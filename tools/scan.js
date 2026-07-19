@@ -60,6 +60,7 @@ for (const ev of allEvents) {
   if (!ev.choices || !ev.choices.length) err(`${at} choices 없음`);
   (ev.nearNode || []).forEach(n => { if (!nodeIds.has(n)) err(`${at} nearNode 미존재: ${n}`); });
   if (ev.needsComp && !compIds.has(ev.needsComp)) err(`${at} needsComp 미존재: ${ev.needsComp}`);
+  if (ev.needsComp2 && !compIds.has(ev.needsComp2)) err(`${at} needsComp2 미존재: ${ev.needsComp2}`);
   if (ev.noComp && !compIds.has(ev.noComp)) err(`${at} noComp 미존재: ${ev.noComp}`);
   if (ev.needFlag && !flagSetters.has(ev.needFlag)) err(`${at} needFlag 세터 없음: ${ev.needFlag}`);
   if (ev.needFlagMin && !flagSetters.has(ev.needFlagMin[0])) err(`${at} needFlagMin 세터 없음: ${ev.needFlagMin[0]}`);

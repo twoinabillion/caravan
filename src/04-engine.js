@@ -344,6 +344,7 @@ G.eligible = (typeFilter)=>{
     if(ev.needFlagMin && (S.flags[ev.needFlagMin[0]]||0) < ev.needFlagMin[1]) return false;
     if(ev.night && !night) return false;
     if(ev.needsComp && !G.hasComp(ev.needsComp)) return false;
+    if(ev.needsComp2 && !G.hasComp(ev.needsComp2)) return false;  // 2인 케미 이벤트
     if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;

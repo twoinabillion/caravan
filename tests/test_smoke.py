@@ -81,7 +81,9 @@ with sync_playwright() as p:
                'circus_meet', 'postman_again', 'seed_harvest', 'wall_reply', 'loc_cablecar', 'loc_filmset',
                'meet_tinker', 'ai_census', 'comp_naming',
                'kids_meet', 'granny_meet', 'dj_tower', 'gp_envelope', 'bori_tag', 'whites_pass',
-               'minji_toolbox', 'eunsu_lastshift', 'near_muju_firefly', 'ai_manifest']:
+               'minji_toolbox', 'eunsu_lastshift', 'near_muju_firefly', 'ai_manifest',
+               'exp_coffee', 'vanowner_coffee', 'library_scribe', 'freq_L2', 'mansu_opening',
+               'duo_mechsong', 'duo_nightround', 'crisis_boar', 'wx_ghostlight', 'meet_pansori']:
         pg.evaluate(f'G.openEventById("{ev}")')
         pg.wait_for_timeout(150)
         vis = pg.locator('#ev-wrap.on').count() > 0
