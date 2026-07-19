@@ -60,6 +60,7 @@ for (const ev of allEvents) {
   if (!ev.choices || !ev.choices.length) err(`${at} choices 없음`);
   (ev.nearNode || []).forEach(n => { if (!nodeIds.has(n)) err(`${at} nearNode 미존재: ${n}`); });
   if (ev.needsComp && !compIds.has(ev.needsComp)) err(`${at} needsComp 미존재: ${ev.needsComp}`);
+  if (ev.noComp && !compIds.has(ev.noComp)) err(`${at} noComp 미존재: ${ev.noComp}`);
   if (ev.needFlag && !flagSetters.has(ev.needFlag)) err(`${at} needFlag 세터 없음: ${ev.needFlag}`);
   if (ev.needFlagMin && !flagSetters.has(ev.needFlagMin[0])) err(`${at} needFlagMin 세터 없음: ${ev.needFlagMin[0]}`);
   if (ev.needWx && !D.wx[ev.needWx]) err(`${at} needWx 미존재: ${ev.needWx}`);
@@ -84,6 +85,17 @@ for (const ev of allEvents) {
       if (fx.item) for (const k in fx.item) if (fx.item[k] < 0 && !itemSources.has(k)) warn(`${at} fx.item 소비만 존재: ${k}`);
     }
   }
+}
+
+/* ── 잡담 검사 ── */
+for (const b of D.banter || []) {
+  const at = `[banter "${(b.t || '').slice(0, 18)}…"]`;
+  const nd = b.need || {};
+  if (nd.comp && !compIds.has(nd.comp)) err(`${at} need.comp 미존재: ${nd.comp}`);
+  if (nd.comp2 && !compIds.has(nd.comp2)) err(`${at} need.comp2 미존재: ${nd.comp2}`);
+  if (nd.flag && !flagSetters.has(nd.flag)) err(`${at} need.flag 세터 없음: ${nd.flag}`);
+  if (nd.wx && !D.wx[nd.wx]) err(`${at} need.wx 미존재: ${nd.wx}`);
+  if (b.who !== '나' && b.who !== 'sys' && !compIds.has(b.who)) err(`${at} who 미존재: ${b.who}`);
 }
 
 /* ── 지도 검사 ── */

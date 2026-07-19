@@ -77,7 +77,9 @@ with sync_playwright() as p:
     check('v1.2 세이브 의뢰 마이그레이션', r['migrated'])
 
     print('― 신규 콘텐츠')
-    for ev in ['lib_meet', 'freq_catch', 'van_receipt', 'meet_smith', 'vg_cicada', 'night_djradio']:
+    for ev in ['lib_meet', 'freq_catch', 'van_receipt', 'meet_smith', 'vg_cicada', 'night_djradio',
+               'circus_meet', 'postman_again', 'seed_harvest', 'wall_reply', 'loc_cablecar', 'loc_filmset',
+               'meet_tinker', 'ai_census', 'comp_naming']:
         pg.evaluate(f'G.openEventById("{ev}")')
         pg.wait_for_timeout(150)
         vis = pg.locator('#ev-wrap.on').count() > 0
@@ -94,6 +96,21 @@ with sync_playwright() as p:
     opened = pg.evaluate('''() => { S.flags.library_met = true; S.driving = null;
       return G.eligible().some(e => e.id === 'lib_request'); }''')
     check('체인 게이트(플래그 후 해금)', opened)
+    # noComp 게이트: 동료 소문은 미영입일 때만
+    r2 = pg.evaluate('''() => {
+      const out = {};
+      S.party = S.party.filter(id => id !== 'minji');
+      out.rumorOpen = G.eligible().some(e => e.id === 'rumor_minji');
+      S.party.push('minji'); S.comps.minji = S.comps.minji || {mood: 60, bond: 0};
+      out.rumorClosed = !G.eligible().some(e => e.id === 'rumor_minji');
+      S.party = S.party.filter(id => id !== 'minji');
+      // 신규 히든 노드 도달성
+      out.newNodes = ['cablecar', 'filmset'].every(id => D.nodes[id] && D.edges.some(e => e[0] === id || e[1] === id));
+      return out;
+    }''')
+    check('noComp 게이트(미영입 소문 열림)', r2['rumorOpen'], str(r2))
+    check('noComp 게이트(영입 후 닫힘)', r2['rumorClosed'], str(r2))
+    check('신규 히든 노드 도로 연결', r2['newNodes'])
     check('콘솔 에러 0 (최종)', not errors, ' | '.join(errors[:3]))
 
     print('― 스크린샷')
