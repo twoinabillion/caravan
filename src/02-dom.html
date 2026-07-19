@@ -1,0 +1,127 @@
+<div id="frame"><div id="app">
+
+  <!-- ══ TITLE ══ -->
+  <div class="scr on" id="scr-title">
+    <canvas id="titlecv"></canvas>
+    <div id="title-ui">
+      <div class="kicker">POST-APOCALYPTIC ROAD TRIP</div>
+      <h1>서울까지<br><span class="km" id="title-km">400km</span></h1>
+      <div class="tag">낡은 밴 한 대. 멸망한 한반도. 그리고 북쪽 끝의 그것.</div>
+      <div class="acts">
+        <button class="act primary" id="bt-new"><span class="ic">▶</span><span><b>새 여행</b><small>부산에서 시동을 건다</small></span></button>
+        <button class="act" id="bt-continue" style="display:none"><span class="ic">↻</span><span><b>이어서 가기</b><small id="cont-info"></small></span></button>
+      </div>
+      <div class="ver">prototype v0.3 · 온로드/오프로드 · 자동 저장 · 엔딩 없음 — 여행은 계속된다</div>
+    </div>
+  </div>
+
+  <!-- ══ MODE SELECT ══ -->
+  <div class="scr" id="scr-mode">
+    <div class="kicker">MODE SELECT — 세계를 고르세요</div>
+    <div class="mode-card" id="mode-on" role="button" tabindex="0">
+      <div class="mk">ON-ROAD</div>
+      <h2>온로드</h2>
+      <p>손으로 빚은 이야기들이 포장도로처럼 깔려 있다. 오프라인, 안정적, 밸런스 잡힌 여행.</p>
+      <div class="quote">"길은 이미 놓여 있다. 어느 길을 고를지는 너의 몫이다."</div>
+    </div>
+    <div class="mode-card off" id="mode-off" role="button" tabindex="0">
+      <div class="mk">OFF-ROAD</div>
+      <h2>오프로드</h2>
+      <p>이 세계의 누구도 대본을 갖고 있지 않다. 이벤트·인물·대화를 AI가 그 자리에서 만들어낸다. 정착지에선 NPC와 진짜 대화가 가능하다.</p>
+      <div class="quote">"지도 밖으로 벗어난 순간, 이야기는 너를 따라 태어난다."</div>
+      <div class="lock" id="offlock"></div>
+      <div id="offkey">
+        <input id="apikey" type="password" placeholder="sk-ant-… (Anthropic API 키)" autocomplete="off">
+        <button id="bt-keyok">연결</button>
+      </div>
+      <div id="offmsg"></div>
+    </div>
+    <button class="act" id="bt-modeback" style="margin-top:6px"><span class="ic">←</span><span><b>돌아가기</b></span></button>
+  </div>
+
+  <!-- ══ INTRO ══ -->
+  <div class="scr" id="scr-intro">
+    <div id="intro-txt"></div>
+    <div id="intro-hint">TAP TO CONTINUE</div>
+  </div>
+
+  <!-- ══ GAME ══ -->
+  <div id="scr-game">
+    <div id="stage">
+      <canvas id="cv"></canvas>
+      <div id="cheollian-tint"></div>
+      <div id="bubbles"></div>
+      <canvas id="minimap" title="지도 열기"></canvas>
+    </div>
+
+    <div id="dash">
+      <div id="gauges">
+        <div class="g" id="g-fuel"><div class="lab"><span>연료 L</span></div><div class="val">--</div><div class="bar"><i></i></div></div>
+        <div class="g" id="g-water"><div class="lab"><span>물</span></div><div class="val">--</div><div class="bar"><i></i></div></div>
+        <div class="g" id="g-food"><div class="lab"><span>식량</span></div><div class="val">--</div><div class="bar"><i></i></div></div>
+        <div class="g" id="g-van"><div class="lab"><span>밴 %</span></div><div class="val">--</div><div class="bar"><i></i></div></div>
+        <div class="g" id="g-scrap"><div class="lab"><span>고철</span></div><div class="val">--</div><div class="bar"><i></i></div></div>
+      </div>
+      <div id="dash-sub">
+        <span id="clockbox">DAY 1 · 08:00</span>
+        <span id="ftgbox" style="display:none">😴</span>
+        <span class="eye" id="eyebox" style="display:none">◉ 관측됨</span>
+        <span id="wxbox">맑음</span>
+      </div>
+    </div>
+
+    <div id="main">
+      <div id="panel"></div>
+      <div id="dock">
+        <button id="dk-map"><span class="dic">🗺</span>지도</button>
+        <button id="dk-status"><span class="dic">🚐</span>상태</button>
+        <button id="dk-journal"><span class="dic">✎</span>일지</button>
+        <button id="dk-camp"><span class="dic">🔥</span>야영</button>
+        <button id="dk-sound"><span class="dic">🔇</span>소리</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EVENT SHEET ══ -->
+  <div class="sheet-wrap" id="ev-wrap"><div class="sheet" id="ev-sheet"></div></div>
+
+  <!-- ══ SETTLEMENT ══ -->
+  <div class="ovl" id="ovl-stl">
+    <div id="stl-head"><h2 id="stl-name"></h2><div class="d" id="stl-desc"></div></div>
+    <div id="stl-body"></div>
+  </div>
+
+  <!-- ══ MAP ══ -->
+  <div class="ovl" id="ovl-map">
+    <div class="ovl-head"><h2>지도 — 한반도 남부</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x">✕</button></div>
+    <div id="mapwrap">
+      <canvas id="mapcv"></canvas>
+      <div id="nodecard"></div>
+    </div>
+  </div>
+
+  <!-- ══ JOURNAL ══ -->
+  <div class="ovl" id="ovl-journal">
+    <div class="ovl-head"><h2>여행 일지</h2><span class="mini" id="j-mini"></span>
+      <button class="x" id="bt-export" title="Obsidian 마크다운으로 내보내기" style="font-size:13px">⇩ .md</button>
+      <button class="x" id="j-x">✕</button></div>
+    <div id="jtabs">
+      <button data-jt="log" class="here">기록</button>
+      <button data-jt="graph">관계망</button>
+    </div>
+    <div class="jpane on" id="jp-log"></div>
+    <div id="jgraphwrap"><canvas id="graphcv"></canvas><div id="gnote"></div></div>
+  </div>
+
+  <!-- ══ STATUS ══ -->
+  <div class="ovl" id="ovl-status">
+    <div class="ovl-head"><h2>달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x">✕</button></div>
+    <div id="st-body"></div>
+  </div>
+
+  <!-- ══ ENDING ══ -->
+  <div class="scr" id="scr-end"></div>
+
+  <div id="toasts"></div>
+</div></div>
+<script>
