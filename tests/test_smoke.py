@@ -112,6 +112,22 @@ with sync_playwright() as p:
       out.newNodes = ['cablecar', 'filmset'].every(id => D.nodes[id] && D.edges.some(e => e[0] === id || e[1] === id));
       return out;
     }''')
+    # 라디오 수리 플로우
+    r3 = pg.evaluate('''() => {
+      const out = {};
+      S.items['라디오 진공관'] = 0; out.blocked = !G.fixRadio();
+      S.items['라디오 진공관'] = 1; out.fixed = G.fixRadio();
+      out.consumed = S.items['라디오 진공관'] === 0;
+      out.flag = !!S.flags.radio_fixed;
+      out.again = !G.fixRadio();          // 재수리 불가
+      UI.playRadio();
+      out.bubble = !!document.querySelector('.bubble.radio');
+      return out;
+    }''')
+    check('라디오: 진공관 없으면 불가', r3['blocked'], str(r3))
+    check('라디오: 수리(진공관 소모+플래그)', r3['fixed'] and r3['consumed'] and r3['flag'], str(r3))
+    check('라디오: 재수리 불가', r3['again'])
+    check('라디오: 방송 버블 표시', r3['bubble'], str(r3))
     check('noComp 게이트(미영입 소문 열림)', r2['rumorOpen'], str(r2))
     check('noComp 게이트(영입 후 닫힘)', r2['rumorClosed'], str(r2))
     check('신규 히든 노드 도로 연결', r2['newNodes'])

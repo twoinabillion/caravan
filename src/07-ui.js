@@ -127,6 +127,7 @@ const UI = (()=>{
     show('scr-intro');
   }
   function renderIntro(){
+    VO.stop(); VO.play('intro'+(introIdx+1));
     $('#intro-txt').innerHTML = D.intro[introIdx];
     $('#intro-txt').style.opacity=0;
     requestAnimationFrame(()=>{ $('#intro-txt').style.transition='opacity .6s'; $('#intro-txt').style.opacity=1; });
@@ -241,12 +242,15 @@ const UI = (()=>{
     if(S.van<S.vanMax-5){
       const hasP=(S.items['부품']||0)>0;
       h+=`<button class="act" data-a="repair" ${hasP?'':'disabled'}><span class="ic">🔧</span><span><b>달구지를 정비한다</b><small>${hasP?'부품 1 소모 · 내구 +35 · 약 1.5시간':'부품이 없다 — 탐색이나 정비소에서 구하자'}</small></span></button>`;
+    if(!S.flags.radio_fixed){ const hasT=(S.items['라디오 진공관']||0)>0;
+      h+=`<button class="act" data-a="radio" ${hasT?'':'disabled'}><span class="ic">📻</span><span><b>라디오를 고친다</b><small>${hasT?'진공관 1 소모 · 주행 중 방송 수신':'라디오 진공관이 필요하다 — 어딘가의 방송국에'}</small></span></button>`; }
     }
     if(S.fuel<5) h+=`<button class="act" data-a="walkfuel"><span class="ic">🛢</span><span><b>걸어서 연료를 구해온다</b><small>시간과 체력을 크게 소모한다</small></span></button>`;
     h+='</div>';
     p.innerHTML=h;
     const wf=p.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>G.openEventById('crisis_nofuel');
     const rp=p.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>G.fieldRepair();
+    const rd=p.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>{ if(G.fixRadio()) renderAll(); };
     const cf=p.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>showCraft();
     wireParty(p);
     p.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
@@ -270,9 +274,22 @@ const UI = (()=>{
     toast(`<span class="ic">📍</span>${D.nodes[S.at].name} 도착`); }
 
   /* ── bubbles ── */
+  function playRadio(){
+    const r=G.pickRadio(); if(!r) return;
+    speak({who:'radio', t:r.t});
+    VO.play(r.key);
+  }
   function speak(b){
     const wrap=$('#bubbles');
     const isAi = b.who==='cheollian';
+    if(b.who==='radio'){
+      const bb=el('div','bubble radio', `<span class="who">📻</span>`+b.t);
+      const wrap2=$('#bubbles'); bb.style.left='8%'; bb.style.top='10px';
+      wrap2.appendChild(bb);
+      requestAnimationFrame(()=>bb.classList.add('show'));
+      setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, 7000);
+      return;
+    }
     const bb=el('div','bubble'+(isAi?' ai':''),
       (b.who!=='sys'&&!isAi? `<span class="who">${b.who==='나'?'나':(D.comps[b.who]?.name||b.who)}</span>`:'')
       + (isAi? `<span class="who">천리안</span>`:'') + b.t);
@@ -298,6 +315,9 @@ const UI = (()=>{
     curEv=evd;
     bgmEvKey = (evd.type==='추적'||evd.type==='위기'||evd.ai)?'tension': evd.type==='스토리'?'story':null;
     if(evd.id==='leo_broadcast') BGM.playSongOnce();   // 400km 송출 — 노래가 울려 퍼지는 그 장면
+    const CVO={ai_vending:'cheollian_01', exp_glasshouse:'cheollian_02', ai_census:'cheollian_03',
+      ai_gasstation:'cheollian_05', ai_manifest:'cheollian_09', seoul_gate:'cheollian_13'};
+    if(CVO[evd.id]) VO.play(CVO[evd.id]);
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
     const aiEvent = evd.type==='추적'||!!evd.ai;
@@ -814,7 +834,7 @@ const UI = (()=>{
   }
 
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
-    showNodeCard, showGraphNote, onDepart, onArrive, showStl};
+    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio};
 })();
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
@@ -903,4 +923,17 @@ const BGM = (()=>{
   }
   function playSongOnce(){ const s=ensureSong(); if(s&&s.paused) toggleSong(); }
   return {tick, setOn, toggleSong, playSongOnce};
+})();
+/* ═══════════════════ VO (보이스 — D.vo 슬롯) ═══════════════════
+   슬롯이 비어 있으면 조용히 무시 (자막만). 파일 오면 드롭인. */
+const VO = (()=>{
+  let cur=null;
+  function play(key){
+    if(!D.vo||!D.vo[key]) return;
+    stop();
+    cur=new Audio(D.vo[key]); cur.volume=0.8;
+    cur.play().catch(()=>{});
+  }
+  function stop(){ if(cur){ cur.pause(); cur=null; } }
+  return {play, stop};
 })();

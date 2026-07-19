@@ -282,6 +282,7 @@ G.startTravel = (to)=>{
 const KMH = 44;                    // 주행 속도
 const TIMESCALE = 2.2;             // 실제 1초 = 게임 2.2분
 let banterCd = 6;                  // 첫 잡담까지 몇 초
+let radioCd = 30;                  // 라디오 첫 수신까지
 
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
@@ -324,6 +325,9 @@ G.tick = (dt)=>{ // dt: real seconds
   // banter
   banterCd -= dt;
   if(banterCd<=0){ banterCd = 11+R(9); const b = G.pickBanter(); if(b) UI.speak(b); }
+  // radio (수리 후에만 수신)
+  if(S.flags.radio_fixed){ radioCd -= dt;
+    if(radioCd<=0){ radioCd = 90+R(120); UI.playRadio(); } }
   // arrival
   if(dv.gone>=dv.dist){ G.arrive(); }
 };
@@ -660,6 +664,31 @@ G.craft = (id)=>{
   UI.toast(`${c.ic} ${c.nm} 제작 완료`);
   G.save(); return true;
 };
+
+/* ── 라디오 수리 (진공관 1 소모, 1회) ── */
+G.fixRadio = ()=>{
+  if(S.flags.radio_fixed || !(S.items['라디오 진공관']>0)) return false;
+  S.items['라디오 진공관']--;
+  S.flags.radio_fixed=true;
+  G.advance(40);
+  G.addNote({type:'사건', title:'라디오 소생',
+    body:'진공관을 갈아 끼우자 죽어 있던 라디오가 지직— 하고 숨을 쉬었다. 그날 밤 남산의 신호 이후 처음이다. 이제 길 위의 목소리들이 들린다.', links:['달구지']});
+  UI.toast('📻 라디오가 살아났다 — 주행 중 방송이 잡힌다');
+  G.save(); return true;
+};
+G.pickRadio = ()=>{
+  const night=G.isNight();
+  const pool=D.radioTexts.filter(r=>{
+    if(r.night===1&&!night) return false;
+    if(lastRadio===r.key) return false;
+    return true; });
+  if(!pool.length) return null;
+  const total=pool.reduce((s,r)=>s+(r.w||1),0);
+  let x=rng()*total;
+  for(const r of pool){ x-=(r.w||1); if(x<=0){ lastRadio=r.key; return r; } }
+  return pool[0];
+};
+let lastRadio=null;
 
 /* ── 의뢰 (배달/특송/조달/편지) ── */
 G.QKIND = {

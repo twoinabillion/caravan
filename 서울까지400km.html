@@ -45,6 +45,8 @@ input{font-family:inherit}
 .bubble .who{color:var(--amber);font-weight:700;margin-right:5px}
 .bubble.ai{border-color:rgba(85,224,200,.5);color:var(--cheollian);font-family:var(--mono);font-size:11.5px}
 .bubble.ai .who{color:var(--cheollian)}
+.bubble.radio{border-color:#4d4370;color:#d8ccff;font-size:12px;max-width:80%}
+.bubble.radio .who{margin-right:6px}
 #minimap{position:absolute;top:8px;right:8px;width:90px;height:120px;z-index:6;cursor:pointer;
   background:rgba(8,11,22,0.62);border:1px solid rgba(60,80,130,0.55);border-radius:9px;
   backdrop-filter:blur(3px);transition:border-color .2s}
@@ -497,6 +499,22 @@ D.portraits = {};
    프롬프트 가이드: ~/seoul-400km/icon-prompts.md */
 D.icons = {};
 D.bgm = {};    /* BGM 슬롯 — 키: title/drive_day/drive_night/tension/settlement/camp/story (docs/audio-guide.md) */
+D.vo = {};     /* 보이스 슬롯 — intro1~5, cheollian_XX, radio_XX (docs/voice-script.md) */
+/* 라디오 방송 조각 — 밴 라디오 수리 후 주행 중 랜덤 수신. D.vo[key] 있으면 음성도 재생 */
+D.radioTexts = [
+ {key:'radio_dj_open',  t:'…새벽 두 시입니다. 아직 길 위에 계신 분들, 오늘도 수고 많으셨습니다.', night:1},
+ {key:'radio_dj_close', t:'…오늘 방송은 여기까지. 내일 이 시간에 다시 만나요. 지익—', night:1},
+ {key:'radio_400',      t:'…4. 0. 0. …4. 0. 0. …', w:0.5},
+ {key:'radio_mayor',    t:'아아, 마을 주민 여러분, 좋은 아침입니다. …서로 얼굴 보고 삽시다. 이상 이장이었습니다. (같은 테이프가 3년째 돌고 있다)'},
+ {key:'radio_ad',       t:'…놓치면 후회하실 신제품! 지금 전화 주시면 하나 더—! (3년 전의 명랑함이 잡음 속에서 반짝였다 꺼졌다)'},
+ {key:'radio_weather',  t:'…내일은 전국이 대체로 맑겠습니다. 나들이하기 좋은 날씨— (예보는 3년째 내일을 말하고 있다)'},
+ {key:'radio_baseball', t:'쳤습니다—! 넘어갑니다 넘어갑니다—!! (어느 여름의 중계가 테이프 속에서 영원히 홈런 중이다)'},
+ {key:'radio_cheollian',t:'…정기 안내 방송입니다. 이동 중인 시민께서는 안전한 경로를 이용하시기 바랍니다. 좋은 하루 되십시오.', w:0.7},
+ {key:'radio_music',    t:'…다음 곡은, 조금 오래된 노래입니다. 이 노래를 아는 분이 아직 계시다면— 같이 불러요. (기타 전주가 잡음에 반쯤 잠겼다)'},
+ {key:'radio_comms',    t:'…들리나? …들리면 응답… (뚝. 다시 잡음. 주파수를 붙잡아도 목소리는 돌아오지 않았다)', w:0.7},
+ {key:'radio_kids',     t:'(아이들이 동요를 부르고 있다. 어린이 방송 녹음분이 어딘가에서 아직 송출되는 중이다. 노래는 2절에서 끊겼다)'},
+ {key:'radio_farm',     t:'…오늘의 영농 정보입니다. 중부 지방은 모내기 적기가— (누군가는 이 방송을 듣고 정말 모를 냈을 것이다. 다랑논의 그 사람처럼)'},
+];
 
 /* 운전사(주인공) 레벨 — 주행거리로 성장 */
 D.driverLv = [
@@ -4463,6 +4481,7 @@ G.startTravel = (to)=>{
 const KMH = 44;                    // 주행 속도
 const TIMESCALE = 2.2;             // 실제 1초 = 게임 2.2분
 let banterCd = 6;                  // 첫 잡담까지 몇 초
+let radioCd = 30;                  // 라디오 첫 수신까지
 
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
@@ -4505,6 +4524,9 @@ G.tick = (dt)=>{ // dt: real seconds
   // banter
   banterCd -= dt;
   if(banterCd<=0){ banterCd = 11+R(9); const b = G.pickBanter(); if(b) UI.speak(b); }
+  // radio (수리 후에만 수신)
+  if(S.flags.radio_fixed){ radioCd -= dt;
+    if(radioCd<=0){ radioCd = 90+R(120); UI.playRadio(); } }
   // arrival
   if(dv.gone>=dv.dist){ G.arrive(); }
 };
@@ -4841,6 +4863,31 @@ G.craft = (id)=>{
   UI.toast(`${c.ic} ${c.nm} 제작 완료`);
   G.save(); return true;
 };
+
+/* ── 라디오 수리 (진공관 1 소모, 1회) ── */
+G.fixRadio = ()=>{
+  if(S.flags.radio_fixed || !(S.items['라디오 진공관']>0)) return false;
+  S.items['라디오 진공관']--;
+  S.flags.radio_fixed=true;
+  G.advance(40);
+  G.addNote({type:'사건', title:'라디오 소생',
+    body:'진공관을 갈아 끼우자 죽어 있던 라디오가 지직— 하고 숨을 쉬었다. 그날 밤 남산의 신호 이후 처음이다. 이제 길 위의 목소리들이 들린다.', links:['달구지']});
+  UI.toast('📻 라디오가 살아났다 — 주행 중 방송이 잡힌다');
+  G.save(); return true;
+};
+G.pickRadio = ()=>{
+  const night=G.isNight();
+  const pool=D.radioTexts.filter(r=>{
+    if(r.night===1&&!night) return false;
+    if(lastRadio===r.key) return false;
+    return true; });
+  if(!pool.length) return null;
+  const total=pool.reduce((s,r)=>s+(r.w||1),0);
+  let x=rng()*total;
+  for(const r of pool){ x-=(r.w||1); if(x<=0){ lastRadio=r.key; return r; } }
+  return pool[0];
+};
+let lastRadio=null;
 
 /* ── 의뢰 (배달/특송/조달/편지) ── */
 G.QKIND = {
@@ -6254,6 +6301,7 @@ const UI = (()=>{
     show('scr-intro');
   }
   function renderIntro(){
+    VO.stop(); VO.play('intro'+(introIdx+1));
     $('#intro-txt').innerHTML = D.intro[introIdx];
     $('#intro-txt').style.opacity=0;
     requestAnimationFrame(()=>{ $('#intro-txt').style.transition='opacity .6s'; $('#intro-txt').style.opacity=1; });
@@ -6368,12 +6416,15 @@ const UI = (()=>{
     if(S.van<S.vanMax-5){
       const hasP=(S.items['부품']||0)>0;
       h+=`<button class="act" data-a="repair" ${hasP?'':'disabled'}><span class="ic">🔧</span><span><b>달구지를 정비한다</b><small>${hasP?'부품 1 소모 · 내구 +35 · 약 1.5시간':'부품이 없다 — 탐색이나 정비소에서 구하자'}</small></span></button>`;
+    if(!S.flags.radio_fixed){ const hasT=(S.items['라디오 진공관']||0)>0;
+      h+=`<button class="act" data-a="radio" ${hasT?'':'disabled'}><span class="ic">📻</span><span><b>라디오를 고친다</b><small>${hasT?'진공관 1 소모 · 주행 중 방송 수신':'라디오 진공관이 필요하다 — 어딘가의 방송국에'}</small></span></button>`; }
     }
     if(S.fuel<5) h+=`<button class="act" data-a="walkfuel"><span class="ic">🛢</span><span><b>걸어서 연료를 구해온다</b><small>시간과 체력을 크게 소모한다</small></span></button>`;
     h+='</div>';
     p.innerHTML=h;
     const wf=p.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>G.openEventById('crisis_nofuel');
     const rp=p.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>G.fieldRepair();
+    const rd=p.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>{ if(G.fixRadio()) renderAll(); };
     const cf=p.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>showCraft();
     wireParty(p);
     p.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
@@ -6397,9 +6448,22 @@ const UI = (()=>{
     toast(`<span class="ic">📍</span>${D.nodes[S.at].name} 도착`); }
 
   /* ── bubbles ── */
+  function playRadio(){
+    const r=G.pickRadio(); if(!r) return;
+    speak({who:'radio', t:r.t});
+    VO.play(r.key);
+  }
   function speak(b){
     const wrap=$('#bubbles');
     const isAi = b.who==='cheollian';
+    if(b.who==='radio'){
+      const bb=el('div','bubble radio', `<span class="who">📻</span>`+b.t);
+      const wrap2=$('#bubbles'); bb.style.left='8%'; bb.style.top='10px';
+      wrap2.appendChild(bb);
+      requestAnimationFrame(()=>bb.classList.add('show'));
+      setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, 7000);
+      return;
+    }
     const bb=el('div','bubble'+(isAi?' ai':''),
       (b.who!=='sys'&&!isAi? `<span class="who">${b.who==='나'?'나':(D.comps[b.who]?.name||b.who)}</span>`:'')
       + (isAi? `<span class="who">천리안</span>`:'') + b.t);
@@ -6425,6 +6489,9 @@ const UI = (()=>{
     curEv=evd;
     bgmEvKey = (evd.type==='추적'||evd.type==='위기'||evd.ai)?'tension': evd.type==='스토리'?'story':null;
     if(evd.id==='leo_broadcast') BGM.playSongOnce();   // 400km 송출 — 노래가 울려 퍼지는 그 장면
+    const CVO={ai_vending:'cheollian_01', exp_glasshouse:'cheollian_02', ai_census:'cheollian_03',
+      ai_gasstation:'cheollian_05', ai_manifest:'cheollian_09', seoul_gate:'cheollian_13'};
+    if(CVO[evd.id]) VO.play(CVO[evd.id]);
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
     const aiEvent = evd.type==='추적'||!!evd.ai;
@@ -6941,7 +7008,7 @@ const UI = (()=>{
   }
 
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
-    showNodeCard, showGraphNote, onDepart, onArrive, showStl};
+    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio};
 })();
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
@@ -7030,6 +7097,19 @@ const BGM = (()=>{
   }
   function playSongOnce(){ const s=ensureSong(); if(s&&s.paused) toggleSong(); }
   return {tick, setOn, toggleSong, playSongOnce};
+})();
+/* ═══════════════════ VO (보이스 — D.vo 슬롯) ═══════════════════
+   슬롯이 비어 있으면 조용히 무시 (자막만). 파일 오면 드롭인. */
+const VO = (()=>{
+  let cur=null;
+  function play(key){
+    if(!D.vo||!D.vo[key]) return;
+    stop();
+    cur=new Audio(D.vo[key]); cur.volume=0.8;
+    cur.play().catch(()=>{});
+  }
+  function stop(){ if(cur){ cur.pause(); cur=null; } }
+  return {play, stop};
 })();
 /* ═══════════════════ OFF-ROAD (LLM) ═══════════════════ */
 const OFF = (()=>{
