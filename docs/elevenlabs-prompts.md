@@ -11,43 +11,38 @@
 
 ## 화자 1. 주인공 (인트로 나레이션) — 최우선
 
-**보이스 프롬프트 (Voice Design에 복붙):**
+**보이스 프롬프트 (Voice Design 칸에 이것만, 약 420자):**
 ```
-Native Korean. Male, mid 20s. Excellent audio quality.
-Persona: quiet survivor narrating his own story.
-Emotion: calm, wistful, quietly resolved.
-Low, warm, pleasant timbre with a slightly husky edge. Speaks slowly with
-half-beat pauses between sentences, understated delivery — like someone
-recalling a grief he has already made peace with.
+Native Korean. Male, mid 20s. Good audio quality. Persona: an ordinary young Korean guy quietly telling his own story, not a professional narrator. Emotion: calm, wistful, a little tired but resolved. Low, warm, natural timbre with a slightly husky edge and soft audible breaths. Relaxed conversational pace, like talking to a close friend late at night. Small pauses mid-sentence, understated and sincere, never theatrical.
 ```
-**Guidance Scale: 35%**
+**Guidance Scale: 30%** (낮을수록 연기가 자연스러움 — 공식 가이드)
 
-**프리뷰 텍스트 (Text to preview에 복붙):**
+**프리뷰 텍스트 (칸이 있으면):**
 ```
-부모의 얼굴은 기억나지 않는다. 기억나는 건 할아버지의 봉고차, 조수석뿐이다. 정비사였던 할아버지는 고장난 세상 곳곳을 그 차로 돌며 나를 키웠다. 잘 봐라. 차는 고치면 다시 달린다. 사람도 그렇다.
+부모님 얼굴은 기억이 안 난다. 기억나는 건 할아버지 봉고차, 조수석. 그게 전부다. 할아버지는 정비사였다. 고장난 세상 여기저기를 그 차로 돌면서, 나를 키웠다.
 ```
 
-**보이스 저장 후, TTS로 뽑을 대사 (파일명 = 앞의 키):**
+**보이스 저장 후, TTS(Eleven v3)로 뽑을 대사 (파일명 = 키):**
 
 `intro1` →
 ```
-부모의 얼굴은 기억나지 않는다. 기억나는 건 할아버지의 봉고차, 조수석뿐이다. 정비사였던 할아버지는 고장난 세상 곳곳을 그 차로 돌며 나를 키웠다. — 잘 봐라. 차는 고치면 다시 달린다. 사람도 그렇다.
+부모님 얼굴은 기억이 안 난다. 기억나는 건 할아버지 봉고차, 조수석. 그게 전부다. 할아버지는 정비사였다. 고장난 세상 여기저기를 그 차로 돌면서, 나를 키웠다. "잘 봐라. 차는 고치면 다시 달린다. 사람도 그렇다."
 ```
 `intro2` →
 ```
-3년 전 봄, 천리안이 깨어났다. 그날 무슨 일이 있었는지 정확히 아는 사람은 없다. 다만 그날 이후 도시의 불이 하나씩 꺼졌다. 할아버지와 나는 부산 끝 부두까지 밀려났고, 거기서 고물 봉고차 한 대를 주워 함께 되살리기 시작했다. 할아버지는 그 차에 '달구지'라는 촌스러운 이름을 붙였다.
+3년 전 봄에, 천리안이 깨어났다. 그날 무슨 일이 있었는지는… 아는 사람이 없다. 그냥, 그날부터 도시 불이 하나씩 꺼졌다. 할아버지랑 나는 부산 끝 부두까지 밀려났고, 거기서 고물 봉고차 한 대를 주워서 같이 고치기 시작했다. 할아버지는 그 차에 '달구지'라는, 진짜 촌스러운 이름을 붙였다.
 ```
 `intro3` →
 ```
-지난겨울, 할아버지는 먼저 떠났다. 남긴 건 두 가지. 달구지의 열쇠, 그리고 손때 묻은 정비 수첩. 수첩 첫 장에는 이렇게 적혀 있다. — 달구지를 완성해라. 그리고 어디든, 끝까지 가라. 길 위에서 배운 건 길 위에서 갚는 거다.
+지난겨울에, 할아버지가 먼저 갔다. 남긴 건 두 개. 달구지 열쇠, 그리고 손때 묻은 정비 수첩. 수첩 첫 장에 이렇게 적혀 있다. "달구지를 완성해라. 그리고 어디든— 끝까지 가라. 길에서 배운 건 길에서 갚는 거다."
 ```
 `intro4` →
 ```
-그리고 어느 밤, 죽어 있던 라디오가 지직거렸다. — 서울. 남산. 코어는 아직 가동 중. 끝내려면, 이리로. — 누가 보낸 신호인지 모른다. 함정일지도 모른다. 하지만 할아버지라면, 시동부터 걸었을 것이다.
+그러다 어느 날 밤에, 죽어 있던 라디오가 지직거렸다. — 서울. 남산. 코어는 아직 가동 중. 끝내려면, 이리로. — 누가 보낸 건지 모른다. 함정일 수도 있다. 근데… 할아버지였으면 시동부터 걸었겠지.
 ```
 `intro5` →
 ```
-연료를 채웠다. 물과 식량을 실었다. 조수석엔 수첩을 놓았다. 할아버지의 자리다. 서울까지 400km. — 가서, 끝내자. 할아버지 몫까지.
+연료 채웠고, 물이랑 식량 실었다. 조수석엔 수첩. …할아버지 자리다. 서울까지 400km. 가서, 끝내자. 할아버지 몫까지.
 ```
 
 ---
