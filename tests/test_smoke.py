@@ -79,13 +79,15 @@ with sync_playwright() as p:
     print('― 신규 콘텐츠')
     for ev in ['lib_meet', 'freq_catch', 'van_receipt', 'meet_smith', 'vg_cicada', 'night_djradio',
                'circus_meet', 'postman_again', 'seed_harvest', 'wall_reply', 'loc_cablecar', 'loc_filmset',
-               'meet_tinker', 'ai_census', 'comp_naming']:
+               'meet_tinker', 'ai_census', 'comp_naming',
+               'kids_meet', 'granny_meet', 'dj_tower', 'gp_envelope', 'bori_tag', 'whites_pass',
+               'minji_toolbox', 'eunsu_lastshift', 'near_muju_firefly', 'ai_manifest']:
         pg.evaluate(f'G.openEventById("{ev}")')
         pg.wait_for_timeout(150)
         vis = pg.locator('#ev-wrap.on').count() > 0
         check(f'이벤트 표시: {ev}', vis)
         if vis:
-            pg.locator('#ev-wrap .choice').first.click()
+            pg.locator('#ev-wrap .choice:not([disabled])').first.click()
             pg.wait_for_timeout(150)
             pg.evaluate('''() => { const c=document.querySelector('#ev-wrap .choice:last-child');
               if (c) c.click(); document.querySelector('#ev-wrap').classList.remove('on'); }''')
