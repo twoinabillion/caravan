@@ -1,0 +1,240 @@
+# ElevenLabs 복붙 시트 — 서울까지 400km
+
+> **사용법 (3단계)**
+> 1. **Voices → Voice Design**: 아래 [보이스 프롬프트]를 복붙 + [프리뷰 텍스트]를 Text to preview에 복붙 → 셋 중 제일 좋은 걸 저장
+> 2. **Text to Speech**: 저장한 보이스로 [대사 목록]을 한 줄씩 생성 → **파일명을 키이름.mp3로** 저장
+> 3. (선택) **Sound Effects**: 맨 아래 [배경음 SFX] 프롬프트로 배경 생성 → `sfx_*.mp3`
+>
+> **원칙: 보이스는 목소리만, 배경은 SFX로 따로.** (ElevenLabs 공식 가이드가 보이스 프롬프트에 reverb/tape/echo 같은 FX 단어 넣지 말라고 함 — 품질 깨짐. 믹싱은 내가 함. 목소리만 던져줘도 됨!)
+
+---
+
+## 화자 1. 주인공 (인트로 나레이션) — 최우선
+
+**보이스 프롬프트 (Voice Design에 복붙):**
+```
+Native Korean. Male, mid 20s. Excellent audio quality.
+Persona: quiet survivor narrating his own story.
+Emotion: calm, wistful, quietly resolved.
+Low, warm, pleasant timbre with a slightly husky edge. Speaks slowly with
+half-beat pauses between sentences, understated delivery — like someone
+recalling a grief he has already made peace with.
+```
+**Guidance Scale: 35%**
+
+**프리뷰 텍스트 (Text to preview에 복붙):**
+```
+부모의 얼굴은 기억나지 않는다. 기억나는 건 할아버지의 봉고차, 조수석뿐이다. 정비사였던 할아버지는 고장난 세상 곳곳을 그 차로 돌며 나를 키웠다. 잘 봐라. 차는 고치면 다시 달린다. 사람도 그렇다.
+```
+
+**보이스 저장 후, TTS로 뽑을 대사 (파일명 = 앞의 키):**
+
+`intro1` →
+```
+부모의 얼굴은 기억나지 않는다. 기억나는 건 할아버지의 봉고차, 조수석뿐이다. 정비사였던 할아버지는 고장난 세상 곳곳을 그 차로 돌며 나를 키웠다. — 잘 봐라. 차는 고치면 다시 달린다. 사람도 그렇다.
+```
+`intro2` →
+```
+3년 전 봄, 천리안이 깨어났다. 그날 무슨 일이 있었는지 정확히 아는 사람은 없다. 다만 그날 이후 도시의 불이 하나씩 꺼졌다. 할아버지와 나는 부산 끝 부두까지 밀려났고, 거기서 고물 봉고차 한 대를 주워 함께 되살리기 시작했다. 할아버지는 그 차에 '달구지'라는 촌스러운 이름을 붙였다.
+```
+`intro3` →
+```
+지난겨울, 할아버지는 먼저 떠났다. 남긴 건 두 가지. 달구지의 열쇠, 그리고 손때 묻은 정비 수첩. 수첩 첫 장에는 이렇게 적혀 있다. — 달구지를 완성해라. 그리고 어디든, 끝까지 가라. 길 위에서 배운 건 길 위에서 갚는 거다.
+```
+`intro4` →
+```
+그리고 어느 밤, 죽어 있던 라디오가 지직거렸다. — 서울. 남산. 코어는 아직 가동 중. 끝내려면, 이리로. — 누가 보낸 신호인지 모른다. 함정일지도 모른다. 하지만 할아버지라면, 시동부터 걸었을 것이다.
+```
+`intro5` →
+```
+연료를 채웠다. 물과 식량을 실었다. 조수석엔 수첩을 놓았다. 할아버지의 자리다. 서울까지 400km. — 가서, 끝내자. 할아버지 몫까지.
+```
+
+---
+
+## 화자 2. 천리안 (13줄 + 라디오 공지 1)
+
+**보이스 프롬프트:**
+```
+Native Korean. Gender-ambiguous, ageless. Studio quality.
+Persona: automated national control system, impossibly polite.
+Emotion: serene, standardized courtesy, subtly unsettling.
+Perfectly even, smooth mid-pitched timbre with zero emotional variance.
+Speaks slightly slower than a human customer service agent, every sentence
+ending with a calm downward intonation. Flawlessly clean, clinical delivery.
+```
+**Guidance Scale: 40%** (톤 정확도가 생명)
+
+**프리뷰 텍스트:**
+```
+안녕하십니까. 정기 현황 파악 중입니다. 탑승 인원을 확인해도 되겠습니까. 협조에 감사드립니다. 목적지에서 뵙겠습니다.
+```
+
+**TTS 대사:**
+
+| 파일명 | 대사 |
+|---|---|
+| `cheollian_01` | 수고하셨습니다. |
+| `cheollian_02` | 금일 수확량이 기록되었습니다. |
+| `cheollian_03` | 안녕하십니까. 정기 현황 파악 중입니다. 탑승 인원을 확인해도 되겠습니까. |
+| `cheollian_04` | 협조에 감사드립니다. |
+| `cheollian_05` | 결제 수단을 제시해 주십시오. |
+| `cheollian_06` | 승인되었습니다. 주유를 시작합니다. |
+| `cheollian_07` | 다음에 또 방문해 주십시오. |
+| `cheollian_08` | 적하 목록을 확인합니다. |
+| `cheollian_09` | 모두 실으셨습니까? |
+| `cheollian_10` | 그 질문을 확인했습니다. |
+| `cheollian_11` | 목적지에서 뵙겠습니다. |
+| `cheollian_12` | 안전 운행 하십시오. |
+| `cheollian_13` | 아직입니다. 전부 싣고 오세요. |
+| `cheollian_14` | 좋은 아침입니다. *(2막용 예비)* |
+| `radio_cheollian` | …정기 안내 방송입니다. 이동 중인 시민께서는 안전한 경로를 이용하시기 바랍니다. 좋은 하루 되십시오. |
+
+---
+
+## 화자 3. 할아버지 (6줄)
+
+**보이스 프롬프트:**
+```
+Native Korean with a slight southeastern Korean regional intonation.
+Elderly man in his 70s. Good quality.
+Persona: old van mechanic leaving words for his grandson.
+Emotion: gruff, warm, unhurried.
+Deep, gravelly, low-pitched timbre. Speaks slowly, like muttering to himself,
+blunt but affectionate, with long pauses between phrases.
+```
+**Guidance Scale: 35%**
+*(낡은 카세트 질감은 프롬프트에 넣지 말 것 — 내가 후처리로 얹음. 목소리는 깨끗하게)*
+
+**프리뷰 텍스트:**
+```
+달구지를 완성해라. 그리고 어디든, 끝까지 가라. 길 위에서 배운 건 길 위에서 갚는 거다.
+```
+
+**TTS 대사:** `gp_01` 기계는 아프면 운다. 사람은 조용해진다. / `gp_02` 조급해서 밟는 기름이 제일 아깝다. / `gp_03` 차는 사람을 고친다. 좋은 사람들을 태워라. / `gp_04` 밀어서 걸 수 있는 차를 타라. / `gp_05` 달구지를 완성해라. 그리고 어디든, 끝까지 가라. / `gp_06` 남산 보고 열어라.
+
+---
+
+## 화자 4. DJ (스튜디오 3줄 + 라디오 수신 3줄 + 음악방송 1줄)
+
+**보이스 프롬프트:**
+```
+Native Korean. Female, late 40s. Good quality.
+Persona: late-night radio host running a one-woman station.
+Emotion: mellow, intimate, comforting.
+Warm, slightly husky, low-pitched timbre with soft audible breaths,
+close and personal delivery. Relaxed slow pacing, like talking to a single
+listener at two in the morning.
+```
+**Guidance Scale: 30%**
+
+**프리뷰 텍스트:**
+```
+새벽 두 시입니다. 아직 길 위에 계신 분들, 오늘도 수고 많으셨습니다. 다음 곡은, 조금 오래된 노래입니다.
+```
+
+**TTS 대사:** `dj_01` 새벽 두 시입니다. 아직 길 위에 계신 분들, 오늘도 수고 많으셨습니다. / `dj_02` 다음 곡 듣겠습니다. / `dj_03` 내일 이 시간에 다시 만나요. / `radio_dj_open` …새벽 두 시입니다. 아직 길 위에 계신 분들, 오늘도 수고 많으셨습니다. / `radio_dj_close` …오늘 방송은 여기까지. 내일 이 시간에 다시 만나요. / `radio_music` …다음 곡은, 조금 오래된 노래입니다. 이 노래를 아는 분이 아직 계시다면— 같이 불러요.
+
+---
+
+## 화자 5~10. 라디오 단역들 (클립 1개씩 — 라이브러리 보이스로 대충 골라도 충분!)
+
+> 보이스 슬롯 아끼려면 Voice Library에서 비슷한 톤 골라 써도 돼. 직접 만들 거면 아래 복붙.
+> **라디오 클립들은 예외적으로 저품질 묘사 OK** (공식 문서가 옛 방송 재현엔 허용) — 원하면 각 프롬프트 끝에 `Low-fidelity audio, like an old radio broadcast.` 한 줄 추가. 안 넣으면 내가 라디오 질감 후처리.
+
+**이장** (`radio_mayor`) — Guidance 30%
+```
+Native Korean. Elderly man in his late 60s, rural village head.
+Persona: village chief making the morning announcement.
+Emotion: hearty, folksy, earnest.
+Loud, warm, slightly hoarse timbre, projecting as if addressing a whole
+village outdoors, with old-fashioned formal phrasing and a slow, deliberate pace.
+```
+대사: `아아, 마을 주민 여러분, 좋은 아침입니다. …서로 얼굴 보고 삽시다. 이상 이장이었습니다.`
+
+**광고 성우** (`radio_ad`) — Guidance 30%
+```
+Native Korean. Female, 30s. Persona: home-shopping commercial announcer.
+Emotion: excessively bright, urgent, salesy.
+High-energy, crisp, smiling voice, speaking quickly with exaggerated
+enthusiasm and hard-sell emphasis.
+```
+대사: `놓치면 후회하실 신제품! 지금 전화 주시면 하나 더!`
+
+**기상캐스터** (`radio_weather`) — Guidance 35%
+```
+Native Korean. Female, late 20s. Persona: TV weather anchor.
+Emotion: pleasant, composed, professional.
+Clear, bright, precise announcer timbre with crisp diction and
+even, practiced news-desk pacing.
+```
+대사: `…내일은 전국이 대체로 맑겠습니다. 나들이하기 좋은 날씨가 되겠습니다.`
+
+**야구 캐스터** (`radio_baseball`) — Guidance 25%
+```
+Native Korean. Male, 40s. Persona: baseball play-by-play commentator
+at the peak moment of a game. Emotion: ecstatic, explosive, breathless.
+Powerful, projected voice shouting with rising excitement, very fast pace,
+voice cracking slightly with joy.
+```
+대사: `쳤습니다—! 넘어갑니다, 넘어갑니다—!!`
+
+**숫자 방송 여성** (`radio_400`) — Guidance 35%
+```
+Native Korean. Female, age hard to place. Persona: a person reading numbers
+into a microphone, alone. Emotion: flat, weary, eerily calm.
+Quiet, breathy, evenly spaced delivery — mechanical rhythm but unmistakably
+human breathing between numbers. Slow, hypnotic pacing.
+```
+대사: `…사. 공. 공. …사. 공. 공. …사. 공. 공.`
+
+**무전 목소리** (`radio_comms`) — Guidance 30%
+```
+Native Korean. Male, 30s-40s. Persona: exhausted man on a two-way radio.
+Emotion: tired, fading hope, restrained.
+Rough, dry, low voice speaking in short fragments with pauses,
+as if repeating the same call for the hundredth time.
+Poor audio quality, like a distant walkie-talkie transmission.
+```
+대사: `…들리나? …들리면 응답…`
+
+**영농방송 아나운서** (`radio_farm`) — Guidance 30%
+```
+Native Korean. Male, 50s. Persona: old-fashioned rural radio announcer
+reading farming information. Emotion: earnest, dutiful, gentle.
+Steady, warm, slightly nasal announcer timbre with old-style formal reading
+rhythm, unhurried pace.
+```
+대사: `…오늘의 영농 정보입니다. 중부 지방은 모내기 적기가 다가오고 있습니다.`
+
+**동요** (`radio_kids`) — ⏸ 보류 추천 (Voice Design으로 아이들 합창은 어려움 — ElevenLabs Music으로 뽑거나 스킵. 스킵해도 자막으로 잘 작동함)
+
+---
+
+## 배경음 SFX (선택 — Sound Effects 탭에 복붙, 파일명 `sfx_*.mp3`)
+
+> **이건 통째로 건너뛰어도 됨** — 목소리만 있어도 게임은 완성이고, 배경 믹싱은 내가 할 수 있어.
+> 뽑을 거면 각 6~10초.
+
+| 파일명 | 프롬프트 (Sound Effects에 복붙) | 쓰이는 곳 |
+|---|---|---|
+| `sfx_garage` | quiet auto repair shop ambience, occasional ratchet clicks and light metal tapping, warm room tone | intro1 |
+| `sfx_collapse` | low wind with a distant city siren slowly fading out, then faint ocean waves | intro2 |
+| `sfx_winter` | cold winter wind, very quiet, one soft page turn | intro3 |
+| `sfx_static` | old radio static and tuning noise, crackling, searching between stations | intro4·라디오 공통 |
+| `sfx_depart` | items being loaded into a van, door closing, old van engine starting and idling | intro5 |
+| `sfx_vending` | old vending machine hum, a can dropping into the tray | cheollian_01 |
+| `sfx_drone` | small surveillance drone propeller hovering steadily | cheollian_03·04 |
+| `sfx_pump` | gas station pump machine beep and fuel flowing | cheollian_05·06 |
+| `sfx_checkpoint` | wind over an empty highway checkpoint, a loudspeaker clicking on | cheollian_08·11 |
+| `sfx_core` | very low deep electronic hum, vast and calm, slowly breathing | cheollian_13 |
+| `sfx_crowd` | baseball stadium crowd roaring and cheering, drums, vintage broadcast feel | radio_baseball |
+| `sfx_village` | rural village morning, birds, distant rooster, outdoor loudspeaker hum | radio_mayor·farm |
+
+---
+
+## 던지는 법 (요약)
+
+1. 목소리 파일: **키이름.mp3** (`intro1.mp3`, `cheollian_09.mp3`, `radio_mayor.mp3`…) → `~/Downloads/`
+2. SFX 뽑았으면: **sfx_이름.mp3** → 같은 곳
+3. 나 호출 → 스펙 검사·트림·정규화·(필요시)믹싱·인라인·배선·배포까지 일괄 처리
