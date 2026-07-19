@@ -17,6 +17,7 @@ D.portraits = {};
        wx_clear wx_rain wx_storm wx_fog wx_dust
    프롬프트 가이드: ~/seoul-400km/icon-prompts.md */
 D.icons = {};
+D.bgm = {};    /* BGM 슬롯 — 키: title/drive_day/drive_night/tension/settlement/camp/story (docs/audio-guide.md) */
 
 /* 운전사(주인공) 레벨 — 주행거리로 성장 */
 D.driverLv = [
