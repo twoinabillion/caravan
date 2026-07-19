@@ -201,7 +201,7 @@ const UI = (()=>{
         <h3>${to.name}(으)로 이동 중</h3>
         <div class="sub">${to.desc}</div>
         ${partyStrip()}
-        ${S.quest?`<div class="sub">${ICO('quest','📦')} ${S.quest.item} → ${D.nodes[S.quest.to].name} <span style="color:var(--amber)">고철 ${S.quest.reward}</span> <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></div>`:''}
+        ${S.quest?`<div class="sub">${(G.QKIND[S.quest.kind]||G.QKIND.deliver).ic} ${G.questLabel(S.quest)} → ${D.nodes[S.quest.to].name} <span style="color:var(--amber)">고철 ${S.quest.reward}</span> <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></div>`:''}
         <div class="sub" style="margin-top:6px">길 위에서는 무슨 일이든 일어난다. 발견도, 사람도, 그것의 눈도.</div>`;
       renderTravelbar();
       wireParty(p);
@@ -209,7 +209,7 @@ const UI = (()=>{
     }
     const n=D.nodes[S.at];
     let h=`<h3>${n.name}</h3><div class="sub">${n.desc}</div>${partyStrip()}
-      ${S.quest?`<div class="sub" style="margin:-4px 0 10px">${ICO('quest','📦')} ${S.quest.item} → ${D.nodes[S.quest.to].name} <span style="color:var(--amber)">고철 ${S.quest.reward}</span> <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></div>`:''}<div class="acts">`;
+      ${S.quest?`<div class="sub" style="margin:-4px 0 10px">${(G.QKIND[S.quest.kind]||G.QKIND.deliver).ic} ${G.questLabel(S.quest)} → ${D.nodes[S.quest.to].name} <span style="color:var(--amber)">고철 ${S.quest.reward}</span> <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></div>`:''}<div class="acts">`;
     if(n.stl) h+=`<button class="act primary" data-a="stl"><span class="ic">🏘</span><span><b>정착지에 들어간다</b><small>거래 · 대화 · 소문</small></span></button>`;
     if(!n.stl && n.type!=='goal') h+=`<button class="act" data-a="explore"><span class="ic">🔦</span><span><b>주변을 탐색한다</b><small>약 1~2시간 · 무엇이 나올지 모른다</small></span></button>`;
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
@@ -398,7 +398,7 @@ const UI = (()=>{
   }
 
   /* ── SETTLEMENT ── */
-  let curStl=null, chatNpc=null, stlQuest=null;
+  let curStl=null, chatNpc=null, stlQuests=null;
   function showStl(stlId){
     curStl=stlId;
     const stl=D.stls[stlId];
@@ -436,14 +436,26 @@ const UI = (()=>{
         <span><b>${c.name}</b><small>${c.bio}</small></span>
         <span class="npc-att">동행 가능</span></button>`;
     }
-    // 배달 의뢰
+    // 의뢰 게시판
     if(S.quest){
-      h+=`<div class="dlg"><div class="say"><span class="spk">${ICO('quest','📦')} 의뢰 진행 중</span> ${S.quest.item} → <b>${D.nodes[S.quest.to].name}</b> <small style="color:var(--faded)">(사례 고철 ${S.quest.reward})</small></div></div>`;
+      const q=S.quest, K=G.QKIND[q.kind]||G.QKIND.deliver;
+      if(G.questReady()){
+        h+=`<div class="dlg"><div class="say"><span class="spk">${K.ic} ${K.nm} 의뢰</span> ${G.questLabel(q)} — 준비됐다.</div>
+          <div class="choices"><button class="choice" id="q-turnin">전달한다 <span class="req">고철 +${q.reward}</span></button></div></div>`;
+      } else {
+        const detail = q.kind==='procure'
+          ? `${q.need.name} ${(S.items[q.need.name]||0)}/${q.need.qty} 모음 · <b>${D.nodes[q.to].name}</b>으로`
+          : `${G.questLabel(q)} → <b>${D.nodes[q.to].name}</b>`;
+        h+=`<div class="dlg"><div class="say"><span class="spk">${K.ic} ${K.nm} 진행 중</span> ${detail} <small style="color:var(--faded)">(사례 고철 ${q.reward} · D-${Math.max(0,q.due-S.day)})</small></div></div>`;
+      }
     } else {
-      const q=G.rollQuest();
-      if(q){ stlQuest=q;
-        h+=`<div class="dlg"><div class="say"><span class="spk">${ICO('quest','📦')} 배달 의뢰</span> "${q.item}, ${D.nodes[q.to].name}까지 부탁해도 되겠소? 사례는 고철 ${q.reward}."</div>
-          <div class="choices"><button class="choice" id="q-accept">맡는다 <span class="req">✓ 도착 시 자동 전달</span></button></div></div>`; }
+      const qs=G.rollQuests();
+      if(qs.length){ stlQuests=qs;
+        h+=`<div class="dlg"><div class="say" style="margin-bottom:4px"><span class="spk">📋 게시판</span> <small style="color:var(--faded)">의뢰는 한 번에 하나만</small></div><div class="choices">`;
+        qs.forEach((q,i)=>{ const K=G.QKIND[q.kind];
+          h+=`<button class="choice" data-quest="${i}">${K.ic} <b>${K.nm}</b> — ${G.questDesc(q)} <span class="req">D-${q.due-S.day} · 고철 ${q.reward}</span></button>`; });
+        h+=`</div></div>`;
+      }
     }
     // trade
     h+=`<div class="dlg"><div class="say" style="margin-bottom:4px"><span class="spk">거래</span> <small style="color:var(--faded)">보유 고철 <span id="tr-scrap">${S.scrap}</span></small></div><div id="trade"></div></div>`;
@@ -455,8 +467,9 @@ const UI = (()=>{
     body.innerHTML=h;
     renderTrade();
     renderGarage();
-    const qa=body.querySelector('#q-accept');
-    if(qa) qa.onclick=()=>{ G.acceptQuest(stlQuest); showStl(curStl); };
+    body.querySelectorAll('[data-quest]').forEach(b=>b.onclick=()=>{ G.acceptQuest(stlQuests[+b.dataset.quest]); showStl(curStl); });
+    const qt=body.querySelector('#q-turnin');
+    if(qt) qt.onclick=()=>{ G.checkQuest(); showStl(curStl); };
     body.querySelectorAll('[data-npc]').forEach(b=>b.onclick=()=>talk(b.dataset.npc));
     const rec=body.querySelector('[data-recruit]');
     if(rec) rec.onclick=()=>recruitStl(stl.recruit);
@@ -683,7 +696,7 @@ const UI = (()=>{
       <div class="st-row"><span class="k">${ICO('scrap')}고철</span><span class="v" style="flex:1">${S.scrap}</span></div>
       <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k} ${S.items[k]||0}`).join(' · ')}</span></div>
       ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}
-      ${S.quest?`<div class="st-row"><span class="k">${ICO('quest','📦')}의뢰</span><span class="v" style="flex:1">${S.quest.item} → ${D.nodes[S.quest.to].name} <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></span></div>`:''}</div>`;
+      ${S.quest?`<div class="st-row"><span class="k">${(G.QKIND[S.quest.kind]||G.QKIND.deliver).ic}의뢰</span><span class="v" style="flex:1">${G.questLabel(S.quest)} → ${D.nodes[S.quest.to].name} <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></span></div>`:''}</div>`;
     /* 여정 */
     h+=`<div class="st-sec"><h4>🧭 여정</h4>
       <div class="st-row"><span class="k">날짜 / 주행</span><span class="v" style="flex:1">DAY ${S.day} · ${Math.round(S.stats.km)}km · 서울까지 약 ${G.remainKm()}km</span></div>

@@ -39,6 +39,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   /* v1 → v2 마이그레이션: 유대/퍼크 필드 보강 */
   S._scrapKm = S._scrapKm||0;
   if(S.quest===undefined) S.quest=null;
+  if(S.quest && !S.quest.kind) S.quest.kind='deliver';   // v1.2 세이브 의뢰 → 배달로
+  if(S._qoffer===undefined) S._qoffer=null;
   if(!S.wx) S.wx = (S.driving&&S.driving.wx)||'clear';
   if(!S.wxNext) S.wxNext = G.rollWx(S.wx);
   if(!S.up) S.up={};
@@ -222,10 +224,11 @@ G.dawn = ()=>{
   /* 의뢰 기한 */
   if(S.quest && S.day>S.quest.due){
     const q=S.quest; S.quest=null;
+    const K=G.QKIND[q.kind]||G.QKIND.deliver;
     const fromStl=D.stls[D.nodes[q.from].stl];
-    if(fromStl) fromStl.npcs.forEach(nid=>{ S.npcs[nid].att-=5; });
-    UI.toast(`📦 의뢰 기한 초과 — ${q.item} 배달 실패`);
-    G.addNote({type:'사건', title:'배달 실패: '+q.item,
+    if(fromStl) fromStl.npcs.forEach(nid=>{ S.npcs[nid].att-=(q.kind==='express'?8:5); });
+    UI.toast(`${K.ic} 의뢰 기한 초과 — ${G.questLabel(q)} 실패`);
+    G.addNote({type:'사건', title:K.nm+' 실패: '+G.questLabel(q),
       body:`기한(${q.due}일차)을 넘겼다. ${D.nodes[q.from].name} 사람들 볼 낯이 없다.`, links:[]});
   }
   if(S.thirst>=3){ G.endGame('thirst'); return; }
@@ -656,33 +659,79 @@ G.craft = (id)=>{
   G.save(); return true;
 };
 
-/* ── 배달 의뢰 ── */
-G.rollQuest = ()=>{
-  if(S.quest||!S.at) return null;
+/* ── 의뢰 (배달/특송/조달/편지) ── */
+G.QKIND = {
+  deliver:{ic:'📦', nm:'배달'},
+  express:{ic:'⚡', nm:'특송'},
+  procure:{ic:'🧰', nm:'조달'},
+  letter :{ic:'✉️', nm:'편지'},
+};
+D.expressItems = ['백신 아이스박스','수술 도구 소독 세트','혼례 떡','부고 답장','제사 신위','접골 부목'];
+G.questLabel = (q)=> q.kind==='procure' ? `${q.need.name} ${q.need.qty}개 조달`
+  : q.kind==='letter' ? `${D.npcs[q.npc].name}에게 편지` : q.item;
+G.questDesc = (q)=>{
+  const to=D.nodes[q.to].name;
+  if(q.kind==='deliver') return `"${q.item}, ${to}까지 부탁해도 되겠소? 사례는 고철 ${q.reward}."`;
+  if(q.kind==='express') return `"급합니다. ${q.item} — ${to}까지 이틀 안에. 사례는 고철 ${q.reward}. 서둘러 주시오."`;
+  if(q.kind==='procure') return `"${q.need.name} ${q.need.qty}개를 구해다 주시오. 여기로 다시 오면 되오. 사례는 고철 ${q.reward}."`;
+  if(q.kind==='letter')  return `"${to}의 ${D.npcs[q.npc].name}에게 편지 한 통만. 사례는 약소하오만… 꼭 좀 전해주시오."`;
+  return '';
+};
+G.rollQuests = ()=>{
+  if(S.quest||!S.at||!D.nodes[S.at].stl) return [];
+  /* 같은 날 같은 정착지에선 같은 게시판 (리롤 방지) */
+  if(S._qoffer && S._qoffer.at===S.at && S._qoffer.day===S.day) return S._qoffer.offers;
   const from=S.at;
   const tos=Object.keys(D.nodes).filter(id=>D.nodes[id].stl && id!==from);
-  if(!tos.length) return null;
-  return {item:pick(D.questItems), from, to:pick(tos), reward:10+Math.floor(rng()*9), due:S.day+4};
+  if(!tos.length) return [];
+  const mk={
+    deliver:()=>({kind:'deliver', item:pick(D.questItems), from, to:pick(tos),
+      reward:10+Math.floor(rng()*9), due:S.day+4}),
+    express:()=>({kind:'express', item:pick(D.expressItems), from, to:pick(tos),
+      reward:18+Math.floor(rng()*9), due:S.day+2}),
+    procure:()=>({kind:'procure', need:{name:pick(['부품','의약품']), qty:2}, from, to:from,
+      reward:14+Math.floor(rng()*7), due:S.day+6}),
+    letter:()=>{ const to=pick(tos); const stl=D.stls[D.nodes[to].stl];
+      return {kind:'letter', npc:pick(stl.npcs), from, to,
+        reward:5+Math.floor(rng()*4), due:S.day+5}; },
+  };
+  const kinds=Object.keys(mk).sort(()=>rng()-0.5).slice(0,2);
+  const offers=kinds.map(k=>mk[k]());
+  S._qoffer={at:from, day:S.day, offers};
+  return offers;
 };
 G.acceptQuest = (q)=>{
-  S.quest=q;
-  G.addNote({type:'소문', title:'의뢰: '+q.item,
-    body:`${D.nodes[q.from].name}에서 맡은 짐. ${D.nodes[q.to].name}까지. 사례는 고철 ${q.reward}.`,
+  S.quest=q; S._qoffer=null;
+  const K=G.QKIND[q.kind];
+  G.addNote({type:'소문', title:'의뢰: '+G.questLabel(q),
+    body:`${D.nodes[q.from].name}에서 맡은 ${K.nm} 의뢰. ${q.kind==='procure'?'구해서 돌아올 것':D.nodes[q.to].name+'까지'}. 사례는 고철 ${q.reward}. 기한 ${q.due}일차.`,
     links:[D.nodes[q.to].name]});
-  UI.toast('📦 의뢰를 실었다 — '+D.nodes[q.to].name.split(' ')[0]+'까지');
+  UI.toast(`${K.ic} 의뢰를 받았다 — ${G.questLabel(q)}`);
   G.save();
 };
+G.questReady = ()=>{ /* 완료 조건 충족? (조달은 물량 체크) */
+  const q=S.quest;
+  if(!q || q.to!==S.at) return false;
+  if(q.kind==='procure') return (S.items[q.need.name]||0) >= q.need.qty;
+  return true;
+};
 G.checkQuest = ()=>{
-  if(!S.quest || S.quest.to!==S.at) return false;
+  if(!G.questReady()) return false;
   const q=S.quest; S.quest=null;
+  const K=G.QKIND[q.kind]||G.QKIND.deliver;
+  if(q.kind==='procure') S.items[q.need.name]-=q.need.qty;
   const early = S.day<=q.due-2;
-  S.scrap += q.reward + (early?4:0);
-  if(early) UI.toast('⚡ 빠른 배달 보너스 — 고철 +4');
+  const bonus = early ? (q.kind==='express'?6:4) : 0;
+  S.scrap += q.reward + bonus;
+  if(bonus) UI.toast(`⚡ 빠른 처리 보너스 — 고철 +${bonus}`);
   const stl=D.stls[D.nodes[S.at].stl];
-  if(stl) stl.npcs.forEach(nid=>{ S.npcs[nid].att+=6; });
-  G.addNote({type:'사건', title:'배달 완료: '+q.item,
-    body:`${D.nodes[q.from].name} → ${D.nodes[q.to].name}. 사례 고철 ${q.reward}. 받은 이의 얼굴이 밝아졌다.`, links:[]});
-  UI.toast(`📦 ${q.item} 전달 완료 — 고철 +${q.reward}`);
+  if(stl) stl.npcs.forEach(nid=>{ S.npcs[nid].att += (q.kind==='express'?9:6); });
+  if(q.kind==='letter'){ S.npcs[q.npc].att+=12; S.npcs[q.npc].met=true; }
+  G.addNote({type:'사건', title:K.nm+' 완료: '+G.questLabel(q),
+    body: q.kind==='letter'
+      ? `${D.npcs[q.npc].name}이(가) 편지를 두 번 읽었다. 답장은 없었다. 눈가가 대신 답했다.`
+      : `${D.nodes[q.from].name} → ${D.nodes[q.to].name}. 사례 고철 ${q.reward}. 받은 이의 얼굴이 밝아졌다.`, links:[]});
+  UI.toast(`${K.ic} ${G.questLabel(q)} 완료 — 고철 +${q.reward}`);
   G.save(); return true;
 };
 
