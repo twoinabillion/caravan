@@ -28,7 +28,7 @@ instrumental, no vocals, seamless loop (no intro build-up, no fade-out ending)
 ## 트랙리스트 (핵심 7)
 
 ### 1. `title` — 타이틀 화면
-달빛 아래 멈춰 선 밴. 여행 전의 고요.
+달빛 아래 멈춰 선 봉고차. 여행 전의 고요.
 ```
 [공통] + slow tempo 68bpm, solo felt piano with distant synth pad,
 sparse and spacious like an empty highway at night under the moon,
