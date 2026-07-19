@@ -4655,21 +4655,32 @@ const MAPR = (()=>{
     ctx.fillText('서', px(178), py(300)); ctx.fillText('해', px(178), py(300)+16);
     ctx.fillText('남   해', px(340), py(700));
 
+    /* 인접 노드 (지금 갈 수 있는 곳) */
+    const nbrs=new Set();
+    if(S && !S.driving && S.at){
+      for(const e of D.edges){
+        if(e[0]===S.at && S.known.includes(e[1])) nbrs.add(e[1]);
+        if(e[1]===S.at && S.known.includes(e[0])) nbrs.add(e[0]);
+      }
+    }
+
     /* 도로 (edges) */
     for(const e of D.edges){
       const known = S && S.known.includes(e[0]) && S.known.includes(e[1]);
       if(!known) continue;
       const a=D.nodes[e[0]], b=D.nodes[e[1]];
       const cur = S.driving && ((S.driving.from===e[0]&&S.driving.to===e[1])||(S.driving.from===e[1]&&S.driving.to===e[0]));
+      const next = !S.driving && (e[0]===S.at||e[1]===S.at) && (nbrs.has(e[0])||nbrs.has(e[1]));
       ctx.beginPath(); ctx.moveTo(px(a.x),py(a.y)); ctx.lineTo(px(b.x),py(b.y));
       ctx.setLineDash(e[3]==='rough'?[4,5]: e[3]==='normal'?[8,4]:[]);
       ctx.strokeStyle= cur? 'rgba(255,180,84,0.9)':
+        next? 'rgba(255,180,84,0.5)':
         (S&&S.visited.includes(e[0])&&S.visited.includes(e[1]))? 'rgba(180,190,220,0.4)':'rgba(120,135,180,0.3)';
-      ctx.lineWidth=cur?2.4:1.6;
+      ctx.lineWidth=cur?2.4: next?2:1.6;
       ctx.stroke(); ctx.setLineDash([]);
     }
 
-    /* 노드 */
+    /* 노드 — 1패스: 심볼 */
     if(S) for(const id of S.known){
       const n=D.nodes[id]; const x=px(n.x), y=py(n.y);
       const visited=S.visited.includes(id);
@@ -4694,19 +4705,67 @@ const MAPR = (()=>{
         ctx.fillStyle= visited? '#9aa5c4':'#5a6484';
         ctx.beginPath(); ctx.arc(x,y,3.6,0,7); ctx.fill();
       }
+      /* 인접(이동 가능) 링 */
+      if(nbrs.has(id)){
+        ctx.strokeStyle=`rgba(255,180,84,${0.35+0.25*Math.sin(t*2.6)})`; ctx.lineWidth=1.3;
+        ctx.beginPath(); ctx.arc(x,y,7.5,0,7); ctx.stroke();
+      }
       if(here){ ctx.strokeStyle='rgba(255,180,84,0.8)'; ctx.lineWidth=1.6;
         ctx.beginPath(); ctx.arc(x,y,9+Math.sin(t*3)*1.6,0,7); ctx.stroke(); }
-      /* 라벨 — 정착지·목적지·방문지·발견한 히든만 (겹침 방지) */
-      const showLabel = n.stl || n.type==='goal' || visited || n.type==='hidden';
-      if(showLabel){
-        ctx.font=`${n.stl||n.type==='goal'?'700 ':''}10px ${'sans-serif'}`;
-        ctx.fillStyle= n.type==='goal'? 'rgba(85,224,200,0.95)':
+    }
+
+    /* 노드 — 2패스: 라벨 (우선순위순, 겹치면 아래로, 그래도 겹치면 생략) */
+    if(S){
+      const placed=[];
+      const putLabel=(x,y,txt,font,fill)=>{
+        ctx.font=font;
+        const w=ctx.measureText(txt).width+4;
+        for(const dy of [-9,15]){
+          const bx={x0:x-w/2, x1:x+w/2, y0:y+dy-9, y1:y+dy+3};
+          if(bx.y0<26) continue;   // 상단 헤더 침범 방지
+          if(placed.some(p=>p.x0<bx.x1&&bx.x0<p.x1&&p.y0<bx.y1&&bx.y0<p.y1)) continue;
+          placed.push(bx);
+          ctx.fillStyle=fill; ctx.textAlign='center';
+          ctx.fillText(txt, x, y+dy);
+          ctx.textAlign='left';
+          return true;
+        }
+        return false;
+      };
+      const prio=(id)=>{ const n=D.nodes[id];
+        if(S.at===id) return 0;
+        if(n.type==='goal') return 1;
+        if(n.stl) return 2;
+        if(nbrs.has(id)) return 3;
+        if(n.type==='hidden') return 4;
+        if(S.visited.includes(id)) return 5;
+        return 6; };
+      const order=[...S.known].sort((a,b)=>prio(a)-prio(b));
+      for(const id of order){
+        const n=D.nodes[id]; const x=px(n.x), y=py(n.y);
+        const p=prio(id);
+        if(p===6 && tf.s<0.9) continue;             // 미방문 일반 노드는 작은 화면에선 점만
+        const bold = p<=2;
+        const font=`${bold?'700 ':''}${p<=3?10:9.5}px sans-serif`;
+        const fill= n.type==='goal'? 'rgba(85,224,200,0.95)':
+          S.at===id? 'rgba(255,200,120,0.98)':
           n.stl? 'rgba(240,225,195,0.95)':
-          n.type==='hidden'? 'rgba(201,184,255,0.8)': 'rgba(160,170,200,0.75)';
-        ctx.textAlign='center';
-        ctx.fillText(n.name.split(' ')[0], x, y-9);
-        ctx.textAlign='left';
+          nbrs.has(id)? 'rgba(255,190,110,0.9)':
+          n.type==='hidden'? 'rgba(201,184,255,0.8)': 'rgba(160,170,200,0.7)';
+        putLabel(x,y,n.name.split(' ')[0],font,fill);
       }
+    }
+
+    /* 의뢰 목적지 마커 */
+    if(S && S.quest && S.known.includes(S.quest.to)){
+      const q=S.quest, n=D.nodes[q.to], x=px(n.x), y=py(n.y);
+      const pulse=0.5+0.5*Math.sin(t*2.8);
+      ctx.strokeStyle=`rgba(255,180,84,${0.35+0.4*pulse})`;
+      ctx.setLineDash([3,3]); ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(x,y,11+pulse*2,0,7); ctx.stroke(); ctx.setLineDash([]);
+      ctx.font='10px sans-serif'; ctx.textAlign='center';
+      ctx.fillText((G.QKIND[q.kind]||G.QKIND.deliver).ic, x+13, y-8);
+      ctx.textAlign='left';
     }
 
     /* 밴 위치 */
@@ -4720,7 +4779,8 @@ const MAPR = (()=>{
     }
     /* 범례 */
     ctx.font='9px monospace'; ctx.fillStyle='rgba(140,150,180,0.55)';
-    ctx.fillText('◆ 정착지   ● 폐허   ◌? 미확인   ─ 고속 · ╌ 국도 · ┄ 험로', 12, H-10);
+    ctx.fillText('◆ 정착지  ● 폐허  ◌? 미확인  ⊙ 지금 갈 수 있는 곳', 12, H-22);
+    ctx.fillText('─ 고속 · ╌ 국도 · ┄ 험로   (노드를 누르면 상세)', 12, H-10);
   }
 
   function onClick(ev){
