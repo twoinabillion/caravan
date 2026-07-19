@@ -178,7 +178,7 @@ const MAPR = (()=>{
       ctx.textAlign='left';
     }
 
-    /* 밴 위치 */
+    /* 차 위치 */
     const vp=vanPos();
     if(vp){ const x=px(vp[0]), y=py(vp[1]);
       ctx.fillStyle='#ffb454';
@@ -190,7 +190,7 @@ const MAPR = (()=>{
     /* 범례 */
     ctx.font='9px monospace'; ctx.fillStyle='rgba(140,150,180,0.55)';
     ctx.fillText('◆ 정착지  ● 폐허  ◌? 미확인  ⊙ 지금 갈 수 있는 곳', 12, H-22);
-    ctx.fillText('─ 고속 · ╌ 국도 · ┄ 험로   (노드를 누르면 상세)', 12, H-10);
+    ctx.fillText('─ 고속 · ╌ 국도 · ┄ 험로   (지명을 누르면 상세)', 12, H-10);
   }
 
   function onClick(ev){
@@ -245,7 +245,7 @@ const MAPR = (()=>{
       mctx.beginPath(); mctx.moveTo(mpx(a.x),mpy(a.y)); mctx.lineTo(mpx(b.x),mpy(b.y)); mctx.stroke();
       mctx.setLineDash([]);
     }
-    /* 밴 위치 */
+    /* 차 위치 */
     const vp = S.driving
       ? [D.nodes[S.driving.from].x+(D.nodes[S.driving.to].x-D.nodes[S.driving.from].x)*(S.driving.gone/S.driving.dist),
          D.nodes[S.driving.from].y+(D.nodes[S.driving.to].y-D.nodes[S.driving.from].y)*(S.driving.gone/S.driving.dist)]

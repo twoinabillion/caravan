@@ -498,7 +498,7 @@ const UI = (()=>{
     // garage
     h+=`<div class="dlg"><div class="say" style="margin-bottom:4px"><span class="spk">🔧 정비소</span> <small style="color:var(--faded)">부품 ${S.items['부품']||0} · 달구지 개조</small></div><div id="garage"></div></div>`;
     h+=`<div class="acts">
-      <button class="act" id="stl-rest"><span class="ic">🛏</span><span><b>하룻밤 묵는다</b><small>아침까지 · 사기 회복 · 밴 정비</small></span></button>
+      <button class="act" id="stl-rest"><span class="ic">🛏</span><span><b>하룻밤 묵는다</b><small>아침까지 · 사기 회복 · 차 정비</small></span></button>
       <button class="act primary" id="stl-out"><span class="ic">🚐</span><span><b>달구지로 돌아간다</b></span></button></div>`;
     body.innerHTML=h;
     renderTrade();
@@ -586,7 +586,7 @@ const UI = (()=>{
     const body=$('#stl-body');
     const c=D.comps[id];
     const full=S.party.length>=G.maxParty();
-    const dlg=el('div','dlg',`<div class="say"><span class="spk">${c.name}</span> "…북쪽으로 가는 밴이 있다고 들었다. ${id==='kangwoo'?'서울까지 가나. …태워라. 밥값은 한다.':''}"</div>
+    const dlg=el('div','dlg',`<div class="say"><span class="spk">${c.name}</span> "…북쪽으로 가는 차가 있다고 들었다. ${id==='kangwoo'?'서울까지 가나. …태워라. 밥값은 한다.':''}"</div>
       <div class="choices">
         <button class="choice" data-r="y" ${full?'disabled':''}>태운다 <span class="req">${full?'✗ 자리가 없다':'✓ '+c.perk}</span></button>
         <button class="choice" data-r="n">지금은 어렵다</button></div>`);
@@ -632,7 +632,7 @@ const UI = (()=>{
           '"요즘 북쪽 하늘에 뭐가 자주 떠. 새는 아니야. 새는 저렇게 안 날지."',
           '"장사꾼 만수? 걔는 안 죽어. 멸망이 두 번 와도 뽕짝 틀고 다닐 걸."',
           '"정리자들 조심해. 나쁜 사람들은 아닌데… 사람이 아닌 것 같을 때가 있어."',
-          '"밴 관리 잘해. 요즘 부품 구하기가 하늘의 별 따기야."',
+          '"차 관리 잘해. 요즘 부품 구하기가 하늘의 별 따기야."',
           '"서울? …거기 얘기는 밥 먹고 하자. 체해."',
         ];
         dlg.querySelector('.say').innerHTML=`<span class="spk">${npc.name}</span> ${pick(lines)}`;
@@ -747,7 +747,7 @@ const UI = (()=>{
       const state= st.perks.includes(p3.id)? 'done': G.hasComp(id)? 'lv'+st.lvl : 'no';
       return {id,c,st,p3,state};
     });
-    h+=`<div class="st-sec"><h4>★ 이야기 (밴에 실린 것들)</h4>`+
+    h+=`<div class="st-sec"><h4>★ 이야기 (차에 실린 것들)</h4>`+
       stories.map(s=>`<div class="st-row" data-comp2="${s.id}" style="cursor:pointer">
         <span class="k">${s.c.face} ${s.c.name}</span>
         <span class="v" style="flex:1;color:${s.state==='done'?'var(--cheollian)':s.state==='no'?'var(--dim)':'inherit'}">
@@ -810,7 +810,7 @@ const UI = (()=>{
     if(kind==='thirst'){
       kicker='GAME OVER'; kcolor='var(--danger)';
       title='물이 먼저 끝났다';
-      body=`사흘째 되는 날, 더는 운전대를 잡을 힘이 없었다.\n\n달구지는 길가에 얌전히 서 있다. 언젠가 다른 여행자가 이 밴을 발견하고, 조수석의 일지를 읽게 될지도 모른다.\n\n일지의 마지막 장에는 이렇게 적혀 있다.\n\n"물을 아껴라. 사람은 아끼지 말고."`;
+      body=`사흘째 되는 날, 더는 운전대를 잡을 힘이 없었다.\n\n달구지는 길가에 얌전히 서 있다. 언젠가 다른 여행자가 이 차를 발견하고, 조수석의 일지를 읽게 될지도 모른다.\n\n일지의 마지막 장에는 이렇게 적혀 있다.\n\n"물을 아껴라. 사람은 아끼지 말고."`;
     } else {
       kicker='GAME OVER'; kcolor='var(--danger)';
       title='여행이 끝났다'; body='달구지는 더 이상 달리지 못한다.';

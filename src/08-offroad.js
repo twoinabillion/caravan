@@ -67,7 +67,7 @@ const OFF = (()=>{
     return `[현재 상태]
 DAY ${S.day}, ${G.fmtClock().split('·')[1]}, ${G.isNight()?'밤':'낮'}, 날씨 ${G.wxName(S.wx)}(내일 ${G.wxName(S.wxNext)})
 위치: ${loc} (권역: ${G.regionOf()==='south'?'남부(안전)':G.regionOf()==='mid'?'중부':'북부(천리안 영향권)'})
-자원: 연료${Math.round(S.fuel)}L 물${S.water} 식량${S.food} 고철${S.scrap} 밴${Math.round(S.van)}%
+자원: 연료${Math.round(S.fuel)}L 물${S.water} 식량${S.food} 고철${S.scrap} 차체\${Math.round(S.van)}%
 동행: ${party}${S.dog?' + 개 보리':''}
 천리안 관측 수준: ${S.pursuit}/5
 [최근 일지]
@@ -140,7 +140,7 @@ ${notes}`;
   async function prefetchBanter(){
     if(!ready()||banterBusy||banterQ.length>=3||!S.party.length) return;
     banterBusy=true;
-    const sys=D.worldBible+`\n[임무] 이동 중인 밴 안의 짧은 잡담/정경 3개를 생성. who는 ${['나','sys',...S.party].join('/')} 중 하나 (sys=정경묘사). text는 1문장, 캐릭터 말투 유지. 최근 일지의 사건을 자연스럽게 언급해도 좋다.`;
+    const sys=D.worldBible+`\n[임무] 이동 중인 봉고차 안의 짧은 잡담/정경 3개를 생성. who는 ${['나','sys',...S.party].join('/')} 중 하나 (sys=정경묘사). text는 1문장, 캐릭터 말투 유지. 최근 일지의 사건을 자연스럽게 언급해도 좋다.`;
     const j=await call(sys, ctx()+'\n\n잡담 3개.', BT_SCHEMA, 500, 'low');
     banterBusy=false;
     if(j&&j.lines) j.lines.slice(0,3).forEach(l=>{

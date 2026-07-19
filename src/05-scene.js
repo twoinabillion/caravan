@@ -401,7 +401,7 @@ const SCENE = (()=>{
     return roadY;
   }
 
-  /* ── 밴 (달구지) ── */
+  /* ── 차 (달구지) ── */
   function van(roadY,speed,dark,wx){
     const up=S? (S.up||{}):{};
     const vx=P(W*0.22), baseY=roadY+P((H-roadY)*0.42);
@@ -755,7 +755,7 @@ const SCENE = (()=>{
     c.fillStyle='#0e1118'; c.fillRect(0,P(h*0.75),w,h);
     c.fillStyle='rgba(222,206,140,0.35)';
     for(let x=0;x<w;x+=22) c.fillRect(P(x-(tt*18%22)),P(h*0.71),12,1);
-    /* 밴 (크게) */
+    /* 차 (크게) */
     const vx=w*0.3, vy=P(h*0.66), BL=76,BH=30,CL=20;
     c.fillStyle='rgba(0,0,0,0.55)'; c.beginPath(); c.ellipse(vx+BL*0.6,vy+10,BL*0.62,3,0,0,7); c.fill();
     c.fillStyle='#8d8474'; c.fillRect(P(vx),vy-BH,BL,BH-8);
