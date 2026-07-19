@@ -343,4 +343,9 @@ input{font-family:inherit}
 .toast.show{opacity:1;transform:none}
 .toast .ic{color:var(--amber);margin-right:5px}
 .toast.discover{border-color:var(--amber-dim);color:var(--amber)}
+#bt-song{position:absolute;right:14px;bottom:12px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.05em;color:var(--faded);background:none;border:1px solid var(--line);
+  border-radius:20px;padding:4px 12px;cursor:pointer;transition:color .3s,border-color .3s}
+#bt-song.playing{color:var(--amber);border-color:var(--amber-dim);animation:songpulse 2.2s ease-in-out infinite}
+@keyframes songpulse{50%{opacity:.55}}
 </style>

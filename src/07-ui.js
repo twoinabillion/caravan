@@ -75,6 +75,8 @@ const UI = (()=>{
   /* ── wiring ── */
   function wire(){
     $('#bt-new').onclick=()=>{ show('scr-mode'); envCheckUI(); };
+    const bs=$('#bt-song');
+    if(bs){ if(!(D.bgm&&D.bgm.song)) bs.style.display='none'; else bs.onclick=()=>BGM.toggleSong(); }
     $('#bt-continue').onclick=()=>{ if(G.load()){ enterGame(); } };
     $('#bt-modeback').onclick=()=>show('scr-title');
     $('#mode-on').onclick=()=>startNew('onroad');
@@ -295,6 +297,7 @@ const UI = (()=>{
   function showEvent(evd){
     curEv=evd;
     bgmEvKey = (evd.type==='추적'||evd.type==='위기'||evd.ai)?'tension': evd.type==='스토리'?'story':null;
+    if(evd.id==='leo_broadcast') BGM.playSongOnce();   // 400km 송출 — 노래가 울려 퍼지는 그 장면
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
     const aiEvent = evd.type==='추적'||!!evd.ai;
@@ -880,6 +883,24 @@ const BGM = (()=>{
     if(!on){ for(const k in players){ const a=players[k]; if(a){ fadeTo(a,0,()=>a.pause()); } } }
     else { const k=cur; cur=null; set(k||'title'); }
   }
-  function tick(desired){ if(desired) set(desired); }
-  return {tick, setOn};
+  function tick(desired){ if(song&&!song.paused) return; if(desired) set(desired); }
+  /* ── 노래 (부서진 고속도로) — BGM과 별개, 명시 재생 ── */
+  let song=null;
+  function ensureSong(){
+    if(song!==undefined&&song) return song;
+    if(!D.bgm||!D.bgm.song) return null;
+    song=new Audio(D.bgm.song); song.volume=0.6;
+    song.onended=()=>{ songUi(false); const k=cur; cur=null; if(on) set(k); };
+    return song;
+  }
+  function songUi(playing){ const b=$('#bt-song'); if(b) b.classList.toggle('playing',playing); }
+  function toggleSong(){
+    const s=ensureSong(); if(!s) return;
+    if(!s.paused){ s.pause(); s.currentTime=0; songUi(false); const k=cur; cur=null; if(on) set(k); return; }
+    /* 배경 BGM 잠시 내림 */
+    const bg=players[cur]; if(bg) fadeTo(bg,0,()=>bg.pause());
+    s.currentTime=0; s.play().catch(()=>{}); songUi(true);
+  }
+  function playSongOnce(){ const s=ensureSong(); if(s&&s.paused) toggleSong(); }
+  return {tick, setOn, toggleSong, playSongOnce};
 })();

@@ -11,6 +11,7 @@ PARTS=(
   src/03-data.js
   src/03b-portraits.js
   src/03c-icons.js
+  src/03d-bgm.js
   src/04-engine.js
   src/05-scene.js
   src/06-mapgraph.js
