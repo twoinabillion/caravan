@@ -452,8 +452,8 @@ const UI = (()=>{
       const qs=G.rollQuests();
       if(qs.length){ stlQuests=qs;
         h+=`<div class="dlg"><div class="say" style="margin-bottom:4px"><span class="spk">📋 게시판</span> <small style="color:var(--faded)">의뢰는 한 번에 하나만</small></div><div class="choices">`;
-        qs.forEach((q,i)=>{ const K=G.QKIND[q.kind];
-          h+=`<button class="choice" data-quest="${i}">${K.ic} <b>${K.nm}</b> — ${G.questDesc(q)} <span class="req">D-${q.due-S.day} · 고철 ${q.reward}</span></button>`; });
+        qs.forEach((q,i)=>{ const K=G.QKIND[q.kind]; const dd=q.due-S.day;
+          h+=`<button class="choice" data-quest="${i}">${K.ic} <b>${K.nm}</b> — ${G.questDesc(q)} <span class="req"><span style="color:${dd<=2?'var(--amber)':'inherit'}">D-${dd}</span> · 고철 ${q.reward}</span></button>`; });
         h+=`</div></div>`;
       }
     }
@@ -723,14 +723,22 @@ const UI = (()=>{
   }
 
   /* ── JOURNAL ── */
+  let jFilter='전체';
   function renderJournal(){
     $('#j-mini').textContent=`${S.notes.length}개의 기록`;
     const log=$('#jp-log');
     if(!S.notes.length){ log.innerHTML='<div class="sub">아직 기록이 없다.</div>'; return; }
-    log.innerHTML=[...S.notes].reverse().map(n=>`
+    const types=['전체','인물','장소','사건','소문'];
+    const cnt=(t)=> t==='전체'? S.notes.length : S.notes.filter(n=>n.type===t).length;
+    const chips=`<div class="jchips">${types.map(t=>
+      `<button class="jchip${jFilter===t?' here':''}" data-jf="${t}">${t} <small>${cnt(t)}</small></button>`).join('')}</div>`;
+    const shown=[...S.notes].reverse().filter(n=>jFilter==='전체'||n.type===jFilter);
+    log.innerHTML=chips+(shown.length? shown.map(n=>`
       <div class="note"><div class="nh"><span class="nt ${n.type}">${n.type}</span><b>${n.title}</b><span class="nd">DAY ${n.day}</span></div>
       <p>${fmt(n.body)}</p>
-      ${n.links.length?`<div class="links">${n.links.map(l=>`<span class="lk">[[${l}]]</span>`).join('')}</div>`:''}</div>`).join('');
+      ${n.links.length?`<div class="links">${n.links.map(l=>`<span class="lk">[[${l}]]</span>`).join('')}</div>`:''}</div>`).join('')
+      : '<div class="sub">이 종류의 기록은 아직 없다.</div>');
+    log.querySelectorAll('[data-jf]').forEach(b=>b.onclick=()=>{ jFilter=b.dataset.jf; renderJournal(); });
   }
   function showGraphNote(note){
     const g=$('#gnote');
