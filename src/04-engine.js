@@ -200,7 +200,9 @@ G.lunch = ()=>{
   const need = Math.ceil(G.partySize()/2);
   const fOk = S.food>=need, wOk = S.water>=need;
   S.food=Math.max(0,S.food-need); S.water=Math.max(0,S.water-need);
-  if(fOk&&wOk) UI.toast(`🍚 점심 — 식량·물 -${need}`);
+  if(fOk&&wOk){ UI.toast(`🍚 점심 — 식량·물 -${need}`);
+    if(typeof SCENE!=='undefined') SCENE.showMeal(16);
+    if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
   else { G.moodAll(-4); S.fatigue=clamp(S.fatigue+8,0,100);
     UI.toast('🍚 점심을 걸렀다 — 사기·체력이 떨어진다'); }
   G.save();
@@ -216,7 +218,9 @@ G.dawn = ()=>{
   // 아침 배급: 1 water + 1 food per person
   if(S.water>=n){ S.water-=n; S.thirst=0; } else { S.water=0; S.thirst++; G.moodAll(-8); S.fatigue=clamp(S.fatigue+15,0,100); UI.toast('💧 물이 부족하다…'); }
   if(S.food>=n){ S.food-=n; S.hunger=0; } else { S.food=0; S.hunger++; G.moodAll(-6); S.fatigue=clamp(S.fatigue+15,0,100); }
-  if(S.water>0||S.food>0) UI.toast(`🍙 아침 배급 — 물·식량 -${n}`);
+  if(S.water>0||S.food>0){ UI.toast(`🍙 아침 배급 — 물·식량 -${n}`);
+    if(typeof SCENE!=='undefined') SCENE.showMeal(16);
+    if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
   if(G.hasComp('leo')) G.moodAll(3); // 레오의 아침 기타
   if(S.up&&S.up.garden){ S.food+=1; }
   if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }

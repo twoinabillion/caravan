@@ -2,6 +2,7 @@
    저해상도(236px) 오프스크린에 그린 뒤 픽셀 업스케일로 블릿한다. */
 const SCENE = (()=>{
   const LW = 236;                     // 논리 해상도(픽셀아트 폭)
+  let mealT = 0;                      // 식사 연출 남은 시간(초)
   let LH = 128;
   let dcv, dctx, VW=560, VH=300, DPR=1;   // 표시 캔버스
   let off, ctx, W=LW, H=LH;               // 픽셀 캔버스 (모든 드로잉)
@@ -508,13 +509,53 @@ const SCENE = (()=>{
     line(vx+24,winY,vx+24,winY+winH); line(vx+41,winY,vx+41,winY+winH);
     if(up.cabin) line(vx+58,winY,vx+58,winY+winH);
     /* 탑승자 (나 + 동료) */
-    const riders=S? [['#2c3346'],...S.party.map(id=>[D.comps[id].color])]:[['#2c3346']];
+    const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
+    const riders=S? [['#2c3346'],...S.party.filter(id=>!outside.includes(id)).map(id=>[D.comps[id].color])]:[['#2c3346']];
     riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
       const hx=P(vx+bodyL-14-i*13), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
       ctx.fillStyle='#171a24'; ctx.fillRect(hx-2,hy-3,5,4);          // 몸/얼굴 실루엣
       ctx.fillStyle=r[0]; ctx.fillRect(hx-2,hy-5,5,2);               // 머리색
       ctx.fillRect(hx-3,hy-4,1,2); ctx.fillRect(hx+3,hy-4,1,2);
     });
+    /* 식사 연출: 창문 안 먹는 모션 + 김 (아침 배급·점심 후 16초) */
+    if(mealT>0){
+      riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
+        const hx=P(vx+bodyL-14-i*13), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
+        const toMouth = Math.sin(t*4.5+i*1.7)>0;                 // 손이 입으로 갔다 내려갔다
+        ctx.fillStyle='#e8d9a8';                                  // 주먹밥
+        ctx.fillRect(hx+(toMouth?0:1), hy-(toMouth?3:1), 2,1);
+      });
+      /* 김 — 창문 위로 몽글몽글 */
+      for(let k=0;k<3;k++){
+        const sx=vx+14+k*16, rise=((t*6+k*4)%7);
+        ctx.fillStyle=`rgba(240,240,235,${0.35*(1-rise/7)})`;
+        ctx.fillRect(P(sx+Math.sin(t*3+k)*1.2), P(winY-1-rise), 1,1);
+      }
+    }
+    /* 정차 중 식사: 밴 옆에 서서 먹는 실루엣 */
+    if(mealT>0 && speed<=0 && S){
+      const eaters=S.party.slice(0,2);
+      eaters.forEach((id,i)=>{
+        const fx=P(vx-9-i*9), fy=P(baseY+6);                     // 지면
+        const bob=Math.sin(t*4+i*2)>0?1:0;
+        ctx.fillStyle='rgba(0,0,0,0.4)';
+        ctx.beginPath(); ctx.ellipse(fx+2,fy+1,3,1,0,0,7); ctx.fill();
+        ctx.fillStyle='#171a24'; ctx.fillRect(fx,fy-7,4,7);       // 몸
+        ctx.fillStyle=D.comps[id].color; ctx.fillRect(fx,fy-9,4,2); // 머리
+        ctx.fillStyle='#d8c894'; ctx.fillRect(fx+4,fy-5-bob,2,1);  // 그릇 든 손
+        const rise=((t*5+i*3)%5);
+        ctx.fillStyle=`rgba(240,240,235,${0.4*(1-rise/5)})`;      // 그릇 김
+        ctx.fillRect(P(fx+4+Math.sin(t*4+i)*0.8), P(fy-7-rise-bob), 1,1);
+      });
+      /* 혼자면 나라도: 운전자 자리 비우고 밴 옆에서 */
+      if(!eaters.length){
+        const fx=P(vx-9), fy=P(baseY+6);
+        const bob=Math.sin(t*4)>0?1:0;
+        ctx.fillStyle='#171a24'; ctx.fillRect(fx,fy-7,4,7);
+        ctx.fillStyle='#2c3346'; ctx.fillRect(fx,fy-9,4,2);
+        ctx.fillStyle='#d8c894'; ctx.fillRect(fx+4,fy-5-bob,2,1);
+      }
+    }
     /* 보리: 가끔 창밖으로 고개 내밀기 */
     if(S&&S.dog){
       const out=speed>0&&Math.sin(t*0.5)>0.2;
@@ -658,6 +699,7 @@ const SCENE = (()=>{
   /* ── 메인 draw ── */
   function draw(dt){
     if(!ctx) return; t+=dt;
+    mealT=Math.max(0,mealT-dt);
     signTexts=[];
     const hour=S? S.min/60:21.2;
     const dark=darknessAt(hour);
@@ -799,5 +841,5 @@ const SCENE = (()=>{
     tdctx.drawImage(toff,0,0,TW,TH,0,0,vw,vh);
   }
 
-  return {init,initTitle,draw,drawTitle};
+  return {init,initTitle,draw,drawTitle, showMeal:(sec)=>{mealT=sec;}};
 })();
