@@ -342,7 +342,9 @@ G.tick = (dt)=>{ // dt: real seconds
   }
   // banter
   banterCd -= dt;
-  if(banterCd<=0){ banterCd = 11+R(9); const b = G.pickBanter(); if(b) UI.speak(b); }
+  if(banterCd<=0){ banterCd = 11+R(9);
+    if(rng()<0.22){ const c=G.pickChat(); if(c){ UI.playChat(c.lines); banterCd+=c.lines.length*3; } }
+    else { const b = G.pickBanter(); if(b) UI.speak(b); } }
   // radio (수리 후에만 수신)
   if(S.flags.radio_fixed){ radioCd -= dt;
     if(radioCd<=0){ radioCd = 90+R(120); UI.playRadio(); } }
@@ -606,6 +608,29 @@ G.camp = (msg)=>{
 
 /* ── banter ── */
 let lastBanter = [];
+let lastChat=-1;
+G.pickChat = ()=>{
+  if(!D.chats) return null;
+  const night=G.isNight(), region=G.regionOf();
+  const pool=D.chats.filter((c,i)=>{
+    if(i===lastChat) return false;
+    const nd=c.need||{};
+    if(nd.comp && !G.hasComp(nd.comp)) return false;
+    if(nd.comp2 && !G.hasComp(nd.comp2)) return false;
+    if(nd.party && S.party.length<nd.party) return false;
+    if(nd.dog===1 && !S.dog) return false;
+    if(nd.night===1 && !night) return false;
+    if(nd.rain===1 && !G.isWet()) return false;
+    if(nd.region && region!==nd.region) return false;
+    /* 등장 화자 전원이 실제 탑승 중이어야 함 (동료만 검사, 나/sys 제외) */
+    for(const ln of c.lines){ const w=ln[0];
+      if(w!=='나'&&w!=='sys'&&D.comps[w]&&!G.hasComp(w)) return false; }
+    return true; });
+  if(!pool.length) return null;
+  const c=pool[Math.floor(rng()*pool.length)];
+  lastChat=D.chats.indexOf(c);
+  return c;
+};
 G.pickBanter = ()=>{
   const night = G.isNight(), rain = G.isWet(), region = G.regionOf();
   const pool = D.banter.filter(b=>{

@@ -112,6 +112,18 @@ for (const b of D.banter || []) {
   if (b.who !== '나' && b.who !== 'sys' && !compIds.has(b.who)) err(`${at} who 미존재: ${b.who}`);
 }
 
+/* ── 티키타카(chats) 검사 ── */
+for (const c of D.chats || []) {
+  const at = `[chat "${((c.lines||[[null,'']])[0][1]||'').slice(0,14)}…"]`;
+  const nd = c.need || {};
+  if (nd.comp && !compIds.has(nd.comp)) err(`${at} need.comp 미존재: ${nd.comp}`);
+  if (nd.comp2 && !compIds.has(nd.comp2)) err(`${at} need.comp2 미존재: ${nd.comp2}`);
+  (c.lines||[]).forEach(([w]) => {
+    if (w !== '나' && w !== 'sys' && !compIds.has(w)) err(`${at} 화자 미존재: ${w}`);
+    // 3인+ 대화의 부가 화자는 런타임(pickChat)이 탑승 검증하므로 need 미보장 허용
+  });
+}
+
 /* ── 지도 검사 ── */
 const seen = new Set();
 for (const [a, b] of D.edges.map(e => [e[0], e[1]])) {

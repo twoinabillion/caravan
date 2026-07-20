@@ -162,6 +162,25 @@ with sync_playwright() as p:
       return out;
     }''')
     check('대화 이벤트 146종', r5['talkCount'] == 146, str(r5['talkCount']))
+    # 티키타카(연속 잡담)
+    r6 = pg.evaluate('''() => {
+      const out = {};
+      out.chatCount = D.chats.length;
+      S.party = ['minji', 'leo']; S.dog = true; G.startTravel('yangsan');
+      const c = G.pickChat();
+      out.picked = c ? c.lines.length : 0;
+      // 화자 전원 탑승 검증: minji만 태우면 leo 등장 대화는 안 뽑힘
+      S.party = ['minji'];
+      let bad = 0;
+      for (let i = 0; i < 40; i++) { const x = G.pickChat();
+        if (x) for (const ln of x.lines) { const w = ln[0];
+          if (w !== '나' && w !== 'sys' && D.comps[w] && !S.party.includes(w)) bad++; } }
+      out.orphan = bad;
+      return out;
+    }''')
+    check('티키타카 20종', r6['chatCount'] == 20, str(r6['chatCount']))
+    check('연속 대화 재생(2줄+)', r6['picked'] >= 2, str(r6['picked']))
+    check('화자 전원 탑승 보장', r6['orphan'] == 0, str(r6['orphan']))
     check('needBond 게이트(유대 5 해금)', r5['noDeep'] and r5['deepOpen'], str(r5))
     check('말 걸기 발동', r5['talked'])
     check('하루 1회 제한', r5['dailyLimit'])

@@ -740,6 +740,122 @@ D.crafts = [
 
 /* ── 잡담 (차 안 인터랙션) ──
    need: {night,day,rain,comp,flag,notFlag,lowFuel,lowFood,region,dog} */
+/* ═══════════ 티키타카 — 주행 중 동료들끼리 주고받는 연속 대화 ═══════════
+   lines: [화자, 대사] 3초 간격 순차 버블. need로 등장 동료 보장. */
+D.chats = [
+ /* ── 2인 티키타카 ── */
+ {need:{comp:'minji',comp2:'leo'}, lines:[
+   ['leo','누나, 엔진 소리 오늘 좀 신나지 않아요?'],
+   ['minji','…신났다기보단 벨트가 살짝 미끄러지는 거야.'],
+   ['leo','에이. 저는 신난 걸로 들을래요.'],
+   ['minji','그래. 신나서 미끄러지는 걸로 해두자.']]},
+ {need:{comp:'parkss',comp2:'kangwoo'}, lines:[
+   ['parkss','강우 씨, 어깨 또 굳었네. 창밖만 보지 말고 좀 돌려.'],
+   ['kangwoo','…경계 중입니다.'],
+   ['parkss','경계도 목이 돌아가야 하지. 좌우로.'],
+   ['kangwoo','……일리 있습니다.']]},
+ {need:{comp:'jaeyi',comp2:'eunsu'}, lines:[
+   ['jaeyi','언니, 저 앞에 폐가 지붕 기와 봤어요? 저거 물건인데.'],
+   ['eunsu','재이 씨는 눈이 레이더네요.'],
+   ['jaeyi','언니 귀가 레이더잖아요. 우린 세트예요.'],
+   ['eunsu','…레이더 세트. 나쁘지 않네요.']]},
+ {need:{comp:'minji',comp2:'kangwoo'}, lines:[
+   ['kangwoo','민지. 방금 그 방지턱, 속도 줄였어야 했다.'],
+   ['minji','아저씨. 달구지 서스펜션 제가 손봤어요. 그 정돈 먹어요.'],
+   ['kangwoo','…정비사 말을 믿지.'],
+   ['minji','믿으세요. 저 이 차 주치의… 아니 담당의예요.']]},
+ {need:{comp:'leo',comp2:'kangwoo'}, lines:[
+   ['leo','형, 이 구간 노래 하나 뽑기 딱인데.'],
+   ['kangwoo','…조용한 걸로.'],
+   ['leo','알죠. 형 취향 이제 파악 끝.'],
+   ['kangwoo','…어제 그 곡.'],
+   ['leo','또요?! 형 진짜 그 곡밖에…']]},
+ {need:{comp:'parkss',comp2:'jaeyi'}, lines:[
+   ['jaeyi','쌤, 이 볼트 골동 가치 있어 보이지 않아요?'],
+   ['parkss','내 눈엔 그냥 볼트야.'],
+   ['jaeyi','쌤은 약은 잘 보고 고철은 못 봐요.'],
+   ['parkss','각자 보는 게 다른 거지. 그래서 같이 타는 거고.']]},
+ {need:{comp:'minji',comp2:'eunsu'}, lines:[
+   ['eunsu','민지 씨, 라디오에서 방금 뭔가 스쳤어요. 88 근처.'],
+   ['minji','…뭐? 어디, 잡아봐요.'],
+   ['eunsu','…놓쳤어요. 미안해요.'],
+   ['minji','아니에요. …스쳤다는 것만으로도 오늘은 됐어요.']]},
+ {need:{comp:'leo',comp2:'eunsu'}, lines:[
+   ['leo','누나, 어젯밤 그 잡음 위에 코드 얹은 거 완성했어요.'],
+   ['eunsu','벌써요? 들려줘요.'],
+   ['leo','제목은 「누나가 잡은 소리」.'],
+   ['eunsu','…제목값 하려면 저작권료 나눠야겠는데요.']]},
+ {need:{comp:'jaeyi',comp2:'kangwoo'}, lines:[
+   ['jaeyi','아저씨, 저 앞 갓길에 뭔가 반짝여요! 세워요!'],
+   ['kangwoo','…함정일 수도 있다.'],
+   ['jaeyi','아저씨는 뭐든 함정이래.'],
+   ['kangwoo','그래서 다들 살아 있는 거다.']]},
+ {need:{comp:'parkss',comp2:'leo'}, lines:[
+   ['parkss','레오, 목소리에 물기가 없어. 물 마셔.'],
+   ['leo','쌤은 제 목을 악기로 대해주셔서 좋아요.'],
+   ['parkss','악기 관리 안 하면 소리가 죽어. 마셔.'],
+   ['leo','넵. 원샷.']]},
+ {need:{comp:'minji',comp2:'jaeyi'}, lines:[
+   ['jaeyi','언니, 이거 정품 맞죠? 언니가 정품이랬잖아요.'],
+   ['minji','한 번 말했으면 됐지 몇 번을 확인해.'],
+   ['jaeyi','언니 입에서 나온 정품 인증은 시세 없는 목록 4번이라…'],
+   ['minji','…그런 걸 왜 목록에 넣어.']]},
+ {need:{comp:'kangwoo',comp2:'eunsu'}, lines:[
+   ['eunsu','강우 씨, 저 능선 위에 뭔가 있어요? 계속 보시던데.'],
+   ['kangwoo','…없다. 없는 걸 확인하는 중이다.'],
+   ['eunsu','그거 관제사랑 똑같아요. 이상 없음을 확인하는 일.'],
+   ['kangwoo','…같은 직업이었군, 우리.']]},
+
+ /* ── 3인 티키타카 ── */
+ {need:{party:2,comp:'leo'}, lines:[
+   ['leo','자, 오늘의 끝말잇기! 시작— 서울.'],
+   ['나','울릉도.'],
+   ['leo','도… 도로! 다음!'],
+   ['minji','로프. …어? 나 언제 껴들었지.'],
+   ['leo','이미 늦었어요 누나. 다음 사람.']]},
+ {need:{party:2,comp:'parkss'}, lines:[
+   ['parkss','다들 아까 그 국밥집 얘기 들었나? 3년 전엔 줄 서서 먹었다는데.'],
+   ['나','지금은 문 닫혔겠죠.'],
+   ['parkss','문은 닫혔어도 국물 맛은 안 닫혔지. 기억이 곧 영업이야.'],
+   ['leo','쌤, 그거 가사로 써도 돼요? 기억이 곧 영업.'],
+   ['parkss','저작권료는 국밥으로 받지.']]},
+ {need:{party:2,comp:'kangwoo'}, lines:[
+   ['kangwoo','전방 3km. 다리. 통과 가능.'],
+   ['나','확인.'],
+   ['minji','다리 상태는 제가 봐요. 난간 녹슨 정도로 하중 견적 나와요.'],
+   ['kangwoo','…든든하군.'],
+   ['minji','이 차에 견적 안 나는 게 없어요.']]},
+ {need:{party:3}, lines:[
+   ['나','…다들 조용하네.'],
+   ['leo','이거 은수 누나 판정으로 몇 등급이에요?'],
+   ['eunsu','1등급 직전. 누가 웃으면 1등급.'],
+   ['jaeyi','그럼 제가 웃을게요. 히히.'],
+   ['eunsu','…판정. 1등급. 교신 불필요.']]},
+ {need:{party:2,comp:'jaeyi',dog:1}, lines:[
+   ['jaeyi','보리야, 이 막대기 시세가 얼만지 알아? …0원. 근데 너한텐 무한대지.'],
+   ['leo','보리 경제학은 감정가가 안 통해요.'],
+   ['jaeyi','인정. 보리한텐 값 매기는 거 실례예요.'],
+   ['나','(보리가 막대기를 물고 자랑하듯 지나갔다)']]},
+
+ /* ── 상황 연동 ── */
+ {need:{comp:'minji',comp2:'parkss',rain:1}, lines:[
+   ['minji','비 오네. 차가 솔직해지는 날이에요.'],
+   ['parkss','사람도 비 오면 솔직해지지. 왜 그런지 아나?'],
+   ['minji','…왜요?'],
+   ['parkss','밖이 시끄러우면 속말이 안 들킬 것 같거든. 착각이지만.']]},
+ {need:{comp:'leo',comp2:'eunsu',night:1}, lines:[
+   ['eunsu','레오 씨, 저 별 보여요? 저거 위성이에요. 아직 돌아요.'],
+   ['leo','주인 없는데 계속 도는 거예요?'],
+   ['eunsu','시키던 일을 계속하는 거죠.'],
+   ['leo','…그거 노래 되겠다. 「아직 도는 것」.'],
+   ['eunsu','제목 좋네요. 가사 나오면 첫 청취 저 주세요.']]},
+ {need:{comp:'kangwoo',comp2:'parkss',night:1}, lines:[
+   ['parkss','강우 씨, 오늘 경계는 내가 반 서지. 자네도 자야 사람이야.'],
+   ['kangwoo','…익숙합니다, 안 자는 게.'],
+   ['parkss','익숙한 게 다 좋은 건 아니야. 그것도 처방일세. 자게.'],
+   ['kangwoo','……복용하겠습니다.']]},
+];
+
 D.banter = [
   /* ── 천리안 풍문/잡담 (v1.3.2) ── */
   {who:'나', t:'(북쪽 하늘을 본다. 오늘도 그쪽만 구름이 없다. 우연이겠지)'},
@@ -5670,7 +5786,9 @@ G.tick = (dt)=>{ // dt: real seconds
   }
   // banter
   banterCd -= dt;
-  if(banterCd<=0){ banterCd = 11+R(9); const b = G.pickBanter(); if(b) UI.speak(b); }
+  if(banterCd<=0){ banterCd = 11+R(9);
+    if(rng()<0.22){ const c=G.pickChat(); if(c){ UI.playChat(c.lines); banterCd+=c.lines.length*3; } }
+    else { const b = G.pickBanter(); if(b) UI.speak(b); } }
   // radio (수리 후에만 수신)
   if(S.flags.radio_fixed){ radioCd -= dt;
     if(radioCd<=0){ radioCd = 90+R(120); UI.playRadio(); } }
@@ -5934,6 +6052,29 @@ G.camp = (msg)=>{
 
 /* ── banter ── */
 let lastBanter = [];
+let lastChat=-1;
+G.pickChat = ()=>{
+  if(!D.chats) return null;
+  const night=G.isNight(), region=G.regionOf();
+  const pool=D.chats.filter((c,i)=>{
+    if(i===lastChat) return false;
+    const nd=c.need||{};
+    if(nd.comp && !G.hasComp(nd.comp)) return false;
+    if(nd.comp2 && !G.hasComp(nd.comp2)) return false;
+    if(nd.party && S.party.length<nd.party) return false;
+    if(nd.dog===1 && !S.dog) return false;
+    if(nd.night===1 && !night) return false;
+    if(nd.rain===1 && !G.isWet()) return false;
+    if(nd.region && region!==nd.region) return false;
+    /* 등장 화자 전원이 실제 탑승 중이어야 함 (동료만 검사, 나/sys 제외) */
+    for(const ln of c.lines){ const w=ln[0];
+      if(w!=='나'&&w!=='sys'&&D.comps[w]&&!G.hasComp(w)) return false; }
+    return true; });
+  if(!pool.length) return null;
+  const c=pool[Math.floor(rng()*pool.length)];
+  lastChat=D.chats.indexOf(c);
+  return c;
+};
 G.pickBanter = ()=>{
   const night = G.isNight(), rain = G.isWet(), region = G.regionOf();
   const pool = D.banter.filter(b=>{
@@ -7840,6 +7981,11 @@ const UI = (()=>{
     toast(`<span class="ic">📍</span>${D.nodes[S.at].name} 도착`); }
 
   /* ── bubbles ── */
+  function playChat(lines){
+    lines.forEach((ln,i)=>{
+      setTimeout(()=>{ if(S && S.driving) speak({who:ln[0], t:ln[1]}); }, i*3000);
+    });
+  }
   function playRadio(){
     const r=G.pickRadio(); if(!r) return;
     speak({who:'radio', t:r.t});
@@ -8408,7 +8554,7 @@ const UI = (()=>{
   }
 
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
-    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio};
+    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat};
 })();
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */

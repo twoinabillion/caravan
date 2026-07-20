@@ -274,6 +274,11 @@ const UI = (()=>{
     toast(`<span class="ic">📍</span>${D.nodes[S.at].name} 도착`); }
 
   /* ── bubbles ── */
+  function playChat(lines){
+    lines.forEach((ln,i)=>{
+      setTimeout(()=>{ if(S && S.driving) speak({who:ln[0], t:ln[1]}); }, i*3000);
+    });
+  }
   function playRadio(){
     const r=G.pickRadio(); if(!r) return;
     speak({who:'radio', t:r.t});
@@ -842,7 +847,7 @@ const UI = (()=>{
   }
 
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
-    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio};
+    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat};
 })();
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
