@@ -161,7 +161,7 @@ with sync_playwright() as p:
       out.dailyLimit = !G.talkTo('minji');                                 // 하루 1회 제한
       return out;
     }''')
-    check('대화 이벤트 94종', r5['talkCount'] == 94, str(r5['talkCount']))
+    check('대화 이벤트 146종', r5['talkCount'] == 146, str(r5['talkCount']))
     check('needBond 게이트(유대 5 해금)', r5['noDeep'] and r5['deepOpen'], str(r5))
     check('말 걸기 발동', r5['talked'])
     check('하루 1회 제한', r5['dailyLimit'])
