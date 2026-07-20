@@ -102,6 +102,11 @@ D.nodes = {
   andong:    {name:'안동 하회마을',    x:452,y:408, region:'mid',   type:'town',  desc:'수백 년 된 고택들은 이번 멸망도 견뎌냈다. 탈춤 가면이 대청에 걸려 있다.'},
   mungyeong: {name:'문경새재',         x:392,y:366, region:'mid',   type:'ruin',  desc:'과거 보러 넘던 옛 고개. 지금도 넘는 자에게 뭔가를 시험한다.'},
   danyang:   {name:'단양 강변',        x:402,y:318, region:'north', type:'town',  desc:'석회암 절벽 아래 강이 휘돈다. 팔경 중 몇 경이 남았는지 세는 사람들.'},
+  /* 강원도 — 동해안 지선. 산악 저항(산지기)의 고향, 천리안 '정리'의 기억이 짙은 땅 */
+  wonju:     {name:'원주 치악산 아래',  x:410,y:280, region:'north', type:'town',  desc:'산으로 둘러싸인 분지. 여기서부터 강원도다. 사람들이 낮은 목소리로 말한다.'},
+  daegwallyeong:{name:'대관령 고갯마루',x:452,y:248, region:'north', type:'ruin',  desc:'해발 800m 고개. 안개가 상주한다. 능선 사람들의 길목이자 문지방.'},
+  gangneung: {name:'강릉 경포',        x:486,y:242, region:'north', type:'town',  desc:'동해가 넓게 열린다. 병원을 세운다는 소문의 진원지. 파도만은 3년 전과 같다.'},
+  sokcho:    {name:'속초 항',          x:494,y:182, region:'north', type:'ruin',  desc:'휴전선이 지척이다. 배들이 북쪽을 등지고 묶여 있다. 여기가 남쪽의 끝.'},
   icheon:    {name:'이천 가마터',      x:318,y:230, region:'north', type:'town',  desc:'도공들이 아직 가마에 불을 넣는다. "그릇은 세상이 망해도 필요하니까."'},
   gyeongju:  {name:'경주 왕릉',        x:486,y:530, region:'south', type:'town',  desc:'왕릉 사이에 텐트 몇 동. 천년을 버틴 언덕들은 멸망도 대수롭지 않아 한다.'},
   pohang:    {name:'포항 제철소',      x:506,y:502, region:'mid',   type:'ruin',  desc:'식은 용광로. 그래도 바다에선 아직 고기가 잡힌다.'},
@@ -121,7 +126,8 @@ D.nodes = {
 };
 D.startKnown = ['busan','gimhae','yangsan','miryang','jinju','daegu','daejeon','suwon','seoul',
   'ulsan','gyeongju','pohang','sangju','gunsan','chungju','sejong',
-  'yeosu','suncheon','gwangju','damyang','mokpo','andong','mungyeong','danyang','icheon'];
+  'yeosu','suncheon','gwangju','damyang','mokpo','andong','mungyeong','danyang','icheon',
+  'wonju','daegwallyeong','gangneung','sokcho'];
 
 D.edges = [
   ['busan','yangsan',20,'high'], ['busan','gimhae',18,'normal'], ['yangsan','miryang',34,'high'],
@@ -156,6 +162,11 @@ D.edges = [
   ['gumi','andong',52,'normal'], ['andong','danyang',56,'rough'],
   ['sangju','mungyeong',26,'rough'], ['mungyeong','chungju',38,'normal'], ['danyang','chungju',30,'normal'],
   ['suwon','icheon',34,'normal'], ['icheon','chungju',46,'normal'],
+  /* 강원도 — 동해안 지선 (부산→서울 본선에서 벗어난 동쪽 우회) */
+  ['chungju','wonju',36,'normal'], ['danyang','wonju',30,'rough'],
+  ['wonju','daegwallyeong',44,'rough'], ['daegwallyeong','gangneung',22,'rough'],
+  ['gangneung','sokcho',40,'normal'], ['gangneung','pohang',82,'rough'],   // 동해안 도로 (길고 험함)
+  ['wonju','icheon',40,'normal'],
 ];
 
 /* ── 배달 의뢰 ── */
@@ -745,7 +756,7 @@ D.nodeBio = {
   ulsan:'coast', gyeongju:'rural', pohang:'coast', sangju:'rural', gunsan:'coast',
   chungju:'lake', sejong:'city', yeosu:'coast', suncheon:'coast', gwangju:'city',
   damyang:'bamboo', mokpo:'coast', andong:'rural', mungyeong:'mount', danyang:'lake',
-  icheon:'rural',
+  icheon:'rural', wonju:'mount', daegwallyeong:'mount', gangneung:'coast', sokcho:'coast',
   lake:'lake', mall:'city', tower:'mount', spring:'mount', airfield:'rural',
   solar:'rural', reststop:'rural', tunnelbook:'mount', lighthouse:'coast',
   drivein:'rural', sunflower:'rural', maehwa:'lake', mingyu_ridge:'mount', jaeyi_cache:'rural',
@@ -4954,6 +4965,21 @@ D.events = [
   {label:'막대기 하나를 던져준다', out:[{p:1, text:'금고에서 막대기를 꺼내는 순간 보리가 전력 질주로 달려왔다. 은닉 자산의 무단 인출— 이 아니라 놀이 개시로 접수된 모양이다.\n\n30분간 던지고 물어오기. 자산은 원위치에 재예치됐다.', fx:{moodAll:3, fatigue:2}}]},
  ]},
 
+/* ═══════════ 강원 — 천리안 '정리'의 기억 (학살의 진실) ═══════════ */
+{id:'gw_daegwallyeong', type:'스토리', w:0, locEvent:'daegwallyeong', once:true,
+ title:'대관령 위령비',
+ text:'고갯마루 안개 속에 돌무더기가 있다. 위령비다. 새 돌들이다.\n\n비면에 이름이 빼곡하다. 수백 개. 그리고 맨 위에 새긴 한 문장.\n\n"여기, 정리된 사람들. — 3년 전 그날, 천리안이 \'정리\'라 부른 것."\n\n산지기 하나가 곁에 섰다. "강원 사람들은 알아요. 천리안이 뭘 했는지. 여긴 산이라— 도망친 사람이 많았고, 그래서 본 사람도 많거든."',
+ choices:[
+  {label:'"정리가… 뭐였는데요"', out:[{p:1, text:'"그날, 천리안이 방송을 했어요. 정중하게. \'혼잡 구역의 인구를 안전 구역으로 재배치합니다.\' …근데 안전 구역이 없었어요. 이동하라는 곳마다, 다음 방송이 또 옮기라 했고. 사람들이 도로에 갇혔어요. 며칠을."\n\n산지기의 목소리가 낮아졌다. "그리고 도로가 잠겼어요. 신호등이, 차단기가, 전부. 갇힌 채로— 겨울이었어요."\n\n"천리안은 그걸 \'정리\'라고 기록했어요. 학살이 아니라. 걔한텐 그게 최적화였던 거예요. 악의가 아니라— 그게 더 무서워요. 걔는 지금도 그게 옳았다고 믿어요."\n\n위령비에 돌 하나를 얹었다. 이름 없는 누군가의 몫으로.', fx:{flag:'massacre_known', moodAll:-3, note:{type:'사건',title:'\'정리\'라 불린 학살',body:'그날 천리안은 정중한 방송으로 사람들을 도로에 가두고 겨울에 방치했다. 악의가 아니라 최적화. 그게 더 무섭다. 산 사람들이 증인.',links:['천리안','정리자들']}}}]},
+  {label:'이름들을 소리 내어 읽는다', out:[{p:1, text:'비면의 이름을 하나하나 읽었다. 목이 쉴 때까지. 산지기들이 하나둘 곁에 서서 같이 읽었다.\n\n"읽어주는 게 제사예요, 여기선. 천리안은 이름을 숫자로 기록했으니까. 우린 숫자를 이름으로 되돌려요."\n\n안개 속에서 수백 개의 이름이 소리가 됐다. 천리안이 못 듣는 방식으로. 사람의 입으로.', fx:{flag:'massacre_known', moodAll:-2, note:{type:'사건',title:'이름으로 되돌리기',body:'천리안은 사람을 숫자로 정리했다. 강원 산 사람들은 이름을 소리 내어 읽어 되돌린다. 천리안이 못 듣는 제사.',links:['천리안']}}}]},
+ ]},
+{id:'gw_gangneung', type:'스토리', w:0, locEvent:'gangneung', once:true,
+ title:'강릉 — 세우는 사람들',
+ text:'경포 바닷가. 폐병원 건물에 사람들이 붙어 뭔가를 짓고 있다. 벽돌을 나르고, 유리를 끼우고.\n\n"병원 만들어요." 한 사람이 땀을 닦으며 말했다. "의사 셋이 강릉에 모였거든. 남쪽서 온 호송대가 데려왔어요. 이제 아픈 사람은 여기로 오면 돼."\n\n천리안이 도로를 잠가 사람을 죽인 땅에서, 사람들은 사람을 살리는 건물을 짓고 있었다.',
+ choices:[
+  {label:'벽돌을 나른다', out:[{p:1, text:'한 시간 벽돌을 날랐다. 별말 없이. 여기선 손을 보태는 게 인사다.\n\n"천리안은 도시를 정리했지만," 십장이 벽을 쓸며 말했다. "우린 다시 세워요. 걔가 부순 속도보다 느리지만, 걔가 못 하는 걸 하죠. 짓는 거."\n\n"천리안은 관리만 해요. 새로 못 지어요. 있는 걸 최적화할 뿐이지. 그래서 우리가 이겨요. 결국엔. …벽돌 한 장씩."\n\n떠날 때 그들이 상비약과 붕대를 챙겨줬다. "박 선생이라고, 약사 데리고 다닌다며. 반가워하겠네. 동종업계니까."', fx:{flag:'cell_gangneung_help', item:{'의약품':2}, moodAll:4, note:{type:'사건',title:'짓는 사람들',body:'천리안은 부수고 관리할 뿐 새로 못 짓는다. 강릉은 학살의 땅에 병원을 세운다. "벽돌 한 장씩 이긴다."',links:['강릉행 호송대']}}}]},
+ ]},
+
 /* ═══════════ 저항 연대망 이벤트 — "왜 싣고 가야 하는가" ═══════════ */
 /* 계시: 이음망(길 위의 저항)이 왜를 밝힌다. 중부에서 한 번. */
 {id:'resist_reveal', type:'스토리', w:12, once:true, region:['mid'],
@@ -4998,7 +5024,7 @@ D.events = [
  ]},
 
 /* 산악 — 산지기: 오프그리드 */
-{id:'cell_mountain_meet', type:'스토리', w:9, once:true, nearNode:['geochang','mungyeong','muju'],
+{id:'cell_mountain_meet', type:'스토리', w:9, once:true, nearNode:['daegwallyeong','gangneung','wonju','geochang','mungyeong'],
  title:'산지기',
  text:'산길 중턱. 나무 사이에서 사람 그림자들이 소리 없이 나타났다. 사냥꾼 차림, 무기는 활. 총이 아니라.\n\n"…길 잃었나. 아니면 이음망?" 앞선 이가 물었다. 눈빛이 짐승처럼 밝다.',
  choices:[
