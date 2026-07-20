@@ -374,10 +374,12 @@ const UI = (()=>{
       h+=`<div class="plist" style="opacity:.65"><div class="pk story"><b>★ Lv.3 — ${p3.nm}</b><small>${p3.d}</small></div></div>
         <div class="csub" style="margin-top:8px">유대는 ${c.name}의 능력을 쓰는 선택, 동행 이벤트, 야영에서 쌓인다.</div>`;
     }
-    h+=`<div class="choices" style="margin-top:12px"><button class="choice" data-x="1">닫는다</button></div>`;
+    h+=`<div class="choices" style="margin-top:12px">${!S.driving?`<button class="choice" data-talk="${id}">💬 말을 건다 <span class="req">하루 한 번 · 이야기가 유대를 만든다</span></button>`:''}<button class="choice" data-x="1">닫는다</button></div>`;
     const sheet=$('#ev-sheet');
     sheet.innerHTML=h;
     sheet.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{ G.choosePerk(id, +b.dataset.pk); showComp(id); });
+    const tk=sheet.querySelector('[data-talk]');
+    if(tk) tk.onclick=()=>{ if(G.talkTo(tk.dataset.talk)){} };
     sheet.querySelector('[data-x]').onclick=()=>{ closeEvent(); };
     $('#ev-wrap').classList.add('on');
   }

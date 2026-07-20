@@ -366,6 +366,7 @@ G.eligible = (typeFilter)=>{
     if(ev.needFlagMin && (S.flags[ev.needFlagMin[0]]||0) < ev.needFlagMin[1]) return false;
     if(ev.night && !night) return false;
     if(ev.needsComp && !G.hasComp(ev.needsComp)) return false;
+    if(ev.needBond && ((S.comps[ev.needBond[0]]||{}).bond||0) < ev.needBond[1]) return false;
     if(ev.needsComp2 && !G.hasComp(ev.needsComp2)) return false;  // 2인 케미 이벤트
     if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
     if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
@@ -697,6 +698,18 @@ G.craft = (id)=>{
   for(const nm in c.out) S.items[nm]=(S.items[nm]||0)+c.out[nm];
   G.advance(ar?20:40);
   UI.toast(`${c.ic} ${c.nm} 제작 완료`);
+  G.save(); return true;
+};
+
+/* ── 1:1 대화 (동료 카드에서 '말을 건다') ── */
+G.talkTo = (id)=>{
+  if(S.driving || !G.hasComp(id)) return false;
+  S._talked = S._talked||{};
+  if(S._talked[id]===S.day){ UI.toast(`${D.comps[id].name}와는 오늘 충분히 이야기했다`); return false; }
+  const pool = G.eligible('대화').filter(ev=>ev.needsComp===id);
+  if(!pool.length){ UI.toast(`${D.comps[id].name}는 지금 자기 일에 빠져 있다`); return false; }
+  S._talked[id]=S.day;
+  G.openEvent(pick(pool));
   G.save(); return true;
 };
 

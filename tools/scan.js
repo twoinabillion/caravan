@@ -63,6 +63,7 @@ for (const ev of allEvents) {
   if (ev.needsComp2 && !compIds.has(ev.needsComp2)) err(`${at} needsComp2 미존재: ${ev.needsComp2}`);
   if (ev.noComp && !compIds.has(ev.noComp)) err(`${at} noComp 미존재: ${ev.noComp}`);
   if (ev.needUp && !D.upgrades.some(u => u.id === ev.needUp)) err(`${at} needUp 미존재: ${ev.needUp}`);
+  if (ev.needBond && !compIds.has(ev.needBond[0])) err(`${at} needBond 동료 미존재: ${ev.needBond[0]}`);
   if (ev.needFlag && !flagSetters.has(ev.needFlag)) err(`${at} needFlag 세터 없음: ${ev.needFlag}`);
   if (ev.needFlagMin && !flagSetters.has(ev.needFlagMin[0])) err(`${at} needFlagMin 세터 없음: ${ev.needFlagMin[0]}`);
   if (ev.needWx && !D.wx[ev.needWx]) err(`${at} needWx 미존재: ${ev.needWx}`);

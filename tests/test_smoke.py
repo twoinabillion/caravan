@@ -148,6 +148,23 @@ with sync_playwright() as p:
     check('needUp 게이트(윈치)', r4['gateClosed'] and r4['gateOpen'], str(r4))
     check('험로 타이어 연비', r4['tiresSave'])
     check('사이드 공구함 정비 강화', r4['repairBoost'], str(r4))
+    # v2.4 1:1 대화 시스템
+    r5 = pg.evaluate('''() => {
+      const out = {};
+      out.talkCount = D.events.filter(e => e.type === '대화').length;
+      S.party = ['minji']; S.comps.minji.bond = 0; S.driving = null; S._talked = {};
+      out.noDeep = !G.eligible('대화').some(e => e.id === 'talk_mj_06');   // needBond 5 잠김
+      S.comps.minji.bond = 6;
+      out.deepOpen = G.eligible('대화').some(e => e.id === 'talk_mj_06');
+      out.talked = G.talkTo('minji');                                      // 대화 발동
+      document.querySelector('#ev-wrap').classList.remove('on');
+      out.dailyLimit = !G.talkTo('minji');                                 // 하루 1회 제한
+      return out;
+    }''')
+    check('대화 이벤트 64종', r5['talkCount'] == 64, str(r5['talkCount']))
+    check('needBond 게이트(유대 5 해금)', r5['noDeep'] and r5['deepOpen'], str(r5))
+    check('말 걸기 발동', r5['talked'])
+    check('하루 1회 제한', r5['dailyLimit'])
     check('noComp 게이트(미영입 소문 열림)', r2['rumorOpen'], str(r2))
     check('noComp 게이트(영입 후 닫힘)', r2['rumorClosed'], str(r2))
     check('신규 히든 노드 도로 연결', r2['newNodes'])
