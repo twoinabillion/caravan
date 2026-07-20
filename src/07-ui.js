@@ -791,6 +791,15 @@ const UI = (()=>{
       });
     });
     h+=`</div>`;
+    /* 저항 연대망 — 계시 이후에만 표시 */
+    if(S.flags.resist_revealed){
+      const linked=G.cellsLinked().length, total=D.resistance.length;
+      h+=`<div class="st-sec"><h4>🕯 저항 연대 <small style="color:var(--faded);font-weight:400">${linked}/${total} 이음 · 천리안 변방</small></h4>`;
+      D.resistance.forEach(c=>{ const on=!!S.flags[c.flag];
+        h+=`<div class="st-row" style="${on?'':'opacity:.5'}"><span class="k">${on?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${on?'var(--paper)':'var(--faded)'}">${c.region} · ${on?c.lead:'미접선'}</span></div>`;
+      });
+      h+=`</div>`;
+    }
     /* 이야기 */
     const stories=Object.keys(D.comps).map(id=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];

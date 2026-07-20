@@ -197,6 +197,24 @@ with sync_playwright() as p:
       out.allHaveFree = D.seoulStops.every(e => e.choices.some(c => !c.req));
       return out;
     }''')
+    # 저항 연대망
+    r8 = pg.evaluate('''() => {
+      const out = {};
+      out.cells = D.resistance.length;
+      out.cellEvents = D.events.filter(e => e.id.startsWith('cell_') && e.id.endsWith('_meet')).length;
+      out.reveal = !!D.events.find(e => e.id === 'resist_reveal');
+      // 각 거점 flag가 이벤트로 세팅되는지 (스캐너가 이미 검증하지만 재확인)
+      S.flags = {}; out.emptyLinked = G.cellsLinked().length;
+      D.resistance.forEach(c => S.flags[c.flag] = true);
+      out.allLinked = G.cellsLinked().length;
+      // flag2 지원 확인
+      G.applyFx({flag:'test_a', flag2:'test_b'});
+      out.flag2 = S.flags.test_a && S.flags.test_b;
+      return out;
+    }''')
+    check('저항 거점 6·접선 5·계시 1', r8['cells'] == 6 and r8['cellEvents'] == 5 and r8['reveal'], str(r8))
+    check('연대 연결 추적', r8['emptyLinked'] == 0 and r8['allLinked'] == 6, str(r8))
+    check('fx.flag2 지원', r8['flag2'])
     check('여정 장부 13개·필요 6', r7['deeds'] == 13 and r7['need'] == 6, str(r7))
     check('빈 상태 서울 잠김', not r7['emptyReady'])
     check('6개 완수→서울 열림', r7['doneCount'] == 6 and r7['fullReady'])

@@ -458,6 +458,7 @@ G.applyFx = (fx)=>{
   if(fx.item){ for(const nm in fx.item){ const v=fx.item[nm]; S.items[nm]=Math.max(0,(S.items[nm]||0)+v);
     chips.push({t:`${nm} ${v>0?'+':''}${v}`, c:'item'}); } }
   if(fx.flag) S.flags[fx.flag]=true;
+  if(fx.flag2) S.flags[fx.flag2]=true;
   if(fx.flagCount) S.flags[fx.flagCount]=(S.flags[fx.flagCount]||0)+1;
   if(fx.unflag) delete S.flags[fx.unflag];
   if(fx.goto){ S.driving=null; S.at=fx.goto; }
@@ -750,6 +751,9 @@ G.talkTo = (id)=>{
   G.openEvent(pick(pool));
   G.save(); return true;
 };
+
+/* ── 저항 연대망 ── */
+G.cellsLinked = ()=> (D.resistance||[]).filter(c=>S.flags[c.flag]);
 
 /* ── 서울 내부 (오르막 진행) ── */
 G.seoulStopDone = (i)=> !!S.flags[`seoul_${D.seoulMap.stops[i].id}_done`] || (i===4 && !!S.flags.seoul_core_reached);

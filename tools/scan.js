@@ -37,6 +37,7 @@ for (const c of Object.values(D.comps)) {
 const flagSetters = new Set();
 const walkFx = (fx) => { if (!fx) return;
   if (fx.flag) flagSetters.add(fx.flag);
+  if (fx.flag2) flagSetters.add(fx.flag2);
   if (fx.flagCount) flagSetters.add(fx.flagCount);
 };
 const walkEvent = (ev, cb) => (ev.choices || []).forEach(c => (c.out || []).forEach(o => cb(o.fx)));
@@ -112,6 +113,11 @@ for (const b of D.banter || []) {
   if (nd.flag && !flagSetters.has(nd.flag)) err(`${at} need.flag 세터 없음: ${nd.flag}`);
   if (nd.wx && !D.wx[nd.wx]) err(`${at} need.wx 미존재: ${nd.wx}`);
   if (b.who !== '나' && b.who !== 'sys' && !compIds.has(b.who)) err(`${at} who 미존재: ${b.who}`);
+}
+
+/* ── 저항 연대망(resistance) 검사 ── */
+for (const c of D.resistance || []) {
+  if (!flagSetters.has(c.flag)) err(`[cell ${c.id}] flag 세터 없음: ${c.flag} — 연결 이벤트 누락`);
 }
 
 /* ── 여정 장부(deeds) 검사 ── */
