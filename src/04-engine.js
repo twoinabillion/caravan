@@ -204,7 +204,7 @@ G.lunch = ()=>{
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(S.up&&S.up.kitchen) G.moodAll(1);
-    if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
+    if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
   else { G.moodAll(-4); S.fatigue=clamp(S.fatigue+8,0,100);
     UI.toast('🍚 점심을 걸렀다 — 사기·체력이 떨어진다'); }
   G.save();
@@ -224,7 +224,7 @@ G.dawn = ()=>{
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(S.up&&S.up.kitchen) G.moodAll(1);
-    if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
+    if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
   if(S.up&&S.up.beehive&&rng()<0.3){ S.food+=1; G.moodAll(2);
     UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }
   if(G.hasComp('leo')) G.moodAll(3); // 레오의 아침 기타
@@ -232,7 +232,7 @@ G.dawn = ()=>{
   if(S.up&&S.up.fridge){ S._fridgeD=(S._fridgeD||0)+1;
     if(S._fridgeD>=3){ S._fridgeD=0; S.food+=1; UI.toast('🧊 냉장 박스 — 아낀 식량 +1'); } }
   if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }
-  if(S.fatigue>=70){ G.moodAll(-3); UI.toast('😴 다들 피곤이 얼굴에 앉았다 — 쉬어야 한다'); }
+  if(S.fatigue>=70){ G.moodAll(-3); UI.toast(S.party.length?'😴 다들 피곤이 얼굴에 앉았다 — 쉬어야 한다':'😴 피곤이 얼굴에 앉았다 — 쉬어야 한다'); }
   /* 의뢰 기한 */
   if(S.quest && S.day>S.quest.due){
     const q=S.quest; S.quest=null;
@@ -608,6 +608,7 @@ G.pickBanter = ()=>{
   const night = G.isNight(), rain = G.isWet(), region = G.regionOf();
   const pool = D.banter.filter(b=>{
     const nd = b.need||{};
+    if(nd.party && S.party.length<nd.party) return false;
     if(nd.comp && !G.hasComp(nd.comp)) return false;
     if(nd.comp2 && !G.hasComp(nd.comp2)) return false;
     if(nd.night===1 && !night) return false; if(nd.night===0 && night) return false;

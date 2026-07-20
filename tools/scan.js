@@ -90,6 +90,16 @@ for (const ev of allEvents) {
   }
 }
 
+/* ── 솔로 정합성: 그룹 표현인데 동료 게이트 없음 (경고) ── */
+const GROUP_MARKS = ['다들','전원이','전원 ','만장일치','우리 중','서로를','각자','교대로','누가 말했','누가 외쳤','누가 물었','누가 웃'];
+for (const ev of D.events) {
+  if (ev.minParty || ev.needsComp || ev.needsComp2 || ev.needsDog) continue;
+  if (ev.w === 0 || ev.fixed || ev.locEvent) continue;   // 강제 발동류는 문장 중립화로 관리
+  const t2 = JSON.stringify(ev);
+  const hit = GROUP_MARKS.find(m => t2.includes(m));
+  if (hit) warn(`[${ev.id}] 그룹 표현("${hit}")인데 minParty 없음 — 혼자일 때 어색`);
+}
+
 /* ── 잡담 검사 ── */
 for (const b of D.banter || []) {
   const at = `[banter "${(b.t || '').slice(0, 18)}…"]`;
