@@ -144,7 +144,7 @@ with sync_playwright() as p:
       out.repairBoost = S.van >= 50;   // 45 이상 회복
       return out;
     }''')
-    check('업그레이드 18종', r4['upCount'] == 18, str(r4['upCount']))
+    check('업그레이드 26종', r4['upCount'] == 26, str(r4['upCount']))
     check('needUp 게이트(윈치)', r4['gateClosed'] and r4['gateOpen'], str(r4))
     check('험로 타이어 연비', r4['tiresSave'])
     check('사이드 공구함 정비 강화', r4['repairBoost'], str(r4))

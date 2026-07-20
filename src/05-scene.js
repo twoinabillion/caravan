@@ -525,6 +525,32 @@ const SCENE = (()=>{
       ctx.fillStyle='#3a3f4c';
       ctx.fillRect(vx+7,vy+3,13,2); ctx.fillRect(vx+bodyL-1,vy+3,13,2);
     }
+    if(up.garden2){ /* 지붕 온실 — 텃밭 위 유리 아치 */
+      ctx.strokeStyle='rgba(175,215,240,0.55)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.arc(P(vx+25),P(vy-bodyH-8),6,Math.PI,0); ctx.stroke();
+      ctx.fillStyle='rgba(220,240,255,0.35)'; ctx.fillRect(P(vx+21+((t*2)%7)),P(vy-bodyH-12),1,1); // 유리 반짝
+    }
+    if(up.scope){ /* 지붕 망원대 */
+      ctx.fillStyle='#3a3f4a'; ctx.fillRect(vx+30,vy-bodyH-11,1,7);
+      ctx.fillStyle='#565d6b'; ctx.fillRect(vx+28,vy-bodyH-12,4,2);
+      ctx.fillStyle='rgba(180,220,255,0.8)'; ctx.fillRect(vx+31,vy-bodyH-12,1,1); // 렌즈
+    }
+    if(up.horn){ /* 왕경적 (지붕 후미 나팔 2개) */
+      ctx.fillStyle='#c9c2b0';
+      ctx.fillRect(vx+1,vy-bodyH-7,3,2); ctx.fillRect(vx,vy-bodyH-8,1,4);
+      ctx.fillRect(vx+1,vy-bodyH-11,3,2); ctx.fillRect(vx,vy-bodyH-12,1,4);
+    }
+    if(up.armory){ /* 무기 선반 — 뒷문에 석궁 걸림 */
+      ctx.strokeStyle='#4c4438'; ctx.lineWidth=1;
+      line(vx+1,vy-bodyH+9, vx+5,vy-bodyH+11);
+      line(vx+3,vy-bodyH+8, vx+3,vy-bodyH+13);
+      ctx.fillStyle='#8a6c42'; ctx.fillRect(vx+2,vy-bodyH+10,2,1);
+    }
+    if(up.bunk){ /* 2층 침대 — 상단 쪽창 */
+      ctx.fillStyle= dark>0.35? '#e8a95c':'rgba(170,198,220,0.45)';
+      ctx.fillRect(vx+28,vy-bodyH+1,6,2);
+      ctx.strokeStyle='#4c4438'; line(vx+31,vy-bodyH+1,vx+31,vy-bodyH+3);
+    }
     if(up.awning){ /* 차양 — 주행 중엔 말린 롤, 정차 중엔 펼침 */
       if(speed>0){
         ctx.fillStyle='#7a4a3f'; ctx.fillRect(vx+7,vy-bodyH+2,18,2);
@@ -561,13 +587,30 @@ const SCENE = (()=>{
     ctx.fillStyle= dark>0.35? '#f5b869':'rgba(170,198,220,0.55)';
     ctx.fillRect(vx+7,winY,bodyL-16,winH);
     if(dark>0.35){ ctx.fillStyle='rgba(255,235,190,0.5)'; ctx.fillRect(vx+7,winY,bodyL-16,2); }
+    const curtained = up.curtain && dark>0.35 && speed<=0;
+    if(curtained){ /* 암막 커튼 — 불빛이 새지 않는다 */
+      ctx.fillStyle='#453a4a'; ctx.fillRect(vx+7,winY,bodyL-16,winH-1);
+      ctx.fillStyle='rgba(255,220,160,0.5)'; ctx.fillRect(vx+7,winY+winH-1,bodyL-16,1); // 틈새 빛
+    }
+    if(up.fridge && !curtained){ /* 냉장 박스 — 창문 너머로 보임 */
+      ctx.fillStyle='#dfe5ea'; ctx.fillRect(vx+17,winY+3,4,5);
+      ctx.fillStyle='#9fc3d8'; ctx.fillRect(vx+18,winY+4,1,1);
+    }
     ctx.strokeStyle='#4c4438';
     line(vx+24,winY,vx+24,winY+winH); line(vx+41,winY,vx+41,winY+winH);
     if(up.cabin) line(vx+58,winY,vx+58,winY+winH);
+    if(up.kitchen && speed<=0){ /* 간이 주방 — 정차 시 조리 해치 열림 */
+      ctx.fillStyle='#877d6b'; ctx.fillRect(vx+26,vy-11,10,1);      // 열린 판(선반)
+      ctx.fillStyle='#3c372f'; ctx.fillRect(vx+26,vy-10,1,3); ctx.fillRect(vx+35,vy-10,1,3); // 지지
+      ctx.fillStyle='#2b2f3a'; ctx.fillRect(vx+29,vy-13,3,2);       // 냄비
+      const rise=((t*5)%5);
+      ctx.fillStyle=`rgba(240,240,235,${0.4*(1-rise/5)})`;
+      ctx.fillRect(P(vx+30+Math.sin(t*3)*0.8),P(vy-14-rise),1,1);   // 김
+    }
     /* 탑승자 (나 + 동료) */
     const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
     const riders=S? [['#2c3346'],...S.party.filter(id=>!outside.includes(id)).map(id=>[D.comps[id].color])]:[['#2c3346']];
-    riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
+    if(!curtained) riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
       const hx=P(vx+bodyL-14-i*13);
       const nod = Math.sin(t*1.2+i*2.7)>0.96?1:0;                    // 가끔 고개 까딱
       const doze = S && S.fatigue>=70 && speed>0 && i===1+(S.day%3) && i>0;  // 피로하면 누군가 존다
@@ -623,7 +666,7 @@ const SCENE = (()=>{
       }
     }
     /* 보리: 가끔 창밖으로 고개 내밀기 */
-    if(S&&S.dog){
+    if(S&&S.dog&&!curtained){
       const out=speed>0&&Math.sin(t*0.5)>0.2;
       if(out){
         const dx=vx+5, dy=winY+2+Math.sin(t*9)*0.7;

@@ -203,6 +203,7 @@ G.lunch = ()=>{
   if(fOk&&wOk){ UI.toast(`🍚 점심 — 식량·물 -${need}`);
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
+    if(S.up&&S.up.kitchen) G.moodAll(1);
     if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
   else { G.moodAll(-4); S.fatigue=clamp(S.fatigue+8,0,100);
     UI.toast('🍚 점심을 걸렀다 — 사기·체력이 떨어진다'); }
@@ -222,11 +223,14 @@ G.dawn = ()=>{
   if(S.water>0||S.food>0){ UI.toast(`🍙 아침 배급 — 물·식량 -${n}`);
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
+    if(S.up&&S.up.kitchen) G.moodAll(1);
     if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
   if(S.up&&S.up.beehive&&rng()<0.3){ S.food+=1; G.moodAll(2);
     UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }
   if(G.hasComp('leo')) G.moodAll(3); // 레오의 아침 기타
-  if(S.up&&S.up.garden){ S.food+=1; }
+  if(S.up&&S.up.garden){ S.food += S.up.garden2?2:1; }
+  if(S.up&&S.up.fridge){ S._fridgeD=(S._fridgeD||0)+1;
+    if(S._fridgeD>=3){ S._fridgeD=0; S.food+=1; UI.toast('🧊 냉장 박스 — 아낀 식량 +1'); } }
   if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }
   if(S.fatigue>=70){ G.moodAll(-3); UI.toast('😴 다들 피곤이 얼굴에 앉았다 — 쉬어야 한다'); }
   /* 의뢰 기한 */
@@ -318,7 +322,8 @@ G.tick = (dt)=>{ // dt: real seconds
     if(S._scrapKm>=25){ S._scrapKm-=25; S.scrap++; UI.toast('🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1'); } }
   // 운전은 추가 피로 (밤 운전은 특히)
   const nightFtg = G.isNight()? (S.up&&S.up.lightbar?0.049:0.075) : 0.04;   // 라이트바=밤길이 덜 갉아먹음
-  S.fatigue = clamp(S.fatigue + gm*nightFtg*(1-G.driverLv()*0.06), 0, 100);
+  const bunkMul = S.up&&S.up.bunk? 0.8:1;                                    // 2층 침대=교대 수면
+  S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*(1-G.driverLv()*0.06), 0, 100);
   G.checkDriverLv();
   G.advance(gm);
   if(S.ended) return;
@@ -394,6 +399,8 @@ G.fireDriveEvent = ()=>{
     if(S.driving&&S.driving.road==='high'&&e.type==='추적') w*=1.3;  // 천리안은 고속도로를 좋아한다
     if(S.up&&S.up.winch&&e.type==='위기') w*=0.6;                     // 윈치=빠져도 나온다
     if(S.up&&S.up.lightbar&&G.isNight()&&e.type==='발견') w*=1.3;     // 라이트바=밤눈
+    if(S.up&&S.up.scope){ if(e.type==='발견') w*=1.25; if(AMBUSH.includes(e.id)) w*=0.75; }
+    if(S.up&&S.up.horn&&['crisis_boar','meet_bikers','meet_waver'].includes(e.id)) w*=0.7;
     return w; };
   const total = pool.reduce((s,e)=>s+wOf(e),0);
   let r = rng()*total;
@@ -579,6 +586,7 @@ G.camp = (msg)=>{
     let risk = G.regionOf()==='north'? 0.45:0.33;
     if(S.dog) risk-=0.10;
     if(G.hasPerk('kw_guard')) risk-=0.10;
+    if(S.up&&S.up.curtain) risk-=0.07;
     if(rng()<Math.max(0.08,risk)){
       const north = G.regionOf()==='north';
       const r=rng();
@@ -680,11 +688,12 @@ G.canCraft = (id)=>{
 G.craft = (id)=>{
   const c=D.crafts.find(x=>x.id===id);
   const chk=G.canCraft(id); if(!chk.ok) return false;
-  if(c.need.scrap) S.scrap-=c.need.scrap;
+  const ar=S.up&&S.up.armory;
+  if(c.need.scrap) S.scrap-=ar? Math.ceil(c.need.scrap*0.8):c.need.scrap;
   if(c.need.parts) S.items['부품']-=c.need.parts;
   if(c.need.fuel) S.fuel-=c.need.fuel;
   for(const nm in c.out) S.items[nm]=(S.items[nm]||0)+c.out[nm];
-  G.advance(40);
+  G.advance(ar?20:40);
   UI.toast(`${c.ic} ${c.nm} 제작 완료`);
   G.save(); return true;
 };

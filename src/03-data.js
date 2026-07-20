@@ -614,6 +614,14 @@ D.upgrades = [
  {id:'stove',   nm:'장작 난로',     ic:'♨', d:'야영 사기 +2 (비 오는 밤엔 +3)',        cost:{scrap:20,parts:0}},
  {id:'sidebox', nm:'사이드 공구함', ic:'🧰', d:'현장 정비 +45로 강화·부품 50% 확률 아낌', cost:{scrap:18,parts:1}},
  {id:'beehive', nm:'이동 벌통',     ic:'🐝', d:'아침 30% 확률 꿀 — 식량+1·사기+2',      cost:{scrap:28,parts:0}},
+ {id:'garden2', nm:'지붕 온실',     ic:'🍅', d:'텃밭 강화 — 매일 식량 +2', cost:{scrap:30,parts:1}, needs:'garden'},
+ {id:'kitchen', nm:'간이 주방',     ic:'🍳', d:'난로 확장 — 식사 때마다 사기 +1', cost:{scrap:24,parts:1}, needs:'stove'},
+ {id:'bunk',    nm:'2층 침대',      ic:'🛏', d:'거주구 확장 — 교대 수면, 주행 피로 -20%', cost:{scrap:28,parts:1}, needs:'cabin'},
+ {id:'fridge',  nm:'냉장 박스',     ic:'🧊', d:'태양광 연결 — 3일마다 식량 +1 (낭비 제로)', cost:{scrap:26,parts:1}, needs:'solar'},
+ {id:'armory',  nm:'무기 선반',     ic:'⚔', d:'공구함 확장 — 제작 고철 -20%·시간 절반', cost:{scrap:24,parts:1}, needs:'sidebox'},
+ {id:'scope',   nm:'지붕 망원대',   ic:'🔭', d:'발견율 +25% · 매복류 조우 -25%', cost:{scrap:22,parts:1}},
+ {id:'horn',    nm:'왕경적',        ic:'📯', d:'들개·멧돼지·강도류 조우 -30%', cost:{scrap:16,parts:0}},
+ {id:'curtain', nm:'암막 커튼',     ic:'🌒', d:'야영 리스크 -7%p — 불빛이 새지 않는다', cost:{scrap:14,parts:0}},
 ];
 
 /* ── 인트로 ── */
