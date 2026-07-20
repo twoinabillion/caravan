@@ -546,13 +546,12 @@ G.arrive = ()=>{
       setTimeout(()=>G.openEvent(D.seoulOpenEvent), 500);
       G.save(); return;
     }
-    /* 아직 — 길이 접혀 되돌아온다 (실은 과업 수·부족분 안내) */
+    /* 아직 — 길이 접혀 되돌아온다 (제일 모자란 기둥 안내) */
     UI.renderAll();
-    const n2=G.deedsDone().length;
-    const hint=G.missingDeedHint();
+    const miss=G.seoulMissing();
     setTimeout(()=>{
-      UI.toast(`📖 여정 장부 ${n2}/${D.seoulNeed} — ${hint?('아직: '+hint):'조금 더'}`);
-      setTimeout(()=>G.openEvent(D.gateEvent), 1400);
+      UI.toast(`📖 ${miss.pillar} ${miss.have}/${miss.need} — 아직: ${miss.hint}`);
+      setTimeout(()=>G.openEvent(D.gateEvent), 1600);
     }, 500);
     G.save(); return; }
   const n = D.nodes[to];
@@ -775,14 +774,36 @@ G.deedDone = (d)=>{
   return false;
 };
 G.deedsDone = ()=> D.deeds.filter(G.deedDone);
-G.seoulReady = ()=> G.deedsDone().length >= (D.seoulNeed||6);
-/* 아직 못 실은 것 중 힌트 하나 (관문에서 되돌릴 때 안내) */
-G.missingDeedHint = ()=>{
-  const undone = D.deeds.filter(d=>!G.deedDone(d));
-  /* 동료가 이미 탑승했는데 유대만 부족한 것을 우선 안내 */
-  const near = undone.find(d=>d.comp && G.hasComp(d.comp));
-  const pick0 = near || undone.find(d=>!d.comp) || undone[0];
-  return pick0 ? pick0.hint : null;
+/* 네 기둥 진척 — 어느 하나도 건너뛸 수 없다 */
+G.pillars = ()=>{
+  const done = G.deedsDone();
+  return {
+    관계: { have: done.filter(d=>d.cat==='동료').length, need: D.seoulPillars.관계,
+            hint:'동료와 깊이 유대를 쌓아 개인 서사에 닿기' },
+    세계: { have: G.cellsLinked().length,               need: D.seoulPillars.세계,
+            hint:'저항 거점을 이어 세상 편이 되기 (지역을 돌며 접선)' },
+    진실: { have: S.flags.massacre_known?1:0,            need: 1,
+            hint:'천리안이 무엇을 했는지 알아내기 (강원의 산으로)' },
+    유산: { have: done.filter(d=>d.cat==='회수').length, need: D.seoulPillars.유산,
+            hint:'남산에서 열 것들을 챙기기 (편지·봉투·커피)' },
+  };
+};
+G.seoulReady = ()=>{
+  const p=G.pillars();
+  return Object.values(p).every(x=>x.have>=x.need)
+      && G.deedsDone().length >= (D.seoulNeed||8);
+};
+/* 관문에서 되돌릴 때 — 제일 모자란 기둥 하나 안내 */
+G.seoulMissing = ()=>{
+  const p=G.pillars();
+  /* 부족분(need-have)이 큰 기둥부터 */
+  const lacking = Object.entries(p).filter(([k,x])=>x.have<x.need)
+    .sort((a,b)=>(b[1].need-b[1].have)-(a[1].need-a[1].have));
+  if(lacking.length){ const [k,x]=lacking[0]; return {pillar:k, have:x.have, need:x.need, hint:x.hint}; }
+  /* 기둥은 다 찼는데 총 과업이 모자란 경우 */
+  const undone=D.deeds.filter(d=>!G.deedDone(d));
+  const near=undone.find(d=>d.comp&&G.hasComp(d.comp))||undone.find(d=>!d.comp)||undone[0];
+  return {pillar:'여정', have:G.deedsDone().length, need:D.seoulNeed, hint: near?near.hint:'조금 더'};
 };
 
 /* ── 라디오 수리 (진공관 1 소모, 1회) ── */

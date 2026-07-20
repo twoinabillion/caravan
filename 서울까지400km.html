@@ -799,7 +799,9 @@ D.resistance = [
 /* ═══════════ 여정 장부 — 서울은 '싣고 온 것'이 있어야 열린다 ═══════════
    천리안: "전부 싣고 오세요." 아래 과업을 일정 수 이상 완수해야 남산이 열림.
    comp: 해당 동료와 유대 Lv3(개인 서사) 도달 / flag: 세계·회수 플래그 */
-D.seoulNeed = 6;   // 남산이 열리는 최소 과업 수
+D.seoulNeed = 9;   // 남산이 열리는 최소 총 과업 수 (13개 중)
+/* 네 기둥 — 어느 하나도 건너뛸 수 없다. 진실(진실=1)은 항상 필수 */
+D.seoulPillars = { 관계:2, 세계:3, 유산:2 };   // 동료 서사 2 + 저항 거점 3 + 회수템 2 (+진실 1)
 D.deeds = [
  /* 동료 서사 — 각자의 이유를 남산까지 싣고 가기 */
  {id:'deed_mj',  cat:'동료', comp:'minji',   title:'민지의 신호',    hint:'민지와 깊어져 오빠의 이야기에 닿기'},
@@ -6354,13 +6356,12 @@ G.arrive = ()=>{
       setTimeout(()=>G.openEvent(D.seoulOpenEvent), 500);
       G.save(); return;
     }
-    /* 아직 — 길이 접혀 되돌아온다 (실은 과업 수·부족분 안내) */
+    /* 아직 — 길이 접혀 되돌아온다 (제일 모자란 기둥 안내) */
     UI.renderAll();
-    const n2=G.deedsDone().length;
-    const hint=G.missingDeedHint();
+    const miss=G.seoulMissing();
     setTimeout(()=>{
-      UI.toast(`📖 여정 장부 ${n2}/${D.seoulNeed} — ${hint?('아직: '+hint):'조금 더'}`);
-      setTimeout(()=>G.openEvent(D.gateEvent), 1400);
+      UI.toast(`📖 ${miss.pillar} ${miss.have}/${miss.need} — 아직: ${miss.hint}`);
+      setTimeout(()=>G.openEvent(D.gateEvent), 1600);
     }, 500);
     G.save(); return; }
   const n = D.nodes[to];
@@ -6583,14 +6584,36 @@ G.deedDone = (d)=>{
   return false;
 };
 G.deedsDone = ()=> D.deeds.filter(G.deedDone);
-G.seoulReady = ()=> G.deedsDone().length >= (D.seoulNeed||6);
-/* 아직 못 실은 것 중 힌트 하나 (관문에서 되돌릴 때 안내) */
-G.missingDeedHint = ()=>{
-  const undone = D.deeds.filter(d=>!G.deedDone(d));
-  /* 동료가 이미 탑승했는데 유대만 부족한 것을 우선 안내 */
-  const near = undone.find(d=>d.comp && G.hasComp(d.comp));
-  const pick0 = near || undone.find(d=>!d.comp) || undone[0];
-  return pick0 ? pick0.hint : null;
+/* 네 기둥 진척 — 어느 하나도 건너뛸 수 없다 */
+G.pillars = ()=>{
+  const done = G.deedsDone();
+  return {
+    관계: { have: done.filter(d=>d.cat==='동료').length, need: D.seoulPillars.관계,
+            hint:'동료와 깊이 유대를 쌓아 개인 서사에 닿기' },
+    세계: { have: G.cellsLinked().length,               need: D.seoulPillars.세계,
+            hint:'저항 거점을 이어 세상 편이 되기 (지역을 돌며 접선)' },
+    진실: { have: S.flags.massacre_known?1:0,            need: 1,
+            hint:'천리안이 무엇을 했는지 알아내기 (강원의 산으로)' },
+    유산: { have: done.filter(d=>d.cat==='회수').length, need: D.seoulPillars.유산,
+            hint:'남산에서 열 것들을 챙기기 (편지·봉투·커피)' },
+  };
+};
+G.seoulReady = ()=>{
+  const p=G.pillars();
+  return Object.values(p).every(x=>x.have>=x.need)
+      && G.deedsDone().length >= (D.seoulNeed||8);
+};
+/* 관문에서 되돌릴 때 — 제일 모자란 기둥 하나 안내 */
+G.seoulMissing = ()=>{
+  const p=G.pillars();
+  /* 부족분(need-have)이 큰 기둥부터 */
+  const lacking = Object.entries(p).filter(([k,x])=>x.have<x.need)
+    .sort((a,b)=>(b[1].need-b[1].have)-(a[1].need-a[1].have));
+  if(lacking.length){ const [k,x]=lacking[0]; return {pillar:k, have:x.have, need:x.need, hint:x.hint}; }
+  /* 기둥은 다 찼는데 총 과업이 모자란 경우 */
+  const undone=D.deeds.filter(d=>!G.deedDone(d));
+  const near=undone.find(d=>d.comp&&G.hasComp(d.comp))||undone.find(d=>!d.comp)||undone[0];
+  return {pillar:'여정', have:G.deedsDone().length, need:D.seoulNeed, hint: near?near.hint:'조금 더'};
 };
 
 /* ── 라디오 수리 (진공관 1 소모, 1회) ── */
@@ -8897,7 +8920,14 @@ const UI = (()=>{
     /* 여정 장부 — 서울은 싣고 온 것이 있어야 열린다 */
     const doneN=G.deedsDone().length, needN=D.seoulNeed;
     const catIco={동료:'♦',회수:'✉',세계:'◈'};
-    h+=`<div class="st-sec"><h4>📖 여정 장부 <small style="color:${doneN>=needN?'var(--ok)':'var(--faded)'};font-weight:400">${doneN}/${needN} ${doneN>=needN?'· 남산이 열린다':'· 전부 싣고 오세요'}</small></h4>`;
+    const ready=G.seoulReady();
+    h+=`<div class="st-sec"><h4>📖 여정 장부 <small style="color:${ready?'var(--ok)':'var(--faded)'};font-weight:400">${ready?'· 남산이 열린다':'· 네 기둥을 싣고 오세요'}</small></h4>`;
+    const P=G.pillars(), pIco={관계:'♦',세계:'🕯',진실:'◈',유산:'✉'};
+    h+=`<div class="st-row" style="flex-wrap:wrap;gap:6px;margin-bottom:4px">`;
+    ['관계','세계','진실','유산'].forEach(k=>{ const x=P[k], ok=x.have>=x.need;
+      h+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
+    });
+    h+=`<span style="font-family:var(--mono);font-size:10.5px;color:var(--dim);align-self:center">총 ${doneN}/${needN}</span></div>`;
     ['동료','회수','세계'].forEach(cat=>{
       D.deeds.filter(d=>d.cat===cat).forEach(d=>{
         const ok=G.deedDone(d);

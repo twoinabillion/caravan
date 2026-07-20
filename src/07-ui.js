@@ -782,7 +782,14 @@ const UI = (()=>{
     /* 여정 장부 — 서울은 싣고 온 것이 있어야 열린다 */
     const doneN=G.deedsDone().length, needN=D.seoulNeed;
     const catIco={동료:'♦',회수:'✉',세계:'◈'};
-    h+=`<div class="st-sec"><h4>📖 여정 장부 <small style="color:${doneN>=needN?'var(--ok)':'var(--faded)'};font-weight:400">${doneN}/${needN} ${doneN>=needN?'· 남산이 열린다':'· 전부 싣고 오세요'}</small></h4>`;
+    const ready=G.seoulReady();
+    h+=`<div class="st-sec"><h4>📖 여정 장부 <small style="color:${ready?'var(--ok)':'var(--faded)'};font-weight:400">${ready?'· 남산이 열린다':'· 네 기둥을 싣고 오세요'}</small></h4>`;
+    const P=G.pillars(), pIco={관계:'♦',세계:'🕯',진실:'◈',유산:'✉'};
+    h+=`<div class="st-row" style="flex-wrap:wrap;gap:6px;margin-bottom:4px">`;
+    ['관계','세계','진실','유산'].forEach(k=>{ const x=P[k], ok=x.have>=x.need;
+      h+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
+    });
+    h+=`<span style="font-family:var(--mono);font-size:10.5px;color:var(--dim);align-self:center">총 ${doneN}/${needN}</span></div>`;
     ['동료','회수','세계'].forEach(cat=>{
       D.deeds.filter(d=>d.cat===cat).forEach(d=>{
         const ok=G.deedDone(d);
