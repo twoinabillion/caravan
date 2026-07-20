@@ -161,7 +161,7 @@ with sync_playwright() as p:
       out.dailyLimit = !G.talkTo('minji');                                 // 하루 1회 제한
       return out;
     }''')
-    check('대화 이벤트 146종', r5['talkCount'] == 146, str(r5['talkCount']))
+    check('대화 이벤트 158종', r5['talkCount'] == 158, str(r5['talkCount']))
     # 티키타카(연속 잡담)
     r6 = pg.evaluate('''() => {
       const out = {};
@@ -236,7 +236,7 @@ with sync_playwright() as p:
     check('6개 완수→서울 열림', r7['doneCount'] == 6 and r7['fullReady'])
     check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
-    check('티키타카 20종', r6['chatCount'] == 20, str(r6['chatCount']))
+    check('티키타카 25종', r6['chatCount'] == 25, str(r6['chatCount']))
     check('연속 대화 재생(2줄+)', r6['picked'] >= 2, str(r6['picked']))
     check('화자 전원 탑승 보장', r6['orphan'] == 0, str(r6['orphan']))
     check('needBond 게이트(유대 5 해금)', r5['noDeep'] and r5['deepOpen'], str(r5))
