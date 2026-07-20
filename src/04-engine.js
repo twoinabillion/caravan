@@ -525,6 +525,15 @@ G.doRecruit = (id)=>{
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
   if(id==='leo') S.dog=true;
   UI.toast(`<span class="ic">${D.comps[id].face}</span>${D.comps[id].name}, 달구지에 탑승`);
+  /* 소개 체인: 아직 안 만난 동료 하나를 짚어준다 (고리 우선, 없으면 아무나) */
+  const ref=D.compRefer[id];
+  let target = ref && !G.hasComp(ref.to) ? ref.to : Object.keys(D.comps).find(c=>!G.hasComp(c));
+  if(target){
+    const line = ref && ref.to===target ? ref.line : `"${D.compWhere[target]} — 그 사람도 꼭 만나."`;
+    G.addNote({type:'소문', title:`${D.comps[id].name}의 소개 — ${D.comps[target].name}`,
+      body:`${line}\n\n📍 ${D.compWhere[target]}`, links:[D.comps[target].name]});
+    setTimeout(()=>UI.toast(`<span class="ic">➜</span>${D.comps[id].name}: ${D.comps[target].name}를 찾아보라 (${D.compWhere[target].split(' —')[0]})`), 1400);
+  }
   G.save(); return true;
 };
 
@@ -777,9 +786,12 @@ G.deedsDone = ()=> D.deeds.filter(G.deedDone);
 /* 네 기둥 진척 — 어느 하나도 건너뛸 수 없다 */
 G.pillars = ()=>{
   const done = G.deedsDone();
+  const nComp = Object.keys(D.comps).length;   // 6
+  /* 아직 못 만난 동료 하나 (관계 힌트용) */
+  const miss = Object.keys(D.comps).find(c=>!G.hasComp(c));
   return {
-    관계: { have: done.filter(d=>d.cat==='동료').length, need: D.seoulPillars.관계,
-            hint:'동료와 깊이 유대를 쌓아 개인 서사에 닿기' },
+    관계: { have: S.party.length, need: nComp,
+            hint: miss? `${D.comps[miss].name}를 아직 못 만났다 — ${D.compWhere[miss].split(' —')[0]}` : '동료를 전부 모으기' },
     세계: { have: G.cellsLinked().length,               need: D.seoulPillars.세계,
             hint:'저항 거점을 이어 세상 편이 되기 (지역을 돌며 접선)' },
     진실: { have: S.flags.massacre_known?1:0,            need: 1,
@@ -788,11 +800,7 @@ G.pillars = ()=>{
             hint:'남산에서 열 것들을 챙기기 (편지·봉투·커피)' },
   };
 };
-G.seoulReady = ()=>{
-  const p=G.pillars();
-  return Object.values(p).every(x=>x.have>=x.need)
-      && G.deedsDone().length >= (D.seoulNeed||8);
-};
+G.seoulReady = ()=> Object.values(G.pillars()).every(x=>x.have>=x.need);
 /* 관문에서 되돌릴 때 — 제일 모자란 기둥 하나 안내 */
 G.seoulMissing = ()=>{
   const p=G.pillars();

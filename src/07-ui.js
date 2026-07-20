@@ -789,13 +789,15 @@ const UI = (()=>{
     ['관계','세계','진실','유산'].forEach(k=>{ const x=P[k], ok=x.have>=x.need;
       h+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
     });
-    h+=`<span style="font-family:var(--mono);font-size:10.5px;color:var(--dim);align-self:center">총 ${doneN}/${needN}</span></div>`;
-    ['동료','회수','세계'].forEach(cat=>{
-      D.deeds.filter(d=>d.cat===cat).forEach(d=>{
-        const ok=G.deedDone(d);
-        const dim = d.comp && !G.hasComp(d.comp);   // 미영입 동료는 흐리게
-        h+=`<div class="st-row" style="${dim?'opacity:.4':''}"><span class="k">${ok?'✓':catIco[cat]} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':(dim?'미합류':d.hint)}</span></div>`;
-      });
+    h+=`</div>`;
+    /* 관계 — 동료 전원 모으기 (미합류는 지역 힌트) */
+    Object.keys(D.comps).forEach(id=>{
+      const c=D.comps[id], got=G.hasComp(id);
+      h+=`<div class="st-row" style="${got?'':'opacity:.55'}"><span class="k">${got?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${got?'var(--ok)':'var(--faded)'}">${got?'합류함':('찾는 중 — '+D.compWhere[id].split(' —')[0])}</span></div>`;
+    });
+    /* 회수템 */
+    D.deeds.filter(d=>d.cat==='회수').forEach(d=>{ const ok=G.deedDone(d);
+      h+=`<div class="st-row"><span class="k">${ok?'✓':'✉'} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':d.hint}</span></div>`;
     });
     h+=`</div>`;
     /* 저항 연대망 — 계시 이후에만 표시 */

@@ -754,7 +754,7 @@ D.comps = {
          {id:'es_tap',  nm:'도청',       d:'야영 중 25% 확률로 미확인 장소의 신호를 잡는다'}],
       3:{id:'es_story', nm:'백도어', d:'스토리 — 은수는 아직 살아 있는 접속 코드를 갖고 있다', story:1}}},
 };
-D.maxParty = 3;
+D.maxParty = 6;   // 6명 전원 = 메인 파티. 봉고차가 다 태운다
 D.bondTh = [5,12,20];
 /* 동료를 만날 수 있는 지역 힌트 (상태 화면) */
 D.compWhere = {
@@ -764,6 +764,15 @@ D.compWhere = {
   leo:'호남의 밤길 — 전주·광주·담양 어딘가에서',
   jaeyi:'서쪽 항구와 김천 사이 — 고물이 모이는 길에서',
   eunsu:'대전·세종 인근 — 관제센터가 있던 땅에서',
+};
+/* 소개 고리 — 한 명을 영입하면 다음 동료 위치를 짚어준다 (전원 모으게 강제) */
+D.compRefer = {
+  minji:  {to:'kangwoo', line:'"참, 대구 돔 시장에 강우라고— 눈 하나는 기가 막힌 파수꾼이 있어. 그 사람 있으면 이 길이 훨씬 안전할 텐데. 꼭 데려와."'},
+  kangwoo:{to:'parkss',  line:'"…경북 국도. 구미에서 김천 사이. 약사 하나가 돌아다닌다. 늙었지만 손이 정확해. 아픈 사람 나오기 전에 태워둬라."'},
+  parkss: {to:'jaeyi',   line:'"김천이랑 군산 사이에 고물 줍는 아가씨가 있어. 손이 야무지더군. 이런 여행엔 뭐든 고치고 바꾸는 사람이 하나 있어야 해. 데려와."'},
+  jaeyi:  {to:'leo',     line:'"호남 밤길에 노래하는 오빠가 있대요! 개도 데리고. 여행에 노래 없으면 그거 그냥 이동이잖아요. 꼭 만나요."'},
+  leo:    {to:'eunsu',   line:'"대전 관제센터 쪽에 조용한 누나가 있대요. 라디오를 기가 막히게 잡는대요. 신호 잡는 사람 있으면… 누굴 찾을 때 큰일 하죠. 꼭이요."'},
+  eunsu:  {to:'minji',   line:'"동해 공업지대에 정비사가 있다고 전파에 잡혔어요. 신호를 잘 아는 사람이래요. 이 차, 오래 굴리려면 그런 손이 필요해요."'},
 };
 
 /* ── 제작 (위수 구역 진입 후 해금) ── */
@@ -799,9 +808,8 @@ D.resistance = [
 /* ═══════════ 여정 장부 — 서울은 '싣고 온 것'이 있어야 열린다 ═══════════
    천리안: "전부 싣고 오세요." 아래 과업을 일정 수 이상 완수해야 남산이 열림.
    comp: 해당 동료와 유대 Lv3(개인 서사) 도달 / flag: 세계·회수 플래그 */
-D.seoulNeed = 9;   // 남산이 열리는 최소 총 과업 수 (13개 중)
-/* 네 기둥 — 어느 하나도 건너뛸 수 없다. 진실(진실=1)은 항상 필수 */
-D.seoulPillars = { 관계:2, 세계:3, 유산:2 };   // 동료 서사 2 + 저항 거점 3 + 회수템 2 (+진실 1)
+/* 네 기둥 — 어느 하나도 건너뛸 수 없다. 관계=6명 전원(D.comps 수로 자동) */
+D.seoulPillars = { 세계:3, 유산:2 };   // 저항 거점 3 + 회수템 2 (+관계 6명 전원 +진실 1)
 D.deeds = [
  /* 동료 서사 — 각자의 이유를 남산까지 싣고 가기 */
  {id:'deed_mj',  cat:'동료', comp:'minji',   title:'민지의 신호',    hint:'민지와 깊어져 오빠의 이야기에 닿기'},
@@ -6335,6 +6343,15 @@ G.doRecruit = (id)=>{
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
   if(id==='leo') S.dog=true;
   UI.toast(`<span class="ic">${D.comps[id].face}</span>${D.comps[id].name}, 달구지에 탑승`);
+  /* 소개 체인: 아직 안 만난 동료 하나를 짚어준다 (고리 우선, 없으면 아무나) */
+  const ref=D.compRefer[id];
+  let target = ref && !G.hasComp(ref.to) ? ref.to : Object.keys(D.comps).find(c=>!G.hasComp(c));
+  if(target){
+    const line = ref && ref.to===target ? ref.line : `"${D.compWhere[target]} — 그 사람도 꼭 만나."`;
+    G.addNote({type:'소문', title:`${D.comps[id].name}의 소개 — ${D.comps[target].name}`,
+      body:`${line}\n\n📍 ${D.compWhere[target]}`, links:[D.comps[target].name]});
+    setTimeout(()=>UI.toast(`<span class="ic">➜</span>${D.comps[id].name}: ${D.comps[target].name}를 찾아보라 (${D.compWhere[target].split(' —')[0]})`), 1400);
+  }
   G.save(); return true;
 };
 
@@ -6587,9 +6604,12 @@ G.deedsDone = ()=> D.deeds.filter(G.deedDone);
 /* 네 기둥 진척 — 어느 하나도 건너뛸 수 없다 */
 G.pillars = ()=>{
   const done = G.deedsDone();
+  const nComp = Object.keys(D.comps).length;   // 6
+  /* 아직 못 만난 동료 하나 (관계 힌트용) */
+  const miss = Object.keys(D.comps).find(c=>!G.hasComp(c));
   return {
-    관계: { have: done.filter(d=>d.cat==='동료').length, need: D.seoulPillars.관계,
-            hint:'동료와 깊이 유대를 쌓아 개인 서사에 닿기' },
+    관계: { have: S.party.length, need: nComp,
+            hint: miss? `${D.comps[miss].name}를 아직 못 만났다 — ${D.compWhere[miss].split(' —')[0]}` : '동료를 전부 모으기' },
     세계: { have: G.cellsLinked().length,               need: D.seoulPillars.세계,
             hint:'저항 거점을 이어 세상 편이 되기 (지역을 돌며 접선)' },
     진실: { have: S.flags.massacre_known?1:0,            need: 1,
@@ -6598,11 +6618,7 @@ G.pillars = ()=>{
             hint:'남산에서 열 것들을 챙기기 (편지·봉투·커피)' },
   };
 };
-G.seoulReady = ()=>{
-  const p=G.pillars();
-  return Object.values(p).every(x=>x.have>=x.need)
-      && G.deedsDone().length >= (D.seoulNeed||8);
-};
+G.seoulReady = ()=> Object.values(G.pillars()).every(x=>x.have>=x.need);
 /* 관문에서 되돌릴 때 — 제일 모자란 기둥 하나 안내 */
 G.seoulMissing = ()=>{
   const p=G.pillars();
@@ -7357,11 +7373,12 @@ const SCENE = (()=>{
       ctx.fillStyle=`rgba(240,240,235,${0.4*(1-rise/5)})`;
       ctx.fillRect(P(vx+30+Math.sin(t*3)*0.8),P(vy-14-rise),1,1);   // 김
     }
-    /* 탑승자 (나 + 동료) */
+    /* 탑승자 (나 + 동료) — 인원수만큼 창문에 균등 배치 */
     const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
     const riders=S? [['#2c3346'],...S.party.filter(id=>!outside.includes(id)).map(id=>[D.comps[id].color])]:[['#2c3346']];
-    if(!curtained) riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
-      const hx=P(vx+bodyL-14-i*13);
+    const seatSpan=bodyL-20, seatGap=Math.min(13, seatSpan/Math.max(1,riders.length));  // 많으면 촘촘히
+    if(!curtained) riders.forEach((r,i)=>{
+      const hx=P(vx+bodyL-8-i*seatGap);
       const nod = Math.sin(t*1.2+i*2.7)>0.96?1:0;                    // 가끔 고개 까딱
       const doze = S && S.fatigue>=70 && speed>0 && i===1+(S.day%3) && i>0;  // 피로하면 누군가 존다
       const hy=P(winY+winH-3+((i%2)?bnc2-bnc:0)) + (doze? 1:nod);
@@ -7378,8 +7395,8 @@ const SCENE = (()=>{
     });
     /* 식사 연출: 창문 안 먹는 모션 + 김 (아침 배급·점심 후 16초) */
     if(mealT>0){
-      riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
-        const hx=P(vx+bodyL-14-i*13), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
+      riders.forEach((r,i)=>{
+        const hx=P(vx+bodyL-8-i*seatGap), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
         const toMouth = Math.sin(t*4.5+i*1.7)>0;                 // 손이 입으로 갔다 내려갔다
         ctx.fillStyle='#e8d9a8';                                  // 주먹밥
         ctx.fillRect(hx+(toMouth?0:1), hy-(toMouth?3:1), 2,1);
@@ -8927,13 +8944,15 @@ const UI = (()=>{
     ['관계','세계','진실','유산'].forEach(k=>{ const x=P[k], ok=x.have>=x.need;
       h+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
     });
-    h+=`<span style="font-family:var(--mono);font-size:10.5px;color:var(--dim);align-self:center">총 ${doneN}/${needN}</span></div>`;
-    ['동료','회수','세계'].forEach(cat=>{
-      D.deeds.filter(d=>d.cat===cat).forEach(d=>{
-        const ok=G.deedDone(d);
-        const dim = d.comp && !G.hasComp(d.comp);   // 미영입 동료는 흐리게
-        h+=`<div class="st-row" style="${dim?'opacity:.4':''}"><span class="k">${ok?'✓':catIco[cat]} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':(dim?'미합류':d.hint)}</span></div>`;
-      });
+    h+=`</div>`;
+    /* 관계 — 동료 전원 모으기 (미합류는 지역 힌트) */
+    Object.keys(D.comps).forEach(id=>{
+      const c=D.comps[id], got=G.hasComp(id);
+      h+=`<div class="st-row" style="${got?'':'opacity:.55'}"><span class="k">${got?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${got?'var(--ok)':'var(--faded)'}">${got?'합류함':('찾는 중 — '+D.compWhere[id].split(' —')[0])}</span></div>`;
+    });
+    /* 회수템 */
+    D.deeds.filter(d=>d.cat==='회수').forEach(d=>{ const ok=G.deedDone(d);
+      h+=`<div class="st-row"><span class="k">${ok?'✓':'✉'} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':d.hint}</span></div>`;
     });
     h+=`</div>`;
     /* 저항 연대망 — 계시 이후에만 표시 */

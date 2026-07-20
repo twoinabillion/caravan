@@ -607,11 +607,12 @@ const SCENE = (()=>{
       ctx.fillStyle=`rgba(240,240,235,${0.4*(1-rise/5)})`;
       ctx.fillRect(P(vx+30+Math.sin(t*3)*0.8),P(vy-14-rise),1,1);   // 김
     }
-    /* 탑승자 (나 + 동료) */
+    /* 탑승자 (나 + 동료) — 인원수만큼 창문에 균등 배치 */
     const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
     const riders=S? [['#2c3346'],...S.party.filter(id=>!outside.includes(id)).map(id=>[D.comps[id].color])]:[['#2c3346']];
-    if(!curtained) riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
-      const hx=P(vx+bodyL-14-i*13);
+    const seatSpan=bodyL-20, seatGap=Math.min(13, seatSpan/Math.max(1,riders.length));  // 많으면 촘촘히
+    if(!curtained) riders.forEach((r,i)=>{
+      const hx=P(vx+bodyL-8-i*seatGap);
       const nod = Math.sin(t*1.2+i*2.7)>0.96?1:0;                    // 가끔 고개 까딱
       const doze = S && S.fatigue>=70 && speed>0 && i===1+(S.day%3) && i>0;  // 피로하면 누군가 존다
       const hy=P(winY+winH-3+((i%2)?bnc2-bnc:0)) + (doze? 1:nod);
@@ -628,8 +629,8 @@ const SCENE = (()=>{
     });
     /* 식사 연출: 창문 안 먹는 모션 + 김 (아침 배급·점심 후 16초) */
     if(mealT>0){
-      riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
-        const hx=P(vx+bodyL-14-i*13), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
+      riders.forEach((r,i)=>{
+        const hx=P(vx+bodyL-8-i*seatGap), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
         const toMouth = Math.sin(t*4.5+i*1.7)>0;                 // 손이 입으로 갔다 내려갔다
         ctx.fillStyle='#e8d9a8';                                  // 주먹밥
         ctx.fillRect(hx+(toMouth?0:1), hy-(toMouth?3:1), 2,1);

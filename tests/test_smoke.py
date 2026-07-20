@@ -181,17 +181,19 @@ with sync_playwright() as p:
     # 여정 장부 + 서울 관문 + 서울 맵
     r7 = pg.evaluate('''() => {
       const out = {};
-      out.deeds = D.deeds.length; out.need = D.seoulNeed; out.pillars = D.seoulPillars;
+      out.deeds = D.deeds.length; out.maxParty = D.maxParty; out.compCount = Object.keys(D.comps).length;
       S.flags = {}; S.party = []; out.emptyReady = G.seoulReady();
-      // 세계/회수만 채워도 기둥(관계·세계·진실) 부족 → 안 열려야
-      ['postman_letter','gp_envelope_found','coffee_found','chalkwall_signed','radio_fixed','freq400_done','seoul_seen'].forEach(f => S.flags[f] = true);
-      out.partialReady = G.seoulReady();          // false여야
-      out.missPillar = G.seoulMissing().pillar;
-      // 네 기둥 다 채우기
-      S.party = ['minji','leo']; S.comps.minji.lvl = 3; S.comps.leo.lvl = 3;
-      S.flags.cell_road = true; S.flags.cell_sea = true; S.flags.cell_dome = true;
-      S.flags.massacre_known = true;
-      out.doneCount = G.deedsDone().length; out.fullReady = G.seoulReady();
+      // 동료 5명 + 세계3 + 진실 + 회수2 → 관계 기둥(6명) 부족으로 잠김
+      S.party = ['minji','parkss','kangwoo','leo','jaeyi'];
+      ['cell_road','cell_sea','cell_dome','massacre_known','postman_letter','gp_envelope_found'].forEach(f => S.flags[f] = true);
+      out.partialReady = G.seoulReady();          // false여야 (은수 없음)
+      out.missPillar = G.seoulMissing().pillar;   // '관계'
+      // 6명 전원 → 열림
+      S.party.push('eunsu');
+      out.fullReady = G.seoulReady();
+      // 소개 체인
+      S.party = []; S.notes = []; G.doRecruit('minji');
+      out.refer = S.notes.some(n => n.title.includes('강우'));
       // 서울 오르막 진행
       S.flags.seoul_open = true; S.seoul = {entered:true};
       out.stage0 = G.seoulStage();
@@ -237,10 +239,11 @@ with sync_playwright() as p:
     check('서울 피날레 저항 통합', r9['coreNames'] and r9['baseRidge'] and r9['ruinsDome'], str(r9))
     check('연대 연결 추적', r8['emptyLinked'] == 0 and r8['allLinked'] == 6, str(r8))
     check('fx.flag2 지원', r8['flag2'])
-    check('여정 장부 13개·필요 9', r7['deeds'] == 13 and r7['need'] == 9, str(r7))
+    check('좌석 6·동료 6', r7['maxParty'] == 6 and r7['compCount'] == 6, str(r7))
     check('빈 상태 서울 잠김', not r7['emptyReady'])
-    check('세계/회수만으론 잠김(네 기둥)', not r7['partialReady'], str(r7))
-    check('네 기둥 충족→서울 열림', r7['fullReady'] and r7['doneCount'] >= 9, str(r7))
+    check('동료 5명이면 잠김(관계 기둥)', not r7['partialReady'] and r7['missPillar'] == '관계', str(r7))
+    check('6명 전원+기둥→서울 열림', r7['fullReady'])
+    check('소개 체인(영입 시 다음 동료 안내)', r7['refer'])
     check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
     check('티키타카 25종', r6['chatCount'] == 25, str(r6['chatCount']))
