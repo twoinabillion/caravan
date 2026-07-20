@@ -376,6 +376,7 @@ G.eligible = (typeFilter)=>{
     if(ev.minParty && S.party.length<ev.minParty) return false;
     if(ev.minPursuit && S.pursuit<ev.minPursuit) return false;
     if(ev.needFlag && !S.flags[ev.needFlag]) return false;
+    if(ev.needFlag2 && !S.flags[ev.needFlag2]) return false;
     if(ev.needWx && S.wx!==ev.needWx) return false;
     if(ev.needRain && !G.isWet()) return false;
     if(ev.needLowWater && S.water>2) return false;

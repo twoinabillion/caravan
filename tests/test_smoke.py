@@ -213,6 +213,22 @@ with sync_playwright() as p:
       return out;
     }''')
     check('저항 거점 6·접선 5·계시 1', r8['cells'] == 6 and r8['cellEvents'] == 5 and r8['reveal'], str(r8))
+    # 저항 후속 + 서울 피날레 통합
+    r9 = pg.evaluate('''() => {
+      const out = {};
+      out.followups = ['cell_sea_2','cell_dome_2','cell_sotgot_2','cell_ghost_2','cell_mountain_2'].filter(id=>D.events.find(e=>e.id===id)).length;
+      const core = D.seoulStops.find(e=>e.id==='seoul_core');
+      out.coreNames = core.choices.some(c=>c.req&&c.req.flag==='massacre_known');
+      const base = D.seoulStops.find(e=>e.id==='seoul_base');
+      out.baseRidge = base.choices.some(c=>c.req&&c.req.flag==='ridge_path');
+      const ruins = D.seoulStops.find(e=>e.id==='seoul_ruins');
+      out.ruinsDome = ruins.choices.some(c=>c.req&&c.req.flag==='dome_dossier');
+      // needFlag2 지원
+      S.flags={'a':true}; out.nf2 = G.eligible().length >= 0; // 그냥 크래시 안 나면 통과
+      return out;
+    }''')
+    check('저항 후속 5종', r9['followups'] == 5, str(r9))
+    check('서울 피날레 저항 통합', r9['coreNames'] and r9['baseRidge'] and r9['ruinsDome'], str(r9))
     check('연대 연결 추적', r8['emptyLinked'] == 0 and r8['allLinked'] == 6, str(r8))
     check('fx.flag2 지원', r8['flag2'])
     check('여정 장부 13개·필요 6', r7['deeds'] == 13 and r7['need'] == 6, str(r7))
