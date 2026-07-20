@@ -489,6 +489,7 @@ G.reqOk = (req)=>{
   if(req.flag && !S.flags[req.flag]) return {ok:false, t:'해당 사항 없음'};
   if(req.comp && !G.hasComp(req.comp)) return {ok:false, t:`${D.comps[req.comp].name} 필요`};
   if(req.up && !(S.up&&S.up[req.up])) return {ok:false, t:`${(G.upDef(req.up)||{nm:req.up}).nm} 필요`};
+  if(req.dog && !S.dog) return {ok:false, t:'보리가 없다'};
   if(req.item && !(S.items[req.item]>0)) return {ok:false, t:`${req.item} 필요`};
   if(req.item2 && !(S.items[req.item2]>0)) return {ok:false, t:`${req.item2} 필요`};
   if(req.scrap && S.scrap<req.scrap) return {ok:false, t:`고철 ${req.scrap} 필요`};
