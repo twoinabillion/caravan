@@ -62,6 +62,7 @@ for (const ev of allEvents) {
   if (ev.needsComp && !compIds.has(ev.needsComp)) err(`${at} needsComp 미존재: ${ev.needsComp}`);
   if (ev.needsComp2 && !compIds.has(ev.needsComp2)) err(`${at} needsComp2 미존재: ${ev.needsComp2}`);
   if (ev.noComp && !compIds.has(ev.noComp)) err(`${at} noComp 미존재: ${ev.noComp}`);
+  if (ev.needUp && !D.upgrades.some(u => u.id === ev.needUp)) err(`${at} needUp 미존재: ${ev.needUp}`);
   if (ev.needFlag && !flagSetters.has(ev.needFlag)) err(`${at} needFlag 세터 없음: ${ev.needFlag}`);
   if (ev.needFlagMin && !flagSetters.has(ev.needFlagMin[0])) err(`${at} needFlagMin 세터 없음: ${ev.needFlagMin[0]}`);
   if (ev.needWx && !D.wx[ev.needWx]) err(`${at} needWx 미존재: ${ev.needWx}`);
@@ -73,6 +74,7 @@ for (const ev of allEvents) {
       if (ch.req.perk && !perkIds.has(ch.req.perk)) err(`${at} req.perk 미존재: ${ch.req.perk}`);
       if (ch.req.flag && !flagSetters.has(ch.req.flag)) err(`${at} req.flag 세터 없음: ${ch.req.flag}`);
       if (ch.req.flagMin && !flagSetters.has(ch.req.flagMin[0])) err(`${at} req.flagMin 세터 없음: ${ch.req.flagMin[0]}`);
+      if (ch.req.up && !D.upgrades.some(u => u.id === ch.req.up)) err(`${at} req.up 미존재: ${ch.req.up}`);
       if (ch.req.item && !itemSources.has(ch.req.item)) err(`${at} req.item 입수처 없음: ${ch.req.item}`);
       if (ch.req.item2 && !itemSources.has(ch.req.item2)) err(`${at} req.item2 입수처 없음: ${ch.req.item2}`);
     }

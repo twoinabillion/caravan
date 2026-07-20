@@ -3,6 +3,7 @@
 const SCENE = (()=>{
   const LW = 236;                     // 논리 해상도(픽셀아트 폭)
   let mealT = 0;                      // 식사 연출 남은 시간(초)
+  let talkIdx = -1, talkT = 0;        // 말하는 탑승자 표시
   let LH = 128;
   let dcv, dctx, VW=560, VH=300, DPR=1;   // 표시 캔버스
   let off, ctx, W=LW, H=LH;               // 픽셀 캔버스 (모든 드로잉)
@@ -479,6 +480,61 @@ const SCENE = (()=>{
       [[vx+6,vy-4],[vx+16,vy-4],[vx+6,vy+0],[vx+16,vy+0],[vx+25,vy-4],[vx+35,vy-4],[vx+25,vy+0],[vx+35,vy+0]]
         .forEach(([rx,ry])=>ctx.fillRect(rx,ry,1,1));
     }
+    if(up.sidebox){ /* 사이드 공구함 (후미 하단) */
+      ctx.fillStyle='#4f5665'; ctx.fillRect(vx-1,vy-2,6,5);
+      ctx.fillStyle='#6a7284'; ctx.fillRect(vx-1,vy-2,6,1);
+      ctx.fillStyle='#c9a24a'; ctx.fillRect(vx+1,vy,1,1);            // 잠금쇠
+    }
+    if(up.stove){ /* 장작 난로 굴뚝 */
+      ctx.fillStyle='#3a3f4a'; ctx.fillRect(vx+17,vy-bodyH-9,2,6);
+      ctx.fillStyle='#565d6b'; ctx.fillRect(vx+16,vy-bodyH-10,4,1);  // 갓
+      if(speed<=0){ for(let sm=0;sm<3;sm++){ const rise=((t*4+sm*3.2)%8);
+        ctx.fillStyle=`rgba(210,210,205,${0.3*(1-rise/8)})`;
+        ctx.fillRect(P(vx+17+Math.sin(t*2+sm)*1.5), P(vy-bodyH-11-rise), 1,1); } }
+    }
+    if(up.beehive){ /* 이동 벌통 (지붕 후미) */
+      ctx.fillStyle='#a58a4a'; ctx.fillRect(vx+bodyL-9,vy-bodyH-7,5,4);
+      ctx.fillStyle='#7a6435'; ctx.fillRect(vx+bodyL-9,vy-bodyH-5,5,1);
+      ctx.fillStyle='#2e2a20'; ctx.fillRect(vx+bodyL-7,vy-bodyH-4,1,1); // 입구
+      for(let bz=0;bz<2;bz++){ ctx.fillStyle='rgba(240,200,90,0.9)';
+        ctx.fillRect(P(vx+bodyL-7+Math.sin(t*7+bz*3)*4), P(vy-bodyH-8+Math.cos(t*9+bz*2)*2), 1,1); }
+    }
+    if(up.lightbar){ /* 라이트바 (캡 지붕) */
+      ctx.fillStyle='#2f333d'; ctx.fillRect(vx+bodyL+2,vy-bodyH+2,9,2);
+      if(dark>0.3){ ctx.fillStyle='#ffe9a8';
+        for(let lb=0;lb<4;lb++) ctx.fillRect(vx+bodyL+3+lb*2,vy-bodyH+3,1,1);
+        ctx.fillStyle='rgba(255,235,170,0.12)'; ctx.fillRect(vx+bodyL+2,vy-bodyH+4,10,3); }
+    }
+    if(up.snorkel){ /* 스노클 (캡 옆 흡기 파이프) */
+      ctx.fillStyle='#3a3f4a';
+      ctx.fillRect(vx+bodyL+cabL-3,vy-bodyH+3,2,12);
+      ctx.fillRect(vx+bodyL+cabL-5,vy-bodyH+2,4,2);                  // 흡기구(앞으로 꺾임)
+    }
+    if(up.bullbar){ /* 전면 가드 */
+      ctx.strokeStyle='#5d6472'; ctx.lineWidth=1;
+      line(vx+bodyL+cabL+2,vy-bodyH+14, vx+bodyL+cabL+2,vy+4);
+      line(vx+bodyL+cabL+1,vy-bodyH+16, vx+bodyL+cabL+3,vy-bodyH+16);
+      line(vx+bodyL+cabL+1,vy-1, vx+bodyL+cabL+3,vy-1);
+    }
+    if(up.winch){ /* 전면 윈치 드럼 */
+      ctx.fillStyle='#2b2f3a'; ctx.fillRect(vx+bodyL+cabL,vy+2,4,3);
+      ctx.fillStyle='#8b93a3'; ctx.fillRect(vx+bodyL+cabL+1,vy+3,2,1); // 케이블 감김
+      ctx.fillStyle='#c9a24a'; ctx.fillRect(vx+bodyL+cabL+4,vy+4,1,1); // 훅
+    }
+    if(up.mudtires){ /* 험로 타이어 펜더 플레어 */
+      ctx.fillStyle='#3a3f4c';
+      ctx.fillRect(vx+7,vy+3,13,2); ctx.fillRect(vx+bodyL-1,vy+3,13,2);
+    }
+    if(up.awning){ /* 차양 — 주행 중엔 말린 롤, 정차 중엔 펼침 */
+      if(speed>0){
+        ctx.fillStyle='#7a4a3f'; ctx.fillRect(vx+7,vy-bodyH+2,18,2);
+        ctx.fillStyle='#9c5f50'; for(let aw=0;aw<4;aw++) ctx.fillRect(vx+9+aw*4,vy-bodyH+2,1,2);
+      } else {
+        ctx.fillStyle='#7a4a3f'; ctx.fillRect(vx-16,vy-bodyH+3,24,2);
+        ctx.fillStyle='#b8877a'; for(let aw=0;aw<5;aw++) ctx.fillRect(vx-15+aw*5,vy-bodyH+3,2,1);
+        ctx.strokeStyle='#4c4438'; line(vx-15,vy-bodyH+5, vx-15,baseY+7);   // 지지대
+      }
+    }
     /* ── 캡 ── */
     ctx.fillStyle='#988e7c';
     ctx.beginPath();
@@ -512,10 +568,20 @@ const SCENE = (()=>{
     const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
     const riders=S? [['#2c3346'],...S.party.filter(id=>!outside.includes(id)).map(id=>[D.comps[id].color])]:[['#2c3346']];
     riders.slice(0,up.cabin?5:4).forEach((r,i)=>{
-      const hx=P(vx+bodyL-14-i*13), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
+      const hx=P(vx+bodyL-14-i*13);
+      const nod = Math.sin(t*1.2+i*2.7)>0.96?1:0;                    // 가끔 고개 까딱
+      const doze = S && S.fatigue>=70 && speed>0 && i===1+(S.day%3) && i>0;  // 피로하면 누군가 존다
+      const hy=P(winY+winH-3+((i%2)?bnc2-bnc:0)) + (doze? 1:nod);
       ctx.fillStyle='#171a24'; ctx.fillRect(hx-2,hy-3,5,4);          // 몸/얼굴 실루엣
       ctx.fillStyle=r[0]; ctx.fillRect(hx-2,hy-5,5,2);               // 머리색
       ctx.fillRect(hx-3,hy-4,1,2); ctx.fillRect(hx+3,hy-4,1,2);
+      if(doze && Math.sin(t*2)>0){ ctx.fillStyle='rgba(200,215,240,0.65)';
+        ctx.fillRect(hx+4,hy-8,1,1); ctx.fillRect(hx+5,hy-10,1,1); } // 쿨쿨 zZ
+      if(i===talkIdx && talkT>0){                                    // 말하는 중 ・・・
+        ctx.fillStyle='rgba(255,235,190,0.9)';
+        const dn=1+Math.floor((t*4)%3);
+        for(let d2=0;d2<dn;d2++) ctx.fillRect(hx-2+d2*2, hy-8, 1,1);
+      }
     });
     /* 식사 연출: 창문 안 먹는 모션 + 김 (아침 배급·점심 후 16초) */
     if(mealT>0){
@@ -700,6 +766,7 @@ const SCENE = (()=>{
   function draw(dt){
     if(!ctx) return; t+=dt;
     mealT=Math.max(0,mealT-dt);
+    talkT=Math.max(0,talkT-dt);
     signTexts=[];
     const hour=S? S.min/60:21.2;
     const dark=darknessAt(hour);
@@ -841,5 +908,5 @@ const SCENE = (()=>{
     tdctx.drawImage(toff,0,0,TW,TH,0,0,vw,vh);
   }
 
-  return {init,initTitle,draw,drawTitle, showMeal:(sec)=>{mealT=sec;}};
+  return {init,initTitle,draw,drawTitle, showMeal:(sec)=>{mealT=sec;}, talkPulse:(idx,sec)=>{talkIdx=idx; talkT=sec||3;}};
 })();

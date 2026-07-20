@@ -202,6 +202,7 @@ G.lunch = ()=>{
   S.food=Math.max(0,S.food-need); S.water=Math.max(0,S.water-need);
   if(fOk&&wOk){ UI.toast(`🍚 점심 — 식량·물 -${need}`);
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
+    if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
   else { G.moodAll(-4); S.fatigue=clamp(S.fatigue+8,0,100);
     UI.toast('🍚 점심을 걸렀다 — 사기·체력이 떨어진다'); }
@@ -220,7 +221,10 @@ G.dawn = ()=>{
   if(S.food>=n){ S.food-=n; S.hunger=0; } else { S.food=0; S.hunger++; G.moodAll(-6); S.fatigue=clamp(S.fatigue+15,0,100); }
   if(S.water>0||S.food>0){ UI.toast(`🍙 아침 배급 — 물·식량 -${n}`);
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
+    if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
+  if(S.up&&S.up.beehive&&rng()<0.3){ S.food+=1; G.moodAll(2);
+    UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }
   if(G.hasComp('leo')) G.moodAll(3); // 레오의 아침 기타
   if(S.up&&S.up.garden){ S.food+=1; }
   if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }
@@ -254,7 +258,10 @@ G.canTravelTo = (id)=>{
 G.fuelFor = (km,road)=>{ let per = 1/4.5; if(road==='rough') per*=1.35; if(road==='high') per*=0.92;
   if(G.hasComp('minji')) per*=0.92;
   if(G.hasPerk('mj_fuel')) per*=0.92;
-  if(S){ if(S.wx==='storm') per*=1.12; else if(S.wx==='dust') per*=1.08;
+  if(road==='rough' && S && S.up && S.up.mudtires) per/=1.15;   // 험로 타이어
+  if(S){ let wxPen = S.wx==='storm'?0.12 : S.wx==='dust'?0.08 : 0;
+    if(S.up&&S.up.snorkel) wxPen/=2;                              // 스노클
+    per*=(1+wxPen);
     if(S.up&&S.up.solar) per*=0.92;
     if(S.fatigue>=60) per*=1.08;         // 피곤한 발은 무겁다
     per*=(1 - G.driverLv()*0.02); }
@@ -302,14 +309,16 @@ G.tick = (dt)=>{ // dt: real seconds
   const per = G.fuelFor(1000,dv.road)/1000;
   S.fuel = Math.max(0, S.fuel - km*per);
   // van wear
-  const wearMul = S.up&&S.up.susp? 0.5:1;
+  let wearMul = S.up&&S.up.susp? 0.5:1;
+  if(S.up&&S.up.mudtires&&dv.road==='rough') wearMul*=0.6;
   if(dv.road==='rough') S.van = Math.max(0, S.van - km*(G.isWet()?0.09:0.06)*wearMul);
   if(S.wx==='storm') S.van = Math.max(0, S.van - km*0.03*wearMul);
   // 재이: 까치의 눈
   if(G.hasPerk('jy_magpie')){ S._scrapKm=(S._scrapKm||0)+km;
     if(S._scrapKm>=25){ S._scrapKm-=25; S.scrap++; UI.toast('🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1'); } }
   // 운전은 추가 피로 (밤 운전은 특히)
-  S.fatigue = clamp(S.fatigue + gm*(G.isNight()?0.075:0.04)*(1-G.driverLv()*0.06), 0, 100);
+  const nightFtg = G.isNight()? (S.up&&S.up.lightbar?0.049:0.075) : 0.04;   // 라이트바=밤길이 덜 갉아먹음
+  S.fatigue = clamp(S.fatigue + gm*nightFtg*(1-G.driverLv()*0.06), 0, 100);
   G.checkDriverLv();
   G.advance(gm);
   if(S.ended) return;
@@ -354,6 +363,7 @@ G.eligible = (typeFilter)=>{
     if(ev.needsComp && !G.hasComp(ev.needsComp)) return false;
     if(ev.needsComp2 && !G.hasComp(ev.needsComp2)) return false;  // 2인 케미 이벤트
     if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
+    if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;
     if(ev.minPursuit && S.pursuit<ev.minPursuit) return false;
@@ -382,6 +392,8 @@ G.fireDriveEvent = ()=>{
     if(S.wx==='storm'&&(e.type==='조우'||e.type==='탐색')) w*=0.7;
     if(S.up&&S.up.antenna&&e.type==='발견') w*=1.5;
     if(S.driving&&S.driving.road==='high'&&e.type==='추적') w*=1.3;  // 천리안은 고속도로를 좋아한다
+    if(S.up&&S.up.winch&&e.type==='위기') w*=0.6;                     // 윈치=빠져도 나온다
+    if(S.up&&S.up.lightbar&&G.isNight()&&e.type==='발견') w*=1.3;     // 라이트바=밤눈
     return w; };
   const total = pool.reduce((s,e)=>s+wOf(e),0);
   let r = rng()*total;
@@ -415,6 +427,8 @@ G.applyFx = (fx)=>{
   }
   if(fx.van<0 && S.up&&S.up.armor){ fx={...fx, van:-Math.ceil(-fx.van*0.7)};
     chips.push({t:'🛡 장갑판: 피해 감소', c:'plus'}); }
+  if(fx.van<0 && S.up&&S.up.bullbar){ fx={...fx, van:-Math.ceil(-fx.van*0.85)};
+    chips.push({t:'🛡 전면 가드: 피해 감소', c:'plus'}); }
   const num = (k,label,unit)=>{ if(fx[k]){ const v=fx[k];
     if(k==='fuel') S.fuel=clamp(S.fuel+v,0,S.fuelMax);
     else if(k==='water') S.water=Math.max(0,S.water+v);
@@ -467,6 +481,7 @@ G.reqOk = (req)=>{
   if(req.flagMin && (S.flags[req.flagMin[0]]||0) < req.flagMin[1]) return {ok:false, t:'아직 단골이 아니다'};
   if(req.flag && !S.flags[req.flag]) return {ok:false, t:'해당 사항 없음'};
   if(req.comp && !G.hasComp(req.comp)) return {ok:false, t:`${D.comps[req.comp].name} 필요`};
+  if(req.up && !(S.up&&S.up[req.up])) return {ok:false, t:`${(G.upDef(req.up)||{nm:req.up}).nm} 필요`};
   if(req.item && !(S.items[req.item]>0)) return {ok:false, t:`${req.item} 필요`};
   if(req.item2 && !(S.items[req.item2]>0)) return {ok:false, t:`${req.item2} 필요`};
   if(req.scrap && S.scrap<req.scrap) return {ok:false, t:`고철 ${req.scrap} 필요`};
@@ -548,6 +563,8 @@ G.camp = (msg)=>{
   if(G.hasPerk('leo_fire')) mood+=4;
   if(G.hasPerk('mj_camp')) vanFix+=6;
   if(S.up&&S.up.solar) vanFix+=3;
+  if(S.up&&S.up.awning) mood+=2;
+  if(S.up&&S.up.stove) mood+= G.isWet()?3:2;
   S.fatigue=0;
   G.moodAll(mood); S.van = clamp(S.van+vanFix,0,S.vanMax);
   if(G.hasPerk('jy_break')){ S.scrap+=2; }
@@ -620,9 +637,12 @@ G.checkDriverLv = ()=>{
 /* ── 현장 수리 ── */
 G.fieldRepair = ()=>{
   if((S.items['부품']||0)<1 || S.van>=S.vanMax-2) return false;
-  S.items['부품']--; S.van=clamp(S.van+35,0,S.vanMax);
+  const box=S.up&&S.up.sidebox;
+  const saved = box && rng()<0.5;
+  if(!saved) S.items['부품']--;
+  S.van=clamp(S.van+(box?45:35),0,S.vanMax);
   G.advance(100);
-  UI.toast('🔧 부품으로 정비 완료 — 내구 +35');
+  UI.toast('🔧 부품으로 정비 완료 — 내구 +'+(box?45:35)+(saved?' · 🧰 부품 아낌':''));
   UI.renderAll(); G.save(); return true;
 };
 

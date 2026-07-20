@@ -282,6 +282,12 @@ const UI = (()=>{
   function speak(b){
     const wrap=$('#bubbles');
     const isAi = b.who==='cheollian';
+    if(!isAi && b.who!=='sys' && b.who!=='radio' && typeof SCENE!=='undefined' && SCENE.talkPulse){
+      let ri=-1;
+      if(b.who==='나') ri=0;
+      else if(S&&S.party){ const k=S.party.indexOf(b.who); if(k>=0) ri=k+1; }
+      if(ri>=0) SCENE.talkPulse(ri, 3.5);
+    }
     if(b.who==='radio'){
       const bb=el('div','bubble radio', `<span class="who">📻</span>`+b.t);
       const wrap2=$('#bubbles'); bb.style.left='8%'; bb.style.top='10px';
