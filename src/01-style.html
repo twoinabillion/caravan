@@ -191,6 +191,26 @@ input{font-family:inherit}
 #jgraphwrap.on{display:block}
 #graphcv{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .jchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+/* ── 서울 오르막 맵 ── */
+#ovl-seoul{background:linear-gradient(180deg,#0a0d1c 0%,#141020 55%,#1c1420 100%)}
+#seoul-body{flex:1;overflow-y:auto;padding:8px 18px 24px;position:relative}
+.seoul-asc{position:relative;max-width:340px;margin:0 auto;padding:12px 0}
+.seoul-road{position:absolute;left:26px;top:24px;bottom:24px;width:2px;
+  background:linear-gradient(180deg,rgba(85,224,200,.5),rgba(255,180,84,.35))}
+.seoul-stop{position:relative;display:flex;gap:14px;align-items:flex-start;padding:14px 0;min-height:58px}
+.seoul-stop .dot{position:relative;z-index:2;flex:none;width:14px;height:14px;margin-left:20px;border-radius:50%;
+  background:var(--night);border:2px solid var(--dim);margin-top:3px}
+.seoul-stop.done .dot{background:var(--amber);border-color:var(--amber)}
+.seoul-stop.here .dot{border-color:var(--cheollian);box-shadow:0 0 0 4px rgba(85,224,200,.18);animation:seoulpulse 1.8s infinite}
+@keyframes seoulpulse{50%{box-shadow:0 0 0 8px rgba(85,224,200,.05)}}
+.seoul-stop .txt b{font-size:14.5px;display:block}
+.seoul-stop.here .txt b{color:var(--cheollian)}
+.seoul-stop.done .txt b{color:var(--amber)}
+.seoul-stop .txt small{display:block;color:var(--faded);font-size:12px;margin-top:2px;line-height:1.45}
+.seoul-stop.locked{opacity:.4}
+.seoul-cta{display:flex;flex-direction:column;gap:9px;max-width:340px;margin:6px auto 0}
+.seoul-cta .act{justify-content:center}
+#seoul-tower{text-align:center;font-size:11px;color:var(--faded);font-family:var(--mono);margin:2px 0 10px;letter-spacing:.12em}
 .jchip{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--faded);
   background:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;cursor:pointer}
 .jchip small{opacity:.55;margin-left:2px}

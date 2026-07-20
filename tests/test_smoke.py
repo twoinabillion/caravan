@@ -178,6 +178,30 @@ with sync_playwright() as p:
       out.orphan = bad;
       return out;
     }''')
+    # 여정 장부 + 서울 관문 + 서울 맵
+    r7 = pg.evaluate('''() => {
+      const out = {};
+      out.deeds = D.deeds.length; out.need = D.seoulNeed;
+      S.flags = {}; out.emptyReady = G.seoulReady();
+      ['postman_letter','gp_envelope_found','coffee_found','chalkwall_signed','radio_fixed','freq400_done'].forEach(f => S.flags[f] = true);
+      out.doneCount = G.deedsDone().length; out.fullReady = G.seoulReady();
+      out.hasHint = !!G.missingDeedHint() || G.seoulReady();
+      // 서울 오르막 진행
+      S.flags.seoul_open = true; S.seoul = {entered:true};
+      out.stage0 = G.seoulStage();
+      ['han','ruins','square','base'].forEach(id => S.flags['seoul_'+id+'_done'] = true);
+      S.flags.seoul_core_reached = true;
+      out.stageEnd = G.seoulStage();
+      // 서울 정거장 이벤트 = 5, 각 stop에 무료 선택지 존재
+      out.stopEvents = D.seoulStops.length;
+      out.allHaveFree = D.seoulStops.every(e => e.choices.some(c => !c.req));
+      return out;
+    }''')
+    check('여정 장부 13개·필요 6', r7['deeds'] == 13 and r7['need'] == 6, str(r7))
+    check('빈 상태 서울 잠김', not r7['emptyReady'])
+    check('6개 완수→서울 열림', r7['doneCount'] == 6 and r7['fullReady'])
+    check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
+    check('각 정거장 무료 선택지', r7['allHaveFree'])
     check('티키타카 20종', r6['chatCount'] == 20, str(r6['chatCount']))
     check('연속 대화 재생(2줄+)', r6['picked'] >= 2, str(r6['picked']))
     check('화자 전원 탑승 보장', r6['orphan'] == 0, str(r6['orphan']))

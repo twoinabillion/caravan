@@ -23,6 +23,8 @@ const npcIds = new Set(Object.keys(D.npcs));
 const allEvents = [...D.events];
 if (D.bridgeEvent) allEvents.push(D.bridgeEvent);
 if (D.gateEvent) allEvents.push(D.gateEvent);
+if (D.seoulOpenEvent) allEvents.push(D.seoulOpenEvent);
+(D.seoulStops || []).forEach(e => allEvents.push(e));
 
 // 퍼크 id 수집 (D.comps[].perks + 스토리 퍼크)
 const perkIds = new Set();
@@ -111,6 +113,14 @@ for (const b of D.banter || []) {
   if (nd.wx && !D.wx[nd.wx]) err(`${at} need.wx 미존재: ${nd.wx}`);
   if (b.who !== '나' && b.who !== 'sys' && !compIds.has(b.who)) err(`${at} who 미존재: ${b.who}`);
 }
+
+/* ── 여정 장부(deeds) 검사 ── */
+for (const d of D.deeds || []) {
+  if (d.comp && !compIds.has(d.comp)) err(`[deed ${d.id}] comp 미존재: ${d.comp}`);
+  if (d.flag && !flagSetters.has(d.flag)) err(`[deed ${d.id}] flag 세터 없음: ${d.flag}`);
+  if (!d.comp && !d.flag) err(`[deed ${d.id}] comp/flag 둘 다 없음`);
+}
+if ((D.deeds || []).length < (D.seoulNeed || 0)) err(`seoulNeed(${D.seoulNeed})가 deeds 수(${(D.deeds||[]).length})보다 큼 — 서울 영영 안 열림`);
 
 /* ── 티키타카(chats) 검사 ── */
 for (const c of D.chats || []) {

@@ -142,6 +142,7 @@ const UI = (()=>{
     applyIcons();
     renderAll();
     if(S.mode==='offroad'&&!OFF.ready()) toast('📡 오프로드 연결 없음 — 온로드 이벤트로 대체됩니다');
+    if(S.flags&&S.flags.seoul_open&&!S.ended) setTimeout(showSeoul, 400);   // 서울 안에서 이어하기
   }
 
   /* ── overlays ── */
@@ -444,6 +445,30 @@ const UI = (()=>{
     curEv=null;
     if(S.driving) SND.setDriving(true);
     renderAll(); G.save();
+    /* 서울 진입 후엔 오르막 맵으로 복귀 */
+    if(S && S.flags && S.flags.seoul_open && !S.ended){ setTimeout(showSeoul, 300); }
+  }
+  function showSeoul(){
+    const stops=D.seoulMap.stops, stage=G.seoulStage();
+    const done=stage>=stops.length;
+    let h='<div id="seoul-tower">▲ 남산 코어</div><div class="seoul-asc"><div class="seoul-road"></div>';
+    stops.forEach((st,i)=>{
+      const cls = G.seoulStopDone(i)?'done' : i===stage?'here' : i>stage?'locked':'';
+      h+=`<div class="seoul-stop ${cls}"><div class="dot"></div><div class="txt"><b>${st.name}${G.seoulStopDone(i)?' ✓':''}</b><small>${i<=stage||G.seoulStopDone(i)?st.desc:'???'}</small></div></div>`;
+    });
+    h+='</div><div class="seoul-cta">';
+    if(!done){
+      h+=`<button class="act primary" id="seoul-go"><span class="ic">▲</span><span><b>${stops[stage].name}(으)로 오른다</b><small>${stage===0?'서울 안으로':'다음 정거장'}</small></span></button>`;
+    } else {
+      h+=`<div class="sub" style="text-align:center;padding:14px 0">〔 1막 완주 〕<br><small style="color:var(--faded)">여기서부터는 아직 쓰이지 않았다. 2막에서 계속됩니다.</small></div>
+        <button class="act" id="seoul-journal"><span class="ic">✎</span><span><b>여행 일지를 연다</b></span></button>`;
+    }
+    h+='</div>';
+    $('#seoul-body').innerHTML=h;
+    document.querySelectorAll('.ovl').forEach(o=>o.classList.remove('on'));
+    $('#ovl-seoul').classList.add('on');
+    const go=$('#seoul-go'); if(go) go.onclick=()=>{ $('#ovl-seoul').classList.remove('on'); G.seoulEnter(stage); };
+    const jn=$('#seoul-journal'); if(jn) jn.onclick=()=>{ $('#ovl-seoul').classList.remove('on'); toggleOvl('#ovl-journal'); renderJournal(); };
   }
 
   /* ── SETTLEMENT ── */
@@ -754,6 +779,18 @@ const UI = (()=>{
       <div class="st-row"><span class="k">정착지</span><span class="v" style="flex:1">${stlVisited}/${Object.keys(D.stls).length} 방문</span></div>
       <div class="st-row"><span class="k">${ICO('pursuit')}천리안 관측</span><span class="v" style="flex:1;color:${S.pursuit>2?'var(--danger)':'inherit'}">${'◉'.repeat(S.pursuit)||'—'} (${S.pursuit}/5)</span></div>
       ${S.flags.seoulTries?`<div class="st-row"><span class="k">남산 시도</span><span class="v" style="flex:1;color:var(--cheollian)">${S.flags.seoulTries}회 — "아직입니다"</span></div>`:''}</div>`;
+    /* 여정 장부 — 서울은 싣고 온 것이 있어야 열린다 */
+    const doneN=G.deedsDone().length, needN=D.seoulNeed;
+    const catIco={동료:'♦',회수:'✉',세계:'◈'};
+    h+=`<div class="st-sec"><h4>📖 여정 장부 <small style="color:${doneN>=needN?'var(--ok)':'var(--faded)'};font-weight:400">${doneN}/${needN} ${doneN>=needN?'· 남산이 열린다':'· 전부 싣고 오세요'}</small></h4>`;
+    ['동료','회수','세계'].forEach(cat=>{
+      D.deeds.filter(d=>d.cat===cat).forEach(d=>{
+        const ok=G.deedDone(d);
+        const dim = d.comp && !G.hasComp(d.comp);   // 미영입 동료는 흐리게
+        h+=`<div class="st-row" style="${dim?'opacity:.4':''}"><span class="k">${ok?'✓':catIco[cat]} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':(dim?'미합류':d.hint)}</span></div>`;
+      });
+    });
+    h+=`</div>`;
     /* 이야기 */
     const stories=Object.keys(D.comps).map(id=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
@@ -847,7 +884,7 @@ const UI = (()=>{
   }
 
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
-    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat};
+    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat, showSeoul};
 })();
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */

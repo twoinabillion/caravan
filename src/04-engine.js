@@ -471,6 +471,7 @@ G.applyFx = (fx)=>{
   if(fx.revealNear){ for(let i=0;i<fx.revealNear;i++){ const id=G.nearestHidden();
     if(id){ S.known.push(id); chips.push({t:`🗺 ${D.nodes[id].name} 발견`, c:'item'}); } } }
   if(fx.dog){ S.dog=true; }
+  if(fx.enterSeoul){ S.seoul={entered:true}; }
   if(fx.recruit) G.doRecruit(fx.recruit);
   if(fx.note) G.addNote(fx.note);
   if(fx.gameover) G.endGame(fx.gameover);
@@ -536,9 +537,21 @@ G.arrive = ()=>{
     const n = D.nodes[to];
     G.addNote({type:'장소', title:n.name, body:`DAY ${S.day} 도착. ${n.desc}`, links:[]});
   }
-  if(to==='seoul'){ /* 엔딩 없음 — 길이 접혀 되돌아온다 */
+  if(to==='seoul'){
+    if(S.flags.seoul_open){ UI.renderAll(); G.save(); return; }  // 이미 열림 — 서울 맵
+    if(G.seoulReady()){                                          // 조건 충족 → 남산이 열린다
+      UI.renderAll();
+      setTimeout(()=>G.openEvent(D.seoulOpenEvent), 500);
+      G.save(); return;
+    }
+    /* 아직 — 길이 접혀 되돌아온다 (실은 과업 수·부족분 안내) */
     UI.renderAll();
-    setTimeout(()=>G.openEvent(D.gateEvent), 500);
+    const n2=G.deedsDone().length;
+    const hint=G.missingDeedHint();
+    setTimeout(()=>{
+      UI.toast(`📖 여정 장부 ${n2}/${D.seoulNeed} — ${hint?('아직: '+hint):'조금 더'}`);
+      setTimeout(()=>G.openEvent(D.gateEvent), 1400);
+    }, 500);
     G.save(); return; }
   const n = D.nodes[to];
   /* 위수 구역 첫 진입 — 초계와의 첫 조우 */
@@ -736,6 +749,35 @@ G.talkTo = (id)=>{
   S._talked[id]=S.day;
   G.openEvent(pick(pool));
   G.save(); return true;
+};
+
+/* ── 서울 내부 (오르막 진행) ── */
+G.seoulStopDone = (i)=> !!S.flags[`seoul_${D.seoulMap.stops[i].id}_done`] || (i===4 && !!S.flags.seoul_core_reached);
+G.seoulStage = ()=>{ /* 다음에 진행할 정거장 인덱스 (0~5, 5=완주) */
+  for(let i=0;i<D.seoulMap.stops.length;i++) if(!G.seoulStopDone(i)) return i;
+  return D.seoulMap.stops.length;
+};
+G.seoulEnter = (i)=>{
+  const ev = D.seoulStops.find(e=>e.seoulStop===i);
+  if(ev) G.openEvent(ev);
+};
+
+/* ── 여정 장부 (서울 관문 조건) ── */
+G.deedDone = (d)=>{
+  if(!S) return false;
+  if(d.comp) return G.hasComp(d.comp) && (S.comps[d.comp]||{}).lvl>=3;
+  if(d.flag) return !!S.flags[d.flag];
+  return false;
+};
+G.deedsDone = ()=> D.deeds.filter(G.deedDone);
+G.seoulReady = ()=> G.deedsDone().length >= (D.seoulNeed||6);
+/* 아직 못 실은 것 중 힌트 하나 (관문에서 되돌릴 때 안내) */
+G.missingDeedHint = ()=>{
+  const undone = D.deeds.filter(d=>!G.deedDone(d));
+  /* 동료가 이미 탑승했는데 유대만 부족한 것을 우선 안내 */
+  const near = undone.find(d=>d.comp && G.hasComp(d.comp));
+  const pick0 = near || undone.find(d=>!d.comp) || undone[0];
+  return pick0 ? pick0.hint : null;
 };
 
 /* ── 라디오 수리 (진공관 1 소모, 1회) ── */
