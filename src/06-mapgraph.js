@@ -3,16 +3,38 @@ const MAPR = (()=>{
   let cv, ctx, W=0, H=0, DPR=1, tf={s:1,ox:0,oy:0}, t=0;
   let fogCv=null;
 
-  /* 한반도 남부 해안선 (지도공간 600×760) */
+  /* 한반도 남부 해안선 (지도공간 600×760) — 실루엣 v2: 태안반도·장기곶·여수반도·다도해 */
   const COAST = [
-    /* 휴전선 부근 */
-    [208,132],[250,118],[310,110],[370,100],[430,84],[456,78],
-    /* 동해안 — 완만 */
-    [468,120],[480,170],[492,230],[500,290],[512,340],[528,392],[526,440],[514,492],[508,540],[502,585],[496,622],
-    /* 남해안 — 다도해 들쭉 */
-    [492,646],[462,652],[438,640],[410,656],[382,644],[352,660],[322,648],[296,658],[268,648],[244,630],[232,612],
-    /* 서해안 — 리아스식 들쭉 */
-    [218,570],[230,532],[210,492],[224,458],[204,420],[218,382],[200,344],[214,306],[198,268],[212,230],[196,196],[214,162],
+    /* 휴전선 (서→동) */
+    [216,142],[250,132],[300,120],[350,108],[400,94],[448,82],[462,78],
+    /* 동해안 — 완만 남하 */
+    [472,108],[480,148],[486,194],[490,240],[493,286],[496,332],[498,372],
+    /* 장기곶(포항) 돌출 */
+    [504,410],[520,455],[526,488],[510,512],
+    /* 울산만 → 부산 */
+    [514,540],[508,578],[506,610],[500,634],[494,652],
+    /* 남해안 — 불규칙한 다도해 */
+    [472,642],[460,664],[446,646],[434,656],[414,642],[398,668],
+    [380,648],[362,662],[346,644],[330,672],[314,650],[300,660],
+    [286,644],[268,664],[254,646],[238,654],
+    /* 목포 끝 */
+    [226,644],[212,630],[208,610],
+    /* 서해안 — 불규칙 리아스 + 태안 돌출 + 경기만은 동쪽으로 말림 */
+    [222,586],[204,566],[218,546],[208,530],[220,510],[200,486],
+    [210,472],[206,446],[218,430],[194,402],[186,382],[202,364],
+    [196,338],[214,318],[204,300],[212,282],[200,258],[216,238],
+    [210,224],[224,206],[218,190],[228,172],[222,158],[218,148],
+  ];
+  /* 섬들 (장식) — [x,y,rx,ry] */
+  const ISLES = [
+    [470,668,9,4],[398,676,11,4],[218,652,7,3],[270,676,8,3],[334,682,5,2],  // 거제·남해·진도·완도·소섬
+    [182,300,3,1.6],[176,352,2.5,1.4],[188,420,3,1.6],[180,470,2.5,1.4],[192,522,3,1.6], // 서해 섬들
+    [548,168,4,2],[560,172,1.5,1],                                            // 울릉도·독도
+  ];
+  /* 백두대간·소백산맥 능선 (장식) */
+  const RIDGE = [
+    [[434,116],[448,160],[454,215],[450,275],[442,335],[432,385]],
+    [[432,385],[408,412],[378,442],[348,470],[316,506],[292,540]],
   ];
 
   function init(canvas){
@@ -45,20 +67,61 @@ const MAPR = (()=>{
   function draw(dt){
     if(!ctx||!W) return; t+=dt;
     ctx.clearRect(0,0,W,H);
-    /* 바다 */
-    ctx.fillStyle='#0a0e1e'; ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle='rgba(85,120,180,0.06)'; ctx.lineWidth=1;
+    /* 바다 — 은은한 심도 그라데이션 */
+    const sea=ctx.createLinearGradient(0,0,0,H);
+    sea.addColorStop(0,'#0a0f22'); sea.addColorStop(1,'#080c1a');
+    ctx.fillStyle=sea; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(85,120,180,0.045)'; ctx.lineWidth=1;
     for(let x=0;x<W;x+=26){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
     for(let y=0;y<H;y+=26){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    /* 물결 잔선 (반짝임) */
+    const wavePts=[[168,200],[560,300],[170,540],[540,560],[560,120],[240,700],[430,700],[170,640]];
+    wavePts.forEach((wp,i)=>{ const a=0.10+0.08*Math.sin(t*1.3+i*1.9); if(a<=0.11) return;
+      ctx.strokeStyle=`rgba(140,175,225,${a})`;
+      ctx.beginPath(); ctx.moveTo(px(wp[0]),py(wp[1])); ctx.lineTo(px(wp[0]+14),py(wp[1])); ctx.stroke(); });
+    /* 해안선 경로 (부드러운 곡선) */
+    const coastPath=()=>{ ctx.beginPath();
+      const n=COAST.length;
+      const mx=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];
+      let m0=mx(COAST[n-1],COAST[0]);
+      ctx.moveTo(px(m0[0]),py(m0[1]));
+      for(let i=0;i<n;i++){ const p=COAST[i], m=mx(p,COAST[(i+1)%n]);
+        ctx.quadraticCurveTo(px(p[0]),py(p[1]),px(m[0]),py(m[1])); }
+      ctx.closePath(); };
+    /* 해안 글로우 (물가 하이라이트) */
+    coastPath();
+    ctx.strokeStyle='rgba(110,160,215,0.22)'; ctx.lineWidth=5; ctx.stroke();
     /* 육지 */
+    coastPath();
+    const land=ctx.createLinearGradient(0,py(78),0,py(668));
+    land.addColorStop(0,'#182138'); land.addColorStop(1,'#121a2c');
+    ctx.fillStyle=land; ctx.fill();
+    ctx.strokeStyle='#31446e'; ctx.lineWidth=1.5; ctx.stroke();
+    /* 백두대간 능선 음영 */
+    ctx.strokeStyle='rgba(60,80,125,0.5)'; ctx.lineWidth=1;
+    RIDGE.forEach(seg=>{ ctx.beginPath();
+      seg.forEach((p,i)=> i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1]))); ctx.stroke(); });
+    RIDGE.forEach(seg=>{ seg.forEach((p,i)=>{ if(i%2) return;      // 봉우리 ▲
+      ctx.strokeStyle='rgba(75,98,145,0.55)';
+      ctx.beginPath(); ctx.moveTo(px(p[0])-2,py(p[1])+2); ctx.lineTo(px(p[0]),py(p[1])-1); ctx.lineTo(px(p[0])+2,py(p[1])+2); ctx.stroke(); }); });
+    /* 섬들 */
+    ISLES.forEach(([ix,iy,rx,ry])=>{
+      ctx.beginPath(); ctx.ellipse(px(ix),py(iy),Math.max(1.5,rx*tf.sx),Math.max(1,ry*tf.sy),0,0,7);
+      ctx.fillStyle='#141c30'; ctx.fill(); ctx.strokeStyle='rgba(90,120,175,0.5)'; ctx.lineWidth=1; ctx.stroke(); });
+    /* 휴전선 */
+    ctx.setLineDash([5,4]); ctx.strokeStyle='rgba(226,87,79,0.4)'; ctx.lineWidth=1.2;
     ctx.beginPath();
-    COAST.forEach((p,i)=> i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
-    ctx.closePath();
-    ctx.fillStyle='#131a2e'; ctx.fill();
-    ctx.strokeStyle='#2a3a5e'; ctx.lineWidth=1.5; ctx.stroke();
+    [[222,148],[262,138],[310,126],[358,113],[406,100],[454,86]].forEach((p,i)=>
+      i?ctx.lineTo(px(p[0]),py(p[1]+4)):ctx.moveTo(px(p[0]),py(p[1]+4)));
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='rgba(226,120,110,0.45)'; ctx.font='8px monospace';
+    ctx.fillText('─ 휴전선 ─', px(296), py(112));
     // 제주
     ctx.beginPath(); ctx.ellipse(px(288),py(714),40*tf.sx,13*tf.sy,0,0,7);
-    ctx.fillStyle='#111828'; ctx.fill(); ctx.strokeStyle='#243252'; ctx.stroke();
+    ctx.fillStyle='#141c30'; ctx.fill(); ctx.strokeStyle='rgba(90,120,175,0.5)'; ctx.stroke();
+    ctx.fillStyle='rgba(120,150,200,0.4)'; ctx.beginPath(); ctx.ellipse(px(288),py(712),4*tf.sx,2*tf.sy,0,0,7); ctx.fill(); // 한라산
+    ctx.fillStyle='rgba(120,150,200,0.35)'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('제주', px(288), py(714)+18); ctx.textAlign='left';
     // 바다 이름
     ctx.fillStyle='rgba(120,150,200,0.28)'; ctx.font=`${9*tf.s+6}px serif`;
     ctx.fillText('동', px(508), py(150)); ctx.fillText('해', px(508), py(150)+16);
