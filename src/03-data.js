@@ -929,6 +929,17 @@ D.intro = [
 /* ═══════════════════ 이벤트 풀 ═══════════════════
    type: 발견|조우|탐색|동행|추적|위기  /  region 배열 없으면 전역
    out[].p 는 가중치. req 미충족 선택지는 회색 */
+D.eventPortraitTitleRules = [
+ {portrait:'hanbyeol', titles:/(한별|이동 도서관|사서의 증언)/},
+ {portrait:'seoyeon', titles:/(서연|이탈자)/},
+ {portrait:'mansu', titles:/(만수|만물상|뽕짝이 멈춘 날|스피커 탈환)/},
+ {portrait:'postman', titles:/(우편부|남산행 편지)/},
+ {portrait:'mapmaker', titles:/지도장이/},
+ {portrait:'mingyu', titles:/(민규|민지의 오빠|남매, 능선에서|88\.9)/},
+ {portrait:'grandfather', titles:/(할아버지|정비 수첩|수첩 —|봉투 개봉|마지막 계단|1페이지)/},
+ {portrait:'bori', titles:/(^보리|레오와 보리|보리의)/}
+];
+
 D.events = [
 
 /* ───── 발견형 ───── */

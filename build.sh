@@ -24,7 +24,7 @@ PARTS_AFTER_VAN=(
 )
 
 VAN_BASE64="$(base64 < assets/van/dalguji-base.png | tr -d '\n')"
-NPC_KEYS=(geumja sundeok taeho jaepil miyoung drhan deokgu kimcaptain hayeosa sanjigi)
+NPC_KEYS=(geumja sundeok taeho jaepil miyoung drhan deokgu kimcaptain hayeosa sanjigi hanbyeol seoyeon mansu postman mapmaker mingyu grandfather bori)
 NPC_JS="$(< src/03f-npc-portraits.js)"
 for KEY in "${NPC_KEYS[@]}"; do
   NPC_BASE64="$(base64 < "assets/portraits/$KEY.png" | tr -d '\n')"
