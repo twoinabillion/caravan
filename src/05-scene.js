@@ -907,6 +907,72 @@ const SCENE = (()=>{
     }
   }
 
+  /* ── 천리안 관측 시각 언어 ──
+     얼굴 대신 센서·스캔·정렬 오류로 존재감을 보인다. pursuit가 높을수록 노골적이다. */
+  function cheollianFx(roadY){
+    if(!S) return;
+    const seoul = S.at==='seoul' || (S.driving&&S.driving.to==='seoul') || !!S.flags.seoul_open;
+    const level=Math.max(S.pursuit||0,seoul?5:0);
+    if(level<=0) return;
+    const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cyan='85,224,200', red='226,87,79';
+
+    /* 먼 구조물의 카메라 눈. 처음엔 점처럼, 관측이 오르면 조리개처럼 읽힌다. */
+    const eyes=Math.min(6,level+1);
+    for(let i=0;i<eyes;i++){
+      const ex=P(18+hash(i*19+7)*(W-36));
+      const ey=P(H*0.29+hash(i*31+3)*H*0.31);
+      const blink=reduced?0.7:0.35+0.65*Math.max(0,Math.sin(t*(1.1+i*0.13)+i*2.4));
+      ctx.fillStyle=`rgba(${seoul&&i%3===0?red:cyan},${0.22+blink*0.55})`;
+      ctx.fillRect(ex,ey,1,1);
+      if(level>=2&&blink>0.72){ ctx.fillRect(ex-2,ey,1,1); ctx.fillRect(ex+2,ey,1,1); }
+      if(level>=4&&blink>0.84){ ctx.fillRect(ex,ey-2,1,1); ctx.fillRect(ex,ey+2,1,1); }
+    }
+
+    /* 화면을 훑는 계측선. 비·안개와 싸우지 않도록 매우 옅게 유지한다. */
+    if(level>=2){
+      const scanY=P(reduced?H*0.45:(t*(9+level*2))%(H+12)-6);
+      ctx.fillStyle=`rgba(${cyan},${0.025+level*0.012})`; ctx.fillRect(0,scanY,W,1);
+      if(level>=4){ ctx.fillStyle=`rgba(${cyan},0.045)`; ctx.fillRect(0,scanY+2,W,1); }
+    }
+
+    /* 달구지를 인식한 추적 프레임. 네 모서리만 남겨 감시 장치처럼 보이게 한다. */
+    if(level>=3){
+      const bx=P(W*0.22-10), by=P(roadY+(H-roadY)*0.42-43), bw=101, bh=59;
+      const pulse=reduced?0.55:0.3+0.3*(0.5+0.5*Math.sin(t*2.7));
+      ctx.strokeStyle=`rgba(${cyan},${pulse})`; ctx.lineWidth=1;
+      const c=7;
+      line(bx,by,bx+c,by); line(bx,by,bx,by+c);
+      line(bx+bw,by,bx+bw-c,by); line(bx+bw,by,bx+bw,by+c);
+      line(bx,by+bh,bx+c,by+bh); line(bx,by+bh,bx,by+bh-c);
+      line(bx+bw,by+bh,bx+bw-c,by+bh); line(bx+bw,by+bh,bx+bw,by+bh-c);
+      if(level>=4){
+        const tx=P(W-16), ty=P(H*0.24);
+        ctx.strokeStyle=`rgba(${cyan},0.12)`; line(tx,ty,bx+bw,by+6);
+        ctx.fillStyle=`rgba(${seoul?red:cyan},0.75)`; ctx.fillRect(tx-1,ty-1,3,3);
+        ctx.fillStyle='#070a12'; ctx.fillRect(tx,ty,1,1);
+      }
+    }
+
+    /* 관측 5단계: 영상 자체가 짧게 어긋난다. */
+    if(level>=5&&!reduced&&Math.sin(t*1.7)>0.94){
+      const gy=P(H*(0.2+hash(Math.floor(t*3))*0.58));
+      const shift=Math.sin(t*17)>0?3:-3;
+      ctx.globalAlpha=0.42;
+      ctx.drawImage(off,0,gy,W,2,shift,gy,W,2);
+      ctx.drawImage(off,0,gy+4,W,1,-shift,gy+4,W,1);
+      ctx.globalAlpha=1;
+    }
+
+    /* 서울에서는 코어의 붉은 맥박이 관측망 전체에 섞인다. */
+    if(seoul){
+      const beat=reduced?0.08:Math.pow(Math.max(0,Math.sin(t*1.35)),12)*0.15;
+      if(beat>0.01){ ctx.fillStyle=`rgba(${red},${beat})`; ctx.fillRect(0,0,W,H); }
+      ctx.fillStyle=`rgba(${red},${0.45+0.35*Math.sin(t*1.35)})`;
+      ctx.fillRect(P(W*0.8),P(H*0.16),2,2);
+    }
+  }
+
   /* ── 메인 draw ── */
   function draw(dt){
     if(!ctx) return; t+=dt;
@@ -945,6 +1011,7 @@ const SCENE = (()=>{
     van(roadY,speed,dark,wx);
     drawPuffs(dt); drawCrows(dt);
     weather(wx,dark,speed,dt);
+    cheollianFx(roadY);
     /* 비네트 */
     const vg=ctx.createRadialGradient(W/2,H*0.45,H*0.3,W/2,H*0.5,H*0.95);
     vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,0.42)');
