@@ -23,7 +23,19 @@ PARTS_AFTER_VAN=(
   src/09-close.html
 )
 
-VAN_BASE64="$(base64 < assets/van/dalguji-base.png | tr -d '\n')"
+VAN_KEYS=(BASE CABIN REINFORCED EXPEDITION WHEEL)
+VAN_FILES=(
+  assets/van/dalguji-base-body.png
+  assets/van/dalguji-cabin-body.png
+  assets/van/dalguji-reinforced-body.png
+  assets/van/dalguji-expedition-body.png
+  assets/van/dalguji-wheel.png
+)
+VAN_JS="$(< src/03e-van.js)"
+for I in "${!VAN_KEYS[@]}"; do
+  VAN_BASE64="$(base64 < "${VAN_FILES[$I]}" | tr -d '\n')"
+  VAN_JS="${VAN_JS//__DALGUJI_${VAN_KEYS[$I]}__/data:image/png;base64,$VAN_BASE64}"
+done
 NPC_KEYS=(geumja sundeok taeho jaepil miyoung drhan deokgu kimcaptain hayeosa sanjigi hanbyeol seoyeon mansu postman mapmaker mingyu grandfather bori)
 NPC_JS="$(< src/03f-npc-portraits.js)"
 for KEY in "${NPC_KEYS[@]}"; do
@@ -32,7 +44,7 @@ for KEY in "${NPC_KEYS[@]}"; do
 done
 {
   cat "${PARTS_BEFORE_VAN[@]}"
-  sed "s|__DALGUJI_BASE__|data:image/png;base64,$VAN_BASE64|" src/03e-van.js
+  printf '%s\n' "$VAN_JS"
   printf '%s\n' "$NPC_JS"
   cat "${PARTS_AFTER_VAN[@]}"
 } > 서울까지400km.html
