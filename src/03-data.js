@@ -929,6 +929,17 @@ D.intro = [
 /* ═══════════════════ 이벤트 풀 ═══════════════════
    type: 발견|조우|탐색|동행|추적|위기  /  region 배열 없으면 전역
    out[].p 는 가중치. req 미충족 선택지는 회색 */
+/* 반복 인물의 핵심 체인은 제목 변화와 무관하게 같은 얼굴을 쓴다. */
+Object.assign(D.eventPortraits, {
+ lib_meet:'hanbyeol', lib_request:'hanbyeol', lib_books:'hanbyeol', lib_return:'hanbyeol', library_scribe:'hanbyeol',
+ deserter_meet:'seoyeon', deserter_check:'seoyeon', deserter_farewell:'seoyeon', whites_pass:'seoyeon', whites_straggler:'seoyeon',
+ mansu_robbed:'mansu', mansu_revenge:'mansu', mansu_opening:'mansu',
+ meet_postman:'postman', postman_again:'postman', ev_postman_ghost:'postman',
+ meet_mapmaker:'mapmaker',
+ loc_mingyu:'mingyu', freq_catch:'mingyu', freq_triangulate:'mingyu', freq_source:'mingyu', freq_L2:'mingyu',
+ gp_note1:'grandfather', gp_note2:'grandfather', gp_note3:'grandfather', gp_envelope:'grandfather',
+ find_bori_nose:'bori', comp_bori_bath:'bori', comp_bori_dream:'bori', bori_tag:'bori', bori_family:'bori'
+});
 D.eventPortraitTitleRules = [
  {portrait:'hanbyeol', titles:/(한별|이동 도서관|사서의 증언)/},
  {portrait:'seoyeon', titles:/(서연|이탈자)/},
