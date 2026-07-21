@@ -486,24 +486,22 @@ const SCENE = (()=>{
       ctx.fillStyle='#8a6c42'; ctx.fillRect(sx+19,P(sy+23+bob),2,2); ctx.fillRect(sx+22,P(sy+23+bob),2,2);
     }
 
-    /* 원본 바퀴 픽셀 자체를 원형으로 잘라 회전시킨다. 별도 타이어를 덧그리지 않는다. */
+    /* 외곽 타이어/휠하우스는 원본 그대로 두고 작은 허브만 회전시킨다. */
     const spin=worldX/6.2;
     [[24,44,0],[77,44,0.28]].forEach((w)=>{
-      const r=6.5, wx0=sx+w[0], wy0=sy+w[1];
+      const wx0=sx+w[0], wy0=sy+w[1], a=spin+w[2];
       if(up.mudtires){
-        ctx.strokeStyle='#14171e'; ctx.lineWidth=2;
-        ctx.beginPath(); ctx.arc(wx0,wy0,7,0,Math.PI*2); ctx.stroke();
-        ctx.strokeStyle='#30343d'; ctx.lineWidth=1;
-        for(let k=0;k<8;k++){
-          const a=spin+w[2]+k*Math.PI/4;
-          line(wx0+Math.cos(a)*6,wy0+Math.sin(a)*6,wx0+Math.cos(a)*7,wy0+Math.sin(a)*7);
+        ctx.strokeStyle='rgba(24,27,34,0.9)'; ctx.lineWidth=1;
+        for(let k=0;k<4;k++){
+          const ta=a+k*Math.PI/2;
+          line(wx0+Math.cos(ta)*5.5,wy0+Math.sin(ta)*5.5,wx0+Math.cos(ta)*6.5,wy0+Math.sin(ta)*6.5);
         }
       }
-      ctx.save();
-      ctx.beginPath(); ctx.arc(wx0,wy0,r,0,Math.PI*2); ctx.clip();
-      ctx.translate(wx0,wy0); ctx.rotate(spin+w[2]);
-      ctx.drawImage(vanSprite,w[0]-r,w[1]-r,r*2,r*2,-r,-r,r*2,r*2);
-      ctx.restore();
+      ctx.fillStyle='#30343c'; circ(wx0,wy0,2.6);
+      ctx.strokeStyle='#777b80'; ctx.lineWidth=1;
+      line(wx0-Math.cos(a)*2,wy0-Math.sin(a)*2,wx0+Math.cos(a)*2,wy0+Math.sin(a)*2);
+      line(wx0-Math.cos(a+Math.PI/2)*2,wy0-Math.sin(a+Math.PI/2)*2,wx0+Math.cos(a+Math.PI/2)*2,wy0+Math.sin(a+Math.PI/2)*2);
+      ctx.fillStyle='#a09b8d'; circ(wx0,wy0,0.8);
     });
 
     ctx.fillStyle=dark>0.25?'#ffe9b0':'#d8d2be'; ctx.fillRect(sx+90,sy+36,2,3);
