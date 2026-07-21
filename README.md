@@ -49,3 +49,15 @@ assets/  portraits·icons·audio 원본
 ---
 
 🤖 [Claude Code](https://claude.com/claude-code)로 개발 중
+
+## 게임 장면
+
+| 부산에서 출발 | 폐허가 된 도로 |
+|:---:|:---:|
+| <img src="docs/screenshots/title.png" alt="서울까지 400km 타이틀" width="360"> | <img src="docs/screenshots/road-day.png" alt="달구지의 주간 도로 주행" width="360"> |
+| **비 내리는 밤** | **천리안의 감시** |
+| <img src="docs/screenshots/rain-night.png" alt="비 내리는 야간 주행" width="360"> | <img src="docs/screenshots/cheollian-fog.png" alt="안개 속 천리안 감시" width="360"> |
+| **길 위에서 만나는 사람들** | **생존자 정착지** |
+| <img src="docs/screenshots/character-event.png" alt="한별과 이동 도서관 이벤트" width="360"> | <img src="docs/screenshots/settlement.png" alt="생존자 정착지 화면" width="360"> |
+
+낡은 봉고차 **달구지**를 고치고 확장하면서 부산에서 서울 남산까지 411km를 이동한다. 날씨와 시간대가 바뀌는 도로, 생존자들과의 선택, 동료 관계, 천리안의 추적이 하나의 여정을 만든다.
