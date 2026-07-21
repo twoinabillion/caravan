@@ -410,7 +410,8 @@ const SCENE = (()=>{
   /* 이미지 차체 + 실시간 레이어. 이미지 로딩 전에는 아래 기존 렌더러로 폴백. */
   function spriteVan(vx,vy,baseY,bodyL,speed,dark,wx,up,bnc,bnc2){
     if(!vanSprite||!vanSprite.complete||!vanSprite.naturalWidth) return false;
-    const sx=P(vx-8), sy=P(baseY-36+bnc*0.3), sw=96, sh=53;
+    /* 원본 96x53 기준. 차체는 서스펜션을 따라 움직이고 바퀴는 노면에 붙인다. */
+    const sx=P(vx-8), sy=P(vy-37), sw=96, sh=53;
     ctx.drawImage(vanSprite,sx,sy,sw,sh);
 
     /* 업그레이드 오버레이: 모두 차체 기준 앵커를 공유한다. */
@@ -485,14 +486,24 @@ const SCENE = (()=>{
       ctx.fillStyle='#8a6c42'; ctx.fillRect(sx+19,P(sy+23+bob),2,2); ctx.fillRect(sx+22,P(sy+23+bob),2,2);
     }
 
-    /* 생성 이미지의 허브 위에 속도 동기 회전 스포크를 덧그린다. */
-    const spin=worldX*0.3;
-    [[sx+29,sy+43],[sx+74,sy+43]].forEach((w,i)=>{
-      if(up.mudtires){ ctx.strokeStyle='#101219'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(w[0],w[1],7,0,Math.PI*2); ctx.stroke(); }
-      ctx.fillStyle='#343945'; circ(w[0],w[1],4.2);
-      ctx.fillStyle='#737985'; circ(w[0],w[1],1.3);
-      ctx.strokeStyle='#171a22'; ctx.lineWidth=1;
-      for(let s=0;s<2;s++){ const a=spin+i*0.35+s*Math.PI/2; line(w[0]-Math.cos(a)*3.5,w[1]-Math.sin(a)*3.5,w[0]+Math.cos(a)*3.5,w[1]+Math.sin(a)*3.5); }
+    /* 원본 바퀴 픽셀 자체를 원형으로 잘라 회전시킨다. 별도 타이어를 덧그리지 않는다. */
+    const spin=worldX/6.2;
+    [[24,44,0],[77,44,0.28]].forEach((w)=>{
+      const r=6.5, wx0=sx+w[0], wy0=sy+w[1];
+      if(up.mudtires){
+        ctx.strokeStyle='#14171e'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(wx0,wy0,7,0,Math.PI*2); ctx.stroke();
+        ctx.strokeStyle='#30343d'; ctx.lineWidth=1;
+        for(let k=0;k<8;k++){
+          const a=spin+w[2]+k*Math.PI/4;
+          line(wx0+Math.cos(a)*6,wy0+Math.sin(a)*6,wx0+Math.cos(a)*7,wy0+Math.sin(a)*7);
+        }
+      }
+      ctx.save();
+      ctx.beginPath(); ctx.arc(wx0,wy0,r,0,Math.PI*2); ctx.clip();
+      ctx.translate(wx0,wy0); ctx.rotate(spin+w[2]);
+      ctx.drawImage(vanSprite,w[0]-r,w[1]-r,r*2,r*2,-r,-r,r*2,r*2);
+      ctx.restore();
     });
 
     ctx.fillStyle=dark>0.25?'#ffe9b0':'#d8d2be'; ctx.fillRect(sx+90,sy+36,2,3);
