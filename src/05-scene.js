@@ -8,6 +8,7 @@ const SCENE = (()=>{
   let dcv, dctx, VW=560, VH=300, DPR=1;   // 표시 캔버스
   let off, ctx, W=LW, H=LH;               // 픽셀 캔버스 (모든 드로잉)
   let worldX=0, t=0, puffs=[], rainDrops=null, flashT=0, shoot=null, birds=null;
+  let vanSprite=null;
   let crowFly=[], crowCd={};
   let signTexts=[];                   // 픽셀 패스에서 수집 → 블릿 후 선명하게 그림
 
@@ -37,6 +38,9 @@ const SCENE = (()=>{
   function init(canvas){
     dcv=canvas; dctx=dcv.getContext('2d');
     off=document.createElement('canvas'); ctx=off.getContext('2d');
+    if(D.vanSprites&&D.vanSprites.base){
+      vanSprite=new Image(); vanSprite.src=D.vanSprites.base;
+    }
     new ResizeObserver(resize).observe(dcv); resize();
   }
   function resize(){
@@ -403,6 +407,102 @@ const SCENE = (()=>{
     return roadY;
   }
 
+  /* 이미지 차체 + 실시간 레이어. 이미지 로딩 전에는 아래 기존 렌더러로 폴백. */
+  function spriteVan(vx,vy,baseY,bodyL,speed,dark,wx,up,bnc,bnc2){
+    if(!vanSprite||!vanSprite.complete||!vanSprite.naturalWidth) return false;
+    const sx=P(vx-8), sy=P(baseY-36+bnc*0.3), sw=96, sh=53;
+    ctx.drawImage(vanSprite,sx,sy,sw,sh);
+
+    /* 업그레이드 오버레이: 모두 차체 기준 앵커를 공유한다. */
+    if(up.solar){
+      ctx.fillStyle='#274e74'; ctx.fillRect(sx+33,sy+5,20,4);
+      ctx.strokeStyle='#5991bd'; for(let x=sx+37;x<sx+53;x+=5) line(x,sy+5,x,sy+9);
+    }
+    if(up.garden){
+      ctx.fillStyle='#54402c'; ctx.fillRect(sx+48,sy+5,14,4);
+      ctx.fillStyle='#67a34b'; for(let g=0;g<5;g++) ctx.fillRect(P(sx+50+g*2.4+Math.sin(t*3+g)*0.5),sy+2,1,4);
+    }
+    if(up.garden2){
+      ctx.strokeStyle='rgba(175,215,240,0.7)'; ctx.beginPath(); ctx.arc(sx+55,sy+6,8,Math.PI,0); ctx.stroke();
+    }
+    if(up.collector){
+      ctx.fillStyle='#67707d'; ctx.beginPath(); ctx.moveTo(sx+17,sy+3); ctx.lineTo(sx+25,sy+3); ctx.lineTo(sx+21,sy+9); ctx.closePath(); ctx.fill();
+    }
+    if(up.stove){
+      ctx.fillStyle='#343943'; ctx.fillRect(sx+29,sy,3,8);
+      if(speed<=0){ const rise=(t*4)%7; ctx.fillStyle=`rgba(210,210,205,${0.35*(1-rise/7)})`; ctx.fillRect(P(sx+30+Math.sin(t*2)),P(sy-1-rise),2,2); }
+    }
+    if(up.beehive){ ctx.fillStyle='#a58a4a'; ctx.fillRect(sx+64,sy+6,7,5); ctx.fillStyle='#2e2a20'; ctx.fillRect(sx+67,sy+9,1,1); }
+    if(up.scope){ ctx.fillStyle='#454b56'; ctx.fillRect(sx+58,sy,2,7); ctx.fillRect(sx+56,sy,6,2); }
+    if(up.horn){ ctx.fillStyle='#c9c2b0'; ctx.fillRect(sx+12,sy+4,5,2); ctx.fillRect(sx+12,sy+8,5,2); }
+    if(up.lightbar){
+      ctx.fillStyle='#30343d'; ctx.fillRect(sx+75,sy+11,11,2);
+      if(dark>0.3){ ctx.fillStyle='#ffe9a8'; for(let i=0;i<5;i++) ctx.fillRect(sx+76+i*2,sy+11,1,1); }
+    }
+    if(up.antenna){
+      ctx.strokeStyle='#777'; line(sx+24,sy+7,sx+20,sy-11);
+      ctx.fillStyle=`rgba(255,90,90,${0.5+0.5*Math.sin(t*3)})`; ctx.fillRect(sx+19,sy-12,1,1);
+    }
+    if(up.cabin){
+      ctx.fillStyle=dark>0.35?'#e6a75c':'#7991a4'; ctx.fillRect(sx+59,sy+22,7,4);
+      ctx.strokeStyle='#3d352c'; ctx.strokeRect(sx+58.5,sy+21.5,8,5);
+    }
+    if(up.bunk){ ctx.fillStyle=dark>0.35?'#e8a95c':'#829aad'; ctx.fillRect(sx+39,sy+17,7,2); }
+    if(up.fridge){ ctx.fillStyle='#dfe5ea'; ctx.fillRect(sx+47,sy+29,4,6); ctx.fillStyle='#9fc3d8'; ctx.fillRect(sx+48,sy+30,1,1); }
+    if(up.curtain&&dark>0.35&&speed<=0){ ctx.fillStyle='#453a4a'; ctx.fillRect(sx+38,sy+20,20,13); }
+    if(up.kitchen&&speed<=0){
+      ctx.fillStyle='#3c372f'; ctx.fillRect(sx+43,sy+34,13,2); ctx.fillStyle='#252934'; ctx.fillRect(sx+48,sy+31,4,2);
+    }
+    if(up.armor){
+      ctx.fillStyle='rgba(105,112,128,0.92)'; ctx.fillRect(sx+33,sy+34,13,8); ctx.fillRect(sx+49,sy+34,13,8);
+      ctx.fillStyle='#a4aaba'; [[35,36],[44,36],[35,40],[44,40],[51,36],[60,36],[51,40],[60,40]].forEach(p=>ctx.fillRect(sx+p[0],sy+p[1],1,1));
+    }
+    if(up.tank1){ ctx.fillStyle='#4a4f5c'; ctx.fillRect(sx+45,sy+43,12,5); ctx.fillStyle='#6d7482'; ctx.fillRect(sx+46,sy+43,10,1); }
+    if(up.tank2){ ctx.fillStyle='#4a4f5c'; ctx.fillRect(sx+58,sy+43,10,5); ctx.fillStyle='#6d7482'; ctx.fillRect(sx+59,sy+43,8,1); }
+    if(up.sidebox){ ctx.fillStyle='#515867'; ctx.fillRect(sx+10,sy+37,8,7); ctx.fillStyle='#c9a24a'; ctx.fillRect(sx+13,sy+39,2,1); }
+    if(up.armory){ ctx.strokeStyle='#5b4630'; line(sx+12,sy+25,sx+19,sy+32); line(sx+16,sy+24,sx+15,sy+34); }
+    if(up.awning){
+      ctx.fillStyle='#874f45';
+      if(speed>0) ctx.fillRect(sx+29,sy+14,25,2);
+      else { ctx.fillRect(sx+9,sy+14,45,3); ctx.strokeStyle='#4c4438'; line(sx+10,sy+17,sx+10,sy+52); }
+    }
+    if(up.snorkel){ ctx.fillStyle='#333842'; ctx.fillRect(sx+89,sy+18,2,18); ctx.fillRect(sx+86,sy+17,5,2); }
+    if(up.bullbar){ ctx.strokeStyle='#6b7280'; line(sx+91,sy+35,sx+94,sy+47); line(sx+91,sy+47,sx+96,sy+47); }
+    if(up.winch){ ctx.fillStyle='#2b2f3a'; ctx.fillRect(sx+89,sy+45,7,4); ctx.fillStyle='#c9a24a'; ctx.fillRect(sx+96,sy+48,2,1); }
+
+    /* 창문 속 탑승자. 초상 대신 저해상도 실루엣을 실시간으로 움직인다. */
+    const riders=S? ['#2c3346',...S.party.map(id=>D.comps[id].color)]:['#2c3346'];
+    const slots=[[78,28],[55,29],[49,29],[42,29]];
+    riders.slice(0,slots.length).forEach((color,i)=>{
+      const q=slots[i], nod=Math.sin(t*1.2+i*2.7)>0.96?1:0;
+      ctx.fillStyle='#171a24'; ctx.fillRect(sx+q[0]-2,sy+q[1]-1+nod,4,4);
+      ctx.fillStyle=color; ctx.fillRect(sx+q[0]-2,sy+q[1]-3+nod,4,2);
+      if(i===talkIdx&&talkT>0){ ctx.fillStyle='#ffebbe'; ctx.fillRect(sx+q[0],sy+q[1]-7,1,1); ctx.fillRect(sx+q[0]+2,sy+q[1]-7,1,1); }
+    });
+    if(S&&S.dog){
+      const bob=speed>0?Math.sin(t*9):0;
+      ctx.fillStyle='#c9a36a'; ctx.fillRect(sx+19,P(sy+25+bob),5,4);
+      ctx.fillStyle='#8a6c42'; ctx.fillRect(sx+19,P(sy+23+bob),2,2); ctx.fillRect(sx+22,P(sy+23+bob),2,2);
+    }
+
+    /* 생성 이미지의 허브 위에 속도 동기 회전 스포크를 덧그린다. */
+    const spin=worldX*0.3;
+    [[sx+29,sy+43],[sx+74,sy+43]].forEach((w,i)=>{
+      if(up.mudtires){ ctx.strokeStyle='#101219'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(w[0],w[1],7,0,Math.PI*2); ctx.stroke(); }
+      ctx.fillStyle='#343945'; circ(w[0],w[1],4.2);
+      ctx.fillStyle='#737985'; circ(w[0],w[1],1.3);
+      ctx.strokeStyle='#171a22'; ctx.lineWidth=1;
+      for(let s=0;s<2;s++){ const a=spin+i*0.35+s*Math.PI/2; line(w[0]-Math.cos(a)*3.5,w[1]-Math.sin(a)*3.5,w[0]+Math.cos(a)*3.5,w[1]+Math.sin(a)*3.5); }
+    });
+
+    ctx.fillStyle=dark>0.25?'#ffe9b0':'#d8d2be'; ctx.fillRect(sx+90,sy+36,2,3);
+    ctx.fillStyle=speed>0?'#c74138':'#762a24'; ctx.fillRect(sx+8,sy+36,2,3);
+    if(wx==='rain'){
+      ctx.globalAlpha=0.15; ctx.drawImage(vanSprite,sx,sy+58,sw,-18); ctx.globalAlpha=1;
+    }
+    return true;
+  }
+
   /* ── 차 (달구지) ── */
   function van(roadY,speed,dark,wx){
     const up=S? (S.up||{}):{};
@@ -428,6 +528,7 @@ const SCENE = (()=>{
       for(let i=0;i<5;i++){ const dx=vx+bodyL+cabL+((t*30+i*23)%80), dy=vy+6+hash(i*7)*12;
         ctx.fillStyle=`rgba(255,230,180,${0.25*dark})`; ctx.fillRect(P(dx),P(dy),1,1); }
     }
+    if(spriteVan(vx,vy,baseY,bodyL,speed,dark,wx,up,bnc,bnc2)) return;
     /* ── 차체: 박스(투톤) ── */
     ctx.fillStyle='#8d8474';                        // 상부 베이지
     ctx.fillRect(vx,vy-bodyH,bodyL,bodyH-7);

@@ -5,13 +5,16 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PARTS=(
+PARTS_BEFORE_VAN=(
   src/01-style.html
   src/02-dom.html
   src/03-data.js
   src/03b-portraits.js
   src/03c-icons.js
   src/03d-bgm.js
+)
+
+PARTS_AFTER_VAN=(
   src/04-engine.js
   src/05-scene.js
   src/06-mapgraph.js
@@ -20,5 +23,10 @@ PARTS=(
   src/09-close.html
 )
 
-cat "${PARTS[@]}" > 서울까지400km.html
+VAN_BASE64="$(base64 < assets/van/dalguji-base.png | tr -d '\n')"
+{
+  cat "${PARTS_BEFORE_VAN[@]}"
+  sed "s|__DALGUJI_BASE__|data:image/png;base64,$VAN_BASE64|" src/03e-van.js
+  cat "${PARTS_AFTER_VAN[@]}"
+} > 서울까지400km.html
 echo "✅ 서울까지400km.html $(wc -c < 서울까지400km.html | tr -d ' ') bytes"
