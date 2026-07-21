@@ -371,6 +371,7 @@ G.eligible = (typeFilter)=>{
     if(ev.needBond && ((S.comps[ev.needBond[0]]||{}).bond||0) < ev.needBond[1]) return false;
     if(ev.needsComp2 && !G.hasComp(ev.needsComp2)) return false;  // 2인 케미 이벤트
     if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
+    if(ev.noFlag && S.flags[ev.noFlag]) return false;   // 해당 서사 이미 봤으면 스킵
     if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;

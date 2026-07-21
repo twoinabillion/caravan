@@ -67,6 +67,7 @@ for (const ev of allEvents) {
   if (ev.noComp && !compIds.has(ev.noComp)) err(`${at} noComp 미존재: ${ev.noComp}`);
   if (ev.needUp && !D.upgrades.some(u => u.id === ev.needUp)) err(`${at} needUp 미존재: ${ev.needUp}`);
   if (ev.needBond && !compIds.has(ev.needBond[0])) err(`${at} needBond 동료 미존재: ${ev.needBond[0]}`);
+  if (ev.noFlag && !flagSetters.has(ev.noFlag)) err(`${at} noFlag 세터 없음: ${ev.noFlag}`);
   if (ev.needFlag && !flagSetters.has(ev.needFlag)) err(`${at} needFlag 세터 없음: ${ev.needFlag}`);
   if (ev.needFlag2 && !flagSetters.has(ev.needFlag2)) err(`${at} needFlag2 세터 없음: ${ev.needFlag2}`);
   if (ev.needFlagMin && !flagSetters.has(ev.needFlagMin[0])) err(`${at} needFlagMin 세터 없음: ${ev.needFlagMin[0]}`);
@@ -90,7 +91,8 @@ for (const ev of allEvents) {
       if (fx.goto && !nodeIds.has(fx.goto)) err(`${at} fx.goto 미존재: ${fx.goto}`);
       if (fx.recruit && !compIds.has(fx.recruit)) err(`${at} fx.recruit 미존재: ${fx.recruit}`);
       if (fx.mood) for (const c in fx.mood) if (!compIds.has(c)) err(`${at} fx.mood 미존재 동료: ${c}`);
-      if (fx.item) for (const k in fx.item) if (fx.item[k] < 0 && !itemSources.has(k)) warn(`${at} fx.item 소비만 존재: ${k}`);
+      if (typeof fx.item === 'string') err(`${at} fx.item 문자열형(버그): '${fx.item}' → item:{'${fx.item}':1} 객체형으로. 엔진은 {이름:개수}만 지급`);
+      if (fx.item && typeof fx.item === 'object') for (const k in fx.item) if (fx.item[k] < 0 && !itemSources.has(k)) warn(`${at} fx.item 소비만 존재: ${k}`);
     }
   }
 }
