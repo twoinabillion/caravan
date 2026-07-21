@@ -36,7 +36,7 @@ python3 tests/test_smoke.py   # Playwright 스모크
 ```
 
 ```
-src/     01-style → 02-dom → 03-data → 03b-portraits → 03c-icons → 03d-bgm → 03e-van
+src/     01-style → 02-dom → 03-data → 03b-portraits → 03c-icons → 03d-bgm → 03e-van → 03f-npc-portraits
          → 04-engine → 05-scene → 06-mapgraph → 07-ui → 08-offroad → 09-close
 docs/    DESIGN.md(디자인 바이블) · README · 오디오/보이스/노래 제작 시트
 tools/   scan.js 정합성 스캐너

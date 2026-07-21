@@ -24,9 +24,16 @@ PARTS_AFTER_VAN=(
 )
 
 VAN_BASE64="$(base64 < assets/van/dalguji-base.png | tr -d '\n')"
+NPC_KEYS=(geumja sundeok taeho jaepil miyoung drhan deokgu kimcaptain hayeosa sanjigi)
+NPC_JS="$(< src/03f-npc-portraits.js)"
+for KEY in "${NPC_KEYS[@]}"; do
+  NPC_BASE64="$(base64 < "assets/portraits/$KEY.png" | tr -d '\n')"
+  NPC_JS="${NPC_JS//__NPC_${KEY}__/data:image/png;base64,$NPC_BASE64}"
+done
 {
   cat "${PARTS_BEFORE_VAN[@]}"
   sed "s|__DALGUJI_BASE__|data:image/png;base64,$VAN_BASE64|" src/03e-van.js
+  printf '%s\n' "$NPC_JS"
   cat "${PARTS_AFTER_VAN[@]}"
 } > 서울까지400km.html
 echo "✅ 서울까지400km.html $(wc -c < 서울까지400km.html | tr -d ' ') bytes"

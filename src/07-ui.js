@@ -183,6 +183,9 @@ const UI = (()=>{
   function faceOf(id, fallback){
     return D.portraits[id]? `<img class="pimg" src="${D.portraits[id]}" alt="">` : fallback;
   }
+  function npcFace(id, fallback){
+    return D.portraits[id]? `<img class="npc-pimg" src="${D.portraits[id]}" alt="">` : fallback;
+  }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
   function applyIcons(){
@@ -335,8 +338,11 @@ const UI = (()=>{
     const aiEvent = evd.type==='추적'||!!evd.ai;
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
-    let h=`<div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
-      <h2>${evd.title}</h2><div class="body">${fmt(text)}</div><div class="choices">`;
+    const portraitKey=D.eventPortraits&&D.eventPortraits[evd.id];
+    const portrait=portraitKey&&D.portraits[portraitKey]
+      ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
+    let h=`<div class="event-head">${portrait}<div><div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
+      <h2>${evd.title}</h2></div></div><div class="body">${fmt(text)}</div><div class="choices">`;
     evd.choices.forEach((c,i)=>{
       const rq=G.reqOk(c.req);
       h+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
@@ -498,7 +504,7 @@ const UI = (()=>{
     for(const nid of stl.npcs){
       const npc=D.npcs[nid], st=S.npcs[nid];
       h+=`<button class="npc-row" data-npc="${nid}">
-        <div class="npc-face">${npc.face}</div>
+        <div class="npc-face">${npcFace(nid,npc.face)}</div>
         <span><b>${npc.name}</b><small>${npc.role}</small></span>
         <span class="npc-att">${st.att>10?'우호적':st.att<-10?'냉랭함':st.met?'아는 사이':'초면'}</span></button>`;
     }
@@ -648,7 +654,7 @@ const UI = (()=>{
     const body=$('#stl-body');
     const old=body.querySelector('.dlg.talk'); if(old) old.remove();
     const rumorDone = S.flags['rumor_'+nid];
-    const dlg=el('div','dlg talk',`<div class="say"><span class="spk">${npc.name}</span> "${greet}"</div>
+    const dlg=el('div','dlg talk',`<div class="npc-talk-head"><div class="npc-face">${npcFace(nid,npc.face)}</div><div class="say"><span class="spk">${npc.name}</span> "${greet}"</div></div>
       <div class="choices">
         ${!rumorDone?`<button class="choice" data-r="rumor">요즘 소문 들은 거 없어요?</button>`:''}
         <button class="choice" data-r="chat">이런저런 얘기를 나눈다</button>
@@ -687,7 +693,7 @@ const UI = (()=>{
     const body=$('#stl-body');
     const old=body.querySelector('.dlg.talk'); if(old) old.remove();
     const dlg=el('div','dlg talk',`
-      <div class="say"><span class="spk">${npc.name}</span></div>
+      <div class="npc-talk-head"><div class="npc-face">${npcFace(nid,npc.face)}</div><div class="say"><span class="spk">${npc.name}</span></div></div>
       <div id="chatlog"></div>
       <div id="chatin"><input id="chat-txt" placeholder="하고 싶은 말… (자유 입력)" maxlength="120">
         <button id="chat-send">말한다</button></div>
