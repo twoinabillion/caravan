@@ -651,6 +651,7 @@ G.pickChat = ()=>{
     if(nd.night===1 && !night) return false;
     if(nd.rain===1 && !G.isWet()) return false;
     if(nd.region && region!==nd.region) return false;
+    if(nd.flag && !S.flags[nd.flag]) return false;
     /* 등장 화자 전원이 실제 탑승 중이어야 함 (동료만 검사, 나/sys 제외) */
     for(const ln of c.lines){ const w=ln[0];
       if(w!=='나'&&w!=='sys'&&D.comps[w]&&!G.hasComp(w)) return false; }

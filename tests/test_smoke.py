@@ -278,7 +278,7 @@ with sync_playwright() as p:
     check('소개 체인(영입 시 다음 동료 안내)', r7['refer'])
     check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
-    check('티키타카 25종', r6['chatCount'] == 25, str(r6['chatCount']))
+    check('티키타카 45종', r6['chatCount'] == 45, str(r6['chatCount']))
     check('연속 대화 재생(2줄+)', r6['picked'] >= 2, str(r6['picked']))
     check('화자 전원 탑승 보장', r6['orphan'] == 0, str(r6['orphan']))
     check('needBond 게이트(유대 5 해금)', r5['noDeep'] and r5['deepOpen'], str(r5))
