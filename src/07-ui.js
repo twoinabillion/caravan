@@ -78,6 +78,9 @@ const UI = (()=>{
     const bs=$('#bt-song');
     if(bs){ if(!(D.bgm&&D.bgm.song)) bs.style.display='none'; else bs.onclick=()=>BGM.toggleSong(); }
     $('#bt-continue').onclick=()=>{ if(G.load()){ enterGame(); } };
+    const nameGo=()=>{ const nm=($('#inp-name').value||'').trim(); G.newGame(pendingMode, nm); enterGame(); };
+    $('#bt-name').onclick=nameGo;
+    $('#inp-name').addEventListener('keydown',e=>{ if(e.key==='Enter') nameGo(); });
     $('#bt-modeback').onclick=()=>show('scr-title');
     $('#mode-on').onclick=()=>startNew('onroad');
     $('#mode-off').onclick=(e)=>{
@@ -134,7 +137,7 @@ const UI = (()=>{
   }
   function nextIntro(){
     introIdx++;
-    if(introIdx>=D.intro.length){ G.newGame(pendingMode); enterGame(); }
+    if(introIdx>=D.intro.length){ show('scr-name'); setTimeout(()=>{ const i=$('#inp-name'); if(i){ i.value=''; i.focus(); } }, 80); }
     else renderIntro();
   }
   function enterGame(){
@@ -318,7 +321,7 @@ const UI = (()=>{
       return;
     }
     const bb=el('div','bubble'+(isAi?' ai':''),
-      (b.who!=='sys'&&!isAi? `<span class="who">${b.who==='나'?'나':(D.comps[b.who]?.name||b.who)}</span>`:'')
+      (b.who!=='sys'&&!isAi? `<span class="who">${b.who==='나'?G.myName():(D.comps[b.who]?.name||b.who)}</span>`:'')
       + (isAi? `<span class="who">천리안</span>`:'') + b.t);
     const slot=bubbleSlot++%2;
     bb.style.left = (8+slot*6)+'%';

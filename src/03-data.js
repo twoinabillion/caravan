@@ -901,25 +901,25 @@ D.npcs = {
 D.stls = {
   gwangju: {name:'광주 대인시장', npcs:['geumja'],
     desc:'호남 최대의 정착지. 시장 골목마다 기름 냄새, 국밥 김, 그리고 오지랖이라는 이름의 복지가 흐른다.',
-    trade:[['연료 5L','fuel',5,6],['물 1통','water',1,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5],['부품','item부품',1,7]]},
+    trade:[['연료 10L','fuel',10,6],['물 3통','water',3,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5],['부품','item부품',1,7]]},
   miryang: {name:'밀양 장터', npcs:['sundeok'],
     desc:'천막과 손수레. 닷새장의 리듬으로 사는 사람들. 국수 삶는 김이 오른다.',
-    trade:[['연료 5L','fuel',5,6],['물 1통','water',1,2],['식량 1일치','food',1,2],['부품','item부품',1,8]]},
+    trade:[['연료 10L','fuel',10,6],['물 3통','water',3,1],['식량 1일치','food',1,2],['부품','item부품',1,8]]},
   daegu:   {name:'대구 돔 시장', npcs:['taeho'], recruit:'kangwoo',
     desc:'야구장 돔 아래 수백 개의 좌판. 남부의 물류가 여기서 돈다. 경비들이 입구에서 무기를 맡아둔다.',
-    trade:[['연료 5L','fuel',5,5],['물 1통','water',1,2],['식량 1일치','food',1,2],['부품','item부품',1,7],['의약품','item의약품',1,6],['탄약','item탄약',1,5]]},
+    trade:[['연료 10L','fuel',10,5],['물 3통','water',3,1],['식량 1일치','food',1,2],['부품','item부품',1,7],['의약품','item의약품',1,6],['탄약','item탄약',1,5]]},
   muju:    {name:'무주 터널', npcs:['jaepil'],
     desc:'터널 양쪽을 컨테이너로 막았다. 천장에 매단 수백 개의 촛불이 별자리 같다.',
     trade:[['물 2통 ⇄ 식량 1','barter_wf',0,0],['식량 2 ⇄ 부품 1','barter_fp',0,0],['의약품 1 ⇄ 식량 3','barter_mf',0,0]]},
   jeonju:  {name:'전주 서문 시장', npcs:['miyoung'],
     desc:'가장 사람 사는 냄새가 나는 곳. 어디선가 진짜 콩나물국밥 냄새가 난다.',
-    trade:[['연료 5L','fuel',5,6],['물 1통','water',1,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5]]},
+    trade:[['연료 10L','fuel',10,6],['물 3통','water',3,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5]]},
   daejeon: {name:'대전 연구단지 코뮌', npcs:['drhan'],
     desc:'연구동 하나에 발전기를 돌려 산다. 화이트보드엔 아직 수식이 남아 있다. 절반은 지워졌다.',
-    trade:[['연료 5L','fuel',5,7],['물 1통','water',1,2],['부품','item부품',1,6],['의약품','item의약품',1,4]]},
+    trade:[['연료 10L','fuel',10,7],['물 3통','water',3,1],['부품','item부품',1,6],['의약품','item의약품',1,4]]},
   suwon:   {name:'수원 성곽 공동체', npcs:['deokgu'],
     desc:'화성 성곽 안의 마지막 도시. 성벽 위 화살수들이 북쪽 하늘만 본다.',
-    trade:[['연료 5L','fuel',5,8],['물 1통','water',1,2],['식량 1일치','food',1,3],['탄약','item탄약',1,6],['부품','item부품',1,8]]},
+    trade:[['연료 10L','fuel',10,8],['물 3통','water',3,1],['식량 1일치','food',1,3],['탄약','item탄약',1,6],['부품','item부품',1,8]]},
 };
 
 /* ── 배경 바이옴 (씬 렌더링) ── */
@@ -955,8 +955,8 @@ D.eventScenes = {
 D.upgrades = [
  {id:'tank1',    nm:'보조 연료탱크',  ic:'🛢', d:'연료 최대 +25L',                cost:{scrap:18, parts:1}},
  {id:'tank2',    nm:'대형 연료탱크',  ic:'🛢', d:'연료 최대 +25L (추가)',         cost:{scrap:30, parts:1}, needs:'tank1'},
- {id:'bench',    nm:'접이식 뒷좌석',  ic:'💺', d:'동료 자리 +1 — 첫 좌석 확장',    cost:{scrap:16, parts:1}, seat:1},
- {id:'cabin',    nm:'거주구 증축',    ic:'🏠', d:'동료 자리 +1 — 달구지가 커진다', cost:{scrap:40, parts:2}, needs:'bench', seat:1},
+ {id:'bench',    nm:'접이식 뒷좌석',  ic:'💺', d:'동료 자리 +1 — 첫 좌석 확장',    cost:{scrap:12, parts:1}, seat:1},
+ {id:'cabin',    nm:'거주구 증축',    ic:'🏠', d:'동료 자리 +1 — 달구지가 커진다', cost:{scrap:30, parts:2}, needs:'bench', seat:1},
  {id:'susp',     nm:'서스펜션 강화',  ic:'🔩', d:'험로·폭풍 마모 절반',           cost:{scrap:24, parts:1}},
  {id:'armor',    nm:'장갑판',         ic:'🛡', d:'최대 내구 +25 · 받는 피해 30%↓', cost:{scrap:30, parts:1}},
  {id:'garden',   nm:'지붕 텃밭',      ic:'🌱', d:'매일 아침 식량 +1',             cost:{scrap:20}},
@@ -974,8 +974,8 @@ D.upgrades = [
  {id:'beehive', nm:'이동 벌통',     ic:'🐝', d:'아침 30% 확률 꿀 — 식량+1·사기+2',      cost:{scrap:28,parts:0}},
  {id:'garden2', nm:'지붕 온실',     ic:'🍅', d:'텃밭 강화 — 매일 식량 +2', cost:{scrap:30,parts:1}, needs:'garden'},
  {id:'kitchen', nm:'간이 주방',     ic:'🍳', d:'난로 확장 — 식사 때마다 사기 +1', cost:{scrap:24,parts:1}, needs:'stove'},
- {id:'bunk',    nm:'2층 침대',      ic:'🛏', d:'동료 자리 +1 · 교대 수면, 주행 피로 -20%', cost:{scrap:28,parts:1}, needs:'cabin', seat:1},
- {id:'jumpseat',nm:'벽걸이 보조석',  ic:'🪑', d:'동료 자리 +1 — 필요할 때만 펼치는 마지막 자리', cost:{scrap:24,parts:1}, needs:'bunk', seat:1},
+ {id:'bunk',    nm:'2층 침대',      ic:'🛏', d:'동료 자리 +1 · 교대 수면, 주행 피로 -20%', cost:{scrap:22,parts:1}, needs:'cabin', seat:1},
+ {id:'jumpseat',nm:'벽걸이 보조석',  ic:'🪑', d:'동료 자리 +1 — 필요할 때만 펼치는 마지막 자리', cost:{scrap:18,parts:1}, needs:'bunk', seat:1},
  {id:'fridge',  nm:'냉장 박스',     ic:'🧊', d:'태양광 연결 — 3일마다 식량 +1 (낭비 제로)', cost:{scrap:26,parts:1}, needs:'solar'},
  {id:'armory',  nm:'무기 선반',     ic:'⚔', d:'공구함 확장 — 제작 고철 -20%·시간 절반', cost:{scrap:24,parts:1}, needs:'sidebox'},
  {id:'scope',   nm:'지붕 망원대',   ic:'🔭', d:'발견율 +25% · 매복류 조우 -25%', cost:{scrap:22,parts:1}},
@@ -1168,7 +1168,7 @@ D.events = [
     {p:1, text:'돌파 직전, 타이어 아래서 뭔가 터졌다. 못판이다!\n\n겨우 빠져나왔지만 바퀴가 너덜너덜하다.', fx:{van:-22, moodAll:-5}}]},
  ]},
 
-{id:'meet_bus', type:'조우', w:13, once:true, nearNode:['gumi','gimcheon','sangju','daegu'],
+{id:'meet_bus', type:'조우', w:13, priority:1, once:true, nearNode:['gumi','gimcheon','sangju','daegu'],
  title:'넘어진 버스',
  text:'시외버스가 옆으로 누워 있다. 사고는 오래전인데— 안에서 소리가 난다.\n\n"거기 누구 있어요?! 문이 안 열려요!"\n\n노인의 목소리다.',
  choices:[
@@ -1176,7 +1176,7 @@ D.events = [
   {label:'지나간다', out:[{p:1, text:'목소리가 끊길 때까지 라디오 볼륨을 올렸다.\n\n그날 밤 아무도 밥을 다 먹지 못했다.', fx:{moodAll:-8, flag:'left_bus', note:{type:'사건',title:'지나친 버스',body:'문이 안 열린다던 목소리. 우리는 볼륨을 올렸다.'}}}]},
  ]},
 
-{id:'meet_scrapyard', type:'조우', w:14, once:true, nearNode:['ulsan','gyeongju','pohang','yangsan'],
+{id:'meet_scrapyard', type:'조우', w:14, priority:1, once:true, nearNode:['ulsan','gyeongju','pohang','yangsan'],
  title:'자동차 무덤',
  text:'공단 옆 폐차장. 수백 대의 차가 탑처럼 쌓여 있다.\n\n그 꼭대기에서 불꽃이 튄다. 용접 불꽃. 사람이다.\n\n"어이!! 그 차!!" 앳된 목소리가 쩌렁쩌렁 울린다. "포터 개조지?! 엔진 소리가 아파요, 지금!!"',
  choices:[
@@ -1186,7 +1186,7 @@ D.events = [
     {p:1, text:'혼자 뒤지다 차 더미가 무너질 뻔했다. 위에서 혀 차는 소리가 들렸다.', fx:{van:-4}}]},
  ]},
 
-{id:'meet_hitchhiker', type:'조우', w:14, once:true, night:true, nearNode:['jeonju','gwangju','damyang','namwon','suncheon'],
+{id:'meet_hitchhiker', type:'조우', w:14, priority:1, once:true, night:true, nearNode:['jeonju','gwangju','damyang','namwon','suncheon'],
  title:'밤의 히치하이커',
  text:'헤드라이트에 잡힌 실루엣. 기타 케이스를 멘 남자와, 그 옆에 앉은 개 한 마리.\n\n남자가 엄지를 든다. 개는 꼬리를 흔든다.\n\n이 시국에 밤길에서 엄지를 드는 배짱이라니.',
  choices:[
@@ -1586,7 +1586,7 @@ D.events = [
  ]},
 
 /* ───── 영입: 재이 & 은수 ───── */
-{id:'jy_recruit', type:'조우', w:13, once:true, nearNode:['gunsan','mokpo','gimcheon','gumi'],
+{id:'jy_recruit', type:'조우', w:13, priority:1, once:true, nearNode:['gunsan','mokpo','gimcheon','gumi'],
  title:'리어카를 끄는 아이',
  text:'고물을 산처럼 실은 리어카가 갓길을 간다. 끄는 건 스무 살쯤의 아이.\n\n차를 보더니 리어카를 세우고 팔짱을 낀다.\n\n"그 차, 왼쪽 뒤 판스프링 헐거운 거 알아요? 소리 들리는데. …고쳐줄 순 없지만, 어디서 부품 구하는진 알아요."\n\n"조건은 하나. 북쪽까지 리어카째 태워줘요. 아, 난 재이."',
  choices:[
@@ -1594,7 +1594,7 @@ D.events = [
   {label:'고물 정보만 산다 (고철 3)', req:{scrap:3}, out:[{p:1, text:'재이가 지도에 폐공단 창고 위치를 찍어줬다. 정보값은 정확했다.\n\n리어카는 다시 북쪽으로 굴러갔다. 저 속도로 언제 도착하려나.', fx:{scrap:-3, item:{'부품':1}}}]},
  ]},
 
-{id:'es_recruit', type:'조우', w:14, once:true, nearNode:['daejeon','sejong','cheongju','nonsan'],
+{id:'es_recruit', type:'조우', w:14, priority:1, once:true, nearNode:['daejeon','sejong','cheongju','nonsan'],
  title:'지붕 위의 안테나',
  text:'폐 기지국 지붕에서 여자가 안테나를 돌리고 있다. 수신기 헤드폰을 목에 걸고.\n\n차를 보고도 놀라지 않는다. 오히려 기다렸다는 듯이.\n\n"남쪽 번호판. 서울 방향. …태워줘요. 나 저거 다룰 줄 알아요."\n\n여자가 가리킨 건 하늘. 정확히는— 하늘에 떠 있는 점 하나.\n\n"천리안 관제센터에서 일했어요. 은수라고 해요."',
  choices:[

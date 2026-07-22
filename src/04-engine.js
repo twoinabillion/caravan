@@ -12,10 +12,10 @@ const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 const G = {};
 
 /* ── new game / save ── */
-G.newGame = (mode)=>{
+G.newGame = (mode, name)=>{
   S = {
-    v:1, mode, day:1, min:7*60+30, at:'busan', driving:null,
-    fuel:34, fuelMax:70, water:10, food:10, scrap:16, van:82, vanMax:100,
+    v:1, mode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
+    fuel:40, fuelMax:70, water:12, food:12, scrap:24, van:82, vanMax:100,
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
@@ -33,6 +33,7 @@ G.newGame = (mode)=>{
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 달구지를 함께 만들었고, 지난겨울 떠났다. 유품은 열쇠와 정비 수첩. "달구지를 완성해라. 그리고 어디든, 끝까지 가라."', links:['달구지']});
   G.save();
 };
+G.myName = ()=> (S && S.name) || '나';
 G.save = ()=>{ if(!S||S.ended) return; try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} };
 G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return false;
   S = JSON.parse(j); rng = mulberry32(S.seed + (S.stats.events*7919));
@@ -198,9 +199,9 @@ G.advance = (mins)=>{
 };
 G.lunch = ()=>{
   const need = Math.ceil(G.partySize()/2);
-  const fOk = S.food>=need, wOk = S.water>=need;
-  S.food=Math.max(0,S.food-need); S.water=Math.max(0,S.water-need);
-  if(fOk&&wOk){ UI.toast(`🍚 점심 — 식량·물 -${need}`);
+  const fOk = S.food>=need, wOk = true;   // 물은 아침 배급만 (v2.23 밸런스)
+  S.food=Math.max(0,S.food-need);
+  if(fOk&&wOk){ UI.toast(`🍚 점심 — 식량 -${need}`);
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(S.up&&S.up.kitchen) G.moodAll(1);
@@ -259,7 +260,7 @@ G.canTravelTo = (id)=>{
   if(S.fuel<=0) return {ok:false, why:'연료가 없다'};
   return {ok:true, km:e[2], road:e[3], fuel:fuelNeed};
 };
-G.fuelFor = (km,road)=>{ let per = 1/4.5; if(road==='rough') per*=1.35; if(road==='high') per*=0.92;
+G.fuelFor = (km,road)=>{ let per = 1/6.0; if(road==='rough') per*=1.35; if(road==='high') per*=0.92;
   if(G.hasComp('minji')) per*=0.92;
   if(G.hasPerk('mj_fuel')) per*=0.92;
   if(road==='rough' && S && S.up && S.up.mudtires) per/=1.15;   // 험로 타이어
@@ -375,6 +376,7 @@ G.eligible = (typeFilter)=>{
     if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
     if(ev.noFlag && S.flags[ev.noFlag]) return false;   // 해당 서사 이미 봤으면 스킵
     if(ev.noPool) return false;   // 랜덤 풀 제외 — chain/직접 호출 전용
+    if(ev.priority && S.party.length>=G.maxParty()) return false;   // 좌석 없으면 영입 이벤트 보류 (소실 방지)
     if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;
@@ -394,6 +396,8 @@ G.unknownHidden = ()=> Object.keys(D.nodes).filter(id=>D.nodes[id].type==='hidde
 G.fireDriveEvent = ()=>{
   // 동행/추적/조우/발견/탐색 가중 혼합
   let pool = G.eligible();
+  const pri = pool.filter(ev=>ev.priority);   // 영입 등 필수 이벤트는 구역 진입 시 우선
+  if(pri.length) pool = pri;
   if(!pool.length) return;
   // 가중치: 관측↑→추적형↑ / 경계태세→매복류↓ / 보리의육감→발견형↑
   const AMBUSH=['meet_waver','meet_toll','meet_bikers','meet_child_alone'];
@@ -577,6 +581,7 @@ G.arrive = ()=>{
     const arrivalDelay=UI.onArrive();
     setTimeout(()=>G.openEventById('perimeter_first'), arrivalDelay);
     G.save(); return; }
+  if(S.fuel<=0){ setTimeout(()=>G.openEventById('crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   const arrivalDelay=UI.onArrive();

@@ -33,6 +33,8 @@ with sync_playwright() as p:
     pg.click('#mode-on'); pg.wait_for_timeout(300)
     for _ in range(len(pg.evaluate('D.intro'))):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
+    pg.fill('#inp-name', '테스터'); pg.click('#bt-name'); pg.wait_for_timeout(200)   # 이름 입력 화면
+    check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
     check('게임 진입(HUD)', pg.locator('#g-fuel').is_visible())
     check('콘솔 에러 0', not errors, ' | '.join(errors[:3]))
