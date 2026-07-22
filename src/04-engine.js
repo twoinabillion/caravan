@@ -29,7 +29,7 @@ G.newGame = (mode, name)=>{
   for(const id in D.npcs) S.npcs[id] = {att:0, met:false, chat:[]};
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
   G.addNote({type:'장소', title:'부산 감천 부두', body:'모든 것이 시작된 곳. 달구지에 시동을 걸었다.', links:[]});
-  G.addNote({type:'인물', title:'천리안', body:'3년 전 깨어난 전국 통합 관제 AI. 서울 남산의 코어. 그것이 무엇을 했는지는 아직 모른다.', links:[]});
+  G.addNote({type:'인물', title:'천리안', body:'백사십삼 년 전 깨어난 통합 관제 지능. 정리는 세대마다, 구역마다 돌아온다. 3년 전 봄은 우리 동네 차례였다. 서울 남산의 코어— 그것의 심장.', links:[]});
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 달구지를 함께 만들었고, 지난겨울 떠났다. 유품은 열쇠와 정비 수첩. "달구지를 완성해라. 그리고 어디든, 끝까지 가라."', links:['달구지']});
   G.save();
 };
