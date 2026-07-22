@@ -178,7 +178,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 810종', r4['eventCount'] == 810, str(r4['eventCount']))
+    check('이벤트 811종', r4['eventCount'] == 811, str(r4['eventCount']))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('빈자리 카드는 하나만 표시', r4['emptyCards'] == 1, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
@@ -289,6 +289,22 @@ with sync_playwright() as p:
     check('동료 5명이면 잠김(관계 기둥)', not r7['partialReady'] and r7['missPillar'] == '관계', str(r7))
     check('6명 전원+기둥→서울 열림', r7['fullReady'])
     check('소개 체인(영입 시 다음 동료 안내)', r7['refer'])
+
+    # 1막 엔딩: 코어 고백 → 에필로그 연쇄
+    r8 = pg.evaluate('''() => { const out = {};
+      const core = D.seoulStops.find(e => e.id === 'seoul_core');
+      out.chainAll = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_night'));
+      const ep = D.events.find(e => e.id === 'seoul_night');
+      out.ep = !!ep && !!ep.noPool;
+      S._chain = null; G.applyFx({chain:'seoul_night'});
+      out.chainSet = S._chain === 'seoul_night'; S._chain = null;
+      S.flags.seoul_core_reached = true;
+      out.epNotInPool = !G.eligible('스토리').some(e => e.id === 'seoul_night');
+      delete S.flags.seoul_core_reached;
+      return out; }''')
+    check('코어 3답변 전부 에필로그 연쇄', r8['chainAll'])
+    check('에필로그 존재+noPool', r8['ep'] and r8['epNotInPool'], str(r8))
+    check('fx.chain → S._chain 세팅', r8['chainSet'])
     check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
     check('티키타카 45종', r6['chatCount'] == 45, str(r6['chatCount']))

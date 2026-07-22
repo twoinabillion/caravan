@@ -466,6 +466,8 @@ const UI = (()=>{
     curEv=null;
     if(S.driving) SND.setDriving(true);
     renderAll(); G.save();
+    /* 연쇄 이벤트 (시네마틱 시퀀스) */
+    if(S && S._chain){ const cid=S._chain; S._chain=null; setTimeout(()=>G.openEventById(cid), 450); return; }
     /* 서울 진입 후엔 오르막 맵으로 복귀 */
     if(S && S.flags && S.flags.seoul_open && !S.ended){ setTimeout(showSeoul, 300); }
   }

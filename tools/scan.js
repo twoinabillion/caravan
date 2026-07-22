@@ -90,6 +90,7 @@ for (const ev of allEvents) {
       if (fx.reveal && fx.reveal !== 'any' && !nodeIds.has(fx.reveal)) err(`${at} fx.reveal 미존재: ${fx.reveal}`);
       if (fx.goto && !nodeIds.has(fx.goto)) err(`${at} fx.goto 미존재: ${fx.goto}`);
       if (fx.recruit && !compIds.has(fx.recruit)) err(`${at} fx.recruit 미존재: ${fx.recruit}`);
+      if (fx.chain && !D.events.find(e => e.id === fx.chain) && !(D.seoulStops||[]).find(e => e.id === fx.chain)) err(`${at} fx.chain 대상 미존재: ${fx.chain}`);
       if (fx.mood) for (const c in fx.mood) if (!compIds.has(c)) err(`${at} fx.mood 미존재 동료: ${c}`);
       if (typeof fx.item === 'string') err(`${at} fx.item 문자열형(버그): '${fx.item}' → item:{'${fx.item}':1} 객체형으로. 엔진은 {이름:개수}만 지급`);
       if (fx.item && typeof fx.item === 'object') for (const k in fx.item) if (fx.item[k] < 0 && !itemSources.has(k)) warn(`${at} fx.item 소비만 존재: ${k}`);

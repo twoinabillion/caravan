@@ -374,6 +374,7 @@ G.eligible = (typeFilter)=>{
     if(ev.needsComp2 && !G.hasComp(ev.needsComp2)) return false;  // 2인 케미 이벤트
     if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
     if(ev.noFlag && S.flags[ev.noFlag]) return false;   // 해당 서사 이미 봤으면 스킵
+    if(ev.noPool) return false;   // 랜덤 풀 제외 — chain/직접 호출 전용
     if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;
@@ -477,6 +478,7 @@ G.applyFx = (fx)=>{
     if(id){ S.known.push(id); chips.push({t:`🗺 ${D.nodes[id].name} 발견`, c:'item'}); } } }
   if(fx.dog){ S.dog=true; }
   if(fx.enterSeoul){ S.seoul={entered:true}; }
+  if(fx.chain){ S._chain = fx.chain; }   // 시트 닫힐 때 UI가 이어서 연다 (시네마틱 연쇄)
   if(fx.recruit) G.doRecruit(fx.recruit);
   if(fx.note) G.addNote(fx.note);
   if(fx.gameover) G.endGame(fx.gameover);
