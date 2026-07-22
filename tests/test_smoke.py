@@ -147,6 +147,15 @@ with sync_playwright() as p:
       out.roadBeats=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.upStories=['up_bench_first','up_cabin_sleepchart','up_garden_roster','up_armor_argument','up_kitchen_firstmeal','up_full_house'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.duoStories=['duo_minji_parkss_space','duo_kangwoo_eunsu_record','duo_leo_jaeyi_route','party_north_vote'].filter(id=>D.events.find(e=>e.id===id)).length;
+      out.sceneCount=Object.keys(D.scenes||{}).length;
+      out.nodeSceneCount=Object.keys(D.nodeScenes||{}).length;
+      out.eventSceneCount=Object.keys(D.eventScenes||{}).length;
+      G.openEventById('kw_base');
+      out.eventScene=!!document.querySelector('#ev-sheet .event-scene');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.at='daegu'; out.arrivalDelay=UI.onArrive();
+      out.arrivalScene=!!document.querySelector('#arrival-scene img');  // .on은 rAF 비동기라 레이스 — 이미지 주입만 검증
+      document.querySelector('#arrival-scene').classList.remove('on');
       const roadIds=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'];
       S.used=S.used.filter(id=>!roadIds.includes(id)); S.at='daejeon'; S.driving=null;
       const oldRemain=G.remainKm;
@@ -169,7 +178,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 774종', r4['eventCount'] == 774, str(r4['eventCount']))
+    check('이벤트 810종', r4['eventCount'] == 810, str(r4['eventCount']))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('빈자리 카드는 하나만 표시', r4['emptyCards'] == 1, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
@@ -177,6 +186,10 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
+    check('시네마틱 이미지 12종', r4['sceneCount'] == 12, str(r4['sceneCount']))
+    check('도시 장면 9곳·사건 장면 6연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] == 6, str(r4))
+    check('회상 이벤트 시네마틱 표시', r4['eventScene'], str(r4))
+    check('도시 도착 시네마틱 표시', r4['arrivalScene'] and r4['arrivalDelay'] == 3000, str(r4))
     check('needUp 게이트(윈치)', r4['gateClosed'] and r4['gateOpen'], str(r4))
     check('험로 타이어 연비', r4['tiresSave'])
     check('사이드 공구함 정비 강화', r4['repairBoost'], str(r4))
@@ -193,7 +206,7 @@ with sync_playwright() as p:
       out.dailyLimit = !G.talkTo('minji');                                 // 하루 1회 제한
       return out;
     }''')
-    check('대화 이벤트 158종', r5['talkCount'] == 158, str(r5['talkCount']))
+    check('대화 이벤트 194종', r5['talkCount'] == 194, str(r5['talkCount']))
     # 티키타카(연속 잡담)
     r6 = pg.evaluate('''() => {
       const out = {};

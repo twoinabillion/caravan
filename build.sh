@@ -42,10 +42,31 @@ for KEY in "${NPC_KEYS[@]}"; do
   NPC_BASE64="$(base64 < "assets/portraits/$KEY.png" | tr -d '\n')"
   NPC_JS="${NPC_JS//__NPC_${KEY}__/data:image/png;base64,$NPC_BASE64}"
 done
+SCENE_KEYS=(GWANGJU_MARKET MIRYANG_MARKET DAEGU_DOME MUJU_TUNNEL JEONJU_MARKET DAEJEON_COMMUNE SUWON_FORTRESS SEOUL_HAN KW_DEFENSE_LINE PERIMETER_WALKER GRANDFATHER_GARAGE BUSAN_DEPARTURE)
+SCENE_FILES=(
+  assets/scenes/gwangju-market.jpg
+  assets/scenes/miryang-market.jpg
+  assets/scenes/daegu-dome.jpg
+  assets/scenes/muju-tunnel.jpg
+  assets/scenes/jeonju-market.jpg
+  assets/scenes/daejeon-commune.jpg
+  assets/scenes/suwon-fortress.jpg
+  assets/scenes/seoul-han.jpg
+  assets/scenes/kw-defense-line.jpg
+  assets/scenes/perimeter-walker.jpg
+  assets/scenes/grandfather-garage.jpg
+  assets/scenes/busan-departure.jpg
+)
+SCENE_JS="$(< src/03g-scenes.js)"
+for I in "${!SCENE_KEYS[@]}"; do
+  SCENE_BASE64="$(base64 < "${SCENE_FILES[$I]}" | tr -d '\n')"
+  SCENE_JS="${SCENE_JS//__SCENE_${SCENE_KEYS[$I]}__/data:image/jpeg;base64,$SCENE_BASE64}"
+done
 {
   cat "${PARTS_BEFORE_VAN[@]}"
   printf '%s\n' "$VAN_JS"
   printf '%s\n' "$NPC_JS"
+  printf '%s\n' "$SCENE_JS"
   cat "${PARTS_AFTER_VAN[@]}"
 } > 서울까지400km.html
 echo "✅ 서울까지400km.html $(wc -c < 서울까지400km.html | tr -d ' ') bytes"

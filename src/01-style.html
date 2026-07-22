@@ -129,6 +129,14 @@ input{font-family:inherit}
 .event-head>div{min-width:0;flex:1}.event-head h2{margin-bottom:0}
 .event-portrait{flex:none;width:52px;height:52px;border-radius:11px;object-fit:cover;image-rendering:pixelated;
   border:1px solid #39456f;background:#0a0d18}
+.event-scene-frame{position:relative;margin:-18px -18px 14px;width:calc(100% + 36px);overflow:hidden;
+  border-bottom:1px solid #39456f;background:#080b13;aspect-ratio:16/9;max-height:270px}
+.event-scene-frame:after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,rgba(5,7,13,.02) 52%,rgba(8,11,19,.62)),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
+.event-scene{display:block;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;
+  animation:scene-reveal .65s cubic-bezier(.2,.8,.2,1) both}
+@keyframes scene-reveal{from{opacity:0;transform:scale(1.035)}to{opacity:1;transform:none}}
 .sheet .tag.ai-tag{color:var(--cheollian)}
 .sheet h2{font-size:17px;line-height:1.35;margin-bottom:10px;text-wrap:balance}
 .sheet .body{color:#cfd3de;font-size:14px;white-space:pre-wrap;margin-bottom:14px}
@@ -150,6 +158,20 @@ input{font-family:inherit}
 .fx.plus{color:var(--ok);border-color:rgba(125,201,143,.4)}
 .fx.minus{color:var(--danger);border-color:rgba(226,87,79,.4)}
 .fx.item{color:var(--amber)}
+
+/* ── 도시 첫인상 시네마틱 ── */
+#arrival-scene{position:absolute;inset:0;z-index:29;display:flex;align-items:flex-end;overflow:hidden;
+  background:#070a12;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease}
+#arrival-scene.on{opacity:1;visibility:visible;pointer-events:auto}
+#arrival-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;
+  transform:scale(1.025);transition:transform 2.8s ease-out}
+#arrival-scene.on img{transform:scale(1)}
+#arrival-scene:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(4,6,12,.92));pointer-events:none}
+.arrival-copy{position:relative;z-index:1;width:100%;padding:28px 20px calc(26px + env(safe-area-inset-bottom));
+  text-shadow:0 2px 12px #000;animation:up .45s .18s both}
+.arrival-copy small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--amber);margin-bottom:6px}
+.arrival-copy b{display:block;font-size:22px;line-height:1.2;margin-bottom:7px}
+.arrival-copy span{display:block;max-width:620px;color:#d0d4dc;font-size:13px;line-height:1.55}
 
 /* ── overlays: map / journal ── */
 .ovl{position:absolute;inset:0;background:var(--night);z-index:25;display:none;flex-direction:column}

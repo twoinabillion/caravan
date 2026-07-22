@@ -572,13 +572,13 @@ G.arrive = ()=>{
   const n = D.nodes[to];
   /* 위수 구역 첫 진입 — 초계와의 첫 조우 */
   if(n.region==='north' && !S.flags.armed_age){
-    UI.onArrive();
-    setTimeout(()=>G.openEventById('perimeter_first'), 500);
+    const arrivalDelay=UI.onArrive();
+    setTimeout(()=>G.openEventById('perimeter_first'), arrivalDelay);
     G.save(); return; }
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
-  UI.onArrive();
-  if(loc){ setTimeout(()=>G.openEvent(loc), 450); }
+  const arrivalDelay=UI.onArrive();
+  if(loc){ setTimeout(()=>G.openEvent(loc), arrivalDelay); }
   else if(!G.maybeCrisis() && n.stl){ /* settlement panel via UI */ }
   G.save();
 };

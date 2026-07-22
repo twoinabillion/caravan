@@ -6,7 +6,7 @@ const UI = (()=>{
   let screen='title';          // title|mode|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, pendingMode='onroad';
-  let bubbleSlot=0;
+  let bubbleSlot=0, arrivalTimer=0;
 
   /* ── modal state ── */
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
@@ -274,8 +274,20 @@ const UI = (()=>{
   /* ── travel hooks ── */
   function onDepart(){ closeOvl('#ovl-map'); closeOvl('#ovl-stl'); renderAll();
     SND.setDriving(true); }
-  function onArrive(){ renderAll(); SND.setDriving(false);
-    toast(`<span class="ic">📍</span>${D.nodes[S.at].name} 도착`); }
+  function onArrive(){
+    renderAll(); SND.setDriving(false);
+    const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];
+    const src=key&&D.scenes&&D.scenes[key];
+    toast(`<span class="ic">📍</span>${n.name} 도착`);
+    if(!src) return 450;
+    const a=$('#arrival-scene');
+    a.innerHTML=`<img src="${src}" alt=""><div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span></div>`;
+    clearTimeout(arrivalTimer);
+    a.onclick=()=>{ a.classList.remove('on'); };
+    requestAnimationFrame(()=>a.classList.add('on'));
+    arrivalTimer=setTimeout(()=>a.classList.remove('on'),2800);
+    return 3000;
+  }
 
   /* ── bubbles ── */
   function playChat(lines){
@@ -338,10 +350,13 @@ const UI = (()=>{
     const aiEvent = evd.type==='추적'||!!evd.ai;
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
+    const sceneKey=evd.scene||(D.eventScenes&&D.eventScenes[evd.id]);
+    const sceneSrc=sceneKey&&D.scenes&&D.scenes[sceneKey];
+    const scene=sceneSrc?`<div class="event-scene-frame"><img class="event-scene" src="${sceneSrc}" alt=""></div>`:'';
     const portraitKey=D.eventPortraits&&D.eventPortraits[evd.id];
     const portrait=portraitKey&&D.portraits[portraitKey]
       ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
-    let h=`<div class="event-head">${portrait}<div><div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
+    let h=`${scene}<div class="event-head">${portrait}<div><div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
       <h2>${evd.title}</h2></div></div><div class="body">${fmt(text)}</div><div class="choices">`;
     evd.choices.forEach((c,i)=>{
       const rq=G.reqOk(c.req);
