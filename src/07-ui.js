@@ -204,7 +204,7 @@ const UI = (()=>{
         <span class="pm">${moodFace(st.mood)}</span>
         ${st.pending?`<span class="pbadge">${ICO('perk','✦')}</span>`:''}</div>`; }
     if(S.dog) h+=`<div class="pcard"><div class="pf">🐕</div><span>보리</span></div>`;
-    for(let i=S.party.length; i<G.maxParty(); i++) h+=`<div class="pcard" style="opacity:.3"><div class="pf">·</div><span>빈자리</span></div>`;
+    if(S.party.length<G.maxParty()) h+=`<div class="pcard" style="opacity:.3"><div class="pf">·</div><span>빈자리</span></div>`;
     return h+'</div>';
   }
   function wireParty(p){
@@ -429,9 +429,9 @@ const UI = (()=>{
     if(chips.length){ h+='<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'; }
     h+='<div class="choices">';
     if(out.fx&&out.fx.offerComp){
-      const id=out.fx.offerComp, mp=G.maxParty(), full=S.party.length>=mp, c=D.comps[id];
+      const id=out.fx.offerComp, mp=G.maxParty(), full=S.party.length>=mp, c=D.comps[id], next=G.nextSeatUpgrade();
       h+=`<button class="choice" data-r="yes" ${full?'disabled':''}>${c.face} ${c.name}를 태운다
-          <span class="req">${full? '✗ 자리가 없다 ('+S.party.length+'/'+mp+')' : '✓ 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
+          <span class="req">${full? '✗ 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
         <button class="choice" data-r="no">작별 인사를 한다</button>`;
     } else {
       h+=`<button class="choice" data-r="ok">계속 간다</button>`;
@@ -630,9 +630,10 @@ const UI = (()=>{
     const body=$('#stl-body');
     const c=D.comps[id];
     const full=S.party.length>=G.maxParty();
+    const next=G.nextSeatUpgrade();
     const dlg=el('div','dlg',`<div class="say"><span class="spk">${c.name}</span> "…북쪽으로 가는 차가 있다고 들었다. ${id==='kangwoo'?'서울까지 가나. …태워라. 밥값은 한다.':''}"</div>
       <div class="choices">
-        <button class="choice" data-r="y" ${full?'disabled':''}>태운다 <span class="req">${full?'✗ 자리가 없다':'✓ '+c.perk}</span></button>
+        <button class="choice" data-r="y" ${full?'disabled':''}>태운다 <span class="req">${full?'✗ 만석'+(next?' · '+next.nm+' 필요':''):'✓ '+c.perk}</span></button>
         <button class="choice" data-r="n">지금은 어렵다</button></div>`);
     body.prepend(dlg);
     dlg.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{

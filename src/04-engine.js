@@ -357,12 +357,14 @@ G.maybeCrisis = ()=>{ if(S._crisis){ const id=S._crisis; S._crisis=null; G.openE
 
 /* ── events ── */
 G.eligible = (typeFilter)=>{
-  const region = G.regionOf(); const night = G.isNight();
+  const region = G.regionOf(); const night = G.isNight(); const remain=G.remainKm();
   return D.events.filter(ev=>{
     if(ev.w<=0||ev.fixed||ev.locEvent) return false;
     if(typeFilter && ev.type!==typeFilter) return false;
     if(ev.once && S.used.includes(ev.id)) return false;
     if(ev.region && !ev.region.includes(region)) return false;
+    if(ev.maxRemain!==undefined && remain>ev.maxRemain) return false;
+    if(ev.minRemain!==undefined && remain<ev.minRemain) return false;
     if(ev.nearNode){ const ctx = S.driving? [S.driving.from,S.driving.to] : [S.at];
       if(!ev.nearNode.some(n=>ctx.includes(n))) return false; }
     if(ev.needFlagMin && (S.flags[ev.needFlagMin[0]]||0) < ev.needFlagMin[1]) return false;
@@ -526,6 +528,9 @@ G.doRecruit = (id)=>{
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
   if(id==='leo') S.dog=true;
   UI.toast(`<span class="ic">${D.comps[id].face}</span>${D.comps[id].name}, 달구지에 탑승`);
+  const nextSeat=G.nextSeatUpgrade();
+  if(S.party.length>=G.maxParty()&&nextSeat)
+    setTimeout(()=>UI.toast(`💺 달구지가 찼다 — 다음 자리: ${nextSeat.nm}`),900);
   /* 소개 체인: 아직 안 만난 동료 하나를 짚어준다 (고리 우선, 없으면 아무나) */
   const ref=D.compRefer[id];
   let target = ref && !G.hasComp(ref.to) ? ref.to : Object.keys(D.comps).find(c=>!G.hasComp(c));
@@ -707,7 +712,9 @@ G.fieldRepair = ()=>{
 };
 
 /* ── 차 업그레이드 ── */
-G.maxParty = ()=> D.maxParty + (S&&S.up&&S.up.cabin?1:0);
+G.seatCapacity = ()=> Math.min(D.maxParty,(D.baseParty||2)+D.upgrades.reduce((n,u)=>n+(u.seat&&S&&S.up&&S.up[u.id]?u.seat:0),0));
+G.maxParty = ()=> Math.max(G.seatCapacity(),S&&S.party?S.party.length:0); // 구버전 과승 세이브는 동료를 내리지 않는다
+G.nextSeatUpgrade = ()=> D.upgrades.find(u=>u.seat&&!(S&&S.up&&S.up[u.id]));
 G.upDef = (id)=> D.upgrades.find(u=>u.id===id);
 G.canBuyUp = (id)=>{
   const u=G.upDef(id); if(!u||S.up[id]) return {ok:false, why:'장착됨'};
@@ -724,7 +731,7 @@ G.buyUpgrade = (id)=>{
   S.up[id]=true;
   if(id==='tank1'||id==='tank2'){ S.fuelMax+=25; }
   if(id==='armor'){ S.vanMax+=25; S.van+=25; }
-  UI.toast(`${u.ic} ${u.nm} 장착 완료`);
+  UI.toast(`${u.ic} ${u.nm} 장착 완료${u.seat?' — 동료 자리 '+G.maxParty()+'명':''}`);
   G.addNote({type:'사건', title:'달구지 개조: '+u.nm, body:u.d+' — 달구지가 조금 더 우리 집이 됐다.', links:[]});
   G.save(); return true;
 };

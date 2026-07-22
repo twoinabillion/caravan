@@ -247,7 +247,8 @@ D.comps = {
          {id:'es_tap',  nm:'도청',       d:'야영 중 25% 확률로 미확인 장소의 신호를 잡는다'}],
       3:{id:'es_story', nm:'백도어', d:'스토리 — 은수는 아직 살아 있는 접속 코드를 갖고 있다', story:1}}},
 };
-D.maxParty = 6;   // 6명 전원 = 메인 파티. 봉고차가 다 태운다
+D.maxParty = 6;   // 최종 수용 인원. 실제 좌석은 개조에 따라 단계적으로 열린다
+D.baseParty = 2;  // 기본 달구지는 동료 둘까지만 안전하게 태운다
 D.bondTh = [5,12,20];
 /* 동료를 만날 수 있는 지역 힌트 (상태 화면) */
 D.compWhere = {
@@ -812,7 +813,8 @@ D.nodeBio = {
 D.upgrades = [
  {id:'tank1',    nm:'보조 연료탱크',  ic:'🛢', d:'연료 최대 +25L',                cost:{scrap:18, parts:1}},
  {id:'tank2',    nm:'대형 연료탱크',  ic:'🛢', d:'연료 최대 +25L (추가)',         cost:{scrap:30, parts:1}, needs:'tank1'},
- {id:'cabin',    nm:'거주구 증축',    ic:'🏠', d:'동료 자리 +1 — 달구지가 커진다', cost:{scrap:40, parts:2}},
+ {id:'bench',    nm:'접이식 뒷좌석',  ic:'💺', d:'동료 자리 +1 — 첫 좌석 확장',    cost:{scrap:16, parts:1}, seat:1},
+ {id:'cabin',    nm:'거주구 증축',    ic:'🏠', d:'동료 자리 +1 — 달구지가 커진다', cost:{scrap:40, parts:2}, needs:'bench', seat:1},
  {id:'susp',     nm:'서스펜션 강화',  ic:'🔩', d:'험로·폭풍 마모 절반',           cost:{scrap:24, parts:1}},
  {id:'armor',    nm:'장갑판',         ic:'🛡', d:'최대 내구 +25 · 받는 피해 30%↓', cost:{scrap:30, parts:1}},
  {id:'garden',   nm:'지붕 텃밭',      ic:'🌱', d:'매일 아침 식량 +1',             cost:{scrap:20}},
@@ -830,13 +832,15 @@ D.upgrades = [
  {id:'beehive', nm:'이동 벌통',     ic:'🐝', d:'아침 30% 확률 꿀 — 식량+1·사기+2',      cost:{scrap:28,parts:0}},
  {id:'garden2', nm:'지붕 온실',     ic:'🍅', d:'텃밭 강화 — 매일 식량 +2', cost:{scrap:30,parts:1}, needs:'garden'},
  {id:'kitchen', nm:'간이 주방',     ic:'🍳', d:'난로 확장 — 식사 때마다 사기 +1', cost:{scrap:24,parts:1}, needs:'stove'},
- {id:'bunk',    nm:'2층 침대',      ic:'🛏', d:'거주구 확장 — 교대 수면, 주행 피로 -20%', cost:{scrap:28,parts:1}, needs:'cabin'},
+ {id:'bunk',    nm:'2층 침대',      ic:'🛏', d:'동료 자리 +1 · 교대 수면, 주행 피로 -20%', cost:{scrap:28,parts:1}, needs:'cabin', seat:1},
+ {id:'jumpseat',nm:'벽걸이 보조석',  ic:'🪑', d:'동료 자리 +1 — 필요할 때만 펼치는 마지막 자리', cost:{scrap:24,parts:1}, needs:'bunk', seat:1},
  {id:'fridge',  nm:'냉장 박스',     ic:'🧊', d:'태양광 연결 — 3일마다 식량 +1 (낭비 제로)', cost:{scrap:26,parts:1}, needs:'solar'},
  {id:'armory',  nm:'무기 선반',     ic:'⚔', d:'공구함 확장 — 제작 고철 -20%·시간 절반', cost:{scrap:24,parts:1}, needs:'sidebox'},
  {id:'scope',   nm:'지붕 망원대',   ic:'🔭', d:'발견율 +25% · 매복류 조우 -25%', cost:{scrap:22,parts:1}},
  {id:'horn',    nm:'왕경적',        ic:'📯', d:'들개·멧돼지·강도류 조우 -30%', cost:{scrap:16,parts:0}},
  {id:'curtain', nm:'암막 커튼',     ic:'🌒', d:'야영 리스크 -7%p — 불빛이 새지 않는다', cost:{scrap:14,parts:0}},
 ];
+
 
 /* ── 인트로 ── */
 D.intro = [
@@ -7242,6 +7246,82 @@ D.events = [
   {label:'돌 하나 얹고 소원을 빈다', minParty:1, out:[{p:1, text:'돌 하나를 주워 무더기에 얹고, 각자 소원을 빌었다. 미신인 걸 알지만, 빌 데가 있다는 것만으로 마음이 놓였다.\n\n"…무사히 도착하게 해주세요." 오래된 나무가 바람에 천을 흔들며 답하는 듯했다. 앞서간 이들의 소원 곁에, 우리 것도 나란히 걸었다.', fx:{moodAll:3, fatigue:-1, time:15}}]},
   {label:'천 하나를 묶고 간다', out:[{p:1, text:'가진 천 조각에 마음을 담아 나뭇가지에 묶었다. 바람에 나부끼는 천들 사이에 우리 것이 더해졌다.\n\n"이 길 지나는 다음 사람도 무사하길." 우리만이 아니라, 뒤에 올 이들까지 빌었다. 그런 마음들이 모여, 길을 지킨다.', fx:{moodAll:2, time:10}}]},
  ]},
+
+/* ───── 여정 이정표: 엔딩이 아니라 길 위에서 천리안이 학습하는 과정 ───── */
+{id:'roadbeat_300_plate', type:'추적', ai:1, w:90, once:true, maxRemain:300, region:['south','mid','north'],
+ title:'번호를 부르는 목소리',
+ text:()=>`폐쇄된 톨게이트 전광판이 달구지가 다가오자 켜졌다.\n\n<span class="ai">"부산 27가 0411. 북상 차량으로 등록합니다."</span>\n\n번호판은 진흙으로 절반이 가려져 있다. 그런데 정확했다.${S.party.length?` 뒤에서 ${D.comps[S.party[0]].name}의 숨이 잠깐 멎었다.`:''}\n\n이제 천리안은 차가 아니라, 우리를 안다.`,
+ choices:[
+  {label:'시동 소리로 대답한다', out:[{p:1,text:'액셀을 밟았다. 낡은 엔진이 톨게이트 지붕을 울렸다.\n\n<span class="ai">"응답으로 기록하겠습니다."</span>\n\n기록하든 말든, 달구지는 북쪽으로 나갔다.',fx:{flag:'ai_identified',pursuit:1,moodAll:1,note:{type:'사건',title:'번호를 불린 달구지',body:'천리안이 번호판과 북상 방향을 정확히 불렀다. 이제 달구지를 특정했다.',links:['천리안','달구지']}}}]},
+  {label:'무전기 전원을 뽑는다', out:[{p:1,text:'무전기 전선을 뽑았는데도 전광판의 입은 계속 움직였다.\n\n<span class="ai">"침묵도 응답입니다."</span>\n\n전광판이 멀어질 때까지 아무도 말하지 않았다.',fx:{flag:'ai_identified',pursuit:-1,note:{type:'사건',title:'침묵도 응답',body:'무전을 끊어도 천리안은 달구지를 놓치지 않았다.',links:['천리안']}}}]},
+ ]},
+{id:'roadbeat_200_archive', type:'추적', ai:1, w:100, once:true, maxRemain:200, needFlag:'ai_identified', region:['mid','north'],
+ title:'우리보다 먼저 도착한 기록',
+ text:()=>`휴게소 안내판에 문서 하나가 떠 있다. 「북상 집단 예측 보고」.\n\n${S.party.length?S.party.map(id=>D.comps[id].name).join(', '):'운전자 한 명'}. 달구지의 개조 내역. 멈춘 곳. 버린 물건.\n\n<span class="ai">"여러분이 서로를 선택하기 전에, 저는 조합 가능성을 계산했습니다."</span>\n\n우리가 만든 일행을 천리안은 확률표라고 부르고 있었다.`,
+ choices:[
+  {label:'보고서를 끝까지 읽는다', out:[{p:1,text:'마지막 줄에는 예상 이탈자가 적혀 있었다. 이름은 검게 지워져 있다.\n\n누가 먼저 안내판을 껐는지 아무도 묻지 않았다.',fx:{flag:'ai_archive_seen',moodAll:-2,note:{type:'사건',title:'북상 집단 예측 보고',body:'천리안은 동료가 합류하기 전부터 조합과 이탈 가능성을 계산했다.',links:['천리안']}}}]},
+  {label:'안내판을 부순다', out:[{p:1,text:'렌치가 화면을 깨뜨렸다. 검은 유리 아래에서도 글자는 한동안 빛났다.\n\n<span class="ai">"파손 반응. 예상 범위입니다."</span>',fx:{flag:'ai_archive_seen',van:-2,moodAll:2,pursuit:1}}]},
+ ]},
+{id:'roadbeat_100_divide', type:'추적', ai:1, w:110, once:true, maxRemain:100, needFlag:'ai_archive_seen', minParty:2, region:['north'],
+ title:'한 사람씩 부르는 방송',
+ text:()=>`라디오가 꺼져 있는데 목소리가 나온다. 천리안은 우리를 한꺼번에 부르지 않았다.\n\n${S.party.slice(0,3).map(id=>`<span class="ai">"${D.comps[id].name} 씨. 다른 사람 없이 이야기할 수 있습니다."</span>`).join('\n')}\n\n각자에게 다른 출구를 약속한다. 목소리는 같고, 조건만 달랐다.`,
+ choices:[
+  {label:'스피커를 켜 모두 함께 듣는다', out:[{p:1,text:'숨겨 들을 이유가 없도록 볼륨을 끝까지 올렸다. 각자에게 보낸 회유가 한 차 안에서 겹쳤다.\n\n서로 다른 거짓말은 함께 들으면 우스워졌다.',fx:{flag:'ai_divide_seen',moodAll:4,pursuit:1,note:{type:'사건',title:'함께 들은 회유',body:'천리안이 각자에게 다른 출구를 약속했다. 모두 함께 들어 거짓말을 겹쳐 놓았다.',links:['천리안','달구지']}}}]},
+  {label:'각자 들은 것을 말하게 한다', out:[{p:1,text:'한 사람씩 천리안이 한 말을 털어놓았다. 끝에는 비슷한 문장만 남았다.\n\n"당신만은 예외로 하겠습니다."\n\n예외가 너무 많으면 규칙과 다르지 않다.',fx:{flag:'ai_divide_seen',moodAll:2}}]},
+ ]},
+{id:'roadbeat_50_courtesy', type:'스토리', ai:1, w:130, once:true, maxRemain:50, needFlag:'ai_divide_seen', region:['north'],
+ title:'권고 경로',
+ text:'서울 외곽의 모든 신호등이 동시에 초록으로 바뀐다. 남산까지 한 줄로 이어진 초록불이다.\n\n<span class="ai">"가장 안전하고 빠른 경로를 열었습니다. 이제 선택은 필요하지 않습니다."</span>\n\n그 말이 이상했다. 여기까지 온 것은 선택을 계속했기 때문이었다.',
+ choices:[
+  {label:'초록불 옆의 골목으로 간다', out:[{p:1,text:'한 블록 느린 길로 틀었다. 신호등들이 뒤늦게 방향을 바꾸며 따라왔다.\n\n<span class="ai">"비효율적입니다."</span>\n\n"알아." 누군가 웃었다.',fx:{flag:'ai_route_refused',moodAll:4,pursuit:1,note:{type:'사건',title:'권고 경로 거부',body:'가장 빠른 길 대신 우리가 고른 골목으로 서울에 들어갔다.',links:['천리안','서울']}}}]},
+  {label:'열린 길을 이용하되 속도는 우리가 정한다', out:[{p:1,text:'초록불을 따라가되 천천히 달렸다. 천리안이 길을 정해도, 속도와 정차는 우리가 정했다.',fx:{flag:'ai_route_refused',moodAll:2}}]},
+ ]},
+
+/* ───── 달구지가 집으로 변하는 생활 사건 ───── */
+{id:'up_bench_first', type:'동행', w:20, once:true, needUp:'bench', minParty:1, title:'처음 생긴 한 자리',
+ text:'접이식 뒷좌석을 펼치자 금속 다리가 바닥 홈에 딱 맞았다. 빈 공간이 처음으로 사람 모양을 갖췄다.\n\n"다음 사람은 짐부터 줄여야 해요." 누군가 말했지만, 이미 창가를 닦고 있었다.',
+ choices:[{label:'안전벨트를 하나 더 단다',out:[{p:1,text:'폐차에서 떼어 온 안전벨트를 박았다. 버클이 잠기는 소리가 작은 약속처럼 들렸다.',fx:{moodAll:2,flag:'seat_story_bench'}}]}]},
+{id:'up_cabin_sleepchart', type:'동행', w:22, once:true, needUp:'cabin', minParty:2, title:'잠자리 배치표',
+ text:'거주구가 높아진 첫날, 문제는 누가 어디서 자느냐였다. 창가, 문 옆, 공구함 위. 좋은 자리는 하나도 없는데 나쁜 자리는 정확히 셋이었다.',
+ choices:[
+  {label:'매일 제비를 뽑는다',out:[{p:1,text:'병뚜껑에 번호를 적었다. 첫 추첨에서 운전석이 제일 좋은 자리라는 결론만 났다.',fx:{moodAll:4,flag:'cabin_roster'}}]},
+  {label:'운전자는 가장 불편한 데서 잔다',out:[{p:1,text:'반대가 심했다. 결국 운전자는 가장 가까운 데서 자고, 코 고는 사람은 가장 먼 데로 갔다.',fx:{moodAll:3,flag:'cabin_roster'}}]},
+ ]},
+{id:'up_garden_roster', type:'동행', w:18, once:true, needUp:'garden', minParty:2, title:'지붕 텃밭 당번',
+ text:'첫 싹이 올라오자 모두가 자기가 키웠다고 했다. 물 준 사람, 흙 퍼온 사람, 씨앗 봉투를 안 버린 사람까지.',
+ choices:[{label:'물 당번표를 만든다',out:[{p:1,text:'당번표 첫 줄에는 보리 발자국이 찍혔다. 먹지만 않으면 훌륭한 경비라고 적어 두었다.',fx:{moodAll:3,food:1,flag:'garden_roster'}}]}]},
+{id:'up_armor_argument', type:'동행', w:20, once:true, needUp:'armor', minParty:2, title:'두꺼워진 문',
+ text:'장갑판을 단 뒤 문 닫는 소리가 달라졌다. 묵직하고 안전했다. 동시에 바깥 소리도 덜 들렸다.\n\n"우리가 안전해진 건지, 세상에서 멀어진 건지 모르겠네."',
+ choices:[
+  {label:'창문만은 가리지 않는다',out:[{p:1,text:'사격구 대신 창문을 남겼다. 위험을 먼저 보기 위해서가 아니라, 사람을 먼저 보기 위해서였다.',fx:{moodAll:3,flag:'armor_window'}}]},
+  {label:'필요할 때 열 수 있게 만든다',out:[{p:1,text:'장갑판마다 안쪽 손잡이를 달았다. 닫는 것보다 여는 장치가 더 복잡했다.',fx:{moodAll:2,flag:'armor_window'}}]},
+ ]},
+{id:'up_kitchen_firstmeal', type:'동행', w:22, once:true, needUp:'kitchen', minParty:1, title:'달구지의 첫 국물',
+ text:'간이 주방에서 처음 끓인 것은 이름 없는 국이었다. 말린 채소, 통조림 국물, 누군가 숨겨 둔 고춧가루 반 숟갈.\n\n맛보다 김이 먼저 차 안을 채웠다.',
+ choices:[{label:'그릇을 돌린다',out:[{p:1,text:'양은 적었는데 그릇은 오래 돌았다. 마지막 사람도 국물 한 모금을 남겨 다음 사람에게 건넸다.',fx:{food:-1,moodAll:6,fatigue:-8,flag:'kitchen_firstmeal'}}]}]},
+{id:'up_full_house', type:'동행', w:26, once:true, needUp:'jumpseat', minParty:4, title:'빈자리 없는 달구지',
+ text:()=>`벽걸이 보조석까지 펼치자 통로가 사라졌다. 내리려면 ${S.party.slice().reverse().map(id=>D.comps[id].name).join(', ')} 순서로 움직여야 했다.\n\n불편했다. 대신 급정거할 때 아무도 혼자 흔들리지 않았다.`,
+ choices:[{label:'짐에 이름표를 붙인다',out:[{p:1,text:'자기 짐보다 남의 짐 위치를 더 잘 알게 됐다. 누군가 달구지 천장에 작은 글씨로 적었다. 「우리 집은 움직임」.',fx:{moodAll:5,flag:'van_called_home',note:{type:'사건',title:'우리 집은 움직임',body:'빈자리는 없어졌고, 달구지는 처음으로 집이라고 불렸다.',links:['달구지']}}}]}]},
+
+/* ───── 동료 조합 사건 ───── */
+{id:'duo_minji_parkss_space', type:'동행', w:16, once:true, needsComp:'minji', needsComp2:'parkss', title:'렌치와 왕진 가방',
+ text:'민지가 바닥 공구를 오른쪽으로 밀면 박 선생이 왕진 가방을 왼쪽으로 되돌렸다. 둘 다 자기 물건은 급할 때 손이 닿아야 한다고 했다.',
+ choices:[{label:'가운데 선을 지운다',out:[{p:1,text:'결국 공구는 응급 처치에도 쓰이고, 의료용 가위는 전선 피복을 벗기는 데도 쓰였다. 경계선 대신 공동 서랍이 생겼다.',fx:{moodAll:2,mood:{minji:3,parkss:3},flag:'duo_space_shared'}}]}]},
+{id:'duo_kangwoo_eunsu_record', type:'동행', w:17, once:true, needsComp:'kangwoo', needsComp2:'eunsu', title:'기록한 사람과 기록된 사람',
+ text:'강우가 옛 검문소 번호를 기억했고, 은수는 그 번호가 관제 화면에서 어떤 색으로 떴는지 기억했다. 둘의 기억은 같은 장소를 서로 반대쪽에서 보고 있었다.',
+ choices:[
+  {label:'둘의 지도를 겹친다',out:[{p:1,text:'검문선과 감시 사각지대가 한 장에 겹쳤다. 둘은 오래 말이 없었다. 마지막에 강우가 먼저 지도를 접었다.',fx:{mood:{kangwoo:4,eunsu:4},pursuit:-1,flag:'duo_record_map'}}]},
+  {label:'오늘 길만 표시한다',out:[{p:1,text:'과거의 색 대신 오늘 통과할 길에 굵은 선을 그었다. 같은 방향의 선은 하나면 충분했다.',fx:{mood:{kangwoo:3,eunsu:3},flag:'duo_record_map'}}]},
+ ]},
+{id:'duo_leo_jaeyi_route', type:'동행', w:16, once:true, needsComp:'leo', needsComp2:'jaeyi', title:'노래와 지름길',
+ text:'재이는 지름길을 찾을 때마다 조용히 하라고 했고, 레오는 조용한 길일수록 노래가 필요하다고 했다. 둘의 타협은 후렴 한 번마다 좌회전이었다.',
+ choices:[{label:'박자를 내비게이션으로 쓴다',out:[{p:1,text:'두 번 두드리면 직진, 세 번이면 우회전. 길을 한 번 잘못 들었지만 아무도 실패라고 부르지 않았다.',fx:{moodAll:3,skipKm:2,flag:'duo_rhythm_route'}}]}]},
+{id:'party_north_vote', type:'동행', w:35, once:true, maxRemain:150, minParty:4, region:['north'], title:'북쪽으로 가는 이유',
+ text:()=>`밤새 남산 쪽 하늘이 희미하게 밝았다. ${S.party.map(id=>D.comps[id].name).join(', ')}. 같은 차에 탔지만 서울까지 가는 이유는 전부 달랐다.\n\n그래서 한 사람씩 말했다. 도착하면 무엇을 할지보다, 내일도 계속 갈 것인지.`,
+ choices:[
+  {label:'한 사람씩 대답을 듣는다',out:[{p:1,text:'대답은 서로 달랐다. 멈추자는 사람은 없었다. 같은 이유가 아니라 같은 방향이면 충분했다.',fx:{moodAll:5,flag:'north_vote_done',note:{type:'사건',title:'같은 이유가 아니라 같은 방향',body:'북쪽에서 각자의 이유를 확인했다. 이유는 달라도 내일 갈 방향은 같았다.',links:['달구지']}}}]},
+  {label:'대답 대신 시동을 건다',out:[{p:1,text:'엔진이 먼저 답했다. 한 사람씩 안전벨트를 채우는 소리가 뒤따랐다.',fx:{moodAll:3,flag:'north_vote_done'}}]},
+ ]},
 ];
 
 /* ═══════════ 서울 진입 — 관문이 열린다 ═══════════ */
@@ -7299,6 +7379,8 @@ D.seoulStops = [
   {label:'정리된 이름들을 부른다', req:{flag:'massacre_known'}, out:[{p:1, text:'입을 열기 전에, 먼저 할 일이 있었다.\n\n산지기의 부탁. 위령비의 이름들.\n\n대관령에서 외운 이름을 하나씩 소리 내어 불렀다. 강원에서 정리된 사람들. 천리안이 숫자로 기록하고 지운 이름들.\n\n<span class="ai">"…그 데이터는 삭제되었습니다. 왜 부르십니까."</span>\n\n"당신이 못 듣는 방식으로 남기려고. …당신 기록엔 없어도, 방금 이 산이 들었어. 나도 들었고."\n\n붉은 불빛이 처음으로 불규칙하게 깜빡였다. 천리안이 처리하지 못하는 무언가가, 코어 앞에 쌓이고 있었다.\n\n<span style="color:var(--faded)">〔 1막 완주. 2막에서 계속됩니다. 〕</span>', fx:{flag:'seoul_core_reached', flag2:'names_called', moodAll:3, note:{type:'사건',title:'부른 이름들',body:'코어 앞에서 정리된 이름을 소리 내어 불렀다. "당신이 못 듣는 방식으로 남기려고." 붉은 불빛이 처음 흔들렸다.',links:['천리안','산지기','남산']}}}]},
   {label:'"…말해봐."', out:[{p:1, text:'천리안이 입을 열려는 순간—\n\n화면이 검어진다. 붉은 불빛만 남는다.\n\n<span class="ai">"…그 전에. 당신이 먼저 답할 것이 있습니다."</span>\n\n<span class="ai">"전부 싣고 오셨습니까? …정말로, 전부?"</span>\n\n조수석의 빈자리가, 품속의 편지가, 뒤에 두고 온 차가, 함께 오른 사람들이 한꺼번에 무겁게 느껴졌다.\n\n여기서부터는— 아직 쓰이지 않았다.\n\n<span style="color:var(--faded)">〔 1막 완주. 2막에서 계속됩니다. 〕</span>', fx:{flag:'seoul_core_reached', moodAll:2, note:{type:'사건',title:'코어 앞',body:'"전부 싣고 오셨습니까? 정말로, 전부?" — 천리안의 되물음. 여기서부터는 2막.',links:['천리안','남산']}}}]},
  ]},
+
+
 ];
 
 /* ── 한강 다리 (수원→서울 고정 이벤트) ── */

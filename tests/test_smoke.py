@@ -84,7 +84,11 @@ with sync_playwright() as p:
                'minji_toolbox', 'eunsu_lastshift', 'near_muju_firefly', 'ai_manifest',
                'exp_coffee', 'vanowner_coffee', 'library_scribe', 'freq_L2', 'mansu_opening',
                'up_winch_rescue', 'up_stove_visitor', 'up_beehive_swarm', 'meet_busstop_grandmas', 'exp_selfwash',
-               'duo_mechsong', 'duo_nightround', 'crisis_boar', 'wx_ghostlight', 'meet_pansori']:
+               'duo_mechsong', 'duo_nightround', 'crisis_boar', 'wx_ghostlight', 'meet_pansori',
+               'roadbeat_300_plate', 'roadbeat_200_archive', 'roadbeat_100_divide', 'roadbeat_50_courtesy',
+               'up_bench_first', 'up_cabin_sleepchart', 'up_garden_roster', 'up_armor_argument',
+               'up_kitchen_firstmeal', 'up_full_house', 'duo_minji_parkss_space',
+               'duo_kangwoo_eunsu_record', 'duo_leo_jaeyi_route', 'party_north_vote']:
         pg.evaluate(f'G.openEventById("{ev}")')
         pg.wait_for_timeout(150)
         vis = pg.locator('#ev-wrap.on').count() > 0
@@ -133,6 +137,26 @@ with sync_playwright() as p:
     r4 = pg.evaluate('''() => {
       const out = {};
       out.upCount = D.upgrades.length;
+      out.eventCount = D.events.length;
+      S.party = []; S.up = {}; UI.renderAll();
+      out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
+      out.seats = [G.maxParty()];
+      ['bench','cabin','bunk','jumpseat'].forEach(id=>{ S.up[id]=true; out.seats.push(G.maxParty()); });
+      S.party=['minji','parkss']; S.up={}; out.fullBlocked=!G.doRecruit('kangwoo');
+      S.up.bench=true; out.nextOpened=G.doRecruit('kangwoo');
+      out.roadBeats=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'].filter(id=>D.events.find(e=>e.id===id)).length;
+      out.upStories=['up_bench_first','up_cabin_sleepchart','up_garden_roster','up_armor_argument','up_kitchen_firstmeal','up_full_house'].filter(id=>D.events.find(e=>e.id===id)).length;
+      out.duoStories=['duo_minji_parkss_space','duo_kangwoo_eunsu_record','duo_leo_jaeyi_route','party_north_vote'].filter(id=>D.events.find(e=>e.id===id)).length;
+      const roadIds=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'];
+      S.used=S.used.filter(id=>!roadIds.includes(id)); S.at='daejeon'; S.driving=null;
+      const oldRemain=G.remainKm;
+      G.remainKm=()=>350; out.roadTooFar=!G.eligible().some(e=>e.id==='roadbeat_300_plate');
+      G.remainKm=()=>299; out.roadInRange=G.eligible().some(e=>e.id==='roadbeat_300_plate');
+      G.remainKm=()=>199; delete S.flags.ai_identified;
+      out.roadChainClosed=!G.eligible().some(e=>e.id==='roadbeat_200_archive');
+      S.flags.ai_identified=true; out.roadChainOpen=G.eligible().some(e=>e.id==='roadbeat_200_archive');
+      G.remainKm=oldRemain;
+      S.party=[]; S.up={};
       S.used = S.used.filter(id => id !== 'up_winch_rescue');   // 앞 단계 표시 테스트로 소진된 once 복구
       S.up = {}; out.gateClosed = !G.eligible().some(e => e.id === 'up_winch_rescue');
       S.up.winch = true; S.driving = null;
@@ -144,7 +168,15 @@ with sync_playwright() as p:
       out.repairBoost = S.van >= 50;   // 45 이상 회복
       return out;
     }''')
-    check('업그레이드 26종', r4['upCount'] == 26, str(r4['upCount']))
+    check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
+    check('이벤트 774종', r4['eventCount'] == 774, str(r4['eventCount']))
+    check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
+    check('빈자리 카드는 하나만 표시', r4['emptyCards'] == 1, str(r4['emptyCards']))
+    check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
+    check('천리안 거리 이정표 4종', r4['roadBeats'] == 4, str(r4['roadBeats']))
+    check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
+    check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
+    check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
     check('needUp 게이트(윈치)', r4['gateClosed'] and r4['gateOpen'], str(r4))
     check('험로 타이어 연비', r4['tiresSave'])
     check('사이드 공구함 정비 강화', r4['repairBoost'], str(r4))
