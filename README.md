@@ -7,7 +7,7 @@
 
 ## ▶ 플레이
 
-- **웹 (온로드 모드)**: https://claude.ai/code/artifact/7c985fb8-0f23-463a-ac72-261d089f5725
+- **웹 (온로드 모드)**: https://twoinabillion.github.io/caravan/
 - **로컬 (오프로드 모드 가능)**: `서울까지400km.html`을 브라우저로 열기
   - 오프로드 = 이벤트·대화를 LLM(claude-opus-4-8)이 실시간 생성 (Anthropic API 키 필요, localStorage에만 저장)
   - 아티팩트 호스팅은 CSP로 외부 API 차단 → 오프로드는 로컬 파일에서만
