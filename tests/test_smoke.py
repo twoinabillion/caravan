@@ -186,7 +186,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 821종', r4['eventCount'] == 821, str(r4['eventCount']))
+    check('이벤트 822종', r4['eventCount'] == 822, str(r4['eventCount']))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('빈자리 카드는 하나만 표시', r4['emptyCards'] == 1, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
@@ -236,14 +236,23 @@ with sync_playwright() as p:
       const out = {};
       out.deeds = D.deeds.length; out.maxParty = D.maxParty; out.compCount = Object.keys(D.comps).length;
       S.flags = {}; S.party = []; out.emptyReady = G.seoulReady();
-      // 동료 5명 + 세계3 + 진실 + 회수2 → 관계 기둥(6명) 부족으로 잠김
+      Object.keys(D.comps).forEach(id => {
+        S.comps[id] = S.comps[id] || {mood:65, bond:20, lvl:3, perks:[], pending:0};
+        S.comps[id].lvl = 3;
+      });
+      // 개인 서사 Lv3 동료 5명 + 이음망 계시 + 세계3 + 진실3 + 유산2 → 관계 기둥 부족
       S.party = ['minji','parkss','kangwoo','leo','jaeyi'];
-      ['cell_road','cell_sea','cell_dome','massacre_known','postman_letter','gp_envelope_found'].forEach(f => S.flags[f] = true);
+      ['resist_revealed','cell_road','cell_sea','cell_dome',
+       'massacre_known','es_truth','uplink_seen',
+       'postman_letter','gp_envelope_found'].forEach(f => S.flags[f] = true);
       out.partialReady = G.seoulReady();          // false여야 (은수 없음)
       out.missPillar = G.seoulMissing().pillar;   // '관계'
-      // 6명 전원 → 열림
+      // 여섯 개인 서사까지 완료 → 열림
       S.party.push('eunsu');
       out.fullReady = G.seoulReady();
+      delete S.flags.uplink_seen;
+      out.truthLocked = !G.seoulReady() && G.seoulMissing().pillar === '진실';
+      S.flags.uplink_seen = true;
       // 소개 체인
       S.party = []; S.notes = []; G.doRecruit('minji');
       out.refer = S.notes.some(n => n.title.includes('강우'));
@@ -295,24 +304,51 @@ with sync_playwright() as p:
     check('좌석 6·동료 6', r7['maxParty'] == 6 and r7['compCount'] == 6, str(r7))
     check('빈 상태 서울 잠김', not r7['emptyReady'])
     check('동료 5명이면 잠김(관계 기둥)', not r7['partialReady'] and r7['missPillar'] == '관계', str(r7))
-    check('6명 전원+기둥→서울 열림', r7['fullReady'])
+    check('6명 개인 서사+기둥→서울 열림', r7['fullReady'])
+    check('상행선 단서 없으면 진실 기둥 잠김', r7['truthLocked'], str(r7))
     check('소개 체인(영입 시 다음 동료 안내)', r7['refer'])
 
-    # 1막 엔딩: 코어 고백 → 에필로그 연쇄
+    # 1막 엔딩: 코어 고백 → 실제 집행 선택 → 에필로그
     r8 = pg.evaluate('''() => { const out = {};
       const core = D.seoulStops.find(e => e.id === 'seoul_core');
-      out.chainAll = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_night'));
+      out.coreToDecision = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_decision'));
+      const decision = D.events.find(e => e.id === 'seoul_decision');
+      out.decision = !!decision && !!decision.noPool && decision.choices.length === 3;
+      out.decisionToNight = decision.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_night'));
+      out.distinct = [...new Set(decision.choices.map(c => c.out[0].fx.flag2))].sort().join(',') ===
+        ['core_quarantine','core_sleep','core_transfer'].join(',');
       const ep = D.events.find(e => e.id === 'seoul_night');
       out.ep = !!ep && !!ep.noPool;
-      S._chain = null; G.applyFx({chain:'seoul_night'});
-      out.chainSet = S._chain === 'seoul_night'; S._chain = null;
+      S._chain = null; G.applyFx({chain:'seoul_decision'});
+      out.chainSet = S._chain === 'seoul_decision'; S._chain = null;
       S.flags.seoul_core_reached = true;
-      out.epNotInPool = !G.eligible('스토리').some(e => e.id === 'seoul_night');
+      out.chainNotInPool = !G.eligible('스토리').some(e => ['seoul_decision','seoul_night'].includes(e.id));
       delete S.flags.seoul_core_reached;
+      S._storyQueue = []; S.used = S.used.filter(id => !['es_nightshift','es_backdoor'].includes(id));
+      delete S.flags.es_v1194; G.grantPerk('eunsu','es_story');
+      out.storyQueued = S._storyQueue[0] === 'es_nightshift' && G.popStory() === 'es_nightshift';
       return out; }''')
-    check('코어 3답변 전부 에필로그 연쇄', r8['chainAll'])
-    check('에필로그 존재+noPool', r8['ep'] and r8['epNotInPool'], str(r8))
+    check('코어 답변 전부 집행 선택으로 연쇄', r8['coreToDecision'])
+    check('집행 선택 3종→에필로그 연쇄', r8['decision'] and r8['decisionToNight'] and r8['distinct'], str(r8))
+    check('결정·에필로그 존재+noPool', r8['ep'] and r8['chainNotInPool'], str(r8))
     check('fx.chain → S._chain 세팅', r8['chainSet'])
+    check('은수 필수 단서 큐 등록·회수', r8['storyQueued'], str(r8))
+    # 실제 시트 닫기 연쇄: 코어 답변 → 집행 선택 → 남산의 밤
+    pg.evaluate('''() => {
+      S.flags = {seoul_open:true, ridge_path:true, mingyu_alive:true};
+      S.used = S.used.filter(id => !['seoul_decision','seoul_night'].includes(id));
+      S._chain = null; S._storyQueue = [];
+      G.openEvent(D.seoulStops.find(e => e.id === 'seoul_core'));
+    }''')
+    pg.locator('#ev-wrap .choice:not([disabled])').first.click()
+    pg.locator('#ev-wrap .choice:not([disabled])').first.click()
+    pg.wait_for_timeout(600)
+    actual_decision = '마지막 집행권' in pg.locator('#ev-sheet').inner_text()
+    pg.locator('#ev-wrap .choice:not([disabled])').first.click()
+    pg.locator('#ev-wrap .choice:not([disabled])').first.click()
+    pg.wait_for_timeout(600)
+    actual_night = '남산의 밤' in pg.locator('#ev-sheet').inner_text()
+    check('실제 UI 연쇄: 코어→집행 선택→에필로그', actual_decision and actual_night)
     check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
     check('티키타카 45종', r6['chatCount'] == 45, str(r6['chatCount']))

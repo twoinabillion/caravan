@@ -22,7 +22,7 @@ G.newGame = (mode, name)=>{
     flags:{}, pursuit:0, used:[], quest:null, wx:'clear', wxNext:'clear', up:{},
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0},
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
-    fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0,
+    fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
   };
   rng = mulberry32(S.seed);
   S.wxNext = G.rollWx('clear');
@@ -50,6 +50,12 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S._drowsyDay===undefined) S._drowsyDay=0;
   if(S._drowsyAt===undefined) S._drowsyAt=-999;
   if(S._lunchDay===undefined) S._lunchDay=0;
+  if(!Array.isArray(S._storyQueue)) S._storyQueue=[];
+  /* 구버전 세이브에서도 은수의 결말 필수 단서가 랜덤 풀에 묻히지 않게 보정 */
+  if(S.flags.es_backdoor_ready && !S.flags.es_truth){
+    const sid=S.flags.es_v1194?'es_backdoor':'es_nightshift';
+    if(!S.used.includes(sid) && !S._storyQueue.includes(sid)) S._storyQueue.push(sid);
+  }
   /* 비히든 노드 전체 공개 (스파인 단절 버그 픽스 + 월드 확장 반영) */
   Object.keys(D.nodes).forEach(id=>{
     if(D.nodes[id].type!=='hidden' && !S.known.includes(id)) S.known.push(id); });
@@ -141,9 +147,23 @@ G.grantPerk = (id, pid)=>{ // 습득 즉시 효과
     case 'pss_story': S.flags.pss_list=true; break;
     case 'leo_story': S.flags.leo_song=true;
       UI.toast('🎸 레오의 노래가 완성됐다 — 청주 방송국으로'); break;
-    case 'es_story': S.flags.es_backdoor_ready=true; S.pursuit=Math.max(0,S.pursuit-2);
-      UI.toast('📡 은수의 접속 코드가 살아 있다'); break;
+    case 'es_story':
+      S.flags.es_backdoor_ready=true; S.pursuit=Math.max(0,S.pursuit-2);
+      G.queueStory(S.flags.es_v1194?'es_backdoor':'es_nightshift');
+      UI.toast('📡 은수의 접속 코드가 살아 있다 — 다음 정차 때 로그를 연다'); break;
   }
+};
+/* 개인 서사처럼 반드시 보여야 하는 장면. 현재 시트를 닫은 뒤 순서대로 연다. */
+G.queueStory = (id)=>{
+  if(!S||!id||S.used.includes(id)||S._storyQueue.includes(id)) return;
+  S._storyQueue.push(id);
+};
+G.popStory = ()=>{
+  while(S&&S._storyQueue&&S._storyQueue.length){
+    const id=S._storyQueue.shift(), ev=D.events.find(e=>e.id===id);
+    if(ev && (!ev.once||!S.used.includes(id))) return id;
+  }
+  return null;
 };
 /* 이벤트 해석 후 훅: 유대 획득 + 직업 부가 수확 */
 G.afterChoice = (evd, choice)=>{
@@ -803,15 +823,29 @@ G.deedsDone = ()=> D.deeds.filter(G.deedDone);
 G.pillars = ()=>{
   const done = G.deedsDone();
   const nComp = Object.keys(D.comps).length;   // 6
-  /* 아직 못 만난 동료 하나 (관계 힌트용) */
+  const storyDone = done.filter(d=>d.cat==='동료').length;
+  /* 아직 못 만났거나 개인 서사가 덜 열린 동료 하나 (관계 힌트용) */
   const miss = Object.keys(D.comps).find(c=>!G.hasComp(c));
+  const shallow = Object.keys(D.comps).find(c=>G.hasComp(c)&&(S.comps[c]||{}).lvl<3);
+  const truthFlags=['massacre_known','es_truth','uplink_seen'];
+  const truthN=truthFlags.filter(f=>S.flags[f]).length;
+  const truthHint=!S.flags.massacre_known
+    ? '반복된 정리가 무엇이었는지 알아내기 (강원의 산으로)'
+    : !S.flags.es_truth
+    ? '은수의 개인 서사를 열어 백도어 로그 확인하기'
+    : !S.flags.uplink_seen
+    ? '백도어 로그에서 남산보다 위로 가는 선 확인하기'
+    : '첫 침묵·작성자·상행선의 관계 확인';
+  const worldN=S.flags.resist_revealed?G.cellsLinked().length:0;
   return {
-    관계: { have: S.party.length, need: nComp,
-            hint: miss? `${D.comps[miss].name}를 아직 못 만났다 — ${D.compWhere[miss].split(' —')[0]}` : '동료를 전부 모으기' },
-    세계: { have: G.cellsLinked().length,               need: D.seoulPillars.세계,
-            hint:'저항 거점을 이어 세상 편이 되기 (지역을 돌며 접선)' },
-    진실: { have: S.flags.massacre_known?1:0,            need: 1,
-            hint:'천리안이 무엇을 했는지 알아내기 (강원의 산으로)' },
+    관계: { have: storyDone, need: nComp,
+            hint: miss? `${D.comps[miss].name}를 아직 못 만났다 — ${D.compWhere[miss].split(' —')[0]}`
+              : shallow? `${D.comps[shallow].name}와 더 깊어져 개인 서사 Lv.3 열기`
+              : '여섯 사람의 개인 서사를 끝까지 듣기' },
+    세계: { have: worldN, need: D.seoulPillars.세계,
+            hint:S.flags.resist_revealed?'저항 거점을 이어 세상 편이 되기':'중부 국도에서 이음망과 먼저 접선하기' },
+    진실: { have: truthN, need: D.seoulPillars.진실,
+            hint:truthHint },
     유산: { have: done.filter(d=>d.cat==='회수').length, need: D.seoulPillars.유산,
             hint:'남산에서 열 것들을 챙기기 (편지·봉투·커피)' },
   };
@@ -827,7 +861,8 @@ G.seoulMissing = ()=>{
   /* 기둥은 다 찼는데 총 과업이 모자란 경우 */
   const undone=D.deeds.filter(d=>!G.deedDone(d));
   const near=undone.find(d=>d.comp&&G.hasComp(d.comp))||undone.find(d=>!d.comp)||undone[0];
-  return {pillar:'여정', have:G.deedsDone().length, need:D.seoulNeed, hint: near?near.hint:'조금 더'};
+  const need=Object.values(p).reduce((n,x)=>n+x.need,0);
+  return {pillar:'여정', have:G.deedsDone().length, need, hint: near?near.hint:'조금 더'};
 };
 
 /* ── 라디오 수리 (진공관 1 소모, 1회) ── */

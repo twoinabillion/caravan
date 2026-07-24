@@ -471,6 +471,8 @@ const UI = (()=>{
     renderAll(); G.save();
     /* 연쇄 이벤트 (시네마틱 시퀀스) */
     if(S && S._chain){ const cid=S._chain; S._chain=null; setTimeout(()=>G.openEventById(cid), 450); return; }
+    const queued=G.popStory();
+    if(queued){ setTimeout(()=>G.openEventById(queued), 450); return; }
     /* 서울 진입 후엔 오르막 맵으로 복귀 */
     if(S && S.flags && S.flags.seoul_open && !S.ended){ setTimeout(showSeoul, 300); }
   }
@@ -817,8 +819,6 @@ const UI = (()=>{
       <div class="st-row"><span class="k">${ICO('pursuit')}천리안 관측</span><span class="v" style="flex:1;color:${S.pursuit>2?'var(--danger)':'inherit'}">${'◉'.repeat(S.pursuit)||'—'} (${S.pursuit}/5)</span></div>
       ${S.flags.seoulTries?`<div class="st-row"><span class="k">남산 시도</span><span class="v" style="flex:1;color:var(--cheollian)">${S.flags.seoulTries}회 — "아직입니다"</span></div>`:''}</div>`;
     /* 여정 장부 — 서울은 싣고 온 것이 있어야 열린다 */
-    const doneN=G.deedsDone().length, needN=D.seoulNeed;
-    const catIco={동료:'♦',회수:'✉',세계:'◈'};
     const ready=G.seoulReady();
     h+=`<div class="st-sec"><h4>📖 여정 장부 <small style="color:${ready?'var(--ok)':'var(--faded)'};font-weight:400">${ready?'· 남산이 열린다':'· 네 기둥을 싣고 오세요'}</small></h4>`;
     const P=G.pillars(), pIco={관계:'♦',세계:'🕯',진실:'◈',유산:'✉'};
@@ -827,10 +827,12 @@ const UI = (()=>{
       h+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
     });
     h+=`</div>`;
-    /* 관계 — 동료 전원 모으기 (미합류는 지역 힌트) */
+    /* 관계 — 동료 전원 개인 서사 Lv.3 (미합류는 지역 힌트) */
     Object.keys(D.comps).forEach(id=>{
-      const c=D.comps[id], got=G.hasComp(id);
-      h+=`<div class="st-row" style="${got?'':'opacity:.55'}"><span class="k">${got?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${got?'var(--ok)':'var(--faded)'}">${got?'합류함':('찾는 중 — '+D.compWhere[id].split(' —')[0])}</span></div>`;
+      const c=D.comps[id], got=G.hasComp(id), deep=got&&(S.comps[id]||{}).lvl>=3;
+      const state=!got?('찾는 중 — '+D.compWhere[id].split(' —')[0])
+        : deep?`★ 「${c.perks[3].nm}」`:`Lv.${S.comps[id].lvl} · 유대 ${S.comps[id].bond}`;
+      h+=`<div class="st-row" style="${got?'':'opacity:.55'}"><span class="k">${deep?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${deep?'var(--ok)':'var(--faded)'}">${state}</span></div>`;
     });
     /* 회수템 */
     D.deeds.filter(d=>d.cat==='회수').forEach(d=>{ const ok=G.deedDone(d);
