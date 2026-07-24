@@ -319,6 +319,24 @@ with sync_playwright() as p:
         ['core_quarantine','core_sleep','core_transfer'].join(',');
       const ep = D.events.find(e => e.id === 'seoul_night');
       out.ep = !!ep && !!ep.noPool;
+      const render = (v, flags={}) => typeof v === 'function' ? v({flags}) : v;
+      const costs = decision.choices.map(c => render(c.out[0].text, {}));
+      out.distinctCosts = costs[0].includes('느린 합의') &&
+        costs[1].includes('원본 기록의 검색창도 꺼졌다') &&
+        costs[2].includes('삼중 감시조');
+      out.gateSeparate = core.text.includes('관문은 사람들을 내쫓기 위한 절차가 아닙니다');
+      const reveal = D.events.find(e => e.id === 'resist_reveal');
+      out.generations = reveal.choices.every(c => c.out[0].text.includes('세대')) &&
+        D.comps.kangwoo.bio.includes('자신이 겪은 서울 추방') &&
+        D.comps.jaeyi.bio.includes('서울을 본 적 없는 남쪽 태생');
+      const base = D.seoulStops.find(e => e.id === 'seoul_base');
+      const envelope = base.choices.find(c => c.label === '봉투를 연다');
+      out.familyQuestion = envelope.out[0].text.includes('증조모') &&
+        envelope.out[0].text.includes('사유: —');
+      const epText = ep.text({flags:{core_transfer:true}});
+      out.facelessRoute = epText.includes('발신자: 미기재 / 승인자: 미기재') &&
+        epText.includes('책임 주체 식별자가 없습니다') &&
+        !epText.includes('반올림하면');
       S._chain = null; G.applyFx({chain:'seoul_decision'});
       out.chainSet = S._chain === 'seoul_decision'; S._chain = null;
       S.flags.seoul_core_reached = true;
@@ -330,6 +348,11 @@ with sync_playwright() as p:
       return out; }''')
     check('코어 답변 전부 집행 선택으로 연쇄', r8['coreToDecision'])
     check('집행 선택 3종→에필로그 연쇄', r8['decision'] and r8['decisionToNight'] and r8['distinct'], str(r8))
+    check('추방과 남산 관문은 별도 절차', r8['gateSeparate'])
+    check('세대별 추방 기억·남쪽 태생 명시', r8['generations'])
+    check('할아버지 집안의 빈 사유표 회수', r8['familyQuestion'])
+    check('세 처분의 대가가 서로 다름', r8['distinctCosts'])
+    check('상행선은 발신자 없는 행정 경로', r8['facelessRoute'])
     check('결정·에필로그 존재+noPool', r8['ep'] and r8['chainNotInPool'], str(r8))
     check('fx.chain → S._chain 세팅', r8['chainSet'])
     check('은수 필수 단서 큐 등록·회수', r8['storyQueued'], str(r8))
