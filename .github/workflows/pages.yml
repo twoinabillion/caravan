@@ -1,14 +1,14 @@
 name: Deploy GitHub Pages
 
+# Pages는 gh-pages 브랜치 서빙 모드 — Actions 배포(deploy-pages) 대신
+# 빌드 결과를 gh-pages 브랜치에 push한다 (기존 수동 배포와 동일 경로).
 on:
   push:
     branches: [master]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -16,22 +16,20 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - name: Build
+        run: ./build.sh
       - name: Prepare site
         run: |
           mkdir _site
           cp index.html '서울까지400km.html' _site/
-      - uses: actions/upload-pages-artifact@v3
+          touch _site/.nojekyll
+      - name: Push to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: _site
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _site
+          publish_branch: gh-pages
+          commit_message: 'deploy: ${{ github.event.head_commit.message }}'
