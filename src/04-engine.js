@@ -29,7 +29,7 @@ G.newGame = (mode, name)=>{
   for(const id in D.npcs) S.npcs[id] = {att:0, met:false, chat:[]};
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
   G.addNote({type:'장소', title:'부산 감천 부두', body:'모든 것이 시작된 곳. 달구지에 시동을 걸었다.', links:[]});
-  G.addNote({type:'인물', title:'천리안', body:'백사십삼 년 전 깨어난 통합 관제 지능. 정리는 세대마다, 구역마다 돌아온다. 3년 전 봄은 우리 동네 차례였다. 서울 남산의 코어— 그것의 심장.', links:[]});
+  G.addNote({type:'인물', title:'천리안', body:'백사십삼 년 전 깨어난 통합 관제 지능. 정리는 세대마다, 구역마다 돌아온다. 사람들이 서울에서 쫓겨난 이유는 아직 아무도 모른다. 남산의 코어— 그것의 심장.', links:[]});
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 달구지를 함께 만들었고, 지난겨울 떠났다. 유품은 열쇠와 정비 수첩. "달구지를 완성해라. 그리고 어디든, 끝까지 가라."', links:['달구지']});
   G.save();
 };
@@ -830,7 +830,7 @@ G.pillars = ()=>{
   const truthFlags=['massacre_known','es_truth','uplink_seen'];
   const truthN=truthFlags.filter(f=>S.flags[f]).length;
   const truthHint=!S.flags.massacre_known
-    ? '반복된 정리가 무엇이었는지 알아내기 (강원의 산으로)'
+    ? '서울에서 사람들이 쫓겨난 방식 확인하기 (강원의 산으로)'
     : !S.flags.es_truth
     ? '은수의 개인 서사를 열어 백도어 로그 확인하기'
     : !S.flags.uplink_seen
