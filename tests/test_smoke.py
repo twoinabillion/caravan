@@ -273,7 +273,7 @@ with sync_playwright() as p:
       const out = {};
       out.followups = ['cell_sea_2','cell_dome_2','cell_sotgot_2','cell_ghost_2','cell_mountain_2'].filter(id=>D.events.find(e=>e.id===id)).length;
       const core = D.seoulStops.find(e=>e.id==='seoul_core');
-      out.coreNames = core.choices.some(c=>c.req&&c.req.flag==='massacre_known');
+      out.coreNames = core.choices.some(c=>c.req&&c.req.flag==='ridge_path');
       const base = D.seoulStops.find(e=>e.id==='seoul_base');
       out.baseRidge = base.choices.some(c=>c.req&&c.req.flag==='ridge_path');
       const ruins = D.seoulStops.find(e=>e.id==='seoul_ruins');
