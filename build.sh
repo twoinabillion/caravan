@@ -5,7 +5,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PARTS_BEFORE_VAN=(
+PARTS_BEFORE_EMBEDS=(
   src/01-style.html
   src/02-dom.html
   src/03-data.js
@@ -14,7 +14,7 @@ PARTS_BEFORE_VAN=(
   src/03d-bgm.js
 )
 
-PARTS_AFTER_VAN=(
+PARTS_AFTER_EMBEDS=(
   src/04-engine.js
   src/05-scene.js
   src/06-mapgraph.js
@@ -23,19 +23,6 @@ PARTS_AFTER_VAN=(
   src/09-close.html
 )
 
-VAN_KEYS=(BASE CABIN REINFORCED EXPEDITION WHEEL)
-VAN_FILES=(
-  assets/van/dalguji-base-body.png
-  assets/van/dalguji-cabin-body.png
-  assets/van/dalguji-reinforced-body.png
-  assets/van/dalguji-expedition-body.png
-  assets/van/dalguji-wheel.png
-)
-VAN_JS="$(< src/03e-van.js)"
-for I in "${!VAN_KEYS[@]}"; do
-  VAN_BASE64="$(base64 < "${VAN_FILES[$I]}" | tr -d '\n')"
-  VAN_JS="${VAN_JS//__DALGUJI_${VAN_KEYS[$I]}__/data:image/png;base64,$VAN_BASE64}"
-done
 NPC_KEYS=(geumja sundeok taeho jaepil miyoung drhan deokgu kimcaptain hayeosa sanjigi hanbyeol seoyeon mansu postman mapmaker mingyu grandfather bori)
 NPC_JS="$(< src/03f-npc-portraits.js)"
 for KEY in "${NPC_KEYS[@]}"; do
@@ -63,10 +50,9 @@ for I in "${!SCENE_KEYS[@]}"; do
   SCENE_JS="${SCENE_JS//__SCENE_${SCENE_KEYS[$I]}__/data:image/jpeg;base64,$SCENE_BASE64}"
 done
 {
-  cat "${PARTS_BEFORE_VAN[@]}"
-  printf '%s\n' "$VAN_JS"
+  cat "${PARTS_BEFORE_EMBEDS[@]}"
   printf '%s\n' "$NPC_JS"
   printf '%s\n' "$SCENE_JS"
-  cat "${PARTS_AFTER_VAN[@]}"
+  cat "${PARTS_AFTER_EMBEDS[@]}"
 } > 서울까지400km.html
 echo "✅ 서울까지400km.html $(wc -c < 서울까지400km.html | tr -d ' ') bytes"

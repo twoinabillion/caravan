@@ -1,5 +1,6 @@
-/* ═══════════════════ DRIVE SCENE — 픽셀아트 렌더러 ═══════════════════
-   저해상도(236px) 오프스크린에 그린 뒤 픽셀 업스케일로 블릿한다. */
+/* ═══════════════════ DRIVE SCENE — 코드 기반 픽셀아트 렌더러 ═══════════════════
+   배경과 달구지를 저해상도(236px) Canvas에 직접 그린 뒤 픽셀 업스케일한다.
+   달구지는 PNG 없이 S.up의 개조 상태를 매 프레임 조합한다. */
 const SCENE = (()=>{
   const LW = 236;                     // 논리 해상도(픽셀아트 폭)
   let mealT = 0;                      // 식사 연출 남은 시간(초)
@@ -8,8 +9,6 @@ const SCENE = (()=>{
   let dcv, dctx, VW=560, VH=300, DPR=1;   // 표시 캔버스
   let off, ctx, W=LW, H=LH;               // 픽셀 캔버스 (모든 드로잉)
   let worldX=0, t=0, puffs=[], rainDrops=null, flashT=0, shoot=null, birds=null;
-  let vanSprite=null, vanSprites={};
-  let lastChassis='base', priorChassis='base', chassisBlend=0;
   let crowFly=[], crowCd={};
   let signTexts=[];                   // 픽셀 패스에서 수집 → 블릿 후 선명하게 그림
 
@@ -21,14 +20,6 @@ const SCENE = (()=>{
   const mix=(h1,h2,f)=>{ const a=toRGB(h1),b=toRGB(h2);
     return `rgb(${Math.round(lerp(a[0],b[0],f))},${Math.round(lerp(a[1],b[1],f))},${Math.round(lerp(a[2],b[2],f))})`; };
   const P=(x)=>Math.round(x);        // 픽셀 스냅
-
-  function loadVanSprites(){
-    if(vanSprite||!D.vanSprites) return;
-    Object.keys(D.vanSprites).forEach(key=>{
-      const img=new Image(); img.src=D.vanSprites[key]; vanSprites[key]=img;
-    });
-    vanSprite=vanSprites.base;
-  }
 
   /* 시간대별 하늘 [hour, top, horizon, glow] */
   const SKY=[
@@ -47,7 +38,6 @@ const SCENE = (()=>{
   function init(canvas){
     dcv=canvas; dctx=dcv.getContext('2d');
     off=document.createElement('canvas'); ctx=off.getContext('2d');
-    loadVanSprites();
     new ResizeObserver(resize).observe(dcv); resize();
   }
   function resize(){
@@ -414,124 +404,6 @@ const SCENE = (()=>{
     return roadY;
   }
 
-  /* 이미지 차체 + 실시간 레이어. 이미지 로딩 전에는 아래 기존 렌더러로 폴백. */
-  function spriteVan(vx,vy,baseY,bodyL,speed,dark,wx,up,bnc,bnc2){
-    const chassis=up.cabin&&up.armor?'expedition':up.cabin?'cabin':up.armor?'reinforced':'base';
-    let bodySprite=vanSprites[chassis]||vanSprite;
-    if(!bodySprite||!bodySprite.complete||!bodySprite.naturalWidth) bodySprite=vanSprite;
-    if(!bodySprite||!bodySprite.complete||!bodySprite.naturalWidth) return false;
-    /* 원본 96x53 기준. 차체는 서스펜션을 따라 움직이고 바퀴는 노면에 붙인다. */
-    const sx=P(vx-8), sy=P(vy-37), sw=96, sh=53;
-    if(chassis!==lastChassis){ priorChassis=lastChassis; lastChassis=chassis; chassisBlend=1; }
-    const priorSprite=vanSprites[priorChassis];
-    if(chassisBlend>0&&priorSprite&&priorSprite.complete&&priorSprite.naturalWidth){
-      ctx.globalAlpha=chassisBlend; ctx.drawImage(priorSprite,sx,sy,sw,sh);
-      ctx.globalAlpha=1-chassisBlend; ctx.drawImage(bodySprite,sx,sy,sw,sh); ctx.globalAlpha=1;
-      ctx.fillStyle=`rgba(255,180,70,${chassisBlend})`;
-      for(let i=0;i<5;i++) ctx.fillRect(P(sx+18+hash(i*13+t)*64),P(sy+20+hash(i*7+t*2)*22),1,1);
-      chassisBlend=Math.max(0,chassisBlend-0.035);
-    } else ctx.drawImage(bodySprite,sx,sy,sw,sh);
-
-    /* 외부 모듈은 지붕·측면·전면·통신 슬롯마다 대표 단계 하나만 보인다. */
-    if(up.garden2){
-      ctx.fillStyle='#54402c'; ctx.fillRect(sx+51,sy+5,16,4);
-      ctx.fillStyle='#67a34b'; for(let g=0;g<5;g++) ctx.fillRect(P(sx+53+g*2.5+Math.sin(t*3+g)*0.5),sy+2,1,4);
-      ctx.strokeStyle='rgba(175,215,240,0.7)'; ctx.beginPath(); ctx.arc(sx+59,sy+6,8,Math.PI,0); ctx.stroke();
-    } else if(up.garden){
-      ctx.fillStyle='#54402c'; ctx.fillRect(sx+53,sy+5,14,4);
-      ctx.fillStyle='#67a34b'; for(let g=0;g<5;g++) ctx.fillRect(P(sx+55+g*2.4+Math.sin(t*3+g)*0.5),sy+2,1,4);
-    } else if(up.solar){
-      ctx.fillStyle='#274e74'; ctx.fillRect(sx+34,sy+5,17,4);
-      ctx.strokeStyle='#5991bd'; for(let x=sx+38;x<sx+51;x+=4) line(x,sy+5,x,sy+9);
-    } else if(up.collector){
-      ctx.fillStyle='#67707d'; ctx.beginPath(); ctx.moveTo(sx+17,sy+3); ctx.lineTo(sx+25,sy+3); ctx.lineTo(sx+21,sy+9); ctx.closePath(); ctx.fill();
-    }
-    if(up.stove){
-      ctx.fillStyle='#343943'; ctx.fillRect(sx+29,sy,3,8);
-      if(speed<=0){ const rise=(t*4)%7; ctx.fillStyle=`rgba(210,210,205,${0.35*(1-rise/7)})`; ctx.fillRect(P(sx+30+Math.sin(t*2)),P(sy-1-rise),2,2); }
-    }
-    if(up.beehive&&!up.garden&&!up.garden2){ ctx.fillStyle='#a58a4a'; ctx.fillRect(sx+62,sy+6,7,5); ctx.fillStyle='#2e2a20'; ctx.fillRect(sx+65,sy+9,1,1); }
-    if(up.scope&&!up.antenna){ ctx.fillStyle='#454b56'; ctx.fillRect(sx+58,sy,2,7); ctx.fillRect(sx+56,sy,6,2); }
-    if(up.horn&&!up.collector){ ctx.fillStyle='#c9c2b0'; ctx.fillRect(sx+12,sy+4,5,2); ctx.fillRect(sx+12,sy+8,5,2); }
-    if(up.lightbar){
-      ctx.fillStyle='#30343d'; ctx.fillRect(sx+75,sy+11,11,2);
-      if(dark>0.3){ ctx.fillStyle='#ffe9a8'; for(let i=0;i<5;i++) ctx.fillRect(sx+76+i*2,sy+11,1,1); }
-    }
-    if(up.antenna){
-      ctx.strokeStyle='#777'; line(sx+24,sy+7,sx+20,sy-11);
-      ctx.fillStyle=`rgba(255,90,90,${0.5+0.5*Math.sin(t*3)})`; ctx.fillRect(sx+19,sy-12,1,1);
-    }
-    /* 캐빈·침상·냉장고는 통합 차체 또는 실내 설비로 처리한다. */
-    if(up.curtain&&dark>0.35&&speed<=0){ ctx.fillStyle='#453a4a'; ctx.fillRect(sx+38,sy+20,20,13); }
-    if(up.kitchen&&speed<=0){
-      ctx.fillStyle='#3c372f'; ctx.fillRect(sx+43,sy+34,13,2); ctx.fillStyle='#252934'; ctx.fillRect(sx+48,sy+31,4,2);
-    }
-    if((up.tank1||up.tank2)&&!up.armor){
-      const tankW=up.tank1&&up.tank2?17:11;
-      ctx.fillStyle='#424752'; ctx.fillRect(sx+47,sy+40,tankW,3);
-      ctx.fillStyle='#69707d'; ctx.fillRect(sx+48,sy+40,tankW-2,1);
-    }
-    if(up.armory&&!up.armor){ ctx.fillStyle='#4a4035'; ctx.fillRect(sx+11,sy+31,10,6); ctx.fillStyle='#8b7048'; ctx.fillRect(sx+13,sy+33,6,1); }
-    else if(up.sidebox&&!up.armor){ ctx.fillStyle='#515867'; ctx.fillRect(sx+11,sy+37,7,5); ctx.fillStyle='#c9a24a'; ctx.fillRect(sx+13,sy+39,2,1); }
-    if(up.awning){
-      ctx.fillStyle='#874f45';
-      if(speed>0) ctx.fillRect(sx+29,sy+14,25,2);
-      else { ctx.fillRect(sx+9,sy+14,45,3); ctx.strokeStyle='#4c4438'; line(sx+10,sy+17,sx+10,sy+52); }
-    }
-    if(up.snorkel){ ctx.fillStyle='#333842'; ctx.fillRect(sx+89,sy+18,2,18); ctx.fillRect(sx+86,sy+17,5,2); }
-    if(up.bullbar&&!up.armor){ ctx.strokeStyle='#6b7280'; line(sx+91,sy+34,sx+94,sy+43); line(sx+91,sy+43,sx+96,sy+43); }
-    if(up.winch&&!up.armor){ ctx.fillStyle='#2b2f3a'; ctx.fillRect(sx+89,sy+40,7,3); ctx.fillStyle='#c9a24a'; ctx.fillRect(sx+95,sy+42,2,1); }
-
-    /* 창문 속 탑승자. 초상 대신 저해상도 실루엣을 실시간으로 움직인다. */
-    const riders=S? ['#2c3346',...S.party.map(id=>D.comps[id].color)]:['#2c3346'];
-    const slots=up.cabin
-      ? [[72,24],[52,24],[47,24],[42,24],[27,23],[23,23]]
-      : [[72,24],[52,24],[47,24],[42,24],[26,23]];
-    ctx.save(); ctx.beginPath();
-    ctx.rect(sx+65,sy+17,14,11); ctx.rect(sx+38,sy+16,18,11); ctx.rect(sx+20,sy+17,10,8); ctx.clip();
-    riders.slice(0,slots.length).forEach((color,i)=>{
-      const q=slots[i], nod=Math.sin(t*1.2+i*2.7)>0.96?1:0;
-      ctx.fillStyle='#171a24'; ctx.fillRect(sx+q[0]-1,sy+q[1]-1+nod,3,3);
-      ctx.fillStyle=color; ctx.fillRect(sx+q[0]-1,sy+q[1]-3+nod,3,2);
-      if(i===talkIdx&&talkT>0){ ctx.fillStyle='#ffebbe'; ctx.fillRect(sx+q[0],sy+q[1]-7,1,1); ctx.fillRect(sx+q[0]+2,sy+q[1]-7,1,1); }
-    });
-    ctx.restore();
-    if(S&&S.dog){
-      const bob=speed>0?Math.sin(t*9):0;
-      ctx.fillStyle='#c9a36a'; ctx.fillRect(sx+19,P(sy+25+bob),5,4);
-      ctx.fillStyle='#8a6c42'; ctx.fillRect(sx+19,P(sy+23+bob),2,2); ctx.fillRect(sx+22,P(sy+23+bob),2,2);
-    }
-
-    /* 타이어는 노면에 고정하고 차체만 서스펜션을 따라 움직인다. */
-    const spin=worldX/6.2;
-    [[27,44,0],[68,44,0.28]].forEach((w)=>{
-      const wx0=sx+w[0], wy0=P(baseY+7), a=spin+w[2];
-      const wheelSprite=vanSprites.wheel, wheelSize=up.mudtires?15:14;
-      if(wheelSprite&&wheelSprite.complete&&wheelSprite.naturalWidth)
-        ctx.drawImage(wheelSprite,P(wx0-wheelSize/2),P(wy0-wheelSize/2),wheelSize,wheelSize);
-      else { ctx.fillStyle='#0e1016'; circ(wx0,wy0,wheelSize/2); ctx.fillStyle='#2b2f3a'; circ(wx0,wy0,3.2); }
-      if(up.mudtires){
-        ctx.strokeStyle='rgba(24,27,34,0.9)'; ctx.lineWidth=1;
-        for(let k=0;k<4;k++){
-          const ta=a+k*Math.PI/2;
-          line(wx0+Math.cos(ta)*5.5,wy0+Math.sin(ta)*5.5,wx0+Math.cos(ta)*6.5,wy0+Math.sin(ta)*6.5);
-        }
-      }
-      ctx.fillStyle='#30343c'; circ(wx0,wy0,2.6);
-      ctx.strokeStyle='#777b80'; ctx.lineWidth=1;
-      line(wx0-Math.cos(a)*2,wy0-Math.sin(a)*2,wx0+Math.cos(a)*2,wy0+Math.sin(a)*2);
-      line(wx0-Math.cos(a+Math.PI/2)*2,wy0-Math.sin(a+Math.PI/2)*2,wx0+Math.cos(a+Math.PI/2)*2,wy0+Math.sin(a+Math.PI/2)*2);
-      ctx.fillStyle='#a09b8d'; circ(wx0,wy0,0.8);
-    });
-
-    ctx.fillStyle=dark>0.25?'#ffe9b0':'#d8d2be'; ctx.fillRect(sx+90,sy+36,2,3);
-    ctx.fillStyle=speed>0?'#c74138':'#762a24'; ctx.fillRect(sx+8,sy+36,2,3);
-    if(wx==='rain'){
-      ctx.globalAlpha=0.15; ctx.drawImage(bodySprite,sx,sy+58,sw,-18); ctx.globalAlpha=1;
-    }
-    return true;
-  }
-
   /* ── 차 (달구지) ── */
   function van(roadY,speed,dark,wx){
     const up=S? (S.up||{}):{};
@@ -540,7 +412,7 @@ const SCENE = (()=>{
     const bnc2=speed>0? Math.sin(t*11+1.2)*0.8 : Math.sin(t*1.6+0.6)*0.3;
     const ride=up.susp?1.5:0;
     const vy=P(baseY+bnc-ride);
-    const bodyL=62+(up.cabin?15:0), bodyH=25, cabL=17;
+    const bodyL=62+(up.cabin?15:0), bodyH=25+(up.cabin?8:0), cabL=17;
     /* 그림자 */
     ctx.fillStyle='rgba(0,0,0,0.5)';
     ctx.beginPath(); ctx.ellipse(vx+bodyL*0.55,baseY+9,bodyL*0.6,2.5,0,0,7); ctx.fill();
@@ -557,7 +429,6 @@ const SCENE = (()=>{
       for(let i=0;i<5;i++){ const dx=vx+bodyL+cabL+((t*30+i*23)%80), dy=vy+6+hash(i*7)*12;
         ctx.fillStyle=`rgba(255,230,180,${0.25*dark})`; ctx.fillRect(P(dx),P(dy),1,1); }
     }
-    if(spriteVan(vx,vy,baseY,bodyL,speed,dark,wx,up,bnc,bnc2)) return;
     /* ── 차체: 박스(투톤) ── */
     ctx.fillStyle='#8d8474';                        // 상부 베이지
     ctx.fillRect(vx,vy-bodyH,bodyL,bodyH-7);
@@ -576,11 +447,12 @@ const SCENE = (()=>{
     ctx.fillStyle='#3d414f'; circ(vx+bodyL-20,vy-bodyH-7,2);
     ctx.fillStyle='#943b32'; ctx.fillRect(vx+32,vy-bodyH-9,7,5);
     ctx.fillStyle='#b8443a'; ctx.fillRect(vx+32,vy-bodyH-9,7,1);
-    if(up.solar){ /* 태양광 패널 */
-      ctx.fillStyle='#274e74'; ctx.fillRect(vx+7,vy-bodyH-8,Math.min(23,bodyL-44),4);
+    if(up.solar){ /* 태양광 패널 — 텃밭과 함께 달면 앞쪽 랙으로 이동 */
+      const panelX=vx+(up.garden?32:7), panelW=Math.min(up.garden?18:23,bodyL-(panelX-vx)-9);
+      ctx.fillStyle='#274e74'; ctx.fillRect(panelX,vy-bodyH-8,panelW,4);
       ctx.strokeStyle='#3f77aa'; ctx.lineWidth=1;
-      for(let px2=vx+10;px2<vx+7+Math.min(23,bodyL-44);px2+=5) line(px2,vy-bodyH-8,px2,vy-bodyH-4);
-      ctx.fillStyle=`rgba(160,210,255,${0.25+0.2*Math.sin(t*2)})`; ctx.fillRect(vx+8,vy-bodyH-8,4,1);
+      for(let px2=panelX+3;px2<panelX+panelW;px2+=5) line(px2,vy-bodyH-8,px2,vy-bodyH-4);
+      ctx.fillStyle=`rgba(160,210,255,${0.25+0.2*Math.sin(t*2)})`; ctx.fillRect(panelX+1,vy-bodyH-8,4,1);
     } else {
       ctx.fillStyle='#8a7a55'; ctx.fillRect(vx+8,vy-bodyH-8,9,4);
       ctx.strokeStyle='#4c4438'; line(vx+10,vy-bodyH-8,vx+10,vy-bodyH-4); line(vx+14,vy-bodyH-8,vx+14,vy-bodyH-4);
@@ -701,6 +573,15 @@ const SCENE = (()=>{
     ctx.lineTo(vx+bodyL,vy+1); ctx.closePath(); ctx.fill();
     ctx.fillStyle='#6f6250'; ctx.fillRect(vx+bodyL,vy-6,cabL,11);
     ctx.fillStyle='#4c4438'; ctx.fillRect(vx+bodyL,vy+3,cabL,2);
+    if(up.armor){ /* 장갑판은 차체 하단을 한 덩어리로 바꿔 원정형 실루엣을 만든다 */
+      ctx.fillStyle='#59616f';
+      ctx.fillRect(vx+2,vy-7,bodyL-4,10);
+      ctx.fillRect(vx+bodyL,vy-6,cabL-1,9);
+      ctx.fillStyle='#737c8c';
+      for(let ax=vx+5;ax<vx+bodyL+cabL-3;ax+=8) ctx.fillRect(P(ax),vy-5+(Math.floor(ax/8)%2)*5,1,1);
+      ctx.strokeStyle='rgba(30,34,42,0.65)';
+      line(vx+bodyL-1,vy-7,vx+bodyL-1,vy+3);
+    }
     /* 보닛 */
     ctx.fillStyle='#877d6b'; ctx.fillRect(vx+bodyL+cabL-6,vy-bodyH+13,6,4);
     /* 앞유리 + 운전자 */
@@ -736,6 +617,14 @@ const SCENE = (()=>{
       const rise=((t*5)%5);
       ctx.fillStyle=`rgba(240,240,235,${0.4*(1-rise/5)})`;
       ctx.fillRect(P(vx+30+Math.sin(t*3)*0.8),P(vy-14-rise),1,1);   // 김
+    }
+    if(up.bench){ /* 첫 좌석 증설: 뒤쪽 창의 안전 손잡이 */
+      ctx.fillStyle='#d0b36e'; ctx.fillRect(vx+10,winY+winH-2,6,1);
+      ctx.fillStyle='#4c4438'; ctx.fillRect(vx+10,winY+winH-3,1,2); ctx.fillRect(vx+15,winY+winH-3,1,2);
+    }
+    if(up.jumpseat){ /* 마지막 보조석: 뒷문 바깥으로 드러나는 접이식 힌지 */
+      ctx.fillStyle='#717988'; ctx.fillRect(vx+1,vy-12,3,1); ctx.fillRect(vx+1,vy-8,3,1);
+      ctx.fillStyle='#c9a24a'; ctx.fillRect(vx+2,vy-10,1,1);
     }
     /* 탑승자 (나 + 동료) — 인원수만큼 창문에 균등 배치 */
     const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
@@ -843,7 +732,13 @@ const SCENE = (()=>{
     const spin=worldX*0.3;
     [[vx+13,bnc],[vx+bodyL+5,bnc2]].forEach(wj=>{
       const wx0=wj[0], wy0=P(baseY+6);
-      ctx.fillStyle='#0e1016'; circ(wx0,wy0,5.5);
+      const wr=up.mudtires?6.7:5.5;
+      ctx.fillStyle='#0e1016'; circ(wx0,wy0,wr);
+      if(up.mudtires){
+        ctx.strokeStyle='#252832'; ctx.lineWidth=1;
+        for(let k=0;k<8;k++){ const a=spin+k*Math.PI/4;
+          line(wx0+Math.cos(a)*(wr-1),wy0+Math.sin(a)*(wr-1),wx0+Math.cos(a)*(wr+0.4),wy0+Math.sin(a)*(wr+0.4)); }
+      }
       ctx.fillStyle='#2b2f3a'; circ(wx0,wy0,3.2);
       ctx.fillStyle='#464c5c'; circ(wx0,wy0,1.4);
       ctx.strokeStyle='#14161f'; ctx.lineWidth=1;
@@ -1069,7 +964,6 @@ const SCENE = (()=>{
     tcv=canvas; tdctx=tcv.getContext('2d');
     toff=document.createElement('canvas'); tctx2=toff.getContext('2d');
     tctx2.imageSmoothingEnabled=false;
-    loadVanSprites();
     const fit=()=>{ const vw=tcv.clientWidth||420, vh=tcv.clientHeight||820;
       tcv.width=vw*DPR; tcv.height=vh*DPR; tdctx.setTransform(DPR,0,0,DPR,0,0);
       TH=Math.round(TW*vh/vw); toff.width=TW; toff.height=TH; };
@@ -1111,34 +1005,40 @@ const SCENE = (()=>{
     const vx=w*0.3, vy=P(h*0.66), BL=76,BH=30,CL=20;
     const gl=0.75+0.25*Math.sin(tt*1.8);
     c.fillStyle='rgba(0,0,0,0.55)'; c.beginPath(); c.ellipse(vx+BL*0.6,vy+10,BL*0.62,3,0,0,7); c.fill();
-    const titleBody=vanSprites.base||vanSprite, titleWheel=vanSprites.wheel;
-    if(titleBody&&titleBody.complete&&titleBody.naturalWidth){
-      c.imageSmoothingEnabled=false;
-      const titleX=P(vx-8);
-      c.drawImage(titleBody,titleX,vy-38,96,53);
-      if(titleWheel&&titleWheel.complete&&titleWheel.naturalWidth){
-        c.drawImage(titleWheel,titleX+20,vy-1,14,14);
-        c.drawImage(titleWheel,titleX+61,vy-1,14,14);
-      }
-    } else {
     c.fillStyle='#8d8474'; c.fillRect(P(vx),vy-BH,BL,BH-8);
     c.fillStyle='#6f6250'; c.fillRect(P(vx),vy-8,BL,12);
+    c.fillStyle='#4c4438'; c.fillRect(P(vx),vy+2,BL+CL-2,2);
     c.fillStyle='#5d564a'; c.fillRect(P(vx+8),vy-BH-5,BL-30,5);
+    c.strokeStyle='#3c372f'; c.lineWidth=1;
+    c.beginPath(); c.moveTo(vx+6,vy-BH-6); c.lineTo(vx+BL-13,vy-BH-6); c.stroke();
     c.fillStyle='#943b32'; c.fillRect(P(vx+38),vy-BH-10,9,6);
     c.fillStyle='#23262e'; c.beginPath(); c.arc(vx+BL-24,vy-BH-8,5,0,7); c.fill();
     c.fillStyle='#988e7c';
     c.beginPath(); c.moveTo(vx+BL,vy-BH+6); c.lineTo(vx+BL+CL-7,vy-BH+7); c.lineTo(vx+BL+CL,vy+1); c.lineTo(vx+BL,vy+1); c.closePath(); c.fill();
+    c.fillStyle='#6f6250'; c.fillRect(P(vx+BL),vy-8,CL-1,10);
+    c.fillStyle='#827765'; c.fillRect(P(vx+BL+CL-7),vy-BH+17,7,5);
     c.fillStyle=`rgba(245,184,105,${0.9*gl})`; c.fillRect(P(vx+9),vy-BH+6,BL-20,11);
     c.fillStyle='rgba(255,235,190,0.5)'; c.fillRect(P(vx+9),vy-BH+6,BL-20,2);
     c.strokeStyle='#4c4438'; c.lineWidth=1;
     c.beginPath(); c.moveTo(vx+30,vy-BH+6); c.lineTo(vx+30,vy-BH+17); c.stroke();
     c.beginPath(); c.moveTo(vx+51,vy-BH+6); c.lineTo(vx+51,vy-BH+17); c.stroke();
+    c.fillStyle='rgba(125,153,179,0.55)';
+    c.beginPath(); c.moveTo(vx+BL+2,vy-BH+8); c.lineTo(vx+BL+CL-8,vy-BH+9);
+    c.lineTo(vx+BL+CL-4,vy-BH+16); c.lineTo(vx+BL+2,vy-BH+16); c.closePath(); c.fill();
+    c.fillStyle='#3c372f'; c.fillRect(P(vx+BL+CL-2),vy-BH+10,2,3);
     c.fillStyle='#0e1016'; c.beginPath(); c.arc(vx+16,vy+6,6.5,0,7); c.arc(vx+BL+6,vy+6,6.5,0,7); c.fill();
     c.fillStyle='#2b2f3a'; c.beginPath(); c.arc(vx+16,vy+6,3.6,0,7); c.arc(vx+BL+6,vy+6,3.6,0,7); c.fill();
+    c.fillStyle='#6b4a35'; c.fillRect(P(vx+3),vy-5,8,3); c.fillRect(P(vx+BL-10),vy-BH+13,4,5);
+    c.strokeStyle='rgba(190,190,180,0.5)';
+    c.beginPath(); c.moveTo(vx+56,vy-6); c.lineTo(vx+63,vy+1); c.moveTo(vx+63,vy-6); c.lineTo(vx+56,vy+1); c.stroke();
+    c.strokeStyle='#4c4438';
+    c.beginPath(); c.moveTo(vx+3,vy-BH+2); c.lineTo(vx+3,vy+1);
+    for(let ly=vy-BH+5;ly<vy;ly+=5){ c.moveTo(vx+1,ly); c.lineTo(vx+5,ly); } c.stroke();
+    c.fillStyle='#d8d2be'; c.fillRect(P(vx+BL+CL-2),vy-4,2,3);
+    c.fillStyle='#762a24'; c.fillRect(P(vx-1),vy-4,2,3);
     c.fillStyle='#ffb454';
     c.beginPath(); c.moveTo(vx+10,vy-BH-14); c.lineTo(vx+3,vy-BH-12); c.lineTo(vx+10,vy-BH-10); c.closePath(); c.fill();
     c.strokeStyle='#666'; c.beginPath(); c.moveTo(vx+12,vy-BH-4); c.lineTo(vx+10,vy-BH-14); c.stroke();
-    }
     /* 헤드라이트 */
     const hg=c.createLinearGradient(vx+BL+CL,0,vx+BL+CL+120,0);
     hg.addColorStop(0,`rgba(255,220,150,${0.24*gl})`); hg.addColorStop(1,'rgba(255,220,150,0)');

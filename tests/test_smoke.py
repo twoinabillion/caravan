@@ -4,7 +4,7 @@
 검사: 부팅→인트로→게임 진입, 콘솔 에러 0, 의뢰 4종 엔진 플로우, 신규 체인 이벤트 표시
 주의: headless 캔버스 getImageData는 못 믿는다 — 픽셀 검증은 스크린샷 눈검수로.
 """
-import sys, pathlib
+import base64, sys, pathlib
 from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -16,6 +16,10 @@ fails = []
 def check(name, ok, detail=''):
     print(('  ✅ ' if ok else '  ❌ ') + name + (f' — {detail}' if detail and not ok else ''))
     if not ok: fails.append(name)
+
+def save_canvas(page, selector, path):
+    data = page.locator(selector).evaluate("(canvas) => canvas.toDataURL('image/png')")
+    path.write_bytes(base64.b64decode(data.split(',', 1)[1]))
 
 with sync_playwright() as p:
     b = p.chromium.launch()
@@ -29,6 +33,8 @@ with sync_playwright() as p:
 
     print('― 부팅/진입')
     check('타이틀 표시', pg.locator('#bt-new').is_visible())
+    check('달구지 PNG 런타임 제거', pg.evaluate('typeof D.vanSprites === "undefined"'))
+    save_canvas(pg, '#titlecv', SHOT / 'title-procedural.png')
     pg.click('#bt-new'); pg.wait_for_timeout(200)
     pg.click('#mode-on'); pg.wait_for_timeout(300)
     for _ in range(len(pg.evaluate('D.intro'))):
@@ -322,7 +328,19 @@ with sync_playwright() as p:
 
     print('― 스크린샷')
     pg.evaluate('document.querySelector("#ev-wrap").classList.remove("on")')
+    pg.evaluate('document.querySelector("#arrival-scene").classList.remove("on")')
+    pg.add_style_tag(content='#arrival-scene,#bubbles,#minimap{display:none!important}')
     pg.screenshot(path=str(SHOT / 'game.png'))
+    save_canvas(pg, '#cv', SHOT / 'van-base-procedural.png')
+    pg.evaluate('''() => {
+      S.up = Object.fromEntries(D.upgrades.map(u => [u.id, true]));
+      S.party = ['minji','parkss','kangwoo','leo','jaeyi','eunsu'];
+      S.dog = true; S.driving = null; S.at = 'daegu'; S.min = 19 * 60; S.wx = 'clear';
+      document.querySelector('#arrival-scene').classList.remove('on');
+      UI.renderAll();
+    }''')
+    pg.wait_for_timeout(250)
+    save_canvas(pg, '#cv', SHOT / 'van-all-upgrades.png')
     pg.evaluate('S.at="daegu"; UI.showStl && 0')  # showStl은 비공개 — dock 경유
     b.close()
 
