@@ -443,7 +443,7 @@ const UI = (()=>{
     chips.push(...G.afterChoice(curEv, choice));
     if(S.ended) return;
     const sheet=$('#ev-sheet');
-    let h=`<div class="tag">${curEv.title}</div><div class="outcome">${fmt(out.text)}</div>`;
+    let h=`<div class="tag">${curEv.title}</div><div class="outcome">${fmt(typeof out.text==='function'? out.text(S):out.text)}</div>`;
     if(chips.length){ h+='<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'; }
     h+='<div class="choices">';
     if(out.fx&&out.fx.offerComp){
@@ -486,8 +486,12 @@ const UI = (()=>{
     if(!done){
       h+=`<button class="act primary" id="seoul-go"><span class="ic">▲</span><span><b>${stops[stage].name}(으)로 오른다</b><small>${stage===0?'서울 안으로':'다음 정거장'}</small></span></button>`;
     } else {
-      h+=`<div class="sub" style="text-align:center;padding:14px 0">〔 1막 완주 〕<br><small style="color:var(--faded)">여기서부터는 아직 쓰이지 않았다. 2막에서 계속됩니다.</small></div>
-        <button class="act" id="seoul-journal"><span class="ic">✎</span><span><b>여행 일지를 연다</b></span></button>`;
+      const cn=S.notes?S.notes.length:0, pn=S.party.length, dg=S.dog?' + 보리':'';
+      h+=`<div class="sub" style="text-align:center;padding:14px 0">〔 1막 「조수석의 무게」 완주 〕<br>
+        <small style="color:var(--faded)">DAY ${S.day} · ${Math.round(S.stats.km)}km · 동료 ${pn}명${dg} · 기록 ${cn}개</small><br>
+        <small style="color:var(--faded)">부산의 폐차장에서 남산의 밤까지, 여기 적힌 전부가 우리가 실어온 것이다.</small><br>
+        <small style="color:var(--faded)">여기서부터는 아직 쓰이지 않았다. 2막 「보관된 것들」에서 계속됩니다.</small></div>
+        <button class="act" id="seoul-journal"><span class="ic">✎</span><span><b>여행 일지를 연다</b><small>411km의 기록을 처음부터</small></span></button>`;
     }
     h+='</div>';
     $('#seoul-body').innerHTML=h;
@@ -647,6 +651,8 @@ const UI = (()=>{
     };
   }
   function recruitStl(id){
+    if(id==='kangwoo' && D.events.find(e=>e.id==='kw_recruit') && !S.used.includes('kw_recruit')){
+      closeOvl('#ovl-stl'); G.openEventById('kw_recruit'); return; }
     const body=$('#stl-body');
     const c=D.comps[id];
     const full=S.party.length>=G.maxParty();
@@ -668,7 +674,11 @@ const UI = (()=>{
   function talk(nid){
     const npc=D.npcs[nid], st=S.npcs[nid];
     if(!st.met && G.hasPerk('leo_fame')) st.att+=15;   // 길 위의 명성
-    const greet = !st.met? (st.att>10? npc.greetGood : npc.greet0)
+    const tries=S.flags.seoulTries||0;
+    const greet = (nid==='deokgu'&&tries>0)
+      ? (tries===1? '…돌아왔냐. 남산이 "아직"이래? 흥, 그럴 줄 알았다. 성문은 안 좁아지니까 천천히 해라. 못 실은 게 뭔지는— 네 차가 제일 잘 알 거다.'
+        : `…${tries}번째다, 이 미친놈들. 근데 이상하지. 올 때마다 차가 무거워 보여. 짐이 아니라 뭐가 다른 게 실리는 모양이야. …밥은 먹었냐. 국밥 시켜놨다.`)
+      : !st.met? (st.att>10? npc.greetGood : npc.greet0)
       : st.att>10? npc.greetGood : st.att<-10? npc.greetBad : npc.greet0;
     st.met=true;
     if(S.mode==='offroad'&&OFF.ready()){ return talkOff(nid, greet); }

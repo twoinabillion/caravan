@@ -180,7 +180,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 811종', r4['eventCount'] == 811, str(r4['eventCount']))
+    check('이벤트 821종', r4['eventCount'] == 821, str(r4['eventCount']))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('빈자리 카드는 하나만 표시', r4['emptyCards'] == 1, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
@@ -208,7 +208,7 @@ with sync_playwright() as p:
       out.dailyLimit = !G.talkTo('minji');                                 // 하루 1회 제한
       return out;
     }''')
-    check('대화 이벤트 194종', r5['talkCount'] == 194, str(r5['talkCount']))
+    check('대화 이벤트 195종', r5['talkCount'] == 195, str(r5['talkCount']))
     # 티키타카(연속 잡담)
     r6 = pg.evaluate('''() => {
       const out = {};

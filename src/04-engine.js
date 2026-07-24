@@ -842,9 +842,12 @@ G.fixRadio = ()=>{
   G.save(); return true;
 };
 G.pickRadio = ()=>{
-  const night=G.isNight();
+  const night=G.isNight(), region=G.regionOf();
   const pool=D.radioTexts.filter(r=>{
     if(r.night===1&&!night) return false;
+    if(r.flag&&!S.flags[r.flag]) return false;
+    if(r.noFlag&&S.flags[r.noFlag]) return false;
+    if(r.region&&r.region!==region) return false;
     if(lastRadio===r.key) return false;
     return true; });
   if(!pool.length) return null;
