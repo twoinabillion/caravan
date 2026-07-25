@@ -158,6 +158,15 @@ G.queueStory = (id)=>{
   if(!S||!id||S.used.includes(id)||S._storyQueue.includes(id)) return;
   S._storyQueue.push(id);
 };
+/* 핵심 여정 장면은 무작위 풀과 경쟁하지 않는다. 주행거리 문턱을 넘긴 뒤
+   다음 도착에서 한 장면만 예약해, 길 위의 호흡을 끊지 않고 본편을 되짚는다. */
+G.scheduleJourneyBeat = ()=>{
+  if(!S||!D.journeyBeats) return null;
+  const beat=D.journeyBeats.find(b=>S.stats.km>=b.km
+    && !S.used.includes(b.id) && !S._storyQueue.includes(b.id));
+  if(beat) G.queueStory(beat.id);
+  return beat&&beat.id;
+};
 G.popStory = ()=>{
   while(S&&S._storyQueue&&S._storyQueue.length){
     const id=S._storyQueue.shift(), ev=D.events.find(e=>e.id===id);
@@ -522,6 +531,10 @@ G.reqOk = (req)=>{
     return {ok:false, t:`퍼크 「${p?p.nm:req.perk}」 필요`}; }
   if(req.flagMin && (S.flags[req.flagMin[0]]||0) < req.flagMin[1]) return {ok:false, t:'아직 단골이 아니다'};
   if(req.flag && !S.flags[req.flag]) return {ok:false, t:'해당 사항 없음'};
+  if(req.traces && G.traceCount()<req.traces) return {ok:false, t:`세대의 흔적 ${req.traces}개 필요`};
+  if(req.party && S.party.length<req.party) return {ok:false, t:`동료 ${req.party}명 필요`};
+  if(req.stories && G.deedsDone().filter(d=>d.cat==='동료').length<req.stories)
+    return {ok:false, t:`개인 서사 ${req.stories}개 필요`};
   if(req.comp && !G.hasComp(req.comp)) return {ok:false, t:`${D.comps[req.comp].name} 필요`};
   if(req.up && !(S.up&&S.up[req.up])) return {ok:false, t:`${(G.upDef(req.up)||{nm:req.up}).nm} 필요`};
   if(req.dog && !S.dog) return {ok:false, t:'보리가 없다'};
@@ -537,6 +550,9 @@ G.reqText = (req)=>{
   if(!req) return '';
   const parts=[];
   if(req.perk){ const p=G.perkDef(req.perk); parts.push(`퍼크: ${p?p.nm:req.perk}`); }
+  if(req.traces) parts.push(`세대의 흔적 ${G.traceCount()}/${req.traces}`);
+  if(req.party) parts.push(`동료 ${S.party.length}/${req.party}`);
+  if(req.stories) parts.push(`개인 서사 ${G.deedsDone().filter(d=>d.cat==='동료').length}/${req.stories}`);
   if(req.comp) parts.push(`동료: ${D.comps[req.comp].name}`);
   if(req.item) parts.push(`아이템: ${req.item}${req.item2?'+'+req.item2:''}`);
   if(req.scrap) parts.push(`고철 ${req.scrap}`);
@@ -580,6 +596,7 @@ G.arrive = ()=>{
     const n = D.nodes[to];
     G.addNote({type:'장소', title:n.name, body:`DAY ${S.day} 도착. ${n.desc}`, links:[]});
   }
+  G.scheduleJourneyBeat();
   if(to==='seoul'){
     if(S.flags.seoul_open){ UI.renderAll(); G.save(); return; }  // 이미 열림 — 서울 맵
     if(G.seoulReady()){                                          // 조건 충족 → 남산이 열린다
@@ -606,7 +623,11 @@ G.arrive = ()=>{
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   const arrivalDelay=UI.onArrive();
   if(loc){ setTimeout(()=>G.openEvent(loc), arrivalDelay); }
-  else if(!G.maybeCrisis() && n.stl){ /* settlement panel via UI */ }
+  else if(!G.maybeCrisis()){
+    const queued=G.popStory();
+    if(queued) setTimeout(()=>G.openEventById(queued), arrivalDelay);
+    else if(n.stl){ /* settlement panel via UI */ }
+  }
   G.save();
 };
 
@@ -819,10 +840,14 @@ G.deedDone = (d)=>{
   return false;
 };
 G.deedsDone = ()=> D.deeds.filter(G.deedDone);
-/* 네 기둥 진척 — 어느 하나도 건너뛸 수 없다 */
+G.traceCount = ()=> !S?0:(D.eraTraces||[]).filter(t=>S.flags[t.flag]).length;
+G.traceNames = ()=> !S?[]:(D.eraTraces||[]).filter(t=>S.flags[t.flag]).map(t=>t.name);
+G.fullCrewStories = ()=> !S?false:Object.keys(D.comps).every(id=>
+  G.hasComp(id)&&(S.comps[id]||{}).lvl>=3);
+/* 네 기둥 진척 — 관계는 선택한 네 사람으로 성립하고, 전원 완주는 선택 보상이다 */
 G.pillars = ()=>{
   const done = G.deedsDone();
-  const nComp = Object.keys(D.comps).length;   // 6
+  const relationNeed = D.seoulPillars.관계;
   const storyDone = done.filter(d=>d.cat==='동료').length;
   /* 아직 못 만났거나 개인 서사가 덜 열린 동료 하나 (관계 힌트용) */
   const miss = Object.keys(D.comps).find(c=>!G.hasComp(c));
@@ -838,10 +863,10 @@ G.pillars = ()=>{
     : '첫 침묵·작성자·상행선의 관계 확인';
   const worldN=S.flags.resist_revealed?G.cellsLinked().length:0;
   return {
-    관계: { have: storyDone, need: nComp,
+    관계: { have: storyDone, need: relationNeed,
             hint: miss? `${D.comps[miss].name}를 아직 못 만났다 — ${D.compWhere[miss].split(' —')[0]}`
               : shallow? `${D.comps[shallow].name}와 더 깊어져 개인 서사 Lv.3 열기`
-              : '여섯 사람의 개인 서사를 끝까지 듣기' },
+              : '함께 갈 네 사람의 개인 서사를 끝까지 듣기' },
     세계: { have: worldN, need: D.seoulPillars.세계,
             hint:S.flags.resist_revealed?'저항 거점을 이어 세상 편이 되기':'중부 국도에서 이음망과 먼저 접선하기' },
     진실: { have: truthN, need: D.seoulPillars.진실,

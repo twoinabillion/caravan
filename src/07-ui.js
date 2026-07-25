@@ -74,6 +74,12 @@ const UI = (()=>{
 
   /* ── wiring ── */
   function wire(){
+    /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
+    document.addEventListener('keydown',e=>{
+      const b=e.target.closest&&e.target.closest('[role="button"]');
+      if(!b||b.tagName==='BUTTON'||(e.key!=='Enter'&&e.key!==' ')) return;
+      e.preventDefault(); b.click();
+    });
     $('#bt-new').onclick=()=>{ show('scr-mode'); envCheckUI(); };
     const bs=$('#bt-song');
     if(bs){ if(!(D.bgm&&D.bgm.song)) bs.style.display='none'; else bs.onclick=()=>BGM.toggleSong(); }
@@ -827,18 +833,31 @@ const UI = (()=>{
       h+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
     });
     h+=`</div>`;
-    /* 관계 — 동료 전원 개인 서사 Lv.3 (미합류는 지역 힌트) */
+    /* 관계 — 선택한 네 사람으로 관문이 열리고, 전원 완주는 추가 증언이 된다 */
     Object.keys(D.comps).forEach(id=>{
       const c=D.comps[id], got=G.hasComp(id), deep=got&&(S.comps[id]||{}).lvl>=3;
       const state=!got?('찾는 중 — '+D.compWhere[id].split(' —')[0])
         : deep?`★ 「${c.perks[3].nm}」`:`Lv.${S.comps[id].lvl} · 유대 ${S.comps[id].bond}`;
       h+=`<div class="st-row" style="${got?'':'opacity:.55'}"><span class="k">${deep?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${deep?'var(--ok)':'var(--faded)'}">${state}</span></div>`;
     });
+    const allStories=G.fullCrewStories();
+    h+=`<div class="csub" style="margin:7px 0 3px;color:${allStories?'var(--ok)':'var(--faded)'}">
+      ${allStories?'★ 여섯 사람의 증언 완성 — 남산에서 추가 회수':'관계 4명으로 남산 진입 · 6명 전원은 추가 증언과 에필로그'}
+    </div>`;
     /* 회수템 */
     D.deeds.filter(d=>d.cat==='회수').forEach(d=>{ const ok=G.deedDone(d);
       h+=`<div class="st-row"><span class="k">${ok?'✓':'✉'} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':d.hint}</span></div>`;
     });
     h+=`</div>`;
+    /* 세대의 흔적 — 발견 뒤에만 나타나는 선택형 기억 장부 */
+    const traceN=G.traceCount();
+    if(traceN){
+      h+=`<div class="st-sec"><h4>▧ 세대의 흔적 <small style="color:var(--faded);font-weight:400">${traceN}/${D.eraTraces.length} · 남산 입장 필수 아님</small></h4>`;
+      D.eraTraces.filter(t=>S.flags[t.flag]).forEach(t=>{
+        h+=`<div class="st-row"><span class="k">✓ ${t.name}</span><span class="v" style="flex:1;font-size:11.5px;color:var(--faded)">${t.era} · ${t.desc}</span></div>`;
+      });
+      h+=`<div class="csub" style="margin-top:7px">${traceN>=5?'코어 앞에서 이 흔적들을 증언할 수 있다.':'다섯 흔적을 모으면 코어 앞에서 별도의 증언이 열린다.'}</div></div>`;
+    }
     /* 저항 연대망 — 계시 이후에만 표시 */
     if(S.flags.resist_revealed){
       const linked=G.cellsLinked().length, total=D.resistance.length;

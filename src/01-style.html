@@ -64,7 +64,7 @@ input{font-family:inherit}
   background:linear-gradient(90deg,transparent,rgba(255,180,84,.4),transparent)}
 #gauges{display:flex;gap:10px;align-items:stretch}
 .g{flex:1;min-width:0}
-.g .lab{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--dim);display:flex;justify-content:space-between}
+.g .lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--faded);display:flex;justify-content:space-between}
 .g .val{font-family:var(--mono);font-size:13.5px;font-variant-numeric:tabular-nums;margin:1px 0 3px;white-space:nowrap}
 .g .bar{height:3px;background:#0a0d18;border-radius:2px;overflow:hidden}
 .g .bar i{display:block;height:100%;background:var(--amber);border-radius:2px;transition:width .4s}
@@ -109,7 +109,7 @@ input{font-family:inherit}
 #dock{position:absolute;left:0;right:0;bottom:0;display:flex;background:rgba(10,13,24,.94);
   border-top:1px solid var(--line);backdrop-filter:blur(8px);
   padding-bottom:env(safe-area-inset-bottom);z-index:10}
-#dock button{flex:1;padding:9px 0 8px;font-size:10.5px;color:var(--faded);display:flex;
+#dock button{flex:1;padding:9px 0 8px;font-size:11.5px;color:var(--faded);display:flex;
   flex-direction:column;align-items:center;gap:2px;letter-spacing:.04em}
 #dock button .dic{font-size:16px;line-height:1}
 #dock button.here{color:var(--amber)}
@@ -196,7 +196,7 @@ input{font-family:inherit}
 /* status */
 #st-body{flex:1;overflow-y:auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom))}
 .st-sec{margin-bottom:16px}
-.st-sec h4{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--amber-dim);margin-bottom:8px}
+.st-sec h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--amber-dim);margin-bottom:8px}
 .st-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px}
 .st-row:last-child{border-bottom:none}
 .st-row .k{color:var(--faded);flex:none;width:88px;font-size:12px}
@@ -243,7 +243,7 @@ input{font-family:inherit}
 .jchip.here{color:var(--amber);border-color:var(--amber-dim)}
 .note{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:9px;background:var(--panel)}
 .note .nh{display:flex;gap:7px;align-items:baseline;margin-bottom:3px}
-.note .nt{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;padding:1px 6px;border-radius:4px;
+.note .nt{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;padding:1px 6px;border-radius:4px;
   border:1px solid var(--line);color:var(--faded)}
 .note .nt.인물{color:#e8a0bf;border-color:#5d3c4d}.note .nt.장소{color:#8fc7ff;border-color:#33507a}
 .note .nt.사건{color:var(--amber);border-color:#6b5527}.note .nt.소문{color:#c9b8ff;border-color:#4d4370}
@@ -351,7 +351,7 @@ input{font-family:inherit}
 .pcard .pf{width:24px;height:24px;border-radius:7px;background:#0a0d18;display:flex;align-items:center;
   justify-content:center;font-size:13px;border:1px solid var(--line)}
 .pcard .pm{font-family:var(--mono);font-size:10px;color:var(--faded)}
-.pcard .plv{font-family:var(--mono);font-size:9px;color:var(--amber)}
+.pcard .plv{font-family:var(--mono);font-size:10px;color:var(--amber)}
 .pimg{width:100%;height:100%;object-fit:cover;border-radius:inherit;image-rendering:pixelated;display:block}
 .ico{width:13px;height:13px;vertical-align:-2px;image-rendering:pixelated;margin-right:3px;display:inline-block}
 .ico.big{width:16px;height:16px;vertical-align:-3px}
