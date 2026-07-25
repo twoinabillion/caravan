@@ -100,7 +100,7 @@ ending with a calm downward intonation. Flawlessly clean, clinical delivery.
 | `cheollian_11` | 목적지에서 뵙겠습니다. |
 | `cheollian_12` | 안전 운행 하십시오. |
 | `cheollian_13` | 아직입니다. 전부 싣고 오세요. |
-| `cheollian_14` | 좋은 아침입니다. *(2막용 예비)* |
+| `cheollian_14` | 좋은 아침입니다. *(현재 미사용 예비)* |
 | `radio_cheollian` | …정기 안내 방송입니다. 이동 중인 시민께서는 안전한 경로를 이용하시기 바랍니다. 좋은 하루 되십시오. |
 
 ---

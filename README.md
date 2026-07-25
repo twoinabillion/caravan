@@ -47,7 +47,7 @@ tests/   test_smoke.py
 assets/  portraits·icons·audio 원본
 ```
 
-설계 원칙·2막 떡밥·로드맵은 [docs/DESIGN.md](docs/DESIGN.md) 참고.
+설계 원칙·엔딩 구조·로드맵은 [docs/DESIGN.md](docs/DESIGN.md) 참고.
 
 ---
 

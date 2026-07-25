@@ -554,10 +554,10 @@ const UI = (()=>{
       h+=`<button class="act primary" id="seoul-go"><span class="ic">▲</span><span><b>${stops[stage].name}(으)로 오른다</b><small>${stage===0?'서울 안으로':'다음 정거장'}</small></span></button>`;
     } else {
       const cn=S.notes?S.notes.length:0, pn=S.party.length, dg=S.dog?' + 보리':'';
-      h+=`<div class="sub" style="text-align:center;padding:14px 0">〔 1막 「조수석의 무게」 완주 〕<br>
+      h+=`<div class="sub" style="text-align:center;padding:14px 0">〔 서울까지 400km 완주 〕<br>
         <small style="color:var(--faded)">DAY ${S.day} · ${Math.round(S.stats.km)}km · 동료 ${pn}명${dg} · 기록 ${cn}개</small><br>
         <small style="color:var(--faded)">부산의 폐차장에서 남산의 밤까지, 여기 적힌 전부가 우리가 실어온 것이다.</small><br>
-        <small style="color:var(--faded)">여기서부터는 아직 쓰이지 않았다. 2막 「보관된 것들」에서 계속됩니다.</small></div>
+        <small style="color:var(--faded)">추방의 이유는 빈칸으로 남았지만, 같은 정리는 오늘 끝났다.</small></div>
         <button class="act" id="seoul-journal"><span class="ic">✎</span><span><b>여행 일지를 연다</b><small>411km의 기록을 처음부터</small></span></button>`;
     }
     h+='</div>';

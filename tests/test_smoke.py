@@ -413,7 +413,7 @@ with sync_playwright() as p:
     check('상행선 단서 없으면 진실 기둥 잠김', r7['truthLocked'], str(r7))
     check('영입 시 다음 동료 자동 안내 없음', not r7['refer'])
 
-    # 1막 엔딩: 코어 고백 → 실제 집행 선택 → 에필로그
+    # 최종 엔딩: 코어 고백 → 실제 집행 선택 → 완결 에필로그
     r8 = pg.evaluate('''() => { const out = {};
       const core = D.seoulStops.find(e => e.id === 'seoul_core');
       out.coreToDecision = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_decision'));
@@ -440,9 +440,11 @@ with sync_playwright() as p:
       out.familyQuestion = envelope.out[0].text.includes('증조모') &&
         envelope.out[0].text.includes('사유: —');
       const epText = ep.text({flags:{core_transfer:true}, party:[]});
-      out.facelessRoute = epText.includes('발신자: 미기재 / 승인자: 미기재') &&
-        epText.includes('책임 주체 식별자가 없습니다') &&
-        !epText.includes('반올림하면');
+      const epOut = ep.choices.map(c => c.out[0].text({flags:{core_transfer:true}, party:[]}));
+      out.subtleClue = epOut.every(t => t.includes('KOR-LOCAL 처리 결과 수신') &&
+        t.includes('후속 목록: 없음') && t.includes('〔 서울까지 400km — 끝 〕')) &&
+        epOut.every(t => !t.includes('2막') && !t.includes('응답 모형') && !t.includes('다음 목적지'));
+      out.storyDone = ep.choices.every(c => c.out[0].fx.flag === 'story_done');
       S._chain = null; G.applyFx({chain:'seoul_decision'});
       out.chainSet = S._chain === 'seoul_decision'; S._chain = null;
       S.flags.seoul_core_reached = true;
@@ -458,7 +460,7 @@ with sync_playwright() as p:
     check('세대별 추방 기억·남쪽 태생 명시', r8['generations'])
     check('할아버지 집안의 빈 사유표 회수', r8['familyQuestion'])
     check('세 처분의 대가가 서로 다름', r8['distinctCosts'])
-    check('상행선은 발신자 없는 행정 경로', r8['facelessRoute'])
+    check('완결 뒤 상행선은 짧은 수신 흔적만 남김', r8['subtleClue'] and r8['storyDone'])
     check('결정·에필로그 존재+noPool', r8['ep'] and r8['chainNotInPool'], str(r8))
     check('fx.chain → S._chain 세팅', r8['chainSet'])
     check('은수 필수 단서 큐 등록·회수', r8['storyQueued'], str(r8))

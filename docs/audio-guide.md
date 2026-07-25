@@ -86,7 +86,7 @@ bittersweet — grief and gratitude at the same time
 ## 선택 트랙 (여유 있으면)
 
 - `rain` — 비/폭풍 주행 변주: `[공통] + drive_day 구조에 rain-on-windshield 질감, darker pads, 88bpm`
-- `gate` — 남산/2막용 (지금은 story가 대신함): `[공통] + vast, sacred-adjacent synth choir pads, sub bass, 60bpm, awe and dread`
+- `gate` — 남산 코어용 (지금은 story가 대신함): `[공통] + vast, sacred-adjacent synth choir pads, sub bass, 60bpm, awe and dread`
 
 ## 게임 연동 (이미 배선 완료 — v1.7)
 
