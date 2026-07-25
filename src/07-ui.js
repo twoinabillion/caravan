@@ -27,7 +27,7 @@ const UI = (()=>{
     SCENE.initTitle($('#titlecv'));
     MAPR.init($('#mapcv'));
     MAPR.initMini($('#minimap'));
-    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); };
+    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     GRAPH.init($('#graphcv'));
     wire();
     applyIcons();
@@ -64,7 +64,7 @@ const UI = (()=>{
       if(screen==='game'){
         SCENE.draw(dt);
         MAPR.drawMini(dt);
-        hudCd-=dt; if(hudCd<=0){ hudCd=0.25; renderHud(); if(S&&S.driving) renderTravelbar(); }
+        hudCd-=dt; if(hudCd<=0){ hudCd=0.25; renderHud(); renderMission(); if(S&&S.driving) renderTravelbar(); }
         if($('#ovl-map').classList.contains('on')) MAPR.draw(dt);
         if($('#jgraphwrap').classList.contains('on')) GRAPH.draw(dt);
       }
@@ -104,11 +104,12 @@ const UI = (()=>{
       if(r.ok){ setTimeout(()=>startNew('offroad'), 600); }
     };
     $('#scr-intro').onclick=()=>nextIntro();
-    $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); };
+    $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>G.camp();
     $('#dk-sound').onclick=()=>SND.toggle();
     $('#dk-status').onclick=()=>{ toggleOvl('#ovl-status'); renderStatus(); };
+    $('#mission-strip').onclick=()=>{ toggleOvl('#ovl-status'); stTab='journey'; renderStatus(); };
     $('#st-x').onclick=()=>closeOvl('#ovl-status');
     $('#map-x').onclick=()=>closeOvl('#ovl-map');
     $('#j-x').onclick=()=>closeOvl('#ovl-journal');
@@ -120,6 +121,10 @@ const UI = (()=>{
       $('#jp-log').classList.toggle('on',!g);
       $('#jgraphwrap').classList.toggle('on',g);
       if(g){ GRAPH.build(); }
+    });
+    document.querySelectorAll('#st-tabs button').forEach(b=>b.onclick=()=>{
+      stTab=b.dataset.st;
+      renderStatus();
     });
   }
   async function envCheckUI(){
@@ -188,6 +193,45 @@ const UI = (()=>{
     eye.innerHTML = `${ICO('pursuit','◉'.repeat(Math.min(S.pursuit,5)))} 관측 ${S.pursuit}`;
   }
 
+  function missionHtml(){
+    const q=S.quest;
+    const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1);
+    let kicker, title, state, meta, pct;
+    if(q){
+      const K=G.QKIND[q.kind]||G.QKIND.deliver;
+      kicker=`${K.nm} · 진행 중`;
+      title=G.questLabel(q);
+      if(q.kind==='procure'){
+        const have=S.items[q.need.name]||0;
+        state=`${q.need.name} ${have}/${q.need.qty} · ${D.nodes[q.to].name}에서 전달`;
+        pct=Math.min(100,have/q.need.qty*100);
+      } else {
+        state=`목적지 ${D.nodes[q.to].name} · 사례 고철 ${q.reward}`;
+        pct=S.at===q.to?100:S.driving&&S.driving.to===q.to?Math.min(95,S.driving.gone/S.driving.dist*100):24;
+      }
+      meta=G.questReady()?'전달 가능':`D-${Math.max(0,q.due-S.day)}`;
+    } else {
+      kicker='본편 · 북쪽으로';
+      title=S.driving?`${D.nodes[S.driving.to].name}(으)로 이동 중`:`서울까지 약 ${G.remainKm()}km`;
+      state=S.flags.ai_identified?'사유가 지워진 143년의 추방을 남산에서 묻는다':'천리안이 왜 길을 지켜보는지 단서를 모은다';
+      meta=`DAY ${S.day}`;
+      pct=Math.max(0,Math.min(100,(411-G.remainKm())/411*100));
+    }
+    const risk=`연료 ${Math.floor(S.fuel)}L · 피로 ${Math.floor(S.fatigue)}% · 관측 ${S.pursuit}/5`;
+    return {danger, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
+      <span class="ms-meta">${meta}<br><small>${risk}</small></span>
+      <span class="ms-state">${state}</span><span class="ms-progress"><i style="width:${pct}%"></i></span>`};
+  }
+  function renderMission(){
+    if(!S) return;
+    const m=missionHtml();
+    ['#mission-strip','#map-mission'].forEach(sel=>{
+      const node=$(sel); if(!node) return;
+      node.innerHTML=m.html;
+      node.classList.toggle('danger',m.danger);
+    });
+  }
+
   /* ── panel ── */
   function faceOf(id, fallback){
     return D.portraits[id]? `<img class="pimg" src="${D.portraits[id]}" alt="">` : fallback;
@@ -229,15 +273,13 @@ const UI = (()=>{
         <h3>${to.name}(으)로 이동 중</h3>
         <div class="sub">${to.desc}</div>
         ${partyStrip()}
-        ${S.quest?`<div class="sub">${(G.QKIND[S.quest.kind]||G.QKIND.deliver).ic} ${G.questLabel(S.quest)} → ${D.nodes[S.quest.to].name} <span style="color:var(--amber)">고철 ${S.quest.reward}</span> <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></div>`:''}
         <div class="sub" style="margin-top:6px">길 위에서는 무슨 일이든 일어난다. 발견도, 사람도, 그것의 눈도.</div>`;
       renderTravelbar();
       wireParty(p);
       return;
     }
     const n=D.nodes[S.at];
-    let h=`<h3>${n.name}</h3><div class="sub">${n.desc}</div>${partyStrip()}
-      ${S.quest?`<div class="sub" style="margin:-4px 0 10px">${(G.QKIND[S.quest.kind]||G.QKIND.deliver).ic} ${G.questLabel(S.quest)} → ${D.nodes[S.quest.to].name} <span style="color:var(--amber)">고철 ${S.quest.reward}</span> <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></div>`:''}<div class="acts">`;
+    let h=`<h3>${n.name}</h3><div class="sub">${n.desc}</div>${partyStrip()}<div class="acts">`;
     if(n.stl) h+=`<button class="act primary" data-a="stl"><span class="ic">🏘</span><span><b>정착지에 들어간다</b><small>거래 · 대화 · 소문</small></span></button>`;
     if(!n.stl && n.type!=='goal') h+=`<button class="act" data-a="explore"><span class="ic">🔦</span><span><b>주변을 탐색한다</b><small>약 1~2시간 · 무엇이 나올지 모른다</small></span></button>`;
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
@@ -278,7 +320,7 @@ const UI = (()=>{
       <span>${D.nodes[d.to].name.split(' ')[0]}</span></div>
       <div class="tr"><i style="width:${f*100}%"></i><div class="van-dot" style="left:${f*100}%"></div></div>`;
   }
-  function renderAll(){ renderHud(); renderPanel(); }
+  function renderAll(){ renderHud(); renderMission(); renderPanel(); }
 
   /* ── travel hooks ── */
   function onDepart(){ closeOvl('#ovl-map'); closeOvl('#ovl-stl'); renderAll();
@@ -369,8 +411,10 @@ const UI = (()=>{
     const portraitKey=D.eventPortraits&&D.eventPortraits[evd.id];
     const portrait=portraitKey&&D.portraits[portraitKey]
       ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
+    const context=D.storyContext&&D.storyContext[evd.id]
+      ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
     let h=`${scene}<div class="event-head">${portrait}<div><div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
-      <h2>${evd.title}</h2></div></div><div class="body">${fmt(text)}</div><div class="choices">`;
+      <h2>${evd.title}</h2></div></div>${context}<div class="body">${fmt(text)}</div><div class="choices">`;
     evd.choices.forEach((c,i)=>{
       const rq=G.reqOk(c.req);
       h+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
@@ -516,7 +560,7 @@ const UI = (()=>{
   }
 
   /* ── SETTLEMENT ── */
-  let curStl=null, chatNpc=null, stlQuests=null;
+  let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel';
   function showStl(stlId){
     curStl=stlId;
     const stl=D.stls[stlId];
@@ -639,17 +683,36 @@ const UI = (()=>{
     const g=$('#garage'); if(!g) return;
     const repCost=G.hasComp('minji')?6:8;
     const canRep=S.van<S.vanMax-5&&S.scrap>=repCost;
-    g.innerHTML = `<div class="trade-row"><span class="tn">🔧 <b>수리</b><br><small style="color:var(--faded)">내구 +30${G.hasComp('minji')?' · 민지 할인':''}</small></span>
-        <span class="tp">고철 ${repCost}</span>
-        <button class="tbtn" data-rep="1" ${canRep?'':'disabled'}>${S.van>=S.vanMax-5?'양호함':'수리'}</button></div>`
-      + D.upgrades.map(u=>{
+    const groups=D.upgradeGroups||[];
+    let group=groups.find(x=>x.id===garageGroup)||groups[0];
+    garageGroup=group.id;
+    const ownedN=group.ids.filter(id=>S.up[id]).length;
+    const art=D.upgradeArt&&D.upgradeArt[group.id];
+    const upgrades=group.ids.map(id=>G.upDef(id)).filter(Boolean);
+    g.innerHTML = `<div class="garage-repair">
+        <span><b>차체 정비</b><small>내구 +30${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}</small></span>
+        <span class="uc-cost">고철 ${repCost}</span>
+        <button class="tbtn" data-rep="1" ${canRep?'':'disabled'}>${S.van>=S.vanMax-5?'양호':'수리'}</button>
+      </div>
+      <div class="garage-tabs">${groups.map(x=>{
+        const n=x.ids.filter(id=>S.up[id]).length;
+        return `<button class="${x.id===garageGroup?'here':''}" data-ug="${x.id}">${x.nm} ${n}/${x.ids.length}</button>`;
+      }).join('')}</div>
+      <div class="upgrade-group">
+        <div class="upgrade-group-hero">${art?`<img src="${art}" alt="${group.nm} 부품 작업대">`:''}
+          <div class="upgrade-group-copy"><b>${group.nm}</b><small>${group.sub}<br>${ownedN}/${group.ids.length} 장착</small></div>
+        </div>
+        <div class="upgrade-list">${upgrades.map(u=>{
       const owned=S.up[u.id];
       const chk=G.canBuyUp(u.id);
       const cost=`고철 ${u.cost.scrap}${u.cost.parts?' + 부품 '+u.cost.parts:''}`;
-      return `<div class="trade-row"><span class="tn">${u.ic} <b>${u.nm}</b><br><small style="color:var(--faded)">${u.d}</small></span>
-        <span class="tp">${owned?'—':cost}</span>
-        <button class="tbtn" data-up="${u.id}" ${owned||!chk.ok?'disabled':''}>${owned?'장착됨':chk.ok?'장착':chk.why}</button></div>`;
-    }).join('');
+      return `<div class="upgrade-card ${owned?'owned':''}">
+        <span><span class="uc-title">${u.ic} ${u.nm}</span><small class="uc-desc">${u.d}</small></span>
+        <span class="uc-cost">${owned?'장착 완료':cost}</span>
+        <button class="tbtn" data-up="${u.id}" title="${chk.why||''}" ${owned||!chk.ok?'disabled':''}>${owned?'완료':chk.ok?'장착':'잠김'}</button>
+      </div>`;
+    }).join('')}</div></div>`;
+    g.querySelectorAll('[data-ug]').forEach(b=>b.onclick=()=>{ garageGroup=b.dataset.ug; renderGarage(); });
     g.querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{
       if(G.buyUpgrade(b.dataset.up)){ renderGarage(); renderTrade(); renderHud();
         const ts=$('#tr-scrap'); if(ts) ts.textContent=S.scrap; }
@@ -788,8 +851,10 @@ const UI = (()=>{
   function renderMapMini(){ $('#map-mini').textContent=`발견 ${S.known.length}/${Object.keys(D.nodes).length} · 서울까지 약 ${G.remainKm()}km`; }
 
   /* ── STATUS ── */
+  let stTab='now';
   function renderStatus(){
     $('#st-mini').textContent=`DAY ${S.day} · ${Math.round(S.stats.km)}km`;
+    document.querySelectorAll('#st-tabs button').forEach(x=>x.classList.toggle('here',x.dataset.st===stTab));
     const b=$('#st-body');
     const bar=(v,m,warn)=>`<div class="bar"><i style="width:${clamp(v/m*100,0,100)}%${warn?';background:var(--danger)':''}"></i></div>`;
     const kmPerL=(100/G.fuelFor(100,'normal')).toFixed(1);
@@ -797,95 +862,96 @@ const UI = (()=>{
     const knownN=S.known.filter(id=>!D.nodes[id].secret).length;
     const totalN=Object.keys(D.nodes).filter(id=>!D.nodes[id].secret).length;
     const stlVisited=Object.keys(D.stls).filter(sid=>S.visited.some(v=>D.nodes[v].stl===sid)).length;
-    let h='';
-    /* 운전사 */
     const dlv=G.driverLv(), dNext=D.driverLv[dlv+1];
-    h+=`<div class="st-sec"><h4>🧑‍✈️ 운전사</h4>
+    const installed=D.upgrades.filter(u=>S.up[u.id]);
+    const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
+    const m=missionHtml();
+
+    let now=`<div class="st-summary">
+      <div class="st-metric ${S.fuel<10?'warn':''}"><span class="mk">연료</span><span class="mv">${Math.floor(S.fuel)}L</span></div>
+      <div class="st-metric ${S.fatigue>=75?'warn':''}"><span class="mk">피로</span><span class="mv">${Math.floor(S.fatigue)}%</span></div>
+      <div class="st-metric ${supplyDays<=1?'warn':''}"><span class="mk">보급</span><span class="mv">${supplyDays}일</span></div>
+    </div>
+    <div class="mission-strip ${m.danger?'danger':''}" style="border:1px solid var(--line);border-radius:10px;margin-bottom:11px">${m.html}</div>
+    <div class="st-sec"><h4>운전사</h4>
       <div class="st-row"><span class="k">나</span><span class="v" style="flex:1">Lv.${dlv} 「${G.driverTitle()}」 <small style="color:var(--faded)">연비 -${dlv*2}% · 피로 -${dlv*7}%</small></span></div>
       ${dNext?`<div class="st-row"><span class="k">다음 숙련</span>${bar(S.stats.km-D.driverLv[dlv].km, dNext.km-D.driverLv[dlv].km)}<span class="v">${Math.round(S.stats.km)}/${dNext.km}km</span></div>`:''}
       <div class="st-row"><span class="k">피로 ${ICO('fatigue_'+G.fatigueStage(), G.fatigueFace())}</span>${bar(S.fatigue,100,S.fatigue>=75)}<span class="v">${Math.floor(S.fatigue)}%</span></div>
-      <div class="csub">피로 85%↑ 주행 시 졸음이 온다. 야영·숙박으로 회복.</div></div>`;
-    /* 달구지 */
-    h+=`<div class="st-sec"><h4>🚐 달구지 1호</h4>
+      <div class="csub">85%부터 졸음 위험. 야영이나 숙박으로 회복한다.</div></div>
+    <div class="st-sec"><h4>달구지 1호</h4>
       <div class="st-row"><span class="k">내구도</span>${bar(S.van,S.vanMax,S.van<25)}<span class="v">${Math.floor(S.van)}/${S.vanMax}</span></div>
       <div class="st-row"><span class="k">연료</span>${bar(S.fuel,S.fuelMax,S.fuel<10)}<span class="v">${Math.floor(S.fuel)}/${S.fuelMax}L</span></div>
       <div class="st-row"><span class="k">연비</span><span class="v" style="flex:1">${kmPerL} km/L ${S.wx!=='clear'?`<small style="color:var(--faded)">(${D.wx[S.wx].nm} 반영)</small>`:''}</span></div>
       <div class="st-row"><span class="k">좌석</span><span class="v" style="flex:1">${S.party.length} / ${G.maxParty()}${S.dog?' + 보리':''}</span></div>
-      <div style="margin-top:8px" class="upchips">${D.upgrades.map(u=>
-        `<span class="upchip ${S.up[u.id]?'':'off'}">${u.ic} ${u.nm}</span>`).join('')}</div>
-      <div class="csub" style="margin-top:7px">개조는 정착지 정비소에서. 장착하면 달구지 겉모습도 바뀐다.</div></div>`;
-    /* 보급 */
-    h+=`<div class="st-sec"><h4>🎒 보급</h4>
+      <div class="csub" style="margin-top:7px">장착 ${installed.length}/${D.upgrades.length}</div>
+      <div style="margin-top:7px" class="upchips">${installed.length?installed.map(u=>
+        `<span class="upchip">${u.ic} ${u.nm}</span>`).join(''):'<span class="upchip off">아직 장착한 부품 없음</span>'}</div></div>
+    <div class="st-sec"><h4>보급</h4>
       <div class="st-row"><span class="k">${ICO('water')}물</span><span class="v" style="flex:1">${S.water} <small style="color:var(--faded)">≈ ${Math.floor(S.water/perDay)}일치</small></span></div>
       <div class="st-row"><span class="k">${ICO('food')}식량</span><span class="v" style="flex:1">${S.food} <small style="color:var(--faded)">≈ ${Math.floor(S.food/perDay)}일치</small></span></div>
       <div class="st-row"><span class="k">${ICO('scrap')}고철</span><span class="v" style="flex:1">${S.scrap}</span></div>
       <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k} ${S.items[k]||0}`).join(' · ')}</span></div>
-      ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}
-      ${S.quest?`<div class="st-row"><span class="k">${(G.QKIND[S.quest.kind]||G.QKIND.deliver).ic}의뢰</span><span class="v" style="flex:1">${G.questLabel(S.quest)} → ${D.nodes[S.quest.to].name} <span style="color:${S.quest.due-S.day<=1?'var(--danger)':'var(--faded)'}">D-${Math.max(0,S.quest.due-S.day)}</span></span></div>`:''}</div>`;
-    /* 여정 */
-    h+=`<div class="st-sec"><h4>🧭 여정</h4>
+      ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}</div>`;
+
+    let journey=`<div class="st-sec"><h4>여정</h4>
       <div class="st-row"><span class="k">날짜 / 주행</span><span class="v" style="flex:1">DAY ${S.day} · ${Math.round(S.stats.km)}km · 서울까지 약 ${G.remainKm()}km</span></div>
       <div class="st-row"><span class="k">이벤트</span><span class="v" style="flex:1">${S.stats.events}건</span></div>
       <div class="st-row"><span class="k">발견</span>${bar(knownN,totalN)}<span class="v">${knownN}/${totalN}</span></div>
       <div class="st-row"><span class="k">정착지</span><span class="v" style="flex:1">${stlVisited}/${Object.keys(D.stls).length} 방문</span></div>
       <div class="st-row"><span class="k">${ICO('pursuit')}천리안 관측</span><span class="v" style="flex:1;color:${S.pursuit>2?'var(--danger)':'inherit'}">${'◉'.repeat(S.pursuit)||'—'} (${S.pursuit}/5)</span></div>
-      ${S.flags.seoulTries?`<div class="st-row"><span class="k">남산 시도</span><span class="v" style="flex:1;color:var(--cheollian)">${S.flags.seoulTries}회 — "아직입니다"</span></div>`:''}</div>`;
-    /* 여정 장부 — 서울은 싣고 온 것이 있어야 열린다 */
+      ${S.flags.seoulTries?`<div class="st-row"><span class="k">남산 시도</span><span class="v" style="flex:1;color:var(--cheollian)">${S.flags.seoulTries}회 · 아직 입장 조건 미달</span></div>`:''}</div>`;
     const ready=G.seoulReady();
-    h+=`<div class="st-sec"><h4>📖 여정 장부 <small style="color:${ready?'var(--ok)':'var(--faded)'};font-weight:400">${ready?'· 남산이 열린다':'· 네 기둥을 싣고 오세요'}</small></h4>`;
+    journey+=`<div class="st-sec"><h4>여정 장부 <small style="color:${ready?'var(--ok)':'var(--faded)'};font-weight:400">${ready?'· 남산 입장 준비 완료':'· 네 기둥을 채우는 중'}</small></h4>`;
     const P=G.pillars(), pIco={관계:'♦',세계:'🕯',진실:'◈',유산:'✉'};
-    h+=`<div class="st-row" style="flex-wrap:wrap;gap:6px;margin-bottom:4px">`;
+    journey+=`<div class="st-row" style="flex-wrap:wrap;gap:6px;margin-bottom:4px">`;
     ['관계','세계','진실','유산'].forEach(k=>{ const x=P[k], ok=x.have>=x.need;
-      h+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
+      journey+=`<span style="font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:12px;border:1px solid ${ok?'var(--ok)':'var(--line)'};color:${ok?'var(--ok)':'var(--faded)'}">${ok?'✓':pIco[k]} ${k} ${x.have}/${x.need}</span>`;
     });
-    h+=`</div>`;
-    /* 관계 — 선택한 네 사람으로 관문이 열리고, 전원 완주는 추가 증언이 된다 */
-    Object.keys(D.comps).forEach(id=>{
-      const c=D.comps[id], got=G.hasComp(id), deep=got&&(S.comps[id]||{}).lvl>=3;
-      const state=!got?('찾는 중 — '+D.compWhere[id].split(' —')[0])
-        : deep?`★ 「${c.perks[3].nm}」`:`Lv.${S.comps[id].lvl} · 유대 ${S.comps[id].bond}`;
-      h+=`<div class="st-row" style="${got?'':'opacity:.55'}"><span class="k">${deep?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${deep?'var(--ok)':'var(--faded)'}">${state}</span></div>`;
-    });
+    journey+=`</div>`;
     const allStories=G.fullCrewStories();
-    h+=`<div class="csub" style="margin:7px 0 3px;color:${allStories?'var(--ok)':'var(--faded)'}">
-      ${allStories?'★ 여섯 사람의 증언 완성 — 남산에서 추가 회수':'관계 4명으로 남산 진입 · 6명 전원은 추가 증언과 에필로그'}
+    journey+=`<div class="csub" style="margin:7px 0 3px;color:${allStories?'var(--ok)':'var(--faded)'}">
+      ${allStories?'여섯 사람의 증언 완성 · 남산 추가 장면 해금':'동료 서사 4명으로 진입 · 6명은 추가 증언과 에필로그'}
     </div>`;
-    /* 회수템 */
     D.deeds.filter(d=>d.cat==='회수').forEach(d=>{ const ok=G.deedDone(d);
-      h+=`<div class="st-row"><span class="k">${ok?'✓':'✉'} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':d.hint}</span></div>`;
+      journey+=`<div class="st-row"><span class="k">${ok?'✓':'○'} ${d.title}</span><span class="v" style="flex:1;font-size:11.5px;color:${ok?'var(--ok)':'var(--faded)'}">${ok?'실었다':d.hint}</span></div>`;
     });
-    h+=`</div>`;
-    /* 세대의 흔적 — 발견 뒤에만 나타나는 선택형 기억 장부 */
+    journey+=`</div>`;
     const traceN=G.traceCount();
     if(traceN){
-      h+=`<div class="st-sec"><h4>▧ 세대의 흔적 <small style="color:var(--faded);font-weight:400">${traceN}/${D.eraTraces.length} · 남산 입장 필수 아님</small></h4>`;
+      journey+=`<div class="st-sec"><h4>세대의 흔적 <small style="color:var(--faded);font-weight:400">${traceN}/${D.eraTraces.length} · 선택 기록</small></h4>`;
       D.eraTraces.filter(t=>S.flags[t.flag]).forEach(t=>{
-        h+=`<div class="st-row"><span class="k">✓ ${t.name}</span><span class="v" style="flex:1;font-size:11.5px;color:var(--faded)">${t.era} · ${t.desc}</span></div>`;
+        journey+=`<div class="st-row"><span class="k">✓ ${t.name}</span><span class="v" style="flex:1;font-size:11.5px;color:var(--faded)">${t.era} · ${t.desc}</span></div>`;
       });
-      h+=`<div class="csub" style="margin-top:7px">${traceN>=5?'코어 앞에서 이 흔적들을 증언할 수 있다.':'다섯 흔적을 모으면 코어 앞에서 별도의 증언이 열린다.'}</div></div>`;
+      journey+=`<div class="csub" style="margin-top:7px">${traceN>=5?'코어 앞에서 이 흔적들을 증언할 수 있다.':'다섯 흔적을 모으면 별도의 증언이 열린다.'}</div></div>`;
     }
-    /* 저항 연대망 — 계시 이후에만 표시 */
     if(S.flags.resist_revealed){
       const linked=G.cellsLinked().length, total=D.resistance.length;
-      h+=`<div class="st-sec"><h4>🕯 저항 연대 <small style="color:var(--faded);font-weight:400">${linked}/${total} 이음 · 천리안 변방</small></h4>`;
+      journey+=`<div class="st-sec"><h4>저항 연대 <small style="color:var(--faded);font-weight:400">${linked}/${total} 이음</small></h4>`;
       D.resistance.forEach(c=>{ const on=!!S.flags[c.flag];
-        h+=`<div class="st-row" style="${on?'':'opacity:.5'}"><span class="k">${on?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${on?'var(--paper)':'var(--faded)'}">${c.region} · ${on?c.lead:'미접선'}</span></div>`;
+        journey+=`<div class="st-row" style="${on?'':'opacity:.5'}"><span class="k">${on?'✓':'○'} ${c.name}</span><span class="v" style="flex:1;font-size:11.5px;color:${on?'var(--paper)':'var(--faded)'}">${c.region} · ${on?c.lead:'미접선'}</span></div>`;
       });
-      h+=`</div>`;
+      journey+=`</div>`;
     }
-    /* 이야기 */
+
     const stories=Object.keys(D.comps).map(id=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
       const state= st.perks.includes(p3.id)? 'done': G.hasComp(id)? 'lv'+st.lvl : 'no';
       return {id,c,st,p3,state};
     });
-    h+=`<div class="st-sec"><h4>★ 이야기 (차에 실린 것들)</h4>`+
+    let crew=`<div class="st-summary">
+      <div class="st-metric"><span class="mk">탑승</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
+      <div class="st-metric"><span class="mk">완주 서사</span><span class="mv">${stories.filter(s=>s.state==='done').length}/6</span></div>
+      <div class="st-metric"><span class="mk">보리</span><span class="mv">${S.dog?'동행 중':'미합류'}</span></div>
+    </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+
       stories.map(s=>`<div class="st-row" data-comp2="${s.id}" style="cursor:pointer">
         <span class="k">${s.c.face} ${s.c.name}</span>
         <span class="v" style="flex:1;color:${s.state==='done'?'var(--cheollian)':s.state==='no'?'var(--dim)':'inherit'}">
         ${s.state==='done'?`★ 「${s.p3.nm}」 완료`: s.state==='no'?`<small>${D.compWhere[s.id]||'아직 만나지 못했다'}</small>`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?' ✦퍼크 대기':''}`}</span></div>`).join('')+
-      `<div class="csub" style="margin-top:7px">그것은 말했다 — "전부 싣고 오세요."</div></div>`;
-    b.innerHTML=h;
+      `<div class="csub" style="margin-top:7px">이름을 누르면 유대와 해금된 능력을 확인한다.</div></div>`;
+
+    b.innerHTML=`<div class="st-pane ${stTab==='now'?'on':''}" data-stpane="now">${now}</div>
+      <div class="st-pane ${stTab==='journey'?'on':''}" data-stpane="journey">${journey}</div>
+      <div class="st-pane ${stTab==='crew'?'on':''}" data-stpane="crew">${crew}</div>`;
     b.querySelectorAll('[data-comp2]').forEach(r=>r.onclick=()=>{ const id=r.dataset.comp2;
       if(G.hasComp(id)) showComp(id); });
   }

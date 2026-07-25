@@ -36,6 +36,8 @@ SCENE_KEYS=(
   TRACE_CORTIS_RELIC TRACE_CORTIS_BEACON TRACE_WORLDCUP_CHART TRACE_FOURCUTS TRACE_COLDBAG TRACE_CONSENT
   SEOUL_RUINS SEOUL_SQUARE SEOUL_BASE SEOUL_CORE SEOUL_DECISION SEOUL_NIGHT
   GENERIC_DISCOVERY GENERIC_ENCOUNTER GENERIC_CRISIS GENERIC_CHEOLLIAN GENERIC_STORY
+  LIBRARY_BUS MINJI_TOOLBOX PARKSS_CLINIC LEO_ROOFTOP_SONG JAEYI_LEDGER EUNSU_LAST_SHIFT
+  POSTMAN_LETTER FREQUENCY_TAPE GRANDFATHER_ENVELOPE RIDGE_MEMORIAL FULL_HOUSE_MEAL
 )
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
@@ -71,11 +73,36 @@ SCENE_FILES=(
   assets/scenes/generic-crisis.jpg
   assets/scenes/generic-cheollian.jpg
   assets/scenes/generic-story.jpg
+  assets/scenes/library-bus.jpg
+  assets/scenes/minji-toolbox.jpg
+  assets/scenes/parkss-clinic.jpg
+  assets/scenes/leo-rooftop-song.jpg
+  assets/scenes/jaeyi-ledger.jpg
+  assets/scenes/eunsu-last-shift.jpg
+  assets/scenes/postman-letter.jpg
+  assets/scenes/frequency-tape.jpg
+  assets/scenes/grandfather-envelope.jpg
+  assets/scenes/ridge-memorial.jpg
+  assets/scenes/full-house-meal.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do
   SCENE_BASE64="$(base64 < "${SCENE_FILES[$I]}" | tr -d '\n')"
   SCENE_JS="${SCENE_JS//__SCENE_${SCENE_KEYS[$I]}__/data:image/jpeg;base64,$SCENE_BASE64}"
+done
+UPGRADE_KEYS=(FUEL SEATING CHASSIS UTILITY POWER CAMP LIVING)
+UPGRADE_FILES=(
+  assets/upgrades/fuel.jpg
+  assets/upgrades/seating.jpg
+  assets/upgrades/chassis.jpg
+  assets/upgrades/utility.jpg
+  assets/upgrades/power.jpg
+  assets/upgrades/camp.jpg
+  assets/upgrades/living.jpg
+)
+for I in "${!UPGRADE_KEYS[@]}"; do
+  UPGRADE_BASE64="$(base64 < "${UPGRADE_FILES[$I]}" | tr -d '\n')"
+  SCENE_JS="${SCENE_JS//__UPGRADE_${UPGRADE_KEYS[$I]}__/data:image/jpeg;base64,$UPGRADE_BASE64}"
 done
 {
   cat "${PARTS_BEFORE_EMBEDS[@]}"

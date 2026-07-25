@@ -32,5 +32,27 @@ D.scenes = {
   'generic-encounter':'__SCENE_GENERIC_ENCOUNTER__',
   'generic-crisis':'__SCENE_GENERIC_CRISIS__',
   'generic-cheollian':'__SCENE_GENERIC_CHEOLLIAN__',
-  'generic-story':'__SCENE_GENERIC_STORY__'
+  'generic-story':'__SCENE_GENERIC_STORY__',
+  'library-bus':'__SCENE_LIBRARY_BUS__',
+  'minji-toolbox':'__SCENE_MINJI_TOOLBOX__',
+  'parkss-clinic':'__SCENE_PARKSS_CLINIC__',
+  'leo-rooftop-song':'__SCENE_LEO_ROOFTOP_SONG__',
+  'jaeyi-ledger':'__SCENE_JAEYI_LEDGER__',
+  'eunsu-last-shift':'__SCENE_EUNSU_LAST_SHIFT__',
+  'postman-letter':'__SCENE_POSTMAN_LETTER__',
+  'frequency-tape':'__SCENE_FREQUENCY_TAPE__',
+  'grandfather-envelope':'__SCENE_GRANDFATHER_ENVELOPE__',
+  'ridge-memorial':'__SCENE_RIDGE_MEMORIAL__',
+  'full-house-meal':'__SCENE_FULL_HOUSE_MEAL__'
+};
+
+/* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */
+D.upgradeArt = {
+  fuel:'__UPGRADE_FUEL__',
+  seating:'__UPGRADE_SEATING__',
+  chassis:'__UPGRADE_CHASSIS__',
+  utility:'__UPGRADE_UTILITY__',
+  power:'__UPGRADE_POWER__',
+  camp:'__UPGRADE_CAMP__',
+  living:'__UPGRADE_LIVING__'
 };

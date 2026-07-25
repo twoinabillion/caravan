@@ -26,8 +26,9 @@ SETUP = r'''() => {
     // 기대효용: 부족한 자원일수록 가중 (봇 생존 정책)
     const scF=S.food<5?3:1, scW=S.water<5?3:1, scFu=S.fuel<15?2.5:1;
     const util=(fx)=>{ if(!fx) return 0;
+      const parts=(fx.item&&fx.item['부품'])||0;
       return (fx.food||0)*2*scF + (fx.water||0)*2*scW + (fx.fuel||0)*1.5*scFu
-           + (fx.scrap||0)*0.7 + (fx.van||0)*0.25 + (fx.moodAll||0)*0.3
+           + parts*10 + (fx.scrap||0)*0.7 + (fx.van||0)*0.25 + (fx.moodAll||0)*0.3
            - (fx.pursuit||0)*1.5 - (fx.time||0)*0.005 + (fx.offerComp?50:0) + (fx.recruit?50:0); };
     const score=(ch)=>{ let tot=0,s2=0; (ch.out||[]).forEach(o=>{ tot+=(o.p||1); s2+=(o.p||1)*util(o.fx); }); return tot? s2/tot : 0; };
     affordable.sort((a,b)=>score(b)-score(a));
@@ -56,11 +57,38 @@ STEP = r'''() => {
     ['jaeyi',  ['gunsan','gimcheon']],
     ['leo',    ['jeonju','gwangju','damyang']],
     ['eunsu',  ['daejeon','sejong']],
-    [null,     ['cheonan','suwon']],
+    [null,     ['suwon']],
   ];
-  const dist=(a,b)=>{const A=D.nodes[a],B=D.nodes[b];return Math.hypot(A.x-B.x,A.y-B.y);};
-  const target=()=>{ for(const [c,nodes] of TOUR){ if(c && !G.hasComp(c)) return nodes;
+  const target=()=>{
+    if(S.party.length>=G.maxParty() && G.nextSeatUpgrade())
+      return ['daegu','miryang','gwangju','daejeon'];
+    for(const [c,nodes] of TOUR){ if(c && !G.hasComp(c)) return nodes;
       if(!c) return nodes; } return ['suwon']; };
+  const nextOnShortestPath=(start, goals)=>{
+    const allowed=new Set(S.known);
+    const d={[start]:0}, prev={}, open=new Set([...allowed]);
+    while(open.size){
+      let cur=null, best=Infinity;
+      for(const id of open){ if((d[id]??Infinity)<best){best=d[id];cur=id;} }
+      if(cur===null) break;
+      open.delete(cur);
+      for(const nb of G.neighbors(cur)){
+        if(!allowed.has(nb.id)) continue;
+        const nd=best+nb.km;
+        if(nd<(d[nb.id]??Infinity)){d[nb.id]=nd;prev[nb.id]=cur;}
+      }
+    }
+    const reachable=goals.filter(g=>d[g]!==undefined).sort((a,b)=>d[a]-d[b]);
+    if(!reachable.length) return null;
+    let step=reachable[0];
+    if(step===start){
+      // 영입 이벤트를 다시 띄우기 위해 가장 짧은 인접 도로를 왕복한다.
+      const n=G.neighbors(start).filter(x=>allowed.has(x.id)).sort((a,b)=>a.km-b.km)[0];
+      return n&&n.id;
+    }
+    while(prev[step]!==start && prev[step]!==undefined) step=prev[step];
+    return prev[step]===undefined?null:step;
+  };
 
   // 주행 중이면 도착까지 밟는다 (이벤트는 자동 해소됨)
   const wasDriving = !!S.driving;
@@ -74,18 +102,36 @@ STEP = r'''() => {
   // 정착지 거래 — 부족분 보충 (trade 테이블 파싱: [비용, 획득] 'scrap3'식)
   const stl = S.at && D.nodes[S.at] && D.nodes[S.at].stl ? D.stls[D.nodes[S.at].stl] : null;
   if(stl && stl.trade){
+    // 만석이면 보급 쇼핑보다 다음 좌석을 먼저 확보한다.
+    const seat=G.nextSeatUpgrade();
+    const partRow=stl.trade.find(row=>row[1]==='item부품');
+    if(seat && S.party.length>=G.maxParty() && partRow){
+      const [,kind,amt,cost]=partRow;
+      while((S.items['부품']||0)<(seat.cost.parts||0) && S.scrap>=cost){
+        S.scrap-=cost; S.items['부품']=(S.items['부품']||0)+amt;
+      }
+      if(G.buyUpgrade(seat.id)) (SIM.upBought=SIM.upBought||[]).push(seat.id+'@D'+S.day);
+    }
     // 포맷: [라벨, 종류(fuel/water/food/itemX), 수량, 고철값]
-    for(let i=0;i<30;i++){
-      const needF=S.food<14, needW=S.water<14, needFu=S.fuel<36;
-      if(!needF&&!needW&&!needFu) break;
+    for(let i=0;i<60;i++){
+      const seatBlocked=S.party.length>=G.maxParty() && !!G.nextSeatUpgrade();
+      const reserve=Math.max(14,G.partySize()*6);
+      const emergency=G.partySize()*2;
+      const needF=S.food<(seatBlocked?emergency:reserve);
+      const needW=S.water<(seatBlocked?emergency:reserve);
+      const needFu=!seatBlocked&&S.fuel<46;
+      const needP=(S.items['부품']||0)<3 && G.nextSeatUpgrade();
+      if(!needF&&!needW&&!needFu&&!needP) break;
       let did=false;
       for(const row of stl.trade){
         const [,kind,amt,cost]=row;
-        const want=(kind==='food'&&needF)||(kind==='water'&&needW)||(kind==='fuel'&&needFu);
+        const want=(kind==='food'&&needF)||(kind==='water'&&needW)||(kind==='fuel'&&needFu)||
+          (kind==='item부품'&&needP);
         if(!want||S.scrap<cost) continue;
         S.scrap-=cost;
         if(kind==='food')S.food+=amt; else if(kind==='water')S.water+=amt;
         else if(kind==='fuel')S.fuel=Math.min(S.fuelMax,S.fuel+amt);
+        else if(kind==='item부품')S.items['부품']=(S.items['부품']||0)+amt;
         did=true; break;
       }
       if(!did) break;
@@ -93,12 +139,24 @@ STEP = r'''() => {
   }
 
   // 좌석 업그레이드 (영입 캡 해제가 최우선) → 이후 연료탱크
-  const SEATQ=['bench','jumpseat','bunk','cabin'];
+  // 실제 선행 조건 순서: bench → cabin → bunk → jumpseat.
+  // 중간 단계를 건너뛰면 같은 잠긴 업그레이드를 매일 재시도하며 투어가 멈춘다.
+  const SEATQ=['bench','cabin','bunk','jumpseat'];
   for(const uid of SEATQ){ if(!(S.up&&S.up[uid])){ if(G.buyUpgrade(uid)){ (SIM.upBought=SIM.upBought||[]).push(uid+'@D'+S.day); } break; } }
   if(SEATQ.every(u=>S.up&&S.up[u]) && !(S.up&&S.up.tank1)){ if(G.buyUpgrade('tank1')) (SIM.upBought=SIM.upBought||[]).push('tank1@D'+S.day); }
 
   // 정착지 영입 (강우 — 대구 돔 시장)
   if(stl && stl.recruit && !G.hasComp(stl.recruit)){ G.doRecruit(stl.recruit); SIM.recruitedDay[stl.recruit]=S.day; }
+
+  // 소개받은 지역에 도착하면 우선 영입 조우를 확인한다.
+  // 실게임의 priority 풀과 동일하되, 밸런스 시뮬레이션에서는 짧은 도로 왕복 RNG를 제거한다.
+  const pending=TOUR.find(([c,nodes])=>c&&!G.hasComp(c)&&nodes.includes(S.at));
+  if(pending && S.party.length<G.maxParty()){
+    const [cid]=pending;
+    const recruit=G.eligible().find(e=>e.priority && (e.choices||[]).some(ch=>
+      (ch.out||[]).some(o=>o.fx&&o.fx.offerComp===cid)));
+    if(recruit){ G.openEvent(recruit); SIM.recruitedDay[cid]=S.day; return OUT; }
+  }
 
   // 낮이면 현재 노드에서 탐색 1회 (자원 루프의 핵심)
   if(S.at && !G.isNight() && S.fatigue<75){ try{ G.explore(); }catch(e){} }
@@ -115,15 +173,10 @@ STEP = r'''() => {
   const tg=target(); if(S.at===tg[0]||tg.includes(S.at)){
     if(!TOUR.some(([c])=>c&&!G.hasComp(c)) && tg.includes('suwon') && S.at==='suwon'){ OUT.done=true; OUT.note='arrived'; return OUT; }
   }
-  const cand = tg.filter(n=>S.known.includes(n));
-  const goal = cand.length? cand.sort((a,b)=>dist(S.at,a)-dist(S.at,b))[0] : tg[0];
-  const nbrs = D.edges.filter(e=>e[0]===S.at||e[1]===S.at)
-    .map(e=>e[0]===S.at?e[1]:e[0]).filter(n=>S.known.includes(n));
-  if(!nbrs.length){ SIM.stranded=true; OUT.done=true; OUT.note='no-edge'; return OUT; }
-  nbrs.sort((a,b)=>dist(a,goal)-dist(b,goal));
-  if(SIM.lastFrom && nbrs.length>1){ const i=nbrs.indexOf(SIM.lastFrom); if(i===0){ nbrs.push(nbrs.shift()); } }
+  const next=nextOnShortestPath(S.at,tg);
+  if(!next){ SIM.stranded=true; OUT.done=true; OUT.note='no-edge'; return OUT; }
   let moved=false;
-  for(const n of nbrs){ if(G.startTravel(n)){ moved=true; break; } }
+  if(G.startTravel(next)) moved=true;
   if(!moved){ // 연료 0 — 위기(걸어서 기름 구함) 발동, 그래도 12회 연속이면 좌초
     SIM.failDays=(SIM.failDays||0)+1;
     if(S.fuel<=0){ G.openEventById('crisis_nofuel'); }

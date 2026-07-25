@@ -160,6 +160,13 @@ with sync_playwright() as p:
       out.sceneCount=Object.keys(D.scenes||{}).length;
       out.nodeSceneCount=Object.keys(D.nodeScenes||{}).length;
       out.eventSceneCount=Object.keys(D.eventScenes||{}).length;
+      out.upgradeArtCount=Object.keys(D.upgradeArt||{}).length;
+      out.upgradeArtReady=Object.values(D.upgradeArt||{}).every(src=>src.startsWith('data:image/jpeg;base64,'));
+      const grouped=(D.upgradeGroups||[]).flatMap(g=>g.ids);
+      out.upgradeGroups=(D.upgradeGroups||[]).length;
+      out.upgradeCoverage=grouped.length===D.upgrades.length &&
+        new Set(grouped).size===D.upgrades.length &&
+        D.upgrades.every(u=>grouped.includes(u.id));
       const sceneFor=e=>e.scene||(D.eventScenes&&D.eventScenes[e.id])
         ||(e.locEvent&&D.nodeScenes&&D.nodeScenes[e.locEvent])
         ||D.eventSceneTypes[(e.ai||e.type==='추적')?'추적':e.type]||'generic-story';
@@ -196,6 +203,24 @@ with sync_playwright() as p:
       S.items['부품'] = 5; S.van = 10; S.up.sidebox = true;
       const p0 = S.items['부품']; G.fieldRepair();
       out.repairBoost = S.van >= 50;   // 45 이상 회복
+      S.quest={kind:'procure',need:{name:'부품',qty:8},from:'daegu',to:'daejeon',reward:22,due:S.day+2};
+      S.items['부품']=3; UI.renderAll();
+      out.missionVisible=document.querySelector('#mission-strip').textContent.includes('부품 3/8');
+      out.mapMission=document.querySelector('#map-mission').textContent.includes('대전');
+      UI.showStl('daegu');
+      out.garageGroups=document.querySelectorAll('#garage [data-ug]').length;
+      out.garageArt=!!document.querySelector('#garage .upgrade-group-hero img');
+      out.garageCards=document.querySelectorAll('#garage .upgrade-card').length;
+      document.querySelector('#ovl-stl').classList.remove('on');
+      document.querySelector('#dk-status').click();
+      document.querySelector('#st-tabs [data-st="journey"]').click();
+      out.statusTabs=document.querySelectorAll('#st-tabs button').length===3 &&
+        document.querySelector('[data-stpane="journey"]').classList.contains('on');
+      document.querySelector('#st-x').click();
+      G.openEventById('roadbeat_200_archive');
+      out.storyContext=document.querySelector('#ev-sheet').textContent.includes('앞 이야기') &&
+        document.querySelector('#ev-sheet').textContent.includes('첫 거리 표식');
+      document.querySelector('#ev-wrap').classList.remove('on');
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
@@ -208,8 +233,14 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 33종·빌드 주입', r4['sceneCount'] == 33 and r4['sceneDataReady'], str(r4))
-    check('도시 9곳·고유 사건 25연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] == 25, str(r4))
+    check('시네마틱 이미지 44종·빌드 주입', r4['sceneCount'] == 44 and r4['sceneDataReady'], str(r4))
+    check('도시 9곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] >= 36, str(r4))
+    check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
+    check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
+    check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))
+    check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
+    check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
+    check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('834개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('회상 이벤트 시네마틱 표시', r4['eventScene'], str(r4))
     check('장면 탭 확대·복귀', r4['sceneZoom'] and r4['sceneUnzoom'], str(r4))
@@ -375,7 +406,8 @@ with sync_playwright() as p:
       out.distinctCosts = costs[0].includes('느린 합의') &&
         costs[1].includes('원본 기록의 검색창도 꺼졌다') &&
         costs[2].includes('삼중 감시조');
-      out.gateSeparate = core.text.includes('추방과 별개의 관문');
+      out.gateSeparate = D.gateEvent.text({flags:{seoulTries:0}}).includes('추방 명령이 아닙니다') &&
+        core.text.includes('별도의 인계 규약');
       const reveal = D.events.find(e => e.id === 'resist_reveal');
       out.generations = reveal.choices.every(c => c.out[0].text.includes('세대')) &&
         D.comps.kangwoo.bio.includes('자신이 겪은 서울 추방') &&

@@ -79,6 +79,8 @@
       </div>
     </div>
 
+    <button id="mission-strip" class="mission-strip" type="button" aria-label="현재 의뢰와 여정 상태 열기"></button>
+
     <div id="main">
       <div id="panel"></div>
       <div id="dock">
@@ -106,6 +108,7 @@
   <!-- ══ MAP ══ -->
   <div class="ovl" id="ovl-map">
     <div class="ovl-head"><h2>지도 — 남녘</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x">✕</button></div>
+    <div id="map-mission" class="mission-strip map-mission"></div>
     <div id="mapwrap">
       <canvas id="mapcv"></canvas>
       <div id="nodecard"></div>
@@ -128,6 +131,11 @@
   <!-- ══ STATUS ══ -->
   <div class="ovl" id="ovl-status">
     <div class="ovl-head"><h2>달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x">✕</button></div>
+    <div id="st-tabs" class="st-tabs" role="tablist">
+      <button class="here" data-st="now" role="tab">지금</button>
+      <button data-st="journey" role="tab">여정</button>
+      <button data-st="crew" role="tab">동료</button>
+    </div>
     <div id="st-body"></div>
   </div>
 
