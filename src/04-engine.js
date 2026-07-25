@@ -559,6 +559,31 @@ G.reqText = (req)=>{
   if(req.fuel) parts.push(`연료 ${req.fuel}L`); if(req.water) parts.push(`물 ${req.water}`); if(req.food) parts.push(`식량 ${req.food}`);
   return parts.join(' · ');
 };
+/* 동료·퍼크·과거 선택 같은 특별 조건은 충족되기 전까지 선택지 자체를 숨긴다.
+   자원 비용은 플레이어가 계획할 정보라 그대로 보여준다. */
+G.reqVisible = (req)=>{
+  if(!req) return true;
+  if(req.perk&&!G.hasPerk(req.perk)) return false;
+  if(req.flagMin&&(S.flags[req.flagMin[0]]||0)<req.flagMin[1]) return false;
+  if(req.flag&&!S.flags[req.flag]) return false;
+  if(req.traces&&G.traceCount()<req.traces) return false;
+  if(req.party&&S.party.length<req.party) return false;
+  if(req.stories&&G.deedsDone().filter(d=>d.cat==='동료').length<req.stories) return false;
+  if(req.comp&&!G.hasComp(req.comp)) return false;
+  if(req.up&&!(S.up&&S.up[req.up])) return false;
+  if(req.dog&&!S.dog) return false;
+  return true;
+};
+G.reqCostText = (req)=>{
+  if(!req) return '';
+  const parts=[];
+  if(req.item) parts.push(`${req.item}${req.item2?' + '+req.item2:''}`);
+  if(req.scrap) parts.push(`고철 ${req.scrap}`);
+  if(req.fuel) parts.push(`연료 ${req.fuel}L`);
+  if(req.water) parts.push(`물 ${req.water}`);
+  if(req.food) parts.push(`식량 ${req.food}`);
+  return parts.join(' · ');
+};
 G.rollOut = (outs)=>{
   const total = outs.reduce((s,o)=>s+o.p,0); let r=rng()*total;
   for(const o of outs){ r-=o.p; if(r<=0) return o } return outs[outs.length-1];
@@ -573,15 +598,6 @@ G.doRecruit = (id)=>{
   const nextSeat=G.nextSeatUpgrade();
   if(S.party.length>=G.maxParty()&&nextSeat)
     setTimeout(()=>UI.toast(`💺 달구지가 찼다 — 다음 자리: ${nextSeat.nm}`),900);
-  /* 소개 체인: 아직 안 만난 동료 하나를 짚어준다 (고리 우선, 없으면 아무나) */
-  const ref=D.compRefer[id];
-  let target = ref && !G.hasComp(ref.to) ? ref.to : Object.keys(D.comps).find(c=>!G.hasComp(c));
-  if(target){
-    const line = ref && ref.to===target ? ref.line : `"${D.compWhere[target]} — 그 사람도 꼭 만나."`;
-    G.addNote({type:'소문', title:`${D.comps[id].name}의 소개 — ${D.comps[target].name}`,
-      body:`${line}\n\n📍 ${D.compWhere[target]}`, links:[D.comps[target].name]});
-    setTimeout(()=>UI.toast(`<span class="ic">➜</span>${D.comps[id].name}: ${D.comps[target].name}를 찾아보라 (${D.compWhere[target].split(' —')[0]})`), 1400);
-  }
   G.save(); return true;
 };
 

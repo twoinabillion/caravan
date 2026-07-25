@@ -150,6 +150,8 @@ with sync_playwright() as p:
       out.journeyBeats = (D.journeyBeats||[]).length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
+      out.introBook = D.intro.length === 8 && D.intro.every(p =>
+        p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
       out.seats = [G.maxParty()];
       ['bench','cabin','bunk','jumpseat'].forEach(id=>{ S.up[id]=true; out.seats.push(G.maxParty()); });
       S.party=['minji','parkss']; S.up={}; out.fullBlocked=!G.doRecruit('kangwoo');
@@ -181,6 +183,23 @@ with sync_playwright() as p:
       G.openEventById('meet_waver');
       out.genericScene=!!document.querySelector('#ev-sheet .event-scene');
       document.querySelector('#ev-wrap').classList.remove('on');
+      S.party=[]; UI.renderAll();
+      G.openEventById('meet_family');
+      out.secretChoiceHidden=!document.querySelector('#ev-sheet').textContent.includes('민지가 트럭을 고친다');
+      out.resourceChoiceVisible=document.querySelector('#ev-sheet').textContent.includes('식량 2');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.party=['minji'];
+      out.secretChoiceRevealed=G.hasComp('minji');
+      UI.showEvent(D.events.find(e=>e.id==='meet_family'));
+      out.secretChoiceRevealed=out.secretChoiceRevealed &&
+        document.querySelector('#ev-sheet').textContent.includes('민지가 트럭을 고친다');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.party=[]; UI.renderAll();
+      document.querySelector('#dk-status').click();
+      document.querySelector('#st-tabs [data-st="crew"]').click();
+      const crewText=document.querySelector('[data-stpane="crew"]').textContent;
+      out.crewNoSpoilers=Object.values(D.comps).every(c=>!crewText.includes(c.name));
+      document.querySelector('#st-x').click();
       S.at='daegu'; out.arrivalDelay=UI.onArrive();
       out.arrivalScene=!!document.querySelector('#arrival-scene img');  // .on은 rAF 비동기라 레이스 — 이미지 주입만 검증
       document.querySelector('#arrival-scene').classList.remove('on');
@@ -227,13 +246,14 @@ with sync_playwright() as p:
     check('이벤트 834종', r4['eventCount'] == 834, str(r4['eventCount']))
     check('세대의 흔적 9종·보장 본편 4장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 4, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
-    check('빈자리 카드는 하나만 표시', r4['emptyCards'] == 1, str(r4['emptyCards']))
+    check('메인 패널에 빈자리 카드 미표시', r4['emptyCards'] == 0, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
     check('천리안 거리 이정표 4종', r4['roadBeats'] == 4, str(r4['roadBeats']))
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 44종·빌드 주입', r4['sceneCount'] == 44 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 54종·빌드 주입', r4['sceneCount'] == 54 and r4['sceneDataReady'], str(r4))
+    check('그림책 도입 8장·고유 컷 연결', r4['introBook'], str(r4))
     check('도시 9곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] >= 36, str(r4))
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
@@ -242,6 +262,9 @@ with sync_playwright() as p:
     check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('834개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
+          r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
+    check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
     check('회상 이벤트 시네마틱 표시', r4['eventScene'], str(r4))
     check('장면 탭 확대·복귀', r4['sceneZoom'] and r4['sceneUnzoom'], str(r4))
     check('도시 도착 시네마틱 표시', r4['arrivalScene'] and r4['arrivalDelay'] == 3000, str(r4))
@@ -320,9 +343,9 @@ with sync_playwright() as p:
       delete S.flags.uplink_seen;
       out.truthLocked = !G.seoulReady() && G.seoulMissing().pillar === '진실';
       S.flags.uplink_seen = true;
-      // 소개 체인
+      // 영입 뒤 미합류 동료의 이름·위치를 자동 공개하지 않는다.
       S.party = []; S.notes = []; G.doRecruit('minji');
-      out.refer = S.notes.some(n => n.title.includes('강우'));
+      out.refer = S.notes.some(n => Object.values(D.comps).some(c => !G.hasComp(c) && n.title.includes(c.name)));
       // 서울 오르막 진행
       S.flags.seoul_open = true; S.seoul = {entered:true};
       out.stage0 = G.seoulStage();
@@ -388,7 +411,7 @@ with sync_playwright() as p:
     check('세대 흔적 5개 코어 증언·실제 조합 반영', r7['traceChoice'] and r7['traceUnlocked'] and r7['traceNarrative'], str(r7))
     check('주행거리 본편 장면 순서 보장', r7['beat1'] == 'story_generation_form' and r7['beat2'] == 'story_generation_speech', str(r7))
     check('상행선 단서 없으면 진실 기둥 잠김', r7['truthLocked'], str(r7))
-    check('소개 체인(영입 시 다음 동료 안내)', r7['refer'])
+    check('영입 시 다음 동료 자동 안내 없음', not r7['refer'])
 
     # 1막 엔딩: 코어 고백 → 실제 집행 선택 → 에필로그
     r8 = pg.evaluate('''() => { const out = {};

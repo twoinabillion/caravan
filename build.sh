@@ -38,6 +38,9 @@ SCENE_KEYS=(
   GENERIC_DISCOVERY GENERIC_ENCOUNTER GENERIC_CRISIS GENERIC_CHEOLLIAN GENERIC_STORY
   LIBRARY_BUS MINJI_TOOLBOX PARKSS_CLINIC LEO_ROOFTOP_SONG JAEYI_LEDGER EUNSU_LAST_SHIFT
   POSTMAN_LETTER FREQUENCY_TAPE GRANDFATHER_ENVELOPE RIDGE_MEMORIAL FULL_HOUSE_MEAL
+  INTRO_PASSENGER_SEAT INTRO_CHEOLLIAN_2026 INTRO_FIRST_THREE_DAYS INTRO_143_YEARS
+  INTRO_BLANK_REASON INTRO_YEARS_TOGETHER INTRO_ENVELOPE_SIGNAL INTRO_DEPARTURE_CHOICE
+  RECRUIT_MINJI RECRUIT_PARKSS
 )
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
@@ -84,6 +87,16 @@ SCENE_FILES=(
   assets/scenes/grandfather-envelope.jpg
   assets/scenes/ridge-memorial.jpg
   assets/scenes/full-house-meal.jpg
+  assets/intro/01-passenger-seat.jpg
+  assets/intro/02-cheollian-2026.jpg
+  assets/intro/03-first-three-days.jpg
+  assets/intro/04-143-years.jpg
+  assets/intro/05-blank-reason.jpg
+  assets/intro/06-years-together.jpg
+  assets/intro/07-envelope-signal.jpg
+  assets/intro/08-departure-choice.jpg
+  assets/scenes/recruit-minji.jpg
+  assets/scenes/recruit-parkss.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do

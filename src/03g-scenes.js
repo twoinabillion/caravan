@@ -43,7 +43,17 @@ D.scenes = {
   'frequency-tape':'__SCENE_FREQUENCY_TAPE__',
   'grandfather-envelope':'__SCENE_GRANDFATHER_ENVELOPE__',
   'ridge-memorial':'__SCENE_RIDGE_MEMORIAL__',
-  'full-house-meal':'__SCENE_FULL_HOUSE_MEAL__'
+  'full-house-meal':'__SCENE_FULL_HOUSE_MEAL__',
+  'intro-passenger-seat':'__SCENE_INTRO_PASSENGER_SEAT__',
+  'intro-cheollian-2026':'__SCENE_INTRO_CHEOLLIAN_2026__',
+  'intro-first-three-days':'__SCENE_INTRO_FIRST_THREE_DAYS__',
+  'intro-143-years':'__SCENE_INTRO_143_YEARS__',
+  'intro-blank-reason':'__SCENE_INTRO_BLANK_REASON__',
+  'intro-years-together':'__SCENE_INTRO_YEARS_TOGETHER__',
+  'intro-envelope-signal':'__SCENE_INTRO_ENVELOPE_SIGNAL__',
+  'intro-departure-choice':'__SCENE_INTRO_DEPARTURE_CHOICE__',
+  'recruit-minji':'__SCENE_RECRUIT_MINJI__',
+  'recruit-parkss':'__SCENE_RECRUIT_PARKSS__'
 };
 
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */

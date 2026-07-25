@@ -142,9 +142,17 @@ const UI = (()=>{
   }
   function renderIntro(){
     VO.stop(); VO.play('intro'+(introIdx+1));
-    $('#intro-txt').innerHTML = D.intro[introIdx];
-    $('#intro-txt').style.opacity=0;
-    requestAnimationFrame(()=>{ $('#intro-txt').style.transition='opacity .6s'; $('#intro-txt').style.opacity=1; });
+    const page=D.intro[introIdx], scene=D.scenes&&D.scenes[page.scene];
+    $('#intro-img').src=scene||'';
+    $('#intro-img').alt=`${page.title} 장면`;
+    $('#intro-era').textContent=page.era||'';
+    $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length}`;
+    $('#intro-title').textContent=page.title||'';
+    $('#intro-txt').innerHTML=page.text||'';
+    const book=$('#intro-book');
+    book.style.opacity=0;
+    $('#scr-intro').scrollTop=0;
+    requestAnimationFrame(()=>{ book.style.transition='opacity .45s'; book.style.opacity=1; });
   }
   function nextIntro(){
     introIdx++;
@@ -257,7 +265,6 @@ const UI = (()=>{
         <span class="pm">${moodFace(st.mood)}</span>
         ${st.pending?`<span class="pbadge">${ICO('perk','✦')}</span>`:''}</div>`; }
     if(S.dog) h+=`<div class="pcard"><div class="pf">🐕</div><span>보리</span></div>`;
-    if(S.party.length<G.maxParty()) h+=`<div class="pcard" style="opacity:.3"><div class="pf">·</div><span>빈자리</span></div>`;
     return h+'</div>';
   }
   function wireParty(p){
@@ -416,10 +423,12 @@ const UI = (()=>{
     let h=`${scene}<div class="event-head">${portrait}<div><div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
       <h2>${evd.title}</h2></div></div>${context}<div class="body">${fmt(text)}</div><div class="choices">`;
     evd.choices.forEach((c,i)=>{
+      if(!G.reqVisible(c.req)) return;
       const rq=G.reqOk(c.req);
+      const cost=G.reqCostText(c.req);
       h+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
         ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
-        ${c.req?`<span class="req">${rq.ok?'✓':'✗'} ${G.reqText(c.req)}</span>`:''}</button>`;
+        ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
     });
     h+='</div>';
     sheet.innerHTML=h;
@@ -933,21 +942,22 @@ const UI = (()=>{
       journey+=`</div>`;
     }
 
-    const stories=Object.keys(D.comps).map(id=>{
+    const stories=Object.keys(D.comps).filter(id=>G.hasComp(id)).map(id=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
-      const state= st.perks.includes(p3.id)? 'done': G.hasComp(id)? 'lv'+st.lvl : 'no';
+      const state=st.perks.includes(p3.id)?'done':'lv'+st.lvl;
       return {id,c,st,p3,state};
     });
     let crew=`<div class="st-summary">
       <div class="st-metric"><span class="mk">탑승</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
-      <div class="st-metric"><span class="mk">완주 서사</span><span class="mv">${stories.filter(s=>s.state==='done').length}/6</span></div>
-      <div class="st-metric"><span class="mk">보리</span><span class="mv">${S.dog?'동행 중':'미합류'}</span></div>
+      <div class="st-metric"><span class="mk">완주 서사</span><span class="mv">${stories.filter(s=>s.state==='done').length}</span></div>
+      <div class="st-metric"><span class="mk">보리</span><span class="mv">${S.dog?'동행 중':'—'}</span></div>
     </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+
-      stories.map(s=>`<div class="st-row" data-comp2="${s.id}" style="cursor:pointer">
+      (stories.length?stories.map(s=>`<div class="st-row" data-comp2="${s.id}" style="cursor:pointer">
         <span class="k">${s.c.face} ${s.c.name}</span>
-        <span class="v" style="flex:1;color:${s.state==='done'?'var(--cheollian)':s.state==='no'?'var(--dim)':'inherit'}">
-        ${s.state==='done'?`★ 「${s.p3.nm}」 완료`: s.state==='no'?`<small>${D.compWhere[s.id]||'아직 만나지 못했다'}</small>`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?' ✦퍼크 대기':''}`}</span></div>`).join('')+
-      `<div class="csub" style="margin-top:7px">이름을 누르면 유대와 해금된 능력을 확인한다.</div></div>`;
+        <span class="v" style="flex:1;color:${s.state==='done'?'var(--cheollian)':'inherit'}">
+        ${s.state==='done'?`★ 「${s.p3.nm}」 완료`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?' ✦퍼크 대기':''}`}</span></div>`).join('')
+        :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+
+      `<div class="csub" style="margin-top:7px">${stories.length?'이름을 누르면 유대와 해금된 능력을 확인한다.':'지도와 명단에는 만나지 않은 사람을 미리 표시하지 않는다.'}</div></div>`;
 
     b.innerHTML=`<div class="st-pane ${stTab==='now'?'on':''}" data-stpane="now">${now}</div>
       <div class="st-pane ${stTab==='journey'?'on':''}" data-stpane="journey">${journey}</div>
