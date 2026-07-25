@@ -990,7 +990,34 @@ D.nodeScenes = {
 D.eventScenes = {
   van_receipt:'grandfather-garage', kw_base:'kw-defense-line',
   perimeter_first:'perimeter-walker', patrol_walker:'perimeter-walker',
-  han_bridge:'seoul-han', seoul_open:'seoul-han'
+  han_bridge:'seoul-han', seoul_open:'seoul-han',
+  story_generation_form:'story-generation-form',
+  story_generation_speech:'story-generation-speech',
+  story_generation_theories:'story-generation-theories',
+  story_generation_route:'story-generation-route',
+  trace_cortis_relic:'trace-cortis-relic',
+  trace_cortis_beacon:'trace-cortis-beacon',
+  trace_worldcup_chart:'trace-worldcup-chart',
+  trace_worldcup_reply:'trace-worldcup-chart',
+  trace_fourcuts:'trace-fourcuts',
+  trace_coldbag:'trace-coldbag',
+  trace_coldbag_return:'trace-coldbag',
+  trace_consent_archive:'trace-consent',
+  seoul_han:'seoul-han',
+  seoul_ruins:'seoul-ruins',
+  seoul_square:'seoul-square',
+  seoul_base:'seoul-base',
+  seoul_core:'seoul-core',
+  seoul_decision:'seoul-decision',
+  seoul_night:'seoul-night'
+};
+/* 고유 컷이 없는 사건도 텍스트로만 떨어지지 않는다.
+   타입별 공용 컷은 장면의 정확한 삽화라기보다 지금 벌어진 일의 시각적 문법이다. */
+D.eventSceneTypes = {
+  '발견':'generic-discovery', '탐색':'generic-discovery', '정경':'generic-discovery',
+  '조우':'generic-encounter', '동행':'generic-encounter', '대화':'generic-story',
+  '사건':'generic-encounter', '위기':'generic-crisis', '추적':'generic-cheollian',
+  '스토리':'generic-story'
 };
 
 /* ── 차 업그레이드 (정착지 정비소) ── */

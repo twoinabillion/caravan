@@ -130,12 +130,20 @@ input{font-family:inherit}
 .event-portrait{flex:none;width:52px;height:52px;border-radius:11px;object-fit:cover;image-rendering:pixelated;
   border:1px solid #39456f;background:#0a0d18}
 .event-scene-frame{position:relative;margin:-18px -18px 14px;width:calc(100% + 36px);overflow:hidden;
-  border-bottom:1px solid #39456f;background:#080b13;aspect-ratio:16/9;max-height:270px}
+  border-bottom:1px solid #39456f;background:#080b13;aspect-ratio:16/9;max-height:270px;cursor:zoom-in}
 .event-scene-frame:after{content:"";position:absolute;inset:0;pointer-events:none;background:
   linear-gradient(180deg,rgba(5,7,13,.02) 52%,rgba(8,11,19,.62)),
   repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
-.event-scene{display:block;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;
+.event-scene{display:block;width:100%;height:100%;object-fit:cover;image-rendering:auto;
   animation:scene-reveal .65s cubic-bezier(.2,.8,.2,1) both}
+.scene-zoom{position:absolute;right:9px;top:9px;z-index:2;width:27px;height:27px;border-radius:50%;
+  display:grid;place-items:center;background:rgba(5,8,15,.72);border:1px solid rgba(255,255,255,.2);
+  color:#e4e8f2;font-size:13px;pointer-events:none}
+.event-scene-frame.zoomed{position:fixed;inset:0;z-index:80;margin:0;width:auto;max-height:none;
+  aspect-ratio:auto;border:0;background:rgba(2,4,9,.97);cursor:zoom-out}
+.event-scene-frame.zoomed:after{display:none}
+.event-scene-frame.zoomed .event-scene{object-fit:contain;animation:none}
+.event-scene-frame.zoomed .scene-zoom{right:16px;top:16px}
 @keyframes scene-reveal{from{opacity:0;transform:scale(1.035)}to{opacity:1;transform:none}}
 .sheet .tag.ai-tag{color:var(--cheollian)}
 .sheet h2{font-size:17px;line-height:1.35;margin-bottom:10px;text-wrap:balance}
@@ -163,7 +171,7 @@ input{font-family:inherit}
 #arrival-scene{position:absolute;inset:0;z-index:29;display:flex;align-items:flex-end;overflow:hidden;
   background:#070a12;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease}
 #arrival-scene.on{opacity:1;visibility:visible;pointer-events:auto}
-#arrival-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;
+#arrival-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:auto;
   transform:scale(1.025);transition:transform 2.8s ease-out}
 #arrival-scene.on img{transform:scale(1)}
 #arrival-scene:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(4,6,12,.92));pointer-events:none}

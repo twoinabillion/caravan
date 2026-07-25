@@ -359,9 +359,13 @@ const UI = (()=>{
     const aiEvent = evd.type==='추적'||!!evd.ai;
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
-    const sceneKey=evd.scene||(D.eventScenes&&D.eventScenes[evd.id]);
+    const locScene=evd.locEvent&&D.nodeScenes&&D.nodeScenes[evd.locEvent];
+    const fallbackType=(evd.ai||evd.type==='추적')?'추적':evd.type;
+    const sceneKey=evd.scene||(D.eventScenes&&D.eventScenes[evd.id])||locScene
+      ||(D.eventSceneTypes&&D.eventSceneTypes[fallbackType])||'generic-story';
     const sceneSrc=sceneKey&&D.scenes&&D.scenes[sceneKey];
-    const scene=sceneSrc?`<div class="event-scene-frame"><img class="event-scene" src="${sceneSrc}" alt=""></div>`:'';
+    const sceneAlt=(evd.title||'길 위의 사건').replace(/"/g,'&quot;');
+    const scene=sceneSrc?`<div class="event-scene-frame" role="button" tabindex="0" aria-label="${sceneAlt} 장면 크게 보기"><img class="event-scene" src="${sceneSrc}" alt="${sceneAlt} 장면"><span class="scene-zoom" aria-hidden="true">↗</span></div>`:'';
     const portraitKey=D.eventPortraits&&D.eventPortraits[evd.id];
     const portrait=portraitKey&&D.portraits[portraitKey]
       ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
@@ -379,6 +383,8 @@ const UI = (()=>{
       if(b.hasAttribute('disabled'))return;
       resolveChoice(evd.choices[+b.dataset.i]);
     });
+    const sceneFrame=sheet.querySelector('.event-scene-frame');
+    if(sceneFrame) sceneFrame.onclick=()=>sceneFrame.classList.toggle('zoomed');
     $('#ev-wrap').classList.add('on');
   }
   function fmt(t){ return (t||'').replace(/\n/g,'<br>'); }

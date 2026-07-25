@@ -29,7 +29,14 @@ for KEY in "${NPC_KEYS[@]}"; do
   NPC_BASE64="$(base64 < "assets/portraits/$KEY.png" | tr -d '\n')"
   NPC_JS="${NPC_JS//__NPC_${KEY}__/data:image/png;base64,$NPC_BASE64}"
 done
-SCENE_KEYS=(GWANGJU_MARKET MIRYANG_MARKET DAEGU_DOME MUJU_TUNNEL JEONJU_MARKET DAEJEON_COMMUNE SUWON_FORTRESS SEOUL_HAN KW_DEFENSE_LINE PERIMETER_WALKER GRANDFATHER_GARAGE BUSAN_DEPARTURE)
+SCENE_KEYS=(
+  GWANGJU_MARKET MIRYANG_MARKET DAEGU_DOME MUJU_TUNNEL JEONJU_MARKET DAEJEON_COMMUNE
+  SUWON_FORTRESS SEOUL_HAN KW_DEFENSE_LINE PERIMETER_WALKER GRANDFATHER_GARAGE BUSAN_DEPARTURE
+  STORY_GENERATION_FORM STORY_GENERATION_SPEECH STORY_GENERATION_THEORIES STORY_GENERATION_ROUTE
+  TRACE_CORTIS_RELIC TRACE_CORTIS_BEACON TRACE_WORLDCUP_CHART TRACE_FOURCUTS TRACE_COLDBAG TRACE_CONSENT
+  SEOUL_RUINS SEOUL_SQUARE SEOUL_BASE SEOUL_CORE SEOUL_DECISION SEOUL_NIGHT
+  GENERIC_DISCOVERY GENERIC_ENCOUNTER GENERIC_CRISIS GENERIC_CHEOLLIAN GENERIC_STORY
+)
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
   assets/scenes/miryang-market.jpg
@@ -43,6 +50,27 @@ SCENE_FILES=(
   assets/scenes/perimeter-walker.jpg
   assets/scenes/grandfather-garage.jpg
   assets/scenes/busan-departure.jpg
+  assets/scenes/story-generation-form.jpg
+  assets/scenes/story-generation-speech.jpg
+  assets/scenes/story-generation-theories.jpg
+  assets/scenes/story-generation-route.jpg
+  assets/scenes/trace-cortis-relic.jpg
+  assets/scenes/trace-cortis-beacon.jpg
+  assets/scenes/trace-worldcup-chart.jpg
+  assets/scenes/trace-fourcuts.jpg
+  assets/scenes/trace-coldbag.jpg
+  assets/scenes/trace-consent.jpg
+  assets/scenes/seoul-ruins.jpg
+  assets/scenes/seoul-square.jpg
+  assets/scenes/seoul-base.jpg
+  assets/scenes/seoul-core.jpg
+  assets/scenes/seoul-decision.jpg
+  assets/scenes/seoul-night.jpg
+  assets/scenes/generic-discovery.jpg
+  assets/scenes/generic-encounter.jpg
+  assets/scenes/generic-crisis.jpg
+  assets/scenes/generic-cheollian.jpg
+  assets/scenes/generic-story.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do
