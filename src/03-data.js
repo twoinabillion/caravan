@@ -295,6 +295,21 @@ D.comps = {
 };
 D.maxParty = 6;   // 최종 수용 인원. 실제 좌석은 개조에 따라 단계적으로 열린다
 D.baseParty = 2;  // 기본 달구지는 동료 둘까지만 안전하게 태운다
+/* 달구지는 좌석만 욱여넣지 않는다.
+   사람 한 명을 더 태울 때마다 후미 차대·바닥·지붕 중 하나를 실제로 증축한다.
+   bodyL/bodyH는 주행 Canvas의 논리 픽셀 치수이며, 모든 단계가 이전보다 커진다. */
+D.vanStages = [
+  {id:'base',     up:null,       lv:0, nm:'기본 생활칸',       bodyL:62, bodyH:25, cm:0,
+    build:'운전사 1명 + 동료 2명 · 접이식 잠자리와 짐칸을 함께 쓴다'},
+  {id:'bench',    up:'bench',    lv:1, nm:'후미 1차 증축',     bodyL:69, bodyH:27, cm:40,
+    build:'차대 레일과 바닥을 40cm 늘리고 안전벨트 좌석을 고정한다'},
+  {id:'cabin',    up:'cabin',    lv:2, nm:'거주구 2차 증축',   bodyL:78, bodyH:32, cm:110,
+    build:'후미 벽을 다시 세워 누적 110cm의 생활칸과 창 한 칸을 만든다'},
+  {id:'bunk',     up:'bunk',     lv:3, nm:'상부 수면칸 증설',  bodyL:85, bodyH:37, cm:145,
+    build:'바닥을 35cm 더 잇고 지붕을 올려 고정식 2층 침상을 만든다'},
+  {id:'jumpseat', up:'jumpseat', lv:4, nm:'후미 서비스칸 완성',bodyL:92, bodyH:39, cm:185,
+    build:'마지막 40cm 서비스 베이에 벽걸이 좌석과 개인 짐칸을 붙인다'},
+];
 D.bondTh = [5,12,20];
 /* 동료를 만날 수 있는 지역 힌트 (상태 화면) */
 D.compWhere = {
@@ -1115,8 +1130,8 @@ D.storyContext = {
 D.upgrades = [
  {id:'tank1',    nm:'보조 연료탱크',  ic:'🛢', d:'연료 최대 +25L',                cost:{scrap:18, parts:1}},
  {id:'tank2',    nm:'대형 연료탱크',  ic:'🛢', d:'연료 최대 +25L (추가)',         cost:{scrap:30, parts:1}, needs:'tank1'},
- {id:'bench',    nm:'접이식 뒷좌석',  ic:'💺', d:'동료 자리 +1 — 첫 좌석 확장',    cost:{scrap:12, parts:1}, seat:1},
- {id:'cabin',    nm:'거주구 증축',    ic:'🏠', d:'동료 자리 +1 — 달구지가 커진다', cost:{scrap:30, parts:2}, needs:'bench', seat:1},
+ {id:'bench',    nm:'후미 레일 좌석칸',ic:'💺', d:'동료 자리 +1 · 차대와 바닥 40cm 연장', cost:{scrap:12, parts:1}, seat:1},
+ {id:'cabin',    nm:'거주구 2차 증축', ic:'🏠', d:'동료 자리 +1 · 후미 생활칸 누적 110cm 연장', cost:{scrap:30, parts:2}, needs:'bench', seat:1},
  {id:'susp',     nm:'서스펜션 강화',  ic:'🔩', d:'험로·폭풍 마모 절반',           cost:{scrap:24, parts:1}},
  {id:'armor',    nm:'장갑판',         ic:'🛡', d:'최대 내구 +25 · 받는 피해 30%↓', cost:{scrap:30, parts:1}},
  {id:'garden',   nm:'지붕 텃밭',      ic:'🌱', d:'매일 아침 식량 +1',             cost:{scrap:20}},
@@ -1134,8 +1149,8 @@ D.upgrades = [
  {id:'beehive', nm:'이동 벌통',     ic:'🐝', d:'아침 30% 확률 꿀 — 식량+1·사기+2',      cost:{scrap:28,parts:0}},
  {id:'garden2', nm:'지붕 온실',     ic:'🍅', d:'텃밭 강화 — 매일 식량 +2', cost:{scrap:30,parts:1}, needs:'garden'},
  {id:'kitchen', nm:'간이 주방',     ic:'🍳', d:'난로 확장 — 식사 때마다 사기 +1', cost:{scrap:24,parts:1}, needs:'stove'},
- {id:'bunk',    nm:'2층 침대',      ic:'🛏', d:'동료 자리 +1 · 교대 수면, 주행 피로 -20%', cost:{scrap:22,parts:1}, needs:'cabin', seat:1},
- {id:'jumpseat',nm:'벽걸이 보조석',  ic:'🪑', d:'동료 자리 +1 — 필요할 때만 펼치는 마지막 자리', cost:{scrap:18,parts:1}, needs:'bunk', seat:1},
+ {id:'bunk',    nm:'상부 2층 침상',   ic:'🛏', d:'동료 자리 +1 · 바닥 35cm+지붕 증설 · 주행 피로 -20%', cost:{scrap:22,parts:1}, needs:'cabin', seat:1},
+ {id:'jumpseat',nm:'후미 서비스칸',   ic:'🪑', d:'동료 자리 +1 · 마지막 40cm 증축+벽걸이 좌석', cost:{scrap:18,parts:1}, needs:'bunk', seat:1},
  {id:'fridge',  nm:'냉장 박스',     ic:'🧊', d:'태양광 연결 — 3일마다 식량 +1 (낭비 제로)', cost:{scrap:26,parts:1}, needs:'solar'},
  {id:'armory',  nm:'무기 선반',     ic:'⚔', d:'공구함 확장 — 제작 고철 -20%·시간 절반', cost:{scrap:24,parts:1}, needs:'sidebox'},
  {id:'scope',   nm:'지붕 망원대',   ic:'🔭', d:'발견율 +25% · 매복류 조우 -25%', cost:{scrap:22,parts:1}},
@@ -1145,7 +1160,7 @@ D.upgrades = [
 
 D.upgradeGroups = [
  {id:'fuel', nm:'연료·흡기', sub:'더 멀리 가고, 악천후에도 숨을 잇는다', ids:['tank1','tank2','snorkel']},
- {id:'seating', nm:'좌석·거주', sub:'사람을 더 태우고 차 안에서 함께 산다', ids:['bench','cabin','bunk','jumpseat','curtain']},
+ {id:'seating', nm:'좌석·거주', sub:'사람이 늘 때마다 후미를 늘리고 지붕을 올린다', ids:['bench','cabin','bunk','jumpseat','curtain']},
  {id:'chassis', nm:'주행·차체', sub:'끊긴 길과 충격을 달구지가 버티게 한다', ids:['susp','armor','winch','bullbar','mudtires']},
  {id:'utility', nm:'공구·대응', sub:'고장과 야간 조우에 현장에서 대처한다', ids:['sidebox','armory','horn','lightbar']},
  {id:'power', nm:'전력·관측', sub:'빛과 신호를 모아 먼저 보고 먼저 듣는다', ids:['solar','antenna','scope','fridge']},
@@ -1308,6 +1323,8 @@ D.intro = [
 버스 창문 하나를 달았다.
 나무판은 잠자리, 벽판은 밥상.
 바닥 밑엔 물통, 천장엔 짐 그물.
+차대 뒤에는 구멍 뚫린 연장 레일과
+새 벽을 세울 볼트 자리를 남겼다.
 
 “왜 한쪽은 비워 둬?”
 “사람이 늘면 자리도 늘려야지.”
@@ -7806,10 +7823,10 @@ D.events = [
 
 /* ───── 달구지가 집으로 변하는 생활 사건 ───── */
 {id:'up_bench_first', type:'동행', w:20, once:true, needUp:'bench', minParty:1, title:'처음 생긴 한 자리',
- text:'접이식 뒷좌석을 펼치자 금속 다리가 바닥 홈에 딱 맞았다. 빈 공간이 처음으로 사람 모양을 갖췄다.\n\n"다음 사람은 짐부터 줄여야 해요." 누군가 말했지만, 이미 창가를 닦고 있었다.',
- choices:[{label:'안전벨트를 하나 더 단다',out:[{p:1,text:'폐차에서 떼어 온 안전벨트를 박았다. 버클이 잠기는 소리가 작은 약속처럼 들렸다.',fx:{moodAll:2,flag:'seat_story_bench'}}]}]},
+ text:'후미 범퍼를 떼고, 할아버지가 남겨 둔 차대 레일을 한 마디 뒤로 뽑았다. 그 위에 새 바닥을 40cm 잇고 나서야 접이식 좌석의 금속 다리가 홈에 맞았다.\n\n자리 하나는 의자 하나가 아니었다. 사람이 앉을 만큼 달구지의 뒤가 실제로 길어졌다.',
+ choices:[{label:'연장부를 다시 조이고 안전벨트를 단다',out:[{p:1,text:'볼트를 대각선으로 두 번씩 조이고 폐차에서 떼어 온 안전벨트를 박았다. 버클이 잠기는 소리가 작은 약속처럼 들렸다.',fx:{moodAll:2,flag:'seat_story_bench'}}]}]},
 {id:'up_cabin_sleepchart', type:'동행', w:22, once:true, needUp:'cabin', minParty:2, title:'잠자리 배치표',
- text:'거주구가 높아진 첫날, 문제는 누가 어디서 자느냐였다. 창가, 문 옆, 공구함 위. 좋은 자리는 하나도 없는데 나쁜 자리는 정확히 셋이었다.',
+ text:'두 번째로 후미 벽을 뜯고 바닥과 지붕을 이었다. 창 한 칸이 더 생긴 첫날, 문제는 누가 어디서 자느냐였다. 창가, 문 옆, 공구함 위. 좋은 자리는 하나도 없는데 나쁜 자리는 정확히 셋이었다.',
  choices:[
   {label:'매일 제비를 뽑는다',out:[{p:1,text:'병뚜껑에 번호를 적었다. 첫 추첨에서 운전석이 제일 좋은 자리라는 결론만 났다.',fx:{moodAll:4,flag:'cabin_roster'}}]},
   {label:'운전자는 가장 불편한 데서 잔다',out:[{p:1,text:'반대가 심했다. 결국 운전자는 가장 가까운 데서 자고, 코 고는 사람은 가장 먼 데로 갔다.',fx:{moodAll:3,flag:'cabin_roster'}}]},
@@ -7827,7 +7844,7 @@ D.events = [
  text:'간이 주방에서 처음 끓인 것은 이름 없는 국이었다. 말린 채소, 통조림 국물, 누군가 숨겨 둔 고춧가루 반 숟갈.\n\n맛보다 김이 먼저 차 안을 채웠다.',
  choices:[{label:'그릇을 돌린다',out:[{p:1,text:'양은 적었는데 그릇은 오래 돌았다. 마지막 사람도 국물 한 모금을 남겨 다음 사람에게 건넸다.',fx:{food:-1,moodAll:6,fatigue:-8,flag:'kitchen_firstmeal'}}]}]},
 {id:'up_full_house', type:'동행', w:26, once:true, needUp:'jumpseat', minParty:4, title:'빈자리 없는 달구지',
- text:()=>`벽걸이 보조석까지 펼치자 통로가 사라졌다. 내리려면 ${S.party.slice().reverse().map(id=>D.comps[id].name).join(', ')} 순서로 움직여야 했다.\n\n불편한데도 자리를 접자는 사람은 없었다. 급정거할 때마다 옆 사람이 먼저 팔을 뻗었기 때문이다.`,
+ text:()=>`마지막 후미 서비스칸을 40cm 잇고 벽걸이 보조석을 펼쳤다. 달구지는 출발 때보다 차대가 네 마디 길고 지붕도 한 층 높았다. 그래도 내리려면 ${S.party.slice().reverse().map(id=>D.comps[id].name).join(', ')} 순서로 움직여야 했다.\n\n넓어진 만큼 사람이 찼다. 불편한데도 자리를 접자는 사람은 없었다. 급정거할 때마다 옆 사람이 먼저 팔을 뻗었기 때문이다.`,
  choices:[{label:'짐과 자리에 이름표를 붙인다',out:[{p:1,text:'자기 짐보다 남의 짐 위치를 더 잘 알게 됐다. 천장에는 출발 전 확인할 이름이 한 줄로 붙었다. 마지막 칸은 늘 「달구지」였다.',fx:{moodAll:5,flag:'van_called_home',note:{type:'사건',title:'출발 전 이름 확인',body:'빈자리는 없어졌고, 출발할 때는 사람과 차의 이름을 하나씩 확인했다.',links:['달구지']}}}]}]},
 
 /* ───── 동료 조합 사건 ───── */

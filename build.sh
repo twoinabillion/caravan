@@ -113,7 +113,7 @@ done
 UPGRADE_KEYS=(FUEL SEATING CHASSIS UTILITY POWER CAMP LIVING)
 UPGRADE_FILES=(
   assets/upgrades/fuel.jpg
-  assets/upgrades/seating.jpg
+  assets/upgrades/seating-v2.jpg
   assets/upgrades/chassis.jpg
   assets/upgrades/utility.jpg
   assets/upgrades/power.jpg

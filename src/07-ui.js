@@ -522,7 +522,7 @@ const UI = (()=>{
     if(out.fx&&out.fx.offerComp){
       const id=out.fx.offerComp, mp=G.maxParty(), full=S.party.length>=mp, c=D.comps[id], next=G.nextSeatUpgrade();
       h+=`<button class="choice" data-r="yes" ${full?'disabled':''}>${c.face} ${c.name}를 태운다
-          <span class="req">${full? '✗ 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
+          <span class="req">${full? '✗ 동료석 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 동료 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
         <button class="choice" data-r="no">작별 인사를 한다</button>`;
     } else {
       h+=`<button class="choice" data-r="ok">계속 간다</button>`;
@@ -706,6 +706,10 @@ const UI = (()=>{
     const ownedN=group.ids.filter(id=>S.up[id]).length;
     const art=D.upgradeArt&&D.upgradeArt[group.id];
     const upgrades=group.ids.map(id=>G.upDef(id)).filter(Boolean);
+    const vanStage=G.vanStage();
+    const stageLine=group.id==='seating'
+      ? `<br>현재 ${vanStage.nm} · 기본 대비 +${vanStage.cm}cm · 정원 ${G.seatCapacity()+1}명`
+      : '';
     g.innerHTML = `<div class="garage-repair">
         <span><b>차체 정비</b><small>내구 +30${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}</small></span>
         <span class="uc-cost">고철 ${repCost}</span>
@@ -717,7 +721,7 @@ const UI = (()=>{
       }).join('')}</div>
       <div class="upgrade-group">
         <div class="upgrade-group-hero">${art?`<img src="${art}" alt="${group.nm} 부품 작업대">`:''}
-          <div class="upgrade-group-copy"><b>${group.nm}</b><small>${group.sub}<br>${ownedN}/${group.ids.length} 장착</small></div>
+          <div class="upgrade-group-copy"><b>${group.nm}</b><small>${group.sub}${stageLine}<br>${ownedN}/${group.ids.length} 장착</small></div>
         </div>
         <div class="upgrade-list">${upgrades.map(u=>{
       const owned=S.up[u.id];
@@ -753,7 +757,7 @@ const UI = (()=>{
     const next=G.nextSeatUpgrade();
     const dlg=el('div','dlg',`<div class="say"><span class="spk">${c.name}</span> "…북쪽으로 가는 차가 있다고 들었다. ${id==='kangwoo'?'서울까지 가나. …태워라. 밥값은 한다.':''}"</div>
       <div class="choices">
-        <button class="choice" data-r="y" ${full?'disabled':''}>태운다 <span class="req">${full?'✗ 만석'+(next?' · '+next.nm+' 필요':''):'✓ '+c.perk}</span></button>
+        <button class="choice" data-r="y" ${full?'disabled':''}>태운다 <span class="req">${full?'✗ 동료석 만석'+(next?' · '+next.nm+' 필요':''):'✓ 동료 자리 있음 · '+c.perk}</span></button>
         <button class="choice" data-r="n">지금은 어렵다</button></div>`);
     body.prepend(dlg);
     dlg.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
@@ -881,6 +885,7 @@ const UI = (()=>{
     const stlVisited=Object.keys(D.stls).filter(sid=>S.visited.some(v=>D.nodes[v].stl===sid)).length;
     const dlv=G.driverLv(), dNext=D.driverLv[dlv+1];
     const installed=D.upgrades.filter(u=>S.up[u.id]);
+    const vanStage=G.vanStage();
     const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
     const m=missionHtml();
 
@@ -899,7 +904,8 @@ const UI = (()=>{
       <div class="st-row"><span class="k">내구도</span>${bar(S.van,S.vanMax,S.van<25)}<span class="v">${Math.floor(S.van)}/${S.vanMax}</span></div>
       <div class="st-row"><span class="k">연료</span>${bar(S.fuel,S.fuelMax,S.fuel<10)}<span class="v">${Math.floor(S.fuel)}/${S.fuelMax}L</span></div>
       <div class="st-row"><span class="k">연비</span><span class="v" style="flex:1">${kmPerL} km/L ${S.wx!=='clear'?`<small style="color:var(--faded)">(${D.wx[S.wx].nm} 반영)</small>`:''}</span></div>
-      <div class="st-row"><span class="k">좌석</span><span class="v" style="flex:1">${S.party.length} / ${G.maxParty()}${S.dog?' + 보리':''}</span></div>
+      <div class="st-row"><span class="k">탑승 인원</span><span class="v" style="flex:1">${S.party.length+1} / ${G.maxParty()+1} <small style="color:var(--faded)">운전사 포함</small>${S.dog?' + 보리':''}</span></div>
+      <div class="st-row"><span class="k">거주구</span><span class="v" style="flex:1">${vanStage.nm} <small style="color:var(--faded)">기본 대비 +${vanStage.cm}cm</small></span></div>
       <div class="csub" style="margin-top:7px">장착 ${installed.length}/${D.upgrades.length}</div>
       <div style="margin-top:7px" class="upchips">${installed.length?installed.map(u=>
         `<span class="upchip">${u.ic} ${u.nm}</span>`).join(''):'<span class="upchip off">아직 장착한 부품 없음</span>'}</div></div>
@@ -956,7 +962,7 @@ const UI = (()=>{
       return {id,c,st,p3,state};
     });
     let crew=`<div class="st-summary">
-      <div class="st-metric"><span class="mk">탑승</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
+      <div class="st-metric"><span class="mk">동료</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
       <div class="st-metric"><span class="mk">완주 서사</span><span class="mv">${stories.filter(s=>s.state==='done').length}</span></div>
       <div class="st-metric"><span class="mk">보리</span><span class="mv">${S.dog?'동행 중':'—'}</span></div>
     </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+

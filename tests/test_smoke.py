@@ -158,10 +158,22 @@ with sync_playwright() as p:
         D.intro.some(p=>p.text.includes('사람의 결정권을 되찾기 위해'));
       out.introHome = D.intro.some(p=>p.scene === 'intro-camper-conversion' &&
         p.text.includes('폐냉장고 단열판') &&
+        p.text.includes('연장 레일') &&
         p.text.includes('집은 사는 사람을 따라 커지는 거야') &&
         p.text.includes('좌석과 침대, 부엌'));
       out.seats = [G.maxParty()];
-      ['bench','cabin','bunk','jumpseat'].forEach(id=>{ S.up[id]=true; out.seats.push(G.maxParty()); });
+      out.vanSizes = [[G.vanStage().bodyL,G.vanStage().bodyH,G.vanStage().cm]];
+      ['bench','cabin','bunk','jumpseat'].forEach(id=>{
+        S.up[id]=true;
+        out.seats.push(G.maxParty());
+        const stage=G.vanStage();
+        out.vanSizes.push([stage.bodyL,stage.bodyH,stage.cm]);
+      });
+      out.vanStagesReady = D.vanStages.length === 5 &&
+        D.vanStages.every((stage,i) => i === 0 ||
+          (stage.bodyL > D.vanStages[i-1].bodyL &&
+           stage.bodyH > D.vanStages[i-1].bodyH &&
+           stage.cm > D.vanStages[i-1].cm));
       S.party=['minji','parkss']; S.up={}; out.fullBlocked=!G.doRecruit('kangwoo');
       S.up.bench=true; out.nextOpened=G.doRecruit('kangwoo');
       out.roadBeats=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'].filter(id=>D.events.find(e=>e.id===id)).length;
@@ -264,6 +276,9 @@ with sync_playwright() as p:
     check('이벤트 836종', r4['eventCount'] == 836, str(r4['eventCount']))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
+    check('좌석마다 달구지 길이·높이·실내 길이 증가',
+          r4['vanStagesReady'] and r4['vanSizes'] == [[62,25,0],[69,27,40],[78,32,110],[85,37,145],[92,39,185]],
+          str(r4['vanSizes']))
     check('메인 패널에 빈자리 카드 미표시', r4['emptyCards'] == 0, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
     check('천리안 거리 이정표 4종', r4['roadBeats'] == 4, str(r4['roadBeats']))

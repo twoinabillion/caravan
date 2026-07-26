@@ -405,14 +405,22 @@ const SCENE = (()=>{
   }
 
   /* ── 차 (달구지) ── */
+  function vanBuildStage(up){
+    const stages=D.vanStages||[];
+    let stage=stages[0]||{lv:0,bodyL:62,bodyH:25};
+    for(const x of stages){ if(!x.up||up[x.up]) stage=x; }
+    return stage;
+  }
   function van(roadY,speed,dark,wx){
     const up=S? (S.up||{}):{};
-    const vx=P(W*0.22), baseY=roadY+P((H-roadY)*0.42);
+    const build=vanBuildStage(up);
+    const bodyL=build.bodyL, bodyH=build.bodyH, cabL=17, cabH=25;
+    const cabX=P(W*0.53), vx=cabX-bodyL;
+    const baseY=roadY+P((H-roadY)*0.42);
     const bnc=speed>0? Math.sin(t*11)*0.8+Math.sin(t*23.7)*0.4 : Math.sin(t*1.6)*0.3;
     const bnc2=speed>0? Math.sin(t*11+1.2)*0.8 : Math.sin(t*1.6+0.6)*0.3;
     const ride=up.susp?1.5:0;
     const vy=P(baseY+bnc-ride);
-    const bodyL=62+(up.cabin?15:0), bodyH=25+(up.cabin?8:0), cabL=17;
     /* 그림자 */
     ctx.fillStyle='rgba(0,0,0,0.5)';
     ctx.beginPath(); ctx.ellipse(vx+bodyL*0.55,baseY+9,bodyL*0.6,2.5,0,0,7); ctx.fill();
@@ -436,12 +444,39 @@ const SCENE = (()=>{
     ctx.fillRect(vx,vy-7,bodyL,12);
     ctx.fillStyle='#4c4438';                        // 스커트
     ctx.fillRect(vx,vy+3,bodyL,2);
+    /* 사람을 더 태울 때마다 뒤로 이어 붙인 실제 증축부.
+       세로 이음선과 바닥 레일이 좌석 수치가 아니라 차체 공사였음을 보여준다. */
+    const stages=D.vanStages||[];
+    for(let si=1;si<=build.lv&&si<stages.length;si++){
+      const seg=stages[si], prev=stages[si-1];
+      const sx=cabX-seg.bodyL, sw=seg.bodyL-prev.bodyL;
+      ctx.fillStyle=si%2?'rgba(72,61,46,0.18)':'rgba(205,184,145,0.08)';
+      ctx.fillRect(sx,vy-bodyH,sw,bodyH+4);
+      ctx.strokeStyle='#3f392f'; ctx.lineWidth=1;
+      line(cabX-prev.bodyL,vy-bodyH,cabX-prev.bodyL,vy+3);
+      ctx.fillStyle='#b59b68';
+      for(let by=vy-bodyH+3;by<vy+1;by+=6) ctx.fillRect(cabX-prev.bodyL-1,by,1,1);
+    }
+    if(build.lv>0){ /* 천공 차대 레일과 단계별 체결 브래킷 */
+      ctx.fillStyle='#343944'; ctx.fillRect(vx+2,vy+4,bodyL-10,2);
+      ctx.fillStyle='#747b88';
+      for(let rx=vx+5;rx<cabX-10;rx+=8) ctx.fillRect(rx,vy+4,1,1);
+    }
     /* 팝업 루프 + 러기지랙 */
     ctx.fillStyle='#5d564a'; ctx.fillRect(vx+6,vy-bodyH-4,bodyL-24,4);
     ctx.strokeStyle='#3c372f'; ctx.lineWidth=1;
     line(vx+4,vy-bodyH-5, vx+bodyL-14,vy-bodyH-5);
     line(vx+4,vy-bodyH-5, vx+4,vy-bodyH);
     line(vx+bodyL-14,vy-bodyH-5, vx+bodyL-14,vy-bodyH);
+    if(up.bunk){ /* 상부 수면칸: 주행 중에도 접히지 않는 경량 하드탑 */
+      const ux=vx+12, uw=bodyL-29;
+      ctx.fillStyle='#756d60'; ctx.fillRect(ux,vy-bodyH-3,uw,3);
+      ctx.fillStyle=dark>0.35?'#d99a54':'rgba(151,181,205,0.48)';
+      for(let bx=ux+5;bx<ux+uw-3;bx+=12) ctx.fillRect(bx,vy-bodyH-2,6,2);
+      ctx.strokeStyle='#3c372f';
+      line(ux+2,vy-bodyH-4,ux+6,vy-bodyH);
+      line(ux+uw-3,vy-bodyH-4,ux+uw-7,vy-bodyH);
+    }
     /* 지붕짐: 스페어 + 제리캔 (+업그레이드 장비) */
     ctx.fillStyle='#23262e'; circ(vx+bodyL-20,vy-bodyH-7,4);
     ctx.fillStyle='#3d414f'; circ(vx+bodyL-20,vy-bodyH-7,2);
@@ -477,10 +512,11 @@ const SCENE = (()=>{
       ctx.fillStyle='#5d6472'; ctx.fillRect(vx+bodyL-29,vy-2,11,1); }
     if(up.armor){ /* 장갑판 */
       ctx.fillStyle='#697080';
-      ctx.fillRect(vx+5,vy-5,13,7); ctx.fillRect(vx+24,vy-5,13,7);
+      for(let ax=vx+5;ax<cabX-11;ax+=18) ctx.fillRect(ax,vy-5,13,7);
       ctx.fillStyle='#8b93a3';
-      [[vx+6,vy-4],[vx+16,vy-4],[vx+6,vy+0],[vx+16,vy+0],[vx+25,vy-4],[vx+35,vy-4],[vx+25,vy+0],[vx+35,vy+0]]
-        .forEach(([rx,ry])=>ctx.fillRect(rx,ry,1,1));
+      for(let ax=vx+6;ax<cabX-11;ax+=18){
+        [[ax,vy-4],[ax+10,vy-4],[ax,vy],[ax+10,vy]].forEach(([rx,ry])=>ctx.fillRect(rx,ry,1,1));
+      }
     }
     if(up.sidebox){ /* 사이드 공구함 (후미 하단) */
       ctx.fillStyle='#4f5665'; ctx.fillRect(vx-1,vy-2,6,5);
@@ -502,20 +538,20 @@ const SCENE = (()=>{
         ctx.fillRect(P(vx+bodyL-7+Math.sin(t*7+bz*3)*4), P(vy-bodyH-8+Math.cos(t*9+bz*2)*2), 1,1); }
     }
     if(up.lightbar){ /* 라이트바 (캡 지붕) */
-      ctx.fillStyle='#2f333d'; ctx.fillRect(vx+bodyL+2,vy-bodyH+2,9,2);
+      ctx.fillStyle='#2f333d'; ctx.fillRect(vx+bodyL+2,vy-cabH+2,9,2);
       if(dark>0.3){ ctx.fillStyle='#ffe9a8';
-        for(let lb=0;lb<4;lb++) ctx.fillRect(vx+bodyL+3+lb*2,vy-bodyH+3,1,1);
-        ctx.fillStyle='rgba(255,235,170,0.12)'; ctx.fillRect(vx+bodyL+2,vy-bodyH+4,10,3); }
+        for(let lb=0;lb<4;lb++) ctx.fillRect(vx+bodyL+3+lb*2,vy-cabH+3,1,1);
+        ctx.fillStyle='rgba(255,235,170,0.12)'; ctx.fillRect(vx+bodyL+2,vy-cabH+4,10,3); }
     }
     if(up.snorkel){ /* 스노클 (캡 옆 흡기 파이프) */
       ctx.fillStyle='#3a3f4a';
-      ctx.fillRect(vx+bodyL+cabL-3,vy-bodyH+3,2,12);
-      ctx.fillRect(vx+bodyL+cabL-5,vy-bodyH+2,4,2);                  // 흡기구(앞으로 꺾임)
+      ctx.fillRect(vx+bodyL+cabL-3,vy-cabH+3,2,12);
+      ctx.fillRect(vx+bodyL+cabL-5,vy-cabH+2,4,2);                  // 흡기구(앞으로 꺾임)
     }
     if(up.bullbar){ /* 전면 가드 */
       ctx.strokeStyle='#5d6472'; ctx.lineWidth=1;
-      line(vx+bodyL+cabL+2,vy-bodyH+14, vx+bodyL+cabL+2,vy+4);
-      line(vx+bodyL+cabL+1,vy-bodyH+16, vx+bodyL+cabL+3,vy-bodyH+16);
+      line(vx+bodyL+cabL+2,vy-cabH+14, vx+bodyL+cabL+2,vy+4);
+      line(vx+bodyL+cabL+1,vy-cabH+16, vx+bodyL+cabL+3,vy-cabH+16);
       line(vx+bodyL+cabL+1,vy-1, vx+bodyL+cabL+3,vy-1);
     }
     if(up.winch){ /* 전면 윈치 드럼 */
@@ -524,8 +560,9 @@ const SCENE = (()=>{
       ctx.fillStyle='#c9a24a'; ctx.fillRect(vx+bodyL+cabL+4,vy+4,1,1); // 훅
     }
     if(up.mudtires){ /* 험로 타이어 펜더 플레어 */
+      const rearAxle=cabX-49, frontAxle=cabX+5;
       ctx.fillStyle='#3a3f4c';
-      ctx.fillRect(vx+7,vy+3,13,2); ctx.fillRect(vx+bodyL-1,vy+3,13,2);
+      ctx.fillRect(rearAxle-6,vy+3,13,2); ctx.fillRect(frontAxle-6,vy+3,13,2);
     }
     if(up.garden2){ /* 지붕 온실 — 텃밭 위 유리 아치 */
       ctx.strokeStyle='rgba(175,215,240,0.55)'; ctx.lineWidth=1;
@@ -566,9 +603,9 @@ const SCENE = (()=>{
     /* ── 캡 ── */
     ctx.fillStyle='#988e7c';
     ctx.beginPath();
-    ctx.moveTo(vx+bodyL,vy-bodyH+5);
-    ctx.lineTo(vx+bodyL+cabL-6,vy-bodyH+6);
-    ctx.lineTo(vx+bodyL+cabL-1,vy-bodyH+13);
+    ctx.moveTo(vx+bodyL,vy-cabH+5);
+    ctx.lineTo(vx+bodyL+cabL-6,vy-cabH+6);
+    ctx.lineTo(vx+bodyL+cabL-1,vy-cabH+13);
     ctx.lineTo(vx+bodyL+cabL,vy+1);
     ctx.lineTo(vx+bodyL,vy+1); ctx.closePath(); ctx.fill();
     ctx.fillStyle='#6f6250'; ctx.fillRect(vx+bodyL,vy-6,cabL,11);
@@ -583,16 +620,20 @@ const SCENE = (()=>{
       line(vx+bodyL-1,vy-7,vx+bodyL-1,vy+3);
     }
     /* 보닛 */
-    ctx.fillStyle='#877d6b'; ctx.fillRect(vx+bodyL+cabL-6,vy-bodyH+13,6,4);
+    ctx.fillStyle='#877d6b'; ctx.fillRect(vx+bodyL+cabL-6,vy-cabH+13,6,4);
     /* 앞유리 + 운전자 */
     ctx.fillStyle= dark>0.4?'rgba(150,180,215,0.32)':'rgba(185,210,232,0.6)';
     ctx.beginPath();
-    ctx.moveTo(vx+bodyL+1,vy-bodyH+7);
-    ctx.lineTo(vx+bodyL+cabL-7,vy-bodyH+8);
-    ctx.lineTo(vx+bodyL+cabL-4,vy-bodyH+14);
-    ctx.lineTo(vx+bodyL+1,vy-bodyH+14); ctx.closePath(); ctx.fill();
+    ctx.moveTo(vx+bodyL+1,vy-cabH+7);
+    ctx.lineTo(vx+bodyL+cabL-7,vy-cabH+8);
+    ctx.lineTo(vx+bodyL+cabL-4,vy-cabH+14);
+    ctx.lineTo(vx+bodyL+1,vy-cabH+14); ctx.closePath(); ctx.fill();
+    /* 운전사는 거주구 머리 줄에 섞지 않고 앞유리 안에 따로 앉는다. */
+    ctx.fillStyle='rgba(20,23,31,0.78)';
+    ctx.fillRect(cabX+4,vy-cabH+10,4,4);
+    ctx.fillRect(cabX+5,vy-cabH+8,3,3);
     /* 사이드미러 */
-    ctx.fillStyle='#3c372f'; ctx.fillRect(vx+bodyL+cabL-2,vy-bodyH+8,2,3);
+    ctx.fillStyle='#3c372f'; ctx.fillRect(vx+bodyL+cabL-2,vy-cabH+8,2,3);
     /* ── 옆창 (거주구) : 따뜻한 빛 + 탑승자 ── */
     const winY=vy-bodyH+5, winH=9;
     ctx.fillStyle= dark>0.35? '#f5b869':'rgba(170,198,220,0.55)';
@@ -608,8 +649,12 @@ const SCENE = (()=>{
       ctx.fillStyle='#9fc3d8'; ctx.fillRect(vx+18,winY+4,1,1);
     }
     ctx.strokeStyle='#4c4438';
-    line(vx+24,winY,vx+24,winY+winH); line(vx+41,winY,vx+41,winY+winH);
-    if(up.cabin) line(vx+58,winY,vx+58,winY+winH);
+    const winX=vx+7, winW=bodyL-16;
+    const winPanels=Math.min(6,2+build.lv);
+    for(let wp=1;wp<winPanels;wp++){
+      const wxp=P(winX+winW*wp/winPanels);
+      line(wxp,winY,wxp,winY+winH);
+    }
     if(up.kitchen && speed<=0){ /* 간이 주방 — 정차 시 조리 해치 열림 */
       ctx.fillStyle='#877d6b'; ctx.fillRect(vx+26,vy-11,10,1);      // 열린 판(선반)
       ctx.fillStyle='#3c372f'; ctx.fillRect(vx+26,vy-10,1,3); ctx.fillRect(vx+35,vy-10,1,3); // 지지
@@ -626,18 +671,19 @@ const SCENE = (()=>{
       ctx.fillStyle='#717988'; ctx.fillRect(vx+1,vy-12,3,1); ctx.fillRect(vx+1,vy-8,3,1);
       ctx.fillStyle='#c9a24a'; ctx.fillRect(vx+2,vy-10,1,1);
     }
-    /* 탑승자 (나 + 동료) — 인원수만큼 창문에 균등 배치 */
+    /* 동료는 창 안쪽에 어두운 실루엣으로만 보인다.
+       주인공은 앞유리, 동료는 실제로 늘어난 거주구 창을 나눠 쓴다. */
     const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
-    const riders=S? [['#2c3346'],...S.party.filter(id=>!outside.includes(id)).map(id=>[D.comps[id].color])]:[['#2c3346']];
-    const seatSpan=bodyL-20, seatGap=Math.min(13, seatSpan/Math.max(1,riders.length));  // 많으면 촘촘히
-    if(!curtained) riders.forEach((r,i)=>{
-      const hx=P(vx+bodyL-8-i*seatGap);
+    const riders=S? S.party.filter(id=>!outside.includes(id)):[];
+    const seatSpan=bodyL-22, seatGap=seatSpan/Math.max(1,riders.length);
+    if(!curtained) riders.forEach((id,i)=>{
+      const hx=P(vx+10+(i+0.5)*seatGap);
       const nod = Math.sin(t*1.2+i*2.7)>0.96?1:0;                    // 가끔 고개 까딱
       const doze = S && S.fatigue>=70 && speed>0 && i===1+(S.day%3) && i>0;  // 피로하면 누군가 존다
-      const hy=P(winY+winH-3+((i%2)?bnc2-bnc:0)) + (doze? 1:nod);
-      ctx.fillStyle='#171a24'; ctx.fillRect(hx-2,hy-3,5,4);          // 몸/얼굴 실루엣
-      ctx.fillStyle=r[0]; ctx.fillRect(hx-2,hy-5,5,2);               // 머리색
-      ctx.fillRect(hx-3,hy-4,1,2); ctx.fillRect(hx+3,hy-4,1,2);
+      const hy=P(winY+winH-2+((i%2)?bnc2-bnc:0)) + (doze? 1:nod);
+      ctx.fillStyle='rgba(18,21,29,0.88)';
+      ctx.fillRect(hx-2,hy-2,5,2);                                  // 어깨
+      ctx.fillRect(hx-1,hy-5,3,3);                                  // 창 안의 머리
       if(doze && Math.sin(t*2)>0){ ctx.fillStyle='rgba(200,215,240,0.65)';
         ctx.fillRect(hx+4,hy-8,1,1); ctx.fillRect(hx+5,hy-10,1,1); } // 쿨쿨 zZ
       if(i===talkIdx && talkT>0){                                    // 말하는 중 ・・・
@@ -648,8 +694,8 @@ const SCENE = (()=>{
     });
     /* 식사 연출: 창문 안 먹는 모션 + 김 (아침 배급·점심 후 16초) */
     if(mealT>0){
-      riders.forEach((r,i)=>{
-        const hx=P(vx+bodyL-8-i*seatGap), hy=P(winY+winH-3+((i%2)?bnc2-bnc:0));
+      riders.forEach((id,i)=>{
+        const hx=P(vx+10+(i+0.5)*seatGap), hy=P(winY+winH-2+((i%2)?bnc2-bnc:0));
         const toMouth = Math.sin(t*4.5+i*1.7)>0;                 // 손이 입으로 갔다 내려갔다
         ctx.fillStyle='#e8d9a8';                                  // 주먹밥
         ctx.fillRect(hx+(toMouth?0:1), hy-(toMouth?3:1), 2,1);
@@ -730,7 +776,8 @@ const SCENE = (()=>{
     ctx.closePath(); ctx.fill();
     /* 바퀴 */
     const spin=worldX*0.3;
-    [[vx+13,bnc],[vx+bodyL+5,bnc2]].forEach(wj=>{
+    const rearAxle=cabX-49, frontAxle=cabX+5;
+    [[rearAxle,bnc],[frontAxle,bnc2]].forEach(wj=>{
       const wx0=wj[0], wy0=P(baseY+6);
       const wr=up.mudtires?6.7:5.5;
       ctx.fillStyle='#0e1016'; circ(wx0,wy0,wr);
@@ -747,7 +794,7 @@ const SCENE = (()=>{
     });
     /* 흙받이 */
     ctx.fillStyle='#33302a';
-    ctx.fillRect(vx+7,P(baseY+3),3,4); ctx.fillRect(vx+bodyL+11,P(baseY+3),3,4);
+    ctx.fillRect(rearAxle-6,P(baseY+3),3,4); ctx.fillRect(frontAxle+6,P(baseY+3),3,4);
     /* 라이트 */
     ctx.fillStyle= dark>0.25?'#ffe9b0':'#d8d2be';
     ctx.fillRect(vx+bodyL+cabL-2,vy-3,2,3);
@@ -862,7 +909,9 @@ const SCENE = (()=>{
 
     /* 달구지를 인식한 추적 프레임. 네 모서리만 남겨 감시 장치처럼 보이게 한다. */
     if(level>=3){
-      const bx=P(W*0.22-10), by=P(roadY+(H-roadY)*0.42-43), bw=101, bh=59;
+      const build=vanBuildStage(S.up||{}), cabX=P(W*0.53), bodyX=cabX-build.bodyL;
+      const bx=P(bodyX-10), by=P(roadY+(H-roadY)*0.42-build.bodyH-18);
+      const bw=build.bodyL+43, bh=build.bodyH+35;
       const pulse=reduced?0.55:0.3+0.3*(0.5+0.5*Math.sin(t*2.7));
       ctx.strokeStyle=`rgba(${cyan},${pulse})`; ctx.lineWidth=1;
       const c=7;

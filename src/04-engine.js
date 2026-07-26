@@ -781,6 +781,12 @@ G.fieldRepair = ()=>{
 /* ── 차 업그레이드 ── */
 G.seatCapacity = ()=> Math.min(D.maxParty,(D.baseParty||2)+D.upgrades.reduce((n,u)=>n+(u.seat&&S&&S.up&&S.up[u.id]?u.seat:0),0));
 G.maxParty = ()=> Math.max(G.seatCapacity(),S&&S.party?S.party.length:0); // 구버전 과승 세이브는 동료를 내리지 않는다
+G.vanStage = ()=>{
+  const stages=D.vanStages||[];
+  let stage=stages[0]||{id:'base',lv:0,nm:'기본 생활칸',bodyL:62,bodyH:25,cm:0,build:''};
+  for(const x of stages){ if(!x.up||(S&&S.up&&S.up[x.up])) stage=x; }
+  return stage;
+};
 G.nextSeatUpgrade = ()=> D.upgrades.find(u=>u.seat&&!(S&&S.up&&S.up[u.id]));
 G.upDef = (id)=> D.upgrades.find(u=>u.id===id);
 G.canBuyUp = (id)=>{
@@ -798,8 +804,10 @@ G.buyUpgrade = (id)=>{
   S.up[id]=true;
   if(id==='tank1'||id==='tank2'){ S.fuelMax+=25; }
   if(id==='armor'){ S.vanMax+=25; S.van+=25; }
-  UI.toast(`${u.ic} ${u.nm} 장착 완료${u.seat?' — 동료 자리 '+G.maxParty()+'명':''}`);
-  G.addNote({type:'사건', title:'달구지 개조: '+u.nm, body:u.d+' — 달구지가 조금 더 우리 집이 됐다.', links:[]});
+  const stage=u.seat?G.vanStage():null;
+  UI.toast(`${u.ic} ${u.nm} 장착 완료${u.seat?` — ${stage.nm} · 동료 자리 ${G.maxParty()}명`:''}`);
+  G.addNote({type:'사건', title:'달구지 개조: '+u.nm,
+    body:(stage?stage.build:u.d)+' — 달구지가 조금 더 우리 집이 됐다.', links:[]});
   G.save(); return true;
 };
 
