@@ -35,6 +35,18 @@ no split panels, no UI, no zombies, no fantasy, no glossy sci-fi.
 인트로의 새 세 컷은 `assets/intro/`, 검증키 사건은 `assets/scenes/`에
 `768×432` JPEG로 저장한다. 생성 원본은 Codex 내장 imagegen 경로에 보존한다.
 
+## 달구지 기원 장면
+
+| 키 | 장면 브리프 |
+|---|---|
+| `intro-camper-conversion` | 부산의 비 오는 항구 작업장. 할아버지는 낡은 한 톤 용달차 적재함의 생활칸 뼈대를 재고, 주인공은 폐버스 창문을 단다. 열린 측면으로 접이식 잠자리·밥상·물통·짐 그물과 아직 비워 둔 증축 틀이 한눈에 보여야 한다. |
+
+기존 `intro-years-together`와 `grandfather-garage`, 실제 기본 달구지
+스프라이트를 참조한다. 차는 공장제 캠핑카나 대형 RV가 아니라 폐냉장고
+단열판과 합판으로 만든 작고 미완성인 이동식 집이어야 한다. 생성 원본은
+`1672×941` PNG로 보존하고, 게임에는 중앙 크롭한
+`assets/intro/06-camper-conversion-v2.jpg`를 사용한다.
+
 ## 세대·서울 고유 장면 16종
 
 | 키 | 장면 브리프 |

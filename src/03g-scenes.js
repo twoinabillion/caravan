@@ -50,6 +50,7 @@ D.scenes = {
   'intro-143-years':'__SCENE_INTRO_143_YEARS__',
   'intro-blank-reason':'__SCENE_INTRO_BLANK_REASON__',
   'intro-years-together':'__SCENE_INTRO_YEARS_TOGETHER__',
+  'intro-camper-conversion':'__SCENE_INTRO_CAMPER_CONVERSION__',
   'intro-envelope-signal':'__SCENE_INTRO_ENVELOPE_SIGNAL__',
   'intro-departure-choice':'__SCENE_INTRO_DEPARTURE_CHOICE__',
   'intro-parents-discovery':'__SCENE_INTRO_PARENTS_DISCOVERY__',

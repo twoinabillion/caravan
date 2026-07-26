@@ -150,12 +150,16 @@ with sync_playwright() as p:
       out.journeyBeats = (D.journeyBeats||[]).length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
-      out.introBook = D.intro.length === 11 && D.intro.every(p =>
+      out.introBook = D.intro.length === 12 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
       out.introPremise = D.intro.some(p=>p.text.includes('미국의 AI와 반도체망')) &&
         D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&
         D.intro.some(p=>p.text.includes('등록 인원 6,412명')) &&
         D.intro.some(p=>p.text.includes('사람의 결정권을 되찾기 위해'));
+      out.introHome = D.intro.some(p=>p.scene === 'intro-camper-conversion' &&
+        p.text.includes('폐냉장고 단열판') &&
+        p.text.includes('집은 사는 사람을 따라 커지는 거야') &&
+        p.text.includes('좌석과 침대, 부엌'));
       out.seats = [G.maxParty()];
       ['bench','cabin','bunk','jumpseat'].forEach(id=>{ S.up[id]=true; out.seats.push(G.maxParty()); });
       S.party=['minji','parkss']; S.up={}; out.fullBlocked=!G.doRecruit('kangwoo');
@@ -256,8 +260,9 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 58종·빌드 주입', r4['sceneCount'] == 58 and r4['sceneDataReady'], str(r4))
-    check('그림책 도입 11장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
+    check('시네마틱 이미지 59종·빌드 주입', r4['sceneCount'] == 59 and r4['sceneDataReady'], str(r4))
+    check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
+    check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
     check('도시 9곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] >= 36, str(r4))
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
