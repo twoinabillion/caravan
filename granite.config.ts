@@ -1,7 +1,7 @@
 import { defineConfig } from '@apps-in-toss/web-framework/config';
 
 export default defineConfig({
-  appName: 'seoul400km',
+  appName: 'caravanproject',
   brand: {
     displayName: '서울까지 400km',
     primaryColor: '#b94a2f',
