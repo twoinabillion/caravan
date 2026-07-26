@@ -53,14 +53,23 @@ with sync_playwright() as p:
       const toast=document.querySelector('.toast').getBoundingClientRect();
       const bubble=document.querySelector('.bubble').getBoundingClientRect();
       const out={stageH:stage.height,mainH:main.height,toastN:document.querySelectorAll('.toast').length,
-        toastW:toast.width,bubbleN:document.querySelectorAll('.bubble').length,bubbleW:bubble.width};
+        toastW:toast.width,bubbleN:document.querySelectorAll('.bubble').length,bubbleW:bubble.width,
+        narrationN:document.querySelectorAll('.bubble.narration').length};
       document.querySelector('#toasts').replaceChildren();
+      document.querySelector('#bubbles').replaceChildren();
+      UI.speak({who:'나',t:'(속말 테스트)'});
+      const thought=document.querySelector('.bubble.thought');
+      out.thought=!!thought;
+      out.thoughtText=thought?.textContent||'';
+      out.thoughtHasWho=!!thought?.querySelector('.who');
       document.querySelector('#bubbles').replaceChildren();
       return out;
     }''')
     check('상단 풍경 310px 이하·하단 패널 380px 이상', layout['stageH'] <= 311 and layout['mainH'] >= 380, str(layout))
     check('알림·주행 말풍선 최대 2개', layout['toastN'] <= 2 and layout['bubbleN'] <= 2, str(layout))
     check('알림 360px·말풍선 300px 이하', layout['toastW'] <= 361 and layout['bubbleW'] <= 301, str(layout))
+    check('서술·속말 말풍선 분리', layout['narrationN'] == 2 and layout['thought'] and
+          layout['thoughtText'] == '속말 테스트' and not layout['thoughtHasWho'], str(layout))
     check('콘솔 에러 0', not errors, ' | '.join(errors[:3]))
 
     print('― 의뢰 엔진')

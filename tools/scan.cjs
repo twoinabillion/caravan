@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* 정합성 스캐너 — D 전체를 로드해 참조를 전수 검사한다.
- * 사용: node tools/scan.js   (레포 루트/어디서든)
+ * 사용: node tools/scan.cjs   (레포 루트/어디서든)
  * 검사: 이벤트 id 중복 · 노드/동료/아이템/플래그 참조 · 고아 노드 · 중복 도로 · nodeBio 커버리지
  */
 const fs = require('fs');

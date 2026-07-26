@@ -74,7 +74,7 @@
 ## 콘텐츠 제작 규칙
 
 - 이벤트 스키마·fx 키·req 키는 04-engine의 `G.eligible`/`G.applyFx`/`G.reqOk`가 진실의 원천
-- 신규 이벤트는 **반드시 `node tools/scan.js`** 통과 후 커밋 (참조 전수 검사)
+- 신규 이벤트는 **반드시 `node tools/scan.cjs`** 통과 후 커밋 (참조 전수 검사)
 - id 규칙: find_/meet_/exp_/comp_/ai_/crisis_/vg_/wx_/night_/camp_/loc_ + 체인은 테마 접두어(lib_, freq_, van_)
 - 정경은 선택지 1개("…"), fx는 moodAll±2 이내 — 분위기용, 보상 아님
 - 천리안 연출(청록 틴트)은 `ai:1` 명시 이벤트만

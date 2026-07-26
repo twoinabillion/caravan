@@ -7,7 +7,8 @@
     "dev:web": "vite",
     "build:web": "vite build",
     "dev:toss": "granite dev",
-    "build:toss": "ait build"
+    "build:toss": "ait build",
+    "lint:dialogue": "node tools/dialogue-lint.cjs"
   },
   "dependencies": {
     "@apps-in-toss/web-framework": "2.10.6"

@@ -392,7 +392,9 @@ const UI = (()=>{
     const wrap=$('#bubbles');
     while(wrap.children.length>=2) wrap.firstElementChild.remove();
     const isAi = b.who==='cheollian';
-    if(!isAi && b.who!=='sys' && b.who!=='radio' && typeof SCENE!=='undefined' && SCENE.talkPulse){
+    const isNarration = b.who==='sys';
+    const isThought = b.who==='나' && /^\s*\([\s\S]*\)\s*$/.test(b.t);
+    if(!isAi && !isNarration && !isThought && b.who!=='radio' && typeof SCENE!=='undefined' && SCENE.talkPulse){
       let ri=-1;
       if(b.who==='나') ri=0;
       else if(S&&S.party){ const k=S.party.indexOf(b.who); if(k>=0) ri=k+1; }
@@ -405,12 +407,15 @@ const UI = (()=>{
       setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, 7000);
       return;
     }
-    const bb=el('div','bubble'+(isAi?' ai':''),
-      (b.who!=='sys'&&!isAi? `<span class="who">${b.who==='나'?G.myName():(D.comps[b.who]?.name||b.who)}</span>`:'')
-      + (isAi? `<span class="who">천리안</span>`:'') + b.t);
+    const kind=isAi?' ai':isNarration?' narration':isThought?' thought':'';
+    const text=isThought?b.t.trim().slice(1,-1):b.t;
+    const bb=el('div','bubble'+kind,
+      (!isNarration&&!isThought&&!isAi? `<span class="who">${b.who==='나'?G.myName():(D.comps[b.who]?.name||b.who)}</span>`:'')
+      + (isAi? `<span class="who">천리안</span>`:'') + text);
     wrap.appendChild(bb);
     requestAnimationFrame(()=>bb.classList.add('show'));
-    setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, 4600);
+    const hold=isNarration?3800:isThought?4200:4600;
+    setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, hold);
   }
 
   /* ── toast ── */

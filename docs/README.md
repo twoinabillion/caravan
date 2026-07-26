@@ -14,7 +14,7 @@
 
 ```bash
 ./build.sh              # src/ 파트 cat → 서울까지400km.html (파트 순서 = 로드 순서)
-node tools/scan.js      # 정합성 스캐너 — 이벤트 참조 전수 검사 (커밋 전 필수)
+node tools/scan.cjs     # 정합성 스캐너 — 이벤트 참조 전수 검사 (커밋 전 필수)
 python3 tests/test_smoke.py   # Playwright 스모크 (부팅·의뢰 엔진·신규 이벤트·콘솔 에러)
 ```
 
@@ -23,7 +23,7 @@ src/        01-style → 02-dom → 03-data → 03b-portraits → 03c-icons
             → 04-engine → 05-scene → 06-mapgraph → 07-ui → 08-offroad → 09-close
 assets/     portraits(96px)·icons(32px) 원본 백업 (게임엔 base64로 인라인)
 docs/       DESIGN.md(디자인 바이블) · 프롬프트 가이드 2종
-tools/      scan.js 정합성 스캐너
+tools/      scan.cjs 정합성 스캐너
 tests/      test_smoke.py + shots/
 ```
 

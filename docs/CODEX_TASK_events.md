@@ -13,7 +13,7 @@
    ```
    node --check src/03-data.js      # 문법
    ./build.sh                       # HTML 재생성
-   node tools/scan.js               # 데이터 정합성 (참조 깨짐·미정의 플래그 검출)
+   node tools/scan.cjs              # 데이터 정합성 (참조 깨짐·미정의 플래그 검출)
    python3 tests/test_smoke.py      # 게이트 로직 스모크
    ```
 4. 아래 **정의된 fx/req/type/region 어휘 밖의 키를 지어내지 마라.** 새 플래그를 만들면 그 플래그를 소비하는 곳이 없어 죽은 데이터가 된다. 새 게이트/시스템이 필요하면 만들지 말고 목록으로 보고만 해라.
