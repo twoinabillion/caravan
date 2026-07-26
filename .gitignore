@@ -1,6 +1,10 @@
 seoul400_apikey
 .DS_Store
 tests/shots/
+node_modules
+dist/
+.granite/
+*.ait
 
 # SSH 키·비밀 절대 커밋 금지
 *.pem
