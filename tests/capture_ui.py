@@ -118,6 +118,38 @@ with sync_playwright() as playwright:
     page.evaluate("G.openEventById('roadbeat_200_archive')")
     page.wait_for_timeout(200)
     page.screenshot(path=str(SHOT / "08-event-context.png"))
+    page.evaluate(
+        """() => {
+          document.querySelector('#ev-wrap').classList.remove('on');
+          S.party = Object.keys(D.comps);
+          Object.keys(D.comps).forEach(id => {
+            const c=D.comps[id], st=S.comps[id];
+            st.lvl=3; st.perks=[...(st.perks||[]), c.perks[3].id];
+          });
+          (D.deeds||[]).forEach(d => { if (d.flag) S.flags[d.flag]=true; });
+          (D.eraTraces||[]).forEach(t => { S.flags[t.flag]=true; });
+          ['ridge_path','sokcho_end','librarian_truth'].forEach(f => { S.flags[f]=true; });
+          UI.showEvent(D.seoulStops.find(e => e.id === 'seoul_core'));
+        }"""
+    )
+    page.wait_for_timeout(200)
+    page.screenshot(path=str(SHOT / "09-event-long-top.png"))
+    scroll_metrics = page.evaluate(
+        """() => {
+          const copy=document.querySelector('.event-scroll');
+          const choices=document.querySelector('.event-choice-dock>.choices');
+          const before={copyTop:copy.scrollTop, choiceTop:choices.scrollTop,
+            copyClient:copy.clientHeight, copyScroll:copy.scrollHeight,
+            choiceClient:choices.clientHeight, choiceScroll:choices.scrollHeight,
+            choiceCount:choices.querySelectorAll('.choice').length};
+          copy.scrollTop=copy.scrollHeight;
+          choices.scrollTop=choices.scrollHeight;
+          return {...before, copyAfter:copy.scrollTop, choiceAfter:choices.scrollTop};
+        }"""
+    )
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "10-event-long-scrolled.png"))
 
     browser.close()
     print(SHOT)
+    print(scroll_metrics)

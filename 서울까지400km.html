@@ -89,14 +89,15 @@ input{font-family:inherit}
 #clockbox{font-variant-numeric:tabular-nums}
 
 /* 현재 임무 — 메인과 전체 지도에서 같은 정보가 사라지지 않는다 */
-.mission-strip{flex:none;width:100%;min-height:58px;border:0;border-bottom:1px solid var(--line);
+.mission-strip{flex:none;width:100%;min-height:52px;border:0;border-bottom:1px solid var(--line);
   background:linear-gradient(90deg,rgba(255,180,84,.09),rgba(15,20,34,.98) 42%);
-  padding:7px 12px;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;
+  padding:6px 12px;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 10px;
   color:var(--paper)}
 .mission-strip .ms-k{grid-column:1;grid-row:1;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;color:var(--amber)}
 .mission-strip .ms-title{grid-column:1;grid-row:2;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mission-strip .ms-meta{grid-column:2;grid-row:1/5;align-self:center;font-family:var(--mono);
   font-size:10.5px;color:var(--faded);text-align:right;white-space:nowrap}
+.mission-strip .ms-alert{color:var(--danger);font-size:9.5px}
 .mission-strip .ms-progress{grid-column:1;grid-row:4;height:2px;background:#080b14;border-radius:2px;overflow:hidden}
 .mission-strip .ms-progress i{display:block;height:100%;background:var(--amber);border-radius:2px}
 .mission-strip .ms-state{grid-column:1;grid-row:3;font-size:10.5px;color:var(--faded);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -106,10 +107,27 @@ input{font-family:inherit}
 
 /* ── main content area ── */
 #main{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
-#panel{flex:1;min-height:0;overflow-y:auto;padding:14px 16px calc(64px + env(safe-area-inset-bottom));
+#panel{flex:1;min-height:0;overflow-y:auto;padding:10px 14px calc(64px + env(safe-area-inset-bottom));
   scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 #panel h3{font-size:16px;letter-spacing:-.01em;margin-bottom:2px;text-wrap:balance}
 #panel .sub{color:var(--faded);font-size:12.5px;margin-bottom:12px}
+.journey-context{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-bottom:9px}
+.context-location,.context-crew{min-width:0;border:1px solid var(--line);border-radius:10px;background:var(--panel2);
+  min-height:44px;color:var(--paper);transition:border-color .15s,background .15s}
+.context-location{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;
+  column-gap:9px;align-items:center;padding:6px 10px;text-align:left}
+.context-location:hover,.context-crew:hover{border-color:#39456f}
+.context-location .loc-mark{grid-row:1/3;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;
+  color:var(--amber);writing-mode:vertical-rl}
+.context-location b{align-self:end;font-size:13px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.context-location small{align-self:start;color:var(--faded);font-family:var(--mono);font-size:9.5px;white-space:nowrap}
+.context-crew{display:flex;align-items:center;gap:7px;padding:5px 9px}
+.crew-faces{display:flex;padding-left:5px}
+.crew-mini{width:25px;height:25px;margin-left:-6px;border-radius:50%;overflow:hidden;background:#0a0d18;
+  border:1px solid #39456f;display:grid;place-items:center;font-size:11px}
+.crew-mini:first-child{margin-left:0}.crew-mini .pimg{border-radius:50%}
+.context-crew .crew-count{font-family:var(--mono);font-size:10px;color:var(--faded);white-space:nowrap}
+.road-note{color:var(--dim);font-size:11.5px;margin-top:6px}
 
 /* travel progress */
 #travelbar{margin:2px 0 12px}
@@ -151,6 +169,20 @@ input{font-family:inherit}
 .sheet{background:linear-gradient(#161c30,var(--panel2));border-top:1px solid #2c3660;
   border-radius:16px 16px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));
   max-height:88%;overflow-y:auto;animation:up .28s cubic-bezier(.2,.9,.3,1)}
+.sheet.event-mode{display:flex;flex-direction:column;overflow:hidden;padding:0;max-height:92dvh;
+  touch-action:pan-y;overscroll-behavior:contain}
+.event-scroll{min-height:0;overflow-y:auto;padding:18px 18px 10px;touch-action:pan-y;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent}
+.event-choice-dock{flex:none;padding:8px 18px calc(12px + env(safe-area-inset-bottom));
+  border-top:1px solid #2c3657;background:rgba(13,17,30,.98);
+  box-shadow:0 -10px 24px rgba(4,6,12,.42)}
+.choice-dock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--amber-dim)}
+.choice-dock-head small{font-size:9px;letter-spacing:0;color:var(--dim)}
+.event-choice-dock>.choices{max-height:min(35dvh,300px);overflow-y:auto;padding:1px 2px 2px;
+  touch-action:pan-y;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent}
 @keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
 @media(prefers-reduced-motion:reduce){.sheet{animation:none}.bubble{transition:none}}
 .sheet .tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--amber-dim);margin-bottom:6px}
@@ -12438,9 +12470,13 @@ const UI = (()=>{
       meta=`DAY ${S.day}`;
       pct=Math.max(0,Math.min(100,(411-G.remainKm())/411*100));
     }
-    const risk=`연료 ${Math.floor(S.fuel)}L · 피로 ${Math.floor(S.fatigue)}% · 관측 ${S.pursuit}/5`;
+    const alerts=[
+      S.fuel<10?'연료 부족':null,
+      S.fatigue>=75?'졸음 위험':null,
+      q&&q.due-S.day<=1?'마감 임박':null,
+    ].filter(Boolean);
     return {danger, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
-      <span class="ms-meta">${meta}<br><small>${risk}</small></span>
+      <span class="ms-meta">${meta}${alerts.length?`<br><small class="ms-alert">${alerts.join(' · ')}</small>`:''}</span>
       <span class="ms-state">${state}</span><span class="ms-progress"><i style="width:${pct}%"></i></span>`};
   }
   function renderMission(){
@@ -12483,23 +12519,55 @@ const UI = (()=>{
   function wireParty(p){
     p.querySelectorAll('[data-comp]').forEach(b=>b.onclick=()=>showComp(b.dataset.comp));
   }
+  function contextRail(node, driving){
+    const ids=['me',...S.party], shown=ids.slice(0,4);
+    const faces=shown.map(id=>{
+      const c=id==='me'?null:D.comps[id];
+      return `<span class="crew-mini">${faceOf(id,c?c.face:'🧑‍✈️')}</span>`;
+    }).join('');
+    const extra=ids.length-shown.length;
+    const dog=S.dog?' + 보리':'';
+    const locTitle=driving?D.nodes[S.driving.to].name:node.name;
+    const locMeta=driving
+      ?`${Math.max(0,Math.round(S.driving.dist-S.driving.gone))}km 남음`
+      :(node.stl?'정차 중 · 정착지':'정차 중');
+    return `<div class="journey-context">
+      <button class="context-location" data-a="where" type="button" aria-label="지도에서 현재 위치 보기">
+        <span class="loc-mark">${driving?'ROUTE':'HERE'}</span><b>${locTitle}</b><small>${locMeta}</small>
+      </button>
+      <button class="context-crew" data-a="crew" type="button" aria-label="탑승 인원과 동료 상태 보기">
+        <span class="crew-faces">${faces}${extra?`<span class="crew-mini">+${extra}</span>`:''}</span>
+        <span class="crew-count">${ids.length}명${dog}</span>
+      </button></div>`;
+  }
+  function wireContext(p){
+    const where=p.querySelector('[data-a="where"]');
+    if(where) where.onclick=()=>{
+      if(!$('#ovl-map').classList.contains('on')) toggleOvl('#ovl-map');
+      MAPR.resize(); renderMapMini(); renderMission();
+    };
+    const crew=p.querySelector('[data-a="crew"]');
+    if(crew) crew.onclick=()=>{
+      stTab='crew';
+      if(!$('#ovl-status').classList.contains('on')) toggleOvl('#ovl-status');
+      renderStatus();
+    };
+  }
   function renderPanel(){
     const p=$('#panel');
     if(!S){ p.innerHTML=''; return; }
     if(S.driving){
       const to=D.nodes[S.driving.to];
       p.innerHTML = `
+        ${contextRail(to,true)}
         <div id="travelbar"></div>
-        <h3>${to.name}(으)로 이동 중</h3>
-        <div class="sub">${to.desc}</div>
-        ${partyStrip()}
-        <div class="sub" style="margin-top:6px">길 위에서는 무슨 일이든 일어난다. 발견도, 사람도, 그것의 눈도.</div>`;
+        <div class="road-note">차는 계속 달린다. 지도나 동료 상태는 위 요약에서 바로 확인할 수 있다.</div>`;
       renderTravelbar();
-      wireParty(p);
+      wireContext(p);
       return;
     }
     const n=D.nodes[S.at];
-    let h=`<h3>${n.name}</h3><div class="sub">${n.desc}</div>${partyStrip()}<div class="acts">`;
+    let h=`${contextRail(n,false)}<div class="acts">`;
     if(S.recruitQ){
       const rq=S.recruitQ, def=D.recruitQuests[rq.id], atTask=rq.stage==='task'&&S.at===rq.target;
       const ready=rq.stage==='ready';
@@ -12536,7 +12604,7 @@ const UI = (()=>{
     const rd=p.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>{ if(G.fixRadio()) renderAll(); };
     const cf=p.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>showCraft();
     const rq=p.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>G.openRecruitStep();
-    wireParty(p);
+    wireContext(p);
     p.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
     const ex=p.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>G.explore();
     const st=p.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>showStl(n.stl);
@@ -12631,6 +12699,7 @@ const UI = (()=>{
     if(CVO[evd.id]) VO.play(CVO[evd.id]);
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
+    sheet.classList.add('event-mode');
     const aiEvent = evd.type==='추적'||!!evd.ai;
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
@@ -12646,17 +12715,22 @@ const UI = (()=>{
       ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
     const context=D.storyContext&&D.storyContext[evd.id]
       ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
-    let h=`${scene}<div class="event-head">${portrait}<div><div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
-      <h2>${evd.title}</h2></div></div>${context}<div class="body">${fmt(text)}</div><div class="choices">`;
+    let choices='', choiceCount=0;
     evd.choices.forEach((c,i)=>{
       if(!G.reqVisible(c.req)) return;
       const rq=G.reqOk(c.req);
       const cost=G.reqCostText(c.req);
-      h+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
+      choiceCount++;
+      choices+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
         ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
         ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
     });
-    h+='</div>';
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${sceneAlt} 사건 내용">${scene}<div class="event-head">${portrait}<div>
+      <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
+      <h2>${evd.title}</h2></div></div>${context}<div class="body">${fmt(text)}</div></div>
+      <div class="event-choice-dock"><div class="choice-dock-head"><span>선택 · ${choiceCount}</span>
+      <small>${choiceCount>3?'위아래로 밀어 모두 보기':'하나를 고른다'}</small></div>
+      <div class="choices" role="group" aria-label="선택지 목록">${choices}</div></div>`;
     sheet.innerHTML=h;
     sheet.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
       if(b.hasAttribute('disabled'))return;
@@ -12697,6 +12771,7 @@ const UI = (()=>{
     }
     h+=`<div class="choices" style="margin-top:12px">${!S.driving?`<button class="choice" data-talk="${id}">💬 말을 건다 <span class="req">하루 한 번 · 이야기가 유대를 만든다</span></button>`:''}<button class="choice" data-x="1">닫는다</button></div>`;
     const sheet=$('#ev-sheet');
+    sheet.classList.remove('event-mode');
     sheet.innerHTML=h;
     sheet.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{ G.choosePerk(id, +b.dataset.pk); showComp(id); });
     const tk=sheet.querySelector('[data-talk]');
@@ -12709,6 +12784,7 @@ const UI = (()=>{
   function showCraft(){
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
+    sheet.classList.remove('event-mode');
     let h=`<div class="tag">🔨 작업대 — 달구지 뒤 칸</div>
       <h2>무기 제작</h2>
       <div class="csub">보유: 고철 ${S.scrap} · 부품 ${S.items['부품']||0} · 연료 ${Math.floor(S.fuel)}L</div>
@@ -12734,18 +12810,21 @@ const UI = (()=>{
     chips.push(...G.afterChoice(curEv, choice));
     if(S.ended) return;
     const sheet=$('#ev-sheet');
-    let h=`<div class="tag">${curEv.title}</div><div class="outcome">${fmt(typeof out.text==='function'? out.text(S):out.text)}</div>`;
-    if(chips.length){ h+='<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'; }
-    h+='<div class="choices">';
+    sheet.classList.add('event-mode');
+    let body=`<div class="tag">${curEv.title}</div><div class="outcome">${fmt(typeof out.text==='function'? out.text(S):out.text)}</div>`;
+    if(chips.length){ body+='<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'; }
+    let actions='';
     if(out.fx&&out.fx.offerComp){
       const id=out.fx.offerComp, mp=G.maxParty(), full=S.party.length>=mp, c=D.comps[id], next=G.nextSeatUpgrade();
-      h+=`<button class="choice" data-r="yes" ${full?'disabled':''}>${c.face} ${c.name}를 태운다
+      actions+=`<button class="choice" data-r="yes" ${full?'disabled':''}>${c.face} ${c.name}를 태운다
           <span class="req">${full? '✗ 동료석 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 동료 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
         <button class="choice" data-r="no">작별 인사를 한다</button>`;
     } else {
-      h+=`<button class="choice" data-r="ok">계속 간다</button>`;
+      actions+=`<button class="choice" data-r="ok">계속 간다</button>`;
     }
-    h+='</div>';
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${body}</div><div class="event-choice-dock">
+      <div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
+      <div class="choices" role="group" aria-label="다음 행동">${actions}</div></div>`;
     sheet.innerHTML=h;
     sheet.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
       if(b.hasAttribute('disabled'))return;
@@ -12756,6 +12835,7 @@ const UI = (()=>{
   }
   function closeEvent(){
     $('#ev-wrap').classList.remove('on');
+    $('#ev-sheet').classList.remove('event-mode');
     $('#cheollian-tint').classList.remove('on');
     curEv=null;
     if(S.driving) SND.setDriving(true);

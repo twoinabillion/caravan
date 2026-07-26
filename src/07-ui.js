@@ -246,9 +246,13 @@ const UI = (()=>{
       meta=`DAY ${S.day}`;
       pct=Math.max(0,Math.min(100,(411-G.remainKm())/411*100));
     }
-    const risk=`연료 ${Math.floor(S.fuel)}L · 피로 ${Math.floor(S.fatigue)}% · 관측 ${S.pursuit}/5`;
+    const alerts=[
+      S.fuel<10?'연료 부족':null,
+      S.fatigue>=75?'졸음 위험':null,
+      q&&q.due-S.day<=1?'마감 임박':null,
+    ].filter(Boolean);
     return {danger, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
-      <span class="ms-meta">${meta}<br><small>${risk}</small></span>
+      <span class="ms-meta">${meta}${alerts.length?`<br><small class="ms-alert">${alerts.join(' · ')}</small>`:''}</span>
       <span class="ms-state">${state}</span><span class="ms-progress"><i style="width:${pct}%"></i></span>`};
   }
   function renderMission(){
@@ -291,23 +295,55 @@ const UI = (()=>{
   function wireParty(p){
     p.querySelectorAll('[data-comp]').forEach(b=>b.onclick=()=>showComp(b.dataset.comp));
   }
+  function contextRail(node, driving){
+    const ids=['me',...S.party], shown=ids.slice(0,4);
+    const faces=shown.map(id=>{
+      const c=id==='me'?null:D.comps[id];
+      return `<span class="crew-mini">${faceOf(id,c?c.face:'🧑‍✈️')}</span>`;
+    }).join('');
+    const extra=ids.length-shown.length;
+    const dog=S.dog?' + 보리':'';
+    const locTitle=driving?D.nodes[S.driving.to].name:node.name;
+    const locMeta=driving
+      ?`${Math.max(0,Math.round(S.driving.dist-S.driving.gone))}km 남음`
+      :(node.stl?'정차 중 · 정착지':'정차 중');
+    return `<div class="journey-context">
+      <button class="context-location" data-a="where" type="button" aria-label="지도에서 현재 위치 보기">
+        <span class="loc-mark">${driving?'ROUTE':'HERE'}</span><b>${locTitle}</b><small>${locMeta}</small>
+      </button>
+      <button class="context-crew" data-a="crew" type="button" aria-label="탑승 인원과 동료 상태 보기">
+        <span class="crew-faces">${faces}${extra?`<span class="crew-mini">+${extra}</span>`:''}</span>
+        <span class="crew-count">${ids.length}명${dog}</span>
+      </button></div>`;
+  }
+  function wireContext(p){
+    const where=p.querySelector('[data-a="where"]');
+    if(where) where.onclick=()=>{
+      if(!$('#ovl-map').classList.contains('on')) toggleOvl('#ovl-map');
+      MAPR.resize(); renderMapMini(); renderMission();
+    };
+    const crew=p.querySelector('[data-a="crew"]');
+    if(crew) crew.onclick=()=>{
+      stTab='crew';
+      if(!$('#ovl-status').classList.contains('on')) toggleOvl('#ovl-status');
+      renderStatus();
+    };
+  }
   function renderPanel(){
     const p=$('#panel');
     if(!S){ p.innerHTML=''; return; }
     if(S.driving){
       const to=D.nodes[S.driving.to];
       p.innerHTML = `
+        ${contextRail(to,true)}
         <div id="travelbar"></div>
-        <h3>${to.name}(으)로 이동 중</h3>
-        <div class="sub">${to.desc}</div>
-        ${partyStrip()}
-        <div class="sub" style="margin-top:6px">길 위에서는 무슨 일이든 일어난다. 발견도, 사람도, 그것의 눈도.</div>`;
+        <div class="road-note">차는 계속 달린다. 지도나 동료 상태는 위 요약에서 바로 확인할 수 있다.</div>`;
       renderTravelbar();
-      wireParty(p);
+      wireContext(p);
       return;
     }
     const n=D.nodes[S.at];
-    let h=`<h3>${n.name}</h3><div class="sub">${n.desc}</div>${partyStrip()}<div class="acts">`;
+    let h=`${contextRail(n,false)}<div class="acts">`;
     if(S.recruitQ){
       const rq=S.recruitQ, def=D.recruitQuests[rq.id], atTask=rq.stage==='task'&&S.at===rq.target;
       const ready=rq.stage==='ready';
@@ -344,7 +380,7 @@ const UI = (()=>{
     const rd=p.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>{ if(G.fixRadio()) renderAll(); };
     const cf=p.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>showCraft();
     const rq=p.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>G.openRecruitStep();
-    wireParty(p);
+    wireContext(p);
     p.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
     const ex=p.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>G.explore();
     const st=p.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>showStl(n.stl);
@@ -439,6 +475,7 @@ const UI = (()=>{
     if(CVO[evd.id]) VO.play(CVO[evd.id]);
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
+    sheet.classList.add('event-mode');
     const aiEvent = evd.type==='추적'||!!evd.ai;
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
@@ -454,17 +491,22 @@ const UI = (()=>{
       ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
     const context=D.storyContext&&D.storyContext[evd.id]
       ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
-    let h=`${scene}<div class="event-head">${portrait}<div><div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
-      <h2>${evd.title}</h2></div></div>${context}<div class="body">${fmt(text)}</div><div class="choices">`;
+    let choices='', choiceCount=0;
     evd.choices.forEach((c,i)=>{
       if(!G.reqVisible(c.req)) return;
       const rq=G.reqOk(c.req);
       const cost=G.reqCostText(c.req);
-      h+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
+      choiceCount++;
+      choices+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
         ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
         ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
     });
-    h+='</div>';
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${sceneAlt} 사건 내용">${scene}<div class="event-head">${portrait}<div>
+      <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
+      <h2>${evd.title}</h2></div></div>${context}<div class="body">${fmt(text)}</div></div>
+      <div class="event-choice-dock"><div class="choice-dock-head"><span>선택 · ${choiceCount}</span>
+      <small>${choiceCount>3?'위아래로 밀어 모두 보기':'하나를 고른다'}</small></div>
+      <div class="choices" role="group" aria-label="선택지 목록">${choices}</div></div>`;
     sheet.innerHTML=h;
     sheet.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
       if(b.hasAttribute('disabled'))return;
@@ -505,6 +547,7 @@ const UI = (()=>{
     }
     h+=`<div class="choices" style="margin-top:12px">${!S.driving?`<button class="choice" data-talk="${id}">💬 말을 건다 <span class="req">하루 한 번 · 이야기가 유대를 만든다</span></button>`:''}<button class="choice" data-x="1">닫는다</button></div>`;
     const sheet=$('#ev-sheet');
+    sheet.classList.remove('event-mode');
     sheet.innerHTML=h;
     sheet.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{ G.choosePerk(id, +b.dataset.pk); showComp(id); });
     const tk=sheet.querySelector('[data-talk]');
@@ -517,6 +560,7 @@ const UI = (()=>{
   function showCraft(){
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
+    sheet.classList.remove('event-mode');
     let h=`<div class="tag">🔨 작업대 — 달구지 뒤 칸</div>
       <h2>무기 제작</h2>
       <div class="csub">보유: 고철 ${S.scrap} · 부품 ${S.items['부품']||0} · 연료 ${Math.floor(S.fuel)}L</div>
@@ -542,18 +586,21 @@ const UI = (()=>{
     chips.push(...G.afterChoice(curEv, choice));
     if(S.ended) return;
     const sheet=$('#ev-sheet');
-    let h=`<div class="tag">${curEv.title}</div><div class="outcome">${fmt(typeof out.text==='function'? out.text(S):out.text)}</div>`;
-    if(chips.length){ h+='<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'; }
-    h+='<div class="choices">';
+    sheet.classList.add('event-mode');
+    let body=`<div class="tag">${curEv.title}</div><div class="outcome">${fmt(typeof out.text==='function'? out.text(S):out.text)}</div>`;
+    if(chips.length){ body+='<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'; }
+    let actions='';
     if(out.fx&&out.fx.offerComp){
       const id=out.fx.offerComp, mp=G.maxParty(), full=S.party.length>=mp, c=D.comps[id], next=G.nextSeatUpgrade();
-      h+=`<button class="choice" data-r="yes" ${full?'disabled':''}>${c.face} ${c.name}를 태운다
+      actions+=`<button class="choice" data-r="yes" ${full?'disabled':''}>${c.face} ${c.name}를 태운다
           <span class="req">${full? '✗ 동료석 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 동료 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
         <button class="choice" data-r="no">작별 인사를 한다</button>`;
     } else {
-      h+=`<button class="choice" data-r="ok">계속 간다</button>`;
+      actions+=`<button class="choice" data-r="ok">계속 간다</button>`;
     }
-    h+='</div>';
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${body}</div><div class="event-choice-dock">
+      <div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
+      <div class="choices" role="group" aria-label="다음 행동">${actions}</div></div>`;
     sheet.innerHTML=h;
     sheet.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
       if(b.hasAttribute('disabled'))return;
@@ -564,6 +611,7 @@ const UI = (()=>{
   }
   function closeEvent(){
     $('#ev-wrap').classList.remove('on');
+    $('#ev-sheet').classList.remove('event-mode');
     $('#cheollian-tint').classList.remove('on');
     curEv=null;
     if(S.driving) SND.setDriving(true);

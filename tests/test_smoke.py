@@ -62,6 +62,10 @@ with sync_playwright() as p:
       out.thought=!!thought;
       out.thoughtText=thought?.textContent||'';
       out.thoughtHasWho=!!thought?.querySelector('.who');
+      out.contextRail=!!document.querySelector('.journey-context .context-location') &&
+        !!document.querySelector('.journey-context .context-crew');
+      out.legacyParty=!document.querySelector('#panel>#party');
+      out.missionNoDuplicate=!document.querySelector('#mission-strip').textContent.includes('연료 ');
       document.querySelector('#bubbles').replaceChildren();
       return out;
     }''')
@@ -70,6 +74,19 @@ with sync_playwright() as p:
     check('알림 360px·말풍선 300px 이하', layout['toastW'] <= 361 and layout['bubbleW'] <= 301, str(layout))
     check('서술·속말 말풍선 분리', layout['narrationN'] == 2 and layout['thought'] and
           layout['thoughtText'] == '속말 테스트' and not layout['thoughtHasWho'], str(layout))
+    check('위치·인원 한 줄 요약, 자원 중복 제거', layout['contextRail'] and
+          layout['legacyParty'] and layout['missionNoDuplicate'], str(layout))
+    context_nav = pg.evaluate('''() => {
+      document.querySelector('.context-location').click();
+      const map=document.querySelector('#ovl-map').classList.contains('on');
+      document.querySelector('#map-x').click();
+      document.querySelector('.context-crew').click();
+      const crew=document.querySelector('#ovl-status').classList.contains('on') &&
+        document.querySelector('[data-stpane="crew"]').classList.contains('on');
+      document.querySelector('#st-x').click();
+      return {map,crew};
+    }''')
+    check('위치→지도·인원→동료 상태 바로가기', context_nav['map'] and context_nav['crew'], str(context_nav))
     check('콘솔 에러 0', not errors, ' | '.join(errors[:3]))
 
     print('― 의뢰 엔진')
@@ -304,6 +321,27 @@ with sync_playwright() as p:
       out.storyContext=document.querySelector('#ev-sheet').textContent.includes('앞 이야기') &&
         document.querySelector('#ev-sheet').textContent.includes('첫 거리 표식');
       document.querySelector('#ev-wrap').classList.remove('on');
+      const flags0={...S.flags}, party0=[...S.party], comps0=structuredClone(S.comps);
+      S.party=Object.keys(D.comps);
+      Object.keys(D.comps).forEach(id=>{
+        const story=D.comps[id].perks[3].id;
+        S.comps[id].lvl=3;
+        if(!S.comps[id].perks.includes(story)) S.comps[id].perks.push(story);
+      });
+      (D.deeds||[]).forEach(d=>{ if(d.flag) S.flags[d.flag]=true; });
+      (D.eraTraces||[]).forEach(t=>{ S.flags[t.flag]=true; });
+      ['ridge_path','sokcho_end','librarian_truth'].forEach(f=>{ S.flags[f]=true; });
+      UI.showEvent(D.seoulStops.find(e=>e.id==='seoul_core'));
+      const copy=document.querySelector('.event-scroll');
+      const choices=document.querySelector('.event-choice-dock>.choices');
+      copy.scrollTop=copy.scrollHeight; choices.scrollTop=choices.scrollHeight;
+      out.eventScroll=copy.scrollHeight>copy.clientHeight && copy.scrollTop>0;
+      out.choiceScroll=choices.scrollHeight>choices.clientHeight && choices.scrollTop>0;
+      out.choiceDock=choices.querySelectorAll('.choice').length===7 &&
+        getComputedStyle(document.querySelector('.event-choice-dock')).position!=='fixed';
+      document.querySelector('#ev-wrap').classList.remove('on');
+      document.querySelector('#ev-sheet').classList.remove('event-mode');
+      S.flags=flags0; S.party=party0; S.comps=comps0;
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
@@ -333,6 +371,8 @@ with sync_playwright() as p:
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
     check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
+    check('긴 사건 본문·7개 선택지 독립 스크롤', r4['eventScroll'] and
+          r4['choiceScroll'] and r4['choiceDock'], str(r4))
     print('― 합류 전 의뢰')
     rr = pg.evaluate('''() => {
       const out={};
