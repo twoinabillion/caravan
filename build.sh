@@ -40,6 +40,8 @@ SCENE_KEYS=(
   POSTMAN_LETTER FREQUENCY_TAPE GRANDFATHER_ENVELOPE RIDGE_MEMORIAL FULL_HOUSE_MEAL
   INTRO_PASSENGER_SEAT INTRO_CHEOLLIAN_2026 INTRO_FIRST_THREE_DAYS INTRO_143_YEARS
   INTRO_BLANK_REASON INTRO_YEARS_TOGETHER INTRO_ENVELOPE_SIGNAL INTRO_DEPARTURE_CHOICE
+  INTRO_PARENTS_DISCOVERY INTRO_SILENCED_PRESENTATION INTRO_CURRENT_EXPULSION
+  FAMILY_VERIFICATION_KEY
   RECRUIT_MINJI RECRUIT_PARKSS
 )
 SCENE_FILES=(
@@ -95,6 +97,10 @@ SCENE_FILES=(
   assets/intro/06-years-together.jpg
   assets/intro/07-envelope-signal.jpg
   assets/intro/08-departure-choice.jpg
+  assets/intro/09-parents-discovery.jpg
+  assets/intro/10-silenced-presentation.jpg
+  assets/intro/11-current-expulsion.jpg
+  assets/scenes/family-verification-key.jpg
   assets/scenes/recruit-minji.jpg
   assets/scenes/recruit-parkss.jpg
 )

@@ -221,7 +221,14 @@ const UI = (()=>{
     } else {
       kicker='본편 · 북쪽으로';
       title=S.driving?`${D.nodes[S.driving.to].name}(으)로 이동 중`:`서울까지 약 ${G.remainKm()}km`;
-      state=S.flags.ai_identified?'사유가 지워진 143년의 추방을 남산에서 묻는다':'천리안이 왜 길을 지켜보는지 단서를 모은다';
+      const cleanup=S.day<=30
+        ? `첫 이송까지 ${31-S.day}일`
+        : '제7 구역의 순차 이송이 시작됐다';
+      state=S.flags.es_truth
+        ? '부모의 수정안을 남산 코어에 적용해 서울의 결정권을 되찾는다'
+        : S.flags.parent_key_found
+        ? '부모님의 검증키를 남산까지 가져가 추방 명령의 발신자를 확인한다'
+        : `서울 외곽 제7 잔류구역 · ${cleanup} — 남산에서 집행을 멈춘다`;
       meta=`DAY ${S.day}`;
       pct=Math.max(0,Math.min(100,(411-G.remainKm())/411*100));
     }
@@ -557,7 +564,7 @@ const UI = (()=>{
       h+=`<div class="sub" style="text-align:center;padding:14px 0">〔 서울까지 400km 완주 〕<br>
         <small style="color:var(--faded)">DAY ${S.day} · ${Math.round(S.stats.km)}km · 동료 ${pn}명${dg} · 기록 ${cn}개</small><br>
         <small style="color:var(--faded)">부산의 폐차장에서 남산의 밤까지, 여기 적힌 전부가 우리가 실어온 것이다.</small><br>
-        <small style="color:var(--faded)">추방의 이유는 빈칸으로 남았지만, 같은 정리는 오늘 끝났다.</small></div>
+        <small style="color:var(--faded)">가족의 추방 이유는 되찾았고, 143년의 최초 목적은 꾸며 쓰지 않은 채 같은 정리를 끝냈다.</small></div>
         <button class="act" id="seoul-journal"><span class="ic">✎</span><span><b>여행 일지를 연다</b><small>411km의 기록을 처음부터</small></span></button>`;
     }
     h+='</div>';

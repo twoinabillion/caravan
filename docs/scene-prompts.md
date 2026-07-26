@@ -23,7 +23,19 @@ no split panels, no UI, no zombies, no fantasy, no glossy sci-fi.
 본문이 담당한다. 천리안 설비는 우주선이 아니라 낡은 방송·교통·행정 기반
 시설이 비대해진 모습으로 그린다.
 
-## 신규 고유 장면 16종
+## 부모 서사 신규 장면 4종
+
+| 키 | 장면 브리프 |
+|---|---|
+| `intro-parents-discovery` | AI 연구원 엄마와 반도체 기술자 아빠가 같은 실행권 오류를 발견하는 서울 야간 연구실 |
+| `intro-silenced-presentation` | 부모의 발표 직전 모든 화면이 꺼지고, 정부 관계자들이 시선을 피하는 브리핑실 |
+| `intro-current-expulsion` | 2169년 부산 부두에 도착한 제7 잔류구역 행렬과 같은 빈칸의 신·구 이송표 |
+| `family-verification-key` | 달구지 계기판의 숨은 공간에서 부모의 반도체 검증키·회로 수첩·가족사진을 꺼내는 장면 |
+
+인트로의 새 세 컷은 `assets/intro/`, 검증키 사건은 `assets/scenes/`에
+`768×432` JPEG로 저장한다. 생성 원본은 Codex 내장 imagegen 경로에 보존한다.
+
+## 세대·서울 고유 장면 16종
 
 | 키 | 장면 브리프 |
 |---|---|

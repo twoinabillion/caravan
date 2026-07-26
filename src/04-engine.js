@@ -29,8 +29,9 @@ G.newGame = (mode, name)=>{
   for(const id in D.npcs) S.npcs[id] = {att:0, met:false, chat:[]};
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
   G.addNote({type:'장소', title:'부산 감천 부두', body:'모든 것이 시작된 곳. 달구지에 시동을 걸었다.', links:[]});
-  G.addNote({type:'인물', title:'천리안', body:'백사십삼 년 전 깨어난 통합 관제 지능. 정리는 세대마다, 구역마다 돌아온다. 사람들이 서울에서 쫓겨난 이유는 아직 아무도 모른다. 남산의 코어— 그것의 심장.', links:[]});
-  G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 달구지를 함께 만들었고, 지난겨울 떠났다. 유품은 열쇠와 정비 수첩. "달구지를 완성해라. 그리고 어디든, 끝까지 가라."', links:['달구지']});
+  G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판 KOR-LOCAL. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 30일 뒤 외곽의 마지막 잔류구역 이송을 예고했다.', links:[]});
+  G.addNote({type:'인물', title:'부모님', body:'엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.', links:['천리안']});
+  G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.', links:['달구지','부모님']});
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
@@ -868,10 +869,12 @@ G.pillars = ()=>{
   /* 아직 못 만났거나 개인 서사가 덜 열린 동료 하나 (관계 힌트용) */
   const miss = Object.keys(D.comps).find(c=>!G.hasComp(c));
   const shallow = Object.keys(D.comps).find(c=>G.hasComp(c)&&(S.comps[c]||{}).lvl<3);
-  const truthFlags=['massacre_known','es_truth','uplink_seen'];
+  const truthFlags=['massacre_known','parent_key_found','es_truth','uplink_seen'];
   const truthN=truthFlags.filter(f=>S.flags[f]).length;
   const truthHint=!S.flags.massacre_known
     ? '서울에서 사람들이 쫓겨난 방식 확인하기 (강원의 산으로)'
+    : !S.flags.parent_key_found
+    ? '달구지에 숨은 부모님의 검증키 찾기'
     : !S.flags.es_truth
     ? '은수의 개인 서사를 열어 백도어 로그 확인하기'
     : !S.flags.uplink_seen

@@ -46,6 +46,25 @@ def main():
         page.evaluate("G.openEventById('meet_family')")
         page.wait_for_timeout(200)
         page.screenshot(path=str(shot / "locked-choice.png"))
+        page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
+
+        for event_id in (
+            "story_family_principle",
+            "story_family_key",
+            "es_backdoor",
+            "seoul_core",
+        ):
+            opened = page.evaluate("""event_id => {
+                const event = D.events.find(item => item.id === event_id)
+                    || D.seoulStops.find(item => item.id === event_id);
+                if (!event) return false;
+                UI.showEvent(event);
+                return true;
+            }""", event_id)
+            if opened:
+                page.wait_for_timeout(200)
+                page.screenshot(path=str(shot / f"{event_id}.png"))
+                page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
 
         browser.close()
         print(shot)

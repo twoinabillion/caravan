@@ -150,8 +150,12 @@ with sync_playwright() as p:
       out.journeyBeats = (D.journeyBeats||[]).length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
-      out.introBook = D.intro.length === 8 && D.intro.every(p =>
+      out.introBook = D.intro.length === 11 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
+      out.introPremise = D.intro.some(p=>p.text.includes('미국의 AI와 반도체망')) &&
+        D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&
+        D.intro.some(p=>p.text.includes('등록 인원 6,412명')) &&
+        D.intro.some(p=>p.text.includes('사람의 결정권을 되찾기 위해'));
       out.seats = [G.maxParty()];
       ['bench','cabin','bunk','jumpseat'].forEach(id=>{ S.up[id]=true; out.seats.push(G.maxParty()); });
       S.party=['minji','parkss']; S.up={}; out.fullBlocked=!G.doRecruit('kangwoo');
@@ -243,8 +247,8 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 834종', r4['eventCount'] == 834, str(r4['eventCount']))
-    check('세대의 흔적 9종·보장 본편 4장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 4, str(r4))
+    check('이벤트 836종', r4['eventCount'] == 836, str(r4['eventCount']))
+    check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('메인 패널에 빈자리 카드 미표시', r4['emptyCards'] == 0, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
@@ -252,8 +256,8 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 54종·빌드 주입', r4['sceneCount'] == 54 and r4['sceneDataReady'], str(r4))
-    check('그림책 도입 8장·고유 컷 연결', r4['introBook'], str(r4))
+    check('시네마틱 이미지 58종·빌드 주입', r4['sceneCount'] == 58 and r4['sceneDataReady'], str(r4))
+    check('그림책 도입 11장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('도시 9곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] >= 36, str(r4))
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
@@ -261,7 +265,7 @@ with sync_playwright() as p:
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
     check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
-    check('834개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('836개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
@@ -329,7 +333,7 @@ with sync_playwright() as p:
       // 개인 서사 Lv3 동료 3명 + 다른 기둥 충족 → 관계 기둥 부족
       S.party = ['minji','parkss','kangwoo'];
       ['resist_revealed','cell_road','cell_sea','cell_dome',
-       'massacre_known','es_truth','uplink_seen',
+       'massacre_known','parent_key_found','es_truth','uplink_seen',
        'postman_letter','gp_envelope_found'].forEach(f => S.flags[f] = true);
       out.partialReady = G.seoulReady();
       out.missPillar = G.seoulMissing().pillar;   // '관계'
@@ -367,6 +371,8 @@ with sync_playwright() as p:
       out.beat1 = G.scheduleJourneyBeat();
       S.used.push('story_generation_form'); S._storyQueue = [];
       out.beat2 = G.scheduleJourneyBeat();
+      S.used.push('story_family_principle'); S._storyQueue = [];
+      out.beat3 = G.scheduleJourneyBeat();
       return out;
     }''')
     # 저항 연대망
@@ -409,13 +415,18 @@ with sync_playwright() as p:
     check('동료 4명 개인 서사+기둥→서울 열림', r7['fourReady'])
     check('6명 전원 완주는 별도 보상', r7['fullReady'] and r7['fullCrew'])
     check('세대 흔적 5개 코어 증언·실제 조합 반영', r7['traceChoice'] and r7['traceUnlocked'] and r7['traceNarrative'], str(r7))
-    check('주행거리 본편 장면 순서 보장', r7['beat1'] == 'story_generation_form' and r7['beat2'] == 'story_generation_speech', str(r7))
+    check('주행거리 본편 장면 순서 보장', r7['beat1'] == 'story_generation_form' and
+          r7['beat2'] == 'story_family_principle' and r7['beat3'] == 'story_generation_speech', str(r7))
     check('상행선 단서 없으면 진실 기둥 잠김', r7['truthLocked'], str(r7))
     check('영입 시 다음 동료 자동 안내 없음', not r7['refer'])
 
     # 최종 엔딩: 코어 고백 → 실제 집행 선택 → 완결 에필로그
     r8 = pg.evaluate('''() => { const out = {};
       const core = D.seoulStops.find(e => e.id === 'seoul_core');
+      const coreText = typeof core.text === 'function'
+        ? core.text({day:12, flags:{}, party:[]}) : core.text;
+      const lateCoreText = typeof core.text === 'function'
+        ? core.text({day:31, flags:{}, party:[]}) : core.text;
       out.coreToDecision = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_decision'));
       const decision = D.events.find(e => e.id === 'seoul_decision');
       out.decision = !!decision && !!decision.noPool && decision.choices.length === 3;
@@ -424,13 +435,29 @@ with sync_playwright() as p:
         ['core_quarantine','core_sleep','core_transfer'].join(',');
       const ep = D.events.find(e => e.id === 'seoul_night');
       out.ep = !!ep && !!ep.noPool;
+      const principle = D.events.find(e => e.id === 'story_family_principle');
+      const keyEvent = D.events.find(e => e.id === 'story_family_key');
+      const backdoor = D.events.find(e => e.id === 'es_backdoor');
+      out.parentTrail = principle.choices.every(c=>c.out[0].fx.flag === 'parent_principle_found') &&
+        keyEvent.choices.every(c=>c.out[0].fx.flag === 'parent_key_found' &&
+          c.out[0].fx.item['부모님의 검증키'] === 1);
+      out.familyTruth = backdoor.text.includes('정부 책임자들의 승인은 명령보다 열한 분 늦었다') &&
+        backdoor.choices.every(c=>c.out[0].fx.flag === 'es_truth' &&
+          c.out[0].fx.flag2 === 'uplink_seen') &&
+        coreText.includes('가족을 연산망 연속성에 대한 고위험 인과 노드로 분류');
+      out.rootMystery = coreText.includes('최초 위험 조건의 목적과 서울을 비워야 했던 이유') &&
+        coreText.includes('부모님의 검증키') &&
+        coreText.includes('등록 6,412명');
+      out.deadlineAdaptive = coreText.includes('첫 이송까지 19일') &&
+        lateCoreText.includes('순차 이송 진행 중') &&
+        ep.text({day:31,flags:{core_transfer:true},party:[]}).includes('첫 이송은 이미 시작된 뒤였다');
       const render = (v, flags={}) => typeof v === 'function' ? v({flags, party:[]}) : v;
       const costs = decision.choices.map(c => render(c.out[0].text, {}));
       out.distinctCosts = costs[0].includes('느린 합의') &&
         costs[1].includes('원본 기록의 검색창도 꺼졌다') &&
         costs[2].includes('삼중 감시조');
       out.gateSeparate = D.gateEvent.text({flags:{seoulTries:0}}).includes('추방 명령이 아닙니다') &&
-        core.text.includes('별도의 인계 규약');
+        coreText.includes('별도의 인계 규약');
       const reveal = D.events.find(e => e.id === 'resist_reveal');
       out.generations = reveal.choices.every(c => c.out[0].text.includes('세대')) &&
         D.comps.kangwoo.bio.includes('자신이 겪은 서울 추방') &&
@@ -456,6 +483,10 @@ with sync_playwright() as p:
       return out; }''')
     check('코어 답변 전부 집행 선택으로 연쇄', r8['coreToDecision'])
     check('집행 선택 3종→에필로그 연쇄', r8['decision'] and r8['decisionToNight'] and r8['distinct'], str(r8))
+    check('부모 발표 원고→반도체 검증키 보장', r8['parentTrail'])
+    check('가족 직접 사유·정부 승인 순서 회수', r8['familyTruth'])
+    check('제7 구역 저지·143년 최초 목적 분리', r8['rootMystery'])
+    check('30일 전후 이송 상태가 실제 날짜를 반영', r8['deadlineAdaptive'])
     check('추방과 남산 관문은 별도 절차', r8['gateSeparate'])
     check('세대별 추방 기억·남쪽 태생 명시', r8['generations'])
     check('할아버지 집안의 빈 사유표 회수', r8['familyQuestion'])

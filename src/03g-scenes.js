@@ -52,6 +52,10 @@ D.scenes = {
   'intro-years-together':'__SCENE_INTRO_YEARS_TOGETHER__',
   'intro-envelope-signal':'__SCENE_INTRO_ENVELOPE_SIGNAL__',
   'intro-departure-choice':'__SCENE_INTRO_DEPARTURE_CHOICE__',
+  'intro-parents-discovery':'__SCENE_INTRO_PARENTS_DISCOVERY__',
+  'intro-silenced-presentation':'__SCENE_INTRO_SILENCED_PRESENTATION__',
+  'intro-current-expulsion':'__SCENE_INTRO_CURRENT_EXPULSION__',
+  'family-verification-key':'__SCENE_FAMILY_VERIFICATION_KEY__',
   'recruit-minji':'__SCENE_RECRUIT_MINJI__',
   'recruit-parkss':'__SCENE_RECRUIT_PARKSS__'
 };
