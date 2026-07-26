@@ -55,6 +55,24 @@ with sync_playwright() as playwright:
     )
     page.wait_for_timeout(250)
     page.screenshot(path=str(SHOT / "01-main.png"))
+    page.evaluate(
+        """() => {
+          UI.toast('🔧 좌석 증축이 끝났다 — 동료 자리 +1');
+          UI.toast('📍 다음 목적지까지 31km');
+          UI.toast('🎒 길에서 쓸 만한 부품을 찾았다');
+          UI.speak({who:'sys', t:'오늘 길은 생각보다 조용하다.'});
+          UI.speak({who:'minji', t:'조용할 때 연료부터 확인해.'});
+          UI.speak({who:'leo', t:'그럼 확인하는 동안 한 곡만.'});
+        }"""
+    )
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "01c-compact-notifications.png"))
+    page.evaluate(
+        """() => {
+          document.querySelector('#toasts').replaceChildren();
+          document.querySelector('#bubbles').replaceChildren();
+        }"""
+    )
 
     page.evaluate("""() => {
       S.at='daejeon'; S.driving=null;

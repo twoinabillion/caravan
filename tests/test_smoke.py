@@ -43,6 +43,24 @@ with sync_playwright() as p:
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
     check('게임 진입(HUD)', pg.locator('#g-fuel').is_visible())
+    layout = pg.evaluate('''() => {
+      UI.toast('첫 번째 알림'); UI.toast('두 번째 알림'); UI.toast('세 번째 알림');
+      UI.speak({who:'sys',t:'첫 번째 주행 소식'});
+      UI.speak({who:'sys',t:'두 번째 주행 소식'});
+      UI.speak({who:'sys',t:'세 번째 주행 소식'});
+      const stage=document.querySelector('#stage').getBoundingClientRect();
+      const main=document.querySelector('#main').getBoundingClientRect();
+      const toast=document.querySelector('.toast').getBoundingClientRect();
+      const bubble=document.querySelector('.bubble').getBoundingClientRect();
+      const out={stageH:stage.height,mainH:main.height,toastN:document.querySelectorAll('.toast').length,
+        toastW:toast.width,bubbleN:document.querySelectorAll('.bubble').length,bubbleW:bubble.width};
+      document.querySelector('#toasts').replaceChildren();
+      document.querySelector('#bubbles').replaceChildren();
+      return out;
+    }''')
+    check('상단 풍경 310px 이하·하단 패널 380px 이상', layout['stageH'] <= 311 and layout['mainH'] >= 380, str(layout))
+    check('알림·주행 말풍선 최대 2개', layout['toastN'] <= 2 and layout['bubbleN'] <= 2, str(layout))
+    check('알림 360px·말풍선 300px 이하', layout['toastW'] <= 361 and layout['bubbleW'] <= 301, str(layout))
     check('콘솔 에러 0', not errors, ' | '.join(errors[:3]))
 
     print('― 의뢰 엔진')

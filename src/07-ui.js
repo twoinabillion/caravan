@@ -6,7 +6,7 @@ const UI = (()=>{
   let screen='title';          // title|mode|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, pendingMode='onroad';
-  let bubbleSlot=0, arrivalTimer=0;
+  let arrivalTimer=0;
 
   /* ── modal state ── */
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
@@ -390,6 +390,7 @@ const UI = (()=>{
   }
   function speak(b){
     const wrap=$('#bubbles');
+    while(wrap.children.length>=2) wrap.firstElementChild.remove();
     const isAi = b.who==='cheollian';
     if(!isAi && b.who!=='sys' && b.who!=='radio' && typeof SCENE!=='undefined' && SCENE.talkPulse){
       let ri=-1;
@@ -399,8 +400,7 @@ const UI = (()=>{
     }
     if(b.who==='radio'){
       const bb=el('div','bubble radio', `<span class="who">📻</span>`+b.t);
-      const wrap2=$('#bubbles'); bb.style.left='8%'; bb.style.top='10px';
-      wrap2.appendChild(bb);
+      wrap.appendChild(bb);
       requestAnimationFrame(()=>bb.classList.add('show'));
       setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, 7000);
       return;
@@ -408,9 +408,6 @@ const UI = (()=>{
     const bb=el('div','bubble'+(isAi?' ai':''),
       (b.who!=='sys'&&!isAi? `<span class="who">${b.who==='나'?G.myName():(D.comps[b.who]?.name||b.who)}</span>`:'')
       + (isAi? `<span class="who">천리안</span>`:'') + b.t);
-    const slot=bubbleSlot++%2;
-    bb.style.left = (8+slot*6)+'%';
-    bb.style.top = (10+slot*46)+'px';
     wrap.appendChild(bb);
     requestAnimationFrame(()=>bb.classList.add('show'));
     setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, 4600);
@@ -418,8 +415,10 @@ const UI = (()=>{
 
   /* ── toast ── */
   function toast(html, cls){
+    const host=$('#toasts');
+    while(host.children.length>=2) host.firstElementChild.remove();
     const t=el('div','toast '+(cls||''), html);
-    $('#toasts').appendChild(t);
+    host.appendChild(t);
     requestAnimationFrame(()=>t.classList.add('show'));
     setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),350); }, 3400);
   }
