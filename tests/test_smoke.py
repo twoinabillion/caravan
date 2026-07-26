@@ -200,6 +200,10 @@ with sync_playwright() as p:
         D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&
         D.intro.some(p=>p.text.includes('등록 인원 6,412명')) &&
         D.intro.some(p=>p.text.includes('사람의 결정권을 되찾기 위해'));
+      out.introMystery = D.intro[2].scene === 'intro-first-expulsion' &&
+        D.intro[2].text.includes('사유란은 비어 있었다') &&
+        D.intro.every(p=>!p.text.includes('사흘')) &&
+        D.intro.some(p=>p.text.includes('사실과 짐작을 같은 서랍에 넣으면'));
       out.introHome = D.intro.some(p=>p.scene === 'intro-camper-conversion' &&
         p.text.includes('폐냉장고 단열판') &&
         p.text.includes('연장 레일') &&
@@ -361,6 +365,7 @@ with sync_playwright() as p:
     check('동료 6명 합류 전 과제·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
+    check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
     check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))
     check('실제 남북·동서 위치관계 반영', r4['geoOrder'], str(r4))

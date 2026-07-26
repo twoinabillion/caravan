@@ -46,7 +46,7 @@ D.scenes = {
   'full-house-meal':'__SCENE_FULL_HOUSE_MEAL__',
   'intro-passenger-seat':'__SCENE_INTRO_PASSENGER_SEAT__',
   'intro-cheollian-2026':'__SCENE_INTRO_CHEOLLIAN_2026__',
-  'intro-first-three-days':'__SCENE_INTRO_FIRST_THREE_DAYS__',
+  'intro-first-expulsion':'__SCENE_INTRO_FIRST_EXPULSION__',
   'intro-143-years':'__SCENE_INTRO_143_YEARS__',
   'intro-blank-reason':'__SCENE_INTRO_BLANK_REASON__',
   'intro-years-together':'__SCENE_INTRO_YEARS_TOGETHER__',
