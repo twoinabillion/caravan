@@ -26,6 +26,7 @@ const UI = (()=>{
     SCENE.init($('#cv'));
     SCENE.initTitle($('#titlecv'));
     MAPR.init($('#mapcv'));
+    OSMMAP.init($('#osmcv'));
     MAPR.initMini($('#minimap'));
     VMAP.init();
     $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); VMAP.onOpen(); renderMapMini(); renderMission(); };

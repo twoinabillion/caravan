@@ -1,3 +1,455 @@
+/* ═══════════════════ OSM 2026 기록 지도 — 완전 오프라인 ═══════════════════
+   전국 주요 교통망은 Geofabrik 대한민국 추출본에서, 서울 서남부 상세 화면은
+   사용자가 내려받은 OSM XML에서 빌드 시 경량화한다. 네트워크와 API 키가
+   없어도 작동하며, 게임 경로와 실제 2026년 지형을 한 화면에 겹쳐 보여준다. */
+const OSMMAP = (()=>{
+  let cv=null, ctx=null, W=0, H=0, DPR=1, baseScale=1, dirty=true, active=false;
+  let pointer=null, lastVanSig='', firstOpen=true;
+  let view={lon:128.325,lat:35.525,zoom:1};
+  let hits=[];
+  let countryRoads={0:[],1:[],2:[],3:[]};
+  let localRoads={0:[],1:[],2:[],3:[],4:[]};
+  const XF=.82;
+  const q=(s)=>document.querySelector(s);
+  const archive=()=>D.osmArchive||{};
+  const country=()=>archive().country||null;
+  const local=()=>archive().local||null;
+
+  function init(canvas){
+    cv=canvas;
+    if(!cv||!country()) return;
+    ctx=cv.getContext('2d');
+    for(const road of country().roads) (countryRoads[road[0]]||countryRoads[3]).push(road[1]);
+    if(local()) for(const road of local().roads) (localRoads[road[0]]||localRoads[4]).push(road[1]);
+    new ResizeObserver(resize).observe(cv);
+    cv.addEventListener('pointerdown',pointerDown);
+    cv.addEventListener('pointermove',pointerMove);
+    cv.addEventListener('pointerup',pointerUp);
+    cv.addEventListener('pointercancel',pointerUp);
+    cv.addEventListener('wheel',wheel,{passive:false});
+    q('#osm-home').onclick=reset;
+    q('#osm-local').onclick=focusLocal;
+    q('#osm-minus').onclick=()=>zoomAt(.72,W/2,H/2);
+    q('#osm-plus').onclick=()=>zoomAt(1.38,W/2,H/2);
+    resize();
+  }
+
+  function fit(){
+    const data=country(); if(!data||!W||!H) return 1;
+    const [west,south,east,north]=data.bounds;
+    return Math.min((W-34)/((east-west)*XF),(H-70)/(north-south));
+  }
+  function resize(){
+    if(!cv||!ctx) return;
+    DPR=Math.min(2,window.devicePixelRatio||1);
+    W=cv.clientWidth; H=cv.clientHeight;
+    if(!W||!H) return;
+    cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    baseScale=fit();
+    clampView();
+    dirty=true;
+  }
+  const scale=()=>baseScale*view.zoom;
+  const screen=(lon,lat)=>[
+    W/2+(lon-view.lon)*scale()*XF,
+    H/2-(lat-view.lat)*scale(),
+  ];
+  function decode(flat,bounds,index){
+    const [west,south,east,north]=bounds, quant=country().q||8191;
+    return [
+      west+flat[index]/quant*(east-west),
+      north-flat[index+1]/quant*(north-south),
+    ];
+  }
+  function visibleBounds(){
+    const s=scale();
+    return [
+      view.lon-W/(2*s*XF),
+      view.lat-H/(2*s),
+      view.lon+W/(2*s*XF),
+      view.lat+H/(2*s),
+    ];
+  }
+  function overlaps(a,b){
+    return a[0]<=b[2]&&a[2]>=b[0]&&a[1]<=b[3]&&a[3]>=b[1];
+  }
+  function clampView(){
+    const data=country(); if(!data||!W||!H) return;
+    const [west,south,east,north]=data.bounds, s=scale()||1;
+    const halfLon=W/(2*s*XF), halfLat=H/(2*s);
+    view.lon=halfLon*2>=east-west?(west+east)/2:clamp(view.lon,west+halfLon,east-halfLon);
+    view.lat=halfLat*2>=north-south?(south+north)/2:clamp(view.lat,south+halfLat,north-halfLat);
+  }
+  function zoomAt(factor,x,y){
+    if(!W||!H) return;
+    const old=scale();
+    const anchorLon=view.lon+(x-W/2)/(old*XF);
+    const anchorLat=view.lat-(y-H/2)/old;
+    view.zoom=clamp(view.zoom*factor,1,260);
+    const next=scale();
+    view.lon=anchorLon-(x-W/2)/(next*XF);
+    view.lat=anchorLat+(y-H/2)/next;
+    clampView(); dirty=true; updateStatus();
+  }
+  function reset(){
+    const data=country(); if(!data) return;
+    const [west,south,east,north]=data.bounds;
+    view={lon:(west+east)/2,lat:(south+north)/2,zoom:1};
+    q('#nodecard').classList.remove('on');
+    clampView(); dirty=true; updateStatus();
+  }
+  function focusLocal(){
+    const data=local(); if(!data) return;
+    const [west,south,east,north]=data.bounds;
+    view.lon=(west+east)/2; view.lat=(south+north)/2;
+    const desired=Math.min((W-48)/((east-west)*XF),(H-100)/(north-south));
+    view.zoom=clamp(desired/baseScale,1,260);
+    q('#nodecard').classList.remove('on');
+    clampView(); dirty=true; updateStatus();
+  }
+  function focus(lon,lat,zoom){
+    view.lon=lon; view.lat=lat; view.zoom=clamp(Math.max(view.zoom,zoom),1,260);
+    clampView(); dirty=true; updateStatus();
+  }
+
+  function pointerDown(event){
+    if(!active) return;
+    cv.setPointerCapture&&cv.setPointerCapture(event.pointerId);
+    pointer={id:event.pointerId,x:event.clientX,y:event.clientY,sx:event.clientX,sy:event.clientY,moved:false};
+  }
+  function pointerMove(event){
+    if(!pointer||pointer.id!==event.pointerId) return;
+    const dx=event.clientX-pointer.x, dy=event.clientY-pointer.y;
+    if(Math.hypot(event.clientX-pointer.sx,event.clientY-pointer.sy)>5) pointer.moved=true;
+    view.lon-=dx/(scale()*XF);
+    view.lat+=dy/scale();
+    pointer.x=event.clientX; pointer.y=event.clientY;
+    clampView(); dirty=true; updateStatus();
+  }
+  function pointerUp(event){
+    if(!pointer||pointer.id!==event.pointerId) return;
+    const moved=pointer.moved;
+    pointer=null;
+    if(!moved){
+      const rect=cv.getBoundingClientRect();
+      tap(event.clientX-rect.left,event.clientY-rect.top);
+    }
+  }
+  function wheel(event){
+    if(!active) return;
+    event.preventDefault();
+    const rect=cv.getBoundingClientRect();
+    zoomAt(Math.exp(-event.deltaY*.0015),event.clientX-rect.left,event.clientY-rect.top);
+  }
+
+  function pathFlat(flat,bounds,close=false){
+    for(let index=0;index<flat.length;index+=2){
+      const point=decode(flat,bounds,index), xy=screen(point[0],point[1]);
+      index?ctx.lineTo(xy[0],xy[1]):ctx.moveTo(xy[0],xy[1]);
+    }
+    if(close) ctx.closePath();
+  }
+  function drawFlatLines(lines,bounds,style){
+    ctx.save();
+    ctx.strokeStyle=style.color;
+    ctx.lineWidth=style.width;
+    ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.setLineDash(style.dash||[]);
+    ctx.beginPath();
+    for(const line of lines) pathFlat(line,bounds);
+    ctx.stroke();
+    ctx.restore();
+  }
+  function drawPolygons(polygons,bounds,fill,stroke,width=.7){
+    ctx.save();
+    ctx.beginPath();
+    for(const polygon of polygons) pathFlat(polygon,bounds,true);
+    ctx.fillStyle=fill; ctx.fill('evenodd');
+    if(stroke){ ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke(); }
+    ctx.restore();
+  }
+
+  function drawGrid(){
+    const s=scale();
+    const step=view.zoom<2?1:view.zoom<7?.25:view.zoom<35?.05:.005;
+    const box=visibleBounds();
+    ctx.save(); ctx.strokeStyle='rgba(87,118,168,.075)';ctx.lineWidth=.7;
+    ctx.beginPath();
+    for(let lon=Math.floor(box[0]/step)*step;lon<=box[2];lon+=step){
+      const a=screen(lon,box[1]),b=screen(lon,box[3]);
+      ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);
+    }
+    for(let lat=Math.floor(box[1]/step)*step;lat<=box[3];lat+=step){
+      const a=screen(box[0],lat),b=screen(box[2],lat);
+      ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);
+    }
+    ctx.stroke();ctx.restore();
+  }
+
+  function drawCountry(){
+    const data=country(); if(!data) return;
+    drawFlatLines(data.boundary,data.bounds,{
+      color:'rgba(74,100,143,.22)',width:.65,dash:[3,5],
+    });
+    if(data.coast?.length) drawFlatLines(data.coast,data.bounds,{
+      color:'rgba(104,151,205,.88)',width:1.15,
+    });
+    if(view.zoom>38) return;
+    const width=Math.min(2.2,.48+Math.log2(view.zoom+1)*.26);
+    const styles={
+      3:{color:'rgba(55,78,118,.48)',width:width*.7},
+      2:{color:'rgba(68,99,148,.66)',width:width*.88},
+      1:{color:'rgba(175,137,86,.68)',width:width*1.08},
+      0:{color:'rgba(226,145,67,.82)',width:width*1.35},
+    };
+    for(const roadClass of [3,2,1,0]){
+      drawFlatLines(countryRoads[roadClass],data.bounds,styles[roadClass]);
+    }
+    drawFlatLines(data.rails,data.bounds,{
+      color:'rgba(111,207,195,.55)',width:Math.max(.6,width*.72),dash:[3,3],
+    });
+  }
+
+  function drawCoverage(){
+    const data=local(); if(!data||view.zoom>=36) return;
+    const [west,south,east,north]=data.bounds;
+    const a=screen(west,north),b=screen(east,south);
+    if(b[0]<0||a[0]>W||b[1]<0||a[1]>H) return;
+    ctx.save();
+    ctx.strokeStyle='rgba(85,224,200,.66)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+    ctx.strokeRect(a[0],a[1],Math.max(3,b[0]-a[0]),Math.max(3,b[1]-a[1]));
+    ctx.setLineDash([]);ctx.fillStyle='rgba(85,224,200,.78)';
+    ctx.font='9px ui-monospace,monospace';ctx.fillText('서울 서남부 2026 상세 기록',a[0]+5,a[1]-5);
+    ctx.restore();
+  }
+
+  function drawLocal(){
+    const data=local();
+    if(!data||view.zoom<24||!overlaps(visibleBounds(),data.bounds)) return;
+    if(data.waters.length) drawPolygons(data.waters,data.bounds,'rgba(27,65,91,.88)',null);
+    if(data.greens.length) drawPolygons(data.greens,data.bounds,'rgba(35,72,61,.72)',null);
+    if(view.zoom>=55&&data.buildings.length){
+      drawPolygons(data.buildings,data.bounds,'rgba(56,66,82,.58)','rgba(104,116,137,.34)',.4);
+    }
+    const k=clamp(view.zoom/100,.65,2.4);
+    for(const roadClass of [4,3,2,1,0]){
+      const styles=[
+        {color:'rgba(242,166,83,.92)',width:2.3*k},
+        {color:'rgba(155,145,119,.9)',width:1.7*k},
+        {color:'rgba(110,123,143,.76)',width:1.05*k},
+        {color:'rgba(82,94,112,.65)',width:.78*k},
+        {color:'rgba(70,87,105,.52)',width:.58*k,dash:[2,2]},
+      ];
+      drawFlatLines(localRoads[roadClass],data.bounds,styles[roadClass]);
+    }
+    drawFlatLines(data.rails,data.bounds,{
+      color:'rgba(99,215,194,.8)',width:1.1*k,dash:[4,3],
+    });
+    if(view.zoom>=85) drawLocalLabels(data);
+  }
+
+  function reserveLabel(placed,x,y,text,font){
+    ctx.font=font;
+    const width=ctx.measureText(text).width+7;
+    const box=[x-width/2,y-9,x+width/2,y+4];
+    if(box[2]<0||box[0]>W||box[3]<0||box[1]>H) return false;
+    if(placed.some(other=>other[0]<box[2]&&box[0]<other[2]&&other[1]<box[3]&&box[1]<other[3])) return false;
+    placed.push(box);return true;
+  }
+  function label(x,y,text,font,fill,placed,stroke='rgba(5,8,15,.96)'){
+    if(!reserveLabel(placed,x,y,text,font)) return false;
+    ctx.font=font;ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle=stroke;ctx.strokeText(text,x,y);
+    ctx.fillStyle=fill;ctx.fillText(text,x,y);ctx.textAlign='left';return true;
+  }
+
+  function drawCountryLabels(placed){
+    const data=country(), box=visibleBounds();
+    const showTowns=view.zoom>=3.2;
+    for(const place of data.places){
+      if(place[3]&& !showTowns) continue;
+      const point=decode(place,data.bounds,0);
+      if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
+      const xy=screen(point[0],point[1]);
+      const city=place[3]===0;
+      ctx.fillStyle=city?'#d7e0ed':'#8e9db5';
+      ctx.beginPath();ctx.arc(xy[0],xy[1],city?2.5:1.7,0,7);ctx.fill();
+      const shown=label(xy[0],xy[1]-6,place[2],
+        `${city?'700 ':' '} ${city?10.5:9}px sans-serif`,
+        city?'rgba(223,230,240,.9)':'rgba(167,178,196,.75)',placed);
+      if(shown) hits.push({x:xy[0],y:xy[1],type:'place',item:place});
+    }
+    if(view.zoom>=4&&view.zoom<38){
+      for(const road of data.roadLabels||[]){
+        if(road[3]>2&&view.zoom<9) continue;
+        const point=decode(road,data.bounds,0);
+        if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
+        const xy=screen(point[0],point[1]);
+        label(xy[0],xy[1],road[2],'8px ui-monospace,monospace',
+          'rgba(210,166,105,.68)',placed);
+      }
+    }
+  }
+  function drawLocalLabels(data){
+    const placed=[], box=visibleBounds();
+    if(view.zoom>=130){
+      for(const road of data.roadNames||[]){
+        const point=decode(road,data.bounds,0);
+        if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
+        const xy=screen(point[0],point[1]);
+        label(xy[0],xy[1],road[2],'8px sans-serif','rgba(202,194,174,.68)',placed);
+      }
+    }
+    for(const poi of data.pois||[]){
+      const point=decode(poi,data.bounds,0);
+      if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
+      const xy=screen(point[0],point[1]);
+      ctx.fillStyle=poi[3]==='역'?'#55e0c8':'#ffb454';
+      ctx.beginPath();ctx.arc(xy[0],xy[1],2.7,0,7);ctx.fill();
+      if(label(xy[0],xy[1]-6,poi[2],'700 9px sans-serif','rgba(226,231,239,.9)',placed)){
+        hits.push({x:xy[0],y:xy[1],type:'poi',item:poi});
+      }
+    }
+  }
+
+  function neighborSet(){
+    const out=new Set();
+    if(!S||S.driving||!S.at) return out;
+    for(const edge of D.edges){
+      if(edge[0]===S.at&&S.known.includes(edge[1])) out.add(edge[1]);
+      if(edge[1]===S.at&&S.known.includes(edge[0])) out.add(edge[0]);
+    }
+    return out;
+  }
+  function vanGeo(){
+    if(!S) return null;
+    if(S.driving){
+      const a=D.geo[S.driving.from],b=D.geo[S.driving.to];
+      if(!a||!b) return null;
+      const fraction=clamp(S.driving.gone/S.driving.dist,0,1);
+      return [a[0]+(b[0]-a[0])*fraction,a[1]+(b[1]-a[1])*fraction];
+    }
+    return D.geo[S.at]||null;
+  }
+  function drawGame(){
+    if(!S) return;
+    const nbrs=neighborSet();
+    ctx.save();ctx.lineCap='round';
+    for(const edge of D.edges){
+      if(!S.known.includes(edge[0])||!S.known.includes(edge[1])) continue;
+      const a=D.geo[edge[0]],b=D.geo[edge[1]];if(!a||!b) continue;
+      const aa=screen(a[0],a[1]),bb=screen(b[0],b[1]);
+      const current=S.driving&&((S.driving.from===edge[0]&&S.driving.to===edge[1])||
+        (S.driving.from===edge[1]&&S.driving.to===edge[0]));
+      const next=!S.driving&&(edge[0]===S.at||edge[1]===S.at)&&(nbrs.has(edge[0])||nbrs.has(edge[1]));
+      ctx.beginPath();ctx.moveTo(aa[0],aa[1]);ctx.lineTo(bb[0],bb[1]);
+      ctx.strokeStyle=current?'rgba(255,180,84,.98)':next?'rgba(255,180,84,.72)':'rgba(211,220,238,.42)';
+      ctx.lineWidth=current?3.2:next?2.4:1.6;ctx.setLineDash(edge[3]==='rough'?[3,5]:[]);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    const placed=[];
+    for(const id of S.known){
+      const node=D.nodes[id],geo=D.geo[id];if(!node||!geo) continue;
+      const xy=screen(geo[0],geo[1]);
+      if(xy[0]<-20||xy[0]>W+20||xy[1]<-20||xy[1]>H+20) continue;
+      const here=S.at===id,goal=node.type==='goal',settlement=!!node.stl;
+      ctx.fillStyle=goal?'#55e0c8':here?'#ffb454':settlement?'#d49b57':'#8290aa';
+      ctx.save();ctx.translate(xy[0],xy[1]);
+      if(settlement){ctx.rotate(Math.PI/4);ctx.fillRect(-3.7,-3.7,7.4,7.4);}
+      else{ctx.beginPath();ctx.arc(0,0,goal||here?4.5:3,0,7);ctx.fill();}
+      ctx.restore();
+      if(here||goal||settlement||nbrs.has(id)){
+        label(xy[0],xy[1]-9,node.name.split(' ')[0],
+          `${here||goal?'700':'600'} 10px sans-serif`,
+          goal?'#76ead9':here?'#ffd197':'#e4d9c4',placed);
+      }
+      hits.push({x:xy[0],y:xy[1],type:'game',id});
+    }
+    const van=vanGeo();
+    if(van){
+      const xy=screen(van[0],van[1]);
+      ctx.shadowColor='#ffb454';ctx.shadowBlur=9;ctx.fillStyle='#ffb454';
+      ctx.beginPath();ctx.roundRect(xy[0]-5,xy[1]-3,10,6,2);ctx.fill();ctx.shadowBlur=0;
+    }
+    ctx.restore();
+  }
+
+  function draw(){
+    if(!active||!ctx||!W) return;
+    const vanSig=S&&S.driving?`${S.driving.from}:${S.driving.to}:${Math.round(S.driving.gone*3)}`:'';
+    if(vanSig!==lastVanSig){lastVanSig=vanSig;dirty=true;}
+    if(!dirty) return;
+    dirty=false;hits=[];
+    const bg=ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#0a1020');bg.addColorStop(1,'#070a13');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    drawGrid();
+    drawCountry();
+    drawCoverage();
+    drawLocal();
+    const placed=[];
+    if(view.zoom<55) drawCountryLabels(placed);
+    drawGame();
+    if(view.zoom>=38&&local()&&!overlaps(visibleBounds(),local().bounds)){
+      ctx.fillStyle='rgba(130,143,164,.58)';ctx.font='10px ui-monospace,monospace';ctx.textAlign='center';
+      ctx.fillText('이 배율의 상세 도시 기록은 아직 복원되지 않았다',W/2,H-44);ctx.textAlign='left';
+    }
+  }
+
+  function tap(x,y){
+    let best=null,distance=22;
+    for(const hit of hits){
+      const d=Math.hypot(hit.x-x,hit.y-y);
+      const limit=hit.type==='game'?26:22;
+      if(d<Math.min(distance,limit)){best=hit;distance=d;}
+    }
+    if(!best){q('#nodecard').classList.remove('on');return;}
+    if(best.type==='game'){UI.showNodeCard(best.id);return;}
+    showRecord(best);
+  }
+  function showRecord(hit){
+    const card=q('#nodecard'),data=hit.item;
+    const point=decode(data,hit.type==='poi'?local().bounds:country().bounds,0);
+    const kind=hit.type==='poi'?data[3]:(data[3]===0?'도시':'읍·면 소재지');
+    card.innerHTML=`<h4>${data[2]} <span class="osm-record">2026 OSM 기록</span></h4>
+      <div class="d">${kind} · 북위 ${point[1].toFixed(4)}°, 동경 ${point[0].toFixed(4)}°<br>
+      2169년의 현황이 아니라, 천리안 이전 사람들이 남긴 위치 기록이다.</div>
+      <button class="osm-focus" type="button">이 좌표를 가운데로 확대</button>`;
+    card.querySelector('.osm-focus').onclick=()=>{focus(point[0],point[1],hit.type==='poi'?150:7);card.classList.remove('on');};
+    card.classList.add('on');
+  }
+
+  function localDetail(){
+    const data=local();if(!data||view.zoom<55) return false;
+    return view.lon>=data.bounds[0]&&view.lon<=data.bounds[2]&&view.lat>=data.bounds[1]&&view.lat<=data.bounds[3];
+  }
+  function status(){
+    const date=(country()?.sourceDate||'2026').slice(0,10);
+    if(localDetail()) return `OSM ${date} · 서울 서남부 골목 기록`;
+    if(view.zoom>=7) return `OSM ${date} · 대한민국 지역 확대`;
+    return `OSM ${date} · 대한민국 주요 교통망`;
+  }
+  function updateStatus(){
+    if(active&&q('#map-geo-status')) q('#map-geo-status').textContent=status();
+  }
+  function activate(){
+    active=true;resize();
+    if(firstOpen){reset();firstOpen=false;}
+    dirty=true;updateStatus();
+  }
+  function deactivate(){active=false;pointer=null;}
+  function onOpen(){if(active){resize();dirty=true;updateStatus();}}
+  const isActive=()=>active;
+  const stats=()=>({
+    country:country()?.counts||{},
+    local:local()?.counts||{},
+    zoom:view.zoom,
+    status:status(),
+  });
+  return {init,activate,deactivate,onOpen,draw,isActive,reset,focusLocal,stats};
+})();
+
 /* ═══════════════════ V-WORLD 2D — 선택형 실측 지도 ═══════════════════
    인증키는 소스/빌드에 넣지 않고 이 브라우저의 localStorage에만 저장한다.
    API가 없거나 실패하면 아래 MAPR 자체 여정도가 항상 폴백으로 남는다. */
@@ -9,9 +461,10 @@ const VMAP = (()=>{
   const q=(s)=>document.querySelector(s);
 
   function init(){
-    const route=q('#map-mode-route'), exact=q('#map-mode-vworld');
-    if(!route||!exact) return;
+    const route=q('#map-mode-route'), osm=q('#map-mode-osm'), exact=q('#map-mode-vworld');
+    if(!route||!osm||!exact) return;
     route.onclick=()=>setRoute();
+    osm.onclick=()=>setOSM();
     exact.onclick=()=> mode==='vworld'?showSetup():activate();
     q('#vworld-cancel').onclick=()=>setRoute();
     q('#vworld-connect').onclick=()=>{
@@ -25,20 +478,34 @@ const VMAP = (()=>{
   }
 
   function updateTabs(){
+    const route=mode==='route', osm=mode==='osm';
     const exact=mode==='vworld';
-    q('#map-mode-route').classList.toggle('here',!exact);
-    q('#map-mode-route').setAttribute('aria-selected',String(!exact));
+    q('#map-mode-route').classList.toggle('here',route);
+    q('#map-mode-route').setAttribute('aria-selected',String(route));
+    q('#map-mode-osm').classList.toggle('here',osm);
+    q('#map-mode-osm').setAttribute('aria-selected',String(osm));
     q('#map-mode-vworld').classList.toggle('here',exact);
     q('#map-mode-vworld').setAttribute('aria-selected',String(exact));
+    q('#mapwrap').classList.toggle('osm',osm);
     q('#mapwrap').classList.toggle('vworld',exact&&!!map);
   }
 
   function setRoute(){
     mode='route';
+    OSMMAP.deactivate();
     q('#vworld-setup').classList.remove('on');
     q('#nodecard').classList.remove('on');
     updateTabs();
     MAPR.resize();
+  }
+
+  function setOSM(){
+    if(!D.osmArchive||!D.osmArchive.country) return;
+    mode='osm';
+    q('#vworld-setup').classList.remove('on');
+    q('#nodecard').classList.remove('on');
+    updateTabs();
+    OSMMAP.activate();
   }
 
   function showSetup(msg=''){
@@ -75,12 +542,13 @@ const VMAP = (()=>{
       localStorage.setItem(KEY_STORE,key);
       localStorage.setItem(DOMAIN_STORE,domain);
       q('#vworld-setup').classList.remove('on');
+      OSMMAP.deactivate();
       mode='vworld'; updateTabs();
       if(map.updateSize) map.updateSize();
       resetView(); sync(true);
       q('#map-geo-status').textContent='V-WORLD · 실측 좌표';
     }catch(err){
-      mode='route'; updateTabs();
+      mode='route'; OSMMAP.deactivate(); updateTabs();
       showSetup('연결하지 못했습니다. 키의 등록 도메인과 네트워크를 확인해 주세요.');
     }finally{ loading=false; }
   }
@@ -260,12 +728,14 @@ const VMAP = (()=>{
   }
 
   function onOpen(){
-    q('#map-geo-status').textContent=mode==='vworld'&&map
-      ?'V-WORLD · 실측 좌표':`WGS84 · ${Object.keys(D.geo||{}).length}곳`;
+    q('#map-geo-status').textContent=mode==='vworld'&&map?'V-WORLD · 실측 좌표':
+      mode==='osm'?OSMMAP.stats().status:`WGS84 · ${Object.keys(D.geo||{}).length}곳`;
     if(map&&mode==='vworld'){ setTimeout(()=>{ map.updateSize&&map.updateSize(); sync(true); },50); }
+    if(mode==='osm') OSMMAP.onOpen();
   }
   const active=()=>mode==='vworld'&&!!map;
-  return {init,onOpen,active,sync,setRoute,resetView};
+  const osmActive=()=>mode==='osm'&&OSMMAP.isActive();
+  return {init,onOpen,active,osmActive,sync,setRoute,setOSM,resetView};
 })();
 
 /* ═══════════════════ MAP ═══════════════════ */
@@ -339,6 +809,7 @@ const MAPR = (()=>{
   }
 
   function draw(dt){
+    if(VMAP.osmActive()){ OSMMAP.draw(dt); return; }
     if(VMAP.active()){ VMAP.sync(); return; }
     if(!ctx||!W) return; t+=dt;
     ctx.clearRect(0,0,W,H);

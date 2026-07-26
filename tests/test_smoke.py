@@ -298,6 +298,49 @@ with sync_playwright() as p:
     check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     pg.click('#dk-map'); pg.wait_for_timeout(120)
+    osm_data = pg.evaluate('''() => ({
+      country:D.osmArchive?.country?.counts,
+      local:D.osmArchive?.local?.counts,
+      sourceDate:D.osmArchive?.country?.sourceDate,
+      attribution:D.osmArchive?.attribution?.text
+    })''')
+    check('대한민국 OSM 경량 데이터 탑재',
+          osm_data['country']['roads'] > 50000 and osm_data['country']['rails'] > 8000 and
+          osm_data['country']['coast'] > 1800 and osm_data['country']['places'] > 1400 and
+          osm_data['sourceDate'].startswith('2026-07-25'),
+          str(osm_data))
+    check('서울 상세 OSM 골목·건물·POI 탑재',
+          osm_data['local']['roads'] > 1000 and osm_data['local']['buildings'] > 800 and
+          osm_data['local']['pois'] == 120, str(osm_data['local']))
+    check('OpenStreetMap ODbL 출처 표기',
+          'OpenStreetMap contributors' in osm_data['attribution'] and
+          pg.locator('#osm-attribution a').count() == 1)
+    pg.click('#map-mode-osm'); pg.wait_for_timeout(420)
+    osm_country = pg.evaluate('''() => ({
+      active:document.querySelector('#mapwrap').classList.contains('osm'),
+      tab:document.querySelector('#map-mode-osm').classList.contains('here'),
+      status:document.querySelector('#map-geo-status').textContent,
+      sdk:document.querySelectorAll('#vworld-sdk').length,
+      stats:OSMMAP.stats()
+    })''')
+    check('대한민국 OSM 전국 지도 오프라인 전환',
+          osm_country['active'] and osm_country['tab'] and '대한민국 주요 교통망' in osm_country['status'] and
+          osm_country['sdk'] == 0, str(osm_country))
+    pg.click('#osm-local'); pg.wait_for_timeout(260)
+    osm_local = pg.evaluate('''() => ({
+      status:document.querySelector('#map-geo-status').textContent,
+      zoom:OSMMAP.stats().zoom,
+      canvas:getComputedStyle(document.querySelector('#osmcv')).display,
+      attribution:getComputedStyle(document.querySelector('#osm-attribution')).display
+    })''')
+    check('서울 서남부 상세 기록 확대',
+          '서울 서남부 골목 기록' in osm_local['status'] and osm_local['zoom'] > 50 and
+          osm_local['canvas'] == 'block' and osm_local['attribution'] == 'block',
+          str(osm_local))
+    pg.click('#map-mode-route'); pg.wait_for_timeout(80)
+    check('OSM에서 여정도로 복귀',
+          pg.locator('#map-mode-route.here').count() == 1 and
+          pg.locator('#mapwrap.osm').count() == 0)
     pg.click('#map-mode-vworld'); pg.wait_for_timeout(120)
     check('V-World 키 입력 전 외부 SDK 미호출',
           pg.locator('#vworld-setup.on').count() == 1 and

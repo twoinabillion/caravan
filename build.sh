@@ -9,6 +9,7 @@ PARTS_BEFORE_EMBEDS=(
   src/01-style.html
   src/02-dom.html
   src/03-data.js
+  src/03h-osm.js
   src/03b-portraits.js
   src/03c-icons.js
   src/03d-bgm.js

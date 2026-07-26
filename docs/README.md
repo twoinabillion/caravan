@@ -19,7 +19,7 @@ python3 tests/test_smoke.py   # Playwright 스모크 (부팅·의뢰 엔진·신
 ```
 
 ```
-src/        01-style → 02-dom → 03-data → 03b-portraits → 03c-icons
+src/        01-style → 02-dom → 03-data → 03h-osm → 03b-portraits → 03c-icons
             → 04-engine → 05-scene → 06-mapgraph → 07-ui → 08-offroad → 09-close
 assets/     portraits(96px)·icons(32px) 원본 백업 (게임엔 base64로 인라인)
 docs/       DESIGN.md(디자인 바이블) · 프롬프트 가이드 2종
@@ -31,7 +31,7 @@ tests/      test_smoke.py + shots/
 
 | 영역 | 내용 |
 |---|---|
-| 지도 | 노드 58곳 WGS84 좌표 + 도로 77 — 자체 여정도와 선택형 V-World 2D 실측 지도가 같은 좌표를 사용 |
+| 지도 | 노드 58곳 WGS84 좌표 + 도로 77 — 자체 여정도, 대한민국 OSM 2026 오프라인 기록, 서울 서남부 상세 기록, 선택형 V-World 2D가 같은 좌표를 사용 |
 | 이벤트 | **836종**(대화 195) + 잡담 243 + **티키타카 45**(주행 중 동료 연속 대화) |
 | 시나리오 | 부모가 만든 인간 확인층 · 현재 제7 구역 추방 저지 · 143년 최초 조건의 미해결 목적 · 코어 처분 3안 |
 | 의뢰 | **4종** 배달📦/특송⚡/조달🧰/편지✉️ — 정착지 게시판 2건 중 택1 |
@@ -48,5 +48,6 @@ tests/      test_smoke.py + shots/
 
 자세한 설계 원칙·떡밥 대장·로드맵은 [DESIGN.md](DESIGN.md), 장기 연작의
 불변 설정은 [SERIES-BIBLE.md](SERIES-BIBLE.md), 시네마틱 공통 화풍과
-장면별 생성 브리프는 [scene-prompts.md](scene-prompts.md), V-World 연결과
-키 보안 원칙은 [vworld-map.md](vworld-map.md).
+장면별 생성 브리프는 [scene-prompts.md](scene-prompts.md), 대한민국 OSM
+기록 지도는 [osm-offline-map.md](osm-offline-map.md), V-World 연결과 키
+보안 원칙은 [vworld-map.md](vworld-map.md).

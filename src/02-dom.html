@@ -119,13 +119,26 @@
     <div id="map-sourcebar">
       <div class="map-modes" role="tablist" aria-label="지도 배경 선택">
         <button id="map-mode-route" class="here" role="tab" aria-selected="true">여정도</button>
+        <button id="map-mode-osm" role="tab" aria-selected="false">대한민국 OSM</button>
         <button id="map-mode-vworld" role="tab" aria-selected="false">V-WORLD 실측</button>
       </div>
       <span id="map-geo-status">WGS84 · 58곳</span>
     </div>
     <div id="mapwrap">
       <div id="vworld-map" aria-label="V-World 실측 지도"></div>
+      <canvas id="osmcv" aria-label="대한민국 OSM 오프라인 기록 지도"></canvas>
       <canvas id="mapcv"></canvas>
+      <div id="osm-tools" aria-label="OSM 지도 조작">
+        <button id="osm-home" type="button">전국</button>
+        <button id="osm-local" type="button">서울 서남부 기록</button>
+        <button id="osm-minus" type="button" aria-label="축소">−</button>
+        <button id="osm-plus" type="button" aria-label="확대">＋</button>
+      </div>
+      <div id="osm-legend"><span>━ 고속도로</span><span>━ 국도</span><span>╍ 철도</span><span>◆ 달구지 경로</span></div>
+      <div id="osm-attribution">
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a>
+        <span>· Geofabrik 대한민국 추출본</span>
+      </div>
       <div id="vworld-setup" aria-live="polite">
         <div class="vworld-box">
           <span class="vk">V-WORLD 2D API 2.0</span>
