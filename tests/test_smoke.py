@@ -170,6 +170,16 @@ with sync_playwright() as p:
       out.sceneCount=Object.keys(D.scenes||{}).length;
       out.nodeSceneCount=Object.keys(D.nodeScenes||{}).length;
       out.eventSceneCount=Object.keys(D.eventScenes||{}).length;
+      out.geoCount=Object.keys(D.geo||{}).length;
+      out.geoReady=Object.keys(D.nodes).every(id => {
+        const n=D.nodes[id], g=D.geo[id];
+        return Array.isArray(g) && g.length === 2 &&
+          Number.isFinite(n.lon) && Number.isFinite(n.lat) &&
+          Number.isFinite(n.x) && Number.isFinite(n.y);
+      });
+      out.geoOrder=D.nodes.busan.lat < D.nodes.seoul.lat &&
+        D.nodes.sokcho.lat > D.nodes.seoul.lat &&
+        D.nodes.mokpo.lon < D.nodes.busan.lon;
       out.upgradeArtCount=Object.keys(D.upgradeArt||{}).length;
       out.upgradeArtReady=Object.values(D.upgradeArt||{}).every(src=>src.startsWith('data:image/jpeg;base64,'));
       const grouped=(D.upgradeGroups||[]).flatMap(g=>g.ids);
@@ -263,6 +273,8 @@ with sync_playwright() as p:
     check('시네마틱 이미지 59종·빌드 주입', r4['sceneCount'] == 59 and r4['sceneDataReady'], str(r4))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
+    check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))
+    check('실제 남북·동서 위치관계 반영', r4['geoOrder'], str(r4))
     check('도시 9곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] >= 36, str(r4))
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
@@ -270,6 +282,70 @@ with sync_playwright() as p:
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
     check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
+    pg.click('#dk-map'); pg.wait_for_timeout(120)
+    pg.click('#map-mode-vworld'); pg.wait_for_timeout(120)
+    check('V-World 키 입력 전 외부 SDK 미호출',
+          pg.locator('#vworld-setup.on').count() == 1 and
+          pg.locator('#vworld-sdk').count() == 0)
+    pg.click('#vworld-cancel'); pg.wait_for_timeout(80)
+    check('V-World 취소 시 자체 여정도 폴백',
+          pg.locator('#map-mode-route.here').count() == 1 and
+          pg.locator('#mapwrap.vworld').count() == 0)
+    pg.evaluate('''() => {
+      class Obj { constructor(options={}){ Object.assign(this,options); } }
+      class Feature {
+        constructor(properties={}){ this.properties={...properties}; }
+        get(key){ return this.properties[key]; }
+        setProperties(properties){ Object.assign(this.properties,properties); }
+      }
+      class VectorSource {
+        constructor(){ this.features=[]; window.__vworldMockSource=this; }
+        clear(){ this.features=[]; }
+        addFeatures(features){ this.features.push(...features); }
+      }
+      class MockMap {
+        constructor(){
+          this.view={setCenter:()=>{},setZoom:()=>{}};
+          window.__vworldMockMap=this;
+        }
+        addLayer(layer){ this.layer=layer; }
+        on(){ }
+        getView(){ return this.view; }
+        updateSize(){ }
+        forEachFeatureAtPixel(){ }
+      }
+      window.ol={
+        source:{Vector:VectorSource},
+        layer:{Vector:Obj},
+        style:{Style:Obj,Stroke:Obj,Fill:Obj,RegularShape:Obj,Circle:Obj,Text:Obj},
+        geom:{LineString:Obj,Point:Obj},
+        Feature,
+        proj:{transform:coords=>coords},
+      };
+      window.vw={ol3:{
+        Map:MockMap,MapOptions:{},CameraPosition:{},
+        BasemapType:{GRAPHIC_NIGHT:'night',GRAPHIC:'graphic'},
+        DensityType:{EMPTY:'empty',BASIC:'basic'},
+      }};
+      localStorage.setItem('seoul400_vworld_key','AAAA0000-BBBB-1111-CCCC-222222222222');
+      localStorage.setItem('seoul400_vworld_domain','twoinabillion.github.io');
+    }''')
+    pg.click('#map-mode-vworld'); pg.wait_for_timeout(180)
+    precise = pg.evaluate('''() => ({
+      active:document.querySelector('#mapwrap').classList.contains('vworld'),
+      features:(window.__vworldMockSource?.features||[]).length,
+      known:S.known.length,
+      status:document.querySelector('#map-geo-status').textContent
+    })''')
+    check('V-World SDK 연결 시 게임 경로·노드 벡터 생성',
+          precise['active'] and precise['features'] > precise['known'] and 'V-WORLD' in precise['status'],
+          str(precise))
+    pg.click('#map-mode-route')
+    pg.evaluate("""() => {
+      localStorage.removeItem('seoul400_vworld_key');
+      localStorage.removeItem('seoul400_vworld_domain');
+    }""")
+    pg.click('#map-x')
     check('836개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))

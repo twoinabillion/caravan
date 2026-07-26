@@ -116,8 +116,30 @@
   <div class="ovl" id="ovl-map">
     <div class="ovl-head"><h2>지도 — 남녘</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x">✕</button></div>
     <div id="map-mission" class="mission-strip map-mission"></div>
+    <div id="map-sourcebar">
+      <div class="map-modes" role="tablist" aria-label="지도 배경 선택">
+        <button id="map-mode-route" class="here" role="tab" aria-selected="true">여정도</button>
+        <button id="map-mode-vworld" role="tab" aria-selected="false">V-WORLD 실측</button>
+      </div>
+      <span id="map-geo-status">WGS84 · 58곳</span>
+    </div>
     <div id="mapwrap">
+      <div id="vworld-map" aria-label="V-World 실측 지도"></div>
       <canvas id="mapcv"></canvas>
+      <div id="vworld-setup" aria-live="polite">
+        <div class="vworld-box">
+          <span class="vk">V-WORLD 2D API 2.0</span>
+          <b>실측 국토 지도를 연결합니다</b>
+          <p>인증키와 등록 도메인은 이 브라우저에만 저장됩니다. 키가 없거나 연결이 끊겨도 여정도는 계속 작동합니다.</p>
+          <label>인증키<input id="vworld-key" type="password" autocomplete="off" spellcheck="false" placeholder="00000000-0000-0000-0000-000000000000"></label>
+          <label>등록 도메인<input id="vworld-domain" type="text" autocomplete="off" spellcheck="false" placeholder="twoinabillion.github.io"></label>
+          <div class="vworld-actions">
+            <button id="vworld-cancel">여정도로 돌아가기</button>
+            <button id="vworld-connect">연결</button>
+          </div>
+          <small id="vworld-msg"></small>
+        </div>
+      </div>
       <div id="nodecard"></div>
     </div>
   </div>

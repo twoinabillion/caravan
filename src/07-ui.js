@@ -27,7 +27,8 @@ const UI = (()=>{
     SCENE.initTitle($('#titlecv'));
     MAPR.init($('#mapcv'));
     MAPR.initMini($('#minimap'));
-    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
+    VMAP.init();
+    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); VMAP.onOpen(); renderMapMini(); renderMission(); };
     GRAPH.init($('#graphcv'));
     wire();
     applyIcons();
@@ -104,7 +105,7 @@ const UI = (()=>{
       if(r.ok){ setTimeout(()=>startNew('offroad'), 600); }
     };
     $('#scr-intro').onclick=()=>nextIntro();
-    $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
+    $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); VMAP.onOpen(); renderMapMini(); renderMission(); };
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>G.camp();
     $('#dk-sound').onclick=()=>SND.toggle();

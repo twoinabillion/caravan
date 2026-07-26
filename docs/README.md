@@ -31,7 +31,7 @@ tests/      test_smoke.py + shots/
 
 | 영역 | 내용 |
 |---|---|
-| 지도 | 노드 58(강원 4 포함) + 안개, 도로 77 — 실제 남한 실루엣(동해안 직선·태안·다도해·강원 지선) |
+| 지도 | 노드 58곳 WGS84 좌표 + 도로 77 — 자체 여정도와 선택형 V-World 2D 실측 지도가 같은 좌표를 사용 |
 | 이벤트 | **836종**(대화 195) + 잡담 243 + **티키타카 45**(주행 중 동료 연속 대화) |
 | 시나리오 | 부모가 만든 인간 확인층 · 현재 제7 구역 추방 저지 · 143년 최초 조건의 미해결 목적 · 코어 처분 3안 |
 | 의뢰 | **4종** 배달📦/특송⚡/조달🧰/편지✉️ — 정착지 게시판 2건 중 택1 |
@@ -48,4 +48,5 @@ tests/      test_smoke.py + shots/
 
 자세한 설계 원칙·떡밥 대장·로드맵은 [DESIGN.md](DESIGN.md), 장기 연작의
 불변 설정은 [SERIES-BIBLE.md](SERIES-BIBLE.md), 시네마틱 공통 화풍과
-장면별 생성 브리프는 [scene-prompts.md](scene-prompts.md).
+장면별 생성 브리프는 [scene-prompts.md](scene-prompts.md), V-World 연결과
+키 보안 원칙은 [vworld-map.md](vworld-map.md).

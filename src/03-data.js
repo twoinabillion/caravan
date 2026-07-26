@@ -130,6 +130,46 @@ D.nodes = {
   cablecar:    {name:'멈춘 케이블카',  x:418,y:344, region:'mid',   type:'hidden', desc:'능선 중턱에 매달린 채 오랫동안 정지한 관광 곤돌라.'},
   filmset:     {name:'시대극 세트장',  x:272,y:506, region:'mid',   type:'hidden', desc:'사극을 찍던 가짜 기와 마을. 지금은 제일 진짜 같은 마을.'},
 };
+
+/* 모든 지도 모드가 함께 쓰는 WGS84 좌표 [경도, 위도].
+   정착지·도시는 실제 중심 좌표, 발견형 장소는 연결 도시 주변의 서사 좌표다.
+   기존 600×760 좌표도 여기서 다시 투영해 자체 여정도와 V-World가 어긋나지 않게 한다. */
+D.geo = {
+  busan:[129.02,35.10], gimhae:[128.88,35.23], yangsan:[129.04,35.34],
+  miryang:[128.75,35.50], jinju:[128.08,35.18], hapcheon:[128.17,35.57],
+  geochang:[127.91,35.69], daegu:[128.60,35.87], gumi:[128.34,36.12],
+  gimcheon:[128.11,36.14], muju:[127.66,36.01], namwon:[127.39,35.42],
+  jeonju:[127.15,35.82], yeongdong:[127.78,36.18], daejeon:[127.38,36.35],
+  nonsan:[127.10,36.19], gongju:[127.12,36.45], cheongju:[127.49,36.64],
+  cheonan:[127.15,36.82], pyeongtaek:[127.11,36.99], suwon:[127.01,37.28],
+  seoul:[126.99,37.55],
+  lake:[128.85,35.56], mall:[128.33,36.08], tower:[127.78,35.80],
+  spring:[127.78,36.25], airfield:[127.03,36.16], solar:[126.97,36.95],
+  reststop:[128.18,36.12], tunnelbook:[127.59,35.97],
+  ulsan:[129.31,35.54], yeosu:[127.66,34.76], suncheon:[127.49,34.95],
+  gwangju:[126.91,35.16], damyang:[126.99,35.32], mokpo:[126.39,34.81],
+  andong:[128.73,36.57], mungyeong:[128.19,36.59], danyang:[128.37,36.98],
+  wonju:[127.95,37.34], daegwallyeong:[128.72,37.68], gangneung:[128.90,37.75],
+  sokcho:[128.59,38.20], icheon:[127.44,37.28], gyeongju:[129.22,35.84],
+  pohang:[129.37,36.03], sangju:[128.16,36.41], gunsan:[126.71,35.97],
+  chungju:[127.93,36.99], sejong:[127.29,36.48],
+  lighthouse:[126.56,35.96], drivein:[127.18,36.89], sunflower:[128.08,35.46],
+  maehwa:[127.72,35.12], mingyu_ridge:[127.91,36.29], jaeyi_cache:[128.29,36.26],
+  cablecar:[128.16,36.76], filmset:[127.35,35.53],
+};
+D.geoBounds = {west:125.70, east:129.70, south:34.65, north:38.55};
+D.projectGeo = ([lon,lat])=>{
+  const b=D.geoBounds;
+  const merc=(v)=>Math.log(Math.tan(Math.PI/4+v*Math.PI/360));
+  const x=178+(lon-b.west)/(b.east-b.west)*(532-178);
+  const y=96+(merc(b.north)-merc(lat))/(merc(b.north)-merc(b.south))*(672-96);
+  return [x,y];
+};
+for(const [id,coord] of Object.entries(D.geo)){
+  if(!D.nodes[id]) continue;
+  const [x,y]=D.projectGeo(coord);
+  Object.assign(D.nodes[id], {lon:coord[0], lat:coord[1], x, y});
+}
 D.startKnown = ['busan','gimhae','yangsan','miryang','jinju','daegu','daejeon','suwon','seoul',
   'ulsan','gyeongju','pohang','sangju','gunsan','chungju','sejong',
   'yeosu','suncheon','gwangju','damyang','mokpo','andong','mungyeong','danyang','icheon',

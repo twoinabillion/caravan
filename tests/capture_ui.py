@@ -59,6 +59,10 @@ with sync_playwright() as playwright:
     page.click("#dk-map")
     page.wait_for_timeout(300)
     page.screenshot(path=str(SHOT / "02-map.png"))
+    page.click("#map-mode-vworld")
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "02b-map-vworld-setup.png"))
+    page.click("#vworld-cancel")
     page.click("#map-x")
 
     page.click("#dk-status")
