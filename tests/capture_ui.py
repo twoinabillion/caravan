@@ -56,20 +56,24 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(250)
     page.screenshot(path=str(SHOT / "01-main.png"))
 
+    page.evaluate("""() => {
+      S.at='daejeon'; S.driving=null;
+      S.recruitQ={id:'eunsu',stage:'task',target:'daejeon',startedDay:S.day};
+      UI.renderAll();
+    }""")
+    page.wait_for_timeout(180)
+    page.screenshot(path=str(SHOT / "01a-recruit-quest.png"))
+    page.evaluate("G.openRecruitStep()")
+    page.wait_for_timeout(180)
+    page.screenshot(path=str(SHOT / "01b-recruit-scene.png"))
+    page.evaluate("""() => {
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.recruitQ=null; S.at='daegu'; UI.renderAll();
+    }""")
+
     page.click("#dk-map")
     page.wait_for_timeout(300)
     page.screenshot(path=str(SHOT / "02-map.png"))
-    page.click("#map-mode-osm")
-    page.wait_for_timeout(650)
-    page.screenshot(path=str(SHOT / "02a-map-osm-country.png"))
-    page.click("#osm-local")
-    page.wait_for_timeout(350)
-    page.screenshot(path=str(SHOT / "02b-map-osm-seoul.png"))
-    page.click("#map-mode-route")
-    page.click("#map-mode-vworld")
-    page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "02c-map-vworld-setup.png"))
-    page.click("#vworld-cancel")
     page.click("#map-x")
 
     page.click("#dk-status")

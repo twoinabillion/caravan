@@ -9,7 +9,6 @@ PARTS_BEFORE_EMBEDS=(
   src/01-style.html
   src/02-dom.html
   src/03-data.js
-  src/03h-osm.js
   src/03b-portraits.js
   src/03c-icons.js
   src/03d-bgm.js
@@ -44,6 +43,8 @@ SCENE_KEYS=(
   INTRO_PARENTS_DISCOVERY INTRO_SILENCED_PRESENTATION INTRO_CURRENT_EXPULSION
   FAMILY_VERIFICATION_KEY
   RECRUIT_MINJI RECRUIT_PARKSS
+  RECRUIT_MINJI_TASK RECRUIT_PARKSS_TASK RECRUIT_LEO_TASK
+  RECRUIT_JAEYI_TASK RECRUIT_EUNSU_TASK RECRUIT_KANGWOO_TASK
 )
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
@@ -105,6 +106,12 @@ SCENE_FILES=(
   assets/scenes/family-verification-key.jpg
   assets/scenes/recruit-minji.jpg
   assets/scenes/recruit-parkss.jpg
+  assets/scenes/recruit-minji-task.jpg
+  assets/scenes/recruit-parkss-task.jpg
+  assets/scenes/recruit-leo-task.jpg
+  assets/scenes/recruit-jaeyi-task.jpg
+  assets/scenes/recruit-eunsu-task.jpg
+  assets/scenes/recruit-kangwoo-task.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do

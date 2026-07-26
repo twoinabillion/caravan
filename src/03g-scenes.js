@@ -58,7 +58,13 @@ D.scenes = {
   'intro-current-expulsion':'__SCENE_INTRO_CURRENT_EXPULSION__',
   'family-verification-key':'__SCENE_FAMILY_VERIFICATION_KEY__',
   'recruit-minji':'__SCENE_RECRUIT_MINJI__',
-  'recruit-parkss':'__SCENE_RECRUIT_PARKSS__'
+  'recruit-parkss':'__SCENE_RECRUIT_PARKSS__',
+  'recruit-minji-task':'__SCENE_RECRUIT_MINJI_TASK__',
+  'recruit-parkss-task':'__SCENE_RECRUIT_PARKSS_TASK__',
+  'recruit-leo-task':'__SCENE_RECRUIT_LEO_TASK__',
+  'recruit-jaeyi-task':'__SCENE_RECRUIT_JAEYI_TASK__',
+  'recruit-eunsu-task':'__SCENE_RECRUIT_EUNSU_TASK__',
+  'recruit-kangwoo-task':'__SCENE_RECRUIT_KANGWOO_TASK__'
 };
 
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */

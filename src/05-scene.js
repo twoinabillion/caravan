@@ -173,6 +173,161 @@ const SCENE = (()=>{
       return D.nodeBio[f<0.5?S.driving.from:S.driving.to]||'rural'; }
     return D.nodeBio[S.at]||'rural';
   }
+  function sceneryOf(){
+    if(!S||!D.nodeScenery) return '';
+    if(S.driving){ const f=S.driving.gone/S.driving.dist;
+      return D.nodeScenery[f<0.5?S.driving.from:S.driving.to]||''; }
+    return D.nodeScenery[S.at]||'';
+  }
+  /* 같은 바이옴 위에 얹는 지역의 기억. 낮은 실루엣으로만 그려 달구지와 날씨를 가리지 않는다. */
+  function localScenery(kind,dark){
+    if(!kind) return;
+    const base=P(H*0.704);
+    const loop=W+150;
+    const x=P(((W*0.67-worldX*0.105)%loop+loop)%loop-38);
+    const col=mix('#1a2237','#090d17',dark*0.55);
+    const dim=mix('#27344c','#101520',dark*0.55);
+    ctx.fillStyle=col; ctx.strokeStyle=dim; ctx.lineWidth=1;
+    const roof=(rx,ry,rw,rh)=>{
+      ctx.fillRect(rx+3,ry+rh,rw-6,5);
+      ctx.beginPath(); ctx.moveTo(rx,ry+rh); ctx.lineTo(rx+rw/2,ry);
+      ctx.lineTo(rx+rw,ry+rh); ctx.closePath(); ctx.fill();
+      ctx.fillRect(rx-2,ry+rh,rw+4,1);
+    };
+    const crane=(cx,cy,flip=1)=>{
+      line(cx,cy,cx,cy-30); line(cx,cy-29,cx+25*flip,cy-33);
+      line(cx+4*flip,cy-28,cx+22*flip,cy-13);
+      line(cx+21*flip,cy-32,cx+21*flip,cy-11);
+      ctx.fillRect(P(cx+19*flip),P(cy-11),4,3);
+    };
+    if(['port','old-port','ferry','fishing-port','night-port','containers'].includes(kind)){
+      crane(x,base-2,1); crane(x+66,base+1,-1);
+      for(let r=0;r<2;r++) for(let k=0;k<4;k++){
+        ctx.fillStyle=r?'#151d2c':col; ctx.fillRect(x+19+k*12+(r%2)*4,base-8-r*6,11,5);
+      }
+      ctx.fillStyle=col;
+      ctx.beginPath(); ctx.moveTo(x+78,base-3); ctx.lineTo(x+111,base-3);
+      ctx.lineTo(x+103,base+3); ctx.lineTo(x+83,base+3); ctx.closePath(); ctx.fill();
+      if(kind==='fishing-port'||kind==='old-port'){
+        line(x+88,base-3,x+88,base-18); line(x+88,base-18,x+99,base-7);
+      }
+      if(kind==='night-port'&&dark>0.2){
+        for(const lx of [x+22,x+47,x+82,x+103]){
+          ctx.fillStyle=`rgba(255,184,92,${0.35+dark*0.35})`; ctx.fillRect(lx,base-7,1,1);
+        }
+      }
+      return;
+    }
+    if(['refinery','steelworks','factory'].includes(kind)){
+      for(let i=0;i<4;i++){
+        const sx=x+i*24, sh=20+(i%3)*9;
+        ctx.fillStyle=col; ctx.fillRect(sx,base-sh,7,sh);
+        ctx.fillStyle=dim; ctx.fillRect(sx-2,base-sh,11,2);
+        line(sx+3,base-sh,sx+3,base-sh-8);
+        if(i%2===0){ ctx.fillStyle='rgba(100,105,112,0.18)'; circ(sx+5,base-sh-12,5+i); }
+      }
+      ctx.strokeStyle=dim;
+      line(x,base-9,x+79,base-9); line(x+10,base-18,x+57,base-18);
+      if(kind==='steelworks'){ ctx.fillStyle=col; circ(x+97,base-13,15); ctx.fillRect(x+82,base-13,30,13); }
+      return;
+    }
+    if(kind==='tumuli'){
+      for(let i=0;i<4;i++){
+        const tx=x+i*30, ry=9+(i%2)*4;
+        ctx.fillStyle=mix('#253324','#101713',dark*0.45);
+        ctx.beginPath(); ctx.ellipse(tx,base,20,ry,0,Math.PI,0); ctx.fill();
+      }
+      return;
+    }
+    if(kind==='dome'){
+      ctx.fillStyle=col; ctx.beginPath(); ctx.ellipse(x+49,base,48,29,0,Math.PI,0); ctx.fill();
+      ctx.strokeStyle=dim;
+      for(let i=0;i<=6;i++) line(x+7+i*14,base,x+49,base-29);
+      ctx.fillStyle='#0c111c'; ctx.fillRect(x+2,base-5,94,5); return;
+    }
+    if(['hanok','market','pavilion','gate','fortress'].includes(kind)){
+      roof(x+3,base-27,33,8); roof(x+43,base-22,28,7);
+      if(kind==='fortress'||kind==='gate'){
+        ctx.fillStyle=col; ctx.fillRect(x-9,base-12,106,12);
+        for(let i=0;i<9;i++) ctx.fillRect(x-9+i*13,base-16,7,5);
+        roof(x+29,base-35,32,8);
+      }
+      if(kind==='pavilion'){ for(const px2 of [x+9,x+30,x+49,x+65]) ctx.fillRect(px2,base-17,2,17); }
+      return;
+    }
+    if(['research','planned-city','broadcast'].includes(kind)){
+      ctx.fillStyle=col;
+      for(let i=0;i<5;i++){
+        const bw=10+i%2*7,bh=18+(i*11)%31;
+        ctx.fillRect(x+i*20,base-bh,bw,bh);
+      }
+      const ax=x+105; line(ax,base,ax,base-48); line(ax-7,base-34,ax+7,base-34);
+      line(ax-5,base-24,ax+5,base-24);
+      ctx.beginPath(); ctx.arc(ax,base-42,8,-1.2,1.2); ctx.stroke();
+      return;
+    }
+    if(kind==='windfarm'){
+      for(let i=0;i<3;i++){
+        const wx2=x+i*48, wy=base-5-i*4; line(wx2,wy,wx2,wy-43);
+        const cy=wy-43, a=t*0.35+i;
+        for(let b=0;b<3;b++){ const a2=a+b*Math.PI*2/3;
+          line(wx2,cy,wx2+Math.cos(a2)*14,cy+Math.sin(a2)*14); }
+        ctx.fillStyle=dim; circ(wx2,cy,2);
+      }
+      return;
+    }
+    if(kind==='overpass'){
+      ctx.fillStyle=col; ctx.fillRect(x-25,base-27,140,5);
+      for(let i=0;i<4;i++) ctx.fillRect(x+i*38,base-23,5,23);
+      ctx.strokeStyle=dim; line(x-20,base-30,x+108,base-30); return;
+    }
+    if(kind==='airfield'){
+      ctx.fillStyle=col; ctx.fillRect(x-20,base-3,138,3);
+      ctx.beginPath(); ctx.moveTo(x+35,base-8); ctx.lineTo(x+73,base-8);
+      ctx.lineTo(x+91,base-3); ctx.lineTo(x+22,base-3); ctx.closePath(); ctx.fill();
+      ctx.fillRect(x+56,base-20,4,12); return;
+    }
+    if(kind==='orchard'){
+      for(let i=0;i<6;i++){ const tx=x+i*22; ctx.fillStyle=col; ctx.fillRect(tx,base-16,2,16);
+        ctx.fillStyle=mix('#203527','#0c1610',dark*0.5); circ(tx,base-19,9); }
+      return;
+    }
+    if(kind==='lantern-river'){
+      ctx.strokeStyle=dim; line(x-20,base-20,x+120,base-20);
+      for(let i=0;i<7;i++){ const lx=x+i*20; line(lx,base-20,lx,base-12);
+        ctx.fillStyle=`rgba(238,156,77,${0.25+dark*0.35})`; ctx.fillRect(lx-2,base-12,4,4); }
+      return;
+    }
+    if(kind==='reeds'){
+      for(let i=0;i<42;i++){ const rx=x+i*4, h2=10+hash(i*4)*21;
+        ctx.strokeStyle=dim; line(rx,base,rx+Math.sin(t+i)*1.2,base-h2);
+        if(i%3===0){ ctx.fillStyle=col; ctx.fillRect(rx-1,base-h2-2,3,3); } }
+      return;
+    }
+    if(kind==='bikes'){
+      for(let i=0;i<4;i++){ const bx=x+i*35; ctx.strokeStyle=dim;
+        ctx.beginPath(); ctx.arc(bx,base-5,5,0,7); ctx.arc(bx+13,base-5,5,0,7); ctx.stroke();
+        line(bx,base-5,bx+7,base-13); line(bx+7,base-13,bx+13,base-5); line(bx,base-5,bx+13,base-5); }
+      return;
+    }
+    if(kind==='kiln'){
+      for(let i=0;i<3;i++){ const kx=x+i*38; ctx.fillStyle=col;
+        ctx.beginPath(); ctx.ellipse(kx,base,17,22,0,Math.PI,0); ctx.fill();
+        ctx.fillStyle='#080c13'; ctx.fillRect(kx-5,base-9,10,9);
+        if(dark>0.2){ ctx.fillStyle='rgba(224,103,50,0.48)'; ctx.fillRect(kx-3,base-6,6,6); } }
+      return;
+    }
+    if(kind==='tunnel'){
+      ctx.fillStyle=col; ctx.beginPath(); ctx.ellipse(x+45,base,46,35,0,Math.PI,0); ctx.fill();
+      ctx.fillStyle='#070a11'; ctx.beginPath(); ctx.ellipse(x+45,base,25,24,0,Math.PI,0); ctx.fill(); return;
+    }
+    if(['limestone','mountain-town'].includes(kind)){
+      ctx.fillStyle=col;
+      ctx.beginPath(); ctx.moveTo(x-20,base); ctx.lineTo(x+2,base-42); ctx.lineTo(x+21,base-19);
+      ctx.lineTo(x+40,base-51); ctx.lineTo(x+67,base-14); ctx.lineTo(x+101,base-39); ctx.lineTo(x+126,base);
+      ctx.closePath(); ctx.fill(); return;
+    }
+  }
   /* 바다/호수 */
   function water(kind,dark){
     const y0=P(H*0.545), y1=P(H*0.705);
@@ -969,6 +1124,7 @@ const SCENE = (()=>{
     }
     namsan(dark);
     if(bio==='coast'||bio==='lake') water(bio,dark);
+    localScenery(sceneryOf(),dark);
     const density = bio==='city'?0.85: bio==='coast'?0.3: bio==='mount'?0.18:
       bio==='lake'?0.26: bio==='bamboo'?0.2: 0.45;
     buildings(0.34,52,density,H*0.705,14, bio==='city'?66:58, mix('#131a2e','#080b15',dark*0.5),dark);

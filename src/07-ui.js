@@ -26,10 +26,8 @@ const UI = (()=>{
     SCENE.init($('#cv'));
     SCENE.initTitle($('#titlecv'));
     MAPR.init($('#mapcv'));
-    OSMMAP.init($('#osmcv'));
     MAPR.initMini($('#minimap'));
-    VMAP.init();
-    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); VMAP.onOpen(); renderMapMini(); renderMission(); };
+    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     GRAPH.init($('#graphcv'));
     wire();
     applyIcons();
@@ -106,7 +104,7 @@ const UI = (()=>{
       if(r.ok){ setTimeout(()=>startNew('offroad'), 600); }
     };
     $('#scr-intro').onclick=()=>nextIntro();
-    $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); VMAP.onOpen(); renderMapMini(); renderMission(); };
+    $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>G.camp();
     $('#dk-sound').onclick=()=>SND.toggle();
@@ -204,10 +202,24 @@ const UI = (()=>{
   }
 
   function missionHtml(){
-    const q=S.quest;
+    const q=S.quest, rq=S.recruitQ;
     const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1);
     let kicker, title, state, meta, pct;
-    if(q){
+    if(rq){
+      const def=D.recruitQuests[rq.id], target=D.nodes[rq.target];
+      kicker=`인연 · ${def.name}`;
+      title=def.title;
+      if(rq.stage==='ready'){
+        state=`떠나기 전의 일을 마쳤다 · 달구지에서 합류를 이야기한다`;
+        meta='합류 대기';
+        pct=100;
+      } else {
+        state=`${target.name} · ${def.hint}`;
+        meta=S.at===rq.target&&!S.driving?'진행 가능':'이동 필요';
+        pct=S.at===rq.target?55:S.driving&&S.driving.to===rq.target
+          ?Math.min(50,S.driving.gone/S.driving.dist*50):18;
+      }
+    } else if(q){
       const K=G.QKIND[q.kind]||G.QKIND.deliver;
       kicker=`${K.nm} · 진행 중`;
       title=G.questLabel(q);
@@ -296,6 +308,14 @@ const UI = (()=>{
     }
     const n=D.nodes[S.at];
     let h=`<h3>${n.name}</h3><div class="sub">${n.desc}</div>${partyStrip()}<div class="acts">`;
+    if(S.recruitQ){
+      const rq=S.recruitQ, def=D.recruitQuests[rq.id], atTask=rq.stage==='task'&&S.at===rq.target;
+      const ready=rq.stage==='ready';
+      h+=`<button class="act primary" data-a="recruitstep" ${!ready&&!atTask?'disabled':''}>
+        <span class="ic">${ready?'🤝':'🧰'}</span><span><b>${ready?`${def.name}와 합류를 이야기한다`:
+          atTask?`${def.name}의 부탁을 진행한다`:`${D.nodes[rq.target].name}에서 ${def.name}와 만나기로 했다`}</b>
+        <small>${ready?'떠나기 전의 일을 함께 마쳤다':def.hint}</small></span></button>`;
+    }
     if(n.stl) h+=`<button class="act primary" data-a="stl"><span class="ic">🏘</span><span><b>정착지에 들어간다</b><small>거래 · 대화 · 소문</small></span></button>`;
     if(!n.stl && n.type!=='goal') h+=`<button class="act" data-a="explore"><span class="ic">🔦</span><span><b>주변을 탐색한다</b><small>약 1~2시간 · 무엇이 나올지 모른다</small></span></button>`;
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
@@ -323,6 +343,7 @@ const UI = (()=>{
     const rp=p.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>G.fieldRepair();
     const rd=p.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>{ if(G.fixRadio()) renderAll(); };
     const cf=p.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>showCraft();
+    const rq=p.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>G.openRecruitStep();
     wireParty(p);
     p.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
     const ex=p.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>G.explore();
@@ -609,12 +630,14 @@ const UI = (()=>{
         <span class="npc-att">${st.att>10?'우호적':st.att<-10?'냉랭함':st.met?'아는 사이':'초면'}</span></button>`;
     }
     // recruit (대구 강우)
-    if(stl.recruit && !G.hasComp(stl.recruit)){
+    if(stl.recruit && !G.hasComp(stl.recruit)
+      && (!S.used.includes('kw_recruit')||(S.recruitQ&&S.recruitQ.id===stl.recruit))){
       const c=D.comps[stl.recruit];
+      const rq=S.recruitQ&&S.recruitQ.id===stl.recruit?S.recruitQ:null;
       h+=`<button class="npc-row" data-recruit="${stl.recruit}">
         <div class="npc-face">${c.face}</div>
         <span><b>${c.name}</b><small>${c.bio}</small></span>
-        <span class="npc-att">동행 가능</span></button>`;
+        <span class="npc-att">${rq?(rq.stage==='ready'?'합류 약속':'부탁 진행 중'):'할 말 있음'}</span></button>`;
     }
     // 의뢰 게시판
     if(S.quest){
@@ -750,24 +773,12 @@ const UI = (()=>{
     };
   }
   function recruitStl(id){
+    if(S.recruitQ){
+      if(S.recruitQ.id!==id){ UI.toast('먼저 지금 맡은 합류 부탁을 끝내야 한다'); return; }
+      closeOvl('#ovl-stl'); G.openRecruitStep(); return;
+    }
     if(id==='kangwoo' && D.events.find(e=>e.id==='kw_recruit') && !S.used.includes('kw_recruit')){
       closeOvl('#ovl-stl'); G.openEventById('kw_recruit'); return; }
-    const body=$('#stl-body');
-    const c=D.comps[id];
-    const full=S.party.length>=G.maxParty();
-    const next=G.nextSeatUpgrade();
-    const dlg=el('div','dlg',`<div class="say"><span class="spk">${c.name}</span> "…북쪽으로 가는 차가 있다고 들었다. ${id==='kangwoo'?'서울까지 가나. …태워라. 밥값은 한다.':''}"</div>
-      <div class="choices">
-        <button class="choice" data-r="y" ${full?'disabled':''}>태운다 <span class="req">${full?'✗ 동료석 만석'+(next?' · '+next.nm+' 필요':''):'✓ 동료 자리 있음 · '+c.perk}</span></button>
-        <button class="choice" data-r="n">지금은 어렵다</button></div>`);
-    body.prepend(dlg);
-    dlg.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
-      if(b.hasAttribute('disabled'))return;
-      if(b.dataset.r==='y'){ G.doRecruit(id);
-        G.addNote({type:'인물',title:c.name,body:`${D.stls[curStl].name}에서 합류. ${c.bio}`,links:[]});
-        showStl(curStl); }
-      else dlg.remove();
-    });
   }
   /* ── NPC 대화 ── */
   function talk(nid){

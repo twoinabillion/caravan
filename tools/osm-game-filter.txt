@@ -1,8 +1,0 @@
-# 서울까지 400km 전국 기록 지도용 OSM 필터.
-# 모든 생활도로와 건물을 전국 단위로 넣으면 단일 HTML이 지나치게 커지므로,
-# 전국 화면에 필요한 주요 도로·철도·도시·대한민국 경계만 남긴다.
-w/highway=motorway,trunk,primary,secondary
-w/railway=rail
-w/natural=coastline
-n/place=city,town
-r/ISO3166-1=KR

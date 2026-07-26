@@ -19,7 +19,7 @@ G.newGame = (mode, name)=>{
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
-    flags:{}, pursuit:0, used:[], quest:null, wx:'clear', wxNext:'clear', up:{},
+    flags:{}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0},
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
@@ -53,6 +53,14 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S._drowsyAt===undefined) S._drowsyAt=-999;
   if(S._lunchDay===undefined) S._lunchDay=0;
   if(!Array.isArray(S._storyQueue)) S._storyQueue=[];
+  if(S.recruitQ===undefined) S.recruitQ=null;
+  /* 즉시 영입이던 구버전에서 만남만 소진하고 합류하지 않은 경우,
+     새 '합류 전 과제'를 다시 시작할 수 있도록 첫 만남을 복구한다. */
+  const oldRecruitStarts={minji:'meet_scrapyard',parkss:'meet_bus',leo:'meet_hitchhiker',
+    jaeyi:'jy_recruit',eunsu:'es_recruit',kangwoo:'kw_recruit'};
+  if(!S.recruitQ) for(const [id,eid] of Object.entries(oldRecruitStarts)){
+    if(!S.party.includes(id)) S.used=S.used.filter(x=>x!==eid);
+  }
   /* 구버전 세이브에서도 은수의 결말 필수 단서가 랜덤 풀에 묻히지 않게 보정 */
   if(S.flags.es_backdoor_ready && !S.flags.es_truth){
     const sid=S.flags.es_v1194?'es_backdoor':'es_nightshift';
@@ -92,6 +100,37 @@ G.remainKm = ()=>{ // rough remaining to seoul via bfs shortest through known gr
       if(dist[nb.id]===undefined||d<dist[nb.id]){ dist[nb.id]=d; q.push(nb.id); } } }
   let base = S.driving ? (dist[S.driving.to]!==undefined? dist[S.driving.to]+ (S.driving.dist-S.driving.gone):999) : dist[S.at];
   return Math.max(0, Math.round(base??400));
+};
+
+/* ── 합류 전 의뢰 ── */
+G.startRecruitQuest = (id)=>{
+  const def=D.recruitQuests&&D.recruitQuests[id];
+  if(!def||G.hasComp(id)||S.recruitQ) return false;
+  const context=S.driving?[S.driving.to,S.driving.from]:[S.at];
+  const target=context.find(n=>def.targets.includes(n))||def.targets[0];
+  S.recruitQ={id,stage:'task',target,startedDay:S.day};
+  UI.toast(`🤝 ${def.name}의 부탁 — ${D.nodes[target].name}`);
+  G.save();
+  return true;
+};
+G.markRecruitReady = (id)=>{
+  if(!S.recruitQ||S.recruitQ.id!==id) return false;
+  S.recruitQ.stage='ready';
+  S.recruitQ.readyDay=S.day;
+  UI.toast(`✓ ${D.recruitQuests[id].name}의 일이 끝났다 — 합류를 이야기할 수 있다`);
+  return true;
+};
+G.openRecruitStep = ()=>{
+  const q=S.recruitQ;
+  if(!q||S.driving) return false;
+  const def=D.recruitQuests[q.id];
+  if(!def) return false;
+  if(q.stage==='task'){
+    if(S.at!==q.target){ UI.toast(`🗺 ${D.nodes[q.target].name}에서 만나기로 했다`); return false; }
+    G.openEventById(def.task); return true;
+  }
+  if(q.stage==='ready'){ G.openEventById(def.join); return true; }
+  return false;
 };
 
 /* ── 유대 & 퍼크 (진전도) ── */
@@ -399,6 +438,7 @@ G.eligible = (typeFilter)=>{
     if(ev.minRemain!==undefined && remain<ev.minRemain) return false;
     if(ev.nearNode){ const ctx = S.driving? [S.driving.from,S.driving.to] : [S.at];
       if(!ev.nearNode.some(n=>ctx.includes(n))) return false; }
+    if(ev.recruitStart && (S.recruitQ||G.hasComp(ev.recruitStart))) return false;
     if(ev.needFlagMin && (S.flags[ev.needFlagMin[0]]||0) < ev.needFlagMin[1]) return false;
     if(ev.night && !night) return false;
     if(ev.needsComp && !G.hasComp(ev.needsComp)) return false;
@@ -407,7 +447,6 @@ G.eligible = (typeFilter)=>{
     if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
     if(ev.noFlag && S.flags[ev.noFlag]) return false;   // 해당 서사 이미 봤으면 스킵
     if(ev.noPool) return false;   // 랜덤 풀 제외 — chain/직접 호출 전용
-    if(ev.priority && S.party.length>=G.maxParty()) return false;   // 좌석 없으면 영입 이벤트 보류 (소실 방지)
     if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;
@@ -514,6 +553,8 @@ G.applyFx = (fx)=>{
   if(fx.dog){ S.dog=true; }
   if(fx.enterSeoul){ S.seoul={entered:true}; }
   if(fx.chain){ S._chain = fx.chain; }   // 시트 닫힐 때 UI가 이어서 연다 (시네마틱 연쇄)
+  if(fx.startRecruit) G.startRecruitQuest(fx.startRecruit);
+  if(fx.recruitReady) G.markRecruitReady(fx.recruitReady);
   if(fx.recruit) G.doRecruit(fx.recruit);
   if(fx.note) G.addNote(fx.note);
   if(fx.gameover) G.endGame(fx.gameover);
@@ -596,6 +637,9 @@ G.doRecruit = (id)=>{
   S.party.push(id); S.comps[id] = S.comps[id]||{mood:65};
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
   if(id==='leo') S.dog=true;
+  if(S.recruitQ&&S.recruitQ.id===id) S.recruitQ=null;
+  G.addNote({type:'인물',title:D.comps[id].name,
+    body:`떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. ${D.comps[id].bio}`,links:[]});
   UI.toast(`<span class="ic">${D.comps[id].face}</span>${D.comps[id].name}, 달구지에 탑승`);
   const nextSeat=G.nextSeatUpgrade();
   if(S.party.length>=G.maxParty()&&nextSeat)
@@ -640,6 +684,8 @@ G.arrive = ()=>{
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   const arrivalDelay=UI.onArrive();
+  if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.target===to)
+    setTimeout(()=>UI.toast(`🤝 ${D.recruitQuests[S.recruitQ.id].name}의 부탁을 진행할 수 있다`),arrivalDelay);
   if(loc){ setTimeout(()=>G.openEvent(loc), arrivalDelay); }
   else if(!G.maybeCrisis()){
     const queued=G.popStory();

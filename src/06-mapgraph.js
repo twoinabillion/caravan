@@ -1,743 +1,5 @@
-/* ═══════════════════ OSM 2026 기록 지도 — 완전 오프라인 ═══════════════════
-   전국 주요 교통망은 Geofabrik 대한민국 추출본에서, 서울 서남부 상세 화면은
-   사용자가 내려받은 OSM XML에서 빌드 시 경량화한다. 네트워크와 API 키가
-   없어도 작동하며, 게임 경로와 실제 2026년 지형을 한 화면에 겹쳐 보여준다. */
-const OSMMAP = (()=>{
-  let cv=null, ctx=null, W=0, H=0, DPR=1, baseScale=1, dirty=true, active=false;
-  let pointer=null, lastVanSig='', firstOpen=true;
-  let view={lon:128.325,lat:35.525,zoom:1};
-  let hits=[];
-  let countryRoads={0:[],1:[],2:[],3:[]};
-  let localRoads={0:[],1:[],2:[],3:[],4:[]};
-  const XF=.82;
-  const q=(s)=>document.querySelector(s);
-  const archive=()=>D.osmArchive||{};
-  const country=()=>archive().country||null;
-  const local=()=>archive().local||null;
-
-  function init(canvas){
-    cv=canvas;
-    if(!cv||!country()) return;
-    ctx=cv.getContext('2d');
-    for(const road of country().roads) (countryRoads[road[0]]||countryRoads[3]).push(road[1]);
-    if(local()) for(const road of local().roads) (localRoads[road[0]]||localRoads[4]).push(road[1]);
-    new ResizeObserver(resize).observe(cv);
-    cv.addEventListener('pointerdown',pointerDown);
-    cv.addEventListener('pointermove',pointerMove);
-    cv.addEventListener('pointerup',pointerUp);
-    cv.addEventListener('pointercancel',pointerUp);
-    cv.addEventListener('wheel',wheel,{passive:false});
-    q('#osm-home').onclick=reset;
-    q('#osm-local').onclick=focusLocal;
-    q('#osm-minus').onclick=()=>zoomAt(.72,W/2,H/2);
-    q('#osm-plus').onclick=()=>zoomAt(1.38,W/2,H/2);
-    resize();
-  }
-
-  function fit(){
-    const data=country(); if(!data||!W||!H) return 1;
-    const [west,south,east,north]=data.bounds;
-    return Math.min((W-34)/((east-west)*XF),(H-70)/(north-south));
-  }
-  function resize(){
-    if(!cv||!ctx) return;
-    DPR=Math.min(2,window.devicePixelRatio||1);
-    W=cv.clientWidth; H=cv.clientHeight;
-    if(!W||!H) return;
-    cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    baseScale=fit();
-    clampView();
-    dirty=true;
-  }
-  const scale=()=>baseScale*view.zoom;
-  const screen=(lon,lat)=>[
-    W/2+(lon-view.lon)*scale()*XF,
-    H/2-(lat-view.lat)*scale(),
-  ];
-  function decode(flat,bounds,index){
-    const [west,south,east,north]=bounds, quant=country().q||8191;
-    return [
-      west+flat[index]/quant*(east-west),
-      north-flat[index+1]/quant*(north-south),
-    ];
-  }
-  function visibleBounds(){
-    const s=scale();
-    return [
-      view.lon-W/(2*s*XF),
-      view.lat-H/(2*s),
-      view.lon+W/(2*s*XF),
-      view.lat+H/(2*s),
-    ];
-  }
-  function overlaps(a,b){
-    return a[0]<=b[2]&&a[2]>=b[0]&&a[1]<=b[3]&&a[3]>=b[1];
-  }
-  function clampView(){
-    const data=country(); if(!data||!W||!H) return;
-    const [west,south,east,north]=data.bounds, s=scale()||1;
-    const halfLon=W/(2*s*XF), halfLat=H/(2*s);
-    view.lon=halfLon*2>=east-west?(west+east)/2:clamp(view.lon,west+halfLon,east-halfLon);
-    view.lat=halfLat*2>=north-south?(south+north)/2:clamp(view.lat,south+halfLat,north-halfLat);
-  }
-  function zoomAt(factor,x,y){
-    if(!W||!H) return;
-    const old=scale();
-    const anchorLon=view.lon+(x-W/2)/(old*XF);
-    const anchorLat=view.lat-(y-H/2)/old;
-    view.zoom=clamp(view.zoom*factor,1,260);
-    const next=scale();
-    view.lon=anchorLon-(x-W/2)/(next*XF);
-    view.lat=anchorLat+(y-H/2)/next;
-    clampView(); dirty=true; updateStatus();
-  }
-  function reset(){
-    const data=country(); if(!data) return;
-    const [west,south,east,north]=data.bounds;
-    view={lon:(west+east)/2,lat:(south+north)/2,zoom:1};
-    q('#nodecard').classList.remove('on');
-    clampView(); dirty=true; updateStatus();
-  }
-  function focusLocal(){
-    const data=local(); if(!data) return;
-    const [west,south,east,north]=data.bounds;
-    view.lon=(west+east)/2; view.lat=(south+north)/2;
-    const desired=Math.min((W-48)/((east-west)*XF),(H-100)/(north-south));
-    view.zoom=clamp(desired/baseScale,1,260);
-    q('#nodecard').classList.remove('on');
-    clampView(); dirty=true; updateStatus();
-  }
-  function focus(lon,lat,zoom){
-    view.lon=lon; view.lat=lat; view.zoom=clamp(Math.max(view.zoom,zoom),1,260);
-    clampView(); dirty=true; updateStatus();
-  }
-
-  function pointerDown(event){
-    if(!active) return;
-    cv.setPointerCapture&&cv.setPointerCapture(event.pointerId);
-    pointer={id:event.pointerId,x:event.clientX,y:event.clientY,sx:event.clientX,sy:event.clientY,moved:false};
-  }
-  function pointerMove(event){
-    if(!pointer||pointer.id!==event.pointerId) return;
-    const dx=event.clientX-pointer.x, dy=event.clientY-pointer.y;
-    if(Math.hypot(event.clientX-pointer.sx,event.clientY-pointer.sy)>5) pointer.moved=true;
-    view.lon-=dx/(scale()*XF);
-    view.lat+=dy/scale();
-    pointer.x=event.clientX; pointer.y=event.clientY;
-    clampView(); dirty=true; updateStatus();
-  }
-  function pointerUp(event){
-    if(!pointer||pointer.id!==event.pointerId) return;
-    const moved=pointer.moved;
-    pointer=null;
-    if(!moved){
-      const rect=cv.getBoundingClientRect();
-      tap(event.clientX-rect.left,event.clientY-rect.top);
-    }
-  }
-  function wheel(event){
-    if(!active) return;
-    event.preventDefault();
-    const rect=cv.getBoundingClientRect();
-    zoomAt(Math.exp(-event.deltaY*.0015),event.clientX-rect.left,event.clientY-rect.top);
-  }
-
-  function pathFlat(flat,bounds,close=false){
-    for(let index=0;index<flat.length;index+=2){
-      const point=decode(flat,bounds,index), xy=screen(point[0],point[1]);
-      index?ctx.lineTo(xy[0],xy[1]):ctx.moveTo(xy[0],xy[1]);
-    }
-    if(close) ctx.closePath();
-  }
-  function drawFlatLines(lines,bounds,style){
-    ctx.save();
-    ctx.strokeStyle=style.color;
-    ctx.lineWidth=style.width;
-    ctx.lineCap='round'; ctx.lineJoin='round';
-    ctx.setLineDash(style.dash||[]);
-    ctx.beginPath();
-    for(const line of lines) pathFlat(line,bounds);
-    ctx.stroke();
-    ctx.restore();
-  }
-  function drawPolygons(polygons,bounds,fill,stroke,width=.7){
-    ctx.save();
-    ctx.beginPath();
-    for(const polygon of polygons) pathFlat(polygon,bounds,true);
-    ctx.fillStyle=fill; ctx.fill('evenodd');
-    if(stroke){ ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke(); }
-    ctx.restore();
-  }
-
-  function drawGrid(){
-    const s=scale();
-    const step=view.zoom<2?1:view.zoom<7?.25:view.zoom<35?.05:.005;
-    const box=visibleBounds();
-    ctx.save(); ctx.strokeStyle='rgba(87,118,168,.075)';ctx.lineWidth=.7;
-    ctx.beginPath();
-    for(let lon=Math.floor(box[0]/step)*step;lon<=box[2];lon+=step){
-      const a=screen(lon,box[1]),b=screen(lon,box[3]);
-      ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);
-    }
-    for(let lat=Math.floor(box[1]/step)*step;lat<=box[3];lat+=step){
-      const a=screen(box[0],lat),b=screen(box[2],lat);
-      ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);
-    }
-    ctx.stroke();ctx.restore();
-  }
-
-  function drawCountry(){
-    const data=country(); if(!data) return;
-    drawFlatLines(data.boundary,data.bounds,{
-      color:'rgba(74,100,143,.22)',width:.65,dash:[3,5],
-    });
-    if(data.coast?.length) drawFlatLines(data.coast,data.bounds,{
-      color:'rgba(104,151,205,.88)',width:1.15,
-    });
-    if(view.zoom>38) return;
-    const width=Math.min(2.2,.48+Math.log2(view.zoom+1)*.26);
-    const styles={
-      3:{color:'rgba(55,78,118,.48)',width:width*.7},
-      2:{color:'rgba(68,99,148,.66)',width:width*.88},
-      1:{color:'rgba(175,137,86,.68)',width:width*1.08},
-      0:{color:'rgba(226,145,67,.82)',width:width*1.35},
-    };
-    for(const roadClass of [3,2,1,0]){
-      drawFlatLines(countryRoads[roadClass],data.bounds,styles[roadClass]);
-    }
-    drawFlatLines(data.rails,data.bounds,{
-      color:'rgba(111,207,195,.55)',width:Math.max(.6,width*.72),dash:[3,3],
-    });
-  }
-
-  function drawCoverage(){
-    const data=local(); if(!data||view.zoom>=36) return;
-    const [west,south,east,north]=data.bounds;
-    const a=screen(west,north),b=screen(east,south);
-    if(b[0]<0||a[0]>W||b[1]<0||a[1]>H) return;
-    ctx.save();
-    ctx.strokeStyle='rgba(85,224,200,.66)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
-    ctx.strokeRect(a[0],a[1],Math.max(3,b[0]-a[0]),Math.max(3,b[1]-a[1]));
-    ctx.setLineDash([]);ctx.fillStyle='rgba(85,224,200,.78)';
-    ctx.font='9px ui-monospace,monospace';ctx.fillText('서울 서남부 2026 상세 기록',a[0]+5,a[1]-5);
-    ctx.restore();
-  }
-
-  function drawLocal(){
-    const data=local();
-    if(!data||view.zoom<24||!overlaps(visibleBounds(),data.bounds)) return;
-    if(data.waters.length) drawPolygons(data.waters,data.bounds,'rgba(27,65,91,.88)',null);
-    if(data.greens.length) drawPolygons(data.greens,data.bounds,'rgba(35,72,61,.72)',null);
-    if(view.zoom>=55&&data.buildings.length){
-      drawPolygons(data.buildings,data.bounds,'rgba(56,66,82,.58)','rgba(104,116,137,.34)',.4);
-    }
-    const k=clamp(view.zoom/100,.65,2.4);
-    for(const roadClass of [4,3,2,1,0]){
-      const styles=[
-        {color:'rgba(242,166,83,.92)',width:2.3*k},
-        {color:'rgba(155,145,119,.9)',width:1.7*k},
-        {color:'rgba(110,123,143,.76)',width:1.05*k},
-        {color:'rgba(82,94,112,.65)',width:.78*k},
-        {color:'rgba(70,87,105,.52)',width:.58*k,dash:[2,2]},
-      ];
-      drawFlatLines(localRoads[roadClass],data.bounds,styles[roadClass]);
-    }
-    drawFlatLines(data.rails,data.bounds,{
-      color:'rgba(99,215,194,.8)',width:1.1*k,dash:[4,3],
-    });
-    if(view.zoom>=85) drawLocalLabels(data);
-  }
-
-  function reserveLabel(placed,x,y,text,font){
-    ctx.font=font;
-    const width=ctx.measureText(text).width+7;
-    const box=[x-width/2,y-9,x+width/2,y+4];
-    if(box[2]<0||box[0]>W||box[3]<0||box[1]>H) return false;
-    if(placed.some(other=>other[0]<box[2]&&box[0]<other[2]&&other[1]<box[3]&&box[1]<other[3])) return false;
-    placed.push(box);return true;
-  }
-  function label(x,y,text,font,fill,placed,stroke='rgba(5,8,15,.96)'){
-    if(!reserveLabel(placed,x,y,text,font)) return false;
-    ctx.font=font;ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle=stroke;ctx.strokeText(text,x,y);
-    ctx.fillStyle=fill;ctx.fillText(text,x,y);ctx.textAlign='left';return true;
-  }
-
-  function drawCountryLabels(placed){
-    const data=country(), box=visibleBounds();
-    const showTowns=view.zoom>=3.2;
-    for(const place of data.places){
-      if(place[3]&& !showTowns) continue;
-      const point=decode(place,data.bounds,0);
-      if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
-      const xy=screen(point[0],point[1]);
-      const city=place[3]===0;
-      ctx.fillStyle=city?'#d7e0ed':'#8e9db5';
-      ctx.beginPath();ctx.arc(xy[0],xy[1],city?2.5:1.7,0,7);ctx.fill();
-      const shown=label(xy[0],xy[1]-6,place[2],
-        `${city?'700 ':' '} ${city?10.5:9}px sans-serif`,
-        city?'rgba(223,230,240,.9)':'rgba(167,178,196,.75)',placed);
-      if(shown) hits.push({x:xy[0],y:xy[1],type:'place',item:place});
-    }
-    if(view.zoom>=4&&view.zoom<38){
-      for(const road of data.roadLabels||[]){
-        if(road[3]>2&&view.zoom<9) continue;
-        const point=decode(road,data.bounds,0);
-        if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
-        const xy=screen(point[0],point[1]);
-        label(xy[0],xy[1],road[2],'8px ui-monospace,monospace',
-          'rgba(210,166,105,.68)',placed);
-      }
-    }
-  }
-  function drawLocalLabels(data){
-    const placed=[], box=visibleBounds();
-    if(view.zoom>=130){
-      for(const road of data.roadNames||[]){
-        const point=decode(road,data.bounds,0);
-        if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
-        const xy=screen(point[0],point[1]);
-        label(xy[0],xy[1],road[2],'8px sans-serif','rgba(202,194,174,.68)',placed);
-      }
-    }
-    for(const poi of data.pois||[]){
-      const point=decode(poi,data.bounds,0);
-      if(point[0]<box[0]||point[0]>box[2]||point[1]<box[1]||point[1]>box[3]) continue;
-      const xy=screen(point[0],point[1]);
-      ctx.fillStyle=poi[3]==='역'?'#55e0c8':'#ffb454';
-      ctx.beginPath();ctx.arc(xy[0],xy[1],2.7,0,7);ctx.fill();
-      if(label(xy[0],xy[1]-6,poi[2],'700 9px sans-serif','rgba(226,231,239,.9)',placed)){
-        hits.push({x:xy[0],y:xy[1],type:'poi',item:poi});
-      }
-    }
-  }
-
-  function neighborSet(){
-    const out=new Set();
-    if(!S||S.driving||!S.at) return out;
-    for(const edge of D.edges){
-      if(edge[0]===S.at&&S.known.includes(edge[1])) out.add(edge[1]);
-      if(edge[1]===S.at&&S.known.includes(edge[0])) out.add(edge[0]);
-    }
-    return out;
-  }
-  function vanGeo(){
-    if(!S) return null;
-    if(S.driving){
-      const a=D.geo[S.driving.from],b=D.geo[S.driving.to];
-      if(!a||!b) return null;
-      const fraction=clamp(S.driving.gone/S.driving.dist,0,1);
-      return [a[0]+(b[0]-a[0])*fraction,a[1]+(b[1]-a[1])*fraction];
-    }
-    return D.geo[S.at]||null;
-  }
-  function drawGame(){
-    if(!S) return;
-    const nbrs=neighborSet();
-    ctx.save();ctx.lineCap='round';
-    for(const edge of D.edges){
-      if(!S.known.includes(edge[0])||!S.known.includes(edge[1])) continue;
-      const a=D.geo[edge[0]],b=D.geo[edge[1]];if(!a||!b) continue;
-      const aa=screen(a[0],a[1]),bb=screen(b[0],b[1]);
-      const current=S.driving&&((S.driving.from===edge[0]&&S.driving.to===edge[1])||
-        (S.driving.from===edge[1]&&S.driving.to===edge[0]));
-      const next=!S.driving&&(edge[0]===S.at||edge[1]===S.at)&&(nbrs.has(edge[0])||nbrs.has(edge[1]));
-      ctx.beginPath();ctx.moveTo(aa[0],aa[1]);ctx.lineTo(bb[0],bb[1]);
-      ctx.strokeStyle=current?'rgba(255,180,84,.98)':next?'rgba(255,180,84,.72)':'rgba(211,220,238,.42)';
-      ctx.lineWidth=current?3.2:next?2.4:1.6;ctx.setLineDash(edge[3]==='rough'?[3,5]:[]);
-      ctx.stroke();
-    }
-    ctx.setLineDash([]);
-    const placed=[];
-    for(const id of S.known){
-      const node=D.nodes[id],geo=D.geo[id];if(!node||!geo) continue;
-      const xy=screen(geo[0],geo[1]);
-      if(xy[0]<-20||xy[0]>W+20||xy[1]<-20||xy[1]>H+20) continue;
-      const here=S.at===id,goal=node.type==='goal',settlement=!!node.stl;
-      ctx.fillStyle=goal?'#55e0c8':here?'#ffb454':settlement?'#d49b57':'#8290aa';
-      ctx.save();ctx.translate(xy[0],xy[1]);
-      if(settlement){ctx.rotate(Math.PI/4);ctx.fillRect(-3.7,-3.7,7.4,7.4);}
-      else{ctx.beginPath();ctx.arc(0,0,goal||here?4.5:3,0,7);ctx.fill();}
-      ctx.restore();
-      if(here||goal||settlement||nbrs.has(id)){
-        label(xy[0],xy[1]-9,node.name.split(' ')[0],
-          `${here||goal?'700':'600'} 10px sans-serif`,
-          goal?'#76ead9':here?'#ffd197':'#e4d9c4',placed);
-      }
-      hits.push({x:xy[0],y:xy[1],type:'game',id});
-    }
-    const van=vanGeo();
-    if(van){
-      const xy=screen(van[0],van[1]);
-      ctx.shadowColor='#ffb454';ctx.shadowBlur=9;ctx.fillStyle='#ffb454';
-      ctx.beginPath();ctx.roundRect(xy[0]-5,xy[1]-3,10,6,2);ctx.fill();ctx.shadowBlur=0;
-    }
-    ctx.restore();
-  }
-
-  function draw(){
-    if(!active||!ctx||!W) return;
-    const vanSig=S&&S.driving?`${S.driving.from}:${S.driving.to}:${Math.round(S.driving.gone*3)}`:'';
-    if(vanSig!==lastVanSig){lastVanSig=vanSig;dirty=true;}
-    if(!dirty) return;
-    dirty=false;hits=[];
-    const bg=ctx.createLinearGradient(0,0,0,H);
-    bg.addColorStop(0,'#0a1020');bg.addColorStop(1,'#070a13');
-    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    drawGrid();
-    drawCountry();
-    drawCoverage();
-    drawLocal();
-    const placed=[];
-    if(view.zoom<55) drawCountryLabels(placed);
-    drawGame();
-    if(view.zoom>=38&&local()&&!overlaps(visibleBounds(),local().bounds)){
-      ctx.fillStyle='rgba(130,143,164,.58)';ctx.font='10px ui-monospace,monospace';ctx.textAlign='center';
-      ctx.fillText('이 배율의 상세 도시 기록은 아직 복원되지 않았다',W/2,H-44);ctx.textAlign='left';
-    }
-  }
-
-  function tap(x,y){
-    let best=null,distance=22;
-    for(const hit of hits){
-      const d=Math.hypot(hit.x-x,hit.y-y);
-      const limit=hit.type==='game'?26:22;
-      if(d<Math.min(distance,limit)){best=hit;distance=d;}
-    }
-    if(!best){q('#nodecard').classList.remove('on');return;}
-    if(best.type==='game'){UI.showNodeCard(best.id);return;}
-    showRecord(best);
-  }
-  function showRecord(hit){
-    const card=q('#nodecard'),data=hit.item;
-    const point=decode(data,hit.type==='poi'?local().bounds:country().bounds,0);
-    const kind=hit.type==='poi'?data[3]:(data[3]===0?'도시':'읍·면 소재지');
-    card.innerHTML=`<h4>${data[2]} <span class="osm-record">2026 OSM 기록</span></h4>
-      <div class="d">${kind} · 북위 ${point[1].toFixed(4)}°, 동경 ${point[0].toFixed(4)}°<br>
-      2169년의 현황이 아니라, 천리안 이전 사람들이 남긴 위치 기록이다.</div>
-      <button class="osm-focus" type="button">이 좌표를 가운데로 확대</button>`;
-    card.querySelector('.osm-focus').onclick=()=>{focus(point[0],point[1],hit.type==='poi'?150:7);card.classList.remove('on');};
-    card.classList.add('on');
-  }
-
-  function localDetail(){
-    const data=local();if(!data||view.zoom<55) return false;
-    return view.lon>=data.bounds[0]&&view.lon<=data.bounds[2]&&view.lat>=data.bounds[1]&&view.lat<=data.bounds[3];
-  }
-  function status(){
-    const date=(country()?.sourceDate||'2026').slice(0,10);
-    if(localDetail()) return `OSM ${date} · 서울 서남부 골목 기록`;
-    if(view.zoom>=7) return `OSM ${date} · 대한민국 지역 확대`;
-    return `OSM ${date} · 대한민국 주요 교통망`;
-  }
-  function updateStatus(){
-    if(active&&q('#map-geo-status')) q('#map-geo-status').textContent=status();
-  }
-  function activate(){
-    active=true;resize();
-    if(firstOpen){reset();firstOpen=false;}
-    dirty=true;updateStatus();
-  }
-  function deactivate(){active=false;pointer=null;}
-  function onOpen(){if(active){resize();dirty=true;updateStatus();}}
-  const isActive=()=>active;
-  const stats=()=>({
-    country:country()?.counts||{},
-    local:local()?.counts||{},
-    zoom:view.zoom,
-    status:status(),
-  });
-  return {init,activate,deactivate,onOpen,draw,isActive,reset,focusLocal,stats};
-})();
-
-/* ═══════════════════ V-WORLD 2D — 선택형 실측 지도 ═══════════════════
-   인증키는 소스/빌드에 넣지 않고 이 브라우저의 localStorage에만 저장한다.
-   API가 없거나 실패하면 아래 MAPR 자체 여정도가 항상 폴백으로 남는다. */
-const VMAP = (()=>{
-  const KEY_STORE='seoul400_vworld_key';
-  const DOMAIN_STORE='seoul400_vworld_domain';
-  let map=null, source=null, layer=null, mode='route', loading=false, lastSync=0, lastSig='';
-  const styleCache=new Map();
-  const q=(s)=>document.querySelector(s);
-
-  function init(){
-    const route=q('#map-mode-route'), osm=q('#map-mode-osm'), exact=q('#map-mode-vworld');
-    if(!route||!osm||!exact) return;
-    route.onclick=()=>setRoute();
-    osm.onclick=()=>setOSM();
-    exact.onclick=()=> mode==='vworld'?showSetup():activate();
-    q('#vworld-cancel').onclick=()=>setRoute();
-    q('#vworld-connect').onclick=()=>{
-      const key=q('#vworld-key').value.trim();
-      const domain=q('#vworld-domain').value.trim();
-      connect(key,domain);
-    };
-    q('#vworld-domain').value=localStorage.getItem(DOMAIN_STORE)||location.hostname||'';
-    q('#map-geo-status').textContent=`WGS84 · ${Object.keys(D.geo||{}).length}곳`;
-    updateTabs();
-  }
-
-  function updateTabs(){
-    const route=mode==='route', osm=mode==='osm';
-    const exact=mode==='vworld';
-    q('#map-mode-route').classList.toggle('here',route);
-    q('#map-mode-route').setAttribute('aria-selected',String(route));
-    q('#map-mode-osm').classList.toggle('here',osm);
-    q('#map-mode-osm').setAttribute('aria-selected',String(osm));
-    q('#map-mode-vworld').classList.toggle('here',exact);
-    q('#map-mode-vworld').setAttribute('aria-selected',String(exact));
-    q('#mapwrap').classList.toggle('osm',osm);
-    q('#mapwrap').classList.toggle('vworld',exact&&!!map);
-  }
-
-  function setRoute(){
-    mode='route';
-    OSMMAP.deactivate();
-    q('#vworld-setup').classList.remove('on');
-    q('#nodecard').classList.remove('on');
-    updateTabs();
-    MAPR.resize();
-  }
-
-  function setOSM(){
-    if(!D.osmArchive||!D.osmArchive.country) return;
-    mode='osm';
-    q('#vworld-setup').classList.remove('on');
-    q('#nodecard').classList.remove('on');
-    updateTabs();
-    OSMMAP.activate();
-  }
-
-  function showSetup(msg=''){
-    const saved=localStorage.getItem(KEY_STORE)||'';
-    q('#vworld-key').value=saved;
-    q('#vworld-domain').value=localStorage.getItem(DOMAIN_STORE)||location.hostname||'';
-    q('#vworld-msg').textContent=msg;
-    q('#vworld-setup').classList.add('on');
-    setTimeout(()=>q('#vworld-key').focus(),50);
-  }
-
-  function activate(){
-    const key=localStorage.getItem(KEY_STORE)||'';
-    const domain=localStorage.getItem(DOMAIN_STORE)||location.hostname||'';
-    if(!key){ showSetup(location.protocol==='file:'
-      ? '로컬 파일은 인증 도메인이 없습니다. 배포 주소나 localhost용 키가 필요합니다.'
-      : '발급받은 인증키를 입력해 주세요.'); return; }
-    connect(key,domain);
-  }
-
-  async function connect(key,domain){
-    const msg=q('#vworld-msg');
-    if(!/^[A-Za-z0-9-]{8,80}$/.test(key)){
-      showSetup('인증키 형식을 확인해 주세요.'); return;
-    }
-    if(!/^[A-Za-z0-9.:-]{1,255}$/.test(domain)){
-      showSetup('등록 도메인은 https://와 경로를 빼고 호스트만 입력해 주세요.'); return;
-    }
-    if(loading) return;
-    loading=true; msg.textContent='V-World 지도를 불러오는 중…';
-    try{
-      await loadSdk(key,domain);
-      if(!map) createMap();
-      localStorage.setItem(KEY_STORE,key);
-      localStorage.setItem(DOMAIN_STORE,domain);
-      q('#vworld-setup').classList.remove('on');
-      OSMMAP.deactivate();
-      mode='vworld'; updateTabs();
-      if(map.updateSize) map.updateSize();
-      resetView(); sync(true);
-      q('#map-geo-status').textContent='V-WORLD · 실측 좌표';
-    }catch(err){
-      mode='route'; OSMMAP.deactivate(); updateTabs();
-      showSetup('연결하지 못했습니다. 키의 등록 도메인과 네트워크를 확인해 주세요.');
-    }finally{ loading=false; }
-  }
-
-  function loadSdk(key,domain){
-    if(window.vw&&vw.ol3&&window.ol) return Promise.resolve();
-    return new Promise((resolve,reject)=>{
-      const old=document.getElementById('vworld-sdk');
-      if(old) old.remove();
-      const script=document.createElement('script');
-      script.id='vworld-sdk';
-      const url=new URL('https://map.vworld.kr/js/vworldMapInit.js.do');
-      url.searchParams.set('version','2.0');
-      url.searchParams.set('apiKey',key);
-      url.searchParams.set('domain',domain);
-      script.src=url.toString();
-      script.async=true;
-      script.referrerPolicy='strict-origin-when-cross-origin';
-      const timer=setTimeout(()=>{ script.remove(); reject(new Error('timeout')); },15000);
-      script.onload=()=>{ clearTimeout(timer);
-        window.vw&&vw.ol3&&window.ol?resolve():reject(new Error('sdk')); };
-      script.onerror=()=>{ clearTimeout(timer); script.remove(); reject(new Error('network')); };
-      document.head.appendChild(script);
-    });
-  }
-
-  function createMap(){
-    const night=vw.ol3.BasemapType.GRAPHIC_NIGHT||vw.ol3.BasemapType.GRAPHIC;
-    vw.ol3.MapOptions={
-      basemapType:night,
-      controlDensity:vw.ol3.DensityType.BASIC,
-      interactionDensity:vw.ol3.DensityType.BASIC,
-      controlsAutoArrange:true,
-      homePosition:vw.ol3.CameraPosition,
-      initPosition:vw.ol3.CameraPosition,
-    };
-    map=new vw.ol3.Map('vworld-map',vw.ol3.MapOptions);
-    source=new ol.source.Vector();
-    layer=new ol.layer.Vector({source,style:featureStyle});
-    if(layer.setZIndex) layer.setZIndex(50);
-    map.addLayer(layer);
-    map.on('click',evt=>{
-      let id=null;
-      map.forEachFeatureAtPixel(evt.pixel,feature=>{
-        const hit=feature.get('gameId');
-        if(hit){ id=hit; return true; }
-        return false;
-      });
-      UI.showNodeCard(id);
-    });
-  }
-
-  function resetView(){
-    if(!map) return;
-    const center=ol.proj.transform([127.72,36.48],'EPSG:4326','EPSG:900913');
-    map.getView().setCenter(center);
-    map.getView().setZoom(7);
-  }
-
-  const merc=(coord)=>ol.proj.transform(coord,'EPSG:4326','EPSG:900913');
-  function featureStyle(feature){
-    const kind=feature.get('mapKind');
-    if(kind==='road'){
-      const state=feature.get('state'), grade=feature.get('grade');
-      const color=state==='current'?'rgba(255,180,84,.96)':
-        state==='next'?'rgba(255,180,84,.62)':
-        state==='visited'?'rgba(205,215,235,.48)':'rgba(135,155,205,.38)';
-      const width=state==='current'?3.6:state==='next'?3:2;
-      const dash=grade==='rough'?[3,7]:grade==='normal'?[9,5]:undefined;
-      const key=`road|${color}|${width}|${dash||''}`;
-      if(!styleCache.has(key)) styleCache.set(key,new ol.style.Style({
-        stroke:new ol.style.Stroke({color,width,lineDash:dash})
-      }));
-      return styleCache.get(key);
-    }
-    if(kind==='van'){
-      const key='van';
-      if(!styleCache.has(key)) styleCache.set(key,new ol.style.Style({
-        image:new ol.style.RegularShape({points:4,radius:7,angle:Math.PI/4,
-          fill:new ol.style.Fill({color:'#ffb454'}),
-          stroke:new ol.style.Stroke({color:'rgba(255,240,205,.95)',width:1.5})}),
-        zIndex:100,
-      }));
-      return styleCache.get(key);
-    }
-    const nodeKind=feature.get('nodeKind'), label=feature.get('label')||'';
-    const here=feature.get('here'), next=feature.get('next'), visited=feature.get('visited');
-    const quest=feature.get('quest');
-    const fill=nodeKind==='goal'?'#55e0c8':here?'#ffb454':
-      nodeKind==='settlement'?(visited?'#ffb454':'#c98d47'):
-      nodeKind==='hidden'?'rgba(201,184,255,.2)':visited?'#aab4cf':'#66718f';
-    const stroke=quest?'#ffcf78':next?'#ffb454':
-      nodeKind==='hidden'?'#c9b8ff':'rgba(8,12,22,.95)';
-    const radius=nodeKind==='goal'?6.5:nodeKind==='settlement'?5.5:nodeKind==='hidden'?5:4;
-    const key=['node',nodeKind,label,here,next,visited,quest].join('|');
-    if(!styleCache.has(key)){
-      const image=nodeKind==='settlement'
-        ? new ol.style.RegularShape({points:4,radius:radius+1,angle:Math.PI/4,
-            fill:new ol.style.Fill({color:fill}),stroke:new ol.style.Stroke({color:stroke,width:next||quest?2:1.2})})
-        : new ol.style.Circle({radius:here?radius+1:radius,
-            fill:new ol.style.Fill({color:fill}),stroke:new ol.style.Stroke({color:stroke,width:here||next||quest?2:1.2})});
-      styleCache.set(key,new ol.style.Style({
-        image,
-        text:label?new ol.style.Text({
-          text:label,offsetY:-13,font:`${here||nodeKind==='goal'?'700':'600'} 11px sans-serif`,
-          fill:new ol.style.Fill({color:nodeKind==='goal'?'#8df2e2':here?'#ffd195':'#e1e5ef'}),
-          stroke:new ol.style.Stroke({color:'rgba(7,10,18,.95)',width:3}),
-        }):undefined,
-        zIndex:here?90:nodeKind==='goal'?80:nodeKind==='settlement'?70:60,
-      }));
-    }
-    return styleCache.get(key);
-  }
-
-  function neighborSet(){
-    const out=new Set();
-    if(!S||S.driving||!S.at) return out;
-    for(const e of D.edges){
-      if(e[0]===S.at&&S.known.includes(e[1])) out.add(e[1]);
-      if(e[1]===S.at&&S.known.includes(e[0])) out.add(e[0]);
-    }
-    return out;
-  }
-
-  function vanGeo(){
-    if(!S) return null;
-    if(S.driving){
-      const a=D.geo[S.driving.from], b=D.geo[S.driving.to];
-      if(!a||!b) return null;
-      const f=clamp(S.driving.gone/S.driving.dist,0,1);
-      return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];
-    }
-    return D.geo[S.at]||null;
-  }
-
-  function sync(force=false){
-    if(!map||mode!=='vworld'||!S) return;
-    const now=performance.now();
-    if(!force&&now-lastSync<400) return;
-    lastSync=now;
-    const driving=S.driving?`${S.driving.from}:${S.driving.to}:${Math.round(S.driving.gone*5)}`:'';
-    const sig=[S.at,driving,S.known.join(','),S.visited.join(','),S.quest&&S.quest.to].join('|');
-    if(!force&&sig===lastSig) return;
-    lastSig=sig;
-    const features=[], nbrs=neighborSet();
-    for(const e of D.edges){
-      if(!S.known.includes(e[0])||!S.known.includes(e[1])) continue;
-      const a=D.geo[e[0]], b=D.geo[e[1]]; if(!a||!b) continue;
-      const current=S.driving&&((S.driving.from===e[0]&&S.driving.to===e[1])||
-        (S.driving.from===e[1]&&S.driving.to===e[0]));
-      const next=!S.driving&&(e[0]===S.at||e[1]===S.at)&&(nbrs.has(e[0])||nbrs.has(e[1]));
-      const visited=S.visited.includes(e[0])&&S.visited.includes(e[1]);
-      const f=new ol.Feature({geometry:new ol.geom.LineString([merc(a),merc(b)])});
-      f.setProperties({mapKind:'road',grade:e[3],state:current?'current':next?'next':visited?'visited':'known'});
-      features.push(f);
-    }
-    for(const id of S.known){
-      const n=D.nodes[id], coord=D.geo[id]; if(!n||!coord) continue;
-      const here=S.at===id, next=nbrs.has(id), visited=S.visited.includes(id);
-      const nodeKind=n.type==='goal'?'goal':(n.stl||n.type==='settlement')?'settlement':
-        n.type==='hidden'?'hidden':'normal';
-      const label=here||next||nodeKind==='goal'||nodeKind==='settlement'||nodeKind==='hidden'
-        ? n.name.split(' ')[0]:'';
-      const f=new ol.Feature({geometry:new ol.geom.Point(merc(coord))});
-      f.setProperties({mapKind:'node',gameId:id,nodeKind,label,here,next,visited,
-        quest:!!(S.quest&&S.quest.to===id)});
-      features.push(f);
-    }
-    const van=vanGeo();
-    if(van){
-      const f=new ol.Feature({geometry:new ol.geom.Point(merc(van))});
-      f.setProperties({mapKind:'van'});
-      features.push(f);
-    }
-    source.clear();
-    source.addFeatures(features);
-  }
-
-  function onOpen(){
-    q('#map-geo-status').textContent=mode==='vworld'&&map?'V-WORLD · 실측 좌표':
-      mode==='osm'?OSMMAP.stats().status:`WGS84 · ${Object.keys(D.geo||{}).length}곳`;
-    if(map&&mode==='vworld'){ setTimeout(()=>{ map.updateSize&&map.updateSize(); sync(true); },50); }
-    if(mode==='osm') OSMMAP.onOpen();
-  }
-  const active=()=>mode==='vworld'&&!!map;
-  const osmActive=()=>mode==='osm'&&OSMMAP.isActive();
-  return {init,onOpen,active,osmActive,sync,setRoute,setOSM,resetView};
-})();
-
+/* ═══════════════════ ILLUSTRATED JOURNEY MAP ═══════════════════
+   외부 지도 SDK 없이 실제 좌표 위에 게임 경로와 지형의 기억을 그린다. */
 /* ═══════════════════ MAP ═══════════════════ */
 const MAPR = (()=>{
   let cv, ctx, W=0, H=0, DPR=1, tf={s:1,ox:0,oy:0}, t=0;
@@ -745,7 +7,7 @@ const MAPR = (()=>{
 
   const geo=(lon,lat)=>D.projectGeo([lon,lat]);
   /* 한반도 남부 해안선 — WGS84를 자체 지도공간 600×760에 투영.
-     게임용으로 단순화했지만 도시 좌표·V-World 배경과 같은 축을 쓴다. */
+     게임용으로 단순화했지만 모든 도시·강·경로가 같은 축을 쓴다. */
   const COAST_GEO = [
     /* 휴전선 (서→동, 동쪽이 약간 더 북) */
     [126.16,37.78],[126.35,37.82],[126.60,37.96],[126.90,38.00],[127.20,38.12],
@@ -780,6 +42,31 @@ const MAPR = (()=>{
   ];
   const DMZ=[[126.18,37.76],[126.55,37.88],[126.95,38.00],[127.35,38.20],
     [127.80,38.30],[128.20,38.34],[128.58,38.52]].map(p=>geo(...p));
+  /* 그림 지도에 남기는 실제 지형의 결. 길 선택과 무관한 도시는 낮은 명도로만 보여
+     세계의 밀도를 높이되, 미발견 장소나 선택 결과는 스포일러하지 않는다. */
+  const RIVERS = [
+    {nm:'한강', at:[126.92,37.58], pts:[[126.56,37.58],[126.78,37.57],[126.98,37.55],[127.18,37.53],[127.42,37.58],[127.73,37.72],[127.95,37.70]]},
+    {nm:'금강', at:[127.10,36.47], pts:[[126.64,36.02],[126.92,36.18],[127.08,36.35],[127.29,36.48],[127.52,36.40],[127.70,36.18],[127.68,36.00]]},
+    {nm:'낙동강', at:[128.37,36.18], pts:[[128.06,35.10],[128.25,35.35],[128.40,35.62],[128.35,35.95],[128.36,36.25],[128.54,36.55],[128.67,36.82]]},
+    {nm:'영산강', at:[126.80,35.24], pts:[[126.48,34.86],[126.63,35.02],[126.82,35.13],[126.92,35.33],[126.98,35.48]]},
+    {nm:'섬진강', at:[127.72,35.28], pts:[[127.52,34.92],[127.66,35.12],[127.78,35.35],[127.66,35.56],[127.54,35.72]]},
+  ].map(r=>({...r,pts:r.pts.map(p=>geo(...p)),at:geo(...r.at)}));
+  const SECONDARY_ROUTES = [
+    [[126.40,34.82],[126.75,35.16],[126.93,35.82],[126.99,36.45],[126.78,37.45]],
+    [[128.05,35.18],[128.34,36.12],[128.19,36.59],[127.95,37.34],[127.73,37.88]],
+    [[129.02,35.10],[129.22,35.84],[129.37,36.03],[128.90,37.75],[128.59,38.20]],
+  ].map(seg=>seg.map(p=>geo(...p)));
+  const CONTEXT_CITIES = [
+    ['인천',126.70,37.46],['고양',126.83,37.66],['부천',126.77,37.50],['안양',126.95,37.39],
+    ['성남',127.13,37.42],['용인',127.18,37.24],['화성',126.83,37.20],['안산',126.83,37.32],
+    ['춘천',127.73,37.88],['태안',126.30,36.75],['보령',126.61,36.33],['익산',126.96,35.95],
+    ['김제',126.88,35.80],['창원',128.68,35.23],['통영',128.43,34.85],['거제',128.62,34.88],
+    ['사천',128.08,35.00],['하동',127.75,35.07],['영주',128.62,36.81],['제천',128.21,37.13],
+  ].map(([nm,lon,lat])=>[nm,...geo(lon,lat)]);
+  const REGION_LABELS = [
+    ['경기',127.20,37.40],['강원',128.28,37.58],['충북',127.78,36.72],['충남',126.76,36.55],
+    ['경북',128.70,36.28],['경남',128.32,35.38],['전북',127.12,35.69],['전남',126.72,34.98],
+  ].map(([nm,lon,lat])=>[nm,...geo(lon,lat)]);
 
   function init(canvas){
     cv=canvas; ctx=cv.getContext('2d');
@@ -809,8 +96,6 @@ const MAPR = (()=>{
   }
 
   function draw(dt){
-    if(VMAP.osmActive()){ OSMMAP.draw(dt); return; }
-    if(VMAP.active()){ VMAP.sync(); return; }
     if(!ctx||!W) return; t+=dt;
     ctx.clearRect(0,0,W,H);
     /* 바다 — 은은한 심도 그라데이션 */
@@ -843,6 +128,27 @@ const MAPR = (()=>{
     land.addColorStop(0,'#182138'); land.addColorStop(1,'#121a2c');
     ctx.fillStyle=land; ctx.fill();
     ctx.strokeStyle='#31446e'; ctx.lineWidth=1.5; ctx.stroke();
+    /* 지역 이름 — 오래된 종이 지도처럼 육지 결 아래에 눌러 둔다. */
+    ctx.textAlign='center';
+    ctx.font='700 11px serif';
+    ctx.fillStyle='rgba(103,125,163,0.13)';
+    REGION_LABELS.forEach(([nm,x,y])=>ctx.fillText(nm,px(x),py(y)));
+    ctx.textAlign='left';
+    /* 강과 옛 간선. 게임 도로보다 가늘고 낮은 명도로, 지형을 읽는 배경선이다. */
+    SECONDARY_ROUTES.forEach(seg=>{
+      ctx.beginPath();
+      seg.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
+      ctx.setLineDash([2,5]); ctx.strokeStyle='rgba(113,132,171,0.14)'; ctx.lineWidth=1; ctx.stroke();
+    });
+    ctx.setLineDash([]);
+    RIVERS.forEach(r=>{
+      ctx.beginPath();
+      r.pts.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
+      ctx.strokeStyle='rgba(72,142,194,0.13)'; ctx.lineWidth=4; ctx.stroke();
+      ctx.strokeStyle='rgba(93,169,219,0.36)'; ctx.lineWidth=1.15; ctx.stroke();
+      ctx.fillStyle='rgba(116,174,211,0.42)'; ctx.font='7px serif';
+      ctx.fillText(r.nm,px(r.at[0])+3,py(r.at[1])-3);
+    });
     /* 백두대간 능선 음영 */
     ctx.strokeStyle='rgba(60,80,125,0.5)'; ctx.lineWidth=1;
     RIDGE.forEach(seg=>{ ctx.beginPath();
@@ -874,6 +180,16 @@ const MAPR = (()=>{
     ctx.fillText('동', px(eastSea[0]), py(eastSea[1])); ctx.fillText('해', px(eastSea[0]), py(eastSea[1])+16);
     ctx.fillText('서', px(westSea[0]), py(westSea[1])); ctx.fillText('해', px(westSea[0]), py(westSea[1])+16);
     ctx.fillText('남   해', px(southSea[0]), py(southSea[1]));
+
+    /* 경로 노드는 아니지만 누구나 지리적 기준으로 아는 도시들. 클릭·이동은 되지 않는다. */
+    ctx.font='7.5px sans-serif';
+    CONTEXT_CITIES.forEach(([nm,x,y])=>{
+      const sx=px(x),sy=py(y);
+      ctx.fillStyle='rgba(117,132,165,0.48)';
+      ctx.beginPath(); ctx.arc(sx,sy,1.35,0,7); ctx.fill();
+      ctx.fillStyle='rgba(136,149,180,0.38)';
+      ctx.fillText(nm,sx+3,sy+2.5);
+    });
 
     /* 인접 노드 (지금 갈 수 있는 곳) */
     const nbrs=new Set();

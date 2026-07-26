@@ -180,6 +180,13 @@ with sync_playwright() as p:
       out.upStories=['up_bench_first','up_cabin_sleepchart','up_garden_roster','up_armor_argument','up_kitchen_firstmeal','up_full_house'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.duoStories=['duo_minji_parkss_space','duo_kangwoo_eunsu_record','duo_leo_jaeyi_route','party_north_vote'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.sceneCount=Object.keys(D.scenes||{}).length;
+      out.recruitDefs=Object.keys(D.recruitQuests||{}).length;
+      out.recruitEvents=Object.keys(D.recruitQuests||{}).every(id=>{
+        const q=D.recruitQuests[id];
+        return D.events.some(e=>e.id===q.task)&&D.events.some(e=>e.id===q.join)&&
+          !!D.scenes[D.eventScenes[q.task]];
+      });
+      out.localScenery=Object.keys(D.nodeScenery||{}).length;
       out.nodeSceneCount=Object.keys(D.nodeScenes||{}).length;
       out.eventSceneCount=Object.keys(D.eventScenes||{}).length;
       out.geoCount=Object.keys(D.geo||{}).length;
@@ -273,7 +280,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 836종', r4['eventCount'] == 836, str(r4['eventCount']))
+    check('이벤트 848종', r4['eventCount'] == 848, str(r4['eventCount']))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',
@@ -285,7 +292,9 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 59종·빌드 주입', r4['sceneCount'] == 59 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 65종·빌드 주입', r4['sceneCount'] == 65 and r4['sceneDataReady'], str(r4))
+    check('동료 6명 합류 전 과제·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
+    check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
     check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))
@@ -297,114 +306,37 @@ with sync_playwright() as p:
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
     check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
-    pg.click('#dk-map'); pg.wait_for_timeout(120)
-    osm_data = pg.evaluate('''() => ({
-      country:D.osmArchive?.country?.counts,
-      local:D.osmArchive?.local?.counts,
-      sourceDate:D.osmArchive?.country?.sourceDate,
-      attribution:D.osmArchive?.attribution?.text
-    })''')
-    check('대한민국 OSM 경량 데이터 탑재',
-          osm_data['country']['roads'] > 50000 and osm_data['country']['rails'] > 8000 and
-          osm_data['country']['coast'] > 1800 and osm_data['country']['places'] > 1400 and
-          osm_data['sourceDate'].startswith('2026-07-25'),
-          str(osm_data))
-    check('서울 상세 OSM 골목·건물·POI 탑재',
-          osm_data['local']['roads'] > 1000 and osm_data['local']['buildings'] > 800 and
-          osm_data['local']['pois'] == 120, str(osm_data['local']))
-    check('OpenStreetMap ODbL 출처 표기',
-          'OpenStreetMap contributors' in osm_data['attribution'] and
-          pg.locator('#osm-attribution a').count() == 1)
-    pg.click('#map-mode-osm'); pg.wait_for_timeout(420)
-    osm_country = pg.evaluate('''() => ({
-      active:document.querySelector('#mapwrap').classList.contains('osm'),
-      tab:document.querySelector('#map-mode-osm').classList.contains('here'),
-      status:document.querySelector('#map-geo-status').textContent,
-      sdk:document.querySelectorAll('#vworld-sdk').length,
-      stats:OSMMAP.stats()
-    })''')
-    check('대한민국 OSM 전국 지도 오프라인 전환',
-          osm_country['active'] and osm_country['tab'] and '대한민국 주요 교통망' in osm_country['status'] and
-          osm_country['sdk'] == 0, str(osm_country))
-    pg.click('#osm-local'); pg.wait_for_timeout(260)
-    osm_local = pg.evaluate('''() => ({
-      status:document.querySelector('#map-geo-status').textContent,
-      zoom:OSMMAP.stats().zoom,
-      canvas:getComputedStyle(document.querySelector('#osmcv')).display,
-      attribution:getComputedStyle(document.querySelector('#osm-attribution')).display
-    })''')
-    check('서울 서남부 상세 기록 확대',
-          '서울 서남부 골목 기록' in osm_local['status'] and osm_local['zoom'] > 50 and
-          osm_local['canvas'] == 'block' and osm_local['attribution'] == 'block',
-          str(osm_local))
-    pg.click('#map-mode-route'); pg.wait_for_timeout(80)
-    check('OSM에서 여정도로 복귀',
-          pg.locator('#map-mode-route.here').count() == 1 and
-          pg.locator('#mapwrap.osm').count() == 0)
-    pg.click('#map-mode-vworld'); pg.wait_for_timeout(120)
-    check('V-World 키 입력 전 외부 SDK 미호출',
-          pg.locator('#vworld-setup.on').count() == 1 and
-          pg.locator('#vworld-sdk').count() == 0)
-    pg.click('#vworld-cancel'); pg.wait_for_timeout(80)
-    check('V-World 취소 시 자체 여정도 폴백',
-          pg.locator('#map-mode-route.here').count() == 1 and
-          pg.locator('#mapwrap.vworld').count() == 0)
-    pg.evaluate('''() => {
-      class Obj { constructor(options={}){ Object.assign(this,options); } }
-      class Feature {
-        constructor(properties={}){ this.properties={...properties}; }
-        get(key){ return this.properties[key]; }
-        setProperties(properties){ Object.assign(this.properties,properties); }
-      }
-      class VectorSource {
-        constructor(){ this.features=[]; window.__vworldMockSource=this; }
-        clear(){ this.features=[]; }
-        addFeatures(features){ this.features.push(...features); }
-      }
-      class MockMap {
-        constructor(){
-          this.view={setCenter:()=>{},setZoom:()=>{}};
-          window.__vworldMockMap=this;
-        }
-        addLayer(layer){ this.layer=layer; }
-        on(){ }
-        getView(){ return this.view; }
-        updateSize(){ }
-        forEachFeatureAtPixel(){ }
-      }
-      window.ol={
-        source:{Vector:VectorSource},
-        layer:{Vector:Obj},
-        style:{Style:Obj,Stroke:Obj,Fill:Obj,RegularShape:Obj,Circle:Obj,Text:Obj},
-        geom:{LineString:Obj,Point:Obj},
-        Feature,
-        proj:{transform:coords=>coords},
-      };
-      window.vw={ol3:{
-        Map:MockMap,MapOptions:{},CameraPosition:{},
-        BasemapType:{GRAPHIC_NIGHT:'night',GRAPHIC:'graphic'},
-        DensityType:{EMPTY:'empty',BASIC:'basic'},
-      }};
-      localStorage.setItem('seoul400_vworld_key','AAAA0000-BBBB-1111-CCCC-222222222222');
-      localStorage.setItem('seoul400_vworld_domain','twoinabillion.github.io');
+    print('― 합류 전 의뢰')
+    rr = pg.evaluate('''() => {
+      const out={};
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.party=[]; S.up={}; S.recruitQ=null; S.driving={from:'busan',to:'ulsan',dist:80,gone:20};
+      out.started=G.startRecruitQuest('minji');
+      out.target=S.recruitQ&&S.recruitQ.target==='ulsan';
+      S.driving=null; S.at='ulsan';
+      out.opened=G.openRecruitStep()&&document.querySelector('#ev-wrap').classList.contains('on');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      out.ready=G.markRecruitReady('minji')&&S.recruitQ.stage==='ready';
+      S.party=['parkss','leo'];
+      out.fullHeld=!G.doRecruit('minji')&&S.recruitQ&&S.recruitQ.stage==='ready';
+      S.up.bench=true;
+      out.joined=G.doRecruit('minji')&&G.hasComp('minji')&&S.recruitQ===null;
+      return out;
     }''')
-    pg.click('#map-mode-vworld'); pg.wait_for_timeout(180)
-    precise = pg.evaluate('''() => ({
-      active:document.querySelector('#mapwrap').classList.contains('vworld'),
-      features:(window.__vworldMockSource?.features||[]).length,
-      known:S.known.length,
-      status:document.querySelector('#map-geo-status').textContent
+    check('첫 만남→지역 과제→합류 약속', rr['started'] and rr['target'] and rr['opened'] and rr['ready'], str(rr))
+    check('만석에서도 약속 보존·좌석 개조 후 합류', rr['fullHeld'] and rr['joined'], str(rr))
+    pg.click('#dk-map'); pg.wait_for_timeout(160)
+    map_detail = pg.evaluate('''() => ({
+      modes:document.querySelectorAll('#map-sourcebar,#osmcv,#vworld-map').length,
+      canvas:document.querySelector('#mapcv')?.getAttribute('aria-label'),
+      rivers:(typeof MAPR==='object'),
+      context:Object.keys(D.nodeScenery||{}).length
     })''')
-    check('V-World SDK 연결 시 게임 경로·노드 벡터 생성',
-          precise['active'] and precise['features'] > precise['known'] and 'V-WORLD' in precise['status'],
-          str(precise))
-    pg.click('#map-mode-route')
-    pg.evaluate("""() => {
-      localStorage.removeItem('seoul400_vworld_key');
-      localStorage.removeItem('seoul400_vworld_domain');
-    }""")
+    check('실축 모드 제거·그림 여정도 단일화', map_detail['modes'] == 0 and '그림 여정도' in map_detail['canvas'], str(map_detail))
+    check('상세 그림 지도 렌더러 유지', map_detail['rivers'] and map_detail['context'] >= 30, str(map_detail))
+    pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('836개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('848개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
@@ -488,7 +420,8 @@ with sync_playwright() as p:
       S.flags.uplink_seen = true;
       // 영입 뒤 미합류 동료의 이름·위치를 자동 공개하지 않는다.
       S.party = []; S.notes = []; G.doRecruit('minji');
-      out.refer = S.notes.some(n => Object.values(D.comps).some(c => !G.hasComp(c) && n.title.includes(c.name)));
+      out.refer = S.notes.some(n => Object.entries(D.comps).some(([id,c]) =>
+        id!=='minji' && n.title.includes(c.name)));
       // 서울 오르막 진행
       S.flags.seoul_open = true; S.seoul = {entered:true};
       out.stage0 = G.seoulStage();
@@ -557,7 +490,7 @@ with sync_playwright() as p:
     check('주행거리 본편 장면 순서 보장', r7['beat1'] == 'story_generation_form' and
           r7['beat2'] == 'story_family_principle' and r7['beat3'] == 'story_generation_speech', str(r7))
     check('상행선 단서 없으면 진실 기둥 잠김', r7['truthLocked'], str(r7))
-    check('영입 시 다음 동료 자동 안내 없음', not r7['refer'])
+    check('영입 시 다음 동료 자동 안내 없음', not r7['refer'], str(r7))
 
     # 최종 엔딩: 코어 고백 → 실제 집행 선택 → 완결 에필로그
     r8 = pg.evaluate('''() => { const out = {};

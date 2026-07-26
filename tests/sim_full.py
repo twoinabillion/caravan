@@ -29,15 +29,18 @@ SETUP = r'''() => {
       const parts=(fx.item&&fx.item['부품'])||0;
       return (fx.food||0)*2*scF + (fx.water||0)*2*scW + (fx.fuel||0)*1.5*scFu
            + parts*10 + (fx.scrap||0)*0.7 + (fx.van||0)*0.25 + (fx.moodAll||0)*0.3
-           - (fx.pursuit||0)*1.5 - (fx.time||0)*0.005 + (fx.offerComp?50:0) + (fx.recruit?50:0); };
+           - (fx.pursuit||0)*1.5 - (fx.time||0)*0.005 + (fx.offerComp?50:0)
+           + (fx.recruit?50:0) + (fx.startRecruit?45:0) + (fx.recruitReady?45:0); };
     const score=(ch)=>{ let tot=0,s2=0; (ch.out||[]).forEach(o=>{ tot+=(o.p||1); s2+=(o.p||1)*util(o.fx); }); return tot? s2/tot : 0; };
     affordable.sort((a,b)=>score(b)-score(a));
-    const mustTake = affordable.find(c=>(c.out||[]).some(o=>o.fx&&(o.fx.offerComp||o.fx.recruit)));
+    const mustTake = affordable.find(c=>(c.out||[]).some(o=>o.fx&&
+      (o.fx.offerComp||o.fx.recruit||o.fx.startRecruit||o.fx.recruitReady)));
     const ch = mustTake || ((Math.random()<0.75)? affordable[0] : affordable[Math.floor(Math.random()*affordable.length)]);
     const out = pickOut(ch.out||[]);
     if(out && out.fx){
       const fx = out.fx;
-      if(fx.offerComp && !G.hasComp(fx.offerComp)){ G.doRecruit(fx.offerComp); SIM.recruitedDay[fx.offerComp]=S.day; }
+      if(fx.offerComp && !G.hasComp(fx.offerComp) && G.doRecruit(fx.offerComp))
+        SIM.recruitedDay[fx.offerComp]=S.day;
       G.applyFx(fx);
       if(fx.recruit) SIM.recruitedDay[fx.recruit]=S.day;
       if(S._chain){ const cid=S._chain; S._chain=null; G.openEventById(cid); }
@@ -60,6 +63,10 @@ STEP = r'''() => {
     [null,     ['suwon']],
   ];
   const target=()=>{
+    if(S.recruitQ){
+      if(S.recruitQ.stage==='task') return [S.recruitQ.target];
+      if(S.party.length<G.maxParty()) return [S.at];
+    }
     if(S.party.length>=G.maxParty() && G.nextSeatUpgrade())
       return ['daegu','miryang','gwangju','daejeon'];
     for(const [c,nodes] of TOUR){ if(c && !G.hasComp(c)) return nodes;
@@ -145,16 +152,22 @@ STEP = r'''() => {
   for(const uid of SEATQ){ if(!(S.up&&S.up[uid])){ if(G.buyUpgrade(uid)){ (SIM.upBought=SIM.upBought||[]).push(uid+'@D'+S.day); } break; } }
   if(SEATQ.every(u=>S.up&&S.up[u]) && !(S.up&&S.up.tank1)){ if(G.buyUpgrade('tank1')) (SIM.upBought=SIM.upBought||[]).push('tank1@D'+S.day); }
 
-  // 정착지 영입 (강우 — 대구 돔 시장)
-  if(stl && stl.recruit && !G.hasComp(stl.recruit)){ G.doRecruit(stl.recruit); SIM.recruitedDay[stl.recruit]=S.day; }
+  // 합류 전 과제/합류 약속이 현재 위치에서 열렸으면 먼저 진행한다.
+  if(S.recruitQ && ((S.recruitQ.stage==='task'&&S.recruitQ.target===S.at)||
+      (S.recruitQ.stage==='ready'&&S.party.length<G.maxParty()))){
+    G.openRecruitStep(); return OUT;
+  }
+
+  // 강우의 첫 만남은 대구 시장에서 직접 열린다.
+  if(stl && stl.recruit==='kangwoo' && !G.hasComp('kangwoo') && !S.recruitQ &&
+      !S.used.includes('kw_recruit')){ G.openEventById('kw_recruit'); return OUT; }
 
   // 소개받은 지역에 도착하면 우선 영입 조우를 확인한다.
   // 실게임의 priority 풀과 동일하되, 밸런스 시뮬레이션에서는 짧은 도로 왕복 RNG를 제거한다.
   const pending=TOUR.find(([c,nodes])=>c&&!G.hasComp(c)&&nodes.includes(S.at));
   if(pending && S.party.length<G.maxParty()){
     const [cid]=pending;
-    const recruit=G.eligible().find(e=>e.priority && (e.choices||[]).some(ch=>
-      (ch.out||[]).some(o=>o.fx&&o.fx.offerComp===cid)));
+    const recruit=G.eligible().find(e=>e.priority&&e.recruitStart===cid);
     if(recruit){ G.openEvent(recruit); SIM.recruitedDay[cid]=S.day; return OUT; }
   }
 
@@ -195,7 +208,8 @@ COLLECT = r'''() => ({
   ev:SIM.ev, evUnique:Object.keys(SIM.evIds).length, crises:SIM.crises,
   recruitedDay:SIM.recruitedDay, minFood:SIM.minFood, minWater:SIM.minWater,
   foodZeroDays:SIM.foodZeroDays, waterZeroDays:SIM.waterZeroDays,
-  stranded:SIM.stranded, km:Math.round(S.stats.km), endKind:SIM.endKind||null, upBought:SIM.upBought||[]
+  stranded:SIM.stranded, km:Math.round(S.stats.km), endKind:SIM.endKind||null,
+  recruitQ:S.recruitQ, partyIds:[...S.party], at:S.at, upBought:SIM.upBought||[]
 })'''
 
 def run():
@@ -230,7 +244,8 @@ def run():
             results.append(data)
             print(f"run{i+1:02d}: {note or 'maxstep'} day={data['day']} party={data['party']} "
                   f"km={data['km']} fuel={data['fuel']} food={data['food']} water={data['water']} "
-                  f"ev={data['ev']} up={len(data['upBought'])} 좌초={data['stranded']} err={data['jsErrors']}")
+                  f"ev={data['ev']} up={len(data['upBought'])} crew={','.join(data['partyIds'])} "
+                  f"rq={data['recruitQ']} at={data['at']} 좌초={data['stranded']} err={data['jsErrors']}")
             pg.close()
         browser.close()
 
