@@ -113,6 +113,18 @@ G.startRecruitQuest = (id)=>{
   G.save();
   return true;
 };
+G.rememberRecruitChoice = (choice)=>{
+  if(!S.recruitQ||!choice) return false;
+  const def=D.recruitQuests&&D.recruitQuests[S.recruitQ.id];
+  if(!def||!def.approaches||!def.approaches[choice]) return false;
+  S.recruitQ.choice=choice;
+  S.recruitQ.choiceDay=S.day;
+  return true;
+};
+G.recruitApproach = ()=>{
+  const q=S&&S.recruitQ, def=q&&D.recruitQuests&&D.recruitQuests[q.id];
+  return q&&q.choice&&def&&def.approaches ? def.approaches[q.choice] : null;
+};
 G.markRecruitReady = (id)=>{
   if(!S.recruitQ||S.recruitQ.id!==id) return false;
   S.recruitQ.stage='ready';
@@ -358,6 +370,24 @@ G.fuelFor = (km,road)=>{ let per = 1/6.0; if(road==='rough') per*=1.35; if(road=
     per*=(1 - G.driverLv()*0.02); }
   return Math.ceil(km*per); };
 
+G.prepareRecruitGuest = (dv)=>{
+  const q=S.recruitQ;
+  if(!q||q.stage!=='road'||!dv) return;
+  const def=D.recruitQuests[q.id];
+  if(!def||!def.guest) return;
+  dv.guest=q.id;
+  if(q.id==='minji') dv.guestFuel=.92;
+  if(q.id==='parkss') S.fatigue=clamp(S.fatigue-8,0,100);
+  if(q.id==='leo') dv.guestFatigue=.8;
+  if(q.id==='jaeyi'){ dv.guestWear=.7; dv.guestFind=2; }
+  if(q.id==='eunsu'){
+    if(S.pursuit>0) S.pursuit--;
+    else if(dv.slots.length) dv.slots.pop();
+  }
+  if(q.id==='kangwoo'&&dv.slots.length) dv.slots.pop();
+  UI.toast(`${def.guest.ic} 임시 동행 — ${def.guest.title}`);
+};
+
 G.startTravel = (to)=>{
   const chk = G.canTravelTo(to); if(!chk.ok) return false;
   const wx = S.wx;
@@ -374,6 +404,7 @@ G.startTravel = (to)=>{
     slots.sort((a,b)=>a.at-b.at);
   }
   S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0};
+  G.prepareRecruitGuest(S.driving);
   S.at = null;
   if(S.mode==='offroad') OFF.prefetch();
   UI.onDepart();
@@ -398,10 +429,11 @@ G.tick = (dt)=>{ // dt: real seconds
   S.stats.km += km;
   // fuel
   const per = G.fuelFor(1000,dv.road)/1000;
-  S.fuel = Math.max(0, S.fuel - km*per);
+  S.fuel = Math.max(0, S.fuel - km*per*(dv.guestFuel||1));
   // van wear
   let wearMul = S.up&&S.up.susp? 0.5:1;
   if(S.up&&S.up.mudtires&&dv.road==='rough') wearMul*=0.6;
+  wearMul*=dv.guestWear||1;
   if(dv.road==='rough') S.van = Math.max(0, S.van - km*(G.isWet()?0.09:0.06)*wearMul);
   if(S.wx==='storm') S.van = Math.max(0, S.van - km*0.03*wearMul);
   // 재이: 까치의 눈
@@ -410,7 +442,7 @@ G.tick = (dt)=>{ // dt: real seconds
   // 운전은 추가 피로 (밤 운전은 특히)
   const nightFtg = G.isNight()? (S.up&&S.up.lightbar?0.049:0.075) : 0.04;   // 라이트바=밤길이 덜 갉아먹음
   const bunkMul = S.up&&S.up.bunk? 0.8:1;                                    // 2층 침대=교대 수면
-  S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*(1-G.driverLv()*0.06), 0, 100);
+  S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*(1-G.driverLv()*0.06)*(dv.guestFatigue||1), 0, 100);
   G.checkDriverLv();
   G.advance(gm);
   if(S.ended) return;
@@ -570,6 +602,7 @@ G.applyFx = (fx)=>{
   if(fx.enterSeoul){ S.seoul={entered:true}; }
   if(fx.chain){ S._chain = fx.chain; }   // 시트 닫힐 때 UI가 이어서 연다 (시네마틱 연쇄)
   if(fx.startRecruit) G.startRecruitQuest(fx.startRecruit);
+  if(fx.recruitChoice) G.rememberRecruitChoice(fx.recruitChoice);
   if(fx.recruitRoad) G.markRecruitRoad(fx.recruitRoad);
   if(fx.recruitReady) G.markRecruitReady(fx.recruitReady);
   if(fx.recruit) G.doRecruit(fx.recruit);
@@ -666,9 +699,14 @@ G.doRecruit = (id)=>{
 
 /* ── arrival ── */
 G.arrive = ()=>{
+  const completedDrive=S.driving;
   const to = S.driving.to;
   const road = S.driving.road;
   S.at = to; S.driving = null;
+  if(completedDrive&&completedDrive.guestFind){
+    S.scrap+=completedDrive.guestFind;
+    UI.toast(`🧰 재이가 길가에서 쓸 만한 고철을 챙겼다 +${completedDrive.guestFind}`);
+  }
   if(S.recruitQ&&S.recruitQ.stage==='road'&&S.recruitQ.roadFrom!==to){
     const rq=S.recruitQ, def=D.recruitQuests[rq.id];
     rq.stage='follow'; rq.target=to; rq.followDay=S.day;

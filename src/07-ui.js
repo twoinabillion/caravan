@@ -210,21 +210,21 @@ const UI = (()=>{
       kicker=`인연 · ${def.name}`;
       title=def.title;
       if(rq.stage==='ready'){
-        state=`서로의 일을 두 번 함께 겪었다 · 이제 당사자가 직접 자리를 고른다`;
+        state='두 과제 완료 · 본인이 자리를 고를 차례';
         meta='합류 대기';
         pct=100;
       } else if(rq.stage==='road'){
-        state=`임시 동행 · ${def.roadHint}`;
+        state='첫 과제 완료 · 한 구간 임시 동행';
         meta=S.driving?'한 구간 이동 중':'다음 길을 고른다';
         pct=S.driving?Math.min(78,58+S.driving.gone/S.driving.dist*20):58;
       } else if(rq.stage==='follow'){
         const target=D.nodes[rq.target];
-        state=`${target.name} · ${def.followHint}`;
+        state=`두 번째 과제 · ${target.name}`;
         meta=S.at===rq.target&&!S.driving?'마주할 일 있음':'이동 필요';
         pct=S.at===rq.target?86:76;
       } else {
         const target=D.nodes[rq.target];
-        state=`${target.name} · ${def.hint}`;
+        state=`첫 번째 과제 · ${target.name}`;
         meta=S.at===rq.target&&!S.driving?'진행 가능':'이동 필요';
         pct=S.at===rq.target?55:S.driving&&S.driving.to===rq.target
           ?Math.min(50,S.driving.gone/S.driving.dist*50):18;
@@ -344,13 +344,19 @@ const UI = (()=>{
     if(!S){ p.innerHTML=''; return; }
     if(S.driving){
       const to=D.nodes[S.driving.to];
-      const guest=S.recruitQ&&S.recruitQ.stage==='road'
-        ?`${D.recruitQuests[S.recruitQ.id].name}, 아직 동료가 아니라 손님으로 함께 가는 중. ${D.recruitQuests[S.recruitQ.id].roadHint}.`
-        :'차는 계속 달린다. 지도나 동료 상태는 위 요약에서 바로 확인할 수 있다.';
+      const rq=S.recruitQ&&S.recruitQ.stage==='road'?S.recruitQ:null;
+      const def=rq&&D.recruitQuests[rq.id];
+      const approach=rq&&G.recruitApproach();
+      const guest=def?`<section class="road-guest-card" aria-label="${def.name} 임시 동행">
+        <div class="road-guest-head"><span class="rg-ico">${def.guest.ic}</span><span>
+          <small>임시 동행 · 아직 손님</small><b>${def.name} — ${def.guest.title}</b></span></div>
+        <div class="road-guest-help">${def.guest.desc}</div>
+        ${approach?`<div class="road-guest-memory"><b>${approach.label}</b> · ${approach.memory}</div>`:''}
+      </section>`:'<div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>';
       p.innerHTML = `
         ${contextRail(to,true)}
         <div id="travelbar"></div>
-        <div class="road-note">${guest}</div>`;
+        ${guest}`;
       renderTravelbar();
       wireContext(p);
       return;
@@ -511,8 +517,13 @@ const UI = (()=>{
     const portraitKey=D.eventPortraits&&D.eventPortraits[evd.id];
     const portrait=portraitKey&&D.portraits[portraitKey]
       ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
-    const context=D.storyContext&&D.storyContext[evd.id]
+    let context=D.storyContext&&D.storyContext[evd.id]
       ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
+    const recruitQ=S.recruitQ, recruitDef=recruitQ&&D.recruitQuests[recruitQ.id];
+    const approach=recruitQ&&G.recruitApproach();
+    if(recruitDef&&approach&&(evd.id===recruitDef.follow||evd.id===recruitDef.join)){
+      context=`<div class="story-context"><b>우리가 앞에서 한 일 · ${approach.label}</b>${approach.memory}</div>`+context;
+    }
     let choices='', choiceCount=0;
     evd.choices.forEach((c,i)=>{
       if(!G.reqVisible(c.req)) return;
@@ -1045,25 +1056,29 @@ const UI = (()=>{
     const stories=Object.keys(D.comps).filter(id=>G.hasComp(id)).map(id=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
       const state=st.perks.includes(p3.id)?'done':'lv'+st.lvl;
-      return {id,c,st,p3,state};
+      const next=st.lvl<3?D.bondTh[st.lvl]:Math.max(1,st.bond);
+      return {id,c,st,p3,state,bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
     });
     let crew=`<div class="st-summary">
       <div class="st-metric"><span class="mk">동료</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
       <div class="st-metric"><span class="mk">완주 서사</span><span class="mv">${stories.filter(s=>s.state==='done').length}</span></div>
       <div class="st-metric"><span class="mk">보리</span><span class="mv">${S.dog?'동행 중':'—'}</span></div>
     </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+
-      (stories.length?stories.map(s=>`<div class="st-row" data-comp2="${s.id}" style="cursor:pointer">
-        <span class="k">${s.c.face} ${s.c.name}</span>
-        <span class="v" style="flex:1;color:${s.state==='done'?'var(--cheollian)':'inherit'}">
-        ${s.state==='done'?`★ 「${s.p3.nm}」 완료`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?' ✦퍼크 대기':''}`}</span></div>`).join('')
+      (stories.length?`<div class="crew-status-list">`+stories.map(s=>`<div class="crew-status-card" data-comp2="${s.id}" role="button" tabindex="0">
+        <span class="crew-status-face">${faceOf(s.id,s.c.face)}</span>
+        <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}</small></span>
+        <span class="crew-status-state">${s.state==='done'?`★ ${s.p3.nm}`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?'<br>✦ 퍼크 대기':''}`}</span>
+        <span class="crew-status-bond"><i style="width:${s.bondPct}%"></i></span></div>`).join('')+`</div>`
         :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+
       `<div class="csub" style="margin-top:7px">${stories.length?'이름을 누르면 유대와 해금된 능력을 확인한다.':'지도와 명단에는 만나지 않은 사람을 미리 표시하지 않는다.'}</div></div>`;
 
     b.innerHTML=`<div class="st-pane ${stTab==='now'?'on':''}" data-stpane="now">${now}</div>
       <div class="st-pane ${stTab==='journey'?'on':''}" data-stpane="journey">${journey}</div>
       <div class="st-pane ${stTab==='crew'?'on':''}" data-stpane="crew">${crew}</div>`;
-    b.querySelectorAll('[data-comp2]').forEach(r=>r.onclick=()=>{ const id=r.dataset.comp2;
-      if(G.hasComp(id)) showComp(id); });
+    b.querySelectorAll('[data-comp2]').forEach(r=>{
+      r.onclick=()=>{ const id=r.dataset.comp2; if(G.hasComp(id)) showComp(id); };
+      r.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); r.click(); } };
+    });
   }
 
   /* ── JOURNAL ── */

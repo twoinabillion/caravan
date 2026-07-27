@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>서울까지 400km</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
 :root{
   --night:#0b0e1a; --deep:#070910; --panel:#131829; --panel2:#0f1422; --line:#232b45;
@@ -93,14 +93,14 @@ input{font-family:inherit}
   background:linear-gradient(90deg,rgba(255,180,84,.09),rgba(15,20,34,.98) 42%);
   padding:6px 12px;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 10px;
   color:var(--paper)}
-.mission-strip .ms-k{grid-column:1;grid-row:1;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;color:var(--amber)}
-.mission-strip .ms-title{grid-column:1;grid-row:2;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mission-strip .ms-k{grid-column:1;grid-row:1;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--amber)}
+.mission-strip .ms-title{grid-column:1;grid-row:2;font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mission-strip .ms-meta{grid-column:2;grid-row:1/5;align-self:center;font-family:var(--mono);
-  font-size:10.5px;color:var(--faded);text-align:right;white-space:nowrap}
-.mission-strip .ms-alert{color:var(--danger);font-size:9.5px}
+  font-size:11px;color:#aeb5c8;text-align:right;white-space:nowrap}
+.mission-strip .ms-alert{color:var(--danger);font-size:10.5px}
 .mission-strip .ms-progress{grid-column:1;grid-row:4;height:2px;background:#080b14;border-radius:2px;overflow:hidden}
 .mission-strip .ms-progress i{display:block;height:100%;background:var(--amber);border-radius:2px}
-.mission-strip .ms-state{grid-column:1;grid-row:3;font-size:10.5px;color:var(--faded);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mission-strip .ms-state{grid-column:1;grid-row:3;font-size:11.5px;color:#aeb5c8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mission-strip.danger{background:linear-gradient(90deg,rgba(226,87,79,.14),rgba(15,20,34,.98) 42%)}
 .mission-strip.danger .ms-k,.mission-strip.danger .ms-meta{color:var(--danger)}
 .map-mission{border-bottom:1px solid #2b3557;background:#10162a}
@@ -120,14 +120,24 @@ input{font-family:inherit}
 .context-location .loc-mark{grid-row:1/3;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;
   color:var(--amber);writing-mode:vertical-rl}
 .context-location b{align-self:end;font-size:13px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.context-location small{align-self:start;color:var(--faded);font-family:var(--mono);font-size:9.5px;white-space:nowrap}
+.context-location small{align-self:start;color:#aeb5c8;font-family:var(--mono);font-size:10.5px;white-space:nowrap}
 .context-crew{display:flex;align-items:center;gap:7px;padding:5px 9px}
 .crew-faces{display:flex;padding-left:5px}
 .crew-mini{width:25px;height:25px;margin-left:-6px;border-radius:50%;overflow:hidden;background:#0a0d18;
   border:1px solid #39456f;display:grid;place-items:center;font-size:11px}
 .crew-mini:first-child{margin-left:0}.crew-mini .pimg{border-radius:50%}
-.context-crew .crew-count{font-family:var(--mono);font-size:10px;color:var(--faded);white-space:nowrap}
-.road-note{color:var(--dim);font-size:11.5px;margin-top:6px}
+.context-crew .crew-count{font-family:var(--mono);font-size:11px;color:#aeb5c8;white-space:nowrap}
+.road-note{color:#aeb5c8;font-size:12.5px;margin-top:8px;line-height:1.55}
+.road-guest-card{margin-top:10px;border:1px solid rgba(255,180,84,.28);border-radius:12px;
+  background:linear-gradient(145deg,rgba(255,180,84,.085),rgba(19,25,43,.94));padding:12px 13px}
+.road-guest-head{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.road-guest-head .rg-ico{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;
+  background:rgba(255,180,84,.12);font-size:17px}
+.road-guest-head small{display:block;color:var(--amber);font:10.5px/1.3 var(--mono);letter-spacing:.08em}
+.road-guest-head b{display:block;font-size:14px;margin-top:1px}
+.road-guest-help{font-size:12.5px;line-height:1.5;color:#d1d5df}
+.road-guest-memory{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);color:#aeb5c8;
+  font:11.5px/1.55 var(--serif)}
 
 /* travel progress */
 #travelbar{margin:2px 0 12px}
@@ -397,6 +407,17 @@ input{font-family:inherit}
 .status-empty{display:flex;flex-direction:column;gap:4px;padding:18px 12px;text-align:center;color:var(--faded);
   border:1px dashed var(--line);border-radius:9px;background:rgba(255,255,255,.015)}
 .status-empty b{color:var(--paper);font-size:13px}.status-empty span{font-size:11.5px}
+.crew-status-list{display:grid;gap:8px}
+.crew-status-card{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+  padding:9px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);cursor:pointer}
+.crew-status-card:hover{border-color:#39456f}
+.crew-status-face{grid-row:1/3;width:42px;height:42px;border-radius:10px;overflow:hidden;display:grid;place-items:center;
+  background:#0a0d18;border:1px solid #39456f;font-size:20px}
+.crew-status-main{min-width:0}.crew-status-main b{display:block;font-size:13.5px}
+.crew-status-main small{display:block;color:#aeb5c8;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crew-status-state{font:10.5px/1.35 var(--mono);color:var(--amber);text-align:right}
+.crew-status-bond{grid-column:2/4;height:3px;background:#080b14;border-radius:3px;overflow:hidden}
+.crew-status-bond i{display:block;height:100%;background:linear-gradient(90deg,var(--cheollian),var(--amber));border-radius:3px}
 @media(max-height:720px){
   #scr-intro{align-items:flex-start;padding:8px 12px 22px}
   #intro-book{max-height:none}

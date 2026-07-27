@@ -66,7 +66,7 @@
 | 아이템 | `item:'약통'` 획득 (문자열) |
 | 플래그 | `flag:'name'` 세움 · `unflag:'name'` 해제 · `flagCount:'name'` 카운터++ |
 | 지도 | `reveal:'lake'` 숨은노드 공개 · `revealNear` 근처공개 |
-| 동료 | `startRecruit:'parkss'`로 첫 부탁을 시작하고, 완료 뒤 `recruitRoad:'parkss'`로 한 구간 임시 동행 → 다음 도착지의 `follow` 사건에서 `recruitReady:'parkss'` → 마지막에 `offerComp:'parkss'` 영입 제안 (신규 동료 만들지 말 것 — 6명 고정) |
+| 동료 | `startRecruit:'parkss'`로 첫 부탁을 시작한다. 첫 과제 결과에는 `recruitChoice:'...'`와 `recruitRoad:'parkss'`를 함께 써서 선택을 기억하고 한 구간 임시 동행을 시작한다. 다음 도착지의 `follow` 사건에서 `recruitReady:'parkss'` → 마지막에 `offerComp:'parkss'` 영입 제안 (신규 동료 만들지 말 것 — 6명 고정) |
 | 일지 | `note:{type:'사건'|'소문'|'인물', title:'...', body:'...', links:['서울']}} ` |
 
 - **note는 적극 활용해라.** 세계관 조각·인물·소문을 일지에 남기면 지식 그래프에 쌓인다. `links`는 `[[링크]]` 대상.

@@ -235,10 +235,12 @@ with sync_playwright() as p:
         const join=D.events.find(e=>e.id===q.join);
         const everyFx=(ev,pred)=>ev&&ev.choices.length>=2&&
           ev.choices.every(c=>c.out&&c.out.length&&c.out.every(o=>pred(o.fx||{})));
-        return everyFx(task,fx=>fx.recruitRoad===id)&&
+        const sceneKeys=[q.task,q.follow,q.join].map(eid=>D.eventScenes[eid]);
+        return q.guest&&q.approaches&&Object.keys(q.approaches).length===3&&
+          everyFx(task,fx=>fx.recruitRoad===id&&!!q.approaches[fx.recruitChoice])&&
           everyFx(follow,fx=>fx.recruitReady===id&&fx.chain===q.join)&&
           join&&join.choices.some(c=>c.out.some(o=>o.fx&&o.fx.offerComp===id))&&
-          !!D.scenes[D.eventScenes[q.task]]&&!!D.scenes[D.eventScenes[q.follow]];
+          new Set(sceneKeys).size===3&&sceneKeys.every(key=>!!D.scenes[key]);
       });
       out.localScenery=Object.keys(D.nodeScenery||{}).length;
       out.nodeSceneCount=Object.keys(D.nodeScenes||{}).length;
@@ -367,7 +369,7 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 65종·빌드 주입', r4['sceneCount'] == 65 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 77종·빌드 주입', r4['sceneCount'] == 77 and r4['sceneDataReady'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
@@ -394,14 +396,19 @@ with sync_playwright() as p:
       S.driving=null; S.at='ulsan';
       out.opened=G.openRecruitStep()&&document.querySelector('#ev-wrap').classList.contains('on');
       document.querySelector('#ev-wrap').classList.remove('on');
+      out.remembered=G.rememberRecruitChoice('shield')&&S.recruitQ.choice==='shield';
       out.road=G.markRecruitRoad('minji')&&S.recruitQ.stage==='road'&&S.recruitQ.roadFrom==='ulsan';
       const oldUsed=S.used, oldArrive=UI.onArrive;
       S.used=D.events.map(e=>e.id); UI.onArrive=()=>0;
-      S.driving={from:'ulsan',to:'gyeongju',dist:59,gone:59,road:'normal'};
+      G.startTravel('gyeongju');
+      out.guestAssist=S.driving&&S.driving.guest==='minji'&&S.driving.guestFuel===.92;
+      S.driving.gone=S.driving.dist;
       G.arrive();
       UI.onArrive=oldArrive; S.used=oldUsed;
       out.follow=S.recruitQ&&S.recruitQ.stage==='follow'&&S.recruitQ.target==='gyeongju';
       out.followOpened=G.openRecruitStep()&&document.querySelector('#ev-wrap').classList.contains('on');
+      out.memoryVisible=document.querySelector('#ev-sheet').textContent.includes('우리가 앞에서 한 일')&&
+        document.querySelector('#ev-sheet').textContent.includes('긴 긁힌 자국');
       document.querySelector('#ev-wrap').classList.remove('on');
       out.ready=G.markRecruitReady('minji')&&S.recruitQ.stage==='ready';
       S.party=['parkss','leo'];
@@ -412,7 +419,8 @@ with sync_playwright() as p:
     }''')
     check('첫 만남→지역 과제→임시 동행→두 번째 사건→합류 약속',
           rr['started'] and rr['target'] and rr['opened'] and rr['road'] and
-          rr['follow'] and rr['followOpened'] and rr['ready'], str(rr))
+          rr['remembered'] and rr['guestAssist'] and rr['follow'] and rr['followOpened'] and
+          rr['memoryVisible'] and rr['ready'], str(rr))
     check('만석에서도 약속 보존·좌석 개조 후 합류', rr['fullHeld'] and rr['joined'], str(rr))
     pg.click('#dk-map'); pg.wait_for_timeout(160)
     map_detail = pg.evaluate('''() => ({

@@ -64,7 +64,19 @@ D.scenes = {
   'recruit-leo-task':'__SCENE_RECRUIT_LEO_TASK__',
   'recruit-jaeyi-task':'__SCENE_RECRUIT_JAEYI_TASK__',
   'recruit-eunsu-task':'__SCENE_RECRUIT_EUNSU_TASK__',
-  'recruit-kangwoo-task':'__SCENE_RECRUIT_KANGWOO_TASK__'
+  'recruit-kangwoo-task':'__SCENE_RECRUIT_KANGWOO_TASK__',
+  'recruit-minji-follow':'__SCENE_RECRUIT_MINJI_FOLLOW__',
+  'recruit-minji-join':'__SCENE_RECRUIT_MINJI_JOIN__',
+  'recruit-parkss-follow':'__SCENE_RECRUIT_PARKSS_FOLLOW__',
+  'recruit-parkss-join':'__SCENE_RECRUIT_PARKSS_JOIN__',
+  'recruit-leo-follow':'__SCENE_RECRUIT_LEO_FOLLOW__',
+  'recruit-leo-join':'__SCENE_RECRUIT_LEO_JOIN__',
+  'recruit-jaeyi-follow':'__SCENE_RECRUIT_JAEYI_FOLLOW__',
+  'recruit-jaeyi-join':'__SCENE_RECRUIT_JAEYI_JOIN__',
+  'recruit-eunsu-follow':'__SCENE_RECRUIT_EUNSU_FOLLOW__',
+  'recruit-eunsu-join':'__SCENE_RECRUIT_EUNSU_JOIN__',
+  'recruit-kangwoo-follow':'__SCENE_RECRUIT_KANGWOO_FOLLOW__',
+  'recruit-kangwoo-join':'__SCENE_RECRUIT_KANGWOO_JOIN__'
 };
 
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */

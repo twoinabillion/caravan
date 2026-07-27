@@ -45,6 +45,9 @@ SCENE_KEYS=(
   RECRUIT_MINJI RECRUIT_PARKSS
   RECRUIT_MINJI_TASK RECRUIT_PARKSS_TASK RECRUIT_LEO_TASK
   RECRUIT_JAEYI_TASK RECRUIT_EUNSU_TASK RECRUIT_KANGWOO_TASK
+  RECRUIT_MINJI_FOLLOW RECRUIT_MINJI_JOIN RECRUIT_PARKSS_FOLLOW RECRUIT_PARKSS_JOIN
+  RECRUIT_LEO_FOLLOW RECRUIT_LEO_JOIN RECRUIT_JAEYI_FOLLOW RECRUIT_JAEYI_JOIN
+  RECRUIT_EUNSU_FOLLOW RECRUIT_EUNSU_JOIN RECRUIT_KANGWOO_FOLLOW RECRUIT_KANGWOO_JOIN
 )
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
@@ -112,6 +115,18 @@ SCENE_FILES=(
   assets/scenes/recruit-jaeyi-task.jpg
   assets/scenes/recruit-eunsu-task.jpg
   assets/scenes/recruit-kangwoo-task.jpg
+  assets/scenes/recruit-minji-follow.jpg
+  assets/scenes/recruit-minji-join.jpg
+  assets/scenes/recruit-parkss-follow.jpg
+  assets/scenes/recruit-parkss-join.jpg
+  assets/scenes/recruit-leo-follow.jpg
+  assets/scenes/recruit-leo-join.jpg
+  assets/scenes/recruit-jaeyi-follow.jpg
+  assets/scenes/recruit-jaeyi-join.jpg
+  assets/scenes/recruit-eunsu-follow.jpg
+  assets/scenes/recruit-eunsu-join.jpg
+  assets/scenes/recruit-kangwoo-follow.jpg
+  assets/scenes/recruit-kangwoo-join.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do
