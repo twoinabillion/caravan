@@ -30,11 +30,12 @@ SETUP = r'''() => {
       return (fx.food||0)*2*scF + (fx.water||0)*2*scW + (fx.fuel||0)*1.5*scFu
            + parts*10 + (fx.scrap||0)*0.7 + (fx.van||0)*0.25 + (fx.moodAll||0)*0.3
            - (fx.pursuit||0)*1.5 - (fx.time||0)*0.005 + (fx.offerComp?50:0)
-           + (fx.recruit?50:0) + (fx.startRecruit?45:0) + (fx.recruitReady?45:0); };
+           + (fx.recruit?50:0) + (fx.startRecruit?45:0) + (fx.recruitRoad?45:0)
+           + (fx.recruitReady?45:0); };
     const score=(ch)=>{ let tot=0,s2=0; (ch.out||[]).forEach(o=>{ tot+=(o.p||1); s2+=(o.p||1)*util(o.fx); }); return tot? s2/tot : 0; };
     affordable.sort((a,b)=>score(b)-score(a));
     const mustTake = affordable.find(c=>(c.out||[]).some(o=>o.fx&&
-      (o.fx.offerComp||o.fx.recruit||o.fx.startRecruit||o.fx.recruitReady)));
+      (o.fx.offerComp||o.fx.recruit||o.fx.startRecruit||o.fx.recruitRoad||o.fx.recruitReady)));
     const ch = mustTake || ((Math.random()<0.75)? affordable[0] : affordable[Math.floor(Math.random()*affordable.length)]);
     const out = pickOut(ch.out||[]);
     if(out && out.fx){
@@ -65,7 +66,9 @@ STEP = r'''() => {
   const target=()=>{
     if(S.recruitQ){
       if(S.recruitQ.stage==='task') return [S.recruitQ.target];
-      if(S.party.length<G.maxParty()) return [S.at];
+      if(S.recruitQ.stage==='road') return [S.at]; // 현재지를 목표로 주면 최단 인접 한 구간을 탄다.
+      if(S.recruitQ.stage==='follow') return [S.recruitQ.target];
+      if(S.recruitQ.stage==='ready'&&S.party.length<G.maxParty()) return [S.at];
     }
     if(S.party.length>=G.maxParty() && G.nextSeatUpgrade())
       return ['daegu','miryang','gwangju','daejeon'];
@@ -152,8 +155,9 @@ STEP = r'''() => {
   for(const uid of SEATQ){ if(!(S.up&&S.up[uid])){ if(G.buyUpgrade(uid)){ (SIM.upBought=SIM.upBought||[]).push(uid+'@D'+S.day); } break; } }
   if(SEATQ.every(u=>S.up&&S.up[u]) && !(S.up&&S.up.tank1)){ if(G.buyUpgrade('tank1')) (SIM.upBought=SIM.upBought||[]).push('tank1@D'+S.day); }
 
-  // 합류 전 과제/합류 약속이 현재 위치에서 열렸으면 먼저 진행한다.
+  // 첫 부탁과 두 번째 개인 사건, 합류 약속이 현재 위치에서 열렸으면 먼저 진행한다.
   if(S.recruitQ && ((S.recruitQ.stage==='task'&&S.recruitQ.target===S.at)||
+      (S.recruitQ.stage==='follow'&&S.recruitQ.target===S.at)||
       (S.recruitQ.stage==='ready'&&S.party.length<G.maxParty()))){
     G.openRecruitStep(); return OUT;
   }

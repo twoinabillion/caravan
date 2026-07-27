@@ -231,8 +231,14 @@ with sync_playwright() as p:
       out.recruitDefs=Object.keys(D.recruitQuests||{}).length;
       out.recruitEvents=Object.keys(D.recruitQuests||{}).every(id=>{
         const q=D.recruitQuests[id];
-        return D.events.some(e=>e.id===q.task)&&D.events.some(e=>e.id===q.join)&&
-          !!D.scenes[D.eventScenes[q.task]];
+        const task=D.events.find(e=>e.id===q.task), follow=D.events.find(e=>e.id===q.follow);
+        const join=D.events.find(e=>e.id===q.join);
+        const everyFx=(ev,pred)=>ev&&ev.choices.length>=2&&
+          ev.choices.every(c=>c.out&&c.out.length&&c.out.every(o=>pred(o.fx||{})));
+        return everyFx(task,fx=>fx.recruitRoad===id)&&
+          everyFx(follow,fx=>fx.recruitReady===id&&fx.chain===q.join)&&
+          join&&join.choices.some(c=>c.out.some(o=>o.fx&&o.fx.offerComp===id))&&
+          !!D.scenes[D.eventScenes[q.task]]&&!!D.scenes[D.eventScenes[q.follow]];
       });
       out.localScenery=Object.keys(D.nodeScenery||{}).length;
       out.nodeSceneCount=Object.keys(D.nodeScenes||{}).length;
@@ -349,7 +355,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 848종', r4['eventCount'] == 848, str(r4['eventCount']))
+    check('이벤트 854종', r4['eventCount'] == 854, str(r4['eventCount']))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',
@@ -362,7 +368,7 @@ with sync_playwright() as p:
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
     check('시네마틱 이미지 65종·빌드 주입', r4['sceneCount'] == 65 and r4['sceneDataReady'], str(r4))
-    check('동료 6명 합류 전 과제·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
+    check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
@@ -388,6 +394,15 @@ with sync_playwright() as p:
       S.driving=null; S.at='ulsan';
       out.opened=G.openRecruitStep()&&document.querySelector('#ev-wrap').classList.contains('on');
       document.querySelector('#ev-wrap').classList.remove('on');
+      out.road=G.markRecruitRoad('minji')&&S.recruitQ.stage==='road'&&S.recruitQ.roadFrom==='ulsan';
+      const oldUsed=S.used, oldArrive=UI.onArrive;
+      S.used=D.events.map(e=>e.id); UI.onArrive=()=>0;
+      S.driving={from:'ulsan',to:'gyeongju',dist:59,gone:59,road:'normal'};
+      G.arrive();
+      UI.onArrive=oldArrive; S.used=oldUsed;
+      out.follow=S.recruitQ&&S.recruitQ.stage==='follow'&&S.recruitQ.target==='gyeongju';
+      out.followOpened=G.openRecruitStep()&&document.querySelector('#ev-wrap').classList.contains('on');
+      document.querySelector('#ev-wrap').classList.remove('on');
       out.ready=G.markRecruitReady('minji')&&S.recruitQ.stage==='ready';
       S.party=['parkss','leo'];
       out.fullHeld=!G.doRecruit('minji')&&S.recruitQ&&S.recruitQ.stage==='ready';
@@ -395,7 +410,9 @@ with sync_playwright() as p:
       out.joined=G.doRecruit('minji')&&G.hasComp('minji')&&S.recruitQ===null;
       return out;
     }''')
-    check('첫 만남→지역 과제→합류 약속', rr['started'] and rr['target'] and rr['opened'] and rr['ready'], str(rr))
+    check('첫 만남→지역 과제→임시 동행→두 번째 사건→합류 약속',
+          rr['started'] and rr['target'] and rr['opened'] and rr['road'] and
+          rr['follow'] and rr['followOpened'] and rr['ready'], str(rr))
     check('만석에서도 약속 보존·좌석 개조 후 합류', rr['fullHeld'] and rr['joined'], str(rr))
     pg.click('#dk-map'); pg.wait_for_timeout(160)
     map_detail = pg.evaluate('''() => ({
@@ -408,7 +425,7 @@ with sync_playwright() as p:
     check('상세 그림 지도 렌더러 유지', map_detail['rivers'] and map_detail['context'] >= 30, str(map_detail))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('848개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('854개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))

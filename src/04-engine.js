@@ -120,6 +120,14 @@ G.markRecruitReady = (id)=>{
   UI.toast(`✓ ${D.recruitQuests[id].name}의 일이 끝났다 — 합류를 이야기할 수 있다`);
   return true;
 };
+G.markRecruitRoad = (id)=>{
+  if(!S.recruitQ||S.recruitQ.id!==id||S.recruitQ.stage!=='task') return false;
+  S.recruitQ.stage='road';
+  S.recruitQ.roadFrom=S.at;
+  S.recruitQ.roadDay=S.day;
+  UI.toast(`🚚 임시 동행 시작 — ${D.recruitQuests[id].name}, 다음 정차까지`);
+  return true;
+};
 G.openRecruitStep = ()=>{
   const q=S.recruitQ;
   if(!q||S.driving) return false;
@@ -128,6 +136,14 @@ G.openRecruitStep = ()=>{
   if(q.stage==='task'){
     if(S.at!==q.target){ UI.toast(`🗺 ${D.nodes[q.target].name}에서 만나기로 했다`); return false; }
     G.openEventById(def.task); return true;
+  }
+  if(q.stage==='road'){
+    UI.toast(`🚚 다음 정차까지 임시 동행을 이어간다 — ${def.name}`);
+    return false;
+  }
+  if(q.stage==='follow'){
+    if(S.at!==q.target){ UI.toast(`🗺 ${D.nodes[q.target].name}에서 할 말이 남았다 — ${def.name}`); return false; }
+    G.openEventById(def.follow); return true;
   }
   if(q.stage==='ready'){ G.openEventById(def.join); return true; }
   return false;
@@ -554,6 +570,7 @@ G.applyFx = (fx)=>{
   if(fx.enterSeoul){ S.seoul={entered:true}; }
   if(fx.chain){ S._chain = fx.chain; }   // 시트 닫힐 때 UI가 이어서 연다 (시네마틱 연쇄)
   if(fx.startRecruit) G.startRecruitQuest(fx.startRecruit);
+  if(fx.recruitRoad) G.markRecruitRoad(fx.recruitRoad);
   if(fx.recruitReady) G.markRecruitReady(fx.recruitReady);
   if(fx.recruit) G.doRecruit(fx.recruit);
   if(fx.note) G.addNote(fx.note);
@@ -652,6 +669,11 @@ G.arrive = ()=>{
   const to = S.driving.to;
   const road = S.driving.road;
   S.at = to; S.driving = null;
+  if(S.recruitQ&&S.recruitQ.stage==='road'&&S.recruitQ.roadFrom!==to){
+    const rq=S.recruitQ, def=D.recruitQuests[rq.id];
+    rq.stage='follow'; rq.target=to; rq.followDay=S.day;
+    if(def) UI.toast(`🤝 ${D.nodes[to].name} — ${def.name}, 마주할 일이 생겼다`);
+  }
   if(road==='rough') G.moodAll(2);   // 험한 길은 경치로 갚는다
   if(!S.visited.includes(to)){
     S.visited.push(to);

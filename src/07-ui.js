@@ -206,14 +206,24 @@ const UI = (()=>{
     const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1);
     let kicker, title, state, meta, pct;
     if(rq){
-      const def=D.recruitQuests[rq.id], target=D.nodes[rq.target];
+      const def=D.recruitQuests[rq.id];
       kicker=`인연 · ${def.name}`;
       title=def.title;
       if(rq.stage==='ready'){
-        state=`떠나기 전의 일을 마쳤다 · 달구지에서 합류를 이야기한다`;
+        state=`서로의 일을 두 번 함께 겪었다 · 이제 당사자가 직접 자리를 고른다`;
         meta='합류 대기';
         pct=100;
+      } else if(rq.stage==='road'){
+        state=`임시 동행 · ${def.roadHint}`;
+        meta=S.driving?'한 구간 이동 중':'다음 길을 고른다';
+        pct=S.driving?Math.min(78,58+S.driving.gone/S.driving.dist*20):58;
+      } else if(rq.stage==='follow'){
+        const target=D.nodes[rq.target];
+        state=`${target.name} · ${def.followHint}`;
+        meta=S.at===rq.target&&!S.driving?'마주할 일 있음':'이동 필요';
+        pct=S.at===rq.target?86:76;
       } else {
+        const target=D.nodes[rq.target];
         state=`${target.name} · ${def.hint}`;
         meta=S.at===rq.target&&!S.driving?'진행 가능':'이동 필요';
         pct=S.at===rq.target?55:S.driving&&S.driving.to===rq.target
@@ -334,10 +344,13 @@ const UI = (()=>{
     if(!S){ p.innerHTML=''; return; }
     if(S.driving){
       const to=D.nodes[S.driving.to];
+      const guest=S.recruitQ&&S.recruitQ.stage==='road'
+        ?`${D.recruitQuests[S.recruitQ.id].name}, 아직 동료가 아니라 손님으로 함께 가는 중. ${D.recruitQuests[S.recruitQ.id].roadHint}.`
+        :'차는 계속 달린다. 지도나 동료 상태는 위 요약에서 바로 확인할 수 있다.';
       p.innerHTML = `
         ${contextRail(to,true)}
         <div id="travelbar"></div>
-        <div class="road-note">차는 계속 달린다. 지도나 동료 상태는 위 요약에서 바로 확인할 수 있다.</div>`;
+        <div class="road-note">${guest}</div>`;
       renderTravelbar();
       wireContext(p);
       return;
@@ -345,12 +358,21 @@ const UI = (()=>{
     const n=D.nodes[S.at];
     let h=`${contextRail(n,false)}<div class="acts">`;
     if(S.recruitQ){
-      const rq=S.recruitQ, def=D.recruitQuests[rq.id], atTask=rq.stage==='task'&&S.at===rq.target;
-      const ready=rq.stage==='ready';
-      h+=`<button class="act primary" data-a="recruitstep" ${!ready&&!atTask?'disabled':''}>
-        <span class="ic">${ready?'🤝':'🧰'}</span><span><b>${ready?`${def.name}와 합류를 이야기한다`:
-          atTask?`${def.name}의 부탁을 진행한다`:`${D.nodes[rq.target].name}에서 ${def.name}와 만나기로 했다`}</b>
-        <small>${ready?'떠나기 전의 일을 함께 마쳤다':def.hint}</small></span></button>`;
+      const rq=S.recruitQ, def=D.recruitQuests[rq.id];
+      const atTask=rq.stage==='task'&&S.at===rq.target;
+      const atFollow=rq.stage==='follow'&&S.at===rq.target;
+      const ready=rq.stage==='ready', road=rq.stage==='road';
+      const enabled=ready||atTask||atFollow;
+      const icon=ready?'🤝':atFollow?'💬':road?'🚚':'🧰';
+      const label=ready?`합류를 이야기한다 — ${def.name}`
+        :atFollow?`길에서 생긴 일을 마주한다 — ${def.name}`
+        :road?`다음 길을 함께 간다 — ${def.name}`
+        :atTask?`${def.name}의 부탁을 진행한다`
+        :`${D.nodes[rq.target].name} · 만나기로 한 사람: ${def.name}`;
+      const small=ready?'서로를 겪은 뒤, 본인이 자리를 고른다'
+        :atFollow?def.followHint:road?def.roadHint:def.hint;
+      h+=`<button class="act primary" data-a="recruitstep" ${!enabled?'disabled':''}>
+        <span class="ic">${icon}</span><span><b>${label}</b><small>${small}</small></span></button>`;
     }
     if(n.stl) h+=`<button class="act primary" data-a="stl"><span class="ic">🏘</span><span><b>정착지에 들어간다</b><small>거래 · 대화 · 소문</small></span></button>`;
     if(!n.stl && n.type!=='goal') h+=`<button class="act" data-a="explore"><span class="ic">🔦</span><span><b>주변을 탐색한다</b><small>약 1~2시간 · 무엇이 나올지 모른다</small></span></button>`;
@@ -689,7 +711,7 @@ const UI = (()=>{
       h+=`<button class="npc-row" data-recruit="${stl.recruit}">
         <div class="npc-face">${c.face}</div>
         <span><b>${c.name}</b><small>${c.bio}</small></span>
-        <span class="npc-att">${rq?(rq.stage==='ready'?'합류 약속':'부탁 진행 중'):'할 말 있음'}</span></button>`;
+        <span class="npc-att">${rq?(rq.stage==='ready'?'합류 대화':rq.stage==='follow'?'마주할 일':rq.stage==='road'?'임시 동행':'부탁 진행 중'):'할 말 있음'}</span></button>`;
     }
     // 의뢰 게시판
     if(S.quest){
