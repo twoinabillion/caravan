@@ -53,6 +53,16 @@ def main():
         page.wait_for_timeout(350)
         page.screenshot(path=str(shot / "main-party.png"))
 
+        page.evaluate("UI.showEvent(D.events.find(item => item.id === 'meet_scrapyard'))")
+        page.evaluate("UI.finishStory()")
+        page.wait_for_timeout(180)
+        page.screenshot(path=str(shot / "recruit-name-hidden.png"))
+        page.locator("#ev-wrap .choice:not([disabled])").first.click()
+        page.evaluate("UI.finishStory()")
+        page.wait_for_timeout(180)
+        page.screenshot(path=str(shot / "recruit-name-known.png"))
+        page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
+
         page.click("#dk-status")
         page.click('#st-tabs [data-st="crew"]')
         page.wait_for_timeout(180)

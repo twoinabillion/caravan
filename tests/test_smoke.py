@@ -46,7 +46,7 @@ with sync_playwright() as p:
       portrait:document.querySelector('#intro-txt .turn-avatar')?.src||'',
       expected:D.portraits.player_child||''
     })''')
-    check('어린 주인공 이름·전용 초상', child_turn['label'] == '테스터 · 여덟 살' and
+    check('어린 주인공 이름·전용 초상', child_turn['label'] == '테스터 · 8살' and
           child_turn['portrait'] == child_turn['expected'], str(child_turn))
     for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 1')):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
@@ -98,6 +98,40 @@ with sync_playwright() as p:
       return {map,crew};
     }''')
     check('위치→지도·인원→동료 상태 바로가기', context_nav['map'] and context_nav['crew'], str(context_nav))
+    portraits = pg.evaluate('''() => {
+      const recruit=D.events.find(e=>e.id==='meet_scrapyard');
+      const rt=UI.storyTurns(recruit.text,recruit);
+      const first=rt.find(t=>t.kind==='dialogue');
+      const anon={id:'portrait-smoke',title:'길 위',type:'조우'};
+      const at=UI.storyTurns('"차 세워요!" 남자가 소리쳤다.',anon);
+      const stranger=at.find(t=>t.kind==='dialogue');
+      const missing=[];
+      const inspect=(value,event,where)=>{
+        if(typeof value==='function'){ try{ value=value(S); }catch(e){ return; } }
+        if(typeof value!=='string') return;
+        UI.storyTurns(value,event).forEach(turn=>{
+          if(turn.kind==='dialogue'&&!D.portraits[turn.who]) missing.push(`${where}:${turn.who}`);
+        });
+      };
+      D.events.forEach(event=>{
+        inspect(event.text,event,`${event.id}.text`);
+        (event.choices||[]).forEach((choice,ci)=>
+          (choice.out||[]).forEach((out,oi)=>inspect(out.text,event,`${event.id}.${ci}.${oi}`)));
+      });
+      return {
+        hidden:first?.name==='???',
+        recruitFace:first?.who==='minji'&&!!D.portraits[first.who],
+        anonRole:stranger?.who==='passer_man'&&stranger?.name==='남자',
+        anonFace:!!D.portraits[stranger?.who],
+        missing,
+        flatIntro:getComputedStyle(document.querySelector('#intro-txt .story-turn')).borderTopWidth==='0px' &&
+          getComputedStyle(document.querySelector('#intro-txt .story-turn')).backgroundColor==='rgba(0, 0, 0, 0)'
+      };
+    }''')
+    check('첫 만남은 이름 ???·실제 동료 얼굴', portraits['hidden'] and portraits['recruitFace'], str(portraits))
+    check('익명 행인은 역할별 얼굴 표시', portraits['anonRole'] and portraits['anonFace'], str(portraits))
+    check('전 이벤트 대화 턴에 얼굴 있음', not portraits['missing'], str(portraits['missing'][:8]))
+    check('인트로 안쪽 카드 제거', portraits['flatIntro'], str(portraits))
     check('콘솔 에러 0', not errors, ' | '.join(errors[:3]))
 
     print('― 의뢰 엔진')

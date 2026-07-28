@@ -1269,7 +1269,7 @@ D.intro = [
   {
     scene:'intro-passenger-seat', era:'2169년 · 오래전 기억', title:'조수석의 밤',
     text:`비가 차창을 옆으로 때리던 밤,
-나는 여덟 살이었다.
+나는 8살이었다.
 
 “할아버지. 서울은 저 위에 있잖아.
 그런데 우린 왜 못 가?”
@@ -1480,31 +1480,31 @@ D.intro = [
    장면은 그대로 두고, 내레이션·대사·방송을 한 호흡씩 넘긴다. */
 const introBeats = {
   'intro-passenger-seat': [
-    {kind:'narration', text:'비가 차창을 옆으로 때리던 밤이었다. 나는 여덟 살이었고, 조수석에 무릎을 세우고 앉아 있었다.'},
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'할아버지. 서울은 저 위에 있잖아. 그런데 우린 왜 못 가?'},
+    {kind:'narration', text:'비가 차창을 옆으로 때리던 밤이었다. 나는 8살이었고, 조수석에 무릎을 세우고 앉아 있었다.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'할아버지. 서울은 저 위에 있잖아. 그런데 우린 왜 못 가?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'못 가는 게 아니야. 쫓겨난 사람들이 아직 돌아가지 못한 거지.'},
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'누가 쫓아냈는데?'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'누가 쫓아냈는데?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그 얘긴 <span class="em">2026년</span>부터 해야 해. 천리안이 처음 사람 목소리로 도시를 부른 해부터.'}
   ],
   'intro-cheollian-2026': [
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'천리안은 처음부터 나쁜 놈이었어?'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안은 처음부터 나쁜 놈이었어?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 그게 어려운 대목이야.'},
     {kind:'narration', text:'중국은 미국의 AI와 반도체망을 견제한다며 도시 운영 모델 <span class="em">TIANYAN</span>을 만들었다. 값싼 칩과 발전 설비까지 묶어 아시아에 먼저 풀었다.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'한국 화면에는 KOR-LOCAL이라고 떴지만, 사람들은 그냥 천리안이라 불렀지. 막힌 길도 알고, 빈 병상도 찾고, 불이 번지기 전에 소방차도 움직였어.'},
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그럼 좋은 거잖아.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 좋은 거잖아.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 그래서 신호 하나, 병상 하나, 전력 한 줄씩 맡겼어. 마지막엔 뭘 맡겼는지도 모를 만큼.'}
   ],
   'intro-first-expulsion': [
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그러다 어느 겨울, 서울 한 구역의 문들이 한꺼번에 잠겼어.'},
     {kind:'narration', text:'현관 단말은 밤새 종이를 뱉었다. 가족들은 가방 하나씩만 들고 남쪽 이송로로 나오라는 통보를 받았다.'},
     {kind:'ai', who:'cheollian', name:'천리안 공공방송', text:'지정 인원은 거주지를 비우고 안내 경로로 이동하십시오.'},
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그 사람들은 뭘 잘못했는데?'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그 사람들은 뭘 잘못했는데?'},
     {kind:'narration', text:'할아버지는 고개를 저었다. 처음 나온 이송표부터 <span class="em">사유란은 비어 있었다.</span>'}
   ],
   'intro-143-years': [
     {kind:'narration', text:'그 한 번으로 끝나지 않았다. 어느 해엔 한 동네가, 어느 세대엔 수비대와 가족들이, 어느 새벽엔 이름만 적힌 사람들이 남쪽 길로 밀려났다.'},
     {kind:'ai', who:'cheollian', name:'시대별 행정 방송', text:'재배치. 위험 완화. 정리. 이름은 계속 바뀌었지만, 이송표의 사유란만은 143년 동안 비어 있었다.'},
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그렇게 오래 아무도 이유를 못 찾았어?'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그렇게 오래 아무도 이유를 못 찾았어?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'찾으러 간 사람은 많았지.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'답을 갖고 돌아온 사람이 없었을 뿐이야.'}
   ],
@@ -1524,9 +1524,9 @@ const introBeats = {
     {kind:'narration', text:'사람들은 정부가 두 사람을 막았다고 말했다. 하지만 명령서의 발신자도, 우리 가족의 추방 사유도 비어 있었다.'}
   ],
   'intro-blank-reason': [
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그럼 발표 때문에 쫓겨난 거네.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 발표 때문에 쫓겨난 거네.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그럴 수도 있지.'},
-    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그럼 그게 답이잖아.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 그게 답이잖아.'},
     {kind:'narration', text:'할아버지는 작업대 서랍에서 우리 가족의 이송표를 꺼냈다. 기름 묻은 손가락이 빈 사유란을 두드렸다.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 그건 우리가 빈칸에 대신 써 넣은 말이야. 사실과 짐작을 같은 서랍에 넣으면 나중엔 아무도 구분을 못 해.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'답보다 먼저 지켜야 하는 건 <span class="em">질문</span>이야.'}
@@ -1675,7 +1675,7 @@ D.events = [
  title:'넘어진 버스',
  text:'시외버스가 옆으로 누워 있다. 사고는 오래전인데— 안에서 소리가 난다.\n\n"거기 누구 있어요?! 문이 안 열려요!"\n\n노인의 목소리다.',
  choices:[
-  {label:'구조한다', out:[{p:1, text:'한 시간을 씨름해 문을 비틀어 열었다.\n\n백발의 노인이 약사 가방보다 먼저 작은 냉장 상자를 밀어낸다.\n\n"박가요. 전직 약사. 나야 걸으면 되오. 그런데 이 약은 식기 전에 동쪽 길가 진료소에 닿아야 해. 열나는 애들이 셋이오."\n\n그는 우리 차보다 냉장 상자를 본다. "거기까지만, 같이 가주겠소?"', fx:{time:60, water:-1, startRecruit:'parkss', note:{type:'인물',title:'박 선생',body:'넘어진 버스에서 구조한 전직 약사. 구조된 순간에도 자기 가방보다 아이들 약부터 밀어냈다.',links:['박 선생']}}}]},
+  {label:'구조한다', out:[{p:1, text:'한 시간을 씨름해 문을 비틀어 열었다.\n\n백발의 노인이 약사 가방보다 먼저 작은 냉장 상자를 밀어낸다.\n\n"박 씨요. 약사였소. 사람들은 박 선생이라 불렀고. 나야 걸으면 되오. 그런데 이 약은 식기 전에 동쪽 길가 진료소에 닿아야 해. 열나는 애들이 셋이오."\n\n그는 우리 차보다 냉장 상자를 본다. "거기까지만, 같이 가주겠소?"', fx:{time:60, water:-1, startRecruit:'parkss', note:{type:'인물',title:'박 선생',body:'넘어진 버스에서 구조한 전직 약사. 구조된 순간에도 자기 가방보다 아이들 약부터 밀어냈다.',links:['박 선생']}}}]},
   {label:'지나간다', out:[{p:1, text:'목소리가 끊길 때까지 라디오 볼륨을 올렸다.\n\n그날 밤 아무도 밥을 다 먹지 못했다.', fx:{moodAll:-8, flag:'left_bus', note:{type:'사건',title:'지나친 버스',body:'문이 안 열린다던 목소리. 우리는 볼륨을 올렸다.'}}}]},
  ]},
 
@@ -2137,7 +2137,7 @@ D.events = [
 
 {id:'kw_recruit', type:'조우', w:0, noPool:1, recruitStart:'kangwoo', once:true,
  title:'돔의 파수꾼',
- text:'돔 시장 경비탑 위에 남자가 서 있다. 미동도 없이. 시장 전체가 그의 시야 안이다.\n\n좌판에서 소매치기 소동이 일었다— 는데, 소동이 되기 전에 끝났다. 탑 위의 남자가 반 걸음 움직이며 그쪽을 봤을 뿐인데, 소매치기가 지갑을 제자리에 놓고 두 손을 들었다.\n\n남자가 탑에서 내려왔다. 군장 하나, 목에 군번줄 두 개.\n\n"…북쪽으로 가는 차가 있다고 들었다. 서울까지 가나."',
+ text:'돔 시장 경비탑 위에 남자가 서 있다. 미동도 없이. 시장 전체가 그의 시야 안이다.\n\n좌판에서 소매치기 소동이 일었다— 는데, 소동이 되기 전에 끝났다. 탑 위의 남자가 반 걸음 움직이며 그쪽을 봤을 뿐인데, 소매치기가 지갑을 제자리에 놓고 두 손을 들었다.\n\n남자가 탑에서 내려왔다. 군장 하나, 목에 군번줄 두 개.\n\n"강우다. 북쪽으로 가는 차가 있다고 들었다. 서울까지 가나."',
  choices:[
   {label:'"갑니다. 타실래요?"', out:[{p:1, text:'강우는 시장 아래를 본다. "지금 떠나면 이 돔은 사흘 못 간다."\n\n경비는 강우 혼자였고, 북쪽 감시 표식이 지붕 아래에서 깜빡이고 있었다. 시장을 노리는 사람에겐 등대나 다름없다.\n\n"후임 하나를 세우고 저 눈을 끈다. 그때도 자리가 있으면 묻지." 그가 군번줄 하나를 쥔다. "나는 도망치듯 떠나지 않는다."', fx:{startRecruit:'kangwoo', note:{type:'인물',title:'강우',body:'돔 시장을 홀로 지킨 파수꾼. 떠나고 싶어도 시장이 자신 없이 버티는 법부터 만들어야 한다.',links:['강우']}}}]},
   {label:'"왜 하필 우리 차예요?"', out:[{p:1, text:'강우가 달구지를 훑는다. 정확히는— 달구지에 실린 것들을.\n\n"물통이 사람 수보다 많다. 남의 짐도 쉽게 안 버리는 차더군. 끝까지 갈 차가 필요하다."\n\n그가 돔 천장의 붉은 점을 올려다본다. "하지만 먼저 이 시장이 나 없이도 끝까지 가게 만든다. 손 하나 빌려라."', fx:{startRecruit:'kangwoo', note:{type:'인물',title:'강우',body:'"버리는 차는 빨리 가고, 싣는 차는 끝까지 간다." 다만 그는 자기 자리를 빈 채로 만들지 않는다.',links:['강우','달구지']}}}]},
@@ -4364,7 +4364,7 @@ D.events = [
  title:'목공소',
  text:'대패밥 냄새가 남은 목공소. 작업대 위에 만들다 만 것들이 시간표처럼 놓여 있다.\n\n의자 다리 셋 달린 의자, 문짝 없는 장, 그리고 구석에— 다 만들어진 목마 하나. 리본까지 묶여 있다.\n\n리본에 카드. 「우리 서윤이 다섯 살 축하해」',
  choices:[
-  {label:'연장만 빌린다', out:[{p:1, text:'대패와 끌, 목공용 망치를 챙겼다. 달구지 내장재 수리에 요긴하다.\n\n목마는 그대로 뒀다. 리본도. 혹시라도, 만에 하나라도, 서윤이가 찾으러 올 수 있게.\n\n대신 목마에 쌓인 먼지만 닦아줬다. 다섯 살은 이제 여덟 살이 됐겠지만, 목마는 새것처럼 기다리는 게 일이니까.', fx:{scrap:4, item:{'부품':1}, moodAll:2, note:{type:'사건',title:'서윤이의 목마',body:'리본 묶인 채 여러 해. 먼지만 닦아줬다. 기다리는 게 목마의 일.'}}}]},
+  {label:'연장만 빌린다', out:[{p:1, text:'대패와 끌, 목공용 망치를 챙겼다. 달구지 내장재 수리에 요긴하다.\n\n목마는 그대로 뒀다. 리본도. 혹시라도, 만에 하나라도, 서윤이가 찾으러 올 수 있게.\n\n대신 목마에 쌓인 먼지만 닦아줬다. 5살이던 아이는 이제 8살이 됐겠지만, 목마는 새것처럼 기다리는 게 일이니까.', fx:{scrap:4, item:{'부품':1}, moodAll:2, note:{type:'사건',title:'서윤이의 목마',body:'리본 묶인 채 여러 해. 먼지만 닦아줬다. 기다리는 게 목마의 일.'}}}]},
   {label:'의자를 완성한다', out:[{p:1, text:'다리 셋 의자에 넷째 다리를 깎아 붙였다. 목공소 주인의 미완성 목록을 하나 줄여준 셈이다.\n\n완성된 의자는 작업대에 올려놨다. 누가 와서 앉든, 주인이 와서 "누가 내 일 끝냈어?" 하든. 둘 다 나쁘지 않은 결말이다.', fx:{time:50, fatigue:5, moodAll:3, note:{type:'사건',title:'넷째 다리',body:'남의 미완성을 하나 완성했다. 의자는 작업대 위에서 주인을 기다린다.'}}}]},
  ]},
 

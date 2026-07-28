@@ -157,7 +157,7 @@ const UI = (()=>{
   function introName(){ return pendingName||'나'; }
   function personalizedIntroBeat(raw){
     const beat={...raw};
-    if(beat.who==='player_child') beat.name=`${introName()} · 여덟 살`;
+    if(beat.who==='player_child') beat.name=`${introName()} · 8살`;
     else if(beat.who==='me') beat.name=introName();
     return beat;
   }
@@ -344,8 +344,11 @@ const UI = (()=>{
     const key=who==='나'?'me':who;
     const manual={
       me:'나', grandfather:'할아버지', mother:'엄마', father:'아빠',
-      intro_child:'서울에서 온 아이', player_child:'여덟 살의 나', cheollian:'천리안', radio:'라디오',
-      sys:'길 위', record:'기록', unknown:'누군가'
+      intro_child:'서울에서 온 아이', player_child:'8살의 나', cheollian:'천리안', radio:'라디오',
+      passer_man:'낯선 남자', passer_woman:'낯선 여자', passer_elder:'노인',
+      passer_child:'아이', passer_merchant:'상인', passer_guard:'경비',
+      passer_refugee:'피난민', passer_worker:'일꾼', passer_medic:'의료인',
+      sys:'길 위', record:'기록', unknown:'???'
     };
     const comp=D.comps&&D.comps[key], npc=D.npcs&&D.npcs[key];
     const playerName=key==='me'&&typeof S!=='undefined'&&S&&G.myName?G.myName():'나';
@@ -363,13 +366,14 @@ const UI = (()=>{
       narration:'장면', dialogue:'대화', thought:'생각', ai:'AI 방송',
       radio:'라디오', letter:'편지', record:'기록'
     }[kind]||'장면';
+    const faceAlt=person.name==='???'?'이름을 모르는 사람':person.name;
     const face=hasPortrait
-      ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(person.name)} 초상">`
+      ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상">`
       : '';
     const speaker=['dialogue','thought','letter'].includes(kind)
       ? `<div class="turn-speaker">${face}<span><small>${source}</small><b>${esc(person.name)}</b></span></div>`
       : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
-    return `<article class="story-turn ${kind}${opt.intro?' intro-turn':''}" data-kind="${kind}" aria-live="polite">
+    return `<article class="story-turn ${kind}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}" data-kind="${kind}" aria-live="polite">
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
   }
   function eventSpeakerCandidates(evd){
@@ -377,6 +381,7 @@ const UI = (()=>{
     const add=(id)=>{ if(id&&id!=='unknown'&&!ids.includes(id)) ids.push(id); };
     add(evd&&evd.needsComp);
     add(evd&&evd.needsComp2);
+    add(evd&&evd.recruitStart);
     add(evd&&D.eventPortraits&&D.eventPortraits[evd.id]);
     const title=stripTags(evd&&evd.title);
     for(const [id,c] of Object.entries(D.comps||{})){ if(title.includes(c.name)) add(id); }
@@ -384,21 +389,43 @@ const UI = (()=>{
     if(evd&&(evd.type==='대화'||evd.needsComp||evd.needsComp2)) add('me');
     return ids;
   }
-  function speakerRegistry(){
+  function speakerRegistry(state){
     const out=[
-      {id:'grandfather',names:['할아버지']},{id:'mother',names:['엄마','어머니']},
-      {id:'father',names:['아빠','아버지']},{id:'intro_child',names:['서울에서 온 아이']},
-      {id:'player_child',names:['여덟 살의 나','어린 나']},
+      {id:'intro_child',names:['서울에서 온 아이']},
+      {id:'player_child',names:['8살의 나','여덟 살의 나','어린 나']},
       {id:'me',names:['내가','나는','내 쪽','나도']}
     ];
+    const family=[
+      {id:'grandfather',names:['할아버지']},{id:'mother',names:['엄마','어머니']},
+      {id:'father',names:['아빠','아버지']}
+    ];
+    family.forEach(item=>{ if(state.candidates.includes(item.id)) out.push(item); });
     for(const [id,c] of Object.entries(D.comps||{})) out.push({id,names:[c.name]});
     for(const [id,n] of Object.entries(D.npcs||{})) out.push({id,names:[n.name]});
     return out.sort((a,b)=>Math.max(...b.names.map(x=>x.length))-Math.max(...a.names.map(x=>x.length)));
   }
+  const anonymousRoles=[
+    {id:'passer_child',names:['아이','소년','소녀','큰애','막내','학생']},
+    {id:'passer_elder',names:['노인','할머니','할아버지','영감','노파']},
+    {id:'passer_merchant',names:['상인','행상','장사꾼','노점상','가게 주인']},
+    {id:'passer_guard',names:['군인','병사','경비병','경비','문지기','수비대원']},
+    {id:'passer_medic',names:['의사','간호사','약사','의무병','의료인']},
+    {id:'passer_worker',names:['직원','점원','관리인','기사','정비사','작업자','역무원','일꾼']},
+    {id:'passer_refugee',names:['피난민','이송자','추방자']},
+    {id:'passer_woman',names:['여자','여성','아주머니','아줌마']},
+    {id:'passer_man',names:['남자','남성','아저씨']}
+  ];
+  function anonymousFallback(evd){
+    const pool=['passer_man','passer_woman','passer_refugee','passer_worker'];
+    const key=String(evd&&evd.id||evd&&evd.title||'길 위');
+    let hash=0;
+    for(let i=0;i<key.length;i++) hash=(hash*31+key.charCodeAt(i))|0;
+    return pool[Math.abs(hash)%pool.length];
+  }
   function inferQuoteSpeaker(before, after, evd, state){
     const b=stripTags(before).slice(-100), a=stripTags(after).slice(0,100);
     const verbs='말|묻|물었|대답|답했|외치|중얼|소리|웃|받았|선언|덧붙|불쑥|고개';
-    for(const item of speakerRegistry()){
+    for(const item of speakerRegistry(state)){
       for(const name of item.names){
         const safe=name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
         if(new RegExp(`^\\s*${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})`).test(a)
@@ -413,12 +440,13 @@ const UI = (()=>{
       state.last='record';
       return {kind:'record',who:'record',name:'기록'};
     }
-    const anonymous=['아이','노인','할머니','할아버지','여자','남자','상인','군인','경비병','직원','소년','소녀','목소리'];
-    for(const name of anonymous){
-      if(new RegExp(`^\\s*${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})`).test(a)
-        ||new RegExp(`${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})[^.。!?]{0,8}$`).test(b)){
-        state.last=name;
-        return {kind:'dialogue',who:'unknown',name};
+    for(const role of anonymousRoles){
+      for(const name of role.names){
+        if(new RegExp(`^\\s*${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})`).test(a)
+          ||new RegExp(`${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})[^.。!?]{0,8}$`).test(b)){
+          state.last=role.id;
+          return {kind:'dialogue',who:role.id,name};
+        }
       }
     }
     const candidates=state.candidates;
@@ -427,10 +455,14 @@ const UI = (()=>{
       state.last=next;
       return {kind:'dialogue',who:next};
     }
-    state.last='unknown';
-    return {kind:'dialogue',who:'unknown',name:'누군가'};
+    state.last=state.fallbackSpeaker;
+    return {kind:'dialogue',who:state.fallbackSpeaker,name:'???'};
   }
-  function buildStoryTurns(value, evd={}){
+  function revealsIdentity(value,id){
+    const comp=D.comps&&D.comps[id];
+    return !!(comp&&stripTags(value).includes(comp.name));
+  }
+  function buildStoryTurns(value, evd={}, opt={}){
     let source=String(value||'').trim();
     if(!source) return [{kind:'narration',text:'잠시 말이 끊겼다.'}];
     const ai=[];
@@ -439,10 +471,16 @@ const UI = (()=>{
     const tags=[];
     source=source.replace(/<[^>]+>/g,tag=>`@@TAG${tags.push(tag)-1}@@`);
     const restore=(text)=>String(text||'').replace(/@@TAG(\d+)@@/g,(_,i)=>tags[+i]||'').trim();
-    const turns=[], state={candidates:eventSpeakerCandidates(evd),last:null};
+    const hiddenSpeaker=evd&&evd.recruitStart;
+    const turns=[];
+    const state={
+      candidates:eventSpeakerCandidates(evd),last:null,hiddenSpeaker,
+      knownSpeaker:!!opt.knownSpeaker,fallbackSpeaker:anonymousFallback(evd)
+    };
     const pushNarration=(raw)=>{
       const restored=restore(raw).trim();
       if(!stripTags(restored)) return;
+      if(hiddenSpeaker&&revealsIdentity(restored,hiddenSpeaker)) state.knownSpeaker=true;
       const parts=restored.split(/\n+/).map(x=>x.trim()).filter(Boolean);
       for(const part of parts){
         const thought=/^\([\s\S]+\)$/.test(stripTags(part));
@@ -466,12 +504,17 @@ const UI = (()=>{
         const before=restore(paragraph.slice(0,match.index));
         const after=restore(paragraph.slice(re.lastIndex));
         const speaker=inferQuoteSpeaker(before,after,evd,state);
-        turns.push({...speaker,text:restore(match[1])});
+        const spoken=restore(match[1]);
+        const hidden=speaker.who===hiddenSpeaker&&!state.knownSpeaker;
+        turns.push({...speaker,name:hidden?'???':speaker.name,text:spoken});
+        if(hidden&&revealsIdentity(spoken,hiddenSpeaker)) state.knownSpeaker=true;
         cursor=re.lastIndex;
       }
       pushNarration(paragraph.slice(cursor));
     }
-    return turns.length?turns:[{kind:'narration',text:restore(source)}];
+    const result=turns.length?turns:[{kind:'narration',text:restore(source)}];
+    result.knownSpeaker=state.knownSpeaker;
+    return result;
   }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
@@ -807,6 +850,7 @@ const UI = (()=>{
     sheet.innerHTML=h;
     curStory={
       phase:'event',label:evd.type==='대화'?'대화':'이야기',turns,index:0,
+      knownSpeaker:!!turns.knownSpeaker,
       finalDock:`<div class="choice-dock-head"><span>선택 · ${choices.count}</span>
         <small>${choices.count>3?'위아래로 밀어 모두 보기':'내가 할 일을 고른다'}</small></div>
         <div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>`,
@@ -897,7 +941,8 @@ const UI = (()=>{
     const sheet=$('#ev-sheet');
     sheet.classList.add('event-mode');
     const outcomeText=typeof out.text==='function'?out.text(S):out.text;
-    const turns=buildStoryTurns(outcomeText,curEv);
+    const knownSpeaker=!!(curStory&&curStory.knownSpeaker);
+    const turns=buildStoryTurns(outcomeText,curEv,{knownSpeaker});
     const oldScene=sheet.querySelector('.event-scene-frame');
     const scene=oldScene?oldScene.outerHTML:'';
     const fxHtml=chips.length
@@ -919,6 +964,7 @@ const UI = (()=>{
     sheet.innerHTML=h;
     curStory={
       phase:'outcome',label:'결과',turns,index:0,
+      knownSpeaker:!!turns.knownSpeaker,
       finalDock:`<div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
         <div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
       reveal:()=>{ const result=sheet.querySelector('.story-result'); if(result) result.innerHTML=fxHtml; },

@@ -21,6 +21,15 @@ D.portraits.mother     = '__NPC_mother__';
 D.portraits.father     = '__NPC_father__';
 D.portraits.intro_child = '__NPC_intro_child__';
 D.portraits.player_child = '__NPC_player_child__';
+D.portraits.passer_man = '__NPC_passer_man__';
+D.portraits.passer_woman = '__NPC_passer_woman__';
+D.portraits.passer_elder = '__NPC_passer_elder__';
+D.portraits.passer_child = '__NPC_passer_child__';
+D.portraits.passer_merchant = '__NPC_passer_merchant__';
+D.portraits.passer_guard = '__NPC_passer_guard__';
+D.portraits.passer_refugee = '__NPC_passer_refugee__';
+D.portraits.passer_worker = '__NPC_passer_worker__';
+D.portraits.passer_medic = '__NPC_passer_medic__';
 
 /* 반복 인물 중심 이벤트에 초상을 자동 연결한다. 명시적 매핑이 항상 우선한다. */
 (D.eventPortraitTitleRules || []).forEach(function(rule){
