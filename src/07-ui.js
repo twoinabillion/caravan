@@ -170,21 +170,24 @@ const UI = (()=>{
       if(page.voice) VO.play(page.voice);
     }
     const beats=page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page.text||''}];
-    const beat=personalizedIntroBeat(beats[Math.min(introTurnIdx,beats.length-1)]);
+    const introBeats=beats.map(personalizedIntroBeat);
     $('#intro-img').src=scene||'';
     $('#intro-img').alt=`${page.title} 장면`;
     $('#intro-era').textContent=page.era||'';
     $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length} · ${introTurnIdx+1} / ${beats.length}`;
     $('#intro-title').textContent=page.title||'';
-    $('#intro-txt').innerHTML=storyTurnHtml(beat,{intro:true});
-    $('#intro-hint').textContent=introTurnIdx<beats.length-1?'눌러서 다음 대화':'눌러서 다음 장';
+    $('#intro-txt').innerHTML=storyReaderHtml(introBeats,introTurnIdx,{intro:true});
+    const nextBeat=introBeats[introTurnIdx+1];
+    $('#intro-hint').textContent=nextBeat
+      ? nextBeat.kind==='dialogue'?'눌러서 다음 말풍선':'눌러서 다음 장면'
+      : '눌러서 다음 장';
     const book=$('#intro-book');
     if(newPage){
       book.style.opacity=0;
       $('#scr-intro').scrollTop=0;
       requestAnimationFrame(()=>{ book.style.transition='opacity .45s'; book.style.opacity=1; });
     } else {
-      const turn=$('#intro-txt .story-turn');
+      const turn=$('#intro-txt .story-turn, #intro-txt .chat-msg:last-child');
       if(turn){
         turn.classList.add('turn-enter');
         requestAnimationFrame(()=>turn.classList.remove('turn-enter'));
@@ -375,6 +378,28 @@ const UI = (()=>{
       : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
     return `<article class="story-turn ${kind}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}" data-kind="${kind}" aria-live="polite">
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
+  }
+  function chatMessageHtml(turn, newest=false){
+    const person=speakerInfo(turn.who,turn.name);
+    const mine=['me','player_child','나'].includes(person.id);
+    const hidden=person.name==='???';
+    const faceAlt=hidden?'이름을 모르는 사람':person.name;
+    const face=person.portrait
+      ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상">`
+      : '';
+    return `<div class="chat-msg ${mine?'mine':'other'}${hidden?' identity-hidden':''}${newest?' chat-newest':''}">
+      ${face}<div class="chat-copy"><b class="chat-name">${esc(person.name)}</b>
+      <div class="chat-bubble">${fmt(turn.text||'')}</div></div></div>`;
+  }
+  function storyReaderHtml(turns,index,opt={}){
+    const safe=Math.min(Math.max(0,index),Math.max(0,turns.length-1));
+    const current=turns[safe]||{kind:'narration',text:'잠시 말이 끊겼다.'};
+    if(current.kind!=='dialogue') return storyTurnHtml(current,opt);
+    let start=safe;
+    while(start>0&&turns[start-1].kind==='dialogue') start--;
+    const run=turns.slice(start,safe+1);
+    return `<section class="story-chat${opt.intro?' intro-chat':''}" aria-live="polite" aria-atomic="false">
+      ${run.map((turn,i)=>chatMessageHtml(turn,i===run.length-1)).join('')}</section>`;
   }
   function eventSpeakerCandidates(evd){
     const ids=[];
@@ -786,7 +811,12 @@ const UI = (()=>{
     const reader=sheet.querySelector('.story-reader');
     const dock=sheet.querySelector('.event-choice-dock');
     const turn=state.turns[Math.min(state.index,state.turns.length-1)];
-    reader.innerHTML=storyTurnHtml(turn);
+    reader.innerHTML=storyReaderHtml(state.turns,state.index);
+    const entering=reader.querySelector('.story-turn, .chat-msg:last-child');
+    if(entering){
+      entering.classList.add('turn-enter');
+      requestAnimationFrame(()=>entering.classList.remove('turn-enter'));
+    }
     const last=state.index>=state.turns.length-1;
     if(!last){
       const next=state.turns[state.index+1];

@@ -39,7 +39,10 @@ def main():
                 page.click("#scr-intro")
                 page.wait_for_timeout(80)
                 page.screenshot(path=str(shot / "intro-child-speaker.png"))
-                advanced = 1
+                page.click("#scr-intro")
+                page.wait_for_timeout(80)
+                page.screenshot(path=str(shot / "intro-chat-pair.png"))
+                advanced = 2
             elif index == 7:
                 for _ in range(3):
                     page.click("#scr-intro")

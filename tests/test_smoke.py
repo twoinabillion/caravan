@@ -40,15 +40,36 @@ with sync_playwright() as p:
     check('인트로 전에 이름 입력', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-intro').is_visible())
     pg.fill('#inp-name', '테스터'); pg.press('#inp-name', 'Enter'); pg.wait_for_timeout(200)
     check('이름 Enter가 첫 턴을 건너뛰지 않음', pg.locator('#intro-count').text_content() == '1 / 12 · 1 / 5')
+    intro_layout = pg.evaluate('''() => {
+      const book=document.querySelector('#intro-book').getBoundingClientRect();
+      const app=document.querySelector('#app').getBoundingClientRect();
+      const css=getComputedStyle(document.querySelector('#intro-book'));
+      return {bookW:book.width,bookH:book.height,appW:app.width,appH:app.height,top:book.top-app.top,
+        border:css.borderTopWidth,radius:css.borderRadius};
+    }''')
+    check('인트로 전체 화면·카드 프레임 제거',
+          abs(intro_layout['bookW']-intro_layout['appW']) < 1 and
+          abs(intro_layout['bookH']-intro_layout['appH']) < 1 and
+          abs(intro_layout['top']) < 1 and intro_layout['border'] == '0px' and
+          intro_layout['radius'] == '0px', str(intro_layout))
     pg.click('#scr-intro'); pg.wait_for_timeout(120)
     child_turn = pg.evaluate('''() => ({
-      label:document.querySelector('#intro-txt .turn-speaker b')?.textContent||'',
-      portrait:document.querySelector('#intro-txt .turn-avatar')?.src||'',
+      label:document.querySelector('#intro-txt .chat-name')?.textContent||'',
+      portrait:document.querySelector('#intro-txt .chat-avatar')?.src||'',
       expected:D.portraits.player_child||''
     })''')
     check('어린 주인공 이름·전용 초상', child_turn['label'] == '테스터 · 8살' and
           child_turn['portrait'] == child_turn['expected'], str(child_turn))
-    for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 1')):
+    pg.click('#scr-intro'); pg.wait_for_timeout(120)
+    intro_chat = pg.evaluate('''() => ({
+      count:document.querySelectorAll('#intro-txt .chat-msg').length,
+      names:[...document.querySelectorAll('#intro-txt .chat-name')].map(x=>x.textContent),
+      sides:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.classList.contains('mine')?'mine':'other')
+    })''')
+    check('사람 대화는 채팅처럼 누적', intro_chat['count'] == 2 and
+          intro_chat['names'] == ['테스터 · 8살','할아버지'] and
+          intro_chat['sides'] == ['mine','other'], str(intro_chat))
+    for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 2')):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
@@ -123,15 +144,12 @@ with sync_playwright() as p:
         recruitFace:first?.who==='minji'&&!!D.portraits[first.who],
         anonRole:stranger?.who==='passer_man'&&stranger?.name==='남자',
         anonFace:!!D.portraits[stranger?.who],
-        missing,
-        flatIntro:getComputedStyle(document.querySelector('#intro-txt .story-turn')).borderTopWidth==='0px' &&
-          getComputedStyle(document.querySelector('#intro-txt .story-turn')).backgroundColor==='rgba(0, 0, 0, 0)'
+        missing
       };
     }''')
     check('첫 만남은 이름 ???·실제 동료 얼굴', portraits['hidden'] and portraits['recruitFace'], str(portraits))
     check('익명 행인은 역할별 얼굴 표시', portraits['anonRole'] and portraits['anonFace'], str(portraits))
     check('전 이벤트 대화 턴에 얼굴 있음', not portraits['missing'], str(portraits['missing'][:8]))
-    check('인트로 안쪽 카드 제거', portraits['flatIntro'], str(portraits))
     check('콘솔 에러 0', not errors, ' | '.join(errors[:3]))
 
     print('― 의뢰 엔진')
