@@ -7,6 +7,26 @@ const UI = (()=>{
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='';
   let arrivalTimer=0;
+  const tossRuntime=Boolean(window.ReactNativeWebView||/\.tossmini\.com$/i.test(location.hostname)||/Toss/i.test(navigator.userAgent));
+  const localOffroad=location.protocol==='file:'&&!tossRuntime;
+  const previewEpisodes=[
+    {scene:'intro-camper-conversion',kind:'PROLOGUE · 달구지',title:'비를 피하는 집',
+      text:'용달 트럭의 적재함을 늘리고, 침상과 수납장을 달아 길 위의 집으로 바꾼다.'},
+    {scene:'recruit-minji-task',kind:'COMPANION · 의뢰',title:'고철 산의 불꽃',
+      text:'사람을 태우기 전에 먼저 그 사람이 끝내지 못한 일을 함께 해결해야 한다.'},
+    {scene:'gwangju-market',kind:'SETTLEMENT · 광주',title:'폐허에도 장은 선다',
+      text:'도시마다 다른 시장과 주민, 소문과 부탁이 달구지를 기다린다.'},
+    {scene:'trace-cortis-relic',kind:'DISCOVERY · 2026년의 흔적',title:'이게 대체 뭐였을까',
+      text:'143년 전의 유행과 물건은 뜻을 잃은 채 보물처럼 다시 발견된다.'},
+    {scene:'library-bus',kind:'SIDE STORY · 이동 도서관',title:'책을 싣고 다니는 사람',
+      text:'서울로 가는 일과 무관해 보여도, 누군가에겐 오늘 꼭 필요한 여정이 있다.'},
+    {scene:'combat-drone-swarm',kind:'COMBAT · 추격',title:'빗속의 탐색등',
+      text:'정면 돌파, 우회, 동료의 기술. 같은 위기도 준비와 선택에 따라 달라진다.'},
+    {scene:'ridge-memorial',kind:'REGION · 대관령',title:'바람이 기억하는 이름',
+      text:'항구와 시장, 터널과 고개까지 지나온 지역이 각자의 풍경과 기억을 남긴다.'},
+    {scene:'full-house-meal',kind:'VAN LIFE · 동행',title:'빈자리 없는 저녁',
+      text:'확장한 달구지 안에서 함께 먹고, 다투고, 화해하며 진짜 동료가 되어 간다.'}
+  ];
 
   /* ── modal state ── */
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
@@ -85,10 +105,19 @@ const UI = (()=>{
       if(!b||b.tagName==='BUTTON'||(e.key!=='Enter'&&e.key!==' ')) return;
       e.preventDefault(); b.click();
     });
-    $('#bt-new').onclick=()=>{ show('scr-mode'); envCheckUI(); };
+    $('#bt-new').onclick=()=>{
+      if(localOffroad){ show('scr-mode'); envCheckUI(); }
+      else startNew('onroad');
+    };
     const bs=$('#bt-song');
     if(bs){ if(!(D.bgm&&D.bgm.song)) bs.style.display='none'; else bs.onclick=()=>BGM.toggleSong(); }
     $('#bt-continue').onclick=()=>{ if(G.load()){ enterGame(); } };
+    $('#bt-preview').onclick=()=>{ renderPreview(); show('scr-preview'); $('#preview-scroll').scrollTop=0; };
+    $('#bt-previewback').onclick=()=>show('scr-title');
+    $('#bt-previewnew').onclick=()=>{
+      if(localOffroad){ show('scr-mode'); envCheckUI(); }
+      else startNew('onroad');
+    };
     const nameGo=()=>{
       pendingName=($('#inp-name').value||'').trim().slice(0,8);
       introIdx=0; introTurnIdx=0;
@@ -139,13 +168,39 @@ const UI = (()=>{
       renderStatus();
     });
   }
+
+  function renderPreview(){
+    const grid=$('#preview-grid');
+    if(grid.childElementCount) return;
+    previewEpisodes.forEach((episode,index)=>{
+      const card=el('article','preview-card');
+      const img=el('img');
+      img.src=(D.scenes&&D.scenes[episode.scene])||'';
+      img.alt=`${episode.title} 게임 장면`;
+      img.loading=index<2?'eager':'lazy';
+      img.decoding='async';
+      const copy=el('div','preview-copy');
+      const no=el('span','preview-no',`${String(index+1).padStart(2,'0')} / ${String(previewEpisodes.length).padStart(2,'0')}`);
+      const kind=el('span','preview-kind',episode.kind);
+      const title=el('h3',null,episode.title);
+      const text=el('p',null,episode.text);
+      copy.append(no,kind,title,text);
+      card.append(img,copy);
+      grid.append(card);
+    });
+  }
   async function envCheckUI(){
     const lock=$('#offlock'), key=$('#offkey'), msg=$('#offmsg');
+    if(!localOffroad){
+      lock.textContent='공개 앱에서는 온로드 이야기만 제공됩니다.';
+      key.classList.remove('on');
+      return;
+    }
     if(OFF.ready()){ lock.textContent='🔓 연결됨 — '+OFF.model; key.classList.remove('on'); return; }
     lock.textContent='환경 확인 중…';
     const ok = await OFF.checkReachable();
-    if(ok){ lock.innerHTML='🔑 Anthropic API 키가 필요합니다 (카드를 누르면 입력창이 열립니다)<br>키는 이 브라우저의 localStorage에만 저장됩니다.'; }
-    else { lock.innerHTML='🔒 이 호스팅 환경(클로드 아티팩트)은 보안 정책상 외부 API 호출이 차단됩니다.<br>게임 HTML 파일을 로컬에서 브라우저로 열면 오프로드 모드가 활성화됩니다.'; }
+    if(ok){ lock.innerHTML='🔑 Anthropic API 키가 필요합니다 (카드를 누르면 입력창이 열립니다)<br>키는 이 로컬 브라우저에만 저장됩니다.'; }
+    else { lock.innerHTML='🔒 현재 브라우저가 외부 API 연결을 허용하지 않습니다.<br>오프로드는 내려받은 게임 HTML을 로컬에서 열었을 때만 사용할 수 있습니다.'; }
   }
   function startNew(mode){
     pendingMode=mode; pendingName=''; introIdx=0; introTurnIdx=0;
@@ -215,10 +270,11 @@ const UI = (()=>{
     enterGame();
   }
   function enterGame(){
+    if(!localOffroad&&S.mode==='offroad') S.mode='onroad';
     show('scr-game'); screen='game';
     applyIcons();
     renderAll();
-    if(S.mode==='offroad'&&!OFF.ready()) toast('📡 오프로드 연결 없음 — 온로드 이벤트로 대체됩니다');
+    if(localOffroad&&S.mode==='offroad'&&!OFF.ready()) toast('📡 오프로드 연결 없음 — 온로드 이벤트로 대체됩니다');
     if(S.flags&&S.flags.seoul_open&&!S.ended) setTimeout(showSeoul, 400);   // 서울 안에서 이어하기
   }
 
@@ -274,9 +330,12 @@ const UI = (()=>{
         pct=S.driving?Math.min(78,58+S.driving.gone/S.driving.dist*20):58;
       } else if(rq.stage==='follow'){
         const target=D.nodes[rq.target];
-        state=`두 번째 과제 · ${target.name}`;
-        meta=S.at===rq.target&&!S.driving?'마주할 일 있음':'이동 필요';
-        pct=S.at===rq.target?86:76;
+        const needsNight=Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay;
+        state=needsNight
+          ? `${def.name}와 임시 동행 · 서로를 지켜볼 하룻밤`
+          : `두 번째 과제 · ${target.name}`;
+        meta=needsNight?'야영 필요':S.at===rq.target&&!S.driving?'마주할 일 있음':'이동 필요';
+        pct=needsNight?70:S.at===rq.target?86:76;
       } else {
         const target=D.nodes[rq.target];
         state=`첫 번째 과제 · ${target.name}`;
@@ -627,14 +686,17 @@ const UI = (()=>{
       const atTask=rq.stage==='task'&&S.at===rq.target;
       const atFollow=rq.stage==='follow'&&S.at===rq.target;
       const ready=rq.stage==='ready', road=rq.stage==='road';
-      const enabled=ready||atTask||atFollow;
+      const waitNight=atFollow&&Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay;
+      const enabled=ready||atTask||(atFollow&&!waitNight);
       const icon=ready?'🤝':atFollow?'💬':road?'🚚':'🧰';
       const label=ready?`합류를 이야기한다 — ${def.name}`
+        :waitNight?`${def.name}와 하룻밤을 보낸다`
         :atFollow?`길에서 생긴 일을 마주한다 — ${def.name}`
         :road?`다음 길을 함께 간다 — ${def.name}`
         :atTask?`${def.name}의 부탁을 진행한다`
         :`${D.nodes[rq.target].name} · 만나기로 한 사람: ${def.name}`;
       const small=ready?'서로를 겪은 뒤, 본인이 자리를 고른다'
+        :waitNight?'야영을 하면 내일 다시 이야기할 수 있다'
         :atFollow?def.followHint:road?def.roadHint:def.hint;
       h+=`<button class="act primary" data-a="recruitstep" ${!enabled?'disabled':''}>
         <span class="ic">${icon}</span><span><b>${label}</b><small>${small}</small></span></button>`;
@@ -1056,7 +1118,7 @@ const UI = (()=>{
     curStl=stlId;
     const stl=D.stls[stlId];
     if(!G.isNight()) G.checkQuest();   // 배달은 사람이 깨어 있을 때만
-    $('#stl-name').innerHTML=stl.name+`<button class="x" style="float:right" id="stl-leave">✕</button>`;
+    $('#stl-name').innerHTML=stl.name+`<button class="x" style="float:right" id="stl-leave" aria-label="${esc(stl.name)} 닫기">✕</button>`;
     $('#stl-desc').textContent=stl.desc;
     const body=$('#stl-body');
     let h='';
@@ -1543,7 +1605,7 @@ const UI = (()=>{
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
 const SND = (()=>{
-  let ac=null, on=false, engineGain=null, noiseSrc=null, sfxBuf=null, pulseTimer=null;
+  let ac=null, on=false, suspended=false, engineGain=null, noiseSrc=null, sfxBuf=null, pulseTimer=null;
   function build(){
     ac=new (window.AudioContext||window.webkitAudioContext)();
     const buf=ac.createBuffer(1, ac.sampleRate*2, ac.sampleRate);
@@ -1569,8 +1631,22 @@ const SND = (()=>{
   }
   function setDriving(driving){
     if(!ac||!engineGain) return;
-    const target= on? (driving?0.16:0.05):0;
+    const target= on&&!suspended? (driving?0.16:0.05):0;
     engineGain.gain.linearRampToValueAtTime(target, ac.currentTime+0.8);
+  }
+  function suspend(){
+    suspended=true;
+    if(!ac) return;
+    if(engineGain){
+      engineGain.gain.cancelScheduledValues(ac.currentTime);
+      engineGain.gain.setValueAtTime(0,ac.currentTime);
+    }
+    ac.suspend().catch(()=>{});
+  }
+  function resume(){
+    suspended=false;
+    if(!on||!ac) return;
+    ac.resume().then(()=>setDriving(S&&S.driving&&!UI.modalOpen())).catch(()=>{});
   }
   function pulse(kind){
     const app=$('#app'); if(!app) return;
@@ -1597,7 +1673,7 @@ const SND = (()=>{
   /* 외부 음원 없이 만드는 짧은 전투 효과음. 사운드 토글과 함께 완전히 꺼진다. */
   function combat(kind='select'){
     pulse(kind);
-    if(!on) return;
+    if(!on||suspended) return;
     if(!ac){ try{ build(); }catch(e){ return; } }
     if(ac.state==='suspended') ac.resume();
     switch(kind){
@@ -1627,14 +1703,14 @@ const SND = (()=>{
       default: tone('sine',360,430,.06,.018);
     }
   }
-  return {toggle, setDriving, combat};
+  return {toggle, setDriving, combat, suspend, resume};
 })();
 /* ═══════════════════ BGM (외부 생성 트랙 — D.bgm 슬롯) ═══════════════════
    D.bgm[key]에 data URI를 넣으면 상황에 맞춰 자동 재생·크로스페이드.
    슬롯이 비어 있으면 완전 무음(현재 동작 유지). 사운드 토글(🔊)에 종속. */
 const BGM = (()=>{
   const players={};
-  let cur=null, on=false;
+  let cur=null, on=false, suspended=false, resumeSong=false;
   const VOL=0.5, FADE=1100;
   function ensure(key){
     if(players[key]!==undefined) return players[key];
@@ -1645,6 +1721,11 @@ const BGM = (()=>{
   function fadeTo(a, target, then){
     if(!a) return;
     if(a._fi) clearInterval(a._fi);
+    if(Math.abs(target-a.volume)<.001){
+      a.volume=target;
+      if(then) then();
+      return;
+    }
     const step=(target-a.volume)/(FADE/50);
     a._fi=setInterval(()=>{
       const v=a.volume+step;
@@ -1656,16 +1737,16 @@ const BGM = (()=>{
     if(cur===key) return;
     const prev=ensure(cur); cur=key;
     if(prev) fadeTo(prev,0,()=>prev.pause());
-    if(!on) return;
+    if(!on||suspended) return;
     const nx=ensure(key);
     if(nx){ nx.play().catch(()=>{}); fadeTo(nx,VOL); }
   }
   function setOn(v){
     on=v;
     if(!on){ for(const k in players){ const a=players[k]; if(a){ fadeTo(a,0,()=>a.pause()); } } }
-    else { const k=cur; cur=null; set(k||'title'); }
+    else if(!suspended){ const k=cur; cur=null; set(k||'title'); }
   }
-  function tick(desired){ if(song&&!song.paused) return; if(desired) set(desired); }
+  function tick(desired){ if(suspended||(song&&!song.paused)) return; if(desired) set(desired); }
   /* ── 노래 (부서진 고속도로) — BGM과 별개, 명시 재생 ── */
   let song=null;
   function ensureSong(){
@@ -1684,7 +1765,31 @@ const BGM = (()=>{
     s.currentTime=0; s.play().catch(()=>{}); songUi(true);
   }
   function playSongOnce(){ const s=ensureSong(); if(s&&s.paused) toggleSong(); }
-  return {tick, setOn, toggleSong, playSongOnce};
+  function suspend(){
+    suspended=true;
+    resumeSong=Boolean(song&&!song.paused);
+    if(song) song.pause();
+    for(const key in players){
+      const a=players[key];
+      if(!a) continue;
+      if(a._fi){ clearInterval(a._fi); a._fi=null; }
+      a.pause();
+    }
+  }
+  function resume(){
+    if(!suspended) return;
+    suspended=false;
+    if(!on) return;
+    if(resumeSong&&song){
+      resumeSong=false;
+      song.play().then(()=>songUi(true)).catch(()=>songUi(false));
+      return;
+    }
+    resumeSong=false;
+    const a=ensure(cur||'title');
+    if(a){ a.play().catch(()=>{}); fadeTo(a,VOL); }
+  }
+  return {tick, setOn, toggleSong, playSongOnce, suspend, resume};
 })();
 /* ═══════════════════ VO (보이스 — D.vo 슬롯) ═══════════════════
    슬롯이 비어 있으면 조용히 무시 (자막만). 파일 오면 드롭인. */
@@ -1699,3 +1804,29 @@ const VO = (()=>{
   function stop(){ if(cur){ cur.pause(); cur=null; } }
   return {play, stop};
 })();
+
+/* 토스 WebView가 백그라운드로 내려갈 때 소리와 진행을 명시적으로 멈춘다.
+   사용자가 고른 음소거 상태는 바꾸지 않고, 다시 보일 때만 정상 재개한다. */
+let lifecycleHidden=false;
+function saveForLifecycle(){
+  try{ if(typeof S!=='undefined'&&S) G.save(); }catch(e){}
+}
+function suspendForLifecycle(){
+  lifecycleHidden=true;
+  saveForLifecycle();
+  SND.suspend();
+  BGM.suspend();
+  VO.stop();
+}
+function resumeForLifecycle(){
+  if(!lifecycleHidden||document.hidden) return;
+  lifecycleHidden=false;
+  SND.resume();
+  BGM.resume();
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden) suspendForLifecycle();
+  else resumeForLifecycle();
+});
+window.addEventListener('pagehide',suspendForLifecycle);
+window.addEventListener('pageshow',resumeForLifecycle);

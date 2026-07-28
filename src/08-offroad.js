@@ -3,14 +3,17 @@ const OFF = (()=>{
   const KEY_LS='seoul400_apikey';
   const API='https://api.anthropic.com/v1/messages';
   const model='claude-opus-4-8';
-  let key = null; try{ key = localStorage.getItem(KEY_LS); }catch(e){}
+  const tossRuntime=Boolean(window.ReactNativeWebView||/\.tossmini\.com$/i.test(location.hostname)||/Toss/i.test(navigator.userAgent));
+  const localOnly=location.protocol==='file:'&&!tossRuntime;
+  let key = null; if(localOnly) try{ key = localStorage.getItem(KEY_LS); }catch(e){}
   let reachable=null, verified=false;
   const evQ=[], banterQ=[];
   let genBusy=false, banterBusy=false;
 
-  const ready = ()=> !!(key && verified && reachable);
+  const ready = ()=> !!(localOnly && key && verified && reachable);
 
   async function checkReachable(){
+    if(!localOnly){ reachable=false; return false; }
     if(reachable!==null) return reachable;
     try{
       await fetch('https://api.anthropic.com/v1/models',{mode:'no-cors',signal:AbortSignal.timeout(6000)});
@@ -23,6 +26,7 @@ const OFF = (()=>{
   }
 
   async function testKey(k){
+    if(!localOnly) return {ok:false,msg:'공개 앱에서는 오프로드 API 키를 받지 않습니다.'};
     try{
       const res=await fetch(API,{method:'POST',
         headers:hdr(k),

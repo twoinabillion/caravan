@@ -35,6 +35,17 @@ with sync_playwright() as p:
     check('타이틀 표시', pg.locator('#bt-new').is_visible())
     check('달구지 PNG 런타임 제거', pg.evaluate('typeof D.vanSprites === "undefined"'))
     save_canvas(pg, '#titlecv', SHOT / 'title-procedural.png')
+    pg.click('#bt-preview'); pg.wait_for_timeout(180)
+    preview = pg.evaluate('''() => ({
+      visible:document.querySelector('#scr-preview').classList.contains('on'),
+      count:document.querySelectorAll('#preview-grid .preview-card').length,
+      loaded:[...document.querySelectorAll('#preview-grid img')].every(img=>img.src.startsWith('data:image/')),
+      spoilers:document.querySelector('#preview-grid').textContent.includes('서울 코어')
+    })''')
+    check('여정 미리보기 8개 실제 삽화', preview['visible'] and preview['count'] == 8 and
+          preview['loaded'] and not preview['spoilers'], str(preview))
+    pg.click('#bt-previewback'); pg.wait_for_timeout(100)
+    check('미리보기에서 제목 화면 복귀', pg.locator('#scr-title').is_visible())
     pg.click('#bt-new'); pg.wait_for_timeout(200)
     pg.click('#mode-on'); pg.wait_for_timeout(300)
     check('인트로 전에 이름 입력', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-intro').is_visible())
@@ -577,6 +588,8 @@ with sync_playwright() as p:
       G.arrive();
       UI.onArrive=oldArrive; S.used=oldUsed;
       out.follow=S.recruitQ&&S.recruitQ.stage==='follow'&&S.recruitQ.target==='gyeongju';
+      out.followHeld=!G.openRecruitStep()&&!document.querySelector('#ev-wrap').classList.contains('on');
+      S.day++;
       out.followOpened=G.openRecruitStep()&&document.querySelector('#ev-wrap').classList.contains('on');
       out.memoryVisible=document.querySelector('#ev-sheet').textContent.includes('우리가 앞에서 한 일')&&
         document.querySelector('#ev-sheet').textContent.includes('긴 긁힌 자국');
@@ -590,7 +603,7 @@ with sync_playwright() as p:
     }''')
     check('첫 만남→지역 과제→임시 동행→두 번째 사건→합류 약속',
           rr['started'] and rr['target'] and rr['opened'] and rr['road'] and
-          rr['remembered'] and rr['guestAssist'] and rr['follow'] and rr['followOpened'] and
+          rr['remembered'] and rr['guestAssist'] and rr['follow'] and rr['followHeld'] and rr['followOpened'] and
           rr['memoryVisible'] and rr['ready'], str(rr))
     check('만석에서도 약속 보존·좌석 개조 후 합류', rr['fullHeld'] and rr['joined'], str(rr))
     pg.click('#dk-map'); pg.wait_for_timeout(160)
@@ -893,6 +906,20 @@ with sync_playwright() as p:
     pg.wait_for_timeout(250)
     save_canvas(pg, '#cv', SHOT / 'van-all-upgrades.png')
     pg.evaluate('S.at="daegu"; UI.showStl && 0')  # showStl은 비공개 — dock 경유
+    ait_pg = b.new_page(viewport={'width': 390, 'height': 844})
+    ait_errors = []
+    ait_pg.on('pageerror', lambda e: ait_errors.append(str(e)))
+    ait_pg.add_init_script("window.ReactNativeWebView={postMessage(){}}")
+    ait_pg.goto(URL)
+    ait_pg.wait_for_timeout(500)
+    ait_pg.click('#bt-new')
+    ait_pg.wait_for_timeout(120)
+    check('AIT 런타임은 오프로드 선택 없이 온로드 이름 입력으로 직행',
+          ait_pg.locator('#scr-name').is_visible() and
+          not ait_pg.locator('#scr-mode').is_visible() and
+          ait_pg.evaluate("document.documentElement.classList.contains('ait-runtime')") and
+          not ait_pg.evaluate('OFF.ready()'), ' | '.join(ait_errors[:2]))
+    ait_pg.close()
     b.close()
 
 print()

@@ -10,9 +10,30 @@
       <div class="acts">
         <button class="act primary" id="bt-new"><span class="ic">▶</span><span><b>새 여행</b><small>부산에서 시동을 건다</small></span></button>
         <button class="act" id="bt-continue" style="display:none"><span class="ic">↻</span><span><b>이어서 가기</b><small id="cont-info"></small></span></button>
+        <button class="act" id="bt-preview"><span class="ic">▧</span><span><b>여정 미리보기</b><small>동료 · 탐사 · 전투 · 달구지 생활</small></span></button>
       </div>
       <div class="ver">v1.8 · 온로드/오프로드 · 자동 저장 · 에피소드 1 — 서울 해방</div>
       <button id="bt-song" title="부서진 고속도로">♪ 부서진 고속도로</button>
+    </div>
+  </div>
+
+  <!-- ══ SPOILER-LIGHT JOURNEY PREVIEW ══ -->
+  <div class="scr" id="scr-preview" aria-label="여정 미리보기">
+    <header id="preview-head">
+      <button id="bt-previewback" aria-label="제목 화면으로 돌아가기">←</button>
+      <div>
+        <span>ROAD ALBUM · 스포일러 없는 장면들</span>
+        <h2>길 위에는 이런 이야기가 있다</h2>
+      </div>
+    </header>
+    <div id="preview-scroll">
+      <p class="preview-lead">낡은 달구지를 집으로 고치고, 낯선 사람의 일을 함께 해결하고, 폐허에 남은 흔적을 좇는다. 선택에 따라 만나거나 놓칠 수 있는 여정의 일부다.</p>
+      <div id="preview-grid" aria-live="polite"></div>
+      <div class="preview-tail">
+        <span>400 KM · ONE ROAD · MANY STORIES</span>
+        <p>모든 장면은 실제 플레이 중 만나는 삽화입니다.</p>
+        <button class="act primary" id="bt-previewnew"><span class="ic">▶</span><span><b>내 여정 시작하기</b><small>부산에서 첫 장을 연다</small></span></button>
+      </div>
     </div>
   </div>
 
@@ -119,7 +140,7 @@
 
   <!-- ══ MAP ══ -->
   <div class="ovl" id="ovl-map">
-    <div class="ovl-head"><h2>지도 — 남녘</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x">✕</button></div>
+    <div class="ovl-head"><h2>지도 — 남녘</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x" aria-label="지도 닫기">✕</button></div>
     <div id="map-mission" class="mission-strip map-mission"></div>
     <div id="mapwrap">
       <canvas id="mapcv" aria-label="서울까지 이어지는 그림 여정도"></canvas>
@@ -130,8 +151,8 @@
   <!-- ══ JOURNAL ══ -->
   <div class="ovl" id="ovl-journal">
     <div class="ovl-head"><h2>여행 일지</h2><span class="mini" id="j-mini"></span>
-      <button class="x" id="bt-export" title="Obsidian 마크다운으로 내보내기" style="font-size:13px">⇩ .md</button>
-      <button class="x" id="j-x">✕</button></div>
+      <button class="x" id="bt-export" title="Obsidian 마크다운으로 내보내기" aria-label="여행 일지를 마크다운으로 내보내기" style="font-size:13px">⇩ .md</button>
+      <button class="x" id="j-x" aria-label="여행 일지 닫기">✕</button></div>
     <div id="jtabs">
       <button data-jt="log" class="here">기록</button>
       <button data-jt="graph">관계망</button>
@@ -142,7 +163,7 @@
 
   <!-- ══ STATUS ══ -->
   <div class="ovl" id="ovl-status">
-    <div class="ovl-head"><h2>달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x">✕</button></div>
+    <div class="ovl-head"><h2>달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x" aria-label="달구지와 여정 닫기">✕</button></div>
     <div id="st-tabs" class="st-tabs" role="tablist">
       <button class="here" data-st="now" role="tab">지금</button>
       <button data-st="journey" role="tab">여정</button>

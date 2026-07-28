@@ -97,6 +97,7 @@ const MAPR = (()=>{
 
   function draw(dt){
     if(!ctx||!W) return; t+=dt;
+    const compact=W<400;
     ctx.clearRect(0,0,W,H);
     /* 바다 — 은은한 심도 그라데이션 */
     const sea=ctx.createLinearGradient(0,0,0,H);
@@ -146,7 +147,7 @@ const MAPR = (()=>{
       r.pts.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
       ctx.strokeStyle='rgba(72,142,194,0.13)'; ctx.lineWidth=4; ctx.stroke();
       ctx.strokeStyle='rgba(93,169,219,0.36)'; ctx.lineWidth=1.15; ctx.stroke();
-      ctx.fillStyle='rgba(116,174,211,0.42)'; ctx.font='7px serif';
+      ctx.fillStyle='rgba(116,174,211,0.5)'; ctx.font=compact?'8.5px serif':'8px serif';
       ctx.fillText(r.nm,px(r.at[0])+3,py(r.at[1])-3);
     });
     /* 백두대간 능선 음영 */
@@ -182,11 +183,13 @@ const MAPR = (()=>{
     ctx.fillText('남   해', px(southSea[0]), py(southSea[1]));
 
     /* 경로 노드는 아니지만 누구나 지리적 기준으로 아는 도시들. 클릭·이동은 되지 않는다. */
-    ctx.font='7.5px sans-serif';
+    ctx.font=compact?'8.5px sans-serif':'8px sans-serif';
+    const compactContext=new Set(['인천','춘천','창원','제천']);
     CONTEXT_CITIES.forEach(([nm,x,y])=>{
       const sx=px(x),sy=py(y);
       ctx.fillStyle='rgba(117,132,165,0.48)';
       ctx.beginPath(); ctx.arc(sx,sy,1.35,0,7); ctx.fill();
+      if(compact&&!compactContext.has(nm)) return;
       ctx.fillStyle='rgba(136,149,180,0.38)';
       ctx.fillText(nm,sx+3,sy+2.5);
     });
@@ -282,7 +285,7 @@ const MAPR = (()=>{
         const p=prio(id);
         if(p===6 && tf.s<0.9) continue;             // 미방문 일반 노드는 작은 화면에선 점만
         const bold = p<=2;
-        const font=`${bold?'700 ':''}${p<=3?10:9.5}px sans-serif`;
+        const font=`${bold?'700 ':''}${p<=3?11:10.5}px sans-serif`;
         const fill= n.type==='goal'? 'rgba(85,224,200,0.95)':
           S.at===id? 'rgba(255,200,120,0.98)':
           n.stl? 'rgba(240,225,195,0.95)':
@@ -314,9 +317,9 @@ const MAPR = (()=>{
       ctx.restore();
     }
     /* 범례 */
-    ctx.font='9px monospace'; ctx.fillStyle='rgba(140,150,180,0.55)';
-    ctx.fillText('◆ 정착지  ● 폐허  ◌? 미확인  ⊙ 지금 갈 수 있는 곳', 12, H-22);
-    ctx.fillText('─ 고속 · ╌ 국도 · ┄ 험로   (지명을 누르면 상세)', 12, H-10);
+    ctx.font=compact?'9.5px monospace':'9px monospace'; ctx.fillStyle='rgba(155,165,195,0.65)';
+    ctx.fillText(compact?'◆ 정착지  ● 폐허  ◌? 미확인':'◆ 정착지  ● 폐허  ◌? 미확인  ⊙ 지금 갈 수 있는 곳',12,H-22);
+    ctx.fillText(compact?'─ 고속  ╌ 국도  ┄ 험로 · 지명을 누르세요':'─ 고속 · ╌ 국도 · ┄ 험로   (지명을 누르면 상세)',12,H-10);
   }
 
   function onClick(ev){

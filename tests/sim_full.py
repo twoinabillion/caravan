@@ -159,7 +159,8 @@ STEP = r'''() => {
   if(S.recruitQ && ((S.recruitQ.stage==='task'&&S.recruitQ.target===S.at)||
       (S.recruitQ.stage==='follow'&&S.recruitQ.target===S.at)||
       (S.recruitQ.stage==='ready'&&S.party.length<G.maxParty()))){
-    G.openRecruitStep(); return OUT;
+    if(!G.openRecruitStep()&&S.recruitQ.stage==='follow') G.camp();
+    return OUT;
   }
 
   // 강우의 첫 만남은 대구 시장에서 직접 열린다.

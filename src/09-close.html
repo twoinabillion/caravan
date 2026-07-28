@@ -1,1 +1,25 @@
 </script>
+<script type="module">
+const aitRuntime = Boolean(
+  window.ReactNativeWebView
+  || /\.tossmini\.com$/i.test(location.hostname)
+  || /Toss/i.test(navigator.userAgent)
+);
+document.documentElement.classList.toggle('ait-runtime', aitRuntime);
+
+if(aitRuntime){
+  import('@apps-in-toss/web-framework').then(({SafeAreaInsets})=>{
+    const root=document.documentElement;
+    const applyInsets=(insets)=>{
+      if(!insets||typeof insets!=='object') return;
+      for(const side of ['top','right','bottom','left']){
+        const value=Number(insets[side]);
+        if(Number.isFinite(value)) root.style.setProperty(`--safe-${side}`,`${Math.max(0,value)}px`);
+      }
+    };
+    applyInsets(SafeAreaInsets.get());
+    const unsubscribe=SafeAreaInsets.subscribe({onEvent:applyInsets});
+    window.addEventListener('pagehide',()=>{ if(typeof unsubscribe==='function') unsubscribe(); },{once:true});
+  }).catch(()=>{ /* 구형 샌드박스에서는 CSS env() 여백을 그대로 사용한다. */ });
+}
+</script>

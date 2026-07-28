@@ -5,7 +5,7 @@ export default defineConfig({
   brand: {
     displayName: '서울까지 400km',
     primaryColor: '#b94a2f',
-    icon: '',
+    icon: 'https://twoinabillion.github.io/caravan/assets/app-icon.png',
   },
   web: {
     host: 'localhost',
@@ -25,10 +25,11 @@ export default defineConfig({
     allowsBackForwardNavigationGestures: false,
   },
   navigationBar: {
-    withBackButton: true,
+    withBackButton: false,
     withHomeButton: false,
     withTitle: false,
     transparentBackground: true,
+    theme: 'dark',
   },
   permissions: [],
   outdir: 'dist',

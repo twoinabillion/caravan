@@ -187,6 +187,10 @@ G.openRecruitStep = ()=>{
   }
   if(q.stage==='follow'){
     if(S.at!==q.target){ UI.toast(`🗺 ${D.nodes[q.target].name}에서 할 말이 남았다 — ${def.name}`); return false; }
+    if(Number.isFinite(q.roadDay)&&S.day<=q.roadDay){
+      UI.toast(`🔥 ${def.name}와 길 위에서 하룻밤을 보낸 뒤 다시 이야기할 수 있다`);
+      return false;
+    }
     G.openEventById(def.follow); return true;
   }
   if(q.stage==='ready'){ G.openEventById(def.join); return true; }
@@ -772,6 +776,7 @@ G.doRecruit = (id)=>{
   if(G.hasComp(id) || S.party.length>=G.maxParty()) return false;
   S.party.push(id); S.comps[id] = S.comps[id]||{mood:65};
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
+  S.comps[id].bond=Math.max(S.comps[id].bond||0,4);
   if(id==='leo') S.dog=true;
   if(S.recruitQ&&S.recruitQ.id===id) S.recruitQ=null;
   G.addNote({type:'인물',title:D.comps[id].name,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""12장 인트로를 모바일 화면으로 캡처하고 내부 스크롤을 점검한다."""
+"""인트로 전 장을 모바일 화면으로 캡처하고 내부 스크롤을 점검한다."""
 import json
 import pathlib
 import sys
@@ -20,6 +20,8 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(450)
     page.click("#bt-new")
     page.click("#mode-on")
+    page.fill("#inp-name", "다온")
+    page.click("#bt-name")
 
     metrics = []
     count = page.evaluate("D.intro.length")

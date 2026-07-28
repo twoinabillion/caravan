@@ -130,6 +130,7 @@ with sync_playwright() as playwright:
           (D.eraTraces||[]).forEach(t => { S.flags[t.flag]=true; });
           ['ridge_path','sokcho_end','librarian_truth'].forEach(f => { S.flags[f]=true; });
           UI.showEvent(D.seoulStops.find(e => e.id === 'seoul_core'));
+          UI.finishStory();
         }"""
     )
     page.wait_for_timeout(200)
