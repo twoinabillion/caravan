@@ -76,7 +76,11 @@ D.scenes = {
   'recruit-eunsu-follow':'__SCENE_RECRUIT_EUNSU_FOLLOW__',
   'recruit-eunsu-join':'__SCENE_RECRUIT_EUNSU_JOIN__',
   'recruit-kangwoo-follow':'__SCENE_RECRUIT_KANGWOO_FOLLOW__',
-  'recruit-kangwoo-join':'__SCENE_RECRUIT_KANGWOO_JOIN__'
+  'recruit-kangwoo-join':'__SCENE_RECRUIT_KANGWOO_JOIN__',
+  'combat-perimeter-warning':'__SCENE_COMBAT_PERIMETER_WARNING__',
+  'combat-walker-disable':'__SCENE_COMBAT_WALKER_DISABLE__',
+  'combat-drone-swarm':'__SCENE_COMBAT_DRONE_SWARM__',
+  'combat-checkpoint-breach':'__SCENE_COMBAT_CHECKPOINT_BREACH__'
 };
 
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */

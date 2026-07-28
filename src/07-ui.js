@@ -682,6 +682,23 @@ const UI = (()=>{
 
   /* ── EVENT SHEET ── */
   let curEv=null, curStory=null;
+  function combatHudHtml(evd){
+    const c=evd&&evd.combat;
+    if(!c) return '';
+    const edge=S.combat?S.combat.edge||0:0;
+    const grade=edge>=2?'우세':edge<0?'불리':'팽팽';
+    const injuries=Object.keys(S.injuries||{}).length;
+    const track=Array.from({length:c.total},(_,i)=>`<i class="${i<c.phase?'on':''}"></i>`).join('');
+    return `<section class="combat-hud" aria-label="교전 상황">
+      <div class="combat-hud-head"><span class="combat-phase">ENCOUNTER ${c.phase}/${c.total}</span>
+        <b class="combat-step">${c.step}</b><span class="combat-threat">${c.threat}</span></div>
+      <div class="combat-objective"><b>목표</b><span>${c.objective}</span></div>
+      <div class="combat-track" aria-hidden="true">${track}</div>
+      <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">전세 ${grade}</span>
+        <span class="${S.van<35?'bad':''}">차체 ${Math.ceil(S.van)}%</span>
+        <span class="${S.pursuit>=3?'bad':''}">관측 ${S.pursuit}/5</span>
+        ${injuries?`<span class="bad">부상 ${injuries}명</span>`:''}</div></section>`;
+  }
   function eventChoiceData(evd){
     let html='', count=0;
     evd.choices.forEach((c,i)=>{
@@ -690,8 +707,9 @@ const UI = (()=>{
       const rq=G.reqOk(req);
       const cost=G.reqCostText(req);
       count++;
-      html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
+      html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.tactic?`<span class="combat-tactic">${c.tactic}</span>`:''}${c.label}
         ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
+        ${c.combatRoll!==undefined?`<span class="combat-odds">현재 전세 · ${G.combatGrade(c)}</span>`:''}
         ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
     });
     return {html,count};
@@ -765,7 +783,7 @@ const UI = (()=>{
     const turns=buildStoryTurns(text,evd);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${sceneAlt} 사건 내용">${scene}<div class="event-head"><div>
       <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
-      <h2>${evd.title}</h2></div></div>${context}<div class="story-reader"></div></div>
+      <h2>${evd.title}</h2></div></div>${context}${combatHudHtml(evd)}<div class="story-reader"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     curStory={
@@ -775,12 +793,15 @@ const UI = (()=>{
         <div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>`,
       wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
         if(b.hasAttribute('disabled')) return;
-        resolveChoice(evd.choices[+b.dataset.i]);
+        const choice=evd.choices[+b.dataset.i];
+        SND.combat(choice.sfx||'select');
+        resolveChoice(choice);
       })
     };
     renderStoryState();
     wireSceneZoom(sheet);
     $('#ev-wrap').classList.add('on');
+    if(evd.sfx) SND.combat(evd.sfx);
   }
   function fmt(t){ return (t||'').replace(/\n/g,'<br>'); }
 
@@ -847,8 +868,11 @@ const UI = (()=>{
   }
 
   function resolveChoice(choice){
+    const oldCombat=$('#ev-sheet').querySelector('.combat-hud');
+    const combatHud=oldCombat?oldCombat.outerHTML:'';
     const out=G.pickOutcome(curEv, choice);
     const chips=G.applyFx(out.fx);
+    if(out.sfx) SND.combat(out.sfx);
     chips.push(...G.afterChoice(curEv, choice));
     if(S.ended) return;
     const sheet=$('#ev-sheet');
@@ -871,7 +895,7 @@ const UI = (()=>{
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
       <div class="event-head"><div><div class="tag">선택의 결과</div><h2>${curEv.title}</h2></div></div>
-      <div class="story-reader"></div><div class="story-result" aria-live="polite"></div></div>
+      ${combatHud}<div class="story-reader"></div><div class="story-result" aria-live="polite"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     curStory={
@@ -1240,6 +1264,11 @@ const UI = (()=>{
     const vanStage=G.vanStage();
     const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
     const m=missionHtml();
+    const injuryIds=Object.keys(S.injuries||{});
+    const injuryPanel=injuryIds.length?`<div class="st-sec"><h4>부상 · 전문 능력 일시 중지</h4>`+
+      injuryIds.map(id=>{const x=S.injuries[id];return `<div class="st-row"><span class="k">${G.injuryName(id)}</span>
+        <span class="v" style="flex:1;color:var(--danger)">${x.label} · ${x.days}일</span></div>`;}).join('')+
+      `<div class="csub">아침마다 회복한다. 운전사 부상은 피로를 더 쌓고, 동료 부상은 해당 퍼크를 잠시 멈춘다.</div></div>`:'';
 
     let now=`<div class="st-summary">
       <div class="st-metric ${S.fuel<10?'warn':''}"><span class="mk">연료</span><span class="mv">${Math.floor(S.fuel)}L</span></div>
@@ -1247,8 +1276,9 @@ const UI = (()=>{
       <div class="st-metric ${supplyDays<=1?'warn':''}"><span class="mk">보급</span><span class="mv">${supplyDays}일</span></div>
     </div>
     <div class="mission-strip ${m.danger?'danger':''}" style="border:1px solid var(--line);border-radius:10px;margin-bottom:11px">${m.html}</div>
+    ${injuryPanel}
     <div class="st-sec"><h4>운전사</h4>
-      <div class="st-row"><span class="k">나</span><span class="v" style="flex:1">Lv.${dlv} 「${G.driverTitle()}」 <small style="color:var(--faded)">연비 -${dlv*2}% · 피로 -${dlv*7}%</small></span></div>
+      <div class="st-row"><span class="k">나</span><span class="v" style="flex:1">Lv.${dlv} 「${G.driverTitle()}」 <small style="color:var(--faded)">연비 -${dlv*2}% · 피로 -${dlv*7}%</small>${G.isInjured('driver')?` <small style="color:var(--danger)">· ${S.injuries.driver.label}</small>`:''}</span></div>
       ${dNext?`<div class="st-row"><span class="k">다음 숙련</span>${bar(S.stats.km-D.driverLv[dlv].km, dNext.km-D.driverLv[dlv].km)}<span class="v">${Math.round(S.stats.km)}/${dNext.km}km</span></div>`:''}
       <div class="st-row"><span class="k">피로 ${ICO('fatigue_'+G.fatigueStage(), G.fatigueFace())}</span>${bar(S.fatigue,100,S.fatigue>=75)}<span class="v">${Math.floor(S.fatigue)}%</span></div>
       <div class="csub">85%부터 졸음 위험. 야영이나 숙박으로 회복한다.</div></div>
@@ -1265,7 +1295,7 @@ const UI = (()=>{
       <div class="st-row"><span class="k">${ICO('water')}물</span><span class="v" style="flex:1">${S.water} <small style="color:var(--faded)">≈ ${Math.floor(S.water/perDay)}일치</small></span></div>
       <div class="st-row"><span class="k">${ICO('food')}식량</span><span class="v" style="flex:1">${S.food} <small style="color:var(--faded)">≈ ${Math.floor(S.food/perDay)}일치</small></span></div>
       <div class="st-row"><span class="k">${ICO('scrap')}고철</span><span class="v" style="flex:1">${S.scrap}</span></div>
-      <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k} ${S.items[k]||0}`).join(' · ')}</span></div>
+      <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k==='탄약'?'소총탄':k} ${S.items[k]||0}`).join(' · ')}</span></div>
       ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}</div>`;
 
     let journey=`<div class="st-sec"><h4>여정</h4>
@@ -1312,7 +1342,7 @@ const UI = (()=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
       const state=st.perks.includes(p3.id)?'done':'lv'+st.lvl;
       const next=st.lvl<3?D.bondTh[st.lvl]:Math.max(1,st.bond);
-      return {id,c,st,p3,state,bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
+      return {id,c,st,p3,state,injury:S.injuries&&S.injuries[id],bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
     });
     let crew=`<div class="st-summary">
       <div class="st-metric"><span class="mk">동료</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
@@ -1322,7 +1352,7 @@ const UI = (()=>{
       (stories.length?`<div class="crew-status-list">`+stories.map(s=>`<div class="crew-status-card" data-comp2="${s.id}" role="button" tabindex="0">
         <span class="crew-status-face">${faceOf(s.id,s.c.face)}</span>
         <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}</small></span>
-        <span class="crew-status-state">${s.state==='done'?`★ ${s.p3.nm}`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?'<br>✦ 퍼크 대기':''}`}</span>
+        <span class="crew-status-state">${s.injury?`🩹 ${s.injury.label}<br>${s.injury.days}일`:(s.state==='done'?`★ ${s.p3.nm}`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?'<br>✦ 퍼크 대기':''}`)}</span>
         <span class="crew-status-bond"><i style="width:${s.bondPct}%"></i></span></div>`).join('')+`</div>`
         :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+
       `<div class="csub" style="margin-top:7px">${stories.length?'이름을 누르면 유대와 해금된 능력을 확인한다.':'지도와 명단에는 만나지 않은 사람을 미리 표시하지 않는다.'}</div></div>`;
@@ -1418,7 +1448,7 @@ const UI = (()=>{
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
 const SND = (()=>{
-  let ac=null, on=false, engineGain=null, noiseSrc=null;
+  let ac=null, on=false, engineGain=null, noiseSrc=null, sfxBuf=null, pulseTimer=null;
   function build(){
     ac=new (window.AudioContext||window.webkitAudioContext)();
     const buf=ac.createBuffer(1, ac.sampleRate*2, ac.sampleRate);
@@ -1430,6 +1460,9 @@ const SND = (()=>{
     engineGain=ac.createGain(); engineGain.gain.value=0;
     noiseSrc.connect(lp); lp.connect(engineGain); engineGain.connect(ac.destination);
     noiseSrc.start();
+    sfxBuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);
+    const white=sfxBuf.getChannelData(0);
+    for(let i=0;i<white.length;i++) white[i]=Math.random()*2-1;
   }
   function toggle(){
     if(!ac){ try{ build(); }catch(e){ return; } }
@@ -1444,7 +1477,62 @@ const SND = (()=>{
     const target= on? (driving?0.16:0.05):0;
     engineGain.gain.linearRampToValueAtTime(target, ac.currentTime+0.8);
   }
-  return {toggle, setDriving};
+  function pulse(kind){
+    const app=$('#app'); if(!app) return;
+    const cls=['hit','impact','metal','alarm','rifle','fire'].includes(kind)?'combat-hit':'combat-alert';
+    app.classList.remove('combat-hit','combat-alert');
+    void app.offsetWidth;
+    app.classList.add(cls);
+    clearTimeout(pulseTimer); pulseTimer=setTimeout(()=>app.classList.remove(cls),500);
+  }
+  function tone(type,f0,f1,dur,vol,delay=0){
+    const t=ac.currentTime+delay, o=ac.createOscillator(), g=ac.createGain();
+    o.type=type; o.frequency.setValueAtTime(Math.max(20,f0),t);
+    o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+dur);
+    g.gain.setValueAtTime(Math.max(.0001,vol),t);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+dur+.02);
+  }
+  function burst(freq,dur,vol,delay=0,q=.7){
+    const t=ac.currentTime+delay, s=ac.createBufferSource(), f=ac.createBiquadFilter(), g=ac.createGain();
+    s.buffer=sfxBuf; f.type='bandpass'; f.frequency.value=freq; f.Q.value=q;
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    s.connect(f); f.connect(g); g.connect(ac.destination); s.start(t); s.stop(t+dur+.02);
+  }
+  /* 외부 음원 없이 만드는 짧은 전투 효과음. 사운드 토글과 함께 완전히 꺼진다. */
+  function combat(kind='select'){
+    pulse(kind);
+    if(!on) return;
+    if(!ac){ try{ build(); }catch(e){ return; } }
+    if(ac.state==='suspended') ac.resume();
+    switch(kind){
+      case 'warning': tone('square',620,480,.11,.045); tone('square',620,480,.11,.045,.18); break;
+      case 'scan': tone('sine',980,1320,.16,.025); tone('sine',720,980,.12,.018,.12); break;
+      case 'drone': tone('sawtooth',92,118,.42,.018); tone('sawtooth',141,126,.36,.012,.03); break;
+      case 'walker': tone('sine',62,38,.22,.08); burst(180,.12,.035,.03); tone('sine',58,34,.2,.07,.24); break;
+      case 'heartbeat': tone('sine',68,42,.13,.065); tone('sine',64,40,.12,.055,.19); break;
+      case 'rifle': burst(1250,.075,.12); tone('sine',105,42,.24,.1); burst(260,.18,.05,.025); break;
+      case 'crossbow': case 'bolt':
+        tone('triangle',760,180,.12,.05); burst(2300,.07,.035,.02,1.4); break;
+      case 'metal': case 'tool':
+        tone('triangle',520,150,.3,.065); tone('sine',1180,760,.16,.022,.015); break;
+      case 'fire':
+        burst(720,.48,.055); burst(180,.24,.08,.08); break;
+      case 'hit': case 'impact':
+        burst(190,.2,.11); tone('sine',82,34,.27,.1); break;
+      case 'alarm':
+        tone('square',740,740,.13,.035); tone('square',540,540,.13,.035,.14);
+        tone('square',740,740,.13,.035,.28); break;
+      case 'hack':
+        tone('sine',420,680,.09,.025); tone('sine',680,920,.1,.025,.1); tone('sine',920,540,.14,.018,.22); break;
+      case 'engine': case 'escape':
+        tone('sawtooth',54,135,.48,.035); burst(110,.35,.025,.05); break;
+      case 'cover': case 'silence':
+        burst(420,.08,.018); tone('sine',120,82,.13,.018); break;
+      default: tone('sine',360,430,.06,.018);
+    }
+  }
+  return {toggle, setDriving, combat};
 })();
 /* ═══════════════════ BGM (외부 생성 트랙 — D.bgm 슬롯) ═══════════════════
    D.bgm[key]에 data URI를 넣으면 상황에 맞춰 자동 재생·크로스페이드.

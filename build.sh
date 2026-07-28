@@ -48,6 +48,7 @@ SCENE_KEYS=(
   RECRUIT_MINJI_FOLLOW RECRUIT_MINJI_JOIN RECRUIT_PARKSS_FOLLOW RECRUIT_PARKSS_JOIN
   RECRUIT_LEO_FOLLOW RECRUIT_LEO_JOIN RECRUIT_JAEYI_FOLLOW RECRUIT_JAEYI_JOIN
   RECRUIT_EUNSU_FOLLOW RECRUIT_EUNSU_JOIN RECRUIT_KANGWOO_FOLLOW RECRUIT_KANGWOO_JOIN
+  COMBAT_PERIMETER_WARNING COMBAT_WALKER_DISABLE COMBAT_DRONE_SWARM COMBAT_CHECKPOINT_BREACH
 )
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
@@ -127,6 +128,10 @@ SCENE_FILES=(
   assets/scenes/recruit-eunsu-join.jpg
   assets/scenes/recruit-kangwoo-follow.jpg
   assets/scenes/recruit-kangwoo-join.jpg
+  assets/scenes/combat-perimeter-warning.jpg
+  assets/scenes/combat-walker-disable.jpg
+  assets/scenes/combat-drone-swarm.jpg
+  assets/scenes/combat-checkpoint-breach.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do

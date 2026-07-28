@@ -429,7 +429,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 854종', r4['eventCount'] == 854, str(r4['eventCount']))
+    check('이벤트 860종', r4['eventCount'] == 860, str(r4['eventCount']))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',
@@ -441,7 +441,7 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 77종·빌드 주입', r4['sceneCount'] == 77 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 81종·빌드 주입', r4['sceneCount'] == 81 and r4['sceneDataReady'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
@@ -464,6 +464,37 @@ with sync_playwright() as p:
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('긴 사건 본문·7개 선택지 독립 스크롤', r4['eventScroll'] and
           r4['choiceScroll'] and r4['choiceDock'], str(r4))
+    rcombat = pg.evaluate('''() => {
+      const out={}, oldCombat=S.combat, oldInjuries=structuredClone(S.injuries||{});
+      const chains=[
+        ['patrol_walker','combat_walker_read','combat_walker_strike'],
+        ['patrol_swarm','combat_swarm_read','combat_swarm_break'],
+        ['patrol_toll','combat_toll_read','combat_toll_breach']
+      ];
+      out.threePhase=chains.every(ids=>ids.every((id,i)=>{
+        const e=D.events.find(x=>x.id===id);
+        return e&&e.combat&&e.combat.phase===i+1&&e.combat.total===3&&D.scenes[e.scene];
+      }));
+      UI.showEvent(D.events.find(e=>e.id==='patrol_walker')); UI.finishStory();
+      out.hud=!!document.querySelector('.combat-hud') &&
+        document.querySelector('.combat-hud').textContent.includes('정찰') &&
+        document.querySelector('.event-choice-dock').textContent.includes('엄폐');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.injuries={}; S.combat=null;
+      G.applyFx({combatStart:{id:'test',threat:'test'},combatEdge:2});
+      out.edge=S.combat&&S.combat.edge===2&&G.combatGrade({combatRoll:.5})==='우세';
+      G.applyFx({injury:{who:'driver',label:'테스트 타박',days:2}});
+      out.injury=G.isInjured('driver')&&S.injuries.driver.days===2;
+      G.applyFx({healInjury:'latest',combatEnd:1});
+      out.recovered=!G.isInjured('driver')&&S.combat===null;
+      out.sound=typeof SND.combat==='function';
+      S.combat=oldCombat; S.injuries=oldInjuries; G.save();
+      return out;
+    }''')
+    check('초계·드론·검문소 3단계 교전', rcombat['threePhase'], str(rcombat))
+    check('교전 HUD·전술 표식', rcombat['hud'], str(rcombat))
+    check('전세·부상·회복 상태 반영', rcombat['edge'] and rcombat['injury'] and rcombat['recovered'], str(rcombat))
+    check('Web Audio 전투 효과음 합성기', rcombat['sound'], str(rcombat))
     print('― 합류 전 의뢰')
     rr = pg.evaluate('''() => {
       const out={};
@@ -511,7 +542,7 @@ with sync_playwright() as p:
     check('상세 그림 지도 렌더러 유지', map_detail['rivers'] and map_detail['context'] >= 30, str(map_detail))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('854개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('860개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))

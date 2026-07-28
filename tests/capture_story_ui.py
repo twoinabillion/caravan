@@ -56,6 +56,11 @@ def main():
             "story_family_key",
             "es_backdoor",
             "seoul_core",
+            "patrol_walker",
+            "combat_walker_read",
+            "combat_walker_strike",
+            "patrol_swarm",
+            "patrol_toll",
         ):
             opened = page.evaluate("""event_id => {
                 const event = D.events.find(item => item.id === event_id)

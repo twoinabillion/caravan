@@ -23,6 +23,7 @@ G.newGame = (mode, name)=>{
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0},
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
+    combat:null, injuries:{},
   };
   rng = mulberry32(S.seed);
   S.wxNext = G.rollWx('clear');
@@ -54,6 +55,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S._lunchDay===undefined) S._lunchDay=0;
   if(!Array.isArray(S._storyQueue)) S._storyQueue=[];
   if(S.recruitQ===undefined) S.recruitQ=null;
+  if(S.combat===undefined) S.combat=null;
+  if(!S.injuries||Array.isArray(S.injuries)) S.injuries={};
   /* 즉시 영입이던 구버전에서 만남만 소진하고 합류하지 않은 경우,
      새 '합류 전 과제'를 다시 시작할 수 있도록 첫 만남을 복구한다. */
   const oldRecruitStarts={minji:'meet_scrapyard',parkss:'meet_bus',leo:'meet_hitchhiker',
@@ -87,6 +90,35 @@ G.partySize = ()=> 1 + S.party.length;
 G.fatigueStage = ()=> S.fatigue>=80?'bad' : S.fatigue>=60?'mid' : 'ok';
 G.fatigueFace  = ()=> ({ok:'🙂',mid:'😑',bad:'😩'})[G.fatigueStage()];
 G.hasComp = id=> S.party.includes(id);
+G.isInjured = id=> !!(S&&S.injuries&&S.injuries[id]&&S.injuries[id].days>0);
+G.injuryName = id=> id==='driver'?G.myName():(D.comps[id]&&D.comps[id].name)||id;
+G.addInjury = (who,label,days)=>{
+  let id=who;
+  if(who==='party') id=S.party.length?pick(S.party):'driver';
+  if(id!=='driver'&&!G.hasComp(id)) id='driver';
+  const prev=S.injuries[id], left=Math.max(days||2,prev?prev.days:0);
+  S.injuries[id]={label:label||'타박상',days:left};
+  return {id,label:S.injuries[id].label,days:left};
+};
+G.healInjury = (who)=>{
+  let id=who;
+  if(who==='latest'||!id){
+    const ids=Object.keys(S.injuries||{});
+    id=ids.sort((a,b)=>S.injuries[b].days-S.injuries[a].days)[0];
+  }
+  if(!id||!S.injuries[id]) return null;
+  const old={id,...S.injuries[id]}; delete S.injuries[id]; return old;
+};
+G.tickInjuries = ()=>{
+  if(!S.injuries) return;
+  for(const id of Object.keys(S.injuries)){
+    S.injuries[id].days--;
+    if(S.injuries[id].days<=0){
+      UI.toast(`🩹 ${G.injuryName(id)}의 ${S.injuries[id].label}이 가라앉았다`);
+      delete S.injuries[id];
+    }
+  }
+};
 G.edgeBetween = (a,b)=> D.edges.find(e=>(e[0]===a&&e[1]===b)||(e[0]===b&&e[1]===a));
 G.neighbors = (id)=> D.edges.filter(e=>e[0]===id||e[1]===id).map(e=>({id:e[0]===id?e[1]:e[0], km:e[2], road:e[3]}));
 G.fmtClock = ()=>{ const h=Math.floor(S.min/60)%24, m=Math.floor(S.min%60);
@@ -162,7 +194,8 @@ G.openRecruitStep = ()=>{
 };
 
 /* ── 유대 & 퍼크 (진전도) ── */
-G.hasPerk = (pid)=> S && S.party.some(id=> (S.comps[id].perks||[]).includes(pid));
+/* 부상 중에는 해당 동료의 전문 퍼크가 잠시 멈춘다. 기본 동행 효과는 유지된다. */
+G.hasPerk = (pid)=> S && S.party.some(id=> !G.isInjured(id)&&(S.comps[id].perks||[]).includes(pid));
 G.perkDef = (pid)=>{
   for(const cid in D.comps){ const P2=D.comps[cid].perks;
     for(const lv of [1,2]) for(const p of P2[lv]) if(p.id===pid) return p;
@@ -246,7 +279,8 @@ G.popStory = ()=>{
 /* 이벤트 해석 후 훅: 유대 획득 + 직업 부가 수확 */
 G.afterChoice = (evd, choice)=>{
   const extra=[];
-  if(choice.req&&choice.req.comp){ G.bond(choice.req.comp, 2); extra.push({t:`✦ ${D.comps[choice.req.comp].name} 유대 +2`, c:'item'}); }
+  const actingComp=choice.req&&(choice.req.healthyComp||choice.req.comp);
+  if(actingComp){ G.bond(actingComp, 2); extra.push({t:`✦ ${D.comps[actingComp].name} 유대 +2`, c:'item'}); }
   else if(choice.req&&choice.req.perk){ const cid=Object.keys(D.comps).find(k=>JSON.stringify(D.comps[k].perks).includes(choice.req.perk));
     if(cid&&G.hasComp(cid)){ G.bond(cid,2); extra.push({t:`✦ ${D.comps[cid].name} 유대 +2`, c:'item'}); } }
   if(evd.needsComp&&(!choice.req||choice.req.comp!==evd.needsComp)){ G.bond(evd.needsComp, 2);
@@ -257,8 +291,23 @@ G.afterChoice = (evd, choice)=>{
   }
   return extra;
 };
+G.combatOdds = (choice)=>{
+  const base=typeof choice.combatRoll==='number'?choice.combatRoll:0.52;
+  const edge=S&&S.combat?S.combat.edge||0:0;
+  let bonus=edge*0.12;
+  if(S&&S.up&&S.up.armor) bonus+=0.04;
+  if(S&&S.up&&S.up.scope&&choice.tactic==='사격') bonus+=0.08;
+  if(G.isInjured('driver')) bonus-=0.08;
+  return clamp(base+bonus,0.12,0.9);
+};
+G.combatGrade = choice=>{
+  const p=G.combatOdds(choice);
+  return p>=0.68?'우세':p<0.42?'불리':'팽팽';
+};
 G.pickOutcome = (evd, choice)=>{
   if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')) return choice.out[0];
+  if(choice.combatRoll!==undefined&&choice.out.length>1)
+    return rng()<G.combatOdds(choice)?choice.out[0]:choice.out[1];
   return G.rollOut(choice.out);
 };
 
@@ -289,7 +338,8 @@ G.advance = (mins)=>{
     const step = Math.min(m, toMid);
     S.min += step; m -= step;
     /* 깨어 있는 모든 시간에 피로가 쌓인다 (수면=camp가 유일한 리셋) */
-    S.fatigue = clamp(S.fatigue + step*0.045*(1-G.driverLv()*0.06), 0, 100);
+    const injuryMul=G.isInjured('driver')?1.2:1;
+    S.fatigue = clamp(S.fatigue + step*0.045*(1-G.driverLv()*0.06)*injuryMul, 0, 100);
     /* 정오 점심 */
     if(S.day>S._lunchDay && S.min>=12*60){ S._lunchDay=S.day; G.lunch(); }
     if(S.min>=24*60){ S.min=0; S.day++; G.dawn(); }
@@ -312,6 +362,7 @@ G.dawn = ()=>{
   // 날씨 실현: 예보가 오늘이 되고, 새 예보가 잡힌다
   const prevWx=S.wx;
   S.wx=S.wxNext; S.wxNext=G.rollWx(S.wx);
+  G.tickInjuries();
   if(S.driving) S.driving.wx=S.wx;
   if(S.wx!==prevWx) UI.toast(`${D.wx[S.wx].ic} ${D.wx[S.wx].nm}${D.wx[S.wx].hint?' — '+D.wx[S.wx].hint:''}`);
   let n = G.partySize();
@@ -567,6 +618,14 @@ G.applyFx = (fx)=>{
     chips.push({t:'🛡 장갑판: 피해 감소', c:'plus'}); }
   if(fx.van<0 && S.up&&S.up.bullbar){ fx={...fx, van:-Math.ceil(-fx.van*0.85)};
     chips.push({t:'🛡 전면 가드: 피해 감소', c:'plus'}); }
+  if(fx.combatStart){
+    const c=fx.combatStart;
+    S.combat={id:c.id||'encounter',threat:c.threat||'위협',edge:c.edge||0,startedDay:S.day};
+  }
+  if(fx.combatEdge&&S.combat){
+    S.combat.edge=clamp((S.combat.edge||0)+fx.combatEdge,-2,3);
+    chips.push({t:`전세 ${fx.combatEdge>0?'우세 +':'불리 '}${fx.combatEdge}`,c:fx.combatEdge>0?'plus':'minus'});
+  }
   const num = (k,label,unit)=>{ if(fx[k]){ const v=fx[k];
     if(k==='fuel') S.fuel=clamp(S.fuel+v,0,S.fuelMax);
     else if(k==='water') S.water=Math.max(0,S.water+v);
@@ -601,6 +660,18 @@ G.applyFx = (fx)=>{
     if(id){ S.known.push(id); chips.push({t:`🗺 ${D.nodes[id].name} 발견`, c:'item'}); } } }
   if(fx.dog){ S.dog=true; }
   if(fx.enterSeoul){ S.seoul={entered:true}; }
+  if(fx.injury){
+    const inj=G.addInjury(fx.injury.who,fx.injury.label,fx.injury.days);
+    chips.push({t:`🩹 ${G.injuryName(inj.id)} · ${inj.label} ${inj.days}일`,c:'minus'});
+  }
+  if(fx.healInjury){
+    const healed=G.healInjury(fx.healInjury);
+    if(healed) chips.push({t:`✚ ${G.injuryName(healed.id)} 부상 처치`,c:'plus'});
+  }
+  if(fx.combatEnd){
+    if(S.combat) chips.push({t:'교전 종료',c:'plus'});
+    S.combat=null;
+  }
   if(fx.chain){ S._chain = fx.chain; }   // 시트 닫힐 때 UI가 이어서 연다 (시네마틱 연쇄)
   if(fx.startRecruit) G.startRecruitQuest(fx.startRecruit);
   if(fx.recruitChoice) G.rememberRecruitChoice(fx.recruitChoice);
@@ -630,6 +701,10 @@ G.reqOk = (req)=>{
   if(req.stories && G.deedsDone().filter(d=>d.cat==='동료').length<req.stories)
     return {ok:false, t:`개인 서사 ${req.stories}개 필요`};
   if(req.comp && !G.hasComp(req.comp)) return {ok:false, t:`${D.comps[req.comp].name} 필요`};
+  if(req.healthyComp){
+    if(!G.hasComp(req.healthyComp)) return {ok:false, t:`${D.comps[req.healthyComp].name} 필요`};
+    if(G.isInjured(req.healthyComp)) return {ok:false, t:`${D.comps[req.healthyComp].name} 부상 회복 필요`};
+  }
   if(req.up && !(S.up&&S.up[req.up])) return {ok:false, t:`${(G.upDef(req.up)||{nm:req.up}).nm} 필요`};
   if(req.dog && !S.dog) return {ok:false, t:'보리가 없다'};
   if(req.item && !(S.items[req.item]>0)) return {ok:false, t:`${req.item} 필요`};
@@ -656,6 +731,7 @@ G.reqText = (req)=>{
   if(req.party) parts.push(`동료 ${S.party.length}/${req.party}`);
   if(req.stories) parts.push(`개인 서사 ${G.deedsDone().filter(d=>d.cat==='동료').length}/${req.stories}`);
   if(req.comp) parts.push(`동료: ${D.comps[req.comp].name}`);
+  if(req.healthyComp) parts.push(`전투 가능: ${D.comps[req.healthyComp].name}${G.isInjured(req.healthyComp)?' (부상)':''}`);
   if(req.item) parts.push(`아이템: ${req.item}${req.item2?'+'+req.item2:''}`);
   if(req.scrap) parts.push(`고철 ${req.scrap}`);
   if(req.fuel) parts.push(`연료 ${req.fuel}L`); if(req.water) parts.push(`물 ${req.water}`); if(req.food) parts.push(`식량 ${req.food}`);
@@ -672,6 +748,7 @@ G.reqVisible = (req)=>{
   if(req.party&&S.party.length<req.party) return false;
   if(req.stories&&G.deedsDone().filter(d=>d.cat==='동료').length<req.stories) return false;
   if(req.comp&&!G.hasComp(req.comp)) return false;
+  if(req.healthyComp&&!G.hasComp(req.healthyComp)) return false;
   if(req.up&&!(S.up&&S.up[req.up])) return false;
   if(req.dog&&!S.dog) return false;
   return true;
