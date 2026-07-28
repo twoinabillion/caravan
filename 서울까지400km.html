@@ -271,6 +271,20 @@ input{font-family:inherit}
 .story-turn.letter .turn-text{font-family:var(--serif)}
 .story-turn.record{border-style:dashed}.story-turn.record .turn-source{color:var(--amber-dim)}
 .story-turn.identity-hidden .turn-speaker b{color:var(--faded);letter-spacing:.16em}
+.story-chat{width:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:9px;padding:5px 0}
+.chat-msg{display:flex;align-items:flex-start;gap:8px;width:100%;transition:opacity .18s ease,transform .18s ease}
+.chat-msg.mine{flex-direction:row-reverse}
+.chat-msg.turn-enter{opacity:.2;transform:translateY(5px)}
+.chat-avatar{flex:none;width:40px;height:40px;border-radius:11px;object-fit:cover;image-rendering:pixelated;
+  border:1px solid #39456f;background:#0a0d18}
+.chat-copy{display:flex;flex-direction:column;align-items:flex-start;min-width:0;max-width:min(78%,400px)}
+.chat-msg.mine .chat-copy{align-items:flex-end}
+.chat-name{margin:0 2px 4px;color:var(--amber);font:700 10.5px/1.25 var(--mono)}
+.chat-msg.identity-hidden .chat-name{color:var(--faded);letter-spacing:.16em}
+.chat-bubble{padding:9px 11px;border:1px solid #303956;border-radius:4px 13px 13px 13px;
+  background:#171d2e;color:#d8dbe4;font-size:13.5px;line-height:1.58;white-space:pre-wrap;word-break:keep-all}
+.chat-msg.mine .chat-bubble{border-color:rgba(255,180,84,.28);border-radius:13px 4px 13px 13px;
+  background:rgba(255,180,84,.105);color:#eee7da}
 .story-next{width:100%;border-color:var(--amber-dim);background:rgba(255,180,84,.07);text-align:center}
 .story-result{margin-top:10px}.story-result .fx-line{margin-bottom:0}
 .choices{display:flex;flex-direction:column;gap:8px}
@@ -454,26 +468,29 @@ input{font-family:inherit}
 #inp-name:focus{border-color:var(--amber-dim);box-shadow:0 0 0 3px rgba(255,180,84,.08)}
 #bt-name{width:min(100%,220px);margin:0 auto}
 #name-card small{display:block;margin-top:9px;color:var(--dim);font:9.5px var(--mono)}
-#scr-intro{display:none;align-items:center;justify-content:center;padding:18px;cursor:pointer;
-  overflow-y:auto;background:radial-gradient(circle at 50% 15%,rgba(255,180,84,.08),transparent 44%),#05060c}
+#scr-intro{display:none;align-items:stretch;justify-content:stretch;padding:0;cursor:pointer;
+  overflow:hidden;background:#05060c}
 #scr-intro.on{display:flex}
-#intro-book{width:min(100%,720px);height:min(720px,calc(100dvh - 62px));max-height:calc(100vh - 56px);
-  overflow:hidden;border:1px solid #282b34;border-radius:13px;background:#0b0c11;
-  box-shadow:0 22px 70px #000;display:flex;flex-direction:column}
+#intro-book{width:100%;height:100dvh;max-height:none;overflow:hidden;border:0;border-radius:0;background:#0b0c11;
+  box-shadow:none;display:flex;flex-direction:column}
 #intro-visual{position:relative;aspect-ratio:16/9;overflow:hidden;background:#05060c}
 #intro-visual:after{content:"";position:absolute;inset:0;box-shadow:inset 0 -30px 44px rgba(5,6,12,.44)}
 #intro-img{width:100%;height:100%;object-fit:cover;display:block}
-#intro-page{padding:15px 18px 24px;max-height:none;min-height:0;overflow-y:auto;display:flex;flex:1;flex-direction:column}
+#intro-page{padding:15px 18px calc(32px + env(safe-area-inset-bottom));max-height:none;min-height:0;
+  overflow-y:auto;display:flex;flex:1;flex-direction:column}
 #intro-meta{display:flex;justify-content:space-between;gap:12px;color:var(--amber-dim);
   font:10px/1.4 var(--mono);letter-spacing:.08em}
 #intro-count{color:var(--dim)}
 #intro-title{font:700 20px/1.35 var(--serif);margin:5px 0 8px;color:#f0eadc}
 #intro-txt{font-family:var(--serif);font-size:14.5px;line-height:1.75;color:#d6d9e2;min-height:154px;
-  display:flex;flex:1;align-items:flex-start}
+  display:flex;flex:1;align-items:stretch}
 #intro-txt .story-reader{min-height:154px}
 #intro-txt .story-turn{min-height:240px;padding:14px 2px 4px;border:0;border-radius:0;background:transparent;box-shadow:none;flex:0 0 auto}
 #intro-txt .turn-text{font-family:var(--serif);font-size:14.5px;line-height:1.7;color:#d6d9e2}
 #intro-txt .story-turn.dialogue .turn-text,#intro-txt .story-turn.letter .turn-text{padding-left:58px}
+#intro-txt .story-chat{justify-content:flex-start;padding:10px 2px 8px}
+#intro-txt .chat-bubble{font-family:var(--serif);font-size:14px;line-height:1.62}
+#intro-txt .chat-copy{max-width:min(79%,440px)}
 #intro-txt .em{color:var(--amber)}
 #intro-txt .ai{color:var(--cheollian);font-family:var(--mono);font-size:14px}
 #intro-hint{position:fixed;bottom:6px;left:0;right:0;text-align:center;font-family:var(--mono);
@@ -493,8 +510,9 @@ input{font-family:inherit}
 .crew-status-bond{grid-column:2/4;height:3px;background:#080b14;border-radius:3px;overflow:hidden}
 .crew-status-bond i{display:block;height:100%;background:linear-gradient(90deg,var(--cheollian),var(--amber));border-radius:3px}
 @media(max-height:720px){
-  #scr-intro{align-items:flex-start;padding:8px 12px 22px}
-  #intro-book{height:calc(100dvh - 30px);max-height:none}
+  #intro-page{padding-top:12px}
+  #intro-title{font-size:18px;margin-bottom:4px}
+  #intro-txt .story-chat{padding-top:5px}
 }
 @keyframes blink{50%{opacity:.25}}
 
@@ -691,7 +709,7 @@ input{font-family:inherit}
       <div id="intro-page">
         <div id="intro-meta"><span id="intro-era"></span><span id="intro-count"></span></div>
         <h2 id="intro-title"></h2>
-        <div id="intro-txt" aria-live="polite" aria-atomic="true"></div>
+        <div id="intro-txt" aria-live="polite" aria-atomic="false"></div>
       </div>
     </div>
     <div id="intro-hint">눌러서 다음 장</div>
@@ -12952,21 +12970,24 @@ const UI = (()=>{
       if(page.voice) VO.play(page.voice);
     }
     const beats=page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page.text||''}];
-    const beat=personalizedIntroBeat(beats[Math.min(introTurnIdx,beats.length-1)]);
+    const introBeats=beats.map(personalizedIntroBeat);
     $('#intro-img').src=scene||'';
     $('#intro-img').alt=`${page.title} 장면`;
     $('#intro-era').textContent=page.era||'';
     $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length} · ${introTurnIdx+1} / ${beats.length}`;
     $('#intro-title').textContent=page.title||'';
-    $('#intro-txt').innerHTML=storyTurnHtml(beat,{intro:true});
-    $('#intro-hint').textContent=introTurnIdx<beats.length-1?'눌러서 다음 대화':'눌러서 다음 장';
+    $('#intro-txt').innerHTML=storyReaderHtml(introBeats,introTurnIdx,{intro:true});
+    const nextBeat=introBeats[introTurnIdx+1];
+    $('#intro-hint').textContent=nextBeat
+      ? nextBeat.kind==='dialogue'?'눌러서 다음 말풍선':'눌러서 다음 장면'
+      : '눌러서 다음 장';
     const book=$('#intro-book');
     if(newPage){
       book.style.opacity=0;
       $('#scr-intro').scrollTop=0;
       requestAnimationFrame(()=>{ book.style.transition='opacity .45s'; book.style.opacity=1; });
     } else {
-      const turn=$('#intro-txt .story-turn');
+      const turn=$('#intro-txt .story-turn, #intro-txt .chat-msg:last-child');
       if(turn){
         turn.classList.add('turn-enter');
         requestAnimationFrame(()=>turn.classList.remove('turn-enter'));
@@ -13157,6 +13178,28 @@ const UI = (()=>{
       : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
     return `<article class="story-turn ${kind}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}" data-kind="${kind}" aria-live="polite">
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
+  }
+  function chatMessageHtml(turn, newest=false){
+    const person=speakerInfo(turn.who,turn.name);
+    const mine=['me','player_child','나'].includes(person.id);
+    const hidden=person.name==='???';
+    const faceAlt=hidden?'이름을 모르는 사람':person.name;
+    const face=person.portrait
+      ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상">`
+      : '';
+    return `<div class="chat-msg ${mine?'mine':'other'}${hidden?' identity-hidden':''}${newest?' chat-newest':''}">
+      ${face}<div class="chat-copy"><b class="chat-name">${esc(person.name)}</b>
+      <div class="chat-bubble">${fmt(turn.text||'')}</div></div></div>`;
+  }
+  function storyReaderHtml(turns,index,opt={}){
+    const safe=Math.min(Math.max(0,index),Math.max(0,turns.length-1));
+    const current=turns[safe]||{kind:'narration',text:'잠시 말이 끊겼다.'};
+    if(current.kind!=='dialogue') return storyTurnHtml(current,opt);
+    let start=safe;
+    while(start>0&&turns[start-1].kind==='dialogue') start--;
+    const run=turns.slice(start,safe+1);
+    return `<section class="story-chat${opt.intro?' intro-chat':''}" aria-live="polite" aria-atomic="false">
+      ${run.map((turn,i)=>chatMessageHtml(turn,i===run.length-1)).join('')}</section>`;
   }
   function eventSpeakerCandidates(evd){
     const ids=[];
@@ -13568,7 +13611,12 @@ const UI = (()=>{
     const reader=sheet.querySelector('.story-reader');
     const dock=sheet.querySelector('.event-choice-dock');
     const turn=state.turns[Math.min(state.index,state.turns.length-1)];
-    reader.innerHTML=storyTurnHtml(turn);
+    reader.innerHTML=storyReaderHtml(state.turns,state.index);
+    const entering=reader.querySelector('.story-turn, .chat-msg:last-child');
+    if(entering){
+      entering.classList.add('turn-enter');
+      requestAnimationFrame(()=>entering.classList.remove('turn-enter'));
+    }
     const last=state.index>=state.turns.length-1;
     if(!last){
       const next=state.turns[state.index+1];
