@@ -19,7 +19,7 @@ def enter_game(page):
     page.wait_for_timeout(500)
     page.click("#bt-new")
     page.click("#mode-on")
-    for _ in range(page.evaluate("D.intro.length")):
+    for _ in range(page.evaluate("D.intro.reduce((n,p)=>n+p.beats.length,0)")):
         page.click("#scr-intro")
         page.wait_for_timeout(80)
     page.fill("#inp-name", "다온")
@@ -70,7 +70,7 @@ with sync_playwright() as playwright:
     page.evaluate(
         """() => {
           document.querySelector('#toasts').replaceChildren();
-          document.querySelector('#bubbles').replaceChildren();
+          UI.clearSpeech();
         }"""
     )
 

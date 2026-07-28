@@ -5,7 +5,7 @@ const el = (tag,cls,html)=>{ const e=document.createElement(tag); if(cls) e.clas
 const UI = (()=>{
   let screen='title';          // title|mode|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
-  let introIdx=0, pendingMode='onroad';
+  let introIdx=0, introTurnIdx=0, pendingMode='onroad';
   let arrivalTimer=0;
 
   /* ── modal state ── */
@@ -76,6 +76,11 @@ const UI = (()=>{
   function wire(){
     /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
     document.addEventListener('keydown',e=>{
+      if(screen==='intro'&&(e.key==='Enter'||e.key===' ')){
+        e.preventDefault();
+        nextIntro();
+        return;
+      }
       const b=e.target.closest&&e.target.closest('[role="button"]');
       if(!b||b.tagName==='BUTTON'||(e.key!=='Enter'&&e.key!==' ')) return;
       e.preventDefault(); b.click();
@@ -136,28 +141,57 @@ const UI = (()=>{
     else { lock.innerHTML='🔒 이 호스팅 환경(클로드 아티팩트)은 보안 정책상 외부 API 호출이 차단됩니다.<br>게임 HTML 파일을 로컬에서 브라우저로 열면 오프로드 모드가 활성화됩니다.'; }
   }
   function startNew(mode){
-    pendingMode=mode; introIdx=0;
-    renderIntro();
+    pendingMode=mode; introIdx=0; introTurnIdx=0;
+    renderIntro(true);
     show('scr-intro');
   }
-  function renderIntro(){
-    VO.stop(); VO.play('intro'+(introIdx+1));
+  function renderIntro(newPage){
     const page=D.intro[introIdx], scene=D.scenes&&D.scenes[page.scene];
+    if(newPage){
+      VO.stop();
+      /* 인트로는 화자별 턴이다. 현재 장면과 정확히 맞는 음성이
+         명시된 경우에만 재생하고, 구형 intro1~5 장문 음성은 쓰지 않는다. */
+      if(page.voice) VO.play(page.voice);
+    }
+    const beats=page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page.text||''}];
+    const beat=beats[Math.min(introTurnIdx,beats.length-1)];
     $('#intro-img').src=scene||'';
     $('#intro-img').alt=`${page.title} 장면`;
     $('#intro-era').textContent=page.era||'';
-    $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length}`;
+    $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length} · ${introTurnIdx+1} / ${beats.length}`;
     $('#intro-title').textContent=page.title||'';
-    $('#intro-txt').innerHTML=page.text||'';
+    $('#intro-txt').innerHTML=storyTurnHtml(beat,{intro:true});
+    $('#intro-hint').textContent=introTurnIdx<beats.length-1?'눌러서 다음 대화':'눌러서 다음 장';
     const book=$('#intro-book');
-    book.style.opacity=0;
-    $('#scr-intro').scrollTop=0;
-    requestAnimationFrame(()=>{ book.style.transition='opacity .45s'; book.style.opacity=1; });
+    if(newPage){
+      book.style.opacity=0;
+      $('#scr-intro').scrollTop=0;
+      requestAnimationFrame(()=>{ book.style.transition='opacity .45s'; book.style.opacity=1; });
+    } else {
+      const turn=$('#intro-txt .story-turn');
+      if(turn){
+        turn.classList.add('turn-enter');
+        requestAnimationFrame(()=>turn.classList.remove('turn-enter'));
+      }
+    }
   }
   function nextIntro(){
+    const page=D.intro[introIdx];
+    const beats=page&&page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page?.text||''}];
+    if(introTurnIdx<beats.length-1){
+      introTurnIdx++;
+      renderIntro(false);
+      return;
+    }
     introIdx++;
+    introTurnIdx=0;
     if(introIdx>=D.intro.length){ show('scr-name'); setTimeout(()=>{ const i=$('#inp-name'); if(i){ i.value=''; i.focus(); } }, 80); }
-    else renderIntro();
+    else renderIntro(true);
+  }
+  function skipIntro(){
+    introIdx=D.intro.length;
+    introTurnIdx=0;
+    show('scr-name');
   }
   function enterGame(){
     show('scr-game'); screen='game';
@@ -277,10 +311,148 @@ const UI = (()=>{
 
   /* ── panel ── */
   function faceOf(id, fallback){
-    return D.portraits[id]? `<img class="pimg" src="${D.portraits[id]}" alt="">` : fallback;
+    const name=(D.comps&&D.comps[id]&&D.comps[id].name)||(D.npcs&&D.npcs[id]&&D.npcs[id].name)||(id==='me'?'나':id);
+    return D.portraits[id]? `<img class="pimg" src="${D.portraits[id]}" alt="${esc(name)} 초상">` : fallback;
   }
   function npcFace(id, fallback){
-    return D.portraits[id]? `<img class="npc-pimg" src="${D.portraits[id]}" alt="">` : fallback;
+    const name=(D.comps&&D.comps[id]&&D.comps[id].name)||(D.npcs&&D.npcs[id]&&D.npcs[id].name)||id;
+    return D.portraits[id]? `<img class="npc-pimg" src="${D.portraits[id]}" alt="${esc(name)} 초상">` : fallback;
+  }
+  const esc=(v)=>String(v??'').replace(/[&<>"']/g,ch=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[ch]);
+  const stripTags=(v)=>String(v||'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
+  function speakerInfo(who, label){
+    const key=who==='나'?'me':who;
+    const manual={
+      me:'나', grandfather:'할아버지', mother:'엄마', father:'아빠',
+      intro_child:'서울에서 온 아이', cheollian:'천리안', radio:'라디오',
+      sys:'길 위', record:'기록', unknown:'누군가'
+    };
+    const comp=D.comps&&D.comps[key], npc=D.npcs&&D.npcs[key];
+    const playerName=key==='me'&&typeof S!=='undefined'&&S&&G.myName?G.myName():'나';
+    return {
+      id:key,
+      name:label||(key==='me'?playerName:(comp&&comp.name)||(npc&&npc.name)||manual[key]||who||'누군가'),
+      portrait:D.portraits&&D.portraits[key]||null
+    };
+  }
+  function storyTurnHtml(turn, opt={}){
+    const kind=turn.kind||'narration';
+    const person=speakerInfo(turn.who,turn.name);
+    const hasPortrait=!!person.portrait&&!['narration','ai','radio'].includes(kind);
+    const source={
+      narration:'장면', dialogue:'대화', thought:'생각', ai:'AI 방송',
+      radio:'라디오', letter:'편지', record:'기록'
+    }[kind]||'장면';
+    const face=hasPortrait
+      ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(person.name)} 초상">`
+      : '';
+    const speaker=['dialogue','thought','letter'].includes(kind)
+      ? `<div class="turn-speaker">${face}<span><small>${source}</small><b>${esc(person.name)}</b></span></div>`
+      : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
+    return `<article class="story-turn ${kind}${opt.intro?' intro-turn':''}" data-kind="${kind}" aria-live="polite">
+      ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
+  }
+  function eventSpeakerCandidates(evd){
+    const ids=[];
+    const add=(id)=>{ if(id&&id!=='unknown'&&!ids.includes(id)) ids.push(id); };
+    add(evd&&evd.needsComp);
+    add(evd&&evd.needsComp2);
+    add(evd&&D.eventPortraits&&D.eventPortraits[evd.id]);
+    const title=stripTags(evd&&evd.title);
+    for(const [id,c] of Object.entries(D.comps||{})){ if(title.includes(c.name)) add(id); }
+    for(const [id,n] of Object.entries(D.npcs||{})){ if(title.includes(n.name)) add(id); }
+    if(evd&&(evd.type==='대화'||evd.needsComp||evd.needsComp2)) add('me');
+    return ids;
+  }
+  function speakerRegistry(){
+    const out=[
+      {id:'grandfather',names:['할아버지']},{id:'mother',names:['엄마','어머니']},
+      {id:'father',names:['아빠','아버지']},{id:'intro_child',names:['서울에서 온 아이']},
+      {id:'me',names:['내가','나는','내 쪽','나도']}
+    ];
+    for(const [id,c] of Object.entries(D.comps||{})) out.push({id,names:[c.name]});
+    for(const [id,n] of Object.entries(D.npcs||{})) out.push({id,names:[n.name]});
+    return out.sort((a,b)=>Math.max(...b.names.map(x=>x.length))-Math.max(...a.names.map(x=>x.length)));
+  }
+  function inferQuoteSpeaker(before, after, evd, state){
+    const b=stripTags(before).slice(-100), a=stripTags(after).slice(0,100);
+    const verbs='말|묻|물었|대답|답했|외치|중얼|소리|웃|받았|선언|덧붙|불쑥|고개';
+    for(const item of speakerRegistry()){
+      for(const name of item.names){
+        const safe=name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+        if(new RegExp(`^\\s*${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})`).test(a)
+          ||new RegExp(`${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})[^.。!?]{0,10}$`).test(b)){
+          state.last=item.id;
+          return {kind:'dialogue',who:item.id};
+        }
+      }
+    }
+    if(/^(?:\s*)(간판|팻말|표지판|화면|단말|종이|문구|기록)/.test(a)
+      ||/(간판|팻말|표지판|화면|단말|종이|문구|기록)[^.。!?]{0,24}$/.test(b)){
+      state.last='record';
+      return {kind:'record',who:'record',name:'기록'};
+    }
+    const anonymous=['아이','노인','할머니','할아버지','여자','남자','상인','군인','경비병','직원','소년','소녀','목소리'];
+    for(const name of anonymous){
+      if(new RegExp(`^\\s*${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})`).test(a)
+        ||new RegExp(`${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})[^.。!?]{0,8}$`).test(b)){
+        state.last=name;
+        return {kind:'dialogue',who:'unknown',name};
+      }
+    }
+    const candidates=state.candidates;
+    if(candidates.length){
+      const next=candidates.find(id=>id!==state.last)||candidates[0];
+      state.last=next;
+      return {kind:'dialogue',who:next};
+    }
+    state.last='unknown';
+    return {kind:'dialogue',who:'unknown',name:'누군가'};
+  }
+  function buildStoryTurns(value, evd={}){
+    let source=String(value||'').trim();
+    if(!source) return [{kind:'narration',text:'잠시 말이 끊겼다.'}];
+    const ai=[];
+    source=source.replace(/<span\s+class=["'][^"']*(?:ai|ai-voice)[^"']*["'][^>]*>([\s\S]*?)<\/span>/gi,
+      (_,text)=>`\n\n@@AI${ai.push(text)-1}@@\n\n`);
+    const tags=[];
+    source=source.replace(/<[^>]+>/g,tag=>`@@TAG${tags.push(tag)-1}@@`);
+    const restore=(text)=>String(text||'').replace(/@@TAG(\d+)@@/g,(_,i)=>tags[+i]||'').trim();
+    const turns=[], state={candidates:eventSpeakerCandidates(evd),last:null};
+    const pushNarration=(raw)=>{
+      const restored=restore(raw).trim();
+      if(!stripTags(restored)) return;
+      const parts=restored.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+      for(const part of parts){
+        const thought=/^\([\s\S]+\)$/.test(stripTags(part));
+        turns.push({
+          kind:thought?'thought':'narration',
+          who:thought?'me':undefined,
+          text:thought?part.replace(/^\(/,'').replace(/\)$/,''):part
+        });
+      }
+    };
+    for(const paragraph of source.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean)){
+      const aiOnly=paragraph.match(/^@@AI(\d+)@@$/);
+      if(aiOnly){
+        turns.push({kind:'ai',who:'cheollian',name:'천리안 방송',text:ai[+aiOnly[1]]||''});
+        continue;
+      }
+      let cursor=0, match;
+      const re=/[“"]([\s\S]*?)[”"]/g;
+      while((match=re.exec(paragraph))){
+        pushNarration(paragraph.slice(cursor,match.index));
+        const before=restore(paragraph.slice(0,match.index));
+        const after=restore(paragraph.slice(re.lastIndex));
+        const speaker=inferQuoteSpeaker(before,after,evd,state);
+        turns.push({...speaker,text:restore(match[1])});
+        cursor=re.lastIndex;
+      }
+      pushNarration(paragraph.slice(cursor));
+    }
+    return turns.length?turns:[{kind:'narration',text:restore(source)}];
   }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
@@ -442,10 +614,10 @@ const UI = (()=>{
   }
 
   /* ── bubbles ── */
+  const speechQueue=[];
+  let speechBusy=false, speechTimer=0;
   function playChat(lines){
-    lines.forEach((ln,i)=>{
-      setTimeout(()=>{ if(S && S.driving) speak({who:ln[0], t:ln[1]}); }, i*3000);
-    });
+    lines.forEach(ln=>speak({who:ln[0],t:ln[1],drivingOnly:true}));
   }
   function playRadio(){
     const r=G.pickRadio(); if(!r) return;
@@ -453,8 +625,18 @@ const UI = (()=>{
     VO.play(r.key);
   }
   function speak(b){
+    if(!b||!b.t) return;
+    speechQueue.push(b);
+    if(!speechBusy) showNextSpeech();
+  }
+  function showNextSpeech(){
     const wrap=$('#bubbles');
-    while(wrap.children.length>=2) wrap.firstElementChild.remove();
+    clearTimeout(speechTimer);
+    wrap.innerHTML='';
+    const b=speechQueue.shift();
+    if(!b){ speechBusy=false; return; }
+    if(b.drivingOnly&&(!S||!S.driving)){ showNextSpeech(); return; }
+    speechBusy=true;
     const isAi = b.who==='cheollian';
     const isNarration = b.who==='sys';
     const isThought = b.who==='나' && /^\s*\([\s\S]*\)\s*$/.test(b.t);
@@ -464,22 +646,28 @@ const UI = (()=>{
       else if(S&&S.party){ const k=S.party.indexOf(b.who); if(k>=0) ri=k+1; }
       if(ri>=0) SCENE.talkPulse(ri, 3.5);
     }
-    if(b.who==='radio'){
-      const bb=el('div','bubble radio', `<span class="who">📻</span>`+b.t);
-      wrap.appendChild(bb);
-      requestAnimationFrame(()=>bb.classList.add('show'));
-      setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, 7000);
-      return;
-    }
-    const kind=isAi?' ai':isNarration?' narration':isThought?' thought':'';
+    const isRadio=b.who==='radio';
+    const kind=isAi?' ai':isNarration?' narration':isThought?' thought':isRadio?' radio':' dialogue';
     const text=isThought?b.t.trim().slice(1,-1):b.t;
-    const bb=el('div','bubble'+kind,
-      (!isNarration&&!isThought&&!isAi? `<span class="who">${b.who==='나'?G.myName():(D.comps[b.who]?.name||b.who)}</span>`:'')
-      + (isAi? `<span class="who">천리안</span>`:'') + text);
+    const profile=speakerInfo(isNarration?'sys':isAi?'cheollian':isRadio?'radio':b.who);
+    const face=profile.portrait&&!isAi&&!isNarration&&!isRadio
+      ? `<img class="bubble-face" src="${profile.portrait}" alt="${esc(profile.name)} 초상">`:'';
+    const label=isNarration?'길 위':isThought?'생각':isAi?'천리안 방송':isRadio?'라디오':profile.name;
+    const bb=el('div','bubble'+kind,`${face}<span class="bubble-copy"><span class="who">${esc(label)}</span><span>${text}</span></span>`);
     wrap.appendChild(bb);
     requestAnimationFrame(()=>bb.classList.add('show'));
-    const hold=isNarration?3800:isThought?4200:4600;
-    setTimeout(()=>{ bb.classList.remove('show'); setTimeout(()=>bb.remove(),400); }, hold);
+    const hold=isRadio?7000:isNarration?3800:isThought?4200:Math.min(6800,4200+Math.max(0,text.length-32)*38);
+    speechTimer=setTimeout(()=>{
+      bb.classList.remove('show');
+      speechTimer=setTimeout(()=>{ bb.remove(); speechBusy=false; showNextSpeech(); },350);
+    },hold);
+  }
+  function clearSpeech(){
+    clearTimeout(speechTimer);
+    speechQueue.length=0;
+    speechBusy=false;
+    const wrap=$('#bubbles');
+    if(wrap) wrap.replaceChildren();
   }
 
   /* ── toast ── */
@@ -493,9 +681,61 @@ const UI = (()=>{
   }
 
   /* ── EVENT SHEET ── */
-  let curEv=null;
+  let curEv=null, curStory=null;
+  function eventChoiceData(evd){
+    let html='', count=0;
+    evd.choices.forEach((c,i)=>{
+      const req=G.choiceReq(c);
+      if(!G.reqVisible(req)) return;
+      const rq=G.reqOk(req);
+      const cost=G.reqCostText(req);
+      count++;
+      html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
+        ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
+        ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
+    });
+    return {html,count};
+  }
+  function wireSceneZoom(sheet){
+    const sceneFrame=sheet.querySelector('.event-scene-frame');
+    if(sceneFrame) sceneFrame.onclick=()=>sceneFrame.classList.toggle('zoomed');
+  }
+  function renderStoryState(){
+    const state=curStory, sheet=$('#ev-sheet');
+    if(!state||!sheet) return;
+    const reader=sheet.querySelector('.story-reader');
+    const dock=sheet.querySelector('.event-choice-dock');
+    const turn=state.turns[Math.min(state.index,state.turns.length-1)];
+    reader.innerHTML=storyTurnHtml(turn);
+    const last=state.index>=state.turns.length-1;
+    if(!last){
+      const next=state.turns[state.index+1];
+      const nextLabel=next.kind==='dialogue'||next.kind==='letter'?'다음 대화'
+        :next.kind==='ai'||next.kind==='radio'?'다음 방송':'다음 장면';
+      dock.innerHTML=`<div class="choice-dock-head"><span>${state.label} · ${state.index+1}/${state.turns.length}</span>
+        <small>한 사람씩 듣는다</small></div>
+        <button class="choice story-next" type="button">${nextLabel}<span class="req">${state.index+2} / ${state.turns.length}</span></button>`;
+      dock.querySelector('.story-next').onclick=()=>{
+        state.index++;
+        renderStoryState();
+        const scroll=sheet.querySelector('.event-scroll');
+        if(scroll&&reader) scroll.scrollTo({top:Math.max(0,reader.offsetTop-12),behavior:'auto'});
+      };
+      return;
+    }
+    dock.innerHTML=state.finalDock;
+    if(state.reveal&&!state.revealed){ state.revealed=true; state.reveal(); }
+    if(state.wireFinal) state.wireFinal(dock);
+  }
+  function finishStory(){
+    if(!curStory) return false;
+    curStory.index=Math.max(0,curStory.turns.length-1);
+    renderStoryState();
+    return true;
+  }
   function showEvent(evd){
     curEv=evd;
+    curStory=null;
     bgmEvKey = (evd.type==='추적'||evd.type==='위기'||evd.ai)?'tension': evd.type==='스토리'?'story':null;
     if(evd.id==='leo_broadcast') BGM.playSongOnce();   // 400km 송출 — 노래가 울려 퍼지는 그 장면
     const CVO={ai_vending:'cheollian_01', exp_glasshouse:'cheollian_02', ai_census:'cheollian_03',
@@ -514,9 +754,6 @@ const UI = (()=>{
     const sceneSrc=sceneKey&&D.scenes&&D.scenes[sceneKey];
     const sceneAlt=(evd.title||'길 위의 사건').replace(/"/g,'&quot;');
     const scene=sceneSrc?`<div class="event-scene-frame" role="button" tabindex="0" aria-label="${sceneAlt} 장면 크게 보기"><img class="event-scene" src="${sceneSrc}" alt="${sceneAlt} 장면"><span class="scene-zoom" aria-hidden="true">↗</span></div>`:'';
-    const portraitKey=D.eventPortraits&&D.eventPortraits[evd.id];
-    const portrait=portraitKey&&D.portraits[portraitKey]
-      ? `<img class="event-portrait" src="${D.portraits[portraitKey]}" alt="">` : '';
     let context=D.storyContext&&D.storyContext[evd.id]
       ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
     const recruitQ=S.recruitQ, recruitDef=recruitQ&&D.recruitQuests[recruitQ.id];
@@ -524,29 +761,25 @@ const UI = (()=>{
     if(recruitDef&&approach&&(evd.id===recruitDef.follow||evd.id===recruitDef.join)){
       context=`<div class="story-context"><b>우리가 앞에서 한 일 · ${approach.label}</b>${approach.memory}</div>`+context;
     }
-    let choices='', choiceCount=0;
-    evd.choices.forEach((c,i)=>{
-      if(!G.reqVisible(c.req)) return;
-      const rq=G.reqOk(c.req);
-      const cost=G.reqCostText(c.req);
-      choiceCount++;
-      choices+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.label}
-        ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
-        ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
-    });
-    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${sceneAlt} 사건 내용">${scene}<div class="event-head">${portrait}<div>
+    const choices=eventChoiceData(evd);
+    const turns=buildStoryTurns(text,evd);
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${sceneAlt} 사건 내용">${scene}<div class="event-head"><div>
       <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
-      <h2>${evd.title}</h2></div></div>${context}<div class="body">${fmt(text)}</div></div>
-      <div class="event-choice-dock"><div class="choice-dock-head"><span>선택 · ${choiceCount}</span>
-      <small>${choiceCount>3?'위아래로 밀어 모두 보기':'하나를 고른다'}</small></div>
-      <div class="choices" role="group" aria-label="선택지 목록">${choices}</div></div>`;
+      <h2>${evd.title}</h2></div></div>${context}<div class="story-reader"></div></div>
+      <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
-    sheet.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
-      if(b.hasAttribute('disabled'))return;
-      resolveChoice(evd.choices[+b.dataset.i]);
-    });
-    const sceneFrame=sheet.querySelector('.event-scene-frame');
-    if(sceneFrame) sceneFrame.onclick=()=>sceneFrame.classList.toggle('zoomed');
+    curStory={
+      phase:'event',label:evd.type==='대화'?'대화':'이야기',turns,index:0,
+      finalDock:`<div class="choice-dock-head"><span>선택 · ${choices.count}</span>
+        <small>${choices.count>3?'위아래로 밀어 모두 보기':'내가 할 일을 고른다'}</small></div>
+        <div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>`,
+      wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
+        if(b.hasAttribute('disabled')) return;
+        resolveChoice(evd.choices[+b.dataset.i]);
+      })
+    };
+    renderStoryState();
+    wireSceneZoom(sheet);
     $('#ev-wrap').classList.add('on');
   }
   function fmt(t){ return (t||'').replace(/\n/g,'<br>'); }
@@ -620,8 +853,13 @@ const UI = (()=>{
     if(S.ended) return;
     const sheet=$('#ev-sheet');
     sheet.classList.add('event-mode');
-    let body=`<div class="tag">${curEv.title}</div><div class="outcome">${fmt(typeof out.text==='function'? out.text(S):out.text)}</div>`;
-    if(chips.length){ body+='<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'; }
+    const outcomeText=typeof out.text==='function'?out.text(S):out.text;
+    const turns=buildStoryTurns(outcomeText,curEv);
+    const oldScene=sheet.querySelector('.event-scene-frame');
+    const scene=oldScene?oldScene.outerHTML:'';
+    const fxHtml=chips.length
+      ? '<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
+      : '';
     let actions='';
     if(out.fx&&out.fx.offerComp){
       const id=out.fx.offerComp, mp=G.maxParty(), full=S.party.length>=mp, c=D.comps[id], next=G.nextSeatUpgrade();
@@ -631,15 +869,24 @@ const UI = (()=>{
     } else {
       actions+=`<button class="choice" data-r="ok">계속 간다</button>`;
     }
-    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${body}</div><div class="event-choice-dock">
-      <div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
-      <div class="choices" role="group" aria-label="다음 행동">${actions}</div></div>`;
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
+      <div class="event-head"><div><div class="tag">선택의 결과</div><h2>${curEv.title}</h2></div></div>
+      <div class="story-reader"></div><div class="story-result" aria-live="polite"></div></div>
+      <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
-    sheet.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
-      if(b.hasAttribute('disabled'))return;
-      if(b.dataset.r==='yes'&&out.fx.offerComp){ G.doRecruit(out.fx.offerComp); }
-      closeEvent();
-    });
+    curStory={
+      phase:'outcome',label:'결과',turns,index:0,
+      finalDock:`<div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
+        <div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
+      reveal:()=>{ const result=sheet.querySelector('.story-result'); if(result) result.innerHTML=fxHtml; },
+      wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
+        if(b.hasAttribute('disabled')) return;
+        if(b.dataset.r==='yes'&&out.fx.offerComp) G.doRecruit(out.fx.offerComp);
+        closeEvent();
+      })
+    };
+    renderStoryState();
+    wireSceneZoom(sheet);
     renderHud();
   }
   function closeEvent(){
@@ -647,6 +894,7 @@ const UI = (()=>{
     $('#ev-sheet').classList.remove('event-mode');
     $('#cheollian-tint').classList.remove('on');
     curEv=null;
+    curStory=null;
     if(S.driving) SND.setDriving(true);
     renderAll(); G.save();
     /* 연쇄 이벤트 (시네마틱 시퀀스) */
@@ -881,7 +1129,7 @@ const UI = (()=>{
     const old=body.querySelector('.dlg.talk'); if(old) old.remove();
     const rumorDone = S.flags['rumor_'+nid];
     const dlg=el('div','dlg talk',`<div class="npc-talk-head"><div class="npc-face">${npcFace(nid,npc.face)}</div><div class="say"><span class="spk">${npc.name}</span> "${greet}"</div></div>
-      <div class="choices">
+      <div class="dialogue-choice-label">내 대답</div><div class="choices">
         ${!rumorDone?`<button class="choice" data-r="rumor">요즘 소문 들은 거 없어요?</button>`:''}
         <button class="choice" data-r="chat">이런저런 얘기를 나눈다</button>
         <button class="choice" data-r="x">그만 일어난다</button></div>`);
@@ -932,7 +1180,14 @@ const UI = (()=>{
   }
   function addChat(cls, txt){
     const log=$('#chatlog'); if(!log) return;
-    log.appendChild(el('div','cmsg '+cls, txt));
+    if(cls==='sys'){
+      log.appendChild(el('div','cmsg sys',txt));
+    } else {
+      const id=cls==='me'?'me':chatNpc;
+      const profile=speakerInfo(id);
+      const face=profile.portrait?`<img src="${profile.portrait}" alt="${esc(profile.name)} 초상">`:'';
+      log.appendChild(el('div','cmsg '+cls,`${face}<span><b>${esc(profile.name)}</b><span>${esc(txt)}</span></span>`));
+    }
     log.scrollTop=log.scrollHeight;
   }
   async function sendChat(){
@@ -1157,7 +1412,8 @@ const UI = (()=>{
   }
 
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
-    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat, showSeoul};
+    showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat, showSeoul,
+    storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech};
 })();
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */

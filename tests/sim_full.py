@@ -21,7 +21,7 @@ SETUP = r'''() => {
     if(evd.once) S.used.push(evd.id);
     SIM.ev++; SIM.evIds[evd.id]=(SIM.evIds[evd.id]||0)+1; SIM.lastEv=evd.id;
     if(evd.id && evd.id.startsWith('crisis_')) SIM.crises[evd.id]=(SIM.crises[evd.id]||0)+1;
-    const affordable = (evd.choices||[]).filter(c=>!c.req || G.reqOk(c.req).ok);
+    const affordable = (evd.choices||[]).filter(c=>G.reqOk(G.choiceReq(c)).ok);
     if(!affordable.length) return;
     // 기대효용: 부족한 자원일수록 가중 (봇 생존 정책)
     const scF=S.food<5?3:1, scW=S.water<5?3:1, scFu=S.fuel<15?2.5:1;
@@ -230,7 +230,7 @@ def run():
             pg.evaluate('localStorage.clear()')
             pg.click('#bt-new'); pg.wait_for_timeout(120)
             pg.click('#mode-on'); pg.wait_for_timeout(200)
-            for _ in range(pg.evaluate('D.intro.length')):
+            for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0)')):
                 pg.click('#scr-intro'); pg.wait_for_timeout(60)
             pg.fill('#inp-name', '봇'); pg.click('#bt-name'); pg.wait_for_timeout(200)
             pg.evaluate(SETUP)

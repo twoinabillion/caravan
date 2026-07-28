@@ -29,7 +29,7 @@ def enter_game(page):
     page.wait_for_timeout(500)
     page.click("#bt-new")
     page.click("#mode-on")
-    for _ in range(page.evaluate("D.intro.length")):
+    for _ in range(page.evaluate("D.intro.reduce((n,p)=>n+p.beats.length,0)")):
         page.click("#scr-intro")
         page.wait_for_timeout(50)
     page.fill("#inp-name", "다온")

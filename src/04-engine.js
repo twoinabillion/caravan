@@ -488,6 +488,7 @@ G.eligible = (typeFilter)=>{
       if(!ev.nearNode.some(n=>ctx.includes(n))) return false; }
     if(ev.recruitStart && (S.recruitQ||G.hasComp(ev.recruitStart))) return false;
     if(ev.needFlagMin && (S.flags[ev.needFlagMin[0]]||0) < ev.needFlagMin[1]) return false;
+    if(ev.needsNpc && !(S.npcs&&S.npcs[ev.needsNpc]&&S.npcs[ev.needsNpc].met)) return false;
     if(ev.night && !night) return false;
     if(ev.needsComp && !G.hasComp(ev.needsComp)) return false;
     if(ev.needBond && ((S.comps[ev.needBond[0]]||{}).bond||0) < ev.needBond[1]) return false;
@@ -638,6 +639,14 @@ G.reqOk = (req)=>{
   if(req.water && S.water<req.water) return {ok:false, t:`물 ${req.water} 필요`};
   if(req.food && S.food<req.food) return {ok:false, t:`식량 ${req.food} 필요`};
   return {ok:true};
+};
+/* 예전 이벤트의 choice.minParty도 req.party와 같은 규칙으로 정규화한다.
+   화면·봇·새 호출부가 모두 하나의 조건 객체를 쓰게 해 조건 누락을 막는다. */
+G.choiceReq = (choice)=>{
+  const req={...(choice&&choice.req||{})};
+  if(choice&&choice.minParty!==undefined)
+    req.party=Math.max(req.party||0,choice.minParty);
+  return Object.keys(req).length?req:null;
 };
 G.reqText = (req)=>{
   if(!req) return '';
@@ -837,6 +846,7 @@ G.pickBanter = ()=>{
   const night = G.isNight(), rain = G.isWet(), region = G.regionOf();
   const pool = D.banter.filter(b=>{
     const nd = b.need||{};
+    if(b.who!=='나'&&b.who!=='sys'&&D.comps[b.who]&&!G.hasComp(b.who)) return false;
     if(nd.party && S.party.length<nd.party) return false;
     if(nd.comp && !G.hasComp(nd.comp)) return false;
     if(nd.comp2 && !G.hasComp(nd.comp2)) return false;
@@ -981,24 +991,24 @@ G.pillars = ()=>{
   const done = G.deedsDone();
   const relationNeed = D.seoulPillars.관계;
   const storyDone = done.filter(d=>d.cat==='동료').length;
-  /* 아직 못 만났거나 개인 서사가 덜 열린 동료 하나 (관계 힌트용) */
+  /* 이름·위치를 먼저 밝히지 않고, 이미 함께하는 사람만 구체적으로 안내한다. */
   const miss = Object.keys(D.comps).find(c=>!G.hasComp(c));
   const shallow = Object.keys(D.comps).find(c=>G.hasComp(c)&&(S.comps[c]||{}).lvl<3);
   const truthFlags=['massacre_known','parent_key_found','es_truth','uplink_seen'];
   const truthN=truthFlags.filter(f=>S.flags[f]).length;
   const truthHint=!S.flags.massacre_known
-    ? '서울에서 사람들이 쫓겨난 방식 확인하기 (강원의 산으로)'
+    ? '길 위의 오래된 추방 기록에서 반복되는 방식 확인하기'
     : !S.flags.parent_key_found
     ? '달구지에 숨은 부모님의 검증키 찾기'
     : !S.flags.es_truth
-    ? '은수의 개인 서사를 열어 백도어 로그 확인하기'
+    ? (G.hasComp('eunsu')?'은수가 끝내지 못한 관제 기록 함께 열기':'서울 관제실을 나온 사람의 증언 찾기')
     : !S.flags.uplink_seen
     ? '백도어 로그에서 남산보다 위로 가는 선 확인하기'
     : '첫 침묵·작성자·상행선의 관계 확인';
   const worldN=S.flags.resist_revealed?G.cellsLinked().length:0;
   return {
     관계: { have: storyDone, need: relationNeed,
-            hint: miss? `${D.comps[miss].name}를 아직 못 만났다 — ${D.compWhere[miss].split(' —')[0]}`
+            hint: miss? '길 위의 인연을 더 만나고, 함께할 이유를 쌓기'
               : shallow? `${D.comps[shallow].name}와 더 깊어져 개인 서사 Lv.3 열기`
               : '함께 갈 네 사람의 개인 서사를 끝까지 듣기' },
     세계: { have: worldN, need: D.seoulPillars.세계,

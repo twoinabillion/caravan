@@ -29,8 +29,10 @@ def main():
         intro_len = page.evaluate("D.intro.length")
         for index in range(intro_len):
             page.screenshot(path=str(shot / f"intro-{index + 1:02d}.png"))
-            page.click("#scr-intro")
-            page.wait_for_timeout(180)
+            beat_count = page.evaluate(f"D.intro[{index}].beats.length")
+            for _ in range(beat_count):
+                page.click("#scr-intro")
+                page.wait_for_timeout(80)
 
         page.fill("#inp-name", "다온")
         page.click("#bt-name")
@@ -44,6 +46,7 @@ def main():
         page.click("#st-x")
 
         page.evaluate("G.openEventById('meet_family')")
+        page.evaluate("UI.finishStory()")
         page.wait_for_timeout(200)
         page.screenshot(path=str(shot / "locked-choice.png"))
         page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
@@ -59,6 +62,7 @@ def main():
                     || D.seoulStops.find(item => item.id === event_id);
                 if (!event) return false;
                 UI.showEvent(event);
+                UI.finishStory();
                 return true;
             }""", event_id)
             if opened:

@@ -45,7 +45,9 @@ with sync_playwright() as playwright:
         metrics.append(info)
         page.screenshot(path=str(SHOT / f"{index + 1:02d}-{info['scene']}.png"))
         if index + 1 < count:
-            page.click("#scr-intro")
+            beat_count = page.evaluate(f"D.intro[{index}].beats.length")
+            for _ in range(beat_count):
+                page.click("#scr-intro")
 
     browser.close()
     print(SHOT)

@@ -62,6 +62,10 @@ for (const ev of allEvents) {
   if (!ev.title) err(`${at} title 없음`);
   if (!ev.choices || !ev.choices.length) err(`${at} choices 없음`);
   (ev.nearNode || []).forEach(n => { if (!nodeIds.has(n)) err(`${at} nearNode 미존재: ${n}`); });
+  if (ev.needsNpc && !npcIds.has(ev.needsNpc)) err(`${at} needsNpc 미존재: ${ev.needsNpc}`);
+  const npcFollow = /^npc_(.+)_2$/.exec(ev.id);
+  if (npcFollow && ev.needsNpc !== npcFollow[1])
+    err(`${at} NPC 후속담은 첫 만남 게이트 needsNpc:'${npcFollow[1]}' 필요`);
   if (ev.needsComp && !compIds.has(ev.needsComp)) err(`${at} needsComp 미존재: ${ev.needsComp}`);
   if (ev.needsComp2 && !compIds.has(ev.needsComp2)) err(`${at} needsComp2 미존재: ${ev.needsComp2}`);
   if (ev.noComp && !compIds.has(ev.noComp)) err(`${at} noComp 미존재: ${ev.noComp}`);
@@ -75,6 +79,8 @@ for (const ev of allEvents) {
   if (ev.hiddenTarget && ev.hiddenTarget !== 'any' && !nodeIds.has(ev.hiddenTarget)) err(`${at} hiddenTarget 미존재: ${ev.hiddenTarget}`);
   if (ev.region) ev.region.forEach(r => { if (!['south','mid','north'].includes(r)) err(`${at} region 미존재: ${r}`); });
   for (const ch of ev.choices || []) {
+    if (ch.minParty !== undefined && (!Number.isInteger(ch.minParty) || ch.minParty < 1))
+      err(`${at} choice.minParty는 1 이상의 정수여야 함`);
     if (ch.req) {
       if (ch.req.comp && !compIds.has(ch.req.comp)) err(`${at} req.comp 미존재: ${ch.req.comp}`);
       if (ch.req.perk && !perkIds.has(ch.req.perk)) err(`${at} req.perk 미존재: ${ch.req.perk}`);

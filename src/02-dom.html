@@ -11,7 +11,7 @@
         <button class="act primary" id="bt-new"><span class="ic">▶</span><span><b>새 여행</b><small>부산에서 시동을 건다</small></span></button>
         <button class="act" id="bt-continue" style="display:none"><span class="ic">↻</span><span><b>이어서 가기</b><small id="cont-info"></small></span></button>
       </div>
-      <div class="ver">v1.7 · 온로드/오프로드 · 자동 저장 · 엔딩 없음 — 여행은 계속된다</div>
+      <div class="ver">v1.8 · 온로드/오프로드 · 자동 저장 · 에피소드 1 — 서울 해방</div>
       <button id="bt-song" title="부서진 고속도로">♪ 부서진 고속도로</button>
     </div>
   </div>
@@ -55,7 +55,7 @@
       <div id="intro-page">
         <div id="intro-meta"><span id="intro-era"></span><span id="intro-count"></span></div>
         <h2 id="intro-title"></h2>
-        <div id="intro-txt"></div>
+        <div id="intro-txt" aria-live="polite" aria-atomic="true"></div>
       </div>
     </div>
     <div id="intro-hint">눌러서 다음 장</div>
@@ -66,7 +66,7 @@
     <div id="stage">
       <canvas id="cv"></canvas>
       <div id="cheollian-tint"></div>
-      <div id="bubbles"></div>
+      <div id="bubbles" aria-live="polite" aria-atomic="true"></div>
       <canvas id="minimap" title="지도 열기" role="button" tabindex="0" aria-label="전체 지도 열기"></canvas>
     </div>
 

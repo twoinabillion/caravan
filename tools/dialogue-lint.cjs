@@ -79,7 +79,12 @@ for (const event of allEvents) {
     for (const outcome of choice.out || []) addQuotedVariants(event.id, outcome.text);
   }
 }
-for (const page of D.intro || []) addQuoted('intro', page.text);
+for (const page of D.intro || []) {
+  addQuoted('intro', page.text);
+  for (const turn of page.beats || []) {
+    if (['dialogue','thought','letter'].includes(turn.kind)) add('intro-turn', turn.name || turn.who, turn.text);
+  }
+}
 for (const [id, npc] of Object.entries(D.npcs || {})) {
   add('npc', id, npc.greet0);
   add('npc', id, npc.greetGood);
@@ -108,9 +113,28 @@ for (const chat of D.chats || []) {
 const stalePatterns = [
   [/형\(주인공\)/, '임시 플레이어 표기 "형(주인공)"'],
   [/(?<!\d)3\s*년|(?<![가-힣])(?:삼|三)\s*년/, '폐기된 3년 설정'],
+  [/정\s*박사/, '만나지 않은 인물 "정 박사"'],
 ];
 for (const [pattern, label] of stalePatterns) {
   if (pattern.test(source)) errors.push(label);
+}
+
+for (const page of D.intro || []) {
+  if (!Array.isArray(page.beats) || page.beats.length < 4) {
+    errors.push(`인트로 화자 턴 부족: ${page.scene || page.title}`);
+    continue;
+  }
+  for (const [index, turn] of page.beats.entries()) {
+    if (!turn.kind || typeof turn.text !== 'string' || !turn.text.trim()) {
+      errors.push(`인트로 빈 턴: ${page.scene || page.title} #${index + 1}`);
+    }
+    if (['dialogue','thought','letter'].includes(turn.kind) && (!turn.who || !turn.name)) {
+      errors.push(`인트로 화자 누락: ${page.scene || page.title} #${index + 1}`);
+    }
+    if (turn.kind === 'ai' && turn.who !== 'cheollian') {
+      errors.push(`인트로 AI 출처 누락: ${page.scene || page.title} #${index + 1}`);
+    }
+  }
 }
 
 const aiTells = [
@@ -133,9 +157,10 @@ if (dump) {
 
 const counts = samples.reduce((out, item) => {
   out[item.scope === 'chat' ? '티키타카' : item.scope === 'banter' ? '주행 대사' :
-      item.scope === 'npc' ? 'NPC' : item.scope === 'radio' ? '라디오' : '대화 이벤트']++;
+      item.scope === 'npc' ? 'NPC' : item.scope === 'radio' ? '라디오' :
+      item.scope === 'intro-turn' ? '인트로 턴' : '대화 이벤트']++;
   return out;
-}, {'티키타카':0, '주행 대사':0, 'NPC':0, '라디오':0, '대화 이벤트':0});
+}, {'티키타카':0, '주행 대사':0, 'NPC':0, '라디오':0, '인트로 턴':0, '대화 이벤트':0});
 
 console.log(`대사 샘플 ${samples.length}줄 ${JSON.stringify(counts)}`);
 for (const warning of warnings.slice(0, 12)) console.log(`⚠️ ${warning}`);
