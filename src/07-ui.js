@@ -3,9 +3,9 @@ const $ = (s)=>document.querySelector(s);
 const el = (tag,cls,html)=>{ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; };
 
 const UI = (()=>{
-  let screen='title';          // title|mode|intro|game|end
+  let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
-  let introIdx=0, introTurnIdx=0, pendingMode='onroad';
+  let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='';
   let arrivalTimer=0;
 
   /* ── modal state ── */
@@ -89,9 +89,16 @@ const UI = (()=>{
     const bs=$('#bt-song');
     if(bs){ if(!(D.bgm&&D.bgm.song)) bs.style.display='none'; else bs.onclick=()=>BGM.toggleSong(); }
     $('#bt-continue').onclick=()=>{ if(G.load()){ enterGame(); } };
-    const nameGo=()=>{ const nm=($('#inp-name').value||'').trim(); G.newGame(pendingMode, nm); enterGame(); };
+    const nameGo=()=>{
+      pendingName=($('#inp-name').value||'').trim().slice(0,8);
+      introIdx=0; introTurnIdx=0;
+      renderIntro(true);
+      show('scr-intro');
+    };
     $('#bt-name').onclick=nameGo;
-    $('#inp-name').addEventListener('keydown',e=>{ if(e.key==='Enter') nameGo(); });
+    $('#inp-name').addEventListener('keydown',e=>{
+      if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); nameGo(); }
+    });
     $('#bt-modeback').onclick=()=>show('scr-title');
     $('#mode-on').onclick=()=>startNew('onroad');
     $('#mode-off').onclick=(e)=>{
@@ -141,9 +148,18 @@ const UI = (()=>{
     else { lock.innerHTML='🔒 이 호스팅 환경(클로드 아티팩트)은 보안 정책상 외부 API 호출이 차단됩니다.<br>게임 HTML 파일을 로컬에서 브라우저로 열면 오프로드 모드가 활성화됩니다.'; }
   }
   function startNew(mode){
-    pendingMode=mode; introIdx=0; introTurnIdx=0;
-    renderIntro(true);
-    show('scr-intro');
+    pendingMode=mode; pendingName=''; introIdx=0; introTurnIdx=0;
+    show('scr-name');
+    const portrait=$('#name-child');
+    if(portrait) portrait.src=D.portraits.player_child||'';
+    setTimeout(()=>{ const i=$('#inp-name'); if(i){ i.value=''; i.focus(); } },80);
+  }
+  function introName(){ return pendingName||'나'; }
+  function personalizedIntroBeat(raw){
+    const beat={...raw};
+    if(beat.who==='player_child') beat.name=`${introName()} · 여덟 살`;
+    else if(beat.who==='me') beat.name=introName();
+    return beat;
   }
   function renderIntro(newPage){
     const page=D.intro[introIdx], scene=D.scenes&&D.scenes[page.scene];
@@ -154,7 +170,7 @@ const UI = (()=>{
       if(page.voice) VO.play(page.voice);
     }
     const beats=page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page.text||''}];
-    const beat=beats[Math.min(introTurnIdx,beats.length-1)];
+    const beat=personalizedIntroBeat(beats[Math.min(introTurnIdx,beats.length-1)]);
     $('#intro-img').src=scene||'';
     $('#intro-img').alt=`${page.title} 장면`;
     $('#intro-era').textContent=page.era||'';
@@ -185,13 +201,15 @@ const UI = (()=>{
     }
     introIdx++;
     introTurnIdx=0;
-    if(introIdx>=D.intro.length){ show('scr-name'); setTimeout(()=>{ const i=$('#inp-name'); if(i){ i.value=''; i.focus(); } }, 80); }
+    if(introIdx>=D.intro.length){ G.newGame(pendingMode,pendingName); enterGame(); }
     else renderIntro(true);
   }
   function skipIntro(){
     introIdx=D.intro.length;
     introTurnIdx=0;
-    show('scr-name');
+    if(screen==='name') pendingName=($('#inp-name').value||'').trim().slice(0,8);
+    G.newGame(pendingMode,pendingName);
+    enterGame();
   }
   function enterGame(){
     show('scr-game'); screen='game';
@@ -326,7 +344,7 @@ const UI = (()=>{
     const key=who==='나'?'me':who;
     const manual={
       me:'나', grandfather:'할아버지', mother:'엄마', father:'아빠',
-      intro_child:'서울에서 온 아이', cheollian:'천리안', radio:'라디오',
+      intro_child:'서울에서 온 아이', player_child:'여덟 살의 나', cheollian:'천리안', radio:'라디오',
       sys:'길 위', record:'기록', unknown:'누군가'
     };
     const comp=D.comps&&D.comps[key], npc=D.npcs&&D.npcs[key];
@@ -370,6 +388,7 @@ const UI = (()=>{
     const out=[
       {id:'grandfather',names:['할아버지']},{id:'mother',names:['엄마','어머니']},
       {id:'father',names:['아빠','아버지']},{id:'intro_child',names:['서울에서 온 아이']},
+      {id:'player_child',names:['여덟 살의 나','어린 나']},
       {id:'me',names:['내가','나는','내 쪽','나도']}
     ];
     for(const [id,c] of Object.entries(D.comps||{})) out.push({id,names:[c.name]});

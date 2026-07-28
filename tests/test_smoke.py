@@ -37,9 +37,19 @@ with sync_playwright() as p:
     save_canvas(pg, '#titlecv', SHOT / 'title-procedural.png')
     pg.click('#bt-new'); pg.wait_for_timeout(200)
     pg.click('#mode-on'); pg.wait_for_timeout(300)
-    for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0)')):
+    check('인트로 전에 이름 입력', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-intro').is_visible())
+    pg.fill('#inp-name', '테스터'); pg.press('#inp-name', 'Enter'); pg.wait_for_timeout(200)
+    check('이름 Enter가 첫 턴을 건너뛰지 않음', pg.locator('#intro-count').text_content() == '1 / 12 · 1 / 5')
+    pg.click('#scr-intro'); pg.wait_for_timeout(120)
+    child_turn = pg.evaluate('''() => ({
+      label:document.querySelector('#intro-txt .turn-speaker b')?.textContent||'',
+      portrait:document.querySelector('#intro-txt .turn-avatar')?.src||'',
+      expected:D.portraits.player_child||''
+    })''')
+    check('어린 주인공 이름·전용 초상', child_turn['label'] == '테스터 · 여덟 살' and
+          child_turn['portrait'] == child_turn['expected'], str(child_turn))
+    for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 1')):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
-    pg.fill('#inp-name', '테스터'); pg.click('#bt-name'); pg.wait_for_timeout(200)   # 이름 입력 화면
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
     check('게임 진입(HUD)', pg.locator('#g-fuel').is_visible())
@@ -248,7 +258,7 @@ with sync_playwright() as p:
       out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= 4 &&
         p.beats.every(turn => turn.text && turn.kind &&
           (!['dialogue','thought','letter'].includes(turn.kind) || (turn.who && turn.name))));
-      out.introPortraits = ['mother','father','intro_child','grandfather','me']
+      out.introPortraits = ['mother','father','intro_child','player_child','grandfather','me']
         .every(id => (D.portraits[id]||'').startsWith('data:image/png;base64,'));
       out.introPremise = D.intro.some(p=>p.text.includes('미국의 AI와 반도체망')) &&
         D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&

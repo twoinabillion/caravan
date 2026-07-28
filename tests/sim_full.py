@@ -230,9 +230,10 @@ def run():
             pg.evaluate('localStorage.clear()')
             pg.click('#bt-new'); pg.wait_for_timeout(120)
             pg.click('#mode-on'); pg.wait_for_timeout(200)
+            pg.fill('#inp-name', '봇'); pg.click('#bt-name'); pg.wait_for_timeout(120)
             for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0)')):
                 pg.click('#scr-intro'); pg.wait_for_timeout(60)
-            pg.fill('#inp-name', '봇'); pg.click('#bt-name'); pg.wait_for_timeout(200)
+            pg.wait_for_timeout(200)
             pg.evaluate(SETUP)
             note = ''
             for step in range(900):

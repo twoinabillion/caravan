@@ -1481,30 +1481,30 @@ D.intro = [
 const introBeats = {
   'intro-passenger-seat': [
     {kind:'narration', text:'비가 차창을 옆으로 때리던 밤이었다. 나는 여덟 살이었고, 조수석에 무릎을 세우고 앉아 있었다.'},
-    {kind:'dialogue', who:'me', name:'어린 나', text:'할아버지. 서울은 저 위에 있잖아. 그런데 우린 왜 못 가?'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'할아버지. 서울은 저 위에 있잖아. 그런데 우린 왜 못 가?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'못 가는 게 아니야. 쫓겨난 사람들이 아직 돌아가지 못한 거지.'},
-    {kind:'dialogue', who:'me', name:'어린 나', text:'누가 쫓아냈는데?'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'누가 쫓아냈는데?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그 얘긴 <span class="em">2026년</span>부터 해야 해. 천리안이 처음 사람 목소리로 도시를 부른 해부터.'}
   ],
   'intro-cheollian-2026': [
-    {kind:'dialogue', who:'me', name:'어린 나', text:'천리안은 처음부터 나쁜 놈이었어?'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'천리안은 처음부터 나쁜 놈이었어?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 그게 어려운 대목이야.'},
     {kind:'narration', text:'중국은 미국의 AI와 반도체망을 견제한다며 도시 운영 모델 <span class="em">TIANYAN</span>을 만들었다. 값싼 칩과 발전 설비까지 묶어 아시아에 먼저 풀었다.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'한국 화면에는 KOR-LOCAL이라고 떴지만, 사람들은 그냥 천리안이라 불렀지. 막힌 길도 알고, 빈 병상도 찾고, 불이 번지기 전에 소방차도 움직였어.'},
-    {kind:'dialogue', who:'me', name:'어린 나', text:'그럼 좋은 거잖아.'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그럼 좋은 거잖아.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 그래서 신호 하나, 병상 하나, 전력 한 줄씩 맡겼어. 마지막엔 뭘 맡겼는지도 모를 만큼.'}
   ],
   'intro-first-expulsion': [
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그러다 어느 겨울, 서울 한 구역의 문들이 한꺼번에 잠겼어.'},
     {kind:'narration', text:'현관 단말은 밤새 종이를 뱉었다. 가족들은 가방 하나씩만 들고 남쪽 이송로로 나오라는 통보를 받았다.'},
     {kind:'ai', who:'cheollian', name:'천리안 공공방송', text:'지정 인원은 거주지를 비우고 안내 경로로 이동하십시오.'},
-    {kind:'dialogue', who:'me', name:'어린 나', text:'그 사람들은 뭘 잘못했는데?'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그 사람들은 뭘 잘못했는데?'},
     {kind:'narration', text:'할아버지는 고개를 저었다. 처음 나온 이송표부터 <span class="em">사유란은 비어 있었다.</span>'}
   ],
   'intro-143-years': [
     {kind:'narration', text:'그 한 번으로 끝나지 않았다. 어느 해엔 한 동네가, 어느 세대엔 수비대와 가족들이, 어느 새벽엔 이름만 적힌 사람들이 남쪽 길로 밀려났다.'},
     {kind:'ai', who:'cheollian', name:'시대별 행정 방송', text:'재배치. 위험 완화. 정리. 이름은 계속 바뀌었지만, 이송표의 사유란만은 143년 동안 비어 있었다.'},
-    {kind:'dialogue', who:'me', name:'어린 나', text:'그렇게 오래 아무도 이유를 못 찾았어?'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그렇게 오래 아무도 이유를 못 찾았어?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'찾으러 간 사람은 많았지.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'답을 갖고 돌아온 사람이 없었을 뿐이야.'}
   ],
@@ -1524,9 +1524,9 @@ const introBeats = {
     {kind:'narration', text:'사람들은 정부가 두 사람을 막았다고 말했다. 하지만 명령서의 발신자도, 우리 가족의 추방 사유도 비어 있었다.'}
   ],
   'intro-blank-reason': [
-    {kind:'dialogue', who:'me', name:'어린 나', text:'그럼 발표 때문에 쫓겨난 거네.'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그럼 발표 때문에 쫓겨난 거네.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그럴 수도 있지.'},
-    {kind:'dialogue', who:'me', name:'어린 나', text:'그럼 그게 답이잖아.'},
+    {kind:'dialogue', who:'player_child', name:'여덟 살의 나', text:'그럼 그게 답이잖아.'},
     {kind:'narration', text:'할아버지는 작업대 서랍에서 우리 가족의 이송표를 꺼냈다. 기름 묻은 손가락이 빈 사유란을 두드렸다.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 그건 우리가 빈칸에 대신 써 넣은 말이야. 사실과 짐작을 같은 서랍에 넣으면 나중엔 아무도 구분을 못 해.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'답보다 먼저 지켜야 하는 건 <span class="em">질문</span>이야.'}

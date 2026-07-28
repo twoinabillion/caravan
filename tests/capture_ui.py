@@ -19,11 +19,11 @@ def enter_game(page):
     page.wait_for_timeout(500)
     page.click("#bt-new")
     page.click("#mode-on")
+    page.fill("#inp-name", "다온")
+    page.click("#bt-name")
     for _ in range(page.evaluate("D.intro.reduce((n,p)=>n+p.beats.length,0)")):
         page.click("#scr-intro")
         page.wait_for_timeout(80)
-    page.fill("#inp-name", "다온")
-    page.click("#bt-name")
     page.wait_for_timeout(350)
 
 

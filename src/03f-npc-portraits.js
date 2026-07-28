@@ -20,6 +20,7 @@ D.portraits.bori       = '__NPC_bori__';
 D.portraits.mother     = '__NPC_mother__';
 D.portraits.father     = '__NPC_father__';
 D.portraits.intro_child = '__NPC_intro_child__';
+D.portraits.player_child = '__NPC_player_child__';
 
 /* 반복 인물 중심 이벤트에 초상을 자동 연결한다. 명시적 매핑이 항상 우선한다. */
 (D.eventPortraitTitleRules || []).forEach(function(rule){

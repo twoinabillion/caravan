@@ -41,13 +41,18 @@
   </div>
 
   <!-- ══ INTRO ══ -->
-  <div class="scr" id="scr-name" style="align-items:center;justify-content:center;gap:14px">
-    <div style="color:var(--faded);font-size:13px;letter-spacing:2px">— 정비 수첩 첫 장 —</div>
-    <div style="font-size:15px;line-height:1.7;text-align:center;max-width:340px">할아버지의 수첩을 폈다.<br>첫 장, 「소유자」 칸이 비어 있다.<br>이제 이 차와 이 길은 내 것이다.</div>
-    <input id="inp-name" maxlength="8" placeholder="이름을 적는다" autocomplete="off"
-      style="background:#0d0f14;border:1px solid #2a2f3a;color:#e8e4d8;font:inherit;font-size:17px;text-align:center;padding:10px 14px;border-radius:8px;width:200px;outline:none">
-    <button id="bt-name" class="mbtn" style="min-width:200px">시동을 건다</button>
-    <div style="color:var(--faded);font-size:11px">비워두면 「나」로 기록됩니다</div>
+  <div class="scr" id="scr-name">
+    <div id="name-card">
+      <div class="name-kicker">STORY BOOK · 첫 장</div>
+      <img id="name-child" alt="여덟 살 주인공 초상">
+      <div class="name-era">2169년 · 오래전 기억</div>
+      <h2>할아버지가 부르던 이름</h2>
+      <p>이 이야기는 비 내리던 어느 밤,<br>여덟 살의 조수석에서 시작된다.</p>
+      <label for="inp-name">이 기억의 주인은 누구였을까?</label>
+      <input id="inp-name" maxlength="8" placeholder="이름을 적는다" autocomplete="off">
+      <button id="bt-name" class="mbtn">이름을 적고 첫 장을 연다</button>
+      <small>비워두면 「나」로 기록됩니다</small>
+    </div>
   </div>
   <div class="scr" id="scr-intro">
     <div id="intro-book">

@@ -24,14 +24,14 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(450)
     page.click("#bt-new")
     page.click("#mode-on")
+    page.fill("#inp-name", "다온")
+    page.click("#bt-name")
     page.click("#scr-intro")
     page.click("#scr-intro")
     page.wait_for_timeout(160)
     page.screenshot(path=str(SHOT / "01-intro-grandfather-turn.png"))
 
     page.evaluate("UI.skipIntro()")
-    page.fill("#inp-name", "다온")
-    page.click("#bt-name")
     page.wait_for_timeout(250)
 
     page.evaluate(

@@ -25,17 +25,31 @@ def main():
         page.click("#bt-new")
         page.click("#mode-on")
         page.wait_for_timeout(350)
+        page.screenshot(path=str(shot / "name-entry.png"))
+        page.fill("#inp-name", "다온")
+        page.click("#bt-name")
+        page.wait_for_timeout(180)
 
         intro_len = page.evaluate("D.intro.length")
         for index in range(intro_len):
             page.screenshot(path=str(shot / f"intro-{index + 1:02d}.png"))
             beat_count = page.evaluate(f"D.intro[{index}].beats.length")
-            for _ in range(beat_count):
+            advanced = 0
+            if index == 0:
+                page.click("#scr-intro")
+                page.wait_for_timeout(80)
+                page.screenshot(path=str(shot / "intro-child-speaker.png"))
+                advanced = 1
+            elif index == 7:
+                for _ in range(3):
+                    page.click("#scr-intro")
+                    page.wait_for_timeout(80)
+                page.screenshot(path=str(shot / "intro-adult-speaker.png"))
+                advanced = 3
+            for _ in range(beat_count - advanced):
                 page.click("#scr-intro")
                 page.wait_for_timeout(80)
 
-        page.fill("#inp-name", "다온")
-        page.click("#bt-name")
         page.wait_for_timeout(350)
         page.screenshot(path=str(shot / "main-party.png"))
 

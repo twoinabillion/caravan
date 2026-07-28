@@ -433,7 +433,26 @@ input{font-family:inherit}
   color:var(--cheollian);border-radius:8px;padding:0 14px;font-size:12.5px}
 #offmsg{font-family:var(--mono);font-size:10.5px;margin-top:7px;color:var(--faded);white-space:pre-wrap}
 
-/* ── intro ── */
+/* ── name / intro ── */
+#scr-name{display:none;align-items:center;justify-content:center;padding:22px;
+  overflow-y:auto;background:radial-gradient(circle at 50% 20%,rgba(255,180,84,.1),transparent 42%),#05060c}
+#scr-name.on{display:flex}
+#name-card{width:min(100%,390px);padding:24px 22px 22px;text-align:center;border:1px solid #2b2e38;
+  border-radius:15px;background:linear-gradient(165deg,rgba(255,180,84,.055),#0b0d14 50%);
+  box-shadow:0 22px 70px #000}
+.name-kicker{font:9.5px var(--mono);letter-spacing:.2em;color:var(--amber-dim);margin-bottom:14px}
+#name-child{display:block;width:104px;height:104px;margin:0 auto 10px;border-radius:18px;object-fit:cover;
+  image-rendering:auto;border:1px solid #4b4650;box-shadow:0 9px 26px rgba(0,0,0,.48)}
+.name-era{font:9.5px var(--mono);letter-spacing:.08em;color:var(--faded);margin-bottom:6px}
+#name-card h2{font:700 20px/1.35 var(--serif);margin:0 0 7px;color:#f0eadc}
+#name-card p{font:14px/1.65 var(--serif);color:#cfd2da;margin-bottom:15px}
+#name-card label{display:block;font:10.5px var(--mono);color:var(--faded);margin-bottom:7px}
+#inp-name{display:block;width:min(100%,220px);margin:0 auto 9px;box-sizing:border-box;background:#090b12;
+  border:1px solid #363b49;color:var(--paper);font:17px var(--serif);text-align:center;padding:10px 14px;
+  border-radius:9px;outline:none}
+#inp-name:focus{border-color:var(--amber-dim);box-shadow:0 0 0 3px rgba(255,180,84,.08)}
+#bt-name{width:min(100%,220px);margin:0 auto}
+#name-card small{display:block;margin-top:9px;color:var(--dim);font:9.5px var(--mono)}
 #scr-intro{display:none;align-items:center;justify-content:center;padding:18px;cursor:pointer;
   overflow-y:auto;background:radial-gradient(circle at 50% 15%,rgba(255,180,84,.08),transparent 44%),#05060c}
 #scr-intro.on{display:flex}

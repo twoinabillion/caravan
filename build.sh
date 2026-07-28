@@ -23,7 +23,7 @@ PARTS_AFTER_EMBEDS=(
   src/09-close.html
 )
 
-NPC_KEYS=(geumja sundeok taeho jaepil miyoung drhan deokgu kimcaptain hayeosa sanjigi hanbyeol seoyeon mansu postman mapmaker mingyu grandfather bori mother father intro_child)
+NPC_KEYS=(geumja sundeok taeho jaepil miyoung drhan deokgu kimcaptain hayeosa sanjigi hanbyeol seoyeon mansu postman mapmaker mingyu grandfather bori mother father intro_child player_child)
 NPC_JS="$(< src/03f-npc-portraits.js)"
 for KEY in "${NPC_KEYS[@]}"; do
   NPC_BASE64="$(base64 < "assets/portraits/$KEY.png" | tr -d '\n')"
