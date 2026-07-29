@@ -702,7 +702,15 @@ const UI = (()=>{
         <span class="ic">${icon}</span><span><b>${label}</b><small>${small}</small></span></button>`;
     }
     if(n.stl) h+=`<button class="act primary" data-a="stl"><span class="ic">🏘</span><span><b>정착지에 들어간다</b><small>거래 · 대화 · 소문</small></span></button>`;
-    if(!n.stl && n.type!=='goal') h+=`<button class="act" data-a="explore"><span class="ic">🔦</span><span><b>주변을 탐색한다</b><small>약 1~2시간 · 무엇이 나올지 모른다</small></span></button>`;
+    if(!n.stl && n.type!=='goal'){
+      const es=G.exploreStatus();
+      const label=es.ok?(es.repeat?'남은 곳을 샅샅이 뒤진다':'주변을 탐색한다'):'주변 탐색';
+      const small=es.ok
+        ?(es.repeat?'최소 4시간 · 피로 약 +15 · 실패율 45% · 오늘의 마지막 탐색'
+          :`최소 2시간 · 피로 약 +5 이상${es.fresh?' · 새 지역 고철 +4':''}`)
+        :es.reason;
+      h+=`<button class="act" data-a="explore" ${es.ok?'':'disabled'}><span class="ic">🔦</span><span><b>${label}</b><small>${small}</small></span></button>`;
+    }
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     for(const nb of nbs){
       const t2=D.nodes[nb.id];

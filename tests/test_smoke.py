@@ -130,6 +130,43 @@ with sync_playwright() as p:
       return {map,crew};
     }''')
     check('위치→지도·인원→동료 상태 바로가기', context_nav['map'] and context_nav['crew'], str(context_nav))
+    exploration = pg.evaluate('''() => {
+      const snapshot=JSON.stringify(S);
+      const node=Object.keys(D.nodes).find(id=>!D.nodes[id].stl&&D.nodes[id].type!=='goal');
+      S.at=node; S.driving=null; S.min=8*60; S.fatigue=0; S._exploreDay=S.day;
+      S._exploreNodes={}; S._salvagedNodes={}; S._salvageCount=2;
+      UI.renderAll();
+      const firstStatus=G.exploreStatus();
+      const d0=S.day*1440+S.min, f0=S.fatigue, scrap0=S.scrap, parts0=S.items['부품']||0;
+      const first=G.explore();
+      const d1=S.day*1440+S.min, f1=S.fatigue;
+      const freshGain={scrap:S.scrap-scrap0,parts:(S.items['부품']||0)-parts0};
+      document.querySelector('#ev-wrap').classList.remove('on');
+      const secondStatus=G.exploreStatus();
+      const second=G.explore();
+      const d2=S.day*1440+S.min, f2=S.fatigue;
+      document.querySelector('#ev-wrap').classList.remove('on');
+      const exhausted=G.exploreStatus();
+      const beforeThird={d:S.day*1440+S.min,f:S.fatigue};
+      const third=G.explore();
+      const unchanged=beforeThird.d===S.day*1440+S.min&&beforeThird.f===S.fatigue;
+      S.day++;
+      const nextDay=G.exploreStatus();
+      S=JSON.parse(snapshot); rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll(); G.save();
+      return {firstStatus,secondStatus,exhausted,nextDay,freshGain,first,second,third,unchanged,
+        firstMins:d1-d0,secondMins:d2-d1,firstFatigue:f1-f0,secondFatigue:f2-f1};
+    }''')
+    check('탐색 최소 2시간·재탐색 4시간', exploration['first'] and exploration['second'] and
+          exploration['firstMins'] == 120 and exploration['secondMins'] == 240, str(exploration))
+    check('재탐색 피로·실패 위험 증가', exploration['firstFatigue'] >= 5 and
+          exploration['secondFatigue'] > exploration['firstFatigue'] and
+          exploration['secondStatus']['miss'] > exploration['firstStatus']['miss'], str(exploration))
+    check('새 지역 확정 고철·세 번째 지역 부품', exploration['firstStatus']['fresh'] and
+          exploration['freshGain']['scrap'] == 4 and exploration['freshGain']['parts'] == 1,
+          str(exploration))
+    check('같은 날 세 번째 탐색 차단·다음 날 해금', not exploration['third'] and
+          not exploration['exhausted']['ok'] and exploration['unchanged'] and
+          exploration['nextDay']['ok'], str(exploration))
     portraits = pg.evaluate('''() => {
       const recruit=D.events.find(e=>e.id==='meet_scrapyard');
       const rt=UI.storyTurns(recruit.text,recruit);

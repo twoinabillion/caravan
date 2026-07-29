@@ -23,7 +23,7 @@ G.newGame = (mode, name)=>{
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0},
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
-    combat:null, injuries:{},
+    combat:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
   };
   rng = mulberry32(S.seed);
   S.wxNext = G.rollWx('clear');
@@ -57,6 +57,10 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
   if(!S.injuries||Array.isArray(S.injuries)) S.injuries={};
+  if(!Number.isFinite(S._exploreDay)) S._exploreDay=S.day;
+  if(!S._exploreNodes||Array.isArray(S._exploreNodes)) S._exploreNodes={};
+  if(!S._salvagedNodes||Array.isArray(S._salvagedNodes)) S._salvagedNodes={};
+  if(!Number.isFinite(S._salvageCount)) S._salvageCount=Object.keys(S._salvagedNodes).length;
   /* 즉시 영입이던 구버전에서 만남만 소진하고 합류하지 않은 경우,
      새 '합류 전 과제'를 다시 시작할 수 있도록 첫 만남을 복구한다. */
   const oldRecruitStarts={minji:'meet_scrapyard',parkss:'meet_bus',leo:'meet_hitchhiker',
@@ -363,6 +367,9 @@ G.lunch = ()=>{
   G.save();
 };
 G.dawn = ()=>{
+  /* 같은 장소도 다음 날이면 다시 수색할 수 있다.
+     대신 하루를 넘기며 물·식량을 소비하므로 무한 무료 파밍은 되지 않는다. */
+  S._exploreDay=S.day; S._exploreNodes={};
   // 날씨 실현: 예보가 오늘이 되고, 새 예보가 잡힌다
   const prevWx=S.wx;
   S.wx=S.wxNext; S.wxNext=G.rollWx(S.wx);
@@ -847,11 +854,46 @@ G.arrive = ()=>{
 };
 
 /* ── node actions ── */
+G.exploreStatus = ()=>{
+  const tries=S._exploreDay===S.day&&S._exploreNodes
+    ?(S._exploreNodes[S.at]||0):0;
+  const repeat=tries===1;
+  const fresh=!(S._salvagedNodes&&S._salvagedNodes[S.at]);
+  const mins=repeat?240:120;
+  /* 첫 탐색은 시간 피로(약 +5)만 적용한다. 이미 훑은 곳을 다시 뒤질 때만
+     잔해를 들추는 노동 피로를 별도로 더해 정상 탐험보다 파밍을 비싸게 만든다. */
+  const fatigue=repeat?4:0;
+  if(tries>=2) return {ok:false,tries,mins:0,fatigue:0,reason:'오늘은 이 주변을 충분히 뒤졌다 — 야영 후 다시 살필 수 있다'};
+  if(G.isNight()) return {ok:false,tries,mins,fatigue,reason:'해가 진 뒤에는 주변을 탐색할 수 없다'};
+  if(S.fatigue>=80) return {ok:false,tries,mins,fatigue,reason:'피로 80% 이상 — 먼저 쉬어야 한다'};
+  return {ok:true,tries,repeat,fresh,mins,fatigue,miss:repeat?0.45:0.15};
+};
 G.explore = ()=>{
+  if(S.driving||UI.modalOpen()) return false;
+  const status=G.exploreStatus();
+  if(!status.ok){ UI.toast(`🔦 ${status.reason}`); UI.renderAll(); return false; }
+  if(S._exploreDay!==S.day){ S._exploreDay=S.day; S._exploreNodes={}; }
+  S._exploreNodes[S.at]=status.tries+1;
+  let freshHaul='';
+  if(status.fresh){
+    S._salvagedNodes[S.at]=true; S._salvageCount++;
+    S.scrap+=4; freshHaul=' · 고철 +4';
+    if(S._salvageCount%3===0){
+      S.items['부품']=(S.items['부품']||0)+1;
+      freshHaul+=' · 부품 +1';
+    }
+  }
+  G.advance(status.mins);
+  S.fatigue=clamp(S.fatigue+status.fatigue,0,100);
   const pool = G.eligible('탐색');
-  G.advance(50);
-  if(!pool.length || rng()<0.15){ UI.toast('아무것도 찾지 못했다'); G.advance(30); UI.renderAll(); G.save(); return; }
+  if(!pool.length || rng()<status.miss){
+    const spent=status.repeat?'네 시간을 더 샅샅이 뒤졌지만':'두 시간을 돌아봤지만';
+    UI.toast(`🔦 ${spent} 큰 수확은 없었다${freshHaul}`);
+    UI.renderAll(); G.save(); return true;
+  }
   G.fireDriveEvent2(pool);
+  G.save();
+  return true;
 };
 G.fireDriveEvent2 = (pool)=>{ const total=pool.reduce((s,e)=>s+e.w,0); let r=rng()*total;
   let evd=pool[0]; for(const e of pool){ r-=e.w; if(r<=0){evd=e;break} } G.openEvent(evd); };
