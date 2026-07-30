@@ -105,19 +105,28 @@ with sync_playwright() as playwright:
     page.screenshot(path=str(SHOT / "05-status-crew.png"))
     page.click("#st-x")
 
-    page.evaluate("UI.showStl('daegu')")
+    page.evaluate("UI.showStl('daegu','hub')")
     page.wait_for_timeout(200)
+    page.screenshot(path=str(SHOT / "06-settlement-hub.png"))
+    page.evaluate("UI.showStl('daegu','market')")
+    page.wait_for_timeout(160)
+    page.screenshot(path=str(SHOT / "07-market.png"))
+    page.evaluate("UI.showStl('daegu','people')")
+    page.wait_for_timeout(160)
+    page.screenshot(path=str(SHOT / "08-people.png"))
+    page.evaluate("UI.showStl('daegu','garage')")
+    page.wait_for_timeout(160)
     page.locator("#garage").scroll_into_view_if_needed()
     page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "06-garage-fuel.png"))
+    page.screenshot(path=str(SHOT / "09-garage-fuel.png"))
     page.click('#garage [data-ug="chassis"]')
     page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "07-garage-chassis.png"))
+    page.screenshot(path=str(SHOT / "10-garage-chassis.png"))
     page.evaluate("document.querySelector('#ovl-stl').classList.remove('on')")
 
     page.evaluate("G.openEventById('roadbeat_200_archive')")
     page.wait_for_timeout(200)
-    page.screenshot(path=str(SHOT / "08-event-context.png"))
+    page.screenshot(path=str(SHOT / "11-event-context.png"))
     page.evaluate(
         """() => {
           document.querySelector('#ev-wrap').classList.remove('on');
@@ -134,7 +143,7 @@ with sync_playwright() as playwright:
         }"""
     )
     page.wait_for_timeout(200)
-    page.screenshot(path=str(SHOT / "09-event-long-top.png"))
+    page.screenshot(path=str(SHOT / "12-event-long-top.png"))
     scroll_metrics = page.evaluate(
         """() => {
           const copy=document.querySelector('.event-scroll');
@@ -149,7 +158,7 @@ with sync_playwright() as playwright:
         }"""
     )
     page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "10-event-long-scrolled.png"))
+    page.screenshot(path=str(SHOT / "13-event-long-scrolled.png"))
 
     browser.close()
     print(SHOT)

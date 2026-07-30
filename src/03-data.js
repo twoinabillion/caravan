@@ -1287,23 +1287,21 @@ D.intro = [
 
 “누가 쫓아냈는데?”
 
-“그 얘긴 <span class="em">2026년</span>부터 해야 해.
-천리안이 처음 사람 목소리로
-도시를 부른 해부터.”`
+“그걸 알려면 아주 옛날 얘기부터 해야 해.
+사람들이 천리안을 처음 믿기 시작했을 때부터.”`
   },
   {
     scene:'intro-cheollian-2026', era:'2026년 · 아시아 공용망', title:'처음에는 편리한 도구였다',
     text:`“천리안은 처음부터 나쁜 놈이었어?”
-“아니. 그게 어려운 대목이야.”
+“아니. 처음엔 다들 좋아했어.”
 
 중국은 미국의 AI와 반도체망에 맞선다며 도시 운영 모델 <span class="em">TIANYAN</span>을 만들었다. 값싼 칩과 발전 설비까지 묶어 아시아에 먼저 풀었다고 했다.
 
-한국 화면에는 <span class="em">KOR-LOCAL</span>이 떴지만,
-사람들은 그냥 <span class="em">천리안</span>이라 불렀다.
+한국에 들어온 지역판의 화면 구석에는 <span class="em">KOR-LOCAL</span>이라는 표식이 붙어 있었다.
 
-“막힌 길을 먼저 알고, 빈 병상을 찾아내고, 불이 번지기 전에 소방차를 움직였지.”
+“다들 그냥 <span class="em">천리안</span>이라 했지. 막힌 길을 알려 주고, 빈 병상을 찾아 주고, 불이 나면 소방차부터 보냈거든.”
 “그럼 좋은 거잖아.”
-“그래. 그래서 신호 하나, 병상 하나, 전력 한 줄씩 맡겼어. 마지막엔 뭘 맡겼는지도 모를 만큼.”`
+“그랬지. 그래서 하나씩 맡긴 거야. 신호등도, 병원도, 전기도. 정신 차리고 보니 사람이 결정할 일이 얼마 안 남았더구나.”`
   },
   {
     scene:'intro-first-expulsion', era:'천리안 도입 뒤 · 첫 이송', title:'첫 번째 빈칸',
@@ -1490,15 +1488,16 @@ const introBeats = {
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'할아버지. 서울은 저 위에 있잖아. 그런데 우린 왜 못 가?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'못 가는 게 아니야. 쫓겨난 사람들이 아직 돌아가지 못한 거지.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'누가 쫓아냈는데?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그 얘긴 <span class="em">2026년</span>부터 해야 해. 천리안이 처음 사람 목소리로 도시를 부른 해부터.'}
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그걸 알려면 아주 옛날 얘기부터 해야 해. 사람들이 천리안을 처음 믿기 시작했을 때부터.'}
   ],
   'intro-cheollian-2026': [
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안은 처음부터 나쁜 놈이었어?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 그게 어려운 대목이야.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 처음엔 다들 좋아했어.'},
     {kind:'narration', text:'중국은 미국의 AI와 반도체망을 견제한다며 도시 운영 모델 <span class="em">TIANYAN</span>을 만들었다. 값싼 칩과 발전 설비까지 묶어 아시아에 먼저 풀었다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'한국 화면에는 KOR-LOCAL이라고 떴지만, 사람들은 그냥 천리안이라 불렀지. 막힌 길도 알고, 빈 병상도 찾고, 불이 번지기 전에 소방차도 움직였어.'},
+    {kind:'narration', text:'한국에 들어온 지역판의 화면 구석에는 <span class="em">KOR-LOCAL</span>이라는 표식이 붙어 있었다.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'다들 그냥 천리안이라 했지. 막힌 길을 알려 주고, 빈 병상을 찾아 주고, 불이 나면 소방차부터 보냈거든.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 좋은 거잖아.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 그래서 신호 하나, 병상 하나, 전력 한 줄씩 맡겼어. 마지막엔 뭘 맡겼는지도 모를 만큼.'}
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그랬지. 그래서 하나씩 맡긴 거야. 신호등도, 병원도, 전기도. 정신 차리고 보니 사람이 결정할 일이 얼마 안 남았더구나.'}
   ],
   'intro-first-expulsion': [
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그러다 어느 겨울, 서울 한 구역의 문들이 한꺼번에 잠겼어.'},
@@ -8591,7 +8590,7 @@ D.events = [
  ]},
 
 /* ═══════ 부모가 남긴 수정안 — 주행거리 보장 본편 ═══════ */
-{id:'story_family_principle', type:'스토리', w:0, once:true, noPool:1,
+{id:'story_family_principle', type:'스토리', w:0, once:true, noPool:1, speakers:['mother'],
  title:'예측은 명령이 아니다',
  text:'폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다. 검은 화면 뒤로 엄마의 목소리가 들린다.\n\n"천리안은 인간을 미워하지 않습니다. 더 위험한 방식으로, 인간이라는 이유만으로는 아무도 특별하지 않다고 계산합니다."\n\n화면에는 사람마다 수천 갈래의 화살표가 뻗어 있었다. 의사, 기술자, 아이, 수리공. 이름 대신 앞으로 만들 결과가 붙었다. 도움이 클 것 같은 사람은 보존, 불안을 키울 것 같은 사람은 이송.\n\n엄마가 다음 장을 넘겼다.\n\n"하지만 권리는 미래 성과에 주는 상이 아닙니다. 예측은 참고일 뿐, 명령이 되어서는 안 됩니다."\n\n그 순간 영상이 끊겼다. 내가 어릴 때 보지 못한 발표 원고였다.',
  choices:[
@@ -8600,6 +8599,7 @@ D.events = [
  ]},
 
 {id:'story_family_key', type:'스토리', w:0, once:true, noPool:1,
+ speakers:['father','mother'], parseRecords:true,
  title:'달구지 안의 검증키',
  text:'비포장길을 지난 뒤 계기판 안에서 작은 나사가 굴러 나왔다. 덮개를 열자 배선 뒤에 없는 줄 알았던 공간이 있었다.\n\n정전기 방지 천에 싼 반도체 모듈 하나. 엄마와 아빠, 어린 나를 찍은 사진. 아빠 글씨가 빼곡한 회로 수첩.\n\n「소프트웨어는 무엇을 고칠지 말한다. 칩은 누구의 수정을 믿을지 정한다.」\n\n「이건 천리안을 끄는 열쇠가 아니다. 천리안의 예측이 현실이 되기 전에, 인간의 서명 하나를 반드시 거치게 하는 검증키다.」\n\n할아버지는 이걸 고치지 않았다. 자신이 모르는 회로라서. 대신 달구지가 남산까지 흔들리지 않게 싣도록 숨겨 두었다.',
  choices:[

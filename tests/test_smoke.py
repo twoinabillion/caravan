@@ -401,6 +401,14 @@ with sync_playwright() as p:
           (!['dialogue','thought','letter'].includes(turn.kind) || (turn.who && turn.name))));
       out.introPortraits = ['mother','father','intro_child','player_child','grandfather','me']
         .every(id => (D.portraits[id]||'').startsWith('data:image/png;base64,'));
+      const familyPrinciple=D.events.find(e=>e.id==='story_family_principle');
+      const familyKey=D.events.find(e=>e.id==='story_family_key');
+      const principleTurns=UI.storyTurns(familyPrinciple.text,familyPrinciple);
+      const keyTurns=UI.storyTurns(familyKey.text,familyKey);
+      const keyOutcomeTurns=UI.storyTurns(familyKey.choices[0].out[0].text,familyKey);
+      out.familySpeakers=principleTurns.some(t=>t.kind==='dialogue'&&t.who==='mother') &&
+        keyTurns.filter(t=>t.kind==='record'&&t.who==='father').length===2 &&
+        keyOutcomeTurns.some(t=>t.kind==='record'&&t.who==='mother');
       out.introPremise = D.intro.some(p=>p.text.includes('미국의 AI와 반도체망')) &&
         D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&
         D.intro.some(p=>p.text.includes('등록 인원 6,412명')) &&
@@ -634,6 +642,7 @@ with sync_playwright() as p:
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('인트로 전 장면 화자 턴·가족 초상 연결',
           r4['introTurns'] and r4['introPortraits'], str(r4))
+    check('부모 핵심 기록은 엄마 음성·아빠 글씨로 식별', r4['familySpeakers'], str(r4))
     check('전 이벤트 턴 변환·알려진 화자 식별',
           r4['turnParser'] and r4['knownSpeaker'], str(r4))
     check('이야기를 다 읽기 전 선택지 잠금',

@@ -100,6 +100,10 @@ def main():
             if opened:
                 page.wait_for_timeout(200)
                 page.screenshot(path=str(shot / f"{event_id}.png"))
+                if event_id == "story_family_key":
+                    page.locator(".event-scroll").evaluate("(el) => { el.scrollTop = el.scrollHeight; }")
+                    page.wait_for_timeout(120)
+                    page.screenshot(path=str(shot / "story_family_key-record.png"))
                 page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
 
         browser.close()

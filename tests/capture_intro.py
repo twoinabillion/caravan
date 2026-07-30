@@ -26,7 +26,19 @@ with sync_playwright() as playwright:
     metrics = []
     count = page.evaluate("D.intro.length")
     for index in range(count):
-        page.wait_for_timeout(120)
+        beat_count = page.evaluate(f"D.intro[{index}].beats.length")
+        for beat_index in range(beat_count):
+            if beat_index:
+                page.click("#scr-intro")
+            page.wait_for_timeout(180)
+            page.screenshot(
+                path=str(
+                    SHOT
+                    / f"{index + 1:02d}-{beat_index + 1:02d}-"
+                    f"{page.evaluate(f'D.intro[{index}].scene')}.png"
+                )
+            )
+
         info = page.evaluate(
             """() => {
               const pageEl=document.querySelector('#intro-page');
@@ -38,23 +50,31 @@ with sync_playwright() as playwright:
                 title:data.title,
                 pageClient:pageEl.clientHeight,
                 pageScroll:pageEl.scrollHeight,
+                scrollTop:pageEl.scrollTop,
                 bookHeight:Math.round(book.getBoundingClientRect().height),
                 visualHeight:Math.round(visual.getBoundingClientRect().height),
-                needsScroll:pageEl.scrollHeight>pageEl.clientHeight+2
+                needsScroll:pageEl.scrollHeight>pageEl.clientHeight+2,
+                newestVisible:(() => {
+                  const newest=document.querySelector('#intro-txt [data-story-entry]:last-child');
+                  if(!newest) return false;
+                  const newestBox=newest.getBoundingClientRect();
+                  const pageBox=pageEl.getBoundingClientRect();
+                  return newestBox.top>=pageBox.top-1 && newestBox.bottom<=pageBox.bottom+1;
+                })()
               };
             }"""
         )
         metrics.append(info)
-        page.screenshot(path=str(SHOT / f"{index + 1:02d}-{info['scene']}.png"))
         if index + 1 < count:
-            beat_count = page.evaluate(f"D.intro[{index}].beats.length")
-            for _ in range(beat_count):
-                page.click("#scr-intro")
+            page.click("#scr-intro")
 
     browser.close()
     print(SHOT)
     print(json.dumps(metrics, ensure_ascii=False, indent=2))
     overflow = [item["scene"] for item in metrics if item["needsScroll"]]
+    hidden = [item["scene"] for item in metrics if not item["newestVisible"]]
     if overflow:
-        print("인트로 내부 스크롤 발생: " + ", ".join(overflow))
+        print("대화 누적으로 자동 스크롤 사용: " + ", ".join(overflow))
+    if hidden:
+        print("현재 턴이 안전 영역 밖에 있음: " + ", ".join(hidden))
         sys.exit(1)

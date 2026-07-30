@@ -436,7 +436,7 @@ const UI = (()=>{
     const face=hasPortrait
       ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상">`
       : '';
-    const speaker=['dialogue','thought','letter'].includes(kind)
+    const speaker=['dialogue','thought','letter'].includes(kind)||(kind==='record'&&hasPortrait)
       ? `<div class="turn-speaker">${face}<span><small>${source}</small><b>${esc(person.name)}</b></span></div>`
       : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
     return `<article class="story-turn story-entry ${kind}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}"
@@ -481,6 +481,7 @@ const UI = (()=>{
     add(evd&&evd.needsComp);
     add(evd&&evd.needsComp2);
     add(evd&&evd.recruitStart);
+    (evd&&evd.speakers||[]).forEach(add);
     add(evd&&D.eventPortraits&&D.eventPortraits[evd.id]);
     const title=stripTags(evd&&evd.title);
     for(const [id,c] of Object.entries(D.comps||{})){ if(title.includes(c.name)) add(id); }
@@ -521,16 +522,17 @@ const UI = (()=>{
     for(let i=0;i<key.length;i++) hash=(hash*31+key.charCodeAt(i))|0;
     return pool[Math.abs(hash)%pool.length];
   }
-  function inferQuoteSpeaker(before, after, evd, state){
-    const b=stripTags(before).slice(-100), a=stripTags(after).slice(0,100);
-    const verbs='말|묻|물었|대답|답했|외치|중얼|소리|웃|받았|선언|덧붙|불쑥|고개';
+  function inferQuoteSpeaker(before, after, evd, state, preferRecord=false){
+    const rawBefore=stripTags(before), b=rawBefore.slice(-220), a=stripTags(after).slice(0,120);
+    const written=/(글씨|수첩|편지|메모|원고|기록|각인|적혀|적었|썼|써 둔|남긴 문장)/.test(rawBefore);
+    const verbs='말|묻|물었|대답|답했|외치|중얼|소리|웃|받았|선언|덧붙|불쑥|고개|글씨|쓰|적|남기';
     for(const item of speakerRegistry(state)){
       for(const name of item.names){
         const safe=name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
         if(new RegExp(`^\\s*${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})`).test(a)
           ||new RegExp(`${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})[^.。!?]{0,10}$`).test(b)){
           state.last=item.id;
-          return {kind:'dialogue',who:item.id};
+          return {kind:written?'record':'dialogue',who:item.id};
         }
       }
     }
@@ -548,6 +550,8 @@ const UI = (()=>{
         }
       }
     }
+    if((written||preferRecord)&&state.last&&state.last!=='record')
+      return {kind:'record',who:state.last};
     const candidates=state.candidates;
     if(candidates.length){
       const next=candidates.find(id=>id!==state.last)||candidates[0];
@@ -579,6 +583,17 @@ const UI = (()=>{
     const pushNarration=(raw)=>{
       const restored=restore(raw).trim();
       if(!stripTags(restored)) return;
+      if(evd&&evd.parseRecords){
+        const plain=stripTags(restored);
+        const cues=[
+          ['mother',/(?:엄마|어머니)[^.。!?]{0,40}(?:글씨|수첩|메모|편지|적|썼|남긴)/],
+          ['father',/(?:아빠|아버지)[^.。!?]{0,40}(?:글씨|수첩|메모|편지|적|썼|남긴)/],
+          ['grandfather',/할아버지[^.。!?]{0,40}(?:글씨|수첩|메모|편지|적|썼|남긴)/]
+        ];
+        for(const [id,re] of cues){
+          if(state.candidates.includes(id)&&re.test(plain)){ state.last=id; break; }
+        }
+      }
       if(hiddenSpeaker&&revealsIdentity(restored,hiddenSpeaker)) state.knownSpeaker=true;
       const parts=restored.split(/\n+/).map(x=>x.trim()).filter(Boolean);
       for(const part of parts){
@@ -597,13 +612,17 @@ const UI = (()=>{
         continue;
       }
       let cursor=0, match;
-      const re=/[“"]([\s\S]*?)[”"]/g;
+      const re=evd&&evd.parseRecords
+        ? /(?:[“"]([\s\S]*?)[”"]|「([\s\S]*?)」)/g
+        : /[“"]([\s\S]*?)[”"]/g;
       while((match=re.exec(paragraph))){
         pushNarration(paragraph.slice(cursor,match.index));
         const before=restore(paragraph.slice(0,match.index));
         const after=restore(paragraph.slice(re.lastIndex));
-        const speaker=inferQuoteSpeaker(before,after,evd,state);
-        const spoken=restore(match[1]);
+        const isRecord=match[2]!==undefined;
+        const speaker=inferQuoteSpeaker(before,after,evd,state,isRecord);
+        if(isRecord&&speaker.kind==='dialogue') speaker.kind='record';
+        const spoken=restore(match[1]!==undefined?match[1]:match[2]);
         const hidden=speaker.who===hiddenSpeaker&&!state.knownSpeaker;
         turns.push({...speaker,name:hidden?'???':speaker.name,text:spoken});
         if(hidden&&revealsIdentity(spoken,hiddenSpeaker)) state.knownSpeaker=true;
