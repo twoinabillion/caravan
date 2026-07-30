@@ -75,11 +75,19 @@ with sync_playwright() as p:
     intro_chat = pg.evaluate('''() => ({
       count:document.querySelectorAll('#intro-txt .chat-msg').length,
       names:[...document.querySelectorAll('#intro-txt .chat-name')].map(x=>x.textContent),
-      sides:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.classList.contains('mine')?'mine':'other')
+      sides:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.classList.contains('mine')?'mine':'other'),
+      narration:document.querySelectorAll('#intro-txt .story-narration').length,
+      order:[...document.querySelectorAll('#intro-txt [data-story-entry]')].map(x=>x.dataset.kind),
+      narrationW:document.querySelector('#intro-txt .story-narration')?.getBoundingClientRect().width||0,
+      transcriptW:document.querySelector('#intro-txt .story-transcript')?.getBoundingClientRect().width||0
     })''')
     check('사람 대화는 채팅처럼 누적', intro_chat['count'] == 2 and
           intro_chat['names'] == ['테스터 · 8살','할아버지'] and
           intro_chat['sides'] == ['mine','other'], str(intro_chat))
+    check('내레이션은 전체 폭으로 남고 채팅을 지우지 않음',
+          intro_chat['narration'] == 1 and
+          intro_chat['order'] == ['narration','dialogue','dialogue'] and
+          intro_chat['narrationW'] >= intro_chat['transcriptW'] - 1, str(intro_chat))
     for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 2')):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
@@ -467,7 +475,7 @@ with sync_playwright() as p:
       out.knownSpeaker=talkTurns.some(t=>t.kind==='dialogue'&&t.who==='minji');
       UI.showEvent(talkSample);
       out.choiceLockedUntilRead=!document.querySelector('#ev-sheet [data-i]')&&
-        !!document.querySelector('#ev-sheet .story-turn');
+        !!document.querySelector('#ev-sheet [data-story-entry]');
       UI.finishStory();
       out.choiceUnlocked=!!document.querySelector('#ev-sheet [data-i]');
       document.querySelector('#ev-wrap').classList.remove('on');
