@@ -240,6 +240,10 @@ with sync_playwright() as p:
     check('v1.2 세이브 의뢰 마이그레이션', r['migrated'])
 
     print('― 신규 콘텐츠')
+    new_road_scenes = {
+        'roadcrew_line', 'roadcrew_bridge', 'roadcrew_washout', 'roadcrew_sign',
+        'road_night_circle', 'road_supply_shelter',
+    }
     for ev in ['lib_meet', 'freq_catch', 'van_receipt', 'meet_smith', 'vg_cicada', 'night_djradio',
                'circus_meet', 'postman_again', 'seed_harvest', 'wall_reply', 'loc_cablecar', 'loc_filmset',
                'meet_tinker', 'ai_census', 'comp_naming',
@@ -248,6 +252,8 @@ with sync_playwright() as p:
                'exp_coffee', 'vanowner_coffee', 'library_scribe', 'freq_L2', 'mansu_opening',
                'up_winch_rescue', 'up_stove_visitor', 'up_beehive_swarm', 'meet_busstop_grandmas', 'exp_selfwash',
                'duo_mechsong', 'duo_nightround', 'crisis_boar', 'wx_ghostlight', 'meet_pansori',
+               'roadcrew_line', 'roadcrew_bridge', 'roadcrew_washout', 'roadcrew_sign',
+               'road_night_circle', 'road_supply_shelter',
                'roadbeat_300_plate', 'roadbeat_200_archive', 'roadbeat_100_divide', 'roadbeat_50_courtesy',
                'up_bench_first', 'up_cabin_sleepchart', 'up_garden_roster', 'up_armor_argument',
                'up_kitchen_firstmeal', 'up_full_house', 'duo_minji_parkss_space',
@@ -257,6 +263,13 @@ with sync_playwright() as p:
         vis = pg.locator('#ev-wrap.on').count() > 0
         check(f'이벤트 표시: {ev}', vis)
         if vis:
+            if ev in new_road_scenes:
+                scene_ready = pg.locator('#ev-sheet img.event-scene').count() == 1 and \
+                    pg.locator('#ev-sheet img.event-scene').evaluate(
+                        "(img) => img.src.startsWith('data:image/jpeg;base64,')")
+                check(f'고유 장면 표시: {ev}', scene_ready)
+                pg.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
+                continue
             pg.evaluate('UI.finishStory()')
             pg.locator('#ev-wrap .choice:not([disabled])').first.click()
             pg.wait_for_timeout(150)
@@ -389,6 +402,18 @@ with sync_playwright() as p:
       S.party=['minji','parkss']; S.up={}; out.fullBlocked=!G.doRecruit('kangwoo');
       S.up.bench=true; out.nextOpened=G.doRecruit('kangwoo');
       out.roadBeats=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'].filter(id=>D.events.find(e=>e.id===id)).length;
+      const roadCrewIds=['roadcrew_line','roadcrew_bridge','roadcrew_washout','roadcrew_sign'];
+      const roadCrewFlags=['roadcrew_met','roadcrew_bridge','roadcrew_safe','roadcrew_road_done'];
+      out.roadCrewEvents=roadCrewIds.filter(id=>D.events.find(e=>e.id===id)).length;
+      out.roadCrewScenes=roadCrewIds.concat(['road_night_circle','road_supply_shelter']).every(id=>{
+        const scene=D.eventScenes[id];
+        return !!scene && (D.scenes[scene]||'').startsWith('data:image/jpeg;base64,');
+      });
+      out.roadCrewChain=roadCrewIds.every((id,i)=>{
+        const ev=D.events.find(e=>e.id===id);
+        return ev&&ev.choices.length>=2&&ev.choices.every(c=>
+          c.out&&c.out.length&&c.out.every(o=>o.fx&&o.fx.flag===roadCrewFlags[i]));
+      });
       out.upStories=['up_bench_first','up_cabin_sleepchart','up_garden_roster','up_armor_argument','up_kitchen_firstmeal','up_full_house'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.duoStories=['duo_minji_parkss_space','duo_kangwoo_eunsu_record','duo_leo_jaeyi_route','party_north_vote'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.sceneCount=Object.keys(D.scenes||{}).length;
@@ -539,7 +564,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 860종', r4['eventCount'] == 860, str(r4['eventCount']))
+    check('이벤트 866종', r4['eventCount'] == 866, str(r4['eventCount']))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',
@@ -548,10 +573,12 @@ with sync_playwright() as p:
     check('메인 패널에 빈자리 카드 미표시', r4['emptyCards'] == 0, str(r4['emptyCards']))
     check('만석 영입 잠금·좌석 개조 후 해금', r4['fullBlocked'] and r4['nextOpened'], str(r4))
     check('천리안 거리 이정표 4종', r4['roadBeats'] == 4, str(r4['roadBeats']))
+    check('도로수선단 4부작·선택 결과 연쇄', r4['roadCrewEvents'] == 4 and
+          r4['roadCrewChain'] and r4['roadCrewScenes'], str(r4))
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 81종·빌드 주입', r4['sceneCount'] == 81 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 87종·빌드 주입', r4['sceneCount'] == 87 and r4['sceneDataReady'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
@@ -654,7 +681,7 @@ with sync_playwright() as p:
     check('상세 그림 지도 렌더러 유지', map_detail['rivers'] and map_detail['context'] >= 30, str(map_detail))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('860개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('866개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))

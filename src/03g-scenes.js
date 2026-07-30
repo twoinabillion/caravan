@@ -80,7 +80,13 @@ D.scenes = {
   'combat-perimeter-warning':'__SCENE_COMBAT_PERIMETER_WARNING__',
   'combat-walker-disable':'__SCENE_COMBAT_WALKER_DISABLE__',
   'combat-drone-swarm':'__SCENE_COMBAT_DRONE_SWARM__',
-  'combat-checkpoint-breach':'__SCENE_COMBAT_CHECKPOINT_BREACH__'
+  'combat-checkpoint-breach':'__SCENE_COMBAT_CHECKPOINT_BREACH__',
+  'roadcrew-line':'__SCENE_ROADCREW_LINE__',
+  'roadcrew-bridge':'__SCENE_ROADCREW_BRIDGE__',
+  'roadcrew-washout':'__SCENE_ROADCREW_WASHOUT__',
+  'roadcrew-sign':'__SCENE_ROADCREW_SIGN__',
+  'road-night-circle':'__SCENE_ROAD_NIGHT_CIRCLE__',
+  'road-supply-shelter':'__SCENE_ROAD_SUPPLY_SHELTER__'
 };
 
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */

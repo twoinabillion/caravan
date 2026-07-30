@@ -49,6 +49,7 @@ SCENE_KEYS=(
   RECRUIT_LEO_FOLLOW RECRUIT_LEO_JOIN RECRUIT_JAEYI_FOLLOW RECRUIT_JAEYI_JOIN
   RECRUIT_EUNSU_FOLLOW RECRUIT_EUNSU_JOIN RECRUIT_KANGWOO_FOLLOW RECRUIT_KANGWOO_JOIN
   COMBAT_PERIMETER_WARNING COMBAT_WALKER_DISABLE COMBAT_DRONE_SWARM COMBAT_CHECKPOINT_BREACH
+  ROADCREW_LINE ROADCREW_BRIDGE ROADCREW_WASHOUT ROADCREW_SIGN ROAD_NIGHT_CIRCLE ROAD_SUPPLY_SHELTER
 )
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
@@ -132,6 +133,12 @@ SCENE_FILES=(
   assets/scenes/combat-walker-disable.jpg
   assets/scenes/combat-drone-swarm.jpg
   assets/scenes/combat-checkpoint-breach.jpg
+  assets/scenes/roadcrew-line.jpg
+  assets/scenes/roadcrew-bridge.jpg
+  assets/scenes/roadcrew-washout.jpg
+  assets/scenes/roadcrew-sign.jpg
+  assets/scenes/road-night-circle.jpg
+  assets/scenes/road-supply-shelter.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do
