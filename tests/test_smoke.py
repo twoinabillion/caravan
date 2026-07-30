@@ -525,10 +525,28 @@ with sync_playwright() as p:
       S.items['부품']=3; UI.renderAll();
       out.missionVisible=document.querySelector('#mission-strip').textContent.includes('부품 3/8');
       out.mapMission=document.querySelector('#map-mission').textContent.includes('대전');
+      S.min=12*60;
       UI.showStl('daegu');
+      out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===3 &&
+        !!document.querySelector('#stl-van') &&
+        !document.querySelector('#garage') && !document.querySelector('#trade');
+      document.querySelector('[data-stlfocus="garage"]').click();
+      document.querySelector('#stl-enter').click();
       out.garageGroups=document.querySelectorAll('#garage [data-ug]').length;
       out.garageArt=!!document.querySelector('#garage .upgrade-group-hero img');
       out.garageCards=document.querySelectorAll('#garage .upgrade-card').length;
+      out.garageVan=!!document.querySelector('#garage-van-cv');
+      out.sectionIsolation=!!document.querySelector('#garage') && !document.querySelector('#trade') &&
+        !document.querySelector('[data-npc]');
+      const oldScrap=S.scrap, oldParts=S.items['부품'], oldFuelMax=S.fuelMax;
+      S.scrap=999; S.items['부품']=99; delete S.up.tank1;
+      UI.showStl('daegu','garage');
+      document.querySelector('[data-up="tank1"]').click();
+      out.upgradeCeremony=!!document.querySelector('.upgrade-install') &&
+        !!document.querySelector('#up-before-van') && !!document.querySelector('#up-after-van') &&
+        document.querySelector('.upgrade-change').textContent.includes('연료 용량');
+      document.querySelector('#upgrade-install-done').click();
+      delete S.up.tank1; S.scrap=oldScrap; S.items['부품']=oldParts; S.fuelMax=oldFuelMax;
       document.querySelector('#ovl-stl').classList.remove('on');
       document.querySelector('#dk-status').click();
       document.querySelector('#st-tabs [data-st="journey"]').click();
@@ -596,7 +614,10 @@ with sync_playwright() as p:
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))
+    check('정착지 3개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
+    check('장소별 기능 분리', r4['sectionIsolation'], str(r4))
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
+    check('업그레이드 전후 차체 작업 장면', r4['upgradeCeremony'], str(r4))
     check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('긴 사건 본문·7개 선택지 독립 스크롤', r4['eventScroll'] and

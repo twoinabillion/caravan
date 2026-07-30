@@ -1121,47 +1121,81 @@ const UI = (()=>{
   }
 
   /* ── SETTLEMENT ── */
-  let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel';
-  function showStl(stlId){
-    curStl=stlId;
-    const stl=D.stls[stlId];
-    if(!G.isNight()) G.checkQuest();   // 배달은 사람이 깨어 있을 때만
-    $('#stl-name').innerHTML=stl.name+`<button class="x" style="float:right" id="stl-leave" aria-label="${esc(stl.name)} 닫기">✕</button>`;
-    $('#stl-desc').textContent=stl.desc;
-    const body=$('#stl-body');
+  let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel',
+    stlMode='hub', stlFocus='market';
+  function settlementScene(stlId){
+    const sid=D.nodeScenes&&D.nodeScenes[stlId];
+    return sid&&D.scenes&&D.scenes[sid]?D.scenes[sid]:'';
+  }
+  function settlementSpots(stlId){
+    return {
+      market:{label:stlId==='muju'?'교환소':stlId==='daejeon'?'보급소':'장터',
+        sub:'의뢰와 물자를 살핀다',icon:'food'},
+      garage:{label:'정비소',sub:'달구지를 고치고 넓힌다',icon:'parts'},
+      people:{label:stlId==='daejeon'?'사람들':'모닥불',
+        sub:'얼굴을 보고 이야기를 나눈다',icon:'bond'}
+    };
+  }
+  function leaveSettlement(){
+    closeOvl('#ovl-stl');
+    renderAll();
+  }
+  function settlementHeader(section){
+    const stl=D.stls[curStl];
+    $('#stl-name').innerHTML=`${section?`<button class="stl-back" id="stl-back" aria-label="${esc(stl.name)} 공간으로 돌아가기">‹</button>`:''}
+      <span>${esc(stl.name)}</span>
+      <button class="x" id="stl-leave" aria-label="${esc(stl.name)} 닫기">✕</button>`;
+    $('#stl-desc').textContent=section||stl.desc;
+    $('#stl-leave').onclick=leaveSettlement;
+    const back=$('#stl-back');
+    if(back) back.onclick=()=>showStl(curStl,'hub');
+  }
+  function renderSettlementHub(){
+    const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl);
+    const spots=settlementSpots(curStl), night=G.isNight();
+    if(night&&(stlFocus==='market'||stlFocus==='garage')) stlFocus='people';
+    const focus=spots[stlFocus]||spots.market;
+    settlementHeader('');
+    $('#ovl-stl').classList.add('hub-mode');
+    body.innerHTML=`<div class="stl-hub" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
+      <div class="stl-hub-art" role="img" aria-label="${esc(stl.name)} 풍경"></div>
+      <div class="stl-hub-place"><b>${esc(stl.name)}</b><small>${night?'장은 잠들었지만 모닥불은 아직 켜져 있다.':esc(stl.desc)}</small></div>
+      <div class="stl-hotspots" aria-label="${esc(stl.name)}에서 갈 곳">
+        ${Object.entries(spots).map(([id,spot])=>{
+          const closed=night&&id!=='people';
+          return `<button class="stl-hotspot ${id} ${stlFocus===id?'selected':''}" data-stlfocus="${id}"
+            aria-pressed="${stlFocus===id}" ${closed?'disabled':''}>
+            <span class="stl-hotspot-icon">${ICO(spot.icon)}</span>
+            <span><b>${spot.label}</b><small>${closed?'아침 06:00에 연다':spot.sub}</small></span>
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="stl-van-wrap"><canvas id="stl-van" aria-label="현재 개조 상태의 달구지"></canvas><span>우리 달구지</span></div>
+      <div class="stl-route ${stlFocus}" aria-hidden="true"></div>
+      <div class="stl-hub-dock">
+        <div class="stl-resource-strip" aria-label="현재 자원">
+          <span>${ICO('fuel')}<b>${Math.floor(S.fuel)}</b><small>연료</small></span>
+          <span>${ICO('water')}<b>${Math.floor(S.water)}</b><small>물</small></span>
+          <span>${ICO('food')}<b>${Math.floor(S.food)}</b><small>식량</small></span>
+          <span>${ICO('scrap')}<b>${S.scrap}</b><small>고철</small></span>
+          <span>${ICO('parts')}<b>${S.items['부품']||0}</b><small>부품</small></span>
+        </div>
+        <div class="stl-focus-copy"><span>${focus.label}</span><small>${night?'오늘은 쉬고 아침에 움직이자.':focus.sub}</small></div>
+        <button class="stl-enter" id="stl-enter">${ICO(focus.icon)}<span>${focus.label}${focus.label==='사람들'?'을':'로'} 간다</span></button>
+        <button class="stl-return" id="stl-out">${ICO('van')} 달구지로 돌아간다</button>
+      </div>
+    </div>`;
+    body.querySelectorAll('[data-stlfocus]').forEach(b=>b.onclick=()=>{
+      stlFocus=b.dataset.stlfocus;
+      renderSettlementHub();
+    });
+    $('#stl-enter').onclick=()=>showStl(curStl,stlFocus);
+    $('#stl-out').onclick=leaveSettlement;
+    $('#ovl-stl').classList.add('on');
+    requestAnimationFrame(()=>{ if(SCENE.drawSettlementVan) SCENE.drawSettlementVan($('#stl-van')); });
+  }
+  function questBoardHtml(){
     let h='';
-    /* 밤에는 장이 닫힌다 */
-    if(G.isNight()){
-      h+=`<div class="dlg"><div class="say"><span class="spk">🌙 밤</span> 장은 닫혔고 사람들은 잠들었다. 등불 몇 개만 성벽을 지킨다.\n\n거래·정비·의뢰는 아침(06:00)부터.</div></div>
-        <div class="acts">
-          <button class="act primary" id="stl-rest"><span class="ic">🛏</span><span><b>하룻밤 묵는다</b><small>아침까지 · 피로 회복 · 사기 회복</small></span></button>
-          <button class="act" id="stl-out"><span class="ic">🚐</span><span><b>달구지로 돌아간다</b></span></button></div>`;
-      body.innerHTML=h;
-      $('#stl-rest').onclick=()=>{ closeOvl('#ovl-stl'); G.camp('🏘 정착지에서 하룻밤을 묵었다'); };
-      $('#stl-out').onclick=()=>{ closeOvl('#ovl-stl'); renderAll(); };
-      $('#stl-leave').onclick=()=>{ closeOvl('#ovl-stl'); renderAll(); };
-      $('#ovl-stl').classList.add('on');
-      return;
-    }
-    // NPCs
-    for(const nid of stl.npcs){
-      const npc=D.npcs[nid], st=S.npcs[nid];
-      h+=`<button class="npc-row" data-npc="${nid}">
-        <div class="npc-face">${npcFace(nid,npc.face)}</div>
-        <span><b>${npc.name}</b><small>${npc.role}</small></span>
-        <span class="npc-att">${st.att>10?'우호적':st.att<-10?'냉랭함':st.met?'아는 사이':'초면'}</span></button>`;
-    }
-    // recruit (대구 강우)
-    if(stl.recruit && !G.hasComp(stl.recruit)
-      && (!S.used.includes('kw_recruit')||(S.recruitQ&&S.recruitQ.id===stl.recruit))){
-      const c=D.comps[stl.recruit];
-      const rq=S.recruitQ&&S.recruitQ.id===stl.recruit?S.recruitQ:null;
-      h+=`<button class="npc-row" data-recruit="${stl.recruit}">
-        <div class="npc-face">${c.face}</div>
-        <span><b>${c.name}</b><small>${c.bio}</small></span>
-        <span class="npc-att">${rq?(rq.stage==='ready'?'합류 대화':rq.stage==='follow'?'마주할 일':rq.stage==='road'?'임시 동행':'부탁 진행 중'):'할 말 있음'}</span></button>`;
-    }
-    // 의뢰 게시판
     if(S.quest){
       const q=S.quest, K=G.QKIND[q.kind]||G.QKIND.deliver;
       if(G.questReady()){
@@ -1176,31 +1210,75 @@ const UI = (()=>{
     } else {
       const qs=G.rollQuests();
       if(qs.length){ stlQuests=qs;
-        h+=`<div class="dlg"><div class="say" style="margin-bottom:4px"><span class="spk">📋 게시판</span> <small style="color:var(--faded)">의뢰는 한 번에 하나만</small></div><div class="choices">`;
-        qs.forEach((q,i)=>{ const K=G.QKIND[q.kind]; const dd=q.due-S.day;
+        h+=`<div class="dlg"><div class="say stl-kicker"><span class="spk">게시판</span> <small>의뢰는 한 번에 하나만 맡는다</small></div><div class="choices">`;
+        qs.forEach((q,i)=>{ const K=G.QKIND[q.kind], dd=q.due-S.day;
           h+=`<button class="choice" data-quest="${i}">${K.ic} <b>${K.nm}</b> — ${G.questDesc(q)} <span class="req"><span style="color:${dd<=2?'var(--amber)':'inherit'}">D-${dd}</span> · 고철 ${q.reward}</span></button>`; });
         h+=`</div></div>`;
       }
     }
-    // trade
-    h+=`<div class="dlg"><div class="say" style="margin-bottom:4px"><span class="spk">거래</span> <small style="color:var(--faded)">보유 고철 <span id="tr-scrap">${S.scrap}</span></small></div><div id="trade"></div></div>`;
-    // garage
-    h+=`<div class="dlg"><div class="say" style="margin-bottom:4px"><span class="spk">🔧 정비소</span> <small style="color:var(--faded)">부품 ${S.items['부품']||0} · 달구지 개조</small></div><div id="garage"></div></div>`;
-    h+=`<div class="acts">
-      <button class="act" id="stl-rest"><span class="ic">🛏</span><span><b>하룻밤 묵는다</b><small>아침까지 · 사기 회복 · 차 정비</small></span></button>
-      <button class="act primary" id="stl-out"><span class="ic">🚐</span><span><b>달구지로 돌아간다</b></span></button></div>`;
+    return h;
+  }
+  function showStl(stlId,mode='hub'){
+    curStl=stlId;
+    stlMode=mode||'hub';
+    const stl=D.stls[stlId];
+    if(!G.isNight()) G.checkQuest();   // 배달은 사람이 깨어 있을 때만
+    if(stlMode==='hub'){ renderSettlementHub(); return; }
+    if(G.isNight()&&stlMode!=='people'){ stlFocus='people'; renderSettlementHub(); return; }
+    $('#ovl-stl').classList.remove('hub-mode');
+    const body=$('#stl-body'), scene=settlementScene(curStl), spots=settlementSpots(curStl);
+    settlementHeader(spots[stlMode]?spots[stlMode].label:'');
+    let h=`<div class="stl-section-hero" ${scene?`style="background-image:url('${scene}')"`:''}>
+      <span>${ICO((spots[stlMode]||spots.market).icon)}${(spots[stlMode]||spots.market).label}</span>
+      <small>${(spots[stlMode]||spots.market).sub}</small>
+    </div>`;
+    if(stlMode==='market'){
+      h+=questBoardHtml();
+      h+=`<div class="dlg"><div class="say stl-kicker"><span class="spk">오늘의 거래</span>
+        <small>보유 고철 <span id="tr-scrap">${S.scrap}</span></small></div><div id="trade"></div></div>`;
+    } else if(stlMode==='garage'){
+      h+=`<div class="dlg garage-shell"><div class="say stl-kicker"><span class="spk">달구지 작업대</span>
+        <small>부품 ${S.items['부품']||0} · 실제 차체 상태를 보며 개조한다</small></div><div id="garage"></div></div>`;
+    } else {
+      if(G.isNight()){
+        h+=`<div class="dlg night-talk"><div class="say"><span class="spk">늦은 밤</span>
+          장터 셔터가 내려갔다. 모닥불 곁에는 잠들기 전 몇 사람의 낮은 목소리만 남았다.</div></div>`;
+      }
+      for(const nid of stl.npcs){
+        const npc=D.npcs[nid], ns=S.npcs[nid];
+        h+=`<button class="npc-row" data-npc="${nid}">
+          <div class="npc-face">${npcFace(nid,npc.face)}</div>
+          <span><b>${npc.name}</b><small>${npc.role}</small></span>
+          <span class="npc-att">${ns.att>10?'우호적':ns.att<-10?'냉랭함':ns.met?'아는 사이':'초면'}</span></button>`;
+      }
+      if(stl.recruit && !G.hasComp(stl.recruit)
+        && (!S.used.includes('kw_recruit')||(S.recruitQ&&S.recruitQ.id===stl.recruit))){
+        const c=D.comps[stl.recruit];
+        const rq=S.recruitQ&&S.recruitQ.id===stl.recruit?S.recruitQ:null;
+        h+=`<button class="npc-row" data-recruit="${stl.recruit}">
+          <div class="npc-face">${c.face}</div>
+          <span><b>${c.name}</b><small>${c.bio}</small></span>
+          <span class="npc-att">${rq?(rq.stage==='ready'?'합류 대화':rq.stage==='follow'?'마주할 일':rq.stage==='road'?'임시 동행':'부탁 진행 중'):'할 말 있음'}</span></button>`;
+      }
+      h+=`<div class="acts stl-rest-actions">
+        <button class="act primary" id="stl-rest"><span>${ICO('bond')}</span><span><b>이곳에서 하룻밤 묵는다</b><small>아침까지 · 피로와 사기 회복 · 차 정비</small></span></button></div>`;
+    }
+    h+=`<button class="stl-section-back" id="stl-hub-back">이 장소를 나와 ${esc(stl.name)}을 다시 둘러본다</button>`;
     body.innerHTML=h;
-    renderTrade();
-    renderGarage();
-    body.querySelectorAll('[data-quest]').forEach(b=>b.onclick=()=>{ G.acceptQuest(stlQuests[+b.dataset.quest]); showStl(curStl); });
-    const qt=body.querySelector('#q-turnin');
-    if(qt) qt.onclick=()=>{ G.checkQuest(); showStl(curStl); };
-    body.querySelectorAll('[data-npc]').forEach(b=>b.onclick=()=>talk(b.dataset.npc));
-    const rec=body.querySelector('[data-recruit]');
-    if(rec) rec.onclick=()=>recruitStl(stl.recruit);
-    $('#stl-rest').onclick=()=>{ closeOvl('#ovl-stl'); G.camp('🏘 정착지에서 하룻밤을 묵었다'); };
-    $('#stl-out').onclick=()=>{ closeOvl('#ovl-stl'); renderAll(); };
-    $('#stl-leave').onclick=()=>{ closeOvl('#ovl-stl'); renderAll(); };
+    if(stlMode==='market'){
+      renderTrade();
+      body.querySelectorAll('[data-quest]').forEach(b=>b.onclick=()=>{ G.acceptQuest(stlQuests[+b.dataset.quest]); showStl(curStl,'market'); });
+      const qt=body.querySelector('#q-turnin');
+      if(qt) qt.onclick=()=>{ G.checkQuest(); showStl(curStl,'market'); };
+    } else if(stlMode==='garage'){
+      renderGarage();
+    } else {
+      body.querySelectorAll('[data-npc]').forEach(b=>b.onclick=()=>talk(b.dataset.npc));
+      const rec=body.querySelector('[data-recruit]');
+      if(rec) rec.onclick=()=>recruitStl(stl.recruit);
+      $('#stl-rest').onclick=()=>{ closeOvl('#ovl-stl'); G.camp('🏘 정착지에서 하룻밤을 묵었다'); };
+    }
+    $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
     $('#ovl-stl').classList.add('on');
   }
   function renderTrade(){
@@ -1242,6 +1320,60 @@ const UI = (()=>{
     $('#tr-scrap').textContent=S.scrap;
     renderTrade(); renderHud(); G.save();
   }
+  function playUpgradeInstall(u,before){
+    const ovl=$('#ovl-stl');
+    const group=(D.upgradeGroups||[]).find(x=>x.ids.includes(u.id))||D.upgradeGroups[0];
+    const art=D.upgradeArt&&D.upgradeArt[group.id];
+    const afterStage=G.vanStage(), afterCapacity=G.seatCapacity();
+    const physical=u.seat
+      ? `<b>후미 증축 +${before.stage.cm}cm → +${afterStage.cm}cm</b><small>${before.stage.nm}에서 ${afterStage.nm} 단계로. 탑승 정원 ${before.capacity+1} → ${afterCapacity+1}명</small>`
+      : u.id==='tank1'||u.id==='tank2'
+        ? `<b>연료 용량 ${before.fuelMax}L → ${S.fuelMax}L</b><small>차체 옆 고정대와 연료 배관을 함께 증설했다.</small>`
+        : u.id==='armor'
+          ? `<b>최대 내구 ${before.vanMax} → ${S.vanMax}</b><small>하중이 몰리는 프레임부터 장갑판을 체결했다.</small>`
+          : `<b>${esc(u.nm)} 장착</b><small>${esc(u.d)} · 작업 뒤 주행 점검까지 마쳤다.</small>`;
+    const layer=el('div','upgrade-install',`<div class="upgrade-install-art" ${art?`style="background-image:url('${art}')"`:''}></div>
+      <div class="upgrade-install-panel" role="dialog" aria-modal="true" aria-labelledby="upgrade-install-title">
+        <div class="upgrade-install-head"><small>${esc(group.nm)} 작업</small><h3 id="upgrade-install-title">${esc(u.nm)}</h3></div>
+        <div class="upgrade-compare">
+          <figure><canvas id="up-before-van" aria-label="개조 전 달구지"></canvas><figcaption>개조 전</figcaption></figure>
+          <span class="upgrade-arrow" aria-hidden="true">→</span>
+          <figure><canvas id="up-after-van" aria-label="개조 후 달구지"></canvas><figcaption>개조 후</figcaption></figure>
+        </div>
+        <div class="upgrade-change">${physical}</div>
+        <div class="upgrade-phases" aria-live="polite">
+          <span class="active">1 · 분해</span><span>2 · 체결</span><span>3 · 시동 확인</span>
+        </div>
+        <button class="upgrade-install-done" id="upgrade-install-done">달구지를 확인한다</button>
+      </div>`);
+    ovl.appendChild(layer);
+    requestAnimationFrame(()=>{
+      if(SCENE.drawSettlementVan){
+        SCENE.drawSettlementVan($('#up-before-van'),before.up);
+        SCENE.drawSettlementVan($('#up-after-van'),S.up);
+      }
+      if(typeof SND!=='undefined') SND.combat('tool');
+    });
+    const phases=[...layer.querySelectorAll('.upgrade-phases span')];
+    const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finish=()=>{
+      if(!layer.isConnected) return;
+      phases.forEach(x=>x.classList.add('active'));
+      layer.classList.add('ready');
+      const done=layer.querySelector('#upgrade-install-done');
+      if(done) done.focus();
+    };
+    if(reduced) finish();
+    else {
+      setTimeout(()=>{ if(!layer.isConnected) return; phases[1].classList.add('active'); if(typeof SND!=='undefined') SND.combat('tool'); },450);
+      setTimeout(()=>{ if(layer.isConnected) phases[2].classList.add('active'); },900);
+      setTimeout(finish,1250);
+    }
+    $('#upgrade-install-done').onclick=()=>{
+      layer.remove();
+      renderGarage();
+    };
+  }
   function renderGarage(){
     const g=$('#garage'); if(!g) return;
     const repCost=G.hasComp('minji')?6:8;
@@ -1256,7 +1388,11 @@ const UI = (()=>{
     const stageLine=group.id==='seating'
       ? `<br>현재 ${vanStage.nm} · 기본 대비 +${vanStage.cm}cm · 정원 ${G.seatCapacity()+1}명`
       : '';
-    g.innerHTML = `<div class="garage-repair">
+    g.innerHTML = `<div class="garage-van-preview">
+        <canvas id="garage-van-cv" aria-label="현재 달구지 차체"></canvas>
+        <div><b>${vanStage.nm}</b><small>차체 증축 +${vanStage.cm}cm · 탑승 정원 ${G.seatCapacity()+1}명</small></div>
+      </div>
+      <div class="garage-repair">
         <span><b>차체 정비</b><small>내구 +30${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}</small></span>
         <span class="uc-cost">고철 ${repCost}</span>
         <button class="tbtn" data-rep="1" ${canRep?'':'disabled'}>${S.van>=S.vanMax-5?'양호':'수리'}</button>
@@ -1279,9 +1415,14 @@ const UI = (()=>{
         <button class="tbtn" data-up="${u.id}" title="${chk.why||''}" ${owned||!chk.ok?'disabled':''}>${owned?'완료':chk.ok?'장착':'잠김'}</button>
       </div>`;
     }).join('')}</div></div>`;
+    requestAnimationFrame(()=>{ if(SCENE.drawSettlementVan) SCENE.drawSettlementVan($('#garage-van-cv')); });
     g.querySelectorAll('[data-ug]').forEach(b=>b.onclick=()=>{ garageGroup=b.dataset.ug; renderGarage(); });
     g.querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{
+      const u=G.upDef(b.dataset.up);
+      const before={up:{...S.up},stage:{...G.vanStage()},capacity:G.seatCapacity(),
+        fuelMax:S.fuelMax,vanMax:S.vanMax};
       if(G.buyUpgrade(b.dataset.up)){ renderGarage(); renderTrade(); renderHud();
+        playUpgradeInstall(u,before);
         const ts=$('#tr-scrap'); if(ts) ts.textContent=S.scrap; }
     });
     const rb=g.querySelector('[data-rep]');
@@ -1331,7 +1472,7 @@ const UI = (()=>{
         dlg.querySelector('.say').innerHTML=`<span class="spk">${npc.name}</span> "${ru.text}"`;
         dlg.querySelector('.choices').innerHTML=`<button class="choice" data-r="x2">고맙습니다</button>`;
         G.applyFx({reveal:ru.reveal, note:{type:'소문',title:npc.name+'의 소문',body:ru.text,links:[D.nodes[ru.reveal].name, npc.name]}});
-        dlg.querySelector('[data-r="x2"]').onclick=()=>{ dlg.remove(); showStl(curStl); };
+        dlg.querySelector('[data-r="x2"]').onclick=()=>{ dlg.remove(); showStl(curStl,'people'); };
       }
       else if(r==='chat'){
         st.att+=3;

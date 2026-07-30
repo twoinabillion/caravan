@@ -566,8 +566,8 @@ const SCENE = (()=>{
     for(const x of stages){ if(!x.up||up[x.up]) stage=x; }
     return stage;
   }
-  function van(roadY,speed,dark,wx){
-    const up=S? (S.up||{}):{};
+  function van(roadY,speed,dark,wx,upOverride){
+    const up=upOverride||(S? (S.up||{}):{});
     const build=vanBuildStage(up);
     const bodyL=build.bodyL, bodyH=build.bodyH, cabL=17, cabH=25;
     const cabX=P(W*0.53), vx=cabX-bodyL;
@@ -1163,6 +1163,31 @@ const SCENE = (()=>{
     dctx.textAlign='left';
   }
 
+  /* 정착지·정비소에서도 주행 화면과 같은 달구지를 그대로 쓴다.
+     별도 PNG가 아니라 업그레이드 상태를 넘겨 전후 외형을 즉시 비교한다. */
+  function drawSettlementVan(canvas,upState){
+    if(!canvas) return;
+    const prevCtx=ctx, prevW=W, prevH=H;
+    const pw=170, ph=100, buf=document.createElement('canvas');
+    buf.width=pw; buf.height=ph;
+    ctx=buf.getContext('2d'); W=pw; H=ph;
+    ctx.imageSmoothingEnabled=false;
+    ctx.clearRect(0,0,W,H);
+    van(54,0,.62,'clear',upState||(S&&S.up)||{});
+    ctx=prevCtx; W=prevW; H=prevH;
+
+    const out=canvas.getContext('2d');
+    const vw=Math.max(1,canvas.clientWidth||360), vh=Math.max(1,canvas.clientHeight||180);
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    canvas.width=Math.round(vw*dpr); canvas.height=Math.round(vh*dpr);
+    out.setTransform(dpr,0,0,dpr,0,0);
+    out.clearRect(0,0,vw,vh);
+    out.imageSmoothingEnabled=false;
+    /* 주행 장면의 넓은 여백은 버리고 차체만 크게 잡는다.
+       후미 증축은 왼쪽으로 길어져 마지막 좌석 단계까지 한눈에 비교된다. */
+    out.drawImage(buf,0,12,128,72,0,0,vw,vh);
+  }
+
   /* ── 타이틀 (같은 픽셀 파이프라인) ── */
   let tcv,tdctx,toff,tctx2,tt=0,TW=236,TH=410;
   function initTitle(canvas){
@@ -1267,5 +1292,6 @@ const SCENE = (()=>{
     tdctx.drawImage(toff,0,0,TW,TH,0,0,vw,vh);
   }
 
-  return {init,initTitle,draw,drawTitle, showMeal:(sec)=>{mealT=sec;}, talkPulse:(idx,sec)=>{talkIdx=idx; talkT=sec||3;}};
+  return {init,initTitle,draw,drawTitle,drawSettlementVan,
+    showMeal:(sec)=>{mealT=sec;}, talkPulse:(idx,sec)=>{talkIdx=idx; talkT=sec||3;}};
 })();

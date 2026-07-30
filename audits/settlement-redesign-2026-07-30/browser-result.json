@@ -1,0 +1,9 @@
+{
+  "hub_hotspots": 3,
+  "garage_entered": true,
+  "upgrade_before_after": true,
+  "market_entered": true,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 401 ()"
+  ]
+}
