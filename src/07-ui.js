@@ -414,6 +414,7 @@ const UI = (()=>{
       passer_man:'낯선 남자', passer_woman:'낯선 여자', passer_elder:'노인',
       passer_child:'아이', passer_merchant:'상인', passer_guard:'경비',
       passer_refugee:'피난민', passer_worker:'일꾼', passer_medic:'의료인',
+      seoyeon:'서연', mingyu:'민규',
       sys:'길 위', record:'기록', unknown:'???'
     };
     const comp=D.comps&&D.comps[key], npc=D.npcs&&D.npcs[key];
@@ -475,13 +476,14 @@ const UI = (()=>{
         return storyTurnHtml(turn,opt);
       }).join('')}</section>`;
   }
-  function eventSpeakerCandidates(evd){
+  function eventSpeakerCandidates(evd, extra=[]){
     const ids=[];
     const add=(id)=>{ if(id&&id!=='unknown'&&!ids.includes(id)) ids.push(id); };
     add(evd&&evd.needsComp);
     add(evd&&evd.needsComp2);
     add(evd&&evd.recruitStart);
     (evd&&evd.speakers||[]).forEach(add);
+    (extra||[]).forEach(add);
     add(evd&&D.eventPortraits&&D.eventPortraits[evd.id]);
     const title=stripTags(evd&&evd.title);
     for(const [id,c] of Object.entries(D.comps||{})){ if(title.includes(c.name)) add(id); }
@@ -524,13 +526,21 @@ const UI = (()=>{
   }
   function inferQuoteSpeaker(before, after, evd, state, preferRecord=false){
     const rawBefore=stripTags(before), b=rawBefore.slice(-220), a=stripTags(after).slice(0,120);
+    const aiOpen=Math.max(
+      String(before||'').lastIndexOf('<span class="ai">'),
+      String(before||'').lastIndexOf("<span class='ai'>")
+    );
+    if(aiOpen>String(before||'').lastIndexOf('</span>')){
+      state.last='cheollian';
+      return {kind:'dialogue',who:'cheollian'};
+    }
     const written=/(글씨|수첩|편지|메모|원고|기록|각인|적혀|적었|썼|써 둔|남긴 문장)/.test(rawBefore);
-    const verbs='말|묻|물었|대답|답했|외치|중얼|소리|웃|받았|선언|덧붙|불쑥|고개|글씨|쓰|적|남기';
+    const verbs='말|묻|물었|대답|답했|외치|중얼|소리쳤|받았|선언|덧붙|불쑥';
     for(const item of speakerRegistry(state)){
       for(const name of item.names){
         const safe=name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
         if(new RegExp(`^\\s*${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})`).test(a)
-          ||new RegExp(`${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})[^.。!?]{0,10}$`).test(b)){
+          ||new RegExp(`${safe}(?:이|가|은|는)?[^.。!?]{0,28}(?:${verbs})[^.。!?]{0,10}[.。!?]?\\s*$`).test(b)){
           state.last=item.id;
           return {kind:written?'record':'dialogue',who:item.id};
         }
@@ -544,7 +554,7 @@ const UI = (()=>{
     for(const role of anonymousRoles){
       for(const name of role.names){
         if(new RegExp(`^\\s*${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})`).test(a)
-          ||new RegExp(`${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})[^.。!?]{0,8}$`).test(b)){
+          ||new RegExp(`${name}(?:이|가|은|는)?[^.。!?]{0,24}(?:${verbs})[^.。!?]{0,8}[.。!?]?\\s*$`).test(b)){
           state.last=role.id;
           return {kind:'dialogue',who:role.id,name};
         }
@@ -552,6 +562,12 @@ const UI = (()=>{
     }
     if((written||preferRecord)&&state.last&&state.last!=='record')
       return {kind:'record',who:state.last};
+    if(!preferRecord&&state.contextSpeaker){
+      const who=state.contextSpeaker;
+      state.contextSpeaker=null;
+      state.last=who;
+      return {kind:'dialogue',who};
+    }
     const candidates=state.candidates;
     if(candidates.length){
       const next=candidates.find(id=>id!==state.last)||candidates[0];
@@ -565,6 +581,15 @@ const UI = (()=>{
     const comp=D.comps&&D.comps[id];
     return !!(comp&&stripTags(value).includes(comp.name));
   }
+  function isInlineQuotedPhrase(spoken,before,after){
+    const text=stripTags(spoken), b=stripTags(before), a=stripTags(after);
+    if(!text||text.length>48||/[.!?…]$/.test(text)) return false;
+    if(/^(?:라고|이라며)\s*(?:말|대답|외치|중얼|물었|덧붙)/.test(a)) return false;
+    const particle=/^(?:(?:이|가|은|는|을|를|의|도|만|과|와|로|으로)(?:\s|[,.!?]|$)|(?:이라고|이라|이라는|이란|이라며|라고|라는|라며|였다|이었다)(?:\s|[,.!?]|$))/;
+    const labelAfter=/^(?:상자|문구|표시|버튼|항목|코드|신호|상태|표지|규정|기록|목록|단어|표현)(?:은|는|이|가|을|를|\s)/;
+    const labelBefore=/(?:이름은|제목은|적힌|쓰인|표시된|불리는|뜻하는)\s*$/;
+    return particle.test(a)||labelAfter.test(a)||labelBefore.test(b);
+  }
   function buildStoryTurns(value, evd={}, opt={}){
     let source=String(value||'').trim();
     if(!source) return [{kind:'narration',text:'잠시 말이 끊겼다.'}];
@@ -577,12 +602,22 @@ const UI = (()=>{
     const hiddenSpeaker=evd&&evd.recruitStart;
     const turns=[];
     const state={
-      candidates:eventSpeakerCandidates(evd),last:null,hiddenSpeaker,
-      knownSpeaker:!!opt.knownSpeaker,fallbackSpeaker:anonymousFallback(evd)
+      candidates:eventSpeakerCandidates(evd,opt.speakers),last:null,contextSpeaker:null,hiddenSpeaker,
+      knownSpeaker:!!opt.knownSpeaker,fallbackSpeaker:anonymousFallback(evd),
+      turnSpeakers:Array.isArray(opt.turnSpeakers)
+        ? opt.turnSpeakers
+        : (Array.isArray(evd&&evd.turnSpeakers)?evd.turnSpeakers:[]),
+      scriptIndex:0
     };
     const pushNarration=(raw)=>{
       const restored=restore(raw).trim();
       if(!stripTags(restored)) return;
+      const nearby=stripTags(restored).slice(-160);
+      const mentioned=[...new Set(speakerRegistry(state)
+        .filter(item=>!['me','player_child','intro_child'].includes(item.id))
+        .filter(item=>item.names.some(name=>nearby.includes(name)))
+        .map(item=>item.id))];
+      if(mentioned.length===1) state.contextSpeaker=mentioned[0];
       if(evd&&evd.parseRecords){
         const plain=stripTags(restored);
         const cues=[
@@ -616,13 +651,23 @@ const UI = (()=>{
         ? /(?:[“"]([\s\S]*?)[”"]|「([\s\S]*?)」)/g
         : /[“"]([\s\S]*?)[”"]/g;
       while((match=re.exec(paragraph))){
-        pushNarration(paragraph.slice(cursor,match.index));
         const before=restore(paragraph.slice(0,match.index));
         const after=restore(paragraph.slice(re.lastIndex));
         const isRecord=match[2]!==undefined;
-        const speaker=inferQuoteSpeaker(before,after,evd,state,isRecord);
-        if(isRecord&&speaker.kind==='dialogue') speaker.kind='record';
         const spoken=restore(match[1]!==undefined?match[1]:match[2]);
+        if(!isRecord&&!state.turnSpeakers.length&&isInlineQuotedPhrase(spoken,before,after)) continue;
+        pushNarration(paragraph.slice(cursor,match.index));
+        const scripted=state.turnSpeakers[state.scriptIndex++];
+        let speaker;
+        if(scripted!==undefined){
+          speaker=typeof scripted==='string'
+            ? {kind:isRecord?'record':'dialogue',who:scripted}
+            : {kind:isRecord?'record':'dialogue',...scripted};
+          state.last=speaker.who;
+        }else{
+          speaker=inferQuoteSpeaker(before,after,evd,state,isRecord);
+        }
+        if(isRecord&&speaker.kind==='dialogue') speaker.kind='record';
         const hidden=speaker.who===hiddenSpeaker&&!state.knownSpeaker;
         turns.push({...speaker,name:hidden?'???':speaker.name,text:spoken});
         if(hidden&&revealsIdentity(spoken,hiddenSpeaker)) state.knownSpeaker=true;
@@ -812,7 +857,7 @@ const UI = (()=>{
   }
   function playRadio(){
     const r=G.pickRadio(); if(!r) return;
-    speak({who:'radio', t:r.t});
+    speak({who:r.narration?'sys':'radio', t:r.t});
     VO.play(r.key);
   }
   function speak(b){
@@ -980,7 +1025,7 @@ const UI = (()=>{
       context=`<div class="story-context"><b>우리가 앞에서 한 일 · ${approach.label}</b>${approach.memory}</div>`+context;
     }
     const choices=eventChoiceData(evd);
-    const turns=buildStoryTurns(text,evd);
+    const turns=buildStoryTurns(text,evd,{turnSpeakers:evd.turnSpeakers});
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${sceneAlt} 사건 내용">${scene}<div class="event-head"><div>
       <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
       <h2>${evd.title}</h2></div></div>${context}${combatHudHtml(evd)}<div class="story-reader"></div></div>
@@ -1080,7 +1125,11 @@ const UI = (()=>{
     sheet.classList.add('event-mode');
     const outcomeText=typeof out.text==='function'?out.text(S):out.text;
     const knownSpeaker=!!(curStory&&curStory.knownSpeaker);
-    const turns=buildStoryTurns(outcomeText,curEv,{knownSpeaker});
+    const turns=buildStoryTurns(outcomeText,curEv,{
+      knownSpeaker,
+      speakers:out.speakers,
+      turnSpeakers:out.turnSpeakers
+    });
     const oldScene=sheet.querySelector('.event-scene-frame');
     const scene=oldScene?oldScene.outerHTML:'';
     const fxHtml=chips.length
