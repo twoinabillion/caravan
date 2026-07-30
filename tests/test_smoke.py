@@ -370,6 +370,26 @@ with sync_playwright() as p:
       const out = {};
       out.upCount = D.upgrades.length;
       out.eventCount = D.events.length;
+      const director0={events:[...(S._recentEvents||[])],types:[...(S._recentEventTypes||[])],
+        breather:S._eventBreather||0};
+      const sample=[
+        {id:'repeat_a',type:'조우',w:1},
+        {id:'fresh_b',type:'발견',w:1},
+        {id:'fresh_c',type:'정경',w:1},
+        {id:'fresh_d',type:'동행',w:1}
+      ];
+      S._recentEvents=['repeat_a']; S._recentEventTypes=[]; S._eventBreather=0;
+      out.directorCooldown=!G.directEventPool(sample).some(e=>e.id==='repeat_a');
+      S._recentEvents=[]; S._recentEventTypes=[]; S._eventBreather=1;
+      const calm=G.directEventPool([{id:'heavy',type:'위기',w:1},...sample]);
+      out.directorBreather=calm.length>0&&calm.every(G.eventIsCalm)&&S._eventBreather===0;
+      S._recentEventTypes=['조우','조우']; S._eventBreather=0;
+      out.directorVariety=G.directEventPool(sample).every(e=>e.type!=='조우');
+      out.directorContext=G.eventIsContextual({once:true,needUp:'bench'}) &&
+        !G.eventIsContextual({once:false,needUp:'bench'}) &&
+        G.eventIsHeavy({type:'추적'}) && G.eventIsCalm({type:'정경'});
+      S._recentEvents=director0.events; S._recentEventTypes=director0.types;
+      S._eventBreather=director0.breather;
       out.traceDefs = (D.eraTraces||[]).length;
       out.journeyBeats = (D.journeyBeats||[]).length;
       S.party = []; S.up = {}; UI.renderAll();
@@ -591,6 +611,10 @@ with sync_playwright() as p:
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
     check('이벤트 866종', r4['eventCount'] == 866, str(r4['eventCount']))
+    check('사건 감독: 최근 반복·종류 연속 차단', r4['directorCooldown'] and
+          r4['directorVariety'], str(r4))
+    check('사건 감독: 무거운 장면 뒤 숨 고르기·맥락 우선', r4['directorBreather'] and
+          r4['directorContext'], str(r4))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',

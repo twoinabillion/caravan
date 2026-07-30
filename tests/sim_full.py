@@ -19,6 +19,7 @@ SETUP = r'''() => {
   G.openEvent = (evd) => {
     if(!evd) return;
     if(evd.once) S.used.push(evd.id);
+    G.rememberEvent(evd);
     SIM.ev++; SIM.evIds[evd.id]=(SIM.evIds[evd.id]||0)+1; SIM.lastEv=evd.id;
     if(evd.id && evd.id.startsWith('crisis_')) SIM.crises[evd.id]=(SIM.crises[evd.id]||0)+1;
     const affordable = (evd.choices||[]).filter(c=>G.reqOk(G.choiceReq(c)).ok);

@@ -23,6 +23,7 @@ G.newGame = (mode, name)=>{
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0},
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
+    _recentEvents:[], _recentEventTypes:[], _eventBreather:0,
     combat:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
   };
   rng = mulberry32(S.seed);
@@ -54,6 +55,9 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S._drowsyAt===undefined) S._drowsyAt=-999;
   if(S._lunchDay===undefined) S._lunchDay=0;
   if(!Array.isArray(S._storyQueue)) S._storyQueue=[];
+  if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
+  if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
+  if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
   if(!S.injuries||Array.isArray(S.injuries)) S.injuries={};
@@ -574,15 +578,66 @@ G.eligible = (typeFilter)=>{
 };
 G.unknownHidden = ()=> Object.keys(D.nodes).filter(id=>D.nodes[id].type==='hidden' && !D.nodes[id].secret && !S.known.includes(id));
 
+/* ── 사건 감독 ──
+   콘텐츠 수를 늘리는 대신, 방금 본 사건과 같은 종류가 다시 겹치지 않게 하고
+   무거운 본편·위기 뒤에는 한 호흡 가벼운 길 풍경을 우선한다. */
+G.eventIsContextual = ev=> !!(ev && ev.once && (
+  ev.priority || ev.needFlag || ev.needFlag2 || ev.needFlagMin || ev.needUp ||
+  ev.needsComp2 || ev.needBond || ev.maxRemain!==undefined || ev.recruitStart
+));
+G.eventIsHeavy = ev=> !!(ev && (
+  ev.ai || ev.priority || ['스토리','추적','위기'].includes(ev.type) ||
+  (ev.once && (ev.needFlag || ev.needFlag2 || ev.needFlagMin))
+));
+G.eventIsCalm = ev=> !!(ev && !G.eventIsHeavy(ev) && !ev.minPursuit &&
+  ['정경','동행','발견'].includes(ev.type));
+G.directEventPool = (pool,opt={})=>{
+  let out=(pool||[]).filter(Boolean);
+  if(!out.length||!S) return out;
+  const recent=new Set((S._recentEvents||[]).slice(-10));
+  const fresh=out.filter(e=>!recent.has(e.id));
+  if(fresh.length>=Math.min(3,out.length)) out=fresh;
+
+  if(opt.breather!==false && S._eventBreather>0){
+    const calm=out.filter(G.eventIsCalm);
+    if(calm.length) out=calm;
+    S._eventBreather=Math.max(0,S._eventBreather-1);
+  }
+
+  const types=(S._recentEventTypes||[]).slice(-2);
+  if(types.length===2&&types[0]===types[1]){
+    const varied=out.filter(e=>e.type!==types[1]);
+    if(varied.length) out=varied;
+  }
+  return out;
+};
+G.rememberEvent = ev=>{
+  if(!S||!ev) return;
+  if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
+  if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
+  if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
+  if(ev.id){
+    S._recentEvents.push(ev.id);
+    if(S._recentEvents.length>16) S._recentEvents.splice(0,S._recentEvents.length-16);
+  }
+  if(ev.type){
+    S._recentEventTypes.push(ev.type);
+    if(S._recentEventTypes.length>6) S._recentEventTypes.splice(0,S._recentEventTypes.length-6);
+  }
+  if(G.eventIsHeavy(ev)) S._eventBreather=Math.max(S._eventBreather,1);
+};
+
 G.fireDriveEvent = ()=>{
   // 동행/추적/조우/발견/탐색 가중 혼합
   let pool = G.eligible();
   const pri = pool.filter(ev=>ev.priority);   // 영입 등 필수 이벤트는 구역 진입 시 우선
   if(pri.length) pool = pri;
+  pool=G.directEventPool(pool);
   if(!pool.length) return;
   // 가중치: 관측↑→추적형↑ / 경계태세→매복류↓ / 보리의육감→발견형↑
   const AMBUSH=['meet_waver','meet_toll','meet_bikers','meet_child_alone'];
   const wOf=(e)=>{ let w=e.w;
+    if(G.eventIsContextual(e)) w*=2.1;                    // 방금 열린 인물·업그레이드·본편 후속
     if(e.type==='추적') w*=(1+S.pursuit*0.5);
     if(G.hasPerk('kw_guard')&&AMBUSH.includes(e.id)) w*=0.35;
     if(G.hasPerk('leo_bori')&&e.type==='발견') w*=1.7;
@@ -605,6 +660,7 @@ G.fireDriveEvent = ()=>{
 G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openEvent(ev); };
 G.openEvent = (evd)=>{
   if(evd.once) S.used.push(evd.id);
+  G.rememberEvent(evd);
   S.stats.events++;
   UI.showEvent(evd);
 };
@@ -895,8 +951,9 @@ G.explore = ()=>{
   G.save();
   return true;
 };
-G.fireDriveEvent2 = (pool)=>{ const total=pool.reduce((s,e)=>s+e.w,0); let r=rng()*total;
-  let evd=pool[0]; for(const e of pool){ r-=e.w; if(r<=0){evd=e;break} } G.openEvent(evd); };
+G.fireDriveEvent2 = (pool)=>{ pool=G.directEventPool(pool); if(!pool.length) return;
+  const total=pool.reduce((s,e)=>s+e.w*(G.eventIsContextual(e)?2.1:1),0); let r=rng()*total;
+  let evd=pool[0]; for(const e of pool){ r-=e.w*(G.eventIsContextual(e)?2.1:1); if(r<=0){evd=e;break} } G.openEvent(evd); };
 G.camp = (msg)=>{
   if(S.driving||UI.modalOpen()) return;
   // advance to next 06:30
