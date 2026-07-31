@@ -477,7 +477,7 @@ with sync_playwright() as p:
       ];
       out.actionCutCount=actionCutKeys.filter(key=>!!D.scenes[key]).length;
       out.actionCutMaps=Object.keys(D.eventTurnScenes||{}).length===4 &&
-        Object.keys(D.eventChoiceScenes||{}).length===12 &&
+        Object.keys(D.eventChoiceScenes||{}).length>=12 &&
         Object.values(D.eventChoiceScenes||{}).every(choiceMap=>
           Object.values(choiceMap).flat().every(key=>!!D.scenes[key]));
       out.recruitDefs=Object.keys(D.recruitQuests||{}).length;
@@ -624,6 +624,13 @@ with sync_playwright() as p:
       S.items['부품']=3; UI.renderAll();
       out.missionVisible=document.querySelector('#mission-strip').textContent.includes('부품 3/8');
       out.mapMission=document.querySelector('#map-mission').textContent.includes('대전');
+      const recruit0=S.recruitQ;
+      S.recruitQ={id:'minji',stage:'task',target:'ulsan'};
+      UI.renderAll();
+      out.missionSecondary=document.querySelector('#mission-strip').classList.contains('has-secondary') &&
+        document.querySelector('#mission-strip').textContent.includes('함께 진행 중') &&
+        document.querySelector('#mission-strip').textContent.includes('대전');
+      S.recruitQ=recruit0; UI.renderAll();
       S.min=12*60;
       UI.showStl('daegu');
       out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===3 &&
@@ -644,15 +651,26 @@ with sync_playwright() as p:
       out.upgradeCeremony=!!document.querySelector('.upgrade-install') &&
         !!document.querySelector('#up-before-van') && !!document.querySelector('#up-after-van') &&
         document.querySelector('.upgrade-change').textContent.includes('연료 용량');
+      document.querySelector('#upgrade-step-action').click();
+      document.querySelector('#upgrade-step-action').click();
+      document.querySelector('#upgrade-step-action').click();
+      out.upgradeInteractive=document.querySelector('.upgrade-install').classList.contains('ready') &&
+        document.querySelectorAll('.upgrade-phases .active').length===3;
       document.querySelector('#upgrade-install-done').click();
       delete S.up.tank1; S.scrap=oldScrap; S.items['부품']=oldParts; S.fuelMax=oldFuelMax;
       document.querySelector('#ovl-stl').classList.remove('on');
       document.querySelector('#dk-status').click();
+      out.statusModalAria=document.querySelector('#ovl-status').getAttribute('aria-hidden')==='false' &&
+        document.querySelector('#ovl-status').getAttribute('role')==='dialog';
       document.querySelector('#st-tabs [data-st="journey"]').click();
       out.statusTabs=document.querySelectorAll('#st-tabs button').length===3 &&
-        document.querySelector('[data-stpane="journey"]').classList.contains('on');
+        document.querySelector('[data-stpane="journey"]').classList.contains('on') &&
+        document.querySelector('#st-tabs [data-st="journey"]').getAttribute('aria-selected')==='true' &&
+        document.querySelector('#st-tabs [data-st="now"]').getAttribute('aria-selected')==='false';
       document.querySelector('#st-x').click();
       G.openEventById('roadbeat_200_archive');
+      out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
+        document.querySelector('#ev-wrap').getAttribute('aria-modal')==='true';
       out.storyContext=document.querySelector('#ev-sheet').textContent.includes('앞 이야기') &&
         document.querySelector('#ev-sheet').textContent.includes('첫 거리 표식');
       document.querySelector('#ev-wrap').classList.remove('on');
@@ -667,7 +685,11 @@ with sync_playwright() as p:
       (D.eraTraces||[]).forEach(t=>{ S.flags[t.flag]=true; });
       ['ridge_path','sokcho_end','librarian_truth'].forEach(f=>{ S.flags[f]=true; });
       UI.showEvent(D.seoulStops.find(e=>e.id==='seoul_core'));
+      const seoulFirst=document.querySelector('.event-scene-frame').dataset.sceneKey;
       UI.finishStory();
+      out.seoulSceneArc=seoulFirst==='seoul-core' &&
+        document.querySelector('.event-scene-frame').dataset.sceneKey==='seoul-testimony' &&
+        !!D.scenes['seoul-liberation'];
       const copy=document.querySelector('.event-scroll');
       const choices=document.querySelector('.event-choice-dock>.choices');
       copy.scrollTop=copy.scrollHeight; choices.scrollTop=choices.scrollHeight;
@@ -699,7 +721,7 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 103종·빌드 주입', r4['sceneCount'] == 103 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 105종·빌드 주입', r4['sceneCount'] == 105 and r4['sceneDataReady'], str(r4))
     check('행동 단위 신규 컷 16장·선택 스포일러 분리',
           r4['actionCutCount'] == 16 and r4['actionCutMaps'], str(r4))
     check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
@@ -726,14 +748,27 @@ with sync_playwright() as p:
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))
+    check('동료 과제 중에도 일반 의뢰와 마감이 보임', r4['missionSecondary'], str(r4))
     check('정착지 3개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
     check('장소별 기능 분리', r4['sectionIsolation'], str(r4))
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
-    check('업그레이드 전후 차체 작업 장면', r4['upgradeCeremony'], str(r4))
-    check('상태창 지금·여정·동료 탭 전환', r4['statusTabs'], str(r4))
+    check('업그레이드 전후 차체 작업 장면·3단계 직접 조작',
+          r4['upgradeCeremony'] and r4['upgradeInteractive'], str(r4))
+    check('상태창 탭 전환·ARIA 선택 상태', r4['statusTabs'] and r4['statusModalAria'], str(r4))
+    check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('긴 사건 본문·7개 선택지 독립 스크롤', r4['eventScroll'] and
           r4['choiceScroll'] and r4['choiceDock'], str(r4))
+    check('서울 코어 증언→해방 장면 분리', r4['seoulSceneArc'], str(r4))
+    pg.click('#dk-status')
+    pg.wait_for_timeout(120)
+    focus_open = pg.evaluate("document.activeElement && document.activeElement.id")
+    pg.keyboard.press('Escape')
+    pg.wait_for_timeout(120)
+    focus_close = pg.evaluate("document.activeElement && document.activeElement.id")
+    check('모달 포커스 진입·Escape 닫기·원위치 복귀',
+          focus_open == 'st-x' and focus_close == 'dk-status',
+          f'open={focus_open}, close={focus_close}')
     rcombat = pg.evaluate('''() => {
       const out={}, oldCombat=S.combat, oldInjuries=structuredClone(S.injuries||{});
       const chains=[

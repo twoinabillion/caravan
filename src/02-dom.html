@@ -76,6 +76,7 @@
     </div>
   </div>
   <div class="scr" id="scr-intro">
+    <button id="intro-skip" type="button" hidden>이미 본 프롤로그 건너뛰기</button>
     <div id="intro-book">
       <div id="intro-visual">
         <img id="intro-img" alt="">
@@ -84,7 +85,7 @@
       <div id="intro-page">
         <div id="intro-meta"><span id="intro-era"></span><span id="intro-count"></span></div>
         <h2 id="intro-title"></h2>
-        <div id="intro-txt" aria-live="polite" aria-atomic="false"></div>
+        <div id="intro-txt"></div>
       </div>
     </div>
   </div>
@@ -132,17 +133,17 @@
   <div id="arrival-scene" aria-live="polite"></div>
 
   <!-- ══ EVENT SHEET ══ -->
-  <div class="sheet-wrap" id="ev-wrap"><div class="sheet" id="ev-sheet"></div></div>
+  <div class="sheet-wrap" id="ev-wrap" role="dialog" aria-modal="true" aria-label="길 위의 이야기" aria-hidden="true"><div class="sheet" id="ev-sheet"></div></div>
 
   <!-- ══ SETTLEMENT ══ -->
-  <div class="ovl" id="ovl-stl">
+  <div class="ovl" id="ovl-stl" role="dialog" aria-modal="true" aria-labelledby="stl-name" aria-hidden="true">
     <div id="stl-head"><h2 id="stl-name"></h2><div class="d" id="stl-desc"></div></div>
     <div id="stl-body"></div>
   </div>
 
   <!-- ══ MAP ══ -->
-  <div class="ovl" id="ovl-map">
-    <div class="ovl-head"><h2>지도 — 남녘</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x" aria-label="지도 닫기">✕</button></div>
+  <div class="ovl" id="ovl-map" role="dialog" aria-modal="true" aria-labelledby="map-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="map-title">지도 — 남녘</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x" aria-label="지도 닫기">✕</button></div>
     <div id="map-mission" class="mission-strip map-mission"></div>
     <div id="mapwrap">
       <canvas id="mapcv" aria-label="서울까지 이어지는 그림 여정도"></canvas>
@@ -151,8 +152,8 @@
   </div>
 
   <!-- ══ JOURNAL ══ -->
-  <div class="ovl" id="ovl-journal">
-    <div class="ovl-head"><h2>여행 일지</h2><span class="mini" id="j-mini"></span>
+  <div class="ovl" id="ovl-journal" role="dialog" aria-modal="true" aria-labelledby="journal-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="journal-title">여행 일지</h2><span class="mini" id="j-mini"></span>
       <button class="x" id="bt-export" title="Obsidian 마크다운으로 내보내기" aria-label="여행 일지를 마크다운으로 내보내기" style="font-size:13px">⇩ .md</button>
       <button class="x" id="j-x" aria-label="여행 일지 닫기">✕</button></div>
     <div id="jtabs">
@@ -164,25 +165,26 @@
   </div>
 
   <!-- ══ STATUS ══ -->
-  <div class="ovl" id="ovl-status">
-    <div class="ovl-head"><h2>달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x" aria-label="달구지와 여정 닫기">✕</button></div>
+  <div class="ovl" id="ovl-status" role="dialog" aria-modal="true" aria-labelledby="status-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="status-title">달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x" aria-label="달구지와 여정 닫기">✕</button></div>
     <div id="st-tabs" class="st-tabs" role="tablist">
-      <button class="here" data-st="now" role="tab">지금</button>
-      <button data-st="journey" role="tab">여정</button>
-      <button data-st="crew" role="tab">동료</button>
+      <button class="here" data-st="now" role="tab" aria-controls="st-body" aria-selected="true">지금</button>
+      <button data-st="journey" role="tab" aria-controls="st-body" aria-selected="false">여정</button>
+      <button data-st="crew" role="tab" aria-controls="st-body" aria-selected="false">동료</button>
     </div>
     <div id="st-body"></div>
   </div>
 
   <!-- ══ SEOUL (내부 오르막) ══ -->
-  <div class="ovl" id="ovl-seoul">
-    <div class="ovl-head"><h2>서울 — 남산 코어까지</h2><span class="mini" id="seoul-mini"></span></div>
+  <div class="ovl" id="ovl-seoul" role="dialog" aria-modal="true" aria-labelledby="seoul-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="seoul-title">서울 — 남산 코어까지</h2><span class="mini" id="seoul-mini"></span></div>
     <div id="seoul-body"></div>
   </div>
 
   <!-- ══ ENDING ══ -->
   <div class="scr" id="scr-end"></div>
 
+  <div id="story-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
   <div id="toasts"></div>
 </div></div>
 <script>

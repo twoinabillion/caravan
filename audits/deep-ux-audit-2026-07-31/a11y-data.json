@@ -1,0 +1,452 @@
+{
+  "title_tab_order": [
+    {
+      "tag": "BUTTON",
+      "id": "bt-new",
+      "text": "▶\n새 여행\n부산에서 시동을 건다",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "bt-preview",
+      "text": "▧\n여정 미리보기\n동료 · 탐사 · 전투 · 달구지 생활",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "bt-song",
+      "text": "♪ 부서진 고속도로",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    {
+      "tag": "BODY",
+      "id": "",
+      "text": "POST-APOCALYPTIC ROAD TRIP\n서울까지\n400km\n낡은 봉고차 한 대. 멸망한 한반도. 그리고 북쪽 끝의 그것.\n▶\n새 여행\n",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "bt-new",
+      "text": "▶\n새 여행\n부산에서 시동을 건다",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "bt-preview",
+      "text": "▧\n여정 미리보기\n동료 · 탐사 · 전투 · 달구지 생활",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "bt-song",
+      "text": "♪ 부서진 고속도로",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    {
+      "tag": "BODY",
+      "id": "",
+      "text": "POST-APOCALYPTIC ROAD TRIP\n서울까지\n400km\n낡은 봉고차 한 대. 멸망한 한반도. 그리고 북쪽 끝의 그것.\n▶\n새 여행\n",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    }
+  ],
+  "status": {
+    "initial_focus": {
+      "tag": "BUTTON",
+      "id": "dk-status",
+      "text": "🚐\n상태",
+      "inEvent": false,
+      "inStatus": false,
+      "inMap": false
+    },
+    "escaped_overlay": true,
+    "tab_path": [
+      {
+        "tag": "BUTTON",
+        "id": "dk-journal",
+        "text": "✎\n일지",
+        "inEvent": false,
+        "inStatus": false,
+        "inMap": false
+      }
+    ],
+    "tab_semantics": [
+      {
+        "text": "지금",
+        "role": "tab",
+        "selected": null
+      },
+      {
+        "text": "여정",
+        "role": "tab",
+        "selected": null
+      },
+      {
+        "text": "동료",
+        "role": "tab",
+        "selected": null
+      }
+    ]
+  },
+  "event": {
+    "initial_focus": {
+      "tag": "BUTTON",
+      "id": "st-x",
+      "text": "✕",
+      "inEvent": false,
+      "inStatus": true,
+      "inMap": false
+    },
+    "escaped_overlay": true,
+    "tab_path": [
+      {
+        "tag": "CANVAS",
+        "id": "minimap",
+        "text": "전체 지도 열기",
+        "inEvent": false,
+        "inStatus": false,
+        "inMap": false
+      }
+    ]
+  },
+  "semantics": {
+    "viewport": "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
+    "eventRole": null,
+    "eventModal": null,
+    "liveRegions": [
+      {
+        "id": "preview-grid",
+        "role": null,
+        "live": "polite",
+        "insideLive": false
+      },
+      {
+        "id": "intro-txt",
+        "role": null,
+        "live": "polite",
+        "insideLive": false
+      },
+      {
+        "id": "",
+        "role": "log",
+        "live": "polite",
+        "insideLive": true
+      },
+      {
+        "id": "bubbles",
+        "role": null,
+        "live": "polite",
+        "insideLive": false
+      },
+      {
+        "id": "arrival-scene",
+        "role": null,
+        "live": "polite",
+        "insideLive": false
+      },
+      {
+        "id": "",
+        "role": "log",
+        "live": "polite",
+        "insideLive": false
+      }
+    ],
+    "tinyText": [
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "lab",
+        "size": "10px",
+        "text": "연료 L"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "size": "10px",
+        "text": "연료 L"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10px",
+        "text": ""
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "lab",
+        "size": "10px",
+        "text": "물"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "size": "10px",
+        "text": "물"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10px",
+        "text": ""
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "lab",
+        "size": "10px",
+        "text": "식량"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "size": "10px",
+        "text": "식량"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10px",
+        "text": ""
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "lab",
+        "size": "10px",
+        "text": "차체 %"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "size": "10px",
+        "text": "차체 %"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10px",
+        "text": ""
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "lab",
+        "size": "10px",
+        "text": "고철"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "size": "10px",
+        "text": "고철"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10px",
+        "text": ""
+      },
+      {
+        "tag": "DIV",
+        "id": "dash-sub",
+        "cls": "",
+        "size": "10.5px",
+        "text": "DAY 1 · 07:30 0% 맑음 · 내일"
+      },
+      {
+        "tag": "SPAN",
+        "id": "clockbox",
+        "cls": "",
+        "size": "10.5px",
+        "text": "DAY 1 · 07:30"
+      },
+      {
+        "tag": "SPAN",
+        "id": "ftgbox",
+        "cls": "",
+        "size": "10.5px",
+        "text": "0%"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10.5px",
+        "text": ""
+      },
+      {
+        "tag": "SPAN",
+        "id": "wxbox",
+        "cls": "",
+        "size": "10.5px",
+        "text": "맑음 · 내일"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10.5px",
+        "text": ""
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "size": "10.5px",
+        "text": "· 내일"
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "ico",
+        "size": "10.5px",
+        "text": ""
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "ms-k",
+        "size": "10.5px",
+        "text": "본편 · 북쪽으로"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "ms-meta",
+        "size": "11px",
+        "text": "DAY 1"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "ms-state",
+        "size": "11.5px",
+        "text": "서울 외곽 제7 잔류구역 · 첫 이송까지 30일 — 남산에서 집행을 멈춘다"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "loc-mark",
+        "size": "8.5px",
+        "text": "HERE"
+      },
+      {
+        "tag": "SMALL",
+        "id": "",
+        "cls": "",
+        "size": "10.5px",
+        "text": "정차 중"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "crew-mini",
+        "size": "11px",
+        "text": ""
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "pimg",
+        "size": "11px",
+        "text": ""
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "crew-count",
+        "size": "11px",
+        "text": "1명"
+      },
+      {
+        "tag": "SMALL",
+        "id": "",
+        "cls": "",
+        "size": "11.5px",
+        "text": "최소 2시간 · 피로 약 +5 이상 · 새 지역 고철 +4"
+      },
+      {
+        "tag": "SMALL",
+        "id": "",
+        "cls": "",
+        "size": "11.5px",
+        "text": "20km · 연료 약 4L"
+      },
+      {
+        "tag": "SMALL",
+        "id": "",
+        "cls": "",
+        "size": "11.5px",
+        "text": "18km · 연료 약 3L"
+      },
+      {
+        "tag": "SMALL",
+        "id": "",
+        "cls": "",
+        "size": "11.5px",
+        "text": "부품 1 소모 · 내구 +35 · 약 1.5시간"
+      },
+      {
+        "tag": "SMALL",
+        "id": "",
+        "cls": "",
+        "size": "11.5px",
+        "text": "라디오 진공관이 필요하다 — 어딘가의 방송국에"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "dk-map",
+        "cls": "",
+        "size": "11.5px",
+        "text": "🗺 지도"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "dk-status",
+        "cls": "",
+        "size": "11.5px",
+        "text": "🚐 상태"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "dk-journal",
+        "cls": "",
+        "size": "11.5px",
+        "text": "✎ 일지"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "dk-camp",
+        "cls": "",
+        "size": "11.5px",
+        "text": "🔥 야영"
+      }
+    ]
+  }
+}

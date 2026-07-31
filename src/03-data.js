@@ -310,7 +310,7 @@ D.vanStages = [
   {id:'jumpseat', up:'jumpseat', lv:4, nm:'후미 서비스칸 완성',bodyL:92, bodyH:39, cm:185,
     build:'마지막 40cm 서비스 베이에 벽걸이 좌석과 개인 짐칸을 붙인다'},
 ];
-D.bondTh = [5,12,20];
+D.bondTh = [5,11,18];
 /* 동료를 만날 수 있는 지역 힌트 (상태 화면) */
 D.compWhere = {
   minji:'동해 공업지대 — 울산·경주·포항의 길에서',
@@ -1013,25 +1013,25 @@ D.npcs = {
 D.stls = {
   gwangju: {name:'광주 대인시장', npcs:['geumja'],
     desc:'호남 최대의 정착지. 시장 골목마다 기름 냄새, 국밥 김, 그리고 오지랖이라는 이름의 복지가 흐른다.',
-    trade:[['연료 10L','fuel',10,6],['물 3통','water',3,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5],['부품','item부품',1,7]]},
+    trade:[['연료 10L','fuel',10,6],['물 5통','water',5,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5],['부품','item부품',1,7]]},
   miryang: {name:'밀양 장터', npcs:['sundeok'],
     desc:'천막과 손수레. 닷새장의 리듬으로 사는 사람들. 국수 삶는 김이 오른다.',
-    trade:[['연료 10L','fuel',10,6],['물 3통','water',3,1],['식량 1일치','food',1,2],['부품','item부품',1,8]]},
+    trade:[['연료 10L','fuel',10,6],['물 5통','water',5,1],['식량 1일치','food',1,2],['부품','item부품',1,8]]},
   daegu:   {name:'대구 돔 시장', npcs:['taeho'], recruit:'kangwoo',
     desc:'야구장 돔 아래 수백 개의 좌판. 남부의 물류가 여기서 돈다. 경비들이 입구에서 무기를 맡아둔다.',
-    trade:[['연료 10L','fuel',10,5],['물 3통','water',3,1],['식량 1일치','food',1,2],['부품','item부품',1,7],['의약품','item의약품',1,6],['탄약','item탄약',1,5]]},
+    trade:[['연료 10L','fuel',10,5],['물 5통','water',5,1],['식량 1일치','food',1,2],['부품','item부품',1,7],['의약품','item의약품',1,6],['탄약','item탄약',1,5]]},
   muju:    {name:'무주 터널', npcs:['jaepil'],
     desc:'터널 양쪽을 컨테이너로 막았다. 천장에 매단 수백 개의 촛불이 별자리 같다.',
     trade:[['물 2통 ⇄ 식량 1','barter_wf',0,0],['식량 2 ⇄ 부품 1','barter_fp',0,0],['의약품 1 ⇄ 식량 3','barter_mf',0,0]]},
   jeonju:  {name:'전주 서문 시장', npcs:['miyoung'],
     desc:'가장 사람 사는 냄새가 나는 곳. 어디선가 진짜 콩나물국밥 냄새가 난다.',
-    trade:[['연료 10L','fuel',10,6],['물 3통','water',3,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5]]},
+    trade:[['연료 10L','fuel',10,6],['물 5통','water',5,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5]]},
   daejeon: {name:'대전 연구단지 코뮌', npcs:['drhan'],
     desc:'연구동 하나에 발전기를 돌려 산다. 화이트보드엔 아직 수식이 남아 있다. 절반은 지워졌다.',
-    trade:[['연료 10L','fuel',10,7],['물 3통','water',3,1],['부품','item부품',1,6],['의약품','item의약품',1,4]]},
+    trade:[['연료 10L','fuel',10,7],['물 5통','water',5,1],['부품','item부품',1,6],['의약품','item의약품',1,4]]},
   suwon:   {name:'수원 성곽 공동체', npcs:['deokgu'],
     desc:'화성 성곽 안의 마지막 도시. 성벽 위 화살수들이 북쪽 하늘만 본다.',
-    trade:[['연료 10L','fuel',10,8],['물 3통','water',3,1],['식량 1일치','food',1,3],['탄약','item탄약',1,6],['부품','item부품',1,8]]},
+    trade:[['연료 10L','fuel',10,8],['물 5통','water',5,1],['식량 1일치','food',1,3],['탄약','item탄약',1,6],['부품','item부품',1,8]]},
 };
 
 /* ── 배경 바이옴 (씬 렌더링) ── */
@@ -1205,7 +1205,15 @@ D.eventTurnScenes = {
   rq_minji_task:['recruit-minji-task','recruit-minji-task-signal'],
   rq_minji_follow:['recruit-minji-follow','recruit-minji-follow-listen'],
   combat_walker_strike:['combat-walker-disable','combat-walker-joint'],
-  seoul_core:['seoul-core','seoul-core-key']
+  seoul_core:['seoul-core','seoul-core-key','seoul-testimony']
+};
+/* 긴 피날레는 장면을 단순 순환하지 않고 이야기의 실제 단계에서 바꾼다. */
+D.eventTurnSceneStages = {
+  seoul_core:[
+    {at:0,key:'seoul-core'},
+    {at:9,key:'seoul-core-key'},
+    {at:24,key:'seoul-testimony'}
+  ]
 };
 D.eventChoiceScenes = {
   rq_minji_task:{
@@ -1221,7 +1229,17 @@ D.eventChoiceScenes = {
   rq_eunsu_task:{1:['recruit-eunsu-task-breaker']},
   rq_eunsu_follow:{2:['recruit-eunsu-follow-lights']},
   rq_kangwoo_task:{2:['recruit-kangwoo-task-seoyeon']},
-  roadcrew_bridge:{0:['roadcrew-bridge-wedge']}
+  roadcrew_bridge:{0:['roadcrew-bridge-wedge']},
+  seoul_core:{
+    0:['seoul-testimony'],1:['seoul-testimony'],2:['seoul-testimony'],3:['seoul-testimony'],
+    4:['seoul-testimony'],5:['seoul-testimony'],6:['seoul-testimony']
+  },
+  seoul_decision:{
+    0:['seoul-liberation'],1:['seoul-liberation'],2:['seoul-liberation']
+  },
+  seoul_night:{
+    0:['seoul-liberation'],1:['seoul-liberation']
+  }
 };
 /* 고유 컷이 없는 사건도 텍스트로만 떨어지지 않는다.
    타입별 공용 컷은 장면의 정확한 삽화라기보다 지금 벌어진 일의 시각적 문법이다. */
@@ -1269,7 +1287,7 @@ D.upgrades = [
  {id:'tank1',    nm:'보조 연료탱크',  ic:'🛢', d:'연료 최대 +25L',                cost:{scrap:18, parts:1}},
  {id:'tank2',    nm:'대형 연료탱크',  ic:'🛢', d:'연료 최대 +25L (추가)',         cost:{scrap:30, parts:1}, needs:'tank1'},
  {id:'bench',    nm:'후미 레일 좌석칸',ic:'💺', d:'동료 자리 +1 · 차대와 바닥 40cm 연장', cost:{scrap:12, parts:1}, seat:1},
- {id:'cabin',    nm:'거주구 2차 증축', ic:'🏠', d:'동료 자리 +1 · 후미 생활칸 누적 110cm 연장', cost:{scrap:30, parts:2}, needs:'bench', seat:1},
+  {id:'cabin',    nm:'거주구 2차 증축', ic:'🏠', d:'동료 자리 +1 · 후미 생활칸 누적 110cm 연장', cost:{scrap:22, parts:1}, needs:'bench', seat:1},
  {id:'susp',     nm:'서스펜션 강화',  ic:'🔩', d:'험로·폭풍 마모 절반',           cost:{scrap:24, parts:1}},
  {id:'armor',    nm:'장갑판',         ic:'🛡', d:'최대 내구 +25 · 받는 피해 30%↓', cost:{scrap:30, parts:1}},
  {id:'garden',   nm:'지붕 텃밭',      ic:'🌱', d:'매일 아침 식량 +1',             cost:{scrap:20}},
@@ -1287,8 +1305,8 @@ D.upgrades = [
  {id:'beehive', nm:'이동 벌통',     ic:'🐝', d:'아침 30% 확률 꿀 — 식량+1·사기+2',      cost:{scrap:28,parts:0}},
  {id:'garden2', nm:'지붕 온실',     ic:'🍅', d:'텃밭 강화 — 매일 식량 +2', cost:{scrap:30,parts:1}, needs:'garden'},
  {id:'kitchen', nm:'간이 주방',     ic:'🍳', d:'난로 확장 — 식사 때마다 사기 +1', cost:{scrap:24,parts:1}, needs:'stove'},
- {id:'bunk',    nm:'상부 2층 침상',   ic:'🛏', d:'동료 자리 +1 · 바닥 35cm+지붕 증설 · 주행 피로 -20%', cost:{scrap:22,parts:1}, needs:'cabin', seat:1},
- {id:'jumpseat',nm:'후미 서비스칸',   ic:'🪑', d:'동료 자리 +1 · 마지막 40cm 증축+벽걸이 좌석', cost:{scrap:18,parts:1}, needs:'bunk', seat:1},
+  {id:'bunk',    nm:'상부 2층 침상',   ic:'🛏', d:'동료 자리 +1 · 바닥 35cm+지붕 증설 · 주행 피로 -20%', cost:{scrap:18,parts:1}, needs:'cabin', seat:1},
+  {id:'jumpseat',nm:'후미 서비스칸',   ic:'🪑', d:'동료 자리 +1 · 마지막 40cm 증축+벽걸이 좌석', cost:{scrap:16,parts:1}, needs:'bunk', seat:1},
  {id:'fridge',  nm:'냉장 박스',     ic:'🧊', d:'태양광 연결 — 3일마다 식량 +1 (낭비 제로)', cost:{scrap:26,parts:1}, needs:'solar'},
  {id:'armory',  nm:'무기 선반',     ic:'⚔', d:'공구함 확장 — 제작 고철 -20%·시간 절반', cost:{scrap:24,parts:1}, needs:'sidebox'},
  {id:'scope',   nm:'지붕 망원대',   ic:'🔭', d:'발견율 +25% · 매복류 조우 -25%', cost:{scrap:22,parts:1}},
@@ -1499,7 +1517,11 @@ D.intro = [
   },
   {
     scene:'intro-departure-choice', era:'오늘 · 부산에서 북쪽으로', title:'내가 가기로 한 이유',
-    text:`부모님의 연구 수첩, 할아버지가 쓰던 렌치, 그리고 아이의 빈 이송표를 실었다.
+    text:`부모님의 연구 수첩, 할아버지가 쓰던 렌치, 그리고 아이에게 빌린 빈 이송표를 실었다.
+
+장치의 설계는 수첩에 있었다.
+실물이 어디 있는지는 할아버지가 남긴 말 한 줄뿐이었다.
+<span class="em">“계기판 안쪽은 뜯기 전에 수첩부터 읽어라.”</span>
 
 남산의 호출에 복종하려는 것도, 할아버지 대신 복수하려는 것도 아니었다.
 
@@ -1663,15 +1685,16 @@ const introBeats = {
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 서른 밤 뒤에 전부 나와야 한대요.'}
   ],
   'intro-departure-choice': [
-    {kind:'narration', text:'나는 아이와 함께 달구지로 돌아왔다. 부모님의 연구 수첩과 할아버지의 렌치를 조수석에 놓고, 아이의 이송표는 수첩 첫 장 옆에 끼웠다.'},
+    {kind:'narration', text:'나는 아이와 함께 달구지로 돌아왔다. 부모님의 연구 수첩과 할아버지의 렌치를 조수석에 놓고, 아이에게 빌린 이송표는 수첩 첫 장 옆에 끼웠다.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'서울 가요?'},
     {kind:'dialogue', who:'me', name:'나', text:'응. 남산에 있는 천리안한테 이 종이를 누가 만들었는지 물어보려고.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'물어보면 친구들은 안 나와도 돼요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'묻기만 해서는 안 되겠지. 우리 부모님이 만든 장치가 있어. 이유와 사람 서명 없이 이송 명령을 못 내리게 하는 거야.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그걸 서울에 가져가요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'그래. 서른 날 안에 남산까지 가서 장치를 연결하고, 이번 이송부터 멈춰 볼게.'},
+    {kind:'dialogue', who:'me', name:'나', text:'묻기만 해서는 안 되겠지. 부모님이 이유와 사람 서명 없이 이송 명령을 못 내리게 하는 장치를 만들었다는 건 알아. 실물은 할아버지가 계기판 안쪽을 보라고만 남겼어.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그럼 먼저 찾아야겠네요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'그래. 차 안에서 그걸 찾아서, 서른 날 안에 남산에 연결할 거야. 이번 이송부터 멈춰 볼게.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'꼭 돌아와요. 종이 돌려줘야 하니까.'},
     {kind:'dialogue', who:'me', name:'나', text:'알았어. 잃어버리지 않고 가져올게.'},
+    {kind:'narration', text:'아이는 이송표를 한 번 더 펴 보더니, 열이 난 동생과 엄마가 기다리는 뒤쪽 버스로 달려갔다. 나는 아이가 차에 오르는 것까지 보고 운전석 문을 열었다.'},
     {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
     {kind:'thought', who:'me', name:'나', text:'이번에는 빈칸을 억지로 채우지 않는다. 누가 명령을 만들고 승인했는지 확인해서, 같은 명령이 다시 나오지 못하게 한다.'},
     {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}

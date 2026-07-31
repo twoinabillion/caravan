@@ -29,9 +29,35 @@ const UI = (()=>{
   ];
 
   /* ── modal state ── */
+  const focusableSel='button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  function openModal(sel,preferred){
+    const node=typeof sel==='string'?$(sel):sel;
+    if(!node) return;
+    if(!node.classList.contains('on')) node._returnFocus=document.activeElement;
+    node.classList.add('on');
+    node.setAttribute('aria-hidden','false');
+    requestAnimationFrame(()=>{
+      const target=(preferred&&node.querySelector(preferred))||node.querySelector(focusableSel);
+      if(target) target.focus({preventScroll:true});
+    });
+  }
+  function closeModal(sel,restore=true){
+    const node=typeof sel==='string'?$(sel):sel;
+    if(!node) return;
+    node.classList.remove('on');
+    node.setAttribute('aria-hidden','true');
+    const back=node._returnFocus;
+    node._returnFocus=null;
+    if(restore&&back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
+  }
+  function activeModal(){
+    return ['#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status']
+      .map($).find(node=>node&&node.classList.contains('on'))||null;
+  }
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
     || $('#ovl-stl').classList.contains('on') || $('#ovl-map').classList.contains('on')
-    || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on');
+    || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on')
+    || $('#ovl-seoul').classList.contains('on');
 
   /* ── screens ── */
   function show(id){
@@ -96,6 +122,20 @@ const UI = (()=>{
   function wire(){
     /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
     document.addEventListener('keydown',e=>{
+      const modal=activeModal();
+      if(modal&&e.key==='Tab'){
+        const items=[...modal.querySelectorAll(focusableSel)].filter(x=>x.offsetParent!==null);
+        if(items.length){
+          const first=items[0], last=items[items.length-1];
+          if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); }
+          else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); }
+        }
+      }
+      if(modal&&e.key==='Escape'&&modal.id!=='ev-wrap'&&modal.id!=='ovl-seoul'){
+        e.preventDefault();
+        closeOvl('#'+modal.id);
+        return;
+      }
       if(screen==='intro'&&(e.key==='Enter'||e.key===' ')){
         e.preventDefault();
         nextIntro();
@@ -144,7 +184,18 @@ const UI = (()=>{
       $('#offmsg').textContent=r.msg;
       if(r.ok){ setTimeout(()=>startNew('offroad'), 600); }
     };
-    $('#scr-intro').onclick=()=>nextIntro();
+    let introPointer=null;
+    $('#scr-intro').addEventListener('pointerdown',e=>{
+      if(e.target.closest('#intro-skip')) return;
+      introPointer={x:e.clientX,y:e.clientY};
+    });
+    $('#scr-intro').addEventListener('pointerup',e=>{
+      if(!introPointer||e.target.closest('#intro-skip')) return;
+      const moved=Math.hypot(e.clientX-introPointer.x,e.clientY-introPointer.y);
+      introPointer=null;
+      if(moved<12) nextIntro();
+    });
+    $('#intro-skip').onclick=e=>{ e.stopPropagation(); skipIntro(); };
     $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>G.camp();
@@ -166,6 +217,13 @@ const UI = (()=>{
     document.querySelectorAll('#st-tabs button').forEach(b=>b.onclick=()=>{
       stTab=b.dataset.st;
       renderStatus();
+    });
+    $('#st-tabs').addEventListener('keydown',e=>{
+      if(!['ArrowLeft','ArrowRight'].includes(e.key)) return;
+      const tabs=[...document.querySelectorAll('#st-tabs button')];
+      const current=tabs.indexOf(document.activeElement);
+      const next=(current+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+      e.preventDefault(); tabs[next].click(); tabs[next].focus();
     });
   }
 
@@ -205,6 +263,8 @@ const UI = (()=>{
   function startNew(mode){
     pendingMode=mode; pendingName=''; introIdx=0; introTurnIdx=0;
     show('scr-name');
+    const skip=$('#intro-skip');
+    if(skip) skip.hidden=!localStorage.getItem('caravan_intro_seen');
     const portrait=$('#name-child');
     if(portrait) portrait.src=D.portraits.player_child||'';
     setTimeout(()=>{ const i=$('#inp-name'); if(i){ i.value=''; i.focus(); } },80);
@@ -232,6 +292,8 @@ const UI = (()=>{
     $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length} · ${introTurnIdx+1} / ${beats.length}`;
     $('#intro-title').textContent=page.title||'';
     $('#intro-txt').innerHTML=storyReaderHtml(introBeats,introTurnIdx,{intro:true});
+    const live=$('#story-live'), current=introBeats[Math.min(introTurnIdx,introBeats.length-1)];
+    if(live&&current) live.textContent=`${current.kind==='dialogue'?(current.name||speakerInfo(current.who).name)+'의 말: ':'장면 설명: '}${stripTags(current.text)}`;
     const nextBeat=introBeats[introTurnIdx+1];
     $('#intro-hint').textContent=nextBeat
       ? nextBeat.kind==='dialogue'?'눌러서 다음 말풍선':'눌러서 다음 장면'
@@ -263,13 +325,17 @@ const UI = (()=>{
     }
     introIdx++;
     introTurnIdx=0;
-    if(introIdx>=D.intro.length){ G.newGame(pendingMode,pendingName); enterGame(); }
+    if(introIdx>=D.intro.length){
+      localStorage.setItem('caravan_intro_seen','1');
+      G.newGame(pendingMode,pendingName); enterGame();
+    }
     else renderIntro(true);
   }
   function skipIntro(){
     introIdx=D.intro.length;
     introTurnIdx=0;
     if(screen==='name') pendingName=($('#inp-name').value||'').trim().slice(0,8);
+    localStorage.setItem('caravan_intro_seen','1');
     G.newGame(pendingMode,pendingName);
     enterGame();
   }
@@ -284,11 +350,13 @@ const UI = (()=>{
 
   /* ── overlays ── */
   function toggleOvl(sel){ const o=$(sel);
-    document.querySelectorAll('.ovl').forEach(x=>{ if(x!==o) x.classList.remove('on') });
-    o.classList.toggle('on');
-    if(!o.classList.contains('on')&&sel==='#ovl-map') $('#nodecard').classList.remove('on');
+    const opening=!o.classList.contains('on');
+    document.querySelectorAll('.ovl').forEach(x=>{ if(x!==o) closeModal(x,false); });
+    if(opening) openModal(o,'.x, button');
+    else closeModal(o);
+    if(!opening&&sel==='#ovl-map') $('#nodecard').classList.remove('on');
   }
-  function closeOvl(sel){ $(sel).classList.remove('on'); if(sel==='#ovl-map') $('#nodecard').classList.remove('on'); }
+  function closeOvl(sel){ closeModal(sel); if(sel==='#ovl-map') $('#nodecard').classList.remove('on'); }
 
   /* ── HUD ── */
   function gauge(id, val, max, warn){
@@ -319,7 +387,7 @@ const UI = (()=>{
   function missionHtml(){
     const q=S.quest, rq=S.recruitQ;
     const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1);
-    let kicker, title, state, meta, pct;
+    let kicker, title, state, meta, pct, secondary='';
     if(rq){
       const def=D.recruitQuests[rq.id];
       kicker=`인연 · ${def.name}`;
@@ -346,6 +414,11 @@ const UI = (()=>{
         meta=S.at===rq.target&&!S.driving?'진행 가능':'이동 필요';
         pct=S.at===rq.target?55:S.driving&&S.driving.to===rq.target
           ?Math.min(50,S.driving.gone/S.driving.dist*50):18;
+      }
+      if(q){
+        const K=G.QKIND[q.kind]||G.QKIND.deliver;
+        const target=D.nodes[q.to];
+        secondary=`<span class="ms-secondary">${K.ic} 함께 진행 중 · ${esc(G.questLabel(q))} → ${esc(target.name)} · D-${Math.max(0,q.due-S.day)}</span>`;
       }
     } else if(q){
       const K=G.QKIND[q.kind]||G.QKIND.deliver;
@@ -379,9 +452,9 @@ const UI = (()=>{
       S.fatigue>=75?'졸음 위험':null,
       q&&q.due-S.day<=1?'마감 임박':null,
     ].filter(Boolean);
-    return {danger, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
+    return {danger,secondary:!!secondary, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
       <span class="ms-meta">${meta}${alerts.length?`<br><small class="ms-alert">${alerts.join(' · ')}</small>`:''}</span>
-      <span class="ms-state">${state}</span><span class="ms-progress"><i style="width:${pct}%"></i></span>`};
+      <span class="ms-state">${state}</span><span class="ms-progress"><i style="width:${pct}%"></i></span>${secondary}`};
   }
   function renderMission(){
     if(!S) return;
@@ -390,6 +463,7 @@ const UI = (()=>{
       const node=$(sel); if(!node) return;
       node.innerHTML=m.html;
       node.classList.toggle('danger',m.danger);
+      node.classList.toggle('has-secondary',m.secondary);
     });
   }
 
@@ -441,7 +515,7 @@ const UI = (()=>{
       ? `<div class="turn-speaker">${face}<span><small>${source}</small><b>${esc(person.name)}</b></span></div>`
       : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
     return `<article class="story-turn story-entry ${kind}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}"
-      data-kind="${kind}" data-story-entry aria-live="polite">
+      data-kind="${kind}" data-story-entry>
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
   }
   const playerSpeaker=(id)=>['me','player_child','나'].includes(id);
@@ -490,8 +564,7 @@ const UI = (()=>{
     const safe=Math.min(Math.max(0,index),Math.max(0,turns.length-1));
     const shown=(turns.length?turns:[{kind:'narration',text:'잠시 말이 끊겼다.'}]).slice(0,safe+1);
     const lanes=dialogueLaneMap(turns);
-    return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="log"
-      aria-live="polite" aria-atomic="false" aria-relevant="additions text">
+    return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
       ${shown.map((turn,i)=>{
         const newest=i===shown.length-1;
         if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes));
@@ -525,8 +598,14 @@ const UI = (()=>{
       {id:'father',names:['아빠','아버지']}
     ];
     family.forEach(item=>{ if(state.candidates.includes(item.id)) out.push(item); });
-    for(const [id,c] of Object.entries(D.comps||{})) out.push({id,names:[c.name]});
-    for(const [id,n] of Object.entries(D.npcs||{})) out.push({id,names:[n.name]});
+    for(const [id,c] of Object.entries(D.comps||{})){
+      if(state.candidates.includes(id)||(typeof S!=='undefined'&&S&&S.party&&S.party.includes(id)))
+        out.push({id,names:[c.name]});
+    }
+    for(const [id,n] of Object.entries(D.npcs||{})){
+      if(state.candidates.includes(id)||(typeof S!=='undefined'&&S&&S.npcs&&S.npcs[id]&&S.npcs[id].met))
+        out.push({id,names:[n.name]});
+    }
     return out.sort((a,b)=>Math.max(...b.names.map(x=>x.length))-Math.max(...a.names.map(x=>x.length)));
   }
   const anonymousRoles=[
@@ -1032,7 +1111,13 @@ const UI = (()=>{
     const sheet=$('#ev-sheet'), frame=sheet&&sheet.querySelector('.event-scene-frame');
     const keys=state&&state.sceneKeys||[];
     if(!frame||!keys.length) return;
-    const key=keys[((state.sceneStart||0)+index)%keys.length];
+    const stages=D.eventTurnSceneStages&&D.eventTurnSceneStages[state.eventId];
+    let key;
+    if(Array.isArray(stages)&&stages.length){
+      const stage=[...stages].reverse().find(item=>index>=item.at);
+      if(stage&&keys.includes(stage.key)) key=stage.key;
+    }
+    key=key||keys[((state.sceneStart||0)+index)%keys.length];
     const src=D.scenes&&D.scenes[key], img=frame.querySelector('.event-scene');
     if(!src||!img) return;
     const shot=storySceneShot(state,turn,index);
@@ -1048,7 +1133,7 @@ const UI = (()=>{
     if(img.src!==src) img.src=src;
     img.alt=`${state.sceneAlt} · ${index+1}번째 장면`;
     const mark=frame.querySelector('.scene-cut-mark');
-    if(mark) mark.textContent=`장면 ${index+1} / ${state.turns.length}`;
+    if(mark) mark.textContent=`${state.label||'이야기'} ${index+1} / ${state.turns.length}`;
     img.classList.remove('scene-recut');
     void img.offsetWidth;
     img.classList.add('scene-recut');
@@ -1065,6 +1150,14 @@ const UI = (()=>{
     const turn=state.turns[Math.min(state.index,state.turns.length-1)];
     reader.innerHTML=storyReaderHtml(state.turns,state.index);
     renderStoryScene(state,turn,state.index);
+    const live=$('#story-live');
+    if(live&&turn){
+      const speaker=turn.kind==='dialogue'?(turn.name||speakerInfo(turn.who).name)+'의 말: '
+        :turn.kind==='narration'?'장면 설명: ':`${state.label}: `;
+      live.textContent=speaker+stripTags(turn.text);
+    }
+    const compact=state.turns.length<=10&&state.index<3&&reader.scrollHeight<210;
+    sheet.classList.toggle('story-compact',compact);
     const entering=reader.querySelector('[data-story-entry]:last-child');
     if(entering){
       entering.classList.add('turn-enter');
@@ -1132,11 +1225,11 @@ const UI = (()=>{
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     curStory={
-      phase:'event',label:evd.type==='대화'?'대화':'이야기',turns,index:0,
+      phase:'event',eventId:evd.id,label:evd.type==='대화'?'대화':'이야기',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
       sceneKeys,sceneAlt,sceneStart:0,
-      finalDock:`<div class="choice-dock-head"><span>선택 · ${choices.count}</span>
-        <small>${choices.count>3?'위아래로 밀어 모두 보기':'내가 할 일을 고른다'}</small></div>
+      finalDock:`<div class="choice-dock-head"><span>${evd.id==='seoul_core'?'마지막 증언':'선택'} · ${choices.count}</span>
+        <small>${choices.count>3?'위아래로 밀어 모두 보기':evd.id==='seoul_core'?'그 뒤 실행안을 정한다':'내가 할 일을 고른다'}</small></div>
         <div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>`,
       wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
         if(b.hasAttribute('disabled')) return;
@@ -1147,7 +1240,7 @@ const UI = (()=>{
     };
     renderStoryState();
     wireSceneZoom(sheet);
-    $('#ev-wrap').classList.add('on');
+    openModal('#ev-wrap','.story-next, .choice');
     if(evd.sfx) SND.combat(evd.sfx);
   }
   function fmt(t){ return (t||'').replace(/\n/g,'<br>'); }
@@ -1158,11 +1251,13 @@ const UI = (()=>{
     SND.setDriving(false);
     const next = st.lvl<3 ? D.bondTh[st.lvl] : null;
     const pct = next ? Math.min(100, st.bond/next*100) : 100;
+    const joinedBy=G.recruitApproach(id);
     let h=`<div class="tag">동료 — ${c.cls}</div>
       <div class="comp-head"><div class="comp-face">${faceOf(id,c.face)}</div>
         <div><h2 style="margin:0">${c.name} <span class="clvl">Lv.${st.lvl}${st.lvl>=3?' MAX':''}</span></h2>
         <div class="csub">${c.role} · 기본: ${c.perk}</div></div></div>
       <div class="body" style="margin:10px 0 0;font-size:13px">${c.bio}</div>
+      ${joinedBy?`<div class="story-context"><b>함께 타게 된 날 · ${esc(joinedBy.label)}</b>${esc(joinedBy.memory)}</div>`:''}
       <div class="bond"><div class="lab"><span>${ICO('bond')}유대 BOND</span><span>${st.bond}${next?' / '+next:' · 완성'}</span></div>
         <div class="bar"><i style="width:${pct}%"></i></div></div>`;
     if(st.perks.length){
@@ -1181,20 +1276,20 @@ const UI = (()=>{
     }
     h+=`<div class="choices" style="margin-top:12px">${!S.driving?`<button class="choice" data-talk="${id}">💬 말을 건다 <span class="req">하루 한 번 · 이야기가 유대를 만든다</span></button>`:''}<button class="choice" data-x="1">닫는다</button></div>`;
     const sheet=$('#ev-sheet');
-    sheet.classList.remove('event-mode');
+    sheet.classList.remove('event-mode','story-compact');
     sheet.innerHTML=h;
     sheet.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{ G.choosePerk(id, +b.dataset.pk); showComp(id); });
     const tk=sheet.querySelector('[data-talk]');
     if(tk) tk.onclick=()=>{ if(G.talkTo(tk.dataset.talk)){} };
     sheet.querySelector('[data-x]').onclick=()=>{ closeEvent(); };
-    $('#ev-wrap').classList.add('on');
+    openModal('#ev-wrap','[data-pk], [data-talk], [data-x]');
   }
 
   /* ── 작업대 (무기 제작) ── */
   function showCraft(){
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
-    sheet.classList.remove('event-mode');
+    sheet.classList.remove('event-mode','story-compact');
     let h=`<div class="tag">🔨 작업대 — 달구지 뒤 칸</div>
       <h2>무기 제작</h2>
       <div class="csub">보유: 고철 ${S.scrap} · 부품 ${S.items['부품']||0} · 연료 ${Math.floor(S.fuel)}L</div>
@@ -1211,7 +1306,7 @@ const UI = (()=>{
     sheet.innerHTML=h;
     sheet.querySelectorAll('[data-cr]').forEach(b=>b.onclick=()=>{ if(G.craft(b.dataset.cr)) showCraft(); });
     sheet.querySelector('[data-x]').onclick=()=>closeEvent();
-    $('#ev-wrap').classList.add('on');
+    openModal('#ev-wrap','[data-cr], [data-x]');
   }
 
   function resolveChoice(choice){
@@ -1258,7 +1353,7 @@ const UI = (()=>{
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     curStory={
-      phase:'outcome',label:'결과',turns,index:0,
+      phase:'outcome',eventId:curEv.id,label:'결과',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
       sceneKeys,sceneAlt,sceneStart,
       finalDock:`<div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
@@ -1275,8 +1370,8 @@ const UI = (()=>{
     renderHud();
   }
   function closeEvent(){
-    $('#ev-wrap').classList.remove('on');
-    $('#ev-sheet').classList.remove('event-mode');
+    closeModal('#ev-wrap');
+    $('#ev-sheet').classList.remove('event-mode','story-compact');
     $('#cheollian-tint').classList.remove('on');
     curEv=null;
     curStory=null;
@@ -1310,10 +1405,10 @@ const UI = (()=>{
     }
     h+='</div>';
     $('#seoul-body').innerHTML=h;
-    document.querySelectorAll('.ovl').forEach(o=>o.classList.remove('on'));
-    $('#ovl-seoul').classList.add('on');
-    const go=$('#seoul-go'); if(go) go.onclick=()=>{ $('#ovl-seoul').classList.remove('on'); G.seoulEnter(stage); };
-    const jn=$('#seoul-journal'); if(jn) jn.onclick=()=>{ $('#ovl-seoul').classList.remove('on'); toggleOvl('#ovl-journal'); renderJournal(); };
+    document.querySelectorAll('.ovl').forEach(o=>{ if(o.id!=='ovl-seoul') closeModal(o,false); });
+    openModal('#ovl-seoul','#seoul-go, #seoul-journal');
+    const go=$('#seoul-go'); if(go) go.onclick=()=>{ closeModal('#ovl-seoul',false); G.seoulEnter(stage); };
+    const jn=$('#seoul-journal'); if(jn) jn.onclick=()=>{ closeModal('#ovl-seoul',false); toggleOvl('#ovl-journal'); renderJournal(); };
   }
 
   /* ── SETTLEMENT ── */
@@ -1387,7 +1482,8 @@ const UI = (()=>{
     });
     $('#stl-enter').onclick=()=>showStl(curStl,stlFocus);
     $('#stl-out').onclick=leaveSettlement;
-    $('#ovl-stl').classList.add('on');
+    if(!$('#ovl-stl').classList.contains('on')) openModal('#ovl-stl','[data-stlfocus], #stl-enter');
+    else $('#ovl-stl').setAttribute('aria-hidden','false');
     requestAnimationFrame(()=>{ if(SCENE.drawSettlementVan) SCENE.drawSettlementVan($('#stl-van')); });
   }
   function questBoardHtml(){
@@ -1475,15 +1571,27 @@ const UI = (()=>{
       $('#stl-rest').onclick=()=>{ closeOvl('#ovl-stl'); G.camp('🏘 정착지에서 하룻밤을 묵었다'); };
     }
     $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
-    $('#ovl-stl').classList.add('on');
+    if(!$('#ovl-stl').classList.contains('on')) openModal('#ovl-stl','#stl-leave, button');
+    else $('#ovl-stl').setAttribute('aria-hidden','false');
   }
   function renderTrade(){
     const stl=D.stls[curStl], tr=$('#trade');
     if(!tr) return;
     const disc=G.hasPerk('leo_vip')?0.8:G.hasComp('leo')?0.9:1;
     let h='';
+    const waterRow=stl.trade.find(row=>row[1]==='water');
+    const foodRow=stl.trade.find(row=>row[1]==='food');
+    if(waterRow&&foodRow){
+      const bundlePrice=Math.max(1,Math.round((waterRow[3]+foodRow[3]*2)*disc));
+      h+=`<div class="trade-bundle"><span><b>길 위 기본 보급</b><small>물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}일치</small></span>
+        <span class="tp">${ICO('scrap')}고철 ${bundlePrice}</span>
+        <button class="tbtn" data-bundle="1" ${S.scrap<bundlePrice?'disabled':''}>한 번에 싣기</button></div>`;
+    }
+    let lastGroup='';
     stl.trade.forEach((row,i)=>{
       const [label,key,qty,price0]=row;
+      const group=key.startsWith('barter')?'물물교환':key.startsWith('item')?'도구와 부품':'주행과 보급';
+      if(group!==lastGroup){ h+=`<div class="trade-group-label">${group}</div>`; lastGroup=group; }
       const tico = key==='fuel'?ICO('fuel'): key==='water'?ICO('water'): key==='food'?ICO('food'):
         key.startsWith('item')?ICO(ITEM_ICO[key.slice(4)]||''):'';
       if(key.startsWith('barter')){
@@ -1496,6 +1604,18 @@ const UI = (()=>{
     });
     tr.innerHTML=h;
     tr.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>buy(+b.dataset.t));
+    const bundle=tr.querySelector('[data-bundle]');
+    if(bundle) bundle.onclick=()=>{
+      const w=stl.trade.find(row=>row[1]==='water');
+      const f=stl.trade.find(row=>row[1]==='food');
+      if(!w||!f) return;
+      const price=Math.max(1,Math.round((w[3]+f[3]*2)*disc));
+      if(S.scrap<price) return;
+      S.scrap-=price; S.water+=w[2]; S.food+=f[2]*2;
+      $('#tr-scrap').textContent=S.scrap;
+      toast(`📦 기본 보급을 실었다 · 물 +${w[2]} · 식량 +${f[2]*2}`);
+      renderTrade(); renderHud(); G.save();
+    };
   }
   function buy(i){
     const stl=D.stls[curStl];
@@ -1537,37 +1657,56 @@ const UI = (()=>{
           <figure><canvas id="up-after-van" aria-label="개조 후 달구지"></canvas><figcaption>개조 후</figcaption></figure>
         </div>
         <div class="upgrade-change">${physical}</div>
-        <div class="upgrade-phases" aria-live="polite">
-          <span class="active">1 · 분해</span><span>2 · 체결</span><span>3 · 시동 확인</span>
+        <div class="upgrade-phases" aria-label="개조 작업 순서">
+          <span class="current">1 · 분해</span><span>2 · 체결</span><span>3 · 시동 확인</span>
         </div>
+        <button class="upgrade-step-action" id="upgrade-step-action">고정 볼트를 직접 푼다</button>
         <button class="upgrade-install-done" id="upgrade-install-done">달구지를 확인한다</button>
+        <span class="sr-only" id="upgrade-step-live" aria-live="polite"></span>
       </div>`);
+    layer._returnFocus=document.activeElement;
     ovl.appendChild(layer);
     requestAnimationFrame(()=>{
       if(SCENE.drawSettlementVan){
         SCENE.drawSettlementVan($('#up-before-van'),before.up);
         SCENE.drawSettlementVan($('#up-after-van'),S.up);
       }
-      if(typeof SND!=='undefined') SND.combat('tool');
     });
     const phases=[...layer.querySelectorAll('.upgrade-phases span')];
-    const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stepButton=layer.querySelector('#upgrade-step-action');
+    const live=layer.querySelector('#upgrade-step-live');
+    const stepCopy=[
+      ['분해 완료. 녹슨 볼트가 바닥에 굴렀다.','새 프레임과 부품을 체결한다'],
+      ['체결 완료. 차체가 전보다 단단히 이어졌다.','운전석에서 시동을 확인한다'],
+      ['시동 확인 완료. 달구지가 새 몸에 맞춰 떨린다.','']
+    ];
+    let step=0;
     const finish=()=>{
       if(!layer.isConnected) return;
       phases.forEach(x=>x.classList.add('active'));
+      phases.forEach(x=>x.classList.remove('current'));
       layer.classList.add('ready');
+      stepButton.hidden=true;
       const done=layer.querySelector('#upgrade-install-done');
       if(done) done.focus();
     };
-    if(reduced) finish();
-    else {
-      setTimeout(()=>{ if(!layer.isConnected) return; phases[1].classList.add('active'); if(typeof SND!=='undefined') SND.combat('tool'); },450);
-      setTimeout(()=>{ if(layer.isConnected) phases[2].classList.add('active'); },900);
-      setTimeout(finish,1250);
-    }
-    $('#upgrade-install-done').onclick=()=>{
+    stepButton.onclick=()=>{
+      if(step>=stepCopy.length) return;
+      phases[step].classList.remove('current');
+      phases[step].classList.add('active');
+      if(typeof SND!=='undefined') SND.combat(step===2?'engine':'tool');
+      if(live) live.textContent=stepCopy[step][0];
+      step++;
+      if(step>=stepCopy.length){ finish(); return; }
+      phases[step].classList.add('current');
+      stepButton.textContent=stepCopy[step-1][1];
+    };
+    stepButton.focus({preventScroll:true});
+    layer.querySelector('#upgrade-install-done').onclick=()=>{
+      const back=layer._returnFocus;
       layer.remove();
       renderGarage();
+      if(back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
     };
   }
   function renderGarage(){
@@ -1753,7 +1892,12 @@ const UI = (()=>{
   let stTab='now';
   function renderStatus(){
     $('#st-mini').textContent=`DAY ${S.day} · ${Math.round(S.stats.km)}km`;
-    document.querySelectorAll('#st-tabs button').forEach(x=>x.classList.toggle('here',x.dataset.st===stTab));
+    document.querySelectorAll('#st-tabs button').forEach(x=>{
+      const selected=x.dataset.st===stTab;
+      x.classList.toggle('here',selected);
+      x.setAttribute('aria-selected',String(selected));
+      x.tabIndex=selected?0:-1;
+    });
     const b=$('#st-body');
     const bar=(v,m,warn)=>`<div class="bar"><i style="width:${clamp(v/m*100,0,100)}%${warn?';background:var(--danger)':''}"></i></div>`;
     const kmPerL=(100/G.fuelFor(100,'normal')).toFixed(1);
@@ -1777,7 +1921,8 @@ const UI = (()=>{
       <div class="st-metric ${S.fatigue>=75?'warn':''}"><span class="mk">피로</span><span class="mv">${Math.floor(S.fatigue)}%</span></div>
       <div class="st-metric ${supplyDays<=1?'warn':''}"><span class="mk">보급</span><span class="mv">${supplyDays}일</span></div>
     </div>
-    <div class="mission-strip ${m.danger?'danger':''}" style="border:1px solid var(--line);border-radius:10px;margin-bottom:11px">${m.html}</div>
+    <div class="mission-strip ${m.danger?'danger':''} ${m.secondary?'has-secondary':''}" style="border:1px solid var(--line);border-radius:10px;margin-bottom:7px">${m.html}</div>
+    <div class="st-more">아래로 밀어 차량·보급 상세 보기 <span aria-hidden="true">↓</span></div>
     ${injuryPanel}
     <div class="st-sec"><h4>운전사</h4>
       <div class="st-row"><span class="k">나</span><span class="v" style="flex:1">Lv.${dlv} 「${G.driverTitle()}」 <small style="color:var(--faded)">연비 -${dlv*2}% · 피로 -${dlv*7}%</small>${G.isInjured('driver')?` <small style="color:var(--danger)">· ${S.injuries.driver.label}</small>`:''}</span></div>
@@ -1844,7 +1989,8 @@ const UI = (()=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
       const state=st.perks.includes(p3.id)?'done':'lv'+st.lvl;
       const next=st.lvl<3?D.bondTh[st.lvl]:Math.max(1,st.bond);
-      return {id,c,st,p3,state,injury:S.injuries&&S.injuries[id],bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
+      return {id,c,st,p3,state,joinedBy:G.recruitApproach(id),
+        injury:S.injuries&&S.injuries[id],bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
     });
     let crew=`<div class="st-summary">
       <div class="st-metric"><span class="mk">동료</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
@@ -1853,7 +1999,7 @@ const UI = (()=>{
     </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+
       (stories.length?`<div class="crew-status-list">`+stories.map(s=>`<div class="crew-status-card" data-comp2="${s.id}" role="button" tabindex="0">
         <span class="crew-status-face">${faceOf(s.id,s.c.face)}</span>
-        <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}</small></span>
+        <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}${s.joinedBy?` · ${esc(s.joinedBy.label)}로 합류`:''}</small></span>
         <span class="crew-status-state">${s.injury?`🩹 ${s.injury.label}<br>${s.injury.days}일`:(s.state==='done'?`★ ${s.p3.nm}`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?'<br>✦ 퍼크 대기':''}`)}</span>
         <span class="crew-status-bond"><i style="width:${s.bondPct}%"></i></span></div>`).join('')+`</div>`
         :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+
@@ -1939,7 +2085,7 @@ const UI = (()=>{
         <button class="act primary" id="end-new"><span class="ic">▶</span><span><b>새 여행을 시작한다</b></span></button>
       </div>`;
     show('scr-end'); screen='end';
-    $('#end-journal').onclick=()=>{ $('#ovl-journal').classList.add('on'); renderJournal(); };
+    $('#end-journal').onclick=()=>{ openModal('#ovl-journal','#j-x'); renderJournal(); };
     $('#end-new').onclick=()=>{ closeOvl('#ovl-journal'); show('scr-title'); refreshTitle(); };
   }
 

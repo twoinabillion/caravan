@@ -131,8 +131,8 @@ const MAPR = (()=>{
     ctx.strokeStyle='#31446e'; ctx.lineWidth=1.5; ctx.stroke();
     /* 지역 이름 — 오래된 종이 지도처럼 육지 결 아래에 눌러 둔다. */
     ctx.textAlign='center';
-    ctx.font='700 11px serif';
-    ctx.fillStyle='rgba(103,125,163,0.13)';
+    ctx.font='700 13px serif';
+    ctx.fillStyle='rgba(135,153,187,0.22)';
     REGION_LABELS.forEach(([nm,x,y])=>ctx.fillText(nm,px(x),py(y)));
     ctx.textAlign='left';
     /* 강과 옛 간선. 게임 도로보다 가늘고 낮은 명도로, 지형을 읽는 배경선이다. */
@@ -147,7 +147,7 @@ const MAPR = (()=>{
       r.pts.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
       ctx.strokeStyle='rgba(72,142,194,0.13)'; ctx.lineWidth=4; ctx.stroke();
       ctx.strokeStyle='rgba(93,169,219,0.36)'; ctx.lineWidth=1.15; ctx.stroke();
-      ctx.fillStyle='rgba(116,174,211,0.5)'; ctx.font=compact?'8.5px serif':'8px serif';
+      ctx.fillStyle='rgba(140,195,229,0.7)'; ctx.font=compact?'10px serif':'10.5px serif';
       ctx.fillText(r.nm,px(r.at[0])+3,py(r.at[1])-3);
     });
     /* 백두대간 능선 음영 */
@@ -166,14 +166,14 @@ const MAPR = (()=>{
     ctx.beginPath();
     DMZ.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
     ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle='rgba(226,120,110,0.45)'; ctx.font='8px monospace';
+    ctx.fillStyle='rgba(239,137,127,0.65)'; ctx.font='10px monospace';
     const dmzLabel=geo(127.05,38.12);
     ctx.fillText('─ 휴전선 ─', px(dmzLabel[0]), py(dmzLabel[1])-6);
     // 제주
     ctx.beginPath(); ctx.ellipse(px(288),py(714),40*tf.sx,13*tf.sy,0,0,7);
     ctx.fillStyle='#141c30'; ctx.fill(); ctx.strokeStyle='rgba(90,120,175,0.5)'; ctx.stroke();
     ctx.fillStyle='rgba(120,150,200,0.4)'; ctx.beginPath(); ctx.ellipse(px(288),py(712),4*tf.sx,2*tf.sy,0,0,7); ctx.fill(); // 한라산
-    ctx.fillStyle='rgba(120,150,200,0.35)'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+    ctx.fillStyle='rgba(145,171,215,0.55)'; ctx.font='10.5px sans-serif'; ctx.textAlign='center';
     ctx.fillText('제주', px(288), py(714)+18); ctx.textAlign='left';
     // 바다 이름
     ctx.fillStyle='rgba(120,150,200,0.28)'; ctx.font=`${9*tf.s+6}px serif`;
@@ -183,14 +183,14 @@ const MAPR = (()=>{
     ctx.fillText('남   해', px(southSea[0]), py(southSea[1]));
 
     /* 경로 노드는 아니지만 누구나 지리적 기준으로 아는 도시들. 클릭·이동은 되지 않는다. */
-    ctx.font=compact?'8.5px sans-serif':'8px sans-serif';
+    ctx.font=compact?'10px sans-serif':'10.5px sans-serif';
     const compactContext=new Set(['인천','춘천','창원','제천']);
     CONTEXT_CITIES.forEach(([nm,x,y])=>{
       const sx=px(x),sy=py(y);
-      ctx.fillStyle='rgba(117,132,165,0.48)';
+      ctx.fillStyle='rgba(137,153,188,0.65)';
       ctx.beginPath(); ctx.arc(sx,sy,1.35,0,7); ctx.fill();
       if(compact&&!compactContext.has(nm)) return;
-      ctx.fillStyle='rgba(136,149,180,0.38)';
+      ctx.fillStyle='rgba(166,179,207,0.58)';
       ctx.fillText(nm,sx+3,sy+2.5);
     });
 
@@ -317,7 +317,7 @@ const MAPR = (()=>{
       ctx.restore();
     }
     /* 범례 */
-    ctx.font=compact?'9.5px monospace':'9px monospace'; ctx.fillStyle='rgba(155,165,195,0.65)';
+    ctx.font=compact?'11px monospace':'11px monospace'; ctx.fillStyle='rgba(185,194,217,0.82)';
     ctx.fillText(compact?'◆ 정착지  ● 폐허  ◌? 미확인':'◆ 정착지  ● 폐허  ◌? 미확인  ⊙ 지금 갈 수 있는 곳',12,H-22);
     ctx.fillText(compact?'─ 고속  ╌ 국도  ┄ 험로 · 지명을 누르세요':'─ 고속 · ╌ 국도 · ┄ 험로   (지명을 누르면 상세)',12,H-10);
   }

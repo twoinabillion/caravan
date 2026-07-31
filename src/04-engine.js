@@ -15,7 +15,7 @@ const G = {};
 G.newGame = (mode, name)=>{
   S = {
     v:1, mode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
-    fuel:40, fuelMax:70, water:12, food:12, scrap:24, van:82, vanMax:100,
+    fuel:40, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100,
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
@@ -161,9 +161,12 @@ G.rememberRecruitChoice = (choice)=>{
   S.recruitQ.choiceDay=S.day;
   return true;
 };
-G.recruitApproach = ()=>{
-  const q=S&&S.recruitQ, def=q&&D.recruitQuests&&D.recruitQuests[q.id];
-  return q&&q.choice&&def&&def.approaches ? def.approaches[q.choice] : null;
+G.recruitApproach = (id)=>{
+  const q=S&&S.recruitQ&&(!id||S.recruitQ.id===id)?S.recruitQ:null;
+  const cid=id||(q&&q.id);
+  const choice=(q&&q.choice)||(cid&&S&&S.comps&&S.comps[cid]&&S.comps[cid].approach);
+  const def=cid&&D.recruitQuests&&D.recruitQuests[cid];
+  return choice&&def&&def.approaches ? def.approaches[choice] : null;
 };
 G.markRecruitReady = (id)=>{
   if(!S.recruitQ||S.recruitQ.id!==id) return false;
@@ -837,13 +840,17 @@ G.rollOut = (outs)=>{
 
 G.doRecruit = (id)=>{
   if(G.hasComp(id) || S.party.length>=G.maxParty()) return false;
+  const approach=S.recruitQ&&S.recruitQ.id===id?S.recruitQ.choice:null;
   S.party.push(id); S.comps[id] = S.comps[id]||{mood:65};
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
-  S.comps[id].bond=Math.max(S.comps[id].bond||0,4);
+  S.comps[id].bond=Math.max(S.comps[id].bond||0,5);
+  if(approach) S.comps[id].approach=approach;
   if(id==='leo') S.dog=true;
   if(S.recruitQ&&S.recruitQ.id===id) S.recruitQ=null;
+  G.checkLevel(id);
+  const memory=G.recruitApproach(id);
   G.addNote({type:'인물',title:D.comps[id].name,
-    body:`떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. ${D.comps[id].bio}`,links:[]});
+    body:`떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다.${memory?' '+memory.label+'. '+memory.memory:''} ${D.comps[id].bio}`,links:[]});
   UI.toast(`<span class="ic">${D.comps[id].face}</span>${D.comps[id].name}, 달구지에 탑승`);
   const nextSeat=G.nextSeatUpgrade();
   if(S.party.length>=G.maxParty()&&nextSeat)
@@ -934,7 +941,9 @@ G.explore = ()=>{
   if(status.fresh){
     S._salvagedNodes[S.at]=true; S._salvageCount++;
     S.scrap+=4; freshHaul=' · 고철 +4';
-    if(S._salvageCount%3===0){
+    /* 초반 두 지역은 좌석 증축을 막지 않도록 표준 체결 부품을 보장한다.
+       이후에는 세 지역마다 한 번이라 무한 파밍보다 새 길을 택하는 편이 낫다. */
+    if(S._salvageCount<=2||S._salvageCount%3===0){
       S.items['부품']=(S.items['부품']||0)+1;
       freshHaul+=' · 부품 +1';
     }
@@ -956,6 +965,13 @@ G.fireDriveEvent2 = (pool)=>{ pool=G.directEventPool(pool); if(!pool.length) ret
   let evd=pool[0]; for(const e of pool){ r-=e.w*(G.eventIsContextual(e)?2.1:1); if(r<=0){evd=e;break} } G.openEvent(evd); };
 G.camp = (msg)=>{
   if(S.driving||UI.modalOpen()) return;
+  const inTown = !!(S.at && D.nodes[S.at] && D.nodes[S.at].stl);
+  /* 정착지 숙박은 공동 우물과 묽은 죽을 포함한다. 하루 배급 직전에
+     지급해 마을 안에서 물이 없어 사망하는 불합리한 루프를 막는다. */
+  if(inTown){
+    S.water+=Math.min(6,G.partySize());
+    S.food+=1;
+  }
   // advance to next 06:30
   const target = 6.5*60;
   let mins = (24*60 - S.min + target); if(S.min < target) mins = target - S.min;
@@ -974,8 +990,7 @@ G.camp = (msg)=>{
   if(G.hasPerk('es_tap')&&rng()<0.25){ const h=G.nearestHidden();
     if(h){ S.known.push(h); UI.toast(`<span class="ic">📡</span>은수의 도청 — ${D.nodes[h].name}`, 'discover'); } }
   if(S.party.length){ const lucky=pick(S.party); G.bond(lucky,1); }
-  const inTown = !!(S.at && D.nodes[S.at] && D.nodes[S.at].stl);
-  UI.toast(msg|| (inTown?'🏘 마을 한켠에 차를 대고 잤다':'🔥 야영으로 하루를 마쳤다'));
+  UI.toast(msg|| (inTown?'🏘 마을 한켠에서 물과 묽은 죽을 얻어 하루를 묵었다':'🔥 야영으로 하루를 마쳤다'));
   /* 노숙 리스크 — 마을 밖에서 잘 때만 */
   if(!inTown){
     let risk = G.regionOf()==='north'? 0.45:0.33;

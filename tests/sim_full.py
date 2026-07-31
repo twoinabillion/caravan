@@ -44,6 +44,7 @@ SETUP = r'''() => {
       if(fx.offerComp && !G.hasComp(fx.offerComp) && G.doRecruit(fx.offerComp))
         SIM.recruitedDay[fx.offerComp]=S.day;
       G.applyFx(fx);
+      G.afterChoice(evd,ch);  // 실제 UI와 동일한 동료 능력 사용·개인 사건 유대 보상
       if(fx.recruit) SIM.recruitedDay[fx.recruit]=S.day;
       if(S._chain){ const cid=S._chain; S._chain=null; G.openEventById(cid); }
     }
@@ -181,6 +182,8 @@ STEP = r'''() => {
   if(S.at && !G.isNight() && S.fatigue<75){ try{ G.explore(); }catch(e){} }
 
   // 하루 한 번 1:1 대화 (유대 곡선 측정) — 유대 낮은 동료 우선
+  // 레벨업 선택을 실제로 완료해야 새 임계값 이후의 유대도 유효하게 쌓인다.
+  for(const id of S.party){ if(S.comps[id].pending) G.choosePerk(id,0); }
   if(S.party.length){ const id=[...S.party].sort((a,b)=>S.comps[a].bond-S.comps[b].bond)[0];
     try{ G.talkTo(id); }catch(e){} }
 
