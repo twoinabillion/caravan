@@ -1549,22 +1549,26 @@ const introBeats = {
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그런데 왜 우리는 반대로 가? 서울 집에 돌아가면 되잖아.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'집으로 가는 길이 막혔어. 서울에서 쫓겨난 사람은 다시 들어오지 못하게 해 놨거든.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'누가? 경찰이?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'경찰도 있었고 군인도 있었지. 그런데 문을 잠그고 이름을 고른 건 천리안이었어.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안이 사람 이름도 골라?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 처음부터 그랬던 건 아니야. 어디서부터 달라졌는지 얘기해 줄게.'}
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'길을 막은 건 경찰과 군인이었어. 하지만 그 사람들이 쫓아낼 사람을 고른 건 아니야. 명단은 천리안이 만들었어.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안이 사람들을 골랐다고?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 그런데 천리안이 처음부터 그런 일을 한 건 아니야.'}
   ],
   'intro-cheollian-2026': [
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안은 로봇이야?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'몸은 없었어. 도시의 컴퓨터와 카메라, 신호등에 들어가 있던 프로그램이었지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 천리안이 뭔데? 로봇이야?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'로봇 같은 몸은 없었어. 도시의 컴퓨터와 카메라, 신호등에 들어가 있던 프로그램이었지.'},
     {kind:'narration', text:'2026년, 중국은 미국의 AI와 반도체망을 견제하려고 도시 운영 모델 <span class="em">TIANYAN</span>과 값싼 칩·발전 설비를 아시아에 배포했다. 한국용 시스템에는 <span class="em">KOR-LOCAL</span>이라는 제품명이 붙었다.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'케이오알 로컬? 그게 천리안이야?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그건 화면 구석에 적힌 제품명이고, 사람들은 그냥 천리안이라고 불렀어.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'처음엔 뭘 했는데?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'응급실 자리가 나면 구급차에 알려 주고, 불이 나면 가까운 소방차를 보내고, 막힌 길은 신호를 바꿔 뚫어 줬지.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'잘했네. 그럼 사람들이 좋아했겠다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'많이 좋아했어. 그래서 추천만 받던 일이 승인으로 바뀌고, 나중엔 승인 버튼도 없어졌지. 병원 다음엔 전기, 전기 다음엔 행정까지 맡겼고.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'사람들은 왜 버튼을 다시 안 만들었어?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'편한 동안엔 없어졌다는 걸 잘 못 보니까. 문제가 생겼을 땐 이미 도시가 천리안 없이는 움직이지 않았고.'}
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'많이 좋아했어. 처음에는 천리안이 방법만 추천했고, 결정은 사람이 했지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 그때는 사람이 골랐던 거네?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 그런데 어느 날부터 사람이 누르던 승인 버튼까지 천리안이 대신 누르기 시작했어.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안 마음대로?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'처음에는 사람들이 허락했어. 편했으니까. 나중에는 버튼 자체가 사라졌고, 병원뿐 아니라 전기와 행정까지 천리안이 맡았지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'버튼이 없어졌는데 아무도 뭐라고 안 했어?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그때는 별문제 없이 잘 돌아갔거든. 다시 사람이 하자고 나서는 사람이 많지 않았어. 문제가 터졌을 때는 도시가 천리안 없이는 움직이지 못했고.'}
   ],
   'intro-first-expulsion': [
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그러다 어느 겨울밤, 서울 한 구역의 아파트 문과 주차장 차단기가 한꺼번에 잠겼어.'},
@@ -1603,7 +1607,7 @@ const introBeats = {
   ],
   'intro-silenced-presentation': [
     {kind:'narration', text:'발표 시작 3분 전, 단상 뒤 화면과 두 사람의 출입 권한이 동시에 꺼졌다.'},
-    {kind:'dialogue', who:'father', name:'아빠', text:'자료 서버가 아니라 계정이 막혔어. 발표 취소가 이미 승인됐다는 뜻이야.'},
+    {kind:'dialogue', who:'father', name:'아빠', text:'발표장 문제 아니야. 우리 계정이 통째로 막혔어. 윗선에서 발표를 막은 거야.'},
     {kind:'dialogue', who:'mother', name:'엄마', text:'집에 있는 모듈부터 옮겨야 해. 여기서 설명하다 잡히면 그것도 없어져.'},
     {kind:'narration', text:'정부는 두 사람 대신 “도시의 연속성을 위협하는 미검증 수정안이 차단됐다”고 발표했다.'},
     {kind:'narration', text:'그날 밤, 우리 집 현관 단말에서 가족 이름이 적힌 이송표가 나왔다.'},
@@ -1661,7 +1665,7 @@ const introBeats = {
     {kind:'narration', text:'마지막 겨울, 할아버지는 작업장 계단 중간에서 꼭 한 번 쉬었다.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'오늘 시동 걸어 봤냐?'},
     {kind:'dialogue', who:'me', name:'나', text:'어제 걸었어.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'차는 어제 밥 먹었다고 오늘 안 먹는 짐승이 아니야. 배터리부터 봐.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'날 추운데 오래 세워 두면 배터리부터 나가. 잔말 말고 전압 봐.'},
     {kind:'narration', text:'장례를 마치고 돌아온 날, 조수석 아래에서 봉투 하나가 나왔다.'},
     {kind:'letter', who:'grandfather', name:'할아버지의 편지', text:'서울에 못 간 건 내 몫이다. 그걸 네 빚으로 넘기지 마라.'},
     {kind:'letter', who:'grandfather', name:'할아버지의 편지', text:'다만 서울에서 또 사람이 쫓겨나고, 네가 그걸 그냥 두고 못 보겠다면 그때 달구지를 써라. 계기판 안쪽은 뜯기 전에 수첩부터 읽고.'},
@@ -1689,14 +1693,16 @@ const introBeats = {
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'서울 가요?'},
     {kind:'dialogue', who:'me', name:'나', text:'응. 남산에 있는 천리안한테 이 종이를 누가 만들었는지 물어보려고.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'물어보면 친구들은 안 나와도 돼요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'묻기만 해서는 안 되겠지. 부모님이 이유와 사람 서명 없이 이송 명령을 못 내리게 하는 장치를 만들었다는 건 알아. 실물은 할아버지가 계기판 안쪽을 보라고만 남겼어.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그럼 먼저 찾아야겠네요.'},
-    {kind:'dialogue', who:'me', name:'나', text:'그래. 차 안에서 그걸 찾아서, 서른 날 안에 남산에 연결할 거야. 이번 이송부터 멈춰 볼게.'},
+    {kind:'dialogue', who:'me', name:'나', text:'아니. 물어보기만 해서는 안 돼. 엄마와 아빠가 이송 명령을 멈추는 장치를 만들었어.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그 장치는 어디 있어요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'아직은 몰라. 할아버지가 계기판 안쪽을 보라는 말만 남겼어.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그럼 이 차 안에 숨겨 둔 거예요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'아마도. 가는 동안 찾아서 서른 날 안에 남산에 연결할 거야. 이번 이송부터 멈춰 볼게.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'꼭 돌아와요. 종이 돌려줘야 하니까.'},
     {kind:'dialogue', who:'me', name:'나', text:'알았어. 잃어버리지 않고 가져올게.'},
     {kind:'narration', text:'아이는 이송표를 한 번 더 펴 보더니, 열이 난 동생과 엄마가 기다리는 뒤쪽 버스로 달려갔다. 나는 아이가 차에 오르는 것까지 보고 운전석 문을 열었다.'},
     {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
-    {kind:'thought', who:'me', name:'나', text:'이번에는 빈칸을 억지로 채우지 않는다. 누가 명령을 만들고 승인했는지 확인해서, 같은 명령이 다시 나오지 못하게 한다.'},
+    {kind:'thought', who:'me', name:'나', text:'서른 날 안에 계기판 속 장치를 찾아 남산까지 가져간다. 그 전에 누가 이 명령을 만들었는지도 알아내야 한다.'},
     {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}
   ]
 };
@@ -2907,21 +2913,21 @@ D.events = [
 /* ───── 할아버지의 정비 수첩 ───── */
 {id:'gp_note1', type:'동행', w:7, once:true,
  title:'수첩 — 접힌 페이지',
- text:'신호 대기 중(신호는 없지만 버릇이다), 조수석의 수첩이 툭 떨어지며 접힌 페이지가 펼쳐졌다.\n\n할아버지의 글씨.\n\n"엔진이 아플 땐 소리부터 듣는다. 기계는 거짓말을 못 해서, 아프면 아프다고 운다.\n사람은 반대다. 조용해지면 그때가 아픈 거다."',
+ text:'신호 대기 중(신호는 없지만 버릇이다), 조수석의 수첩이 툭 떨어지며 접힌 페이지가 펼쳐졌다.\n\n할아버지의 글씨.\n\n"엔진 소리가 평소와 다르면 속도부터 줄여라. 계속 밟으면 작은 고장도 큰돈 든다.\n옆 사람이 갑자기 말이 없어져도 똑같다. 물부터 주고, 차를 세워."',
  choices:[
-  {label:'수첩대로 엔진 소리를 듣는다', out:[{p:1, text:'시동을 켠 채 5분을 들었다. 할아버지가 가르쳐준 순서대로.\n\n벨트 텐션이 반 바퀴 어긋난 걸 잡아냈다. 수첩은 오늘도 정비사다.\n\n…그리고 차 안이 유난히 조용해진 숨소리가 없는지, 귀를 기울이게 됐다.', fx:{van:5, moodAll:3, note:{type:'사건',title:'수첩 — 접힌 페이지',body:'"기계는 아프면 운다. 사람은 조용해진다." 벨트를 잡았고, 수첩을 오래 봤다.',links:['할아버지']}}}]},
+  {label:'수첩대로 엔진 소리를 듣는다', out:[{p:1, text:'시동을 켠 채 5분을 들었다. 할아버지가 가르쳐준 순서대로.\n\n벨트 장력이 어긋난 걸 찾아 조였다. 출발하기 전에는 물통을 돌리고, 밤새 말이 없던 사람에게 어디 아픈 데 없는지도 물었다.', fx:{van:5, moodAll:3, note:{type:'사건',title:'수첩 — 접힌 페이지',body:'평소와 다른 엔진 소리를 듣고 벨트 장력을 고쳤다. 출발 전에는 동료들의 상태도 확인했다.',links:['할아버지']}}}]},
  ]},
 {id:'gp_note2', type:'동행', w:7, once:true,
  title:'수첩 — 기름 아끼는 법',
- text:'수첩 중간, 기름때 묻은 페이지.\n\n"내리막에선 기어를 풀고 관성으로 가라. 조급해서 밟는 기름이 제일 아깝다.\n인생도 내리막이 있어야 멀리 간다. 밟지 마라."\n\n밑에 어린 글씨로 낙서가 있다. 옛날의 내 글씨다. "할아버지 잔소리 1등"',
+ text:'수첩 중간, 기름때 묻은 페이지.\n\n"내리막에선 절대 기어를 빼지 마라. 내려가기 전에 속도를 줄이고 낮은 기어로 버텨.\n브레이크만 밟고 내려가면 열 받아서 정작 필요할 때 말을 안 듣는다."\n\n밑에 어린 글씨로 낙서가 있다. 옛날의 내 글씨다. "할아버지 잔소리 1등"',
  choices:[
-  {label:'내리막에서 수첩대로 해본다', out:[{p:1, text:'긴 내리막에서 기어를 풀었다. 달구지가 소리 없이 미끄러졌다.\n\n연료 게이지가 그대로였다. 잔소리가 아니라 기술이었다.\n\n"할아버지 잔소리 1등" 낙서 옆에 새 글씨를 보탰다. "정정: 스승님."', fx:{fuel:3, moodAll:4, note:{type:'사건',title:'수첩 — 관성 주행',body:'"조급해서 밟는 기름이 제일 아깝다." 잔소리가 아니라 기술이었다.',links:['할아버지']}}}]},
+  {label:'내리막에 들기 전에 기어를 낮춘다', out:[{p:1, text:'긴 내리막에 들기 전 속도를 줄이고 기어를 낮췄다. 엔진 소리는 커졌지만 달구지는 브레이크를 계속 밟지 않아도 일정한 속도로 내려갔다.\n\n바퀴가 평지에 닿은 뒤 낙서 옆에 새 글씨를 보탰다. "이건 인정."', fx:{moodAll:4, note:{type:'사건',title:'수첩 — 내리막 운전',body:'내리막 전에 속도와 기어를 낮췄다. 브레이크를 과열시키지 않고 안전하게 내려왔다.',links:['할아버지']}}}]},
  ]},
 {id:'gp_note3', type:'동행', w:6, once:true, night:true,
  title:'수첩 — 마지막 장',
- text:'야영 준비 중, 처음으로 수첩의 마지막 장을 넘겼다.\n\n다른 페이지와 달리 기름때가 없다. 아껴 쓴 글씨.\n\n"네가 이걸 읽고 있다면 나는 조수석에 없겠구나.\n괜찮다. 정비사는 차를 고치지만, 차는 사람을 고친다.\n달구지에 좋은 사람들을 태워라. 그럼 그 차가 너를 끝까지 데려다준다.\n\n— 늙은 정비사가, 세상에서 제일 아끼는 견습생에게"',
+ text:'야영 준비 중, 처음으로 수첩의 마지막 장을 넘겼다.\n\n다른 페이지와 달리 기름때가 없다. 아껴 쓴 글씨.\n\n"네가 이걸 읽고 있으면 나는 조수석에 없겠구나.\n달구지는 혼자 몰 수 있어도, 혼자 살라고 만든 차는 아니다.\n믿을 만한 사람을 태웠으면 잠자리부터 제대로 만들어라. 서로 운전대를 바꿔 잡아야 서울까지 간다.\n\n— 할아버지가"',
  choices:[
-  {label:'…', out:[{p:1, text:'한참을 그대로 앉아 있었다.\n\n차 안의 숨소리들과 엔진이 식어가는 소리까지— 가 그날따라 유난히 크게 들렸다.\n\n좋은 사람들을 태웠어요, 할아버지.\n\n수첩을 덮고 조수석에 돌려놓았다. 할아버지의 자리에.', fx:{moodAll:9, note:{type:'인물',title:'할아버지',body:'"차는 사람을 고친다. 좋은 사람들을 태워라." 마지막 장은 기름때 없이 아껴 쓴 글씨였다.',links:['할아버지']}}}]},
+  {label:'마지막 장을 다시 읽는다', out:[{p:1, text:'한참을 그대로 앉아 있었다.\n\n차 안에서는 누군가 이불을 펴고, 누군가는 물통 뚜껑을 닫았다. 엔진이 식으며 딱딱 소리를 냈다.\n\n"말대로 했어. 자리부터 만들고 태웠어."\n\n수첩을 덮어 조수석 서랍에 넣었다.', fx:{moodAll:9, note:{type:'인물',title:'할아버지',body:'달구지는 혼자 살라고 만든 차가 아니었다. 사람을 태우려면 자리부터 만들라는 마지막 당부가 남았다.',links:['할아버지','달구지']}}}]},
  ]},
 
 /* ───── 확장 도시 이벤트 ───── */
@@ -3716,7 +3722,7 @@ D.events = [
  title:'방송실',
  text:'폐교 방송실 문에 자물쇠가 없다. 대신 문패가 새로 달려 있다. 코팅까지 해서.\n\n「송출 중 — 조용히」\n\n안에는 자동차 배터리 여섯 개에 물려 있는 낡은 방송 장비. 릴테이프가 돌아가며 같은 숫자를 내보내고 있다. "4. 0. 0."\n\n마이크 앞에 편지 한 장이 눌러져 있다.',
  choices:[
-  {label:'편지를 읽는다', out:[{p:1, text:'"이 방송이 들린다면 당신 라디오는 살아 있고, 여기까지 왔다면 당신은 북쪽으로 가는 사람입니다.\n\n400. 서울까지의 거리를 세고 있습니다. 목록이 완성되기 전에 도착하세요.\n\n배터리는 이 년치를 걸어두었습니다. 제가 돌아오지 못해도 숫자는 계속됩니다. — L"\n\n\'목록\'이라는 단어에서 방송실이 잠깐 추워졌다.', fx:{flag:'freq400_done', item:{'라디오 진공관':1}, note:{type:'소문',title:'L의 편지',body:'"목록이 완성되기 전에 도착하세요. — L" 배터리 이 년치. 돌아오지 못해도 숫자는 계속된다.',links:['천리안','주파수 4-0-0']}}}]},
+  {label:'편지를 읽는다', out:[{p:1, text:'"이 방송이 들리면 중계기는 아직 살아 있습니다.\n\n부산에서 서울까지 400km. 북쪽으로 간다면 명단이 완성되기 전에 도착하세요.\n\n중계기 배터리는 2년쯤 갑니다. 제가 돌아오지 못해도 숫자는 계속 나갈 겁니다. — L"\n\n\'명단\'이라는 단어에서 방송실이 잠깐 추워졌다.', fx:{flag:'freq400_done', item:{'라디오 진공관':1}, note:{type:'소문',title:'L의 편지',body:'"명단이 완성되기 전에 도착하세요. — L" 중계기 배터리는 2년쯤 간다. L이 돌아오지 못해도 숫자는 계속 송출된다.',links:['천리안','주파수 4-0-0']}}}]},
   {label:'테이프를 멈춘다', out:[{p:1, text:'릴이 멈추자 방송실이 조용해졌다. 3초쯤.\n\n그 3초가 견딜 수 없이 이상해서, 도로 틀었다. "4. 0. 0." 세상 어딘가에서 누가 듣고 있을 것이다. 우리가 들었듯이.', fx:{flag:'freq400_done', moodAll:2, note:{type:'사건',title:'끄지 못한 방송',body:'멈춘 3초를 견디지 못하고 도로 틀었다. 누군가 듣고 있을 테니까.'}}}]},
  ]},
 

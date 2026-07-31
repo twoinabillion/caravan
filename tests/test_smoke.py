@@ -427,6 +427,22 @@ with sync_playwright() as p:
         D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&
         D.intro.some(p=>p.text.includes('등록 인원 6,412명')) &&
         D.intro.some(p=>p.text.includes('사람의 결정권을 되찾기 위해'));
+      const firstIntroBeats=D.intro[0].beats||[];
+      const departureBeats=D.intro.find(p=>p.scene==='intro-departure-choice')?.beats||[];
+      out.introCausalDialogue =
+        firstIntroBeats.some(t=>t.text.includes('길을 막은 건 경찰과 군인이었어')) &&
+        firstIntroBeats.some(t=>t.text.includes('명단은 천리안이 만들었어')) &&
+        firstIntroBeats.some(t=>t.text.includes('천리안이 사람들을 골랐다고?')) &&
+        firstIntroBeats.every(t=>!t.text.includes('문을 잠그고 이름을 고른')) &&
+        departureBeats.some(t=>t.text.includes('그 장치는 어디 있어요?')) &&
+        departureBeats.some(t=>t.text.includes('이 차 안에 숨겨 둔 거예요?'));
+      const gpNote2=D.events.find(e=>e.id==='gp_note2');
+      const gpNote3=D.events.find(e=>e.id==='gp_note3');
+      out.grandfatherNotes =
+        gpNote2.text.includes('절대 기어를 빼지 마라') &&
+        gpNote2.choices[0].out[0].text.includes('기어를 낮췄다') &&
+        gpNote3.text.includes('잠자리부터 제대로 만들어라') &&
+        !gpNote3.text.includes('차는 사람을 고친다');
       out.introMystery = D.intro[2].scene === 'intro-first-expulsion' &&
         D.intro[2].text.includes('사유란은 비어 있었다') &&
         D.intro.every(p=>!p.text.includes('사흘')) &&
@@ -741,6 +757,8 @@ with sync_playwright() as p:
           r4['turnSceneCut'] and r4['turnSceneVisual'], str(r4))
     check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
+    check('인트로 행동·원인 대사가 구체적으로 이어짐', r4['introCausalDialogue'], str(r4))
+    check('할아버지 수첩은 구체적이고 안전한 정비 조언', r4['grandfatherNotes'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
     check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))
     check('실제 남북·동서 위치관계 반영', r4['geoOrder'], str(r4))
