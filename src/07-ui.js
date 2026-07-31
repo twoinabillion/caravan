@@ -1058,19 +1058,25 @@ const UI = (()=>{
       if(Array.isArray(value)){ value.forEach(add); return; }
       if(value&&D.scenes&&D.scenes[value]&&!keys.includes(value)) keys.push(value);
     };
+    /* 장면 후보는 우선순위다. 전용 컷과 지역·공용 컷을 한 배열에 섞으면
+       대사마다 서로 관계없는 사진이 순환하므로, 먼저 찾은 계층만 쓴다. */
     add(leading);
+    if(keys.length) return keys;
     const turnCuts=evd&&D.eventTurnScenes&&D.eventTurnScenes[evd.id];
     add(turnCuts);
+    if(keys.length) return keys;
     add(evd&&evd.scenes);
     add(evd&&evd.scene);
     add(evd&&D.eventScenes&&D.eventScenes[evd.id]);
-    if(!turnCuts||!turnCuts.length){
-      add(evd&&evd.locEvent&&D.nodeScenes&&D.nodeScenes[evd.locEvent]);
-      add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.at]);
-      const fallbackType=evd&&((evd.ai||evd.type==='추적')?'추적':evd.type);
-      add(fallbackType&&D.eventSceneTypes&&D.eventSceneTypes[fallbackType]);
-      add('generic-story');
-    }
+    if(keys.length) return keys;
+    add(evd&&evd.locEvent&&D.nodeScenes&&D.nodeScenes[evd.locEvent]);
+    if(keys.length) return keys;
+    const fallbackType=evd&&((evd.ai||evd.type==='추적')?'추적':evd.type);
+    add(fallbackType&&D.eventSceneTypes&&D.eventSceneTypes[fallbackType]);
+    if(keys.length) return keys;
+    add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.at]);
+    if(keys.length) return keys;
+    add('generic-story');
     return keys;
   }
   function sceneFrameHtml(sceneKeys, sceneAlt){
@@ -1117,26 +1123,37 @@ const UI = (()=>{
       const stage=[...stages].reverse().find(item=>index>=item.at);
       if(stage&&keys.includes(stage.key)) key=stage.key;
     }
-    key=key||keys[((state.sceneStart||0)+index)%keys.length];
+    if(!key){
+      const total=Math.max(1,state.turns.length);
+      const section=Math.min(keys.length-1,Math.floor(index*keys.length/total));
+      key=keys[Math.min(keys.length-1,(state.sceneStart||0)+section)];
+    }
     const src=D.scenes&&D.scenes[key], img=frame.querySelector('.event-scene');
     if(!src||!img) return;
-    const shot=storySceneShot(state,turn,index);
+    const priorKey=frame.dataset.sceneKey;
+    const firstRender=frame.dataset.cutToken==='initial';
+    const changed=priorKey!==key;
     frame.dataset.sceneKey=key;
-    frame.dataset.cutToken=`${state.phase}-${index}-${key}-${shot.side}-${shot.x}-${shot.scale}`;
-    frame.dataset.tone=shot.tone;
     frame.dataset.speaker=turn&&turn.kind==='dialogue'
       ? speakerInfo(turn.who,turn.name).id||'unknown'
       : turn&&turn.kind||'narration';
-    frame.style.setProperty('--scene-x',`${shot.x}%`);
-    frame.style.setProperty('--scene-y',`${shot.y}%`);
-    frame.style.setProperty('--scene-scale',String(shot.scale));
-    if(img.src!==src) img.src=src;
+    if(firstRender||changed){
+      const shot=storySceneShot(state,turn,index);
+      frame.dataset.cutToken=`${state.phase}-${index}-${key}`;
+      frame.dataset.tone=shot.tone;
+      frame.style.setProperty('--scene-x',`${shot.x}%`);
+      frame.style.setProperty('--scene-y',`${shot.y}%`);
+      frame.style.setProperty('--scene-scale',String(shot.scale));
+      if(img.src!==src) img.src=src;
+    }
     img.alt=`${state.sceneAlt} · ${index+1}번째 장면`;
     const mark=frame.querySelector('.scene-cut-mark');
     if(mark) mark.textContent=`${state.label||'이야기'} ${index+1} / ${state.turns.length}`;
     img.classList.remove('scene-recut');
-    void img.offsetWidth;
-    img.classList.add('scene-recut');
+    if(changed){
+      void img.offsetWidth;
+      img.classList.add('scene-recut');
+    }
   }
   function wireSceneZoom(sheet){
     const sceneFrame=sheet.querySelector('.event-scene-frame');
@@ -1331,10 +1348,15 @@ const UI = (()=>{
     const choiceCuts=D.eventChoiceScenes&&D.eventChoiceScenes[curEv.id]
       &&D.eventChoiceScenes[curEv.id][choiceIndex];
     const explicitCuts=[out.scenes,out.scene,choice.scenes,choice.scene,choiceCuts];
+    const priorScene=sheet.querySelector('.event-scene-frame')?.dataset.sceneKey;
     const sceneKeys=eventSceneKeys(curEv,explicitCuts);
-    const priorCut=curStory?(curStory.sceneStart||0)+curStory.index+1:1;
-    const sceneStart=choiceCuts&&choiceCuts.length?0:(sceneKeys.length?priorCut%sceneKeys.length:0);
-    const scene=sceneFrameHtml(sceneKeys,sceneAlt);
+    const hasExplicit=sceneKeys.length&&explicitCuts.some(value=>
+      Array.isArray(value)?value.some(Boolean):Boolean(value));
+    const outcomeSceneKeys=hasExplicit
+      ? sceneKeys
+      : eventSceneKeys(curEv,priorScene?[priorScene]:[]);
+    const sceneStart=0;
+    const scene=sceneFrameHtml(outcomeSceneKeys,sceneAlt);
     const fxHtml=chips.length
       ? '<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
       : '';
@@ -1355,7 +1377,7 @@ const UI = (()=>{
     curStory={
       phase:'outcome',eventId:curEv.id,label:'결과',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
-      sceneKeys,sceneAlt,sceneStart,
+      sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,
       finalDock:`<div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
         <div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
       reveal:()=>{ const result=sheet.querySelector('.story-result'); if(result) result.innerHTML=fxHtml; },

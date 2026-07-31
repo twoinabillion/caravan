@@ -436,6 +436,15 @@ with sync_playwright() as p:
         firstIntroBeats.every(t=>!t.text.includes('문을 잠그고 이름을 고른')) &&
         departureBeats.some(t=>t.text.includes('그 장치는 어디 있어요?')) &&
         departureBeats.some(t=>t.text.includes('이 차 안에 숨겨 둔 거예요?'));
+      const firstTransferBeats=D.intro.find(p=>p.scene==='intro-first-expulsion')?.beats||[];
+      const currentTransferBeats=D.intro.find(p=>p.scene==='intro-current-expulsion')?.beats||[];
+      out.transferPaperMeaning =
+        firstTransferBeats.some(t=>t.text.includes('집 문이 잠기고 배급도 끊겼어')) &&
+        firstTransferBeats.some(t=>t.text.includes('강제 이송 명령서')) &&
+        currentTransferBeats.some(t=>t.text.includes('한 사람에 20kg')) &&
+        currentTransferBeats.some(t=>t.text.includes('집과 배급, 통행 권한')) &&
+        departureBeats.some(t=>t.text.includes('아이 어머니의 허락')) &&
+        departureBeats.every(t=>!t.text.includes('아이에게 빌린'));
       const gpNote2=D.events.find(e=>e.id==='gp_note2');
       const gpNote3=D.events.find(e=>e.id==='gp_note3');
       out.grandfatherNotes =
@@ -554,9 +563,9 @@ with sync_playwright() as p:
         !!document.querySelector('#ev-sheet [data-story-entry]');
       document.querySelector('#ev-sheet .story-next')?.click();
       const secondFrame=document.querySelector('#ev-sheet .event-scene-frame');
-      out.turnSceneCut=!!firstCut&&secondFrame.dataset.cutToken!==firstCut;
-      out.turnSceneVisual=secondFrame.dataset.sceneKey!==firstScene ||
-        secondFrame.style.getPropertyValue('--scene-x')!=='50%';
+      out.turnSceneStable=!!firstCut&&firstScene==='generic-story' &&
+        secondFrame.dataset.cutToken===firstCut &&
+        secondFrame.dataset.sceneKey===firstScene;
       UI.finishStory();
       out.choiceUnlocked=!!document.querySelector('#ev-sheet [data-i]');
       document.querySelector('#ev-wrap').classList.remove('on');
@@ -576,13 +585,18 @@ with sync_playwright() as p:
       const actionSnapshot=structuredClone(S);
       const minjiAction=D.events.find(e=>e.id==='rq_minji_task');
       UI.showEvent(minjiAction);
-      const actionFirst=document.querySelector('.event-scene-frame').dataset.sceneKey;
-      document.querySelector('#ev-sheet .story-next')?.click();
-      const actionSecond=document.querySelector('.event-scene-frame').dataset.sceneKey;
+      const actionKeys=[];
+      while(document.querySelector('#ev-sheet .story-next')){
+        actionKeys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
+        document.querySelector('#ev-sheet .story-next').click();
+      }
+      actionKeys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
       UI.finishStory();
       document.querySelector('#ev-sheet [data-i="2"]').click();
-      out.actionCutRuntime=actionFirst==='recruit-minji-task' &&
-        actionSecond==='recruit-minji-task-signal' &&
+      const signalAt=actionKeys.indexOf('recruit-minji-task-signal');
+      out.actionCutRuntime=actionKeys[0]==='recruit-minji-task' &&
+        signalAt>0 &&
+        actionKeys.slice(signalAt).every(key=>key==='recruit-minji-task-signal') &&
         document.querySelector('.event-scene-frame').dataset.sceneKey==='recruit-minji-task-collapse';
       document.querySelector('#ev-wrap').classList.remove('on');
       S=actionSnapshot; rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll();
@@ -753,11 +767,12 @@ with sync_playwright() as p:
     check('이야기를 다 읽기 전 선택지 잠금',
           r4['choiceLockedUntilRead'] and r4['choiceUnlocked'], str(r4))
     check('이벤트 화면이 상단 16px 안에서 시작', r4['eventTop'] <= 16, str(r4['eventTop']))
-    check('대사 턴마다 장면 컷·구도 전환',
-          r4['turnSceneCut'] and r4['turnSceneVisual'], str(r4))
+    check('같은 장면은 대사마다 깜빡이거나 구도를 바꾸지 않음',
+          r4['turnSceneStable'], str(r4))
     check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
     check('인트로 행동·원인 대사가 구체적으로 이어짐', r4['introCausalDialogue'], str(r4))
+    check('이송표 내용·강제력·사본을 가져가는 이유 설명', r4['transferPaperMeaning'], str(r4))
     check('할아버지 수첩은 구체적이고 안전한 정비 조언', r4['grandfatherNotes'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
     check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))

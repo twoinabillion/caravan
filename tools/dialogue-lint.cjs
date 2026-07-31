@@ -119,6 +119,7 @@ const stalePatterns = [
   [/내리막에선\s*기어를\s*풀고/, '위험한 내리막 중립 주행 안내'],
   [/차는\s*사람을\s*고친다/, '구체적 행동 없이 감정만 요구하는 폐기 대사'],
   [/배터리는\s*이\s*년치를\s*걸어/, '사람이 쓰지 않는 어색한 배터리 표현'],
+  [/아이에게\s*빌린\s*(?:빈\s*)?이송표/, '아이의 필수 서류를 빌려 가는 폐기 설정'],
 ];
 for (const [pattern, label] of stalePatterns) {
   if (pattern.test(source)) errors.push(label);

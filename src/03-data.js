@@ -1367,6 +1367,12 @@ D.intro = [
 가족들은 가방 하나씩만 들고
 남쪽 이송로로 나오라는 통보를 받았다.
 
+그 종이는 안내문이 아니었다.
+가족 이름과 출발 시각, 허용된 짐의 무게가 적힌
+<span class="em">강제 이송 명령서</span>였다.
+시각이 지나면 집과 배급 계정이 막혔고,
+남쪽 버스를 타려면 검문소에 그 종이를 내야 했다.
+
 <span class="ai">“지정 인원은 거주지를 비우고
 안내 경로로 이동하십시오.”</span>
 
@@ -1503,11 +1509,16 @@ D.intro = [
 
 “몇 살이야?”
 “여덟이요.”
-“왜 쫓겨났대?”
+“그 종이에 뭐라고 적혀 있어?”
 
-아이는 대답 대신 종이 한가운데를 손가락으로 문질렀다.
+아이의 가족 이름, 제7 잔류구역을 떠날 날짜,
+한 사람당 허용된 짐 20kg과 남쪽 이송로가 적혀 있었다.
+명령을 따르지 않으면 집과 배급 계정이 끊긴다는 경고도 있었다.
 
-우리 가족의 것과 같은 자리.
+“그런데 왜 너희 가족이 골라졌대?”
+
+아이는 종이 한가운데를 손가락으로 문질렀다.
+우리 가족의 것과 같은 자리였다.
 <span class="em">비어 있었다.</span>
 
 부두 라디오에서는 한 문장이 반복됐다.
@@ -1517,7 +1528,7 @@ D.intro = [
   },
   {
     scene:'intro-departure-choice', era:'오늘 · 부산에서 북쪽으로', title:'내가 가기로 한 이유',
-    text:`부모님의 연구 수첩, 할아버지가 쓰던 렌치, 그리고 아이에게 빌린 빈 이송표를 실었다.
+    text:`부모님의 연구 수첩, 할아버지가 쓰던 렌치, 그리고 아이 어머니의 허락을 받아 부두 접수소에서 복사한 현재 이송표를 실었다.
 
 장치의 설계는 수첩에 있었다.
 실물이 어디 있는지는 할아버지가 남긴 말 한 줄뿐이었다.
@@ -1575,6 +1586,10 @@ const introBeats = {
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'사람들이 집 안에 갇힌 거야?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'처음 몇 시간은 그랬지. 새벽이 되자 남쪽으로 나가는 문 하나만 열렸고, 현관 단말에서 이송표가 쏟아졌어.'},
     {kind:'narration', text:'이송표에는 가족 이름, 챙길 수 있는 짐의 무게, 출발 시간이 인쇄돼 있었다.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그 종이를 버리고 그냥 집에 있으면 되잖아.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'출발 시간이 지나면 집 문이 잠기고 배급도 끊겼어. 남쪽 버스를 타려면 검문소에 이송표를 내야 했고.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 종이에 이름이 찍히면 정말 나가야 했던 거야?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 안내문이 아니라 강제 이송 명령서였으니까.'},
     {kind:'ai', who:'cheollian', name:'천리안 공공방송', text:'지정 인원은 거주지를 비우고 안내 경로로 이동하십시오.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그 사람들은 뭘 잘못했는데?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그걸 물어본 사람이 많았어. 그런데 방송은 출발 시간만 반복했지.'},
@@ -1679,8 +1694,13 @@ const introBeats = {
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'여덟이요.'},
     {kind:'dialogue', who:'me', name:'나', text:'같이 온 어른은?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마는 뒤 차에 있어요. 동생이 열나서 아직 못 내렸어요.'},
-    {kind:'dialogue', who:'me', name:'나', text:'이 종이에는 왜 나오라고 적혀 있어?'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'이름이랑 떠날 날짜만 있어요. 엄마도 이유는 모른대요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'그 종이에 뭐라고 적혀 있어?'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마랑 저랑 동생 이름이요. 서른 날 뒤까지 제7 구역을 나가래요. 짐은 한 사람에 20kg만 가져갈 수 있고요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'안 나가면 어떻게 된대?'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'집 문이 잠기고 배급표도 끊긴대요. 검문소에서 이 종이를 보여 줘야 남쪽 버스를 탈 수 있고요.'},
+    {kind:'narration', text:'이송표는 안내장이 아니었다. 이름이 찍힌 가족의 집과 배급, 통행 권한을 출발 시각에 끊는 강제 명령서였다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'그런데 왜 너희 가족이 골라졌대?'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마도 열 번 넘게 물어봤대요. 아무도 대답을 안 해 줬어요.'},
     {kind:'narration', text:'아이가 이송표를 펼쳤다. 우리 가족의 것과 같은 자리였다. 이름과 날짜 사이의 <span class="em">사유란이 비어 있었다.</span>'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'아저씨도 이 종이 받아 봤어요?'},
     {kind:'dialogue', who:'me', name:'나', text:'나도 8살 때 받았어.'},
@@ -1689,7 +1709,7 @@ const introBeats = {
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 서른 밤 뒤에 전부 나와야 한대요.'}
   ],
   'intro-departure-choice': [
-    {kind:'narration', text:'나는 아이와 함께 달구지로 돌아왔다. 부모님의 연구 수첩과 할아버지의 렌치를 조수석에 놓고, 아이에게 빌린 이송표는 수첩 첫 장 옆에 끼웠다.'},
+    {kind:'narration', text:'부두 접수소에서 아이 어머니의 허락을 받아 현재 이송표를 한 장 복사했다. 달구지로 돌아와 부모님의 연구 수첩과 할아버지의 렌치를 조수석에 놓고, 사본은 수첩 첫 장 옆에 끼웠다.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'서울 가요?'},
     {kind:'dialogue', who:'me', name:'나', text:'응. 남산에 있는 천리안한테 이 종이를 누가 만들었는지 물어보려고.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'물어보면 친구들은 안 나와도 돼요?'},
@@ -1698,8 +1718,8 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'아직은 몰라. 할아버지가 계기판 안쪽을 보라는 말만 남겼어.'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그럼 이 차 안에 숨겨 둔 거예요?'},
     {kind:'dialogue', who:'me', name:'나', text:'아마도. 가는 동안 찾아서 서른 날 안에 남산에 연결할 거야. 이번 이송부터 멈춰 볼게.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'꼭 돌아와요. 종이 돌려줘야 하니까.'},
-    {kind:'dialogue', who:'me', name:'나', text:'알았어. 잃어버리지 않고 가져올게.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들 데리러 다시 오는 거죠?'},
+    {kind:'dialogue', who:'me', name:'나', text:'그러려고 가는 거야. 이번 이송을 먼저 멈추고 돌아올게.'},
     {kind:'narration', text:'아이는 이송표를 한 번 더 펴 보더니, 열이 난 동생과 엄마가 기다리는 뒤쪽 버스로 달려갔다. 나는 아이가 차에 오르는 것까지 보고 운전석 문을 열었다.'},
     {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
     {kind:'thought', who:'me', name:'나', text:'서른 날 안에 계기판 속 장치를 찾아 남산까지 가져간다. 그 전에 누가 이 명령을 만들었는지도 알아내야 한다.'},
