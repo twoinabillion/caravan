@@ -444,16 +444,38 @@ const UI = (()=>{
       data-kind="${kind}" data-story-entry aria-live="polite">
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
   }
-  function chatMessageHtml(turn, newest=false){
+  const playerSpeaker=(id)=>['me','player_child','나'].includes(id);
+  function dialogueLaneMap(turns){
+    const lanes=new Map(), speakers=[];
+    (turns||[]).forEach(turn=>{
+      if(turn.kind!=='dialogue') return;
+      const person=speakerInfo(turn.who,turn.name);
+      const key=`${person.id||'unknown'}::${person.name||'???'}`;
+      if(!speakers.some(item=>item.key===key)) speakers.push({key,id:person.id});
+    });
+    speakers.filter(item=>playerSpeaker(item.id)).forEach(item=>lanes.set(item.key,'right'));
+    let npcIndex=0;
+    speakers.filter(item=>!playerSpeaker(item.id)).forEach(item=>{
+      lanes.set(item.key,npcIndex%2===0?'left':'right');
+      npcIndex++;
+    });
+    return lanes;
+  }
+  function dialogueSide(turn,lanes){
     const person=speakerInfo(turn.who,turn.name);
-    const mine=['me','player_child','나'].includes(person.id);
+    const key=`${person.id||'unknown'}::${person.name||'???'}`;
+    return (lanes&&lanes.get(key))||(playerSpeaker(person.id)?'right':'left');
+  }
+  function chatMessageHtml(turn, newest=false, side='left'){
+    const person=speakerInfo(turn.who,turn.name);
+    const mine=playerSpeaker(person.id);
     const hidden=person.name==='???';
     const faceAlt=hidden?'이름을 모르는 사람':person.name;
     const face=person.portrait
       ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상">`
       : '';
-    return `<div class="chat-msg story-entry ${mine?'mine':'other'}${hidden?' identity-hidden':''}${newest?' chat-newest':''}"
-      data-kind="dialogue" data-story-entry>
+    return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${hidden?' identity-hidden':''}${newest?' chat-newest':''}"
+      data-kind="dialogue" data-speaker="${esc(person.id||person.name)}" data-side="${side}" data-story-entry>
       ${face}<div class="chat-copy"><b class="chat-name">${esc(person.name)}</b>
       <div class="chat-bubble">${fmt(turn.text||'')}</div></div></div>`;
   }
@@ -467,11 +489,12 @@ const UI = (()=>{
   function storyReaderHtml(turns,index,opt={}){
     const safe=Math.min(Math.max(0,index),Math.max(0,turns.length-1));
     const shown=(turns.length?turns:[{kind:'narration',text:'잠시 말이 끊겼다.'}]).slice(0,safe+1);
+    const lanes=dialogueLaneMap(turns);
     return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="log"
       aria-live="polite" aria-atomic="false" aria-relevant="additions text">
       ${shown.map((turn,i)=>{
         const newest=i===shown.length-1;
-        if(turn.kind==='dialogue') return chatMessageHtml(turn,newest);
+        if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes));
         if(turn.kind==='narration') return narrationMessageHtml(turn,newest,opt);
         return storyTurnHtml(turn,opt);
       }).join('')}</section>`;
@@ -950,6 +973,86 @@ const UI = (()=>{
     });
     return {html,count};
   }
+  function eventSceneKeys(evd, leading=[]){
+    const keys=[];
+    const add=(value)=>{
+      if(Array.isArray(value)){ value.forEach(add); return; }
+      if(value&&D.scenes&&D.scenes[value]&&!keys.includes(value)) keys.push(value);
+    };
+    add(leading);
+    const turnCuts=evd&&D.eventTurnScenes&&D.eventTurnScenes[evd.id];
+    add(turnCuts);
+    add(evd&&evd.scenes);
+    add(evd&&evd.scene);
+    add(evd&&D.eventScenes&&D.eventScenes[evd.id]);
+    if(!turnCuts||!turnCuts.length){
+      add(evd&&evd.locEvent&&D.nodeScenes&&D.nodeScenes[evd.locEvent]);
+      add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.at]);
+      const fallbackType=evd&&((evd.ai||evd.type==='추적')?'추적':evd.type);
+      add(fallbackType&&D.eventSceneTypes&&D.eventSceneTypes[fallbackType]);
+      add('generic-story');
+    }
+    return keys;
+  }
+  function sceneFrameHtml(sceneKeys, sceneAlt){
+    const key=sceneKeys&&sceneKeys[0], src=key&&D.scenes&&D.scenes[key];
+    if(!src) return '';
+    return `<div class="event-scene-frame" role="button" tabindex="0"
+      data-scene-key="${esc(key)}" data-cut-token="initial"
+      aria-label="${esc(sceneAlt)} 장면 크게 보기">
+      <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면">
+      <span class="scene-cut-mark" aria-hidden="true">장면 1</span>
+      <span class="scene-zoom" aria-hidden="true">↗</span></div>`;
+  }
+  function storySceneShot(state,turn,index){
+    const lanes=dialogueLaneMap(state.turns);
+    const side=turn&&turn.kind==='dialogue'?dialogueSide(turn,lanes):'center';
+    const shotCycle=[
+      {x:50,y:50,scale:1.00},{x:42,y:48,scale:1.08},
+      {x:58,y:53,scale:1.12},{x:50,y:60,scale:1.16}
+    ];
+    let shot=shotCycle[index%shotCycle.length], tone=state.phase==='outcome'?'outcome':'story';
+    if(turn&&turn.kind==='dialogue'){
+      const swing=index%2?6:0;
+      shot=side==='right'
+        ? {x:68+swing,y:48+(index%3)*3,scale:1.11+(index%3)*.025}
+        : {x:32-swing,y:48+(index%3)*3,scale:1.11+(index%3)*.025};
+    }else if(turn&&['record','letter','thought'].includes(turn.kind)){
+      shot={x:index%2?58:42,y:61,scale:1.18+(index%2)*.025};
+      tone='memory';
+    }else if(turn&&['ai','radio'].includes(turn.kind)){
+      shot={x:50+(index%2?8:-8),y:45,scale:1.14+(index%3)*.02};
+      tone='ai';
+    }else if(state.phase==='outcome'){
+      shot={...shot,scale:shot.scale+.055};
+    }
+    return {side,tone,...shot};
+  }
+  function renderStoryScene(state,turn,index){
+    const sheet=$('#ev-sheet'), frame=sheet&&sheet.querySelector('.event-scene-frame');
+    const keys=state&&state.sceneKeys||[];
+    if(!frame||!keys.length) return;
+    const key=keys[((state.sceneStart||0)+index)%keys.length];
+    const src=D.scenes&&D.scenes[key], img=frame.querySelector('.event-scene');
+    if(!src||!img) return;
+    const shot=storySceneShot(state,turn,index);
+    frame.dataset.sceneKey=key;
+    frame.dataset.cutToken=`${state.phase}-${index}-${key}-${shot.side}-${shot.x}-${shot.scale}`;
+    frame.dataset.tone=shot.tone;
+    frame.dataset.speaker=turn&&turn.kind==='dialogue'
+      ? speakerInfo(turn.who,turn.name).id||'unknown'
+      : turn&&turn.kind||'narration';
+    frame.style.setProperty('--scene-x',`${shot.x}%`);
+    frame.style.setProperty('--scene-y',`${shot.y}%`);
+    frame.style.setProperty('--scene-scale',String(shot.scale));
+    if(img.src!==src) img.src=src;
+    img.alt=`${state.sceneAlt} · ${index+1}번째 장면`;
+    const mark=frame.querySelector('.scene-cut-mark');
+    if(mark) mark.textContent=`장면 ${index+1} / ${state.turns.length}`;
+    img.classList.remove('scene-recut');
+    void img.offsetWidth;
+    img.classList.add('scene-recut');
+  }
   function wireSceneZoom(sheet){
     const sceneFrame=sheet.querySelector('.event-scene-frame');
     if(sceneFrame) sceneFrame.onclick=()=>sceneFrame.classList.toggle('zoomed');
@@ -961,6 +1064,7 @@ const UI = (()=>{
     const dock=sheet.querySelector('.event-choice-dock');
     const turn=state.turns[Math.min(state.index,state.turns.length-1)];
     reader.innerHTML=storyReaderHtml(state.turns,state.index);
+    renderStoryScene(state,turn,state.index);
     const entering=reader.querySelector('[data-story-entry]:last-child');
     if(entering){
       entering.classList.add('turn-enter');
@@ -1010,13 +1114,9 @@ const UI = (()=>{
     const aiEvent = evd.type==='추적'||!!evd.ai;
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
-    const locScene=evd.locEvent&&D.nodeScenes&&D.nodeScenes[evd.locEvent];
-    const fallbackType=(evd.ai||evd.type==='추적')?'추적':evd.type;
-    const sceneKey=evd.scene||(D.eventScenes&&D.eventScenes[evd.id])||locScene
-      ||(D.eventSceneTypes&&D.eventSceneTypes[fallbackType])||'generic-story';
-    const sceneSrc=sceneKey&&D.scenes&&D.scenes[sceneKey];
-    const sceneAlt=(evd.title||'길 위의 사건').replace(/"/g,'&quot;');
-    const scene=sceneSrc?`<div class="event-scene-frame" role="button" tabindex="0" aria-label="${sceneAlt} 장면 크게 보기"><img class="event-scene" src="${sceneSrc}" alt="${sceneAlt} 장면"><span class="scene-zoom" aria-hidden="true">↗</span></div>`:'';
+    const sceneAlt=stripTags(evd.title||'길 위의 사건');
+    const sceneKeys=eventSceneKeys(evd);
+    const scene=sceneFrameHtml(sceneKeys,sceneAlt);
     let context=D.storyContext&&D.storyContext[evd.id]
       ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
     const recruitQ=S.recruitQ, recruitDef=recruitQ&&D.recruitQuests[recruitQ.id];
@@ -1026,7 +1126,7 @@ const UI = (()=>{
     }
     const choices=eventChoiceData(evd);
     const turns=buildStoryTurns(text,evd,{turnSpeakers:evd.turnSpeakers});
-    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${sceneAlt} 사건 내용">${scene}<div class="event-head"><div>
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<div class="event-head"><div>
       <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
       <h2>${evd.title}</h2></div></div>${context}${combatHudHtml(evd)}<div class="story-reader"></div></div>
       <div class="event-choice-dock"></div>`;
@@ -1034,6 +1134,7 @@ const UI = (()=>{
     curStory={
       phase:'event',label:evd.type==='대화'?'대화':'이야기',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
+      sceneKeys,sceneAlt,sceneStart:0,
       finalDock:`<div class="choice-dock-head"><span>선택 · ${choices.count}</span>
         <small>${choices.count>3?'위아래로 밀어 모두 보기':'내가 할 일을 고른다'}</small></div>
         <div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>`,
@@ -1130,8 +1231,15 @@ const UI = (()=>{
       speakers:out.speakers,
       turnSpeakers:out.turnSpeakers
     });
-    const oldScene=sheet.querySelector('.event-scene-frame');
-    const scene=oldScene?oldScene.outerHTML:'';
+    const sceneAlt=stripTags(curEv.title||'선택의 결과');
+    const choiceIndex=Math.max(0,curEv.choices.indexOf(choice));
+    const choiceCuts=D.eventChoiceScenes&&D.eventChoiceScenes[curEv.id]
+      &&D.eventChoiceScenes[curEv.id][choiceIndex];
+    const explicitCuts=[out.scenes,out.scene,choice.scenes,choice.scene,choiceCuts];
+    const sceneKeys=eventSceneKeys(curEv,explicitCuts);
+    const priorCut=curStory?(curStory.sceneStart||0)+curStory.index+1:1;
+    const sceneStart=choiceCuts&&choiceCuts.length?0:(sceneKeys.length?priorCut%sceneKeys.length:0);
+    const scene=sceneFrameHtml(sceneKeys,sceneAlt);
     const fxHtml=chips.length
       ? '<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
       : '';
@@ -1152,6 +1260,7 @@ const UI = (()=>{
     curStory={
       phase:'outcome',label:'결과',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
+      sceneKeys,sceneAlt,sceneStart,
       finalDock:`<div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
         <div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
       reveal:()=>{ const result=sheet.querySelector('.story-result'); if(result) result.innerHTML=fxHtml; },
@@ -1951,7 +2060,7 @@ const BGM = (()=>{
   function ensure(key){
     if(players[key]!==undefined) return players[key];
     if(!D.bgm||!D.bgm[key]){ players[key]=null; return null; }
-    const a=new Audio(D.bgm[key]); a.loop=true; a.volume=0; a.preload='auto';
+    const a=new Audio(D.bgm[key]); a.loop=D.bgm[`${key}Loop`]!==false; a.volume=0; a.preload='auto';
     players[key]=a; return a;
   }
   function fadeTo(a, target, then){

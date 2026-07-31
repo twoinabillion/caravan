@@ -86,7 +86,23 @@ D.scenes = {
   'roadcrew-washout':'__SCENE_ROADCREW_WASHOUT__',
   'roadcrew-sign':'__SCENE_ROADCREW_SIGN__',
   'road-night-circle':'__SCENE_ROAD_NIGHT_CIRCLE__',
-  'road-supply-shelter':'__SCENE_ROAD_SUPPLY_SHELTER__'
+  'road-supply-shelter':'__SCENE_ROAD_SUPPLY_SHELTER__',
+  'recruit-minji-task-signal':'__SCENE_RECRUIT_MINJI_TASK_SIGNAL__',
+  'recruit-minji-task-collapse':'__SCENE_RECRUIT_MINJI_TASK_COLLAPSE__',
+  'recruit-minji-follow-listen':'__SCENE_RECRUIT_MINJI_FOLLOW_LISTEN__',
+  'recruit-minji-follow-record':'__SCENE_RECRUIT_MINJI_FOLLOW_RECORD__',
+  'recruit-parkss-task-power':'__SCENE_RECRUIT_PARKSS_TASK_POWER__',
+  'recruit-leo-task-wade':'__SCENE_RECRUIT_LEO_TASK_WADE__',
+  'recruit-jaeyi-task-lift':'__SCENE_RECRUIT_JAEYI_TASK_LIFT__',
+  'recruit-eunsu-task-breaker':'__SCENE_RECRUIT_EUNSU_TASK_BREAKER__',
+  'recruit-kangwoo-task-seoyeon':'__SCENE_RECRUIT_KANGWOO_TASK_SEOYEON__',
+  'combat-walker-joint':'__SCENE_COMBAT_WALKER_JOINT__',
+  'seoul-core-key':'__SCENE_SEOUL_CORE_KEY__',
+  'roadcrew-bridge-wedge':'__SCENE_ROADCREW_BRIDGE_WEDGE__',
+  'recruit-parkss-follow-shared':'__SCENE_RECRUIT_PARKSS_FOLLOW_SHARED__',
+  'recruit-leo-follow-puddle':'__SCENE_RECRUIT_LEO_FOLLOW_PUDDLE__',
+  'recruit-jaeyi-follow-shelf':'__SCENE_RECRUIT_JAEYI_FOLLOW_SHELF__',
+  'recruit-eunsu-follow-lights':'__SCENE_RECRUIT_EUNSU_FOLLOW_LIGHTS__'
 };
 
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */

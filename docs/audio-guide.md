@@ -29,6 +29,9 @@ instrumental, no vocals, seamless loop (no intro build-up, no fade-out ending)
 
 ### 1. `title` — 타이틀 화면
 달빛 아래 멈춰 선 봉고차. 여행 전의 고요.
+
+> ✅ 적용 완료: **「파란 트럭의 밤」** (`assets/audio/title.mp3`). 3분 22초 완곡형이며 페이드아웃 뒤 한 번만 재생.
+
 ```
 [공통] + slow tempo 68bpm, solo felt piano with distant synth pad,
 sparse and spacious like an empty highway at night under the moon,

@@ -1,9 +1,20 @@
 #!/bin/bash
-# 서울까지 400km — 단일 HTML 빌드
-# src/ 파트를 순서대로 cat 해서 서울까지400km.html 을 만든다.
+# 서울까지 400km — 최신 게임 통합 빌드
+# 기본: src/ → 서울까지400km.html → caravan.ait + 호환 파일명 동기화
+# --html-only: AIT 빌드 내부에서 재귀 없이 HTML만 갱신
 # 파트 순서가 곧 스크립트 로드 순서 (data → engine → scene → map → ui → offroad → boot)
 set -euo pipefail
 cd "$(dirname "$0")"
+
+HTML_ONLY=false
+if [[ "${1:-}" == "--html-only" ]]; then
+  HTML_ONLY=true
+  shift
+fi
+if [[ $# -gt 0 ]]; then
+  echo "사용법: ./build.sh [--html-only]" >&2
+  exit 2
+fi
 
 PARTS_BEFORE_EMBEDS=(
   src/01-style.html
@@ -50,6 +61,12 @@ SCENE_KEYS=(
   RECRUIT_EUNSU_FOLLOW RECRUIT_EUNSU_JOIN RECRUIT_KANGWOO_FOLLOW RECRUIT_KANGWOO_JOIN
   COMBAT_PERIMETER_WARNING COMBAT_WALKER_DISABLE COMBAT_DRONE_SWARM COMBAT_CHECKPOINT_BREACH
   ROADCREW_LINE ROADCREW_BRIDGE ROADCREW_WASHOUT ROADCREW_SIGN ROAD_NIGHT_CIRCLE ROAD_SUPPLY_SHELTER
+  RECRUIT_MINJI_TASK_SIGNAL RECRUIT_MINJI_TASK_COLLAPSE
+  RECRUIT_MINJI_FOLLOW_LISTEN RECRUIT_MINJI_FOLLOW_RECORD
+  RECRUIT_PARKSS_TASK_POWER RECRUIT_LEO_TASK_WADE RECRUIT_JAEYI_TASK_LIFT RECRUIT_EUNSU_TASK_BREAKER
+  RECRUIT_KANGWOO_TASK_SEOYEON COMBAT_WALKER_JOINT SEOUL_CORE_KEY ROADCREW_BRIDGE_WEDGE
+  RECRUIT_PARKSS_FOLLOW_SHARED RECRUIT_LEO_FOLLOW_PUDDLE
+  RECRUIT_JAEYI_FOLLOW_SHELF RECRUIT_EUNSU_FOLLOW_LIGHTS
 )
 SCENE_FILES=(
   assets/scenes/gwangju-market.jpg
@@ -139,6 +156,22 @@ SCENE_FILES=(
   assets/scenes/roadcrew-sign.jpg
   assets/scenes/road-night-circle.jpg
   assets/scenes/road-supply-shelter.jpg
+  assets/scenes/recruit-minji-task-signal.jpg
+  assets/scenes/recruit-minji-task-collapse.jpg
+  assets/scenes/recruit-minji-follow-listen.jpg
+  assets/scenes/recruit-minji-follow-record.jpg
+  assets/scenes/recruit-parkss-task-power.jpg
+  assets/scenes/recruit-leo-task-wade.jpg
+  assets/scenes/recruit-jaeyi-task-lift.jpg
+  assets/scenes/recruit-eunsu-task-breaker.jpg
+  assets/scenes/recruit-kangwoo-task-seoyeon.jpg
+  assets/scenes/combat-walker-joint.jpg
+  assets/scenes/seoul-core-key.jpg
+  assets/scenes/roadcrew-bridge-wedge.jpg
+  assets/scenes/recruit-parkss-follow-shared.jpg
+  assets/scenes/recruit-leo-follow-puddle.jpg
+  assets/scenes/recruit-jaeyi-follow-shelf.jpg
+  assets/scenes/recruit-eunsu-follow-lights.jpg
 )
 SCENE_JS="$(< src/03g-scenes.js)"
 for I in "${!SCENE_KEYS[@]}"; do
@@ -159,10 +192,19 @@ for I in "${!UPGRADE_KEYS[@]}"; do
   UPGRADE_BASE64="$(base64 < "${UPGRADE_FILES[$I]}" | tr -d '\n')"
   SCENE_JS="${SCENE_JS//__UPGRADE_${UPGRADE_KEYS[$I]}__/data:image/jpeg;base64,$UPGRADE_BASE64}"
 done
+TITLE_BGM_JS="$(< src/03e-bgm-title.js)"
+TITLE_BGM_BASE64="$(base64 < assets/audio/title.mp3 | tr -d '\n')"
+TITLE_BGM_JS="${TITLE_BGM_JS//__BGM_TITLE__/data:audio/mpeg;base64,$TITLE_BGM_BASE64}"
 {
   cat "${PARTS_BEFORE_EMBEDS[@]}"
+  printf '%s\n' "$TITLE_BGM_JS"
   printf '%s\n' "$NPC_JS"
   printf '%s\n' "$SCENE_JS"
   cat "${PARTS_AFTER_EMBEDS[@]}"
 } > 서울까지400km.html
 echo "✅ 서울까지400km.html $(wc -c < 서울까지400km.html | tr -d ' ') bytes"
+
+if [[ "$HTML_ONLY" == false ]]; then
+  echo "📦 최신 HTML로 AIT 번들을 갱신합니다."
+  CARAVAN_HTML_READY=1 npm run build:toss
+fi

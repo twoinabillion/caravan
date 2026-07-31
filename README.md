@@ -52,7 +52,8 @@
 ## 개발
 
 ```bash
-./build.sh              # src/ 파트 → 서울까지400km.html (파트 순서=로드 순서)
+./build.sh              # src/ → 최신 HTML → caravan.ait까지 한 번에 갱신
+./build.sh --html-only  # AIT 없이 HTML만 갱신해야 할 때
 node tools/scan.cjs     # 정합성 스캐너 (이벤트 참조 전수 검사, 커밋 전 필수)
 python3 tests/test_smoke.py   # Playwright 스모크
 ```

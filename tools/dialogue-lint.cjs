@@ -114,16 +114,21 @@ const stalePatterns = [
   [/형\(주인공\)/, '임시 플레이어 표기 "형(주인공)"'],
   [/(?<!\d)3\s*년|(?<![가-힣])(?:삼|三)\s*년/, '폐기된 3년 설정'],
   [/정\s*박사/, '만나지 않은 인물 "정 박사"'],
+  [/답보다\s*먼저\s*지켜야\s*하는\s*건\s*질문/, '맥락 없이 결론부터 말하는 폐기 대사'],
 ];
 for (const [pattern, label] of stalePatterns) {
   if (pattern.test(source)) errors.push(label);
 }
 
 for (const page of D.intro || []) {
-  if (!Array.isArray(page.beats) || page.beats.length < 4) {
+  if (!Array.isArray(page.beats) || page.beats.length < 8) {
     errors.push(`인트로 화자 턴 부족: ${page.scene || page.title}`);
     continue;
   }
+  const spoken=page.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind));
+  const speakers=new Set(page.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who));
+  if(spoken.length<5) errors.push(`인트로 문답 부족: ${page.scene || page.title}`);
+  if(speakers.size<2) errors.push(`인트로 대화 상대 부족: ${page.scene || page.title}`);
   for (const [index, turn] of page.beats.entries()) {
     if (!turn.kind || typeof turn.text !== 'string' || !turn.text.trim()) {
       errors.push(`인트로 빈 턴: ${page.scene || page.title} #${index + 1}`);
@@ -140,7 +145,7 @@ for (const page of D.intro || []) {
 const aiTells = [
   /이를 통해/, /더 나아가/, /전반적으로/, /결론적으로/,
   /핵심은/, /의미합니다/, /판단됩니다/, /필요가 있습니다/,
-  /선이 아니라 삶/,
+  /선이 아니라 삶/, /해야 하는 건 (?:질문|답|사람|길)/,
 ];
 for (const sample of samples) {
   const hit = aiTells.find(pattern => pattern.test(sample.text));

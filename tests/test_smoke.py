@@ -33,6 +33,8 @@ with sync_playwright() as p:
 
     print('― 부팅/진입')
     check('타이틀 표시', pg.locator('#bt-new').is_visible())
+    check('「파란 트럭의 밤」 타이틀 BGM 내장',
+          pg.evaluate("D.bgm.title.startsWith('data:audio/mpeg;base64,') && D.bgm.titleLoop === false"))
     check('달구지 PNG 런타임 제거', pg.evaluate('typeof D.vanSprites === "undefined"'))
     save_canvas(pg, '#titlecv', SHOT / 'title-procedural.png')
     pg.click('#bt-preview'); pg.wait_for_timeout(180)
@@ -50,7 +52,9 @@ with sync_playwright() as p:
     pg.click('#mode-on'); pg.wait_for_timeout(300)
     check('인트로 전에 이름 입력', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-intro').is_visible())
     pg.fill('#inp-name', '테스터'); pg.press('#inp-name', 'Enter'); pg.wait_for_timeout(200)
-    check('이름 Enter가 첫 턴을 건너뛰지 않음', pg.locator('#intro-count').text_content() == '1 / 12 · 1 / 5')
+    expected_intro_count = pg.evaluate("`1 / ${D.intro.length} · 1 / ${D.intro[0].beats.length}`")
+    check('이름 Enter가 첫 턴을 건너뛰지 않음',
+          pg.locator('#intro-count').text_content() == expected_intro_count)
     intro_layout = pg.evaluate('''() => {
       const book=document.querySelector('#intro-book').getBoundingClientRect();
       const app=document.querySelector('#app').getBoundingClientRect();
@@ -76,6 +80,7 @@ with sync_playwright() as p:
       count:document.querySelectorAll('#intro-txt .chat-msg').length,
       names:[...document.querySelectorAll('#intro-txt .chat-name')].map(x=>x.textContent),
       sides:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.classList.contains('mine')?'mine':'other'),
+      lanes:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.dataset.side),
       narration:document.querySelectorAll('#intro-txt .story-narration').length,
       order:[...document.querySelectorAll('#intro-txt [data-story-entry]')].map(x=>x.dataset.kind),
       narrationW:document.querySelector('#intro-txt .story-narration')?.getBoundingClientRect().width||0,
@@ -83,7 +88,8 @@ with sync_playwright() as p:
     })''')
     check('사람 대화는 채팅처럼 누적', intro_chat['count'] == 2 and
           intro_chat['names'] == ['테스터 · 8살','할아버지'] and
-          intro_chat['sides'] == ['mine','other'], str(intro_chat))
+          intro_chat['sides'] == ['mine','other'] and
+          intro_chat['lanes'] == ['right','left'], str(intro_chat))
     check('내레이션은 전체 폭으로 남고 채팅을 지우지 않음',
           intro_chat['narration'] == 1 and
           intro_chat['order'] == ['narration','dialogue','dialogue'] and
@@ -358,13 +364,13 @@ with sync_playwright() as p:
       out.again = !G.fixRadio();          // 재수리 불가
       UI.clearSpeech();
       UI.playRadio();
-      out.bubble = !!document.querySelector('.bubble.radio');
+      out.bubble = !!document.querySelector('.bubble.radio,.bubble.narration');
       return out;
     }''')
     check('라디오: 진공관 없으면 불가', r3['blocked'], str(r3))
     check('라디오: 수리(진공관 소모+플래그)', r3['fixed'] and r3['consumed'] and r3['flag'], str(r3))
     check('라디오: 재수리 불가', r3['again'])
-    check('라디오: 방송 버블 표시', r3['bubble'], str(r3))
+    check('라디오: 방송·수신 정경 버블 표시', r3['bubble'], str(r3))
     # v2.0 업그레이드
     r4 = pg.evaluate('''() => {
       const out = {};
@@ -396,7 +402,9 @@ with sync_playwright() as p:
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
       out.introBook = D.intro.length === 12 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
-      out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= 4 &&
+      out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= 8 &&
+        p.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind)).length >= 5 &&
+        new Set(p.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who)).size >= 2 &&
         p.beats.every(turn => turn.text && turn.kind &&
           (!['dialogue','thought','letter'].includes(turn.kind) || (turn.who && turn.name))));
       out.introPortraits = ['mother','father','intro_child','player_child','grandfather','me']
@@ -405,9 +413,15 @@ with sync_playwright() as p:
       const familyKey=D.events.find(e=>e.id==='story_family_key');
       const principleTurns=UI.storyTurns(familyPrinciple.text,familyPrinciple);
       const keyTurns=UI.storyTurns(familyKey.text,familyKey);
-      const keyOutcomeTurns=UI.storyTurns(familyKey.choices[0].out[0].text,familyKey);
-      out.familySpeakers=principleTurns.some(t=>t.kind==='dialogue'&&t.who==='mother') &&
+      const keyOutcome=familyKey.choices[0].out[0];
+      const keyOutcomeTurns=UI.storyTurns(
+        keyOutcome.text,familyKey,{turnSpeakers:keyOutcome.turnSpeakers});
+      out.familySpeakers=principleTurns.filter(t=>t.kind==='dialogue').length>=8 &&
+        principleTurns.some(t=>t.kind==='dialogue'&&t.who==='father') &&
+        principleTurns.some(t=>t.kind==='dialogue'&&t.who==='mother') &&
         keyTurns.filter(t=>t.kind==='record'&&t.who==='father').length===2 &&
+        keyTurns.some(t=>t.kind==='dialogue'&&t.who==='father') &&
+        keyTurns.some(t=>t.kind==='dialogue'&&t.who==='mother') &&
         keyOutcomeTurns.some(t=>t.kind==='record'&&t.who==='mother');
       out.introPremise = D.intro.some(p=>p.text.includes('미국의 AI와 반도체망')) &&
         D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&
@@ -420,7 +434,7 @@ with sync_playwright() as p:
       out.introHome = D.intro.some(p=>p.scene === 'intro-camper-conversion' &&
         p.text.includes('폐냉장고 단열판') &&
         p.text.includes('연장 레일') &&
-        p.text.includes('집은 사는 사람을 따라 커지는 거야') &&
+        p.text.includes('사람이 셋이면 셋이 누울 자리를 만든 다음에 태워야 해') &&
         p.text.includes('좌석과 침대, 부엌'));
       out.seats = [G.maxParty()];
       out.vanSizes = [[G.vanStage().bodyL,G.vanStage().bodyH,G.vanStage().cm]];
@@ -453,6 +467,19 @@ with sync_playwright() as p:
       out.upStories=['up_bench_first','up_cabin_sleepchart','up_garden_roster','up_armor_argument','up_kitchen_firstmeal','up_full_house'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.duoStories=['duo_minji_parkss_space','duo_kangwoo_eunsu_record','duo_leo_jaeyi_route','party_north_vote'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.sceneCount=Object.keys(D.scenes||{}).length;
+      const actionCutKeys=[
+        'recruit-minji-task-signal','recruit-minji-task-collapse',
+        'recruit-minji-follow-listen','recruit-minji-follow-record',
+        'recruit-parkss-task-power','recruit-leo-task-wade','recruit-jaeyi-task-lift',
+        'recruit-eunsu-task-breaker','recruit-kangwoo-task-seoyeon','combat-walker-joint',
+        'seoul-core-key','roadcrew-bridge-wedge','recruit-parkss-follow-shared',
+        'recruit-leo-follow-puddle','recruit-jaeyi-follow-shelf','recruit-eunsu-follow-lights'
+      ];
+      out.actionCutCount=actionCutKeys.filter(key=>!!D.scenes[key]).length;
+      out.actionCutMaps=Object.keys(D.eventTurnScenes||{}).length===4 &&
+        Object.keys(D.eventChoiceScenes||{}).length===12 &&
+        Object.values(D.eventChoiceScenes||{}).every(choiceMap=>
+          Object.values(choiceMap).flat().every(key=>!!D.scenes[key]));
       out.recruitDefs=Object.keys(D.recruitQuests||{}).length;
       out.recruitEvents=Object.keys(D.recruitQuests||{}).every(id=>{
         const q=D.recruitQuests[id];
@@ -502,11 +529,47 @@ with sync_playwright() as p:
       const talkTurns=UI.storyTurns(talkSample.text,talkSample);
       out.knownSpeaker=talkTurns.some(t=>t.kind==='dialogue'&&t.who==='minji');
       UI.showEvent(talkSample);
+      document.querySelector('#ev-sheet').getAnimations().forEach(animation=>animation.finish());
+      out.eventTop=Math.round(document.querySelector('#ev-sheet').getBoundingClientRect().top);
+      const firstFrame=document.querySelector('#ev-sheet .event-scene-frame');
+      const firstCut=firstFrame&&firstFrame.dataset.cutToken;
+      const firstScene=firstFrame&&firstFrame.dataset.sceneKey;
       out.choiceLockedUntilRead=!document.querySelector('#ev-sheet [data-i]')&&
         !!document.querySelector('#ev-sheet [data-story-entry]');
+      document.querySelector('#ev-sheet .story-next')?.click();
+      const secondFrame=document.querySelector('#ev-sheet .event-scene-frame');
+      out.turnSceneCut=!!firstCut&&secondFrame.dataset.cutToken!==firstCut;
+      out.turnSceneVisual=secondFrame.dataset.sceneKey!==firstScene ||
+        secondFrame.style.getPropertyValue('--scene-x')!=='50%';
       UI.finishStory();
       out.choiceUnlocked=!!document.querySelector('#ev-sheet [data-i]');
       document.querySelector('#ev-wrap').classList.remove('on');
+      const trio=D.events.find(e=>e.id==='rq_kangwoo_join');
+      UI.showEvent(trio); UI.finishStory();
+      const trioMessages=[...document.querySelectorAll('#ev-sheet .chat-msg')];
+      const laneBySpeaker={};
+      let stable=true;
+      trioMessages.forEach(msg=>{
+        const speaker=msg.dataset.speaker, side=msg.dataset.side;
+        if(laneBySpeaker[speaker]&&laneBySpeaker[speaker]!==side) stable=false;
+        laneBySpeaker[speaker]=side;
+      });
+      out.trioDialogue=Object.keys(laneBySpeaker).length>=3&&stable&&
+        Object.values(laneBySpeaker).includes('left')&&Object.values(laneBySpeaker).includes('right');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      const actionSnapshot=structuredClone(S);
+      const minjiAction=D.events.find(e=>e.id==='rq_minji_task');
+      UI.showEvent(minjiAction);
+      const actionFirst=document.querySelector('.event-scene-frame').dataset.sceneKey;
+      document.querySelector('#ev-sheet .story-next')?.click();
+      const actionSecond=document.querySelector('.event-scene-frame').dataset.sceneKey;
+      UI.finishStory();
+      document.querySelector('#ev-sheet [data-i="2"]').click();
+      out.actionCutRuntime=actionFirst==='recruit-minji-task' &&
+        actionSecond==='recruit-minji-task-signal' &&
+        document.querySelector('.event-scene-frame').dataset.sceneKey==='recruit-minji-task-collapse';
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S=actionSnapshot; rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll();
       G.openEventById('kw_base');
       out.eventScene=!!document.querySelector('#ev-sheet .event-scene');
       const sf=document.querySelector('#ev-sheet .event-scene-frame');
@@ -636,7 +699,11 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 87종·빌드 주입', r4['sceneCount'] == 87 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 103종·빌드 주입', r4['sceneCount'] == 103 and r4['sceneDataReady'], str(r4))
+    check('행동 단위 신규 컷 16장·선택 스포일러 분리',
+          r4['actionCutCount'] == 16 and r4['actionCutMaps'], str(r4))
+    check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
+          r4['actionCutRuntime'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
@@ -647,6 +714,10 @@ with sync_playwright() as p:
           r4['turnParser'] and r4['knownSpeaker'], str(r4))
     check('이야기를 다 읽기 전 선택지 잠금',
           r4['choiceLockedUntilRead'] and r4['choiceUnlocked'], str(r4))
+    check('이벤트 화면이 상단 16px 안에서 시작', r4['eventTop'] <= 16, str(r4['eventTop']))
+    check('대사 턴마다 장면 컷·구도 전환',
+          r4['turnSceneCut'] and r4['turnSceneVisual'], str(r4))
+    check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
     check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))
@@ -907,6 +978,14 @@ with sync_playwright() as p:
         ? core.text({day:12, flags:{}, party:[]}) : core.text;
       const lateCoreText = typeof core.text === 'function'
         ? core.text({day:31, flags:{}, party:[]}) : core.text;
+      const coreTurns = UI.storyTurns(coreText, core, {turnSpeakers:core.turnSpeakers});
+      const testimony = core.choices[2].out[0];
+      const testimonyTurns = UI.storyTurns(testimony.text, core, {turnSpeakers:testimony.turnSpeakers});
+      out.coreDialogue = coreTurns.filter(t=>t.kind==='dialogue'&&t.who==='me').length === 13 &&
+        coreTurns.filter(t=>t.kind==='ai'&&t.who==='cheollian').length >= 10 &&
+        !coreTurns.some(t=>t.name==='???') &&
+        testimonyTurns.some(t=>t.kind==='dialogue'&&t.who==='minji') &&
+        testimonyTurns.some(t=>t.kind==='dialogue'&&t.who==='eunsu');
       out.coreToDecision = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_decision'));
       const decision = D.events.find(e => e.id === 'seoul_decision');
       out.decision = !!decision && !!decision.noPool && decision.choices.length === 3;
@@ -925,7 +1004,8 @@ with sync_playwright() as p:
         backdoor.choices.every(c=>c.out[0].fx.flag === 'es_truth' &&
           c.out[0].fx.flag2 === 'uplink_seen') &&
         coreText.includes('가족을 연산망 연속성에 대한 고위험 인과 노드로 분류');
-      out.rootMystery = coreText.includes('최초 위험 조건의 목적과 서울을 비워야 했던 이유') &&
+      out.rootMystery = coreText.includes('최초 위험 조건은 외부에서 배부') &&
+        coreText.includes('목적, 발신자, 승인자는 제 지역 기록에 없습니다') &&
         coreText.includes('부모님의 검증키') &&
         coreText.includes('등록 6,412명');
       out.deadlineAdaptive = coreText.includes('첫 이송까지 19일') &&
@@ -937,7 +1017,7 @@ with sync_playwright() as p:
         costs[1].includes('원본 기록의 검색창도 꺼졌다') &&
         costs[2].includes('삼중 감시조');
       out.gateSeparate = D.gateEvent.text({flags:{seoulTries:0}}).includes('추방 명령이 아닙니다') &&
-        coreText.includes('별도의 인계 규약');
+        coreText.includes('인계 규약을 만들었습니다');
       const reveal = D.events.find(e => e.id === 'resist_reveal');
       out.generations = reveal.choices.every(c => c.out[0].text.includes('세대')) &&
         D.comps.kangwoo.bio.includes('자신이 겪은 서울 추방') &&
@@ -965,6 +1045,7 @@ with sync_playwright() as p:
     check('집행 선택 3종→에필로그 연쇄', r8['decision'] and r8['decisionToNight'] and r8['distinct'], str(r8))
     check('부모 발표 원고→반도체 검증키 보장', r8['parentTrail'])
     check('가족 직접 사유·정부 승인 순서 회수', r8['familyTruth'])
+    check('서울 코어는 주인공 질문·천리안 답변·동료 증언으로 분리', r8['coreDialogue'], str(r8))
     check('제7 구역 저지·143년 최초 목적 분리', r8['rootMystery'])
     check('30일 전후 이송 상태가 실제 날짜를 반영', r8['deadlineAdaptive'])
     check('추방과 남산 관문은 별도 절차', r8['gateSeparate'])

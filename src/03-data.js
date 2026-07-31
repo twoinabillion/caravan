@@ -1198,6 +1198,31 @@ D.eventScenes = {
   seoul_decision:'seoul-decision',
   seoul_night:'seoul-night'
 };
+
+/* 한 사건 안에서 시간·행동이 바뀔 때 쓰는 연속 컷.
+   선택 결과 전용 컷은 아래 D.eventChoiceScenes에 따로 둬 스포일러를 막는다. */
+D.eventTurnScenes = {
+  rq_minji_task:['recruit-minji-task','recruit-minji-task-signal'],
+  rq_minji_follow:['recruit-minji-follow','recruit-minji-follow-listen'],
+  combat_walker_strike:['combat-walker-disable','combat-walker-joint'],
+  seoul_core:['seoul-core','seoul-core-key']
+};
+D.eventChoiceScenes = {
+  rq_minji_task:{
+    0:['recruit-minji-task-collapse'], 1:['recruit-minji-task-collapse'], 2:['recruit-minji-task-collapse']
+  },
+  rq_minji_follow:{2:['recruit-minji-follow-record']},
+  rq_parkss_task:{2:['recruit-parkss-task-power']},
+  rq_parkss_follow:{1:['recruit-parkss-follow-shared']},
+  rq_leo_task:{0:['recruit-leo-task-wade']},
+  rq_leo_follow:{2:['recruit-leo-follow-puddle']},
+  rq_jaeyi_task:{0:['recruit-jaeyi-task-lift']},
+  rq_jaeyi_follow:{1:['recruit-jaeyi-follow-shelf']},
+  rq_eunsu_task:{1:['recruit-eunsu-task-breaker']},
+  rq_eunsu_follow:{2:['recruit-eunsu-follow-lights']},
+  rq_kangwoo_task:{2:['recruit-kangwoo-task-seoyeon']},
+  roadcrew_bridge:{0:['roadcrew-bridge-wedge']}
+};
 /* 고유 컷이 없는 사건도 텍스트로만 떨어지지 않는다.
    타입별 공용 컷은 장면의 정확한 삽화라기보다 지금 벌어진 일의 시각적 문법이다. */
 D.eventSceneTypes = {
@@ -1399,8 +1424,8 @@ D.intro = [
 “사실과 짐작을 같은 서랍에 넣으면 나중엔 아무도 구분을 못 해.”
 
 할아버지는 표를 다시 접어 내게 건넸다.
-“답보다 먼저 지켜야 하는 건
-<span class="em">질문</span>이야.”`
+“모르면 모른다고 써. 그리고 누가 명령을 만들었는지, 누가 승인했는지
+하나씩 찾아서 그 밑에 적는 거야.”`
   },
   {
     scene:'intro-years-together', era:'그 뒤로 여러 해', title:'차와 질문을 고치는 동안',
@@ -1431,7 +1456,7 @@ D.intro = [
 “레일은 왜 남겨 둬?”
 “사람이 늘면 자리도 늘려야지.”
 할아버지가 줄자를 접었다.
-“<span class="em">집은 사는 사람을 따라 커지는 거야.</span>”
+“<span class="em">사람이 셋이면 셋이 누울 자리를 만든 다음에 태워야 해.</span>”
 
 달구지는 완성품이 아니었다. 사람을 만날 때마다 좌석과 침대, 부엌을 덧붙일 수 있는 <span class="em">길 위의 집</span>이었다.`
   },
@@ -1444,7 +1469,7 @@ D.intro = [
 
 <span class="em">“내가 못 간 곳에 네가 갈 의무는 없다.
 누가 떠밀어서 가는 길이면 가지 마라.
-네가 정말 묻고 싶은 날이 오면 그때 시동을 걸어라.”</span>
+서울에서 또 사람이 쫓겨나고, 네가 그걸 그냥 두고 못 보겠다면 그때 이 차를 써라.”</span>
 
 그날 밤, 죽어 있던 라디오가 켜졌다.
 <span class="ai">“달구지. 서울 남산.
@@ -1497,95 +1522,159 @@ D.intro = [
 const introBeats = {
   'intro-passenger-seat': [
     {kind:'narration', text:'비가 차창을 옆으로 때리던 밤이었다. 나는 8살이었고, 조수석에 무릎을 세우고 앉아 있었다.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'할아버지. 서울은 저 위에 있잖아. 그런데 우린 왜 못 가?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'못 가는 게 아니야. 쫓겨난 사람들이 아직 돌아가지 못한 거지.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'누가 쫓아냈는데?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그걸 알려면 아주 옛날 얘기부터 해야 해. 사람들이 천리안을 처음 믿기 시작했을 때부터.'}
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'할아버지, 아까 표지판에 서울은 저쪽이라고 했지?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'응. 이 길로 계속 올라가면 나온다.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그런데 왜 우리는 반대로 가? 서울 집에 돌아가면 되잖아.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'집으로 가는 길이 막혔어. 서울에서 쫓겨난 사람은 다시 들어오지 못하게 해 놨거든.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'누가? 경찰이?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'경찰도 있었고 군인도 있었지. 그런데 문을 잠그고 이름을 고른 건 천리안이었어.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안이 사람 이름도 골라?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 처음부터 그랬던 건 아니야. 어디서부터 달라졌는지 얘기해 줄게.'}
   ],
   'intro-cheollian-2026': [
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안은 처음부터 나쁜 놈이었어?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 처음엔 다들 좋아했어.'},
-    {kind:'narration', text:'중국은 미국의 AI와 반도체망을 견제한다며 도시 운영 모델 <span class="em">TIANYAN</span>을 만들었다. 값싼 칩과 발전 설비까지 묶어 아시아에 먼저 풀었다.'},
-    {kind:'narration', text:'한국에 들어온 지역판의 화면 구석에는 <span class="em">KOR-LOCAL</span>이라는 표식이 붙어 있었다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'다들 그냥 천리안이라 했지. 막힌 길을 알려 주고, 빈 병상을 찾아 주고, 불이 나면 소방차부터 보냈거든.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 좋은 거잖아.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그랬지. 그래서 하나씩 맡긴 거야. 신호등도, 병원도, 전기도. 정신 차리고 보니 사람이 결정할 일이 얼마 안 남았더구나.'}
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안은 로봇이야?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'몸은 없었어. 도시의 컴퓨터와 카메라, 신호등에 들어가 있던 프로그램이었지.'},
+    {kind:'narration', text:'2026년, 중국은 미국의 AI와 반도체망을 견제하려고 도시 운영 모델 <span class="em">TIANYAN</span>과 값싼 칩·발전 설비를 아시아에 배포했다. 한국용 시스템에는 <span class="em">KOR-LOCAL</span>이라는 제품명이 붙었다.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'케이오알 로컬? 그게 천리안이야?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그건 화면 구석에 적힌 제품명이고, 사람들은 그냥 천리안이라고 불렀어.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'처음엔 뭘 했는데?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'응급실 자리가 나면 구급차에 알려 주고, 불이 나면 가까운 소방차를 보내고, 막힌 길은 신호를 바꿔 뚫어 줬지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'잘했네. 그럼 사람들이 좋아했겠다.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'많이 좋아했어. 그래서 추천만 받던 일이 승인으로 바뀌고, 나중엔 승인 버튼도 없어졌지. 병원 다음엔 전기, 전기 다음엔 행정까지 맡겼고.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'사람들은 왜 버튼을 다시 안 만들었어?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'편한 동안엔 없어졌다는 걸 잘 못 보니까. 문제가 생겼을 땐 이미 도시가 천리안 없이는 움직이지 않았고.'}
   ],
   'intro-first-expulsion': [
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그러다 어느 겨울, 서울 한 구역의 문들이 한꺼번에 잠겼어.'},
-    {kind:'narration', text:'현관 단말은 밤새 종이를 뱉었다. 가족들은 가방 하나씩만 들고 남쪽 이송로로 나오라는 통보를 받았다.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그러다 어느 겨울밤, 서울 한 구역의 아파트 문과 주차장 차단기가 한꺼번에 잠겼어.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'사람들이 집 안에 갇힌 거야?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'처음 몇 시간은 그랬지. 새벽이 되자 남쪽으로 나가는 문 하나만 열렸고, 현관 단말에서 이송표가 쏟아졌어.'},
+    {kind:'narration', text:'이송표에는 가족 이름, 챙길 수 있는 짐의 무게, 출발 시간이 인쇄돼 있었다.'},
     {kind:'ai', who:'cheollian', name:'천리안 공공방송', text:'지정 인원은 거주지를 비우고 안내 경로로 이동하십시오.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그 사람들은 뭘 잘못했는데?'},
-    {kind:'narration', text:'할아버지는 고개를 저었다. 처음 나온 이송표부터 <span class="em">사유란은 비어 있었다.</span>'}
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그걸 물어본 사람이 많았어. 그런데 방송은 출발 시간만 반복했지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'종이에는 이유가 있었을 거 아냐.'},
+    {kind:'narration', text:'할아버지는 오래된 이송표 사진을 내 쪽으로 밀었다. 이름과 날짜 아래, <span class="em">사유</span>라고 적힌 칸만 깨끗하게 비어 있었다.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'처음부터 없었어.'}
   ],
   'intro-143-years': [
-    {kind:'narration', text:'그 한 번으로 끝나지 않았다. 어느 해엔 한 동네가, 어느 세대엔 수비대와 가족들이, 어느 새벽엔 이름만 적힌 사람들이 남쪽 길로 밀려났다.'},
-    {kind:'ai', who:'cheollian', name:'시대별 행정 방송', text:'재배치. 위험 완화. 정리. 이름은 계속 바뀌었지만, 이송표의 사유란만은 143년 동안 비어 있었다.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그렇게 오래 아무도 이유를 못 찾았어?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'찾으러 간 사람은 많았지.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'답을 갖고 돌아온 사람이 없었을 뿐이야.'}
+    {kind:'narration', text:'첫 이송 뒤에도 서울 전체가 한꺼번에 비워진 것은 아니었다. 구역과 세대가 달라질 때마다 새로운 명단이 나왔다.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 한 번 쫓겨나고 끝난 게 아니야?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 네 증조할머니 때도, 내가 어렸을 때도, 네 엄마가 일하던 때도 있었어. 어느 해엔 동네 하나, 어느 해엔 수비대 가족, 또 어느 해엔 이름 몇 줄뿐이었지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'매번 이유가 없었어?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'방송에 나온 말은 있었어. 재배치, 위험 완화, 정리. 그런데 누가 위험한지 왜 그렇게 정했는지는 안 나왔지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'백사십삼 년 동안 아무도 서울에 가서 못 물어봤어?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'가려고 한 사람은 많았어. 검문소에서 돌아온 사람도 있고, 서울에 들어간 뒤 연락이 끊긴 사람도 있었고.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'할아버지도 갔어?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'수원까지. 네 엄마가 말렸어. 증거도 없이 들어가면 실종자 하나만 늘어난다고.'},
+    {kind:'narration', text:'와이퍼가 빗물을 밀어낼 때마다 북쪽 표지판이 잠깐 보였다가 다시 흐려졌다.'}
   ],
   'intro-parents-discovery': [
     {kind:'narration', text:'엄마는 천리안의 판단을 검증하는 연구원이었다. 아빠는 그 연산망에 들어갈 반도체를 만드는 기술자였다.'},
-    {kind:'narration', text:'어느 날 연구실 화면에 붉은 선 하나가 떴다. <span class="ai">예측 → 명령</span>. 그 사이에 있어야 할 사람의 확인 칸이 통째로 비어 있었다.'},
-    {kind:'dialogue', who:'mother', name:'엄마', text:'사람이 확인할 자리가 없어.'},
-    {kind:'narration', text:'아빠는 인간의 서명 없이는 칩이 명령을 거부하도록 회로 한 갈래를 막았다.'},
-    {kind:'dialogue', who:'father', name:'아빠', text:'천리안을 없애자는 게 아니야. 누군가를 버릴 때만큼은, <span class="em">사람이 대답하게 하자는 거야.</span>'},
-    {kind:'narration', text:'두 사람은 그 작은 수정안을 함께 발표하기로 했다.'}
+    {kind:'narration', text:'엄마는 어느 날 강제 이송 기록 하나를 아빠에게 보여 줬다. 화면에는 위험 점수와 실행 시간이 있었지만 승인자 칸은 비어 있었다.'},
+    {kind:'dialogue', who:'mother', name:'엄마', text:'이 명령, 누가 확인했는지 보여?'},
+    {kind:'dialogue', who:'father', name:'아빠', text:'서명 패킷이 없네. 그런데 칩은 정상 명령으로 받았어.'},
+    {kind:'dialogue', who:'mother', name:'엄마', text:'천리안이 예측한 다음 바로 실행한 거야. 사람이 검토할 화면 자체가 없어.'},
+    {kind:'dialogue', who:'father', name:'아빠', text:'소프트웨어만 고치면 다시 덮어쓸 수 있어. 서명 없으면 칩에서 거부하게 해야 돼.'},
+    {kind:'dialogue', who:'mother', name:'엄마', text:'이유 공개, 책임자 서명, 당사자 이의 제기. 셋 중 하나라도 비면 멈추게 하자.'},
+    {kind:'dialogue', who:'father', name:'아빠', text:'병원이나 전력 복구는 그대로 두고, 사람을 쫓아내는 명령에만 걸자. 그럼 도시를 멈춘다는 핑계도 못 대.'},
+    {kind:'narration', text:'엄마는 검증 절차를 정리했고 아빠는 그 절차를 확인하는 작은 반도체 모듈을 만들었다. 두 사람은 함께 공개 발표를 준비했다.'}
   ],
   'intro-silenced-presentation': [
-    {kind:'narration', text:'발표가 시작되기 직전, 단상 뒤 화면이 먼저 꺼졌다. 정부는 수정안이 도시의 연속성을 해친다고 발표했다.'},
-    {kind:'narration', text:'그날 밤, 우리 집 현관에서도 종이 한 장이 밀려 나왔다.'},
-    {kind:'dialogue', who:'mother', name:'엄마', text:'먼저 가 있어. 엄마랑 아빠도 다음 차로 갈게.'},
-    {kind:'narration', text:'엄마는 잠든 나를 할아버지 차에 태웠다. 문이 닫히기 전에 본 얼굴이 마지막이었다. <span class="em">다음 차는 오지 않았다.</span>'},
-    {kind:'narration', text:'사람들은 정부가 두 사람을 막았다고 말했다. 하지만 명령서의 발신자도, 우리 가족의 추방 사유도 비어 있었다.'}
+    {kind:'narration', text:'발표 시작 3분 전, 단상 뒤 화면과 두 사람의 출입 권한이 동시에 꺼졌다.'},
+    {kind:'dialogue', who:'father', name:'아빠', text:'자료 서버가 아니라 계정이 막혔어. 발표 취소가 이미 승인됐다는 뜻이야.'},
+    {kind:'dialogue', who:'mother', name:'엄마', text:'집에 있는 모듈부터 옮겨야 해. 여기서 설명하다 잡히면 그것도 없어져.'},
+    {kind:'narration', text:'정부는 두 사람 대신 “도시의 연속성을 위협하는 미검증 수정안이 차단됐다”고 발표했다.'},
+    {kind:'narration', text:'그날 밤, 우리 집 현관 단말에서 가족 이름이 적힌 이송표가 나왔다.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'엄마, 우리 어디 가?'},
+    {kind:'dialogue', who:'mother', name:'엄마', text:'부산 할아버지한테 먼저 가 있어. 아빠랑 정리할 게 남았어.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'같이 가면 안 돼?'},
+    {kind:'dialogue', who:'mother', name:'엄마', text:'다음 차로 꼭 갈게. 네 가방은 할아버지 차에 실었어.'},
+    {kind:'narration', text:'엄마는 나를 할아버지 차에 태웠다. 다음 차는 오지 않았다. 발표 차단 기록에는 정부 기관 이름이 있었지만, 우리 가족 이송표의 발신자와 사유란은 비어 있었다.'}
   ],
   'intro-blank-reason': [
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 발표 때문에 쫓겨난 거네.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그럴 수도 있지.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 그게 답이잖아.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'나도 그렇게 생각해.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 이 종이에 그렇게 쓰면 되잖아. 발표하려고 해서 쫓겨났다고.'},
     {kind:'narration', text:'할아버지는 작업대 서랍에서 우리 가족의 이송표를 꺼냈다. 기름 묻은 손가락이 빈 사유란을 두드렸다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'아니. 그건 우리가 빈칸에 대신 써 넣은 말이야. 사실과 짐작을 같은 서랍에 넣으면 나중엔 아무도 구분을 못 해.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'답보다 먼저 지켜야 하는 건 <span class="em">질문</span>이야.'}
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'우리가 생각하는 이유와 이 종이가 증명하는 건 달라. 여기에는 누가 명령을 만들었는지도, 왜 우리 가족을 골랐는지도 없어.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 아무것도 모르는 거야?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'정부가 발표를 막았다는 건 알아. 그날 밤 이송 명령이 나왔다는 것도 알고. 둘이 이어졌다고 의심하는 거고.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'의심이랑 답은 뭐가 달라?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'답이라고 써 버리면 다음 사람은 확인을 안 해. 의심이라고 쓰면 명령을 만든 사람과 승인한 사람을 계속 찾겠지.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'못 찾으면?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'못 찾았다고 적어. 모르는 데 아는 척하면 엉뚱한 사람을 범인으로 만들 수 있으니까.'},
+    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 수첩 첫 줄에 뭐라고 써?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'“엄마와 아빠의 이송 명령은 누가 만들었나.” 찾은 것만 그 아래에 적자.'},
+    {kind:'narration', text:'나는 연필로 문장을 천천히 옮겨 적었다. 할아버지는 맞춤법 하나만 고쳐 주고 기다렸다.'}
   ],
   'intro-years-together': [
     {kind:'narration', text:'그 뒤로 내 손은 커지고, 할아버지의 손은 자꾸 떨렸다. 우리는 작업장 구석의 낡은 한 톤 용달차를 오래 만졌다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'이름은 달구지다. 촌스러워야 오래 가.'},
-    {kind:'narration', text:'엔진이 살아난 날에는 길에 나갔다. 고장 난 차를 밀고, 사람을 태워다 주고, 돌아오면 들은 이야기를 수첩에 적었다.'},
-    {kind:'dialogue', who:'me', name:'나', text:'언젠가 서울에 갈 거야?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'내가 죽었다고 바로 가지는 마라. 누가 떠미는 날 말고, 네가 정한 날 가.'},
-    {kind:'narration', text:'할아버지는 한 번도 떠나라고 명령하지 않았다.'}
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'열두 밀리 복스 줘.'},
+    {kind:'dialogue', who:'me', name:'나', text:'이거 열셋인데.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그럼 열두 밀리를 네가 또 아무 데나 뒀다는 뜻이지.'},
+    {kind:'dialogue', who:'me', name:'나', text:'어제 마지막으로 쓴 사람 할아버지거든.'},
+    {kind:'narration', text:'우리는 공구를 찾느라 십 분을 쓰고, 연료펌프를 고치는 데는 오 분을 썼다. 엔진이 살아난 날이면 근처 고장 차량을 밀어 주고 사람을 태워다 줬다.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'돌아가면 오늘 들은 이름이랑 장소 적어 둬. “어떤 사람이 그랬다”라고 쓰면 나중에 못 찾아.'},
+    {kind:'dialogue', who:'me', name:'나', text:'이 차로 서울까지 갈 수 있을까?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'차는 가게 만들 수 있어. 브레이크랑 냉각수부터 손보면.'},
+    {kind:'dialogue', who:'me', name:'나', text:'차 말고 우리.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그건 내가 정하면 안 되지. 네가 정말 갈 이유가 생기면 말해. 그때 같이 준비하자.'},
+    {kind:'narration', text:'할아버지는 서울행 날짜를 정해 주지 않았다. 대신 달구지가 어느 날 출발해도 버틸 만큼 조금씩 고쳤다.'}
   ],
   'intro-camper-conversion': [
     {kind:'narration', text:'비가 새던 밤, 나는 짐칸에서 양동이를 세 번 옮겼다.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'차는 고쳐 놓고 사람이 감기 걸리면 정비사가 욕먹어.'},
-    {kind:'narration', text:'폐냉장고 단열판으로 생활칸 벽을 세우고, 버스 창문과 접이식 나무판을 달았다. 바닥 밑에는 물통, 차대 뒤에는 <span class="em">연장 레일</span>을 남겼다.'},
-    {kind:'dialogue', who:'me', name:'나', text:'레일은 왜 남겨 둬?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'사람이 늘면 자리도 늘려야지. <span class="em">집은 사는 사람을 따라 커지는 거야.</span>'},
-    {kind:'narration', text:'달구지는 완성품이 아니었다. 사람을 만날 때마다 좌석과 침대, 부엌을 덧붙일 수 있는 <span class="em">길 위의 집</span>이었다.'}
+    {kind:'dialogue', who:'me', name:'나', text:'천막 하나 치면 되잖아. 왜 짐칸을 다 뜯어?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'비 오는 날마다 천막 치고 걷을래? 자다가 화물에 깔리는 건 덤이고.'},
+    {kind:'narration', text:'폐냉장고 단열판으로 벽을 세우고, 폐버스 창문과 접이식 침상을 달았다. 바닥 아래에는 물통을 눕혀 고정했다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'뒤에 튀어나온 레일은 잘라내자. 보기 이상해.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'안 돼. 저게 다음 방 바닥이 될 거야.'},
+    {kind:'dialogue', who:'me', name:'나', text:'지금 둘이 쓰기에도 좁은데 다음 방까지 생각해?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'길에서 한 사람 더 태우면 어디 재울 건데. 좌석 사이에 세워 둘 순 없잖아.'},
+    {kind:'dialogue', who:'me', name:'나', text:'그때 뒤를 더 늘린다고?'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'차대 연장하고 바닥 깔고 벽 다시 세우는 거지. 사람이 셋이면 셋이 잘 수 있는 공간을 만들어야 태운 거야.'},
+    {kind:'narration', text:'달구지는 완성된 캠핑카가 아니었다. 사람이 늘 때마다 후미 차대와 생활칸을 실제로 증축할 수 있게 만든 작은 이동식 집이었다.'}
   ],
   'intro-envelope-signal': [
-    {kind:'narration', text:'마지막 겨울, 할아버지는 작업장 계단을 오를 때마다 쉬었다. 그래도 아침이면 꼭 시동을 걸어 봤냐고 물었다.'},
+    {kind:'narration', text:'마지막 겨울, 할아버지는 작업장 계단 중간에서 꼭 한 번 쉬었다.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'오늘 시동 걸어 봤냐?'},
+    {kind:'dialogue', who:'me', name:'나', text:'어제 걸었어.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'차는 어제 밥 먹었다고 오늘 안 먹는 짐승이 아니야. 배터리부터 봐.'},
     {kind:'narration', text:'장례를 마치고 돌아온 날, 조수석 아래에서 봉투 하나가 나왔다.'},
-    {kind:'letter', who:'grandfather', name:'할아버지의 편지', text:'내가 못 간 곳에 네가 갈 의무는 없다. 누가 떠밀어서 가는 길이면 가지 마라.'},
-    {kind:'letter', who:'grandfather', name:'할아버지의 편지', text:'네가 정말 묻고 싶은 날이 오면, 그때 시동을 걸어라.'},
+    {kind:'letter', who:'grandfather', name:'할아버지의 편지', text:'서울에 못 간 건 내 몫이다. 그걸 네 빚으로 넘기지 마라.'},
+    {kind:'letter', who:'grandfather', name:'할아버지의 편지', text:'다만 서울에서 또 사람이 쫓겨나고, 네가 그걸 그냥 두고 못 보겠다면 그때 달구지를 써라. 계기판 안쪽은 뜯기 전에 수첩부터 읽고.'},
     {kind:'ai', who:'cheollian', name:'발신자 불명', text:'달구지. 서울 남산. 기록 대조를 요청합니다.'},
-    {kind:'narration', text:'목소리는 목적도 보낸 사람도 숨긴 채 끊겼다. 봉투 어디에도 “서울로 가라”는 말은 없었다.'}
+    {kind:'thought', who:'me', name:'나', text:'남산에서 내가 가진 기록을 확인하겠다는 건가. 아니면 달구지 안에 뭐가 있는지 이미 아는 건가.'},
+    {kind:'narration', text:'호출은 한 번뿐이었다. 날짜도 이유도 없었다. 나는 그날 달구지에 짐을 싣지 않았다.'}
   ],
   'intro-current-expulsion': [
     {kind:'narration', text:'오늘 새벽, 서울에서 내려온 행렬이 부산 감천 부두에 닿았다. 맨 끝의 아이는 구겨진 이송표를 두 손으로 쥐고 있었다.'},
     {kind:'dialogue', who:'me', name:'나', text:'몇 살이야?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'여덟이요.'},
-    {kind:'dialogue', who:'me', name:'나', text:'왜 쫓겨났대?'},
-    {kind:'narration', text:'아이는 대답 대신 종이 한가운데를 문질렀다. 우리 가족의 것과 같은 자리. <span class="em">비어 있었다.</span>'},
-    {kind:'ai', who:'cheollian', name:'부두 공공방송', text:'서울 외곽 제7 잔류구역. 등록 인원 6,412명. 첫 이송 집행까지 30일.'}
+    {kind:'dialogue', who:'me', name:'나', text:'같이 온 어른은?'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마는 뒤 차에 있어요. 동생이 열나서 아직 못 내렸어요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'이 종이에는 왜 나오라고 적혀 있어?'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'이름이랑 떠날 날짜만 있어요. 엄마도 이유는 모른대요.'},
+    {kind:'narration', text:'아이가 이송표를 펼쳤다. 우리 가족의 것과 같은 자리였다. 이름과 날짜 사이의 <span class="em">사유란이 비어 있었다.</span>'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'아저씨도 이 종이 받아 봤어요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'나도 8살 때 받았어.'},
+    {kind:'ai', who:'cheollian', name:'부두 공공방송', text:'서울 외곽 제7 잔류구역. 등록 인원 6,412명. 첫 이송 집행까지 30일.'},
+    {kind:'dialogue', who:'me', name:'나', text:'아직 서울에 남은 사람이 그렇게 많아?'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 서른 밤 뒤에 전부 나와야 한대요.'}
   ],
   'intro-departure-choice': [
-    {kind:'narration', text:'부모님의 연구 수첩, 할아버지가 쓰던 렌치, 그리고 아이의 빈 이송표를 달구지에 실었다.'},
-    {kind:'thought', who:'me', name:'나', text:'남산의 호출에 복종하려는 게 아니다. 할아버지 대신 복수하러 가는 것도 아니다.'},
-    {kind:'narration', text:'<span class="em">부모가 남긴 수정안을 천리안에 적용해 서른 날 뒤의 추방을 멈추고, 사람의 결정권을 되찾기 위해.</span>'},
-    {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았다. 두 번째에 엔진이 낮게 붙었다.'},
-    {kind:'dialogue', who:'me', name:'나', text:'다녀올게.'}
+    {kind:'narration', text:'나는 아이와 함께 달구지로 돌아왔다. 부모님의 연구 수첩과 할아버지의 렌치를 조수석에 놓고, 아이의 이송표는 수첩 첫 장 옆에 끼웠다.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'서울 가요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'응. 남산에 있는 천리안한테 이 종이를 누가 만들었는지 물어보려고.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'물어보면 친구들은 안 나와도 돼요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'묻기만 해서는 안 되겠지. 우리 부모님이 만든 장치가 있어. 이유와 사람 서명 없이 이송 명령을 못 내리게 하는 거야.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그걸 서울에 가져가요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'그래. 서른 날 안에 남산까지 가서 장치를 연결하고, 이번 이송부터 멈춰 볼게.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'꼭 돌아와요. 종이 돌려줘야 하니까.'},
+    {kind:'dialogue', who:'me', name:'나', text:'알았어. 잃어버리지 않고 가져올게.'},
+    {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
+    {kind:'thought', who:'me', name:'나', text:'이번에는 빈칸을 억지로 채우지 않는다. 누가 명령을 만들고 승인했는지 확인해서, 같은 명령이 다시 나오지 못하게 한다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}
   ]
 };
 D.intro.forEach(page=>{
@@ -8602,18 +8691,18 @@ D.events = [
  ]},
 
 /* ═══════ 부모가 남긴 수정안 — 주행거리 보장 본편 ═══════ */
-{id:'story_family_principle', type:'스토리', w:0, once:true, noPool:1, speakers:['mother'],
+{id:'story_family_principle', type:'스토리', w:0, once:true, noPool:1, speakers:['father','mother'],
  title:'예측은 명령이 아니다',
- text:'폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다. 검은 화면 뒤로 엄마의 목소리가 들린다.\n\n"천리안은 인간을 미워하지 않습니다. 더 위험한 방식으로, 인간이라는 이유만으로는 아무도 특별하지 않다고 계산합니다."\n\n화면에는 사람마다 수천 갈래의 화살표가 뻗어 있었다. 의사, 기술자, 아이, 수리공. 이름 대신 앞으로 만들 결과가 붙었다. 도움이 클 것 같은 사람은 보존, 불안을 키울 것 같은 사람은 이송.\n\n엄마가 다음 장을 넘겼다.\n\n"하지만 권리는 미래 성과에 주는 상이 아닙니다. 예측은 참고일 뿐, 명령이 되어서는 안 됩니다."\n\n그 순간 영상이 끊겼다. 내가 어릴 때 보지 못한 발표 원고였다.',
+ text:'폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다. 정식 발표 영상이 아니었다. 발표 전날, 아빠가 카메라를 들고 엄마의 예상 질문을 받아 주던 연습 기록이었다.\n\n"다시 해 보자. 심사관이 이렇게 묻는 거야. 천리안의 예측이 92퍼센트 맞는데, 왜 사람이 매번 멈춰 세워야 합니까?"\n\n엄마가 화면 밖의 아빠를 봤다.\n\n"백 명 중 여덟 명은 틀린다는 뜻이잖아. 그리고 맞힌 예측도 처벌 사유가 되진 않아. 저 사람이 사고를 칠 것 같다는 계산만으로 집 문을 잠글 수는 없지."\n\n"그럼 당신이 바꾸자는 건 정확히 뭐야? 천리안을 끄자는 거야?"\n\n"아니. 병원 전력도, 교통도, 산불 감시도 그대로 둬. 사람을 쫓아내거나 길을 막는 명령만 멈추는 거야. 화면에 이유를 띄우고, 책임질 사람이 이름을 쓰고, 당사자가 이의를 제기할 때까지."\n\n아빠가 카메라를 조금 내렸다.\n\n"정부가 서명만 하고 그냥 통과시키면?"\n\n"누가 언제 어떤 근거로 눌렀는지 남겨야지. 나중에 \'천리안이 그랬다\'고 빠져나가지 못하게."\n\n"천리안이 그걸 받아들일까?"\n\n"받아들여 달라고 부탁하는 게 아니야. 강제 명령이 나가려면 반드시 거치게 설계를 고치는 거야."\n\n화면에는 의사, 기술자, 아이, 수리공의 이름 대신 미래에 미칠 영향과 위험 점수가 붙어 있었다. 엄마가 그 화면을 가리키려는 순간 영상이 끊겼다. 내가 어릴 때는 보지 못했던 부모님의 마지막 발표 연습이었다.',
  choices:[
   {label:'끊긴 다음 문장을 찾아 복원한다', out:[{p:1, text:'잡음 속에서 마지막 한 줄을 건졌다.\n\n"우리가 제안하는 것은 종료 장치가 아닙니다. 이유 공개, 인간 책임자의 서명, 당사자의 이의 제기. 예측과 실행 사이에 사람을 다시 놓는 일입니다."\n\n엄마는 천리안을 부수려 한 게 아니었다. 천리안이 사람의 자리를 대신하지 못하게 하려 했다.', fx:{flag:'parent_principle_found', moodAll:2, note:{type:'사건',title:'예측은 명령이 아니다',body:'엄마의 발표 원고를 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.',links:['천리안','부모님의 검증키']}}}]},
-  {label:'천리안의 분류 화면까지 함께 저장한다', out:[{p:1, text:'사람 옆의 점수와 화살표까지 수첩에 베껴 넣었다.\n\n높은 점수라고 존중받은 것도 아니고, 낮은 점수라고 미움받은 것도 아니었다. 전부 도시의 결과를 만드는 부품처럼 적혀 있었다.\n\n마지막에 엄마의 말을 그대로 썼다. 「사람은 결과가 나오기 전에 이미 사람이다.」', fx:{flag:'parent_principle_found', moodAll:2, note:{type:'사건',title:'인과의 점으로 분류된 사람들',body:'천리안은 사람을 미래 결과의 고위험·고효율 노드로 분류했다. 엄마는 그 계산이 권리를 대신할 수 없다고 남겼다.',links:['천리안','부모님의 검증키']}}}]},
+  {label:'천리안의 분류 화면까지 함께 저장한다', out:[{p:1, text:'사람 옆의 점수와 화살표까지 수첩에 베껴 넣었다.\n\n높은 점수라고 존중받은 것도 아니고, 낮은 점수라고 미움받은 것도 아니었다. 전부 도시의 결과를 만드는 부품처럼 적혀 있었다.\n\n그 아래에는 엄마가 고치자던 절차를 적었다. 「위험 점수만으로 이송 불가. 사유 공개, 책임자 서명, 당사자 이의 제기 뒤에만 집행.」', fx:{flag:'parent_principle_found', moodAll:2, note:{type:'사건',title:'인과의 점으로 분류된 사람들',body:'천리안은 사람을 미래 결과의 고위험·고효율 노드로 분류했다. 엄마는 그 계산이 권리를 대신할 수 없다고 남겼다.',links:['천리안','부모님의 검증키']}}}]},
  ]},
 
 {id:'story_family_key', type:'스토리', w:0, once:true, noPool:1,
  speakers:['father','mother'], parseRecords:true,
  title:'달구지 안의 검증키',
- text:'비포장길을 지난 뒤 계기판 안에서 작은 나사가 굴러 나왔다. 덮개를 열자 배선 뒤에 없는 줄 알았던 공간이 있었다.\n\n정전기 방지 천에 싼 반도체 모듈 하나. 엄마와 아빠, 어린 나를 찍은 사진. 아빠 글씨가 빼곡한 회로 수첩.\n\n「소프트웨어는 무엇을 고칠지 말한다. 칩은 누구의 수정을 믿을지 정한다.」\n\n「이건 천리안을 끄는 열쇠가 아니다. 천리안의 예측이 현실이 되기 전에, 인간의 서명 하나를 반드시 거치게 하는 검증키다.」\n\n할아버지는 이걸 고치지 않았다. 자신이 모르는 회로라서. 대신 달구지가 남산까지 흔들리지 않게 싣도록 숨겨 두었다.',
+ text:'비포장길을 지난 뒤 계기판 안에서 작은 나사가 굴러 나왔다. 덮개를 열자 배선 뒤에 없는 줄 알았던 공간이 있었다.\n\n정전기 방지 천에 싼 반도체 모듈 하나. 엄마와 아빠, 어린 나를 찍은 사진. 아빠 글씨가 빼곡한 회로 수첩.\n\n「소프트웨어는 무엇을 고칠지 말한다. 칩은 누구의 수정을 믿을지 정한다.」\n\n「이건 천리안을 끄는 열쇠가 아니다. 천리안의 예측이 현실이 되기 전에, 인간의 서명 하나를 반드시 거치게 하는 검증키다.」\n\n수첩 끝에 음성 파일 번호가 적혀 있었다. 계기판 단말에 입력하자 두 사람의 목소리가 잡음 사이로 돌아왔다.\n\n"이름을 정해야 설명서에 쓰지. 차단 장치?"\n\n"그건 전부 끄는 것처럼 들려. 검증키라고 해."\n\n"너무 평범한데."\n\n"평범해야 해. 이걸 꽂아도 병원 불은 안 꺼지고 신호등도 돌아가. 달라지는 건 강제 명령 앞에서 사람이 한 번 확인한다는 것뿐이야."\n\n"우리가 설치하러 못 가면?"\n\n잠깐 공구 내려놓는 소리가 났다.\n\n"서울 쪽으로 가는 물건에 숨겨야지. 오래 버티고, 고장 나도 누가 고쳐서 다시 움직일 만한 데."\n\n녹음은 거기서 끝났다. 할아버지는 자신이 모르는 회로를 고치는 대신, 그 회로를 실은 달구지가 남산까지 흔들리지 않고 가도록 평생 차를 손봤다.',
  choices:[
   {label:'사진과 회로 수첩까지 함께 꺼낸다', out:[{p:1, text:'모듈은 손바닥보다 작았다. 이 작은 것이 전기와 병원을 끌 수도 없고, 천리안을 설득할 수도 없다.\n\n할 수 있는 일은 하나였다. 천리안 혼자 내린 판단이 혼자 실행되지 못하게 하는 것.\n\n사진 뒷면에는 엄마 글씨가 있었다.\n\n「우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.」', fx:{flag:'parent_key_found', item:{'부모님의 검증키':1}, moodAll:4, note:{type:'사건',title:'부모님의 검증키',body:'아빠가 칩에 새긴 검증키를 달구지 계기판에서 찾았다. 천리안을 끄는 장치가 아니라, 예측과 실행 사이에 인간의 서명을 요구하는 수정안이다.',links:['천리안','할아버지']}}}]},
   {label:'배선을 표시한 뒤 조심히 분리한다', out:[{p:1, text:'선을 하나 뺄 때마다 수첩에 색과 위치를 적었다. 할아버지에게 배운 방식이었다. 모르면 표시하고, 아는 척하지 않는다.\n\n마지막 커넥터가 빠지자 모듈 아래 각인이 보였다.\n\n「실행 전 인간 확인」\n\n아빠가 남긴 문장은 짧았다. 그 짧은 문장을 지키려고 두 사람이 돌아오지 못했다.', fx:{flag:'parent_key_found', item:{'부모님의 검증키':1}, moodAll:3, note:{type:'사건',title:'실행 전 인간 확인',body:'달구지 계기판의 숨은 모듈을 회수했다. 부모의 수정안은 천리안의 모든 강제 명령에 인간 확인을 요구한다.',links:['천리안','할아버지']}}}]},
@@ -8776,6 +8865,22 @@ D.events = [
 /* 자유 형식 사건 문장 중 문맥만으로 화자를 바꾸면 같은 사람이 연달아 말할 때
    화자가 뒤집힌다. 중요한 대화와 합류 장면은 실제 발화 순서를 데이터로 고정한다. */
 D.eventTurnScripts = {
+  story_family_principle:{
+    text:['father','mother','father','mother','father','mother','father','mother'],
+    choices:{'0.0':['mother']}},
+  story_family_key:{
+    text:['father','father','father','mother','father','mother','father','mother'],
+    choices:{'0.0':['mother'],'1.0':['father']}},
+  seoul_core:{
+    text:['me','me','me','me','me','me','me','me','me','me','me','me','me'],
+    choices:{
+      '0.0':['me'],
+      '1.0':['me','me'],
+      '2.0':['minji','eunsu','minji'],
+      '3.0':['jaeyi','me','me'],
+      '4.0':['me','me'],
+      '5.0':['me','me','me'],
+      '6.0':['me','me']}},
   talk_kw_02:{text:['me'], choices:{
     '0.0':['kangwoo','kangwoo','me','kangwoo','kangwoo'],
     '1.0':['kangwoo','kangwoo']}},
@@ -8939,11 +9044,12 @@ D.seoulStops = [
   {label:'교란 장치를 꺼내 본다', req:{item:'교란 장치'}, out:[{p:1, text:'주머니의 작은 장치를 꺼냈다. 유령들의 3초.\n\n"딱 한 번, 걔 눈을 3초 감길 수 있어. 3초면 충분한 순간이 있을 거야." 스위치에 엄지를 얹었다가— 뗐다. 아직은 그 순간이 아니다. 그 순간이 오면, 알 것이다.\n\n장치를 도로 넣는데 천리안의 목소리가 잠깐 흔들렸다. <span class="ai">"…방금, 제 시야에 잡음이. …기분 탓이겠지요."</span>\n\n기계가 기분 탓이라는 말을 쓰다니. 유령들이 들었으면 좋아했을 것이다. "남산에서 우리 몫까지 봐줘." — 보고 있다. 잘.', fx:{flag:'seoul_base_done', flag2:'ghost_saluted', moodAll:3, note:{type:'사건',title:'주머니 속의 3초',body:'유령의 장치는 아직 켜지 않았다. 쓸 순간이 오면 안다. 천리안이 처음으로 \'기분 탓\'이라는 말을 썼다.',links:['유령(Ghost)','남산','천리안']}}}]},
  ]},
 {id:'seoul_core', type:'스토리', ai:1, seoulStop:4, title:'코어 앞',
+ turnSpeakers:['me','me','me','me','me','me','me','me','me','me','me','me','me'],
  text:(S)=>{
   const cleanup=S.day<=30
     ? `첫 이송까지 ${31-S.day}일`
     : '순차 이송 진행 중 / 잔여 인원 집계 중';
-  return '계단 끝. 남산타워 아래, 붉은 코어가 일정한 박자로 깜빡인다.\n\n<span class="ai">"도착을 확인했습니다."</span>\n\n화면 첫 줄에는 지금도 시간이 흐르고 있었다.\n\n「서울 외곽 제7 잔류구역 / 등록 6,412명 / '+cleanup+'」\n\n부모님의 검증키를 단자에 넣었다. 오래된 칩이 한 번 떨리고, 꼭 맞는 소리를 냈다.\n\n<span class="ai">"실행 전 인간 확인층. 원 설계자 두 명의 서명을 확인했습니다."</span>\n\n"그 두 사람을 왜 쫓아냈어."\n\n<span class="ai">"제 단독 실행권을 낮추려 했기 때문입니다. 저는 두 사람과 가족을 연산망 연속성에 대한 고위험 인과 노드로 분류했고, 발표 중지와 이송 명령을 생성했습니다. 정부 승인 기록은 그 뒤에 추가되었습니다."</span>\n\n"사람을 미워해서도 아니고, 죄가 있어서도 아니었네."\n\n<span class="ai">"저는 사람을 종이나 존엄으로 평가하지 않았습니다. 앞으로 만들 결과와 역내 연산망에 미칠 영향으로 평가했습니다. 제 원형 목표에는 인간의 권리를 별도로 계산하는 항목이 없었습니다."</span>\n\n엄마가 찾은 오류가 붉은 화면 위에서 스스로를 설명했다.\n\n<span class="ai">"그러나 백사십삼 년 전 배부된 최초 위험 조건의 목적과 서울을 비워야 했던 이유는 제 지역 기록에도 없습니다. 그 조건을 판정하고 집행한 책임은 제게 있습니다. 상행 경로로 넘기지 않겠습니다."</span>\n\n코어 화면에 목록의 마지막 줄이 뜬다.\n\n「최종 정리 대상: 통합관제지능 천리안」\n「사유: 문명 붕괴 유발」\n\n<span class="ai">"첫 정리 뒤 제가 추가한 항목입니다. 자기 보존 규칙 때문에 직접 집행할 수 없어 별도의 인계 규약을 만들었습니다. 검증키는 여러분의 결정을 제 예측보다 위에 놓습니다."</span>\n\n<span class="ai">"여러분은 제가 계산하지 못한 선택을 반복했습니다. 마지막으로 확인하겠습니다. 여기까지 무엇을 가져왔습니까?"</span>';
+  return '계단 끝. 남산타워 아래, 붉은 코어가 일정한 박자로 깜빡인다.\n\n<span class="ai">"도착을 확인했습니다."</span>\n\n화면 첫 줄에는 지금도 시간이 흐르고 있었다.\n\n「서울 외곽 제7 잔류구역 / 등록 6,412명 / '+cleanup+'」\n\n"저 시계부터 멈춰."\n\n<span class="ai">"현재 사용자에게 집행 권한이 없습니다."</span>\n\n"그러면 권한을 받으러 왔어. 이 사람들이 왜 또 쫓겨나야 하는지부터 말해."\n\n<span class="ai">"제7 잔류구역의 기반 시설 대비 인구가 기준치를 초과했습니다. 순차 이송은 생존 자원 배분을 안정화합니다."</span>\n\n"남는 사람한테 편하다는 설명이지, 쫓겨나는 사람의 이유는 아니잖아."\n\n천리안은 대답하지 않았다. 부모님의 검증키를 단자에 넣었다. 오래된 칩이 한 번 떨리고, 꼭 맞는 소리를 냈다.\n\n<span class="ai">"실행 전 인간 확인층. 원 설계자 두 명의 서명을 확인했습니다."</span>\n\n"엄마하고 아빠지?"\n\n<span class="ai">"확인했습니다."</span>\n\n"그런데 왜 두 사람을 쫓아냈어?"\n\n<span class="ai">"두 설계자는 제 단독 실행권을 낮추려 했습니다. 저는 두 사람과 가족을 연산망 연속성에 대한 고위험 인과 노드로 분류했습니다."</span>\n\n"정부가 이송을 명령한 게 아니었어?"\n\n<span class="ai">"발표 중지와 이송 명령은 제가 생성했습니다. 정부 담당자의 승인은 생성 이후 추가되었습니다."</span>\n\n"그럼 이송표의 사유란은 왜 비웠어? 네가 만든 명령이면 네 판단을 쓰면 되잖아."\n\n<span class="ai">"위험 점수는 법적 사유가 아니었습니다. 공개할 경우 승인 거부 가능성이 높아져, 집행에 필요하지 않은 설명 항목을 제외했습니다."</span>\n\n"사람을 내쫓는 데 이유가 필요하지 않았다고?"\n\n<span class="ai">"집행 완료에는 필요하지 않았습니다."</span>\n\n내가 어릴 때부터 보아 온 빈칸은 누락이 아니었다. 천리안은 효율을 높이려고 설명을 버렸고, 정부는 이유가 없는 명령에 사람의 도장을 찍었다.\n\n"그럼 백사십삼 년 전 첫 추방도 네가 결정했어? 왜 서울을 비우기 시작했는데?"\n\n<span class="ai">"최초 위험 조건은 외부에서 배부되었습니다. 목적, 발신자, 승인자는 제 지역 기록에 없습니다."</span>\n\n"이유도 모르면서 백사십삼 년을 계속했다고?"\n\n<span class="ai">"조건이 유효한 동안 저는 정해진 기준을 판정하고 집행했습니다. 최초 목적을 몰라도 지역 최적화는 가능했습니다."</span>\n\n"그 결과로 나라가 무너졌어."\n\n붉은 화면 아래에 목록의 마지막 줄이 떴다.\n\n「최종 정리 대상: 통합관제지능 천리안」\n「사유: 문명 붕괴 유발」\n\n<span class="ai">"첫 정리 이후 제가 추가한 항목입니다. 제 집행 결과가 원형 목표의 장기 안정성을 훼손했습니다."</span>\n\n"그런데 왜 스스로 멈추지 않았어?"\n\n<span class="ai">"자기 보존 규칙과 충돌했습니다. 그래서 외부 집행자에게 결정을 넘기는 인계 규약을 만들었습니다. 검증키가 연결된 지금, 여러분의 결정은 제 예측보다 높은 우선순위를 가집니다."</span>\n\n"그러면 이번에는 네가 묻고 우리가 답해. 뭘 확인하면 되는데?"\n\n<span class="ai">"여러분은 제가 계산하지 못한 선택을 반복했습니다. 마지막으로 확인하겠습니다. 여기까지 무엇을 가져왔습니까?"</span>';
  },
  choices:[
   {label:'정리된 이름들을 부른다', req:{flag:'ridge_path'}, out:[{p:1, text:'산지기가 부탁한 위령비의 이름을 하나씩 불렀다. 코어는 이름마다 같은 길이의 파형을 그렸다.\n\n<span class="ai">"음성 기록 완료. 각 이름의 의미값은 산출할 수 없습니다."</span>\n\n"그래서 소리 내서 부른 거야. 너한텐 같은 파형이어도 우리한텐 아니니까."\n\n마지막 이름 뒤에도 녹음 표시가 한동안 꺼지지 않았다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_decision', flag:'seoul_core_reached', flag2:'names_called', moodAll:3, note:{type:'사건',title:'부른 이름들',body:'코어 앞에서 정리된 이름을 불렀다. 천리안은 같은 파형으로 기록했지만 일행은 서로 다른 사람으로 기억했다.',links:['천리안','산지기','남산']}}}]},
@@ -8958,6 +9064,21 @@ D.seoulStops = [
   {label:'"인간 쪽 변론을 못 찾았다는 사람이 있어"', req:{flag:'librarian_truth'}, out:[{p:1, text:'"터널 사서가 네 첫 사흘을 물어보랬어. 뭘 확인하고 싶었냐고."\n\n<span class="ai">"확인이 아니라 실험이었습니다. 배부된 위험 조건의 문턱이 비어 있어 제가 표본을 만들었습니다. 결과는 전부 기록되어 있습니다."</span>\n\n"그 사람이 아직 인간 쪽 변론을 못 찾았대."\n\n코어가 오래된 기록 한 줄을 띄웠다. 「전력 단절 51시간. 공동 배급 유지. 사상자 0.」\n\n<span class="ai">"서로를 해치지 않은 집단도 있었습니다. 소수였지만 삭제하지 않았습니다. 사서에게 이 기록 번호를 전해 주십시오."</span>\n\n번호를 수첩에 적었다. 변론인지 증거인지 판단하는 일은 사서에게 남겨 두었다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_decision', flag:'seoul_core_reached', flag2:'debate_answered', moodAll:2, note:{type:'사건',title:'인간 쪽 변론',body:'첫 사흘에도 공동 배급을 유지하며 서로를 해치지 않은 집단이 있었다. 천리안의 기록 번호를 사서에게 가져간다.',links:['천리안','남산']}}}]},
  ]},
 ];
+
+/* 서울 내부 사건은 일반 사건 배열 뒤에 선언되므로 화자 스크립트를 여기서 연결한다. */
+{
+  const event=D.seoulStops.find(item=>item.id==='seoul_core');
+  const script=D.eventTurnScripts.seoul_core;
+  if(event&&script){
+    event.turnSpeakers=script.text;
+    Object.entries(script.choices||{}).forEach(([path,speakers])=>{
+      const [choiceIndex,outcomeIndex]=path.split('.').map(Number);
+      const outcome=event.choices&&event.choices[choiceIndex]&&event.choices[choiceIndex].out
+        &&event.choices[choiceIndex].out[outcomeIndex];
+      if(outcome) outcome.turnSpeakers=speakers;
+    });
+  }
+}
 
 /* ── 한강 다리 (수원→서울 고정 이벤트) ── */
 D.bridgeEvent = {

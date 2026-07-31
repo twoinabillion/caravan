@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "bash ./build.sh",
+    "build:html": "bash ./build.sh --html-only",
     "dev:web": "vite",
     "build:web": "vite build",
     "dev:toss": "granite dev",
-    "build:toss": "ait build",
+    "prebuild:toss": "if [ \"${CARAVAN_HTML_READY:-0}\" != \"1\" ]; then bash ./build.sh --html-only; fi",
+    "build:toss": "ait build && node tools/sync-ait-aliases.mjs",
     "lint:dialogue": "node tools/dialogue-lint.cjs"
   },
   "dependencies": {

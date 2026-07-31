@@ -66,6 +66,29 @@ def main():
         page.screenshot(path=str(shot / "recruit-name-known.png"))
         page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
 
+        page.evaluate("UI.showEvent(D.events.find(item => item.id === 'rq_minji_task'))")
+        page.wait_for_timeout(320)
+        page.screenshot(path=str(shot / "action-minji-01-setup.png"))
+        page.locator("#ev-sheet .story-next").click()
+        page.wait_for_timeout(180)
+        page.screenshot(path=str(shot / "action-minji-02-signal.png"))
+        page.evaluate("UI.finishStory()")
+        page.locator('#ev-sheet [data-i="2"]').click()
+        page.wait_for_timeout(220)
+        page.screenshot(path=str(shot / "action-minji-03-collapse.png"))
+        page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
+
+        page.evaluate("UI.showEvent(D.events.find(item => item.id === 'rq_kangwoo_join'))")
+        page.wait_for_timeout(320)
+        for index in range(5):
+            page.screenshot(path=str(shot / f"dialogue-cut-{index + 1:02d}.png"))
+            next_button = page.locator("#ev-sheet .story-next")
+            if not next_button.count():
+                break
+            next_button.click()
+            page.wait_for_timeout(180)
+        page.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
+
         page.click("#dk-status")
         page.click('#st-tabs [data-st="crew"]')
         page.wait_for_timeout(180)
