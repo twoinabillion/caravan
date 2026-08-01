@@ -25,6 +25,7 @@ G.newGame = (mode, name)=>{
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
     _recentEvents:[], _recentEventTypes:[], _eventBreather:0,
     combat:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
+    _stlField:{daily:{},once:{},log:[]},
   };
   rng = mulberry32(S.seed);
   S.wxNext = G.rollWx('clear');
@@ -65,6 +66,10 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!S._exploreNodes||Array.isArray(S._exploreNodes)) S._exploreNodes={};
   if(!S._salvagedNodes||Array.isArray(S._salvagedNodes)) S._salvagedNodes={};
   if(!Number.isFinite(S._salvageCount)) S._salvageCount=Object.keys(S._salvagedNodes).length;
+  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},log:[]};
+  if(!S._stlField.daily||Array.isArray(S._stlField.daily)) S._stlField.daily={};
+  if(!S._stlField.once||Array.isArray(S._stlField.once)) S._stlField.once={};
+  if(!Array.isArray(S._stlField.log)) S._stlField.log=[];
   /* 즉시 영입이던 구버전에서 만남만 소진하고 합류하지 않은 경우,
      새 '합류 전 과제'를 다시 시작할 수 있도록 첫 만남을 복구한다. */
   const oldRecruitStarts={minji:'meet_scrapyard',parkss:'meet_bus',leo:'meet_hitchhiker',
@@ -319,6 +324,18 @@ G.combatGrade = choice=>{
   const p=G.combatOdds(choice);
   return p>=0.68?'우세':p<0.42?'불리':'팽팽';
 };
+G.rememberCombatChoice = (evd,choice)=>{
+  if(!evd||!evd.combat||!choice) return null;
+  const entry={phase:evd.combat.phase,step:evd.combat.step,
+    tactic:choice.tactic||'행동',label:String(choice.label||'').replace(/<[^>]*>/g,'')};
+  if(S.combat){
+    if(!Array.isArray(S.combat.history)) S.combat.history=[];
+    S.combat.history.push(entry);
+    if(S.combat.history.length>3) S.combat.history=S.combat.history.slice(-3);
+    G.save();
+  }
+  return entry;
+};
 G.pickOutcome = (evd, choice)=>{
   if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')) return choice.out[0];
   if(choice.combatRoll!==undefined&&choice.out.length>1)
@@ -457,6 +474,29 @@ G.prepareRecruitGuest = (dv)=>{
   UI.toast(`${def.guest.ic} 임시 동행 — ${def.guest.title}`);
 };
 
+/* 영입 임무에서 고른 방법이 문구로만 남지 않고, 합류 후 첫 주행에
+   한 번의 실제 결과를 만든다. 데이터에 drive가 있는 동료만 대상이다. */
+G.prepareRecruitMemory = (dv)=>{
+  if(!dv) return null;
+  for(const id of S.party||[]){
+    const choice=S.comps[id]&&S.comps[id].approach;
+    const approach=choice&&D.recruitQuests[id]&&D.recruitQuests[id].approaches[choice];
+    const drive=approach&&approach.drive, flag=`${id}_approach_drive`;
+    if(!drive||S.flags[flag]) continue;
+    S.flags[flag]=true;
+    dv.recruitMemory={id,choice,title:drive.title,desc:drive.desc,effect:drive.effect};
+    if(drive.fuel) dv.memoryFuel=drive.fuel;
+    if(drive.scrap) dv.memoryScrap=drive.scrap;
+    if(drive.van){
+      S.van=clamp(S.van+drive.van,0,S.vanMax);
+      dv.memoryVan=drive.van;
+    }
+    UI.toast(`🔩 ${D.comps[id].name}가 첫 동행을 준비한다 — ${drive.effect}`);
+    return dv.recruitMemory;
+  }
+  return null;
+};
+
 G.startTravel = (to)=>{
   const chk = G.canTravelTo(to); if(!chk.ok) return false;
   const wx = S.wx;
@@ -474,6 +514,7 @@ G.startTravel = (to)=>{
   }
   S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0};
   G.prepareRecruitGuest(S.driving);
+  G.prepareRecruitMemory(S.driving);
   S.at = null;
   if(S.mode==='offroad') OFF.prefetch();
   UI.onDepart();
@@ -498,7 +539,7 @@ G.tick = (dt)=>{ // dt: real seconds
   S.stats.km += km;
   // fuel
   const per = G.fuelFor(1000,dv.road)/1000;
-  S.fuel = Math.max(0, S.fuel - km*per*(dv.guestFuel||1));
+  S.fuel = Math.max(0, S.fuel - km*per*(dv.guestFuel||1)*(dv.memoryFuel||1));
   // van wear
   let wearMul = S.up&&S.up.susp? 0.5:1;
   if(S.up&&S.up.mudtires&&dv.road==='rough') wearMul*=0.6;
@@ -777,7 +818,8 @@ G.reqOk = (req)=>{
   }
   if(req.up && !(S.up&&S.up[req.up])) return {ok:false, t:`${(G.upDef(req.up)||{nm:req.up}).nm} 필요`};
   if(req.dog && !S.dog) return {ok:false, t:'보리가 없다'};
-  if(req.item && !(S.items[req.item]>0)) return {ok:false, t:`${req.item} 필요`};
+  if(req.item && (S.items[req.item]||0)<(req.itemQty||1))
+    return {ok:false, t:`${req.item} ${req.itemQty||1}개 필요`};
   if(req.item2 && !(S.items[req.item2]>0)) return {ok:false, t:`${req.item2} 필요`};
   if(req.scrap && S.scrap<req.scrap) return {ok:false, t:`고철 ${req.scrap} 필요`};
   if(req.fuel && S.fuel<req.fuel) return {ok:false, t:`연료 ${req.fuel}L 필요`};
@@ -802,7 +844,7 @@ G.reqText = (req)=>{
   if(req.stories) parts.push(`개인 서사 ${G.deedsDone().filter(d=>d.cat==='동료').length}/${req.stories}`);
   if(req.comp) parts.push(`동료: ${D.comps[req.comp].name}`);
   if(req.healthyComp) parts.push(`전투 가능: ${D.comps[req.healthyComp].name}${G.isInjured(req.healthyComp)?' (부상)':''}`);
-  if(req.item) parts.push(`아이템: ${req.item}${req.item2?'+'+req.item2:''}`);
+  if(req.item) parts.push(`아이템: ${req.item}${req.itemQty>1?' '+req.itemQty+'개':''}${req.item2?'+'+req.item2:''}`);
   if(req.scrap) parts.push(`고철 ${req.scrap}`);
   if(req.fuel) parts.push(`연료 ${req.fuel}L`); if(req.water) parts.push(`물 ${req.water}`); if(req.food) parts.push(`식량 ${req.food}`);
   return parts.join(' · ');
@@ -826,12 +868,72 @@ G.reqVisible = (req)=>{
 G.reqCostText = (req)=>{
   if(!req) return '';
   const parts=[];
-  if(req.item) parts.push(`${req.item}${req.item2?' + '+req.item2:''}`);
+  if(req.item) parts.push(`${req.item}${req.itemQty>1?' '+req.itemQty+'개':''}${req.item2?' + '+req.item2:''}`);
   if(req.scrap) parts.push(`고철 ${req.scrap}`);
   if(req.fuel) parts.push(`연료 ${req.fuel}L`);
   if(req.water) parts.push(`물 ${req.water}`);
   if(req.food) parts.push(`식량 ${req.food}`);
   return parts.join(' · ');
+};
+
+/* 정착지 마이크로 탐색. 하루 제한과 일회성 보상을 엔진에서 강제해
+   화면을 다시 열거나 세이브를 불러와도 무한 파밍이 되지 않게 한다. */
+G.stlFieldState = ()=>{
+  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},log:[]};
+  S._stlField.daily=S._stlField.daily||{};
+  S._stlField.once=S._stlField.once||{};
+  S._stlField.log=Array.isArray(S._stlField.log)?S._stlField.log:[];
+  return S._stlField;
+};
+G.stlFieldAction = (stlId,actionId)=>{
+  const field=D.stls&&D.stls[stlId]&&D.stls[stlId].field;
+  return field&&field.actions&&field.actions.find(a=>a.id===actionId);
+};
+G.stlFieldStatus = (stlId,action)=>{
+  const state=G.stlFieldState();
+  const field=D.stls&&D.stls[stlId]&&D.stls[stlId].field;
+  const today=field&&field.actions
+    ?field.actions.filter(a=>state.daily[`${S.day}:${stlId}:${a.id}`]).length:0;
+  if(!action) return {ok:false,reason:'할 일을 찾지 못했다',doneToday:today};
+  const dayKey=`${S.day}:${stlId}:${action.id}`, onceKey=`${stlId}:${action.id}`;
+  const done=!!((action.daily&&state.daily[dayKey])||(action.once&&state.once[onceKey]));
+  const hiddenLocked=!!(action.hidden&&action.needDone&&today<action.needDone);
+  const req=G.reqOk(action.req);
+  let reason='';
+  if(done) reason=action.once?'이미 마친 일':'오늘은 이미 들렀다';
+  else if(hiddenLocked) reason='아직 보이지 않는다';
+  else if(!req.ok) reason=req.t;
+  return {ok:!done&&!hiddenLocked&&req.ok,done,hiddenLocked,reason,doneToday:today,dayKey,onceKey};
+};
+G.doStlFieldAction = (stlId,actionId)=>{
+  if(S.driving||!S.at||D.nodes[S.at].stl!==stlId) return {ok:false,reason:'이 장소에 멈춰 있지 않다'};
+  const action=G.stlFieldAction(stlId,actionId), before=G.stlFieldStatus(stlId,action);
+  if(!before.ok) return {ok:false,reason:before.reason};
+  const field=D.stls[stlId].field, state=G.stlFieldState();
+  const wasHiddenOpen=field.actions.some(a=>a.hidden&&!G.stlFieldStatus(stlId,a).hiddenLocked);
+  const fx={...(action.fx||{}),time:action.time||0};
+  if(action.req){
+    if(action.req.scrap) fx.scrap=(fx.scrap||0)-action.req.scrap;
+    if(action.req.fuel) fx.fuel=(fx.fuel||0)-action.req.fuel;
+    if(action.req.water) fx.water=(fx.water||0)-action.req.water;
+    if(action.req.food) fx.food=(fx.food||0)-action.req.food;
+    if(action.req.item){
+      fx.item={...(fx.item||{})};
+      fx.item[action.req.item]=(fx.item[action.req.item]||0)-(action.req.itemQty||1);
+      if(action.req.item2) fx.item[action.req.item2]=(fx.item[action.req.item2]||0)-1;
+    }
+  }
+  /* 보상을 적용하기 전에 소비 키를 남겨 중복 탭도 한 번만 처리한다. */
+  state.daily[before.dayKey]=true;
+  if(action.once) state.once[before.onceKey]=true;
+  state.log.push({stl:stlId,id:action.id,day:S.day,min:S.min});
+  if(state.log.length>40) state.log=state.log.slice(-40);
+  const chips=G.applyFx(fx);
+  const comp=S.party&&S.party.find(id=>D.comps[id]);
+  if(comp){ G.bond(comp,1); chips.push({t:`✦ ${D.comps[comp].name} 유대 +1`,c:'item'}); }
+  const hiddenOpen=!wasHiddenOpen&&field.actions.some(a=>a.hidden&&!G.stlFieldStatus(stlId,a).hiddenLocked);
+  G.save();
+  return {ok:true,action,chips,compId:comp||null,hiddenOpen};
 };
 G.rollOut = (outs)=>{
   const total = outs.reduce((s,o)=>s+o.p,0); let r=rng()*total;
@@ -867,6 +969,11 @@ G.arrive = ()=>{
   if(completedDrive&&completedDrive.guestFind){
     S.scrap+=completedDrive.guestFind;
     UI.toast(`🧰 재이가 길가에서 쓸 만한 고철을 챙겼다 +${completedDrive.guestFind}`);
+  }
+  if(completedDrive&&completedDrive.memoryScrap){
+    S.scrap+=completedDrive.memoryScrap;
+    const id=completedDrive.recruitMemory&&completedDrive.recruitMemory.id;
+    UI.toast(`🔩 ${id?D.comps[id].name:'동료'}가 표시한 고철 +${completedDrive.memoryScrap}`);
   }
   if(S.recruitQ&&S.recruitQ.stage==='road'&&S.recruitQ.roadFrom!==to){
     const rq=S.recruitQ, def=D.recruitQuests[rq.id];

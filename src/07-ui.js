@@ -64,6 +64,9 @@ const UI = (()=>{
     document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
     $('#scr-game').classList.remove('on');
     screen=id.replace('scr-','');
+    $('#app').dataset.screen=screen;
+    const earlySound=$('#early-sound');
+    if(earlySound) earlySound.hidden=!['title','preview','mode','name','intro'].includes(screen);
     $('#'+id).classList.add('on');
   }
 
@@ -150,8 +153,11 @@ const UI = (()=>{
       else startNew('onroad');
     };
     const bs=$('#bt-song');
-    if(bs){ if(!(D.bgm&&D.bgm.song)) bs.style.display='none'; else bs.onclick=()=>BGM.toggleSong(); }
-    $('#bt-continue').onclick=()=>{ if(G.load()){ enterGame(); } };
+    if(bs){
+      if(!(D.bgm&&D.bgm.song)) bs.style.display='none';
+      else bs.onclick=()=>{ SND.enable(true); BGM.toggleSong(); };
+    }
+    $('#bt-continue').onclick=()=>{ SND.enable(); if(G.load()){ enterGame(); } };
     $('#bt-preview').onclick=()=>{ renderPreview(); show('scr-preview'); $('#preview-scroll').scrollTop=0; };
     $('#bt-previewback').onclick=()=>show('scr-title');
     $('#bt-previewnew').onclick=()=>{
@@ -161,6 +167,9 @@ const UI = (()=>{
     const nameGo=()=>{
       pendingName=($('#inp-name').value||'').trim().slice(0,8);
       introIdx=0; introTurnIdx=0;
+      /* 이름 확인은 모바일 브라우저가 허용하는 명시적 사용자 제스처다.
+         여기서 오디오를 열어 프롤로그 환경음도 실제로 들리게 한다. */
+      SND.enable();
       renderIntro(true);
       show('scr-intro');
     };
@@ -198,8 +207,12 @@ const UI = (()=>{
     $('#intro-skip').onclick=e=>{ e.stopPropagation(); skipIntro(); };
     $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
-    $('#dk-camp').onclick=()=>G.camp();
+    $('#dk-camp').onclick=()=>{
+      if(S&&!S.driving&&!UI.modalOpen()) AMBI.play('sfx_camp_loop',.32);
+      G.camp();
+    };
     $('#dk-sound').onclick=()=>SND.toggle();
+    $('#early-sound').onclick=()=>SND.toggle();
     $('#dk-status').onclick=()=>{ toggleOvl('#ovl-status'); renderStatus(); };
     $('#mission-strip').onclick=()=>{ toggleOvl('#ovl-status'); stTab='journey'; renderStatus(); };
     $('#st-x').onclick=()=>closeOvl('#ovl-status');
@@ -280,6 +293,7 @@ const UI = (()=>{
     const page=D.intro[introIdx], scene=D.scenes&&D.scenes[page.scene];
     if(newPage){
       VO.stop();
+      AMBI.intro(page.scene);
       /* 인트로는 화자별 턴이다. 현재 장면과 정확히 맞는 음성이
          명시된 경우에만 재생하고, 구형 intro1~5 장문 음성은 쓰지 않는다. */
       if(page.voice) VO.play(page.voice);
@@ -327,6 +341,7 @@ const UI = (()=>{
     introTurnIdx=0;
     if(introIdx>=D.intro.length){
       localStorage.setItem('caravan_intro_seen','1');
+      AMBI.setLoop(null);
       G.newGame(pendingMode,pendingName); enterGame();
     }
     else renderIntro(true);
@@ -336,6 +351,7 @@ const UI = (()=>{
     introTurnIdx=0;
     if(screen==='name') pendingName=($('#inp-name').value||'').trim().slice(0,8);
     localStorage.setItem('caravan_intro_seen','1');
+    AMBI.setLoop(null);
     G.newGame(pendingMode,pendingName);
     enterGame();
   }
@@ -356,7 +372,11 @@ const UI = (()=>{
     else closeModal(o);
     if(!opening&&sel==='#ovl-map') $('#nodecard').classList.remove('on');
   }
-  function closeOvl(sel){ closeModal(sel); if(sel==='#ovl-map') $('#nodecard').classList.remove('on'); }
+  function closeOvl(sel){
+    closeModal(sel);
+    if(sel==='#ovl-map') $('#nodecard').classList.remove('on');
+    if(sel==='#ovl-stl'&&typeof AMBI!=='undefined') AMBI.restore();
+  }
 
   /* ── HUD ── */
   function gauge(id, val, max, warn){
@@ -519,17 +539,27 @@ const UI = (()=>{
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
   }
   const playerSpeaker=(id)=>['me','player_child','나'].includes(id);
-  function dialogueLaneMap(turns){
-    const lanes=new Map(), speakers=[];
+  /* 이름은 ???→실명으로 바뀐 수 있지만, 화자의 좌우 자리는 인물 ID를 따른다.
+     화면에 보이는 이름을 키로 쓰면 자기소개 순간에 같은 인물이 반대쪽으로 튀어 간다. */
+  function speakerLaneKey(turn){
+    const person=speakerInfo(turn&&turn.who,turn&&turn.name);
+    if(person.id&&person.id!=='unknown') return `speaker:${person.id}`;
+    return `anonymous:${turn&&turn.speakerKey||person.name||'unknown'}`;
+  }
+  function dialogueLaneMap(turns,seed){
+    const lanes=new Map(seed instanceof Map?seed:[]), speakers=[];
     (turns||[]).forEach(turn=>{
       if(turn.kind!=='dialogue') return;
       const person=speakerInfo(turn.who,turn.name);
-      const key=`${person.id||'unknown'}::${person.name||'???'}`;
+      const key=speakerLaneKey(turn);
       if(!speakers.some(item=>item.key===key)) speakers.push({key,id:person.id});
     });
-    speakers.filter(item=>playerSpeaker(item.id)).forEach(item=>lanes.set(item.key,'right'));
-    let npcIndex=0;
+    speakers.filter(item=>playerSpeaker(item.id)&&!lanes.has(item.key))
+      .forEach(item=>lanes.set(item.key,'right'));
+    let npcIndex=[...lanes.keys()].filter(key=>
+      !['speaker:me','speaker:player_child','speaker:나'].includes(key)).length;
     speakers.filter(item=>!playerSpeaker(item.id)).forEach(item=>{
+      if(lanes.has(item.key)) return;
       lanes.set(item.key,npcIndex%2===0?'left':'right');
       npcIndex++;
     });
@@ -537,7 +567,7 @@ const UI = (()=>{
   }
   function dialogueSide(turn,lanes){
     const person=speakerInfo(turn.who,turn.name);
-    const key=`${person.id||'unknown'}::${person.name||'???'}`;
+    const key=speakerLaneKey(turn);
     return (lanes&&lanes.get(key))||(playerSpeaker(person.id)?'right':'left');
   }
   function chatMessageHtml(turn, newest=false, side='left'){
@@ -563,7 +593,7 @@ const UI = (()=>{
   function storyReaderHtml(turns,index,opt={}){
     const safe=Math.min(Math.max(0,index),Math.max(0,turns.length-1));
     const shown=(turns.length?turns:[{kind:'narration',text:'잠시 말이 끊겼다.'}]).slice(0,safe+1);
-    const lanes=dialogueLaneMap(turns);
+    const lanes=opt.lanes instanceof Map?opt.lanes:dialogueLaneMap(turns);
     return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
       ${shown.map((turn,i)=>{
         const newest=i===shown.length-1;
@@ -771,8 +801,10 @@ const UI = (()=>{
         }
         if(isRecord&&speaker.kind==='dialogue') speaker.kind='record';
         const hidden=speaker.who===hiddenSpeaker&&!state.knownSpeaker;
-        turns.push({...speaker,name:hidden?'???':speaker.name,text:spoken});
-        if(hidden&&revealsIdentity(spoken,hiddenSpeaker)) state.knownSpeaker=true;
+        const revealsNow=hidden&&revealsIdentity(spoken,hiddenSpeaker);
+        /* 자기소개를 한 바로 그 문장부터 실명으로 보여 준다. */
+        turns.push({...speaker,name:hidden&&!revealsNow?'???':speaker.name,text:spoken});
+        if(revealsNow) state.knownSpeaker=true;
         cursor=re.lastIndex;
       }
       pushNarration(paragraph.slice(cursor));
@@ -780,6 +812,21 @@ const UI = (()=>{
     const result=turns.length?turns:[{kind:'narration',text:restore(source)}];
     result.knownSpeaker=state.knownSpeaker;
     return result;
+  }
+  function prepareEventAudio(turns,evd){
+    if(!Array.isArray(turns)||!evd) return turns;
+    if(evd.id==='seoul_core'){
+      let voiceNo=0;
+      for(const turn of turns){
+        if(turn.kind==='ai'&&voiceNo<15){
+          voiceNo++;
+          turn.voice=`cheollian_core_${String(voiceNo).padStart(2,'0')}`;
+        }
+        if(/검증키를 단자에 넣|오래된 칩이/.test(stripTags(turn.text||'')))
+          turn.sfx='sfx_core_key_insert';
+      }
+    }
+    return turns;
   }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
@@ -846,11 +893,17 @@ const UI = (()=>{
       const rq=S.recruitQ&&S.recruitQ.stage==='road'?S.recruitQ:null;
       const def=rq&&D.recruitQuests[rq.id];
       const approach=rq&&G.recruitApproach();
+      const memory=S.driving.recruitMemory;
       const guest=def?`<section class="road-guest-card" aria-label="${def.name} 임시 동행">
         <div class="road-guest-head"><span class="rg-ico">${def.guest.ic}</span><span>
           <small>임시 동행 · 아직 손님</small><b>${def.name} — ${def.guest.title}</b></span></div>
         <div class="road-guest-help">${def.guest.desc}</div>
         ${approach?`<div class="road-guest-memory"><b>${approach.label}</b> · ${approach.memory}</div>`:''}
+      </section>`:memory?`<section class="road-guest-card road-memory-card" aria-label="${esc(D.comps[memory.id].name)}의 선택 후속 행동">
+        <div class="road-guest-head"><span class="rg-ico">${D.comps[memory.id].face}</span><span>
+          <small>함께 고른 방식 · 첫 후속</small><b>${esc(D.comps[memory.id].name)} — ${esc(memory.title)}</b></span></div>
+        <div class="road-guest-help">${esc(memory.desc)}</div>
+        <div class="road-guest-memory"><b>${esc(memory.effect)}</b> · 이번 주행에서 확인할 수 있다.</div>
       </section>`:'<div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>';
       p.innerHTML = `
         ${contextRail(to,true)}
@@ -935,9 +988,11 @@ const UI = (()=>{
 
   /* ── travel hooks ── */
   function onDepart(){ closeOvl('#ovl-map'); closeOvl('#ovl-stl'); renderAll();
-    SND.setDriving(true); }
+    SND.setDriving(true);
+    AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
     renderAll(); SND.setDriving(false);
+    AMBI.arrive();
     const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];
     const src=key&&D.scenes&&D.scenes[key];
     toast(`<span class="ic">📍</span>${n.name} 도착`);
@@ -960,6 +1015,7 @@ const UI = (()=>{
   function playRadio(){
     const r=G.pickRadio(); if(!r) return;
     speak({who:r.narration?'sys':'radio', t:r.t});
+    AMBI.play(r.key==='radio_400_after'?'sfx_radio_400_after':'sfx_radio_static',.28);
     VO.play(r.key);
   }
   function speak(b){
@@ -1020,17 +1076,22 @@ const UI = (()=>{
 
   /* ── EVENT SHEET ── */
   let curEv=null, curStory=null;
-  function combatHudHtml(evd){
+  let storyAuto=localStorage.getItem('caravan_story_auto')!=='0', storyAutoTimer=0;
+  function combatHudHtml(evd,opt={}){
     const c=evd&&evd.combat;
     if(!c) return '';
-    const edge=S.combat?S.combat.edge||0:0;
+    const state=opt.state===undefined?S.combat:opt.state;
+    const edge=state?state.edge||0:0;
     const grade=edge>=2?'우세':edge<0?'불리':'팽팽';
     const injuries=Object.keys(S.injuries||{}).length;
     const track=Array.from({length:c.total},(_,i)=>`<i class="${i<c.phase?'on':''}"></i>`).join('');
+    const history=state&&Array.isArray(state.history)?state.history:[];
+    const last=history[history.length-1];
     return `<section class="combat-hud" aria-label="교전 상황">
-      <div class="combat-hud-head"><span class="combat-phase">ENCOUNTER ${c.phase}/${c.total}</span>
+      <div class="combat-hud-head"><span class="combat-phase">${opt.result?'RESULT':'ENCOUNTER'} ${c.phase}/${c.total}</span>
         <b class="combat-step">${c.step}</b><span class="combat-threat">${c.threat}</span></div>
-      <div class="combat-objective"><b>목표</b><span>${c.objective}</span></div>
+      <div class="combat-objective"><b>${opt.result?(opt.ended?'마침':'결과'):'목표'}</b><span>${opt.result?(opt.ended?'선택의 대가를 확인하고 이탈한다':'이 선택이 다음 단계의 전세가 된다'):c.objective}</span></div>
+      ${last?`<div class="combat-last ${opt.result?'result':''}"><b>${opt.result?'방금 선택':'직전 선택'}</b><span><strong>${esc(last.tactic)}</strong>${esc(last.label)}</span></div>`:''}
       <div class="combat-track" aria-hidden="true">${track}</div>
       <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">전세 ${grade}</span>
         <span class="${S.van<35?'bad':''}">차체 ${Math.ceil(S.van)}%</span>
@@ -1108,8 +1169,6 @@ const UI = (()=>{
     }else if(turn&&['ai','radio'].includes(turn.kind)){
       shot={x:50+(index%2?8:-8),y:45,scale:1.14+(index%3)*.02};
       tone='ai';
-    }else if(state.phase==='outcome'){
-      shot={...shot,scale:shot.scale+.055};
     }
     return {side,tone,...shot};
   }
@@ -1137,7 +1196,17 @@ const UI = (()=>{
     frame.dataset.speaker=turn&&turn.kind==='dialogue'
       ? speakerInfo(turn.who,turn.name).id||'unknown'
       : turn&&turn.kind||'narration';
-    if(firstRender||changed){
+    const carry=firstRender&&state.sceneCarry&&state.sceneCarry.key===key
+      ? state.sceneCarry:null;
+    if(carry){
+      frame.dataset.cutToken=`carry-${state.phase}-${key}`;
+      frame.dataset.tone=carry.tone||state.phase;
+      frame.style.setProperty('--scene-x',carry.x||'50%');
+      frame.style.setProperty('--scene-y',carry.y||'50%');
+      frame.style.setProperty('--scene-scale',carry.scale||'1');
+      if(img.src!==src) img.src=src;
+      state.sceneCarry=null;
+    }else if(firstRender||changed){
       const shot=storySceneShot(state,turn,index);
       frame.dataset.cutToken=`${state.phase}-${index}-${key}`;
       frame.dataset.tone=shot.tone;
@@ -1159,14 +1228,105 @@ const UI = (()=>{
     const sceneFrame=sheet.querySelector('.event-scene-frame');
     if(sceneFrame) sceneFrame.onclick=()=>sceneFrame.classList.toggle('zoomed');
   }
+  function clearStoryAuto(){
+    if(storyAutoTimer){ clearTimeout(storyAutoTimer); storyAutoTimer=0; }
+  }
+  function setStoryAuto(value){
+    storyAuto=!!value;
+    localStorage.setItem('caravan_story_auto',storyAuto?'1':'0');
+  }
+  function storyAutoDelay(turn){
+    const test=Number(window.__CARAVAN_TEST_AUTO_MS);
+    if(Number.isFinite(test)&&test>0) return test;
+    const chars=stripTags(turn&&turn.text||'').replace(/\s/g,'').length;
+    const base=1400+chars*88+(turn&&turn.sfx?700:0);
+    return Math.max(2600,Math.min(8200,turn&&turn.voice?Math.max(base,5200):base));
+  }
+  function advanceStory(state){
+    if(!state||curStory!==state||state.index>=state.turns.length-1) return;
+    clearStoryAuto();
+    state.reviewing=false;
+    state.userHoldingStory=false;
+    state.index++;
+    renderStoryState();
+    const sheet=$('#ev-sheet'), scroll=sheet&&sheet.querySelector('.event-scroll');
+    const reader=sheet&&sheet.querySelector('.story-reader');
+    const latest=reader&&reader.querySelector('[data-story-entry]:last-child');
+    if(scroll&&reader&&latest){
+      const bottom=reader.offsetTop+latest.offsetTop+latest.offsetHeight;
+      scroll.scrollTo({top:Math.max(0,bottom-scroll.clientHeight+28),behavior:'auto'});
+    }
+  }
+  function scheduleStoryAuto(state,turn){
+    clearStoryAuto();
+    if(!storyAuto||!state||state.index>=state.turns.length-1||state.reviewing||state.userHoldingStory) return;
+    const expectedIndex=state.index, delay=storyAutoDelay(turn);
+    storyAutoTimer=setTimeout(()=>{
+      storyAutoTimer=0;
+      if(document.hidden||state.reviewing||state.userHoldingStory||$('#ev-sheet .event-scene-frame.zoomed')){
+        if(curStory===state&&state.index===expectedIndex) scheduleStoryAuto(state,turn);
+        return;
+      }
+      if(curStory===state&&state.index===expectedIndex&&$('#ev-wrap').classList.contains('on'))
+        advanceStory(state);
+    },delay);
+  }
+  function wireStoryReviewPause(state,turn){
+    const scroll=$('#ev-sheet .event-scroll'), toggle=$('#ev-sheet .story-auto-toggle');
+    if(!scroll||!toggle) return;
+    const sync=()=>{
+      const waiting=storyAuto&&(state.reviewing||state.userHoldingStory);
+      toggle.classList.toggle('waiting',waiting);
+      toggle.textContent=!storyAuto?'자동 OFF':waiting?'자동 대기':'자동 ON';
+      toggle.setAttribute('aria-label',!storyAuto?'자동 진행 꺼짐'
+        :waiting?'지난 대화를 보는 동안 자동 진행 대기':'자동 진행 켜짐');
+    };
+    const reviewPosition=()=>{
+      const gap=scroll.scrollHeight-scroll.scrollTop-scroll.clientHeight;
+      state.reviewing=gap>72;
+      sync();
+    };
+    scroll.onpointerdown=()=>{
+      state.userHoldingStory=true;
+      clearStoryAuto();
+      sync();
+    };
+    const release=()=>{
+      state.userHoldingStory=false;
+      reviewPosition();
+      if(!state.reviewing) scheduleStoryAuto(state,turn);
+    };
+    scroll.onpointerup=release;
+    scroll.onpointercancel=release;
+    scroll.onscroll=()=>{
+      if(!state.userHoldingStory) return;
+      reviewPosition();
+    };
+    scroll.onwheel=()=>{
+      state.userHoldingStory=true;
+      clearStoryAuto();
+      requestAnimationFrame(()=>{
+        state.userHoldingStory=false;
+        reviewPosition();
+        if(!state.reviewing) scheduleStoryAuto(state,turn);
+      });
+    };
+    sync();
+  }
   function renderStoryState(){
     const state=curStory, sheet=$('#ev-sheet');
     if(!state||!sheet) return;
+    clearStoryAuto();
     const reader=sheet.querySelector('.story-reader');
     const dock=sheet.querySelector('.event-choice-dock');
     const turn=state.turns[Math.min(state.index,state.turns.length-1)];
-    reader.innerHTML=storyReaderHtml(state.turns,state.index);
+    reader.innerHTML=storyReaderHtml(state.turns,state.index,{lanes:state.lanes});
     renderStoryScene(state,turn,state.index);
+    if(turn&&state.audioIndex!==state.index){
+      state.audioIndex=state.index;
+      if(turn.voice) VO.play(turn.voice);
+      if(turn.sfx) AMBI.play(turn.sfx,.42);
+    }
     const live=$('#story-live');
     if(live&&turn){
       const speaker=turn.kind==='dialogue'?(turn.name||speakerInfo(turn.who).name)+'의 말: '
@@ -1185,21 +1345,24 @@ const UI = (()=>{
       const next=state.turns[state.index+1];
       const nextLabel=next.kind==='dialogue'||next.kind==='letter'?'다음 대화'
         :next.kind==='ai'||next.kind==='radio'?'다음 방송':'다음 장면';
+      const autoCopy=next.kind==='dialogue'||next.kind==='letter'?'자동으로 다음 대화가 이어집니다'
+        :next.kind==='ai'||next.kind==='radio'?'자동으로 다음 방송이 이어집니다':'자동으로 다음 장면이 이어집니다';
+      dock.classList.add('story-progress-dock');
       dock.innerHTML=`<div class="choice-dock-head"><span>${state.label} · ${state.index+1}/${state.turns.length}</span>
-        <small>한 줄씩 이어진다</small></div>
-        <button class="choice story-next" type="button">${nextLabel}<span class="req">${state.index+2} / ${state.turns.length}</span></button>`;
-      dock.querySelector('.story-next').onclick=()=>{
-        state.index++;
+        <button class="story-auto-toggle${storyAuto?' on':''}" type="button" aria-pressed="${storyAuto}">${storyAuto?'자동 ON':'자동 OFF'}</button></div>
+        <button class="choice story-next" type="button">계속<span class="req">${storyAuto?autoCopy:`${nextLabel} · 직접 넘기기`} · ${state.index+2}/${state.turns.length}</span></button>`;
+      dock.querySelector('.story-next').onclick=()=>advanceStory(state);
+      dock.querySelector('.story-auto-toggle').onclick=()=>{
+        setStoryAuto(!storyAuto);
+        state.reviewing=false;
+        state.userHoldingStory=false;
         renderStoryState();
-        const scroll=sheet.querySelector('.event-scroll');
-        const latest=reader&&reader.querySelector('[data-story-entry]:last-child');
-        if(scroll&&reader&&latest){
-          const bottom=reader.offsetTop+latest.offsetTop+latest.offsetHeight;
-          scroll.scrollTo({top:Math.max(0,bottom-scroll.clientHeight+28),behavior:'auto'});
-        }
       };
+      wireStoryReviewPause(state,turn);
+      scheduleStoryAuto(state,turn);
       return;
     }
+    dock.classList.remove('story-progress-dock');
     dock.innerHTML=state.finalDock;
     if(state.reveal&&!state.revealed){ state.revealed=true; state.reveal(); }
     if(state.wireFinal) state.wireFinal(dock);
@@ -1211,6 +1374,7 @@ const UI = (()=>{
     return true;
   }
   function showEvent(evd){
+    clearStoryAuto();
     curEv=evd;
     curStory=null;
     bgmEvKey = (evd.type==='추적'||evd.type==='위기'||evd.ai)?'tension': evd.type==='스토리'?'story':null;
@@ -1219,6 +1383,7 @@ const UI = (()=>{
       ai_gasstation:'cheollian_05', ai_manifest:'cheollian_09', seoul_gate:'cheollian_13'};
     if(CVO[evd.id]) VO.play(CVO[evd.id]);
     SND.setDriving(false);
+    AMBI.event(evd);
     const sheet=$('#ev-sheet');
     sheet.classList.add('event-mode');
     const aiEvent = evd.type==='추적'||!!evd.ai;
@@ -1235,18 +1400,20 @@ const UI = (()=>{
       context=`<div class="story-context"><b>우리가 앞에서 한 일 · ${approach.label}</b>${approach.memory}</div>`+context;
     }
     const choices=eventChoiceData(evd);
-    const turns=buildStoryTurns(text,evd,{turnSpeakers:evd.turnSpeakers});
+    const turns=prepareEventAudio(buildStoryTurns(text,evd,{turnSpeakers:evd.turnSpeakers}),evd);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<div class="event-head"><div>
       <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
       <h2>${evd.title}</h2></div></div>${context}${combatHudHtml(evd)}<div class="story-reader"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
+    const lanes=dialogueLaneMap(turns);
     curStory={
       phase:'event',eventId:evd.id,label:evd.type==='대화'?'대화':'이야기',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
+      lanes,
       sceneKeys,sceneAlt,sceneStart:0,
-      finalDock:`<div class="choice-dock-head"><span>${evd.id==='seoul_core'?'마지막 증언':'선택'} · ${choices.count}</span>
-        <small>${choices.count>3?'위아래로 밀어 모두 보기':evd.id==='seoul_core'?'그 뒤 실행안을 정한다':'내가 할 일을 고른다'}</small></div>
+      finalDock:`<div class="choice-dock-head"><span>${evd.id==='seoul_core'?'마지막 증언':'어떻게 할까?'} · ${choices.count}</span>
+        <small>${choices.count>3?'위아래로 밀어 모두 보기':evd.id==='seoul_core'?'자동 진행이 멈췄습니다 · 실행안을 선택':'자동 진행이 멈췄습니다 · 직접 선택'}</small></div>
         <div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>`,
       wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
         if(b.hasAttribute('disabled')) return;
@@ -1327,10 +1494,22 @@ const UI = (()=>{
   }
 
   function resolveChoice(choice){
+    clearStoryAuto();
     const oldCombat=$('#ev-sheet').querySelector('.combat-hud');
-    const combatHud=oldCombat?oldCombat.outerHTML:'';
+    const combatBefore=S.combat?{edge:S.combat.edge||0,history:[...(S.combat.history||[])]}:{edge:0,history:[]};
     const out=G.pickOutcome(curEv, choice);
     const chips=G.applyFx(out.fx);
+    const combatEntry=G.rememberCombatChoice(curEv,choice);
+    let combatHud='';
+    if(oldCombat){
+      let resultState=S.combat;
+      if(!resultState){
+        let edge=out.fx&&out.fx.combatStart?0:combatBefore.edge;
+        if(out.fx&&out.fx.combatEdge) edge=clamp(edge+out.fx.combatEdge,-2,3);
+        resultState={edge,history:[...combatBefore.history,...(combatEntry?[combatEntry]:[])]};
+      }
+      combatHud=combatHudHtml(curEv,{state:resultState,result:true,ended:!!(out.fx&&out.fx.combatEnd)});
+    }
     if(out.sfx) SND.combat(out.sfx);
     chips.push(...G.afterChoice(curEv, choice));
     if(S.ended) return;
@@ -1348,37 +1527,52 @@ const UI = (()=>{
     const choiceCuts=D.eventChoiceScenes&&D.eventChoiceScenes[curEv.id]
       &&D.eventChoiceScenes[curEv.id][choiceIndex];
     const explicitCuts=[out.scenes,out.scene,choice.scenes,choice.scene,choiceCuts];
-    const priorScene=sheet.querySelector('.event-scene-frame')?.dataset.sceneKey;
+    const priorFrame=sheet.querySelector('.event-scene-frame');
+    const priorScene=priorFrame&&priorFrame.dataset.sceneKey;
+    const priorShot=priorFrame?{
+      key:priorScene,
+      x:priorFrame.style.getPropertyValue('--scene-x'),
+      y:priorFrame.style.getPropertyValue('--scene-y'),
+      scale:priorFrame.style.getPropertyValue('--scene-scale'),
+      tone:priorFrame.dataset.tone
+    }:null;
     const sceneKeys=eventSceneKeys(curEv,explicitCuts);
     const hasExplicit=sceneKeys.length&&explicitCuts.some(value=>
       Array.isArray(value)?value.some(Boolean):Boolean(value));
     const outcomeSceneKeys=hasExplicit
       ? sceneKeys
       : eventSceneKeys(curEv,priorScene?[priorScene]:[]);
+    const sceneCarry=priorShot&&outcomeSceneKeys[0]===priorShot.key?priorShot:null;
     const sceneStart=0;
     const scene=sceneFrameHtml(outcomeSceneKeys,sceneAlt);
     const fxHtml=chips.length
       ? '<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
       : '';
     let actions='';
+    const chained=out.fx&&out.fx.chain;
+    const chainEvent=chained&&D.events.find(e=>e.id===chained);
     if(out.fx&&out.fx.offerComp){
       const id=out.fx.offerComp, mp=G.maxParty(), full=S.party.length>=mp, c=D.comps[id], next=G.nextSeatUpgrade();
       actions+=`<button class="choice" data-r="yes" ${full?'disabled':''}>${c.face} ${c.name}를 태운다
           <span class="req">${full? '✗ 동료석 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 동료 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
         <button class="choice" data-r="no">작별 인사를 한다</button>`;
     } else {
-      actions+=`<button class="choice" data-r="ok">계속 간다</button>`;
+      actions+=`<button class="choice" data-r="ok">${chained
+        ?`다음 단계${chainEvent&&chainEvent.combat?' — '+esc(chainEvent.combat.step):''}`
+        :'길로 돌아가기'}</button>`;
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
       <div class="event-head"><div><div class="tag">선택의 결과</div><h2>${curEv.title}</h2></div></div>
       ${combatHud}<div class="story-reader"></div><div class="story-result" aria-live="polite"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
+    const lanes=dialogueLaneMap(turns,curStory&&curStory.lanes);
     curStory={
       phase:'outcome',eventId:curEv.id,label:'결과',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
-      sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,
-      finalDock:`<div class="choice-dock-head"><span>다음</span><small>결과를 확인했다</small></div>
+      lanes,
+      sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,sceneCarry,
+      finalDock:`<div class="choice-dock-head"><span>${chained?'이야기 계속':'사건 마침'}</span><small>${chained?'다음 장면은 직접 넘어갑니다':'자동 진행이 끝났습니다'}</small></div>
         <div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
       reveal:()=>{ const result=sheet.querySelector('.story-result'); if(result) result.innerHTML=fxHtml; },
       wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
@@ -1392,12 +1586,14 @@ const UI = (()=>{
     renderHud();
   }
   function closeEvent(){
+    clearStoryAuto();
     closeModal('#ev-wrap');
     $('#ev-sheet').classList.remove('event-mode','story-compact');
     $('#cheollian-tint').classList.remove('on');
     curEv=null;
     curStory=null;
     if(S.driving) SND.setDriving(true);
+    AMBI.restore();
     renderAll(); G.save();
     /* 연쇄 이벤트 (시네마틱 시퀀스) */
     if(S && S._chain){ const cid=S._chain; S._chain=null; setTimeout(()=>G.openEventById(cid), 450); return; }
@@ -1434,20 +1630,91 @@ const UI = (()=>{
   }
 
   /* ── SETTLEMENT ── */
-  let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel',
+  let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel', stlFieldResult=null,
     stlMode='hub', stlFocus='market';
   function settlementScene(stlId){
     const sid=D.nodeScenes&&D.nodeScenes[stlId];
     return sid&&D.scenes&&D.scenes[sid]?D.scenes[sid]:'';
   }
   function settlementSpots(stlId){
-    return {
+    const spots={
       market:{label:stlId==='muju'?'교환소':stlId==='daejeon'?'보급소':'장터',
         sub:'의뢰와 물자를 살핀다',icon:'food'},
       garage:{label:'정비소',sub:'달구지를 고치고 넓힌다',icon:'parts'},
       people:{label:stlId==='daejeon'?'사람들':'모닥불',
         sub:'얼굴을 보고 이야기를 나눈다',icon:'bond'}
     };
+    if(D.stls[stlId]&&D.stls[stlId].field)
+      spots.alley={label:'장터 골목',sub:'동료와 직접 둘러본다',icon:'quest'};
+    return spots;
+  }
+  function settlementCompanion(){
+    const id=(S.party||[]).find(pid=>D.comps&&D.comps[pid]);
+    return id?{id,...D.comps[id]}:null;
+  }
+  function settlementPortrait(id,cls,alt){
+    const src=D.portraits&&D.portraits[id];
+    return src?`<img class="${cls}" src="${src}" alt="${esc(alt)}">`:'';
+  }
+  function settlementWalkCopy(focus){
+    const stl=D.stls[curStl], spot=settlementSpots(curStl)[focus], comp=settlementCompanion();
+    const local=stl.walk&&stl.walk[focus]||spot.sub;
+    const line=comp&&D.settlementCompanionLines&&D.settlementCompanionLines[comp.id]
+      ?D.settlementCompanionLines[comp.id][focus]:local;
+    return {
+      title:comp?`${comp.name}와 ${spot.label}${spot.label==='사람들'?'을':'로'} 걷는 중`:`${spot.label}${spot.label==='사람들'?'을':'로'} 걷는 중`,
+      line:line||local,
+      local
+    };
+  }
+  function settlementPartyMarkerHtml(comp){
+    const faces=[settlementPortrait('me','stl-walker-face me',`${G.myName()} 초상`)];
+    if(comp) faces.push(settlementPortrait(comp.id,'stl-walker-face companion',`${comp.name} 초상`));
+    return `<div class="stl-walk-party" role="img" aria-label="${esc(comp?`${G.myName()}와 ${comp.name}이 정착지를 함께 걷는다`:`${G.myName()}이 정착지를 걷는다`)}">
+      ${faces.filter(Boolean).join('')}
+    </div>`;
+  }
+  function settlementCrowdHtml(stl){
+    const ids=[...(stl.npcs||[]).slice(0,1),'passer_merchant','passer_worker','passer_child'];
+    return `<div class="stl-crowd" aria-hidden="true">${ids.map((id,i)=>
+      settlementPortrait(id,`stl-crowd-face crowd-${i+1}`,'')).filter(Boolean).join('')}</div>`;
+  }
+  function settlementSectionPartyHtml(focus){
+    const comp=settlementCompanion(), copy=settlementWalkCopy(focus);
+    return `<div class="stl-section-party">
+      <span class="stl-section-faces">
+        ${settlementPortrait('me','stl-section-face me',`${G.myName()} 초상`)}
+        ${comp?settlementPortrait(comp.id,'stl-section-face companion',`${comp.name} 초상`):''}
+      </span>
+      <span><b>${esc(copy.title.replace('걷는 중','도착'))}</b><small>${esc(copy.local)}</small></span>
+    </div>`;
+  }
+  function updateSettlementFocus(next){
+    const spots=settlementSpots(curStl), night=G.isNight();
+    if(!spots[next]||(night&&next!=='people')) return;
+    stlFocus=next;
+    const hub=$('#stl-body .stl-hub');
+    if(!hub) return;
+    const focus=spots[next], copy=settlementWalkCopy(next);
+    hub.dataset.focus=next;
+    hub.querySelectorAll('[data-stlfocus]').forEach(b=>{
+      const selected=b.dataset.stlfocus===next;
+      b.classList.toggle('selected',selected);
+      b.setAttribute('aria-pressed',String(selected));
+    });
+    const route=hub.querySelector('.stl-route');
+    if(route) route.className=`stl-route ${next}`;
+    const title=hub.querySelector('[data-stl-walk-title]');
+    const line=hub.querySelector('[data-stl-walk-line]');
+    if(title) title.textContent=copy.title;
+    if(line) line.textContent=copy.line;
+    const enter=hub.querySelector('#stl-enter');
+    if(enter) enter.innerHTML=`${ICO(focus.icon)}<span>${focus.label}${focus.label==='사람들'?'을':'로'} 들어간다</span>`;
+    hub.classList.remove('is-walking');
+    requestAnimationFrame(()=>{
+      hub.classList.add('is-walking');
+      setTimeout(()=>hub.classList.remove('is-walking'),420);
+    });
   }
   function leaveSettlement(){
     closeOvl('#ovl-stl');
@@ -1465,14 +1732,18 @@ const UI = (()=>{
   }
   function renderSettlementHub(){
     const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl);
-    const spots=settlementSpots(curStl), night=G.isNight();
-    if(night&&(stlFocus==='market'||stlFocus==='garage')) stlFocus='people';
+    const spots=settlementSpots(curStl), night=G.isNight(), comp=settlementCompanion();
+    AMBI.settlement(night?'people':'hub');
+    if(!spots[stlFocus]) stlFocus='market';
+    if(night&&stlFocus!=='people') stlFocus='people';
     const focus=spots[stlFocus]||spots.market;
+    const walkCopy=settlementWalkCopy(stlFocus);
     settlementHeader('');
     $('#ovl-stl').classList.add('hub-mode');
-    body.innerHTML=`<div class="stl-hub" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
+    body.innerHTML=`<div class="stl-hub" data-focus="${stlFocus}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
       <div class="stl-hub-art" role="img" aria-label="${esc(stl.name)} 풍경"></div>
       <div class="stl-hub-place"><b>${esc(stl.name)}</b><small>${night?'장은 잠들었지만 모닥불은 아직 켜져 있다.':esc(stl.desc)}</small></div>
+      ${settlementCrowdHtml(stl)}
       <div class="stl-hotspots" aria-label="${esc(stl.name)}에서 갈 곳">
         ${Object.entries(spots).map(([id,spot])=>{
           const closed=night&&id!=='people';
@@ -1483,6 +1754,7 @@ const UI = (()=>{
           </button>`;
         }).join('')}
       </div>
+      ${settlementPartyMarkerHtml(comp)}
       <div class="stl-van-wrap"><canvas id="stl-van" aria-label="현재 개조 상태의 달구지"></canvas><span>우리 달구지</span></div>
       <div class="stl-route ${stlFocus}" aria-hidden="true"></div>
       <div class="stl-hub-dock">
@@ -1493,15 +1765,15 @@ const UI = (()=>{
           <span>${ICO('scrap')}<b>${S.scrap}</b><small>고철</small></span>
           <span>${ICO('parts')}<b>${S.items['부품']||0}</b><small>부품</small></span>
         </div>
-        <div class="stl-focus-copy"><span>${focus.label}</span><small>${night?'오늘은 쉬고 아침에 움직이자.':focus.sub}</small></div>
-        <button class="stl-enter" id="stl-enter">${ICO(focus.icon)}<span>${focus.label}${focus.label==='사람들'?'을':'로'} 간다</span></button>
+        <div class="stl-focus-copy">
+          ${settlementPortrait(comp?comp.id:'me','stl-focus-face',`${comp?comp.name:G.myName()} 초상`)}
+          <span><b data-stl-walk-title>${esc(walkCopy.title)}</b><small data-stl-walk-line>${esc(night?'오늘은 쉬고 아침에 움직이자.':walkCopy.line)}</small></span>
+        </div>
+        <button class="stl-enter" id="stl-enter">${ICO(focus.icon)}<span>${focus.label}${focus.label==='사람들'?'을':'로'} 들어간다</span></button>
         <button class="stl-return" id="stl-out">${ICO('van')} 달구지로 돌아간다</button>
       </div>
     </div>`;
-    body.querySelectorAll('[data-stlfocus]').forEach(b=>b.onclick=()=>{
-      stlFocus=b.dataset.stlfocus;
-      renderSettlementHub();
-    });
+    body.querySelectorAll('[data-stlfocus]').forEach(b=>b.onclick=()=>updateSettlementFocus(b.dataset.stlfocus));
     $('#stl-enter').onclick=()=>showStl(curStl,stlFocus);
     $('#stl-out').onclick=leaveSettlement;
     if(!$('#ovl-stl').classList.contains('on')) openModal('#ovl-stl','[data-stlfocus], #stl-enter');
@@ -1532,19 +1804,48 @@ const UI = (()=>{
     }
     return h;
   }
+  function settlementFieldHtml(stl){
+    const field=stl.field;
+    if(!field) return '';
+    const actions=field.actions.filter(a=>!G.stlFieldStatus(curStl,a).hiddenLocked);
+    const result=stlFieldResult&&stlFieldResult.stl===curStl?stlFieldResult:null;
+    let h=`<div class="stl-field-intro"><span>${ICO('quest')}</span><span><b>${esc(field.title)}</b><small>${esc(field.desc)}</small></span></div>`;
+    if(result){
+      const person=speakerInfo(result.action.npc);
+      h+=`<div class="stl-field-result" data-field-result>
+        ${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}
+        <span><small>${esc(person.name)} · ${esc(result.action.label)}</small><p>${esc(result.action.result)}</p>
+        ${result.chips&&result.chips.length?`<span class="stl-field-chips">${result.chips.map(c=>`<i class="${c.c||''}">${esc(c.t)}</i>`).join('')}</span>`:''}</span>
+      </div>`;
+    }
+    h+=`<div class="stl-field-list">${actions.map(action=>{
+      const status=G.stlFieldStatus(curStl,action), person=speakerInfo(action.npc);
+      const cost=G.reqCostText(action.req), cadence=action.once?'여행 중 1회':'하루 1회';
+      return `<button class="stl-field-action" data-stlfield="${action.id}" ${status.ok?'':'disabled'}>
+        ${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}
+        <span><b>${esc(action.label)}</b><small>${esc(action.desc)}</small>
+          <span class="stl-field-meta"><i>${action.time}분</i><i>${cadence}</i>${cost?`<i>${esc(cost)}</i>`:''}</span></span>
+        <em>${status.ok?esc(action.action):esc(status.reason)}</em>
+      </button>`;
+    }).join('')}</div>`;
+    return h;
+  }
   function showStl(stlId,mode='hub'){
     curStl=stlId;
     stlMode=mode||'hub';
     const stl=D.stls[stlId];
+    AMBI.settlement(stlMode);
     if(!G.isNight()) G.checkQuest();   // 배달은 사람이 깨어 있을 때만
     if(stlMode==='hub'){ renderSettlementHub(); return; }
     if(G.isNight()&&stlMode!=='people'){ stlFocus='people'; renderSettlementHub(); return; }
     $('#ovl-stl').classList.remove('hub-mode');
     const body=$('#stl-body'), scene=settlementScene(curStl), spots=settlementSpots(curStl);
     settlementHeader(spots[stlMode]?spots[stlMode].label:'');
+    const walkCopy=settlementWalkCopy(stlMode);
     let h=`<div class="stl-section-hero" ${scene?`style="background-image:url('${scene}')"`:''}>
+      ${settlementSectionPartyHtml(stlMode)}
       <span>${ICO((spots[stlMode]||spots.market).icon)}${(spots[stlMode]||spots.market).label}</span>
-      <small>${(spots[stlMode]||spots.market).sub}</small>
+      <small>${esc(walkCopy.local)}</small>
     </div>`;
     if(stlMode==='market'){
       h+=questBoardHtml();
@@ -1553,6 +1854,8 @@ const UI = (()=>{
     } else if(stlMode==='garage'){
       h+=`<div class="dlg garage-shell"><div class="say stl-kicker"><span class="spk">달구지 작업대</span>
         <small>부품 ${S.items['부품']||0} · 실제 차체 상태를 보며 개조한다</small></div><div id="garage"></div></div>`;
+    } else if(stlMode==='alley'){
+      h+=settlementFieldHtml(stl);
     } else {
       if(G.isNight()){
         h+=`<div class="dlg night-talk"><div class="say"><span class="spk">늦은 밤</span>
@@ -1565,7 +1868,7 @@ const UI = (()=>{
           <span><b>${npc.name}</b><small>${npc.role}</small></span>
           <span class="npc-att">${ns.att>10?'우호적':ns.att<-10?'냉랭함':ns.met?'아는 사이':'초면'}</span></button>`;
       }
-      if(stl.recruit && !G.hasComp(stl.recruit)
+      if(stl.recruit && !G.hasComp(stl.recruit) && (!S.recruitQ||S.recruitQ.id===stl.recruit)
         && (!S.used.includes('kw_recruit')||(S.recruitQ&&S.recruitQ.id===stl.recruit))){
         const c=D.comps[stl.recruit];
         const rq=S.recruitQ&&S.recruitQ.id===stl.recruit?S.recruitQ:null;
@@ -1586,11 +1889,24 @@ const UI = (()=>{
       if(qt) qt.onclick=()=>{ G.checkQuest(); showStl(curStl,'market'); };
     } else if(stlMode==='garage'){
       renderGarage();
+    } else if(stlMode==='alley'){
+      body.querySelectorAll('[data-stlfield]').forEach(b=>b.onclick=()=>{
+        const result=G.doStlFieldAction(curStl,b.dataset.stlfield);
+        if(!result.ok){ toast(result.reason||'지금은 할 수 없다'); return; }
+        stlFieldResult={stl:curStl,action:result.action,chips:result.chips};
+        if(result.hiddenOpen) toast('👣 천막 뒤에서 순덕이 손짓한다','discover');
+        showStl(curStl,'alley');
+        requestAnimationFrame(()=>body.querySelector('[data-field-result]')?.scrollIntoView({block:'nearest'}));
+      });
     } else {
       body.querySelectorAll('[data-npc]').forEach(b=>b.onclick=()=>talk(b.dataset.npc));
       const rec=body.querySelector('[data-recruit]');
       if(rec) rec.onclick=()=>recruitStl(stl.recruit);
-      $('#stl-rest').onclick=()=>{ closeOvl('#ovl-stl'); G.camp('🏘 정착지에서 하룻밤을 묵었다'); };
+      $('#stl-rest').onclick=()=>{
+        AMBI.play('sfx_camp_loop',.32);
+        closeOvl('#ovl-stl');
+        G.camp('🏘 정착지에서 하룻밤을 묵었다');
+      };
     }
     $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
     if(!$('#ovl-stl').classList.contains('on')) openModal('#ovl-stl','#stl-leave, button');
@@ -1663,6 +1979,7 @@ const UI = (()=>{
     const group=(D.upgradeGroups||[]).find(x=>x.ids.includes(u.id))||D.upgradeGroups[0];
     const art=D.upgradeArt&&D.upgradeArt[group.id];
     const afterStage=G.vanStage(), afterCapacity=G.seatCapacity();
+    AMBI.play('sfx_van_extension',u.seat ? 0.44 : 0.28);
     const physical=u.seat
       ? `<b>후미 증축 +${before.stage.cm}cm → +${afterStage.cm}cm</b><small>${before.stage.nm}에서 ${afterStage.nm} 단계로. 탑승 정원 ${before.capacity+1} → ${afterCapacity+1}명</small>`
       : u.id==='tank1'||u.id==='tank2'
@@ -2118,7 +2435,7 @@ const UI = (()=>{
 
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
 const SND = (()=>{
-  let ac=null, on=false, suspended=false, engineGain=null, noiseSrc=null, sfxBuf=null, pulseTimer=null;
+  let ac=null, on=false, userChoice=false, suspended=false, engineGain=null, noiseSrc=null, sfxBuf=null, pulseTimer=null;
   function build(){
     ac=new (window.AudioContext||window.webkitAudioContext)();
     const buf=ac.createBuffer(1, ac.sampleRate*2, ac.sampleRate);
@@ -2134,17 +2451,45 @@ const SND = (()=>{
     const white=sfxBuf.getChannelData(0);
     for(let i=0;i<white.length;i++) white[i]=Math.random()*2-1;
   }
-  function toggle(){
-    if(!ac){ try{ build(); }catch(e){ return; } }
-    on=!on;
-    if(ac.state==='suspended') ac.resume();
-    $('#dk-sound').querySelector('.dic').textContent= on?'🔊':'🔇';
-    BGM.setOn(on);
-    setDriving(S&&S.driving&&!UI.modalOpen());
+  function syncUi(){
+    const dock=$('#dk-sound'), early=$('#early-sound');
+    if(dock){
+      dock.querySelector('.dic').textContent=on?'🔊':'🔇';
+      dock.setAttribute('aria-label',on?'소리 끄기':'소리 켜기');
+      dock.setAttribute('aria-pressed',String(on));
+    }
+    if(early){
+      early.classList.toggle('on',on);
+      early.setAttribute('aria-label',on?'소리 끄기':'소리 켜기');
+      early.setAttribute('aria-pressed',String(on));
+      early.querySelector('.sound-icon').textContent=on?'🔊':'🔇';
+      early.querySelector('.sound-label').textContent=on?'소리 끄기':'소리 켜기';
+    }
   }
+  function setEnabled(value,remember=true){
+    if(remember) userChoice=true;
+    if(value&&!ac){ try{ build(); }catch(e){ return false; } }
+    on=!!value;
+    if(on&&ac&&ac.state==='suspended') ac.resume().catch(()=>{});
+    if(!on&&ac&&ac.state==='running') ac.suspend().catch(()=>{});
+    syncUi();
+    BGM.setOn(on);
+    AMBI.setOn(on);
+    VO.setOn(on);
+    setDriving(S&&S.driving&&!UI.modalOpen());
+    return true;
+  }
+  function toggle(){ setEnabled(!on,true); }
+  function enable(force=false){
+    if(on) return true;
+    if(userChoice&&!force) return false;
+    return setEnabled(true,force);
+  }
+  function isEnabled(){ return on; }
   function setDriving(driving){
     if(!ac||!engineGain) return;
-    const target= on&&!suspended? (driving?0.16:0.05):0;
+    const hasRecorded=!!(D.sfx&&D.sfx.sfx_drive_asphalt_loop);
+    const target= on&&!suspended? (driving?(hasRecorded?0.055:0.16):(hasRecorded?0.018:0.05)):0;
     engineGain.gain.linearRampToValueAtTime(target, ac.currentTime+0.8);
   }
   function suspend(){
@@ -2216,14 +2561,14 @@ const SND = (()=>{
       default: tone('sine',360,430,.06,.018);
     }
   }
-  return {toggle, setDriving, combat, suspend, resume};
+  return {toggle, enable, isEnabled, setDriving, combat, suspend, resume};
 })();
 /* ═══════════════════ BGM (외부 생성 트랙 — D.bgm 슬롯) ═══════════════════
    D.bgm[key]에 data URI를 넣으면 상황에 맞춰 자동 재생·크로스페이드.
    슬롯이 비어 있으면 완전 무음(현재 동작 유지). 사운드 토글(🔊)에 종속. */
 const BGM = (()=>{
   const players={};
-  let cur=null, on=false, suspended=false, resumeSong=false;
+  let cur=null, on=false, suspended=false, resumeSong=false, manualPauseKey=null;
   const VOL=0.5, FADE=1100;
   function ensure(key){
     if(players[key]!==undefined) return players[key];
@@ -2256,10 +2601,20 @@ const BGM = (()=>{
   }
   function setOn(v){
     on=v;
-    if(!on){ for(const k in players){ const a=players[k]; if(a){ fadeTo(a,0,()=>a.pause()); } } }
-    else if(!suspended){ const k=cur; cur=null; set(k||'title'); }
+    if(!on){
+      if(song&&!song.paused){ song.pause(); song.currentTime=0; songUi(false); }
+      for(const k in players){ const a=players[k]; if(a){ fadeTo(a,0,()=>a.pause()); } }
+    }
+    else if(!suspended){ manualPauseKey=null; const k=cur; cur=null; set(k||'title'); }
   }
-  function tick(desired){ if(suspended||(song&&!song.paused)) return; if(desired) set(desired); }
+  function tick(desired){
+    if(suspended||(song&&!song.paused)) return;
+    if(manualPauseKey){
+      if(desired===manualPauseKey) return;
+      manualPauseKey=null;
+    }
+    if(desired) set(desired);
+  }
   /* ── 노래 (부서진 고속도로) — BGM과 별개, 명시 재생 ── */
   let song=null;
   function ensureSong(){
@@ -2269,11 +2624,23 @@ const BGM = (()=>{
     song.onended=()=>{ songUi(false); const k=cur; cur=null; if(on) set(k); };
     return song;
   }
-  function songUi(playing){ const b=$('#bt-song'); if(b) b.classList.toggle('playing',playing); }
+  function songUi(playing){
+    const b=$('#bt-song'); if(!b) return;
+    b.classList.toggle('playing',playing);
+    b.setAttribute('aria-pressed',String(playing));
+    b.setAttribute('title',playing?'노래 끄기':'부서진 고속도로 재생');
+    b.textContent=playing?'■ 노래 끄기':'♪ 부서진 고속도로';
+  }
   function toggleSong(){
     const s=ensureSong(); if(!s) return;
-    if(!s.paused){ s.pause(); s.currentTime=0; songUi(false); const k=cur; cur=null; if(on) set(k); return; }
+    if(!s.paused){
+      s.pause(); s.currentTime=0; songUi(false);
+      manualPauseKey=cur||'title';
+      for(const k in players){ const a=players[k]; if(a) fadeTo(a,0,()=>a.pause()); }
+      return;
+    }
     /* 배경 BGM 잠시 내림 */
+    manualPauseKey=null;
     const bg=players[cur]; if(bg) fadeTo(bg,0,()=>bg.pause());
     s.currentTime=0; s.play().catch(()=>{}); songUi(true);
   }
@@ -2302,20 +2669,170 @@ const BGM = (()=>{
     const a=ensure(cur||'title');
     if(a){ a.play().catch(()=>{}); fadeTo(a,VOL); }
   }
-  return {tick, setOn, toggleSong, playSongOnce, suspend, resume};
+  function isSongPlaying(){ return Boolean(song&&!song.paused); }
+  function isMusicPaused(){ return Boolean(manualPauseKey); }
+  return {tick, setOn, toggleSong, playSongOnce, isSongPlaying, isMusicPaused, suspend, resume};
+})();
+/* ═══════════════════ AMBIENCE / RECORDED SFX ═══════════════════
+   생성한 네 테이크를 전부 싣지 않고 대표 한 개만 사용한다.
+   긴 환경음은 한 겹만 유지하고, 짧은 동작음만 그 위에 포개 모바일에서도
+   소리가 뭉개지거나 앱 용량이 폭증하지 않게 한다. */
+const AMBI = (()=>{
+  const cache={}, shots=new Set();
+  let on=false, suspended=false, current=null, currentKey=null, departTimer=null;
+  const FADE=480;
+  function source(key){ return D.sfx&&D.sfx[key]; }
+  function make(key,loop=false){
+    if(!source(key)) return null;
+    if(loop&&cache[key]) return cache[key];
+    const audio=new Audio(source(key));
+    audio.loop=loop;
+    audio.preload='auto';
+    if(loop) cache[key]=audio;
+    return audio;
+  }
+  function fade(audio,target,done){
+    if(!audio) return;
+    const start=audio.volume, begun=performance.now();
+    if(audio._fade) clearInterval(audio._fade);
+    audio._fade=setInterval(()=>{
+      const p=Math.min(1,(performance.now()-begun)/FADE);
+      audio.volume=Math.max(0,Math.min(1,start+(target-start)*p));
+      if(p>=1){
+        clearInterval(audio._fade); audio._fade=null;
+        if(done) done();
+      }
+    },40);
+  }
+  function setLoop(key,volume=.18){
+    clearTimeout(departTimer);
+    if(currentKey===key&&current){
+      current._target=volume;
+      if(on&&!suspended&&current.paused) current.play().catch(()=>{});
+      if(on&&!suspended) fade(current,volume);
+      return;
+    }
+    const prev=current;
+    currentKey=key||null;
+    current=key?make(key,true):null;
+    if(prev&&prev!==current) fade(prev,0,()=>{ prev.pause(); prev.currentTime=0; });
+    if(!current||!on||suspended) return;
+    current._target=volume;
+    current.volume=0;
+    current.play().catch(()=>{});
+    fade(current,volume);
+  }
+  function play(key,volume=.34){
+    if(!on||suspended||!source(key)) return null;
+    const audio=make(key,false);
+    if(!audio) return null;
+    audio.volume=volume;
+    shots.add(audio);
+    const clear=()=>shots.delete(audio);
+    audio.onended=clear;
+    audio.onerror=clear;
+    audio.play().catch(clear);
+    return audio;
+  }
+  function setOn(value){
+    on=!!value;
+    if(!on){
+      if(current){ current.pause(); current.currentTime=0; }
+      for(const audio of shots) audio.pause();
+      shots.clear();
+      return;
+    }
+    if(!suspended&&current){
+      current.volume=0;
+      current.play().catch(()=>{});
+      fade(current,current._target||.18);
+    }
+  }
+  function intro(scene){
+    switch(scene){
+      case 'intro-passenger-seat':
+        setLoop('sfx_rain_wiper_loop',.20); break;
+      case 'intro-first-expulsion':
+        setLoop(null); play('sfx_door_printer',.38); break;
+      case 'intro-parents-discovery':
+        setLoop('sfx_lab_room_loop',.15); break;
+      case 'intro-silenced-presentation':
+        setLoop('sfx_lab_room_loop',.10); play('sfx_presentation_cut',.38); break;
+      case 'intro-camper-conversion':
+        setLoop('sfx_garage_loop',.15); play('sfx_van_extension',.34); break;
+      case 'intro-current-expulsion':
+        setLoop('sfx_port_arrival_loop',.17); break;
+      case 'intro-departure-choice':
+        setLoop(null); play('sfx_cargo_depart',.38); break;
+      default:
+        if(!['intro-cheollian-2026','intro-143-years'].includes(scene)) setLoop(null);
+    }
+  }
+  function depart(road){
+    play('sfx_van_start',.38);
+    const key=road==='rough'?'sfx_drive_gravel_loop':'sfx_drive_asphalt_loop';
+    departTimer=setTimeout(()=>setLoop(key,.17),1100);
+  }
+  function arrive(){
+    setLoop(null);
+    play('sfx_stop_brake',.38);
+  }
+  function settlement(mode){
+    if(mode==='garage') setLoop('sfx_garage_loop',.17);
+    else if(mode==='people') setLoop('sfx_camp_loop',.15);
+    else setLoop('sfx_market_loop',.14);
+  }
+  function event(evd){
+    const id=String(evd&&evd.id||''), cue=String(evd&&evd.sfx||'');
+    if(id==='seoul_core') setLoop('sfx_core_loop',.17);
+    else if(/drone|swarm/.test(id)||cue==='drone') setLoop('sfx_drone_real',.14);
+    else setLoop(null);
+    if(id==='ai_gasstation') play('sfx_fuel_pump',.38);
+    if(/checkpoint|toll/.test(id)||cue==='scan') play('sfx_checkpoint',.28);
+    if(/walker/.test(id)||cue==='walker') play('sfx_walker_real',.36);
+    if(/^(?:freq_|radio_|dj_)/.test(id)) play('sfx_radio_static',.26);
+  }
+  function restore(){
+    if(typeof S==='undefined'||!S){ setLoop(null); return; }
+    if($('#ovl-stl')&&$('#ovl-stl').classList.contains('on')){
+      settlement(G.isNight()?'people':'hub');
+      return;
+    }
+    if(S.driving){
+      setLoop(S.driving.road==='rough'?'sfx_drive_gravel_loop':'sfx_drive_asphalt_loop',.17);
+      return;
+    }
+    if(G.isNight()) setLoop('sfx_camp_loop',.12);
+    else setLoop(null);
+  }
+  function suspend(){
+    suspended=true;
+    clearTimeout(departTimer);
+    if(current) current.pause();
+    for(const audio of shots) audio.pause();
+    shots.clear();
+  }
+  function resume(){
+    suspended=false;
+    if(!on||!current) return;
+    current.play().catch(()=>{});
+    fade(current,current._target||.18);
+  }
+  return {setOn,setLoop,play,intro,depart,arrive,settlement,event,restore,suspend,resume};
 })();
 /* ═══════════════════ VO (보이스 — D.vo 슬롯) ═══════════════════
    슬롯이 비어 있으면 조용히 무시 (자막만). 파일 오면 드롭인. */
 const VO = (()=>{
-  let cur=null;
+  let cur=null, on=false;
   function play(key){
-    if(!D.vo||!D.vo[key]) return;
+    if(!on||!D.vo||!D.vo[key]) return;
     stop();
     cur=new Audio(D.vo[key]); cur.volume=0.8;
     cur.play().catch(()=>{});
   }
   function stop(){ if(cur){ cur.pause(); cur=null; } }
-  return {play, stop};
+  function setOn(value){ on=!!value; if(!on) stop(); }
+  return {play, stop, setOn};
 })();
 
 /* 토스 WebView가 백그라운드로 내려갈 때 소리와 진행을 명시적으로 멈춘다.
@@ -2329,6 +2846,7 @@ function suspendForLifecycle(){
   saveForLifecycle();
   SND.suspend();
   BGM.suspend();
+  AMBI.suspend();
   VO.stop();
 }
 function resumeForLifecycle(){
@@ -2336,6 +2854,7 @@ function resumeForLifecycle(){
   lifecycleHidden=false;
   SND.resume();
   BGM.resume();
+  AMBI.resume();
 }
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden) suspendForLifecycle();

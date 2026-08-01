@@ -147,6 +147,45 @@ for (const page of D.intro || []) {
   }
 }
 
+/* 합류 장면은 동료가 갑자기 승차를 선언하지 않는다.
+   이전 과제의 감정선과 별개로, 화면 안에서도 제안→응답→자리 마련이 읽혀야 한다. */
+const recruitJoinRules = {
+  rq_minji_join: [/서울까지 같이 가고 싶어요/, /손님 자리가 아니라 네 자리를 만들자/],
+  rq_parkss_join: [/같이 가실래요/, /좋소/],
+  rq_leo_join: [/서울까지 같이 갈래요/, /저희 둘 다요/],
+  rq_jaeyi_join: [/서울까지 쓸 자리를 만들죠/, /이 레일 한 칸 써도 돼요/],
+  rq_eunsu_join: [/같이 갈래요/, /갈게요/],
+  rq_kangwoo_join: [/서울까지 같이 갑니까/, /간다/],
+};
+for (const [id, patterns] of Object.entries(recruitJoinRules)) {
+  const event = allEvents.find(item => item.id === id);
+  if (!event || typeof event.text !== 'string') {
+    errors.push(`합류 장면 누락: ${id}`);
+    continue;
+  }
+  let previous = -1;
+  for (const pattern of patterns) {
+    const match = event.text.match(pattern);
+    const index = match ? event.text.indexOf(match[0]) : -1;
+    if (index < 0 || index <= previous) {
+      errors.push(`합류 대화의 제안→응답 순서 깨짐: ${id} / ${pattern}`);
+      break;
+    }
+    previous = index;
+  }
+  const joins = (event.choices || []).flatMap(choice => choice.out || [])
+    .filter(outcome => outcome.fx && outcome.fx.offerComp);
+  if (joins.length !== 1) errors.push(`합류 확정 분기 수 이상: ${id} (${joins.length})`);
+}
+
+const introGrandfatherTerms = (D.intro || []).flatMap(page => page.beats || [])
+  .filter(turn => turn.kind === 'dialogue' && turn.who === 'grandfather')
+  .map(turn => turn.text)
+  .join('\n');
+if (/KOR-LOCAL|TIANYAN|케이오알\s*로컬/.test(introGrandfatherTerms)) {
+  errors.push('할아버지가 제품명·내부 용어를 설명하는 인트로 회귀');
+}
+
 const aiTells = [
   /이를 통해/, /더 나아가/, /전반적으로/, /결론적으로/,
   /핵심은/, /의미합니다/, /판단됩니다/, /필요가 있습니다/,

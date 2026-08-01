@@ -4,13 +4,17 @@
 현재 빌드 산출물을 기준으로 지도, 상태, 정비소, 이벤트 시트를 남긴다.
 디자인 회귀를 눈으로 비교할 때 쓰는 보조 도구다.
 """
+import os
 import pathlib
 from playwright.sync_api import sync_playwright
 
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 URL = (ROOT / "서울까지400km.html").as_uri()
-SHOT = ROOT / "tests" / "shots" / "ui"
+WIDTH = int(os.environ.get("CARAVAN_VIEWPORT_WIDTH", "480"))
+HEIGHT = int(os.environ.get("CARAVAN_VIEWPORT_HEIGHT", "860"))
+SHOT_NAME = os.environ.get("CARAVAN_SHOT_DIR", "ui")
+SHOT = ROOT / "tests" / "shots" / SHOT_NAME
 SHOT.mkdir(parents=True, exist_ok=True)
 
 
@@ -30,7 +34,7 @@ def enter_game(page):
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch()
     page = browser.new_page(
-        viewport={"width": 480, "height": 860},
+        viewport={"width": WIDTH, "height": HEIGHT},
         device_scale_factor=1,
     )
     enter_game(page)
@@ -123,6 +127,40 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "10-garage-chassis.png"))
     page.evaluate("document.querySelector('#ovl-stl').classList.remove('on')")
+
+    page.evaluate("""() => {
+      S.at='miryang'; S.driving=null; S.party=['minji'];
+      S._stlField={daily:{},once:{},log:[]};
+      UI.showStl('miryang','hub');
+    }""")
+    page.wait_for_timeout(180)
+    page.screenshot(path=str(SHOT / "10a-miryang-walk-hub.png"))
+    page.evaluate("UI.showStl('miryang','alley')")
+    page.wait_for_timeout(160)
+    page.screenshot(path=str(SHOT / "10b-miryang-alley.png"))
+    page.click('[data-stlfield="noodles"]')
+    page.click('[data-stlfield="pump"]')
+    page.wait_for_timeout(160)
+    page.screenshot(path=str(SHOT / "10c-miryang-hidden-trace.png"))
+    page.evaluate("document.querySelector('#ovl-stl').classList.remove('on')")
+
+    page.evaluate("""() => {
+      S.combat=null; S.injuries={}; S.party=['minji'];
+      UI.showEvent(D.events.find(e=>e.id==='patrol_walker')); UI.finishStory();
+    }""")
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "10d-combat-plan.png"))
+    page.click('#ev-sheet [data-i="0"]')
+    page.evaluate("UI.finishStory()")
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "10e-combat-choice-result.png"))
+    page.evaluate("""() => {
+      document.querySelector('#ev-wrap').classList.remove('on'); S._chain=null;
+      UI.showEvent(D.events.find(e=>e.id==='combat_walker_read')); UI.finishStory();
+    }""")
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "10f-combat-next-phase.png"))
+    page.evaluate("document.querySelector('#ev-wrap').classList.remove('on'); S._chain=null")
 
     page.evaluate("G.openEventById('roadbeat_200_archive')")
     page.wait_for_timeout(200)

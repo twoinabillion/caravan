@@ -1,0 +1,19 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "runtime_turns": 25212,
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 401 ()"
+  ],
+  "screenshots": [
+    "01-intro-cheollian-conversation.png",
+    "02-first-meeting-hidden-name.png",
+    "03-eunsu-nightshift.png",
+    "04-nested-quote-runtime-split.png",
+    "05-recruit-quest-loses-identity.png",
+    "06-self-address-speaker-reversal.png",
+    "07-gender-placeholder-in-dialogue.png"
+  ]
+}

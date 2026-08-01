@@ -35,6 +35,44 @@ with sync_playwright() as p:
     check('타이틀 표시', pg.locator('#bt-new').is_visible())
     check('「파란 트럭의 밤」 타이틀 BGM 내장',
           pg.evaluate("D.bgm.title.startsWith('data:audio/mpeg;base64,') && D.bgm.titleLoop === false"))
+    early_sound = pg.evaluate('''() => ({
+      visible:document.querySelector('#early-sound').offsetParent!==null,
+      pressed:document.querySelector('#early-sound').getAttribute('aria-pressed'),
+      label:document.querySelector('#early-sound').textContent.trim()
+    })''')
+    check('초반 화면 전체 소리 토글 표시', early_sound['visible'] and
+          early_sound['pressed'] == 'false' and early_sound['label'] == '🔇소리 켜기', str(early_sound))
+    pg.click('#bt-song'); pg.wait_for_timeout(120)
+    check('타이틀 곡 재생 버튼이 정지 버튼으로 바뀜',
+          pg.evaluate("BGM.isSongPlaying() && SND.isEnabled() && document.querySelector('#bt-song').textContent.includes('노래 끄기')"))
+    pg.click('#bt-song'); pg.wait_for_timeout(120)
+    check('같은 버튼으로 곡을 끄면 타이틀 BGM이 다시 재생되지 않음',
+          pg.evaluate("!BGM.isSongPlaying() && BGM.isMusicPaused() && !document.querySelector('#bt-song').classList.contains('playing')"))
+    pg.click('#early-sound'); pg.wait_for_timeout(80)
+    check('초반 전체 소리 토글로 음소거',
+          pg.evaluate("!SND.isEnabled() && document.querySelector('#early-sound').getAttribute('aria-pressed') === 'false'"))
+    audio_assets = pg.evaluate('''() => {
+      const sfx=Object.entries(D.sfx||{});
+      const core=Object.entries(D.vo||{}).filter(([key])=>/^cheollian_core_\\d{2}$/.test(key));
+      const humanVoice=Object.keys(D.vo||{}).filter(key=>
+        /(mother|father|grandfather|minji|parkss|leo|jaeyi|eunsu|kangwoo|intro)/i.test(key));
+      const embedded=value=>String(value||'').startsWith('data:audio/mpeg;base64,');
+      return {
+        sfxCount:sfx.length,
+        sfxEmbedded:sfx.every(([,value])=>embedded(value)),
+        driveEmbedded:embedded(D.bgm.drive_day)&&embedded(D.bgm.drive_night),
+        coreCount:core.length,
+        coreEmbedded:core.every(([,value])=>embedded(value)),
+        humanVoice,
+        managers:typeof AMBI==='object'&&typeof VO==='object'
+      };
+    }''')
+    check('대표 환경음·차량음 23개와 주행 BGM 내장',
+          audio_assets['sfxCount'] == 23 and audio_assets['sfxEmbedded'] and
+          audio_assets['driveEmbedded'], str(audio_assets))
+    check('천리안 코어 음성 15개만 내장·사람 음성 제외',
+          audio_assets['coreCount'] == 15 and audio_assets['coreEmbedded'] and
+          not audio_assets['humanVoice'] and audio_assets['managers'], str(audio_assets))
     check('달구지 PNG 런타임 제거', pg.evaluate('typeof D.vanSprites === "undefined"'))
     save_canvas(pg, '#titlecv', SHOT / 'title-procedural.png')
     pg.click('#bt-preview'); pg.wait_for_timeout(180)
@@ -52,6 +90,8 @@ with sync_playwright() as p:
     pg.click('#mode-on'); pg.wait_for_timeout(300)
     check('인트로 전에 이름 입력', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-intro').is_visible())
     pg.fill('#inp-name', '테스터'); pg.press('#inp-name', 'Enter'); pg.wait_for_timeout(200)
+    check('사용자가 끈 소리는 프롤로그에서 자동으로 다시 켜지지 않음',
+          pg.evaluate("!SND.isEnabled() && document.querySelector('#early-sound').offsetParent !== null"))
     expected_intro_count = pg.evaluate("`1 / ${D.intro.length} · 1 / ${D.intro[0].beats.length}`")
     check('이름 Enter가 첫 턴을 건너뛰지 않음',
           pg.locator('#intro-count').text_content() == expected_intro_count)
@@ -99,6 +139,108 @@ with sync_playwright() as p:
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
     check('게임 진입(HUD)', pg.locator('#g-fuel').is_visible())
+    auto_flow = pg.evaluate('''async () => {
+      window.__CARAVAN_TEST_AUTO_MS=90;
+      const ev=D.events.find(item=>item.id==='lib_meet');
+      UI.showEvent(ev);
+      document.querySelector('#ev-sheet').getAnimations().forEach(animation=>animation.finish());
+      const first=document.querySelector('#ev-sheet .story-next').getBoundingClientRect();
+      const announced=document.querySelector('#ev-sheet .story-next .req').textContent.includes('자동으로 다음 대화가 이어집니다');
+      const toggle=document.querySelector('#ev-sheet .story-auto-toggle');
+      const defaultOn=toggle.getAttribute('aria-pressed')==='true';
+      await new Promise(resolve=>setTimeout(resolve,150));
+      const badge=document.querySelector('.scene-cut-mark').textContent;
+      const second=document.querySelector('#ev-sheet .story-next').getBoundingClientRect();
+      document.querySelector('#ev-sheet .story-auto-toggle').click();
+      const stoppedAt=document.querySelector('.scene-cut-mark').textContent;
+      await new Promise(resolve=>setTimeout(resolve,150));
+      const stayed=document.querySelector('.scene-cut-mark').textContent===stoppedAt;
+      UI.finishStory();
+      const choicePause=document.querySelector('.choice-dock-head small').textContent.includes('직접 선택');
+      document.querySelector('#ev-sheet [data-i="2"]').click();
+      UI.finishStory();
+      const finishLabel=document.querySelector('#ev-sheet [data-r="ok"]').textContent.trim();
+      document.querySelector('#ev-sheet [data-r="ok"]').click();
+      delete window.__CARAVAN_TEST_AUTO_MS;
+      return {announced,defaultOn,badge,stable:Math.abs(first.y-second.y)<1,stayed,choicePause,finishLabel};
+    }''')
+    check('대화 자동 진행 안내·ON 기본값·선택지에서 정지',
+          auto_flow['announced'] and auto_flow['defaultOn'] and '2 / 4' in auto_flow['badge'] and
+          auto_flow['stayed'] and auto_flow['choicePause'], str(auto_flow))
+    check('진행 버튼 위치 고정·사건 종료 문구 명확',
+          auto_flow['stable'] and auto_flow['finishLabel'] == '길로 돌아가기', str(auto_flow))
+    identity_flow = pg.evaluate('''() => {
+      const backup=JSON.parse(JSON.stringify(S));
+      const revealChecks=[];
+      for(const ev of D.events.filter(item=>item.recruitStart)){
+        const id=ev.recruitStart, name=D.comps[id].name;
+        const introText=typeof ev.text==='function'?ev.text(S):ev.text;
+        const intro=UI.storyTurns(introText,ev,{turnSpeakers:ev.turnSpeakers});
+        const start=[];
+        (ev.choices||[]).forEach(choice=>(choice.out||[]).forEach(out=>{
+          if(out.fx&&out.fx.startRecruit===id) start.push(out);
+        }));
+        const outcome=start[0];
+        const outcomeText=outcome&&(typeof outcome.text==='function'?outcome.text(S):outcome.text);
+        const result=outcome?UI.storyTurns(outcomeText,ev,{
+          knownSpeaker:!!intro.knownSpeaker,
+          speakers:outcome.speakers,
+          turnSpeakers:outcome.turnSpeakers
+        }):[];
+        const combined=[...intro,...result].filter(turn=>turn.kind==='dialogue'&&turn.who===id);
+        const revealAt=combined.findIndex(turn=>String(turn.text||'').includes(name));
+        revealChecks.push({id,
+          hasStart:!!outcome,
+          revealAt,
+          revealNamed:revealAt>=0&&combined[revealAt].name!=='???',
+          hiddenBefore:combined.slice(0,Math.max(0,revealAt)).every(turn=>turn.name==='???'),
+          knownAfter:revealAt>=0&&combined.slice(revealAt).every(turn=>turn.name!=='???')
+        });
+      }
+
+      localStorage.setItem('caravan_story_auto','0');
+      const ev=D.events.find(item=>item.id==='meet_scrapyard');
+      UI.showEvent(ev);
+      UI.finishStory();
+      const beforeRows=[...document.querySelectorAll('#ev-sheet .chat-msg[data-speaker="minji"]')]
+        .map(node=>({side:node.dataset.side,name:node.querySelector('.chat-name').textContent.trim()}));
+      const beforeFrame=document.querySelector('#ev-sheet .event-scene-frame');
+      const beforeScene={
+        key:beforeFrame.dataset.sceneKey,
+        x:beforeFrame.style.getPropertyValue('--scene-x'),
+        y:beforeFrame.style.getPropertyValue('--scene-y'),
+        scale:beforeFrame.style.getPropertyValue('--scene-scale')
+      };
+      document.querySelector('#ev-sheet [data-i="0"]').click();
+      UI.finishStory();
+      const afterRows=[...document.querySelectorAll('#ev-sheet .chat-msg[data-speaker="minji"]')]
+        .map(node=>({side:node.dataset.side,name:node.querySelector('.chat-name').textContent.trim()}));
+      const afterFrame=document.querySelector('#ev-sheet .event-scene-frame');
+      const afterScene={
+        key:afterFrame.dataset.sceneKey,
+        x:afterFrame.style.getPropertyValue('--scene-x'),
+        y:afterFrame.style.getPropertyValue('--scene-y'),
+        scale:afterFrame.style.getPropertyValue('--scene-scale')
+      };
+      const laneStable=beforeRows.length>0&&afterRows.length>0&&
+        [...beforeRows,...afterRows].every(row=>row.side===beforeRows[0].side);
+      const revealOnLine=afterRows[0]&&afterRows[0].name==='민지';
+      const sceneStable=JSON.stringify(beforeScene)===JSON.stringify(afterScene);
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S=backup; UI.renderAll();
+      return {revealChecks,laneStable,revealOnLine,beforeRows,afterRows,sceneStable,beforeScene,afterScene};
+    }''')
+    check('여섯 동료 첫 만남의 ???→실명 공개 순서',
+          len(identity_flow['revealChecks']) == 6 and all(
+            item['hasStart'] and item['revealAt'] >= 0 and item['revealNamed'] and
+            item['hiddenBefore'] and item['knownAfter'] for item in identity_flow['revealChecks']),
+          str(identity_flow['revealChecks']))
+    check('민지가 이름을 밝힌 문장부터 실명 표시',
+          identity_flow['revealOnLine'], str(identity_flow))
+    check('같은 화자는 ???→실명에서도 좌우 레인 고정',
+          identity_flow['laneStable'], str(identity_flow))
+    check('같은 장면을 쓰는 선택→결과에서 이미지 크롭 고정',
+          identity_flow['sceneStable'], str(identity_flow))
     layout = pg.evaluate('''() => {
       UI.toast('첫 번째 알림'); UI.toast('두 번째 알림'); UI.toast('세 번째 알림');
       UI.speak({who:'sys',t:'첫 번째 주행 소식'});
@@ -212,6 +354,32 @@ with sync_playwright() as p:
     check('첫 만남은 이름 ???·실제 동료 얼굴', portraits['hidden'] and portraits['recruitFace'], str(portraits))
     check('익명 행인은 역할별 얼굴 표시', portraits['anonRole'] and portraits['anonFace'], str(portraits))
     check('전 이벤트 대화 턴에 얼굴 있음', not portraits['missing'], str(portraits['missing'][:8]))
+    recruit_dialogue = pg.evaluate('''() => {
+      const expected={
+        rq_minji_join:['minji','me','minji','me','minji'],
+        rq_parkss_join:['me','parkss','me','parkss','parkss'],
+        rq_leo_join:['leo','me','leo','me'],
+        rq_jaeyi_join:['jaeyi','me','jaeyi','me','jaeyi'],
+        rq_eunsu_join:['eunsu','me','eunsu','me','eunsu'],
+        rq_kangwoo_join:['kangwoo','seoyeon','kangwoo','me','kangwoo','me','kangwoo']
+      };
+      const actual={};
+      for(const id of Object.keys(expected)){
+        const event=D.events.find(item=>item.id===id);
+        actual[id]=UI.storyTurns(event.text,event)
+          .filter(turn=>turn.kind==='dialogue').map(turn=>turn.who);
+      }
+      return {
+        actual,
+        ok:Object.keys(expected).every(id=>JSON.stringify(actual[id])===JSON.stringify(expected[id])),
+        invitations:Object.keys(expected).every(id=>{
+          const text=D.events.find(item=>item.id===id).text;
+          return /서울까지|같이 가|함께/.test(text);
+        })
+      };
+    }''')
+    check('동료 합류 대화의 제안→응답 화자 순서 고정',
+          recruit_dialogue['ok'] and recruit_dialogue['invitations'], str(recruit_dialogue))
     check('콘솔 에러 0', not errors, ' | '.join(errors[:3]))
 
     print('― 의뢰 엔진')
@@ -662,6 +830,20 @@ with sync_playwright() as p:
         document.querySelector('#mission-strip').textContent.includes('대전');
       S.recruitQ=recruit0; UI.renderAll();
       S.min=12*60;
+      const walkParty0=[...S.party];
+      S.party=['minji'];
+      UI.showStl('miryang');
+      out.settlementWalkParty=document.querySelectorAll('.stl-walker-face').length===2 &&
+        document.querySelector('.stl-focus-copy').textContent.includes('민지와');
+      document.querySelector('[data-stlfocus="garage"]').click();
+      out.settlementWalkMove=document.querySelector('.stl-hub').dataset.focus==='garage' &&
+        document.querySelector('[data-stlfocus="garage"]').getAttribute('aria-pressed')==='true' &&
+        document.querySelector('.stl-route').classList.contains('garage');
+      document.querySelector('#stl-enter').click();
+      out.settlementSceneLarge=document.querySelector('.stl-section-hero').getBoundingClientRect().height>=190 &&
+        document.querySelectorAll('.stl-section-face').length===2 &&
+        document.querySelector('.stl-section-party').textContent.includes('민지와');
+      S.party=walkParty0;
       UI.showStl('daegu');
       out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===3 &&
         !!document.querySelector('#stl-van') &&
@@ -783,6 +965,8 @@ with sync_playwright() as p:
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))
     check('동료 과제 중에도 일반 의뢰와 마감이 보임', r4['missionSecondary'], str(r4))
     check('정착지 3개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
+    check('정착지에서 현재 동료와 장소 사이를 이동', r4['settlementWalkParty'] and r4['settlementWalkMove'], str(r4))
+    check('정착지 내부 장면 확대·동행 상태 유지', r4['settlementSceneLarge'], str(r4))
     check('장소별 기능 분리', r4['sectionIsolation'], str(r4))
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
     check('업그레이드 전후 차체 작업 장면·3단계 직접 조작',
@@ -817,6 +1001,12 @@ with sync_playwright() as p:
       out.hud=!!document.querySelector('.combat-hud') &&
         document.querySelector('.combat-hud').textContent.includes('정찰') &&
         document.querySelector('.event-choice-dock').textContent.includes('엄폐');
+      document.querySelector('#ev-sheet [data-i="0"]').click();
+      out.choiceFeedback=!!document.querySelector('.combat-last.result') &&
+        document.querySelector('.combat-last.result').textContent.includes('엄폐') &&
+        S.combat&&S.combat.history&&S.combat.history[0].tactic==='엄폐';
+      UI.finishStory();
+      out.chainLabel=document.querySelector('#ev-sheet [data-r="ok"]')?.textContent.includes('다음 단계');
       document.querySelector('#ev-wrap').classList.remove('on');
       S.injuries={}; S.combat=null;
       G.applyFx({combatStart:{id:'test',threat:'test'},combatEdge:2});
@@ -825,13 +1015,19 @@ with sync_playwright() as p:
       out.injury=G.isInjured('driver')&&S.injuries.driver.days===2;
       G.applyFx({healInjury:'latest',combatEnd:1});
       out.recovered=!G.isInjured('driver')&&S.combat===null;
+      const oldFire=S.items['화염병']||0;
+      S.items['화염병']=1; out.twoItemBlocked=!G.reqOk({item:'화염병',itemQty:2}).ok;
+      S.items['화염병']=2; out.twoItemReady=G.reqOk({item:'화염병',itemQty:2}).ok;
+      S.items['화염병']=oldFire;
       out.sound=typeof SND.combat==='function';
       S.combat=oldCombat; S.injuries=oldInjuries; G.save();
       return out;
     }''')
     check('초계·드론·검문소 3단계 교전', rcombat['threePhase'], str(rcombat))
-    check('교전 HUD·전술 표식', rcombat['hud'], str(rcombat))
+    check('교전 HUD·전술 표식·직전 선택 기억',
+          rcombat['hud'] and rcombat['choiceFeedback'] and rcombat['chainLabel'], str(rcombat))
     check('전세·부상·회복 상태 반영', rcombat['edge'] and rcombat['injury'] and rcombat['recovered'], str(rcombat))
+    check('전투 소모품은 실제 필요 수량까지 검사', rcombat['twoItemBlocked'] and rcombat['twoItemReady'], str(rcombat))
     check('Web Audio 전투 효과음 합성기', rcombat['sound'], str(rcombat))
     print('― 합류 전 의뢰')
     rr = pg.evaluate('''() => {
@@ -875,11 +1071,17 @@ with sync_playwright() as p:
     map_detail = pg.evaluate('''() => ({
       modes:document.querySelectorAll('#map-sourcebar,#osmcv,#vworld-map').length,
       canvas:document.querySelector('#mapcv')?.getAttribute('aria-label'),
-      rivers:(typeof MAPR==='object'),
+      cleanMode:MAPR&&MAPR.mode,
+      title:document.querySelector('#map-title')?.textContent,
       context:Object.keys(D.nodeScenery||{}).length
     })''')
-    check('실축 모드 제거·그림 여정도 단일화', map_detail['modes'] == 0 and '그림 여정도' in map_detail['canvas'], str(map_detail))
-    check('상세 그림 지도 렌더러 유지', map_detail['rivers'] and map_detail['context'] >= 30, str(map_detail))
+    check('실축 모드 제거·대한민국 여정 지도 단일화', map_detail['modes'] == 0 and
+          '대한민국 주요 도시' in map_detail['canvas'] and '대한민국' in map_detail['title'], str(map_detail))
+    check('강·산맥 장식 없는 도시 중심 지도', map_detail['cleanMode'] == 'cities-only' and
+          map_detail['context'] >= 30, str(map_detail))
+    map_source = (ROOT / 'src' / '06-mapgraph.js').read_text(encoding='utf-8')
+    check('강 이름·보조 도로·지역명 레이어 제거', not any(token in map_source for token in
+          ('RIVERS', 'SECONDARY_ROUTES', 'REGION_LABELS', "nm:'한강'", "nm:'낙동강'")))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
     check('866개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))

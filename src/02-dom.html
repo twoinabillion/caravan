@@ -1,4 +1,8 @@
-<div id="frame"><div id="app">
+<div id="frame"><div id="app" data-screen="title">
+
+  <button id="early-sound" type="button" aria-label="소리 켜기" aria-pressed="false">
+    <span class="sound-icon" aria-hidden="true">🔇</span><span class="sound-label">소리 켜기</span>
+  </button>
 
   <!-- ══ TITLE ══ -->
   <div class="scr on" id="scr-title">
@@ -13,7 +17,7 @@
         <button class="act" id="bt-preview"><span class="ic">▧</span><span><b>여정 미리보기</b><small>동료 · 탐사 · 전투 · 달구지 생활</small></span></button>
       </div>
       <div class="ver">v1.8 · 온로드/오프로드 · 자동 저장 · 에피소드 1 — 서울 해방</div>
-      <button id="bt-song" title="부서진 고속도로">♪ 부서진 고속도로</button>
+      <button id="bt-song" type="button" title="부서진 고속도로 재생" aria-pressed="false">♪ 부서진 고속도로</button>
     </div>
   </div>
 
@@ -143,10 +147,10 @@
 
   <!-- ══ MAP ══ -->
   <div class="ovl" id="ovl-map" role="dialog" aria-modal="true" aria-labelledby="map-title" aria-hidden="true">
-    <div class="ovl-head"><h2 id="map-title">지도 — 남녘</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x" aria-label="지도 닫기">✕</button></div>
+    <div class="ovl-head"><h2 id="map-title">여정 지도 — 대한민국</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x" aria-label="지도 닫기">✕</button></div>
     <div id="map-mission" class="mission-strip map-mission"></div>
     <div id="mapwrap">
-      <canvas id="mapcv" aria-label="서울까지 이어지는 그림 여정도"></canvas>
+      <canvas id="mapcv" aria-label="대한민국 주요 도시와 서울행 경로 지도"></canvas>
       <div id="nodecard"></div>
     </div>
   </div>

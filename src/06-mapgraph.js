@@ -7,7 +7,7 @@ const MAPR = (()=>{
 
   const geo=(lon,lat)=>D.projectGeo([lon,lat]);
   /* 한반도 남부 해안선 — WGS84를 자체 지도공간 600×760에 투영.
-     게임용으로 단순화했지만 모든 도시·강·경로가 같은 축을 쓴다. */
+     게임용으로 단순화했지만 모든 도시와 여행 경로가 같은 축을 쓴다. */
   const COAST_GEO = [
     /* 휴전선 (서→동, 동쪽이 약간 더 북) */
     [126.16,37.78],[126.35,37.82],[126.60,37.96],[126.90,38.00],[127.20,38.12],
@@ -26,47 +26,12 @@ const MAPR = (()=>{
     [126.58,37.20],[126.45,37.42],[126.28,37.55],
   ];
   const COAST=COAST_GEO.map(([lon,lat])=>geo(lon,lat));
-  /* 섬들 (장식) — [x,y,rx,ry] */
-  const ISLES = [
-    [...geo(128.62,34.85),9,4],[...geo(127.90,34.80),10,4],
-    [...geo(126.75,34.32),8,3],[...geo(126.25,34.48),8,3],[...geo(127.35,34.55),5,2],
-    [...geo(125.90,35.05),3,1.6],[...geo(126.05,35.45),2.5,1.4],
-    [...geo(126.10,35.85),3,1.6],[...geo(126.02,36.25),2.5,1.4],
-    [...geo(126.18,36.65),3,1.6],
-    [556,150,4,2],[566,156,1.5,1],                                            // 울릉도·독도
-  ];
-  /* 백두대간·소백산맥 능선 (장식) */
-  const RIDGE = [
-    [[128.58,38.20],[128.58,37.80],[128.50,37.40],[128.32,37.00],[128.18,36.60],[128.02,36.20]].map(p=>geo(...p)),
-    [[128.02,36.20],[127.90,36.00],[127.70,35.80],[127.50,35.60],[127.30,35.40]].map(p=>geo(...p)),
-  ];
-  const DMZ=[[126.18,37.76],[126.55,37.88],[126.95,38.00],[127.35,38.20],
-    [127.80,38.30],[128.20,38.34],[128.58,38.52]].map(p=>geo(...p));
-  /* 그림 지도에 남기는 실제 지형의 결. 길 선택과 무관한 도시는 낮은 명도로만 보여
-     세계의 밀도를 높이되, 미발견 장소나 선택 결과는 스포일러하지 않는다. */
-  const RIVERS = [
-    {nm:'한강', at:[126.92,37.58], pts:[[126.56,37.58],[126.78,37.57],[126.98,37.55],[127.18,37.53],[127.42,37.58],[127.73,37.72],[127.95,37.70]]},
-    {nm:'금강', at:[127.10,36.47], pts:[[126.64,36.02],[126.92,36.18],[127.08,36.35],[127.29,36.48],[127.52,36.40],[127.70,36.18],[127.68,36.00]]},
-    {nm:'낙동강', at:[128.37,36.18], pts:[[128.06,35.10],[128.25,35.35],[128.40,35.62],[128.35,35.95],[128.36,36.25],[128.54,36.55],[128.67,36.82]]},
-    {nm:'영산강', at:[126.80,35.24], pts:[[126.48,34.86],[126.63,35.02],[126.82,35.13],[126.92,35.33],[126.98,35.48]]},
-    {nm:'섬진강', at:[127.72,35.28], pts:[[127.52,34.92],[127.66,35.12],[127.78,35.35],[127.66,35.56],[127.54,35.72]]},
-  ].map(r=>({...r,pts:r.pts.map(p=>geo(...p)),at:geo(...r.at)}));
-  const SECONDARY_ROUTES = [
-    [[126.40,34.82],[126.75,35.16],[126.93,35.82],[126.99,36.45],[126.78,37.45]],
-    [[128.05,35.18],[128.34,36.12],[128.19,36.59],[127.95,37.34],[127.73,37.88]],
-    [[129.02,35.10],[129.22,35.84],[129.37,36.03],[128.90,37.75],[128.59,38.20]],
-  ].map(seg=>seg.map(p=>geo(...p)));
-  const CONTEXT_CITIES = [
-    ['인천',126.70,37.46],['고양',126.83,37.66],['부천',126.77,37.50],['안양',126.95,37.39],
-    ['성남',127.13,37.42],['용인',127.18,37.24],['화성',126.83,37.20],['안산',126.83,37.32],
-    ['춘천',127.73,37.88],['태안',126.30,36.75],['보령',126.61,36.33],['익산',126.96,35.95],
-    ['김제',126.88,35.80],['창원',128.68,35.23],['통영',128.43,34.85],['거제',128.62,34.88],
-    ['사천',128.08,35.00],['하동',127.75,35.07],['영주',128.62,36.81],['제천',128.21,37.13],
-  ].map(([nm,lon,lat])=>[nm,...geo(lon,lat)]);
-  const REGION_LABELS = [
-    ['경기',127.20,37.40],['강원',128.28,37.58],['충북',127.78,36.72],['충남',126.76,36.55],
-    ['경북',128.70,36.28],['경남',128.32,35.38],['전북',127.12,35.69],['전남',126.72,34.98],
-  ].map(([nm,lon,lat])=>[nm,...geo(lon,lat)]);
+  /* 지리는 방향을 알려 주는 배경이어야 한다. 화면에는 실제 여행에서 기준이 되는
+     주요 도시만 상시 표시하고, 작은 경유지는 현재 위치나 다음 길일 때만 이름을 보인다. */
+  const CITY_IDS=new Set([
+    'seoul','suwon','daejeon','sejong','cheongju','daegu','jeonju','gwangju',
+    'busan','ulsan','pohang','gyeongju','gunsan','mokpo','yeosu','wonju','gangneung','sokcho'
+  ]);
 
   function init(canvas){
     cv=canvas; ctx=cv.getContext('2d');
@@ -97,20 +62,11 @@ const MAPR = (()=>{
 
   function draw(dt){
     if(!ctx||!W) return; t+=dt;
-    const compact=W<400;
     ctx.clearRect(0,0,W,H);
-    /* 바다 — 은은한 심도 그라데이션 */
+    /* 바다 — 윤곽과 도시가 먼저 읽히도록 장식 격자와 물결은 쓰지 않는다. */
     const sea=ctx.createLinearGradient(0,0,0,H);
     sea.addColorStop(0,'#0a0f22'); sea.addColorStop(1,'#080c1a');
     ctx.fillStyle=sea; ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle='rgba(85,120,180,0.045)'; ctx.lineWidth=1;
-    for(let x=0;x<W;x+=26){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
-    for(let y=0;y<H;y+=26){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
-    /* 물결 잔선 (반짝임) */
-    const wavePts=[[168,200],[560,300],[170,540],[540,560],[560,120],[240,700],[430,700],[170,640]];
-    wavePts.forEach((wp,i)=>{ const a=0.10+0.08*Math.sin(t*1.3+i*1.9); if(a<=0.11) return;
-      ctx.strokeStyle=`rgba(140,175,225,${a})`;
-      ctx.beginPath(); ctx.moveTo(px(wp[0]),py(wp[1])); ctx.lineTo(px(wp[0]+14),py(wp[1])); ctx.stroke(); });
     /* 해안선 경로 (부드러운 곡선) */
     const coastPath=()=>{ ctx.beginPath();
       const n=COAST.length;
@@ -122,77 +78,16 @@ const MAPR = (()=>{
       ctx.closePath(); };
     /* 해안 글로우 (물가 하이라이트) */
     coastPath();
-    ctx.strokeStyle='rgba(110,160,215,0.22)'; ctx.lineWidth=5; ctx.stroke();
+    ctx.strokeStyle='rgba(110,160,215,0.18)'; ctx.lineWidth=6; ctx.stroke();
     /* 육지 */
     coastPath();
     const land=ctx.createLinearGradient(0,py(78),0,py(668));
     land.addColorStop(0,'#182138'); land.addColorStop(1,'#121a2c');
     ctx.fillStyle=land; ctx.fill();
-    ctx.strokeStyle='#31446e'; ctx.lineWidth=1.5; ctx.stroke();
-    /* 지역 이름 — 오래된 종이 지도처럼 육지 결 아래에 눌러 둔다. */
-    ctx.textAlign='center';
-    ctx.font='700 13px serif';
-    ctx.fillStyle='rgba(135,153,187,0.22)';
-    REGION_LABELS.forEach(([nm,x,y])=>ctx.fillText(nm,px(x),py(y)));
-    ctx.textAlign='left';
-    /* 강과 옛 간선. 게임 도로보다 가늘고 낮은 명도로, 지형을 읽는 배경선이다. */
-    SECONDARY_ROUTES.forEach(seg=>{
-      ctx.beginPath();
-      seg.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
-      ctx.setLineDash([2,5]); ctx.strokeStyle='rgba(113,132,171,0.14)'; ctx.lineWidth=1; ctx.stroke();
-    });
-    ctx.setLineDash([]);
-    RIVERS.forEach(r=>{
-      ctx.beginPath();
-      r.pts.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
-      ctx.strokeStyle='rgba(72,142,194,0.13)'; ctx.lineWidth=4; ctx.stroke();
-      ctx.strokeStyle='rgba(93,169,219,0.36)'; ctx.lineWidth=1.15; ctx.stroke();
-      ctx.fillStyle='rgba(140,195,229,0.7)'; ctx.font=compact?'10px serif':'10.5px serif';
-      ctx.fillText(r.nm,px(r.at[0])+3,py(r.at[1])-3);
-    });
-    /* 백두대간 능선 음영 */
-    ctx.strokeStyle='rgba(60,80,125,0.5)'; ctx.lineWidth=1;
-    RIDGE.forEach(seg=>{ ctx.beginPath();
-      seg.forEach((p,i)=> i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1]))); ctx.stroke(); });
-    RIDGE.forEach(seg=>{ seg.forEach((p,i)=>{ if(i%2) return;      // 봉우리 ▲
-      ctx.strokeStyle='rgba(75,98,145,0.55)';
-      ctx.beginPath(); ctx.moveTo(px(p[0])-2,py(p[1])+2); ctx.lineTo(px(p[0]),py(p[1])-1); ctx.lineTo(px(p[0])+2,py(p[1])+2); ctx.stroke(); }); });
-    /* 섬들 */
-    ISLES.forEach(([ix,iy,rx,ry])=>{
-      ctx.beginPath(); ctx.ellipse(px(ix),py(iy),Math.max(1.5,rx*tf.sx),Math.max(1,ry*tf.sy),0,0,7);
-      ctx.fillStyle='#141c30'; ctx.fill(); ctx.strokeStyle='rgba(90,120,175,0.5)'; ctx.lineWidth=1; ctx.stroke(); });
-    /* 휴전선 */
-    ctx.setLineDash([5,4]); ctx.strokeStyle='rgba(226,87,79,0.4)'; ctx.lineWidth=1.2;
-    ctx.beginPath();
-    DMZ.forEach((p,i)=>i?ctx.lineTo(px(p[0]),py(p[1])):ctx.moveTo(px(p[0]),py(p[1])));
-    ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle='rgba(239,137,127,0.65)'; ctx.font='10px monospace';
-    const dmzLabel=geo(127.05,38.12);
-    ctx.fillText('─ 휴전선 ─', px(dmzLabel[0]), py(dmzLabel[1])-6);
-    // 제주
+    ctx.strokeStyle='#3a4e78'; ctx.lineWidth=1.8; ctx.stroke();
+    /* 제주는 방향 기준으로만 남긴다. */
     ctx.beginPath(); ctx.ellipse(px(288),py(714),40*tf.sx,13*tf.sy,0,0,7);
     ctx.fillStyle='#141c30'; ctx.fill(); ctx.strokeStyle='rgba(90,120,175,0.5)'; ctx.stroke();
-    ctx.fillStyle='rgba(120,150,200,0.4)'; ctx.beginPath(); ctx.ellipse(px(288),py(712),4*tf.sx,2*tf.sy,0,0,7); ctx.fill(); // 한라산
-    ctx.fillStyle='rgba(145,171,215,0.55)'; ctx.font='10.5px sans-serif'; ctx.textAlign='center';
-    ctx.fillText('제주', px(288), py(714)+18); ctx.textAlign='left';
-    // 바다 이름
-    ctx.fillStyle='rgba(120,150,200,0.28)'; ctx.font=`${9*tf.s+6}px serif`;
-    const eastSea=geo(129.56,37.55), westSea=geo(125.82,36.55), southSea=geo(127.45,34.54);
-    ctx.fillText('동', px(eastSea[0]), py(eastSea[1])); ctx.fillText('해', px(eastSea[0]), py(eastSea[1])+16);
-    ctx.fillText('서', px(westSea[0]), py(westSea[1])); ctx.fillText('해', px(westSea[0]), py(westSea[1])+16);
-    ctx.fillText('남   해', px(southSea[0]), py(southSea[1]));
-
-    /* 경로 노드는 아니지만 누구나 지리적 기준으로 아는 도시들. 클릭·이동은 되지 않는다. */
-    ctx.font=compact?'10px sans-serif':'10.5px sans-serif';
-    const compactContext=new Set(['인천','춘천','창원','제천']);
-    CONTEXT_CITIES.forEach(([nm,x,y])=>{
-      const sx=px(x),sy=py(y);
-      ctx.fillStyle='rgba(137,153,188,0.65)';
-      ctx.beginPath(); ctx.arc(sx,sy,1.35,0,7); ctx.fill();
-      if(compact&&!compactContext.has(nm)) return;
-      ctx.fillStyle='rgba(166,179,207,0.58)';
-      ctx.fillText(nm,sx+3,sy+2.5);
-    });
 
     /* 인접 노드 (지금 갈 수 있는 곳) */
     const nbrs=new Set();
@@ -210,11 +105,13 @@ const MAPR = (()=>{
       const a=D.nodes[e[0]], b=D.nodes[e[1]];
       const cur = S.driving && ((S.driving.from===e[0]&&S.driving.to===e[1])||(S.driving.from===e[1]&&S.driving.to===e[0]));
       const next = !S.driving && (e[0]===S.at||e[1]===S.at) && (nbrs.has(e[0])||nbrs.has(e[1]));
+      const traveled=S&&S.visited.includes(e[0])&&S.visited.includes(e[1]);
+      if(!cur&&!next&&!traveled) continue;           // 먼 미래의 길망은 미리 펼치지 않는다
       ctx.beginPath(); ctx.moveTo(px(a.x),py(a.y)); ctx.lineTo(px(b.x),py(b.y));
       ctx.setLineDash(e[3]==='rough'?[4,5]: e[3]==='normal'?[8,4]:[]);
       ctx.strokeStyle= cur? 'rgba(255,180,84,0.9)':
         next? 'rgba(255,180,84,0.5)':
-        (S&&S.visited.includes(e[0])&&S.visited.includes(e[1]))? 'rgba(180,190,220,0.4)':'rgba(120,135,180,0.3)';
+        'rgba(180,190,220,0.32)';
       ctx.lineWidth=cur?2.4: next?2:1.6;
       ctx.stroke(); ctx.setLineDash([]);
     }
@@ -224,6 +121,9 @@ const MAPR = (()=>{
       const n=D.nodes[id]; const x=px(n.x), y=py(n.y);
       const visited=S.visited.includes(id);
       const here = S.at===id;
+      const city=CITY_IDS.has(id);
+      const visible=city||here||visited||nbrs.has(id)||n.stl||n.type==='goal';
+      if(!visible) continue;
       if(n.type==='goal'){
         const pulse=0.5+0.5*Math.sin(t*2.4);
         ctx.strokeStyle=`rgba(85,224,200,${0.25+0.45*pulse})`; ctx.lineWidth=1.5;
@@ -234,6 +134,11 @@ const MAPR = (()=>{
         ctx.fillStyle= visited? '#ffb454':'#c98d47';
         ctx.save(); ctx.translate(x,y); ctx.rotate(Math.PI/4);
         ctx.fillRect(-4.4,-4.4,8.8,8.8); ctx.restore();
+      } else if(city){
+        ctx.fillStyle=visited?'#c8d0e6':'#7d89aa';
+        ctx.beginPath(); ctx.arc(x,y,3.8,0,7); ctx.fill();
+        ctx.strokeStyle='rgba(206,217,241,.45)'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.arc(x,y,6.2,0,7); ctx.stroke();
       } else if(n.type==='hidden'){
         ctx.strokeStyle='#c9b8ff'; ctx.setLineDash([2.5,2.5]); ctx.lineWidth=1.4;
         ctx.beginPath(); ctx.arc(x,y,5.6,0,7); ctx.stroke(); ctx.setLineDash([]);
@@ -274,16 +179,14 @@ const MAPR = (()=>{
       const prio=(id)=>{ const n=D.nodes[id];
         if(S.at===id) return 0;
         if(n.type==='goal') return 1;
-        if(n.stl) return 2;
+        if(CITY_IDS.has(id)) return 2;
         if(nbrs.has(id)) return 3;
-        if(n.type==='hidden') return 4;
-        if(S.visited.includes(id)) return 5;
-        return 6; };
+        return 4; };
       const order=[...S.known].sort((a,b)=>prio(a)-prio(b));
       for(const id of order){
         const n=D.nodes[id]; const x=px(n.x), y=py(n.y);
         const p=prio(id);
-        if(p===6 && tf.s<0.9) continue;             // 미방문 일반 노드는 작은 화면에선 점만
+        if(p>=4) continue;                           // 작은 경유지는 점으로만 남긴다
         const bold = p<=2;
         const font=`${bold?'700 ':''}${p<=3?11:10.5}px sans-serif`;
         const fill= n.type==='goal'? 'rgba(85,224,200,0.95)':
@@ -291,7 +194,7 @@ const MAPR = (()=>{
           n.stl? 'rgba(240,225,195,0.95)':
           nbrs.has(id)? 'rgba(255,190,110,0.9)':
           n.type==='hidden'? 'rgba(201,184,255,0.8)': 'rgba(160,170,200,0.7)';
-        putLabel(x,y,n.name.split(' ')[0],font,fill);
+        putLabel(x,y,n.name.split(/[ —]/)[0],font,fill);
       }
     }
 
@@ -316,18 +219,23 @@ const MAPR = (()=>{
       ctx.beginPath(); ctx.roundRect(-5,-3.4,10,6.8,2); ctx.fill();
       ctx.restore();
     }
-    /* 범례 */
-    ctx.font=compact?'11px monospace':'11px monospace'; ctx.fillStyle='rgba(185,194,217,0.82)';
-    ctx.fillText(compact?'◆ 정착지  ● 폐허  ◌? 미확인':'◆ 정착지  ● 폐허  ◌? 미확인  ⊙ 지금 갈 수 있는 곳',12,H-22);
-    ctx.fillText(compact?'─ 고속  ╌ 국도  ┄ 험로 · 지명을 누르세요':'─ 고속 · ╌ 국도 · ┄ 험로   (지명을 누르면 상세)',12,H-10);
+    /* 한 줄 범례 — 지도 자체보다 크게 보이지 않게 한다. */
+    ctx.font='10.5px monospace'; ctx.fillStyle='rgba(185,194,217,0.72)';
+    ctx.fillText('◆ 주요 거점   ● 도시   ⊙ 현재·다음 길   · 지명을 누르면 상세',12,H-12);
   }
 
   function onClick(ev){
     if(!S) return;
     const r=cv.getBoundingClientRect();
     const mx=ev.clientX-r.left, my=ev.clientY-r.top;
+    const nbrs=new Set();
+    if(!S.driving&&S.at) for(const e of D.edges){
+      if(e[0]===S.at&&S.known.includes(e[1])) nbrs.add(e[1]);
+      if(e[1]===S.at&&S.known.includes(e[0])) nbrs.add(e[0]);
+    }
     let best=null, bd=24;
     for(const id of S.known){ const n=D.nodes[id];
+      if(!(CITY_IDS.has(id)||S.at===id||S.visited.includes(id)||nbrs.has(id)||n.stl||n.type==='goal')) continue;
       const d=Math.hypot(px(n.x)-mx, py(n.y)-my);
       if(d<bd){ bd=d; best=id; } }
     UI.showNodeCard(best);
@@ -405,7 +313,7 @@ const MAPR = (()=>{
     mctx.beginPath(); mctx.moveTo(w-8.5,14); mctx.lineTo(w-6.5,12); mctx.lineTo(w-4.5,14); mctx.stroke();
   }
 
-  return {init, draw, resize, initMini, drawMini};
+  return {init, draw, resize, initMini, drawMini, mode:'cities-only'};
 })();
 
 /* ═══════════════════ JOURNAL GRAPH ═══════════════════ */

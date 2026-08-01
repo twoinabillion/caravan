@@ -11,7 +11,11 @@
     "dev:toss": "granite dev",
     "prebuild:toss": "if [ \"${CARAVAN_HTML_READY:-0}\" != \"1\" ]; then bash ./build.sh --html-only; fi",
     "build:toss": "ait build && node tools/sync-ait-aliases.mjs",
-    "lint:dialogue": "node tools/dialogue-lint.cjs"
+    "lint:dialogue": "node tools/dialogue-lint.cjs",
+    "validate:content": "node tools/validate-content.cjs",
+    "verify:quick": "npm run lint:dialogue && npm run validate:content",
+    "test:golden": "python3 tests/test_golden_route.py",
+    "test:smoke": "python3 tests/test_smoke.py"
   },
   "dependencies": {
     "@apps-in-toss/web-framework": "2.10.6"
