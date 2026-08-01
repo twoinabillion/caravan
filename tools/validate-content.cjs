@@ -33,6 +33,7 @@ for (const event of events) {
 
 const compIds = new Set(Object.keys(D.comps || {}));
 const npcIds = new Set(Object.keys(D.npcs || {}));
+const knowledgeIds = new Set(Object.keys(D.knowledge || {}));
 const speakerIds = new Set([
   ...compIds, ...npcIds, ...Object.keys(D.portraits || {}),
   'me', '나', 'sys', 'record', 'cheollian', 'radio', 'unknown',
@@ -55,8 +56,15 @@ function validateReq(req, where) {
   if (!req) return;
   need(isObject(req), where, '선택 조건이 객체가 아님');
   if (!isObject(req)) return;
-  for (const key of ['comp', 'healthyComp'])
+  for (const key of ['comp', 'healthyComp', 'trustComp'])
     if (req[key]) need(compIds.has(req[key]), where, `없는 동료 참조 ${req[key]}`);
+  if (req.knowledge) {
+    need(Array.isArray(req.knowledge) && req.knowledge.length === 2, where, 'knowledge 조건 형식이 잘못됨');
+    if (Array.isArray(req.knowledge)) {
+      need(knowledgeIds.has(req.knowledge[0]), where, `없는 지식 ${req.knowledge[0]}`);
+      need([1, 2].includes(req.knowledge[1]), where, 'knowledge 단계는 1 또는 2여야 함');
+    }
+  }
   if (req.perk) need(perkIds.has(req.perk), where, `없는 퍼크 참조 ${req.perk}`);
   if (req.up) need((D.upgrades || []).some(up => up.id === req.up), where, `없는 업그레이드 ${req.up}`);
   for (const key of ['scrap', 'fuel', 'water', 'food', 'party', 'stories', 'traces', 'itemQty'])
@@ -79,6 +87,21 @@ function validateFx(fx, where) {
     const valid = Object.values(D.recruitQuests || {}).some(q => q.approaches && q.approaches[fx.recruitChoice]);
     need(valid, where, `없는 영입 방식 ${fx.recruitChoice}`);
   }
+  if (fx.knowledge) {
+    const gains = Array.isArray(fx.knowledge[0]) ? fx.knowledge : [fx.knowledge];
+    for (const gain of gains) {
+      need(Array.isArray(gain) && knowledgeIds.has(gain[0]), where, `없는 지식 효과 ${gain && gain[0]}`);
+      need(Array.isArray(gain) && [1, 2].includes(gain[1]), where, '지식 효과 단계는 1 또는 2여야 함');
+    }
+  }
+  if (fx.relation) {
+    need(isObject(fx.relation) && Array.isArray(fx.relation.between) && fx.relation.between.length === 2,
+      where, '관계 효과 형식이 잘못됨');
+    for (const id of (fx.relation && fx.relation.between) || [])
+      need(compIds.has(id), where, `없는 관계 동료 ${id}`);
+    need(Number.isFinite(fx.relation && fx.relation.amount) && fx.relation.amount !== 0,
+      where, '관계 변화량이 0이거나 숫자가 아님');
+  }
 }
 
 for (const event of events) {
@@ -91,6 +114,14 @@ for (const event of events) {
   if (event.locEvent) need(!!D.nodes[event.locEvent], where, `locEvent가 없는 장소 ${event.locEvent}`);
   for (const key of ['needsComp', 'needsComp2', 'noComp'])
     if (event[key]) need(compIds.has(event[key]), where, `없는 동료 게이트 ${key}:${event[key]}`);
+  for (const key of ['needKnowledge', 'noKnowledge']) if (event[key]) {
+    need(Array.isArray(event[key]) && knowledgeIds.has(event[key][0]), where, `없는 지식 게이트 ${event[key] && event[key][0]}`);
+    need(Array.isArray(event[key]) && [1, 2].includes(event[key][1]), where, `${key} 단계는 1 또는 2여야 함`);
+  }
+  for (const key of ['maxVanPct', 'maxScrap', 'maxPartyMood'])
+    if (event[key] !== undefined) need(Number.isFinite(event[key]) && event[key] >= 0, where, `${key} 게이트가 잘못됨`);
+  for (const key of ['needsInjury', 'needsDriverInjury'])
+    if (event[key] !== undefined) need(event[key] === 1, where, `${key} 게이트는 1이어야 함`);
   if (event.needsNpc) need(npcIds.has(event.needsNpc), where, `없는 NPC 게이트 ${event.needsNpc}`);
   (event.choices || []).forEach((choice, ci) => {
     const cwhere = `${where}.choice[${ci}]`;
@@ -106,6 +137,36 @@ for (const event of events) {
     });
   });
   for (const speaker of event.turnSpeakers || []) validateSpeaker(speaker, where);
+}
+
+for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
+  const event=eventById.get(eventId), where=`choiceMemory:${eventId}`;
+  need(!!event, where, '이벤트가 없음');
+  need(Array.isArray(memories), where, '선택 기억 목록이 배열이 아님');
+  const ids=new Set();
+  for (const [index, memory] of (memories || []).entries()) {
+    if (!memory) continue;
+    need(!!(event && event.choices[index]), `${where}[${index}]`, '해당 선택지가 없음');
+    need(typeof memory.id === 'string' && memory.id.trim() && !ids.has(memory.id), `${where}[${index}]`, '없거나 중복된 기억 ID');
+    ids.add(memory.id);
+    need(typeof memory.summary === 'string' && memory.summary.trim(), `${where}[${index}]`, '기억 요약 없음');
+    need(Number.isFinite(memory.afterKm) && memory.afterKm > 0, `${where}[${index}]`, '후속 주행거리 없음');
+    need(Array.isArray(memory.lines) && memory.lines.length, `${where}[${index}]`, '후속 대화 없음');
+    for (const line of memory.lines || []) {
+      need(Array.isArray(line) && line.length === 2 && typeof line[1] === 'string' && line[1].trim(), `${where}[${index}]`, '후속 대사 형식 오류');
+      if (Array.isArray(line)) validateSpeaker(line[0], `${where}[${index}]`);
+    }
+  }
+}
+
+for (const [id, def] of Object.entries(D.knowledge || {})) {
+  const where=`knowledge:${id}`;
+  need(typeof def.label === 'string' && def.label.trim(), where, '표시 이름 없음');
+  need(def.initial === undefined || [0, 1, 2].includes(def.initial), where, '초기 단계 오류');
+  need(typeof def.known === 'string' && def.known.trim(), where, '확인된 사실 문장 없음');
+  for (const rule of def.flags || []) {
+    need(Array.isArray(rule) && typeof rule[0] === 'string' && [1, 2].includes(rule[1]), where, '플래그 동기화 규칙 오류');
+  }
 }
 
 for (const [id, script] of Object.entries(D.eventTurnScripts || {})) {

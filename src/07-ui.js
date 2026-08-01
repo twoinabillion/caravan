@@ -894,6 +894,7 @@ const UI = (()=>{
       const def=rq&&D.recruitQuests[rq.id];
       const approach=rq&&G.recruitApproach();
       const memory=S.driving.recruitMemory;
+      const choiceMemory=G.pendingChoiceMemory();
       const guest=def?`<section class="road-guest-card" aria-label="${def.name} 임시 동행">
         <div class="road-guest-head"><span class="rg-ico">${def.guest.ic}</span><span>
           <small>임시 동행 · 아직 손님</small><b>${def.name} — ${def.guest.title}</b></span></div>
@@ -904,6 +905,11 @@ const UI = (()=>{
           <small>함께 고른 방식 · 첫 후속</small><b>${esc(D.comps[memory.id].name)} — ${esc(memory.title)}</b></span></div>
         <div class="road-guest-help">${esc(memory.desc)}</div>
         <div class="road-guest-memory"><b>${esc(memory.effect)}</b> · 이번 주행에서 확인할 수 있다.</div>
+      </section>`:choiceMemory?`<section class="road-guest-card road-memory-card" aria-label="길에서 되돌아올 선택">
+        <div class="road-guest-head"><span class="rg-ico">◇</span><span>
+          <small>길이 기억하는 선택</small><b>${esc(choiceMemory.eventTitle)}</b></span></div>
+        <div class="road-guest-help">${esc(choiceMemory.summary)}</div>
+        <div class="road-guest-memory">조금 더 달리면 이 선택이 사람들의 말과 풍경으로 돌아온다.</div>
       </section>`:'<div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>';
       p.innerHTML = `
         ${contextRail(to,true)}
@@ -1511,7 +1517,7 @@ const UI = (()=>{
       combatHud=combatHudHtml(curEv,{state:resultState,result:true,ended:!!(out.fx&&out.fx.combatEnd)});
     }
     if(out.sfx) SND.combat(out.sfx);
-    chips.push(...G.afterChoice(curEv, choice));
+    chips.push(...G.afterChoice(curEv, choice, out));
     if(S.ended) return;
     const sheet=$('#ev-sheet');
     sheet.classList.add('event-mode');
@@ -2291,6 +2297,11 @@ const UI = (()=>{
       <div class="st-row"><span class="k">정착지</span><span class="v" style="flex:1">${stlVisited}/${Object.keys(D.stls).length} 방문</span></div>
       <div class="st-row"><span class="k">${ICO('pursuit')}천리안 관측</span><span class="v" style="flex:1;color:${S.pursuit>2?'var(--danger)':'inherit'}">${'◉'.repeat(S.pursuit)||'—'} (${S.pursuit}/5)</span></div>
       ${S.flags.seoulTries?`<div class="st-row"><span class="k">남산 시도</span><span class="v" style="flex:1;color:var(--cheollian)">${S.flags.seoulTries}회 · 아직 입장 조건 미달</span></div>`:''}</div>`;
+    const knowledge=G.knowledgeSummary(), verified=knowledge.filter(k=>k.level>=2), heard=knowledge.filter(k=>k.level===1);
+    journey+=`<div class="st-sec knowledge-status"><h4>아는 것과 모르는 것 <small>${verified.length}/${knowledge.length} 확인</small></h4>
+      ${verified.slice(-4).map(k=>`<div class="st-row"><span class="k">✓ ${esc(k.label)}</span><span class="v">${esc(k.text)}</span></div>`).join('')}
+      ${heard.slice(-3).map(k=>`<div class="st-row pending"><span class="k">? ${esc(k.label)}</span><span class="v">${esc(k.text)}</span></div>`).join('')}
+      ${knowledge.some(k=>k.level===0)?`<div class="csub">확인하지 못한 항목 ${knowledge.filter(k=>k.level===0).length}개 · 소문은 사실처럼 말하지 않는다.</div>`:''}</div>`;
     const ready=G.seoulReady();
     journey+=`<div class="st-sec"><h4>여정 장부 <small style="color:${ready?'var(--ok)':'var(--faded)'};font-weight:400">${ready?'· 남산 입장 준비 완료':'· 네 기둥을 채우는 중'}</small></h4>`;
     const P=G.pillars(), pIco={관계:'♦',세계:'🕯',진실:'◈',유산:'✉'};
@@ -2328,7 +2339,7 @@ const UI = (()=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
       const state=st.perks.includes(p3.id)?'done':'lv'+st.lvl;
       const next=st.lvl<3?D.bondTh[st.lvl]:Math.max(1,st.bond);
-      return {id,c,st,p3,state,joinedBy:G.recruitApproach(id),
+      return {id,c,st,p3,state,joinedBy:G.recruitApproach(id),best:G.bestRelation(id),
         injury:S.injuries&&S.injuries[id],bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
     });
     let crew=`<div class="st-summary">
@@ -2338,7 +2349,7 @@ const UI = (()=>{
     </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+
       (stories.length?`<div class="crew-status-list">`+stories.map(s=>`<div class="crew-status-card" data-comp2="${s.id}" role="button" tabindex="0">
         <span class="crew-status-face">${faceOf(s.id,s.c.face)}</span>
-        <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}${s.joinedBy?` · ${esc(s.joinedBy.label)}로 합류`:''}</small></span>
+        <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}${s.joinedBy?` · ${esc(s.joinedBy.label)}로 합류`:''}${s.best?`<br>${esc(D.comps[s.best.id].name)}와 ${G.relationLabel(s.best.score)}`:''}</small></span>
         <span class="crew-status-state">${s.injury?`🩹 ${s.injury.label}<br>${s.injury.days}일`:(s.state==='done'?`★ ${s.p3.nm}`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?'<br>✦ 퍼크 대기':''}`)}</span>
         <span class="crew-status-bond"><i style="width:${s.bondPct}%"></i></span></div>`).join('')+`</div>`
         :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+

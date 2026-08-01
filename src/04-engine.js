@@ -24,6 +24,9 @@ G.newGame = (mode, name)=>{
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
     _recentEvents:[], _recentEventTypes:[], _eventBreather:0,
+    memories:{choices:{},pending:[],history:[]}, knowledge:{},
+    relations:{pairs:{},seenChats:{}},
+    director:{intensity:10,phase:'build',relaxEvents:0},
     combat:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
     _stlField:{daily:{},once:{},log:[]},
   };
@@ -31,6 +34,8 @@ G.newGame = (mode, name)=>{
   S.wxNext = G.rollWx('clear');
   for(const id in D.npcs) S.npcs[id] = {att:0, met:false, chat:[]};
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
+  G.ensureNarrativeState();
+  G.syncKnowledgeFromFlags();
   G.addNote({type:'장소', title:'부산 감천 부두', body:'모든 것이 시작된 곳. 달구지에 시동을 걸었다.', links:[]});
   G.addNote({type:'물건', title:'달구지', body:'낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.', links:['할아버지']});
   G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판 KOR-LOCAL. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 30일 뒤 외곽의 마지막 잔류구역 이송을 예고했다.', links:[]});
@@ -59,6 +64,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
+  G.ensureNarrativeState();
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
   if(!S.injuries||Array.isArray(S.injuries)) S.injuries={};
@@ -92,6 +98,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     if(!c.perks) c.perks=[];
     if(c.pending===undefined) c.pending=0;
   }
+  G.syncKnowledgeFromFlags();
   return true; }catch(e){ return false } };
 G.hasSave = ()=>{ try{ return !!localStorage.getItem(SAVE_KEY) }catch(e){ return false } };
 G.wipe = ()=>{ try{ localStorage.removeItem(SAVE_KEY) }catch(e){} };
@@ -99,6 +106,96 @@ G.wipe = ()=>{ try{ localStorage.removeItem(SAVE_KEY) }catch(e){} };
 /* ── helpers ── */
 G.node = id=>D.nodes[id];
 G.partySize = ()=> 1 + S.party.length;
+/* 서사 상태는 기존 v1 저장과 분리해 보강한다. 구버전 세이브는
+   없는 필드만 추가하며, 이미 본 이벤트나 동료 수치는 건드리지 않는다. */
+G.ensureNarrativeState = ()=>{
+  if(!S) return;
+  if(!S.memories||Array.isArray(S.memories)) S.memories={choices:{},pending:[],history:[]};
+  if(!S.memories.choices||Array.isArray(S.memories.choices)) S.memories.choices={};
+  if(!Array.isArray(S.memories.pending)) S.memories.pending=[];
+  if(!Array.isArray(S.memories.history)) S.memories.history=[];
+  if(!S.knowledge||Array.isArray(S.knowledge)) S.knowledge={};
+  if(!S.relations||Array.isArray(S.relations)) S.relations={pairs:{},seenChats:{}};
+  if(!S.relations.pairs||Array.isArray(S.relations.pairs)) S.relations.pairs={};
+  if(!S.relations.seenChats||Array.isArray(S.relations.seenChats)) S.relations.seenChats={};
+  if(!S.director||Array.isArray(S.director)) S.director={intensity:10,phase:'build',relaxEvents:0};
+  if(!Number.isFinite(S.director.intensity)) S.director.intensity=10;
+  if(!['build','peak','fade','relax'].includes(S.director.phase)) S.director.phase='build';
+  if(!Number.isFinite(S.director.relaxEvents)) S.director.relaxEvents=0;
+  for(const [id,def] of Object.entries(D.knowledge||{})){
+    const initial=Number.isFinite(def.initial)?def.initial:0;
+    if(!Number.isFinite(S.knowledge[id])) S.knowledge[id]=initial;
+    else S.knowledge[id]=clamp(S.knowledge[id],0,2);
+  }
+};
+G.knowledgeLevel = id=>{
+  G.ensureNarrativeState();
+  return S&&Number.isFinite(S.knowledge[id])?S.knowledge[id]:0;
+};
+G.learn = (id,level=1)=>{
+  G.ensureNarrativeState();
+  const def=D.knowledge&&D.knowledge[id];
+  if(!def) return null;
+  const before=G.knowledgeLevel(id), after=clamp(Math.max(before,level),0,2);
+  S.knowledge[id]=after;
+  return after>before?{id,level:after,label:def.label}:null;
+};
+G.syncKnowledgeFromFlags = ()=>{
+  if(!S) return [];
+  G.ensureNarrativeState();
+  const learned=[];
+  for(const [id,def] of Object.entries(D.knowledge||{})){
+    for(const rule of def.flags||[]){
+      if(S.flags&&S.flags[rule[0]]){
+        const hit=G.learn(id,rule[1]);
+        if(hit) learned.push(hit);
+      }
+    }
+  }
+  return learned;
+};
+G.knowledgeSummary = ()=>{
+  G.ensureNarrativeState();
+  return Object.entries(D.knowledge||{}).map(([id,def])=>{
+    const level=G.knowledgeLevel(id);
+    return {id,label:def.label,level,text:level>=2?def.known:(level===1?(def.heard||def.known):'아직 확인하지 못했다.')};
+  });
+};
+G.relationKey = (a,b)=>[a,b].sort().join(':');
+G.relation = (a,b)=>{
+  G.ensureNarrativeState();
+  return (S.relations.pairs[G.relationKey(a,b)]||{}).score||0;
+};
+G.changeRelation = (a,b,amount,reason)=>{
+  if(!a||!b||a===b||!G.hasComp(a)||!G.hasComp(b)||!Number.isFinite(amount)) return null;
+  G.ensureNarrativeState();
+  const key=G.relationKey(a,b), pair=S.relations.pairs[key]||{score:0,history:[]};
+  pair.score=clamp(pair.score+amount,-3,5);
+  pair.history=Array.isArray(pair.history)?pair.history:[];
+  pair.history.push({day:S.day,amount,reason:reason||'함께 겪은 일'});
+  if(pair.history.length>8) pair.history=pair.history.slice(-8);
+  S.relations.pairs[key]=pair;
+  return {key,score:pair.score};
+};
+G.bestRelation = id=>{
+  if(!S||!G.hasComp(id)) return null;
+  const peers=S.party.filter(other=>other!==id).map(other=>({id:other,score:G.relation(id,other)}));
+  peers.sort((a,b)=>b.score-a.score);
+  return peers[0]&&peers[0].score>0?peers[0]:null;
+};
+G.relationLabel = score=>score>=5?'서로를 맡김':score>=3?'손발이 맞음':score>=1?'호흡을 익힘':'낯섦';
+G.rememberCrewChat = chat=>{
+  if(!S||!chat||!Array.isArray(chat.lines)) return;
+  G.ensureNarrativeState();
+  const index=(D.chats||[]).indexOf(chat), key=`chat:${index}`;
+  if(index<0||S.relations.seenChats[key]) return;
+  const speakers=[...new Set(chat.lines.map(line=>line[0]).filter(id=>D.comps[id]&&G.hasComp(id)))];
+  if(speakers.length<2) return;
+  for(let i=0;i<speakers.length;i++) for(let j=i+1;j<speakers.length;j++)
+    G.changeRelation(speakers[i],speakers[j],1,'길 위에서 나눈 대화');
+  S.relations.seenChats[key]=true;
+  G.save();
+};
 /* 피로 3단계 — 디버프 문턱(60 연비/80 감속·졸음)과 동일선 */
 G.fatigueStage = ()=> S.fatigue>=80?'bad' : S.fatigue>=60?'mid' : 'ok';
 G.fatigueFace  = ()=> ({ok:'🙂',mid:'😑',bad:'😩'})[G.fatigueStage()];
@@ -296,20 +393,74 @@ G.popStory = ()=>{
   }
   return null;
 };
-/* 이벤트 해석 후 훅: 유대 획득 + 직업 부가 수확 */
-G.afterChoice = (evd, choice)=>{
+/* 이벤트 해석 후 훅: 유대 획득 + 직업 부가 수확 + 오래 남을 선택 */
+G.afterChoice = (evd, choice, outcome)=>{
   const extra=[];
-  const actingComp=choice.req&&(choice.req.healthyComp||choice.req.comp);
+  const actingComp=choice.req&&(choice.req.healthyComp||choice.req.trustComp||choice.req.comp);
   if(actingComp){ G.bond(actingComp, 2); extra.push({t:`✦ ${D.comps[actingComp].name} 유대 +2`, c:'item'}); }
   else if(choice.req&&choice.req.perk){ const cid=Object.keys(D.comps).find(k=>JSON.stringify(D.comps[k].perks).includes(choice.req.perk));
     if(cid&&G.hasComp(cid)){ G.bond(cid,2); extra.push({t:`✦ ${D.comps[cid].name} 유대 +2`, c:'item'}); } }
-  if(evd.needsComp&&(!choice.req||choice.req.comp!==evd.needsComp)){ G.bond(evd.needsComp, 2);
+  if(evd.needsComp&&actingComp!==evd.needsComp){ G.bond(evd.needsComp, 2);
     extra.push({t:`✦ ${D.comps[evd.needsComp].name} 유대 +2`, c:'item'}); }
   if(evd.type==='탐색'){
     if(G.hasPerk('mj_eye')&&rng()<0.25){ S.items['부품']=(S.items['부품']||0)+1; extra.push({t:'🔧 폐차장의 눈: 부품 +1', c:'item'}); }
     if(G.hasPerk('pss_herb')&&rng()<0.2){ S.items['의약품']=(S.items['의약품']||0)+1; extra.push({t:'💊 약초학: 의약품 +1', c:'item'}); }
   }
+  extra.push(...G.rememberChoice(evd,choice,outcome));
   return extra;
+};
+G.choiceMemoryDef = (eventId,choiceIndex)=>{
+  const defs=D.choiceMemories&&D.choiceMemories[eventId];
+  return Array.isArray(defs)?defs[choiceIndex]:null;
+};
+G.rememberChoice = (evd,choice,outcome)=>{
+  if(!S||!evd||!choice) return [];
+  G.ensureNarrativeState();
+  const choiceIndex=(evd.choices||[]).indexOf(choice);
+  const def=G.choiceMemoryDef(evd.id,choiceIndex);
+  if(!def||S.memories.choices[def.id]) return [];
+  const entry={id:def.id,eventId:evd.id,choiceIndex,day:S.day,km:Math.round(S.stats.km),
+    eventTitle:evd.title,choiceLabel:String(choice.label||'').replace(/<[^>]*>/g,''),
+    summary:def.summary,dueKm:S.stats.km+(def.afterKm||16),dueEvents:S.stats.events+(def.afterEvents||1),
+    echoed:false};
+  S.memories.choices[def.id]=entry;
+  S.memories.pending.push(def.id);
+  S.memories.history.push(def.id);
+  if(S.memories.history.length>40) S.memories.history=S.memories.history.slice(-40);
+  return [{t:`기억됨 · ${def.summary}`,c:'item'}];
+};
+G.pendingChoiceMemory = ()=>{
+  if(!S) return null;
+  G.ensureNarrativeState();
+  for(const id of S.memories.pending){
+    const memory=S.memories.choices[id];
+    if(memory&&!memory.echoed) return memory;
+  }
+  return null;
+};
+G.takeChoiceEcho = ()=>{
+  if(!S||!S.driving) return null;
+  G.ensureNarrativeState();
+  const idx=S.memories.pending.findIndex(id=>{
+    const m=S.memories.choices[id];
+    return m&&!m.echoed&&S.stats.km>=m.dueKm&&S.stats.events>=m.dueEvents;
+  });
+  if(idx<0) return null;
+  const id=S.memories.pending[idx], memory=S.memories.choices[id];
+  const def=G.choiceMemoryDef(memory.eventId,memory.choiceIndex);
+  if(!def||!Array.isArray(def.lines)){
+    S.memories.pending.splice(idx,1);
+    return null;
+  }
+  /* 동료가 화자로 지정된 기억은 그 사람이 실제 탑승 중일 때만 재생한다. */
+  const unavailable=def.lines.some(line=>D.comps[line[0]]&&!G.hasComp(line[0]));
+  if(unavailable) return null;
+  memory.echoed=true;
+  memory.echoDay=S.day;
+  memory.echoKm=Math.round(S.stats.km);
+  S.memories.pending.splice(idx,1);
+  G.save();
+  return {memory,lines:def.lines};
 };
 G.combatOdds = (choice)=>{
   const base=typeof choice.combatRoll==='number'?choice.combatRoll:0.52;
@@ -526,6 +677,7 @@ const KMH = 44;                    // 주행 속도
 const TIMESCALE = 2.2;             // 실제 1초 = 게임 2.2분
 let banterCd = 6;                  // 첫 잡담까지 몇 초
 let radioCd = 30;                  // 라디오 첫 수신까지
+let choiceEchoCd = 8;              // 선택의 후속은 일반 잡담보다 먼저 한 번 확인
 
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
@@ -569,6 +721,16 @@ G.tick = (dt)=>{ // dt: real seconds
     if(slot.gen){ OFF.playGenerated(()=>G.fireDriveEvent()); return; }
     G.fireDriveEvent(); return;
   }
+  // 중요한 선택은 충분한 거리와 사건이 지난 뒤 한 번만 대화/풍경으로 돌아온다.
+  choiceEchoCd -= dt;
+  if(choiceEchoCd<=0){
+    const echo=G.takeChoiceEcho();
+    if(echo){
+      UI.playChat(echo.lines);
+      banterCd=Math.max(banterCd,echo.lines.length*4+8);
+      choiceEchoCd=55;
+    } else choiceEchoCd=8;
+  }
   // banter
   banterCd -= dt;
   if(banterCd<=0){ banterCd = 11+R(9);
@@ -610,8 +772,18 @@ G.eligible = (typeFilter)=>{
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;
     if(ev.minPursuit && S.pursuit<ev.minPursuit) return false;
+    if(ev.maxVanPct!==undefined && S.van/Math.max(1,S.vanMax)*100>ev.maxVanPct) return false;
+    if(ev.maxScrap!==undefined && S.scrap>ev.maxScrap) return false;
+    if(ev.needsInjury && !Object.keys(S.injuries||{}).length) return false;
+    if(ev.needsDriverInjury && !G.isInjured('driver')) return false;
+    if(ev.maxPartyMood!==undefined){
+      const moods=S.party.map(id=>(S.comps[id]||{}).mood||0);
+      if(!moods.length||Math.min(...moods)>ev.maxPartyMood) return false;
+    }
     if(ev.needFlag && !S.flags[ev.needFlag]) return false;
     if(ev.needFlag2 && !S.flags[ev.needFlag2]) return false;
+    if(ev.needKnowledge && G.knowledgeLevel(ev.needKnowledge[0])<ev.needKnowledge[1]) return false;
+    if(ev.noKnowledge && G.knowledgeLevel(ev.noKnowledge[0])>=ev.noKnowledge[1]) return false;
     if(ev.needWx && S.wx!==ev.needWx) return false;
     if(ev.needRain && !G.isWet()) return false;
     if(ev.needLowWater && S.water>2) return false;
@@ -627,7 +799,7 @@ G.unknownHidden = ()=> Object.keys(D.nodes).filter(id=>D.nodes[id].type==='hidde
    무거운 본편·위기 뒤에는 한 호흡 가벼운 길 풍경을 우선한다. */
 G.eventIsContextual = ev=> !!(ev && ev.once && (
   ev.priority || ev.needFlag || ev.needFlag2 || ev.needFlagMin || ev.needUp ||
-  ev.needsComp2 || ev.needBond || ev.maxRemain!==undefined || ev.recruitStart
+  ev.needKnowledge || ev.needsComp2 || ev.needBond || ev.maxRemain!==undefined || ev.recruitStart
 ));
 G.eventIsHeavy = ev=> !!(ev && (
   ev.ai || ev.priority || ['스토리','추적','위기'].includes(ev.type) ||
@@ -635,6 +807,22 @@ G.eventIsHeavy = ev=> !!(ev && (
 ));
 G.eventIsCalm = ev=> !!(ev && !G.eventIsHeavy(ev) && !ev.minPursuit &&
   ['정경','동행','발견'].includes(ev.type));
+G.directorPressure = ()=>{
+  if(!S) return 0;
+  G.ensureNarrativeState();
+  return clamp(S.director.intensity+S.pursuit*4+(S.fatigue>=75?8:0)+(S.van<30?7:0),0,100);
+};
+G.directorWeight = ev=>{
+  if(!S||!ev) return 1;
+  const pressure=G.directorPressure(), phase=S.director.phase;
+  if(['peak','fade','relax'].includes(phase)){
+    if(G.eventIsCalm(ev)) return phase==='relax'?2.4:1.8;
+    if(G.eventIsHeavy(ev)&&!ev.priority) return phase==='relax'?0.18:0.42;
+  }
+  if(phase==='build'&&pressure>=55&&G.eventIsHeavy(ev)) return 1.25;
+  if(phase==='build'&&pressure<25&&G.eventIsCalm(ev)) return 0.78;
+  return 1;
+};
 G.directEventPool = (pool,opt={})=>{
   let out=(pool||[]).filter(Boolean);
   if(!out.length||!S) return out;
@@ -646,6 +834,16 @@ G.directEventPool = (pool,opt={})=>{
     const calm=out.filter(G.eventIsCalm);
     if(calm.length) out=calm;
     S._eventBreather=Math.max(0,S._eventBreather-1);
+  }
+
+  const phase=S.director&&S.director.phase;
+  if(['peak','fade','relax'].includes(phase)){
+    const calm=out.filter(G.eventIsCalm);
+    if(calm.length) out=calm;
+    else {
+      const lighter=out.filter(e=>!G.eventIsHeavy(e));
+      if(lighter.length) out=lighter;
+    }
   }
 
   const types=(S._recentEventTypes||[]).slice(-2);
@@ -660,6 +858,7 @@ G.rememberEvent = ev=>{
   if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
+  G.ensureNarrativeState();
   if(ev.id){
     S._recentEvents.push(ev.id);
     if(S._recentEvents.length>16) S._recentEvents.splice(0,S._recentEvents.length-16);
@@ -669,6 +868,24 @@ G.rememberEvent = ev=>{
     if(S._recentEventTypes.length>6) S._recentEventTypes.splice(0,S._recentEventTypes.length-6);
   }
   if(G.eventIsHeavy(ev)) S._eventBreather=Math.max(S._eventBreather,1);
+  const d=S.director, calm=G.eventIsCalm(ev), heavy=G.eventIsHeavy(ev);
+  if(d.phase==='peak'){
+    d.intensity=clamp(d.intensity-(calm?18:8),0,100);
+    d.phase='fade';
+  } else if(d.phase==='fade'){
+    d.intensity=clamp(d.intensity-(calm?20:9),0,100);
+    if(d.intensity<=38){ d.phase='relax'; d.relaxEvents=0; }
+  } else if(d.phase==='relax'){
+    d.intensity=clamp(d.intensity-(calm?12:5),0,100);
+    d.relaxEvents++;
+    if(d.relaxEvents>=2||d.intensity<=16){ d.phase='build'; d.relaxEvents=0; }
+  } else {
+    const rise=heavy?28:(calm?5:12);
+    d.intensity=clamp(d.intensity+rise,0,100);
+    if(heavy||d.intensity>=72) d.phase='peak';
+  }
+  d.lastEvent=ev.id||null;
+  d.lastDay=S.day;
 };
 
 G.fireDriveEvent = ()=>{
@@ -680,7 +897,7 @@ G.fireDriveEvent = ()=>{
   if(!pool.length) return;
   // 가중치: 관측↑→추적형↑ / 경계태세→매복류↓ / 보리의육감→발견형↑
   const AMBUSH=['meet_waver','meet_toll','meet_bikers','meet_child_alone'];
-  const wOf=(e)=>{ let w=e.w;
+  const wOf=(e)=>{ let w=e.w*G.directorWeight(e);
     if(G.eventIsContextual(e)) w*=2.1;                    // 방금 열린 인물·업그레이드·본편 후속
     if(e.type==='추적') w*=(1+S.pursuit*0.5);
     if(G.hasPerk('kw_guard')&&AMBUSH.includes(e.id)) w*=0.35;
@@ -759,6 +976,20 @@ G.applyFx = (fx)=>{
   if(fx.flag2) S.flags[fx.flag2]=true;
   if(fx.flagCount) S.flags[fx.flagCount]=(S.flags[fx.flagCount]||0)+1;
   if(fx.unflag) delete S.flags[fx.unflag];
+  if(fx.knowledge){
+    const gains=Array.isArray(fx.knowledge[0])?fx.knowledge:[fx.knowledge];
+    for(const gain of gains){
+      const learned=G.learn(gain[0],gain[1]);
+      if(learned) chips.push({t:`◈ ${learned.label} · ${learned.level>=2?'확인':'단서'}`,c:'item'});
+    }
+  }
+  if(fx.relation&&fx.relation.between){
+    const rel=G.changeRelation(fx.relation.between[0],fx.relation.between[1],fx.relation.amount||0,fx.relation.reason);
+    if(rel){
+      const [a,b]=fx.relation.between;
+      chips.push({t:`♦ ${D.comps[a].name}·${D.comps[b].name} — ${G.relationLabel(rel.score)}`,c:'item'});
+    }
+  }
   if(fx.goto){ S.driving=null; S.at=fx.goto; }
   if(fx.pursuit){ S.pursuit=clamp(S.pursuit+fx.pursuit,0,5);
     chips.push({t:`◉ 관측 ${fx.pursuit>0?'+':''}${fx.pursuit}`, c:fx.pursuit>0?'minus':'plus'}); }
@@ -790,6 +1021,8 @@ G.applyFx = (fx)=>{
   if(fx.recruitReady) G.markRecruitReady(fx.recruitReady);
   if(fx.recruit) G.doRecruit(fx.recruit);
   if(fx.note) G.addNote(fx.note);
+  for(const learned of G.syncKnowledgeFromFlags())
+    chips.push({t:`◈ ${learned.label} · ${learned.level>=2?'확인':'단서'}`,c:'item'});
   if(fx.gameover) G.endGame(fx.gameover);
   G.save();
   return chips;
@@ -807,11 +1040,18 @@ G.reqOk = (req)=>{
     return {ok:false, t:`퍼크 「${p?p.nm:req.perk}」 필요`}; }
   if(req.flagMin && (S.flags[req.flagMin[0]]||0) < req.flagMin[1]) return {ok:false, t:'아직 단골이 아니다'};
   if(req.flag && !S.flags[req.flag]) return {ok:false, t:'해당 사항 없음'};
+  if(req.knowledge && G.knowledgeLevel(req.knowledge[0])<req.knowledge[1])
+    return {ok:false,t:'아직 확인하지 못한 사실이다'};
   if(req.traces && G.traceCount()<req.traces) return {ok:false, t:`세대의 흔적 ${req.traces}개 필요`};
   if(req.party && S.party.length<req.party) return {ok:false, t:`동료 ${req.party}명 필요`};
   if(req.stories && G.deedsDone().filter(d=>d.cat==='동료').length<req.stories)
     return {ok:false, t:`개인 서사 ${req.stories}개 필요`};
   if(req.comp && !G.hasComp(req.comp)) return {ok:false, t:`${D.comps[req.comp].name} 필요`};
+  if(req.trustComp){
+    if(!G.hasComp(req.trustComp)) return {ok:false,t:`${D.comps[req.trustComp].name} 필요`};
+    if(G.isInjured(req.trustComp)) return {ok:false,t:`${D.comps[req.trustComp].name}가 다쳐 맡을 수 없다`};
+    if((S.comps[req.trustComp].mood||0)<25) return {ok:false,t:`${D.comps[req.trustComp].name}가 지금은 맡지 않겠다고 한다`};
+  }
   if(req.healthyComp){
     if(!G.hasComp(req.healthyComp)) return {ok:false, t:`${D.comps[req.healthyComp].name} 필요`};
     if(G.isInjured(req.healthyComp)) return {ok:false, t:`${D.comps[req.healthyComp].name} 부상 회복 필요`};
@@ -843,6 +1083,8 @@ G.reqText = (req)=>{
   if(req.party) parts.push(`동료 ${S.party.length}/${req.party}`);
   if(req.stories) parts.push(`개인 서사 ${G.deedsDone().filter(d=>d.cat==='동료').length}/${req.stories}`);
   if(req.comp) parts.push(`동료: ${D.comps[req.comp].name}`);
+  if(req.knowledge){ const k=D.knowledge&&D.knowledge[req.knowledge[0]]; parts.push(`확인: ${k?k.label:req.knowledge[0]}`); }
+  if(req.trustComp) parts.push(`맡김: ${D.comps[req.trustComp].name}`);
   if(req.healthyComp) parts.push(`전투 가능: ${D.comps[req.healthyComp].name}${G.isInjured(req.healthyComp)?' (부상)':''}`);
   if(req.item) parts.push(`아이템: ${req.item}${req.itemQty>1?' '+req.itemQty+'개':''}${req.item2?'+'+req.item2:''}`);
   if(req.scrap) parts.push(`고철 ${req.scrap}`);
@@ -856,10 +1098,12 @@ G.reqVisible = (req)=>{
   if(req.perk&&!G.hasPerk(req.perk)) return false;
   if(req.flagMin&&(S.flags[req.flagMin[0]]||0)<req.flagMin[1]) return false;
   if(req.flag&&!S.flags[req.flag]) return false;
+  if(req.knowledge&&G.knowledgeLevel(req.knowledge[0])<req.knowledge[1]) return false;
   if(req.traces&&G.traceCount()<req.traces) return false;
   if(req.party&&S.party.length<req.party) return false;
   if(req.stories&&G.deedsDone().filter(d=>d.cat==='동료').length<req.stories) return false;
   if(req.comp&&!G.hasComp(req.comp)) return false;
+  if(req.trustComp&&!G.hasComp(req.trustComp)) return false;
   if(req.healthyComp&&!G.hasComp(req.healthyComp)) return false;
   if(req.up&&!(S.up&&S.up[req.up])) return false;
   if(req.dog&&!S.dog) return false;
@@ -1068,8 +1312,9 @@ G.explore = ()=>{
   return true;
 };
 G.fireDriveEvent2 = (pool)=>{ pool=G.directEventPool(pool); if(!pool.length) return;
-  const total=pool.reduce((s,e)=>s+e.w*(G.eventIsContextual(e)?2.1:1),0); let r=rng()*total;
-  let evd=pool[0]; for(const e of pool){ r-=e.w*(G.eventIsContextual(e)?2.1:1); if(r<=0){evd=e;break} } G.openEvent(evd); };
+  const weight=e=>e.w*(G.eventIsContextual(e)?2.1:1)*G.directorWeight(e);
+  const total=pool.reduce((s,e)=>s+weight(e),0); let r=rng()*total;
+  let evd=pool[0]; for(const e of pool){ r-=weight(e); if(r<=0){evd=e;break} } G.openEvent(evd); };
 G.camp = (msg)=>{
   if(S.driving||UI.modalOpen()) return;
   const inTown = !!(S.at && D.nodes[S.at] && D.nodes[S.at].stl);
@@ -1136,6 +1381,7 @@ G.pickChat = ()=>{
     if(nd.rain===1 && !G.isWet()) return false;
     if(nd.region && region!==nd.region) return false;
     if(nd.flag && !S.flags[nd.flag]) return false;
+    if(nd.knowledge && G.knowledgeLevel(nd.knowledge[0])<nd.knowledge[1]) return false;
     /* 등장 화자 전원이 실제 탑승 중이어야 함 (동료만 검사, 나/sys 제외) */
     for(const ln of c.lines){ const w=ln[0];
       if(w!=='나'&&w!=='sys'&&D.comps[w]&&!G.hasComp(w)) return false; }
@@ -1143,6 +1389,7 @@ G.pickChat = ()=>{
   if(!pool.length) return null;
   const c=pool[Math.floor(rng()*pool.length)];
   lastChat=D.chats.indexOf(c);
+  G.rememberCrewChat(c);
   return c;
 };
 G.pickBanter = ()=>{
@@ -1162,6 +1409,7 @@ G.pickBanter = ()=>{
     if(nd.lowFuel===1 && S.fuel>12) return false;
     if(nd.region && region!==nd.region) return false;
     if(nd.flag && !S.flags[nd.flag]) return false;
+    if(nd.knowledge && G.knowledgeLevel(nd.knowledge[0])<nd.knowledge[1]) return false;
     if(lastBanter.includes(b.t)) return false;
     return true;
   });
@@ -1454,6 +1702,18 @@ G.exportMd = ()=>{
   L.push(``);
   L.push(`> ${S.mode==='offroad'?'오프로드':'온로드'} 모드 · DAY ${S.day} · 주행 ${Math.round(S.stats.km)}km · 이벤트 ${S.stats.events}건`);
   L.push(``);
+  const knowledge=G.knowledgeSummary().filter(k=>k.level>0);
+  if(knowledge.length){
+    L.push(`## 아는 것과 모르는 것`); L.push(``);
+    for(const k of knowledge) L.push(`- ${k.level>=2?'[x]':'[ ]'} **${k.label}** — ${k.text}`);
+    L.push(``);
+  }
+  const choices=(S.memories&&S.memories.history||[]).map(id=>S.memories.choices[id]).filter(Boolean);
+  if(choices.length){
+    L.push(`## 길이 기억한 선택`); L.push(``);
+    for(const m of choices) L.push(`- DAY ${m.day} · ${m.eventTitle}: ${m.summary}`);
+    L.push(``);
+  }
   const types = ['인물','장소','사건','소문'];
   for(const t of types){
     const ns = S.notes.filter(n=>n.type===t);

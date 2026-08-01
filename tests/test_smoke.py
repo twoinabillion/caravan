@@ -545,7 +545,7 @@ with sync_playwright() as p:
       out.upCount = D.upgrades.length;
       out.eventCount = D.events.length;
       const director0={events:[...(S._recentEvents||[])],types:[...(S._recentEventTypes||[])],
-        breather:S._eventBreather||0};
+        breather:S._eventBreather||0,state:structuredClone(S.director)};
       const sample=[
         {id:'repeat_a',type:'조우',w:1},
         {id:'fresh_b',type:'발견',w:1},
@@ -562,8 +562,46 @@ with sync_playwright() as p:
       out.directorContext=G.eventIsContextual({once:true,needUp:'bench'}) &&
         !G.eventIsContextual({once:false,needUp:'bench'}) &&
         G.eventIsHeavy({type:'추적'}) && G.eventIsCalm({type:'정경'});
+      S.director={intensity:55,phase:'build',relaxEvents:0};
+      G.rememberEvent({id:'test-heavy',type:'위기'});
+      const peak=S.director.phase==='peak';
+      G.rememberEvent({id:'test-calm-1',type:'정경'});
+      const fade=S.director.phase==='fade';
+      G.rememberEvent({id:'test-calm-2',type:'정경'});
+      G.rememberEvent({id:'test-calm-3',type:'정경'});
+      out.directorArc=peak&&fade&&S.director.phase==='relax';
       S._recentEvents=director0.events; S._recentEventTypes=director0.types;
       S._eventBreather=director0.breather;
+      S.director=director0.state;
+
+      const narrative0={flags:{...S.flags},knowledge:structuredClone(S.knowledge),
+        memories:structuredClone(S.memories),relations:structuredClone(S.relations),
+        party:[...S.party],comps:structuredClone(S.comps),driving:S.driving?structuredClone(S.driving):null,
+        events:S.stats.events,km:S.stats.km};
+      S.flags.parent_principle_found=true;
+      G.syncKnowledgeFromFlags();
+      out.knowledgeState=G.knowledgeLevel('current_exodus')===2&&
+        G.knowledgeLevel('parent_principle')===2&&G.knowledgeSummary().length===Object.keys(D.knowledge).length;
+      S.memories={choices:{},pending:[],history:[]};
+      const family=D.events.find(e=>e.id==='meet_family');
+      const memoryChip=G.rememberChoice(family,family.choices[0],family.choices[0].out[0]);
+      S.stats.km+=20; S.stats.events+=2;
+      S.driving={from:'busan',to:'yangsan',dist:35,gone:5,road:'normal',slots:[],si:0};
+      const echo=G.takeChoiceEcho(), echoAgain=G.takeChoiceEcho();
+      out.choiceMemory=memoryChip.length===1&&echo&&echo.memory.id==='family_fed'&&!echoAgain&&
+        S.memories.choices.family_fed.echoed;
+      S.party=['minji','leo'];
+      S.comps.minji.mood=65; S.comps.leo.mood=65;
+      S.relations={pairs:{},seenChats:{}};
+      G.rememberCrewChat(D.chats[0]); G.rememberCrewChat(D.chats[0]);
+      out.crewRelation=G.relation('minji','leo')===1;
+      S.comps.leo.mood=10;
+      const refusal=G.reqOk({trustComp:'leo'});
+      out.companionRefusal=!refusal.ok&&refusal.t.includes('맡지 않겠다고');
+      out.initiatives=D.events.filter(e=>e.id.startsWith('initiative_')).length;
+      S.flags=narrative0.flags; S.knowledge=narrative0.knowledge; S.memories=narrative0.memories;
+      S.relations=narrative0.relations; S.party=narrative0.party; S.comps=narrative0.comps; S.driving=narrative0.driving;
+      S.stats.events=narrative0.events; S.stats.km=narrative0.km;
       out.traceDefs = (D.eraTraces||[]).length;
       out.journeyBeats = (D.journeyBeats||[]).length;
       S.party = []; S.up = {}; UI.renderAll();
@@ -879,6 +917,9 @@ with sync_playwright() as p:
         document.querySelector('[data-stpane="journey"]').classList.contains('on') &&
         document.querySelector('#st-tabs [data-st="journey"]').getAttribute('aria-selected')==='true' &&
         document.querySelector('#st-tabs [data-st="now"]').getAttribute('aria-selected')==='false';
+      const knowledgeText=document.querySelector('[data-stpane="journey"]').textContent;
+      out.knowledgeUi=knowledgeText.includes('아는 것과 모르는 것') &&
+        knowledgeText.includes('제7 잔류구역의 현재 이송') && knowledgeText.includes('소문은 사실처럼 말하지 않는다');
       document.querySelector('#st-x').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
@@ -915,11 +956,17 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 866종', r4['eventCount'] == 866, str(r4['eventCount']))
+    check('이벤트 872종', r4['eventCount'] == 872, str(r4['eventCount']))
     check('사건 감독: 최근 반복·종류 연속 차단', r4['directorCooldown'] and
           r4['directorVariety'], str(r4))
     check('사건 감독: 무거운 장면 뒤 숨 고르기·맥락 우선', r4['directorBreather'] and
           r4['directorContext'], str(r4))
+    check('사건 감독: 상승→절정→하강→휴식 전환', r4['directorArc'], str(r4))
+    check('핵심 지식: 소문·확인 단계와 플래그 마이그레이션', r4['knowledgeState'], str(r4))
+    check('선택 기억: 거리 뒤 한 번만 후속 대화', r4['choiceMemory'], str(r4))
+    check('동료 관계: 같은 대화 중복 적립 방지', r4['crewRelation'], str(r4))
+    check('동료 능동 사건 6종·낮은 사기에서 맡김 거절',
+          r4['initiatives'] == 6 and r4['companionRefusal'], str(r4))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',
@@ -972,6 +1019,7 @@ with sync_playwright() as p:
     check('업그레이드 전후 차체 작업 장면·3단계 직접 조작',
           r4['upgradeCeremony'] and r4['upgradeInteractive'], str(r4))
     check('상태창 탭 전환·ARIA 선택 상태', r4['statusTabs'] and r4['statusModalAria'], str(r4))
+    check('상태창에서 확인된 사실·남은 질문 분리', r4['knowledgeUi'], str(r4))
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('긴 사건 본문·7개 선택지 독립 스크롤', r4['eventScroll'] and
@@ -1084,7 +1132,7 @@ with sync_playwright() as p:
           ('RIVERS', 'SECONDARY_ROUTES', 'REGION_LABELS', "nm:'한강'", "nm:'낙동강'")))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('866개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('872개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
