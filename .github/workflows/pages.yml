@@ -19,8 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build
-        run: ./build.sh
+      - name: Build web release
+        # Pages에는 단일 HTML만 필요하다. AIT는 로컬 Toss 빌드 산출물이므로
+        # GitHub runner에서 Granite CLI를 찾지 않도록 명시적으로 제외한다.
+        run: ./build.sh --html-only
       - name: Prepare site
         run: |
           mkdir _site
