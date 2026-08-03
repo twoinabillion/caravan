@@ -35,6 +35,16 @@ no split panels, no UI, no zombies, no fantasy, no glossy sci-fi.
 인트로의 새 세 컷은 `assets/intro/`, 검증키 사건은 `assets/scenes/`에
 `768×432` JPEG로 저장한다. 생성 원본은 Codex 내장 imagegen 경로에 보존한다.
 
+## 현재의 출발 계기 장면 2종
+
+| 키 | 장면 브리프 |
+|---|---|
+| `intro-mother-keepsakes` | 부산 항구 작업장에서 엄마의 철제 상자를 정리하다 현재 이송 명령과 같은 규격의 회로도를 발견하는 성인 주인공 |
+| `intro-dashboard-module` | 같은 작업장에서 달구지 계기판을 열어 검증 모듈의 존재만 확인하고, 분리 절차가 없어 배선에 번호표를 붙인 뒤 다시 닫는 주인공 |
+
+두 컷의 실제 생성 프롬프트와 원본 경로는
+`generated-departure-motive-2026-08-03.md`에 기록한다.
+
 ## 달구지 기원 장면
 
 | 키 | 장면 브리프 |

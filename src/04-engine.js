@@ -19,7 +19,7 @@ G.newGame = (mode, name)=>{
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
-    flags:{}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
+    flags:{mother_keepsakes:true,intro_module_seen:true}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0},
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
@@ -41,6 +41,8 @@ G.newGame = (mode, name)=>{
   G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판 KOR-LOCAL. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 30일 뒤 외곽의 마지막 잔류구역 이송을 예고했다.', links:[]});
   G.addNote({type:'인물', title:'부모님', body:'엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.', links:['천리안']});
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.', links:['달구지','부모님']});
+  G.addNote({type:'물건', title:'엄마의 철제 상자', body:'현재 이송표와 같은 명령 규격을 가리키는 회로도가 수첩 등판에서 나왔다. 남산 중앙 노드, 달구지 계기판 뒤 검증 모듈, 발신 기록과 당사자 증언을 함께 가져가라는 메모가 적혀 있었다.', links:['부모님','천리안','달구지']});
+  G.addNote({type:'물건', title:'계기판 속 검증 모듈', body:'출발 전에 존재를 확인했지만 분리 절차 두 장이 없어 아직 달구지 전장에 연결해 두었다. 절차를 찾고 기록을 모아 남산에 적용해야 한다.', links:['엄마의 철제 상자','부모님','남산']});
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
@@ -160,6 +162,20 @@ G.knowledgeSummary = ()=>{
     const level=G.knowledgeLevel(id);
     return {id,label:def.label,level,text:level>=2?def.known:(level===1?(def.heard||def.known):'아직 확인하지 못했다.')};
   });
+};
+/* 출발 동기는 설정 문단으로 끝내지 않고 플레이 중 계속 확인하는 작업 목록이다.
+   검증 모듈은 부산에서 이미 보았고, 빠진 절차와 여러 사람의 기록을 모은 뒤에야
+   안전하게 회수해 남산에 연결할 수 있다. */
+G.departureSteps = ()=>{
+  if(!S) return [];
+  const witnessed=G.pillars?G.pillars().관계.have:0;
+  return [
+    {id:'module',done:!!S.flags.intro_module_seen,label:'계기판 속 검증 모듈 확인',detail:'엄마의 회로도와 실제 배선이 일치했다'},
+    {id:'procedure',done:!!S.flags.parent_principle_found,label:'뜯긴 분리 절차 복원',detail:S.flags.parent_principle_found?'발표 연습 기록에서 4–5쪽을 찾았다':'부모의 발표·보관 기록을 따라간다'},
+    {id:'key',done:!!S.flags.parent_key_found,label:'검증키 안전 회수',detail:S.flags.parent_key_found?'남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
+    {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'발신 기록과 당사자 증언 대조',detail:S.flags.es_truth?'명령 생성 순서를 확인했다':`같은 명령을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
+    {id:'seoul',done:!!S.flags.story_done,label:'남산 중앙 노드에 적용',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'첫 이송 집행 전에 서울에 도착한다'}
+  ];
 };
 G.relationKey = (a,b)=>[a,b].sort().join(':');
 G.relation = (a,b)=>{
@@ -462,10 +478,33 @@ G.takeChoiceEcho = ()=>{
   G.save();
   return {memory,lines:def.lines};
 };
+G.combatTacticDelta = choice=>{
+  if(!S||!S.combat||!choice||!choice.tactic) return 0;
+  const history=Array.isArray(S.combat.history)?S.combat.history:[];
+  const last=history[history.length-1];
+  let delta=0;
+  /* 같은 해법을 연달아 쓰면 상대가 각도를 읽는다. 다른 전술로 잇는 선택은
+     정찰→대응→이탈의 단계가 실제로 연결되도록 작은 보너스를 준다. */
+  if(last&&last.tactic===choice.tactic) delta-=0.09;
+  else if(last&&last.tactic!==choice.tactic) delta+=0.04;
+  if(history.slice(0,-1).some(x=>x.tactic===choice.tactic)) delta-=0.03;
+  const helper=choice.req&&choice.req.healthyComp;
+  if(helper&&G.hasComp(helper)&&!G.isInjured(helper))
+    delta+=Math.min(0.06,(S.comps[helper].lvl||0)*0.02);
+  return delta;
+};
+G.combatTacticNote = choice=>{
+  const delta=G.combatTacticDelta(choice);
+  if(delta>=0.06) return '전문가 연계';
+  if(delta>0) return '전술 전환';
+  if(delta<=-0.08) return '같은 수를 읽힘';
+  if(delta<0) return '반복 부담';
+  return '새 전술';
+};
 G.combatOdds = (choice)=>{
   const base=typeof choice.combatRoll==='number'?choice.combatRoll:0.52;
   const edge=S&&S.combat?S.combat.edge||0:0;
-  let bonus=edge*0.12;
+  let bonus=edge*0.12+G.combatTacticDelta(choice);
   if(S&&S.up&&S.up.armor) bonus+=0.04;
   if(S&&S.up&&S.up.scope&&choice.tactic==='사격') bonus+=0.08;
   if(G.isInjured('driver')) bonus-=0.08;
@@ -1011,7 +1050,15 @@ G.applyFx = (fx)=>{
     if(healed) chips.push({t:`✚ ${G.injuryName(healed.id)} 부상 처치`,c:'plus'});
   }
   if(fx.combatEnd){
-    if(S.combat) chips.push({t:'교전 종료',c:'plus'});
+    if(S.combat){
+      const history=Array.isArray(S.combat.history)?S.combat.history:[];
+      const tactics=[...new Set(history.map(x=>x.tactic).filter(Boolean))];
+      G.addNote({type:'사건',title:`교전 기록: ${S.combat.threat}`,
+        body:`${history.map(x=>`${x.step} — ${x.tactic}: ${x.label}`).join('\n')||'전술 기록 없음'}\n결과: 교전 종료. 차체 ${Math.round(S.van)}/${S.vanMax}, 관측 ${S.pursuit}/5.`,
+        links:['달구지','천리안']});
+      if(tactics.length>=2&&S.party.length){ G.moodAll(1); chips.push({t:'전술 연계 · 사기 +1',c:'plus'}); }
+      chips.push({t:'교전 종료 · 전술 기록 저장',c:'plus'});
+    }
     S.combat=null;
   }
   if(fx.chain){ S._chain = fx.chain; }   // 시트 닫힐 때 UI가 이어서 연다 (시네마틱 연쇄)
@@ -1472,9 +1519,12 @@ G.buyUpgrade = (id)=>{
   if(id==='tank1'||id==='tank2'){ S.fuelMax+=25; }
   if(id==='armor'){ S.vanMax+=25; S.van+=25; }
   const stage=u.seat?G.vanStage():null;
+  const group=(D.upgradeGroups||[]).find(x=>x.ids.includes(id));
+  const adviser=group&&D.upgradeAdvisers&&D.upgradeAdvisers[group.id];
+  if(adviser&&G.hasComp(adviser.id)&&!G.isInjured(adviser.id)) G.bond(adviser.id,1);
   UI.toast(`${u.ic} ${u.nm} 장착 완료${u.seat?` — ${stage.nm} · 동료 자리 ${G.maxParty()}명`:''}`);
   G.addNote({type:'사건', title:'달구지 개조: '+u.nm,
-    body:(stage?stage.build:u.d)+' — 달구지가 조금 더 우리 집이 됐다.', links:[]});
+    body:(stage?stage.build:u.d)+` — 달구지가 조금 더 우리 집이 됐다.${adviser&&G.hasComp(adviser.id)?` ${D.comps[adviser.id].name}가 자기 전문으로 작업을 거들었다.`:''}`, links:[]});
   G.save(); return true;
 };
 

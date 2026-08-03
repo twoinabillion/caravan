@@ -58,6 +58,8 @@ D.scenes = {
   'intro-parents-discovery':'__SCENE_INTRO_PARENTS_DISCOVERY__',
   'intro-silenced-presentation':'__SCENE_INTRO_SILENCED_PRESENTATION__',
   'intro-current-expulsion':'__SCENE_INTRO_CURRENT_EXPULSION__',
+  'intro-mother-keepsakes':'__SCENE_INTRO_MOTHER_KEEPSAKES__',
+  'intro-dashboard-module':'__SCENE_INTRO_DASHBOARD_MODULE__',
   'family-verification-key':'__SCENE_FAMILY_VERIFICATION_KEY__',
   'recruit-minji':'__SCENE_RECRUIT_MINJI__',
   'recruit-parkss':'__SCENE_RECRUIT_PARKSS__',

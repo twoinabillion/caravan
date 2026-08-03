@@ -6,6 +6,7 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='';
+  let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
   let arrivalTimer=0;
   const tossRuntime=Boolean(window.ReactNativeWebView||/\.tossmini\.com$/i.test(location.hostname)||/Toss/i.test(navigator.userAgent));
   const localOffroad=location.protocol==='file:'&&!tossRuntime;
@@ -195,15 +196,21 @@ const UI = (()=>{
     };
     let introPointer=null;
     $('#scr-intro').addEventListener('pointerdown',e=>{
-      if(e.target.closest('#intro-skip')) return;
+      if(e.target.closest('#intro-skip,#intro-auto')) return;
       introPointer={x:e.clientX,y:e.clientY};
     });
     $('#scr-intro').addEventListener('pointerup',e=>{
-      if(!introPointer||e.target.closest('#intro-skip')) return;
+      if(!introPointer||e.target.closest('#intro-skip,#intro-auto')) return;
       const moved=Math.hypot(e.clientX-introPointer.x,e.clientY-introPointer.y);
       introPointer=null;
       if(moved<12) nextIntro();
     });
+    $('#intro-auto').onclick=e=>{
+      e.stopPropagation();
+      introAuto=!introAuto;
+      localStorage.setItem('caravan_intro_auto',introAuto?'1':'0');
+      renderIntro(false);
+    };
     $('#intro-skip').onclick=e=>{ e.stopPropagation(); skipIntro(); };
     $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
@@ -289,6 +296,24 @@ const UI = (()=>{
     else if(beat.who==='me') beat.name=introName();
     return beat;
   }
+  function clearIntroAuto(){
+    if(introAutoTimer){ clearTimeout(introAutoTimer); introAutoTimer=0; }
+  }
+  function updateIntroAuto(){
+    const b=$('#intro-auto'); if(!b) return;
+    b.textContent=introAuto?'자동 ON':'자동 OFF';
+    b.setAttribute('aria-pressed',String(introAuto));
+    b.setAttribute('aria-label',introAuto?'프롤로그 자동 진행 켜짐. 누르면 멈춥니다':'프롤로그 자동 진행 꺼짐. 누르면 켭니다');
+  }
+  function scheduleIntroAuto(){
+    clearIntroAuto(); updateIntroAuto();
+    if(!introAuto||introIdx>=D.intro.length) return;
+    const page=D.intro[introIdx], beats=page&&page.beats||[];
+    const beat=beats[Math.min(introTurnIdx,Math.max(0,beats.length-1))];
+    const chars=stripTags(beat&&beat.text||'').length;
+    const delay=Math.max(1900,Math.min(5200,800+chars*55));
+    introAutoTimer=setTimeout(()=>{ introAutoTimer=0; if(screen==='intro'&&!document.hidden) nextIntro(); },delay);
+  }
   function renderIntro(newPage){
     const page=D.intro[introIdx], scene=D.scenes&&D.scenes[page.scene];
     if(newPage){
@@ -309,9 +334,10 @@ const UI = (()=>{
     const live=$('#story-live'), current=introBeats[Math.min(introTurnIdx,introBeats.length-1)];
     if(live&&current) live.textContent=`${current.kind==='dialogue'?(current.name||speakerInfo(current.who).name)+'의 말: ':'장면 설명: '}${stripTags(current.text)}`;
     const nextBeat=introBeats[introTurnIdx+1];
-    $('#intro-hint').textContent=nextBeat
-      ? nextBeat.kind==='dialogue'?'눌러서 다음 말풍선':'눌러서 다음 장면'
-      : '눌러서 다음 장';
+    const manualHint=nextBeat
+      ? nextBeat.kind==='dialogue'?'탭하면 다음 말풍선':'탭하면 다음 장면'
+      : '탭하면 다음 장';
+    $('#intro-hint').textContent=introAuto?`자동으로 이어집니다 · ${manualHint}`:manualHint;
     const book=$('#intro-book');
     if(newPage){
       book.style.opacity=0;
@@ -328,8 +354,10 @@ const UI = (()=>{
         });
       }
     }
+    scheduleIntroAuto();
   }
   function nextIntro(){
+    clearIntroAuto();
     const page=D.intro[introIdx];
     const beats=page&&page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page?.text||''}];
     if(introTurnIdx<beats.length-1){
@@ -347,6 +375,7 @@ const UI = (()=>{
     else renderIntro(true);
   }
   function skipIntro(){
+    clearIntroAuto();
     introIdx=D.intro.length;
     introTurnIdx=0;
     if(screen==='name') pendingName=($('#inp-name').value||'').trim().slice(0,8);
@@ -1114,7 +1143,7 @@ const UI = (()=>{
       count++;
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.tactic?`<span class="combat-tactic">${c.tactic}</span>`:''}${c.label}
         ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
-        ${c.combatRoll!==undefined?`<span class="combat-odds">현재 전세 · ${G.combatGrade(c)}</span>`:''}
+        ${c.combatRoll!==undefined?`<span class="combat-odds">현재 전세 · ${G.combatGrade(c)} · ${G.combatTacticNote(c)}</span>`:''}
         ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
     });
     return {html,count};
@@ -1504,8 +1533,11 @@ const UI = (()=>{
     const oldCombat=$('#ev-sheet').querySelector('.combat-hud');
     const combatBefore=S.combat?{edge:S.combat.edge||0,history:[...(S.combat.history||[])]}:{edge:0,history:[]};
     const out=G.pickOutcome(curEv, choice);
+    /* 마지막 선택은 combatEnd가 상태를 비우기 전에 먼저 기록한다.
+       시작·중간 단계는 applyFx가 교전 상태를 만든 뒤 기록한다. */
+    let combatEntry=out.fx&&out.fx.combatEnd?G.rememberCombatChoice(curEv,choice):null;
     const chips=G.applyFx(out.fx);
-    const combatEntry=G.rememberCombatChoice(curEv,choice);
+    if(!combatEntry) combatEntry=G.rememberCombatChoice(curEv,choice);
     let combatHud='';
     if(oldCombat){
       let resultState=S.combat;
@@ -1650,8 +1682,8 @@ const UI = (()=>{
       people:{label:stlId==='daejeon'?'사람들':'모닥불',
         sub:'얼굴을 보고 이야기를 나눈다',icon:'bond'}
     };
-    if(D.stls[stlId]&&D.stls[stlId].field)
-      spots.alley={label:'장터 골목',sub:'동료와 직접 둘러본다',icon:'quest'};
+    const field=D.stls[stlId]&&D.stls[stlId].field;
+    if(field) spots.alley={label:field.spotLabel||'현장 안쪽',sub:field.spotSub||'동료와 직접 둘러본다',icon:'quest'};
     return spots;
   }
   function settlementCompanion(){
@@ -1900,7 +1932,7 @@ const UI = (()=>{
         const result=G.doStlFieldAction(curStl,b.dataset.stlfield);
         if(!result.ok){ toast(result.reason||'지금은 할 수 없다'); return; }
         stlFieldResult={stl:curStl,action:result.action,chips:result.chips};
-        if(result.hiddenOpen) toast('👣 천막 뒤에서 순덕이 손짓한다','discover');
+        if(result.hiddenOpen) toast(`👣 ${D.stls[curStl].field.revealToast||'도움을 마치자 전에는 보이지 않던 곳이 열렸다'}`,'discover');
         showStl(curStl,'alley');
         requestAnimationFrame(()=>body.querySelector('[data-field-result]')?.scrollIntoView({block:'nearest'}));
       });
@@ -1985,6 +2017,11 @@ const UI = (()=>{
     const group=(D.upgradeGroups||[]).find(x=>x.ids.includes(u.id))||D.upgradeGroups[0];
     const art=D.upgradeArt&&D.upgradeArt[group.id];
     const afterStage=G.vanStage(), afterCapacity=G.seatCapacity();
+    const work=D.upgradeWork&&D.upgradeWork[group.id]||{
+      phases:['분해','체결','시동 확인'],actions:['고정 볼트를 직접 푼다','새 부품을 체결한다','운전석에서 작동을 확인한다']};
+    const adviserDef=D.upgradeAdvisers&&D.upgradeAdvisers[group.id];
+    const adviser=adviserDef&&G.hasComp(adviserDef.id)&&!G.isInjured(adviserDef.id)
+      ?{...adviserDef,...D.comps[adviserDef.id]}:null;
     AMBI.play('sfx_van_extension',u.seat ? 0.44 : 0.28);
     const physical=u.seat
       ? `<b>후미 증축 +${before.stage.cm}cm → +${afterStage.cm}cm</b><small>${before.stage.nm}에서 ${afterStage.nm} 단계로. 탑승 정원 ${before.capacity+1} → ${afterCapacity+1}명</small>`
@@ -2002,10 +2039,12 @@ const UI = (()=>{
           <figure><canvas id="up-after-van" aria-label="개조 후 달구지"></canvas><figcaption>개조 후</figcaption></figure>
         </div>
         <div class="upgrade-change">${physical}</div>
+        ${adviser?`<div class="upgrade-adviser">${settlementPortrait(adviser.id,'upgrade-adviser-face',`${adviser.name} 초상`)}
+          <span><b>${esc(adviser.name)}가 작업을 거든다</b><small>“${esc(adviser.line)}” · 유대 +1</small></span></div>`:''}
         <div class="upgrade-phases" aria-label="개조 작업 순서">
-          <span class="current">1 · 분해</span><span>2 · 체결</span><span>3 · 시동 확인</span>
+          ${work.phases.map((phase,i)=>`<span class="${i===0?'current':''}">${i+1} · ${esc(phase)}</span>`).join('')}
         </div>
-        <button class="upgrade-step-action" id="upgrade-step-action">고정 볼트를 직접 푼다</button>
+        <button class="upgrade-step-action" id="upgrade-step-action">${esc(work.actions[0])}</button>
         <button class="upgrade-install-done" id="upgrade-install-done">달구지를 확인한다</button>
         <span class="sr-only" id="upgrade-step-live" aria-live="polite"></span>
       </div>`);
@@ -2020,11 +2059,10 @@ const UI = (()=>{
     const phases=[...layer.querySelectorAll('.upgrade-phases span')];
     const stepButton=layer.querySelector('#upgrade-step-action');
     const live=layer.querySelector('#upgrade-step-live');
-    const stepCopy=[
-      ['분해 완료. 녹슨 볼트가 바닥에 굴렀다.','새 프레임과 부품을 체결한다'],
-      ['체결 완료. 차체가 전보다 단단히 이어졌다.','운전석에서 시동을 확인한다'],
-      ['시동 확인 완료. 달구지가 새 몸에 맞춰 떨린다.','']
-    ];
+    const stepCopy=work.phases.map((phase,i)=>[
+      `${phase} 완료. ${i===work.phases.length-1?'달구지가 새 부품에 맞춰 낮게 떨린다.':'표시선과 체결 상태를 다시 확인했다.'}`,
+      work.actions[i+1]||''
+    ]);
     let step=0;
     const finish=()=>{
       if(!layer.isConnected) return;
@@ -2297,6 +2335,13 @@ const UI = (()=>{
       <div class="st-row"><span class="k">정착지</span><span class="v" style="flex:1">${stlVisited}/${Object.keys(D.stls).length} 방문</span></div>
       <div class="st-row"><span class="k">${ICO('pursuit')}천리안 관측</span><span class="v" style="flex:1;color:${S.pursuit>2?'var(--danger)':'inherit'}">${'◉'.repeat(S.pursuit)||'—'} (${S.pursuit}/5)</span></div>
       ${S.flags.seoulTries?`<div class="st-row"><span class="k">남산 시도</span><span class="v" style="flex:1;color:var(--cheollian)">${S.flags.seoulTries}회 · 아직 입장 조건 미달</span></div>`:''}</div>`;
+    const departureSteps=G.departureSteps(), departureDone=departureSteps.filter(x=>x.done).length;
+    const deadline=S.day<=30?`첫 이송까지 ${31-S.day}일`:'순차 이송 진행 중';
+    journey+=`<div class="st-sec departure-brief"><h4>왜 지금 서울로 가는가 <small>${departureDone}/${departureSteps.length}</small></h4>
+      <p><b>${esc(deadline)}</b> · 엄마의 유품에서 현재 이송 규격과 맞는 남산 도면을 찾았다. 계기판 속 검증 모듈을 사람들의 기록과 함께 가져가 이번 명령을 멈춘다.</p>
+      <div class="departure-steps">${departureSteps.map(step=>`<div class="departure-step ${step.done?'done':''}">
+        <i>${step.done?'✓':'○'}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}</div>
+      <div class="csub">동료는 데려오는 대상이 아니다. 서로의 일을 끝낸 뒤 같은 목적지를 고른 사람이 자기 이유로 합류한다.</div></div>`;
     const knowledge=G.knowledgeSummary(), verified=knowledge.filter(k=>k.level>=2), heard=knowledge.filter(k=>k.level===1);
     journey+=`<div class="st-sec knowledge-status"><h4>아는 것과 모르는 것 <small>${verified.length}/${knowledge.length} 확인</small></h4>
       ${verified.slice(-4).map(k=>`<div class="st-row"><span class="k">✓ ${esc(k.label)}</span><span class="v">${esc(k.text)}</span></div>`).join('')}
@@ -2773,6 +2818,10 @@ const AMBI = (()=>{
         setLoop('sfx_garage_loop',.15); play('sfx_van_extension',.34); break;
       case 'intro-current-expulsion':
         setLoop('sfx_port_arrival_loop',.17); break;
+      case 'intro-mother-keepsakes':
+        setLoop('sfx_garage_loop',.11); break;
+      case 'intro-dashboard-module':
+        setLoop('sfx_garage_loop',.13); play('sfx_van_extension',.18); break;
       case 'intro-departure-choice':
         setLoop(null); play('sfx_cargo_depart',.38); break;
       default:

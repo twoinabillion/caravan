@@ -95,6 +95,9 @@ with sync_playwright() as p:
     expected_intro_count = pg.evaluate("`1 / ${D.intro.length} · 1 / ${D.intro[0].beats.length}`")
     check('이름 Enter가 첫 턴을 건너뛰지 않음',
           pg.locator('#intro-count').text_content() == expected_intro_count)
+    check('프롤로그 자동 진행을 명시하고 언제든 끌 수 있음',
+          pg.locator('#intro-auto').get_attribute('aria-pressed') == 'true' and
+          '자동으로 이어집니다' in pg.locator('#intro-hint').text_content())
     intro_layout = pg.evaluate('''() => {
       const book=document.querySelector('#intro-book').getBoundingClientRect();
       const app=document.querySelector('#app').getBoundingClientRect();
@@ -606,11 +609,11 @@ with sync_playwright() as p:
       out.journeyBeats = (D.journeyBeats||[]).length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
-      out.introBook = D.intro.length === 12 && D.intro.every(p =>
+      out.introBook = D.intro.length === 14 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
       out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= 8 &&
         p.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind)).length >= 5 &&
-        new Set(p.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who)).size >= 2 &&
+        (p.solo || new Set(p.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who)).size >= 2) &&
         p.beats.every(turn => turn.text && turn.kind &&
           (!['dialogue','thought','letter'].includes(turn.kind) || (turn.who && turn.name))));
       out.introPortraits = ['mother','father','intro_child','player_child','grandfather','me']
@@ -634,14 +637,23 @@ with sync_playwright() as p:
         D.intro.some(p=>p.text.includes('등록 인원 6,412명')) &&
         D.intro.some(p=>p.text.includes('사람의 결정권을 되찾기 위해'));
       const firstIntroBeats=D.intro[0].beats||[];
+      const keepsakeBeats=D.intro.find(p=>p.scene==='intro-mother-keepsakes')?.beats||[];
+      const moduleBeats=D.intro.find(p=>p.scene==='intro-dashboard-module')?.beats||[];
       const departureBeats=D.intro.find(p=>p.scene==='intro-departure-choice')?.beats||[];
       out.introCausalDialogue =
         firstIntroBeats.some(t=>t.text.includes('길을 막은 건 경찰과 군인이었어')) &&
         firstIntroBeats.some(t=>t.text.includes('명단은 천리안이 만들었어')) &&
         firstIntroBeats.some(t=>t.text.includes('천리안이 사람들을 골랐다고?')) &&
         firstIntroBeats.every(t=>!t.text.includes('문을 잠그고 이름을 고른')) &&
-        departureBeats.some(t=>t.text.includes('그 장치는 어디 있어요?')) &&
-        departureBeats.some(t=>t.text.includes('이 차 안에 숨겨 둔 거예요?'));
+        keepsakeBeats.some(t=>t.text.includes('현재 이송표에 찍힌 명령 규격')) &&
+        keepsakeBeats.some(t=>t.text.includes('검증 모듈 보관 위치')) &&
+        moduleBeats.some(t=>t.text.includes('분리 절차 두 장')) &&
+        departureBeats.some(t=>t.text.includes('같은 명령을 겪었거나')) &&
+        departureBeats.some(t=>t.text.includes('그 사람도 서울에 갈 이유를 고르면'));
+      out.introImmediateMotive=keepsakeBeats.some(t=>t.text.includes('지금 쫓겨나는 사람')) &&
+        departureBeats.some(t=>t.text.includes('다음 이송이 시작되기 전에 멈추러')) &&
+        D.scenes['intro-mother-keepsakes'].startsWith('data:image/jpeg;base64,') &&
+        D.scenes['intro-dashboard-module'].startsWith('data:image/jpeg;base64,');
       const firstTransferBeats=D.intro.find(p=>p.scene==='intro-first-expulsion')?.beats||[];
       const currentTransferBeats=D.intro.find(p=>p.scene==='intro-current-expulsion')?.beats||[];
       out.transferPaperMeaning =
@@ -728,6 +740,9 @@ with sync_playwright() as p:
       out.localScenery=Object.keys(D.nodeScenery||{}).length;
       out.nodeSceneCount=Object.keys(D.nodeScenes||{}).length;
       out.eventSceneCount=Object.keys(D.eventScenes||{}).length;
+      out.settlementFields=Object.values(D.stls||{}).filter(stl=>stl.field).length===7 &&
+        Object.values(D.stls||{}).every(stl=>stl.field&&stl.field.actions.length>=3&&
+          stl.field.actions.some(action=>action.hidden));
       out.geoCount=Object.keys(D.geo||{}).length;
       out.geoReady=Object.keys(D.nodes).every(id => {
         const n=D.nodes[id], g=D.geo[id];
@@ -883,7 +898,7 @@ with sync_playwright() as p:
         document.querySelector('.stl-section-party').textContent.includes('민지와');
       S.party=walkParty0;
       UI.showStl('daegu');
-      out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===3 &&
+      out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===4 &&
         !!document.querySelector('#stl-van') &&
         !document.querySelector('#garage') && !document.querySelector('#trade');
       document.querySelector('[data-stlfocus="garage"]').click();
@@ -895,19 +910,22 @@ with sync_playwright() as p:
       out.sectionIsolation=!!document.querySelector('#garage') && !document.querySelector('#trade') &&
         !document.querySelector('[data-npc]');
       const oldScrap=S.scrap, oldParts=S.items['부품'], oldFuelMax=S.fuelMax;
+      const upgradeParty=[...S.party]; S.party=['minji'];
       S.scrap=999; S.items['부품']=99; delete S.up.tank1;
       UI.showStl('daegu','garage');
       document.querySelector('[data-up="tank1"]').click();
       out.upgradeCeremony=!!document.querySelector('.upgrade-install') &&
         !!document.querySelector('#up-before-van') && !!document.querySelector('#up-after-van') &&
         document.querySelector('.upgrade-change').textContent.includes('연료 용량');
+      out.upgradeAdviser=document.querySelector('.upgrade-adviser')?.textContent.includes('민지') &&
+        document.querySelector('.upgrade-adviser')?.textContent.includes('마른 천');
       document.querySelector('#upgrade-step-action').click();
       document.querySelector('#upgrade-step-action').click();
       document.querySelector('#upgrade-step-action').click();
       out.upgradeInteractive=document.querySelector('.upgrade-install').classList.contains('ready') &&
         document.querySelectorAll('.upgrade-phases .active').length===3;
       document.querySelector('#upgrade-install-done').click();
-      delete S.up.tank1; S.scrap=oldScrap; S.items['부품']=oldParts; S.fuelMax=oldFuelMax;
+      delete S.up.tank1; S.scrap=oldScrap; S.items['부품']=oldParts; S.fuelMax=oldFuelMax; S.party=upgradeParty;
       document.querySelector('#ovl-stl').classList.remove('on');
       document.querySelector('#dk-status').click();
       out.statusModalAria=document.querySelector('#ovl-status').getAttribute('aria-hidden')==='false' &&
@@ -920,6 +938,9 @@ with sync_playwright() as p:
       const knowledgeText=document.querySelector('[data-stpane="journey"]').textContent;
       out.knowledgeUi=knowledgeText.includes('아는 것과 모르는 것') &&
         knowledgeText.includes('제7 잔류구역의 현재 이송') && knowledgeText.includes('소문은 사실처럼 말하지 않는다');
+      out.departureBrief=knowledgeText.includes('왜 지금 서울로 가는가') &&
+        knowledgeText.includes('첫 이송까지') && knowledgeText.includes('분리 절차') &&
+        knowledgeText.includes('자기 이유');
       document.querySelector('#st-x').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
@@ -980,14 +1001,14 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 105종·빌드 주입', r4['sceneCount'] == 105 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 107종·빌드 주입', r4['sceneCount'] == 107 and r4['sceneDataReady'], str(r4))
     check('행동 단위 신규 컷 16장·선택 스포일러 분리',
           r4['actionCutCount'] == 16 and r4['actionCutMaps'], str(r4))
     check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
           r4['actionCutRuntime'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
-    check('그림책 도입 12장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
+    check('그림책 도입 14장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('인트로 전 장면 화자 턴·가족 초상 연결',
           r4['introTurns'] and r4['introPortraits'], str(r4))
     check('부모 핵심 기록은 엄마 음성·아빠 글씨로 식별', r4['familySpeakers'], str(r4))
@@ -1001,6 +1022,7 @@ with sync_playwright() as p:
     check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
     check('인트로 행동·원인 대사가 구체적으로 이어짐', r4['introCausalDialogue'], str(r4))
+    check('엄마의 유품→현재 명령→30일 시한으로 즉시 출발', r4['introImmediateMotive'], str(r4))
     check('이송표 내용·강제력·사본을 가져가는 이유 설명', r4['transferPaperMeaning'], str(r4))
     check('할아버지 수첩은 구체적이고 안전한 정비 조언', r4['grandfatherNotes'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
@@ -1011,15 +1033,18 @@ with sync_playwright() as p:
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))
     check('동료 과제 중에도 일반 의뢰와 마감이 보임', r4['missionSecondary'], str(r4))
-    check('정착지 3개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
+    check('정착지 4개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
+    check('모든 정착지에 소모·발견·숨은 현장 행동', r4['settlementFields'], str(r4))
     check('정착지에서 현재 동료와 장소 사이를 이동', r4['settlementWalkParty'] and r4['settlementWalkMove'], str(r4))
     check('정착지 내부 장면 확대·동행 상태 유지', r4['settlementSceneLarge'], str(r4))
     check('장소별 기능 분리', r4['sectionIsolation'], str(r4))
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
     check('업그레이드 전후 차체 작업 장면·3단계 직접 조작',
           r4['upgradeCeremony'] and r4['upgradeInteractive'], str(r4))
+    check('업그레이드 분야별 작업·동료 전문가 참여', r4['upgradeAdviser'], str(r4))
     check('상태창 탭 전환·ARIA 선택 상태', r4['statusTabs'] and r4['statusModalAria'], str(r4))
     check('상태창에서 확인된 사실·남은 질문 분리', r4['knowledgeUi'], str(r4))
+    check('상태창에서 지금 떠나는 이유·동료 합류 원칙 상시 확인', r4['departureBrief'], str(r4))
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('긴 사건 본문·7개 선택지 독립 스크롤', r4['eventScroll'] and
@@ -1035,7 +1060,8 @@ with sync_playwright() as p:
           focus_open == 'st-x' and focus_close == 'dk-status',
           f'open={focus_open}, close={focus_close}')
     rcombat = pg.evaluate('''() => {
-      const out={}, oldCombat=S.combat, oldInjuries=structuredClone(S.injuries||{});
+      const out={}, oldCombat=S.combat, oldInjuries=structuredClone(S.injuries||{}),
+        oldNotes=structuredClone(S.notes||[]), oldParty=[...S.party];
       const chains=[
         ['patrol_walker','combat_walker_read','combat_walker_strike'],
         ['patrol_swarm','combat_swarm_read','combat_swarm_break'],
@@ -1061,20 +1087,32 @@ with sync_playwright() as p:
       out.edge=S.combat&&S.combat.edge===2&&G.combatGrade({combatRoll:.5})==='우세';
       G.applyFx({injury:{who:'driver',label:'테스트 타박',days:2}});
       out.injury=G.isInjured('driver')&&S.injuries.driver.days===2;
+      S.combat.history=[
+        {phase:1,step:'정찰',tactic:'엄폐',label:'차체 뒤에서 각도를 읽었다'},
+        {phase:2,step:'대응',tactic:'해킹',label:'센서 연결을 끊었다'}
+      ];
+      const same={combatRoll:.55,tactic:'해킹'}, switched={combatRoll:.55,tactic:'기동'};
+      out.tacticAdapt=G.combatOdds(same)<G.combatOdds(switched) &&
+        G.combatTacticNote(same)==='같은 수를 읽힘' && G.combatTacticNote(switched)==='전술 전환';
+      S.party=['minji']; const moodBefore=S.comps.minji.mood;
       G.applyFx({healInjury:'latest',combatEnd:1});
       out.recovered=!G.isInjured('driver')&&S.combat===null;
+      out.combatJournal=S.notes.at(-1)?.title==='교전 기록: test' &&
+        S.notes.at(-1)?.body.includes('정찰 — 엄폐') && S.comps.minji.mood===Math.min(100,moodBefore+1);
       const oldFire=S.items['화염병']||0;
       S.items['화염병']=1; out.twoItemBlocked=!G.reqOk({item:'화염병',itemQty:2}).ok;
       S.items['화염병']=2; out.twoItemReady=G.reqOk({item:'화염병',itemQty:2}).ok;
       S.items['화염병']=oldFire;
       out.sound=typeof SND.combat==='function';
-      S.combat=oldCombat; S.injuries=oldInjuries; G.save();
+      S.combat=oldCombat; S.injuries=oldInjuries; S.notes=oldNotes; S.party=oldParty; G.save();
       return out;
     }''')
     check('초계·드론·검문소 3단계 교전', rcombat['threePhase'], str(rcombat))
     check('교전 HUD·전술 표식·직전 선택 기억',
           rcombat['hud'] and rcombat['choiceFeedback'] and rcombat['chainLabel'], str(rcombat))
     check('전세·부상·회복 상태 반영', rcombat['edge'] and rcombat['injury'] and rcombat['recovered'], str(rcombat))
+    check('같은 전술 반복 불리·전술 전환 유리', rcombat['tacticAdapt'], str(rcombat))
+    check('교전 전술을 일지에 남기고 조합 보상', rcombat['combatJournal'], str(rcombat))
     check('전투 소모품은 실제 필요 수량까지 검사', rcombat['twoItemBlocked'] and rcombat['twoItemReady'], str(rcombat))
     check('Web Audio 전투 효과음 합성기', rcombat['sound'], str(rcombat))
     print('― 합류 전 의뢰')

@@ -133,7 +133,9 @@ for (const page of D.intro || []) {
   const spoken=page.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind));
   const speakers=new Set(page.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who));
   if(spoken.length<5) errors.push(`인트로 문답 부족: ${page.scene || page.title}`);
-  if(speakers.size<2) errors.push(`인트로 대화 상대 부족: ${page.scene || page.title}`);
+  /* 유품을 정리하거나 장치를 확인하는 장면은 혼자 있는 것이 서사적으로 맞다.
+     solo 장면에 억지 대화 상대를 만들지 않고, 생각·편지 턴의 충분한 호흡만 검사한다. */
+  if(!page.solo&&speakers.size<2) errors.push(`인트로 대화 상대 부족: ${page.scene || page.title}`);
   for (const [index, turn] of page.beats.entries()) {
     if (!turn.kind || typeof turn.text !== 'string' || !turn.text.trim()) {
       errors.push(`인트로 빈 턴: ${page.scene || page.title} #${index + 1}`);

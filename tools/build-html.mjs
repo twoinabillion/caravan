@@ -34,7 +34,9 @@ const introScenes = {
   INTRO_DEPARTURE_CHOICE:'assets/intro/08-departure-choice.jpg',
   INTRO_PARENTS_DISCOVERY:'assets/intro/09-parents-discovery.jpg',
   INTRO_SILENCED_PRESENTATION:'assets/intro/10-silenced-presentation.jpg',
-  INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion.jpg'
+  INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion.jpg',
+  INTRO_MOTHER_KEEPSAKES:'assets/intro/12-mother-keepsakes.jpg',
+  INTRO_DASHBOARD_MODULE:'assets/intro/13-dashboard-module.jpg'
 };
 const upgradeScenes = {
   FUEL:'assets/upgrades/fuel.jpg', SEATING:'assets/upgrades/seating-v2.jpg',
