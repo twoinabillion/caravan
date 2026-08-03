@@ -19,8 +19,9 @@ G.newGame = (mode, name)=>{
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
-    flags:{mother_keepsakes:true,intro_module_seen:true}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
-    notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0},
+    flags:{mother_keepsakes:true,intro_family_helped:true,intro_appeal_failed:true,
+      intro_module_seen:true,intro_workshop_left:true}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
+    notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0, nonlethal:0}, routePlan:null,
     thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
     _recentEvents:[], _recentEventTypes:[], _eventBreather:0,
@@ -28,7 +29,7 @@ G.newGame = (mode, name)=>{
     relations:{pairs:{},seenChats:{}},
     director:{intensity:10,phase:'build',relaxEvents:0},
     combat:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
-    _stlField:{daily:{},once:{},impact:{},log:[]},
+    _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
   };
   rng = mulberry32(S.seed);
   S.wxNext = G.rollWx('clear');
@@ -43,6 +44,8 @@ G.newGame = (mode, name)=>{
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.', links:['달구지','부모님']});
   G.addNote({type:'물건', title:'엄마의 철제 상자', body:'현재 이송표와 같은 명령 규격을 가리키는 회로도가 수첩 등판에서 나왔다. 남산 중앙 노드, 달구지 계기판 뒤 검증 모듈, 발신 기록과 당사자 증언을 함께 가져가라는 메모가 적혀 있었다.', links:['부모님','천리안','달구지']});
   G.addNote({type:'물건', title:'계기판 속 검증 모듈', body:'출발 전에 존재를 확인했지만 분리 절차 두 장이 없어 아직 달구지 전장에 연결해 두었다. 절차를 찾고 기록을 모아 남산에 적용해야 한다.', links:['엄마의 철제 상자','부모님','남산']});
+  G.addNote({type:'인물', title:'도윤의 가족', body:'부산 부두에서 난방이 끊긴 이송 버스를 고쳐 준 가족. 엄마 하진, 8살 도윤, 동생 유나는 제7 잔류구역 6,412명 가운데 먼저 남쪽으로 보내진 사람들이다.', links:['서울 추방','천리안']});
+  G.addNote({type:'사건', title:'30일의 시한', body:'부산의 원격 이의 제기는 막혔다. DAY 30 안에 남산 중앙 노드에서 이송 중단까지 완료해야 첫 이송을 막을 수 있다. 서울 도착만으로 끝나지 않는다.', links:['남산','도윤의 가족','계기판 속 검증 모듈']});
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
@@ -69,16 +72,25 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   G.ensureNarrativeState();
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
+  if(S.routePlan===undefined) S.routePlan=null;
+  if(!S.stats) S.stats={km:0,events:0,nonlethal:0};
+  if(!Number.isFinite(S.stats.nonlethal)) S.stats.nonlethal=0;
+  if(S._impactEcho===undefined) S._impactEcho=null;
   if(!S.injuries||Array.isArray(S.injuries)) S.injuries={};
   if(!Number.isFinite(S._exploreDay)) S._exploreDay=S.day;
   if(!S._exploreNodes||Array.isArray(S._exploreNodes)) S._exploreNodes={};
   if(!S._salvagedNodes||Array.isArray(S._salvagedNodes)) S._salvagedNodes={};
   if(!Number.isFinite(S._salvageCount)) S._salvageCount=Object.keys(S._salvagedNodes).length;
-  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},impact:{},log:[]};
+  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},impact:{},roadEchoed:{},log:[]};
   if(!S._stlField.daily||Array.isArray(S._stlField.daily)) S._stlField.daily={};
   if(!S._stlField.once||Array.isArray(S._stlField.once)) S._stlField.once={};
   if(!S._stlField.impact||Array.isArray(S._stlField.impact)) S._stlField.impact={};
+  if(!S._stlField.roadEchoed||Array.isArray(S._stlField.roadEchoed)) S._stlField.roadEchoed={};
   if(!Array.isArray(S._stlField.log)) S._stlField.log=[];
+  /* 새 인트로 이전 세이브도 이미 부산을 떠난 시점이므로 출발 직전의 정본 행동을 복원한다. */
+  if(S.flags.intro_family_helped===undefined) S.flags.intro_family_helped=true;
+  if(S.flags.intro_appeal_failed===undefined) S.flags.intro_appeal_failed=true;
+  if(S.flags.intro_workshop_left===undefined) S.flags.intro_workshop_left=true;
   /* 구버전은 실행 기록만 있었으므로 남아 있는 기록에서 최초 방문 흔적을 복원한다. */
   for(const entry of S._stlField.log){
     if(!entry||!entry.stl||!entry.id) continue;
@@ -173,6 +185,7 @@ G.knowledgeSummary = ()=>{
     return {id,label:def.label,level,text:level>=2?def.known:(level===1?(def.heard||def.known):'아직 확인하지 못했다.')};
   });
 };
+G.transferStatus = (state=S)=>D.transferStatus(state);
 /* 출발 동기는 설정 문단으로 끝내지 않고 플레이 중 계속 확인하는 작업 목록이다.
    검증 모듈은 부산에서 이미 보았고, 빠진 절차와 여러 사람의 기록을 모은 뒤에야
    안전하게 회수해 남산에 연결할 수 있다. */
@@ -180,11 +193,12 @@ G.departureSteps = ()=>{
   if(!S) return [];
   const witnessed=G.pillars?G.pillars().관계.have:0;
   return [
+    {id:'family',done:!!S.flags.intro_family_helped,label:'6,412명 가운데 한 가족을 만남',detail:'도윤 가족의 버스 난방을 고치고 현재 이송을 직접 보았다'},
+    {id:'appeal',done:!!S.flags.intro_appeal_failed,label:'부산에서 이의 제기 시도',detail:'원격 절차는 막혔고 남산 현장 확인만 남았다'},
     {id:'module',done:!!S.flags.intro_module_seen,label:'계기판 속 검증 모듈 확인',detail:'엄마의 회로도와 실제 배선이 일치했다'},
-    {id:'procedure',done:!!S.flags.parent_principle_found,label:'뜯긴 분리 절차 복원',detail:S.flags.parent_principle_found?'발표 연습 기록에서 4–5쪽을 찾았다':'부모의 발표·보관 기록을 따라간다'},
-    {id:'key',done:!!S.flags.parent_key_found,label:'검증키 안전 회수',detail:S.flags.parent_key_found?'남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
+    {id:'key',done:!!S.flags.parent_key_found,label:'분리 절차 복원·검증키 안전 회수',detail:S.flags.parent_key_found?'4–5쪽을 복원해 남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
     {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'발신 기록과 당사자 증언 대조',detail:S.flags.es_truth?'명령 생성 순서를 확인했다':`같은 명령을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
-    {id:'seoul',done:!!S.flags.story_done,label:'남산 중앙 노드에 적용',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'첫 이송 집행 전에 서울에 도착한다'}
+    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'서울 도착이 아니라 DAY 30 안의 이송 중단이 완료 조건이다'}
   ];
 };
 G.relationKey = (a,b)=>[a,b].sort().join(':');
@@ -655,11 +669,56 @@ G.dawn = ()=>{
 G.moodAll = (d)=>{ for(const id of S.party){ S.comps[id].mood = clamp(S.comps[id].mood+d,0,100); } };
 
 /* ── travel ── */
+G.routeStatus = ()=>{
+  const state=S&&S.routePlan, def=state&&D.routePlans&&D.routePlans[state.id];
+  if(!state||!def) return null;
+  const at=S.driving?S.driving.to:S.at;
+  const reached=new Set(state.visited||[]);
+  if(at) reached.add(at);
+  const done=def.corridor.filter(id=>reached.has(id)).length;
+  return {state,def,done,total:def.corridor.length,complete:state.status==='complete'};
+};
+G.routeTravelCheck = (from,to)=>{
+  const rs=G.routeStatus();
+  if(!rs||rs.complete||from===rs.def.end) return {ok:true};
+  /* 오래된 세이브나 강제 이동이 노선 밖에서 복원되면 발을 묶지 않는다. */
+  if(!rs.def.corridor.includes(from)) return {ok:true};
+  if(rs.def.corridor.includes(to)) return {ok:true};
+  return {ok:false,why:`${rs.def.name}을 골랐다 — 청주까지 이 노선을 마쳐야 한다`};
+};
+G.chooseRoute = id=>{
+  const def=D.routePlans&&D.routePlans[id];
+  if(!def||S.routePlan) return false;
+  S.routePlan={id,status:'active',chosenDay:S.day,startedKm:Math.round(S.stats.km),visited:[def.start]};
+  G.queueStory(def.opening);
+  G.addNote({type:'사건',title:`김천에서 고른 길: ${def.name}`,
+    body:`${def.promise}. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.`,links:['달구지']});
+  UI.toast(`${def.mark} ${def.name} — 청주까지 노선 고정`);
+  return true;
+};
+G.updateRouteOnArrival = to=>{
+  const rs=G.routeStatus();
+  if(!rs||rs.complete) return false;
+  if(rs.def.corridor.includes(to)&&!rs.state.visited.includes(to)) rs.state.visited.push(to);
+  if(to!==rs.def.end) return false;
+  rs.state.status='complete'; rs.state.completedDay=S.day;
+  if(rs.state.id==='ridge'){
+    S.pursuit=Math.max(0,S.pursuit-1); G.moodAll(2);
+  } else {
+    S.food+=2; S.water+=2;
+  }
+  G.addNote({type:'사건',title:`노선 완주: ${rs.def.name}`,
+    body:`김천에서 고른 길을 청주까지 바꾸지 않고 왔다. ${rs.def.reward}.`,links:['달구지']});
+  UI.toast(`${rs.def.mark} ${rs.def.name} 완주 — 두 길이 청주에서 다시 만났다`);
+  return true;
+};
 G.canTravelTo = (id)=>{
   if(S.driving||S.ended) return {ok:false};
   const e = G.edgeBetween(S.at,id);
   if(!e) return {ok:false, why:'인접한 길이 없다'};
   if(!S.known.includes(id)) return {ok:false, why:'모르는 곳이다'};
+  const route=G.routeTravelCheck(S.at,id);
+  if(!route.ok) return route;
   const fuelNeed = G.fuelFor(e[2], e[3]);
   if(S.fuel<=0) return {ok:false, why:'연료가 없다'};
   return {ok:true, km:e[2], road:e[3], fuel:fuelNeed};
@@ -717,6 +776,49 @@ G.prepareRecruitMemory = (dv)=>{
   return null;
 };
 
+/* 정착지에서 바꾼 풍경이 정착지 패널 안에서 끝나지 않게, 그곳을 떠나는
+   첫 주행 중 한 번만 후속 장면을 예약한다. */
+G.prepareSettlementRoadEcho = (dv,from,to)=>{
+  const node=D.nodes[from], stlId=node&&node.stl;
+  if(!dv||!stlId) return null;
+  const state=G.stlFieldState();
+  const recent=[...state.log].reverse().find(entry=>{
+    if(!entry||entry.stl!==stlId) return false;
+    const key=`${stlId}:${entry.id}`, action=G.stlFieldAction(stlId,entry.id);
+    return action&&action.change&&!state.roadEchoed[key];
+  });
+  if(!recent) return null;
+  const action=G.stlFieldAction(stlId,recent.id), key=`${stlId}:${recent.id}`;
+  S._impactEcho={key,stlId,actionId:recent.id,from,to,wx:dv.wx,day:S.day,
+    visual:action.change.visual||'route',label:action.label||action.title||'도운 일',done:false};
+  dv.slots.push({at:Math.max(2,dv.dist*(.28+rng()*.12)),special:'impact'});
+  dv.slots.sort((a,b)=>a.at-b.at);
+  return S._impactEcho;
+};
+G.roadEchoCopy = phase=>D.roadEchoCopy(S,phase);
+G.resolveImpactEcho = mode=>{
+  const echo=S&&S._impactEcho;
+  if(!echo||echo.done) return {fx:{},chips:[]};
+  const state=G.stlFieldState();
+  echo.done=true; echo.mode=mode;
+  state.roadEchoed[echo.key]={day:S.day,min:S.min,mode,to:echo.to};
+  const tech=['light','air','gate','watch','record','route','order'].includes(echo.visual);
+  let fx={}, summary='일행을 그대로 보냈다';
+  if(mode==='assist'){
+    fx={time:35,fatigue:2,moodAll:2}; summary='차를 세우고 마지막 구간을 함께 정리했다';
+    if(echo.visual==='water') fx.water=2;
+    else if(['steam','food'].includes(echo.visual)) fx.food=2;
+    else if(echo.visual==='shelter') fx.fatigue=-4;
+    else fx.scrap=2;
+  } else if(mode==='relay'){
+    fx={time:15,moodAll:1,scrap:1}; summary='달구지 무전과 지도로 다음 구간을 이어 줬다';
+    if(tech) fx.pursuit=-1;
+  }
+  G.addNote({type:'사건',title:G.roadEchoCopy('title'),
+    body:`${summary}. ${G.roadEchoCopy('outcome')}`,links:['달구지']});
+  return {fx,chips:[{t:'정착지의 변화가 길 위로 이어졌다',c:'item'}]};
+};
+
 G.startTravel = (to)=>{
   const chk = G.canTravelTo(to); if(!chk.ok) return false;
   const wx = S.wx;
@@ -733,6 +835,7 @@ G.startTravel = (to)=>{
     slots.sort((a,b)=>a.at-b.at);
   }
   S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0};
+  if(!isBridge) G.prepareSettlementRoadEcho(S.driving,S.at,to);
   G.prepareRecruitGuest(S.driving);
   G.prepareRecruitMemory(S.driving);
   S.at = null;
@@ -787,6 +890,7 @@ G.tick = (dt)=>{ // dt: real seconds
   if(dv.si < dv.slots.length && dv.gone >= dv.slots[dv.si].at){
     const slot = dv.slots[dv.si++];
     if(slot.special==='bridge'){ G.openEvent(D.bridgeEvent); return; }
+    if(slot.special==='impact'){ G.openEventById('settlement_road_echo'); return; }
     if(slot.gen){ OFF.playGenerated(()=>G.fireDriveEvent()); return; }
     G.fireDriveEvent(); return;
   }
@@ -999,6 +1103,14 @@ G.openEvent = (evd)=>{
 G.applyFx = (fx)=>{
   const chips = [];
   if(!fx) return chips;
+  if(fx.routeChoice){
+    if(G.chooseRoute(fx.routeChoice)) chips.push({t:`노선 선택 · ${D.routePlans[fx.routeChoice].name}`,c:'item'});
+  }
+  if(fx.impactEcho){
+    const echo=G.resolveImpactEcho(fx.impactEcho);
+    const base={...fx}; delete base.impactEcho;
+    fx={...base,...echo.fx}; chips.push(...echo.chips);
+  }
   /* 퍼크 보정 */
   if(fx.scrap>0 && G.hasComp('jaeyi')) fx={...fx, scrap:Math.ceil(fx.scrap*1.3)};
   if(fx.scrap<0 && G.hasPerk('jy_hands')) fx={...fx, scrap:-Math.ceil(-fx.scrap*0.75)};
@@ -1019,7 +1131,7 @@ G.applyFx = (fx)=>{
     const c=fx.combatStart;
     S.combat={id:c.id||'encounter',threat:c.threat||'위협',edge:c.edge||0,
       terrain:c.terrain||'',stakes:c.stakes||'',objective:c.objective||'',
-      pressure:clamp(c.pressure||0,0,3),startedDay:S.day};
+      kind:c.kind||'교전',pressure:clamp(c.pressure||0,0,3),startedDay:S.day};
   }
   if(fx.combatEdge&&S.combat){
     S.combat.edge=clamp((S.combat.edge||0)+fx.combatEdge,-2,3);
@@ -1091,14 +1203,17 @@ G.applyFx = (fx)=>{
     if(S.combat){
       const history=Array.isArray(S.combat.history)?S.combat.history:[];
       const tactics=[...new Set(history.map(x=>x.tactic).filter(Boolean))];
+      const kind=S.combat.kind||'교전';
+      const result=fx.combatResult==='success'?'목표 달성':fx.combatResult==='partial'?'부분 달성':'종료';
       const context=[S.combat.terrain&&`지형: ${S.combat.terrain}`,
         S.combat.objective&&`처음 목표: ${S.combat.objective}`,
         S.combat.stakes&&`실패 위험: ${S.combat.stakes}`].filter(Boolean).join('\n');
-      G.addNote({type:'사건',title:`교전 기록: ${S.combat.threat}`,
-        body:`${context}${context?'\n':''}${history.map(x=>`${x.step} — ${x.tactic}: ${x.label}`).join('\n')||'전술 기록 없음'}\n결과: 교전 종료. 차체 ${Math.round(S.van)}/${S.vanMax}, 관측 ${S.pursuit}/5.`,
+      G.addNote({type:'사건',title:`${kind} 기록: ${S.combat.threat}`,
+        body:`${context}${context?'\n':''}${history.map(x=>`${x.step} — ${x.tactic}: ${x.label}`).join('\n')||'행동 기록 없음'}\n결과: ${result}. 차체 ${Math.round(S.van)}/${S.vanMax}, 관측 ${S.pursuit}/5.`,
         links:['달구지','천리안']});
+      if(kind!=='교전'&&['success','partial'].includes(fx.combatResult)) S.stats.nonlethal++;
       if(tactics.length>=2&&S.party.length){ G.moodAll(1); chips.push({t:'전술 연계 · 사기 +1',c:'plus'}); }
-      chips.push({t:'교전 종료 · 전술 기록 저장',c:'plus'});
+      chips.push({t:`${kind} ${result} · 행동 기록 저장`,c:'plus'});
     }
     S.combat=null;
   }
@@ -1211,10 +1326,11 @@ G.reqCostText = (req)=>{
 /* 정착지 마이크로 탐색. 하루 제한과 일회성 보상을 엔진에서 강제해
    화면을 다시 열거나 세이브를 불러와도 무한 파밍이 되지 않게 한다. */
 G.stlFieldState = ()=>{
-  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},impact:{},log:[]};
+  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},impact:{},roadEchoed:{},log:[]};
   S._stlField.daily=S._stlField.daily||{};
   S._stlField.once=S._stlField.once||{};
   S._stlField.impact=S._stlField.impact||{};
+  S._stlField.roadEchoed=S._stlField.roadEchoed||{};
   S._stlField.log=Array.isArray(S._stlField.log)?S._stlField.log:[];
   return S._stlField;
 };
@@ -1342,6 +1458,7 @@ G.arrive = ()=>{
     const n = D.nodes[to];
     G.addNote({type:'장소', title:n.name, body:`DAY ${S.day} 도착. ${n.desc}`, links:[]});
   }
+  G.updateRouteOnArrival(to);
   G.scheduleJourneyBeat();
   if(to==='seoul'){
     if(S.flags.seoul_open){ UI.renderAll(); G.save(); return; }  // 이미 열림 — 서울 맵

@@ -31,12 +31,15 @@ const introScenes = {
   INTRO_YEARS_TOGETHER:'assets/intro/06-years-together.jpg',
   INTRO_CAMPER_CONVERSION:'assets/intro/06-camper-conversion-v2.jpg',
   INTRO_ENVELOPE_SIGNAL:'assets/intro/07-envelope-signal.jpg',
-  INTRO_DEPARTURE_CHOICE:'assets/intro/08-departure-choice.jpg',
+  INTRO_DEPARTURE_CHOICE:'assets/intro/08-departure-choice-v2.jpg',
   INTRO_PARENTS_DISCOVERY:'assets/intro/09-parents-discovery.jpg',
   INTRO_SILENCED_PRESENTATION:'assets/intro/10-silenced-presentation.jpg',
-  INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion.jpg',
-  INTRO_MOTHER_KEEPSAKES:'assets/intro/12-mother-keepsakes.jpg',
-  INTRO_DASHBOARD_MODULE:'assets/intro/13-dashboard-module.jpg'
+  INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion-v2.jpg',
+  INTRO_DOCK_AID:'assets/intro/14-dock-aid-v2.jpg',
+  INTRO_APPEAL_DENIED:'assets/intro/15-appeal-denied.jpg',
+  INTRO_MOTHER_KEEPSAKES:'assets/intro/12-mother-keepsakes-v2.jpg',
+  INTRO_DASHBOARD_MODULE:'assets/intro/13-dashboard-module.jpg',
+  INTRO_WORKSHOP_DEPARTURE:'assets/intro/16-workshop-shutter-v2.jpg'
 };
 const upgradeScenes = {
   FUEL:'assets/upgrades/fuel.jpg', SEATING:'assets/upgrades/seating-v2.jpg',

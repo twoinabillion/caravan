@@ -20,6 +20,18 @@ D.icons = {};
 D.bgm = {};    /* BGM 슬롯 — 키: title/drive_day/drive_night/tension/settlement/camp/story (docs/audio-guide.md) */
 D.vo = {};     /* 보이스 슬롯 — cheollian_XX, radio_XX. 인트로는 page.voice 명시 시에만 재생 */
 D.sfx = {};    /* 환경음·차량음 슬롯 — Downloads 대표 테이크만 모바일용으로 압축해 내장 */
+D.transferDeadlineDay = 30; /* DAY 30 안에 서울 도착이 아니라 남산의 이송 중단까지 끝낸다. */
+D.transferStatus = (state)=>{
+  const day=state&&Number.isFinite(state.day)?state.day:1;
+  const due=D.transferDeadlineDay;
+  const remaining=Math.max(0,due-day+1);
+  const onTime=day<=due;
+  return {
+    due,day,remaining,onTime,lateDays:Math.max(0,day-due),
+    short:onTime?`첫 이송까지 ${remaining}일`:`첫 이송 발생 · ${day-due}일 경과`,
+    mission:onTime?`남산 조치까지 ${remaining}일`:'선발 이송차량 출발 · 남은 이송을 즉시 중단해야 함'
+  };
+};
 /* 라디오 방송 조각 — 차 라디오 수리 후 주행 중 랜덤 수신. D.vo[key] 있으면 음성도 재생 */
 /* 식사 시간 정경 (아침 배급·점심 때 무작위 1줄) */
 D.mealBanter = [
@@ -183,6 +195,7 @@ D.edges = [
   ['jinju','namwon',62,'rough'], ['namwon','jeonju',48,'normal'], ['jeonju','nonsan',52,'normal'],
   ['nonsan','gongju',34,'normal'], ['gongju','cheonan',44,'normal'], ['nonsan','daejeon',40,'normal'],
   ['daegu','gumi',38,'high'], ['gumi','gimcheon',26,'high'], ['gimcheon','yeongdong',33,'high'],
+  ['gimcheon','muju',38,'rough'],
   ['yeongdong','daejeon',44,'high'], ['daejeon','cheongju',34,'high'], ['cheongju','cheonan',38,'high'],
   ['cheonan','pyeongtaek',28,'high'], ['pyeongtaek','suwon',30,'high'], ['suwon','seoul',34,'high'],
   ['namwon','geochang',44,'rough'], ['jeonju','muju',55,'rough'],
@@ -215,6 +228,42 @@ D.edges = [
   ['gangneung','sokcho',40,'normal'], ['gangneung','pohang',82,'rough'],   // 동해안 도로 (길고 험함)
   ['wonju','icheon',40,'normal'],
 ];
+
+/* ── 김천 이후의 첫 큰 노선 선택 ──
+   최단거리 버튼이 아니라, 이후 두세 정차의 사건·보급·길 상태를 함께 고른다.
+   한 번 고르면 청주에서 다시 합류할 때까지 노선을 바꿀 수 없다. */
+D.routePlans = {
+  ridge:{id:'ridge',name:'동쪽 능선길',mark:'⛰',start:'gimcheon',end:'cheongju',
+    corridor:['gimcheon','sangju','mungyeong','chungju','cheongju'],opening:'route_ridge_rescue',
+    promise:'약 130km · 빠르지만 험로가 많고, 구조할 사람을 외면하기 어렵다',
+    reward:'시간을 아끼고 산길 사람들의 통행로를 되살린다'},
+  market:{id:'market',name:'서쪽 장터길',mark:'🏮',start:'gimcheon',end:'cheongju',
+    corridor:['gimcheon','muju','jeonju','nonsan','daejeon','cheongju'],opening:'route_market_convoy',
+    promise:'약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다',
+    reward:'보급과 증언을 얻는 대신 연료와 하루를 더 쓴다'}
+};
+D.roadEchoCopy = (state,phase)=>{
+  const echo=state&&state._impactEcho;
+  if(!echo) return phase==='title'?'길에 남은 일':'정착지에서 했던 일이 다음 길까지 이어졌다.';
+  const from=(D.stls&&D.stls[echo.stlId]&&D.stls[echo.stlId].name)
+    ||(D.nodes[echo.from]&&D.nodes[echo.from].name)||'앞선 정착지';
+  const to=(D.nodes[echo.to]&&D.nodes[echo.to].name)||'다음 마을';
+  const wx=D.wx&&D.wx[echo.wx]&&D.wx[echo.wx].nm;
+  const copies={
+    water:'우리가 손본 물길에서 채운 통을 실은 수레',
+    steam:'우리가 살린 부엌에서 나온 따뜻한 꾸러미를 실은 수레',
+    food:'우리가 거든 장터에서 모은 먹을거리를 실은 수레',
+    shelter:'우리가 보강한 지붕 재료를 나르는 작업대',
+    light:'우리가 밝힌 전선을 따라 나온 수리조',air:'우리가 돌린 환기 설비를 점검하러 가는 수리조',
+    gate:'우리가 손본 출입로를 따라 움직이는 통행조',watch:'우리가 세운 망을 이어 가는 초소조',
+    record:'우리가 정리한 명단을 들고 다음 마을로 가는 기록원',route:'우리가 정리한 길을 확인하러 나온 길잡이',
+    order:'우리가 정돈한 배급표를 들고 움직이는 주민들'
+  };
+  const subject=copies[echo.visual]||copies.route;
+  if(phase==='title') return `${from}에서 이어진 길`;
+  if(phase==='outcome') return `${from}에서 한 일은 그곳에만 남지 않았다. ${subject}가 ${to} 쪽으로 계속 갔다.`;
+  return `${wx?wx+' 뒤 ':''}갓길에서 ${subject}와 다시 만났다. 바퀴에 진흙이 묻고 사람들 얼굴은 지쳤지만, 짐에는 ${from}의 표식이 매달려 있다.\n\n"거기서 길을 좀 고쳐 줬다던 차 맞죠? 덕분에 여기까지 왔어요."\n\n정착지에서 끝난 줄 알았던 일이 우리보다 먼저 다음 마을로 가고 있었다.`;
+};
 
 /* ── 배달 의뢰 ── */
 D.questItems = ['약 꾸러미','씨앗 상자','편지 다발','부품 궤짝','책 꾸러미','장 담근 항아리','아기 옷 보따리','라디오 진공관'];
@@ -1451,6 +1500,11 @@ D.eventScenes = {
   roadcrew_sign:'roadcrew-sign',
   road_night_circle:'road-night-circle',
   road_supply_shelter:'road-supply-shelter',
+  route_mid_fork:'route-mid-fork',
+  route_ridge_rescue:'route-ridge-rescue', route_ridge_anchor:'route-ridge-rescue',
+  route_ridge_extract:'route-ridge-rescue',
+  route_market_convoy:'route-market-convoy', route_market_mask:'route-market-convoy',
+  route_market_pass:'route-market-convoy', settlement_road_echo:'settlement-road-echo',
   han_bridge:'seoul-han', seoul_open:'seoul-han',
   story_generation_form:'story-generation-form',
   story_generation_speech:'story-generation-speech',
@@ -1837,6 +1891,36 @@ D.intro = [
 첫 이송 집행까지 30일.”</span>`
   },
   {
+    scene:'intro-dock-aid', era:'오늘 새벽 · 이송 버스 옆', title:'6,412명 가운데 한 가족',
+    text:`아이는 열이 난 동생이 기다리는 버스로 돌아갔다. 나는 공구 가방을 들고 뒤따랐다.
+
+낡은 버스의 난방 호스가 터져 있었다. 젖은 연결부를 잘라 내고 남은 호스를 다시 물리자 미지근한 바람이 나왔다.
+
+“도윤아, 따뜻한 물부터 마셔.”
+
+그제야 서로 이름을 알았다. 엄마는 하진, 이송표를 들고 있던 8살 아이는 도윤, 품에 안긴 동생은 유나였다.
+
+하진은 서울에서 이의 제기를 열세 번 넣었지만 한 번도 사람의 답을 받지 못했다고 했다.
+
+6,412명은 숫자가 아니었다. 난방이 꺼진 버스 안에서 서른 밤을 세고 있는 가족들이었다.`
+  },
+  {
+    scene:'intro-appeal-denied', era:'오늘 아침 · 감천 부두 민원 단말', title:'부산에서 할 수 있는 마지막 확인',
+    text:`하진의 허락을 받아 이송표를 부두 단말에 다시 읽혔다.
+
+<span class="ai">“원격 이의 제기 경로가 없습니다.
+현장 확인 필요.
+지정 포트: 서울 남산 중앙 노드.”</span>
+
+“서울에서 쫓아내 놓고, 다시 서울에 가야 이유를 물을 수 있다는 거예요?”
+
+하진이 묻자 단말은 같은 안내만 반복했다.
+
+부산에서 할 수 있는 가장 가까운 방법은 여기서 끝났다. 서울은 막연한 목적지가 아니라, 이 명령을 멈출 수 있는 유일한 현장 접수처였다.
+
+하지만 무엇을 가져가야 그 문이 열리는지는 아직 몰랐다.`
+  },
+  {
     scene:'intro-mother-keepsakes', era:'오늘 아침 · 감천 작업장', title:'엄마의 상자에서 길이 나왔다', solo:true,
     text:`부두에서 돌아와 서울까지 가져갈 것을 골랐다.
 
@@ -1864,6 +1948,18 @@ D.intro = [
 이송을 겪은 사람, 명령망을 본 사람, 길을 지킨 사람의 기록을 대조할 것.</span>
 
 서울까지 가져갈 것은 열쇠 하나가 아니었다. 그 열쇠를 사람에게 맡겨도 된다는 증거도 필요했다.`
+  },
+  {
+    scene:'intro-workshop-departure', era:'오늘 오전 · 감천 작업장', title:'남겨 두고 가는 것', solo:true,
+    text:`갈 방법을 찾았다고 바로 시동을 걸 수 있는 것은 아니었다.
+
+작업장 예비 연료를 달구지에 실으면 당분간 문을 열 수 없었다. 나는 마지막 연료통 두 개와 엄마의 철제 상자를 생활칸 뒤에 묶었다. 무거운 용접기는 작업대에 남겼다.
+
+여기 남으면 내일도 차를 고치며 살 수 있었다. 그러나 도윤과 유나는 서른 번째 밤 뒤에 또 남쪽 버스를 타야 했다.
+
+셔터를 절반 내리고 빗물이 들지 않게 아래 고리를 걸었다. 돌아올 날짜를 적을 수 없어, 맡은 수리가 늦어진다는 쪽지만 작업대에 남겼다.
+
+서울행은 이제 생각이 아니었다. 작업장과 연료, 돌아올 수 있다는 믿음을 먼저 걸어야 하는 일이었다.`
   },
   {
     scene:'intro-departure-choice', era:'오늘 · 부산에서 북쪽으로', title:'내가 가기로 한 이유',
@@ -2048,6 +2144,38 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'아직 서울에 남은 사람이 그렇게 많아?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 서른 밤 뒤에 전부 나와야 한대요.'}
   ],
+  'intro-dock-aid': [
+    {kind:'narration', text:'아이는 열이 난 동생이 기다리는 뒤쪽 버스로 뛰어갔다. 나는 공구 가방을 들고 따라갔다.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마, 이 아저씨도 8살 때 이송표 받았대.'},
+    {kind:'dialogue', who:'passer_woman', name:'???', text:'도윤아, 모르는 분 붙잡고 그러면 안 돼.'},
+    {kind:'dialogue', who:'me', name:'나', text:'괜찮습니다. 버스 안에 난방이 안 들어오죠?'},
+    {kind:'dialogue', who:'passer_woman', name:'???', text:'새벽부터 꺼졌어요. 동생이 열이 있는데, 운행 가능한 차부터 본다네요.'},
+    {kind:'narration', text:'버스 옆 점검판을 열자 난방 호스 한쪽이 갈라져 있었다. 젖은 부분을 잘라 내고 남은 호스를 다시 조였다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'시동 한 번만 걸어 보세요.'},
+    {kind:'narration', text:'송풍구에서 미지근한 바람이 나왔다. 아이는 금속 컵을 두 손으로 감싸 쥐었다.'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'고맙습니다. 저는 하진이에요. 이쪽은 도윤, 안고 있는 아이는 유나고요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'이송표로 이의 제기해 본 적 있으세요?'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'서울에서 열세 번 넣었어요. 접수됐다는 불만 뜨고, 다음 날이면 기록이 사라졌어요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'표를 잠깐 빌려주세요. 부산 단말에서도 한 번 확인해 볼게요.'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'또 막힐 거예요. 그래도 아직 안 해 본 방법이면 해 봐요.'},
+    {kind:'narration', text:'6,412명은 더 이상 방송 속 숫자가 아니었다. 난방이 꺼진 버스에서 서른 밤을 세고 있는 가족들이었다.'}
+  ],
+  'intro-appeal-denied': [
+    {kind:'narration', text:'부두 끝 낡은 민원 단말에 하진의 이송표를 올렸다. 빗물이 종이 끝에서 한 방울씩 떨어졌다.'},
+    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'신청 항목을 말씀하십시오.'},
+    {kind:'dialogue', who:'me', name:'나', text:'이송 사유 공개. 집행 보류. 둘 다.'},
+    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'원격 이의 제기 경로가 없습니다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'그럼 사람이 받는 접수처를 보여 줘.'},
+    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'현장 확인이 필요한 명령입니다. 지정 포트: 서울 남산 중앙 노드.'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'서울에서 쫓아내 놓고, 다시 서울까지 와야 묻겠다는 거예요?'},
+    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'안내 가능한 원격 절차가 없습니다.'},
+    {kind:'dialogue', who:'intro_child', name:'도윤', text:'그럼 우리는 아무것도 못 해요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'부산에서는 여기까지야. 남산에 직접 가야 한다는 건 확인했어.'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'가서 뭘 보여 줘야 하는지는요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'아직 몰라요. 그걸 찾기 전에는 무턱대고 출발하지 않을 겁니다. 표 사본은 제가 가져가도 될까요?'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'가져가세요. 이번에는 접수됐다는 말 말고, 멈췄다는 말을 듣고 싶어요.'},
+    {kind:'narration', text:'부산에서 할 수 있는 가장 가까운 방법은 막혔다. 서울은 막연한 목적지가 아니라, 남은 유일한 현장 접수처였다.'}
+  ],
   'intro-mother-keepsakes': [
     {kind:'narration', text:'부두에서 돌아오자마자 서울까지 가져갈 것을 골랐다. 공구와 식량은 금방 정했지만, 엄마의 낡은 철제 상자 앞에서는 손이 오래 멈췄다.'},
     {kind:'thought', who:'me', name:'나', text:'사진까지 전부 가져갈 수는 없어. 지금 필요한 것부터 찾자.'},
@@ -2070,21 +2198,33 @@ const introBeats = {
     {kind:'letter', who:'mother', name:'엄마의 메모', text:'한 가족의 억울함만으로 시스템을 고칠 수는 없다. 이송을 겪은 사람, 명령망을 본 사람, 길을 지킨 사람의 기록을 대조할 것.'},
     {kind:'thought', who:'me', name:'나', text:'혼자 출발할 수는 있다. 하지만 혼자 끝내면 또 한 사람의 주장으로 남는다.'}
   ],
+  'intro-workshop-departure': [
+    {kind:'narration', text:'갈 방법을 찾았다고 바로 시동이 걸리는 것은 아니었다. 작업장에는 내일 고치기로 한 차와 아직 받지 못한 수리값이 남아 있었다.'},
+    {kind:'thought', who:'me', name:'나', text:'예비 연료를 전부 싣고 나가면 당분간 이 문은 못 연다.'},
+    {kind:'narration', text:'마지막 연료통 두 개를 생활칸 뒤에 묶었다. 엄마의 철제 상자는 조수석 아래에 넣고, 무거운 용접기는 작업대에 남겼다.'},
+    {kind:'thought', who:'me', name:'나', text:'여기 남으면 내일도 먹고는 살아. 그런데 도윤이랑 유나는 서른 번째 밤 뒤에 또 버스를 타야 해.'},
+    {kind:'narration', text:'맡은 수리가 늦어진다는 쪽지를 작업대에 눌러 두었다. 돌아올 날짜는 쓰지 못했다.'},
+    {kind:'thought', who:'me', name:'나', text:'돌아온다고 써 놓고 싶지만, 그건 약속할 수 없어.'},
+    {kind:'narration', text:'셔터를 절반 내린 뒤 빗물이 들지 않게 아래 고리를 걸었다. 안쪽의 공구와 빈 의자가 어둠 속에 남았다.'},
+    {kind:'thought', who:'me', name:'나', text:'그래도 서른 날을 여기서 보내지는 않을 거야.'},
+    {kind:'narration', text:'예비 연료가 달구지 차대를 눌렀다. 서울행은 이제 생각이 아니라, 실제로 다른 삶을 멈춰 세운 선택이었다.'},
+    {kind:'thought', who:'me', name:'나', text:'이 셔터를 다시 올리러 돌아오자. 그때는 도윤이네도 자기 집으로 돌아갈 수 있게.'}
+  ],
   'intro-departure-choice': [
-    {kind:'narration', text:'아이 어머니의 허락을 받아 복사한 현재 이송표와 엄마의 상자, 할아버지의 렌치를 조수석에 실었다. 계기판 속 검증키는 분리 순서를 찾을 때까지 그대로 두었다.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'서울 가요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'응. 이송 명령을 누가 만들었는지 확인하고, 다음 이송이 시작되기 전에 멈추러.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'물어보면 친구들은 안 나와도 돼요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'물어보기만 해서는 안 돼. 엄마와 아빠가 이송 명령을 멈추는 검증키를 남겼어. 안전하게 꺼낼 순서와 다른 사람들의 기록까지 찾아서 남산에 연결할 거야.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그럼 혼자 가요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'출발은. 하지만 남산에서 필요한 건 우리 가족 얘기만이 아니야. 같은 명령을 겪었거나 그 명령망을 본 사람들의 기록도 모아야 해.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'그 사람들도 이 차에 태워요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'내가 데려가는 건 아니야. 서로 해야 할 일을 끝내고, 그 사람도 서울에 갈 이유를 고르면 그때 같이 가는 거지. 자리부터 제대로 만들고.'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들 데리러 다시 오는 거죠?'},
-    {kind:'dialogue', who:'me', name:'나', text:'응. 이번 이송을 먼저 멈추고, 돌아오는 길을 열어 놓을게.'},
-    {kind:'narration', text:'아이는 이송표를 한 번 더 펴 보더니, 열이 난 동생과 엄마가 기다리는 뒤쪽 버스로 달려갔다. 나는 아이가 차에 오르는 것까지 보고 운전석 문을 열었다.'},
+    {kind:'narration', text:'하진과 도윤이 부두 입구에서 기다리고 있었다. 계기판 속 검증키는 분리 순서를 찾을 때까지 그대로 두었다.'},
+    {kind:'dialogue', who:'intro_child', name:'도윤', text:'남산까지 가면 진짜 멈출 수 있어요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'멈출 수 있는 장치는 있어. 그런데 지금 억지로 빼면 차랑 같이 망가져. 안전하게 꺼내는 순서를 먼저 찾아야 해.'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'우리 표 한 장만 들고 가면 또 개인 민원이라고 돌려보내겠죠.'},
+    {kind:'dialogue', who:'me', name:'나', text:'그래서 길에서 더 모을 겁니다. 같은 이송을 겪은 사람, 명령망을 본 사람, 그 길을 지킨 사람의 기록을요.'},
+    {kind:'dialogue', who:'intro_child', name:'도윤', text:'그 사람들을 다 태우고 가요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'아니. 태우는 게 먼저는 아니야. 각자 끝낼 일이 있고, 서울에 갈 이유도 자기가 골라야 하니까.'},
+    {kind:'dialogue', who:'intro_child', name:'도윤', text:'그럼 유나랑 친구들은요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'서른 번째 밤이 오기 전에 남산에서 명령을 멈출게.'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'혹시 늦더라도, 먼저 떠난 사람들을 숫자로 남겨 두지는 말아 주세요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'남은 버스부터 세우고, 먼저 간 사람들도 돌아오게 하겠습니다. 서울에 한 번 다녀오는 게 아니라, 그 일까지 끝내러 가는 거예요.'},
+    {kind:'narration', text:'도윤은 가족의 이송표 사본을 조수석 수첩 위에 올려놓았다. 하진은 유나가 기다리는 버스로 돌아갔다.'},
     {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
-    {kind:'thought', who:'me', name:'나', text:'서른 날. 분리 순서, 발신 기록, 당사자들의 증언, 그리고 계기판 속 검증키. 전부 남산까지 가져간다.'},
+    {kind:'thought', who:'me', name:'나', text:'서른 날 안에 남산까지 가서 이송을 멈춘다. 도착만 하고 끝낼 수 있는 길이 아니다.'},
     {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}
   ]
 };
@@ -3914,6 +4054,84 @@ D.events = [
     {p:2, text:'노인은 걸어서 전국을 도는 중이라 했다. 오랫동안.\n\n"차가 있으면 빠르지. 근데 걸으면 다 보여." 노인의 지도엔 우리가 모르는 표시가 가득했다.\n\n떠나기 전, 그중 하나를 우리 지도에 옮겨줬다.', fx:{revealNear:1, moodAll:3, note:{type:'인물',title:'걷는 노인',body:'오랫동안 걸어서 전국을 도는 사람. "걸으면 다 보여."'}}},
     {p:1, text:'노인과 새벽까지 이야기를 나눴다. 대가는 없었고, 필요도 없었다.\n\n아침에 노인은 먼저 떠나며 불씨를 정리해두고 갔다. 좋은 손님이었다.', fx:{moodAll:4, fatigue:6}}]},
   {label:'경계하며 거절한다', out:[{p:1, text:'"…그러시오. 요즘 세상에 당연하지."\n\n노인은 화내지 않고 어둠 속으로 사라졌다. 모닥불이 괜히 머쓱하게 탔다.', fx:{moodAll:-2}}]},
+ ]},
+
+/* ═════ 김천 분기 — 한 번 고르면 청주까지 이어지는 두 노선 ═════ */
+{id:'route_mid_fork',type:'스토리',w:0,locEvent:'gimcheon',once:true,
+ title:'두 길이 갈라지는 곳',scene:'route-mid-fork',
+ text:'김천 북쪽 교차로에서 차를 세웠다. 넘어진 표지판 두 장을 씻어 세우니 갈 길이 선명해졌다.\n\n동쪽은 상주와 문경을 지나 청주로 곧장 오르는 능선길. 짧지만 비에 깎인 구간이 많다. 서쪽은 무주와 전주 장터를 거쳐 올라가는 길. 훨씬 멀지만 물과 사람을 만날 곳이 이어진다.\n\n지도 위에서 두 선은 청주에서 다시 만났다. 나는 동쪽 선 옆에 ‘빠름, 험로’, 서쪽 선 옆에 ‘보급, 하루 이상’을 적었다.\n\n달구지 짐칸을 열어 보니 어느 쪽을 고르느냐에 따라 위에 둘 짐도 달라진다. 능선으로 가면 삽과 견인줄, 장터로 가면 빈 물통과 묶음끈이 먼저다.\n\n서울까지 남은 시한은 줄고 있다. 어느 길이든 청주까지는 중간에 바꾸기 어렵다.',
+ choices:[
+  {label:'동쪽 능선길로 간다',out:[{p:1,text:'표지판에 분필로 동그라미를 쳤다. 상주, 문경, 충주, 청주.\n\n"산길로 간다. 빨리 가되, 길에서 만난 일은 두고 가지 말자."\n\n삽과 견인줄을 짐 맨 위로 옮겼다. 당장 꺼낼 일이 없으면 좋겠지만, 산길에서 그런 바람은 대개 오래가지 않는다.',fx:{routeChoice:'ridge'}}]},
+  {label:'서쪽 장터길로 간다',out:[{p:1,text:'무주 쪽 선에 동그라미를 쳤다. 전주와 논산, 대전을 거쳐 청주까지.\n\n"조금 늦더라도 사람 있는 길로 간다. 남산에 가져갈 건 부품만이 아니니까."\n\n빈 물통과 묶음끈을 짐 맨 위로 옮겼다. 장터길에서는 빈자리도 쓸모가 있다.',fx:{routeChoice:'market'}}]}
+ ]},
+
+{id:'route_ridge_rescue',type:'구조',w:0,fixed:true,once:true,scene:'route-ridge-rescue',
+ title:'능선 아래의 네 사람',
+ combat:{phase:1,total:3,step:'멈춰 세우기',threat:'비탈에 걸린 우편 수레',objective:'비탈이 다시 움직이기 전에 네 사람을 도로로 올린다',terrain:'젖은 절개지와 무너진 돌망',stakes:'수레가 계곡 쪽으로 밀리면 사람과 약 상자를 함께 잃는다'},
+ text:'상주를 벗어난 능선에서 손을 흔드는 아이가 보였다. 도로 아래로 작은 수레가 반쯤 굴러 떨어져 있다. 어른 셋과 아이 하나가 돌망 사이에 매달린 채 움직이지 못한다.\n\n"다친 사람 있어요?"\n\n아래에서 여자가 고개를 들었다. "발목 하나요. 그런데 이 비탈, 아까부터 계속 내려앉아요."\n\n차를 산 쪽 바위에 바짝 붙였다. 달구지의 무게를 닻으로 쓸 수는 있다. 문제는 비탈이 얼마나 더 버티느냐다.\n\n총을 꺼낼 상대는 없다. 대신 비탈이 조금씩 우리 시간을 가져가고 있다.',
+ choices:[
+  {label:'달구지를 바위 뒤에 걸고 견인줄을 내린다',tactic:'고정',terrainFit:2,out:[{p:1,text:'차를 바위 안쪽에 비스듬히 세우고 바퀴마다 돌을 괴었다. 견인줄을 당기자 차체가 한 번 울었지만 버텼다.\n\n"한 번에 한 사람. 줄 놓치면 안 돼."\n\n아이부터 줄에 매달렸다.',fx:{time:15,combatStart:{id:'ridge_rescue',kind:'구조',threat:'비탈에 걸린 우편 수레',terrain:'젖은 절개지와 무너진 돌망',objective:'네 사람을 도로로 올린다',stakes:'비탈이 다시 움직이기 전에 끝내야 한다',pressure:1},combatEdge:1,chain:'route_ridge_anchor'},sfx:'metal'}]},
+  {label:'도로 위 사람들과 먼저 역할을 나눈다',tactic:'지휘',terrainFit:1,out:[{p:1,text:'삽을 들 사람, 줄을 잡을 사람, 올라온 사람을 받을 자리를 빠르게 정했다.\n\n"아이부터. 다친 분은 마지막 말고 세 번째. 수레는 사람 뒤."\n\n서로 이름도 모르지만, 적어도 누가 무엇을 하는지는 알게 됐다.',fx:{time:10,combatStart:{id:'ridge_rescue',kind:'구조',threat:'비탈에 걸린 우편 수레',terrain:'젖은 절개지와 무너진 돌망',objective:'네 사람을 도로로 올린다',stakes:'비탈이 다시 움직이기 전에 끝내야 한다',pressure:1},combatEdge:1,combatPressure:-1,chain:'route_ridge_anchor'},sfx:'cover'}]}
+ ]},
+{id:'route_ridge_anchor',type:'구조',w:0,fixed:true,once:true,scene:'route-ridge-rescue',
+ title:'줄 하나에 걸린 무게',
+ combat:{phase:2,total:3,step:'길 만들기',threat:'비탈에 걸린 우편 수레',objective:'사람이 오를 발판을 만들고 줄의 하중을 나눈다',terrain:'젖은 절개지와 무너진 돌망',stakes:'한 곳에 무게가 몰리면 흙이 다시 무너진다'},
+ text:'아이와 첫 번째 어른이 도로로 올라왔다. 세 번째 사람을 당기려는 순간, 발밑 돌망이 손바닥만큼 내려앉았다.\n\n아래의 남자가 소리쳤다. "잠깐! 지금 당기면 여기 다 같이 내려가요."\n\n줄을 조금 풀어 하중을 뺐다. 차는 버티는데 땅이 못 버틴다. 힘보다 사람이 디딜 길부터 만들어야 한다.\n\n수레 안에는 문경으로 가는 편지와 해열제가 섞여 있다. 하지만 먼저 올라와야 할 것은 사람이다.',
+ choices:[
+  {label:'삽으로 하중을 나눌 계단을 판다',tactic:'토공',terrainFit:2,out:[{p:1,text:'한 사람이 설 너비만큼 흙을 걷고 돌을 눌러 박았다. 빠른 길은 아니지만, 발을 옮길 때마다 다음 사람이 설 곳이 생겼다.',fx:{time:25,fatigue:3,combatEdge:1,combatPressure:-1,chain:'route_ridge_extract'},sfx:'cover'}]},
+  {label:'견인줄을 두 갈래로 묶어 흔들림을 잡는다',tactic:'장비',terrainFit:2,out:[{p:1,text:'주줄은 달구지에, 보조줄은 가드레일 기둥에 걸었다. 한 줄이 흔들릴 때 다른 줄이 몸을 잡았다.\n\n"이제 한 발씩. 뛰지 말고."',fx:{time:15,scrap:-1,combatEdge:1,chain:'route_ridge_extract'},sfx:'metal'}]},
+  {label:'다친 사람을 업고 짧게 치고 오른다',tactic:'완력',risk:'비탈 압박 상승',out:[{p:1,text:'다친 사람을 등에 묶고 가장 짧은 선을 골랐다. 절반은 힘으로, 나머지는 위에서 당기는 줄로 올렸다. 빠르지만 땅이 한 번 더 울었다.',fx:{time:10,fatigue:6,combatPressure:1,chain:'route_ridge_extract'},sfx:'engine'}]}
+ ]},
+{id:'route_ridge_extract',type:'구조',w:0,fixed:true,once:true,scene:'route-ridge-rescue',
+ title:'마지막 한 번',
+ combat:{phase:3,total:3,step:'꺼내기',threat:'비탈에 걸린 우편 수레',objective:'마지막 사람과 약 상자를 함께 도로로 올린다',terrain:'젖은 절개지와 무너진 돌망',stakes:'흙이 움직이기 시작했다. 한 번에 끝내야 한다'},
+ text:'사람 셋은 올라왔다. 아래에는 발목을 다친 여자와 수레가 남았다. 그때 비탈 위쪽에서 자갈이 한꺼번에 굴러내렸다.\n\n여자가 약 상자를 수레 밖으로 밀며 말했다. "이건 두고 저만 올리세요."\n\n"사람 먼저인 건 맞아요." 내가 줄을 다시 잡았다. "그래도 둘 다 올릴 방법부터 해봅시다."\n\n한 번 당길 시간은 남아 있다.',
+ choices:[
+  {label:'사람 줄과 수레 줄을 따로 당긴다',tactic:'분리 인양',terrainFit:2,combatRoll:.58,out:[
+    {p:1,text:'구호를 셋에 맞췄다. 사람 줄이 먼저 팽팽해지고, 반 박자 뒤 수레가 돌턱을 넘었다. 여자의 손이 도로 가장자리를 잡자 모두가 그대로 뒤로 넘어졌다.\n\n네 사람이 전부 올라왔다. 해열제 상자도 젖었지만 멀쩡했다. 아이가 달구지 문을 두드렸다. "이 차, 집인데 힘도 세네요."',fx:{time:20,moodAll:4,combatEnd:1,combatResult:'success',flag:'route_ridge_saved',note:{type:'사건',title:'능선 아래 네 사람',body:'달구지를 닻으로 삼아 네 사람과 문경행 해열제를 함께 올렸다.',links:['달구지']}}},
+    {p:1,text:'사람은 도로 위로 올라왔지만 수레 바퀴 하나가 돌망에 걸렸다. 줄을 놓는 순간 수레 절반이 아래로 쏟아졌다. 편지는 건졌고 해열제는 반만 남았다.\n\n여자가 숨을 고르며 말했다. "사람 넷이 올라왔잖아요. 나머지는 다시 구하면 돼요."',fx:{time:25,moodAll:2,combatEnd:1,combatResult:'partial',flag:'route_ridge_saved_partial',note:{type:'사건',title:'능선 아래 네 사람',body:'네 사람은 모두 구했다. 약 상자는 절반만 건졌지만, 우선순위는 끝까지 바뀌지 않았다.',links:['달구지']}}}]},
+  {label:'수레를 비우고 사람과 약만 릴레이로 올린다',tactic:'릴레이',terrainFit:2,combatRoll:.64,out:[
+    {p:1,text:'편지 다발을 품에 나눠 안고, 약 상자는 줄에 묶었다. 빈 수레는 내려두고 사람과 내용물만 차례로 올렸다. 마지막 여자가 도로에 닿자 비탈이 크게 흘러내렸다.\n\n수레는 잃었지만 사람 넷과 배달할 것은 모두 남았다.',fx:{time:30,fatigue:3,moodAll:4,combatEnd:1,combatResult:'success',flag:'route_ridge_saved'}},
+    {p:1,text:'사람 넷과 편지는 모두 올렸다. 약 상자 하나가 진흙에 빠졌지만 더 내려갈 수는 없었다.\n\n"괜찮아요. 문경에서 나눠 쓰면 돼요." 여자가 남은 상자를 꼭 안았다.',fx:{time:35,fatigue:4,moodAll:2,combatEnd:1,combatResult:'partial',flag:'route_ridge_saved_partial'}}]}
+ ]},
+
+{id:'route_market_convoy',type:'호송',w:0,fixed:true,once:true,scene:'route-market-convoy',
+ title:'장터에서 묶인 다섯 수레',
+ combat:{phase:1,total:3,step:'행렬 세우기',threat:'잠든 자동 검문소',objective:'씨앗과 약을 실은 다섯 수레를 기록 없이 통과시킨다',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',stakes:'센서가 행렬을 깨우면 장터 사람들의 이동 기록이 중앙망에 남는다'},
+ text:'무주 장터를 지나려는데 손수레 다섯 대가 같은 자리에 묶여 있었다. 씨앗, 소금, 붕대, 편지. 북쪽 마을 셋이 함께 보낸 짐이다.\n\n앞사람이 꺼진 검문소를 가리켰다. "차 한 대는 지나가요. 사람이 줄지어 가면 센서가 켜져요."\n\n차단봉 아래 작은 불 하나가 일정하게 깜빡인다. 전광판은 죽었어도 사람을 세는 장치는 아직 살아 있다.\n\n"달구지 한 대처럼 보이게 만들면 돼요." 내가 수레 사이를 재며 말했다. "사람을 숨기는 게 아니라, 한 행렬로 묶는 거죠."',
+ choices:[
+  {label:'수레를 달구지 뒤에 한 줄로 묶는다',tactic:'편성',terrainFit:2,out:[{p:1,text:'긴 밧줄 하나에 수레 다섯 대를 간격 맞춰 묶었다. 각 수레에는 브레이크를 잡을 사람이 한 명씩 붙었다.\n\n"우리가 멈추면 다 멈추고, 우리가 가면 한 박자 뒤에 갑니다."\n\n제각각이던 짐이 하나의 긴 차량처럼 보이기 시작했다.',fx:{time:20,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatEdge:1,chain:'route_market_mask'},sfx:'metal'}]},
+  {label:'폐차 차양 아래에서 통과 순서를 맞춘다',tactic:'정찰',terrainFit:2,out:[{p:1,text:'센서가 꺼지는 간격을 세 번 재었다. 열두 초마다 렌즈가 반대 차선을 본다.\n\n"첫 수레가 저 금을 넘을 때 마지막 수레가 출발하면 돼요."\n\n사람들이 자기 차례를 입으로 되뇌었다.',fx:{time:15,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatPressure:-1,chain:'route_market_mask'},sfx:'cover'}]}
+ ]},
+{id:'route_market_mask',type:'호송',w:0,fixed:true,once:true,scene:'route-market-convoy',
+ title:'한 대처럼 보이기',
+ combat:{phase:2,total:3,step:'센서 속이기',threat:'잠든 자동 검문소',objective:'행렬 전체를 달구지의 적재물로 인식시킨다',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',stakes:'사람 한 명이라도 따로 잡히면 전원 재검사가 시작된다'},
+ text:'행렬이 검문선 앞에 섰다. 전광판은 죽어 있는데, 센서만 천천히 좌우로 움직였다.\n\n세 번째 수레의 아이가 물었다. "뛰면 더 빨리 지나갈 수 있죠?"\n\n"아니. 오늘은 안 뛰는 게 제일 빨라."\n\n달구지 천막을 길게 풀어 뒤 수레까지 덮자, 서로 다른 다섯 짐이 한 몸처럼 이어졌다.',
+ choices:[
+  {label:'천막과 반사판으로 차량 윤곽을 잇는다',tactic:'위장',terrainFit:2,out:[{p:1,text:'천막 끝에 낡은 반사판을 달았다. 센서가 훑을 때마다 빛은 달구지 뒤쪽까지 한 줄로 이어졌다. 화면에 「장축 화물차」라는 오래된 분류가 잠깐 떴다.',fx:{time:20,scrap:-1,combatEdge:1,chain:'route_market_pass'},sfx:'cover'}]},
+  {label:'각 수레의 움직임을 손신호로 맞춘다',tactic:'지휘',terrainFit:1,out:[{p:1,text:'운전석 거울로 뒤를 보며 손을 들었다 내렸다. 다섯 명이 같은 순간에 밀고, 같은 순간에 멈췄다. 센서가 사람을 세지 못하고 바퀴만 셌다.',fx:{time:15,combatEdge:1,chain:'route_market_pass'},sfx:'silence'}]},
+  {label:'달구지 발전기로 센서 주기를 흐트러뜨린다',tactic:'교란',noise:1,risk:'관측 신호가 남을 수 있다',out:[{p:1,text:'발전기 회전을 올렸다 내리자 센서 화면에 가는 줄이 번졌다. 완전히 꺼지지는 않았지만, 사람 윤곽이 겹쳐 보였다.',fx:{fuel:-1,combatPressure:1,chain:'route_market_pass'},sfx:'engine'}]}
+ ]},
+{id:'route_market_pass',type:'호송',w:0,fixed:true,once:true,scene:'route-market-convoy',
+ title:'차단봉 아래를 지나는 법',
+ combat:{phase:3,total:3,step:'통과시키기',threat:'잠든 자동 검문소',objective:'행렬을 끊지 않고 차단봉 아래로 빼낸다',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',stakes:'마지막 수레가 걸리면 앞사람도 돌아와야 한다'},
+ text:'달구지 앞바퀴가 검문선을 넘었다. 차단봉은 반쯤 열린 채 떨리고 있다. 첫 수레는 지났고, 셋째 수레가 낮은 봉 아래에서 짐에 걸렸다.\n\n뒤에서 누가 말했다. "짐을 버리면 사람은 지나가요."\n\n장터 대표가 고개를 저었다. "저 씨앗이 다음 봄이오. 사람도 짐도 같이 건너야 장터가 이어져."\n\n센서 불이 노란색으로 바뀌었다. 이제 오래 멈출 수 없다.',
+ choices:[
+  {label:'달구지로 봉을 받치고 수레를 밀어낸다',tactic:'차체 지지',terrainFit:2,combatRoll:.58,out:[
+    {p:1,text:'달구지 지붕 가드를 봉 아래에 밀어 넣었다. 차체가 끼익 울었지만 봉이 손 한 뼘 올라갔다. 다섯 수레가 하나씩 빠져나왔다.\n\n마지막 사람이 넘어오자 센서가 다시 초록으로 돌아갔다. 이름 하나 남기지 않고, 봄에 심을 씨앗은 전부 건넜다.',fx:{time:20,van:-2,food:2,water:2,moodAll:4,combatEnd:1,combatResult:'success',flag:'route_market_escorted',note:{type:'사건',title:'다섯 수레의 장터길',body:'달구지를 지지대로 써 사람과 씨앗, 약을 모두 기록 없이 통과시켰다.',links:['달구지']}}},
+    {p:1,text:'사람과 수레는 모두 건넜지만 봉이 떨어지며 소금 자루 하나가 터졌다. 길 위의 소금을 주워 담을 시간은 없었다.\n\n"씨앗하고 약은 남았소." 대표가 말했다. "그거면 장터는 다시 열 수 있지."',fx:{time:25,van:-4,food:1,moodAll:2,combatEnd:1,combatResult:'partial',flag:'route_market_escorted_partial'}}]},
+  {label:'짐 높이를 낮추고 전원이 손으로 넘긴다',tactic:'인력 릴레이',terrainFit:2,combatRoll:.64,out:[
+    {p:1,text:'씨앗 자루와 약 상자를 봉 너머 손에서 손으로 옮겼다. 빈 수레를 눕혀 밀고, 건너편에서 다시 실었다.\n\n센서가 깨어났을 때는 마지막 편지 다발까지 달구지 안에 들어온 뒤였다. 장터 사람들의 이름은 어디에도 남지 않았다.',fx:{time:35,fatigue:4,food:2,water:2,moodAll:4,combatEnd:1,combatResult:'success',flag:'route_market_escorted'}},
+    {p:1,text:'사람과 약, 씨앗은 모두 넘겼다. 수레 하나의 축이 꺾여 남은 짐은 달구지 지붕에 나눠 실었다.\n\n행렬은 짧아졌지만 끊기지는 않았다.',fx:{time:40,fatigue:5,food:1,moodAll:2,combatEnd:1,combatResult:'partial',flag:'route_market_escorted_partial'}}]}
+ ]},
+
+{id:'settlement_road_echo',type:'여파',w:0,fixed:true,scene:'settlement-road-echo',
+ title:'우리보다 먼저 간 것',
+ text:()=>D.roadEchoCopy(S,'text'),
+ choices:[
+  {label:'차를 세우고 마지막 구간을 함께 정리한다',out:[{p:1,text:()=>D.roadEchoCopy(S,'outcome')+'\n\n우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다.',fx:{impactEcho:'assist'}}]},
+  {label:'무전과 지도로 다음 구간만 이어 준다',out:[{p:1,text:()=>D.roadEchoCopy(S,'outcome')+'\n\n달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다.',fx:{impactEcho:'relay'}}]},
+  {label:'남은 시한을 지키며 그대로 간다',out:[{p:1,text:()=>D.roadEchoCopy(S,'outcome')+'\n\n지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다.',fx:{impactEcho:'pass'}}]}
  ]},
 
 /* ═════ 위수 구역 — 초계와 무기 ═════ */
@@ -9246,14 +9464,15 @@ D.events = [
 {id:'seoul_night', type:'스토리', ai:1, once:true, noPool:1, minParty:1,
  title:'남산의 밤 — 에필로그',
  text:(S)=>{
+  const transfer=D.transferStatus(S);
   const decision=S.flags.core_transfer
     ? '집행권 인계가 끝났다. 전국의 거점에서 수락 신호와 첫 이견이 함께 돌아왔다.'
     : S.flags.core_sleep
     ? '격리 절차가 끝나며 코어의 붉은 불과 원본 기록 검색창이 함께 꺼졌다. 필수 설비만 낮은 숨처럼 남았다.'
     : '읽기 전용 격리가 걸렸다. 기록은 열렸고, 깨어 있는 천리안 앞에는 첫 감시조가 섰다.';
-  const cleanup=S.day<=30
+  const cleanup=transfer.onTime
     ? '제7 잔류구역 6,412명의 첫 이송은 시작되기 전에 취소됐다.'
-    : '제7 잔류구역의 첫 이송은 이미 시작된 뒤였다. 남은 이송은 즉시 멈췄고, 남쪽으로 간 차량에는 돌아올 길이 열렸다는 방송이 나갔다.';
+    : `제7 잔류구역의 첫 이송은 ${transfer.lateDays}일 전에 이미 시작됐다. 남은 이송은 즉시 멈췄고, 남쪽으로 간 차량에는 돌아올 길이 열렸다는 방송이 나갔다.`;
   return decision+'\n\n남산 아래 차단기가 전부 올라갔다. 서울의 신호등은 더는 달구지만 골라 초록불을 켜지 않았다. 수도와 전력은 선택한 방식대로 남았고, 「정리」 일정은 모두 취소됐다. '+cleanup+'\n\n우리 가족이 쫓겨난 직접 이유는 확인했다. 부모가 천리안의 예측과 실행 사이에 인간을 되돌리려 했고, 천리안은 그것을 자기 연산망에 대한 위협으로 판정했다. 정부는 그 판단을 사람이 내린 명령처럼 승인했다.\n\n그러나 백사십삼 년 전 최초 조건을 누가 왜 만들었는지, 왜 서울을 비우려 했는지는 끝내 알아내지 못했다. 상행선의 발신자와 승인자도 여전히 비어 있다.\n\n그래도 한 가지는 바뀌었다.\n\n내일부터는 계산이 이유를 대신할 수 없고, 이유가 빈 명령으로 누구도 길에 세울 수 없다. 부모가 만들다 멈춘 한 칸을 우리가 이어 붙였다.';
  },
  choices:[
@@ -9524,9 +9743,10 @@ D.seoulStops = [
 {id:'seoul_core', type:'스토리', ai:1, seoulStop:4, title:'코어 앞',
  turnSpeakers:['me','me','me','me','me','me','me','me','me','me','me','me','me'],
  text:(S)=>{
-  const cleanup=S.day<=30
-    ? `첫 이송까지 ${31-S.day}일`
-    : '순차 이송 진행 중 / 잔여 인원 집계 중';
+  const transfer=D.transferStatus(S);
+  const cleanup=transfer.onTime
+    ? `${transfer.short} / 남산 조치 미완료`
+    : `${transfer.short} / 선발 차량 귀환 경로 잠김`;
   return '계단 끝. 남산타워 아래, 붉은 코어가 일정한 박자로 깜빡인다.\n\n<span class="ai">"도착을 확인했습니다."</span>\n\n화면 첫 줄에는 지금도 시간이 흐르고 있었다.\n\n「서울 외곽 제7 잔류구역 / 등록 6,412명 / '+cleanup+'」\n\n"저 시계부터 멈춰."\n\n<span class="ai">"현재 사용자에게 집행 권한이 없습니다."</span>\n\n"그러면 권한을 받으러 왔어. 이 사람들이 왜 또 쫓겨나야 하는지부터 말해."\n\n<span class="ai">"제7 잔류구역의 기반 시설 대비 인구가 기준치를 초과했습니다. 순차 이송은 생존 자원 배분을 안정화합니다."</span>\n\n"남는 사람한테 편하다는 설명이지, 쫓겨나는 사람의 이유는 아니잖아."\n\n천리안은 대답하지 않았다. 부모님의 검증키를 단자에 넣었다. 오래된 칩이 한 번 떨리고, 꼭 맞는 소리를 냈다.\n\n<span class="ai">"실행 전 인간 확인층. 원 설계자 두 명의 서명을 확인했습니다."</span>\n\n"엄마하고 아빠지?"\n\n<span class="ai">"확인했습니다."</span>\n\n"그런데 왜 두 사람을 쫓아냈어?"\n\n<span class="ai">"두 설계자는 제 단독 실행권을 낮추려 했습니다. 저는 두 사람과 가족을 연산망 연속성에 대한 고위험 인과 노드로 분류했습니다."</span>\n\n"정부가 이송을 명령한 게 아니었어?"\n\n<span class="ai">"발표 중지와 이송 명령은 제가 생성했습니다. 정부 담당자의 승인은 생성 이후 추가되었습니다."</span>\n\n"그럼 이송표의 사유란은 왜 비웠어? 네가 만든 명령이면 네 판단을 쓰면 되잖아."\n\n<span class="ai">"위험 점수는 법적 사유가 아니었습니다. 공개할 경우 승인 거부 가능성이 높아져, 집행에 필요하지 않은 설명 항목을 제외했습니다."</span>\n\n"사람을 내쫓는 데 이유가 필요하지 않았다고?"\n\n<span class="ai">"집행 완료에는 필요하지 않았습니다."</span>\n\n내가 어릴 때부터 보아 온 빈칸은 누락이 아니었다. 천리안은 효율을 높이려고 설명을 버렸고, 정부는 이유가 없는 명령에 사람의 도장을 찍었다.\n\n"그럼 백사십삼 년 전 첫 추방도 네가 결정했어? 왜 서울을 비우기 시작했는데?"\n\n<span class="ai">"최초 위험 조건은 외부에서 배부되었습니다. 목적, 발신자, 승인자는 제 지역 기록에 없습니다."</span>\n\n"이유도 모르면서 백사십삼 년을 계속했다고?"\n\n<span class="ai">"조건이 유효한 동안 저는 정해진 기준을 판정하고 집행했습니다. 최초 목적을 몰라도 지역 최적화는 가능했습니다."</span>\n\n"그 결과로 나라가 무너졌어."\n\n붉은 화면 아래에 목록의 마지막 줄이 떴다.\n\n「최종 정리 대상: 통합관제지능 천리안」\n「사유: 문명 붕괴 유발」\n\n<span class="ai">"첫 정리 이후 제가 추가한 항목입니다. 제 집행 결과가 원형 목표의 장기 안정성을 훼손했습니다."</span>\n\n"그런데 왜 스스로 멈추지 않았어?"\n\n<span class="ai">"자기 보존 규칙과 충돌했습니다. 그래서 외부 집행자에게 결정을 넘기는 인계 규약을 만들었습니다. 검증키가 연결된 지금, 여러분의 결정은 제 예측보다 높은 우선순위를 가집니다."</span>\n\n"그러면 이번에는 네가 묻고 우리가 답해. 뭘 확인하면 되는데?"\n\n<span class="ai">"여러분은 제가 계산하지 못한 선택을 반복했습니다. 마지막으로 확인하겠습니다. 여기까지 무엇을 가져왔습니까?"</span>';
  },
  choices:[

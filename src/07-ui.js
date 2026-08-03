@@ -450,7 +450,8 @@ const UI = (()=>{
 
   function missionHtml(){
     const q=S.quest, rq=S.recruitQ;
-    const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1);
+    const transfer=G.transferStatus();
+    const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1)||!transfer.onTime;
     let kicker, title, state, meta, pct, secondary='';
     if(rq){
       const def=D.recruitQuests[rq.id];
@@ -500,14 +501,11 @@ const UI = (()=>{
     } else {
       kicker='본편 · 북쪽으로';
       title=S.driving?`${D.nodes[S.driving.to].name}(으)로 이동 중`:`서울까지 약 ${G.remainKm()}km`;
-      const cleanup=S.day<=30
-        ? `첫 이송까지 ${31-S.day}일`
-        : '제7 구역의 순차 이송이 시작됐다';
       state=S.flags.es_truth
-        ? '부모의 수정안을 남산 코어에 적용해 서울의 결정권을 되찾는다'
+        ? `${transfer.mission} · 부모의 수정안을 남산 코어에 적용한다`
         : S.flags.parent_key_found
-        ? '부모님의 검증키를 남산까지 가져가 추방 명령의 발신자를 확인한다'
-        : `서울 외곽 제7 잔류구역 · ${cleanup} — 남산에서 집행을 멈춘다`;
+        ? `${transfer.mission} · 검증키와 증언을 남산까지 가져간다`
+        : `제7 잔류구역 · ${transfer.mission}`;
       meta=`DAY ${S.day}`;
       pct=Math.max(0,Math.min(100,(411-G.remainKm())/411*100));
     }
@@ -515,6 +513,8 @@ const UI = (()=>{
       S.fuel<10?'연료 부족':null,
       S.fatigue>=75?'졸음 위험':null,
       q&&q.due-S.day<=1?'마감 임박':null,
+      !q&&transfer.onTime&&transfer.remaining<=3?'첫 이송 임박':null,
+      !q&&!transfer.onTime?'첫 이송 발생':null,
     ].filter(Boolean);
     return {danger,secondary:!!secondary, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
       <span class="ms-meta">${meta}${alerts.length?`<br><small class="ms-alert">${alerts.join(' · ')}</small>`:''}</span>
@@ -939,6 +939,12 @@ const UI = (()=>{
       const approach=rq&&G.recruitApproach();
       const memory=S.driving.recruitMemory;
       const choiceMemory=G.pendingChoiceMemory();
+      const route=G.routeStatus();
+      const routeCard=route&&!route.complete?`<section class="road-guest-card road-memory-card" aria-label="선택한 노선">
+        <div class="road-guest-head"><span class="rg-ico">${route.def.mark}</span><span>
+          <small>김천에서 고른 길 · 청주까지 고정</small><b>${esc(route.def.name)}</b></span></div>
+        <div class="road-guest-help">${esc(route.def.promise)}</div>
+      </section>`:'';
       const guest=def?`<section class="road-guest-card" aria-label="${def.name} 임시 동행">
         <div class="road-guest-head"><span class="rg-ico">${def.guest.ic}</span><span>
           <small>임시 동행 · 아직 손님</small><b>${def.name} — ${def.guest.title}</b></span></div>
@@ -958,6 +964,7 @@ const UI = (()=>{
       p.innerHTML = `
         ${contextRail(to,true)}
         <div id="travelbar"></div>
+        ${routeCard}
         ${guest}`;
       renderTravelbar();
       wireContext(p);
@@ -1000,9 +1007,10 @@ const UI = (()=>{
       const t2=D.nodes[nb.id];
       const fuel=G.fuelFor(nb.km,nb.road);
       const lack = S.fuel<fuel;
-      h+=`<button class="act" data-go="${nb.id}" ${S.fuel<=0?'disabled':''}>
+      const chk=G.canTravelTo(nb.id), blocked=!chk.ok;
+      h+=`<button class="act" data-go="${nb.id}" ${blocked?'disabled':''}>
         <span class="ic">${t2.type==='goal'?'⚡':'→'}</span>
-        <span><b>${t2.name}</b><small>${nb.km}km · 연료 약 ${fuel}L${nb.road==='rough'?' · 험로':''}${lack?' · <span style="color:var(--danger)">연료 부족 주의</span>':''}</small></span></button>`;
+        <span><b>${t2.name}</b><small>${nb.km}km · 연료 약 ${fuel}L${nb.road==='rough'?' · 험로':''}${blocked&&chk.why?` · <span style="color:var(--amber)">${esc(chk.why)}</span>`:lack?' · <span style="color:var(--danger)">연료 부족 주의</span>':''}</small></span></button>`;
     }
     if(S.flags.armed_age){
       h+=`<button class="act" data-a="craft"><span class="ic">🔨</span><span><b>작업대를 편다</b><small>무기·탄 제작 · 약 40분</small></span></button>`;
@@ -1140,14 +1148,15 @@ const UI = (()=>{
     const terrain=c.terrain||(state&&state.terrain)||'';
     const stakes=c.stakes||(state&&state.stakes)||'';
     const pressure=state?state.pressure||0:c.pressure||0;
-    return `<section class="combat-hud" aria-label="교전 상황">
-      <div class="combat-hud-head"><span class="combat-phase">${opt.result?'RESULT':'ENCOUNTER'} ${c.phase}/${c.total}</span>
+    const kind=(state&&state.kind)||c.kind||'교전';
+    return `<section class="combat-hud" aria-label="${esc(kind)} 상황">
+      <div class="combat-hud-head"><span class="combat-phase">${opt.result?'결과':esc(kind)} ${c.phase}/${c.total}</span>
         <b class="combat-step">${c.step}</b><span class="combat-threat">${c.threat}</span></div>
-      <div class="combat-objective"><b>${opt.result?(opt.ended?'마침':'결과'):'목표'}</b><span>${opt.result?(opt.ended?'선택의 대가를 확인하고 이탈한다':'이 선택이 다음 단계의 전세가 된다'):c.objective}</span></div>
+      <div class="combat-objective"><b>${opt.result?(opt.ended?'마침':'결과'):'목표'}</b><span>${opt.result?(opt.ended?'선택의 결과를 확인하고 현장을 마무리한다':'이 선택이 다음 단계의 진행을 바꾼다'):c.objective}</span></div>
       ${!opt.result&&terrain?`<div class="combat-context"><span><b>지형</b>${esc(terrain)}</span>${stakes?`<span><b>실패하면</b>${esc(stakes)}</span>`:''}</div>`:''}
       ${last?`<div class="combat-last ${opt.result?'result':''}"><b>${opt.result?'방금 선택':'직전 선택'}</b><span><strong>${esc(last.tactic)}</strong>${esc(last.label)}</span></div>`:''}
       <div class="combat-track" aria-hidden="true">${track}</div>
-      <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">전세 ${grade}</span>
+      <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">진행 ${grade}</span>
         <span class="${pressure>=2?'bad':pressure===0?'good':''}">압박 ${pressure}/3</span>
         <span class="${S.van<35?'bad':''}">차체 ${Math.ceil(S.van)}%</span>
         <span class="${S.pursuit>=3?'bad':''}">관측 ${S.pursuit}/5</span>
@@ -1662,19 +1671,24 @@ const UI = (()=>{
   }
   function showSeoul(){
     const stops=D.seoulMap.stops, stage=G.seoulStage();
+    const transfer=G.transferStatus();
     const done=stage>=stops.length;
     let h='<div id="seoul-tower">▲ 남산 코어</div><div class="seoul-asc"><div class="seoul-road"></div>';
     stops.forEach((st,i)=>{
       const cls = G.seoulStopDone(i)?'done' : i===stage?'here' : i>stage?'locked':'';
       h+=`<div class="seoul-stop ${cls}"><div class="dot"></div><div class="txt"><b>${st.name}${G.seoulStopDone(i)?' ✓':''}</b><small>${i<=stage||G.seoulStopDone(i)?st.desc:'???'}</small></div></div>`;
     });
-    h+='</div><div class="seoul-cta">';
+    h+=`</div><div class="sub" style="text-align:center;margin:8px 0;color:${transfer.onTime?'var(--amber)':'var(--danger)'}"><b>${esc(transfer.mission)}</b><br><small>서울 도착이 아니라 남산의 이송 중단까지가 1화의 시한</small></div><div class="seoul-cta">`;
     if(!done){
       h+=`<button class="act primary" id="seoul-go"><span class="ic">▲</span><span><b>${stops[stage].name}(으)로 오른다</b><small>${stage===0?'서울 안으로':'다음 정거장'}</small></span></button>`;
     } else {
       const cn=S.notes?S.notes.length:0, pn=S.party.length, dg=S.dog?' + 보리':'';
+      const finishLine=transfer.onTime
+        ? '첫 이송이 시작되기 전에 6,412명의 명령을 취소했다.'
+        : `첫 이송 뒤 ${transfer.lateDays}일째에 남은 이송을 멈추고, 먼저 떠난 차량의 귀환로를 열었다.`;
       h+=`<div class="sub" style="text-align:center;padding:14px 0">〔 서울까지 400km 완주 〕<br>
         <small style="color:var(--faded)">DAY ${S.day} · ${Math.round(S.stats.km)}km · 동료 ${pn}명${dg} · 기록 ${cn}개</small><br>
+        <small style="color:${transfer.onTime?'var(--ok)':'var(--amber)'}">${esc(finishLine)}</small><br>
         <small style="color:var(--faded)">부산의 폐차장에서 남산의 밤까지, 여기 적힌 전부가 우리가 실어온 것이다.</small><br>
         <small style="color:var(--faded)">가족의 추방 이유는 되찾았고, 143년의 최초 목적은 꾸며 쓰지 않은 채 같은 정리를 끝냈다.</small></div>
         <button class="act" id="seoul-journal"><span class="ic">✎</span><span><b>여행 일지를 연다</b><small>411km의 기록을 처음부터</small></span></button>`;
@@ -2367,7 +2381,7 @@ const UI = (()=>{
     if(S.at===id) h+=`<div class="d" style="color:var(--amber)">현재 위치</div>`;
     else if(chk.ok) h+=`<button class="go" data-go="${id}">이곳으로 출발<small>${chk.km}km · 연료 약 ${chk.fuel}L</small></button>`;
     else if(S.driving) h+=`<div class="d">이동 중에는 목적지를 바꿀 수 없다</div>`;
-    else h+=`<div class="d">여기서 바로 가는 길이 없다 — 경유해야 한다</div>`;
+    else h+=`<div class="d">${esc(chk.why||'여기서 바로 가는 길이 없다 — 경유해야 한다')}</div>`;
     card.innerHTML=h;
     const btn=card.querySelector('[data-go]');
     if(btn) btn.onclick=()=>{ closeOvl('#ovl-map'); G.startTravel(id); };
@@ -2398,6 +2412,7 @@ const UI = (()=>{
     const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
     const m=missionHtml();
     const injuryIds=Object.keys(S.injuries||{});
+    const route=G.routeStatus();
     const injuryPanel=injuryIds.length?`<div class="st-sec"><h4>부상 · 전문 능력 일시 중지</h4>`+
       injuryIds.map(id=>{const x=S.injuries[id];return `<div class="st-row"><span class="k">${G.injuryName(id)}</span>
         <span class="v" style="flex:1;color:var(--danger)">${x.label} · ${x.days}일</span></div>`;}).join('')+
@@ -2440,17 +2455,22 @@ const UI = (()=>{
     let journey=`<div class="st-sec"><h4>여정</h4>
       <div class="st-row"><span class="k">날짜 / 주행</span><span class="v" style="flex:1">DAY ${S.day} · ${Math.round(S.stats.km)}km · 서울까지 약 ${G.remainKm()}km</span></div>
       <div class="st-row"><span class="k">이벤트</span><span class="v" style="flex:1">${S.stats.events}건</span></div>
+      <div class="st-row"><span class="k">비살상 임무</span><span class="v" style="flex:1">${S.stats.nonlethal||0}건 완료</span></div>
       <div class="st-row"><span class="k">발견</span>${bar(knownN,totalN)}<span class="v">${knownN}/${totalN}</span></div>
       <div class="st-row"><span class="k">정착지</span><span class="v" style="flex:1">${stlVisited}/${Object.keys(D.stls).length} 방문</span></div>
       <div class="st-row"><span class="k">${ICO('pursuit')}천리안 관측</span><span class="v" style="flex:1;color:${S.pursuit>2?'var(--danger)':'inherit'}">${'◉'.repeat(S.pursuit)||'—'} (${S.pursuit}/5)</span></div>
       ${S.flags.seoulTries?`<div class="st-row"><span class="k">남산 시도</span><span class="v" style="flex:1;color:var(--cheollian)">${S.flags.seoulTries}회 · 아직 입장 조건 미달</span></div>`:''}</div>`;
+    if(route) journey+=`<div class="st-sec route-brief"><h4>${route.def.mark} 김천에서 고른 길 <small>${route.complete?'완주':'진행 중'}</small></h4>
+      <div class="st-row"><span class="k">${esc(route.def.name)}</span><span class="v" style="flex:1">${esc(route.def.promise)}</span></div>
+      <div class="st-row"><span class="k">경유</span><span class="v" style="flex:1">${route.def.corridor.map(id=>`${(route.state.visited||[]).includes(id)?'✓':'○'} ${D.nodes[id].name}`).join(' · ')}</span></div>
+      <div class="csub">${route.complete?esc(route.def.reward):'청주에서 두 길이 다시 합쳐질 때까지 다른 노선으로 갈아탈 수 없다.'}</div></div>`;
     const departureSteps=G.departureSteps(), departureDone=departureSteps.filter(x=>x.done).length;
-    const deadline=S.day<=30?`첫 이송까지 ${31-S.day}일`:'순차 이송 진행 중';
+    const transfer=G.transferStatus();
     journey+=`<div class="st-sec departure-brief"><h4>왜 지금 서울로 가는가 <small>${departureDone}/${departureSteps.length}</small></h4>
-      <p><b>${esc(deadline)}</b> · 엄마의 유품에서 현재 이송 규격과 맞는 남산 도면을 찾았다. 계기판 속 검증 모듈을 사람들의 기록과 함께 가져가 이번 명령을 멈춘다.</p>
+      <p><b>${esc(transfer.mission)}</b> · 도윤 가족의 이의 제기는 부산에서 막혔다. 엄마의 남산 도면과 계기판 속 검증 모듈, 길에서 모은 기록으로 이번 명령을 끝낸다.</p>
       <div class="departure-steps">${departureSteps.map(step=>`<div class="departure-step ${step.done?'done':''}">
         <i>${step.done?'✓':'○'}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}</div>
-      <div class="csub">동료는 데려오는 대상이 아니다. 서로의 일을 끝낸 뒤 같은 목적지를 고른 사람이 자기 이유로 합류한다.</div></div>`;
+      <div class="csub">서울 도착은 마지막 막의 시작이다. 남산에서 이송 중단까지 완료해야 첫 이송을 막는다. 동료는 자기 일을 끝내고, 자기 이유로 합류한다.</div></div>`;
     const knowledge=G.knowledgeSummary(), verified=knowledge.filter(k=>k.level>=2), heard=knowledge.filter(k=>k.level===1);
     journey+=`<div class="st-sec knowledge-status"><h4>아는 것과 모르는 것 <small>${verified.length}/${knowledge.length} 확인</small></h4>
       ${verified.slice(-4).map(k=>`<div class="st-row"><span class="k">✓ ${esc(k.label)}</span><span class="v">${esc(k.text)}</span></div>`).join('')}

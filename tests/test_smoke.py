@@ -609,7 +609,7 @@ with sync_playwright() as p:
       out.journeyBeats = (D.journeyBeats||[]).length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
-      out.introBook = D.intro.length === 14 && D.intro.every(p =>
+      out.introBook = D.intro.length === 17 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
       out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= 8 &&
         p.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind)).length >= 5 &&
@@ -639,6 +639,9 @@ with sync_playwright() as p:
       const firstIntroBeats=D.intro[0].beats||[];
       const keepsakeBeats=D.intro.find(p=>p.scene==='intro-mother-keepsakes')?.beats||[];
       const moduleBeats=D.intro.find(p=>p.scene==='intro-dashboard-module')?.beats||[];
+      const familyBeats=D.intro.find(p=>p.scene==='intro-dock-aid')?.beats||[];
+      const appealBeats=D.intro.find(p=>p.scene==='intro-appeal-denied')?.beats||[];
+      const workshopBeats=D.intro.find(p=>p.scene==='intro-workshop-departure')?.beats||[];
       const departureBeats=D.intro.find(p=>p.scene==='intro-departure-choice')?.beats||[];
       out.introCausalDialogue =
         firstIntroBeats.some(t=>t.text.includes('길을 막은 건 경찰과 군인이었어')) &&
@@ -648,10 +651,18 @@ with sync_playwright() as p:
         keepsakeBeats.some(t=>t.text.includes('현재 이송표에 찍힌 명령 규격')) &&
         keepsakeBeats.some(t=>t.text.includes('검증 모듈 보관 위치')) &&
         moduleBeats.some(t=>t.text.includes('분리 절차 두 장')) &&
-        departureBeats.some(t=>t.text.includes('같은 명령을 겪었거나')) &&
-        departureBeats.some(t=>t.text.includes('그 사람도 서울에 갈 이유를 고르면'));
+        familyBeats.some(t=>t.text.includes('난방 호스')) &&
+        appealBeats.some(t=>t.text.includes('서울 남산 중앙 노드')) &&
+        departureBeats.some(t=>t.text.includes('같은 이송을 겪은 사람')) &&
+        departureBeats.some(t=>t.text.includes('서울에 갈 이유도 자기가 골라야'));
       out.introImmediateMotive=keepsakeBeats.some(t=>t.text.includes('지금 쫓겨나는 사람')) &&
-        departureBeats.some(t=>t.text.includes('다음 이송이 시작되기 전에 멈추러')) &&
+        familyBeats.some(t=>t.text.includes('6,412명은 더 이상')) &&
+        appealBeats.some(t=>t.text.includes('원격 이의 제기 경로가 없습니다')) &&
+        workshopBeats.some(t=>t.text.includes('예비 연료를 전부 싣고')) &&
+        departureBeats.some(t=>t.text.includes('도착만 하고 끝낼 수 있는 길이 아니다')) &&
+        ['intro-current-expulsion','intro-dock-aid','intro-appeal-denied','intro-mother-keepsakes',
+         'intro-dashboard-module','intro-workshop-departure','intro-departure-choice']
+          .every(key=>D.scenes[key].startsWith('data:image/jpeg;base64,')) &&
         D.scenes['intro-mother-keepsakes'].startsWith('data:image/jpeg;base64,') &&
         D.scenes['intro-dashboard-module'].startsWith('data:image/jpeg;base64,');
       const firstTransferBeats=D.intro.find(p=>p.scene==='intro-first-expulsion')?.beats||[];
@@ -661,7 +672,7 @@ with sync_playwright() as p:
         firstTransferBeats.some(t=>t.text.includes('강제 이송 명령서')) &&
         currentTransferBeats.some(t=>t.text.includes('한 사람에 20kg')) &&
         currentTransferBeats.some(t=>t.text.includes('집과 배급, 통행 권한')) &&
-        departureBeats.some(t=>t.text.includes('아이 어머니의 허락')) &&
+        appealBeats.some(t=>t.text.includes('표 사본은 제가 가져가도 될까요')) &&
         departureBeats.every(t=>!t.text.includes('아이에게 빌린'));
       const gpNote2=D.events.find(e=>e.id==='gp_note2');
       const gpNote3=D.events.find(e=>e.id==='gp_note3');
@@ -990,7 +1001,7 @@ with sync_playwright() as p:
       out.knowledgeUi=knowledgeText.includes('아는 것과 모르는 것') &&
         knowledgeText.includes('제7 잔류구역의 현재 이송') && knowledgeText.includes('소문은 사실처럼 말하지 않는다');
       out.departureBrief=knowledgeText.includes('왜 지금 서울로 가는가') &&
-        knowledgeText.includes('첫 이송까지') && knowledgeText.includes('분리 절차') &&
+        knowledgeText.includes('남산 조치까지') && knowledgeText.includes('분리 절차') &&
         knowledgeText.includes('자기 이유');
       document.querySelector('#st-x').click();
       G.openEventById('roadbeat_200_archive');
@@ -1025,10 +1036,39 @@ with sync_playwright() as p:
       document.querySelector('#ev-wrap').classList.remove('on');
       document.querySelector('#ev-sheet').classList.remove('event-mode');
       S.flags=flags0; S.party=party0; S.comps=comps0;
+      const systemSnapshot=structuredClone(S);
+      S.at='gimcheon'; S.driving=null; S.routePlan=null;
+      G.chooseRoute('ridge');
+      const ridgeGo=G.canTravelTo('sangju'), marketBlocked=G.canTravelTo('muju');
+      out.routeChoice=G.routeStatus()?.def.id==='ridge'&&ridgeGo.ok&&!marketBlocked.ok&&
+        marketBlocked.why.includes('청주')&&S._storyQueue.includes('route_ridge_rescue');
+      const routeIds=['route_ridge_rescue','route_ridge_anchor','route_ridge_extract',
+        'route_market_convoy','route_market_mask','route_market_pass'];
+      out.nonlethalMissions=routeIds.every(id=>{
+        const ev=D.events.find(e=>e.id===id);
+        return ev&&ev.combat&&['구조','호송'].includes(ev.type)&&
+          D.scenes[D.eventScenes[id]].startsWith('data:image/jpeg;base64,');
+      })&&['route_ridge_extract','route_market_pass'].every(id=>
+        D.events.find(e=>e.id===id).choices.every(c=>c.combatRoll!==undefined&&
+          c.out.every(o=>o.fx.combatEnd&&['success','partial'].includes(o.fx.combatResult))));
+      S.stats.nonlethal=0;
+      G.applyFx({combatStart:{id:'test_rescue',kind:'구조',threat:'테스트 비탈',objective:'사람을 꺼낸다'}});
+      G.applyFx({combatEnd:1,combatResult:'success'});
+      out.nonlethalLedger=S.stats.nonlethal===1&&S.notes.some(n=>n.title.includes('구조 기록'));
+      S.at='miryang'; S.routePlan=null; S._impactEcho=null;
+      S._stlField={daily:{},once:{},impact:{'miryang:pump':{day:S.day,min:S.min}},roadEchoed:{},
+        log:[{stl:'miryang',id:'pump',day:S.day,min:S.min}]};
+      const echoDrive={wx:'rain',dist:34,slots:[]};
+      const settlementEcho=G.prepareSettlementRoadEcho(echoDrive,'miryang','yangsan');
+      const echoResult=G.resolveImpactEcho('relay');
+      out.settlementRoadEcho=!!settlementEcho&&echoDrive.slots.some(slot=>slot.special==='impact')&&
+        !!S._stlField.roadEchoed['miryang:pump']&&echoResult.fx.time===15&&
+        D.scenes['settlement-road-echo'].startsWith('data:image/jpeg;base64,');
+      S=systemSnapshot; rng=mulberry32(S.seed+(S.stats.events*7919));
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('이벤트 872종', r4['eventCount'] == 872, str(r4['eventCount']))
+    check('플레이 이벤트 880종', r4['eventCount'] == 880, str(r4['eventCount']))
     check('사건 감독: 최근 반복·종류 연속 차단', r4['directorCooldown'] and
           r4['directorVariety'], str(r4))
     check('사건 감독: 무거운 장면 뒤 숨 고르기·맥락 우선', r4['directorBreather'] and
@@ -1052,14 +1092,18 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 107종·빌드 주입', r4['sceneCount'] == 107 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 114종·빌드 주입', r4['sceneCount'] == 114 and r4['sceneDataReady'], str(r4))
+    check('김천 노선 선택·청주까지 경로 잠금', r4['routeChoice'], str(r4))
+    check('비살상 구조·호송 3단계 임무와 장부 기록',
+          r4['nonlethalMissions'] and r4['nonlethalLedger'], str(r4))
+    check('정착지 행동이 다음 도로 사건으로 한 번 이어짐', r4['settlementRoadEcho'], str(r4))
     check('행동 단위 신규 컷 16장·선택 스포일러 분리',
           r4['actionCutCount'] == 16 and r4['actionCutMaps'], str(r4))
     check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
           r4['actionCutRuntime'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
-    check('그림책 도입 14장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
+    check('그림책 도입 17장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('인트로 전 장면 화자 턴·가족 초상 연결',
           r4['introTurns'] and r4['introPortraits'], str(r4))
     check('부모 핵심 기록은 엄마 음성·아빠 글씨로 식별', r4['familySpeakers'], str(r4))
@@ -1073,7 +1117,7 @@ with sync_playwright() as p:
     check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
     check('인트로 행동·원인 대사가 구체적으로 이어짐', r4['introCausalDialogue'], str(r4))
-    check('엄마의 유품→현재 명령→30일 시한으로 즉시 출발', r4['introImmediateMotive'], str(r4))
+    check('한 가족 도움→이의 제기 실패→유품·대가→30일 시한으로 출발', r4['introImmediateMotive'], str(r4))
     check('이송표 내용·강제력·사본을 가져가는 이유 설명', r4['transferPaperMeaning'], str(r4))
     check('할아버지 수첩은 구체적이고 안전한 정비 조언', r4['grandfatherNotes'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
@@ -1245,7 +1289,7 @@ with sync_playwright() as p:
           ('RIVERS', 'SECONDARY_ROUTES', 'REGION_LABELS', "nm:'한강'", "nm:'낙동강'")))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('872개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('880개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
@@ -1439,9 +1483,12 @@ with sync_playwright() as p:
         coreText.includes('목적, 발신자, 승인자는 제 지역 기록에 없습니다') &&
         coreText.includes('부모님의 검증키') &&
         coreText.includes('등록 6,412명');
-      out.deadlineAdaptive = coreText.includes('첫 이송까지 19일') &&
-        lateCoreText.includes('순차 이송 진행 중') &&
-        ep.text({day:31,flags:{core_transfer:true},party:[]}).includes('첫 이송은 이미 시작된 뒤였다');
+      const day1=D.transferStatus({day:1}), day30=D.transferStatus({day:30}), day31=D.transferStatus({day:31});
+      out.deadlineAdaptive = day1.remaining===30 && day30.remaining===1 && day30.onTime && !day31.onTime &&
+        day1.mission.includes('남산 조치까지 30일') &&
+        coreText.includes('첫 이송까지 19일') &&
+        lateCoreText.includes('첫 이송 발생 · 1일 경과') &&
+        ep.text({day:31,flags:{core_transfer:true},party:[]}).includes('첫 이송은 1일 전에 이미 시작됐다');
       const render = (v, flags={}) => typeof v === 'function' ? v({flags, party:[]}) : v;
       const costs = decision.choices.map(c => render(c.out[0].text, {}));
       out.distinctCosts = costs[0].includes('느린 합의') &&
