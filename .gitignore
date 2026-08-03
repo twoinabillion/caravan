@@ -6,6 +6,7 @@ dist/
 .granite/
 *.ait
 __pycache__/
+.pytest_cache/
 *.pyc
 
 # SSH 키·비밀 절대 커밋 금지

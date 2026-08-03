@@ -12,7 +12,7 @@
 | 부산 원격 이의 제기 실패 | `assets/intro/15-appeal-denied.jpg` |
 | 엄마의 철제 상자와 완성된 생활칸 | `assets/intro/12-mother-keepsakes-v2.jpg` |
 | 작업장 예비 연료를 싣고 셔터를 내리는 선택 | `assets/intro/16-workshop-shutter-v2.jpg` |
-| 파란 생활차로 부산을 떠나는 마지막 컷 | `assets/intro/08-departure-choice-v2.jpg` |
+| 파란 생활차로 부산을 떠나는 마지막 컷 | `assets/intro/08-departure-choice-v3.jpg` |
 
 ## 최종 프롬프트 세트
 

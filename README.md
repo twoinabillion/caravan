@@ -12,8 +12,8 @@
 
 | 달구지 — 비를 피하는 집 | 동료 — 고철 산의 불꽃 |
 |:---:|:---:|
-| <img src="assets/intro/06-camper-conversion-v2.jpg" alt="용달 트럭의 적재함을 늘려 생활차 달구지로 개조하는 장면" width="420"> | <img src="assets/scenes/recruit-minji-task.jpg" alt="민지의 일을 도우며 고철 산에서 부품을 절단하는 장면" width="420"> |
-| 용달 트럭의 적재함을 늘리고 침상과 수납장을 달아, 길 위의 집으로 바꾼다. | 사람을 바로 태우지 않는다. 먼저 그 사람이 끝내지 못한 일을 함께 해결한다. |
+| <img src="assets/intro/06-camper-conversion-v3.jpg" alt="파란 용달 트럭 적재함에 둘이 지낼 생활칸을 올리는 장면" width="420"> | <img src="assets/scenes/recruit-minji-task.jpg" alt="민지의 일을 도우며 고철 산에서 부품을 절단하는 장면" width="420"> |
+| 처음에는 둘이 지낼 만큼만 침상과 수납장을 얹어 길 위의 집으로 바꾼다. 동료가 늘면 그때 차대와 생활칸도 함께 늘어난다. | 사람을 바로 태우지 않는다. 먼저 그 사람이 끝내지 못한 일을 함께 해결한다. |
 | **도시 — 폐허에도 장은 선다** | **발견 — 2026년의 흔적** |
 | <img src="assets/scenes/gwangju-market.jpg" alt="폐허 속에서 다시 열린 광주 생존자 시장" width="420"> | <img src="assets/scenes/trace-cortis-relic.jpg" alt="143년 전의 물건을 발견한 생존자와 아이들" width="420"> |
 | 지역마다 다른 시장과 주민, 소문과 부탁이 달구지를 기다린다. | 143년 전의 유행과 물건은 뜻을 잃은 채 보물처럼 다시 발견된다. |

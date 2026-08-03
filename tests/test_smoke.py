@@ -654,7 +654,7 @@ with sync_playwright() as p:
         familyBeats.some(t=>t.text.includes('난방 호스')) &&
         appealBeats.some(t=>t.text.includes('서울 남산 중앙 노드')) &&
         departureBeats.some(t=>t.text.includes('같은 이송을 겪은 사람')) &&
-        departureBeats.some(t=>t.text.includes('서울에 갈 이유도 자기가 골라야'));
+        departureBeats.some(t=>t.text.includes('같은 곳까지 가겠다는 사람'));
       out.introImmediateMotive=keepsakeBeats.some(t=>t.text.includes('지금 쫓겨나는 사람')) &&
         familyBeats.some(t=>t.text.includes('6,412명은 더 이상')) &&
         appealBeats.some(t=>t.text.includes('원격 이의 제기 경로가 없습니다')) &&
@@ -687,9 +687,13 @@ with sync_playwright() as p:
         D.intro.some(p=>p.text.includes('사실과 짐작을 같은 서랍에 넣으면'));
       out.introHome = D.intro.some(p=>p.scene === 'intro-camper-conversion' &&
         p.text.includes('폐냉장고 단열판') &&
-        p.text.includes('연장 레일') &&
-        p.text.includes('사람이 셋이면 셋이 누울 자리를 만든 다음에 태워야 해') &&
-        p.text.includes('좌석과 침대, 부엌'));
+        p.text.includes('정비 레일') &&
+        p.text.includes('남겨 둔 여지는 나중에도 쓸 수 있으니까') &&
+        !p.text.includes('사람이 셋이면') &&
+        !p.text.includes('사람이 늘면')) &&
+        departureBeats.some(t=>t.text.includes('누구를 태우라고 정해 둔 자리가 아니라')) &&
+        D.intro.find(p=>p.scene==='intro-envelope-signal').beats.some(t=>
+          t.text.includes('엄마의 철제 상자와 계기판'));
       out.seats = [G.maxParty()];
       out.vanSizes = [[G.vanStage().bodyL,G.vanStage().bodyH,G.vanStage().cm]];
       ['bench','cabin','bunk','jumpseat'].forEach(id=>{
@@ -816,6 +820,13 @@ with sync_playwright() as p:
       document.querySelector('#ev-wrap').classList.remove('on');
       const actionSnapshot=structuredClone(S);
       const minjiAction=D.events.find(e=>e.id==='rq_minji_task');
+      const minjiArcText=JSON.stringify(['meet_scrapyard','rq_minji_task','rq_minji_follow','rq_minji_join']
+        .map(id=>D.events.find(e=>e.id===id)));
+      out.minjiDialogueNatural=
+        !minjiArcText.includes('이제 대답하러 갈 거야') &&
+        !minjiArcText.includes('이제 출발해도 돼요') &&
+        minjiArcText.includes('소매 끝으로 눈가를 한 번 훔쳤다') &&
+        minjiArcText.includes('네 자리부터 만들자고');
       UI.showEvent(minjiAction);
       const actionKeys=[];
       while(document.querySelector('#ev-sheet .story-next')){
@@ -1101,6 +1112,8 @@ with sync_playwright() as p:
           r4['actionCutCount'] == 16 and r4['actionCutMaps'], str(r4))
     check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
           r4['actionCutRuntime'], str(r4))
+    check('민지 첫 합류 대사가 선언 대신 행동·망설임·선택으로 연결',
+          r4['minjiDialogueNatural'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
     check('그림책 도입 17장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))

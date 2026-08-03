@@ -1,13 +1,14 @@
 # 출발 계기 인트로 컷 생성 기록
 
 2026-08-03 Codex 내장 `imagegen`으로 기존
-`assets/intro/07-envelope-signal.jpg`의 색감·주인공·달구지 작업장 분위기를
+현재 기준 장면인 `assets/intro/07-envelope-signal-v3.jpg`의 색감·주인공·달구지
+작업장 분위기를
 참조해 두 장을 새로 생성했다. 원본은 생성 경로에 보존하고 게임용 이미지는
-`768×432` JPEG로 변환했다.
+원본 화면비를 유지한 `1672×941` JPEG로 변환했다.
 
-## `12-mother-keepsakes.jpg`
+## `12-mother-keepsakes-v2.jpg`
 
-- 게임 경로: `assets/intro/12-mother-keepsakes.jpg`
+- 게임 경로: `assets/intro/12-mother-keepsakes-v2.jpg`
 - 최종 생성 원본: `/Users/sang/.codex/generated_images/019f9300-ff93-7e10-8ff7-2f8eeacfec88/exec-a625ab86-20b7-4e1d-a0e5-76fdcba02073.png`
 - 프롬프트 요약: 2169년 비 오는 부산 항구 작업장, 성인 주인공이 엄마의
   낡은 철제 상자에서 가족사진·출입증·멈춘 시계·연구 수첩과 접힌 회로도를
