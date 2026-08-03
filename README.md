@@ -75,7 +75,8 @@ assets/  intro·scenes·portraits·upgrades·icons·audio 원본 · store 앱 �
 ```
 
 설계 원칙·엔딩 구조·로드맵은 [docs/DESIGN.md](docs/DESIGN.md), 장기 연작의
-불변 설정은 [docs/SERIES-BIBLE.md](docs/SERIES-BIBLE.md)에서 관리한다.
+불변 설정은 [docs/SERIES-BIBLE.md](docs/SERIES-BIBLE.md), 현재 구현 규모·점수·
+다음 우선순위는 [docs/CURRENT-STATE-2026-08-03.md](docs/CURRENT-STATE-2026-08-03.md)에서 관리한다.
 지도는 외부 API 없이 동작하는 그림 여정도다. 실제 좌표를 바탕으로 대한민국 윤곽과
 주요 도시를 배치하되, 강줄기와 산맥 같은 장식은 덜어 현재 경로와 발견 장소가 먼저 보이게 했다.
 
