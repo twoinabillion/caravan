@@ -28,7 +28,7 @@ G.newGame = (mode, name)=>{
     relations:{pairs:{},seenChats:{}},
     director:{intensity:10,phase:'build',relaxEvents:0},
     combat:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
-    _stlField:{daily:{},once:{},log:[]},
+    _stlField:{daily:{},once:{},impact:{},log:[]},
   };
   rng = mulberry32(S.seed);
   S.wxNext = G.rollWx('clear');
@@ -74,10 +74,20 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!S._exploreNodes||Array.isArray(S._exploreNodes)) S._exploreNodes={};
   if(!S._salvagedNodes||Array.isArray(S._salvagedNodes)) S._salvagedNodes={};
   if(!Number.isFinite(S._salvageCount)) S._salvageCount=Object.keys(S._salvagedNodes).length;
-  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},log:[]};
+  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},impact:{},log:[]};
   if(!S._stlField.daily||Array.isArray(S._stlField.daily)) S._stlField.daily={};
   if(!S._stlField.once||Array.isArray(S._stlField.once)) S._stlField.once={};
+  if(!S._stlField.impact||Array.isArray(S._stlField.impact)) S._stlField.impact={};
   if(!Array.isArray(S._stlField.log)) S._stlField.log=[];
+  /* 구버전은 실행 기록만 있었으므로 남아 있는 기록에서 최초 방문 흔적을 복원한다. */
+  for(const entry of S._stlField.log){
+    if(!entry||!entry.stl||!entry.id) continue;
+    const key=`${entry.stl}:${entry.id}`;
+    if(!S._stlField.impact[key]) S._stlField.impact[key]={day:entry.day||1,min:entry.min||0};
+  }
+  for(const [key,done] of Object.entries(S._stlField.once)){
+    if(done&&!S._stlField.impact[key]) S._stlField.impact[key]={day:1,min:0,legacy:true};
+  }
   /* 즉시 영입이던 구버전에서 만남만 소진하고 합류하지 않은 경우,
      새 '합류 전 과제'를 다시 시작할 수 있도록 첫 만남을 복구한다. */
   const oldRecruitStarts={minji:'meet_scrapyard',parkss:'meet_bus',leo:'meet_hitchhiker',
@@ -1201,9 +1211,10 @@ G.reqCostText = (req)=>{
 /* 정착지 마이크로 탐색. 하루 제한과 일회성 보상을 엔진에서 강제해
    화면을 다시 열거나 세이브를 불러와도 무한 파밍이 되지 않게 한다. */
 G.stlFieldState = ()=>{
-  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},log:[]};
+  if(!S._stlField||Array.isArray(S._stlField)) S._stlField={daily:{},once:{},impact:{},log:[]};
   S._stlField.daily=S._stlField.daily||{};
   S._stlField.once=S._stlField.once||{};
+  S._stlField.impact=S._stlField.impact||{};
   S._stlField.log=Array.isArray(S._stlField.log)?S._stlField.log:[];
   return S._stlField;
 };
@@ -1218,6 +1229,7 @@ G.stlFieldStatus = (stlId,action)=>{
     ?field.actions.filter(a=>state.daily[`${S.day}:${stlId}:${a.id}`]).length:0;
   if(!action) return {ok:false,reason:'할 일을 찾지 못했다',doneToday:today};
   const dayKey=`${S.day}:${stlId}:${action.id}`, onceKey=`${stlId}:${action.id}`;
+  const impact=state.impact[onceKey]||null;
   const done=!!((action.daily&&state.daily[dayKey])||(action.once&&state.once[onceKey]));
   const hiddenLocked=!!(action.hidden&&action.needDone&&today<action.needDone);
   const req=G.reqOk(action.req);
@@ -1225,13 +1237,28 @@ G.stlFieldStatus = (stlId,action)=>{
   if(done) reason=action.once?'이미 마친 일':'오늘은 이미 들렀다';
   else if(hiddenLocked) reason='아직 보이지 않는다';
   else if(!req.ok) reason=req.t;
-  return {ok:!done&&!hiddenLocked&&req.ok,done,hiddenLocked,reason,doneToday:today,dayKey,onceKey};
+  return {ok:!done&&!hiddenLocked&&req.ok,done,changed:!!impact,changedOn:impact,
+    hiddenLocked,reason,doneToday:today,dayKey,onceKey};
+};
+/* 한 번이라도 직접 손을 보탠 장소는 날짜가 바뀌어도 기억한다. 이 값은
+   정착지 풍경, 주민 반응, 품앗이 가격에 공통으로 쓰이는 단일 진실이다. */
+G.stlImpact = stlId=>{
+  const stl=D.stls&&D.stls[stlId], field=stl&&stl.field, state=G.stlFieldState();
+  const actions=field&&field.actions||[];
+  const changed=actions.filter(action=>state.impact[`${stlId}:${action.id}`]);
+  const total=actions.length, count=changed.length;
+  return {
+    count,total,stage:count===0?0:(count>=total?3:(count>=2?2:1)),
+    changed,last:changed.length?changed[changed.length-1]:null,
+    discount:count>=2?.9:1
+  };
 };
 G.doStlFieldAction = (stlId,actionId)=>{
   if(S.driving||!S.at||D.nodes[S.at].stl!==stlId) return {ok:false,reason:'이 장소에 멈춰 있지 않다'};
   const action=G.stlFieldAction(stlId,actionId), before=G.stlFieldStatus(stlId,action);
   if(!before.ok) return {ok:false,reason:before.reason};
   const field=D.stls[stlId].field, state=G.stlFieldState();
+  const impactBefore=G.stlImpact(stlId), firstImpact=!state.impact[before.onceKey];
   const wasHiddenOpen=field.actions.some(a=>a.hidden&&!G.stlFieldStatus(stlId,a).hiddenLocked);
   const fx={...(action.fx||{}),time:action.time||0};
   if(action.req){
@@ -1248,14 +1275,21 @@ G.doStlFieldAction = (stlId,actionId)=>{
   /* 보상을 적용하기 전에 소비 키를 남겨 중복 탭도 한 번만 처리한다. */
   state.daily[before.dayKey]=true;
   if(action.once) state.once[before.onceKey]=true;
+  if(firstImpact) state.impact[before.onceKey]={day:S.day,min:S.min};
   state.log.push({stl:stlId,id:action.id,day:S.day,min:S.min});
   if(state.log.length>40) state.log=state.log.slice(-40);
   const chips=G.applyFx(fx);
+  if(firstImpact){
+    const localNpc=(D.stls[stlId].npcs||[])[0];
+    if(localNpc&&S.npcs[localNpc]) S.npcs[localNpc].att=clamp((S.npcs[localNpc].att||0)+4,-30,30);
+    chips.push({t:'이곳에 우리 손길이 남았다',c:'item'});
+  }
   const comp=S.party&&S.party.find(id=>D.comps[id]);
   if(comp){ G.bond(comp,1); chips.push({t:`✦ ${D.comps[comp].name} 유대 +1`,c:'item'}); }
   const hiddenOpen=!wasHiddenOpen&&field.actions.some(a=>a.hidden&&!G.stlFieldStatus(stlId,a).hiddenLocked);
   G.save();
-  return {ok:true,action,chips,compId:comp||null,hiddenOpen};
+  return {ok:true,action,chips,compId:comp||null,hiddenOpen,firstImpact,
+    impactBefore,impactAfter:G.stlImpact(stlId)};
 };
 G.rollOut = (outs)=>{
   const total = outs.reduce((s,o)=>s+o.p,0); let r=rng()*total;

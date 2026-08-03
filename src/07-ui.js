@@ -1737,6 +1737,23 @@ const UI = (()=>{
     return `<div class="stl-crowd" aria-hidden="true">${ids.map((id,i)=>
       settlementPortrait(id,`stl-crowd-face crowd-${i+1}`,'')).filter(Boolean).join('')}</div>`;
   }
+  function settlementImpactCopy(stlId){
+    const stl=D.stls[stlId], impact=G.stlImpact(stlId), last=impact.last;
+    if(!impact.count) return {impact,title:'아직 낯선 곳',line:'안쪽 일을 거들면 풍경과 사람들의 반응이 달라진다.'};
+    const complete=impact.stage===3;
+    return {
+      impact,
+      title:complete?'우리 손을 기억하는 곳':`우리 손길 ${impact.count}/${impact.total}`,
+      line:last&&last.change?last.change.after:`${stl.name}에 우리가 거든 일이 남아 있다.`
+    };
+  }
+  function settlementImpactLayerHtml(copy){
+    const visual=copy.impact.last&&copy.impact.last.change&&copy.impact.last.change.visual||'work';
+    return `<div class="stl-impact-layer stage-${copy.impact.stage} visual-${esc(visual)}" aria-hidden="true">
+      <i class="stl-impact-mark mark-1"></i><i class="stl-impact-mark mark-2"></i><i class="stl-impact-mark mark-3"></i>
+      <i class="stl-impact-motion motion-1"></i><i class="stl-impact-motion motion-2"></i>
+    </div>`;
+  }
   function settlementSectionPartyHtml(focus){
     const comp=settlementCompanion(), copy=settlementWalkCopy(focus);
     return `<div class="stl-section-party">
@@ -1791,6 +1808,7 @@ const UI = (()=>{
   function renderSettlementHub(){
     const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl);
     const spots=settlementSpots(curStl), night=G.isNight(), comp=settlementCompanion();
+    const impactCopy=settlementImpactCopy(curStl), impact=impactCopy.impact;
     AMBI.settlement(night?'people':'hub');
     if(!spots[stlFocus]) stlFocus='market';
     if(night&&stlFocus!=='people') stlFocus='people';
@@ -1798,9 +1816,11 @@ const UI = (()=>{
     const walkCopy=settlementWalkCopy(stlFocus);
     settlementHeader('');
     $('#ovl-stl').classList.add('hub-mode');
-    body.innerHTML=`<div class="stl-hub" data-focus="${stlFocus}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
+    body.innerHTML=`<div class="stl-hub" data-focus="${stlFocus}" data-impact-stage="${impact.stage}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
       <div class="stl-hub-art" role="img" aria-label="${esc(stl.name)} 풍경"></div>
-      <div class="stl-hub-place"><b>${esc(stl.name)}</b><small>${night?'장은 잠들었지만 모닥불은 아직 켜져 있다.':esc(stl.desc)}</small></div>
+      ${settlementImpactLayerHtml(impactCopy)}
+      <div class="stl-hub-place"><b>${esc(stl.name)}</b><small>${night?'장은 잠들었지만 모닥불은 아직 켜져 있다.':esc(stl.desc)}</small>
+        <span class="stl-place-impact ${impact.count?'changed':''}"><i>${impact.count?'현장 변화':'첫 방문'}</i>${esc(impactCopy.title)} · ${esc(impactCopy.line)}</span></div>
       ${settlementCrowdHtml(stl)}
       <div class="stl-hotspots" aria-label="${esc(stl.name)}에서 갈 곳">
         ${Object.entries(spots).map(([id,spot])=>{
@@ -1808,7 +1828,7 @@ const UI = (()=>{
           return `<button class="stl-hotspot ${id} ${stlFocus===id?'selected':''}" data-stlfocus="${id}"
             aria-pressed="${stlFocus===id}" ${closed?'disabled':''}>
             <span class="stl-hotspot-icon">${ICO(spot.icon)}</span>
-            <span><b>${spot.label}</b><small>${closed?'아침 06:00에 연다':spot.sub}</small></span>
+            <span><b>${spot.label}</b><small>${closed?'아침 06:00에 연다':id==='alley'&&impact.count?`현장 변화 ${impact.count}/${impact.total}`:spot.sub}</small></span>
           </button>`;
         }).join('')}
       </div>
@@ -1871,8 +1891,9 @@ const UI = (()=>{
     if(!actions.some(a=>a.id===stlFieldFocus)) stlFieldFocus=actions[0]&&actions[0].id||'';
     const focusIndex=Math.max(0,actions.findIndex(a=>a.id===stlFieldFocus));
     const focusAction=actions[focusIndex], done=actions.filter(a=>G.stlFieldStatus(curStl,a).done).length;
-    const comp=settlementCompanion();
-    let h=`<div class="stl-field-intro"><span>${ICO('quest')}</span><span><b>${esc(field.title)}</b><small>${esc(field.desc)}</small></span></div>`;
+    const comp=settlementCompanion(), impactCopy=settlementImpactCopy(curStl), impact=impactCopy.impact;
+    let h=`<div class="stl-field-intro ${impact.count?'changed':''}"><span>${ICO('quest')}</span><span><b>${esc(field.title)}</b><small>${esc(field.desc)}</small>
+      <em>${impact.count?`현장 변화 ${impact.count}/${impact.total} · ${esc(impactCopy.line)}`:'아직 우리가 바꾼 것은 없다'}</em></span></div>`;
     if(actions.length){
       const pos=actions.length===1?50:Math.round(focusIndex/(actions.length-1)*100);
       h+=`<section class="stl-field-map" style="--field-pos:${pos}%" aria-label="${esc(field.title)} 현장 동선">
@@ -1888,7 +1909,7 @@ const UI = (()=>{
               <i>${status.done?'✓':index+1}</i><span>${esc(action.label)}</span></button>`;
           }).join('')}
         </div>
-        <div class="stl-field-focus-copy" data-field-focus-copy><b>${esc(focusAction.label)}</b><span>${esc(focusAction.desc)}</span></div>
+        <div class="stl-field-focus-copy" data-field-focus-copy><b>${esc(focusAction.label)}</b><span>${esc(G.stlFieldStatus(curStl,focusAction).changed&&focusAction.change?focusAction.change.after:focusAction.desc)}</span></div>
       </section>`;
     }
     if(result){
@@ -1898,11 +1919,17 @@ const UI = (()=>{
         <span><small>${esc(person.name)} · ${esc(result.action.label)}</small><p>${esc(result.action.result)}</p>
         ${result.chips&&result.chips.length?`<span class="stl-field-chips">${result.chips.map(c=>`<i class="${c.c||''}">${esc(c.t)}</i>`).join('')}</span>`:''}</span>
       </div>`;
+      if(result.firstImpact&&result.action.change){
+        h+=`<div class="stl-change-reveal" aria-live="polite">
+          <span><small>작업 전</small><b>${esc(result.action.desc)}</b></span><i aria-hidden="true">→</i>
+          <span><small>지금</small><b>${esc(result.action.change.after)}</b></span>
+        </div>`;
+      }
     }
     h+=`<div class="stl-field-list">${actions.map(action=>{
       const status=G.stlFieldStatus(curStl,action), person=speakerInfo(action.npc);
       const cost=G.reqCostText(action.req), cadence=action.once?'여행 중 1회':'하루 1회';
-      return `<button class="stl-field-action ${action.id===stlFieldFocus?'focused':''}" data-stlfield="${action.id}" data-fieldcard="${action.id}" ${status.ok?'':'disabled'}>
+      return `<button class="stl-field-action ${action.id===stlFieldFocus?'focused':''} ${status.changed?'changed':''}" data-stlfield="${action.id}" data-fieldcard="${action.id}" ${status.ok?'':'disabled'}>
         ${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}
         <span><b>${esc(action.label)}</b><small>${esc(action.desc)}</small>
           <span class="stl-field-meta"><i>${action.time}분</i><i>${cadence}</i>${cost?`<i>${esc(cost)}</i>`:''}</span></span>
@@ -1926,7 +1953,8 @@ const UI = (()=>{
         node.setAttribute('aria-pressed',String(selected));
       });
       const copy=map.querySelector('[data-field-focus-copy]');
-      if(copy) copy.innerHTML=`<b>${esc(action.label)}</b><span>${esc(action.desc)}</span>`;
+      const status=G.stlFieldStatus(curStl,action);
+      if(copy) copy.innerHTML=`<b>${esc(action.label)}</b><span>${esc(status.changed&&action.change?action.change.after:action.desc)}</span>`;
     }
     const cards=[...document.querySelectorAll('#stl-body [data-fieldcard]')];
     cards.forEach(card=>card.classList.toggle('focused',card.dataset.fieldcard===actionId));
@@ -1944,8 +1972,9 @@ const UI = (()=>{
     $('#ovl-stl').classList.remove('hub-mode');
     const body=$('#stl-body'), scene=settlementScene(curStl), spots=settlementSpots(curStl);
     settlementHeader(spots[stlMode]?spots[stlMode].label:'');
-    const walkCopy=settlementWalkCopy(stlMode);
-    let h=`<div class="stl-section-hero" ${scene?`style="background-image:url('${scene}')"`:''}>
+    const walkCopy=settlementWalkCopy(stlMode), impactCopy=settlementImpactCopy(curStl);
+    let h=`<div class="stl-section-hero" data-impact-stage="${impactCopy.impact.stage}" ${scene?`style="background-image:url('${scene}')"`:''}>
+      ${settlementImpactLayerHtml(impactCopy)}
       ${settlementSectionPartyHtml(stlMode)}
       <span>${ICO((spots[stlMode]||spots.market).icon)}${(spots[stlMode]||spots.market).label}</span>
       <small>${esc(walkCopy.local)}</small>
@@ -1997,7 +2026,8 @@ const UI = (()=>{
       body.querySelectorAll('[data-stlfield]').forEach(b=>b.onclick=()=>{
         const result=G.doStlFieldAction(curStl,b.dataset.stlfield);
         if(!result.ok){ toast(result.reason||'지금은 할 수 없다'); return; }
-        stlFieldResult={stl:curStl,action:result.action,chips:result.chips};
+        stlFieldResult={stl:curStl,action:result.action,chips:result.chips,
+          firstImpact:result.firstImpact,impactBefore:result.impactBefore,impactAfter:result.impactAfter};
         if(result.hiddenOpen) toast(`👣 ${D.stls[curStl].field.revealToast||'도움을 마치자 전에는 보이지 않던 곳이 열렸다'}`,'discover');
         showStl(curStl,'alley');
         requestAnimationFrame(()=>body.querySelector('[data-field-result]')?.scrollIntoView({block:'nearest'}));
@@ -2019,8 +2049,11 @@ const UI = (()=>{
   function renderTrade(){
     const stl=D.stls[curStl], tr=$('#trade');
     if(!tr) return;
-    const disc=G.hasPerk('leo_vip')?0.8:G.hasComp('leo')?0.9:1;
-    let h='';
+    const crewDisc=G.hasPerk('leo_vip')?0.8:G.hasComp('leo')?0.9:1;
+    const localImpact=G.stlImpact(curStl), localDisc=localImpact.discount;
+    const disc=Math.max(.65,crewDisc*localDisc);
+    const barterOnly=stl.trade.every(row=>row[1].startsWith('barter'));
+    let h=localDisc<1?`<div class="trade-local-trust"><span>품앗이 ${barterOnly?'교환':'가격'}</span><b>현장 ${localImpact.count}곳을 거든 사람 · ${barterOnly?'교환품을 한 단계 후하게 쳐준다':'10% 덜 받는다'}</b></div>`:'';
     const waterRow=stl.trade.find(row=>row[1]==='water');
     const foodRow=stl.trade.find(row=>row[1]==='food');
     if(waterRow&&foodRow){
@@ -2032,12 +2065,15 @@ const UI = (()=>{
     let lastGroup='';
     stl.trade.forEach((row,i)=>{
       const [label,key,qty,price0]=row;
+      const trustedLabel=localDisc<1&&key==='barter_wf'?'물 1통 ⇄ 식량 1':
+        localDisc<1&&key==='barter_fp'?'식량 1 ⇄ 부품 1':
+        localDisc<1&&key==='barter_mf'?'의약품 1 ⇄ 식량 4':label;
       const group=key.startsWith('barter')?'물물교환':key.startsWith('item')?'도구와 부품':'주행과 보급';
       if(group!==lastGroup){ h+=`<div class="trade-group-label">${group}</div>`; lastGroup=group; }
       const tico = key==='fuel'?ICO('fuel'): key==='water'?ICO('water'): key==='food'?ICO('food'):
         key.startsWith('item')?ICO(ITEM_ICO[key.slice(4)]||''):'';
       if(key.startsWith('barter')){
-        h+=`<div class="trade-row"><span class="tn">${label}</span><button class="tbtn" data-t="${i}">교환</button></div>`;
+        h+=`<div class="trade-row"><span class="tn">${trustedLabel}</span><button class="tbtn" data-t="${i}">교환</button></div>`;
       } else {
         const price=Math.max(1,Math.round(price0*disc));
         h+=`<div class="trade-row"><span class="tn">${tico}${label}</span><span class="tp">${ICO('scrap')}고철 ${price}</span>
@@ -2062,10 +2098,12 @@ const UI = (()=>{
   function buy(i){
     const stl=D.stls[curStl];
     const [label,key,qty,price0]=stl.trade[i];
-    const disc=G.hasPerk('leo_vip')?0.8:G.hasComp('leo')?0.9:1;
-    if(key==='barter_wf'){ if(S.water>=2){S.water-=2;S.food+=1;} else return toast('물이 부족하다'); }
-    else if(key==='barter_fp'){ if(S.food>=2){S.food-=2;S.items['부품']=(S.items['부품']||0)+1;} else return toast('식량이 부족하다'); }
-    else if(key==='barter_mf'){ if((S.items['의약품']||0)>=1){S.items['의약품']--;S.food+=3;} else return toast('의약품이 없다'); }
+    const crewDisc=G.hasPerk('leo_vip')?0.8:G.hasComp('leo')?0.9:1;
+    const localTrusted=G.stlImpact(curStl).discount<1;
+    const disc=Math.max(.65,crewDisc*G.stlImpact(curStl).discount);
+    if(key==='barter_wf'){ const cost=localTrusted?1:2; if(S.water>=cost){S.water-=cost;S.food+=1;} else return toast('물이 부족하다'); }
+    else if(key==='barter_fp'){ const cost=localTrusted?1:2; if(S.food>=cost){S.food-=cost;S.items['부품']=(S.items['부품']||0)+1;} else return toast('식량이 부족하다'); }
+    else if(key==='barter_mf'){ if((S.items['의약품']||0)>=1){S.items['의약품']--;S.food+=localTrusted?4:3;} else return toast('의약품이 없다'); }
     else{
       const price=Math.max(1,Math.round(price0*disc));
       if(S.scrap<price) return;

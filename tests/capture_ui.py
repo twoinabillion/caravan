@@ -130,7 +130,7 @@ with sync_playwright() as playwright:
 
     page.evaluate("""() => {
       S.at='miryang'; S.driving=null; S.party=['minji'];
-      S._stlField={daily:{},once:{},log:[]};
+      S._stlField={daily:{},once:{},impact:{},log:[]};
       UI.showStl('miryang','hub');
     }""")
     page.wait_for_timeout(180)
@@ -142,6 +142,9 @@ with sync_playwright() as playwright:
     page.click('[data-stlfield="pump"]')
     page.wait_for_timeout(160)
     page.screenshot(path=str(SHOT / "10c-miryang-hidden-trace.png"))
+    page.evaluate("UI.showStl('miryang','hub')")
+    page.wait_for_timeout(180)
+    page.screenshot(path=str(SHOT / "10c2-miryang-changed-hub.png"))
     page.evaluate("document.querySelector('#ovl-stl').classList.remove('on')")
 
     page.evaluate("""() => {

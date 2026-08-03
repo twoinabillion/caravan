@@ -222,6 +222,8 @@ for (const [id, stl] of Object.entries(D.stls || {})) {
     need(Boolean(action.daily) !== Boolean(action.once), awhere, 'daily와 once 중 하나만 필요');
     need(Number.isFinite(action.time) && action.time >= 15, awhere, '소요 시간은 15분 이상이어야 함');
     need(speakerIds.has(action.npc), awhere, `없는 현장 인물 ${action.npc}`);
+    need(action.change && ['steam','light','record','order','water','route','air','shelter','watch','gate'].includes(action.change.visual), awhere, '현장 변화 시각 유형 없음·오류');
+    need(action.change && typeof action.change.after === 'string' && action.change.after.trim(), awhere, '행동 뒤 남는 변화 문구 없음');
     validateReq(action.req, awhere); validateFx(action.fx, awhere);
     if (action.hidden) need(Number.isFinite(action.needDone) && action.needDone > 0, awhere, '숨은 행동에 needDone이 없음');
   }

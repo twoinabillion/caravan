@@ -906,6 +906,34 @@ with sync_playwright() as p:
       out.settlementSceneLarge=document.querySelector('.stl-section-hero').getBoundingClientRect().height>=190 &&
         document.querySelectorAll('.stl-section-face').length===2 &&
         document.querySelector('.stl-section-party').textContent.includes('민지와');
+      const settlementSnapshot=structuredClone(S);
+      S.at='miryang'; S.driving=null; S.party=['minji']; S.scrap=100;
+      S._stlField={daily:{},once:{},impact:{},log:[]};
+      const firstChange=G.doStlFieldAction('miryang','parts');
+      const secondChange=G.doStlFieldAction('miryang','pump');
+      const impact=G.stlImpact('miryang');
+      UI.showStl('miryang','hub');
+      out.settlementImpactState=firstChange.firstImpact&&secondChange.firstImpact&&
+        impact.count===2&&impact.stage===2&&impact.discount===.9&&
+        S.npcs.sundeok.att>=8;
+      out.settlementImpactVisual=document.querySelector('.stl-hub').dataset.impactStage==='2'&&
+        document.querySelectorAll('.stl-impact-layer.stage-2').length===1&&
+        document.querySelector('.stl-place-impact').textContent.includes('우리 손길 2/4');
+      UI.showStl('miryang','alley');
+      out.settlementImpactBeforeAfter=document.querySelectorAll('.stl-field-action.changed').length===2&&
+        document.querySelector('[data-fieldcard="pump"]')?.textContent.includes('오늘은 이미 들렀다')&&
+        document.querySelector('.stl-field-intro').textContent.includes('현장 변화 2/4');
+      UI.showStl('miryang','market');
+      out.settlementImpactTrade=document.querySelector('.trade-local-trust')?.textContent.includes('10% 덜 받는다');
+      S.at='muju'; S.water=5; S.food=0;
+      S._stlField.impact['muju:candle_round']={day:S.day,min:S.min};
+      S._stlField.impact['muju:vent_fan']={day:S.day,min:S.min};
+      UI.showStl('muju','market');
+      const trustedBarter=document.querySelector('[data-t="0"]');
+      trustedBarter?.click();
+      out.settlementBarterTrust=document.querySelector('.trade-local-trust')?.textContent.includes('한 단계 후하게')&&
+        document.querySelector('#trade')?.textContent.includes('물 1통 ⇄ 식량 1')&&S.water===4&&S.food===1;
+      S=settlementSnapshot; rng=mulberry32(S.seed+(S.stats.events*7919));
       S.party=walkParty0;
       UI.showStl('daegu');
       out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===4 &&
@@ -1061,6 +1089,11 @@ with sync_playwright() as p:
     check('정착지에서 현재 동료와 장소 사이를 이동', r4['settlementWalkParty'] and r4['settlementWalkMove'], str(r4))
     check('현장 동선·동행 마커·숨은 장소 비공개', r4['settlementFieldMap'] and r4['settlementFieldMove'], str(r4))
     check('정착지 내부 장면 확대·동행 상태 유지', r4['settlementSceneLarge'], str(r4))
+    check('정착지 행동이 날짜를 넘어 영구 변화로 저장', r4['settlementImpactState'], str(r4))
+    check('정착지 전후 풍경·현장 변화가 모바일 화면에 표시',
+          r4['settlementImpactVisual'] and r4['settlementImpactBeforeAfter'], str(r4))
+    check('두 현장을 거들면 주민 신뢰·품앗이 가격·교환 반영',
+          r4['settlementImpactTrade'] and r4['settlementBarterTrust'], str(r4))
     check('장소별 기능 분리', r4['sectionIsolation'], str(r4))
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
     check('업그레이드 전후 차체 작업 장면·3단계 직접 조작',
