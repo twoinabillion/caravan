@@ -888,6 +888,16 @@ with sync_playwright() as p:
       UI.showStl('miryang');
       out.settlementWalkParty=document.querySelectorAll('.stl-walker-face').length===2 &&
         document.querySelector('.stl-focus-copy').textContent.includes('민지와');
+      UI.showStl('miryang','alley');
+      const fieldSpots=[...document.querySelectorAll('[data-fieldspot]')];
+      out.settlementFieldMap=fieldSpots.length===3 &&
+        document.querySelectorAll('.stl-field-map-face').length===2 &&
+        document.querySelector('.stl-field-map').textContent.includes('현장 동선') &&
+        !document.querySelector('.stl-field-map').textContent.includes('천막 뒤 번호표');
+      fieldSpots[1].click();
+      out.settlementFieldMove=fieldSpots[1].getAttribute('aria-pressed')==='true' &&
+        document.querySelector('[data-fieldcard="'+fieldSpots[1].dataset.fieldspot+'"]').classList.contains('focused');
+      document.querySelector('#stl-hub-back').click();
       document.querySelector('[data-stlfocus="garage"]').click();
       out.settlementWalkMove=document.querySelector('.stl-hub').dataset.focus==='garage' &&
         document.querySelector('[data-stlfocus="garage"]').getAttribute('aria-pressed')==='true' &&
@@ -930,6 +940,19 @@ with sync_playwright() as p:
       document.querySelector('#dk-status').click();
       out.statusModalAria=document.querySelector('#ovl-status').getAttribute('aria-hidden')==='false' &&
         document.querySelector('#ovl-status').getAttribute('role')==='dialog';
+      const root=document.documentElement;
+      const textStart=root.classList.contains('ui-large-text');
+      document.querySelector('[data-ui-pref="text"]').click();
+      const textChanged=root.classList.contains('ui-large-text')!==textStart &&
+        document.querySelector('[data-ui-pref="text"]').getAttribute('aria-pressed')===String(!textStart);
+      document.querySelector('[data-ui-pref="text"]').click();
+      const motionStart=root.classList.contains('ui-reduce-motion');
+      document.querySelector('[data-ui-pref="motion"]').click();
+      const motionChanged=root.classList.contains('ui-reduce-motion')!==motionStart &&
+        document.querySelector('[data-ui-pref="motion"]').getAttribute('aria-pressed')===String(!motionStart);
+      document.querySelector('[data-ui-pref="motion"]').click();
+      out.uiPrefs=textChanged&&motionChanged&&root.classList.contains('ui-large-text')===textStart &&
+        root.classList.contains('ui-reduce-motion')===motionStart;
       document.querySelector('#st-tabs [data-st="journey"]').click();
       out.statusTabs=document.querySelectorAll('#st-tabs button').length===3 &&
         document.querySelector('[data-stpane="journey"]').classList.contains('on') &&
@@ -1036,6 +1059,7 @@ with sync_playwright() as p:
     check('정착지 4개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
     check('모든 정착지에 소모·발견·숨은 현장 행동', r4['settlementFields'], str(r4))
     check('정착지에서 현재 동료와 장소 사이를 이동', r4['settlementWalkParty'] and r4['settlementWalkMove'], str(r4))
+    check('현장 동선·동행 마커·숨은 장소 비공개', r4['settlementFieldMap'] and r4['settlementFieldMove'], str(r4))
     check('정착지 내부 장면 확대·동행 상태 유지', r4['settlementSceneLarge'], str(r4))
     check('장소별 기능 분리', r4['sectionIsolation'], str(r4))
     check('정비소 분류·실제 부품 이미지·카드 표시', r4['garageGroups'] == 7 and r4['garageArt'] and r4['garageCards'] > 0, str(r4))
@@ -1043,6 +1067,7 @@ with sync_playwright() as p:
           r4['upgradeCeremony'] and r4['upgradeInteractive'], str(r4))
     check('업그레이드 분야별 작업·동료 전문가 참여', r4['upgradeAdviser'], str(r4))
     check('상태창 탭 전환·ARIA 선택 상태', r4['statusTabs'] and r4['statusModalAria'], str(r4))
+    check('기기별 큰 글자·움직임 줄임 설정', r4['uiPrefs'], str(r4))
     check('상태창에서 확인된 사실·남은 질문 분리', r4['knowledgeUi'], str(r4))
     check('상태창에서 지금 떠나는 이유·동료 합류 원칙 상시 확인', r4['departureBrief'], str(r4))
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
@@ -1074,16 +1099,19 @@ with sync_playwright() as p:
       UI.showEvent(D.events.find(e=>e.id==='patrol_walker')); UI.finishStory();
       out.hud=!!document.querySelector('.combat-hud') &&
         document.querySelector('.combat-hud').textContent.includes('정찰') &&
+        document.querySelector('.combat-hud').textContent.includes('폐차 행렬') &&
+        document.querySelector('.combat-hud').textContent.includes('실패하면') &&
         document.querySelector('.event-choice-dock').textContent.includes('엄폐');
       document.querySelector('#ev-sheet [data-i="0"]').click();
       out.choiceFeedback=!!document.querySelector('.combat-last.result') &&
         document.querySelector('.combat-last.result').textContent.includes('엄폐') &&
-        S.combat&&S.combat.history&&S.combat.history[0].tactic==='엄폐';
+        S.combat&&S.combat.history&&S.combat.history[0].tactic==='엄폐' &&
+        S.combat.terrain.includes('폐차 행렬')&&S.combat.pressure===0;
       UI.finishStory();
       out.chainLabel=document.querySelector('#ev-sheet [data-r="ok"]')?.textContent.includes('다음 단계');
       document.querySelector('#ev-wrap').classList.remove('on');
       S.injuries={}; S.combat=null;
-      G.applyFx({combatStart:{id:'test',threat:'test'},combatEdge:2});
+      G.applyFx({combatStart:{id:'test',threat:'test',terrain:'테스트 지형',objective:'테스트 목표',stakes:'테스트 실패',pressure:0},combatEdge:2});
       out.edge=S.combat&&S.combat.edge===2&&G.combatGrade({combatRoll:.5})==='우세';
       G.applyFx({injury:{who:'driver',label:'테스트 타박',days:2}});
       out.injury=G.isInjured('driver')&&S.injuries.driver.days===2;
@@ -1094,11 +1122,24 @@ with sync_playwright() as p:
       const same={combatRoll:.55,tactic:'해킹'}, switched={combatRoll:.55,tactic:'기동'};
       out.tacticAdapt=G.combatOdds(same)<G.combatOdds(switched) &&
         G.combatTacticNote(same)==='같은 수를 읽힘' && G.combatTacticNote(switched)==='전술 전환';
+      S.combat.history=[]; S.combat.pressure=0;
+      const openOdds=G.combatOdds({combatRoll:.5,tactic:'기동'});
+      S.combat.pressure=2;
+      const rushedOdds=G.combatOdds({combatRoll:.5,tactic:'기동'});
+      const terrainOdds=G.combatOdds({combatRoll:.5,tactic:'기동',terrainFit:2});
+      out.combatContext=rushedOdds<openOdds&&terrainOdds>rushedOdds &&
+        G.combatContextNote({terrainFit:2,noise:2}).includes('지형 정답') &&
+        G.combatContextNote({terrainFit:2,noise:2}).includes('경보 노출 큼');
+      S.combat.history=[
+        {phase:1,step:'정찰',tactic:'엄폐',label:'차체 뒤에서 각도를 읽었다'},
+        {phase:2,step:'대응',tactic:'해킹',label:'센서 연결을 끊었다'}
+      ];
       S.party=['minji']; const moodBefore=S.comps.minji.mood;
       G.applyFx({healInjury:'latest',combatEnd:1});
       out.recovered=!G.isInjured('driver')&&S.combat===null;
       out.combatJournal=S.notes.at(-1)?.title==='교전 기록: test' &&
-        S.notes.at(-1)?.body.includes('정찰 — 엄폐') && S.comps.minji.mood===Math.min(100,moodBefore+1);
+        S.notes.at(-1)?.body.includes('정찰 — 엄폐') && S.notes.at(-1)?.body.includes('지형: 테스트 지형') &&
+        S.comps.minji.mood===Math.min(100,moodBefore+1);
       const oldFire=S.items['화염병']||0;
       S.items['화염병']=1; out.twoItemBlocked=!G.reqOk({item:'화염병',itemQty:2}).ok;
       S.items['화염병']=2; out.twoItemReady=G.reqOk({item:'화염병',itemQty:2}).ok;
@@ -1112,6 +1153,7 @@ with sync_playwright() as p:
           rcombat['hud'] and rcombat['choiceFeedback'] and rcombat['chainLabel'], str(rcombat))
     check('전세·부상·회복 상태 반영', rcombat['edge'] and rcombat['injury'] and rcombat['recovered'], str(rcombat))
     check('같은 전술 반복 불리·전술 전환 유리', rcombat['tacticAdapt'], str(rcombat))
+    check('지형 활용·시간 압박이 실제 성공률에 반영', rcombat['combatContext'], str(rcombat))
     check('교전 전술을 일지에 남기고 조합 보상', rcombat['combatJournal'], str(rcombat))
     check('전투 소모품은 실제 필요 수량까지 검사', rcombat['twoItemBlocked'] and rcombat['twoItemReady'], str(rcombat))
     check('Web Audio 전투 효과음 합성기', rcombat['sound'], str(rcombat))

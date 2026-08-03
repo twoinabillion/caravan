@@ -8,6 +8,18 @@ const UI = (()=>{
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='';
   let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
   let arrivalTimer=0;
+  const savedMotion=localStorage.getItem('caravan_ui_motion');
+  const uiPrefs={
+    largeText:localStorage.getItem('caravan_ui_text')==='large',
+    reduceMotion:savedMotion?savedMotion==='reduced':Boolean(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  };
+  function applyUiPrefs(){
+    const root=document.documentElement;
+    root.classList.toggle('ui-large-text',uiPrefs.largeText);
+    root.classList.toggle('ui-reduce-motion',uiPrefs.reduceMotion);
+    root.dataset.uiText=uiPrefs.largeText?'large':'normal';
+    root.dataset.uiMotion=uiPrefs.reduceMotion?'reduced':'full';
+  }
   const tossRuntime=Boolean(window.ReactNativeWebView||/\.tossmini\.com$/i.test(location.hostname)||/Toss/i.test(navigator.userAgent));
   const localOffroad=location.protocol==='file:'&&!tossRuntime;
   const previewEpisodes=[
@@ -73,6 +85,7 @@ const UI = (()=>{
 
   /* ── boot ── */
   function boot(){
+    applyUiPrefs();
     SCENE.init($('#cv'));
     SCENE.initTitle($('#titlecv'));
     MAPR.init($('#mapcv'));
@@ -94,7 +107,7 @@ const UI = (()=>{
   }
 
   /* ── main loop ── */
-  let last=0, hudCd=0, bgmCd=0;
+  let last=0, lastVisual=0, hudCd=0, bgmCd=0;
   function bgmKey(){
     if(screen==='title'||screen==='mode'||screen==='intro') return 'title';
     if(screen==='end') return 'story';
@@ -107,11 +120,13 @@ const UI = (()=>{
   }
   function loop(ts){
     const dt=Math.min(0.05,(ts-last)/1000||0.016); last=ts;
+    const drawFrame=!uiPrefs.reduceMotion||ts-lastVisual>=80;
+    if(drawFrame) lastVisual=ts;
     bgmCd-=dt; if(bgmCd<=0){ bgmCd=0.4; BGM.tick(bgmKey()); }
-    if(screen==='title') SCENE.drawTitle(dt);
+    if(screen==='title'&&drawFrame) SCENE.drawTitle(dt);
     else if(screen==='game'||screen==='end'){
       if(screen==='game'&&!S?.ended) G.tick(dt);
-      if(screen==='game'){
+      if(screen==='game'&&drawFrame){
         SCENE.draw(dt);
         MAPR.drawMini(dt);
         hudCd-=dt; if(hudCd<=0){ hudCd=0.25; renderHud(); renderMission(); if(S&&S.driving) renderTravelbar(); }
@@ -519,11 +534,11 @@ const UI = (()=>{
   /* ── panel ── */
   function faceOf(id, fallback){
     const name=(D.comps&&D.comps[id]&&D.comps[id].name)||(D.npcs&&D.npcs[id]&&D.npcs[id].name)||(id==='me'?'나':id);
-    return D.portraits[id]? `<img class="pimg" src="${D.portraits[id]}" alt="${esc(name)} 초상">` : fallback;
+    return D.portraits[id]? `<img class="pimg" src="${D.portraits[id]}" alt="${esc(name)} 초상" decoding="async">` : fallback;
   }
   function npcFace(id, fallback){
     const name=(D.comps&&D.comps[id]&&D.comps[id].name)||(D.npcs&&D.npcs[id]&&D.npcs[id].name)||id;
-    return D.portraits[id]? `<img class="npc-pimg" src="${D.portraits[id]}" alt="${esc(name)} 초상">` : fallback;
+    return D.portraits[id]? `<img class="npc-pimg" src="${D.portraits[id]}" alt="${esc(name)} 초상" decoding="async">` : fallback;
   }
   const esc=(v)=>String(v??'').replace(/[&<>"']/g,ch=>({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -558,7 +573,7 @@ const UI = (()=>{
     }[kind]||'장면';
     const faceAlt=person.name==='???'?'이름을 모르는 사람':person.name;
     const face=hasPortrait
-      ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상">`
+      ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
       : '';
     const speaker=['dialogue','thought','letter'].includes(kind)||(kind==='record'&&hasPortrait)
       ? `<div class="turn-speaker">${face}<span><small>${source}</small><b>${esc(person.name)}</b></span></div>`
@@ -605,7 +620,7 @@ const UI = (()=>{
     const hidden=person.name==='???';
     const faceAlt=hidden?'이름을 모르는 사람':person.name;
     const face=person.portrait
-      ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상">`
+      ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
       : '';
     return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${hidden?' identity-hidden':''}${newest?' chat-newest':''}"
       data-kind="dialogue" data-speaker="${esc(person.id||person.name)}" data-side="${side}" data-story-entry>
@@ -1122,13 +1137,18 @@ const UI = (()=>{
     const track=Array.from({length:c.total},(_,i)=>`<i class="${i<c.phase?'on':''}"></i>`).join('');
     const history=state&&Array.isArray(state.history)?state.history:[];
     const last=history[history.length-1];
+    const terrain=c.terrain||(state&&state.terrain)||'';
+    const stakes=c.stakes||(state&&state.stakes)||'';
+    const pressure=state?state.pressure||0:c.pressure||0;
     return `<section class="combat-hud" aria-label="교전 상황">
       <div class="combat-hud-head"><span class="combat-phase">${opt.result?'RESULT':'ENCOUNTER'} ${c.phase}/${c.total}</span>
         <b class="combat-step">${c.step}</b><span class="combat-threat">${c.threat}</span></div>
       <div class="combat-objective"><b>${opt.result?(opt.ended?'마침':'결과'):'목표'}</b><span>${opt.result?(opt.ended?'선택의 대가를 확인하고 이탈한다':'이 선택이 다음 단계의 전세가 된다'):c.objective}</span></div>
+      ${!opt.result&&terrain?`<div class="combat-context"><span><b>지형</b>${esc(terrain)}</span>${stakes?`<span><b>실패하면</b>${esc(stakes)}</span>`:''}</div>`:''}
       ${last?`<div class="combat-last ${opt.result?'result':''}"><b>${opt.result?'방금 선택':'직전 선택'}</b><span><strong>${esc(last.tactic)}</strong>${esc(last.label)}</span></div>`:''}
       <div class="combat-track" aria-hidden="true">${track}</div>
       <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">전세 ${grade}</span>
+        <span class="${pressure>=2?'bad':pressure===0?'good':''}">압박 ${pressure}/3</span>
         <span class="${S.van<35?'bad':''}">차체 ${Math.ceil(S.van)}%</span>
         <span class="${S.pursuit>=3?'bad':''}">관측 ${S.pursuit}/5</span>
         ${injuries?`<span class="bad">부상 ${injuries}명</span>`:''}</div></section>`;
@@ -1143,7 +1163,7 @@ const UI = (()=>{
       count++;
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.tactic?`<span class="combat-tactic">${c.tactic}</span>`:''}${c.label}
         ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
-        ${c.combatRoll!==undefined?`<span class="combat-odds">현재 전세 · ${G.combatGrade(c)} · ${G.combatTacticNote(c)}</span>`:''}
+        ${c.combatRoll!==undefined?`<span class="combat-odds">현재 전세 · ${G.combatGrade(c)} · ${G.combatTacticNote(c)}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}</span>`:''}
         ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
     });
     return {html,count};
@@ -1181,7 +1201,7 @@ const UI = (()=>{
     return `<div class="event-scene-frame" role="button" tabindex="0"
       data-scene-key="${esc(key)}" data-cut-token="initial"
       aria-label="${esc(sceneAlt)} 장면 크게 보기">
-      <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면">
+      <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면" decoding="async">
       <span class="scene-cut-mark" aria-hidden="true">장면 1</span>
       <span class="scene-zoom" aria-hidden="true">↗</span></div>`;
   }
@@ -1531,7 +1551,7 @@ const UI = (()=>{
   function resolveChoice(choice){
     clearStoryAuto();
     const oldCombat=$('#ev-sheet').querySelector('.combat-hud');
-    const combatBefore=S.combat?{edge:S.combat.edge||0,history:[...(S.combat.history||[])]}:{edge:0,history:[]};
+    const combatBefore=S.combat?{...S.combat,edge:S.combat.edge||0,history:[...(S.combat.history||[])]}:{edge:0,pressure:0,history:[]};
     const out=G.pickOutcome(curEv, choice);
     /* 마지막 선택은 combatEnd가 상태를 비우기 전에 먼저 기록한다.
        시작·중간 단계는 applyFx가 교전 상태를 만든 뒤 기록한다. */
@@ -1544,7 +1564,7 @@ const UI = (()=>{
       if(!resultState){
         let edge=out.fx&&out.fx.combatStart?0:combatBefore.edge;
         if(out.fx&&out.fx.combatEdge) edge=clamp(edge+out.fx.combatEdge,-2,3);
-        resultState={edge,history:[...combatBefore.history,...(combatEntry?[combatEntry]:[])]};
+        resultState={...combatBefore,edge,history:[...combatBefore.history,...(combatEntry?[combatEntry]:[])]};
       }
       combatHud=combatHudHtml(curEv,{state:resultState,result:true,ended:!!(out.fx&&out.fx.combatEnd)});
     }
@@ -1669,7 +1689,7 @@ const UI = (()=>{
 
   /* ── SETTLEMENT ── */
   let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel', stlFieldResult=null,
-    stlMode='hub', stlFocus='market';
+    stlMode='hub', stlFocus='market', stlFieldFocus='';
   function settlementScene(stlId){
     const sid=D.nodeScenes&&D.nodeScenes[stlId];
     return sid&&D.scenes&&D.scenes[sid]?D.scenes[sid]:'';
@@ -1692,7 +1712,7 @@ const UI = (()=>{
   }
   function settlementPortrait(id,cls,alt){
     const src=D.portraits&&D.portraits[id];
-    return src?`<img class="${cls}" src="${src}" alt="${esc(alt)}">`:'';
+    return src?`<img class="${cls}" src="${src}" alt="${esc(alt)}" decoding="async">`:'';
   }
   function settlementWalkCopy(focus){
     const stl=D.stls[curStl], spot=settlementSpots(curStl)[focus], comp=settlementCompanion();
@@ -1847,7 +1867,30 @@ const UI = (()=>{
     if(!field) return '';
     const actions=field.actions.filter(a=>!G.stlFieldStatus(curStl,a).hiddenLocked);
     const result=stlFieldResult&&stlFieldResult.stl===curStl?stlFieldResult:null;
+    if(result&&actions.some(a=>a.id===result.action.id)) stlFieldFocus=result.action.id;
+    if(!actions.some(a=>a.id===stlFieldFocus)) stlFieldFocus=actions[0]&&actions[0].id||'';
+    const focusIndex=Math.max(0,actions.findIndex(a=>a.id===stlFieldFocus));
+    const focusAction=actions[focusIndex], done=actions.filter(a=>G.stlFieldStatus(curStl,a).done).length;
+    const comp=settlementCompanion();
     let h=`<div class="stl-field-intro"><span>${ICO('quest')}</span><span><b>${esc(field.title)}</b><small>${esc(field.desc)}</small></span></div>`;
+    if(actions.length){
+      const pos=actions.length===1?50:Math.round(focusIndex/(actions.length-1)*100);
+      h+=`<section class="stl-field-map" style="--field-pos:${pos}%" aria-label="${esc(field.title)} 현장 동선">
+        <div class="stl-field-map-head"><b>현장 동선</b><span>${done}/${actions.length}곳 확인</span></div>
+        <div class="stl-field-path"><i class="stl-field-rail" aria-hidden="true"></i>
+          <div class="stl-field-map-party" aria-hidden="true">
+            ${settlementPortrait('me','stl-field-map-face me','')}${comp?settlementPortrait(comp.id,'stl-field-map-face companion',''):''}
+          </div>
+          ${actions.map((action,index)=>{ const status=G.stlFieldStatus(curStl,action);
+            return `<button class="stl-field-spot ${status.done?'done':''} ${action.id===stlFieldFocus?'selected':''}"
+              style="--spot-pos:${actions.length===1?50:Math.round(index/(actions.length-1)*100)}%"
+              data-fieldspot="${action.id}" aria-pressed="${action.id===stlFieldFocus}">
+              <i>${status.done?'✓':index+1}</i><span>${esc(action.label)}</span></button>`;
+          }).join('')}
+        </div>
+        <div class="stl-field-focus-copy" data-field-focus-copy><b>${esc(focusAction.label)}</b><span>${esc(focusAction.desc)}</span></div>
+      </section>`;
+    }
     if(result){
       const person=speakerInfo(result.action.npc);
       h+=`<div class="stl-field-result" data-field-result>
@@ -1859,7 +1902,7 @@ const UI = (()=>{
     h+=`<div class="stl-field-list">${actions.map(action=>{
       const status=G.stlFieldStatus(curStl,action), person=speakerInfo(action.npc);
       const cost=G.reqCostText(action.req), cadence=action.once?'여행 중 1회':'하루 1회';
-      return `<button class="stl-field-action" data-stlfield="${action.id}" ${status.ok?'':'disabled'}>
+      return `<button class="stl-field-action ${action.id===stlFieldFocus?'focused':''}" data-stlfield="${action.id}" data-fieldcard="${action.id}" ${status.ok?'':'disabled'}>
         ${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}
         <span><b>${esc(action.label)}</b><small>${esc(action.desc)}</small>
           <span class="stl-field-meta"><i>${action.time}분</i><i>${cadence}</i>${cost?`<i>${esc(cost)}</i>`:''}</span></span>
@@ -1867,6 +1910,28 @@ const UI = (()=>{
       </button>`;
     }).join('')}</div>`;
     return h;
+  }
+  function updateSettlementFieldFocus(actionId,scroll=true){
+    const field=D.stls[curStl]&&D.stls[curStl].field;
+    const visible=field&&field.actions.filter(a=>!G.stlFieldStatus(curStl,a).hiddenLocked)||[];
+    const index=visible.findIndex(a=>a.id===actionId);
+    if(index<0) return;
+    stlFieldFocus=actionId;
+    const map=$('#stl-body .stl-field-map'), action=visible[index];
+    if(map){
+      map.style.setProperty('--field-pos',`${visible.length===1?50:Math.round(index/(visible.length-1)*100)}%`);
+      map.querySelectorAll('[data-fieldspot]').forEach(node=>{
+        const selected=node.dataset.fieldspot===actionId;
+        node.classList.toggle('selected',selected);
+        node.setAttribute('aria-pressed',String(selected));
+      });
+      const copy=map.querySelector('[data-field-focus-copy]');
+      if(copy) copy.innerHTML=`<b>${esc(action.label)}</b><span>${esc(action.desc)}</span>`;
+    }
+    const cards=[...document.querySelectorAll('#stl-body [data-fieldcard]')];
+    cards.forEach(card=>card.classList.toggle('focused',card.dataset.fieldcard===actionId));
+    const card=cards.find(node=>node.dataset.fieldcard===actionId);
+    if(scroll&&card) card.scrollIntoView({behavior:document.documentElement.classList.contains('ui-reduce-motion')?'auto':'smooth',block:'nearest'});
   }
   function showStl(stlId,mode='hub'){
     curStl=stlId;
@@ -1928,6 +1993,7 @@ const UI = (()=>{
     } else if(stlMode==='garage'){
       renderGarage();
     } else if(stlMode==='alley'){
+      body.querySelectorAll('[data-fieldspot]').forEach(b=>b.onclick=()=>updateSettlementFieldFocus(b.dataset.fieldspot));
       body.querySelectorAll('[data-stlfield]').forEach(b=>b.onclick=()=>{
         const result=G.doStlFieldAction(curStl,b.dataset.stlfield);
         if(!result.ok){ toast(result.reason||'지금은 할 수 없다'); return; }
@@ -2326,7 +2392,12 @@ const UI = (()=>{
       <div class="st-row"><span class="k">${ICO('food')}식량</span><span class="v" style="flex:1">${S.food} <small style="color:var(--faded)">≈ ${Math.floor(S.food/perDay)}일치</small></span></div>
       <div class="st-row"><span class="k">${ICO('scrap')}고철</span><span class="v" style="flex:1">${S.scrap}</span></div>
       <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k==='탄약'?'소총탄':k} ${S.items[k]||0}`).join(' · ')}</span></div>
-      ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}</div>`;
+      ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}</div>
+    <div class="st-sec ui-comfort"><h4>화면 편의 <small>이 기기에 저장</small></h4>
+      <div class="ui-comfort-grid">
+        <button data-ui-pref="text" aria-pressed="${uiPrefs.largeText}"><span>글자 크기</span><b>${uiPrefs.largeText?'크게':'보통'}</b></button>
+        <button data-ui-pref="motion" aria-pressed="${uiPrefs.reduceMotion}"><span>화면 움직임</span><b>${uiPrefs.reduceMotion?'줄임':'기본'}</b></button>
+      </div><div class="csub">움직임 줄임은 장면 전환과 달구지 애니메이션을 낮추고, 캔버스 갱신 부담도 줄인다.</div></div>`;
 
     let journey=`<div class="st-sec"><h4>여정</h4>
       <div class="st-row"><span class="k">날짜 / 주행</span><span class="v" style="flex:1">DAY ${S.day} · ${Math.round(S.stats.km)}km · 서울까지 약 ${G.remainKm()}km</span></div>
@@ -2403,6 +2474,17 @@ const UI = (()=>{
     b.innerHTML=`<div class="st-pane ${stTab==='now'?'on':''}" data-stpane="now">${now}</div>
       <div class="st-pane ${stTab==='journey'?'on':''}" data-stpane="journey">${journey}</div>
       <div class="st-pane ${stTab==='crew'?'on':''}" data-stpane="crew">${crew}</div>`;
+    b.querySelectorAll('[data-ui-pref]').forEach(button=>button.onclick=()=>{
+      if(button.dataset.uiPref==='text'){
+        uiPrefs.largeText=!uiPrefs.largeText;
+        localStorage.setItem('caravan_ui_text',uiPrefs.largeText?'large':'normal');
+      }else{
+        uiPrefs.reduceMotion=!uiPrefs.reduceMotion;
+        localStorage.setItem('caravan_ui_motion',uiPrefs.reduceMotion?'reduced':'full');
+      }
+      applyUiPrefs();
+      renderStatus();
+    });
     b.querySelectorAll('[data-comp2]').forEach(r=>{
       r.onclick=()=>{ const id=r.dataset.comp2; if(G.hasComp(id)) showComp(id); };
       r.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); r.click(); } };

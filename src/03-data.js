@@ -3906,40 +3906,43 @@ D.events = [
 
 {id:'patrol_walker', minParty:1, type:'추적', w:10, region:['north'], needFlag:'armed_age',
  title:'초계 보행기', scene:'combat-perimeter-warning',
- combat:{phase:1,total:3,step:'정찰',threat:'4족 초계 보행기',objective:'렌즈가 돌아오기 전에 자리를 잡는다'}, sfx:'scan',
+ combat:{phase:1,total:3,step:'정찰',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',pressure:1,
+  objective:'렌즈가 돌아오기 전에 자리를 잡는다',stakes:'경보가 북쪽 검문망으로 넘어간다'}, sfx:'scan',
  text:'언덕 너머에서 회색 몸통이 먼저 보였다. 네 다리는 아직 경사 아래에 있다.\n\n강우가 없어도 이제 저 발소리는 안다. 한 걸음, 멈춤, 좌우 스캔. 다시 한 걸음.\n\n렌즈가 이쪽으로 돌아오기까지 서른 초쯤.',
  choices:[
-  {label:'폐차 행렬 뒤로 달구지를 붙인다', tactic:'엄폐', out:[{p:1, text:'시동을 죽이고 녹슨 화물차 그림자에 바짝 붙였다.\n\n보행기의 렌즈가 도로를 훑었다. 아직은 우리 앞쪽만 본다. 먼저 볼 수 있는 쪽이 조금 유리하다.', fx:{time:5,combatStart:{id:'walker',threat:'4족 초계 보행기'},combatEdge:1,chain:'combat_walker_read'}, sfx:'cover'}]},
-  {label:'달구지로 시선을 끌고 옆 차선에 세운다', tactic:'유인', risk:'차체가 노출된다', out:[{p:1, text:'헤드라이트를 한 번 켰다 껐다. 렌즈가 즉시 달구지를 물었다.\n\n차를 콘크리트 분리대 옆으로 밀어 세웠다. 숨을 곳은 줄었지만, 놈이 어디를 보는지는 분명해졌다.', fx:{van:-2,combatStart:{id:'walker',threat:'4족 초계 보행기'},chain:'combat_walker_read'}, sfx:'engine'}]},
+  {label:'폐차 행렬 뒤로 달구지를 붙인다', tactic:'엄폐', out:[{p:1, text:'시동을 죽이고 녹슨 화물차 그림자에 바짝 붙였다.\n\n보행기의 렌즈가 도로를 훑었다. 아직은 우리 앞쪽만 본다. 먼저 볼 수 있는 쪽이 조금 유리하다.', fx:{time:5,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_walker_read'}, sfx:'cover'}]},
+  {label:'달구지로 시선을 끌고 옆 차선에 세운다', tactic:'유인', risk:'차체가 노출된다', out:[{p:1, text:'헤드라이트를 한 번 켰다 껐다. 렌즈가 즉시 달구지를 물었다.\n\n차를 콘크리트 분리대 옆으로 밀어 세웠다. 숨을 곳은 줄었지만, 놈이 어디를 보는지는 분명해졌다.', fx:{van:-2,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatPressure:1,chain:'combat_walker_read'}, sfx:'engine'}]},
   {label:'농로로 빠져 교전을 버린다', tactic:'이탈', out:[{p:1, text:'후진으로 갈림길까지 빠져나온 뒤 농로로 차를 꺾었다.\n\n멀리 돌아가면 된다. 싸우지 않은 건 진 것도, 이긴 것도 아니었다.', fx:{time:35,fuel:-3,moodAll:-1,combatEnd:1}, sfx:'escape'}]},
  ]},
 
 {id:'combat_walker_read', type:'추적', w:0, fixed:true, ai:1,
  title:'발을 읽는 시간', scene:'combat-walker-disable',
- combat:{phase:2,total:3,step:'대응',threat:'4족 초계 보행기',objective:'한 번뿐인 공격 각도를 만든다'}, sfx:'walker',
+ combat:{phase:2,total:3,step:'대응',threat:'4족 초계 보행기',terrain:'폐차 사이 관절 사각',
+  objective:'한 번뿐인 공격 각도를 만든다',stakes:'서두르면 총구가 먼저 돌아온다'}, sfx:'walker',
  text:'쿵. 왼발. 잠깐 멈춤. 쿵. 오른발.\n\n놈은 빠르지 않다. 대신 몸통 렌즈와 다리 센서가 서로의 빈틈을 메운다. 아무 데나 치면 경보만 울릴 것이다.\n\n"서두르지 마." 누군가 아주 작게 말했다. 이번엔 그 말이 맞다.',
  choices:[
-  {label:'발을 내딛는 박자를 끝까지 센다', tactic:'관찰', out:[{p:1, text:'세 번째 걸음마다 오른쪽 앞다리에 체중이 몰린다. 그때 몸통이 아주 조금 아래로 처진다.\n\n짧지만, 사람 하나가 움직일 만큼은 되는 틈이다.', fx:{time:4,combatEdge:1,chain:'combat_walker_strike'}, sfx:'heartbeat'}]},
+  {label:'발을 내딛는 박자를 끝까지 센다', tactic:'관찰', out:[{p:1, text:'세 번째 걸음마다 오른쪽 앞다리에 체중이 몰린다. 그때 몸통이 아주 조금 아래로 처진다.\n\n짧지만, 사람 하나가 움직일 만큼은 되는 틈이다.', fx:{time:4,combatEdge:1,combatPressure:-1,chain:'combat_walker_strike'}, sfx:'heartbeat'}]},
   {label:'민지가 유압관의 흔들림을 찾는다', tactic:'정비', req:{healthyComp:'minji'}, out:[{p:1, text:'민지는 무릎 대신 다리 안쪽의 가느다란 관을 가리켰다.\n\n"저기 끊으면 서는 게 아니라 주저앉아요. 넘어지는 방향만 조심해요."\n\n우리는 놈이 쓰러질 자리를 먼저 비웠다.', fx:{combatEdge:2,chain:'combat_walker_strike',mood:{minji:2}}, sfx:'tool'}]},
   {label:'강우가 관절 사각을 짚는다', tactic:'사격', req:{healthyComp:'kangwoo'}, out:[{p:1, text:'강우의 손가락이 오른쪽 앞다리, 몸통 렌즈, 다시 오른쪽 앞다리를 찍었다.\n\n"한 발로 세우고, 다음에 움직여. 두 번째 발을 미리 쓰지 마."\n\n말수가 짧아질수록 그가 확실하다는 뜻이었다.', fx:{combatEdge:2,chain:'combat_walker_strike',mood:{kangwoo:2}}, sfx:'bolt'}]},
-  {label:'더 다가오기 전에 끝낸다', tactic:'돌입', risk:'각도가 나쁘다', out:[{p:1, text:'생각할 시간을 끊고 먼저 몸을 일으켰다.\n\n보행기의 렌즈가 소리 난 쪽으로 돌아왔다. 이제부터는 속도로 메워야 한다.', fx:{combatEdge:-1,chain:'combat_walker_strike'}, sfx:'warning'}]},
+  {label:'더 다가오기 전에 끝낸다', tactic:'돌입', risk:'각도가 나쁘다', out:[{p:1, text:'생각할 시간을 끊고 먼저 몸을 일으켰다.\n\n보행기의 렌즈가 소리 난 쪽으로 돌아왔다. 이제부터는 속도로 메워야 한다.', fx:{combatEdge:-1,combatPressure:1,chain:'combat_walker_strike'}, sfx:'warning'}]},
  ]},
 
 {id:'combat_walker_strike', type:'추적', w:0, fixed:true, ai:1,
  title:'렌즈가 돌아오는 순간', scene:'combat-walker-disable',
- combat:{phase:3,total:3,step:'교전',threat:'4족 초계 보행기',objective:'제압하거나 달구지까지 살아서 물러난다'}, sfx:'warning',
+ combat:{phase:3,total:3,step:'교전',threat:'4족 초계 보행기',terrain:'오른쪽 앞다리와 비워 둔 전도 방향',
+  objective:'제압하거나 달구지까지 살아서 물러난다',stakes:'총구가 돌아오면 차와 사람이 함께 노출된다'}, sfx:'warning',
  text:'렌즈 안쪽에서 붉은 점이 켜진다.\n\n<span class="ai">"미등록 인원. 행동을 중지하십시오."</span>\n\n말은 정중했지만 총구는 그렇지 않았다. 지금 고른 한 동작 뒤에는 되감기가 없다.',
  choices:[
-  {label:'석궁으로 몸통 렌즈를 끊는다', tactic:'사격', req:{item:'석궁',item2:'볼트'}, combatRoll:.54, out:[
+  {label:'석궁으로 몸통 렌즈를 끊는다', tactic:'사격', terrainFit:1, req:{item:'석궁',item2:'볼트'}, combatRoll:.54, out:[
     {p:1, text:'숨을 멈추고 당겼다.\n\n퓩. 볼트가 렌즈 테두리에 박혔다. 붉은 점이 허공을 두 번 훑더니 꺼졌다. 보행기는 한쪽 무릎을 접고 그대로 멎었다.\n\n가까이 가서야 다들 숨을 내쉬었다.', fx:{item:{'볼트':-1,'부품':1},scrap:6,combatEnd:1,note:{type:'사건',title:'렌즈를 끊은 한 발',body:'보행기의 보폭을 읽고 몸통 렌즈를 끊었다. 싸움은 발사보다 오래 준비됐다.',links:['천리안']}}, sfx:'crossbow'},
     {p:1, text:'줄이 손가락을 스쳤다. 볼트는 렌즈 옆 철판에서 튕겼다.\n\n경고탄이 폐차 문짝을 찢었다. 달구지까지 뛰어들어 후진으로 빠졌다. 손바닥이 벌어졌지만 운전대는 놓치지 않았다.', fx:{item:{'볼트':-1},fuel:-4,van:-7,pursuit:1,injury:{who:'driver',label:'손바닥 열상',days:2},combatEnd:1}, sfx:'impact'}]},
-  {label:'쇠파이프로 다리 밸브를 꺾는다', tactic:'근접', req:{item:'쇠파이프'}, risk:'근접 부상', combatRoll:.45, out:[
+  {label:'쇠파이프로 다리 밸브를 꺾는다', tactic:'근접', terrainFit:2, req:{item:'쇠파이프'}, risk:'근접 부상', combatRoll:.45, out:[
     {p:1, text:'다리가 내려오는 박자에 맞춰 안쪽으로 파고들었다.\n\n쇠파이프를 밸브와 프레임 사이에 끼우고 온몸으로 눌렀다. 금속이 비명을 질렀고, 보행기는 우리가 비워 둔 쪽으로 쓰러졌다.', fx:{scrap:7,item:{'부품':1},fatigue:8,combatEnd:1}, sfx:'metal'},
     {p:1, text:'밸브는 휘었지만 다리는 멈추지 않았다.\n\n옆으로 구르는 순간 발끝이 어깨를 스쳤다. 강우가 소총을 한 발 쏴 시선을 빼앗았고, 우리는 달구지로 물러났다.', fx:{fatigue:10,van:-4,pursuit:1,injury:{who:'driver',label:'어깨 타박',days:3},combatEnd:1}, sfx:'hit'}]},
-  {label:'화염병으로 센서 앞에 열벽을 만든다', tactic:'교란', req:{item:'화염병'}, combatRoll:.64, out:[
+  {label:'화염병으로 센서 앞에 열벽을 만든다', tactic:'교란', terrainFit:1, noise:1, req:{item:'화염병'}, combatRoll:.64, out:[
     {p:1, text:'병은 보행기가 아니라 그 앞 아스팔트에서 깨졌다.\n\n검은 연기와 불꽃이 센서를 가렸다. 놈이 빈 열원을 향해 몸통을 돌리는 동안 달구지는 반대편으로 빠져나갔다.', fx:{item:{'화염병':-1},fuel:-2,moodAll:2,combatEnd:1}, sfx:'fire'},
     {p:1, text:'바람이 불길을 너무 빨리 눕혔다. 센서가 다시 달구지를 잡았다.\n\n경고탄 하나가 적재함 외벽을 뚫었다. 불길이 번지기 전에 떨쳐냈지만 차 안에는 탄내가 오래 남았다.', fx:{item:{'화염병':-1},fuel:-4,van:-9,pursuit:1,combatEnd:1}, sfx:'hit'}]},
-  {label:'강우가 앞다리 관절에 한 발 쓴다', tactic:'사격', req:{healthyComp:'kangwoo',item:'탄약'}, combatRoll:.62, out:[
+  {label:'강우가 앞다리 관절에 한 발 쓴다', tactic:'사격', terrainFit:2, noise:1, req:{healthyComp:'kangwoo',item:'탄약'}, combatRoll:.62, out:[
     {p:1, text:'"오른발 들면 간다."\n\n쿵. 오른발이 들렸다. 탕.\n\n관절핀 하나가 정확히 빠져나왔다. 보행기가 옆으로 무너지자 강우는 탄피보다 먼저 우리 얼굴부터 확인했다. "다 있지?" 그제야 소총을 내렸다.', fx:{item:{'탄약':-1,'부품':1},scrap:5,mood:{kangwoo:5},combatEnd:1,note:{type:'사건',title:'한 발 뒤의 확인',body:'강우는 보행기를 쓰러뜨린 뒤 탄피보다 먼저 사람 수를 셌다.',links:['강우']}}, sfx:'rifle'},
     {p:1, text:'방아쇠를 당기는 순간 보행기가 몸을 틀었다. 탄은 관절 옆을 긁었다.\n\n강우가 두 번째 탄 대신 우리를 밀어 엄폐시켰다. 파편이 그의 옆구리를 때렸다. 그는 끝까지 걸어서 차에 탔다.', fx:{item:{'탄약':-1},fuel:-3,pursuit:1,injury:{who:'kangwoo',label:'옆구리 파편상',days:3},combatEnd:1}, sfx:'hit'}]},
   {label:'제압을 포기하고 달구지로 물러난다', tactic:'이탈', out:[{p:1, text:'누가 먼저랄 것도 없이 하나씩 뒤로 빠졌다. 마지막 사람이 타자마자 기어를 넣었다.\n\n보행기는 따라오지 않았다. 사정거리 밖까지 가서야 서로의 손과 얼굴을 확인했다.', fx:{fuel:-4,van:-3,moodAll:-2,combatEnd:1}, sfx:'escape'}]},
@@ -3947,77 +3950,83 @@ D.events = [
 
 {id:'patrol_swarm', type:'추적', w:9, region:['north'], needFlag:'armed_age',
  title:'세 개의 그림자', scene:'combat-drone-swarm',
- combat:{phase:1,total:3,step:'정찰',threat:'초계 쿼드 편대',objective:'편대가 닫히기 전에 도주선을 고른다'}, sfx:'drone',
+ combat:{phase:1,total:3,step:'정찰',threat:'초계 쿼드 편대',terrain:'오래된 터널과 고가 아래 폐차 지대',pressure:1,
+  objective:'편대가 닫히기 전에 도주선을 고른다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다'}, sfx:'drone',
  text:'사이드미러에 점 셋이 생겼다. 새가 아니다. 간격이 너무 일정하다.\n\n앞에는 오래된 터널, 오른쪽에는 고가도로 아래 폐차 지대. 드론들은 아직 확성기만 켰다.\n\n<span class="ai">"차량 정지. 등록을 확인합니다."</span>',
  choices:[
-  {label:'터널을 도주선으로 잡는다', tactic:'이탈', out:[{p:1,text:'기어를 내리고 터널까지 남은 거리를 눈으로 쟀다.\n\n입구는 좁지만 안은 어둡다. 드론이 고도를 낮추면 서로 피할 공간도 없어진다.',fx:{combatStart:{id:'swarm',threat:'초계 쿼드 편대'},combatEdge:1,chain:'combat_swarm_read'},sfx:'engine'}]},
-  {label:'고가 아래 폐차 지대로 파고든다', tactic:'엄폐', risk:'길이 거칠다', out:[{p:1,text:'핸들을 꺾어 폐차 사이로 들어갔다. 지붕 위 안테나가 철판을 긁었다.\n\n드론 셋이 흩어졌다. 놈들도 이 안에서는 한 줄로 들어와야 한다.',fx:{van:-3,combatStart:{id:'swarm',threat:'초계 쿼드 편대'},combatEdge:1,chain:'combat_swarm_read'},sfx:'metal'}]},
+  {label:'터널을 도주선으로 잡는다', tactic:'이탈', out:[{p:1,text:'기어를 내리고 터널까지 남은 거리를 눈으로 쟀다.\n\n입구는 좁지만 안은 어둡다. 드론이 고도를 낮추면 서로 피할 공간도 없어진다.',fx:{combatStart:{id:'swarm',threat:'초계 쿼드 편대',terrain:'오래된 터널과 고가 아래 폐차 지대',objective:'편대를 갈라 터널의 사각으로 빠진다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_swarm_read'},sfx:'engine'}]},
+  {label:'고가 아래 폐차 지대로 파고든다', tactic:'엄폐', risk:'길이 거칠다', out:[{p:1,text:'핸들을 꺾어 폐차 사이로 들어갔다. 지붕 위 안테나가 철판을 긁었다.\n\n드론 셋이 흩어졌다. 놈들도 이 안에서는 한 줄로 들어와야 한다.',fx:{van:-3,combatStart:{id:'swarm',threat:'초계 쿼드 편대',terrain:'오래된 터널과 고가 아래 폐차 지대',objective:'편대를 갈라 터널의 사각으로 빠진다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다',pressure:1},combatEdge:1,chain:'combat_swarm_read'},sfx:'metal'}]},
   {label:'연료를 써서 편대 밖으로 달아난다', tactic:'이탈', out:[{p:1,text:'액셀을 끝까지 밟고 갈림길 두 개를 연달아 꺾었다.\n\n모터음이 한참 따라왔지만 결국 멀어졌다. 연료계 바늘도 그만큼 내려가 있었다.',fx:{fuel:-7,moodAll:-2,combatEnd:1},sfx:'escape'}]},
  ]},
 
 {id:'combat_swarm_read', type:'추적', w:0, fixed:true, ai:1,
  title:'셋 중 하나', scene:'combat-drone-swarm',
- combat:{phase:2,total:3,step:'대응',threat:'초계 쿼드 편대',objective:'편대의 눈과 귀가 어디인지 가려낸다'}, sfx:'drone',
+ combat:{phase:2,total:3,step:'대응',threat:'초계 쿼드 편대',terrain:'빗물과 터널 입구의 좁은 고도',
+  objective:'편대의 눈과 귀가 어디인지 가려낸다',stakes:'지휘기를 못 찾으면 셋이 동시에 따라붙는다'}, sfx:'drone',
  text:'드론 셋은 같은 높이로 날지 않는다. 가운데 기체가 조금 뒤에서 움직이고, 나머지 둘은 그 움직임을 반 박자 늦게 따라 한다.\n\n하부에 달린 검은 통도 총열처럼 보였지만, 빗물 속에서 희미하게 스피커 망이 보였다.',
  choices:[
-  {label:'가운데 기체의 명령 박자를 외운다', tactic:'관찰', out:[{p:1,text:'가운데가 선회하면 양옆이 갈라지고, 가운데가 멈추면 둘이 사격 각도를 만든다.\n\n지휘기는 하나다. 하나를 흔들면 셋의 줄이 풀린다.',fx:{combatEdge:1,chain:'combat_swarm_break'},sfx:'heartbeat'}]},
+  {label:'가운데 기체의 명령 박자를 외운다', tactic:'관찰', out:[{p:1,text:'가운데가 선회하면 양옆이 갈라지고, 가운데가 멈추면 둘이 사격 각도를 만든다.\n\n지휘기는 하나다. 하나를 흔들면 셋의 줄이 풀린다.',fx:{combatEdge:1,combatPressure:-1,chain:'combat_swarm_break'},sfx:'heartbeat'}]},
   {label:'은수가 편대 주파수를 분리한다', tactic:'해킹', req:{healthyComp:'eunsu'}, out:[{p:1,text:'은수가 헤드폰 한쪽을 내 귀에 대줬다. 잡음 아래 짧은 신호가 반복됐다.\n\n"가운데가 명령하고 있어요. 제가 한 번 늦출게요. 그때 움직여요."\n\n그녀가 손가락 세 개를 펴고 하나씩 접었다.',fx:{combatEdge:2,chain:'combat_swarm_break',mood:{eunsu:2}},sfx:'hack'}]},
   {label:'차 안의 불을 모두 끄고 소리만 듣는다', tactic:'엄폐', out:[{p:1,text:'계기판까지 끄자 모터음의 높낮이가 들렸다.\n\n왼쪽 기체는 로터 하나가 떨린다. 방향을 바꿀 때마다 줄이 잠깐 벌어진다.',fx:{time:3,combatEdge:1,chain:'combat_swarm_break'},sfx:'silence'}]},
-  {label:'지금 바로 터널로 내달린다', tactic:'돌입', risk:'편대가 아직 붙어 있다', out:[{p:1,text:'분석을 접고 시동을 올렸다.\n\n셋의 붉은 빛이 동시에 달구지 지붕을 물었다. 터널은 가까워졌고, 우리 쪽 여유는 사라졌다.',fx:{combatEdge:-1,chain:'combat_swarm_break'},sfx:'warning'}]},
+  {label:'지금 바로 터널로 내달린다', tactic:'돌입', risk:'편대가 아직 붙어 있다', out:[{p:1,text:'분석을 접고 시동을 올렸다.\n\n셋의 붉은 빛이 동시에 달구지 지붕을 물었다. 터널은 가까워졌고, 우리 쪽 여유는 사라졌다.',fx:{combatEdge:-1,combatPressure:1,chain:'combat_swarm_break'},sfx:'warning'}]},
  ]},
 
 {id:'combat_swarm_break', type:'추적', w:0, fixed:true, ai:1,
  title:'터널 입구까지', scene:'combat-drone-swarm',
- combat:{phase:3,total:3,step:'돌파',threat:'초계 쿼드 편대',objective:'편대를 흩뜨리고 추적 범위를 벗어난다'}, sfx:'warning',
+ combat:{phase:3,total:3,step:'돌파',threat:'초계 쿼드 편대',terrain:'백 미터 앞 터널과 젖은 차선',
+  objective:'편대를 흩뜨리고 추적 범위를 벗어난다',stakes:'터널 밖에서 붙잡히면 지붕과 적재함이 먼저 맞는다'}, sfx:'warning',
  text:'빗방울 사이로 붉은 탐조등이 세 줄 내려온다. 그중 하나가 운전석 앞유리에 걸렸다.\n\n터널 입구는 이제 백 미터. 드론의 로터음은 지붕 바로 위에 있다.',
  choices:[
-  {label:'차선을 꺾어 터널 안으로 밀어 넣는다', tactic:'운전', combatRoll:.62, out:[
+  {label:'차선을 꺾어 터널 안으로 밀어 넣는다', tactic:'운전', terrainFit:2, combatRoll:.62, out:[
     {p:1,text:'첫 번째 빛이 닿는 순간 차선을 바꿨다. 드론 하나가 따라 들어왔고, 둘은 입구에서 서로 얽혀 고도를 올렸다.\n\n터널 중간에서 헤드라이트를 끄자 마지막 모터음도 멀어졌다. 어둠 속에서 아무도 소리 내어 웃지 못했다.',fx:{fuel:-5,moodAll:1,combatEnd:1,note:{type:'소문',title:'터널의 사각',body:'초계 쿼드는 좁고 어두운 터널에서 편대를 유지하지 못한다.',links:['천리안']}},sfx:'escape'},
     {p:1,text:'터널 입구에서 핸들이 물웅덩이에 뜨는 느낌이 났다.\n\n가드레일을 긁고서야 차가 바로 섰다. 드론은 놓쳤지만 운전대를 붙든 손목이 부어올랐다.',fx:{fuel:-6,van:-9,injury:{who:'driver',label:'손목 염좌',days:2},combatEnd:1},sfx:'hit'}]},
-  {label:'석궁으로 떨리는 로터를 끊는다', tactic:'사격', req:{item:'석궁',item2:'볼트'}, combatRoll:.53, out:[
+  {label:'석궁으로 떨리는 로터를 끊는다', tactic:'사격', terrainFit:1, req:{item:'석궁',item2:'볼트'}, combatRoll:.53, out:[
     {p:1,text:'떨리는 로터가 아래로 내려오는 순간을 기다렸다.\n\n퓩. 볼트가 축에 감겼고 기체가 젖은 도로에 미끄러졌다. 나머지 둘은 충돌을 피하려 벌어졌다. 그 틈으로 터널을 통과했다.',fx:{item:{'볼트':-1,'부품':1},scrap:5,combatEnd:1},sfx:'crossbow'},
     {p:1,text:'볼트가 로터 바람에 밀려 차체를 스쳤다.\n\n드론 하나가 적재함 위로 내려앉듯 붙었다. 급제동으로 떼어냈지만 지붕의 짐과 볼트 한 발을 잃었다.',fx:{item:{'볼트':-1},scrap:-3,van:-5,pursuit:1,combatEnd:1},sfx:'impact'}]},
-  {label:'화염병 두 개로 검은 연막을 세운다', tactic:'교란', req:{item:'화염병',itemQty:2}, combatRoll:.67, out:[
+  {label:'화염병 두 개로 검은 연막을 세운다', tactic:'교란', terrainFit:2, noise:1, req:{item:'화염병',itemQty:2}, combatRoll:.67, out:[
     {p:1,text:'첫 병은 중앙선, 둘째는 갓길에 깨졌다.\n\n검은 연기가 도로 전체를 덮었다. 드론들이 열원을 피해 고도를 올린 사이 달구지는 터널 속으로 사라졌다.',fx:{item:{'화염병':-2},moodAll:2,combatEnd:1},sfx:'fire'},
     {p:1,text:'젖은 도로에서 불길이 낮게 깔렸다. 연막은 충분하지 않았다.\n\n드론의 경고탄이 뒤 문을 찢었다. 터널 안까지 쫓기다 겨우 떨쳐냈다.',fx:{item:{'화염병':-2},van:-8,pursuit:1,combatEnd:1},sfx:'hit'}]},
-  {label:'은수가 지휘기에 귀환 명령을 밀어 넣는다', tactic:'해킹', req:{healthyComp:'eunsu',perk:'es_hack'}, combatRoll:.6, out:[
+  {label:'은수가 지휘기에 귀환 명령을 밀어 넣는다', tactic:'해킹', terrainFit:2, req:{healthyComp:'eunsu',perk:'es_hack'}, combatRoll:.6, out:[
     {p:1,text:'은수가 엔터 키를 누르고도 화면에서 손을 떼지 않았다.\n\n가운데 기체가 먼저 방향을 돌렸다. 둘이 잠깐 흔들리더니 똑같이 북쪽으로 붙었다.\n\n"로그에는 임무 완료로 남아요." 은수가 뒤늦게 숨을 내쉬었다.',fx:{mood:{eunsu:6},combatEnd:1,note:{type:'사건',title:'편대의 거짓 귀환',body:'은수가 지휘기에 귀환 명령을 넣었다. 편대 로그에는 임무 완료가 남았다.',links:['은수']}},sfx:'hack'},
     {p:1,text:'귀환 명령이 반쯤 들어간 순간 연결이 끊겼다.\n\n두 기는 돌아섰지만 지휘기 하나가 끝까지 따라왔다. 은수가 단말을 끌어안고 바닥에 엎드렸고, 우리는 터널 벽을 긁으며 빠져나왔다.',fx:{van:-7,pursuit:1,injury:{who:'eunsu',label:'팔꿈치 타박',days:2},combatEnd:1},sfx:'hit'}]},
  ]},
 
 {id:'patrol_toll', type:'추적', w:8, region:['north'], needFlag:'armed_age',
  title:'불 꺼진 검문소', scene:'combat-checkpoint-breach',
- combat:{phase:1,total:3,step:'정찰',threat:'자동 검문소',objective:'센서가 깨기 전에 접근로를 고른다'}, sfx:'scan',
+ combat:{phase:1,total:3,step:'정찰',threat:'자동 검문소',terrain:'안개 낀 배수로와 폐기 차량 갓길',pressure:1,
+  objective:'센서가 깨기 전에 접근로를 고른다',stakes:'차량 번호가 중앙 검문 기록에 남는다'}, sfx:'scan',
  text:'톨게이트처럼 생긴 오래된 검문소가 안개 속에 걸려 있다. 불은 꺼졌는데 차단봉만 새것처럼 반듯하다.\n\n센서 기둥 하나가 천천히 고개를 돌린다. 아직 우리 번호를 읽지는 못했다.',
  choices:[
-  {label:'배수로를 따라 제어함까지 붙는다', tactic:'잠입', out:[{p:1,text:'달구지를 센서 밖에 세우고 배수로로 몸을 낮췄다.\n\n물이 무릎까지 찼지만 콘크리트 벽이 열을 가려줬다. 제어함은 손 닿는 곳까지 왔다.',fx:{fatigue:3,combatStart:{id:'toll',threat:'자동 검문소'},combatEdge:1,chain:'combat_toll_read'},sfx:'cover'}]},
-  {label:'달구지를 폐기 차량처럼 갓길에 세운다', tactic:'위장', out:[{p:1,text:'차를 기울어진 표지판 뒤에 세우고 모든 전원을 내렸다.\n\n센서 빛이 적재함을 한 번 훑고 지나갔다. 오래 보지는 않았다. 낡음이 오늘도 신분증 노릇을 했다.',fx:{time:5,combatStart:{id:'toll',threat:'자동 검문소'},combatEdge:1,chain:'combat_toll_read'},sfx:'silence'}]},
+  {label:'배수로를 따라 제어함까지 붙는다', tactic:'잠입', out:[{p:1,text:'달구지를 센서 밖에 세우고 배수로로 몸을 낮췄다.\n\n물이 무릎까지 찼지만 콘크리트 벽이 열을 가려줬다. 제어함은 손 닿는 곳까지 왔다.',fx:{fatigue:3,combatStart:{id:'toll',threat:'자동 검문소',terrain:'안개 낀 배수로와 수동 제어함',objective:'송신 전에 차단봉을 열고 기록 없이 통과한다',stakes:'차량 번호가 중앙 검문 기록에 남는다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_toll_read'},sfx:'cover'}]},
+  {label:'달구지를 폐기 차량처럼 갓길에 세운다', tactic:'위장', out:[{p:1,text:'차를 기울어진 표지판 뒤에 세우고 모든 전원을 내렸다.\n\n센서 빛이 적재함을 한 번 훑고 지나갔다. 오래 보지는 않았다. 낡음이 오늘도 신분증 노릇을 했다.',fx:{time:5,combatStart:{id:'toll',threat:'자동 검문소',terrain:'안개 낀 배수로와 수동 제어함',objective:'송신 전에 차단봉을 열고 기록 없이 통과한다',stakes:'차량 번호가 중앙 검문 기록에 남는다',pressure:1},combatEdge:1,chain:'combat_toll_read'},sfx:'silence'}]},
   {label:'논길로 멀리 우회한다', tactic:'우회', out:[{p:1,text:'한 시간 가까이 논둑을 타고 돌아갔다.\n\n차 안 살림이 모조리 한쪽으로 쏠렸지만 검문 기록은 남지 않았다. 돌아와 정리할 일이 하나 더 생겼을 뿐이다.',fx:{time:45,fuel:-4,van:-3,combatEnd:1},sfx:'escape'}]},
  ]},
 
 {id:'combat_toll_read', type:'추적', w:0, fixed:true, ai:1,
  title:'깨어나는 순서', scene:'combat-checkpoint-breach',
- combat:{phase:2,total:3,step:'대응',threat:'자동 검문소',objective:'경보보다 먼저 차단봉을 무력화한다'}, sfx:'scan',
+ combat:{phase:2,total:3,step:'대응',threat:'자동 검문소',terrain:'수동 레버와 낡은 정비 포트',
+  objective:'경보보다 먼저 차단봉을 무력화한다',stakes:'점등 뒤 여섯 초면 외부 송신이 시작된다'}, sfx:'scan',
  text:'제어함 안에는 손으로 당기는 레버와 오래된 정비 포트가 함께 있다.\n\n멀리서 센서 기둥 하나가 켜지고, 그다음 카메라가 돌아간다. 전부 한꺼번에 깨어나는 장치는 아니다.',
  choices:[
-  {label:'점등 순서를 한 바퀴 더 지켜본다', tactic:'관찰', out:[{p:1,text:'센서, 카메라, 차단봉. 여섯 초 뒤 경보.\n\n순서는 늘 같았다. 여섯 초면 레버를 당기고 차까지 뛸 수 있다. 넘어지지만 않으면.',fx:{time:3,combatEdge:1,chain:'combat_toll_breach'},sfx:'heartbeat'}]},
+  {label:'점등 순서를 한 바퀴 더 지켜본다', tactic:'관찰', out:[{p:1,text:'센서, 카메라, 차단봉. 여섯 초 뒤 경보.\n\n순서는 늘 같았다. 여섯 초면 레버를 당기고 차까지 뛸 수 있다. 넘어지지만 않으면.',fx:{time:3,combatEdge:1,combatPressure:-1,chain:'combat_toll_breach'},sfx:'heartbeat'}]},
   {label:'민지가 레버 축의 고정핀을 뺀다', tactic:'정비', req:{healthyComp:'minji'}, out:[{p:1,text:'민지가 녹슨 축 아래를 손끝으로 훑더니 작은 핀 하나를 뽑았다.\n\n"이제 힘으로 열지 마요. 살짝 당기면 돼요. 세게 하면 오히려 걸려요."\n\n차단봉이 사람 손 무게만큼 가벼워졌다.',fx:{combatEdge:2,chain:'combat_toll_breach',mood:{minji:2}},sfx:'tool'}]},
   {label:'은수가 정비 포트의 응답을 듣는다', tactic:'해킹', req:{healthyComp:'eunsu'}, out:[{p:1,text:'은수가 케이블을 꽂고 화면 밝기를 손바닥으로 가렸다.\n\n"옛날 유지보수 규격이에요. 열어 달라고 말하는 대신, 이미 열렸다고 보고하면 돼요."\n\n그녀가 짧은 응답 코드를 만들었다.',fx:{combatEdge:2,chain:'combat_toll_breach',mood:{eunsu:2}},sfx:'hack'}]},
-  {label:'센서가 더 켜지기 전에 손부터 댄다', tactic:'돌입', risk:'경보가 빠르다', out:[{p:1,text:'계획을 그만두고 제어함 문을 잡아당겼다.\n\n녹슨 경첩 소리가 안개 속으로 길게 퍼졌다. 센서 둘이 동시에 이쪽을 봤다.',fx:{combatEdge:-1,chain:'combat_toll_breach'},sfx:'warning'}]},
+  {label:'센서가 더 켜지기 전에 손부터 댄다', tactic:'돌입', risk:'경보가 빠르다', out:[{p:1,text:'계획을 그만두고 제어함 문을 잡아당겼다.\n\n녹슨 경첩 소리가 안개 속으로 길게 퍼졌다. 센서 둘이 동시에 이쪽을 봤다.',fx:{combatEdge:-1,combatPressure:1,chain:'combat_toll_breach'},sfx:'warning'}]},
  ]},
 
 {id:'combat_toll_breach', type:'추적', w:0, fixed:true, ai:1,
  title:'여섯 초', scene:'combat-checkpoint-breach',
- combat:{phase:3,total:3,step:'돌파',threat:'자동 검문소',objective:'경보가 송신되기 전에 길을 연다'}, sfx:'warning',
+ combat:{phase:3,total:3,step:'돌파',threat:'자동 검문소',terrain:'제어함에서 차단선까지 여섯 초 거리',
+  objective:'경보가 송신되기 전에 길을 연다',stakes:'늦으면 위치·차량·인원 기록이 함께 전송된다'}, sfx:'warning',
  text:'첫 번째 센서에 붉은 불이 들어왔다.\n\n<span class="ai">"미등록 접근. 확인 절차를 시작합니다."</span>\n\n아직 사이렌은 없다. 손으로 센 여섯 초가 지금부터다.',
  choices:[
-  {label:'쇠파이프로 수동 레버를 당긴다', tactic:'근접', req:{item:'쇠파이프'}, risk:'경보 송신', combatRoll:.55, out:[
+  {label:'쇠파이프로 수동 레버를 당긴다', tactic:'근접', terrainFit:2, noise:1, req:{item:'쇠파이프'}, risk:'경보 송신', combatRoll:.55, out:[
     {p:1,text:'하나, 둘. 제어함을 벌리고 레버를 당겼다.\n\n넷. 차단봉이 올라갔다. 여섯이 되기 전에 달구지가 선을 넘었다. 뒤에서 사이렌이 한 번 숨을 들이켰다가 꺼졌다.',fx:{time:8,combatEnd:1},sfx:'metal'},
     {p:1,text:'레버가 중간에서 걸렸다. 몸을 싣자 차단봉은 열렸지만 여섯 초를 넘겼다.\n\n사이렌이 울었고 센서 기둥이 달구지를 끝까지 따라 돌았다. 손등에는 제어함 철판에 긁힌 피가 맺혔다.',fx:{time:10,pursuit:1,injury:{who:'driver',label:'손등 열상',days:2},combatEnd:1},sfx:'alarm'}]},
-  {label:'은수가 ‘이미 통과’ 응답을 보낸다', tactic:'해킹', req:{healthyComp:'eunsu'}, combatRoll:.66, out:[
+  {label:'은수가 ‘이미 통과’ 응답을 보낸다', tactic:'해킹', terrainFit:2, req:{healthyComp:'eunsu'}, combatRoll:.66, out:[
     {p:1,text:'은수가 짧은 코드를 보냈다.\n\n<span class="ai">"처리 완료. 좋은 하루 되십시오."</span>\n\n차단봉이 정중하게 올라갔다. 달구지가 지나간 뒤에야 은수가 케이블을 뽑고 뛰어왔다. "좋은 하루는 무슨." 숨이 차서 말끝이 웃음처럼 떨렸다.',fx:{mood:{eunsu:4},combatEnd:1},sfx:'hack'},
     {p:1,text:'응답은 들어갔지만 검문소가 한 번 더 물었다. 등록 번호가 무엇이냐고.\n\n은수가 아무 번호나 밀어 넣은 사이 차단봉을 들이받고 빠져나왔다. 기록에는 아마 세상에 없는 차가 남았을 것이다.',fx:{van:-6,pursuit:1,combatEnd:1},sfx:'hit'}]},
-  {label:'센서 앞에 화염병을 깨고 밀고 나간다', tactic:'교란', req:{item:'화염병'}, combatRoll:.62, out:[
+  {label:'센서 앞에 화염병을 깨고 밀고 나간다', tactic:'교란', terrainFit:1, noise:2, req:{item:'화염병'}, combatRoll:.62, out:[
     {p:1,text:'불은 센서 기둥 바로 앞에서 솟았다. 열상이 화면을 하얗게 태웠다.\n\n차단봉 옆의 좁은 틈으로 달구지를 밀어 넣었다. 거울 하나를 잃었지만 번호는 남기지 않았다.',fx:{item:{'화염병':-1},van:-3,combatEnd:1},sfx:'fire'},
     {p:1,text:'안개가 연기를 눌러 길 쪽으로 밀었다. 센서는 가려졌지만 우리도 앞을 못 봤다.\n\n차단봉을 들이받고서야 빠져나왔다. 뒤쪽 사이렌은 끝내 꺼지지 않았다.',fx:{item:{'화염병':-1},van:-10,pursuit:1,combatEnd:1},sfx:'hit'}]},
   {label:'작업을 버리고 논길로 물러난다', tactic:'이탈', out:[{p:1,text:'케이블과 공구만 챙겨 배수로로 돌아 나왔다.\n\n붉은 불이 등을 훑었지만 달구지는 이미 갓길을 벗어나고 있었다. 오래 돌아가도, 전원이 차에 타 있는 편이 낫다.',fx:{time:40,fuel:-4,moodAll:-1,combatEnd:1},sfx:'escape'}]},

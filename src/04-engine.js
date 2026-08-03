@@ -501,10 +501,30 @@ G.combatTacticNote = choice=>{
   if(delta<0) return '반복 부담';
   return '새 전술';
 };
+G.combatContextDelta = choice=>{
+  if(!choice) return 0;
+  const state=S&&S.combat?S.combat:null;
+  const pressure=state?state.pressure||0:0;
+  const terrain=Number(choice.terrainFit||0);
+  const noise=Number(choice.noise||0);
+  /* 지형을 제대로 쓴 선택은 보상하고, 몰린 상태에서 큰 소리를 내는 선택은
+     검문망에 더 빨리 잡히게 한다. 전세와 별개의 축이라 같은 장비라도
+     교전 장소와 앞 단계 선택에 따라 성공률이 달라진다. */
+  return terrain*0.035-pressure*0.05-noise*(0.018+((S&&S.pursuit)||0)*0.004);
+};
+G.combatContextNote = choice=>{
+  const notes=[];
+  if(Number(choice&&choice.terrainFit)>=2) notes.push('지형 정답');
+  else if(Number(choice&&choice.terrainFit)>=1) notes.push('지형 활용');
+  if(Number(choice&&choice.noise)>=2) notes.push('경보 노출 큼');
+  else if(Number(choice&&choice.noise)>=1) notes.push('소음 노출');
+  if(S&&S.combat&&(S.combat.pressure||0)>=2) notes.push('시간에 몰림');
+  return notes.join(' · ');
+};
 G.combatOdds = (choice)=>{
   const base=typeof choice.combatRoll==='number'?choice.combatRoll:0.52;
   const edge=S&&S.combat?S.combat.edge||0:0;
-  let bonus=edge*0.12+G.combatTacticDelta(choice);
+  let bonus=edge*0.12+G.combatTacticDelta(choice)+G.combatContextDelta(choice);
   if(S&&S.up&&S.up.armor) bonus+=0.04;
   if(S&&S.up&&S.up.scope&&choice.tactic==='사격') bonus+=0.08;
   if(G.isInjured('driver')) bonus-=0.08;
@@ -987,11 +1007,19 @@ G.applyFx = (fx)=>{
     chips.push({t:'🛡 전면 가드: 피해 감소', c:'plus'}); }
   if(fx.combatStart){
     const c=fx.combatStart;
-    S.combat={id:c.id||'encounter',threat:c.threat||'위협',edge:c.edge||0,startedDay:S.day};
+    S.combat={id:c.id||'encounter',threat:c.threat||'위협',edge:c.edge||0,
+      terrain:c.terrain||'',stakes:c.stakes||'',objective:c.objective||'',
+      pressure:clamp(c.pressure||0,0,3),startedDay:S.day};
   }
   if(fx.combatEdge&&S.combat){
     S.combat.edge=clamp((S.combat.edge||0)+fx.combatEdge,-2,3);
     chips.push({t:`전세 ${fx.combatEdge>0?'우세 +':'불리 '}${fx.combatEdge}`,c:fx.combatEdge>0?'plus':'minus'});
+  }
+  if(fx.combatPressure&&S.combat){
+    const before=S.combat.pressure||0;
+    S.combat.pressure=clamp(before+fx.combatPressure,0,3);
+    const delta=S.combat.pressure-before;
+    if(delta) chips.push({t:delta>0?'교전 압박 상승':'숨 돌릴 틈 확보',c:delta>0?'minus':'plus'});
   }
   const num = (k,label,unit)=>{ if(fx[k]){ const v=fx[k];
     if(k==='fuel') S.fuel=clamp(S.fuel+v,0,S.fuelMax);
@@ -1053,8 +1081,11 @@ G.applyFx = (fx)=>{
     if(S.combat){
       const history=Array.isArray(S.combat.history)?S.combat.history:[];
       const tactics=[...new Set(history.map(x=>x.tactic).filter(Boolean))];
+      const context=[S.combat.terrain&&`지형: ${S.combat.terrain}`,
+        S.combat.objective&&`처음 목표: ${S.combat.objective}`,
+        S.combat.stakes&&`실패 위험: ${S.combat.stakes}`].filter(Boolean).join('\n');
       G.addNote({type:'사건',title:`교전 기록: ${S.combat.threat}`,
-        body:`${history.map(x=>`${x.step} — ${x.tactic}: ${x.label}`).join('\n')||'전술 기록 없음'}\n결과: 교전 종료. 차체 ${Math.round(S.van)}/${S.vanMax}, 관측 ${S.pursuit}/5.`,
+        body:`${context}${context?'\n':''}${history.map(x=>`${x.step} — ${x.tactic}: ${x.label}`).join('\n')||'전술 기록 없음'}\n결과: 교전 종료. 차체 ${Math.round(S.van)}/${S.vanMax}, 관측 ${S.pursuit}/5.`,
         links:['달구지','천리안']});
       if(tactics.length>=2&&S.party.length){ G.moodAll(1); chips.push({t:'전술 연계 · 사기 +1',c:'plus'}); }
       chips.push({t:'교전 종료 · 전술 기록 저장',c:'plus'});

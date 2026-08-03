@@ -97,6 +97,49 @@ const errors = [];
 const warnings = [];
 const personIds = new Set(Object.keys(D.comps || {}));
 
+/* 화자 스크립트와 연쇄 사건은 대사 자체가 자연스러워도 연결 키 하나가
+   어긋나면 화면에서 갑자기 다른 사람이 말하거나 앞 설명 없이 다음 장면이 뜬다.
+   긴 시나리오를 추가할 때 그 회귀를 데이터 단계에서 막는다. */
+const eventById = new Map(allEvents.map(event => [event.id, event]));
+const speakerIds = new Set([
+  ...Object.keys(D.comps || {}), ...Object.keys(D.npcs || {}),
+  'me','나','sys','record','radio','cheollian','grandfather','mother','father',
+  'player_child','intro_child','unknown','passer_man','passer_woman','passer_elder',
+  'passer_child','passer_merchant','passer_guard','passer_refugee','passer_worker',
+  'passer_medic','seoyeon','mingyu'
+]);
+const validateSpeaker = (value, scope) => {
+  const who=typeof value==='string'?value:value&&value.who;
+  if(!who) errors.push(`화자 스크립트 빈 값: ${scope}`);
+  else if(!speakerIds.has(who)) errors.push(`등록되지 않은 화자: ${scope} / ${who}`);
+  if(value&&typeof value==='object'&&value.kind==='dialogue'&&!value.name)
+    errors.push(`익명 대화 화자 이름 누락: ${scope} / ${who}`);
+};
+for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
+  const event=eventById.get(eventId);
+  if(!event){ errors.push(`화자 스크립트의 사건 누락: ${eventId}`); continue; }
+  for(const [index,value] of (script.text||[]).entries()) validateSpeaker(value,`${eventId}.text.${index}`);
+  for(const [path, speakers] of Object.entries(script.choices||{})){
+    const [choiceIndex,outcomeIndex]=path.split('.').map(Number);
+    const outcome=event.choices&&event.choices[choiceIndex]&&event.choices[choiceIndex].out
+      &&event.choices[choiceIndex].out[outcomeIndex];
+    if(!outcome) errors.push(`화자 스크립트 결과 경로 누락: ${eventId} / ${path}`);
+    for(const [index,value] of (speakers||[]).entries()) validateSpeaker(value,`${eventId}.${path}.${index}`);
+  }
+}
+for (const event of allEvents) {
+  for (const [choiceIndex,choice] of (event.choices||[]).entries()) {
+    for (const [outcomeIndex,outcome] of (choice.out||[]).entries()) {
+      const target=outcome.fx&&outcome.fx.chain;
+      if(target&&!eventById.has(target)) errors.push(`연쇄 사건 대상 누락: ${event.id} ${choiceIndex}.${outcomeIndex} → ${target}`);
+      if(target===event.id) errors.push(`자기 자신으로 되도는 연쇄 사건: ${event.id}`);
+    }
+  }
+}
+for (const eventId of Object.keys(D.storyContext||{})) {
+  if(!eventById.has(eventId)) errors.push(`앞 이야기 문맥의 사건 누락: ${eventId}`);
+}
+
 for (const item of D.banter || []) {
   if (personIds.has(item.who) && /^\s*\(/.test(item.t || '')) {
     errors.push(`행동 지문에 인물 화자 지정: ${item.who} — ${item.t}`);
