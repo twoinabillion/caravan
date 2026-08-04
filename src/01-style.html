@@ -242,13 +242,13 @@ input{font-family:inherit}
 .event-scroll{flex:1;min-height:0;overflow-y:auto;padding:14px 16px 8px;touch-action:pan-y;
   overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
   scrollbar-color:var(--line) transparent}
-.event-choice-dock{flex:none;padding:8px 14px calc(10px + var(--safe-bottom));
+.event-choice-dock{flex:none;padding:8px 14px calc(8px + var(--safe-bottom));
   border-top:1px solid #2c3657;background:#0d111e;
   box-shadow:0 -10px 24px rgba(4,6,12,.42)}
 .choice-dock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;
   font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--amber-dim)}
 .choice-dock-head small{font-size:11px;letter-spacing:0;color:#929bb4}
-.story-progress-dock{min-height:131px}
+.story-progress-dock{min-height:108px}
 .story-auto-toggle{flex:none;min-width:78px;min-height:44px;margin:-8px 0;padding:6px 10px;
   border:1px solid #39456f;border-radius:22px;color:#aeb7ce;background:rgba(255,255,255,.025);
   font:10.5px/1 var(--mono);letter-spacing:.04em}
@@ -257,7 +257,7 @@ input{font-family:inherit}
 .story-auto-toggle.waiting{color:#f0c783;border-color:rgba(240,199,131,.42);
   background:rgba(240,199,131,.06)}
 .story-progress-dock .story-next{min-height:61px;display:flex;flex-direction:column;justify-content:center}
-.event-choice-dock>.choices{max-height:min(33dvh,290px);overflow-y:auto;padding:1px 2px 2px;
+.event-choice-dock>.choices{max-height:min(31dvh,280px);overflow-y:auto;padding:1px 2px 2px;
   touch-action:pan-y;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
   scrollbar-color:var(--line) transparent}
 @keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
@@ -1097,7 +1097,7 @@ input{font-family:inherit}
 .ui-large-text .stl-field-result p,.ui-large-text .cmsg{font-size:15px;line-height:1.62}
 .ui-large-text .story-context,.ui-large-text .combat-objective,.ui-large-text .mission-strip,
 .ui-large-text .st-sec .csub,.ui-large-text .stl-field-focus-copy span{font-size:12.5px;line-height:1.5}
-.ui-large-text .event-choice-dock>.choices{max-height:min(41dvh,350px)}
+.ui-large-text .event-choice-dock>.choices{max-height:min(35dvh,320px)}
 .ui-reduce-motion *{animation-duration:.001ms!important;animation-iteration-count:1!important;
   transition-duration:.001ms!important;scroll-behavior:auto!important}
 #bt-song{position:absolute;right:14px;bottom:8px;min-height:40px;font-family:var(--mono);font-size:11px;

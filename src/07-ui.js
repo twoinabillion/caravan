@@ -626,13 +626,21 @@ const UI = (()=>{
     });
     speakers.filter(item=>playerSpeaker(item.id)&&!lanes.has(item.key))
       .forEach(item=>lanes.set(item.key,'right'));
-    let npcIndex=[...lanes.keys()].filter(key=>
-      !['speaker:me','speaker:player_child','speaker:나'].includes(key)).length;
-    speakers.filter(item=>!playerSpeaker(item.id)).forEach(item=>{
-      if(lanes.has(item.key)) return;
-      lanes.set(item.key,npcIndex%2===0?'left':'right');
-      npcIndex++;
-    });
+
+    const npcSpeakers=speakers.filter(item=>!playerSpeaker(item.id));
+    if(npcSpeakers.length<=2){
+      let npcIndex=[...lanes.keys()].filter(key=>
+        !['speaker:me','speaker:player_child','speaker:나'].includes(key)).length;
+      npcSpeakers.forEach(item=>{
+        if(lanes.has(item.key)) return;
+        lanes.set(item.key,npcIndex%2===0?'left':'right');
+        npcIndex++;
+      });
+    }else{
+      npcSpeakers.forEach(item=>{
+        if(!lanes.has(item.key)) lanes.set(item.key,'left');
+      });
+    }
     return lanes;
   }
   function dialogueSide(turn,lanes){
@@ -1457,8 +1465,8 @@ const UI = (()=>{
         :turn.kind==='narration'?'장면 설명: ':`${state.label}: `;
       live.textContent=speaker+stripTags(turn.text);
     }
-    const dockHeight=194;
-    const compact=state.turns.length<=12 && (reader.scrollHeight + dockHeight) < (sheet.clientHeight||420);
+    const dockHeight=dock ? Math.min(224,Math.max(170,dock.offsetHeight||194)) : 194;
+    const compact=state.turns.length<=16 && (reader.scrollHeight + dockHeight) < (sheet.clientHeight||420);
     sheet.classList.toggle('story-compact',compact);
     const entering=reader.querySelector('[data-story-entry]:last-child');
     if(entering){
