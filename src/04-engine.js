@@ -28,7 +28,7 @@ G.newGame = (mode, name)=>{
     memories:{choices:{},pending:[],history:[]}, knowledge:{},
     relations:{pairs:{},seenChats:{}},
     director:{intensity:10,phase:'build',relaxEvents:0},
-    combat:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
+    combat:null, lastCombatReport:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
   };
   rng = mulberry32(S.seed);
@@ -72,6 +72,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   G.ensureNarrativeState();
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
+  if(S.lastCombatReport===undefined) S.lastCombatReport=null;
   if(S.routePlan===undefined) S.routePlan=null;
   if(!S.stats) S.stats={km:0,events:0,nonlethal:0};
   if(!Number.isFinite(S.stats.nonlethal)) S.stats.nonlethal=0;
@@ -545,23 +546,53 @@ G.combatContextNote = choice=>{
   if(S&&S.combat&&(S.combat.pressure||0)>=2) notes.push('시간에 몰림');
   return notes.join(' · ');
 };
-G.combatOdds = (choice)=>{
+G.combatIntentAnswer = (evd,choice)=>{
+  const combat=evd&&evd.combat;
+  const counters=combat&&combat.counters;
+  if(!counters||!choice||!choice.tactic) return null;
+  const label=counters[choice.tactic];
+  return label?{match:true,label}:null;
+};
+G.combatIntentDelta = (evd,choice)=>G.combatIntentAnswer(evd,choice)?0.04:0;
+G.combatIntentNote = (evd,choice)=>{
+  const answer=G.combatIntentAnswer(evd,choice);
+  return answer?`의도 대응 · ${answer.label}`:'';
+};
+G.combatReadDelta = choice=>{
+  const read=S&&S.combat&&S.combat.read;
+  if(!read||!choice||!choice.tactic||!Array.isArray(read.tactics)) return 0;
+  return read.tactics.includes(choice.tactic)?0.1:0;
+};
+G.combatReadNote = choice=>{
+  const read=S&&S.combat&&S.combat.read;
+  if(!read||!choice||!choice.tactic||!Array.isArray(read.tactics)) return '';
+  return read.tactics.includes(choice.tactic)?'읽어낸 틈 활용':'다른 해법';
+};
+G.combatOdds = (choice,evd)=>{
   const base=typeof choice.combatRoll==='number'?choice.combatRoll:0.52;
   const edge=S&&S.combat?S.combat.edge||0:0;
-  let bonus=edge*0.12+G.combatTacticDelta(choice)+G.combatContextDelta(choice);
+  const readBonus=G.combatReadDelta(choice);
+  let bonus=edge*0.12+G.combatTacticDelta(choice)+G.combatContextDelta(choice)
+    +G.combatIntentDelta(evd,choice)+readBonus;
   if(S&&S.up&&S.up.armor) bonus+=0.04;
   if(S&&S.up&&S.up.scope&&choice.tactic==='사격') bonus+=0.08;
   if(G.isInjured('driver')) bonus-=0.08;
-  return clamp(base+bonus,0.12,0.9);
+  /* 앞 단계에서 구체적인 틈을 읽고 그에 맞는 해법을 고른 경우에만
+     일반 성공 상한 90%를 95%까지 연다. 준비해도 실패 가능성은 남긴다. */
+  return clamp(base+bonus,0.12,readBonus>0?0.95:0.9);
 };
-G.combatGrade = choice=>{
-  const p=G.combatOdds(choice);
+G.combatGrade = (choice,evd)=>{
+  const p=G.combatOdds(choice,evd);
   return p>=0.68?'우세':p<0.42?'불리':'팽팽';
 };
 G.rememberCombatChoice = (evd,choice)=>{
   if(!evd||!evd.combat||!choice) return null;
+  const answer=G.combatIntentAnswer(evd,choice);
+  const read=G.combatReadNote(choice);
   const entry={phase:evd.combat.phase,step:evd.combat.step,
-    tactic:choice.tactic||'행동',label:String(choice.label||'').replace(/<[^>]*>/g,'')};
+    tactic:choice.tactic||'행동',label:String(choice.label||'').replace(/<[^>]*>/g,''),
+    intent:evd.combat.intent||'',response:answer&&answer.label||'',read,
+    context:G.combatContextNote(choice)};
   if(S.combat){
     if(!Array.isArray(S.combat.history)) S.combat.history=[];
     S.combat.history.push(entry);
@@ -573,7 +604,7 @@ G.rememberCombatChoice = (evd,choice)=>{
 G.pickOutcome = (evd, choice)=>{
   if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')) return choice.out[0];
   if(choice.combatRoll!==undefined&&choice.out.length>1)
-    return rng()<G.combatOdds(choice)?choice.out[0]:choice.out[1];
+    return rng()<G.combatOdds(choice,evd)?choice.out[0]:choice.out[1];
   return G.rollOut(choice.out);
 };
 
@@ -677,6 +708,43 @@ G.routeStatus = ()=>{
   if(at) reached.add(at);
   const done=def.corridor.filter(id=>reached.has(id)).length;
   return {state,def,done,total:def.corridor.length,complete:state.status==='complete'};
+};
+G.durationLabel = mins=>{
+  mins=Math.max(0,Math.round(Number(mins)||0));
+  if(mins<60) return `${mins}분`;
+  const h=Math.floor(mins/60), m=mins%60;
+  return m?`${h}시간 ${m}분`:`${h}시간`;
+};
+/* 노선 선택은 숨은 정답 대신 지금 가진 자원과 감당할 시간을 보여 준다.
+   거리는 고정값이 아니라 실제 도로 데이터를 합산해 지도 수정에도 함께 갱신된다. */
+G.routeForecast = id=>{
+  const def=D.routePlans&&D.routePlans[id];
+  if(!def) return null;
+  let km=0,fuel=0,rough=0;
+  for(let i=0;i<def.corridor.length-1;i++){
+    const e=G.edgeBetween(def.corridor[i],def.corridor[i+1]);
+    if(!e) continue;
+    km+=e[2]; fuel+=G.fuelFor(e[2],e[3]);
+    if(e[3]==='rough') rough++;
+  }
+  const stops=def.corridor.slice(1,-1).filter(node=>D.nodes[node]&&D.nodes[node].stl).length;
+  const short=Math.max(0,fuel-Math.floor(S.fuel));
+  const readiness=short===0?'현재 연료로 통과 가능'
+    :stops?`연료 ${short}L가량은 중간 보급 필요`:`출발 전 연료 ${short}L가량 더 필요`;
+  return {id,km,fuel,rough,stops,minutes:Math.ceil(km/44*60),short,readiness};
+};
+G.travelForecast = id=>{
+  const chk=G.canTravelTo(id);
+  if(!chk.ok) return {...chk,minutes:0,risk:''};
+  const reasons=[];
+  if(chk.road==='rough') reasons.push('험로');
+  if(S.wx==='storm') reasons.push('폭풍');
+  else if(S.wx==='rain') reasons.push('빗길');
+  else if(S.wx==='dust') reasons.push('먼지');
+  if(S.fatigue>=60) reasons.push('피로 누적');
+  const shortage=S.fuel<chk.fuel;
+  return {...chk,minutes:Math.ceil(chk.km/44*60),shortage,
+    risk:reasons.length?reasons.join(' · '):'보통 도로'};
 };
 G.routeTravelCheck = (from,to)=>{
   const rs=G.routeStatus();
@@ -1131,7 +1199,8 @@ G.applyFx = (fx)=>{
     const c=fx.combatStart;
     S.combat={id:c.id||'encounter',threat:c.threat||'위협',edge:c.edge||0,
       terrain:c.terrain||'',stakes:c.stakes||'',objective:c.objective||'',
-      kind:c.kind||'교전',pressure:clamp(c.pressure||0,0,3),startedDay:S.day};
+      kind:c.kind||'교전',pressure:clamp(c.pressure||0,0,3),read:null,startedDay:S.day,
+      start:{van:S.van,fuel:S.fuel,fatigue:S.fatigue,pursuit:S.pursuit}};
   }
   if(fx.combatEdge&&S.combat){
     S.combat.edge=clamp((S.combat.edge||0)+fx.combatEdge,-2,3);
@@ -1142,6 +1211,11 @@ G.applyFx = (fx)=>{
     S.combat.pressure=clamp(before+fx.combatPressure,0,3);
     const delta=S.combat.pressure-before;
     if(delta) chips.push({t:delta>0?'교전 압박 상승':'숨 돌릴 틈 확보',c:delta>0?'minus':'plus'});
+  }
+  if(fx.combatRead&&S.combat){
+    S.combat.read={label:String(fx.combatRead.label||'틈을 읽었다'),
+      tactics:Array.isArray(fx.combatRead.tactics)?[...fx.combatRead.tactics]:[]};
+    chips.push({t:`◎ 읽어낸 틈 · ${S.combat.read.label}`,c:'plus'});
   }
   const num = (k,label,unit)=>{ if(fx[k]){ const v=fx[k];
     if(k==='fuel') S.fuel=clamp(S.fuel+v,0,S.fuelMax);
@@ -1205,9 +1279,20 @@ G.applyFx = (fx)=>{
       const tactics=[...new Set(history.map(x=>x.tactic).filter(Boolean))];
       const kind=S.combat.kind||'교전';
       const result=fx.combatResult==='success'?'목표 달성':fx.combatResult==='partial'?'부분 달성':'종료';
+      const start=S.combat.start||{};
+      const costs=[
+        Number.isFinite(start.van)&&Math.round(S.van-start.van)!==0?`차체 ${Math.round(S.van-start.van)>0?'+':''}${Math.round(S.van-start.van)}%`:null,
+        Number.isFinite(start.fuel)&&Math.round(S.fuel-start.fuel)!==0?`연료 ${Math.round(S.fuel-start.fuel)>0?'+':''}${Math.round(S.fuel-start.fuel)}L`:null,
+        Number.isFinite(start.fatigue)&&Math.round(S.fatigue-start.fatigue)!==0?`피로 ${Math.round(S.fatigue-start.fatigue)>0?'+':''}${Math.round(S.fatigue-start.fatigue)}`:null,
+        Number.isFinite(start.pursuit)&&S.pursuit-start.pursuit!==0?`관측 ${S.pursuit-start.pursuit>0?'+':''}${S.pursuit-start.pursuit}`:null,
+      ].filter(Boolean);
+      S.lastCombatReport={kind,threat:S.combat.threat,result,resultCode:fx.combatResult||'end',
+        tactics,history:history.map(x=>({...x})),read:S.combat.read&&S.combat.read.label||'',
+        readUsed:history.some(x=>x.read==='읽어낸 틈 활용'),costs,day:S.day};
       const context=[S.combat.terrain&&`지형: ${S.combat.terrain}`,
         S.combat.objective&&`처음 목표: ${S.combat.objective}`,
-        S.combat.stakes&&`실패 위험: ${S.combat.stakes}`].filter(Boolean).join('\n');
+        S.combat.stakes&&`실패 위험: ${S.combat.stakes}`,
+        S.combat.read&&`읽어낸 틈: ${S.combat.read.label}`].filter(Boolean).join('\n');
       G.addNote({type:'사건',title:`${kind} 기록: ${S.combat.threat}`,
         body:`${context}${context?'\n':''}${history.map(x=>`${x.step} — ${x.tactic}: ${x.label}`).join('\n')||'행동 기록 없음'}\n결과: ${result}. 차체 ${Math.round(S.van)}/${S.vanMax}, 관측 ${S.pursuit}/5.`,
         links:['달구지','천리안']});
@@ -1510,6 +1595,16 @@ G.exploreStatus = ()=>{
   if(G.isNight()) return {ok:false,tries,mins,fatigue,reason:'해가 진 뒤에는 주변을 탐색할 수 없다'};
   if(S.fatigue>=80) return {ok:false,tries,mins,fatigue,reason:'피로 80% 이상 — 먼저 쉬어야 한다'};
   return {ok:true,tries,repeat,fresh,mins,fatigue,miss:repeat?0.45:0.15};
+};
+G.exploreForecast = status=>{
+  status=status||G.exploreStatus();
+  const region=G.regionOf();
+  const danger=(S.pursuit>=3||S.wx==='storm'||region==='north')?'높음'
+    :(S.pursuit>0||S.wx==='rain'||status.repeat)?'보통':'낮음';
+  const focus=region==='north'?'통제 흔적 · 우회로 · 생존 물자'
+    :region==='central'?'사람의 흔적 · 폐시설 · 보급품':'생활 흔적 · 고철 · 길의 소문';
+  const guaranteed=status.fresh?'고철 4 · 체결 부품 가능':'확정 회수 없음';
+  return {danger,focus,guaranteed};
 };
 G.explore = ()=>{
   if(S.driving||UI.modalOpen()) return false;

@@ -85,6 +85,50 @@ for (const page of D.intro || []) {
     if (['dialogue','thought','letter'].includes(turn.kind)) add('intro-turn', turn.name || turn.who, turn.text);
   }
 }
+
+/* 인트로의 핵심 정보는 '설명을 들음 → 확인 행동 → 출발 결정' 순서로
+   도착해야 한다. 키워드가 모두 있어도 순서가 뒤집히면 1에서 5로 건너뛴
+   것처럼 보이므로, 플레이어가 실제로 보게 되는 턴 순서를 함께 검사한다. */
+const introByScene = new Map((D.intro || []).map(page => [page.scene, page]));
+const introTurnIndex = (scene, pattern) => {
+  const page=introByScene.get(scene);
+  return page ? (page.beats || []).findIndex(turn => pattern.test(turn.text || '')) : -1;
+};
+const requireIntroOrder = (scene, steps) => {
+  let previous=-1;
+  for(const [label,pattern] of steps){
+    const index=introTurnIndex(scene,pattern);
+    if(index<0 || index<=previous){
+      errors.push(`인트로 인과 단계 누락·역전: ${scene} / ${label}`);
+      return;
+    }
+    previous=index;
+  }
+};
+requireIntroOrder('intro-parents-discovery', [
+  ['아이의 가족 질문', /엄마랑 아빠도/],
+  ['할아버지의 불확실성', /확실히 몰랐어/],
+  ['부모가 발견한 승인 공백', /승인자 칸은 비어/],
+]);
+requireIntroOrder('intro-envelope-signal', [
+  ['장례 직후 출발 금지', /곧장 시동부터 걸지는 마라/],
+  ['전압 점검 행동', /전압 점검/],
+  ['남산 호출', /기록 대조를 요청합니다/],
+  ['그날은 출발하지 않음', /아무것도 싣지 않았다/],
+]);
+requireIntroOrder('intro-departure-choice', [
+  ['불완전한 장치 인정', /아직은 몰라/],
+  ['추가 기록 필요', /같은 이송을 겪은 사람/],
+  ['동행은 본인 선택', /같은 곳까지 가겠다는 사람/],
+  ['30일 행동 시한', /서른 날 안에/],
+]);
+const currentTransfer=introByScene.get('intro-current-expulsion');
+const childTransferSpeech=(currentTransfer&&currentTransfer.beats||[])
+  .filter(turn=>turn.kind==='dialogue'&&turn.who==='intro_child')
+  .map(turn=>turn.text).join('\n');
+if(/제7\s*구역.*20kg|검문소.*통행/s.test(childTransferSpeech)){
+  errors.push('8살 도윤이 행정 정보를 완성된 문장으로 대신 설명함');
+}
 for (const [id, npc] of Object.entries(D.npcs || {})) {
   add('npc', id, npc.greet0);
   add('npc', id, npc.greetGood);
@@ -226,6 +270,18 @@ for (const [id, patterns] of Object.entries(recruitJoinRules)) {
     .filter(outcome => outcome.fx && outcome.fx.offerComp);
   if (joins.length !== 1) errors.push(`합류 확정 분기 수 이상: ${id} (${joins.length})`);
 }
+for (const id of Object.keys(D.comps || {})) {
+  const task=eventById.get(`rq_${id}_task`);
+  const follow=eventById.get(`rq_${id}_follow`);
+  const join=eventById.get(`rq_${id}_join`);
+  if(!task||!follow||!join) continue;
+  const taskOut=(task.choices||[]).flatMap(choice=>choice.out||[]);
+  const followOut=(follow.choices||[]).flatMap(choice=>choice.out||[]);
+  if(taskOut.some(out=>!(out.fx&&out.fx.recruitRoad===id)))
+    errors.push(`동료 과제 결과가 후속 체험으로 이어지지 않음: ${id}`);
+  if(followOut.some(out=>!(out.fx&&out.fx.recruitReady===id&&out.fx.chain===join.id)))
+    errors.push(`동료 합류 전 망설임·확인 단계 누락: ${id}`);
+}
 
 const introGrandfatherTerms = (D.intro || []).flatMap(page => page.beats || [])
   .filter(turn => turn.kind === 'dialogue' && turn.who === 'grandfather')
@@ -239,6 +295,8 @@ const aiTells = [
   /이를 통해/, /더 나아가/, /전반적으로/, /결론적으로/,
   /핵심은/, /의미합니다/, /판단됩니다/, /필요가 있습니다/,
   /선이 아니라 삶/, /해야 하는 건 (?:질문|답|사람|길)/,
+  /중요한 건/, /문제는 [^.!?]{0,45}(?:아니라|아냐)/,
+  /(?:선택|판단|질문|답|이유)(?:은|이|가|을) [^.!?]{0,45}의 몫/,
 ];
 for (const sample of samples) {
   const hit = aiTells.find(pattern => pattern.test(sample.text));

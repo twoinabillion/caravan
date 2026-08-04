@@ -53,8 +53,8 @@ no split panels, no UI, no zombies, no fantasy, no glossy sci-fi.
 
 기존 `intro-years-together`와 `grandfather-garage`, 실제 기본 달구지
 스프라이트를 참조한다. 차는 공장제 캠핑카나 대형 RV가 아니라 폐냉장고
-단열판과 합판으로 만든 작고 미완성인 이동식 집이어야 한다. 생성 원본과 같은
-`1672×941` 화면비를 유지한 JPEG
+단열판과 합판으로 만든 작고 미완성인 이동식 집이어야 한다. `1672×941` 생성
+원본의 화면비를 유지해 모바일용 `1280×720` 고품질 JPEG로 최적화한
 `assets/intro/06-camper-conversion-v3.jpg`를 게임에 사용한다. 처음부터 적재함을
 늘린 차가 아니라, 둘이 지낼 기본 생활칸을 기존 파란 용달차에 올리는 장면이다.
 차대와 생활칸의 증축은 실제 동료 수와 좌석 업그레이드가 늘 때부터 보여 준다.

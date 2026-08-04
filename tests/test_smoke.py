@@ -33,6 +33,8 @@ with sync_playwright() as p:
 
     print('― 부팅/진입')
     check('타이틀 표시', pg.locator('#bt-new').is_visible())
+    check('모바일 단일 HTML 35MB 이하', (ROOT / '서울까지400km.html').stat().st_size < 35_000_000,
+          f"{(ROOT / '서울까지400km.html').stat().st_size / 1_000_000:.1f}MB")
     check('「파란 트럭의 밤」 타이틀 BGM 내장',
           pg.evaluate("D.bgm.title.startsWith('data:audio/mpeg;base64,') && D.bgm.titleLoop === false"))
     early_sound = pg.evaluate('''() => ({
@@ -296,6 +298,8 @@ with sync_playwright() as p:
       S._exploreNodes={}; S._salvagedNodes={}; S._salvageCount=2;
       UI.renderAll();
       const firstStatus=G.exploreStatus();
+      const firstForecast=G.exploreForecast(firstStatus);
+      const panelForecast=document.querySelector('[data-a="explore"]')?.textContent||'';
       const d0=S.day*1440+S.min, f0=S.fatigue, scrap0=S.scrap, parts0=S.items['부품']||0;
       const first=G.explore();
       const d1=S.day*1440+S.min, f1=S.fatigue;
@@ -313,7 +317,8 @@ with sync_playwright() as p:
       const nextDay=G.exploreStatus();
       S=JSON.parse(snapshot); rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll(); G.save();
       return {firstStatus,secondStatus,exhausted,nextDay,freshGain,first,second,third,unchanged,
-        firstMins:d1-d0,secondMins:d2-d1,firstFatigue:f1-f0,secondFatigue:f2-f1};
+        firstForecast,panelForecast,firstMins:d1-d0,secondMins:d2-d1,
+        firstFatigue:f1-f0,secondFatigue:f2-f1};
     }''')
     check('탐색 최소 2시간·재탐색 4시간', exploration['first'] and exploration['second'] and
           exploration['firstMins'] == 120 and exploration['secondMins'] == 240, str(exploration))
@@ -323,6 +328,9 @@ with sync_playwright() as p:
     check('새 지역 확정 고철·세 번째 지역 부품', exploration['firstStatus']['fresh'] and
           exploration['freshGain']['scrap'] == 4 and exploration['freshGain']['parts'] == 1,
           str(exploration))
+    check('탐색 전에 확정 회수·지역 목표·위험 표시',
+          exploration['firstForecast']['guaranteed'].startswith('고철 4') and
+          '찾을 것' in exploration['panelForecast'] and '탐색 위험' in exploration['panelForecast'], str(exploration))
     check('같은 날 세 번째 탐색 차단·다음 날 해금', not exploration['third'] and
           not exploration['exhausted']['ok'] and exploration['unchanged'] and
           exploration['nextDay']['ok'], str(exploration))
@@ -659,7 +667,7 @@ with sync_playwright() as p:
         familyBeats.some(t=>t.text.includes('6,412명은 더 이상')) &&
         appealBeats.some(t=>t.text.includes('원격 이의 제기 경로가 없습니다')) &&
         workshopBeats.some(t=>t.text.includes('예비 연료를 전부 싣고')) &&
-        departureBeats.some(t=>t.text.includes('도착만 하고 끝낼 수 있는 길이 아니다')) &&
+        departureBeats.some(t=>t.text.includes('버스 번호와 사람 이름을 놓치지 않는다')) &&
         ['intro-current-expulsion','intro-dock-aid','intro-appeal-denied','intro-mother-keepsakes',
          'intro-dashboard-module','intro-workshop-departure','intro-departure-choice']
           .every(key=>D.scenes[key].startsWith('data:image/jpeg;base64,')) &&
@@ -672,7 +680,7 @@ with sync_playwright() as p:
         firstTransferBeats.some(t=>t.text.includes('강제 이송 명령서')) &&
         currentTransferBeats.some(t=>t.text.includes('한 사람에 20kg')) &&
         currentTransferBeats.some(t=>t.text.includes('집과 배급, 통행 권한')) &&
-        appealBeats.some(t=>t.text.includes('표 사본은 제가 가져가도 될까요')) &&
+        appealBeats.some(t=>t.text.includes('이 표, 복사해도 될까요')) &&
         departureBeats.every(t=>!t.text.includes('아이에게 빌린'));
       const gpNote2=D.events.find(e=>e.id==='gp_note2');
       const gpNote3=D.events.find(e=>e.id==='gp_note3');
@@ -684,7 +692,7 @@ with sync_playwright() as p:
       out.introMystery = D.intro[2].scene === 'intro-first-expulsion' &&
         D.intro[2].text.includes('사유란은 비어 있었다') &&
         D.intro.every(p=>!p.text.includes('사흘')) &&
-        D.intro.some(p=>p.text.includes('사실과 짐작을 같은 서랍에 넣으면'));
+        D.intro.some(p=>p.text.includes('우리가 지어낸 답이랑 헷갈리지 않으니까'));
       out.introHome = D.intro.some(p=>p.scene === 'intro-camper-conversion' &&
         p.text.includes('폐냉장고 단열판') &&
         p.text.includes('정비 레일') &&
@@ -902,7 +910,9 @@ with sync_playwright() as p:
       UI.renderAll();
       out.missionSecondary=document.querySelector('#mission-strip').classList.contains('has-secondary') &&
         document.querySelector('#mission-strip').textContent.includes('함께 진행 중') &&
-        document.querySelector('#mission-strip').textContent.includes('대전');
+        document.querySelector('#mission-strip').textContent.includes('대전') &&
+        document.querySelector('#mission-strip').textContent.includes('본편') &&
+        document.querySelector('#mission-strip').textContent.includes('남산 조치');
       S.recruitQ=recruit0; UI.renderAll();
       S.min=12*60;
       const walkParty0=[...S.party];
@@ -1049,6 +1059,13 @@ with sync_playwright() as p:
       S.flags=flags0; S.party=party0; S.comps=comps0;
       const systemSnapshot=structuredClone(S);
       S.at='gimcheon'; S.driving=null; S.routePlan=null;
+      const ridgeForecast=G.routeForecast('ridge'), marketForecast=G.routeForecast('market');
+      UI.showEvent(D.events.find(e=>e.id==='route_mid_fork')); UI.finishStory();
+      const routeChoiceText=document.querySelector('.event-choice-dock').textContent;
+      out.routeForecast=ridgeForecast.km===130&&marketForecast.km===219&&
+        ridgeForecast.fuel<marketForecast.fuel&&routeChoiceText.includes('순수 주행')&&
+        routeChoiceText.includes('보급 거점');
+      document.querySelector('#ev-wrap').classList.remove('on');
       G.chooseRoute('ridge');
       const ridgeGo=G.canTravelTo('sangju'), marketBlocked=G.canTravelTo('muju');
       out.routeChoice=G.routeStatus()?.def.id==='ridge'&&ridgeGo.ok&&!marketBlocked.ok&&
@@ -1105,6 +1122,7 @@ with sync_playwright() as p:
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
     check('시네마틱 이미지 114종·빌드 주입', r4['sceneCount'] == 114 and r4['sceneDataReady'], str(r4))
     check('김천 노선 선택·청주까지 경로 잠금', r4['routeChoice'], str(r4))
+    check('김천 두 노선에 실제 거리·시간·연료·보급 전망 표시', r4['routeForecast'], str(r4))
     check('비살상 구조·호송 3단계 임무와 장부 기록',
           r4['nonlethalMissions'] and r4['nonlethalLedger'], str(r4))
     check('정착지 행동이 다음 도로 사건으로 한 번 이어짐', r4['settlementRoadEcho'], str(r4))
@@ -1182,6 +1200,9 @@ with sync_playwright() as p:
         ['patrol_swarm','combat_swarm_read','combat_swarm_break'],
         ['patrol_toll','combat_toll_read','combat_toll_breach']
       ];
+      const combatEvents=D.events.filter(e=>e.combat);
+      out.intentData=combatEvents.length===15&&combatEvents.every(e=>
+        e.combat.intent&&e.combat.counters&&Object.keys(e.combat.counters).length>=2);
       out.threePhase=chains.every(ids=>ids.every((id,i)=>{
         const e=D.events.find(x=>x.id===id);
         return e&&e.combat&&e.combat.phase===i+1&&e.combat.total===3&&D.scenes[e.scene];
@@ -1190,8 +1211,10 @@ with sync_playwright() as p:
       out.hud=!!document.querySelector('.combat-hud') &&
         document.querySelector('.combat-hud').textContent.includes('정찰') &&
         document.querySelector('.combat-hud').textContent.includes('폐차 행렬') &&
+        document.querySelector('.combat-hud').textContent.includes('다음 움직임') &&
         document.querySelector('.combat-hud').textContent.includes('실패하면') &&
-        document.querySelector('.event-choice-dock').textContent.includes('엄폐');
+        document.querySelector('.event-choice-dock').textContent.includes('엄폐') &&
+        document.querySelector('.event-choice-dock').textContent.includes('의도 대응');
       document.querySelector('#ev-sheet [data-i="0"]').click();
       out.choiceFeedback=!!document.querySelector('.combat-last.result') &&
         document.querySelector('.combat-last.result').textContent.includes('엄폐') &&
@@ -1199,6 +1222,22 @@ with sync_playwright() as p:
         S.combat.terrain.includes('폐차 행렬')&&S.combat.pressure===0;
       UI.finishStory();
       out.chainLabel=document.querySelector('#ev-sheet [data-r="ok"]')?.textContent.includes('다음 단계');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      UI.showEvent(D.events.find(e=>e.id==='combat_walker_read')); UI.finishStory();
+      document.querySelector('#ev-sheet [data-i="0"]').click(); UI.finishStory();
+      out.readStored=S.combat&&S.combat.read&&S.combat.read.label.includes('세 번째 걸음')&&
+        document.querySelector('.combat-read')?.textContent.includes('읽어낸 틈');
+      document.querySelector('#ev-wrap').classList.remove('on');
+      const strike=D.events.find(e=>e.id==='combat_walker_strike');
+      UI.showEvent(strike); UI.finishStory();
+      const strikeChoice=strike.choices[0], savedRead=S.combat.read;
+      const prepared=G.combatOdds(strikeChoice,strike);
+      S.combat.read=null;
+      const unprepared=G.combatOdds(strikeChoice,strike);
+      S.combat.read=savedRead;
+      out.readBonus=prepared-unprepared>=.04&&prepared<=.95&&
+        G.combatReadNote(strikeChoice)==='읽어낸 틈 활용'&&
+        document.querySelector('.event-choice-dock').textContent.includes('읽어낸 틈 활용');
       document.querySelector('#ev-wrap').classList.remove('on');
       S.injuries={}; S.combat=null;
       G.applyFx({combatStart:{id:'test',threat:'test',terrain:'테스트 지형',objective:'테스트 목표',stakes:'테스트 실패',pressure:0},combatEdge:2});
@@ -1227,6 +1266,8 @@ with sync_playwright() as p:
       S.party=['minji']; const moodBefore=S.comps.minji.mood;
       G.applyFx({healInjury:'latest',combatEnd:1});
       out.recovered=!G.isInjured('driver')&&S.combat===null;
+      out.combatReport=S.lastCombatReport?.result==='종료'&&
+        S.lastCombatReport.tactics.join(',')==='엄폐,해킹'&&S.lastCombatReport.history.length===2;
       out.combatJournal=S.notes.at(-1)?.title==='교전 기록: test' &&
         S.notes.at(-1)?.body.includes('정찰 — 엄폐') && S.notes.at(-1)?.body.includes('지형: 테스트 지형') &&
         S.comps.minji.mood===Math.min(100,moodBefore+1);
@@ -1241,10 +1282,14 @@ with sync_playwright() as p:
     check('초계·드론·검문소 3단계 교전', rcombat['threePhase'], str(rcombat))
     check('교전 HUD·전술 표식·직전 선택 기억',
           rcombat['hud'] and rcombat['choiceFeedback'] and rcombat['chainLabel'], str(rcombat))
+    check('15개 전투·구조·호송 단계에 다음 움직임과 대응법 표시', rcombat['intentData'], str(rcombat))
+    check('앞 단계에서 읽은 틈이 마지막 판정에 실제 반영',
+          rcombat['readStored'] and rcombat['readBonus'], str(rcombat))
     check('전세·부상·회복 상태 반영', rcombat['edge'] and rcombat['injury'] and rcombat['recovered'], str(rcombat))
     check('같은 전술 반복 불리·전술 전환 유리', rcombat['tacticAdapt'], str(rcombat))
     check('지형 활용·시간 압박이 실제 성공률에 반영', rcombat['combatContext'], str(rcombat))
     check('교전 전술을 일지에 남기고 조합 보상', rcombat['combatJournal'], str(rcombat))
+    check('교전 종료 뒤 전술 흐름·결과·손실 결산 저장', rcombat['combatReport'], str(rcombat))
     check('전투 소모품은 실제 필요 수량까지 검사', rcombat['twoItemBlocked'] and rcombat['twoItemReady'], str(rcombat))
     check('Web Audio 전투 효과음 합성기', rcombat['sound'], str(rcombat))
     print('― 합류 전 의뢰')
@@ -1504,9 +1549,9 @@ with sync_playwright() as p:
         ep.text({day:31,flags:{core_transfer:true},party:[]}).includes('첫 이송은 1일 전에 이미 시작됐다');
       const render = (v, flags={}) => typeof v === 'function' ? v({flags, party:[]}) : v;
       const costs = decision.choices.map(c => render(c.out[0].text, {}));
-      out.distinctCosts = costs[0].includes('느린 합의') &&
-        costs[1].includes('원본 기록의 검색창도 꺼졌다') &&
-        costs[2].includes('삼중 감시조');
+      out.distinctCosts = costs[0].includes('첫 회의 채널이 열렸다') &&
+        costs[1].includes('원본 기록 검색창도 코어와 함께 꺼져 있었다') &&
+        costs[2].includes('근무표 첫 줄에는 이름 세 칸');
       out.gateSeparate = D.gateEvent.text({flags:{seoulTries:0}}).includes('추방 명령이 아닙니다') &&
         coreText.includes('인계 규약을 만들었습니다');
       const reveal = D.events.find(e => e.id === 'resist_reveal');

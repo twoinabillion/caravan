@@ -509,6 +509,14 @@ const UI = (()=>{
       meta=`DAY ${S.day}`;
       pct=Math.max(0,Math.min(100,(411-G.remainKm())/411*100));
     }
+    /* 동료 영입과 장터 의뢰에 몰입해도 1화의 시계가 사라지지 않게 한다.
+       부가 목표가 본편을 덮지 않고 같은 카드 아래 두 번째 줄로 남는다. */
+    if(rq||q){
+      const clock=`⌛ 본편 · ${esc(transfer.mission)} · 서울 도착이 아니라 코어 조치가 마감`;
+      secondary=secondary
+        ?secondary.replace('</span>',`<small class="ms-main-clock">${clock}</small></span>`)
+        :`<span class="ms-secondary main-clock">${clock}</span>`;
+    }
     const alerts=[
       S.fuel<10?'연료 부족':null,
       S.fatigue>=75?'졸음 위험':null,
@@ -546,6 +554,14 @@ const UI = (()=>{
   const stripTags=(v)=>String(v||'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
   function speakerInfo(who, label){
     const key=who==='나'?'me':who;
+    const normalizeUnknown=(id)=>{
+      if(!id||typeof id!=='string') return '이름을 모르는 사람';
+      if(id.startsWith('passer_')) return '길 위의 사람';
+      if(id==='me' || id==='player_child' || id==='intro_child') return '나';
+      if(id.startsWith('npc_')) return '동행자';
+      if(id.startsWith('comp_')) return '동행';
+      return '누군가';
+    };
     const manual={
       me:'나', grandfather:'할아버지', mother:'엄마', father:'아빠',
       intro_child:'서울에서 온 아이', player_child:'8살의 나', cheollian:'천리안', radio:'라디오',
@@ -553,13 +569,14 @@ const UI = (()=>{
       passer_child:'아이', passer_merchant:'상인', passer_guard:'경비',
       passer_refugee:'피난민', passer_worker:'일꾼', passer_medic:'의료인',
       seoyeon:'서연', mingyu:'민규',
-      sys:'길 위', record:'기록', unknown:'???'
+      driver:'운전수', sys:'길 위', record:'기록', unknown:'???', 나:'나'
     };
     const comp=D.comps&&D.comps[key], npc=D.npcs&&D.npcs[key];
     const playerName=key==='me'&&typeof S!=='undefined'&&S&&G.myName?G.myName():'나';
+    const resolvedManual=(typeof manual[key]==='string'&&manual[key])?manual[key]:normalizeUnknown(key);
     return {
       id:key,
-      name:label||(key==='me'?playerName:(comp&&comp.name)||(npc&&npc.name)||manual[key]||who||'누군가'),
+      name:label||(key==='me'?playerName:(comp&&comp.name)||(npc&&npc.name)||resolvedManual),
       portrait:D.portraits&&D.portraits[key]||null
     };
   }
@@ -944,6 +961,7 @@ const UI = (()=>{
         <div class="road-guest-head"><span class="rg-ico">${route.def.mark}</span><span>
           <small>김천에서 고른 길 · 청주까지 고정</small><b>${esc(route.def.name)}</b></span></div>
         <div class="road-guest-help">${esc(route.def.promise)}</div>
+        <div class="road-guest-memory"><b>노선 진행 ${route.done}/${route.total}</b> · 청주에서 두 길이 다시 합쳐진다.</div>
       </section>`:'';
       const guest=def?`<section class="road-guest-card" aria-label="${def.name} 임시 동행">
         <div class="road-guest-head"><span class="rg-ico">${def.guest.ic}</span><span>
@@ -995,22 +1013,23 @@ const UI = (()=>{
     if(n.stl) h+=`<button class="act primary" data-a="stl"><span class="ic">🏘</span><span><b>정착지에 들어간다</b><small>거래 · 대화 · 소문</small></span></button>`;
     if(!n.stl && n.type!=='goal'){
       const es=G.exploreStatus();
+      const ef=G.exploreForecast(es);
       const label=es.ok?(es.repeat?'남은 곳을 샅샅이 뒤진다':'주변을 탐색한다'):'주변 탐색';
       const small=es.ok
-        ?(es.repeat?'최소 4시간 · 피로 약 +15 · 실패율 45% · 오늘의 마지막 탐색'
-          :`최소 2시간 · 피로 약 +5 이상${es.fresh?' · 새 지역 고철 +4':''}`)
+        ?(es.repeat?`최소 4시간 · 피로 약 +15 · 탐색 위험 ${ef.danger} · 오늘의 마지막 탐색`
+          :`최소 2시간 · 피로 약 +5 이상 · ${ef.guaranteed} · 탐색 위험 ${ef.danger}`)
         :es.reason;
-      h+=`<button class="act" data-a="explore" ${es.ok?'':'disabled'}><span class="ic">🔦</span><span><b>${label}</b><small>${small}</small></span></button>`;
+      h+=`<button class="act" data-a="explore" ${es.ok?'':'disabled'}><span class="ic">🔦</span><span><b>${label}</b><small>${small}${es.ok?`<em class="act-forecast">찾을 것 · ${ef.focus}</em>`:''}</small></span></button>`;
     }
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     for(const nb of nbs){
       const t2=D.nodes[nb.id];
-      const fuel=G.fuelFor(nb.km,nb.road);
+      const forecast=G.travelForecast(nb.id), fuel=G.fuelFor(nb.km,nb.road);
       const lack = S.fuel<fuel;
       const chk=G.canTravelTo(nb.id), blocked=!chk.ok;
       h+=`<button class="act" data-go="${nb.id}" ${blocked?'disabled':''}>
         <span class="ic">${t2.type==='goal'?'⚡':'→'}</span>
-        <span><b>${t2.name}</b><small>${nb.km}km · 연료 약 ${fuel}L${nb.road==='rough'?' · 험로':''}${blocked&&chk.why?` · <span style="color:var(--amber)">${esc(chk.why)}</span>`:lack?' · <span style="color:var(--danger)">연료 부족 주의</span>':''}</small></span></button>`;
+        <span><b>${t2.name}</b><small>${nb.km}km · 주행 약 ${G.durationLabel(Math.ceil(nb.km/44*60))} · 연료 약 ${fuel}L${blocked&&chk.why?` · <span style="color:var(--amber)">${esc(chk.why)}</span>`:lack?' · <span style="color:var(--danger)">연료 부족 주의</span>':forecast.risk&&forecast.risk!=='보통 도로'?` · ${esc(forecast.risk)}`:''}</small></span></button>`;
     }
     if(S.flags.armed_age){
       h+=`<button class="act" data-a="craft"><span class="ic">🔨</span><span><b>작업대를 편다</b><small>무기·탄 제작 · 약 40분</small></span></button>`;
@@ -1147,14 +1166,23 @@ const UI = (()=>{
     const last=history[history.length-1];
     const terrain=c.terrain||(state&&state.terrain)||'';
     const stakes=c.stakes||(state&&state.stakes)||'';
+    const intent=c.intent||'';
+    const read=state&&state.read;
     const pressure=state?state.pressure||0:c.pressure||0;
     const kind=(state&&state.kind)||c.kind||'교전';
+    const report=opt.ended&&S.lastCombatReport;
+    const reportCost=report&&report.costs&&report.costs.length?report.costs.join(' · '):'추가 손실 없음';
     return `<section class="combat-hud" aria-label="${esc(kind)} 상황">
       <div class="combat-hud-head"><span class="combat-phase">${opt.result?'결과':esc(kind)} ${c.phase}/${c.total}</span>
         <b class="combat-step">${c.step}</b><span class="combat-threat">${c.threat}</span></div>
       <div class="combat-objective"><b>${opt.result?(opt.ended?'마침':'결과'):'목표'}</b><span>${opt.result?(opt.ended?'선택의 결과를 확인하고 현장을 마무리한다':'이 선택이 다음 단계의 진행을 바꾼다'):c.objective}</span></div>
+      ${!opt.result&&intent?`<div class="combat-intent"><b>다음 움직임</b><span>${esc(intent)}</span></div>`:''}
       ${!opt.result&&terrain?`<div class="combat-context"><span><b>지형</b>${esc(terrain)}</span>${stakes?`<span><b>실패하면</b>${esc(stakes)}</span>`:''}</div>`:''}
-      ${last?`<div class="combat-last ${opt.result?'result':''}"><b>${opt.result?'방금 선택':'직전 선택'}</b><span><strong>${esc(last.tactic)}</strong>${esc(last.label)}</span></div>`:''}
+      ${read?`<div class="combat-read"><b>읽어낸 틈</b><span>${esc(read.label)}</span></div>`:''}
+      ${last?`<div class="combat-last ${opt.result?'result':''}"><b>${opt.result?'방금 선택':'직전 선택'}</b><span><strong>${esc(last.tactic)}</strong>${esc(last.label)}${last.response?`<small>${esc(last.response)}</small>`:''}</span></div>`:''}
+      ${report?`<div class="combat-debrief"><span><b>작전 결산</b>${esc(report.result)} · ${esc(report.tactics.join(' → ')||'행동 기록 없음')}</span>
+        <span><b>${report.readUsed?'결정적 근거':'대가'}</b>${esc(report.readUsed?`읽어낸 틈을 마지막 행동에 활용 · ${report.read}`:reportCost)}</span>
+        ${report.readUsed?`<span><b>대가</b>${esc(reportCost)}</span>`:''}</div>`:''}
       <div class="combat-track" aria-hidden="true">${track}</div>
       <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">진행 ${grade}</span>
         <span class="${pressure>=2?'bad':pressure===0?'good':''}">압박 ${pressure}/3</span>
@@ -1169,10 +1197,16 @@ const UI = (()=>{
       if(!G.reqVisible(req)) return;
       const rq=G.reqOk(req);
       const cost=G.reqCostText(req);
+      const intentNote=G.combatIntentNote(evd,c);
+      const readNote=G.combatReadNote(c);
+      const routeId=(c.out||[]).map(o=>o.fx&&o.fx.routeChoice).find(Boolean);
+      const route=routeId&&G.routeForecast(routeId);
       count++;
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.tactic?`<span class="combat-tactic">${c.tactic}</span>`:''}${c.label}
+        ${intentNote?`<span class="combat-response">↳ ${esc(intentNote)}</span>`:''}
         ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
-        ${c.combatRoll!==undefined?`<span class="combat-odds">현재 전세 · ${G.combatGrade(c)} · ${G.combatTacticNote(c)}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}</span>`:''}
+        ${c.combatRoll!==undefined?`<span class="combat-odds">판정 전망 · ${G.combatGrade(c,evd)} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}</span>`:''}
+        ${route?`<span class="route-forecast"><b>${route.km}km · 순수 주행 ${G.durationLabel(route.minutes)} · 연료 약 ${route.fuel}L</b><small>${route.rough?`험로 ${route.rough}구간 · `:''}보급 거점 ${route.stops}곳 · ${esc(route.readiness)}</small></span>`:''}
         ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
     });
     return {html,count};
@@ -1210,28 +1244,29 @@ const UI = (()=>{
     return `<div class="event-scene-frame" role="button" tabindex="0"
       data-scene-key="${esc(key)}" data-cut-token="initial"
       aria-label="${esc(sceneAlt)} 장면 크게 보기">
-      <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면" decoding="async">
+      <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면" decoding="async" loading="eager" fetchpriority="high">
       <span class="scene-cut-mark" aria-hidden="true">장면 1</span>
       <span class="scene-zoom" aria-hidden="true">↗</span></div>`;
   }
   function storySceneShot(state,turn,index){
     const lanes=dialogueLaneMap(state.turns);
     const side=turn&&turn.kind==='dialogue'?dialogueSide(turn,lanes):'center';
+    const cadence=Math.floor(index/2);
     const shotCycle=[
       {x:50,y:50,scale:1.00},{x:42,y:48,scale:1.08},
       {x:58,y:53,scale:1.12},{x:50,y:60,scale:1.16}
     ];
-    let shot=shotCycle[index%shotCycle.length], tone=state.phase==='outcome'?'outcome':'story';
+    let shot=shotCycle[cadence%shotCycle.length], tone=state.phase==='outcome'?'outcome':'story';
     if(turn&&turn.kind==='dialogue'){
-      const swing=index%2?6:0;
+      const swing=cadence%2?6:0;
       shot=side==='right'
-        ? {x:68+swing,y:48+(index%3)*3,scale:1.11+(index%3)*.025}
-        : {x:32-swing,y:48+(index%3)*3,scale:1.11+(index%3)*.025};
+        ? {x:68+swing,y:48+(cadence%3)*3,scale:1.11+(cadence%3)*.025}
+        : {x:32-swing,y:48+(cadence%3)*3,scale:1.11+(cadence%3)*.025};
     }else if(turn&&['record','letter','thought'].includes(turn.kind)){
-      shot={x:index%2?58:42,y:61,scale:1.18+(index%2)*.025};
+      shot={x:cadence%2?58:42,y:61,scale:1.18+(cadence%2)*.025};
       tone='memory';
     }else if(turn&&['ai','radio'].includes(turn.kind)){
-      shot={x:50+(index%2?8:-8),y:45,scale:1.14+(index%3)*.02};
+      shot={x:50+(cadence%2?8:-8),y:45,scale:1.14+(cadence%3)*.02};
       tone='ai';
     }
     return {side,tone,...shot};
@@ -1268,7 +1303,7 @@ const UI = (()=>{
       frame.style.setProperty('--scene-x',carry.x||'50%');
       frame.style.setProperty('--scene-y',carry.y||'50%');
       frame.style.setProperty('--scene-scale',carry.scale||'1');
-      if(img.src!==src) img.src=src;
+      if(priorKey!==key) img.src=src;
       state.sceneCarry=null;
     }else if(firstRender||changed){
       const shot=storySceneShot(state,turn,index);
@@ -1277,7 +1312,7 @@ const UI = (()=>{
       frame.style.setProperty('--scene-x',`${shot.x}%`);
       frame.style.setProperty('--scene-y',`${shot.y}%`);
       frame.style.setProperty('--scene-scale',String(shot.scale));
-      if(img.src!==src) img.src=src;
+      if(changed) img.src=src;
     }
     img.alt=`${state.sceneAlt} · ${index+1}번째 장면`;
     const mark=frame.querySelector('.scene-cut-mark');

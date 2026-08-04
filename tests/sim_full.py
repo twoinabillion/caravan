@@ -10,11 +10,12 @@ HTML = Path(__file__).resolve().parent.parent / '서울까지400km.html'
 
 SETUP = r'''() => {
   window.SIM = {ev:0, evIds:{}, crises:{}, recruitedDay:{}, log:[],
-                minFood:99, minWater:99, foodZeroDays:0, waterZeroDays:0, stranded:false};
+                minFood:99, minWater:99, foodZeroDays:0, waterZeroDays:0, stranded:false,
+                blocked:{}};
   // 이벤트 자동 해소기 — UI를 열지 않고 즉시 선택/적용
   const pickOut = (outs) => { let tot=0; outs.forEach(o=>tot+=(o.p||1));
     let r = Math.random()*tot; for(const o of outs){ r-=(o.p||1); if(r<=0) return o; } return outs[outs.length-1]; };
-  UI.onArrive = () => 0;   // 도착 연출 스킵 — locEvent 즉시 개봉
+  UI.onArrive = () => 0;   // 도착 이미지 연출만 스킵 — 엔진의 locEvent 흐름은 그대로 둔다.
   const _end = G.endGame; G.endGame = (kind)=>{ SIM.endKind = kind; S.ended = true; };   // 사인 기록(연출 스킵)
   G.openEvent = (evd) => {
     if(!evd) return;
@@ -41,9 +42,11 @@ SETUP = r'''() => {
     const out = pickOut(ch.out||[]);
     if(out && out.fx){
       const fx = out.fx;
+      let combatEntry=fx.combatEnd?G.rememberCombatChoice(evd,ch):null;
       if(fx.offerComp && !G.hasComp(fx.offerComp) && G.doRecruit(fx.offerComp))
         SIM.recruitedDay[fx.offerComp]=S.day;
       G.applyFx(fx);
+      if(!combatEntry) G.rememberCombatChoice(evd,ch);
       G.afterChoice(evd,ch);  // 실제 UI와 동일한 동료 능력 사용·개인 사건 유대 보상
       if(fx.recruit) SIM.recruitedDay[fx.recruit]=S.day;
       if(S._chain){ const cid=S._chain; S._chain=null; G.openEventById(cid); }
@@ -86,6 +89,7 @@ STEP = r'''() => {
       open.delete(cur);
       for(const nb of G.neighbors(cur)){
         if(!allowed.has(nb.id)) continue;
+        if(!G.routeTravelCheck(cur,nb.id).ok) continue;
         const nd=best+nb.km;
         if(nd<(d[nb.id]??Infinity)){d[nb.id]=nd;prev[nb.id]=cur;}
       }
@@ -95,7 +99,8 @@ STEP = r'''() => {
     let step=reachable[0];
     if(step===start){
       // 영입 이벤트를 다시 띄우기 위해 가장 짧은 인접 도로를 왕복한다.
-      const n=G.neighbors(start).filter(x=>allowed.has(x.id)).sort((a,b)=>a.km-b.km)[0];
+      const n=G.neighbors(start).filter(x=>allowed.has(x.id)&&G.canTravelTo(x.id).ok)
+        .sort((a,b)=>a.km-b.km)[0];
       return n&&n.id;
     }
     while(prev[step]!==start && prev[step]!==undefined) step=prev[step];
@@ -199,10 +204,13 @@ STEP = r'''() => {
   if(!next){ SIM.stranded=true; OUT.done=true; OUT.note='no-edge'; return OUT; }
   let moved=false;
   if(G.startTravel(next)) moved=true;
-  if(!moved){ // 연료 0 — 위기(걸어서 기름 구함) 발동, 그래도 12회 연속이면 좌초
+  if(!moved){
+    const chk=G.canTravelTo(next), why=chk.why||'이동 불가';
+    SIM.blocked[why]=(SIM.blocked[why]||0)+1;
+    SIM.lastBlocked={from:S.at,to:next,why,fuel:S.fuel,route:S.routePlan&&S.routePlan.id||null};
     SIM.failDays=(SIM.failDays||0)+1;
     if(S.fuel<=0){ G.openEventById('crisis_nofuel'); }
-    if(SIM.failDays>=12){ SIM.stranded=true; OUT.done=true; OUT.note='stranded-fuel'; return OUT; }
+    if(SIM.failDays>=12){ SIM.stranded=true; OUT.done=true; OUT.note='stranded:'+why; return OUT; }
     if(!G.isNight() && S.fatigue<80){ try{ G.explore(); }catch(e){} }
     else G.camp();
   } else { SIM.failDays=0; SIM.lastFrom=S.driving?S.driving.from:null; }
@@ -218,7 +226,8 @@ COLLECT = r'''() => ({
   recruitedDay:SIM.recruitedDay, minFood:SIM.minFood, minWater:SIM.minWater,
   foodZeroDays:SIM.foodZeroDays, waterZeroDays:SIM.waterZeroDays,
   stranded:SIM.stranded, km:Math.round(S.stats.km), endKind:SIM.endKind||null,
-  recruitQ:S.recruitQ, partyIds:[...S.party], at:S.at, upBought:SIM.upBought||[]
+  recruitQ:S.recruitQ, partyIds:[...S.party], at:S.at, upBought:SIM.upBought||[],
+  blocked:SIM.blocked,lastBlocked:SIM.lastBlocked||null,routePlan:S.routePlan
 })'''
 
 def run():
@@ -255,7 +264,8 @@ def run():
             print(f"run{i+1:02d}: {note or 'maxstep'} day={data['day']} party={data['party']} "
                   f"km={data['km']} fuel={data['fuel']} food={data['food']} water={data['water']} "
                   f"ev={data['ev']} up={len(data['upBought'])} crew={','.join(data['partyIds'])} "
-                  f"rq={data['recruitQ']} at={data['at']} 좌초={data['stranded']} err={data['jsErrors']}")
+                  f"rq={data['recruitQ']} at={data['at']} route={data['routePlan']} "
+                  f"blocked={data['lastBlocked']} 좌초={data['stranded']} err={data['jsErrors']}")
             pg.close()
         browser.close()
 
