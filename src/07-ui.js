@@ -1202,12 +1202,15 @@ const UI = (()=>{
       const routeId=(c.out||[]).map(o=>o.fx&&o.fx.routeChoice).find(Boolean);
       const route=routeId&&G.routeForecast(routeId);
       count++;
-      html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>${c.tactic?`<span class="combat-tactic">${c.tactic}</span>`:''}${c.label}
-        ${intentNote?`<span class="combat-response">↳ ${esc(intentNote)}</span>`:''}
-        ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
-        ${c.combatRoll!==undefined?`<span class="combat-odds">판정 전망 · ${G.combatGrade(c,evd)} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}</span>`:''}
-        ${route?`<span class="route-forecast"><b>${route.km}km · 순수 주행 ${G.durationLabel(route.minutes)} · 연료 약 ${route.fuel}L</b><small>${route.rough?`험로 ${route.rough}구간 · `:''}보급 거점 ${route.stops}곳 · ${esc(route.readiness)}</small></span>`:''}
-        ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}</button>`;
+      const title = c.tactic ? `<span class="combat-tactic">${c.tactic}</span><span>${c.label}</span>` : `<span>${c.label}</span>`;
+      html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'}>
+          <div class="choice-head"><span class="choice-index">${count}</span><span class="choice-title">${title}</span></div>
+          ${intentNote?`<span class="combat-response">↳ ${esc(intentNote)}</span>`:''}
+          ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
+          ${c.combatRoll!==undefined?`<span class="combat-odds">판정 전망 · ${G.combatGrade(c,evd)} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}</span>`:''}
+          ${route?`<span class="route-forecast"><b>${route.km}km · 순수 주행 ${G.durationLabel(route.minutes)} · 연료 약 ${route.fuel}L</b><small>${route.rough?`험로 ${route.rough}구간 · `:''}보급 거점 ${route.stops}곳 · ${esc(route.readiness)}</small></span>`:''}
+          ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
+        </button>`;
     });
     return {html,count};
   }
@@ -1291,6 +1294,7 @@ const UI = (()=>{
     const priorKey=frame.dataset.sceneKey;
     const firstRender=frame.dataset.cutToken==='initial';
     const changed=priorKey!==key;
+    const refreshShot=turn&&turn.kind==='dialogue' && !changed && index%2===0;
     frame.dataset.sceneKey=key;
     frame.dataset.speaker=turn&&turn.kind==='dialogue'
       ? speakerInfo(turn.who,turn.name).id||'unknown'
@@ -1305,7 +1309,7 @@ const UI = (()=>{
       frame.style.setProperty('--scene-scale',carry.scale||'1');
       if(priorKey!==key) img.src=src;
       state.sceneCarry=null;
-    }else if(firstRender||changed){
+    }else if(firstRender||changed||refreshShot){
       const shot=storySceneShot(state,turn,index);
       frame.dataset.cutToken=`${state.phase}-${index}-${key}`;
       frame.dataset.tone=shot.tone;
@@ -1318,7 +1322,7 @@ const UI = (()=>{
     const mark=frame.querySelector('.scene-cut-mark');
     if(mark) mark.textContent=`${state.label||'이야기'} ${index+1} / ${state.turns.length}`;
     img.classList.remove('scene-recut');
-    if(changed){
+    if(changed||refreshShot){
       void img.offsetWidth;
       img.classList.add('scene-recut');
     }
