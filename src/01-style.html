@@ -126,10 +126,17 @@ input{font-family:inherit}
 .mission-strip .ms-progress{grid-column:1;grid-row:4;height:2px;background:#080b14;border-radius:2px;overflow:hidden}
 .mission-strip .ms-progress i{display:block;height:100%;background:var(--amber);border-radius:2px}
 .mission-strip .ms-state{grid-column:1;grid-row:3;font-size:12.5px;color:#bdc3d2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mission-strip .ms-secondary{grid-column:1/3;grid-row:5;margin-top:4px;padding-top:4px;border-top:1px dashed rgba(226,87,79,.28);
-  color:#ffaaa5;font:11.5px/1.35 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mission-strip .ms-secondary-wrap{grid-column:1/3;grid-row:5;display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;padding:8px 0 0;
+  border-top:1px dashed rgba(226,87,79,.28);font:11px/1.35 var(--mono)}
+.mission-strip .ms-sec-title{display:inline-flex;align-items:center;height:21px;padding:0 7px;border-radius:999px;
+  background:rgba(226,87,79,.14);color:#ffc6a3;font-weight:700;white-space:nowrap}
+.mission-strip .ms-chip{display:inline-flex;align-items:center;padding:4px 8px 4px 7px;border-radius:14px;
+  background:rgba(255,255,255,.045);border:1px solid rgba(255,180,84,.25);color:#dfe4f0;white-space:nowrap}
+.mission-strip .ms-chip.chip-core{border-color:#ffaaa5;background:rgba(255,170,165,.10);color:#ffd7ce}
+.mission-strip .ms-chip.chip-recruit{border-color:rgba(125,201,143,.48);color:#b6f5bf;background:rgba(125,201,143,.08)}
+.mission-strip .ms-chip.chip-quest{border-color:rgba(140,170,255,.38);color:#d5ddff;background:rgba(140,170,255,.08)}
 .mission-strip .ms-main-clock{display:block;margin-top:3px;color:var(--amber);font-size:10px;font-weight:600}
-.mission-strip.has-secondary{min-height:76px}
+.mission-strip.has-secondary{min-height:84px}
 .mission-strip.danger{background:linear-gradient(90deg,rgba(226,87,79,.14),rgba(15,20,34,.98) 42%)}
 .mission-strip.danger .ms-k,.mission-strip.danger .ms-meta{color:var(--danger)}
 .map-mission{border-bottom:1px solid #2b3557;background:#10162a}

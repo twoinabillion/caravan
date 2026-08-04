@@ -452,7 +452,8 @@ const UI = (()=>{
     const q=S.quest, rq=S.recruitQ;
     const transfer=G.transferStatus();
     const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1)||!transfer.onTime;
-    let kicker, title, state, meta, pct, secondary='';
+    let kicker='', title='', state='', meta='', pct=0, secondary='';
+    const secondaryMissions=[];
     if(rq){
       const def=D.recruitQuests[rq.id];
       kicker=`인연 · ${def.name}`;
@@ -480,11 +481,6 @@ const UI = (()=>{
         pct=S.at===rq.target?55:S.driving&&S.driving.to===rq.target
           ?Math.min(50,S.driving.gone/S.driving.dist*50):18;
       }
-      if(q){
-        const K=G.QKIND[q.kind]||G.QKIND.deliver;
-        const target=D.nodes[q.to];
-        secondary=`<span class="ms-secondary">${K.ic} 함께 진행 중 · ${esc(G.questLabel(q))} → ${esc(target.name)} · D-${Math.max(0,q.due-S.day)}</span>`;
-      }
     } else if(q){
       const K=G.QKIND[q.kind]||G.QKIND.deliver;
       kicker=`${K.nm} · 진행 중`;
@@ -509,21 +505,34 @@ const UI = (()=>{
       meta=`DAY ${S.day}`;
       pct=Math.max(0,Math.min(100,(411-G.remainKm())/411*100));
     }
-    /* 동료 영입과 장터 의뢰에 몰입해도 1화의 시계가 사라지지 않게 한다.
-       부가 목표가 본편을 덮지 않고 같은 카드 아래 두 번째 줄로 남는다. */
-    if(rq||q){
-      const clock=`⌛ 본편 · ${esc(transfer.mission)} · 서울 도착이 아니라 코어 조치가 마감`;
-      secondary=secondary
-        ?secondary.replace('</span>',`<small class="ms-main-clock">${clock}</small></span>`)
-        :`<span class="ms-secondary main-clock">${clock}</span>`;
+
+    // 동시 임무가 사라지지 않도록 본편/동행/게시판을 칩으로 남긴다.
+    if(rq){
+      const def=D.recruitQuests[rq.id];
+      secondaryMissions.push(`<span class="ms-chip chip-recruit">🤝 ${esc(def.name)} 과제 ${rq.stage==='ready'?'완료':rq.stage==='road'?'임시동행':'대기중'}</span>`);
+    }
+    if(q){
+      const K=G.QKIND[q.kind]||G.QKIND.deliver;
+      const target=D.nodes[q.to];
+      secondaryMissions.push(`<span class="ms-chip chip-quest">${K.ic} 게시판 ${G.questLabel(q)} → ${esc(target.name)} · D-${Math.max(0,q.due-S.day)}</span>`);
+    }
+    if(!rq&&!q){
+      secondaryMissions.push(`<span class="ms-chip chip-core">🚗 ${transfer.onTime?`이송 마감 ${transfer.remaining}일`:'1화 종료 전 조치 미완'}</span>`);
+    }
+
+    const clock=`⌛ 본편 · ${esc(transfer.mission)} · 서울 도착이 아니라 코어 조치가 마감`;
+    secondaryMissions.push(`<span class="ms-chip chip-core">${clock}</span>`);
+    if(secondaryMissions.length){
+      secondary=`<div class="ms-secondary-wrap"><span class="ms-sec-title">동시 진행</span>${secondaryMissions.map(x=>x).join('')}</div>`;
     }
     const alerts=[
       S.fuel<10?'연료 부족':null,
       S.fatigue>=75?'졸음 위험':null,
       q&&q.due-S.day<=1?'마감 임박':null,
-      !q&&transfer.onTime&&transfer.remaining<=3?'첫 이송 임박':null,
-      !q&&!transfer.onTime?'첫 이송 발생':null,
+      !q&&transfer.onTime&&transfer.remaining<=3?`이송 임박 ${transfer.remaining}일 남음`:null,
+      !q&&!transfer.onTime?'본편 조치 임박':null,
     ].filter(Boolean);
+    alerts.length= alerts.length>0? Math.min(alerts.length,3):0;
     return {danger,secondary:!!secondary, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
       <span class="ms-meta">${meta}${alerts.length?`<br><small class="ms-alert">${alerts.join(' · ')}</small>`:''}</span>
       <span class="ms-state">${state}</span><span class="ms-progress"><i style="width:${pct}%"></i></span>${secondary}`};
@@ -1248,7 +1257,7 @@ const UI = (()=>{
       data-scene-key="${esc(key)}" data-cut-token="initial"
       aria-label="${esc(sceneAlt)} 장면 크게 보기">
       <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면" decoding="async" loading="eager" fetchpriority="high">
-      <span class="scene-cut-mark" aria-hidden="true">장면 1</span>
+      <span class="scene-cut-mark" aria-hidden="true">컷 1 / 1</span>
       <span class="scene-zoom" aria-hidden="true">↗</span></div>`;
   }
   function storySceneShot(state,turn,index){
@@ -1301,6 +1310,12 @@ const UI = (()=>{
       : turn&&turn.kind||'narration';
     const carry=firstRender&&state.sceneCarry&&state.sceneCarry.key===key
       ? state.sceneCarry:null;
+    const cutCount=Math.max(1, state.sceneKeys ? state.sceneKeys.length : 1);
+    if(firstRender) state.sceneCut=1;
+    if(changed){
+      state.sceneCut=(state.sceneCut||1)+1;
+      if(cutCount>1) state.sceneCut=Math.min(state.sceneCut,cutCount);
+    }
     if(carry){
       frame.dataset.cutToken=`carry-${state.phase}-${key}`;
       frame.dataset.tone=carry.tone||state.phase;
@@ -1320,7 +1335,13 @@ const UI = (()=>{
     }
     img.alt=`${state.sceneAlt} · ${index+1}번째 장면`;
     const mark=frame.querySelector('.scene-cut-mark');
-    if(mark) mark.textContent=`${state.label||'이야기'} ${index+1} / ${state.turns.length}`;
+    if(mark){
+      const hasCuts=cutCount>1;
+      const cut=Math.min(state.sceneCut||1,cutCount);
+      mark.textContent= hasCuts
+        ? `컷 ${cut}/${cutCount}`
+        : `${state.label||'대화'} ${index+1}/${state.turns.length}`;
+    }
     img.classList.remove('scene-recut');
     if(changed||refreshShot){
       void img.offsetWidth;
@@ -1436,7 +1457,8 @@ const UI = (()=>{
         :turn.kind==='narration'?'장면 설명: ':`${state.label}: `;
       live.textContent=speaker+stripTags(turn.text);
     }
-    const compact=state.turns.length<=10&&state.index<3&&reader.scrollHeight<210;
+    const dockHeight=194;
+    const compact=state.turns.length<=12 && (reader.scrollHeight + dockHeight) < (sheet.clientHeight||420);
     sheet.classList.toggle('story-compact',compact);
     const entering=reader.querySelector('[data-story-entry]:last-child');
     if(entering){
@@ -1448,12 +1470,12 @@ const UI = (()=>{
       const next=state.turns[state.index+1];
       const nextLabel=next.kind==='dialogue'||next.kind==='letter'?'다음 대화'
         :next.kind==='ai'||next.kind==='radio'?'다음 방송':'다음 장면';
-      const autoCopy=next.kind==='dialogue'||next.kind==='letter'?'자동으로 다음 대화가 이어집니다'
-        :next.kind==='ai'||next.kind==='radio'?'자동으로 다음 방송이 이어집니다':'자동으로 다음 장면이 이어집니다';
+      const autoCopy=next.kind==='dialogue'||next.kind==='letter'?'자동 진행 중'
+        :next.kind==='ai'||next.kind==='radio'?'방송 자동 진행':'자동 진행 중';
       dock.classList.add('story-progress-dock');
       dock.innerHTML=`<div class="choice-dock-head"><span>${state.label} · ${state.index+1}/${state.turns.length}</span>
         <button class="story-auto-toggle${storyAuto?' on':''}" type="button" aria-pressed="${storyAuto}">${storyAuto?'자동 ON':'자동 OFF'}</button></div>
-        <button class="choice story-next" type="button">계속<span class="req">${storyAuto?autoCopy:`${nextLabel} · 직접 넘기기`} · ${state.index+2}/${state.turns.length}</span></button>`;
+        <button class="choice story-next" type="button">계속<span class="req">${nextLabel} · ${state.index+2}/${state.turns.length} · ${storyAuto?autoCopy:'직접 넘기기'}</span></button>`;
       dock.querySelector('.story-next').onclick=()=>advanceStory(state);
       dock.querySelector('.story-auto-toggle').onclick=()=>{
         setStoryAuto(!storyAuto);
