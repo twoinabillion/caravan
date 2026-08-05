@@ -1,0 +1,151 @@
+{
+  "generatedAt": "2026-08-05T14:08:05.546Z",
+  "html": {
+    "bytes": 30586144,
+    "warnBytes": 32000000,
+    "maxBytes": 35000000
+  },
+  "embedded": {
+    "files": 194,
+    "bytes": 17797267,
+    "categories": {
+      "audio": {
+        "files": 41,
+        "bytes": 6511276,
+        "encodedBytes": 8681756
+      },
+      "scene": {
+        "files": 122,
+        "bytes": 10847505,
+        "encodedBytes": 14463512
+      },
+      "portrait": {
+        "files": 31,
+        "bytes": 438486,
+        "encodedBytes": 584696
+      }
+    }
+  },
+  "largest": [
+    {
+      "path": "assets/audio/title.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1621676,
+      "encodedBytes": 2162236
+    },
+    {
+      "path": "assets/audio/bgm/drive_day.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1290476,
+      "encodedBytes": 1720636
+    },
+    {
+      "path": "assets/audio/bgm/drive_night.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1204940,
+      "encodedBytes": 1606588
+    },
+    {
+      "path": "assets/scenes/miryang-market-hub.jpg",
+      "mime": "image/jpeg",
+      "bytes": 388152,
+      "encodedBytes": 517536
+    },
+    {
+      "path": "assets/intro/08-departure-choice-v3.jpg",
+      "mime": "image/jpeg",
+      "bytes": 198424,
+      "encodedBytes": 264568
+    },
+    {
+      "path": "assets/intro/06-years-together-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 187162,
+      "encodedBytes": 249552
+    },
+    {
+      "path": "assets/intro/15-appeal-denied.jpg",
+      "mime": "image/jpeg",
+      "bytes": 184143,
+      "encodedBytes": 245524
+    },
+    {
+      "path": "assets/intro/14-dock-aid-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 173117,
+      "encodedBytes": 230824
+    },
+    {
+      "path": "assets/intro/06-camper-conversion-v3.jpg",
+      "mime": "image/jpeg",
+      "bytes": 170496,
+      "encodedBytes": 227328
+    },
+    {
+      "path": "assets/intro/16-workshop-shutter-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 163126,
+      "encodedBytes": 217504
+    },
+    {
+      "path": "assets/intro/07-envelope-signal-v3.jpg",
+      "mime": "image/jpeg",
+      "bytes": 158530,
+      "encodedBytes": 211376
+    },
+    {
+      "path": "assets/intro/11-current-expulsion-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 152361,
+      "encodedBytes": 203148
+    },
+    {
+      "path": "assets/intro/12-mother-keepsakes-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 147955,
+      "encodedBytes": 197276
+    },
+    {
+      "path": "assets/scenes/miryang-market.jpg",
+      "mime": "image/jpeg",
+      "bytes": 138178,
+      "encodedBytes": 184240
+    },
+    {
+      "path": "assets/scenes/settlement-road-echo.jpg",
+      "mime": "image/jpeg",
+      "bytes": 129648,
+      "encodedBytes": 172864
+    },
+    {
+      "path": "assets/scenes/gwangju-market.jpg",
+      "mime": "image/jpeg",
+      "bytes": 129184,
+      "encodedBytes": 172248
+    },
+    {
+      "path": "assets/scenes/roadcrew-line.jpg",
+      "mime": "image/jpeg",
+      "bytes": 126662,
+      "encodedBytes": 168884
+    },
+    {
+      "path": "assets/upgrades/seating-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 124580,
+      "encodedBytes": 166108
+    },
+    {
+      "path": "assets/scenes/trace-coldbag.jpg",
+      "mime": "image/jpeg",
+      "bytes": 123152,
+      "encodedBytes": 164204
+    },
+    {
+      "path": "assets/scenes/roadcrew-washout.jpg",
+      "mime": "image/jpeg",
+      "bytes": 123135,
+      "encodedBytes": 164180
+    }
+  ]
+}

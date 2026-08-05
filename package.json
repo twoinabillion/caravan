@@ -8,6 +8,8 @@
     "build:html": "bash ./build.sh --html-only",
     "dev:web": "vite",
     "build:web": "vite build",
+    "optimize:assets": "bash tools/optimize-embedded-assets.sh",
+    "simulate:journeys": "python3 tools/simulate-journeys.py --runs 1000",
     "dev:toss": "granite dev",
     "prebuild:toss": "if [ \"${CARAVAN_HTML_READY:-0}\" != \"1\" ]; then bash ./build.sh --html-only; fi",
     "build:toss": "ait build && node tools/sync-ait-aliases.mjs",

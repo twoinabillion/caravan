@@ -13,6 +13,10 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..');
 const output = path.join(root, '서울까지400km.html');
 const temporary = `${output}.tmp`;
+const reportOutput = path.join(root, 'reports', 'asset-budget.json');
+const WARN_BYTES = 32_000_000;
+const MAX_BYTES = 35_000_000;
+const embeddedAssets = new Map();
 
 const before = [
   'src/01-style.html', 'src/02-dom.html', 'src/03-data.js',
@@ -52,7 +56,10 @@ const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
 const dataUri = (relative, mime) => {
   const absolute = path.join(root, relative);
   if (!fs.existsSync(absolute)) throw new Error(`자산 파일 없음: ${relative}`);
-  return `data:${mime};base64,${fs.readFileSync(absolute).toString('base64')}`;
+  const buffer = fs.readFileSync(absolute);
+  embeddedAssets.set(relative, {path:relative, mime, bytes:buffer.byteLength,
+    encodedBytes:Buffer.byteLength(buffer.toString('base64'))});
+  return `data:${mime};base64,${buffer.toString('base64')}`;
 };
 const replace = (source, pattern, resolve, label) => {
   let count = 0;
@@ -83,8 +90,25 @@ const chunks = [
   ...before.map(read), title.result, audio.result, npc.result, upgrades.result, ...after.map(read)
 ];
 const html = chunks.join('\n');
+const htmlBytes = Buffer.byteLength(html);
 const unresolved = [...new Set(html.match(/__(?:NPC|SCENE|UPGRADE|BGM|SFX|VO)_[A-Z0-9_]+__/g) || [])];
 if (unresolved.length) throw new Error(`치환되지 않은 자산: ${unresolved.slice(0, 8).join(', ')}`);
+
+const categoryOf = relative => relative.includes('/audio/')?'audio'
+  :relative.includes('/scenes/')||relative.includes('/intro/')||relative.includes('/upgrades/')?'scene'
+  :relative.includes('/portraits/')?'portrait':'other';
+const assetEntries = [...embeddedAssets.values()].sort((a,b)=>b.encodedBytes-a.encodedBytes);
+const categories = assetEntries.reduce((out,item)=>{
+  const category=categoryOf(item.path), row=out[category]||(out[category]={files:0,bytes:0,encodedBytes:0});
+  row.files++; row.bytes+=item.bytes; row.encodedBytes+=item.encodedBytes;
+  return out;
+},{});
+const report={generatedAt:new Date().toISOString(),html:{bytes:htmlBytes,warnBytes:WARN_BYTES,maxBytes:MAX_BYTES},
+  embedded:{files:assetEntries.length,bytes:assetEntries.reduce((sum,item)=>sum+item.bytes,0),categories},
+  largest:assetEntries.slice(0,20)};
+fs.mkdirSync(path.dirname(reportOutput),{recursive:true});
+fs.writeFileSync(reportOutput,`${JSON.stringify(report,null,2)}\n`);
+if(htmlBytes>MAX_BYTES) throw new Error(`단일 HTML 용량 초과: ${htmlBytes} / ${MAX_BYTES} bytes`);
 
 try {
   fs.writeFileSync(temporary, html);
@@ -92,4 +116,10 @@ try {
 } finally {
   if (fs.existsSync(temporary)) fs.unlinkSync(temporary);
 }
-console.log(`✅ 서울까지400km.html ${Buffer.byteLength(html)} bytes · NPC ${npc.count}·장면 ${scenes.count}·업그레이드 ${upgrades.count}·오디오 ${audio.count + title.count}`);
+console.log(`✅ 서울까지400km.html ${htmlBytes} bytes · NPC ${npc.count}·장면 ${scenes.count}·업그레이드 ${upgrades.count}·오디오 ${audio.count + title.count}`);
+console.log(`📦 내장 자산 ${report.embedded.files}개 · 원본 ${report.embedded.bytes} bytes · base64 ${assetEntries.reduce((sum,item)=>sum+item.encodedBytes,0)} bytes`);
+for(const [name,row] of Object.entries(categories))
+  console.log(`   ${name.padEnd(8)} ${String(row.files).padStart(3)}개 · ${String(row.encodedBytes).padStart(9)} bytes`);
+console.log('📊 용량 상위 20개');
+assetEntries.slice(0,20).forEach((item,index)=>console.log(`   ${String(index+1).padStart(2)}. ${String(item.encodedBytes).padStart(8)} · ${item.path}`));
+if(htmlBytes>WARN_BYTES) console.warn(`⚠️ HTML 권장 용량 초과: ${htmlBytes} / ${WARN_BYTES} bytes · reports/asset-budget.json 확인`);

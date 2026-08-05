@@ -2,6 +2,7 @@
 D.scenes = {
   'gwangju-market':'__SCENE_GWANGJU_MARKET__',
   'miryang-market':'__SCENE_MIRYANG_MARKET__',
+  'miryang-market-hub':'__SCENE_MIRYANG_MARKET_HUB__',
   'daegu-dome':'__SCENE_DAEGU_DOME__',
   'muju-tunnel':'__SCENE_MUJU_TUNNEL__',
   'jeonju-market':'__SCENE_JEONJU_MARKET__',

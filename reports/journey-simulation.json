@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "runs": 1000,
+  "seed": 400000001,
+  "data": {
+    "nodes": 58,
+    "edges": 78,
+    "settlements": 7
+  },
+  "model": {
+    "source": "Built game runtime: D.nodes, D.edges, D.stls.trade, G.fuelFor",
+    "policies": {
+      "direct": "직행형",
+      "prepared": "준비형",
+      "explorer": "탐색형"
+    },
+    "assumptions": [
+      "도로 주행은 실제 연료 공식을 사용한다.",
+      "하루는 10시간의 이동·탐색 활동으로 환산한다.",
+      "식량은 인원당 활동일 0.82, 물은 1.05를 소비한다.",
+      "정착지는 실제 trade 교환비로 다음 보급점까지 필요한 자원을 구매한다.",
+      "전투·사고·노획은 노면과 플레이 성향에 따른 확률 모델이다."
+    ]
+  },
+  "overall": {
+    "runs": 1000,
+    "completionRate": 97.5,
+    "failures": {
+      "fuel": 24,
+      "water": 1
+    },
+    "averageDays": 4.44,
+    "p95Days": 4.84,
+    "averageKm": 383.2,
+    "averageFuelLeft": 10.01,
+    "averageFoodLeft": 7.82,
+    "averageWaterLeft": 8.86,
+    "averageScrapLeft": 6.72,
+    "averageVanLeft": 71.71,
+    "crisisRunRate": 12.7,
+    "averageEvents": 3.48,
+    "averageSettlementStops": 3.49
+  },
+  "byPolicy": {
+    "direct": {
+      "label": "직행형",
+      "runs": 334,
+      "completionRate": 99.7,
+      "failures": {
+        "fuel": 1
+      },
+      "averageDays": 4.42,
+      "p95Days": 4.75,
+      "averageKm": 356,
+      "averageFuelLeft": 8.3,
+      "averageFoodLeft": 7.74,
+      "averageWaterLeft": 8.68,
+      "averageScrapLeft": 10.29,
+      "averageVanLeft": 68.12,
+      "crisisRunRate": 25.1,
+      "averageEvents": 4.02,
+      "averageSettlementStops": 3
+    },
+    "prepared": {
+      "label": "준비형",
+      "runs": 333,
+      "completionRate": 100,
+      "failures": {},
+      "averageDays": 4.42,
+      "p95Days": 4.73,
+      "averageKm": 411,
+      "averageFuelLeft": 11.62,
+      "averageFoodLeft": 8.01,
+      "averageWaterLeft": 9.11,
+      "averageScrapLeft": 2.85,
+      "averageVanLeft": 76.62,
+      "crisisRunRate": 0.9,
+      "averageEvents": 2.5,
+      "averageSettlementStops": 4
+    },
+    "explorer": {
+      "label": "탐색형",
+      "runs": 333,
+      "completionRate": 92.8,
+      "failures": {
+        "fuel": 23,
+        "water": 1
+      },
+      "averageDays": 4.47,
+      "p95Days": 4.92,
+      "averageKm": 382.5,
+      "averageFuelLeft": 10.11,
+      "averageFoodLeft": 7.72,
+      "averageWaterLeft": 8.79,
+      "averageScrapLeft": 7.06,
+      "averageVanLeft": 70.29,
+      "crisisRunRate": 12,
+      "averageEvents": 3.94,
+      "averageSettlementStops": 3.46
+    }
+  },
+  "failures": {
+    "fuel": 24,
+    "water": 1
+  },
+  "topRoutes": [
+    {
+      "route": "busan > yangsan > miryang > lake > daegu > gumi > gimcheon > sangju > mungyeong > chungju > icheon > suwon > seoul",
+      "count": 421,
+      "percent": 42.1
+    },
+    {
+      "route": "busan > yangsan > miryang > daegu > gumi > gimcheon > yeongdong > daejeon > cheongju > cheonan > pyeongtaek > suwon > seoul",
+      "count": 399,
+      "percent": 39.9
+    },
+    {
+      "route": "busan > yangsan > miryang > daegu > gumi > gimcheon > sangju > mungyeong > chungju > icheon > suwon > seoul",
+      "count": 77,
+      "percent": 7.7
+    },
+    {
+      "route": "busan > yangsan > miryang > lake > daegu > gumi > gimcheon > yeongdong > daejeon > cheongju > cheonan > pyeongtaek > suwon > seoul",
+      "count": 74,
+      "percent": 7.4
+    },
+    {
+      "route": "busan > yangsan > miryang > daegu > gumi > gimcheon > yeongdong > daejeon > sejong > gongju > cheonan > pyeongtaek > suwon > seoul",
+      "count": 9,
+      "percent": 0.9
+    },
+    {
+      "route": "busan > yangsan > miryang > lake > daegu > gumi > gimcheon > yeongdong > daejeon > sejong > gongju > cheonan > pyeongtaek > suwon > seoul",
+      "count": 8,
+      "percent": 0.8
+    },
+    {
+      "route": "busan > yangsan > miryang > daegu > gumi > andong > danyang > wonju > icheon > suwon > seoul",
+      "count": 2,
+      "percent": 0.2
+    },
+    {
+      "route": "busan > yangsan > miryang > lake > daegu > gumi > gimcheon > yeongdong > daejeon > sejong > cheongju > cheonan > pyeongtaek > suwon > seoul",
+      "count": 2,
+      "percent": 0.2
+    },
+    {
+      "route": "busan > yangsan > miryang > daegu > gumi > gimcheon > yeongdong > daejeon > sejong > cheongju > cheonan > pyeongtaek > suwon > seoul",
+      "count": 2,
+      "percent": 0.2
+    },
+    {
+      "route": "busan > yangsan > ulsan > gyeongju > pohang > gangneung > daegwallyeong > wonju > icheon > suwon > seoul",
+      "count": 2,
+      "percent": 0.2
+    }
+  ],
+  "warnings": [],
+  "generatedAt": "2026-08-05T14:08:07.524047+00:00"
+}

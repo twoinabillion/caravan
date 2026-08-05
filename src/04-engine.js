@@ -940,7 +940,22 @@ G.combatOddsBreakdown = (choice,evd)=>{
   const terrainDelta=G.combatContextDelta(choice);
   const tacticDelta=G.combatTacticDelta(choice);
   const intentDelta=G.combatIntentDelta(evd,choice);
-  const perkDelta=(S&&S.up&&S.up.armor?0.04:0)+(S&&S.up&&S.up.scope&&choice.tactic==='사격'?0.08:0);
+  const tactic=choice&&choice.tactic||'';
+  const vehicleSources=[];
+  let vehicleDelta=0;
+  const vehicleFit=(id,delta,label)=>{ if(S&&S.up&&S.up[id]){ vehicleDelta+=delta; vehicleSources.push(label); } };
+  vehicleFit('armor',0.04,'장갑판');
+  if(['분리 인양','고정','차체 지지'].includes(tactic)) vehicleFit('winch',0.06,'전면 윈치');
+  if(['정비','장비'].includes(tactic)) vehicleFit('sidebox',0.05,'사이드 공구함');
+  if(['돌입','운전'].includes(tactic)) vehicleFit('bullbar',0.05,'전면 가드');
+  if(['유인','교란','이탈'].includes(tactic)) vehicleFit('horn',0.04,'왕경적');
+  if(G.isNight()&&['관찰','정찰','운전'].includes(tactic)) vehicleFit('lightbar',0.05,'라이트바');
+  if(S&&S.up&&S.up.scope&&['사격','관찰','정찰'].includes(tactic)){
+    vehicleDelta+=tactic==='사격'?0.08:0.05;
+    vehicleSources.push('지붕 망원대');
+  }
+  if(choice&&Number(choice.terrainFit)>=2) vehicleFit('mudtires',0.03,'험로 타이어');
+  const perkDelta=Math.min(0.14,vehicleDelta);
   const injury= G.isInjured('driver') ? -0.08 : 0;
   const adaptive=G.combatAdaptiveBias()*COMBAT_AUTO_ADJUST_SCALE;
   const comeback= flow&&Array.isArray(flow.history) ? Math.min(3,G.combatRecentFailureStreak())*0.015 : 0;
@@ -948,7 +963,7 @@ G.combatOddsBreakdown = (choice,evd)=>{
   /* 앞 단계에서 구체적인 틈을 읽고 그에 맞는 해법을 고른 경우에만
      일반 성공 상한 90%를 95%까지 연다. 준비해도 실패 가능성은 남긴다. */
   const guaranteedRead=G.combatReadGuaranteed(evd,choice);
-  return {base,baseSource,edge,readBonus,readDelta:readBonus,terrainDelta,tacticDelta,intentDelta,perkDelta,guaranteedRead,
+  return {base,baseSource,edge,readBonus,readDelta:readBonus,terrainDelta,tacticDelta,intentDelta,perkDelta,vehicleSources,guaranteedRead,
     injury,bonus,adaptive:adaptive+comeback,adaptiveRecovery:comeback,adaptivePercent:G.combatAdaptivePercent(),
     odds:guaranteedRead?1:clamp(base+bonus,0.12,readBonus>0?0.95:0.9)};
 };
@@ -1142,18 +1157,114 @@ G.routeForecast = id=>{
     :stops?`연료 ${short}L가량은 중간 보급 필요`:`출발 전 연료 ${short}L가량 더 필요`;
   return {id,km,fuel,rough,stops,minutes:Math.ceil(km/44*60),short,readiness};
 };
+G.goalDistance = id=>{
+  if(!D.nodes[id]||!D.nodes.seoul) return Infinity;
+  const distances=Object.fromEntries(Object.keys(D.nodes).map(node=>[node,Infinity]));
+  const pending=new Set(Object.keys(D.nodes));
+  distances[id]=0;
+  while(pending.size){
+    let current=null;
+    for(const node of pending){
+      if(current===null||distances[node]<distances[current]) current=node;
+    }
+    if(current===null||!Number.isFinite(distances[current])) break;
+    pending.delete(current);
+    if(current==='seoul') break;
+    for(const edge of D.edges){
+      let next=null;
+      if(edge[0]===current) next=edge[1];
+      else if(edge[1]===current) next=edge[0];
+      if(!next||!pending.has(next)) continue;
+      const candidate=distances[current]+edge[2];
+      if(candidate<distances[next]) distances[next]=candidate;
+    }
+  }
+  return distances.seoul;
+};
 G.travelForecast = id=>{
   const chk=G.canTravelTo(id);
-  if(!chk.ok) return {...chk,minutes:0,risk:''};
+  if(!chk.ok) return {...chk,minutes:0,risk:'',gear:[],gearLabel:'',readinessScore:0,
+    readinessLabel:'이동 불가',readinessClass:'blocked',readinessReason:chk.why||'지금은 갈 수 없다'};
   const reasons=[];
   if(chk.road==='rough') reasons.push('험로');
   if(S.wx==='storm') reasons.push('폭풍');
   else if(S.wx==='rain') reasons.push('빗길');
   else if(S.wx==='dust') reasons.push('먼지');
   if(S.fatigue>=60) reasons.push('피로 누적');
+  const gear=[];
+  if(chk.road==='rough'&&S.up.mudtires) gear.push('험로 타이어');
+  if(chk.road==='rough'&&S.up.susp) gear.push('강화 서스펜션');
+  if(chk.road==='rough'&&S.up.winch) gear.push('전면 윈치');
+  if(['storm','dust'].includes(S.wx)&&S.up.snorkel) gear.push('스노클');
+  if(G.isNight()&&S.up.lightbar) gear.push('라이트바');
+  if(S.up.solar) gear.push('태양광 보조');
+  const minutes=Math.ceil(chk.km/44*60);
   const shortage=S.fuel<chk.fuel;
-  return {...chk,minutes:Math.ceil(chk.km/44*60),shortage,
-    risk:reasons.length?reasons.join(' · '):'보통 도로'};
+  const fuelMargin=Math.floor(S.fuel-chk.fuel);
+  const party=Math.max(1,G.partySize());
+  const supplyNeed=Math.max(1,Math.ceil(party*minutes/600));
+  const supplyMargin=Math.floor(Math.min(S.food,S.water)-supplyNeed);
+  const vanRatio=S.van/Math.max(1,S.vanMax);
+  const warnings=[];
+  let readinessScore=100;
+  if(shortage){ readinessScore-=70+Math.min(20,Math.abs(fuelMargin)*2); warnings.push(`연료 ${Math.abs(fuelMargin)}L 부족`); }
+  else if(fuelMargin<=3){ readinessScore-=22; warnings.push(`연료 여유 ${fuelMargin}L`); }
+  else if(fuelMargin<=7) readinessScore-=10;
+  if(supplyMargin<0){ readinessScore-=28; warnings.push('식량·물 보충 필요'); }
+  else if(supplyMargin<=2){ readinessScore-=12; warnings.push('식량·물 여유 적음'); }
+  if(vanRatio<.3){ readinessScore-=30; warnings.push('차체 위험'); }
+  else if(vanRatio<.55){ readinessScore-=14; warnings.push('차체 점검 권장'); }
+  if(S.fatigue>=75){ readinessScore-=22; warnings.push('운전자 휴식 필요'); }
+  else if(S.fatigue>=55){ readinessScore-=10; warnings.push('피로 누적'); }
+  if(chk.road==='rough'&&!S.up.mudtires&&!S.up.susp){ readinessScore-=12; warnings.push('험로 대응 없음'); }
+  if(['storm','dust'].includes(S.wx)&&!S.up.snorkel){ readinessScore-=8; warnings.push('흡기 보호 없음'); }
+  if(G.isNight()&&!S.up.lightbar){ readinessScore-=7; warnings.push('야간 시야 제한'); }
+  readinessScore=Math.round(clamp(readinessScore+Math.min(9,gear.length*3),0,100));
+  const readinessLabel=readinessScore>=86?'여유':readinessScore>=68?'준비됨':readinessScore>=45?'주의':'위험';
+  const readinessClass=readinessScore>=86?'ready':readinessScore>=68?'steady':readinessScore>=45?'caution':'danger';
+  const support=gear.length?`${gear.join(' · ')} 작동`:'';
+  const readinessReason=[...warnings,support].filter(Boolean).join(' · ')||'자원과 차체 상태가 안정적이다';
+  const currentGoalDistance=G.goalDistance(S.at);
+  const nextGoalDistance=G.goalDistance(id);
+  const progressKm=Math.round(currentGoalDistance-nextGoalDistance);
+  const progressScore=progressKm>0?Math.round(clamp(55+progressKm*.8,55,100))
+    :progressKm===0?45:Math.round(clamp(35+progressKm,0,40));
+  const destination=D.nodes[id]||{};
+  let supplyScore=destination.stl?82:destination.type==='settlement'?70:38;
+  if(destination.stl&&supplyMargin<=2) supplyScore+=12;
+  if(!destination.stl&&supplyMargin<=0) supplyScore-=18;
+  supplyScore=Math.round(clamp(supplyScore,0,100));
+  const directionLabel=progressKm>0?`서울 방향 ${progressKm}km 전진`
+    :progressKm<0?`서울에서 ${Math.abs(progressKm)}km 멀어짐`:'서울 진행도 변화 없음';
+  return {...chk,minutes,shortage,
+    risk:reasons.length?reasons.join(' · '):'보통 도로',gear,
+    gearLabel:gear.length?`대응 장비: ${gear.join(' · ')}`:'',fuelMargin,supplyMargin,
+    readinessScore,readinessLabel,readinessClass,readinessReason,
+    safetyScore:readinessScore,progressKm,progressScore,supplyScore,directionLabel};
+};
+G.vanBuildProfile = ()=>{
+  const installed=(D.upgrades||[]).filter(up=>S.up&&S.up[up.id]);
+  const ranked=(D.upgradeGroups||[]).map(group=>({
+    id:group.id,nm:group.nm,sub:group.sub,
+    count:group.ids.filter(id=>S.up&&S.up[id]).length
+  })).sort((a,b)=>b.count-a.count);
+  const profiles={
+    fuel:['장거리 순항형','연료 여유와 악천후 대응으로 먼 구간을 끊지 않고 달린다'],
+    seating:['이동 공동체형','더 많은 사람과 생활 공간을 싣는 움직이는 집이다'],
+    chassis:['험로 돌파형','차체와 바퀴를 믿고 끊긴 길을 정면으로 넘는다'],
+    utility:['현장 대응형','고장과 돌발 상황을 그 자리에서 해결한다'],
+    power:['관측 선행형','먼저 보고 먼저 듣고 위험이 닿기 전에 움직인다'],
+    camp:['야영 생활형','멈춘 시간을 회복과 관계의 시간으로 바꾼다'],
+    living:['자급 생활형','물과 먹을 것을 차 위에서 조금씩 되살린다']
+  };
+  if(!installed.length) return {id:'stock',name:'기본 생존형',summary:'아직 한 방향으로 특화되지 않은 출발 상태',installed:0,signature:[],secondary:'',tier:0,tierLabel:'기본'};
+  const main=ranked[0], second=ranked.find(group=>group.count>0&&group.id!==main.id);
+  const identity=profiles[main.id]||[main.nm,main.sub];
+  const signature=installed.filter(up=>main.id&&((D.upgradeGroups||[]).find(g=>g.id===main.id)?.ids||[]).includes(up.id)).slice(-3).map(up=>up.nm);
+  const tier=main.count>=4?2:main.count>=2?1:0;
+  return {id:main.id,name:identity[0],summary:identity[1],installed:installed.length,signature,
+    secondary:second&&second.count===main.count?`${second.nm} 혼합`:'',tier,
+    tierLabel:tier===2?'완성':tier===1?'특화':'형성 중'};
 };
 G.routeTravelCheck = (from,to)=>{
   const rs=G.routeStatus();

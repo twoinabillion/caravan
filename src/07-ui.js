@@ -1058,17 +1058,31 @@ const UI = (()=>{
       localActions+=`<button class="act" data-a="explore" ${es.ok?'':'disabled'}><span class="ic">🔦</span><span><b>${label}</b><small>${small}${es.ok?`<em class="act-forecast">찾을 것 · ${ef.focus}</em>`:''}</small></span></button>`;
     }
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
-    const routeActions=nbs.map((nb,index)=>{
+    const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
+    const viable=routeModels.filter(model=>model.forecast.ok&&!model.forecast.shortage);
+    const forward=viable.filter(model=>model.forecast.progressKm>0);
+    const recommendationPool=forward.length?forward:viable;
+    const safest=[...recommendationPool].sort((a,b)=>b.forecast.safetyScore-a.forecast.safetyScore||b.forecast.progressScore-a.forecast.progressScore)[0]||null;
+    const fastest=[...recommendationPool].sort((a,b)=>b.forecast.progressScore-a.forecast.progressScore||b.forecast.safetyScore-a.forecast.safetyScore)[0]||null;
+    const supplied=[...recommendationPool].sort((a,b)=>b.forecast.supplyScore-a.forecast.supplyScore||b.forecast.progressScore-a.forecast.progressScore)[0]||null;
+    const routeActions=routeModels.map((model,index)=>{
+      const {nb,forecast,fuel}=model;
       const t2=D.nodes[nb.id];
-      const forecast=G.travelForecast(nb.id), fuel=G.fuelFor(nb.km,nb.road);
-      const lack = S.fuel<fuel;
-      const chk=G.canTravelTo(nb.id), blocked=!chk.ok;
+      const lack = forecast.shortage;
+      const chk=forecast, blocked=!chk.ok;
+      const recommendations=[];
+      if(model===safest) recommendations.push(['safe','안전']);
+      if(model===fastest) recommendations.push(['fast','진행']);
+      if(model===supplied&&forecast.supplyScore>=70) recommendations.push(['supply','보급']);
+      const isRecommended=recommendations.length>0;
       const note=blocked&&chk.why?esc(chk.why):lack?'연료 부족 주의'
-        :forecast.risk&&forecast.risk!=='보통 도로'?esc(forecast.risk):'북쪽으로 이어지는 길';
-      return `<button class="act route-option${lack?' route-low-fuel':''}" data-go="${nb.id}" ${blocked?'disabled':''}>
+        :forecast.risk&&forecast.risk!=='보통 도로'?esc(forecast.risk):'다음 목적지로 이어지는 길';
+      return `<button class="act route-option route-${forecast.readinessClass}${lack?' route-low-fuel':''}${isRecommended?' route-recommended':''}${forecast.progressKm<0?' route-backtrack':''}" data-go="${nb.id}" ${blocked?'disabled':''}>
         <span class="route-index"><i>${String(index+1).padStart(2,'0')}</i>${t2.type==='goal'?'⚡':'↗'}</span>
         <span class="route-copy"><span class="route-name"><b>${t2.name}</b><em>${note}</em></span>
-        <small class="route-stats"><span>${nb.km}km</span><i>·</i><span>주행 약 ${G.durationLabel(Math.ceil(nb.km/44*60))}</span><i>·</i><span>연료 약 ${fuel}L</span></small></span></button>`;
+        <span class="route-decision"><i class="route-readiness ${forecast.readinessClass}">${forecast.readinessLabel} ${forecast.readinessScore}</i>${recommendations.map(([cls,label])=>`<i class="route-recommend ${cls}">${label} 추천</i>`).join('')}${forecast.gear.length?`<i class="route-gear-count">장비 ${forecast.gear.length}</i>`:''}</span>
+        <small class="route-stats"><span>${nb.km}km</span><i>·</i><span>주행 약 ${G.durationLabel(forecast.minutes)}</span><i>·</i><span>연료 약 ${fuel}L</span></small>
+        <small class="route-advice"><b>${esc(forecast.directionLabel)}</b> · ${esc(forecast.readinessReason)}</small></span></button>`;
     }).join('');
     if(S.flags.armed_age){
       utilityActions+=`<button class="act" data-a="craft"><span class="ic">🔨</span><span><b>작업대를 편다</b><small>무기·탄 제작 · 약 40분</small></span></button>`;
@@ -1086,9 +1100,14 @@ const UI = (()=>{
     const routeSection=`<section class="journey-section route-section">
       <div class="journey-section-head"><span><small>CHOOSE THE ROAD</small><b>다음 길을 고른다</b></span><em>${nbs.length}개 경로</em></div>
       <div class="acts route-options">${routeActions||'<div class="route-empty">지금 이어지는 길이 없다.</div>'}</div></section>`;
-    const utilitySection=utilityActions?`<section class="journey-section utility-section">
-      <div class="journey-section-head"><span><small>VAN & GEAR</small><b>차량과 장비</b></span><em>출발 전 정비</em></div>
-      <div class="acts utility-actions">${utilityActions}</div></section>`:'';
+    const buildProfile=G.vanBuildProfile();
+    const utilitySection=`<section class="journey-section utility-section">
+      <div class="journey-section-head"><span><small>VAN & GEAR</small><b>차량과 장비</b></span><em>${esc(buildProfile.name)}</em></div>
+      <div class="van-build-summary build-${buildProfile.id}">
+        <span class="van-build-rank">${buildProfile.installed}<small>장착</small></span>
+        <span><b>${esc(buildProfile.name)} <i class="van-build-tier tier-${buildProfile.tier}">${esc(buildProfile.tierLabel)}</i>${buildProfile.secondary?` · ${esc(buildProfile.secondary)}`:''}</b><small>${esc(buildProfile.summary)}</small>${buildProfile.signature.length?`<em>${buildProfile.signature.map(esc).join(' · ')}</em>`:''}</span>
+      </div>
+      ${utilityActions?`<div class="acts utility-actions">${utilityActions}</div>`:''}</section>`;
     const h=`${contextRail(n,false)}${localSection}${routeSection}${utilitySection}`;
     p.innerHTML=h;
     const wf=p.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>G.openEventById('crisis_nofuel');
@@ -1449,12 +1468,14 @@ const UI = (()=>{
         ? `${adjustedPct>=0?'+':''}${adjustedPct}%`
         : '0%';
       const sourceLabel=profile&&profile.baseSource==='eventBase'?'교전 기본':'선택 난이도';
+      const vehicleText=profile&&profile.vehicleSources&&profile.vehicleSources.length
+        ? ` · 차량 대응 ${profile.vehicleSources.join(' + ')}`:'';
       const riskMeta = profile ? combatChoiceRiskMeta(oddsMeta.pct) : null;
       const riskMark=riskMeta&&['위험','주의'].includes(riskMeta.label)?'⚠ ':'';
       const riskChip = riskMeta ? `<span class="combat-risk ${riskMeta.cls}">${riskMark}${riskMeta.label}</span>` : '';
       const oddsLabel = profile
         ? combatShowDetail
-          ? `판정 전망 · ${G.combatGrade(c,evd)} · 난이도 ${oddsMeta.score10}/10 · 기본 ${basePercent}%(${sourceLabel}) · 조정 ${adjustLabel}${adaptiveText} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}`
+          ? `판정 전망 · ${G.combatGrade(c,evd)} · 난이도 ${oddsMeta.score10}/10 · 기본 ${basePercent}%(${sourceLabel}) · 조정 ${adjustLabel}${adaptiveText} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}${vehicleText}`
           : `판정 전망 · ${G.combatGrade(c,evd)} · 난이도 ${oddsMeta.score10}/10${readNote?` · ${readNote}`:''}`
         : '';
       if(profile){
@@ -1471,7 +1492,8 @@ const UI = (()=>{
         riskMeta ? `위험도 ${riskMeta.label}` : '',
         rq.ok ? '요구사항 충족' : `요구 조건: ${rq.t}`,
         intentNote || '',
-        G.combatContextNote(c) || ''
+        G.combatContextNote(c) || '',
+        vehicleText ? vehicleText.replace(/^ · /,'') : ''
       ].filter(Boolean);
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'} aria-label="${esc(liveBits.join(' · '))}">
           <div class="choice-head"><span class="choice-index">${count}</span><span class="choice-title">${title}</span></div>
@@ -2077,8 +2099,8 @@ const UI = (()=>{
   /* ── SETTLEMENT ── */
   let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel', stlFieldResult=null,
     stlMode='hub', stlFocus='market', stlFieldFocus='';
-  function settlementScene(stlId){
-    const sid=D.nodeScenes&&D.nodeScenes[stlId];
+  function settlementScene(stlId,mode='section'){
+    const sid=stlId==='miryang'&&mode==='hub'?'miryang-market-hub':D.nodeScenes&&D.nodeScenes[stlId];
     return sid&&D.scenes&&D.scenes[sid]?D.scenes[sid]:'';
   }
   function settlementSpots(stlId){
@@ -2113,6 +2135,15 @@ const UI = (()=>{
     };
   }
   function settlementPartyMarkerHtml(comp){
+    if(curStl==='miryang'){
+      const names=[G.myName(),comp&&comp.name].filter(Boolean).join(' · ');
+      const hiddenFaces=[settlementPortrait('me','stl-walker-face me',`${G.myName()} 초상`)];
+      if(comp) hiddenFaces.push(settlementPortrait(comp.id,'stl-walker-face companion',`${comp.name} 초상`));
+      return `<div class="stl-walk-party stl-party-placard" role="img" aria-label="${esc(names)}이 밀양 장터를 함께 걷는다">
+        <span class="stl-marker-a11y" aria-hidden="true">${hiddenFaces.filter(Boolean).join('')}</span>
+        <i aria-hidden="true"></i><span><b>우리 일행</b><small>${esc(names)}</small></span>
+      </div>`;
+    }
     const faces=[settlementPortrait('me','stl-walker-face me',`${G.myName()} 초상`)];
     if(comp) faces.push(settlementPortrait(comp.id,'stl-walker-face companion',`${comp.name} 초상`));
     return `<div class="stl-walk-party" role="img" aria-label="${esc(comp?`${G.myName()}와 ${comp.name}이 정착지를 함께 걷는다`:`${G.myName()}이 정착지를 걷는다`)}">
@@ -2120,6 +2151,7 @@ const UI = (()=>{
     </div>`;
   }
   function settlementCrowdHtml(stl){
+    if(curStl==='miryang') return '';
     const ids=[...(stl.npcs||[]).slice(0,1),'passer_merchant','passer_worker','passer_child'];
     return `<div class="stl-crowd" aria-hidden="true">${ids.map((id,i)=>
       settlementPortrait(id,`stl-crowd-face crowd-${i+1}`,'')).filter(Boolean).join('')}</div>`;
@@ -2193,7 +2225,7 @@ const UI = (()=>{
     if(back) back.onclick=()=>showStl(curStl,'hub');
   }
   function renderSettlementHub(){
-    const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl);
+    const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl,'hub');
     const spots=settlementSpots(curStl), night=G.isNight(), comp=settlementCompanion();
     const impactCopy=settlementImpactCopy(curStl), impact=impactCopy.impact;
     AMBI.settlement(night?'people':'hub');
@@ -2203,18 +2235,18 @@ const UI = (()=>{
     const walkCopy=settlementWalkCopy(stlFocus);
     settlementHeader('');
     $('#ovl-stl').classList.add('hub-mode');
-    body.innerHTML=`<div class="stl-hub" data-focus="${stlFocus}" data-impact-stage="${impact.stage}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
+    body.innerHTML=`<div class="stl-hub stl-hub-${curStl}" data-focus="${stlFocus}" data-impact-stage="${impact.stage}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
       <div class="stl-hub-art" role="img" aria-label="${esc(stl.name)} 풍경"></div>
       ${settlementImpactLayerHtml(impactCopy)}
       <div class="stl-hub-place"><b>${esc(stl.name)}</b><small>${night?'장은 잠들었지만 모닥불은 아직 켜져 있다.':esc(stl.desc)}</small>
         <span class="stl-place-impact ${impact.count?'changed':''}"><i>${impact.count?'현장 변화':'첫 방문'}</i>${esc(impactCopy.title)} · ${esc(impactCopy.line)}</span></div>
       ${settlementCrowdHtml(stl)}
       <div class="stl-hotspots" aria-label="${esc(stl.name)}에서 갈 곳">
-        ${Object.entries(spots).map(([id,spot])=>{
+        ${Object.entries(spots).map(([id,spot],index)=>{
           const closed=night&&id!=='people';
           return `<button class="stl-hotspot ${id} ${stlFocus===id?'selected':''}" data-stlfocus="${id}"
             aria-pressed="${stlFocus===id}" ${closed?'disabled':''}>
-            <span class="stl-hotspot-icon">${ICO(spot.icon)}</span>
+            ${curStl==='miryang'?`<span class="stl-hotspot-index">${String(index+1).padStart(2,'0')}</span>`:`<span class="stl-hotspot-icon">${ICO(spot.icon)}</span>`}
             <span><b>${spot.label}</b><small>${closed?'아침 06:00에 연다':id==='alley'&&impact.count?`현장 변화 ${impact.count}/${impact.total}`:spot.sub}</small></span>
           </button>`;
         }).join('')}
@@ -2279,11 +2311,28 @@ const UI = (()=>{
     const focusIndex=Math.max(0,actions.findIndex(a=>a.id===stlFieldFocus));
     const focusAction=actions[focusIndex], done=actions.filter(a=>G.stlFieldStatus(curStl,a).done).length;
     const comp=settlementCompanion(), impactCopy=settlementImpactCopy(curStl), impact=impactCopy.impact;
-    let h=`<div class="stl-field-intro ${impact.count?'changed':''}"><span>${ICO('quest')}</span><span><b>${esc(field.title)}</b><small>${esc(field.desc)}</small>
+    const illustrated=curStl==='miryang', illustratedScene=illustrated?settlementScene(curStl,'hub'):'';
+    let h=`<div class="stl-field-intro ${illustrated?'miryang-field-intro':''} ${impact.count?'changed':''}"><span>${illustrated?'<i>FIELD</i>':ICO('quest')}</span><span><b>${esc(field.title)}</b><small>${esc(field.desc)}</small>
       <em>${impact.count?`현장 변화 ${impact.count}/${impact.total} · ${esc(impactCopy.line)}`:'아직 우리가 바꾼 것은 없다'}</em></span></div>`;
     if(actions.length){
       const pos=actions.length===1?50:Math.round(focusIndex/(actions.length-1)*100);
-      h+=`<section class="stl-field-map" style="--field-pos:${pos}%" aria-label="${esc(field.title)} 현장 동선">
+      if(illustrated){
+        h+=`<section class="stl-field-map stl-field-illustrated" data-focus="${stlFieldFocus}" style="--field-pos:${pos}%;--field-scene:url('${illustratedScene}')" aria-label="${esc(field.title)} 실제 장터 배치">
+          <div class="stl-field-map-head"><b>밀양 닷새장 · 현장 동선</b><span>${done}/${actions.length}곳 완료</span></div>
+          <div class="stl-field-scene" role="img" aria-label="국수 좌판, 부품 천막, 공동 펌프와 모닥불이 있는 밀양 장터">
+            ${actions.map((action,index)=>{ const status=G.stlFieldStatus(curStl,action);
+              return `<button class="stl-field-scene-spot spot-${action.id} ${status.done?'done':''} ${action.id===stlFieldFocus?'selected':''}"
+                data-fieldspot="${action.id}" aria-pressed="${action.id===stlFieldFocus}">
+                <i>${status.done?'✓':String(index+1).padStart(2,'0')}</i><span>${esc(action.label)}</span></button>`;
+            }).join('')}
+            <div class="stl-field-map-party stl-field-scene-party" aria-hidden="true">
+              <span class="stl-marker-a11y">${settlementPortrait('me','stl-field-map-face me','')}${comp?settlementPortrait(comp.id,'stl-field-map-face companion',''):''}</span>
+              <i></i><span>${esc(comp?`${G.myName()} · ${comp.name}`:G.myName())}</span>
+            </div>
+          </div>
+          <div class="stl-field-focus-copy" data-field-focus-copy><b>${esc(focusAction.label)}</b><span>${esc(G.stlFieldStatus(curStl,focusAction).changed&&focusAction.change?focusAction.change.after:focusAction.desc)}</span></div>
+        </section>`;
+      } else h+=`<section class="stl-field-map" style="--field-pos:${pos}%" aria-label="${esc(field.title)} 현장 동선">
         <div class="stl-field-map-head"><b>현장 동선</b><span>${done}/${actions.length}곳 확인</span></div>
         <div class="stl-field-path"><i class="stl-field-rail" aria-hidden="true"></i>
           <div class="stl-field-map-party" aria-hidden="true">
@@ -2313,11 +2362,11 @@ const UI = (()=>{
         </div>`;
       }
     }
-    h+=`<div class="stl-field-list">${actions.map(action=>{
+    h+=`<div class="stl-field-list ${illustrated?'miryang-field-list':''}">${actions.map((action,index)=>{
       const status=G.stlFieldStatus(curStl,action), person=speakerInfo(action.npc);
       const cost=G.reqCostText(action.req), cadence=action.once?'여행 중 1회':'하루 1회';
       return `<button class="stl-field-action ${action.id===stlFieldFocus?'focused':''} ${status.changed?'changed':''}" data-stlfield="${action.id}" data-fieldcard="${action.id}" ${status.ok?'':'disabled'}>
-        ${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}
+        ${illustrated?`<span class="stl-field-card-index">${status.done?'✓':String(index+1).padStart(2,'0')}</span>`:settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}
         <span><b>${esc(action.label)}</b><small>${esc(action.desc)}</small>
           <span class="stl-field-meta"><i>${action.time}분</i><i>${cadence}</i>${cost?`<i>${esc(cost)}</i>`:''}</span></span>
         <em>${status.ok?esc(action.action):esc(status.reason)}</em>
@@ -2334,6 +2383,7 @@ const UI = (()=>{
     const map=$('#stl-body .stl-field-map'), action=visible[index];
     if(map){
       map.style.setProperty('--field-pos',`${visible.length===1?50:Math.round(index/(visible.length-1)*100)}%`);
+      map.dataset.focus=actionId;
       map.querySelectorAll('[data-fieldspot]').forEach(node=>{
         const selected=node.dataset.fieldspot===actionId;
         node.classList.toggle('selected',selected);
@@ -2357,10 +2407,11 @@ const UI = (()=>{
     if(stlMode==='hub'){ renderSettlementHub(); return; }
     if(G.isNight()&&stlMode!=='people'){ stlFocus='people'; renderSettlementHub(); return; }
     $('#ovl-stl').classList.remove('hub-mode');
-    const body=$('#stl-body'), scene=settlementScene(curStl), spots=settlementSpots(curStl);
+    const body=$('#stl-body'), scene=settlementScene(curStl,stlMode==='alley'?'hub':'section'), spots=settlementSpots(curStl);
     settlementHeader(spots[stlMode]?spots[stlMode].label:'');
     const walkCopy=settlementWalkCopy(stlMode), impactCopy=settlementImpactCopy(curStl);
-    let h=`<div class="stl-section-hero" data-impact-stage="${impactCopy.impact.stage}" ${scene?`style="background-image:url('${scene}')"`:''}>
+    const directField=curStl==='miryang'&&stlMode==='alley';
+    let h=directField?'':`<div class="stl-section-hero" data-impact-stage="${impactCopy.impact.stage}" ${scene?`style="background-image:url('${scene}')"`:''}>
       ${settlementImpactLayerHtml(impactCopy)}
       ${settlementSectionPartyHtml(stlMode)}
       <span>${ICO((spots[stlMode]||spots.market).icon)}${(spots[stlMode]||spots.market).label}</span>
