@@ -2,7 +2,7 @@
    외부 지도 SDK 없이 실제 좌표 위에 게임 경로와 지형의 기억을 그린다. */
 /* ═══════════════════ MAP ═══════════════════ */
 const MAPR = (()=>{
-  let cv, ctx, W=0, H=0, DPR=1, tf={s:1,ox:0,oy:0}, t=0;
+  let cv, ctx, W=0, H=0, DPR=1, tf={s:1,ox:0,oy:0}, t=0, selectedNode=null;
   let fogCv=null;
 
   const geo=(lon,lat)=>D.projectGeo([lon,lat]);
@@ -32,6 +32,38 @@ const MAPR = (()=>{
     'seoul','suwon','daejeon','sejong','cheongju','daegu','jeonju','gwangju',
     'busan','ulsan','pohang','gyeongju','gunsan','mokpo','yeosu','wonju','gangneung','sokcho'
   ]);
+  const edgeKey=(a,b)=>a<b?`${a}|${b}`:`${b}|${a}`;
+  function shortestPath(start,target){
+    if(!S||!start||!target||!D.nodes[start]||!D.nodes[target]) return null;
+    if(start===target) return {nodes:[start],km:0,segments:0,names:[D.nodes[start].name]};
+    const known=new Set(S.known||[]), dist={}, prev={}, open=new Set([...known,start,target]);
+    for(const id of open) dist[id]=Infinity;
+    dist[start]=0;
+    while(open.size){
+      let cur=null,best=Infinity;
+      for(const id of open) if((dist[id]??Infinity)<best){ best=dist[id]; cur=id; }
+      if(cur===null||best===Infinity) break;
+      open.delete(cur);
+      if(cur===target) break;
+      for(const e of D.edges){
+        let next=null;
+        if(e[0]===cur) next=e[1]; else if(e[1]===cur) next=e[0];
+        if(!next||!known.has(next)||!open.has(next)) continue;
+        const nd=best+(Number(e[2])||1);
+        if(nd<dist[next]){ dist[next]=nd; prev[next]=cur; }
+      }
+    }
+    if(!Number.isFinite(dist[target])) return null;
+    const nodes=[target];
+    while(nodes[0]!==start){ const p=prev[nodes[0]]; if(!p) return null; nodes.unshift(p); }
+    return {nodes,km:Math.round(dist[target]),segments:nodes.length-1,names:nodes.map(id=>D.nodes[id].name)};
+  }
+  function pathTo(target){
+    if(!S||!target) return null;
+    const start=S.driving?S.driving.to:S.at;
+    return shortestPath(start,target);
+  }
+  const pathEdges=path=>new Set(path&&path.nodes?path.nodes.slice(1).map((id,i)=>edgeKey(path.nodes[i],id)):[]);
 
   function init(canvas){
     cv=canvas; ctx=cv.getContext('2d');
@@ -98,7 +130,12 @@ const MAPR = (()=>{
       }
     }
 
-    /* 도로 (edges) */
+    const selectedPath=pathTo(selectedNode), selectedEdges=pathEdges(selectedPath);
+    const activeRouteEdges=new Set();
+    const route=S&&S.routePlan&&S.routePlan.status==='active'&&D.routePlans&&D.routePlans[S.routePlan.id];
+    if(route) route.corridor.slice(1).forEach((id,i)=>activeRouteEdges.add(edgeKey(route.corridor[i],id)));
+
+    /* 도로 (edges) — 전체 망은 방향을 읽을 만큼 남기고, 실제 선택은 더 강하게 겹친다. */
     for(const e of D.edges){
       const known = S && S.known.includes(e[0]) && S.known.includes(e[1]);
       if(!known) continue;
@@ -106,13 +143,16 @@ const MAPR = (()=>{
       const cur = S.driving && ((S.driving.from===e[0]&&S.driving.to===e[1])||(S.driving.from===e[1]&&S.driving.to===e[0]));
       const next = !S.driving && (e[0]===S.at||e[1]===S.at) && (nbrs.has(e[0])||nbrs.has(e[1]));
       const traveled=S&&S.visited.includes(e[0])&&S.visited.includes(e[1]);
-      if(!cur&&!next&&!traveled) continue;           // 먼 미래의 길망은 미리 펼치지 않는다
+      const selected=selectedEdges.has(edgeKey(e[0],e[1]));
+      const routeEdge=activeRouteEdges.has(edgeKey(e[0],e[1]));
       ctx.beginPath(); ctx.moveTo(px(a.x),py(a.y)); ctx.lineTo(px(b.x),py(b.y));
-      ctx.setLineDash(e[3]==='rough'?[4,5]: e[3]==='normal'?[8,4]:[]);
+      ctx.setLineDash(cur||selected||routeEdge?[]:e[3]==='rough'?[4,5]:e[3]==='normal'?[8,4]:[]);
       ctx.strokeStyle= cur? 'rgba(255,180,84,0.9)':
-        next? 'rgba(255,180,84,0.5)':
-        'rgba(180,190,220,0.32)';
-      ctx.lineWidth=cur?2.4: next?2:1.6;
+        selected? 'rgba(85,224,200,0.88)':
+        next? 'rgba(255,180,84,0.82)':
+        routeEdge? 'rgba(255,180,84,0.52)':
+        traveled? 'rgba(180,190,220,0.38)':'rgba(130,151,196,0.16)';
+      ctx.lineWidth=cur?3:selected?3:next?2.8:routeEdge?2.2:traveled?1.7:1.05;
       ctx.stroke(); ctx.setLineDash([]);
     }
 
@@ -121,6 +161,7 @@ const MAPR = (()=>{
       const n=D.nodes[id]; const x=px(n.x), y=py(n.y);
       const visited=S.visited.includes(id);
       const here = S.at===id;
+      const selected=selectedNode===id;
       const city=CITY_IDS.has(id);
       const visible=city||here||visited||nbrs.has(id)||n.stl||n.type==='goal';
       if(!visible) continue;
@@ -156,6 +197,8 @@ const MAPR = (()=>{
       }
       if(here){ ctx.strokeStyle='rgba(255,180,84,0.8)'; ctx.lineWidth=1.6;
         ctx.beginPath(); ctx.arc(x,y,9+Math.sin(t*3)*1.6,0,7); ctx.stroke(); }
+      if(selected){ ctx.strokeStyle='rgba(85,224,200,0.95)'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(x,y,11+Math.sin(t*2.4),0,7); ctx.stroke(); }
     }
 
     /* 노드 — 2패스: 라벨 (우선순위순, 겹치면 아래로, 그래도 겹치면 생략) */
@@ -177,6 +220,7 @@ const MAPR = (()=>{
         return false;
       };
       const prio=(id)=>{ const n=D.nodes[id];
+        if(selectedNode===id) return 0;
         if(S.at===id) return 0;
         if(n.type==='goal') return 1;
         if(CITY_IDS.has(id)) return 2;
@@ -221,7 +265,7 @@ const MAPR = (()=>{
     }
     /* 한 줄 범례 — 지도 자체보다 크게 보이지 않게 한다. */
     ctx.font='10.5px monospace'; ctx.fillStyle='rgba(185,194,217,0.72)';
-    ctx.fillText('◆ 주요 거점   ● 도시   ⊙ 현재·다음 길   · 지명을 누르면 상세',12,H-12);
+    ctx.fillText('◆ 거점  ● 도시  황색 현재 길  청록 선택 경로  · 지명을 누르면 경로 표시',12,H-12);
   }
 
   function onClick(ev){
@@ -238,6 +282,7 @@ const MAPR = (()=>{
       if(!(CITY_IDS.has(id)||S.at===id||S.visited.includes(id)||nbrs.has(id)||n.stl||n.type==='goal')) continue;
       const d=Math.hypot(px(n.x)-mx, py(n.y)-my);
       if(d<bd){ bd=d; best=id; } }
+    selectedNode=best;
     UI.showNodeCard(best);
   }
 
@@ -313,7 +358,7 @@ const MAPR = (()=>{
     mctx.beginPath(); mctx.moveTo(w-8.5,14); mctx.lineTo(w-6.5,12); mctx.lineTo(w-4.5,14); mctx.stroke();
   }
 
-  return {init, draw, resize, initMini, drawMini, mode:'cities-only'};
+  return {init, draw, resize, initMini, drawMini, pathTo, mode:'cities-only'};
 })();
 
 /* ═══════════════════ JOURNAL GRAPH ═══════════════════ */

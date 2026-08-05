@@ -1,5 +1,6 @@
 /* ═══════════════════ ENGINE ═══════════════════ */
 const SAVE_KEY = 'seoul400_save_v1';
+const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -10,6 +11,14 @@ const pick = (arr)=>arr[Math.floor(rng()*arr.length)];
 const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 
 const G = {};
+const COMBAT_DIFFICULTY_SHIFT = 0.06;      // per combat.difficulty 단계
+const COMBAT_ROLL_VARIANCE = 0.7;          // combatRoll 편차 반영 폭
+const COMBAT_AUTO_ADJUST_DECAY = 0.84;     // 전투 결과 기반 적응형 난이도 감쇠율
+const COMBAT_AUTO_ADJUST_GAIN = { success: -0.14, partial: 0.08, failure: 0.24 };
+const COMBAT_AUTO_ADJUST_STREAK_BOOST = 0.06; // 연속 동일 결과에 대한 보정 추가 강도
+const COMBAT_AUTO_ADJUST_STREAK_LIMIT = 3;   // 연속 부스트 최대 레벨
+const COMBAT_AUTO_ADJUST_MAX = 0.5;
+const COMBAT_AUTO_ADJUST_SCALE = 0.08;     // [-0.5~0.5] → 판정 보정 ±0.04
 
 /* ── new game / save ── */
 G.newGame = (mode, name)=>{
@@ -29,6 +38,8 @@ G.newGame = (mode, name)=>{
     relations:{pairs:{},seenChats:{}},
     director:{intensity:10,phase:'build',relaxEvents:0},
     combat:null, lastCombatReport:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
+    _combatFlow:{runId:0,adjust:0,history:[]},
+    _quality:null,
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
   };
   rng = mulberry32(S.seed);
@@ -49,7 +60,10 @@ G.newGame = (mode, name)=>{
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
-G.save = ()=>{ if(!S||S.ended) return; try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} };
+G.save = ()=>{ if(!S||S.ended) return; try{
+  if(S._quality&&S._quality.activeSession) S._quality.lastSeenAt=Date.now();
+  localStorage.setItem(SAVE_KEY, JSON.stringify(S));
+}catch(e){} };
 G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return false;
   S = JSON.parse(j); rng = mulberry32(S.seed + (S.stats.events*7919));
   /* v1 → v2 마이그레이션: 유대/퍼크 필드 보강 */
@@ -73,6 +87,15 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
   if(S.lastCombatReport===undefined) S.lastCombatReport=null;
+  if(!S._combatFlow||typeof S._combatFlow!=='object') S._combatFlow={runId:0,adjust:0,history:[]};
+  else{
+    S._combatFlow.runId=Math.max(0,Number(S._combatFlow.runId)||0);
+    S._combatFlow.adjust=Number.isFinite(S._combatFlow.adjust)
+      ? clamp(S._combatFlow.adjust,-COMBAT_AUTO_ADJUST_MAX,COMBAT_AUTO_ADJUST_MAX)
+      : 0;
+    if(!Array.isArray(S._combatFlow.history)) S._combatFlow.history=[];
+  }
+  G.recoverQualitySession();
   if(S.routePlan===undefined) S.routePlan=null;
   if(!S.stats) S.stats={km:0,events:0,nonlethal:0};
   if(!Number.isFinite(S.stats.nonlethal)) S.stats.nonlethal=0;
@@ -152,6 +175,300 @@ G.ensureNarrativeState = ()=>{
     if(!Number.isFinite(S.knowledge[id])) S.knowledge[id]=initial;
     else S.knowledge[id]=clamp(S.knowledge[id],0,2);
   }
+};
+G.ensureCombatFlow = ()=>{
+  if(!S) return null;
+  if(!S._combatFlow||typeof S._combatFlow!=='object') S._combatFlow={runId:0,adjust:0,history:[]};
+  S._combatFlow.runId=Math.max(0,Number(S._combatFlow.runId)||0);
+  S._combatFlow.adjust=Number.isFinite(S._combatFlow.adjust)
+    ? clamp(S._combatFlow.adjust,-COMBAT_AUTO_ADJUST_MAX,COMBAT_AUTO_ADJUST_MAX)
+    : 0;
+  if(!Array.isArray(S._combatFlow.history)) S._combatFlow.history=[];
+  return S._combatFlow;
+};
+G.ensureQualityState = ()=>{
+  if(!S) return null;
+  const fresh=()=>({version:2,build:'2026-08-05-quality2',createdAt:Date.now(),playMs:0,activeSession:null,sessions:[],
+    counts:{events:0,choices:0,combats:0,repeatEvents:0,visibleChoices:0,lockedChoices:0},
+    eventIds:{},eventTypes:{},combat:{success:0,partial:0,failure:0},resources:{},
+    first45:{events:0,choices:0,combats:0},lastEventType:'',typeStreak:0,maxTypeStreak:0,
+    resourceLatch:{},routes:{},settlements:{},activeSettlement:null,upgrades:[],choiceEchoes:0,endings:{},timeline:[]});
+  if(!S._quality||typeof S._quality!=='object'||Array.isArray(S._quality)) S._quality=fresh();
+  const q=S._quality;
+  if(!q.counts||typeof q.counts!=='object') q.counts=fresh().counts;
+  for(const key of ['events','choices','combats','repeatEvents','visibleChoices','lockedChoices'])
+    if(!Number.isFinite(q.counts[key])) q.counts[key]=0;
+  if(!q.eventIds||Array.isArray(q.eventIds)) q.eventIds={};
+  if(!q.eventTypes||Array.isArray(q.eventTypes)) q.eventTypes={};
+  if(!q.combat||Array.isArray(q.combat)) q.combat={success:0,partial:0,failure:0};
+  for(const key of ['success','partial','failure']) if(!Number.isFinite(q.combat[key])) q.combat[key]=0;
+  if(!q.resources||Array.isArray(q.resources)) q.resources={};
+  if(!q.resourceLatch||Array.isArray(q.resourceLatch)) q.resourceLatch={};
+  if(!q.routes||Array.isArray(q.routes)) q.routes={};
+  if(!q.settlements||Array.isArray(q.settlements)) q.settlements={};
+  if(!Array.isArray(q.upgrades)) q.upgrades=[];
+  if(!Number.isFinite(q.choiceEchoes)) q.choiceEchoes=0;
+  if(!q.endings||Array.isArray(q.endings)) q.endings={};
+  if(!q.first45||Array.isArray(q.first45)) q.first45={events:0,choices:0,combats:0};
+  if(!Array.isArray(q.timeline)) q.timeline=[];
+  if(!Array.isArray(q.sessions)) q.sessions=[];
+  if(!Number.isFinite(q.playMs)) q.playMs=0;
+  q.version=2;
+  q.build='2026-08-05-quality2';
+  return q;
+};
+G.recoverQualitySession = ()=>{
+  const q=G.ensureQualityState();
+  if(!q||!q.activeSession) return q;
+  const endAt=Math.max(q.activeSession.startedAt,Math.min(Date.now(),q.lastSeenAt||q.activeSession.startedAt));
+  const duration=Math.max(0,Math.min(4*60*60*1000,endAt-q.activeSession.startedAt));
+  q.playMs+=duration;
+  q.sessions.push({day:q.activeSession.day,km:q.activeSession.km,durationMin:Math.round(duration/6000)/10,interrupted:true});
+  if(q.sessions.length>50) q.sessions=q.sessions.slice(-50);
+  q.lastStop={context:'비정상 종료 복구',stop:S.combat?`combat:${S.combat.id}`:S.driving?`drive:${S.driving.from}>${S.driving.to}`:S.at?`node:${S.at}`:'unknown',day:S.day,km:Math.round((S.stats&&S.stats.km)||0)};
+  q.activeSession=null;
+  return q;
+};
+G.qualityPlayMs = ()=>{
+  const q=G.ensureQualityState();
+  if(!q) return 0;
+  const live=q.activeSession&&Number.isFinite(q.activeSession.startedAt)
+    ? Math.max(0,Date.now()-q.activeSession.startedAt) : 0;
+  return q.playMs+live;
+};
+G.qualityRecord = (type,data={})=>{
+  const q=G.ensureQualityState();
+  if(!q) return;
+  q.timeline.push({type,day:S.day,min:Math.round(S.min),km:Math.round((S.stats&&S.stats.km)||0),
+    playMin:Math.round(G.qualityPlayMs()/6000)/10,...data});
+  if(q.timeline.length>400) q.timeline=q.timeline.slice(-400);
+  q.lastSeenAt=Date.now();
+};
+G.qualitySessionStart = ()=>{
+  const q=G.ensureQualityState();
+  if(!q||q.activeSession) return;
+  q.activeSession={startedAt:Date.now(),day:S.day,km:Math.round((S.stats&&S.stats.km)||0)};
+  G.qualityRecord('session_start');
+};
+G.qualitySessionEnd = context=>{
+  const q=G.ensureQualityState();
+  if(!q||!q.activeSession) return;
+  const duration=Math.max(0,Math.min(4*60*60*1000,Date.now()-q.activeSession.startedAt));
+  q.playMs+=duration;
+  q.sessions.push({day:q.activeSession.day,km:q.activeSession.km,durationMin:Math.round(duration/6000)/10});
+  if(q.sessions.length>50) q.sessions=q.sessions.slice(-50);
+  q.activeSession=null;
+  const stop=S.combat?`combat:${S.combat.id}`:S.driving?`drive:${S.driving.from}>${S.driving.to}`:S.at?`node:${S.at}`:'unknown';
+  q.lastStop={context:context||'',stop,day:S.day,km:Math.round((S.stats&&S.stats.km)||0)};
+  G.qualityRecord('session_end',{durationMin:Math.round(duration/6000)/10,context:context||'',stop});
+  G.save();
+};
+G.qualityRoute = (id,status)=>{
+  const q=G.ensureQualityState();
+  const row=q.routes[id]||(q.routes[id]={chosen:0,completed:0});
+  if(status==='chosen') row.chosen++;
+  if(status==='completed') row.completed++;
+  row.lastDay=S.day; row.lastKm=Math.round((S.stats&&S.stats.km)||0);
+  G.qualityRecord(`route_${status}`,{routeId:id});
+};
+G.qualitySettlementEnter = nodeId=>{
+  const node=D.nodes&&D.nodes[nodeId], stlId=node&&node.stl;
+  if(!stlId) return;
+  const q=G.ensureQualityState();
+  if(q.activeSettlement&&q.activeSettlement.id===stlId) return;
+  q.activeSettlement={id:stlId,nodeId,startedPlayMs:G.qualityPlayMs(),startedGameMin:S.day*1440+S.min};
+  const row=q.settlements[stlId]||(q.settlements[stlId]={visits:0,playMinutes:0,gameMinutes:0,actions:0});
+  row.visits++;
+  G.qualityRecord('settlement_enter',{settlementId:stlId,nodeId});
+};
+G.qualitySettlementLeave = nodeId=>{
+  const q=G.ensureQualityState(), active=q.activeSettlement;
+  if(!active) return;
+  const playMinutes=Math.max(0,Math.round((G.qualityPlayMs()-active.startedPlayMs)/6000)/10);
+  const gameMinutes=Math.max(0,Math.round(S.day*1440+S.min-active.startedGameMin));
+  const row=q.settlements[active.id]||(q.settlements[active.id]={visits:1,playMinutes:0,gameMinutes:0,actions:0});
+  row.playMinutes=Math.round((row.playMinutes+playMinutes)*10)/10;
+  row.gameMinutes+=gameMinutes;
+  row.lastNode=nodeId||active.nodeId;
+  G.qualityRecord('settlement_leave',{settlementId:active.id,nodeId:nodeId||active.nodeId,playMinutes,gameMinutes});
+  q.activeSettlement=null;
+};
+G.qualitySettlementAction = stlId=>{
+  const q=G.ensureQualityState();
+  const row=q.settlements[stlId]||(q.settlements[stlId]={visits:1,playMinutes:0,gameMinutes:0,actions:0});
+  row.actions++;
+  G.qualityRecord('settlement_action',{settlementId:stlId});
+};
+G.qualityUpgrade = id=>{
+  const q=G.ensureQualityState(), u=G.upDef(id);
+  q.upgrades.push({id,day:S.day,km:Math.round((S.stats&&S.stats.km)||0),route:S.routePlan&&S.routePlan.id||''});
+  if(q.upgrades.length>40) q.upgrades=q.upgrades.slice(-40);
+  G.qualityRecord('upgrade',{upgradeId:id,group:(D.upgradeGroups||[]).find(group=>group.ids.includes(id))?.id||'',cost:u&&u.cost&&u.cost.scrap||0});
+};
+G.qualityChoiceEcho = memory=>{
+  const q=G.ensureQualityState();
+  q.choiceEchoes++;
+  G.qualityRecord('choice_echo',{memoryId:memory&&memory.id||'',eventId:memory&&memory.eventId||''});
+};
+G.qualityEnding = kind=>{
+  const q=G.ensureQualityState();
+  q.endings[kind]=(q.endings[kind]||0)+1;
+  G.qualityRecord('ending',{ending:kind});
+};
+G.qualityArchive = ()=>{ try{
+  const rows=JSON.parse(localStorage.getItem(QUALITY_ARCHIVE_KEY)||'[]');
+  return Array.isArray(rows)?rows:[];
+}catch(e){ return []; } };
+G.archiveQualityRun = kind=>{ try{
+  const rows=G.qualityArchive();
+  rows.push({endedAt:new Date().toISOString(),ending:kind,day:S.day,km:Math.round((S.stats&&S.stats.km)||0),
+    route:S.routePlan&&S.routePlan.id||'',summary:G.qualitySummary()});
+  localStorage.setItem(QUALITY_ARCHIVE_KEY,JSON.stringify(rows.slice(-12)));
+}catch(e){} };
+G.qualityEventOpen = ev=>{
+  if(!ev) return;
+  const q=G.ensureQualityState(), recent=S._recentEvents||[];
+  const reverseIndex=[...recent].reverse().indexOf(ev.id);
+  const repeatDistance=reverseIndex<0?null:reverseIndex+1;
+  q.counts.events++;
+  q.eventIds[ev.id]=(q.eventIds[ev.id]||0)+1;
+  q.eventTypes[ev.type||'기타']=(q.eventTypes[ev.type||'기타']||0)+1;
+  if(repeatDistance!==null&&repeatDistance<=10) q.counts.repeatEvents++;
+  if(q.lastEventType===(ev.type||'기타')) q.typeStreak++;
+  else { q.lastEventType=ev.type||'기타'; q.typeStreak=1; }
+  q.maxTypeStreak=Math.max(q.maxTypeStreak||0,q.typeStreak);
+  if(G.qualityPlayMs()<=45*60*1000) q.first45.events++;
+  G.qualityRecord('event_open',{eventId:ev.id||'',eventType:ev.type||'기타',repeatDistance});
+};
+G.qualityChoice = (ev,choice,index,visible,available)=>{
+  const q=G.ensureQualityState();
+  q.counts.choices++;
+  q.counts.visibleChoices+=Math.max(0,visible||0);
+  q.counts.lockedChoices+=Math.max(0,(visible||0)-(available||0));
+  if(G.qualityPlayMs()<=45*60*1000) q.first45.choices++;
+  G.qualityRecord('choice',{eventId:ev&&ev.id||'',eventType:ev&&ev.type||'',choiceIndex:index,
+    tactic:choice&&choice.tactic||'',visible:visible||0,available:available||0});
+};
+G.qualityCombat = report=>{
+  if(!report) return;
+  const q=G.ensureQualityState();
+  const result=['success','partial','failure'].includes(report.resultCode)?report.resultCode:'partial';
+  q.counts.combats++;
+  q.combat[result]++;
+  if(G.qualityPlayMs()<=45*60*1000) q.first45.combats++;
+  G.qualityRecord('combat_end',{threat:report.threat||'',kind:report.kind||'',result,
+    tactics:(report.tactics||[]).join('>'),gainCount:(report.gains||[]).length,costCount:(report.costs||[]).length});
+};
+G.qualityResourceCheck = ()=>{
+  if(!S) return;
+  const q=G.ensureQualityState();
+  const thresholds={fuel:S.fuel<=10,water:S.water<=G.partySize(),food:S.food<=G.partySize(),
+    van:S.van<=30,fatigue:S.fatigue>=85,pursuit:S.pursuit>=4};
+  for(const [key,active] of Object.entries(thresholds)){
+    if(active&&!q.resourceLatch[key]){
+      q.resourceLatch[key]=true;
+      q.resources[key]=(q.resources[key]||0)+1;
+      G.qualityRecord('resource_critical',{resource:key});
+    } else if(!active) q.resourceLatch[key]=false;
+  }
+};
+G.qualitySummary = ()=>{
+  const q=G.ensureQualityState(), combats=q.counts.combats||0, events=q.counts.events||0;
+  return {playMinutes:Math.round(G.qualityPlayMs()/6000)/10,sessions:q.sessions.length+(q.activeSession?1:0),
+    events,uniqueEvents:Object.keys(q.eventIds).length,repeatRate:events?Math.round(q.counts.repeatEvents/events*100):0,
+    maxTypeStreak:q.maxTypeStreak||0,choices:q.counts.choices||0,
+    lockedRate:q.counts.visibleChoices?Math.round(q.counts.lockedChoices/q.counts.visibleChoices*100):0,
+    combats,combat:{...q.combat},successRate:combats?Math.round(q.combat.success/combats*100):0,
+    first45:{...q.first45},resources:{...q.resources},routes:{...q.routes},settlements:{...q.settlements},
+    upgrades:q.upgrades.length,choiceEchoes:q.choiceEchoes||0,lastStop:q.lastStop||null,
+    endings:{...q.endings},timelineCount:q.timeline.length,build:q.build};
+};
+G.exportQuality = format=>{
+  const q=G.ensureQualityState(), summary=G.qualitySummary();
+  if(format==='json') return JSON.stringify({game:'서울까지 400km',exportedAt:new Date().toISOString(),summary,quality:q,completedRuns:G.qualityArchive()},null,2);
+  const L=['# 서울까지 400km — 품질 기록','',
+    `> 기록 스키마 ${q.version} · 빌드 ${q.build}`,
+    `> 외부 전송 없는 로컬 기록 · DAY ${S.day} · ${Math.round(S.stats.km)}km · 실제 플레이 ${summary.playMinutes}분`,'',
+    '## 핵심 지표','',
+    `- 사건 ${summary.events}회 · 고유 사건 ${summary.uniqueEvents}개 · 10사건 내 반복 ${summary.repeatRate}%`,
+    `- 선택 ${summary.choices}회 · 잠긴 선택지 노출 비율 ${summary.lockedRate}%`,
+    `- 같은 사건 유형 최대 ${summary.maxTypeStreak}회 연속`,
+    `- 전투 ${summary.combats}회 · 성공 ${summary.combat.success} · 부분 성공 ${summary.combat.partial} · 실패 ${summary.combat.failure}`,
+    `- 첫 45분 · 사건 ${summary.first45.events} · 선택 ${summary.first45.choices} · 전투 ${summary.first45.combats}`,
+    `- 핵심 선택 가까운 회수 ${summary.choiceEchoes}회 · 개조 ${summary.upgrades}회`,'',
+    '## 노선과 정착지',''];
+  const routeRows=Object.entries(summary.routes);
+  if(routeRows.length) routeRows.forEach(([id,row])=>L.push(`- 노선 ${id}: 선택 ${row.chosen||0}회 · 완주 ${row.completed||0}회`));
+  else L.push('- 노선 기록 없음');
+  const settlementRows=Object.entries(summary.settlements);
+  if(settlementRows.length) settlementRows.forEach(([id,row])=>L.push(`- 정착지 ${id}: 방문 ${row.visits||0}회 · 실제 ${row.playMinutes||0}분 · 현장 행동 ${row.actions||0}회`));
+  else L.push('- 정착지 기록 없음');
+  L.push('',
+    '## 자원 위험 진입','');
+  const resourceNames={fuel:'연료',water:'물',food:'식량',van:'차체',fatigue:'피로',pursuit:'관측'};
+  const resourceRows=Object.entries(summary.resources);
+  if(resourceRows.length) resourceRows.forEach(([key,value])=>L.push(`- ${resourceNames[key]||key}: ${value}회`));
+  else L.push('- 아직 기록 없음');
+  L.push('','## 최근 세부 기록','');
+  q.timeline.slice(-120).forEach(row=>L.push(`- ${row.playMin}분 · DAY ${row.day} · ${row.km}km · ${row.type}${row.eventId?` · ${row.eventId}`:''}${row.result?` · ${row.result}`:''}`));
+  return L.join('\n');
+};
+G.combatAdaptiveBias = ()=>{
+  const flow=G.ensureCombatFlow();
+  return flow?flow.adjust:0;
+};
+G.combatAdaptivePercent = ()=>Math.round(G.combatAdaptiveBias()*100);
+G.combatAdaptiveTrendPercent = ()=>{
+  const flow=G.ensureCombatFlow();
+  if(!flow || !Array.isArray(flow.history) || flow.history.length<1) return 0;
+  const samples=flow.history.slice(-3);
+  const count=Math.max(1,samples.length);
+  const avg=samples.reduce((sum,entry)=>sum+(Number.isFinite(entry.delta)?entry.delta:0),0)/count;
+  return Math.round(avg*100);
+};
+G.combatRecentFailureStreak = ()=>{
+  const flow=G.ensureCombatFlow();
+  if(!flow || !Array.isArray(flow.history) || flow.history.length<1) return 0;
+  let streak=0;
+  for(let i=flow.history.length-1;i>=0;i--){
+    if(flow.history[i]&&flow.history[i].result==='failure') streak++;
+    else break;
+  }
+  return Math.min(3,streak);
+};
+G.recordCombatOutcome = (resultCode)=>{
+  const flow=G.ensureCombatFlow();
+  if(!flow) return;
+  const sameAsLast = (()=> {
+    const prev=flow.history[flow.history.length-1];
+    let streak=0;
+    for(let i=flow.history.length-1;i>=0;i--){
+      if(flow.history[i].result===resultCode) streak++;
+      else break;
+    }
+    return prev&&prev.result===resultCode ? streak : 0;
+  })();
+  const streak=Math.max(0,sameAsLast);
+  const before=flow.adjust;
+  const gain = resultCode==='success'
+    ? COMBAT_AUTO_ADJUST_GAIN.success
+    : resultCode==='partial' ? COMBAT_AUTO_ADJUST_GAIN.partial
+    : COMBAT_AUTO_ADJUST_GAIN.failure;
+  const boost = Math.min(COMBAT_AUTO_ADJUST_STREAK_LIMIT, Math.max(0,streak)) * COMBAT_AUTO_ADJUST_STREAK_BOOST;
+  const tunedGain = resultCode==='failure' ? gain + boost : gain - boost*0.5;
+  flow.adjust=clamp(flow.adjust*COMBAT_AUTO_ADJUST_DECAY+tunedGain,-COMBAT_AUTO_ADJUST_MAX,COMBAT_AUTO_ADJUST_MAX);
+  const delta=flow.adjust-before;
+  flow.history.push({
+    result:resultCode,
+    day:S.day,
+    km:Math.round((S.stats&&S.stats.km)||0),
+    before:Math.round(before*1000)/1000,
+    after:Math.round(flow.adjust*1000)/1000,
+    delta:Math.round(delta*1000)/1000,
+    streak:Math.max(streak+1,1)
+  });
+  if(flow.history.length>12) flow.history=flow.history.slice(-12);
+  return {before,after:flow.adjust,delta,streak:Math.max(streak+1,1)};
 };
 G.knowledgeLevel = id=>{
   G.ensureNarrativeState();
@@ -500,6 +817,7 @@ G.takeChoiceEcho = ()=>{
   memory.echoDay=S.day;
   memory.echoKm=Math.round(S.stats.km);
   S.memories.pending.splice(idx,1);
+  G.qualityChoiceEcho(memory);
   G.save();
   return {memory,lines:def.lines};
 };
@@ -546,6 +864,23 @@ G.combatContextNote = choice=>{
   if(S&&S.combat&&(S.combat.pressure||0)>=2) notes.push('시간에 몰림');
   return notes.join(' · ');
 };
+G.combatDifficultyMeta = p=>{
+  if(!Number.isFinite(p)) return {odds:0,pct:0,label:'측정 불가',className:'neutral',score:3,score10:5};
+  const v=clamp(p,0,1);
+  const pct=Math.round(v*100);
+  const score10=Math.max(1,Math.min(10,Math.round(v*10)));
+  const score=Math.max(1,Math.min(5,Math.ceil(score10/2)));
+  const bucket=score10>=9
+    ? {label:'매우 쉬움',className:'good'}
+    : score10>=7
+      ? {label:'쉬움',className:'good'}
+      : score10>=5
+        ? {label:'보통',className:'neutral'}
+        : score10>=3
+          ? {label:'어려움',className:'hard'}
+          : {label:'매우 어려움',className:'hard'};
+  return {odds:v,pct,label:bucket.label,className:bucket.className,score,score10};
+};
 G.combatIntentAnswer = (evd,choice)=>{
   const combat=evd&&evd.combat;
   const counters=combat&&combat.counters;
@@ -558,6 +893,26 @@ G.combatIntentNote = (evd,choice)=>{
   const answer=G.combatIntentAnswer(evd,choice);
   return answer?`의도 대응 · ${answer.label}`:'';
 };
+G.combatBaseOdds = (choice,evd)=>{
+  const combat=evd&&evd.combat;
+  const hasRoll=typeof choice.combatRoll==='number';
+  const roll=hasRoll ? choice.combatRoll : 0.52;
+  const globalShift=Number(combat&&combat.difficulty)||0;
+  const shift=clamp(globalShift,-2,2)*COMBAT_DIFFICULTY_SHIFT;
+  const adaptive=G.combatAdaptiveBias()*COMBAT_AUTO_ADJUST_SCALE;
+  const eventBase=Number(combat&&combat.baseChance);
+  if(Number.isFinite(combat&&combat.baseChance)){
+    return clamp(eventBase + (hasRoll ? (roll-0.5)*COMBAT_ROLL_VARIANCE : 0) + shift + adaptive,0.1,0.94);
+  }
+  return clamp(roll + shift + adaptive,0.1,0.94);
+};
+G.combatOddsSource = (choice,evd)=>{
+  const combat=evd&&evd.combat;
+  if(Number.isFinite(combat&&combat.baseChance)) return 'eventBase';
+  const base=typeof choice.combatRoll==='number'?choice.combatRoll:NaN;
+  const baseSource = Number.isFinite(base)?'choiceBase':'fallbackBase';
+  return baseSource;
+};
 G.combatReadDelta = choice=>{
   const read=S&&S.combat&&S.combat.read;
   if(!read||!choice||!choice.tactic||!Array.isArray(read.tactics)) return 0;
@@ -568,18 +923,50 @@ G.combatReadNote = choice=>{
   if(!read||!choice||!choice.tactic||!Array.isArray(read.tactics)) return '';
   return read.tactics.includes(choice.tactic)?'읽어낸 틈 활용':'다른 해법';
 };
-G.combatOdds = (choice,evd)=>{
-  const base=typeof choice.combatRoll==='number'?choice.combatRoll:0.52;
+G.combatReadGuaranteed = (evd,choice)=>{
+  const combat=evd&&evd.combat, tactic=choice&&choice.tactic;
+  /* 대응 단계의 역할은 운이 아니라 관찰과 해법 선택이다. 예고 행동에
+     맞는 대응은 정보를 확정하고, 승패의 불확실성은 마지막 실행에 둔다. */
+  return !!(combat&&combat.phase===2&&tactic&&combat.counters&&
+    Object.prototype.hasOwnProperty.call(combat.counters,tactic)&&
+    choice.out&&choice.out[0]&&choice.out[0].fx&&choice.out[0].fx.combatRead);
+};
+G.combatOddsBreakdown = (choice,evd)=>{
+  const flow=G.ensureCombatFlow();
+  const base=G.combatBaseOdds(choice,evd);
+  const baseSource=G.combatOddsSource(choice,evd);
   const edge=S&&S.combat?S.combat.edge||0:0;
   const readBonus=G.combatReadDelta(choice);
-  let bonus=edge*0.12+G.combatTacticDelta(choice)+G.combatContextDelta(choice)
-    +G.combatIntentDelta(evd,choice)+readBonus;
-  if(S&&S.up&&S.up.armor) bonus+=0.04;
-  if(S&&S.up&&S.up.scope&&choice.tactic==='사격') bonus+=0.08;
-  if(G.isInjured('driver')) bonus-=0.08;
+  const terrainDelta=G.combatContextDelta(choice);
+  const tacticDelta=G.combatTacticDelta(choice);
+  const intentDelta=G.combatIntentDelta(evd,choice);
+  const perkDelta=(S&&S.up&&S.up.armor?0.04:0)+(S&&S.up&&S.up.scope&&choice.tactic==='사격'?0.08:0);
+  const injury= G.isInjured('driver') ? -0.08 : 0;
+  const adaptive=G.combatAdaptiveBias()*COMBAT_AUTO_ADJUST_SCALE;
+  const comeback= flow&&Array.isArray(flow.history) ? Math.min(3,G.combatRecentFailureStreak())*0.015 : 0;
+  const bonus=edge*0.12+tacticDelta+terrainDelta+intentDelta+readBonus+perkDelta+injury+comeback;
   /* 앞 단계에서 구체적인 틈을 읽고 그에 맞는 해법을 고른 경우에만
      일반 성공 상한 90%를 95%까지 연다. 준비해도 실패 가능성은 남긴다. */
-  return clamp(base+bonus,0.12,readBonus>0?0.95:0.9);
+  const guaranteedRead=G.combatReadGuaranteed(evd,choice);
+  return {base,baseSource,edge,readBonus,readDelta:readBonus,terrainDelta,tacticDelta,intentDelta,perkDelta,guaranteedRead,
+    injury,bonus,adaptive:adaptive+comeback,adaptiveRecovery:comeback,adaptivePercent:G.combatAdaptivePercent(),
+    odds:guaranteedRead?1:clamp(base+bonus,0.12,readBonus>0?0.95:0.9)};
+};
+G.combatOdds = (choice,evd)=>{
+  const breakdown=G.combatOddsBreakdown(choice,evd);
+  return breakdown?breakdown.odds:0.52;
+};
+G.combatOddsPercent = (choice,evd)=>{
+  const p=G.combatOdds(choice,evd);
+  return Math.round(clamp(Number.isFinite(p)?p:0,0,1)*100);
+};
+G.combatChoiceChoiceText = choice=>{
+  if(!choice) return '';
+  const tactic=choice.tactic||'행동';
+  const label=String(choice.label||'').replace(/<[^>]*>/g,'').trim();
+  if(tactic==='행동'&&label) return label;
+  if(!label) return tactic;
+  return `${tactic} · ${label}`;
 };
 G.combatGrade = (choice,evd)=>{
   const p=G.combatOdds(choice,evd);
@@ -601,11 +988,33 @@ G.rememberCombatChoice = (evd,choice)=>{
   }
   return entry;
 };
+G.inferCombatResult = (choice,out,index,rolled)=>{
+  const fx=out&&out.fx;
+  if(!fx||!fx.combatEnd) return '';
+  if(['success','partial','failure'].includes(fx.combatResult)) return fx.combatResult;
+  const severeCost=!!fx.injury || (fx.pursuit||0)>0 || (fx.van||0)<=-7 || (fx.fuel||0)<=-7;
+  const clearGain=(fx.scrap||0)>0 || (fx.food||0)>0 || (fx.water||0)>0 ||
+    !!fx.note || !!fx.flag || !!fx.flag2 || !!fx.knowledge || !!fx.reveal;
+  if(rolled) return index===0?'success':severeCost?'failure':'partial';
+  if(choice&&choice.tactic==='이탈') return 'partial';
+  return clearGain&&!severeCost?'success':'partial';
+};
 G.pickOutcome = (evd, choice)=>{
-  if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')) return choice.out[0];
-  if(choice.combatRoll!==undefined&&choice.out.length>1)
-    return rng()<G.combatOdds(choice,evd)?choice.out[0]:choice.out[1];
-  return G.rollOut(choice.out);
+  let out=null, index=0, rolled=false;
+  if(G.combatReadGuaranteed(evd,choice)) out=choice.out[0];
+  else if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')) out=choice.out[0];
+  else if(choice.combatRoll!==undefined&&choice.out.length>1){
+    rolled=true;
+    index=rng()<G.combatOdds(choice,evd)?0:1;
+    out=choice.out[index];
+  } else {
+    out=G.rollOut(choice.out);
+    index=Math.max(0,choice.out.indexOf(out));
+  }
+  const combatResult=G.inferCombatResult(choice,out,index,rolled);
+  if(combatResult&&out&&out.fx&&!out.fx.combatResult)
+    return {...out,fx:{...out.fx,combatResult}};
+  return out;
 };
 
 /* ── notes (지식 그래프) ── */
@@ -762,6 +1171,7 @@ G.chooseRoute = id=>{
   G.addNote({type:'사건',title:`김천에서 고른 길: ${def.name}`,
     body:`${def.promise}. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.`,links:['달구지']});
   UI.toast(`${def.mark} ${def.name} — 청주까지 노선 고정`);
+  G.qualityRoute(id,'chosen');
   return true;
 };
 G.updateRouteOnArrival = to=>{
@@ -778,6 +1188,7 @@ G.updateRouteOnArrival = to=>{
   G.addNote({type:'사건',title:`노선 완주: ${rs.def.name}`,
     body:`김천에서 고른 길을 청주까지 바꾸지 않고 왔다. ${rs.def.reward}.`,links:['달구지']});
   UI.toast(`${rs.def.mark} ${rs.def.name} 완주 — 두 길이 청주에서 다시 만났다`);
+  G.qualityRoute(rs.state.id,'completed');
   return true;
 };
 G.canTravelTo = (id)=>{
@@ -889,6 +1300,7 @@ G.resolveImpactEcho = mode=>{
 
 G.startTravel = (to)=>{
   const chk = G.canTravelTo(to); if(!chk.ok) return false;
+  G.qualitySettlementLeave(S.at);
   const wx = S.wx;
   const slots = [];
   const isBridge = (S.at==='suwon'&&to==='seoul'&&!S.flags.bridge_crossed);
@@ -945,6 +1357,7 @@ G.tick = (dt)=>{ // dt: real seconds
   const nightFtg = G.isNight()? (S.up&&S.up.lightbar?0.049:0.075) : 0.04;   // 라이트바=밤길이 덜 갉아먹음
   const bunkMul = S.up&&S.up.bunk? 0.8:1;                                    // 2층 침대=교대 수면
   S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*(1-G.driverLv()*0.06)*(dv.guestFatigue||1), 0, 100);
+  G.qualityResourceCheck();
   G.checkDriverLv();
   G.advance(gm);
   if(S.ended) return;
@@ -1073,8 +1486,10 @@ G.directEventPool = (pool,opt={})=>{
 
   if(opt.breather!==false && S._eventBreather>0){
     const calm=out.filter(G.eventIsCalm);
-    if(calm.length) out=calm;
-    S._eventBreather=Math.max(0,S._eventBreather-1);
+    if(calm.length){
+      out=calm;
+      S._eventBreather=Math.max(0,S._eventBreather-1);
+    }
   }
 
   const phase=S.director&&S.director.phase;
@@ -1162,6 +1577,7 @@ G.fireDriveEvent = ()=>{
 G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openEvent(ev); };
 G.openEvent = (evd)=>{
   if(evd.once) S.used.push(evd.id);
+  G.qualityEventOpen(evd);
   G.rememberEvent(evd);
   S.stats.events++;
   UI.showEvent(evd);
@@ -1197,10 +1613,16 @@ G.applyFx = (fx)=>{
     chips.push({t:'🛡 전면 가드: 피해 감소', c:'plus'}); }
   if(fx.combatStart){
     const c=fx.combatStart;
+    const flow=G.ensureCombatFlow();
+    if(flow) flow.runId = Math.max(0,(Number(flow.runId)||0)+1);
+    const adaptiveBias=flow ? flow.adjust : G.combatAdaptiveBias();
     S.combat={id:c.id||'encounter',threat:c.threat||'위협',edge:c.edge||0,
       terrain:c.terrain||'',stakes:c.stakes||'',objective:c.objective||'',
       kind:c.kind||'교전',pressure:clamp(c.pressure||0,0,3),read:null,startedDay:S.day,
-      start:{van:S.van,fuel:S.fuel,fatigue:S.fatigue,pursuit:S.pursuit}};
+      runId:flow&&flow.runId?flow.runId:0,adaptive:adaptiveBias,adaptivePercent:Math.round(adaptiveBias*100),
+      start:{van:S.van,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
+        fatigue:S.fatigue,pursuit:S.pursuit,items:{...(S.items||{})},
+        injuries:Object.keys(S.injuries||{})}};
   }
   if(fx.combatEdge&&S.combat){
     S.combat.edge=clamp((S.combat.edge||0)+fx.combatEdge,-2,3);
@@ -1275,20 +1697,47 @@ G.applyFx = (fx)=>{
   }
   if(fx.combatEnd){
     if(S.combat){
+      const resultCode=fx.combatResult==='success'?'success':fx.combatResult==='partial'?'partial':'failure';
+      const adaptiveUpdate=G.recordCombatOutcome(resultCode);
+      const adaptiveEndPercent=adaptiveUpdate && Number.isFinite(adaptiveUpdate.after) ? Math.round(adaptiveUpdate.after*100) : G.combatAdaptivePercent();
       const history=Array.isArray(S.combat.history)?S.combat.history:[];
       const tactics=[...new Set(history.map(x=>x.tactic).filter(Boolean))];
       const kind=S.combat.kind||'교전';
       const result=fx.combatResult==='success'?'목표 달성':fx.combatResult==='partial'?'부분 달성':'종료';
       const start=S.combat.start||{};
-      const costs=[
-        Number.isFinite(start.van)&&Math.round(S.van-start.van)!==0?`차체 ${Math.round(S.van-start.van)>0?'+':''}${Math.round(S.van-start.van)}%`:null,
-        Number.isFinite(start.fuel)&&Math.round(S.fuel-start.fuel)!==0?`연료 ${Math.round(S.fuel-start.fuel)>0?'+':''}${Math.round(S.fuel-start.fuel)}L`:null,
-        Number.isFinite(start.fatigue)&&Math.round(S.fatigue-start.fatigue)!==0?`피로 ${Math.round(S.fatigue-start.fatigue)>0?'+':''}${Math.round(S.fatigue-start.fatigue)}`:null,
-        Number.isFinite(start.pursuit)&&S.pursuit-start.pursuit!==0?`관측 ${S.pursuit-start.pursuit>0?'+':''}${S.pursuit-start.pursuit}`:null,
-      ].filter(Boolean);
-      S.lastCombatReport={kind,threat:S.combat.threat,result,resultCode:fx.combatResult||'end',
+      const gains=[], costs=[];
+      const addDelta=(label,delta,unit='',higherIsGood=true)=>{
+        delta=Math.round((Number(delta)||0)*10)/10;
+        if(!delta) return;
+        const text=`${label} ${delta>0?'+':''}${delta}${unit}`;
+        ((delta>0)===higherIsGood?gains:costs).push(text);
+      };
+      addDelta('차체',S.van-start.van,'%',true);
+      addDelta('연료',S.fuel-start.fuel,'L',true);
+      addDelta('물',S.water-start.water,'',true);
+      addDelta('식량',S.food-start.food,'',true);
+      addDelta('고철',S.scrap-start.scrap,'',true);
+      addDelta('피로',S.fatigue-start.fatigue,'',false);
+      addDelta('관측',S.pursuit-start.pursuit,'',false);
+      const itemNames=new Set([...Object.keys(start.items||{}),...Object.keys(S.items||{})]);
+      itemNames.forEach(name=>addDelta(name,(S.items[name]||0)-(start.items&&start.items[name]||0),'',true));
+      const previousInjuries=new Set(start.injuries||[]);
+      const newInjuries=Object.keys(S.injuries||{}).filter(id=>!previousInjuries.has(id));
+      newInjuries.forEach(id=>{
+        const injury=S.injuries[id];
+        costs.push(`${G.injuryName(id)} · ${injury&&injury.label||'부상'}`);
+      });
+      const decisive=[...history].reverse().find(x=>x.read==='읽어낸 틈 활용'||x.response)||history[history.length-1];
+      S.lastCombatReport={kind,threat:S.combat.threat,result,resultCode,
+        adaptive:{start:S.combat.adaptivePercent||Math.round((S.combat.adaptive||0)*100),end:adaptiveEndPercent,
+          delta:adaptiveUpdate&&Number.isFinite(adaptiveUpdate.delta)?Math.round(adaptiveUpdate.delta*100):0,
+          streak:adaptiveUpdate&&adaptiveUpdate.streak?adaptiveUpdate.streak:1},
         tactics,history:history.map(x=>({...x})),read:S.combat.read&&S.combat.read.label||'',
-        readUsed:history.some(x=>x.read==='읽어낸 틈 활용'),costs,day:S.day};
+        readUsed:history.some(x=>x.read==='읽어낸 틈 활용'),
+        objective:S.combat.objective||'',stakes:S.combat.stakes||'',
+        keyMoment:decisive?`${decisive.tactic} · ${decisive.label}`:'',
+        gains,costs,newInjuries,day:S.day};
+      G.qualityCombat(S.lastCombatReport);
       const context=[S.combat.terrain&&`지형: ${S.combat.terrain}`,
         S.combat.objective&&`처음 목표: ${S.combat.objective}`,
         S.combat.stakes&&`실패 위험: ${S.combat.stakes}`,
@@ -1299,6 +1748,10 @@ G.applyFx = (fx)=>{
       if(kind!=='교전'&&['success','partial'].includes(fx.combatResult)) S.stats.nonlethal++;
       if(tactics.length>=2&&S.party.length){ G.moodAll(1); chips.push({t:'전술 연계 · 사기 +1',c:'plus'}); }
       chips.push({t:`${kind} ${result} · 행동 기록 저장`,c:'plus'});
+      S._eventBreather=Math.max(Number(S._eventBreather)||0,2);
+      G.ensureNarrativeState();
+      S.director.phase='fade';
+      S.director.intensity=Math.max(44,Math.min(72,S.director.intensity));
     }
     S.combat=null;
   }
@@ -1312,6 +1765,7 @@ G.applyFx = (fx)=>{
   for(const learned of G.syncKnowledgeFromFlags())
     chips.push({t:`◈ ${learned.label} · ${learned.level>=2?'확인':'단서'}`,c:'item'});
   if(fx.gameover) G.endGame(fx.gameover);
+  G.qualityResourceCheck();
   G.save();
   return chips;
 };
@@ -1478,6 +1932,7 @@ G.doStlFieldAction = (stlId,actionId)=>{
   if(action.once) state.once[before.onceKey]=true;
   if(firstImpact) state.impact[before.onceKey]={day:S.day,min:S.min};
   state.log.push({stl:stlId,id:action.id,day:S.day,min:S.min});
+  G.qualitySettlementAction(stlId);
   if(state.log.length>40) state.log=state.log.slice(-40);
   const chips=G.applyFx(fx);
   if(firstImpact){
@@ -1523,6 +1978,7 @@ G.arrive = ()=>{
   const to = S.driving.to;
   const road = S.driving.road;
   S.at = to; S.driving = null;
+  G.qualitySettlementEnter(to);
   if(completedDrive&&completedDrive.guestFind){
     S.scrap+=completedDrive.guestFind;
     UI.toast(`🧰 재이가 길가에서 쓸 만한 고철을 챙겼다 +${completedDrive.guestFind}`);
@@ -1793,6 +2249,7 @@ G.buyUpgrade = (id)=>{
   S.scrap-=u.cost.scrap;
   if(u.cost.parts) S.items['부품']-=u.cost.parts;
   S.up[id]=true;
+  G.qualityUpgrade(id);
   if(id==='tank1'||id==='tank2'){ S.fuelMax+=25; }
   if(id==='armor'){ S.vanMax+=25; S.van+=25; }
   const stage=u.seat?G.vanStage():null;
@@ -2018,6 +2475,9 @@ G.checkQuest = ()=>{
 
 /* ── endings ── */
 G.endGame = (kind)=>{
+  G.qualityEnding(kind);
+  G.qualitySessionEnd('ending');
+  G.archiveQualityRun(kind);
   S.ended = true; G.wipe();
   UI.showEnding(kind);
 };
