@@ -917,12 +917,29 @@ G.beatReady = (b)=>{
   const w=b.when;
   if(!w) return true;
   if(w.comps && !w.comps.every(id=>G.hasComp(id)&&!G.isInjured(id))) return false;
-  if(w.region && w.region!==G.regionOf()) return false;
+  if(w.region){ const r=G.regionOf();
+    if(Array.isArray(w.region)? !w.region.includes(r) : w.region!==r) return false; }
   if(w.flag && !S.flags[w.flag]) return false;
   if(w.noFlag && S.flags[w.noFlag]) return false;
   if(w.minParty!==undefined && S.party.length<w.minParty) return false;
   if(w.maxKm!==undefined && S.stats.km>w.maxKm) return false;
+  if(w.lowWater && S.water>2) return false;   // 본문이 "물통 바닥"을 전제하는 장면용
+  if(w.day===false && G.isNight()) return false;
   return true;
+};
+/* 비트로 승격한 이벤트가 원래 갖고 있던 출현 조건을 잃지 않게 한다.
+   승격은 "무작위 풀에서 꺼내 보장한다"는 뜻이지 "아무 데서나 튼다"는 뜻이 아니다.
+   (2026-08-06: water_toll이 물통 가득한 상태에서 "우리 물통은 바닥이 보인다"를
+    출력할 수 있었다 — 승격이 needLowWater를 우회했기 때문.) */
+G.beatConditionsMatchEvent = (b)=>{
+  const ev=D.events.find(e=>e.id===b.id);
+  if(!ev) return {ok:false, why:'이벤트 없음'};
+  const w=b.when||{};
+  if(ev.region && !w.region) return {ok:false, why:`region ${ev.region.join('/')} 조건이 비트에 없음`};
+  if(ev.needLowWater && !w.lowWater) return {ok:false, why:'needLowWater 조건이 비트에 없음'};
+  if(ev.needFlag && w.flag!==ev.needFlag) return {ok:false, why:`needFlag ${ev.needFlag} 조건이 비트에 없음`};
+  if(ev.night===false && w.day!==false) return {ok:false, why:'주간 전용 조건이 비트에 없음'};
+  return {ok:true};
 };
 G.scheduleJourneyBeat = ()=>{
   if(!S||!D.journeyBeats) return null;

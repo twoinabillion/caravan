@@ -510,16 +510,16 @@ D.eraTraces = [
    풀에 두면 등장률이 0에 수렴한다(2026-08-06 실측: 갈등 아크 0%, 악의 조우 0%). */
 D.journeyBeats = [
  {id:'story_generation_form',     km:60,  kind:'story'},
- {id:'levy_office',                km:80,  kind:'world'},
+ {id:'levy_office',                km:80,  kind:'world', when:{region:['mid']}},
  {id:'story_family_principle',     km:100, kind:'story'},
- {id:'salvage_claim',              km:110, kind:'world'},
- {id:'conflict_fuel_detour',       km:120, kind:'world', when:{comps:['kangwoo','parkss']}},
+ {id:'salvage_claim',              km:110, kind:'world', when:{region:['south','mid']}},
+ {id:'conflict_fuel_detour',       km:120, kind:'world', when:{region:['mid'], comps:['kangwoo','parkss']}},
  {id:'story_generation_speech',   km:140, kind:'story'},
- {id:'water_toll',                 km:170, kind:'world'},
- {id:'cleaners_recall',            km:200, kind:'world'},
+ {id:'water_toll',                 km:170, kind:'world', when:{region:['mid','north'], lowWater:true}},
+ {id:'cleaners_recall',            km:200, kind:'world', when:{region:['north'], day:false}},
  {id:'story_generation_theories', km:220, kind:'story'},
  {id:'story_family_key',           km:240, kind:'story'},
- {id:'signal_bait',                km:260, kind:'world', when:{flag:'radio_fixed'}},
+ {id:'signal_bait',                km:260, kind:'world', when:{region:['north'], flag:'radio_fixed'}},
  {id:'story_generation_route',    km:300, kind:'story'},
 ];
 

@@ -46,12 +46,22 @@ with sync_playwright() as playwright:
     check('비트가 거리 순으로 정렬돼 있다', not defs['unsorted'])
     check('중복 비트 없음', not defs['dupes'], str(defs['dupes']))
 
+    # 승격은 "풀에서 꺼내 보장한다"는 뜻이지 "아무 데서나 튼다"는 뜻이 아니다.
+    # 원래 이벤트가 갖고 있던 출현 조건이 비트 조건으로 옮겨졌는지 확인한다.
+    conds = page.evaluate("""() => (D.journeyBeats||[]).map(b => ({
+      id: b.id, ...G.beatConditionsMatchEvent(b) }))""")
+    bad = [c for c in conds if not c['ok']]
+    check('승격이 원래 출현 조건을 잃지 않았다', not bad,
+          '; '.join(f"{c['id']}: {c.get('why')}" for c in bad))
+
     print('― 동료 조건 비트 (갈등 아크)')
     conflict = page.evaluate("""() => {
       const beat=(D.journeyBeats||[]).find(b=>b.id==='conflict_fuel_detour');
       if(!beat) return {found:false};
       G.newGame('onroad','비트','full');
       S.stats.km = beat.km + 10;
+      S.at = 'gimcheon';        // 이 비트는 중부 전용이다 (원 이벤트의 region 조건)
+      S.driving = null;
       // 조건 미충족(동료 없음)
       const withoutComps = G.beatReady(beat);
       // 조건 충족
@@ -78,6 +88,7 @@ with sync_playwright() as playwright:
     queueing = page.evaluate("""() => {
       G.newGame('onroad','큐','full');
       S.stats.km = 400;                 // 모든 거리 문턱 통과
+      S.at = 'gimcheon'; S.driving = null;   // 중부 — 지역 조건 비트가 열리는 자리
       S._storyQueue=[]; S.used=[];
       G.scheduleJourneyBeat();
       const queuedAll = S._storyQueue.length;
