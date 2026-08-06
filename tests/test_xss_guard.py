@@ -68,6 +68,31 @@ with sync_playwright() as playwright:
     body_html = page.evaluate("(document.querySelector('.story-reader')||{}).innerHTML||''")
     check('본문에 실제 <script> 태그 없음', '<script' not in body_html)
 
+    print('― 이벤트 타입 태그 (2026-08-06 실제 유출 경로)')
+    # 오프로드 생성 이벤트의 etype만 sanit()을 안 거쳐 태그로 실행되던 자리
+    etype = page.evaluate("""() => {
+      window.__pwn=0;
+      UI.showEvent({gen:true, type:'<img src=x onerror="window.__pwn=1">조우', title:'t', text:'b',
+        choices:[{label:'ok', out:[{p:1,text:'e',fx:{}}]}]});
+      return {pwn:window.__pwn, imgs:document.querySelectorAll('#ev-sheet .tag img').length};
+    }""")
+    check('type 태그가 실행되지 않음', etype['pwn'] == 0 and etype['imgs'] == 0, str(etype))
+    enum_guard = page.evaluate("""() => {
+      // 스키마 enum은 서버 쪽 약속일 뿐 — 받는 쪽에서도 걸러야 한다
+      return typeof OFF === 'object';
+    }""")
+    check('오프로드 모듈 존재 (enum 재검증 대상)', enum_guard)
+
+    print('― 일지 노트 제목·링크')
+    note = page.evaluate("""() => {
+      window.__pwn2=0;
+      G.addNote({type:'사건', title:'<img src=x onerror="window.__pwn2=1">제목', body:'본문',
+        links:['<img src=x onerror="window.__pwn2=2">링크']});
+      UI.showGraphNote(S.notes[S.notes.length-1]);
+      return {pwn:window.__pwn2, imgs:document.querySelectorAll('#gnote img').length};
+    }""")
+    check('노트 제목·링크가 실행되지 않음', note['pwn'] == 0 and note['imgs'] == 0, str(note))
+
     print('― authored 마크업은 계속 동작해야 한다')
     # <span class="ai">…</span>은 buildStoryTurns 파서가 ai-턴으로 소비한다.
     # 이스케이프 강화가 이 파서 경로를 깨지 않았는지 확인한다.

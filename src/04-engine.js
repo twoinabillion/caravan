@@ -15,6 +15,15 @@ const pick = (arr)=>arr[Math.floor(rng()*arr.length)];
 const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 
 const G = {};
+
+/* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
+   필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
+G.saveMigrations = {
+  2:(s)=>{   // 2026-08-06: 구제 횟수·정착지 숙박 횟수 도입
+    if(!s._rescues||typeof s._rescues!=='object'||Array.isArray(s._rescues)) s._rescues={};
+    if(!s._stlNights||typeof s._stlNights!=='object'||Array.isArray(s._stlNights)) s._stlNights={};
+  },
+};
 const COMBAT_DIFFICULTY_SHIFT = 0.06;      // per combat.difficulty 단계
 const COMBAT_ROLL_VARIANCE = 0.7;          // combatRoll 편차 반영 폭
 const COMBAT_AUTO_ADJUST_DECAY = 0.84;     // 전투 결과 기반 적응형 난이도 감쇠율
@@ -95,12 +104,18 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   for(const key of ['fuel','fuelMax','water','food','scrap','van','vanMax','thirst','hunger','pursuit'])
     if(!Number.isFinite(S[key])) S[key]=({fuel:42,fuelMax:70,water:16,food:14,scrap:0,van:82,vanMax:100}[key]||0);
   if(!Number.isFinite(S.seed)) S.seed=1;
-  /* 버전 마이그레이션: 이전 버전 세이브는 단계 함수를 순서대로 통과한다 */
-  G.saveMigrations=G.saveMigrations||{};
-  for(let v=Number.isFinite(S.v)?S.v:1; v<SAVE_VERSION; v++){
-    const step=G.saveMigrations[v+1]; if(step) step(S);
+  /* 이어서 가기도 새 게임과 같은 출발선에서 시작한다 (세션 잔여 상태 제거) */
+  G.resetDriveTimers();
+  /* 버전 마이그레이션: 이전 버전 세이브는 단계 함수를 순서대로 통과하고,
+     실제로 통과한 만큼만 버전이 올라간다. 실행 안 된 단계를 완료로 찍으면
+     나중에 진짜 마이그레이션을 붙여도 옛 세이브에는 영영 적용되지 않는다. */
+  let v=Number.isFinite(S.v)?S.v:1;
+  while(v<SAVE_VERSION){
+    const step=G.saveMigrations[v+1];
+    if(!step) break;
+    step(S); v++;
   }
-  S.v=SAVE_VERSION;
+  S.v=v;
   if(!S.stats||typeof S.stats!=='object'||Array.isArray(S.stats)) S.stats={km:0,events:0,nonlethal:0};
   if(!Number.isFinite(S.stats.km)) S.stats.km=0;
   if(!Number.isFinite(S.stats.events)) S.stats.events=0;
@@ -1699,7 +1714,10 @@ const TIMESCALE = 2.2;             // 실제 1초 = 게임 2.2분
 let banterCd = 6;                  // 첫 잡담까지 몇 초
 let radioCd = 30;                  // 라디오 첫 수신까지
 let choiceEchoCd = 8;              // 선택의 후속은 일반 잡담보다 먼저 한 번 확인
-G.resetDriveTimers = ()=>{ banterCd=6; radioCd=30; choiceEchoCd=8; };
+/* 선택 풀을 거르는 "최근에 나온 것" 기록까지 함께 되돌린다 — 쿨다운만 리셋하면
+   대사 후보 집합이 이전 판을 기억한 채 남아 같은 시드가 다른 여정을 만든다. */
+G.resetDriveTimers = ()=>{ banterCd=6; radioCd=30; choiceEchoCd=8;
+  lastBanter=[]; lastChat=-1; lastRadio=null; };
 
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
@@ -2561,17 +2579,17 @@ G.camp = (msg)=>{
     S._stlNights=S._stlNights||{};
     const nights=S._stlNights[S.at]||0;
     S._stlNights[S.at]=nights+1;
-    if(nights===0){
-      S.water+=Math.min(6,G.partySize());
-      S.food+=1;
-    } else if(S.scrap>=2){
-      S.scrap-=2;
-      S.water+=Math.min(6,G.partySize());
+    /* 손님 대접(첫 밤)과 품앗이 삯을 낸 밤은 같은 보급을 받는다.
+       삯도 없이 또 신세 지는 밤은 우물물 한 통뿐 — 인원이 몇이든 한 통이라
+       파티가 클수록 더 아프다. (인원수 배급보다 반드시 적어야 한다.) */
+    const townSupply=Math.min(6,G.partySize())+1;
+    if(nights===0 || S.scrap>=2){
+      if(nights>0) S.scrap-=2;
+      S.water+=townSupply;
       S.food+=1;
     } else {
-      /* 삯도 없이 또 신세지는 밤 — 우물물만 얻는다 */
       townStingy=true;
-      S.water+=2;
+      S.water+=1;
     }
   }
   // advance to next 06:30

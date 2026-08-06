@@ -111,7 +111,9 @@ ${notes}`;
     const j=await call(EV_SYS(), ctx()+'\n\n이벤트를 생성하라.', EV_SCHEMA, 1400, 'medium');
     if(!j||!j.choices||!j.choices.length) return null;
     const cl=(v,l)=>clamp(Math.round(v||0),-l,l);
-    return {gen:true, type:j.etype||'조우', title:sanit(j.title,40)||'길 위에서', text:sanit(j.text,900),
+    /* etype은 스키마 enum이지만 스키마는 서버 쪽 약속일 뿐이다 — 받는 쪽에서 다시 검증한다 */
+    const TYPES=['조우','탐색','발견','추적','동행'];
+    return {gen:true, type:TYPES.includes(j.etype)?j.etype:'조우', title:sanit(j.title,40)||'길 위에서', text:sanit(j.text,900),
       choices:j.choices.slice(0,3).map(c=>{
         const e=c.effects||{};
         const fx={fuel:cl(e.fuel,10)||undefined, water:cl(e.water,8)||undefined, food:cl(e.food,8)||undefined,

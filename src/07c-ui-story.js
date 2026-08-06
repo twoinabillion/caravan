@@ -105,7 +105,7 @@
       : adaptiveChange<0 ? `다음 교전 보정 ${adaptiveChange}%` : '다음 교전 보정 유지';
     /* 선택 전 예보는 등급으로만 — 정확한 %는 결과 뒤 디브리프에서 공개한다 */
     const compactForecast=difficulty
-      ? `<div class="combat-forecast"><span class="combat-tier ${riskTagClass}">${riskTag}</span><span>선택 전망 ${esc(difficulty.worstLabel)}~${esc(difficulty.bestLabel)}</span><strong>${esc(difficulty.bestLabel)}</strong></div>`
+      ? `<div class="combat-forecast"><span class="combat-tier ${riskTagClass}">${riskTag}</span><span>가장 나은 수</span><strong>${esc(difficulty.bestLabel)}</strong></div>`
       : '';
     const detailForecast=difficulty
       ? `<div class="combat-difficulty">
@@ -241,13 +241,18 @@
       const adaptiveText = adaptivePercent===0 ? '' : ` · 적응 보정 ${adaptivePercent>=0?'+':''}${adaptivePercent}%`;
       count++;
       const title = c.tactic ? `<span class="combat-tactic">${esc(c.tactic)}</span><span>${safeHtml(c.label)}</span>` : `<span>${safeHtml(c.label)}</span>`;
-      const profile=inCombat ? G.combatOddsBreakdown(c,evd) : null;
+      /* 판정이 없는 선택(단일 결과)에 전망을 붙이면 확정 결과에 난이도를 매기는 셈이다.
+         실제로 굴리는 선택에만 전망을 보여 준다. */
+      const rolls=c.combatRoll!==undefined && Array.isArray(c.out) && c.out.length>1;
+      const profile=(inCombat&&rolls) ? G.combatOddsBreakdown(c,evd) : null;
       const oddsMeta=G.combatDifficultyMeta(profile&&profile.odds);
       const vehicleText=profile&&profile.vehicleSources&&profile.vehicleSources.length
         ? ` · 차량 대응 ${profile.vehicleSources.join(' + ')}`:'';
+      /* 척도는 하나만 — 등급(우세/팽팽/불리)이 유일한 서열이고,
+         위험 칩은 경고일 때만 나온다(모든 카드에 같은 칩이 붙으면 정보가 0이다). */
       const riskMeta = profile ? combatChoiceRiskMeta(oddsMeta.pct) : null;
-      const riskMark=riskMeta&&['위험','주의'].includes(riskMeta.label)?'⚠ ':'';
-      const riskChip = riskMeta ? `<span class="combat-risk ${riskMeta.cls}">${riskMark}${riskMeta.label}</span>` : '';
+      const riskWarn = riskMeta && ['위험','주의'].includes(riskMeta.label);
+      const riskChip = riskWarn ? `<span class="combat-risk ${riskMeta.cls}">⚠ ${riskMeta.label}</span>` : '';
       /* 선택 전에는 %가 아니라 등급과 "실패하면 무엇을 잃는가"를 보여 준다.
          정확한 수치 분해는 결과 뒤 리포트(combatMeta)가 담당한다. */
       const failCost = profile ? G.combatFailurePreview(c) : '';
@@ -280,7 +285,7 @@
           ${intentNote?`<span class="combat-response">↳ ${esc(intentNote)}</span>`:''}
           ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
           ${riskChip}
-          ${profile?`<span class="combat-odds"><span class="combat-tier ${oddsMeta.className}">${esc(G.combatGrade(c,evd))} · 난이도 ${esc(oddsMeta.label)}</span>${oddsLabel?` · ${esc(oddsLabel)}`:''}</span>`:''}
+          ${profile?`<span class="combat-odds"><span class="combat-tier ${oddsMeta.className}">${esc(G.combatGrade(c,evd))}</span>${oddsLabel?` · ${esc(oddsLabel)}`:''}</span>`:''}
           ${route?`<span class="route-forecast"><b>${route.km}km · 순수 주행 ${G.durationLabel(route.minutes)} · 연료 약 ${route.fuel}L</b><small>${route.rough?`험로 ${route.rough}구간 · `:''}보급 거점 ${route.stops}곳 · ${esc(route.readiness)}</small></span>`:''}
           ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
         </button>`;
@@ -289,10 +294,12 @@
     if(inCombat&&difficulty){
       const tips=[];
       const trend=G.combatAdaptiveTrendPercent();
-      if(difficulty.criticalCount>0) tips.push(`25% 이하 선택이 ${difficulty.criticalCount}개입니다`);
-      else if(difficulty.warningCount>0) tips.push(`주의 구간(26~35%)이 ${difficulty.warningCount}개입니다`);
-      else if(difficulty.safeCount===0) tips.push(`안전 구간(45%+)이 없습니다`);
-      if(trend>2) tips.push(`적응 추세 ${trend>=0?'+':''}${trend}% (강화 중)`);
+      /* 선택 전에는 숫자를 감춘다는 계약을 여기서도 지킨다 —
+         "25% 이하가 하나 있다"는 어느 것인지 안 알려주면서 수치만 흘리는 최악의 조합이었다. */
+      if(difficulty.criticalCount>0) tips.push(`무리한 수가 ${difficulty.criticalCount}개 섞여 있다`);
+      else if(difficulty.warningCount>0) tips.push(`위태로운 수가 ${difficulty.warningCount}개 있다`);
+      else if(difficulty.safeCount===0) tips.push(`확실한 수는 없다`);
+      if(trend>2) tips.push(`적응 추세 강화 중`);
       if(tips.length) html=`<div class="combat-choice-hint">${tips.map(t=>`<span>${esc(t)}</span>`).join(' · ')}</div>${html}`;
     }
     if(inCombat) rememberCombatPhaseDifficulty(evd,S.combat,difficulty);
@@ -634,7 +641,7 @@
     curCombatChoices=choices.combatChoices;
     const turns=prepareEventAudio(buildStoryTurns(text,evd,{turnSpeakers:evd.turnSpeakers}),evd);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<div class="event-head"><div>
-      <div class="tag ${aiEvent?'ai-tag':''}">${evd.type}${evd.gen?' · 오프로드 생성':''}</div>
+      <div class="tag ${aiEvent?'ai-tag':''}">${esc(evd.type)}${evd.gen?' · 오프로드 생성':''}</div>
       <h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;

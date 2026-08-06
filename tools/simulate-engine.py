@@ -67,7 +67,12 @@ SIM_JS = r"""
         choice = choices[Math.min(1, choices.length - 1)];
       }
       const out = G.pickOutcome(evd, choice);
+      // 실제 UI 핸들러와 같은 순서 — 이걸 빼면 S.combat.history가 비어
+      // 적응형 난이도(COMBAT_AUTO_ADJUST_*)가 꺼진 채로 밸런스를 재게 된다
+      const meta = out && out.combatMeta || null;
+      let entry = (out.fx && out.fx.combatEnd) ? G.rememberCombatChoice(evd, choice, meta) : null;
       G.applyFx(out.fx || {});
+      if (!entry) G.rememberCombatChoice(evd, choice, meta);
       if (G.afterChoice) { try { G.afterChoice(evd, choice, out); } catch (e) {} }
       if (out.fx && out.fx.chain) { const next = D.events.find(e => e.id === out.fx.chain); if (next) G.openEvent(next); }
     }
@@ -146,20 +151,47 @@ def summarize(rows):
     for policy in policies:
         subset = [r for r in rows if r['policy'] == policy]
         arrived = [r for r in subset if r['ended'] == 'arrived']
-        days = sorted(r['day'] for r in arrived) or [0]
+        days = sorted(r['day'] for r in arrived)
         out[policy] = {
             'runs': len(subset),
             'arrivedPct': round(100 * len(arrived) / max(1, len(subset)), 1),
             'deadPct': round(100 * sum(1 for r in subset if r['ended'] == 'dead') / max(1, len(subset)), 1),
-            'medianDay': days[len(days) // 2],
+            'medianDay': days[len(days) // 2] if days else None,
+            'endedBuckets': {k: sum(1 for r in subset if r['ended'] == k)
+                             for k in sorted({r['ended'] for r in subset})},
+            'meanParty': round(sum(r['party'] for r in subset) / max(1, len(subset)), 2),
             'meanRescues': round(sum(r['rescues'] for r in subset) / max(1, len(subset)), 2),
             'lateTransferPct': round(100 * sum(1 for r in subset if r['lateTransfer']) / max(1, len(subset)), 1),
             'meanEvents': round(sum(r['events'] for r in subset) / max(1, len(subset)), 1),
             'deadlineSeenPct': round(100 * sum(1 for r in subset if r['deadlineSeen']) / max(1, len(subset)), 1),
         }
-    all_days = [out[p]['medianDay'] for p in policies]
-    out['_spread'] = {'medianDaySpread': (max(all_days) - min(all_days)) if all_days else 0}
+    all_days = [out[p]['medianDay'] for p in policies if out[p]['medianDay'] is not None]
+    out['_spread'] = {'medianDaySpread': (max(all_days) - min(all_days)) if all_days else None}
     return out
+
+
+THRESHOLDS = """게이트 임계값 — 리포트 생성기가 아니라 실제로 실패할 수 있는 검사다."""
+
+
+def gate(summary, rows):
+    """밸런스가 무너지면 릴리스를 막는다. 리포트만 뽑고 통과시키면 게이트가 아니다."""
+    problems = []
+    for policy, row in summary.items():
+        if policy.startswith('_'):
+            continue
+        if row['medianDay'] is None:
+            problems.append(f"{policy}: 완주 0건 (buckets={row['endedBuckets']})")
+            continue
+        # 아무도 죽지 않고 아무도 못 가면 둘 다 밸런스 실패다
+        if row['arrivedPct'] < 25:
+            problems.append(f"{policy}: 완주 {row['arrivedPct']}% < 25%")
+        if row['deadlineSeenPct'] < 100:
+            problems.append(f"{policy}: 시한 압박 목격 {row['deadlineSeenPct']}% < 100%")
+        if row['meanEvents'] < 5:
+            problems.append(f"{policy}: 런당 사건 {row['meanEvents']}건 — 이벤트 층이 돌지 않았다")
+    if not rows:
+        problems.append('시뮬레이션 결과 0건')
+    return problems
 
 
 def main():
@@ -198,10 +230,18 @@ def main():
         if policy.startswith('_'):
             continue
         print(f"  {policy:9s} 완주 {row['arrivedPct']:5.1f}% · 사망 {row['deadPct']:4.1f}% · "
-              f"중앙 DAY {row['medianDay']:3d} · 구제 {row['meanRescues']:.2f}회 · "
-              f"시한압박 목격 {row['deadlineSeenPct']:5.1f}% · 사건 {row['meanEvents']:.1f}건")
+              f"중앙 DAY {str(row['medianDay']):>3s} · 구제 {row['meanRescues']:.2f}회 · "
+              f"시한압박 목격 {row['deadlineSeenPct']:5.1f}% · 사건 {row['meanEvents']:.1f}건 · "
+              f"동행 {row['meanParty']:.1f}명 · {row['endedBuckets']}")
     print(f"  정책 간 소요일 스프레드: {summary['_spread']['medianDaySpread']}일")
     print(f"보고서 → {args.report}")
+
+    problems = gate(summary, rows)
+    if problems:
+        for p in problems:
+            print(f'  ❌ {p}')
+        raise SystemExit(f'실엔진 밸런스 게이트 실패 {len(problems)}건')
+    print('✅ 실엔진 밸런스 게이트 통과')
 
 
 if __name__ == '__main__':

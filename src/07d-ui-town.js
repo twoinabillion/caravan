@@ -924,9 +924,9 @@
       `<button class="jchip${jFilter===t?' here':''}" data-jf="${t}">${t} <small>${cnt(t)}</small></button>`).join('')}</div>`;
     const shown=[...S.notes].reverse().filter(n=>jFilter==='전체'||n.type===jFilter);
     log.innerHTML=chips+(shown.length? shown.map(n=>`
-      <div class="note"><div class="nh"><span class="nt ${n.type}">${n.type}</span><b>${n.title}</b><span class="nd">DAY ${n.day}</span></div>
+      <div class="note"><div class="nh"><span class="nt ${esc(n.type)}">${esc(n.type)}</span><b>${esc(n.title)}</b><span class="nd">DAY ${n.day}</span></div>
       <p>${fmt(n.body)}</p>
-      ${n.links.length?`<div class="links">${n.links.map(l=>`<span class="lk">[[${l}]]</span>`).join('')}</div>`:''}</div>`).join('')
+      ${n.links.length?`<div class="links">${n.links.map(l=>`<span class="lk">[[${esc(l)}]]</span>`).join('')}</div>`:''}</div>`).join('')
       : '<div class="sub">이 종류의 기록은 아직 없다.</div>');
     log.querySelectorAll('[data-jf]').forEach(b=>b.onclick=()=>{ jFilter=b.dataset.jf; renderJournal(); });
   }
@@ -934,9 +934,9 @@
     const g=$('#gnote');
     if(!note){ g.classList.remove('on'); return; }
     g.innerHTML=`<div class="note" style="margin:0;border:none;padding:0">
-      <div class="nh"><span class="nt ${note.type}">${note.type}</span><b>${note.title}</b><span class="nd">DAY ${note.day}</span></div>
+      <div class="nh"><span class="nt ${esc(note.type)}">${esc(note.type)}</span><b>${esc(note.title)}</b><span class="nd">DAY ${note.day}</span></div>
       <p>${fmt(note.body)}</p>
-      ${note.links.length?`<div class="links">${note.links.map(l=>`<span class="lk">[[${l}]]</span>`).join('')}</div>`:''}</div>`;
+      ${note.links.length?`<div class="links">${note.links.map(l=>`<span class="lk">[[${esc(l)}]]</span>`).join('')}</div>`:''}</div>`;
     g.classList.add('on');
   }
   async function exportJournal(){

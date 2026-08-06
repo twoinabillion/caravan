@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T07:37:14.149278+00:00",
+  "generatedAt": "2026-08-06T08:07:00.121328+00:00",
   "source": "real engine (G.newGame/startTravel/tick/pickOutcome/applyFx)",
   "runs": 60,
   "seed": 400000001,
@@ -10,6 +10,12 @@
       "arrivedPct": 70.0,
       "deadPct": 15.0,
       "medianDay": 3,
+      "endedBuckets": {
+        "arrived": 14,
+        "dead": 3,
+        "timeout": 3
+      },
+      "meanParty": 0.0,
       "meanRescues": 2.7,
       "lateTransferPct": 30.0,
       "meanEvents": 21.6,
@@ -20,6 +26,11 @@
       "arrivedPct": 85.0,
       "deadPct": 0.0,
       "medianDay": 4,
+      "endedBuckets": {
+        "arrived": 17,
+        "timeout": 3
+      },
+      "meanParty": 0.0,
       "meanRescues": 3.25,
       "lateTransferPct": 15.0,
       "meanEvents": 24.6,
@@ -30,6 +41,11 @@
       "arrivedPct": 80.0,
       "deadPct": 0.0,
       "medianDay": 3,
+      "endedBuckets": {
+        "arrived": 16,
+        "timeout": 4
+      },
+      "meanParty": 0.0,
       "meanRescues": 3.1,
       "lateTransferPct": 20.0,
       "meanEvents": 21.8,

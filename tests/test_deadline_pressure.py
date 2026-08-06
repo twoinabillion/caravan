@@ -34,12 +34,31 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(200)
     page.evaluate("document.querySelector('#arrival-scene') && document.querySelector('#arrival-scene').classList.remove('on')")
 
-    print('― DAY 30 시한 집행')
+    print('― DAY 30 시한 집행 (날짜 축)')
     d10 = page.evaluate("""() => {
       S.day=21; S._crisis=null; G.tickDeadline();
       return {flag:!!S.flags.deadline_seen_d10, queued:S._crisis};
     }""")
     check('D-10에 이송 준비 이벤트 예약', d10['flag'] and d10['queued'] == 'deadline_d10', str(d10))
+
+    print('― 시한 집행 (거리 축 — 실제 플레이에서 먼저 닿는 쪽)')
+    # 부산 출발 시 remainKm≈356이므로, 짧은 여정에서는 날짜가 아니라 거리가 압박을 연다.
+    dist = page.evaluate("""() => {
+      const out={start:G.remainKm()};
+      const probe=(at)=>{ S.day=2; S.at=at; S.driving=null; S._crisis=null;
+        for(const k of ['deadline_seen_d10','deadline_seen_d5','deadline_seen_d0']) delete S.flags[k];
+        G.tickDeadline(); return {km:G.remainKm(), queued:S._crisis}; };
+      out.mid=probe('daejeon');
+      out.near=probe('suwon');
+      return out;
+    }""")
+    check('출발 지점 잔여 거리가 260km 문턱보다 멀다 (거리 축이 단계적으로 열림)',
+          dist['start'] > 260, str(dist['start']))
+    check('중간 지점에서 거리 기준으로 압박 발화',
+          dist['mid']['queued'] in ('deadline_d10', 'deadline_d5', 'deadline_d0'), str(dist['mid']))
+    check('서울 근처에서는 마지막 단계까지 도달', dist['near']['km'] <= 60, str(dist['near']))
+    page.evaluate("""() => { for(const k of ['deadline_seen_d10','deadline_seen_d5','deadline_seen_d0']) delete S.flags[k];
+      S.at='busan'; S._crisis=null; }""")
 
     d5 = page.evaluate("""() => {
       S._crisis=null; S.day=26; S.pursuit=0; G.tickDeadline();
@@ -63,26 +82,35 @@ with sync_playwright() as playwright:
     print('― 야영 밸런스')
     camp = page.evaluate("""() => {
       const r={};
-      S.at='miryang'; S.driving=null; S.scrap=30; S.min=20*60;
-      const s0=S.scrap;
-      G.camp();
-      r.first={scrap:s0-S.scrap, nights:(S._stlNights||{}).miryang};
-      document.querySelectorAll('.wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
-      S.min=20*60;
-      const s1=S.scrap;
-      G.camp();
-      r.second={scrap:s1-S.scrap, nights:(S._stlNights||{}).miryang};
-      document.querySelectorAll('.wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
-      S.min=20*60; S.scrap=0;
-      const f2=S.food;
-      G.camp();
-      r.third={foodGain:S.food-f2, nights:(S._stlNights||{}).miryang};
+      S.at='miryang'; S.driving=null; S.scrap=30;
+      // 한 밤을 같은 조건에서 재현한다 — 날씨(빗물받이 +2)와 시각을 매번 고정
+      const night=()=>{
+        document.querySelectorAll('.wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
+        S.wx='clear'; S.wxNext='clear'; S.min=20*60;
+        S.thirst=0; S.hunger=0;
+        const before={scrap:S.scrap, water:S.water, food:S.food};
+        G.camp();
+        S.wx='clear'; S.wxNext='clear';
+        return {scrapSpent:before.scrap-S.scrap, water:S.water-before.water,
+                food:S.food-before.food, nights:(S._stlNights||{}).miryang};
+      };
+      r.first=night();
+      r.second=night();
+      S.scrap=0;            // 삯을 낼 수 없는 상태
+      r.third=night();
+      r.partySize=G.partySize();
       return r;
     }""")
-    first_free = camp['first']['scrap'] == 0 and camp['first']['nights'] == 1
-    check('정착지 첫 밤 무상', first_free, str(camp['first']))
-    check('반복 숙박은 고철 2 청구', camp['second']['scrap'] == 2 and camp['second']['nights'] == 2, str(camp['second']))
-    check('삯 없으면 배급 축소', camp['third']['foodGain'] <= 0, str(camp['third']))
+    # 판정은 절대값이 아니라 밤 사이의 차이로 한다 (퍼크·업그레이드·날씨에 흔들리지 않게).
+    check('정착지 첫 밤은 무상', camp['first']['scrapSpent'] == 0 and camp['first']['nights'] == 1, str(camp['first']))
+    check('반복 숙박은 고철 2 청구', camp['second']['scrapSpent'] == 2 and camp['second']['nights'] == 2, str(camp['second']))
+    check('유상 밤은 첫 밤과 같은 보급', camp['second']['water'] == camp['first']['water'], str(camp))
+    # 삯을 못 내는 밤이 보급을 더 주면 가격 자체가 무의미해진다 (2026-08-06 실제 회귀)
+    check('삯 없는 밤은 보급이 실제로 줄어든다',
+          camp['third']['scrapSpent'] == 0
+          and camp['third']['water'] < camp['first']['water']
+          and camp['third']['food'] <= camp['first']['food'],
+          f"무상밤={camp['first']} 삯없는밤={camp['third']}")
 
     print('― 구제 유상화 (에스컬레이션 사다리)')
     ladder = page.evaluate("""() => {

@@ -28,7 +28,9 @@ if(!html.includes(`const GAME_BUILD = '${gameBuild}'`)) fail('generated HTML doe
 /* 확대 금지 회귀 방지: 어떤 배포 셸도 user-scalable=no를 다시 들여올 수 없다 */
 for(const shell of ['서울까지400km.html','index.html']){
   const doc=readFileSync(resolve(root,shell),'utf8');
-  if(/user-scalable\s*=\s*no|maximum-scale\s*=\s*1[,"' ]/.test(doc)) fail(`${shell} restricts zoom (user-scalable/maximum-scale)`);
+  /* no / 0 / 1 / 1.0 — 확대 금지를 쓰는 모든 관용 표기를 막는다 */
+  if(/user-scalable\s*=\s*(no|0)|maximum-scale\s*=\s*1(\.0+)?\s*[,"';]/.test(doc))
+    fail(`${shell} restricts zoom (user-scalable/maximum-scale)`);
 }
 
 console.log(`✅ release gate · HTML ${(htmlBytes/1_000_000).toFixed(2)}MB · AIT sha256 ${hashes[0].slice(0,12)} · ${gameBuild}`);

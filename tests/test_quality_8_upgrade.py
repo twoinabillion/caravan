@@ -125,7 +125,9 @@ with sync_playwright() as playwright:
       return {
         choiceCount:choices.length,
         overlaps,
-        duplicate:odds.some(text=>(text.match(/난이도/g)||[]).length!==1 || text.includes('판정 전망')),
+        // 서열 척도는 카드당 하나(등급)뿐이고, 선택 전에 %는 새지 않는다
+        duplicate:odds.some(text=>text.includes('난이도') || text.includes('판정 전망') || /\\d+\\s*%/.test(text)),
+        gradeOnce:odds.every(text=>(text.match(/우세|팽팽|불리/g)||[]).length===1),
         stateCount:document.querySelectorAll('.combat-state span').length,
         solid:choices.every(node=>!getComputedStyle(node).backgroundColor.includes('rgba')),
         contained:rects.every(rect=>rect.left>=list.getBoundingClientRect().left-.5 && rect.right<=list.getBoundingClientRect().right+.5),
@@ -133,7 +135,8 @@ with sync_playwright() as playwright:
       };
     }""")
     check('기본 전투 카드는 중복 전망 없이 핵심 상태만 표시한다',
-          combat['choiceCount'] >= 2 and not combat['duplicate'] and combat['stateCount'] <= 3, str(combat))
+          combat['choiceCount'] >= 2 and not combat['duplicate'] and combat['gradeOnce']
+          and combat['stateCount'] <= 3, str(combat))
     check('전투 선택은 독립 스크롤 영역 안에서 겹치거나 비치지 않는다',
           not combat['overlaps'] and combat['solid'] and combat['contained'] and combat['listOverflow'] == 'auto', str(combat))
     page.screenshot(path=str(SHOT / '04-combat-density.png'))
