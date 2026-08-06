@@ -24,7 +24,9 @@ const before = [
 ];
 const after = [
   'src/04-engine.js', 'src/05-scene.js', 'src/06-mapgraph.js',
-  'src/07-ui.js', 'src/08-offroad.js', 'src/09-close.html'
+  'src/07a-ui-core.js', 'src/07b-ui-panel.js', 'src/07c-ui-story.js',
+  'src/07d-ui-town.js', 'src/07e-ui-audio.js',
+  'src/08-offroad.js', 'src/09-close.html'
 ];
 const introScenes = {
   INTRO_PASSENGER_SEAT:'assets/intro/01-passenger-seat.jpg',

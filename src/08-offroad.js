@@ -12,6 +12,10 @@ const OFF = (()=>{
 
   const ready = ()=> !!(localOnly && key && verified && reachable);
 
+  /* 모델 출력은 신뢰 경계 밖 — 수치를 clamp하듯 문자열도 여기서 무해화한다.
+     태그를 벗기고 남은 꺾쇠까지 지워야 렌더러의 authored HTML 경로에 섞여도 마크업이 될 수 없다. */
+  const sanit=(v,max)=>String(v??'').replace(/<[^>]*>/g,'').replace(/[<>]/g,'').slice(0,max||400);
+
   async function checkReachable(){
     if(!localOnly){ reachable=false; return false; }
     if(reachable!==null) return reachable;
@@ -107,16 +111,16 @@ ${notes}`;
     const j=await call(EV_SYS(), ctx()+'\n\n이벤트를 생성하라.', EV_SCHEMA, 1400, 'medium');
     if(!j||!j.choices||!j.choices.length) return null;
     const cl=(v,l)=>clamp(Math.round(v||0),-l,l);
-    return {gen:true, type:j.etype||'조우', title:j.title||'길 위에서', text:j.text||'',
+    return {gen:true, type:j.etype||'조우', title:sanit(j.title,40)||'길 위에서', text:sanit(j.text,900),
       choices:j.choices.slice(0,3).map(c=>{
         const e=c.effects||{};
         const fx={fuel:cl(e.fuel,10)||undefined, water:cl(e.water,8)||undefined, food:cl(e.food,8)||undefined,
           scrap:cl(e.scrap,10)||undefined, van:cl(e.van,12)||undefined, moodAll:cl(e.moodAll,8)||undefined,
           pursuit: e.pursuit>0?1:undefined,
           reveal: e.revealHidden? 'any':undefined,
-          note: (e.noteTitle&&e.noteBody)? {type:'사건',title:e.noteTitle.slice(0,30),body:e.noteBody.slice(0,200),links:[]}:undefined};
+          note: (e.noteTitle&&e.noteBody)? {type:'사건',title:sanit(e.noteTitle,30),body:sanit(e.noteBody,200),links:[]}:undefined};
         Object.keys(fx).forEach(k=>fx[k]===undefined&&delete fx[k]);
-        return {label:c.label, out:[{p:1, text:c.resultText, fx}]};
+        return {label:sanit(c.label,60), out:[{p:1, text:sanit(c.resultText,600), fx}]};
       })};
   }
   function prefetch(){
@@ -149,14 +153,15 @@ ${notes}`;
     banterBusy=false;
     if(j&&j.lines) j.lines.slice(0,3).forEach(l=>{
       const who=(l.who==='나'||l.who==='sys'||S.party.includes(l.who))? l.who:'sys';
-      banterQ.push({who, t:l.text.slice(0,90)}); });
+      banterQ.push({who, t:sanit(l.text,90)}); });
   }
   /* 온로드 잡담 픽커에 끼어들기 */
   const origPick=G.pickBanter;
   G.pickBanter=()=>{
     if(S&&S.mode==='offroad'&&ready()){
       if(banterQ.length<2) prefetchBanter();
-      if(banterQ.length&&Math.random()<0.55) return banterQ.shift();
+      /* 게임 rng를 쓴다 — 결정성(같은 시드 → 같은 여정)이 깨지지 않도록 */
+      if(banterQ.length&&rng()<0.55) return banterQ.shift();
     }
     return origPick();
   };
@@ -180,6 +185,7 @@ ${notes}`;
 reveal_place는 아직 모르는 장소의 소문을 들려줄 때.`;
     const j=await call(sys, `[대화 기록]\n${hist}\n\n[상태]\n${ctx()}\n\n${npc.name}의 응답을 생성.`, NPC_SCHEMA, 600, 'low');
     if(!j) return null;
+    j.reply=sanit(j.reply,400);
     st.att=clamp(st.att+clamp(j.attitudeDelta||0,-5,5),-100,100);
     st.chat.push({r:'npc',t:j.reply});
     if(st.chat.length>16) st.chat=st.chat.slice(-12);

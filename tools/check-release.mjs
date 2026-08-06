@@ -18,6 +18,17 @@ const hashes=artifacts.map(name=>createHash('sha256').update(readFileSync(resolv
 if(new Set(hashes).size!==1) fail(`AIT hashes differ: ${hashes.join(', ')}`);
 
 const html=readFileSync(htmlPath,'utf8');
-if(!html.includes("const GAME_BUILD = '2026-08-06-quality3'")) fail('generated HTML does not contain the current quality build');
+/* 빌드 문자열의 단일 소스는 src/04-engine.js — 게이트는 그 값을 읽어 대조만 한다 */
+const engineSource=readFileSync(resolve(root,'src/04-engine.js'),'utf8');
+const buildMatch=engineSource.match(/const GAME_BUILD = '([^']+)'/);
+if(!buildMatch) fail('src/04-engine.js does not declare GAME_BUILD');
+const gameBuild=buildMatch[1];
+if(!html.includes(`const GAME_BUILD = '${gameBuild}'`)) fail('generated HTML does not contain the current build string');
 
-console.log(`✅ release gate · HTML ${(htmlBytes/1_000_000).toFixed(2)}MB · AIT sha256 ${hashes[0].slice(0,12)} · quality3`);
+/* 확대 금지 회귀 방지: 어떤 배포 셸도 user-scalable=no를 다시 들여올 수 없다 */
+for(const shell of ['서울까지400km.html','index.html']){
+  const doc=readFileSync(resolve(root,shell),'utf8');
+  if(/user-scalable\s*=\s*no|maximum-scale\s*=\s*1[,"' ]/.test(doc)) fail(`${shell} restricts zoom (user-scalable/maximum-scale)`);
+}
+
+console.log(`✅ release gate · HTML ${(htmlBytes/1_000_000).toFixed(2)}MB · AIT sha256 ${hashes[0].slice(0,12)} · ${gameBuild}`);

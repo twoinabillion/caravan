@@ -22,6 +22,12 @@
     "test:quality9": "python3 tests/test_quality_9_foundation.py",
     "test:quality9:audit": "node tools/quality-9-audit.cjs",
     "test:save": "python3 tests/test_save_migrations.py",
+    "test:xss": "python3 tests/test_xss_guard.py",
+    "test:pressure": "python3 tests/test_deadline_pressure.py",
+    "test:combat": "python3 tests/test_combat_rework.py",
+    "test:slots": "python3 tests/test_progression_slots.py",
+    "test:determinism": "python3 tests/test_determinism.py",
+    "simulate:engine": "python3 tools/simulate-engine.py --runs 60",
     "test:accessibility9": "python3 tests/test_quality_9_accessibility.py",
     "test:release": "bash tools/release-check.sh"
   },

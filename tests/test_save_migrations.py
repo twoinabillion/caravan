@@ -54,12 +54,12 @@ with sync_playwright() as playwright:
       localStorage.setItem(SAVE_KEY,JSON.stringify(save));
       S=null;
       const ok=G.load();
-      return {ok,version:S&&S._quality.version,build:S&&S._quality.build,
+      return {ok,version:S&&S._quality.version,build:S&&S._quality.build,gameBuild:GAME_BUILD,
         milestones:S&&S._quality.milestones,callbacks:S&&S._quality.choiceCallbacks,
         meaningful:S&&S._quality.meaningful};
     }""")
     check('quality v2 evidence upgrades to the current schema',
-          quality_v2['ok'] and quality_v2['version'] == 3 and quality_v2['build'] == '2026-08-06-quality3' and
+          quality_v2['ok'] and quality_v2['version'] == 3 and quality_v2['build'] == quality_v2['gameBuild'] and
           quality_v2['milestones'] == {} and quality_v2['callbacks']['late'] == 0 and
           quality_v2['meaningful']['changes'] == [], str(quality_v2))
 

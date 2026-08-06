@@ -2,6 +2,9 @@
 const SAVE_KEY = 'seoul400_save_v1';
 const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
 const GAME_BUILD = '2026-08-06-quality3';
+/* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
+   G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
+const SAVE_VERSION = 2;
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -19,12 +22,12 @@ const COMBAT_AUTO_ADJUST_GAIN = { success: -0.14, partial: 0.08, failure: 0.24 }
 const COMBAT_AUTO_ADJUST_STREAK_BOOST = 0.06; // 연속 동일 결과에 대한 보정 추가 강도
 const COMBAT_AUTO_ADJUST_STREAK_LIMIT = 3;   // 연속 부스트 최대 레벨
 const COMBAT_AUTO_ADJUST_MAX = 0.5;
-const COMBAT_AUTO_ADJUST_SCALE = 0.08;     // [-0.5~0.5] → 판정 보정 ±0.04
+const COMBAT_AUTO_ADJUST_SCALE = 0.16;     // [-0.5~0.5] → 판정 보정 ±0.08 — 체감 가능한 크기
 
 /* ── new game / save ── */
 G.newGame = (mode, name, entryMode='full')=>{
   S = {
-    v:1, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
+    v:SAVE_VERSION, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
     fuel:42, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100,
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
@@ -32,7 +35,10 @@ G.newGame = (mode, name, entryMode='full')=>{
     flags:{mother_keepsakes:true,intro_family_helped:true,intro_appeal_failed:true,
       intro_module_seen:true,intro_workshop_left:true}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0, nonlethal:0}, routePlan:null,
-    thirst:0, hunger:0, ended:false, seed:Math.floor(Math.random()*1e9),
+    /* 시드는 주입 가능해야 한다 — 같은 시드 → 같은 여정이라야 회귀 테스트와
+       실엔진 시뮬레이션이 성립한다 (G.seedOverride를 미리 세팅). */
+    thirst:0, hunger:0, ended:false,
+    seed:Number.isFinite(G.seedOverride)?G.seedOverride:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
     _recentEvents:[], _recentEventTypes:[], _eventBreather:0,
     memories:{choices:{},pending:[],history:[]}, knowledge:{},
@@ -42,8 +48,12 @@ G.newGame = (mode, name, entryMode='full')=>{
     _combatFlow:{runId:0,adjust:0,history:[]},
     _quality:null, guideDismissed:false, lastJourneyRecap:null,
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
+    _rescues:{}, _stlNights:{},
   };
   rng = mulberry32(S.seed);
+  /* 주행 쿨다운은 모듈 변수라 새 게임에서 남아 있으면 rng 소비 타이밍이 어긋난다.
+     같은 시드 → 같은 여정을 위해 여기서 초기값으로 되돌린다. */
+  G.resetDriveTimers();
   S.wxNext = G.rollWx('clear');
   for(const id in D.npcs) S.npcs[id] = {att:0, met:false, chat:[]};
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
@@ -61,10 +71,18 @@ G.newGame = (mode, name, entryMode='full')=>{
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
+let saveWarned=false;
 G.save = ()=>{ if(!S||S.ended) return; try{
   if(S._quality&&S._quality.activeSession) S._quality.lastSeenAt=Date.now();
   localStorage.setItem(SAVE_KEY, JSON.stringify(S));
-}catch(e){} };
+  saveWarned=false;
+}catch(e){
+  /* 무음 유실 금지 — 진행이 쌓이는 게임에서 저장 실패는 반드시 사용자에게 보인다 */
+  if(!saveWarned){ saveWarned=true;
+    try{ UI.toast('💾 저장에 실패했어요 — 브라우저 저장 공간을 확인해 주세요','warn'); }catch(_e){}
+    console.warn('save failed', e);
+  }
+} };
 G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return false;
   const parsed=JSON.parse(j);
   if(!parsed||typeof parsed!=='object'||Array.isArray(parsed)) throw new Error('invalid save root');
@@ -77,6 +95,12 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   for(const key of ['fuel','fuelMax','water','food','scrap','van','vanMax','thirst','hunger','pursuit'])
     if(!Number.isFinite(S[key])) S[key]=({fuel:42,fuelMax:70,water:16,food:14,scrap:0,van:82,vanMax:100}[key]||0);
   if(!Number.isFinite(S.seed)) S.seed=1;
+  /* 버전 마이그레이션: 이전 버전 세이브는 단계 함수를 순서대로 통과한다 */
+  G.saveMigrations=G.saveMigrations||{};
+  for(let v=Number.isFinite(S.v)?S.v:1; v<SAVE_VERSION; v++){
+    const step=G.saveMigrations[v+1]; if(step) step(S);
+  }
+  S.v=SAVE_VERSION;
   if(!S.stats||typeof S.stats!=='object'||Array.isArray(S.stats)) S.stats={km:0,events:0,nonlethal:0};
   if(!Number.isFinite(S.stats.km)) S.stats.km=0;
   if(!Number.isFinite(S.stats.events)) S.stats.events=0;
@@ -112,18 +136,13 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
   if(S.guideDismissed===undefined) S.guideDismissed=false;
   if(S.lastJourneyRecap===undefined) S.lastJourneyRecap=null;
+  if(!S._rescues||typeof S._rescues!=='object'||Array.isArray(S._rescues)) S._rescues={};
+  if(!S._stlNights||typeof S._stlNights!=='object'||Array.isArray(S._stlNights)) S._stlNights={};
   G.ensureNarrativeState();
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
   if(S.lastCombatReport===undefined) S.lastCombatReport=null;
-  if(!S._combatFlow||typeof S._combatFlow!=='object') S._combatFlow={runId:0,adjust:0,history:[]};
-  else{
-    S._combatFlow.runId=Math.max(0,Number(S._combatFlow.runId)||0);
-    S._combatFlow.adjust=Number.isFinite(S._combatFlow.adjust)
-      ? clamp(S._combatFlow.adjust,-COMBAT_AUTO_ADJUST_MAX,COMBAT_AUTO_ADJUST_MAX)
-      : 0;
-    if(!Array.isArray(S._combatFlow.history)) S._combatFlow.history=[];
-  }
+  G.ensureCombatFlow();
   G.recoverQualitySession();
   if(S.routePlan===undefined) S.routePlan=null;
   if(!S.stats) S.stats={km:0,events:0,nonlethal:0};
@@ -889,7 +908,10 @@ G.afterChoice = (evd, choice, outcome)=>{
   const extra=[];
   const actingComp=choice.req&&(choice.req.healthyComp||choice.req.trustComp||choice.req.comp);
   if(actingComp){ G.bond(actingComp, 2); extra.push({t:`✦ ${D.comps[actingComp].name} 유대 +2`, c:'item'}); }
-  else if(choice.req&&choice.req.perk){ const cid=Object.keys(D.comps).find(k=>JSON.stringify(D.comps[k].perks).includes(choice.req.perk));
+  else if(choice.req&&choice.req.perk){
+    /* id 정확 매치 — 직렬화 부분 문자열 매치는 id가 다른 id/설명문에 포함되는 순간 오귀속된다 */
+    const cid=Object.keys(D.comps).find(k=>Object.values(D.comps[k].perks||{})
+      .some(lv=>Array.isArray(lv)?lv.some(p=>p.id===choice.req.perk):lv&&lv.id===choice.req.perk));
     if(cid&&G.hasComp(cid)){ G.bond(cid,2); extra.push({t:`✦ ${D.comps[cid].name} 유대 +2`, c:'item'}); } }
   if(evd.needsComp&&actingComp!==evd.needsComp){ G.bond(evd.needsComp, 2);
     extra.push({t:`✦ ${D.comps[evd.needsComp].name} 유대 +2`, c:'item'}); }
@@ -1022,7 +1044,7 @@ G.combatIntentAnswer = (evd,choice)=>{
   const label=counters[choice.tactic];
   return label?{match:true,label}:null;
 };
-G.combatIntentDelta = (evd,choice)=>G.combatIntentAnswer(evd,choice)?0.04:0;
+G.combatIntentDelta = (evd,choice)=>G.combatIntentAnswer(evd,choice)?0.07:0;
 G.combatIntentNote = (evd,choice)=>{
   const answer=G.combatIntentAnswer(evd,choice);
   return answer?`의도 대응 · ${answer.label}`:'';
@@ -1057,13 +1079,22 @@ G.combatReadNote = choice=>{
   if(!read||!choice||!choice.tactic||!Array.isArray(read.tactics)) return '';
   return read.tactics.includes(choice.tactic)?'읽어낸 틈 활용':'다른 해법';
 };
-G.combatReadGuaranteed = (evd,choice)=>{
-  const combat=evd&&evd.combat, tactic=choice&&choice.tactic;
-  /* 대응 단계의 역할은 운이 아니라 관찰과 해법 선택이다. 예고 행동에
-     맞는 대응은 정보를 확정하고, 승패의 불확실성은 마지막 실행에 둔다. */
-  return !!(combat&&combat.phase===2&&tactic&&combat.counters&&
-    Object.prototype.hasOwnProperty.call(combat.counters,tactic)&&
-    choice.out&&choice.out[0]&&choice.out[0].fx&&choice.out[0].fx.combatRead);
+/* 대응 단계도 판정이다. counter에 맞는 대응은 의도 보정과 높은 기본치를 받지만
+   확정 성공은 아니다 — 실패하면 부정확한 read(그 전술만 남는 좁은 정보)가 남고,
+   3단계에서 그 정보의 질이 그대로 반영된다. "정보의 질"이 도박의 대상이 된다. */
+G.combatFailurePreview = choice=>{
+  if(!choice||!Array.isArray(choice.out)||choice.out.length<2) return '';
+  const fx=choice.out[choice.out.length-1]&&choice.out[choice.out.length-1].fx||{};
+  const bits=[];
+  if((fx.van||0)<0) bits.push(`차체 ${fx.van}`);
+  if((fx.fuel||0)<0) bits.push(`연료 ${fx.fuel}L`);
+  if((fx.pursuit||0)>0) bits.push(`관측 +${fx.pursuit}`);
+  if(fx.injury) bits.push(`부상 위험`);
+  if(fx.item) for(const k in fx.item) if(fx.item[k]<0) bits.push(`${k} ${fx.item[k]}`);
+  if((fx.combatPressure||0)>0) bits.push(`압박 +${fx.combatPressure}`);
+  if((fx.combatEdge||0)<0) bits.push(`우위 ${fx.combatEdge}`);
+  if((fx.fatigue||0)>0) bits.push(`피로 +${fx.fatigue}`);
+  return bits.slice(0,3).join(' · ');
 };
 G.combatOddsBreakdown = (choice,evd)=>{
   const flow=G.ensureCombatFlow();
@@ -1096,10 +1127,47 @@ G.combatOddsBreakdown = (choice,evd)=>{
   const bonus=edge*0.12+tacticDelta+terrainDelta+intentDelta+readBonus+perkDelta+injury+comeback;
   /* 앞 단계에서 구체적인 틈을 읽고 그에 맞는 해법을 고른 경우에만
      일반 성공 상한 90%를 95%까지 연다. 준비해도 실패 가능성은 남긴다. */
-  const guaranteedRead=G.combatReadGuaranteed(evd,choice);
-  return {base,baseSource,edge,readBonus,readDelta:readBonus,terrainDelta,tacticDelta,intentDelta,perkDelta,vehicleSources,guaranteedRead,
+  return {base,baseSource,edge,readBonus,readDelta:readBonus,terrainDelta,tacticDelta,intentDelta,perkDelta,vehicleSources,
     injury,bonus,adaptive:adaptive+comeback,adaptiveRecovery:comeback,adaptivePercent:G.combatAdaptivePercent(),
-    odds:guaranteedRead?1:clamp(base+bonus,0.12,readBonus>0?0.95:0.9)};
+    odds:clamp(base+bonus,0.12,readBonus>0?0.95:0.9)};
+};
+G.combatChoiceOutcomeMeta = (evd,choice,roll,result)=>{
+  const breakdown=G.combatOddsBreakdown(choice,evd);
+  if(!breakdown||!Number.isFinite(breakdown.base)||!Number.isFinite(breakdown.odds))
+    return null;
+  const show=(n,suffix='')=>`${n>=0?'+':''}${Math.round(n)}${suffix}`;
+  const details=[];
+  const read=breakdown.readDelta*100;
+  const terrain=breakdown.terrainDelta*100;
+  const tactic=breakdown.tacticDelta*100;
+  const intent=breakdown.intentDelta*100;
+  const perk=breakdown.perkDelta*100;
+  const adaptive=breakdown.adaptive*100;
+  const injury=breakdown.injury*100;
+  if(Math.abs(read)>=1) details.push(`틈 활용 ${show(read)}%`);
+  if(Math.abs(terrain)>=1) details.push(`지형 ${show(terrain)}%`);
+  if(Math.abs(tactic)>=1) details.push(`전술 ${show(tactic)}%`);
+  if(Math.abs(intent)>=1) details.push(`의도 대응 ${show(intent)}%`);
+  if(Math.abs(perk)>=1) details.push(`차량 ${show(perk)}%`);
+  if(Math.abs(adaptive)>=1) details.push(`적응 ${show(adaptive)}%`);
+  if(Math.abs(injury)>=1) details.push(`부상 ${show(injury)}%`);
+  const base = Math.round(breakdown.base*100);
+  const odds = Math.round(breakdown.odds*100);
+  const adjusted = odds-base;
+  const baseSource = breakdown.baseSource==='eventBase' ? '교전 기본' : '선택 기준';
+  const summary = `${baseSource} ${base}% → ${show(adjusted)}% = ${odds}%`;
+  return {
+    result: String(result||'').trim(),
+    base,
+    odds,
+    adjusted,
+    roll: Number.isFinite(roll) ? Math.round(roll*100) : null,
+    baseSource: breakdown.baseSource,
+    baseSourceLabel: baseSource,
+    vehicleSources: breakdown.vehicleSources||[],
+    details,
+    summary
+  };
 };
 G.combatOdds = (choice,evd)=>{
   const breakdown=G.combatOddsBreakdown(choice,evd);
@@ -1121,14 +1189,14 @@ G.combatGrade = (choice,evd)=>{
   const p=G.combatOdds(choice,evd);
   return p>=0.68?'우세':p<0.42?'불리':'팽팽';
 };
-G.rememberCombatChoice = (evd,choice)=>{
+G.rememberCombatChoice = (evd,choice,outcomeMeta=null)=>{
   if(!evd||!evd.combat||!choice) return null;
   const answer=G.combatIntentAnswer(evd,choice);
   const read=G.combatReadNote(choice);
   const entry={phase:evd.combat.phase,step:evd.combat.step,
     tactic:choice.tactic||'행동',label:String(choice.label||'').replace(/<[^>]*>/g,''),
     intent:evd.combat.intent||'',response:answer&&answer.label||'',read,
-    context:G.combatContextNote(choice)};
+    context:G.combatContextNote(choice),outcomeMeta:outcomeMeta||null};
   if(S.combat){
     if(!Array.isArray(S.combat.history)) S.combat.history=[];
     S.combat.history.push(entry);
@@ -1149,27 +1217,40 @@ G.inferCombatResult = (choice,out,index,rolled)=>{
   return clearGain&&!severeCost?'success':'partial';
 };
 G.pickOutcome = (evd, choice)=>{
-  let out=null, index=0, rolled=false;
-  if(G.combatReadGuaranteed(evd,choice)) out=choice.out[0];
-  else if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')) out=choice.out[0];
+  let out=null, index=0, rolled=false, rolledValue;
+  /* 강우의 저격은 조우당 한 발만 확실하다 — 연발은 위치를 드러낸다(소음×관측 정합) */
+  if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')&&S.combat&&!S.combat.sniperUsed){
+    S.combat.sniperUsed=1; out=choice.out[0];
+  }
   else if(choice.combatRoll!==undefined&&choice.out.length>1){
     rolled=true;
-    index=rng()<G.combatOdds(choice,evd)?0:1;
+    rolledValue=rng();
+    const odds=G.combatOdds(choice,evd);
+    if(rolledValue<odds) index=0;
+    /* out이 3개면 실패 대역이 갈라진다: 나머지의 60%는 부분 성공, 40%는 실패 */
+    else if(choice.out.length>=3) index = rolledValue<odds+(1-odds)*0.6 ? 1 : 2;
+    else index=1;
     out=choice.out[index];
   } else {
     out=G.rollOut(choice.out);
     index=Math.max(0,choice.out.indexOf(out));
   }
   const combatResult=G.inferCombatResult(choice,out,index,rolled);
+  const combatMeta = G.combatChoiceOutcomeMeta(evd,choice,rolled?rolledValue:null,combatResult);
+  if(combatMeta){
+    combatMeta.rollValue=Number.isFinite(rolledValue) ? Math.round(rolledValue*100) : null;
+  }
   if(combatResult&&out&&out.fx&&!out.fx.combatResult)
-    return {...out,fx:{...out.fx,combatResult}};
-  return out;
+    return {...out,fx:{...out.fx,combatResult},...(combatMeta?{combatMeta}:{} )};
+  return combatMeta ? {...out,combatMeta} : out;
 };
 
 /* ── notes (지식 그래프) ── */
 G.addNote = (n)=>{
   const ex = S.notes.find(x=>x.title===n.title);
   if(ex){ if(n.body && !ex.body.includes(n.body)) ex.body += '\n'+n.body;
+    /* 같은 제목에 무한히 붙으면 세이브·일지가 비대해진다 — 최근 기록만 남긴다 */
+    const lines=ex.body.split('\n'); if(lines.length>20) ex.body=lines.slice(-20).join('\n');
     (n.links||[]).forEach(l=>{ if(!ex.links.includes(l)) ex.links.push(l) }); ex.day=S.day; return ex; }
   const note = {id:'n'+(S.noteSeq++), type:n.type||'사건', title:n.title, body:n.body||'', links:n.links||[], day:S.day};
   S.notes.push(note); return note;
@@ -1253,7 +1334,30 @@ G.dawn = ()=>{
   }
   if(S.thirst>=3){ G.endGame('thirst'); return; }
   if(S.hunger===1) G.queueCrisis('crisis_hungry');
+  G.tickDeadline();
   G.save();
+};
+/* DAY 30 — 선언된 시한을 실제로 집행한다. 압박은 새벽마다 단계적으로 오르고,
+   시한을 넘기면 첫 이송이 실제로 출발한다(에필로그·처분 장면에 새겨진다). */
+G.tickDeadline = ()=>{
+  if(!S || S.flags.core_decided || S.flags.story_done) return;
+  const t=D.transferStatus(S);
+  const fire=(flag,id)=>{ if(!S.flags[flag]){ S.flags[flag]=1; G.queueCrisis(id); return true; } return false; };
+  /* 시한은 남은 날로도, 남은 거리로도 다가온다. 빠른 주행(3~5일)에서도
+     이송 준비가 길 위에 보이도록 두 축 중 이른 쪽에서 단계가 열린다. */
+  const remainKm=G.remainKm();
+  if(t.onTime){
+    if(t.remaining<=10 || remainKm<=260) fire('deadline_seen_d10','deadline_d10');
+    if((t.remaining<=5 || remainKm<=150) && fire('deadline_seen_d5','deadline_d5') && S.pursuit<1) S.pursuit=1;
+    if(t.remaining<=1 || remainKm<=60) fire('deadline_seen_d0','deadline_d0');
+  } else {
+    fire('deadline_seen_late','deadline_late');
+    /* 늦은 하루하루가 관측을 끌어올린다 — 시간 자체가 비용이다 */
+    if(t.lateDays>=2 && S.pursuit<5 && rng()<0.5){
+      S.pursuit=clamp(S.pursuit+1,0,5);
+      UI.toast('👁 이송 경로의 초계가 늘었다 — 관측 +1');
+    }
+  }
 };
 G.moodAll = (d)=>{ for(const id of S.party){ S.comps[id].mood = clamp(S.comps[id].mood+d,0,100); } };
 
@@ -1451,12 +1555,13 @@ G.canTravelTo = (id)=>{
 };
 G.fuelFor = (km,road)=>{ let per = 1/6.0; if(road==='rough') per*=1.35; if(road==='high') per*=0.92;
   if(G.hasComp('minji')) per*=0.92;
-  if(G.hasPerk('mj_fuel')) per*=0.92;
+  if(G.hasPerk('mj_fuel')) per*=0.95;
   if(road==='rough' && S && S.up && S.up.mudtires) per/=1.15;   // 험로 타이어
   if(S){ let wxPen = S.wx==='storm'?0.12 : S.wx==='dust'?0.08 : 0;
     if(S.up&&S.up.snorkel) wxPen/=2;                              // 스노클
     per*=(1+wxPen);
     if(S.up&&S.up.solar) per*=0.92;
+    per*=G.weightFuelFactor();           // 많이 실은 차는 많이 마신다
     if(S.fatigue>=60) per*=1.08;         // 피곤한 발은 무겁다
     per*=(1 - G.driverLv()*0.02); }
   return Math.ceil(km*per); };
@@ -1594,6 +1699,7 @@ const TIMESCALE = 2.2;             // 실제 1초 = 게임 2.2분
 let banterCd = 6;                  // 첫 잡담까지 몇 초
 let radioCd = 30;                  // 라디오 첫 수신까지
 let choiceEchoCd = 8;              // 선택의 후속은 일반 잡담보다 먼저 한 번 확인
+G.resetDriveTimers = ()=>{ banterCd=6; radioCd=30; choiceEchoCd=8; };
 
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
@@ -1611,6 +1717,7 @@ G.tick = (dt)=>{ // dt: real seconds
   // van wear
   let wearMul = S.up&&S.up.susp? 0.5:1;
   if(S.up&&S.up.mudtires&&dv.road==='rough') wearMul*=0.6;
+  wearMul*=G.weightWearFactor();   // 무거운 차는 험로에서 더 앓는다
   wearMul*=dv.guestWear||1;
   if(dv.road==='rough') S.van = Math.max(0, S.van - km*(G.isWet()?0.09:0.06)*wearMul);
   if(S.wx==='storm') S.van = Math.max(0, S.van - km*0.03*wearMul);
@@ -1626,9 +1733,9 @@ G.tick = (dt)=>{ // dt: real seconds
   G.advance(gm);
   if(S.ended) return;
   // crises
-  if(S.fuel<=0 && dv.gone<dv.dist){ G.openEventById('crisis_nofuel'); return; }
-  if(S.van<=0){ S.van=0; G.openEventById('crisis_breakdown'); return; }
-  if(S.fatigue>=99){ G.openEventById('crisis_collapse'); return; }
+  if(S.fuel<=0 && dv.gone<dv.dist){ G.openRescue('nofuel','crisis_nofuel'); return; }
+  if(S.van<=0){ S.van=0; G.openRescue('breakdown','crisis_breakdown'); return; }
+  if(S.fatigue>=99){ G.openRescue('collapse','crisis_collapse'); return; }
   if(S.fatigue>=85 && (S.day*1440+S.min)-S._drowsyAt>240){
     S._drowsyAt=S.day*1440+S.min; G.openEventById('crisis_drowsy'); return; }
   // event slots
@@ -1663,6 +1770,19 @@ G.tick = (dt)=>{ // dt: real seconds
 
 G.queueCrisis = (id)=>{ S._crisis = id; };
 G.maybeCrisis = ()=>{ if(S._crisis){ const id=S._crisis; S._crisis=null; G.openEventById(id); return true } return false };
+/* 구제 위기는 반복될수록 비싸진다. 첫 실수는 배움이고, 그 뒤로는 시간·자원·관측이
+   실제 비용으로 청구된다 — "실패 = 소액 과금" 루프를 여기서 끊는다. */
+G.rescueCount = (kind)=>((S&&S._rescues)||{})[kind]||0;
+G.openRescue = (kind, base)=>{
+  S._rescues=S._rescues||{};
+  const n=S._rescues[kind]||0;
+  S._rescues[kind]=n+1;
+  const tiers={nofuel:['crisis_nofuel','crisis_nofuel2','crisis_nofuel3'],
+    breakdown:['crisis_breakdown','crisis_breakdown2','crisis_breakdown2'],
+    collapse:['crisis_collapse','crisis_collapse2','crisis_collapse2']};
+  const ladder=tiers[kind]||[base];
+  G.openEventById(ladder[Math.min(n,ladder.length-1)]||base);
+};
 
 /* ── events ── */
 G.eligible = (typeFilter)=>{
@@ -1733,7 +1853,12 @@ G.directorPressure = ()=>{
 G.directorWeight = ev=>{
   if(!S||!ev) return 1;
   const pressure=G.directorPressure(), phase=S.director.phase;
-  if(['peak','fade','relax'].includes(phase)){
+  /* 절정은 무거운 사건을 밀어붙이는 국면이다 — 억제는 fade/relax의 일이다 */
+  if(phase==='peak'){
+    if(G.eventIsHeavy(ev)) return ev.priority?1.6:1.45;
+    if(G.eventIsCalm(ev)) return 0.5;
+  }
+  if(['fade','relax'].includes(phase)){
     if(G.eventIsCalm(ev)) return phase==='relax'?2.4:1.8;
     if(G.eventIsHeavy(ev)&&!ev.priority) return phase==='relax'?0.18:0.42;
   }
@@ -1748,7 +1873,9 @@ G.directEventPool = (pool,opt={})=>{
   const fresh=out.filter(e=>!recent.has(e.id));
   if(fresh.length>=Math.min(3,out.length)) out=fresh;
 
-  if(opt.breather!==false && S._eventBreather>0){
+  const phase=S.director&&S.director.phase;
+  /* 숨 고르기는 절정이 끝난 뒤에 — peak 중에는 breather가 절정을 가로채지 않는다 */
+  if(opt.breather!==false && S._eventBreather>0 && phase!=='peak'){
     const calm=out.filter(G.eventIsCalm);
     if(calm.length){
       out=calm;
@@ -1756,8 +1883,11 @@ G.directEventPool = (pool,opt={})=>{
     }
   }
 
-  const phase=S.director&&S.director.phase;
-  if(['peak','fade','relax'].includes(phase)){
+  if(phase==='peak'){
+    /* 절정은 절정답게 — 무거운 사건을 한 박자 더 밀고, fade가 내리막을 맡는다 */
+    const climax=out.filter(G.eventIsHeavy);
+    if(climax.length) out=climax;
+  } else if(['fade','relax'].includes(phase)){
     const calm=out.filter(G.eventIsCalm);
     if(calm.length) out=calm;
     else {
@@ -1790,8 +1920,14 @@ G.rememberEvent = ev=>{
   if(G.eventIsHeavy(ev)) S._eventBreather=Math.max(S._eventBreather,1);
   const d=S.director, calm=G.eventIsCalm(ev), heavy=G.eventIsHeavy(ev);
   if(d.phase==='peak'){
-    d.intensity=clamp(d.intensity-(calm?18:8),0,100);
-    d.phase='fade';
+    d.peakEvents=(d.peakEvents||0)+1;
+    /* 절정은 무거운 사건 최대 2개까지 유지 — 그 뒤에 내리막 */
+    if(heavy&&d.peakEvents<2){
+      d.intensity=clamp(d.intensity+6,0,100);
+    } else {
+      d.intensity=clamp(d.intensity-(calm?18:8),0,100);
+      d.phase='fade'; d.peakEvents=0;
+    }
   } else if(d.phase==='fade'){
     d.intensity=clamp(d.intensity-(calm?20:9),0,100);
     if(d.intensity<=38){ d.phase='relax'; d.relaxEvents=0; }
@@ -1802,7 +1938,7 @@ G.rememberEvent = ev=>{
   } else {
     const rise=heavy?28:(calm?5:12);
     d.intensity=clamp(d.intensity+rise,0,100);
-    if(heavy||d.intensity>=72) d.phase='peak';
+    if(heavy||d.intensity>=72){ d.phase='peak'; d.peakEvents=0; }
   }
   d.lastEvent=ev.id||null;
   d.lastDay=S.day;
@@ -1835,6 +1971,20 @@ G.fireDriveEvent = ()=>{
   let r = rng()*total;
   let evd = pool[0];
   for(const e of pool){ r -= wOf(e); if(r<=0){ evd=e; break } }
+  /* 풀 가중치는 코드를 읽지 않으면 플라시보와 구별이 안 된다 —
+     장비가 실제로 개입한 순간에 짧은 귀속 한 줄을 남긴다. */
+  if(S.up){
+    if(evd.type==='발견'&&S.up.antenna) UI.toast('📡 장거리 안테나가 먼저 신호를 잡았다');
+    else if(evd.type==='발견'&&S.up.lightbar&&G.isNight()) UI.toast('💡 라이트바가 어둠 속의 것을 먼저 비췄다');
+    else if(AMBUSH.includes(evd.id)&&S.up.scope) UI.toast('🔭 망원대가 그림자를 먼저 잡았다 — 손쓸 시간은 남아 있다');
+    else if(!G.eventIsHeavy(evd)&&rng()<0.08){
+      /* 억제형 장비의 일상 귀속 — 조용한 날이 왜 조용한지 가끔 알려 준다 */
+      if(S.up.horn&&pool.some(e=>['crisis_boar','meet_bikers','meet_waver'].includes(e.id)))
+        UI.toast('📯 왕경적 소리에 길가의 그림자들이 먼저 흩어졌다');
+      else if(S.up.winch&&pool.some(e=>e.type==='위기'))
+        UI.toast('🪝 전면 윈치 덕에 걱정할 구덩이가 하나 줄었다');
+    }
+  }
   G.openEvent(evd);
 };
 
@@ -1992,6 +2142,11 @@ G.applyFx = (fx)=>{
         costs.push(`${G.injuryName(id)} · ${injury&&injury.label||'부상'}`);
       });
       const decisive=[...history].reverse().find(x=>x.read==='읽어낸 틈 활용'||x.response)||history[history.length-1];
+      const finalChoice=history[history.length-1]||{};
+      const causeSummary=finalChoice&&finalChoice.outcomeMeta&&finalChoice.outcomeMeta.summary
+        ? finalChoice.outcomeMeta.summary : '';
+      const causeFactors=finalChoice&&finalChoice.outcomeMeta&&Array.isArray(finalChoice.outcomeMeta.details)
+        ? finalChoice.outcomeMeta.details : [];
       S.lastCombatReport={kind,threat:S.combat.threat,result,resultCode,
         adaptive:{start:S.combat.adaptivePercent||Math.round((S.combat.adaptive||0)*100),end:adaptiveEndPercent,
           delta:adaptiveUpdate&&Number.isFinite(adaptiveUpdate.delta)?Math.round(adaptiveUpdate.delta*100):0,
@@ -2000,6 +2155,8 @@ G.applyFx = (fx)=>{
         readUsed:history.some(x=>x.read==='읽어낸 틈 활용'),
         objective:S.combat.objective||'',stakes:S.combat.stakes||'',
         keyMoment:decisive?`${decisive.tactic} · ${decisive.label}`:'',
+        causeSummary:causeSummary,
+        causeFactors:causeFactors,
         gains,costs,newInjuries,day:S.day};
       G.qualityCombat(S.lastCombatReport);
       const context=[S.combat.terrain&&`지형: ${S.combat.terrain}`,
@@ -2252,9 +2409,21 @@ G.makeJourneyRecap = (drive,routeCompleted=false)=>{
     good:(value>0)===higherIsGood}));
   const elapsed=Math.max(0,Math.round(S.day*1440+S.min-(Number(start.gameMinute)||S.day*1440+S.min)));
   const route=G.routeStatus();
+  const routeContract=route&&route.def?{
+    id:route.def.id,
+    name:route.def.name,
+    mark:route.def.mark,
+    promise:route.def.promise,
+    reward:route.def.reward,
+    done:route.done,
+    total:route.total,
+    remainingSegments:Math.max(0,route.total-route.done),
+    complete:routeCompleted
+  }:null;
   return {from:drive.from,to:drive.to,km:Math.round(drive.dist),minutes:elapsed,road:drive.road,
     events:drive.eventCount||0,build:start.build||'기본 생존형',changes,routeCompleted,
-    routeName:route&&route.def&&route.def.name||'',day:S.day};
+    routeContract,routeName:route&&route.def&&route.def.name||'',routeProgress:routeContract?`${routeContract.done}/${routeContract.total}`:'',
+    day:S.day};
 };
 G.arrive = ()=>{
   const completedDrive=S.driving;
@@ -2262,6 +2431,7 @@ G.arrive = ()=>{
   const road = S.driving.road;
   S.at = to; S.driving = null;
   G.qualitySettlementEnter(to);
+  G.tickDeadline();   // 거리로 다가오는 시한은 도착할 때마다 확인한다
   if(completedDrive&&completedDrive.guestFind){
     S.scrap+=completedDrive.guestFind;
     UI.toast(`🧰 재이가 길가에서 쓸 만한 고철을 챙겼다 +${completedDrive.guestFind}`);
@@ -2307,7 +2477,7 @@ G.arrive = ()=>{
     const arrivalDelay=UI.onArrive();
     setTimeout(()=>G.openEventById('perimeter_first'), arrivalDelay);
     G.save(); return; }
-  if(S.fuel<=0){ setTimeout(()=>G.openEventById('crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
+  if(S.fuel<=0){ setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   const arrivalDelay=UI.onArrive();
@@ -2383,11 +2553,26 @@ G.fireDriveEvent2 = (pool)=>{ pool=G.directEventPool(pool); if(!pool.length) ret
 G.camp = (msg)=>{
   if(S.driving||UI.modalOpen()) return;
   const inTown = !!(S.at && D.nodes[S.at] && D.nodes[S.at].stl);
-  /* 정착지 숙박은 공동 우물과 묽은 죽을 포함한다. 하루 배급 직전에
-     지급해 마을 안에서 물이 없어 사망하는 불합리한 루프를 막는다. */
+  /* 정착지 숙박: 첫 밤은 손님 대접, 그 뒤로는 품앗이 삯이 든다.
+     공짜 안전+보급이 노숙을 절대 열위로 만드는 걸 막는 밸런스 축 —
+     "안전을 사거나(정착지), 준비로 벌거나(노숙 경계)". */
+  let townStingy=false;
   if(inTown){
-    S.water+=Math.min(6,G.partySize());
-    S.food+=1;
+    S._stlNights=S._stlNights||{};
+    const nights=S._stlNights[S.at]||0;
+    S._stlNights[S.at]=nights+1;
+    if(nights===0){
+      S.water+=Math.min(6,G.partySize());
+      S.food+=1;
+    } else if(S.scrap>=2){
+      S.scrap-=2;
+      S.water+=Math.min(6,G.partySize());
+      S.food+=1;
+    } else {
+      /* 삯도 없이 또 신세지는 밤 — 우물물만 얻는다 */
+      townStingy=true;
+      S.water+=2;
+    }
   }
   // advance to next 06:30
   const target = 6.5*60;
@@ -2396,7 +2581,7 @@ G.camp = (msg)=>{
   let mood=6, vanFix=4;
   if(G.hasPerk('pss_night')) mood+=3;
   if(G.hasPerk('leo_fire')) mood+=4;
-  if(G.hasPerk('mj_camp')) vanFix+=6;
+  if(G.hasPerk('mj_camp')) vanFix+=8;
   if(S.up&&S.up.solar) vanFix+=3;
   if(S.up&&S.up.awning) mood+=2;
   if(S.up&&S.up.stove) mood+= G.isWet()?3:2;
@@ -2407,12 +2592,20 @@ G.camp = (msg)=>{
   if(G.hasPerk('es_tap')&&rng()<0.25){ const h=G.nearestHidden();
     if(h){ S.known.push(h); UI.toast(`<span class="ic">📡</span>은수의 도청 — ${D.nodes[h].name}`, 'discover'); } }
   if(S.party.length){ const lucky=pick(S.party); G.bond(lucky,1); }
-  UI.toast(msg|| (inTown?'🏘 마을 한켠에서 물과 묽은 죽을 얻어 하루를 묵었다':'🔥 야영으로 하루를 마쳤다'));
-  /* 노숙 리스크 — 마을 밖에서 잘 때만 */
+  if(townStingy) G.moodAll(-2);
+  const nightsHere=inTown?((S._stlNights&&S._stlNights[S.at])||1):0;
+  UI.toast(msg|| (inTown?
+    (nightsHere<=1?'🏘 마을 한켠에서 물과 묽은 죽을 얻어 하루를 묵었다'
+      :townStingy?'🏘 삯 없이 또 신세를 졌다 — 우물물만 얻었다'
+      :'🏘 품앗이 삯(고철 2)을 내고 하루를 묵었다')
+    :'🔥 야영으로 하루를 마쳤다'));
+  /* 노숙 리스크 — 마을 밖에서 잘 때만. 동료가 있으면 경계 당번이 위험을 깎는다 */
   if(!inTown){
     let risk = G.regionOf()==='north'? 0.45:0.33;
     if(S.dog) risk-=0.10;
     if(G.hasPerk('kw_guard')) risk-=0.10;
+    if(S.party.length){ risk-=0.05*Math.min(2,S.party.length);
+      if(rng()<0.35) UI.toast('🕯 경계 당번을 세웠다 — 밤이 한결 덜 위험하다'); }
     if(S.up&&S.up.curtain) risk-=0.07;
     if(rng()<Math.max(0.08,risk)){
       const north = G.regionOf()==='north';
@@ -2521,9 +2714,21 @@ G.vanStage = ()=>{
 };
 G.nextSeatUpgrade = ()=> D.upgrades.find(u=>u.seat&&!(S&&S.up&&S.up[u.id]));
 G.upDef = (id)=> D.upgrades.find(u=>u.id===id);
+/* ── 탑재 중량·슬롯: 싣는 것에는 자리와 무게라는 값이 있다 ── */
+G.upWeight = ()=> (D.upgrades||[]).reduce((w,u)=>w+((S&&S.up&&S.up[u.id])?(u.w||0):0),0);
+/* 8pt까지는 공짜, 그 위로는 1pt당 연비 +1.2% (최대 +12%) */
+G.weightFuelFactor = ()=>{ const w=G.upWeight(); return 1+Math.min(0.12,Math.max(0,w-8)*0.012); };
+/* 10pt를 넘는 무게는 험로에서 차체를 더 갉아먹는다 (최대 +20%) */
+G.weightWearFactor = ()=>{ const w=G.upWeight(); return 1+Math.min(0.2,Math.max(0,w-10)*0.02); };
+G.slotUsage = slot=> (D.upgrades||[]).filter(u=>u.slot===slot&&S&&S.up&&S.up[u.id]);
 G.canBuyUp = (id)=>{
   const u=G.upDef(id); if(!u||S.up[id]) return {ok:false, why:'장착됨'};
   if(u.needs&&!S.up[u.needs]) return {ok:false, why:G.upDef(u.needs).nm+' 필요'};
+  if(u.slot&&D.upSlots&&D.upSlots[u.slot]){
+    const rule=D.upSlots[u.slot], used=G.slotUsage(u.slot);
+    if(used.length>=rule.cap)
+      return {ok:false, why:`${rule.nm} 자리 없음 — ${used.map(x=>x.nm).join(' · ')} 장착 중`};
+  }
   if(S.scrap<u.cost.scrap) return {ok:false, why:'고철 부족'};
   if((u.cost.parts||0)>(S.items['부품']||0)) return {ok:false, why:'부품 부족'};
   return {ok:true};
@@ -2545,6 +2750,55 @@ G.buyUpgrade = (id)=>{
   G.addNote({type:'사건', title:'달구지 개조: '+u.nm,
     body:(stage?stage.build:u.d)+` — 달구지가 조금 더 우리 집이 됐다.${adviser&&G.hasComp(adviser.id)?` ${D.comps[adviser.id].name}가 자기 전문으로 작업을 거들었다.`:''}`, links:[]});
   G.save(); return true;
+};
+
+/* ── 정착지 경제: 거래·수리 규칙은 엔진 소관, UI는 호출과 표시만 한다.
+   (엔진 테스트와 시뮬레이터가 실제 규칙과 같은 코드를 보게 하기 위함) ── */
+G.tradeDiscount = (stlId)=>{
+  const crewDisc=G.hasPerk('leo_vip')?0.8:G.hasComp('leo')?0.9:1;
+  return Math.max(.65, crewDisc*G.stlImpact(stlId).discount);
+};
+G.trade = (stlId, i)=>{
+  const stl=D.stls[stlId]; if(!stl||!stl.trade||!stl.trade[i]) return {ok:false, why:'거래 없음'};
+  const [,key,qty,price0]=stl.trade[i];
+  const localTrusted=G.stlImpact(stlId).discount<1;
+  if(key==='barter_wf'){ const cost=localTrusted?1:2;
+    if(S.water<cost) return {ok:false, why:'물이 부족하다'};
+    S.water-=cost; S.food+=1; }
+  else if(key==='barter_fp'){ const cost=localTrusted?1:2;
+    if(S.food<cost) return {ok:false, why:'식량이 부족하다'};
+    S.food-=cost; S.items['부품']=(S.items['부품']||0)+1; }
+  else if(key==='barter_mf'){
+    if((S.items['의약품']||0)<1) return {ok:false, why:'의약품이 없다'};
+    S.items['의약품']--; S.food+=localTrusted?4:3; }
+  else {
+    const price=Math.max(1,Math.round(price0*G.tradeDiscount(stlId)));
+    if(S.scrap<price) return {ok:false, why:'고철 부족'};
+    S.scrap-=price;
+    if(key==='fuel') S.fuel=clamp(S.fuel+qty,0,S.fuelMax);
+    else if(key==='water') S.water+=qty;
+    else if(key==='food') S.food+=qty;
+    else if(key.startsWith('item')){ const nm=key.slice(4); S.items[nm]=(S.items[nm]||0)+qty; }
+  }
+  G.save(); return {ok:true};
+};
+G.tradeBundle = (stlId)=>{
+  const stl=D.stls[stlId]; if(!stl||!stl.trade) return {ok:false, why:'거래 없음'};
+  const w=stl.trade.find(row=>row[1]==='water');
+  const f=stl.trade.find(row=>row[1]==='food');
+  if(!w||!f) return {ok:false, why:'묶음 없음'};
+  const price=Math.max(1,Math.round((w[3]+f[3]*2)*G.tradeDiscount(stlId)));
+  if(S.scrap<price) return {ok:false, why:'고철 부족'};
+  S.scrap-=price; S.water+=w[2]; S.food+=f[2]*2;
+  G.save(); return {ok:true, water:w[2], food:f[2]*2, price};
+};
+G.settlementRepairQuote = ()=>({cost:G.hasComp('minji')?6:8, amount:30});
+G.settlementRepair = ()=>{
+  const quote=G.settlementRepairQuote();
+  if(S.van>=S.vanMax-5) return {ok:false, why:'수리할 곳이 없다'};
+  if(S.scrap<quote.cost) return {ok:false, why:'고철 부족'};
+  S.scrap-=quote.cost; S.van=clamp(S.van+quote.amount,0,S.vanMax);
+  G.save(); return {ok:true, ...quote};
 };
 
 /* ── 제작 (작업대) ── */

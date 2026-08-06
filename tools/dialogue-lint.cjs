@@ -324,6 +324,35 @@ for (const id of personIds) {
     warnings.push(`반복 문장 시작 ${id} / 「${opening}」 ${count}회`);
 }
 
+/* 서술 목발 단어 총량 상한 — 세계 전체가 한 사람의 리듬으로 말하지 않게.
+   상한은 2026-08 경구 다이어트로 낮춘 값에 고정한다. 늘어나면 게이트가 막는다. */
+const crutchCaps = [['한참', 45], ['처음으로', 36], ['백미러', 66]];
+for (const [word, cap] of crutchCaps) {
+  const count = (source.match(new RegExp(word, 'g')) || []).length;
+  if (count > cap) errors.push(`목발 단어 「${word}」 ${count}회 > 상한 ${cap}회 — 동의어로 흩거나 문장을 바꿀 것`);
+}
+
+/* 경구 종결 비율 — 이벤트 결과문이 "X는 Y다"식 짧은 단정으로 닫히는 빈도.
+   개별로는 좋은 문장이라 금지하지 않고, 비율만 감시한다 (늘면 게이트). */
+const outcomeTexts = [];
+for (const ev of D.events || []) {
+  for (const choice of ev.choices || []) {
+    for (const out of (typeof choice.out === 'object' && Array.isArray(choice.out)) ? choice.out : []) {
+      if (typeof out.text === 'string') outcomeTexts.push(out.text);
+    }
+  }
+}
+const aphorismEnd = (text) => {
+  const plain = text.replace(/<[^>]+>/g, '').trim();
+  const lastSentence = plain.split(/\n+/).pop().trim();
+  return lastSentence.length > 0 && lastSentence.length <= 30 &&
+    /(?:은|는|이|가|도) [가-힣 ]{1,14}(?:이)?다[.」"']?$/.test(lastSentence);
+};
+const aphorismCount = outcomeTexts.filter(aphorismEnd).length;
+const aphorismRatio = outcomeTexts.length ? aphorismCount / outcomeTexts.length : 0;
+console.log(`경구 종결 ${aphorismCount}/${outcomeTexts.length} (${Math.round(aphorismRatio * 100)}%)`);
+if (aphorismRatio > 0.16) errors.push(`경구 종결 비율 ${Math.round(aphorismRatio * 100)}% > 상한 16% — 결과문을 행동이나 여백으로 닫을 것`);
+
 if (dump) {
   for (const sample of samples) {
     process.stdout.write(`${sample.text}\n`);

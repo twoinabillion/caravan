@@ -1078,7 +1078,8 @@ with sync_playwright() as p:
           D.scenes[D.eventScenes[id]].startsWith('data:image/jpeg;base64,');
       })&&['route_ridge_extract','route_market_pass'].every(id=>
         D.events.find(e=>e.id===id).choices.every(c=>c.combatRoll!==undefined&&
-          c.out.every(o=>o.fx.combatEnd&&['success','partial'].includes(o.fx.combatResult))));
+          c.out.every(o=>o.fx.combatEnd&&['success','partial','failure'].includes(o.fx.combatResult))&&
+          c.out.some(o=>o.fx.combatResult==='failure')));
       S.stats.nonlethal=0;
       G.applyFx({combatStart:{id:'test_rescue',kind:'구조',threat:'테스트 비탈',objective:'사람을 꺼낸다'}});
       G.applyFx({combatEnd:1,combatResult:'success'});
@@ -1096,7 +1097,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('플레이 이벤트 880종', r4['eventCount'] == 880, str(r4['eventCount']))
+    check('플레이 이벤트 894종', r4['eventCount'] == 894, str(r4['eventCount']))
     check('사건 감독: 최근 반복·종류 연속 차단', r4['directorCooldown'] and
           r4['directorVariety'], str(r4))
     check('사건 감독: 무거운 장면 뒤 숨 고르기·맥락 우선', r4['directorBreather'] and
@@ -1347,7 +1348,7 @@ with sync_playwright() as p:
           ('RIVERS', 'SECONDARY_ROUTES', 'REGION_LABELS', "nm:'한강'", "nm:'낙동강'")))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('880개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('894개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
@@ -1521,7 +1522,9 @@ with sync_playwright() as p:
         !coreTurns.some(t=>t.name==='???') &&
         testimonyTurns.some(t=>t.kind==='dialogue'&&t.who==='minji') &&
         testimonyTurns.some(t=>t.kind==='dialogue'&&t.who==='eunsu');
-      out.coreToDecision = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_decision'));
+      // 코어 증언 → 대가 목격(seoul_costs) → 처분(seoul_decision)으로 한 박자가 늘었다
+      out.coreToDecision = core.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_costs')) &&
+        D.events.find(e => e.id === 'seoul_costs').choices.every(c => c.out.every(o => o.fx.chain === 'seoul_decision'));
       const decision = D.events.find(e => e.id === 'seoul_decision');
       out.decision = !!decision && !!decision.noPool && decision.choices.length === 3;
       out.decisionToNight = decision.choices.every(c => c.out.every(o => o.fx && o.fx.chain === 'seoul_night'));
@@ -1607,7 +1610,14 @@ with sync_playwright() as p:
     pg.locator('#ev-wrap .choice:not([disabled])').first.click()
     pg.wait_for_timeout(600)
     pg.evaluate('UI.finishStory()')
-    actual_decision = '마지막 집행권' in pg.locator('#ev-sheet').inner_text()
+    # 새 박자: 처분 전에 세 개의 값을 먼저 목격한다
+    actual_costs = '세 개의 값' in pg.locator('#ev-sheet').inner_text()
+    pg.locator('#ev-wrap .choice:not([disabled])').first.click()
+    pg.evaluate('UI.finishStory()')
+    pg.locator('#ev-wrap .choice:not([disabled])').first.click()
+    pg.wait_for_timeout(600)
+    pg.evaluate('UI.finishStory()')
+    actual_decision = actual_costs and '마지막 집행권' in pg.locator('#ev-sheet').inner_text()
     pg.locator('#ev-wrap .choice:not([disabled])').first.click()
     pg.evaluate('UI.finishStory()')
     pg.locator('#ev-wrap .choice:not([disabled])').first.click()

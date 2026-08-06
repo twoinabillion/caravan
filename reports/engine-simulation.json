@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-08-06T07:37:14.149278+00:00",
+  "source": "real engine (G.newGame/startTravel/tick/pickOutcome/applyFx)",
+  "runs": 60,
+  "seed": 400000001,
+  "maxDays": 45,
+  "summary": {
+    "direct": {
+      "runs": 20,
+      "arrivedPct": 70.0,
+      "deadPct": 15.0,
+      "medianDay": 3,
+      "meanRescues": 2.7,
+      "lateTransferPct": 30.0,
+      "meanEvents": 21.6,
+      "deadlineSeenPct": 100.0
+    },
+    "explorer": {
+      "runs": 20,
+      "arrivedPct": 85.0,
+      "deadPct": 0.0,
+      "medianDay": 4,
+      "meanRescues": 3.25,
+      "lateTransferPct": 15.0,
+      "meanEvents": 24.6,
+      "deadlineSeenPct": 100.0
+    },
+    "prepared": {
+      "runs": 20,
+      "arrivedPct": 80.0,
+      "deadPct": 0.0,
+      "medianDay": 3,
+      "meanRescues": 3.1,
+      "lateTransferPct": 20.0,
+      "meanEvents": 21.8,
+      "deadlineSeenPct": 100.0
+    },
+    "_spread": {
+      "medianDaySpread": 1
+    }
+  }
+}

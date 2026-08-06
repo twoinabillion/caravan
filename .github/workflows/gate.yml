@@ -1,0 +1,73 @@
+name: gate
+
+# 게이트가 노트북 한 대의 기억력에 의존하지 않게 한다.
+# PR: 빠른 층(빌드·lint·세이브·보안·결정성·골든 루트)
+# main: 전체 릴리스 게이트
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  quick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deps
+        run: |
+          npm ci || npm install
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Build
+        run: npm run build
+      - name: Content + dialogue lint
+        run: npm run verify:quick
+      - name: Save migration fixtures
+        run: npm run test:save
+      - name: Security (LLM output escaping)
+        run: npm run test:xss
+      - name: Determinism
+        run: npm run test:determinism
+      - name: Core loop pressure
+        run: npm run test:pressure
+      - name: Combat rework
+        run: npm run test:combat
+      - name: Progression slots
+        run: npm run test:slots
+      - name: Golden route
+        run: npm run test:golden
+      - name: Artifact gate
+        run: node tools/check-release.mjs
+
+  full:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deps
+        run: |
+          npm ci || npm install
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Full release gate
+        run: npm run test:release
+      - name: Upload simulation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulation-reports
+          path: reports/
