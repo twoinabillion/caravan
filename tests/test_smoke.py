@@ -921,7 +921,7 @@ with sync_playwright() as p:
       out.settlementWalkParty=document.querySelectorAll('.stl-walker-face').length===2 &&
         document.querySelector('.stl-focus-copy').textContent.includes('민지와');
       UI.showStl('miryang','alley');
-      const fieldSpots=[...document.querySelectorAll('[data-fieldspot]')];
+      const fieldSpots=[...document.querySelectorAll('.stl-field-switcher [data-fieldspot]')];
       out.settlementFieldMap=fieldSpots.length===3 &&
         document.querySelectorAll('.stl-field-map-face').length===2 &&
         document.querySelector('.stl-field-map').textContent.includes('현장 동선') &&
@@ -1353,7 +1353,9 @@ with sync_playwright() as p:
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
     check('회상 이벤트 시네마틱 표시', r4['eventScene'], str(r4))
     check('장면 탭 확대·복귀', r4['sceneZoom'] and r4['sceneUnzoom'], str(r4))
-    check('도시 도착 시네마틱 표시', r4['arrivalScene'] and r4['arrivalDelay'] == 3000, str(r4))
+    # 9.0 arrival recap keeps the city image on screen long enough to read the
+    # route-contract and resource ledger before the next authored event opens.
+    check('도시 도착 시네마틱 표시', r4['arrivalScene'] and r4['arrivalDelay'] == 4500, str(r4))
     check('needUp 게이트(윈치)', r4['gateClosed'] and r4['gateOpen'], str(r4))
     check('험로 타이어 연비', r4['tiresSave'])
     check('사이드 공구함 정비 강화', r4['repairBoost'], str(r4))

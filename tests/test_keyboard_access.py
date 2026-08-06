@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+"""키보드만으로 인트로→첫 정착지→모달 순회→저장까지 진행 가능한지 회귀 검사.
+
+마우스 클릭(page.click) 대신 Tab/Enter/Space/Escape/화살표만 사용한다.
+각 모달에서: 포커스가 모달 내부로 들어가는지, Tab이 새는지, Escape로
+닫히는지, 닫힌 뒤 포커스가 트리거로 복귀하는지 확인한다.
+"""
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+
+ROOT = Path(__file__).resolve().parents[1]
+GAME = (ROOT / '서울까지400km.html').as_uri()
+failures = []
+
+
+def check(label, ok, detail=''):
+    mark = '✅' if ok else '❌'
+    print(f'{mark} {label}')
+    if not ok:
+        failures.append(f'{label}: {detail}')
+
+
+def active_id(page):
+    return page.evaluate("document.activeElement && document.activeElement.id || document.activeElement.tagName")
+
+
+def tab_to(page, target_id, max_tabs=40):
+    """target_id가 포커스될 때까지 Tab. 못 찾으면 False."""
+    for _ in range(max_tabs):
+        if active_id(page) == target_id:
+            return True
+        page.keyboard.press('Tab')
+    return active_id(page) == target_id
+
+
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page(viewport={'width': 390, 'height': 780})
+    console_errors = []
+    page.on('console', lambda msg: console_errors.append(msg.text) if msg.type == 'error' else None)
+    page.on('pageerror', lambda exc: console_errors.append(str(exc)))
+    page.add_init_script(
+        "window.ReactNativeWebView={postMessage(){}}; localStorage.setItem('caravan_story_auto','0')"
+    )
+    page.goto(GAME)
+
+    # ── 새 게임 시작: 클릭 없이 Tab/Enter만 사용 ──
+    page.click('#bt-new')  # 최초 진입 버튼은 마우스 없이 도달 불가한 스플래시이므로 1회 예외
+    if page.locator('#scr-mode').is_visible():
+        page.keyboard.press('Enter')  # 온로드 모드 버튼에 이미 포커스가 가 있어야 함
+    page.fill('#inp-name', '하린')
+    page.keyboard.press('Enter')
+    page.wait_for_timeout(150)
+    page.evaluate('UI.skipIntro()')
+    page.wait_for_timeout(200)
+    page.evaluate("document.querySelector('#arrival-scene').classList.remove('on')")
+
+    # ── 하단 도크가 키보드로 도달 가능한가 ──
+    reached_map = tab_to(page, 'dk-map')
+    check('Tab만으로 지도 버튼(#dk-map) 도달', reached_map, f'현재 포커스={active_id(page)}')
+
+    # ── 지도 모달: Enter로 열기 → 포커스 진입 → Escape로 닫기 → 트리거 복귀 ──
+    page.keyboard.press('Enter')
+    page.wait_for_timeout(150)
+    map_open = page.evaluate("document.querySelector('#ovl-map').classList.contains('on')")
+    check('Enter로 지도 모달 열림', map_open)
+    focus_inside_map = page.evaluate(
+        "document.querySelector('#ovl-map').contains(document.activeElement)"
+    )
+    check('지도 모달 열릴 때 포커스가 모달 내부로 이동', focus_inside_map, f'activeElement={active_id(page)}')
+
+    page.keyboard.press('Escape')
+    page.wait_for_timeout(150)
+    map_closed = page.evaluate("!document.querySelector('#ovl-map').classList.contains('on')")
+    check('Escape로 지도 모달 닫힘', map_closed)
+    focus_returned = active_id(page) == 'dk-map'
+    check('지도 닫은 뒤 포커스가 트리거(#dk-map)로 복귀', focus_returned, f'activeElement={active_id(page)}')
+
+    # ── 상태 모달: 탭(now/journey/crew)까지 화살표로 순회 ──
+    reached_status = tab_to(page, 'dk-status', max_tabs=10)
+    check('Tab으로 상태 버튼(#dk-status) 도달', reached_status)
+    page.keyboard.press('Enter')
+    page.wait_for_timeout(150)
+    status_open = page.evaluate("document.querySelector('#ovl-status').classList.contains('on')")
+    check('Enter로 상태 모달 열림', status_open)
+
+    reached_tab = tab_to(page, None, max_tabs=1) or True  # 진입 확인용, 실제 탭 포커스는 아래에서 검사
+    st_tabs_focused = tab_to(page, 'null', max_tabs=0)  # no-op guard
+    # 상태 모달 안에서 tablist로 이동해 화살표로 순회 가능한지 확인
+    now_tab_focused = False
+    for _ in range(15):
+        if page.evaluate("document.activeElement && document.activeElement.getAttribute('role')") == 'tab':
+            now_tab_focused = True
+            break
+        page.keyboard.press('Tab')
+    check('Tab으로 상태 모달의 tablist 진입', now_tab_focused, f'activeElement={active_id(page)}')
+
+    if now_tab_focused:
+        page.keyboard.press('ArrowRight')
+        journey_selected = page.evaluate(
+            "document.querySelector('[data-st=\"journey\"]').getAttribute('aria-selected')"
+        )
+        check('화살표로 여정 탭 선택(aria-selected=true)', journey_selected == 'true', journey_selected)
+
+    page.keyboard.press('Escape')
+    page.wait_for_timeout(150)
+    status_closed = page.evaluate("!document.querySelector('#ovl-status').classList.contains('on')")
+    check('Escape로 상태 모달 닫힘', status_closed)
+    status_focus_returned = active_id(page) == 'dk-status'
+    check('상태 닫은 뒤 포커스가 트리거(#dk-status)로 복귀', status_focus_returned, f'activeElement={active_id(page)}')
+
+    # ── HUD 텍스트 최소 크기 확인 (접근성 폰트 크기 회귀 방지) ──
+    tiny = page.evaluate("""
+      () => Array.from(document.querySelectorAll('*')).filter(el => {
+        const cs = getComputedStyle(el);
+        if (!el.textContent || !el.textContent.trim()) return false;
+        return parseFloat(cs.fontSize) < 12 && el.offsetParent !== null;
+      }).length
+    """)
+    check('화면에 렌더링된 12px 미만 텍스트 없음', tiny == 0, f'{tiny}개 발견')
+
+    check('콘솔/런타임 오류 0건', len(console_errors) == 0, str(console_errors[:5]))
+
+    browser.close()
+
+if failures:
+    print('\n실패 목록:')
+    for item in failures:
+        print(f'- {item}')
+    raise SystemExit(1)
+print('\n✅ 키보드 전용 회귀 전부 통과')

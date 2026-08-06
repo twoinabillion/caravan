@@ -141,6 +141,13 @@ const errors = [];
 const warnings = [];
 const personIds = new Set(Object.keys(D.comps || {}));
 
+for (const id of personIds) {
+  const voice=D.companionVoices&&D.companionVoices[id];
+  if(!voice) errors.push(`동료 목소리 시트 누락: ${id}`);
+  else if(!Array.isArray(voice.forbidden)||voice.forbidden.length<3)
+    errors.push(`동료 금지 범용 표현 부족: ${id}`);
+}
+
 /* 화자 스크립트와 연쇄 사건은 대사 자체가 자연스러워도 연결 키 하나가
    어긋나면 화면에서 갑자기 다른 사람이 말하거나 앞 설명 없이 다음 장면이 뜬다.
    긴 시나리오를 추가할 때 그 회귀를 데이터 단계에서 막는다. */
@@ -302,6 +309,19 @@ for (const sample of samples) {
   const hit = aiTells.find(pattern => pattern.test(sample.text));
   if (hit) warnings.push(`${sample.scope}/${sample.speaker}: ${sample.text}`);
   if (sample.text.length > 135) warnings.push(`긴 한 호흡 ${sample.scope}/${sample.speaker} (${sample.text.length}자)`);
+}
+
+/* 한 인물의 여러 대사가 같은 첫마디로 시작하면 장면이 달라도 음성이
+   템플릿처럼 들린다. 열 번 이상 반복되는 시작만 수동 검토 후보로 올린다. */
+for (const id of personIds) {
+  const openings=new Map();
+  for (const sample of samples.filter(item=>item.speaker===id)) {
+    const opening=sample.text.replace(/^[\s…·,.!?"“”']+/,'').split(/[\s,.!?]/)[0].slice(0,8);
+    if(opening.length<2) continue;
+    openings.set(opening,(openings.get(opening)||0)+1);
+  }
+  for (const [opening,count] of openings) if(count>=10)
+    warnings.push(`반복 문장 시작 ${id} / 「${opening}」 ${count}회`);
 }
 
 if (dump) {

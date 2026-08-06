@@ -150,7 +150,7 @@ with sync_playwright() as p:
     page.evaluate("UI.showStl('miryang','alley')")
     alley_scroll = page.evaluate('''() => {
       const panel=document.querySelector('#stl-body');
-      const last=document.querySelector('[data-stlfield="pump"]');
+      const last=document.querySelector('.stl-field-switcher [data-fieldspot="pump"]');
       last.scrollIntoView({block:'center'});
       const r=last.getBoundingClientRect();
       return {top:r.top,bottom:r.bottom,width:r.width,viewport:innerWidth,
@@ -175,10 +175,12 @@ with sync_playwright() as p:
           noodles['day'] == field_before['day'] and noodles['min'] == field_before['min'] + 20 and
           noodles['scrap'] == field_before['scrap'] - 2 and noodles['food'] == field_before['food'] + 1 and
           noodles['disabled'] and '순덕' in noodles['result'], str(noodles))
+    page.click('.stl-field-switcher [data-fieldspot="pump"]')
     page.click('[data-stlfield="pump"]')
     revealed = page.evaluate("[...document.querySelectorAll('[data-stlfield]')].map(b=>b.dataset.stlfield)")
     check('두 곳을 거들어야 143년의 작은 흔적이 자연스럽게 열린다',
           revealed == ['noodles', 'parts', 'pump', 'oldcard'], str(revealed))
+    page.click('.stl-field-switcher [data-fieldspot="oldcard"]')
     page.click('[data-stlfield="oldcard"]')
     trace = page.evaluate('''() => ({
       flag:!!S.flags.miryang_oldcard,

@@ -24,40 +24,38 @@
   },
   "overall": {
     "runs": 1000,
-    "completionRate": 97.5,
+    "completionRate": 98.2,
     "failures": {
-      "fuel": 24,
+      "fuel": 17,
       "water": 1
     },
-    "averageDays": 4.44,
+    "averageDays": 4.43,
     "p95Days": 4.84,
     "averageKm": 383.2,
-    "averageFuelLeft": 10.01,
+    "averageFuelLeft": 9.84,
     "averageFoodLeft": 7.82,
     "averageWaterLeft": 8.86,
-    "averageScrapLeft": 6.72,
-    "averageVanLeft": 71.71,
-    "crisisRunRate": 12.7,
-    "averageEvents": 3.48,
+    "averageScrapLeft": 8.21,
+    "averageVanLeft": 71.75,
+    "crisisRunRate": 18.7,
+    "averageEvents": 3.47,
     "averageSettlementStops": 3.49
   },
   "byPolicy": {
     "direct": {
       "label": "직행형",
       "runs": 334,
-      "completionRate": 99.7,
-      "failures": {
-        "fuel": 1
-      },
+      "completionRate": 100,
+      "failures": {},
       "averageDays": 4.42,
       "p95Days": 4.75,
       "averageKm": 356,
-      "averageFuelLeft": 8.3,
+      "averageFuelLeft": 6.21,
       "averageFoodLeft": 7.74,
       "averageWaterLeft": 8.68,
-      "averageScrapLeft": 10.29,
-      "averageVanLeft": 68.12,
-      "crisisRunRate": 25.1,
+      "averageScrapLeft": 13.25,
+      "averageVanLeft": 68.29,
+      "crisisRunRate": 42.8,
       "averageEvents": 4.02,
       "averageSettlementStops": 3
     },
@@ -69,38 +67,38 @@
       "averageDays": 4.42,
       "p95Days": 4.73,
       "averageKm": 411,
-      "averageFuelLeft": 11.62,
+      "averageFuelLeft": 12.18,
       "averageFoodLeft": 8.01,
-      "averageWaterLeft": 9.11,
-      "averageScrapLeft": 2.85,
+      "averageWaterLeft": 9.13,
+      "averageScrapLeft": 3.99,
       "averageVanLeft": 76.62,
-      "crisisRunRate": 0.9,
+      "crisisRunRate": 0.3,
       "averageEvents": 2.5,
       "averageSettlementStops": 4
     },
     "explorer": {
       "label": "탐색형",
       "runs": 333,
-      "completionRate": 92.8,
+      "completionRate": 94.6,
       "failures": {
-        "fuel": 23,
+        "fuel": 17,
         "water": 1
       },
       "averageDays": 4.47,
       "p95Days": 4.92,
-      "averageKm": 382.5,
-      "averageFuelLeft": 10.11,
-      "averageFoodLeft": 7.72,
-      "averageWaterLeft": 8.79,
-      "averageScrapLeft": 7.06,
-      "averageVanLeft": 70.29,
-      "crisisRunRate": 12,
-      "averageEvents": 3.94,
+      "averageKm": 382.6,
+      "averageFuelLeft": 11.21,
+      "averageFoodLeft": 7.71,
+      "averageWaterLeft": 8.77,
+      "averageScrapLeft": 7.34,
+      "averageVanLeft": 70.28,
+      "crisisRunRate": 12.9,
+      "averageEvents": 3.9,
       "averageSettlementStops": 3.46
     }
   },
   "failures": {
-    "fuel": 24,
+    "fuel": 17,
     "water": 1
   },
   "topRoutes": [
@@ -156,5 +154,5 @@
     }
   ],
   "warnings": [],
-  "generatedAt": "2026-08-05T14:08:07.524047+00:00"
+  "generatedAt": "2026-08-06T04:01:17.967920+00:00"
 }

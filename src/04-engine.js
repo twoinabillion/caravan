@@ -1,6 +1,7 @@
 /* ═══════════════════ ENGINE ═══════════════════ */
 const SAVE_KEY = 'seoul400_save_v1';
 const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
+const GAME_BUILD = '2026-08-06-quality3';
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -21,10 +22,10 @@ const COMBAT_AUTO_ADJUST_MAX = 0.5;
 const COMBAT_AUTO_ADJUST_SCALE = 0.08;     // [-0.5~0.5] → 판정 보정 ±0.04
 
 /* ── new game / save ── */
-G.newGame = (mode, name)=>{
+G.newGame = (mode, name, entryMode='full')=>{
   S = {
-    v:1, mode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
-    fuel:40, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100,
+    v:1, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
+    fuel:42, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100,
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
@@ -39,7 +40,7 @@ G.newGame = (mode, name)=>{
     director:{intensity:10,phase:'build',relaxEvents:0},
     combat:null, lastCombatReport:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
     _combatFlow:{runId:0,adjust:0,history:[]},
-    _quality:null,
+    _quality:null, guideDismissed:false, lastJourneyRecap:null,
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
   };
   rng = mulberry32(S.seed);
@@ -65,7 +66,33 @@ G.save = ()=>{ if(!S||S.ended) return; try{
   localStorage.setItem(SAVE_KEY, JSON.stringify(S));
 }catch(e){} };
 G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return false;
-  S = JSON.parse(j); rng = mulberry32(S.seed + (S.stats.events*7919));
+  const parsed=JSON.parse(j);
+  if(!parsed||typeof parsed!=='object'||Array.isArray(parsed)) throw new Error('invalid save root');
+  S=parsed;
+  if(S.at===undefined&&(!S.driving||typeof S.driving!=='object')) throw new Error('save has no location');
+  if(S.at!==null&&(!S.at||!D.nodes[S.at])) throw new Error('save has invalid location');
+  if(S.driving&&(!D.nodes[S.driving.from]||!D.nodes[S.driving.to])) throw new Error('save has invalid route');
+  if(!Number.isFinite(S.day)) S.day=1;
+  if(!Number.isFinite(S.min)) S.min=7*60+30;
+  for(const key of ['fuel','fuelMax','water','food','scrap','van','vanMax','thirst','hunger','pursuit'])
+    if(!Number.isFinite(S[key])) S[key]=({fuel:42,fuelMax:70,water:16,food:14,scrap:0,van:82,vanMax:100}[key]||0);
+  if(!Number.isFinite(S.seed)) S.seed=1;
+  if(!S.stats||typeof S.stats!=='object'||Array.isArray(S.stats)) S.stats={km:0,events:0,nonlethal:0};
+  if(!Number.isFinite(S.stats.km)) S.stats.km=0;
+  if(!Number.isFinite(S.stats.events)) S.stats.events=0;
+  if(!Array.isArray(S.party)) S.party=[];
+  if(!S.comps||typeof S.comps!=='object'||Array.isArray(S.comps)) S.comps={};
+  if(!S.flags||typeof S.flags!=='object'||Array.isArray(S.flags)) S.flags={};
+  if(!S.items||typeof S.items!=='object'||Array.isArray(S.items)) S.items={};
+  for(const name of ['부품','의약품','탄약']) if(!Number.isFinite(S.items[name])) S.items[name]=0;
+  if(!Array.isArray(S.used)) S.used=[];
+  if(!Array.isArray(S.known)) S.known=[];
+  if(!Array.isArray(S.visited)) S.visited=S.at?[S.at]:[];
+  if(!Array.isArray(S.notes)) S.notes=[];
+  if(!Number.isFinite(S.noteSeq)) S.noteSeq=S.notes.length;
+  if(!S.npcs||typeof S.npcs!=='object'||Array.isArray(S.npcs)) S.npcs={};
+  for(const id in D.npcs) if(!S.npcs[id]) S.npcs[id]={att:0,met:false,chat:[]};
+  rng = mulberry32(S.seed + (S.stats.events*7919));
   /* v1 → v2 마이그레이션: 유대/퍼크 필드 보강 */
   S._scrapKm = S._scrapKm||0;
   if(S.quest===undefined) S.quest=null;
@@ -83,6 +110,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
+  if(S.guideDismissed===undefined) S.guideDismissed=false;
+  if(S.lastJourneyRecap===undefined) S.lastJourneyRecap=null;
   G.ensureNarrativeState();
   if(S.recruitQ===undefined) S.recruitQ=null;
   if(S.combat===undefined) S.combat=null;
@@ -147,8 +176,13 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     if(c.pending===undefined) c.pending=0;
   }
   G.syncKnowledgeFromFlags();
-  return true; }catch(e){ return false } };
-G.hasSave = ()=>{ try{ return !!localStorage.getItem(SAVE_KEY) }catch(e){ return false } };
+  return true; }catch(e){ S=null; return false } };
+G.hasSave = ()=>{ try{
+  const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
+  const save=JSON.parse(raw);
+  return Boolean(save&&typeof save==='object'&&!Array.isArray(save)
+    &&(save.at!==undefined||save.driving)&&Number.isFinite(save.day));
+}catch(e){ return false } };
 G.wipe = ()=>{ try{ localStorage.removeItem(SAVE_KEY) }catch(e){} };
 
 /* ── helpers ── */
@@ -188,11 +222,13 @@ G.ensureCombatFlow = ()=>{
 };
 G.ensureQualityState = ()=>{
   if(!S) return null;
-  const fresh=()=>({version:2,build:'2026-08-05-quality2',createdAt:Date.now(),playMs:0,activeSession:null,sessions:[],
+  const fresh=()=>({version:3,build:GAME_BUILD,entryMode:S.entryMode||'legacy',createdAt:Date.now(),playMs:0,activeSession:null,sessions:[],
     counts:{events:0,choices:0,combats:0,repeatEvents:0,visibleChoices:0,lockedChoices:0},
     eventIds:{},eventTypes:{},combat:{success:0,partial:0,failure:0},resources:{},
     first45:{events:0,choices:0,combats:0},lastEventType:'',typeStreak:0,maxTypeStreak:0,
-    resourceLatch:{},routes:{},settlements:{},activeSettlement:null,upgrades:[],choiceEchoes:0,endings:{},timeline:[]});
+    heavyStreak:0,maxHeavyStreak:0,meaningful:{lastPlayMs:0,maxGapMinutes:0,changes:[]},
+    resourceLatch:{},routes:{},settlements:{},activeSettlement:null,upgrades:[],choiceEchoes:0,
+    milestones:{},choiceCallbacks:{remembered:0,near:0,late:0,items:{}},endings:{},timeline:[]});
   if(!S._quality||typeof S._quality!=='object'||Array.isArray(S._quality)) S._quality=fresh();
   const q=S._quality;
   if(!q.counts||typeof q.counts!=='object') q.counts=fresh().counts;
@@ -208,13 +244,24 @@ G.ensureQualityState = ()=>{
   if(!q.settlements||Array.isArray(q.settlements)) q.settlements={};
   if(!Array.isArray(q.upgrades)) q.upgrades=[];
   if(!Number.isFinite(q.choiceEchoes)) q.choiceEchoes=0;
+  if(!q.milestones||Array.isArray(q.milestones)) q.milestones={};
+  if(!q.choiceCallbacks||Array.isArray(q.choiceCallbacks)) q.choiceCallbacks={remembered:0,near:0,late:0,items:{}};
+  for(const key of ['remembered','near','late']) if(!Number.isFinite(q.choiceCallbacks[key])) q.choiceCallbacks[key]=0;
+  if(!q.choiceCallbacks.items||Array.isArray(q.choiceCallbacks.items)) q.choiceCallbacks.items={};
   if(!q.endings||Array.isArray(q.endings)) q.endings={};
   if(!q.first45||Array.isArray(q.first45)) q.first45={events:0,choices:0,combats:0};
+  if(!Number.isFinite(q.heavyStreak)) q.heavyStreak=0;
+  if(!Number.isFinite(q.maxHeavyStreak)) q.maxHeavyStreak=0;
+  if(!q.meaningful||Array.isArray(q.meaningful)) q.meaningful={lastPlayMs:0,maxGapMinutes:0,changes:[]};
+  if(!Number.isFinite(q.meaningful.lastPlayMs)) q.meaningful.lastPlayMs=0;
+  if(!Number.isFinite(q.meaningful.maxGapMinutes)) q.meaningful.maxGapMinutes=0;
+  if(!Array.isArray(q.meaningful.changes)) q.meaningful.changes=[];
   if(!Array.isArray(q.timeline)) q.timeline=[];
   if(!Array.isArray(q.sessions)) q.sessions=[];
   if(!Number.isFinite(q.playMs)) q.playMs=0;
-  q.version=2;
-  q.build='2026-08-05-quality2';
+  q.version=3;
+  q.build=GAME_BUILD;
+  q.entryMode=S.entryMode||q.entryMode||'legacy';
   return q;
 };
 G.recoverQualitySession = ()=>{
@@ -244,11 +291,33 @@ G.qualityRecord = (type,data={})=>{
   if(q.timeline.length>400) q.timeline=q.timeline.slice(-400);
   q.lastSeenAt=Date.now();
 };
+G.qualityMilestone = (id,data={})=>{
+  const q=G.ensureQualityState();
+  if(!q||!id||q.milestones[id]) return q&&q.milestones[id]||null;
+  const row={playMin:Math.round(G.qualityPlayMs()/6000)/10,day:S.day,min:Math.round(S.min),
+    km:Math.round((S.stats&&S.stats.km)||0),...data};
+  q.milestones[id]=row;
+  G.qualityRecord('milestone',{milestone:id,...data});
+  return row;
+};
+G.qualityMeaningfulChange = (kind,id='')=>{
+  const q=G.ensureQualityState();
+  if(!q) return;
+  const now=G.qualityPlayMs();
+  const gap=Math.max(0,Math.round((now-(q.meaningful.lastPlayMs||0))/6000)/10);
+  q.meaningful.maxGapMinutes=Math.max(q.meaningful.maxGapMinutes||0,gap);
+  q.meaningful.lastPlayMs=now;
+  q.meaningful.changes.push({kind,id,playMin:Math.round(now/6000)/10,day:S.day,km:Math.round((S.stats&&S.stats.km)||0)});
+  if(q.meaningful.changes.length>100) q.meaningful.changes=q.meaningful.changes.slice(-100);
+  G.qualityRecord('meaningful_change',{kind,id,gapMinutes:gap});
+};
 G.qualitySessionStart = ()=>{
   const q=G.ensureQualityState();
   if(!q||q.activeSession) return;
   q.activeSession={startedAt:Date.now(),day:S.day,km:Math.round((S.stats&&S.stats.km)||0)};
   G.qualityRecord('session_start');
+  G.qualityMilestone('journey_start',{entryMode:S.entryMode||'legacy'});
+  if(!(q.meaningful&&q.meaningful.changes&&q.meaningful.changes.length)) G.qualityMeaningfulChange('objective','journey_start');
 };
 G.qualitySessionEnd = context=>{
   const q=G.ensureQualityState();
@@ -280,6 +349,7 @@ G.qualitySettlementEnter = nodeId=>{
   const row=q.settlements[stlId]||(q.settlements[stlId]={visits:0,playMinutes:0,gameMinutes:0,actions:0});
   row.visits++;
   G.qualityRecord('settlement_enter',{settlementId:stlId,nodeId});
+  if(stlId!=='busan') G.qualityMilestone('first_settlement',{settlementId:stlId,nodeId});
 };
 G.qualitySettlementLeave = nodeId=>{
   const q=G.ensureQualityState(), active=q.activeSettlement;
@@ -298,17 +368,39 @@ G.qualitySettlementAction = stlId=>{
   const row=q.settlements[stlId]||(q.settlements[stlId]={visits:1,playMinutes:0,gameMinutes:0,actions:0});
   row.actions++;
   G.qualityRecord('settlement_action',{settlementId:stlId});
+  G.qualityMeaningfulChange('settlement',stlId);
 };
 G.qualityUpgrade = id=>{
   const q=G.ensureQualityState(), u=G.upDef(id);
   q.upgrades.push({id,day:S.day,km:Math.round((S.stats&&S.stats.km)||0),route:S.routePlan&&S.routePlan.id||''});
   if(q.upgrades.length>40) q.upgrades=q.upgrades.slice(-40);
   G.qualityRecord('upgrade',{upgradeId:id,group:(D.upgradeGroups||[]).find(group=>group.ids.includes(id))?.id||'',cost:u&&u.cost&&u.cost.scrap||0});
+  G.qualityMeaningfulChange('vehicle',id);
 };
 G.qualityChoiceEcho = memory=>{
   const q=G.ensureQualityState();
   q.choiceEchoes++;
+  const id=memory&&memory.id||'';
+  if(id){
+    const row=q.choiceCallbacks.items[id]||(q.choiceCallbacks.items[id]={remembered:false,near:false,late:false});
+    if(!row.near){ row.near=true; q.choiceCallbacks.near++; }
+  }
   G.qualityRecord('choice_echo',{memoryId:memory&&memory.id||'',eventId:memory&&memory.eventId||''});
+};
+G.qualityChoiceRemember = memory=>{
+  const q=G.ensureQualityState(), id=memory&&memory.id||'';
+  if(!id) return;
+  const row=q.choiceCallbacks.items[id]||(q.choiceCallbacks.items[id]={remembered:false,near:false,late:false});
+  if(!row.remembered){ row.remembered=true; q.choiceCallbacks.remembered++; }
+  G.qualityRecord('choice_remember',{memoryId:id,eventId:memory.eventId||''});
+  G.qualityMeaningfulChange('story',id);
+};
+G.qualityChoiceLate = (memoryId,source='ending')=>{
+  const q=G.ensureQualityState();
+  if(!memoryId) return;
+  const row=q.choiceCallbacks.items[memoryId]||(q.choiceCallbacks.items[memoryId]={remembered:false,near:false,late:false});
+  if(!row.late){ row.late=true; q.choiceCallbacks.late++; }
+  G.qualityRecord('choice_late_callback',{memoryId,source});
 };
 G.qualityEnding = kind=>{
   const q=G.ensureQualityState();
@@ -322,7 +414,9 @@ G.qualityArchive = ()=>{ try{
 G.archiveQualityRun = kind=>{ try{
   const rows=G.qualityArchive();
   rows.push({endedAt:new Date().toISOString(),ending:kind,day:S.day,km:Math.round((S.stats&&S.stats.km)||0),
-    route:S.routePlan&&S.routePlan.id||'',summary:G.qualitySummary()});
+    route:S.routePlan&&S.routePlan.id||'',entryMode:S.entryMode||'legacy',party:[...(S.party||[])],
+    vanBuild:G.vanBuildProfile(),recruitApproaches:G.recruitApproachEchoes(),choices:(S.memories&&S.memories.history||[])
+      .map(id=>S.memories.choices[id]).filter(Boolean).slice(-8),summary:G.qualitySummary()});
   localStorage.setItem(QUALITY_ARCHIVE_KEY,JSON.stringify(rows.slice(-12)));
 }catch(e){} };
 G.qualityEventOpen = ev=>{
@@ -337,8 +431,13 @@ G.qualityEventOpen = ev=>{
   if(q.lastEventType===(ev.type||'기타')) q.typeStreak++;
   else { q.lastEventType=ev.type||'기타'; q.typeStreak=1; }
   q.maxTypeStreak=Math.max(q.maxTypeStreak||0,q.typeStreak);
+  const heavy=Boolean(ev.combat)||/(전투|위기|천리안|추격|습격)/.test(`${ev.type||''} ${ev.title||''}`);
+  q.heavyStreak=heavy?(q.heavyStreak||0)+1:0;
+  q.maxHeavyStreak=Math.max(q.maxHeavyStreak||0,q.heavyStreak);
+  if(S.driving) S.driving.eventCount=(S.driving.eventCount||0)+1;
   if(G.qualityPlayMs()<=45*60*1000) q.first45.events++;
   G.qualityRecord('event_open',{eventId:ev.id||'',eventType:ev.type||'기타',repeatDistance});
+  G.qualityMilestone('first_event',{eventId:ev.id||'',eventType:ev.type||'기타'});
 };
 G.qualityChoice = (ev,choice,index,visible,available)=>{
   const q=G.ensureQualityState();
@@ -348,6 +447,7 @@ G.qualityChoice = (ev,choice,index,visible,available)=>{
   if(G.qualityPlayMs()<=45*60*1000) q.first45.choices++;
   G.qualityRecord('choice',{eventId:ev&&ev.id||'',eventType:ev&&ev.type||'',choiceIndex:index,
     tactic:choice&&choice.tactic||'',visible:visible||0,available:available||0});
+  G.qualityMilestone('first_choice',{eventId:ev&&ev.id||'',choiceIndex:index});
 };
 G.qualityCombat = report=>{
   if(!report) return;
@@ -358,6 +458,7 @@ G.qualityCombat = report=>{
   if(G.qualityPlayMs()<=45*60*1000) q.first45.combats++;
   G.qualityRecord('combat_end',{threat:report.threat||'',kind:report.kind||'',result,
     tactics:(report.tactics||[]).join('>'),gainCount:(report.gains||[]).length,costCount:(report.costs||[]).length});
+  G.qualityMilestone('first_combat',{threat:report.threat||'',result});
 };
 G.qualityResourceCheck = ()=>{
   if(!S) return;
@@ -376,12 +477,29 @@ G.qualitySummary = ()=>{
   const q=G.ensureQualityState(), combats=q.counts.combats||0, events=q.counts.events||0;
   return {playMinutes:Math.round(G.qualityPlayMs()/6000)/10,sessions:q.sessions.length+(q.activeSession?1:0),
     events,uniqueEvents:Object.keys(q.eventIds).length,repeatRate:events?Math.round(q.counts.repeatEvents/events*100):0,
-    maxTypeStreak:q.maxTypeStreak||0,choices:q.counts.choices||0,
+    maxTypeStreak:q.maxTypeStreak||0,maxHeavyStreak:q.maxHeavyStreak||0,choices:q.counts.choices||0,
     lockedRate:q.counts.visibleChoices?Math.round(q.counts.lockedChoices/q.counts.visibleChoices*100):0,
     combats,combat:{...q.combat},successRate:combats?Math.round(q.combat.success/combats*100):0,
     first45:{...q.first45},resources:{...q.resources},routes:{...q.routes},settlements:{...q.settlements},
-    upgrades:q.upgrades.length,choiceEchoes:q.choiceEchoes||0,lastStop:q.lastStop||null,
+    upgrades:q.upgrades.length,choiceEchoes:q.choiceEchoes||0,choiceCallbacks:{...q.choiceCallbacks,items:{...q.choiceCallbacks.items}},
+    milestones:{...q.milestones},meaningful:{lastPlayMin:Math.round((q.meaningful.lastPlayMs||0)/6000)/10,
+      maxGapMinutes:Math.max(q.meaningful.maxGapMinutes||0,Math.round((G.qualityPlayMs()-(q.meaningful.lastPlayMs||0))/6000)/10),
+      count:q.meaningful.changes.length},entryMode:q.entryMode||'legacy',lastStop:q.lastStop||null,
     endings:{...q.endings},timelineCount:q.timeline.length,build:q.build};
+};
+G.journeyGuide = ()=>{
+  if(!S||S.guideDismissed||G.qualityArchive().length||G.qualityPlayMs()>45*60*1000) return null;
+  const milestones=G.ensureQualityState().milestones||{};
+  if(!milestones.first_departure) return {step:1,total:4,kicker:'FIRST JOURNEY',title:'다음 길 하나를 고른다',
+    body:'서울까지 남은 방향과 연료·시간·위험을 비교한 뒤, 감당할 수 있는 길을 누르면 바로 출발한다.',focus:'route'};
+  if(!milestones.first_event) return {step:2,total:4,kicker:'ON THE ROAD',title:S.driving?'주행은 자동으로 이어진다':'다음 길에서 첫 사건을 만난다',
+    body:S.driving?'남은 거리와 자원을 지켜보다 사건이 멈춰 세우면, 예상 결과와 조건을 읽고 선택한다.':'도착까지 사건이 없었다면 다음 길을 고르면 된다. 사건이 열릴 때 선택의 예상 결과와 조건을 확인한다.',focus:'drive'};
+  const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;
+  if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'FIRST STOP',title:'정착지 안으로 들어간다',
+    body:'거래만 하지 않아도 된다. 사람을 만나고 현장 일을 도우면 다음 길과 동료의 이야기가 열린다.',focus:'settlement'};
+  if(!milestones.temporary_companion) return {step:4,total:4,kicker:'MAKE ROOM',title:'사람의 일을 먼저 끝낸다',
+    body:'만난 사람의 부탁을 따라가면 한 구간을 손님으로 동행한다. 서로를 겪은 뒤에야 합류를 고른다.',focus:'companion'};
+  return null;
 };
 G.exportQuality = format=>{
   const q=G.ensureQualityState(), summary=G.qualitySummary();
@@ -393,10 +511,17 @@ G.exportQuality = format=>{
     `- 사건 ${summary.events}회 · 고유 사건 ${summary.uniqueEvents}개 · 10사건 내 반복 ${summary.repeatRate}%`,
     `- 선택 ${summary.choices}회 · 잠긴 선택지 노출 비율 ${summary.lockedRate}%`,
     `- 같은 사건 유형 최대 ${summary.maxTypeStreak}회 연속`,
+    `- 무거운 장면 최대 ${summary.maxHeavyStreak}회 연속 · 의미 있는 변화 최대 공백 ${summary.meaningful.maxGapMinutes}분`,
     `- 전투 ${summary.combats}회 · 성공 ${summary.combat.success} · 부분 성공 ${summary.combat.partial} · 실패 ${summary.combat.failure}`,
     `- 첫 45분 · 사건 ${summary.first45.events} · 선택 ${summary.first45.choices} · 전투 ${summary.first45.combats}`,
-    `- 핵심 선택 가까운 회수 ${summary.choiceEchoes}회 · 개조 ${summary.upgrades}회`,'',
-    '## 노선과 정착지',''];
+    `- 핵심 선택 기록 ${summary.choiceCallbacks.remembered} · 가까운 회수 ${summary.choiceCallbacks.near} · 먼 회수 ${summary.choiceCallbacks.late}`,
+    `- 개조 ${summary.upgrades}회 · 시작 방식 ${summary.entryMode}`,'',
+    '## 첫 여정 이정표',''];
+  const milestoneRows=Object.entries(summary.milestones);
+  if(milestoneRows.length) milestoneRows.forEach(([id,row])=>L.push(`- ${id}: ${row.playMin}분 · DAY ${row.day} · ${row.km}km`));
+  else L.push('- 아직 기록 없음');
+  L.push('',
+    '## 노선과 정착지','');
   const routeRows=Object.entries(summary.routes);
   if(routeRows.length) routeRows.forEach(([id,row])=>L.push(`- 노선 ${id}: 선택 ${row.chosen||0}회 · 완주 ${row.completed||0}회`));
   else L.push('- 노선 기록 없음');
@@ -628,6 +753,14 @@ G.recruitApproach = (id)=>{
   const def=cid&&D.recruitQuests&&D.recruitQuests[cid];
   return choice&&def&&def.approaches ? def.approaches[choice] : null;
 };
+G.recruitApproachEchoes = ()=> (S&&S.party||[]).map(id=>{
+  const choice=S.comps&&S.comps[id]&&S.comps[id].approach;
+  const quest=D.recruitQuests&&D.recruitQuests[id];
+  const approach=choice&&quest&&quest.approaches&&quest.approaches[choice];
+  if(!approach) return null;
+  return {id,choice,name:D.comps[id]&&D.comps[id].name||quest.name,
+    label:approach.label,memory:approach.memory,driveEchoed:Boolean(S.flags&&S.flags[`${id}_approach_drive`])};
+}).filter(Boolean);
 G.markRecruitReady = (id)=>{
   if(!S.recruitQ||S.recruitQ.id!==id) return false;
   S.recruitQ.stage='ready';
@@ -785,6 +918,7 @@ G.rememberChoice = (evd,choice,outcome)=>{
   S.memories.pending.push(def.id);
   S.memories.history.push(def.id);
   if(S.memories.history.length>40) S.memories.history=S.memories.history.slice(-40);
+  G.qualityChoiceRemember(entry);
   return [{t:`기억됨 · ${def.summary}`,c:'item'}];
 };
 G.pendingChoiceMemory = ()=>{
@@ -1283,6 +1417,7 @@ G.chooseRoute = id=>{
     body:`${def.promise}. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.`,links:['달구지']});
   UI.toast(`${def.mark} ${def.name} — 청주까지 노선 고정`);
   G.qualityRoute(id,'chosen');
+  G.qualityMeaningfulChange('objective',`route:${id}`);
   return true;
 };
 G.updateRouteOnArrival = to=>{
@@ -1300,6 +1435,7 @@ G.updateRouteOnArrival = to=>{
     body:`김천에서 고른 길을 청주까지 바꾸지 않고 왔다. ${rs.def.reward}.`,links:['달구지']});
   UI.toast(`${rs.def.mark} ${rs.def.name} 완주 — 두 길이 청주에서 다시 만났다`);
   G.qualityRoute(rs.state.id,'completed');
+  G.qualityMeaningfulChange('world',`route_complete:${rs.state.id}`);
   return true;
 };
 G.canTravelTo = (id)=>{
@@ -1340,6 +1476,7 @@ G.prepareRecruitGuest = (dv)=>{
     else if(dv.slots.length) dv.slots.pop();
   }
   if(q.id==='kangwoo'&&dv.slots.length) dv.slots.pop();
+  G.qualityMilestone('temporary_companion',{companionId:q.id});
   UI.toast(`${def.guest.ic} 임시 동행 — ${def.guest.title}`);
 };
 
@@ -1355,6 +1492,19 @@ G.prepareRecruitMemory = (dv)=>{
     S.flags[flag]=true;
     dv.recruitMemory={id,choice,title:drive.title,desc:drive.desc,effect:drive.effect};
     if(drive.fuel) dv.memoryFuel=drive.fuel;
+    if(drive.fatigueMul) dv.memoryFatigue=drive.fatigueMul;
+    if(drive.fatigue){
+      S.fatigue=clamp(S.fatigue+drive.fatigue,0,100);
+      dv.memoryFatigueStart=drive.fatigue;
+    }
+    if(drive.pursuit){
+      S.pursuit=clamp(S.pursuit+drive.pursuit,0,5);
+      dv.memoryPursuit=drive.pursuit;
+    }
+    if(drive.skipEvent&&dv.slots.length){
+      dv.slots.pop();
+      dv.memorySkippedEvent=true;
+    }
     if(drive.scrap) dv.memoryScrap=drive.scrap;
     if(drive.van){
       S.van=clamp(S.van+drive.van,0,S.vanMax);
@@ -1425,7 +1575,10 @@ G.startTravel = (to)=>{
       slots.push({at:chk.km*f, gen}); }
     slots.sort((a,b)=>a.at-b.at);
   }
-  S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0};
+  S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,
+    snapshot:{gameMinute:S.day*1440+S.min,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
+      van:S.van,fatigue:S.fatigue,pursuit:S.pursuit,build:G.vanBuildProfile().name}};
+  G.qualityMilestone('first_departure',{from:S.at,to,km:chk.km,road:chk.road});
   if(!isBridge) G.prepareSettlementRoadEcho(S.driving,S.at,to);
   G.prepareRecruitGuest(S.driving);
   G.prepareRecruitMemory(S.driving);
@@ -1467,7 +1620,7 @@ G.tick = (dt)=>{ // dt: real seconds
   // 운전은 추가 피로 (밤 운전은 특히)
   const nightFtg = G.isNight()? (S.up&&S.up.lightbar?0.049:0.075) : 0.04;   // 라이트바=밤길이 덜 갉아먹음
   const bunkMul = S.up&&S.up.bunk? 0.8:1;                                    // 2층 침대=교대 수면
-  S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*(1-G.driverLv()*0.06)*(dv.guestFatigue||1), 0, 100);
+  S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*(1-G.driverLv()*0.06)*(dv.guestFatigue||1)*(dv.memoryFatigue||1), 0, 100);
   G.qualityResourceCheck();
   G.checkDriverLv();
   G.advance(gm);
@@ -1875,6 +2028,7 @@ G.applyFx = (fx)=>{
   if(fx.note) G.addNote(fx.note);
   for(const learned of G.syncKnowledgeFromFlags())
     chips.push({t:`◈ ${learned.label} · ${learned.level>=2?'확인':'단서'}`,c:'item'});
+  if(fx.flag==='story_done') chips.push(...G.completeJourney());
   if(fx.gameover) G.endGame(fx.gameover);
   G.qualityResourceCheck();
   G.save();
@@ -2072,6 +2226,8 @@ G.doRecruit = (id)=>{
   if(approach) S.comps[id].approach=approach;
   if(id==='leo') S.dog=true;
   if(S.recruitQ&&S.recruitQ.id===id) S.recruitQ=null;
+  G.qualityMilestone('first_recruit',{companionId:id,approach:approach||''});
+  G.qualityMeaningfulChange('relationship',id);
   G.checkLevel(id);
   const memory=G.recruitApproach(id);
   G.addNote({type:'인물',title:D.comps[id].name,
@@ -2084,6 +2240,22 @@ G.doRecruit = (id)=>{
 };
 
 /* ── arrival ── */
+G.makeJourneyRecap = (drive,routeCompleted=false)=>{
+  if(!drive) return null;
+  const start=drive.snapshot||{};
+  const delta=(key)=>Math.round(((Number(S[key])||0)-(Number(start[key])||0))*10)/10;
+  const changes=[
+    ['연료',delta('fuel'),'L',true],['물',delta('water'),'',true],['식량',delta('food'),'',true],
+    ['고철',delta('scrap'),'',true],['차체',delta('van'),'%',true],['피로',delta('fatigue'),'',false],
+    ['관측',delta('pursuit'),'',false]
+  ].filter(row=>row[1]!==0).map(([label,value,unit,higherIsGood])=>({label,value,unit,
+    good:(value>0)===higherIsGood}));
+  const elapsed=Math.max(0,Math.round(S.day*1440+S.min-(Number(start.gameMinute)||S.day*1440+S.min)));
+  const route=G.routeStatus();
+  return {from:drive.from,to:drive.to,km:Math.round(drive.dist),minutes:elapsed,road:drive.road,
+    events:drive.eventCount||0,build:start.build||'기본 생존형',changes,routeCompleted,
+    routeName:route&&route.def&&route.def.name||'',day:S.day};
+};
 G.arrive = ()=>{
   const completedDrive=S.driving;
   const to = S.driving.to;
@@ -2110,7 +2282,9 @@ G.arrive = ()=>{
     const n = D.nodes[to];
     G.addNote({type:'장소', title:n.name, body:`DAY ${S.day} 도착. ${n.desc}`, links:[]});
   }
-  G.updateRouteOnArrival(to);
+  const routeCompleted=G.updateRouteOnArrival(to);
+  S.lastJourneyRecap=G.makeJourneyRecap(completedDrive,routeCompleted);
+  G.qualityMeaningfulChange('arrival',to);
   G.scheduleJourneyBeat();
   if(to==='seoul'){
     if(S.flags.seoul_open){ UI.renderAll(); G.save(); return; }  // 이미 열림 — 서울 맵
@@ -2585,6 +2759,29 @@ G.checkQuest = ()=>{
 };
 
 /* ── endings ── */
+G.completeJourney = ()=>{
+  if(!S||S.flags.run_archived) return [];
+  const kind=S.flags.core_transfer?'transfer':S.flags.core_sleep?'sleep':'quarantine';
+  const memories=(S.memories&&S.memories.history||[]).map(id=>S.memories.choices[id]).filter(Boolean);
+  const recruitEchoes=G.recruitApproachEchoes();
+  for(const memory of memories){
+    memory.lateEchoed=true;
+    memory.lateDay=S.day;
+    G.qualityChoiceLate(memory.id,kind);
+  }
+  G.qualityMeaningfulChange('ending',kind);
+  G.qualityEnding(kind);
+  S.lastRecruitApproachEchoes=recruitEchoes;
+  for(const echo of recruitEchoes) S.flags[`${echo.id}_approach_ending`]=true;
+  S.flags.run_archived=true;
+  G.qualitySessionEnd('journey_complete');
+  G.archiveQualityRun(kind);
+  G.save();
+  return [
+    ...memories.slice(-4).map(memory=>({t:`되돌아온 선택 · ${memory.summary}`,c:'item'})),
+    ...recruitEchoes.slice(-2).map(echo=>({t:`끝까지 남은 합류 방식 · ${echo.name}: ${echo.label}`,c:'item'}))
+  ];
+};
 G.endGame = (kind)=>{
   G.qualityEnding(kind);
   G.qualitySessionEnd('ending');

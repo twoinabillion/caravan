@@ -51,6 +51,15 @@ for (const comp of Object.values(D.comps || {})) {
   for (const level of [1, 2]) for (const perk of comp.perks[level] || []) perkIds.add(perk.id);
   if (comp.perks[3]) perkIds.add(comp.perks[3].id);
 }
+for (const id of compIds) {
+  const voice=D.companionVoices&&D.companionVoices[id];
+  need(isObject(voice), `companionVoice:${id}`, '목소리 시트가 없음');
+  if (!isObject(voice)) continue;
+  for (const field of ['vocabulary','rhythm','humor','avoidance','silence'])
+    need(typeof voice[field] === 'string' && voice[field].trim(), `companionVoice:${id}`, `${field} 항목이 없음`);
+  need(Array.isArray(voice.forbidden) && voice.forbidden.length >= 3,
+    `companionVoice:${id}`, '금지 범용 표현이 세 개 미만');
+}
 
 function validateReq(req, where) {
   if (!req) return;
@@ -139,6 +148,7 @@ for (const event of events) {
   for (const speaker of event.turnSpeakers || []) validateSpeaker(speaker, where);
 }
 
+let choiceMemoryCount=0;
 for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
   const event=eventById.get(eventId), where=`choiceMemory:${eventId}`;
   need(!!event, where, '이벤트가 없음');
@@ -146,6 +156,7 @@ for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
   const ids=new Set();
   for (const [index, memory] of (memories || []).entries()) {
     if (!memory) continue;
+    choiceMemoryCount++;
     need(!!(event && event.choices[index]), `${where}[${index}]`, '해당 선택지가 없음');
     need(typeof memory.id === 'string' && memory.id.trim() && !ids.has(memory.id), `${where}[${index}]`, '없거나 중복된 기억 ID');
     ids.add(memory.id);
@@ -158,6 +169,7 @@ for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
     }
   }
 }
+need(choiceMemoryCount===17, 'choiceMemory', `핵심 선택 기억은 정확히 17개여야 함 (현재 ${choiceMemoryCount})`);
 
 for (const [id, def] of Object.entries(D.knowledge || {})) {
   const where=`knowledge:${id}`;

@@ -17,7 +17,13 @@
     "validate:content": "node tools/validate-content.cjs",
     "verify:quick": "npm run lint:dialogue && npm run validate:content",
     "test:golden": "python3 tests/test_golden_route.py",
-    "test:smoke": "python3 tests/test_smoke.py"
+    "test:smoke": "python3 tests/test_smoke.py",
+    "test:quality8": "python3 tests/test_quality_8_upgrade.py",
+    "test:quality9": "python3 tests/test_quality_9_foundation.py",
+    "test:quality9:audit": "node tools/quality-9-audit.cjs",
+    "test:save": "python3 tests/test_save_migrations.py",
+    "test:accessibility9": "python3 tests/test_quality_9_accessibility.py",
+    "test:release": "bash tools/release-check.sh"
   },
   "dependencies": {
     "@apps-in-toss/web-framework": "2.10.6"

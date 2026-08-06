@@ -139,6 +139,7 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(160)
     page.screenshot(path=str(SHOT / "10b-miryang-alley.png"))
     page.click('[data-stlfield="noodles"]')
+    page.click('.stl-field-switcher [data-fieldspot="pump"]')
     page.click('[data-stlfield="pump"]')
     page.wait_for_timeout(160)
     page.screenshot(path=str(SHOT / "10c-miryang-hidden-trace.png"))

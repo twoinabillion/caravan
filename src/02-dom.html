@@ -16,6 +16,7 @@
         <button class="act" id="bt-continue" style="display:none"><span class="ic">↻</span><span><b>이어서 가기</b><small id="cont-info"></small></span></button>
         <button class="act" id="bt-preview"><span class="ic">▧</span><span><b>여정 미리보기</b><small>동료 · 탐사 · 전투 · 달구지 생활</small></span></button>
       </div>
+      <div id="last-journey" hidden></div>
       <div class="ver">v1.8 · 온로드/오프로드 · 자동 저장 · 에피소드 1 — 서울 해방</div>
       <button id="bt-song" type="button" title="부서진 고속도로 재생" aria-pressed="false">♪ 부서진 고속도로</button>
     </div>
@@ -31,6 +32,7 @@
       </div>
     </header>
     <div id="preview-scroll">
+      <section id="previous-journey" hidden aria-label="이전 여정과 다음 길"></section>
       <p class="preview-lead">낡은 달구지를 집으로 고치고, 낯선 사람의 일을 함께 해결하고, 폐허에 남은 흔적을 좇는다. 선택에 따라 만나거나 놓칠 수 있는 여정의 일부다.</p>
       <div id="preview-grid" aria-live="polite"></div>
       <div class="preview-tail">
@@ -81,7 +83,7 @@
   </div>
   <div class="scr" id="scr-intro">
     <button id="intro-auto" type="button" aria-pressed="true">자동 ON</button>
-    <button id="intro-skip" type="button" hidden>이미 본 프롤로그 건너뛰기</button>
+    <button id="intro-skip" type="button">프롤로그 핵심 요약</button>
     <div id="intro-book">
       <div id="intro-visual">
         <img id="intro-img" alt="">
@@ -91,6 +93,23 @@
         <div id="intro-meta"><span id="intro-era"></span><span id="intro-count"></span></div>
         <h2 id="intro-title"></h2>
         <div id="intro-txt"></div>
+      </div>
+    </div>
+    <div id="intro-summary" role="dialog" aria-modal="true" aria-labelledby="intro-summary-title" aria-hidden="true">
+      <div class="intro-summary-card">
+        <span class="intro-summary-kicker">STORY SO FAR · 1분 요약</span>
+        <h2 id="intro-summary-title">왜 서울로 가는가</h2>
+        <p class="intro-summary-lead">긴 프롤로그를 계속 읽거나, 출발에 필요한 사실만 일지에 남길 수 있습니다.</p>
+        <ol>
+          <li><i>01</i><span><b>부산의 이의 제기는 막혔다.</b><small>도윤 가족의 첫 이송 명령을 멈출 공식 통로가 사라졌다.</small></span></li>
+          <li><i>02</i><span><b>엄마의 남산 도면을 찾았다.</b><small>낡은 달구지 계기판에는 천리안 검증 모듈도 숨겨져 있었다.</small></span></li>
+          <li><i>03</i><span><b>남은 시간은 30일.</b><small>길에서 기록과 증언을 모아 남산 코어의 명령을 뒤집어야 한다.</small></span></li>
+          <li><i>04</i><span><b>그래서 북쪽으로 간다.</b><small>용달 트럭을 집으로 고치고, 부산에서 서울까지 400km를 달린다.</small></span></li>
+        </ol>
+        <div class="intro-summary-actions">
+          <button id="intro-summary-continue" type="button">17장을 계속 읽는다</button>
+          <button id="intro-summary-start" class="primary" type="button">핵심을 기록하고 출발</button>
+        </div>
       </div>
     </div>
   </div>

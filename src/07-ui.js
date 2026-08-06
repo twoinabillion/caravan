@@ -64,7 +64,7 @@ const UI = (()=>{
     if(restore&&back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
   }
   function activeModal(){
-    return ['#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status']
+    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status']
       .map($).find(node=>node&&node.classList.contains('on'))||null;
   }
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
@@ -104,6 +104,24 @@ const UI = (()=>{
         $('#cont-info').textContent=`DAY ${s.day} · ${Math.round(s.stats.km)}km 주행 · ${s.mode==='offroad'?'오프로드':'온로드'}`;
       }catch(e){}
     } else $('#bt-continue').style.display='none';
+    const lastBox=$('#last-journey');
+    const last=G.qualityArchive().slice(-1)[0];
+    if(lastBox){
+      lastBox.hidden=!last;
+      if(last) lastBox.innerHTML=previousJourneyHtml(last,true);
+    }
+  }
+  function previousJourneyHtml(last,compact=false){
+    const route=D.routePlans&&D.routePlans[last.route];
+    const other=Object.values(D.routePlans||{}).find(def=>!route||def.id!==route.id);
+    const party=(last.party||[]).map(id=>D.comps[id]&&D.comps[id].name).filter(Boolean);
+    const build=last.vanBuild&&last.vanBuild.name||'기록되지 않은 달구지';
+    const choices=Array.isArray(last.choices)?last.choices.length:0;
+    if(compact) return `<span>PREVIOUS JOURNEY</span><b>${route?esc(route.name):'지난 길'} · ${esc(build)}</b><small>DAY ${last.day||'?'} · ${last.km||0}km · ${party.length?party.map(esc).join(' · '):'혼자 달린 기록'}</small>`;
+    return `<div class="previous-journey-head"><span>YOUR LAST ROAD</span><b>${route?esc(route.name):'지난 여정의 길'} · ${esc(build)}</b></div>
+      <div class="previous-journey-facts"><span>DAY ${last.day||'?'}</span><span>${last.km||0}km</span><span>동료 ${party.length}명</span><span>기억된 선택 ${choices}개</span></div>
+      <p>${party.length?`${party.map(esc).join(' · ')}와 함께 달렸다.`:'혼자 시작한 달구지의 기록이 남아 있다.'}</p>
+      ${other?`<div class="next-road-rumor"><small>이번에는 다른 소문</small><b>${esc(other.name)}</b><span>${esc(other.promise)}</span></div>`:''}`;
   }
 
   /* ── main loop ── */
@@ -152,10 +170,11 @@ const UI = (()=>{
       }
       if(modal&&e.key==='Escape'&&modal.id!=='ev-wrap'&&modal.id!=='ovl-seoul'){
         e.preventDefault();
-        closeOvl('#'+modal.id);
+        if(modal.id==='intro-summary') closeModal(modal);
+        else closeOvl('#'+modal.id);
         return;
       }
-      if(screen==='intro'&&(e.key==='Enter'||e.key===' ')){
+      if(screen==='intro'&&!modal&&!e.target.closest('button, input, select, textarea, [role="dialog"]')&&(e.key==='Enter'||e.key===' ')){
         e.preventDefault();
         nextIntro();
         return;
@@ -211,11 +230,11 @@ const UI = (()=>{
     };
     let introPointer=null;
     $('#scr-intro').addEventListener('pointerdown',e=>{
-      if(e.target.closest('#intro-skip,#intro-auto')) return;
+      if(e.target.closest('#intro-skip,#intro-auto,#intro-summary')) return;
       introPointer={x:e.clientX,y:e.clientY};
     });
     $('#scr-intro').addEventListener('pointerup',e=>{
-      if(!introPointer||e.target.closest('#intro-skip,#intro-auto')) return;
+      if(!introPointer||e.target.closest('#intro-skip,#intro-auto,#intro-summary')) return;
       const moved=Math.hypot(e.clientX-introPointer.x,e.clientY-introPointer.y);
       introPointer=null;
       if(moved<12) nextIntro();
@@ -226,7 +245,17 @@ const UI = (()=>{
       localStorage.setItem('caravan_intro_auto',introAuto?'1':'0');
       renderIntro(false);
     };
-    $('#intro-skip').onclick=e=>{ e.stopPropagation(); skipIntro(); };
+    $('#intro-skip').onclick=e=>{
+      e.stopPropagation();
+      clearIntroAuto();
+      openModal('#intro-summary','#intro-summary-start');
+    };
+    $('#intro-summary-continue').onclick=e=>{
+      e.stopPropagation();
+      closeModal('#intro-summary');
+      scheduleIntroAuto();
+    };
+    $('#intro-summary-start').onclick=e=>{ e.stopPropagation(); skipIntro(); };
     $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>{
@@ -264,6 +293,12 @@ const UI = (()=>{
 
   function renderPreview(){
     const grid=$('#preview-grid');
+    const previous=$('#previous-journey');
+    const last=G.qualityArchive().slice(-1)[0];
+    if(previous){
+      previous.hidden=!last;
+      previous.innerHTML=last?previousJourneyHtml(last,false):'';
+    }
     if(grid.childElementCount) return;
     previewEpisodes.forEach((episode,index)=>{
       const card=el('article','preview-card');
@@ -299,7 +334,10 @@ const UI = (()=>{
     pendingMode=mode; pendingName=''; introIdx=0; introTurnIdx=0;
     show('scr-name');
     const skip=$('#intro-skip');
-    if(skip) skip.hidden=!localStorage.getItem('caravan_intro_seen');
+    if(skip){
+      skip.hidden=false;
+      skip.textContent=localStorage.getItem('caravan_intro_seen')?'이미 본 프롤로그 요약':'프롤로그 핵심 요약';
+    }
     const portrait=$('#name-child');
     if(portrait) portrait.src=D.portraits.player_child||'';
     setTimeout(()=>{ const i=$('#inp-name'); if(i){ i.value=''; i.focus(); } },80);
@@ -385,18 +423,20 @@ const UI = (()=>{
     if(introIdx>=D.intro.length){
       localStorage.setItem('caravan_intro_seen','1');
       AMBI.setLoop(null);
-      G.newGame(pendingMode,pendingName); enterGame();
+      G.newGame(pendingMode,pendingName,'full'); enterGame();
     }
     else renderIntro(true);
   }
   function skipIntro(){
     clearIntroAuto();
+    const entryMode=$('#intro-summary').classList.contains('on')?'summary':'skip';
+    closeModal('#intro-summary',false);
     introIdx=D.intro.length;
     introTurnIdx=0;
     if(screen==='name') pendingName=($('#inp-name').value||'').trim().slice(0,8);
     localStorage.setItem('caravan_intro_seen','1');
     AMBI.setLoop(null);
-    G.newGame(pendingMode,pendingName);
+    G.newGame(pendingMode,pendingName,entryMode);
     enterGame();
   }
   function enterGame(){
@@ -966,6 +1006,26 @@ const UI = (()=>{
         <span class="crew-count">${ids.length}명${dog}</span>
       </button></section>`;
   }
+  function journeyGuideHtml(){
+    const guide=G.journeyGuide&&G.journeyGuide();
+    if(!guide) return '';
+    return `<section class="journey-guide guide-${guide.focus}" role="status" aria-label="첫 여정 안내 ${guide.step}/${guide.total}">
+      <div class="journey-guide-head"><span>${esc(guide.kicker)} · ${guide.step}/${guide.total}</span>
+        <button type="button" data-guide-dismiss aria-label="첫 여정 안내 숨기기">숨기기</button></div>
+      <b>${esc(guide.title)}</b><p>${esc(guide.body)}</p>
+      <div class="journey-guide-track" aria-hidden="true"><i style="width:${guide.step/guide.total*100}%"></i></div>
+    </section>`;
+  }
+  function wireJourneyGuide(p){
+    const dismiss=p.querySelector('[data-guide-dismiss]');
+    if(!dismiss) return;
+    dismiss.onclick=()=>{
+      S.guideDismissed=true;
+      G.save();
+      renderPanel();
+      toast('첫 여정 설명을 접었다 · 여정 탭에서 목표를 다시 볼 수 있다');
+    };
+  }
   function wireContext(p){
     const where=p.querySelector('[data-a="where"]');
     if(where) where.onclick=()=>{
@@ -1014,6 +1074,7 @@ const UI = (()=>{
       </section>`:'<div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>';
       p.innerHTML = `
         ${contextRail(to,true)}
+        ${journeyGuideHtml()}
         <section class="travel-progress-card" aria-label="현재 주행 진행">
           <div class="journey-section-head"><span><small>ACTIVE ROUTE</small><b>${esc(D.nodes[S.driving.from].name)}에서 ${esc(to.name)}까지</b></span><em>주행 중</em></div>
           <div id="travelbar"></div>
@@ -1022,6 +1083,7 @@ const UI = (()=>{
         ${guest}`;
       renderTravelbar();
       wireContext(p);
+      wireJourneyGuide(p);
       return;
     }
     const n=D.nodes[S.at];
@@ -1100,6 +1162,14 @@ const UI = (()=>{
     const routeSection=`<section class="journey-section route-section">
       <div class="journey-section-head"><span><small>CHOOSE THE ROAD</small><b>다음 길을 고른다</b></span><em>${nbs.length}개 경로</em></div>
       <div class="acts route-options">${routeActions||'<div class="route-empty">지금 이어지는 길이 없다.</div>'}</div></section>`;
+    const routeRumors=!S.routePlan&&S.stats.km>=70?`<section class="journey-section route-rumor-section">
+      <div class="journey-section-head"><span><small>AHEAD AT GIMCHEON</small><b>앞에서 갈라질 두 노선</b></span><em>미리 준비</em></div>
+      <p>김천에서 한 길을 고르면 청주까지 바꿀 수 없다. 지금은 필요한 연료와 장비를 준비할 수 있다.</p>
+      <div class="route-rumor-grid">${Object.values(D.routePlans||{}).map(def=>{ const forecast=G.routeForecast(def.id); return `<article>
+        <span>${def.mark}</span><div><b>${esc(def.name)}</b><p>${esc(def.promise)}</p>
+        <small>${forecast.km}km · ${G.durationLabel(forecast.minutes)} · 연료 약 ${forecast.fuel}L · ${forecast.rough?`험로 ${forecast.rough}구간`:`정착지 ${forecast.stops}곳`}</small>
+        <em class="${forecast.short?'warn':''}">${esc(forecast.readiness)}</em></div></article>`; }).join('')}</div>
+    </section>`:'';
     const buildProfile=G.vanBuildProfile();
     const utilitySection=`<section class="journey-section utility-section">
       <div class="journey-section-head"><span><small>VAN & GEAR</small><b>차량과 장비</b></span><em>${esc(buildProfile.name)}</em></div>
@@ -1108,7 +1178,7 @@ const UI = (()=>{
         <span><b>${esc(buildProfile.name)} <i class="van-build-tier tier-${buildProfile.tier}">${esc(buildProfile.tierLabel)}</i>${buildProfile.secondary?` · ${esc(buildProfile.secondary)}`:''}</b><small>${esc(buildProfile.summary)}</small>${buildProfile.signature.length?`<em>${buildProfile.signature.map(esc).join(' · ')}</em>`:''}</span>
       </div>
       ${utilityActions?`<div class="acts utility-actions">${utilityActions}</div>`:''}</section>`;
-    const h=`${contextRail(n,false)}${localSection}${routeSection}${utilitySection}`;
+    const h=`${contextRail(n,false)}${journeyGuideHtml()}${localSection}${routeRumors}${routeSection}${utilitySection}`;
     p.innerHTML=h;
     const wf=p.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>G.openEventById('crisis_nofuel');
     const rp=p.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>G.fieldRepair();
@@ -1116,6 +1186,7 @@ const UI = (()=>{
     const cf=p.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>showCraft();
     const rq=p.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>G.openRecruitStep();
     wireContext(p);
+    wireJourneyGuide(p);
     p.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
     const ex=p.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>G.explore();
     const st=p.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>showStl(n.stl);
@@ -1136,18 +1207,27 @@ const UI = (()=>{
     AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
     renderAll(); SND.setDriving(false);
-    AMBI.arrive();
+    AMBI.arrive(S.at);
     const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];
     const src=key&&D.scenes&&D.scenes[key];
+    const recap=S.lastJourneyRecap;
     toast(`<span class="ic">📍</span>${n.name} 도착`);
-    if(!src) return 450;
     const a=$('#arrival-scene');
-    a.innerHTML=`<img src="${src}" alt=""><div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span></div>`;
+    const recapChanges=recap&&recap.changes&&recap.changes.length
+      ?recap.changes.slice(0,5).map(change=>`<i class="${change.good?'gain':'cost'}">${esc(change.label)} ${change.value>0?'+':''}${change.value}${esc(change.unit)}</i>`).join('')
+      :'<i>자원 변화 없음</i>';
+    a.innerHTML=`${src?`<img src="${src}" alt="">`:'<div class="arrival-fallback" aria-hidden="true"></div>'}<div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span>
+      ${recap?`<div class="arrival-ledger" aria-label="방금 주행 정산">
+        <div><strong>${esc(D.nodes[recap.from].name)} → ${esc(n.name)}</strong><em>${recap.km}km · ${G.durationLabel(recap.minutes)} · 사건 ${recap.events}건</em></div>
+        <div class="arrival-deltas">${recapChanges}</div>
+        <p>${esc(recap.build)}으로 달렸다${recap.routeCompleted&&recap.routeName?` · ${esc(recap.routeName)} 완주`:''}</p>
+      </div>`:''}</div>`;
     clearTimeout(arrivalTimer);
     a.onclick=()=>{ a.classList.remove('on'); };
     requestAnimationFrame(()=>a.classList.add('on'));
-    arrivalTimer=setTimeout(()=>a.classList.remove('on'),2800);
-    return 3000;
+    const hold=uiPrefs.reduceMotion?3200:4300;
+    arrivalTimer=setTimeout(()=>a.classList.remove('on'),hold);
+    return hold+200;
   }
 
   /* ── bubbles ── */
@@ -1361,10 +1441,9 @@ const UI = (()=>{
       <div class="sr-only">적응형 난이도는 최근 전투 결과로 조정됩니다. 현재 보정은 ${adaptiveLabel}, 최근 추세는 ${adaptiveTrendLabel}, 선택 위험도는 ${riskTag}입니다.</div>
       <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">진행 ${grade}</span>
         <span class="${pressure>=2?'bad':pressure===0?'good':''}">압박 ${pressure}/3</span>
-        <span class="${adaptiveClass}">적응 ${adaptiveLabel}</span>
-        <span class="${adaptiveTrendClass}">추세 ${adaptiveTrendLabel}</span>
-        <span class="${S.van<35?'bad':''}">차체 ${Math.ceil(S.van)}%</span>
-        <span class="${S.pursuit>=3?'bad':''}">관측 ${S.pursuit}/5</span>
+        ${combatShowDetail?`<span class="${adaptiveClass}">적응 ${adaptiveLabel}</span><span class="${adaptiveTrendClass}">추세 ${adaptiveTrendLabel}</span>`:''}
+        ${combatShowDetail||S.van<35?`<span class="${S.van<35?'bad':''}">차체 ${Math.ceil(S.van)}%</span>`:''}
+        ${combatShowDetail||S.pursuit>=3?`<span class="${S.pursuit>=3?'bad':''}">관측 ${S.pursuit}/5</span>`:''}
         ${injuries?`<span class="bad">부상 ${injuries}명</span>`:''}</div></section>`;
   }
   function combatChoiceSummary(pool){
@@ -1473,10 +1552,11 @@ const UI = (()=>{
       const riskMeta = profile ? combatChoiceRiskMeta(oddsMeta.pct) : null;
       const riskMark=riskMeta&&['위험','주의'].includes(riskMeta.label)?'⚠ ':'';
       const riskChip = riskMeta ? `<span class="combat-risk ${riskMeta.cls}">${riskMark}${riskMeta.label}</span>` : '';
+      const compactOddsNote=[readNote,G.combatContextNote(c)].filter(Boolean).join(' · ');
       const oddsLabel = profile
         ? combatShowDetail
           ? `판정 전망 · ${G.combatGrade(c,evd)} · 난이도 ${oddsMeta.score10}/10 · 기본 ${basePercent}%(${sourceLabel}) · 조정 ${adjustLabel}${adaptiveText} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}${vehicleText}`
-          : `판정 전망 · ${G.combatGrade(c,evd)} · 난이도 ${oddsMeta.score10}/10${readNote?` · ${readNote}`:''}`
+          : compactOddsNote
         : '';
       if(profile){
         combatChoices.push({
@@ -1500,7 +1580,7 @@ const UI = (()=>{
           ${intentNote?`<span class="combat-response">↳ ${esc(intentNote)}</span>`:''}
           ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
           ${riskChip}
-          ${profile?`<span class="combat-odds"><span class="combat-tier ${oddsMeta.className}">성공률 ${oddsMeta.pct}% · 난이도 ${oddsMeta.score10}/10</span> · ${oddsLabel}</span>`:''}
+          ${profile?`<span class="combat-odds"><span class="combat-tier ${oddsMeta.className}">성공률 ${oddsMeta.pct}% · 난이도 ${oddsMeta.score10}/10</span>${oddsLabel?` · ${esc(oddsLabel)}`:''}</span>`:''}
           ${route?`<span class="route-forecast"><b>${route.km}km · 순수 주행 ${G.durationLabel(route.minutes)} · 연료 약 ${route.fuel}L</b><small>${route.rough?`험로 ${route.rough}구간 · `:''}보급 거점 ${route.stops}곳 · ${esc(route.readiness)}</small></span>`:''}
           ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
         </button>`;
@@ -1955,6 +2035,7 @@ const UI = (()=>{
     G.qualityChoice(curEv,choice,Math.max(0,curEv.choices.indexOf(choice)),qualityVisible,qualityAvailable);
     const oldCombat=$('#ev-sheet').querySelector('.combat-hud');
     const combatBefore=S.combat?{...S.combat,edge:S.combat.edge||0,history:[...(S.combat.history||[])]}:{edge:0,pressure:0,history:[]};
+    if(S.combat) SND.combat('confirm');
     const out=G.pickOutcome(curEv, choice);
     /* 마지막 선택은 combatEnd가 상태를 비우기 전에 먼저 기록한다.
        시작·중간 단계는 applyFx가 교전 상태를 만든 뒤 기록한다. */
@@ -1972,6 +2053,10 @@ const UI = (()=>{
       combatHud=combatHudHtml(curEv,{state:resultState,result:true,ended:!!(out.fx&&out.fx.combatEnd),combatChoices:curCombatChoices});
     }
     if(out.sfx) SND.combat(out.sfx);
+    if(out.fx&&out.fx.combatEnd){
+      const resultCue=['success','partial','failure'].includes(out.fx.combatResult)?out.fx.combatResult:'failure';
+      setTimeout(()=>SND.combat(resultCue),140);
+    }
     chips.push(...G.afterChoice(curEv, choice, out));
     if(S.ended) return;
     const sheet=$('#ev-sheet');
@@ -2078,6 +2163,7 @@ const UI = (()=>{
       h+=`<button class="act primary" id="seoul-go"><span class="ic">▲</span><span><b>${stops[stage].name}(으)로 오른다</b><small>${stage===0?'서울 안으로':'다음 정거장'}</small></span></button>`;
     } else {
       const cn=S.notes?S.notes.length:0, pn=S.party.length, dg=S.dog?' + 보리':'';
+      const recalled=(S.memories&&S.memories.history||[]).map(id=>S.memories.choices[id]).filter(Boolean).slice(-4);
       const finishLine=transfer.onTime
         ? '첫 이송이 시작되기 전에 6,412명의 명령을 취소했다.'
         : `첫 이송 뒤 ${transfer.lateDays}일째에 남은 이송을 멈추고, 먼저 떠난 차량의 귀환로를 열었다.`;
@@ -2086,6 +2172,7 @@ const UI = (()=>{
         <small style="color:${transfer.onTime?'var(--ok)':'var(--amber)'}">${esc(finishLine)}</small><br>
         <small style="color:var(--faded)">부산의 폐차장에서 남산의 밤까지, 여기 적힌 전부가 우리가 실어온 것이다.</small><br>
         <small style="color:var(--faded)">가족의 추방 이유는 되찾았고, 143년의 최초 목적은 꾸며 쓰지 않은 채 같은 정리를 끝냈다.</small></div>
+        ${recalled.length?`<div class="seoul-memory-recap"><b>남산까지 돌아온 선택</b>${recalled.map(memory=>`<span>DAY ${memory.day} · ${esc(memory.summary)}</span>`).join('')}</div>`:''}
         <button class="act" id="seoul-journal"><span class="ic">✎</span><span><b>여행 일지를 연다</b><small>411km의 기록을 처음부터</small></span></button>`;
     }
     h+='</div>';
@@ -2228,7 +2315,7 @@ const UI = (()=>{
     const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl,'hub');
     const spots=settlementSpots(curStl), night=G.isNight(), comp=settlementCompanion();
     const impactCopy=settlementImpactCopy(curStl), impact=impactCopy.impact;
-    AMBI.settlement(night?'people':'hub');
+    AMBI.settlement(night?'people':'hub',curStl);
     if(!spots[stlFocus]) stlFocus='market';
     if(night&&stlFocus!=='people') stlFocus='people';
     const focus=spots[stlFocus]||spots.market;
@@ -2330,6 +2417,12 @@ const UI = (()=>{
               <i></i><span>${esc(comp?`${G.myName()} · ${comp.name}`:G.myName())}</span>
             </div>
           </div>
+          <div class="stl-field-switcher" role="group" aria-label="현장 행동 선택">
+            ${actions.map((action,index)=>{ const status=G.stlFieldStatus(curStl,action);
+              return `<button data-fieldspot="${action.id}" class="${action.id===stlFieldFocus?'selected':''}" aria-pressed="${action.id===stlFieldFocus}">
+                <i>${status.done?'✓':String(index+1).padStart(2,'0')}</i><span>${esc(action.label)}</span></button>`;
+            }).join('')}
+          </div>
           <div class="stl-field-focus-copy" data-field-focus-copy><b>${esc(focusAction.label)}</b><span>${esc(G.stlFieldStatus(curStl,focusAction).changed&&focusAction.change?focusAction.change.after:focusAction.desc)}</span></div>
         </section>`;
       } else h+=`<section class="stl-field-map" style="--field-pos:${pos}%" aria-label="${esc(field.title)} 현장 동선">
@@ -2393,6 +2486,11 @@ const UI = (()=>{
       const status=G.stlFieldStatus(curStl,action);
       if(copy) copy.innerHTML=`<b>${esc(action.label)}</b><span>${esc(status.changed&&action.change?action.change.after:action.desc)}</span>`;
     }
+    document.querySelectorAll('#stl-body .stl-field-switcher [data-fieldspot]').forEach(node=>{
+      const selected=node.dataset.fieldspot===actionId;
+      node.classList.toggle('selected',selected);
+      node.setAttribute('aria-pressed',String(selected));
+    });
     const cards=[...document.querySelectorAll('#stl-body [data-fieldcard]')];
     cards.forEach(card=>card.classList.toggle('focused',card.dataset.fieldcard===actionId));
     const card=cards.find(node=>node.dataset.fieldcard===actionId);
@@ -2402,7 +2500,8 @@ const UI = (()=>{
     curStl=stlId;
     stlMode=mode||'hub';
     const stl=D.stls[stlId];
-    AMBI.settlement(stlMode);
+    G.qualityMilestone('first_settlement_visit',{settlementId:stlId,mode:stlMode});
+    AMBI.settlement(stlMode,stlId);
     if(!G.isNight()) G.checkQuest();   // 배달은 사람이 깨어 있을 때만
     if(stlMode==='hub'){ renderSettlementHub(); return; }
     if(G.isNight()&&stlMode!=='people'){ stlFocus='people'; renderSettlementHub(); return; }
@@ -2843,6 +2942,7 @@ const UI = (()=>{
     const m=missionHtml();
     const injuryIds=Object.keys(S.injuries||{});
     const route=G.routeStatus();
+    const audioChannels=[['music','음악'],['ambience','환경음'],['effects','효과음'],['voice','목소리']];
     const injuryPanel=injuryIds.length?`<div class="st-sec"><h4>부상 · 전문 능력 일시 중지</h4>`+
       injuryIds.map(id=>{const x=S.injuries[id];return `<div class="st-row"><span class="k">${G.injuryName(id)}</span>
         <span class="v" style="flex:1;color:var(--danger)">${x.label} · ${x.days}일</span></div>`;}).join('')+
@@ -2880,7 +2980,11 @@ const UI = (()=>{
       <div class="ui-comfort-grid">
         <button data-ui-pref="text" aria-pressed="${uiPrefs.largeText}"><span>글자 크기</span><b>${uiPrefs.largeText?'크게':'보통'}</b></button>
         <button data-ui-pref="motion" aria-pressed="${uiPrefs.reduceMotion}"><span>화면 움직임</span><b>${uiPrefs.reduceMotion?'줄임':'기본'}</b></button>
-      </div><div class="csub">움직임 줄임은 장면 전환과 달구지 애니메이션을 낮추고, 캔버스 갱신 부담도 줄인다.</div></div>`;
+      </div><div class="csub">움직임 줄임은 장면 전환과 달구지 애니메이션을 낮추고, 캔버스 갱신 부담도 줄인다.</div></div>
+    <div class="st-sec audio-mixer"><h4>소리 믹서 <small>채널별 · 이 기기에 저장</small></h4>
+      <div class="audio-mixer-list">${audioChannels.map(([key,label])=>{ const value=Math.round(SND.level(key)*100); return `
+        <label><span>${label}</span><input type="range" min="0" max="100" step="5" value="${value}" data-audio-level="${key}" aria-label="${label} 음량"><output>${value}%</output></label>`; }).join('')}</div>
+      <div class="csub">하단의 소리 버튼은 전체 음소거이며, 이 값은 음악·현장음·효과·음성을 따로 조절한다.</div></div>`;
 
     let journey=`<div class="st-sec"><h4>여정</h4>
       <div class="st-row"><span class="k">날짜 / 주행</span><span class="v" style="flex:1">DAY ${S.day} · ${Math.round(S.stats.km)}km · 서울까지 약 ${G.remainKm()}km</span></div>
@@ -2958,8 +3062,9 @@ const UI = (()=>{
       <div class="st-row"><span class="k">실제 플레이</span><span class="v" style="flex:1">${quality.playMinutes}분 · ${quality.sessions}세션</span></div>
       <div class="st-row"><span class="k">사건 다양성</span><span class="v" style="flex:1">고유 ${quality.uniqueEvents}/${quality.events} · 같은 유형 최대 ${quality.maxTypeStreak}연속</span></div>
       <div class="st-row"><span class="k">첫 45분</span><span class="v" style="flex:1">사건 ${quality.first45.events} · 선택 ${quality.first45.choices} · 전투 ${quality.first45.combats}</span></div>
+      <div class="st-row"><span class="k">호흡·변화</span><span class="v" style="flex:1">무거운 장면 최대 ${quality.maxHeavyStreak}연속 · 의미 있는 변화 공백 최대 ${quality.meaningful.maxGapMinutes}분</span></div>
       <div class="st-row"><span class="k">노선·정착지</span><span class="v" style="flex:1">노선 ${qualityRoutesCompleted}/${qualityRoutesChosen} 완주 · 정착지 ${qualitySettlementVisits}회 · 현장 행동 ${qualitySettlementActions}회</span></div>
-      <div class="st-row"><span class="k">성장·회수</span><span class="v" style="flex:1">개조 ${quality.upgrades}회 · 핵심 선택 회수 ${quality.choiceEchoes}회</span></div>
+      <div class="st-row"><span class="k">성장·회수</span><span class="v" style="flex:1">개조 ${quality.upgrades}회 · 선택 기록 ${quality.choiceCallbacks.remembered} · 가까운 회수 ${quality.choiceCallbacks.near} · 먼 회수 ${quality.choiceCallbacks.late}</span></div>
       ${quality.lastStop?`<div class="st-row"><span class="k">최근 중단</span><span class="v" style="flex:1">${esc(quality.lastStop.context||'게임')} · ${esc(quality.lastStop.stop)}</span></div>`:''}
       <div class="quality-actions"><button data-quality-export="md">개발 기록 .md</button><button data-quality-export="json">원본 .json</button></div>
     </details>`;
@@ -2997,6 +3102,11 @@ const UI = (()=>{
       }
       applyUiPrefs();
       renderStatus();
+    });
+    b.querySelectorAll('[data-audio-level]').forEach(input=>input.oninput=()=>{
+      SND.setLevel(input.dataset.audioLevel,Number(input.value)/100);
+      const output=input.parentElement&&input.parentElement.querySelector('output');
+      if(output) output.textContent=`${input.value}%`;
     });
     b.querySelectorAll('[data-quality-export]').forEach(button=>button.onclick=()=>exportQuality(button.dataset.qualityExport));
     b.querySelectorAll('[data-comp2]').forEach(r=>{
@@ -3102,6 +3212,22 @@ const UI = (()=>{
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
 const SND = (()=>{
   let ac=null, on=false, userChoice=false, suspended=false, engineGain=null, noiseSrc=null, sfxBuf=null, pulseTimer=null;
+  const mixKeys=['music','ambience','effects','voice'];
+  const mix=Object.fromEntries(mixKeys.map(key=>{
+    const raw=localStorage.getItem(`caravan_audio_${key}`);
+    const saved=raw===null?NaN:Number(raw);
+    return [key,Number.isFinite(saved)&&saved>=0&&saved<=1?saved:1];
+  }));
+  function level(key){ return Number.isFinite(mix[key])?mix[key]:1; }
+  function setLevel(key,value){
+    if(!mixKeys.includes(key)) return;
+    mix[key]=Math.max(0,Math.min(1,Number(value)||0));
+    localStorage.setItem(`caravan_audio_${key}`,String(mix[key]));
+    if(key==='music'&&typeof BGM!=='undefined') BGM.applyMix();
+    if((key==='ambience'||key==='effects')&&typeof AMBI!=='undefined') AMBI.applyMix();
+    if(key==='ambience') setDriving(typeof S!=='undefined'&&S&&S.driving&&!UI.modalOpen());
+    if(key==='voice'&&typeof VO!=='undefined') VO.applyMix();
+  }
   function build(){
     ac=new (window.AudioContext||window.webkitAudioContext)();
     const buf=ac.createBuffer(1, ac.sampleRate*2, ac.sampleRate);
@@ -3155,7 +3281,7 @@ const SND = (()=>{
   function setDriving(driving){
     if(!ac||!engineGain) return;
     const hasRecorded=!!(D.sfx&&D.sfx.sfx_drive_asphalt_loop);
-    const target= on&&!suspended? (driving?(hasRecorded?0.055:0.16):(hasRecorded?0.018:0.05)):0;
+    const target= on&&!suspended? (driving?(hasRecorded?0.055:0.16):(hasRecorded?0.018:0.05))*level('ambience'):0;
     engineGain.gain.linearRampToValueAtTime(target, ac.currentTime+0.8);
   }
   function suspend(){
@@ -3181,6 +3307,8 @@ const SND = (()=>{
     clearTimeout(pulseTimer); pulseTimer=setTimeout(()=>app.classList.remove(cls),500);
   }
   function tone(type,f0,f1,dur,vol,delay=0){
+    vol*=level('effects');
+    if(vol<=0) return;
     const t=ac.currentTime+delay, o=ac.createOscillator(), g=ac.createGain();
     o.type=type; o.frequency.setValueAtTime(Math.max(20,f0),t);
     o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+dur);
@@ -3189,6 +3317,8 @@ const SND = (()=>{
     o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+dur+.02);
   }
   function burst(freq,dur,vol,delay=0,q=.7){
+    vol*=level('effects');
+    if(vol<=0) return;
     const t=ac.currentTime+delay, s=ac.createBufferSource(), f=ac.createBiquadFilter(), g=ac.createGain();
     s.buffer=sfxBuf; f.type='bandpass'; f.frequency.value=freq; f.Q.value=q;
     g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
@@ -3224,10 +3354,20 @@ const SND = (()=>{
         tone('sawtooth',54,135,.48,.035); burst(110,.35,.025,.05); break;
       case 'cover': case 'silence':
         burst(420,.08,.018); tone('sine',120,82,.13,.018); break;
+      case 'confirm':
+        tone('sine',420,520,.055,.022); tone('sine',560,680,.065,.018,.07); break;
+      case 'success':
+        tone('triangle',360,520,.13,.04); tone('triangle',520,760,.19,.045,.12); break;
+      case 'partial':
+        tone('triangle',430,520,.11,.035); tone('sine',390,310,.22,.026,.14); break;
+      case 'failure':
+        tone('sawtooth',310,190,.18,.04); burst(170,.2,.045,.09); tone('sine',145,70,.3,.04,.18); break;
+      case 'exit':
+        tone('sine',330,250,.12,.022); tone('sine',250,220,.18,.016,.13); break;
       default: tone('sine',360,430,.06,.018);
     }
   }
-  return {toggle, enable, isEnabled, setDriving, combat, suspend, resume};
+  return {toggle, enable, isEnabled, setDriving, combat, suspend, resume, level, setLevel};
 })();
 /* ═══════════════════ BGM (외부 생성 트랙 — D.bgm 슬롯) ═══════════════════
    D.bgm[key]에 data URI를 넣으면 상황에 맞춰 자동 재생·크로스페이드.
@@ -3236,6 +3376,7 @@ const BGM = (()=>{
   const players={};
   let cur=null, on=false, suspended=false, resumeSong=false, manualPauseKey=null;
   const VOL=0.5, FADE=1100;
+  const mixedVolume=()=>VOL*SND.level('music');
   function ensure(key){
     if(players[key]!==undefined) return players[key];
     if(!D.bgm||!D.bgm[key]){ players[key]=null; return null; }
@@ -3263,7 +3404,7 @@ const BGM = (()=>{
     if(prev) fadeTo(prev,0,()=>prev.pause());
     if(!on||suspended) return;
     const nx=ensure(key);
-    if(nx){ nx.play().catch(()=>{}); fadeTo(nx,VOL); }
+    if(nx){ nx.play().catch(()=>{}); fadeTo(nx,mixedVolume()); }
   }
   function setOn(v){
     on=v;
@@ -3286,7 +3427,7 @@ const BGM = (()=>{
   function ensureSong(){
     if(song!==undefined&&song) return song;
     if(!D.bgm||!D.bgm.song) return null;
-    song=new Audio(D.bgm.song); song.volume=0.6;
+    song=new Audio(D.bgm.song); song.volume=0.6*SND.level('music');
     song.onended=()=>{ songUi(false); const k=cur; cur=null; if(on) set(k); };
     return song;
   }
@@ -3308,6 +3449,7 @@ const BGM = (()=>{
     /* 배경 BGM 잠시 내림 */
     manualPauseKey=null;
     const bg=players[cur]; if(bg) fadeTo(bg,0,()=>bg.pause());
+    s.volume=0.6*SND.level('music');
     s.currentTime=0; s.play().catch(()=>{}); songUi(true);
   }
   function playSongOnce(){ const s=ensureSong(); if(s&&s.paused) toggleSong(); }
@@ -3333,11 +3475,16 @@ const BGM = (()=>{
     }
     resumeSong=false;
     const a=ensure(cur||'title');
-    if(a){ a.play().catch(()=>{}); fadeTo(a,VOL); }
+    if(a){ a.play().catch(()=>{}); fadeTo(a,mixedVolume()); }
+  }
+  function applyMix(){
+    if(song) song.volume=0.6*SND.level('music');
+    const active=cur?ensure(cur):null;
+    if(active&&on&&!suspended&&(!song||song.paused)) fadeTo(active,mixedVolume());
   }
   function isSongPlaying(){ return Boolean(song&&!song.paused); }
   function isMusicPaused(){ return Boolean(manualPauseKey); }
-  return {tick, setOn, toggleSong, playSongOnce, isSongPlaying, isMusicPaused, suspend, resume};
+  return {tick, setOn, toggleSong, playSongOnce, isSongPlaying, isMusicPaused, suspend, resume, applyMix};
 })();
 /* ═══════════════════ AMBIENCE / RECORDED SFX ═══════════════════
    생성한 네 테이크를 전부 싣지 않고 대표 한 개만 사용한다.
@@ -3373,26 +3520,27 @@ const AMBI = (()=>{
   function setLoop(key,volume=.18){
     clearTimeout(departTimer);
     if(currentKey===key&&current){
-      current._target=volume;
+      current._baseTarget=volume;
       if(on&&!suspended&&current.paused) current.play().catch(()=>{});
-      if(on&&!suspended) fade(current,volume);
+      if(on&&!suspended) fade(current,volume*SND.level('ambience'));
       return;
     }
     const prev=current;
     currentKey=key||null;
     current=key?make(key,true):null;
     if(prev&&prev!==current) fade(prev,0,()=>{ prev.pause(); prev.currentTime=0; });
+    if(current) current._baseTarget=volume;
     if(!current||!on||suspended) return;
-    current._target=volume;
     current.volume=0;
     current.play().catch(()=>{});
-    fade(current,volume);
+    fade(current,volume*SND.level('ambience'));
   }
   function play(key,volume=.34){
     if(!on||suspended||!source(key)) return null;
     const audio=make(key,false);
     if(!audio) return null;
-    audio.volume=volume;
+    audio._baseVolume=volume;
+    audio.volume=volume*SND.level('effects');
     shots.add(audio);
     const clear=()=>shots.delete(audio);
     audio.onended=clear;
@@ -3411,7 +3559,7 @@ const AMBI = (()=>{
     if(!suspended&&current){
       current.volume=0;
       current.play().catch(()=>{});
-      fade(current,current._target||.18);
+      fade(current,(current._baseTarget||.18)*SND.level('ambience'));
     }
   }
   function intro(scene){
@@ -3443,14 +3591,26 @@ const AMBI = (()=>{
     const key=road==='rough'?'sfx_drive_gravel_loop':'sfx_drive_asphalt_loop';
     departTimer=setTimeout(()=>setLoop(key,.17),1100);
   }
-  function arrive(){
+  const placeProfiles={
+    busan:['sfx_port_arrival_loop',.16],gwangju:['sfx_market_loop',.13],miryang:['sfx_market_loop',.15],
+    daegu:['sfx_garage_loop',.13],muju:['sfx_camp_loop',.12],jeonju:['sfx_market_loop',.12],
+    daejeon:['sfx_lab_room_loop',.14],suwon:['sfx_garage_loop',.11],seoul:['sfx_core_loop',.14]
+  };
+  function placeLoop(placeId,mode='hub'){
+    if(mode==='garage') return ['sfx_garage_loop',.17];
+    if(mode==='people'&&placeId!=='daejeon'&&placeId!=='suwon') return ['sfx_camp_loop',.13];
+    return placeProfiles[placeId]||['sfx_market_loop',.14];
+  }
+  function arrive(nodeId){
     setLoop(null);
     play('sfx_stop_brake',.38);
+    const placeId=D.nodes&&D.nodes[nodeId]&&D.nodes[nodeId].stl||nodeId;
+    const profile=placeProfiles[placeId];
+    if(profile) departTimer=setTimeout(()=>setLoop(profile[0],profile[1]),650);
   }
-  function settlement(mode){
-    if(mode==='garage') setLoop('sfx_garage_loop',.17);
-    else if(mode==='people') setLoop('sfx_camp_loop',.15);
-    else setLoop('sfx_market_loop',.14);
+  function settlement(mode,placeId){
+    const profile=placeLoop(placeId,mode);
+    setLoop(profile[0],profile[1]);
   }
   function event(evd){
     const id=String(evd&&evd.id||''), cue=String(evd&&evd.sfx||'');
@@ -3465,7 +3625,7 @@ const AMBI = (()=>{
   function restore(){
     if(typeof S==='undefined'||!S){ setLoop(null); return; }
     if($('#ovl-stl')&&$('#ovl-stl').classList.contains('on')){
-      settlement(G.isNight()?'people':'hub');
+      settlement(G.isNight()?'people':'hub',S.at&&D.nodes[S.at]&&D.nodes[S.at].stl);
       return;
     }
     if(S.driving){
@@ -3473,7 +3633,11 @@ const AMBI = (()=>{
       return;
     }
     if(G.isNight()) setLoop('sfx_camp_loop',.12);
-    else setLoop(null);
+    else {
+      const placeId=S.at&&D.nodes[S.at]&&D.nodes[S.at].stl||S.at;
+      const profile=placeProfiles[placeId];
+      if(profile) setLoop(profile[0],profile[1]); else setLoop(null);
+    }
   }
   function suspend(){
     suspended=true;
@@ -3486,9 +3650,13 @@ const AMBI = (()=>{
     suspended=false;
     if(!on||!current) return;
     current.play().catch(()=>{});
-    fade(current,current._target||.18);
+    fade(current,(current._baseTarget||.18)*SND.level('ambience'));
   }
-  return {setOn,setLoop,play,intro,depart,arrive,settlement,event,restore,suspend,resume};
+  function applyMix(){
+    if(current&&on&&!suspended) fade(current,(current._baseTarget||.18)*SND.level('ambience'));
+    for(const audio of shots) audio.volume=(audio._baseVolume||.34)*SND.level('effects');
+  }
+  return {setOn,setLoop,play,intro,depart,arrive,settlement,event,restore,suspend,resume,applyMix};
 })();
 /* ═══════════════════ VO (보이스 — D.vo 슬롯) ═══════════════════
    슬롯이 비어 있으면 조용히 무시 (자막만). 파일 오면 드롭인. */
@@ -3497,12 +3665,13 @@ const VO = (()=>{
   function play(key){
     if(!on||!D.vo||!D.vo[key]) return;
     stop();
-    cur=new Audio(D.vo[key]); cur.volume=0.8;
+    cur=new Audio(D.vo[key]); cur.volume=0.8*SND.level('voice');
     cur.play().catch(()=>{});
   }
   function stop(){ if(cur){ cur.pause(); cur=null; } }
   function setOn(value){ on=!!value; if(!on) stop(); }
-  return {play, stop, setOn};
+  function applyMix(){ if(cur) cur.volume=0.8*SND.level('voice'); }
+  return {play, stop, setOn, applyMix};
 })();
 
 /* 토스 WebView가 백그라운드로 내려갈 때 소리와 진행을 명시적으로 멈춘다.
