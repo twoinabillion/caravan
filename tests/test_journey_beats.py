@@ -70,9 +70,9 @@ with sync_playwright() as playwright:
       S.comps.parkss={mood:70,bond:6,lvl:1,perks:[]};
       S.injuries={};
       const withComps = G.beatReady(beat);
-      S._storyQueue=[]; S.used=[];
+      S._beatQueue=[]; S.used=[];
       G.scheduleJourneyBeat();
-      const queued = S._storyQueue.includes('conflict_fuel_detour');
+      const queued = (S._beatQueue||[]).includes('conflict_fuel_detour');
       // 부상 중이면 다시 닫힌다 (조건이 실제로 읽히는지)
       S.injuries={kangwoo:{label:'테스트',days:2}};
       const injured = G.beatReady(beat);
@@ -84,16 +84,61 @@ with sync_playwright() as playwright:
     check('조건 충족 시 실제로 예약된다', conflict['queued'] is True)
     check('동료가 다치면 다시 닫힌다', conflict['injured'] is False)
 
+    print('― 예약 뒤 조건이 깨지면 내보내지 않는다')
+    # 2026-08-06 적대적 재검증 실증: 예약 시점에만 조건을 보면, 두 사람이 내린 뒤에도
+    # 두 사람의 갈등 장면이 열리고 물통을 채운 뒤에도 "물통이 바닥"이 출력됐다.
+    stale = page.evaluate("""() => {
+      G.newGame('onroad','조건붕괴','full');
+      S.at='gimcheon'; S.driving=null; S.stats.km=400;
+      S.party=['kangwoo','parkss'];
+      S.comps.kangwoo={mood:70,bond:6,lvl:1,perks:[]};
+      S.comps.parkss={mood:70,bond:6,lvl:1,perks:[]};
+      S.injuries={}; S.water=1;
+      S._beatQueue=[]; S.used=[];
+      G.scheduleJourneyBeat();
+      const queuedConflict = (S._beatQueue||[]).includes('conflict_fuel_detour');
+      const queuedWater = (S._beatQueue||[]).includes('water_toll');
+      // 조건을 깬다: 동료 하차 + 물통 가득
+      S.party=[]; S.water=99;
+      const popped=[];
+      for(let i=0;i<12;i++){ const id=G.popBeat(); if(!id) break; popped.push(id); S.used.push(id); }
+      return {queuedConflict, queuedWater, popped,
+              stillQueued:[...(S._beatQueue||[])]};
+    }""")
+    check('조건 충족 시 둘 다 예약됐다',
+          stale['queuedConflict'] and stale['queuedWater'], str(stale)[:120])
+    check('동료가 내리면 갈등 아크가 나오지 않는다',
+          'conflict_fuel_detour' not in stale['popped'], str(stale['popped']))
+    check('물통을 채우면 우물 장면이 나오지 않는다',
+          'water_toll' not in stale['popped'], str(stale['popped']))
+    check('조건이 깨진 비트는 버리지 않고 보관한다',
+          'conflict_fuel_detour' in stale['stillQueued'] and 'water_toll' in stale['stillQueued'],
+          str(stale['stillQueued']))
+
+    print('― 조건 종류별 실제 차단 (정의 대조가 아니라 동작)')
+    enforce = page.evaluate("""() => {
+      G.newGame('onroad','차단','full');
+      S.stats.km=400; S.driving=null; S.injuries={};
+      const beat=(id)=>(D.journeyBeats||[]).find(b=>b.id===id);
+      S.at='busan';  S.water=1;  const southBlocksNorth=!G.beatReady(beat('cleaners_recall'));
+      S.at='gimcheon'; S.water=99; const fullWaterBlocks=!G.beatReady(beat('water_toll'));
+      S.at='seoul'; delete S.flags.radio_fixed; const noFlagBlocks=!G.beatReady(beat('signal_bait'));
+      return {southBlocksNorth, fullWaterBlocks, noFlagBlocks};
+    }""")
+    check('남부에서는 북부 전용 조우가 열리지 않는다', enforce['southBlocksNorth'], str(enforce))
+    check('물통이 가득하면 우물 장면이 열리지 않는다', enforce['fullWaterBlocks'], str(enforce))
+    check('라디오 없이 신호 미끼가 열리지 않는다', enforce['noFlagBlocks'], str(enforce))
+
     print('― 예약은 도착마다 채워지고 하나씩 나온다')
     queueing = page.evaluate("""() => {
       G.newGame('onroad','큐','full');
       S.stats.km = 400;                 // 모든 거리 문턱 통과
       S.at = 'gimcheon'; S.driving = null;   // 중부 — 지역 조건 비트가 열리는 자리
-      S._storyQueue=[]; S.used=[];
+      S._beatQueue=[]; S.used=[];
       G.scheduleJourneyBeat();
-      const queuedAll = S._storyQueue.length;
-      const first = G.popStory();
-      const afterPop = S._storyQueue.length;
+      const queuedAll = S._beatQueue.length;
+      const first = G.popBeat();
+      const afterPop = S._beatQueue.length;
       return {queuedAll, first, afterPop};
     }""")
     check('조건을 넘긴 비트가 한꺼번에 대기열에 들어간다', queueing['queuedAll'] >= 5, str(queueing))

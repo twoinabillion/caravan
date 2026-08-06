@@ -112,6 +112,72 @@ with sync_playwright() as playwright:
     }""")
     check('combatFailurePreview 전 선택 반환', all(fail_preview), str(fail_preview)[:120])
 
+    print('― W3: 판정 없는 확정 선택 비율')
+    det = page.evaluate("""() => {
+      let det=[], rolled=0;
+      for(const e of D.events){
+        if(!e.combat) continue;
+        for(const c of (e.choices||[])){
+          const isDet = c.combatRoll===undefined || !(c.out && c.out.length>1);
+          // '준비 행동'으로 명시한 선택은 판정 대상이 아니다 (전망도 표시하지 않는다)
+          if(isDet && !c.prep) det.push(`${e.id}:${c.tactic||c.label||''}`.slice(0,40));
+          else if(!isDet) rolled++;
+        }
+      }
+      return {det, rolled, pct: Math.round(100*det.length/Math.max(1,det.length+rolled))};
+    }""")
+    check('판정 없는 확정 선택 ≤ 15%', det['pct'] <= 15,
+          f"{det['pct']}% ({len(det['det'])}개) 예: {det['det'][:3]}")
+
+    # prep은 라벨이 아니라 계약이다 — 준비 행동에는 전망(등급·실패 비용)이 붙지 않아야 한다.
+    prep_ui = page.evaluate("""() => {
+      G.newGame('onroad','준비','full');
+      S.combat=null; S.injuries={}; S.pursuit=0;
+      UI.showEvent(D.events.find(e=>e.id==='patrol_walker'));
+      UI.finishStory();
+      const evd=D.events.find(e=>e.id==='patrol_walker');
+      const cards=[...document.querySelectorAll('#ev-sheet .choice')];
+      return cards.map((n,i)=>({prep:!!(evd.choices[i]&&evd.choices[i].prep),
+        hasOdds: !!n.querySelector('.combat-odds')}));
+    }""")
+    leaked = [r for r in prep_ui if r['prep'] and r['hasOdds']]
+    check('준비 행동에는 전망이 붙지 않는다', not leaked, f"{len(leaked)}개 카드가 확정 결과에 등급 표시")
+
+    print('― W3: 이탈에 실질 비용이 붙는가')
+    exits = page.evaluate("""() => {
+      const rows=[];
+      for(const e of D.events){
+        if(!e.combat) continue;
+        for(const c of (e.choices||[])){
+          if(!['이탈','우회'].includes(c.tactic)) continue;
+          const fx=(c.out&&c.out[0]&&c.out[0].fx)||{};
+          const real = (fx.pursuit||0)>0 || fx.trust || fx.mood ||
+            (fx.moodAll||0)<=-3 || fx.flag || fx.note;
+          rows.push({ev:e.id, real:!!real});
+        }
+      }
+      return rows;
+    }""")
+    no_cost = [r['ev'] for r in exits if not r['real']]
+    check('이탈 선택에 관측·신뢰·서사 대가가 붙는다', not no_cost,
+          f"{len(no_cost)}/{len(exits)}개가 자원만 소모: {no_cost[:3]}")
+
+    print('― W3: 관측(pursuit)에 임계 효과가 있는가')
+    pursuit = page.evaluate("""() => {
+      G.newGame('onroad','관측','full');
+      const at=(n)=>{ S.pursuit=n; return {
+        checkpoint: typeof G.pursuitCheckpoint==='function' ? G.pursuitCheckpoint() : null,
+        refused: typeof G.pursuitRefusesShelter==='function' ? G.pursuitRefusesShelter() : null,
+      };};
+      return {low:at(0), mid:at(3), high:at(5)};
+    }""")
+    check('관측 3에서 강제 검문 임계가 존재',
+          pursuit['mid']['checkpoint'] is not None and pursuit['mid']['checkpoint'] != pursuit['low']['checkpoint'],
+          str(pursuit))
+    check('관측 5에서 정착지 반응이 달라진다',
+          pursuit['high']['refused'] is not None and pursuit['high']['refused'] != pursuit['low']['refused'],
+          str(pursuit))
+
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()
 

@@ -185,17 +185,14 @@ SIM_JS = r"""
       }
       if (S.ended) { ended = 'dead'; break; }
       resolveEvent(policy);
-      /* 도착 처리의 지연 예약을 재현한다. 실엔진은 위치 이벤트·위기·예약 스토리를
-         setTimeout으로 여는데(04-engine.js G.arrive), 동기 루프에서는 타이머가
-         돌지 않아 그 층이 통째로 측정에서 빠진다 — 여정 비트 등장률이 0%로
-         나오던 원인이 이것이었다. */
-      const locEv = D.events.find(e => e.locEvent === S.at && !S.used.includes(e.id)
-        && (!e.needsComp || G.hasComp(e.needsComp)) && (!e.needFlag || S.flags[e.needFlag]));
-      if (locEv) { G.openEvent(locEv); resolveEvent(policy); }
-      else if (!G.maybeCrisis()) {
-        const queued = G.popStory();
-        if (queued) { G.openEventById(queued); resolveEvent(policy); }
-      } else { resolveEvent(policy); }
+      /* 도착 처리의 지연 예약을 '재현'하면 안 된다 — 실 G.arrive가 이미 돌았고,
+         그 안에서 popBeat/popStory/maybeCrisis가 소비된다. 사본을 또 돌리면
+         도착마다 큐가 두 번 빠지고 첫 결과는 setTimeout과 함께 버려진다.
+         (2026-08-06 적대적 재검증에서 이 계측 오류가 드러났다.)
+         대신 arrive가 setTimeout에 넘긴 id를 그대로 받아 동기로 연다. */
+      const deferred = S._simDeferred;
+      S._simDeferred = null;
+      if (deferred) { G.openEventById(deferred); resolveEvent(policy); }
       if (S.fatigue >= cfg.campAt || G.isNight()) { G.camp(); resolveEvent(policy); }
       if (S.ended) { ended = 'dead'; break; }
     }
@@ -225,9 +222,15 @@ SIM_JS = r"""
 
 # 이 비트들은 "썼으니 있다"가 아니라 "플레이어가 실제로 본다"를 보장해야 하는 것들.
 # 2026-08-06 측정에서 런당 등장률이 3% 안팎이었다 — 사실상 아무도 못 보는 상태.
-# 동료 조건이 붙은 비트(갈등 아크 등)는 자동 플레이어가 동료를 얻지 못해
-# 구조적으로 0%가 나온다 — 시뮬이 아니라 단위 검사(tests/test_journey_beats.py)가 지킨다.
-KEY_BEATS = {}
+# 본편 비트는 전달률을 실제로 재야 한다. (2026-08-06: 여기를 빈 dict로 두는 바람에
+# 승격이 본편 비트를 밀어낸 것을 게이트가 놓쳤다 — 죽은 검사는 검사가 아니다.)
+# 동료 조건이 붙은 비트(갈등 아크)는 자동 플레이어가 동료를 얻지 못해 구조적으로
+# 0%가 나오므로 여기 넣지 않고 단위 검사(tests/test_journey_beats.py)가 지킨다.
+KEY_BEATS = {
+    'story_generation_form': '본편 · 세대의 서식',
+    'story_family_principle': '본편 · 가족의 원칙',
+    'story_generation_speech': '본편 · 세대의 말',
+}
 MALICE_BEATS = ['levy_office', 'salvage_claim', 'water_toll', 'cleaners_recall', 'signal_bait']
 
 
@@ -237,9 +240,14 @@ def beat_rates(rows):
     for beat, label in KEY_BEATS.items():
         hit = sum(1 for r in rows if beat in (r.get('seen') or []))
         out[beat] = {'label': label, 'pct': round(100 * hit / n, 1)}
-    malice_hit = sum(1 for r in rows
-                     if any(b in (r.get('seen') or []) for b in MALICE_BEATS))
-    out['_malice'] = {'label': '악의 계열 조우', 'pct': round(100 * malice_hit / n, 1)}
+    # OR 집계는 한 편이 100%면 나머지가 0%여도 통과한다 — 개별로 센다.
+    per = {}
+    for b in MALICE_BEATS:
+        per[b] = round(100 * sum(1 for r in rows if b in (r.get('seen') or [])) / n, 1)
+    delivered = sum(1 for b, pct in per.items() if pct >= 40)
+    out['_malice'] = {'label': '악의 계열 조우', 'per': per, 'delivered': delivered,
+                      'pct': round(100 * sum(1 for r in rows
+                                             if any(b in (r.get('seen') or []) for b in MALICE_BEATS)) / n, 1)}
     return out
 
 
@@ -319,6 +327,9 @@ def gate(summary, rows, deadline):
         if beat == '_malice':
             if row['pct'] < 70:
                 problems.append(f"{row['label']} 조우율 {row['pct']}% < 70% — 세계에 대비가 없다")
+            if row['delivered'] < 3:
+                problems.append(
+                    f"악의 조우 5종 중 실제 전달 {row['delivered']}종 < 3종 — {row['per']}")
         elif row['pct'] < 60:
             problems.append(f"핵심 비트 「{row['label']}」 등장률 {row['pct']}% < 60% — 쓴 것이 안 보인다")
 
@@ -371,7 +382,8 @@ def main():
               f"동행 {row['meanParty']:.1f}명 · {row['endedBuckets']}")
     print(f"  정책 간 소요일 스프레드: {summary['_spread']['medianDaySpread']}일")
     for beat, row in summary.get('_beats', {}).items():
-        print(f"  등장률 · {row['label']}: {row['pct']}%")
+        extra = f" · 개별 {row['per']}" if 'per' in row else ''
+        print(f"  등장률 · {row['label']}: {row['pct']}%{extra}")
     print(f"보고서 → {args.report}")
 
     problems = gate(summary, rows, page_deadline)

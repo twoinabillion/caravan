@@ -55,7 +55,7 @@ G.newGame = (mode, name, entryMode='full')=>{
     thirst:0, hunger:0, ended:false,
     seed:Number.isFinite(G.seedOverride)?G.seedOverride:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
-    _recentEvents:[], _recentEventTypes:[], _eventBreather:0,
+    _recentEvents:[], _recentEventTypes:[], _eventBreather:0, _beatQueue:[],
     memories:{choices:{},pending:[],history:[]}, knowledge:{},
     relations:{pairs:{},seenChats:{}},
     director:{intensity:10,phase:'build',relaxEvents:0},
@@ -152,6 +152,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S._drowsyAt===undefined) S._drowsyAt=-999;
   if(S._lunchDay===undefined) S._lunchDay=0;
   if(!Array.isArray(S._storyQueue)) S._storyQueue=[];
+  if(!Array.isArray(S._beatQueue)) S._beatQueue=[];
   if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
@@ -923,7 +924,7 @@ G.beatReady = (b)=>{
   if(w.noFlag && S.flags[w.noFlag]) return false;
   if(w.minParty!==undefined && S.party.length<w.minParty) return false;
   if(w.maxKm!==undefined && S.stats.km>w.maxKm) return false;
-  if(w.lowWater && S.water>2) return false;   // 본문이 "물통 바닥"을 전제하는 장면용
+  if(w.lowWater && S.water>Math.max(2,G.partySize()+1)) return false;  // 본문이 "물통 바닥"을 전제하는 장면용
   if(w.day===false && G.isNight()) return false;
   return true;
 };
@@ -941,15 +942,40 @@ G.beatConditionsMatchEvent = (b)=>{
   if(ev.night===false && w.day!==false) return {ok:false, why:'주간 전용 조건이 비트에 없음'};
   return {ok:true};
 };
+/* 여정 비트는 개인 서사 연쇄(_storyQueue)와 다른 큐를 쓴다.
+   _storyQueue는 사건을 닫을 때마다 빠지므로(07c-ui-story.js closeEvent),
+   비트를 거기 넣으면 정착지 한 곳에서 장면이 연달아 쏟아진다 — 실제로 그랬다.
+   비트는 도착에서만, 한 번에 하나씩 나온다. */
+G.queueBeat = (id)=>{
+  if(!S||!id||S.used.includes(id)) return;
+  if(!Array.isArray(S._beatQueue)) S._beatQueue=[];
+  if(!S._beatQueue.includes(id)) S._beatQueue.push(id);
+};
 G.scheduleJourneyBeat = ()=>{
   if(!S||!D.journeyBeats) return null;
-  /* 조건을 넘긴 비트는 전부 대기열에 넣는다. 도착마다 하나씩만 예약하면
-     앞선 비트가 자리를 차지해 뒤쪽 비트는 짧은 여정에서 영영 못 나온다.
-     꺼내는 것은 여전히 도착당 하나이므로 한 번에 몰아치지는 않는다. */
+  if(!Array.isArray(S._beatQueue)) S._beatQueue=[];
   const ready=D.journeyBeats.filter(b=>G.beatReady(b)
-    && !S.used.includes(b.id) && !S._storyQueue.includes(b.id));
-  ready.forEach(b=>G.queueStory(b.id));
+    && !S.used.includes(b.id) && !S._beatQueue.includes(b.id));
+  ready.forEach(b=>G.queueBeat(b.id));
   return ready.length?ready[0].id:null;
+};
+/* 예약 시점과 꺼내는 시점 사이에 상황이 바뀔 수 있다. 동료가 다치거나 내리고,
+   물통이 채워지고, 지역이 바뀐다. 조건이 깨진 비트는 내보내지 않고 되돌려 둔다 —
+   안 그러면 두 사람이 없는데 두 사람의 갈등 장면이 열린다(2026-08-06 실측). */
+G.popBeat = ()=>{
+  if(!S||!Array.isArray(S._beatQueue)) return null;
+  const defs=id=>(D.journeyBeats||[]).find(b=>b.id===id);
+  /* 조건(지역·저수량·플래그)이 붙은 비트는 창이 닫힌다 — 북부를 벗어나면 북부 장면은
+     영영 못 나온다. 조건 없는 본편 비트는 언제 나와도 되므로 뒤로 미룬다.
+     (2026-08-06 실측: 북부 창이 4구간뿐이라 순서가 안 돌아왔다.) */
+  const ready=S._beatQueue.filter(id=>{
+    const b=defs(id); return b && !S.used.includes(id) && G.beatReady(b);
+  });
+  if(!ready.length) return null;
+  const urgent=ready.find(id=>{ const w=defs(id).when||{}; return w.region||w.lowWater||w.flag; });
+  const out=urgent||ready[0];
+  S._beatQueue=S._beatQueue.filter(id=>id!==out && defs(id) && !S.used.includes(id));
+  return out;
 };
 G.popStory = ()=>{
   while(S&&S._storyQueue&&S._storyQueue.length){
@@ -1725,6 +1751,26 @@ G.resolveImpactEcho = mode=>{
   return {fx,chips:[{t:'정착지의 변화가 길 위로 이어졌다',c:'item'}]};
 };
 
+/* ── 관측(pursuit) 임계 효과 ──
+   그동안 관측은 이벤트 가중치만 흔들었고 문턱이 없어, 전투 실패와 구제 사다리가
+   물리던 "관측 +1"이 사실상 가짜 값이었다(2026-08-06 실측: 임계 분기 0개).
+   이제 3에서 길이 좁아지고, 5에서 마을이 문을 닫는다. */
+G.PURSUIT_CHECKPOINT = 3;
+G.PURSUIT_SHUNNED = 5;
+G.pursuitCheckpoint = ()=>{
+  if(!S) return null;
+  if(S.pursuit>=G.PURSUIT_SHUNNED) return {level:'high', chance:0.5,
+    label:'검문망이 좁혀졌다 — 주행마다 검문 위험'};
+  if(S.pursuit>=G.PURSUIT_CHECKPOINT) return {level:'watch', chance:0.28,
+    label:'초계가 늘었다 — 긴 구간에서 검문 위험'};
+  return null;
+};
+G.pursuitRefusesShelter = ()=>{
+  if(!S) return null;
+  if(S.pursuit>=G.PURSUIT_SHUNNED) return {refused:true,
+    why:'표시된 차량은 마을에 재우지 않는다'};
+  return {refused:false, why:''};
+};
 G.startTravel = (to)=>{
   const chk = G.canTravelTo(to); if(!chk.ok) return false;
   G.qualitySettlementLeave(S.at);
@@ -1740,6 +1786,19 @@ G.startTravel = (to)=>{
       const gen = S.mode==='offroad' && OFF.ready() && rng()<0.5;
       slots.push({at:chk.km*f, gen}); }
     slots.sort((a,b)=>a.at-b.at);
+    /* 여정 비트는 길 위의 장면이다. 도착 슬롯에 두면 위치 이벤트·위기와 자리를 다퉈
+       한두 개만 전달된다(2026-08-06 실측). 주행 중 한 자리를 비트에 준다. */
+    if(Array.isArray(S._beatQueue)&&S._beatQueue.length){
+      slots.push({at:chk.km*(0.3+rng()*0.35), beat:true});
+      slots.sort((a,b)=>a.at-b.at);
+    }
+    /* 관측이 문턱을 넘으면 검문이 실제로 길 위에 선다 — 긴 구간일수록 더 자주 */
+    const watch=G.pursuitCheckpoint();
+    if(watch){
+      const odds=watch.chance*(chk.km>=30?1:0.6);
+      if(rng()<odds) slots.push({at:chk.km*(0.35+rng()*0.4), forced:'patrol_toll'});
+      slots.sort((a,b)=>a.at-b.at);
+    }
   }
   S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,
     snapshot:{gameMinute:S.day*1440+S.min,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
@@ -1816,6 +1875,8 @@ G.tick = (dt)=>{ // dt: real seconds
     const slot = dv.slots[dv.si++];
     if(slot.special==='bridge'){ G.openEvent(D.bridgeEvent); return; }
     if(slot.special==='impact'){ G.openEventById('settlement_road_echo'); return; }
+    if(slot.beat){ const id=G.popBeat(); if(id){ G.openEventById(id); return; } }
+    if(slot.forced){ G.openEventById(slot.forced); return; }   // 관측 문턱이 세운 검문
     if(slot.gen){ OFF.playGenerated(()=>G.fireDriveEvent()); return; }
     G.fireDriveEvent(); return;
   }
@@ -2556,10 +2617,13 @@ G.arrive = ()=>{
   const arrivalDelay=UI.onArrive();
   if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.target===to)
     setTimeout(()=>UI.toast(`🤝 ${D.recruitQuests[S.recruitQ.id].name}의 부탁을 진행할 수 있다`),arrivalDelay);
-  if(loc){ setTimeout(()=>G.openEvent(loc), arrivalDelay); }
+  /* setTimeout으로 넘기는 id를 함께 기록한다. 타이머가 돌지 않는 환경(시뮬·테스트)이
+     이 층을 통째로 놓치거나, 반대로 사본을 만들어 큐를 두 번 빼는 일을 막는다. */
+  S._simDeferred=null;
+  if(loc){ S._simDeferred=loc.id; setTimeout(()=>G.openEvent(loc), arrivalDelay); }
   else if(!G.maybeCrisis()){
     const queued=G.popStory();
-    if(queued) setTimeout(()=>G.openEventById(queued), arrivalDelay);
+    if(queued){ S._simDeferred=queued; setTimeout(()=>G.openEventById(queued), arrivalDelay); }
     else if(n.stl){ /* settlement panel via UI */ }
   }
   G.save();
@@ -2629,8 +2693,15 @@ G.camp = (msg)=>{
   /* 정착지 숙박: 첫 밤은 손님 대접, 그 뒤로는 품앗이 삯이 든다.
      공짜 안전+보급이 노숙을 절대 열위로 만드는 걸 막는 밸런스 축 —
      "안전을 사거나(정착지), 준비로 벌거나(노숙 경계)". */
-  let townStingy=false;
-  if(inTown){
+  let townStingy=false, townShunned=false;
+  /* 관측 문턱을 넘긴 차량은 마을이 받아 주지 않는다 — 관측이 처음으로 값을 갖는 자리 */
+  const shun=G.pursuitRefusesShelter();
+  if(inTown && shun && shun.refused){
+    townShunned=true;
+    G.moodAll(-4);
+    UI.toast('🚫 마을이 문을 닫았다 — 표시된 차량은 재우지 않는다');
+  }
+  else if(inTown){
     S._stlNights=S._stlNights||{};
     const nights=S._stlNights[S.at]||0;
     S._stlNights[S.at]=nights+1;
@@ -2668,13 +2739,14 @@ G.camp = (msg)=>{
   if(S.party.length){ const lucky=pick(S.party); G.bond(lucky,1); }
   if(townStingy) G.moodAll(-2);
   const nightsHere=inTown?((S._stlNights&&S._stlNights[S.at])||1):0;
-  UI.toast(msg|| (inTown?
+  UI.toast(msg|| (townShunned?'🚫 마을 밖 갓길에서 밤을 났다 — 관측된 차량은 받아 주지 않는다'
+    :inTown?
     (nightsHere<=1?'🏘 마을 한켠에서 물과 묽은 죽을 얻어 하루를 묵었다'
       :townStingy?'🏘 삯 없이 또 신세를 졌다 — 우물물만 얻었다'
       :'🏘 품앗이 삯(고철 2)을 내고 하루를 묵었다')
     :'🔥 야영으로 하루를 마쳤다'));
-  /* 노숙 리스크 — 마을 밖에서 잘 때만. 동료가 있으면 경계 당번이 위험을 깎는다 */
-  if(!inTown){
+  /* 노숙 리스크 — 마을 밖(또는 마을이 문을 닫은 밤)에 잘 때. 동료 경계 당번이 위험을 깎는다 */
+  if(!inTown || townShunned){
     let risk = G.regionOf()==='north'? 0.45:0.33;
     if(S.dog) risk-=0.10;
     if(G.hasPerk('kw_guard')) risk-=0.10;

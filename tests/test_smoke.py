@@ -1236,11 +1236,12 @@ with sync_playwright() as p:
         document.querySelector('.combat-read')?.textContent.includes('읽어낸 틈');
       document.querySelector('#ev-wrap').classList.remove('on');
       const strike=D.events.find(e=>e.id==='combat_walker_strike');
-      UI.showEvent(strike); UI.finishStory();
       const strikeChoice=strike.choices[0];
       /* 판정이 갈리므로 앞 단계 결과에 기대지 않고, 3단계에 유리한 틈을 명시적으로 세워
-         '읽은 틈이 최종 판정에 반영되는가'만 격리해서 잰다. */
+         '읽은 틈이 최종 판정에 반영되는가'만 격리해서 잰다.
+         화면 렌더보다 먼저 세워야 선택 카드에도 반영된다. */
       S.combat.read={label:'세 번째 걸음 뒤 몸통이 처지는 순간',tactics:[strikeChoice.tactic]};
+      UI.showEvent(strike); UI.finishStory();
       const savedRead=S.combat.read;
       const prepared=G.combatOdds(strikeChoice,strike);
       S.combat.read=null;
@@ -1466,17 +1467,17 @@ with sync_playwright() as p:
         !traceText.includes(D.eraTraces[5].name);
       /* 본편 장면은 거리 순서를 지켜야 한다. 같은 레일에 세계 질감 조우가 함께
          실리므로, 본편만 골라 순서를 본다(대기열에는 둘 다 들어간다). */
-      S.used = []; S._storyQueue = []; S.stats.km = 150;
+      S.used = []; S._storyQueue = []; S._beatQueue = []; S.stats.km = 150;
       const storyOnly = () => {
         G.scheduleJourneyBeat();
-        const q = S._storyQueue.filter(id =>
+        const q = (S._beatQueue||[]).filter(id =>
           (D.journeyBeats||[]).some(b => b.id === id && b.kind !== 'world'));
         return q[0] || null;
       };
       out.beat1 = storyOnly();
-      S.used.push('story_generation_form'); S._storyQueue = [];
+      S.used.push('story_generation_form'); S._beatQueue = [];
       out.beat2 = storyOnly();
-      S.used.push('story_family_principle'); S._storyQueue = [];
+      S.used.push('story_family_principle'); S._beatQueue = [];
       out.beat3 = storyOnly();
       return out;
     }''')

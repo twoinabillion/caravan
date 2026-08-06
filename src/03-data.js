@@ -512,14 +512,14 @@ D.journeyBeats = [
  {id:'story_generation_form',     km:60,  kind:'story'},
  {id:'levy_office',                km:80,  kind:'world', when:{region:['mid']}},
  {id:'story_family_principle',     km:100, kind:'story'},
- {id:'salvage_claim',              km:110, kind:'world', when:{region:['south','mid']}},
+ {id:'salvage_claim',              km:110, kind:'world', when:{region:['south','mid','north']}},
  {id:'conflict_fuel_detour',       km:120, kind:'world', when:{region:['mid'], comps:['kangwoo','parkss']}},
  {id:'story_generation_speech',   km:140, kind:'story'},
  {id:'water_toll',                 km:170, kind:'world', when:{region:['mid','north'], lowWater:true}},
- {id:'cleaners_recall',            km:200, kind:'world', when:{region:['north'], day:false}},
  {id:'story_generation_theories', km:220, kind:'story'},
  {id:'story_family_key',           km:240, kind:'story'},
- {id:'signal_bait',                km:260, kind:'world', when:{region:['north'], flag:'radio_fixed'}},
+ {id:'cleaners_recall',            km:262, kind:'world', when:{region:['north'], day:false}},
+ {id:'signal_bait',                km:300, kind:'world', when:{region:['north'], flag:'radio_fixed'}},
  {id:'story_generation_route',    km:300, kind:'story'},
 ];
 
@@ -2435,7 +2435,7 @@ D.events = [
   {label:'지나간다', out:[{p:1, text:'속도를 줄이지 않았다.\n\n백미러 속에서 흰 옷 넷이 여자를 향해 반걸음씩 좁혀 들었다. 부드럽게. 계속.\n\n그날 밤 야영지에서 누군가 물었다. "그 사람, 탔을까." 아무도 대답하지 않았다.', fx:{moodAll:-7, flag:'recall_passed', note:{type:'사건',title:'지나친 회수조',body:'흰 옷 넷과 내리지 않으려던 여자. 우리는 속도를 줄이지 않았다.',links:['정리자들']}}}]},
  ]},
 
-{id:'salvage_claim', type:'조우', w:8, once:true, region:['south','mid'],
+{id:'salvage_claim', type:'조우', w:8, once:true, region:['south','mid','north'],
  title:'먼저 온 사람들',
  text:'무너진 창고 앞에 트럭 두 대가 서 있다. 안에서 쇠 긁는 소리가 난다.\n\n우리가 다가가자 한 사람이 나와 길을 막았다. 손에는 장부와 연필.\n\n"여기 우리 구역이오. 들어가려면 회수료 내야 돼."\n\n"언제부터 구역이 됐소?"\n\n"우리가 온 날부터." 남자가 장부를 흔들었다. 종이에는 지역 이름과 날짜가 빼곡했다. 정말로 기록하고 있었다. 자기들끼리의 법을 만들고, 그 법을 자기들이 집행하는 사람들.\n\n"규칙 없으면 다 뺏기니까. 규칙 만들면 우리가 뺏고." 남자가 웃지 않고 말했다.',
  choices:[
@@ -4278,8 +4278,8 @@ D.events = [
    threat:'비탈에 걸린 우편 수레',objective:'비탈이 다시 움직이기 전에 네 사람을 도로로 올린다',terrain:'젖은 절개지와 무너진 돌망',stakes:'수레가 계곡 쪽으로 밀리면 사람과 약 상자를 함께 잃는다',intent:'젖은 돌망이 한 번 더 내려앉기 전에 사람과 차의 무게를 고정해야 한다',counters:{'고정':'달구지를 닻으로 쓴다','지휘':'하중을 사람별로 나눈다'}},
  text:'상주를 벗어난 능선에서 손을 흔드는 아이가 보였다. 도로 아래로 작은 수레가 반쯤 굴러 떨어져 있다. 어른 셋과 아이 하나가 돌망 사이에 매달린 채 움직이지 못한다.\n\n"다친 사람 있어요?"\n\n아래에서 여자가 고개를 들었다. "발목 하나요. 그런데 이 비탈, 아까부터 계속 내려앉아요."\n\n차를 산 쪽 바위에 바짝 붙였다. 달구지의 무게를 닻으로 쓸 수는 있다. 문제는 비탈이 얼마나 더 버티느냐다.\n\n총을 꺼낼 상대는 없다. 대신 비탈이 조금씩 우리 시간을 가져가고 있다.',
  choices:[
-  {label:'달구지를 바위 뒤에 걸고 견인줄을 내린다',tactic:'고정',terrainFit:2,out:[{p:1,text:'차를 바위 안쪽에 비스듬히 세우고 바퀴마다 돌을 괴었다. 견인줄을 당기자 차체가 한 번 울었지만 버텼다.\n\n"한 번에 한 사람. 줄 놓치면 안 돼."\n\n아이부터 줄에 매달렸다.',fx:{time:15,combatStart:{id:'ridge_rescue',kind:'구조',threat:'비탈에 걸린 우편 수레',terrain:'젖은 절개지와 무너진 돌망',objective:'네 사람을 도로로 올린다',stakes:'비탈이 다시 움직이기 전에 끝내야 한다',pressure:1},combatEdge:2,chain:'route_ridge_anchor'},sfx:'metal'}]},
-  {label:'도로 위 사람들과 먼저 역할을 나눈다',tactic:'지휘',terrainFit:1,out:[{p:1,text:'삽을 들 사람, 줄을 잡을 사람, 올라온 사람을 받을 자리를 빠르게 정했다.\n\n"아이부터. 다친 분은 마지막 말고 세 번째. 수레는 사람 뒤."\n\n서로 이름도 모르지만, 적어도 누가 무엇을 하는지는 알게 됐다.',fx:{time:10,combatStart:{id:'ridge_rescue',kind:'구조',threat:'비탈에 걸린 우편 수레',terrain:'젖은 절개지와 무너진 돌망',objective:'네 사람을 도로로 올린다',stakes:'비탈이 다시 움직이기 전에 끝내야 한다',pressure:1},combatEdge:1,combatPressure:-1,chain:'route_ridge_anchor'},sfx:'cover'}]}
+  {label:'달구지를 바위 뒤에 걸고 견인줄을 내린다',tactic:'고정',prep:1,terrainFit:2,out:[{p:1,text:'차를 바위 안쪽에 비스듬히 세우고 바퀴마다 돌을 괴었다. 견인줄을 당기자 차체가 한 번 울었지만 버텼다.\n\n"한 번에 한 사람. 줄 놓치면 안 돼."\n\n아이부터 줄에 매달렸다.',fx:{time:15,combatStart:{id:'ridge_rescue',kind:'구조',threat:'비탈에 걸린 우편 수레',terrain:'젖은 절개지와 무너진 돌망',objective:'네 사람을 도로로 올린다',stakes:'비탈이 다시 움직이기 전에 끝내야 한다',pressure:1},combatEdge:2,chain:'route_ridge_anchor'},sfx:'metal'}]},
+  {label:'도로 위 사람들과 먼저 역할을 나눈다',tactic:'지휘',prep:1,terrainFit:1,out:[{p:1,text:'삽을 들 사람, 줄을 잡을 사람, 올라온 사람을 받을 자리를 빠르게 정했다.\n\n"아이부터. 다친 분은 마지막 말고 세 번째. 수레는 사람 뒤."\n\n서로 이름도 모르지만, 적어도 누가 무엇을 하는지는 알게 됐다.',fx:{time:10,combatStart:{id:'ridge_rescue',kind:'구조',threat:'비탈에 걸린 우편 수레',terrain:'젖은 절개지와 무너진 돌망',objective:'네 사람을 도로로 올린다',stakes:'비탈이 다시 움직이기 전에 끝내야 한다',pressure:1},combatEdge:1,combatPressure:-1,chain:'route_ridge_anchor'},sfx:'cover'}]}
  ]},
 {id:'route_ridge_anchor',type:'구조',w:0,fixed:true,once:true,scene:'route-ridge-rescue',
  title:'줄 하나에 걸린 무게',
@@ -4287,9 +4287,15 @@ D.events = [
    threat:'비탈에 걸린 우편 수레',objective:'사람이 오를 발판을 만들고 줄의 하중을 나눈다',terrain:'젖은 절개지와 무너진 돌망',stakes:'한 곳에 무게가 몰리면 흙이 다시 무너진다',intent:'당기는 힘이 한곳에 몰리면 발판부터 무너진다',counters:{'토공':'디딜 곳을 늘린다','장비':'하중을 두 줄로 나눈다'}},
  text:'아이와 첫 번째 어른이 도로로 올라왔다. 세 번째 사람을 당기려는 순간, 발밑 돌망이 손바닥만큼 내려앉았다.\n\n아래의 남자가 소리쳤다. "잠깐! 지금 당기면 여기 다 같이 내려가요."\n\n줄을 조금 풀어 하중을 뺐다. 차는 버티는데 땅이 못 버틴다. 힘보다 사람이 디딜 길부터 만들어야 한다.\n\n수레 안에는 문경으로 가는 편지와 해열제가 섞여 있다. 하지만 먼저 올라와야 할 것은 사람이다.',
  choices:[
-  {label:'삽으로 하중을 나눌 계단을 판다',tactic:'토공',terrainFit:2,out:[{p:1,text:'한 사람이 설 너비만큼 흙을 걷고 돌을 눌러 박았다. 빠른 길은 아니지만, 발을 옮길 때마다 다음 사람이 설 곳이 생겼다.',fx:{time:25,fatigue:3,combatEdge:1,combatPressure:-1,combatRead:{label:'사람 줄과 짐 줄을 나눌 발판',tactics:['분리 인양','릴레이']},chain:'route_ridge_extract'},sfx:'cover'}]},
-  {label:'견인줄을 두 갈래로 묶어 흔들림을 잡는다',tactic:'장비',terrainFit:2,out:[{p:1,text:'주줄은 달구지에, 보조줄은 가드레일 기둥에 걸었다. 한 줄이 흔들릴 때 다른 줄이 몸을 잡았다.\n\n"이제 한 발씩. 뛰지 말고."',fx:{time:15,scrap:-1,combatEdge:1,combatRead:{label:'한 줄이 흔들릴 때 받쳐 줄 보조 하중',tactics:['분리 인양','릴레이']},chain:'route_ridge_extract'},sfx:'metal'}]},
-  {label:'다친 사람을 업고 짧게 치고 오른다',tactic:'완력',risk:'비탈 압박 상승',out:[{p:1,text:'다친 사람을 등에 묶고 가장 짧은 선을 골랐다. 절반은 힘으로, 나머지는 위에서 당기는 줄로 올렸다. 빠르지만 땅이 한 번 더 울었다.',fx:{time:10,fatigue:6,combatPressure:1,chain:'route_ridge_extract'},sfx:'engine'}]}
+  {label:'삽으로 하중을 나눌 계단을 판다',tactic:'토공',terrainFit:2,combatRoll:.62,out:[
+    {p:1,text:'한 사람이 설 너비만큼 흙을 걷고 돌을 눌러 박았다. 빠른 길은 아니지만, 발을 옮길 때마다 다음 사람이 설 곳이 생겼다.',fx:{time:25,fatigue:3,combatEdge:1,combatPressure:-1,combatRead:{label:'사람 줄과 짐 줄을 나눌 발판',tactics:['분리 인양','릴레이']},chain:'route_ridge_extract'},sfx:'cover'},
+    {p:1,text:'세 번째 계단을 파는 순간 흙이 통째로 밀려 내려갔다. 방금 만든 발판이 아래 사람 어깨 위로 쏟아졌다.\n\n아래에서 괜찮다는 소리가 올라왔지만 괜찮은 목소리가 아니었다.\n\n다시 팠다. 이번엔 더 얕게, 더 느리게.',fx:{time:45,fatigue:8,combatPressure:2,combatRead:{label:'무너진 자리라 발 디딜 곳을 못 믿는다',tactics:['토공']},chain:'route_ridge_extract'},sfx:'impact'}]},
+  {label:'견인줄을 두 갈래로 묶어 흔들림을 잡는다',tactic:'장비',terrainFit:2,combatRoll:.6,out:[
+    {p:1,text:'주줄은 달구지에, 보조줄은 가드레일 기둥에 걸었다. 한 줄이 흔들릴 때 다른 줄이 몸을 잡았다.\n\n"이제 한 발씩. 뛰지 말고."',fx:{time:15,scrap:-1,combatEdge:1,combatRead:{label:'한 줄이 흔들릴 때 받쳐 줄 보조 하중',tactics:['분리 인양','릴레이']},chain:'route_ridge_extract'},sfx:'metal'},
+    {p:1,text:'가드레일 기둥이 생각보다 삭아 있었다. 보조줄을 당기자 기둥이 뿌리째 기울었다.\n\n급히 주줄 하나로 되돌렸다. 하중이 한 곳에 몰린 채로 가야 한다는 뜻이다.\n\n"한 명씩. 절대 두 명 같이 오르지 마세요."',fx:{time:30,scrap:-2,combatPressure:2,combatRead:{label:'줄이 하나뿐이라 한 번에 한 사람',tactics:['릴레이']},chain:'route_ridge_extract'},sfx:'metal'}]},
+  {label:'다친 사람을 업고 짧게 치고 오른다',tactic:'완력',risk:'비탈 압박 상승',combatRoll:.5,out:[
+    {p:1,text:'다친 사람을 등에 묶고 가장 짧은 선을 골랐다. 절반은 힘으로, 나머지는 위에서 당기는 줄로 올렸다. 빠르지만 땅이 한 번 더 울었다.',fx:{time:10,fatigue:6,combatPressure:1,chain:'route_ridge_extract'},sfx:'engine'},
+    {p:1,text:'절반쯤 올라갔을 때 발밑이 꺼졌다. 업힌 사람과 함께 미끄러져 원래 자리보다 아래로 떨어졌다.\n\n다친 발목이 한 번 더 접혔다. 비명은 짧았고, 그래서 더 아파 보였다.\n\n미안하다는 말과 다시 하자는 말이 거의 동시에 나왔다. 둘 다 숨이 찼다.',fx:{time:35,fatigue:12,combatPressure:2,combatEdge:-1,injury:{who:'driver',label:'허리 삠',days:2},chain:'route_ridge_extract'},sfx:'impact'}]}
  ]},
 {id:'route_ridge_extract',type:'구조',w:0,fixed:true,once:true,scene:'route-ridge-rescue',
  title:'마지막 한 번',
@@ -4313,8 +4319,8 @@ D.events = [
    threat:'잠든 자동 검문소',objective:'씨앗과 약을 실은 다섯 수레를 기록 없이 통과시킨다',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',stakes:'센서가 행렬을 깨우면 장터 사람들의 이동 기록이 중앙망에 남는다',intent:'센서는 따로 움직이는 사람 수를 세어 재검사를 깨운다',counters:{'편성':'다섯 수레를 한 차량으로 묶는다','정찰':'센서가 외면하는 박자를 찾는다'}},
  text:'무주 장터를 지나려는데 손수레 다섯 대가 같은 자리에 묶여 있었다. 씨앗, 소금, 붕대, 편지. 북쪽 마을 셋이 함께 보낸 짐이다.\n\n앞사람이 꺼진 검문소를 가리켰다. "차 한 대는 지나가요. 사람이 줄지어 가면 센서가 켜져요."\n\n차단봉 아래 작은 불 하나가 일정하게 깜빡인다. 전광판은 죽었어도 사람을 세는 장치는 아직 살아 있다.\n\n"달구지 한 대처럼 보이게 만들면 돼요." 내가 수레 사이를 재며 말했다. "사람을 숨기는 게 아니라, 한 행렬로 묶는 거죠."',
  choices:[
-  {label:'수레를 달구지 뒤에 한 줄로 묶는다',tactic:'편성',terrainFit:2,out:[{p:1,text:'긴 밧줄 하나에 수레 다섯 대를 간격 맞춰 묶었다. 각 수레에는 브레이크를 잡을 사람이 한 명씩 붙었다.\n\n"우리가 멈추면 다 멈추고, 우리가 가면 한 박자 뒤에 갑니다."\n\n제각각이던 짐이 하나의 긴 차량처럼 보이기 시작했다.',fx:{time:20,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatEdge:1,chain:'route_market_mask'},sfx:'metal'}]},
-  {label:'폐차 차양 아래에서 통과 순서를 맞춘다',tactic:'정찰',terrainFit:2,out:[{p:1,text:'센서가 꺼지는 간격을 세 번 재었다. 열두 초마다 렌즈가 반대 차선을 본다.\n\n"첫 수레가 저 금을 넘을 때 마지막 수레가 출발하면 돼요."\n\n사람들이 자기 차례를 입으로 되뇌었다.',fx:{time:15,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatPressure:-1,chain:'route_market_mask'},sfx:'cover'}]}
+  {label:'수레를 달구지 뒤에 한 줄로 묶는다',tactic:'편성',prep:1,terrainFit:2,out:[{p:1,text:'긴 밧줄 하나에 수레 다섯 대를 간격 맞춰 묶었다. 각 수레에는 브레이크를 잡을 사람이 한 명씩 붙었다.\n\n"우리가 멈추면 다 멈추고, 우리가 가면 한 박자 뒤에 갑니다."\n\n제각각이던 짐이 하나의 긴 차량처럼 보이기 시작했다.',fx:{time:20,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatEdge:1,chain:'route_market_mask'},sfx:'metal'}]},
+  {label:'폐차 차양 아래에서 통과 순서를 맞춘다',tactic:'정찰',prep:1,terrainFit:2,out:[{p:1,text:'센서가 꺼지는 간격을 세 번 재었다. 열두 초마다 렌즈가 반대 차선을 본다.\n\n"첫 수레가 저 금을 넘을 때 마지막 수레가 출발하면 돼요."\n\n사람들이 자기 차례를 입으로 되뇌었다.',fx:{time:15,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatPressure:-1,chain:'route_market_mask'},sfx:'cover'}]}
  ]},
 {id:'route_market_mask',type:'호송',w:0,fixed:true,once:true,scene:'route-market-convoy',
  title:'한 대처럼 보이기',
@@ -4322,9 +4328,15 @@ D.events = [
    threat:'잠든 자동 검문소',objective:'행렬 전체를 달구지의 적재물로 인식시킨다',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',stakes:'사람 한 명이라도 따로 잡히면 전원 재검사가 시작된다',intent:'센서가 바퀴와 사람 윤곽을 따로 세기 시작한다',counters:{'위장':'긴 차량 윤곽을 만든다','지휘':'모두 같은 박자로 움직인다'}},
  text:'행렬이 검문선 앞에 섰다. 전광판은 죽어 있는데, 센서만 천천히 좌우로 움직였다.\n\n세 번째 수레의 아이가 물었다. "뛰면 더 빨리 지나갈 수 있죠?"\n\n"아니. 오늘은 안 뛰는 게 제일 빨라."\n\n달구지 천막을 길게 풀어 뒤 수레까지 덮자, 서로 다른 다섯 짐이 한 몸처럼 이어졌다.',
  choices:[
-  {label:'천막과 반사판으로 차량 윤곽을 잇는다',tactic:'위장',terrainFit:2,out:[{p:1,text:'천막 끝에 낡은 반사판을 달았다. 센서가 훑을 때마다 빛은 달구지 뒤쪽까지 한 줄로 이어졌다. 화면에 「장축 화물차」라는 오래된 분류가 잠깐 떴다.',fx:{time:20,scrap:-1,combatEdge:1,combatRead:{label:'센서가 한 차량으로 보는 긴 윤곽',tactics:['차체 지지','인력 릴레이']},chain:'route_market_pass'},sfx:'cover'}]},
-  {label:'각 수레의 움직임을 손신호로 맞춘다',tactic:'지휘',terrainFit:1,out:[{p:1,text:'운전석 거울로 뒤를 보며 손을 들었다 내렸다. 다섯 명이 같은 순간에 밀고, 같은 순간에 멈췄다. 센서가 사람을 세지 못하고 바퀴만 셌다.',fx:{time:15,combatEdge:1,combatRead:{label:'센서가 놓치는 한 박자의 정지',tactics:['차체 지지','인력 릴레이']},chain:'route_market_pass'},sfx:'silence'}]},
-  {label:'달구지 발전기로 센서 주기를 흐트러뜨린다',tactic:'교란',noise:1,risk:'관측 신호가 남을 수 있다',out:[{p:1,text:'발전기 회전을 올렸다 내리자 센서 화면에 가는 줄이 번졌다. 완전히 꺼지지는 않았지만, 사람 윤곽이 겹쳐 보였다.',fx:{fuel:-1,combatPressure:1,chain:'route_market_pass'},sfx:'engine'}]}
+  {label:'천막과 반사판으로 차량 윤곽을 잇는다',tactic:'위장',terrainFit:2,combatRoll:.6,out:[
+    {p:1,text:'천막 끝에 낡은 반사판을 달았다. 센서가 훑을 때마다 빛은 달구지 뒤쪽까지 한 줄로 이어졌다. 화면에 「장축 화물차」라는 오래된 분류가 잠깐 떴다.',fx:{time:20,scrap:-1,combatEdge:1,combatRead:{label:'센서가 한 차량으로 보는 긴 윤곽',tactics:['차체 지지','인력 릴레이']},chain:'route_market_pass'},sfx:'cover'},
+    {p:1,text:'바람이 천막을 들췄다. 이어 놓은 윤곽이 가운데서 끊겼다.\n\n화면 분류가 「장축 화물차」에서 「다중 개체」로 바뀌었다가, 돌아왔다가, 또 바뀌었다.\n\n"저거 계속 헷갈리는 중이에요." 아이가 속삭였다. 헷갈리는 기계는 대개 사람을 부른다.',fx:{time:35,scrap:-2,combatPressure:2,combatRead:{label:'윤곽이 끊겨 센서가 개체 수를 다시 센다',tactics:['위장']},chain:'route_market_pass'},sfx:'warning'}]},
+  {label:'각 수레의 움직임을 손신호로 맞춘다',tactic:'지휘',terrainFit:1,combatRoll:.58,out:[
+    {p:1,text:'운전석 거울로 뒤를 보며 손을 들었다 내렸다. 다섯 명이 같은 순간에 밀고, 같은 순간에 멈췄다. 센서가 사람을 세지 못하고 바퀴만 셌다.',fx:{time:15,combatEdge:1,combatRead:{label:'센서가 놓치는 한 박자의 정지',tactics:['차체 지지','인력 릴레이']},chain:'route_market_pass'},sfx:'silence'},
+    {p:1,text:'세 번째 수레가 반 박자 늦었다. 한 명이 늦으면 뒤가 전부 늦는다.\n\n행렬이 아코디언처럼 늘어졌다 줄었다 했다. 센서 불빛이 그 리듬을 따라 좌우로 흔들렸다.\n\n"제가 늦었어요." 늙은 목소리가 작게 말했다. 아무도 대꾸하지 않은 건 탓하지 않으려고였다.',fx:{time:30,combatPressure:2,combatRead:{label:'행렬 간격이 들쭉날쭉해 한 박자를 못 만든다',tactics:['지휘']},chain:'route_market_pass'},sfx:'warning'}]},
+  {label:'달구지 발전기로 센서 주기를 흐트러뜨린다',tactic:'교란',noise:1,risk:'관측 신호가 남을 수 있다',combatRoll:.55,out:[
+    {p:1,text:'발전기 회전을 올렸다 내리자 센서 화면에 가는 줄이 번졌다. 완전히 꺼지지는 않았지만, 사람 윤곽이 겹쳐 보였다.',fx:{fuel:-1,combatPressure:1,chain:'route_market_pass'},sfx:'engine'},
+    {p:1,text:'회전을 너무 올렸다. 발전기 소리가 국도 전체에 퍼졌고, 센서는 오히려 또렷해졌다.\n\n화면 구석에 작은 글자가 떴다. 「전자 간섭 감지 · 기록」\n\n장터 대표가 조용히 말했다. "저건 지워지는 기록이 아니오."',fx:{fuel:-2,combatPressure:2,pursuit:1,chain:'route_market_pass'},sfx:'warning'}]}
  ]},
 {id:'route_market_pass',type:'호송',w:0,fixed:true,once:true,scene:'route-market-convoy',
  title:'차단봉 아래를 지나는 법',
@@ -4368,9 +4380,9 @@ D.events = [
    objective:'렌즈가 돌아오기 전에 자리를 잡는다',stakes:'경보가 북쪽 검문망으로 넘어간다',intent:'몸통 렌즈가 정면 차선을 훑은 뒤 왼쪽 폐차 행렬로 돌아온다',counters:{'엄폐':'폐차로 시야를 끊는다','유인':'스캔 방향을 옆 차선에 묶는다'}}, sfx:'scan',
  text:'언덕 너머에서 회색 몸통이 먼저 보였다. 네 다리는 아직 경사 아래에 있다.\n\n강우가 없어도 이제 저 발소리는 안다. 한 걸음, 멈춤, 좌우 스캔. 다시 한 걸음.\n\n렌즈가 이쪽으로 돌아오기까지 서른 초쯤.',
  choices:[
-  {label:'폐차 행렬 뒤로 달구지를 붙인다', tactic:'엄폐', out:[{p:1, text:'시동을 죽이고 녹슨 화물차 그림자에 바짝 붙였다.\n\n보행기의 렌즈가 도로를 훑었다. 아직은 우리 앞쪽만 본다. 먼저 볼 수 있는 쪽이 조금 유리하다.', fx:{time:5,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_walker_read'}, sfx:'cover'}]},
-  {label:'달구지로 시선을 끌고 옆 차선에 세운다', tactic:'유인', risk:'차체가 노출된다', out:[{p:1, text:'헤드라이트를 한 번 켰다 껐다. 렌즈가 즉시 달구지를 물었다.\n\n차를 콘크리트 분리대 옆으로 밀어 세웠다. 숨을 곳은 줄었지만, 놈이 어디를 보는지는 이제 완전히 분명해졌다.', fx:{van:-2,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatEdge:2,combatPressure:1,chain:'combat_walker_read'}, sfx:'engine'}]},
-  {label:'농로로 빠져 교전을 버린다', tactic:'이탈', out:[{p:1, text:'후진으로 갈림길까지 빠져나온 뒤 농로로 차를 꺾었다.\n\n멀리 돌아가면 된다. 싸우지 않은 건 진 것도, 이긴 것도 아니었다.', fx:{time:35,fuel:-3,moodAll:-1,combatEnd:1}, sfx:'escape'}]},
+  {label:'폐차 행렬 뒤로 달구지를 붙인다', tactic:'엄폐', prep:1, out:[{p:1, text:'시동을 죽이고 녹슨 화물차 그림자에 바짝 붙였다.\n\n보행기의 렌즈가 도로를 훑었다. 아직은 우리 앞쪽만 본다. 먼저 볼 수 있는 쪽이 조금 유리하다.', fx:{time:5,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_walker_read'}, sfx:'cover'}]},
+  {label:'달구지로 시선을 끌고 옆 차선에 세운다', tactic:'유인', prep:1, risk:'차체가 노출된다', out:[{p:1, text:'헤드라이트를 한 번 켰다 껐다. 렌즈가 즉시 달구지를 물었다.\n\n차를 콘크리트 분리대 옆으로 밀어 세웠다. 숨을 곳은 줄었지만, 놈이 어디를 보는지는 이제 완전히 분명해졌다.', fx:{van:-2,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatEdge:2,combatPressure:1,chain:'combat_walker_read'}, sfx:'engine'}]},
+  {label:'농로로 빠져 교전을 버린다', tactic:'이탈', prep:1, out:[{p:1, text:'후진으로 갈림길까지 빠져나온 뒤 농로로 차를 꺾었다.\n\n백미러 속에서 보행기가 몸통을 돌렸다. 도망치는 것은 서 있는 것보다 잘 보인다. 렌즈가 우리 뒤꽁무니를 오래 따라왔다.\n\n멀리 돌아가면 된다. 다만 이 길에 우리가 있었다는 건 어딘가에 적혔다.', fx:{time:35,fuel:-3,moodAll:-3,pursuit:1,combatEnd:1,note:{type:'사건',title:'등을 보인 자리',body:'보행기를 피해 농로로 빠졌다. 후퇴하는 차는 서 있는 차보다 잘 읽힌다.',links:['천리안']}}, sfx:'escape'}]},
  ]},
 
 {id:'combat_walker_read', type:'추적', w:0, fixed:true, ai:1,
@@ -4412,7 +4424,7 @@ D.events = [
   {label:'강우가 앞다리 관절에 한 발 쓴다', tactic:'사격', terrainFit:2, noise:1, req:{healthyComp:'kangwoo',item:'탄약'}, combatRoll:.62, out:[
     {p:1, text:'"오른발 들면 간다."\n\n쿵. 오른발이 들렸다. 탕.\n\n관절핀 하나가 정확히 빠져나왔다. 보행기가 옆으로 무너지자 강우는 탄피보다 먼저 우리 얼굴부터 확인했다. "다 있지?" 그제야 소총을 내렸다.', fx:{item:{'탄약':-1,'부품':1},scrap:5,mood:{kangwoo:5},combatEnd:1,note:{type:'사건',title:'한 발 뒤의 확인',body:'강우는 보행기를 쓰러뜨린 뒤 탄피보다 먼저 사람 수를 셌다.',links:['강우']}}, sfx:'rifle'},
     {p:1, text:'방아쇠를 당기는 순간 보행기가 몸을 틀었다. 탄은 관절 옆을 긁었다.\n\n강우가 두 번째 탄 대신 우리를 밀어 엄폐시켰다. 파편이 그의 옆구리를 때렸다. 그는 끝까지 걸어서 차에 탔다.', fx:{item:{'탄약':-1},fuel:-3,pursuit:1,injury:{who:'kangwoo',label:'옆구리 파편상',days:3},combatEnd:1}, sfx:'hit'}]},
-  {label:'제압을 포기하고 달구지로 물러난다', tactic:'이탈', out:[{p:1, text:'누가 먼저랄 것도 없이 하나씩 뒤로 빠졌다. 마지막 사람이 타자마자 기어를 넣었다.\n\n보행기는 따라오지 않았다. 사정거리 밖까지 가서야 서로의 손과 얼굴을 확인했다.', fx:{fuel:-4,van:-3,moodAll:-2,combatEnd:1}, sfx:'escape'}]},
+  {label:'제압을 포기하고 달구지로 물러난다', tactic:'이탈', prep:1, out:[{p:1, text:'누가 먼저랄 것도 없이 하나씩 뒤로 빠졌다. 마지막 사람이 타자마자 기어를 넣었다.\n\n보행기는 따라오지 않았다. 대신 붉은 렌즈가 번호판 높이에서 한 박자 멈췄다. 읽은 것이다.\n\n사정거리 밖까지 가서야 서로의 손과 얼굴을 확인했다. 다 있었다. 그것만으로 오늘은 됐다고 서로 말했다.', fx:{fuel:-4,van:-3,moodAll:-2,pursuit:1,combatEnd:1,note:{type:'사건',title:'읽힌 번호판',body:'보행기 제압을 포기하고 물러났다. 물러나는 동안 렌즈가 번호판 높이에서 멈췄다.',links:['천리안','달구지']}}, sfx:'escape'}]},
  ]},
 
 {id:'patrol_swarm', type:'추적', w:9, region:['north'], needFlag:'armed_age',
@@ -4422,9 +4434,9 @@ D.events = [
    objective:'편대가 닫히기 전에 도주선을 고른다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다',intent:'양옆 기체가 차선을 벌려 달구지를 가운데 지휘기 앞으로 몬다',counters:{'이탈':'좁은 터널로 편대 폭을 줄인다','엄폐':'폐차 사이에서 한 줄로 들어오게 한다'}}, sfx:'drone',
  text:'사이드미러에 점 셋이 생겼다. 새가 아니다. 간격이 너무 일정하다.\n\n앞에는 오래된 터널, 오른쪽에는 고가도로 아래 폐차 지대. 드론들은 아직 확성기만 켰다.\n\n<span class="ai">"차량 정지. 등록을 확인합니다."</span>',
  choices:[
-  {label:'터널을 도주선으로 잡는다', tactic:'이탈', out:[{p:1,text:'기어를 내리고 터널까지 남은 거리를 눈으로 쟀다.\n\n입구는 좁지만 안은 어둡다. 드론이 고도를 낮추면 서로 피할 공간도 없어진다.',fx:{combatStart:{id:'swarm',threat:'초계 쿼드 편대',terrain:'오래된 터널과 고가 아래 폐차 지대',objective:'편대를 갈라 터널의 사각으로 빠진다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_swarm_read'},sfx:'engine'}]},
-  {label:'고가 아래 폐차 지대로 파고든다', tactic:'엄폐', risk:'길이 거칠다', out:[{p:1,text:'핸들을 꺾어 폐차 사이로 들어갔다. 지붕 위 안테나가 철판을 긁었다.\n\n드론 셋이 흩어졌다. 놈들도 이 안에서는 한 줄로 들어와야 한다. 매복하는 쪽이 유리한 지형이다.',fx:{van:-3,combatStart:{id:'swarm',threat:'초계 쿼드 편대',terrain:'오래된 터널과 고가 아래 폐차 지대',objective:'편대를 갈라 터널의 사각으로 빠진다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다',pressure:1},combatEdge:2,chain:'combat_swarm_read'},sfx:'metal'}]},
-  {label:'연료를 써서 편대 밖으로 달아난다', tactic:'이탈', out:[{p:1,text:'액셀을 끝까지 밟고 갈림길 두 개를 연달아 꺾었다.\n\n모터음이 한참 따라왔지만 결국 멀어졌다. 연료계 바늘도 그만큼 내려가 있었다.',fx:{fuel:-7,moodAll:-2,combatEnd:1},sfx:'escape'}]},
+  {label:'터널을 도주선으로 잡는다', tactic:'기동', prep:1, out:[{p:1,text:'기어를 내리고 터널까지 남은 거리를 눈으로 쟀다.\n\n입구는 좁지만 안은 어둡다. 드론이 고도를 낮추면 서로 피할 공간도 없어진다.',fx:{combatStart:{id:'swarm',threat:'초계 쿼드 편대',terrain:'오래된 터널과 고가 아래 폐차 지대',objective:'편대를 갈라 터널의 사각으로 빠진다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_swarm_read'},sfx:'engine'}]},
+  {label:'고가 아래 폐차 지대로 파고든다', tactic:'엄폐', prep:1, risk:'길이 거칠다', out:[{p:1,text:'핸들을 꺾어 폐차 사이로 들어갔다. 지붕 위 안테나가 철판을 긁었다.\n\n드론 셋이 흩어졌다. 놈들도 이 안에서는 한 줄로 들어와야 한다. 매복하는 쪽이 유리한 지형이다.',fx:{van:-3,combatStart:{id:'swarm',threat:'초계 쿼드 편대',terrain:'오래된 터널과 고가 아래 폐차 지대',objective:'편대를 갈라 터널의 사각으로 빠진다',stakes:'세 기체가 사격 각도를 닫으면 차가 포위된다',pressure:1},combatEdge:2,chain:'combat_swarm_read'},sfx:'metal'}]},
+  {label:'연료를 써서 편대 밖으로 달아난다', tactic:'이탈', prep:1, out:[{p:1,text:'액셀을 끝까지 밟고 갈림길 두 개를 연달아 꺾었다.\n\n모터음이 한동안 따라왔지만 결국 멀어졌다. 연료계 바늘도 그만큼 내려가 있었다.\n\n은수가 아니어도 알 수 있었다. 셋이 동시에 같은 방향으로 짧은 신호를 쐈다. 우리가 어디로 갔는지 누군가는 받았다는 뜻이다.',fx:{fuel:-7,moodAll:-2,pursuit:1,combatEnd:1,note:{type:'사건',title:'송신된 도주로',body:'드론 편대를 따돌렸지만 셋이 동시에 신호를 보냈다. 우리 도주 방향은 기록됐다.',links:['천리안']}},sfx:'escape'}]},
  ]},
 
 {id:'combat_swarm_read', type:'추적', w:0, fixed:true, ai:1,
@@ -4476,9 +4488,9 @@ D.events = [
   objective:'센서가 깨기 전에 접근로를 고른다',stakes:'차량 번호가 중앙 검문 기록에 남는다',intent:'열 센서가 갓길 차량부터 훑고 차단봉 앞 번호판으로 이동한다',counters:{'잠입':'배수로 벽으로 열을 가린다','위장':'폐기 차량의 윤곽에 섞인다'}}, sfx:'scan',
  text:'톨게이트처럼 생긴 오래된 검문소가 안개 속에 걸려 있다. 불은 꺼졌는데 차단봉만 새것처럼 반듯하다.\n\n센서 기둥 하나가 천천히 고개를 돌린다. 아직 우리 번호를 읽지는 못했다.',
  choices:[
-  {label:'배수로를 따라 제어함까지 붙는다', tactic:'잠입', out:[{p:1,text:'달구지를 센서 밖에 세우고 배수로로 몸을 낮췄다.\n\n물이 무릎까지 찼지만 콘크리트 벽이 열을 가려줬다. 제어함은 손 닿는 곳까지 왔다.',fx:{fatigue:3,combatStart:{id:'toll',threat:'자동 검문소',terrain:'안개 낀 배수로와 수동 제어함',objective:'송신 전에 차단봉을 열고 기록 없이 통과한다',stakes:'차량 번호가 중앙 검문 기록에 남는다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_toll_read'},sfx:'cover'}]},
-  {label:'달구지를 폐기 차량처럼 갓길에 세운다', tactic:'위장', out:[{p:1,text:'차를 기울어진 표지판 뒤에 세우고 모든 전원을 내렸다.\n\n센서가 두 바퀴를 도는 동안 숨을 죽였다. 빛이 적재함을 훑고, 오래 보지 않고 지나갔다. 낡음이 오늘도 신분증 노릇을 했다. 이제 놈의 순찰 간격까지 알게 됐다.',fx:{time:15,combatStart:{id:'toll',threat:'자동 검문소',terrain:'안개 낀 배수로와 수동 제어함',objective:'송신 전에 차단봉을 열고 기록 없이 통과한다',stakes:'차량 번호가 중앙 검문 기록에 남는다',pressure:1},combatEdge:2,chain:'combat_toll_read'},sfx:'silence'}]},
-  {label:'논길로 멀리 우회한다', tactic:'우회', out:[{p:1,text:'한 시간 가까이 논둑을 타고 돌아갔다.\n\n차 안 살림이 모조리 한쪽으로 쏠렸지만 검문 기록은 남지 않았다. 돌아와 정리할 일이 하나 더 생겼을 뿐이다.',fx:{time:45,fuel:-4,van:-3,combatEnd:1},sfx:'escape'}]},
+  {label:'배수로를 따라 제어함까지 붙는다', tactic:'잠입', prep:1, out:[{p:1,text:'달구지를 센서 밖에 세우고 배수로로 몸을 낮췄다.\n\n물이 무릎까지 찼지만 콘크리트 벽이 열을 가려줬다. 제어함은 손 닿는 곳까지 왔다.',fx:{fatigue:3,combatStart:{id:'toll',threat:'자동 검문소',terrain:'안개 낀 배수로와 수동 제어함',objective:'송신 전에 차단봉을 열고 기록 없이 통과한다',stakes:'차량 번호가 중앙 검문 기록에 남는다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_toll_read'},sfx:'cover'}]},
+  {label:'달구지를 폐기 차량처럼 갓길에 세운다', tactic:'위장', prep:1, out:[{p:1,text:'차를 기울어진 표지판 뒤에 세우고 모든 전원을 내렸다.\n\n센서가 두 바퀴를 도는 동안 숨을 죽였다. 빛이 적재함을 훑고, 오래 보지 않고 지나갔다. 낡음이 오늘도 신분증 노릇을 했다. 이제 놈의 순찰 간격까지 알게 됐다.',fx:{time:15,combatStart:{id:'toll',threat:'자동 검문소',terrain:'안개 낀 배수로와 수동 제어함',objective:'송신 전에 차단봉을 열고 기록 없이 통과한다',stakes:'차량 번호가 중앙 검문 기록에 남는다',pressure:1},combatEdge:2,chain:'combat_toll_read'},sfx:'silence'}]},
+  {label:'논길로 멀리 우회한다', tactic:'우회', prep:1, out:[{p:1,text:'한 시간 가까이 논둑을 타고 돌아갔다.\n\n차 안 살림이 모조리 한쪽으로 쏠렸다. 검문 기록은 남지 않았지만, 제어함도 그대로 남았다. 다음에 이 길을 지나는 누군가는 우리가 열어 두지 않은 문 앞에 설 것이다.\n\n돌아와 정리할 일이 하나, 마음에 걸리는 일이 하나 더 생겼다.',fx:{time:45,fuel:-4,van:-3,moodAll:-3,flag:'toll_left_armed',combatEnd:1,note:{type:'사건',title:'열지 않은 제어함',body:'검문소를 우회했다. 기록은 안 남았지만 검문소는 그대로 켜져 있다.',links:[]}},sfx:'escape'}]},
  ]},
 
 {id:'combat_toll_read', type:'추적', w:0, fixed:true, ai:1,
@@ -4518,7 +4530,7 @@ D.events = [
   {label:'센서 앞에 화염병을 깨고 밀고 나간다', tactic:'교란', terrainFit:1, noise:2, req:{item:'화염병'}, combatRoll:.62, out:[
     {p:1,text:'불은 센서 기둥 바로 앞에서 솟았다. 열상이 화면을 하얗게 태웠다.\n\n차단봉 옆의 좁은 틈으로 달구지를 밀어 넣었다. 거울 하나를 잃었지만 번호는 남기지 않았다.',fx:{item:{'화염병':-1},van:-3,combatEnd:1},sfx:'fire'},
     {p:1,text:'안개가 연기를 눌러 길 쪽으로 밀었다. 센서는 가려졌지만 우리도 앞을 못 봤다.\n\n차단봉을 들이받고서야 빠져나왔다. 뒤쪽 사이렌은 끝내 꺼지지 않았다.',fx:{item:{'화염병':-1},van:-10,pursuit:1,combatEnd:1},sfx:'hit'}]},
-  {label:'작업을 버리고 논길로 물러난다', tactic:'이탈', out:[{p:1,text:'케이블과 공구만 챙겨 배수로로 돌아 나왔다.\n\n붉은 불이 등을 훑었지만 달구지는 이미 갓길을 벗어나고 있었다. 오래 돌아가도, 전원이 차에 타 있는 편이 낫다.',fx:{time:40,fuel:-4,moodAll:-1,combatEnd:1},sfx:'escape'}]},
+  {label:'작업을 버리고 논길로 물러난다', tactic:'이탈', prep:1, out:[{p:1,text:'케이블과 공구만 챙겨 배수로로 돌아 나왔다.\n\n붉은 불이 등을 훑었다. 달구지는 이미 갓길을 벗어나고 있었지만, 훑은 것과 못 훑은 것은 다르다.\n\n오래 돌아가도 전원이 차에 타 있는 편이 낫다. 그건 맞다. 다만 제어함은 손댄 채로 남았고, 손댄 흔적은 열린 것보다 오래 남는다.',fx:{time:40,fuel:-4,moodAll:-3,pursuit:1,flag:'toll_left_armed',combatEnd:1,note:{type:'사건',title:'손댄 채로 둔 제어함',body:'검문소 작업을 중단하고 물러났다. 붉은 불이 등을 훑었고 시도는 기록으로 남았다.',links:['천리안']}},sfx:'escape'}]},
  ]},
 /* ═══════════ v1.3 시나리오 체인 ═══════════ */
 

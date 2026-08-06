@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T09:54:39.987471+00:00",
+  "generatedAt": "2026-08-06T10:23:44.269715+00:00",
   "source": "real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가",
   "metric": "daysToSeoulNode",
   "runs": 60,
@@ -9,19 +9,19 @@
   "summary": {
     "direct": {
       "runs": 20,
-      "reachedPct": 80.0,
-      "deadPct": 5.0,
+      "reachedPct": 75.0,
+      "deadPct": 10.0,
       "medianDay": 5,
       "endedBuckets": {
-        "dead": 1,
-        "reached": 16,
+        "dead": 2,
+        "reached": 15,
         "timeout": 3
       },
       "meanParty": 0.0,
-      "meanDeeds": 0.05,
+      "meanDeeds": 0.0,
       "deedsNeed": 13,
-      "meanDay": 12.45,
-      "meanRescues": 3.35,
+      "meanDay": 14.75,
+      "meanRescues": 2.95,
       "lateTransferPct": 0.0,
       "lateBase": "arrived",
       "meanEvents": 29.2,
@@ -29,27 +29,9 @@
     },
     "explorer": {
       "runs": 20,
-      "reachedPct": 100.0,
-      "deadPct": 0.0,
-      "medianDay": 9,
-      "endedBuckets": {
-        "reached": 20
-      },
-      "meanParty": 0.0,
-      "meanDeeds": 0.0,
-      "deedsNeed": 13,
-      "meanDay": 10.4,
-      "meanRescues": 3.9,
-      "lateTransferPct": 5.0,
-      "lateBase": "arrived",
-      "meanEvents": 62.6,
-      "deadlineSeenPct": 100.0
-    },
-    "prepared": {
-      "runs": 20,
       "reachedPct": 95.0,
       "deadPct": 0.0,
-      "medianDay": 7,
+      "medianDay": 9,
       "endedBuckets": {
         "reached": 19,
         "timeout": 1
@@ -57,19 +39,58 @@
       "meanParty": 0.0,
       "meanDeeds": 0.0,
       "deedsNeed": 13,
-      "meanDay": 9.0,
-      "meanRescues": 3.55,
-      "lateTransferPct": 0.0,
+      "meanDay": 11.85,
+      "meanRescues": 3.5,
+      "lateTransferPct": 10.5,
       "lateBase": "arrived",
-      "meanEvents": 43.5,
+      "meanEvents": 67.2,
+      "deadlineSeenPct": 100.0
+    },
+    "prepared": {
+      "runs": 20,
+      "reachedPct": 90.0,
+      "deadPct": 0.0,
+      "medianDay": 7,
+      "endedBuckets": {
+        "reached": 18,
+        "timeout": 2
+      },
+      "meanParty": 0.0,
+      "meanDeeds": 0.05,
+      "deedsNeed": 13,
+      "meanDay": 15.9,
+      "meanRescues": 3.55,
+      "lateTransferPct": 22.2,
+      "lateBase": "arrived",
+      "meanEvents": 49.6,
       "deadlineSeenPct": 100.0
     },
     "_spread": {
       "medianDaySpread": 4
     },
     "_beats": {
+      "story_generation_form": {
+        "label": "본편 · 세대의 서식",
+        "pct": 100.0
+      },
+      "story_family_principle": {
+        "label": "본편 · 가족의 원칙",
+        "pct": 96.7
+      },
+      "story_generation_speech": {
+        "label": "본편 · 세대의 말",
+        "pct": 88.3
+      },
       "_malice": {
         "label": "악의 계열 조우",
+        "per": {
+          "levy_office": 100.0,
+          "salvage_claim": 100.0,
+          "water_toll": 0.0,
+          "cleaners_recall": 51.7,
+          "signal_bait": 0.0
+        },
+        "delivered": 3,
         "pct": 100.0
       }
     }
