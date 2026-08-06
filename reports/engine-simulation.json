@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T09:21:52.185298+00:00",
+  "generatedAt": "2026-08-06T09:49:46.100688+00:00",
   "source": "real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가",
   "metric": "daysToSeoulNode",
   "runs": 60,
@@ -9,22 +9,22 @@
   "summary": {
     "direct": {
       "runs": 20,
-      "reachedPct": 75.0,
+      "reachedPct": 80.0,
       "deadPct": 5.0,
       "medianDay": 5,
       "endedBuckets": {
         "dead": 1,
-        "reached": 15,
-        "timeout": 4
+        "reached": 16,
+        "timeout": 3
       },
       "meanParty": 0.0,
       "meanDeeds": 0.05,
       "deedsNeed": 13,
-      "meanDay": 14.55,
-      "meanRescues": 3.25,
+      "meanDay": 12.45,
+      "meanRescues": 3.35,
       "lateTransferPct": 0.0,
       "lateBase": "arrived",
-      "meanEvents": 22.9,
+      "meanEvents": 29.2,
       "deadlineSeenPct": 100.0
     },
     "explorer": {
@@ -38,34 +38,40 @@
       "meanParty": 0.0,
       "meanDeeds": 0.0,
       "deedsNeed": 13,
-      "meanDay": 8.8,
-      "meanRescues": 3.75,
-      "lateTransferPct": 0.0,
+      "meanDay": 10.4,
+      "meanRescues": 3.9,
+      "lateTransferPct": 5.0,
       "lateBase": "arrived",
-      "meanEvents": 52.9,
+      "meanEvents": 62.6,
       "deadlineSeenPct": 100.0
     },
     "prepared": {
       "runs": 20,
-      "reachedPct": 85.0,
+      "reachedPct": 95.0,
       "deadPct": 0.0,
-      "medianDay": 6,
+      "medianDay": 7,
       "endedBuckets": {
-        "reached": 17,
-        "timeout": 3
+        "reached": 19,
+        "timeout": 1
       },
       "meanParty": 0.0,
       "meanDeeds": 0.0,
       "deedsNeed": 13,
-      "meanDay": 12.8,
-      "meanRescues": 3.6,
+      "meanDay": 9.0,
+      "meanRescues": 3.55,
       "lateTransferPct": 0.0,
       "lateBase": "arrived",
-      "meanEvents": 39.1,
+      "meanEvents": 43.5,
       "deadlineSeenPct": 100.0
     },
     "_spread": {
       "medianDaySpread": 4
+    },
+    "_beats": {
+      "_malice": {
+        "label": "악의 계열 조우",
+        "pct": 100.0
+      }
     }
   }
 }

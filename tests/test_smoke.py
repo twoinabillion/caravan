@@ -614,7 +614,9 @@ with sync_playwright() as p:
       S.relations=narrative0.relations; S.party=narrative0.party; S.comps=narrative0.comps; S.driving=narrative0.driving;
       S.stats.events=narrative0.events; S.stats.km=narrative0.km;
       out.traceDefs = (D.eraTraces||[]).length;
-      out.journeyBeats = (D.journeyBeats||[]).length;
+      // 본편 장면과 세계 질감 조우는 같은 레일을 쓰되 종류로 구분한다
+      out.journeyBeats = (D.journeyBeats||[]).filter(b=>b.kind!=='world').length;
+      out.worldBeats = (D.journeyBeats||[]).filter(b=>b.kind==='world').length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
       out.introBook = D.intro.length === 17 && D.intro.every(p =>
@@ -1097,7 +1099,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('플레이 이벤트 894종', r4['eventCount'] == 894, str(r4['eventCount']))
+    check('플레이 이벤트 897종', r4['eventCount'] == 897, str(r4['eventCount']))
     check('사건 감독: 최근 반복·종류 연속 차단', r4['directorCooldown'] and
           r4['directorVariety'], str(r4))
     check('사건 감독: 무거운 장면 뒤 숨 고르기·맥락 우선', r4['directorBreather'] and
@@ -1109,6 +1111,7 @@ with sync_playwright() as p:
     check('동료 능동 사건 6종·낮은 사기에서 맡김 거절',
           r4['initiatives'] == 6 and r4['companionRefusal'], str(r4))
     check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
+    check('세계 질감 조우도 같은 레일로 보장된다', r4['worldBeats'] >= 5, str(r4['worldBeats']))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',
           r4['vanStagesReady'] and r4['vanSizes'] == [[62,25,0],[69,27,40],[78,32,110],[85,37,145],[92,39,185]],
@@ -1355,7 +1358,7 @@ with sync_playwright() as p:
           ('RIVERS', 'SECONDARY_ROUTES', 'REGION_LABELS', "nm:'한강'", "nm:'낙동강'")))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('894개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('897개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
@@ -1461,12 +1464,20 @@ with sync_playwright() as p:
       const traceText = core.choices.find(c => c.req && c.req.traces === 5).out[0].text(S);
       out.traceNarrative = D.eraTraces.slice(0,5).every(t => traceText.includes(t.name)) &&
         !traceText.includes(D.eraTraces[5].name);
+      /* 본편 장면은 거리 순서를 지켜야 한다. 같은 레일에 세계 질감 조우가 함께
+         실리므로, 본편만 골라 순서를 본다(대기열에는 둘 다 들어간다). */
       S.used = []; S._storyQueue = []; S.stats.km = 150;
-      out.beat1 = G.scheduleJourneyBeat();
+      const storyOnly = () => {
+        G.scheduleJourneyBeat();
+        const q = S._storyQueue.filter(id =>
+          (D.journeyBeats||[]).some(b => b.id === id && b.kind !== 'world'));
+        return q[0] || null;
+      };
+      out.beat1 = storyOnly();
       S.used.push('story_generation_form'); S._storyQueue = [];
-      out.beat2 = G.scheduleJourneyBeat();
+      out.beat2 = storyOnly();
       S.used.push('story_family_principle'); S._storyQueue = [];
-      out.beat3 = G.scheduleJourneyBeat();
+      out.beat3 = storyOnly();
       return out;
     }''')
     # 저항 연대망

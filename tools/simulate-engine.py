@@ -40,7 +40,8 @@ SIM_JS = r"""
 
   // 이벤트는 열리는 즉시 정책에 따라 선택 하나를 고르고 닫는다
   let pendingEvent = null;
-  UI.showEvent = (evd) => { pendingEvent = evd; };
+  const seenEvents = [];
+  UI.showEvent = (evd) => { pendingEvent = evd; if (evd && evd.id) seenEvents.push(evd.id); };
 
   const choiceUsable = (choice) => {
     if (!choice || !choice.req) return true;
@@ -85,6 +86,7 @@ SIM_JS = r"""
     G.newGame('onroad', '시뮬', 'full');
     G.seedOverride = undefined;
     let ended = '', guard = 0, lastMiss = null;
+    seenEvents.length = 0;
 
     // 정책별 성향 — 실제 플레이어가 시간을 쓰는 방식의 근사
     const cfg = {
@@ -183,12 +185,24 @@ SIM_JS = r"""
       }
       if (S.ended) { ended = 'dead'; break; }
       resolveEvent(policy);
+      /* 도착 처리의 지연 예약을 재현한다. 실엔진은 위치 이벤트·위기·예약 스토리를
+         setTimeout으로 여는데(04-engine.js G.arrive), 동기 루프에서는 타이머가
+         돌지 않아 그 층이 통째로 측정에서 빠진다 — 여정 비트 등장률이 0%로
+         나오던 원인이 이것이었다. */
+      const locEv = D.events.find(e => e.locEvent === S.at && !S.used.includes(e.id)
+        && (!e.needsComp || G.hasComp(e.needsComp)) && (!e.needFlag || S.flags[e.needFlag]));
+      if (locEv) { G.openEvent(locEv); resolveEvent(policy); }
+      else if (!G.maybeCrisis()) {
+        const queued = G.popStory();
+        if (queued) { G.openEventById(queued); resolveEvent(policy); }
+      } else { resolveEvent(policy); }
       if (S.fatigue >= cfg.campAt || G.isNight()) { G.camp(); resolveEvent(policy); }
       if (S.ended) { ended = 'dead'; break; }
     }
     if (!ended) ended = S.ended ? 'dead' : 'timeout';
     results.push({
       policy, ended,
+      seen: [...new Set(seenEvents)],
       missing: lastMiss ? `${lastMiss.pillar} ${lastMiss.have}/${lastMiss.need}` : '',
       ready: !!(typeof G.seoulReady === 'function' && G.seoulReady()),
       deeds: (typeof G.deedsDone === 'function' ? G.deedsDone().length : 0),
@@ -207,6 +221,26 @@ SIM_JS = r"""
   return results;
 }
 """
+
+
+# 이 비트들은 "썼으니 있다"가 아니라 "플레이어가 실제로 본다"를 보장해야 하는 것들.
+# 2026-08-06 측정에서 런당 등장률이 3% 안팎이었다 — 사실상 아무도 못 보는 상태.
+# 동료 조건이 붙은 비트(갈등 아크 등)는 자동 플레이어가 동료를 얻지 못해
+# 구조적으로 0%가 나온다 — 시뮬이 아니라 단위 검사(tests/test_journey_beats.py)가 지킨다.
+KEY_BEATS = {}
+MALICE_BEATS = ['levy_office', 'salvage_claim', 'water_toll', 'cleaners_recall', 'signal_bait']
+
+
+def beat_rates(rows):
+    out = {}
+    n = max(1, len(rows))
+    for beat, label in KEY_BEATS.items():
+        hit = sum(1 for r in rows if beat in (r.get('seen') or []))
+        out[beat] = {'label': label, 'pct': round(100 * hit / n, 1)}
+    malice_hit = sum(1 for r in rows
+                     if any(b in (r.get('seen') or []) for b in MALICE_BEATS))
+    out['_malice'] = {'label': '악의 계열 조우', 'pct': round(100 * malice_hit / n, 1)}
+    return out
 
 
 def summarize(rows):
@@ -235,6 +269,7 @@ def summarize(rows):
         }
     all_days = [out[p]['medianDay'] for p in policies if out[p]['medianDay'] is not None]
     out['_spread'] = {'medianDaySpread': (max(all_days) - min(all_days)) if all_days else None}
+    out['_beats'] = beat_rates(rows)
     return out
 
 
@@ -277,6 +312,15 @@ def gate(summary, rows, deadline):
     spread = summary.get('_spread', {}).get('medianDaySpread')
     if spread is None or spread < 2:
         problems.append(f"정책 간 소요일 스프레드 {spread}일 < 2일 — 준비에 비용이 없다")
+
+    # W2: 쓴 것이 보이는가. 등장률이 낮으면 기능이 아니라 죽은 콘텐츠다.
+    beats = summary.get('_beats', {})
+    for beat, row in beats.items():
+        if beat == '_malice':
+            if row['pct'] < 70:
+                problems.append(f"{row['label']} 조우율 {row['pct']}% < 70% — 세계에 대비가 없다")
+        elif row['pct'] < 60:
+            problems.append(f"핵심 비트 「{row['label']}」 등장률 {row['pct']}% < 60% — 쓴 것이 안 보인다")
 
     if not rows:
         problems.append('시뮬레이션 결과 0건')
@@ -326,6 +370,8 @@ def main():
               f"시한압박 목격 {row['deadlineSeenPct']:5.1f}% · 사건 {row['meanEvents']:.1f}건 · "
               f"동행 {row['meanParty']:.1f}명 · {row['endedBuckets']}")
     print(f"  정책 간 소요일 스프레드: {summary['_spread']['medianDaySpread']}일")
+    for beat, row in summary.get('_beats', {}).items():
+        print(f"  등장률 · {row['label']}: {row['pct']}%")
     print(f"보고서 → {args.report}")
 
     problems = gate(summary, rows, page_deadline)

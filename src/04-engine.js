@@ -910,12 +910,29 @@ G.queueStory = (id)=>{
 };
 /* 핵심 여정 장면은 무작위 풀과 경쟁하지 않는다. 주행거리 문턱을 넘긴 뒤
    다음 도착에서 한 장면만 예약해, 길 위의 호흡을 끊지 않고 본편을 되짚는다. */
+/* 비트 조건. 거리만으로 고르면 동료·상황이 맞아야 성립하는 장면을 예약할 수 없고,
+   그래서 그런 장면들이 무작위 풀에 남아 등장률 0%가 됐다(2026-08-06 실측). */
+G.beatReady = (b)=>{
+  if(!b||S.stats.km<b.km) return false;
+  const w=b.when;
+  if(!w) return true;
+  if(w.comps && !w.comps.every(id=>G.hasComp(id)&&!G.isInjured(id))) return false;
+  if(w.region && w.region!==G.regionOf()) return false;
+  if(w.flag && !S.flags[w.flag]) return false;
+  if(w.noFlag && S.flags[w.noFlag]) return false;
+  if(w.minParty!==undefined && S.party.length<w.minParty) return false;
+  if(w.maxKm!==undefined && S.stats.km>w.maxKm) return false;
+  return true;
+};
 G.scheduleJourneyBeat = ()=>{
   if(!S||!D.journeyBeats) return null;
-  const beat=D.journeyBeats.find(b=>S.stats.km>=b.km
+  /* 조건을 넘긴 비트는 전부 대기열에 넣는다. 도착마다 하나씩만 예약하면
+     앞선 비트가 자리를 차지해 뒤쪽 비트는 짧은 여정에서 영영 못 나온다.
+     꺼내는 것은 여전히 도착당 하나이므로 한 번에 몰아치지는 않는다. */
+  const ready=D.journeyBeats.filter(b=>G.beatReady(b)
     && !S.used.includes(b.id) && !S._storyQueue.includes(b.id));
-  if(beat) G.queueStory(beat.id);
-  return beat&&beat.id;
+  ready.forEach(b=>G.queueStory(b.id));
+  return ready.length?ready[0].id:null;
 };
 G.popStory = ()=>{
   while(S&&S._storyQueue&&S._storyQueue.length){
