@@ -411,7 +411,7 @@
     if(waterRow&&foodRow){
       const bundlePrice=Math.max(1,Math.round((waterRow[3]+foodRow[3]*2)*disc));
       h+=`<div class="trade-bundle"><span><b>길 위 기본 보급</b><small>물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}일치</small></span>
-        <span class="tp">${ICO('scrap')}고철 ${bundlePrice}</span>
+        <span class="tp">${ICO('scrap')}고철 ${bundlePrice} · 40분</span>
         <button class="tbtn" data-bundle="1" ${S.scrap<bundlePrice?'disabled':''}>한 번에 싣기</button></div>`;
     }
     let lastGroup='';
@@ -549,7 +549,7 @@
       </div>
       <div class="garage-repair">
         <span><b>차체 정비</b><small>내구 +30${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}</small></span>
-        <span class="uc-cost">고철 ${repCost}</span>
+        <span class="uc-cost">고철 ${repCost} · ${G.durationLabel(G.settlementRepairQuote().mins)}</span>
         <button class="tbtn" data-rep="1" ${canRep?'':'disabled'}>${S.van>=S.vanMax-5?'양호':'수리'}</button>
       </div>
       <div class="garage-tabs">${groups.map(x=>{
@@ -563,7 +563,8 @@
         <div class="upgrade-list">${upgrades.map(u=>{
       const owned=S.up[u.id];
       const chk=G.canBuyUp(u.id);
-      const cost=`고철 ${u.cost.scrap}${u.cost.parts?' + 부품 '+u.cost.parts:''}`;
+      /* 시간도 값이다 — 미리 보이지 않으면 선택이 아니라 사후 통보가 된다 */
+      const cost=`고철 ${u.cost.scrap}${u.cost.parts?' + 부품 '+u.cost.parts:''} · ${G.durationLabel(G.upgradeMinutes(u))}`;
       return `<div class="upgrade-card ${owned?'owned':''}">
         <span><span class="uc-title">${u.ic} ${u.nm}</span><small class="uc-desc">${u.d}</small></span>
         <span class="uc-cost">${owned?'장착 완료':cost}</span>

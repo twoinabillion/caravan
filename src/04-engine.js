@@ -4,7 +4,7 @@ const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
 const GAME_BUILD = '2026-08-06-quality3';
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
-const SAVE_VERSION = 2;
+const SAVE_VERSION = 3;
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -19,6 +19,12 @@ const G = {};
 /* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
    필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
 G.saveMigrations = {
+  3:(s)=>{   // 2026-08-06: 시한 30일 → 20일. 옛 계약으로 달린 날은 소급 청구하지 않는다
+    if(Number.isFinite(s.day)&&s.day>D.transferDeadlineDay&&!s.flags?.transfer_started){
+      s._deadlineGrandfathered=true;
+      s.day=Math.min(s.day,D.transferDeadlineDay);   // 옛 시한 아래 있던 진행은 시한 내로 본다
+    }
+  },
   2:(s)=>{   // 2026-08-06: 구제 횟수·정착지 숙박 횟수 도입
     if(!s._rescues||typeof s._rescues!=='object'||Array.isArray(s._rescues)) s._rescues={};
     if(!s._stlNights||typeof s._stlNights!=='object'||Array.isArray(s._stlNights)) s._stlNights={};
@@ -70,13 +76,13 @@ G.newGame = (mode, name, entryMode='full')=>{
   G.syncKnowledgeFromFlags();
   G.addNote({type:'장소', title:'부산 감천 부두', body:'모든 것이 시작된 곳. 달구지에 시동을 걸었다.', links:[]});
   G.addNote({type:'물건', title:'달구지', body:'낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.', links:['할아버지']});
-  G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판 KOR-LOCAL. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 30일 뒤 외곽의 마지막 잔류구역 이송을 예고했다.', links:[]});
+  G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판 KOR-LOCAL. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 스무 날 뒤 외곽의 마지막 잔류구역 이송을 예고했다.', links:[]});
   G.addNote({type:'인물', title:'부모님', body:'엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.', links:['천리안']});
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.', links:['달구지','부모님']});
   G.addNote({type:'물건', title:'엄마의 철제 상자', body:'현재 이송표와 같은 명령 규격을 가리키는 회로도가 수첩 등판에서 나왔다. 남산 중앙 노드, 달구지 계기판 뒤 검증 모듈, 발신 기록과 당사자 증언을 함께 가져가라는 메모가 적혀 있었다.', links:['부모님','천리안','달구지']});
   G.addNote({type:'물건', title:'계기판 속 검증 모듈', body:'출발 전에 존재를 확인했지만 분리 절차 두 장이 없어 아직 달구지 전장에 연결해 두었다. 절차를 찾고 기록을 모아 남산에 적용해야 한다.', links:['엄마의 철제 상자','부모님','남산']});
   G.addNote({type:'인물', title:'도윤의 가족', body:'부산 부두에서 난방이 끊긴 이송 버스를 고쳐 준 가족. 엄마 하진, 8살 도윤, 동생 유나는 제7 잔류구역 6,412명 가운데 먼저 남쪽으로 보내진 사람들이다.', links:['서울 추방','천리안']});
-  G.addNote({type:'사건', title:'30일의 시한', body:'부산의 원격 이의 제기는 막혔다. DAY 30 안에 남산 중앙 노드에서 이송 중단까지 완료해야 첫 이송을 막을 수 있다. 서울 도착만으로 끝나지 않는다.', links:['남산','도윤의 가족','계기판 속 검증 모듈']});
+  G.addNote({type:'사건', title:'스무 날의 시한', body:'부산의 원격 이의 제기는 막혔다. DAY 20 안에 남산 중앙 노드에서 이송 중단까지 완료해야 첫 이송을 막을 수 있다. 서울 도착만으로 끝나지 않는다.', links:['남산','도윤의 가족','계기판 속 검증 모듈']});
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
@@ -675,7 +681,7 @@ G.departureSteps = ()=>{
     {id:'module',done:!!S.flags.intro_module_seen,label:'계기판 속 검증 모듈 확인',detail:'엄마의 회로도와 실제 배선이 일치했다'},
     {id:'key',done:!!S.flags.parent_key_found,label:'분리 절차 복원·검증키 안전 회수',detail:S.flags.parent_key_found?'4–5쪽을 복원해 남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
     {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'발신 기록과 당사자 증언 대조',detail:S.flags.es_truth?'명령 생성 순서를 확인했다':`같은 명령을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
-    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'서울 도착이 아니라 DAY 30 안의 이송 중단이 완료 조건이다'}
+    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'서울 도착이 아니라 DAY 9 안의 이송 중단이 완료 조건이다'}
   ];
 };
 G.relationKey = (a,b)=>[a,b].sort().join(':');
@@ -1287,7 +1293,9 @@ G.advance = (mins)=>{
   while(m>0){
     const toMid = 24*60 - S.min;
     const step = Math.min(m, toMid);
-    S.min += step; m -= step;
+    /* 분 단위로 정규화한다. 주행 tick이 실수를 더하다 보면 06:30이 389.9999가 되어
+       "다음 날 아침"을 판별하는 조건과 표시가 어긋난다. */
+    S.min = Math.round((S.min + step) * 1000) / 1000; m -= step;
     /* 깨어 있는 모든 시간에 피로가 쌓인다 (수면=camp가 유일한 리셋) */
     const injuryMul=G.isInjured('driver')?1.2:1;
     S.fatigue = clamp(S.fatigue + step*0.045*(1-G.driverLv()*0.06)*injuryMul, 0, 100);
@@ -1352,19 +1360,23 @@ G.dawn = ()=>{
   G.tickDeadline();
   G.save();
 };
-/* DAY 30 — 선언된 시한을 실제로 집행한다. 압박은 새벽마다 단계적으로 오르고,
+/* DAY 9 — 선언된 시한을 실제로 집행한다. 압박은 새벽마다 단계적으로 오르고,
    시한을 넘기면 첫 이송이 실제로 출발한다(에필로그·처분 장면에 새겨진다). */
 G.tickDeadline = ()=>{
   if(!S || S.flags.core_decided || S.flags.story_done) return;
   const t=D.transferStatus(S);
   const fire=(flag,id)=>{ if(!S.flags[flag]){ S.flags[flag]=1; G.queueCrisis(id); return true; } return false; };
-  /* 시한은 남은 날로도, 남은 거리로도 다가온다. 빠른 주행(3~5일)에서도
-     이송 준비가 길 위에 보이도록 두 축 중 이른 쪽에서 단계가 열린다. */
+  /* 시한이 실제 여정 길이(닷새~스무 날)와 같은 척도가 된 뒤로는 날짜 축이 주도한다.
+     거리 축은 남산 코앞까지 갔는데 아직 압박을 못 본 경우를 위한 안전망으로만 남긴다. */
   const remainKm=G.remainKm();
+  /* 단계는 남은 날로 고른다 — 이벤트 본문이 "엿새 뒤" 같은 절대 날짜를 말하기 때문이다.
+     거리 축은 한 단계도 못 본 채 남산 코앞까지 간 경우의 안전망으로만 쓴다. */
+  const seenAny=S.flags.deadline_seen_d10||S.flags.deadline_seen_d5||S.flags.deadline_seen_d0;
   if(t.onTime){
-    if(t.remaining<=10 || remainKm<=260) fire('deadline_seen_d10','deadline_d10');
-    if((t.remaining<=5 || remainKm<=150) && fire('deadline_seen_d5','deadline_d5') && S.pursuit<1) S.pursuit=1;
-    if(t.remaining<=1 || remainKm<=60) fire('deadline_seen_d0','deadline_d0');
+    if(t.remaining<=Math.ceil(t.due*0.6)) fire('deadline_seen_d10','deadline_d10');
+    else if(remainKm<=150 && !seenAny) fire('deadline_seen_d10','deadline_d10');
+    if(t.remaining<=Math.ceil(t.due*0.3) && fire('deadline_seen_d5','deadline_d5') && S.pursuit<1) S.pursuit=1;
+    if(t.remaining<=1 || (remainKm<=40 && !S.flags.deadline_seen_d0)) fire('deadline_seen_d0','deadline_d0');
   } else {
     fire('deadline_seen_late','deadline_late');
     /* 늦은 하루하루가 관측을 끌어올린다 — 시간 자체가 비용이다 */
@@ -1408,7 +1420,7 @@ G.routeForecast = id=>{
   const short=Math.max(0,fuel-Math.floor(S.fuel));
   const readiness=short===0?'현재 연료로 통과 가능'
     :stops?`연료 ${short}L가량은 중간 보급 필요`:`출발 전 연료 ${short}L가량 더 필요`;
-  return {id,km,fuel,rough,stops,minutes:Math.ceil(km/44*60),short,readiness};
+  return {id,km,fuel,rough,stops,minutes:G.driveMinutes(km),short,readiness};
 };
 G.goalDistance = id=>{
   if(!D.nodes[id]||!D.nodes.seoul) return Infinity;
@@ -1451,7 +1463,7 @@ G.travelForecast = id=>{
   if(['storm','dust'].includes(S.wx)&&S.up.snorkel) gear.push('스노클');
   if(G.isNight()&&S.up.lightbar) gear.push('라이트바');
   if(S.up.solar) gear.push('태양광 보조');
-  const minutes=Math.ceil(chk.km/44*60);
+  const minutes=G.driveMinutes(chk.km);
   const shortage=S.fuel<chk.fuel;
   const fuelMargin=Math.floor(S.fuel-chk.fuel);
   const party=Math.max(1,G.partySize());
@@ -1709,8 +1721,12 @@ G.startTravel = (to)=>{
   return true;
 };
 
-const KMH = 44;                    // 주행 속도
-const TIMESCALE = 2.2;             // 실제 1초 = 게임 2.2분
+/* 무너진 국도를 낡은 용달차로 간다. 평균 시속은 고속도로 순항이 아니라
+   우회·서행·잔해 치우기가 섞인 값이다. 시속을 낮추는 대신 TIMESCALE을 같은 비율로
+   올려 실시간 체감(초당 약 1.6km 진행)은 그대로 두었다 — 게임 안의 하루만 무거워진다.
+   411km ÷ 13km/h ≈ 32시간 주행 = 낮에만 달리면 사나흘, 사건과 정비까지 치면 일주일 넘게. */
+const KMH = 13;                    // 평균 주행 속도 (실주행 기준, 잔해·우회 포함)
+const TIMESCALE = 7.4;             // 실제 1초 = 게임 7.4분 (13/60*7.4 ≈ 이전과 같은 초당 거리)
 let banterCd = 6;                  // 첫 잡담까지 몇 초
 let radioCd = 30;                  // 라디오 첫 수신까지
 let choiceEchoCd = 8;              // 선택의 후속은 일반 잡담보다 먼저 한 번 확인
@@ -1718,6 +1734,11 @@ let choiceEchoCd = 8;              // 선택의 후속은 일반 잡담보다 �
    대사 후보 집합이 이전 판을 기억한 채 남아 같은 시드가 다른 여정을 만든다. */
 G.resetDriveTimers = ()=>{ banterCd=6; radioCd=30; choiceEchoCd=8;
   lastBanter=[]; lastChat=-1; lastRadio=null; };
+/* 실시간 1초당 진행 거리(km). 테스트·도구가 속도 상수를 복제하지 않도록 엔진이 노출한다. */
+G.tickKmPerSecond = ()=> KMH/60*TIMESCALE;
+/* 표시용 주행 소요 시간(게임 분). UI가 속도 상수를 복제하면 예상과 실제가 갈라진다 —
+   2026-08-06에 실제로 그랬다(표시 2시간 58분 vs 실제 10시간). 단일 소스로 고정. */
+G.driveMinutes = (km)=> Math.ceil((Number(km)||0)/KMH*60);
 
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
@@ -2596,6 +2617,7 @@ G.camp = (msg)=>{
   const target = 6.5*60;
   let mins = (24*60 - S.min + target); if(S.min < target) mins = target - S.min;
   G.advance(mins);
+  S.min = Math.round(S.min);   // 기상 시각은 정확히 06:30이어야 한다
   let mood=6, vanFix=4;
   if(G.hasPerk('pss_night')) mood+=3;
   if(G.hasPerk('leo_fire')) mood+=4;
@@ -2732,6 +2754,8 @@ G.vanStage = ()=>{
 };
 G.nextSeatUpgrade = ()=> D.upgrades.find(u=>u.seat&&!(S&&S.up&&S.up[u.id]));
 G.upDef = (id)=> D.upgrades.find(u=>u.id===id);
+/* 차고 작업 소요 시간. 값을 UI가 미리 보여줘야 '지금 달까, 다음 마을에서 달까'가 선택이 된다. */
+G.upgradeMinutes = (u)=> Math.round((u&&u.seat?300:200)*(G.hasComp('minji')&&!G.isInjured('minji')?0.75:1));
 /* ── 탑재 중량·슬롯: 싣는 것에는 자리와 무게라는 값이 있다 ── */
 G.upWeight = ()=> (D.upgrades||[]).reduce((w,u)=>w+((S&&S.up&&S.up[u.id])?(u.w||0):0),0);
 /* 8pt까지는 공짜, 그 위로는 1pt당 연비 +1.2% (최대 +12%) */
@@ -2757,6 +2781,10 @@ G.buyUpgrade = (id)=>{
   S.scrap-=u.cost.scrap;
   if(u.cost.parts) S.items['부품']-=u.cost.parts;
   S.up[id]=true;
+  /* 차고 작업은 분해·체결·확인 세 단계다(D.upgradeWork). 그 서사만큼 시간도 든다 —
+     증축은 반나절, 나머지는 서너 시간. 정비 전문가가 타고 있으면 손이 빠르다. */
+  G.advance(G.upgradeMinutes(u));
+  if(S.ended) return true;   // 차고 작업 중 여정이 끝날 수 있다
   G.qualityUpgrade(id);
   if(id==='tank1'||id==='tank2'){ S.fuelMax+=25; }
   if(id==='armor'){ S.vanMax+=25; S.van+=25; }
@@ -2798,6 +2826,8 @@ G.trade = (stlId, i)=>{
     else if(key==='food') S.food+=qty;
     else if(key.startsWith('item')){ const nm=key.slice(4); S.items[nm]=(S.items[nm]||0)+qty; }
   }
+  G.advance(25);   // 흥정도 시간이다
+  if(S.ended) return {ok:true, ended:true};
   G.save(); return {ok:true};
 };
 G.tradeBundle = (stlId)=>{
@@ -2808,14 +2838,20 @@ G.tradeBundle = (stlId)=>{
   const price=Math.max(1,Math.round((w[3]+f[3]*2)*G.tradeDiscount(stlId)));
   if(S.scrap<price) return {ok:false, why:'고철 부족'};
   S.scrap-=price; S.water+=w[2]; S.food+=f[2]*2;
+  G.advance(40);   // 물통과 자루를 싣는 데 걸리는 시간
+  if(S.ended) return {ok:true, ended:true, water:w[2], food:f[2]*2, price};
   G.save(); return {ok:true, water:w[2], food:f[2]*2, price};
 };
-G.settlementRepairQuote = ()=>({cost:G.hasComp('minji')?6:8, amount:30});
+/* 정비소 수리는 맡기고 기다리는 일이다 — 반나절이 사라진다.
+   시간이 값이 되어야 "지금 고칠까, 다음 마을까지 버틸까"가 선택이 된다. */
+G.settlementRepairQuote = ()=>({cost:G.hasComp('minji')?6:8, amount:30, mins:G.hasComp('minji')?120:180});
 G.settlementRepair = ()=>{
   const quote=G.settlementRepairQuote();
   if(S.van>=S.vanMax-5) return {ok:false, why:'수리할 곳이 없다'};
   if(S.scrap<quote.cost) return {ok:false, why:'고철 부족'};
   S.scrap-=quote.cost; S.van=clamp(S.van+quote.amount,0,S.vanMax);
+  G.advance(quote.mins);
+  if(S.ended) return {ok:true, ended:true, ...quote};   // advance가 갈증 종료를 부를 수 있다
   G.save(); return {ok:true, ...quote};
 };
 

@@ -1149,7 +1149,7 @@ with sync_playwright() as p:
     check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
     check('인트로 행동·원인 대사가 구체적으로 이어짐', r4['introCausalDialogue'], str(r4))
-    check('한 가족 도움→이의 제기 실패→유품·대가→30일 시한으로 출발', r4['introImmediateMotive'], str(r4))
+    check('한 가족 도움→이의 제기 실패→유품·대가→시한 선언으로 출발', r4['introImmediateMotive'], str(r4))
     check('이송표 내용·강제력·사본을 가져가는 이유 설명', r4['transferPaperMeaning'], str(r4))
     check('할아버지 수첩은 구체적이고 안전한 정비 조언', r4['grandfatherNotes'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
@@ -1226,12 +1226,19 @@ with sync_playwright() as p:
       document.querySelector('#ev-wrap').classList.remove('on');
       UI.showEvent(D.events.find(e=>e.id==='combat_walker_read')); UI.finishStory();
       document.querySelector('#ev-sheet [data-i="0"]').click(); UI.finishStory();
-      out.readStored=S.combat&&S.combat.read&&S.combat.read.label.includes('세 번째 걸음')&&
+      /* 2단계는 더 이상 확정 성공이 아니다(자동 성공 제거). 어느 분기가 나오든
+         '틈을 읽었다는 사실이 저장되고 3단계에 전달되는가'가 검사 대상이다. */
+      out.readStored=!!(S.combat&&S.combat.read&&Array.isArray(S.combat.read.tactics)&&
+        S.combat.read.tactics.length&&S.combat.read.label)&&
         document.querySelector('.combat-read')?.textContent.includes('읽어낸 틈');
       document.querySelector('#ev-wrap').classList.remove('on');
       const strike=D.events.find(e=>e.id==='combat_walker_strike');
       UI.showEvent(strike); UI.finishStory();
-      const strikeChoice=strike.choices[0], savedRead=S.combat.read;
+      const strikeChoice=strike.choices[0];
+      /* 판정이 갈리므로 앞 단계 결과에 기대지 않고, 3단계에 유리한 틈을 명시적으로 세워
+         '읽은 틈이 최종 판정에 반영되는가'만 격리해서 잰다. */
+      S.combat.read={label:'세 번째 걸음 뒤 몸통이 처지는 순간',tactics:[strikeChoice.tactic]};
+      const savedRead=S.combat.read;
       const prepared=G.combatOdds(strikeChoice,strike);
       S.combat.read=null;
       const unprepared=G.combatOdds(strikeChoice,strike);
@@ -1513,7 +1520,7 @@ with sync_playwright() as p:
       const coreText = typeof core.text === 'function'
         ? core.text({day:12, flags:{}, party:[]}) : core.text;
       const lateCoreText = typeof core.text === 'function'
-        ? core.text({day:31, flags:{}, party:[]}) : core.text;
+        ? core.text({day:D.transferDeadlineDay+1, flags:{}, party:[]}) : core.text;
       const coreTurns = UI.storyTurns(coreText, core, {turnSpeakers:core.turnSpeakers});
       const testimony = core.choices[2].out[0];
       const testimonyTurns = UI.storyTurns(testimony.text, core, {turnSpeakers:testimony.turnSpeakers});
@@ -1546,12 +1553,16 @@ with sync_playwright() as p:
         coreText.includes('목적, 발신자, 승인자는 제 지역 기록에 없습니다') &&
         coreText.includes('부모님의 검증키') &&
         coreText.includes('등록 6,412명');
-      const day1=D.transferStatus({day:1}), day30=D.transferStatus({day:30}), day31=D.transferStatus({day:31});
-      out.deadlineAdaptive = day1.remaining===30 && day30.remaining===1 && day30.onTime && !day31.onTime &&
-        day1.mission.includes('남산 조치까지 30일') &&
-        coreText.includes('첫 이송까지 19일') &&
+      // 시한 값은 데이터에서 파생한다 — 상수를 복제하면 밸런스 튜닝 때마다 여기서 깨진다
+      const due=D.transferDeadlineDay;
+      const day1=D.transferStatus({day:1}), dayDue=D.transferStatus({day:due}), dayLate=D.transferStatus({day:due+1});
+      out.deadlineAdaptive = day1.remaining===due && dayDue.remaining===1 && dayDue.onTime && !dayLate.onTime &&
+        day1.mission.includes(`남산 조치까지 ${due}일`) &&
         lateCoreText.includes('첫 이송 발생 · 1일 경과') &&
-        ep.text({day:31,flags:{core_transfer:true},party:[]}).includes('첫 이송은 1일 전에 이미 시작됐다');
+        // 지각은 사람 수로 청구된다 (하루 = 버스 12대 · 540명)
+        dayLate.departed===540 && dayLate.remainingResidents===D.residentCount-540 &&
+        ep.text({day:due+1,flags:{core_transfer:true},party:[]}).includes('이송은 1일 전에 시작됐다') &&
+        ep.text({day:due+1,flags:{core_transfer:true},party:[]}).includes('540명');
       const render = (v, flags={}) => typeof v === 'function' ? v({flags, party:[]}) : v;
       const costs = decision.choices.map(c => render(c.out[0].text, {}));
       out.distinctCosts = costs[0].includes('첫 회의 채널이 열렸다') &&
@@ -1588,7 +1599,7 @@ with sync_playwright() as p:
     check('가족 직접 사유·정부 승인 순서 회수', r8['familyTruth'])
     check('서울 코어는 주인공 질문·천리안 답변·동료 증언으로 분리', r8['coreDialogue'], str(r8))
     check('제7 구역 저지·143년 최초 목적 분리', r8['rootMystery'])
-    check('30일 전후 이송 상태가 실제 날짜를 반영', r8['deadlineAdaptive'])
+    check('시한 전후 이송 상태가 실제 날짜·인원을 반영', r8['deadlineAdaptive'])
     check('추방과 남산 관문은 별도 절차', r8['gateSeparate'])
     check('세대별 추방 기억·남쪽 태생 명시', r8['generations'])
     check('할아버지 집안의 빈 사유표 회수', r8['familyQuestion'])

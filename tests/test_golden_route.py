@@ -82,7 +82,10 @@ with sync_playwright() as p:
       S.driving.slots=[]; S.driving.si=0;
       const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
       const ftg=S.fatigue>=80?.85:1;
-      G.tick(S.driving.dist/(44/60*2.2*wx*ftg)+.02);
+      // 속도 상수를 테스트가 복제하면 밸런스 튜닝 때마다 여기서 깨진다.
+      // 엔진이 실제로 쓰는 값을 그대로 역산한다.
+      const perSec=G.tickKmPerSecond();
+      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
       UI.onArrive=old;
     }''')
     at_yangsan = page.evaluate("({at:S.at, button:document.querySelector('[data-a=recruitstep]')?.textContent||''})")
@@ -111,7 +114,10 @@ with sync_playwright() as p:
       S.driving.slots=[]; S.driving.si=0;
       const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
       const ftg=S.fatigue>=80?.85:1;
-      G.tick(S.driving.dist/(44/60*2.2*wx*ftg)+.02);
+      // 속도 상수를 테스트가 복제하면 밸런스 튜닝 때마다 여기서 깨진다.
+      // 엔진이 실제로 쓰는 값을 그대로 역산한다.
+      const perSec=G.tickKmPerSecond();
+      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
       UI.onArrive=old;
     }''')
     follow = page.evaluate('''() => ({
@@ -214,7 +220,10 @@ with sync_playwright() as p:
       S.driving.slots=[]; S.driving.si=0;
       const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
       const ftg=S.fatigue>=80?.85:1;
-      G.tick(S.driving.dist/(44/60*2.2*wx*ftg)+.02);
+      // 속도 상수를 테스트가 복제하면 밸런스 튜닝 때마다 여기서 깨진다.
+      // 엔진이 실제로 쓰는 값을 그대로 역산한다.
+      const perSec=G.tickKmPerSecond();
+      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
       UI.onArrive=old;
       UI.showStl('daegu','people');
     }''')

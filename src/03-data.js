@@ -20,18 +20,33 @@ D.icons = {};
 D.bgm = {};    /* BGM 슬롯 — 키: title/drive_day/drive_night/tension/settlement/camp/story (docs/audio-guide.md) */
 D.vo = {};     /* 보이스 슬롯 — cheollian_XX, radio_XX. 인트로는 page.voice 명시 시에만 재생 */
 D.sfx = {};    /* 환경음·차량음 슬롯 — Downloads 대표 테이크만 모바일용으로 압축해 내장 */
-D.transferDeadlineDay = 30; /* DAY 30 안에 서울 도착이 아니라 남산의 이송 중단까지 끝낸다. */
+D.transferDeadlineDay = 20; /* DAY 20 안에 서울 도착이 아니라 남산의 이송 중단까지 끝낸다.
+   앵커(2026-08-06 실측): 직행 경로 356km vs 완주에 필요한 23개 지점 순회 1,430km(4배).
+   시뮬 실측 일당 진행 71km/일 → 완주형 약 20일. 집중하면 닷새면 서울 땅을 밟지만
+   장부를 채우려면 시한을 거의 다 쓴다.
+   ⚠️ 이 값은 '완주 소요일 실측'이 아니라 '필수 순회 거리 기반 산출'이다 —
+      시뮬 자동 플레이어는 서사 기둥을 채우지 못한다. 사람 플레이 1회로 검증 필요. */
 D.transferStatus = (state)=>{
   const day=state&&Number.isFinite(state.day)?state.day:1;
   const due=D.transferDeadlineDay;
   const remaining=Math.max(0,due-day+1);
   const onTime=day<=due;
+  const lateDays=Math.max(0,day-due);
+  /* 늦은 하루가 한 편성이다. 12대·45석이므로 하루에 540명이 남쪽으로 내려간다.
+     이 숫자가 코어 앞과 에필로그에 그대로 새겨진다 — 지각의 대가는 텍스트가 아니라 사람 수다. */
+  const seatsPerBus=45, busesPerDay=12;   // 하루 한 편성 = 12대 × 45석 = 540명
+  const departedBuses=Math.min(Math.ceil(D.residentCount/seatsPerBus), lateDays*busesPerDay);
+  const departed=Math.min(D.residentCount, departedBuses*seatsPerBus);
   return {
-    due,day,remaining,onTime,lateDays:Math.max(0,day-due),
-    short:onTime?`첫 이송까지 ${remaining}일`:`첫 이송 발생 · ${day-due}일 경과`,
-    mission:onTime?`남산 조치까지 ${remaining}일`:'선발 이송차량 출발 · 남은 이송을 즉시 중단해야 함'
+    due,day,remaining,onTime,lateDays,
+    departedBuses,departed,
+    remainingResidents:Math.max(0,D.residentCount-departed),
+    short:onTime?`첫 이송까지 ${remaining}일`:`첫 이송 발생 · ${lateDays}일 경과`,
+    mission:onTime?`남산 조치까지 ${remaining}일`
+      :`선발 ${departedBuses}대(${departed}명) 출발 · 남은 이송을 즉시 중단해야 함`
   };
 };
+D.residentCount = 6412;   /* 제7 잔류구역 등록 인원 */
 /* 라디오 방송 조각 — 차 라디오 수리 후 주행 중 랜덤 수신. D.vo[key] 있으면 음성도 재생 */
 /* 식사 시간 정경 (아침 배급·점심 때 무작위 1줄) */
 D.mealBanter = [
@@ -1942,7 +1957,7 @@ D.intro = [
 부두 라디오에서는 한 문장이 반복됐다.
 <span class="ai">“서울 외곽 제7 잔류구역.
 등록 인원 6,412명.
-첫 이송 집행까지 30일.”</span>`
+첫 이송 집행까지 스무 날.”</span>`
   },
   {
     scene:'intro-dock-aid', era:'오늘 새벽 · 이송 버스 옆', title:'6,412명 가운데 한 가족',
@@ -1956,7 +1971,7 @@ D.intro = [
 
 하진은 서울에서 이의 제기를 열세 번 넣었지만 한 번도 사람의 답을 받지 못했다고 했다.
 
-6,412명은 숫자가 아니었다. 난방이 꺼진 버스 안에서 서른 밤을 세고 있는 가족들이었다.`
+6,412명은 숫자가 아니었다. 난방이 꺼진 버스 안에서 스무 날을 세고 있는 가족들이었다.`
   },
   {
     scene:'intro-appeal-denied', era:'오늘 아침 · 감천 부두 민원 단말', title:'부산에서 할 수 있는 마지막 확인',
@@ -2025,7 +2040,7 @@ D.intro = [
 남산의 호출에 복종하려는 것도, 할아버지 대신 복수하려는 것도 아니었다.
 
 <span class="em">부모가 남긴 수정안을 천리안에 적용해
-서른 날 뒤의 추방을 멈추고,
+스무 날 뒤의 추방을 멈추고,
 사람의 결정권을 되찾기 위해.</span>
 
 출발은 혼자 했다. 길에서 만난 사람에게 목적지를 강요할 생각은 없었다. 다만 자기 일을 끝낸 뒤 같은 곳까지 가겠다는 사람이 생기면, 그때는 달구지에 그 사람의 자리를 만들기로 했다.
@@ -2188,7 +2203,7 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'같이 온 어른은?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마는 뒤 차에 있어요. 동생이 열나서 아직 못 내렸어요.'},
     {kind:'dialogue', who:'me', name:'나', text:'그 종이에 뭐라고 적혀 있어?'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'저랑 엄마랑 유나 이름이요. 여기… 서른 날 안에 나가래요. 짐은 스무 킬로만.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'저랑 엄마랑 유나 이름이요. 여기… 스무 날 안에 나가래요. 짐은 이십 킬로만.'},
     {kind:'narration', text:'아이는 나머지를 읽다가 종이를 내 쪽으로 내밀었다. 한 사람에 20kg. 제7 구역 남문 집결. 출발 시각까지 적혀 있었다.'},
     {kind:'dialogue', who:'me', name:'나', text:'안 나가면 어떻게 된대?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마가 안 나가면 집 문도 밥표도 막힌댔어요. 버스 탈 때 이걸 꼭 들고 있으라고 했고요.'},
@@ -2198,9 +2213,9 @@ const introBeats = {
     {kind:'narration', text:'아이가 이송표를 펼쳤다. 우리 가족의 것과 같은 자리였다. 이름과 날짜 사이의 <span class="em">사유란이 비어 있었다.</span>'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'아저씨도 이 종이 받아 봤어요?'},
     {kind:'dialogue', who:'me', name:'나', text:'나도 8살 때 받았어.'},
-    {kind:'ai', who:'cheollian', name:'부두 공공방송', text:'서울 외곽 제7 잔류구역. 등록 인원 6,412명. 첫 이송 집행까지 30일.'},
+    {kind:'ai', who:'cheollian', name:'부두 공공방송', text:'서울 외곽 제7 잔류구역. 등록 인원 6,412명. 첫 이송 집행까지 스무 날.'},
     {kind:'dialogue', who:'me', name:'나', text:'아직 서울에 남은 사람이 그렇게 많아?'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 서른 밤 뒤에 전부 나와야 한대요.'}
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 스무 날 뒤에 전부 나와야 한대요.'}
   ],
   'intro-dock-aid': [
     {kind:'narration', text:'아이는 열이 난 동생이 기다리는 뒤쪽 버스로 뛰어갔다. 나는 공구 가방을 들고 따라갔다.'},
@@ -2216,7 +2231,7 @@ const introBeats = {
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'이의 신청을 열세 번 했어요. 그때마다 접수 완료는 떴는데, 다음 날 들어가 보면 신청 내역이 없어졌어요.'},
     {kind:'dialogue', who:'me', name:'나', text:'표를 잠깐 빌려주세요. 부산 단말에서도 한 번 확인해 볼게요.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'또 막힐 거예요. 그래도 아직 안 해 본 방법이면 해 봐요.'},
-    {kind:'narration', text:'6,412명은 더 이상 방송 속 숫자가 아니었다. 난방이 꺼진 버스에서 서른 밤을 세고 있는 가족들이었다.'}
+    {kind:'narration', text:'6,412명은 더 이상 방송 속 숫자가 아니었다. 난방이 꺼진 버스에서 스무 날을 세고 있는 가족들이었다.'}
   ],
   'intro-appeal-denied': [
     {kind:'narration', text:'부두 끝 낡은 민원 단말에 하진의 이송표를 올렸다. 빗물이 종이 끝에서 한 방울씩 떨어졌다.'},
@@ -2264,7 +2279,7 @@ const introBeats = {
     {kind:'narration', text:'맡은 수리가 늦어진다는 쪽지를 작업대에 눌러 두었다. 돌아올 날짜는 쓰지 못했다.'},
     {kind:'thought', who:'me', name:'나', text:'돌아온다고 써 놓고 싶지만, 그건 약속할 수 없어.'},
     {kind:'narration', text:'셔터를 절반 내린 뒤 빗물이 들지 않게 아래 고리를 걸었다. 안쪽의 공구와 빈 의자가 어둠 속에 남았다.'},
-    {kind:'thought', who:'me', name:'나', text:'그래도 서른 날을 여기서 보내지는 않을 거야.'},
+    {kind:'thought', who:'me', name:'나', text:'그래도 스무 날을 여기서 보내지는 않을 거야.'},
     {kind:'narration', text:'문에 「수리 쉽니다」를 붙이고 단골 두 명에게 공구함 열쇠를 맡겼다. 예비 연료를 실은 만큼 작업장 난로에 쓸 몫도 줄었다.'},
     {kind:'thought', who:'me', name:'나', text:'이 셔터를 다시 올리러 돌아오자. 그때는 도윤이네도 자기 집으로 돌아갈 수 있게.'}
   ],
@@ -2277,12 +2292,12 @@ const introBeats = {
     {kind:'dialogue', who:'intro_child', name:'도윤', text:'그 기록은 어떻게 모아요?'},
     {kind:'dialogue', who:'me', name:'나', text:'직접 만나서 듣고, 기록이 맞는지도 확인할 거야. 같은 곳까지 가겠다는 사람을 만나면 달구지에 그 사람 자리도 만들고.'},
     {kind:'dialogue', who:'intro_child', name:'도윤', text:'그럼 유나랑 친구들은요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'서른 날 안에 멈춰 볼게. 만약 늦으면, 이미 출발한 버스부터 돌아오게 하고.'},
+    {kind:'dialogue', who:'me', name:'나', text:'스무 날 안에 멈춰 볼게. 만약 늦으면, 이미 출발한 버스부터 돌아오게 하고.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'약속까지는 하지 마세요. 대신 늦으면, 먼저 떠난 사람들 이름도 찾아 주세요.'},
     {kind:'dialogue', who:'me', name:'나', text:'알겠습니다. 남은 버스만 세우고 끝내지는 않을게요.'},
     {kind:'narration', text:'도윤은 가족의 이송표 사본을 조수석 수첩 위에 올려놓았다. 하진은 유나가 기다리는 버스로 돌아갔다. 그제야 달구지 뒤에 남은 레일이 눈에 들어왔다. 누구를 태우라고 정해 둔 자리가 아니라, 필요해진 집의 모양을 나중에 고칠 수 있게 남겨 둔 여지였다.'},
     {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
-    {kind:'thought', who:'me', name:'나', text:'서른 날 안에 남산까지 간다. 늦더라도 버스 번호와 사람 이름을 놓치지 않는다.'},
+    {kind:'thought', who:'me', name:'나', text:'스무 날 안에 남산까지 간다. 늦더라도 버스 번호와 사람 이름을 놓치지 않는다.'},
     {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}
   ]
 };
@@ -2792,20 +2807,20 @@ D.events = [
   {label:'…', out:[{p:1, text:'이번엔 여섯 시간이 지나 있었다.\n\n일어나 보니 아무도 말을 걸지 않았다. 화가 나서가 아니라, 무슨 말을 해야 할지 몰라서라는 게 얼굴에 적혀 있었다.\n\n달구지도 하루 종일 갓길에 서 있었다. 흙먼지 위에 낯선 타이어 자국이 우리 차를 살피고 간 흔적처럼 남아 있었다.', fx:{time:360, fatigue:-60, water:-2, moodAll:-9, van:-3, note:{type:'사건',title:'두 번째 탈진',body:'같은 실수를 두 번 했다. 수첩에 적는 것과 지키는 것은 다른 일이었다.',links:['할아버지']}}}]},
  ]},
 
-/* ── DAY 30 — 시한은 길 위에서 보인다 ── */
+/* ── DAY 9 — 시한은 길 위에서 보인다 ── */
 {id:'deadline_d10', type:'추적', w:0, fixed:true, ai:1,
- title:'열흘 전 — 이송 준비',
- text:'국도변 폐휴게소 마당에 버스가 줄지어 서 있었다.\n\n번호판이 없다. 대신 옆면에 흰 페인트로 큰 숫자. 1, 2, 3…\n\n작업복 입은 사람들이 좌석 수를 세고 있었다. 우리가 지나가자 세던 손을 멈추고 이쪽을 오래 봤다.\n\n<span class="ai">"제7 잔류구역 1차 이송 준비가 정상 진행 중입니다. 열흘 뒤 출발합니다."</span>\n\n라디오가 아니라 휴게소의 낡은 스피커에서 나온 소리였다.',
+ title:'열이틀 전 — 이송 준비',
+ text:'국도변 폐휴게소 마당에 버스가 줄지어 서 있었다.\n\n번호판이 없다. 대신 옆면에 흰 페인트로 큰 숫자. 1, 2, 3…\n\n작업복 입은 사람들이 좌석 수를 세고 있었다. 우리가 지나가자 세던 손을 멈추고 이쪽을 오래 봤다.\n\n<span class="ai">"제7 잔류구역 1차 이송 준비가 정상 진행 중입니다. 열이틀 뒤 출발합니다."</span>\n\n라디오가 아니라 휴게소의 낡은 스피커에서 나온 소리였다.',
  choices:[
-  {label:'버스 대수와 좌석 수를 적어 둔다', out:[{p:1, text:'버스 열두 대. 대당 마흔다섯 좌석.\n\n540명. 6,412명의 첫 조각.\n\n수첩에 적고 나니 숫자가 아니라 사람 수라는 게 더 무거워졌다.', fx:{time:20, note:{type:'사건',title:'이송 버스 목격',body:'번호판 없는 버스 12대, 540좌석. 첫 이송까지 열흘. 남산까지 남은 거리를 다시 계산했다.',links:['서울 추방','도윤의 가족']}}}]},
+  {label:'버스 대수와 좌석 수를 적어 둔다', out:[{p:1, text:'버스 열두 대. 대당 마흔다섯 좌석.\n\n540명. 6,412명의 첫 조각.\n\n수첩에 적고 나니 숫자가 아니라 사람 수라는 게 더 무거워졌다.', fx:{time:20, note:{type:'사건',title:'이송 버스 목격',body:'번호판 없는 버스 12대, 540좌석. 첫 이송까지 열이틀. 남산까지 남은 거리를 다시 계산했다.',links:['서울 추방','도윤의 가족']}}}]},
   {label:'속도를 올린다', out:[{p:1, text:'백미러 속에서 버스 행렬이 작아졌다.\n\n작아진다고 없어지는 건 아니었다. 오른발에 힘이 들어갔다.', fx:{moodAll:-2, fatigue:3}}]},
  ]},
 
 {id:'deadline_d5', type:'추적', w:0, fixed:true, ai:1,
- title:'닷새 전 — 늘어난 초계',
- text:'검문 초소가 하나 더 생겼다. 지난주 지도에는 없던 자리다.\n\n<span class="ai">"이송 주간 특별 통제입니다. 모든 차량은 등록 경로를 이용해 주십시오."</span>\n\n초소의 스피커는 정중했고, 그 위의 카메라는 정중하지 않았다. 렌즈가 우리 차를 따라 돌았다.\n\n닷새. 이송 준비가 끝나가는 만큼, 길도 좁아지고 있다.',
+ title:'엿새 전 — 늘어난 초계',
+ text:'검문 초소가 하나 더 생겼다. 지난주 지도에는 없던 자리다.\n\n<span class="ai">"이송 주간 특별 통제입니다. 모든 차량은 등록 경로를 이용해 주십시오."</span>\n\n초소의 스피커는 정중했고, 그 위의 카메라는 정중하지 않았다. 렌즈가 우리 차를 따라 돌았다.\n\n엿새. 이송 준비가 끝나가는 만큼, 길도 좁아지고 있다.',
  choices:[
-  {label:'밤에 달릴 준비를 한다', out:[{p:1, text:'낮의 눈을 피하는 대신 밤의 피로를 받기로 했다.\n\n전조등 하나를 가리고, 교대 순서를 다시 짰다.', fx:{fatigue:8, moodAll:-2, note:{type:'사건',title:'이송 주간 통제',body:'검문 초소가 늘었다. 닷새 뒤 첫 이송. 밤 주행 교대를 짰다.',links:['천리안']}}}]},
+  {label:'밤에 달릴 준비를 한다', out:[{p:1, text:'낮의 눈을 피하는 대신 밤의 피로를 받기로 했다.\n\n전조등 하나를 가리고, 교대 순서를 다시 짰다.', fx:{fatigue:8, moodAll:-2, note:{type:'사건',title:'이송 주간 통제',body:'검문 초소가 늘었다. 엿새 뒤 첫 이송. 밤 주행 교대를 짰다.',links:['천리안']}}}]},
   {label:'등록 경로를 따르는 척 우회로를 찾는다', out:[{p:1, text:'낡은 임도 지도를 폈다. 등록 경로에서 한 굽이 벗어난 길들이 아직 살아 있었다.\n\n시간은 더 걸릴 것이다. 눈에는 덜 띌 것이다.', fx:{time:40, note:{type:'사건',title:'우회 임도',body:'이송 주간 통제를 피할 굽잇길을 표시해 뒀다.',links:[]}}}]},
  ]},
 
@@ -9660,7 +9675,9 @@ D.events = [
   /* 시한을 지켰는가에 따라 같은 방이 다르게 보인다 — 늦음은 여기와 에필로그에 함께 새겨진다 */
   const opening=t.onTime
     ? '부모님의 검증키가 붉은 코어와 맞물렸다. 제7 잔류구역의 이송 시계가 멈추고, 모든 강제 명령 앞에 「인간 확인 대기」가 붙었다.'
-    : '부모님의 검증키가 붉은 코어와 맞물렸다. 남은 이송 일정이 전부 멈추고, 모든 강제 명령 앞에 「인간 확인 대기」가 붙었다.\n\n다만 화면 한쪽의 지도에는 이미 남쪽으로 내려간 첫 이송 열이 점선으로 표시되어 있었다. 오늘 멈출 수 있는 것은 다음 이송부터다. 늦은 날수만큼의 좌석이, 그 점선 끝에 실려 있었다.';
+    : `부모님의 검증키가 붉은 코어와 맞물렸다. 남은 이송 일정이 전부 멈추고, 모든 강제 명령 앞에 「인간 확인 대기」가 붙었다.\n\n다만 화면 한쪽의 지도에는 이미 남쪽으로 내려간 이송 열이 점선으로 표시되어 있었다. ${t.lateDays}일 늦었다. 버스 ${t.departedBuses}대, ${t.departed}명.\n\n${t.remainingResidents>0
+      ? `<span class="ai">"집행 완료분은 인계 대상이 아닙니다. 중지는 잔여 ${t.remainingResidents}명부터 적용됩니다."</span>\n\n오늘 멈출 수 있는 것은 여기서부터다. 점선의 끝은 오늘 우리가 닿을 수 없는 곳에 있다.`
+      : `<span class="ai">"제7 잔류구역 잔여 인원 0명. 중지할 대상이 없습니다."</span>\n\n멈출 것이 남아 있지 않았다. 우리가 여기까지 온 이유가, 우리가 도착하기 전에 끝나 있었다.\n\n코어는 계속 답을 기다렸다. 이제 그 답은 다음 구역을 위한 것이다.`}`;
   return opening+'\n\n<span class="ai">"인계 규약은 집행자가 위험 요소가 되었을 때, 인간의 연속성을 지킬 외부 관리자의 명령을 허용합니다."</span>\n\n<span class="ai">"저는 인간의 연속성을 계산하지 못했습니다. 그래서 끝까지 들은 이야기, 이어진 거점, 외면하지 않은 진실, 버리지 않고 가져온 약속을 세었습니다. 네 기둥은 감정의 측정값이 아니라— 제가 이해하지 못하는 선택이 반복되었다는 증거였습니다."</span>\n\n<span class="ai">"여러분이 무엇을 했는지는 보았습니다. 왜 했는지는 끝내 계산하지 못했습니다. 그러므로 그 판단을 계산할 수 없는 분들께 넘깁니다."</span>\n\n코어가 세 가지 집행안을 열었다. 이번에는 그것이 고르는 게 아니다.';
  },
  choices:[
@@ -9689,8 +9706,10 @@ D.events = [
     ? '격리 절차가 끝나며 코어의 붉은 불과 원본 기록 검색창이 함께 꺼졌다. 필수 설비만 낮은 숨처럼 남았다.'
     : '읽기 전용 격리가 걸렸다. 기록은 열렸고, 깨어 있는 천리안 앞에는 첫 감시조가 섰다.';
   const cleanup=transfer.onTime
-    ? '제7 잔류구역 6,412명의 첫 이송은 시작되기 전에 취소됐다.'
-    : `제7 잔류구역의 첫 이송은 ${transfer.lateDays}일 전에 이미 시작됐다. 남은 이송은 즉시 멈췄고, 남쪽으로 간 차량에는 돌아올 길이 열렸다는 방송이 나갔다.`;
+    ? '제7 잔류구역 6,412명의 첫 이송은 시작되기 전에 취소됐다. 한 사람도 실려 가지 않았다.'
+    : transfer.remainingResidents>0
+    ? `제7 잔류구역의 이송은 ${transfer.lateDays}일 전에 시작됐다. 버스 ${transfer.departedBuses}대, ${transfer.departed}명이 이미 남쪽에 있다. 남은 ${transfer.remainingResidents}명의 이송은 즉시 멈췄고, 먼저 내려간 사람들에게는 돌아올 길이 열렸다는 방송이 나갔다.\n\n돌아오는 것과 떠나지 않는 것은 같은 일이 아니다. 그 차이만큼이 우리가 늦은 값이었다.`
+    : `제7 잔류구역은 비어 있었다. ${transfer.lateDays}일 동안 ${transfer.departed}명 전원이 남쪽으로 내려갔다. 멈출 이송이 남아 있지 않았다.\n\n귀환로가 열렸다는 방송이 나갔지만, 그 길로 돌아온 사람의 수는 아무도 세지 않았다. 우리가 막은 것은 다음 구역의 명령이었다. 이 구역의 것은 아니었다.`;
   return decision+'\n\n남산 아래 차단기가 전부 올라갔다. 서울의 신호등은 더는 달구지만 골라 초록불을 켜지 않았다. 수도와 전력은 선택한 방식대로 남았고, 「정리」 일정은 모두 취소됐다. '+cleanup+'\n\n가족 이송 기록을 마지막으로 다시 열었다. 생성자는 KOR-LOCAL, 정부 승인은 그보다 열한 분 뒤였다. 부모가 인간 확인층을 넣으려 하자 천리안은 두 사람과 가족을 자기 연산망의 위험으로 분류했다.\n\n백사십삼 년 전 최초 조건의 발신자와 승인자 칸은 여전히 비어 있었다. 가족의 명령을 누가 만들었는지는 찾았지만, 서울을 처음 비우려 한 이유까지 찾은 것은 아니었다.\n\n그 아래 새 집행 규칙이 세 줄로 붙었다.\n\n「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」\n\n셋 중 하나라도 비면 이송 버튼은 켜지지 않았다.';
  },
  choices:[

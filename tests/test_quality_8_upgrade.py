@@ -49,7 +49,7 @@ with sync_playwright() as playwright:
     })""")
     check('요약은 네 개의 출발 근거와 직접 출발 선택을 제공한다',
           summary['open'] and summary['points'] == 4 and summary['focus'] == 'intro-summary-start' and
-          '30일' in summary['copy'] and '400km' in summary['copy'], str(summary))
+          '스무 날' in summary['copy'] and '400km' in summary['copy'], str(summary))
     page.screenshot(path=str(SHOT / '01-intro-summary.png'))
     page.click('#intro-summary-continue')
     check('전체 프롤로그로 손실 없이 돌아간다',

@@ -92,7 +92,7 @@ pacing should be improved inside the same gameplay scenes so the work compounds.
 
 Promotion gate:
 
-- 90% of new players can explain why they are going to Seoul and what DAY 30 means.
+- 90% of new players can explain why they are going to Seoul and what 시한(DAY 8) means.
 - 90% find the next action within 10 seconds without observer help.
 - First-45-minute abandonment is at most 15%.
 - No run contains three heavy events in sequence or 30 minutes without meaningful change.

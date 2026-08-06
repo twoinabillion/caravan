@@ -23,7 +23,7 @@ test. Any observer explanation counts as a task failure.
 
 | Cohort | Minimum | Required evidence |
 |---|---:|---|
-| New players, first 45 minutes | 10 | Pacing, next-action discovery, DAY 30/Seoul comprehension |
+| New players, first 45 minutes | 10 | Pacing, next-action discovery, 시한(DAY 8)/Seoul comprehension |
 | East-route completions | 4 | Route identity, combat, build, ending callbacks |
 | West-route completions | 4 | Exploration, settlement identity, supplies, ending callbacks |
 | Deliberate second journeys | 4 | Setup speed, changed scenes/choices, reason to replay |
@@ -35,7 +35,7 @@ test. Any observer explanation counts as a task failure.
 Record success without help, time, wrong turns, and the participant's own words.
 
 1. Begin a journey and choose the first road.
-2. Explain why Seoul matters and what DAY 30 means.
+2. Explain why Seoul matters and what 시한(DAY 8) means.
 3. Respond to the first road event and explain the consequence.
 4. Enter the first settlement and choose a useful action.
 5. Complete a temporary-companion step.
@@ -81,7 +81,7 @@ After play, rate each item from 0–10 without showing the baseline scores.
 A category becomes 9.0 only when its implementation and automated gates pass, the blind
 median is at least 9.0, and no blocker or regression remains. Also require:
 
-- At least 90% understand Seoul/DAY 30, find the next action, explain route choice, and explain combat results.
+- At least 90% understand Seoul/시한(DAY 8), find the next action, explain route choice, and explain combat results.
 - First-45-minute abandonment at or below 15%; observer interventions count as UI failures.
 - At least 90% speaker and visual-region identification; at least 80% identify five of seven audio regions.
 - Audio cue identification at least 90%, with no clipping/jumps and fatigue complaints below 10%.

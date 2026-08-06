@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DAY 30 집행·구제 유상화·야영 밸런스·페이싱 감독이 실제로 배선됐는지 확인한다."""
+"""시한 집행·구제 유상화·야영 밸런스·페이싱 감독·지각 대가가 실제로 배선됐는지 확인한다."""
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -34,48 +34,50 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(200)
     page.evaluate("document.querySelector('#arrival-scene') && document.querySelector('#arrival-scene').classList.remove('on')")
 
-    print('― DAY 30 시한 집행 (날짜 축)')
-    d10 = page.evaluate("""() => {
-      S.day=21; S._crisis=null; G.tickDeadline();
+    deadline = page.evaluate('D.transferDeadlineDay')
+    print(f'― DAY {deadline} 시한 집행 (날짜 축)')
+    d10 = page.evaluate("""(deadline) => {
+      S.day=Math.ceil(deadline*0.45); S._crisis=null; G.tickDeadline();
       return {flag:!!S.flags.deadline_seen_d10, queued:S._crisis};
-    }""")
-    check('D-10에 이송 준비 이벤트 예약', d10['flag'] and d10['queued'] == 'deadline_d10', str(d10))
+    }""", deadline)
+    check('1단계(잔여 60%) 이송 준비 이벤트 예약', d10['flag'] and d10['queued'] == 'deadline_d10', str(d10))
 
     print('― 시한 집행 (거리 축 — 실제 플레이에서 먼저 닿는 쪽)')
-    # 부산 출발 시 remainKm≈356이므로, 짧은 여정에서는 날짜가 아니라 거리가 압박을 연다.
+    # 날짜 축이 주도하고, 거리 축(150/80/40km)은 코앞까지 갔는데 아직 못 본 경우의 안전망이다.
     dist = page.evaluate("""() => {
       const out={start:G.remainKm()};
       const probe=(at)=>{ S.day=2; S.at=at; S.driving=null; S._crisis=null;
         for(const k of ['deadline_seen_d10','deadline_seen_d5','deadline_seen_d0']) delete S.flags[k];
         G.tickDeadline(); return {km:G.remainKm(), queued:S._crisis}; };
-      out.mid=probe('daejeon');
+      out.mid=probe('cheonan');   // 잔여 92km — 안전망 1단 구간
       out.near=probe('suwon');
       return out;
     }""")
-    check('출발 지점 잔여 거리가 260km 문턱보다 멀다 (거리 축이 단계적으로 열림)',
-          dist['start'] > 260, str(dist['start']))
-    check('중간 지점에서 거리 기준으로 압박 발화',
+    check('출발 지점은 거리 안전망 문턱(150km) 밖 — 날짜 축이 주도한다',
+          dist['start'] > 150, str(dist['start']))
+    # 안전망은 '한 단계도 못 본 채 코앞까지 간 경우'에만 켠다 (본문이 절대 날짜를 말하므로)
+    check('안전망: 한 단계도 못 봤고 서울 150km 안이면 거리로도 열린다',
           dist['mid']['queued'] in ('deadline_d10', 'deadline_d5', 'deadline_d0'), str(dist['mid']))
     check('서울 근처에서는 마지막 단계까지 도달', dist['near']['km'] <= 60, str(dist['near']))
     page.evaluate("""() => { for(const k of ['deadline_seen_d10','deadline_seen_d5','deadline_seen_d0']) delete S.flags[k];
       S.at='busan'; S._crisis=null; }""")
 
-    d5 = page.evaluate("""() => {
-      S._crisis=null; S.day=26; S.pursuit=0; G.tickDeadline();
+    d5 = page.evaluate("""(deadline) => {
+      S._crisis=null; S.day=Math.ceil(deadline*0.75); S.pursuit=0; G.tickDeadline();
       return {flag:!!S.flags.deadline_seen_d5, queued:S._crisis, pursuit:S.pursuit};
-    }""")
-    check('D-5에 통제 이벤트 + 관측 바닥 1', d5['flag'] and d5['queued'] == 'deadline_d5' and d5['pursuit'] >= 1, str(d5))
+    }""", deadline)
+    check('2단계(잔여 30%) 통제 이벤트 + 관측 바닥 1', d5['flag'] and d5['queued'] == 'deadline_d5' and d5['pursuit'] >= 1, str(d5))
 
-    late = page.evaluate("""() => {
-      S._crisis=null; S.day=31; G.tickDeadline();
+    late = page.evaluate("""(deadline) => {
+      S._crisis=null; S.day=deadline+1; G.tickDeadline();
       return {flag:!!S.flags.deadline_seen_late, queued:S._crisis};
-    }""")
+    }""", deadline)
     check('시한 초과 시 첫 이송 이벤트 예약', late['flag'] and late['queued'] == 'deadline_late', str(late))
 
-    ended = page.evaluate("""() => {
-      S._crisis=null; S.flags.core_decided=1; S.day=40; G.tickDeadline();
+    ended = page.evaluate("""(deadline) => {
+      S._crisis=null; S.flags.core_decided=1; S.day=deadline*3; G.tickDeadline();
       return {queued:S._crisis};
-    }""")
+    }""", deadline)
     check('처분 뒤에는 시한 압박 정지', ended['queued'] is None, str(ended))
     page.evaluate("delete S.flags.core_decided; S.day=2; S.pursuit=0; S._crisis=null")
 
@@ -136,6 +138,29 @@ with sync_playwright() as playwright:
     }""")
     check('peak에서 무거운 이벤트 가중 상승', director['wH'] > 1.2 and director['wC'] < 1, str(director))
     check('peak 풀이 무거운 이벤트로 좁혀짐 (breather가 가로채지 않음)', director['poolIds'] == ['x1'], str(director))
+
+    print('― 지각의 대가 (사람 수로 새겨지는가)')
+    cost = page.evaluate("""() => {
+      const read=(day)=>{
+        G.newGame('onroad','지각','full');
+        S.day=day; S.flags.core_quarantine=true;
+        const T=(id)=>{const e=D.events.find(x=>x.id===id)||D.seoulStops.find(x=>x.id===id);
+          return typeof e.text==='function'?e.text(S):e.text;};
+        const t=G.transferStatus();
+        return {departed:t.departed, remaining:t.remainingResidents,
+                dec:T('seoul_decision'), night:T('seoul_night')};
+      };
+      return {onTime:read(D.transferDeadlineDay-1), late:read(D.transferDeadlineDay+3),
+              deadline:D.transferDeadlineDay};
+    }""")
+    on_time, late = cost['onTime'], cost['late']
+    check('시한을 지키면 아무도 실려 가지 않는다',
+          on_time['departed'] == 0 and '한 사람도' in on_time['night'], str(on_time['departed']))
+    check('3일 지각 = 실제 인원이 남쪽으로 간다', late['departed'] == 1620 and late['remaining'] == 4792,
+          f"departed={late['departed']} remaining={late['remaining']}")
+    check('그 인원이 코어 앞 텍스트에 새겨진다', str(late['departed']) in late['dec'], late['dec'][:60])
+    check('그 인원이 에필로그에도 남는다', str(late['departed']) in late['night'], late['night'][:60])
+    check('지킨 엔딩과 늦은 엔딩이 실제로 다르다', on_time['night'] != late['night'])
 
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()

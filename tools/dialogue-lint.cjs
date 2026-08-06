@@ -17,6 +17,10 @@ const source = fs.readFileSync(path.join(root, 'src', '03-data.js'), 'utf8');
 const D = new Function(source + '\nreturn D;')();
 const dump = process.argv.includes('--dump');
 
+/* 검사 결과 수집 — 아래 최상위 검사들이 곧바로 push하므로 반드시 먼저 선언한다 */
+const errors = [];
+const warnings = [];
+
 const samples = [];
 const companionIds = Object.keys(D.comps || {});
 const allFlags = Object.fromEntries([
@@ -120,7 +124,7 @@ requireIntroOrder('intro-departure-choice', [
   ['불완전한 장치 인정', /아직은 몰라/],
   ['추가 기록 필요', /같은 이송을 겪은 사람/],
   ['동행은 본인 선택', /같은 곳까지 가겠다는 사람/],
-  ['30일 행동 시한', /서른 날 안에/],
+  ['행동 시한 선언', /스무 날 안에/],
 ]);
 const currentTransfer=introByScene.get('intro-current-expulsion');
 const childTransferSpeech=(currentTransfer&&currentTransfer.beats||[])
@@ -137,8 +141,6 @@ for (const [id, npc] of Object.entries(D.npcs || {})) {
 }
 for (const item of D.radioTexts || []) add('radio', 'radio', typeof item === 'string' ? item : item.t);
 
-const errors = [];
-const warnings = [];
 const personIds = new Set(Object.keys(D.comps || {}));
 
 for (const id of personIds) {

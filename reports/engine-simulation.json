@@ -1,58 +1,71 @@
 {
-  "generatedAt": "2026-08-06T08:07:00.121328+00:00",
-  "source": "real engine (G.newGame/startTravel/tick/pickOutcome/applyFx)",
+  "generatedAt": "2026-08-06T09:21:52.185298+00:00",
+  "source": "real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가",
+  "metric": "daysToSeoulNode",
   "runs": 60,
   "seed": 400000001,
   "maxDays": 45,
+  "deadlineDay": 20,
   "summary": {
     "direct": {
       "runs": 20,
-      "arrivedPct": 70.0,
-      "deadPct": 15.0,
-      "medianDay": 3,
+      "reachedPct": 75.0,
+      "deadPct": 5.0,
+      "medianDay": 5,
       "endedBuckets": {
-        "arrived": 14,
-        "dead": 3,
-        "timeout": 3
+        "dead": 1,
+        "reached": 15,
+        "timeout": 4
       },
       "meanParty": 0.0,
-      "meanRescues": 2.7,
-      "lateTransferPct": 30.0,
-      "meanEvents": 21.6,
+      "meanDeeds": 0.05,
+      "deedsNeed": 13,
+      "meanDay": 14.55,
+      "meanRescues": 3.25,
+      "lateTransferPct": 0.0,
+      "lateBase": "arrived",
+      "meanEvents": 22.9,
       "deadlineSeenPct": 100.0
     },
     "explorer": {
       "runs": 20,
-      "arrivedPct": 85.0,
+      "reachedPct": 100.0,
       "deadPct": 0.0,
-      "medianDay": 4,
+      "medianDay": 9,
       "endedBuckets": {
-        "arrived": 17,
-        "timeout": 3
+        "reached": 20
       },
       "meanParty": 0.0,
-      "meanRescues": 3.25,
-      "lateTransferPct": 15.0,
-      "meanEvents": 24.6,
+      "meanDeeds": 0.0,
+      "deedsNeed": 13,
+      "meanDay": 8.8,
+      "meanRescues": 3.75,
+      "lateTransferPct": 0.0,
+      "lateBase": "arrived",
+      "meanEvents": 52.9,
       "deadlineSeenPct": 100.0
     },
     "prepared": {
       "runs": 20,
-      "arrivedPct": 80.0,
+      "reachedPct": 85.0,
       "deadPct": 0.0,
-      "medianDay": 3,
+      "medianDay": 6,
       "endedBuckets": {
-        "arrived": 16,
-        "timeout": 4
+        "reached": 17,
+        "timeout": 3
       },
       "meanParty": 0.0,
-      "meanRescues": 3.1,
-      "lateTransferPct": 20.0,
-      "meanEvents": 21.8,
+      "meanDeeds": 0.0,
+      "deedsNeed": 13,
+      "meanDay": 12.8,
+      "meanRescues": 3.6,
+      "lateTransferPct": 0.0,
+      "lateBase": "arrived",
+      "meanEvents": 39.1,
       "deadlineSeenPct": 100.0
     },
     "_spread": {
-      "medianDaySpread": 1
+      "medianDaySpread": 4
     }
   }
 }
