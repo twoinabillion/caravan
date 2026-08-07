@@ -4,6 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 npm run build
+npm run test:health
 npm run verify:quick
 npm run test:quality8
 npm run test:quality9

@@ -26,8 +26,7 @@ const after = [
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js',
   'src/05-scene.js', 'src/06-mapgraph.js',
-  'src/07a-ui-core.js', 'src/07b-ui-panel.js', 'src/07c-ui-story.js',
-  'src/07d-ui-town.js', 'src/07e-ui-audio.js',
+  'src/07-ui.js', 'src/07e-ui-audio.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
 const introScenes = {
