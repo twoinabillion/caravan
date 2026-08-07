@@ -92,7 +92,8 @@ with sync_playwright() as playwright:
       const before=S.ended; G.dawn();
       const stranded=!!S.ended && !before;
       G.newGame('onroad','기피','full');
-      S.pursuit=5; S._shunnedDays=3; S.water=9; S.food=9;
+      /* 기피는 관측 5 + 실제 문전박대 2회 이후에만 — 길에서 자급하는 차는 기피로 죽지 않는다 */
+      S.pursuit=5; S._shunnedDays=3; S._shelterRefusals=2; S._lastPursuitUp=S.day; S.water=9; S.food=9;
       G.dawn();
       const shunned=!!S.ended;
       return {closes, stranded, shunned};
