@@ -180,6 +180,27 @@ const UI = (()=>{
     /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
     document.addEventListener('keydown',e=>{
       const modal=activeModal();
+      /* 지도 키보드 여행 — [/]로 갈 수 있는 이웃을 순회하고 Enter로 출발한다.
+         지도가 캔버스라 이 배선이 없으면 여행은 마우스 전용이다(2026-08-07). */
+      const mapOvl=document.querySelector('#ovl-map');
+      if(mapOvl&&mapOvl.classList.contains('on')&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){
+        if(e.key==='['||e.key===']'){
+          e.preventDefault();
+          const nbs=(G.neighbors(S.at)||[]).filter(n=>{ try{ return G.canTravelTo(n.id).ok; }catch(err){ return false; } });
+          if(nbs.length){
+            const ids=nbs.map(n=>n.id);
+            let idx=ids.indexOf(mapKbFocus);
+            idx=e.key===']'?(idx+1)%ids.length:(idx-1+ids.length)%ids.length;
+            mapKbFocus=ids[idx];
+            showNodeCard(mapKbFocus);
+          }
+          return;
+        }
+        if(e.key==='Enter'&&mapKbFocus){
+          const btn=document.querySelector('#nodecard [data-go]');
+          if(btn){ e.preventDefault(); btn.click(); mapKbFocus=null; return; }
+        }
+      }
       /* 선택지 숫자키 — 카드에 이미 번호가 그려져 있다(choice-index). 게임의 대부분이
          선택이므로 이것이 키보드 완주의 중심 배선이다. */
       if(modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){
@@ -2980,6 +3001,7 @@ const UI = (()=>{
 
   /* ── STATUS ── */
   let stTab='now';
+  let mapKbFocus=null;
   function renderStatus(){
     $('#st-mini').textContent=`DAY ${S.day} · ${Math.round(S.stats.km)}km`;
     document.querySelectorAll('#st-tabs button').forEach(x=>{

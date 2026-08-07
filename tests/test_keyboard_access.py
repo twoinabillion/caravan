@@ -152,6 +152,22 @@ with sync_playwright() as p:
     }""")
     check('숫자키 2가 두 번째 선택지를 실행한다', picked.get('cards', 0) >= 2 and picked.get('changed'), str(picked))
 
+    # ── 지도 키보드 여행 — ]로 이웃 순회, Enter로 출발 ──
+    travel = page.evaluate("""() => {
+      G.newGame('onroad','키보드여행','full');
+      document.querySelector('#ovl-map').classList.add('on');
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:']',bubbles:true}));
+      const cardOn=document.querySelector('#nodecard').classList.contains('on');
+      const goBtn=!!document.querySelector('#nodecard [data-go]');
+      const before=S.at;
+      document.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+      const departed=!!S.driving;
+      document.querySelector('#ovl-map').classList.remove('on');
+      return {cardOn, goBtn, departed, from:before, to:S.driving&&S.driving.to};
+    }""")
+    check('] 키가 이웃 노드 카드를 연다', travel.get('cardOn') and travel.get('goBtn'), str(travel))
+    check('Enter가 실제로 출발시킨다', travel.get('departed'), str(travel))
+
     check('콘솔/런타임 오류 0건', len(console_errors) == 0, str(console_errors[:5]))
 
     browser.close()

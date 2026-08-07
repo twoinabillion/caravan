@@ -112,6 +112,14 @@ MUTATIONS = [
         'new': "    && true   /* 기계도 배운다 — 바뀐 패턴엔 옛 해법이 안 통한다 */",
         'test': ['python3', 'tests/test_combat_rework.py'],
     },
+    {
+        'name': 'keyboard-travel',
+        'why': '지도 키보드 배선을 끊으면 여행이 마우스 전용으로 돌아간다',
+        'file': 'src/07-ui.js',
+        'old': "      if(mapOvl&&mapOvl.classList.contains('on')&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
+        'new': "      if(false&&mapOvl&&mapOvl.classList.contains('on')){",
+        'test': ['python3', 'tests/test_keyboard_access.py'],
+    },
 ]
 
 
