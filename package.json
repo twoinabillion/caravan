@@ -36,6 +36,8 @@
     "test:profiles": "python3 tests/test_start_profiles.py",
     "test:seoul": "python3 tests/test_seoul_sequence.py",
     "test:finale": "npm run build:html --silent && python3 tests/test_finale.py",
+    "fuzz": "python3 tools/fuzz-invariants.py --runs 10 --steps 400",
+    "fuzz:selftest": "python3 tools/fuzz-invariants.py --runs 2 --steps 60 --selftest || true",
     "verify:mutations": "python3 tools/mutation-check.py",
     "simulate:engine": "npm run build:html && python3 tools/simulate-engine.py --runs 60",
     "test:accessibility9": "npm run build:html --silent && python3 tests/test_quality_9_accessibility.py",

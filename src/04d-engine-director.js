@@ -696,8 +696,12 @@ G.arrive = ()=>{
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   const arrivalDelay=UI.onArrive();
-  if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.target===to)
-    setTimeout(()=>UI.toast(`🤝 ${D.recruitQuests[S.recruitQ.id].name}의 부탁을 진행할 수 있다`),arrivalDelay);
+  if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.target===to){
+    /* 타이머가 돌기 전에 영입이 끝나면 S.recruitQ는 null이다 — 이름을 지금 캡처한다
+       (2026-08-07 퍼저 실측 크래시) */
+    const recruitName=D.recruitQuests[S.recruitQ.id].name;
+    setTimeout(()=>UI.toast(`🤝 ${recruitName}의 부탁을 진행할 수 있다`),arrivalDelay);
+  }
   /* setTimeout으로 넘기는 id를 함께 기록한다. 타이머가 돌지 않는 환경(시뮬·테스트)이
      이 층을 통째로 놓치거나, 반대로 사본을 만들어 큐를 두 번 빼는 일을 막는다. */
   S._simDeferred=[];
