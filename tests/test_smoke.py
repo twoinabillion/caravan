@@ -4,7 +4,7 @@
 검사: 부팅→인트로→게임 진입, 콘솔 에러 0, 의뢰 4종 엔진 플로우, 신규 체인 이벤트 표시
 주의: headless 캔버스 getImageData는 못 믿는다 — 픽셀 검증은 스크린샷 눈검수로.
 """
-import base64, sys, pathlib
+import base64, json, sys, pathlib
 from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -33,7 +33,10 @@ with sync_playwright() as p:
 
     print('― 부팅/진입')
     check('타이틀 표시', pg.locator('#bt-new').is_visible())
-    check('모바일 단일 HTML 35MB 이하', (ROOT / '서울까지400km.html').stat().st_size < 35_000_000,
+    # 용량 상한의 단일 소스는 빌드 예산(reports/asset-budget.json) — 검사에 숫자를 또 박지 않는다
+    _budget = json.loads((ROOT / 'reports' / 'asset-budget.json').read_text())
+    check(f"모바일 단일 HTML 예산({_budget['html']['maxBytes']//1_000_000}MB) 이하",
+          (ROOT / '서울까지400km.html').stat().st_size <= _budget['html']['maxBytes'],
           f"{(ROOT / '서울까지400km.html').stat().st_size / 1_000_000:.1f}MB")
     check('「파란 트럭의 밤」 타이틀 BGM 내장',
           pg.evaluate("D.bgm.title.startsWith('data:audio/mpeg;base64,') && D.bgm.titleLoop === false"))
