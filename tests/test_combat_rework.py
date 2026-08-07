@@ -82,6 +82,23 @@ with sync_playwright() as playwright:
     check('읽어낸 위협의 counter는 확실히 관철된다', prep['expCertain'], str(prep))
     check('counters 밖 전술은 우회 불가', not prep['fleeBypass'], str(prep))
 
+    stamp = page.evaluate("""() => {
+      // 위협 도장은 조우 종료(combatEnd)에만 — 중간 단계에 찍으면 3단계 작전의
+      // 2·3단계가 첫 판부터 확정이 된다 (2026-08-07 재검토에서 실제로 그랬다)
+      const mid=D.events.find(e=>e.id==='route_ridge_rescue');   // combatEnd 없음
+      const last=D.events.find(e=>e.id==='route_ridge_extract'); // combatEnd 있음
+      S.combat={id:'ridge',edge:0,pressure:1,phase:1,history:[]};
+      delete S._threatRead;
+      G.pickOutcome(mid, mid.choices[0]);
+      const afterMid=!!(S._threatRead&&S._threatRead[mid.combat.threat]);
+      S.combat={id:'ridge',edge:0,pressure:1,phase:3,history:[]};
+      for(let i=0;i<20;i++){ const o=G.pickOutcome(last, last.choices.find(c=>c.combatRoll!==undefined)); if(o.fx&&o.fx.combatEnd) break; }
+      const afterEnd=!!(S._threatRead&&S._threatRead[last.combat.threat]);
+      return {afterMid, afterEnd};
+    }""")
+    check('중간 단계는 위협 도장을 찍지 않는다', not stamp['afterMid'], str(stamp))
+    check('조우 종료가 위협 도장을 찍는다', stamp['afterEnd'], str(stamp))
+
     coverage = page.evaluate("""() => {
       // 데이터 계약: 굴림뿐인 전투 전부에 counters와 맞물리는 tactic 선택이 있다
       const bad=[];

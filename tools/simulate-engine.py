@@ -26,7 +26,7 @@ DEFAULT_HTML = ROOT / '서울까지400km.html'
 DEFAULT_REPORT = ROOT / 'reports' / 'engine-simulation.json'
 
 SIM_JS = r"""
-({runs, baseSeed, policies, maxDays}) => {
+({runs, baseSeed, policies, maxDays, profileOverride}) => {
   const results = [];
   // UI 부작용 차단: 시뮬은 상태만 돌린다 (모달/토스트/오디오는 no-op)
   const realModalOpen = UI.modalOpen;
@@ -104,7 +104,7 @@ SIM_JS = r"""
   for (let i = 0; i < runs; i++) {
     const policy = policies[i % policies.length];
     G.seedOverride = baseSeed + i * 7919;
-    G.newGame('onroad', '시뮬', 'full');
+    G.newGame('onroad', '시뮬', 'full', (typeof profileOverride!=='undefined'&&profileOverride)||undefined);
     G.seedOverride = undefined;
     /* 고철 수입/지출 계측 — 카탈로그가 도달 가능한지 판단하려면 유입을 알아야 한다 */
     S._scrapEarned = 0; S._scrapSpent = 0; S._blocked = {};
@@ -610,6 +610,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--runs', type=int, default=60)
     ap.add_argument('--seed', type=int, default=400_000_001)
+    ap.add_argument('--profile', default='', help='출발 프로필 강제 (keeper/runner/hauler)')
+    ap.add_argument('--policies', default='', help='정책 목록 콤마 구분')
     ap.add_argument('--max-days', type=int, default=45)
     ap.add_argument('--html', type=Path, default=DEFAULT_HTML)
     ap.add_argument('--report', type=Path, default=DEFAULT_REPORT)
@@ -624,7 +626,8 @@ def main():
         page_deadline = page.evaluate('D.transferDeadlineDay')
         rows = page.evaluate(SIM_JS, {
             'runs': args.runs, 'baseSeed': args.seed,
-            'policies': ['direct', 'prepared', 'explorer', 'completionist'], 'maxDays': args.max_days,
+            'policies': args.policies.split(',') if args.policies else ['direct', 'prepared', 'explorer', 'completionist'],
+            'maxDays': args.max_days, 'profileOverride': args.profile or None,
         })
         browser.close()
 

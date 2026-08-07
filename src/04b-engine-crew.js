@@ -485,8 +485,10 @@ G.pickOutcome = (evd, choice)=>{
     out=G.rollOut(choice.out);
     index=Math.max(0,choice.out.indexOf(out));
   }
-  /* 이 위협을 한 번 겪었다 — 다음 조우부터 같은 계통은 읽는 법을 안다 */
-  if(evd&&evd.combat&&evd.combat.threat){
+  /* 이 위협을 한 번 겪어냈다 — 다음 조우부터 같은 계통은 읽는 법을 안다.
+     도장은 조우가 '끝난' 결과(combatEnd)에만 찍는다. 단계 중간에 찍으면
+     3단계 작전의 2·3단계가 첫 판부터 확정이 된다(2026-08-07 재검토 실측). */
+  if(evd&&evd.combat&&evd.combat.threat&&out&&out.fx&&out.fx.combatEnd){
     S._threatRead=S._threatRead||{};
     S._threatRead[evd.combat.threat]=true;
   }
