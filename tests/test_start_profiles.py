@@ -69,6 +69,26 @@ with sync_playwright() as playwright:
     }""")
     check('로드 후 profile 유지', kept.get('profile') == 'hauler', str(kept))
 
+    print('― 이전 순환의 흔적 (지난 결말이 다음 런에 남는다)')
+    trace = page.evaluate("""() => {
+      const out={};
+      for(const kind of ['story_done','too_late','thirst','stranded','shunned','empty_district']){
+        G.newGame('onroad','전판','full'); S.day=9; G.archiveQualityRun(kind);
+        G.newGame('onroad','후판','full');
+        out[kind]=(S._storyQueue||[]).includes('prev_trace_'+kind);
+      }
+      // 첫 런(아카이브 없음)엔 흔적이 없다
+      localStorage.removeItem('caravan_quality_runs_v1');
+      const keys=Object.keys(localStorage).filter(k=>/quality|archive/i.test(k));
+      keys.forEach(k=>localStorage.removeItem(k));
+      G.newGame('onroad','첫판','full');
+      out.firstRunClean=!(S._storyQueue||[]).some(id=>id.startsWith('prev_trace_'));
+      return out;
+    }""")
+    for kind in ['story_done','too_late','thirst','stranded','shunned','empty_district']:
+        check(f'{kind} 결말 → 다음 런에 흔적', bool(trace.get(kind)), '')
+    check('첫 런에는 흔적이 없다', bool(trace.get('firstRunClean')), str(trace))
+
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()
 

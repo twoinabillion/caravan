@@ -120,6 +120,14 @@ MUTATIONS = [
         'new': "      if(false&&mapOvl&&mapOvl.classList.contains('on')){",
         'test': ['python3', 'tests/test_keyboard_access.py'],
     },
+    {
+        'name': 'prev-cycle-trace',
+        'why': '흔적 큐잉을 끊으면 런들이 서로를 기억하지 못한다 — 메타 층이 장식이 된다',
+        'file': 'src/04a-engine-core.js',
+        'old': "    if(traceId&&D.events.some(e=>e.id===traceId)) G.queueStory(traceId);",
+        'new': "    if(false&&traceId&&D.events.some(e=>e.id===traceId)) G.queueStory(traceId);",
+        'test': ['python3', 'tests/test_start_profiles.py'],
+    },
 ]
 
 

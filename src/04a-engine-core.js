@@ -81,6 +81,13 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
   G.ensureNarrativeState();
   G.syncKnowledgeFromFlags();
+  /* 이전 순환의 흔적 — 지난 런의 결말이 이번 길 위에 하나 남는다.
+     143년 반복의 세계에서 이전 여정은 없던 일이 아니라 이전 순환이다. */
+  try{
+    const prev=G.qualityArchive().slice(-1)[0];
+    const traceId=prev&&prev.ending?('prev_trace_'+prev.ending):null;
+    if(traceId&&D.events.some(e=>e.id===traceId)) G.queueStory(traceId);
+  }catch(e){}
   G.addNote({type:'장소', title:'부산 감천 부두', body:'모든 것이 시작된 곳. 달구지에 시동을 걸었다.', links:[]});
   G.addNote({type:'물건', title:'달구지', body:'낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.', links:['할아버지']});
   G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판 KOR-LOCAL. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 스무 날 뒤 외곽의 마지막 잔류구역 이송을 예고했다.', links:[]});
