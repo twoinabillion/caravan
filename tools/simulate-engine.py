@@ -544,6 +544,11 @@ def gate(summary, rows, deadline):
 
     comp = summary.get('completionist')
     if comp:
+        # 경제가 '물리는' 증거 둘: 다 챙기는 플레이는 중량 페널티 구간(>8pt)에 실제로
+        # 들어가고, 배타 슬롯 경합을 실제로 겪는다. (2026-08-07 실측 11.6pt · 60%)
+        if (comp.get('meanWeight') or 0) < 8:
+            problems.append(
+                f"completionist: 평균 중량 {comp.get('meanWeight')}pt < 8 — 중량 기회비용이 발동하지 않는다")
         # 완주형의 존재 이유: 네 기둥이 실플레이 경로로 채워지는가.
         # 완주(completed)는 봇 내비 편차로 흔들려 출력만 하고, ready는 게이트로 건다.
         if comp.get('readyPct', 0) < 60:
