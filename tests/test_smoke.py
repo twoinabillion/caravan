@@ -1431,23 +1431,27 @@ with sync_playwright() as p:
         S.comps[id] = S.comps[id] || {mood:65, bond:20, lvl:3, perks:[], pending:0};
         S.comps[id].lvl = 3;
       });
-      // 개인 서사 Lv3 동료 3명 + 다른 기둥 충족 → 관계 기둥 부족
-      S.party = ['minji','parkss','kangwoo'];
+      // 관계 요구(D.seoulPillars.관계)보다 한 명 모자라면 관계 기둥이 잠긴다
+      const allIds=['minji','parkss','kangwoo','leo','jaeyi','eunsu'];
+      S.party = allIds.slice(0, D.seoulPillars.관계 - 1);
       ['resist_revealed','cell_road','cell_sea','cell_dome',
        'massacre_known','parent_key_found','es_truth','uplink_seen',
        'postman_letter','gp_envelope_found'].forEach(f => S.flags[f] = true);
       out.partialReady = G.seoulReady();
       out.missPillar = G.seoulMissing().pillar;   // '관계'
-      // 선택한 네 사람의 개인 서사 → 열림
-      S.party.push('leo');
+      // 요구 인원을 채우면 열림
+      S.party = allIds.slice(0, D.seoulPillars.관계);
       out.fourReady = G.seoulReady();
       // 전원 완주는 별도 보상 판정
-      S.party.push('jaeyi','eunsu');
+      S.party = allIds.slice();
       out.fullReady = G.seoulReady();
       out.fullCrew = G.fullCrewStories();
-      delete S.flags.uplink_seen;
+      // 진실 플래그를 요구 미만으로 지우면 진실 기둥이 잠긴다 (요구는 D.seoulPillars.진실)
+      const truthFlags=['massacre_known','parent_key_found','es_truth','uplink_seen'];
+      const removed=truthFlags.slice(D.seoulPillars.진실 - 1);
+      removed.forEach(f=>delete S.flags[f]);
       out.truthLocked = !G.seoulReady() && G.seoulMissing().pillar === '진실';
-      S.flags.uplink_seen = true;
+      removed.forEach(f=>S.flags[f]=true);
       // 영입 뒤 미합류 동료의 이름·위치를 자동 공개하지 않는다.
       S.party = []; S.notes = []; G.doRecruit('minji');
       out.refer = S.notes.some(n => Object.entries(D.comps).some(([id,c]) =>
@@ -1521,13 +1525,13 @@ with sync_playwright() as p:
     check('fx.flag2 지원', r8['flag2'])
     check('좌석 6·동료 6', r7['maxParty'] == 6 and r7['compCount'] == 6, str(r7))
     check('빈 상태 서울 잠김', not r7['emptyReady'])
-    check('동료 3명 개인 서사면 관계 기둥 잠김', not r7['partialReady'] and r7['missPillar'] == '관계', str(r7))
-    check('동료 4명 개인 서사+기둥→서울 열림', r7['fourReady'])
+    check('관계 요구 미만이면 관계 기둥 잠김', not r7['partialReady'] and r7['missPillar'] == '관계', str(r7))
+    check('관계 요구 충족+기둥→서울 열림', r7['fourReady'])
     check('6명 전원 완주는 별도 보상', r7['fullReady'] and r7['fullCrew'])
     check('세대 흔적 5개 코어 증언·실제 조합 반영', r7['traceChoice'] and r7['traceUnlocked'] and r7['traceNarrative'], str(r7))
     check('주행거리 본편 장면 순서 보장', r7['beat1'] == 'story_generation_form' and
           r7['beat2'] == 'story_family_principle' and r7['beat3'] == 'story_generation_speech', str(r7))
-    check('상행선 단서 없으면 진실 기둥 잠김', r7['truthLocked'], str(r7))
+    check('진실 요구 미만이면 진실 기둥 잠김', r7['truthLocked'], str(r7))
     check('영입 시 다음 동료 자동 안내 없음', not r7['refer'], str(r7))
 
     # 최종 엔딩: 코어 고백 → 실제 집행 선택 → 완결 에필로그
