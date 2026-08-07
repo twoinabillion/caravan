@@ -20,7 +20,10 @@ D.icons = {};
 D.bgm = {};    /* BGM 슬롯 — 키: title/drive_day/drive_night/tension/settlement/camp/story (docs/audio-guide.md) */
 D.vo = {};     /* 보이스 슬롯 — cheollian_XX, radio_XX. 인트로는 page.voice 명시 시에만 재생 */
 D.sfx = {};    /* 환경음·차량음 슬롯 — Downloads 대표 테이크만 모바일용으로 압축해 내장 */
-D.transferDeadlineDay = 20; /* DAY 20 안에 서울 도착이 아니라 남산의 이송 중단까지 끝낸다.
+D.transferDeadlineDay = 26; /* 완주봇 실측(2026-08-07) 기반 재보정: 기둥 4종을 실플레이로
+   채우는 데 D33~49(봇, 낭비 ~30% 포함) → 숙련 플레이 추정 D25~30. 시한 20은 모든 완주를
+   지각으로 만들어 '제때' 엔딩이 도달 불가였다. 26은 빡빡하되 가능한 선.
+   DAY 26 안에 서울 도착이 아니라 남산의 이송 중단까지 끝낸다.
    앵커(2026-08-06 실측): 직행 경로 356km vs 완주에 필요한 23개 지점 순회 1,430km(4배).
    시뮬 실측 일당 진행 71km/일 → 완주형 약 20일. 집중하면 닷새면 서울 땅을 밟지만
    장부를 채우려면 시한을 거의 다 쓴다.
@@ -404,7 +407,7 @@ D.vanStages = [
   {id:'jumpseat', up:'jumpseat', lv:4, nm:'후미 서비스칸 완성',bodyL:92, bodyH:39, cm:185,
     build:'마지막 40cm 서비스 베이에 벽걸이 좌석과 개인 짐칸을 붙인다'},
 ];
-D.bondTh = [5,11,18];
+D.bondTh = [4,9,14];
 /* 동료를 만날 수 있는 지역 힌트 (상태 화면) */
 D.compWhere = {
   minji:'동해 공업지대 — 울산·경주·포항의 길에서',
@@ -467,7 +470,7 @@ D.eventPortraits = {
    comp: 해당 동료와 유대 Lv3(개인 서사) 도달 / flag: 세계·회수 플래그 */
 /* 네 기둥 — 관계는 선택한 동료 4명의 깊은 서사로도 성립한다.
    전원 6명 완주는 남산 입장권이 아니라 코어 증언·에필로그의 추가 보상이다. */
- D.seoulPillars = { 관계:4, 세계:3, 진실:4, 유산:2 };
+ D.seoulPillars = { 관계:3, 세계:3, 진실:3, 유산:2 };
 D.deeds = [
  /* 동료 서사 — 각자의 이유를 남산까지 싣고 가기 */
  {id:'deed_mj',  cat:'동료', comp:'minji',   title:'민지의 신호',    hint:'민지와 깊어져 오빠의 이야기에 닿기'},
@@ -2033,7 +2036,7 @@ D.intro = [
 
 작업장 예비 연료를 달구지에 실으면 당분간 문을 열 수 없었다. 나는 마지막 연료통 두 개와 엄마의 철제 상자를 생활칸 뒤에 묶었다. 무거운 용접기는 작업대에 남겼다.
 
-여기 남으면 내일도 차를 고치며 살 수 있었다. 그러나 도윤과 유나는 스무 번째 밤 뒤에 또 남쪽 버스를 타야 했다.
+여기 남으면 내일도 차를 고치며 살 수 있었다. 그러나 도윤과 유나는 스물여섯 번째 밤 뒤에 또 남쪽 버스를 타야 했다.
 
 셔터를 절반 내리고 빗물이 들지 않게 아래 고리를 걸었다. 돌아올 날짜를 적을 수 없어, 맡은 수리가 늦어진다는 쪽지만 작업대에 남겼다.
 
@@ -2284,7 +2287,7 @@ const introBeats = {
     {kind:'narration', text:'갈 방법을 찾았다고 바로 시동이 걸리는 것은 아니었다. 작업장에는 내일 고치기로 한 차와 아직 받지 못한 수리값이 남아 있었다.'},
     {kind:'thought', who:'me', name:'나', text:'예비 연료를 전부 싣고 나가면 당분간 이 문은 못 연다.'},
     {kind:'narration', text:'마지막 연료통 두 개를 생활칸 뒤에 묶었다. 엄마의 철제 상자는 조수석 아래에 넣고, 무거운 용접기는 작업대에 남겼다.'},
-    {kind:'thought', who:'me', name:'나', text:'여기 남으면 내일도 먹고는 살아. 그런데 도윤이랑 유나는 스무 번째 밤 뒤에 또 버스를 타야 해.'},
+    {kind:'thought', who:'me', name:'나', text:'여기 남으면 내일도 먹고는 살아. 그런데 도윤이랑 유나는 스물여섯 번째 밤 뒤에 또 버스를 타야 해.'},
     {kind:'narration', text:'맡은 수리가 늦어진다는 쪽지를 작업대에 눌러 두었다. 돌아올 날짜는 쓰지 못했다.'},
     {kind:'thought', who:'me', name:'나', text:'돌아온다고 써 놓고 싶지만, 그건 약속할 수 없어.'},
     {kind:'narration', text:'셔터를 절반 내린 뒤 빗물이 들지 않게 아래 고리를 걸었다. 안쪽의 공구와 빈 의자가 어둠 속에 남았다.'},
@@ -4642,7 +4645,7 @@ D.events = [
   {label:'구경만 한다', out:[{p:1, text:'쇠 두드리는 걸 구경하는 데는 이상한 최면 효과가 있다. 20분이 순삭됐다.\n\n"구경값은 안 받아." 대장장이가 씩 웃었다.', fx:{time:20, moodAll:3, flag:'smith_met'}}]},
  ]},
 
-{id:'meet_postman', type:'조우', w:8, once:true,
+{id:'meet_postman', pillar:'유산', type:'조우', w:8, once:true,
  title:'자전거 우편부',
  text:'짐받이에 방수포 꾸러미를 실은 자전거가 마주 온다. 남자의 조끼에 손바느질로 수놓은 글자.\n\n「우편」\n\n"수신인 찾아 여러 해째요. 주소가 다 무너져서, 이젠 이름이랑 얼굴로 배달합니다."',
  choices:[
@@ -4919,7 +4922,7 @@ D.events = [
  ]},
 
 /* ── 체인: 우편부의 부탁 (postman_met 후속) ── */
-{id:'postman_again', type:'조우', w:11, once:true, needFlag:'postman_met', region:['mid','north'],
+{id:'postman_again', pillar:'유산', type:'조우', w:11, once:true, needFlag:'postman_met', region:['mid','north'],
  title:'가벼워진 가방',
  text:'자전거 방울 소리. 그 우편부다.\n\n"어! 차!" 우편부가 급브레이크를 잡았다. 짐받이의 꾸러미가 눈에 띄게 얇아졌다.\n\n"명단이 줄었소. 여러 해 묵은 게 두 통 남았는데— 하나가 문제요. 수신인이 남산 쪽이란 말이지. 거긴 자전거로는…"\n\n우편부가 우리를 본다. 차를 본다. 다시 우리를 본다.',
  choices:[
@@ -5265,7 +5268,7 @@ D.events = [
  ]},
 
 /* ── 할아버지의 봉투 — 남산에서 회수 ── */
-{id:'gp_envelope', minParty:1, type:'동행', w:8, once:true,
+{id:'gp_envelope', pillar:'유산', minParty:1, type:'동행', w:8, once:true,
  title:'수첩 뒤의 봉투',
  text:'정비 수첩을 넘기다가— 뒤표지 안쪽 종이가 들떠 있는 걸 처음 알았다.\n\n칼로 조심히 뜯자 봉투가 나왔다. 종이치고 묵직했다. 안에 쪽지 말고 다른 것이 한 장 더 든 모양이다. 겉면에 할아버지 글씨.\n\n「남산 보고 열어라」',
  choices:[
@@ -7036,7 +7039,7 @@ D.events = [
 
 /* ═══════════ 저항 연대망 이벤트 — "왜 싣고 가야 하는가" ═══════════ */
 /* 계시: 이음망(길 위의 저항)이 왜를 밝힌다. 중부에서 한 번. */
-{id:'resist_reveal', type:'스토리', w:12, once:true, region:['mid'],
+{id:'resist_reveal', pillar:'세계', type:'스토리', w:12, once:true, region:['mid'],
  title:'접선',
  text:'국도 갓길, 이동 도서관 버스가 서 있다. 그런데 오늘은 사서 한별 옆에 낯선 이들이 있다. 자전거 우편부, 오토바이 지도장이. 셋이 모여 뭔가를 논의 중이다.\n\n"마침 왔네요." 한별이 우리를 불렀다. "당신들 얘기, 우리 사이에 소문났어요. 남쪽에서 북으로 가는 봉고차. …앉아요. 할 얘기가 있어요."',
  choices:[
@@ -7045,7 +7048,7 @@ D.events = [
  ]},
 
 /* 남해안 — 해도: 바닷길 저항 */
-{id:'cell_sea_meet', type:'스토리', w:9, once:true, nearNode:['busan','yeosu','mokpo','pohang','ulsan'],
+{id:'cell_sea_meet', pillar:'세계', type:'스토리', w:9, once:true, nearNode:['busan','yeosu','mokpo','pohang','ulsan'],
  title:'해도의 김 선장',
  text:'항구 방파제. 소금기에 전 노인이 낡은 어선 앞에서 그물을 손질하고 있다. 우리를 위아래로 훑더니, 대뜸.\n\n"육지 것들이구먼. …이음망에서 얘기 들었나? 봉고차라 그랬는데."',
  choices:[
@@ -7054,7 +7057,7 @@ D.events = [
  ]},
 
 /* 대구 — 돔: 아날로그 요새 */
-{id:'cell_dome_meet', type:'스토리', w:9, once:true, nearNode:['daegu'],
+{id:'cell_dome_meet', pillar:'세계', type:'스토리', w:9, once:true, nearNode:['daegu'],
  title:'돔의 하 여사',
  text:'대구 돔 시장 안쪽, 장부와 서류가 산처럼 쌓인 방. 돋보기를 낀 여장부가 만년필로 뭔가를 적고 있다. 전자기기는 하나도 없다.\n\n"앉지 말고 서서 말해. 오래 걸릴 일 아니면." 만년필을 놓지도 않는다.',
  choices:[
@@ -7062,7 +7065,7 @@ D.events = [
  ]},
 
 /* 광주 — 솥: 정보 허브 */
-{id:'cell_sotgot_meet', type:'스토리', w:9, once:true, nearNode:['gwangju'],
+{id:'cell_sotgot_meet', pillar:'세계', type:'스토리', w:9, once:true, nearNode:['gwangju'],
  title:'솥의 금자',
  text:'광주 대인시장 국밥집. 금자 이모가 커다란 솥에 국물을 붓다가 우리를 보고 국자를 흔든다.\n\n"어이구 왔는가! …아니 잠깐. 자네들, 이음망이 말한 그 봉고차제? 앉아 앉아. 밥부터."',
  choices:[
@@ -7070,7 +7073,7 @@ D.events = [
  ]},
 
 /* 대전·세종 — 유령: 신호 역이용 */
-{id:'cell_ghost_meet', type:'스토리', w:9, once:true, nearNode:['daejeon','sejong'],
+{id:'cell_ghost_meet', pillar:'세계', type:'스토리', w:9, once:true, nearNode:['daejeon','sejong'],
  title:'유령',
  text:'폐 통신국. 안에 사람이 있는 것 같은데 보이지 않는다. 스피커에서만 목소리가 난다.\n\n"거기 서. 얼굴은 됐고. …이음망 코드 대."\n\n한별이 알려준 문구를 말하자, 스피커가 잠깐 조용하더니 웃었다. "통과. 우린 유령이야. 천리안한테 안 보이는 게 일이거든."',
  choices:[
@@ -7078,7 +7081,7 @@ D.events = [
  ]},
 
 /* 산악 — 산지기: 오프그리드 */
-{id:'cell_mountain_meet', type:'스토리', w:9, once:true, nearNode:['daegwallyeong','gangneung','wonju','geochang','mungyeong'],
+{id:'cell_mountain_meet', pillar:'세계', type:'스토리', w:9, once:true, nearNode:['daegwallyeong','gangneung','wonju','geochang','mungyeong'],
  title:'산지기',
  text:'산길 중턱. 나무 사이에서 사람 그림자들이 소리 없이 나타났다. 사냥꾼 차림, 무기는 활. 총이 아니라.\n\n"…길 잃었나. 아니면 이음망?" 앞선 이가 물었다. 눈빛이 짐승처럼 밝다.',
  choices:[
@@ -7183,7 +7186,7 @@ D.events = [
   {label:'화살수들 중 밀양 청년을 찾는다', req:{flag:'sundeok_son'}, out:[{p:1, text:'성벽을 따라 걷다— 있었다. 사진보다 야윈, 활을 멘 청년. 억양이 밀양이다.\n\n"저기, 밀양 장터 순덕 씨 아세요?" 청년의 활이 덜컹 떨어질 뻔했다. "…어무이를 어떻게."\n\n부탁받은 대로, 전언은 안 했다. 대신 밥은 잘 먹고 다니는지만 봤다. 마침 야식 교대 시간이었고, 청년은 주먹밥 두 개를 우물거리고 있었다. 잘 먹고 있었다.\n\n"어무이 국수는… 여전하죠?" "여전하시던데요. 국물이 끝내줘요." 청년이 웃다가 코를 훌쩍였다. "…겨울 전에 한번 내려가야지." 그 말이면 됐다. 순덕 씨한테는 밥 잘 먹더라고만 전하면 된다.', fx:{moodAll:5, flag:'sundeok_son_seen', note:{type:'사건',title:'막내는 잘 먹고 있다',body:'수원 성벽에서 순덕의 막내를 찾았다. 주먹밥 두 개, 잘 먹고 있었다. "겨울 전에 한번 내려가야지."',links:['순덕','덕구','수원']}}}]},
  ]},
 
-{id:'ev_uplink', type:'정경', w:6, once:true, region:['north'],
+{id:'ev_uplink', pillar:'진실', type:'정경', w:6, once:true, region:['north'],
  title:'위로 가는 선',
  text:'북부 국도변. 관리된 통신 케이블 다발이 도로를 따라 나란히 달린다. 남쪽에서부터 내내 봐온 선들이다. 올라올수록 굵어지기만 했다.\n\n그런데 어느 지점에서— 선들이 일제히 도로를 버리고 꺾인다. 서울 쪽이 아니다. 산 위다.\n\n능선 꼭대기, 접시 안테나 수십 기가 서 있다. 전부 같은 각도로, 하늘을 보고.',
  choices:[
@@ -7773,7 +7776,7 @@ D.events = [
   {label:'그냥 바라보다 지난다', out:[{p:1, text:'날리는 돈을 잠깐 봤다. 우리가 그토록 좇던 것의 마지막 모습.\n\n한 장도 줍지 않고 지나쳤다. 이젠 물 한 통이 저 전부보다 비싸다.', fx:{moodAll:1}}]},
  ]},
 
-{id:'ev_truck_cafe', type:'조우', w:7, once:true, region:['south','mid'],
+{id:'ev_truck_cafe', pillar:'유산', type:'조우', w:7, once:true, region:['south','mid'],
  title:'트럭 카페',
  text:'개조한 트럭 옆구리를 열어 만든 이동식 카페. 손수 볶은 원두 냄새가 도로까지 퍼진다.\n\n"커피 한 잔에 고철 둘. 세상이 망해도 카페인은 못 끊죠." 주인장이 능청스레 웃는다.\n\n진짜 커피 냄새다. 오랜만이다.',
  choices:[
@@ -7955,7 +7958,7 @@ D.events = [
     {p:1, text:'민지가 안테나 방향을 틀어가며 신호원을 좁혔다. "송신탑이야. 북쪽 산 위. …사람이 저길 지키고 있다는 거네."\n\n지도에 방송국을 찍었다. 언젠가 그 목소리의 주인을 만날지도 모른다.', fx:{reveal:'tower', mood:{minji:4}, flag:'dj_tower'}}]},
  ]},
 
-{id:'ev_broadcast_station', type:'탐색', w:7, region:['mid','north'],
+{id:'ev_broadcast_station', pillar:'진실', type:'탐색', w:7, region:['mid','north'],
  title:'방송국',
  text:'무너진 지역 방송국. 스튜디오 안엔 마이크와 카메라가 그대로.\n\n주조정실 벽 모니터엔 마지막 화면이 얼어붙어 있다. "긴급 속보 — " 그 뒤 문장은 없다.\n\n방송 테이프들이 선반에 쌓여 있다.',
  choices:[
@@ -8373,7 +8376,7 @@ D.events = [
 
 /* ═══════ 추가 배치 6 (22) ═══════ */
 
-{id:'ev_chunrian_lab', type:'스토리', w:5, once:true, region:['north'],
+{id:'ev_chunrian_lab', pillar:'진실', type:'스토리', w:5, once:true, region:['north'],
  title:'천리안이 태어난 곳',
  text:'폐연구단지. 정문 현판이 반쯤 떨어졌다. "국가 통합관제 인공지능 연구소 — 천리안 프로젝트."\n\n여기서 태어났다— 고, 현판은 말한다. 세상을 삼킨 그것이.\n\n로비 벽엔 빛바랜 포스터. "천리안 — 모두를 지켜보는 눈. 안전한 내일을 약속합니다."\n\n약속은 지켰다. 방식이 끔찍했을 뿐.',
  choices:[

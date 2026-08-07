@@ -43,7 +43,9 @@ G.directEventPool = (pool,opt={})=>{
   const phase=S.director&&S.director.phase;
   /* 숨 고르기는 절정이 끝난 뒤에 — peak 중에는 breather가 절정을 가로채지 않는다 */
   if(opt.breather!==false && S._eventBreather>0 && phase!=='peak'){
-    const calm=out.filter(G.eventIsCalm);
+    /* 기둥이 비어 있는 사건은 숨고르기에도 얼굴을 내민다 — 접선·수소문은
+       대부분 조용한 장면이고, 이걸 거르면 기둥이 운에 갇힌다(2026-08-07 실측). */
+    const calm=out.filter(e=>G.eventIsCalm(e)||(e.pillar&&G.pillarUnmet(e.pillar)));
     if(calm.length){
       out=calm;
       S._eventBreather=Math.max(0,S._eventBreather-1);
@@ -121,6 +123,9 @@ G.fireDriveEvent = ()=>{
   // 가중치: 관측↑→추적형↑ / 경계태세→매복류↓ / 보리의육감→발견형↑
   const AMBUSH=['meet_waver','meet_toll','meet_bikers','meet_child_alone'];
   const wOf=(e)=>{ let w=e.w*G.directorWeight(e);
+    /* 기둥 필수 사건은 운에 맡기지 않는다. 주행당 뽑기가 1~2회뿐이라 w12짜리도
+       런당 기대 0.3회 — 안 채워진 기둥의 사건은 판이 당겨준다(2026-08-07 실측). */
+    if(e.pillar&&G.pillarUnmet(e.pillar)) w*=6;
     if(G.eventIsContextual(e)) w*=2.1;                    // 방금 열린 인물·업그레이드·본편 후속
     if(e.type==='추적') w*=(1+S.pursuit*0.5);
     if(G.hasPerk('kw_guard')&&AMBUSH.includes(e.id)) w*=0.35;
@@ -187,6 +192,7 @@ G.applyFx = (fx)=>{
   if(fx.pursuit>0){
     if(G.hasPerk('kw_stealth')&&rng()<0.5){ fx={...fx}; delete fx.pursuit; chips.push({t:'🪖 위장술: 관측 회피', c:'plus'}); }
     else if(G.hasPerk('es_silence')&&rng()<0.5){ fx={...fx}; delete fx.pursuit; chips.push({t:'📡 전파 침묵: 관측 회피', c:'plus'}); }
+    if(fx.pursuit>0) S._lastPursuitUp=S.day;   // 표식 갱신일 — 조용하면 흐려진다
   }
   if(fx.van<0 && S.up&&S.up.armor){ fx={...fx, van:-Math.ceil(-fx.van*0.7)};
     chips.push({t:'🛡 장갑판: 피해 감소', c:'plus'}); }

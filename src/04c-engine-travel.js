@@ -343,6 +343,13 @@ G.startTravel = (to)=>{
       slots.push({at:chk.km*(0.3+rng()*0.35), beat:true});
       slots.sort((a,b)=>a.at-b.at);
     }
+    /* 기둥 접선도 길의 장면이다. 접선은 노드 앵커형(nearNode)이라 그 구간 1~2번
+       뽑기에 걸리길 비는 구조로는 산술이 안 된다(2026-08-07 완주봇: 50일에 0~1/3).
+       이 구간에서 만날 수 있는 접선이 있으면 자리 하나를 보장한다. */
+    if(D.events.some(e=>e.pillar&&G.pillarUnmet(e.pillar))){
+      slots.push({at:chk.km*(0.5+rng()*0.3), pillarPick:true});
+      slots.sort((a,b)=>a.at-b.at);
+    }
     /* 관측이 문턱을 넘으면 검문이 실제로 길 위에 선다 — 긴 구간일수록 더 자주 */
     const watch=G.pursuitCheckpoint();
     if(watch){
@@ -427,6 +434,11 @@ G.tick = (dt)=>{ // dt: real seconds
     if(slot.special==='bridge'){ G.openEvent(D.bridgeEvent); return; }
     if(slot.special==='impact'){ G.openEventById('settlement_road_echo'); return; }
     if(slot.beat){ const id=G.popBeat(); if(id){ G.openEventById(id); return; } }
+    if(slot.pillarPick){
+      const pool=G.eligible().filter(e=>e.pillar&&G.pillarUnmet(e.pillar));
+      if(pool.length){ G.openEvent(pool[Math.floor(rng()*pool.length)]); return; }
+      G.fireDriveEvent(); return;   // 이 구간엔 접선이 없다 — 자리는 일반 뽑기로
+    }
     if(slot.forced){ G.openEventById(slot.forced); return; }   // 관측 문턱이 세운 검문
     if(slot.gen){ OFF.playGenerated(()=>G.fireDriveEvent()); return; }
     G.fireDriveEvent(); return;

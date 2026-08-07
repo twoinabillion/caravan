@@ -575,12 +575,26 @@ G.dawn = ()=>{
   if(S.thirst>=3){ G.endGame('thirst'); return; }
   /* 좌초 — 연료도 살 고철도 없고 마을도 아닌 곳에서 며칠째. 구제는 무한하지 않다. */
   const atTown=!!(S.at&&D.nodes[S.at]&&D.nodes[S.at].stl);
-  if(S.fuel<=0 && !atTown && S.scrap<8 && ((S._rescues&&S._rescues.nofuel)||0)>=3){
+  /* 빈 탱크로 길가에서 맞는 아침 — 구제가 먼저 온다(값은 오르고 세 번이 한계).
+     고철이 있어도 살 곳이 없으면 영구 교착이 되는 소프트락 실측(2026-08-07 완주봇). */
+  if(S.fuel<=0 && !atTown && !S.driving){
+    /* 구제 사다리는 마지막 단(견인 20고철·걷기)을 계속 제안한다 — 셀 수 있는 건 값이지 횟수가 아니다 */
+    setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 800);
+  }
+  if(S.fuel<=0 && !atTown && S.scrap<20 && ((S._rescues&&S._rescues.nofuel)||0)>=3){
     S._strandedDays=(S._strandedDays||0)+1;
     if(S._strandedDays>=2){ G.endGame('stranded'); return; }
   } else S._strandedDays=0;
+  /* 관측은 갱신되지 않으면 흐려진다 — 이틀 조용하면 표식이 한 단계 낡는다.
+     이게 없으면 관측 5가 흡수 상태가 되어 늦은 완주는 구조적으로 기피 사망한다
+     (2026-08-07 완주봇: ready 후 전원 shunned). 압박에는 대응 수단이 있어야 한다. */
+  if(S.pursuit>0 && (S.day-(S._lastPursuitUp||0))>=2){
+    S.pursuit--; S._lastPursuitUp=S.day;
+    if(S.pursuit<G.PURSUIT_SHUNNED) UI.toast('📡 표식이 낡았다 — 관측 -1');
+  }
   /* 기피 — 관측 문턱을 넘긴 채 마을이 계속 문을 닫으면 길 위에서 버티는 일만 남는다 */
-  if(S.pursuit>=G.PURSUIT_SHUNNED){
+  if(S.pursuit>=G.PURSUIT_SHUNNED && (S._shelterRefusals||0)>=2){
+    /* 문전박대를 실제로 두 번 이상 겪은 뒤에만 — 길에서 자급하는 차는 기피로 죽지 않는다 */
     S._shunnedDays=(S._shunnedDays||0)+1;
     if(S._shunnedDays>=4){ G.endGame('shunned'); return; }
   } else S._shunnedDays=0;
@@ -608,8 +622,11 @@ G.tickDeadline = ()=>{
   } else {
     fire('deadline_seen_late','deadline_late');
     /* 늦은 하루하루가 관측을 끌어올린다 — 시간 자체가 비용이다 */
-    if(t.lateDays>=2 && S.pursuit<5 && rng()<0.5){
-      S.pursuit=clamp(S.pursuit+1,0,5);
+    /* 지각만으로 기피 문턱(5)을 넘기면 too_late 엔딩이 영원히 도달 불가가 된다 —
+       늦은 완주는 죽음이 아니라 '늦은 값'을 치르는 결말이어야 한다(2026-08-07 완주봇 실측).
+       5는 습격·강탈 같은 스스로 저지른 일로만 넘는다. */
+    if(t.lateDays>=2 && S.pursuit<4 && rng()<0.5){
+      S.pursuit=clamp(S.pursuit+1,0,4); S._lastPursuitUp=S.day;
       UI.toast('👁 이송 경로의 초계가 늘었다 — 관측 +1');
     }
   }

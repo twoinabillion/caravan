@@ -66,6 +66,20 @@ SIM_JS = r"""
         }, choices[0]);
       } else if (policy === 'explorer') {
         choice = choices[choices.length - 1];
+      } else if (policy === 'completionist') {
+        // 완주형은 서사를 진전시키는 선택을 안다: 영입 시작·유대·기억·본편 플래그 우선
+        const score = (c) => {
+          const fx = (c.out && c.out[0] && c.out[0].fx) || {};
+          let v = 0;
+          if (fx.startRecruit) v += 100;
+          if (fx.recruitChoice || fx.recruitReady || fx.recruitJoin) v += 100;
+          if (fx.flag) v += 30;
+          if (fx.bond || fx.bondAll) v += 20;
+          if (fx.note) v += 3;
+          if ((fx.pursuit || 0) > 0) v -= 60;   // 관측 5 = 기피 죽음 위험
+          return v;
+        };
+        choice = choices.reduce((a, b) => score(b) > score(a) ? b : a, choices[0]);
       } else {
         choice = choices[Math.min(1, choices.length - 1)];
       }
@@ -75,6 +89,11 @@ SIM_JS = r"""
       const meta = out && out.combatMeta || null;
       let entry = (out.fx && out.fx.combatEnd) ? G.rememberCombatChoice(evd, choice, meta) : null;
       G.applyFx(out.fx || {});
+      /* offerComp는 UI 확인 다이얼로그를 거쳐 G.doRecruit로 이어진다 —
+         봇은 자리가 있으면 태운다 (direct는 혼자 간다는 성향이라 제외) */
+      if (out.fx && out.fx.offerComp && policy !== 'direct') {
+        try { if (S.party.length < G.maxParty()) { G.doRecruit(out.fx.offerComp); trace('합류 ' + out.fx.offerComp); } else trace('자리없음 ' + out.fx.offerComp); } catch (e) {}
+      }
       if (!entry) G.rememberCombatChoice(evd, choice, meta);
       if (G.afterChoice) { try { G.afterChoice(evd, choice, out); } catch (e) {} }
       if (out.fx && out.fx.chain) { const next = D.events.find(e => e.id === out.fx.chain); if (next) G.openEvent(next); }
@@ -105,7 +124,8 @@ SIM_JS = r"""
         const buyable = (D.upgrades || [])
           .filter(u => !S.up[u.id] && G.canBuyUp(u.id).ok)
           .sort((a, b) => rank(a) - rank(b));
-        if (!buyable.length || S.scrap < G.upScrapCost(buyable[0]) + 8) {
+        const reserve = policy === 'completionist' ? 30 : 8;   // 긴 투어는 구제·보급 예비금이 생명줄
+        if (!buyable.length || S.scrap < G.upScrapCost(buyable[0]) + reserve) {
           for (const u of (D.upgrades || [])) {
             if (S.up[u.id]) continue;
             const why = G.canBuyUp(u.id).why || (S.scrap < G.upScrapCost(u) + 8 ? '여유 부족' : '');
@@ -129,11 +149,32 @@ SIM_JS = r"""
                  wants:['tank1','tank2','collector','garden','kitchen','stove','fridge','bunk','awning','susp','armor']},
       explorer: {bundles:3, explore:2, upgrades:true,  repairAt:0.75, campAt:55, fieldWork:true,
                  wants:['scope','antenna','mudtires','winch','lightbar','bullbar','solar','snorkel','sidebox','armory','horn']},
+      /* 완주형 — 네 기둥을 실제로 채우러 다닌다. 영입 목표가 서울 반대 방향이면
+         BFS로 우회한다. 이 정책의 소요일이 곧 "다 챙기는 플레이"의 실측이다. */
+      completionist: {bundles:3, explore:2, upgrades:true, repairAt:0.75, campAt:60, fieldWork:true,
+                 wants:['bench','cabin','tank1','scope','antenna','collector','garden','winch','kitchen','bunk']},
     }[policy];
 
     /* 동료 영입 — 네 기둥의 '관계'는 영입 없이는 영영 0이다.
        엔진의 실제 진행 함수(G.openRecruitStep)를 그대로 부른다. */
+    S._recruitTrace = [];
+    S._poolLog = {};
+    if (!G._fireWrapped) {
+      G._fireWrapped = true;
+      const origFire = G.fireDriveEvent;
+      G.fireDriveEvent = () => {
+        try {
+          const pool = G.directEventPool(G.eligible());
+          for (const e of pool) if (['resist_reveal','cell_sea_meet','cell_dome_meet','gp_envelope','postman_again'].includes(e.id))
+            S._poolLog[e.id] = (S._poolLog[e.id] || 0) + 1;
+          S._poolLog._calls = (S._poolLog._calls || 0) + 1;
+        } catch (e) {}
+        return origFire();
+      };
+    }
+    const trace = (m) => { if (S._recruitTrace.length < 40) S._recruitTrace.push(`D${S.day} ${m}`); };
     const pushRecruit = () => {
+      if (S.recruitQ) trace(`Q ${S.recruitQ.id}:${S.recruitQ.stage}@${S.at}→${S.recruitQ.target}`);
       let guard3 = 0;
       while (S.recruitQ && guard3++ < 4) {
         const before = JSON.stringify(S.recruitQ);
@@ -149,7 +190,9 @@ SIM_JS = r"""
       const stl = S.at && D.nodes[S.at] && D.nodes[S.at].stl;
       if (!stl) return;
       let guard2 = 0;
-      while (S.water <= G.partySize() * 2 && S.scrap >= 8 && guard2++ < 3) G.tradeBundle(stl);
+      // 6인 파티가 정착지 사이 사나흘을 버틴다 — 이틀치만 사면 길에서 마른다
+      while ((S.water <= G.partySize() * 3 + 4 || S.food <= G.partySize() * 2) && S.scrap >= 8 && guard2++ < 8)
+        G.tradeBundle(stl);
     };
 
     while (!ended && S.day <= maxDays && guard++ < 4000) {
@@ -160,9 +203,14 @@ SIM_JS = r"""
         /* 여기까지가 이 도구가 정직하게 잴 수 있는 구간이다: 주행·보급 경제.
            네 기둥(서사 수집)은 자동 플레이어가 수행하지 못하므로, 관문 통과 여부와
            무관하게 '서울 노드 첫 도달일'을 기록하고 런을 끝낸다. */
-        lastMiss = G.seoulReady() ? null : G.seoulMissing();
-        ended = 'reached';
-        break;
+        if (policy === 'completionist' && !G.seoulReady()) {
+          /* 관문에서 되돌아왔다 — 기둥을 채우러 계속 돈다. 이 정책의 존재 이유다. */
+          lastMiss = G.seoulMissing();
+        } else {
+          lastMiss = G.seoulReady() ? null : G.seoulMissing();
+          ended = G.seoulReady() ? 'completed' : 'reached';
+          break;
+        }
       }
 
       if (S.at && D.nodes[S.at] && D.nodes[S.at].stl) {
@@ -191,16 +239,93 @@ SIM_JS = r"""
       if (S.ended) { ended = 'dead'; break; }
 
       pushRecruit();
-      // 서울에 가장 가까워지는 이웃을 고른다 (remainKm 기준 그리디)
-      const here = S.at;
-      let target = null, bestRemain = Infinity;
-      for (const nb of G.neighbors(here)) {
-        const save = S.at; S.at = nb.id;
-        const remain = G.remainKm();
-        S.at = save;
-        if (remain < bestRemain) { bestRemain = remain; target = nb.id; }
+      // 퍽 선택 대기가 걸리면 유대 레벨이 영원히 멈춘다 — 사람은 카드에서 고른다
+      for (const cid of S.party || []) {
+        const c = S.comps[cid];
+        if (c && c.pending) { try { G.choosePerk(cid, 0); } catch (e) {} }
       }
+      const here = S.at;
+      let target = null;
+      const stepToward = (goal) => {
+        const prev = {}; prev[here] = here;
+        const queue = [here];
+        while (queue.length) {
+          const cur = queue.shift();
+          if (cur === goal) break;
+          for (const nb of G.neighbors(cur)) if (!(nb.id in prev)) { prev[nb.id] = cur; queue.push(nb.id); }
+        }
+        if (!(goal in prev)) return null;
+        let step = goal;
+        while (prev[step] !== here) step = prev[step];
+        return step;
+      };
+      // 생존이 최우선 — 물·식량이 이틀치 밑이면 최근접 정착지로 간다
+      if (policy === 'completionist') {
+        const need = 2 + (S.party || []).length;
+        if (S.water < need || S.food < need) {
+          let bestStl = null, bestLen = Infinity;
+          for (const id of Object.keys(D.nodes)) {
+            if (!D.nodes[id].stl || id === here) continue;
+            const dist = {}; dist[here] = 0; const q2 = [here];
+            let found = -1;
+            while (q2.length) {
+              const cur = q2.shift();
+              if (cur === id) { found = dist[cur]; break; }
+              for (const nb of G.neighbors(cur)) if (!(nb.id in dist)) { dist[nb.id] = dist[cur] + 1; q2.push(nb.id); }
+            }
+            if (found >= 0 && found < bestLen) { bestLen = found; bestStl = id; }
+          }
+          if (bestStl) target = stepToward(bestStl);
+        }
+      }
+      // 장부가 찼으면 남산이다 — 우회는 끝났다
+      if (!target && policy === 'completionist' && G.seoulReady()) target = stepToward('seoul');
+      // 완주형: 영입 목표가 있으면 그리로 가는 최단 경로의 다음 발
+      if (!target && policy === 'completionist' && S.recruitQ && (S.recruitQ.stage === 'task' || S.recruitQ.stage === 'follow')
+          && S.recruitQ.target && S.recruitQ.target !== here) {
+        target = stepToward(S.recruitQ.target);
+      }
+      if (!target && policy === 'completionist' && !G.seoulReady()) {
+        /* 기둥이 안 찼으면 서울은 벽이다 — 미방문 노드로 순회하며 사건을 모은다 */
+        S._visited = S._visited || {}; S._visited[here] = (S._visited[here] || 0) + 1;
+        let bestScore = -Infinity;
+        for (const nb of G.neighbors(here)) {
+          if (nb.id === 'seoul') continue;
+          const visits = S._visited[nb.id] || 0;
+          const save = S.at; S.at = nb.id; const remain = G.remainKm(); S.at = save;
+          /* 덜 가 본 곳 우선, 같은 방문 횟수면 서울과 가까운 쪽 (막판에 헤매지 않게) */
+          const score = -visits * 1000 - remain;
+          if (score > bestScore) { bestScore = score; target = nb.id; }
+        }
+      }
+      if (policy === 'completionist' && target === 'seoul' && !G.seoulReady()) target = null;
+      if (!target) {
+        // 기본: 서울에 가장 가까워지는 이웃 (remainKm 기준 그리디)
+        let bestRemain = Infinity;
+        for (const nb of G.neighbors(here)) {
+          if (policy === 'completionist' && nb.id === 'seoul' && !G.seoulReady()) continue;
+          const save = S.at; S.at = nb.id;
+          const remain = G.remainKm();
+          S.at = save;
+          if (remain < bestRemain) { bestRemain = remain; target = nb.id; }
+        }
+      }
+      if (!target) { G.camp(); resolveEvent(policy); continue; }
+      if (policy === 'completionist' && G.seoulReady() && S._recruitTrace.length < 40)
+        trace(`준비완료 @${here}→${target} 관측${S.pursuit} 연료${Math.round(S.fuel)}`);
       if (!target) { ended = 'stuck'; break; }
+      /* 고른 목표가 막혔으면(연료 부족 등) 갈 수 있는 이웃 중 차선을 고른다 —
+         같은 구간을 12일 재시도하는 교착이 실제로 났다(2026-08-07 seed77). */
+      if (!G.canTravelTo(target).ok) {
+        let alt = null, altRemain = Infinity;
+        for (const nb of G.neighbors(here)) {
+          if (!G.canTravelTo(nb.id).ok) continue;
+          if (policy === 'completionist' && nb.id === 'seoul' && !G.seoulReady()) continue;
+          const save = S.at; S.at = nb.id; const remain = G.remainKm(); S.at = save;
+          if (remain < altRemain) { altRemain = remain; alt = nb.id; }
+        }
+        if (alt) target = alt;
+      }
       const chk = G.canTravelTo(target);
       if (!chk.ok) {
         if (S.at && D.nodes[S.at] && D.nodes[S.at].stl) { G.trade(D.nodes[S.at].stl, 0); G.camp(); resolveEvent(policy); continue; }
@@ -236,6 +361,9 @@ SIM_JS = r"""
 
       if (S.roadGarage) { buyUpgrades(); S.roadGarage = false; meterScrap(); }
       if (S.fatigue >= cfg.campAt || G.isNight()) { G.camp(); resolveEvent(policy); drain(); }
+      if (S.fuel <= 0 && !(S.at && D.nodes[S.at] && D.nodes[S.at].stl) && !S.driving) {
+        G.openRescue('nofuel', 'crisis_nofuel'); resolveEvent(policy);
+      }
       if (S.roadGarage) { buyUpgrades(); S.roadGarage = false; meterScrap(); }
       if (S.ended) { ended = 'dead'; break; }
     }
@@ -243,6 +371,14 @@ SIM_JS = r"""
     results.push({
       policy, ended,
       seen: [...new Set(seenEvents)], roadGarageSeen: seenEvents.includes('road_mechanic'),
+      recruitTrace: S._recruitTrace || [], poolLog: S._poolLog || {},
+      party: (S.party||[]).length,
+      compLvls: Object.fromEntries((S.party||[]).map(id=>[id,(S.comps[id]||{}).lvl||0])),
+      pillars: (()=>{ try { const p=G.pillars(); return Object.fromEntries(Object.entries(p).map(([k,v])=>[k,v.have+'/'+v.need])); } catch(e){ return null; } })(),
+      seoulReady: (()=>{ try { return G.seoulReady(); } catch(e){ return false; } })(),
+      storyDone: !!(S.flags&&S.flags.story_done),
+      deathCause: S.ended && S.endKind ? S.endKind : (S.ended ? 'unknown' : null),
+      lastVitals: {water:S.water, food:S.food, fuel:S.fuel, van:S.van, pursuit:S.pursuit},
       missing: lastMiss ? `${lastMiss.pillar} ${lastMiss.have}/${lastMiss.need}` : '',
       ready: !!(typeof G.seoulReady === 'function' && G.seoulReady()),
       deeds: (typeof G.deedsDone === 'function' ? G.deedsDone().length : 0),
@@ -306,11 +442,12 @@ def summarize(rows, deadline):
     policies = sorted({r['policy'] for r in rows})
     for policy in policies:
         subset = [r for r in rows if r['policy'] == policy]
-        arrived = [r for r in subset if r['ended'] == 'reached']
+        arrived = [r for r in subset if r['ended'] in ('reached', 'completed')]
         days = sorted(r['day'] for r in arrived)
         out[policy] = {
             'runs': len(subset),
             'reachedPct': round(100 * len(arrived) / max(1, len(subset)), 1),
+            'completedPct': round(100 * sum(1 for r in subset if r['ended'] == 'completed') / max(1, len(subset)), 1),
             'deadPct': round(100 * sum(1 for r in subset if r['ended'] == 'dead') / max(1, len(subset)), 1),
             'medianDay': days[len(days) // 2] if days else None,
             'endedBuckets': {k: sum(1 for r in subset if r['ended'] == k)
@@ -333,6 +470,7 @@ def summarize(rows, deadline):
             'meanEvents': round(sum(r['events'] for r in subset) / max(1, len(subset)), 1),
             'deadlineSeenPct': round(100 * sum(1 for r in subset if r['deadlineSeen']) / max(1, len(subset)), 1),
             'lateRatePct': round(100 * sum(1 for r in subset if (r.get('day') or 0) > deadline) / max(1, len(subset)), 1),
+            'readyPct': round(100 * sum(1 for r in subset if r.get('seoulReady')) / max(1, len(subset)), 1),
         }
     all_days = [out[p]['medianDay'] for p in policies if out[p]['medianDay'] is not None]
     out['_spread'] = {'medianDaySpread': (max(all_days) - min(all_days)) if all_days else None}
@@ -374,7 +512,8 @@ def gate(summary, rows, deadline):
         if row['medianDay'] is None:
             problems.append(f"{policy}: 서울 노드 도달 0건 (buckets={row['endedBuckets']})")
             continue
-        if row['reachedPct'] < 25:
+        if policy != 'completionist' and row['reachedPct'] < 25:
+            # 완주형은 준비 전 서울을 피하도록 설계돼 이 게이트가 맞지 않는다 — readyPct로 잰다
             problems.append(f"{policy}: 서울 노드 도달 {row['reachedPct']}% < 25%")
         if row['deadlineSeenPct'] < 100:
             problems.append(f"{policy}: 시한 압박 목격 {row['deadlineSeenPct']}% < 100%")
@@ -402,6 +541,15 @@ def gate(summary, rows, deadline):
             problems.append(
                 f"{slowest[0]}(최저속): {slowest[1]['medianDay']}일 < 시한 {deadline}일의 40% "
                 f"— 다 챙겨도 시간이 남으면 시한은 압박이 아니다")
+
+    comp = summary.get('completionist')
+    if comp:
+        # 완주형의 존재 이유: 네 기둥이 실플레이 경로로 채워지는가.
+        # 완주(completed)는 봇 내비 편차로 흔들려 출력만 하고, ready는 게이트로 건다.
+        if comp.get('readyPct', 0) < 60:
+            problems.append(
+                f"completionist: 기둥 4종 완성(seoulReady) {comp.get('readyPct')}% < 60% "
+                f"— 완주 콘텐츠가 실플레이 경로로 도달 불가")
 
     spread = summary.get('_spread', {}).get('medianDaySpread')
     if spread is None or spread < 2:
@@ -471,12 +619,13 @@ def main():
         page_deadline = page.evaluate('D.transferDeadlineDay')
         rows = page.evaluate(SIM_JS, {
             'runs': args.runs, 'baseSeed': args.seed,
-            'policies': ['direct', 'prepared', 'explorer'], 'maxDays': args.max_days,
+            'policies': ['direct', 'prepared', 'explorer', 'completionist'], 'maxDays': args.max_days,
         })
         browser.close()
 
     summary = summarize(rows, page_deadline)
     report = {
+        'rows': rows,
         'generatedAt': datetime.now(timezone.utc).isoformat(),
         'source': 'real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가',
         'metric': 'daysToSeoulNode',
@@ -494,6 +643,7 @@ def main():
         print(f"  {policy:9s} 서울도달 {row['reachedPct']:5.1f}% · 사망 {row['deadPct']:4.1f}% · "
               f"중앙 DAY {str(row['medianDay']):>3s} · 구제 {row['meanRescues']:.2f}회 · "
               f"고철 +{row.get('meanScrapEarned',0):.0f}/잔여 {row.get('meanScrapLeft',0):.0f} · "
+              + (f"기둥완성 {row.get('readyPct',0):.0f}% · " if policy == 'completionist' else '') +
               f"시한압박 목격 {row['deadlineSeenPct']:5.1f}% · 사건 {row['meanEvents']:.1f}건 · "
               f"동행 {row['meanParty']:.1f}명 · 장착 {row['medianUpgrades']}개"
               f"(중량 {row['meanWeight']}pt · 슬롯경합 {row['slotContestPct']}%) · {row['endedBuckets']}")

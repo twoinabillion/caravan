@@ -81,6 +81,7 @@ G.camp = (msg)=>{
   const shun=G.pursuitRefusesShelter();
   if(inTown && shun && shun.refused){
     townShunned=true;
+    S._shelterRefusals=(S._shelterRefusals||0)+1;
     G.moodAll(-4);
     UI.toast('🚫 마을이 문을 닫았다 — 표시된 차량은 재우지 않는다');
   }
@@ -119,7 +120,9 @@ G.camp = (msg)=>{
   if(G.isWet()){ S.water+=2; UI.toast('💧 빗물받이 가득 — 물 +2'); }
   if(G.hasPerk('es_tap')&&rng()<0.25){ const h=G.nearestHidden();
     if(h){ S.known.push(h); UI.toast(`<span class="ic">📡</span>은수의 도청 — ${D.nodes[h].name}`, 'discover'); } }
-  if(S.party.length){ const lucky=pick(S.party); G.bond(lucky,1); }
+  /* 모닥불 대화는 전원의 시간이다 — 한 명만 깊어지면 4인 Lv3(관계 기둥)가
+     산술적으로 시한 안에 안 들어간다(2026-08-07 완주봇 실측: 관계가 최장 병목). */
+  for(const cid of S.party) G.bond(cid,1);
   if(townStingy) G.moodAll(-2);
   const nightsHere=inTown?((S._stlNights&&S._stlNights[S.at])||1):0;
   UI.toast(msg|| (townShunned?'🚫 마을 밖 갓길에서 밤을 났다 — 관측된 차량은 받아 주지 않는다'
@@ -138,6 +141,15 @@ G.camp = (msg)=>{
     if(S.up&&S.up.curtain) risk-=0.07;
     if(rng()<Math.max(0.08,risk)){
       const north = G.regionOf()==='north';
+      /* 밤은 접선의 시간이기도 하다 — 기둥이 비어 있으면 35%로 그 사건이 모닥불을 찾아온다.
+         주행 뽑기가 하루 0.7회뿐이라(2026-08-07 실측) 밤 채널이 없으면 기둥이 운에 갇힌다. */
+      const pillarPool=G.eligible().filter(e=>e.pillar&&G.pillarUnmet(e.pillar));
+      if(pillarPool.length&&rng()<0.35){
+        const pv=pillarPool[Math.floor(rng()*pillarPool.length)];
+        G.deferEvent(pv.id);
+        setTimeout(()=>G.openEventById(pv.id), 600);
+        UI.renderAll(); G.save(); return;
+      }
       const r=rng();
       const ev = north? (r<0.45?'camp_scan': r<0.7?'camp_thief': r<0.87?'camp_dogs':'camp_visitor')
                       : (r<0.32?'camp_thief': r<0.6?'camp_dogs':'camp_visitor');
@@ -427,7 +439,9 @@ G.pillars = ()=>{
     : !S.flags.uplink_seen
     ? '백도어 로그에서 남산보다 위로 가는 선 확인하기'
     : '첫 침묵·작성자·상행선의 관계 확인';
-  const worldN=S.flags.resist_revealed?G.cellsLinked().length:0;
+  /* 접선을 폭로 뒤에만 세면 세계 기둥이 이벤트 하나에 이중 잠금된다(2026-08-07 실측:
+     50일 순회에도 0~1/3). 만난 거점은 만난 것이다 — 폭로는 그 의미를 밝힐 뿐. */
+  const worldN=G.cellsLinked().length;
   return {
     관계: { have: storyDone, need: relationNeed,
             hint: miss? '길 위의 인연을 더 만나고, 함께할 이유를 쌓기'
@@ -441,6 +455,7 @@ G.pillars = ()=>{
             hint:'남산에서 열 것들을 챙기기 (편지·봉투·커피)' },
   };
 };
+G.pillarUnmet = (name)=>{ try{ const p=G.pillars()[name]; return !!p && p.have<p.need; }catch(e){ return false; } };
 G.seoulReady = ()=> Object.values(G.pillars()).every(x=>x.have>=x.need);
 /* 관문에서 되돌릴 때 — 제일 모자란 기둥 하나 안내 */
 G.seoulMissing = ()=>{
@@ -615,6 +630,7 @@ G.overrideDissent = (disposition)=>{
   return {who, name:D.comps[who].name};
 };
 G.endGame = (kind)=>{
+  S.endKind=kind;
   G.qualityEnding(kind);
   G.qualitySessionEnd('ending');
   G.archiveQualityRun(kind);
