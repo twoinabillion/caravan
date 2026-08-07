@@ -31,6 +31,7 @@
     "test:choices": "npm run build:html --silent && python3 tests/test_choice_visibility.py",
     "test:beats": "npm run build:html --silent && python3 tests/test_journey_beats.py",
     "test:health": "python3 tests/test_source_health.py",
+    "test:audio": "npm run build:html --silent && python3 tests/test_audio_mix.py",
     "test:finale": "npm run build:html --silent && python3 tests/test_finale.py",
     "simulate:engine": "python3 tools/simulate-engine.py --runs 60",
     "test:accessibility9": "npm run build:html --silent && python3 tests/test_quality_9_accessibility.py",

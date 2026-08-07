@@ -19,6 +19,7 @@ npm run test:eta
 npm run test:choices
 npm run test:beats
 npm run test:finale
+npm run test:audio
 npm run test:accessibility9
 npm run test:golden
 python3 -u tests/test_keyboard_access.py

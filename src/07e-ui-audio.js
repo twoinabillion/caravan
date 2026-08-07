@@ -158,7 +158,46 @@ const SND = (()=>{
       default: tone('sine',360,430,.06,.018);
     }
   }
-  return {toggle, enable, isEnabled, setDriving, combat, suspend, resume, level, setLevel};
+  /* ── 미디어 라우팅 ──
+     iOS Safari는 HTMLMediaElement.volume 쓰기를 무시한다. 음악·환경음·목소리를
+     element.volume으로만 조절하면 아이폰에서 4채널 믹서·크로스페이드가 통째로
+     동작하지 않는다(2026-08-06 적대적 재검증 지적). 요소를 AudioContext의
+     게인 노드에 물려 게인으로 조절하면 어느 플랫폼에서나 실제로 먹는다. */
+  const routed=new WeakMap();
+  function route(audioEl){
+    if(!audioEl) return null;
+    if(routed.has(audioEl)) return routed.get(audioEl);
+    if(!ac){ try{ build(); }catch(e){ return null; } }
+    if(!ac) return null;
+    let node;
+    try{ node=ac.createMediaElementSource(audioEl); }
+    catch(e){ return null; }          // 이미 물렸거나 지원 안 되면 원래 경로로
+    const gain=ac.createGain();
+    gain.gain.value=1;
+    node.connect(gain); gain.connect(ac.destination);
+    audioEl.volume=1;                  // 조절은 게인이 한다
+    const handle={gain, ctx:ac};
+    routed.set(audioEl, handle);
+    return handle;
+  }
+  /* 요소 볼륨 대신 게인을 쓴다. 라우팅이 불가능한 환경에서는 원래 방식으로 되돌아간다. */
+  function setMediaVolume(audioEl, v){
+    if(!audioEl) return;
+    const level=Math.max(0,Math.min(1,v));
+    const h=route(audioEl);
+    if(h){
+      const t=h.ctx.currentTime;
+      h.gain.gain.cancelScheduledValues(t);
+      h.gain.gain.setValueAtTime(h.gain.gain.value, t);
+      h.gain.gain.linearRampToValueAtTime(level, t+0.05);
+      audioEl._mixLevel=level;
+    } else {
+      audioEl.volume=level; audioEl._mixLevel=level;
+    }
+  }
+  const mediaVolume=(audioEl)=> audioEl ? (audioEl._mixLevel!==undefined?audioEl._mixLevel:audioEl.volume) : 0;
+  return {toggle, enable, isEnabled, setDriving, combat, suspend, resume, level, setLevel,
+    route, setMediaVolume, mediaVolume};
 })();
 /* ═══════════════════ BGM (외부 생성 트랙 — D.bgm 슬롯) ═══════════════════
    D.bgm[key]에 data URI를 넣으면 상황에 맞춰 자동 재생·크로스페이드.
@@ -171,22 +210,24 @@ const BGM = (()=>{
   function ensure(key){
     if(players[key]!==undefined) return players[key];
     if(!D.bgm||!D.bgm[key]){ players[key]=null; return null; }
-    const a=new Audio(D.bgm[key]); a.loop=D.bgm[`${key}Loop`]!==false; a.volume=0; a.preload='auto';
+    const a=new Audio(D.bgm[key]); a.loop=D.bgm[`${key}Loop`]!==false; a.preload='auto';
+    SND.setMediaVolume(a,0);
     players[key]=a; return a;
   }
   function fadeTo(a, target, then){
     if(!a) return;
     if(a._fi) clearInterval(a._fi);
-    if(Math.abs(target-a.volume)<.001){
-      a.volume=target;
+    const from=SND.mediaVolume(a);
+    if(Math.abs(target-from)<.001){
+      SND.setMediaVolume(a,target);
       if(then) then();
       return;
     }
-    const step=(target-a.volume)/(FADE/50);
+    const step=(target-from)/(FADE/50);
     a._fi=setInterval(()=>{
-      const v=a.volume+step;
-      if((step>0&&v>=target)||(step<0&&v<=target)){ a.volume=target; clearInterval(a._fi); a._fi=null; if(then)then(); }
-      else a.volume=Math.max(0,Math.min(1,v));
+      const v=SND.mediaVolume(a)+step;
+      if((step>0&&v>=target)||(step<0&&v<=target)){ SND.setMediaVolume(a,target); clearInterval(a._fi); a._fi=null; if(then)then(); }
+      else SND.setMediaVolume(a,Math.max(0,Math.min(1,v)));
     },50);
   }
   function set(key){
@@ -218,7 +259,7 @@ const BGM = (()=>{
   function ensureSong(){
     if(song!==undefined&&song) return song;
     if(!D.bgm||!D.bgm.song) return null;
-    song=new Audio(D.bgm.song); song.volume=0.6*SND.level('music');
+    song=new Audio(D.bgm.song); SND.setMediaVolume(song, 0.6*SND.level('music'));
     song.onended=()=>{ songUi(false); const k=cur; cur=null; if(on) set(k); };
     return song;
   }
@@ -240,7 +281,7 @@ const BGM = (()=>{
     /* 배경 BGM 잠시 내림 */
     manualPauseKey=null;
     const bg=players[cur]; if(bg) fadeTo(bg,0,()=>bg.pause());
-    s.volume=0.6*SND.level('music');
+    SND.setMediaVolume(s, 0.6*SND.level('music'));
     s.currentTime=0; s.play().catch(()=>{}); songUi(true);
   }
   function playSongOnce(){ const s=ensureSong(); if(s&&s.paused) toggleSong(); }
@@ -269,7 +310,7 @@ const BGM = (()=>{
     if(a){ a.play().catch(()=>{}); fadeTo(a,mixedVolume()); }
   }
   function applyMix(){
-    if(song) song.volume=0.6*SND.level('music');
+    if(song) SND.setMediaVolume(song, 0.6*SND.level('music'));
     const active=cur?ensure(cur):null;
     if(active&&on&&!suspended&&(!song||song.paused)) fadeTo(active,mixedVolume());
   }
@@ -301,7 +342,7 @@ const AMBI = (()=>{
     if(audio._fade) clearInterval(audio._fade);
     audio._fade=setInterval(()=>{
       const p=Math.min(1,(performance.now()-begun)/FADE);
-      audio.volume=Math.max(0,Math.min(1,start+(target-start)*p));
+      SND.setMediaVolume(audio, Math.max(0,Math.min(1,start+(target-start)*p)));
       if(p>=1){
         clearInterval(audio._fade); audio._fade=null;
         if(done) done();
@@ -322,7 +363,7 @@ const AMBI = (()=>{
     if(prev&&prev!==current) fade(prev,0,()=>{ prev.pause(); prev.currentTime=0; });
     if(current) current._baseTarget=volume;
     if(!current||!on||suspended) return;
-    current.volume=0;
+    SND.setMediaVolume(current,0);
     current.play().catch(()=>{});
     fade(current,volume*SND.level('ambience'));
   }
@@ -331,7 +372,7 @@ const AMBI = (()=>{
     const audio=make(key,false);
     if(!audio) return null;
     audio._baseVolume=volume;
-    audio.volume=volume*SND.level('effects');
+    SND.setMediaVolume(audio, volume*SND.level('effects'));
     shots.add(audio);
     const clear=()=>shots.delete(audio);
     audio.onended=clear;
@@ -348,7 +389,7 @@ const AMBI = (()=>{
       return;
     }
     if(!suspended&&current){
-      current.volume=0;
+      SND.setMediaVolume(current,0);
       current.play().catch(()=>{});
       fade(current,(current._baseTarget||.18)*SND.level('ambience'));
     }
@@ -445,7 +486,7 @@ const AMBI = (()=>{
   }
   function applyMix(){
     if(current&&on&&!suspended) fade(current,(current._baseTarget||.18)*SND.level('ambience'));
-    for(const audio of shots) audio.volume=(audio._baseVolume||.34)*SND.level('effects');
+    for(const audio of shots) SND.setMediaVolume(audio, (audio._baseVolume||.34)*SND.level('effects'));
   }
   return {setOn,setLoop,play,intro,depart,arrive,settlement,event,restore,suspend,resume,applyMix};
 })();
@@ -456,12 +497,12 @@ const VO = (()=>{
   function play(key){
     if(!on||!D.vo||!D.vo[key]) return;
     stop();
-    cur=new Audio(D.vo[key]); cur.volume=0.8*SND.level('voice');
+    cur=new Audio(D.vo[key]); SND.setMediaVolume(cur, 0.8*SND.level('voice'));
     cur.play().catch(()=>{});
   }
   function stop(){ if(cur){ cur.pause(); cur=null; } }
   function setOn(value){ on=!!value; if(!on) stop(); }
-  function applyMix(){ if(cur) cur.volume=0.8*SND.level('voice'); }
+  function applyMix(){ if(cur) SND.setMediaVolume(cur, 0.8*SND.level('voice')); }
   return {play, stop, setOn, applyMix};
 })();
 
