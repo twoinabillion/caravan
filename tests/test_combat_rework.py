@@ -68,7 +68,8 @@ with sync_playwright() as playwright:
       const noReq=evd.choices.find(c=>c.tactic==='관찰');
       let expCertain=true;
       for(let i=0;i<40;i++){
-        S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[]};
+        // 적응(기계도 배운다)이 '관찰'을 지목하면 깨지는 게 정상 — 다른 tactic으로 고정
+        S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[], adaptedFor:evd.combat.threat, adapted:'정비'};
         S._threatRead={[evd.combat.threat]:true};
         const out=G.pickOutcome(evd,noReq);
         if(noReq.out.findIndex(o=>o.text===out.text)!==0) expCertain=false;
@@ -98,6 +99,40 @@ with sync_playwright() as playwright:
     }""")
     check('중간 단계는 위협 도장을 찍지 않는다', not stamp['afterMid'], str(stamp))
     check('조우 종료가 위협 도장을 찍는다', stamp['afterEnd'], str(stamp))
+
+    adapt = page.evaluate("""() => {
+      // 기계도 배운다 — 읽어낸 위협은 재조우에서 counter 하나의 패턴을 바꾼다.
+      // 바뀐 counter는 확정이 깨지고, 나머지는 여전히 확정이어야 한다.
+      const evd=D.events.find(e=>e.id==='combat_walker_read');
+      const noReq=evd.choices.find(c=>c.tactic==='관찰');
+      S._threatRead={[evd.combat.threat]:true};
+      let sawFail=false;
+      for(let i=0;i<60;i++){
+        S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[], adaptedFor:evd.combat.threat, adapted:'관찰'};
+        const o=G.pickOutcome(evd,noReq);
+        if(noReq.out.findIndex(x=>x.text===o.text)!==0) sawFail=true;
+      }
+      let othersCertain=true;
+      for(let i=0;i<40;i++){
+        S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[], adaptedFor:evd.combat.threat, adapted:'정비'};
+        const o=G.pickOutcome(evd,noReq);
+        if(noReq.out.findIndex(x=>x.text===o.text)!==0) othersCertain=false;
+      }
+      // 안 읽힌 위협은 적응하지 않는다
+      delete S._threatRead;
+      S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[]};
+      const fresh=G.threatAdaptedTactic(evd);
+      // 화면 노출 — 바뀐 패턴은 의도 줄에 보여야 결정이 된다
+      S._threatRead={[evd.combat.threat]:true};
+      S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[]};
+      G.threatAdaptedTactic(evd);
+      const hud=UI.combatHudHtml?'skip':document.createElement('div');
+      return {sawFail, othersCertain, freshNull:fresh===null, adapted:S.combat.adapted};
+    }""")
+    check('바뀐 counter는 확정이 깨진다', adapt['sawFail'], str(adapt))
+    check('다른 counter는 여전히 확정', adapt['othersCertain'], str(adapt))
+    check('안 읽힌 위협은 적응하지 않는다', adapt['freshNull'], str(adapt))
+    check('적응 tactic이 조우에 고정된다', adapt['adapted'] in ('관찰','정비','사격'), str(adapt))
 
     coverage = page.evaluate("""() => {
       // 데이터 계약: 굴림뿐인 전투 전부에 counters와 맞물리는 tactic 선택이 있다

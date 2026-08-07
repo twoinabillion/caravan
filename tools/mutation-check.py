@@ -104,6 +104,14 @@ MUTATIONS = [
         'new': "  if(false&&prof&&prof.patch) for(const [k,v] of Object.entries(prof.patch))",
         'test': ['python3', 'tests/test_start_profiles.py'],
     },
+    {
+        'name': 'threat-adaptation',
+        'why': '적응을 끄면 한 번 배운 위협은 영원히 확정 — 학습 대 학습 축이 죽는다',
+        'file': 'src/04b-engine-crew.js',
+        'old': "    && G.threatAdaptedTactic(evd)!==choice.tactic   /* 기계도 배운다 — 바뀐 패턴엔 옛 해법이 안 통한다 */",
+        'new': "    && true   /* 기계도 배운다 — 바뀐 패턴엔 옛 해법이 안 통한다 */",
+        'test': ['python3', 'tests/test_combat_rework.py'],
+    },
 ]
 
 

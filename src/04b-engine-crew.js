@@ -454,6 +454,21 @@ G.inferCombatResult = (choice,out,index,rolled)=>{
   if(choice&&choice.tactic==='이탈') return 'partial';
   return clearGain&&!severeCost?'success':'partial';
 };
+/* 기계도 배운다 — 플레이어가 위협을 읽어냈으면(threatRead) 다음 조우에서
+   그 계통은 counter 하나의 패턴을 바꾼다. 준비=확정 규칙이 '한 번 배우면
+   영원히 심심함'으로 굳는 것을 막는 학습 대 학습 축(2026-08-07).
+   조우당 하나, 조우 시작 시 결정되어 조우 내내 고정된다. */
+G.threatAdaptedTactic = (evd)=>{
+  if(!S||!evd||!evd.combat||!evd.combat.threat||!evd.combat.counters) return null;
+  if(!(S._threatRead&&S._threatRead[evd.combat.threat])) return null;   // 아직 안 읽힌 위협은 안 바뀐다
+  if(!S.combat) return null;
+  if(S.combat.adaptedFor!==evd.combat.threat){
+    const keys=Object.keys(evd.combat.counters);
+    S.combat.adaptedFor=evd.combat.threat;
+    S.combat.adapted=keys.length?keys[Math.floor(rng()*keys.length)]:null;
+  }
+  return S.combat.adapted||null;
+};
 G.pickOutcome = (evd, choice)=>{
   let out=null, index=0, rolled=false, rolledValue;
   /* 강우의 저격은 조우당 한 발만 확실하다 — 연발은 위치를 드러낸다(소음×관측 정합) */
@@ -468,6 +483,7 @@ G.pickOutcome = (evd, choice)=>{
   else if(choice.combatRoll!==undefined && choice.out.length>1
     && choice.tactic && evd.combat && evd.combat.counters && evd.combat.counters[choice.tactic]
     && !(choice.req&&choice.req.item)   /* 소모품 지불은 준비 숙련이 아니다 — 연발은 위치를 드러낸다 */
+    && G.threatAdaptedTactic(evd)!==choice.tactic   /* 기계도 배운다 — 바뀐 패턴엔 옛 해법이 안 통한다 */
     && ((choice.req&&(choice.req.healthyComp||choice.req.up||choice.req.knowledge))
         || (S._threatRead&&S._threatRead[evd.combat.threat]))){
     out=choice.out[0]; index=0;
