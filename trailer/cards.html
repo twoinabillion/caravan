@@ -1,0 +1,73 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+:root{
+  --night:#0b0e1a; --deep:#070910; --amber:#ffb454; --amber-dim:#c98d47;
+  --paper:#e8e3d5; --faded:#8b93ad; --danger:#e2574f;
+  --sans:"Apple SD Gothic Neo",Pretendard,"Noto Sans KR",sans-serif;
+  --mono:"SF Mono",ui-monospace,Menlo,monospace;
+  --serif:"Apple Myungjo","Nanum Myeongjo","Noto Serif KR",serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--deep);overflow:hidden}
+#stage{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:22px;text-align:center;padding:40px}
+.kicker{font:600 15px/1 var(--mono);letter-spacing:.34em;color:var(--amber);opacity:0}
+.big{font:600 44px/1.5 var(--serif);color:var(--paper);white-space:pre-line;min-height:1.5em}
+.small{font:400 19px/1.7 var(--sans);color:var(--faded);white-space:pre-line}
+.caret{display:inline-block;width:3px;height:1.05em;background:var(--amber);
+  vertical-align:-0.15em;margin-left:4px;animation:blink 0.9s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+#title-art{display:none;flex-direction:column;gap:14px;align-items:center}
+#title-art .t1{font:600 21px/1 var(--mono);letter-spacing:.5em;color:var(--amber-dim);text-indent:.5em}
+#title-art .t2{font:700 76px/1.2 var(--serif);color:var(--paper);letter-spacing:.06em}
+#title-art .t3{font:400 18px/1.8 var(--sans);color:var(--faded);margin-top:8px}
+.fade-in{animation:fin 1.4s ease forwards}
+@keyframes fin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+<div id="stage">
+  <div class="kicker" id="kick"></div>
+  <div class="big" id="line"></div>
+  <div class="small" id="sub"></div>
+  <div id="title-art">
+    <div class="t1">SEOUL 400KM</div>
+    <div class="t2">서울까지 400km</div>
+    <div class="t3">부산에서 남산까지, 한 대의 달구지<br>멈춰야 하는 것은 사람이 아니라 버스다</div>
+  </div>
+</div>
+<script>
+const params=new URLSearchParams(location.search);
+const card=params.get('card')||'1';
+const kick=document.getElementById('kick'), line=document.getElementById('line'),
+      sub=document.getElementById('sub');
+
+function type(el, text, cps, done){
+  let i=0; el.textContent='';
+  const caret=document.createElement('span'); caret.className='caret';
+  el.appendChild(caret);
+  const t=setInterval(()=>{
+    if(i>=text.length){ clearInterval(t); setTimeout(()=>{caret.remove(); done&&done();}, 700); return; }
+    caret.before(text[i++]);
+  }, 1000/cps);
+}
+
+const CARDS={
+  1:{kick:'2169',  big:'서울이 비워진 지\n백사십삼 년', sub:''},
+  2:{kick:'제7 잔류구역', big:'6,412명', sub:'다음 이송이 시작되기 전에'},
+  3:{kick:'400KM', big:'일곱 개의 마을\n여섯 사람', sub:'그리고 돌아오지 않은 이유 하나'},
+  title:{},
+};
+
+if(card==='title'){
+  document.getElementById('title-art').style.display='flex';
+  document.getElementById('title-art').classList.add('fade-in');
+} else {
+  const c=CARDS[card];
+  setTimeout(()=>{
+    kick.textContent=c.kick; kick.style.opacity=1; kick.classList.add('fade-in');
+    setTimeout(()=>type(line, c.big, 14, ()=>{
+      if(c.sub){ sub.textContent=c.sub; sub.classList.add('fade-in'); }
+    }), 500);
+  }, 350);
+}
+</script>
