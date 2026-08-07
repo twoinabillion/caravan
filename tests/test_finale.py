@@ -50,7 +50,8 @@ with sync_playwright() as playwright:
       const ready=(dec.choices||[]).map(c=>!c.req || G.reqOk(c.req).ok!==false);
       return {bare, ready};
     }""")
-    check('빈손이면 최소 하나는 잠긴다', False in lock['bare'], str(lock['bare']))
+    # 하나만 잠겨도 통과하면 자물쇠 두 개를 지워도 초록이다 (2026-08-07 뮤테이션 실증)
+    check('빈손이면 셋 다 잠긴다', lock['bare'] == [False, False, False], str(lock['bare']))
     check('준비하면 전부 열린다', all(lock['ready']), str(lock['ready']))
 
     print('― 대가 확인이 실제 선택인가')
@@ -67,6 +68,38 @@ with sync_playwright() as playwright:
     }""")
     check('authored 엔딩 5종 이상',
           endings['kinds'] is not None and len(endings['kinds']) >= 5, str(endings))
+
+    # 배열에 이름만 있는 엔딩은 엔딩이 아니다 — 화면과 트리거가 함께 있어야 한다
+    reach = page.evaluate("""() => {
+      const out={};
+      for(const kind of G.endingKinds()){
+        UI.showEnding(kind);
+        const t=(document.querySelector('#scr-end h1')||{}).textContent||'';
+        out[kind]={title:t, generic: t==='여행이 끝났다'};
+      }
+      return out;
+    }""")
+    generic = [k for k, v in reach.items() if v['generic']]
+    check('모든 엔딩이 전용 화면을 갖는다', not generic, f"일반 문구로 떨어짐: {generic}")
+
+    triggers = page.evaluate("""() => {
+      // 에필로그가 여정을 닫는가 + 좌초/기피가 상태에서 발화하는가
+      const night=D.events.find(e=>e.id==='seoul_night');
+      const closes=(night.choices||[]).every(c=>c.out[0].fx && c.out[0].fx.endJourney);
+      G.newGame('onroad','좌초','full');
+      S.at='yangsan'; S.driving=null; S.fuel=0; S.scrap=0;
+      S._rescues={nofuel:3}; S._strandedDays=1; S.water=9; S.food=9;
+      const before=S.ended; G.dawn();
+      const stranded=!!S.ended && !before;
+      G.newGame('onroad','기피','full');
+      S.pursuit=5; S._shunnedDays=3; S.water=9; S.food=9;
+      G.dawn();
+      const shunned=!!S.ended;
+      return {closes, stranded, shunned};
+    }""")
+    check('에필로그가 여정을 닫는다(endJourney)', triggers['closes'], str(triggers))
+    check('좌초가 상태에서 발화한다', triggers['stranded'], str(triggers))
+    check('기피가 상태에서 발화한다', triggers['shunned'], str(triggers))
 
     print('― 구역이 빈 뒤 도착은 별도 엔딩인가')
     empty = page.evaluate("""() => {

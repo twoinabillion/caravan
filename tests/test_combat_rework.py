@@ -151,8 +151,9 @@ with sync_playwright() as playwright:
         for(const c of (e.choices||[])){
           if(!['이탈','우회'].includes(c.tactic)) continue;
           const fx=(c.out&&c.out[0]&&c.out[0].fx)||{};
-          const real = (fx.pursuit||0)>0 || fx.trust || fx.mood ||
-            (fx.moodAll||0)<=-3 || fx.flag || fx.note;
+          // note/flag는 모든 이탈에 붙어 있어 판별력이 없다 — 실제 대가만 센다
+          // (2026-08-07 뮤테이션: pursuit을 전부 지워도 초록이었다)
+          const real = (fx.pursuit||0)>0 || fx.trust || fx.mood || (fx.moodAll||0)<=-3;
           rows.push({ev:e.id, real:!!real});
         }
       }

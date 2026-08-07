@@ -358,6 +358,8 @@ G.applyFx = (fx)=>{
     const paid=G.overrideDissent(fx.dissent);
     if(paid) chips.push({t:`✦ ${paid.name}의 반대를 눌렀다 — 유대 -6`, c:'minus'});
   }
+  if(fx.roadGarage){ S.roadGarage=true; setTimeout(()=>UI.showStl(G.nearestStl(),'garage'), 400); }
+  if(fx.endJourney) G.endGame(G.arrivalEndingKind());
   if(fx.gameover) G.endGame(fx.gameover);
   G.qualityResourceCheck();
   G.save();
@@ -681,9 +683,10 @@ G.arrive = ()=>{
   /* 위수 구역 첫 진입 — 초계와의 첫 조우 */
   if(n.region==='north' && !S.flags.armed_age){
     const arrivalDelay=UI.onArrive();
+    G.deferEvent('perimeter_first');
     setTimeout(()=>G.openEventById('perimeter_first'), arrivalDelay);
     G.save(); return; }
-  if(S.fuel<=0){ setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
+  if(S.fuel<=0){ G.deferEvent('crisis_nofuel'); setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   const arrivalDelay=UI.onArrive();
@@ -691,11 +694,11 @@ G.arrive = ()=>{
     setTimeout(()=>UI.toast(`🤝 ${D.recruitQuests[S.recruitQ.id].name}의 부탁을 진행할 수 있다`),arrivalDelay);
   /* setTimeout으로 넘기는 id를 함께 기록한다. 타이머가 돌지 않는 환경(시뮬·테스트)이
      이 층을 통째로 놓치거나, 반대로 사본을 만들어 큐를 두 번 빼는 일을 막는다. */
-  S._simDeferred=null;
-  if(loc){ S._simDeferred=loc.id; setTimeout(()=>G.openEvent(loc), arrivalDelay); }
+  S._simDeferred=[];
+  if(loc){ G.deferEvent(loc.id); setTimeout(()=>G.openEvent(loc), arrivalDelay); }
   else if(!G.maybeCrisis()){
     const queued=G.popStory();
-    if(queued){ S._simDeferred=queued; setTimeout(()=>G.openEventById(queued), arrivalDelay); }
+    if(queued){ G.deferEvent(queued); setTimeout(()=>G.openEventById(queued), arrivalDelay); }
     else if(n.stl){ /* settlement panel via UI */ }
   }
   G.save();

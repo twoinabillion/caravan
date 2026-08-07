@@ -49,7 +49,8 @@ jobs:
         run: |
           node -e "
           const fs=require('fs');
-          const build=fs.readFileSync('src/04-engine.js','utf8').match(/const GAME_BUILD = '([^']+)'/)[1];
+          const build=['04a-engine-core.js','04b-engine-crew.js','04c-engine-travel.js','04d-engine-director.js','04e-engine-world.js']
+            .map(n=>fs.readFileSync('src/'+n,'utf8')).join('\n').match(/const GAME_BUILD = '([^']+)'/)[1];
           const html=fs.readFileSync('서울까지400km.html','utf8');
           if(!html.includes(\"const GAME_BUILD = '\"+build+\"'\")) throw new Error('build string mismatch');
           for(const shell of ['서울까지400km.html','index.html']){

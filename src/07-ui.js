@@ -2558,6 +2558,7 @@ const UI = (()=>{
     if(scroll&&card) card.scrollIntoView({behavior:document.documentElement.classList.contains('ui-reduce-motion')?'auto':'smooth',block:'nearest'});
   }
   function showStl(stlId,mode='hub'){
+    if(S&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl) S.roadGarage=false;   // 진짜 정착지는 제값
     curStl=stlId;
     stlMode=mode||'hub';
     const stl=D.stls[stlId];
@@ -3242,6 +3243,10 @@ const UI = (()=>{
       kicker='GAME OVER'; kcolor='var(--danger)';
       title='어느 마을도 열어 주지 않았다';
       body=`관측 표시가 붙은 차는 마을에 들이지 않는다.\n\n문이 하나씩 닫히는 데는 오래 걸리지 않았다. 물도, 부품도, 하룻밤도 살 수 없게 되자 길 위에서 버티는 일만 남았다.\n\n천리안이 우리를 잡은 게 아니다. 우리를 아무도 재우지 못하게 만들었을 뿐이다.`;
+    } else if(kind==='story_done'){
+      kicker='ENDING · 제때'; kcolor='var(--good)';
+      title='첫 버스가 서던 날';
+      body=`제7 잔류구역 6,412명. 명부의 숫자가 그대로 남은 채로 이송이 멈췄다.\n\n집행 중지는 방송으로 나갔다. 남산의 스피커는 감정이 없고, 그래서 그 문장은 이상하게 오래 남는다.\n\n"제7 잔류구역 이송을 중지합니다."\n\n143년 동안 아무도 듣지 못한 문장이었다.\n\n수첩의 사유란은 여전히 비어 있다. 우리는 그 빈칸을 채우러 온 게 아니라, 그 빈칸 때문에 사람을 싣지 않기로 하러 온 것이었다.\n\n북쪽 길은 아직 열려 있다.`;
     } else {
       kicker='GAME OVER'; kcolor='var(--danger)';
       title='여행이 끝났다'; body='달구지는 더 이상 달리지 못한다.';

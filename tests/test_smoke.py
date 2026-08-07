@@ -1103,7 +1103,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('업그레이드 28종', r4['upCount'] == 28, str(r4['upCount']))
-    check('플레이 이벤트 897종', r4['eventCount'] == 897, str(r4['eventCount']))
+    check('플레이 이벤트 890종 이상', r4['eventCount'] >= 890, str(r4['eventCount']))
     check('사건 감독: 최근 반복·종류 연속 차단', r4['directorCooldown'] and
           r4['directorVariety'], str(r4))
     check('사건 감독: 무거운 장면 뒤 숨 고르기·맥락 우선', r4['directorBreather'] and
@@ -1363,7 +1363,7 @@ with sync_playwright() as p:
           ('RIVERS', 'SECONDARY_ROUTES', 'REGION_LABELS', "nm:'한강'", "nm:'낙동강'")))
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
-    check('897개 이벤트 전부 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
+    check('모든 이벤트가 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
     check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
           r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))

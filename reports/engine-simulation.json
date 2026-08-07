@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T02:09:13.144708+00:00",
+  "generatedAt": "2026-08-07T02:50:39.570429+00:00",
   "source": "real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가",
   "metric": "daysToSeoulNode",
   "runs": 60,
@@ -9,73 +9,130 @@
   "summary": {
     "direct": {
       "runs": 20,
-      "reachedPct": 75.0,
-      "deadPct": 10.0,
+      "reachedPct": 70.0,
+      "deadPct": 30.0,
       "medianDay": 5,
       "endedBuckets": {
-        "dead": 2,
-        "reached": 15,
-        "timeout": 3
+        "dead": 6,
+        "reached": 14
       },
       "meanParty": 0.0,
       "meanDeeds": 0.0,
       "medianUpgrades": 0,
+      "roadGaragePct": 70.0,
+      "blockedTop": [],
+      "meanScrapEarned": 0.0,
+      "meanScrapLeft": 3.5,
       "meanWeight": 0.0,
       "slotContestPct": 0.0,
       "deedsNeed": 13,
-      "meanDay": 14.75,
-      "meanRescues": 2.95,
+      "meanDay": 11.75,
+      "meanRescues": 3.1,
       "lateTransferPct": 0.0,
       "lateBase": "arrived",
-      "meanEvents": 29.2,
-      "deadlineSeenPct": 100.0
+      "meanEvents": 34.1,
+      "deadlineSeenPct": 100.0,
+      "lateRatePct": 30.0
     },
     "explorer": {
       "runs": 20,
+      "reachedPct": 80.0,
+      "deadPct": 20.0,
+      "medianDay": 10,
+      "endedBuckets": {
+        "dead": 4,
+        "reached": 16
+      },
+      "meanParty": 0.0,
+      "meanDeeds": 0.0,
+      "medianUpgrades": 5,
+      "roadGaragePct": 85.0,
+      "blockedTop": [
+        [
+          "고철 부족",
+          532
+        ],
+        [
+          "여유 부족",
+          275
+        ],
+        [
+          "보조 연료탱크 필요",
+          56
+        ],
+        [
+          "후미 레일 좌석칸 필요",
+          56
+        ],
+        [
+          "지붕 텃밭 필요",
+          56
+        ]
+      ],
+      "meanScrapEarned": 0.0,
+      "meanScrapLeft": 77.4,
+      "meanWeight": 6.1,
+      "slotContestPct": 5.0,
+      "deedsNeed": 13,
+      "meanDay": 14.55,
+      "meanRescues": 3.7,
+      "lateTransferPct": 0.0,
+      "lateBase": "arrived",
+      "meanEvents": 73.1,
+      "deadlineSeenPct": 100.0,
+      "lateRatePct": 20.0
+    },
+    "prepared": {
+      "runs": 20,
       "reachedPct": 100.0,
       "deadPct": 0.0,
-      "medianDay": 10,
+      "medianDay": 7,
       "endedBuckets": {
         "reached": 20
       },
       "meanParty": 0.0,
-      "meanDeeds": 0.1,
-      "medianUpgrades": 8,
-      "meanWeight": 8.2,
-      "slotContestPct": 70.0,
-      "deedsNeed": 13,
-      "meanDay": 12.15,
-      "meanRescues": 4.25,
-      "lateTransferPct": 5.0,
-      "lateBase": "arrived",
-      "meanEvents": 63.5,
-      "deadlineSeenPct": 100.0
-    },
-    "prepared": {
-      "runs": 20,
-      "reachedPct": 95.0,
-      "deadPct": 0.0,
-      "medianDay": 9,
-      "endedBuckets": {
-        "reached": 19,
-        "timeout": 1
-      },
-      "meanParty": 0.0,
       "meanDeeds": 0.0,
-      "medianUpgrades": 7,
-      "meanWeight": 6.2,
-      "slotContestPct": 20.0,
+      "medianUpgrades": 5,
+      "roadGaragePct": 100.0,
+      "blockedTop": [
+        [
+          "고철 부족",
+          747
+        ],
+        [
+          "여유 부족",
+          293
+        ],
+        [
+          "후미 레일 좌석칸 필요",
+          61
+        ],
+        [
+          "거주구 2차 증축 필요",
+          61
+        ],
+        [
+          "상부 2층 침상 필요",
+          61
+        ]
+      ],
+      "meanScrapEarned": 0.0,
+      "meanScrapLeft": 46.2,
+      "meanWeight": 8.0,
+      "slotContestPct": 100.0,
       "deedsNeed": 13,
-      "meanDay": 10.85,
-      "meanRescues": 3.8,
+      "meanDay": 7.3,
+      "meanRescues": 3.95,
       "lateTransferPct": 0.0,
       "lateBase": "arrived",
-      "meanEvents": 58.6,
-      "deadlineSeenPct": 100.0
+      "meanEvents": 50.5,
+      "deadlineSeenPct": 100.0,
+      "lateRatePct": 0.0
     },
     "_spread": {
       "medianDaySpread": 5
     },
+    "_buildOverlap": 0.0,
     "_beats": {
       "story_generation_form": {
         "label": "본편 · 세대의 서식",
@@ -83,11 +140,11 @@
       },
       "story_family_principle": {
         "label": "본편 · 가족의 원칙",
-        "pct": 98.3
+        "pct": 95.0
       },
       "story_generation_speech": {
         "label": "본편 · 세대의 말",
-        "pct": 91.7
+        "pct": 86.7
       },
       "_malice": {
         "label": "악의 계열 조우",
@@ -95,7 +152,7 @@
           "levy_office": 100.0,
           "salvage_claim": 100.0,
           "water_toll": 0.0,
-          "cleaners_recall": 50.0,
+          "cleaners_recall": 53.3,
           "signal_bait": 0.0
         },
         "delivered": 3,

@@ -164,8 +164,11 @@ const SND = (()=>{
      동작하지 않는다(2026-08-06 적대적 재검증 지적). 요소를 AudioContext의
      게인 노드에 물려 게인으로 조절하면 어느 플랫폼에서나 실제로 먹는다. */
   const routed=new WeakMap();
-  function route(audioEl){
+  function route(audioEl, opt){
     if(!audioEl) return null;
+    /* 일회성 재생은 라우팅하지 않는다. MediaElementSource는 요소당 한 번만 만들 수 있고
+       회수되지 않아, 한 방짜리 효과음까지 물리면 세션 내내 노드가 쌓인다. */
+    if(opt&&opt.oneShot) return null;
     if(routed.has(audioEl)) return routed.get(audioEl);
     if(!ac){ try{ build(); }catch(e){ return null; } }
     if(!ac) return null;
@@ -181,10 +184,10 @@ const SND = (()=>{
     return handle;
   }
   /* 요소 볼륨 대신 게인을 쓴다. 라우팅이 불가능한 환경에서는 원래 방식으로 되돌아간다. */
-  function setMediaVolume(audioEl, v){
+  function setMediaVolume(audioEl, v, opt){
     if(!audioEl) return;
     const level=Math.max(0,Math.min(1,v));
-    const h=route(audioEl);
+    const h=route(audioEl, opt);
     if(h){
       const t=h.ctx.currentTime;
       h.gain.gain.cancelScheduledValues(t);
@@ -338,7 +341,9 @@ const AMBI = (()=>{
   }
   function fade(audio,target,done){
     if(!audio) return;
-    const start=audio.volume, begun=performance.now();
+    /* 라우팅된 요소의 .volume은 1로 고정돼 있다 — 여기서 읽으면 모든 전환이
+       최대 음량에서 시작한다(2026-08-07 실측 회귀). 믹스 값을 읽어야 한다. */
+    const start=SND.mediaVolume(audio), begun=performance.now();
     if(audio._fade) clearInterval(audio._fade);
     audio._fade=setInterval(()=>{
       const p=Math.min(1,(performance.now()-begun)/FADE);
@@ -372,7 +377,7 @@ const AMBI = (()=>{
     const audio=make(key,false);
     if(!audio) return null;
     audio._baseVolume=volume;
-    SND.setMediaVolume(audio, volume*SND.level('effects'));
+    SND.setMediaVolume(audio, volume*SND.level('effects'), {oneShot:true});
     shots.add(audio);
     const clear=()=>shots.delete(audio);
     audio.onended=clear;
@@ -486,7 +491,7 @@ const AMBI = (()=>{
   }
   function applyMix(){
     if(current&&on&&!suspended) fade(current,(current._baseTarget||.18)*SND.level('ambience'));
-    for(const audio of shots) SND.setMediaVolume(audio, (audio._baseVolume||.34)*SND.level('effects'));
+    for(const audio of shots) SND.setMediaVolume(audio, (audio._baseVolume||.34)*SND.level('effects'), {oneShot:true});
   }
   return {setOn,setLoop,play,intro,depart,arrive,settlement,event,restore,suspend,resume,applyMix};
 })();

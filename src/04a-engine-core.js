@@ -684,7 +684,7 @@ G.departureSteps = ()=>{
     {id:'module',done:!!S.flags.intro_module_seen,label:'계기판 속 검증 모듈 확인',detail:'엄마의 회로도와 실제 배선이 일치했다'},
     {id:'key',done:!!S.flags.parent_key_found,label:'분리 절차 복원·검증키 안전 회수',detail:S.flags.parent_key_found?'4–5쪽을 복원해 남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
     {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'발신 기록과 당사자 증언 대조',detail:S.flags.es_truth?'명령 생성 순서를 확인했다':`같은 명령을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
-    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'서울 도착이 아니라 DAY 9 안의 이송 중단이 완료 조건이다'}
+    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':`서울 도착이 아니라 DAY ${D.transferDeadlineDay} 안의 이송 중단이 완료 조건이다`}
   ];
 };
 G.relationKey = (a,b)=>[a,b].sort().join(':');

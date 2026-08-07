@@ -492,6 +492,7 @@ G.eligible = (typeFilter)=>{
     if(ev.noFlag && S.flags[ev.noFlag]) return false;   // 해당 서사 이미 봤으면 스킵
     if(ev.noPool) return false;   // 랜덤 풀 제외 — chain/직접 호출 전용
     if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
+    if(ev.scrapMin!==undefined && S.scrap<ev.scrapMin) return false;  // 쓸 고철이 있어야 의미 있는 제안
     if(ev.needsDog && !S.dog) return false;
     if(ev.minParty && S.party.length<ev.minParty) return false;
     if(ev.minPursuit && S.pursuit<ev.minPursuit) return false;

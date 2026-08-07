@@ -141,6 +141,7 @@ G.camp = (msg)=>{
       const r=rng();
       const ev = north? (r<0.45?'camp_scan': r<0.7?'camp_thief': r<0.87?'camp_dogs':'camp_visitor')
                       : (r<0.32?'camp_thief': r<0.6?'camp_dogs':'camp_visitor');
+      G.deferEvent(ev);
       setTimeout(()=>G.openEventById(ev), 600);
       UI.renderAll(); G.save(); return;
     }
@@ -252,6 +253,10 @@ G.weightFuelFactor = ()=>{ const w=G.upWeight(); return 1+Math.min(0.12,Math.max
 /* 10pt를 넘는 무게는 험로에서 차체를 더 갉아먹는다 (최대 +20%) */
 G.weightWearFactor = ()=>{ const w=G.upWeight(); return 1+Math.min(0.2,Math.max(0,w-10)*0.02); };
 G.slotUsage = slot=> (D.upgrades||[]).filter(u=>u.slot===slot&&S&&S.up&&S.up[u.id]);
+/* 길 위 작업대는 웃돈을 받는다. 정착지 밖에서도 고철을 쓸 곳이 있어야
+   마지막 정착지 뒤에 번 것이 죽지 않는다(실측: 도착 시 평균 85 고철 사장). */
+G.ROAD_GARAGE_MUL = 1.5;
+G.upScrapCost = (u)=> Math.ceil(u.cost.scrap * (S&&S.roadGarage ? G.ROAD_GARAGE_MUL : 1));
 G.canBuyUp = (id)=>{
   const u=G.upDef(id); if(!u||S.up[id]) return {ok:false, why:'장착됨'};
   if(u.needs&&!S.up[u.needs]) return {ok:false, why:G.upDef(u.needs).nm+' 필요'};
@@ -260,14 +265,14 @@ G.canBuyUp = (id)=>{
     if(used.length>=rule.cap)
       return {ok:false, why:`${rule.nm} 자리 없음 — ${used.map(x=>x.nm).join(' · ')} 장착 중`};
   }
-  if(S.scrap<u.cost.scrap) return {ok:false, why:'고철 부족'};
+  if(S.scrap<G.upScrapCost(u)) return {ok:false, why:'고철 부족'};
   if((u.cost.parts||0)>(S.items['부품']||0)) return {ok:false, why:'부품 부족'};
   return {ok:true};
 };
 G.buyUpgrade = (id)=>{
   const chk=G.canBuyUp(id); if(!chk.ok) return false;
   const u=G.upDef(id);
-  S.scrap-=u.cost.scrap;
+  S.scrap-=G.upScrapCost(u);
   if(u.cost.parts) S.items['부품']-=u.cost.parts;
   S.up[id]=true;
   /* 차고 작업은 분해·체결·확인 세 단계다(D.upgradeWork). 그 서사만큼 시간도 든다 —
@@ -581,6 +586,11 @@ G.completeJourney = ()=>{
 };
 /* 엔딩 종류 목록 — 화면(showEnding)과 검사가 같은 정의를 본다.
    2026-08-06까지 authored 엔딩은 갈증 하나뿐이었고, 나머지는 "여행이 끝났다"였다. */
+/* 타이머로 넘기는 이벤트는 여기 남긴다. 타이머가 돌지 않는 환경(시뮬·테스트)이
+   이 층을 통째로 놓치던 문제 — 도착 말고도 야영·초계·구제 경로가 있다. */
+G.deferEvent = (id)=>{ if(!S||!id) return; if(!Array.isArray(S._simDeferred)) S._simDeferred=[]; S._simDeferred.push(id); };
+/* 길 위 작업대가 빌려 쓰는 정착지 화면 — 가장 가까운 곳의 재고를 쓴다 */
+G.nearestStl = ()=>{ const ids=Object.keys(D.stls); return (S&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl)||ids[ids.length-1]; };
 G.endingKinds = ()=>['thirst','stranded','shunned','too_late','empty_district','story_done'];
 /* 도착 시점의 결말 종류. 늦음은 실패가 아니라 다른 결말이지만,
    구역이 비어버린 뒤의 도착은 승리 텍스트의 변주가 아니라 이름 있는 결말이어야 한다. */

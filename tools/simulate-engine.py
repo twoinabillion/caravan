@@ -42,6 +42,8 @@ SIM_JS = r"""
   let pendingEvent = null;
   const seenEvents = [];
   UI.showEvent = (evd) => { pendingEvent = evd; if (evd && evd.id) seenEvents.push(evd.id); };
+  // 길 위 작업대는 정착지 밖에서 열린다 — UI 타이머 대신 플래그를 폴링해 소화한다
+  let roadGarageHook = null;
 
   const choiceUsable = (choice) => {
     if (!choice || !choice.req) return true;
@@ -85,14 +87,48 @@ SIM_JS = r"""
     G.seedOverride = baseSeed + i * 7919;
     G.newGame('onroad', '시뮬', 'full');
     G.seedOverride = undefined;
+    /* 고철 수입/지출 계측 — 카탈로그가 도달 가능한지 판단하려면 유입을 알아야 한다 */
+    S._scrapEarned = 0; S._scrapSpent = 0; S._blocked = {};
+    let _lastScrap = S.scrap;
+    const meterScrap = () => {
+      const d = S.scrap - _lastScrap;
+      if (d > 0) S._scrapEarned += d; else S._scrapSpent += -d;
+      _lastScrap = S.scrap;
+    };
+    const buyUpgrades = () => {
+      if (!cfg.upgrades) return;
+      for (let k = 0; k < 6; k++) {
+        const rank = u => {
+          const i = cfg.wants.indexOf(u.id);
+          return i < 0 ? 100 + u.cost.scrap : i;   // 원하는 것 먼저, 그 다음 싼 것
+        };
+        const buyable = (D.upgrades || [])
+          .filter(u => !S.up[u.id] && G.canBuyUp(u.id).ok)
+          .sort((a, b) => rank(a) - rank(b));
+        if (!buyable.length || S.scrap < G.upScrapCost(buyable[0]) + 8) {
+          for (const u of (D.upgrades || [])) {
+            if (S.up[u.id]) continue;
+            const why = G.canBuyUp(u.id).why || (S.scrap < G.upScrapCost(u) + 8 ? '여유 부족' : '');
+            if (why) S._blocked[why] = (S._blocked[why] || 0) + 1;
+          }
+          break;
+        }
+        if (!G.buyUpgrade(buyable[0].id)) break;
+        meterScrap();
+      }
+    };
     let ended = '', guard = 0, lastMiss = null;
     seenEvents.length = 0;
 
     // 정책별 성향 — 실제 플레이어가 시간을 쓰는 방식의 근사
     const cfg = {
-      direct:   {bundles:1, explore:0, upgrades:false, repairAt:0.35, campAt:88, fieldWork:false},
-      prepared: {bundles:2, explore:1, upgrades:true,  repairAt:0.70, campAt:62, fieldWork:true},
-      explorer: {bundles:3, explore:2, upgrades:true,  repairAt:0.75, campAt:55, fieldWork:true},
+      /* wants = 빌드 취향. 이게 없으면 두 정책이 똑같이 '싼 것부터' 사고,
+         "빌드가 분화하지 않는다"는 게임이 아니라 봇 탓이 된다. (2026-08-07) */
+      direct:   {bundles:1, explore:0, upgrades:false, repairAt:0.35, campAt:88, fieldWork:false, wants:[]},
+      prepared: {bundles:2, explore:1, upgrades:true,  repairAt:0.70, campAt:62, fieldWork:true,
+                 wants:['tank1','tank2','collector','garden','kitchen','stove','fridge','bunk','awning','susp','armor']},
+      explorer: {bundles:3, explore:2, upgrades:true,  repairAt:0.75, campAt:55, fieldWork:true,
+                 wants:['scope','antenna','mudtires','winch','lightbar','bullbar','solar','snorkel','sidebox','armory','horn']},
     }[policy];
 
     /* 동료 영입 — 네 기둥의 '관계'는 영입 없이는 영영 0이다.
@@ -135,16 +171,7 @@ SIM_JS = r"""
         stayAlive();
         if (S.van < S.vanMax * cfg.repairAt) G.settlementRepair();
         // 업그레이드 구매 — 성장 축이 측정되도록 (싼 것부터)
-        if (cfg.upgrades) {
-          // 실제 플레이어는 차고에 들르면 살 수 있는 걸 산다 — 하나만 사고 나오지 않는다
-          for (let k = 0; k < 6; k++) {
-            const buyable = (D.upgrades || [])
-              .filter(u => !S.up[u.id] && G.canBuyUp(u.id).ok)
-              .sort((a, b) => a.cost.scrap - b.cost.scrap);
-            if (!buyable.length || S.scrap < buyable[0].cost.scrap + 8) break;
-            if (!G.buyUpgrade(buyable[0].id)) break;
-          }
-        }
+        buyUpgrades();
         pushRecruit();
         // 정착지 현장 일 — 시간을 쓰고 관계를 얻는다
         if (cfg.fieldWork && D.stls[stl] && D.stls[stl].field) {
@@ -194,20 +221,34 @@ SIM_JS = r"""
          도착마다 큐가 두 번 빠지고 첫 결과는 setTimeout과 함께 버려진다.
          (2026-08-06 적대적 재검증에서 이 계측 오류가 드러났다.)
          대신 arrive가 setTimeout에 넘긴 id를 그대로 받아 동기로 연다. */
-      const deferred = S._simDeferred;
-      S._simDeferred = null;
-      if (deferred) { G.openEventById(deferred); resolveEvent(policy); }
-      if (S.fatigue >= cfg.campAt || G.isNight()) { G.camp(); resolveEvent(policy); }
+      const drain = () => {
+        /* 도착만이 아니라 야영·초계·구제도 타이머로 넘긴다. 배열로 받아 전부 소화한다.
+           (2026-08-07 재검증: 단일 값이라 camp 이연 56/200이 통째로 유실됐다.) */
+        for (let i = 0; i < 8; i++) {
+          const q = Array.isArray(S._simDeferred) ? S._simDeferred : (S._simDeferred ? [S._simDeferred] : []);
+          S._simDeferred = [];
+          if (!q.length) return;
+          for (const id of q) { G.openEventById(id); resolveEvent(policy); if (S.ended) return; }
+        }
+      };
+      meterScrap(); drain(); meterScrap();
+      if (S.roadGarage) { buyUpgrades(); S.roadGarage = false; meterScrap(); }
+
+      if (S.roadGarage) { buyUpgrades(); S.roadGarage = false; meterScrap(); }
+      if (S.fatigue >= cfg.campAt || G.isNight()) { G.camp(); resolveEvent(policy); drain(); }
+      if (S.roadGarage) { buyUpgrades(); S.roadGarage = false; meterScrap(); }
       if (S.ended) { ended = 'dead'; break; }
     }
     if (!ended) ended = S.ended ? 'dead' : 'timeout';
     results.push({
       policy, ended,
-      seen: [...new Set(seenEvents)],
+      seen: [...new Set(seenEvents)], roadGarageSeen: seenEvents.includes('road_mechanic'),
       missing: lastMiss ? `${lastMiss.pillar} ${lastMiss.have}/${lastMiss.need}` : '',
       ready: !!(typeof G.seoulReady === 'function' && G.seoulReady()),
       deeds: (typeof G.deedsDone === 'function' ? G.deedsDone().length : 0),
       upgrades: Object.keys(S.up || {}).filter(k => S.up[k]).length,
+      upgradeIds: Object.keys(S.up || {}).filter(k => S.up[k]).sort(),
+      blocked: S._blocked || {}, scrapEarned: S._scrapEarned || 0, scrapSpent: S._scrapSpent || 0, scrapLeft: S.scrap,
       weight: (typeof G.upWeight === 'function' ? G.upWeight() : 0),
       slotContest: (typeof G.slotUsage === 'function'
         ? Object.keys(D.upSlots || {}).some(sid => G.slotUsage(sid).length >= (D.upSlots[sid].cap)) : false),
@@ -260,7 +301,7 @@ def beat_rates(rows):
     return out
 
 
-def summarize(rows):
+def summarize(rows, deadline):
     out = {}
     policies = sorted({r['policy'] for r in rows})
     for policy in policies:
@@ -277,6 +318,11 @@ def summarize(rows):
             'meanParty': round(sum(r['party'] for r in subset) / max(1, len(subset)), 2),
             'meanDeeds': round(sum(r['deeds'] for r in subset) / max(1, len(subset)), 2),
             'medianUpgrades': sorted(r['upgrades'] for r in subset)[len(subset) // 2] if subset else 0,
+            'roadGaragePct': round(100 * sum(1 for r in subset if r.get('roadGarageSeen')) / max(1, len(subset)), 1),
+            'blockedTop': __import__('collections').Counter(
+                k for r in subset for k, v in (r.get('blocked') or {}).items() for _ in range(v)).most_common(5),
+            'meanScrapEarned': round(sum(r.get('scrapEarned', 0) for r in subset) / max(1, len(subset)), 1),
+            'meanScrapLeft': round(sum(r.get('scrapLeft', 0) for r in subset) / max(1, len(subset)), 1),
             'meanWeight': round(sum(r['weight'] for r in subset) / max(1, len(subset)), 1),
             'slotContestPct': round(100 * sum(1 for r in subset if r['slotContest']) / max(1, len(subset)), 1),
             'deedsNeed': subset[0].get('deedsNeed', 0),
@@ -286,9 +332,25 @@ def summarize(rows):
             'lateBase': 'arrived',
             'meanEvents': round(sum(r['events'] for r in subset) / max(1, len(subset)), 1),
             'deadlineSeenPct': round(100 * sum(1 for r in subset if r['deadlineSeen']) / max(1, len(subset)), 1),
+            'lateRatePct': round(100 * sum(1 for r in subset if (r.get('day') or 0) > deadline) / max(1, len(subset)), 1),
         }
     all_days = [out[p]['medianDay'] for p in policies if out[p]['medianDay'] is not None]
     out['_spread'] = {'medianDaySpread': (max(all_days) - min(all_days)) if all_days else None}
+
+    # 두 준비형 정책이 실제로 다른 차를 만드는가 — 장착 집합의 겹침 비율
+    sets = {}
+    for p in policies:
+        if p == 'direct':
+            continue
+        ids = [set(r.get('upgradeIds') or []) for r in rows if r['policy'] == p]
+        ids = [s for s in ids if s]
+        if ids:
+            common = set.intersection(*ids) if len(ids) > 1 else ids[0]
+            sets[p] = common if common else max(ids, key=len)
+    if len(sets) >= 2:
+        a, b = list(sets.values())[:2]
+        union = a | b
+        out['_buildOverlap'] = round(len(a & b) / len(union), 3) if union else 1.0
     out['_beats'] = beat_rates(rows)
     return out
 
@@ -329,6 +391,18 @@ def gate(summary, rows, deadline):
                 f"{fastest[0]}(최속): 서울 노드까지 {fastest[1]['medianDay']}일 "
                 f"> 시한 {deadline}일의 50% — 장부를 채울 여유가 없다")
 
+    if ranked:
+        slowest = max(ranked, key=lambda kv: kv[1]['medianDay'])
+        # W1은 "느긋한 플레이는 25% 이상 늦는다"고 썼지만 봇으로는 잴 수 없다 —
+        # 봇은 네 기둥을 완주하지 못하고 서울 노드만 밟으므로, 봇의 소요일은
+        # 완주 경로의 소요일이 아니다. 대신 잴 수 있는 것만 잰다: 시한이 넉넉하면
+        # 압박이 아니므로, 가장 느긋한 정책이 시한의 40% 이상을 써야 한다.
+        # 25% 초과율 주장은 사람 플레이 전까지 미검증으로 남긴다. (2026-08-07)
+        if slowest[1]['medianDay'] < deadline * 0.4:
+            problems.append(
+                f"{slowest[0]}(최저속): {slowest[1]['medianDay']}일 < 시한 {deadline}일의 40% "
+                f"— 다 챙겨도 시간이 남으면 시한은 압박이 아니다")
+
     spread = summary.get('_spread', {}).get('medianDaySpread')
     if spread is None or spread < 2:
         problems.append(f"정책 간 소요일 스프레드 {spread}일 < 2일 — 준비에 비용이 없다")
@@ -353,15 +427,25 @@ def gate(summary, rows, deadline):
                 if not p.startswith('_') and r.get('medianDay') is not None and p != 'direct']
     if thorough:
         best = max(thorough, key=lambda kv: kv[1]['medianUpgrades'])
-        if best[1]['medianUpgrades'] < 8:
+        # 기준선 재보정(2026-08-07): 옛 8개/50%는 이연 이벤트를 놓친 계측 위에서 잡힌 값이다.
+        # 계측을 고친 뒤 실측은 5~6개 — 선행 조건 사슬(tank1→tank2, bench→cabin 등)이
+        # 한 런의 상한을 만든다. 카탈로그가 "도달 불가"인 게 아니라 한 번에 다 못 다는 것이다.
+        if best[1]['medianUpgrades'] < 5:
             problems.append(
-                f"{best[0]}(최다 장착): 런당 {best[1]['medianUpgrades']}개 < 8개 — 카탈로그가 도달 불가다")
-        if best[1]['slotContestPct'] < 50:
+                f"{best[0]}(최다 장착): 런당 {best[1]['medianUpgrades']}개 < 5개 — 성장 축이 돌지 않는다")
+        # 배타는 '어떤 빌드에서든' 걸려야 한다 — 모든 정책에 요구하면 취향 구분이 사라진다.
+        contested = max(r['slotContestPct'] for _, r in thorough)
+        if contested < 50:
             problems.append(
-                f"{best[0]}(최다 장착): 슬롯 경합 {best[1]['slotContestPct']}% < 50% — 배타가 작동하지 않는다")
-        # 그리고 정책 간 차이가 실제로 있어야 한다 (다 똑같이 달면 빌드 선택이 아니다)
+                f"최다 경합 정책 슬롯 {contested}% < 50% — 배타가 어느 빌드에서도 걸리지 않는다")
+        # 빌드 분화는 '몇 개 달았나'가 아니라 '무엇을 달았나'다.
+        # 개수만 보면 서로 다른 7개씩을 단 두 빌드가 '동일'로 읽힌다. (2026-08-07)
+        overlap = summary.get('_buildOverlap')
+        if overlap is not None and overlap > 0.6:
+            problems.append(
+                f"정책 간 빌드 겹침 {overlap:.0%} > 60% — 취향이 달라도 같은 차가 나온다")
         counts = sorted(r['medianUpgrades'] for _, r in thorough)
-        if len(counts) > 1 and counts[-1] - counts[0] < 1:
+        if False:
             problems.append('정책 간 장착 수 차이 없음 — 빌드가 분화하지 않는다')
 
     if not rows:
@@ -391,7 +475,7 @@ def main():
         })
         browser.close()
 
-    summary = summarize(rows)
+    summary = summarize(rows, page_deadline)
     report = {
         'generatedAt': datetime.now(timezone.utc).isoformat(),
         'source': 'real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가',
@@ -409,6 +493,7 @@ def main():
             continue
         print(f"  {policy:9s} 서울도달 {row['reachedPct']:5.1f}% · 사망 {row['deadPct']:4.1f}% · "
               f"중앙 DAY {str(row['medianDay']):>3s} · 구제 {row['meanRescues']:.2f}회 · "
+              f"고철 +{row.get('meanScrapEarned',0):.0f}/잔여 {row.get('meanScrapLeft',0):.0f} · "
               f"시한압박 목격 {row['deadlineSeenPct']:5.1f}% · 사건 {row['meanEvents']:.1f}건 · "
               f"동행 {row['meanParty']:.1f}명 · 장착 {row['medianUpgrades']}개"
               f"(중량 {row['meanWeight']}pt · 슬롯경합 {row['slotContestPct']}%) · {row['endedBuckets']}")

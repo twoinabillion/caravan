@@ -167,4 +167,4 @@ with sync_playwright() as playwright:
 
 if failures:
     raise SystemExit(f'Phase1 검증 실패 {len(failures)}건: ' + ', '.join(failures))
-print('✅ DAY30·구제·야영·감독 배선 전부 통과')
+print('✅ 시한·구제·야영·감독 배선 전부 통과')

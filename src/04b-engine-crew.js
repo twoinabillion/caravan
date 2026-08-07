@@ -573,11 +573,22 @@ G.dawn = ()=>{
       body:`기한(${q.due}일차)을 넘겼다. ${D.nodes[q.from].name} 사람들 볼 낯이 없다.`, links:[]});
   }
   if(S.thirst>=3){ G.endGame('thirst'); return; }
+  /* 좌초 — 연료도 살 고철도 없고 마을도 아닌 곳에서 며칠째. 구제는 무한하지 않다. */
+  const atTown=!!(S.at&&D.nodes[S.at]&&D.nodes[S.at].stl);
+  if(S.fuel<=0 && !atTown && S.scrap<8 && ((S._rescues&&S._rescues.nofuel)||0)>=3){
+    S._strandedDays=(S._strandedDays||0)+1;
+    if(S._strandedDays>=2){ G.endGame('stranded'); return; }
+  } else S._strandedDays=0;
+  /* 기피 — 관측 문턱을 넘긴 채 마을이 계속 문을 닫으면 길 위에서 버티는 일만 남는다 */
+  if(S.pursuit>=G.PURSUIT_SHUNNED){
+    S._shunnedDays=(S._shunnedDays||0)+1;
+    if(S._shunnedDays>=4){ G.endGame('shunned'); return; }
+  } else S._shunnedDays=0;
   if(S.hunger===1) G.queueCrisis('crisis_hungry');
   G.tickDeadline();
   G.save();
 };
-/* DAY 9 — 선언된 시한을 실제로 집행한다. 압박은 새벽마다 단계적으로 오르고,
+/* 시한(D.transferDeadlineDay)을 실제로 집행한다. 압박은 새벽마다 단계적으로 오르고,
    시한을 넘기면 첫 이송이 실제로 출발한다(에필로그·처분 장면에 새겨진다). */
 G.tickDeadline = ()=>{
   if(!S || S.flags.core_decided || S.flags.story_done) return;
