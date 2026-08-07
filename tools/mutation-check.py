@@ -144,6 +144,14 @@ MUTATIONS = [
         'new': "        const lines=undefined||[",
         'test': ['python3', 'tests/test_npc_layer.py'],
     },
+    {
+        'name': 'market-mul',
+        'why': '시세 계수를 끄면 모든 마을이 같은 값 — 값의 차이가 동선이 되지 못한다',
+        'file': 'src/04e-engine-world.js',
+        'old': "  const m=D.market&&D.market[stlId]&&D.market[stlId].mul; if(!m) return 1;",
+        'new': "  const m=null; if(!m) return 1;",
+        'test': ['python3', 'tests/test_market_economy.py'],
+    },
 ]
 
 

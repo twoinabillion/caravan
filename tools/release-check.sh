@@ -23,6 +23,7 @@ npm run test:finale
 npm run test:seoul
 npm run test:profiles
 npm run test:npcs
+npm run test:market
 npm run test:audio
 npm run test:accessibility9
 npm run test:golden

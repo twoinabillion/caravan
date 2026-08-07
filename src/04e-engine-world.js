@@ -306,6 +306,28 @@ G.buyUpgrade = (id)=>{
 
 /* ── 정착지 경제: 거래·수리 규칙은 엔진 소관, UI는 호출과 표시만 한다.
    (엔진 테스트와 시뮬레이터가 실제 규칙과 같은 코드를 보게 하기 위함) ── */
+/* 지역 시세 계수 — key('fuel'/'water'/'food'/'item부품'…)를 마을 사정으로 환산 */
+G.marketMul = (stlId,key)=>{
+  const m=D.market&&D.market[stlId]&&D.market[stlId].mul; if(!m) return 1;
+  const name=key&&key.startsWith&&key.startsWith('item')?key.slice(4):key;
+  return m[name]||1;
+};
+/* 이 마을이 웃돈 주고 사는 것 — 싣고 온 물건을 판다 */
+G.stlDemand = (stlId)=> (D.market&&D.market[stlId]&&D.market[stlId].demand)||null;
+G.sellToDemand = (stlId)=>{
+  const d=G.stlDemand(stlId); if(!d) return {ok:false, why:'매입 없음'};
+  if(d.item==='식량'){
+    if(S.food<2) return {ok:false, why:'팔 식량이 없다 (이틀치는 남겨야)'};
+    S.food--; S.scrap+=d.price;
+  } else {
+    if((S.items[d.item]||0)<1) return {ok:false, why:'팔 '+d.item+'이 없다'};
+    S.items[d.item]--; S.scrap+=d.price;
+  }
+  S._soldDemand=S._soldDemand||{}; S._soldDemand[stlId]=(S._soldDemand[stlId]||0)+1;
+  G.advance(20);
+  if(S.ended) return {ok:true, ended:true, price:d.price};
+  G.save(); return {ok:true, price:d.price};
+};
 G.tradeDiscount = (stlId)=>{
   const crewDisc=G.hasPerk('leo_vip')?0.8:G.hasComp('leo')?0.9:1;
   return Math.max(.65, crewDisc*G.stlImpact(stlId).discount);
@@ -324,7 +346,7 @@ G.trade = (stlId, i)=>{
     if((S.items['의약품']||0)<1) return {ok:false, why:'의약품이 없다'};
     S.items['의약품']--; S.food+=localTrusted?4:3; }
   else {
-    const price=Math.max(1,Math.round(price0*G.tradeDiscount(stlId)));
+    const price=Math.max(1,Math.round(price0*G.marketMul(stlId,key)*G.tradeDiscount(stlId)));
     if(S.scrap<price) return {ok:false, why:'고철 부족'};
     S.scrap-=price;
     if(key==='fuel') S.fuel=clamp(S.fuel+qty,0,S.fuelMax);
@@ -341,7 +363,7 @@ G.tradeBundle = (stlId)=>{
   const w=stl.trade.find(row=>row[1]==='water');
   const f=stl.trade.find(row=>row[1]==='food');
   if(!w||!f) return {ok:false, why:'묶음 없음'};
-  const price=Math.max(1,Math.round((w[3]+f[3]*2)*G.tradeDiscount(stlId)));
+  const price=Math.max(1,Math.round((w[3]*G.marketMul(stlId,'water')+f[3]*2*G.marketMul(stlId,'food'))*G.tradeDiscount(stlId)));
   if(S.scrap<price) return {ok:false, why:'고철 부족'};
   S.scrap-=price; S.water+=w[2]; S.food+=f[2]*2;
   G.advance(40);   // 물통과 자루를 싣는 데 걸리는 시간

@@ -2694,7 +2694,7 @@ const UI = (()=>{
     const waterRow=stl.trade.find(row=>row[1]==='water');
     const foodRow=stl.trade.find(row=>row[1]==='food');
     if(waterRow&&foodRow){
-      const bundlePrice=Math.max(1,Math.round((waterRow[3]+foodRow[3]*2)*disc));
+      const bundlePrice=Math.max(1,Math.round((waterRow[3]*G.marketMul(curStl,'water')+foodRow[3]*2*G.marketMul(curStl,'food'))*disc));
       h+=`<div class="trade-bundle"><span><b>길 위 기본 보급</b><small>물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}일치</small></span>
         <span class="tp">${ICO('scrap')}고철 ${bundlePrice} · 40분</span>
         <button class="tbtn" data-bundle="1" ${S.scrap<bundlePrice?'disabled':''}>한 번에 싣기</button></div>`;
@@ -2712,13 +2712,41 @@ const UI = (()=>{
       if(key.startsWith('barter')){
         h+=`<div class="trade-row"><span class="tn">${trustedLabel}</span><button class="tbtn" data-t="${i}">교환</button></div>`;
       } else {
-        const price=Math.max(1,Math.round(price0*disc));
-        h+=`<div class="trade-row"><span class="tn">${tico}${label}</span><span class="tp">${ICO('scrap')}고철 ${price}</span>
+        const mul=G.marketMul(curStl,key);
+        const price=Math.max(1,Math.round(price0*mul*disc));
+        const tag=mul<=0.9?'<em class="mk-cheap">이 동네가 싸다</em>':mul>=1.2?'<em class="mk-dear">여긴 귀하다</em>':'';
+        h+=`<div class="trade-row"><span class="tn">${tico}${label}${tag}</span><span class="tp">${ICO('scrap')}고철 ${price}</span>
           <button class="tbtn" data-t="${i}" ${S.scrap<price?'disabled':''}>산다</button></div>`;
       }
     });
+    /* 매입 — 이 마을이 웃돈 주고 사는 것. 싣고 온 물건이 장사가 된다 */
+    const dm=G.stlDemand(curStl);
+    if(dm){
+      const have=dm.item==='식량'?S.food:(S.items[dm.item]||0);
+      h+=`<div class="trade-group-label">매입</div>
+        <div class="trade-row trade-demand"><span class="tn">${ICO(ITEM_ICO[dm.item]||'food')}${dm.item} 1 ${dm.item==='식량'?'(일치)':''}<em>${esc(dm.why)}</em></span>
+        <span class="tp">${ICO('scrap')}고철 +${dm.price}</span>
+        <button class="tbtn" data-sell="1" ${have<(dm.item==='식량'?2:1)?'disabled':''}>판다</button></div>`;
+    }
+    /* 다음 마을의 시세 소문 — 정보가 동선이 되도록, 갈 수 있는 이웃 정착지 하나만 */
+    const nbStl=(G.neighbors(S.at)||[]).map(n=>D.nodes[n.id]&&D.nodes[n.id].stl).filter(Boolean)
+      .concat(Object.keys(D.stls).filter(id=>id!==curStl)).find(id=>id&&id!==curStl&&D.market[id]);
+    if(nbStl){
+      const nm=D.market[nbStl], picks=[];
+      for(const [k,v] of Object.entries(nm.mul||{})) if(v>=1.2) picks.push(k+'이 귀하고');
+      const dm2=nm.demand;
+      if(picks.length||dm2) h+=`<div class="trade-rumor">🧾 장사꾼들 말로는, ${D.stls[nbStl].name}은 ${picks[0]||''} ${dm2?dm2.item+'을 웃돈 주고 산다더라':''}</div>`;
+    }
     tr.innerHTML=h;
     tr.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>buy(+b.dataset.t));
+    const sellBtn=tr.querySelector('[data-sell]');
+    if(sellBtn) sellBtn.onclick=()=>{
+      const r=G.sellToDemand(curStl);
+      if(!r.ok){ toast(r.why); return; }
+      $('#tr-scrap').textContent=S.scrap;
+      toast(`${ICO('scrap')} 고철 +${r.price} — 팔았다`);
+      renderTrade(); renderHud();
+    };
     const bundle=tr.querySelector('[data-bundle]');
     if(bundle) bundle.onclick=()=>{
       const r=G.tradeBundle(curStl);
