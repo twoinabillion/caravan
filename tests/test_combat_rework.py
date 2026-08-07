@@ -42,12 +42,58 @@ with sync_playwright() as playwright:
       const seen=new Set();
       for(let i=0;i<200;i++){
         S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[]};
+        delete S._threatRead;   // 첫 조우 조건 고정 — 경험 우회를 배제하고 굴림만 본다
         const out=G.pickOutcome(evd,counter);
         seen.add(counter.out.findIndex(o=>o.text===out.text));
       }
       return [...seen].sort();
     }""")
-    check('phase 2 실패 분기 실제 도달', 1 in dist, str(dist))
+    check('첫 조우·무준비는 실패 분기에 실제 도달', 1 in dist, str(dist))
+
+    print('― 준비는 굴림을 대체한다 (2026-08-07 규칙)')
+    prep = page.evaluate("""() => {
+      const evd=D.events.find(e=>e.id==='combat_walker_read');
+      // (a) 요구를 채운 counter — 민지가 건강하면 유압관 읽기는 확실하다
+      const withReq=evd.choices.find(c=>c.tactic==='정비'&&c.req&&c.req.healthyComp==='minji');
+      G.doRecruit&&!G.hasComp('minji')&&G.doRecruit('minji');
+      let reqCertain=true;
+      for(let i=0;i<40;i++){
+        S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[]};
+        delete S._threatRead;
+        const out=G.pickOutcome(evd,withReq);
+        if(evd.choices.find(c=>c===withReq).out.indexOf(out)!==0
+           && withReq.out.findIndex(o=>o.text===out.text)!==0) reqCertain=false;
+      }
+      // (b) 같은 위협을 읽어낸 뒤에는 무요구 counter도 확실하다
+      const noReq=evd.choices.find(c=>c.tactic==='관찰');
+      let expCertain=true;
+      for(let i=0;i<40;i++){
+        S.combat={id:'walker',edge:0,pressure:1,phase:2,history:[]};
+        S._threatRead={[evd.combat.threat]:true};
+        const out=G.pickOutcome(evd,noReq);
+        if(noReq.out.findIndex(o=>o.text===out.text)!==0) expCertain=false;
+      }
+      // (c) 이탈은 counters에 없다 — 준비 우회 불가
+      const flee=evd.choices.find(c=>c.tactic==='돌입'||!evd.combat.counters[c.tactic]);
+      const bypassable=!!(flee&&evd.combat.counters[flee.tactic]);
+      return {reqCertain, expCertain, fleeBypass:bypassable};
+    }""")
+    check('요구를 채운 counter는 확실히 관철된다', prep['reqCertain'], str(prep))
+    check('읽어낸 위협의 counter는 확실히 관철된다', prep['expCertain'], str(prep))
+    check('counters 밖 전술은 우회 불가', not prep['fleeBypass'], str(prep))
+
+    coverage = page.evaluate("""() => {
+      // 데이터 계약: 굴림뿐인 전투 전부에 counters와 맞물리는 tactic 선택이 있다
+      const bad=[];
+      for(const e of D.events.filter(e=>e.combat)){
+        const rolled=(e.choices||[]).filter(c=>c.combatRoll!==undefined);
+        if(!rolled.length) continue;
+        const bypass=rolled.some(c=>c.tactic&&e.combat.counters&&e.combat.counters[c.tactic]);
+        if(!bypass) bad.push(e.id);
+      }
+      return bad;
+    }""")
+    check('모든 굴림 전투에 준비 우회로가 있다', not coverage, str(coverage))
 
     print('― 구조·호송 3분기 (성공/부분/실패)')
     tri = page.evaluate("""() => {
@@ -58,6 +104,7 @@ with sync_playwright() as playwright:
         const seen=new Set();
         for(let i=0;i<400;i++){
           S.combat={id:'x',edge:0,pressure:1,phase:3,history:[]};
+          delete S._threatRead;   // 첫 조우 조건 고정 — 경험 우회 배제
           const out=G.pickOutcome(evd,choice);
           seen.add(out.fx&&out.fx.combatResult);
         }
@@ -81,6 +128,7 @@ with sync_playwright() as playwright:
       // 이후: 같은 조우에서는 판정으로
       let sawFail=false;
       for(let i=0;i<200;i++){
+        delete S._threatRead;   // 경험 우회 배제
         S.combat.sniperUsed=1;
         const out=G.pickOutcome(evd,choice);
         if(out.text===choice.out[1].text) sawFail=true;

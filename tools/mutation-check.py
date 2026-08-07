@@ -64,6 +64,14 @@ MUTATIONS = [
         'new': "if(false){\n      slots.push({at:chk.km*(0.5+rng()*0.3), pillarPick:true});",
         'test': ['python3', 'tools/simulate-engine.py', '--runs', '16', '--max-days', '50'],
     },
+    {
+        'name': 'combat-prep-bypass',
+        'why': '준비 우회를 끄면 counters는 다시 장식이 되고 전투가 전부 굴림으로 돌아간다',
+        'file': 'src/04b-engine-crew.js',
+        'old': "&& choice.tactic && evd.combat && evd.combat.counters && evd.combat.counters[choice.tactic]",
+        'new': "&& false && choice.tactic && evd.combat && evd.combat.counters && evd.combat.counters[choice.tactic]",
+        'test': ['python3', 'tests/test_combat_rework.py'],
+    },
 ]
 
 

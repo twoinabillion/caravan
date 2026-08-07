@@ -460,6 +460,18 @@ G.pickOutcome = (evd, choice)=>{
   if(choice.req&&choice.req.item==='탄약'&&G.hasPerk('kw_sniper')&&S.combat&&!S.combat.sniperUsed){
     S.combat.sniperUsed=1; out=choice.out[0];
   }
+  /* 준비는 굴림을 대체한다. 선언된 counter의 tactic과 일치하는 선택이
+     (a) 요구를 실제로 채웠거나(맞는 동료·장비 — req 통과가 곧 준비 확인)
+     (b) 같은 위협을 이미 한 번 겪어 읽어냈다면(S._threatRead)
+     결과는 확실한 성공이다. 굴림은 준비 없이 덤빌 때의 것.
+     (2026-08-07: counters가 준비를 '선언'만 하고 판정은 여전히 굴림이던 간극을 닫음) */
+  else if(choice.combatRoll!==undefined && choice.out.length>1
+    && choice.tactic && evd.combat && evd.combat.counters && evd.combat.counters[choice.tactic]
+    && !(choice.req&&choice.req.item)   /* 소모품 지불은 준비 숙련이 아니다 — 연발은 위치를 드러낸다 */
+    && ((choice.req&&(choice.req.healthyComp||choice.req.up||choice.req.knowledge))
+        || (S._threatRead&&S._threatRead[evd.combat.threat]))){
+    out=choice.out[0]; index=0;
+  }
   else if(choice.combatRoll!==undefined&&choice.out.length>1){
     rolled=true;
     rolledValue=rng();
@@ -472,6 +484,11 @@ G.pickOutcome = (evd, choice)=>{
   } else {
     out=G.rollOut(choice.out);
     index=Math.max(0,choice.out.indexOf(out));
+  }
+  /* 이 위협을 한 번 겪었다 — 다음 조우부터 같은 계통은 읽는 법을 안다 */
+  if(evd&&evd.combat&&evd.combat.threat){
+    S._threatRead=S._threatRead||{};
+    S._threatRead[evd.combat.threat]=true;
   }
   const combatResult=G.inferCombatResult(choice,out,index,rolled);
   const combatMeta = G.combatChoiceOutcomeMeta(evd,choice,rolled?rolledValue:null,combatResult);
