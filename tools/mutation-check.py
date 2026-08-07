@@ -128,6 +128,14 @@ MUTATIONS = [
         'new': "    if(false&&traceId&&D.events.some(e=>e.id===traceId)) G.queueStory(traceId);",
         'test': ['python3', 'tests/test_start_profiles.py'],
     },
+    {
+        'name': 'pacing-slot-starve',
+        'why': '주행 이벤트 슬롯이 고갈되면 죽은 구간이 생긴다 — 무사건 게이트가 잡아야 한다',
+        'file': 'src/04c-engine-travel.js',
+        'old': "    let count = chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0);",
+        'new': "    let count = 0; void(chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0));",
+        'test': ['python3', 'tools/simulate-engine.py', '--runs', '24'],
+    },
 ]
 
 

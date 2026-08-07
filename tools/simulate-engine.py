@@ -41,7 +41,13 @@ SIM_JS = r"""
   // 이벤트는 열리는 즉시 정책에 따라 선택 하나를 고르고 닫는다
   let pendingEvent = null;
   const seenEvents = [];
-  UI.showEvent = (evd) => { pendingEvent = evd; if (evd && evd.id) seenEvents.push(evd.id); };
+  UI.showEvent = (evd) => { pendingEvent = evd; if (evd && evd.id) seenEvents.push(evd.id);
+    if (S && evd && evd.id) {
+      (S._evTimes = S._evTimes || []).push(S.day * 1440 + S.min);
+      /* 감독이 실제로 일하는지의 원자료: 이 사건이 무거운가 × 지금 국면이 무엇인가 */
+      try { (S._evPhase = S._evPhase || []).push({p: S.director && S.director.phase,
+        h: G.eventIsHeavy ? !!G.eventIsHeavy(evd) : false}); } catch (e) {}
+    } };
   // 길 위 작업대는 정착지 밖에서 열린다 — UI 타이머 대신 플래그를 폴링해 소화한다
   let roadGarageHook = null;
 
@@ -357,6 +363,7 @@ SIM_JS = r"""
         }
       };
       meterScrap(); drain(); meterScrap();
+      try{ (S._dirSamples=S._dirSamples||[]).push({d:S.day, i:G.directorPressure(), p:S.director&&S.director.phase}); }catch(e){}
       if (S.roadGarage) { buyUpgrades(); S.roadGarage = false; meterScrap(); }
 
       if (S.roadGarage) { buyUpgrades(); S.roadGarage = false; meterScrap(); }
@@ -377,6 +384,19 @@ SIM_JS = r"""
       pillars: (()=>{ try { const p=G.pillars(); return Object.fromEntries(Object.entries(p).map(([k,v])=>[k,v.have+'/'+v.need])); } catch(e){ return null; } })(),
       seoulReady: (()=>{ try { return G.seoulReady(); } catch(e){ return false; } })(),
       storyDone: !!(S.flags&&S.flags.story_done),
+      pacing: (()=>{
+        const t=(S._evTimes||[]).slice().sort((a,b)=>a-b);
+        let maxGap=0;
+        for(let k=1;k<t.length;k++) maxGap=Math.max(maxGap, t[k]-t[k-1]);
+        const ds=S._dirSamples||[];
+        const phases=[...new Set(ds.map(x=>x.p))];
+        const iv=ds.map(x=>x.i), mean=iv.reduce((a,b)=>a+b,0)/Math.max(1,iv.length);
+        const sd=Math.sqrt(iv.reduce((a,b)=>a+(b-mean)*(b-mean),0)/Math.max(1,iv.length));
+        const ep=S._evPhase||[];
+        const share=(ph)=>{ const rows=ep.filter(x=>ph.includes(x.p)); return rows.length?rows.filter(x=>x.h).length/rows.length:null; };
+        return {maxGapMin:Math.round(maxGap), phases, intensityMean:Math.round(mean), intensitySd:Math.round(sd*10)/10, events:t.length,
+                peakHeavy:share(['peak','build']), relaxHeavy:share(['relax','fade'])};
+      })(),
       deathCause: S.ended && S.endKind ? S.endKind : (S.ended ? 'unknown' : null),
       lastVitals: {water:S.water, food:S.food, fuel:S.fuel, van:S.van, pursuit:S.pursuit},
       missing: lastMiss ? `${lastMiss.pillar} ${lastMiss.have}/${lastMiss.need}` : '',
@@ -471,6 +491,14 @@ def summarize(rows, deadline):
             'deadlineSeenPct': round(100 * sum(1 for r in subset if r['deadlineSeen']) / max(1, len(subset)), 1),
             'lateRatePct': round(100 * sum(1 for r in subset if (r.get('day') or 0) > deadline) / max(1, len(subset)), 1),
             'readyPct': round(100 * sum(1 for r in subset if r.get('seoulReady')) / max(1, len(subset)), 1),
+            'maxEventGapMin': max((r.get('pacing', {}).get('maxGapMin', 0) for r in subset), default=0),
+            'phase3Pct': round(100 * sum(1 for r in subset
+                if len([p2 for p2 in (r.get('pacing', {}).get('phases') or []) if p2]) >= 3) / max(1, len(subset)), 1),
+            'intensitySdMean': round(sum(r.get('pacing', {}).get('intensitySd', 0) for r in subset) / max(1, len(subset)), 1),
+            'heavyShapeDelta': (lambda ps, rs: round((sum(ps) / len(ps) - sum(rs) / len(rs)) * 100, 1)
+                if ps and rs else None)(
+                [r.get('pacing', {}).get('peakHeavy') for r in subset if r.get('pacing', {}).get('peakHeavy') is not None],
+                [r.get('pacing', {}).get('relaxHeavy') for r in subset if r.get('pacing', {}).get('relaxHeavy') is not None]),
         }
     all_days = [out[p]['medianDay'] for p in policies if out[p]['medianDay'] is not None]
     out['_spread'] = {'medianDaySpread': (max(all_days) - min(all_days)) if all_days else None}
@@ -555,6 +583,29 @@ def gate(summary, rows, deadline):
             problems.append(
                 f"completionist: 기둥 4종 완성(seoulReady) {comp.get('readyPct')}% < 60% "
                 f"— 완주 콘텐츠가 실플레이 경로로 도달 불가")
+
+    # 페이싱 곡선 게이트 (2026-08-07): 주장이 아니라 곡선으로.
+    # (1) 이틀 넘게 아무 사건도 없는 죽은 구간이 없어야 하고
+    # (2) 느긋한 정책에서 감독 국면 3종(build/peak/relax·fade)이 실제로 순환해야 하고
+    # (3) 강도가 평평하지 않아야 한다(표준편차).
+    for policy in ('prepared', 'explorer', 'completionist'):
+        row = summary.get(policy)
+        if not row:
+            continue
+        # 완주형은 40~50일 순회라 최댓값 통계가 더 출렁인다 — 실측(2760) 기반 여유
+        gap_cap = 3600 if policy == 'completionist' else 2880
+        if row.get('maxEventGapMin', 0) > gap_cap:
+            problems.append(f"{policy}: 최대 무사건 구간 {row['maxEventGapMin']}분 > {gap_cap}분 — 죽은 구간")
+        if row.get('phase3Pct', 0) < 60:
+            problems.append(f"{policy}: 국면 3종 순환 런 {row.get('phase3Pct')}% < 60% — 감독이 평평하다")
+        if row.get('intensitySdMean', 0) < 5:
+            problems.append(f"{policy}: 강도 표준편차 {row.get('intensitySdMean')} < 5 — 곡선이 아니라 직선")
+        # ⚠️ 이 지표는 감독의 '인과 증명'이 아니다 — 국면이 최근 사건으로 계산되므로
+        # 절정=무거움 상관은 정의상 성립한다(2026-08-07 실측: 가중·숨고르기를 꺼도 11~22%p 유지).
+        # 회귀 바닥선으로만 쓴다: 이 수치가 0에 수렴하면 국면 계산 자체가 죽은 것이다.
+        d = row.get('heavyShapeDelta')
+        if d is not None and d < 3:
+            problems.append(f"{policy}: 절정-이완 무거운 사건 비율 차 {d}%p < 3%p — 국면 계산이 죽었다")
 
     spread = summary.get('_spread', {}).get('medianDaySpread')
     if spread is None or spread < 2:
