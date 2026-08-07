@@ -1,6 +1,203 @@
 {
- "violations": [],
- "pageerrors": [
-  "Cannot read properties of null (reading 'id') || TypeError: Cannot read properties of null (reading 'id')\n    at file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html:14979:62"
- ]
+ "violations": [
+  {
+   "at": "explore",
+   "msg": "S.water=NaN — NaN/유한 아님",
+   "trail": [
+    "recruitStep",
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi"
+   ],
+   "snap": {
+    "day": 2,
+    "min": 510,
+    "water": NaN,
+    "food": 23,
+    "fuel": 52,
+    "scrap": 17,
+    "van": 78,
+    "ended": false
+   }
+  },
+  {
+   "at": "perk",
+   "msg": "S.water=NaN — NaN/유한 아님",
+   "trail": [
+    "recruitStep",
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi",
+    "perk"
+   ],
+   "snap": {
+    "day": 2,
+    "min": 510,
+    "water": NaN,
+    "food": 23,
+    "fuel": 52,
+    "scrap": 17,
+    "van": 78,
+    "ended": false
+   }
+  },
+  {
+   "at": "travel",
+   "msg": "S.water=NaN — NaN/유한 아님",
+   "trail": [
+    "recruitStep",
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi",
+    "perk",
+    "travel"
+   ],
+   "snap": {
+    "day": 2,
+    "min": 510,
+    "water": NaN,
+    "food": 23,
+    "fuel": 52,
+    "scrap": 17,
+    "van": 78,
+    "ended": false
+   }
+  },
+  {
+   "at": "repair",
+   "msg": "S.water=NaN — NaN/유한 아님",
+   "trail": [
+    "recruitStep",
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi",
+    "perk",
+    "travel",
+    "repair"
+   ],
+   "snap": {
+    "day": 2,
+    "min": 510,
+    "water": NaN,
+    "food": 23,
+    "fuel": 52,
+    "scrap": 17,
+    "van": 78,
+    "ended": false
+   }
+  },
+  {
+   "at": "travel",
+   "msg": "시간 역행 3390→2790",
+   "trail": [
+    "recruitStep",
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi",
+    "perk",
+    "travel",
+    "repair",
+    "travel"
+   ]
+  },
+  {
+   "at": "travel",
+   "msg": "S.water=NaN — NaN/유한 아님",
+   "trail": [
+    "recruitStep",
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi",
+    "perk",
+    "travel",
+    "repair",
+    "travel"
+   ],
+   "snap": {
+    "day": 2,
+    "min": -90,
+    "water": NaN,
+    "food": 23,
+    "fuel": 52,
+    "scrap": 17,
+    "van": 78,
+    "ended": false
+   }
+  },
+  {
+   "at": "buyUp",
+   "msg": "S.water=NaN — NaN/유한 아님",
+   "trail": [
+    "recruitStep",
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi",
+    "perk",
+    "travel",
+    "repair",
+    "travel",
+    "buyUp"
+   ],
+   "snap": {
+    "day": 2,
+    "min": -90,
+    "water": NaN,
+    "food": 23,
+    "fuel": 52,
+    "scrap": 17,
+    "van": 78,
+    "ended": false
+   }
+  },
+  {
+   "at": "saveload",
+   "msg": "S.water=NaN — NaN/유한 아님",
+   "trail": [
+    "camp",
+    "perk",
+    "recruitStep",
+    "field",
+    "explore",
+    "choice:exp_kimchi",
+    "perk",
+    "travel",
+    "repair",
+    "travel",
+    "buyUp",
+    "saveload"
+   ],
+   "snap": {
+    "day": 2,
+    "min": -90,
+    "water": NaN,
+    "food": 23,
+    "fuel": 52,
+    "scrap": 17,
+    "van": 78,
+    "ended": false
+   }
+  }
+ ],
+ "pageerrors": []
 }

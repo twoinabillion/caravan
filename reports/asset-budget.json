@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-07T05:50:07.355Z",
+  "generatedAt": "2026-08-07T06:44:21.120Z",
   "html": {
-    "bytes": 30753376,
+    "bytes": 35019694,
     "warnBytes": 32000000,
-    "maxBytes": 35000000
+    "maxBytes": 38000000
   },
   "embedded": {
-    "files": 194,
-    "bytes": 17797267,
+    "files": 198,
+    "bytes": 20996659,
     "categories": {
       "audio": {
-        "files": 41,
-        "bytes": 6511276,
-        "encodedBytes": 8681756
+        "files": 45,
+        "bytes": 9710668,
+        "encodedBytes": 12947612
       },
       "scene": {
         "files": 122,
@@ -44,6 +44,30 @@
       "mime": "audio/mpeg",
       "bytes": 1204940,
       "encodedBytes": 1606588
+    },
+    {
+      "path": "assets/audio/bgm/settlement.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 823824,
+      "encodedBytes": 1098432
+    },
+    {
+      "path": "assets/audio/bgm/story.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 823824,
+      "encodedBytes": 1098432
+    },
+    {
+      "path": "assets/audio/bgm/tension.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 807408,
+      "encodedBytes": 1076544
+    },
+    {
+      "path": "assets/audio/bgm/camp.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 744336,
+      "encodedBytes": 992448
     },
     {
       "path": "assets/scenes/miryang-market-hub.jpg",
@@ -122,30 +146,6 @@
       "mime": "image/jpeg",
       "bytes": 129184,
       "encodedBytes": 172248
-    },
-    {
-      "path": "assets/scenes/roadcrew-line.jpg",
-      "mime": "image/jpeg",
-      "bytes": 126662,
-      "encodedBytes": 168884
-    },
-    {
-      "path": "assets/upgrades/seating-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 124580,
-      "encodedBytes": 166108
-    },
-    {
-      "path": "assets/scenes/trace-coldbag.jpg",
-      "mime": "image/jpeg",
-      "bytes": 123152,
-      "encodedBytes": 164204
-    },
-    {
-      "path": "assets/scenes/roadcrew-washout.jpg",
-      "mime": "image/jpeg",
-      "bytes": 123135,
-      "encodedBytes": 164180
     }
   ]
 }

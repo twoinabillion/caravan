@@ -3,6 +3,16 @@ D.bgm.drive_day = '__BGM_DRIVE_DAY__';
 D.bgm.drive_night = '__BGM_DRIVE_NIGHT__';
 D.bgm.drive_dayLoop = true;
 D.bgm.drive_nightLoop = true;
+/* 2026-08-07 절차 합성 4트랙 (tools/synth-bgm.py) — 사람 청취 검증 전 v1.
+   Suno 정식 트랙이 도착하면 assets/audio/bgm/의 같은 파일명을 교체하면 끝. */
+D.bgm.tension = '__BGM_TENSION__';
+D.bgm.settlement = '__BGM_SETTLEMENT__';
+D.bgm.camp = '__BGM_CAMP__';
+D.bgm.story = '__BGM_STORY__';
+D.bgm.tensionLoop = true;
+D.bgm.settlementLoop = true;
+D.bgm.campLoop = true;
+D.bgm.storyLoop = true;
 
 D.sfx = {
   sfx_van_start:'__SFX_VAN_START__',
