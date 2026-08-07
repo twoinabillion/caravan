@@ -2911,12 +2911,15 @@ const UI = (()=>{
         const ru=npc.rumor;
         dlg.querySelector('.say').innerHTML=`<span class="spk">${npc.name}</span> "${ru.text}"`;
         dlg.querySelector('.choices').innerHTML=`<button class="choice" data-r="x2">고맙습니다</button>`;
-        G.applyFx({reveal:ru.reveal, note:{type:'소문',title:npc.name+'의 소문',body:ru.text,links:[D.nodes[ru.reveal].name, npc.name]}});
+        if(ru.reveal) G.applyFx({reveal:ru.reveal, note:{type:'소문',title:npc.name+'의 소문',body:ru.text,links:[D.nodes[ru.reveal].name, npc.name]}});
+        else G.applyFx({note:{type:'소문',title:npc.name+'의 소문',body:ru.text,links:[npc.name]}});
         dlg.querySelector('[data-r="x2"]').onclick=()=>{ dlg.remove(); showStl(curStl,'people'); };
       }
       else if(r==='chat'){
         st.att+=3;
-        const lines=[
+        /* 인물 전용 잡담이 있으면 그걸 쓴다 — 공용 풀 5줄을 전원이 돌려 쓰던
+           문제(금자도 문지기도 같은 말)의 해소. 2026-08-07 */
+        const lines=npc.chats||[
           '"요즘 북쪽 하늘에 뭐가 자주 떠. 새는 아니야. 새는 저렇게 안 날지."',
           '"장사꾼 만수? 걔는 안 죽어. 멸망이 두 번 와도 뽕짝 틀고 다닐 걸."',
           '"정리자들 조심해. 나쁜 사람들은 아닌데… 사람이 아닌 것 같을 때가 있어."',

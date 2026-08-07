@@ -33,6 +33,7 @@
     "test:health": "python3 tests/test_source_health.py",
     "test:audio": "npm run build:html --silent && python3 tests/test_audio_mix.py",
     "test:companions": "python3 tests/test_companions_e2e.py",
+    "test:npcs": "python3 tests/test_npc_layer.py",
     "test:profiles": "python3 tests/test_start_profiles.py",
     "test:seoul": "python3 tests/test_seoul_sequence.py",
     "test:finale": "npm run build:html --silent && python3 tests/test_finale.py",

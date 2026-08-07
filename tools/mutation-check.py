@@ -136,6 +136,14 @@ MUTATIONS = [
         'new': "    let count = 0; void(chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0));",
         'test': ['python3', 'tools/simulate-engine.py', '--runs', '24'],
     },
+    {
+        'name': 'npc-personal-chats',
+        'why': '전용 잡담 분기를 끊으면 17명이 다시 공용 5줄을 돌려 쓴다',
+        'file': 'src/07-ui.js',
+        'old': "        const lines=npc.chats||[",
+        'new': "        const lines=undefined||[",
+        'test': ['python3', 'tests/test_npc_layer.py'],
+    },
 ]
 
 
