@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T10:23:44.269715+00:00",
+  "generatedAt": "2026-08-07T01:58:22.444857+00:00",
   "source": "real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가",
   "metric": "daysToSeoulNode",
   "runs": 60,
@@ -19,6 +19,9 @@
       },
       "meanParty": 0.0,
       "meanDeeds": 0.0,
+      "medianUpgrades": 0,
+      "meanWeight": 0.0,
+      "slotContestPct": 0.0,
       "deedsNeed": 13,
       "meanDay": 14.75,
       "meanRescues": 2.95,
@@ -29,6 +32,27 @@
     },
     "explorer": {
       "runs": 20,
+      "reachedPct": 100.0,
+      "deadPct": 0.0,
+      "medianDay": 10,
+      "endedBuckets": {
+        "reached": 20
+      },
+      "meanParty": 0.0,
+      "meanDeeds": 0.1,
+      "medianUpgrades": 8,
+      "meanWeight": 8.2,
+      "slotContestPct": 70.0,
+      "deedsNeed": 13,
+      "meanDay": 12.15,
+      "meanRescues": 4.25,
+      "lateTransferPct": 5.0,
+      "lateBase": "arrived",
+      "meanEvents": 63.5,
+      "deadlineSeenPct": 100.0
+    },
+    "prepared": {
+      "runs": 20,
       "reachedPct": 95.0,
       "deadPct": 0.0,
       "medianDay": 9,
@@ -38,35 +62,19 @@
       },
       "meanParty": 0.0,
       "meanDeeds": 0.0,
+      "medianUpgrades": 7,
+      "meanWeight": 6.2,
+      "slotContestPct": 20.0,
       "deedsNeed": 13,
-      "meanDay": 11.85,
-      "meanRescues": 3.5,
-      "lateTransferPct": 10.5,
+      "meanDay": 10.85,
+      "meanRescues": 3.8,
+      "lateTransferPct": 0.0,
       "lateBase": "arrived",
-      "meanEvents": 67.2,
-      "deadlineSeenPct": 100.0
-    },
-    "prepared": {
-      "runs": 20,
-      "reachedPct": 90.0,
-      "deadPct": 0.0,
-      "medianDay": 7,
-      "endedBuckets": {
-        "reached": 18,
-        "timeout": 2
-      },
-      "meanParty": 0.0,
-      "meanDeeds": 0.05,
-      "deedsNeed": 13,
-      "meanDay": 15.9,
-      "meanRescues": 3.55,
-      "lateTransferPct": 22.2,
-      "lateBase": "arrived",
-      "meanEvents": 49.6,
+      "meanEvents": 58.6,
       "deadlineSeenPct": 100.0
     },
     "_spread": {
-      "medianDaySpread": 4
+      "medianDaySpread": 5
     },
     "_beats": {
       "story_generation_form": {
@@ -75,11 +83,11 @@
       },
       "story_family_principle": {
         "label": "본편 · 가족의 원칙",
-        "pct": 96.7
+        "pct": 98.3
       },
       "story_generation_speech": {
         "label": "본편 · 세대의 말",
-        "pct": 88.3
+        "pct": 91.7
       },
       "_malice": {
         "label": "악의 계열 조우",
@@ -87,7 +95,7 @@
           "levy_office": 100.0,
           "salvage_claim": 100.0,
           "water_toll": 0.0,
-          "cleaners_recall": 51.7,
+          "cleaners_recall": 50.0,
           "signal_bait": 0.0
         },
         "delivered": 3,

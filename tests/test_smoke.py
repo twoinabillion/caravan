@@ -295,8 +295,10 @@ with sync_playwright() as p:
       const snapshot=JSON.stringify(S);
       const node=Object.keys(D.nodes).find(id=>!D.nodes[id].stl&&D.nodes[id].type!=='goal');
       S.at=node; S.driving=null; S.min=8*60; S.fatigue=0; S._exploreDay=S.day;
-      S._exploreNodes={}; S._salvagedNodes={}; S._salvageCount=2;
+      S._exploreNodes={}; S._salvagedNodes={}; S._salvageCount=1;   // 다음 수색이 보장 회차가 되도록
       UI.renderAll();
+      const region=G.regionOf();
+      const expected=region==='north'?12:region==='mid'?9:6;
       const firstStatus=G.exploreStatus();
       const firstForecast=G.exploreForecast(firstStatus);
       const panelForecast=document.querySelector('[data-a="explore"]')?.textContent||'';
@@ -316,7 +318,7 @@ with sync_playwright() as p:
       S.day++;
       const nextDay=G.exploreStatus();
       S=JSON.parse(snapshot); rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll(); G.save();
-      return {firstStatus,secondStatus,exhausted,nextDay,freshGain,first,second,third,unchanged,
+      return {firstStatus,secondStatus,exhausted,nextDay,freshGain,first,second,third,unchanged,region,expected,
         firstForecast,panelForecast,firstMins:d1-d0,secondMins:d2-d1,
         firstFatigue:f1-f0,secondFatigue:f2-f1};
     }''')
@@ -325,11 +327,13 @@ with sync_playwright() as p:
     check('재탐색 피로·실패 위험 증가', exploration['firstFatigue'] >= 5 and
           exploration['secondFatigue'] > exploration['firstFatigue'] and
           exploration['secondStatus']['miss'] > exploration['firstStatus']['miss'], str(exploration))
-    check('새 지역 확정 고철·세 번째 지역 부품', exploration['firstStatus']['fresh'] and
-          exploration['freshGain']['scrap'] == 4 and exploration['freshGain']['parts'] == 1,
-          str(exploration))
+    # 수확은 지역에 따라 다르다 — 남쪽은 143년 훑였고 북쪽은 위험한 만큼 남아 있다.
+    check('새 지역 확정 고철(지역 차등)·부품', exploration['firstStatus']['fresh'] and
+          exploration['freshGain']['scrap'] == exploration['expected'] and
+          exploration['freshGain']['parts'] == 1,
+          f"{exploration['region']} 지역 기대 {exploration['expected']} 실제 {exploration['freshGain']}")
     check('탐색 전에 확정 회수·지역 목표·위험 표시',
-          exploration['firstForecast']['guaranteed'].startswith('고철 4') and
+          exploration['firstForecast']['guaranteed'] == f"고철 {exploration['expected']} · 체결 부품 가능" and
           '찾을 것' in exploration['panelForecast'] and '탐색 위험' in exploration['panelForecast'], str(exploration))
     check('같은 날 세 번째 탐색 차단·다음 날 해금', not exploration['third'] and
           not exploration['exhausted']['ok'] and exploration['unchanged'] and
@@ -1623,8 +1627,14 @@ with sync_playwright() as p:
     # 실제 시트 닫기 연쇄: 코어 답변 → 집행 선택 → 남산의 밤
     pg.evaluate('''() => {
       S.flags = {seoul_open:true, ridge_path:true, mingyu_alive:true};
-      S.used = S.used.filter(id => !['seoul_decision','seoul_night'].includes(id));
-      S._chain = null; S._storyQueue = [];
+      /* 처분에는 요구 조건이 있다(W5) — 준비된 일행으로 최종막을 연다.
+         빈 상태면 셋 다 잠겨 누를 선택지가 없다(그 자체가 의도된 동작). */
+      S.party = ['minji','parkss','kangwoo','eunsu'];
+      for(const id of S.party) S.comps[id] = {mood:80,bond:20,lvl:3,perks:[]};
+      S.injuries = {};
+      for(const cell of (D.resistance||[])) S.flags[cell.flag] = true;
+      S.used = S.used.filter(id => !['seoul_decision','seoul_night','seoul_costs'].includes(id));
+      S._chain = null; S._storyQueue = []; S._beatQueue = [];
       G.openEvent(D.seoulStops.find(e => e.id === 'seoul_core'));
       UI.finishStory();
     }''')
@@ -1647,7 +1657,14 @@ with sync_playwright() as p:
     pg.wait_for_timeout(600)
     pg.evaluate('UI.finishStory()')
     actual_night = '남산의 밤' in pg.locator('#ev-sheet').inner_text()
-    check('실제 UI 연쇄: 코어→집행 선택→에필로그', actual_decision and actual_night)
+    check('실제 UI 연쇄: 코어→대가 확인→집행 선택→에필로그', actual_decision and actual_night)
+    locked = pg.evaluate('''() => {
+      S.party = []; S.flags = {seoul_open:true};
+      for(const cell of (D.resistance||[])) delete S.flags[cell.flag];
+      const dec = D.events.find(e => e.id === 'seoul_decision');
+      return (dec.choices||[]).map(c => !c.req || G.reqOk(c.req).ok !== false);
+    }''')
+    check('준비 못 하면 처분이 잠긴다', not any(locked), str(locked))
     check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
     check('티키타카 45종', r6['chatCount'] == 45, str(r6['chatCount']))

@@ -9,7 +9,8 @@ const SRC = path.join(__dirname, '..', 'src');
 const read = (f) => fs.readFileSync(path.join(SRC, f), 'utf8');
 
 const D = new Function(read('03-data.js') + '\nreturn D;')();
-const engine = read('04-engine.js');
+const engine = ['04a-engine-core.js','04b-engine-crew.js','04c-engine-travel.js',
+  '04d-engine-director.js','04e-engine-world.js'].map(read).join('\n');
 const dataSrc = read('03-data.js');
 
 let errs = [], warns = [];

@@ -30,6 +30,7 @@
     "test:eta": "python3 tests/test_eta_consistency.py",
     "test:choices": "python3 tests/test_choice_visibility.py",
     "test:beats": "python3 tests/test_journey_beats.py",
+    "test:finale": "python3 tests/test_finale.py",
     "simulate:engine": "python3 tools/simulate-engine.py --runs 60",
     "test:accessibility9": "python3 tests/test_quality_9_accessibility.py",
     "test:release": "bash tools/release-check.sh"

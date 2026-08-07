@@ -6,7 +6,8 @@ const path=require('node:path');
 
 const root=path.resolve(__dirname,'..');
 const dataSource=fs.readFileSync(path.join(root,'src/03-data.js'),'utf8');
-const engineSource=fs.readFileSync(path.join(root,'src/04-engine.js'),'utf8');
+const engineSource=['04a-engine-core.js','04b-engine-crew.js','04c-engine-travel.js','04d-engine-director.js','04e-engine-world.js']
+  .map(n=>fs.readFileSync(path.join(root,'src',n),'utf8')).join('\n');
 const uiSource=['07a-ui-core.js','07b-ui-panel.js','07c-ui-story.js','07d-ui-town.js','07e-ui-audio.js']
   .map(name=>fs.readFileSync(path.join(root,'src',name),'utf8')).join('\n');
 const styleSource=fs.readFileSync(path.join(root,'src/01-style.html'),'utf8');

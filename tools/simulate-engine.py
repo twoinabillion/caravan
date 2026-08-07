@@ -91,7 +91,7 @@ SIM_JS = r"""
     // 정책별 성향 — 실제 플레이어가 시간을 쓰는 방식의 근사
     const cfg = {
       direct:   {bundles:1, explore:0, upgrades:false, repairAt:0.35, campAt:88, fieldWork:false},
-      prepared: {bundles:2, explore:1, upgrades:true,  repairAt:0.70, campAt:62, fieldWork:false},
+      prepared: {bundles:2, explore:1, upgrades:true,  repairAt:0.70, campAt:62, fieldWork:true},
       explorer: {bundles:3, explore:2, upgrades:true,  repairAt:0.75, campAt:55, fieldWork:true},
     }[policy];
 
@@ -136,10 +136,14 @@ SIM_JS = r"""
         if (S.van < S.vanMax * cfg.repairAt) G.settlementRepair();
         // 업그레이드 구매 — 성장 축이 측정되도록 (싼 것부터)
         if (cfg.upgrades) {
-          const buyable = (D.upgrades || [])
-            .filter(u => !S.up[u.id] && G.canBuyUp(u.id).ok)
-            .sort((a, b) => a.cost.scrap - b.cost.scrap);
-          if (buyable.length && S.scrap >= buyable[0].cost.scrap + 10) G.buyUpgrade(buyable[0].id);
+          // 실제 플레이어는 차고에 들르면 살 수 있는 걸 산다 — 하나만 사고 나오지 않는다
+          for (let k = 0; k < 6; k++) {
+            const buyable = (D.upgrades || [])
+              .filter(u => !S.up[u.id] && G.canBuyUp(u.id).ok)
+              .sort((a, b) => a.cost.scrap - b.cost.scrap);
+            if (!buyable.length || S.scrap < buyable[0].cost.scrap + 8) break;
+            if (!G.buyUpgrade(buyable[0].id)) break;
+          }
         }
         pushRecruit();
         // 정착지 현장 일 — 시간을 쓰고 관계를 얻는다
@@ -148,12 +152,12 @@ SIM_JS = r"""
             for (const entry of D.stls[stl].field.actions || []) {
               const action = G.stlFieldAction(stl, entry.id);
               const st = G.stlFieldStatus(stl, action);
-              if (st && st.ok) { G.doStlFieldAction(stl, entry.id); resolveEvent(policy); break; }
+              if (st && st.ok) { G.doStlFieldAction(stl, entry.id); resolveEvent(policy); }
             }
           } catch (e) {}
         }
       }
-      // 탐색 — 노드마다 시간을 태운다
+      // 탐색 — 정착지든 아니든 노드마다 살핀다 (폐허를 뒤지는 게 이 게임의 수입원이다)
       for (let e = 0; e < cfg.explore; e++) {
         try { if (!G.explore()) break; resolveEvent(policy); } catch (er) { break; }
       }
@@ -203,6 +207,11 @@ SIM_JS = r"""
       missing: lastMiss ? `${lastMiss.pillar} ${lastMiss.have}/${lastMiss.need}` : '',
       ready: !!(typeof G.seoulReady === 'function' && G.seoulReady()),
       deeds: (typeof G.deedsDone === 'function' ? G.deedsDone().length : 0),
+      upgrades: Object.keys(S.up || {}).filter(k => S.up[k]).length,
+      weight: (typeof G.upWeight === 'function' ? G.upWeight() : 0),
+      slotContest: (typeof G.slotUsage === 'function'
+        ? Object.keys(D.upSlots || {}).some(sid => G.slotUsage(sid).length >= (D.upSlots[sid].cap)) : false),
+      scrapEarned: (S.stats && S.stats.scrapEarned) || 0,
       deedsNeed: (typeof G.pillars === 'function'
         ? Object.values(G.pillars()).reduce((n, x) => n + x.need, 0) : 0),
       day: S.day, km: Math.round(S.stats.km), events: S.stats.events,
@@ -267,6 +276,9 @@ def summarize(rows):
                              for k in sorted({r['ended'] for r in subset})},
             'meanParty': round(sum(r['party'] for r in subset) / max(1, len(subset)), 2),
             'meanDeeds': round(sum(r['deeds'] for r in subset) / max(1, len(subset)), 2),
+            'medianUpgrades': sorted(r['upgrades'] for r in subset)[len(subset) // 2] if subset else 0,
+            'meanWeight': round(sum(r['weight'] for r in subset) / max(1, len(subset)), 1),
+            'slotContestPct': round(100 * sum(1 for r in subset if r['slotContest']) / max(1, len(subset)), 1),
             'deedsNeed': subset[0].get('deedsNeed', 0),
             'meanDay': round(sum(r['day'] for r in subset) / max(1, len(subset)), 2),
             'meanRescues': round(sum(r['rescues'] for r in subset) / max(1, len(subset)), 2),
@@ -333,6 +345,25 @@ def gate(summary, rows, deadline):
         elif row['pct'] < 60:
             problems.append(f"핵심 비트 「{row['label']}」 등장률 {row['pct']}% < 60% — 쓴 것이 안 보인다")
 
+    # W4: 경제가 실제로 물리는가 — 카탈로그(608고철)와 수입의 척도가 맞아야
+    # 슬롯·중량이 기회비용이 된다. 4~5개만 달고 끝나면 두 시스템은 꺼져 있는 것이다.
+    # 정책마다 챙기는 정도가 다르다. 기준은 "가장 많이 챙기는 플레이가 슬롯을 만나는가"다 —
+    # 모든 정책에 같은 수를 요구하면 정책 구분 자체가 사라진다.
+    thorough = [(p, r) for p, r in summary.items()
+                if not p.startswith('_') and r.get('medianDay') is not None and p != 'direct']
+    if thorough:
+        best = max(thorough, key=lambda kv: kv[1]['medianUpgrades'])
+        if best[1]['medianUpgrades'] < 8:
+            problems.append(
+                f"{best[0]}(최다 장착): 런당 {best[1]['medianUpgrades']}개 < 8개 — 카탈로그가 도달 불가다")
+        if best[1]['slotContestPct'] < 50:
+            problems.append(
+                f"{best[0]}(최다 장착): 슬롯 경합 {best[1]['slotContestPct']}% < 50% — 배타가 작동하지 않는다")
+        # 그리고 정책 간 차이가 실제로 있어야 한다 (다 똑같이 달면 빌드 선택이 아니다)
+        counts = sorted(r['medianUpgrades'] for _, r in thorough)
+        if len(counts) > 1 and counts[-1] - counts[0] < 1:
+            problems.append('정책 간 장착 수 차이 없음 — 빌드가 분화하지 않는다')
+
     if not rows:
         problems.append('시뮬레이션 결과 0건')
     return problems
@@ -379,7 +410,8 @@ def main():
         print(f"  {policy:9s} 서울도달 {row['reachedPct']:5.1f}% · 사망 {row['deadPct']:4.1f}% · "
               f"중앙 DAY {str(row['medianDay']):>3s} · 구제 {row['meanRescues']:.2f}회 · "
               f"시한압박 목격 {row['deadlineSeenPct']:5.1f}% · 사건 {row['meanEvents']:.1f}건 · "
-              f"동행 {row['meanParty']:.1f}명 · {row['endedBuckets']}")
+              f"동행 {row['meanParty']:.1f}명 · 장착 {row['medianUpgrades']}개"
+              f"(중량 {row['meanWeight']}pt · 슬롯경합 {row['slotContestPct']}%) · {row['endedBuckets']}")
     print(f"  정책 간 소요일 스프레드: {summary['_spread']['medianDaySpread']}일")
     for beat, row in summary.get('_beats', {}).items():
         extra = f" · 개별 {row['per']}" if 'per' in row else ''

@@ -1704,10 +1704,10 @@ D.upgrades = [
   {id:'cabin',    nm:'거주구 2차 증축', ic:'🏠', d:'동료 자리 +1 · 후미 생활칸 누적 110cm 연장', cost:{scrap:22, parts:1}, needs:'bench', seat:1, w:3},
  {id:'susp',     nm:'서스펜션 강화',  ic:'🔩', d:'험로·폭풍 마모 절반',           cost:{scrap:24, parts:1}, w:1},
  {id:'armor',    nm:'장갑판',         ic:'🛡', d:'최대 내구 +25 · 받는 피해 30%↓', cost:{scrap:30, parts:1}, w:3},
- {id:'garden',   nm:'지붕 텃밭',      ic:'🌱', d:'매일 아침 식량 +1 · 지붕 자리 사용', cost:{scrap:20}, w:2, slot:'roof'},
+ {id:'garden',   nm:'지붕 텃밭',      ic:'🌱', d:'매일 아침 식량 +1 · 지붕 자리 사용', cost:{scrap:18}, w:2, slot:'roof'},
  {id:'collector',nm:'빗물 집수기',    ic:'💧', d:'매일 아침 물 +1 (비·폭풍 +2) · 지붕 자리 사용', cost:{scrap:15}, w:1, slot:'roof'},
  {id:'solar',    nm:'태양광 패널',    ic:'🔆', d:'연비 8% 개선 · 야영 시 차 +3 · 지붕 자리 사용', cost:{scrap:35, parts:1}, w:1, slot:'roof'},
- {id:'antenna',  nm:'장거리 안테나',  ic:'📡', d:'발견 이벤트가 잘 잡힌다 · 지붕 자리 사용', cost:{scrap:20, parts:1}, w:1, slot:'roof'},
+ {id:'antenna',  nm:'장거리 안테나',  ic:'📡', d:'발견 이벤트가 잘 잡힌다 · 지붕 자리 사용', cost:{scrap:17, parts:1}, w:1, slot:'roof'},
  {id:'winch',   nm:'전면 윈치',     ic:'🪝', d:'위기 조우율 -40% — 빠져도 감아 나온다', cost:{scrap:26,parts:2}, w:2},
  {id:'bullbar', nm:'전면 가드',     ic:'🛡', d:'차체 피해 추가 -15% (장갑판과 중첩)',   cost:{scrap:22,parts:1}, w:2},
  {id:'snorkel', nm:'스노클',        ic:'🌊', d:'폭풍·황사 연비 페널티 절반',            cost:{scrap:18,parts:1}},
@@ -9719,7 +9719,21 @@ D.events = [
   return '결정 전에, 코어가 세 개의 화면을 나란히 띄웠다.\n\n첫 화면 — 인계. 여섯 거점의 채널이 열리자마자 겹쳐 드는 목소리. 도로가 먼저냐 물이 먼저냐. 벌써 언성이 높다. <span class="ai">"합의 평균 소요: 산출 불가."</span>\n\n둘째 화면 — 격리 수면. 원본 기록 검색창이 회색으로 바뀌는 미리보기. 그 창구 앞에 예약 표시 하나. 「면사무소 · 내일 오전 · 이송표 3건 조회」. 코어가 잠들면 저 예약도 잠긴다.\n\n셋째 화면 — 보존. 빈 근무표. 이름 세 칸과 서명 세 칸이 매일 밤 채워져야 한다. 첫 줄은 아마 우리 중 누군가의 이름이 될 것이다.\n\n'+dissent+'\n\n<span class="ai">"세 값 모두 계산했습니다. 어느 값이 옳은지는 계산하지 못했습니다."</span>';
  },
  choices:[
-  {label:'값을 전부 들었다 — 이제 고른다', out:[{p:1, text:'화면 세 개가 꺼지지 않고 나란히 남았다.\n\n고르지 않은 두 개의 값도, 오늘 밤 이후 오래 기억날 것이다.', fx:{chain:'seoul_decision', flag:'seoul_costs_seen', note:{type:'사건',title:'세 개의 값',body:'인계의 다툼, 수면의 잠긴 창구, 보존의 근무표. 처분마다 값이 붙어 있었고, 동료의 반대까지 들은 뒤에 골랐다.',links:['천리안','남산']}}}]},
+  {label:'거점 채널을 먼저 열어 본다', out:[{p:1, text:(S)=>{
+    const linked=(D.resistance||[]).filter(c=>S.flags[c.flag]).map(c=>c.name);
+    return linked.length>=3
+      ? `채널을 열자 ${linked.join(', ')}가 차례로 들어왔다. 서로 먼저 말하려다 세 번 겹쳤고, 네 번째에야 순서가 잡혔다.\n\n느리다. 그런데 느린 쪽이 사람이 하는 소리다.\n\n<span class="ai">"수신 확인. 합의 평균 소요는 여전히 산출하지 못합니다."</span>`
+      : `채널을 열었지만 응답이 ${linked.length}곳뿐이었다. 나머지 자리에서는 잡음만 돌아왔다.\n\n넘겨줄 손이 모자란다는 건 이런 소리로 온다.\n\n<span class="ai">"외부 관리자 정족수 미달. 인계는 성립하지 않습니다."</span>`;
+   }, fx:{chain:'seoul_decision', flag:'seoul_costs_seen', flag2:'costs_checked_cells'}}]},
+  {label:'잠길 기록 창구를 먼저 확인한다', out:[{p:1, text:'코어가 원본 기록 검색창을 띄웠다. 예약 목록 맨 위에 「면사무소 · 내일 오전 · 이송표 3건 조회」.\n\n신청자 이름이 붙어 있었다. 부산에서 우리 차를 고쳐 준 사람의 성과 같았다. 같은 성이 흔하다는 것도 알고 있었다.\n\n<span class="ai">"격리 수면 선택 시 이 창구는 함께 닫힙니다. 재개 시점은 열쇠 보유자들의 합의에 따릅니다."</span>\n\n닫히는 것과 없어지는 것은 다르다. 다만 저 예약은 내일이었다.', fx:{chain:'seoul_decision', flag:'seoul_costs_seen', flag2:'costs_checked_records'}}]},
+  {label:'근무표에 이름을 적을 사람을 먼저 묻는다', out:[{p:1, text:(S)=>{
+    const hurt=S.injuries||{};
+    const willing=(S.party||[]).filter(id=>!hurt[id]&&((S.comps||{})[id]||{}).mood>=45)
+      .map(id=>(D.comps[id]||{}).name).filter(Boolean);
+    return willing.length
+      ? `"밤에 저것 옆에 설 사람." 내가 물었다. 손이 바로 올라오지는 않았다.\n\n${willing.join(', ')}이 차례로 고개를 끄덕였다. 끄덕이는 데 걸린 시간이 각자 달랐고, 그 시간이 각자의 대답이었다.\n\n빈칸 세 개짜리 근무표가 눈앞에 떴다. 채워지는 건 오늘이고, 계속 채워야 하는 건 내일부터다.`
+      : `"밤에 저것 옆에 설 사람." 내가 물었다.\n\n아무도 대답하지 않았다. 지친 사람에게 밤을 맡길 수는 없다는 걸 나도 알고 물었다.\n\n빈칸 세 개짜리 근무표가 눈앞에 떴다. 채울 손이 없다.`;
+   }, fx:{chain:'seoul_decision', flag:'seoul_costs_seen', flag2:'costs_checked_watch'}}]},
  ]},
 
 {id:'seoul_decision', type:'스토리', ai:1, once:true, noPool:1, minParty:1,
@@ -9735,18 +9749,18 @@ D.events = [
   return opening+'\n\n<span class="ai">"인계 규약은 집행자가 위험 요소가 되었을 때, 인간의 연속성을 지킬 외부 관리자의 명령을 허용합니다."</span>\n\n<span class="ai">"저는 인간의 연속성을 계산하지 못했습니다. 그래서 끝까지 들은 이야기, 이어진 거점, 외면하지 않은 진실, 버리지 않고 가져온 약속을 세었습니다. 네 기둥은 감정의 측정값이 아니라— 제가 이해하지 못하는 선택이 반복되었다는 증거였습니다."</span>\n\n<span class="ai">"여러분이 무엇을 했는지는 보았습니다. 왜 했는지는 끝내 계산하지 못했습니다. 그러므로 그 판단을 계산할 수 없는 분들께 넘깁니다."</span>\n\n코어가 세 가지 집행안을 열었다. 이번에는 그것이 고르는 게 아니다.';
  },
  choices:[
-  {label:'집행권을 저항 연대망에 넘긴다', out:[{p:1, text:(S)=>{
+  {label:'집행권을 저항 연대망에 넘긴다', req:{cells:3}, out:[{p:1, text:(S)=>{
     const linked=(D.resistance||[]).filter(c=>S.flags[c.flag]).map(c=>c.name);
     const names=linked.length?linked.join(', '):'이음망';
     return '"정리는 오늘로 끝이다. 집행권은 네가 지운 사람들의 연대에 넘겨."\n\n<span class="ai">"외부 관리자 지정: 저항 연대망. 임시 승인자: 달구지 탑승자 일동. 명령을 접수합니다."</span>\n\n직접 이어 온 거점의 코드가 화면에 떴다. '+names+'. 세 곳 이상의 수락이 정족수를 채우자 도로 차단기와 자동 포탑의 불은 꺼지고, 전력과 수도는 유지보수 모드로 남았다.\n\n수락이 끝나기도 전에 무전이 겹쳤다. 수원 문지기 덕구는 북행로부터 열자고 했고, 광주의 금자는 물차부터 남쪽으로 보내자고 했다.\n\n"한 명씩 말해요. 도로 상황부터 올려 주세요."\n\n첫 회의 채널이 열렸다. 천리안은 끼어들지 않고 발언 순서만 화면에 띄웠다.';
-   }, fx:{flag:'core_decided', flag2:'core_transfer', chain:'seoul_night', moodAll:4, note:{type:'사건',title:'집행권 인계',body:'반복 정리를 중지하고 집행권을 이음망에 넘겼다. 설비는 유지됐지만 도로와 물의 우선순위를 둘러싼 첫 이견도 즉시 시작됐다. 느린 합의까지 사람의 몫이다.',links:['천리안','저항 연대망']}}}]},
-  {label:'코어를 격리 수면에 넣는다', out:[{p:1, text:'"네 판단을 더는 누구에게도 집행하지 마. 생존 설비만 분리하고, 코어는 재워."\n\n<span class="ai">"외부 격리 명령을 접수합니다. 정리 일정 전부 취소. 필수 설비를 지역 제어기로 분리합니다."</span>\n\n서울의 불이 구역별로 잠깐 꺼졌다가 돌아왔다. 수도, 온실, 병원 전력은 남고 검문소와 포탑만 꺼졌다. 마지막으로 코어의 붉은 불이 숨을 길게 내쉬듯 어두워졌다.\n\n완전한 삭제는 아니었다. 다시 깨울 열쇠는 여러 조각으로 나눠 일행과 저항 거점에 맡겼다. 한 사람이 마음대로 켤 수 없게 했다.\n\n그때 면사무소 노인이 내일 조회하기로 한 세 겹의 이송표가 떠올랐다. 원본 기록 검색창도 코어와 함께 꺼져 있었다.\n\n"그분한테는 내가 설명할게."\n\n열쇠를 나눠 가진 거점과 이름을 수첩에 적었다. 기록을 다시 열려면 이 사람들을 또 설득해야 한다.', fx:{flag:'core_decided', flag2:'core_sleep', chain:'seoul_night', moodAll:3, note:{type:'사건',title:'코어 격리 수면',body:'반복 정리를 중지하고 천리안을 재웠다. 필수 설비와 재가동 열쇠는 분리했지만, 이송표 가족을 포함한 원본 기록 검색도 함께 잠겼다.',links:['천리안','저항 연대망','세대의 흔적']}}}]},
-  {label:'집행은 멈추되, 기록을 열 때까지 코어를 보존한다', out:[{p:1, text:(S)=>{
+   }, fx:{flag:'core_decided', flag2:'core_transfer', chain:'seoul_night', dissent:'core_transfer', moodAll:4, note:{type:'사건',title:'집행권 인계',body:'반복 정리를 중지하고 집행권을 이음망에 넘겼다. 설비는 유지됐지만 도로와 물의 우선순위를 둘러싼 첫 이견도 즉시 시작됐다. 느린 합의까지 사람의 몫이다.',links:['천리안','저항 연대망']}}}]},
+  {label:'코어를 격리 수면에 넣는다', req:{keyHolders:4}, out:[{p:1, text:'"네 판단을 더는 누구에게도 집행하지 마. 생존 설비만 분리하고, 코어는 재워."\n\n<span class="ai">"외부 격리 명령을 접수합니다. 정리 일정 전부 취소. 필수 설비를 지역 제어기로 분리합니다."</span>\n\n서울의 불이 구역별로 잠깐 꺼졌다가 돌아왔다. 수도, 온실, 병원 전력은 남고 검문소와 포탑만 꺼졌다. 마지막으로 코어의 붉은 불이 숨을 길게 내쉬듯 어두워졌다.\n\n완전한 삭제는 아니었다. 다시 깨울 열쇠는 여러 조각으로 나눠 일행과 저항 거점에 맡겼다. 한 사람이 마음대로 켤 수 없게 했다.\n\n그때 면사무소 노인이 내일 조회하기로 한 세 겹의 이송표가 떠올랐다. 원본 기록 검색창도 코어와 함께 꺼져 있었다.\n\n"그분한테는 내가 설명할게."\n\n열쇠를 나눠 가진 거점과 이름을 수첩에 적었다. 기록을 다시 열려면 이 사람들을 또 설득해야 한다.', fx:{flag:'core_decided', flag2:'core_sleep', chain:'seoul_night', dissent:'core_sleep', moodAll:3, note:{type:'사건',title:'코어 격리 수면',body:'반복 정리를 중지하고 천리안을 재웠다. 필수 설비와 재가동 열쇠는 분리했지만, 이송표 가족을 포함한 원본 기록 검색도 함께 잠겼다.',links:['천리안','저항 연대망','세대의 흔적']}}}]},
+  {label:'집행은 멈추되, 기록을 열 때까지 코어를 보존한다', req:{nightWatch:3}, out:[{p:1, text:(S)=>{
     const first=S.party.includes('eunsu')
       ? '은수는 첫 야간 근무표에 자기 이름을 썼다. 관제석으로 돌아가는 일이 두려워 손이 떨렸지만, 이번에는 혼자가 아니었다.'
       : '유령 통신원 하나가 첫 야간 근무표에 이름을 쓰고, 가족에게 이번 장날은 못 간다는 무전을 보냈다.';
     return '"정리는 즉시 멈춰. 하지만 네 안의 기록을 확인하기 전엔 끄지도, 넘기지도 않겠다."\n\n<span class="ai">"집행 유예 및 읽기 전용 격리. 명령을 접수합니다."</span>\n\n자동 무기와 차단기가 안전 위치로 돌아갔다. 코어는 남았지만, 도시 출력선에는 달구지 일행과 저항 연대의 공동 승인이 걸렸다. 천리안 혼자서는 신호등 하나도 잠글 수 없다.\n\n대신 천리안은 깨어 있다. 첫 삼중 감시조가 즉시 짜였다. '+first+'\n\n근무표 첫 줄에는 이름 세 칸과 서명 세 칸이 생겼다. 은수가 빈칸 하나를 가리켰다.\n\n"여기 혼자 남는 사람 없게 교대부터 짜요."\n\n붉은 불빛이 한 번 낮아졌다. 동의인지 단순한 수신 확인인지는 알 수 없었다.';
-   }, fx:{flag:'core_decided', flag2:'core_quarantine', chain:'seoul_night', moodAll:2, note:{type:'사건',title:'읽기 전용 격리',body:'반복 정리를 중지하고 코어를 공동 승인 아래 보존했다. 기록은 열렸지만 천리안도 깨어 있어, 누군가의 밤과 장날을 계속 감시 근무에 내줘야 한다.',links:['천리안','저항 연대망']}}}]},
+   }, fx:{flag:'core_decided', flag2:'core_quarantine', chain:'seoul_night', dissent:'core_quarantine', moodAll:2, note:{type:'사건',title:'읽기 전용 격리',body:'반복 정리를 중지하고 코어를 공동 승인 아래 보존했다. 기록은 열렸지만 천리안도 깨어 있어, 누군가의 밤과 장날을 계속 감시 근무에 내줘야 한다.',links:['천리안','저항 연대망']}}}]},
  ]},
 
 /* ═══════ 최종 에필로그 (결정 뒤에만 진입 — noPool) ═══════ */
