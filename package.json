@@ -33,6 +33,7 @@
     "test:health": "python3 tests/test_source_health.py",
     "test:audio": "npm run build:html --silent && python3 tests/test_audio_mix.py",
     "test:finale": "npm run build:html --silent && python3 tests/test_finale.py",
+    "verify:mutations": "python3 tools/mutation-check.py",
     "simulate:engine": "npm run build:html && python3 tools/simulate-engine.py --runs 60",
     "test:accessibility9": "npm run build:html --silent && python3 tests/test_quality_9_accessibility.py",
     "test:release": "bash tools/release-check.sh"

@@ -26,4 +26,5 @@ python3 -u tests/test_keyboard_access.py
 python3 -u tests/test_smoke.py
 npm run simulate:journeys   # 지도·연비 전용 체크 (이벤트 층은 모델임)
 npm run simulate:engine     # 실엔진 밸런스 — 진짜 게임을 측정한다
+npm run verify:mutations    # 게이트가 지킨다는 것 자체를 검증 (거짓 통과 방지)
 node tools/check-release.mjs
