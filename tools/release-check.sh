@@ -21,6 +21,7 @@ npm run test:beats
 npm run test:companions
 npm run test:finale
 npm run test:seoul
+npm run test:profiles
 npm run test:audio
 npm run test:accessibility9
 npm run test:golden

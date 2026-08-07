@@ -96,6 +96,14 @@ MUTATIONS = [
         'new': "if(false&&modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
         'test': ['python3', 'tests/test_keyboard_access.py'],
     },
+    {
+        'name': 'start-profile-patch',
+        'why': '패치 적용을 끊으면 프로필 3종이 같은 시작이 된다 — 선택이 장식이 된다',
+        'file': 'src/04a-engine-core.js',
+        'old': "  if(prof&&prof.patch) for(const [k,v] of Object.entries(prof.patch))",
+        'new': "  if(false&&prof&&prof.patch) for(const [k,v] of Object.entries(prof.patch))",
+        'test': ['python3', 'tests/test_start_profiles.py'],
+    },
 ]
 
 

@@ -42,7 +42,7 @@ const COMBAT_AUTO_ADJUST_MAX = 0.5;
 const COMBAT_AUTO_ADJUST_SCALE = 0.16;     // [-0.5~0.5] → 판정 보정 ±0.08 — 체감 가능한 크기
 
 /* ── new game / save ── */
-G.newGame = (mode, name, entryMode='full')=>{
+G.newGame = (mode, name, entryMode='full', profile)=>{
   S = {
     v:SAVE_VERSION, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
     fuel:42, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100,
@@ -63,10 +63,15 @@ G.newGame = (mode, name, entryMode='full')=>{
     director:{intensity:10,phase:'build',relaxEvents:0},
     combat:null, lastCombatReport:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
     _combatFlow:{runId:0,adjust:0,history:[]},
+    profile:profile&&D.startProfiles&&D.startProfiles[profile]?profile:'keeper',
     _quality:null, guideDismissed:false, lastJourneyRecap:null,
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
     _rescues:{}, _stlNights:{},
   };
+  /* 출발 구성 — 자원 패치는 얕은 병합, items만 통째 교체 */
+  const prof=D.startProfiles&&D.startProfiles[S.profile];
+  if(prof&&prof.patch) for(const [k,v] of Object.entries(prof.patch))
+    S[k]=(k==='items')?{...v}:v;
   rng = mulberry32(S.seed);
   /* 주행 쿨다운은 모듈 변수라 새 게임에서 남아 있으면 rng 소비 타이밍이 어긋난다.
      같은 시드 → 같은 여정을 위해 여기서 초기값으로 되돌린다. */

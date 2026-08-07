@@ -10,7 +10,15 @@ const el = (tag,cls,html)=>{ const e=document.createElement(tag); if(cls) e.clas
 const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
-  let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='';
+  let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
+  function renderProfilePick(){
+    const box=$('#profile-pick'); if(!box) return;
+    box.innerHTML=Object.entries(D.startProfiles||{}).map(([id,p])=>
+      `<button type="button" class="profile-card${id===pendingProfile?' on':''}" role="radio"
+         aria-checked="${id===pendingProfile}" data-profile="${id}">
+         <span class="profile-ic">${p.ic}</span><b>${p.nm}</b><small>${p.d}</small></button>`).join('');
+    box.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{ pendingProfile=b.dataset.profile; renderProfilePick(); });
+  }
   let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
   let arrivalTimer=0;
   const savedMotion=localStorage.getItem('caravan_ui_motion');
@@ -351,7 +359,7 @@ const UI = (()=>{
   }
   function startNew(mode){
     pendingMode=mode; pendingName=''; introIdx=0; introTurnIdx=0;
-    show('scr-name');
+    show('scr-name'); renderProfilePick();
     const skip=$('#intro-skip');
     if(skip){
       skip.hidden=false;
@@ -442,7 +450,7 @@ const UI = (()=>{
     if(introIdx>=D.intro.length){
       localStorage.setItem('caravan_intro_seen','1');
       AMBI.setLoop(null);
-      G.newGame(pendingMode,pendingName,'full'); enterGame();
+      G.newGame(pendingMode,pendingName,'full',pendingProfile); enterGame();
     }
     else renderIntro(true);
   }
@@ -455,7 +463,7 @@ const UI = (()=>{
     if(screen==='name') pendingName=($('#inp-name').value||'').trim().slice(0,8);
     localStorage.setItem('caravan_intro_seen','1');
     AMBI.setLoop(null);
-    G.newGame(pendingMode,pendingName,entryMode);
+    G.newGame(pendingMode,pendingName,entryMode,pendingProfile);
     enterGame();
   }
   function enterGame(){

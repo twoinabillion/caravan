@@ -20,6 +20,15 @@ D.icons = {};
 D.bgm = {};    /* BGM 슬롯 — 키: title/drive_day/drive_night/tension/settlement/camp/story (docs/audio-guide.md) */
 D.vo = {};     /* 보이스 슬롯 — cheollian_XX, radio_XX. 인트로는 page.voice 명시 시에만 재생 */
 D.sfx = {};    /* 환경음·차량음 슬롯 — Downloads 대표 테이크만 모바일용으로 압축해 내장 */
+/* 출발 구성 — 같은 길을 다른 무게로 시작한다. 수치가 아니라 첫 사흘의 질문이 달라진다. */
+D.startProfiles = {
+  keeper:{ nm:'정비사의 손녀', ic:'🔧', d:'할아버지의 균형 잡힌 달구지. 배운 대로 간다.',
+    patch:{} },
+  runner:{ nm:'빈 탱크의 밤', ic:'⛽', d:'연료계는 바닥, 대신 손에 익은 고철과 부품. 첫 마을까지가 첫 시험이다.',
+    patch:{fuel:16, scrap:44, water:12, food:10, items:{'부품':3,'의약품':1,'탄약':0}} },
+  hauler:{ nm:'가득 실은 채', ic:'📦', d:'창고를 다 실었다. 물자는 넉넉하지만 고철이 없어 마을마다 일해야 한다.',
+    patch:{fuel:52, scrap:6, water:26, food:24, van:74, items:{'부품':0,'의약품':2,'탄약':0}} },
+};
 D.transferDeadlineDay = 26; /* 완주봇 실측(2026-08-07) 기반 재보정: 기둥 4종을 실플레이로
    채우는 데 D33~49(봇, 낭비 ~30% 포함) → 숙련 플레이 추정 D25~30. 시한 20은 모든 완주를
    지각으로 만들어 '제때' 엔딩이 도달 불가였다. 26은 빡빡하되 가능한 선.
