@@ -1459,7 +1459,7 @@ const UI = (()=>{
     let intent=c.intent||'';
     const adapted=G.threatAdaptedTactic&&G.threatAdaptedTactic(evd);
     if(adapted&&c.counters&&c.counters[adapted])
-      intent+=` — 패턴이 바뀌었다. ${adapted} 대응이 읽히고 있다`;
+      intent+=` — 저쪽도 배웠다. ${adapted} 대응이 더는 통하지 않는다`;
     const read=state&&state.read;
     const pressure=state?state.pressure||0:c.pressure||0;
     const kind=(state&&state.kind)||c.kind||'교전';

@@ -353,6 +353,26 @@ const aphorismEnd = (text) => {
 const aphorismCount = outcomeTexts.filter(aphorismEnd).length;
 const aphorismRatio = outcomeTexts.length ? aphorismCount / outcomeTexts.length : 0;
 console.log(`경구 종결 ${aphorismCount}/${outcomeTexts.length} (${Math.round(aphorismRatio * 100)}%)`);
+
+/* 보이스 시트의 forbidden은 선언만으로는 아무것도 막지 않는다 — 실제 발화와 전수 대조.
+   (2026-08-07: 시트 존재 검사만 있고 내용 대조가 없던 간극을 닫음) */
+{
+  const byWho = new Map();
+  const addLine = (who, text) => {
+    if (!who || !text) return;
+    if (!byWho.has(who)) byWho.set(who, []);
+    byWho.get(who).push(text);
+  };
+  for (const b of D.banter || []) addLine(b.who, b.t);
+  for (const c of D.chats || []) for (const [w, t] of c.lines || []) addLine(w, t);
+  for (const [cid, voice] of Object.entries(D.companionVoices || {})) {
+    const lines = byWho.get(cid) || [];
+    for (const phrase of voice.forbidden || []) {
+      for (const text of lines) if (text.includes(phrase))
+        errors.push(`금지 구절 위반 ${cid} 「${phrase}」: ${text.slice(0, 50)}`);
+    }
+  }
+}
 if (aphorismRatio > 0.16) errors.push(`경구 종결 비율 ${Math.round(aphorismRatio * 100)}% > 상한 16% — 결과문을 행동이나 여백으로 닫을 것`);
 
 if (dump) {
