@@ -72,6 +72,14 @@ MUTATIONS = [
         'new': "&& false && choice.tactic && evd.combat && evd.combat.counters && evd.combat.counters[choice.tactic]",
         'test': ['python3', 'tests/test_combat_rework.py'],
     },
+    {
+        'name': 'companion-drive-echo',
+        'why': '접근 방식 기억을 지우면 영입 선택이 다시 문구로만 남는다',
+        'file': 'src/04c-engine-travel.js',
+        'old': "    dv.recruitMemory={id,choice,title:drive.title,desc:drive.desc,effect:drive.effect};",
+        'new': "    if(false) dv.recruitMemory={id,choice,title:drive.title,desc:drive.desc,effect:drive.effect};",
+        'test': ['python3', 'tests/test_companions_e2e.py'],
+    },
 ]
 
 
