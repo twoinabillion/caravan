@@ -80,6 +80,14 @@ MUTATIONS = [
         'new': "    if(false) dv.recruitMemory={id,choice,title:drive.title,desc:drive.desc,effect:drive.effect};",
         'test': ['python3', 'tests/test_companions_e2e.py'],
     },
+    {
+        'name': 'seoul-ascent',
+        'why': '정거장 진행이 끊기면 최종막이 관문에서 멈춘 채 초록일 수 있다',
+        'file': 'src/04e-engine-world.js',
+        'old': "G.seoulEnter = (i)=>{\n  const ev = D.seoulStops.find(e=>e.seoulStop===i);\n  if(ev) G.openEvent(ev);",
+        'new': "G.seoulEnter = (i)=>{\n  const ev = null;\n  if(ev) G.openEvent(ev);",
+        'test': ['python3', 'tests/test_seoul_sequence.py'],
+    },
 ]
 
 

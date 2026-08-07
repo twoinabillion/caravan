@@ -33,6 +33,7 @@
     "test:health": "python3 tests/test_source_health.py",
     "test:audio": "npm run build:html --silent && python3 tests/test_audio_mix.py",
     "test:companions": "python3 tests/test_companions_e2e.py",
+    "test:seoul": "python3 tests/test_seoul_sequence.py",
     "test:finale": "npm run build:html --silent && python3 tests/test_finale.py",
     "verify:mutations": "python3 tools/mutation-check.py",
     "simulate:engine": "npm run build:html && python3 tools/simulate-engine.py --runs 60",
