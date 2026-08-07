@@ -119,6 +119,39 @@ with sync_playwright() as p:
     """)
     check('화면에 렌더링된 12px 미만 텍스트 없음', tiny == 0, f'{tiny}개 발견')
 
+
+    # ── 선택지 숫자키 — 게임의 대부분이 선택이므로 키보드 완주의 중심 배선 ──
+    picked = page.evaluate("""() => {
+      G.newGame('onroad','키보드','full');
+      S.scrap=20;
+      const evd=D.events.find(e=>e.id==='meet_toll');
+      UI.showEvent(evd);
+      return new Promise(res=>{
+        const t0=Date.now();
+        const tick=()=>{
+          const frame=document.querySelector('#ev-wrap [role="button"]');
+          if(frame) frame.click();   // 타이프라이터 빨리감기
+          // 대화 페이지('계속'=story-next)는 숫자키 1로 넘어간다 — 그 자체가 키보드 배선 검증
+          const next=document.querySelector('#ev-wrap button.choice.story-next');
+          if(next){ document.dispatchEvent(new KeyboardEvent('keydown',{key:'1',bubbles:true})); }
+          const cards=[...document.querySelectorAll('#ev-wrap button.choice:not(.story-next)')].filter(x=>x.offsetParent!==null&&!x.disabled);
+          if(cards.length>=2){
+            const firstText=cards[0].textContent;
+            document.dispatchEvent(new KeyboardEvent('keydown',{key:'2',bubbles:true}));
+            setTimeout(()=>{
+              const now=[...document.querySelectorAll('#ev-wrap button.choice:not(.story-next)')].filter(x=>x.offsetParent!==null);
+              res({cards:cards.length, changed:!now.length||now[0]&&now[0].textContent!==firstText});
+            }, 500);
+            return;
+          }
+          if(Date.now()-t0>6000) return res({cards:cards.length, timeout:true});
+          setTimeout(tick, 250);
+        };
+        tick();
+      });
+    }""")
+    check('숫자키 2가 두 번째 선택지를 실행한다', picked.get('cards', 0) >= 2 and picked.get('changed'), str(picked))
+
     check('콘솔/런타임 오류 0건', len(console_errors) == 0, str(console_errors[:5]))
 
     browser.close()

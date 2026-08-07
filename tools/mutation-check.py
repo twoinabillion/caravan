@@ -88,6 +88,14 @@ MUTATIONS = [
         'new': "G.seoulEnter = (i)=>{\n  const ev = null;\n  if(ev) G.openEvent(ev);",
         'test': ['python3', 'tests/test_seoul_sequence.py'],
     },
+    {
+        'name': 'keyboard-numbers',
+        'why': '숫자키 배선을 끊으면 키보드만으로는 선택을 진행할 수 없다',
+        'file': 'src/07-ui.js',
+        'old': "if(modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
+        'new': "if(false&&modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
+        'test': ['python3', 'tests/test_keyboard_access.py'],
+    },
 ]
 
 

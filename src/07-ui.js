@@ -172,6 +172,13 @@ const UI = (()=>{
     /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
     document.addEventListener('keydown',e=>{
       const modal=activeModal();
+      /* 선택지 숫자키 — 카드에 이미 번호가 그려져 있다(choice-index). 게임의 대부분이
+         선택이므로 이것이 키보드 완주의 중심 배선이다. */
+      if(modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){
+        const cards=[...modal.querySelectorAll('button.choice:not([disabled])')].filter(x=>x.offsetParent!==null);
+        const card=cards[Number(e.key)-1];
+        if(card){ e.preventDefault(); card.click(); return; }
+      }
       if(modal&&e.key==='Tab'){
         const items=[...modal.querySelectorAll(focusableSel)].filter(x=>x.offsetParent!==null);
         if(items.length){
