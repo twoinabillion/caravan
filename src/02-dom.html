@@ -134,6 +134,14 @@
         <b id="road-status-place">부산 감천 부두</b>
         <small id="road-status-meta">정차 중 · 다음 길을 고른다</small>
       </div>
+      <div id="stage-actions" aria-label="현재 장소의 빠른 행동"></div>
+      <div id="cockpit-controls" aria-label="달구지 운전석 조작부">
+        <button type="button" data-cockpit-action="ignition" aria-pressed="false"><span>⌁</span><b>시동</b></button>
+        <button type="button" data-cockpit-action="map"><span>▱</span><b>지도</b></button>
+        <button type="button" data-cockpit-action="crew"><span>◇</span><b>백미러</b></button>
+        <button type="button" data-cockpit-action="status"><span>!</span><b>차량 진단</b></button>
+        <button type="button" data-cockpit-action="radio"><span>◉</span><b>라디오</b></button>
+      </div>
       <canvas id="minimap" title="지도 열기" role="button" tabindex="0" aria-label="전체 지도 열기"></canvas>
     </div>
 

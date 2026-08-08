@@ -58,6 +58,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     seed:Number.isFinite(G.seedOverride)?G.seedOverride:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _lunchDay:0, _storyQueue:[],
     _recentEvents:[], _recentEventTypes:[], _eventBreather:0, _beatQueue:[],
+    _roadEventDay:1, _roadEventCount:0, _lastRoadEventKm:-999, _lastCampEventDay:-999,
     memories:{choices:{},pending:[],history:[]}, knowledge:{},
     relations:{pairs:{},seenChats:{}},
     director:{intensity:10,phase:'build',relaxEvents:0},
@@ -216,8 +217,14 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
      새 '합류 전 과제'를 다시 시작할 수 있도록 첫 만남을 복구한다. */
   const oldRecruitStarts={minji:'meet_scrapyard',parkss:'meet_bus',leo:'meet_hitchhiker',
     jaeyi:'jy_recruit',eunsu:'es_recruit',kangwoo:'kw_recruit'};
-  if(!S.recruitQ) for(const [id,eid] of Object.entries(oldRecruitStarts)){
-    if(!S.party.includes(id)) S.used=S.used.filter(x=>x!==eid);
+  /* 이 보정은 영구 규칙이 아니라 구버전 세이브를 위한 1회 마이그레이션이다.
+     매 로드마다 used를 지우면 이미 헤어진 인물이 출발지에 다시 생성되어
+     순간이동하거나 처음 만나는 것처럼 보인다. */
+  if(!S.flags.recruit_migration_v2){
+    if(!S.recruitQ) for(const [id,eid] of Object.entries(oldRecruitStarts)){
+      if(!S.party.includes(id)) S.used=S.used.filter(x=>x!==eid);
+    }
+    S.flags.recruit_migration_v2=true;
   }
   /* 구버전 세이브에서도 은수의 결말 필수 단서가 랜덤 풀에 묻히지 않게 보정 */
   if(S.flags.es_backdoor_ready && !S.flags.es_truth){
@@ -861,7 +868,7 @@ G.openRecruitStep = ()=>{
   const def=D.recruitQuests[q.id];
   if(!def) return false;
   if(q.stage==='task'){
-    if(S.at!==q.target){ UI.toast(`🗺 ${D.nodes[q.target].name}에서 만나기로 했다`); return false; }
+    if(S.at!==q.target){ UI.toast(`🚚 ${def.name}와 함께 ${D.nodes[q.target].name}(으)로 가야 한다`); return false; }
     G.openEventById(def.task); return true;
   }
   if(q.stage==='road'){
@@ -869,12 +876,15 @@ G.openRecruitStep = ()=>{
     return false;
   }
   if(q.stage==='follow'){
-    if(S.at!==q.target){ UI.toast(`🗺 ${D.nodes[q.target].name}에서 할 말이 남았다 — ${def.name}`); return false; }
+    if(S.at!==q.target){ UI.toast(`🚚 ${def.name}와 함께 ${D.nodes[q.target].name}(으)로 이동 중이다`); return false; }
     if(Number.isFinite(q.roadDay)&&S.day<=q.roadDay){
       UI.toast(`🔥 ${def.name}와 길 위에서 하룻밤을 보낸 뒤 다시 이야기할 수 있다`);
       return false;
     }
-    G.openEventById(def.follow); return true;
+    /* 별도 후일담과 합류 확인을 연속 모달로 열지 않는다. 길 위에서 함께
+       보낸 시간이 이미 후일담이므로 다음 정차에서는 합류 결정만 남긴다. */
+    G.markRecruitReady(q.id);
+    G.openEventById(def.join); return true;
   }
   if(q.stage==='ready'){ G.openEventById(def.join); return true; }
   return false;

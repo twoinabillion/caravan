@@ -36,6 +36,17 @@ G.directorWeight = ev=>{
 G.directEventPool = (pool,opt={})=>{
   let out=(pool||[]).filter(Boolean);
   if(!out.length||!S) return out;
+  /* 사건 뒤에는 실제로 아무 일도 일어나지 않는 도로 구간을 둔다.
+     기존 breather는 '조용한 전체화면 사건'을 다시 골랐기 때문에 플레이
+     호흡은 쉬지 못했다. 같은 구간의 재호출도 계속 비워 둔다. */
+  const legKey=S.driving?`${S.day}:${S.at}>${S.driving.to}`:'';
+  if(opt.breather!==false && S.driving && (S._eventBreather>0||S._breatherLegKey===legKey)){
+    if(S._breatherLegKey!==legKey){
+      S._breatherLegKey=legKey;
+      S._eventBreather=Math.max(0,S._eventBreather-1);
+    }
+    return [];
+  }
   const recent=new Set((S._recentEvents||[]).slice(-10));
   const fresh=out.filter(e=>!recent.has(e.id));
   if(fresh.length>=Math.min(3,out.length)) out=fresh;
@@ -86,7 +97,9 @@ G.rememberEvent = ev=>{
     S._recentEventTypes.push(ev.type);
     if(S._recentEventTypes.length>6) S._recentEventTypes.splice(0,S._recentEventTypes.length-6);
   }
-  if(G.eventIsHeavy(ev)) S._eventBreather=Math.max(S._eventBreather,1);
+  /* 모든 전체화면 사건 뒤 한 번, 전투·위기 뒤 두 번의 발생 기회를 쉰다. */
+  S._eventBreather=Math.max(S._eventBreather,G.eventIsHeavy(ev)?2:1);
+  if(S.driving) S._lastNarrativeLeg=`${S.day}:${S.at}>${S.driving.to}`;
   const d=S.director, calm=G.eventIsCalm(ev), heavy=G.eventIsHeavy(ev);
   if(d.phase==='peak'){
     d.peakEvents=(d.peakEvents||0)+1;

@@ -1704,4 +1704,98 @@ input{font-family:inherit}
 .mk-dear{background:#3a2a1e;color:#e0b070;}
 .trade-demand .tn em{display:block;font-style:normal;font-size:11px;color:#aab3cc;}
 .trade-rumor{margin-top:10px;font-size:12px;color:#929bb4;line-height:1.5;}
+
+/* ── 사건 집중 모드 ─────────────────────────────────────────
+   긴 대화의 모든 턴을 동시에 펼치면 모바일에서 이미지·본문·선택지가 서로
+   경쟁한다. DOM과 진행 카운트는 유지하고 현재 문맥 두 턴만 시각화한다. */
+#ev-wrap.on{background:rgba(5,7,13,.96);backdrop-filter:blur(10px)}
+#ev-sheet.story-compact .story-reader [data-story-entry]:not(:nth-last-child(-n+2)),
+#ev-sheet.story-compact .story-transcript>.chat-msg:not(:nth-last-child(-n+2)){
+  display:none!important;
+}
+#ev-sheet.story-compact .story-reader{min-height:0}
+#ev-sheet.story-compact .story-transcript{gap:8px}
+#ev-sheet.story-compact .chat-msg,
+#ev-sheet.story-compact .story-narration{margin-top:0}
+@media(max-width:680px){
+  #ev-sheet.story-compact .event-scene-frame{max-height:min(34dvh,270px)}
+  #ev-sheet.story-compact .event-scroll{scroll-padding-bottom:180px}
+  #ev-sheet.story-compact .event-head{margin-top:8px}
+
+  /* 모바일 정보 계층: 핵심 임무와 현재 행동을 먼저, 보조 정보는 일지에서. */
+  .mission-strip{min-height:50px;padding:5px 10px}
+  .mission-strip.has-secondary{min-height:66px}
+  .mission-strip .ms-secondary-wrap{margin-top:3px;padding-top:4px;gap:4px}
+  .mission-strip .ms-secondary-wrap .ms-chip:nth-of-type(n+3){display:none}
+  .journey-context{margin-bottom:10px;padding:8px;gap:5px}
+  .journey-context-head{padding-bottom:0}
+  .journey-guide{margin-bottom:10px;padding:9px 10px}
+  .road-guest-card,.road-checkin{margin-top:8px;padding:9px 10px}
+}
+
+/* 첫 35km에는 본편 목적과 다음 행동만 보인다. 게시판·동료 보조 임무는
+   사라지는 것이 아니라 지도와 일지에 남고, 첫 루프를 익힌 뒤 펼쳐진다. */
+html[data-journey-stage="first"] .mission-strip .ms-secondary-wrap{display:none}
+html[data-journey-stage="first"] .mission-strip.has-secondary{min-height:56px}
+
+/* ── cinematic journey shell ─────────────────────────────────
+   정보판이 아니라 풍경이 첫 인상이 된다. 계기판은 이미지 가장자리에 겹치고,
+   현재 결정 두 개만 장면 위에 남는다. */
+#stage{flex-basis:clamp(300px,42dvh,410px)}
+html[data-travel-state="driving"] #stage,html[data-travel-state="ignition"] #stage{flex-basis:clamp(350px,52dvh,500px)}
+#dash{z-index:11;margin:-64px 10px 0;border:1px solid rgba(232,227,213,.14);border-radius:14px 14px 5px 5px;
+  background:linear-gradient(180deg,rgba(9,12,21,.72),rgba(10,14,25,.95));
+  box-shadow:0 14px 30px rgba(0,0,0,.3);backdrop-filter:blur(12px)}
+#mission-strip{width:calc(100% - 20px);margin:8px 10px 0;border:1px solid rgba(255,180,84,.2);border-radius:8px;
+  background:linear-gradient(90deg,rgba(255,180,84,.075),rgba(12,16,28,.94) 42%)}
+#main{z-index:4;margin-top:8px;border-radius:18px 18px 0 0;background:
+  radial-gradient(90% 50% at 50% 0%,rgba(59,74,112,.11),transparent 70%),var(--night);
+  box-shadow:0 -1px rgba(255,255,255,.045),0 -16px 44px rgba(0,0,0,.16)}
+#panel{padding-top:14px}
+#stage-actions{position:absolute;z-index:12;left:14px;right:14px;bottom:76px;display:flex;justify-content:center;gap:8px;
+  pointer-events:none}
+#stage-actions:empty{display:none}
+.stage-action{pointer-events:auto;max-width:min(48%,240px);min-height:44px;padding:10px 15px;border:1px solid rgba(255,195,111,.58);
+  border-radius:999px;background:rgba(10,13,22,.76);color:#fff2d9;font-size:13px;font-weight:800;line-height:1.25;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(12px);
+  box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.08)}
+.stage-action:first-child{background:linear-gradient(135deg,rgba(113,72,28,.9),rgba(31,25,24,.88));border-color:#e1a956}
+.stage-action:hover{border-color:#ffd18d;transform:translateY(-1px)}
+html[data-travel-state="driving"] #stage-actions,html[data-travel-state="ignition"] #stage-actions{display:none}
+.journey-context{background:rgba(13,17,30,.58);box-shadow:none}
+.journey-context{background:rgba(13,17,30,.58);box-shadow:none}
+.journey-context-head{display:none}
+.context-location,.context-crew{background:rgba(5,8,15,.22)}
+.act,.route-option{box-shadow:none}
+
+#cockpit-controls{display:none;position:absolute;inset:0;z-index:13;pointer-events:none}
+html[data-travel-state="driving"] #cockpit-controls,html[data-travel-state="ignition"] #cockpit-controls{display:block}
+#cockpit-controls button{position:absolute;pointer-events:auto;display:flex;align-items:center;gap:5px;min-width:44px;min-height:44px;
+  padding:7px 10px;border:1px solid rgba(222,190,126,.42);border-radius:8px;background:rgba(7,9,14,.55);
+  color:#f0dfba;backdrop-filter:blur(6px);box-shadow:0 5px 16px rgba(0,0,0,.24)}
+#cockpit-controls button span{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:rgba(255,180,84,.13);
+  color:var(--amber);font:700 12px/1 var(--mono)}
+#cockpit-controls button b{font:700 11px/1.1 var(--mono);white-space:nowrap}
+#cockpit-controls [data-cockpit-action="map"]{left:11%;bottom:20%}
+#cockpit-controls [data-cockpit-action="ignition"]{left:50%;bottom:4%;transform:translateX(-50%);border-color:rgba(226,87,79,.62)}
+#cockpit-controls [data-cockpit-action="ignition"].on{border-color:rgba(125,201,143,.75);background:rgba(27,63,40,.72);color:#c7f4cf}
+#cockpit-controls [data-cockpit-action="crew"]{left:50%;top:6%;transform:translateX(-50%)}
+#cockpit-controls [data-cockpit-action="status"]{left:50%;bottom:16%;transform:translateX(-50%)}
+#cockpit-controls [data-cockpit-action="radio"]{right:10%;bottom:20%}
+#cockpit-controls button:hover{border-color:#f4c77d;background:rgba(37,28,20,.72)}
+
+@media(max-width:680px){
+  #stage{flex-basis:clamp(290px,40dvh,370px)}
+  html[data-travel-state="driving"] #stage,html[data-travel-state="ignition"] #stage{flex-basis:clamp(335px,49dvh,450px)}
+  #dash{margin-top:-58px;margin-left:8px;margin-right:8px;padding-top:7px;padding-bottom:6px}
+  #mission-strip{width:calc(100% - 16px);margin:7px 8px 0}
+  #main{margin-top:7px;border-radius:15px 15px 0 0}
+  #panel{padding:11px 12px calc(64px + var(--safe-bottom))}
+  #stage-actions{left:10px;right:10px;bottom:67px;gap:6px}
+  .stage-action{min-height:42px;padding:9px 12px;font-size:12.5px}
+  #cockpit-controls button{padding:6px;min-width:42px;min-height:42px}
+  #cockpit-controls button b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  #cockpit-controls [data-cockpit-action="map"]{left:8%;bottom:19%}
+  #cockpit-controls [data-cockpit-action="radio"]{right:7%;bottom:19%}
+}
 </style>

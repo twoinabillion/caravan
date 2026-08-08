@@ -66,10 +66,32 @@ G.explore = ()=>{
   G.save();
   return true;
 };
-G.fireDriveEvent2 = (pool)=>{ pool=G.directEventPool(pool); if(!pool.length) return;
+G.fireDriveEvent2 = (pool)=>{
+  /* 도로는 사건 목록이 아니라 실제 이동 공간이다. 초반에는 시스템을 익힐
+     여백을 더 주고, 이후에도 하루 두 번을 넘는 강제 사건은 보류한다. */
+  if(S._roadEventDay!==S.day){
+    S._roadEventDay=S.day;
+    S._roadEventCount=0;
+  }
+  const earlyJourney=(S.stats&&S.stats.km<35)||(S.stats&&S.stats.events<4);
+  const dailyCap=earlyJourney?1:2;
+  const minGapKm=earlyJourney?30:18;
+  const km=Number(S.stats&&S.stats.km)||0;
+  if((Number(S._roadEventCount)||0)>=dailyCap||km-(Number(S._lastRoadEventKm)||-999)<minGapKm) return;
+  /* 큐에 든 이야기는 직전 모달을 닫자마자 재생하지 않고, 다음 정상적인
+     도로 사건 기회에 대신 사용한다. 플레이어가 그 사이 실제로 운전한다. */
+  pool=G.directEventPool(pool); if(!pool.length) return;
+  const queued=G.popStory();
+  const markRoadEvent=()=>{
+    S._roadEventCount=(Number(S._roadEventCount)||0)+1;
+    S._lastRoadEventKm=km;
+  };
+  if(queued){ markRoadEvent(); G.openEventById(queued); return; }
   const weight=e=>e.w*(G.eventIsContextual(e)?2.1:1)*G.directorWeight(e);
   const total=pool.reduce((s,e)=>s+weight(e),0); let r=rng()*total;
-  let evd=pool[0]; for(const e of pool){ r-=weight(e); if(r<=0){evd=e;break} } G.openEvent(evd); };
+  let evd=pool[0]; for(const e of pool){ r-=weight(e); if(r<=0){evd=e;break} }
+  markRoadEvent(); G.openEvent(evd);
+};
 /* 야영은 즉시 시간 넘김이 아니라, 차를 "집"처럼 쓰는 짧은 준비 단계도 가진다.
    _campPlan은 기존 저장 파일에도 자연스럽게 붙고, 다음 취침 후 반드시 비운다. */
 G.prepareCamp = (kind,cid)=>{
@@ -168,13 +190,15 @@ G.camp = (msg)=>{
     if(S.party.length){ risk-=0.05*Math.min(2,S.party.length);
       if(rng()<0.35) UI.toast('🕯 경계 당번을 세웠다 — 밤이 한결 덜 위험하다'); }
     if(S.up&&S.up.curtain) risk-=0.07;
-    if(rng()<Math.max(0.08,risk)){
+    const campStoryReady=!Number.isFinite(S._lastCampEventDay)||S.day-S._lastCampEventDay>=2;
+    if(campStoryReady&&rng()<Math.max(0.08,risk)){
       const north = G.regionOf()==='north';
       /* 밤은 접선의 시간이기도 하다 — 기둥이 비어 있으면 35%로 그 사건이 모닥불을 찾아온다.
          주행 뽑기가 하루 0.7회뿐이라(2026-08-07 실측) 밤 채널이 없으면 기둥이 운에 갇힌다. */
       const pillarPool=G.eligible().filter(e=>e.pillar&&G.pillarUnmet(e.pillar));
-      if(pillarPool.length&&rng()<0.35){
+      if(pillarPool.length&&rng()<0.18){
         const pv=pillarPool[Math.floor(rng()*pillarPool.length)];
+        S._lastCampEventDay=S.day;
         G.deferEvent(pv.id);
         setTimeout(()=>G.openEventById(pv.id), 600);
         UI.renderAll(); G.save(); return;
@@ -182,12 +206,13 @@ G.camp = (msg)=>{
       const r=rng();
       const ev = north? (r<0.45?'camp_scan': r<0.7?'camp_thief': r<0.87?'camp_dogs':'camp_visitor')
                       : (r<0.32?'camp_thief': r<0.6?'camp_dogs':'camp_visitor');
+      S._lastCampEventDay=S.day;
       G.deferEvent(ev);
       setTimeout(()=>G.openEventById(ev), 600);
       UI.renderAll(); G.save(); return;
     }
   }
-  if(!G.maybeCrisis() && S.party.length && rng()<0.5){
+  if(!G.maybeCrisis() && S.party.length && rng()<0.25){
     const pool = G.eligible('동행'); if(pool.length) setTimeout(()=>G.fireDriveEvent2(pool), 500);
   }
   UI.renderAll(); G.save();

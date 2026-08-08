@@ -58,7 +58,7 @@ with sync_playwright() as p:
     check('360px 모바일 첫 화면에 가로 넘침이 없다',
           compact['content'] <= compact['viewport'] and compact['dock'] <= compact['viewport'], str(compact))
 
-    page.evaluate("G.startTravel('yangsan')")
+    page.evaluate("G.startTravel('yangsan'); G.toggleIgnition()")
     first_pool = page.evaluate('''() => ({
       slots:S.driving.slots.length,
       priority:G.eligible().filter(e=>e.priority).map(e=>e.id)
@@ -75,6 +75,9 @@ with sync_playwright() as p:
     })''')
     check('부품을 먼저 골라도 민지의 부탁으로 자연스럽게 이어진다',
           after_meet == {'id': 'minji', 'stage': 'task', 'target': 'yangsan', 'used': True}, str(after_meet))
+    same_leg_events = page.evaluate('G.directEventPool(G.eligible()).length')
+    check('민지 사건을 닫은 같은 주행 구간에는 다른 사건이 연달아 열리지 않는다',
+          same_leg_events == 0, str(same_leg_events))
 
     # 실제 엔진의 시간·연료 계산으로 도착하되, 이 테스트에서는 추가 랜덤 사건만 건너뛴다.
     page.evaluate('''() => {
@@ -102,7 +105,7 @@ with sync_playwright() as p:
     check('민지 첫 임무의 방식과 차체 흉터가 상태에 남는다',
           task['stage'] == 'road' and task['choice'] == 'shield' and task['van'] < 82, str(task))
 
-    page.evaluate("G.startTravel('miryang')")
+    page.evaluate("G.startTravel('miryang'); G.toggleIgnition()")
     guest = page.evaluate('''() => ({
       id:S.driving.guest, fuel:S.driving.guestFuel,
       copy:document.querySelector('.road-guest-card')?.textContent||''
@@ -128,19 +131,17 @@ with sync_playwright() as p:
           follow['at'] == 'miryang' and follow['stage'] == 'follow' and follow['target'] == 'miryang' and follow['held'], str(follow))
 
     page.evaluate("G.camp('밀양 장터에서 하룻밤을 묵었다')")
-    next_day = page.evaluate("({day:S.day, min:S.min, opened:G.openRecruitStep()})")
-    check('다음 날에야 민지의 두 번째 대화가 열린다',
+    next_day = page.evaluate("({day:S.day, min:S.min, opened:G.openRecruitStep(), title:document.querySelector('#ev-sheet h2')?.textContent||''})")
+    check('다음 날 별도 재회 없이 민지의 합류 결정이 열린다',
           next_day['day'] == 2 and next_day['min'] == 390 and next_day['opened'], str(next_day))
-    finish_open_event(page, 2)
-    page.wait_for_timeout(650)  # rq_minji_join 연쇄
-    join_title = page.locator('#ev-sheet h2').text_content()
-    check('정오의 대답 뒤 합류 제안이 끊기지 않고 이어진다', join_title == '민지가 고른 자리', join_title)
+    check('민지는 다른 장소에서 다시 소개되지 않고 곧바로 자리를 고른다',
+          next_day['title'] == '민지가 고른 자리', next_day['title'])
     finish_open_event(page, 0, 'yes')
     joined = page.evaluate('''() => ({
       party:[...S.party], quest:S.recruitQ,
       approach:S.comps.minji.approach, bond:S.comps.minji.bond
     })''')
-    check('민지는 첫 만남이 아니라 두 사건을 겪은 뒤 탑승한다',
+    check('민지는 첫 만남·공동 과제·실제 주행 뒤 탑승한다',
           joined['party'] == ['minji'] and joined['quest'] is None and joined['approach'] == 'shield' and joined['bond'] >= 5,
           str(joined))
 
@@ -201,7 +202,7 @@ with sync_playwright() as p:
     page.evaluate("UI.showStl('miryang','hub'); document.querySelector('#stl-out').click()")
 
     drive_before = page.evaluate("({van:S.van,vanMax:S.vanMax})")
-    page.evaluate("G.startTravel('daegu')")
+    page.evaluate("G.startTravel('daegu'); G.toggleIgnition()")
     callback = page.evaluate('''() => ({
       memory:S.driving.recruitMemory,
       van:S.van,

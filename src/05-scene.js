@@ -1101,6 +1101,126 @@ const SCENE = (()=>{
     }
   }
 
+  /* ── 운전석 시점 ───────────────────────────────────────────
+     기존 지역·시간·날씨를 그대로 쓰되 주행 중에는 측면 도로 대신 앞유리
+     너머의 소실점 도로를 그린다. 실제 조향 게임이 아니라 여행의 시점을
+     운전자에게 돌려주는 2D 다이제틱 허브다. */
+  function forwardRoad(dark,wx){
+    const horizon=P(H*0.57), cx=P(W*0.52);
+    ctx.fillStyle=mix('#313126','#17171b',dark*0.56);
+    ctx.fillRect(0,horizon,W,H-horizon);
+    ctx.beginPath();
+    ctx.moveTo(cx-P(W*0.055),horizon); ctx.lineTo(cx+P(W*0.055),horizon);
+    ctx.lineTo(W+P(W*0.06),H); ctx.lineTo(-P(W*0.06),H); ctx.closePath();
+    ctx.fillStyle=wx==='rain'?mix('#30343c','#11141c',dark*0.55):mix('#34343a','#171820',dark*0.48);
+    ctx.fill();
+    ctx.strokeStyle=mix('#77756d','#34343c',dark*0.55); ctx.lineWidth=1;
+    line(cx-P(W*0.055),horizon,-P(W*0.06),H);
+    line(cx+P(W*0.055),horizon,W+P(W*0.06),H);
+    const phase=(worldX*0.012)%1;
+    for(let i=0;i<8;i++){
+      const q=(i+phase)/8, q2=q*q;
+      const y=horizon+(H-horizon)*q2;
+      const len=1+q2*10;
+      ctx.strokeStyle=`rgba(220,211,180,${0.2+q*0.58})`; ctx.lineWidth=Math.max(1,P(q*2));
+      line(cx,y,cx,y+len);
+    }
+    if(wx==='rain'){
+      ctx.fillStyle='rgba(135,160,180,.08)'; ctx.fillRect(0,horizon,W,H-horizon);
+    }
+    return horizon;
+  }
+
+  function drawApproachLandmark(dark){
+    if(!S||!S.driving||!D.nodes[S.driving.to]) return;
+    const f=S.driving.gone/S.driving.dist;
+    if(f<0.48) return;
+    const name=String(D.nodes[S.driving.to].name||'');
+    const q=Math.min(1,(f-0.48)/0.52), s=0.55+q*0.8;
+    const base=P(H*(0.63+q*0.025)), x=P(W*(0.69-q*0.08));
+    const col=mix('#26314b','#0a0d17',dark*0.56);
+    ctx.fillStyle=col; ctx.strokeStyle=col; ctx.lineWidth=Math.max(1,P(s));
+    const tower=(tx,top,h,w)=>{ ctx.fillRect(P(tx-w/2),P(top+h*0.45),Math.max(1,P(w)),P(h*0.55));
+      ctx.beginPath(); ctx.moveTo(P(tx),P(top)); ctx.lineTo(P(tx-w*0.38),P(top+h*0.45)); ctx.lineTo(P(tx+w*0.38),P(top+h*0.45)); ctx.closePath(); ctx.fill(); };
+    if(name.includes('서울')){
+      tower(x,base-P(42*s),P(42*s),P(5*s));
+      ctx.fillRect(x-P(3*s),base-P(47*s),P(6*s),P(3*s));
+      ctx.fillRect(x-P(34*s),base-P(29*s),P(13*s),P(29*s));
+      ctx.fillStyle=dark>0.35?'rgba(255,190,105,.65)':'rgba(175,190,190,.5)';
+      for(let i=0;i<4;i++) ctx.fillRect(x-P(31*s),base-P((6+i*6)*s),1,1);
+    } else if(name.includes('부산')){
+      ctx.beginPath(); ctx.moveTo(x-P(52*s),base); ctx.lineTo(x-P(44*s),base-P(30*s)); ctx.lineTo(x-P(36*s),base); ctx.moveTo(x+P(34*s),base); ctx.lineTo(x+P(42*s),base-P(30*s)); ctx.lineTo(x+P(50*s),base); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x-P(44*s),base-P(23*s)); ctx.quadraticCurveTo(x,base-P(5*s),x+P(42*s),base-P(23*s)); ctx.stroke();
+    } else if(name.includes('대구')){
+      tower(x,base-P(38*s),P(38*s),P(6*s)); ctx.fillRect(x-P(8*s),base-P(40*s),P(16*s),P(5*s));
+    } else if(name.includes('대전')){
+      tower(x,base-P(35*s),P(35*s),P(5*s)); ctx.beginPath(); ctx.arc(x,base-P(35*s),P(7*s),0,7); ctx.fill();
+    } else if(name.includes('경주')){
+      ctx.beginPath(); ctx.moveTo(x-P(14*s),base); ctx.quadraticCurveTo(x-P(10*s),base-P(27*s),x,base-P(34*s)); ctx.quadraticCurveTo(x+P(10*s),base-P(27*s),x+P(14*s),base); ctx.fill();
+      ctx.fillStyle=mix('#141b2b','#080b13',dark*0.5); for(let i=0;i<4;i++) ctx.fillRect(x-1,base-P((7+i*6)*s),2,2);
+    } else if(name.includes('수원')){
+      ctx.fillRect(x-P(25*s),base-P(16*s),P(50*s),P(16*s));
+      ctx.beginPath(); ctx.moveTo(x-P(30*s),base-P(16*s)); ctx.lineTo(x,base-P(28*s)); ctx.lineTo(x+P(30*s),base-P(16*s)); ctx.closePath(); ctx.fill();
+    } else if(name.includes('광주')){
+      ctx.beginPath(); ctx.moveTo(x-P(48*s),base); ctx.lineTo(x-P(18*s),base-P(26*s)); ctx.lineTo(x,base-P(15*s)); ctx.lineTo(x+P(18*s),base-P(30*s)); ctx.lineTo(x+P(48*s),base); ctx.fill();
+    } else if(name.includes('여수')||name.includes('포항')){
+      ctx.fillStyle=mix('#243549','#0a111b',dark*0.5); ctx.fillRect(x-P(58*s),base-P(5*s),P(116*s),P(5*s));
+      ctx.strokeStyle=col; ctx.beginPath(); ctx.moveTo(x-P(38*s),base); ctx.quadraticCurveTo(x,base-P(28*s),x+P(38*s),base); ctx.stroke();
+    } else if(name.includes('강릉')||name.includes('속초')){
+      ctx.beginPath(); ctx.moveTo(x-P(56*s),base); ctx.lineTo(x-P(20*s),base-P(30*s)); ctx.lineTo(x,base-P(17*s)); ctx.lineTo(x+P(20*s),base-P(36*s)); ctx.lineTo(x+P(56*s),base); ctx.fill();
+      ctx.fillStyle=mix('#263d45','#0a1419',dark*0.5); ctx.fillRect(0,base,W,H-base);
+    } else if(name.includes('춘천')){
+      ctx.fillStyle=mix('#253b4e','#0b121c',dark*0.5); ctx.fillRect(0,base-P(6*s),W,P(6*s));
+      ctx.fillStyle=col; ctx.beginPath(); ctx.moveTo(x-P(50*s),base); ctx.lineTo(x-P(15*s),base-P(25*s)); ctx.lineTo(x+P(5*s),base-P(12*s)); ctx.lineTo(x+P(42*s),base-P(30*s)); ctx.lineTo(x+P(60*s),base); ctx.fill();
+    }
+  }
+
+  function drawCockpit(dark,wx,speed){
+    const dashY=P(H*0.735), warm=dark>0.35?'#d79b4d':'#b68243';
+    /* 천장과 A필러 */
+    ctx.fillStyle=mix('#25231f','#0c0d11',dark*0.52);
+    ctx.fillRect(0,0,W,P(H*0.055));
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(P(W*0.09),0); ctx.lineTo(P(W*0.17),dashY); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(W-P(W*0.09),0); ctx.lineTo(W,0); ctx.lineTo(W,H); ctx.lineTo(W-P(W*0.17),dashY); ctx.closePath(); ctx.fill();
+    /* 백미러 */
+    ctx.fillStyle='#090a0d'; ctx.fillRect(P(W*0.39),P(H*0.055),P(W*0.23),P(H*0.065));
+    ctx.fillStyle=mix('#293448','#10141d',dark*0.5); ctx.fillRect(P(W*0.405),P(H*0.068),P(W*0.20),P(H*0.038));
+    ctx.fillStyle='rgba(255,180,84,.55)'; ctx.fillRect(P(W*0.49),P(H*0.108),P(W*0.02),1);
+    /* 대시보드 */
+    const dg=ctx.createLinearGradient(0,dashY,0,H);
+    dg.addColorStop(0,mix('#403b31','#17181b',dark*0.55)); dg.addColorStop(1,'#090a0d');
+    ctx.fillStyle=dg; ctx.beginPath(); ctx.moveTo(P(W*0.09),dashY); ctx.lineTo(P(W*0.91),dashY); ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
+    ctx.fillStyle='#111319'; ctx.fillRect(P(W*0.32),dashY+5,P(W*0.36),P(H*0.13));
+    /* 계기판 */
+    const fuel=S?Math.max(0,Math.min(1,S.fuel/S.fuelMax)):0.5;
+    const vanHealth=S?Math.max(0,Math.min(1,S.van/S.vanMax)):0.8;
+    ctx.strokeStyle='#555a62'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(P(W*0.42),dashY+P(H*0.07),P(H*0.045),Math.PI,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(P(W*0.58),dashY+P(H*0.07),P(H*0.045),Math.PI,Math.PI*2); ctx.stroke();
+    ctx.strokeStyle=fuel<0.2?'#e2574f':warm; ctx.lineWidth=2;
+    const fa=Math.PI+Math.PI*fuel; line(P(W*0.42),dashY+P(H*0.07),P(W*0.42)+Math.cos(fa)*P(H*0.035),dashY+P(H*0.07)+Math.sin(fa)*P(H*0.035));
+    ctx.strokeStyle=vanHealth<0.3?'#e2574f':'#7dc98f';
+    const va=Math.PI+Math.PI*vanHealth; line(P(W*0.58),dashY+P(H*0.07),P(W*0.58)+Math.cos(va)*P(H*0.035),dashY+P(H*0.07)+Math.sin(va)*P(H*0.035));
+    ctx.fillStyle='#c5d2c8'; ctx.font=`${Math.max(5,P(H*0.018))}px monospace`; ctx.textAlign='center';
+    ctx.fillText('FUEL',P(W*0.42),dashY+P(H*0.102)); ctx.fillText('VAN',P(W*0.58),dashY+P(H*0.102));
+    /* 라디오와 접힌 지도 */
+    ctx.fillStyle='#17191d'; ctx.fillRect(P(W*0.70),dashY+P(H*0.035),P(W*0.18),P(H*0.10));
+    ctx.fillStyle=warm; ctx.fillRect(P(W*0.73),dashY+P(H*0.055),P(W*0.11),2);
+    ctx.fillStyle=mix('#c5b88f','#68604b',dark*0.3); ctx.fillRect(P(W*0.11),dashY+P(H*0.025),P(W*0.15),P(H*0.12));
+    ctx.strokeStyle='rgba(52,68,77,.55)'; ctx.lineWidth=1; line(P(W*0.16),dashY+P(H*0.03),P(W*0.18),dashY+P(H*0.14));
+    /* 핸들 */
+    ctx.strokeStyle='#090a0c'; ctx.lineWidth=P(H*0.022);
+    ctx.beginPath(); ctx.arc(P(W*0.31),H+P(H*0.005),P(H*0.16),Math.PI*1.08,Math.PI*1.92); ctx.stroke();
+    ctx.lineWidth=P(H*0.012); line(P(W*0.31),H-P(H*0.075),P(W*0.31),H-P(H*0.005));
+    /* 비 오는 날 와이퍼 */
+    if(wx==='rain'&&speed>0){
+      const sweep=(Math.sin(t*5)+1)*0.5;
+      ctx.strokeStyle='rgba(12,13,16,.9)'; ctx.lineWidth=2;
+      line(P(W*0.48),dashY,P(W*(0.22+0.38*sweep)),P(H*(0.68-0.42*sweep)));
+    }
+    ctx.textAlign='left';
+  }
+
   /* ── 메인 draw ── */
   function draw(dt){
     if(!ctx) return; t+=dt;
@@ -1110,7 +1230,7 @@ const SCENE = (()=>{
     const hour=S? S.min/60:21.2;
     const dark=darknessAt(hour);
     const wx=S? (S.wx||'clear'):'clear';
-    const speed=S&&S.driving&&!UI.modalOpen()?1:0;
+    const speed=S&&S.driving&&S.driving.ignition!==false&&!UI.modalOpen()?1:0;
     if(speed>0) worldX+=64*dt;
 
     drawSky(hour,dark,wx);
@@ -1133,13 +1253,18 @@ const SCENE = (()=>{
     if(bio==='bamboo') bambooStrip(0.55);
     if(bio!=='coast'&&bio!=='lake') pines(0.46,H*0.705, mix('#0f1626','#070a12',dark*0.5));
     buildings(0.55,64,density*0.72,H*0.715,9,30, mix('#0f1526','#060910',dark*0.5),dark);
-    const roadY=road(dark,wx);
-    deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
-    poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
-    signs(1.0,roadY+1);
-    van(roadY,speed,dark,wx);
-    drawPuffs(dt); drawCrows(dt);
-    weather(wx,dark,speed,dt);
+    const cockpit=!!(S&&S.driving);
+    if(cockpit) drawApproachLandmark(dark);
+    const roadY=cockpit?forwardRoad(dark,wx):road(dark,wx);
+    if(!cockpit){
+      deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
+      poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
+      signs(1.0,roadY+1);
+      van(roadY,speed,dark,wx);
+      drawPuffs(dt);
+    }
+    drawCrows(dt); weather(wx,dark,speed,dt);
+    if(cockpit) drawCockpit(dark,wx,speed);
     cheollianFx(roadY);
     /* 비네트 */
     const vg=ctx.createRadialGradient(W/2,H*0.45,H*0.3,W/2,H*0.5,H*0.95);

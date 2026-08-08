@@ -11,6 +11,28 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
+  /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
+     원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
+  function syncStageActions(){
+    const host=$('#stage-actions'), panel=$('#panel');
+    if(!host||!panel||!S||S.driving){ if(host) host.replaceChildren(); return; }
+    const selectors='button.act.primary:not(:disabled),button.route-option:not(:disabled),button[data-a="recruitstep"]:not(:disabled)';
+    const originals=[...panel.querySelectorAll(selectors)].filter(button=>button.offsetParent!==null).slice(0,2);
+    const buttons=originals.map(original=>{
+      const button=document.createElement('button');
+      button.type='button'; button.className='stage-action';
+      const strong=original.querySelector('b,h3');
+      button.textContent=(strong?strong.textContent:original.textContent).trim().replace(/\s+/g,' ');
+      button.setAttribute('aria-label',button.textContent);
+      button.onclick=()=>original.click();
+      return button;
+    });
+    host.replaceChildren(...buttons);
+  }
+  queueMicrotask(()=>{
+    const panel=$('#panel');
+    if(panel) new MutationObserver(syncStageActions).observe(panel,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled','class']});
+  });
   function renderProfilePick(){
     const box=$('#profile-pick'); if(!box) return;
     box.innerHTML=Object.entries(D.startProfiles||{}).map(([id,p])=>
@@ -187,6 +209,20 @@ const UI = (()=>{
     const saveForLifecycle=()=>{ if(S) G.save(); };
     document.addEventListener('visibilitychange',()=>{ if(document.hidden) saveForLifecycle(); });
     window.addEventListener('pagehide',saveForLifecycle);
+    $('#cockpit-controls').querySelectorAll('[data-cockpit-action]').forEach(button=>button.onclick=()=>{
+      const action=button.dataset.cockpitAction;
+      if(action==='ignition'){
+        G.toggleIgnition();
+        renderAll();
+      }
+      else if(action==='map') $('#dk-map').click();
+      else if(action==='crew'){
+        $('#dk-status').click();
+        requestAnimationFrame(()=>document.querySelector('[data-sttab="crew"],[data-tab="crew"]')?.click());
+      }
+      else if(action==='status') $('#dk-status').click();
+      else if(action==='radio') $('#dk-sound').click();
+    });
     /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
     document.addEventListener('keydown',e=>{
       const modal=activeModal();
@@ -1125,6 +1161,18 @@ const UI = (()=>{
   function renderPanel(){
     const p=$('#panel');
     if(!S){ p.innerHTML=''; return; }
+    /* 온보딩은 설명을 더 붙이는 대신 아직 필요 없는 정보를 접는다. */
+    const journeyStage=(S.stats&&S.stats.km<35)||(S.stats&&S.stats.events<4)?'first'
+      :(S.stats&&S.stats.km<110?'learning':'open');
+    document.documentElement.dataset.journeyStage=journeyStage;
+    document.documentElement.dataset.travelState=S.driving?(S.driving.ignition===false?'ignition':'driving'):'stopped';
+    const ignition=$('[data-cockpit-action="ignition"]');
+    if(ignition){
+      const on=!!(S.driving&&S.driving.ignition!==false);
+      ignition.classList.toggle('on',on);
+      ignition.setAttribute('aria-pressed',String(on));
+      const label=ignition.querySelector('b'); if(label) label.textContent=on?'시동 끄기':'시동 걸기';
+    }
     if(S.driving){
       const to=D.nodes[S.driving.to];
       const rq=S.recruitQ&&S.recruitQ.stage==='road'?S.recruitQ:null;
@@ -1192,8 +1240,8 @@ const UI = (()=>{
         :waitNight?`${def.name}와 하룻밤을 보낸다`
         :atFollow?`길에서 생긴 일을 마주한다 — ${def.name}`
         :road?`다음 길을 함께 간다 — ${def.name}`
-        :atTask?`${def.name}의 부탁을 진행한다`
-        :`${D.nodes[rq.target].name} · 만나기로 한 사람: ${def.name}`;
+        :atTask?`${def.name}와 부탁을 함께 해결한다`
+        :`${D.nodes[rq.target].name}까지 임시 동행 · ${def.name}`;
       const small=ready?'서로를 겪은 뒤, 본인이 자리를 고른다'
         :waitNight?'야영을 하면 내일 다시 이야기할 수 있다'
         :atFollow?def.followHint:road?def.roadHint:def.hint;
@@ -2062,6 +2110,9 @@ const UI = (()=>{
     const choices=eventChoiceData(evd);
     curCombatChoices=choices.combatChoices;
     const turns=prepareEventAudio(buildStoryTurns(text,evd,{turnSpeakers:evd.turnSpeakers}),evd);
+    /* 긴 사건도 모바일에서는 현재 문맥에 집중한다. 이전 턴은 DOM에 남겨
+       진행 상태와 접근성을 보존하되 compact 스타일로 화면에서는 접는다. */
+    sheet.classList.toggle('story-compact',turns.length>2);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<div class="event-head"><div>
       <div class="tag ${aiEvent?'ai-tag':''}">${esc(evd.type)}${evd.gen?' · 오프로드 생성':''}</div>
       <h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></div>
@@ -2283,8 +2334,8 @@ const UI = (()=>{
     renderAll(); G.save();
     /* 연쇄 이벤트 (시네마틱 시퀀스) */
     if(S && S._chain){ const cid=S._chain; S._chain=null; setTimeout(()=>G.openEventById(cid), 450); return; }
-    const queued=G.popStory();
-    if(queued){ setTimeout(()=>G.openEventById(queued), 450); return; }
+    /* storyQueue는 다음 도로 사건 기회에 fireDriveEvent2가 소비한다.
+       모달을 닫자마자 다음 모달을 여는 연쇄는 명시적 _chain만 허용한다. */
     /* 서울 진입 후엔 오르막 맵으로 복귀 */
     if(S && S.flags && S.flags.seoul_open && !S.ended){ setTimeout(showSeoul, 300); }
   }
@@ -2700,8 +2751,10 @@ const UI = (()=>{
           <span><b>${npc.name}</b><small>${npc.role}</small></span>
           <span class="npc-att">${ns.att>10?'우호적':ns.att<-10?'냉랭함':ns.met?'아는 사이':'초면'}</span></button>`;
       }
-      if(stl.recruit && !G.hasComp(stl.recruit) && (!S.recruitQ||S.recruitQ.id===stl.recruit)
-        && (!S.used.includes('kw_recruit')||(S.recruitQ&&S.recruitQ.id===stl.recruit))){
+      /* 합류 과제 중인 인물은 달구지에 임시 동행 중이다. 출발지 NPC 목록에
+         동시에 남겨 두면 같은 사람이 두 장소에 있는 것처럼 보인다. */
+      if(stl.recruit && !G.hasComp(stl.recruit) && !S.recruitQ
+        && !S.used.includes('kw_recruit')){
         const c=D.comps[stl.recruit];
         const rq=S.recruitQ&&S.recruitQ.id===stl.recruit?S.recruitQ:null;
         h+=`<button class="npc-row" data-recruit="${stl.recruit}">

@@ -358,7 +358,7 @@ G.startTravel = (to)=>{
       slots.sort((a,b)=>a.at-b.at);
     }
   }
-  S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,
+  S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,ignition:false,
     snapshot:{gameMinute:S.day*1440+S.min,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
       van:S.van,fatigue:S.fatigue,pursuit:S.pursuit,build:G.vanBuildProfile().name}};
   G.qualityMilestone('first_departure',{from:S.at,to,km:chk.km,road:chk.road});
@@ -387,6 +387,14 @@ G.resetDriveTimers = ()=>{ banterCd=6; radioCd=30; choiceEchoCd=8;
   lastBanter=[]; lastChat=-1; lastRadio=null; };
 /* 실시간 1초당 진행 거리(km). 테스트·도구가 속도 상수를 복제하지 않도록 엔진이 노출한다. */
 G.tickKmPerSecond = ()=> KMH/60*TIMESCALE;
+G.toggleIgnition = ()=>{
+  if(!S||!S.driving) return false;
+  S.driving.ignition=!S.driving.ignition;
+  if(typeof SND!=='undefined') SND.setDriving(S.driving.ignition);
+  UI.toast(S.driving.ignition?'🔑 시동이 걸렸다 — 길 위로 출발한다':'🔑 시동을 껐다 — 달구지가 갓길에 멈췄다');
+  G.save();
+  return S.driving.ignition;
+};
 /* 표시용 주행 소요 시간(게임 분). UI가 속도 상수를 복제하면 예상과 실제가 갈라진다 —
    2026-08-06에 실제로 그랬다(표시 2시간 58분 vs 실제 10시간). 단일 소스로 고정. */
 G.driveMinutes = (km)=> Math.ceil((Number(km)||0)/KMH*60);
@@ -394,6 +402,7 @@ G.driveMinutes = (km)=> Math.ceil((Number(km)||0)/KMH*60);
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
   if(!S.driving) return;
+  if(S.driving.ignition===false) return;
   const gm = dt*TIMESCALE;               // game minutes
   const wxSpd = S.wx==='storm'?0.76 : S.wx==='fog'?0.88 : 1;
   const ftgSpd = S.fatigue>=80?0.85:1;   // 수면 부족 → 감속
@@ -529,4 +538,3 @@ G.eligible = (typeFilter)=>{
   });
 };
 G.unknownHidden = ()=> Object.keys(D.nodes).filter(id=>D.nodes[id].type==='hidden' && !D.nodes[id].secret && !S.known.includes(id));
-
