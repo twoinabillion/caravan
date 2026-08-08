@@ -45,7 +45,7 @@ const COMBAT_AUTO_ADJUST_SCALE = 0.16;     // [-0.5~0.5] → 판정 보정 ±0.0
 G.newGame = (mode, name, entryMode='full', profile)=>{
   S = {
     v:SAVE_VERSION, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
-    fuel:42, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100,
+    fuel:42, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100, vanName:'달구지',
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
@@ -64,7 +64,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     combat:null, lastCombatReport:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
     _combatFlow:{runId:0,adjust:0,history:[]},
     profile:profile&&D.startProfiles&&D.startProfiles[profile]?profile:'keeper',
-    _quality:null, guideDismissed:false, lastJourneyRecap:null,
+    _quality:null, guideDismissed:false, lastJourneyRecap:null, journeyRecaps:[],
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
     _rescues:{}, _stlNights:{},
   };
@@ -100,6 +100,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
+G.vanName = ()=> (S && S.vanName) || '달구지';
 let saveWarned=false;
 G.save = ()=>{ if(!S||S.ended) return; try{
   if(S._quality&&S._quality.activeSession) S._quality.lastSeenAt=Date.now();
@@ -124,6 +125,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   for(const key of ['fuel','fuelMax','water','food','scrap','van','vanMax','thirst','hunger','pursuit'])
     if(!Number.isFinite(S[key])) S[key]=({fuel:42,fuelMax:70,water:16,food:14,scrap:0,van:82,vanMax:100}[key]||0);
   if(!Number.isFinite(S.seed)) S.seed=1;
+  if(typeof S.vanName!=='string'||!S.vanName.trim()) S.vanName='달구지';
+  else S.vanName=S.vanName.trim().slice(0,12);
   /* 이어서 가기도 새 게임과 같은 출발선에서 시작한다 (세션 잔여 상태 제거) */
   G.resetDriveTimers();
   /* 버전 마이그레이션: 이전 버전 세이브는 단계 함수를 순서대로 통과하고,
@@ -172,6 +175,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
   if(S.guideDismissed===undefined) S.guideDismissed=false;
   if(S.lastJourneyRecap===undefined) S.lastJourneyRecap=null;
+  if(!Array.isArray(S.journeyRecaps)) S.journeyRecaps=[];
   if(!S._rescues||typeof S._rescues!=='object'||Array.isArray(S._rescues)) S._rescues={};
   if(!S._stlNights||typeof S._stlNights!=='object'||Array.isArray(S._stlNights)) S._stlNights={};
   G.ensureNarrativeState();
@@ -238,6 +242,24 @@ G.hasSave = ()=>{ try{
   return Boolean(save&&typeof save==='object'&&!Array.isArray(save)
     &&(save.at!==undefined||save.driving)&&Number.isFinite(save.day));
 }catch(e){ return false } };
+G.exportSave = ()=> S?JSON.stringify(S):'';
+/* 가져오기는 현재 세이브를 먼저 보관한 뒤 기존 load/migration 경로로 검증한다.
+   파일이 망가졌거나 다른 데이터라면 진행 중인 여정을 그대로 되돌린다. */
+G.importSave = raw=>{
+  const previous=localStorage.getItem(SAVE_KEY);
+  try{
+    const candidate=JSON.parse(raw);
+    if(!candidate||typeof candidate!=='object'||Array.isArray(candidate)) throw new Error('invalid backup');
+    localStorage.setItem(SAVE_KEY,raw);
+    if(!G.load()) throw new Error('unloadable backup');
+    G.save();
+    return {ok:true};
+  }catch(e){
+    if(previous===null) localStorage.removeItem(SAVE_KEY); else localStorage.setItem(SAVE_KEY,previous);
+    G.load();
+    return {ok:false,why:'이 게임의 유효한 백업 파일이 아니다'};
+  }
+};
 G.wipe = ()=>{ try{ localStorage.removeItem(SAVE_KEY) }catch(e){} };
 
 /* ── helpers ── */
@@ -546,9 +568,11 @@ G.journeyGuide = ()=>{
   if(!S||S.guideDismissed||G.qualityArchive().length||G.qualityPlayMs()>45*60*1000) return null;
   const milestones=G.ensureQualityState().milestones||{};
   if(!milestones.first_departure) return {step:1,total:4,kicker:'FIRST JOURNEY',title:'다음 길 하나를 고른다',
-    body:'서울까지 남은 방향과 연료·시간·위험을 비교한 뒤, 감당할 수 있는 길을 누르면 바로 출발한다.',focus:'route'};
+    body:'모든 길이 정답은 아니다. 지금 가진 보급과 달구지로 감당할 수 있는 한 길을 고르면 바로 출발한다.',
+    points:['준비도: 초록은 안정적, 주황·빨강은 먼저 이유를 확인한다','거리: 가까운 길은 빠르고, 먼 길은 보급과 이야기를 더 만날 수 있다','장비: 길 아래 조언이 지금 달구지에 맞는 이유를 알려 준다'],focus:'route'};
   if(!milestones.first_event) return {step:2,total:4,kicker:'ON THE ROAD',title:S.driving?'주행은 자동으로 이어진다':'다음 길에서 첫 사건을 만난다',
-    body:S.driving?'남은 거리와 자원을 지켜보다 사건이 멈춰 세우면, 예상 결과와 조건을 읽고 선택한다.':'도착까지 사건이 없었다면 다음 길을 고르면 된다. 사건이 열릴 때 선택의 예상 결과와 조건을 확인한다.',focus:'drive'};
+    body:S.driving?'남은 거리와 자원을 지켜보다 사건이 멈춰 세우면, 예상 결과와 조건을 읽고 선택한다.':'도착까지 사건이 없었다면 다음 길을 고르면 된다. 사건이 열릴 때 선택의 예상 결과와 조건을 확인한다.',
+    points:['선택지의 조건은 지금 쓸 자원이나 필요한 능력이다','위험한 수를 피하는 것보다, 왜 감수하는지 아는 것이 중요하다'],focus:'drive'};
   const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;
   if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'FIRST STOP',title:'정착지 안으로 들어간다',
     body:'거래만 하지 않아도 된다. 사람을 만나고 현장 일을 도우면 다음 길과 동료의 이야기가 열린다.',focus:'settlement'};
@@ -855,4 +879,3 @@ G.openRecruitStep = ()=>{
   if(q.stage==='ready'){ G.openEventById(def.join); return true; }
   return false;
 };
-

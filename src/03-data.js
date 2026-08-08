@@ -269,6 +269,20 @@ D.routePlans = {
     promise:'약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다',
     reward:'보급과 증언을 얻는 대신 연료와 하루를 더 쓴다'}
 };
+D.routeCrewMoments = [
+  {id:'ridge_minji_kangwoo',route:'ridge',crew:['minji','kangwoo'],title:'견인줄과 경계선',
+    text:'민지가 차체 진동을 손끝으로 읽는 동안 강우는 다음 굽이의 사각을 짚었다. 둘의 방식은 달랐지만, 위험을 먼저 발견한다는 점에서는 같았다.'},
+  {id:'ridge_jaeyi_leo',route:'ridge',crew:['jaeyi','leo'],title:'절벽에 남긴 표식',
+    text:'재이가 무너진 갓길에 작은 표식을 묶자 레오가 기타 줄 한 가닥을 보탰다. 돌아오는 사람이 길을 알아볼 수 있게 하자는 말에는 설명이 필요 없었다.'},
+  {id:'ridge_parkss_eunsu',route:'ridge',crew:['parkss','eunsu'],title:'고도와 호흡',
+    text:'박 선생이 승객들의 호흡을 살피는 동안 은수는 고도에 따라 끊기는 주파수를 기록했다. 몸과 신호, 서로 다른 이상 징후가 한 장의 기록에 모였다.'},
+  {id:'market_minji_jaeyi',route:'market',crew:['minji','jaeyi'],title:'장터에서 찾은 부품',
+    text:'민지가 고장 난 발전기에서 쓸 나사를 골라내자 재이는 주인이 다시 찾을 몫을 따로 남겼다. 달구지에 필요한 것과 가져가도 되는 것은 같은 말이 아니었다.'},
+  {id:'market_parkss_eunsu',route:'market',crew:['parkss','eunsu'],title:'약 봉투의 주소',
+    text:'박 선생이 약 봉투마다 복용 시간을 적고 은수가 수신 가능한 마을을 표시했다. 짐 한 칸이 물건이 아니라 사람을 잇는 작은 우편함이 되었다.'},
+  {id:'market_kangwoo_leo',route:'market',crew:['kangwoo','leo'],title:'행렬의 박자',
+    text:'강우가 수레 사이 안전거리를 맞추자 레오는 손가락으로 출발 박자를 세었다. 명령보다 짧은 리듬이 긴 행렬을 한 번에 움직였다.'}
+];
 D.roadEchoCopy = (state,phase)=>{
   const echo=state&&state._impactEcho;
   if(!echo) return phase==='title'?'길에 남은 일':'정착지에서 했던 일이 다음 길까지 이어졌다.';
@@ -398,6 +412,27 @@ D.companionVoices = {
     rhythm:'정확한 존댓말, 짧은 머뭇거림 뒤 정정. 확신이 없으면 없다고 말한다.',humor:'기계 용어를 사람 사이 거리로 잘못 옮겼다가 조용히 받아들인다.',
     avoidance:'관제 근무의 책임을 시스템 탓 하나로 지우지 않는다.',silence:'헤드폰을 벗거나 같은 기록을 다시 확인한다.',
     forbidden:['데이터가 증명해요','객관적으로','정답은 하나예요']}
+};
+/* 차 안에 남는 동료별 생활 흔적. 합류 자체가 보상이 되며 별도 수집 작업은 없다. */
+D.companionKeepsakes = {
+  minji:{icon:'🔩',name:'민지의 자석 접시',desc:'크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.'},
+  parkss:{icon:'🩹',name:'박 선생의 진료 깡통',desc:'붕대, 연필, 체온표가 같은 순서로 정리되어 있다.'},
+  kangwoo:{icon:'🧭',name:'강우의 접힌 경계 지도',desc:'안전한 길보다 피해야 할 사각이 더 많이 표시되어 있다.'},
+  leo:{icon:'🎸',name:'레오의 여분 기타 줄',desc:'창가 손잡이에 묶여 있어 바람이 들면 아주 작게 울린다.'},
+  jaeyi:{icon:'🧷',name:'재이의 발견물 상자',desc:'버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.'},
+  eunsu:{icon:'📻',name:'은수의 수신 기록',desc:'날짜와 주파수 옆에 그날 들은 사람의 목소리가 한 줄씩 남는다.'}
+};
+
+/* 시네마틱 인물 연속성의 정본. 동료가 보이는 새 장면은 portraits/{id}.png를
+   반드시 reference image로 넣고 anchor를 모두 유지한다. 장면마다 의상·나이·얼굴을
+   새로 디자인하지 않는다. */
+D.companionVisuals = {
+  minji:{portrait:'assets/portraits/minji.png',anchor:'17세 한국인 소녀 · 헝클어진 검은 머리를 묶음 · 이마의 둥근 정비 고글 · 갈색 작업 재킷과 장갑 · 오른팔의 붉은 패치',avoid:'성인화, 긴 생머리, 깨끗한 새 작업복, 고글 삭제'},
+  parkss:{portrait:'assets/portraits/parkss.png',anchor:'60대 한국인 남성 · 짧은 회색 머리 · 사각 안경 · 차분한 회청색 누빔 진료 재킷 · 왼팔의 낡은 의료 패치',avoid:'젊은 의사, 흰 가운, 안경 삭제, 과장된 군복'},
+  kangwoo:{portrait:'assets/portraits/kangwoo.png',anchor:'30대 한국인 남성 · 짧게 민 검은 머리 · 각진 표정 · 낡은 카키 경비 재킷 · 어깨의 계급 패치',avoid:'긴 머리, 수염 추가, 전술 헬멧, 미래형 갑옷'},
+  leo:{portrait:'assets/portraits/leo.png',anchor:'20대 후반 한국인 남성 · 검은 물방울무늬 두건 · 긴 검은 머리 · 패치와 핀이 달린 남색 데님 재킷 · 기타',avoid:'모자 교체, 짧은 머리, 기타 삭제, 화려한 록스타 의상'},
+  jaeyi:{portrait:'assets/portraits/jaeyi.png',anchor:'20대 초반 한국인 여성 · 짧고 헝클어진 갈색 머리 · 올리브 작업 조끼와 낡은 셔츠 · 작은 수집품 핀',avoid:'긴 머리, 전투복, 과한 화장, 깨끗한 신품 의상'},
+  eunsu:{portrait:'assets/portraits/eunsu.png',anchor:'30대 한국인 여성 · 턱선의 검은 머리 · 한쪽 귀의 통신 장비 · 짙은 회색 관제 재킷 · 둥근 통신 패치',avoid:'긴 머리, 밝은 색 복장, 헤드셋 삭제, 미래형 사이버 장비'}
 };
 D.maxParty = 6;   // 최종 수용 인원. 실제 좌석은 개조에 따라 단계적으로 열린다
 D.baseParty = 2;  // 기본 달구지는 동료 둘까지만 안전하게 태운다

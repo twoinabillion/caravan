@@ -117,6 +117,30 @@ D.scenes = {
   'recruit-eunsu-follow-lights':'__SCENE_RECRUIT_EUNSU_FOLLOW_LIGHTS__'
 };
 
+/* Cinematic asset registry. Every event scene has a production format; companion
+   scenes additionally declare the canonical portrait reference that generation and
+   review must use. Keep this data beside the scene keys, not only in prompt docs. */
+const sceneCompanionId = key => {
+  const match=String(key||'').match(/^recruit-(minji|parkss|kangwoo|leo|jaeyi|eunsu)(?:-|$)/);
+  return match?match[1]:'';
+};
+const sceneFormatFor = key => {
+  if(sceneCompanionId(key)||/^(minji-toolbox|parkss-clinic|leo-rooftop-song|jaeyi-ledger|eunsu-last-shift|library-bus)$/.test(key)) return 'character';
+  if(/^(trace-|frequency-tape|postman-letter|grandfather-envelope|family-verification-key|story-generation-form|story-generation-speech)$/.test(key)) return 'detail';
+  if(/^(combat-|roadcrew-|route-)/.test(key)) return 'action';
+  return 'place';
+};
+D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
+  const companion=sceneCompanionId(key);
+  return [key,{
+    format:sceneFormatFor(key),
+    companions:companion?[companion]:[],
+    reference:companion?`assets/portraits/${companion}.png`:'',
+    size:'768x432',
+    status:'approved'
+  }];
+}));
+
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */
 D.upgradeArt = {
   fuel:'__UPGRADE_FUEL__',

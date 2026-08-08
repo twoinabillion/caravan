@@ -70,6 +70,30 @@ G.fireDriveEvent2 = (pool)=>{ pool=G.directEventPool(pool); if(!pool.length) ret
   const weight=e=>e.w*(G.eventIsContextual(e)?2.1:1)*G.directorWeight(e);
   const total=pool.reduce((s,e)=>s+weight(e),0); let r=rng()*total;
   let evd=pool[0]; for(const e of pool){ r-=weight(e); if(r<=0){evd=e;break} } G.openEvent(evd); };
+/* 야영은 즉시 시간 넘김이 아니라, 차를 "집"처럼 쓰는 짧은 준비 단계도 가진다.
+   _campPlan은 기존 저장 파일에도 자연스럽게 붙고, 다음 취침 후 반드시 비운다. */
+G.prepareCamp = (kind,cid)=>{
+  const plan=S._campPlan||(S._campPlan={});
+  if(kind==='meal'){
+    if(plan.meal) return {ok:false,why:'오늘의 한 끼는 이미 준비했다'};
+    if(S.food<1||S.water<1) return {ok:false,why:'공동 식사에는 식량 1과 물 1이 필요하다'};
+    S.food--; S.water--; plan.meal=true;
+    UI.toast('🍲 공동 식사를 준비했다 — 취침 시 사기 +3');
+  } else if(kind==='repair'){
+    if(plan.repair) return {ok:false,why:'오늘 밤의 간이 정비는 이미 끝냈다'};
+    if((S.items['부품']||0)<1) return {ok:false,why:'간이 정비에는 부품 1이 필요하다'};
+    if(S.van>=S.vanMax) return {ok:false,why:'차체는 지금 더 손볼 곳이 없다'};
+    S.items['부품']--; plan.repair=true;
+    UI.toast('🔧 공구를 꺼내 차체를 살폈다 — 취침 시 내구 +8');
+  } else if(kind==='talk'){
+    if(plan.talk) return {ok:false,why:'오늘 밤엔 이미 한 사람과 오래 이야기했다'};
+    if(!cid||!S.party.includes(cid)) return {ok:false,why:'지금 함께 야영 중인 동료를 골라야 한다'};
+    plan.talk=cid;
+    UI.toast(`🕯 ${D.comps[cid].name}와 불빛 아래 이야기를 나누기로 했다`);
+  } else return {ok:false,why:'알 수 없는 야영 준비다'};
+  G.save();
+  return {ok:true};
+};
 G.camp = (msg)=>{
   if(S.driving||UI.modalOpen()) return;
   const inTown = !!(S.at && D.nodes[S.at] && D.nodes[S.at].stl);
@@ -114,6 +138,9 @@ G.camp = (msg)=>{
   if(S.up&&S.up.solar) vanFix+=3;
   if(S.up&&S.up.awning) mood+=2;
   if(S.up&&S.up.stove) mood+= G.isWet()?3:2;
+  const campPlan=S._campPlan||{};
+  if(campPlan.meal) mood+=3;
+  if(campPlan.repair) vanFix+=8;
   S.fatigue=0;
   G.moodAll(mood); S.van = clamp(S.van+vanFix,0,S.vanMax);
   if(G.hasPerk('jy_break')){ S.scrap+=2; }
@@ -123,6 +150,8 @@ G.camp = (msg)=>{
   /* 모닥불 대화는 전원의 시간이다 — 한 명만 깊어지면 4인 Lv3(관계 기둥)가
      산술적으로 시한 안에 안 들어간다(2026-08-07 완주봇 실측: 관계가 최장 병목). */
   for(const cid of S.party) G.bond(cid,1);
+  if(campPlan.talk&&S.party.includes(campPlan.talk)) G.bond(campPlan.talk,2);
+  S._campPlan={};
   if(townStingy) G.moodAll(-2);
   const nightsHere=inTown?((S._stlNights&&S._stlNights[S.at])||1):0;
   UI.toast(msg|| (townShunned?'🚫 마을 밖 갓길에서 밤을 났다 — 관측된 차량은 받아 주지 않는다'
@@ -414,6 +443,25 @@ G.talkTo = (id)=>{
   S._talked[id]=S.day;
   G.openEvent(pick(pool));
   G.save(); return true;
+};
+/* 장거리에는 사건만큼 평범한 말도 남는다. 한 구간에 한 번만 허용해
+   반복 클릭 보상 대신 "이번 길에서 누구와 시간을 보낼지"를 고르게 한다. */
+G.roadCheckIn = (id)=>{
+  if(!S.driving||!id||!S.party.includes(id)) return {ok:false,why:'지금 함께 달리는 동료를 골라야 한다'};
+  if(S.driving.checkIn) return {ok:false,why:'이 구간에서는 이미 누군가와 이야기를 나눴다'};
+  S.driving.checkIn=id;
+  G.bond(id,1);
+  if(S.comps[id]) S.comps[id].mood=clamp((S.comps[id].mood||0)+3,0,100);
+  const routeId=S.routePlan&&S.routePlan.id;
+  const moment=(D.routeCrewMoments||[]).find(row=>row.route===routeId&&row.crew.includes(id)&&row.crew.every(cid=>S.party.includes(cid)));
+  if(moment){
+    const other=moment.crew.find(cid=>cid!==id);
+    S.driving.checkInMoment={id:moment.id,title:moment.title,text:moment.text,crew:moment.crew.slice()};
+    if(other&&S.comps[other]) S.comps[other].mood=clamp((S.comps[other].mood||0)+2,0,100);
+    UI.toast(`💬 ${moment.title} — ${D.comps[id].name}와 ${D.comps[other].name}`);
+  }else UI.toast(`💬 ${D.comps[id].name}와 짧게 이야기를 나눴다 — 유대 +1 · 기분 +3`);
+  G.save();
+  return {ok:true,moment:moment||null};
 };
 
 /* ── 저항 연대망 ── */

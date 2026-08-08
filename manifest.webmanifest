@@ -1,0 +1,14 @@
+{
+  "name": "서울까지 400km",
+  "short_name": "서울까지 400km",
+  "description": "무너진 한반도를 북상하는 서사형 생존 로드 게임",
+  "lang": "ko",
+  "start_url": "./서울까지400km.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070910",
+  "theme_color": "#0b0e1a",
+  "icons": [
+    {"src": "assets/app-icon.png", "sizes": "600x600", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

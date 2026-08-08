@@ -8,17 +8,25 @@
   <div class="scr on" id="scr-title">
     <canvas id="titlecv"></canvas>
     <div id="title-ui">
-      <div class="kicker">POST-APOCALYPTIC ROAD TRIP</div>
-      <h1>서울까지<br><span class="km" id="title-km">400km</span></h1>
-      <div class="tag">낡은 봉고차 한 대. 멸망한 한반도. 그리고 북쪽 끝의 그것.</div>
-      <div class="acts">
-        <button class="act primary" id="bt-new"><span class="ic">▶</span><span><b>새 여행</b><small>부산에서 시동을 건다</small></span></button>
-        <button class="act" id="bt-continue" style="display:none"><span class="ic">↻</span><span><b>이어서 가기</b><small id="cont-info"></small></span></button>
-        <button class="act" id="bt-preview"><span class="ic">▧</span><span><b>여정 미리보기</b><small>동료 · 탐사 · 전투 · 달구지 생활</small></span></button>
+      <div class="title-heading">
+        <div class="kicker">멸망 이후, 부산에서 서울까지</div>
+        <div class="title-departure"><span>출발 기록 01</span><b>부산 감천 부두</b></div>
+        <h1>서울까지<br><span class="km" id="title-km">400km</span></h1>
+        <div class="tag">낡은 달구지 한 대와 아직 끝나지 않은 사람들의 길.</div>
       </div>
-      <div id="last-journey" hidden></div>
-      <div class="ver">v1.8 · 온로드/오프로드 · 자동 저장 · 에피소드 1 — 서울 해방</div>
-      <button id="bt-song" type="button" title="부서진 고속도로 재생" aria-pressed="false">♪ 부서진 고속도로</button>
+      <div class="title-console" aria-label="여정 출발 메뉴">
+        <div class="title-console-head"><span>출발 준비</span><em>기록은 자동으로 저장됩니다</em></div>
+        <div class="acts">
+          <button class="act primary" id="bt-new"><span class="ic">▶</span><span><b>새 여정 시작</b><small>부산에서 시동을 걸고 북쪽으로</small></span><strong>출발</strong></button>
+          <button class="act" id="bt-continue" style="display:none"><span class="ic">↻</span><span><b>이어서 달리기</b><small id="cont-info"></small></span><strong>계속</strong></button>
+          <button class="act title-preview" id="bt-preview"><span class="ic">▧</span><span><b>여정 미리보기</b><small>동료 · 탐사 · 전투 · 달구지 생활</small></span><strong>보기</strong></button>
+        </div>
+        <div id="last-journey" hidden></div>
+        <div class="title-console-foot">
+          <div class="ver"><span>v1.8</span><span>오프라인 플레이</span><span>에피소드 1 · 서울 해방</span></div>
+          <button id="bt-song" type="button" title="부서진 고속도로 재생" aria-pressed="false"><small>배경음</small><b>부서진 고속도로</b></button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -203,6 +211,12 @@
       <button data-st="crew" role="tab" aria-controls="st-body" aria-selected="false">동료</button>
     </div>
     <div id="st-body"></div>
+  </div>
+
+  <!-- ══ CAMP / VAN HOME ══ -->
+  <div class="ovl" id="ovl-camp" role="dialog" aria-modal="true" aria-labelledby="camp-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="camp-title">오늘 밤의 달구지</h2><span class="mini" id="camp-mini"></span><button class="x" id="camp-x" aria-label="야영 준비 닫기">✕</button></div>
+    <div id="camp-body"></div>
   </div>
 
   <!-- ══ SEOUL (내부 오르막) ══ -->

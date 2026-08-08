@@ -147,12 +147,12 @@ const MAPR = (()=>{
       const routeEdge=activeRouteEdges.has(edgeKey(e[0],e[1]));
       ctx.beginPath(); ctx.moveTo(px(a.x),py(a.y)); ctx.lineTo(px(b.x),py(b.y));
       ctx.setLineDash(cur||selected||routeEdge?[]:e[3]==='rough'?[4,5]:e[3]==='normal'?[8,4]:[]);
-      ctx.strokeStyle= cur? 'rgba(255,180,84,0.9)':
+      ctx.strokeStyle= cur? 'rgba(255,180,84,0.96)':
         selected? 'rgba(85,224,200,0.88)':
-        next? 'rgba(255,180,84,0.82)':
-        routeEdge? 'rgba(255,180,84,0.52)':
-        traveled? 'rgba(180,190,220,0.38)':'rgba(130,151,196,0.16)';
-      ctx.lineWidth=cur?3:selected?3:next?2.8:routeEdge?2.2:traveled?1.7:1.05;
+        next? 'rgba(255,190,105,0.94)':
+        routeEdge? 'rgba(255,180,84,0.7)':
+        traveled? 'rgba(190,202,232,0.5)':'rgba(145,168,215,0.25)';
+      ctx.lineWidth=cur?3.5:selected?3.4:next?3.2:routeEdge?2.7:traveled?2:1.25;
       ctx.stroke(); ctx.setLineDash([]);
     }
 
@@ -174,12 +174,12 @@ const MAPR = (()=>{
       } else if(n.stl||n.type==='settlement'){
         ctx.fillStyle= visited? '#ffb454':'#c98d47';
         ctx.save(); ctx.translate(x,y); ctx.rotate(Math.PI/4);
-        ctx.fillRect(-4.4,-4.4,8.8,8.8); ctx.restore();
+        ctx.fillRect(-5,-5,10,10); ctx.restore();
       } else if(city){
         ctx.fillStyle=visited?'#c8d0e6':'#7d89aa';
-        ctx.beginPath(); ctx.arc(x,y,3.8,0,7); ctx.fill();
-        ctx.strokeStyle='rgba(206,217,241,.45)'; ctx.lineWidth=1;
-        ctx.beginPath(); ctx.arc(x,y,6.2,0,7); ctx.stroke();
+        ctx.beginPath(); ctx.arc(x,y,4.5,0,7); ctx.fill();
+        ctx.strokeStyle='rgba(216,225,244,.6)'; ctx.lineWidth=1.2;
+        ctx.beginPath(); ctx.arc(x,y,7.2,0,7); ctx.stroke();
       } else if(n.type==='hidden'){
         ctx.strokeStyle='#c9b8ff'; ctx.setLineDash([2.5,2.5]); ctx.lineWidth=1.4;
         ctx.beginPath(); ctx.arc(x,y,5.6,0,7); ctx.stroke(); ctx.setLineDash([]);
@@ -188,12 +188,12 @@ const MAPR = (()=>{
         else { ctx.fillStyle='#c9b8ff'; ctx.beginPath(); ctx.arc(x,y,2.6,0,7); ctx.fill(); }
       } else {
         ctx.fillStyle= visited? '#9aa5c4':'#5a6484';
-        ctx.beginPath(); ctx.arc(x,y,3.6,0,7); ctx.fill();
+        ctx.beginPath(); ctx.arc(x,y,4.1,0,7); ctx.fill();
       }
       /* 인접(이동 가능) 링 */
       if(nbrs.has(id)){
-        ctx.strokeStyle=`rgba(255,180,84,${0.35+0.25*Math.sin(t*2.6)})`; ctx.lineWidth=1.3;
-        ctx.beginPath(); ctx.arc(x,y,7.5,0,7); ctx.stroke();
+        ctx.strokeStyle=`rgba(255,180,84,${0.52+0.28*Math.sin(t*2.6)})`; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(x,y,9,0,7); ctx.stroke();
       }
       if(here){ ctx.strokeStyle='rgba(255,180,84,0.8)'; ctx.lineWidth=1.6;
         ctx.beginPath(); ctx.arc(x,y,9+Math.sin(t*3)*1.6,0,7); ctx.stroke(); }
@@ -236,8 +236,8 @@ const MAPR = (()=>{
         const fill= n.type==='goal'? 'rgba(85,224,200,0.95)':
           S.at===id? 'rgba(255,200,120,0.98)':
           n.stl? 'rgba(240,225,195,0.95)':
-          nbrs.has(id)? 'rgba(255,190,110,0.9)':
-          n.type==='hidden'? 'rgba(201,184,255,0.8)': 'rgba(160,170,200,0.7)';
+          nbrs.has(id)? 'rgba(255,205,135,0.98)':
+          n.type==='hidden'? 'rgba(211,196,255,0.88)': 'rgba(181,192,220,0.84)';
         putLabel(x,y,n.name.split(/[ —]/)[0],font,fill);
       }
     }

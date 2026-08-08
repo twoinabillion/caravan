@@ -634,10 +634,17 @@ G.makeJourneyRecap = (drive,routeCompleted=false)=>{
     remainingSegments:Math.max(0,route.total-route.done),
     complete:routeCompleted
   }:null;
+  const checkIn=drive.checkIn&&D.comps[drive.checkIn]?{
+    id:drive.checkIn,name:D.comps[drive.checkIn].name,
+    moment:drive.checkInMoment||null
+  }:null;
   return {from:drive.from,to:drive.to,km:Math.round(drive.dist),minutes:elapsed,road:drive.road,
     events:drive.eventCount||0,build:start.build||'기본 생존형',changes,routeCompleted,
     routeContract,routeName:route&&route.def&&route.def.name||'',routeProgress:routeContract?`${routeContract.done}/${routeContract.total}`:'',
-    day:S.day};
+    checkIn,chapter:routeCompleted&&routeContract?{
+      title:`${routeContract.name} 완주`,
+      text:`${routeContract.done}개 구간을 지나 길의 약속을 마쳤다. ${routeContract.reward}`
+    }:null,day:S.day};
 };
 G.arrive = ()=>{
   const completedDrive=S.driving;
@@ -668,6 +675,11 @@ G.arrive = ()=>{
   }
   const routeCompleted=G.updateRouteOnArrival(to);
   S.lastJourneyRecap=G.makeJourneyRecap(completedDrive,routeCompleted);
+  if(S.lastJourneyRecap){
+    if(!Array.isArray(S.journeyRecaps)) S.journeyRecaps=[];
+    S.journeyRecaps.push(S.lastJourneyRecap);
+    if(S.journeyRecaps.length>12) S.journeyRecaps=S.journeyRecaps.slice(-12);
+  }
   G.qualityMeaningfulChange('arrival',to);
   G.scheduleJourneyBeat();
   if(to==='seoul'){
@@ -713,4 +725,3 @@ G.arrive = ()=>{
   }
   G.save();
 };
-

@@ -77,13 +77,13 @@ const UI = (()=>{
     if(restore&&back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
   }
   function activeModal(){
-    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status']
+    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-camp']
       .map($).find(node=>node&&node.classList.contains('on'))||null;
   }
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
     || $('#ovl-stl').classList.contains('on') || $('#ovl-map').classList.contains('on')
     || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on')
-    || $('#ovl-seoul').classList.contains('on');
+    || $('#ovl-seoul').classList.contains('on') || $('#ovl-camp').classList.contains('on');
 
   /* ── screens ── */
   function show(id){
@@ -98,6 +98,11 @@ const UI = (()=>{
 
   /* ── boot ── */
   function boot(){
+    /* 설치형 웹앱에서도 첫 화면과 저장된 여정을 끊김 없이 연다. file:// 미리보기는
+       서비스 워커를 지원하지 않으므로 등록을 건너뛴다. */
+    if('serviceWorker' in navigator && location.protocol!=='file:'){
+      window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}),{once:true});
+    }
     applyUiPrefs();
     SCENE.init($('#cv'));
     SCENE.initTitle($('#titlecv'));
@@ -135,12 +140,14 @@ const UI = (()=>{
     const routeState=route?`${routeResult} · 선택 ${routeRow.chosen||0}회`:'';
     const lastChoices=Array.isArray(last.choices)?last.choices:[];
     const choiceCount=lastChoices.length;
+    const remainingCompanions=Math.max(0,Object.keys(D.comps||{}).length-party.length);
     if(compact) return `<span>PREVIOUS JOURNEY</span><b>${route?esc(route.name):'지난 길'} · ${esc(build)}</b><small>DAY ${last.day||'?'} · ${last.km||0}km · ${party.length?party.map(esc).join(' · '):'혼자 달린 기록'} · ${routeState||'노선 미기록'}</small>`;
     return `<div class="previous-journey-head"><span>YOUR LAST ROAD</span><b>${route?esc(route.name):'지난 여정의 길'} · ${esc(build)}</b></div>
       <div class="previous-journey-facts"><span>DAY ${last.day||'?'}</span><span>${last.km||0}km</span><span>동료 ${party.length}명</span><span>기억된 선택 ${choiceCount}개</span></div>
       <p>${party.length?`${party.map(esc).join(' · ')}와 함께 달렸다.`:'혼자 시작한 달구지의 기록이 남아 있다.'}</p>
       <div class="next-road-rumor"><small>노선 기록</small><b>${route?esc(route.name):'기록된 노선 없음'}</b><span>${routeState||'방향/결과 기록 없음'}</span></div>
       ${choiceCount>3?`<div class="next-road-rumor"><small>회상 포인트</small><b>최근 선택</b><span>${esc(lastChoices[0]?.summary||'기억에서 사라졌습니다.')}</span><span>${esc(lastChoices[1]?.summary||'추가 기록이 적습니다.')}</span></div>`:''}
+      ${remainingCompanions?`<div class="next-road-rumor"><small>다음 여정의 빈자리</small><b>아직 만나지 못한 사람들</b><span>지난 길에서 스치지 못한 ${remainingCompanions}개의 동료 이야기가 다른 부탁과 갈림길에서 기다린다.</span></div>`:''}
       ${other?`<div class="next-road-rumor"><small>이번에는 다른 소문</small><b>${esc(other.name)}</b><span>${esc(other.promise)}</span></div>`:''}`;
   }
 
@@ -177,6 +184,9 @@ const UI = (()=>{
 
   /* ── wiring ── */
   function wire(){
+    const saveForLifecycle=()=>{ if(S) G.save(); };
+    document.addEventListener('visibilitychange',()=>{ if(document.hidden) saveForLifecycle(); });
+    window.addEventListener('pagehide',saveForLifecycle);
     /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
     document.addEventListener('keydown',e=>{
       const modal=activeModal();
@@ -308,7 +318,7 @@ const UI = (()=>{
     $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>{
       if(S&&!S.driving&&!UI.modalOpen()) AMBI.play('sfx_camp_loop',.32);
-      G.camp();
+      showCampHub();
     };
     $('#dk-sound').onclick=()=>SND.toggle();
     $('#early-sound').onclick=()=>SND.toggle();
@@ -1085,7 +1095,7 @@ const UI = (()=>{
     return `<section class="journey-guide guide-${guide.focus}" role="status" aria-label="첫 여정 안내 ${guide.step}/${guide.total}">
       <div class="journey-guide-head"><span>${esc(guide.kicker)} · ${guide.step}/${guide.total}</span>
         <button type="button" data-guide-dismiss aria-label="첫 여정 안내 숨기기">숨기기</button></div>
-      <b>${esc(guide.title)}</b><p>${esc(guide.body)}</p>
+      <b>${esc(guide.title)}</b><p>${esc(guide.body)}</p>${guide.points&&guide.points.length?`<ul class="journey-guide-list">${guide.points.map(point=>`<li>${esc(point)}</li>`).join('')}</ul>`:''}
       <div class="journey-guide-track" aria-hidden="true"><i style="width:${guide.step/guide.total*100}%"></i></div>
     </section>`;
   }
@@ -1145,6 +1155,11 @@ const UI = (()=>{
         <div class="road-guest-help">${esc(choiceMemory.summary)}</div>
         <div class="road-guest-memory">조금 더 달리면 이 선택이 사람들의 말과 풍경으로 돌아온다.</div>
       </section>`:'<div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>';
+      const checkMoment=S.driving.checkInMoment;
+      const roadCheckIn=S.party.length?`<section class="road-checkin ${checkMoment?'has-moment':''}" aria-label="주행 중 동료와 이야기">
+        <div><small>ROAD MOMENT · 이 구간 한 번</small><b>${checkMoment?esc(checkMoment.title):S.driving.checkIn?`${esc(D.comps[S.driving.checkIn].name)}와 나눈 짧은 이야기`:'누구와 이 길을 보낼까?'}</b>${checkMoment?`<p>${esc(checkMoment.text)}</p>`:''}</div>
+        <div class="road-checkin-list">${S.party.map(id=>`<button data-road-checkin="${id}" ${S.driving.checkIn?'disabled':''}>${faceOf(id,D.comps[id].face)} <span>${esc(D.comps[id].name)}</span></button>`).join('')}</div>
+      </section>`:'';
       p.innerHTML = `
         ${contextRail(to,true)}
         ${journeyGuideHtml()}
@@ -1153,9 +1168,13 @@ const UI = (()=>{
           <div id="travelbar"></div>
         </section>
         ${routeCard}
-        ${guest}`;
+        ${guest}
+        ${roadCheckIn}`;
       renderTravelbar();
       wireContext(p);
+      p.querySelectorAll('[data-road-checkin]').forEach(b=>b.onclick=()=>{
+        const r=G.roadCheckIn(b.dataset.roadCheckin); if(!r.ok) UI.toast(r.why); renderPanel(); renderHud();
+      });
       wireJourneyGuide(p);
       return;
     }
@@ -1296,11 +1315,15 @@ const UI = (()=>{
       <strong>계약: ${esc(recap.routeContract.promise)}</strong>
       <span>예상 반영: ${recap.routeContract.complete?'청주 합류 보상: ':'계속 진행 보상: '}${esc(recap.routeContract.reward||'다음 정착지와 정착 보급으로 반영')}</span>
     </div>`:'';
+    const people=recap&&recap.checkIn?`<div class="arrival-people"><small>이 길에서 함께한 시간</small><strong>${esc(recap.checkIn.moment&&recap.checkIn.moment.title||`${recap.checkIn.name}와 나눈 짧은 이야기`)}</strong>${recap.checkIn.moment?`<span>${esc(recap.checkIn.moment.text)}</span>`:''}</div>`:'';
+    const chapter=recap&&recap.chapter?`<div class="arrival-chapter"><small>CHAPTER COMPLETE</small><strong>${esc(recap.chapter.title)}</strong><span>${esc(recap.chapter.text)}</span></div>`:'';
     a.innerHTML=`${src?`<img src="${src}" alt="">`:'<div class="arrival-fallback" aria-hidden="true"></div>'}<div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span>
       ${recap?`<div class="arrival-ledger" aria-label="방금 주행 정산">
         <div><strong>${esc(D.nodes[recap.from].name)} → ${esc(n.name)}</strong><em>${recap.km}km · ${G.durationLabel(recap.minutes)} · 사건 ${recap.events}건</em></div>
         <div class="arrival-deltas">${recapChanges}</div>
         ${contract}
+        ${people}
+        ${chapter}
         <p>${esc(recap.build)}으로 달렸다${recap.routeCompleted&&recap.routeName?` · ${esc(recap.routeName)} 완주`:''}</p>
       </div>`:''}</div>`;
     clearTimeout(arrivalTimer);
@@ -1640,7 +1663,7 @@ const UI = (()=>{
          정확한 수치 분해는 결과 뒤 리포트(combatMeta)가 담당한다. */
       const failCost = profile ? G.combatFailurePreview(c) : '';
       const failNote = failCost ? `실패하면 ${failCost}` : '';
-      const compactOddsNote=[readNote,G.combatContextNote(c),failNote].filter(Boolean).join(' · ');
+      const compactOddsNote=[readNote,G.combatContextNote(c)].filter(Boolean).join(' · ');
       const oddsLabel = profile
         ? combatShowDetail
           ? `판정 전망 · ${G.combatGrade(c,evd)} · ${oddsMeta.label} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}${vehicleText}${failNote?` · ${failNote}`:''}`
@@ -1661,6 +1684,7 @@ const UI = (()=>{
         rq.ok ? '요구사항 충족' : `요구 조건: ${rq.t}`,
         intentNote || '',
         G.combatContextNote(c) || '',
+        failNote,
         vehicleText ? vehicleText.replace(/^ · /,'') : ''
       ].filter(Boolean);
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'} aria-label="${esc(liveBits.join(' · '))}">
@@ -1668,7 +1692,8 @@ const UI = (()=>{
           ${intentNote?`<span class="combat-response">↳ ${esc(intentNote)}</span>`:''}
           ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
           ${riskChip}
-          ${profile?`<span class="combat-odds"><span class="combat-tier ${oddsMeta.className}">${esc(G.combatGrade(c,evd))}</span>${oddsLabel?` · ${esc(oddsLabel)}`:''}</span>`:''}
+          ${profile?`<span class="combat-odds"><span class="combat-tier ${oddsMeta.className}">${esc(G.combatGrade(c,evd))}</span>${oddsLabel?` · ${esc(oddsLabel)}`:''}${failNote?` · 실패하면 ${esc(failNote)}`:''}</span>`:''}
+          ${!profile&&failNote?`<span class="combat-failure">⚠ 실패하면 ${esc(failNote)}</span>`:''}
           ${route?`<span class="route-forecast"><b>${route.km}km · 순수 주행 ${G.durationLabel(route.minutes)} · 연료 약 ${route.fuel}L</b><small>${route.rough?`험로 ${route.rough}구간 · `:''}보급 거점 ${route.stops}곳 · ${esc(route.readiness)}</small></span>`:''}
           ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
         </button>`;
@@ -1715,17 +1740,25 @@ const UI = (()=>{
     add('generic-story');
     return keys;
   }
+  function sceneFormat(key){
+    const declared=D.sceneAssetMeta&&D.sceneAssetMeta[key]&&D.sceneAssetMeta[key].format;
+    if(declared) return declared;
+    if(/^(recruit-|minji-toolbox|parkss-clinic|leo-rooftop-song|jaeyi-ledger|eunsu-last-shift|library-bus)$/.test(key||'')) return 'character';
+    if(/^(trace-|frequency-tape|postman-letter|grandfather-envelope|family-verification-key|story-generation-form|story-generation-speech)$/.test(key||'')) return 'detail';
+    if(/^(combat-|roadcrew-|route-)/.test(key||'')) return 'action';
+    return 'place';
+  }
   function sceneFrameHtml(sceneKeys, sceneAlt){
     const key=sceneKeys&&sceneKeys[0], src=key&&D.scenes&&D.scenes[key];
     if(!src) return '';
     return `<div class="event-scene-frame" role="button" tabindex="0"
-      data-scene-key="${esc(key)}" data-cut-token="initial"
+      data-scene-key="${esc(key)}" data-scene-format="${sceneFormat(key)}" data-cut-token="initial"
       aria-label="${esc(sceneAlt)} 장면 크게 보기">
       <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면" decoding="async" loading="eager" fetchpriority="high">
       <span class="scene-cut-mark" aria-hidden="true">컷 1 / 1</span>
       <span class="scene-zoom" aria-hidden="true">↗</span></div>`;
   }
-  function storySceneShot(state,turn,index){
+  function storySceneShot(state,turn,index,format='place'){
     const lanes=dialogueLaneMap(state.turns);
     const side=turn&&turn.kind==='dialogue'?dialogueSide(turn,lanes):'center';
     const cadence=Math.floor(index/2);
@@ -1745,6 +1778,11 @@ const UI = (()=>{
     }else if(turn&&['ai','radio'].includes(turn.kind)){
       shot={x:50+(cadence%2?8:-8),y:45,scale:1.14+(cadence%3)*.02};
       tone='ai';
+    }
+    if(!turn||turn.kind==='narration'){
+      if(format==='character') shot={x:50,y:46,scale:1.1};
+      else if(format==='detail') shot={x:50,y:52,scale:1.04};
+      else if(format==='action') shot={x:50,y:48,scale:1.07};
     }
     return {side,tone,...shot};
   }
@@ -1770,6 +1808,7 @@ const UI = (()=>{
     const changed=priorKey!==key;
     const refreshShot=turn&&turn.kind==='dialogue' && !changed && index%2===0;
     frame.dataset.sceneKey=key;
+    frame.dataset.sceneFormat=sceneFormat(key);
     frame.dataset.speaker=turn&&turn.kind==='dialogue'
       ? speakerInfo(turn.who,turn.name).id||'unknown'
       : turn&&turn.kind||'narration';
@@ -1790,7 +1829,7 @@ const UI = (()=>{
       if(priorKey!==key) img.src=src;
       state.sceneCarry=null;
     }else if(firstRender||changed||refreshShot){
-      const shot=storySceneShot(state,turn,index);
+      const shot=storySceneShot(state,turn,index,sceneFormat(key));
       frame.dataset.cutToken=`${state.phase}-${index}-${key}`;
       frame.dataset.tone=shot.tone;
       frame.style.setProperty('--scene-x',`${shot.x}%`);
@@ -2253,12 +2292,24 @@ const UI = (()=>{
     const stops=D.seoulMap.stops, stage=G.seoulStage();
     const transfer=G.transferStatus();
     const done=stage>=stops.length;
+    const route=S.routePlan&&D.routePlans&&D.routePlans[S.routePlan.id];
+    const build=G.vanBuildProfile();
+    const companionStories=(S.party||[]).filter(id=>D.comps[id]&&(S.comps[id]||{}).lvl>=3).length;
+    const settlementChanges=Object.keys(D.stls||{}).reduce((count,id)=>count+(G.stlImpact(id).count||0),0);
+    const rememberedChoices=(S.memories&&S.memories.history||[]).length;
+    const journeyLoad=stage===0?`<section class="seoul-journey-load" aria-label="서울에 가져온 여정">
+      <small>WHAT YOU BROUGHT</small><b>서울에 가져온 것</b>
+      <div><span>길</span><strong>${esc(route?route.name:'스스로 고른 길')}</strong></div>
+      <div><span>달구지</span><strong>${esc(build.name)} · 개조 ${build.installed}개</strong></div>
+      <div><span>사람</span><strong>동료 서사 ${companionStories}개 · 현장 변화 ${settlementChanges}곳</strong></div>
+      <div><span>기억</span><strong>되돌아올 선택 ${rememberedChoices}개</strong></div>
+    </section>`:'';
     let h='<div id="seoul-tower">▲ 남산 코어</div><div class="seoul-asc"><div class="seoul-road"></div>';
     stops.forEach((st,i)=>{
       const cls = G.seoulStopDone(i)?'done' : i===stage?'here' : i>stage?'locked':'';
       h+=`<div class="seoul-stop ${cls}"><div class="dot"></div><div class="txt"><b>${st.name}${G.seoulStopDone(i)?' ✓':''}</b><small>${i<=stage||G.seoulStopDone(i)?st.desc:'???'}</small></div></div>`;
     });
-    h+=`</div><div class="sub" style="text-align:center;margin:8px 0;color:${transfer.onTime?'var(--amber)':'var(--danger)'}"><b>${esc(transfer.mission)}</b><br><small>서울 도착이 아니라 남산의 이송 중단까지가 1화의 시한</small></div><div class="seoul-cta">`;
+    h+=`</div><div class="sub" style="text-align:center;margin:8px 0;color:${transfer.onTime?'var(--amber)':'var(--danger)'}"><b>${esc(transfer.mission)}</b><br><small>서울 도착이 아니라 남산의 이송 중단까지가 1화의 시한</small></div>${journeyLoad}<div class="seoul-cta">`;
     if(!done){
       h+=`<button class="act primary" id="seoul-go"><span class="ic">▲</span><span><b>${stops[stage].name}(으)로 오른다</b><small>${stage===0?'서울 안으로':'다음 정거장'}</small></span></button>`;
     } else {
@@ -2411,6 +2462,15 @@ const UI = (()=>{
     const back=$('#stl-back');
     if(back) back.onclick=()=>showStl(curStl,'hub');
   }
+  function settlementIntent(spotId,night){
+    if(night) return {label:'오늘의 선택',text:'사람들과 쉬며 내일의 길을 준비한다. 장터와 작업장은 아침에 다시 연다.'};
+    if(spotId==='market') return S.quest
+      ? {label:'의뢰와 보급',text:'진행 중인 의뢰를 먼저 확인한 뒤, 다음 길에 필요한 물자만 챙긴다.'}
+      : {label:'보급과 의뢰',text:'물자만 채울지, 다음 정착지로 이어지는 의뢰 하나를 맡을지 고른다.'};
+    if(spotId==='garage') return {label:'달구지 준비',text:'다음 길의 위험을 보고 수리와 개조 중 지금 필요한 작업을 고른다.'};
+    if(spotId==='people') return {label:'사람과 정보',text:'소문, 부탁, 동료의 다음 일을 찾아 여정에 남을 관계를 만든다.'};
+    return {label:'현장에 손 보태기',text:'시간과 자원을 써서 이곳의 일을 돕는다. 변화는 다음 길에서도 돌아온다.'};
+  }
   function renderSettlementHub(){
     const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl,'hub');
     const spots=settlementSpots(curStl), night=G.isNight(), comp=settlementCompanion();
@@ -2420,6 +2480,7 @@ const UI = (()=>{
     if(night&&stlFocus!=='people') stlFocus='people';
     const focus=spots[stlFocus]||spots.market;
     const walkCopy=settlementWalkCopy(stlFocus);
+    const intent=settlementIntent(stlFocus,night);
     settlementHeader('');
     $('#ovl-stl').classList.add('hub-mode');
     body.innerHTML=`<div class="stl-hub stl-hub-${curStl}" data-focus="${stlFocus}" data-impact-stage="${impact.stage}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
@@ -2453,6 +2514,7 @@ const UI = (()=>{
           ${settlementPortrait(comp?comp.id:'me','stl-focus-face',`${comp?comp.name:G.myName()} 초상`)}
           <span><b data-stl-walk-title>${esc(walkCopy.title)}</b><small data-stl-walk-line>${esc(night?'오늘은 쉬고 아침에 움직이자.':walkCopy.line)}</small></span>
         </div>
+        <div class="stl-intent"><small>${esc(intent.label)}</small><span>${esc(intent.text)}</span></div>
         <button class="stl-enter" id="stl-enter">${ICO(focus.icon)}<span>${focus.label}${focus.label==='사람들'?'을':'로'} 들어간다</span></button>
         <button class="stl-return" id="stl-out">${ICO('van')} 달구지로 돌아간다</button>
       </div>
@@ -2842,6 +2904,44 @@ const UI = (()=>{
       if(back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
     };
   }
+  function showCampHub(){
+    if(!S||S.driving||(UI.modalOpen()&&!$('#ovl-camp').classList.contains('on'))) return;
+    const plan=S._campPlan||{};
+    const body=$('#camp-body'), ovl=$('#ovl-camp');
+    const party=S.party||[];
+    const resource=`식량 ${S.food} · 물 ${S.water} · 부품 ${S.items['부품']||0} · 고철 ${S.scrap}`;
+    const planned=plan.meal||plan.repair||plan.talk;
+    const keepsakes=party.map(id=>({id,...(D.companionKeepsakes&&D.companionKeepsakes[id])})).filter(row=>row.name);
+    const interior=(D.upgrades||[]).filter(up=>S.up&&S.up[up.id]);
+    const recent=(S.journeyRecaps||[]).slice(-3).reverse();
+    body.innerHTML=`<section class="camp-home">
+      <div class="camp-home-hero"><small>VAN HOME · ${G.isNight()?'밤':'해 지기 전'}</small><h3>${esc(G.vanName())} · ${S.at&&D.nodes[S.at]?D.nodes[S.at].name:'길가'}</h3><p>문을 닫고, 물건을 정리하고, 오늘을 끝낼 준비를 한다. 준비한 것은 이번 취침에만 반영된다.</p>
+        <div class="camp-storage">${resource}</div></div>
+      ${keepsakes.length||interior.length?`<div class="camp-home-section camp-lived-in"><b>살아온 차 안</b><small>합류한 사람과 장착한 부품이 공간에 흔적을 남긴다.</small>
+        <div class="camp-keepsakes">${keepsakes.map(row=>`<article><span>${row.icon}</span><div><strong>${esc(row.name)}</strong><small>${esc(row.desc)}</small></div></article>`).join('')}</div>
+        <div class="camp-interior"><span>장착된 생활 흔적</span>${interior.length?interior.map(up=>`<i>${up.ic} ${esc(up.nm)}</i>`).join(''):'<i class="empty">아직 장착한 생활 부품 없음</i>'}</div>
+      </div>`:`<div class="camp-home-section camp-home-teaser"><b>아직 작은 집</b><small>첫 동료가 타거나 생활 부품을 장착하면 이곳에 그 흔적이 남는다.</small><span>빈 선반과 고정 볼트가 다음 자리를 기다린다.</span></div>`}
+      ${recent.length?`<div class="camp-home-section camp-roadbook"><b>최근 주행 기록</b><small>차가 기억하는 마지막 세 구간.</small>${recent.map(row=>`<article><strong>${esc(D.nodes[row.from].name)} → ${esc(D.nodes[row.to].name)}</strong><span>DAY ${row.day} · ${row.km}km · 사건 ${row.events}건${row.checkIn?` · ${esc(row.checkIn.name)}`:''}</span></article>`).join('')}</div>`:''}
+      <div class="camp-home-section"><b>오늘 밤 준비</b><small>각 준비는 밤에 한 번만 할 수 있다.</small>
+        <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${plan.meal?'disabled':''}><span>🍲 <strong>공동 식사</strong><small>식량 1 · 물 1 소비 · 취침 사기 +3</small></span><em>${plan.meal?'준비됨':'준비'}</em></button>
+        <button class="camp-prep ${plan.repair?'done':''}" data-camp-prep="repair" ${plan.repair?'disabled':''}><span>🔧 <strong>간이 정비</strong><small>부품 1 소비 · 취침 내구 +8</small></span><em>${plan.repair?'준비됨':'준비'}</em></button>
+      </div>
+      <div class="camp-home-section"><b>불빛 아래 한 사람</b><small>선택한 동료는 취침 후 유대 +2를 더 얻는다.</small>
+        <div class="camp-talk-list">${party.length?party.map(id=>`<button class="camp-talk ${plan.talk===id?'done':''}" data-camp-talk="${id}" ${plan.talk?'disabled':''}><span>${D.comps[id].face} <strong>${esc(D.comps[id].name)}</strong></span><em>${plan.talk===id?'약속됨':'이야기'}</em></button>`).join(''):'<p class="camp-empty">오늘 밤은 혼자다. 차 안의 소리만 들린다.</p>'}</div>
+      </div>
+      <div class="camp-rest"><span>${planned?'준비를 마쳤다.':'준비 없이 쉬어도 된다.'}</span><button class="act" id="camp-rest">🔥 이곳에서 밤 보내기</button></div>
+    </section>`;
+    ovl.classList.add('on'); ovl.setAttribute('aria-hidden','false');
+    requestAnimationFrame(()=>$('#camp-x').focus({preventScroll:true}));
+    $('#camp-x').onclick=()=>closeOvl('#ovl-camp');
+    body.querySelectorAll('[data-camp-prep]').forEach(b=>b.onclick=()=>{
+      const r=G.prepareCamp(b.dataset.campPrep); if(!r.ok) UI.toast(r.why); showCampHub();
+    });
+    body.querySelectorAll('[data-camp-talk]').forEach(b=>b.onclick=()=>{
+      const r=G.prepareCamp('talk',b.dataset.campTalk); if(!r.ok) UI.toast(r.why); showCampHub();
+    });
+    $('#camp-rest').onclick=()=>{ closeOvl('#ovl-camp'); G.camp(); };
+  }
   function renderGarage(){
     const g=$('#garage'); if(!g) return;
     const repCost=G.hasComp('minji')?6:8;
@@ -3074,7 +3174,8 @@ const UI = (()=>{
       ${dNext?`<div class="st-row"><span class="k">다음 숙련</span>${bar(S.stats.km-D.driverLv[dlv].km, dNext.km-D.driverLv[dlv].km)}<span class="v">${Math.round(S.stats.km)}/${dNext.km}km</span></div>`:''}
       <div class="st-row"><span class="k">피로 ${ICO('fatigue_'+G.fatigueStage(), G.fatigueFace())}</span>${bar(S.fatigue,100,S.fatigue>=75)}<span class="v">${Math.floor(S.fatigue)}%</span></div>
       <div class="csub">85%부터 졸음 위험. 야영이나 숙박으로 회복한다.</div></div>
-    <div class="st-sec"><h4>달구지 1호</h4>
+    <div class="st-sec"><h4>${esc(G.vanName())}</h4>
+      <div class="van-name-edit"><label for="van-name-input">차 이름</label><input id="van-name-input" maxlength="12" value="${esc(G.vanName())}" aria-label="달구지 이름"><button data-save-van-name="1">바꾸기</button></div>
       <div class="st-row"><span class="k">내구도</span>${bar(S.van,S.vanMax,S.van<25)}<span class="v">${Math.floor(S.van)}/${S.vanMax}</span></div>
       <div class="st-row"><span class="k">연료</span>${bar(S.fuel,S.fuelMax,S.fuel<10)}<span class="v">${Math.floor(S.fuel)}/${S.fuelMax}L</span></div>
       <div class="st-row"><span class="k">연비</span><span class="v" style="flex:1">${kmPerL} km/L ${S.wx!=='clear'?`<small style="color:var(--faded)">(${D.wx[S.wx].nm} 반영)</small>`:''}</span></div>
@@ -3099,7 +3200,10 @@ const UI = (()=>{
     <div class="st-sec audio-mixer"><h4>소리 믹서 <small>채널별 · 이 기기에 저장</small></h4>
       <div class="audio-mixer-list">${audioChannels.map(([key,label])=>{ const value=Math.round(SND.level(key)*100); return `
         <label><span>${label}</span><input type="range" min="0" max="100" step="5" value="${value}" data-audio-level="${key}" aria-label="${label} 음량"><output>${value}%</output></label>`; }).join('')}</div>
-      <div class="csub">하단의 소리 버튼은 전체 음소거이며, 이 값은 음악·현장음·효과·음성을 따로 조절한다.</div></div>`;
+      <div class="csub">하단의 소리 버튼은 전체 음소거이며, 이 값은 음악·현장음·효과·음성을 따로 조절한다.</div></div>
+    <div class="st-sec save-backup"><h4>여정 백업 <small>내 기기에만 저장</small></h4>
+      <p>현재 여정을 파일로 보관하거나, 이전 백업으로 되돌릴 수 있다. 복원은 현재 저장을 바꾼다.</p>
+      <div class="save-backup-actions"><button data-save-export="1">💾 백업 파일 만들기</button><label>↥ 백업 파일 복원<input type="file" accept="application/json,.json" data-save-import="1"></label></div></div>`;
 
     let journey=`<div class="st-sec"><h4>여정</h4>
       <div class="st-row"><span class="k">날짜 / 주행</span><span class="v" style="flex:1">DAY ${S.day} · ${Math.round(S.stats.km)}km · 서울까지 약 ${G.remainKm()}km</span></div>
@@ -3188,8 +3292,13 @@ const UI = (()=>{
       const c=D.comps[id], st=S.comps[id], p3=c.perks[3];
       const state=st.perks.includes(p3.id)?'done':'lv'+st.lvl;
       const next=st.lvl<3?D.bondTh[st.lvl]:Math.max(1,st.bond);
+      const nextPayoff=st.lvl>=3
+        ? `완주 서사 해금 · ${p3.d}`
+        : st.lvl===2
+          ? `다음 유대 · ${p3.nm}: ${p3.d}`
+          : `다음 유대 · ${(c.perks[st.lvl+1]||[]).map(perk=>perk.nm).join(' / ')}`;
       return {id,c,st,p3,state,joinedBy:G.recruitApproach(id),best:G.bestRelation(id),
-        injury:S.injuries&&S.injuries[id],bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
+        injury:S.injuries&&S.injuries[id],nextPayoff,bondPct:st.lvl>=3?100:Math.min(100,st.bond/next*100)};
     });
     let crew=`<div class="st-summary">
       <div class="st-metric"><span class="mk">동료</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
@@ -3198,7 +3307,7 @@ const UI = (()=>{
     </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+
       (stories.length?`<div class="crew-status-list">`+stories.map(s=>`<div class="crew-status-card" data-comp2="${s.id}" role="button" tabindex="0">
         <span class="crew-status-face">${faceOf(s.id,s.c.face)}</span>
-        <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}${s.joinedBy?` · ${esc(s.joinedBy.label)}로 합류`:''}${s.best?`<br>${esc(D.comps[s.best.id].name)}와 ${G.relationLabel(s.best.score)}`:''}</small></span>
+        <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}${s.joinedBy?` · ${esc(s.joinedBy.label)}로 합류`:''}${s.best?`<br>${esc(D.comps[s.best.id].name)}와 ${G.relationLabel(s.best.score)}`:''}</small><em class="crew-status-next">${esc(s.nextPayoff)}</em></span>
         <span class="crew-status-state">${s.injury?`🩹 ${s.injury.label}<br>${s.injury.days}일`:(s.state==='done'?`★ ${s.p3.nm}`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?'<br>✦ 퍼크 대기':''}`)}</span>
         <span class="crew-status-bond"><i style="width:${s.bondPct}%"></i></span></div>`).join('')+`</div>`
         :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+
@@ -3223,6 +3332,30 @@ const UI = (()=>{
       const output=input.parentElement&&input.parentElement.querySelector('output');
       if(output) output.textContent=`${input.value}%`;
     });
+    const saveVanName=b.querySelector('[data-save-van-name]');
+    if(saveVanName) saveVanName.onclick=()=>{
+      const input=b.querySelector('#van-name-input');
+      const next=(input&&input.value||'').trim().slice(0,12)||'달구지';
+      S.vanName=next; G.save(); UI.toast(`🚐 차 이름을 ${next}(으)로 바꿨다`); renderStatus();
+    };
+    const saveExport=b.querySelector('[data-save-export]');
+    if(saveExport) saveExport.onclick=()=>{
+      const blob=new Blob([G.exportSave()],{type:'application/json'});
+      const url=URL.createObjectURL(blob), a=document.createElement('a');
+      a.href=url; a.download=`seoul-400km-day-${S.day}-backup.json`; a.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      UI.toast('💾 현재 여정을 백업 파일로 만들었다');
+    };
+    const saveImport=b.querySelector('[data-save-import]');
+    if(saveImport) saveImport.onchange=()=>{
+      const file=saveImport.files&&saveImport.files[0]; if(!file) return;
+      if(!window.confirm('이 백업으로 현재 여정을 교체할까요? 현재 저장은 사라집니다.')){ saveImport.value=''; return; }
+      file.text().then(raw=>{
+        const result=G.importSave(raw);
+        if(!result.ok){ UI.toast(`⚠ ${result.why}`); return; }
+        UI.toast('💾 백업을 복원했다'); renderAll(); renderStatus();
+      }).catch(()=>UI.toast('⚠ 백업 파일을 읽지 못했다'));
+    };
     b.querySelectorAll('[data-quality-export]').forEach(button=>button.onclick=()=>exportQuality(button.dataset.qualityExport));
     b.querySelectorAll('[data-comp2]').forEach(r=>{
       r.onclick=()=>{ const id=r.dataset.comp2; if(G.hasComp(id)) showComp(id); };
