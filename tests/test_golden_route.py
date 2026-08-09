@@ -148,6 +148,37 @@ with sync_playwright() as p:
           nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
           nav_initial['hazards'] == 3 and '연료' in nav_initial['copy'] and '식량' in nav_initial['copy'],
           str(nav_initial))
+    stop_console = page.evaluate('''() => {
+      const action=document.querySelector('.stop-action-console');
+      const vehicle=document.querySelector('.vehicle-console');
+      const toggle=document.querySelector('[data-vehicle-tools]');
+      return {
+        actionCopy:action?.textContent||'',
+        explore:!!action?.querySelector('[data-a="explore"]:not([disabled])'),
+        systems:vehicle?.querySelectorAll('.vehicle-system-card').length||0,
+        vehicleCopy:vehicle?.textContent||'',
+        toggleHeight:toggle?.getBoundingClientRect().height||0,
+        expanded:toggle?.getAttribute('aria-expanded')
+      };
+    }''')
+    check('부산에서도 정착지와 외곽 탐색을 같은 정차 행동 콘솔에서 고른다',
+          stop_console['explore'] and '이곳에서 더 할 일' in stop_console['actionCopy'] and
+          '2시간' in stop_console['actionCopy'] and '위험' in stop_console['actionCopy'], str(stop_console))
+    check('달구지 장비는 연료·차체·장착 상태를 접지 않고 먼저 보여 준다',
+          stop_console['systems'] == 3 and '연료 계통' in stop_console['vehicleCopy'] and
+          '차체 상태' in stop_console['vehicleCopy'] and '장착 장비' in stop_console['vehicleCopy'] and
+          stop_console['toggleHeight'] >= 44 and stop_console['expanded'] == 'false', str(stop_console))
+    page.click('[data-vehicle-tools]')
+    vehicle_open = page.evaluate('''() => ({
+      open:!!document.querySelector('.vehicle-console-tools'),
+      expanded:document.querySelector('[data-vehicle-tools]')?.getAttribute('aria-expanded'),
+      hasRepair:!!document.querySelector('[data-a="repair"]'),
+      hasRadio:!!document.querySelector('[data-a="radio"]')
+    })''')
+    check('장비 관리를 열면 현재 장착 모듈과 실제 현장 정비 행동이 이어진다',
+          vehicle_open['open'] and vehicle_open['expanded'] == 'true' and
+          vehicle_open['hasRepair'] and vehicle_open['hasRadio'], str(vehicle_open))
+    page.click('[data-vehicle-tools]')
     intel_coverage = page.evaluate('''() => {
       const cities=Object.entries(D.nodes).filter(([,node])=>node.type!=='hidden').map(([id])=>id);
       return {cities:cities.length, covered:cities.filter(id=>D.navIntel&&D.navIntel[id]).length};

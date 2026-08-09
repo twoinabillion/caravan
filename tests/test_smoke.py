@@ -1059,9 +1059,14 @@ with sync_playwright() as p:
         !!D.scenes['seoul-liberation'];
       const copy=document.querySelector('.event-scroll');
       const choices=document.querySelector('.event-choice-dock>.choices');
-      copy.scrollTop=copy.scrollHeight; choices.scrollTop=choices.scrollHeight;
-      out.eventScroll=copy.scrollHeight>copy.clientHeight && copy.scrollTop>0;
-      out.choiceScroll=choices.scrollHeight>choices.clientHeight && choices.scrollTop>0;
+      const firstPage=[...choices.querySelectorAll('.choice')].filter(node=>!node.hidden).map(node=>node.dataset.i);
+      document.querySelector('[data-choice-next]').click();
+      const secondPage=[...choices.querySelectorAll('.choice')].filter(node=>!node.hidden).map(node=>node.dataset.i);
+      out.choicePaging=firstPage.length===3 && secondPage.length===3 &&
+        firstPage.join(',')!==secondPage.join(',') && document.querySelector('[data-choice-page]').textContent==='2';
+      out.eventTerminal=document.querySelector('#ev-sheet').dataset.storyStep==='decision' &&
+        document.querySelector('[data-event-progress]').textContent.includes('/') &&
+        document.querySelector('.event-scene-frame').getBoundingClientRect().height>=170;
       out.choiceDock=choices.querySelectorAll('.choice').length===7 &&
         getComputedStyle(document.querySelector('.event-choice-dock')).position!=='fixed';
       document.querySelector('#ev-wrap').classList.remove('on');
@@ -1192,8 +1197,8 @@ with sync_playwright() as p:
     check('상태창에서 지금 떠나는 이유·동료 합류 원칙 상시 확인', r4['departureBrief'], str(r4))
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
-    check('긴 사건 본문·7개 선택지 독립 스크롤', r4['eventScroll'] and
-          r4['choiceScroll'] and r4['choiceDock'], str(r4))
+    check('긴 사건도 큰 장면·진행 상태·3개 단위 선택 페이지로 정리', r4['eventTerminal'] and
+          r4['choicePaging'] and r4['choiceDock'], str(r4))
     check('서울 코어 증언→해방 장면 분리', r4['seoulSceneArc'], str(r4))
     pg.click('#dk-status')
     pg.wait_for_timeout(120)

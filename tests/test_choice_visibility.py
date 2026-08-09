@@ -26,9 +26,11 @@ PROBE = """() => {
   const list=document.querySelector('.event-choice-dock>.choices');
   return {
     count: cards.length,
-    clipped: cards.filter(c=>c.scrollHeight > c.clientHeight + 1)
+    visible: cards.filter(c=>!c.hidden).map(c=>c.dataset.i),
+    clipped: cards.filter(c=>!c.hidden && c.scrollHeight > c.clientHeight + 1)
                   .map(c=>({t:(c.innerText||'').slice(0,18), r:c.clientHeight, c:c.scrollHeight})),
-    scrollable: list ? list.scrollHeight > list.clientHeight + 1 : false,
+    pager: !!document.querySelector('[data-choice-pages]'),
+    page: document.querySelector('[data-choice-page]')?.textContent||'',
     listOverflow: list ? getComputedStyle(list).overflowY : '',
   };
 }"""
@@ -55,11 +57,45 @@ with sync_playwright() as playwright:
         page.wait_for_timeout(250)
         r = page.evaluate(PROBE)
         label = f"{width}x{height}{' 큰 글자' if large else ''}"
-        check(f'{label}: 선택 카드 {r["count"]}개 전부 온전히 보임',
-              r['count'] > 0 and not r['clipped'], str(r['clipped'])[:160])
-        # 카드가 화면보다 많으면 목록이 실제로 스크롤되어야 한다 (안내 문구가 거짓말이 되지 않게)
+        check(f'{label}: 현재 페이지 선택 카드가 세 개 이하로 온전히 보임',
+              r['count'] > 0 and len(r['visible']) <= 3 and not r['clipped'], str(r)[:220])
+        # 네 개 이상은 3개 단위 페이지로 나눠 작은 화면에서도 선택지를 읽을 수 있어야 한다.
         if r['count'] >= 4:
-            check(f'{label}: 넘치는 목록은 스크롤 가능', r['scrollable'] or r['listOverflow'] == 'auto', str(r))
+            first = r['visible']
+            page.click('[data-choice-next]')
+            page.wait_for_timeout(60)
+            after = page.evaluate(PROBE)
+            check(f'{label}: 넘치는 선택지는 페이지로 이동 가능',
+                  r['pager'] and r['page'] == '1' and after['page'] == '2' and
+                  first != after['visible'] and len(after['visible']) <= 3 and not after['clipped'], str(after))
+        terminal = page.evaluate("""() => ({
+          phase:document.querySelector('#ev-sheet').dataset.storyPhase,
+          step:document.querySelector('#ev-sheet').dataset.storyStep,
+          progress:document.querySelector('[data-event-progress]')?.textContent||'',
+          sceneHeight:document.querySelector('.event-scene-frame')?.getBoundingClientRect().height||0,
+          detail:!!document.querySelector('[data-event-detail]')
+        })""")
+        check(f'{label}: 전술 선택 터미널에 큰 장면·진행 상태·상세 제어 표시',
+              terminal['phase'] == 'event' and terminal['step'] == 'decision' and
+              '/' in terminal['progress'] and terminal['sceneHeight'] >= 170 and terminal['detail'], str(terminal))
+        page.click('[data-event-detail]')
+        check(f'{label}: 전투 상세 정보 토글 작동',
+              page.locator('#ev-sheet').evaluate("node=>node.classList.contains('combat-details-open')"))
+        page.evaluate("""() => {
+          document.querySelector('.choice[data-i="4"]').click();
+          UI.finishStory();
+        }""")
+        page.wait_for_timeout(80)
+        outcome = page.evaluate("""() => ({
+          phase:document.querySelector('#ev-sheet').dataset.storyPhase,
+          title:document.querySelector('.event-head h2')?.textContent||'',
+          recap:document.querySelector('.event-choice-recap')?.textContent||'',
+          effects:document.querySelectorAll('.story-result .fx').length,
+          actionHeight:document.querySelector('.event-choice-dock .choice')?.getBoundingClientRect().height||0
+        })""")
+        check(f'{label}: 결과 화면이 선택 회고·영향 칩·다음 행동으로 이어짐',
+              outcome['phase'] == 'outcome' and '제압을 포기' in outcome['title'] and
+              '이탈' in outcome['recap'] and outcome['effects'] > 0 and outcome['actionHeight'] >= 44, str(outcome))
         page.close()
 
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))

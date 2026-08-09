@@ -566,12 +566,20 @@ const SCENE = (()=>{
     for(const x of stages){ if(!x.up||up[x.up]) stage=x; }
     return stage;
   }
-  function van(roadY,speed,dark,wx,upOverride){
+  function van(roadY,speed,dark,wx,upOverride,displayScale=1){
     const up=upOverride||(S? (S.up||{}):{});
     const build=vanBuildStage(up);
     const bodyL=build.bodyL, bodyH=build.bodyH, cabL=17, cabH=25;
     const cabX=P(W*0.53), vx=cabX-bodyL;
     const baseY=roadY+P((H-roadY)*0.42);
+    /* 정차 화면에서는 달구지가 주인공이다. 차축과 노면 접점을 고정한 채 키워
+       배경 표지판이나 지평선보다 먼저 읽히게 한다. 정착지 비교 캔버스는 1배를 쓴다. */
+    ctx.save();
+    if(displayScale!==1){
+      ctx.translate(cabX,baseY+6);
+      ctx.scale(displayScale,displayScale);
+      ctx.translate(-cabX,-baseY-6);
+    }
     const bnc=speed>0? Math.sin(t*11)*0.8+Math.sin(t*23.7)*0.4 : Math.sin(t*1.6)*0.3;
     const bnc2=speed>0? Math.sin(t*11+1.2)*0.8 : Math.sin(t*1.6+0.6)*0.3;
     const ride=up.susp?1.5:0;
@@ -969,6 +977,7 @@ const SCENE = (()=>{
     /* 배기 */
     if(speed>0&&Math.random()<0.3) puffs.push({x:vx-3,y:vy+5,r:1,a:0.4,vx:-9,vy:-2-Math.random()*2});
     if(S&&!S.driving&&G.isNight()&&Math.random()<0.08) puffs.push({x:vx+30,y:vy-bodyH-9,r:1,a:0.25,vx:1.5,vy:-4});
+    ctx.restore();
   }
   function drawPuffs(dt){
     for(let i=puffs.length-1;i>=0;i--){ const p2=puffs[i];
@@ -1257,7 +1266,7 @@ const SCENE = (()=>{
     deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
     poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
     signs(1.0,roadY+1);
-    van(roadY,speed,dark,wx);
+    van(roadY,speed,dark,wx,undefined,speed>0?1:1.26);
     drawPuffs(dt);
     drawCrows(dt); weather(wx,dark,speed,dt);
     cheollianFx(roadY);

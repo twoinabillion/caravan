@@ -48,6 +48,14 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "00c-navigation-resources.png"))
     page.click('[data-nav-inspect-close]')
+    page.locator('.stop-action-console').scroll_into_view_if_needed()
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "00d-stop-actions.png"))
+    page.click('[data-vehicle-tools]')
+    page.locator('.vehicle-console').scroll_into_view_if_needed()
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "00e-vehicle-tools.png"))
+    page.click('[data-vehicle-tools]')
     page.evaluate(
         """() => {
           S.at = 'daegu';
@@ -203,10 +211,12 @@ with sync_playwright() as playwright:
     page.evaluate("""() => {
       S.combat=null; S.injuries={}; S.party=['minji'];
       UI.showEvent(D.events.find(e=>e.id==='patrol_walker')); UI.finishStory();
+      document.querySelector('#ev-sheet [data-i="1"]')?.focus();
     }""")
     page.wait_for_timeout(120)
+    page.mouse.move(1, 1)
     page.screenshot(path=str(SHOT / "10d-combat-plan.png"))
-    page.click('#ev-sheet [data-i="0"]')
+    page.click('#ev-sheet [data-i="1"]')
     page.evaluate("UI.finishStory()")
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "10e-combat-choice-result.png"))
@@ -238,22 +248,19 @@ with sync_playwright() as playwright:
     )
     page.wait_for_timeout(200)
     page.screenshot(path=str(SHOT / "12-event-long-top.png"))
-    scroll_metrics = page.evaluate(
+    paging_metrics = page.evaluate(
         """() => {
-          const copy=document.querySelector('.event-scroll');
           const choices=document.querySelector('.event-choice-dock>.choices');
-          const before={copyTop:copy.scrollTop, choiceTop:choices.scrollTop,
-            copyClient:copy.clientHeight, copyScroll:copy.scrollHeight,
-            choiceClient:choices.clientHeight, choiceScroll:choices.scrollHeight,
-            choiceCount:choices.querySelectorAll('.choice').length};
-          copy.scrollTop=copy.scrollHeight;
-          choices.scrollTop=choices.scrollHeight;
-          return {...before, copyAfter:copy.scrollTop, choiceAfter:choices.scrollTop};
+          const first=[...choices.querySelectorAll('.choice')].filter(node=>!node.hidden).map(node=>node.dataset.i);
+          document.querySelector('[data-choice-next]')?.click();
+          const second=[...choices.querySelectorAll('.choice')].filter(node=>!node.hidden).map(node=>node.dataset.i);
+          return {choiceCount:choices.querySelectorAll('.choice').length,first,second,
+            page:document.querySelector('[data-choice-page]')?.textContent||''};
         }"""
     )
     page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "13-event-long-scrolled.png"))
+    page.screenshot(path=str(SHOT / "13-event-long-page2.png"))
 
     browser.close()
     print(SHOT)
-    print(scroll_metrics)
+    print(paging_metrics)
