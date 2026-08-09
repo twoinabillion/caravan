@@ -66,6 +66,30 @@ with sync_playwright() as playwright:
         page.wait_for_timeout(80)
         page.screenshot(path=str(SHOT / "01d-nav-pressed.png"))
         page.mouse.up()
+    for index in range(5):
+        page.evaluate(
+            """index => {
+              const buttons=[...document.querySelectorAll('#dock button')];
+              buttons.forEach((button, buttonIndex) => {
+                button.classList.toggle('here', buttonIndex === index);
+                if (buttonIndex === index) button.setAttribute('aria-current', 'page');
+                else button.removeAttribute('aria-current');
+              });
+            }""",
+            index,
+        )
+        page.wait_for_timeout(80)
+        page.screenshot(path=str(SHOT / f"01e-nav-selected-{index + 1}.png"))
+    page.evaluate(
+        """() => {
+          const buttons=[...document.querySelectorAll('#dock button')];
+          buttons.forEach((button, index) => {
+            button.classList.toggle('here', index === 0);
+            if (index === 0) button.setAttribute('aria-current', 'page');
+            else button.removeAttribute('aria-current');
+          });
+        }"""
+    )
     page.evaluate(
         """() => {
           UI.toast('🔧 좌석 증축이 끝났다 — 동료 자리 +1');
