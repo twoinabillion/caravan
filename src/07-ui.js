@@ -196,7 +196,7 @@ const UI = (()=>{
       if(screen==='game'&&drawFrame){
         SCENE.draw(dt);
         MAPR.drawMini(dt);
-        hudCd-=dt; if(hudCd<=0){ hudCd=0.25; renderHud(); renderMission(); if(S&&S.driving) renderTravelbar(); }
+        hudCd-=dt; if(hudCd<=0){ hudCd=0.25; renderHud(); renderMission(); if(S&&S.driving){ renderTravelbar(); renderCockpitNav(); } }
         if($('#ovl-map').classList.contains('on')) MAPR.draw(dt);
         if($('#jgraphwrap').classList.contains('on')) GRAPH.draw(dt);
       }
@@ -209,7 +209,7 @@ const UI = (()=>{
     const saveForLifecycle=()=>{ if(S) G.save(); };
     document.addEventListener('visibilitychange',()=>{ if(document.hidden) saveForLifecycle(); });
     window.addEventListener('pagehide',saveForLifecycle);
-    $('#cockpit-controls').querySelectorAll('[data-cockpit-action]').forEach(button=>button.onclick=()=>{
+    document.querySelectorAll('[data-cockpit-action]').forEach(button=>button.onclick=()=>{
       const action=button.dataset.cockpitAction;
       if(action==='ignition'){
         G.toggleIgnition();
@@ -1158,6 +1158,14 @@ const UI = (()=>{
       renderStatus();
     };
   }
+  function renderCockpitNav(){
+    if(!S||!S.driving) return;
+    const to=D.nodes[S.driving.to];
+    const remaining=Math.max(0,Math.ceil((S.driving.dist||0)-(S.driving.gone||0)));
+    const place=$('#cockpit-nav-place'); if(place) place.textContent=to?to.name:'다음 목적지';
+    const distance=$('#cockpit-nav-distance');
+    if(distance) distance.textContent=`${remaining}km 남음 · ${S.driving.ignition===false?'시동 대기':'주행 중'}`;
+  }
   function renderPanel(){
     const p=$('#panel');
     if(!S){ p.innerHTML=''; return; }
@@ -1172,6 +1180,25 @@ const UI = (()=>{
       ignition.classList.toggle('on',on);
       ignition.setAttribute('aria-pressed',String(on));
       const label=ignition.querySelector('b'); if(label) label.textContent=on?'시동 끄기':'시동 걸기';
+    }
+    const setCockpitMeter=(selector,value,max,suffix)=>{
+      const meter=$(selector); if(!meter) return;
+      const ratio=Math.max(0,Math.min(1,(Number(value)||0)/Math.max(1,Number(max)||1)));
+      meter.style.setProperty('--needle-angle',`${-120+ratio*240}deg`);
+      meter.classList.toggle('warn',ratio<=0.25);
+      const output=meter.querySelector('b'); if(output) output.textContent=`${Math.round(Number(value)||0)}${suffix}`;
+    };
+    setCockpitMeter('#cockpit-fuel-meter',S.fuel,S.fuelCap||60,'L');
+    setCockpitMeter('#cockpit-van-meter',S.van,100,'%');
+    const crewCount=$('#cockpit-crew-count');
+    const crewFaces=$('#cockpit-crew-faces');
+    if(crewCount&&crewFaces){
+      const party=Array.isArray(S.party)?S.party:(Array.isArray(S.crew)?S.crew:[]);
+      const memberId=member=>typeof member==='string'?member:(member&&(member.id||member.pid||member.key));
+      const ids=['me',...party.map(memberId)].filter(id=>id&&D.portraits&&D.portraits[id]).slice(0,3);
+      crewFaces.innerHTML=ids.map(id=>`<img src="${D.portraits[id]}" alt="">`).join('');
+      crewCount.textContent=`${Math.max(1,1+party.length)}명`;
+      $('#cockpit-mirror').setAttribute('aria-label',`동료 ${Math.max(1,1+party.length)}명과 백미러 보기`);
     }
     if(S.driving){
       const to=D.nodes[S.driving.to];

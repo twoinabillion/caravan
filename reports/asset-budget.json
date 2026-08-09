@@ -1,18 +1,23 @@
 {
-  "generatedAt": "2026-08-08T13:32:52.560Z",
+  "generatedAt": "2026-08-08T14:47:04.761Z",
   "html": {
-    "bytes": 35073397,
+    "bytes": 37110454,
     "warnBytes": 32000000,
     "maxBytes": 38000000
   },
   "embedded": {
-    "files": 198,
-    "bytes": 20971915,
+    "files": 200,
+    "bytes": 22488843,
     "categories": {
       "audio": {
         "files": 45,
         "bytes": 9710668,
         "encodedBytes": 12947612
+      },
+      "other": {
+        "files": 2,
+        "bytes": 1516928,
+        "encodedBytes": 2022572
       },
       "scene": {
         "files": 122,
@@ -32,6 +37,12 @@
       "mime": "audio/mpeg",
       "bytes": 1621676,
       "encodedBytes": 2162236
+    },
+    {
+      "path": "assets/ui/cockpit-shell-v1.png",
+      "mime": "image/png",
+      "bytes": 1302431,
+      "encodedBytes": 1736576
     },
     {
       "path": "assets/audio/bgm/drive_day.mp3",
@@ -74,6 +85,12 @@
       "mime": "image/jpeg",
       "bytes": 388152,
       "encodedBytes": 517536
+    },
+    {
+      "path": "assets/ui/cockpit-map-v1.png",
+      "mime": "image/png",
+      "bytes": 214497,
+      "encodedBytes": 285996
     },
     {
       "path": "assets/intro/08-departure-choice-v3.jpg",
@@ -134,18 +151,6 @@
       "mime": "image/jpeg",
       "bytes": 138178,
       "encodedBytes": 184240
-    },
-    {
-      "path": "assets/scenes/settlement-road-echo.jpg",
-      "mime": "image/jpeg",
-      "bytes": 129648,
-      "encodedBytes": 172864
-    },
-    {
-      "path": "assets/scenes/gwangju-market.jpg",
-      "mime": "image/jpeg",
-      "bytes": 129184,
-      "encodedBytes": 172248
     }
   ]
 }

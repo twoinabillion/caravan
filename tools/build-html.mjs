@@ -55,7 +55,14 @@ const upgradeScenes = {
   LIVING:'assets/upgrades/living.jpg'
 };
 
-const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
+const read = relative => {
+  const source = fs.readFileSync(path.join(root, relative), 'utf8');
+  return relative === 'src/02-dom.html'
+    ? source
+      .replace('assets/ui/cockpit-shell-v1.png', dataUri('assets/ui/cockpit-shell-v1.png', 'image/png'))
+      .replace('assets/ui/cockpit-map-v1.png', dataUri('assets/ui/cockpit-map-v1.png', 'image/png'))
+    : source;
+};
 const dataUri = (relative, mime) => {
   const absolute = path.join(root, relative);
   if (!fs.existsSync(absolute)) throw new Error(`자산 파일 없음: ${relative}`);
