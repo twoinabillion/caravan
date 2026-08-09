@@ -11,12 +11,13 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
+  let navChoiceAt=null, navChoiceId=null, navInspectKey=null;
   /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
      원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
   function syncStageActions(){
     const host=$('#stage-actions'), panel=$('#panel');
     if(!host||!panel||!S||S.driving){ if(host) host.replaceChildren(); return; }
-    const selectors='button.act.primary:not(:disabled),button.route-option:not(:disabled),button[data-a="recruitstep"]:not(:disabled)';
+    const selectors='button.act.primary:not(:disabled),button[data-nav-depart]:not(:disabled),button[data-a="recruitstep"]:not(:disabled)';
     const originals=[...panel.querySelectorAll(selectors)].filter(button=>button.offsetParent!==null).slice(0,2);
     const buttons=originals.map(original=>{
       const button=document.createElement('button');
@@ -123,7 +124,17 @@ const UI = (()=>{
     /* 설치형 웹앱에서도 첫 화면과 저장된 여정을 끊김 없이 연다. file:// 미리보기는
        서비스 워커를 지원하지 않으므로 등록을 건너뛴다. */
     if('serviceWorker' in navigator && location.protocol!=='file:'){
-      window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}),{once:true});
+      window.addEventListener('load',()=>{
+        const localPreview=location.hostname==='127.0.0.1'||location.hostname==='localhost';
+        if(localPreview){
+          navigator.serviceWorker.getRegistrations().then(registrations=>
+            Promise.all(registrations.map(registration=>registration.unregister()))).catch(()=>{});
+          if('caches' in window) caches.keys().then(keys=>Promise.all(keys
+            .filter(key=>key.startsWith('seoul-400km-')).map(key=>caches.delete(key)))).catch(()=>{});
+          return;
+        }
+        navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+      },{once:true});
     }
     applyUiPrefs();
     SCENE.init($('#cv'));
@@ -1116,6 +1127,261 @@ const UI = (()=>{
   }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
+  function routeDestinationIntel(model){
+    const node=D.nodes[model.nb.id]||{}, authored=(D.navIntel&&D.navIntel[model.nb.id])||{};
+    const typeLabel=node.type==='goal'?'목표 지점':node.stl?'주요 정착지':node.type==='settlement'?'정착지'
+      :node.type==='town'?'마을':node.type==='hidden'?'미확인 장소':'폐허·탐색지';
+    const trade=node.stl&&D.stls&&D.stls[node.stl]&&Array.isArray(D.stls[node.stl].trade)
+      ?D.stls[node.stl].trade:[];
+    const supplyNames=[];
+    for(const row of trade){
+      const key=row[1], name=key==='fuel'?'연료':key==='water'?'물':key==='food'?'식량'
+        :String(key||'').startsWith('item')?String(key).slice(4):'';
+      if(name&&!supplyNames.includes(name)) supplyNames.push(name);
+    }
+    let supply=node.stl
+      ?(supplyNames.length?`${supplyNames.slice(0,4).join(' · ')} 보급 확인`:'현지 교환 확인')
+      :node.type==='settlement'?'휴식과 제한적 보급 가능'
+      :node.type==='town'?'현지 교환 가능성 · 재고 미확인'
+      :node.type==='goal'?'보급보다 임무 준비가 우선'
+      :node.type==='hidden'?'도착 전 보급 정보 없음':'탐색 회수 가능 · 보급 미확인';
+    if(model.nb.id==='busan') supply='차고 · 창고 · 출발 보급 가능';
+    const fallbackRoad=model.nb.road==='rough'
+      ?{hazard:'거친 접근로',effect:'차체 손상과 연료 추가 소모',counter:'타이어·서스펜션을 점검하고 저속 진입'}
+      :model.nb.road==='high'
+        ?{hazard:'노출된 큰길',effect:'관측 흔적이 커질 수 있음',counter:'정차를 줄이고 우회 지점을 미리 확인'}
+        :{hazard:'갈림길 접근',effect:'길목 사건과 짧은 우회 가능',counter:'최근 타이어 자국과 라디오 소문 확인'};
+    return {
+      typeLabel,arrival:node.desc||'아직 기록이 충분하지 않은 목적지다.',supply,
+      hazard:authored.hazard||fallbackRoad.hazard,effect:authored.effect||fallbackRoad.effect,
+      counter:authored.counter||fallbackRoad.counter,source:authored.source||'운전수들의 최근 소문',
+      confidence:authored.confidence||(node.type==='hidden'?'미상':'추정')
+    };
+  }
+  function routeDangerForecast(model){
+    const road=model.nb.road, weather=S.wx, intel=routeDestinationIntel(model);
+    const roadRisk=Math.round(clamp(road==='rough'?67:road==='normal'?43:30,8,92));
+    const localRisk=Math.round(clamp((road==='rough'?52:road==='normal'?39:31)+(model.nb.km>=45?10:0),8,90));
+    const observed=Math.round(clamp(10+(road==='high'?18:road==='normal'?9:4)+S.pursuit*13+(G.isNight()?12:0)
+      +(weather==='storm'?16:weather==='rain'||weather==='dust'?8:0),5,94));
+    const level=value=>value>=68?'높음':value>=42?'주의':'낮음';
+    const roadInfo=road==='rough'
+      ?{label:'험로 파손',short:'험로',effect:'연료 소모와 차체 피로가 커진다',counter:model.forecast.gear.length?`${model.forecast.gear.join(' · ')}로 대응 가능`:'타이어·서스펜션 점검 후 저속 주행'}
+      :road==='high'
+        ?{label:'큰길 노출',short:'노출',effect:'빠르지만 관측 장치와 검문에 오래 보인다',counter:'불필요한 정차를 줄이고 출구를 미리 확인'}
+        :{label:'길목 사건',short:'길목',effect:'갈림길이나 장애물에서 사건이 생길 수 있다',counter:'속도를 낮추고 최근 통행 흔적을 확인'};
+    const watchInfo=weather==='storm'
+      ?{label:'폭풍 노출',short:'폭풍',effect:'시야와 흡기 상태가 급격히 나빠진다',counter:S.up.snorkel?'스노클 장착 · 대응 가능':'폭풍이 잦아들 때까지 대기하거나 흡기를 보호'}
+      :weather==='rain'
+        ?{label:'침수·빗길',short:'빗길',effect:'제동 거리가 늘고 낮은 도로가 잠길 수 있다',counter:'저지대를 피하고 제동 거리를 길게 확보'}
+        :weather==='dust'
+          ?{label:'먼지 시야',short:'먼지',effect:'시야와 흡기 효율이 떨어진다',counter:S.up.snorkel?'스노클 장착 · 대응 가능':'흡기구를 보호하고 앞차와 거리를 확보'}
+          :G.isNight()
+            ?{label:'야간 관측',short:'야간',effect:'우리도 길을 덜 보고 상대도 우리 불빛을 본다',counter:S.up.lightbar?'라이트바 장착 · 시야 대응 가능':'불빛을 낮추고 속도를 줄여 이동'}
+            :{label:'관측 위험',short:'관측',effect:'관리 신호와 추적 흔적에 잡힐 수 있다',counter:'라디오 송신을 줄이고 오래 정차하지 않기'};
+    return [
+      {id:'road',...roadInfo,value:roadRisk,level:level(roadRisk),confidence:'확정',source:`도로 장부 · ${road==='rough'?'험로':road==='high'?'큰길':'일반 도로'}`},
+      {id:'local',label:intel.hazard,short:'현지',value:localRisk,level:level(localRisk),effect:intel.effect,counter:intel.counter,
+        confidence:intel.confidence,source:intel.source},
+      {id:'watch',...watchInfo,value:observed,level:level(observed),confidence:'추정',source:'날씨 · 시간 · 관측 흔적 종합'}
+    ];
+  }
+  function routeConsoleModel(routeModels,recommended){
+    if(navChoiceAt!==S.at||!routeModels.some(model=>model.nb.id===navChoiceId)){
+      navChoiceAt=S.at;
+      navChoiceId=(recommended||routeModels[0]||{}).nb?.id||null;
+      navInspectKey=null;
+    }
+    return routeModels.find(model=>model.nb.id===navChoiceId)||routeModels[0]||null;
+  }
+  function routeInspectorHtml(key,context){
+    if(!key) return '';
+    const {selected,node,intel,hazards,foodNeed,fuelAfter,foodAfter,waterAfter}=context;
+    let eyebrow='',title='',body='',effect='',counter='';
+    if(key==='destination'){
+      eyebrow=`${intel.typeLabel} · 정보 ${intel.confidence}`; title=node.name; body=intel.arrival;
+      effect=intel.supply; counter=`접근 주의 · ${intel.hazard} — ${intel.counter}`;
+    } else if(key==='fuel'){
+      const margin=Math.floor(S.fuel-selected.fuel);
+      eyebrow='자원 계산 · 연료'; title=`${Math.floor(S.fuel)}L → ${fuelAfter}L`;
+      body=`이 구간 ${selected.nb.km}km에서 약 ${selected.fuel}L를 쓴다. 날씨·적재량·노면 상태가 반영된 값이다.`;
+      effect=margin<0?`연료 ${Math.abs(margin)}L 부족`:margin<=3?`도착 후 여유 ${margin}L · 위험`:`도착 후 여유 ${margin}L`;
+      counter=margin<0?'이곳에서 연료를 구하거나 더 짧은 길 선택':margin<=3?'예비 연료 확보 후 출발 권장':'현재 연료로 주행 가능';
+    } else if(key==='resources'){
+      const fuelMargin=Math.floor(S.fuel-selected.fuel), supplyMargin=Math.min(foodAfter,waterAfter);
+      eyebrow='자원 계산 · 전체'; title=`연료 ${fuelAfter}L · 식량/물 ${foodAfter}/${waterAfter} 예상`;
+      body=`${selected.nb.km}km를 달리며 연료 약 ${selected.fuel}L, ${Math.max(1,G.partySize())}명의 식량과 물을 각각 약 ${foodNeed} 사용한다.`;
+      effect=`도착지 정보 · ${intel.supply}`;
+      counter=fuelMargin<0?`연료 ${Math.abs(fuelMargin)}L를 먼저 확보`
+        :supplyMargin<0?'출발 전 식량과 물을 보충'
+        :fuelMargin<=3||supplyMargin<=2?'도착 후 바로 보급처 확인':'현재 자원으로 주행 가능';
+    } else if(key.startsWith('hazard:')){
+      const hazard=hazards.find(row=>row.id===key.slice(7));
+      if(!hazard) return '';
+      eyebrow=`위험 ${hazard.level} · 정보 ${hazard.confidence}`; title=hazard.label;
+      body=`출처 · ${hazard.source}`; effect=hazard.effect; counter=hazard.counter;
+    } else return '';
+    return `<div class="nav-inspector" data-nav-inspector="${esc(key)}">
+      <button type="button" class="nav-inspector-back" data-nav-inspect-close>← 경로 요약</button>
+      <small>${esc(eyebrow)}</small><b>${esc(title)}</b><p>${esc(body)}</p>
+      <dl><div><dt>예상</dt><dd>${esc(effect)}</dd></div><div><dt>대응</dt><dd>${esc(counter)}</dd></div></dl>
+    </div>`;
+  }
+  function routeConsoleHtml(routeModels,recommended){
+    const selected=routeConsoleModel(routeModels,recommended);
+    if(!selected) return '<div class="route-empty">지금 이어지는 길이 없다.</div>';
+    const node=D.nodes[selected.nb.id], forecast=selected.forecast;
+    const intel=routeDestinationIntel(selected), hazards=routeDangerForecast(selected);
+    const foodNeed=Math.max(1,Math.ceil(Math.max(1,G.partySize())*forecast.minutes/600));
+    const fuelAfter=Math.max(0,Math.floor(S.fuel-selected.fuel));
+    const foodAfter=Math.floor(S.food-foodNeed), waterAfter=Math.floor(S.water-foodNeed);
+    const destinationTabs=routeModels.map((model,index)=>{
+      const active=model.nb.id===selected.nb.id;
+      const name=D.nodes[model.nb.id].name;
+      return `<button type="button" class="route-option nav-destination-tab${active?' is-selected':''}"
+        data-go="${model.nb.id}" data-route-select="${model.nb.id}" aria-pressed="${active}"
+        aria-label="목적지 ${index+1}, ${esc(name)} 선택">${String(index+1).padStart(2,'0')}<span class="sr-only"> ${esc(name)}</span></button>`;
+    }).join('');
+    const hazardRows=hazards.map(hazard=>`<span class="nav-hazard-row risk-${hazard.level==='높음'?'high':hazard.level==='주의'?'mid':'low'}">
+      <span><b>${hazard.label}</b><small>${hazard.level}</small></span>
+      <i class="nav-risk-meter" aria-hidden="true"><u style="width:${hazard.level==='높음'?86:hazard.level==='주의'?58:28}%"></u></i><em>${hazard.level}</em></span>`).join('');
+    const canDepart=forecast.ok&&!forecast.shortage;
+    const inspector=routeInspectorHtml(navInspectKey,{selected,node,intel,hazards,foodNeed,fuelAfter,foodAfter,waterAfter});
+    const summary=`<p class="nav-arrival-note"><span>${esc(intel.typeLabel)}</span> ${esc(intel.supply)}</p>
+      <button type="button" class="nav-hazard-list" data-nav-inspect="hazard:local"
+        aria-label="예상 위험 세 건. 지역 위험 상세 정보 열기">${hazardRows}</button>
+      <div class="nav-supply-impact" aria-label="예상 자원 변화">
+        <button type="button" data-nav-inspect="resources" aria-label="연료와 식량, 물 예상 사용량 상세 보기">
+          <span>${ICO('fuel')}연료 ${Math.floor(S.fuel)}→<strong>${fuelAfter}L</strong></span>
+          <em>${ICO('food')}식량·물 ${S.food}/${S.water}→<strong>${foodAfter}/${waterAfter}</strong></em></button>
+      </div>`;
+    const departButton=canDepart
+      ?`<button type="button" data-nav-depart="${selected.nb.id}">출발 <span aria-hidden="true">→</span></button>`
+      :forecast.shortage
+        ?`<button type="button" data-nav-inspect="fuel" class="nav-resource-fix">연료 ${Math.abs(forecast.fuelMargin)}L 부족</button>`
+        :'<button type="button" disabled>경로 잠김</button>';
+    return `<div class="route-console" data-route-console="${selected.nb.id}">
+      <div class="route-console-screen">
+        <section class="nav-route-map" aria-labelledby="nav-map-title">
+          <div class="nav-screen-kicker"><span id="nav-map-title">${esc(D.nodes[S.at].name)} → 다음 목적지</span><em>LIVE ROUTE</em></div>
+          <canvas data-nav-map tabindex="0" aria-label="${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 선택 경로. 위험 표식을 누르면 상세 정보를 확인한다"></canvas>
+          <div class="nav-map-legend"><span>선택 경로</span><span>대체 경로</span><span class="danger">위험 구간</span></div>
+        </section>
+        <section class="nav-route-decision" aria-live="polite">
+          <div class="nav-destination-head"><span>목적지 ${String(routeModels.indexOf(selected)+1).padStart(2,'0')} / ${String(routeModels.length).padStart(2,'0')}</span>
+            <div class="nav-destination-tabs" role="group" aria-label="목적지 선택">${destinationTabs}</div></div>
+          <div class="nav-destination-title"><h3>${esc(node.name)}</h3></div>
+          <div class="nav-console-body">${inspector||summary}</div>
+          <div class="nav-time"><b>${selected.nb.km}km · ${G.durationLabel(forecast.minutes)}</b><span>${forecast.readinessLabel}</span></div>
+          <div class="nav-console-actions">
+            <button type="button" data-nav-cycle aria-label="다른 목적지 선택" ${routeModels.length<2?'disabled':''}>다른 길</button>
+            ${departButton}
+          </div>
+          ${canDepart?'':`<small class="nav-depart-blocked">${esc(forecast.readinessReason)}</small>`}
+        </section>
+      </div>
+    </div>`;
+  }
+  function drawRouteConsoleMap(canvas,routeModels,selectedId){
+    if(!canvas||!routeModels.length) return;
+    const rect=canvas.getBoundingClientRect();
+    if(rect.width<20||rect.height<20) return;
+    const ratio=Math.min(2,window.devicePixelRatio||1);
+    canvas.width=Math.round(rect.width*ratio); canvas.height=Math.round(rect.height*ratio);
+    const ctx=canvas.getContext('2d');
+    ctx.setTransform(ratio,0,0,ratio,0,0);
+    const width=rect.width,height=rect.height;
+    ctx.clearRect(0,0,width,height);
+    ctx.strokeStyle='rgba(84,119,145,.13)'; ctx.lineWidth=1;
+    for(let x=12;x<width;x+=28){ ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,height);ctx.stroke(); }
+    for(let y=12;y<height;y+=28){ ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(width,y);ctx.stroke(); }
+
+    /* 이 화면은 전국 지도가 아니라 지금 고를 수 있는 갈림길이다. 다음 구간 너머의
+       노드까지 축척에 넣으면 부산처럼 가까운 두 목적지가 한 점에 뭉친다. */
+    const ids=new Set([S.at,...routeModels.map(model=>model.nb.id)]);
+    const nodes=[...ids].map(id=>({id,node:D.nodes[id]})).filter(row=>row.node&&Number.isFinite(row.node.x)&&Number.isFinite(row.node.y));
+    const xs=nodes.map(row=>row.node.x),ys=nodes.map(row=>row.node.y);
+    let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+    if(maxX-minX<12){ minX-=6;maxX+=6; } if(maxY-minY<12){ minY-=6;maxY+=6; }
+    const padX=Math.max(24,width*.1),padY=Math.max(24,height*.12);
+    const point=id=>{
+      const node=D.nodes[id];
+      return {x:padX+(node.x-minX)/(maxX-minX)*(width-padX*2),y:padY+(node.y-minY)/(maxY-minY)*(height-padY*2)};
+    };
+    ctx.lineCap='round';ctx.lineJoin='round';ctx.font='600 10px monospace';
+    ctx.setLineDash([4,5]);ctx.lineWidth=1;
+    D.edges.forEach(edge=>{
+      if(!ids.has(edge[0])||!ids.has(edge[1])) return;
+      const a=point(edge[0]),b=point(edge[1]);
+      ctx.strokeStyle='rgba(87,108,137,.38)';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    });
+    ctx.setLineDash([]);
+    routeModels.forEach(model=>{
+      const a=point(S.at),b=point(model.nb.id),selected=model.nb.id===selectedId;
+      ctx.strokeStyle=selected?'#ffb454':'rgba(85,224,200,.62)';ctx.lineWidth=selected?4:2;
+      if(!selected) ctx.setLineDash([5,5]);
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);
+    });
+    const selected=routeModels.find(model=>model.nb.id===selectedId)||routeModels[0];
+    const a=point(S.at),b=point(selected.nb.id),hazards=routeDangerForecast(selected).slice(0,3);
+    canvas._navHazardHotspots=[];
+    hazards.forEach((hazard,index)=>{
+      const t=[.25,.5,.75][index]||.5,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;
+      canvas._navHazardHotspots.push({x,y,key:`hazard:${hazard.id}`});
+      ctx.fillStyle='#0b101c';ctx.strokeStyle='#ef6257';ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#ef6257';ctx.font='800 9px monospace';
+      const align=index===1?'left':(x>width*.62?'right':'left');ctx.textAlign=align;
+      ctx.fillText(hazard.short,x+(align==='right'?-11:11),y+3);ctx.textAlign='left';
+    });
+    nodes.forEach(({id,node})=>{
+      const p=point(id),isCurrent=id===S.at,isSelected=id===selectedId,isChoice=routeModels.some(model=>model.nb.id===id);
+      ctx.fillStyle=isCurrent?'#55e0c8':isSelected?'#ffb454':isChoice?'#79b7c1':'#54627b';
+      ctx.beginPath();ctx.arc(p.x,p.y,isCurrent||isSelected?5:3,0,Math.PI*2);ctx.fill();
+      if(isCurrent||isSelected){ ctx.strokeStyle=ctx.fillStyle;ctx.globalAlpha=.38;ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,10,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1; }
+      if(isCurrent||isSelected||isChoice){
+        ctx.fillStyle=isCurrent?'#79e9d6':isSelected?'#ffc16b':'#91a8bd';ctx.font='700 10px monospace';
+        const label=isCurrent?'현재 '+node.name:node.name;
+        const align=p.x>width*.68?'right':'left';ctx.textAlign=align;
+        ctx.fillText(label,p.x+(align==='right'?-8:8),p.y-8);ctx.textAlign='left';
+      }
+    });
+  }
+  function wireRouteConsole(panel,routeModels){
+    panel.querySelectorAll('[data-route-select]').forEach(button=>button.onclick=()=>{
+      navChoiceAt=S.at;navChoiceId=button.dataset.routeSelect;navInspectKey=null;renderPanel();
+    });
+    const cycle=panel.querySelector('[data-nav-cycle]');
+    if(cycle) cycle.onclick=()=>{
+      const index=Math.max(0,routeModels.findIndex(model=>model.nb.id===navChoiceId));
+      navChoiceAt=S.at;navChoiceId=routeModels[(index+1)%routeModels.length].nb.id;navInspectKey=null;renderPanel();
+    };
+    panel.querySelectorAll('[data-nav-inspect]').forEach(button=>button.onclick=()=>{
+      navInspectKey=button.dataset.navInspect;renderPanel();
+    });
+    const inspectClose=panel.querySelector('[data-nav-inspect-close]');
+    if(inspectClose) inspectClose.onclick=()=>{ navInspectKey=null;renderPanel(); };
+    const depart=panel.querySelector('[data-nav-depart]');
+    if(depart) depart.onclick=()=>G.startTravel(depart.dataset.navDepart);
+    const canvas=panel.querySelector('[data-nav-map]');
+    if(canvas){
+      requestAnimationFrame(()=>drawRouteConsoleMap(canvas,routeModels,navChoiceId));
+      canvas.onclick=event=>{
+        const rect=canvas.getBoundingClientRect(), x=event.clientX-rect.left, y=event.clientY-rect.top;
+        const hit=(canvas._navHazardHotspots||[]).find(point=>Math.hypot(point.x-x,point.y-y)<=22);
+        if(hit){ navInspectKey=hit.key;renderPanel(); }
+      };
+      canvas.onmousemove=event=>{
+        const rect=canvas.getBoundingClientRect(), x=event.clientX-rect.left, y=event.clientY-rect.top;
+        canvas.style.cursor=(canvas._navHazardHotspots||[]).some(point=>Math.hypot(point.x-x,point.y-y)<=22)?'pointer':'default';
+      };
+      canvas.onkeydown=event=>{
+        if((event.key==='Enter'||event.key===' ')&&(canvas._navHazardHotspots||[])[0]){
+          event.preventDefault();navInspectKey=canvas._navHazardHotspots[0].key;renderPanel();
+        }
+      };
+    }
+  }
   function applyIcons(){
     [['#g-fuel','fuel'],['#g-water','water'],['#g-food','food'],['#g-van','van'],['#g-scrap','scrap']]
       .forEach(([sel,key])=>{ if(!D.icons[key]) return;
@@ -1295,24 +1561,6 @@ const UI = (()=>{
     const fastest=[...recommendationPool].sort((a,b)=>b.forecast.progressScore-a.forecast.progressScore||b.forecast.safetyScore-a.forecast.safetyScore)[0]||null;
     const supplied=[...recommendationPool].sort((a,b)=>b.forecast.supplyScore-a.forecast.supplyScore||b.forecast.progressScore-a.forecast.progressScore)[0]||null;
     const recommended=fastest&&fastest.forecast.safetyScore>=68?fastest:(safest||supplied);
-    const routeActions=routeModels.map((model,index)=>{
-      const {nb,forecast,fuel}=model;
-      const t2=D.nodes[nb.id];
-      const lack = forecast.shortage;
-      const chk=forecast, blocked=!chk.ok;
-      const recommendations=[];
-      if(model===recommended) recommendations.push([model===fastest?'fast':'safe','현재']);
-      const isRecommended=recommendations.length>0;
-      const note=blocked&&chk.why?esc(chk.why):lack?'연료 부족 주의'
-        :forecast.risk&&forecast.risk!=='보통 도로'?esc(forecast.risk):'다음 목적지로 이어지는 길';
-      const buttonHint=esc(`${t2.name}로 이동: ${forecast.readinessLabel} ${forecast.readinessScore}점. ${forecast.readinessReason}`);
-      return `<button class="act route-option route-${forecast.readinessClass}${lack?' route-low-fuel':''}${isRecommended?' route-recommended':''}${forecast.progressKm<0?' route-backtrack':''}" data-go="${nb.id}" ${blocked?'disabled':''} aria-label="${buttonHint}">
-        <span class="route-index"><i>${String(index+1).padStart(2,'0')}</i>${t2.type==='goal'?'⚡':'↗'}</span>
-        <span class="route-copy"><span class="route-name"><b>${t2.name}</b><em>${note}</em></span>
-        <span class="route-decision"><i class="route-readiness ${forecast.readinessClass}">${forecast.readinessLabel} ${forecast.readinessScore}</i>${recommendations.map(([cls,label])=>`<i class="route-recommend ${cls}">${label} 추천</i>`).join('')}${forecast.gear.length?`<i class="route-gear-count">장비 ${forecast.gear.length}</i>`:''}</span>
-        <small class="route-stats"><span>${nb.km}km</span><i>·</i><span>주행 약 ${G.durationLabel(forecast.minutes)}</span><i>·</i><span>연료 약 ${fuel}L</span></small>
-        <small class="route-advice"><b>${esc(forecast.directionLabel)}</b> · ${esc(forecast.readinessReason)}</small></span></button>`;
-    }).join('');
     if(S.flags.armed_age){
       utilityActions+=`<button class="act" data-a="craft"><span class="ic">🔨</span><span><b>작업대를 편다</b><small>무기·탄 제작 · 약 40분</small></span></button>`;
     }
@@ -1326,9 +1574,8 @@ const UI = (()=>{
     const localSection=localActions?`<section class="journey-section local-section">
       <div class="journey-section-head"><span><small>AT THIS STOP</small><b>이곳에서 할 일</b></span><em>${n.stl?'정착지':'현지 행동'}</em></div>
       <div class="acts local-actions">${localActions}</div></section>`:'';
-    const routeSection=`<section class="journey-section route-section">
-      <div class="journey-section-head"><span><small>CHOOSE THE ROAD</small><b>다음 길을 고른다</b></span><em>${nbs.length}개 경로</em></div>
-      <div class="acts route-options">${routeActions||'<div class="route-empty">지금 이어지는 길이 없다.</div>'}</div></section>`;
+    const routeSection=`<section class="journey-section route-section route-console-section" aria-label="목적지 네비게이션">
+      ${routeConsoleHtml(routeModels,recommended)}</section>`;
     const routeRumors=!S.routePlan&&S.stats.km>=70?`<section class="journey-section route-rumor-section">
       <div class="journey-section-head"><span><small>AHEAD AT GIMCHEON</small><b>앞에서 갈라질 두 노선</b></span><em>미리 준비</em></div>
       <p>김천에서 한 길을 고르면 청주까지 바꿀 수 없다. 지금은 필요한 연료와 장비를 준비할 수 있다.</p>
@@ -1346,7 +1593,7 @@ const UI = (()=>{
         <span><b>${esc(buildProfile.name)} <i class="van-build-tier tier-${buildProfile.tier}">${esc(buildProfile.tierLabel)}</i>${buildProfile.secondary?` · ${esc(buildProfile.secondary)}`:''}</b><small>${esc(buildProfile.summary)}</small>${buildProfile.signature.length?`<em>${buildProfile.signature.map(esc).join(' · ')}</em>`:''}</span>
       </div>
       ${utilityActions?`<div class="acts utility-actions">${utilityActions}</div>`:''}</details>`;
-    const h=`${contextRail(n,false)}${journeyGuideHtml()}${localSection}${routeRumors}${routeSection}${utilitySection}`;
+    const h=`${contextRail(n,false)}${journeyGuideHtml()}${routeSection}${localSection}${routeRumors}${utilitySection}`;
     p.innerHTML=h;
     const wf=p.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>G.openRescue('nofuel','crisis_nofuel');
     const rp=p.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>G.fieldRepair();
@@ -1355,7 +1602,8 @@ const UI = (()=>{
     const rq=p.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>G.openRecruitStep();
     wireContext(p);
     wireJourneyGuide(p);
-    p.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
+    wireRouteConsole(p,routeModels);
+    p.querySelectorAll('[data-go]:not([data-route-select])').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
     const ex=p.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>G.explore();
     const st=p.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>showStl(n.stl);
   }

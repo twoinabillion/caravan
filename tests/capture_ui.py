@@ -38,6 +38,16 @@ with sync_playwright() as playwright:
         device_scale_factor=1,
     )
     enter_game(page)
+    page.wait_for_timeout(250)
+    page.screenshot(path=str(SHOT / "00-navigation-busan.png"))
+    page.click('[data-nav-inspect="hazard:local"]')
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "00b-navigation-danger.png"))
+    page.click('[data-nav-inspect-close]')
+    page.click('[data-nav-inspect="resources"]')
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "00c-navigation-resources.png"))
+    page.click('[data-nav-inspect-close]')
     page.evaluate(
         """() => {
           S.at = 'daegu';
@@ -90,6 +100,12 @@ with sync_playwright() as playwright:
           });
         }"""
     )
+    page.locator("#dk-menu").focus()
+    page.keyboard.press("Shift+Tab")
+    page.keyboard.press("Shift+Tab")
+    page.wait_for_timeout(80)
+    page.screenshot(path=str(SHOT / "01f-nav-focus.png"))
+    page.evaluate("document.querySelector('#dk-map').blur()")
     page.evaluate(
         """() => {
           UI.toast('🔧 좌석 증축이 끝났다 — 동료 자리 +1');

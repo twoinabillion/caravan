@@ -58,7 +58,136 @@ with sync_playwright() as p:
     check('360px 모바일 첫 화면에 가로 넘침이 없다',
           compact['content'] <= compact['viewport'] and compact['dock'] <= compact['viewport'], str(compact))
 
-    page.evaluate("G.startTravel('yangsan')")
+    dock_geometry = page.evaluate('''() => {
+      const dock=document.querySelector('#dock');
+      const dockBox=dock.getBoundingClientRect();
+      const buttons=[...dock.querySelectorAll('button')];
+      const target=[.1244,.3109,.4936,.6814,.8692];
+      const measured=buttons.map((button,index)=>{
+        const box=button.getBoundingClientRect();
+        const face=getComputedStyle(button,'::before');
+        const left=parseFloat(face.left)+parseFloat(face.marginLeft);
+        const faceCenter=(box.left-dockBox.left+left+parseFloat(face.width)/2)/dockBox.width;
+        const iconBox=button.querySelector('.dic').getBoundingClientRect();
+        const labelBox=button.querySelector('span:last-child').getBoundingClientRect();
+        return {
+          target:target[index],
+          hitWidth:box.width,
+          faceCenter,
+          iconCenter:(iconBox.left+iconBox.width/2-dockBox.left)/dockBox.width,
+          labelCenter:(labelBox.left+labelBox.width/2-dockBox.left)/dockBox.width
+        };
+      });
+      return {dockWidth:dockBox.width,measured};
+    }''')
+    hit_widths = [row['hitWidth'] for row in dock_geometry['measured']]
+    center_errors = [
+        abs(row[key] - row['target'])
+        for row in dock_geometry['measured']
+        for key in ('faceCenter', 'iconCenter', 'labelCenter')
+    ]
+    check('동일한 20% 터치 영역 안에서 면·아이콘·라벨이 셸 우물 중심에 함께 맞는다',
+          max(hit_widths) - min(hit_widths) <= 1 and max(center_errors) <= .001,
+          str(dock_geometry))
+
+    dock_rest = page.evaluate('''() => {
+      const road=document.querySelector('#dk-road');
+      const map=document.querySelector('#dk-map');
+      return {
+        sameFace:getComputedStyle(road,'::before').backgroundImage===getComputedStyle(map,'::before').backgroundImage,
+        roadDepth:getComputedStyle(road,'::before').transform,
+        mapDepth:getComputedStyle(map,'::before').transform
+      };
+    }''')
+    check('첫 화면의 길 버튼은 선택 표시만 있고 다른 버튼처럼 솟아 있다',
+          dock_rest['sameFace'] and dock_rest['roadDepth'] == dock_rest['mapDepth'], str(dock_rest))
+
+    map_box = page.locator('#dk-map').bounding_box()
+    page.mouse.move(map_box['x'] + map_box['width'] / 2, map_box['y'] + map_box['height'] / 2)
+    page.mouse.down()
+    dock_press = page.evaluate('''() => {
+      const button=document.querySelector('#dk-map');
+      const face=getComputedStyle(button,'::before');
+      const icon=getComputedStyle(button.querySelector('.dic'));
+      const label=getComputedStyle(button.querySelector('span:last-child'));
+      return {
+        changedFace:face.backgroundImage!==getComputedStyle(document.querySelector('#dk-road'),'::before').backgroundImage,
+        faceDepth:face.transform,
+        iconDepth:icon.transform,
+        labelDepth:label.transform
+      };
+    }''')
+    page.mouse.move(0, 0)
+    page.mouse.up()
+    check('누르는 동안에만 버튼 면과 내용이 같은 깊이로 내려간다',
+          dock_press['changedFace'] and dock_press['faceDepth'] == dock_press['iconDepth'] == dock_press['labelDepth'],
+          str(dock_press))
+
+    page.locator('#dk-menu').focus()
+    page.keyboard.press('Shift+Tab')
+    page.keyboard.press('Shift+Tab')
+    dock_focus = page.evaluate('''() => {
+      const button=document.querySelector('#dk-map');
+      return {
+        outline:getComputedStyle(button).outlineStyle,
+        labelGlow:getComputedStyle(button.querySelector('span:last-child')).textShadow
+      };
+    }''')
+    page.evaluate("document.querySelector('#dk-map').blur()")
+    check('키보드 초점은 노란 사각형 대신 버튼 내용의 빛으로 보인다',
+          dock_focus['outline'] == 'none' and dock_focus['labelGlow'] != 'none', str(dock_focus))
+
+    nav_initial = page.evaluate('''() => ({
+      console:!!document.querySelector('.route-console'),
+      routes:[...document.querySelectorAll('[data-route-select]')].map(button=>button.dataset.routeSelect),
+      hazards:document.querySelectorAll('.nav-hazard-row').length,
+      selected:document.querySelector('[data-route-select][aria-pressed="true"]')?.dataset.routeSelect,
+      copy:document.querySelector('.route-console')?.textContent||''
+    })''')
+    check('정차 화면은 목적지·위험·연료·식량을 한 네비게이션에서 보여 준다',
+          nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
+          nav_initial['hazards'] == 3 and '연료' in nav_initial['copy'] and '식량' in nav_initial['copy'],
+          str(nav_initial))
+    intel_coverage = page.evaluate('''() => {
+      const cities=Object.entries(D.nodes).filter(([,node])=>node.type!=='hidden').map(([id])=>id);
+      return {cities:cities.length, covered:cities.filter(id=>D.navIntel&&D.navIntel[id]).length};
+    }''')
+    check('현재 공개된 모든 도시는 출발 전 고유 위험 정보를 가진다',
+          intel_coverage['cities'] == intel_coverage['covered'], str(intel_coverage))
+    page.click('[data-nav-inspect="hazard:local"]')
+    local_intel = page.evaluate('''() => ({
+      key:document.querySelector('[data-nav-inspector]')?.dataset.navInspector,
+      copy:document.querySelector('.nav-inspector')?.textContent||'',
+      percent:(document.querySelector('.route-console')?.textContent||'').includes('%')
+    })''')
+    check('도시 위험을 누르면 출처·예상 결과·대응 방법이 열리고 가짜 확률은 보이지 않는다',
+          local_intel['key'] == 'hazard:local' and '고가 낙하물' in local_intel['copy'] and
+          '예상' in local_intel['copy'] and '대응' in local_intel['copy'] and not local_intel['percent'],
+          str(local_intel))
+    page.click('[data-nav-inspect-close]')
+    page.click('[data-nav-inspect="resources"]')
+    fuel_intel = page.evaluate('''() => ({
+      key:document.querySelector('[data-nav-inspector]')?.dataset.navInspector,
+      copy:document.querySelector('.nav-inspector')?.textContent||''
+    })''')
+    check('자원을 누르면 연료·식량·물 예상 소모와 도착지 보급 정보가 열린다',
+          fuel_intel['key'] == 'resources' and '연료' in fuel_intel['copy'] and
+          '식량/물' in fuel_intel['copy'] and '도착지 정보' in fuel_intel['copy'], str(fuel_intel))
+    page.click('[data-nav-inspect-close]')
+    page.click('[data-route-select="gimhae"]')
+    nav_compare = page.evaluate('''() => ({
+      driving:!!S.driving,
+      selected:document.querySelector('.route-console')?.dataset.routeConsole,
+      depart:document.querySelector('[data-nav-depart]')?.dataset.navDepart,
+      title:document.querySelector('.nav-route-decision h3')?.textContent
+    })''')
+    check('다른 길 선택은 즉시 출발하지 않고 비교할 목적지만 바꾼다',
+          not nav_compare['driving'] and nav_compare['selected'] == 'gimhae' and
+          nav_compare['depart'] == 'gimhae' and '김해' in nav_compare['title'], str(nav_compare))
+    page.click('[data-route-select="yangsan"]')
+    page.click('[data-nav-depart="yangsan"]')
+    check('네비게이션 출발 확인이 선택한 실제 주행을 시작한다',
+          page.evaluate("S.driving&&S.driving.to==='yangsan'"))
     first_pool = page.evaluate('''() => ({
       slots:S.driving.slots.length,
       priority:G.eligible().filter(e=>e.priority).map(e=>e.id)

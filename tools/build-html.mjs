@@ -72,14 +72,15 @@ const replace = (source, pattern, resolve, label) => {
 };
 
 const uiAssetPaths = {
-  NAV_ARMORED_SHELL:'assets/ui/nav-armored-shell-v1.png',
-  NAV_BUTTON_FACE:'assets/ui/nav-button-face-v1.png',
-  NAV_BUTTON_PRESSED:'assets/ui/nav-button-pressed-v1.png'
+  NAV_ARMORED_SHELL:{path:'assets/ui/nav-armored-shell-v1.png', mime:'image/png'},
+  NAV_BUTTON_FACE:{path:'assets/ui/nav-button-face-v1.png', mime:'image/png'},
+  NAV_BUTTON_PRESSED:{path:'assets/ui/nav-button-pressed-v1.png', mime:'image/png'},
+  ROUTE_CONSOLE_SHELL:{path:'assets/ui/route-console-shell-v1.jpg', mime:'image/jpeg'}
 };
 const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key => {
-  const relative=uiAssetPaths[key];
-  if(!relative) throw new Error(`알 수 없는 UI 자산: ${key}`);
-  return dataUri(relative,'image/png');
+  const asset=uiAssetPaths[key];
+  if(!asset) throw new Error(`알 수 없는 UI 자산: ${key}`);
+  return dataUri(asset.path,asset.mime);
 }, 'UI');
 
 const npc = replace(read('src/03f-npc-portraits.js'), /__NPC_([a-z0-9_]+)__/g,

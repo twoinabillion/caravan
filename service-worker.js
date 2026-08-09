@@ -1,4 +1,4 @@
-const CACHE = 'seoul-400km-shell-v1';
+const CACHE = 'seoul-400km-shell-v2';
 const SHELL = ['./', './index.html', './서울까지400km.html', './assets/app-icon.png', './manifest.webmanifest'];
 
 self.addEventListener('install', event => {
@@ -15,6 +15,18 @@ self.addEventListener('activate', event => {
    but never make a failed network request hide a previously cached journey shell. */
 self.addEventListener('fetch', event => {
   if(event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  const isDocument = event.request.mode === 'navigate' || url.pathname.endsWith('.html');
+  if(isDocument){
+    event.respondWith(fetch(event.request).then(response => {
+      if(response.ok && url.origin === self.location.origin){
+        const copy=response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, copy));
+      }
+      return response;
+    }).catch(() => caches.match(event.request).then(hit => hit || caches.match('./서울까지400km.html'))));
+    return;
+  }
   event.respondWith(caches.match(event.request).then(hit => {
     if(hit) return hit;
     return fetch(event.request).then(response => {
@@ -23,8 +35,6 @@ self.addEventListener('fetch', event => {
         caches.open(CACHE).then(cache => cache.put(event.request, copy));
       }
       return response;
-    }).catch(() => event.request.mode === 'navigate'
-      ? caches.match('./서울까지400km.html')
-      : Response.error());
+    }).catch(() => Response.error());
   }));
 });
