@@ -1,49 +1,36 @@
-# Cockpit Option 1 Design QA
+# Caravan cockpit design QA
 
-- Source visual truth: `/Users/sang/.codex/generated_images/019fdfc9-5f28-7170-aab4-d2a0abfb6556/exec-186c663e-579f-4102-afaf-7d1bd9b00462.png`
-- Implementation screenshot: `/private/tmp/caravan-cockpit-audit/14-cockpit-option1-final.png`
-- Combined comparison: `/private/tmp/caravan-cockpit-audit/15-reference-vs-final.png`
-- CSS viewport: `390 x 844`
-- Device scale factor: `1`
-- Source pixels: `852 x 1872`, normalized to `390 x 844` for comparison
-- Implementation pixels: `390 x 844`
-- State: first route selected, ignition waiting, one current occupant
+## Result
 
-## Full-view comparison evidence
+- Status: passed
+- P0: 0
+- P1: 0
+- P2: 0
 
-The normalized side-by-side comparison preserves the source's main proportions: overhead route display and mirror, dominant windshield, steering wheel and twin gauges, and three physical dashboard controls. The implementation deliberately uses the live game's road renderer instead of the mock's static city scene.
+## Evidence
 
-## Focused-region comparison evidence
+- Reference: `/Users/sang/.codex/generated_images/019fdfc9-5f28-7170-aab4-d2a0abfb6556/exec-186c663e-579f-4102-afaf-7d1bd9b00462.png`
+- Mobile implementation: `/private/tmp/caravan-cockpit-audit/16-cockpit-v2-ignition.png`
+- Side-by-side comparison: `/private/tmp/caravan-cockpit-audit/17-reference-vs-v2.png`
+- Viewport: 390 x 844
 
-A separate crop was not needed. At the normalized `390 x 844` size, the route display, mirror portrait, gauge values and needles, ignition, paper map and radio frequency are all readable in the combined comparison. The original-size implementation screenshot was also inspected for transparency edges and text clipping.
+## Findings resolved
 
-## Required fidelity surfaces
+- Replaced the generic dashboard composition with the selected analog cockpit geometry and material treatment.
+- Preserved the physical ignition cylinder, folded-map unit, radio face, analog gauge markings, steering wheel, mirror, and windshield framing.
+- Removed oversized visible button rectangles and constrained touch targets to the corresponding physical devices.
+- Kept live destination, remaining distance, ignition state, passenger portrait, fuel needle, and body-condition needle as dynamic UI.
+- Kept the windshield transparent so the live road, weather, time, and destination scenery remain visible.
+- Avoided duplicated labels by using the labels baked into the cockpit face while retaining accessible button names.
 
-- Fonts and typography: compact Korean monospace hierarchy matches the amber instrument language; destination, distance, values and control labels remain readable without wrapping.
-- Spacing and layout rhythm: the cockpit fills the viewport; the windshield remains the largest region; all interactive controls stay inside their physical housings with no persistent dock or stacked mission panels.
-- Colors and visual tokens: worn brown-black materials, amber display text, green running state and red warning capability match the selected direction and existing game palette.
-- Image quality and asset fidelity: the generated cockpit shell is embedded at native quality with a clean transparent windshield opening. The folded map is a dedicated raster asset, not placeholder art. Existing game portraits are used in the mirror.
-- Copy and content: destination, remaining distance, ignition state, fuel, vehicle condition, occupant count and control labels are driven by game state rather than baked into the image.
+## Interaction map
 
-## Interaction evidence
+- Ignition: physical key cylinder and its immediate bezel.
+- Map: center folded-map device.
+- Radio: right radio device.
+- Fuel and body gauges: their circular instrument faces.
+- Rear-view mirror: passenger/status area.
 
-- Ignition changes `ignition` to `driving` and updates the control state.
-- Map control opens `#ovl-map`.
-- Mirror opens the crew/status overlay.
-- Fuel and vehicle gauges open the vehicle status overlay.
-- Radio control changes the sound state.
-- Browser `pageerror`: none across the tested flow.
+## Residual note
 
-## Comparison history
-
-1. First implementation: P1 road sightline sat below the windshield and crew mirror contained text only. Fixed by resizing the live road canvas into the glass opening and binding existing portrait assets to the mirror.
-2. Second implementation: P2 route text reused the long origin-to-destination string and truncated. Fixed with a dedicated live cockpit navigation display.
-3. Third implementation: P2 map and radio housings were visually blank. Fixed with an embedded folded-map asset and live radio display label.
-4. Final pass: no actionable P0, P1 or P2 visual differences remain.
-
-## Follow-up polish
-
-- P3: the live road renderer is intentionally simpler than the concept's painted city scene; future scenery upgrades can add density without changing the cockpit UI.
-- P3: mirror portrait count varies with the real party and therefore may differ from the two-character concept reference.
-
-final result: passed
+The world visible through the windshield intentionally keeps the existing game pixel-art rendering. The cockpit is more detailed than the exterior scene, but this preserves gameplay readability and avoids turning the driving view into a static illustration.
