@@ -1,12 +1,13 @@
 name: gate
 
 # 게이트가 노트북 한 대의 기억력에 의존하지 않게 한다.
-# PR: 빠른 층(빌드·lint·세이브·보안·결정성·골든 루트)
-# main: 전체 릴리스 게이트
+# push/PR: 빠른 층(빌드·lint·세이브·보안·결정성·골든 루트)
+# 수동 실행: 장기 시뮬레이션까지 포함한 전체 릴리스 게이트
 on:
   push:
     branches: [master, main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   quick:
@@ -62,6 +63,9 @@ jobs:
           "
 
   full:
+    # 장기 밸런스 시뮬레이션은 진단용이다. 일반 UI/콘텐츠 push를 빨갛게
+    # 막지 않고, 출시 후보를 점검할 때 Actions에서 수동으로 실행한다.
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:

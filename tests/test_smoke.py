@@ -918,7 +918,8 @@ with sync_playwright() as p:
       S.recruitQ={id:'minji',stage:'task',target:'ulsan'};
       UI.renderAll();
       out.missionSecondary=document.querySelector('#mission-strip').classList.contains('has-secondary') &&
-        document.querySelector('#mission-strip').textContent.includes('함께 진행 중') &&
+        document.querySelector('#mission-strip').textContent.includes('민지') &&
+        document.querySelector('#mission-strip').textContent.includes('게시판') &&
         document.querySelector('#mission-strip').textContent.includes('대전') &&
         document.querySelector('#mission-strip').textContent.includes('본편') &&
         document.querySelector('#mission-strip').textContent.includes('남산 조치');

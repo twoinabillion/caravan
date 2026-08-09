@@ -2161,7 +2161,7 @@ const UI = (()=>{
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns);
     curStory={
-      phase:'event',eventId:evd.id,label:evd.type==='대화'?'대화':'이야기',turns,index:Math.max(0,turns.length-2),
+      phase:'event',eventId:evd.id,label:evd.type==='대화'?'대화':'이야기',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
       sceneKeys,sceneAlt,sceneStart:0,
