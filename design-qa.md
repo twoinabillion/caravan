@@ -1,11 +1,12 @@
 # Armored navigation design QA
 
 - Source visual truth: `/Users/sang/Desktop/Caravan UI Concepts/03-armored-route-deck.png`
-- User-reported regression: `/Users/sang/Desktop/Screenshot 2026-08-09 at 2.10.20 PM.png`
-- Implementation screenshots: `/Users/sang/caravan/tests/shots/armored-nav-depth-390/01-main.png` and `/Users/sang/caravan/tests/shots/armored-nav-depth-580/01-main.png`
+- User-reported regression screenshots: `/Users/sang/Desktop/Screenshot 2026-08-09 at 2.10.20 PM.png` and `/Users/sang/Desktop/Screenshot 2026-08-09 at 2.18.01 PM.png`
+- Implementation screenshots: `/Users/sang/caravan/tests/shots/armored-nav-depth-390/01-main.png` and `/Users/sang/caravan/tests/shots/armored-nav-optical-580/01-main.png`
 - Full-view comparison: `/Users/sang/caravan/tests/shots/armored-nav-depth-390/compare-restored-390.png`
 - Focused responsive comparison: `/Users/sang/caravan/tests/shots/armored-nav-depth-580/compare-wide-before-after.png`
 - Focused press comparison: `/Users/sang/caravan/tests/shots/armored-nav-depth-580/compare-depth-states.png`
+- Focused optical-centering comparison: `/Users/sang/caravan/tests/shots/armored-nav-optical-580/compare-user-after.png`
 - Viewport/state: 390 × 844 and 580 × 844 CSS px, stopped at Daegu with route choices visible, device scale factor 1
 - Density normalization: source concept 852 × 1846 px downsampled to 390 × 844 px. User regression screenshot 1160 × 327 px normalized to a 580 × 164 comparison crop. Implementations captured natively at both CSS sizes.
 
@@ -14,6 +15,7 @@
 No actionable P0, P1, or P2 differences remain.
 
 - Fonts and typography: the implementation keeps the game's existing Korean mono/sans hierarchy rather than rasterizing mockup labels. The five labels are readable at 12px or larger and remain live text.
+- Optical centering: Road's icon/label group is shifted 2px right; Inventory and Menu are shifted 2px left. Objectives and Map remain at their mathematical centers. These corrections affect content only and leave frame geometry untouched.
 - Spacing and layout rhythm: the generated shell occupies 76–77px at 390px and scales to 114px at 580px. The five live buttons remain in the original equal responsive grid, matching the five evenly distributed hardware frames without protruding above or separating from the shell.
 - Colors and visual tokens: olive-charcoal steel, rubbed silver edges, soot-black recesses, and amber active state match the selected source. The implementation is slightly brighter than the mockup at the lower edge; this is acceptable because it improves well separation on the actual game background.
 - Image quality and asset fidelity: the shell, raised button face, and pressed button face are dedicated transparent raster assets generated from the selected source. Edges are clean, corners are transparent, and there are no chroma halos at the captured scale.
@@ -35,6 +37,10 @@ No actionable P0, P1, or P2 differences remain.
 4. Responsive restoration and uniform depth pass
    - Fix: restored the exact original five-column responsive layout. Removed all scale and per-button position transforms, then routed both the face and icon/label through one shared `--press-depth` value: 2px selected and 4px held.
    - Post-fix evidence: the bottom half of `compare-wide-before-after.png` restores the compact integrated plate at 580px. `compare-depth-states.png` shows the selected and held states staying centered while sinking uniformly. All five selected states were also captured in `all-selected-states.png`.
+5. Optical content-centering pass
+   - [P2] At the user's 2× screenshot density, Road read slightly left of its recess while Inventory and Menu read slightly right because their icon shapes and Korean label widths carry uneven visual weight.
+   - Fix: applied content-only optical offsets of +2px to Road and -2px to Inventory/Menu. The button faces, shell, grid, and press depth remain unchanged.
+   - Post-fix evidence: `compare-user-after.png` places the user capture and corrected 580px dock together; `compare-optical-before-after.png` isolates the three small shifts, and `compare-selected-held.png` confirms the corrections persist during vertical press travel.
    - No remaining P0/P1/P2 findings.
 
 ## Primary interactions tested
@@ -59,6 +65,7 @@ No actionable P0, P1, or P2 differences remain.
 - [x] Captured and compared the same viewport and state
 - [x] Restored the original responsive five-column placement at 390px and 580px
 - [x] Applied one shared vertical depth value to the face, icon, and label
+- [x] Optically centered Road, Inventory, and Menu content without moving their frames
 - [x] Passed source health, content/asset verification, keyboard regression, and golden route
 
 final result: passed
