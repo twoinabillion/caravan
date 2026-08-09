@@ -1230,7 +1230,7 @@ const SCENE = (()=>{
     const hour=S? S.min/60:21.2;
     const dark=darknessAt(hour);
     const wx=S? (S.wx||'clear'):'clear';
-    const speed=S&&S.driving&&S.driving.ignition!==false&&!UI.modalOpen()?1:0;
+    const speed=S&&S.driving&&!UI.modalOpen()?1:0;
     if(speed>0) worldX+=64*dt;
 
     drawSky(hour,dark,wx);
@@ -1253,18 +1253,13 @@ const SCENE = (()=>{
     if(bio==='bamboo') bambooStrip(0.55);
     if(bio!=='coast'&&bio!=='lake') pines(0.46,H*0.705, mix('#0f1626','#070a12',dark*0.5));
     buildings(0.55,64,density*0.72,H*0.715,9,30, mix('#0f1526','#060910',dark*0.5),dark);
-    const cockpit=!!(S&&S.driving);
-    if(cockpit) drawApproachLandmark(dark);
-    const roadY=cockpit?forwardRoad(dark,wx):road(dark,wx);
-    if(!cockpit){
-      deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
-      poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
-      signs(1.0,roadY+1);
-      van(roadY,speed,dark,wx);
-      drawPuffs(dt);
-    }
+    const roadY=road(dark,wx);
+    deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
+    poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
+    signs(1.0,roadY+1);
+    van(roadY,speed,dark,wx);
+    drawPuffs(dt);
     drawCrows(dt); weather(wx,dark,speed,dt);
-    if(cockpit) drawCockpit(dark,wx,speed);
     cheollianFx(roadY);
     /* 비네트 */
     const vg=ctx.createRadialGradient(W/2,H*0.45,H*0.3,W/2,H*0.5,H*0.95);

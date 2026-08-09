@@ -58,7 +58,7 @@ with sync_playwright() as p:
     check('360px 모바일 첫 화면에 가로 넘침이 없다',
           compact['content'] <= compact['viewport'] and compact['dock'] <= compact['viewport'], str(compact))
 
-    page.evaluate("G.startTravel('yangsan'); G.toggleIgnition()")
+    page.evaluate("G.startTravel('yangsan')")
     first_pool = page.evaluate('''() => ({
       slots:S.driving.slots.length,
       priority:G.eligible().filter(e=>e.priority).map(e=>e.id)
@@ -105,7 +105,7 @@ with sync_playwright() as p:
     check('민지 첫 임무의 방식과 차체 흉터가 상태에 남는다',
           task['stage'] == 'road' and task['choice'] == 'shield' and task['van'] < 82, str(task))
 
-    page.evaluate("G.startTravel('miryang'); G.toggleIgnition()")
+    page.evaluate("G.startTravel('miryang')")
     guest = page.evaluate('''() => ({
       id:S.driving.guest, fuel:S.driving.guestFuel,
       copy:document.querySelector('.road-guest-card')?.textContent||''
@@ -202,7 +202,7 @@ with sync_playwright() as p:
     page.evaluate("UI.showStl('miryang','hub'); document.querySelector('#stl-out').click()")
 
     drive_before = page.evaluate("({van:S.van,vanMax:S.vanMax})")
-    page.evaluate("G.startTravel('daegu'); G.toggleIgnition()")
+    page.evaluate("G.startTravel('daegu')")
     callback = page.evaluate('''() => ({
       memory:S.driving.recruitMemory,
       van:S.van,

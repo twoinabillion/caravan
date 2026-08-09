@@ -38,23 +38,10 @@ for(const name of portraitFiles){
   }
 }
 
-const uiContracts=new Map([
-  ['assets/ui/cockpit-shell-v1.png',[853,1844]],
-  ['assets/ui/caravan-exterior-v1.webp',[720,720]]
-]);
-for(const [relative,expected] of uiContracts){
-  const file=join(root,relative);
-  if(!existsSync(file)){ failures.push(`${relative}: missing`); continue; }
-  const actual=dimensions(file);
-  if(actual.width!==expected[0]||actual.height!==expected[1]){
-    failures.push(`${relative}: ${actual.width}x${actual.height}; expected ${expected[0]}x${expected[1]}`);
-  }
-}
-
 if(failures.length){
   console.error('Scene asset contract failed:');
   failures.forEach(line=>console.error(`- ${line}`));
   process.exit(1);
 }
 
-console.log(`Image asset contract passed: ${imageFiles.length} scenes, ${portraitFiles.length} portraits, ${uiContracts.size} driving UI assets checked.`);
+console.log(`Image asset contract passed: ${imageFiles.length} scenes and ${portraitFiles.length} portraits checked.`);

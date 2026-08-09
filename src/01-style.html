@@ -2089,4 +2089,69 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 @media(prefers-reduced-motion:reduce){
   #drive-exterior-van,#drive-prompt{animation:none!important}
 }
+
+/* ── road-first navigation ──────────────────────────────────
+   The stopped screen is the play surface. Objectives, map, inventory and
+   secondary utilities stay one tap away instead of competing with the road. */
+#mission-strip{display:none}
+#stage{flex-basis:clamp(235px,32dvh,280px)}
+#dash{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;z-index:11;
+  margin:-46px 10px 0;padding:8px 10px;border:1px solid rgba(232,227,213,.16);border-radius:12px;
+  background:linear-gradient(180deg,rgba(9,12,21,.76),rgba(10,14,25,.96));
+  box-shadow:0 12px 28px rgba(0,0,0,.32);backdrop-filter:blur(12px)}
+#gauges{grid-template-columns:repeat(2,minmax(0,1fr))}
+#gauges .g{padding:0 10px}
+#gauges .g:nth-child(2),#gauges .g:nth-child(3),#gauges .g:nth-child(5){display:none}
+#dash-sub{min-width:112px;display:grid;justify-items:end;gap:3px;margin:0;padding:0 0 0 10px;
+  border-top:0;border-left:1px solid rgba(255,255,255,.07);line-height:1.25}
+#dash-sub #ftgbox,#dash-sub #eyebox{display:none!important}
+#main{margin-top:8px}
+#panel{padding-top:10px}
+#panel>.journey-context{display:none}
+#panel>.journey-guide{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 10px;
+  margin:0 0 10px;padding:8px 10px}
+#panel>.journey-guide .journey-guide-head{grid-column:1/3;margin:0}
+#panel>.journey-guide>b{grid-column:1;font-size:13px}
+#panel>.journey-guide>p,#panel>.journey-guide>.journey-guide-list{display:none}
+#panel>.journey-guide .journey-guide-track{grid-column:1/3;margin-top:2px}
+.journey-section{margin-bottom:12px}
+.journey-section-head{margin-bottom:7px}
+
+#dock{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:4px 5px var(--safe-bottom);gap:2px;
+  background:linear-gradient(180deg,rgba(14,18,30,.95),rgba(7,10,18,.99));
+  border-top-color:rgba(255,180,84,.2);box-shadow:0 -10px 30px rgba(0,0,0,.28)}
+#dock button{min-width:0;min-height:54px;padding:5px 2px 4px;gap:4px;border:1px solid transparent;border-radius:8px;
+  font:700 12px/1.1 var(--mono);letter-spacing:.02em;color:#929db5;box-shadow:none}
+#dock button .dic{width:22px;height:22px;display:grid;place-items:center;filter:none}
+#dock button .dic img{display:block;width:20px;height:20px;object-fit:contain;image-rendering:pixelated;opacity:.7}
+#dock button.here{color:#ffd39a;border-color:rgba(255,180,84,.28);background:rgba(255,180,84,.075);box-shadow:none}
+#dock button.here .dic img{opacity:1;filter:drop-shadow(0 0 6px rgba(255,180,84,.22))}
+
+#menu-body{flex:1;overflow-y:auto;padding:14px 14px calc(20px + var(--safe-bottom));background:
+  radial-gradient(90% 42% at 50% 0%,rgba(255,180,84,.065),transparent 70%),var(--night)}
+.menu-intro{margin-bottom:12px;padding:4px 2px 10px;border-bottom:1px solid rgba(255,255,255,.07)}
+.menu-intro small{display:block;color:var(--amber);font:700 12px/1.2 var(--mono);letter-spacing:.15em}
+.menu-intro b{display:block;margin-top:4px;color:var(--paper);font-size:17px}
+.menu-intro p{margin:4px 0 0;color:var(--faded);font-size:12.5px;line-height:1.45}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.menu-grid button,.menu-settings{min-width:0;min-height:88px;display:flex;align-items:flex-start;gap:10px;padding:12px;
+  border:1px solid var(--line);border-radius:11px;background:linear-gradient(145deg,rgba(28,34,53,.98),rgba(16,21,35,.98));
+  color:var(--paper);text-align:left}
+.menu-grid button:hover,.menu-settings:hover{border-color:var(--amber-dim)}
+.menu-ico{flex:none;width:28px;height:28px;display:grid;place-items:center;color:var(--amber);font-size:16px}
+.menu-ico img{display:block;width:26px;height:26px;object-fit:contain;image-rendering:pixelated}
+.menu-grid button>span:last-child,.menu-settings>span:last-child{min-width:0}
+.menu-grid b,.menu-settings b{display:block;font-size:13.5px;line-height:1.3}
+.menu-grid small,.menu-settings small{display:block;margin-top:4px;color:#99a4bb;font:12px/1.35 var(--mono)}
+.menu-settings{width:100%;min-height:68px;margin-top:8px;align-items:center}
+
+@media(max-width:680px){
+  #stage{flex-basis:clamp(225px,31dvh,255px)}
+  #dash{margin:-42px 8px 0;padding:7px 8px;gap:7px}
+  #gauges .g{padding:0 8px}
+  #dash-sub{min-width:101px;padding-left:8px;font-size:12px}
+  #main{margin-top:7px}
+  #panel{padding:9px 12px calc(70px + var(--safe-bottom))}
+  #dock button{min-height:52px}
+}
 </style>

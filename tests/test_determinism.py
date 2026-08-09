@@ -51,7 +51,6 @@ RUN_JS = """
   for (const target of ['yangsan','miryang','daegu','gimcheon']) {
     if (!G.canTravelTo(target).ok) break;
     if (!G.startTravel(target)) break;
-    if (S.driving && S.driving.ignition === false) G.toggleIgnition();
     let guard = 0;
     while (S.driving && guard++ < 3000) { G.tick(1.4); if (pending) resolve(); }
     resolve();

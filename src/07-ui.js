@@ -99,12 +99,12 @@ const UI = (()=>{
     if(restore&&back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
   }
   function activeModal(){
-    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-camp']
+    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-menu','#ovl-camp']
       .map($).find(node=>node&&node.classList.contains('on'))||null;
   }
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
     || $('#ovl-stl').classList.contains('on') || $('#ovl-map').classList.contains('on')
-    || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on')
+    || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on') || $('#ovl-menu').classList.contains('on')
     || $('#ovl-seoul').classList.contains('on') || $('#ovl-camp').classList.contains('on');
 
   /* ── screens ── */
@@ -196,7 +196,7 @@ const UI = (()=>{
       if(screen==='game'&&drawFrame){
         SCENE.draw(dt);
         MAPR.drawMini(dt);
-        hudCd-=dt; if(hudCd<=0){ hudCd=0.25; renderHud(); renderMission(); if(S&&S.driving){ renderTravelbar(); renderCockpitNav(); } }
+        hudCd-=dt; if(hudCd<=0){ hudCd=0.25; renderHud(); renderMission(); if(S&&S.driving) renderTravelbar(); }
         if($('#ovl-map').classList.contains('on')) MAPR.draw(dt);
         if($('#jgraphwrap').classList.contains('on')) GRAPH.draw(dt);
       }
@@ -209,30 +209,6 @@ const UI = (()=>{
     const saveForLifecycle=()=>{ if(S) G.save(); };
     document.addEventListener('visibilitychange',()=>{ if(document.hidden) saveForLifecycle(); });
     window.addEventListener('pagehide',saveForLifecycle);
-    document.querySelectorAll('[data-cockpit-action]').forEach(button=>button.onclick=()=>{
-      const action=button.dataset.cockpitAction;
-      if(action==='ignition'){
-        G.toggleIgnition();
-        renderAll();
-      }
-      else if(action==='map') $('#dk-map').click();
-      else if(action==='crew'){
-        $('#dk-status').click();
-        requestAnimationFrame(()=>document.querySelector('[data-sttab="crew"],[data-tab="crew"]')?.click());
-      }
-      else if(action==='status') $('#dk-status').click();
-      else if(action==='radio') $('#dk-sound').click();
-    });
-    document.querySelectorAll('[data-drive-action]').forEach(button=>button.onclick=()=>{
-      const action=button.dataset.driveAction;
-      if(action==='view') G.cycleDriveView();
-      else if(action==='wipers') G.cycleDriveWipers();
-      else if(action==='lights') G.cycleDriveLights();
-      else if(action==='pace') G.cycleDrivePace();
-      else if(action==='lane-left') G.resolveDrivePrompt('left');
-      else if(action==='lane-right') G.resolveDrivePrompt('right');
-      renderAll();
-    });
     /* div/canvas로 만든 조작 카드도 Enter·Space로 실제 버튼처럼 작동한다. */
     document.addEventListener('keydown',e=>{
       const modal=activeModal();
@@ -360,16 +336,32 @@ const UI = (()=>{
       scheduleIntroAuto();
     };
     $('#intro-summary-start').onclick=e=>{ e.stopPropagation(); skipIntro(); };
-    $('#dk-map').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
-    $('#dk-journal').onclick=()=>{ toggleOvl('#ovl-journal'); renderJournal(); };
+    document.querySelectorAll('[data-nav-icon],[data-menu-icon]').forEach(button=>{
+      const key=button.dataset.navIcon||button.dataset.menuIcon;
+      const slot=button.querySelector('.dic,.menu-ico');
+      if(slot&&D.icons[key]) slot.innerHTML=`<img src="${D.icons[key]}" alt="">`;
+    });
+    $('#dk-road').onclick=()=>{
+      document.querySelectorAll('.ovl.on').forEach(o=>closeModal(o,false));
+      setDockTab('dk-road');
+      $('#panel').scrollTo({top:0,behavior:uiPrefs.reduceMotion?'auto':'smooth'});
+    };
+    $('#dk-objectives').onclick=()=>openStatusTab('journey','dk-objectives');
+    $('#dk-map').onclick=()=>{ setDockTab('dk-map'); toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
+    $('#dk-menu').onclick=()=>{ setDockTab('dk-menu'); toggleOvl('#ovl-menu'); };
+    $('#menu-x').onclick=()=>closeOvl('#ovl-menu');
+    $('#menu-crew').onclick=()=>openStatusFromMenu('crew');
+    $('#menu-settings').onclick=()=>openStatusFromMenu('now',true);
+    $('#dk-journal').onclick=()=>{ openFromMenu('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>{
-      if(S&&!S.driving&&!UI.modalOpen()) AMBI.play('sfx_camp_loop',.32);
+      closeModal('#ovl-menu',false);
+      if(S&&!S.driving) AMBI.play('sfx_camp_loop',.32);
       showCampHub();
     };
     $('#dk-sound').onclick=()=>SND.toggle();
     $('#early-sound').onclick=()=>SND.toggle();
-    $('#dk-status').onclick=()=>{ toggleOvl('#ovl-status'); renderStatus(); };
-    $('#mission-strip').onclick=()=>{ toggleOvl('#ovl-status'); stTab='journey'; renderStatus(); };
+    $('#dk-status').onclick=()=>openStatusTab('now','dk-status');
+    $('#mission-strip').onclick=()=>openStatusTab('journey','dk-objectives');
     $('#st-x').onclick=()=>closeOvl('#ovl-status');
     $('#map-x').onclick=()=>closeOvl('#ovl-map');
     $('#j-x').onclick=()=>closeOvl('#ovl-journal');
@@ -555,6 +547,36 @@ const UI = (()=>{
   }
 
   /* ── overlays ── */
+  function setDockTab(id){
+    document.querySelectorAll('#dock button').forEach(button=>{
+      const active=button.id===id;
+      button.classList.toggle('here',active);
+      if(active) button.setAttribute('aria-current','page');
+      else button.removeAttribute('aria-current');
+    });
+  }
+  function openStatusTab(tab,triggerId){
+    stTab=tab;
+    setDockTab(triggerId||'dk-status');
+    if(!$('#ovl-status').classList.contains('on')) toggleOvl('#ovl-status');
+    renderStatus();
+  }
+  function openFromMenu(sel){
+    closeModal('#ovl-menu',false);
+    $('#dk-menu').focus({preventScroll:true});
+    toggleOvl(sel);
+  }
+  function openStatusFromMenu(tab,scrollSettings=false){
+    closeModal('#ovl-menu',false);
+    $('#dk-menu').focus({preventScroll:true});
+    stTab=tab;
+    toggleOvl('#ovl-status');
+    renderStatus();
+    if(scrollSettings) requestAnimationFrame(()=>{
+      const target=$('#st-body').querySelector('.ui-comfort');
+      if(target) target.scrollIntoView({block:'start'});
+    });
+  }
   function toggleOvl(sel){ const o=$(sel);
     const opening=!o.classList.contains('on');
     document.querySelectorAll('.ovl').forEach(x=>{ if(x!==o) closeModal(x,false); });
@@ -564,6 +586,7 @@ const UI = (()=>{
   }
   function closeOvl(sel){
     closeModal(sel);
+    if(['#ovl-map','#ovl-status','#ovl-menu','#ovl-journal','#ovl-camp'].includes(sel)) setDockTab('dk-road');
     if(sel==='#ovl-map') $('#nodecard').classList.remove('on');
     if(sel==='#ovl-stl'&&typeof AMBI!=='undefined') AMBI.restore();
   }
@@ -1169,47 +1192,6 @@ const UI = (()=>{
       renderStatus();
     };
   }
-  function renderDriveControls(){
-    const state=G.driveControlState?G.driveControlState():{view:'cockpit',wipers:'auto',lights:'auto',pace:'cruise'};
-    document.documentElement.dataset.driveView=state.view||'cockpit';
-    document.documentElement.dataset.drivePace=state.pace||'cruise';
-    const labels={
-      view:state.view==='cockpit'?'운전석':'외부',
-      wipers:{auto:'자동',on:'켜짐',off:'꺼짐'}[state.wipers]||'자동',
-      lights:{auto:'자동',on:'켜짐',off:'꺼짐'}[state.lights]||'자동',
-      pace:{eco:'절약',cruise:'순항',push:'가속'}[state.pace]||'순항'
-    };
-    Object.entries(labels).forEach(([key,label])=>{
-      const button=document.querySelector('[data-drive-action="'+key+'"]');
-      if(!button) return;
-      const output=button.querySelector('b');
-      if(output) output.textContent=label;
-      button.setAttribute('aria-label',button.querySelector('span').textContent+' '+label);
-      button.classList.toggle('active',key==='wipers'?state.wipersActive:key==='lights'?state.lightsActive:false);
-    });
-    const prompt=$('#drive-prompt'), lanes=$('#drive-lanes');
-    if(prompt&&lanes){
-      const active=!!(S&&S.driving&&state.prompt);
-      prompt.classList.toggle('on',active);
-      lanes.classList.toggle('on',active);
-      if(active){
-        const side=state.prompt.blocked==='left'?'왼쪽':'오른쪽';
-        prompt.querySelector('b').textContent=side+' 차선 · '+state.prompt.kind;
-        prompt.querySelector('span').textContent='반대 차선으로 피한다 · '+Math.max(1,Math.ceil(state.prompt.expires))+'초';
-      }
-    }
-  }
-  function renderCockpitNav(){
-    renderDriveControls();
-    if(!S||!S.driving) return;
-    const to=D.nodes[S.driving.to];
-    const remaining=Math.max(0,Math.ceil((S.driving.dist||0)-(S.driving.gone||0)));
-    const place=$('#cockpit-nav-place'); if(place) place.textContent=to?to.name:'다음 목적지';
-    const distance=$('#cockpit-nav-distance');
-    if(distance) distance.textContent=`${remaining}km`;
-    const state=$('#cockpit-nav-state');
-    if(state) state.textContent=`${S.driving.ignition===false?'시동 대기':'주행 중'} · 본편 북쪽으로`;
-  }
   function renderPanel(){
     const p=$('#panel');
     if(!S){ p.innerHTML=''; return; }
@@ -1217,37 +1199,7 @@ const UI = (()=>{
     const journeyStage=(S.stats&&S.stats.km<35)||(S.stats&&S.stats.events<4)?'first'
       :(S.stats&&S.stats.km<110?'learning':'open');
     document.documentElement.dataset.journeyStage=journeyStage;
-    document.documentElement.dataset.travelState=S.driving?(S.driving.ignition===false?'ignition':'driving'):'stopped';
-    renderDriveControls();
-    const ignition=$('[data-cockpit-action="ignition"]');
-    if(ignition){
-      const on=!!(S.driving&&S.driving.ignition!==false);
-      ignition.classList.toggle('on',on);
-      ignition.setAttribute('aria-pressed',String(on));
-      ignition.setAttribute('aria-label',on?'시동 끄기':'시동 걸기');
-      const label=ignition.querySelector('b'); if(label) label.textContent=on?'시동 끄기':'시동 걸기';
-    }
-    const setCockpitMeter=(selector,value,max,suffix)=>{
-      const meter=$(selector); if(!meter) return;
-      const ratio=Math.max(0,Math.min(1,(Number(value)||0)/Math.max(1,Number(max)||1)));
-      meter.style.setProperty('--needle-angle',`${-135+ratio*90}deg`);
-      meter.classList.toggle('warn',ratio<=0.25);
-      const rounded=Math.round(Number(value)||0);
-      const output=meter.querySelector('b'); if(output) output.textContent=`${rounded}${suffix}`;
-      meter.setAttribute('aria-label',`${selector.includes('fuel')?'연료':'차체'} ${rounded}${suffix} · 차량 상태 열기`);
-    };
-    setCockpitMeter('#cockpit-fuel-meter',S.fuel,S.fuelCap||60,'L');
-    setCockpitMeter('#cockpit-van-meter',S.van,100,'%');
-    const crewCount=$('#cockpit-crew-count');
-    const crewFaces=$('#cockpit-crew-faces');
-    if(crewCount&&crewFaces){
-      const party=Array.isArray(S.party)?S.party:(Array.isArray(S.crew)?S.crew:[]);
-      const memberId=member=>typeof member==='string'?member:(member&&(member.id||member.pid||member.key));
-      const ids=['me',...party.map(memberId)].filter(id=>id&&D.portraits&&D.portraits[id]).slice(0,3);
-      crewFaces.innerHTML=ids.map(id=>`<img src="${D.portraits[id]}" alt="">`).join('');
-      crewCount.textContent=`${Math.max(1,1+party.length)}명`;
-      $('#cockpit-mirror').setAttribute('aria-label',`동료 ${Math.max(1,1+party.length)}명과 백미러 보기`);
-    }
+    document.documentElement.dataset.travelState='stopped';
     if(S.driving){
       const to=D.nodes[S.driving.to];
       const rq=S.recruitQ&&S.recruitQ.stage==='road'?S.recruitQ:null;
@@ -1315,7 +1267,7 @@ const UI = (()=>{
         :waitNight?`${def.name}와 하룻밤을 보낸다`
         :atFollow?`길에서 생긴 일을 마주한다 — ${def.name}`
         :road?`다음 길을 함께 간다 — ${def.name}`
-        :atTask?`${def.name}와 부탁을 함께 해결한다`
+        :atTask?`${def.name}의 부탁을 진행한다`
         :`${D.nodes[rq.target].name}까지 임시 동행 · ${def.name}`;
       const small=ready?'서로를 겪은 뒤, 본인이 자리를 고른다'
         :waitNight?'야영을 하면 내일 다시 이야기할 수 있다'
@@ -3276,6 +3228,7 @@ const UI = (()=>{
   let stTab='now';
   let mapKbFocus=null;
   function renderStatus(){
+    $('#status-title').textContent=stTab==='journey'?'현재 목표':stTab==='crew'?'동료':'가방과 달구지';
     $('#st-mini').textContent=`DAY ${S.day} · ${Math.round(S.stats.km)}km`;
     document.querySelectorAll('#st-tabs button').forEach(x=>{
       const selected=x.dataset.st===stTab;
@@ -3294,7 +3247,6 @@ const UI = (()=>{
     const installed=D.upgrades.filter(u=>S.up[u.id]);
     const vanStage=G.vanStage();
     const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
-    const m=missionHtml();
     const injuryIds=Object.keys(S.injuries||{});
     const route=G.routeStatus();
     const audioChannels=[['music','음악'],['ambience','환경음'],['effects','효과음'],['voice','목소리']];
@@ -3302,14 +3254,19 @@ const UI = (()=>{
       injuryIds.map(id=>{const x=S.injuries[id];return `<div class="st-row"><span class="k">${G.injuryName(id)}</span>
         <span class="v" style="flex:1;color:var(--danger)">${x.label} · ${x.days}일</span></div>`;}).join('')+
       `<div class="csub">아침마다 회복한다. 운전사 부상은 피로를 더 쌓고, 동료 부상은 해당 퍼크를 잠시 멈춘다.</div></div>`:'';
+    const supplies=`<div class="st-sec inventory-primary"><h4>가방과 보급 <small>${supplyDays}일치</small></h4>
+      <div class="st-row"><span class="k">${ICO('water')}물</span><span class="v" style="flex:1">${S.water} <small style="color:var(--faded)">≈ ${Math.floor(S.water/perDay)}일치</small></span></div>
+      <div class="st-row"><span class="k">${ICO('food')}식량</span><span class="v" style="flex:1">${S.food} <small style="color:var(--faded)">≈ ${Math.floor(S.food/perDay)}일치</small></span></div>
+      <div class="st-row"><span class="k">${ICO('scrap')}고철</span><span class="v" style="flex:1">${S.scrap}</span></div>
+      <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k==='탄약'?'소총탄':k} ${S.items[k]||0}`).join(' · ')}</span></div>
+      ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}</div>`;
 
     let now=`<div class="st-summary">
       <div class="st-metric ${S.fuel<10?'warn':''}"><span class="mk">연료</span><span class="mv">${Math.floor(S.fuel)}L</span></div>
       <div class="st-metric ${S.fatigue>=75?'warn':''}"><span class="mk">피로</span><span class="mv">${Math.floor(S.fatigue)}%</span></div>
       <div class="st-metric ${supplyDays<=1?'warn':''}"><span class="mk">보급</span><span class="mv">${supplyDays}일</span></div>
     </div>
-    <div class="mission-strip ${m.danger?'danger':''} ${m.secondary?'has-secondary':''}" style="border:1px solid var(--line);border-radius:10px;margin-bottom:7px">${m.html}</div>
-    <div class="st-more">아래로 밀어 차량·보급 상세 보기 <span aria-hidden="true">↓</span></div>
+    ${supplies}
     ${injuryPanel}
     <div class="st-sec"><h4>운전사</h4>
       <div class="st-row"><span class="k">나</span><span class="v" style="flex:1">Lv.${dlv} 「${G.driverTitle()}」 <small style="color:var(--faded)">연비 -${dlv*2}% · 피로 -${dlv*7}%</small>${G.isInjured('driver')?` <small style="color:var(--danger)">· ${S.injuries.driver.label}</small>`:''}</span></div>
@@ -3328,12 +3285,6 @@ const UI = (()=>{
       <div class="csub" style="margin-top:7px">장착 ${installed.length}/${D.upgrades.length}</div>
       <div style="margin-top:7px" class="upchips">${installed.length?installed.map(u=>
         `<span class="upchip">${u.ic} ${u.nm}</span>`).join(''):'<span class="upchip off">아직 장착한 부품 없음</span>'}</div></div>
-    <div class="st-sec"><h4>보급</h4>
-      <div class="st-row"><span class="k">${ICO('water')}물</span><span class="v" style="flex:1">${S.water} <small style="color:var(--faded)">≈ ${Math.floor(S.water/perDay)}일치</small></span></div>
-      <div class="st-row"><span class="k">${ICO('food')}식량</span><span class="v" style="flex:1">${S.food} <small style="color:var(--faded)">≈ ${Math.floor(S.food/perDay)}일치</small></span></div>
-      <div class="st-row"><span class="k">${ICO('scrap')}고철</span><span class="v" style="flex:1">${S.scrap}</span></div>
-      <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k==='탄약'?'소총탄':k} ${S.items[k]||0}`).join(' · ')}</span></div>
-      ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}</div>
     <div class="st-sec ui-comfort"><h4>화면 편의 <small>이 기기에 저장</small></h4>
       <div class="ui-comfort-grid">
         <button data-ui-pref="text" aria-pressed="${uiPrefs.largeText}"><span>글자 크기</span><b>${uiPrefs.largeText?'크게':'보통'}</b></button>

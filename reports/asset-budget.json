@@ -1,23 +1,18 @@
 {
-  "generatedAt": "2026-08-09T01:29:21.623Z",
+  "generatedAt": "2026-08-09T04:10:58.984Z",
   "html": {
-    "bytes": 37038853,
+    "bytes": 35099396,
     "warnBytes": 32000000,
     "maxBytes": 38000000
   },
   "embedded": {
-    "files": 200,
-    "bytes": 22422944,
+    "files": 198,
+    "bytes": 20971915,
     "categories": {
       "audio": {
         "files": 45,
         "bytes": 9710668,
         "encodedBytes": 12947612
-      },
-      "other": {
-        "files": 2,
-        "bytes": 1451029,
-        "encodedBytes": 1934708
       },
       "scene": {
         "files": 122,
@@ -37,12 +32,6 @@
       "mime": "audio/mpeg",
       "bytes": 1621676,
       "encodedBytes": 2162236
-    },
-    {
-      "path": "assets/ui/cockpit-shell-v1.png",
-      "mime": "image/png",
-      "bytes": 1384475,
-      "encodedBytes": 1845968
     },
     {
       "path": "assets/audio/bgm/drive_day.mp3",
@@ -151,6 +140,12 @@
       "mime": "image/jpeg",
       "bytes": 129648,
       "encodedBytes": 172864
+    },
+    {
+      "path": "assets/scenes/gwangju-market.jpg",
+      "mime": "image/jpeg",
+      "bytes": 129184,
+      "encodedBytes": 172248
     }
   ]
 }

@@ -109,6 +109,11 @@ with sync_playwright() as playwright:
     page.screenshot(path=str(SHOT / "05-status-crew.png"))
     page.click("#st-x")
 
+    page.click("#dk-menu")
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "05b-menu.png"))
+    page.click("#menu-x")
+
     page.evaluate("UI.showStl('daegu','hub')")
     page.wait_for_timeout(200)
     page.screenshot(path=str(SHOT / "06-settlement-hub.png"))

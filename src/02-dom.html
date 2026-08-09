@@ -134,41 +134,6 @@
         <b id="road-status-place">부산 감천 부두</b>
         <small id="road-status-meta">정차 중 · 다음 길을 고른다</small>
       </div>
-      <div id="cockpit-nav" aria-live="polite">
-        <b id="cockpit-nav-place">목적지</b>
-        <small id="cockpit-nav-distance">--km 남음 · 시동 대기</small>
-        <em id="cockpit-nav-state">본편 · 북쪽으로</em>
-      </div>
-      <div id="stage-actions" aria-label="현재 장소의 빠른 행동"></div>
-      <div id="cockpit-shell" aria-hidden="true"><img src="assets/ui/cockpit-shell-v1.png" alt=""></div>
-      <img id="drive-exterior-van" src="assets/ui/caravan-exterior-v1.webp" alt="" aria-hidden="true">
-      <button id="cockpit-mirror" type="button" data-cockpit-action="crew" aria-label="동료와 백미러 보기">
-        <span id="cockpit-crew-faces" aria-hidden="true"></span><b id="cockpit-crew-count">동료</b>
-      </button>
-      <div id="cockpit-meters" aria-label="달구지 계기판">
-        <button id="cockpit-fuel-meter" class="cockpit-meter" type="button" data-cockpit-action="status" aria-label="연료와 차량 상태 보기">
-          <i class="cockpit-needle"></i><span>FUEL</span><b id="cockpit-fuel-value">--L</b>
-        </button>
-        <button id="cockpit-van-meter" class="cockpit-meter" type="button" data-cockpit-action="status" aria-label="차체와 차량 상태 보기">
-          <i class="cockpit-needle"></i><span>VAN</span><b id="cockpit-van-value">--%</b>
-        </button>
-      </div>
-      <div id="cockpit-controls" aria-label="달구지 운전석 조작부">
-        <button type="button" data-cockpit-action="ignition" aria-pressed="false"><span>START</span><b>시동</b></button>
-        <button type="button" data-cockpit-action="map"><span>MAP</span><b>지도</b></button>
-        <button type="button" data-cockpit-action="radio"><span>89.1</span><b>라디오</b></button>
-      </div>
-      <div id="drive-controls" aria-label="주행 보조 조작부">
-        <button type="button" data-drive-action="view"><span>VIEW</span><b>운전석</b></button>
-        <button type="button" data-drive-action="wipers"><span>WIPER</span><b>자동</b></button>
-        <button type="button" data-drive-action="lights"><span>LIGHT</span><b>자동</b></button>
-        <button type="button" data-drive-action="pace"><span>DRIVE</span><b>순항</b></button>
-      </div>
-      <div id="drive-prompt" role="status" aria-live="assertive"><small>ROAD HAZARD</small><b></b><span></span></div>
-      <div id="drive-lanes" aria-label="차선 선택">
-        <button type="button" data-drive-action="lane-left">왼쪽 차선</button>
-        <button type="button" data-drive-action="lane-right">오른쪽 차선</button>
-      </div>
       <canvas id="minimap" title="지도 열기" role="button" tabindex="0" aria-label="전체 지도 열기"></canvas>
     </div>
 
@@ -192,13 +157,13 @@
 
     <div id="main">
       <div id="panel"></div>
-      <div id="dock">
-        <button id="dk-map"><span class="dic">🗺</span>지도</button>
-        <button id="dk-status"><span class="dic">🚐</span>상태</button>
-        <button id="dk-journal"><span class="dic">✎</span>일지</button>
-        <button id="dk-camp"><span class="dic">🔥</span>야영</button>
-        <button id="dk-sound"><span class="dic">🔇</span>소리</button>
-      </div>
+      <nav id="dock" aria-label="게임 주요 메뉴">
+        <button id="dk-road" class="here" aria-current="page" data-nav-icon="van"><span class="dic" aria-hidden="true"></span><span>길</span></button>
+        <button id="dk-objectives" data-nav-icon="quest"><span class="dic" aria-hidden="true"></span><span>목표</span></button>
+        <button id="dk-map" data-nav-icon="pursuit"><span class="dic" aria-hidden="true"></span><span>지도</span></button>
+        <button id="dk-status" data-nav-icon="parts"><span class="dic" aria-hidden="true"></span><span>가방</span></button>
+        <button id="dk-menu" data-nav-icon="perk"><span class="dic" aria-hidden="true"></span><span>메뉴</span></button>
+      </nav>
     </div>
   </div>
 
@@ -241,11 +206,26 @@
   <div class="ovl" id="ovl-status" role="dialog" aria-modal="true" aria-labelledby="status-title" aria-hidden="true">
     <div class="ovl-head"><h2 id="status-title">달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x" aria-label="달구지와 여정 닫기">✕</button></div>
     <div id="st-tabs" class="st-tabs" role="tablist">
-      <button class="here" data-st="now" role="tab" aria-controls="st-body" aria-selected="true">지금</button>
-      <button data-st="journey" role="tab" aria-controls="st-body" aria-selected="false">여정</button>
+      <button class="here" data-st="now" role="tab" aria-controls="st-body" aria-selected="true">가방·차량</button>
+      <button data-st="journey" role="tab" aria-controls="st-body" aria-selected="false">현재 목표</button>
       <button data-st="crew" role="tab" aria-controls="st-body" aria-selected="false">동료</button>
     </div>
     <div id="st-body"></div>
+  </div>
+
+  <!-- ══ SECONDARY MENU ══ -->
+  <div class="ovl" id="ovl-menu" role="dialog" aria-modal="true" aria-labelledby="menu-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="menu-title">달구지 메뉴</h2><span class="mini">도구와 설정</span><button class="x" id="menu-x" aria-label="메뉴 닫기">✕</button></div>
+    <div id="menu-body">
+      <header class="menu-intro"><small>ON THE ROAD</small><b>필요한 것만 꺼내 쓴다</b><p>동료와 기록, 야영, 소리 설정은 이곳에 모아 두었다.</p></header>
+      <div class="menu-grid">
+        <button id="menu-crew" data-menu-icon="bond"><span class="menu-ico" aria-hidden="true"></span><span><b>동료</b><small>탑승 인원과 유대</small></span></button>
+        <button id="dk-journal" data-menu-icon="quest"><span class="menu-ico" aria-hidden="true"></span><span><b>여행 일지</b><small>기록과 관계망</small></span></button>
+        <button id="dk-camp" data-menu-icon="food"><span class="menu-ico" aria-hidden="true"></span><span><b>야영</b><small>휴식과 달구지 생활</small></span></button>
+        <button id="dk-sound" data-menu-icon="perk"><span class="dic menu-ico" aria-hidden="true"></span><span><b>소리</b><small>전체 음소거 전환</small></span></button>
+      </div>
+      <button id="menu-settings" class="menu-settings" data-menu-icon="van"><span class="menu-ico" aria-hidden="true"></span><span><b>화면·소리·백업 설정</b><small>접근성, 믹서, 저장 파일 관리</small></span></button>
+    </div>
   </div>
 
   <!-- ══ CAMP / VAN HOME ══ -->

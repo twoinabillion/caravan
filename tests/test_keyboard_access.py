@@ -115,9 +115,9 @@ with sync_playwright() as p:
         const cs = getComputedStyle(el);
         if (!el.textContent || !el.textContent.trim()) return false;
         return parseFloat(cs.fontSize) < 12 && el.offsetParent !== null;
-      }).length
+      }).map(el => ({tag:el.tagName, cls:el.className, text:el.textContent.trim().slice(0,40), size:getComputedStyle(el).fontSize}))
     """)
-    check('화면에 렌더링된 12px 미만 텍스트 없음', tiny == 0, f'{tiny}개 발견')
+    check('화면에 렌더링된 12px 미만 텍스트 없음', len(tiny) == 0, f'{len(tiny)}개 발견: {tiny[:4]}')
 
 
     # ── 선택지 숫자키 — 게임의 대부분이 선택이므로 키보드 완주의 중심 배선 ──
