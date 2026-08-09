@@ -59,6 +59,13 @@ with sync_playwright() as playwright:
     )
     page.wait_for_timeout(250)
     page.screenshot(path=str(SHOT / "01-main.png"))
+    road_box = page.locator("#dk-road").bounding_box()
+    if road_box:
+        page.mouse.move(road_box["x"] + road_box["width"] / 2, road_box["y"] + road_box["height"] / 2)
+        page.mouse.down()
+        page.wait_for_timeout(80)
+        page.screenshot(path=str(SHOT / "01d-nav-pressed.png"))
+        page.mouse.up()
     page.evaluate(
         """() => {
           UI.toast('🔧 좌석 증축이 끝났다 — 동료 자리 +1');

@@ -19,7 +19,7 @@ const MAX_BYTES = 38_000_000;   /* BGM 7슬롯 계획 +5~8MB 허용 (docs/audio-
 const embeddedAssets = new Map();
 
 const before = [
-  'src/01-style.html', 'src/02-dom.html', 'src/03-data.js',
+  'src/02-dom.html', 'src/03-data.js',
   'src/03b-portraits.js', 'src/03c-icons.js', 'src/03d-bgm.js'
 ];
 const after = [
@@ -71,6 +71,17 @@ const replace = (source, pattern, resolve, label) => {
   return {result, count};
 };
 
+const uiAssetPaths = {
+  NAV_ARMORED_SHELL:'assets/ui/nav-armored-shell-v1.png',
+  NAV_BUTTON_FACE:'assets/ui/nav-button-face-v1.png',
+  NAV_BUTTON_PRESSED:'assets/ui/nav-button-pressed-v1.png'
+};
+const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key => {
+  const relative=uiAssetPaths[key];
+  if(!relative) throw new Error(`알 수 없는 UI 자산: ${key}`);
+  return dataUri(relative,'image/png');
+}, 'UI');
+
 const npc = replace(read('src/03f-npc-portraits.js'), /__NPC_([a-z0-9_]+)__/g,
   key => dataUri(`assets/portraits/${key}.png`, 'image/png'), 'NPC');
 const scenes = replace(read('src/03g-scenes.js'), /__SCENE_([A-Z0-9_]+)__/g, key => {
@@ -90,7 +101,7 @@ const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__
 }, '오디오');
 
 const chunks = [
-  ...before.map(read), title.result, audio.result, npc.result, upgrades.result, ...after.map(read)
+  styles.result, ...before.map(read), title.result, audio.result, npc.result, upgrades.result, ...after.map(read)
 ];
 const html = chunks.join('\n');
 const htmlBytes = Buffer.byteLength(html);
@@ -99,7 +110,8 @@ if (unresolved.length) throw new Error(`치환되지 않은 자산: ${unresolved
 
 const categoryOf = relative => relative.includes('/audio/')?'audio'
   :relative.includes('/scenes/')||relative.includes('/intro/')||relative.includes('/upgrades/')?'scene'
-  :relative.includes('/portraits/')?'portrait':'other';
+  :relative.includes('/portraits/')?'portrait'
+  :relative.includes('/ui/')?'ui':'other';
 const assetEntries = [...embeddedAssets.values()].sort((a,b)=>b.encodedBytes-a.encodedBytes);
 const categories = assetEntries.reduce((out,item)=>{
   const category=categoryOf(item.path), row=out[category]||(out[category]={files:0,bytes:0,encodedBytes:0});

@@ -1,36 +1,53 @@
-# Caravan cockpit design QA
+# Armored navigation design QA
 
-## Result
+- Source visual truth: `/Users/sang/Desktop/Caravan UI Concepts/03-armored-route-deck.png`
+- Implementation screenshot: `/Users/sang/caravan/tests/shots/armored-nav-final/01-main.png`
+- Full-view comparison: `/Users/sang/caravan/tests/shots/armored-nav-final/compare-full.png`
+- Focused state comparison: `/Users/sang/caravan/tests/shots/armored-nav-final/compare-dock-states.png`
+- Viewport/state: 390 × 844 CSS px, stopped at Daegu with route choices visible, device scale factor 1
+- Density normalization: source 852 × 1846 px downsampled to 390 × 844 px; implementation captured natively at 390 × 844 px
 
-- Status: passed
-- P0: 0
-- P1: 0
-- P2: 0
+## Findings
 
-## Evidence
+No actionable P0, P1, or P2 differences remain.
 
-- Reference: `/Users/sang/.codex/generated_images/019fdfc9-5f28-7170-aab4-d2a0abfb6556/exec-186c663e-579f-4102-afaf-7d1bd9b00462.png`
-- Mobile implementation: `/private/tmp/caravan-cockpit-audit/16-cockpit-v2-ignition.png`
-- Side-by-side comparison: `/private/tmp/caravan-cockpit-audit/17-reference-vs-v2.png`
-- Viewport: 390 x 844
+- Fonts and typography: the implementation keeps the game's existing Korean mono/sans hierarchy rather than rasterizing mockup labels. The five labels are readable at 12px or larger and remain live text.
+- Spacing and layout rhythm: the generated shell occupies 76–77px at the target viewport, matches the source's low armored silhouette, and preserves the visible second route choice. Five button centers align with the five image wells.
+- Colors and visual tokens: olive-charcoal steel, rubbed silver edges, soot-black recesses, and amber active state match the selected source. The implementation is slightly brighter than the mockup at the lower edge; this is acceptable because it improves well separation on the actual game background.
+- Image quality and asset fidelity: the shell, raised button face, and pressed button face are dedicated transparent raster assets generated from the selected source. Edges are clean, corners are transparent, and there are no chroma halos at the captured scale.
+- Copy and content: `길 / 목표 / 지도 / 가방 / 메뉴` matches the selected design and remains accessible, selectable interface copy.
+- Icons: the implementation intentionally retains the game's embedded icon family rather than baking mockup glyphs into the plate. Desaturation and amber active treatment integrate them with the generated metal assets.
+- Interaction and accessibility: the controls remain native buttons. Hover/focus, latched selected, pointer-down pressed, keyboard activation, modal focus transfer, Escape return, and 12px minimum rendered text all pass.
 
-## Findings resolved
+## Comparison history
 
-- Replaced the generic dashboard composition with the selected analog cockpit geometry and material treatment.
-- Preserved the physical ignition cylinder, folded-map unit, radio face, analog gauge markings, steering wheel, mirror, and windshield framing.
-- Removed oversized visible button rectangles and constrained touch targets to the corresponding physical devices.
-- Kept live destination, remaining distance, ignition state, passenger portrait, fuel needle, and body-condition needle as dynamic UI.
-- Kept the windshield transparent so the live road, weather, time, and destination scenery remain visible.
-- Avoided duplicated labels by using the labels baked into the cockpit face while retaining accessible button names.
+1. Initial coded pass
+   - [P2] The active and held-down faces were too similar in the focused comparison, so the hardware press was not immediately legible.
+   - Fix: generated a separate recessed button-face asset with a physical inner shadow and amber pilot lamp, then mapped it to selected and active states. Increased active travel and darkening without delaying navigation.
+2. Final coded pass
+   - Post-fix evidence: `compare-dock-states.png` shows source, latched selected, and held-down states together. The selected face has the lamp and recessed plate; the held state sinks and darkens further.
+   - No remaining P0/P1/P2 findings.
 
-## Interaction map
+## Primary interactions tested
 
-- Ignition: physical key cylinder and its immediate bezel.
-- Map: center folded-map device.
-- Radio: right radio device.
-- Fuel and body gauges: their circular instrument faces.
-- Rear-view mirror: passenger/status area.
+- Road button resting, selected, and held-down visual states
+- Map and Inventory opening from keyboard and pointer input
+- Status tab arrow-key navigation
+- Escape close with focus restored to the triggering dock button
+- Menu overlay capture
+- Golden route progression with no horizontal overflow or console errors
 
-## Residual note
+## Follow-up polish
 
-The world visible through the windshield intentionally keeps the existing game pixel-art rendering. The cockpit is more detailed than the exterior scene, but this preserves gameplay readability and avoids turning the driving view into a static illustration.
+- [P3] A future custom monochrome navigation icon set could match the mockup pictograms more literally, but the current embedded game icons are coherent and avoid introducing a second icon language elsewhere in the game.
+
+## Implementation checklist
+
+- [x] Generated image shell with five empty wells
+- [x] Generated separate raised and pressed button-face assets
+- [x] Kept labels, icons, clicks, focus, and selected state in code
+- [x] Embedded all three UI assets into the single-file build
+- [x] Captured and compared the same viewport and state
+- [x] Passed source health, content/asset verification, keyboard regression, and golden route
+
+final result: passed
