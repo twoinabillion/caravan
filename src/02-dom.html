@@ -141,6 +141,7 @@
       </div>
       <div id="stage-actions" aria-label="현재 장소의 빠른 행동"></div>
       <div id="cockpit-shell" aria-hidden="true"><img src="assets/ui/cockpit-shell-v1.png" alt=""></div>
+      <img id="drive-exterior-van" src="assets/ui/caravan-exterior-v1.webp" alt="" aria-hidden="true">
       <button id="cockpit-mirror" type="button" data-cockpit-action="crew" aria-label="동료와 백미러 보기">
         <span id="cockpit-crew-faces" aria-hidden="true"></span><b id="cockpit-crew-count">동료</b>
       </button>
@@ -156,6 +157,17 @@
         <button type="button" data-cockpit-action="ignition" aria-pressed="false"><span>START</span><b>시동</b></button>
         <button type="button" data-cockpit-action="map"><span>MAP</span><b>지도</b></button>
         <button type="button" data-cockpit-action="radio"><span>89.1</span><b>라디오</b></button>
+      </div>
+      <div id="drive-controls" aria-label="주행 보조 조작부">
+        <button type="button" data-drive-action="view"><span>VIEW</span><b>운전석</b></button>
+        <button type="button" data-drive-action="wipers"><span>WIPER</span><b>자동</b></button>
+        <button type="button" data-drive-action="lights"><span>LIGHT</span><b>자동</b></button>
+        <button type="button" data-drive-action="pace"><span>DRIVE</span><b>순항</b></button>
+      </div>
+      <div id="drive-prompt" role="status" aria-live="assertive"><small>ROAD HAZARD</small><b></b><span></span></div>
+      <div id="drive-lanes" aria-label="차선 선택">
+        <button type="button" data-drive-action="lane-left">왼쪽 차선</button>
+        <button type="button" data-drive-action="lane-right">오른쪽 차선</button>
       </div>
       <canvas id="minimap" title="지도 열기" role="button" tabindex="0" aria-label="전체 지도 열기"></canvas>
     </div>

@@ -1,0 +1,4990 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T01:29:23.264Z",
+  "summary": {
+    "runs": 40,
+    "completedRuns": 40,
+    "totalLegs": 400,
+    "totalBlockingEvents": 160,
+    "maxBlockingEventsPerLeg": 1,
+    "eventsPerTenGameplayMinutes": 5.18,
+    "averageUninterruptedSeconds": 20.59,
+    "averageSecondsBeforeBlockingEvent": 15.61,
+    "shortLegBlockingRate": 0,
+    "projectedStoryTaps": {
+      "beforeChoiceMax": 1,
+      "outcomeContinueTaps": 0
+    },
+    "companionLocation": {
+      "stopped": "달구지 생활칸",
+      "driving": "조수석",
+      "different": true
+    }
+  },
+  "warnings": [],
+  "runs": [
+    {
+      "run": 0,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 1,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 2,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 3,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 4,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 5,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 6,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 7,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 8,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 9,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 10,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 11,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 12,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 13,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 14,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 15,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 16,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 17,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 18,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 19,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 20,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 21,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 22,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 23,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 24,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 25,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 26,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 27,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 28,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 29,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 30,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 31,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 32,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 33,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 34,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 35,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 36,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 37,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 38,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    },
+    {
+      "run": 39,
+      "legs": 10,
+      "reachedSeoul": true,
+      "blockedEvents": 4
+    }
+  ],
+  "legs": [
+    {
+      "run": 0,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 0,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.38,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 0,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 0,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 0,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.48,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 0,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 0,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 0,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 0,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 0,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 1,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 1,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.66,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 1,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 1,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 1,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 23.4,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 1,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 1,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 1,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 1,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 1,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 2,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 2,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.82,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 2,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 2,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 2,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 16.39,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 2,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 2,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 2,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 2,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 2,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 3,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 3,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.63,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 3,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 3,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 3,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.61,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 3,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 3,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 3,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.4,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 3,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 3,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 4,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 4,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.64,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 4,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 4,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 4,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 16.63,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 4,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 4,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 4,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 4,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 4,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 5,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 5,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.82,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 5,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 5,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 5,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 16.61,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 5,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 5,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 5,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 5,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 5,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 6,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 6,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 13.45,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 6,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 6,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 6,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 19.36,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 6,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 6,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 6,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 6,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 6,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 7,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 7,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 13.91,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 7,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 7,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 7,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 16.91,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 7,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 7,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 7,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 18.03,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 7,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 7,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 8,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 8,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.85,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 8,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 8,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 8,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 17.24,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 8,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 8,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 8,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.6,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 8,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 8,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 9,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 9,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 12.57,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 9,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 9,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 9,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 24.5,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 9,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 9,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 9,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 9,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 9,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 10,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 10,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 13.16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 10,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 10,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 10,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 16.45,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 10,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 10,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 10,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.39,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 10,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 10,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 11,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 11,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 12.07,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 11,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 11,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 11,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 18.92,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 11,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 11,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 11,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16.02,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 11,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 11,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 12,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 12,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 11.94,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 12,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 12,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 12,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 22.27,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 12,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 12,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 12,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 12,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 12,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 13,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 13,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.51,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 13,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 13,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 13,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 23.42,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 13,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 13,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 13,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 13,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 13,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 14,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 14,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.05,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 14,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 14,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 14,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 18.36,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 14,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 14,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 14,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.33,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 14,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 14,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 15,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 15,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.49,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 15,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 15,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 15,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 18.06,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 15,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 15,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 15,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 15,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 15,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 16,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 16,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.35,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 16,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 16,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 16,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.91,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 16,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 16,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 16,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16.7,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 16,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 16,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 17,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 17,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.56,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 17,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 17,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 17,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 18.8,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 17,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 17,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 17,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 17,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 17,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 18,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 18,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.66,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 18,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 18,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 18,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 22.03,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 18,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 18,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 18,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 18,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 18,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 19,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 19,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 11.52,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 19,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 19,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 19,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 20.26,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 19,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 19,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 19,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 19,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 19,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 20,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 20,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.77,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 20,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 20,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 20,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 24.39,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 20,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 20,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 20,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.79,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 20,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 20,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 21,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 21,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.78,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 21,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 21,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 21,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.15,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 21,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 21,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 21,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 18.64,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 21,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 21,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 22,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 22,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 12.74,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 22,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 22,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 22,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 23.56,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 22,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 22,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 22,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 22,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 22,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 23,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 23,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 23,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 23,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 23,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 17.16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 23,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 23,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 23,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 23,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 23,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 24,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 24,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.83,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 24,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 24,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 24,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 17.79,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 24,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 24,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 24,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 19.87,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 24,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 24,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 25,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 25,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.47,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 25,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 25,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 25,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 22.31,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 25,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 25,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 25,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 25,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 25,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 26,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 26,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.75,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 26,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 26,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 26,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.18,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 26,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 26,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 26,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 26,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 26,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 27,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 27,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.95,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 27,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 27,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 27,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 16.54,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 27,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 27,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 27,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16.03,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 27,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 27,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 28,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 28,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.93,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 28,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 28,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 28,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 28,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 28,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 28,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 18.85,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 28,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 28,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 29,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 29,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.7,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 29,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 29,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 29,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 22.59,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 29,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 29,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 29,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 18.12,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 29,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 29,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 30,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 30,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.51,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 30,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 30,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 30,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 23.67,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 30,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 30,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 30,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 19.24,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 30,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 30,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 31,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 31,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 13.49,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 31,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 31,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 31,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 25.71,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 31,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 31,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 31,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16.87,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 31,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 31,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 32,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 32,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.12,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 32,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 32,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 32,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 20.35,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 32,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 32,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 32,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 32,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 32,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 33,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 33,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.43,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 33,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 33,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 33,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 22.84,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 33,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 33,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 33,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 19.54,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 33,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 33,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 34,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 34,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 14.73,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 34,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 34,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 34,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 24.81,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 34,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 34,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 34,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.15,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 34,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 34,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 35,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 35,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.02,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 35,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 35,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 35,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 24.1,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 35,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 35,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 35,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16.9,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 35,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 35,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 36,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 36,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 16.16,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 36,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 36,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 36,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 19.47,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 36,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 36,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 36,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 16.67,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 36,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 36,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 37,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 37,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 12.13,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 37,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 37,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 37,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.95,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 37,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 37,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 37,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.05,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 37,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 37,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 38,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 38,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 13.87,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 38,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 38,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 38,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 18.24,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 38,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 38,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 38,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.47,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 38,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 38,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    },
+    {
+      "run": 39,
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "blockingEvents": 0,
+      "driveSeconds": 12.47,
+      "uninterruptedSeconds": 12.47,
+      "short": true,
+      "slotKinds": []
+    },
+    {
+      "run": 39,
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 15.73,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 39,
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "blockingEvents": 0,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 32.43,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 39,
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "blockingEvents": 0,
+      "driveSeconds": 23.7,
+      "uninterruptedSeconds": 23.7,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 39,
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "blockingEvents": 1,
+      "driveSeconds": 32.43,
+      "uninterruptedSeconds": 21.09,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 39,
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "blockingEvents": 0,
+      "driveSeconds": 34.93,
+      "uninterruptedSeconds": 34.93,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 39,
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "blockingEvents": 0,
+      "driveSeconds": 18.71,
+      "uninterruptedSeconds": 18.71,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 39,
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "blockingEvents": 1,
+      "driveSeconds": 24.95,
+      "uninterruptedSeconds": 17.8,
+      "short": false,
+      "slotKinds": [
+        "pillar"
+      ]
+    },
+    {
+      "run": 39,
+      "from": "icheon",
+      "to": "suwon",
+      "km": 34,
+      "blockingEvents": 0,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 21.21,
+      "short": false,
+      "slotKinds": []
+    },
+    {
+      "run": 39,
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "blockingEvents": 1,
+      "driveSeconds": 21.21,
+      "uninterruptedSeconds": 10.6,
+      "short": false,
+      "slotKinds": [
+        "bridge"
+      ]
+    }
+  ],
+  "generatedAtUtc": "2026-08-09T01:29:23.336617+00:00"
+}

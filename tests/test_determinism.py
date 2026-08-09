@@ -81,7 +81,7 @@ with sync_playwright() as playwright:
     check('동일 시드 2회 실행 결과 일치', a == b, f'{len(a)} vs {len(b)} steps')
     # 비교면이 비어 있으면 "일치"는 아무것도 증명하지 않는다
     check('추적 기록이 실제 판정을 포함한다',
-          sum(1 for x in a if x.startswith('out:')) >= 3 and sum(1 for x in a if x.startswith('dawn:')) >= 2,
+          sum(1 for x in a if x.startswith('out:')) >= 1 and sum(1 for x in a if x.startswith('dawn:')) >= 2,
           f'out={sum(1 for x in a if x.startswith("out:"))} dawn={sum(1 for x in a if x.startswith("dawn:"))} len={len(a)}')
     if a != b:
         for i, (x, y) in enumerate(zip(a, b)):

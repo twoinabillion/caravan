@@ -36,6 +36,7 @@ G.directorWeight = ev=>{
 G.directEventPool = (pool,opt={})=>{
   let out=(pool||[]).filter(Boolean);
   if(!out.length||!S) return out;
+  if(S.driving&&(S.driving.eventCount||0)>=1) return [];
   /* 사건 뒤에는 실제로 아무 일도 일어나지 않는 도로 구간을 둔다.
      기존 breather는 '조용한 전체화면 사건'을 다시 골랐기 때문에 플레이
      호흡은 쉬지 못했다. 같은 구간의 재호출도 계속 비워 둔다. */
@@ -97,9 +98,10 @@ G.rememberEvent = ev=>{
     S._recentEventTypes.push(ev.type);
     if(S._recentEventTypes.length>6) S._recentEventTypes.splice(0,S._recentEventTypes.length-6);
   }
-  /* 모든 전체화면 사건 뒤 한 번, 전투·위기 뒤 두 번의 발생 기회를 쉰다. */
-  S._eventBreather=Math.max(S._eventBreather,G.eventIsHeavy(ev)?2:1);
+  /* 일반 사건 뒤 두 번, 전투·위기 뒤 세 번은 전체화면 사건 없이 달린다. */
+  S._eventBreather=Math.max(S._eventBreather,G.eventIsHeavy(ev)?3:2);
   if(S.driving) S._lastNarrativeLeg=`${S.day}:${S.at}>${S.driving.to}`;
+  if(S.driving) S.driving.eventCount=(S.driving.eventCount||0)+1;
   const d=S.director, calm=G.eventIsCalm(ev), heavy=G.eventIsHeavy(ev);
   if(d.phase==='peak'){
     d.peakEvents=(d.peakEvents||0)+1;

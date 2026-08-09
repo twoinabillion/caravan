@@ -60,6 +60,7 @@ const read = relative => {
   return relative === 'src/02-dom.html'
     ? source
       .replace('assets/ui/cockpit-shell-v1.png', dataUri('assets/ui/cockpit-shell-v1.png', 'image/png'))
+      .replace('assets/ui/caravan-exterior-v1.webp', dataUri('assets/ui/caravan-exterior-v1.webp', 'image/webp'))
     : source;
 };
 const dataUri = (relative, mime) => {

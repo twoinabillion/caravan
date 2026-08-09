@@ -322,6 +322,64 @@ G.pursuitRefusesShelter = ()=>{
     why:'표시된 차량은 마을에 재우지 않는다'};
   return {refused:false, why:''};
 };
+G.ensureDrivePrefs = ()=>{
+  const fallback={view:'cockpit',wipers:'auto',lights:'auto',pace:'cruise'};
+  if(!S) return fallback;
+  const prefs=S.drivePrefs&&typeof S.drivePrefs==='object'?S.drivePrefs:{};
+  if(!['cockpit','exterior'].includes(prefs.view)) prefs.view='cockpit';
+  if(!['auto','on','off'].includes(prefs.wipers)) prefs.wipers='auto';
+  if(!['auto','on','off'].includes(prefs.lights)) prefs.lights='auto';
+  if(!['eco','cruise','push'].includes(prefs.pace)) prefs.pace='cruise';
+  S.drivePrefs=prefs;
+  return prefs;
+};
+G.ensureDriveControls = dv=>{
+  if(!dv) return null;
+  G.ensureDrivePrefs();
+  if(!['left','center','right'].includes(dv.lane)) dv.lane='center';
+  if(!Number.isFinite(dv.controlCd)) dv.controlCd=5+Math.random()*3;
+  if(!Number.isFinite(dv.controlEvents)) dv.controlEvents=0;
+  return dv;
+};
+G.crewLocation = id=>{
+  if(!S||!id) return '위치 확인 중';
+  const party=Array.isArray(S.party)?S.party:[];
+  const index=party.indexOf(id);
+  if(index<0) return '아직 일행이 아님';
+  if(S.driving) return index===0?'조수석':'생활칸';
+  const node=S.at&&D.nodes[S.at];
+  if(node&&node.stl) return '차 옆 · 정착지';
+  return '달구지 생활칸';
+};
+G.normalizeDriveSlots = dv=>{
+  if(!dv) return dv;
+  const quiet=Number.isFinite(S._driveLegsSinceBlock)?S._driveLegsSinceBlock:3;
+  if(!Array.isArray(dv.slots)||!dv.slots.length){
+    S._driveLegsSinceBlock=quiet+1;
+    return dv;
+  }
+  const rank=slot=>slot.special==='bridge'?100:slot.forced?90:slot.beat?80:slot.pillarPick?70:slot.special==='impact'?60:10;
+  const chosen=[...dv.slots].sort((a,b)=>rank(b)-rank(a)||a.at-b.at)[0];
+  const critical=chosen.special==='bridge'||!!chosen.forced;
+  if(!critical&&dv.dist<30){
+    dv.slots=[];
+    S._driveLegsSinceBlock=quiet+1;
+    return dv;
+  }
+  const requiredQuietLegs=dv.dist<30?3:2;
+  if(!critical&&quiet<requiredQuietLegs){
+    dv.slots=[];
+    S._driveLegsSinceBlock=quiet+1;
+    return dv;
+  }
+  const seconds=Number.isFinite(G.tickKmPerSecond&&G.tickKmPerSecond())
+    ? (dv.dist>=38?16:Math.min(9,dv.dist/G.tickKmPerSecond()*.65)) : 8;
+  const minimum=Math.min(dv.dist*.88,G.tickKmPerSecond()*seconds);
+  chosen.at=Math.max(Number(chosen.at)||0,minimum);
+  dv.slots=[chosen];
+  S._driveLegsSinceBlock=0;
+  return dv;
+};
 G.startTravel = (to)=>{
   const chk = G.canTravelTo(to); if(!chk.ok) return false;
   G.qualitySettlementLeave(S.at);
@@ -330,10 +388,10 @@ G.startTravel = (to)=>{
   const isBridge = (S.at==='suwon'&&to==='seoul'&&!S.flags.bridge_crossed);
   if(isBridge){ slots.push({at:chk.km*0.5, special:'bridge'}); }
   else{
-    let count = chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0);
-    if(rng()<0.3) count++;
+    /* 짧은 구간은 운전 자체가 장면이다. 일반 전체화면 사건은 긴 구간에 한 번만 둔다. */
+    let count = chk.km>=38?1:0;
     const used=[];
-    for(let i=0;i<count;i++){ let f; do{ f=0.14+rng()*0.72 }while(used.some(u=>Math.abs(u-f)<0.15)); used.push(f);
+    for(let i=0;i<count;i++){ let f; do{ f=0.72+rng()*0.14 }while(used.some(u=>Math.abs(u-f)<0.15)); used.push(f);
       const gen = S.mode==='offroad' && OFF.ready() && rng()<0.5;
       slots.push({at:chk.km*f, gen}); }
     slots.sort((a,b)=>a.at-b.at);
@@ -359,12 +417,15 @@ G.startTravel = (to)=>{
     }
   }
   S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,ignition:false,
+    lane:'center',controlCd:5+rng()*3,controlEvents:0,prompt:null,
     snapshot:{gameMinute:S.day*1440+S.min,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
       van:S.van,fatigue:S.fatigue,pursuit:S.pursuit,build:G.vanBuildProfile().name}};
   G.qualityMilestone('first_departure',{from:S.at,to,km:chk.km,road:chk.road});
   if(!isBridge) G.prepareSettlementRoadEcho(S.driving,S.at,to);
   G.prepareRecruitGuest(S.driving);
   G.prepareRecruitMemory(S.driving);
+  G.ensureDriveControls(S.driving);
+  G.normalizeDriveSlots(S.driving);
   S.at = null;
   if(S.mode==='offroad') OFF.prefetch();
   UI.onDepart();
@@ -395,6 +456,90 @@ G.toggleIgnition = ()=>{
   G.save();
   return S.driving.ignition;
 };
+G.driveControlState = ()=>{
+  const prefs=G.ensureDrivePrefs();
+  const dv=S&&S.driving?G.ensureDriveControls(S.driving):null;
+  const wet=!!(S&&['rain','storm'].includes(S.wx));
+  const dark=!!(S&&(G.isNight()||S.wx==='fog'));
+  return {
+    ...prefs,
+    wipersActive:prefs.wipers==='on'||(prefs.wipers==='auto'&&wet),
+    lightsActive:prefs.lights==='on'||(prefs.lights==='auto'&&dark),
+    lane:dv&&dv.lane||'center',
+    prompt:dv&&dv.prompt||null
+  };
+};
+G.cycleDriveView = ()=>{
+  const prefs=G.ensureDrivePrefs();
+  prefs.view=prefs.view==='cockpit'?'exterior':'cockpit';
+  UI.toast(prefs.view==='cockpit'?'운전석 시점':'차량 외부 시점');
+  G.save();
+  return prefs.view;
+};
+G.cycleDriveWipers = ()=>{
+  const prefs=G.ensureDrivePrefs(), order=['auto','on','off'];
+  prefs.wipers=order[(order.indexOf(prefs.wipers)+1)%order.length];
+  UI.toast('와이퍼 '+({auto:'자동',on:'켜짐',off:'꺼짐'}[prefs.wipers]));
+  G.save();
+  return prefs.wipers;
+};
+G.cycleDriveLights = ()=>{
+  const prefs=G.ensureDrivePrefs(), order=['auto','on','off'];
+  prefs.lights=order[(order.indexOf(prefs.lights)+1)%order.length];
+  UI.toast('전조등 '+({auto:'자동',on:'켜짐',off:'꺼짐'}[prefs.lights]));
+  G.save();
+  return prefs.lights;
+};
+G.cycleDrivePace = ()=>{
+  const prefs=G.ensureDrivePrefs(), order=['eco','cruise','push'];
+  prefs.pace=order[(order.indexOf(prefs.pace)+1)%order.length];
+  UI.toast('주행 '+({eco:'절약',cruise:'순항',push:'가속'}[prefs.pace]));
+  G.save();
+  return prefs.pace;
+};
+G.openDrivePrompt = ()=>{
+  const dv=S&&S.driving&&G.ensureDriveControls(S.driving);
+  if(!dv||dv.prompt||dv.controlEvents>=1) return false;
+  const blocked=rng()<.5?'left':'right';
+  const kind=dv.road==='rough'?'파인 노면':['rain','storm'].includes(S.wx)?'고인 물'
+    :(S.wx==='fog'||G.isNight())?'잔해 그림자':'떨어진 적재물';
+  dv.prompt={kind,blocked,safe:blocked==='left'?'right':'left',expires:6};
+  UI.toast((blocked==='left'?'왼쪽':'오른쪽')+' 차선에 '+kind);
+  return true;
+};
+G.resolveDrivePrompt = lane=>{
+  const dv=S&&S.driving&&G.ensureDriveControls(S.driving);
+  if(!dv) return false;
+  dv.lane=lane||dv.lane;
+  if(!dv.prompt) return true;
+  const safe=lane===dv.prompt.safe;
+  if(safe){
+    S.fatigue=clamp(S.fatigue-.5,0,100);
+    UI.toast('차선을 바꿔 장애물을 피했다');
+  } else {
+    const damage=dv.road==='rough'?4:2;
+    S.van=Math.max(0,S.van-damage);
+    S.fatigue=clamp(S.fatigue+1.5,0,100);
+    UI.toast('충격을 받았다 · 차체 -'+damage+'%');
+  }
+  dv.prompt=null;
+  dv.controlEvents++;
+  dv.controlCd=18+R(10);
+  G.save();
+  return safe;
+};
+G.tickDrivePrompt = dt=>{
+  const dv=S&&S.driving&&G.ensureDriveControls(S.driving);
+  if(!dv||dv.controlEvents>=1) return;
+  if(dv.prompt){
+    dv.prompt.expires-=dt;
+    if(dv.prompt.expires<=0) G.resolveDrivePrompt(null);
+    return;
+  }
+  dv.controlCd-=dt;
+  const progress=dv.dist?dv.gone/dv.dist:0;
+  if(dv.controlCd<=0&&progress>=.16&&progress<=.78) G.openDrivePrompt();
+};
 /* 표시용 주행 소요 시간(게임 분). UI가 속도 상수를 복제하면 예상과 실제가 갈라진다 —
    2026-08-06에 실제로 그랬다(표시 2시간 58분 vs 실제 10시간). 단일 소스로 고정. */
 G.driveMinutes = (km)=> Math.ceil((Number(km)||0)/KMH*60);
@@ -404,15 +549,20 @@ G.tick = (dt)=>{ // dt: real seconds
   if(!S.driving) return;
   if(S.driving.ignition===false) return;
   const gm = dt*TIMESCALE;               // game minutes
+  const dv = S.driving;
+  const controls=G.driveControlState();
   const wxSpd = S.wx==='storm'?0.76 : S.wx==='fog'?0.88 : 1;
   const ftgSpd = S.fatigue>=80?0.85:1;   // 수면 부족 → 감속
-  const km = KMH/60*gm*wxSpd*ftgSpd;
-  const dv = S.driving;
+  const paceSpd=controls.pace==='eco'?.88:controls.pace==='push'?1.12:1;
+  const visibilitySpd=(!controls.wipersActive&&['rain','storm'].includes(S.wx))
+    ||(!controls.lightsActive&&(G.isNight()||S.wx==='fog'))?.74:1;
+  const km = KMH/60*gm*wxSpd*ftgSpd*paceSpd*visibilitySpd;
   dv.gone = Math.min(dv.dist, dv.gone+km);
   S.stats.km += km;
   // fuel
   const per = G.fuelFor(1000,dv.road)/1000;
-  S.fuel = Math.max(0, S.fuel - km*per*(dv.guestFuel||1)*(dv.memoryFuel||1));
+  const paceFuel=controls.pace==='eco'?.88:controls.pace==='push'?1.22:1;
+  S.fuel = Math.max(0, S.fuel - km*per*paceFuel*(dv.guestFuel||1)*(dv.memoryFuel||1));
   // van wear
   let wearMul = S.up&&S.up.susp? 0.5:1;
   if(S.up&&S.up.mudtires&&dv.road==='rough') wearMul*=0.6;
@@ -426,7 +576,8 @@ G.tick = (dt)=>{ // dt: real seconds
   // 운전은 추가 피로 (밤 운전은 특히)
   const nightFtg = G.isNight()? (S.up&&S.up.lightbar?0.049:0.075) : 0.04;   // 라이트바=밤길이 덜 갉아먹음
   const bunkMul = S.up&&S.up.bunk? 0.8:1;                                    // 2층 침대=교대 수면
-  S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*(1-G.driverLv()*0.06)*(dv.guestFatigue||1)*(dv.memoryFatigue||1), 0, 100);
+  const paceFatigue=controls.pace==='push'?1.18:controls.pace==='eco'?.92:1;
+  S.fatigue = clamp(S.fatigue + gm*nightFtg*bunkMul*paceFatigue*(1-G.driverLv()*0.06)*(dv.guestFatigue||1)*(dv.memoryFatigue||1), 0, 100);
   G.qualityResourceCheck();
   G.checkDriverLv();
   G.advance(gm);
@@ -437,6 +588,7 @@ G.tick = (dt)=>{ // dt: real seconds
   if(S.fatigue>=99){ G.openRescue('collapse','crisis_collapse'); return; }
   if(S.fatigue>=85 && (S.day*1440+S.min)-S._drowsyAt>240){
     S._drowsyAt=S.day*1440+S.min; G.openEventById('crisis_drowsy'); return; }
+  G.tickDrivePrompt(dt);
   // event slots
   if(dv.si < dv.slots.length && dv.gone >= dv.slots[dv.si].at){
     const slot = dv.slots[dv.si++];

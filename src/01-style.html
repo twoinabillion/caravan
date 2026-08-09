@@ -1989,4 +1989,104 @@ html[data-travel-state="ignition"] #bubbles .bubble{pointer-events:auto;max-widt
   #cockpit-controls [data-cockpit-action="radio"]{position:absolute;transform:none;min-width:0;min-height:70px}
   #cockpit-controls button b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 }
+
+/* ── two-view driving controls and road interaction ── */
+#drive-exterior-van,#drive-controls,#drive-prompt,#drive-lanes{display:none}
+html[data-travel-state="driving"] #drive-controls,
+html[data-travel-state="ignition"] #drive-controls{
+  display:grid;position:absolute;z-index:25;top:19%;right:8px;width:54px;gap:6px
+}
+#drive-controls button{
+  min-width:50px;min-height:42px;padding:5px 4px;border:1px solid rgba(198,151,88,.38);
+  border-radius:7px;background:linear-gradient(180deg,rgba(35,31,27,.94),rgba(13,14,16,.94));
+  color:#d9c5a4;box-shadow:inset 0 1px rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.32)
+}
+#drive-controls button span{display:block;color:#8f7859;font:700 7px/1 var(--mono);letter-spacing:.08em}
+#drive-controls button b{display:block;margin-top:4px;font:800 10px/1 var(--mono)}
+#drive-controls button.active{border-color:rgba(107,200,135,.62);color:#bde9c8;
+  box-shadow:inset 0 0 14px rgba(77,180,111,.12),0 0 10px rgba(77,180,111,.1)}
+#drive-controls button:active{transform:translateY(1px)}
+#drive-prompt{
+  position:absolute;z-index:28;top:20%;left:50%;width:min(68%,270px);transform:translateX(-50%);
+  flex-direction:column;gap:3px;padding:9px 12px;border:1px solid rgba(231,164,72,.65);
+  border-radius:8px;background:rgba(10,12,16,.9);color:#f0d5aa;text-align:center;
+  box-shadow:0 10px 28px rgba(0,0,0,.4),inset 0 0 18px rgba(222,139,51,.07)
+}
+#drive-prompt.on{display:flex;animation:hazard-in .18s ease-out both}
+#drive-prompt small{color:#df9550;font:800 8px/1 var(--mono);letter-spacing:.16em}
+#drive-prompt b{font:800 13px/1.25 var(--sans)}
+#drive-prompt span{color:#b6aa97;font:700 10px/1.25 var(--sans)}
+#drive-lanes{
+  position:absolute;z-index:29;left:7px;right:7px;bottom:34%;align-items:center;justify-content:space-between;
+  pointer-events:none
+}
+#drive-lanes.on{display:flex}
+#drive-lanes button{pointer-events:auto;min-width:96px;min-height:52px;padding:8px 10px;border:1px solid rgba(231,164,72,.55);
+  border-radius:9px;background:rgba(10,12,16,.84);color:#f0d5aa;font:800 11px/1 var(--sans);
+  box-shadow:0 5px 18px rgba(0,0,0,.35)}
+@keyframes hazard-in{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}
+
+html[data-drive-view="exterior"][data-travel-state="driving"] #cockpit-shell,
+html[data-drive-view="exterior"][data-travel-state="ignition"] #cockpit-shell,
+html[data-drive-view="exterior"][data-travel-state="driving"] #cockpit-mirror,
+html[data-drive-view="exterior"][data-travel-state="ignition"] #cockpit-mirror,
+html[data-drive-view="exterior"][data-travel-state="driving"] #cockpit-meters,
+html[data-drive-view="exterior"][data-travel-state="ignition"] #cockpit-meters,
+html[data-drive-view="exterior"][data-travel-state="driving"] #cockpit-controls,
+html[data-drive-view="exterior"][data-travel-state="ignition"] #cockpit-controls{display:none!important}
+html[data-drive-view="exterior"][data-travel-state="driving"] #cv,
+html[data-drive-view="exterior"][data-travel-state="ignition"] #cv{top:0;height:100%!important}
+html[data-drive-view="exterior"][data-travel-state="driving"] #drive-exterior-van,
+html[data-drive-view="exterior"][data-travel-state="ignition"] #drive-exterior-van{
+  display:block;position:absolute;z-index:12;left:50%;bottom:5%;width:min(72%,430px);height:auto;
+  transform:translateX(-50%);transform-origin:50% 90%;pointer-events:none;
+  filter:drop-shadow(0 18px 18px rgba(0,0,0,.55))
+}
+html[data-drive-view="exterior"][data-travel-state="driving"] #drive-exterior-van{
+  animation:exterior-ride 1.6s ease-in-out infinite alternate
+}
+html[data-drive-pace="eco"] #drive-exterior-van{animation-duration:2.1s!important}
+html[data-drive-pace="push"] #drive-exterior-van{animation-duration:.9s!important}
+@keyframes exterior-ride{
+  from{transform:translateX(-50%) translateY(0) rotate(-.15deg)}
+  to{transform:translateX(-50%) translateY(3px) rotate(.18deg)}
+}
+html[data-drive-view="exterior"] #cockpit-nav{
+  top:3%!important;left:3%!important;width:58%!important;height:auto!important;padding:9px 11px!important;
+  border:1px solid rgba(192,145,82,.35)!important;border-radius:8px!important;
+  background:rgba(9,12,17,.82)!important;box-shadow:0 8px 22px rgba(0,0,0,.3)!important
+}
+html[data-drive-view="exterior"] #drive-controls{top:3%;grid-template-columns:repeat(2,50px);width:106px}
+
+/* ── progressive disclosure at stops ── */
+.utility-section>summary{cursor:pointer;list-style:none}
+.utility-section>summary::-webkit-details-marker{display:none}
+.utility-section>summary:after{content:'열기';margin-left:auto;color:var(--amber);font:700 9px/1 var(--mono)}
+.utility-section[open]>summary:after{content:'닫기'}
+.utility-section:not([open]){padding-bottom:0}
+.utility-section:not([open])>summary{border-bottom:0}
+html[data-journey-stage="first"] .route-rumor-section{display:none}
+.ms-secondary-wrap .ms-chip:nth-of-type(n+3){display:none}
+
+/* ── concise choices and companion continuity ── */
+.choice-intent{display:inline-flex;align-items:center;margin-right:7px;padding:3px 6px;border:1px solid rgba(73,196,183,.4);
+  border-radius:999px;color:#76d7ce;font:800 8px/1 var(--mono);font-style:normal;letter-spacing:.04em}
+.crew-presence{border-color:rgba(91,193,173,.35)!important;background:rgba(21,55,53,.26)!important}
+.crew-presence b{display:block;color:#81d4c7!important}
+.event-choice-dock .choice[disabled]{min-height:44px;padding-top:8px;padding-bottom:8px;opacity:.46}
+.event-choice-dock .choice[disabled] .combat-response,
+.event-choice-dock .choice[disabled] .combat-odds,
+.event-choice-dock .choice[disabled] .risk{display:none}
+.event-choice-dock .choice[disabled] .req{margin-top:3px}
+
+@media(max-width:680px){
+  html[data-travel-state="driving"] #drive-controls,
+  html[data-travel-state="ignition"] #drive-controls{right:6px;gap:4px}
+  #drive-controls button{min-width:46px;min-height:40px}
+  html[data-drive-view="exterior"] #drive-controls{grid-template-columns:repeat(2,46px);width:96px}
+  #drive-lanes{bottom:31%}
+}
+@media(prefers-reduced-motion:reduce){
+  #drive-exterior-van,#drive-prompt{animation:none!important}
+}
 </style>
