@@ -11,13 +11,13 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
-  let navChoiceAt=null, navChoiceId=null, navInspectKey=null, vehicleToolsOpen=false;
+  let navChoiceAt=null, navChoiceId=null, navInspectKey=null, vehicleToolsOpen=false, journeyConsoleMode='local';
   /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
      원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
   function syncStageActions(){
     const host=$('#stage-actions'), panel=$('#panel');
     if(!host||!panel||!S||S.driving){ if(host) host.replaceChildren(); return; }
-    const selectors='button.act.primary:not(:disabled),button[data-nav-depart]:not(:disabled),button[data-a="recruitstep"]:not(:disabled)';
+    const selectors='button.act.primary:not(:disabled),.stop-action-card.primary .stop-action-trigger:not(:disabled),button[data-nav-depart]:not(:disabled),button[data-a="recruitstep"]:not(:disabled)';
     const originals=[...panel.querySelectorAll(selectors)].filter(button=>button.offsetParent!==null).slice(0,2);
     const buttons=originals.map(original=>{
       const button=document.createElement('button');
@@ -1458,16 +1458,46 @@ const UI = (()=>{
       renderStatus();
     };
   }
-  function stopActionHtml({action,kicker,icon,title,description,chips=[],primary=false,disabled=false}){
+  function stopActionHtml({action,kicker,icon,title,description,chips=[],primary=false,disabled=false,cta=''}){
     const chipHtml=chips.filter(Boolean).map(chip=>{
       const item=typeof chip==='string'?{label:chip}:chip;
       return `<i class="${item.tone?` tone-${esc(item.tone)}`:''}">${esc(item.label)}</i>`;
     }).join('');
-    return `<button type="button" class="act stop-action-card${primary?' primary':''}" data-a="${esc(action)}" ${disabled?'disabled':''}>
-      <span class="ic stop-action-icon">${ICO(icon)}</span>
+    return `<article class="stop-action-card${primary?' primary':''}${disabled?' is-disabled':''}">
       <span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
         <span class="stop-action-description">${esc(description)}</span>
-        ${chipHtml?`<span class="stop-action-chips">${chipHtml}</span>`:''}</span></button>`;
+        ${chipHtml?`<span class="stop-action-chips">${chipHtml}</span>`:''}</span>
+      <button type="button" class="stop-action-trigger" data-a="${esc(action)}" ${disabled?'disabled':''}>
+        <span class="ic stop-action-icon">${ICO(icon)}</span><span><b>${esc(cta||title)}</b><small>${esc(kicker)}</small></span>
+      </button></article>`;
+  }
+  function journeyModeTabsHtml(mode){
+    const modes=[['route','길'],['local','현지'],['vehicle','달구지']];
+    return `<div class="journey-mode-tabs" role="tablist" aria-label="정차 콘솔 모드">${modes.map(([id,label])=>{
+      const active=id===mode;
+      return `<button type="button" role="tab" data-journey-mode="${id}" aria-selected="${active}" aria-controls="journey-mode-${id}" tabindex="${active?'0':'-1'}">${label}</button>`;
+    }).join('')}</div>`;
+  }
+  function wireJourneyMode(panel){
+    const buttons=[...panel.querySelectorAll('[data-journey-mode]')];
+    const select=(button)=>{
+      if(!button||button.dataset.journeyMode===journeyConsoleMode) return;
+      const scrollTop=panel.scrollTop;
+      journeyConsoleMode=button.dataset.journeyMode;
+      navInspectKey=null;
+      renderPanel();
+      panel.scrollTop=scrollTop;
+      requestAnimationFrame(()=>panel.querySelector(`[data-journey-mode="${journeyConsoleMode}"]`)?.focus({preventScroll:true}));
+    };
+    buttons.forEach((button,index)=>{
+      button.onclick=()=>select(button);
+      button.onkeydown=event=>{
+        if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight') return;
+        event.preventDefault();
+        const direction=event.key==='ArrowRight'?1:-1;
+        select(buttons[(index+direction+buttons.length)%buttons.length]);
+      };
+    });
   }
   function renderPanel(){
     const p=$('#panel');
@@ -1551,24 +1581,31 @@ const UI = (()=>{
       localActions+=stopActionHtml({
         action:'recruitstep',kicker:ready?'합류 결정':atFollow?'동행 후속':road?'임시 동행':'동료의 부탁',
         icon:'quest',title:label,description:small,primary:true,disabled:!enabled,
-        chips:[enabled?{label:'지금 가능',tone:'ready'}:{label:road?'다음 주행에서 진행':'다른 시간·장소 필요',tone:'muted'}]
+        chips:[enabled?{label:'지금 가능',tone:'ready'}:{label:road?'다음 주행에서 진행':'다른 시간·장소 필요',tone:'muted'}],cta:'진행하기'
       });
     }
     if(n.stl) localActions+=stopActionHtml({
       action:'stl',kicker:'주요 정착지',icon:'quest',title:`${n.name} 안으로`,
       description:'사람과 거래하고, 이곳의 부탁과 소문을 직접 확인한다.',primary:true,
-      chips:['거래','대화','지역 활동']
+      chips:['거래','대화','지역 활동'],cta:'정착지 안으로'
     });
+    let exploreStatus=null, exploreForecast=null;
     if(n.type!=='goal'){
       const es=G.exploreStatus();
       const ef=G.exploreForecast(es);
+      exploreStatus=es; exploreForecast=ef;
       const label=es.ok?(es.repeat?'남은 곳을 샅샅이 뒤진다':n.stl?'도시 외곽을 탐색한다':'주변을 탐색한다'):'주변 탐색';
       localActions+=stopActionHtml({
         action:'explore',kicker:es.repeat?'오늘의 마지막 수색':'현지 탐색',icon:'pursuit',title:label,
         description:es.ok?`찾을 것 · ${ef.focus}`:es.reason,disabled:!es.ok,
-        chips:es.ok?[G.durationLabel(es.mins),{label:`탐색 위험 ${ef.danger}`,tone:ef.danger==='높음'?'danger':ef.danger==='보통'?'caution':'ready'},ef.guaranteed]:[]
+        chips:es.ok?[G.durationLabel(es.mins),{label:`탐색 위험 ${ef.danger}`,tone:ef.danger==='높음'?'danger':ef.danger==='보통'?'caution':'ready'},ef.guaranteed]:[],cta:'주변 탐색'
       });
     }
+    localActions+=stopActionHtml({
+      action:'camp',kicker:'차 안에서',icon:'van',title:'이곳에서 밤을 준비한다',
+      description:'식사와 간이 정비를 준비하고, 동료와 오늘의 길을 돌아본다.',
+      chips:[G.isNight()?'지금 밤':'해 지기 전','식사·정비·대화'],cta:'야영 준비'
+    });
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
     const viable=routeModels.filter(model=>model.forecast.ok&&!model.forecast.shortage);
@@ -1588,11 +1625,6 @@ const UI = (()=>{
     if(!S.flags.radio_fixed){ const hasT=(S.items['라디오 진공관']||0)>0;
       utilityActions+=`<button class="act" data-a="radio" ${hasT?'':'disabled'}><span class="ic">${ICO('quest')}</span><span><b>라디오를 고친다</b><small>${hasT?'진공관 1 소모 · 주행 중 방송 수신':'라디오 진공관이 필요하다 — 어딘가의 방송국에'}</small></span></button>`; }
     if(S.fuel<5) utilityActions+=`<button class="act" data-a="walkfuel"><span class="ic">${ICO('fuel')}</span><span><b>걸어서 연료를 구해온다</b><small>시간과 체력을 크게 소모한다</small></span></button>`;
-    const localSection=localActions?`<section class="journey-section stop-action-console local-section" aria-label="이곳에서 더 할 일">
-      <div class="stop-console-head"><span><small>STOP ACTIONS</small><b>이곳에서 더 할 일</b><p>출발 전에 이 장소에서 시간을 쓰는 행동이다.</p></span><em>${n.stl?'정착지·외곽':'현지 행동'}</em></div>
-      <div class="stop-action-grid local-actions">${localActions}</div></section>`:'';
-    const routeSection=`<section class="journey-section route-section route-console-section" aria-label="목적지 네비게이션">
-      ${routeConsoleHtml(routeModels,recommended)}</section>`;
     const routeRumors=!S.routePlan&&S.stats.km>=70?`<section class="journey-section route-rumor-section">
       <div class="journey-section-head"><span><small>AHEAD AT GIMCHEON</small><b>앞에서 갈라질 두 노선</b></span><em>미리 준비</em></div>
       <p>김천에서 한 길을 고르면 청주까지 바꿀 수 없다. 지금은 필요한 연료와 장비를 준비할 수 있다.</p>
@@ -1615,7 +1647,22 @@ const UI = (()=>{
     const installedModuleHtml=installedUpgrades.length
       ?installedUpgrades.map(upgrade=>`<i>${esc(upgrade.nm)}</i>`).join('')
       :'<span>아직 장착한 추가 장비가 없다.</span>';
-    const vehicleSection=`<section class="journey-section vehicle-console" aria-label="달구지 장비와 정비">
+    const systemStrip=`<div class="journey-system-strip" aria-label="현재 달구지 상태">
+      <span>${ICO('fuel')}<small>연료</small><b>${Math.floor(S.fuel)}L</b></span>
+      <span>${ICO('van')}<small>차체</small><b>${vanPercent}%</b></span>
+      <span>${ICO('perk')}<small>장비</small><b>${installedUpgrades.length}</b></span></div>`;
+    const localTime=exploreStatus&&exploreStatus.ok?G.durationLabel(exploreStatus.mins):'행동별 확인';
+    const localRisk=exploreForecast?`탐색 위험 ${exploreForecast.danger}`:'현지 정보 확인';
+    const localReward=exploreForecast?exploreForecast.guaranteed:(n.stl?'거래·대화':'현지 행동');
+    const localSection=localActions?`<div class="route-console journey-mode-panel" id="journey-mode-local" role="tabpanel" aria-label="현지에서 할 일">
+      <section class="route-console-screen journey-local-screen stop-action-console">
+        <div class="journey-mode-heading"><span><small>LOCAL ACTIONS</small><b>이곳에서 할 일</b><p>출발 전에 이 장소에서 시간을 쓰는 행동이다.</p></span><em>${n.stl?'정착지·외곽':'현지 행동'}</em></div>
+        <div class="stop-action-grid local-actions">${localActions}</div>
+        <div class="local-action-summary"><span><small>예상 소요</small><b>${esc(localTime)}</b></span><span><small>현재 위험도</small><b>${esc(localRisk)}</b></span><span><small>예상 보상</small><b>${esc(localReward)}</b></span></div>
+        ${systemStrip}
+      </section></div>`:'<div class="route-empty">지금 이곳에서 할 수 있는 일이 없다.</div>';
+    const vehicleSection=`<div class="route-console journey-mode-panel" id="journey-mode-vehicle" role="tabpanel" aria-label="달구지 장비와 정비">
+      <section class="route-console-screen journey-vehicle-screen vehicle-console">
       <div class="vehicle-console-head"><span><small>VAN SYSTEMS</small><b>달구지 장비</b><p>다음 길에 필요한 계통과 지금 손볼 일을 한곳에서 확인한다.</p></span>
         <button type="button" data-vehicle-tools aria-controls="vehicle-console-tools" aria-expanded="${vehicleToolsOpen}">${vehicleToolsOpen?'관리 닫기':'장비 관리'}</button></div>
       <div class="vehicle-system-grid">
@@ -1631,8 +1678,11 @@ const UI = (()=>{
         <div class="vehicle-module-list"><small>현재 장착</small><div>${installedModuleHtml}</div></div>
         ${utilityActions?`<div class="acts utility-actions">${utilityActions}</div>`:'<p class="vehicle-tools-empty">현재 이곳에서 필요한 현장 정비는 없다. 큰 개조는 정착지 정비소에서 진행할 수 있다.</p>'}
       </div>`:''}
-    </section>`;
-    const h=`${contextRail(n,false)}${journeyGuideHtml()}${routeSection}${localSection}${vehicleSection}${routeRumors}`;
+      </section></div>`;
+    const routeSection=`<div id="journey-mode-route" role="tabpanel" aria-label="목적지 네비게이션">${routeConsoleHtml(routeModels,recommended)}</div>`;
+    const activeMode=journeyConsoleMode==='route'?routeSection:journeyConsoleMode==='vehicle'?vehicleSection:localSection;
+    const journeyConsole=`<section class="journey-mode-console" aria-label="정차 통합 콘솔">${journeyModeTabsHtml(journeyConsoleMode)}${activeMode}</section>`;
+    const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}${journeyConsoleMode==='route'?routeRumors:''}`;
     p.innerHTML=h;
     const wf=p.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>G.openRescue('nofuel','crisis_nofuel');
     const rp=p.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>G.fieldRepair();
@@ -1648,10 +1698,12 @@ const UI = (()=>{
     };
     wireContext(p);
     wireJourneyGuide(p);
+    wireJourneyMode(p);
     wireRouteConsole(p,routeModels);
     p.querySelectorAll('[data-go]:not([data-route-select])').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
     const ex=p.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>G.explore();
     const st=p.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>showStl(n.stl);
+    const camp=p.querySelector('[data-a="camp"]'); if(camp) camp.onclick=()=>showCampHub();
   }
   function renderTravelbar(){
     const tb=$('#travelbar'); if(!tb||!S.driving) return;
@@ -1668,6 +1720,7 @@ const UI = (()=>{
     SND.setDriving(true);
     AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
+    journeyConsoleMode='local'; vehicleToolsOpen=false; navInspectKey=null;
     renderAll(); SND.setDriving(false);
     AMBI.arrive(S.at);
     const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];

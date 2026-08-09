@@ -26,6 +26,7 @@ def enter_game(page):
     page.evaluate('UI.skipIntro()')
     page.wait_for_timeout(120)
     page.evaluate("document.querySelector('#arrival-scene').classList.remove('on')")
+    page.click('[data-journey-mode="route"]')
 
 
 def layout_state(page):

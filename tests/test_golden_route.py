@@ -137,6 +137,16 @@ with sync_playwright() as p:
     check('키보드 초점은 노란 사각형 대신 버튼 내용의 빛으로 보인다',
           dock_focus['outline'] == 'none' and dock_focus['labelGlow'] != 'none', str(dock_focus))
 
+    mode_initial = page.evaluate('''() => ({
+      tabs:[...document.querySelectorAll('[data-journey-mode]')].map(button=>button.textContent.trim()),
+      selected:document.querySelector('[data-journey-mode][aria-selected="true"]')?.dataset.journeyMode,
+      panels:document.querySelectorAll('.journey-mode-panel').length,
+      local:!!document.querySelector('.stop-action-console')
+    })''')
+    check('정차 기능은 길·현지·달구지 세 모드를 가진 한 콘솔에서 전환한다',
+          mode_initial['tabs'] == ['길', '현지', '달구지'] and mode_initial['selected'] == 'local' and
+          mode_initial['panels'] == 1 and mode_initial['local'], str(mode_initial))
+    page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
       console:!!document.querySelector('.route-console'),
       routes:[...document.querySelectorAll('[data-route-select]')].map(button=>button.dataset.routeSelect),
@@ -148,26 +158,38 @@ with sync_playwright() as p:
           nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
           nav_initial['hazards'] == 3 and '연료' in nav_initial['copy'] and '식량' in nav_initial['copy'],
           str(nav_initial))
+    page.click('[data-journey-mode="local"]')
     stop_console = page.evaluate('''() => {
       const action=document.querySelector('.stop-action-console');
-      const vehicle=document.querySelector('.vehicle-console');
-      const toggle=document.querySelector('[data-vehicle-tools]');
       return {
         actionCopy:action?.textContent||'',
         explore:!!action?.querySelector('[data-a="explore"]:not([disabled])'),
+        panels:document.querySelectorAll('.journey-mode-panel').length
+      };
+    }''')
+    check('부산에서도 정착지와 외곽 탐색을 현지 모드에서 고른다',
+          stop_console['explore'] and '이곳에서 할 일' in stop_console['actionCopy'] and
+          '2시간' in stop_console['actionCopy'] and '위험' in stop_console['actionCopy'] and
+          stop_console['panels'] == 1, str(stop_console))
+    page.click('[data-a="camp"]')
+    check('현지 모드의 야영 준비는 실제 차 안 준비 화면을 연다',
+          page.locator('#ovl-camp.on').count() == 1 and page.locator('#camp-rest').count() == 1)
+    page.click('#camp-x')
+    page.click('[data-journey-mode="vehicle"]')
+    vehicle_console = page.evaluate('''() => {
+      const vehicle=document.querySelector('.vehicle-console');
+      const toggle=document.querySelector('[data-vehicle-tools]');
+      return {
         systems:vehicle?.querySelectorAll('.vehicle-system-card').length||0,
         vehicleCopy:vehicle?.textContent||'',
         toggleHeight:toggle?.getBoundingClientRect().height||0,
         expanded:toggle?.getAttribute('aria-expanded')
       };
     }''')
-    check('부산에서도 정착지와 외곽 탐색을 같은 정차 행동 콘솔에서 고른다',
-          stop_console['explore'] and '이곳에서 더 할 일' in stop_console['actionCopy'] and
-          '2시간' in stop_console['actionCopy'] and '위험' in stop_console['actionCopy'], str(stop_console))
     check('달구지 장비는 연료·차체·장착 상태를 접지 않고 먼저 보여 준다',
-          stop_console['systems'] == 3 and '연료 계통' in stop_console['vehicleCopy'] and
-          '차체 상태' in stop_console['vehicleCopy'] and '장착 장비' in stop_console['vehicleCopy'] and
-          stop_console['toggleHeight'] >= 44 and stop_console['expanded'] == 'false', str(stop_console))
+          vehicle_console['systems'] == 3 and '연료 계통' in vehicle_console['vehicleCopy'] and
+          '차체 상태' in vehicle_console['vehicleCopy'] and '장착 장비' in vehicle_console['vehicleCopy'] and
+          vehicle_console['toggleHeight'] >= 44 and vehicle_console['expanded'] == 'false', str(vehicle_console))
     page.click('[data-vehicle-tools]')
     vehicle_open = page.evaluate('''() => ({
       open:!!document.querySelector('.vehicle-console-tools'),
@@ -179,6 +201,7 @@ with sync_playwright() as p:
           vehicle_open['open'] and vehicle_open['expanded'] == 'true' and
           vehicle_open['hasRepair'] and vehicle_open['hasRadio'], str(vehicle_open))
     page.click('[data-vehicle-tools]')
+    page.click('[data-journey-mode="route"]')
     intel_coverage = page.evaluate('''() => {
       const cities=Object.entries(D.nodes).filter(([,node])=>node.type!=='hidden').map(([id])=>id);
       return {cities:cities.length, covered:cities.filter(id=>D.navIntel&&D.navIntel[id]).length};
@@ -251,7 +274,8 @@ with sync_playwright() as p:
       G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
       UI.onArrive=old;
     }''')
-    at_yangsan = page.evaluate("({at:S.at, button:document.querySelector('[data-a=recruitstep]')?.textContent||''})")
+    page.click('[data-journey-mode="local"]')
+    at_yangsan = page.evaluate("({at:S.at, button:document.querySelector('[data-a=recruitstep]')?.closest('.stop-action-card')?.textContent||''})")
     check('양산 도착 즉시 민지 부탁의 다음 행동이 보인다',
           at_yangsan['at'] == 'yangsan' and '부탁을 진행한다' in at_yangsan['button'], str(at_yangsan))
 
