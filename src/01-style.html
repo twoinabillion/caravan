@@ -2377,6 +2377,112 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   .journey-system-strip .ico{width:12px;height:12px}.journey-system-strip small,.journey-system-strip b{font-size:12px}
 }
 
+/* ── stopped-state console correction ───────────────────────
+   Keep the proven destination navigator at its original geometry. The thin
+   switcher only chooses the screen; local and vehicle detail use one shell
+   and hand longer lists to full-screen drawers. */
+.journey-mode-tabs{z-index:3;min-height:44px;margin:0 8.9% 6px;padding:0;gap:0;border:1px solid #414a55;
+  background:#11161d;filter:drop-shadow(0 5px 9px rgba(0,0,0,.32))}
+.journey-mode-tabs button{min-height:44px;padding:5px 8px;border:0;border-right:1px solid #353e49;
+  background:#151a21;color:#9fa6ad;font:850 13px/1 var(--sans);text-shadow:0 1px 2px #000}
+.journey-mode-tabs button:last-child{border-right:0}
+.journey-mode-tabs button[aria-selected="true"]{background:#282117;color:#ffc063;text-shadow:0 0 8px rgba(255,181,78,.26),0 1px 2px #000}
+.journey-mode-tabs button[aria-selected="true"]::after{left:12px;right:12px;bottom:0;height:2px}
+
+.journey-mode-panel{margin-top:0;aspect-ratio:auto}
+.journey-local-panel{aspect-ratio:.88}
+.journey-vehicle-panel{aspect-ratio:1.08}
+.journey-local-screen.stop-action-console,.journey-vehicle-screen.vehicle-console{inset:9.6% 8.6% 10%;padding:9px 10px;overflow:hidden}
+.journey-mode-heading{gap:7px;padding-bottom:6px}
+.journey-mode-heading small{font-size:10px}
+.journey-mode-heading b{font-size:14px}
+.journey-mode-heading p{font-size:10.5px}
+.journey-mode-heading>em{padding:4px 5px;font-size:10px}
+
+.journey-local-screen .stop-action-grid{grid-template-columns:minmax(0,1fr);flex:1;overflow:visible}
+.journey-local-screen .stop-action-card{grid-template-columns:minmax(0,1fr) minmax(100px,.64fr);gap:7px;padding:6px 0}
+.journey-local-screen .stop-action-kicker{font-size:10px}
+.journey-local-screen .stop-action-copy>b{font-size:12.5px}
+.journey-local-screen .stop-action-description{font-size:10.5px;line-height:1.3;-webkit-line-clamp:2}
+.journey-local-screen .stop-action-chips{display:flex;gap:3px;margin-top:4px}
+.journey-local-screen .stop-action-chips i{min-height:20px;padding:3px 4px;font-size:10px}
+.journey-local-screen .stop-action-trigger{min-height:52px;padding:6px}
+.journey-local-screen .stop-action-trigger b{font-size:12px}
+.journey-local-screen .stop-action-trigger small{font-size:10px}
+
+.console-more-actions,.console-detail-open{display:flex;flex:none;width:100%;min-height:44px;align-items:center;justify-content:space-between;
+  margin-top:6px;padding:7px 10px;border:1px solid #3a5862;border-radius:2px;background:#0b2028;color:#73cbc3;
+  font:850 12px/1.15 var(--mono);text-align:left}
+.console-more-actions span,.console-detail-open span{color:#d8b06f}
+.console-more-actions:hover,.console-detail-open:hover{border-color:#70c9c1;background:#102a32}
+.console-more-actions:focus-visible,.console-detail-open:focus-visible{outline:2px solid #ffe0a3;outline-offset:1px}
+
+.journey-system-strip{min-height:34px;margin-top:5px;padding:5px 0 0;border-top:1px solid rgba(111,127,148,.25)}
+.journey-system-strip>span{grid-template-columns:15px auto 1fr;padding:0 5px}
+.journey-system-strip small,.journey-system-strip b{font-size:10px}
+
+.journey-vehicle-screen.vehicle-console{overflow:hidden;overscroll-behavior:auto}
+.journey-vehicle-screen .journey-system-strip{margin-top:7px;padding:7px 0;border-bottom:1px solid rgba(111,127,148,.2)}
+.vehicle-now-action{display:grid;flex:1;min-height:0;align-content:center;gap:5px;padding:6px 0}
+.vehicle-now-action>small{color:#da9d49;font:800 12px/1.2 var(--mono);letter-spacing:.08em}
+.vehicle-now-action>p{margin:0;color:#9aa5b5;font:12px/1.4 var(--mono)}
+.vehicle-now-action .act{width:100%;min-height:52px;padding:8px 10px;border-radius:3px;background:#101827}
+.vehicle-now-action .act .ico{width:20px;height:20px;object-fit:contain;image-rendering:pixelated}
+.vehicle-now-action .act b{font-size:12px}.vehicle-now-action .act small{font-size:12px}
+.journey-vehicle-screen .console-detail-open{margin-top:0}
+
+.console-detail-overlay{background:#080d16}
+.console-detail-body{flex:1;min-height:0;overflow-y:auto;padding:14px 14px calc(24px + var(--safe-bottom));overscroll-behavior:contain}
+.console-detail-section{display:grid;gap:11px}
+.console-detail-section>header{padding:2px 0 10px;border-bottom:1px solid rgba(255,180,84,.23)}
+.console-detail-section>header small{display:block;color:#da9d49;font:800 12px/1.2 var(--mono);letter-spacing:.11em}
+.console-detail-section>header b{display:block;margin-top:3px;color:#efeee8;font-size:16px;line-height:1.3}
+.console-detail-section>header p{margin:4px 0 0;color:#8e9bab;font:12px/1.45 var(--mono)}
+.console-detail-body .stop-action-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.console-detail-body .stop-action-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(112px,.58fr);align-items:center;gap:8px;
+  padding:10px;border:1px solid #344158;border-radius:4px;background:#0b121e}
+.console-detail-body .stop-action-card.is-disabled{opacity:.5}
+.console-detail-body .stop-action-copy>b{display:block;margin-top:2px;color:#eeb04f;font:850 13px/1.25 var(--sans)}
+.console-detail-body .stop-action-kicker{color:#62c7bf;font-size:12px}
+.console-detail-body .stop-action-description{font-size:12px}
+.console-detail-body .stop-action-chips i{font-size:12px}
+.console-detail-body .stop-action-trigger{min-height:54px}
+.vehicle-detail-system-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.console-detail-body .vehicle-system-card{padding:10px 9px}
+.console-detail-body .vehicle-system-card small,.console-detail-body .vehicle-system-card em{font-size:12px}
+.console-detail-body .vehicle-system-card b{font-size:12px}
+.console-detail-body .vehicle-module-list{grid-template-columns:72px minmax(0,1fr)}
+.console-detail-body .vehicle-module-list>small,.console-detail-body .vehicle-module-list i{font-size:12px}
+.console-detail-body .utility-actions{display:grid;grid-template-columns:1fr;gap:7px}
+.console-detail-body .utility-actions .act{min-height:54px;border-radius:4px;background:#101827}
+
+@media(max-width:520px){
+  .journey-mode-tabs{min-height:44px;margin:0 8.6% 5px;padding:0}
+  .journey-mode-tabs button{min-height:44px;font-size:13px}
+  .journey-mode-panel{aspect-ratio:auto}
+  .journey-local-panel{aspect-ratio:1.06}
+  .journey-vehicle-panel{aspect-ratio:1.12}
+  .journey-mode-heading small{display:none}
+  .journey-mode-heading>em{font-size:12px}
+  .journey-mode-heading p{display:none}
+  .journey-local-screen .stop-action-card{grid-template-columns:minmax(0,1fr) minmax(94px,.62fr);gap:6px;padding:4px 0}
+  .journey-local-screen .stop-action-kicker{display:none}
+  .journey-local-screen .stop-action-chips{display:flex}
+  .journey-local-screen .stop-action-description{display:none}
+  .journey-local-screen .stop-action-chips i{min-height:22px;font-size:12px}
+  .journey-local-screen .stop-action-trigger{grid-template-columns:22px minmax(0,1fr);min-height:50px}
+  .journey-local-screen .stop-action-trigger .stop-action-icon{width:22px;height:22px}
+  .journey-local-screen .stop-action-trigger .stop-action-icon .ico{width:20px;height:20px}
+  .journey-local-screen .stop-action-trigger small{display:none}
+  .journey-system-strip{min-height:32px}
+  .journey-system-strip small,.journey-system-strip b{font-size:12px}
+  .vehicle-detail-system-grid{grid-template-columns:1fr}
+  .console-detail-body .vehicle-system-card{grid-template-columns:24px minmax(0,1fr);padding:10px}
+  .console-detail-body .vehicle-system-icon{grid-row:1/4;width:24px;height:24px}
+  .console-detail-body .vehicle-system-icon .ico{width:22px;height:22px}
+  .console-detail-body .vehicle-system-card em{grid-column:2}
+}
+
 #menu-body{flex:1;overflow-y:auto;padding:14px 14px calc(20px + var(--safe-bottom));background:
   radial-gradient(90% 42% at 50% 0%,rgba(255,180,84,.065),transparent 70%),var(--night)}
 .menu-intro{margin-bottom:12px;padding:4px 2px 10px;border-bottom:1px solid rgba(255,255,255,.07)}

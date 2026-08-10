@@ -143,8 +143,8 @@ with sync_playwright() as p:
       panels:document.querySelectorAll('.journey-mode-panel').length,
       local:!!document.querySelector('.stop-action-console')
     })''')
-    check('정차 기능은 길·현지·달구지 세 모드를 가진 한 콘솔에서 전환한다',
-          mode_initial['tabs'] == ['길', '현지', '달구지'] and mode_initial['selected'] == 'local' and
+    check('정차 기능은 목적지·머물기·달구지 세 모드를 가진 한 콘솔에서 전환한다',
+          mode_initial['tabs'] == ['목적지', '머물기', '달구지'] and mode_initial['selected'] == 'local' and
           mode_initial['panels'] == 1 and mode_initial['local'], str(mode_initial))
     page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
@@ -167,40 +167,59 @@ with sync_playwright() as p:
         panels:document.querySelectorAll('.journey-mode-panel').length
       };
     }''')
-    check('부산에서도 정착지와 외곽 탐색을 현지 모드에서 고른다',
-          stop_console['explore'] and '이곳에서 할 일' in stop_console['actionCopy'] and
+    check('부산에서도 정착지와 외곽 탐색을 머물기 모드에서 고른다',
+          stop_console['explore'] and '머물며 할 일' in stop_console['actionCopy'] and
           '2시간' in stop_console['actionCopy'] and '위험' in stop_console['actionCopy'] and
           stop_console['panels'] == 1, str(stop_console))
+    local_layout = page.evaluate('''() => {
+      const console=document.querySelector('.stop-action-console');
+      return {
+        visible:console?.querySelectorAll('.stop-action-card').length||0,
+        nestedScroll:console ? console.scrollHeight > console.clientHeight + 1 : true
+      };
+    }''')
+    check('머물기 콘솔은 주요 행동을 최대 두 개만 스크롤 없이 보여 준다',
+          local_layout['visible'] <= 2 and not local_layout['nestedScroll'], str(local_layout))
+    page.evaluate("S.recruitQ={id:'minji',stage:'task',target:'busan',startedDay:S.day}; UI.renderAll()")
+    more_actions = page.locator('[data-local-more]')
+    check('세 번째 행동부터는 콘솔 안 스크롤 대신 전체 행동 서랍으로 분리된다',
+          more_actions.count() == 1 and more_actions.bounding_box()['height'] >= 44)
+    more_actions.click()
+    check('추가 행동 서랍에서 나머지 현지 행동을 바로 찾을 수 있다',
+          page.locator('#ovl-local-actions.on').count() == 1 and page.locator('#local-actions-body [data-a]').count() >= 1)
+    page.click('#local-actions-x')
+    page.evaluate("S.recruitQ=null; UI.renderAll()")
     page.click('[data-a="camp"]')
-    check('현지 모드의 야영 준비는 실제 차 안 준비 화면을 연다',
+    check('머물기 모드의 야영 준비는 실제 차 안 준비 화면을 연다',
           page.locator('#ovl-camp.on').count() == 1 and page.locator('#camp-rest').count() == 1)
     page.click('#camp-x')
     page.click('[data-journey-mode="vehicle"]')
     vehicle_console = page.evaluate('''() => {
       const vehicle=document.querySelector('.vehicle-console');
-      const toggle=document.querySelector('[data-vehicle-tools]');
+      const detail=document.querySelector('[data-vehicle-detail]');
       return {
-        systems:vehicle?.querySelectorAll('.vehicle-system-card').length||0,
+        systems:vehicle?.querySelectorAll('.journey-system-strip>span').length||0,
         vehicleCopy:vehicle?.textContent||'',
-        toggleHeight:toggle?.getBoundingClientRect().height||0,
-        expanded:toggle?.getAttribute('aria-expanded')
+        detailHeight:detail?.getBoundingClientRect().height||0,
+        nestedScroll:vehicle ? vehicle.scrollHeight > vehicle.clientHeight + 1 : true
       };
     }''')
-    check('달구지 장비는 연료·차체·장착 상태를 접지 않고 먼저 보여 준다',
-          vehicle_console['systems'] == 3 and '연료 계통' in vehicle_console['vehicleCopy'] and
-          '차체 상태' in vehicle_console['vehicleCopy'] and '장착 장비' in vehicle_console['vehicleCopy'] and
-          vehicle_console['toggleHeight'] >= 44 and vehicle_console['expanded'] == 'false', str(vehicle_console))
-    page.click('[data-vehicle-tools]')
+    check('달구지는 세 상태와 가장 필요한 행동을 스크롤 없이 먼저 보여 준다',
+          vehicle_console['systems'] == 3 and '연료' in vehicle_console['vehicleCopy'] and
+          '차체' in vehicle_console['vehicleCopy'] and '장비' in vehicle_console['vehicleCopy'] and
+          '지금 할 수 있는 일' in vehicle_console['vehicleCopy'] and
+          vehicle_console['detailHeight'] >= 44 and not vehicle_console['nestedScroll'], str(vehicle_console))
+    page.click('[data-vehicle-detail]')
     vehicle_open = page.evaluate('''() => ({
-      open:!!document.querySelector('.vehicle-console-tools'),
-      expanded:document.querySelector('[data-vehicle-tools]')?.getAttribute('aria-expanded'),
-      hasRepair:!!document.querySelector('[data-a="repair"]'),
-      hasRadio:!!document.querySelector('[data-a="radio"]')
+      open:!!document.querySelector('#ovl-vehicle-detail.on'),
+      systems:document.querySelectorAll('#vehicle-detail-body .vehicle-system-card').length,
+      hasRepair:!!document.querySelector('#vehicle-detail-body [data-a="repair"]'),
+      hasRadio:!!document.querySelector('#vehicle-detail-body [data-a="radio"]')
     })''')
-    check('장비 관리를 열면 현재 장착 모듈과 실제 현장 정비 행동이 이어진다',
-          vehicle_open['open'] and vehicle_open['expanded'] == 'true' and
+    check('전체 정비 서랍을 열면 세 계통·장착 모듈·현장 정비 행동이 이어진다',
+          vehicle_open['open'] and vehicle_open['systems'] == 3 and
           vehicle_open['hasRepair'] and vehicle_open['hasRadio'], str(vehicle_open))
-    page.click('[data-vehicle-tools]')
+    page.click('#vehicle-detail-x')
     page.click('[data-journey-mode="route"]')
     intel_coverage = page.evaluate('''() => {
       const cities=Object.entries(D.nodes).filter(([,node])=>node.type!=='hidden').map(([id])=>id);

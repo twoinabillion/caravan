@@ -54,11 +54,26 @@ with sync_playwright() as playwright:
     page.click('[data-journey-mode="local"]')
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "00d-stop-actions.png"))
+    page.evaluate(
+        """() => {
+          S.recruitQ={id:'minji',stage:'task',target:'busan',startedDay:S.day};
+          UI.renderAll();
+        }"""
+    )
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "00da-stop-actions-extra.png"))
+    page.click('[data-local-more]')
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "00db-local-actions-drawer.png"))
+    page.click('#local-actions-x')
+    page.evaluate("S.recruitQ=null; UI.renderAll()")
     page.click('[data-journey-mode="vehicle"]')
-    page.click('[data-vehicle-tools]')
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "00e-vehicle-tools.png"))
-    page.click('[data-vehicle-tools]')
+    page.click('[data-vehicle-detail]')
+    page.wait_for_timeout(120)
+    page.screenshot(path=str(SHOT / "00f-vehicle-detail.png"))
+    page.click('#vehicle-detail-x')
     page.evaluate(
         """() => {
           S.at = 'daegu';

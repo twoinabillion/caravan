@@ -11,7 +11,7 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
-  let navChoiceAt=null, navChoiceId=null, navInspectKey=null, vehicleToolsOpen=false, journeyConsoleMode='local';
+  let navChoiceAt=null, navChoiceId=null, navInspectKey=null, journeyConsoleMode='local';
   /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
      원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
   function syncStageActions(){
@@ -100,13 +100,14 @@ const UI = (()=>{
     if(restore&&back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
   }
   function activeModal(){
-    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-menu','#ovl-camp']
+    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-menu','#ovl-camp','#ovl-local-actions','#ovl-vehicle-detail']
       .map($).find(node=>node&&node.classList.contains('on'))||null;
   }
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
     || $('#ovl-stl').classList.contains('on') || $('#ovl-map').classList.contains('on')
     || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on') || $('#ovl-menu').classList.contains('on')
-    || $('#ovl-seoul').classList.contains('on') || $('#ovl-camp').classList.contains('on');
+    || $('#ovl-seoul').classList.contains('on') || $('#ovl-camp').classList.contains('on')
+    || $('#ovl-local-actions').classList.contains('on') || $('#ovl-vehicle-detail').classList.contains('on');
 
   /* ── screens ── */
   function show(id){
@@ -361,6 +362,8 @@ const UI = (()=>{
     $('#dk-map').onclick=()=>{ setDockTab('dk-map'); toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
     $('#dk-menu').onclick=()=>{ setDockTab('dk-menu'); toggleOvl('#ovl-menu'); };
     $('#menu-x').onclick=()=>closeOvl('#ovl-menu');
+    $('#local-actions-x').onclick=()=>closeOvl('#ovl-local-actions');
+    $('#vehicle-detail-x').onclick=()=>closeOvl('#ovl-vehicle-detail');
     $('#menu-crew').onclick=()=>openStatusFromMenu('crew');
     $('#menu-settings').onclick=()=>openStatusFromMenu('now',true);
     $('#dk-journal').onclick=()=>{ openFromMenu('#ovl-journal'); renderJournal(); };
@@ -1472,7 +1475,7 @@ const UI = (()=>{
       </button></article>`;
   }
   function journeyModeTabsHtml(mode){
-    const modes=[['route','길'],['local','현지'],['vehicle','달구지']];
+    const modes=[['route','목적지'],['local','머물기'],['vehicle','달구지']];
     return `<div class="journey-mode-tabs" role="tablist" aria-label="정차 콘솔 모드">${modes.map(([id,label])=>{
       const active=id===mode;
       return `<button type="button" role="tab" data-journey-mode="${id}" aria-selected="${active}" aria-controls="journey-mode-${id}" tabindex="${active?'0':'-1'}">${label}</button>`;
@@ -1498,6 +1501,20 @@ const UI = (()=>{
         select(buttons[(index+direction+buttons.length)%buttons.length]);
       };
     });
+  }
+  function wireStopActionButtons(root,node,overlay=''){
+    const run=action=>{
+      if(overlay) closeModal(overlay,false);
+      action();
+    };
+    const wf=root.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>run(()=>G.openRescue('nofuel','crisis_nofuel'));
+    const rp=root.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>run(()=>G.fieldRepair());
+    const rd=root.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>run(()=>{ if(G.fixRadio()) renderAll(); });
+    const cf=root.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>run(()=>showCraft());
+    const rq=root.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>run(()=>G.openRecruitStep());
+    const ex=root.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>run(()=>G.explore());
+    const st=root.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>run(()=>showStl(node.stl));
+    const camp=root.querySelector('[data-a="camp"]'); if(camp) camp.onclick=()=>run(()=>showCampHub());
   }
   function renderPanel(){
     const p=$('#panel');
@@ -1561,7 +1578,7 @@ const UI = (()=>{
       return;
     }
     const n=D.nodes[S.at];
-    let localActions='', utilityActions='';
+    let localActions=[], utilityActions=[];
     if(S.recruitQ){
       const rq=S.recruitQ, def=D.recruitQuests[rq.id];
       const atTask=rq.stage==='task'&&S.at===rq.target;
@@ -1578,34 +1595,32 @@ const UI = (()=>{
       const small=ready?'서로를 겪은 뒤, 본인이 자리를 고른다'
         :waitNight?'야영을 하면 내일 다시 이야기할 수 있다'
         :atFollow?def.followHint:road?def.roadHint:def.hint;
-      localActions+=stopActionHtml({
+      localActions.push(stopActionHtml({
         action:'recruitstep',kicker:ready?'합류 결정':atFollow?'동행 후속':road?'임시 동행':'동료의 부탁',
         icon:'quest',title:label,description:small,primary:true,disabled:!enabled,
         chips:[enabled?{label:'지금 가능',tone:'ready'}:{label:road?'다음 주행에서 진행':'다른 시간·장소 필요',tone:'muted'}],cta:'진행하기'
-      });
+      }));
     }
-    if(n.stl) localActions+=stopActionHtml({
+    if(n.stl) localActions.push(stopActionHtml({
       action:'stl',kicker:'주요 정착지',icon:'quest',title:`${n.name} 안으로`,
       description:'사람과 거래하고, 이곳의 부탁과 소문을 직접 확인한다.',primary:true,
       chips:['거래','대화','지역 활동'],cta:'정착지 안으로'
-    });
-    let exploreStatus=null, exploreForecast=null;
+    }));
     if(n.type!=='goal'){
       const es=G.exploreStatus();
       const ef=G.exploreForecast(es);
-      exploreStatus=es; exploreForecast=ef;
       const label=es.ok?(es.repeat?'남은 곳을 샅샅이 뒤진다':n.stl?'도시 외곽을 탐색한다':'주변을 탐색한다'):'주변 탐색';
-      localActions+=stopActionHtml({
+      localActions.push(stopActionHtml({
         action:'explore',kicker:es.repeat?'오늘의 마지막 수색':'현지 탐색',icon:'pursuit',title:label,
         description:es.ok?`찾을 것 · ${ef.focus}`:es.reason,disabled:!es.ok,
         chips:es.ok?[G.durationLabel(es.mins),{label:`탐색 위험 ${ef.danger}`,tone:ef.danger==='높음'?'danger':ef.danger==='보통'?'caution':'ready'},ef.guaranteed]:[],cta:'주변 탐색'
-      });
+      }));
     }
-    localActions+=stopActionHtml({
+    localActions.push(stopActionHtml({
       action:'camp',kicker:'차 안에서',icon:'van',title:'이곳에서 밤을 준비한다',
       description:'식사와 간이 정비를 준비하고, 동료와 오늘의 길을 돌아본다.',
       chips:[G.isNight()?'지금 밤':'해 지기 전','식사·정비·대화'],cta:'야영 준비'
-    });
+    }));
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
     const viable=routeModels.filter(model=>model.forecast.ok&&!model.forecast.shortage);
@@ -1615,16 +1630,14 @@ const UI = (()=>{
     const fastest=[...recommendationPool].sort((a,b)=>b.forecast.progressScore-a.forecast.progressScore||b.forecast.safetyScore-a.forecast.safetyScore)[0]||null;
     const supplied=[...recommendationPool].sort((a,b)=>b.forecast.supplyScore-a.forecast.supplyScore||b.forecast.progressScore-a.forecast.progressScore)[0]||null;
     const recommended=fastest&&fastest.forecast.safetyScore>=68?fastest:(safest||supplied);
-    if(S.flags.armed_age){
-      utilityActions+=`<button class="act" data-a="craft"><span class="ic">${ICO('perk')}</span><span><b>작업대를 편다</b><small>무기·탄 제작 · 약 40분</small></span></button>`;
-    }
+    if(S.fuel<5) utilityActions.push(`<button class="act" data-a="walkfuel"><span class="ic">${ICO('fuel')}</span><span><b>걸어서 연료를 구해온다</b><small>시간과 체력을 크게 소모한다</small></span></button>`);
     if(S.van<S.vanMax-5){
       const hasP=(S.items['부품']||0)>0;
-      utilityActions+=`<button class="act" data-a="repair" ${hasP?'':'disabled'}><span class="ic">${ICO('parts')}</span><span><b>달구지를 정비한다</b><small>${hasP?'부품 1 소모 · 내구 +35 · 약 1.5시간':'부품이 없다 — 탐색이나 정비소에서 구하자'}</small></span></button>`;
+      utilityActions.push(`<button class="act" data-a="repair" ${hasP?'':'disabled'}><span class="ic">${ICO('parts')}</span><span><b>달구지를 정비한다</b><small>${hasP?'부품 1 소모 · 내구 +35 · 약 1.5시간':'부품이 없다 — 탐색이나 정비소에서 구하자'}</small></span></button>`);
     }
     if(!S.flags.radio_fixed){ const hasT=(S.items['라디오 진공관']||0)>0;
-      utilityActions+=`<button class="act" data-a="radio" ${hasT?'':'disabled'}><span class="ic">${ICO('quest')}</span><span><b>라디오를 고친다</b><small>${hasT?'진공관 1 소모 · 주행 중 방송 수신':'라디오 진공관이 필요하다 — 어딘가의 방송국에'}</small></span></button>`; }
-    if(S.fuel<5) utilityActions+=`<button class="act" data-a="walkfuel"><span class="ic">${ICO('fuel')}</span><span><b>걸어서 연료를 구해온다</b><small>시간과 체력을 크게 소모한다</small></span></button>`;
+      utilityActions.push(`<button class="act" data-a="radio" ${hasT?'':'disabled'}><span class="ic">${ICO('quest')}</span><span><b>라디오를 고친다</b><small>${hasT?'진공관 1 소모 · 주행 중 방송 수신':'라디오 진공관이 필요하다 — 어딘가의 방송국에'}</small></span></button>`); }
+    if(S.flags.armed_age) utilityActions.push(`<button class="act" data-a="craft"><span class="ic">${ICO('perk')}</span><span><b>작업대를 편다</b><small>무기·탄 제작 · 약 40분</small></span></button>`);
     const routeRumors=!S.routePlan&&S.stats.km>=70?`<section class="journey-section route-rumor-section">
       <div class="journey-section-head"><span><small>AHEAD AT GIMCHEON</small><b>앞에서 갈라질 두 노선</b></span><em>미리 준비</em></div>
       <p>김천에서 한 길을 고르면 청주까지 바꿀 수 없다. 지금은 필요한 연료와 장비를 준비할 수 있다.</p>
@@ -1651,59 +1664,58 @@ const UI = (()=>{
       <span>${ICO('fuel')}<small>연료</small><b>${Math.floor(S.fuel)}L</b></span>
       <span>${ICO('van')}<small>차체</small><b>${vanPercent}%</b></span>
       <span>${ICO('perk')}<small>장비</small><b>${installedUpgrades.length}</b></span></div>`;
-    const localTime=exploreStatus&&exploreStatus.ok?G.durationLabel(exploreStatus.mins):'행동별 확인';
-    const localRisk=exploreForecast?`탐색 위험 ${exploreForecast.danger}`:'현지 정보 확인';
-    const localReward=exploreForecast?exploreForecast.guaranteed:(n.stl?'거래·대화':'현지 행동');
-    const localSection=localActions?`<div class="route-console journey-mode-panel" id="journey-mode-local" role="tabpanel" aria-label="현지에서 할 일">
+    const visibleLocalActions=localActions.slice(0,2), hiddenLocalActions=localActions.slice(2);
+    const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물며 할 일">
       <section class="route-console-screen journey-local-screen stop-action-console">
-        <div class="journey-mode-heading"><span><small>LOCAL ACTIONS</small><b>이곳에서 할 일</b><p>출발 전에 이 장소에서 시간을 쓰는 행동이다.</p></span><em>${n.stl?'정착지·외곽':'현지 행동'}</em></div>
-        <div class="stop-action-grid local-actions">${localActions}</div>
-        <div class="local-action-summary"><span><small>예상 소요</small><b>${esc(localTime)}</b></span><span><small>현재 위험도</small><b>${esc(localRisk)}</b></span><span><small>예상 보상</small><b>${esc(localReward)}</b></span></div>
+        <div class="journey-mode-heading"><span><small>STAY & ACT</small><b>머물며 할 일</b><p>출발 전에 이 장소에서 시간을 쓰는 행동이다.</p></span><em>${n.stl?'정착지·주변':'정차 중'}</em></div>
+        <div class="stop-action-grid local-actions">${visibleLocalActions.join('')}</div>
+        ${hiddenLocalActions.length?`<button type="button" class="console-more-actions" data-local-more>더 할 일 ${hiddenLocalActions.length}<span>전체 보기 →</span></button>`:''}
         ${systemStrip}
       </section></div>`:'<div class="route-empty">지금 이곳에서 할 수 있는 일이 없다.</div>';
-    const vehicleSection=`<div class="route-console journey-mode-panel" id="journey-mode-vehicle" role="tabpanel" aria-label="달구지 장비와 정비">
-      <section class="route-console-screen journey-vehicle-screen vehicle-console">
-      <div class="vehicle-console-head"><span><small>VAN SYSTEMS</small><b>달구지 장비</b><p>다음 길에 필요한 계통과 지금 손볼 일을 한곳에서 확인한다.</p></span>
-        <button type="button" data-vehicle-tools aria-controls="vehicle-console-tools" aria-expanded="${vehicleToolsOpen}">${vehicleToolsOpen?'관리 닫기':'장비 관리'}</button></div>
-      <div class="vehicle-system-grid">
+    const utilityActionsHtml=utilityActions.join('');
+    const vehicleDetailHtml=`<section class="console-detail-section">
+      <header><small>VAN SYSTEMS</small><b>달구지 전체 상태</b><p>현재 계통과 장착 상태를 확인하고 필요한 현장 작업을 진행한다.</p></header>
+      <div class="vehicle-system-grid vehicle-detail-system-grid">
         <article class="vehicle-system-card"><span class="vehicle-system-icon">${ICO('fuel')}</span><small>연료 계통</small><b>${Math.floor(S.fuel)} / ${S.fuelMax}L</b><em>${esc(moduleNames(fuelModules)||'기본 연료통')}</em></article>
         <article class="vehicle-system-card system-${vehicleTone}"><span class="vehicle-system-icon">${ICO('van')}</span><small>차체 상태</small><b>${Math.round(S.van)} / ${S.vanMax}</b><em>${esc(moduleNames(chassisModules)||`내구 ${vanPercent}%`)}</em></article>
         <article class="vehicle-system-card"><span class="vehicle-system-icon">${ICO('perk')}</span><small>장착 장비</small><b>${installedUpgrades.length}개</b><em>${esc(buildProfile.name)}</em></article>
       </div>
-      ${vehicleToolsOpen?`<div class="vehicle-console-tools" id="vehicle-console-tools">
-        <div class="van-build-summary build-${buildProfile.id}">
-          <span class="van-build-rank">${buildProfile.installed}<small>장착</small></span>
-          <span><b>${esc(buildProfile.name)} <i class="van-build-tier tier-${buildProfile.tier}">${esc(buildProfile.tierLabel)}</i>${buildProfile.secondary?` · ${esc(buildProfile.secondary)}`:''}</b><small>${esc(buildProfile.summary)}</small>${buildProfile.signature.length?`<em>${buildProfile.signature.map(esc).join(' · ')}</em>`:''}</span>
-        </div>
-        <div class="vehicle-module-list"><small>현재 장착</small><div>${installedModuleHtml}</div></div>
-        ${utilityActions?`<div class="acts utility-actions">${utilityActions}</div>`:'<p class="vehicle-tools-empty">현재 이곳에서 필요한 현장 정비는 없다. 큰 개조는 정착지 정비소에서 진행할 수 있다.</p>'}
-      </div>`:''}
+      <div class="van-build-summary build-${buildProfile.id}">
+        <span class="van-build-rank">${buildProfile.installed}<small>장착</small></span>
+        <span><b>${esc(buildProfile.name)} <i class="van-build-tier tier-${buildProfile.tier}">${esc(buildProfile.tierLabel)}</i>${buildProfile.secondary?` · ${esc(buildProfile.secondary)}`:''}</b><small>${esc(buildProfile.summary)}</small>${buildProfile.signature.length?`<em>${buildProfile.signature.map(esc).join(' · ')}</em>`:''}</span>
+      </div>
+      <div class="vehicle-module-list"><small>현재 장착</small><div>${installedModuleHtml}</div></div>
+      <div class="acts utility-actions">${utilityActionsHtml||'<p class="vehicle-tools-empty">현재 필요한 현장 정비는 없다. 큰 개조는 정착지 정비소에서 진행할 수 있다.</p>'}</div>
+    </section>`;
+    const vehicleSection=`<div class="route-console journey-mode-panel journey-vehicle-panel" id="journey-mode-vehicle" role="tabpanel" aria-label="달구지 상태와 정비">
+      <section class="route-console-screen journey-vehicle-screen vehicle-console">
+        <div class="journey-mode-heading"><span><small>VAN STATUS</small><b>달구지 상태</b><p>지금 손볼 일과 다음 길의 준비 상태를 확인한다.</p></span><em>${vanPercent<35?'정비 필요':vanPercent<65?'점검 권장':'주행 가능'}</em></div>
+        ${systemStrip}
+        <div class="vehicle-now-action"><small>지금 할 수 있는 일</small>${utilityActions[0]||'<p>현재 급한 현장 정비는 없다.</p>'}</div>
+        <button type="button" class="console-detail-open" data-vehicle-detail>전체 정비·장착 보기 <span>→</span></button>
       </section></div>`;
     const routeSection=`<div id="journey-mode-route" role="tabpanel" aria-label="목적지 네비게이션">${routeConsoleHtml(routeModels,recommended)}</div>`;
     const activeMode=journeyConsoleMode==='route'?routeSection:journeyConsoleMode==='vehicle'?vehicleSection:localSection;
     const journeyConsole=`<section class="journey-mode-console" aria-label="정차 통합 콘솔">${journeyModeTabsHtml(journeyConsoleMode)}${activeMode}</section>`;
     const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}${journeyConsoleMode==='route'?routeRumors:''}`;
     p.innerHTML=h;
-    const wf=p.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>G.openRescue('nofuel','crisis_nofuel');
-    const rp=p.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>G.fieldRepair();
-    const rd=p.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>{ if(G.fixRadio()) renderAll(); };
-    const cf=p.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>showCraft();
-    const rq=p.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>G.openRecruitStep();
-    const vehicleTools=p.querySelector('[data-vehicle-tools]'); if(vehicleTools) vehicleTools.onclick=()=>{
-      const scrollTop=p.scrollTop;
-      vehicleToolsOpen=!vehicleToolsOpen;
-      renderPanel();
-      p.scrollTop=scrollTop;
-      requestAnimationFrame(()=>p.querySelector('[data-vehicle-tools]')?.focus({preventScroll:true}));
+    wireStopActionButtons(p,n);
+    const localMore=p.querySelector('[data-local-more]'); if(localMore) localMore.onclick=()=>{
+      const body=$('#local-actions-body');
+      body.innerHTML=`<section class="console-detail-section"><header><small>MORE ACTIONS</small><b>${esc(n.name)}에서 더 할 일</b><p>현재 화면에 다 담지 않은 행동이다.</p></header><div class="stop-action-grid local-actions">${hiddenLocalActions.join('')}</div></section>`;
+      openModal('#ovl-local-actions','[data-a]');
+      wireStopActionButtons(body,n,'#ovl-local-actions');
+    };
+    const vehicleDetail=p.querySelector('[data-vehicle-detail]'); if(vehicleDetail) vehicleDetail.onclick=()=>{
+      const body=$('#vehicle-detail-body'); body.innerHTML=vehicleDetailHtml;
+      openModal('#ovl-vehicle-detail','[data-a], #vehicle-detail-x');
+      wireStopActionButtons(body,n,'#ovl-vehicle-detail');
     };
     wireContext(p);
     wireJourneyGuide(p);
     wireJourneyMode(p);
     wireRouteConsole(p,routeModels);
     p.querySelectorAll('[data-go]:not([data-route-select])').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
-    const ex=p.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>G.explore();
-    const st=p.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>showStl(n.stl);
-    const camp=p.querySelector('[data-a="camp"]'); if(camp) camp.onclick=()=>showCampHub();
   }
   function renderTravelbar(){
     const tb=$('#travelbar'); if(!tb||!S.driving) return;
@@ -1716,11 +1728,11 @@ const UI = (()=>{
   function renderAll(){ renderHud(); renderMission(); renderPanel(); }
 
   /* ── travel hooks ── */
-  function onDepart(){ vehicleToolsOpen=false; closeOvl('#ovl-map'); closeOvl('#ovl-stl'); renderAll();
+  function onDepart(){ closeOvl('#ovl-map'); closeOvl('#ovl-stl'); closeOvl('#ovl-local-actions'); closeOvl('#ovl-vehicle-detail'); renderAll();
     SND.setDriving(true);
     AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
-    journeyConsoleMode='local'; vehicleToolsOpen=false; navInspectKey=null;
+    journeyConsoleMode='local'; navInspectKey=null;
     renderAll(); SND.setDriving(false);
     AMBI.arrive(S.at);
     const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];
