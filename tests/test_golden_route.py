@@ -162,7 +162,7 @@ with sync_playwright() as p:
     stopped_gap = stopped_geometry['dockTop'] - stopped_geometry['shellBottom']
     dash_gap = stopped_geometry['tabsTop'] - stopped_geometry['dashBottom']
     check('정차 콘솔은 하단의 빈 띠를 줄이고 그 높이를 달구지·도로 장면에 돌려준다',
-          stopped_geometry['stageHeight'] >= 242 and -2 <= stopped_gap <= 12 and 4 <= dash_gap <= 10,
+          stopped_geometry['stageHeight'] >= 249 and -10 <= stopped_gap <= -4 and 4 <= dash_gap <= 10,
           str({**stopped_geometry, 'dockGap': stopped_gap, 'dashGap': dash_gap}))
     page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
