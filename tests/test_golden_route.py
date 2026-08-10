@@ -151,12 +151,16 @@ with sync_playwright() as p:
       console:!!document.querySelector('.route-console'),
       routes:[...document.querySelectorAll('[data-route-select]')].map(button=>button.dataset.routeSelect),
       hazards:document.querySelectorAll('.nav-hazard-row').length,
+      facts:document.querySelectorAll('.nav-known-facts>span').length,
+      unknowns:document.querySelectorAll('.nav-unknown-list>span').length,
       selected:document.querySelector('[data-route-select][aria-pressed="true"]')?.dataset.routeSelect,
+      height:document.querySelector('.route-console')?.getBoundingClientRect().height||0,
       copy:document.querySelector('.route-console')?.textContent||''
     })''')
-    check('정차 화면은 목적지·위험·연료·식량을 한 네비게이션에서 보여 준다',
+    check('정차 네비게이션은 경로 범위만 보이고 현장 상황은 미확인으로 남긴다',
           nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
-          nav_initial['hazards'] == 3 and '연료' in nav_initial['copy'] and '식량' in nav_initial['copy'],
+          nav_initial['hazards'] == 0 and nav_initial['facts'] == 3 and nav_initial['unknowns'] == 3 and
+          '연료 범위' in nav_initial['copy'] and '현장 상황 미확인' in nav_initial['copy'],
           str(nav_initial))
     page.click('[data-journey-mode="local"]')
     stop_console = page.evaluate('''() => {
@@ -164,12 +168,15 @@ with sync_playwright() as p:
       return {
         actionCopy:action?.textContent||'',
         explore:!!action?.querySelector('[data-a="explore"]:not([disabled])'),
+        images:action?.querySelectorAll('.stop-action-card img').length||0,
+        height:action?.closest('.route-console')?.getBoundingClientRect().height||0,
         panels:document.querySelectorAll('.journey-mode-panel').length
       };
     }''')
-    check('부산에서도 정착지와 외곽 탐색을 머물기 모드에서 고른다',
+    check('머물기 행동은 그림 없이 시간과 미확인 상태만 보여 준다',
           stop_console['explore'] and '머물며 할 일' in stop_console['actionCopy'] and
-          '2시간' in stop_console['actionCopy'] and '위험' in stop_console['actionCopy'] and
+          '2시간' in stop_console['actionCopy'] and '발견물 미확인' in stop_console['actionCopy'] and
+          '탐색 위험' not in stop_console['actionCopy'] and stop_console['images'] == 0 and
           stop_console['panels'] == 1, str(stop_console))
     local_layout = page.evaluate('''() => {
       const console=document.querySelector('.stop-action-console');
@@ -188,11 +195,11 @@ with sync_playwright() as p:
     check('추가 행동 서랍에서 나머지 현지 행동을 바로 찾을 수 있다',
           page.locator('#ovl-local-actions.on').count() == 1 and page.locator('#local-actions-body [data-a]').count() >= 1)
     page.click('#local-actions-x')
-    page.evaluate("S.recruitQ=null; UI.renderAll()")
-    page.click('[data-a="camp"]')
+    page.evaluate("document.querySelector('#local-actions-body [data-a=camp]').click()")
     check('머물기 모드의 야영 준비는 실제 차 안 준비 화면을 연다',
           page.locator('#ovl-camp.on').count() == 1 and page.locator('#camp-rest').count() == 1)
     page.click('#camp-x')
+    page.evaluate("S.recruitQ=null; UI.renderAll()")
     page.click('[data-journey-mode="vehicle"]')
     vehicle_console = page.evaluate('''() => {
       const vehicle=document.querySelector('.vehicle-console');
@@ -200,6 +207,7 @@ with sync_playwright() as p:
       return {
         systems:vehicle?.querySelectorAll('.journey-system-strip>span').length||0,
         vehicleCopy:vehicle?.textContent||'',
+        height:vehicle?.closest('.route-console')?.getBoundingClientRect().height||0,
         detailHeight:detail?.getBoundingClientRect().height||0,
         nestedScroll:vehicle ? vehicle.scrollHeight > vehicle.clientHeight + 1 : true
       };
@@ -207,8 +215,12 @@ with sync_playwright() as p:
     check('달구지는 세 상태와 가장 필요한 행동을 스크롤 없이 먼저 보여 준다',
           vehicle_console['systems'] == 3 and '연료' in vehicle_console['vehicleCopy'] and
           '차체' in vehicle_console['vehicleCopy'] and '장비' in vehicle_console['vehicleCopy'] and
-          '지금 할 수 있는 일' in vehicle_console['vehicleCopy'] and
+          '지금 필요한 정비' in vehicle_console['vehicleCopy'] and
           vehicle_console['detailHeight'] >= 44 and not vehicle_console['nestedScroll'], str(vehicle_console))
+    check('목적지·머물기·달구지 세 콘솔의 외형 높이가 같다',
+          max(nav_initial['height'], stop_console['height'], vehicle_console['height']) -
+          min(nav_initial['height'], stop_console['height'], vehicle_console['height']) <= 1,
+          str({'route': nav_initial['height'], 'local': stop_console['height'], 'vehicle': vehicle_console['height']}))
     page.click('[data-vehicle-detail]')
     vehicle_open = page.evaluate('''() => ({
       open:!!document.querySelector('#ovl-vehicle-detail.on'),
@@ -221,32 +233,23 @@ with sync_playwright() as p:
           vehicle_open['hasRepair'] and vehicle_open['hasRadio'], str(vehicle_open))
     page.click('#vehicle-detail-x')
     page.click('[data-journey-mode="route"]')
-    intel_coverage = page.evaluate('''() => {
-      const cities=Object.entries(D.nodes).filter(([,node])=>node.type!=='hidden').map(([id])=>id);
-      return {cities:cities.length, covered:cities.filter(id=>D.navIntel&&D.navIntel[id]).length};
+    hidden_future = page.evaluate('''() => {
+      const console=document.querySelector('.route-console');
+      const copy=console?.textContent||'';
+      const canvas=console?.querySelector('[data-nav-map]');
+      return {
+        inspector:!!console?.querySelector('[data-nav-inspector]'),
+        hazardRows:console?.querySelectorAll('.nav-hazard-row').length||0,
+        hotspots:(canvas?._navHazardHotspots||[]).length,
+        exactHazard:copy.includes('고가 낙하물'),
+        futureArrow:/연료\\s*\\d+\\s*→/.test(copy),
+        hasRanges:copy.includes('시간 범위')&&copy.includes('연료 범위')
+      };
     }''')
-    check('현재 공개된 모든 도시는 출발 전 고유 위험 정보를 가진다',
-          intel_coverage['cities'] == intel_coverage['covered'], str(intel_coverage))
-    page.click('[data-nav-inspect="hazard:local"]')
-    local_intel = page.evaluate('''() => ({
-      key:document.querySelector('[data-nav-inspector]')?.dataset.navInspector,
-      copy:document.querySelector('.nav-inspector')?.textContent||'',
-      percent:(document.querySelector('.route-console')?.textContent||'').includes('%')
-    })''')
-    check('도시 위험을 누르면 출처·예상 결과·대응 방법이 열리고 가짜 확률은 보이지 않는다',
-          local_intel['key'] == 'hazard:local' and '고가 낙하물' in local_intel['copy'] and
-          '예상' in local_intel['copy'] and '대응' in local_intel['copy'] and not local_intel['percent'],
-          str(local_intel))
-    page.click('[data-nav-inspect-close]')
-    page.click('[data-nav-inspect="resources"]')
-    fuel_intel = page.evaluate('''() => ({
-      key:document.querySelector('[data-nav-inspector]')?.dataset.navInspector,
-      copy:document.querySelector('.nav-inspector')?.textContent||''
-    })''')
-    check('자원을 누르면 연료·식량·물 예상 소모와 도착지 보급 정보가 열린다',
-          fuel_intel['key'] == 'resources' and '연료' in fuel_intel['copy'] and
-          '식량/물' in fuel_intel['copy'] and '도착지 정보' in fuel_intel['copy'], str(fuel_intel))
-    page.click('[data-nav-inspect-close]')
+    check('위험·인물·도착 후 자원은 출발 전에 인터페이스로 노출되지 않는다',
+          not hidden_future['inspector'] and hidden_future['hazardRows'] == 0 and
+          hidden_future['hotspots'] == 0 and not hidden_future['exactHazard'] and
+          not hidden_future['futureArrow'] and hidden_future['hasRanges'], str(hidden_future))
     page.click('[data-route-select="gimhae"]')
     nav_compare = page.evaluate('''() => ({
       driving:!!S.driving,

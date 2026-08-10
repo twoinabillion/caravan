@@ -317,23 +317,6 @@ G.combatReadNote = choice=>{
   if(!read||!choice||!choice.tactic||!Array.isArray(read.tactics)) return '';
   return read.tactics.includes(choice.tactic)?'읽어낸 틈 활용':'다른 해법';
 };
-/* 대응 단계도 판정이다. counter에 맞는 대응은 의도 보정과 높은 기본치를 받지만
-   확정 성공은 아니다 — 실패하면 부정확한 read(그 전술만 남는 좁은 정보)가 남고,
-   3단계에서 그 정보의 질이 그대로 반영된다. "정보의 질"이 도박의 대상이 된다. */
-G.combatFailurePreview = choice=>{
-  if(!choice||!Array.isArray(choice.out)||choice.out.length<2) return '';
-  const fx=choice.out[choice.out.length-1]&&choice.out[choice.out.length-1].fx||{};
-  const bits=[];
-  if((fx.van||0)<0) bits.push(`차체 ${fx.van}`);
-  if((fx.fuel||0)<0) bits.push(`연료 ${fx.fuel}L`);
-  if((fx.pursuit||0)>0) bits.push(`관측 +${fx.pursuit}`);
-  if(fx.injury) bits.push(`부상 위험`);
-  if(fx.item) for(const k in fx.item) if(fx.item[k]<0) bits.push(`${k} ${fx.item[k]}`);
-  if((fx.combatPressure||0)>0) bits.push(`압박 +${fx.combatPressure}`);
-  if((fx.combatEdge||0)<0) bits.push(`우위 ${fx.combatEdge}`);
-  if((fx.fatigue||0)>0) bits.push(`피로 +${fx.fatigue}`);
-  return bits.slice(0,3).join(' · ');
-};
 G.combatOddsBreakdown = (choice,evd)=>{
   const flow=G.ensureCombatFlow();
   const base=G.combatBaseOdds(choice,evd);
@@ -667,4 +650,3 @@ G.tickDeadline = ()=>{
   }
 };
 G.moodAll = (d)=>{ for(const id of S.party){ S.comps[id].mood = clamp(S.comps[id].mood+d,0,100); } };
-

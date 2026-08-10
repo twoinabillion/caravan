@@ -190,27 +190,22 @@ with sync_playwright() as playwright:
     check('첫 발 확정 + 캡 기록', sniper['firstGuaranteed'], str(sniper))
     check('두 발째부터는 실패 가능', sniper['sawFail'], str(sniper))
 
-    print('― 리스크 표시 (선택 전 % 숨김 + 실패 비용 노출)')
+    print('― 선택 전 미래 정보 비노출')
     ui = page.evaluate("""() => {
       G.newGame('onroad','전투UI','full');
       S.combat=null; S.injuries={}; S.pursuit=0;
       UI.showEvent(D.events.find(e=>e.id==='combat_walker_strike'));
       UI.finishStory();
-      const odds=[...document.querySelectorAll('#ev-sheet .combat-odds')].map(n=>n.textContent);
+      const choices=[...document.querySelectorAll('#ev-sheet .choice')];
+      const copy=choices.map(n=>`${n.textContent} ${n.getAttribute('aria-label')||''}`).join(' ');
       return {
-        count:odds.length,
-        percentLeak:odds.filter(t=>/\\d+\\s*%/.test(t)).length,
-        failShown:odds.filter(t=>t.includes('실패하면')).length,
+        count:choices.length,
+        forecastNodes:document.querySelectorAll('#ev-sheet .combat-odds, #ev-sheet .combat-risk, #ev-sheet .combat-failure').length,
+        predictionLeak:/판정 전망|실패하면|위험도|가장 나은|가장 위험|\\d+\\s*%/.test(copy),
       };
     }""")
-    check('선택 카드에 % 미노출', ui['count'] > 0 and ui['percentLeak'] == 0, str(ui))
-    check('실패 비용 표기 존재', ui['failShown'] >= 2, str(ui))
-
-    fail_preview = page.evaluate("""() => {
-      const evd=D.events.find(e=>e.id==='combat_walker_strike');
-      return evd.choices.filter(c=>c.combatRoll!==undefined).map(c=>G.combatFailurePreview(c));
-    }""")
-    check('combatFailurePreview 전 선택 반환', all(fail_preview), str(fail_preview)[:120])
+    check('선택 카드는 행동만 보이고 성공률·실패 비용을 노출하지 않는다',
+          ui['count'] > 0 and ui['forecastNodes'] == 0 and not ui['predictionLeak'], str(ui))
 
     print('― W3: 판정 없는 확정 선택 비율')
     det = page.evaluate("""() => {
@@ -229,7 +224,7 @@ with sync_playwright() as playwright:
     check('판정 없는 확정 선택 ≤ 15%', det['pct'] <= 15,
           f"{det['pct']}% ({len(det['det'])}개) 예: {det['det'][:3]}")
 
-    # prep은 라벨이 아니라 계약이다 — 준비 행동에는 전망(등급·실패 비용)이 붙지 않아야 한다.
+    # 어떤 종류의 선택에도 선택 전 판정 전망이 붙지 않아야 한다.
     prep_ui = page.evaluate("""() => {
       G.newGame('onroad','준비','full');
       S.combat=null; S.injuries={}; S.pursuit=0;
@@ -240,8 +235,8 @@ with sync_playwright() as playwright:
       return cards.map((n,i)=>({prep:!!(evd.choices[i]&&evd.choices[i].prep),
         hasOdds: !!n.querySelector('.combat-odds')}));
     }""")
-    leaked = [r for r in prep_ui if r['prep'] and r['hasOdds']]
-    check('준비 행동에는 전망이 붙지 않는다', not leaked, f"{len(leaked)}개 카드가 확정 결과에 등급 표시")
+    leaked = [r for r in prep_ui if r['hasOdds']]
+    check('전투의 모든 선택에서 전망 노드가 사라졌다', not leaked, f"{len(leaked)}개 카드가 선택 전 전망 표시")
 
     print('― W3: 이탈에 실질 비용이 붙는가')
     exits = page.evaluate("""() => {

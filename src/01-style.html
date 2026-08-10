@@ -2243,6 +2243,17 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .nav-console-body{display:flex;flex:1;min-height:0;flex-direction:column}
 .nav-arrival-note{min-height:17px;margin:3px 0 2px;color:#8c9bad;font:8.5px/1.2 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-arrival-note span{color:#6bc8c0;font-weight:800}
+.nav-known-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin:3px 0 4px}
+.nav-known-facts>span{display:grid;align-content:center;min-width:0;min-height:35px;padding:4px 5px;border:1px solid rgba(85,199,190,.2);
+  background:rgba(9,31,39,.62)}
+.nav-known-facts small{color:#6ebeb8;font:700 7.5px/1.15 var(--mono);white-space:nowrap}
+.nav-known-facts b{margin-top:2px;color:#dbe1e6;font:800 8.5px/1.15 var(--mono);overflow-wrap:anywhere}
+.nav-unknown-list{display:grid;flex:1;min-height:0;align-content:center;gap:2px}
+.nav-unknown-list>span{display:grid;grid-template-columns:7px minmax(0,1fr) auto;align-items:center;gap:5px;min-height:19px;padding:2px 4px;
+  border-left:1px solid rgba(121,143,165,.34);background:rgba(21,29,42,.58);color:#aeb8c4}
+.nav-unknown-list i{width:5px;height:5px;border:1px solid #708399;border-radius:50%}
+.nav-unknown-list b{font:700 8.5px/1.2 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-unknown-list small{color:#68788c;font:7.5px/1.15 var(--mono);white-space:nowrap}
 .nav-hazard-list{display:grid;width:100%;gap:3px;min-height:75px;padding:0;border:0;border-radius:2px;background:transparent;text-align:left;cursor:pointer}
 .nav-hazard-list:hover{background:rgba(96,198,190,.07)}.nav-hazard-list:focus-visible{outline:1px solid #80d5cf;outline-offset:1px}
 .nav-hazard-row{display:grid;width:100%;grid-template-columns:minmax(0,1fr) 52px 30px;align-items:center;gap:5px;min-height:25px;padding:0;
@@ -2390,8 +2401,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .journey-mode-tabs button[aria-selected="true"]::after{left:12px;right:12px;bottom:0;height:2px}
 
 .journey-mode-panel{margin-top:0;aspect-ratio:auto}
-.journey-local-panel{aspect-ratio:.88}
-.journey-vehicle-panel{aspect-ratio:1.08}
+.journey-local-panel,.journey-vehicle-panel{aspect-ratio:3/2}
 .journey-local-screen.stop-action-console,.journey-vehicle-screen.vehicle-console{inset:9.6% 8.6% 10%;padding:9px 10px;overflow:hidden}
 .journey-mode-heading{gap:7px;padding-bottom:6px}
 .journey-mode-heading small{font-size:10px}
@@ -2400,15 +2410,17 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .journey-mode-heading>em{padding:4px 5px;font-size:10px}
 
 .journey-local-screen .stop-action-grid{grid-template-columns:minmax(0,1fr);flex:1;overflow:visible}
-.journey-local-screen .stop-action-card{grid-template-columns:minmax(0,1fr) minmax(100px,.64fr);gap:7px;padding:6px 0}
+.journey-local-screen .stop-action-card{display:block;padding:0;border-bottom:1px solid rgba(112,127,147,.27)}
 .journey-local-screen .stop-action-kicker{font-size:10px}
 .journey-local-screen .stop-action-copy>b{font-size:12.5px}
 .journey-local-screen .stop-action-description{font-size:10.5px;line-height:1.3;-webkit-line-clamp:2}
 .journey-local-screen .stop-action-chips{display:flex;gap:3px;margin-top:4px}
 .journey-local-screen .stop-action-chips i{min-height:20px;padding:3px 4px;font-size:10px}
-.journey-local-screen .stop-action-trigger{min-height:52px;padding:6px}
-.journey-local-screen .stop-action-trigger b{font-size:12px}
-.journey-local-screen .stop-action-trigger small{font-size:10px}
+.journey-local-screen .stop-action-trigger{display:grid;width:100%;grid-template-columns:minmax(0,1fr) auto;gap:8px;min-height:64px;padding:7px 5px;
+  border:0;background:transparent}
+.journey-local-screen .stop-action-card.primary .stop-action-trigger{background:linear-gradient(90deg,rgba(186,121,42,.13),transparent 72%)}
+.journey-local-screen .stop-action-cta{align-self:center;color:#d9aa61;font:800 11px/1.2 var(--mono);white-space:nowrap}
+.journey-local-screen .stop-action-cta i{font-style:normal;color:#6ec9c1}
 
 .console-more-actions,.console-detail-open{display:flex;flex:none;width:100%;min-height:44px;align-items:center;justify-content:space-between;
   margin-top:6px;padding:7px 10px;border:1px solid #3a5862;border-radius:2px;background:#0b2028;color:#73cbc3;
@@ -2439,14 +2451,16 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .console-detail-section>header b{display:block;margin-top:3px;color:#efeee8;font-size:16px;line-height:1.3}
 .console-detail-section>header p{margin:4px 0 0;color:#8e9bab;font:12px/1.45 var(--mono)}
 .console-detail-body .stop-action-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
-.console-detail-body .stop-action-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(112px,.58fr);align-items:center;gap:8px;
-  padding:10px;border:1px solid #344158;border-radius:4px;background:#0b121e}
+.console-detail-body .stop-action-card{display:block;padding:0;border:1px solid #344158;border-radius:4px;background:#0b121e;overflow:hidden}
 .console-detail-body .stop-action-card.is-disabled{opacity:.5}
 .console-detail-body .stop-action-copy>b{display:block;margin-top:2px;color:#eeb04f;font:850 13px/1.25 var(--sans)}
 .console-detail-body .stop-action-kicker{color:#62c7bf;font-size:12px}
 .console-detail-body .stop-action-description{font-size:12px}
 .console-detail-body .stop-action-chips i{font-size:12px}
-.console-detail-body .stop-action-trigger{min-height:54px}
+.console-detail-body .stop-action-trigger{display:grid;width:100%;grid-template-columns:minmax(0,1fr) auto;gap:10px;min-height:70px;padding:10px 12px;border:0;background:transparent}
+.console-detail-body .stop-action-card.primary .stop-action-trigger{background:linear-gradient(90deg,rgba(186,121,42,.15),transparent 74%)}
+.console-detail-body .stop-action-cta{align-self:center;color:#d9aa61;font:800 12px/1.2 var(--mono);white-space:nowrap}
+.console-detail-body .stop-action-cta i{font-style:normal;color:#6ec9c1}
 .vehicle-detail-system-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .console-detail-body .vehicle-system-card{padding:10px 9px}
 .console-detail-body .vehicle-system-card small,.console-detail-body .vehicle-system-card em{font-size:12px}
@@ -2460,20 +2474,21 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   .journey-mode-tabs{min-height:44px;margin:0 8.6% 5px;padding:0}
   .journey-mode-tabs button{min-height:44px;font-size:13px}
   .journey-mode-panel{aspect-ratio:auto}
-  .journey-local-panel{aspect-ratio:1.06}
-  .journey-vehicle-panel{aspect-ratio:1.12}
+  .journey-local-panel,.journey-vehicle-panel{aspect-ratio:1.15}
   .journey-mode-heading small{display:none}
   .journey-mode-heading>em{font-size:12px}
   .journey-mode-heading p{display:none}
-  .journey-local-screen .stop-action-card{grid-template-columns:minmax(0,1fr) minmax(94px,.62fr);gap:6px;padding:4px 0}
+  .journey-local-screen .stop-action-card{display:block;padding:0}
   .journey-local-screen .stop-action-kicker{display:none}
   .journey-local-screen .stop-action-chips{display:flex}
   .journey-local-screen .stop-action-description{display:none}
   .journey-local-screen .stop-action-chips i{min-height:22px;font-size:12px}
-  .journey-local-screen .stop-action-trigger{grid-template-columns:22px minmax(0,1fr);min-height:50px}
-  .journey-local-screen .stop-action-trigger .stop-action-icon{width:22px;height:22px}
-  .journey-local-screen .stop-action-trigger .stop-action-icon .ico{width:20px;height:20px}
-  .journey-local-screen .stop-action-trigger small{display:none}
+  .journey-local-screen .stop-action-trigger{grid-template-columns:minmax(0,1fr) auto;min-height:58px;padding:6px 4px}
+  .journey-local-screen .stop-action-cta{font-size:12px}
+  .nav-known-facts{gap:2px;margin:2px 0}.nav-known-facts>span{min-height:32px;padding:3px}
+  .nav-known-facts small{font-size:6.5px}.nav-known-facts b{font-size:7.5px}
+  .nav-unknown-list{gap:1px}.nav-unknown-list>span{min-height:18px;padding:1px 3px;grid-template-columns:6px minmax(0,1fr)}
+  .nav-unknown-list b{font-size:7.5px}.nav-unknown-list small{display:none}
   .journey-system-strip{min-height:32px}
   .journey-system-strip small,.journey-system-strip b{font-size:12px}
   .vehicle-detail-system-grid{grid-template-columns:1fr}

@@ -11,7 +11,7 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
-  let navChoiceAt=null, navChoiceId=null, navInspectKey=null, journeyConsoleMode='local';
+  let navChoiceAt=null, navChoiceId=null, journeyConsoleMode='local';
   /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
      원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
   function syncStageActions(){
@@ -1130,114 +1130,34 @@ const UI = (()=>{
   }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
-  function routeDestinationIntel(model){
-    const node=D.nodes[model.nb.id]||{}, authored=(D.navIntel&&D.navIntel[model.nb.id])||{};
+  function routeDestinationType(model){
+    const node=D.nodes[model.nb.id]||{};
     const typeLabel=node.type==='goal'?'목표 지점':node.stl?'주요 정착지':node.type==='settlement'?'정착지'
       :node.type==='town'?'마을':node.type==='hidden'?'미확인 장소':'폐허·탐색지';
-    const trade=node.stl&&D.stls&&D.stls[node.stl]&&Array.isArray(D.stls[node.stl].trade)
-      ?D.stls[node.stl].trade:[];
-    const supplyNames=[];
-    for(const row of trade){
-      const key=row[1], name=key==='fuel'?'연료':key==='water'?'물':key==='food'?'식량'
-        :String(key||'').startsWith('item')?String(key).slice(4):'';
-      if(name&&!supplyNames.includes(name)) supplyNames.push(name);
-    }
-    let supply=node.stl
-      ?(supplyNames.length?`${supplyNames.slice(0,4).join(' · ')} 보급 확인`:'현지 교환 확인')
-      :node.type==='settlement'?'휴식과 제한적 보급 가능'
-      :node.type==='town'?'현지 교환 가능성 · 재고 미확인'
-      :node.type==='goal'?'보급보다 임무 준비가 우선'
-      :node.type==='hidden'?'도착 전 보급 정보 없음':'탐색 회수 가능 · 보급 미확인';
-    if(model.nb.id==='busan') supply='차고 · 창고 · 출발 보급 가능';
-    const fallbackRoad=model.nb.road==='rough'
-      ?{hazard:'거친 접근로',effect:'차체 손상과 연료 추가 소모',counter:'타이어·서스펜션을 점검하고 저속 진입'}
-      :model.nb.road==='high'
-        ?{hazard:'노출된 큰길',effect:'관측 흔적이 커질 수 있음',counter:'정차를 줄이고 우회 지점을 미리 확인'}
-        :{hazard:'갈림길 접근',effect:'길목 사건과 짧은 우회 가능',counter:'최근 타이어 자국과 라디오 소문 확인'};
-    return {
-      typeLabel,arrival:node.desc||'아직 기록이 충분하지 않은 목적지다.',supply,
-      hazard:authored.hazard||fallbackRoad.hazard,effect:authored.effect||fallbackRoad.effect,
-      counter:authored.counter||fallbackRoad.counter,source:authored.source||'운전수들의 최근 소문',
-      confidence:authored.confidence||(node.type==='hidden'?'미상':'추정')
-    };
+    return typeLabel;
   }
-  function routeDangerForecast(model){
-    const road=model.nb.road, weather=S.wx, intel=routeDestinationIntel(model);
-    const roadRisk=Math.round(clamp(road==='rough'?67:road==='normal'?43:30,8,92));
-    const localRisk=Math.round(clamp((road==='rough'?52:road==='normal'?39:31)+(model.nb.km>=45?10:0),8,90));
-    const observed=Math.round(clamp(10+(road==='high'?18:road==='normal'?9:4)+S.pursuit*13+(G.isNight()?12:0)
-      +(weather==='storm'?16:weather==='rain'||weather==='dust'?8:0),5,94));
-    const level=value=>value>=68?'높음':value>=42?'주의':'낮음';
-    const roadInfo=road==='rough'
-      ?{label:'험로 파손',short:'험로',effect:'연료 소모와 차체 피로가 커진다',counter:model.forecast.gear.length?`${model.forecast.gear.join(' · ')}로 대응 가능`:'타이어·서스펜션 점검 후 저속 주행'}
-      :road==='high'
-        ?{label:'큰길 노출',short:'노출',effect:'빠르지만 관측 장치와 검문에 오래 보인다',counter:'불필요한 정차를 줄이고 출구를 미리 확인'}
-        :{label:'길목 사건',short:'길목',effect:'갈림길이나 장애물에서 사건이 생길 수 있다',counter:'속도를 낮추고 최근 통행 흔적을 확인'};
-    const watchInfo=weather==='storm'
-      ?{label:'폭풍 노출',short:'폭풍',effect:'시야와 흡기 상태가 급격히 나빠진다',counter:S.up.snorkel?'스노클 장착 · 대응 가능':'폭풍이 잦아들 때까지 대기하거나 흡기를 보호'}
-      :weather==='rain'
-        ?{label:'침수·빗길',short:'빗길',effect:'제동 거리가 늘고 낮은 도로가 잠길 수 있다',counter:'저지대를 피하고 제동 거리를 길게 확보'}
-        :weather==='dust'
-          ?{label:'먼지 시야',short:'먼지',effect:'시야와 흡기 효율이 떨어진다',counter:S.up.snorkel?'스노클 장착 · 대응 가능':'흡기구를 보호하고 앞차와 거리를 확보'}
-          :G.isNight()
-            ?{label:'야간 관측',short:'야간',effect:'우리도 길을 덜 보고 상대도 우리 불빛을 본다',counter:S.up.lightbar?'라이트바 장착 · 시야 대응 가능':'불빛을 낮추고 속도를 줄여 이동'}
-            :{label:'관측 위험',short:'관측',effect:'관리 신호와 추적 흔적에 잡힐 수 있다',counter:'라디오 송신을 줄이고 오래 정차하지 않기'};
-    return [
-      {id:'road',...roadInfo,value:roadRisk,level:level(roadRisk),confidence:'확정',source:`도로 장부 · ${road==='rough'?'험로':road==='high'?'큰길':'일반 도로'}`},
-      {id:'local',label:intel.hazard,short:'현지',value:localRisk,level:level(localRisk),effect:intel.effect,counter:intel.counter,
-        confidence:intel.confidence,source:intel.source},
-      {id:'watch',...watchInfo,value:observed,level:level(observed),confidence:'추정',source:'날씨 · 시간 · 관측 흔적 종합'}
-    ];
+  function routeDurationRange(minutes){
+    const low=Math.max(5,Math.floor(minutes*.85/5)*5);
+    const high=Math.max(low+5,Math.ceil(minutes*1.2/5)*5);
+    return `${G.durationLabel(low)}–${G.durationLabel(high)}`;
   }
-  function routeConsoleModel(routeModels,recommended){
+  function routeFuelRange(fuel){
+    const low=Math.max(1,Math.floor(fuel*.85));
+    const high=Math.max(low+1,Math.ceil(fuel*1.2));
+    return `${low}–${high}L`;
+  }
+  function routeConsoleModel(routeModels){
     if(navChoiceAt!==S.at||!routeModels.some(model=>model.nb.id===navChoiceId)){
       navChoiceAt=S.at;
-      navChoiceId=(recommended||routeModels[0]||{}).nb?.id||null;
-      navInspectKey=null;
+      navChoiceId=(routeModels[0]||{}).nb?.id||null;
     }
     return routeModels.find(model=>model.nb.id===navChoiceId)||routeModels[0]||null;
   }
-  function routeInspectorHtml(key,context){
-    if(!key) return '';
-    const {selected,node,intel,hazards,foodNeed,fuelAfter,foodAfter,waterAfter}=context;
-    let eyebrow='',title='',body='',effect='',counter='';
-    if(key==='destination'){
-      eyebrow=`${intel.typeLabel} · 정보 ${intel.confidence}`; title=node.name; body=intel.arrival;
-      effect=intel.supply; counter=`접근 주의 · ${intel.hazard} — ${intel.counter}`;
-    } else if(key==='fuel'){
-      const margin=Math.floor(S.fuel-selected.fuel);
-      eyebrow='자원 계산 · 연료'; title=`${Math.floor(S.fuel)}L → ${fuelAfter}L`;
-      body=`이 구간 ${selected.nb.km}km에서 약 ${selected.fuel}L를 쓴다. 날씨·적재량·노면 상태가 반영된 값이다.`;
-      effect=margin<0?`연료 ${Math.abs(margin)}L 부족`:margin<=3?`도착 후 여유 ${margin}L · 위험`:`도착 후 여유 ${margin}L`;
-      counter=margin<0?'이곳에서 연료를 구하거나 더 짧은 길 선택':margin<=3?'예비 연료 확보 후 출발 권장':'현재 연료로 주행 가능';
-    } else if(key==='resources'){
-      const fuelMargin=Math.floor(S.fuel-selected.fuel), supplyMargin=Math.min(foodAfter,waterAfter);
-      eyebrow='자원 계산 · 전체'; title=`연료 ${fuelAfter}L · 식량/물 ${foodAfter}/${waterAfter} 예상`;
-      body=`${selected.nb.km}km를 달리며 연료 약 ${selected.fuel}L, ${Math.max(1,G.partySize())}명의 식량과 물을 각각 약 ${foodNeed} 사용한다.`;
-      effect=`도착지 정보 · ${intel.supply}`;
-      counter=fuelMargin<0?`연료 ${Math.abs(fuelMargin)}L를 먼저 확보`
-        :supplyMargin<0?'출발 전 식량과 물을 보충'
-        :fuelMargin<=3||supplyMargin<=2?'도착 후 바로 보급처 확인':'현재 자원으로 주행 가능';
-    } else if(key.startsWith('hazard:')){
-      const hazard=hazards.find(row=>row.id===key.slice(7));
-      if(!hazard) return '';
-      eyebrow=`위험 ${hazard.level} · 정보 ${hazard.confidence}`; title=hazard.label;
-      body=`출처 · ${hazard.source}`; effect=hazard.effect; counter=hazard.counter;
-    } else return '';
-    return `<div class="nav-inspector" data-nav-inspector="${esc(key)}">
-      <button type="button" class="nav-inspector-back" data-nav-inspect-close>← 경로 요약</button>
-      <small>${esc(eyebrow)}</small><b>${esc(title)}</b><p>${esc(body)}</p>
-      <dl><div><dt>예상</dt><dd>${esc(effect)}</dd></div><div><dt>대응</dt><dd>${esc(counter)}</dd></div></dl>
-    </div>`;
-  }
-  function routeConsoleHtml(routeModels,recommended){
-    const selected=routeConsoleModel(routeModels,recommended);
+  function routeConsoleHtml(routeModels){
+    const selected=routeConsoleModel(routeModels);
     if(!selected) return '<div class="route-empty">지금 이어지는 길이 없다.</div>';
     const node=D.nodes[selected.nb.id], forecast=selected.forecast;
-    const intel=routeDestinationIntel(selected), hazards=routeDangerForecast(selected);
-    const foodNeed=Math.max(1,Math.ceil(Math.max(1,G.partySize())*forecast.minutes/600));
-    const fuelAfter=Math.max(0,Math.floor(S.fuel-selected.fuel));
-    const foodAfter=Math.floor(S.food-foodNeed), waterAfter=Math.floor(S.water-foodNeed);
+    const destinationType=routeDestinationType(selected);
     const destinationTabs=routeModels.map((model,index)=>{
       const active=model.nb.id===selected.nb.id;
       const name=D.nodes[model.nb.id].name;
@@ -1245,42 +1165,41 @@ const UI = (()=>{
         data-go="${model.nb.id}" data-route-select="${model.nb.id}" aria-pressed="${active}"
         aria-label="목적지 ${index+1}, ${esc(name)} 선택">${String(index+1).padStart(2,'0')}<span class="sr-only"> ${esc(name)}</span></button>`;
     }).join('');
-    const hazardRows=hazards.map(hazard=>`<span class="nav-hazard-row risk-${hazard.level==='높음'?'high':hazard.level==='주의'?'mid':'low'}">
-      <span><b>${hazard.label}</b><small>${hazard.level}</small></span>
-      <i class="nav-risk-meter" aria-hidden="true"><u style="width:${hazard.level==='높음'?86:hazard.level==='주의'?58:28}%"></u></i><em>${hazard.level}</em></span>`).join('');
     const canDepart=forecast.ok&&!forecast.shortage;
-    const inspector=routeInspectorHtml(navInspectKey,{selected,node,intel,hazards,foodNeed,fuelAfter,foodAfter,waterAfter});
-    const summary=`<p class="nav-arrival-note"><span>${esc(intel.typeLabel)}</span> ${esc(intel.supply)}</p>
-      <button type="button" class="nav-hazard-list" data-nav-inspect="hazard:local"
-        aria-label="예상 위험 세 건. 지역 위험 상세 정보 열기">${hazardRows}</button>
-      <div class="nav-supply-impact" aria-label="예상 자원 변화">
-        <button type="button" data-nav-inspect="resources" aria-label="연료와 식량, 물 예상 사용량 상세 보기">
-          <span>${ICO('fuel')}연료 ${Math.floor(S.fuel)}→<strong>${fuelAfter}L</strong></span>
-          <em>${ICO('food')}식량·물 ${S.food}/${S.water}→<strong>${foodAfter}/${waterAfter}</strong></em></button>
+    const summary=`<p class="nav-arrival-note"><span>${esc(destinationType)}</span> 도착 뒤 현장 정보를 확인한다.</p>
+      <div class="nav-known-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
+        <span><small>거리</small><b>${selected.nb.km}km</b></span>
+        <span><small>시간 범위</small><b>${routeDurationRange(forecast.minutes)}</b></span>
+        <span><small>연료 범위</small><b>${routeFuelRange(selected.fuel)}</b></span>
+      </div>
+      <div class="nav-unknown-list" aria-label="출발 전에는 알 수 없는 정보">
+        <span><i aria-hidden="true"></i><b>도로 정보 불완전</b><small>주행하며 확인</small></span>
+        <span><i aria-hidden="true"></i><b>통신 음영 구간</b><small>신호 미확인</small></span>
+        <span><i aria-hidden="true"></i><b>현장 상황 미확인</b><small>도착 뒤 확인</small></span>
       </div>`;
     const departButton=canDepart
       ?`<button type="button" data-nav-depart="${selected.nb.id}">출발 <span aria-hidden="true">→</span></button>`
       :forecast.shortage
-        ?`<button type="button" data-nav-inspect="fuel" class="nav-resource-fix">연료 ${Math.abs(forecast.fuelMargin)}L 부족</button>`
+        ?`<button type="button" class="nav-resource-fix" disabled>현재 연료 부족</button>`
         :'<button type="button" disabled>경로 잠김</button>';
     return `<div class="route-console" data-route-console="${selected.nb.id}">
       <div class="route-console-screen">
         <section class="nav-route-map" aria-labelledby="nav-map-title">
           <div class="nav-screen-kicker"><span id="nav-map-title">${esc(D.nodes[S.at].name)} → 다음 목적지</span><em>LIVE ROUTE</em></div>
-          <canvas data-nav-map tabindex="0" aria-label="${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 선택 경로. 위험 표식을 누르면 상세 정보를 확인한다"></canvas>
-          <div class="nav-map-legend"><span>선택 경로</span><span>대체 경로</span><span class="danger">위험 구간</span></div>
+          <canvas data-nav-map aria-label="${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 지도에 기록된 경로"></canvas>
+          <div class="nav-map-legend"><span>선택 경로</span><span>대체 경로</span><span>현장 정보 미확인</span></div>
         </section>
         <section class="nav-route-decision" aria-live="polite">
           <div class="nav-destination-head"><span>목적지 ${String(routeModels.indexOf(selected)+1).padStart(2,'0')} / ${String(routeModels.length).padStart(2,'0')}</span>
             <div class="nav-destination-tabs" role="group" aria-label="목적지 선택">${destinationTabs}</div></div>
           <div class="nav-destination-title"><h3>${esc(node.name)}</h3></div>
-          <div class="nav-console-body">${inspector||summary}</div>
-          <div class="nav-time"><b>${selected.nb.km}km · ${G.durationLabel(forecast.minutes)}</b><span>${forecast.readinessLabel}</span></div>
+          <div class="nav-console-body">${summary}</div>
+          <div class="nav-time"><b>현재 연료 ${Math.floor(S.fuel)}L</b><span>식량 ${S.food} · 물 ${S.water}</span></div>
           <div class="nav-console-actions">
             <button type="button" data-nav-cycle aria-label="다른 목적지 선택" ${routeModels.length<2?'disabled':''}>다른 길</button>
             ${departButton}
           </div>
-          ${canDepart?'':`<small class="nav-depart-blocked">${esc(forecast.readinessReason)}</small>`}
+          ${canDepart?'':`<small class="nav-depart-blocked">${forecast.shortage?'현재 연료로 출발할 수 없다.':'아직 이 경로를 이용할 수 없다.'}</small>`}
         </section>
       </div>
     </div>`;
@@ -1325,18 +1244,6 @@ const UI = (()=>{
       if(!selected) ctx.setLineDash([5,5]);
       ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);
     });
-    const selected=routeModels.find(model=>model.nb.id===selectedId)||routeModels[0];
-    const a=point(S.at),b=point(selected.nb.id),hazards=routeDangerForecast(selected).slice(0,3);
-    canvas._navHazardHotspots=[];
-    hazards.forEach((hazard,index)=>{
-      const t=[.25,.5,.75][index]||.5,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;
-      canvas._navHazardHotspots.push({x,y,key:`hazard:${hazard.id}`});
-      ctx.fillStyle='#0b101c';ctx.strokeStyle='#ef6257';ctx.lineWidth=2;
-      ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();ctx.stroke();
-      ctx.fillStyle='#ef6257';ctx.font='800 9px monospace';
-      const align=index===1?'left':(x>width*.62?'right':'left');ctx.textAlign=align;
-      ctx.fillText(hazard.short,x+(align==='right'?-11:11),y+3);ctx.textAlign='left';
-    });
     nodes.forEach(({id,node})=>{
       const p=point(id),isCurrent=id===S.at,isSelected=id===selectedId,isChoice=routeModels.some(model=>model.nb.id===id);
       ctx.fillStyle=isCurrent?'#55e0c8':isSelected?'#ffb454':isChoice?'#79b7c1':'#54627b';
@@ -1352,38 +1259,17 @@ const UI = (()=>{
   }
   function wireRouteConsole(panel,routeModels){
     panel.querySelectorAll('[data-route-select]').forEach(button=>button.onclick=()=>{
-      navChoiceAt=S.at;navChoiceId=button.dataset.routeSelect;navInspectKey=null;renderPanel();
+      navChoiceAt=S.at;navChoiceId=button.dataset.routeSelect;renderPanel();
     });
     const cycle=panel.querySelector('[data-nav-cycle]');
     if(cycle) cycle.onclick=()=>{
       const index=Math.max(0,routeModels.findIndex(model=>model.nb.id===navChoiceId));
-      navChoiceAt=S.at;navChoiceId=routeModels[(index+1)%routeModels.length].nb.id;navInspectKey=null;renderPanel();
+      navChoiceAt=S.at;navChoiceId=routeModels[(index+1)%routeModels.length].nb.id;renderPanel();
     };
-    panel.querySelectorAll('[data-nav-inspect]').forEach(button=>button.onclick=()=>{
-      navInspectKey=button.dataset.navInspect;renderPanel();
-    });
-    const inspectClose=panel.querySelector('[data-nav-inspect-close]');
-    if(inspectClose) inspectClose.onclick=()=>{ navInspectKey=null;renderPanel(); };
     const depart=panel.querySelector('[data-nav-depart]');
     if(depart) depart.onclick=()=>G.startTravel(depart.dataset.navDepart);
     const canvas=panel.querySelector('[data-nav-map]');
-    if(canvas){
-      requestAnimationFrame(()=>drawRouteConsoleMap(canvas,routeModels,navChoiceId));
-      canvas.onclick=event=>{
-        const rect=canvas.getBoundingClientRect(), x=event.clientX-rect.left, y=event.clientY-rect.top;
-        const hit=(canvas._navHazardHotspots||[]).find(point=>Math.hypot(point.x-x,point.y-y)<=22);
-        if(hit){ navInspectKey=hit.key;renderPanel(); }
-      };
-      canvas.onmousemove=event=>{
-        const rect=canvas.getBoundingClientRect(), x=event.clientX-rect.left, y=event.clientY-rect.top;
-        canvas.style.cursor=(canvas._navHazardHotspots||[]).some(point=>Math.hypot(point.x-x,point.y-y)<=22)?'pointer':'default';
-      };
-      canvas.onkeydown=event=>{
-        if((event.key==='Enter'||event.key===' ')&&(canvas._navHazardHotspots||[])[0]){
-          event.preventDefault();navInspectKey=canvas._navHazardHotspots[0].key;renderPanel();
-        }
-      };
-    }
+    if(canvas) requestAnimationFrame(()=>drawRouteConsoleMap(canvas,routeModels,navChoiceId));
   }
   function applyIcons(){
     [['#g-fuel','fuel'],['#g-water','water'],['#g-food','food'],['#g-van','van'],['#g-scrap','scrap']]
@@ -1461,17 +1347,17 @@ const UI = (()=>{
       renderStatus();
     };
   }
-  function stopActionHtml({action,kicker,icon,title,description,chips=[],primary=false,disabled=false,cta=''}){
+  function stopActionHtml({action,kicker,title,description,chips=[],primary=false,disabled=false,cta=''}){
     const chipHtml=chips.filter(Boolean).map(chip=>{
       const item=typeof chip==='string'?{label:chip}:chip;
       return `<i class="${item.tone?` tone-${esc(item.tone)}`:''}">${esc(item.label)}</i>`;
     }).join('');
     return `<article class="stop-action-card${primary?' primary':''}${disabled?' is-disabled':''}">
-      <span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
-        <span class="stop-action-description">${esc(description)}</span>
-        ${chipHtml?`<span class="stop-action-chips">${chipHtml}</span>`:''}</span>
       <button type="button" class="stop-action-trigger" data-a="${esc(action)}" ${disabled?'disabled':''}>
-        <span class="ic stop-action-icon">${ICO(icon)}</span><span><b>${esc(cta||title)}</b><small>${esc(kicker)}</small></span>
+        <span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
+          <span class="stop-action-description">${esc(description)}</span>
+          ${chipHtml?`<span class="stop-action-chips">${chipHtml}</span>`:''}</span>
+        <span class="stop-action-cta">${esc(cta||title)} <i aria-hidden="true">→</i></span>
       </button></article>`;
   }
   function journeyModeTabsHtml(mode){
@@ -1487,7 +1373,6 @@ const UI = (()=>{
       if(!button||button.dataset.journeyMode===journeyConsoleMode) return;
       const scrollTop=panel.scrollTop;
       journeyConsoleMode=button.dataset.journeyMode;
-      navInspectKey=null;
       renderPanel();
       panel.scrollTop=scrollTop;
       requestAnimationFrame(()=>panel.querySelector(`[data-journey-mode="${journeyConsoleMode}"]`)?.focus({preventScroll:true}));
@@ -1608,28 +1493,19 @@ const UI = (()=>{
     }));
     if(n.type!=='goal'){
       const es=G.exploreStatus();
-      const ef=G.exploreForecast(es);
-      const label=es.ok?(es.repeat?'남은 곳을 샅샅이 뒤진다':n.stl?'도시 외곽을 탐색한다':'주변을 탐색한다'):'주변 탐색';
       localActions.push(stopActionHtml({
-        action:'explore',kicker:es.repeat?'오늘의 마지막 수색':'현지 탐색',icon:'pursuit',title:label,
-        description:es.ok?`찾을 것 · ${ef.focus}`:es.reason,disabled:!es.ok,
-        chips:es.ok?[G.durationLabel(es.mins),{label:`탐색 위험 ${ef.danger}`,tone:ef.danger==='높음'?'danger':ef.danger==='보통'?'caution':'ready'},ef.guaranteed]:[],cta:'주변 탐색'
+        action:'explore',kicker:es.repeat?'오늘의 마지막 수색':'주변에서',title:'주변 탐색',
+        description:es.ok?'시간을 들여 직접 주변을 확인한다. 무엇을 마주칠지는 알 수 없다.':es.reason,disabled:!es.ok,
+        chips:es.ok?[G.durationLabel(es.mins),{label:'발견물 미확인',tone:'muted'}]:[],cta:'탐색하기'
       }));
     }
     localActions.push(stopActionHtml({
-      action:'camp',kicker:'차 안에서',icon:'van',title:'이곳에서 밤을 준비한다',
+      action:'camp',kicker:'차 안에서',title:'야영 준비',
       description:'식사와 간이 정비를 준비하고, 동료와 오늘의 길을 돌아본다.',
-      chips:[G.isNight()?'지금 밤':'해 지기 전','식사·정비·대화'],cta:'야영 준비'
+      chips:[G.isNight()?'지금 밤':'해 지기 전','식사·정비·대화'],cta:'준비하기'
     }));
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
-    const viable=routeModels.filter(model=>model.forecast.ok&&!model.forecast.shortage);
-    const forward=viable.filter(model=>model.forecast.progressKm>0);
-    const recommendationPool=forward.length?forward:viable;
-    const safest=[...recommendationPool].sort((a,b)=>b.forecast.safetyScore-a.forecast.safetyScore||b.forecast.progressScore-a.forecast.progressScore)[0]||null;
-    const fastest=[...recommendationPool].sort((a,b)=>b.forecast.progressScore-a.forecast.progressScore||b.forecast.safetyScore-a.forecast.safetyScore)[0]||null;
-    const supplied=[...recommendationPool].sort((a,b)=>b.forecast.supplyScore-a.forecast.supplyScore||b.forecast.progressScore-a.forecast.progressScore)[0]||null;
-    const recommended=fastest&&fastest.forecast.safetyScore>=68?fastest:(safest||supplied);
     if(S.fuel<5) utilityActions.push(`<button class="act" data-a="walkfuel"><span class="ic">${ICO('fuel')}</span><span><b>걸어서 연료를 구해온다</b><small>시간과 체력을 크게 소모한다</small></span></button>`);
     if(S.van<S.vanMax-5){
       const hasP=(S.items['부품']||0)>0;
@@ -1639,13 +1515,8 @@ const UI = (()=>{
       utilityActions.push(`<button class="act" data-a="radio" ${hasT?'':'disabled'}><span class="ic">${ICO('quest')}</span><span><b>라디오를 고친다</b><small>${hasT?'진공관 1 소모 · 주행 중 방송 수신':'라디오 진공관이 필요하다 — 어딘가의 방송국에'}</small></span></button>`); }
     if(S.flags.armed_age) utilityActions.push(`<button class="act" data-a="craft"><span class="ic">${ICO('perk')}</span><span><b>작업대를 편다</b><small>무기·탄 제작 · 약 40분</small></span></button>`);
     const routeRumors=!S.routePlan&&S.stats.km>=70?`<section class="journey-section route-rumor-section">
-      <div class="journey-section-head"><span><small>AHEAD AT GIMCHEON</small><b>앞에서 갈라질 두 노선</b></span><em>미리 준비</em></div>
-      <p>김천에서 한 길을 고르면 청주까지 바꿀 수 없다. 지금은 필요한 연료와 장비를 준비할 수 있다.</p>
-      <div class="route-rumor-grid">${Object.values(D.routePlans||{}).map(def=>{ const forecast=G.routeForecast(def.id); return `<article>
-        <span>${def.mark}</span><div><b>${esc(def.name)}</b><p>${esc(def.promise)}</p>
-        <small>${forecast.km}km · ${G.durationLabel(forecast.minutes)} · 연료 약 ${forecast.fuel}L · ${forecast.rough?`험로 ${forecast.rough}구간`:`정착지 ${forecast.stops}곳`}</small>
-        <small class="route-rumor-reward">도착 계약: ${esc(def.reward||'도착 후 반영')}</small>
-        <em class="${forecast.short?'warn':''}">${esc(forecast.readiness)}</em></div></article>`; }).join('')}</div>
+      <div class="journey-section-head"><span><small>MAP NOTE</small><b>김천의 갈림길</b></span><em>도착 뒤 선택</em></div>
+      <p>김천에서 고른 길은 청주까지 이어진다. 두 길의 현장 상황은 김천에 도착한 뒤 지도에서 확인한다.</p>
     </section>`:'';
     const buildProfile=G.vanBuildProfile();
     const installedUpgrades=(D.upgrades||[]).filter(upgrade=>S.up&&S.up[upgrade.id]);
@@ -1670,7 +1541,6 @@ const UI = (()=>{
         <div class="journey-mode-heading"><span><small>STAY & ACT</small><b>머물며 할 일</b><p>출발 전에 이 장소에서 시간을 쓰는 행동이다.</p></span><em>${n.stl?'정착지·주변':'정차 중'}</em></div>
         <div class="stop-action-grid local-actions">${visibleLocalActions.join('')}</div>
         ${hiddenLocalActions.length?`<button type="button" class="console-more-actions" data-local-more>더 할 일 ${hiddenLocalActions.length}<span>전체 보기 →</span></button>`:''}
-        ${systemStrip}
       </section></div>`:'<div class="route-empty">지금 이곳에서 할 수 있는 일이 없다.</div>';
     const utilityActionsHtml=utilityActions.join('');
     const vehicleDetailHtml=`<section class="console-detail-section">
@@ -1689,12 +1559,12 @@ const UI = (()=>{
     </section>`;
     const vehicleSection=`<div class="route-console journey-mode-panel journey-vehicle-panel" id="journey-mode-vehicle" role="tabpanel" aria-label="달구지 상태와 정비">
       <section class="route-console-screen journey-vehicle-screen vehicle-console">
-        <div class="journey-mode-heading"><span><small>VAN STATUS</small><b>달구지 상태</b><p>지금 손볼 일과 다음 길의 준비 상태를 확인한다.</p></span><em>${vanPercent<35?'정비 필요':vanPercent<65?'점검 권장':'주행 가능'}</em></div>
+        <div class="journey-mode-heading"><span><small>VAN STATUS</small><b>달구지 정비</b><p>현재 계통과 장착 상태를 확인하고 손볼 일을 고른다.</p></span><em>${vanPercent<35?'정비 필요':vanPercent<65?'점검 권장':'주행 가능'}</em></div>
         ${systemStrip}
-        <div class="vehicle-now-action"><small>지금 할 수 있는 일</small>${utilityActions[0]||'<p>현재 급한 현장 정비는 없다.</p>'}</div>
-        <button type="button" class="console-detail-open" data-vehicle-detail>전체 정비·장착 보기 <span>→</span></button>
+        <div class="vehicle-now-action"><small>지금 필요한 정비</small>${utilityActions[0]||'<p>현재 급한 현장 정비는 없다.</p>'}</div>
+        <button type="button" class="console-detail-open" data-vehicle-detail>정비·장착 전체 보기 <span>→</span></button>
       </section></div>`;
-    const routeSection=`<div id="journey-mode-route" role="tabpanel" aria-label="목적지 네비게이션">${routeConsoleHtml(routeModels,recommended)}</div>`;
+    const routeSection=`<div id="journey-mode-route" role="tabpanel" aria-label="목적지 네비게이션">${routeConsoleHtml(routeModels)}</div>`;
     const activeMode=journeyConsoleMode==='route'?routeSection:journeyConsoleMode==='vehicle'?vehicleSection:localSection;
     const journeyConsole=`<section class="journey-mode-console" aria-label="정차 통합 콘솔">${journeyModeTabsHtml(journeyConsoleMode)}${activeMode}</section>`;
     const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}${journeyConsoleMode==='route'?routeRumors:''}`;
@@ -1732,7 +1602,7 @@ const UI = (()=>{
     SND.setDriving(true);
     AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
-    journeyConsoleMode='local'; navInspectKey=null;
+    journeyConsoleMode='local';
     renderAll(); SND.setDriving(false);
     AMBI.arrive(S.at);
     const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];
@@ -1746,7 +1616,7 @@ const UI = (()=>{
     const contract=recap&&recap.routeContract?`<div class="arrival-contract">
       <small>${esc(recap.routeContract.mark)} ${esc(recap.routeContract.name)} · ${esc(recap.routeProgress)} 구간</small>
       <strong>계약: ${esc(recap.routeContract.promise)}</strong>
-      <span>예상 반영: ${recap.routeContract.complete?'청주 합류 보상: ':'계속 진행 보상: '}${esc(recap.routeContract.reward||'다음 정착지와 정착 보급으로 반영')}</span>
+      <span>${recap.routeContract.complete?'계약 구간 완료':'계약 진행 중'}</span>
     </div>`:'';
     const people=recap&&recap.checkIn?`<div class="arrival-people"><small>이 길에서 함께한 시간</small><strong>${esc(recap.checkIn.moment&&recap.checkIn.moment.title||`${recap.checkIn.name}와 나눈 짧은 이야기`)}</strong>${recap.checkIn.moment?`<span>${esc(recap.checkIn.moment.text)}</span>`:''}</div>`:'';
     const chapter=recap&&recap.chapter?`<div class="arrival-chapter"><small>CHAPTER COMPLETE</small><strong>${esc(recap.chapter.title)}</strong><span>${esc(recap.chapter.text)}</span></div>`:'';
@@ -1839,67 +1709,6 @@ const UI = (()=>{
   let curEv=null, curStory=null;
   let curCombatChoices=[];
   let storyAuto=localStorage.getItem('caravan_story_auto')!=='0', storyAutoTimer=0;
-  let combatShowDetail=localStorage.getItem('caravan_combat_detail')==='1';
-  let combatPhaseDifficultyProfiles=Object.create(null);
-  function combatProfileKey(evd, state){
-    const stateRunId=state&&Number.isFinite(state.runId)?`run:${state.runId}`:null;
-    if(stateRunId) return stateRunId;
-    const stateId=state&&state.id ? String(state.id) : null;
-    if(stateId) return stateId;
-    const combatId=evd&&evd.combat&&evd.combat.id;
-    if(combatId) return String(combatId);
-    return evd&&evd.id ? String(evd.id) : null;
-  }
-  function rememberCombatPhaseDifficulty(evd, state, summary){
-    if(!summary) return;
-    const c=evd&&evd.combat;
-    const key=combatProfileKey(evd,state);
-    if(!key||!c||!Number.isFinite(c.phase)) return;
-    const phase=Math.floor(c.phase);
-    const profile=combatPhaseDifficultyProfiles[key]
-      || (combatPhaseDifficultyProfiles[key]={phases:{},updatedAt:Date.now(),total:0});
-    const total=Number.isFinite(c.total)?Math.max(1,Math.floor(c.total)):profile.total||0;
-    profile.phases[phase]={
-      step:c.step||'',
-      phase,
-      total,
-      avgPercent:summary.avgPercent,
-      avgLabel:summary.avgLabel,
-      avgClass:summary.avgClass,
-      avgScore10:summary.avgScore10,
-      updatedAt:Date.now()
-    };
-    profile.total=Math.max(profile.total,total);
-    profile.updatedAt=Date.now();
-  }
-  function combatPhaseSummaryHtml(evd,state){
-    const key=combatProfileKey(evd,state);
-    if(!key) return '';
-    const profile=combatPhaseDifficultyProfiles[key];
-    if(!profile||!profile.phases) return '';
-    const c=evd&&evd.combat;
-    const current=Number.isFinite(c&&c.phase)?Math.floor(c.phase):null;
-    const phases=Object.keys(profile.phases)
-      .map(v=>Number(v))
-      .filter(n=>Number.isFinite(n))
-      .sort((a,b)=>a-b);
-    if(!phases.length) return '';
-    const chips=phases.map((phase,index)=>{
-      const row=profile.phases[phase];
-      const label=`P${phase}${row.total?`/${row.total}`:''}`;
-      const cls=row.avgClass||'neutral';
-      const active=phase===current ? ' on' : '';
-      /* 정확한 %는 결과 뒤 리포트의 몫 — 선택 전에는 등급만 보여 준다 */
-      const title=row.step?`${row.step} · ${row.avgLabel}`:row.avgLabel;
-      const previous=phases[index-1];
-      const prevRow=previous!==undefined ? profile.phases[previous] : null;
-      const delta = prevRow ? row.avgPercent - prevRow.avgPercent : 0;
-      const jump = prevRow && Math.abs(delta)>=15 ? ' jump' : '';
-      const trendText = prevRow ? ` ${delta>=0?'↗':'↘'}` : '';
-      return `<span class="combat-phase-chip ${cls}${active}${jump}" title="${esc(title)}">${esc(label)} ${esc(row.avgLabel)}${esc(trendText)}</span>`;
-    }).join('');
-    return `<div class="combat-phase-summary"><b>단계 난이도</b>${chips}</div>`;
-  }
   function combatHudHtml(evd,opt={}){
     const c=evd&&evd.combat;
     if(!c) return '';
@@ -1911,61 +1720,18 @@ const UI = (()=>{
     const history=state&&Array.isArray(state.history)?state.history:[];
     const last=history[history.length-1];
     const terrain=c.terrain||(state&&state.terrain)||'';
-    const stakes=c.stakes||(state&&state.stakes)||'';
-    let intent=c.intent||'';
-    const adapted=G.threatAdaptedTactic&&G.threatAdaptedTactic(evd);
-    if(adapted&&c.counters&&c.counters[adapted])
-      intent+=` — 저쪽도 배웠다. ${adapted} 대응이 더는 통하지 않는다`;
-    const read=state&&state.read;
     const pressure=state?state.pressure||0:c.pressure||0;
     const kind=(state&&state.kind)||c.kind||'교전';
     const report=opt.ended&&S.lastCombatReport;
     const reportCost=report&&report.costs&&report.costs.length?report.costs.join(' · '):'추가 손실 없음';
-    const adaptivePercent = report&&report.adaptive&&Number.isFinite(report.adaptive.end)
-      ? report.adaptive.end
-      : Number.isFinite(state&&state.adaptivePercent) ? state.adaptivePercent
-      : Number.isFinite(state&&state.adaptive) ? Math.round(state.adaptive*100) : 0;
-    const adaptiveLabel = `${adaptivePercent>=0?'+':''}${adaptivePercent}%`;
-    const adaptiveClass = adaptivePercent>1 ? 'good' : adaptivePercent<-1 ? 'bad' : 'neutral';
-    const adaptiveTrendPercent = Number.isFinite(G.combatAdaptiveTrendPercent&&G.combatAdaptiveTrendPercent())
-      ? G.combatAdaptiveTrendPercent() : 0;
-    const adaptiveTrendLabel = `${adaptiveTrendPercent>=0?'+':''}${adaptiveTrendPercent}%`;
-    const adaptiveTrendClass = adaptiveTrendPercent>0 ? 'good' : adaptiveTrendPercent<0 ? 'bad' : 'neutral';
-    const difficulty=combatChoiceSummary(opt.combatChoices);
-    const risk = combatChoiceRiskTag(difficulty);
-    const riskTag = risk.label;
-    const riskTagClass = risk.className;
-    const phaseSummary=combatShowDetail?combatPhaseSummaryHtml(evd,state):'';
     const resultClass=report?` combat-result-${report.resultCode}`:'';
     const reportGain=report&&report.gains&&report.gains.length?report.gains.join(' · '):'추가 획득 없음';
-    const adaptiveChange=report&&report.adaptive&&report.adaptive.delta||0;
-    const adaptiveCopy=adaptiveChange>0
-      ? `다음 교전 회복 보정 +${adaptiveChange}%`
-      : adaptiveChange<0 ? `다음 교전 보정 ${adaptiveChange}%` : '다음 교전 보정 유지';
-    /* 선택 전 예보는 등급으로만 — 정확한 %는 결과 뒤 디브리프에서 공개한다 */
-    const compactForecast=difficulty
-      ? `<div class="combat-forecast"><span class="combat-tier ${riskTagClass}">${riskTag}</span><span>가장 나은 수</span><strong>${esc(difficulty.bestLabel)}</strong></div>`
-      : '';
-    const detailForecast=difficulty
-      ? `<div class="combat-difficulty">
-          <span class="combat-tier ${difficulty.avgClass}">전망 ${esc(difficulty.avgLabel)}</span>
-          <span class="combat-tier ${riskTagClass}">선택 위험도 ${riskTag}</span>
-          <span class="combat-tier ${adaptiveClass}">적응 보정 ${adaptiveLabel}</span>
-          <span class="combat-tier ${adaptiveTrendClass}">최근 추세 ${adaptiveTrendLabel}</span>
-          <span class="combat-tier ${difficulty.bestClass}">가장 확실한 수 · ${esc(difficulty.bestLabel)}</span>
-          <span class="combat-tier ${difficulty.worstClass}">가장 위험한 수 · ${esc(difficulty.worstLabel)}</span>
-          ${phaseSummary||''}
-        </div>`
-      : phaseSummary;
-    const screenText = `${esc(kind)} 상황 / 단계 ${c.phase}/${c.total} / 진행 ${grade}${report?` / 결과 ${report.result}`:''} / 적응형 난이도 ${adaptiveLabel} / 추세 ${adaptiveTrendLabel} / ${riskTag}`;
+    const screenText = `${esc(kind)} 상황 / 단계 ${c.phase}/${c.total} / 진행 ${grade}${report?` / 결과 ${report.result}`:''}`;
     return `<section class="combat-hud${resultClass}" role="status" aria-live="polite" aria-atomic="true" aria-label="${screenText}">
       <div class="combat-hud-head"><span class="combat-phase">${opt.result?'결과':esc(kind)} ${c.phase}/${c.total}</span>
         <b class="combat-step">${c.step}</b><span class="combat-threat">${c.threat}</span></div>
       <div class="combat-objective"><b>${opt.result?(opt.ended?'마침':'결과'):'목표'}</b><span>${opt.result?(opt.ended?'선택의 결과를 확인하고 현장을 마무리한다':'이 선택이 다음 단계의 진행을 바꾼다'):c.objective}</span></div>
-      ${!opt.result&&intent?`<div class="combat-intent"><b>다음 움직임</b><span>${esc(intent)}</span></div>`:''}
-      ${!opt.result&&terrain?`<div class="combat-context"><span><b>지형</b>${esc(terrain)}</span>${stakes?`<span><b>실패하면</b>${esc(stakes)}</span>`:''}</div>`:''}
-      ${read?`<div class="combat-read"><b>읽어낸 틈</b><span>${esc(read.label)}</span></div>`:''}
-      ${combatShowDetail?detailForecast:compactForecast}
+      ${!opt.result&&terrain?`<div class="combat-context"><span><b>현재 지형</b>${esc(terrain)}</span></div>`:''}
       ${last?`<div class="combat-last ${opt.result?'result':''}"><b>${opt.result?'방금 선택':'직전 선택'}</b><span><strong>${esc(last.tactic)}</strong>${esc(last.label)}${last.response?`<small>${esc(last.response)}</small>`:''}</span></div>`:''}
       ${report?`<div class="combat-debrief">
         <div class="combat-debrief-head"><strong>${esc(report.result)}</strong><span>${esc(report.objective||report.threat)}</span></div>
@@ -1976,91 +1742,13 @@ const UI = (()=>{
           <span class="gain"><b>얻은 것</b>${esc(reportGain)}</span>
           <span class="cost"><b>치른 대가</b>${esc(reportCost)}</span>
         </div>
-        <div class="combat-recovery"><span>${esc(adaptiveCopy)}</span><span>다음 두 사건은 조용한 호흡을 우선합니다</span></div>
       </div>`:''}
       <div class="combat-track" aria-hidden="true">${track}</div>
-      <div class="sr-only">적응형 난이도는 최근 전투 결과로 조정됩니다. 현재 보정은 ${adaptiveLabel}, 최근 추세는 ${adaptiveTrendLabel}, 선택 위험도는 ${riskTag}입니다.</div>
       <div class="combat-state"><span class="${grade==='우세'?'good':grade==='불리'?'bad':''}">진행 ${grade}</span>
         <span class="${pressure>=2?'bad':pressure===0?'good':''}">압박 ${pressure}/3</span>
-        ${combatShowDetail?`<span class="${adaptiveClass}">적응 ${adaptiveLabel}</span><span class="${adaptiveTrendClass}">추세 ${adaptiveTrendLabel}</span>`:''}
-        ${combatShowDetail||S.van<35?`<span class="${S.van<35?'bad':''}">차체 ${Math.ceil(S.van)}%</span>`:''}
-        ${combatShowDetail||S.pursuit>=3?`<span class="${S.pursuit>=3?'bad':''}">관측 ${S.pursuit}/5</span>`:''}
+        ${S.van<35?`<span class="bad">차체 ${Math.ceil(S.van)}%</span>`:''}
+        ${S.pursuit>=3?`<span class="bad">관측 ${S.pursuit}/5</span>`:''}
         ${injuries?`<span class="bad">부상 ${injuries}명</span>`:''}</div></section>`;
-  }
-  function combatChoiceSummary(pool){
-    if(!Array.isArray(pool)||!pool.length) return null;
-    const adaptivePercent = S&&S.combat&&Number.isFinite(S.combat.adaptivePercent)
-      ? S.combat.adaptivePercent : 0;
-    const rows=pool
-      .map(entry=>{
-        const odds = Number.isFinite(entry.odds) ? entry.odds : (Number.isFinite(entry.pct) ? entry.pct/100 : NaN);
-        if(!Number.isFinite(odds)) return null;
-        const meta=G.combatDifficultyMeta(odds);
-        const base=Number.isFinite(entry.base)?entry.base:odds;
-        const label=stripTags(entry.label||'전술 선택').trim()||'전술 선택';
-        return {
-          pct:meta.pct,
-          base:Math.round(base*100),
-          delta:Math.round((meta.pct - Math.round(base*100))),
-          label,
-          className:entry.className||meta.className,
-          score10:meta.score10
-        };
-      })
-      .filter(Boolean);
-    if(!rows.length) return null;
-    rows.sort((a,b)=>b.pct-a.pct);
-    const avgPercent=Math.round(rows.reduce((sum,r)=>sum+r.pct,0)/rows.length);
-    const avgBase=Math.round(rows.reduce((sum,r)=>sum+r.base,0)/rows.length);
-    const avgDelta=Math.round(rows.reduce((sum,r)=>sum+r.delta,0)/rows.length);
-    const avgMeta=G.combatDifficultyMeta(avgPercent/100);
-    const avgBaseMeta=G.combatDifficultyMeta(avgBase/100);
-    const best=rows[0];
-    const worst=rows[rows.length-1];
-    const safeCount = rows.filter(r=>r.pct>=45).length;
-    const warningCount = rows.filter(r=>r.pct>=26&&r.pct<=35).length;
-    const criticalCount = rows.filter(r=>r.pct<=25).length;
-    return {
-      avgPercent,
-      avgLabel:avgMeta.label,
-      avgClass:avgMeta.className,
-      avgScore10:avgMeta.score10,
-      avgDelta,
-      bestPercent:best.pct,
-      bestLabel:best.label,
-      bestBase:best.base,
-      bestScore10:best.score10,
-      bestDelta:best.delta,
-      worstPercent:worst.pct,
-      worstLabel:worst.label,
-      worstBase:worst.base,
-      worstScore10:worst.score10,
-      worstDelta:worst.delta,
-      avgBase,
-      avgBaseLabel:avgBaseMeta.label,
-      avgBaseScore10:avgBaseMeta.score10,
-      bestClass:rows[0].className,
-      worstClass:rows[rows.length-1].className,
-      adaptivePercent,
-      safeCount,
-      warningCount,
-      criticalCount,
-      riskCount:warningCount+criticalCount
-    };
-  }
-  function combatChoiceRiskTag(difficulty){
-    if(!difficulty) return {label:'불균형',className:'hard'};
-    if(difficulty.criticalCount>0) return {label:'⚠ 고위험',className:'bad'};
-    if(difficulty.warningCount>0) return {label:'주의',className:'hard'};
-    if(difficulty.safeCount>0) return {label:'안전권',className:'good'};
-    return {label:'불균형',className:'hard'};
-  }
-  function combatChoiceRiskMeta(basePercent){
-    if(!Number.isFinite(basePercent)) return {label:'안정',cls:'combat-risk-combat-safe'};
-    if(basePercent<=25) return {label:'위험',cls:'combat-risk-combat-critical'};
-    if(basePercent<=35) return {label:'주의',cls:'combat-risk-combat-warning'};
-    if(basePercent<=45) return {label:'보통',cls:'combat-risk-combat-hint'};
-    return {label:'안정',cls:'combat-risk-combat-safe'};
   }
   function choiceIntentTag(choice){
     const text=stripTags(choice&&choice.label||'');
@@ -2080,81 +1768,24 @@ const UI = (()=>{
       if(!G.reqVisible(req)) return;
       const rq=G.reqOk(req);
       const cost=G.reqCostText(req);
-      const intentNote=G.combatIntentNote(evd,c);
-      const readNote=G.combatReadNote(c);
       const routeId=(c.out||[]).map(o=>o.fx&&o.fx.routeChoice).find(Boolean);
       const route=routeId&&G.routeForecast(routeId);
-      const adaptivePercent = S&&S.combat&&Number.isFinite(S.combat.adaptivePercent)
-        ? S.combat.adaptivePercent : G.combatAdaptivePercent();
-      const adaptiveText = adaptivePercent===0 ? '' : ` · 적응 보정 ${adaptivePercent>=0?'+':''}${adaptivePercent}%`;
       count++;
       const intentTag=!inCombat?choiceIntentTag(c):'';
       const title = c.tactic ? `<span class="combat-tactic">${esc(c.tactic)}</span><span>${safeHtml(c.label)}</span>` : `<span>${safeHtml(c.label)}</span>`;
-      /* 판정이 없는 선택(단일 결과)에 전망을 붙이면 확정 결과에 난이도를 매기는 셈이다.
-         실제로 굴리는 선택에만 전망을 보여 준다. */
-      const rolls=c.combatRoll!==undefined && Array.isArray(c.out) && c.out.length>1;
-      const profile=(inCombat&&rolls) ? G.combatOddsBreakdown(c,evd) : null;
-      const oddsMeta=G.combatDifficultyMeta(profile&&profile.odds);
-      const vehicleText=profile&&profile.vehicleSources&&profile.vehicleSources.length
-        ? ` · 차량 대응 ${profile.vehicleSources.join(' + ')}`:'';
-      /* 척도는 하나만 — 등급(우세/팽팽/불리)이 유일한 서열이고,
-         위험 칩은 경고일 때만 나온다(모든 카드에 같은 칩이 붙으면 정보가 0이다). */
-      const riskMeta = profile ? combatChoiceRiskMeta(oddsMeta.pct) : null;
-      const riskWarn = riskMeta && ['위험','주의'].includes(riskMeta.label);
-      const riskChip = riskWarn ? `<span class="combat-risk ${riskMeta.cls}">⚠ ${riskMeta.label}</span>` : '';
-      /* 선택 전에는 %가 아니라 등급과 "실패하면 무엇을 잃는가"를 보여 준다.
-         정확한 수치 분해는 결과 뒤 리포트(combatMeta)가 담당한다. */
-      const failCost = profile ? G.combatFailurePreview(c) : '';
-      const failNote = failCost ? String(failCost).replace(/^실패하면\s*/,'') : '';
-      const compactOddsNote=[readNote,G.combatContextNote(c)].filter(Boolean).join(' · ');
-      const oddsLabel = profile
-        ? combatShowDetail
-          ? `판정 전망 · ${G.combatGrade(c,evd)} · ${oddsMeta.label} · ${G.combatTacticNote(c)}${readNote?` · ${readNote}`:''}${G.combatContextNote(c)?` · ${G.combatContextNote(c)}`:''}${vehicleText}${failNote?` · 실패하면 ${failNote}`:''}`
-          : compactOddsNote
-        : '';
-      if(profile){
-        combatChoices.push({
-          odds:oddsMeta.odds,pct:oddsMeta.pct,label:G.combatChoiceChoiceText(c),className:oddsMeta.className,score10:oddsMeta.score10,
-          base:Number.isFinite(profile&&profile.base)?profile.base:oddsMeta.odds,baseSource:profile&&profile.baseSource
-          ,adaptivePercent:profile.adaptivePercent||adaptivePercent
-        });
-      }
       const liveBits=[
         `${count}번째 선택`,
         stripTags(c.label || ''),
-        profile ? `${oddsLabel} (${G.combatGrade(c,evd)})` : '',
-        riskMeta ? `위험도 ${riskMeta.label}` : '',
         rq.ok ? '요구사항 충족' : `요구 조건: ${rq.t}`,
-        intentNote || '',
-        G.combatContextNote(c) || '',
-        failNote?`실패하면 ${failNote}`:'',
-        vehicleText ? vehicleText.replace(/^ · /,'') : ''
+        cost||''
       ].filter(Boolean);
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'} aria-label="${esc(liveBits.join(' · '))}">
           <div class="choice-head"><span class="choice-index">${count}</span><span class="choice-title">${intentTag?`<i class="choice-intent">${intentTag}</i>`:''}${title}</span></div>
-          ${intentNote?`<span class="combat-response">↳ ${esc(intentNote)}</span>`:''}
-          ${c.risk?`<span class="risk">⚠ ${c.risk}</span>`:''}
-          ${riskChip}
-          ${profile?`<span class="combat-odds"><span class="combat-tier ${oddsMeta.className}">${esc(G.combatGrade(c,evd))}</span>${oddsLabel?` · ${esc(oddsLabel)}`:''}${failNote?` · 실패하면 ${esc(failNote)}`:''}</span>`:''}
-          ${!profile&&failNote?`<span class="combat-failure">⚠ 실패하면 ${esc(failNote)}</span>`:''}
-          ${route?`<span class="route-forecast"><b>${route.km}km · 순수 주행 ${G.durationLabel(route.minutes)} · 연료 약 ${route.fuel}L</b><small>${route.rough?`험로 ${route.rough}구간 · `:''}보급 거점 ${route.stops}곳 · ${esc(route.readiness)}</small></span>`:''}
+          ${route?`<span class="route-forecast"><b>${route.km}km · ${routeDurationRange(route.minutes)} · 연료 ${routeFuelRange(route.fuel)}</b><small>현장 상황은 출발 뒤 확인</small></span>`:''}
           ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
         </button>`;
     });
-    const difficulty=combatChoiceSummary(combatChoices);
-    if(inCombat&&difficulty){
-      const tips=[];
-      const trend=G.combatAdaptiveTrendPercent();
-      /* 선택 전에는 숫자를 감춘다는 계약을 여기서도 지킨다 —
-         "25% 이하가 하나 있다"는 어느 것인지 안 알려주면서 수치만 흘리는 최악의 조합이었다. */
-      if(difficulty.criticalCount>0) tips.push(`무리한 수가 ${difficulty.criticalCount}개 섞여 있다`);
-      else if(difficulty.warningCount>0) tips.push(`위태로운 수가 ${difficulty.warningCount}개 있다`);
-      else if(difficulty.safeCount===0) tips.push(`확실한 수는 없다`);
-      if(trend>2) tips.push(`적응 추세 강화 중`);
-      if(tips.length) html=`<div class="combat-choice-hint">${tips.map(t=>`<span>${esc(t)}</span>`).join(' · ')}</div>${html}`;
-    }
-    if(inCombat) rememberCombatPhaseDifficulty(evd,S.combat,difficulty);
-    return {html,count,combatChoices,difficulty};
+    return {html,count,combatChoices,difficulty:null};
   }
   function eventSceneKeys(evd, leading=[]){
     const keys=[];
@@ -2306,10 +1937,6 @@ const UI = (()=>{
     storyAuto=!!value;
     localStorage.setItem('caravan_story_auto',storyAuto?'1':'0');
   }
-  function setCombatShowDetail(value){
-    combatShowDetail=!!value;
-    localStorage.setItem('caravan_combat_detail',combatShowDetail?'1':'0');
-  }
   function storyAutoDelay(turn){
     const test=Number(window.__CARAVAN_TEST_AUTO_MS);
     if(Number.isFinite(test)&&test>0) return test;
@@ -2427,23 +2054,7 @@ const UI = (()=>{
     if(live&&turn){
       const speaker=turn.kind==='dialogue'?(turn.name||speakerInfo(turn.who).name)+'의 말: '
         :turn.kind==='narration'?'장면 설명: ':`${state.label}: `;
-      const combatSummary = state.phase==='event' ? combatChoiceSummary(curCombatChoices) : null;
-      const adaptiveTrend = combatSummary ? G.combatAdaptiveTrendPercent() : 0;
-      const adaptiveTrendText = adaptiveTrend===0 ? '' : ` / 추세 ${adaptiveTrend>=0?'+':''}${adaptiveTrend}%`;
-      const riskText = combatSummary && (combatSummary.criticalCount || combatSummary.warningCount)
-        ? combatSummary.criticalCount>0
-          ? ` / 위험 ${combatSummary.criticalCount}개`
-          : ` / 주의 ${combatSummary.warningCount}개`
-        : '';
-      const adaptiveSummary = combatSummary&&combatSummary.adaptivePercent!==undefined
-        ? ` · 적응형 ${combatSummary.adaptivePercent>=0?'+':''}${combatSummary.adaptivePercent}%`
-        : '';
-      const suffix = combatSummary
-        ? combatShowDetail
-          ? ` / 전투 난이도 ${combatSummary.avgLabel} ${combatSummary.avgPercent}% (${combatSummary.avgScore10}/10), 기본 ${combatSummary.avgBase}%(${combatSummary.avgBaseLabel} · ${combatSummary.avgBaseScore10}/10), 보정 ${combatSummary.avgDelta>=0?'+':''}${combatSummary.avgDelta}%, 최저 ${combatSummary.worstPercent}%(${combatSummary.worstScore10}/10, 기본 ${combatSummary.worstBase}% / ${combatSummary.worstDelta>=0?'+':''}${combatSummary.worstDelta}%) / 최고 ${combatSummary.bestPercent}%(${combatSummary.bestScore10}/10, 기본 ${combatSummary.bestBase}% / ${combatSummary.bestDelta>=0?'+':''}${combatSummary.bestDelta}%) ${adaptiveSummary}${riskText}${adaptiveTrendText}`
-          : ` / 전투 흐름 ${combatSummary.avgLabel}${riskText}`
-        : '';
-      live.textContent=speaker+stripTags(turn.text)+suffix;
+      live.textContent=speaker+stripTags(turn.text);
     }
     const dockHeight=dock ? Math.min(224,Math.max(170,dock.offsetHeight||194)) : 194;
     const compact=state.turns.length<=16 && (reader.scrollHeight + dockHeight) < (sheet.clientHeight||420);
@@ -2466,13 +2077,9 @@ const UI = (()=>{
         :next.kind==='ai'||next.kind==='radio'?'다음 방송':'다음 장면';
       const autoCopy=next.kind==='dialogue'||next.kind==='letter'?'자동으로 다음 대화가 이어집니다'
         :next.kind==='ai'||next.kind==='radio'?'자동으로 다음 방송이 이어집니다':'자동으로 다음 장면이 이어집니다';
-      const combatToggle=state.phase==='event' && curEv&&curEv.combat
-        ? `<button class="story-combat-toggle${combatShowDetail?' on':''}" type="button" aria-pressed="${combatShowDetail}" aria-label="${combatShowDetail?'전투 상세 정보 켜짐':'전투 요약 모드 켜짐'}">${combatShowDetail?'상세':'요약'}</button>`
-        : '';
       dock.classList.add('story-progress-dock');
       dock.innerHTML=`<div class="choice-dock-head"><span>${state.label} · ${state.index+1}/${state.turns.length}</span>
-        <button class="story-auto-toggle${storyAuto?' on':''}" type="button" aria-pressed="${storyAuto}">${storyAuto?'자동 ON':'자동 OFF'}</button>
-        ${combatToggle}</div>
+        <button class="story-auto-toggle${storyAuto?' on':''}" type="button" aria-pressed="${storyAuto}">${storyAuto?'자동 ON':'자동 OFF'}</button></div>
         <button class="choice story-next" type="button">계속<span class="req">${nextLabel} · ${state.index+2}/${state.turns.length} · ${storyAuto?autoCopy:'직접 넘기기'}</span></button>`;
       dock.querySelector('.story-next').onclick=()=>advanceStory(state);
       dock.querySelector('.story-auto-toggle').onclick=()=>{
@@ -2481,13 +2088,6 @@ const UI = (()=>{
         state.userHoldingStory=false;
         renderStoryState();
       };
-      const combatToggleButton=dock.querySelector('.story-combat-toggle');
-      if(combatToggleButton){
-        combatToggleButton.onclick=()=>{
-          setCombatShowDetail(!combatShowDetail);
-          renderStoryState();
-        };
-      }
       wireStoryReviewPause(state,turn);
       scheduleStoryAuto(state,turn);
       return;

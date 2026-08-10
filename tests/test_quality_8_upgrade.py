@@ -120,22 +120,21 @@ with sync_playwright() as playwright:
       const choices=[...document.querySelectorAll('#ev-sheet .choice')];
       const rects=choices.map(node=>node.getBoundingClientRect());
       const overlaps=rects.some((rect,index)=>index>0 && rect.top < rects[index-1].bottom-.5);
-      const odds=[...document.querySelectorAll('#ev-sheet .combat-odds')].map(node=>node.textContent);
+      const choiceCopy=choices.map(node=>`${node.textContent} ${node.getAttribute('aria-label')||''}`).join(' ');
       const list=document.querySelector('.event-choice-dock>.choices');
       return {
         choiceCount:choices.length,
         overlaps,
-        // 서열 척도는 카드당 하나(등급)뿐이고, 선택 전에 %는 새지 않는다
-        duplicate:odds.some(text=>text.includes('난이도') || text.includes('판정 전망') || /\\d+\\s*%/.test(text)),
-        gradeOnce:odds.every(text=>(text.match(/우세|팽팽|불리/g)||[]).length===1),
+        forecastNodes:document.querySelectorAll('#ev-sheet .combat-odds, #ev-sheet .combat-risk, #ev-sheet .combat-forecast').length,
+        predictionLeak:/판정 전망|실패하면|가장 나은|가장 위험|\\d+\\s*%/.test(choiceCopy),
         stateCount:document.querySelectorAll('.combat-state span').length,
         solid:choices.every(node=>!getComputedStyle(node).backgroundColor.includes('rgba')),
         contained:rects.every(rect=>rect.left>=list.getBoundingClientRect().left-.5 && rect.right<=list.getBoundingClientRect().right+.5),
         listOverflow:getComputedStyle(list).overflowY
       };
     }""")
-    check('기본 전투 카드는 중복 전망 없이 핵심 상태만 표시한다',
-          combat['choiceCount'] >= 2 and not combat['duplicate'] and combat['gradeOnce']
+    check('기본 전투 카드는 성공 전망·실패 결과 없이 행동만 표시한다',
+          combat['choiceCount'] >= 2 and combat['forecastNodes'] == 0 and not combat['predictionLeak']
           and combat['stateCount'] <= 3, str(combat))
     check('전투 선택은 독립 스크롤 영역 안에서 겹치거나 비치지 않는다',
           not combat['overlaps'] and combat['solid'] and combat['contained'] and combat['listOverflow'] == 'auto', str(combat))

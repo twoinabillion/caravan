@@ -578,7 +578,7 @@ G.journeyGuide = ()=>{
     body:'모든 길이 정답은 아니다. 지금 가진 보급과 달구지로 감당할 수 있는 한 길을 고르면 바로 출발한다.',
     points:['준비도: 초록은 안정적, 주황·빨강은 먼저 이유를 확인한다','거리: 가까운 길은 빠르고, 먼 길은 보급과 이야기를 더 만날 수 있다','장비: 길 아래 조언이 지금 달구지에 맞는 이유를 알려 준다'],focus:'route'};
   if(!milestones.first_event) return {step:2,total:4,kicker:'ON THE ROAD',title:S.driving?'주행은 자동으로 이어진다':'다음 길에서 첫 사건을 만난다',
-    body:S.driving?'남은 거리와 자원을 지켜보다 사건이 멈춰 세우면, 예상 결과와 조건을 읽고 선택한다.':'도착까지 사건이 없었다면 다음 길을 고르면 된다. 사건이 열릴 때 선택의 예상 결과와 조건을 확인한다.',
+    body:S.driving?'남은 거리와 현재 자원을 지켜보다 사건이 멈춰 세우면, 현장에서 판단해 선택한다.':'도착까지 사건이 없었다면 다음 길을 고르면 된다. 길과 사건의 상황은 직접 마주친 뒤 확인한다.',
     points:['선택지의 조건은 지금 쓸 자원이나 필요한 능력이다','위험한 수를 피하는 것보다, 왜 감수하는지 아는 것이 중요하다'],focus:'drive'};
   const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;
   if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'FIRST STOP',title:'정착지 안으로 들어간다',

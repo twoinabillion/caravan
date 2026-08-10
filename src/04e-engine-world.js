@@ -14,19 +14,6 @@ G.exploreStatus = ()=>{
   if(S.fatigue>=80) return {ok:false,tries,mins,fatigue,reason:'피로 80% 이상 — 먼저 쉬어야 한다'};
   return {ok:true,tries,repeat,fresh,mins,fatigue,miss:repeat?0.45:0.15};
 };
-G.exploreForecast = status=>{
-  status=status||G.exploreStatus();
-  const region=G.regionOf();
-  const danger=(S.pursuit>=3||S.wx==='storm'||region==='north')?'높음'
-    :(S.pursuit>0||S.wx==='rain'||status.repeat)?'보통':'낮음';
-  const focus=region==='north'?'통제 흔적 · 우회로 · 생존 물자'
-    :region==='central'?'사람의 흔적 · 폐시설 · 보급품':'생활 흔적 · 고철 · 길의 소문';
-  /* 예보는 실제 수확을 말해야 한다 — 고정 문구를 두면 지역 차등을 도입한 순간 거짓말이 된다 */
-  const haul=region==='north'?12:region==='mid'?9:6;
-  const guaranteed=status.fresh?`고철 ${haul} · 체결 부품 가능`
-    :status.repeat?'재수색 고철 2~4':'확정 회수 없음';
-  return {danger,focus,guaranteed};
-};
 G.explore = ()=>{
   if(S.driving||UI.modalOpen()) return false;
   const status=G.exploreStatus();

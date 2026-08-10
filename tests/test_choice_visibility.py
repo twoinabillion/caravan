@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""선택 카드는 잘리지 않는다.
-
-2026-08-06 회귀: 전투 카드에 '실패하면 …' 줄을 추가하자 카드가 길어졌는데,
-.choice가 overflow:hidden + flex-shrink:1이라 목록이 스크롤되는 대신 카드가
-눌려 내용의 절반(등급·실패 비용·요구 조건)이 통째로 사라졌다. 스크린리더에는
-남아 있어 눈으로 보는 사람만 정보를 잃는 형태였다.
-"""
+"""선택 카드는 잘리지 않고, 현재 상황 상세는 별도로 열 수 있다."""
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -75,11 +69,11 @@ with sync_playwright() as playwright:
           sceneHeight:document.querySelector('.event-scene-frame')?.getBoundingClientRect().height||0,
           detail:!!document.querySelector('[data-event-detail]')
         })""")
-        check(f'{label}: 전술 선택 터미널에 큰 장면·진행 상태·상세 제어 표시',
+        check(f'{label}: 전술 선택 터미널에 큰 장면·진행 상태·현재 정보 상세 제어 표시',
               terminal['phase'] == 'event' and terminal['step'] == 'decision' and
               '/' in terminal['progress'] and terminal['sceneHeight'] >= 170 and terminal['detail'], str(terminal))
         page.click('[data-event-detail]')
-        check(f'{label}: 전투 상세 정보 토글 작동',
+        check(f'{label}: 전투 현재 정보 토글 작동',
               page.locator('#ev-sheet').evaluate("node=>node.classList.contains('combat-details-open')"))
         page.evaluate("""() => {
           document.querySelector('.choice[data-i="4"]').click();
