@@ -146,6 +146,19 @@ with sync_playwright() as p:
     check('정차 기능은 목적지·머물기·달구지 세 모드를 가진 한 콘솔에서 전환한다',
           mode_initial['tabs'] == ['목적지', '머물기', '달구지'] and mode_initial['selected'] == 'local' and
           mode_initial['panels'] == 1 and mode_initial['local'], str(mode_initial))
+    stopped_geometry = page.evaluate('''() => {
+      const shell=document.querySelector('.journey-mode-panel');
+      const dock=document.querySelector('#dock');
+      return {
+        stageHeight:document.querySelector('#stage')?.getBoundingClientRect().height||0,
+        shellBottom:shell?.getBoundingClientRect().bottom||0,
+        dockTop:dock?.getBoundingClientRect().top||0
+      };
+    }''')
+    stopped_gap = stopped_geometry['dockTop'] - stopped_geometry['shellBottom']
+    check('정차 콘솔은 하단의 빈 띠를 줄이고 그 높이를 달구지·도로 장면에 돌려준다',
+          stopped_geometry['stageHeight'] >= 242 and -2 <= stopped_gap <= 12,
+          str({**stopped_geometry, 'gap': stopped_gap}))
     page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
       console:!!document.querySelector('.route-console'),
@@ -204,17 +217,19 @@ with sync_playwright() as p:
     vehicle_console = page.evaluate('''() => {
       const vehicle=document.querySelector('.vehicle-console');
       const detail=document.querySelector('[data-vehicle-detail]');
+      const roadView=vehicle?.querySelector('[data-vehicle-road-view]');
       return {
-        systems:vehicle?.querySelectorAll('.journey-system-strip>span').length||0,
+        systems:vehicle?.querySelectorAll('.vehicle-road-facts>i').length||0,
+        roadView:!!roadView && roadView.width>0 && roadView.height>0,
         vehicleCopy:vehicle?.textContent||'',
         height:vehicle?.closest('.route-console')?.getBoundingClientRect().height||0,
         detailHeight:detail?.getBoundingClientRect().height||0,
         nestedScroll:vehicle ? vehicle.scrollHeight > vehicle.clientHeight + 1 : true
       };
     }''')
-    check('달구지는 세 상태와 가장 필요한 행동을 스크롤 없이 먼저 보여 준다',
-          vehicle_console['systems'] == 3 and '연료' in vehicle_console['vehicleCopy'] and
-          '차체' in vehicle_console['vehicleCopy'] and '장비' in vehicle_console['vehicleCopy'] and
+    check('달구지는 현재 도로 장면과 세 상태, 가장 필요한 행동을 스크롤 없이 먼저 보여 준다',
+          vehicle_console['roadView'] and vehicle_console['systems'] == 3 and '연료' in vehicle_console['vehicleCopy'] and
+          '차체' in vehicle_console['vehicleCopy'] and '장착' in vehicle_console['vehicleCopy'] and
           '지금 필요한 정비' in vehicle_console['vehicleCopy'] and
           vehicle_console['detailHeight'] >= 44 and not vehicle_console['nestedScroll'], str(vehicle_console))
     check('목적지·머물기·달구지 세 콘솔의 외형 높이가 같다',

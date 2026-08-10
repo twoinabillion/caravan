@@ -2434,11 +2434,24 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .journey-system-strip small,.journey-system-strip b{font-size:10px}
 
 .journey-vehicle-screen.vehicle-console{overflow:hidden;overscroll-behavior:auto}
-.journey-vehicle-screen .journey-system-strip{margin-top:7px;padding:7px 0;border-bottom:1px solid rgba(111,127,148,.2)}
-.vehicle-now-action{display:grid;flex:1;min-height:0;align-content:center;gap:5px;padding:6px 0}
+.vehicle-road-preview{position:relative;display:block;flex:1;min-height:74px;margin:6px 0 4px;overflow:hidden;
+  border:1px solid #34424e;border-radius:3px;background:#070b12;box-shadow:inset 0 0 0 1px rgba(0,0,0,.42)}
+.vehicle-road-preview::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,rgba(3,7,12,.2),transparent 35%,transparent 64%,rgba(3,7,12,.82)),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px)}
+.vehicle-road-preview canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
+.vehicle-road-preview figcaption{position:absolute;z-index:1;inset:0;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:none}
+.vehicle-road-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:11px 6px 5px;
+  background:linear-gradient(180deg,transparent,rgba(4,9,15,.88) 32%)}
+.vehicle-road-facts i{display:grid;grid-template-columns:auto auto;justify-content:center;gap:4px;padding:0 5px;
+  border-right:1px solid rgba(118,136,156,.3);font-style:normal;text-shadow:0 1px 2px #000}
+.vehicle-road-facts i:last-child{border-right:0}
+.vehicle-road-facts small,.vehicle-road-facts b{font:800 10px/1.2 var(--mono)}
+.vehicle-road-facts small{color:#a7b1bd}.vehicle-road-facts b{color:#f2bb68}
+.vehicle-now-action{display:grid;grid-template-columns:82px minmax(0,1fr);flex:none;min-height:0;align-items:center;gap:6px;padding:3px 0}
 .vehicle-now-action>small{color:#da9d49;font:800 12px/1.2 var(--mono);letter-spacing:.08em}
 .vehicle-now-action>p{margin:0;color:#9aa5b5;font:12px/1.4 var(--mono)}
-.vehicle-now-action .act{width:100%;min-height:52px;padding:8px 10px;border-radius:3px;background:#101827}
+.vehicle-now-action .act{width:100%;min-height:48px;padding:6px 9px;border-radius:3px;background:#101827}
 .vehicle-now-action .act .ico{width:20px;height:20px;object-fit:contain;image-rendering:pixelated}
 .vehicle-now-action .act b{font-size:12px}.vehicle-now-action .act small{font-size:12px}
 .journey-vehicle-screen .console-detail-open{margin-top:0}
@@ -2491,6 +2504,14 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   .nav-unknown-list b{font-size:7.5px}.nav-unknown-list small{display:none}
   .journey-system-strip{min-height:32px}
   .journey-system-strip small,.journey-system-strip b{font-size:12px}
+  .vehicle-road-preview{min-height:76px;margin:4px 0 3px}
+  .vehicle-road-facts small,.vehicle-road-facts b{font-size:12px}
+  .vehicle-road-facts{padding:12px 4px 4px}
+  .vehicle-road-facts i{gap:3px;padding:0 3px}
+  .vehicle-now-action{grid-template-columns:74px minmax(0,1fr);gap:5px;padding:2px 0}
+  .vehicle-now-action>small{font-size:12px}
+  .vehicle-now-action .act{min-height:44px;padding:5px 7px}
+  .vehicle-now-action .act small{display:none}
   .vehicle-detail-system-grid{grid-template-columns:1fr}
   .console-detail-body .vehicle-system-card{grid-template-columns:24px minmax(0,1fr);padding:10px}
   .console-detail-body .vehicle-system-icon{grid-row:1/4;width:24px;height:24px}
@@ -2517,12 +2538,14 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .menu-settings{width:100%;min-height:68px;margin-top:8px;align-items:center}
 
 @media(max-width:680px){
-  #stage{flex-basis:clamp(225px,31dvh,255px)}
+  /* 하단 장갑 콘솔과 도크 사이의 빈 띠를 풍경에 돌려준다. 정차 장면을
+     18px 키우고 같은 만큼 도크 예약 여백을 줄여 달구지와 노면을 더 보인다. */
+  #stage{flex-basis:clamp(243px,34dvh,273px)}
   #dash{margin:-42px 8px 0;padding:7px 8px;gap:7px}
   #gauges .g{padding:0 8px}
   #dash-sub{min-width:101px;padding-left:8px;font-size:12px}
   #main{margin-top:7px}
-  #panel{padding:9px 12px calc(var(--nav-deck-h) + 8px + var(--safe-bottom))}
+  #panel{padding:9px 12px calc(var(--nav-deck-h) - 10px + var(--safe-bottom))}
 }
 @media(min-width:521px){
   .stop-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))}

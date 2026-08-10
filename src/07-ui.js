@@ -1531,10 +1531,11 @@ const UI = (()=>{
     const installedModuleHtml=installedUpgrades.length
       ?installedUpgrades.map(upgrade=>`<i>${esc(upgrade.nm)}</i>`).join('')
       :'<span>아직 장착한 추가 장비가 없다.</span>';
-    const systemStrip=`<div class="journey-system-strip" aria-label="현재 달구지 상태">
-      <span>${ICO('fuel')}<small>연료</small><b>${Math.floor(S.fuel)}L</b></span>
-      <span>${ICO('van')}<small>차체</small><b>${vanPercent}%</b></span>
-      <span>${ICO('perk')}<small>장비</small><b>${installedUpgrades.length}</b></span></div>`;
+    const vehicleRoadPreview=`<figure class="vehicle-road-preview">
+      <canvas data-vehicle-road-view role="img" aria-label="${esc(n.name)}에 정차한 현재 달구지와 도로">현재 달구지와 정차한 도로</canvas>
+      <figcaption><span class="vehicle-road-facts" aria-label="현재 달구지 상태">
+          <i><small>연료</small><b>${Math.floor(S.fuel)}L</b></i><i><small>차체</small><b>${vanPercent}%</b></i><i><small>장착</small><b>${installedUpgrades.length}</b></i>
+        </span></figcaption></figure>`;
     const visibleLocalActions=localActions.slice(0,2), hiddenLocalActions=localActions.slice(2);
     const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물며 할 일">
       <section class="route-console-screen journey-local-screen stop-action-console">
@@ -1560,7 +1561,7 @@ const UI = (()=>{
     const vehicleSection=`<div class="route-console journey-mode-panel journey-vehicle-panel" id="journey-mode-vehicle" role="tabpanel" aria-label="달구지 상태와 정비">
       <section class="route-console-screen journey-vehicle-screen vehicle-console">
         <div class="journey-mode-heading"><span><small>VAN STATUS</small><b>달구지 정비</b><p>현재 계통과 장착 상태를 확인하고 손볼 일을 고른다.</p></span><em>${vanPercent<35?'정비 필요':vanPercent<65?'점검 권장':'주행 가능'}</em></div>
-        ${systemStrip}
+        ${vehicleRoadPreview}
         <div class="vehicle-now-action"><small>지금 필요한 정비</small>${utilityActions[0]||'<p>현재 급한 현장 정비는 없다.</p>'}</div>
         <button type="button" class="console-detail-open" data-vehicle-detail>정비·장착 전체 보기 <span>→</span></button>
       </section></div>`;
@@ -1569,6 +1570,8 @@ const UI = (()=>{
     const journeyConsole=`<section class="journey-mode-console" aria-label="정차 통합 콘솔">${journeyModeTabsHtml(journeyConsoleMode)}${activeMode}</section>`;
     const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}${journeyConsoleMode==='route'?routeRumors:''}`;
     p.innerHTML=h;
+    const vehicleRoadView=p.querySelector('[data-vehicle-road-view]');
+    if(vehicleRoadView) requestAnimationFrame(()=>SCENE.drawVehicleRoadView?.(vehicleRoadView));
     wireStopActionButtons(p,n);
     const localMore=p.querySelector('[data-local-more]'); if(localMore) localMore.onclick=()=>{
       const body=$('#local-actions-body');

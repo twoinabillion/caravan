@@ -1317,6 +1317,29 @@ const SCENE = (()=>{
     out.drawImage(buf,0,12,128,72,0,0,vw,vh);
   }
 
+  /* 달구지 탭은 별도 예측 그림을 만들지 않고 지금 주행 무대의 한 프레임을
+     그대로 가져온다. 차와 노면이 중심에 오도록 잘라 현재 시간·날씨·지역과
+     실제 장착 외형이 메인 무대와 항상 같은 모습으로 보인다. */
+  function drawVehicleRoadView(canvas){
+    if(!canvas||!dcv||!dcv.width||!dcv.height) return;
+    const out=canvas.getContext('2d');
+    const vw=Math.max(1,canvas.clientWidth||320), vh=Math.max(1,canvas.clientHeight||92);
+    const outDpr=Math.min(2,window.devicePixelRatio||1);
+    canvas.width=Math.round(vw*outDpr); canvas.height=Math.round(vh*outDpr);
+    out.setTransform(outDpr,0,0,outDpr,0,0);
+    out.clearRect(0,0,vw,vh);
+    out.imageSmoothingEnabled=false;
+
+    const sourceW=dcv.width, sourceH=dcv.height, targetAspect=vw/vh;
+    let cropW=sourceW*.78, cropH=cropW/targetAspect;
+    if(cropH>sourceH*.62){ cropH=sourceH*.62; cropW=cropH*targetAspect; }
+    if(cropW>sourceW){ cropW=sourceW; cropH=cropW/targetAspect; }
+    const sx=Math.max(0,Math.min(sourceW-cropW,sourceW*.51-cropW*.5));
+    /* 달구지 차체를 아래 상태띠 위쪽에 두고 노면은 충분히 남긴다. */
+    const sy=Math.max(0,Math.min(sourceH-cropH,sourceH*.75-cropH*.56));
+    out.drawImage(dcv,sx,sy,cropW,cropH,0,0,vw,vh);
+  }
+
   /* ── 타이틀 (같은 픽셀 파이프라인) ── */
   let tcv,tdctx,toff,tctx2,tt=0,TW=236,TH=410;
   function initTitle(canvas){
@@ -1421,6 +1444,6 @@ const SCENE = (()=>{
     tdctx.drawImage(toff,0,0,TW,TH,0,0,vw,vh);
   }
 
-  return {init,initTitle,draw,drawTitle,drawSettlementVan,
+  return {init,initTitle,draw,drawTitle,drawSettlementVan,drawVehicleRoadView,
     showMeal:(sec)=>{mealT=sec;}, talkPulse:(idx,sec)=>{talkIdx=idx; talkT=sec||3;}};
 })();
