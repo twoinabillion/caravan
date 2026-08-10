@@ -143,22 +143,27 @@ with sync_playwright() as p:
       panels:document.querySelectorAll('.journey-mode-panel').length,
       local:!!document.querySelector('.stop-action-console')
     })''')
-    check('정차 기능은 목적지·머물기·달구지 세 모드를 가진 한 콘솔에서 전환한다',
-          mode_initial['tabs'] == ['목적지', '머물기', '달구지'] and mode_initial['selected'] == 'local' and
+    check('정차 기능은 목적지·머물기 두 모드만 가진 한 콘솔에서 전환한다',
+          mode_initial['tabs'] == ['목적지', '머물기'] and mode_initial['selected'] == 'local' and
           mode_initial['panels'] == 1 and mode_initial['local'], str(mode_initial))
     stopped_geometry = page.evaluate('''() => {
       const shell=document.querySelector('.journey-mode-panel');
       const dock=document.querySelector('#dock');
+      const dash=document.querySelector('#dash');
+      const tabs=document.querySelector('.journey-mode-tabs');
       return {
         stageHeight:document.querySelector('#stage')?.getBoundingClientRect().height||0,
         shellBottom:shell?.getBoundingClientRect().bottom||0,
-        dockTop:dock?.getBoundingClientRect().top||0
+        dockTop:dock?.getBoundingClientRect().top||0,
+        dashBottom:dash?.getBoundingClientRect().bottom||0,
+        tabsTop:tabs?.getBoundingClientRect().top||0
       };
     }''')
     stopped_gap = stopped_geometry['dockTop'] - stopped_geometry['shellBottom']
+    dash_gap = stopped_geometry['tabsTop'] - stopped_geometry['dashBottom']
     check('정차 콘솔은 하단의 빈 띠를 줄이고 그 높이를 달구지·도로 장면에 돌려준다',
-          stopped_geometry['stageHeight'] >= 242 and -2 <= stopped_gap <= 12,
-          str({**stopped_geometry, 'gap': stopped_gap}))
+          stopped_geometry['stageHeight'] >= 242 and -2 <= stopped_gap <= 12 and 4 <= dash_gap <= 10,
+          str({**stopped_geometry, 'dockGap': stopped_gap, 'dashGap': dash_gap}))
     page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
       console:!!document.querySelector('.route-console'),
@@ -205,48 +210,25 @@ with sync_playwright() as p:
     check('세 번째 행동부터는 콘솔 안 스크롤 대신 전체 행동 서랍으로 분리된다',
           more_actions.count() == 1 and more_actions.bounding_box()['height'] >= 44)
     more_actions.click()
-    check('추가 행동 서랍에서 나머지 현지 행동을 바로 찾을 수 있다',
-          page.locator('#ovl-local-actions.on').count() == 1 and page.locator('#local-actions-body [data-a]').count() >= 1)
+    local_more_state = page.evaluate('''() => ({
+      open:!!document.querySelector('#ovl-local-actions.on'),
+      hasCamp:!!document.querySelector('#local-actions-body [data-a="camp"]'),
+      hasRepair:!!document.querySelector('#local-actions-body [data-a="repair"]'),
+      hasRadio:!!document.querySelector('#local-actions-body [data-a="radio"]')
+    })''')
+    check('추가 행동 서랍에서 야영·정비·라디오를 한곳에서 찾을 수 있다',
+          local_more_state['open'] and local_more_state['hasCamp'] and
+          local_more_state['hasRepair'] and local_more_state['hasRadio'], str(local_more_state))
     page.click('#local-actions-x')
     page.evaluate("document.querySelector('#local-actions-body [data-a=camp]').click()")
     check('머물기 모드의 야영 준비는 실제 차 안 준비 화면을 연다',
           page.locator('#ovl-camp.on').count() == 1 and page.locator('#camp-rest').count() == 1)
     page.click('#camp-x')
     page.evaluate("S.recruitQ=null; UI.renderAll()")
-    page.click('[data-journey-mode="vehicle"]')
-    vehicle_console = page.evaluate('''() => {
-      const vehicle=document.querySelector('.vehicle-console');
-      const detail=document.querySelector('[data-vehicle-detail]');
-      const roadView=vehicle?.querySelector('[data-vehicle-road-view]');
-      return {
-        systems:vehicle?.querySelectorAll('.vehicle-road-facts>i').length||0,
-        roadView:!!roadView && roadView.width>0 && roadView.height>0,
-        vehicleCopy:vehicle?.textContent||'',
-        height:vehicle?.closest('.route-console')?.getBoundingClientRect().height||0,
-        detailHeight:detail?.getBoundingClientRect().height||0,
-        nestedScroll:vehicle ? vehicle.scrollHeight > vehicle.clientHeight + 1 : true
-      };
-    }''')
-    check('달구지는 현재 도로 장면과 세 상태, 가장 필요한 행동을 스크롤 없이 먼저 보여 준다',
-          vehicle_console['roadView'] and vehicle_console['systems'] == 3 and '연료' in vehicle_console['vehicleCopy'] and
-          '차체' in vehicle_console['vehicleCopy'] and '장착' in vehicle_console['vehicleCopy'] and
-          '지금 필요한 정비' in vehicle_console['vehicleCopy'] and
-          vehicle_console['detailHeight'] >= 44 and not vehicle_console['nestedScroll'], str(vehicle_console))
-    check('목적지·머물기·달구지 세 콘솔의 외형 높이가 같다',
-          max(nav_initial['height'], stop_console['height'], vehicle_console['height']) -
-          min(nav_initial['height'], stop_console['height'], vehicle_console['height']) <= 1,
-          str({'route': nav_initial['height'], 'local': stop_console['height'], 'vehicle': vehicle_console['height']}))
-    page.click('[data-vehicle-detail]')
-    vehicle_open = page.evaluate('''() => ({
-      open:!!document.querySelector('#ovl-vehicle-detail.on'),
-      systems:document.querySelectorAll('#vehicle-detail-body .vehicle-system-card').length,
-      hasRepair:!!document.querySelector('#vehicle-detail-body [data-a="repair"]'),
-      hasRadio:!!document.querySelector('#vehicle-detail-body [data-a="radio"]')
-    })''')
-    check('전체 정비 서랍을 열면 세 계통·장착 모듈·현장 정비 행동이 이어진다',
-          vehicle_open['open'] and vehicle_open['systems'] == 3 and
-          vehicle_open['hasRepair'] and vehicle_open['hasRadio'], str(vehicle_open))
-    page.click('#vehicle-detail-x')
+    check('목적지·머물기 두 콘솔의 외형 높이가 같고 달구지 탭은 남지 않는다',
+          abs(nav_initial['height'] - stop_console['height']) <= 1 and
+          page.locator('[data-journey-mode="vehicle"], #ovl-vehicle-detail').count() == 0,
+          str({'route': nav_initial['height'], 'local': stop_console['height']}))
     page.click('[data-journey-mode="route"]')
     hidden_future = page.evaluate('''() => {
       const console=document.querySelector('.route-console');

@@ -59,13 +59,6 @@ with sync_playwright() as playwright:
     page.screenshot(path=str(SHOT / "00db-local-actions-drawer.png"))
     page.click('#local-actions-x')
     page.evaluate("S.recruitQ=null; UI.renderAll()")
-    page.click('[data-journey-mode="vehicle"]')
-    page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "00e-vehicle-tools.png"))
-    page.click('[data-vehicle-detail]')
-    page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "00f-vehicle-detail.png"))
-    page.click('#vehicle-detail-x')
     page.evaluate(
         """() => {
           S.at = 'daegu';
