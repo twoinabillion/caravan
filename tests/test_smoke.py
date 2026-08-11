@@ -748,11 +748,23 @@ with sync_playwright() as p:
         'recruit-parkss-task-power','recruit-leo-task-wade','recruit-jaeyi-task-lift',
         'recruit-eunsu-task-breaker','recruit-kangwoo-task-seoyeon','combat-walker-joint',
         'seoul-core-key','roadcrew-bridge-wedge','recruit-parkss-follow-shared',
-        'recruit-leo-follow-puddle','recruit-jaeyi-follow-shelf','recruit-eunsu-follow-lights'
+        'recruit-leo-follow-puddle','recruit-jaeyi-follow-shelf','recruit-eunsu-follow-lights',
+        'recruit-minji-meet-action','recruit-parkss-meet-action','recruit-leo-meet-action',
+        'recruit-jaeyi-meet-action','recruit-eunsu-meet-action','recruit-kangwoo-meet-action',
+        'recruit-minji-join-decision','recruit-parkss-join-decision','recruit-leo-join-decision',
+        'recruit-jaeyi-join-decision','recruit-eunsu-join-decision','recruit-kangwoo-join-decision'
       ];
       out.actionCutCount=actionCutKeys.filter(key=>!!D.scenes[key]).length;
-      out.actionCutMaps=Object.keys(D.eventTurnScenes||{}).length===4 &&
+      const recruitIds=['minji','parkss','leo','jaeyi','eunsu','kangwoo'];
+      const firstMeetIds=['meet_scrapyard','meet_bus','meet_hitchhiker','jy_recruit','es_recruit','kw_recruit'];
+      out.actionCutMaps=Object.keys(D.eventTurnScenes||{}).length===10 &&
         Object.keys(D.eventChoiceScenes||{}).length>=12 &&
+        firstMeetIds.every((eventId,index)=>{
+          const id=recruitIds[index], keys=D.eventTurnScenes[eventId]||[];
+          return keys.length===2&&keys[0]===`recruit-${id}`&&keys[1]===`recruit-${id}-meet-action`;
+        }) && recruitIds.every(id=>
+          !D.eventTurnScenes[`rq_${id}_join`] &&
+          D.eventChoiceScenes[`rq_${id}_join`]?.[0]?.[0]===`recruit-${id}-join-decision`) &&
         Object.values(D.eventChoiceScenes||{}).every(choiceMap=>
           Object.values(choiceMap).flat().every(key=>!!D.scenes[key]));
       out.recruitDefs=Object.keys(D.recruitQuests||{}).length;
@@ -836,6 +848,32 @@ with sync_playwright() as p:
         Object.values(laneBySpeaker).includes('left')&&Object.values(laneBySpeaker).includes('right');
       document.querySelector('#ev-wrap').classList.remove('on');
       const actionSnapshot=structuredClone(S);
+      const recruitCutSpecs=[
+        ['minji','meet_scrapyard'],['parkss','meet_bus'],['leo','meet_hitchhiker'],
+        ['jaeyi','jy_recruit'],['eunsu','es_recruit'],['kangwoo','kw_recruit']
+      ];
+      out.recruitCutRuntime=recruitCutSpecs.every(([id,eventId])=>{
+        const meet=D.events.find(e=>e.id===eventId);
+        UI.showEvent(meet);
+        const keys=[];
+        while(document.querySelector('#ev-sheet .story-next')){
+          keys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
+          document.querySelector('#ev-sheet .story-next').click();
+        }
+        keys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
+        const meetOk=keys[0]===`recruit-${id}`&&keys.includes(`recruit-${id}-meet-action`);
+        document.querySelector('#ev-wrap').classList.remove('on');
+
+        const join=D.events.find(e=>e.id===`rq_${id}_join`);
+        UI.showEvent(join); UI.finishStory();
+        const before=document.querySelector('.event-scene-frame').dataset.sceneKey;
+        document.querySelector('#ev-sheet [data-i="0"]').click();
+        const after=document.querySelector('.event-scene-frame').dataset.sceneKey;
+        const joinOk=before===`recruit-${id}-join`&&after===`recruit-${id}-join-decision`;
+        document.querySelector('#ev-wrap').classList.remove('on');
+        return meetOk&&joinOk;
+      });
+      S=structuredClone(actionSnapshot); rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll();
       const minjiAction=D.events.find(e=>e.id==='rq_minji_task');
       const minjiArcText=JSON.stringify(['meet_scrapyard','rq_minji_task','rq_minji_follow','rq_minji_join']
         .map(id=>D.events.find(e=>e.id===id)));
@@ -1138,14 +1176,16 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 115종·빌드 주입', r4['sceneCount'] == 115 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 131종·빌드 주입', r4['sceneCount'] == 131 and r4['sceneDataReady'], str(r4))
     check('김천 노선 선택·청주까지 경로 잠금', r4['routeChoice'], str(r4))
     check('김천 두 노선은 지도 거리·시간·연료 범위만 표시하고 현장 정보는 숨긴다', r4['routeForecast'], str(r4))
     check('비살상 구조·호송 3단계 임무와 장부 기록',
           r4['nonlethalMissions'] and r4['nonlethalLedger'], str(r4))
     check('정착지 행동이 다음 도로 사건으로 한 번 이어짐', r4['settlementRoadEcho'], str(r4))
-    check('행동 단위 신규 컷 16장·선택 스포일러 분리',
-          r4['actionCutCount'] == 16 and r4['actionCutMaps'], str(r4))
+    check('행동 단위 신규 컷 28장·선택 스포일러 분리',
+          r4['actionCutCount'] == 28 and r4['actionCutMaps'], str(r4))
+    check('동료 6명 첫 만남 행동컷·선택 뒤 합류 결정컷 실제 전환',
+          r4['recruitCutRuntime'], str(r4))
     check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
           r4['actionCutRuntime'], str(r4))
     check('민지 첫 합류 대사가 선언 대신 행동·망설임·선택으로 연결',

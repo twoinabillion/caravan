@@ -2240,7 +2240,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .nav-destination-title{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;gap:5px;border-bottom:1px solid rgba(255,180,84,.22)}
 .nav-route-decision h3{margin:4px 0 3px;padding-bottom:4px;border:0;
   color:#ffba59;font:800 clamp(13px,2.45vw,18px)/1.22 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nav-console-body{display:flex;flex:1;min-height:0;flex-direction:column}
+.nav-console-body{display:flex;flex:1;min-height:0;flex-direction:column;justify-content:center}
 .nav-arrival-note{min-height:17px;margin:3px 0 2px;color:#8c9bad;font:8.5px/1.2 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-arrival-note span{color:#6bc8c0;font-weight:800}
 .nav-known-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin:3px 0 4px}
@@ -2248,39 +2248,6 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   background:rgba(9,31,39,.62)}
 .nav-known-facts small{color:#6ebeb8;font:700 7.5px/1.15 var(--mono);white-space:nowrap}
 .nav-known-facts b{margin-top:2px;color:#dbe1e6;font:800 8.5px/1.15 var(--mono);overflow-wrap:anywhere}
-.nav-unknown-list{display:grid;flex:1;min-height:0;align-content:center;gap:2px}
-.nav-unknown-list>span{display:grid;grid-template-columns:7px minmax(0,1fr) auto;align-items:center;gap:5px;min-height:19px;padding:2px 4px;
-  border-left:1px solid rgba(121,143,165,.34);background:rgba(21,29,42,.58);color:#aeb8c4}
-.nav-unknown-list i{width:5px;height:5px;border:1px solid #708399;border-radius:50%}
-.nav-unknown-list b{font:700 8.5px/1.2 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nav-unknown-list small{color:#68788c;font:7.5px/1.15 var(--mono);white-space:nowrap}
-.nav-hazard-list{display:grid;width:100%;gap:3px;min-height:75px;padding:0;border:0;border-radius:2px;background:transparent;text-align:left;cursor:pointer}
-.nav-hazard-list:hover{background:rgba(96,198,190,.07)}.nav-hazard-list:focus-visible{outline:1px solid #80d5cf;outline-offset:1px}
-.nav-hazard-row{display:grid;width:100%;grid-template-columns:minmax(0,1fr) 52px 30px;align-items:center;gap:5px;min-height:25px;padding:0;
-  border:0;border-radius:1px;background:transparent;color:#bcc5d1;text-align:left}
-.nav-hazard-row>span{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:4px}
-.nav-hazard-row b{min-width:0;font:700 10px/1.2 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nav-hazard-row small{color:#8795a8;font:8px/1 var(--mono)}
-.nav-hazard-row em{color:#aeb7c3;font:9px/1 var(--mono);font-style:normal;text-align:right}
-.nav-risk-meter{display:block;height:6px;background:#2b3440;overflow:hidden;font-style:normal}
-.nav-risk-meter u{display:block;height:100%;background:#6bbcb4;text-decoration:none}
-.nav-hazard-row.risk-mid .nav-risk-meter u{background:#d69a42}.nav-hazard-row.risk-mid em{color:#e3ad5c}
-.nav-hazard-row.risk-high .nav-risk-meter u{background:#de5b52}.nav-hazard-row.risk-high em{color:#ef756a}
-.nav-supply-impact{display:grid;margin:4px 0 0;padding:3px 0;border-top:1px solid rgba(255,180,84,.16);border-bottom:1px solid rgba(255,180,84,.16)}
-.nav-supply-impact>button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:6px;min-height:44px;padding:3px 0;
-  border:0;border-radius:1px;background:transparent;color:#aeb7c5;font:9.5px/1.2 var(--mono);text-align:left;cursor:pointer}
-.nav-supply-impact>button:hover{background:rgba(255,180,84,.06)}.nav-supply-impact>button:focus-visible{outline:1px solid #ffc16b;outline-offset:1px}
-.nav-supply-impact>button span,.nav-supply-impact>button em{display:flex;align-items:center;gap:3px}.nav-supply-impact .ico{width:14px;height:14px}
-.nav-supply-impact>button em{color:#c9d0d9;font-style:normal;white-space:nowrap}.nav-supply-impact strong{color:#ff765f;font-weight:850}
-.nav-inspector{display:flex;min-height:0;flex:1;flex-direction:column;padding-top:4px;color:#aeb8c5;font-family:var(--mono)}
-.nav-inspector-back{align-self:flex-start;min-height:44px;margin:0 0 2px;padding:2px 6px;border:1px solid #31515d;border-radius:2px;
-  background:#0a1b23;color:#68c3bd;font:800 8.5px/1 var(--mono)}
-.nav-inspector>small{color:#da9d49;font:800 8px/1.2 var(--mono);letter-spacing:.04em}
-.nav-inspector>b{margin-top:2px;color:#e6ebef;font:850 12px/1.2 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nav-inspector>p{display:-webkit-box;overflow:hidden;margin:3px 0;color:#8f9dad;font:8.5px/1.35 var(--mono);-webkit-box-orient:vertical;-webkit-line-clamp:2}
-.nav-inspector dl{display:grid;gap:3px;margin:2px 0 0}.nav-inspector dl>div{display:grid;grid-template-columns:28px minmax(0,1fr);gap:5px}
-.nav-inspector dt,.nav-inspector dd{margin:0;font:8.5px/1.25 var(--mono)}.nav-inspector dt{color:#6bc8c0;font-weight:800}
-.nav-inspector dd{color:#bdc6d0}.nav-inspector dl>div:last-child dd{color:#f0c179}
 .nav-time{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:27px;color:#6ecdc3;font:9.5px/1.2 var(--mono)}
 .nav-time b{font:800 10px/1.2 var(--mono);white-space:nowrap}.nav-time span{color:#9ca8b7;font-size:9px;white-space:nowrap}
 .nav-console-actions{display:grid;grid-template-columns:minmax(58px,.78fr) minmax(76px,1.22fr);gap:5px;margin-top:auto}
@@ -2470,8 +2437,6 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   .journey-local-screen .stop-action-cta{font-size:12px}
   .nav-known-facts{gap:2px;margin:2px 0}.nav-known-facts>span{min-height:32px;padding:3px}
   .nav-known-facts small{font-size:6.5px}.nav-known-facts b{font-size:7.5px}
-  .nav-unknown-list{gap:1px}.nav-unknown-list>span{min-height:18px;padding:1px 3px;grid-template-columns:6px minmax(0,1fr)}
-  .nav-unknown-list b{font-size:7.5px}.nav-unknown-list small{display:none}
   .journey-system-strip{min-height:32px}
   .journey-system-strip small,.journey-system-strip b{font-size:12px}
   .console-detail-body .vehicle-system-card{grid-template-columns:24px minmax(0,1fr);padding:10px}
@@ -2507,6 +2472,12 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   #dash-sub{min-width:101px;padding-left:8px;font-size:12px}
   #main{margin-top:7px}
   #panel{padding:9px 12px calc(var(--nav-deck-h) - 10px + var(--safe-bottom))}
+}
+/* 13~15형 고해상도 창은 CSS 폭이 900px 바로 아래로 잡힌다. 이 구간에서
+   남는 세로 공간을 빈 바닥으로 두지 않고 정차 풍경에 돌려, 여정 콘솔이
+   하단 도크 바로 위에 놓이게 한다. 짧은 창은 기존 280px을 유지한다. */
+@media(min-width:681px) and (max-width:899px) and (min-height:800px){
+  #stage{flex-basis:clamp(280px,calc(100dvh - 565px),520px)}
 }
 @media(min-width:521px){
   .stop-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))}

@@ -215,55 +215,6 @@ D.startKnown = ['busan','gimhae','yangsan','miryang','jinju','daegu','daejeon','
   'yeosu','suncheon','gwangju','damyang','mokpo','andong','mungyeong','danyang','icheon',
   'wonju','daegwallyeong','gangneung','sokcho'];
 
-/* ── 목적지 정보 ──
-   네비게이션이 도시 이름만 보여 주지 않도록, 접근할 때 실제로 판단할 지역 정보다.
-   도착 화면·시장·사건은 기존 데이터가 담당하고 여기서는 출발 전 위험과 대응을
-   한 문장으로 연결한다. 등록되지 않은 발견형 장소는 UI의 유형별 기본값을 쓴다. */
-D.navIntel = {
-  busan:      {hazard:'부두 적재로 병목',effect:'우회 중 시간 지연과 차체 긁힘',counter:'컨테이너 표식을 따라 저속 진입',source:'감천 짐꾼 왕복 기록',confidence:'확정'},
-  gimhae:     {hazard:'활주로 노출 구간',effect:'긴 직선에서 관측 흔적이 커짐',counter:'해 지기 전 농로 쪽으로 통과',source:'부산 폐차장 운전수',confidence:'추정'},
-  yangsan:    {hazard:'고가 낙하물',effect:'차체와 적재물 손상 가능',counter:'교각 아래를 살피고 서스펜션 점검',source:'민지의 현장 표식',confidence:'확정'},
-  miryang:    {hazard:'장날 진입 정체',effect:'도착 시간이 늦어지고 장이 닫힐 수 있음',counter:'동쪽 천막길로 들어가 일찍 정차',source:'닷새장 행상 지도',confidence:'확정'},
-  jinju:      {hazard:'반쪽 난 남강 다리',effect:'강변 진흙길에서 바퀴가 빠질 수 있음',counter:'수위가 낮은 북쪽 둔치로 우회',source:'남강 어부의 무전',confidence:'추정'},
-  hapcheon:   {hazard:'과수원 야생동물',effect:'급제동과 식량 손실 가능',counter:'해 질 무렵을 피하고 경적을 짧게 사용',source:'장터 사과 상자 표식',confidence:'추정'},
-  geochang:   {hazard:'분지의 짙은 안개',effect:'갈림길을 놓치고 연료를 더 쓸 수 있음',counter:'라디오 표지와 도로 반사판을 따라 이동',source:'거창 우편부 메모',confidence:'추정'},
-  daegu:      {hazard:'돔 입구 검문',effect:'무기 보관과 적재 검사로 시간 소모',counter:'탄약을 따로 봉인하고 거래 장부 준비',source:'돔 시장 통행증',confidence:'확정'},
-  gumi:       {hazard:'공단 잔류 가스',effect:'흡기 오염과 승객 피로 누적',counter:'굴뚝 바람 아래쪽을 피하고 창문 봉쇄',source:'공단 작업조 경고판',confidence:'추정'},
-  gimcheon:   {hazard:'표지판 없는 대형 갈림길',effect:'잘못 든 노선은 청주까지 되돌리기 어려움',counter:'출발 전 능선길과 장터길 계약 확인',source:'우편부 노선 장부',confidence:'확정'},
-  muju:       {hazard:'터널 공동체 경계선',effect:'불시 검문과 물물교환 요구',counter:'전조등을 낮추고 입구에서 먼저 정차',source:'터널 촌장 통행 규칙',confidence:'확정'},
-  namwon:     {hazard:'섬진강 범람 흔적',effect:'끊긴 둑길 때문에 장거리 우회 가능',counter:'광한루 북쪽 제방 상태를 먼저 확인',source:'남원 장꾼의 최근 소문',confidence:'추정'},
-  jeonju:     {hazard:'서문 장터 행렬',effect:'적재물을 노리는 소매치기와 지연',counter:'사람 많은 시간에 동료가 후미를 지킴',source:'서문 진료소 연락망',confidence:'확정'},
-  yeongdong:  {hazard:'도로를 덮은 포도넝쿨',effect:'하부 축과 냉각구가 막힐 수 있음',counter:'낫을 꺼내고 저속으로 길을 열며 진행',source:'포도밭 생존자 표식',confidence:'추정'},
-  daejeon:    {hazard:'연구단지 자동 감시',effect:'무전 신호가 기록되고 관측도가 오를 수 있음',counter:'송신을 줄이고 지하 주차로로 접근',source:'유령 통신팀 패킷',confidence:'확정'},
-  nonsan:     {hazard:'평야의 위장 검문',effect:'멀리서 진짜 사람인지 구분하기 어려움',counter:'허수아비 방향과 타이어 자국부터 확인',source:'논산 농가 무전',confidence:'추정'},
-  gongju:     {hazard:'금강 교량 균열',effect:'무거운 적재 상태에서 붕괴 위험 증가',counter:'승객이 내려 도보로 먼저 하중 확인',source:'산성 주민의 석회 표식',confidence:'확정'},
-  cheongju:   {hazard:'끊긴 방송탑 전선',effect:'차체가 걸리거나 전기 잔류 구간에 진입',counter:'송신탑 서쪽 서비스 도로 이용',source:'라디오 수리 기록',confidence:'추정'},
-  cheonan:    {hazard:'너무 깨끗한 북쪽 도로',effect:'관리 구역 검문에 노출될 가능성',counter:'큰길을 오래 달리지 말고 휴게소에서 정찰',source:'북부 주파수 감청',confidence:'추정'},
-  pyeongtaek: {hazard:'컨테이너 낙하 통로',effect:'항구 바람에 적재물이 이동할 수 있음',counter:'봉인 번호와 바람 방향을 확인하고 통과',source:'항구도로 야간 경비',confidence:'추정'},
-  suwon:      {hazard:'해 질 녘 성문 폐쇄',effect:'늦으면 바깥에서 야영해야 함',counter:'도착 시각을 계산하고 성벽 무전에 응답',source:'수원 성곽 당직표',confidence:'확정'},
-  seoul:      {hazard:'남산 관제 밀집 구역',effect:'자동 검문과 천리안 직접 관측',counter:'여정 장부와 검증키를 준비하고 진입',source:'은수의 관제센터 기억',confidence:'확정'},
-  ulsan:      {hazard:'공업단지 화학 웅덩이',effect:'타이어와 차체 하부가 손상될 수 있음',counter:'공업탑 서쪽 고지대를 따라 접근',source:'폐차장 회수팀 지도',confidence:'추정'},
-  yeosu:      {hazard:'해안도로 만조',effect:'저지대 도로 침수와 염수 유입',counter:'조수표를 확인하고 방파제 안쪽으로 이동',source:'여수 어선 조수표',confidence:'확정'},
-  suncheon:   {hazard:'갈대밭 화재 흔적',effect:'연기 속 시야 저하와 우회 가능',counter:'바람을 등지지 말고 습지 둑을 따라 이동',source:'철새 감시소 기록',confidence:'추정'},
-  gwangju:    {hazard:'대인시장 진입 혼잡',effect:'보급품 분실과 도착 지연',counter:'금자 가게 표식을 찾아 공동 하역장 이용',source:'시장 배급망',confidence:'확정'},
-  damyang:    {hazard:'대숲 낙죽 구간',effect:'도로를 가로막은 대나무로 차체 손상',counter:'바람이 잦아든 뒤 가장자리부터 치움',source:'담양 숯쟁이 소문',confidence:'추정'},
-  mokpo:      {hazard:'터미널 염해 붕괴',effect:'부식된 바닥과 램프가 내려앉을 수 있음',counter:'차는 광장에 두고 선착장은 도보 정찰',source:'목포 출항 게시판 낙서',confidence:'추정'},
-  andong:     {hazard:'낙동강 안개와 좁은 고갯길',effect:'시야를 잃고 절벽 쪽으로 밀릴 수 있음',counter:'낮에 진입하고 하회마을 연기 신호 확인',source:'안동 장승 표식',confidence:'추정'},
-  mungyeong:  {hazard:'새재 급경사',effect:'연료 소모와 차체 피로 증가',counter:'적재를 고정하고 냉각 시간을 확보',source:'산지기 고개 기록',confidence:'확정'},
-  danyang:    {hazard:'석회암 낙석',effect:'전면 유리와 적재함 손상 가능',counter:'절벽 그늘을 피하고 짧게 정차해 소리 확인',source:'강변 채석꾼 표식',confidence:'추정'},
-  wonju:      {hazard:'치악산 우회 검문',effect:'산길로 몰리면 시간과 연료를 더 사용',counter:'분지 진입 전 두 도로의 통행 흔적 비교',source:'원주 주민의 낮은 무전',confidence:'추정'},
-  daegwallyeong:{hazard:'상시 안개와 횡풍',effect:'차선 이탈과 적재물 흔들림',counter:'속도를 낮추고 견인줄과 조명을 점검',source:'산지기 풍향 기록',confidence:'확정'},
-  gangneung:  {hazard:'해안 감시 신호',effect:'병원 소문을 쫓는 약탈자와 마주칠 수 있음',counter:'경포 진입 전 라디오 호출부호 확인',source:'동해 병원 준비대 무전',confidence:'추정'},
-  sokcho:     {hazard:'북쪽 봉쇄선 잔해',effect:'막힌 도로에서 되돌아설 공간 부족',counter:'항구 창고 앞에 차를 두고 도보 정찰',source:'속초 어민의 항로 기록',confidence:'추정'},
-  icheon:     {hazard:'가마 연기와 농로 교차',effect:'시야 저하와 수레 행렬 정체',counter:'가마 불이 줄어드는 시간에 남쪽 길로 진입',source:'이천 도공 운송표',confidence:'확정'},
-  gyeongju:   {hazard:'왕릉 사이 좁은 길',effect:'대형 차량 회전과 후진이 어려움',counter:'텐트촌 안내자를 만나 바깥길로 이동',source:'왕릉 야영지 지도',confidence:'추정'},
-  pohang:     {hazard:'제철소 금속 분진',effect:'흡기 막힘과 타이어 펑크 가능',counter:'바닷바람 부는 시간에 외곽도로 이용',source:'포항 고철선 선원',confidence:'추정'},
-  sangju:     {hazard:'자전거 행렬과 끊긴 국도',effect:'급회피 중 적재물이 흔들릴 수 있음',counter:'자전거 표식을 따라 저속으로 길을 공유',source:'상주 길잡이 노선표',confidence:'확정'},
-  gunsan:     {hazard:'내항 밀물과 녹슨 선로',effect:'바퀴가 선로 홈에 빠지거나 침수될 수 있음',counter:'어선 귀항 전에 내륙 쪽 창고길 이용',source:'군산 어민 조수 기록',confidence:'확정'},
-  chungju:    {hazard:'호숫가 물안개',effect:'굽은 길에서 맞은편 차량을 늦게 발견',counter:'경적 신호를 쓰고 호수 바깥 차선 유지',source:'충주 낚싯배 무전',confidence:'추정'},
-  sejong:     {hazard:'무인 행정구역 센서',effect:'빈 도로에서 움직임이 오래 기록됨',counter:'지하 연결로를 짧게 쓰고 송신을 차단',source:'대전 통신팀 도면',confidence:'추정'},
-};
-
 D.edges = [
   ['busan','yangsan',20,'high'], ['busan','gimhae',18,'normal'], ['yangsan','miryang',34,'high'],
   ['gimhae','jinju',55,'rough'], ['miryang','daegu',52,'high'], ['miryang','hapcheon',40,'normal'],
@@ -501,25 +452,6 @@ D.vanStages = [
     build:'마지막 40cm 서비스 베이에 벽걸이 좌석과 개인 짐칸을 붙인다'},
 ];
 D.bondTh = [4,9,14];
-/* 동료를 만날 수 있는 지역 힌트 (상태 화면) */
-D.compWhere = {
-  minji:'동해 공업지대 — 울산·경주·포항의 길에서',
-  parkss:'경북 국도 — 구미·김천·상주 언저리에서',
-  kangwoo:'대구 돔 시장에서 (경비 일을 하고 있다)',
-  leo:'호남의 밤길 — 전주·광주·담양 어딘가에서',
-  jaeyi:'서쪽 항구와 김천 사이 — 고물이 모이는 길에서',
-  eunsu:'대전·세종 인근 — 관제센터가 있던 땅에서',
-};
-/* 소개 고리 — 한 명을 영입하면 다음 동료 위치를 짚어준다 (전원 모으게 강제) */
-D.compRefer = {
-  minji:  {to:'kangwoo', line:'"참, 대구 돔 시장에 강우라고— 눈 하나는 기가 막힌 파수꾼이 있다더라. 폐차장 오는 장사꾼들이 다 그 사람 얘길 했어. 그 사람 있으면 이 길이 훨씬 안전할 텐데. 꼭 데려와."'},
-  kangwoo:{to:'parkss',  line:'"…경북 국도. 구미에서 김천 사이. 약사 하나가 돌아다닌다. 늙었지만 손이 정확해. 아픈 사람 나오기 전에 태워둬라."'},
-  parkss: {to:'jaeyi',   line:'"김천이랑 군산 사이에 고물 줍는 아가씨가 있어. 왕진 다니며 몇 번 마주쳤는데, 리어카 정리하는 손이 야무지더군. 이런 여행엔 뭐든 고치고 바꾸는 사람이 하나 있어야 해. 데려와."'},
-  jaeyi:  {to:'leo',     line:'"호남 밤길에 노래하는 오빠가 있대요! 개도 데리고. 여행에 노래 없으면 그거 그냥 이동이잖아요. 꼭 만나요."'},
-  leo:    {to:'eunsu',   line:'"대전 관제센터 쪽에 조용한 누나가 있대요. 라디오를 기가 막히게 잡는대요. 신호 잡는 사람 있으면… 누굴 찾을 때 큰일 하죠. 꼭이요."'},
-  eunsu:  {to:'minji',   line:'"동해 공업지대에 정비사가 있다고 전파에 잡혔어요. 엔진 소리만 듣고 병명을 맞힌다고, 행상들 무전에 자주 나와요. 이 차, 오래 굴리려면 그런 손이 필요해요."'},
-};
-
 /* ── 제작 (위수 구역 진입 후 해금) ── */
 D.crafts = [
  {id:'pipe',    nm:'쇠파이프',   ic:'🔧', out:{'쇠파이프':1}, need:{scrap:6},           d:'묵직한 근접 무기. 없는 것보단 백배 낫다'},
@@ -1838,6 +1770,8 @@ D.eventScenes = {
   initiative_kangwoo_route:'roadcrew-line', initiative_leo_pause:'road-night-circle',
   initiative_jaeyi_salvage:'recruit-jaeyi-task', initiative_eunsu_silence:'recruit-eunsu-task',
   meet_scrapyard:'recruit-minji', meet_bus:'recruit-parkss',
+  meet_hitchhiker:'recruit-leo', jy_recruit:'recruit-jaeyi',
+  es_recruit:'recruit-eunsu', kw_recruit:'recruit-kangwoo',
   rq_minji_task:'recruit-minji-task', rq_minji_follow:'recruit-minji-follow', rq_minji_join:'recruit-minji-join',
   rq_parkss_task:'recruit-parkss-task', rq_parkss_follow:'recruit-parkss-follow', rq_parkss_join:'recruit-parkss-join',
   rq_leo_task:'recruit-leo-task', rq_leo_follow:'recruit-leo-follow', rq_leo_join:'recruit-leo-join',
@@ -1902,6 +1836,12 @@ D.eventScenes = {
 /* 한 사건 안에서 시간·행동이 바뀔 때 쓰는 연속 컷.
    선택 결과 전용 컷은 아래 D.eventChoiceScenes에 따로 둬 스포일러를 막는다. */
 D.eventTurnScenes = {
+  meet_scrapyard:['recruit-minji','recruit-minji-meet-action'],
+  meet_bus:['recruit-parkss','recruit-parkss-meet-action'],
+  meet_hitchhiker:['recruit-leo','recruit-leo-meet-action'],
+  jy_recruit:['recruit-jaeyi','recruit-jaeyi-meet-action'],
+  es_recruit:['recruit-eunsu','recruit-eunsu-meet-action'],
+  kw_recruit:['recruit-kangwoo','recruit-kangwoo-meet-action'],
   rq_minji_task:['recruit-minji-task','recruit-minji-task-signal'],
   rq_minji_follow:['recruit-minji-follow','recruit-minji-follow-listen'],
   combat_walker_strike:['combat-walker-disable','combat-walker-joint'],
@@ -1929,6 +1869,12 @@ D.eventChoiceScenes = {
   rq_eunsu_task:{1:['recruit-eunsu-task-breaker']},
   rq_eunsu_follow:{2:['recruit-eunsu-follow-lights']},
   rq_kangwoo_task:{2:['recruit-kangwoo-task-seoyeon']},
+  rq_minji_join:{0:['recruit-minji-join-decision']},
+  rq_parkss_join:{0:['recruit-parkss-join-decision']},
+  rq_leo_join:{0:['recruit-leo-join-decision']},
+  rq_jaeyi_join:{0:['recruit-jaeyi-join-decision']},
+  rq_eunsu_join:{0:['recruit-eunsu-join-decision']},
+  rq_kangwoo_join:{0:['recruit-kangwoo-join-decision']},
   roadcrew_bridge:{0:['roadcrew-bridge-wedge']},
   seoul_core:{
     0:['seoul-testimony'],1:['seoul-testimony'],2:['seoul-testimony'],3:['seoul-testimony'],

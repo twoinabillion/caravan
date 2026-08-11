@@ -575,16 +575,16 @@ G.journeyGuide = ()=>{
   if(!S||S.guideDismissed||G.qualityArchive().length||G.qualityPlayMs()>45*60*1000) return null;
   const milestones=G.ensureQualityState().milestones||{};
   if(!milestones.first_departure) return {step:1,total:4,kicker:'FIRST JOURNEY',title:'다음 길 하나를 고른다',
-    body:'모든 길이 정답은 아니다. 지금 가진 보급과 달구지로 감당할 수 있는 한 길을 고르면 바로 출발한다.',
-    points:['준비도: 초록은 안정적, 주황·빨강은 먼저 이유를 확인한다','거리: 가까운 길은 빠르고, 먼 길은 보급과 이야기를 더 만날 수 있다','장비: 길 아래 조언이 지금 달구지에 맞는 이유를 알려 준다'],focus:'route'};
-  if(!milestones.first_event) return {step:2,total:4,kicker:'ON THE ROAD',title:S.driving?'주행은 자동으로 이어진다':'다음 길에서 첫 사건을 만난다',
-    body:S.driving?'남은 거리와 현재 자원을 지켜보다 사건이 멈춰 세우면, 현장에서 판단해 선택한다.':'도착까지 사건이 없었다면 다음 길을 고르면 된다. 길과 사건의 상황은 직접 마주친 뒤 확인한다.',
-    points:['선택지의 조건은 지금 쓸 자원이나 필요한 능력이다','위험한 수를 피하는 것보다, 왜 감수하는지 아는 것이 중요하다'],focus:'drive'};
+    body:'지도에 기록된 연결과 현재 연료를 보고, 감당할 수 있는 한 길을 고르면 바로 출발한다.',
+    points:['지도: 지금 연결된 목적지만 표시한다','수치: 거리·시간·연료는 현재 지도와 계기판 기준이다','현장: 실제로 확인한 내용만 여정 기록에 남는다'],focus:'route'};
+  if(!milestones.first_event) return {step:2,total:4,kicker:'ON THE ROAD',title:S.driving?'주행은 자동으로 이어진다':'다음 목적지를 고른다',
+    body:S.driving?'화면에는 남은 거리와 현재 자원만 표시된다. 주행이 멈추면 그때 나타난 상황을 보고 결정한다.':'현재 지도와 계기판을 확인하고 다음 목적지를 직접 고른다.',
+    points:['선택 조건은 지금 쓸 자원과 현재 가진 능력이다','아직 벌어지지 않은 일은 표시하지 않는다'],focus:'drive'};
   const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;
   if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'FIRST STOP',title:'정착지 안으로 들어간다',
-    body:'거래만 하지 않아도 된다. 사람을 만나고 현장 일을 도우면 다음 길과 동료의 이야기가 열린다.',focus:'settlement'};
-  if(!milestones.temporary_companion) return {step:4,total:4,kicker:'MAKE ROOM',title:'사람의 일을 먼저 끝낸다',
-    body:'만난 사람의 부탁을 따라가면 한 구간을 손님으로 동행한다. 서로를 겪은 뒤에야 합류를 고른다.',focus:'companion'};
+    body:'거래·휴식·현장 행동 중 지금 필요한 일을 직접 고른다. 들어가기 전에는 결과를 표시하지 않는다.',focus:'settlement'};
+  if(!milestones.temporary_companion&&S.recruitQ) return {step:4,total:4,kicker:'MAKE ROOM',title:'함께한 뒤에 결정한다',
+    body:'함께 갈지는 실제로 겪은 일과 대화가 끝난 뒤에만 선택한다.',focus:'companion'};
   return null;
 };
 G.exportQuality = format=>{

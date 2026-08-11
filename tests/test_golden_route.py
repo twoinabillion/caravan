@@ -164,6 +164,23 @@ with sync_playwright() as p:
     check('정차 콘솔은 하단의 빈 띠를 줄이고 그 높이를 달구지·도로 장면에 돌려준다',
           stopped_geometry['stageHeight'] >= 249 and -10 <= stopped_gap <= -4 and 4 <= dash_gap <= 10,
           str({**stopped_geometry, 'dockGap': stopped_gap, 'dashGap': dash_gap}))
+    page.set_viewport_size({'width': 895, 'height': 955})
+    page.wait_for_timeout(80)
+    desktop_geometry = page.evaluate('''() => {
+      const shell=document.querySelector('.journey-mode-panel')?.getBoundingClientRect();
+      const dock=document.querySelector('#dock')?.getBoundingClientRect();
+      return {
+        stageHeight:document.querySelector('#stage')?.getBoundingClientRect().height||0,
+        shellBottom:shell?.bottom||0,
+        dockTop:dock?.top||0,
+        gap:(dock?.top||0)-(shell?.bottom||0)
+      };
+    }''')
+    check('900px 바로 아래의 긴 화면은 빈 바닥 대신 풍경을 늘려 콘솔을 도크까지 내린다',
+          desktop_geometry['stageHeight'] >= 389 and -14 <= desktop_geometry['gap'] <= -4,
+          str(desktop_geometry))
+    page.set_viewport_size({'width': 360, 'height': 700})
+    page.wait_for_timeout(80)
     page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
       console:!!document.querySelector('.route-console'),
@@ -175,10 +192,11 @@ with sync_playwright() as p:
       height:document.querySelector('.route-console')?.getBoundingClientRect().height||0,
       copy:document.querySelector('.route-console')?.textContent||''
     })''')
-    check('정차 네비게이션은 경로 범위만 보이고 현장 상황은 미확인으로 남긴다',
+    check('정차 네비게이션은 현재 경로 수치만 보이고 사전 신호나 만남을 예고하지 않는다',
           nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
-          nav_initial['hazards'] == 0 and nav_initial['facts'] == 3 and nav_initial['unknowns'] == 3 and
-          '연료 범위' in nav_initial['copy'] and '현장 상황 미확인' in nav_initial['copy'],
+          nav_initial['hazards'] == 0 and nav_initial['facts'] == 3 and nav_initial['unknowns'] == 0 and
+          '연료 범위' in nav_initial['copy'] and
+          not any(word in nav_initial['copy'] for word in ['만날','사람','위험','신호','미확인']),
           str(nav_initial))
     page.click('[data-journey-mode="local"]')
     stop_console = page.evaluate('''() => {
@@ -239,6 +257,7 @@ with sync_playwright() as p:
         hazardRows:console?.querySelectorAll('.nav-hazard-row').length||0,
         hotspots:(canvas?._navHazardHotspots||[]).length,
         exactHazard:copy.includes('고가 낙하물'),
+        predictiveCopy:/만날|사람|위험|신호|미확인|예상/.test(copy),
         futureArrow:/연료\\s*\\d+\\s*→/.test(copy),
         hasRanges:copy.includes('시간 범위')&&copy.includes('연료 범위')
       };
@@ -246,7 +265,8 @@ with sync_playwright() as p:
     check('위험·인물·도착 후 자원은 출발 전에 인터페이스로 노출되지 않는다',
           not hidden_future['inspector'] and hidden_future['hazardRows'] == 0 and
           hidden_future['hotspots'] == 0 and not hidden_future['exactHazard'] and
-          not hidden_future['futureArrow'] and hidden_future['hasRanges'], str(hidden_future))
+          not hidden_future['predictiveCopy'] and not hidden_future['futureArrow'] and
+          hidden_future['hasRanges'], str(hidden_future))
     page.click('[data-route-select="gimhae"]')
     nav_compare = page.evaluate('''() => ({
       driving:!!S.driving,
@@ -414,7 +434,7 @@ with sync_playwright() as p:
     })''')
     check('민지 임무에서 고른 방패 해법이 합류 후 첫 주행의 수리로 되돌아온다',
           callback['memory']['id'] == 'minji' and callback['memory']['choice'] == 'shield' and
-          callback['van'] == min(drive_before['van'] + 4, drive_before['vanMax']) and
+          abs(callback['van'] - min(drive_before['van'] + 4, drive_before['vanMax'])) < .01 and
           callback['used'] and '긁힌 판' in callback['copy'], str(callback))
     daegu_pool = page.evaluate("G.eligible().filter(e=>e.priority&&e.recruitStart).map(e=>e.id)")
     check('민지 합류 직후 대구 길에서 새 동료 사건을 연달아 강제하지 않는다',

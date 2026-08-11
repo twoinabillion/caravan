@@ -174,14 +174,12 @@ const UI = (()=>{
     const routeState=route?`${routeResult} · 선택 ${routeRow.chosen||0}회`:'';
     const lastChoices=Array.isArray(last.choices)?last.choices:[];
     const choiceCount=lastChoices.length;
-    const remainingCompanions=Math.max(0,Object.keys(D.comps||{}).length-party.length);
     if(compact) return `<span>PREVIOUS JOURNEY</span><b>${route?esc(route.name):'지난 길'} · ${esc(build)}</b><small>DAY ${last.day||'?'} · ${last.km||0}km · ${party.length?party.map(esc).join(' · '):'혼자 달린 기록'} · ${routeState||'노선 미기록'}</small>`;
     return `<div class="previous-journey-head"><span>YOUR LAST ROAD</span><b>${route?esc(route.name):'지난 여정의 길'} · ${esc(build)}</b></div>
       <div class="previous-journey-facts"><span>DAY ${last.day||'?'}</span><span>${last.km||0}km</span><span>동료 ${party.length}명</span><span>기억된 선택 ${choiceCount}개</span></div>
       <p>${party.length?`${party.map(esc).join(' · ')}와 함께 달렸다.`:'혼자 시작한 달구지의 기록이 남아 있다.'}</p>
       <div class="next-road-rumor"><small>노선 기록</small><b>${route?esc(route.name):'기록된 노선 없음'}</b><span>${routeState||'방향/결과 기록 없음'}</span></div>
       ${choiceCount>3?`<div class="next-road-rumor"><small>회상 포인트</small><b>최근 선택</b><span>${esc(lastChoices[0]?.summary||'기억에서 사라졌습니다.')}</span><span>${esc(lastChoices[1]?.summary||'추가 기록이 적습니다.')}</span></div>`:''}
-      ${remainingCompanions?`<div class="next-road-rumor"><small>다음 여정의 빈자리</small><b>아직 만나지 못한 사람들</b><span>지난 길에서 스치지 못한 ${remainingCompanions}개의 동료 이야기가 다른 부탁과 갈림길에서 기다린다.</span></div>`:''}
       ${other?`<div class="next-road-rumor"><small>이번에는 다른 소문</small><b>${esc(other.name)}</b><span>${esc(other.promise)}</span></div>`:''}`;
   }
 
@@ -1165,16 +1163,11 @@ const UI = (()=>{
         aria-label="목적지 ${index+1}, ${esc(name)} 선택">${String(index+1).padStart(2,'0')}<span class="sr-only"> ${esc(name)}</span></button>`;
     }).join('');
     const canDepart=forecast.ok&&!forecast.shortage;
-    const summary=`<p class="nav-arrival-note"><span>${esc(destinationType)}</span> 도착 뒤 현장 정보를 확인한다.</p>
+    const summary=`<p class="nav-arrival-note"><span>${esc(destinationType)}</span> 지도에 기록된 구간</p>
       <div class="nav-known-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
         <span><small>거리</small><b>${selected.nb.km}km</b></span>
         <span><small>시간 범위</small><b>${routeDurationRange(forecast.minutes)}</b></span>
         <span><small>연료 범위</small><b>${routeFuelRange(selected.fuel)}</b></span>
-      </div>
-      <div class="nav-unknown-list" aria-label="출발 전에는 알 수 없는 정보">
-        <span><i aria-hidden="true"></i><b>도로 정보 불완전</b><small>주행하며 확인</small></span>
-        <span><i aria-hidden="true"></i><b>통신 음영 구간</b><small>신호 미확인</small></span>
-        <span><i aria-hidden="true"></i><b>현장 상황 미확인</b><small>도착 뒤 확인</small></span>
       </div>`;
     const departButton=canDepart
       ?`<button type="button" data-nav-depart="${selected.nb.id}">출발 <span aria-hidden="true">→</span></button>`
@@ -1186,7 +1179,7 @@ const UI = (()=>{
         <section class="nav-route-map" aria-labelledby="nav-map-title">
           <div class="nav-screen-kicker"><span id="nav-map-title">${esc(D.nodes[S.at].name)} → 다음 목적지</span><em>LIVE ROUTE</em></div>
           <canvas data-nav-map aria-label="${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 지도에 기록된 경로"></canvas>
-          <div class="nav-map-legend"><span>선택 경로</span><span>대체 경로</span><span>현장 정보 미확인</span></div>
+          <div class="nav-map-legend"><span>선택 경로</span><span>대체 경로</span></div>
         </section>
         <section class="nav-route-decision" aria-live="polite">
           <div class="nav-destination-head"><span>목적지 ${String(routeModels.indexOf(selected)+1).padStart(2,'0')} / ${String(routeModels.length).padStart(2,'0')}</span>
@@ -2536,7 +2529,7 @@ const UI = (()=>{
     if(spotId==='market') return S.quest
       ? {label:'의뢰와 보급',text:'진행 중인 의뢰를 먼저 확인한 뒤, 다음 길에 필요한 물자만 챙긴다.'}
       : {label:'보급과 의뢰',text:'물자만 채울지, 다음 정착지로 이어지는 의뢰 하나를 맡을지 고른다.'};
-    if(spotId==='garage') return {label:'달구지 준비',text:'다음 길의 위험을 보고 수리와 개조 중 지금 필요한 작업을 고른다.'};
+    if(spotId==='garage') return {label:'달구지 준비',text:'현재 차체 상태를 보고 수리와 개조 중 지금 필요한 작업을 고른다.'};
     if(spotId==='people') return {label:'사람과 정보',text:'소문, 부탁, 동료의 다음 일을 찾아 여정에 남을 관계를 만든다.'};
     return {label:'현장에 손 보태기',text:'시간과 자원을 써서 이곳의 일을 돕는다. 변화는 다음 길에서도 돌아온다.'};
   }
