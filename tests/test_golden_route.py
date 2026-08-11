@@ -190,12 +190,18 @@ with sync_playwright() as p:
       unknowns:document.querySelectorAll('.nav-unknown-list>span').length,
       selected:document.querySelector('[data-route-select][aria-pressed="true"]')?.dataset.routeSelect,
       height:document.querySelector('.route-console')?.getBoundingClientRect().height||0,
-      copy:document.querySelector('.route-console')?.textContent||''
+      copy:document.querySelector('.route-console')?.textContent||'',
+      titleSize:parseFloat(getComputedStyle(document.querySelector('.nav-route-decision h3')).fontSize),
+      descriptionSize:parseFloat(getComputedStyle(document.querySelector('.nav-place-description')).fontSize),
+      valueSize:parseFloat(getComputedStyle(document.querySelector('.nav-known-facts b')).fontSize)
     })''')
     check('정차 네비게이션은 현재 경로 수치만 보이고 사전 신호나 만남을 예고하지 않는다',
           nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
-          nav_initial['hazards'] == 0 and nav_initial['facts'] == 3 and nav_initial['unknowns'] == 0 and
-          '연료 범위' in nav_initial['copy'] and
+          nav_initial['hazards'] == 0 and nav_initial['facts'] == 6 and nav_initial['unknowns'] == 0 and
+          '무너진 고가 아래로 길이 하나 살아 있다' in nav_initial['copy'] and
+          '소모 연료' in nav_initial['copy'] and '보유 연료' in nav_initial['copy'] and
+          '차체' in nav_initial['copy'] and '식량·물' in nav_initial['copy'] and
+          nav_initial['titleSize'] >= 14 and nav_initial['descriptionSize'] >= 9 and nav_initial['valueSize'] >= 9.5 and
           not any(word in nav_initial['copy'] for word in ['만날','사람','위험','신호','미확인']),
           str(nav_initial))
     page.click('[data-journey-mode="local"]')
@@ -209,8 +215,8 @@ with sync_playwright() as p:
         panels:document.querySelectorAll('.journey-mode-panel').length
       };
     }''')
-    check('머물기 행동은 그림 없이 시간과 미확인 상태만 보여 준다',
-          stop_console['explore'] and '머물며 할 일' in stop_console['actionCopy'] and
+    check('머물기 행동은 별도 제목 없이 바로 네 가지 행동을 보여 준다',
+          stop_console['explore'] and '머물며 할 일' not in stop_console['actionCopy'] and
           '2시간' in stop_console['actionCopy'] and '발견물 미확인' in stop_console['actionCopy'] and
           '탐색 위험' not in stop_console['actionCopy'] and stop_console['images'] == 0 and
           stop_console['panels'] == 1, str(stop_console))
@@ -221,24 +227,21 @@ with sync_playwright() as p:
         nestedScroll:console ? console.scrollHeight > console.clientHeight + 1 : true
       };
     }''')
-    check('머물기 콘솔은 주요 행동을 최대 두 개만 스크롤 없이 보여 준다',
-          local_layout['visible'] <= 2 and not local_layout['nestedScroll'], str(local_layout))
+    check('머물기 콘솔은 기본 행동 네 개를 더보기 없이 한 화면에 보여 준다',
+          local_layout['visible'] == 4 and not local_layout['nestedScroll'] and
+          page.locator('[data-local-more]').count() == 0, str(local_layout))
     page.evaluate("S.recruitQ={id:'minji',stage:'task',target:'busan',startedDay:S.day}; UI.renderAll()")
-    more_actions = page.locator('[data-local-more]')
-    check('세 번째 행동부터는 콘솔 안 스크롤 대신 전체 행동 서랍으로 분리된다',
-          more_actions.count() == 1 and more_actions.bounding_box()['height'] >= 44)
-    more_actions.click()
-    local_more_state = page.evaluate('''() => ({
-      open:!!document.querySelector('#ovl-local-actions.on'),
-      hasCamp:!!document.querySelector('#local-actions-body [data-a="camp"]'),
-      hasRepair:!!document.querySelector('#local-actions-body [data-a="repair"]'),
-      hasRadio:!!document.querySelector('#local-actions-body [data-a="radio"]')
+    direct_actions = page.evaluate('''() => ({
+      count:document.querySelectorAll('.stop-action-console .stop-action-card').length,
+      hasCamp:!!document.querySelector('.stop-action-console [data-a="camp"]'),
+      hasRepair:!!document.querySelector('.stop-action-console [data-a="repair"]'),
+      hasRadio:!!document.querySelector('.stop-action-console [data-a="radio"]'),
+      hasMore:!!document.querySelector('[data-local-more]')
     })''')
-    check('추가 행동 서랍에서 야영·정비·라디오를 한곳에서 찾을 수 있다',
-          local_more_state['open'] and local_more_state['hasCamp'] and
-          local_more_state['hasRepair'] and local_more_state['hasRadio'], str(local_more_state))
-    page.click('#local-actions-x')
-    page.evaluate("document.querySelector('#local-actions-body [data-a=camp]').click()")
+    check('동료 행동이 추가되어도 야영·정비·라디오는 머물기 화면 안에 그대로 남는다',
+          direct_actions['count'] == 5 and direct_actions['hasCamp'] and direct_actions['hasRepair'] and
+          direct_actions['hasRadio'] and not direct_actions['hasMore'], str(direct_actions))
+    page.evaluate("document.querySelector('.stop-action-console [data-a=camp]').click()")
     check('머물기 모드의 야영 준비는 실제 차 안 준비 화면을 연다',
           page.locator('#ovl-camp.on').count() == 1 and page.locator('#camp-rest').count() == 1)
     page.click('#camp-x')
@@ -259,7 +262,7 @@ with sync_playwright() as p:
         exactHazard:copy.includes('고가 낙하물'),
         predictiveCopy:/만날|사람|위험|신호|미확인|예상/.test(copy),
         futureArrow:/연료\\s*\\d+\\s*→/.test(copy),
-        hasRanges:copy.includes('시간 범위')&&copy.includes('연료 범위')
+        hasRanges:/\\d+–\\d+분/.test(copy)&&copy.includes('소모 연료')
       };
     }''')
     check('위험·인물·도착 후 자원은 출발 전에 인터페이스로 노출되지 않는다',
@@ -267,7 +270,7 @@ with sync_playwright() as p:
           hidden_future['hotspots'] == 0 and not hidden_future['exactHazard'] and
           not hidden_future['predictiveCopy'] and not hidden_future['futureArrow'] and
           hidden_future['hasRanges'], str(hidden_future))
-    page.click('[data-route-select="gimhae"]')
+    page.click('[data-nav-cycle]')
     nav_compare = page.evaluate('''() => ({
       driving:!!S.driving,
       selected:document.querySelector('.route-console')?.dataset.routeConsole,
@@ -277,7 +280,7 @@ with sync_playwright() as p:
     check('다른 길 선택은 즉시 출발하지 않고 비교할 목적지만 바꾼다',
           not nav_compare['driving'] and nav_compare['selected'] == 'gimhae' and
           nav_compare['depart'] == 'gimhae' and '김해' in nav_compare['title'], str(nav_compare))
-    page.click('[data-route-select="yangsan"]')
+    page.click('[data-nav-cycle]')
     page.click('[data-nav-depart="yangsan"]')
     check('네비게이션 출발 확인이 선택한 실제 주행을 시작한다',
           page.evaluate("S.driving&&S.driving.to==='yangsan'"))

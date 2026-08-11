@@ -54,10 +54,6 @@ with sync_playwright() as playwright:
     )
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "00da-stop-actions-extra.png"))
-    page.click('[data-local-more]')
-    page.wait_for_timeout(120)
-    page.screenshot(path=str(SHOT / "00db-local-actions-drawer.png"))
-    page.click('#local-actions-x')
     page.evaluate("S.recruitQ=null; UI.renderAll()")
     page.evaluate(
         """() => {

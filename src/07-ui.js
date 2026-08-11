@@ -1138,10 +1138,25 @@ const UI = (()=>{
     const high=Math.max(low+5,Math.ceil(minutes*1.2/5)*5);
     return `${G.durationLabel(low)}–${G.durationLabel(high)}`;
   }
+  function routeMinuteRange(minutes){
+    const low=Math.max(5,Math.floor(minutes*.85/5)*5);
+    const high=Math.max(low+5,Math.ceil(minutes*1.2/5)*5);
+    return `${low}–${high}분`;
+  }
   function routeFuelRange(fuel){
     const low=Math.max(1,Math.floor(fuel*.85));
     const high=Math.max(low+1,Math.ceil(fuel*1.2));
     return `${low}–${high}L`;
+  }
+  function routePlaceDescription(node){
+    const source=String(node&&node.desc||'').trim();
+    const speculative=/소문|누군가|무엇|뭐가|누구|기다리|이유 모를|불안|시험|같았다|마주|위험/;
+    const known=source.split(/(?<=[.!?])\s+/).filter(sentence=>sentence&&!speculative.test(sentence)).slice(0,2).join(' ');
+    if(known) return known;
+    if(node&&node.type==='town') return '작은 마을과 주변 도로가 지도에 기록되어 있다.';
+    if(node&&node.type==='hidden') return '직접 확인해 지도에 표시한 장소다.';
+    if(node&&node.type==='goal') return '이번 여정의 최종 목적지다.';
+    return '남아 있는 길과 구조물이 지도에 기록되어 있다.';
   }
   function routeConsoleModel(routeModels){
     if(navChoiceAt!==S.at||!routeModels.some(model=>model.nb.id===navChoiceId)){
@@ -1163,11 +1178,14 @@ const UI = (()=>{
         aria-label="목적지 ${index+1}, ${esc(name)} 선택">${String(index+1).padStart(2,'0')}<span class="sr-only"> ${esc(name)}</span></button>`;
     }).join('');
     const canDepart=forecast.ok&&!forecast.shortage;
-    const summary=`<p class="nav-arrival-note"><span>${esc(destinationType)}</span> 지도에 기록된 구간</p>
+    const summary=`<p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
       <div class="nav-known-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
         <span><small>거리</small><b>${selected.nb.km}km</b></span>
-        <span><small>시간 범위</small><b>${routeDurationRange(forecast.minutes)}</b></span>
-        <span><small>연료 범위</small><b>${routeFuelRange(selected.fuel)}</b></span>
+        <span><small>시간</small><b>${routeMinuteRange(forecast.minutes)}</b></span>
+        <span><small>소모 연료</small><b>${routeFuelRange(selected.fuel)}</b></span>
+        <span><small>보유 연료</small><b>${Math.floor(S.fuel)}L</b></span>
+        <span><small>차체</small><b>${Math.ceil(S.van)}%</b></span>
+        <span><small>식량·물</small><b>식량 ${S.food} · 물 ${S.water}</b></span>
       </div>`;
     const departButton=canDepart
       ?`<button type="button" data-nav-depart="${selected.nb.id}">출발 <span aria-hidden="true">→</span></button>`
@@ -1184,9 +1202,8 @@ const UI = (()=>{
         <section class="nav-route-decision" aria-live="polite">
           <div class="nav-destination-head"><span>목적지 ${String(routeModels.indexOf(selected)+1).padStart(2,'0')} / ${String(routeModels.length).padStart(2,'0')}</span>
             <div class="nav-destination-tabs" role="group" aria-label="목적지 선택">${destinationTabs}</div></div>
-          <div class="nav-destination-title"><h3>${esc(node.name)}</h3></div>
+          <div class="nav-destination-title"><h3>${esc(node.name)}</h3><small>${esc(destinationType)}</small></div>
           <div class="nav-console-body">${summary}</div>
-          <div class="nav-time"><b>현재 연료 ${Math.floor(S.fuel)}L</b><span>식량 ${S.food} · 물 ${S.water}</span></div>
           <div class="nav-console-actions">
             <button type="button" data-nav-cycle aria-label="다른 목적지 선택" ${routeModels.length<2?'disabled':''}>다른 길</button>
             ${departButton}
@@ -1217,7 +1234,7 @@ const UI = (()=>{
     const xs=nodes.map(row=>row.node.x),ys=nodes.map(row=>row.node.y);
     let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
     if(maxX-minX<12){ minX-=6;maxX+=6; } if(maxY-minY<12){ minY-=6;maxY+=6; }
-    const padX=Math.max(24,width*.1),padY=Math.max(24,height*.12);
+    const padX=width<160?Math.max(30,width*.26):Math.max(24,width*.1),padY=Math.max(24,height*.12);
     const point=id=>{
       const node=D.nodes[id];
       return {x:padX+(node.x-minX)/(maxX-minX)*(width-padX*2),y:padY+(node.y-minY)/(maxY-minY)*(height-padY*2)};
@@ -1243,7 +1260,9 @@ const UI = (()=>{
       if(isCurrent||isSelected){ ctx.strokeStyle=ctx.fillStyle;ctx.globalAlpha=.38;ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,10,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1; }
       if(isCurrent||isSelected||isChoice){
         ctx.fillStyle=isCurrent?'#79e9d6':isSelected?'#ffc16b':'#91a8bd';ctx.font='700 10px monospace';
-        const label=isCurrent?'현재 '+node.name:node.name;
+        const compact=width<160;
+        if(compact&&!isCurrent) return;
+        const label=compact?'현재 위치':isCurrent?'현재 '+node.name:node.name;
         const align=p.x>width*.68?'right':'left';ctx.textAlign=align;
         ctx.fillText(label,p.x+(align==='right'?-8:8),p.y-8);ctx.textAlign='left';
       }
@@ -1524,12 +1543,9 @@ const UI = (()=>{
       <div class="journey-section-head"><span><small>MAP NOTE</small><b>김천의 갈림길</b></span><em>도착 뒤 선택</em></div>
       <p>김천에서 고른 길은 청주까지 이어진다. 두 길의 현장 상황은 김천에 도착한 뒤 지도에서 확인한다.</p>
     </section>`:'';
-    const visibleLocalActions=localActions.slice(0,2), hiddenLocalActions=localActions.slice(2);
-    const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물며 할 일">
-      <section class="route-console-screen journey-local-screen stop-action-console">
-        <div class="journey-mode-heading"><span><small>STAY & ACT</small><b>머물며 할 일</b><p>출발 전에 이 장소에서 시간을 쓰는 행동이다.</p></span><em>${n.stl?'정착지·주변':'정차 중'}</em></div>
-        <div class="stop-action-grid local-actions">${visibleLocalActions.join('')}</div>
-        ${hiddenLocalActions.length?`<button type="button" class="console-more-actions" data-local-more>더 할 일 ${hiddenLocalActions.length}<span>전체 보기 →</span></button>`:''}
+    const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물기">
+      <section class="route-console-screen journey-local-screen stop-action-console local-action-count-${Math.min(localActions.length,5)}">
+        <div class="stop-action-grid local-actions">${localActions.join('')}</div>
       </section></div>`:'<div class="route-empty">지금 이곳에서 할 수 있는 일이 없다.</div>';
     const routeSection=`<div id="journey-mode-route" role="tabpanel" aria-label="목적지 네비게이션">${routeConsoleHtml(routeModels)}</div>`;
     const activeMode=journeyConsoleMode==='route'?routeSection:localSection;
@@ -1537,12 +1553,6 @@ const UI = (()=>{
     const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}${journeyConsoleMode==='route'?routeRumors:''}`;
     p.innerHTML=h;
     wireStopActionButtons(p,n);
-    const localMore=p.querySelector('[data-local-more]'); if(localMore) localMore.onclick=()=>{
-      const body=$('#local-actions-body');
-      body.innerHTML=`<section class="console-detail-section"><header><small>MORE ACTIONS</small><b>${esc(n.name)}에서 더 할 일</b><p>현재 화면에 다 담지 않은 행동이다.</p></header><div class="stop-action-grid local-actions">${hiddenLocalActions.join('')}</div></section>`;
-      openModal('#ovl-local-actions','[data-a]');
-      wireStopActionButtons(body,n,'#ovl-local-actions');
-    };
     wireContext(p);
     wireJourneyGuide(p);
     wireJourneyMode(p);
