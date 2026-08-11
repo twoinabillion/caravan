@@ -150,7 +150,7 @@ ${notes}`;
   async function prefetchBanter(){
     if(!ready()||banterBusy||banterQ.length>=3||!S.party.length) return;
     banterBusy=true;
-    const sys=D.worldBible+`\n[임무] 이동 중인 봉고차 안의 짧은 잡담/정경 3개를 생성. who는 ${['나','sys',...S.party].join('/')} 중 하나 (sys=정경묘사). text는 1문장, 캐릭터 말투 유지. 최근 일지의 사건을 자연스럽게 언급해도 좋다.`;
+    const sys=D.worldBible+`\n[임무] 이동 중인 달구지 안의 짧은 잡담/정경 3개를 생성. who는 ${['나','sys',...S.party].join('/')} 중 하나 (sys=정경묘사). text는 1문장, 캐릭터 말투 유지. 최근 일지의 사건을 자연스럽게 언급해도 좋다.`;
     const j=await call(sys, ctx()+'\n\n잡담 3개.', BT_SCHEMA, 500, 'low');
     banterBusy=false;
     if(j&&j.lines) j.lines.slice(0,3).forEach(l=>{

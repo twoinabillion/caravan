@@ -1,0 +1,9 @@
+# Keep the review record and final comparison boards in Git.
+# Generated source PNGs and intermediate contact sheets remain local working files.
+*
+!.gitignore
+!audit.md
+!20-final-people-comparison.jpg
+!21-final-vehicle-comparison.jpg
+!22-final-world-comparison.jpg
+!23-final-dalguji-comparison.jpg

@@ -1,5 +1,10 @@
 # 시네마틱 장면 생성 가이드
 
+> **현재 필수 레퍼런스 (2026-08-11):** `assets/reference/people-canon-2026-08-11.png`,
+> `visual-canon-2026-08-11.png`, `world-canon-2026-08-11.png`,
+> `dalguji-technical-canon-2026-08-11.webp`. 아래에 언급된 과거 장면은 더 이상
+> 인물·차량 정본이 아니며, 새 장면은 [`visual-canon-2026-08-11.md`](visual-canon-2026-08-11.md)를 우선한다.
+
 신규 장면은 Codex 내장 `imagegen`으로 생성했다. 기존
 `grandfather-garage.jpg`, `gwangju-market.jpg`, `seoul-han.jpg`,
 `perimeter-walker.jpg`를 **스타일 레퍼런스**로만 사용했으며, 생성된 원본은

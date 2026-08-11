@@ -2,12 +2,13 @@
 
 This is the source of truth for every cinematic scene that shows a recruitable
 companion. The canonical references are the portrait assets in
-`assets/portraits/`. A scene is not approved because it has a similar mood;
+`assets/portraits/` and `assets/reference/people-canon-2026-08-11.png`. A scene is not approved because it has a similar mood;
 the person must still be identifiable at a glance.
 
 ## Non-negotiable generation workflow
 
-1. Attach `assets/portraits/{id}.png` as a character-reference image.
+1. Attach `assets/reference/people-canon-2026-08-11.png` and the matching
+   `assets/portraits/{id}.png` as character-reference images.
 2. Include every listed identity anchor in the prompt.
 3. Preserve the person across first meeting, task, temporary travel, joining,
    settlement, combat, and ending scenes. Dirt, rain, injury, and lighting may
@@ -21,12 +22,27 @@ the person must still be identifiable at a glance.
 
 | Companion | Required identity anchors | Do not change |
 |---|---|---|
-| Minji | 17; tied, messy black hair; round mechanic goggles on forehead; brown work jacket; gloves; red sleeve patch | age, long loose hair, clean uniform, missing goggles |
-| Park | 60s; short gray hair; rectangular glasses; blue-gray quilted medical jacket; worn medical sleeve patch | age, white coat, missing glasses, military uniform |
-| Kangwoo | 30s; close-cropped black hair; square guarded expression; worn khaki guard jacket; shoulder rank patch | hairstyle, facial hair, helmet, futuristic armor |
-| Leo | late 20s; black patterned bandana; long black hair; patched navy denim jacket; guitar | hat/hair swap, missing guitar, polished rock-star outfit |
-| Jaeyi | early 20s; short messy brown hair; olive work vest; worn shirt; small scavenger pins | long hair, tactical uniform, glamorous makeup, new clothing |
-| Eunsu | 30s; chin-length black hair; single-ear comms piece; dark gray control-room jacket; round comms patch | long hair, bright outfit, missing comms piece, cyberpunk hardware |
+| Daun | adult Korean man; worn olive cap; short messy black hair; dark weathered work jacket and trousers; shoulder bag | missing cap, long hair, bright new clothes, heroic armor |
+| Minji | young Korean woman; black ponytail; round mechanic goggles on head; oil-stained dark mechanic workwear; gloves and tool pouch | child styling, long loose hair, brown fashion jacket, clean uniform, missing goggles |
+| Park Seong | older Korean man; neat gray hair; round metal glasses; gray sweater vest over shirt; compact medical case | young doctor, rectangular glasses, white coat, military uniform, missing case |
+| Kangwoo | adult Korean man; buzzed black hair; guarded angular expression; faded olive military/work jacket | long hair, large beard, helmet, futuristic armor |
+| Leo | adult Korean man; patterned dark bandana; long wavy black hair; worn dark-blue denim jacket; acoustic guitar | hat/hair swap, missing guitar, polished rock-star outfit |
+| Bori | shaggy tan medium dog; dark eyes; black nose; worn red neckerchief | breed/coat change, short hair, white coat, missing neckerchief |
+| Jaeyi | young Korean woman; short messy brown hair; worn mustard work jacket; dark work trousers and gloves | long hair, olive vest, tactical uniform, glamorous makeup, new clothing |
+| Eunsu | adult Korean woman; straight jaw-length black bob; large over-ear headset; charcoal hooded technical jacket | long hair, bright outfit, small earpiece, missing headset, cyberpunk hardware |
+
+## Vehicle and interior lock
+
+- If a companion scene contains the party vehicle, also attach
+  `assets/reference/visual-canon-2026-08-11.png` and
+  `assets/reference/dalguji-technical-canon-2026-08-11.webp`.
+- The Dalguji is always the same warm gray-beige Korean cab-over one-ton truck
+  with a separate rectangular camper box, individual amber windows, rear
+  double doors, black/olive roof luggage, two red fuel cans, antenna, and one
+  faded white X. Never substitute a panel van, blue truck, pickup camper, bus,
+  American RV, or integrated step-van.
+- Interior frames use the same narrow wood-and-metal living box: rear bunk,
+  map/work table, radio, practical storage, and amber lantern.
 
 ## Character-scene composition
 

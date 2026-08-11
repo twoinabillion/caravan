@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-11T03:10:51.033Z",
+  "generatedAt": "2026-08-11T08:32:27.501Z",
   "html": {
-    "bytes": 37805557,
+    "bytes": 37339437,
     "warnBytes": 32000000,
     "maxBytes": 38000000
   },
   "embedded": {
     "files": 218,
-    "bytes": 22331975,
+    "bytes": 21979137,
     "categories": {
       "audio": {
         "files": 45,
@@ -21,13 +21,13 @@
       },
       "scene": {
         "files": 138,
-        "bytes": 11296499,
-        "encodedBytes": 15062212
+        "bytes": 10939640,
+        "encodedBytes": 14586408
       },
       "portrait": {
         "files": 31,
-        "bytes": 438486,
-        "encodedBytes": 584696
+        "bytes": 442507,
+        "encodedBytes": 590056
       }
     }
   },
@@ -83,20 +83,38 @@
     {
       "path": "assets/scenes/miryang-market-hub.jpg",
       "mime": "image/jpeg",
-      "bytes": 388152,
-      "encodedBytes": 517536
+      "bytes": 250564,
+      "encodedBytes": 334088
+    },
+    {
+      "path": "assets/intro/12-mother-keepsakes-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 208954,
+      "encodedBytes": 278608
     },
     {
       "path": "assets/intro/08-departure-choice-v3.jpg",
       "mime": "image/jpeg",
-      "bytes": 198424,
-      "encodedBytes": 264568
+      "bytes": 201780,
+      "encodedBytes": 269040
     },
     {
       "path": "assets/intro/06-years-together-v2.jpg",
       "mime": "image/jpeg",
-      "bytes": 187162,
-      "encodedBytes": 249552
+      "bytes": 197472,
+      "encodedBytes": 263296
+    },
+    {
+      "path": "assets/intro/06-camper-conversion-v3.jpg",
+      "mime": "image/jpeg",
+      "bytes": 195684,
+      "encodedBytes": 260912
+    },
+    {
+      "path": "assets/intro/16-workshop-shutter-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 189654,
+      "encodedBytes": 252872
     },
     {
       "path": "assets/intro/15-appeal-denied.jpg",
@@ -105,52 +123,34 @@
       "encodedBytes": 245524
     },
     {
+      "path": "assets/intro/07-envelope-signal-v3.jpg",
+      "mime": "image/jpeg",
+      "bytes": 179794,
+      "encodedBytes": 239728
+    },
+    {
       "path": "assets/intro/14-dock-aid-v2.jpg",
       "mime": "image/jpeg",
       "bytes": 173117,
       "encodedBytes": 230824
     },
     {
-      "path": "assets/intro/06-camper-conversion-v3.jpg",
+      "path": "assets/intro/13-dashboard-module.jpg",
       "mime": "image/jpeg",
-      "bytes": 170496,
-      "encodedBytes": 227328
+      "bytes": 169135,
+      "encodedBytes": 225516
     },
     {
-      "path": "assets/intro/16-workshop-shutter-v2.jpg",
+      "path": "assets/intro/01-passenger-seat.jpg",
       "mime": "image/jpeg",
-      "bytes": 163126,
-      "encodedBytes": 217504
-    },
-    {
-      "path": "assets/intro/07-envelope-signal-v3.jpg",
-      "mime": "image/jpeg",
-      "bytes": 158530,
-      "encodedBytes": 211376
+      "bytes": 163873,
+      "encodedBytes": 218500
     },
     {
       "path": "assets/intro/11-current-expulsion-v2.jpg",
       "mime": "image/jpeg",
       "bytes": 152361,
       "encodedBytes": 203148
-    },
-    {
-      "path": "assets/intro/12-mother-keepsakes-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 147955,
-      "encodedBytes": 197276
-    },
-    {
-      "path": "assets/scenes/miryang-market.jpg",
-      "mime": "image/jpeg",
-      "bytes": 138178,
-      "encodedBytes": 184240
-    },
-    {
-      "path": "assets/scenes/settlement-road-echo.jpg",
-      "mime": "image/jpeg",
-      "bytes": 129648,
-      "encodedBytes": 172864
     }
   ]
 }

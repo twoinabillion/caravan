@@ -146,12 +146,19 @@ const sceneFormatFor = key => {
   if(/^(combat-|roadcrew-|route-)/.test(key)) return 'action';
   return 'place';
 };
+const sceneUsesDalguji = key => /^(busan-departure|full-house-meal|generic-|combat-|roadcrew-|route-|settlement-|recruit-|intro-(passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
 D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
   const companion=sceneCompanionId(key);
+  const vehicleRefs=sceneUsesDalguji(key)?(D.dalgujiVisual.refs||[]):[];
   return [key,{
     format:sceneFormatFor(key),
     companions:companion?[companion]:[],
     reference:companion?`assets/portraits/${companion}.png`:'',
+    references:[
+      ...(companion?['assets/reference/people-canon-2026-08-11.png',`assets/portraits/${companion}.png`]:[]),
+      ...vehicleRefs
+    ],
+    vehicleReference:vehicleRefs,
     size:'768x432',
     status:'approved'
   }];

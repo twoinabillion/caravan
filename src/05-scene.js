@@ -569,7 +569,9 @@ const SCENE = (()=>{
   function van(roadY,speed,dark,wx,upOverride,displayScale=1){
     const up=upOverride||(S? (S.up||{}):{});
     const build=vanBuildStage(up);
-    const bodyL=build.bodyL, bodyH=build.bodyH, cabL=17, cabH=25;
+    /* 캐논 비율: 짧은 한국형 캡오버 운전석 + 그보다 긴 독립 생활 박스.
+       운전석과 거주구가 한 덩어리인 RV/패널 밴 실루엣으로 돌아가지 않는다. */
+    const bodyL=build.bodyL, bodyH=build.bodyH, cabL=25, cabH=22;
     const cabX=P(W*0.53), vx=cabX-bodyL;
     const baseY=roadY+P((H-roadY)*0.42);
     /* 정차 화면에서는 달구지가 주인공이다. 차축과 노면 접점을 고정한 채 키워
@@ -640,11 +642,19 @@ const SCENE = (()=>{
       line(ux+2,vy-bodyH-4,ux+6,vy-bodyH);
       line(ux+uw-3,vy-bodyH-4,ux+uw-7,vy-bodyH);
     }
-    /* 지붕짐: 스페어 + 제리캔 (+업그레이드 장비) */
-    ctx.fillStyle='#23262e'; circ(vx+bodyL-20,vy-bodyH-7,4);
-    ctx.fillStyle='#3d414f'; circ(vx+bodyL-20,vy-bodyH-7,2);
-    ctx.fillStyle='#943b32'; ctx.fillRect(vx+32,vy-bodyH-9,7,5);
-    ctx.fillStyle='#b8443a'; ctx.fillRect(vx+32,vy-bodyH-9,7,1);
+    /* 지붕짐은 개조 단계와 무관하게 같은 차를 알아보게 하는 고정 표식이다.
+       검은 예비 타이어·올리브 짐가방·빨간 연료통 두 개를 캡 가까이에 묶는다. */
+    const rackRight=cabX-7;
+    ctx.fillStyle='#23262e'; circ(rackRight-14,vy-bodyH-7,4);
+    ctx.fillStyle='#3d414f'; circ(rackRight-14,vy-bodyH-7,2);
+    ctx.fillStyle='#514d3d'; ctx.fillRect(rackRight-29,vy-bodyH-9,12,5);
+    ctx.fillStyle='#6b634c'; ctx.fillRect(rackRight-28,vy-bodyH-9,10,1);
+    for(let rc=0;rc<2;rc++){
+      const rx=rackRight-9+rc*5;
+      ctx.fillStyle='#8f3730'; ctx.fillRect(rx,vy-bodyH-10,4,6);
+      ctx.fillStyle='#b4483d'; ctx.fillRect(rx,vy-bodyH-10,4,1);
+      ctx.fillStyle='#512925'; ctx.fillRect(rx+1,vy-bodyH-8,2,3);
+    }
     if(up.solar){ /* 태양광 패널 — 텃밭과 함께 달면 앞쪽 랙으로 이동 */
       const panelX=vx+(up.garden?32:7), panelW=Math.min(up.garden?18:23,bodyL-(panelX-vx)-9);
       ctx.fillStyle='#274e74'; ctx.fillRect(panelX,vy-bodyH-8,panelW,4);
@@ -723,7 +733,7 @@ const SCENE = (()=>{
       ctx.fillStyle='#c9a24a'; ctx.fillRect(vx+bodyL+cabL+4,vy+4,1,1); // 훅
     }
     if(up.mudtires){ /* 험로 타이어 펜더 플레어 */
-      const rearAxle=cabX-49, frontAxle=cabX+5;
+      const rearAxle=cabX-(45+build.lv*3), frontAxle=cabX+13;
       ctx.fillStyle='#3a3f4c';
       ctx.fillRect(rearAxle-6,vy+3,13,2); ctx.fillRect(frontAxle-6,vy+3,13,2);
     }
@@ -763,16 +773,18 @@ const SCENE = (()=>{
         ctx.strokeStyle='#4c4438'; line(vx-15,vy-bodyH+5, vx-15,baseY+7);   // 지지대
       }
     }
-    /* ── 캡 ── */
-    ctx.fillStyle='#988e7c';
+    /* ── 독립 캡오버 운전석 ── */
+    ctx.fillStyle='#91897d';
     ctx.beginPath();
-    ctx.moveTo(vx+bodyL,vy-cabH+5);
-    ctx.lineTo(vx+bodyL+cabL-6,vy-cabH+6);
-    ctx.lineTo(vx+bodyL+cabL-1,vy-cabH+13);
-    ctx.lineTo(vx+bodyL+cabL,vy+1);
+    ctx.moveTo(vx+bodyL+1,vy-cabH+2);
+    ctx.lineTo(vx+bodyL+cabL-7,vy-cabH+2);
+    ctx.lineTo(vx+bodyL+cabL-1,vy-cabH+8);
+    ctx.lineTo(vx+bodyL+cabL,vy+2);
     ctx.lineTo(vx+bodyL,vy+1); ctx.closePath(); ctx.fill();
     ctx.fillStyle='#6f6250'; ctx.fillRect(vx+bodyL,vy-6,cabL,11);
     ctx.fillStyle='#4c4438'; ctx.fillRect(vx+bodyL,vy+3,cabL,2);
+    /* 검은 세로 틈이 생활 박스와 캡을 확실히 분리한다. */
+    ctx.fillStyle='#37332d'; ctx.fillRect(cabX-1,vy-cabH+1,2,cabH+3);
     if(up.armor){ /* 장갑판은 차체 하단을 한 덩어리로 바꿔 원정형 실루엣을 만든다 */
       ctx.fillStyle='#59616f';
       ctx.fillRect(vx+2,vy-7,bodyL-4,10);
@@ -782,41 +794,57 @@ const SCENE = (()=>{
       ctx.strokeStyle='rgba(30,34,42,0.65)';
       line(vx+bodyL-1,vy-7,vx+bodyL-1,vy+3);
     }
-    /* 보닛 */
-    ctx.fillStyle='#877d6b'; ctx.fillRect(vx+bodyL+cabL-6,vy-cabH+13,6,4);
-    /* 앞유리 + 운전자 */
-    ctx.fillStyle= dark>0.4?'rgba(150,180,215,0.32)':'rgba(185,210,232,0.6)';
+    /* 앞유리와 옆문 창. 앞바퀴 위까지 선 캡오버 전면이라 긴 보닛이 없다. */
+    const cabGlass=dark>0.4?'rgba(132,157,180,0.38)':'rgba(169,188,201,0.62)';
+    ctx.fillStyle=cabGlass;
     ctx.beginPath();
-    ctx.moveTo(vx+bodyL+1,vy-cabH+7);
-    ctx.lineTo(vx+bodyL+cabL-7,vy-cabH+8);
-    ctx.lineTo(vx+bodyL+cabL-4,vy-cabH+14);
-    ctx.lineTo(vx+bodyL+1,vy-cabH+14); ctx.closePath(); ctx.fill();
+    ctx.moveTo(cabX+3,vy-cabH+5);
+    ctx.lineTo(cabX+cabL-11,vy-cabH+5);
+    ctx.lineTo(cabX+cabL-9,vy-cabH+13);
+    ctx.lineTo(cabX+3,vy-cabH+13); ctx.closePath(); ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(cabX+cabL-9,vy-cabH+5);
+    ctx.lineTo(cabX+cabL-3,vy-cabH+9);
+    ctx.lineTo(cabX+cabL-3,vy-cabH+14);
+    ctx.lineTo(cabX+cabL-7,vy-cabH+13); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle='#4b463d'; line(cabX+2,vy-cabH+15,cabX+2,vy+1);
+    line(cabX+cabL-9,vy-cabH+5,cabX+cabL-7,vy-cabH+14);
     /* 운전사는 거주구 머리 줄에 섞지 않고 앞유리 안에 따로 앉는다. */
     ctx.fillStyle='rgba(20,23,31,0.78)';
-    ctx.fillRect(cabX+4,vy-cabH+10,4,4);
-    ctx.fillRect(cabX+5,vy-cabH+8,3,3);
+    ctx.fillRect(cabX+9,vy-cabH+10,4,4);
+    ctx.fillRect(cabX+10,vy-cabH+8,3,3);
     /* 사이드미러 */
-    ctx.fillStyle='#3c372f'; ctx.fillRect(vx+bodyL+cabL-2,vy-cabH+8,2,3);
+    ctx.fillStyle='#3c372f'; ctx.fillRect(vx+bodyL+cabL-1,vy-cabH+8,3,2);
+    /* 전면 그릴과 고정된 흰 X: 증축해도 항상 같은 운전석에 남는다. */
+    ctx.fillStyle='#49463f'; ctx.fillRect(cabX+cabL-2,vy-6,2,6);
+    ctx.fillStyle='#2f302d';
+    for(let gy=vy-5;gy<vy;gy+=2) ctx.fillRect(cabX+cabL-2,gy,2,1);
+    ctx.strokeStyle='rgba(220,218,205,0.78)'; ctx.lineWidth=1.5;
+    line(cabX+5,vy-7,cabX+11,vy); line(cabX+11,vy-7,cabX+5,vy);
+    ctx.lineWidth=1;
     /* ── 옆창 (거주구) : 따뜻한 빛 + 탑승자 ── */
     const winY=vy-bodyH+5, winH=9;
-    ctx.fillStyle= dark>0.35? '#f5b869':'rgba(170,198,220,0.55)';
-    ctx.fillRect(vx+7,winY,bodyL-16,winH);
-    if(dark>0.35){ ctx.fillStyle='rgba(255,235,190,0.5)'; ctx.fillRect(vx+7,winY,bodyL-16,2); }
+    const winX=vx+7, winW=bodyL-16;
+    const winPanels=Math.min(6,3+build.lv);
+    const winGap=2, panelW=Math.max(4,Math.floor((winW-winGap*(winPanels-1))/winPanels));
+    ctx.fillStyle= dark>0.35? '#e6a24e':'rgba(151,174,188,0.58)';
+    for(let wp=0;wp<winPanels;wp++){
+      const px=P(winX+wp*(panelW+winGap));
+      ctx.fillRect(px,winY,panelW,winH);
+      if(dark>0.35){ ctx.fillStyle='rgba(255,226,168,0.5)'; ctx.fillRect(px+1,winY+1,Math.max(1,panelW-2),1);
+        ctx.fillStyle='#e6a24e'; }
+    }
     const curtained = up.curtain && dark>0.35 && speed<=0;
     if(curtained){ /* 암막 커튼 — 불빛이 새지 않는다 */
-      ctx.fillStyle='#453a4a'; ctx.fillRect(vx+7,winY,bodyL-16,winH-1);
-      ctx.fillStyle='rgba(255,220,160,0.5)'; ctx.fillRect(vx+7,winY+winH-1,bodyL-16,1); // 틈새 빛
+      for(let wp=0;wp<winPanels;wp++){
+        const px=P(winX+wp*(panelW+winGap));
+        ctx.fillStyle='#453a4a'; ctx.fillRect(px,winY,panelW,winH-1);
+        ctx.fillStyle='rgba(255,220,160,0.5)'; ctx.fillRect(px,winY+winH-1,panelW,1);
+      }
     }
     if(up.fridge && !curtained){ /* 냉장 박스 — 창문 너머로 보임 */
       ctx.fillStyle='#dfe5ea'; ctx.fillRect(vx+17,winY+3,4,5);
       ctx.fillStyle='#9fc3d8'; ctx.fillRect(vx+18,winY+4,1,1);
-    }
-    ctx.strokeStyle='#4c4438';
-    const winX=vx+7, winW=bodyL-16;
-    const winPanels=Math.min(6,2+build.lv);
-    for(let wp=1;wp<winPanels;wp++){
-      const wxp=P(winX+winW*wp/winPanels);
-      line(wxp,winY,wxp,winY+winH);
     }
     if(up.kitchen && speed<=0){ /* 간이 주방 — 정차 시 조리 해치 열림 */
       ctx.fillStyle='#877d6b'; ctx.fillRect(vx+26,vy-11,10,1);      // 열린 판(선반)
@@ -915,9 +943,6 @@ const SCENE = (()=>{
     ctx.fillStyle='rgba(122,70,40,0.55)';
     ctx.fillRect(vx+3,vy-2,6,3); ctx.fillRect(vx+bodyL-9,vy-bodyH+9,3,5);
     ctx.fillRect(vx+bodyL+4,vy+1,5,2);
-    /* 덕트테이프 X 패치 */
-    ctx.strokeStyle='rgba(190,190,180,0.5)';
-    line(vx+46,vy-4,vx+52,vy+2); line(vx+52,vy-4,vx+46,vy+2);
     /* 뒷사다리 */
     ctx.strokeStyle='#4c4438';
     line(vx+2,vy-bodyH+2,vx+2,vy+2);
@@ -939,7 +964,7 @@ const SCENE = (()=>{
     ctx.closePath(); ctx.fill();
     /* 바퀴 */
     const spin=worldX*0.3;
-    const rearAxle=cabX-49, frontAxle=cabX+5;
+    const rearAxle=cabX-(45+build.lv*3), frontAxle=cabX+13;
     [[rearAxle,bnc],[frontAxle,bnc2]].forEach(wj=>{
       const wx0=wj[0], wy0=P(baseY+6);
       const wr=up.mudtires?6.7:5.5;
@@ -1361,7 +1386,7 @@ const SCENE = (()=>{
     c.fillStyle='rgba(222,206,140,0.35)';
     for(let x=0;x<w;x+=22) c.fillRect(P(x-(tt*18%22)),P(h*0.71),12,1);
     /* 차 (크게) */
-    const vx=w*0.3, vy=P(h*0.66), BL=76,BH=30,CL=20;
+    const vx=w*0.27, vy=P(h*0.66), BL=76,BH=30,CL=28;
     const gl=0.75+0.25*Math.sin(tt*1.8);
     c.fillStyle='rgba(0,0,0,0.55)'; c.beginPath(); c.ellipse(vx+BL*0.6,vy+10,BL*0.62,3,0,0,7); c.fill();
     c.fillStyle='#8d8474'; c.fillRect(P(vx),vy-BH,BL,BH-8);
@@ -1370,26 +1395,40 @@ const SCENE = (()=>{
     c.fillStyle='#5d564a'; c.fillRect(P(vx+8),vy-BH-5,BL-30,5);
     c.strokeStyle='#3c372f'; c.lineWidth=1;
     c.beginPath(); c.moveTo(vx+6,vy-BH-6); c.lineTo(vx+BL-13,vy-BH-6); c.stroke();
-    c.fillStyle='#943b32'; c.fillRect(P(vx+38),vy-BH-10,9,6);
-    c.fillStyle='#23262e'; c.beginPath(); c.arc(vx+BL-24,vy-BH-8,5,0,7); c.fill();
-    c.fillStyle='#988e7c';
-    c.beginPath(); c.moveTo(vx+BL,vy-BH+6); c.lineTo(vx+BL+CL-7,vy-BH+7); c.lineTo(vx+BL+CL,vy+1); c.lineTo(vx+BL,vy+1); c.closePath(); c.fill();
+    c.fillStyle='#514d3d'; c.fillRect(P(vx+BL-31),vy-BH-10,13,6);
+    c.fillStyle='#23262e'; c.beginPath(); c.arc(vx+BL-36,vy-BH-8,5,0,7); c.fill();
+    for(let rc=0;rc<2;rc++){
+      c.fillStyle='#8f3730'; c.fillRect(P(vx+BL-16+rc*6),vy-BH-11,5,7);
+      c.fillStyle='#b4483d'; c.fillRect(P(vx+BL-16+rc*6),vy-BH-11,5,1);
+    }
+    c.fillStyle='#91897d';
+    c.beginPath(); c.moveTo(vx+BL+1,vy-BH+8); c.lineTo(vx+BL+CL-8,vy-BH+8);
+    c.lineTo(vx+BL+CL-1,vy-BH+15); c.lineTo(vx+BL+CL,vy+1);
+    c.lineTo(vx+BL,vy+1); c.closePath(); c.fill();
     c.fillStyle='#6f6250'; c.fillRect(P(vx+BL),vy-8,CL-1,10);
-    c.fillStyle='#827765'; c.fillRect(P(vx+BL+CL-7),vy-BH+17,7,5);
-    c.fillStyle=`rgba(245,184,105,${0.9*gl})`; c.fillRect(P(vx+9),vy-BH+6,BL-20,11);
-    c.fillStyle='rgba(255,235,190,0.5)'; c.fillRect(P(vx+9),vy-BH+6,BL-20,2);
+    c.fillStyle='#37332d'; c.fillRect(P(vx+BL-1),vy-BH+7,2,BH-5);
+    c.fillStyle=`rgba(230,162,78,${0.9*gl})`;
+    for(let wi=0;wi<3;wi++){
+      const px=P(vx+9+wi*20);
+      c.fillRect(px,vy-BH+6,16,11);
+      c.fillStyle='rgba(255,235,190,0.5)'; c.fillRect(px+1,vy-BH+7,14,2);
+      c.fillStyle=`rgba(230,162,78,${0.9*gl})`;
+    }
     c.strokeStyle='#4c4438'; c.lineWidth=1;
-    c.beginPath(); c.moveTo(vx+30,vy-BH+6); c.lineTo(vx+30,vy-BH+17); c.stroke();
-    c.beginPath(); c.moveTo(vx+51,vy-BH+6); c.lineTo(vx+51,vy-BH+17); c.stroke();
     c.fillStyle='rgba(125,153,179,0.55)';
-    c.beginPath(); c.moveTo(vx+BL+2,vy-BH+8); c.lineTo(vx+BL+CL-8,vy-BH+9);
-    c.lineTo(vx+BL+CL-4,vy-BH+16); c.lineTo(vx+BL+2,vy-BH+16); c.closePath(); c.fill();
-    c.fillStyle='#3c372f'; c.fillRect(P(vx+BL+CL-2),vy-BH+10,2,3);
-    c.fillStyle='#0e1016'; c.beginPath(); c.arc(vx+16,vy+6,6.5,0,7); c.arc(vx+BL+6,vy+6,6.5,0,7); c.fill();
-    c.fillStyle='#2b2f3a'; c.beginPath(); c.arc(vx+16,vy+6,3.6,0,7); c.arc(vx+BL+6,vy+6,3.6,0,7); c.fill();
+    c.beginPath(); c.moveTo(vx+BL+4,vy-BH+12); c.lineTo(vx+BL+CL-12,vy-BH+12);
+    c.lineTo(vx+BL+CL-9,vy-BH+20); c.lineTo(vx+BL+4,vy-BH+20); c.closePath(); c.fill();
+    c.fillStyle='rgba(125,153,179,0.55)';
+    c.beginPath(); c.moveTo(vx+BL+CL-10,vy-BH+12); c.lineTo(vx+BL+CL-3,vy-BH+16);
+    c.lineTo(vx+BL+CL-3,vy-BH+21); c.lineTo(vx+BL+CL-8,vy-BH+20); c.closePath(); c.fill();
+    c.fillStyle='#3c372f'; c.fillRect(P(vx+BL+CL-1),vy-BH+15,3,2);
+    c.fillStyle='#49463f'; c.fillRect(P(vx+BL+CL-2),vy-8,2,7);
+    c.strokeStyle='rgba(220,218,205,0.78)'; c.lineWidth=1.5;
+    c.beginPath(); c.moveTo(vx+BL+6,vy-8); c.lineTo(vx+BL+13,vy);
+    c.moveTo(vx+BL+13,vy-8); c.lineTo(vx+BL+6,vy); c.stroke(); c.lineWidth=1;
+    c.fillStyle='#0e1016'; c.beginPath(); c.arc(vx+18,vy+6,6.5,0,7); c.arc(vx+BL+14,vy+6,6.5,0,7); c.fill();
+    c.fillStyle='#2b2f3a'; c.beginPath(); c.arc(vx+18,vy+6,3.6,0,7); c.arc(vx+BL+14,vy+6,3.6,0,7); c.fill();
     c.fillStyle='#6b4a35'; c.fillRect(P(vx+3),vy-5,8,3); c.fillRect(P(vx+BL-10),vy-BH+13,4,5);
-    c.strokeStyle='rgba(190,190,180,0.5)';
-    c.beginPath(); c.moveTo(vx+56,vy-6); c.lineTo(vx+63,vy+1); c.moveTo(vx+63,vy-6); c.lineTo(vx+56,vy+1); c.stroke();
     c.strokeStyle='#4c4438';
     c.beginPath(); c.moveTo(vx+3,vy-BH+2); c.lineTo(vx+3,vy+1);
     for(let ly=vy-BH+5;ly<vy;ly+=5){ c.moveTo(vx+1,ly); c.lineTo(vx+5,ly); } c.stroke();
