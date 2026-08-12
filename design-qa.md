@@ -1,4 +1,60 @@
-# Locked Game Viewport + Road Tools — Design QA
+# Destination Console V3 — Design QA
+
+## Comparison target
+
+- Source visual truth: `/Users/sang/Desktop/Caravan 목적지 UI 3가지 시안/3-세로-로커와-캐러셀.png` — 938×1676 px.
+- Browser-rendered implementation: `audits/destination-console-v3-2026-08-12/01-route-primary.png` — 480×860 px.
+- Secondary destination state: `audits/destination-console-v3-2026-08-12/02-route-secondary.png`.
+- Stay state: `audits/destination-console-v3-2026-08-12/03-stay-mode.png`.
+- Viewport: 480×860 CSS px at `deviceScaleFactor: 1`.
+- Density normalization: source resized and center-cropped to 480×860; implementation captured at native 480×860.
+- State: Day 1, 부산 감천 부두, 목적지 active, 양산 고가차도 selected.
+
+## Evidence
+
+- Full-view comparison: `audits/destination-console-v3-2026-08-12/04-source-vs-implementation.png`.
+- Focused console comparison: `audits/destination-console-v3-2026-08-12/07-console-focused-comparison.png`.
+
+## Findings
+
+- No actionable P0/P1/P2 differences remain.
+- Fonts and typography: Korean sans headings and monospaced telemetry preserve the selected hierarchy. Real destination names and values remain legible at 480×860.
+- Spacing and layout rhythm: square housing, left rocker, live map, summary, centered carousel, departure action, and dock fit the locked viewport. Console width is 456 px, live screen width 337 px, and rocker targets are over 44 px tall.
+- Colors and visual tokens: amber selection/action, teal current position/secondary route, near-black display, and weathered olive metal match the selected reference and Caravan palette.
+- Image quality and asset fidelity: the 1024 px console housing is a dedicated raster asset. Destination cards reuse canonical game scene art and are properly cropped at their live size.
+- Copy and content: the screen shows only current destination, known place description, distance, time, and required fuel. It never previews a future danger, encounter, person, success rate, or breakdown.
+- Intentional P3 variance: the source concept uses a static Korea route illustration; the game uses its live immediate-route canvas so all selectable routes remain real and unknown events stay unknown.
+
+## Interaction and browser evidence
+
+- Carousel arrow changed selection from `yangsan` to `gimhae` and updated map, text, image, values, and CTA.
+- Destination cards, dots, keyboard arrows, and horizontal swipe share the same live selection state.
+- The vertical rocker switches between `목적지` and `머물기`.
+- Departure remains connected to `G.startTravel`.
+- Goal → map → route departure and bag repair/state-number updates passed `tests/capture_interactive_tools.py`.
+- Console/page errors: zero. Horizontal viewport overflow: none.
+
+## Comparison history
+
+### Iteration 1 — blocked
+
+- P0 interaction failure: pointer capture on the carousel viewport swallowed the arrow click, so the selected destination did not change.
+- Fix: removed pointer capture while retaining swipe-distance detection.
+
+### Iteration 2 — passed
+
+- Same-viewport post-fix evidence changed the route from Yangsan to Gimhae in `02-route-secondary.png`.
+- Both destination and stay states fit above the persistent dock and retain 44 px touch targets.
+
+## Residual follow-up polish
+
+- P3: when a future node exposes five or more immediate destinations, re-check the centered-card scroll treatment with the longer set.
+
+final result: passed
+
+---
+
+# Previous QA — Locked Game Viewport + Road Tools
 
 ## Comparison target
 

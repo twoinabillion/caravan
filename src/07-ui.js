@@ -11,7 +11,7 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
-  let navChoiceAt=null, navChoiceId=null, journeyConsoleMode='local';
+  let navChoiceAt=null, navChoiceId=null, journeyConsoleMode='route';
   /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
      원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
   function syncStageActions(){
@@ -1170,51 +1170,68 @@ const UI = (()=>{
     }
     return routeModels.find(model=>model.nb.id===navChoiceId)||routeModels[0]||null;
   }
+  function routeThumbnail(nodeId){
+    const direct=D.nodeScenes&&D.nodeScenes[nodeId];
+    if(direct&&D.scenes&&D.scenes[direct]) return D.scenes[direct];
+    const scenery=D.nodeScenery&&D.nodeScenery[nodeId];
+    const sceneByScenery={
+      port:'busan-departure','old-port':'busan-departure',ferry:'busan-departure','fishing-port':'busan-departure','night-port':'busan-departure',
+      overpass:'roadcrew-bridge',airfield:'roadcrew-line',refinery:'roadcrew-line',steelworks:'roadcrew-line',factory:'roadcrew-line',
+      'mountain-town':'route-ridge-rescue',windfarm:'route-ridge-rescue',limestone:'route-ridge-rescue',tunnel:'muju-tunnel',
+      market:'settlement-road-echo',hanok:'jeonju-market',dome:'daegu-dome',fortress:'suwon-fortress'
+    };
+    return D.scenes&&D.scenes[sceneByScenery[scenery]||'generic-discovery']||'';
+  }
   function routeConsoleHtml(routeModels){
     const selected=routeConsoleModel(routeModels);
     if(!selected) return '<div class="route-empty">지금 이어지는 길이 없다.</div>';
     const node=D.nodes[selected.nb.id], forecast=selected.forecast;
     const destinationType=routeDestinationType(selected);
-    const destinationTabs=routeModels.map((model,index)=>{
+    const selectedIndex=routeModels.indexOf(selected);
+    const destinationCards=routeModels.map((model,index)=>{
       const active=model.nb.id===selected.nb.id;
-      const name=D.nodes[model.nb.id].name;
-      return `<button type="button" class="route-option nav-destination-tab${active?' is-selected':''}"
-        data-go="${model.nb.id}" data-route-select="${model.nb.id}" aria-pressed="${active}"
-        aria-label="목적지 ${index+1}, ${esc(name)} 선택">${String(index+1).padStart(2,'0')}<span class="sr-only"> ${esc(name)}</span></button>`;
+      const cardNode=D.nodes[model.nb.id], src=routeThumbnail(model.nb.id);
+      return `<button type="button" class="nav-destination-card${active?' is-selected':''}"
+        data-route-select="${model.nb.id}" aria-pressed="${active}"
+        aria-label="목적지 ${index+1}, ${esc(cardNode.name)} 선택">
+        ${src?`<img src="${src}" alt="" loading="eager" decoding="async">`:''}
+        <span><small>${String(index+1).padStart(2,'0')} · ${esc(routeDestinationType(model))}</small><b>${esc(cardNode.name)}</b><em>${model.nb.km}km</em></span>
+      </button>`;
     }).join('');
     const canDepart=forecast.ok&&!forecast.shortage;
-    const summary=`<p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
-      <div class="nav-known-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
-        <span><small>거리</small><b>${selected.nb.km}km</b></span>
-        <span><small>시간</small><b>${routeMinuteRange(forecast.minutes)}</b></span>
-        <span><small>소모 연료</small><b>${routeFuelRange(selected.fuel)}</b></span>
-        <span><small>보유 연료</small><b>${Math.floor(S.fuel)}L</b></span>
-        <span><small>차체</small><b>${Math.ceil(S.van)}%</b></span>
-        <span><small>식량·물</small><b>식량 ${S.food} · 물 ${S.water}</b></span>
-      </div>`;
     const departButton=canDepart
-      ?`<button type="button" data-nav-depart="${selected.nb.id}">출발 <span aria-hidden="true">→</span></button>`
+      ?`<button type="button" data-nav-depart="${selected.nb.id}">${esc(node.name)}으로 출발 <span aria-hidden="true">→</span></button>`
       :forecast.shortage
         ?`<button type="button" class="nav-resource-fix" disabled>현재 연료 부족</button>`
         :'<button type="button" disabled>경로 잠김</button>';
-    return `<div class="route-console" data-route-console="${selected.nb.id}">
+    const dots=routeModels.map((model,index)=>`<button type="button" data-route-select="${model.nb.id}"
+      aria-label="${esc(D.nodes[model.nb.id].name)} 보기" aria-pressed="${index===selectedIndex}"></button>`).join('');
+    return `<div class="route-console route-console-v3" data-route-console="${selected.nb.id}">
       <div class="route-console-screen">
         <section class="nav-route-map" aria-labelledby="nav-map-title">
-          <div class="nav-screen-kicker"><span id="nav-map-title">${esc(D.nodes[S.at].name)} → 다음 목적지</span><em>LIVE ROUTE</em></div>
+          <div class="nav-screen-kicker"><span id="nav-map-title">${esc(D.nodes[S.at].name)} 출발 경로</span><em>ROUTE ${String(selectedIndex+1).padStart(2,'0')}</em></div>
           <canvas data-nav-map aria-label="${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 지도에 기록된 경로"></canvas>
-          <div class="nav-map-legend"><span>선택 경로</span><span>대체 경로</span></div>
+          <div class="nav-map-legend"><span>● 선택 경로</span><span>● 다른 길</span></div>
         </section>
-        <section class="nav-route-decision" aria-live="polite">
-          <div class="nav-destination-head"><span>목적지 ${String(routeModels.indexOf(selected)+1).padStart(2,'0')} / ${String(routeModels.length).padStart(2,'0')}</span>
-            <div class="nav-destination-tabs" role="group" aria-label="목적지 선택">${destinationTabs}</div></div>
-          <div class="nav-destination-title"><h3>${esc(node.name)}</h3><small>${esc(destinationType)}</small></div>
-          <div class="nav-console-body">${summary}</div>
-          <div class="nav-console-actions">
-            <button type="button" data-nav-cycle aria-label="다른 목적지 선택" ${routeModels.length<2?'disabled':''}>다른 길</button>
-            ${departButton}
+        <section class="nav-route-decision" aria-live="polite" aria-label="선택한 목적지 정보">
+          <div class="nav-destination-title"><span><small>${esc(destinationType)}</small><h3>${esc(node.name)}</h3></span><em>${String(selectedIndex+1).padStart(2,'0')} / ${String(routeModels.length).padStart(2,'0')}</em></div>
+          <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
+          <div class="nav-known-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
+            <span><small>거리</small><b>${selected.nb.km}km</b></span>
+            <span><small>이동 시간</small><b>${G.durationLabel(forecast.minutes)}</b></span>
+            <span><small>필요 연료</small><b>${Math.ceil(selected.fuel)}L</b></span>
           </div>
-          ${canDepart?'':`<small class="nav-depart-blocked">${forecast.shortage?'현재 연료로 출발할 수 없다.':'아직 이 경로를 이용할 수 없다.'}</small>`}
         </section>
+        <section class="nav-destination-carousel" aria-label="목적지 선택">
+          <button type="button" class="nav-carousel-arrow" data-nav-prev aria-label="이전 목적지" ${routeModels.length<2?'disabled':''}>‹</button>
+          <div class="nav-destination-viewport" tabindex="0"><div class="nav-destination-track">${destinationCards}</div></div>
+          <button type="button" class="nav-carousel-arrow" data-nav-next aria-label="다음 목적지" ${routeModels.length<2?'disabled':''}>›</button>
+          <div class="nav-carousel-dots" aria-label="목적지 위치">${dots}</div>
+        </section>
+        <div class="nav-console-actions">
+          ${departButton}
+          ${canDepart?'':`<small class="nav-depart-blocked">${forecast.shortage?'현재 연료로 출발할 수 없다.':'아직 이 경로를 이용할 수 없다.'}</small>`}
+        </div>
       </div>
     </div>`;
   }
@@ -1277,15 +1294,36 @@ const UI = (()=>{
     panel.querySelectorAll('[data-route-select]').forEach(button=>button.onclick=()=>{
       navChoiceAt=S.at;navChoiceId=button.dataset.routeSelect;renderPanel();
     });
-    const cycle=panel.querySelector('[data-nav-cycle]');
-    if(cycle) cycle.onclick=()=>{
+    const chooseOffset=offset=>{
+      if(routeModels.length<2) return;
       const index=Math.max(0,routeModels.findIndex(model=>model.nb.id===navChoiceId));
-      navChoiceAt=S.at;navChoiceId=routeModels[(index+1)%routeModels.length].nb.id;renderPanel();
+      navChoiceAt=S.at;
+      navChoiceId=routeModels[(index+offset+routeModels.length)%routeModels.length].nb.id;
+      renderPanel();
     };
+    const prev=panel.querySelector('[data-nav-prev]'),next=panel.querySelector('[data-nav-next]');
+    if(prev) prev.onclick=()=>chooseOffset(-1);
+    if(next) next.onclick=()=>chooseOffset(1);
     const depart=panel.querySelector('[data-nav-depart]');
     if(depart) depart.onclick=()=>G.startTravel(depart.dataset.navDepart);
     const canvas=panel.querySelector('[data-nav-map]');
     if(canvas) requestAnimationFrame(()=>drawRouteConsoleMap(canvas,routeModels,navChoiceId));
+    const viewport=panel.querySelector('.nav-destination-viewport');
+    const activeCard=viewport&&viewport.querySelector('.nav-destination-card.is-selected');
+    if(viewport&&activeCard) requestAnimationFrame(()=>viewport.scrollTo({left:activeCard.offsetLeft-(viewport.clientWidth-activeCard.clientWidth)/2,behavior:'auto'}));
+    if(viewport){
+      let pointerX=null;
+      viewport.onpointerdown=event=>{ pointerX=event.clientX; };
+      viewport.onpointerup=event=>{
+        if(pointerX===null) return;
+        const delta=event.clientX-pointerX;pointerX=null;
+        if(Math.abs(delta)>36) chooseOffset(delta<0?1:-1);
+      };
+      viewport.onkeydown=event=>{
+        if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight') return;
+        event.preventDefault();chooseOffset(event.key==='ArrowRight'?1:-1);
+      };
+    }
   }
   function applyIcons(){
     [['#g-fuel','fuel'],['#g-water','water'],['#g-food','food'],['#g-van','van'],['#g-scrap','scrap']]
@@ -1378,7 +1416,7 @@ const UI = (()=>{
   }
   function journeyModeTabsHtml(mode){
     const modes=[['route','목적지'],['local','머물기']];
-    return `<div class="journey-mode-tabs" role="tablist" aria-label="정차 콘솔 모드">${modes.map(([id,label])=>{
+    return `<div class="journey-mode-tabs journey-rocker" role="tablist" aria-label="정차 콘솔 모드">${modes.map(([id,label])=>{
       const active=id===mode;
       return `<button type="button" role="tab" data-journey-mode="${id}" aria-selected="${active}" aria-controls="journey-mode-${id}" tabindex="${active?'0':'-1'}">${label}</button>`;
     }).join('')}</div>`;
@@ -1436,9 +1474,9 @@ const UI = (()=>{
     buttons.forEach((button,index)=>{
       button.onclick=()=>select(button);
       button.onkeydown=event=>{
-        if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight') return;
+        if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)) return;
         event.preventDefault();
-        const direction=event.key==='ArrowRight'?1:-1;
+        const direction=(event.key==='ArrowRight'||event.key==='ArrowDown')?1:-1;
         select(buttons[(index+direction+buttons.length)%buttons.length]);
       };
     });
@@ -3279,6 +3317,10 @@ const UI = (()=>{
     $('#status-title').textContent=stTab==='journey'?'현재 목표':'가방과 보급';
     $('#st-mini').textContent=clock;
     prop.className=`road-tool-prop ${stTab==='journey'?'goal-folio':'bag-supply-roll'}`;
+    $('#st-tabs').style.position='absolute';
+    $('#st-tabs').style.left='-10000px';
+    $('#st-tabs').style.top='0';
+    $('#st-tabs').style.display='flex';
     document.querySelectorAll('#st-tabs button').forEach(button=>{
       const selected=button.dataset.st===stTab;
       button.classList.toggle('here',selected);
@@ -3349,6 +3391,7 @@ const UI = (()=>{
   function renderStatus(){
     if(renderInteractiveRoadTool()) return;
     const prop=$('#status-prop');
+    $('#st-tabs').style.cssText='';
     prop.className=`road-tool-prop utility-sheet${stTab==='settings'?' settings-sheet':''}`;
     $('#status-title').textContent=stTab==='settings'?'화면·소리·백업 설정':stTab==='crew'?'동료':'가방과 달구지';
     $('#st-mini').textContent=`DAY ${S.day} · ${Math.round(S.stats.km)}km`;

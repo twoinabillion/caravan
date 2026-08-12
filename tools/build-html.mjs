@@ -75,7 +75,7 @@ const uiAssetPaths = {
   NAV_ARMORED_SHELL:{path:'assets/ui/nav-armored-shell-v1.png', mime:'image/png'},
   NAV_BUTTON_FACE:{path:'assets/ui/nav-button-face-v1.png', mime:'image/png'},
   NAV_BUTTON_PRESSED:{path:'assets/ui/nav-button-pressed-v1.png', mime:'image/png'},
-  ROUTE_CONSOLE_SHELL:{path:'assets/ui/route-console-shell-v1.jpg', mime:'image/jpeg'},
+  ROUTE_CONSOLE_SHELL:{path:'assets/ui/route-console-shell-v3.webp', mime:'image/webp'},
   GOAL_FOLIO_SHELL:{path:'assets/ui/goal-folio-shell-v1.webp', mime:'image/webp'},
   MAP_NAVIGATOR_SHELL:{path:'assets/ui/map-navigator-shell-v1.webp', mime:'image/webp'},
   BAG_SUPPLY_ROLL:{path:'assets/ui/bag-supply-roll-v1.webp', mime:'image/webp'}
