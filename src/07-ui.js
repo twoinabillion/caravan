@@ -114,6 +114,7 @@ const UI = (()=>{
     document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
     $('#scr-game').classList.remove('on');
     screen=id.replace('scr-','');
+    if(screen!=='game') resetStoppedStageFit();
     $('#app').dataset.screen=screen;
     const earlySound=$('#early-sound');
     if(earlySound) earlySound.hidden=!['title','preview','mode','name','intro'].includes(screen);
@@ -1378,6 +1379,43 @@ const UI = (()=>{
       return `<button type="button" role="tab" data-journey-mode="${id}" aria-selected="${active}" aria-controls="journey-mode-${id}" tabindex="${active?'0':'-1'}">${label}</button>`;
     }).join('')}</div>`;
   }
+  let stoppedStageFitFrame=0;
+  let stoppedStageBase=0;
+  let stoppedStageResizeTimer=0;
+  function resetStoppedStageFit(){
+    if(stoppedStageFitFrame) cancelAnimationFrame(stoppedStageFitFrame);
+    stoppedStageFitFrame=0;
+    stoppedStageBase=0;
+    const stage=$('#stage');
+    if(stage) stage.style.removeProperty('flex-basis');
+  }
+  function scheduleStoppedStageFit(){
+    if(stoppedStageFitFrame) cancelAnimationFrame(stoppedStageFitFrame);
+    if(screen!=='game'||!S||S.driving) return;
+    /* 남는 세로 공간은 빈 패널로 두지 않고 풍경에 돌려준다. 고정 높이를 더하는
+       대신 실제 콘텐츠 끝과 하단 메뉴 사이를 재므로 짧은 화면은 기존 배치를 지킨다. */
+    stoppedStageFitFrame=requestAnimationFrame(()=>{
+      stoppedStageFitFrame=requestAnimationFrame(()=>{
+        stoppedStageFitFrame=0;
+        const stage=$('#stage'), panel=$('#panel'), dock=$('#dock');
+        const contentEnd=panel&&[...panel.children].reverse().find(node=>node.getClientRects().length);
+        if(!stage||!panel||!dock||!contentEnd||!stage.offsetParent||panel.scrollTop>1) return;
+        const stageHeight=stage.getBoundingClientRect().height;
+        if(!stoppedStageBase) stoppedStageBase=stageHeight;
+        const targetGap=Math.max(16,Math.min(24,Math.round(window.innerHeight*.02)));
+        const gap=dock.getBoundingClientRect().top-contentEnd.getBoundingClientRect().bottom;
+        const nextHeight=Math.max(stoppedStageBase,Math.round(stageHeight+gap-targetGap));
+        if(Math.abs(nextHeight-stageHeight)>1) stage.style.flexBasis=`${nextHeight}px`;
+      });
+    });
+  }
+  window.addEventListener('resize',()=>{
+    clearTimeout(stoppedStageResizeTimer);
+    stoppedStageResizeTimer=setTimeout(()=>{
+      resetStoppedStageFit();
+      scheduleStoppedStageFit();
+    },80);
+  },{passive:true});
   function wireJourneyMode(panel){
     const buttons=[...panel.querySelectorAll('[data-journey-mode]')];
     const select=(button)=>{
@@ -1414,13 +1452,14 @@ const UI = (()=>{
   }
   function renderPanel(){
     const p=$('#panel');
-    if(!S){ p.innerHTML=''; return; }
+    if(!S){ resetStoppedStageFit(); p.innerHTML=''; return; }
     /* 온보딩은 설명을 더 붙이는 대신 아직 필요 없는 정보를 접는다. */
     const journeyStage=(S.stats&&S.stats.km<35)||(S.stats&&S.stats.events<4)?'first'
       :(S.stats&&S.stats.km<110?'learning':'open');
     document.documentElement.dataset.journeyStage=journeyStage;
     document.documentElement.dataset.travelState='stopped';
     if(S.driving){
+      resetStoppedStageFit();
       const to=D.nodes[S.driving.to];
       const rq=S.recruitQ&&S.recruitQ.stage==='road'?S.recruitQ:null;
       const def=rq&&D.recruitQuests[rq.id];
@@ -1558,6 +1597,7 @@ const UI = (()=>{
     wireJourneyMode(p);
     wireRouteConsole(p,routeModels);
     p.querySelectorAll('[data-go]:not([data-route-select])').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
+    scheduleStoppedStageFit();
   }
   function renderTravelbar(){
     const tb=$('#travelbar'); if(!tb||!S.driving) return;
