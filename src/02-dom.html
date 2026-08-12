@@ -129,12 +129,14 @@
       <canvas id="cv"></canvas>
       <div id="cheollian-tint"></div>
       <div id="bubbles" aria-live="polite" aria-atomic="true"></div>
-      <div id="road-status" aria-live="polite">
-        <span id="road-status-kicker">CURRENT STOP</span>
-        <b id="road-status-place">부산 감천 부두</b>
-        <small id="road-status-meta">정차 중 · 다음 길을 고른다</small>
+      <div id="road-status" class="stage-readout stage-readout-vehicle" aria-live="polite" aria-label="달구지 상태">
+        <span><small>연료</small><b id="stage-fuel">--L</b></span>
+        <span><small>차체</small><b id="stage-van">--%</b></span>
       </div>
-      <canvas id="minimap" title="지도 열기" role="button" tabindex="0" aria-label="전체 지도 열기"></canvas>
+      <div id="stage-time" class="stage-readout stage-readout-time" aria-live="polite" aria-label="날짜 시간 날씨">
+        <span id="stage-day">DAY 1</span><b id="stage-clock">08:00</b><small id="stage-weather">맑음</small>
+      </div>
+      <canvas id="minimap" title="지도 열기" role="button" tabindex="-1" aria-label="전체 지도 열기" aria-hidden="true"></canvas>
     </div>
 
     <div id="dash">

@@ -1,70 +1,80 @@
-# Interactive Road Tools — Design QA
+# Locked Game Viewport + Road Tools — Design QA
 
 ## Comparison target
 
 - Source visual truth:
-  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/01-목표-여행-서류철.png` — 937×1678 px
-  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/02-지도-차내-네비게이션.png` — 938×1677 px
-  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/03-가방-보급-롤.png` — 937×1678 px
+  - User-approved road composition represented by the existing 480×860 game view.
+  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/01-목표-여행-서류철.png` — 937×1678 px.
+  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/02-지도-차내-네비게이션.png` — 938×1677 px.
+  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/03-가방-보급-롤.png` — 937×1678 px.
 - Browser-rendered implementation:
-  - `audits/interactive-road-tools-2026-08-12/01-goal-folio.png`
-  - `audits/interactive-road-tools-2026-08-12/02-map-navigator.png`
-  - `audits/interactive-road-tools-2026-08-12/03-bag-supply-roll.png`
-- Implementation screenshots: 480×860 px, CSS viewport 480×860, `deviceScaleFactor: 1`.
-- Density normalization: each source was proportionally downsampled and centered on a 480×860 canvas before being paired with the 480×860 browser capture. No device chrome was included.
-- State: new game, Day 1 morning, current stop 부산 감천 부두. The implementation intentionally shows the live 07:30 game clock and actual route/resource values; the source mock uses illustrative 09:30 values.
+  - `audits/locked-game-ui-2026-08-12/01-mobile-480x860-road-app.png`
+  - `audits/locked-game-ui-2026-08-12/01-mobile-480x860-goal-app.png`
+  - `audits/locked-game-ui-2026-08-12/01-mobile-480x860-bag-app.png`
+  - `audits/locked-game-ui-2026-08-12/02-desktop-1440x900-road-app.png`
+  - `audits/locked-game-ui-2026-08-12/02-desktop-1440x900-goal-app.png`
+  - `audits/locked-game-ui-2026-08-12/02-desktop-1440x900-bag-app.png`
+- Viewports: mobile 480×860 and desktop 1440×900, both at `deviceScaleFactor: 1`.
+- Density normalization: the desktop `#app` content was captured at its actual 480 px CSS width and cropped to the same 480×860 comparison window as mobile. No browser chrome was included.
+- State: new game, Day 1 07:30, 부산 감천 부두, default goal and `부품` inventory selection.
 
 ## Evidence
 
-- Full-view, same-input comparisons:
-  - `audits/interactive-road-tools-2026-08-12/04-goal-reference-vs-implementation.png`
-  - `audits/interactive-road-tools-2026-08-12/05-map-reference-vs-implementation.png`
-  - `audits/interactive-road-tools-2026-08-12/06-bag-reference-vs-implementation.png`
-  - Contact sheet: `audits/interactive-road-tools-2026-08-12/07-all-reference-vs-implementation.jpg`
-- Focused comparisons for readable typography, map selection, resource rows, pockets, and actions:
-  - `audits/interactive-road-tools-2026-08-12/08-goal-focused.png`
-  - `audits/interactive-road-tools-2026-08-12/09-map-focused.png`
-  - `audits/interactive-road-tools-2026-08-12/10-bag-focused.png`
-  - Contact sheet: `audits/interactive-road-tools-2026-08-12/11-focused-reference-vs-implementation.jpg`
+- Full-view, same-input mobile/desktop comparisons:
+  - `audits/locked-game-ui-2026-08-12/03-road-mobile-vs-desktop.png`
+  - `audits/locked-game-ui-2026-08-12/04-goal-mobile-vs-desktop.png`
+  - `audits/locked-game-ui-2026-08-12/05-bag-mobile-vs-desktop.png`
+  - Contact sheet: `audits/locked-game-ui-2026-08-12/06-mobile-vs-desktop-contact.jpg`.
+- Same-input reference/implementation comparisons for the changed physical props:
+  - `audits/locked-game-ui-2026-08-12/07-goal-source-vs-final.png`
+  - `audits/locked-game-ui-2026-08-12/08-bag-source-vs-final.png`
+  - Contact sheet: `audits/locked-game-ui-2026-08-12/09-source-vs-final-contact.jpg`.
+- Focused regions were not split into additional files because each pair preserves a full 480×860 screen at readable original pixels; HUD labels, paper rows, pocket labels, numbers, and bottom controls remain legible.
 
 ## Findings
 
 - No actionable P0/P1/P2 differences remain.
-- Fonts and typography: the condensed Korean sans/mono hierarchy, optical weights, line height, truncation, and amber/teal emphasis preserve the source hierarchy. Live quest copy is denser than the illustrative mock but remains legible and contained.
-- Spacing and layout rhythm: all three props retain the source major-region proportions, hardware frame, fixed bottom dock, tap-target separation, and vertical hierarchy at 480×860. Goal content uses three focused progression rows to avoid crowding.
-- Colors and visual tokens: parchment black/teal, CRT teal, canvas brown, and amber interaction states match the source direction; selected/disabled states remain distinct.
-- Image quality and asset fidelity: the leather folio, CRT navigator, and canvas roll are project-local WebP raster shells, not CSS approximations. Live icons use the game's existing raster icon family. Crops are sharp with no transparency halos or stretching.
-- Copy and content: all visible labels are coherent in Korean and use current game state. The map shows only known geography and player-selected routes; it does not reveal future encounters or danger predictions.
-- Interaction and accessibility: bottom-dock navigation, folio-to-map navigation, destination selection, route departure, bag pocket selection, repair action, and return-to-road were exercised. Route departure decreased fuel; repair consumed a part and increased vehicle health; a resource mutation was reflected by the visible number. Console/page errors were zero. The Quality 9 accessibility gate passed at 360×700, 390×844, and 480×860, including large text, reduced motion, and 200% zoom.
+- Fonts and typography: tool typography now uses the 480 px game container (`cqw`) instead of the outer browser viewport, so font size, optical weight, line height, and truncation no longer drift on desktop. Korean labels remain contained by their paper, pocket, and hardware slots.
+- Spacing and layout rhythm: `#app`, the road tools, and the bottom dock use the same 480 px layout on mobile and desktop. Desktop adds only outside margins. Goal rows and bag pockets align to the same raster-shell coordinates in both captures.
+- Colors and visual tokens: the existing amber/teal/night tokens and parchment/canvas materials are unchanged. The new HUD uses the same amber and neutral instrument palette.
+- Image quality and asset fidelity: the folio, CRT map, canvas roll, icons, dock, road, and vehicle remain raster/canvas assets from the game. No replacement CSS/SVG illustration was introduced.
+- Copy and content: the upper-left readout now contains only `연료` and `차체`; the upper-right contains `DAY`, time, and current weather. The redundant miniature map and current-stop plaque are removed from the stage; current place and route remain in the navigation surface.
+- Interaction and accessibility: the visible main controls remain real buttons. The hidden minimap is removed from keyboard navigation and the full map remains available through the bottom dock. Console/page errors were zero. The accessibility gate passed at 360×700, 390×844, and 480×860 with large text, reduced motion, and 200% zoom.
 
 ## Comparison history
 
 ### Iteration 1 — blocked
 
-- P2 goal density: all six steps were shown at once, making the paper crowded. Fixed by showing a three-step progress window centered on current progress.
-- P2 map fidelity: the first canvas pass read too purple and opened without a useful route card. Fixed by applying the teal CRT navigator palette and selecting the first reachable known destination on open.
-- P2 map layout: destination details occupied the wrong region. Fixed by moving the compact selected-route summary and departure control into the physical lower hardware bay.
-- P2 bag state: zero quantities rendered as a dash and the QA capture showed a different selected pocket. Fixed by rendering numeric zero and capturing the source-matching `부품` selected state before exercising alternatives.
-- P3 bag icon scale: first-pass item icons were visually underweighted. Fixed by increasing pocket and detail icon size while retaining the existing raster icon family.
+- P1 composition drift: the desktop game expanded to 840/1180 px and activated desktop-only layout rules. Fixed by locking `#app` to a 480 px game column and removing the desktop side rail/reflow.
+- P2 HUD duplication: current-stop information and the miniature map repeated navigation data while fuel, condition, date, time, and weather remained lower in a separate dashboard. Fixed by replacing the two upper corners with vehicle and time/weather readouts and hiding the miniature map from view and keyboard order.
+- P2 road-tool slot alignment: `vw`-based typography followed the outer desktop viewport instead of the physical prop. Fixed by converting prop/dock sizing to container-query width units.
+- P2 panel scale drift: the folio and bag width depended on outer viewport height, producing different sizes at 860 and 900 px tall captures. Fixed by locking the road-tool prop width to the same 480 px game column.
 
 ### Iteration 2 — passed
 
-- Post-fix evidence is recorded in comparison files 04–11 above.
-- The final normalized comparison found no remaining P0/P1/P2 visual or interaction issues.
+- The final browser capture reports a 480 px `#app`, goal prop, and bag prop on both mobile and desktop.
+- Post-fix visual evidence is recorded in comparison files 03–06 above.
+- The normalized comparison found no remaining P0/P1/P2 visual, responsive, or interaction issue.
+
+### Iteration 3 — passed
+
+- Source and final goal/bag screens were normalized to the same 480×860 frame and inspected together in files 07–09.
+- The folio preserves the source's paper hierarchy and tab registration; the bag preserves its roll, pocket, meter, and inventory alignment. Content density changed only to support live game data and controls.
 
 ## Residual follow-up polish
 
-- P3: the live route graph contains more discovered-city labels than the simplified concept map. This is an intentional product difference so the real world state remains usable rather than decorative.
-- P3: the standalone HTML remains above its 32 MB advisory size budget (37.5 MB) because the game embeds all media for offline play. This does not block this UI or its interaction path.
+- P3: a 1440×900 desktop viewport has 40 more vertical pixels than the 480×860 mobile target. The game keeps those pixels as neutral bottom breathing room rather than stretching or reflowing content.
+- P3: the single-file offline HTML remains above its 32 MB advisory budget because the game embeds all media. This does not block the UI path.
 
 ## Implementation checklist
 
-- [x] Preserve all three physical prop designs as raster shells.
-- [x] Render all readable values and app copy as live DOM/canvas content.
-- [x] Connect goal, map, bag, road, and menu navigation.
-- [x] Connect destination selection and departure.
-- [x] Connect bag item selection and parts repair.
-- [x] Verify responsive accessibility and console health.
-- [x] Compare normalized source and implementation full views and focused regions.
+- [x] Replace upper-left stop plaque with live fuel and vehicle condition.
+- [x] Replace upper-right miniature map with live day, time, and weather.
+- [x] Keep full map access in the persistent bottom dock.
+- [x] Lock mobile and desktop to one 480 px game composition.
+- [x] Bind road-tool typography and dock sizing to the game container.
+- [x] Match folio and bag shell geometry on mobile and desktop.
+- [x] Verify browser console, responsive accessibility, large text, reduced motion, and zoom.
+- [x] Compare normalized mobile and desktop screenshots in the same inputs.
 
 final result: passed

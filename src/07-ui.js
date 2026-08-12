@@ -114,7 +114,10 @@ const UI = (()=>{
     document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
     $('#scr-game').classList.remove('on');
     screen=id.replace('scr-','');
-    if(screen!=='game') resetStoppedStageFit();
+    if(screen!=='game'){
+      resetStoppedStageFit();
+      document.documentElement.classList.remove('game-viewport-locked');
+    }
     $('#app').dataset.screen=screen;
     const earlySound=$('#early-sound');
     if(earlySound) earlySound.hidden=!['title','preview','mode','name','intro'].includes(screen);
@@ -623,9 +626,17 @@ const UI = (()=>{
     gauge('#g-food', S.food, 14, S.food<=G.partySize());
     gauge('#g-van', Math.floor(S.van), S.vanMax, S.van<25);
     gauge('#g-scrap', S.scrap, 40, false);
-    $('#clockbox').textContent = G.fmtClock();
+    const clock=G.fmtClock();
+    $('#clockbox').textContent = clock;
     const wxNow=D.wx[S.wx]||D.wx.clear, wxN=D.wx[S.wxNext]||D.wx.clear;
     $('#wxbox').innerHTML = `${ICO('wx_'+S.wx, wxNow.ic+' ')}${wxNow.nm} <span style="opacity:.5">· 내일 ${ICO('wx_'+S.wxNext, wxN.ic)}</span>`;
+    const stageFuel=$('#stage-fuel'), stageVan=$('#stage-van'), stageDay=$('#stage-day');
+    const stageClock=$('#stage-clock'), stageWeather=$('#stage-weather');
+    if(stageFuel) stageFuel.textContent=`${Math.floor(S.fuel)}L`;
+    if(stageVan) stageVan.textContent=`${Math.floor(S.van)}%`;
+    if(stageDay) stageDay.textContent=`DAY ${S.day}`;
+    if(stageClock) stageClock.textContent=clock.replace(/^DAY\s+\d+\s*·\s*/,'');
+    if(stageWeather) stageWeather.textContent=wxNow.nm;
     const f=$('#ftgbox'), stg=G.fatigueStage();
     f.style.display='inline';
     f.style.color = stg==='bad'?'var(--danger)': stg==='mid'?'var(--amber)':'var(--faded)';
@@ -633,19 +644,6 @@ const UI = (()=>{
     const eye=$('#eyebox');
     eye.style.display = S.pursuit>0? 'inline':'none';
     eye.innerHTML = `${ICO('pursuit','◉'.repeat(Math.min(S.pursuit,5)))} 관측 ${S.pursuit}`;
-    const roadKicker=$('#road-status-kicker'), roadPlace=$('#road-status-place'), roadMeta=$('#road-status-meta');
-    if(roadKicker&&roadPlace&&roadMeta){
-      if(S.driving){
-        const d=S.driving, left=Math.max(0,Math.round(d.dist-d.gone));
-        roadKicker.textContent='ON THE ROAD';
-        roadPlace.textContent=`${D.nodes[d.from].name} → ${D.nodes[d.to].name}`;
-        roadMeta.textContent=`${left}km 남음 · ${d.road||'북쪽으로 이어지는 길'}`;
-      } else {
-        roadKicker.textContent='CURRENT STOP';
-        roadPlace.textContent=D.nodes[S.at].name;
-        roadMeta.textContent=D.nodes[S.at].type==='goal'?'목적지 도착':'정차 중 · 다음 길을 고른다';
-      }
-    }
     renderDeskRail();
   }
 
@@ -1398,6 +1396,9 @@ const UI = (()=>{
   function scheduleStoppedStageFit(){
     if(stoppedStageFitFrame) cancelAnimationFrame(stoppedStageFitFrame);
     if(screen!=='game'||!S||S.driving) return;
+    /* 주행 화면은 모든 기기에서 같은 480×860 구도를 쓴다. 넓은 데스크톱에서만
+       남는 높이를 풍경으로 다시 계산하면 모바일과 패널 비율이 달라지므로 멈춘다. */
+    if(document.documentElement.classList.contains('game-viewport-locked')) return;
     /* 남는 세로 공간은 빈 패널로 두지 않고 풍경에 돌려준다. 고정 높이를 더하는
        대신 실제 콘텐츠 끝과 하단 메뉴 사이를 재므로 짧은 화면은 기존 배치를 지킨다. */
     stoppedStageFitFrame=requestAnimationFrame(()=>{
@@ -1459,6 +1460,7 @@ const UI = (()=>{
   function renderPanel(){
     const p=$('#panel');
     if(!S){ resetStoppedStageFit(); p.innerHTML=''; return; }
+    document.documentElement.classList.add('game-viewport-locked');
     /* 온보딩은 설명을 더 붙이는 대신 아직 필요 없는 정보를 접는다. */
     const journeyStage=(S.stats&&S.stats.km<35)||(S.stats&&S.stats.events<4)?'first'
       :(S.stats&&S.stats.km<110?'learning':'open');
