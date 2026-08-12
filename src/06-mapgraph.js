@@ -95,9 +95,10 @@ const MAPR = (()=>{
   function draw(dt){
     if(!ctx||!W) return; t+=dt;
     ctx.clearRect(0,0,W,H);
+    const navigatorMode=!!(cv.closest&&cv.closest('.map-navigator'));
     /* 바다 — 윤곽과 도시가 먼저 읽히도록 장식 격자와 물결은 쓰지 않는다. */
     const sea=ctx.createLinearGradient(0,0,0,H);
-    sea.addColorStop(0,'#0a0f22'); sea.addColorStop(1,'#080c1a');
+    sea.addColorStop(0,navigatorMode?'#031c1d':'#0a0f22'); sea.addColorStop(1,navigatorMode?'#021112':'#080c1a');
     ctx.fillStyle=sea; ctx.fillRect(0,0,W,H);
     /* 해안선 경로 (부드러운 곡선) */
     const coastPath=()=>{ ctx.beginPath();
@@ -110,16 +111,16 @@ const MAPR = (()=>{
       ctx.closePath(); };
     /* 해안 글로우 (물가 하이라이트) */
     coastPath();
-    ctx.strokeStyle='rgba(110,160,215,0.18)'; ctx.lineWidth=6; ctx.stroke();
+    ctx.strokeStyle=navigatorMode?'rgba(82,190,181,0.18)':'rgba(110,160,215,0.18)'; ctx.lineWidth=6; ctx.stroke();
     /* 육지 */
     coastPath();
     const land=ctx.createLinearGradient(0,py(78),0,py(668));
-    land.addColorStop(0,'#182138'); land.addColorStop(1,'#121a2c');
+    land.addColorStop(0,navigatorMode?'#0c3130':'#182138'); land.addColorStop(1,navigatorMode?'#092221':'#121a2c');
     ctx.fillStyle=land; ctx.fill();
-    ctx.strokeStyle='#3a4e78'; ctx.lineWidth=1.8; ctx.stroke();
+    ctx.strokeStyle=navigatorMode?'#397a74':'#3a4e78'; ctx.lineWidth=1.8; ctx.stroke();
     /* 제주는 방향 기준으로만 남긴다. */
     ctx.beginPath(); ctx.ellipse(px(288),py(714),40*tf.sx,13*tf.sy,0,0,7);
-    ctx.fillStyle='#141c30'; ctx.fill(); ctx.strokeStyle='rgba(90,120,175,0.5)'; ctx.stroke();
+    ctx.fillStyle=navigatorMode?'#0b2928':'#141c30'; ctx.fill(); ctx.strokeStyle=navigatorMode?'rgba(79,159,151,.5)':'rgba(90,120,175,0.5)'; ctx.stroke();
 
     /* 인접 노드 (지금 갈 수 있는 곳) */
     const nbrs=new Set();

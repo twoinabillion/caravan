@@ -251,7 +251,7 @@ const UI = (()=>{
         const card=cards[Number(e.key)-1];
         if(card){ e.preventDefault(); card.click(); return; }
       }
-      if(modal&&e.key==='Tab'){
+      if(modal&&modal.getAttribute('aria-modal')!=='false'&&e.key==='Tab'){
         const items=[...modal.querySelectorAll(focusableSel)].filter(x=>x.offsetParent!==null);
         if(items.length){
           const first=items[0], last=items[items.length-1];
@@ -358,12 +358,18 @@ const UI = (()=>{
       $('#panel').scrollTo({top:0,behavior:uiPrefs.reduceMotion?'auto':'smooth'});
     };
     $('#dk-objectives').onclick=()=>openStatusTab('journey','dk-objectives');
-    $('#dk-map').onclick=()=>{ setDockTab('dk-map'); toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
+    $('#dk-map').onclick=()=>{
+      setDockTab('dk-map'); toggleOvl('#ovl-map'); wireRoadTool($('#ovl-map'));
+      MAPR.resize(); renderMapMini(); renderMission();
+      const choices=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id)&&G.canTravelTo(nb.id).ok);
+      if(!choices.some(nb=>nb.id===mapKbFocus)) mapKbFocus=choices[0]?.id||null;
+      if(mapKbFocus) showNodeCard(mapKbFocus);
+    };
     $('#dk-menu').onclick=()=>{ setDockTab('dk-menu'); toggleOvl('#ovl-menu'); };
     $('#menu-x').onclick=()=>closeOvl('#ovl-menu');
     $('#local-actions-x').onclick=()=>closeOvl('#ovl-local-actions');
     $('#menu-crew').onclick=()=>openStatusFromMenu('crew');
-    $('#menu-settings').onclick=()=>openStatusFromMenu('now',true);
+    $('#menu-settings').onclick=()=>openStatusFromMenu('settings',true);
     $('#dk-journal').onclick=()=>{ openFromMenu('#ovl-journal'); renderJournal(); };
     $('#dk-camp').onclick=()=>{
       closeModal('#ovl-menu',false);
@@ -585,7 +591,7 @@ const UI = (()=>{
     toggleOvl('#ovl-status');
     renderStatus();
     if(scrollSettings) requestAnimationFrame(()=>{
-      const target=$('#st-body').querySelector('.ui-comfort');
+      const target=$('#st-body').querySelector('.settings-console');
       if(target) target.scrollIntoView({block:'start'});
     });
   }
@@ -3230,6 +3236,7 @@ const UI = (()=>{
     const routeText=routeStops.length>6
       ? [...routeStops.slice(0,4),'…',routeStops[routeStops.length-1]].join(' → ')
       : routeStops.join(' → ');
+    const compact=!!card.closest('.map-navigator');
     let h=`<h4>${n.name} ${S.visited.includes(id)?'':'<small style="color:var(--faded)">(미방문)</small>'}</h4>
       <div class="d">${S.visited.includes(id)||n.type!=='hidden'? n.desc:'가보기 전엔 알 수 없다.'}</div>`;
     if(S.at===id) h+=`<div class="d" style="color:var(--amber)">현재 위치</div>`;
@@ -3237,6 +3244,12 @@ const UI = (()=>{
     else if(S.driving) h+=`<div class="d">이동 중에는 목적지를 바꿀 수 없다</div>`;
     else h+=`<div class="d">${esc(chk.why||'여기서 바로 가는 길이 없다 — 경유해야 한다')}</div>`;
     if(plan&&plan.segments>1) h+=`<div class="map-route-preview"><b>이어지는 길 · ${plan.segments}구간 · 약 ${plan.km}km</b><span>${esc(routeText)}</span></div>`;
+    if(compact){
+      h=`<div class="map-compact-place"><small>선택한 길</small><h4>${esc(n.name)}</h4></div>`;
+      if(S.at===id) h+=`<div class="d">현재 위치</div>`;
+      else if(chk.ok) h+=`<button class="go" data-go="${id}">이 길 선택<small>${chk.km}km · 연료 약 ${chk.fuel}L</small></button>`;
+      else h+=`<div class="d">${esc(S.driving?'이동 중에는 바꿀 수 없다':chk.why||'여기서 이어진 길이 없다')}</div>`;
+    }
     card.innerHTML=h;
     const btn=card.querySelector('[data-go]');
     if(btn) btn.onclick=()=>{ closeOvl('#ovl-map'); G.startTravel(id); };
@@ -3246,9 +3259,96 @@ const UI = (()=>{
 
   /* ── STATUS ── */
   let stTab='now';
+  let inventorySelection='부품';
   let mapKbFocus=null;
+  function wireRoadTool(root){
+    root.querySelectorAll('[data-road-tool]').forEach(button=>button.onclick=()=>{
+      const tool=button.dataset.roadTool;
+      if(tool==='road') $('#dk-road').click();
+      else if(tool==='map') $('#dk-map').click();
+      else if(tool==='goal') openStatusTab('journey','dk-objectives');
+      else if(tool==='bag') openStatusTab('now','dk-status');
+    });
+  }
+  function renderInteractiveRoadTool(){
+    if(stTab!=='now'&&stTab!=='journey') return false;
+    const prop=$('#status-prop'), b=$('#st-body');
+    const clock=G.fmtClock();
+    $('#status-title').textContent=stTab==='journey'?'현재 목표':'가방과 보급';
+    $('#st-mini').textContent=clock;
+    prop.className=`road-tool-prop ${stTab==='journey'?'goal-folio':'bag-supply-roll'}`;
+    document.querySelectorAll('#st-tabs button').forEach(button=>{
+      const selected=button.dataset.st===stTab;
+      button.classList.toggle('here',selected);
+      button.setAttribute('aria-selected',String(selected));
+      button.tabIndex=selected?0:-1;
+    });
+    if(stTab==='journey'){
+      const steps=G.departureSteps();
+      const done=steps.filter(step=>step.done).length;
+      const focusStart=Math.max(0,Math.min(steps.length-3,done-1));
+      const focusSteps=steps.slice(focusStart,focusStart+3);
+      const transfer=G.transferStatus();
+      const knowledge=G.knowledgeSummary().filter(item=>item.level>=2);
+      const clue=knowledge[knowledge.length-1];
+      b.innerHTML=`<div class="folio-live-content">
+        <div class="folio-title-row"><span>현재 목표</span><small>${esc(clock)}</small></div>
+        <h3>${transfer.onTime?'서울 이송 중단':'남은 이송 중단'}</h3>
+        <button class="folio-location" data-road-tool="map">${esc(D.nodes[S.at].name)} · 지도에서 보기</button>
+        <section class="folio-progress" aria-label="목표 진행 ${done}/${steps.length}">
+          <div class="folio-section-title"><b>진행 단계</b><span>${done}/${steps.length}</span></div>
+          ${focusSteps.map((step,index)=>`<div class="folio-step ${step.done?'done':''}"><i>${step.done?'✓':focusStart+index+1}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}
+        </section>
+        <section class="folio-clue"><span>확인된 단서</span><b>${esc(clue?clue.label:'남산 진입 경로 도면')}</b><p>${esc(clue?clue.text:'엄마가 남긴 도면과 현재 길의 기록을 대조한다.')}</p></section>
+        <div class="folio-support"><span>다음 행동</span><b>${steps.find(step=>!step.done)?.label||'남산에서 기록을 제출한다'}</b></div>
+        <button class="folio-road-button" data-road-tool="road">길로 돌아가기</button>
+        <nav class="prop-edge-tabs" aria-label="다른 도구"><button data-road-tool="map">지도</button><button data-road-tool="bag">가방</button></nav>
+      </div>`;
+    }else{
+      const perDay=Math.max(1,G.partySize()-(G.hasPerk('kw_ration')&&G.partySize()>1?1:0));
+      const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
+      const entries=[
+        {id:'부품',label:'부품',value:S.items['부품']||0,icon:'parts',desc:'달구지 정비에 사용한다.',action:S.van<S.vanMax-2?'정비에 사용':'차체가 충분히 튼튼하다'},
+        {id:'의약품',label:'의약품',value:S.items['의약품']||0,icon:'meds',desc:'부상자를 돌볼 때 사용하는 약품이다.',action:'현재 수량 확인'},
+        {id:'탄약',label:'소총탄',value:S.items['탄약']||0,icon:'ammo',desc:'총기를 사용할 때 필요한 탄약이다.',action:'현재 수량 확인'},
+        {id:'고철',label:'고철',value:S.scrap,icon:'scrap',desc:'거래와 개조에 사용하는 재료다.',action:'현재 수량 확인'},
+        {id:'기타',label:'기타',value:Object.entries(S.items).filter(([key])=>!['부품','의약품','탄약'].includes(key)).reduce((sum,[,value])=>sum+(Number(value)||0),0),icon:'quest',desc:'특별한 의뢰와 길에서 얻은 물건이다.',action:'가방 안에 보관 중'}
+      ];
+      if(!entries.some(entry=>entry.id===inventorySelection)) inventorySelection='부품';
+      const selected=entries.find(entry=>entry.id===inventorySelection)||entries[0];
+      b.innerHTML=`<div class="bag-live-content">
+        <div class="bag-title-row"><h3>가방과 보급</h3><small>${esc(clock)}</small></div>
+        <section class="bag-critical">
+          <div>${ICO('water')}<span>물<b>${S.water}</b></span></div>
+          <div>${ICO('food')}<span>식량<b>${S.food}</b></span></div>
+          <div>${ICO('fuel')}<span>연료<b>${Math.floor(S.fuel)}L</b></span></div>
+        </section>
+        <section class="bag-vehicle"><div><span>차체</span><b>${Math.floor(S.van)}%</b><i><em style="width:${clamp(S.van/S.vanMax*100,0,100)}%"></em></i></div><div><span>보급</span><b>${supplyDays}일</b><i><em style="width:${clamp(supplyDays/5*100,0,100)}%"></em></i></div></section>
+        <section class="bag-pockets" aria-label="가방 수납칸">${entries.map(entry=>`<button class="bag-pocket ${entry.id===selected.id?'selected':''}" data-bag-item="${entry.id}" aria-pressed="${entry.id===selected.id}">${ICO(entry.icon)}<span>${esc(entry.label)}</span><b>${entry.value??0}</b></button>`).join('')}</section>
+        <section class="bag-detail">${ICO(selected.icon)}<div><span>${esc(selected.label)}</span><p>${esc(selected.desc)}</p><button data-bag-action="${selected.id}" ${(selected.id==='부품'&&(!(S.items['부품'])||S.van>=S.vanMax-2))?'disabled':''}>${esc(selected.action)}</button></div></section>
+        <nav class="bag-tool-tabs" aria-label="다른 도구"><button data-road-tool="goal">목표</button><button data-road-tool="map">지도</button><button data-road-tool="road">길로</button></nav>
+      </div>`;
+      b.querySelectorAll('[data-bag-item]').forEach(button=>button.onclick=()=>{
+        inventorySelection=button.dataset.bagItem;
+        renderStatus();
+        requestAnimationFrame(()=>b.querySelector(`[data-bag-item="${inventorySelection}"]`)?.focus({preventScroll:true}));
+      });
+      const action=b.querySelector('[data-bag-action]');
+      if(action) action.onclick=()=>{
+        if(action.dataset.bagAction==='부품'){
+          if(!G.fieldRepair()) toast('지금은 부품으로 정비할 필요가 없다');
+          renderStatus();
+        }else toast(`${selected.label} ${selected.value||0} · ${selected.desc}`);
+      };
+    }
+    wireRoadTool(b);
+    return true;
+  }
   function renderStatus(){
-    $('#status-title').textContent=stTab==='journey'?'현재 목표':stTab==='crew'?'동료':'가방과 달구지';
+    if(renderInteractiveRoadTool()) return;
+    const prop=$('#status-prop');
+    prop.className=`road-tool-prop utility-sheet${stTab==='settings'?' settings-sheet':''}`;
+    $('#status-title').textContent=stTab==='settings'?'화면·소리·백업 설정':stTab==='crew'?'동료':'가방과 달구지';
     $('#st-mini').textContent=`DAY ${S.day} · ${Math.round(S.stats.km)}km`;
     document.querySelectorAll('#st-tabs button').forEach(x=>{
       const selected=x.dataset.st===stTab;
@@ -3426,9 +3526,24 @@ const UI = (()=>{
         :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+
       `<div class="csub" style="margin-top:7px">${stories.length?'이름을 누르면 유대와 해금된 능력을 확인한다.':'지도와 명단에는 만나지 않은 사람을 미리 표시하지 않는다.'}</div></div>`;
 
+    const settings=`<div class="settings-console">
+      <div class="st-sec ui-comfort"><h4>화면 편의 <small>이 기기에 저장</small></h4>
+        <div class="ui-comfort-grid">
+          <button data-ui-pref="text" aria-pressed="${uiPrefs.largeText}"><span>글자 크기</span><b>${uiPrefs.largeText?'크게':'보통'}</b></button>
+          <button data-ui-pref="motion" aria-pressed="${uiPrefs.reduceMotion}"><span>화면 움직임</span><b>${uiPrefs.reduceMotion?'줄임':'기본'}</b></button>
+        </div><div class="csub">움직임 줄임은 장면 전환과 달구지 애니메이션을 낮춘다.</div></div>
+      <div class="st-sec audio-mixer"><h4>소리 믹서 <small>채널별 · 이 기기에 저장</small></h4>
+        <div class="audio-mixer-list">${audioChannels.map(([key,label])=>{ const value=Math.round(SND.level(key)*100); return `
+          <label><span>${label}</span><input type="range" min="0" max="100" step="5" value="${value}" data-audio-level="${key}" aria-label="${label} 음량"><output>${value}%</output></label>`; }).join('')}</div></div>
+      <div class="st-sec save-backup"><h4>여정 백업 <small>내 기기에만 저장</small></h4>
+        <p>현재 여정을 파일로 보관하거나 이전 백업으로 되돌릴 수 있다.</p>
+        <div class="save-backup-actions"><button data-save-export="1">백업 파일 만들기</button><label>백업 파일 복원<input type="file" accept="application/json,.json" data-save-import="1"></label></div></div>
+    </div>`;
+
     b.innerHTML=`<div class="st-pane ${stTab==='now'?'on':''}" data-stpane="now">${now}</div>
       <div class="st-pane ${stTab==='journey'?'on':''}" data-stpane="journey">${journey}</div>
-      <div class="st-pane ${stTab==='crew'?'on':''}" data-stpane="crew">${crew}</div>`;
+      <div class="st-pane ${stTab==='crew'?'on':''}" data-stpane="crew">${crew}</div>
+      <div class="st-pane ${stTab==='settings'?'on':''}" data-stpane="settings">${settings}</div>`;
     b.querySelectorAll('[data-ui-pref]').forEach(button=>button.onclick=()=>{
       if(button.dataset.uiPref==='text'){
         uiPrefs.largeText=!uiPrefs.largeText;

@@ -180,12 +180,17 @@
   </div>
 
   <!-- ══ MAP ══ -->
-  <div class="ovl" id="ovl-map" role="dialog" aria-modal="true" aria-labelledby="map-title" aria-hidden="true">
-    <div class="ovl-head"><h2 id="map-title">여정 지도 — 대한민국</h2><span class="mini" id="map-mini"></span><button class="x" id="map-x" aria-label="지도 닫기">✕</button></div>
-    <div id="map-mission" class="mission-strip map-mission"></div>
-    <div id="mapwrap">
-      <canvas id="mapcv" aria-label="대한민국 주요 도시와 서울행 경로 지도"></canvas>
-      <div id="nodecard"></div>
+  <div class="ovl road-tool-overlay map-tool-overlay" id="ovl-map" role="dialog" aria-modal="false" aria-labelledby="map-title" aria-hidden="true">
+    <div class="road-tool-stage">
+      <section class="road-tool-prop map-navigator" aria-label="차내 네비게이션">
+        <header class="map-live-head"><h2 id="map-title">여정 지도</h2><span id="map-mini"></span><button class="road-tool-close" id="map-x" aria-label="지도를 닫고 길로 돌아가기">길로</button></header>
+        <div id="map-mission" class="mission-strip map-mission"></div>
+        <div id="mapwrap">
+          <canvas id="mapcv" aria-label="대한민국 주요 도시와 서울행 경로 지도"></canvas>
+        </div>
+        <div id="nodecard"></div>
+        <nav class="map-tool-tabs" aria-label="다른 도구"><button data-road-tool="goal">목표</button><button data-road-tool="bag">가방</button></nav>
+      </section>
     </div>
   </div>
 
@@ -203,14 +208,18 @@
   </div>
 
   <!-- ══ STATUS ══ -->
-  <div class="ovl" id="ovl-status" role="dialog" aria-modal="true" aria-labelledby="status-title" aria-hidden="true">
-    <div class="ovl-head"><h2 id="status-title">달구지 & 여정</h2><span class="mini" id="st-mini"></span><button class="x" id="st-x" aria-label="달구지와 여정 닫기">✕</button></div>
-    <div id="st-tabs" class="st-tabs" role="tablist">
-      <button class="here" data-st="now" role="tab" aria-controls="st-body" aria-selected="true">가방·차량</button>
-      <button data-st="journey" role="tab" aria-controls="st-body" aria-selected="false">현재 목표</button>
-      <button data-st="crew" role="tab" aria-controls="st-body" aria-selected="false">동료</button>
+  <div class="ovl road-tool-overlay" id="ovl-status" role="dialog" aria-modal="false" aria-labelledby="status-title" aria-hidden="true">
+    <div class="road-tool-stage">
+      <section class="road-tool-prop" id="status-prop">
+        <header class="road-tool-live-head"><h2 id="status-title">가방과 보급</h2><span id="st-mini"></span><button class="road-tool-close" id="st-x" aria-label="도구를 닫고 길로 돌아가기">길로</button></header>
+        <div id="st-tabs" class="st-tabs" role="tablist">
+          <button class="here" data-st="now" role="tab" aria-controls="st-body" aria-selected="true">가방</button>
+          <button data-st="journey" role="tab" aria-controls="st-body" aria-selected="false">목표</button>
+          <button data-st="crew" role="tab" aria-controls="st-body" aria-selected="false">동료</button>
+        </div>
+        <div id="st-body"></div>
+      </section>
     </div>
-    <div id="st-body"></div>
   </div>
 
   <!-- ══ SECONDARY MENU ══ -->

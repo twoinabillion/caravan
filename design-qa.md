@@ -1,90 +1,70 @@
-# Stop Mode Console Design QA
+# Interactive Road Tools — Design QA
 
-## Artifacts
+## Comparison target
 
-- Source visual truth: `/Users/sang/Desktop/Caravan 정차 UI 세 가지 안 - 2026-08-09/03-모드-전환-콘솔.png`
-- Normalized source: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/source-option-03-normalized.png`
+- Source visual truth:
+  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/01-목표-여행-서류철.png` — 937×1678 px
+  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/02-지도-차내-네비게이션.png` — 938×1677 px
+  - `/Users/sang/Desktop/Caravan UI 시안 - 목표 지도 가방/03-가방-보급-롤.png` — 937×1678 px
 - Browser-rendered implementation:
-  - Local overview: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/00d-stop-actions.png`
-  - Local overview with extra actions: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/00da-stop-actions-extra.png`
-  - Local extra-action drawer: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/00db-local-actions-drawer.png`
-  - Route navigator: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/00-navigation-busan.png`
-  - Vehicle overview: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/00e-vehicle-tools.png`
-  - Vehicle detail drawer: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/00f-vehicle-detail.png`
-- Full-view comparison: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/design-comparison-local.png`
-- Focused console comparison: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/design-comparison-console-focus.png`
+  - `audits/interactive-road-tools-2026-08-12/01-goal-folio.png`
+  - `audits/interactive-road-tools-2026-08-12/02-map-navigator.png`
+  - `audits/interactive-road-tools-2026-08-12/03-bag-supply-roll.png`
+- Implementation screenshots: 480×860 px, CSS viewport 480×860, `deviceScaleFactor: 1`.
+- Density normalization: each source was proportionally downsampled and centered on a 480×860 canvas before being paired with the 480×860 browser capture. No device chrome was included.
+- State: new game, Day 1 morning, current stop 부산 감천 부두. The implementation intentionally shows the live 07:30 game clock and actual route/resource values; the source mock uses illustrative 09:30 values.
 
-## Normalization
+## Evidence
 
-- Source pixel size: `900 × 1747` px.
-- Source normalized size: `360 × 700` px.
-- Implementation viewport and CSS size: `360 × 700` CSS px.
-- Implementation pixel size: `360 × 700` px at device scale factor `1`.
-- State: stopped at 부산 감천 부두, Day 1 at 07:30, `머물기` selected.
-- The source was normalized to the implementation viewport. Both full views omit browser chrome and device framing.
+- Full-view, same-input comparisons:
+  - `audits/interactive-road-tools-2026-08-12/04-goal-reference-vs-implementation.png`
+  - `audits/interactive-road-tools-2026-08-12/05-map-reference-vs-implementation.png`
+  - `audits/interactive-road-tools-2026-08-12/06-bag-reference-vs-implementation.png`
+  - Contact sheet: `audits/interactive-road-tools-2026-08-12/07-all-reference-vs-implementation.jpg`
+- Focused comparisons for readable typography, map selection, resource rows, pockets, and actions:
+  - `audits/interactive-road-tools-2026-08-12/08-goal-focused.png`
+  - `audits/interactive-road-tools-2026-08-12/09-map-focused.png`
+  - `audits/interactive-road-tools-2026-08-12/10-bag-focused.png`
+  - Contact sheet: `audits/interactive-road-tools-2026-08-12/11-focused-reference-vs-implementation.jpg`
 
 ## Findings
 
-- No actionable P0, P1, or P2 differences remain.
-- [P3] The concept uses a second heavy metal rail around `길 / 현지 / 달구지`; the implementation intentionally uses a thin `목적지 / 머물기 / 달구지` switcher so the Caravan and live console retain more space.
-- [P3] The concept uses a shared time/risk/reward summary. The implementation intentionally keeps those facts on each action card, preventing metadata from describing the wrong action when multiple choices are visible.
-- [P3] 부산 has two authored local actions, so the normal local overview has no `더 할 일` button. The separately captured recruit-task state proves that the button and drawer appear when a third action exists.
+- No actionable P0/P1/P2 differences remain.
+- Fonts and typography: the condensed Korean sans/mono hierarchy, optical weights, line height, truncation, and amber/teal emphasis preserve the source hierarchy. Live quest copy is denser than the illustrative mock but remains legible and contained.
+- Spacing and layout rhythm: all three props retain the source major-region proportions, hardware frame, fixed bottom dock, tap-target separation, and vertical hierarchy at 480×860. Goal content uses three focused progression rows to avoid crowding.
+- Colors and visual tokens: parchment black/teal, CRT teal, canvas brown, and amber interaction states match the source direction; selected/disabled states remain distinct.
+- Image quality and asset fidelity: the leather folio, CRT navigator, and canvas roll are project-local WebP raster shells, not CSS approximations. Live icons use the game's existing raster icon family. Crops are sharp with no transparency halos or stretching.
+- Copy and content: all visible labels are coherent in Korean and use current game state. The map shows only known geography and player-selected routes; it does not reveal future encounters or danger predictions.
+- Interaction and accessibility: bottom-dock navigation, folio-to-map navigation, destination selection, route departure, bag pocket selection, repair action, and return-to-road were exercised. Route departure decreased fuel; repair consumed a part and increased vehicle health; a resource mutation was reflected by the visible number. Console/page errors were zero. The Quality 9 accessibility gate passed at 360×700, 390×844, and 480×860, including large text, reduced motion, and 200% zoom.
 
-## Required Fidelity Surfaces
+## Comparison history
 
-- Fonts and typography: the Korean sans/mono hierarchy, amber action titles, teal state labels, and compact instrument labels match Caravan's established system. The final browser audit found no visible text below 12 px, and dynamic action metadata wraps without covering the CTA.
-- Spacing and layout rhythm: the upper Caravan scene remains dominant. The mode switcher is a single 44 px rail, the destination navigator keeps its original geometry, and local/vehicle screens use one metal shell. The local overview shows at most two complete actions; neither overview has an internal scroll area.
-- Colors and visual tokens: navy screens, warm metal, amber selected/action states, teal status states, and red hazard states match the source direction and existing game tokens. Selected tabs also use a bottom marker, not color alone.
-- Image quality and asset fidelity: the implementation reuses the real raster console shell, button faces, pixel icons, minimap, and Caravan scene. No placeholder imagery, handcrafted SVG, CSS-drawn substitute, or stretched UI sprite was introduced.
-- Copy and content: ambiguous `길 / 현지` copy is replaced by task language—`목적지 / 머물기 / 달구지`. Route danger and supplies remain functional; local actions carry their own time/risk/reward; vehicle detail contains real fuel, chassis, equipment, repair, and radio state.
+### Iteration 1 — blocked
 
-## Full-view Comparison Evidence
+- P2 goal density: all six steps were shown at once, making the paper crowded. Fixed by showing a three-step progress window centered on current progress.
+- P2 map fidelity: the first canvas pass read too purple and opened without a useful route card. Fixed by applying the teal CRT navigator palette and selecting the first reachable known destination on open.
+- P2 map layout: destination details occupied the wrong region. Fixed by moving the compact selected-route summary and departure control into the physical lower hardware bay.
+- P2 bag state: zero quantities rendered as a dash and the QA capture showed a different selected pocket. Fixed by rendering numeric zero and capturing the source-matching `부품` selected state before exercising alternatives.
+- P3 bag icon scale: first-pass item icons were visually underweighted. Fixed by increasing pocket and detail icon size while retaining the existing raster icon family.
 
-The combined full-view pair shows the same stopped/local state. Both preserve the scene → resource HUD → mode selector → armored terminal → five-button dock hierarchy. The implementation deliberately removes the source's second heavy selector frame and global summary, but retains the same amber/teal hierarchy, two-action scan pattern, vehicle status strip, and raster hardware language.
+### Iteration 2 — passed
 
-## Focused Region Comparison Evidence
+- Post-fix evidence is recorded in comparison files 04–11 above.
+- The final normalized comparison found no remaining P0/P1/P2 visual or interaction issues.
 
-The focused pair confirms that the live screen still reads as one armored terminal. Compared with the source, the implementation's action rows expose their own metadata and full CTA faces without overlap, while the thin selector reduces stacked metal. Text, status chips, shell edges, and the three system values are readable at the native 360 px capture.
+## Residual follow-up polish
 
-## Comparison History
+- P3: the live route graph contains more discovered-city labels than the simplified concept map. This is an intentional product difference so the real world state remains usable rather than decorative.
+- P3: the standalone HTML remains above its 32 MB advisory size budget (37.5 MB) because the game embeds all media for offline play. This does not block this UI or its interaction path.
 
-1. Audited implementation at commit `47a6e10`:
-   - Evidence: `/Users/sang/caravan/audits/stop-console-qa-2026-08-10/00-stop-console-audit-contact.png`.
-   - [P1] The second local action was clipped behind a fixed summary.
-   - [P1] The route navigator was compressed by a generic fixed panel ratio.
-   - [P1] Opening vehicle management changed the toggle label but left its contents below an invisible nested scroll.
-   - [P2] `길 / 현지` competed with the selected bottom `길` tab and did not describe the tasks clearly.
-2. Structural fix:
-   - Restored the original route-console geometry.
-   - Replaced the heavy mode rail with a thin 44 px selector.
-   - Limited the local overview to two complete action cards and moved additional actions to a full-screen drawer.
-   - Removed the nested vehicle-management toggle; the overview now shows three system values and the most-needed action, while full repair/equipment content opens in a full-screen drawer.
-   - Renamed modes to `목적지 / 머물기 / 달구지`.
-3. First 360 px recapture:
-   - Evidence: `/Users/sang/caravan/tests/shots/stop-console-structure-final/00d-stop-actions.png`.
-   - [P2] Local status content extended behind the persistent dock.
-   - Fix: shortened small-screen rows, removed only redundant description copy, retained per-action metadata, and adjusted local/vehicle shell ratios.
-4. Accessibility-density recapture:
-   - Evidence: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/00d-stop-actions.png`.
-   - Raised every visible local/vehicle label to at least 12 px and hid redundant English kickers on the smallest viewport.
-   - Post-fix evidence shows complete actions, the resource strip, and all persistent controls without overlap.
-5. Final combined comparison:
-   - Evidence: `/Users/sang/caravan/tests/shots/stop-console-structure-final-3/design-comparison-local.png`.
-   - No actionable P0/P1/P2 differences remain.
+## Implementation checklist
 
-## Interaction and Runtime Checks
-
-- Chromium browser capture at `360 × 700`, device scale factor `1`.
-- Tested mouse/touch mode switching and arrow-key tab switching.
-- Tested route selection, hazard details, resource details, and departure.
-- Tested local camp, the conditional `더 할 일` button, drawer open/close, and focus restoration.
-- Tested vehicle overview, detail drawer, repair action, radio state, and drawer close.
-- Tested `360 × 700`, `390 × 844`, `480 × 860`, large text, reduced motion, and 200% zoom.
-- Golden route, keyboard-only, source-health, and Quality 9 accessibility gates pass.
-- Browser console/page errors: zero.
-
-## Follow-up Polish
-
-- If 부산 later receives an authored settlement-interior hub, it can become the first local action while keeping exploration second and moving camp to the existing extra-action drawer.
+- [x] Preserve all three physical prop designs as raster shells.
+- [x] Render all readable values and app copy as live DOM/canvas content.
+- [x] Connect goal, map, bag, road, and menu navigation.
+- [x] Connect destination selection and departure.
+- [x] Connect bag item selection and parts repair.
+- [x] Verify responsive accessibility and console health.
+- [x] Compare normalized source and implementation full views and focused regions.
 
 final result: passed
