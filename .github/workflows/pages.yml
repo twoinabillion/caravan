@@ -26,7 +26,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir _site
-          cp index.html '서울까지400km.html' _site/
+          cp index.html '서울까지400km.html' mobile-preview.html _site/
           touch _site/.nojekyll
       - name: Push to gh-pages
         uses: peaceiris/actions-gh-pages@v4
