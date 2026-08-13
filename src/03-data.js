@@ -106,8 +106,8 @@ D.driverLv = [
    type: city(주요도시폐허) town(소규모) ruin(폐허) settlement(사람사는곳) hidden(발견형) goal */
 D.nodes = {
   busan:     {name:'부산 감천 부두',   x:492,y:640, region:'south', type:'settlement', desc:'남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.'},
-  gimhae:    {name:'김해 들판',        x:450,y:626, region:'south', type:'ruin',  desc:'비행장이 있던 자리. 활주로 위에 잡초가 활주하고 있다.'},
-  yangsan:   {name:'양산 고가차도',    x:486,y:600, region:'south', type:'ruin',  desc:'무너진 고가 아래로 길이 하나 살아 있다.'},
+  gimhae:    {name:'김해 들판',        x:450,y:626, region:'south', type:'ruin',  desc:'민간 비행장이 있던 넓은 들판이다. 갈라진 활주로 위로 잡초가 길게 자라고, 북서쪽 유도로는 아직 바퀴가 지나갈 수 있다.'},
+  yangsan:   {name:'양산 고가차도',    x:486,y:600, region:'south', type:'ruin',  desc:'무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.'},
   miryang:   {name:'밀양 장터',        x:446,y:566, region:'south', type:'settlement', stl:'miryang', desc:'닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.'},
   jinju:     {name:'진주 남강변',      x:360,y:600, region:'south', type:'town',  desc:'강물은 그대로인데 다리는 반쪽이다. 유등 축제의 등롱 잔해가 강가에 쌓여 있다.'},
   hapcheon:  {name:'합천 과수원',      x:400,y:548, region:'south', type:'ruin',  desc:'주인 잃은 사과나무들이 제멋대로 열매를 맺는다.'},

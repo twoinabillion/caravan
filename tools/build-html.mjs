@@ -77,6 +77,9 @@ const uiAssetPaths = {
   NAV_BUTTON_PRESSED:{path:'assets/ui/nav-button-pressed-v1.png', mime:'image/png'},
   ROUTE_CONSOLE_SHELL:{path:'assets/ui/route-console-shell-option3.webp', mime:'image/webp'},
   ROUTE_MAP_TERRAIN:{path:'assets/ui/route-map-terrain-v1.webp', mime:'image/webp'},
+  ROUTE_FACT_FUEL:{path:'assets/ui/route-fact-fuel-option3.png', mime:'image/png'},
+  ROUTE_FACT_TIME:{path:'assets/ui/route-fact-time-option3.png', mime:'image/png'},
+  ROUTE_FACT_DISTANCE:{path:'assets/ui/route-fact-distance-option3.png', mime:'image/png'},
   GOAL_FOLIO_SHELL:{path:'assets/ui/goal-folio-shell-v1.webp', mime:'image/webp'},
   MAP_NAVIGATOR_SHELL:{path:'assets/ui/map-navigator-shell-v1.webp', mime:'image/webp'},
   BAG_SUPPLY_ROLL:{path:'assets/ui/bag-supply-roll-v1.webp', mime:'image/webp'}

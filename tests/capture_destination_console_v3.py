@@ -66,12 +66,19 @@ with sync_playwright() as playwright:
       const app=document.querySelector('#app').getBoundingClientRect();
       const consoleBox=document.querySelector('.route-console-v3').getBoundingClientRect();
       const screen=document.querySelector('.route-console-screen').getBoundingClientRect();
+      const map=document.querySelector('.nav-route-map').getBoundingClientRect();
+      const summary=document.querySelector('.nav-route-summary').getBoundingClientRect();
+      const carousel=document.querySelector('.nav-destination-carousel').getBoundingClientRect();
+      const description=document.querySelector('.nav-place-description');
+      const selectedCard=document.querySelector('.nav-destination-card.is-selected').getBoundingClientRect();
       const dock=document.querySelector('#dock').getBoundingClientRect();
       const rocker=[...document.querySelectorAll('.journey-rocker button')].map(button=>({
         label:button.textContent.trim(),selected:button.getAttribute('aria-selected'),
         box:button.getBoundingClientRect().toJSON()
       }));
-      return {app:app.toJSON(),consoleBox:consoleBox.toJSON(),screen:screen.toJSON(),dock:dock.toJSON(),rocker,
+      return {app:app.toJSON(),consoleBox:consoleBox.toJSON(),screen:screen.toJSON(),map:map.toJSON(),summary:summary.toJSON(),
+        carousel:carousel.toJSON(),selectedCard:selectedCard.toJSON(),description:description.textContent.trim(),
+        descriptionLines:Math.round(description.getBoundingClientRect().height/parseFloat(getComputedStyle(description).lineHeight)),dock:dock.toJSON(),rocker,
         bodyOverflow:document.documentElement.scrollWidth>document.documentElement.clientWidth};
     }""")
     if errors:
@@ -82,6 +89,13 @@ with sync_playwright() as playwright:
         raise SystemExit(f"viewport overflow: {metrics}")
     if metrics["consoleBox"]["width"] < 430 or metrics["screen"]["width"] < 300:
         raise SystemExit(f"console geometry too small: {metrics}")
+    ratios = [metrics[name]["height"] / metrics["screen"]["height"] for name in ("map", "summary", "carousel")]
+    if not (0.43 <= ratios[0] <= 0.47 and 0.19 <= ratios[1] <= 0.23 and 0.32 <= ratios[2] <= 0.36):
+        raise SystemExit(f"option 3 vertical proportions drifted: {ratios}")
+    if metrics["selectedCard"]["width"] < 180 or metrics["selectedCard"]["height"] < 105:
+        raise SystemExit(f"selected destination image too small: {metrics['selectedCard']}")
+    if len(metrics["description"]) < 45 or metrics["descriptionLines"] < 2:
+        raise SystemExit(f"destination description collapsed: {metrics['description']!r}")
     if any(item["box"]["height"] < 44 for item in metrics["rocker"]):
         raise SystemExit(f"rocker touch target too small: {metrics['rocker']}")
 

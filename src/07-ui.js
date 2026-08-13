@@ -1221,9 +1221,9 @@ const UI = (()=>{
         <section class="nav-route-summary" aria-live="polite" aria-label="선택한 목적지 정보">
           <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
           <div class="nav-route-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
-            <span>${ICO('fuel','')}<span><small>연료 소모</small><b>${Math.ceil(selected.fuel)}L</b></span></span>
-            <span>${ICO('fatigue_ok','')}<span><small>이동 시간</small><b>${G.durationLabel(forecast.minutes)}</b></span></span>
-            <span>${ICO('pursuit','')}<span><small>총 거리</small><b>${selected.nb.km}km</b></span></span>
+            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>연료 소모</small><b>${Math.ceil(selected.fuel)}L</b></span></span>
+            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>이동 시간</small><b>${G.durationLabel(forecast.minutes)}</b></span></span>
+            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>총 거리</small><b>${selected.nb.km}km</b></span></span>
           </div>
         </section>
         <section class="nav-destination-carousel" aria-label="목적지 선택">
@@ -1289,9 +1289,8 @@ const UI = (()=>{
     const viewport=panel.querySelector('.nav-destination-viewport');
     const activeCard=viewport&&viewport.querySelector('.nav-destination-card.is-selected');
     if(viewport&&activeCard){
-      const centerActive=()=>viewport.scrollTo({
-        left:Math.max(0,activeCard.offsetLeft-(viewport.clientWidth-activeCard.clientWidth)/2),behavior:'auto'
-      });
+      const fixedPair=!!panel.querySelector('.route-console-v3.has-two-routes');
+      const centerActive=()=>viewport.scrollTo({left:fixedPair?0:Math.max(0,activeCard.offsetLeft-(viewport.clientWidth-activeCard.clientWidth)/2),behavior:'auto'});
       /* 큰 글자 모드처럼 renderAll 직후 바로 기하를 검사해도 선택 카드가 먼저
          프레임 밖에 남지 않도록, 강제 레이아웃 뒤 즉시 한 번과 다음 프레임에 한 번 맞춘다. */
       void viewport.offsetWidth;centerActive();requestAnimationFrame(centerActive);
