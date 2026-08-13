@@ -10,7 +10,7 @@ failures = []
 
 def check(label, ok, detail=''):
     mark = '✅' if ok else '❌'
-    print(f'{mark} {label}')
+    print(f'{mark} {label}' + (f' — {detail}' if not ok and detail else ''))
     if not ok:
         failures.append(f'{label}: {detail}')
 
@@ -140,34 +140,34 @@ with sync_playwright() as p:
     mode_initial = page.evaluate('''() => ({
       tabs:[...document.querySelectorAll('[data-journey-mode]')].map(button=>button.textContent.trim()),
       selected:document.querySelector('[data-journey-mode][aria-selected="true"]')?.dataset.journeyMode,
-      panels:document.querySelectorAll('.journey-mode-panel').length,
-      local:!!document.querySelector('.stop-action-console')
+      consoles:document.querySelectorAll('.journey-mode-console').length,
+      route:!!document.querySelector('.route-console-v3')
     })''')
     check('정차 기능은 목적지·머물기 두 모드만 가진 한 콘솔에서 전환한다',
-          mode_initial['tabs'] == ['목적지', '머물기'] and mode_initial['selected'] == 'local' and
-          mode_initial['panels'] == 1 and mode_initial['local'], str(mode_initial))
+          mode_initial['tabs'] == ['목적지', '머물기'] and mode_initial['selected'] == 'route' and
+          mode_initial['consoles'] == 1 and mode_initial['route'], str(mode_initial))
     stopped_geometry = page.evaluate('''() => {
-      const shell=document.querySelector('.journey-mode-panel');
+      const shell=document.querySelector('.route-console');
       const dock=document.querySelector('#dock');
-      const dash=document.querySelector('#dash');
+      const readout=document.querySelector('#road-status');
       const tabs=document.querySelector('.journey-mode-tabs');
       return {
         stageHeight:document.querySelector('#stage')?.getBoundingClientRect().height||0,
         shellBottom:shell?.getBoundingClientRect().bottom||0,
         dockTop:dock?.getBoundingClientRect().top||0,
-        dashBottom:dash?.getBoundingClientRect().bottom||0,
+        readoutBottom:readout?.getBoundingClientRect().bottom||0,
         tabsTop:tabs?.getBoundingClientRect().top||0
       };
     }''')
     stopped_gap = stopped_geometry['dockTop'] - stopped_geometry['shellBottom']
-    dash_gap = stopped_geometry['tabsTop'] - stopped_geometry['dashBottom']
-    check('정차 콘솔은 하단의 빈 띠를 줄이고 그 높이를 달구지·도로 장면에 돌려준다',
-          stopped_geometry['stageHeight'] >= 249 and -10 <= stopped_gap <= -4 and 4 <= dash_gap <= 10,
-          str({**stopped_geometry, 'dockGap': stopped_gap, 'dashGap': dash_gap}))
+    check('정차 콘솔은 중복 계기판 없이 하단의 빈 띠를 줄이고 풍경과 길 선택을 넓게 쓴다',
+          stopped_geometry['stageHeight'] >= 249 and 0 <= stopped_gap <= 26 and
+          stopped_geometry['tabsTop'] > stopped_geometry['readoutBottom'],
+          str({**stopped_geometry, 'dockGap': stopped_gap}))
     page.set_viewport_size({'width': 895, 'height': 955})
     page.wait_for_timeout(80)
     desktop_geometry = page.evaluate('''() => {
-      const shell=document.querySelector('.journey-mode-panel')?.getBoundingClientRect();
+      const shell=document.querySelector('.route-console')?.getBoundingClientRect();
       const dock=document.querySelector('#dock')?.getBoundingClientRect();
       return {
         stageHeight:document.querySelector('#stage')?.getBoundingClientRect().height||0,
@@ -176,15 +176,15 @@ with sync_playwright() as p:
         gap:(dock?.top||0)-(shell?.bottom||0)
       };
     }''')
-    check('900px 바로 아래의 긴 화면은 빈 바닥 대신 풍경을 늘려 콘솔을 도크까지 내린다',
-          desktop_geometry['stageHeight'] >= 389 and -14 <= desktop_geometry['gap'] <= -4,
+    check('900px 바로 아래의 넓은 화면은 풍경을 유지하고 콘솔과 도크를 겹치지 않는다',
+          desktop_geometry['stageHeight'] >= 279 and 0 <= desktop_geometry['gap'] <= 88,
           str(desktop_geometry))
     page.set_viewport_size({'width': 360, 'height': 700})
     page.wait_for_timeout(80)
     page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
       console:!!document.querySelector('.route-console'),
-      routes:[...document.querySelectorAll('[data-route-select]')].map(button=>button.dataset.routeSelect),
+      routes:[...new Set([...document.querySelectorAll('[data-route-select]')].map(button=>button.dataset.routeSelect))],
       hazards:document.querySelectorAll('.nav-hazard-row').length,
       facts:document.querySelectorAll('.nav-known-facts>span').length,
       unknowns:document.querySelectorAll('.nav-unknown-list>span').length,
@@ -197,10 +197,10 @@ with sync_playwright() as p:
     })''')
     check('정차 네비게이션은 현재 경로 수치만 보이고 사전 신호나 만남을 예고하지 않는다',
           nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
-          nav_initial['hazards'] == 0 and nav_initial['facts'] == 6 and nav_initial['unknowns'] == 0 and
+          nav_initial['hazards'] == 0 and nav_initial['facts'] == 3 and nav_initial['unknowns'] == 0 and
           '무너진 고가 아래로 길이 하나 살아 있다' in nav_initial['copy'] and
-          '소모 연료' in nav_initial['copy'] and '보유 연료' in nav_initial['copy'] and
-          '차체' in nav_initial['copy'] and '식량·물' in nav_initial['copy'] and
+          '거리' in nav_initial['copy'] and '이동 시간' in nav_initial['copy'] and
+          '필요 연료' in nav_initial['copy'] and
           nav_initial['titleSize'] >= 14 and nav_initial['descriptionSize'] >= 9 and nav_initial['valueSize'] >= 9.5 and
           not any(word in nav_initial['copy'] for word in ['만날','사람','위험','신호','미확인']),
           str(nav_initial))
@@ -262,15 +262,15 @@ with sync_playwright() as p:
         exactHazard:copy.includes('고가 낙하물'),
         predictiveCopy:/만날|사람|위험|신호|미확인|예상/.test(copy),
         futureArrow:/연료\\s*\\d+\\s*→/.test(copy),
-        hasRanges:/\\d+–\\d+분/.test(copy)&&copy.includes('소모 연료')
+        hasKnownTravel:copy.includes('이동 시간')&&copy.includes('필요 연료')
       };
     }''')
     check('위험·인물·도착 후 자원은 출발 전에 인터페이스로 노출되지 않는다',
           not hidden_future['inspector'] and hidden_future['hazardRows'] == 0 and
           hidden_future['hotspots'] == 0 and not hidden_future['exactHazard'] and
           not hidden_future['predictiveCopy'] and not hidden_future['futureArrow'] and
-          hidden_future['hasRanges'], str(hidden_future))
-    page.click('[data-nav-cycle]')
+          hidden_future['hasKnownTravel'], str(hidden_future))
+    page.click('[data-nav-next]')
     nav_compare = page.evaluate('''() => ({
       driving:!!S.driving,
       selected:document.querySelector('.route-console')?.dataset.routeConsole,
@@ -280,7 +280,7 @@ with sync_playwright() as p:
     check('다른 길 선택은 즉시 출발하지 않고 비교할 목적지만 바꾼다',
           not nav_compare['driving'] and nav_compare['selected'] == 'gimhae' and
           nav_compare['depart'] == 'gimhae' and '김해' in nav_compare['title'], str(nav_compare))
-    page.click('[data-nav-cycle]')
+    page.click('[data-nav-next]')
     page.click('[data-nav-depart="yangsan"]')
     check('네비게이션 출발 확인이 선택한 실제 주행을 시작한다',
           page.evaluate("S.driving&&S.driving.to==='yangsan'"))

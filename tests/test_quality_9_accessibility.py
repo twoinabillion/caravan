@@ -42,6 +42,9 @@ def layout_state(page):
       const rects=controls.map(node=>({node,rect:node.getBoundingClientRect()}));
       const stage=document.querySelector('#stage');
       const dock=document.querySelector('#dock');
+      const dash=document.querySelector('#dash');
+      const roadStatus=document.querySelector('#road-status')?.getBoundingClientRect();
+      const stageTime=document.querySelector('#stage-time')?.getBoundingClientRect();
       const contentEnd=[...panel.children].reverse().find(node=>node.getClientRects().length);
       return {
         documentOverflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
@@ -52,6 +55,9 @@ def layout_state(page):
         escaped:rects.filter(({rect})=>rect.left<panelRect.left-1||rect.right>panelRect.right+1).length,
         routeCount:panel.querySelectorAll('[data-route-select]').length,
         primaryCount:panel.querySelectorAll('[data-nav-depart]').length,
+        dashVisible:!!(dash&&dash.offsetParent!==null),
+        compactHud:!!(roadStatus&&stageTime&&roadStatus.height<=40&&stageTime.height<=40&&
+          roadStatus.width<=150&&stageTime.width<=120),
         stageHeight:stage?.getBoundingClientRect().height||0,
         dockGap:contentEnd&&dock?dock.getBoundingClientRect().top-contentEnd.getBoundingClientRect().bottom:null,
         guide:panel.querySelector('.journey-guide')?.textContent||''
@@ -92,6 +98,7 @@ with sync_playwright() as playwright:
         check(f'{width}×{height} normal text keeps the primary route path usable',
               normal['routeCount'] >= 2 and
               normal['primaryCount'] == 1 and
+              not normal['dashVisible'] and normal['compactHud'] and
               not normal['documentOverflow'] and not normal['panelOverflow'] and
               normal['shortControls'] == 0 and normal['escaped'] == 0, str(normal))
         if height >= 800:
@@ -138,6 +145,24 @@ with sync_playwright() as playwright:
         bag = tool_target_state(page, '#ovl-status')
         check(f'{width}×{height} bag keeps visible controls at least 44px',
               bag['count'] >= 8 and not bag['short'] and bag['escaped'] == 0, str(bag))
+        page.click('[data-bag-item="의약품"]')
+        bag_selection = page.evaluate("""() => ({
+          selected:document.querySelector('[data-bag-item="의약품"]')?.getAttribute('aria-pressed'),
+          heading:document.querySelector('.bag-detail-heading span')?.textContent,
+          count:document.querySelector('.bag-detail-heading b')?.textContent
+        })""")
+        check(f'{width}×{height} bag selection updates the live detail panel',
+              bag_selection['selected'] == 'true' and bag_selection['heading'] == '의약품' and
+              bool(bag_selection['count']), str(bag_selection))
+        page.evaluate("""() => { S.items['부품']=2; S.van=50; UI.renderAll(); }""")
+        page.click('[data-bag-item="부품"]')
+        before_repair = page.evaluate("() => ({parts:S.items['부품'],van:S.van})")
+        page.click('[data-bag-action="부품"]')
+        after_repair = page.evaluate("() => ({parts:S.items['부품'],van:S.van})")
+        check(f'{width}×{height} bag repair action changes inventory and vehicle state',
+              after_repair['parts'] == before_repair['parts'] - 1 and
+              after_repair['van'] > before_repair['van'],
+              f'{before_repair} -> {after_repair}')
         page.click('[data-road-tool="road"]')
 
         check(f'{width}×{height} console/runtime errors remain zero', not errors, str(errors[:5]))

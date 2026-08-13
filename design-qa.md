@@ -6,7 +6,7 @@ final result: passed
 
 - Source visual truth: `audits/mobile-ui-2026-08-13/390x844-01-route.png`,
   `390x844-03-goal.png`, `390x844-04-map.png`, `390x844-05-bag.png`
-- Implementation: `audits/mobile-ui-2026-08-13/after/390x844-01-route.png`,
+- Implementation: `audits/mobile-ui-2026-08-13/hud-compact/390x844-01-route.png`,
   `after/390x844-03-goal.png`, `after/390x844-04-map.png`, `after/390x844-05-bag.png`
 - Viewport / pixels: 각 390×844 CSS px / 390×844 image px, deviceScaleFactor 1
 - 추가 반응형 검증: 360×700, 430×932 캡처; 480×860 자동 레이아웃 검증
@@ -16,6 +16,8 @@ final result: passed
 
 - 길: 수정 전 약 85px였던 콘솔–도크 빈 공간이 수정 후 16.8px가 됐다. 정차 콘솔과
   하단 도크의 크기는 유지하면서 늘어난 영역은 도로와 달구지를 보여 주는 데 사용됐다.
+  달구지 아래 중복 계기판은 완전히 제거하고, 같은 정보는 상단 좌우의 38px 높이
+  소형 HUD에만 남겼다. 길 콘솔은 세로로 약 6% 늘려 스위치와 본문 압박을 줄였다.
 - 목표: 가죽 폴더와 종이 비율은 유지됐고, `지도에서 보기`와 `길로 돌아가기`의 실제
   터치 높이가 44px로 커졌다. 글자 크기 증가로 인한 줄 겹침이나 폴더 밖 이탈은 없다.
 - 지도: 수도권·영남권의 지명 수가 충돌 기준에 따라 줄어 노드와 선택 경로가 먼저
@@ -31,7 +33,8 @@ Focused region comparison은 별도 확대본 없이 원본 해상도의 네 상
 - Fonts and typography: 기존 글꼴·굵기·행간을 유지했다. 목표 단계는 10px, 보조문은
   8.5px, 가방 설명은 9.5px의 새 최소값을 적용했고 잘림을 확인하지 못했다.
 - Spacing and layout rhythm: 390×844와 430×932의 잉여 공간은 각각 16.8px와 18.9px로
-  정리됐다. 360×700은 공간 부족 때문에 기존의 1.5px 밀집 구도를 유지한다.
+  정리됐다. 중복 계기판 제거 뒤 390×844 길 콘솔은 357.4px에서 389.4px로 커졌다.
+  360×700은 공간 부족 때문에 0.6px 밀집 구도를 유지한다.
 - Colors and visual tokens: 색상, 금속·가죽·종이 래스터 셸, 테두리와 그림자 토큰은
   변경하지 않았다.
 - Image quality and asset fidelity: 이미지 자산과 크롭을 변경하지 않았다. 기존 달구지,
@@ -58,6 +61,12 @@ Focused region comparison은 별도 확대본 없이 원본 해상도의 네 상
 4. First post-fix test P2 — 480×860에서 콘솔이 도크와 약 7px 겹침.
    Fix: 음수 간격일 때 풍경을 줄이는 보정을 추가했다.
    Evidence: `tests/test_quality_9_accessibility.py` 최종 통과, 최종 dockGap 16.0px.
+5. Follow-up P1 — 달구지 아래 큰 연료·차체·시간 바가 상단 HUD와 중복되고 길 선택
+   스위치가 눌려 보임.
+   Fix: 큰 계기판 DOM을 제거하고 상단 좌우 HUD를 38px 높이로 축소했다. 고철 콘솔은
+   동일 너비에서 세로로 약 6% 늘리고 스위치 두 칸을 균등 중앙 정렬했다.
+   Evidence: `hud-compact/360x700-01-route.png`, `hud-compact/390x844-01-route.png`,
+   `hud-compact/430x932-01-route.png`, `hud-compact/390x844-02-stay.png`.
 
 ## Verification
 
@@ -70,6 +79,13 @@ Focused region comparison은 별도 확대본 없이 원본 해상도의 네 상
 
 ## Follow-up polish
 
-- P3: 360×700에서는 콘솔과 도크 사이가 1.5px로 촘촘하다. 핵심 조작은 모두 보이므로
+- P3: 360×700에서는 콘솔과 도크 사이가 0.6px로 촘촘하다. 핵심 조작은 모두 보이므로
   현재는 짧은 화면의 풍경 높이를 더 줄이지 않는 쪽을 선택했다.
 - 실기기 Safari/Chrome의 주소창 축소와 VoiceOver/TalkBack 순서는 별도 실기기 QA가 남는다.
+# 2026-08-13 가방·지도 품질 후속
+
+- 가방 수납칸 선택 위계, 수량 단위, 상세 행동의 결과 예고를 정리했다.
+- `부품 1개로 정비 · 차체 +35/+45`가 실제 `fieldRepair()` 계산과 일치한다.
+- 수납칸 선택과 부품 정비의 상태 변경을 모바일 접근성 테스트에 추가했다.
+- 360×700, 390×844, 480×860, 200% 확대 검증 통과.
+- 증거: `audits/mobile-ui-2026-08-13/polish-audit.md`, `polish-after/`.

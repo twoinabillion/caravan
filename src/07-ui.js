@@ -615,6 +615,7 @@ const UI = (()=>{
   /* ── HUD ── */
   function gauge(id, val, max, warn){
     const g=$(id);
+    if(!g) return;
     g.querySelector('.val').textContent = typeof val==='number'? (Math.round(val*10)/10) : val;
     g.querySelector('.bar i').style.width = clamp(val/max*100,0,100)+'%';
     g.classList.toggle('warn', warn);
@@ -627,9 +628,11 @@ const UI = (()=>{
     gauge('#g-van', Math.floor(S.van), S.vanMax, S.van<25);
     gauge('#g-scrap', S.scrap, 40, false);
     const clock=G.fmtClock();
-    $('#clockbox').textContent = clock;
+    const clockbox=$('#clockbox');
+    if(clockbox) clockbox.textContent = clock;
     const wxNow=D.wx[S.wx]||D.wx.clear, wxN=D.wx[S.wxNext]||D.wx.clear;
-    $('#wxbox').innerHTML = `${ICO('wx_'+S.wx, wxNow.ic+' ')}${wxNow.nm} <span style="opacity:.5">· 내일 ${ICO('wx_'+S.wxNext, wxN.ic)}</span>`;
+    const wxbox=$('#wxbox');
+    if(wxbox) wxbox.innerHTML = `${ICO('wx_'+S.wx, wxNow.ic+' ')}${wxNow.nm} <span style="opacity:.5">· 내일 ${ICO('wx_'+S.wxNext, wxN.ic)}</span>`;
     const stageFuel=$('#stage-fuel'), stageVan=$('#stage-van'), stageDay=$('#stage-day');
     const stageClock=$('#stage-clock'), stageWeather=$('#stage-weather');
     if(stageFuel) stageFuel.textContent=`${Math.floor(S.fuel)}L`;
@@ -638,12 +641,16 @@ const UI = (()=>{
     if(stageClock) stageClock.textContent=clock.replace(/^DAY\s+\d+\s*·\s*/,'');
     if(stageWeather) stageWeather.textContent=wxNow.nm;
     const f=$('#ftgbox'), stg=G.fatigueStage();
-    f.style.display='inline';
-    f.style.color = stg==='bad'?'var(--danger)': stg==='mid'?'var(--amber)':'var(--faded)';
-    f.innerHTML = `${ICO('fatigue_'+stg, G.fatigueFace())} ${Math.floor(S.fatigue)}%`;
+    if(f){
+      f.style.display='inline';
+      f.style.color = stg==='bad'?'var(--danger)': stg==='mid'?'var(--amber)':'var(--faded)';
+      f.innerHTML = `${ICO('fatigue_'+stg, G.fatigueFace())} ${Math.floor(S.fatigue)}%`;
+    }
     const eye=$('#eyebox');
-    eye.style.display = S.pursuit>0? 'inline':'none';
-    eye.innerHTML = `${ICO('pursuit','◉'.repeat(Math.min(S.pursuit,5)))} 관측 ${S.pursuit}`;
+    if(eye){
+      eye.style.display = S.pursuit>0? 'inline':'none';
+      eye.innerHTML = `${ICO('pursuit','◉'.repeat(Math.min(S.pursuit,5)))} 관측 ${S.pursuit}`;
+    }
     renderDeskRail();
   }
 
@@ -3356,12 +3363,15 @@ const UI = (()=>{
     }else{
       const perDay=Math.max(1,G.partySize()-(G.hasPerk('kw_ration')&&G.partySize()>1?1:0));
       const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
+      const parts=S.items['부품']||0;
+      const repairGain=S.up&&S.up.sidebox?45:35;
+      const canRepair=parts>0&&S.van<S.vanMax-2;
       const entries=[
-        {id:'부품',label:'부품',value:S.items['부품']||0,icon:'parts',desc:'달구지 정비에 사용한다.',action:S.van<S.vanMax-2?'정비에 사용':'차체가 충분히 튼튼하다'},
-        {id:'의약품',label:'의약품',value:S.items['의약품']||0,icon:'meds',desc:'부상자를 돌볼 때 사용하는 약품이다.',action:'현재 수량 확인'},
-        {id:'탄약',label:'소총탄',value:S.items['탄약']||0,icon:'ammo',desc:'총기를 사용할 때 필요한 탄약이다.',action:'현재 수량 확인'},
-        {id:'고철',label:'고철',value:S.scrap,icon:'scrap',desc:'거래와 개조에 사용하는 재료다.',action:'현재 수량 확인'},
-        {id:'기타',label:'기타',value:Object.entries(S.items).filter(([key])=>!['부품','의약품','탄약'].includes(key)).reduce((sum,[,value])=>sum+(Number(value)||0),0),icon:'quest',desc:'특별한 의뢰와 길에서 얻은 물건이다.',action:'가방 안에 보관 중'}
+        {id:'부품',label:'부품',value:parts,unit:'개',icon:'parts',desc:'달구지의 손상된 차체를 현장에서 복구한다.',action:canRepair?`부품 1개로 정비 · 차체 +${repairGain}`:parts<1?'정비할 부품이 없다':'차체가 충분히 튼튼하다',primary:true},
+        {id:'의약품',label:'의약품',value:S.items['의약품']||0,unit:'개',icon:'meds',desc:'부상자를 돌볼 때 사용하는 약품이다.',action:'보유 수량 확인'},
+        {id:'탄약',label:'소총탄',value:S.items['탄약']||0,unit:'발',icon:'ammo',desc:'총기를 사용할 때 필요한 탄약이다.',action:'보유 수량 확인'},
+        {id:'고철',label:'고철',value:S.scrap,unit:'개',icon:'scrap',desc:'거래와 달구지 개조에 사용하는 재료다.',action:'보유 수량 확인'},
+        {id:'기타',label:'기타',value:Object.entries(S.items).filter(([key])=>!['부품','의약품','탄약'].includes(key)).reduce((sum,[,value])=>sum+(Number(value)||0),0),unit:'개',icon:'quest',desc:'의뢰와 여정에서 얻은 특별한 물건이다.',action:'보관 내용 확인'}
       ];
       if(!entries.some(entry=>entry.id===inventorySelection)) inventorySelection='부품';
       const selected=entries.find(entry=>entry.id===inventorySelection)||entries[0];
@@ -3372,9 +3382,9 @@ const UI = (()=>{
           <div>${ICO('food')}<span>식량<b>${S.food}</b></span></div>
           <div>${ICO('fuel')}<span>연료<b>${Math.floor(S.fuel)}L</b></span></div>
         </section>
-        <section class="bag-vehicle"><div><span>차체</span><b>${Math.floor(S.van)}%</b><i><em style="width:${clamp(S.van/S.vanMax*100,0,100)}%"></em></i></div><div><span>보급</span><b>${supplyDays}일</b><i><em style="width:${clamp(supplyDays/5*100,0,100)}%"></em></i></div></section>
-        <section class="bag-pockets" aria-label="가방 수납칸">${entries.map(entry=>`<button class="bag-pocket ${entry.id===selected.id?'selected':''}" data-bag-item="${entry.id}" aria-pressed="${entry.id===selected.id}">${ICO(entry.icon)}<span>${esc(entry.label)}</span><b>${entry.value??0}</b></button>`).join('')}</section>
-        <section class="bag-detail">${ICO(selected.icon)}<div><span>${esc(selected.label)}</span><p>${esc(selected.desc)}</p><button data-bag-action="${selected.id}" ${(selected.id==='부품'&&(!(S.items['부품'])||S.van>=S.vanMax-2))?'disabled':''}>${esc(selected.action)}</button></div></section>
+        <section class="bag-vehicle" aria-label="달구지와 보급 상태"><small class="bag-vehicle-title">여정 상태</small><div><span>차체</span><b>${Math.floor(S.van)}%</b><i><em style="width:${clamp(S.van/S.vanMax*100,0,100)}%"></em></i></div><div><span>남은 보급</span><b>${supplyDays}일</b><i><em style="width:${clamp(supplyDays/5*100,0,100)}%"></em></i></div></section>
+        <section class="bag-pockets" aria-label="가방 수납칸">${entries.map(entry=>`<button class="bag-pocket ${entry.id===selected.id?'selected':''}" data-bag-item="${entry.id}" aria-pressed="${entry.id===selected.id}" aria-label="${esc(entry.label)} ${entry.value??0}${entry.unit}${entry.id===selected.id?', 선택됨':''}">${ICO(entry.icon)}<span class="bag-pocket-name">${esc(entry.label)}</span><span class="bag-pocket-count"><small>보유</small><b>${entry.value??0}</b><small>${entry.unit}</small></span></button>`).join('')}</section>
+        <section class="bag-detail">${ICO(selected.icon)}<div class="bag-detail-copy"><small class="bag-detail-kicker">선택한 수납칸</small><div class="bag-detail-heading"><span>${esc(selected.label)}</span><b>${selected.value??0}${selected.unit}</b></div><p>${esc(selected.desc)}</p><button class="${selected.primary?'is-primary':'is-info'}" data-bag-action="${selected.id}" ${(selected.id==='부품'&&!canRepair)?'disabled':''}>${esc(selected.action)}</button></div></section>
         <nav class="bag-tool-tabs" aria-label="다른 도구"><button data-road-tool="goal">목표</button><button data-road-tool="map">지도</button><button data-road-tool="road">길로</button></nav>
       </div>`;
       b.querySelectorAll('[data-bag-item]').forEach(button=>button.onclick=()=>{
