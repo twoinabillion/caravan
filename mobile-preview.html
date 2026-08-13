@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caravan 모바일 실사용 프리뷰</title>
+  <style>
+    :root{
+      color-scheme:dark;
+      --bg:#080a0f;--panel:#10141d;--line:#293140;--paper:#ece9df;
+      --muted:#9da6b6;--amber:#ffb85a;--teal:#63c4bd;
+    }
+    *{box-sizing:border-box}
+    html,body{min-height:100%;margin:0;background:var(--bg);color:var(--paper);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,select{font:inherit}
+    button:focus-visible,select:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+    .topbar{position:sticky;z-index:5;top:0;display:flex;align-items:center;gap:10px;min-height:66px;padding:10px 16px;
+      border-bottom:1px solid var(--line);background:rgba(8,10,15,.96);backdrop-filter:blur(12px)}
+    .brand{min-width:230px}.brand b{display:block;font-size:15px}.brand small{display:block;margin-top:2px;color:var(--teal);font:12px/1.2 ui-monospace,monospace}
+    .controls{display:flex;flex:1;align-items:center;gap:8px;flex-wrap:wrap}
+    select,button{min-height:44px;border:1px solid #3a4558;border-radius:7px;background:#151b25;color:var(--paper);padding:8px 11px}
+    select{min-width:245px}button:hover{border-color:#69768b;background:#1b2330}.primary{border-color:#a66e27;background:#6f4819;color:#ffe1ae}
+    main{display:grid;grid-template-columns:minmax(238px,292px) minmax(0,1fr);min-height:calc(100vh - 66px)}
+    .notes{padding:24px 20px;border-right:1px solid var(--line);background:#0c1017}
+    .notes h1{margin:0;font-size:21px;letter-spacing:-.03em}.notes p{margin:11px 0;color:#b7becb;font-size:14px;line-height:1.58}
+    .measure{margin:18px 0;padding:12px;border:1px solid #304154;border-radius:8px;background:#0b1620}
+    .measure small{display:block;color:var(--teal);font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.07em}
+    .measure b{display:block;margin-top:5px;color:var(--amber);font:800 21px/1 ui-monospace,monospace}
+    .measure span{display:block;margin-top:7px;color:#aeb8c7;font-size:12px;line-height:1.4}
+    .limits{padding-top:14px;border-top:1px solid var(--line);color:#8f98a8;font-size:12px;line-height:1.55}
+    .stage{display:grid;place-items:center;min-width:0;padding:28px;overflow:auto;background:
+      radial-gradient(90% 70% at 50% 10%,#171d2b 0,transparent 68%),#07090d}
+    .viewport-label{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;color:#a8b0bf;font:12px/1.2 ui-monospace,monospace}
+    .viewport-label b{color:#ece9df}.viewport-label em{color:var(--teal);font-style:normal}
+    .viewport-shell{position:relative;width:var(--scaled-w);height:var(--scaled-h);overflow:hidden;border:1px solid #556176;border-radius:8px;
+      background:#000;box-shadow:0 20px 70px rgba(0,0,0,.58),0 0 0 6px #111722}
+    iframe{position:absolute;inset:0;width:var(--vp-w);height:var(--vp-h);border:0;background:#000;transform:scale(var(--scale));transform-origin:0 0}
+    @media(max-width:820px){main{grid-template-columns:1fr}.notes{border-right:0;border-bottom:1px solid var(--line)}.topbar{position:relative;align-items:flex-start;flex-direction:column}.brand{min-width:0}.stage{padding:22px 12px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><b>Caravan 모바일 실사용 프리뷰</b><small>주소창이 차지한 높이까지 반영</small></div>
+    <div class="controls">
+      <label><span hidden>기기 조건</span><select id="preset" aria-label="모바일 화면 조건">
+        <optgroup label="iPhone · Safari 주소창 열림">
+          <option value="iphone-se3-safari">iPhone SE 3 · 375 × 553</option>
+          <option value="iphone13-mini-safari">iPhone 13 mini · 375 × 629</option>
+          <option value="iphone13-safari" selected>iPhone 13 / 14 · 390 × 664</option>
+          <option value="iphone15-pro-safari">iPhone 15 Pro · 393 × 659</option>
+          <option value="iphone15-promax-safari">iPhone 15 Pro Max · 430 × 739</option>
+        </optgroup>
+        <optgroup label="iPhone · 홈 화면 추가">
+          <option value="iphone13-home">iPhone 13 · 390 × 844</option>
+          <option value="iphone15-pro-home">iPhone 15 Pro · 393 × 852</option>
+          <option value="iphone15-promax-home">iPhone 15 Pro Max · 430 × 932</option>
+        </optgroup>
+        <optgroup label="Samsung Galaxy · Chrome 주소창 열림">
+          <option value="galaxy-s24-chrome">Galaxy S24 · 360 × 700</option>
+          <option value="galaxy-a55-chrome">Galaxy A55 · 480 × 940</option>
+          <option value="galaxy-s9-chrome">Galaxy S9+ · 320 × 578</option>
+        </optgroup>
+        <optgroup label="Google Pixel · Chrome 주소창 열림">
+          <option value="pixel5-chrome">Pixel 5 · 393 × 647</option>
+          <option value="pixel7-chrome">Pixel 7 · 412 × 759</option>
+        </optgroup>
+        <optgroup label="앱 안에서 링크 열기">
+          <option value="iphone13-inapp">iPhone 13 · 카카오/인스타 안 · 390 × 604</option>
+          <option value="galaxy-s24-inapp">Galaxy S24 · 카카오/인스타 안 · 360 × 640</option>
+        </optgroup>
+      </select></label>
+      <button id="reload" type="button">게임 다시 불러오기</button>
+      <button id="actual" class="primary" type="button">100% 실제 크기</button>
+    </div>
+  </header>
+  <main>
+    <aside class="notes">
+      <h1>휴대폰에서 보이는 게임 영역</h1>
+      <p>위의 뒤로가기·주소창은 게임 위에 덧붙는 것이 아니라, 게임이 사용할 세로 높이를 가져간다. 이 프리뷰는 그만큼을 이미 뺀 실제 콘텐츠 영역으로 게임을 렌더링한다.</p>
+      <div class="measure"><small>LIVE CSS VIEWPORT</small><b id="dimensions">390 × 664</b><span id="description">iPhone 13/14에서 Safari 도구막대가 보이는 조건을 근사한다.</span></div>
+      <p>왼쪽 조건을 바꾸면 같은 게임을 긴 화면·짧은 화면에서 바로 비교할 수 있다. 브라우저 창이 작으면 비율만 축소해 보여 주며, 게임 내부 치수는 그대로 유지된다.</p>
+      <div class="limits">이 화면은 CSS 레이아웃과 터치 크기를 재현한다. iOS Safari의 글꼴 렌더링, 노치 안전영역, 스크롤 탄성까지 완전히 동일한 최종 검증은 실제 iPhone에서 해야 한다.</div>
+    </aside>
+    <section class="stage" aria-label="모바일 게임 프리뷰">
+      <div>
+        <div class="viewport-label"><b id="viewport-name">iPhone 13 · Safari</b><em id="scale-label">100%</em></div>
+        <div class="viewport-shell" id="shell">
+          <iframe id="game" title="서울까지 400km 모바일 게임" src="./서울까지400km.html"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const presets={
+      'iphone-se3-safari':{name:'iPhone SE 3 · Safari',width:375,height:553,description:'작은 iPhone에서 Safari 상·하단 도구막대가 보이는 매우 짧은 조건이다.'},
+      'iphone13-mini-safari':{name:'iPhone 13 mini · Safari',width:375,height:629,description:'작은 노치형 iPhone에서 Safari 도구막대가 보이는 조건이다.'},
+      'iphone13-safari':{name:'iPhone 13 / 14 · Safari',width:390,height:664,description:'iPhone 13/14에서 Safari 도구막대가 보이는 조건을 근사한다.'},
+      'iphone15-pro-safari':{name:'iPhone 15 Pro · Safari',width:393,height:659,description:'iPhone 15 Pro에서 Safari 도구막대가 보이는 조건이다.'},
+      'iphone15-promax-safari':{name:'iPhone 15 Pro Max · Safari',width:430,height:739,description:'큰 iPhone에서 Safari 도구막대가 보이는 조건이다.'},
+      'iphone13-home':{name:'iPhone 13 · 홈 화면',width:390,height:844,description:'홈 화면에 추가해 주소창 없이 실행한 iPhone 13의 전체 높이다.'},
+      'iphone15-pro-home':{name:'iPhone 15 Pro · 홈 화면',width:393,height:852,description:'홈 화면 추가 또는 standalone 실행에 가까운 iPhone 15 Pro 높이다.'},
+      'iphone15-promax-home':{name:'iPhone 15 Pro Max · 홈 화면',width:430,height:932,description:'주소창 없이 실행한 큰 iPhone의 전체 높이다.'},
+      'galaxy-s24-chrome':{name:'Galaxy S24 · Chrome',width:360,height:700,description:'Galaxy S24에서 Chrome 주소창과 하단 내비게이션이 보이는 보수적 조건이다.'},
+      'galaxy-a55-chrome':{name:'Galaxy A55 · Chrome',width:480,height:940,description:'큰 Android 화면에서 Chrome UI를 제외한 넓은 콘텐츠 영역이다.'},
+      'galaxy-s9-chrome':{name:'Galaxy S9+ · Chrome',width:320,height:578,description:'폭이 좁은 구형 Galaxy에서 Chrome UI가 보이는 스트레스 조건이다.'},
+      'pixel5-chrome':{name:'Pixel 5 · Chrome',width:393,height:647,description:'Pixel 5에서 Chrome 주소창이 열린 짧은 조건이다.'},
+      'pixel7-chrome':{name:'Pixel 7 · Chrome',width:412,height:759,description:'Pixel 7에서 Chrome UI를 제외한 일반적인 콘텐츠 영역이다.'},
+      'iphone13-inapp':{name:'iPhone 13 · 앱 안 브라우저',width:390,height:604,description:'카카오톡·인스타그램 같은 앱 안의 자체 상단 바까지 보이는 보수적 조건이다.'},
+      'galaxy-s24-inapp':{name:'Galaxy S24 · 앱 안 브라우저',width:360,height:640,description:'Android 인앱 브라우저의 상단 바까지 포함한 짧은 조건이다.'}
+    };
+    const select=document.querySelector('#preset');
+    const shell=document.querySelector('#shell');
+    const frame=document.querySelector('#game');
+    let current=presets['iphone13-safari'];
+    let actualSize=false;
+    function fit(){
+      const stage=document.querySelector('.stage');
+      const availableWidth=Math.max(220,stage.clientWidth-56);
+      const availableHeight=Math.max(300,window.innerHeight-128);
+      const scale=actualSize?1:Math.min(1,availableWidth/current.width,availableHeight/current.height);
+      shell.style.setProperty('--vp-w',current.width+'px');
+      shell.style.setProperty('--vp-h',current.height+'px');
+      shell.style.setProperty('--scale',String(scale));
+      shell.style.setProperty('--scaled-w',(current.width*scale)+'px');
+      shell.style.setProperty('--scaled-h',(current.height*scale)+'px');
+      document.querySelector('#scale-label').textContent=Math.round(scale*100)+'% 표시';
+    }
+    function applyPreset(){
+      current=presets[select.value]||presets['iphone13-safari'];
+      document.querySelector('#dimensions').textContent=`${current.width} × ${current.height}`;
+      document.querySelector('#description').textContent=current.description;
+      document.querySelector('#viewport-name').textContent=current.name;
+      const url=new URL(location.href);url.searchParams.set('preset',select.value);history.replaceState(null,'',url);
+      fit();
+    }
+    const initial=new URL(location.href).searchParams.get('preset');
+    if(presets[initial]) select.value=initial;
+    select.addEventListener('change',applyPreset);
+    document.querySelector('#reload').addEventListener('click',()=>{frame.src=frame.src});
+    document.querySelector('#actual').addEventListener('click',event=>{
+      actualSize=!actualSize;event.currentTarget.textContent=actualSize?'화면에 맞추기':'100% 실제 크기';fit();
+    });
+    window.addEventListener('resize',fit,{passive:true});
+    applyPreset();
+  </script>
+</body>
+</html>
