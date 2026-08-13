@@ -1434,11 +1434,9 @@ const UI = (()=>{
   function scheduleStoppedStageFit(){
     if(stoppedStageFitFrame) cancelAnimationFrame(stoppedStageFitFrame);
     if(screen!=='game'||!S||S.driving) return;
-    /* 주행 화면은 모든 기기에서 같은 480×860 구도를 쓴다. 넓은 데스크톱에서만
-       남는 높이를 풍경으로 다시 계산하면 모바일과 패널 비율이 달라지므로 멈춘다. */
-    if(document.documentElement.classList.contains('game-viewport-locked')) return;
     /* 남는 세로 공간은 빈 패널로 두지 않고 풍경에 돌려준다. 고정 높이를 더하는
-       대신 실제 콘텐츠 끝과 하단 메뉴 사이를 재므로 짧은 화면은 기존 배치를 지킨다. */
+       대신 실제 콘텐츠 끝과 하단 메뉴 사이를 재므로 짧은 화면은 기존 배치를 지킨다.
+       game-viewport-locked는 런타임 폭을 고정할 뿐, 이 세로 보정까지 막으면 안 된다. */
     stoppedStageFitFrame=requestAnimationFrame(()=>{
       stoppedStageFitFrame=requestAnimationFrame(()=>{
         stoppedStageFitFrame=0;
@@ -1449,7 +1447,14 @@ const UI = (()=>{
         if(!stoppedStageBase) stoppedStageBase=stageHeight;
         const targetGap=Math.max(16,Math.min(24,Math.round(window.innerHeight*.02)));
         const gap=dock.getBoundingClientRect().top-contentEnd.getBoundingClientRect().bottom;
-        const nextHeight=Math.max(stoppedStageBase,Math.round(stageHeight+gap-targetGap));
+        let nextHeight=stageHeight;
+        if(gap>targetGap+1){
+          nextHeight=Math.max(stoppedStageBase,Math.round(stageHeight+gap-targetGap));
+        }else if(gap<0){
+          /* 너비가 큰 짧은 화면에서는 정사각 콘솔이 먼저 커진다. 이때만 풍경을
+             최대 32px 줄여 하단 도크와 실제 조작이 겹치지 않게 한다. */
+          nextHeight=Math.max(stoppedStageBase-32,Math.round(stageHeight+gap-targetGap));
+        }
         if(Math.abs(nextHeight-stageHeight)>1) stage.style.flexBasis=`${nextHeight}px`;
       });
     });

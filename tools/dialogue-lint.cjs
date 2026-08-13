@@ -146,8 +146,15 @@ const personIds = new Set(Object.keys(D.comps || {}));
 for (const id of personIds) {
   const voice=D.companionVoices&&D.companionVoices[id];
   if(!voice) errors.push(`동료 목소리 시트 누락: ${id}`);
-  else if(!Array.isArray(voice.forbidden)||voice.forbidden.length<3)
-    errors.push(`동료 금지 범용 표현 부족: ${id}`);
+  else {
+    if(!Array.isArray(voice.forbidden)||voice.forbidden.length<3)
+      errors.push(`동료 금지 범용 표현 부족: ${id}`);
+    const groundingFields=['value','routine','care','conflict','repair','stress'];
+    const missing=groundingFields.filter(field=>!voice.grounding||typeof voice.grounding[field]!=='string'||!voice.grounding[field].trim());
+    if(missing.length) errors.push(`동료 행동 성격 규칙 누락: ${id} / ${missing.join(', ')}`);
+    const pilot=(D.banter||[]).filter(line=>line.who===id&&line.persona==='grounding');
+    if(pilot.length<2) errors.push(`동료 페르소나 파일럿 대사 부족: ${id} / ${pilot.length}줄`);
+  }
 }
 
 /* 화자 스크립트와 연쇄 사건은 대사 자체가 자연스러워도 연결 키 하나가

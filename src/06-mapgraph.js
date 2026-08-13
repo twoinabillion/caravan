@@ -202,16 +202,25 @@ const MAPR = (()=>{
         ctx.beginPath(); ctx.arc(x,y,11+Math.sin(t*2.4),0,7); ctx.stroke(); }
     }
 
-    /* 노드 — 2패스: 라벨 (우선순위순, 겹치면 아래로, 그래도 겹치면 생략) */
+    /* 노드 — 2패스: 라벨. 작은 지도에서는 글자끼리뿐 아니라 다른 도시 심벌과도
+       부딪히지 않는 후보만 그린다. 현재 위치·선택 지점은 항상 우선한다. */
     if(S){
       const placed=[];
-      const putLabel=(x,y,txt,font,fill)=>{
+      const nodeZones=S.known.map(id=>{
+        const n=D.nodes[id];
+        return {id,x:px(n.x),y:py(n.y),r:W<340?9:7};
+      });
+      const hitsNode=(box,id)=>nodeZones.some(zone=>zone.id!==id&&
+        zone.x+zone.r>box.x0&&zone.x-zone.r<box.x1&&
+        zone.y+zone.r>box.y0&&zone.y-zone.r<box.y1);
+      const putLabel=(id,x,y,txt,font,fill,essential)=>{
         ctx.font=font;
-        const w=ctx.measureText(txt).width+4;
-        for(const dy of [-9,15]){
-          const bx={x0:x-w/2, x1:x+w/2, y0:y+dy-9, y1:y+dy+3};
-          if(bx.y0<26) continue;   // 상단 헤더 침범 방지
+        const w=ctx.measureText(txt).width+8;
+        for(const dy of [-11,18]){
+          const bx={x0:x-w/2, x1:x+w/2, y0:y+dy-10, y1:y+dy+4};
+          if(bx.x0<7||bx.x1>W-7||bx.y0<28||bx.y1>H-31) continue;
           if(placed.some(p=>p.x0<bx.x1&&bx.x0<p.x1&&p.y0<bx.y1&&bx.y0<p.y1)) continue;
+          if(!essential&&hitsNode(bx,id)) continue;
           placed.push(bx);
           ctx.fillStyle=fill; ctx.textAlign='center';
           ctx.fillText(txt, x, y+dy);
@@ -239,7 +248,7 @@ const MAPR = (()=>{
           n.stl? 'rgba(240,225,195,0.95)':
           nbrs.has(id)? 'rgba(255,205,135,0.98)':
           n.type==='hidden'? 'rgba(211,196,255,0.88)': 'rgba(181,192,220,0.84)';
-        putLabel(x,y,n.name.split(/[ —]/)[0],font,fill);
+        putLabel(id,x,y,n.name.split(/[ —]/)[0],font,fill,p<=1);
       }
     }
 
@@ -264,9 +273,10 @@ const MAPR = (()=>{
       ctx.beginPath(); ctx.roundRect(-5,-3.4,10,6.8,2); ctx.fill();
       ctx.restore();
     }
-    /* 한 줄 범례 — 지도 자체보다 크게 보이지 않게 한다. */
-    ctx.font='10.5px monospace'; ctx.fillStyle='rgba(185,194,217,0.72)';
-    ctx.fillText('◆ 거점  ● 도시  황색 현재 길  청록 선택 경로  · 지명을 누르면 경로 표시',12,H-12);
+    /* 접힌 CRT의 실제 폭 안에서 끝까지 읽히는 두 줄 범례. */
+    ctx.font=`${W<330?9:9.5}px monospace`; ctx.fillStyle='rgba(185,194,217,0.72)';
+    ctx.fillText('◆ 거점   ● 도시   황색 현재 길',12,H-23);
+    ctx.fillText('청록 선택 경로   · 지명을 누르면 경로 표시',12,H-10);
   }
 
   function onClick(ev){

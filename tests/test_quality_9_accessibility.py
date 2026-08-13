@@ -24,27 +24,57 @@ def enter_game(page):
     page.fill('#inp-name', '접근성')
     page.click('#bt-name')
     page.evaluate('UI.skipIntro()')
-    page.wait_for_timeout(120)
+    page.wait_for_timeout(160)
     page.evaluate("document.querySelector('#arrival-scene').classList.remove('on')")
     page.click('[data-journey-mode="route"]')
+    page.wait_for_timeout(160)
 
 
 def layout_state(page):
     return page.evaluate("""() => {
       const panel=document.querySelector('#panel');
-      const controls=[...panel.querySelectorAll('button:not([disabled])')].filter(node=>node.offsetParent!==null);
+      const controls=[...panel.querySelectorAll('button:not([disabled])')].filter(node=>{
+        if(node.offsetParent===null) return false;
+        if(node.matches('.nav-destination-card:not(.is-selected)')) return false;
+        return true;
+      });
       const panelRect=panel.getBoundingClientRect();
-      const rects=controls.map(node=>node.getBoundingClientRect());
+      const rects=controls.map(node=>({node,rect:node.getBoundingClientRect()}));
+      const stage=document.querySelector('#stage');
+      const dock=document.querySelector('#dock');
+      const contentEnd=[...panel.children].reverse().find(node=>node.getClientRects().length);
       return {
         documentOverflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
         panelOverflow:panel.scrollWidth>panel.clientWidth+1,
-        shortControls:rects.filter(rect=>rect.height<43.5).length,
-        escaped:rects.filter(rect=>rect.left<panelRect.left-1||rect.right>panelRect.right+1).length,
-        routeCount:panel.querySelectorAll('[data-go]').length,
-        primaryCount:panel.querySelectorAll('.act.primary').length,
+        shortControls:rects.filter(({node,rect})=>node.closest('.nav-carousel-dots')
+          ? rect.width<23.5||rect.height<23.5
+          : rect.width<43.5||rect.height<43.5).length,
+        escaped:rects.filter(({rect})=>rect.left<panelRect.left-1||rect.right>panelRect.right+1).length,
+        routeCount:panel.querySelectorAll('[data-route-select]').length,
+        primaryCount:panel.querySelectorAll('[data-nav-depart]').length,
+        stageHeight:stage?.getBoundingClientRect().height||0,
+        dockGap:contentEnd&&dock?dock.getBoundingClientRect().top-contentEnd.getBoundingClientRect().bottom:null,
         guide:panel.querySelector('.journey-guide')?.textContent||''
       };
     }""")
+
+
+def tool_target_state(page, selector):
+    return page.evaluate("""selector => {
+      const root=document.querySelector(selector);
+      const rootRect=root.getBoundingClientRect();
+      const controls=[...root.querySelectorAll('button:not([disabled])')].filter(node=>
+        node.offsetParent!==null&&!node.closest('#st-tabs'));
+      const short=controls.map(node=>({node,rect:node.getBoundingClientRect()})).filter(({rect})=>
+        rect.width<43.5||rect.height<43.5);
+      const escaped=controls.map(node=>node.getBoundingClientRect()).filter(rect=>
+        rect.left<rootRect.left-1||rect.right>rootRect.right+1||rect.top<rootRect.top-1||rect.bottom>rootRect.bottom+1);
+      return {
+        count:controls.length,
+        short:short.map(({node,rect})=>`${node.className||node.id}:${Math.round(rect.width)}x${Math.round(rect.height)}`),
+        escaped:escaped.length
+      };
+    }""", selector)
 
 
 with sync_playwright() as playwright:
@@ -61,8 +91,12 @@ with sync_playwright() as playwright:
         normal = layout_state(page)
         check(f'{width}×{height} normal text keeps the primary route path usable',
               normal['routeCount'] >= 2 and
+              normal['primaryCount'] == 1 and
               not normal['documentOverflow'] and not normal['panelOverflow'] and
               normal['shortControls'] == 0 and normal['escaped'] == 0, str(normal))
+        if height >= 800:
+            check(f'{width}×{height} returns surplus height to the road scene',
+                  14 <= normal['dockGap'] <= 26, str(normal))
 
         page.evaluate("""() => {
           document.documentElement.classList.add('ui-large-text');
@@ -75,13 +109,37 @@ with sync_playwright() as playwright:
 
         motion = page.evaluate("""() => {
           document.documentElement.classList.add('ui-reduce-motion');
-          const option=document.querySelector('.route-option');
+          const option=document.querySelector('.nav-destination-track');
           const style=getComputedStyle(option);
           return {duration:style.animationDuration,transition:style.transitionDuration};
         }""")
         check(f'{width}×{height} reduced motion collapses animation and transition time',
               motion['duration'] in ('0.001ms', '0.000001s', '1e-06s', '0s') and
               motion['transition'] in ('0.001ms', '0.000001s', '1e-06s', '0s'), str(motion))
+
+        page.click('#dk-objectives')
+        page.wait_for_timeout(80)
+        goal = tool_target_state(page, '#ovl-status')
+        check(f'{width}×{height} goal folio keeps visible controls at least 44px',
+              goal['count'] >= 4 and not goal['short'] and goal['escaped'] == 0, str(goal))
+        page.click('.folio-road-button')
+
+        page.click('#dk-map')
+        page.evaluate("UI.showNodeCard(S.known.find(id => id !== S.at))")
+        page.wait_for_timeout(80)
+        map_state = tool_target_state(page, '#ovl-map')
+        check(f'{width}×{height} map keeps visible controls at least 44px',
+              map_state['count'] >= 4 and not map_state['short'] and map_state['escaped'] == 0,
+              str(map_state))
+        page.click('#map-x')
+
+        page.click('#dk-status')
+        page.wait_for_timeout(80)
+        bag = tool_target_state(page, '#ovl-status')
+        check(f'{width}×{height} bag keeps visible controls at least 44px',
+              bag['count'] >= 8 and not bag['short'] and bag['escaped'] == 0, str(bag))
+        page.click('[data-road-tool="road"]')
+
         check(f'{width}×{height} console/runtime errors remain zero', not errors, str(errors[:5]))
         page.close()
 
