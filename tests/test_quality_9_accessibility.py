@@ -35,6 +35,7 @@ def layout_state(page):
       const panel=document.querySelector('#panel');
       const controls=[...panel.querySelectorAll('button:not([disabled])')].filter(node=>{
         if(node.offsetParent===null) return false;
+        if(node.getAttribute('aria-hidden')==='true') return false;
         if(node.matches('.nav-destination-card:not(.is-selected)')) return false;
         return true;
       });
@@ -53,6 +54,8 @@ def layout_state(page):
           ? rect.width<23.5||rect.height<23.5
           : rect.width<43.5||rect.height<43.5).length,
         escaped:rects.filter(({rect})=>rect.left<panelRect.left-1||rect.right>panelRect.right+1).length,
+        escapedControls:rects.filter(({rect})=>rect.left<panelRect.left-1||rect.right>panelRect.right+1)
+          .map(({node,rect})=>`${node.className||node.id}:${Math.round(rect.left)}–${Math.round(rect.right)}`),
         routeCount:panel.querySelectorAll('[data-route-select]').length,
         primaryCount:panel.querySelectorAll('[data-nav-depart]').length,
         dashVisible:!!(dash&&dash.offsetParent!==null),

@@ -1193,40 +1193,37 @@ const UI = (()=>{
     const selected=routeConsoleModel(routeModels);
     if(!selected) return '<div class="route-empty">지금 이어지는 길이 없다.</div>';
     const node=D.nodes[selected.nb.id], forecast=selected.forecast;
-    const destinationType=routeDestinationType(selected);
     const selectedIndex=routeModels.indexOf(selected);
-    const destinationCards=routeModels.map((model,index)=>{
+    const canDepart=forecast.ok&&!forecast.shortage;
+    const carouselModels=routeModels.length===2
+      ?[routeModels[1-selectedIndex],selected,routeModels[1-selectedIndex]]
+      :routeModels;
+    const destinationCards=carouselModels.map((model,displayIndex)=>{
+      const index=routeModels.indexOf(model);
       const active=model.nb.id===selected.nb.id;
       const cardNode=D.nodes[model.nb.id], src=routeThumbnail(model.nb.id);
       return `<button type="button" class="nav-destination-card${active?' is-selected':''}"
-        data-route-select="${model.nb.id}" aria-pressed="${active}"
-        aria-label="목적지 ${index+1}, ${esc(cardNode.name)} 선택">
+        data-route-select="${model.nb.id}" ${active&&canDepart?`data-nav-depart="${model.nb.id}"`:''} aria-pressed="${active}" ${!active&&routeModels.length===2?'tabindex="-1" aria-hidden="true"':''}
+        aria-label="${active&&canDepart?`${esc(cardNode.name)}으로 출발`:`목적지 ${index+1}, ${esc(cardNode.name)} 선택`}">
         ${src?`<img src="${src}" alt="" loading="eager" decoding="async">`:''}
-        <span><small>${String(index+1).padStart(2,'0')} · ${esc(routeDestinationType(model))}</small><b>${esc(cardNode.name)}</b><em>${model.nb.km}km</em></span>
+        <span><b>${esc(cardNode.name)}</b><em>${model.nb.km}km</em></span>
       </button>`;
     }).join('');
-    const canDepart=forecast.ok&&!forecast.shortage;
-    const departButton=canDepart
-      ?`<button type="button" data-nav-depart="${selected.nb.id}">${esc(node.name)}으로 출발 <span aria-hidden="true">→</span></button>`
-      :forecast.shortage
-        ?`<button type="button" class="nav-resource-fix" disabled>현재 연료 부족</button>`
-        :'<button type="button" disabled>경로 잠김</button>';
     const dots=routeModels.map((model,index)=>`<button type="button" data-route-select="${model.nb.id}"
       aria-label="${esc(D.nodes[model.nb.id].name)} 보기" aria-pressed="${index===selectedIndex}"></button>`).join('');
-    return `<div class="route-console route-console-v3" data-route-console="${selected.nb.id}">
+    return `<div class="route-console route-console-v3${routeModels.length===2?' has-two-routes':''}" data-route-console="${selected.nb.id}">
       <div class="route-console-screen">
         <section class="nav-route-map" aria-labelledby="nav-map-title">
-          <div class="nav-screen-kicker"><span id="nav-map-title">${esc(D.nodes[S.at].name)} 출발 경로</span><em>ROUTE ${String(selectedIndex+1).padStart(2,'0')}</em></div>
+          <h3 class="sr-only" id="nav-map-title">${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지의 경로</h3>
           <canvas data-nav-map aria-label="${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 지도에 기록된 경로"></canvas>
-          <div class="nav-map-legend"><span>● 선택 경로</span><span>● 다른 길</span></div>
+          <div class="nav-map-destination-badge"><b>${esc(node.name)}</b><small>${selected.nb.km}km</small></div>
         </section>
-        <section class="nav-route-decision" aria-live="polite" aria-label="선택한 목적지 정보">
-          <div class="nav-destination-title"><span><small>${esc(destinationType)}</small><h3>${esc(node.name)}</h3></span><em>${String(selectedIndex+1).padStart(2,'0')} / ${String(routeModels.length).padStart(2,'0')}</em></div>
+        <section class="nav-route-summary" aria-live="polite" aria-label="선택한 목적지 정보">
           <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
-          <div class="nav-known-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
-            <span><small>거리</small><b>${selected.nb.km}km</b></span>
-            <span><small>이동 시간</small><b>${G.durationLabel(forecast.minutes)}</b></span>
-            <span><small>필요 연료</small><b>${Math.ceil(selected.fuel)}L</b></span>
+          <div class="nav-route-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
+            <span>${ICO('fuel','')}<span><small>연료 소모</small><b>${Math.ceil(selected.fuel)}L</b></span></span>
+            <span>${ICO('fatigue_ok','')}<span><small>이동 시간</small><b>${G.durationLabel(forecast.minutes)}</b></span></span>
+            <span>${ICO('pursuit','')}<span><small>총 거리</small><b>${selected.nb.km}km</b></span></span>
           </div>
         </section>
         <section class="nav-destination-carousel" aria-label="목적지 선택">
@@ -1235,10 +1232,7 @@ const UI = (()=>{
           <button type="button" class="nav-carousel-arrow" data-nav-next aria-label="다음 목적지" ${routeModels.length<2?'disabled':''}>›</button>
           <div class="nav-carousel-dots" aria-label="목적지 위치">${dots}</div>
         </section>
-        <div class="nav-console-actions">
-          ${departButton}
-          ${canDepart?'':`<small class="nav-depart-blocked">${forecast.shortage?'현재 연료로 출발할 수 없다.':'아직 이 경로를 이용할 수 없다.'}</small>`}
-        </div>
+        ${canDepart?'':`<small class="nav-depart-blocked">${forecast.shortage?'현재 연료로 출발할 수 없다.':'아직 이 경로를 이용할 수 없다.'}</small>`}
       </div>
     </div>`;
   }
@@ -1252,54 +1246,33 @@ const UI = (()=>{
     ctx.setTransform(ratio,0,0,ratio,0,0);
     const width=rect.width,height=rect.height;
     ctx.clearRect(0,0,width,height);
-    ctx.strokeStyle='rgba(84,119,145,.13)'; ctx.lineWidth=1;
-    for(let x=12;x<width;x+=28){ ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,height);ctx.stroke(); }
-    for(let y=12;y<height;y+=28){ ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(width,y);ctx.stroke(); }
-
-    /* 이 화면은 전국 지도가 아니라 지금 고를 수 있는 갈림길이다. 다음 구간 너머의
-       노드까지 축척에 넣으면 부산처럼 가까운 두 목적지가 한 점에 뭉친다. */
-    const ids=new Set([S.at,...routeModels.map(model=>model.nb.id)]);
-    const nodes=[...ids].map(id=>({id,node:D.nodes[id]})).filter(row=>row.node&&Number.isFinite(row.node.x)&&Number.isFinite(row.node.y));
-    const xs=nodes.map(row=>row.node.x),ys=nodes.map(row=>row.node.y);
-    let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
-    if(maxX-minX<12){ minX-=6;maxX+=6; } if(maxY-minY<12){ minY-=6;maxY+=6; }
-    const padX=width<160?Math.max(30,width*.26):Math.max(24,width*.1),padY=Math.max(24,height*.12);
-    const point=id=>{
-      const node=D.nodes[id];
-      return {x:padX+(node.x-minX)/(maxX-minX)*(width-padX*2),y:padY+(node.y-minY)/(maxY-minY)*(height-padY*2)};
-    };
-    ctx.lineCap='round';ctx.lineJoin='round';ctx.font='600 10px monospace';
-    ctx.setLineDash([4,5]);ctx.lineWidth=1;
-    D.edges.forEach(edge=>{
-      if(!ids.has(edge[0])||!ids.has(edge[1])) return;
-      const a=point(edge[0]),b=point(edge[1]);
-      ctx.strokeStyle='rgba(87,108,137,.38)';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-    });
-    ctx.setLineDash([]);
-    routeModels.forEach(model=>{
-      const a=point(S.at),b=point(model.nb.id),selected=model.nb.id===selectedId;
-      ctx.strokeStyle=selected?'#ffb454':'rgba(85,224,200,.62)';ctx.lineWidth=selected?4:2;
-      if(!selected) ctx.setLineDash([5,5]);
-      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);
-    });
-    nodes.forEach(({id,node})=>{
-      const p=point(id),isCurrent=id===S.at,isSelected=id===selectedId,isChoice=routeModels.some(model=>model.nb.id===id);
-      ctx.fillStyle=isCurrent?'#55e0c8':isSelected?'#ffb454':isChoice?'#79b7c1':'#54627b';
-      ctx.beginPath();ctx.arc(p.x,p.y,isCurrent||isSelected?5:3,0,Math.PI*2);ctx.fill();
-      if(isCurrent||isSelected){ ctx.strokeStyle=ctx.fillStyle;ctx.globalAlpha=.38;ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,10,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1; }
-      if(isCurrent||isSelected||isChoice){
-        ctx.fillStyle=isCurrent?'#79e9d6':isSelected?'#ffc16b':'#91a8bd';ctx.font='700 10px monospace';
-        const compact=width<160;
-        if(compact&&!isCurrent) return;
-        const label=compact?'현재 위치':isCurrent?'현재 '+node.name:node.name;
-        const align=p.x>width*.68?'right':'left';ctx.textAlign=align;
-        ctx.fillText(label,p.x+(align==='right'?-8:8),p.y-8);ctx.textAlign='left';
-      }
-    });
+    /* The approved concept uses a leg-focused relief display rather than a
+       literal nationwide scale. Keeping the active leg large also prevents
+       Busan's nearby exits from collapsing into one unreadable point. */
+    const selectedIndex=Math.max(0,routeModels.findIndex(model=>model.nb.id===selectedId));
+    const current={x:width*.18,y:height*.76};
+    const selected={x:width*(selectedIndex%2?.74:.78),y:height*(selectedIndex%2?.28:.22)};
+    const bends=[current,{x:width*.30,y:height*.66},{x:width*.45,y:height*.58},{x:width*.56,y:height*.43},selected];
+    ctx.lineCap='round';ctx.lineJoin='round';ctx.setLineDash([5,6]);
+    ctx.strokeStyle='rgba(222,226,223,.68)';ctx.lineWidth=2;
+    ctx.beginPath();bends.forEach((point,index)=>{index?ctx.lineTo(point.x,point.y):ctx.moveTo(point.x,point.y);});ctx.stroke();ctx.setLineDash([]);
+    bends.slice(1,-1).forEach(point=>{ctx.fillStyle='#c1c5c3';ctx.beginPath();ctx.arc(point.x,point.y,2.6,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(237,239,235,.58)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(point.x,point.y,4.7,0,Math.PI*2);ctx.stroke();});
+    ctx.fillStyle='#55e0c8';ctx.beginPath();ctx.arc(current.x,current.y,4.5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(85,224,200,.8)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(current.x,current.y,9,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='#ffb454';ctx.beginPath();ctx.arc(selected.x,selected.y,5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(255,180,84,.9)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(selected.x,selected.y,10,0,Math.PI*2);ctx.stroke();
+    const bracket=13,arm=5;ctx.strokeStyle='#ffb454';ctx.lineWidth=2;
+    [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([sx,sy])=>{ctx.beginPath();ctx.moveTo(selected.x+sx*bracket,selected.y+sy*(bracket-arm));ctx.lineTo(selected.x+sx*bracket,selected.y+sy*bracket);ctx.lineTo(selected.x+sx*(bracket-arm),selected.y+sy*bracket);ctx.stroke();});
+    ctx.font=`700 ${width<300?9:10}px ${getComputedStyle(document.documentElement).getPropertyValue('--mono')||'monospace'}`;
+    ctx.fillStyle='#79e9d6';ctx.textAlign='left';ctx.fillText(D.nodes[S.at].name,current.x+10,current.y+17);
+    ctx.textAlign='left';
   }
   function wireRouteConsole(panel,routeModels){
-    panel.querySelectorAll('[data-route-select]').forEach(button=>button.onclick=()=>{
-      navChoiceAt=S.at;navChoiceId=button.dataset.routeSelect;renderPanel();
+    panel.querySelectorAll('[data-route-select]').forEach(button=>button.onclick=event=>{
+      if(event.defaultPrevented) return;
+      const id=button.dataset.routeSelect;
+      if(button.classList.contains('nav-destination-card')&&id===navChoiceId&&button.dataset.navDepart){
+        G.startTravel(button.dataset.navDepart);return;
+      }
+      navChoiceAt=S.at;navChoiceId=id;renderPanel();
     });
     const chooseOffset=offset=>{
       if(routeModels.length<2) return;
@@ -1311,20 +1284,26 @@ const UI = (()=>{
     const prev=panel.querySelector('[data-nav-prev]'),next=panel.querySelector('[data-nav-next]');
     if(prev) prev.onclick=()=>chooseOffset(-1);
     if(next) next.onclick=()=>chooseOffset(1);
-    const depart=panel.querySelector('[data-nav-depart]');
-    if(depart) depart.onclick=()=>G.startTravel(depart.dataset.navDepart);
     const canvas=panel.querySelector('[data-nav-map]');
     if(canvas) requestAnimationFrame(()=>drawRouteConsoleMap(canvas,routeModels,navChoiceId));
     const viewport=panel.querySelector('.nav-destination-viewport');
     const activeCard=viewport&&viewport.querySelector('.nav-destination-card.is-selected');
-    if(viewport&&activeCard) requestAnimationFrame(()=>viewport.scrollTo({left:activeCard.offsetLeft-(viewport.clientWidth-activeCard.clientWidth)/2,behavior:'auto'}));
+    if(viewport&&activeCard){
+      const centerActive=()=>viewport.scrollTo({
+        left:Math.max(0,activeCard.offsetLeft-(viewport.clientWidth-activeCard.clientWidth)/2),behavior:'auto'
+      });
+      /* 큰 글자 모드처럼 renderAll 직후 바로 기하를 검사해도 선택 카드가 먼저
+         프레임 밖에 남지 않도록, 강제 레이아웃 뒤 즉시 한 번과 다음 프레임에 한 번 맞춘다. */
+      void viewport.offsetWidth;centerActive();requestAnimationFrame(centerActive);
+    }
     if(viewport){
-      let pointerX=null;
-      viewport.onpointerdown=event=>{ pointerX=event.clientX; };
+      let pointerX=null,dragged=false;
+      viewport.addEventListener('click',event=>{if(!dragged)return;event.preventDefault();event.stopPropagation();dragged=false;},true);
+      viewport.onpointerdown=event=>{ pointerX=event.clientX;dragged=false; };
       viewport.onpointerup=event=>{
         if(pointerX===null) return;
         const delta=event.clientX-pointerX;pointerX=null;
-        if(Math.abs(delta)>36) chooseOffset(delta<0?1:-1);
+        if(Math.abs(delta)>36){dragged=true;chooseOffset(delta<0?1:-1);}
       };
       viewport.onkeydown=event=>{
         if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight') return;
@@ -1457,7 +1436,7 @@ const UI = (()=>{
         let nextHeight=stageHeight;
         if(gap>targetGap+1){
           nextHeight=Math.max(stoppedStageBase,Math.round(stageHeight+gap-targetGap));
-        }else if(gap<0){
+        }else if(gap<targetGap-1){
           /* 너비가 큰 짧은 화면에서는 정사각 콘솔이 먼저 커진다. 이때만 풍경을
              최대 32px 줄여 하단 도크와 실제 조작이 겹치지 않게 한다. */
           nextHeight=Math.max(stoppedStageBase-32,Math.round(stageHeight+gap-targetGap));

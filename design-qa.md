@@ -1,91 +1,63 @@
-# Caravan 모바일 UI 개선 Design QA — 2026-08-13
+# Caravan 목적지 콘솔 Option 3 Design QA — 2026-08-13
 
 final result: passed
 
 ## 비교 기준
 
-- Source visual truth: `audits/mobile-ui-2026-08-13/390x844-01-route.png`,
-  `390x844-03-goal.png`, `390x844-04-map.png`, `390x844-05-bag.png`
-- Implementation: `audits/mobile-ui-2026-08-13/hud-compact/390x844-01-route.png`,
-  `after/390x844-03-goal.png`, `after/390x844-04-map.png`, `after/390x844-05-bag.png`
-- Viewport / pixels: 각 390×844 CSS px / 390×844 image px, deviceScaleFactor 1
-- 추가 반응형 검증: 360×700, 430×932 캡처; 480×860 자동 레이아웃 검증
-- State: Day 1, 대구 정차, 길·목표·지도·가방 동일 게임 상태
+- Source visual truth: `Desktop/Caravan 목적지 UI 3가지 시안/3-세로-로커와-캐러셀.png`
+- Implementation: `audits/destination-console-v3-fidelity-2026-08-13/01-route-primary.png`
+- Side-by-side evidence: `audits/destination-console-v3-fidelity-2026-08-13/04-source-vs-implementation.png`
+- Viewport / pixels: source 480×860 normalized, implementation 480×860 CSS px / image px, deviceScaleFactor 1
+- Additional responsive evidence: `audits/destination-console-v3-fidelity-2026-08-13/04-route-360x700.png`
+- State: Day 1, 부산 감천 부두 정차, 목적지 양산 고가차도 선택
 
-## Full-view comparison evidence
+## 최종 대조
 
-- 길: 수정 전 약 85px였던 콘솔–도크 빈 공간이 수정 후 16.8px가 됐다. 정차 콘솔과
-  하단 도크의 크기는 유지하면서 늘어난 영역은 도로와 달구지를 보여 주는 데 사용됐다.
-  달구지 아래 중복 계기판은 완전히 제거하고, 같은 정보는 상단 좌우의 38px 높이
-  소형 HUD에만 남겼다. 길 콘솔은 세로로 약 6% 늘려 스위치와 본문 압박을 줄였다.
-- 목표: 가죽 폴더와 종이 비율은 유지됐고, `지도에서 보기`와 `길로 돌아가기`의 실제
-  터치 높이가 44px로 커졌다. 글자 크기 증가로 인한 줄 겹침이나 폴더 밖 이탈은 없다.
-- 지도: 수도권·영남권의 지명 수가 충돌 기준에 따라 줄어 노드와 선택 경로가 먼저
-  읽힌다. 잘리던 한 줄 범례는 두 줄로 바뀌어 CRT 오른쪽 안에서 끝난다.
-- 가방: 수납칸, 이미지, 숫자 정렬은 그대로이며 상세 행동 버튼만 44px로 커졌다.
+- P0/P1: 없음.
+- 프레임은 승인한 Option 3 이미지에서 내부 화면만 투명하게 분리해 사용했다. 그래서
+  상단 사선, 좌측 세로 로커, 우측 표시등, 하단 도크 결합부가 원본과 동일하다.
+- 내부는 원본의 세로 순서를 그대로 따른다: 대형 지형 지도, 2줄 장소 설명, 연료·시간·거리
+  3열, 가운데 큰 목적지와 양쪽 미리보기, 페이지 점.
+- 원본의 정적인 목적지명·거리·사진은 게임 데이터로 교체했다. 현재 상태에서는 양산
+  고가차도 20km, 김해 들판 18km가 보이며 선택에 따라 지도 배지·경로·소모량·시간이
+  함께 갱신된다.
+- 게임 시작 시 선택 가능한 길이 두 개인 경우에도 중앙 큰 카드와 좌우 미리보기의
+  3장 구도를 유지한다.
+- 기존의 `ROUTE 01`, `01/02`, 작은 선형 그래프, 상자 3개, 별도 대형 출발 버튼은
+  Option 3 원본에 없으므로 제거했다. 선택된 중앙 카드 자체가 출발 동작이다.
 
-Focused region comparison은 별도 확대본 없이 원본 해상도의 네 상태를 좌우 결합해
-터치 버튼, 지도 범례, 도시 라벨, 폴더 본문을 확인했다. 모든 핵심 세부가 390×844
-원본 캡처에서 읽혀 별도 크롭은 필요하지 않았다.
+## Fidelity surfaces
 
-## Required fidelity surfaces
+- Typography: 원본처럼 지도 배지는 청록, 거리·주요 선택선은 호박색, 본문과 계기값은
+  회백색 계열을 사용했다. 모바일 한글은 잘리지 않는다.
+- Spacing: 480px 화면에서 콘솔 폭 472px, 내부 화면 389×407px. 원본의 거의 꽉 찬
+  폭과 정사각형에 가까운 콘솔 비율을 유지한다.
+- Images: 금속 프레임은 승인 원본에서 직접 분리한 래스터, 지도는 텍스트 없는 어두운
+  대한민국 지형 래스터, 목적지 카드는 기존 게임 장소 이미지를 사용한다.
+- Copy: 발견 전 위험·사람·사건을 예고하지 않는다. 이미 지도에 기록된 장소 설명과
+  현재 계산 가능한 연료·시간·거리만 표시한다.
+- Interaction: 좌우 화살표·스와이프·방향키로 목적지가 바뀌며, 선택 카드 클릭은 실제
+  `S.driving` 상태를 만들고 주행을 시작한다. 세로 로커의 목적지·머물기 터치 영역은
+  각각 최소 44px다.
+- Responsive: 360×700에서 가로 넘침이 없고 중앙 카드가 130px 이상 유지된다. 콘솔과
+  도크도 화면 안에 들어온다.
 
-- Fonts and typography: 기존 글꼴·굵기·행간을 유지했다. 목표 단계는 10px, 보조문은
-  8.5px, 가방 설명은 9.5px의 새 최소값을 적용했고 잘림을 확인하지 못했다.
-- Spacing and layout rhythm: 390×844와 430×932의 잉여 공간은 각각 16.8px와 18.9px로
-  정리됐다. 중복 계기판 제거 뒤 390×844 길 콘솔은 357.4px에서 389.4px로 커졌다.
-  360×700은 공간 부족 때문에 0.6px 밀집 구도를 유지한다.
-- Colors and visual tokens: 색상, 금속·가죽·종이 래스터 셸, 테두리와 그림자 토큰은
-  변경하지 않았다.
-- Image quality and asset fidelity: 이미지 자산과 크롭을 변경하지 않았다. 기존 달구지,
-  목표 폴더, 지도 CRT, 가방 이미지가 그대로 사용된다.
-- Copy and content: 미래 위험이나 만날 인물을 예고하는 문구를 추가하지 않았다. 지도는
-  이미 알려진 장소와 선택 경로만 보여 준다.
-- Interaction/accessibility: 목표·지도·가방의 표시 조작은 최소 44px, 캐러셀 점은 24px
-  실제 히트 영역이다. 축소 모션, 큰 글자, 200% 확대와 키보드 포커스 스타일을 유지했다.
+## 검증
 
-## Comparison history
+- `npm run build:html --silent`: passed
+- `python3 tests/capture_destination_console_v3.py`: passed
+  - 양산 → 김해 캐러셀 상태 변화 확인
+  - 목적지/머물기 로커 전환 확인
+  - 선택 중앙 카드 클릭 후 `S.driving === true`, `S.at === null` 확인
+  - 480×860, 360×700 가로 넘침 없음
+  - Chromium console/page error 0
+- `npm run test:accessibility9`: passed
+  - 360×700, 390×844, 480×860 일반/큰 글자 모드 통과
+  - 목표·지도·가방 44px 조작 영역 및 200% 확대 통과
+- `git diff --check`: passed
 
-1. Initial P1 — 긴 휴대폰에서 콘솔과 도크 사이 85–125px 빈 공간.
-   Fix: 실제 콘텐츠 끝과 도크를 측정해 남는 높이를 정차 풍경에 배분하고, 겹칠 때는
-   최대 32px까지 풍경을 줄이는 양방향 보정을 적용했다.
-   Evidence: `after/390x844-01-route.png`, `after/430x932-01-route.png`.
-2. Initial P2 — 지도 지명 충돌과 범례 오른쪽 잘림.
-   Fix: 라벨–노드 충돌 검사와 현재/선택 우선순위를 추가하고 범례를 두 줄로 바꿨다.
-   Evidence: `after/390x844-04-map.png`, `after/360x700-04-map.png`.
-3. Initial P2 — 목표·지도·가방·정착지의 34–42px 보조 버튼과 작은 본문.
-   Fix: 주요 보조 조작을 44px로, 캐러셀 점 히트 영역을 24px로 확장하고 최소 글자
-   크기를 높였다.
-   Evidence: `after/390x844-03-goal.png`, `after/390x844-05-bag.png`,
-   `after/390x844-07-settlement.png`.
-4. First post-fix test P2 — 480×860에서 콘솔이 도크와 약 7px 겹침.
-   Fix: 음수 간격일 때 풍경을 줄이는 보정을 추가했다.
-   Evidence: `tests/test_quality_9_accessibility.py` 최종 통과, 최종 dockGap 16.0px.
-5. Follow-up P1 — 달구지 아래 큰 연료·차체·시간 바가 상단 HUD와 중복되고 길 선택
-   스위치가 눌려 보임.
-   Fix: 큰 계기판 DOM을 제거하고 상단 좌우 HUD를 38px 높이로 축소했다. 고철 콘솔은
-   동일 너비에서 세로로 약 6% 늘리고 스위치 두 칸을 균등 중앙 정렬했다.
-   Evidence: `hud-compact/360x700-01-route.png`, `hud-compact/390x844-01-route.png`,
-   `hud-compact/430x932-01-route.png`, `hud-compact/390x844-02-stay.png`.
+## Remaining P3
 
-## Verification
-
-- `python3 tests/test_quality_9_accessibility.py`: passed
-- `npm run verify:quick`: passed
-- `python3 tests/test_source_health.py`: passed
-- Chromium console/page errors: 360×700, 390×844, 430×932 모두 0
-- Primary interactions tested: 목적지 캐러셀, 큰 글자, 모션 축소, 목표 열기/복귀,
-  지도 열기/지점 선택/복귀, 가방 열기/복귀
-
-## Follow-up polish
-
-- P3: 360×700에서는 콘솔과 도크 사이가 0.6px로 촘촘하다. 핵심 조작은 모두 보이므로
-  현재는 짧은 화면의 풍경 높이를 더 줄이지 않는 쪽을 선택했다.
-- 실기기 Safari/Chrome의 주소창 축소와 VoiceOver/TalkBack 순서는 별도 실기기 QA가 남는다.
-# 2026-08-13 가방·지도 품질 후속
-
-- 가방 수납칸 선택 위계, 수량 단위, 상세 행동의 결과 예고를 정리했다.
-- `부품 1개로 정비 · 차체 +35/+45`가 실제 `fieldRepair()` 계산과 일치한다.
-- 수납칸 선택과 부품 정비의 상태 변경을 모바일 접근성 테스트에 추가했다.
-- 360×700, 390×844, 480×860, 200% 확대 검증 통과.
-- 증거: `audits/mobile-ui-2026-08-13/polish-audit.md`, `polish-after/`.
+- 승인 시안은 예시 목적지가 3개 이상이지만 현재 부산 첫 정차 데이터에는 실제 길이
+  두 개뿐이다. UI는 같은 3장 구도를 위해 반대 목적지 이미지를 양쪽 미리보기로
+  반복한다. 새로운 실제 노드를 예고하거나 가짜 목적지를 추가하지는 않았다.

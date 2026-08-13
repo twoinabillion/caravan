@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-13T03:20:37.977Z",
+  "generatedAt": "2026-08-13T08:52:30.507Z",
   "html": {
-    "bytes": 37383260,
+    "bytes": 37563552,
     "warnBytes": 32000000,
     "maxBytes": 38000000
   },
   "embedded": {
-    "files": 221,
-    "bytes": 22042973,
+    "files": 222,
+    "bytes": 22192577,
     "categories": {
       "audio": {
         "files": 45,
@@ -15,9 +15,9 @@
         "encodedBytes": 12947612
       },
       "ui": {
-        "files": 7,
-        "bytes": 950158,
-        "encodedBytes": 1266884
+        "files": 8,
+        "bytes": 1099762,
+        "encodedBytes": 1466360
       },
       "scene": {
         "files": 138,
@@ -147,10 +147,10 @@
       "encodedBytes": 218500
     },
     {
-      "path": "assets/intro/11-current-expulsion-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 152361,
-      "encodedBytes": 203148
+      "path": "assets/ui/route-map-terrain-v1.webp",
+      "mime": "image/webp",
+      "bytes": 163676,
+      "encodedBytes": 218236
     }
   ]
 }

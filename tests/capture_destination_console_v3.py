@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Capture and interaction-check the selected destination console v3."""
+import os
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -7,7 +8,10 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 URL = (ROOT / "서울까지400km.html").as_uri()
-OUT = ROOT / "audits" / "destination-console-v3-2026-08-12"
+OUT = Path(os.environ.get(
+    "CARAVAN_DESTINATION_AUDIT_DIR",
+    ROOT / "audits" / "destination-console-v3-2026-08-12",
+))
 OUT.mkdir(parents=True, exist_ok=True)
 
 
@@ -33,7 +37,11 @@ with sync_playwright() as playwright:
     page.add_init_script("localStorage.clear(); localStorage.setItem('caravan_story_auto','0')")
     enter_game(page)
 
+    page.wait_for_timeout(220)
     page.locator("#app").screenshot(path=str(OUT / "01-route-primary.png"))
+    active_departure = page.locator(".nav-destination-card.is-selected[data-nav-depart]")
+    if active_departure.count() != 1:
+        raise SystemExit("selected destination card is not the single departure action")
     primary = page.locator(".route-console-v3").get_attribute("data-route-console")
     next_button = page.locator("[data-nav-next]")
     had_next = next_button.is_enabled()
@@ -76,5 +84,27 @@ with sync_playwright() as playwright:
         raise SystemExit(f"console geometry too small: {metrics}")
     if any(item["box"]["height"] < 44 for item in metrics["rocker"]):
         raise SystemExit(f"rocker touch target too small: {metrics['rocker']}")
+
+    page.set_viewport_size({"width": 360, "height": 700})
+    page.wait_for_timeout(180)
+    page.locator("#app").screenshot(path=str(OUT / "04-route-360x700.png"))
+    narrow = page.evaluate("""() => {
+      const consoleBox=document.querySelector('.route-console-v3').getBoundingClientRect();
+      const card=document.querySelector('.nav-destination-card.is-selected').getBoundingClientRect();
+      return {consoleBox:consoleBox.toJSON(),card:card.toJSON(),
+        overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth};
+    }""")
+    if narrow["overflow"] or narrow["consoleBox"]["right"] > 361 or narrow["card"]["width"] < 130:
+        raise SystemExit(f"narrow viewport compression: {narrow}")
+
+    departure_probe = browser.new_page(viewport={"width": 480, "height": 860}, device_scale_factor=1)
+    departure_probe.add_init_script("localStorage.clear(); localStorage.setItem('caravan_story_auto','0')")
+    enter_game(departure_probe)
+    departure_probe.locator(".nav-destination-card.is-selected[data-nav-depart]").click()
+    departure_probe.wait_for_timeout(120)
+    departed = departure_probe.evaluate("() => Boolean(S.driving) && S.at === null")
+    departure_probe.close()
+    if not departed:
+        raise SystemExit("selected destination card did not begin travel")
     print({"primary": primary, "secondary": secondary, "metrics": metrics, "errors": errors})
     browser.close()
