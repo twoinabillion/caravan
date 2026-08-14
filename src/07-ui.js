@@ -58,6 +58,68 @@ const UI = (()=>{
   }
   const tossRuntime=Boolean(window.ReactNativeWebView||/\.tossmini\.com$/i.test(location.hostname)||/Toss/i.test(navigator.userAgent));
   const localOffroad=location.protocol==='file:'&&!tossRuntime;
+  let deferredInstallPrompt=null, appShellRegistration=null;
+  const isInstalledApp=()=>Boolean(
+    tossRuntime || navigator.standalone===true ||
+    (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches) ||
+    (window.matchMedia&&window.matchMedia('(display-mode: fullscreen)').matches)
+  );
+  const isApplePhone=()=>/iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || (/Macintosh/i.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
+  function syncInstallUI(){
+    const button=$('#bt-install'); if(!button) return;
+    const eligible=location.protocol!=='file:'&&!isInstalledApp()&&!tossRuntime;
+    button.hidden=!eligible;
+    if(!eligible) return;
+    const label=button.querySelector('b'), hint=button.querySelector('small');
+    if(label) label.textContent=deferredInstallPrompt?'앱 설치':'설치 안내';
+    if(hint) hint.textContent=isApplePhone()?'iPhone 홈 화면':'휴대폰 홈 화면';
+  }
+  function renderInstallGuide(){
+    const steps=$('#install-steps'), copy=$('#install-copy'), action=$('#install-action');
+    if(!steps||!copy||!action) return;
+    if(deferredInstallPrompt){
+      copy.textContent='설치 버튼을 누르면 홈 화면에 게임 아이콘이 생깁니다.';
+      steps.innerHTML='<li>아래의 앱 설치하기를 누른다.</li><li>브라우저 설치 창에서 설치를 확인한다.</li><li>홈 화면의 서울까지 400km 아이콘으로 실행한다.</li>';
+      action.textContent='앱 설치하기'; action.dataset.installReady='1';
+    }else if(isApplePhone()){
+      copy.textContent='iPhone과 iPad에서는 Safari의 공유 메뉴로 설치합니다.';
+      steps.innerHTML='<li>이 주소를 Safari에서 연다.</li><li>Safari 아래쪽의 공유 버튼을 누른다.</li><li>홈 화면에 추가를 고르고 추가를 누른다.</li>';
+      action.textContent='설치 순서 확인'; delete action.dataset.installReady;
+    }else{
+      copy.textContent='Chrome 또는 기본 브라우저 메뉴에서 홈 화면에 설치할 수 있습니다.';
+      steps.innerHTML='<li>브라우저의 더보기 메뉴를 연다.</li><li>앱 설치 또는 홈 화면에 추가를 누른다.</li><li>생긴 게임 아이콘으로 다시 실행한다.</li>';
+      action.textContent='설치 순서 확인'; delete action.dataset.installReady;
+    }
+  }
+  async function requestAppInstall(){
+    if(isInstalledApp()){ toast('이미 앱으로 실행 중입니다'); return; }
+    if(deferredInstallPrompt){
+      const prompt=deferredInstallPrompt;
+      deferredInstallPrompt=null;
+      closeModal('#install-guide',false);
+      try{
+        await prompt.prompt();
+        const choice=await prompt.userChoice;
+        if(choice&&choice.outcome==='accepted') toast('홈 화면에 게임을 설치합니다');
+      }catch(e){}
+      syncInstallUI();
+      return;
+    }
+    renderInstallGuide();
+    openModal('#install-guide','#install-x');
+  }
+  window.addEventListener('beforeinstallprompt',event=>{
+    event.preventDefault();
+    deferredInstallPrompt=event;
+    syncInstallUI();
+  });
+  window.addEventListener('appinstalled',()=>{
+    deferredInstallPrompt=null;
+    closeModal('#install-guide',false);
+    syncInstallUI();
+    toast('설치 완료 · 이제 홈 화면 아이콘으로 실행할 수 있습니다');
+  });
   const previewEpisodes=[
     {scene:'intro-camper-conversion',kind:'PROLOGUE · 달구지',title:'비를 피하는 집',
       text:'용달 트럭의 적재함을 늘리고, 침상과 수납장을 달아 길 위의 집으로 바꾼다.'},
@@ -100,7 +162,7 @@ const UI = (()=>{
     if(restore&&back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
   }
   function activeModal(){
-    return ['#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-menu','#ovl-camp','#ovl-local-actions']
+    return ['#install-guide','#intro-summary','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-menu','#ovl-camp','#ovl-local-actions']
       .map($).find(node=>node&&node.classList.contains('on'))||null;
   }
   const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
@@ -129,18 +191,34 @@ const UI = (()=>{
     /* 설치형 웹앱에서도 첫 화면과 저장된 여정을 끊김 없이 연다. file:// 미리보기는
        서비스 워커를 지원하지 않으므로 등록을 건너뛴다. */
     if('serviceWorker' in navigator && location.protocol!=='file:'){
-      window.addEventListener('load',()=>{
+      window.addEventListener('load',async()=>{
         const localPreview=location.hostname==='127.0.0.1'||location.hostname==='localhost';
-        if(localPreview){
+        const testLocalPwa=new URLSearchParams(location.search).has('pwa');
+        if(localPreview&&!testLocalPwa){
           navigator.serviceWorker.getRegistrations().then(registrations=>
             Promise.all(registrations.map(registration=>registration.unregister()))).catch(()=>{});
           if('caches' in window) caches.keys().then(keys=>Promise.all(keys
             .filter(key=>key.startsWith('seoul-400km-')).map(key=>caches.delete(key)))).catch(()=>{});
           return;
         }
-        navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+        const hadController=Boolean(navigator.serviceWorker.controller);
+        try{
+          appShellRegistration=await navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'});
+          await appShellRegistration.update();
+          const refresh=()=>appShellRegistration&&appShellRegistration.update().catch(()=>{});
+          window.addEventListener('online',refresh);
+          document.addEventListener('visibilitychange',()=>{ if(!document.hidden) refresh(); });
+          navigator.serviceWorker.addEventListener('controllerchange',()=>{
+            if(!hadController) return;
+            if(screen==='title'&&!sessionStorage.getItem('caravan_app_reloaded')){
+              sessionStorage.setItem('caravan_app_reloaded','1');
+              location.reload();
+            }else if(screen==='game') toast('새 버전을 받았습니다 · 다음 실행부터 적용됩니다');
+          },{once:true});
+        }catch(e){}
       },{once:true});
     }
+    document.documentElement.classList.toggle('installed-app',isInstalledApp());
     applyUiPrefs();
     SCENE.init($('#cv'));
     SCENE.initTitle($('#titlecv'));
@@ -151,6 +229,7 @@ const UI = (()=>{
     wire();
     applyIcons();
     refreshTitle();
+    syncInstallUI();
     requestAnimationFrame(loop);
   }
   function refreshTitle(){
@@ -280,6 +359,12 @@ const UI = (()=>{
     $('#bt-new').onclick=()=>{
       if(localOffroad){ show('scr-mode'); envCheckUI(); }
       else startNew('onroad');
+    };
+    $('#bt-install').onclick=()=>requestAppInstall();
+    $('#install-x').onclick=()=>closeModal('#install-guide');
+    $('#install-action').onclick=()=>{
+      if($('#install-action').dataset.installReady) requestAppInstall();
+      else closeModal('#install-guide');
     };
     const bs=$('#bt-song');
     if(bs){

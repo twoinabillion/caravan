@@ -45,6 +45,8 @@
     "verify:mutations": "python3 tools/mutation-check.py",
     "simulate:engine": "npm run build:html && python3 tools/simulate-engine.py --runs 60",
     "test:accessibility9": "npm run build:html --silent && python3 tests/test_quality_9_accessibility.py",
+    "test:pwa": "npm run build:html --silent && node tools/check-pwa.mjs",
+    "test:pwa:runtime": "python3 tests/test_pwa_runtime.py",
     "test:release": "bash tools/release-check.sh"
   },
   "dependencies": {

@@ -27,6 +27,10 @@
 ## ▶ 플레이
 
 - **웹 (온로드 모드)**: https://twoinabillion.github.io/caravan/
+- **휴대폰 앱으로 설치**
+  - iPhone/iPad: Safari에서 위 링크 열기 → 공유 → **홈 화면에 추가**
+  - Android: Chrome에서 위 링크 열기 → 메뉴 → **앱 설치**
+  - 설치 후에는 홈 화면의 `서울까지 400km` 아이콘으로 전체 화면 실행. 온라인이면 최신 배포본을 먼저 확인하고, 오프라인이면 마지막으로 받은 버전으로 실행한다.
 - **데스크톱 모바일 실사용 프리뷰**: https://twoinabillion.github.io/caravan/mobile-preview.html
   - iPhone Safari/Android Chrome의 주소창이 차지한 높이를 제외한 실제 게임 영역을 재현한다.
 - **로컬 (오프로드 모드 가능)**: `서울까지400km.html`을 브라우저로 열기

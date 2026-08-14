@@ -23,10 +23,14 @@ jobs:
         # Pages에는 단일 HTML만 필요하다. AIT는 로컬 Toss 빌드 산출물이므로
         # GitHub runner에서 Granite CLI를 찾지 않도록 명시적으로 제외한다.
         run: ./build.sh --html-only
+      - name: Verify installable app shell
+        run: node tools/check-pwa.mjs
       - name: Prepare site
         run: |
-          mkdir _site
+          mkdir -p _site/assets
           cp index.html '서울까지400km.html' mobile-preview.html _site/
+          cp manifest.webmanifest service-worker.js _site/
+          cp assets/app-icon.png assets/app-icon-192.png assets/app-icon-512.png _site/assets/
           touch _site/.nojekyll
       - name: Push to gh-pages
         uses: peaceiris/actions-gh-pages@v4

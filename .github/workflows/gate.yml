@@ -29,6 +29,8 @@ jobs:
       - name: Build
         # AIT 패키징은 로컬 Toss 빌드 산출물이므로 러너에서는 HTML만 만든다 (pages.yml과 동일 이유)
         run: npm run build:html
+      - name: Installable phone app shell
+        run: npm run test:pwa
       - name: Content + dialogue lint
         run: npm run verify:quick
       - name: Save migration fixtures

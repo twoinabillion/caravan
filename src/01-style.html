@@ -3,7 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0b0e1a">
+<meta name="application-name" content="서울까지 400km">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="서울까지 400km">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="assets/app-icon.png">
 <style>
@@ -1435,8 +1437,12 @@ input{font-family:inherit}
 #scr-title .title-console-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:9px;padding-top:9px;border-top:1px solid #293246}
 #scr-title #title-ui .ver{display:flex;flex-wrap:wrap;gap:4px 9px;margin:0;color:#778295;font:9.5px/1.35 var(--mono)}
 #scr-title #title-ui .ver span+span:before{content:"·";margin-right:9px;color:#475166}
-#scr-title #bt-song{flex:none;display:grid;gap:1px;padding:5px 8px;border:1px solid #303a50;border-radius:7px;background:#0c111c;color:#c5ccd7;text-align:left}
-#scr-title #bt-song small{color:#758096;font:9px/1.2 var(--mono)}#scr-title #bt-song b{font-size:10px;font-weight:500}
+#scr-title .title-console-tools{flex:none;display:flex;align-items:stretch;gap:5px}
+#scr-title #bt-song,#scr-title #bt-install{position:static;right:auto;bottom:auto;flex:none;display:grid;gap:1px;min-height:0;padding:5px 8px;border:1px solid #303a50;border-radius:7px;background:#0c111c;color:#c5ccd7;text-align:left;letter-spacing:0}
+#scr-title #bt-song small,#scr-title #bt-install small{color:#758096;font:9px/1.2 var(--mono)}
+#scr-title #bt-song b,#scr-title #bt-install b{font-size:10px;font-weight:500}
+#scr-title #bt-install{border-color:rgba(255,180,84,.48);color:#ffd08e;background:rgba(255,180,84,.07)}
+#scr-title #bt-install[hidden]{display:none}
 #app[data-screen="title"] #early-sound{border-color:#344056;background:rgba(7,10,17,.86);box-shadow:0 8px 24px rgba(0,0,0,.3)}
 
 @container game (max-width:600px){
@@ -1456,7 +1462,33 @@ input{font-family:inherit}
   #scr-title .title-console .act small{font-size:10px}
   #scr-title .title-console-foot{align-items:center;margin-top:7px;padding-top:7px}
   #scr-title #title-ui .ver{max-width:205px;font-size:8.5px}
-  #scr-title #bt-song{padding:5px 7px}#scr-title #bt-song b{font-size:9px}
+  #scr-title .title-console-tools{gap:4px}
+  #scr-title #bt-song,#scr-title #bt-install{padding:5px 7px}
+  #scr-title #bt-song b,#scr-title #bt-install b{font-size:9px}
+}
+
+/* ── installable phone app ── */
+#install-guide{z-index:60;background:rgba(3,5,10,.72);backdrop-filter:blur(8px)}
+#install-guide .install-card{width:min(100%,480px);max-height:min(82dvh,620px);margin:0 auto;padding:0;
+  border:1px solid rgba(255,180,84,.42);border-bottom:0;border-radius:20px 20px 0 0;
+  background:linear-gradient(180deg,#171d2b,#0c111c);box-shadow:0 -18px 60px rgba(0,0,0,.55)}
+.install-card-head{display:flex;align-items:flex-start;gap:12px;padding:18px 18px 12px;border-bottom:1px solid #293246}
+.install-app-icon{flex:none;width:64px;height:64px;border:1px solid rgba(255,180,84,.5);border-radius:15px;object-fit:cover;box-shadow:0 8px 20px rgba(0,0,0,.34)}
+.install-card-title{min-width:0;flex:1}.install-card-title small{display:block;color:var(--amber);font:800 10px/1.2 var(--mono);letter-spacing:.13em}
+.install-card-title h2{margin:4px 0 3px;font-size:20px}.install-card-title p{margin:0;color:#aab3c3;font-size:12px;line-height:1.45}
+#install-x{flex:none;min-width:44px;min-height:44px;margin:-8px -8px 0 0;color:#9ca6b8;font-size:20px}
+.install-card-body{padding:15px 18px calc(18px + var(--safe-bottom));overflow-y:auto}
+.install-result{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:14px}
+.install-result span{min-width:0;padding:9px 6px;border:1px solid #303a50;border-radius:9px;background:#101624;text-align:center}
+.install-result b{display:block;color:#e4e8ef;font-size:11px}.install-result small{display:block;margin-top:2px;color:#7f8a9c;font:9px/1.25 var(--mono)}
+.install-steps{margin:0 0 14px;padding:0;list-style:none;counter-reset:install-step;display:grid;gap:7px}
+.install-steps li{counter-increment:install-step;display:grid;grid-template-columns:26px minmax(0,1fr);align-items:center;gap:8px;min-height:46px;padding:7px 9px;border:1px solid #293247;border-radius:9px;color:#cbd1dc;font-size:12.5px;line-height:1.4;background:#0c121f}
+.install-steps li:before{content:counter(install-step);display:grid;place-items:center;width:24px;height:24px;border:1px solid rgba(255,180,84,.45);border-radius:50%;color:var(--amber);font:800 11px/1 var(--mono)}
+#install-action{width:100%;min-height:50px;border:1px solid #ffc36e;border-radius:10px;background:#e9a54a;color:#15120e;font-weight:900}
+.install-note{margin:9px 2px 0;color:#7f899a;font-size:11px;line-height:1.45;text-align:center}
+@media(max-height:700px){
+  #install-guide .install-card{max-height:92dvh}.install-card-head{padding-top:13px}.install-app-icon{width:54px;height:54px}
+  .install-result{margin-bottom:9px}.install-card-body{padding-top:10px}.install-steps{margin-bottom:10px}
 }
 .garage-van-preview{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(110px,.75fr);
   align-items:center;gap:6px;min-height:135px;margin-bottom:10px;padding:7px 10px;

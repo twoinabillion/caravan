@@ -1,5 +1,8 @@
-const CACHE = 'seoul-400km-shell-v2';
-const SHELL = ['./', './index.html', './서울까지400km.html', './assets/app-icon.png', './manifest.webmanifest'];
+const CACHE = 'seoul-400km-shell-v3';
+const SHELL = [
+  './', './index.html', './서울까지400km.html', './manifest.webmanifest',
+  './assets/app-icon.png', './assets/app-icon-192.png', './assets/app-icon-512.png'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -18,7 +21,10 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const isDocument = event.request.mode === 'navigate' || url.pathname.endsWith('.html');
   if(isDocument){
-    event.respondWith(fetch(event.request).then(response => {
+    /* 설치된 앱은 온라인일 때 HTTP 캐시보다 배포본을 먼저 확인한다. GitHub에
+       새 HTML이 올라오면 다음 실행에서 곧바로 받고, 실패할 때만 마지막 판으로 간다. */
+    const latest = new Request(event.request, {cache:'no-store'});
+    event.respondWith(fetch(latest).then(response => {
       if(response.ok && url.origin === self.location.origin){
         const copy=response.clone();
         caches.open(CACHE).then(cache => cache.put(event.request, copy));
