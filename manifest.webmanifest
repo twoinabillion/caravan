@@ -1,0 +1,22 @@
+{
+  "name": "서울까지 400km",
+  "short_name": "서울까지 400km",
+  "id": "./",
+  "description": "무너진 한반도를 북상하는 서사형 생존 로드 게임",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "./서울까지400km.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "portrait-primary",
+  "background_color": "#070910",
+  "theme_color": "#0b0e1a",
+  "categories": ["games", "entertainment"],
+  "prefer_related_applications": false,
+  "icons": [
+    {"src": "assets/app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "assets/app-icon.png", "sizes": "600x600", "type": "image/png", "purpose": "maskable"}
+  ]
+}
