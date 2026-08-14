@@ -1274,6 +1274,22 @@ const UI = (()=>{
     };
     return D.scenes&&D.scenes[sceneByScenery[scenery]||'generic-discovery']||'';
   }
+  /* The route console is a close-up navigator, not the nationwide journey map.
+     Crop the existing relief around the active leg so a 20 km hop reads as a
+     local road instead of a line drawn across all of Korea. */
+  function routeTerrainStyle(model){
+    const from=D.nodes[S.at]||{}, to=D.nodes[model.nb.id]||{};
+    const bounds=D.geoBounds||{west:125.7,east:129.7,south:34.65,north:38.55};
+    const lon=((Number(from.lon)||bounds.west)+(Number(to.lon)||bounds.east))/2;
+    const lat=((Number(from.lat)||bounds.south)+(Number(to.lat)||bounds.north))/2;
+    const geoX=Math.max(0,Math.min(1,(lon-bounds.west)/(bounds.east-bounds.west)));
+    const geoY=Math.max(0,Math.min(1,(bounds.north-lat)/(bounds.north-bounds.south)));
+    /* The land occupies roughly 21–83% × 7–89% of the painted source. */
+    const imageX=(21+geoX*62).toFixed(1);
+    const imageY=(7+geoY*82).toFixed(1);
+    const zoom=Math.round(Math.max(340,Math.min(470,520-Number(model.nb.km||0)*3)));
+    return `--route-map-x:${imageX}%;--route-map-y:${imageY}%;--route-map-zoom:${zoom}%`;
+  }
   function routeConsoleHtml(routeModels){
     const selected=routeConsoleModel(routeModels);
     if(!selected) return '<div class="route-empty">지금 이어지는 길이 없다.</div>';
@@ -1298,9 +1314,10 @@ const UI = (()=>{
       aria-label="${esc(D.nodes[model.nb.id].name)} 보기" aria-pressed="${index===selectedIndex}"></button>`).join('');
     return `<div class="route-console route-console-v3${routeModels.length===2?' has-two-routes':''}" data-route-console="${selected.nb.id}">
       <div class="route-console-screen">
-        <section class="nav-route-map" aria-labelledby="nav-map-title">
-          <h3 class="sr-only" id="nav-map-title">${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지의 경로</h3>
-          <canvas data-nav-map aria-label="${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 지도에 기록된 경로"></canvas>
+        <section class="nav-route-map" style="${routeTerrainStyle(selected)}" aria-labelledby="nav-map-title">
+          <h3 class="sr-only" id="nav-map-title">${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지의 현재 구간 확대도</h3>
+          <canvas data-nav-map aria-label="현재 구간 확대: ${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 ${selected.nb.km}km"></canvas>
+          <div class="nav-map-scale"><small>LOCAL ROUTE</small><b>현재 구간 확대</b></div>
           <div class="nav-map-destination-badge"><b>${esc(node.name)}</b><small>${selected.nb.km}km</small></div>
         </section>
         <section class="nav-route-summary" aria-live="polite" aria-label="선택한 목적지 정보">
@@ -1331,9 +1348,8 @@ const UI = (()=>{
     ctx.setTransform(ratio,0,0,ratio,0,0);
     const width=rect.width,height=rect.height;
     ctx.clearRect(0,0,width,height);
-    /* The approved concept uses a leg-focused relief display rather than a
-       literal nationwide scale. Keeping the active leg large also prevents
-       Busan's nearby exits from collapsing into one unreadable point. */
+    /* This is deliberately a schematic of one leg, drawn over a close-cropped
+       regional relief. It never claims that its line is the nationwide scale. */
     const selectedIndex=Math.max(0,routeModels.findIndex(model=>model.nb.id===selectedId));
     const current={x:width*.18,y:height*.76};
     const selected={x:width*(selectedIndex%2?.74:.78),y:height*(selectedIndex%2?.28:.22)};
