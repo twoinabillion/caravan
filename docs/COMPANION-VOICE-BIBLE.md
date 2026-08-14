@@ -10,6 +10,11 @@ For every companion line, check six things: vocabulary, sentence rhythm, humor,
 avoidance, silence, and forbidden generic phrasing. Relationship growth should change
 address, initiative, and willingness to help, but not erase the speaker's core rhythm.
 
+The `personaModel` attached to each runtime sheet adds four checks derived from the
+full Korean Nemotron persona schema: a five-axis trait profile, the occupational behavior
+used as an analogue, a contradiction, and an observable tell. These are editing lenses,
+not imported biographies or generated dialogue.
+
 | Companion | Vocabulary and rhythm | Humor | Avoidance and silence |
 |---|---|---|---|
 | Minji | Engines, wiring, sounds, and faults. Short polite sentences followed by quick corrections. | Corrects jokes as if diagnosing a machine. | Does not explain Mingyu on demand; touches tools or listens to the engine instead. |
@@ -29,8 +34,23 @@ address, initiative, and willingness to help, but not erase the speaker's core r
 - Conflict and repair: the mistake must alter an action, cost, relationship, or later line;
   apology alone is not the repair.
 
+## Korean address contract
+
+Random road scenes may play in any order, so they cannot depend on an unseen intimacy
+transition. The runtime `addresses` maps preserve these stable relationships.
+
+| Speaker | Stable forms of address |
+|---|---|
+| Minji | 박 선생 `선생님`; 강우 `아저씨`; 레오 `레오`; 재이 `재이 언니`; 은수 `은수 언니` |
+| Park | 민지 `민지 양/학생`; 강우 `강우 씨/자네`; younger crew by name or `자네` |
+| Kangwoo | crew by name; Park `선생님` |
+| Leo | 민지 `민지야`; 강우 `형`; Park `쌤/선생님`; 은수 `누나` |
+| Jaeyi | 민지 `민지 씨`; Kangwoo `강우 씨/아저씨`; Leo `레오 오빠`; Eunsu `은수 언니` |
+| Eunsu | peers and younger crew by `이름+씨`; Park `선생님` |
+
 ## Automated guardrails
 
-`npm run lint:dialogue` verifies that all six sheets exist, registered speaker routes are
-valid, recruitment dialogue keeps proposal → response → seat order, discarded lore does
-not return, and unusually repeated sentence openings are surfaced for manual review.
+`npm run lint:dialogue` inventories 4,112 lines across banter, chats, NPC dialogue, radio,
+intro, and event quotations. It verifies all six sheets, persona models, relationship address
+maps, registered speaker routes, recruitment proposal → response → seat order, discarded
+lore, forbidden generic phrasing in attributed event speech, and repeated openings.

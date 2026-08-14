@@ -5,9 +5,9 @@
  *   node tools/dialogue-lint.cjs
  *   node tools/dialogue-lint.cjs --dump
  *
- * 자동 판정은 연기와 맥락을 대신하지 않는다. 여기서는 몰입을 확실히 깨는
- * 항목(화자 이름을 단 행동 지문, 임시 플레이어 표기, 폐기된 3년 설정)과
- * 한국어 AI 문체의 대표적인 연결어만 연기 테스트 전 스모크 검사한다.
+ * 자동 판정은 연기와 맥락을 대신하지 않는다. 대신 잡담·티키타카·NPC·인트로와
+ * 사건 속 따옴표 발화를 한 인벤토리로 모아 호칭, 화자, 보이스 시트, 폐기 설정,
+ * 한국어 AI 문체의 대표적인 연결어를 연기 테스트 전에 전수 검사한다.
  */
 const fs = require('fs');
 const path = require('path');
@@ -39,14 +39,19 @@ const add = (scope, speaker, text) => {
   if (typeof text !== 'string' || !text.trim()) return;
   samples.push({scope, speaker, text:text.replace(/<[^>]+>/g, '').trim()});
 };
-const addQuoted = (scope, text) => {
-  if (typeof text !== 'string') return;
+const speakerKey = value => typeof value === 'string' ? value : value && value.who;
+const quotedParts = text => {
+  if (typeof text !== 'string') return [];
   const humanText = text.replace(/<span class=["']ai["']>[\s\S]*?<\/span>/g, '');
-  for (const match of humanText.matchAll(/["“]([^"”\n]{2,})["”]/g)) add(scope, 'event', match[1]);
+  return [...humanText.matchAll(/["“]([^"”\n]{2,})["”]/g)].map(match=>match[1]);
 };
-const addQuotedVariants = (scope, value) => {
+const addQuoted = (scope, text, speakers=[]) => {
+  const quotes=quotedParts(text);
+  for (const [index,quote] of quotes.entries()) add(scope, speakerKey(speakers[index]) || 'event', quote);
+};
+const addQuotedVariants = (scope, value, speakers=[]) => {
   if (typeof value !== 'function') {
-    addQuoted(scope, value);
+    addQuoted(scope, value, speakers);
     return;
   }
   const variants = new Set();
@@ -60,7 +65,7 @@ const addQuotedVariants = (scope, value) => {
     }
   }
   delete global.S;
-  for (const text of variants) addQuoted(scope, text);
+  for (const text of variants) addQuoted(scope, text, speakers);
 };
 
 for (const chat of D.chats || []) {
@@ -77,16 +82,16 @@ const allEvents = [
   ...[D.bridgeEvent, D.gateEvent, D.seoulOpenEvent].filter(Boolean),
 ];
 for (const event of allEvents) {
-  addQuotedVariants(event.id, event.text);
+  addQuotedVariants(event.id, event.text, event.turnSpeakers || []);
   for (const choice of event.choices || []) {
     addQuotedVariants(event.id, choice.label);
-    for (const outcome of choice.out || []) addQuotedVariants(event.id, outcome.text);
+    for (const outcome of choice.out || []) addQuotedVariants(event.id, outcome.text, outcome.turnSpeakers || []);
   }
 }
 for (const page of D.intro || []) {
   addQuoted('intro', page.text);
   for (const turn of page.beats || []) {
-    if (['dialogue','thought','letter'].includes(turn.kind)) add('intro-turn', turn.name || turn.who, turn.text);
+    if (['dialogue','thought','letter'].includes(turn.kind)) add('intro-turn', turn.who || turn.name, turn.text);
   }
 }
 
@@ -137,7 +142,12 @@ for (const [id, npc] of Object.entries(D.npcs || {})) {
   add('npc', id, npc.greet0);
   add('npc', id, npc.greetGood);
   add('npc', id, npc.greetBad);
+  for(const text of npc.chats || []) add('npc', id, text.replace(/^["“]|["”]$/g,''));
   add('npc', id, npc.rumor && npc.rumor.text);
+  const utterances=[npc.greet0,npc.greetGood,npc.greetBad,...(npc.chats||[]),npc.rumor&&npc.rumor.text]
+    .filter(text=>typeof text==='string'&&text.trim());
+  if((npc.chats||[]).length<5) errors.push(`NPC 전용 생활 대사 부족: ${id} / ${(npc.chats||[]).length}줄`);
+  if(new Set(utterances).size!==utterances.length) errors.push(`NPC 안에서 중복 대사 발견: ${id}`);
 }
 for (const item of D.radioTexts || []) add('radio', 'radio', typeof item === 'string' ? item : item.t);
 
@@ -149,6 +159,13 @@ for (const id of personIds) {
   else {
     if(!Array.isArray(voice.forbidden)||voice.forbidden.length<3)
       errors.push(`동료 금지 범용 표현 부족: ${id}`);
+    const personaFields=['traits','analog','contradiction','tell'];
+    const missingPersona=personaFields.filter(field=>!voice.personaModel||
+      (field==='traits' ? !voice.personaModel.traits||Object.keys(voice.personaModel.traits).length!==5
+        : typeof voice.personaModel[field]!=='string'||!voice.personaModel[field].trim()));
+    if(missingPersona.length) errors.push(`동료 Nemotron 페르소나 모델 누락: ${id} / ${missingPersona.join(', ')}`);
+    if(!voice.addresses||Object.keys(voice.addresses).length<5)
+      errors.push(`동료 관계별 호칭표 누락: ${id}`);
     const groundingFields=['value','routine','care','conflict','repair','stress'];
     const missing=groundingFields.filter(field=>!voice.grounding||typeof voice.grounding[field]!=='string'||!voice.grounding[field].trim());
     if(missing.length) errors.push(`동료 행동 성격 규칙 누락: ${id} / ${missing.join(', ')}`);
@@ -211,6 +228,19 @@ for (const chat of D.chats || []) {
       errors.push(`티키타카 행동 지문에 화자 지정: ${speaker} — ${text}`);
     }
   }
+}
+
+/* 관계 호칭은 장면 순서가 무작위여도 나이와 관계를 뒤집지 않는다.
+   친밀도에 따라 호칭이 짧아지는 것은 허용하되, 상대 자체가 바뀌는 호칭은 막는다. */
+const addressBreaks = [
+  ['leo', /(?=.*민지)(?=.*누나)/, '레오가 17세 민지를 누나라고 부름'],
+  ['jaeyi', /(?=.*민지)(?=.*언니)/, '재이가 17세 민지를 언니라고 부름'],
+  ['minji', /재이야/, '민지가 연상인 재이를 이름만 불러 관계 단계가 역전됨'],
+  ['jaeyi', /레오 씨/, '재이가 레오를 장면마다 오빠와 씨로 바꿔 부름'],
+];
+for(const [speaker,pattern,label] of addressBreaks){
+  const hit=samples.find(sample=>sample.speaker===speaker&&pattern.test(sample.text));
+  if(hit) errors.push(`${label}: ${hit.text}`);
 }
 
 const stalePatterns = [
@@ -361,19 +391,12 @@ const aphorismCount = outcomeTexts.filter(aphorismEnd).length;
 const aphorismRatio = outcomeTexts.length ? aphorismCount / outcomeTexts.length : 0;
 console.log(`경구 종결 ${aphorismCount}/${outcomeTexts.length} (${Math.round(aphorismRatio * 100)}%)`);
 
-/* 보이스 시트의 forbidden은 선언만으로는 아무것도 막지 않는다 — 실제 발화와 전수 대조.
-   (2026-08-07: 시트 존재 검사만 있고 내용 대조가 없던 간극을 닫음) */
+/* 보이스 시트의 forbidden은 선언만으로는 아무것도 막지 않는다. 잡담뿐 아니라
+   화자가 명시된 사건 대사까지 같은 인벤토리에서 전수 대조한다. */
 {
-  const byWho = new Map();
-  const addLine = (who, text) => {
-    if (!who || !text) return;
-    if (!byWho.has(who)) byWho.set(who, []);
-    byWho.get(who).push(text);
-  };
-  for (const b of D.banter || []) addLine(b.who, b.t);
-  for (const c of D.chats || []) for (const [w, t] of c.lines || []) addLine(w, t);
   for (const [cid, voice] of Object.entries(D.companionVoices || {})) {
-    const lines = byWho.get(cid) || [];
+    const lines = samples.filter(sample=>sample.speaker===cid).map(sample=>sample.text);
+    if(lines.length<35) errors.push(`동료 전수 검사 가능한 발화 부족: ${cid} / ${lines.length}줄`);
     for (const phrase of voice.forbidden || []) {
       for (const text of lines) if (text.includes(phrase))
         errors.push(`금지 구절 위반 ${cid} 「${phrase}」: ${text.slice(0, 50)}`);
@@ -395,8 +418,12 @@ const counts = samples.reduce((out, item) => {
       item.scope === 'intro-turn' ? '인트로 턴' : '대화 이벤트']++;
   return out;
 }, {'티키타카':0, '주행 대사':0, 'NPC':0, '라디오':0, '인트로 턴':0, '대화 이벤트':0});
+const companionCoverage=Object.fromEntries(companionIds.map(id=>[
+  id,samples.filter(sample=>sample.speaker===id).length
+]));
 
 console.log(`대사 샘플 ${samples.length}줄 ${JSON.stringify(counts)}`);
+console.log(`동료 화자 확정 ${JSON.stringify(companionCoverage)}`);
 for (const warning of warnings.slice(0, 12)) console.log(`⚠️ ${warning}`);
 if (warnings.length > 12) console.log(`⚠️ 추가 검토 후보 ${warnings.length - 12}줄`);
 if (errors.length) {
