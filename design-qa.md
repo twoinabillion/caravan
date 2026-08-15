@@ -56,3 +56,70 @@ final result: passed
   길만 열려 있으므로 가짜 목적지를 추가하지 않고 양옆에 반대 길 미리보기를 반복한다.
 - 원본 중간의 별도 연료·차체 바는 이전 요청대로 제거된 상태를 유지한다. 같은 정보는
   상단 HUD에 있으므로 중복 복원하지 않았다.
+
+---
+
+# Goal + Bag Design QA
+
+- Date: 2026-08-15
+- Source visual truth: `audits/goal-bag-overflow-2026-08-15/user-screen-fix-goal-476x809.png`, `audits/goal-bag-overflow-2026-08-15/user-screen-fix-bag-selected-476x809.png`
+- Implementation: `audits/goal-bag-overflow-2026-08-15/balanced-pass-2-goal-476x809.png`, `audits/goal-bag-overflow-2026-08-15/balanced-pass-2-bag-selected-476x809.png`
+- Responsive evidence: matching 320×578 source and implementation captures in the same audit folder
+- Comparison composites: `qa-goal-before-after-476x809.png`, `qa-bag-before-after-476x809.png`, `qa-goal-before-after-320x578.png`, `qa-bag-before-after-320x578.png`
+- Viewports: 476×809 and 320×578 CSS px
+- Pixels/density: screenshots match CSS viewport dimensions at device scale factor 1; no density normalization required
+- State: Day 1 new-game state, goal progress 3/6; bag comparison uses selected `고철`
+
+The user's current screenshots used a later in-game clock and different inventory values. The comparison therefore judges the same UI structure and responsive geometry, not exact state-dependent numbers.
+
+## Full-view comparison evidence
+
+The before/after composites were opened together after both implementation captures were inspected. At 476×809, the prior goal page left the lower paper frame almost empty and repeated the progress-step label as the next action. The revised page assigns the map-side area to a distinct action and uses the lower frame for current location and completion criteria. At 320×578, the lower frame collapses to completion criteria only without clipping. The bag comparison keeps the established raster shell but reduces the selected pocket's full-height emphasis and returns space from the icon to the detail copy.
+
+## Focused-region evidence
+
+Separate crops were not needed: the 476×809 full capture keeps the small goal metadata, all five bag pocket labels/counts, and the detail action readable at original resolution. The 320×578 full capture provides the focused short-screen check.
+
+## Comparison history
+
+### Iteration 1 — blocked
+
+- [P1] Goal lower frame looked unfinished because it was mostly blank and repeated the same `분리 절차 복원·검증키 안전 회수` copy already shown in progress.
+- [P2] The third raster tab had no label or behavior and looked broken.
+- [P2] Bag selected state used long gold side rails, while secondary labels were too dim and the detail icon consumed too much width.
+
+Fixes:
+
+- Added step-specific, non-spoiler next-action copy.
+- Split the lower goal frame into `현재 위치` and `완료 기준`; short screens retain only the completion criterion.
+- Turned the third edge tab into a functional `메뉴` control.
+- Removed the selected pocket's vertical rails, increased secondary text contrast/size, reduced the detail icon column, and allowed two-line detail copy.
+
+### Iteration 2 — passed
+
+- The goal page now uses both lower paper frames with a clear hierarchy and no repeated action label.
+- All three side tabs are labeled, at least 44px, contained in the viewport, and the Menu tab opens the menu overlay.
+- The bag selection remains visible without dividing the whole pocket column, and detail copy has more usable width.
+- No actionable P0/P1/P2 mismatch remains in the 476×809 or 320×578 comparisons.
+
+## Required fidelity surfaces
+
+- Fonts/typography: Existing Korean sans and mono families remain intact. Action hierarchy is stronger; small goal and bag labels use heavier weights and higher contrast. No new wrapping or truncation issue is visible.
+- Spacing/layout rhythm: The 720:1120 prop ratio is preserved. Goal support content is separated into map-side action copy and full-width metadata; bag detail uses a 21/79 image-copy split. Side gutters remain at least 8px.
+- Colors/tokens: Existing teal, amber, paper, and canvas palette remains unchanged. Contrast was increased within the existing token family rather than introducing a new accent.
+- Image quality/assets: Original goal folio, map slip, bag canvas, and item raster assets are preserved at their native shell proportions; no replacement or stretching was introduced.
+- Copy/content: Next-action wording is distinct from progress history and describes only the active objective. It does not reveal future encounters or route danger.
+
+## Interaction and runtime checks
+
+- Chrome captures completed at 320×578, 375×553, 360×700, 390×664, 390×844, 462×832, and 476×809.
+- Goal edge tabs, menu opening, bag selection, bag repair action, dock return, large text, reduced motion, and 200% zoom checks passed.
+- Horizontal overflow: none.
+- Console/runtime errors: none.
+- Full smoke suite: passed.
+
+## Follow-up polish
+
+- [P3] On very short screens, `현재 위치` is intentionally omitted from the lower goal frame to protect the completion criterion and 44px controls.
+
+final result: passed

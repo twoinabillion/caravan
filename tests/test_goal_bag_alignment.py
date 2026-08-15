@@ -70,19 +70,29 @@ def check_viewport(playwright, width, height):
           return {x:r.x,right:r.right,width:r.width,height:r.height};
         })"""
     )
-    assert len(edge_tabs) == 2
+    assert len(edge_tabs) == 3
+    assert page.locator(".prop-edge-tabs button").all_inner_texts() == ["지도", "가방", "메뉴"]
     for tab in edge_tabs:
         assert tab["x"] >= 7.5 and tab["right"] <= width - 7.5, tab
         assert tab["width"] >= 44 and tab["height"] >= 44, tab
+    page.click('.prop-edge-tabs [data-road-tool="menu"]')
+    page.wait_for_timeout(80)
+    assert "on" in (page.locator("#ovl-menu").get_attribute("class") or "").split()
+    page.evaluate("document.querySelector('#dk-menu').click()")
+    page.evaluate("document.querySelector('#dk-objectives').click()")
+    page.wait_for_timeout(80)
     support = box(page, ".folio-support")
     support_copy = box(page, ".folio-support>b")
+    support_meta = box(page, ".folio-support-meta")
     road_button = box(page, ".folio-road-button")
     assert road_button["y"] - (support["y"] + support["height"]) <= 8, (
         support,
         road_button,
     )
-    assert support_copy["y"] > support["y"] + support["height"] * 0.2
-    assert support_copy["y"] + support_copy["height"] < support["y"] + support["height"]
+    assert support_copy["y"] >= support["y"]
+    assert support_copy["y"] + support_copy["height"] < support_meta["y"]
+    assert support_meta["y"] >= support["y"] + support["height"] * 0.55
+    assert support_meta["y"] + support_meta["height"] <= support["y"] + support["height"]
 
     page.click("#dk-status")
     page.wait_for_timeout(120)

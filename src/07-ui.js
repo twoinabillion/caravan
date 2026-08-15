@@ -3437,6 +3437,7 @@ const UI = (()=>{
       else if(tool==='map') $('#dk-map').click();
       else if(tool==='goal') openStatusTab('journey','dk-objectives');
       else if(tool==='bag') openStatusTab('now','dk-status');
+      else if(tool==='menu') $('#dk-menu').click();
     });
   }
   function renderInteractiveRoadTool(){
@@ -3463,8 +3464,18 @@ const UI = (()=>{
       const focusStart=Math.max(0,Math.min(steps.length-3,done-1));
       const focusSteps=steps.slice(focusStart,focusStart+3);
       const transfer=G.transferStatus();
+      const witnessed=G.pillars?G.pillars().관계.have:0;
       const knowledge=G.knowledgeSummary().filter(item=>item.level>=2);
       const clue=knowledge[knowledge.length-1];
+      const nextActions={
+        family:{label:'도윤 가족의 버스 난방을 고친다',detail:'이송 현장을 직접 확인하고 기록을 남긴다.',condition:'이송 현장 직접 확인'},
+        appeal:{label:'부산에서 이의 제기 절차를 확인한다',detail:'원격 절차가 막힌 이유와 결과를 기록한다.',condition:'이의 제기 결과 기록'},
+        module:{label:'계기판 배선을 회로도와 대조한다',detail:'검증 모듈이 실제 달구지에 연결됐는지 확인한다.',condition:'회로도·배선 대조'},
+        key:{label:'분리 절차 4–5쪽을 먼저 찾는다',detail:'절차를 확보하기 전에는 검증키를 뽑지 않는다.',condition:'분리 절차 4–5쪽 확보'},
+        witness:{label:'당사자 증언과 발신 기록을 맞춘다',detail:'같은 명령을 겪은 사람들의 기록을 직접 대조한다.',condition:`증언 ${witnessed}/${D.seoulPillars.관계}`},
+        seoul:{label:'남산 관문에서 이송을 중단한다',detail:'서울 도착 뒤 남은 중단 절차를 끝낸다.',condition:`DAY ${D.transferDeadlineDay} 안에 완료`}
+      };
+      const nextAction=nextActions[nextStep?.id]||{label:'이송 중단 기록을 보관한다',detail:'완료한 기록을 달구지 안에 안전하게 보관한다.',condition:'목표 완료'};
       b.innerHTML=`<div class="folio-live-content">
         <div class="folio-title-row"><span>현재 목표</span><small>${esc(clock)}</small></div>
         <h3>${transfer.onTime?'서울 이송 중단':'남은 이송 중단'}</h3>
@@ -3474,9 +3485,9 @@ const UI = (()=>{
           ${focusSteps.map((step,index)=>`<div class="folio-step ${step.done?'done':''}"><i>${step.done?'✓':focusStart+index+1}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}
         </section>
         <section class="folio-clue"><span>확인된 단서</span><b>${esc(clue?clue.label:'남산 진입 경로 도면')}</b><p>${esc(clue?clue.text:'엄마가 남긴 도면과 현재 길의 기록을 대조한다.')}</p></section>
-        <div class="folio-support"><span>다음 행동</span><b>${esc(nextStep?.label||'남산에서 기록을 제출한다')}</b><p>${esc(nextStep?.detail||'남산 관문에서 이송 기록을 최종 확인한다.')}</p></div>
+        <div class="folio-support"><span>다음 행동</span><b>${esc(nextAction.label)}</b><p>${esc(nextAction.detail)}</p><dl class="folio-support-meta"><div><dt>현재 위치</dt><dd>${esc(D.nodes[S.at].name)}</dd></div><div><dt>완료 기준</dt><dd>${esc(nextAction.condition)}</dd></div></dl></div>
         <button class="folio-road-button" data-road-tool="road">길로 돌아가기</button>
-        <nav class="prop-edge-tabs" aria-label="다른 도구"><button data-road-tool="map">지도</button><button data-road-tool="bag">가방</button></nav>
+        <nav class="prop-edge-tabs" aria-label="다른 도구"><button data-road-tool="map">지도</button><button data-road-tool="bag">가방</button><button data-road-tool="menu">메뉴</button></nav>
       </div>`;
     }else{
       const perDay=Math.max(1,G.partySize()-(G.hasPerk('kw_ration')&&G.partySize()>1?1:0));
