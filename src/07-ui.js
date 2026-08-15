@@ -469,7 +469,6 @@ const UI = (()=>{
     $('#dk-sound').onclick=()=>SND.toggle();
     $('#early-sound').onclick=()=>SND.toggle();
     $('#dk-status').onclick=()=>openStatusTab('now','dk-status');
-    $('#mission-strip').onclick=()=>openStatusTab('journey','dk-objectives');
     $('#st-x').onclick=()=>closeOvl('#ovl-status');
     $('#map-x').onclick=()=>closeOvl('#ovl-map');
     $('#j-x').onclick=()=>closeOvl('#ovl-journal');
@@ -2009,7 +2008,6 @@ const UI = (()=>{
       data-scene-key="${esc(key)}" data-scene-format="${sceneFormat(key)}" data-cut-token="initial"
       aria-label="${esc(description)} 크게 보기">
       <img class="event-scene" src="${src}" alt="${esc(description)}" decoding="async" loading="eager" fetchpriority="high">
-      <span class="scene-cut-mark" aria-hidden="true">컷 1 / 1</span>
       <span class="scene-zoom" aria-hidden="true">↗</span></div>`;
   }
   function storySceneShot(state,turn,index,format='place'){
@@ -2094,14 +2092,6 @@ const UI = (()=>{
     const description=D.sceneDescriptions&&D.sceneDescriptions[key]||state.sceneAlt;
     img.alt=`${description} · ${index+1}번째 장면`;
     frame.setAttribute('aria-label',`${description} 크게 보기`);
-    const mark=frame.querySelector('.scene-cut-mark');
-    if(mark){
-      const hasCuts=cutCount>1;
-      const cut=Math.min(state.sceneCut||1,cutCount);
-      mark.textContent= hasCuts
-        ? `컷 ${cut} / ${cutCount}`
-        : `${state.label||'대화'} ${index+1} / ${state.turns.length}`;
-    }
     img.classList.remove('scene-recut');
     if(changed||refreshShot){
       void img.offsetWidth;
@@ -2156,24 +2146,15 @@ const UI = (()=>{
     },delay);
   }
   function wireStoryReviewPause(state,turn){
-    const scroll=$('#ev-sheet .event-scroll'), toggle=$('#ev-sheet .story-auto-toggle');
-    if(!scroll||!toggle) return;
-    const sync=()=>{
-      const waiting=storyAuto&&(state.reviewing||state.userHoldingStory);
-      toggle.classList.toggle('waiting',waiting);
-      toggle.textContent=!storyAuto?'자동 OFF':waiting?'자동 대기':'자동 ON';
-      toggle.setAttribute('aria-label',!storyAuto?'자동 진행 꺼짐'
-        :waiting?'지난 대화를 보는 동안 자동 진행 대기':'자동 진행 켜짐');
-    };
+    const scroll=$('#ev-sheet .event-scroll');
+    if(!scroll) return;
     const reviewPosition=()=>{
       const gap=scroll.scrollHeight-scroll.scrollTop-scroll.clientHeight;
       state.reviewing=gap>72;
-      sync();
     };
     scroll.onpointerdown=()=>{
       state.userHoldingStory=true;
       clearStoryAuto();
-      sync();
     };
     const release=()=>{
       state.userHoldingStory=false;
@@ -2195,7 +2176,6 @@ const UI = (()=>{
         if(!state.reviewing) scheduleStoryAuto(state,turn);
       });
     };
-    sync();
   }
   function wireEventChoicePages(dock){
     const pager=dock&&dock.querySelector('[data-choice-pages]');
@@ -2255,21 +2235,9 @@ const UI = (()=>{
       : `${state.index+1} / ${state.turns.length}`;
     if(!last){
       const next=state.turns[state.index+1];
-      const nextLabel=next.kind==='dialogue'||next.kind==='letter'?'다음 대화'
-        :next.kind==='ai'||next.kind==='radio'?'다음 방송':'다음 장면';
-      const autoCopy=next.kind==='dialogue'||next.kind==='letter'?'자동으로 다음 대화가 이어집니다'
-        :next.kind==='ai'||next.kind==='radio'?'자동으로 다음 방송이 이어집니다':'자동으로 다음 장면이 이어집니다';
       dock.classList.add('story-progress-dock');
-      dock.innerHTML=`<div class="choice-dock-head"><span>${state.label} · ${state.index+1}/${state.turns.length}</span>
-        <button class="story-auto-toggle${storyAuto?' on':''}" type="button" aria-pressed="${storyAuto}">${storyAuto?'자동 ON':'자동 OFF'}</button></div>
-        <button class="choice story-next" type="button"><strong>계속</strong><span class="req">${nextLabel} · ${state.index+2}/${state.turns.length} · ${storyAuto?autoCopy:'직접 넘기기'}</span></button>`;
+      dock.innerHTML=`<button class="choice story-next" type="button"><strong>계속</strong></button>`;
       dock.querySelector('.story-next').onclick=()=>advanceStory(state);
-      dock.querySelector('.story-auto-toggle').onclick=()=>{
-        setStoryAuto(!storyAuto);
-        state.reviewing=false;
-        state.userHoldingStory=false;
-        renderStoryState();
-      };
       wireStoryReviewPause(state,turn);
       scheduleStoryAuto(state,turn);
       return;
@@ -2301,10 +2269,6 @@ const UI = (()=>{
     sheet.classList.remove('combat-details-open');
     sheet.dataset.eventKind=evd.combat?'combat':'story';
     const aiEvent = evd.type==='추적'||!!evd.ai;
-    const physicalContext=S.stopover
-      ?`경유지 · ${Math.max(0,Math.round(S.stopover.remainingKm||0))}km 남음`
-      :S.at&&D.nodes[S.at]?D.nodes[S.at].name
-      :S.driving?`이동 중 · ${Math.max(0,Math.round(S.driving.dist-S.driving.gone))}km 남음`:'현재 위치';
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
     const sceneAlt=stripTags(evd.title||'길 위의 사건');
@@ -2330,8 +2294,7 @@ const UI = (()=>{
     sheet.classList.toggle('story-compact',turns.length>2);
     const choicePages=Math.ceil(choices.count/3);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<div class="event-head"><div>
-      <div class="event-meta-row"><div class="tag ${aiEvent?'ai-tag':''}">${esc(evd.type)}${evd.gen?' · 오프로드 생성':''} · ${esc(physicalContext)}</div><span data-event-progress>1 / ${turns.length}</span></div>
-      <h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></div>
+      <span class="sr-only" data-event-progress>1 / ${turns.length}</span><h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns);
@@ -2340,9 +2303,7 @@ const UI = (()=>{
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
       sceneKeys,sceneAlt,sceneStart:0,
-      finalDock:`<div class="choice-dock-head"><span>${evd.id==='seoul_core'?'마지막 증언':'결정을 선택'} · ${choices.count}</span>
-        <small>${choices.count>3?'한 번에 세 개씩 확인 · 직접 선택':evd.id==='seoul_core'?'실행안을 직접 선택':'자동 진행이 멈췄습니다 · 직접 선택'}</small></div>
-        <div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>
+      finalDock:`<div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>
         ${choicePages>1?`<div class="event-choice-pages" data-choice-pages role="group" aria-label="선택지 1 / ${choicePages} 페이지"><button type="button" data-choice-prev>이전</button><span><b data-choice-page>1</b> / ${choicePages}</span><button type="button" data-choice-next>다음</button></div>`:''}
         ${evd.combat?`<button class="event-detail-toggle" type="button" data-event-detail aria-expanded="false">상세 정보</button>`:''}`,
       wireFinal:(dock)=>{
@@ -2513,7 +2474,6 @@ const UI = (()=>{
       ? '<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
       : '';
     const selectedTitle=stripTags(choice.label||curEv.title||'선택의 결과').trim()||'선택의 결과';
-    const selectedTactic=stripTags(choice.tactic||choiceIntentTag(choice)||'대응').trim()||'대응';
     let actions='';
     const chained=out.fx&&out.fx.chain;
     const chainEvent=chained&&D.events.find(e=>e.id===chained);
@@ -2528,8 +2488,7 @@ const UI = (()=>{
         :'길로 돌아가기'}</button>`;
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
-      <div class="event-head"><div><div class="event-meta-row"><div class="tag">선택의 결과</div><span data-event-progress>결과 · ${turns.length} / ${turns.length}</span></div><h2>${esc(selectedTitle)}</h2></div></div>
-      <div class="event-choice-recap"><small>방금 선택</small><b>${esc(selectedTactic)}</b></div>
+      <div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(selectedTitle)}</h2></div></div>
       ${combatHud}<div class="story-result" role="status" aria-live="polite" aria-atomic="true"></div><div class="story-reader"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
@@ -2539,8 +2498,7 @@ const UI = (()=>{
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
       sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,sceneCarry,
-      finalDock:`<div class="choice-dock-head"><span>${chained?'이야기 계속':'사건 마침'}</span><small>${chained?'다음 장면은 직접 넘어갑니다':'자동 진행이 끝났습니다'}</small></div>
-        <div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
+      finalDock:`<div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
       reveal:()=>{ const result=sheet.querySelector('.story-result'); if(result) result.innerHTML=fxHtml; },
       wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
         if(b.hasAttribute('disabled')) return;
@@ -3434,10 +3392,6 @@ const UI = (()=>{
     root.querySelectorAll('[data-road-tool]').forEach(button=>button.onclick=()=>{
       const tool=button.dataset.roadTool;
       if(tool==='road') $('#dk-road').click();
-      else if(tool==='map') $('#dk-map').click();
-      else if(tool==='goal') openStatusTab('journey','dk-objectives');
-      else if(tool==='bag') openStatusTab('now','dk-status');
-      else if(tool==='menu') $('#dk-menu').click();
     });
   }
   function renderInteractiveRoadTool(){
@@ -3479,7 +3433,7 @@ const UI = (()=>{
       b.innerHTML=`<div class="folio-live-content">
         <div class="folio-title-row"><span>현재 목표</span><small>${esc(clock)}</small></div>
         <h3>${transfer.onTime?'서울 이송 중단':'남은 이송 중단'}</h3>
-        <button class="folio-location" data-road-tool="map">${esc(D.nodes[S.at].name)} · 지도에서 보기</button>
+        <div class="folio-location">${esc(D.nodes[S.at].name)}</div>
         <section class="folio-progress" aria-label="목표 진행 ${done}/${steps.length}">
           <div class="folio-section-title"><b>진행 단계</b><span>${done}/${steps.length}</span></div>
           ${focusSteps.map((step,index)=>`<div class="folio-step ${step.done?'done':''}"><i>${step.done?'✓':focusStart+index+1}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}
@@ -3487,7 +3441,6 @@ const UI = (()=>{
         <section class="folio-clue"><span>확인된 단서</span><b>${esc(clue?clue.label:'남산 진입 경로 도면')}</b><p>${esc(clue?clue.text:'엄마가 남긴 도면과 현재 길의 기록을 대조한다.')}</p></section>
         <div class="folio-support"><span>다음 행동</span><b>${esc(nextAction.label)}</b><p>${esc(nextAction.detail)}</p><dl class="folio-support-meta"><div><dt>현재 위치</dt><dd>${esc(D.nodes[S.at].name)}</dd></div><div><dt>완료 기준</dt><dd>${esc(nextAction.condition)}</dd></div></dl></div>
         <button class="folio-road-button" data-road-tool="road">길로 돌아가기</button>
-        <nav class="prop-edge-tabs" aria-label="다른 도구"><button data-road-tool="map">지도</button><button data-road-tool="bag">가방</button><button data-road-tool="menu">메뉴</button></nav>
       </div>`;
     }else{
       const perDay=Math.max(1,G.partySize()-(G.hasPerk('kw_ration')&&G.partySize()>1?1:0));
@@ -3497,10 +3450,10 @@ const UI = (()=>{
       const canRepair=parts>0&&S.van<S.vanMax-2;
       const entries=[
         {id:'부품',label:'부품',value:parts,unit:'개',icon:'parts',desc:'달구지의 손상된 차체를 현장에서 복구한다.',action:canRepair?`부품 1개로 정비 · 차체 +${repairGain}`:parts<1?'정비할 부품이 없다':'차체가 충분히 튼튼하다',primary:true},
-        {id:'의약품',label:'의약품',value:S.items['의약품']||0,unit:'개',icon:'meds',desc:'부상자를 돌볼 때 사용하는 약품이다.',action:'보유 수량 확인'},
-        {id:'탄약',label:'소총탄',value:S.items['탄약']||0,unit:'발',icon:'ammo',desc:'총기를 사용할 때 필요한 탄약이다.',action:'보유 수량 확인'},
-        {id:'고철',label:'고철',value:S.scrap,unit:'개',icon:'scrap',desc:'거래와 달구지 개조에 사용하는 재료다.',action:'보유 수량 확인'},
-        {id:'기타',label:'기타',value:Object.entries(S.items).filter(([key])=>!['부품','의약품','탄약'].includes(key)).reduce((sum,[,value])=>sum+(Number(value)||0),0),unit:'개',icon:'quest',desc:'의뢰와 여정에서 얻은 특별한 물건이다.',action:'보관 내용 확인'}
+        {id:'의약품',label:'의약품',value:S.items['의약품']||0,unit:'개',icon:'meds',desc:'부상자를 돌볼 때 사용하는 약품이다.'},
+        {id:'탄약',label:'소총탄',value:S.items['탄약']||0,unit:'발',icon:'ammo',desc:'총기를 사용할 때 필요한 탄약이다.'},
+        {id:'고철',label:'고철',value:S.scrap,unit:'개',icon:'scrap',desc:'거래와 달구지 개조에 사용하는 재료다.'},
+        {id:'기타',label:'기타',value:Object.entries(S.items).filter(([key])=>!['부품','의약품','탄약'].includes(key)).reduce((sum,[,value])=>sum+(Number(value)||0),0),unit:'개',icon:'quest',desc:'의뢰와 여정에서 얻은 특별한 물건이다.'}
       ];
       if(!entries.some(entry=>entry.id===inventorySelection)) inventorySelection='부품';
       const selected=entries.find(entry=>entry.id===inventorySelection)||entries[0];
@@ -3513,7 +3466,7 @@ const UI = (()=>{
         </section>
         <section class="bag-vehicle" aria-label="달구지와 보급 상태"><small class="bag-vehicle-title">여정 상태</small><div><span>차체</span><b>${Math.floor(S.van)}%</b><i><em style="width:${clamp(S.van/S.vanMax*100,0,100)}%"></em></i></div><div><span>남은 보급</span><b>${supplyDays}일</b><i><em style="width:${clamp(supplyDays/5*100,0,100)}%"></em></i></div></section>
         <section class="bag-pockets" aria-label="가방 수납칸">${entries.map(entry=>`<button class="bag-pocket ${entry.id===selected.id?'selected':''}" data-bag-item="${entry.id}" aria-pressed="${entry.id===selected.id}" aria-label="${esc(entry.label)} ${entry.value??0}${entry.unit}${entry.id===selected.id?', 선택됨':''}">${ICO(entry.icon)}<span class="bag-pocket-name">${esc(entry.label)}</span><span class="bag-pocket-count"><small>보유</small><span class="bag-pocket-amount"><b>${entry.value??0}</b><small>${entry.unit}</small></span></span></button>`).join('')}</section>
-        <section class="bag-detail">${ICO(selected.icon)}<div class="bag-detail-copy"><small class="bag-detail-kicker">선택한 수납칸</small><div class="bag-detail-heading"><span>${esc(selected.label)}</span><b>${selected.value??0}${selected.unit}</b></div><p>${esc(selected.desc)}</p><button class="${selected.primary?'is-primary':'is-info'}" data-bag-action="${selected.id}" ${(selected.id==='부품'&&!canRepair)?'disabled':''}>${esc(selected.action)}</button></div></section>
+        <section class="bag-detail">${ICO(selected.icon)}<div class="bag-detail-copy"><small class="bag-detail-kicker">선택한 수납칸</small><div class="bag-detail-heading"><span>${esc(selected.label)}</span><b>${selected.value??0}${selected.unit}</b></div><p>${esc(selected.desc)}</p>${selected.primary?`<button class="is-primary" data-bag-action="${selected.id}" ${(selected.id==='부품'&&!canRepair)?'disabled':''}>${esc(selected.action)}</button>`:`<div class="bag-detail-state" role="status">${selected.value>0?'가방에 보관 중':'현재 비어 있음'}</div>`}</div></section>
       </div>`;
       b.querySelectorAll('[data-bag-item]').forEach(button=>button.onclick=()=>{
         inventorySelection=button.dataset.bagItem;
@@ -3525,7 +3478,7 @@ const UI = (()=>{
         if(action.dataset.bagAction==='부품'){
           if(!G.fieldRepair()) toast('지금은 부품으로 정비할 필요가 없다');
           renderStatus();
-        }else toast(`${selected.label} ${selected.value||0} · ${selected.desc}`);
+        }
       };
     }
     wireRoadTool(b);
@@ -3705,14 +3658,14 @@ const UI = (()=>{
       <div class="st-metric"><span class="mk">동료</span><span class="mv">${S.party.length}/${G.maxParty()}</span></div>
       <div class="st-metric"><span class="mk">완주 서사</span><span class="mv">${stories.filter(s=>s.state==='done').length}</span></div>
       <div class="st-metric"><span class="mk">보리</span><span class="mv">${S.dog?'동행 중':'—'}</span></div>
-    </div><div class="st-sec"><h4>차에 실린 이야기</h4>`+
+    </div><div class="st-sec crew-manifest"><h4>동행 명단 <small>이름을 눌러 자세히 보기</small></h4>`+
       (stories.length?`<div class="crew-status-list">`+stories.map(s=>`<div class="crew-status-card" data-comp2="${s.id}" role="button" tabindex="0">
         <span class="crew-status-face">${faceOf(s.id,s.c.face)}</span>
         <span class="crew-status-main"><b>${s.c.name}</b><small>${s.c.role}${s.joinedBy?` · ${esc(s.joinedBy.label)}로 합류`:''}${s.best?`<br>${esc(D.comps[s.best.id].name)}와 ${G.relationLabel(s.best.score)}`:''}</small><em class="crew-status-next">${esc(s.nextPayoff)}</em></span>
         <span class="crew-status-state">${s.injury?`🩹 ${s.injury.label}<br>${s.injury.days}일`:(s.state==='done'?`★ ${s.p3.nm}`:`Lv.${s.st.lvl} · 유대 ${s.st.bond}${s.st.pending?'<br>✦ 퍼크 대기':''}`)}</span>
         <span class="crew-status-bond"><i style="width:${s.bondPct}%"></i></span></div>`).join('')+`</div>`
         :`<div class="status-empty"><b>아직 혼자다.</b><span>누구를 만나게 될지는 길이 정한다.</span></div>`)+
-      `<div class="csub" style="margin-top:7px">${stories.length?'이름을 누르면 유대와 해금된 능력을 확인한다.':'지도와 명단에는 만나지 않은 사람을 미리 표시하지 않는다.'}</div></div>`;
+      `<div class="csub" style="margin-top:9px">${stories.length?'각자의 유대와 다음 능력은 함께 겪은 일에 따라 달라진다.':'지도와 명단에는 만나지 않은 사람을 미리 표시하지 않는다.'}</div></div>`;
 
     const settings=`<div class="settings-console">
       <div class="st-sec ui-comfort"><h4>화면 편의 <small>이 기기에 저장</small></h4>

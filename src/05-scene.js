@@ -10,7 +10,6 @@ const SCENE = (()=>{
   let off, ctx, W=LW, H=LH;               // 픽셀 캔버스 (모든 드로잉)
   let worldX=0, t=0, puffs=[], rainDrops=null, flashT=0, shoot=null, birds=null;
   let crowFly=[], crowCd={};
-  let signTexts=[];                   // 픽셀 패스에서 수집 → 블릿 후 선명하게 그림
 
   const hash=(n)=>{ let x=Math.sin(n*127.1+311.7)*43758.5453; return x-Math.floor(x); };
   const lerp=(a,b,f)=>a+(b-a)*f;
@@ -473,19 +472,6 @@ const SCENE = (()=>{
     }
   }
 
-  function signs(par,roadY){
-    const cell=620, offp=worldX*par, first=Math.floor(offp/cell)-1;
-    for(let i=first;i<first+Math.ceil(W/cell)+2;i++){
-      const x=P(i*cell-offp+hash(i*2.3)*120);
-      if(x<-40||x>W+20) continue;
-      const remain=S?G.remainKm():400;
-      const km=Math.max(0,Math.round((remain+((i*cell-offp)-W*0.26)/10)/10)*10);
-      ctx.fillStyle='#222c34'; ctx.fillRect(x-1,roadY-26,2,26);
-      ctx.fillStyle='#173629'; ctx.fillRect(x-17,roadY-38,34,14);
-      ctx.strokeStyle='#2e5140'; ctx.lineWidth=1; ctx.strokeRect(x-16.5,roadY-37.5,33,13);
-      signTexts.push({x:x, y:roadY-31, km});
-    }
-  }
   function deadCars(par,roadY,col){
     const cell=290, offp=worldX*par, first=Math.floor(offp/cell)-1;
     for(let i=first;i<first+Math.ceil(W/cell)+2;i++){
@@ -1260,7 +1246,6 @@ const SCENE = (()=>{
     if(!ctx) return; t+=dt;
     mealT=Math.max(0,mealT-dt);
     talkT=Math.max(0,talkT-dt);
-    signTexts=[];
     const hour=S? S.min/60:21.2;
     const dark=darknessAt(hour);
     const wx=S? (S.wx||'clear'):'clear';
@@ -1290,7 +1275,6 @@ const SCENE = (()=>{
     const roadY=road(dark,wx);
     deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
     poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
-    signs(1.0,roadY+1);
     van(roadY,speed,dark,wx,undefined,speed>0?1:1.26);
     drawPuffs(dt);
     drawCrows(dt); weather(wx,dark,speed,dt);
@@ -1304,17 +1288,6 @@ const SCENE = (()=>{
     dctx.clearRect(0,0,VW,VH);
     dctx.imageSmoothingEnabled=false;
     dctx.drawImage(off,0,0,W,H,0,0,VW,VH);
-    /* 표지판 텍스트만 선명하게 */
-    const sc=VW/W;
-    dctx.font='700 11px ui-monospace,monospace'; dctx.textAlign='center';
-    for(const st of signTexts){
-      dctx.fillStyle='#cfe4d6';
-      dctx.fillText('서울 '+st.km, st.x*sc, st.y*sc);
-      dctx.font='8px ui-monospace,monospace'; dctx.fillStyle='#8fbf9d';
-      dctx.fillText('SEOUL', st.x*sc, st.y*sc+9);
-      dctx.font='700 11px ui-monospace,monospace';
-    }
-    dctx.textAlign='left';
   }
 
   /* 정착지·정비소에서도 주행 화면과 같은 달구지를 그대로 쓴다.

@@ -73,23 +73,12 @@ def check_viewport(playwright, width, height):
         goal_reference,
         goal_frame_reference,
     )
-    edge_tabs = page.locator(".prop-edge-tabs button").evaluate_all(
-        """nodes => nodes.map(node => {
-          const r = node.getBoundingClientRect();
-          return {x:r.x,right:r.right,width:r.width,height:r.height};
-        })"""
-    )
-    assert len(edge_tabs) == 3
-    assert page.locator(".prop-edge-tabs button").all_inner_texts() == ["지도", "가방", "메뉴"]
-    for tab in edge_tabs:
-        assert tab["x"] >= 7.5 and tab["right"] <= width - 7.5, tab
-        assert tab["width"] >= 44 and tab["height"] >= 44, tab
-    page.click('.prop-edge-tabs [data-road-tool="menu"]')
-    page.wait_for_timeout(80)
-    assert "on" in (page.locator("#ovl-menu").get_attribute("class") or "").split()
-    page.evaluate("document.querySelector('#dk-menu').click()")
-    page.evaluate("document.querySelector('#dk-objectives').click()")
-    page.wait_for_timeout(80)
+    assert page.locator(".prop-edge-tabs").count() == 0
+    assert page.locator('.folio-location[data-road-tool]').count() == 0
+    assert page.locator('.folio-location').evaluate("node => node.tagName") == "DIV"
+    assert "지도에서 보기" not in page.locator('.folio-location').inner_text()
+    assert page.locator('[data-road-tool]').count() == 1
+    assert page.locator('[data-road-tool]').get_attribute('data-road-tool') == 'road'
     support = box(page, ".folio-support")
     support_copy = box(page, ".folio-support>b")
     support_meta = box(page, ".folio-support-meta")
@@ -132,6 +121,12 @@ def check_viewport(playwright, width, height):
     assert support_copy["y"] + support_copy["height"] < support_meta["y"]
     assert support_meta["y"] >= support["y"] + support["height"] * 0.55
     assert support_meta["y"] + support_meta["height"] <= support["y"] + support["height"]
+
+    page.click("#dk-map")
+    page.wait_for_timeout(80)
+    assert page.locator("#ovl-map .map-tool-tabs").count() == 0
+    assert page.locator("#ovl-map [data-road-tool]").count() == 0
+    assert page.locator("#mission-strip").evaluate("node => node.tagName") == "DIV"
 
     page.click("#dk-status")
     page.wait_for_timeout(120)
@@ -231,8 +226,10 @@ def check_viewport(playwright, width, height):
     assert_same_rail(
         detail_reference, box(page, ".bag-detail-heading"), "bag detail heading"
     )
-    assert_same_rail(
-        detail_reference, box(page, ".bag-detail button"), "bag detail action"
+    detail_state = box(page, ".bag-detail-state")
+    assert detail_state["x"] > detail_reference["x"]
+    assert detail_state["x"] + detail_state["width"] <= (
+        detail_reference["x"] + detail_reference["width"] + 0.5
     )
     assert detail_reference["y"] >= detail_panel["y"] - 0.5
     assert (
@@ -242,6 +239,8 @@ def check_viewport(playwright, width, height):
     selected = page.locator('[data-bag-item="의약품"]')
     assert selected.get_attribute("aria-pressed") == "true"
     assert page.locator(".bag-detail-heading span").inner_text() == "의약품"
+    assert page.locator(".bag-detail-state").inner_text() == "가방에 보관 중"
+    assert page.locator('[data-bag-action="의약품"]').count() == 0
 
     numeric_variant = page.locator(".bag-pocket-count b").first.evaluate(
         "node => getComputedStyle(node).fontVariantNumeric"

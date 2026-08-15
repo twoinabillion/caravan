@@ -55,7 +55,8 @@ def check_viewport(playwright, width, height):
         """node => ({
           backgroundImage:getComputedStyle(node).backgroundImage,
           faceImage:getComputedStyle(node,'::before').backgroundImage,
-          faceSize:getComputedStyle(node,'::before').backgroundSize
+          faceSize:getComputedStyle(node,'::before').backgroundSize,
+          faceDisplay:getComputedStyle(node,'::before').display
         })"""
     )
 
@@ -67,11 +68,10 @@ def check_viewport(playwright, width, height):
     assert next_button["width"] <= 360.5
     assert next_button["x"] >= dock["x"] + 13
     assert next_button["x"] + next_button["width"] <= dock["x"] + dock["width"] - 13
-    assert button_face["backgroundImage"] == "none"
-    assert button_face["faceImage"] != "none"
-    assert button_face["faceSize"] == "54px 54px"
+    assert "linear-gradient" in button_face["backgroundImage"]
+    assert button_face["faceDisplay"] == "none"
     assert page.locator(".story-next strong").inner_text() == "계속"
-    assert page.locator(".story-next .req").is_visible()
+    assert page.locator(".story-next .req").count() == 0
     assert page.locator("[data-event-progress]").inner_text() == "1 / 4"
     page.click(".story-next")
     page.wait_for_timeout(90)

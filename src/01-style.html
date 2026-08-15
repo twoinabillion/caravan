@@ -709,9 +709,6 @@ input{font-family:inherit}
 .folio-support-meta dt{display:block;color:#51483c;font:850 clamp(9.5px,2.1cqw,11px)/1.15 var(--sans)}
 .folio-support-meta dd{display:block;min-width:0;margin:4% 0 0;color:#211e19;font:900 clamp(11.5px,2.6cqw,14px)/1.18 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .folio-road-button{flex:none;min-height:44px;margin:auto var(--folio-frame-right) 0 var(--folio-frame-left);border:0;color:#2b1c0f;font:950 clamp(13px,3.8cqw,21px)/1 var(--sans);text-align:center}
-.prop-edge-tabs{position:absolute;z-index:5;right:-17%;top:17.5%;display:grid;grid-template-rows:repeat(3,minmax(44px,1fr));gap:5%;height:41%;width:44px}
-.prop-edge-tabs button{min-width:44px;min-height:44px;color:#30271e;font:900 clamp(9px,2cqw,11px)/1 var(--sans);writing-mode:vertical-rl}
-
 /* canvas supply roll */
 .bag-live-content{position:absolute;inset:0;color:#d8d2c3;font-family:var(--sans)}
 .bag-title-row{position:absolute;z-index:3;top:1.65%;left:9.2%;right:9.2%;display:flex;align-items:center;justify-content:space-between;gap:8px;color:#ded7c7}
@@ -743,10 +740,11 @@ input{font-family:inherit}
 .bag-detail-copy{display:flex;min-width:0;min-height:0;flex-direction:column;justify-content:center}.bag-detail-kicker{display:block;color:#70b4b0;font:850 clamp(8px,1.7cqw,9.5px)/1 var(--sans);letter-spacing:.04em}
 .bag-detail-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:8px;margin-top:2%}.bag-detail-heading span{min-width:0;color:#e5aa49;font:950 clamp(14px,3.5cqw,20px)/1.1 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bag-detail-heading b{color:#d7d0c2;font:850 clamp(10px,2.4cqw,13px)/1 var(--mono);font-variant-numeric:tabular-nums}
 .bag-detail p{display:-webkit-box;margin:2.5% 0 3.4%;color:#d2cabd;font:700 clamp(10px,2.25cqw,12.5px)/1.28 var(--sans);overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-.bag-detail button{width:100%;min-height:44px;margin-left:0;border:0;color:#87c7c3;background:transparent;
-  font:900 clamp(10px,2.45cqw,13.5px)/1.15 var(--sans)}
+.bag-detail button,.bag-detail-state{display:grid;width:86%;min-height:44px;margin-left:14%;place-items:center;border:0;color:#87c7c3;background:transparent;
+  font:900 clamp(10px,2.45cqw,13.5px)/1.15 var(--sans);text-align:center;transform:translateY(clamp(5px,1.6cqw,8px))}
 .bag-detail button.is-primary{border:0;color:#f4c679;background:transparent}.bag-detail button:hover{background:rgba(214,151,57,.09)}
 .bag-detail button:focus-visible{outline:2px solid #e0a343;outline-offset:-3px}.bag-detail button:disabled{opacity:.45}
+.bag-detail-state{color:#8fc4bf;cursor:default}
 
 /* fold-out CRT navigator */
 .map-navigator{background-image:url("__UI_MAP_NAVIGATOR_SHELL__")}
@@ -770,11 +768,6 @@ input{font-family:inherit}
 .map-navigator #nodecard .go:hover{background:rgba(255,180,84,.08)}
 .map-navigator #nodecard .go:focus-visible{outline:2px solid #ffd291;outline-offset:-3px}
 .map-navigator #nodecard .go small{font-size:clamp(9px,1.9cqw,10.5px)}
-.map-tool-tabs{position:absolute;z-index:9;left:5.5%;right:6.7%;bottom:9.1%;display:flex;justify-content:space-between;pointer-events:none}
-.map-tool-tabs button{min-width:44px;min-height:44px;border:0;background:transparent;color:#d2a35b;font:900 clamp(9px,1.9cqw,11px)/1 var(--sans);pointer-events:auto}
-.map-tool-tabs button:hover{background:rgba(210,163,91,.07)}.map-tool-tabs button:focus-visible{outline:2px solid #d2a35b;outline-offset:-3px}
-.map-tool-tabs button:nth-child(2){margin-left:auto;margin-right:0}
-
 /* crew and settings still live in the secondary utility sheet. */
 #status-prop.utility-sheet{width:100%;height:100%;max-width:560px;aspect-ratio:auto;display:flex;flex-direction:column;background:var(--night);filter:none}
 #status-prop.utility-sheet>.road-tool-live-head{position:relative;inset:auto;flex:none;gap:8px;padding:calc(10px + var(--safe-top)) 12px 8px;border-bottom:1px solid var(--line)}
@@ -789,6 +782,9 @@ input{font-family:inherit}
   .bag-detail-kicker{display:none}
   .bag-detail-heading{margin-top:0}
   .bag-detail p{margin:1% 0 1.4%;line-height:1.15}
+  .bag-pocket-name{font-size:11px}
+  .bag-pocket-count>small:first-child{display:none}
+  .bag-pocket-count small{font-size:9.5px}
 }
 /* status */
 #st-body{flex:1;overflow-y:auto;padding:12px 14px calc(18px + var(--safe-bottom))}
@@ -2615,6 +2611,21 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .menu-grid small,.menu-settings small{display:block;margin-top:4px;color:#99a4bb;font:12px/1.35 var(--mono)}
 .menu-settings{width:100%;min-height:68px;margin-top:8px;align-items:center}
 
+/* Secondary tools share one restrained field-console language. */
+#menu-body{padding:18px 16px calc(22px + var(--safe-bottom))}
+.menu-intro{position:relative;margin:0 0 14px;padding:9px 10px 12px 14px;border:0;border-left:2px solid rgba(226,163,77,.72);
+  background:linear-gradient(90deg,rgba(226,163,77,.075),transparent 78%)}
+.menu-intro small{font-size:10px}.menu-intro b{font-size:18px;letter-spacing:-.02em}.menu-intro p{max-width:34em;margin-top:5px}
+.menu-grid{gap:7px}
+.menu-grid button,.menu-settings{position:relative;min-height:80px;align-items:center;padding:11px 12px;border-color:#29364a;border-radius:5px;
+  background:linear-gradient(180deg,#111b28,#0b131f);box-shadow:inset 0 1px rgba(255,255,255,.025);overflow:hidden}
+.menu-grid button::after,.menu-settings::after{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:#365f62;opacity:.72}
+.menu-grid button:hover,.menu-grid button:focus-visible,.menu-settings:hover,.menu-settings:focus-visible{border-color:#9b7440;outline:0;background:#131d29}
+.menu-grid button:hover::after,.menu-grid button:focus-visible::after,.menu-settings:hover::after,.menu-settings:focus-visible::after{background:var(--amber)}
+.menu-ico{width:34px;height:34px;border-right:1px solid #2b384b}
+.menu-ico img{width:25px;height:25px}.menu-grid b,.menu-settings b{font-size:13px}.menu-grid small,.menu-settings small{font-size:10.5px;line-height:1.4}
+.menu-settings{min-height:58px;margin-top:7px}
+
 @container game (max-width:680px){
   /* 하단 장갑 콘솔과 도크 사이의 빈 띠를 풍경에 돌려준다. 도크의 투명한
      윗부분까지 활용해 달구지·노면을 더 보여 주되 버튼 얼굴은 가리지 않는다. */
@@ -2765,6 +2776,48 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock{min-height:108px}
 #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices{display:grid;grid-template-columns:1fr;max-height:none;overflow:visible}
 #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices>.choice:not(:first-child){min-height:48px;border-radius:3px;background:#0b1722}
+
+/* The event is now the image, story and decision—not a dashboard describing them. */
+#ev-sheet.event-mode .scene-cut-mark,
+#ev-sheet.event-mode .event-meta-row,
+#ev-sheet.event-mode .choice-dock-head,
+#ev-sheet.event-mode .story-auto-toggle,
+#ev-sheet.event-mode .event-choice-recap{display:none!important}
+#ev-sheet.event-mode .event-scene-frame{margin-bottom:12px}
+#ev-sheet.event-mode .event-head{margin-bottom:5px;padding-bottom:9px}
+#ev-sheet.event-mode .event-head h2{margin:0;color:#f0ede4;font-size:21px;line-height:1.24}
+#ev-sheet.event-mode .story-progress-dock{min-height:0;padding-top:9px;padding-bottom:calc(9px + var(--safe-bottom))}
+#ev-sheet.event-mode .story-next{display:flex;width:min(100%,340px);min-height:48px;margin:0 auto;padding:0 22px;align-items:center;justify-content:center;
+  border:1px solid #72593a;border-radius:3px;background:linear-gradient(180deg,#101b27,#0a131e);box-shadow:inset 0 1px rgba(255,210,142,.05);text-align:center}
+#ev-sheet.event-mode .story-next::before{display:none}
+#ev-sheet.event-mode .story-next strong{display:block;color:#efb65f;font:850 14px/1 var(--sans);text-shadow:none}
+#ev-sheet.event-mode .story-next .req{display:none}
+#ev-sheet.event-mode .story-next:active{transform:translateY(1px);background:#08111a}
+#ev-sheet.event-mode .story-next:active::before{display:none}
+#ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock{padding-top:10px}
+#ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock>.choices{padding-top:0}
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock{min-height:74px}
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock .choice:first-child{min-height:48px}
+
+/* Crew prioritizes people, then status. Settings read as grouped instruments. */
+.crew-manifest>h4,.settings-console .st-sec>h4{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.crew-manifest>h4 small,.settings-console .st-sec>h4 small{color:#778598;font:500 9.5px/1.2 var(--mono);letter-spacing:.02em;text-align:right}
+.crew-status-list{gap:7px}
+.crew-status-card{grid-template-columns:58px minmax(0,1fr) auto;gap:7px 11px;min-height:78px;padding:8px 10px 8px 8px;
+  border-color:#29384b;border-radius:5px;background:linear-gradient(100deg,#111a26,#0b121d);box-shadow:inset 2px 0 rgba(84,188,179,.35)}
+.crew-status-card:hover,.crew-status-card:focus-visible{border-color:#9a7443;outline:0;box-shadow:inset 2px 0 var(--amber)}
+.crew-status-face{grid-row:1/3;width:58px;height:58px;border-radius:3px;border-color:#3c4b5d;background:#080d14}
+.crew-status-main b{font-size:14px;color:#eeece5}.crew-status-main small{margin-top:2px;color:#9da8b5;font-size:10.5px;line-height:1.35;white-space:normal}
+.crew-status-next{display:-webkit-box;margin-top:4px;color:#6fc4ba;font-size:10px;line-height:1.3;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.crew-status-state{align-self:start;padding:4px 6px;border:1px solid rgba(220,161,75,.3);border-radius:3px;background:rgba(220,161,75,.055);
+  color:#e0aa5d;font-size:9.5px;white-space:nowrap}
+.crew-status-bond{grid-column:2/4;height:2px;border-radius:0;background:#050910}.crew-status-bond i{border-radius:0}
+.settings-console{display:grid!important;gap:8px}.settings-console .st-sec{margin:0;padding:12px;border-color:#29384b;border-radius:5px;
+  background:linear-gradient(180deg,#101925,#0a121d)}
+.settings-console .st-sec>h4{margin-bottom:10px;color:#d7a45d;font-size:10.5px}
+.settings-console .ui-comfort-grid{gap:6px}.settings-console .ui-comfort-grid button{min-height:50px;border-radius:3px;background:#0c1520}
+.settings-console .audio-mixer-list{gap:0}.settings-console .audio-mixer-list label{border-top:1px solid rgba(255,255,255,.045)}
+.settings-console .save-backup-actions button,.settings-console .save-backup-actions label{border-radius:3px;background:#0c1520}
 
 @container game (max-width:380px){
   #ev-sheet.event-mode .event-scroll{padding-left:14px;padding-right:14px}

@@ -147,36 +147,30 @@ with sync_playwright() as p:
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
     check('게임 진입(HUD)', pg.locator('#stage-fuel').is_visible())
-    auto_flow = pg.evaluate('''async () => {
+    event_flow = pg.evaluate('''async () => {
       window.__CARAVAN_TEST_AUTO_MS=90;
       const ev=D.events.find(item=>item.id==='lib_meet');
       UI.showEvent(ev);
       document.querySelector('#ev-sheet').getAnimations().forEach(animation=>animation.finish());
       const first=document.querySelector('#ev-sheet .story-next').getBoundingClientRect();
-      const announced=document.querySelector('#ev-sheet .story-next .req').textContent.includes('자동으로 다음 대화가 이어집니다');
-      const toggle=document.querySelector('#ev-sheet .story-auto-toggle');
-      const defaultOn=toggle.getAttribute('aria-pressed')==='true';
+      const chrome=document.querySelectorAll('#ev-sheet .scene-cut-mark,#ev-sheet .story-auto-toggle,#ev-sheet .choice-dock-head,#ev-sheet .event-meta-row').length;
       await new Promise(resolve=>setTimeout(resolve,150));
-      const badge=document.querySelector('.scene-cut-mark').textContent;
+      const progress=document.querySelector('#ev-sheet [data-event-progress]').textContent;
       const second=document.querySelector('#ev-sheet .story-next').getBoundingClientRect();
-      document.querySelector('#ev-sheet .story-auto-toggle').click();
-      const stoppedAt=document.querySelector('.scene-cut-mark').textContent;
-      await new Promise(resolve=>setTimeout(resolve,150));
-      const stayed=document.querySelector('.scene-cut-mark').textContent===stoppedAt;
       UI.finishStory();
-      const choicePause=document.querySelector('.choice-dock-head small').textContent.includes('직접 선택');
+      const choiceCount=document.querySelectorAll('#ev-sheet .choices>[data-i]').length;
       document.querySelector('#ev-sheet [data-i="2"]').click();
       UI.finishStory();
       const finishLabel=document.querySelector('#ev-sheet [data-r="ok"]').textContent.trim();
       document.querySelector('#ev-sheet [data-r="ok"]').click();
       delete window.__CARAVAN_TEST_AUTO_MS;
-      return {announced,defaultOn,badge,stable:Math.abs(first.y-second.y)<1,stayed,choicePause,finishLabel};
+      return {chrome,progress,stable:Math.abs(first.y-second.y)<1,choiceCount,finishLabel};
     }''')
-    check('대화 자동 진행 안내·ON 기본값·선택지에서 정지',
-          auto_flow['announced'] and auto_flow['defaultOn'] and '2 / 4' in auto_flow['badge'] and
-          auto_flow['stayed'] and auto_flow['choicePause'], str(auto_flow))
+    check('사건 장식 UI 없이 자동 진행·선택지는 유지',
+          event_flow['chrome'] == 0 and '2 / 4' in event_flow['progress'] and event_flow['choiceCount'] >= 3,
+          str(event_flow))
     check('진행 버튼 위치 고정·사건 종료 문구 명확',
-          auto_flow['stable'] and auto_flow['finishLabel'] == '길로 돌아가기', str(auto_flow))
+          event_flow['stable'] and event_flow['finishLabel'] == '길로 돌아가기', str(event_flow))
     identity_flow = pg.evaluate('''() => {
       const backup=JSON.parse(JSON.stringify(S));
       const revealChecks=[];

@@ -87,9 +87,9 @@ with sync_playwright() as playwright:
           effects:document.querySelectorAll('.story-result .fx').length,
           actionHeight:document.querySelector('.event-choice-dock .choice')?.getBoundingClientRect().height||0
         })""")
-        check(f'{label}: 결과 화면이 선택 회고·영향 칩·다음 행동으로 이어짐',
+        check(f'{label}: 결과 화면이 제목·영향 칩·다음 행동으로 이어짐',
               outcome['phase'] == 'outcome' and '제압을 포기' in outcome['title'] and
-              '이탈' in outcome['recap'] and outcome['effects'] > 0 and outcome['actionHeight'] >= 44, str(outcome))
+              not outcome['recap'] and outcome['effects'] > 0 and outcome['actionHeight'] >= 44, str(outcome))
         page.close()
 
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
