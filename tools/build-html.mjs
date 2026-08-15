@@ -72,9 +72,9 @@ const replace = (source, pattern, resolve, label) => {
 };
 
 const uiAssetPaths = {
-  NAV_ARMORED_SHELL:{path:'assets/ui/nav-armored-shell-v1.png', mime:'image/png'},
-  NAV_BUTTON_FACE:{path:'assets/ui/nav-button-face-v1.png', mime:'image/png'},
-  NAV_BUTTON_PRESSED:{path:'assets/ui/nav-button-pressed-v1.png', mime:'image/png'},
+  NAV_ARMORED_SHELL:{path:'assets/ui/nav-armored-shell-v2.webp', mime:'image/webp'},
+  NAV_BUTTON_FACE:{path:'assets/ui/nav-button-face-v2.webp', mime:'image/webp'},
+  NAV_BUTTON_PRESSED:{path:'assets/ui/nav-button-pressed-v2.webp', mime:'image/webp'},
   ROUTE_CONSOLE_SHELL:{path:'assets/ui/route-console-shell-option3.webp', mime:'image/webp'},
   ROUTE_MAP_TERRAIN:{path:'assets/ui/route-map-terrain-v1.webp', mime:'image/webp'},
   ROUTE_FACT_FUEL:{path:'assets/ui/route-fact-fuel-option3.png', mime:'image/png'},
@@ -93,8 +93,9 @@ const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key =>
 const npc = replace(read('src/03f-npc-portraits.js'), /__NPC_([a-z0-9_]+)__/g,
   key => dataUri(`assets/portraits/${key}.png`, 'image/png'), 'NPC');
 const scenes = replace(read('src/03g-scenes.js'), /__SCENE_([A-Z0-9_]+)__/g, key => {
-  const relative = introScenes[key] || `assets/scenes/${key.toLowerCase().replaceAll('_', '-')}.jpg`;
-  return dataUri(relative, 'image/jpeg');
+  const isArrival=key.startsWith('ARRIVAL_');
+  const relative = introScenes[key] || `assets/scenes/${key.toLowerCase().replaceAll('_', '-')}.${isArrival?'webp':'jpg'}`;
+  return dataUri(relative, isArrival?'image/webp':'image/jpeg');
 }, '장면');
 const upgrades = replace(scenes.result, /__UPGRADE_([A-Z0-9_]+)__/g,
   key => dataUri(upgradeScenes[key], 'image/jpeg'), '업그레이드');

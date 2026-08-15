@@ -9,6 +9,55 @@ D.scenes = {
   'daejeon-commune':'__SCENE_DAEJEON_COMMUNE__',
   'suwon-fortress':'__SCENE_SUWON_FORTRESS__',
   'seoul-han':'__SCENE_SEOUL_HAN__',
+  'arrival-gimhae':'__SCENE_ARRIVAL_GIMHAE__',
+  'arrival-yangsan':'__SCENE_ARRIVAL_YANGSAN__',
+  'arrival-jinju':'__SCENE_ARRIVAL_JINJU__',
+  'arrival-hapcheon':'__SCENE_ARRIVAL_HAPCHEON__',
+  'arrival-geochang':'__SCENE_ARRIVAL_GEOCHANG__',
+  'arrival-gumi':'__SCENE_ARRIVAL_GUMI__',
+  'arrival-gimcheon':'__SCENE_ARRIVAL_GIMCHEON__',
+  'arrival-namwon':'__SCENE_ARRIVAL_NAMWON__',
+  'arrival-yeongdong':'__SCENE_ARRIVAL_YEONGDONG__',
+  'arrival-nonsan':'__SCENE_ARRIVAL_NONSAN__',
+  'arrival-gongju':'__SCENE_ARRIVAL_GONGJU__',
+  'arrival-cheongju':'__SCENE_ARRIVAL_CHEONGJU__',
+  'arrival-cheonan':'__SCENE_ARRIVAL_CHEONAN__',
+  'arrival-pyeongtaek':'__SCENE_ARRIVAL_PYEONGTAEK__',
+  'arrival-lake':'__SCENE_ARRIVAL_LAKE__',
+  'arrival-mall':'__SCENE_ARRIVAL_MALL__',
+  'arrival-tower':'__SCENE_ARRIVAL_TOWER__',
+  'arrival-spring':'__SCENE_ARRIVAL_SPRING__',
+  'arrival-airfield':'__SCENE_ARRIVAL_AIRFIELD__',
+  'arrival-solar':'__SCENE_ARRIVAL_SOLAR__',
+  'arrival-reststop':'__SCENE_ARRIVAL_RESTSTOP__',
+  'arrival-tunnelbook':'__SCENE_ARRIVAL_TUNNELBOOK__',
+  'arrival-ulsan':'__SCENE_ARRIVAL_ULSAN__',
+  'arrival-yeosu':'__SCENE_ARRIVAL_YEOSU__',
+  'arrival-suncheon':'__SCENE_ARRIVAL_SUNCHEON__',
+  'arrival-damyang':'__SCENE_ARRIVAL_DAMYANG__',
+  'arrival-mokpo':'__SCENE_ARRIVAL_MOKPO__',
+  'arrival-andong':'__SCENE_ARRIVAL_ANDONG__',
+  'arrival-mungyeong':'__SCENE_ARRIVAL_MUNGYEONG__',
+  'arrival-danyang':'__SCENE_ARRIVAL_DANYANG__',
+  'arrival-wonju':'__SCENE_ARRIVAL_WONJU__',
+  'arrival-daegwallyeong':'__SCENE_ARRIVAL_DAEGWALLYEONG__',
+  'arrival-gangneung':'__SCENE_ARRIVAL_GANGNEUNG__',
+  'arrival-sokcho':'__SCENE_ARRIVAL_SOKCHO__',
+  'arrival-icheon':'__SCENE_ARRIVAL_ICHEON__',
+  'arrival-gyeongju':'__SCENE_ARRIVAL_GYEONGJU__',
+  'arrival-pohang':'__SCENE_ARRIVAL_POHANG__',
+  'arrival-sangju':'__SCENE_ARRIVAL_SANGJU__',
+  'arrival-gunsan':'__SCENE_ARRIVAL_GUNSAN__',
+  'arrival-chungju':'__SCENE_ARRIVAL_CHUNGJU__',
+  'arrival-sejong':'__SCENE_ARRIVAL_SEJONG__',
+  'arrival-lighthouse':'__SCENE_ARRIVAL_LIGHTHOUSE__',
+  'arrival-drivein':'__SCENE_ARRIVAL_DRIVEIN__',
+  'arrival-sunflower':'__SCENE_ARRIVAL_SUNFLOWER__',
+  'arrival-maehwa':'__SCENE_ARRIVAL_MAEHWA__',
+  'arrival-mingyu-ridge':'__SCENE_ARRIVAL_MINGYU_RIDGE__',
+  'arrival-jaeyi-cache':'__SCENE_ARRIVAL_JAEYI_CACHE__',
+  'arrival-cablecar':'__SCENE_ARRIVAL_CABLECAR__',
+  'arrival-filmset':'__SCENE_ARRIVAL_FILMSET__',
   'kw-defense-line':'__SCENE_KW_DEFENSE_LINE__',
   'perimeter-walker':'__SCENE_PERIMETER_WALKER__',
   'grandfather-garage':'__SCENE_GRANDFATHER_GARAGE__',
@@ -165,7 +214,7 @@ const sceneFormatFor = key => {
   if(/^(combat-|roadcrew-|route-)/.test(key)) return 'action';
   return 'place';
 };
-const sceneUsesDalguji = key => /^(busan-departure|full-house-meal|generic-|combat-|roadcrew-|route-|settlement-|recruit-|intro-(passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
+const sceneUsesDalguji = key => /^(arrival-|busan-departure|full-house-meal|generic-|combat-|roadcrew-|route-|settlement-|recruit-|intro-(passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
 D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
   const companion=sceneCompanionId(key);
   const vehicleRefs=sceneUsesDalguji(key)?(D.dalgujiVisual.refs||[]):[];
@@ -178,7 +227,7 @@ D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
       ...vehicleRefs
     ],
     vehicleReference:vehicleRefs,
-    size:'768x432',
+    size:String(key).startsWith('arrival-')?'540x900':'768x432',
     status:'approved'
   }];
 }));

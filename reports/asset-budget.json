@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-08-15T07:03:16.018Z",
+  "generatedAt": "2026-08-15T08:46:13.587Z",
   "html": {
-    "bytes": 37539219,
+    "bytes": 37121218,
     "warnBytes": 32000000,
     "maxBytes": 38000000
   },
   "embedded": {
-    "files": 232,
-    "bytes": 22103579,
+    "files": 281,
+    "bytes": 22272329,
     "categories": {
       "audio": {
         "files": 45,
         "bytes": 9710668,
         "encodedBytes": 12947612
       },
+      "scene": {
+        "files": 194,
+        "bytes": 11711620,
+        "encodedBytes": 15615784
+      },
       "ui": {
         "files": 11,
-        "bytes": 1118490,
-        "encodedBytes": 1491336
-      },
-      "scene": {
-        "files": 145,
-        "bytes": 10831914,
-        "encodedBytes": 14442768
+        "bytes": 407534,
+        "encodedBytes": 543396
       },
       "portrait": {
         "files": 31,
@@ -73,12 +73,6 @@
       "mime": "audio/mpeg",
       "bytes": 744336,
       "encodedBytes": 992448
-    },
-    {
-      "path": "assets/ui/nav-armored-shell-v1.png",
-      "mime": "image/png",
-      "bytes": 589181,
-      "encodedBytes": 785576
     },
     {
       "path": "assets/scenes/miryang-market-hub.jpg",
@@ -151,6 +145,12 @@
       "mime": "image/webp",
       "bytes": 163676,
       "encodedBytes": 218236
+    },
+    {
+      "path": "assets/intro/11-current-expulsion-v2.jpg",
+      "mime": "image/jpeg",
+      "bytes": 152361,
+      "encodedBytes": 203148
     }
   ]
 }

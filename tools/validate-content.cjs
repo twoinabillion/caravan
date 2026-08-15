@@ -223,6 +223,11 @@ for (const [id, script] of Object.entries(D.eventTurnScripts || {})) {
   }
 }
 
+for (const id of Object.keys(D.nodes || {})) {
+  const scene=D.nodeScenes&&D.nodeScenes[id];
+  need(!!scene, `nodeScene:${id}`, '도착 장면 연결이 없음');
+  if(scene) need(!!D.scenes[scene], `nodeScene:${id}`, `없는 장면 ${scene}`);
+}
 for (const [id, scene] of Object.entries(D.eventScenes || {}))
   need(!!D.scenes[scene], `eventScene:${id}`, `없는 장면 ${scene}`);
 for (const [id, turns] of Object.entries(D.eventTurnScenes || {})) {

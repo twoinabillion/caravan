@@ -56,7 +56,7 @@ function dimensions(file){
 for(const name of imageFiles){
   const file=join(sceneDir,name);
   const actual=dimensions(file);
-  const expected=hubExceptions.get(name)||[768,432];
+  const expected=/^arrival-.*\.webp$/i.test(name)?[540,900]:(hubExceptions.get(name)||[768,432]);
   if(actual.width!==expected[0]||actual.height!==expected[1]){
     failures.push(`${name}: ${actual.width}x${actual.height}; expected ${expected[0]}x${expected[1]}`);
   }

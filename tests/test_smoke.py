@@ -261,7 +261,7 @@ with sync_playwright() as p:
       const out={stageH:stage.height,stageW:stage.width,mainH:main.height,toastN:document.querySelectorAll('.toast').length,
         toastW:toast.width,bubbleN:document.querySelectorAll('.bubble').length,bubbleW:bubble.width,
         narrationN:document.querySelectorAll('.bubble.narration').length};
-      document.querySelector('#toasts').replaceChildren();
+      UI.clearToasts();
       UI.clearSpeech();
       UI.speak({who:'나',t:'(속말 테스트)'});
       const thought=document.querySelector('.bubble.thought');
@@ -276,7 +276,7 @@ with sync_playwright() as p:
       return out;
     }''')
     check('상단 풍경 310px 이하·하단 패널 380px 이상', layout['stageH'] <= 311 and layout['mainH'] >= 380, str(layout))
-    check('알림 최대 2개·주행 말풍선 한 번에 1개', layout['toastN'] <= 2 and layout['bubbleN'] == 1, str(layout))
+    check('알림 한 번에 1개·주행 말풍선 한 번에 1개', layout['toastN'] == 1 and layout['bubbleN'] == 1, str(layout))
     check('알림 360px 이하·서술 캡션 화면 안', layout['toastW'] <= 361 and
           layout['bubbleW'] <= layout['stageW'] - 24, str(layout))
     check('서술·속말 말풍선 분리', layout['narrationN'] == 1 and layout['thought'] and
@@ -818,7 +818,7 @@ with sync_playwright() as p:
         ||(e.locEvent&&D.nodeScenes&&D.nodeScenes[e.locEvent])
         ||D.eventSceneTypes[(e.ai||e.type==='추적')?'추적':e.type]||'generic-story';
       out.allEventsIllustrated=D.events.every(e=>!!D.scenes[sceneFor(e)]);
-      out.sceneDataReady=Object.values(D.scenes).every(src=>src.startsWith('data:image/jpeg;base64,'));
+      out.sceneDataReady=Object.values(D.scenes).every(src=>src.startsWith('data:image/'));
       out.turnParser=D.events.every(e=>{
         const raw=typeof e.text==='function'?e.text(S):e.text;
         const turns=UI.storyTurns(raw,e);
@@ -1188,7 +1188,7 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 138종·빌드 주입', r4['sceneCount'] == 138 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 187종·빌드 주입', r4['sceneCount'] == 187 and r4['sceneDataReady'], str(r4))
     check('김천 노선 선택·청주까지 경로 잠금', r4['routeChoice'], str(r4))
     check('김천 두 노선은 지도 거리·시간·연료 범위만 표시하고 현장 정보는 숨긴다', r4['routeForecast'], str(r4))
     check('비살상 구조·호송 3단계 임무와 장부 기록',
@@ -1224,7 +1224,7 @@ with sync_playwright() as p:
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
     check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))
     check('실제 남북·동서 위치관계 반영', r4['geoOrder'], str(r4))
-    check('도시 9곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 9 and r4['eventSceneCount'] >= 36, str(r4))
+    check('도착지 58곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 58 and r4['eventSceneCount'] >= 36, str(r4))
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))

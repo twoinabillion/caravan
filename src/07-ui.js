@@ -44,6 +44,8 @@ const UI = (()=>{
   }
   let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
   let arrivalTimer=0;
+  const toastQueue=[];
+  let toastActive=false, toastTimer=0;
   const savedMotion=localStorage.getItem('caravan_ui_motion');
   const uiPrefs={
     largeText:localStorage.getItem('caravan_ui_text')==='large',
@@ -1759,7 +1761,6 @@ const UI = (()=>{
     const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];
     const src=key&&D.scenes&&D.scenes[key];
     const recap=S.lastJourneyRecap;
-    toast(`<span class="ic">📍</span>${n.name} 도착`);
     const a=$('#arrival-scene');
     const recapChanges=recap&&recap.changes&&recap.changes.length
       ?recap.changes.slice(0,5).map(change=>`<i class="${change.good?'gain':'cost'}">${esc(change.label)} ${change.value>0?'+':''}${change.value}${esc(change.unit)}</i>`).join('')
@@ -1771,7 +1772,7 @@ const UI = (()=>{
     </div>`:'';
     const people=recap&&recap.checkIn?`<div class="arrival-people"><small>이 길에서 함께한 시간</small><strong>${esc(recap.checkIn.moment&&recap.checkIn.moment.title||`${recap.checkIn.name}와 나눈 짧은 이야기`)}</strong>${recap.checkIn.moment?`<span>${esc(recap.checkIn.moment.text)}</span>`:''}</div>`:'';
     const chapter=recap&&recap.chapter?`<div class="arrival-chapter"><small>CHAPTER COMPLETE</small><strong>${esc(recap.chapter.title)}</strong><span>${esc(recap.chapter.text)}</span></div>`:'';
-    a.innerHTML=`${src?`<img src="${src}" alt="">`:'<div class="arrival-fallback" aria-hidden="true"></div>'}<div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span>
+    a.innerHTML=`${src?`<img src="${src}" alt="${esc(n.name)} 도착 풍경">`:'<div class="arrival-fallback" aria-hidden="true"></div>'}<div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span>
       ${recap?`<div class="arrival-ledger" aria-label="방금 주행 정산">
         <div><strong>${esc(D.nodes[recap.from].name)} → ${esc(n.name)}</strong><em>${recap.km}km · ${G.durationLabel(recap.minutes)} · 사건 ${recap.events}건</em></div>
         <div class="arrival-deltas">${recapChanges}</div>
@@ -1847,13 +1848,40 @@ const UI = (()=>{
   }
 
   /* ── toast ── */
-  function toast(html, cls){
+  function showNextToast(){
     const host=$('#toasts');
-    while(host.children.length>=2) host.firstElementChild.remove();
-    const t=el('div','toast '+(cls||''), html);
-    host.appendChild(t);
+    if(!host||toastActive||!toastQueue.length) return;
+    toastActive=true;
+    const item=toastQueue.shift();
+    const t=el('div','toast '+(item.cls||''),item.html);
+    host.replaceChildren(t);
     requestAnimationFrame(()=>t.classList.add('show'));
-    setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),350); }, 3400);
+    const hold=Math.min(4200,2600+String(t.textContent||'').length*18);
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>{
+      t.classList.remove('show');
+      toastTimer=setTimeout(()=>{
+        if(t.isConnected) t.remove();
+        toastActive=false;
+        showNextToast();
+      },uiPrefs.reduceMotion?10:260);
+    },hold);
+  }
+  function toast(html, cls){
+    const normalized=String(html||'').trim();
+    if(!normalized) return;
+    const last=toastQueue[toastQueue.length-1];
+    if(last&&last.html===normalized&&last.cls===(cls||'')) return;
+    toastQueue.push({html:normalized,cls:cls||''});
+    if(toastQueue.length>6) toastQueue.splice(0,toastQueue.length-6);
+    showNextToast();
+  }
+  function clearToasts(){
+    clearTimeout(toastTimer);
+    toastQueue.length=0;
+    toastActive=false;
+    const host=$('#toasts');
+    if(host) host.replaceChildren();
   }
 
   /* ── EVENT SHEET ── */
@@ -3852,5 +3880,5 @@ const UI = (()=>{
 
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
     showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat, showSeoul,
-    storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech};
+    storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech, clearToasts};
 })();

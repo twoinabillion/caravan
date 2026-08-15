@@ -1815,7 +1815,24 @@ D.nodeScenery = {
 D.nodeScenes = {
   busan:'busan-departure', gwangju:'gwangju-market', miryang:'miryang-market',
   daegu:'daegu-dome', muju:'muju-tunnel', jeonju:'jeonju-market',
-  daejeon:'daejeon-commune', suwon:'suwon-fortress', seoul:'seoul-han'
+  daejeon:'daejeon-commune', suwon:'suwon-fortress', seoul:'seoul-han',
+  gimhae:'arrival-gimhae', yangsan:'arrival-yangsan', jinju:'arrival-jinju',
+  hapcheon:'arrival-hapcheon', geochang:'arrival-geochang', gumi:'arrival-gumi',
+  gimcheon:'arrival-gimcheon', namwon:'arrival-namwon', yeongdong:'arrival-yeongdong',
+  nonsan:'arrival-nonsan', gongju:'arrival-gongju', cheongju:'arrival-cheongju',
+  cheonan:'arrival-cheonan', pyeongtaek:'arrival-pyeongtaek', lake:'arrival-lake',
+  mall:'arrival-mall', tower:'arrival-tower', spring:'arrival-spring',
+  airfield:'arrival-airfield', solar:'arrival-solar', reststop:'arrival-reststop',
+  tunnelbook:'arrival-tunnelbook', ulsan:'arrival-ulsan', yeosu:'arrival-yeosu',
+  suncheon:'arrival-suncheon', damyang:'arrival-damyang', mokpo:'arrival-mokpo',
+  andong:'arrival-andong', mungyeong:'arrival-mungyeong', danyang:'arrival-danyang',
+  wonju:'arrival-wonju', daegwallyeong:'arrival-daegwallyeong', gangneung:'arrival-gangneung',
+  sokcho:'arrival-sokcho', icheon:'arrival-icheon', gyeongju:'arrival-gyeongju',
+  pohang:'arrival-pohang', sangju:'arrival-sangju', gunsan:'arrival-gunsan',
+  chungju:'arrival-chungju', sejong:'arrival-sejong', lighthouse:'arrival-lighthouse',
+  drivein:'arrival-drivein', sunflower:'arrival-sunflower', maehwa:'arrival-maehwa',
+  mingyu_ridge:'arrival-mingyu-ridge', jaeyi_cache:'arrival-jaeyi-cache',
+  cablecar:'arrival-cablecar', filmset:'arrival-filmset'
 };
 D.eventScenes = {
   van_receipt:'grandfather-garage', kw_base:'kw-defense-line',
