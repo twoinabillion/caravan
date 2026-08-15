@@ -658,11 +658,14 @@ input{font-family:inherit}
 /* ── interactive road tools ─────────────────────────────────
    목표·지도·가방은 서로 다른 실제 물건이지만, 하단 도크와 조작 규칙은 같다.
    물건의 질감은 raster shell, 변하는 정보와 모든 조작은 live DOM/canvas다. */
-.road-tool-overlay{--tool-dock-h:clamp(76px,19.68cqw,134px);inset:0 0 calc(var(--tool-dock-h) + var(--safe-bottom));
+.road-tool-overlay{--tool-dock-h:clamp(76px,19.68cqw,134px);
+  --tool-fit-w:calc(64.2857dvh - clamp(48.86px,12.6514cqw,86.14px) - var(--safe-bottom) - var(--safe-top));
+  inset:0 0 calc(var(--tool-dock-h) + var(--safe-bottom));
   z-index:24;background:radial-gradient(110% 72% at 50% 5%,#202116 0%,#080a0d 56%,#030507 100%);overflow:hidden}
 .road-tool-stage{width:100%;height:100%;display:grid;place-items:center;padding:var(--safe-top) 0 0;overflow:hidden}
-.road-tool-prop{position:relative;width:min(100%,480px);
-  height:auto;max-height:100%;aspect-ratio:720/1120;flex:none;overflow:hidden;
+.road-tool-prop{position:relative;container-type:inline-size;
+  width:min(calc(100% - 8px),480px,var(--tool-fit-w));
+  height:auto;max-height:none;aspect-ratio:720/1120;flex:none;overflow:hidden;
   background-position:center;background-repeat:no-repeat;background-size:100% 100%;filter:drop-shadow(0 12px 26px rgba(0,0,0,.55))}
 .road-tool-live-head,.map-live-head{position:absolute;z-index:8;display:flex;align-items:center;min-width:0}
 .road-tool-live-head h2,.map-live-head h2{min-width:0;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -695,7 +698,7 @@ input{font-family:inherit}
 .folio-clue>span,.folio-support>span{display:block;color:#275f5e;font:900 clamp(8px,1.95cqw,10.5px)/1.1 var(--sans);letter-spacing:.03em}
 .folio-clue>b{display:block;margin-top:2%;font:900 clamp(11px,2.55cqw,14px)/1.15 var(--sans)}
 .folio-clue>p{display:-webkit-box;margin:2% 0 0;color:#51493e;font:600 clamp(8px,1.9cqw,10.5px)/1.25 var(--sans);overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-.folio-support{min-height:8.5%;margin:0 var(--folio-rail) 1%;padding:2% 3%;border:1px solid rgba(55,47,37,.28);overflow:hidden}
+.folio-support{flex:1;min-height:8.5%;margin:0 var(--folio-rail) 1%;padding:2% 3%;border:1px solid rgba(55,47,37,.28);overflow:hidden}
 .folio-support>b{display:block;margin-top:1%;font:850 clamp(9px,2.15cqw,12px)/1.2 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .folio-road-button{flex:none;min-height:44px;margin:auto var(--folio-rail) 0;border:1px solid rgba(69,46,22,.72);color:#2b1c0f;font:950 clamp(13px,3.8cqw,21px)/1 var(--sans);text-align:center}
 .prop-edge-tabs{position:absolute;z-index:5;right:-17%;top:17.5%;display:grid;gap:7.5%;height:33%;width:44px}
