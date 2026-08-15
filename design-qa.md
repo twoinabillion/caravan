@@ -2,6 +2,72 @@
 
 final result: passed
 
+---
+
+# Goal + Bag Raster-slot Precision QA — 2026-08-15
+
+- Source visual truth: `assets/ui/goal-folio-shell-v1.webp` and `assets/ui/bag-supply-roll-v1.webp` (720×1120 px each), plus the user's goal/bag screenshots represented by the pre-fix captures below.
+- Pre-fix implementation: `audits/goal-bag-overflow-2026-08-15/deep-adjust-before-goal-476x809.png` and `deep-adjust-before-bag-selected-476x809.png`.
+- Final implementation: `audits/goal-bag-overflow-2026-08-15/deep-adjust-after-goal-476x809.png` and `deep-adjust-after-bag-selected-476x809.png`.
+- Short-screen evidence: matching `deep-adjust-before-*320x578.png` and `deep-adjust-after-*320x578.png` captures.
+- Side-by-side full-view comparisons: `deep-adjust-qa-goal-476x809.png`, `deep-adjust-qa-bag-476x809.png`, `deep-adjust-qa-goal-320x578.png`, and `deep-adjust-qa-bag-320x578.png`.
+- Viewports: 476×809 and 320×578 CSS px; additional regression viewports 375×553, 360×700, 390×844, and 462×832.
+- Pixels/density: implementation captures equal their CSS viewport dimensions at deviceScaleFactor 1. The 720×1120 shell assets are proportionally scaled into the same 720:1120 prop box; no density resampling was used for layout measurements.
+- Browser/state: Google Chrome, Day 1 new-game goal progress 3/6; bag state selected `고철`. State-dependent numbers are intentionally not compared to the user's later save.
+
+## Full-view comparison evidence
+
+The 476×809 goal and bag before/after captures were joined into the same comparison images and opened at original resolution. A second same-input comparison was performed at 320×578. The final goal screen uses the raster's printed paper frames instead of drawing a second CSS rectangle. The action copy now begins inside the printed map frame, while its lower metadata sits inside the lower printed panel. The final bag screen moves its resource panel and five interactive columns onto the actual leather panel and stitched pocket seams.
+
+## Focused-region evidence
+
+Separate crops were unnecessary because the original-size 476×809 composites keep every stitched divider, item center, count strip, small metadata label, and printed paper border legible. The 320×578 composites serve as the focused responsive check for the densest layout.
+
+## Comparison history
+
+### Iteration 1 — blocked
+
+- [P2] Goal clue region had a coded 1px rectangle over the raster's own printed frames, producing a visibly doubled/competing border and making the page feel misregistered.
+- [P2] The goal action area started too low and used conservative type, leaving the printed map frame visually empty.
+- [P1] Bag pocket columns were inset 6.7% from the shell, but the measured stitched pocket centers are approximately 13.12%, 31.56%, 50%, 68.44%, and 86.88%. The outer columns were visibly pulled toward the middle.
+- [P2] Bag vehicle status started below the second leather panel's true top and the pocket grid ended before the printed lower seam.
+
+Fixes:
+
+- Removed the duplicate goal clue border, shortened its reserved height, and raised the action frame.
+- Increased goal action and completion-metadata optical size/contrast without changing the existing paper palette.
+- Set the bag pocket grid to 3.9% side insets with zero artificial inter-column gap, matching the five measured raster seam centers.
+- Raised and widened the vehicle panel, extended the pocket grid through the printed lower seam, and recentered icons/count strips within their stitched slots.
+- Added automated guards for the five raster seam centers, duplicate goal border, action-frame vertical band, 44px controls, and cross-viewport containment.
+
+### Iteration 2 — passed
+
+- The 476×809 side-by-side comparison shows one coherent set of goal paper frames and five centered bag columns.
+- The 320×578 comparison preserves readable hierarchy, full five-column containment, and the persistent bottom controls.
+- No actionable P0/P1/P2 mismatch remains at the checked states and viewports.
+
+## Required fidelity surfaces
+
+- Fonts and typography: the established Korean sans/mono families remain unchanged. Goal action and completion values use heavier optical weights; no new clipping, unwanted wrapping, or truncation appears at 320×578 through 476×809.
+- Spacing and layout rhythm: the 720:1120 prop ratio is preserved. Goal content follows the printed paper frames. Bag columns now follow the asset's measured stitch geometry instead of a generic evenly inset grid.
+- Colors and visual tokens: existing teal, amber, paper, canvas, and muted ink tokens are preserved. Only existing-family contrast was strengthened.
+- Image quality and asset fidelity: the original 720×1120 goal and bag raster assets remain unmodified and unstretched. Icons stay as real raster assets; no CSS/SVG/emoji substitute was introduced.
+- Copy and content: existing non-spoiler goal copy is retained. No future encounter, danger, reward, or route outcome is exposed.
+
+## Interaction, accessibility, and runtime checks
+
+- `python3 tests/test_goal_bag_alignment.py`: passed on 320×578, 375×553, 360×700, 390×844, 462×832, and 476×809 in Google Chrome.
+- `python3 tests/test_quality_9_accessibility.py`: passed, including 44px goal/bag controls, large text, reduced motion, selection updates, repair action, 200% zoom, and zero console/runtime errors.
+- `npm run verify:quick`: passed; dialogue, content references, and scene-asset contracts are clean.
+- `python3 tests/test_smoke.py`: passed in full.
+- `git diff --check`: passed.
+
+## Follow-up polish
+
+- [P3] At very short heights, the goal page intentionally hides secondary location metadata and prose before reducing touch targets or overlapping the printed map.
+
+final result: passed
+
 ## 비교 기준
 
 - Source: `Desktop/Caravan 목적지 UI 3가지 시안/3-세로-로커와-캐러셀.png`

@@ -40,7 +40,7 @@ def assert_same_rail(reference, candidate, label, tolerance=1.0):
 
 
 def check_viewport(playwright, width, height):
-    browser = playwright.chromium.launch()
+    browser = playwright.chromium.launch(channel="chrome")
     page = browser.new_page(viewport={"width": width, "height": height})
     page.add_init_script(
         "localStorage.clear(); localStorage.setItem('caravan_story_auto','0')"
@@ -85,6 +85,14 @@ def check_viewport(playwright, width, height):
     support_copy = box(page, ".folio-support>b")
     support_meta = box(page, ".folio-support-meta")
     road_button = box(page, ".folio-road-button")
+    clue_border = page.locator(".folio-clue").evaluate(
+        "node => getComputedStyle(node).borderTopWidth"
+    )
+    assert clue_border == "0px", "the coded clue frame must not double the raster frame"
+    support_top_ratio = (support["y"] - goal_prop["y"]) / goal_prop["height"]
+    assert 0.48 <= support_top_ratio <= 0.64, (
+        f"goal action frame missed the printed folio slot: {support_top_ratio:.4f}"
+    )
     assert road_button["y"] - (support["y"] + support["height"]) <= 8, (
         support,
         road_button,
@@ -124,10 +132,18 @@ def check_viewport(playwright, width, height):
     assert len(pocket_boxes) == len(count_boxes) == 5
     assert max(abs(item["y"] - pocket_boxes[0]["y"]) for item in pocket_boxes) <= 0.5
     assert max(abs(item["y"] - count_boxes[0]["y"]) for item in count_boxes) <= 0.5
-    for pocket, count in zip(pocket_boxes, count_boxes):
+    raster_pocket_centers = (0.1312, 0.3156, 0.5, 0.6844, 0.8688)
+    for pocket, count, expected_center in zip(
+        pocket_boxes, count_boxes, raster_pocket_centers
+    ):
         pocket_center = pocket["x"] + pocket["width"] / 2
         count_center = count["x"] + count["width"] / 2
         assert abs(pocket_center - count_center) <= 0.5
+        pocket_center_ratio = (pocket_center - bag_prop["x"]) / bag_prop["width"]
+        assert abs(pocket_center_ratio - expected_center) <= 0.006, (
+            f"bag pocket missed stitched slot: actual={pocket_center_ratio:.4f} "
+            f"expected={expected_center:.4f}"
+        )
 
     page.click('[data-bag-item="의약품"]')
     page.wait_for_timeout(80)
