@@ -53,7 +53,7 @@ def check_viewport(playwright, width, height):
     assert abs(goal_prop["width"] / goal_prop["height"] - 720 / 1120) <= 0.003
     goal_left_gutter = goal_prop["x"]
     goal_right_gutter = width - goal_prop["x"] - goal_prop["width"]
-    assert goal_left_gutter >= 3.5 and goal_right_gutter >= 3.5
+    assert goal_left_gutter >= 7.5 and goal_right_gutter >= 7.5
     assert abs(goal_left_gutter - goal_right_gutter) <= 1.0
     goal_reference = box(page, ".folio-live-content>h3")
     for selector in (
@@ -72,14 +72,17 @@ def check_viewport(playwright, width, height):
     )
     assert len(edge_tabs) == 2
     for tab in edge_tabs:
-        assert tab["x"] >= 3.5 and tab["right"] <= width - 3.5, tab
+        assert tab["x"] >= 7.5 and tab["right"] <= width - 7.5, tab
         assert tab["width"] >= 44 and tab["height"] >= 44, tab
     support = box(page, ".folio-support")
+    support_copy = box(page, ".folio-support>b")
     road_button = box(page, ".folio-road-button")
     assert road_button["y"] - (support["y"] + support["height"]) <= 8, (
         support,
         road_button,
     )
+    assert support_copy["y"] > support["y"] + support["height"] * 0.2
+    assert support_copy["y"] + support_copy["height"] < support["y"] + support["height"]
 
     page.click("#dk-status")
     page.wait_for_timeout(120)
@@ -87,7 +90,7 @@ def check_viewport(playwright, width, height):
     assert abs(bag_prop["width"] / bag_prop["height"] - 720 / 1120) <= 0.003
     bag_left_gutter = bag_prop["x"]
     bag_right_gutter = width - bag_prop["x"] - bag_prop["width"]
-    assert bag_left_gutter >= 3.5 and bag_right_gutter >= 3.5
+    assert bag_left_gutter >= 7.5 and bag_right_gutter >= 7.5
     assert abs(bag_left_gutter - bag_right_gutter) <= 1.0
     assert_same_rail(
         box(page, ".bag-critical"),
@@ -147,4 +150,9 @@ with sync_playwright() as playwright:
     check_viewport(playwright, 375, 553)
     check_viewport(playwright, 390, 844)
     check_viewport(playwright, 360, 700)
-    print("✅ 목표·가방 정렬·넘침 · 320x578 / 375x553 / 360x700 / 390x844")
+    check_viewport(playwright, 462, 832)
+    check_viewport(playwright, 476, 809)
+    print(
+        "✅ 목표·가방 정렬·넘침 · "
+        "320x578 / 375x553 / 360x700 / 390x844 / 462x832 / 476x809"
+    )

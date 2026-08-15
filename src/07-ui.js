@@ -3459,6 +3459,7 @@ const UI = (()=>{
     if(stTab==='journey'){
       const steps=G.departureSteps();
       const done=steps.filter(step=>step.done).length;
+      const nextStep=steps.find(step=>!step.done);
       const focusStart=Math.max(0,Math.min(steps.length-3,done-1));
       const focusSteps=steps.slice(focusStart,focusStart+3);
       const transfer=G.transferStatus();
@@ -3473,7 +3474,7 @@ const UI = (()=>{
           ${focusSteps.map((step,index)=>`<div class="folio-step ${step.done?'done':''}"><i>${step.done?'✓':focusStart+index+1}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}
         </section>
         <section class="folio-clue"><span>확인된 단서</span><b>${esc(clue?clue.label:'남산 진입 경로 도면')}</b><p>${esc(clue?clue.text:'엄마가 남긴 도면과 현재 길의 기록을 대조한다.')}</p></section>
-        <div class="folio-support"><span>다음 행동</span><b>${steps.find(step=>!step.done)?.label||'남산에서 기록을 제출한다'}</b></div>
+        <div class="folio-support"><span>다음 행동</span><b>${esc(nextStep?.label||'남산에서 기록을 제출한다')}</b><p>${esc(nextStep?.detail||'남산 관문에서 이송 기록을 최종 확인한다.')}</p></div>
         <button class="folio-road-button" data-road-tool="road">길로 돌아가기</button>
         <nav class="prop-edge-tabs" aria-label="다른 도구"><button data-road-tool="map">지도</button><button data-road-tool="bag">가방</button></nav>
       </div>`;
@@ -3500,7 +3501,7 @@ const UI = (()=>{
           <div>${ICO('fuel')}<span>연료<b>${Math.floor(S.fuel)}L</b></span></div>
         </section>
         <section class="bag-vehicle" aria-label="달구지와 보급 상태"><small class="bag-vehicle-title">여정 상태</small><div><span>차체</span><b>${Math.floor(S.van)}%</b><i><em style="width:${clamp(S.van/S.vanMax*100,0,100)}%"></em></i></div><div><span>남은 보급</span><b>${supplyDays}일</b><i><em style="width:${clamp(supplyDays/5*100,0,100)}%"></em></i></div></section>
-        <section class="bag-pockets" aria-label="가방 수납칸">${entries.map(entry=>`<button class="bag-pocket ${entry.id===selected.id?'selected':''}" data-bag-item="${entry.id}" aria-pressed="${entry.id===selected.id}" aria-label="${esc(entry.label)} ${entry.value??0}${entry.unit}${entry.id===selected.id?', 선택됨':''}">${ICO(entry.icon)}<span class="bag-pocket-name">${esc(entry.label)}</span><span class="bag-pocket-count"><small>보유</small><b>${entry.value??0}</b><small>${entry.unit}</small></span></button>`).join('')}</section>
+        <section class="bag-pockets" aria-label="가방 수납칸">${entries.map(entry=>`<button class="bag-pocket ${entry.id===selected.id?'selected':''}" data-bag-item="${entry.id}" aria-pressed="${entry.id===selected.id}" aria-label="${esc(entry.label)} ${entry.value??0}${entry.unit}${entry.id===selected.id?', 선택됨':''}">${ICO(entry.icon)}<span class="bag-pocket-name">${esc(entry.label)}</span><span class="bag-pocket-count"><small>보유</small><span class="bag-pocket-amount"><b>${entry.value??0}</b><small>${entry.unit}</small></span></span></button>`).join('')}</section>
         <section class="bag-detail">${ICO(selected.icon)}<div class="bag-detail-copy"><small class="bag-detail-kicker">선택한 수납칸</small><div class="bag-detail-heading"><span>${esc(selected.label)}</span><b>${selected.value??0}${selected.unit}</b></div><p>${esc(selected.desc)}</p><button class="${selected.primary?'is-primary':'is-info'}" data-bag-action="${selected.id}" ${(selected.id==='부품'&&!canRepair)?'disabled':''}>${esc(selected.action)}</button></div></section>
       </div>`;
       b.querySelectorAll('[data-bag-item]').forEach(button=>button.onclick=()=>{

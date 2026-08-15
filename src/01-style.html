@@ -672,6 +672,7 @@ input{font-family:inherit}
 .road-tool-close{min-width:44px;min-height:44px;padding:5px 8px;border:1px solid currentColor;border-radius:3px;font:800 11px/1 var(--mono)}
 #status-prop.goal-folio{background-image:url("__UI_GOAL_FOLIO_SHELL__")}
 #status-prop.bag-supply-roll{background-image:url("__UI_BAG_SUPPLY_ROLL__")}
+#status-prop.goal-folio,#status-prop.bag-supply-roll{width:min(calc(100% - 16px),440px,var(--tool-fit-w))}
 #status-prop.goal-folio>.road-tool-live-head,#status-prop.bag-supply-roll>.road-tool-live-head{display:none}
 #status-prop.goal-folio>#st-tabs,#status-prop.bag-supply-roll>#st-tabs{display:none}
 #status-prop.goal-folio>#st-body,#status-prop.bag-supply-roll>#st-body{position:absolute;inset:0;padding:0;overflow:hidden;background:transparent}
@@ -698,8 +699,9 @@ input{font-family:inherit}
 .folio-clue>span,.folio-support>span{display:block;color:#275f5e;font:900 clamp(8px,1.95cqw,10.5px)/1.1 var(--sans);letter-spacing:.03em}
 .folio-clue>b{display:block;margin-top:2%;font:900 clamp(11px,2.55cqw,14px)/1.15 var(--sans)}
 .folio-clue>p{display:-webkit-box;margin:2% 0 0;color:#51493e;font:600 clamp(8px,1.9cqw,10.5px)/1.25 var(--sans);overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
-.folio-support{flex:1;min-height:8.5%;margin:0 var(--folio-rail) 1%;padding:2% 3%;border:1px solid rgba(55,47,37,.28);overflow:hidden}
-.folio-support>b{display:block;margin-top:1%;font:850 clamp(9px,2.15cqw,12px)/1.2 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.folio-support{display:flex;flex:1;min-height:8.5%;margin:0 var(--folio-rail) 1%;padding:3% 43% 3% 3%;flex-direction:column;justify-content:center;align-items:flex-start;border:0;overflow:hidden}
+.folio-support>b{display:-webkit-box;margin-top:3%;font:850 clamp(10px,2.35cqw,13px)/1.25 var(--sans);overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+.folio-support>p{display:-webkit-box;margin-top:3%;color:#5a5144;font:650 clamp(8px,1.85cqw,10px)/1.3 var(--sans);overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
 .folio-road-button{flex:none;min-height:44px;margin:auto var(--folio-rail) 0;border:1px solid rgba(69,46,22,.72);color:#2b1c0f;font:950 clamp(13px,3.8cqw,21px)/1 var(--sans);text-align:center}
 .prop-edge-tabs{position:absolute;z-index:5;right:-17%;top:17.5%;display:grid;gap:7.5%;height:33%;width:44px}
 .prop-edge-tabs button{min-width:44px;min-height:44px;color:#30271e;font:900 clamp(9px,2cqw,11px)/1 var(--sans);writing-mode:vertical-rl}
@@ -726,8 +728,8 @@ input{font-family:inherit}
 .bag-pocket.selected{color:#f1b34e;text-shadow:0 0 9px rgba(241,179,78,.24);box-shadow:inset 2px 0 0 rgba(229,164,67,.3),inset -2px 0 0 rgba(229,164,67,.3),inset 0 -28px 28px rgba(191,122,30,.08)}.bag-pocket:focus-visible{outline:2px solid #e0a343;outline-offset:-5px}
 .bag-pocket .ico{position:absolute;top:25%;left:50%;width:clamp(43px,10.8cqw,61px);height:clamp(43px,10.8cqw,61px);object-fit:contain;image-rendering:pixelated;transform:translateX(-50%);filter:drop-shadow(0 3px 3px rgba(0,0,0,.65))}
 .bag-pocket-name{position:absolute;top:3.2%;left:3%;right:3%;font:850 clamp(9px,1.9cqw,11px)/1.1 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bag-pocket-count{position:absolute;top:62%;left:10%;right:10%;display:flex;min-height:44px;align-items:center;justify-content:center;gap:2px;border-top:1px solid rgba(203,187,151,.26);border-bottom:1px solid rgba(0,0,0,.38);background:rgba(5,7,7,.34);font-family:var(--mono);text-shadow:0 2px 2px #000}
-.bag-pocket-count b{font:950 clamp(18px,4.8cqw,27px)/1 var(--mono);font-variant-numeric:tabular-nums}.bag-pocket-count small{color:#918b7f;font:800 clamp(7.5px,1.55cqw,9px)/1 var(--sans)}
+.bag-pocket-count{position:absolute;top:62%;left:10%;right:10%;display:flex;min-height:44px;align-items:center;justify-content:center;gap:clamp(3px,1cqw,6px);border-top:1px solid rgba(203,187,151,.26);border-bottom:1px solid rgba(0,0,0,.38);background:rgba(5,7,7,.34);font-family:var(--mono);text-shadow:0 2px 2px #000}
+.bag-pocket-amount{display:inline-flex;align-items:baseline;gap:1px;white-space:nowrap}.bag-pocket-count b{font:950 clamp(18px,4.45cqw,24px)/1 var(--mono);font-variant-numeric:tabular-nums}.bag-pocket-count small{color:#918b7f;font:800 clamp(7.5px,1.55cqw,9px)/1 var(--sans)}
 .bag-pocket.selected .bag-pocket-count{border-top-color:rgba(232,173,80,.55);background:rgba(75,44,12,.34)}.bag-pocket.selected .bag-pocket-count small{color:#d9b06d}
 .bag-detail{position:absolute;top:75.3%;left:6.7%;right:6.7%;bottom:4.3%;display:grid;grid-template-columns:25% minmax(0,1fr);align-items:center;gap:3.5%;padding:2.4% 5.5% 2.1%}
 .bag-detail>.ico{justify-self:center;width:clamp(58px,15cqw,84px);height:clamp(58px,15cqw,84px);object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 4px 4px rgba(0,0,0,.52))}
@@ -774,6 +776,7 @@ input{font-family:inherit}
 #status-prop.utility-sheet.settings-sheet>#st-tabs{display:none}
 @media(max-height:650px){
   .folio-step small{display:none}.folio-clue{min-height:15%}
+  .folio-support>p{display:none}
   .bag-detail-kicker{display:none}
   .bag-detail-heading{margin-top:0}
   .bag-detail p{margin:1% 0 1.4%;line-height:1.15}
