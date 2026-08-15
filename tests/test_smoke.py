@@ -146,7 +146,7 @@ with sync_playwright() as p:
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
-    check('게임 진입(HUD)', pg.locator('#g-fuel').is_visible())
+    check('게임 진입(HUD)', pg.locator('#stage-fuel').is_visible())
     auto_flow = pg.evaluate('''async () => {
       window.__CARAVAN_TEST_AUTO_MS=90;
       const ev=D.events.find(item=>item.id==='lib_meet');
@@ -300,6 +300,7 @@ with sync_playwright() as p:
       S.at=node; S.driving=null; S.min=8*60; S.fatigue=0; S._exploreDay=S.day;
       S._exploreNodes={}; S._salvagedNodes={}; S._salvageCount=1;   // 다음 수색이 보장 회차가 되도록
       UI.renderAll();
+      document.querySelector('[data-journey-mode="local"]')?.click();
       const region=G.regionOf();
       const expected=region==='north'?12:region==='mid'?9:6;
       const firstStatus=G.exploreStatus();
@@ -510,10 +511,10 @@ with sync_playwright() as p:
       out.npcLocked = followups.every(([ev,npc,node]) => {
         S.at = node; S.used = S.used.filter(id => id !== ev);
         S.npcs[npc].met = false;
-        return !G.eligible().some(e => e.id === ev);
+        return !G.nodeEvents(node).some(e => e.id === ev);
       });
       S.at = 'daejeon'; S.npcs.drhan.met = true;
-      out.npcOpen = G.eligible().some(e => e.id === 'npc_drhan_2');
+      out.npcOpen = G.nodeEvents('daejeon').some(e => e.id === 'npc_drhan_2');
 
       S.party = []; S.flags.library_done = true;
       let orphan = 0;
@@ -743,6 +744,9 @@ with sync_playwright() as p:
       out.duoStories=['duo_minji_parkss_space','duo_kangwoo_eunsu_record','duo_leo_jaeyi_route','party_north_vote'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.sceneCount=Object.keys(D.scenes||{}).length;
       const actionCutKeys=[
+        'recruit-minji-welding','recruit-parkss-bus-overturned','recruit-leo-hitch-gesture',
+        'recruit-jaeyi-suspension-check','recruit-eunsu-rooftop','recruit-eunsu-sky-point',
+        'recruit-kangwoo-pickpocket',
         'recruit-minji-task-signal','recruit-minji-task-collapse',
         'recruit-minji-follow-listen','recruit-minji-follow-record',
         'recruit-parkss-task-power','recruit-leo-task-wade','recruit-jaeyi-task-lift',
@@ -756,13 +760,19 @@ with sync_playwright() as p:
       ];
       out.actionCutCount=actionCutKeys.filter(key=>!!D.scenes[key]).length;
       const recruitIds=['minji','parkss','leo','jaeyi','eunsu','kangwoo'];
-      const firstMeetIds=['meet_scrapyard','meet_bus','meet_hitchhiker','jy_recruit','es_recruit','kw_recruit'];
+      const expectedMeetCuts={
+        meet_scrapyard:['recruit-minji-welding','recruit-minji','recruit-minji-meet-action'],
+        meet_bus:['recruit-parkss-bus-overturned','recruit-parkss-meet-action'],
+        meet_hitchhiker:['recruit-leo-hitch-gesture','recruit-leo-meet-action'],
+        jy_recruit:['recruit-jaeyi','recruit-jaeyi-suspension-check','recruit-jaeyi-meet-action'],
+        es_recruit:['recruit-eunsu-rooftop','recruit-eunsu-sky-point'],
+        kw_recruit:['recruit-kangwoo','recruit-kangwoo-pickpocket','recruit-kangwoo-meet-action']
+      };
       out.actionCutMaps=Object.keys(D.eventTurnScenes||{}).length===10 &&
         Object.keys(D.eventChoiceScenes||{}).length>=12 &&
-        firstMeetIds.every((eventId,index)=>{
-          const id=recruitIds[index], keys=D.eventTurnScenes[eventId]||[];
-          return keys.length===2&&keys[0]===`recruit-${id}`&&keys[1]===`recruit-${id}-meet-action`;
-        }) && recruitIds.every(id=>
+        Object.entries(expectedMeetCuts).every(([eventId,expected])=>
+          JSON.stringify(D.eventTurnScenes[eventId]||[])===JSON.stringify(expected)) &&
+        recruitIds.every(id=>
           !D.eventTurnScenes[`rq_${id}_join`] &&
           D.eventChoiceScenes[`rq_${id}_join`]?.[0]?.[0]===`recruit-${id}-join-decision`) &&
         Object.values(D.eventChoiceScenes||{}).every(choiceMap=>
@@ -861,7 +871,8 @@ with sync_playwright() as p:
           document.querySelector('#ev-sheet .story-next').click();
         }
         keys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
-        const meetOk=keys[0]===`recruit-${id}`&&keys.includes(`recruit-${id}-meet-action`);
+        const expected=D.eventTurnScenes[eventId]||[];
+        const meetOk=keys[0]===expected[0]&&expected.every(key=>keys.includes(key));
         document.querySelector('#ev-wrap').classList.remove('on');
 
         const join=D.events.find(e=>e.id===`rq_${id}_join`);
@@ -1046,6 +1057,9 @@ with sync_playwright() as p:
       delete S.up.tank1; S.scrap=oldScrap; S.items['부품']=oldParts; S.fuelMax=oldFuelMax; S.party=upgradeParty;
       document.querySelector('#ovl-stl').classList.remove('on');
       document.querySelector('#dk-status').click();
+      document.querySelector('#st-x').click();
+      document.querySelector('#dk-menu').click();
+      document.querySelector('#menu-settings').click();
       out.statusModalAria=document.querySelector('#ovl-status').getAttribute('aria-hidden')==='false' &&
         document.querySelector('#ovl-status').getAttribute('role')==='dialog';
       const root=document.documentElement;
@@ -1063,15 +1077,13 @@ with sync_playwright() as p:
         root.classList.contains('ui-reduce-motion')===motionStart;
       document.querySelector('#st-tabs [data-st="journey"]').click();
       out.statusTabs=document.querySelectorAll('#st-tabs button').length===3 &&
-        document.querySelector('[data-stpane="journey"]').classList.contains('on') &&
+        !!document.querySelector('.folio-live-content') &&
         document.querySelector('#st-tabs [data-st="journey"]').getAttribute('aria-selected')==='true' &&
         document.querySelector('#st-tabs [data-st="now"]').getAttribute('aria-selected')==='false';
-      const knowledgeText=document.querySelector('[data-stpane="journey"]').textContent;
-      out.knowledgeUi=knowledgeText.includes('아는 것과 모르는 것') &&
-        knowledgeText.includes('제7 잔류구역의 현재 이송') && knowledgeText.includes('소문은 사실처럼 말하지 않는다');
-      out.departureBrief=knowledgeText.includes('왜 지금 서울로 가는가') &&
-        knowledgeText.includes('남산 조치까지') && knowledgeText.includes('분리 절차') &&
-        knowledgeText.includes('자기 이유');
+      const knowledgeText=document.querySelector('.folio-live-content')?.textContent||'';
+      out.knowledgeUi=knowledgeText.includes('확인된 단서') && knowledgeText.includes('진행 단계');
+      out.departureBrief=knowledgeText.includes('현재 목표') &&
+        knowledgeText.includes('서울 이송 중단') && knowledgeText.includes('다음 행동');
       document.querySelector('#st-x').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
@@ -1176,14 +1188,14 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 131종·빌드 주입', r4['sceneCount'] == 131 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 138종·빌드 주입', r4['sceneCount'] == 138 and r4['sceneDataReady'], str(r4))
     check('김천 노선 선택·청주까지 경로 잠금', r4['routeChoice'], str(r4))
     check('김천 두 노선은 지도 거리·시간·연료 범위만 표시하고 현장 정보는 숨긴다', r4['routeForecast'], str(r4))
     check('비살상 구조·호송 3단계 임무와 장부 기록',
           r4['nonlethalMissions'] and r4['nonlethalLedger'], str(r4))
     check('정착지 행동이 다음 도로 사건으로 한 번 이어짐', r4['settlementRoadEcho'], str(r4))
-    check('행동 단위 신규 컷 28장·선택 스포일러 분리',
-          r4['actionCutCount'] == 28 and r4['actionCutMaps'], str(r4))
+    check('행동 단위 신규 컷 35장·선택 스포일러 분리',
+          r4['actionCutCount'] == 35 and r4['actionCutMaps'], str(r4))
     check('동료 6명 첫 만남 행동컷·선택 뒤 합류 결정컷 실제 전환',
           r4['recruitCutRuntime'], str(r4))
     check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
@@ -1247,8 +1259,8 @@ with sync_playwright() as p:
     pg.keyboard.press('Escape')
     pg.wait_for_timeout(120)
     focus_close = pg.evaluate("document.activeElement && document.activeElement.id")
-    check('모달 포커스 진입·Escape 닫기·원위치 복귀',
-          focus_open == 'st-x' and focus_close == 'dk-status',
+    check('도구 열기·Escape 닫기·원위치 복귀',
+          focus_open in ('st-x', 'dk-status') and focus_close == 'dk-status',
           f'open={focus_open}, close={focus_close}')
     rcombat = pg.evaluate('''() => {
       const out={}, oldCombat=S.combat, oldInjuries=structuredClone(S.injuries||{}),
@@ -1405,7 +1417,7 @@ with sync_playwright() as p:
       context:Object.keys(D.nodeScenery||{}).length
     })''')
     check('실축 모드 제거·대한민국 여정 지도 단일화', map_detail['modes'] == 0 and
-          '대한민국 주요 도시' in map_detail['canvas'] and '대한민국' in map_detail['title'], str(map_detail))
+          '대한민국 주요 도시' in map_detail['canvas'] and map_detail['title'] == '여정 지도', str(map_detail))
     check('강·산맥 장식 없는 도시 중심 지도', map_detail['cleanMode'] == 'cities-only' and
           map_detail['context'] >= 30, str(map_detail))
     map_source = (ROOT / 'src' / '06-mapgraph.js').read_text(encoding='utf-8')

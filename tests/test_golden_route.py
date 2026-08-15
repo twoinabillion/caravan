@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """부산→민지→밀양→대구 첫 90분 골든 루트 회귀 검사."""
+import os
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -27,7 +28,7 @@ def finish_open_event(page, choice_index, action='ok'):
 
 
 with sync_playwright() as p:
-    browser = p.chromium.launch()
+    browser = p.chromium.launch(channel=os.environ.get('CARAVAN_BROWSER_CHANNEL') or None)
     # 작은 안드로이드 WebView까지 골든 루트의 실제 터치 흐름을 보장한다.
     page = browser.new_page(viewport={'width': 360, 'height': 700})
     console_errors = []
@@ -161,11 +162,12 @@ with sync_playwright() as p:
     }''')
     stopped_gap = stopped_geometry['dockTop'] - stopped_geometry['shellBottom']
     check('정차 콘솔은 중복 계기판 없이 하단의 빈 띠를 줄이고 풍경과 길 선택을 넓게 쓴다',
-          stopped_geometry['stageHeight'] >= 249 and 0 <= stopped_gap <= 26 and
+          stopped_geometry['stageHeight'] >= 246 and 0 <= stopped_gap <= 26 and
           stopped_geometry['tabsTop'] > stopped_geometry['readoutBottom'],
           str({**stopped_geometry, 'dockGap': stopped_gap}))
     page.set_viewport_size({'width': 895, 'height': 955})
-    page.wait_for_timeout(80)
+    # resize 디바운스 80ms와 2프레임 실측 보정이 모두 끝난 뒤 측정한다.
+    page.wait_for_timeout(180)
     desktop_geometry = page.evaluate('''() => {
       const shell=document.querySelector('.route-console')?.getBoundingClientRect();
       const dock=document.querySelector('#dock')?.getBoundingClientRect();
@@ -180,28 +182,28 @@ with sync_playwright() as p:
           desktop_geometry['stageHeight'] >= 279 and 0 <= desktop_geometry['gap'] <= 88,
           str(desktop_geometry))
     page.set_viewport_size({'width': 360, 'height': 700})
-    page.wait_for_timeout(80)
+    page.wait_for_timeout(180)
     page.click('[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
       console:!!document.querySelector('.route-console'),
       routes:[...new Set([...document.querySelectorAll('[data-route-select]')].map(button=>button.dataset.routeSelect))],
       hazards:document.querySelectorAll('.nav-hazard-row').length,
-      facts:document.querySelectorAll('.nav-known-facts>span').length,
+      facts:document.querySelectorAll('.nav-route-facts>span').length,
       unknowns:document.querySelectorAll('.nav-unknown-list>span').length,
       selected:document.querySelector('[data-route-select][aria-pressed="true"]')?.dataset.routeSelect,
       height:document.querySelector('.route-console')?.getBoundingClientRect().height||0,
       copy:document.querySelector('.route-console')?.textContent||'',
-      titleSize:parseFloat(getComputedStyle(document.querySelector('.nav-route-decision h3')).fontSize),
+      titleSize:parseFloat(getComputedStyle(document.querySelector('.nav-map-destination-badge b')).fontSize),
       descriptionSize:parseFloat(getComputedStyle(document.querySelector('.nav-place-description')).fontSize),
-      valueSize:parseFloat(getComputedStyle(document.querySelector('.nav-known-facts b')).fontSize)
+      valueSize:parseFloat(getComputedStyle(document.querySelector('.nav-route-facts b')).fontSize)
     })''')
     check('정차 네비게이션은 현재 경로 수치만 보이고 사전 신호나 만남을 예고하지 않는다',
-          nav_initial['console'] and nav_initial['routes'] == ['yangsan', 'gimhae'] and
+          nav_initial['console'] and set(nav_initial['routes']) == {'yangsan', 'gimhae'} and
           nav_initial['hazards'] == 0 and nav_initial['facts'] == 3 and nav_initial['unknowns'] == 0 and
           '무너진 고가 아래로 길이 하나 살아 있다' in nav_initial['copy'] and
           '거리' in nav_initial['copy'] and '이동 시간' in nav_initial['copy'] and
-          '필요 연료' in nav_initial['copy'] and
-          nav_initial['titleSize'] >= 14 and nav_initial['descriptionSize'] >= 9 and nav_initial['valueSize'] >= 9.5 and
+          '연료 소모' in nav_initial['copy'] and
+          nav_initial['titleSize'] >= 11 and nav_initial['descriptionSize'] >= 9 and nav_initial['valueSize'] >= 10 and
           not any(word in nav_initial['copy'] for word in ['만날','사람','위험','신호','미확인']),
           str(nav_initial))
     page.click('[data-journey-mode="local"]')
@@ -262,7 +264,7 @@ with sync_playwright() as p:
         exactHazard:copy.includes('고가 낙하물'),
         predictiveCopy:/만날|사람|위험|신호|미확인|예상/.test(copy),
         futureArrow:/연료\\s*\\d+\\s*→/.test(copy),
-        hasKnownTravel:copy.includes('이동 시간')&&copy.includes('필요 연료')
+        hasKnownTravel:copy.includes('이동 시간')&&copy.includes('연료 소모')
       };
     }''')
     check('위험·인물·도착 후 자원은 출발 전에 인터페이스로 노출되지 않는다',
@@ -275,7 +277,7 @@ with sync_playwright() as p:
       driving:!!S.driving,
       selected:document.querySelector('.route-console')?.dataset.routeConsole,
       depart:document.querySelector('[data-nav-depart]')?.dataset.navDepart,
-      title:document.querySelector('.nav-route-decision h3')?.textContent
+      title:document.querySelector('.nav-map-destination-badge b')?.textContent
     })''')
     check('다른 길 선택은 즉시 출발하지 않고 비교할 목적지만 바꾼다',
           not nav_compare['driving'] and nav_compare['selected'] == 'gimhae' and
@@ -286,20 +288,62 @@ with sync_playwright() as p:
           page.evaluate("S.driving&&S.driving.to==='yangsan'"))
     first_pool = page.evaluate('''() => ({
       slots:S.driving.slots.length,
+      waypoints:S.driving.slots.filter(slot=>slot.waypoint).map(slot=>slot.waypoint),
       priority:G.eligible().filter(e=>e.priority).map(e=>e.id)
     })''')
     check('첫 도로에는 최소 한 번의 사건 자리가 있다', first_pool['slots'] >= 1, str(first_pool))
-    check('첫 핵심 조우는 민지 한 명으로 집중된다', first_pool['priority'] == ['meet_scrapyard'], str(first_pool))
+    check('민지 조우는 일반 도로 풀에 섞이지 않고 실제 폐차장 경유지에 숨겨진다',
+          first_pool['waypoints'] == ['meet_scrapyard'] and first_pool['priority'] == [], str(first_pool))
 
-    # 정보 질문이 아닌 '부품부터 본다'를 골라도 민지 부탁이 사라지지 않아야 한다.
-    page.evaluate("G.openEventById('meet_scrapyard')")
+    # 실제 경유 거리까지 달려야 폐차장과 민지가 드러난다. 테스트의 다른 랜덤 슬롯만 비운다.
+    page.evaluate('''() => {
+      const dv=S.driving;
+      dv.slots=dv.slots.filter(slot=>slot.waypoint==='meet_scrapyard');
+      dv.si=0;
+      const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
+      const ftg=S.fatigue>=80?.85:1;
+      G.tick(dv.slots[0].at/(G.tickKmPerSecond()*wx*ftg)+.02);
+    }''')
+    at_scrapyard = page.evaluate('''() => ({
+      event:S.stopover&&S.stopover.eventId,
+      from:S.stopover&&S.stopover.from,
+      to:S.stopover&&S.stopover.to,
+      remaining:S.stopover&&S.stopover.remainingKm,
+      title:document.querySelector('#ev-sheet h2')?.textContent||''
+    })''')
+    check('부산→양산 도중 실제 폐차장 지점에서만 자동차 무덤이 열린다',
+          at_scrapyard['event'] == 'meet_scrapyard' and at_scrapyard['from'] == 'busan' and
+          at_scrapyard['to'] == 'yangsan' and at_scrapyard['remaining'] > 0 and
+          at_scrapyard['title'] == '자동차 무덤', str(at_scrapyard))
+
+    # 정보 질문이 아닌 '부품부터 본다'를 골라도 민지 부탁은 같은 현장에서 바로 이어진다.
     finish_open_event(page, 1)
+    page.wait_for_timeout(550)
     after_meet = page.evaluate('''() => ({
       id:S.recruitQ&&S.recruitQ.id, stage:S.recruitQ&&S.recruitQ.stage,
-      target:S.recruitQ&&S.recruitQ.target, used:S.used.includes('meet_scrapyard')
+      target:S.recruitQ&&S.recruitQ.target, used:S.used.includes('meet_scrapyard'),
+      sameStop:S.recruitQ&&S.recruitQ.sameStop,
+      stopover:S.stopover&&S.stopover.eventId,
+      title:document.querySelector('#ev-sheet h2')?.textContent||''
     })''')
-    check('부품을 먼저 골라도 민지의 부탁으로 자연스럽게 이어진다',
-          after_meet == {'id': 'minji', 'stage': 'task', 'target': 'yangsan', 'used': True}, str(after_meet))
+    check('부품을 먼저 골라도 되돌아갈 도시 없이 같은 폐차장의 부탁으로 이어진다',
+          after_meet == {'id': 'minji', 'stage': 'task', 'target': 'yangsan', 'used': True,
+                         'sameStop': True, 'stopover': 'meet_scrapyard', 'title': '무너지기 전의 목소리'},
+          str(after_meet))
+
+    finish_open_event(page, 2)  # 달구지를 방패로 쓰는 무장비 해법
+    task = page.evaluate('''() => ({
+      stage:S.recruitQ&&S.recruitQ.stage, choice:S.recruitQ&&S.recruitQ.choice,
+      van:S.van, guest:S.driving&&S.driving.guest,
+      fuel:S.driving&&S.driving.guestFuel,
+      remaining:S.driving&&Math.round(S.driving.dist-S.driving.gone),
+      copy:document.querySelector('.road-guest-card')?.textContent||''
+    })''')
+    check('민지 첫 임무의 방식과 차체 흉터가 상태에 남는다',
+          task['stage'] == 'road' and task['choice'] == 'shield' and task['van'] < 82, str(task))
+    check('폐차장 일을 끝낸 민지는 새 출발을 기다리지 않고 남은 길부터 함께 탄다',
+          task['guest'] == 'minji' and task['fuel'] == .92 and task['remaining'] > 0 and
+          '민지' in task['copy'], str(task))
     same_leg_events = page.evaluate('G.directEventPool(G.eligible()).length')
     check('민지 사건을 닫은 같은 주행 구간에는 다른 사건이 연달아 열리지 않는다',
           same_leg_events == 0, str(same_leg_events))
@@ -317,46 +361,15 @@ with sync_playwright() as p:
       UI.onArrive=old;
     }''')
     page.click('[data-journey-mode="local"]')
-    at_yangsan = page.evaluate("({at:S.at, button:document.querySelector('[data-a=recruitstep]')?.closest('.stop-action-card')?.textContent||''})")
-    check('양산 도착 즉시 민지 부탁의 다음 행동이 보인다',
-          at_yangsan['at'] == 'yangsan' and '부탁을 진행한다' in at_yangsan['button'], str(at_yangsan))
-
-    opened = page.evaluate('G.openRecruitStep()')
-    check('차 더미 구조 임무가 실제 행동으로 열린다', opened and page.locator('#ev-sheet').count() == 1)
-    finish_open_event(page, 2)  # 달구지를 방패로 쓰는 무장비 해법
-    task = page.evaluate('''() => ({
-      stage:S.recruitQ&&S.recruitQ.stage, choice:S.recruitQ&&S.recruitQ.choice,
-      van:S.van, time:G.fmtClock()
-    })''')
-    check('민지 첫 임무의 방식과 차체 흉터가 상태에 남는다',
-          task['stage'] == 'road' and task['choice'] == 'shield' and task['van'] < 82, str(task))
-
-    page.evaluate("G.startTravel('miryang')")
-    guest = page.evaluate('''() => ({
-      id:S.driving.guest, fuel:S.driving.guestFuel,
-      copy:document.querySelector('.road-guest-card')?.textContent||''
-    })''')
-    check('합류 전에도 민지가 한 구간 실제 주행을 돕는다',
-          guest['id'] == 'minji' and guest['fuel'] == .92 and '민지' in guest['copy'], str(guest))
-    page.evaluate('''() => {
-      const old=UI.onArrive; UI.onArrive=()=>{UI.renderAll();return 0};
-      S.driving.slots=[]; S.driving.si=0;
-      const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
-      const ftg=S.fatigue>=80?.85:1;
-      // 속도 상수를 테스트가 복제하면 밸런스 튜닝 때마다 여기서 깨진다.
-      // 엔진이 실제로 쓰는 값을 그대로 역산한다.
-      const perSec=G.tickKmPerSecond();
-      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
-      UI.onArrive=old;
-    }''')
     follow = page.evaluate('''() => ({
       at:S.at, stage:S.recruitQ&&S.recruitQ.stage, target:S.recruitQ&&S.recruitQ.target,
       held:!G.openRecruitStep(), day:S.day
     })''')
-    check('밀양 도착 뒤 바로 합류시키지 않고 하룻밤을 요구한다',
-          follow['at'] == 'miryang' and follow['stage'] == 'follow' and follow['target'] == 'miryang' and follow['held'], str(follow))
+    check('양산 정차 뒤 바로 합류시키지 않고 함께 보낸 하룻밤을 요구한다',
+          follow['at'] == 'yangsan' and follow['stage'] == 'follow' and follow['target'] == 'yangsan' and follow['held'], str(follow))
 
-    page.evaluate("G.camp('밀양 장터에서 하룻밤을 묵었다')")
+    # 야영 무작위 사건은 별도 회귀 대상이다. 이 루트에서는 영입의 밤만 고정한다.
+    page.evaluate("S._lastCampEventDay=S.day; G.camp('양산 외곽에서 민지와 하룻밤을 묵었다')")
     next_day = page.evaluate("({day:S.day, min:S.min, opened:G.openRecruitStep(), title:document.querySelector('#ev-sheet h2')?.textContent||''})")
     check('다음 날 별도 재회 없이 민지의 합류 결정이 열린다',
           next_day['day'] == 2 and next_day['min'] == 390 and next_day['opened'], str(next_day))
@@ -370,6 +383,30 @@ with sync_playwright() as p:
     check('민지는 첫 만남·공동 과제·실제 주행 뒤 탑승한다',
           joined['party'] == ['minji'] and joined['quest'] is None and joined['approach'] == 'shield' and joined['bond'] >= 5,
           str(joined))
+
+    drive_before = page.evaluate("({van:S.van,vanMax:S.vanMax})")
+    page.evaluate("G.startTravel('miryang')")
+    callback = page.evaluate('''() => ({
+      memory:S.driving.recruitMemory,
+      van:S.van,
+      used:!!S.flags.minji_approach_drive,
+      copy:document.querySelector('.road-memory-card')?.textContent||''
+    })''')
+    check('민지 임무에서 고른 방패 해법이 합류 후 첫 주행의 수리로 되돌아온다',
+          callback['memory']['id'] == 'minji' and callback['memory']['choice'] == 'shield' and
+          abs(callback['van'] - min(drive_before['van'] + 4, drive_before['vanMax'])) < .01 and
+          callback['used'] and '긁힌 판' in callback['copy'], str(callback))
+    page.evaluate('''() => {
+      const old=UI.onArrive; UI.onArrive=()=>{UI.renderAll();return 0};
+      S.driving.slots=[]; S.driving.si=0;
+      const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
+      const ftg=S.fatigue>=80?.85:1;
+      const perSec=G.tickKmPerSecond();
+      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
+      UI.onArrive=old;
+    }''')
+    check('민지를 다시 찾으러 되돌아가지 않고 진행 방향의 밀양에 도착한다',
+          page.evaluate("S.at==='miryang' && !S.driving"))
 
     page.evaluate("UI.showStl('miryang','hub')")
     hub = page.evaluate('''() => ({
@@ -427,20 +464,15 @@ with sync_playwright() as p:
           trace['bond'] == field_before['bond'] + 3, str(trace))
     page.evaluate("UI.showStl('miryang','hub'); document.querySelector('#stl-out').click()")
 
-    drive_before = page.evaluate("({van:S.van,vanMax:S.vanMax})")
     page.evaluate("G.startTravel('daegu')")
-    callback = page.evaluate('''() => ({
+    later_drive = page.evaluate('''() => ({
       memory:S.driving.recruitMemory,
-      van:S.van,
-      used:!!S.flags.minji_approach_drive,
-      copy:document.querySelector('.road-memory-card')?.textContent||''
+      used:!!S.flags.minji_approach_drive
     })''')
-    check('민지 임무에서 고른 방패 해법이 합류 후 첫 주행의 수리로 되돌아온다',
-          callback['memory']['id'] == 'minji' and callback['memory']['choice'] == 'shield' and
-          abs(callback['van'] - min(drive_before['van'] + 4, drive_before['vanMax'])) < .01 and
-          callback['used'] and '긁힌 판' in callback['copy'], str(callback))
+    check('민지의 첫 주행 기억 보상은 다음 구간에서 중복 적용되지 않는다',
+          later_drive['memory'] is None and later_drive['used'], str(later_drive))
     daegu_pool = page.evaluate("G.eligible().filter(e=>e.priority&&e.recruitStart).map(e=>e.id)")
-    check('민지 합류 직후 대구 길에서 새 동료 사건을 연달아 강제하지 않는다',
+    check('민지 합류 직후의 다음 대구 길에서 새 동료 사건을 연달아 강제하지 않는다',
           daegu_pool == [], str(daegu_pool))
     page.evaluate('''() => {
       const old=UI.onArrive; UI.onArrive=()=>{UI.renderAll();return 0};

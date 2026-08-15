@@ -1598,9 +1598,11 @@ const UI = (()=>{
     if(S.driving){
       resetStoppedStageFit();
       const to=D.nodes[S.driving.to];
-      const rq=S.recruitQ&&S.recruitQ.stage==='road'?S.recruitQ:null;
+      const rq=S.recruitQ&&(S.recruitQ.stage==='road'
+        ||(S.recruitQ.stage==='task'&&S.driving.recruitEscort===S.recruitQ.id))?S.recruitQ:null;
       const def=rq&&D.recruitQuests[rq.id];
       const approach=rq&&G.recruitApproach();
+      const taskEscort=!!(rq&&rq.stage==='task');
       const memory=S.driving.recruitMemory;
       const choiceMemory=G.pendingChoiceMemory();
       const route=G.routeStatus();
@@ -1610,11 +1612,11 @@ const UI = (()=>{
         <div class="road-guest-help">${esc(route.def.promise)}</div>
         <div class="road-guest-memory"><b>노선 진행 ${route.done}/${route.total}</b> · 청주에서 두 길이 다시 합쳐진다.</div>
       </section>`:'';
-      const guest=def?`<section class="road-guest-card" aria-label="${def.name} 임시 동행">
+      const guest=def?`<section class="road-guest-card" aria-label="${def.name} ${taskEscort?'현장 동행':'임시 동행'}">
         <div class="road-guest-head"><span class="rg-ico">${def.guest.ic}</span><span>
-          <small>임시 동행 · 아직 손님</small><b>${def.name} — ${def.guest.title}</b></span></div>
-        <div class="road-guest-help">${def.guest.desc}</div>
-        ${approach?`<div class="road-guest-memory"><b>${approach.label}</b> · ${approach.memory}</div>`:''}
+          <small>${taskEscort?'같은 방향의 현장 동행':'임시 동행 · 아직 손님'}</small><b>${def.name} — ${taskEscort?`${esc(D.nodes[rq.target].name)}까지`:def.guest.title}</b></span></div>
+        <div class="road-guest-help">${taskEscort?'길에서 만난 뒤 목적지가 같은 사람이다. 되돌아가지 않고 지금 가는 정차지에서 부탁을 이어 간다.':def.guest.desc}</div>
+        ${!taskEscort&&approach?`<div class="road-guest-memory"><b>${approach.label}</b> · ${approach.memory}</div>`:''}
       </section>`:memory?`<section class="road-guest-card road-memory-card" aria-label="${esc(D.comps[memory.id].name)}의 선택 후속 행동">
         <div class="road-guest-head"><span class="rg-ico">${D.comps[memory.id].face}</span><span>
           <small>함께 고른 방식 · 첫 후속</small><b>${esc(D.comps[memory.id].name)} — ${esc(memory.title)}</b></span></div>
@@ -1974,10 +1976,11 @@ const UI = (()=>{
   function sceneFrameHtml(sceneKeys, sceneAlt){
     const key=sceneKeys&&sceneKeys[0], src=key&&D.scenes&&D.scenes[key];
     if(!src) return '';
+    const description=D.sceneDescriptions&&D.sceneDescriptions[key]||sceneAlt;
     return `<div class="event-scene-frame" role="button" tabindex="0"
       data-scene-key="${esc(key)}" data-scene-format="${sceneFormat(key)}" data-cut-token="initial"
-      aria-label="${esc(sceneAlt)} 장면 크게 보기">
-      <img class="event-scene" src="${src}" alt="${esc(sceneAlt)} 장면" decoding="async" loading="eager" fetchpriority="high">
+      aria-label="${esc(description)} 크게 보기">
+      <img class="event-scene" src="${src}" alt="${esc(description)}" decoding="async" loading="eager" fetchpriority="high">
       <span class="scene-cut-mark" aria-hidden="true">컷 1 / 1</span>
       <span class="scene-zoom" aria-hidden="true">↗</span></div>`;
   }
@@ -2060,7 +2063,9 @@ const UI = (()=>{
       frame.style.setProperty('--scene-scale',String(shot.scale));
       if(changed) img.src=src;
     }
-    img.alt=`${state.sceneAlt} · ${index+1}번째 장면`;
+    const description=D.sceneDescriptions&&D.sceneDescriptions[key]||state.sceneAlt;
+    img.alt=`${description} · ${index+1}번째 장면`;
+    frame.setAttribute('aria-label',`${description} 크게 보기`);
     const mark=frame.querySelector('.scene-cut-mark');
     if(mark){
       const hasCuts=cutCount>1;
@@ -2268,6 +2273,10 @@ const UI = (()=>{
     sheet.classList.remove('combat-details-open');
     sheet.dataset.eventKind=evd.combat?'combat':'story';
     const aiEvent = evd.type==='추적'||!!evd.ai;
+    const physicalContext=S.stopover
+      ?`경유지 · ${Math.max(0,Math.round(S.stopover.remainingKm||0))}km 남음`
+      :S.at&&D.nodes[S.at]?D.nodes[S.at].name
+      :S.driving?`이동 중 · ${Math.max(0,Math.round(S.driving.dist-S.driving.gone))}km 남음`:'현재 위치';
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
     const sceneAlt=stripTags(evd.title||'길 위의 사건');
@@ -2293,7 +2302,7 @@ const UI = (()=>{
     sheet.classList.toggle('story-compact',turns.length>2);
     const choicePages=Math.ceil(choices.count/3);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<div class="event-head"><div>
-      <div class="event-meta-row"><div class="tag ${aiEvent?'ai-tag':''}">${esc(evd.type)}${evd.gen?' · 오프로드 생성':''}</div><span data-event-progress>1 / ${turns.length}</span></div>
+      <div class="event-meta-row"><div class="tag ${aiEvent?'ai-tag':''}">${esc(evd.type)}${evd.gen?' · 오프로드 생성':''} · ${esc(physicalContext)}</div><span data-event-progress>1 / ${turns.length}</span></div>
       <h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
@@ -2529,6 +2538,7 @@ const UI = (()=>{
     curStory=null;
     if(S.driving) SND.setDriving(true);
     AMBI.restore();
+    if(S&&S.stopover&&!S._chain) S.stopover=null;
     renderAll(); G.save();
     /* 연쇄 이벤트 (시네마틱 시퀀스) */
     if(S && S._chain){ const cid=S._chain; S._chain=null; setTimeout(()=>G.openEventById(cid), 450); return; }

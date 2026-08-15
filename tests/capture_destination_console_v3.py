@@ -28,7 +28,7 @@ def enter_game(page):
 
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch()
+    browser = playwright.chromium.launch(channel=os.environ.get("CARAVAN_BROWSER_CHANNEL") or None)
     page = browser.new_page(viewport={"width": 480, "height": 860}, device_scale_factor=1)
     errors = []
     page.on("console", lambda message: errors.append(message.text)
@@ -90,7 +90,7 @@ with sync_playwright() as playwright:
     if metrics["consoleBox"]["width"] < 430 or metrics["screen"]["width"] < 300:
         raise SystemExit(f"console geometry too small: {metrics}")
     ratios = [metrics[name]["height"] / metrics["screen"]["height"] for name in ("map", "summary", "carousel")]
-    if not (0.43 <= ratios[0] <= 0.47 and 0.19 <= ratios[1] <= 0.23 and 0.32 <= ratios[2] <= 0.36):
+    if not (0.41 <= ratios[0] <= 0.45 and 0.24 <= ratios[1] <= 0.28 and 0.29 <= ratios[2] <= 0.33):
         raise SystemExit(f"option 3 vertical proportions drifted: {ratios}")
     if metrics["selectedCard"]["width"] < 180 or metrics["selectedCard"]["height"] < 105:
         raise SystemExit(f"selected destination image too small: {metrics['selectedCard']}")

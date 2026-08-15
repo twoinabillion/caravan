@@ -6,7 +6,7 @@ const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
 const GAME_BUILD = '2026-08-06-quality3';
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
-const SAVE_VERSION = 3;
+const SAVE_VERSION = 4;
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -21,6 +21,16 @@ const G = {};
 /* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
    필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
 G.saveMigrations = {
+  4:(s)=>{   // 2026-08-15: 장소 사건·도로 경유지 계약 도입
+    s.stopover=null;
+    s.locationContractVersion=1;
+    /* 구버전에서 도로 첫 만남 뒤 후보 배열의 첫 도시로 되돌아가던 의뢰는
+       현재 진행 방향(또는 현재 정차지)에서 이어 간다. 본 사건의 완료 기록은 보존한다. */
+    if(s.recruitQ&&s.recruitQ.stage==='task'){
+      if(s.driving&&s.driving.to) s.recruitQ.target=s.driving.to;
+      else if(s.at) s.recruitQ.target=s.at;
+    }
+  },
   3:(s)=>{   // 2026-08-06: 시한 30일 → 20일. 옛 계약으로 달린 날은 소급 청구하지 않는다
     if(Number.isFinite(s.day)&&s.day>D.transferDeadlineDay&&!s.flags?.transfer_started){
       s._deadlineGrandfathered=true;
@@ -67,7 +77,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     profile:profile&&D.startProfiles&&D.startProfiles[profile]?profile:'keeper',
     _quality:null, guideDismissed:false, lastJourneyRecap:null, journeyRecaps:[],
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
-    _rescues:{}, _stlNights:{},
+    _rescues:{}, _stlNights:{}, stopover:null, locationContractVersion:D.eventLocationVersion||1,
   };
   /* 출발 구성 — 자원 패치는 얕은 병합, items만 통째 교체 */
   const prof=D.startProfiles&&D.startProfiles[S.profile];
@@ -181,6 +191,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!S._stlNights||typeof S._stlNights!=='object'||Array.isArray(S._stlNights)) S._stlNights={};
   G.ensureNarrativeState();
   if(S.recruitQ===undefined) S.recruitQ=null;
+  if(S.stopover===undefined) S.stopover=null;
+  if(!Number.isFinite(S.locationContractVersion)) S.locationContractVersion=D.eventLocationVersion||1;
   if(S.combat===undefined) S.combat=null;
   if(S.lastCombatReport===undefined) S.lastCombatReport=null;
   G.ensureCombatFlow();
@@ -817,10 +829,15 @@ G.remainKm = ()=>{ // rough remaining to seoul via bfs shortest through known gr
 G.startRecruitQuest = (id)=>{
   const def=D.recruitQuests&&D.recruitQuests[id];
   if(!def||G.hasComp(id)||S.recruitQ) return false;
-  const context=S.driving?[S.driving.to,S.driving.from]:[S.at];
-  const target=context.find(n=>def.targets.includes(n))||def.targets[0];
-  S.recruitQ={id,stage:'task',target,startedDay:S.day};
-  UI.toast(`🤝 ${def.name}의 부탁 — ${D.nodes[target].name}`);
+  /* 도로에서 만난 사람의 다음 일은 무조건 현재 진행 방향에 둔다. 후보 배열의
+     첫 도시를 고르면 반대 방향에서 만났을 때 이미 지난 곳으로 돌아가야 했다. */
+  const target=(S.driving&&S.driving.to)||S.at||def.targets[0];
+  const sameStop=!!(S.stopover&&['meet_scrapyard','meet_hitchhiker'].includes(S.stopover.eventId));
+  S.recruitQ={id,stage:'task',target,startedDay:S.day,
+    metAt:S.stopover?{...S.stopover}:S.at||null,sameStop};
+  if(S.driving) S.driving.recruitEscort=id;
+  UI.toast(sameStop?`🤝 ${def.name}의 부탁 — 이 자리에서 바로 돕는다`
+    :`🤝 ${def.name}의 부탁 — ${D.nodes[target].name}`);
   G.save();
   return true;
 };
@@ -857,8 +874,12 @@ G.markRecruitReady = (id)=>{
 G.markRecruitRoad = (id)=>{
   if(!S.recruitQ||S.recruitQ.id!==id||S.recruitQ.stage!=='task') return false;
   S.recruitQ.stage='road';
-  S.recruitQ.roadFrom=S.at;
+  S.recruitQ.roadFrom=S.driving?S.driving.from:S.at;
+  if(S.driving) S.recruitQ.roadAtKm=Math.round(S.driving.gone||0);
   S.recruitQ.roadDay=S.day;
+  /* 같은 경유지에서 과제를 마쳤다면 남은 구간부터 실제 임시 동행 효과와
+     탑승 카드를 켠다. 새 출발까지 기다리게 하지 않는다. */
+  if(S.driving&&G.prepareRecruitGuest) G.prepareRecruitGuest(S.driving);
   UI.toast(`🚚 임시 동행 시작 — ${D.recruitQuests[id].name}, 다음 정차까지`);
   return true;
 };

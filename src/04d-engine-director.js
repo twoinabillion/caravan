@@ -665,7 +665,7 @@ G.arrive = ()=>{
   const completedDrive=S.driving;
   const to = S.driving.to;
   const road = S.driving.road;
-  S.at = to; S.driving = null;
+  S.at = to; S.driving = null; S.stopover=null;
   G.qualitySettlementEnter(to);
   G.tickDeadline();   // 거리로 다가오는 시한은 도착할 때마다 확인한다
   if(completedDrive&&completedDrive.guestFind){

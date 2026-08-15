@@ -10,7 +10,10 @@ G.exploreStatus = ()=>{
      잔해를 들추는 노동 피로를 별도로 더해 정상 탐험보다 파밍을 비싸게 만든다. */
   const fatigue=repeat?4:0;
   if(tries>=2) return {ok:false,tries,mins:0,fatigue:0,reason:'오늘은 이 주변을 충분히 뒤졌다 — 야영 후 다시 살필 수 있다'};
-  if(G.isNight()) return {ok:false,tries,mins,fatigue,reason:'해가 진 뒤에는 주변을 탐색할 수 없다'};
+  /* 밤에만 성립하는 지역 장면(별자리·등불·반딧불)은 그 장소에서 실제로
+     기다렸을 때 볼 수 있어야 한다. 아무 현장 사건도 없을 때만 야간 수색을 막는다. */
+  if(G.isNight()&&!(G.nodeEvents&&G.nodeEvents(S.at).length))
+    return {ok:false,tries,mins,fatigue,reason:'해가 진 뒤에는 주변을 탐색할 수 없다'};
   if(S.fatigue>=80) return {ok:false,tries,mins,fatigue,reason:'피로 80% 이상 — 먼저 쉬어야 한다'};
   return {ok:true,tries,repeat,fresh,mins,fatigue,miss:repeat?0.45:0.15};
 };
@@ -38,11 +41,20 @@ G.explore = ()=>{
   }
   G.advance(status.mins);
   S.fatigue=clamp(S.fatigue+status.fatigue,0,100);
+  const localPool=G.nodeEvents?G.nodeEvents(S.at):[];
   const pool = G.eligible('탐색');
   if(status.repeat){
     /* 다시 뒤지는 것도 완전히 헛되지는 않다 — 대신 처음만 못하다 */
     const again=2+Math.floor(rng()*3);
     S.scrap+=again; freshHaul+=` · 재수색 고철 +${again}`;
+  }
+  /* 장소 계약 사건은 이곳까지 와서 시간을 쓴 결과다. 도로 사건 쿨다운이나
+     탐색 실패 주사위로 다시 묻지 않고, 현재 장소 후보 안에서만 고른다. */
+  if(localPool.length){
+    const total=localPool.reduce((sum,event)=>sum+Math.max(1,event.w||1),0);
+    let roll=rng()*total, selected=localPool[0];
+    for(const event of localPool){ roll-=Math.max(1,event.w||1); if(roll<=0){ selected=event; break; } }
+    G.openEvent(selected); G.save(); return true;
   }
   if(!pool.length || rng()<status.miss){
     const spent=status.repeat?'네 시간을 더 샅샅이 뒤졌지만':'두 시간을 돌아봤지만';

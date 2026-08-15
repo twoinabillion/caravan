@@ -1889,12 +1889,12 @@ D.eventScenes = {
 /* 한 사건 안에서 시간·행동이 바뀔 때 쓰는 연속 컷.
    선택 결과 전용 컷은 아래 D.eventChoiceScenes에 따로 둬 스포일러를 막는다. */
 D.eventTurnScenes = {
-  meet_scrapyard:['recruit-minji','recruit-minji-meet-action'],
-  meet_bus:['recruit-parkss','recruit-parkss-meet-action'],
-  meet_hitchhiker:['recruit-leo','recruit-leo-meet-action'],
-  jy_recruit:['recruit-jaeyi','recruit-jaeyi-meet-action'],
-  es_recruit:['recruit-eunsu','recruit-eunsu-meet-action'],
-  kw_recruit:['recruit-kangwoo','recruit-kangwoo-meet-action'],
+  meet_scrapyard:['recruit-minji-welding','recruit-minji','recruit-minji-meet-action'],
+  meet_bus:['recruit-parkss-bus-overturned','recruit-parkss-meet-action'],
+  meet_hitchhiker:['recruit-leo-hitch-gesture','recruit-leo-meet-action'],
+  jy_recruit:['recruit-jaeyi','recruit-jaeyi-suspension-check','recruit-jaeyi-meet-action'],
+  es_recruit:['recruit-eunsu-rooftop','recruit-eunsu-sky-point'],
+  kw_recruit:['recruit-kangwoo','recruit-kangwoo-pickpocket','recruit-kangwoo-meet-action'],
   rq_minji_task:['recruit-minji-task','recruit-minji-task-signal'],
   rq_minji_follow:['recruit-minji-follow','recruit-minji-follow-listen'],
   combat_walker_strike:['combat-walker-disable','combat-walker-joint'],
@@ -1902,6 +1902,33 @@ D.eventTurnScenes = {
 };
 /* 긴 피날레는 장면을 단순 순환하지 않고 이야기의 실제 단계에서 바꾼다. */
 D.eventTurnSceneStages = {
+  meet_scrapyard:[
+    {at:0,key:'recruit-minji-welding'},
+    {at:2,key:'recruit-minji'},
+    {at:3,key:'recruit-minji-meet-action'}
+  ],
+  meet_bus:[
+    {at:0,key:'recruit-parkss-bus-overturned'},
+    {at:2,key:'recruit-parkss-meet-action'}
+  ],
+  meet_hitchhiker:[
+    {at:0,key:'recruit-leo-hitch-gesture'},
+    {at:2,key:'recruit-leo-meet-action'}
+  ],
+  jy_recruit:[
+    {at:0,key:'recruit-jaeyi'},
+    {at:2,key:'recruit-jaeyi-suspension-check'},
+    {at:3,key:'recruit-jaeyi-meet-action'}
+  ],
+  es_recruit:[
+    {at:0,key:'recruit-eunsu-rooftop'},
+    {at:3,key:'recruit-eunsu-sky-point'}
+  ],
+  kw_recruit:[
+    {at:0,key:'recruit-kangwoo'},
+    {at:1,key:'recruit-kangwoo-pickpocket'},
+    {at:2,key:'recruit-kangwoo-meet-action'}
+  ],
   seoul_core:[
     {at:0,key:'seoul-core'},
     {at:9,key:'seoul-core-key'},
@@ -10158,6 +10185,88 @@ D.events = [
    }, fx:{flag:'story_done', endJourney:1, moodAll:3, note:{type:'사건',title:'수첩의 마지막 줄',body:'가족의 직접 사유와 143년의 미확인 목적을 나눠 적었다. 반복 정리 중지와 재집행 불가가 마지막 줄에 남았다.',links:['천리안','할아버지','남산','부모님의 검증키']}}}]},
  ]},
 ];
+
+/* ── 사건 위치 계약 ────────────────────────────────────────────────
+   nearNode는 과거에 '출발지/도착지 중 하나가 맞으면 도로 어디서나 등장'이라는
+   뜻으로 해석돼, 부산의 시장과 대구의 사람까지 이미 떠난 도로 위로 순간이동했다.
+   이제 장소 사건은 멈춘 뒤 탐색(node), 실제 경유 지점(waypoint), 순수 도로(road)를
+   명시한다. UI는 이 정보를 출발 전에 예고하지 않고, 엔진만 물리적 위치를 지킨다. */
+D.eventLocationVersion = 1;
+D.eventLocations = {
+  /* 동료 첫 만남 — 민지·박 선생·레오·재이는 실제 도로 경유지, 은수는 청주 현장 */
+  meet_scrapyard:{kind:'waypoint',progress:.58,routes:[
+    ['busan','yangsan'],['yangsan','ulsan'],['ulsan','gyeongju'],['gyeongju','pohang']]},
+  meet_bus:{kind:'waypoint',progress:.52,routes:[['gumi','gimcheon'],['gimcheon','sangju']]},
+  meet_hitchhiker:{kind:'waypoint',progress:.56,routes:[
+    ['namwon','jeonju'],['gwangju','damyang'],['damyang','namwon'],['suncheon','namwon'],
+    ['suncheon','gwangju'],['gwangju','jeonju']]},
+  jy_recruit:{kind:'waypoint',progress:.54,routes:[
+    ['gumi','gimcheon'],['gwangju','mokpo'],['jeonju','gunsan']]},
+  es_recruit:{kind:'node',nodes:['cheongju']},
+
+  /* 지역의 음식·기억·사람은 그 지역에 멈춰 직접 둘러봤을 때만 만난다. */
+  lc_busan_dried:{kind:'node',nodes:['busan','gimhae']},
+  lc_ulsan_whale:{kind:'node',nodes:['ulsan']},
+  lc_pohang_gwamegi:{kind:'node',nodes:['pohang']},
+  lc_gyeongju_stars:{kind:'node',nodes:['gyeongju']},
+  lc_daegu_makchang:{kind:'node',nodes:['daegu']},
+  lc_daejeon_bakery:{kind:'node',nodes:['daejeon']},
+  lc_cheonan_walnut:{kind:'node',nodes:['cheonan']},
+  lc_suwon_galbi:{kind:'node',nodes:['suwon']},
+  lc_jeonju_bibim:{kind:'node',nodes:['jeonju']},
+  lc_mokpo_hongeo:{kind:'node',nodes:['mokpo']},
+  lc_andong_fish:{kind:'node',nodes:['andong']},
+  lc_yeongdong_wine:{kind:'node',nodes:['yeongdong','gimcheon']},
+  lc_nonsan_camp:{kind:'node',nodes:['nonsan']},
+  lc_gunsan_bakery:{kind:'node',nodes:['gunsan']},
+  lc_icheon_rice:{kind:'node',nodes:['icheon']},
+  lc_damyang_juktong:{kind:'node',nodes:['damyang','gwangju']},
+  lc_chungju_lake:{kind:'node',nodes:['chungju','danyang']},
+  lc_sejong_library:{kind:'node',nodes:['sejong','gongju']},
+
+  near_miryang_ice:{kind:'node',nodes:['miryang']},
+  near_jinju_lantern:{kind:'node',nodes:['jinju']},
+  near_hapcheon_sutra:{kind:'node',nodes:['hapcheon']},
+  near_geochang_actor:{kind:'node',nodes:['geochang']},
+  near_muju_firefly:{kind:'node',nodes:['muju']},
+  near_yeosu_camellia:{kind:'node',nodes:['yeosu']},
+  near_mungyeong_omija:{kind:'node',nodes:['mungyeong']},
+
+  cell_sea_meet:{kind:'node',nodes:['busan','yeosu','mokpo','pohang','ulsan']},
+  cell_dome_meet:{kind:'node',nodes:['daegu']},
+  cell_sotgot_meet:{kind:'node',nodes:['gwangju']},
+  cell_ghost_meet:{kind:'node',nodes:['daejeon','sejong']},
+  cell_mountain_meet:{kind:'node',nodes:['daegwallyeong','gangneung','wonju','geochang','mungyeong']},
+  cell_sea_2:{kind:'node',nodes:['gunsan','pyeongtaek','mokpo']},
+
+  npc_sundeok_2:{kind:'node',nodes:['miryang']},
+  npc_taeho_2:{kind:'node',nodes:['daegu']},
+  npc_jaepil_2:{kind:'node',nodes:['muju']},
+  npc_miyoung_2:{kind:'node',nodes:['jeonju']},
+  npc_drhan_2:{kind:'node',nodes:['daejeon']},
+  npc_deokgu_2:{kind:'node',nodes:['suwon']},
+
+  ev_sunflower_field:{kind:'node',nodes:['sunflower']},
+  ev_plum_blossom:{kind:'node',nodes:['maehwa']},
+  ev_fog_pass:{kind:'waypoint',progress:.5,routes:[
+    ['wonju','daegwallyeong'],['daegwallyeong','gangneung']]},
+  ev_container_port:{kind:'node',nodes:['pyeongtaek']},
+  ev_cablecar_hang:{kind:'node',nodes:['cablecar']},
+  ev_lighthouse_visit:{kind:'node',nodes:['lighthouse']},
+  ev_seaside_restaurant:{kind:'node',nodes:['sokcho','gangneung','pohang']},
+
+  parcel_found:{kind:'node',nodes:['suwon','pyeongtaek','seoul']},
+  van_garage:{kind:'waypoint',progress:.63,routes:[['gumi','gimcheon'],['gimcheon','sangju']]},
+  granny_arrive:{kind:'node',nodes:['suwon','pyeongtaek']}
+};
+
+/* 폐차장과 침수 지하차도는 '다음 도시의 일'이 아니다. 첫 만남과 바로 붙은
+   같은 현장이므로, 차가 선 그 자리에서 구조까지 연속 장면으로 해결한다. */
+for(const [eventId,taskId] of [['meet_scrapyard','rq_minji_task'],['meet_hitchhiker','rq_leo_task']]){
+  const event=D.events.find(item=>item.id===eventId);
+  for(const choice of (event&&event.choices)||[]) for(const outcome of choice.out||[])
+    if(outcome.fx&&outcome.fx.startRecruit) outcome.fx.chain=taskId;
+}
 
 /* 동료는 선택지에 붙는 열쇠만이 아니다. 자기 전문과 성격에 따라 먼저
    문제를 발견하고 차를 세운다. 플레이어는 제안을 받거나 다른 방식을 가르친다. */

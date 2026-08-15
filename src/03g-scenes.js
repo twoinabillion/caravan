@@ -77,6 +77,13 @@ D.scenes = {
   'recruit-jaeyi-meet-action':'__SCENE_RECRUIT_JAEYI_MEET_ACTION__',
   'recruit-eunsu-meet-action':'__SCENE_RECRUIT_EUNSU_MEET_ACTION__',
   'recruit-kangwoo-meet-action':'__SCENE_RECRUIT_KANGWOO_MEET_ACTION__',
+  'recruit-minji-welding':'__SCENE_RECRUIT_MINJI_WELDING__',
+  'recruit-parkss-bus-overturned':'__SCENE_RECRUIT_PARKSS_BUS_OVERTURNED__',
+  'recruit-leo-hitch-gesture':'__SCENE_RECRUIT_LEO_HITCH_GESTURE__',
+  'recruit-jaeyi-suspension-check':'__SCENE_RECRUIT_JAEYI_SUSPENSION_CHECK__',
+  'recruit-eunsu-rooftop':'__SCENE_RECRUIT_EUNSU_ROOFTOP__',
+  'recruit-eunsu-sky-point':'__SCENE_RECRUIT_EUNSU_SKY_POINT__',
+  'recruit-kangwoo-pickpocket':'__SCENE_RECRUIT_KANGWOO_PICKPOCKET__',
   'recruit-minji-task':'__SCENE_RECRUIT_MINJI_TASK__',
   'recruit-parkss-task':'__SCENE_RECRUIT_PARKSS_TASK__',
   'recruit-leo-task':'__SCENE_RECRUIT_LEO_TASK__',
@@ -131,6 +138,18 @@ D.scenes = {
   'recruit-leo-follow-puddle':'__SCENE_RECRUIT_LEO_FOLLOW_PUDDLE__',
   'recruit-jaeyi-follow-shelf':'__SCENE_RECRUIT_JAEYI_FOLLOW_SHELF__',
   'recruit-eunsu-follow-lights':'__SCENE_RECRUIT_EUNSU_FOLLOW_LIGHTS__'
+};
+
+/* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
+   실제 화면 행동을 설명한다. */
+D.sceneDescriptions = {
+  'recruit-minji-welding':'폐차장 차 더미 위에서 용접하는 민지와 아래에 선 달구지',
+  'recruit-parkss-bus-overturned':'옆으로 넘어진 버스 안에서 약 상자를 먼저 내미는 박 선생',
+  'recruit-leo-hitch-gesture':'젖은 밤길에서 엄지를 든 레오와 꼬리를 흔드는 보리',
+  'recruit-jaeyi-suspension-check':'달구지 왼쪽 뒤 판스프링을 살피는 재이와 짐 실은 리어카',
+  'recruit-eunsu-rooftop':'청주 폐 기지국 지붕에서 안테나를 돌리는 은수와 아래의 달구지',
+  'recruit-eunsu-sky-point':'목에 헤드폰을 건 은수가 수신기를 들고 하늘의 점을 가리키는 모습',
+  'recruit-kangwoo-pickpocket':'대구 돔 시장에서 강우의 시선에 지갑을 돌려놓는 소매치기'
 };
 
 /* Cinematic asset registry. Every event scene has a production format; companion

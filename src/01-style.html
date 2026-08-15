@@ -2757,7 +2757,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
    The shell is cut from the approved mockup. Terrain is raster; route,
    telemetry and cards stay live so selection and resource values remain real. */
 .journey-mode-console{position:relative;margin:0 -8px 6px}
-.route-console,.journey-local-panel{aspect-ratio:1.02;background-position:center;background-size:100% 100%}
+.route-console,.journey-local-panel{aspect-ratio:.95;background-position:center;background-size:100% 100%}
 .route-console-v3::after{content:"";position:absolute;z-index:9;inset:0;background:url("__UI_ROUTE_CONSOLE_SHELL__") center/100% 100% no-repeat;pointer-events:none}
 .route-console-v3 .route-console-screen{inset:8.2% 7.4% 3.8%;border:0;background:#06101a}
 .journey-local-screen.stop-action-console{inset:8.2% 7.4% 3.8% 10.1%;border:0;background:#06101a}
@@ -2771,7 +2771,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .journey-mode-tabs.journey-rocker button[aria-selected="true"]::after{content:none}
 .journey-mode-tabs.journey-rocker button:focus-visible{outline:2px solid #ffe0a3;outline-offset:-1px}
 
-.route-console-v3 .route-console-screen{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:45% 21% 34%;overflow:hidden;
+.route-console-v3 .route-console-screen{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:43% 26% 31%;overflow:hidden;
   clip-path:polygon(3.2% 0,96.8% 0,96.8% 42%,100% 45%,100% 100%,0 100%,0 45%,3.2% 42%);font-family:var(--mono)}
 .route-console-v3 .nav-route-map{position:relative;display:block;min-width:0;min-height:0;padding:0;overflow:hidden;border:0;
   margin-inline:20px;background-color:#07111b;background-image:url("__UI_ROUTE_MAP_TERRAIN__");
@@ -2833,9 +2833,19 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   .route-console-v3 .nav-route-map,.route-console-v3 .nav-route-summary{margin-inline:14px}
   .route-console-v3 .nav-route-summary{padding-left:7px;padding-right:7px}
   .route-console-v3 .nav-route-facts>span{grid-template-columns:18px minmax(0,1fr);gap:2px;padding-left:3px;padding-right:3px}
-  .route-console-v3 .nav-route-fact-icon{width:18px;height:18px}.route-console-v3 .nav-route-facts small{font-size:8px}.route-console-v3 .nav-route-facts b{font-size:10px}
+  .route-console-v3 .nav-route-fact-icon{width:18px;height:18px}.route-console-v3 .nav-route-facts small{font-size:8.5px}.route-console-v3 .nav-route-facts b{font-size:10.5px}
   .route-console-v3 .nav-map-scale{left:3%;padding:4px 5px 3px}.route-console-v3 .nav-map-scale small{font-size:7px}.route-console-v3 .nav-map-scale b{font-size:8.5px}
   .route-console-v3 .nav-map-destination-badge b{font-size:11px}.route-console-v3 .nav-map-destination-badge small{font-size:9px}
   .journey-mode-tabs.journey-rocker button{font-size:9px}
+}
+@container game (max-width:680px){
+  /* 짧은 모바일 화면에서는 늘어난 콘솔을 아래 도크 쪽으로 밀지 않고,
+     사용자가 지적한 빈 풍경 띠 쪽으로 올려 설명과 계기판 숨통을 튼다. */
+  .journey-mode-console{margin-top:clamp(-34px,-7vw,-24px)}
+}
+@media (min-width:681px){
+  /* 넓은 창에는 위쪽 침범 대신 늘어난 높이를 그대로 사용해 도크와의
+     불필요한 빈 띠를 줄인다. */
+  .journey-mode-console{margin-top:0}
 }
 </style>

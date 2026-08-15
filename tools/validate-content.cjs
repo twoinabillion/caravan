@@ -31,6 +31,36 @@ for (const event of events) {
   eventById.set(event.id, event);
 }
 
+/* 장소 사건은 근처 도시 이름만 달아 둔 채 도로 풀에 섞지 않는다. 모든 구형
+   nearNode가 명시적 위치 계약으로 이관됐고, waypoint가 실제 인접 구간인지 검사한다. */
+const locationKinds = new Set(['node', 'waypoint', 'road', 'local']);
+const locationEdgeKeys = new Set((D.edges || []).map(([a,b]) => [a,b].sort().join('|')));
+for (const event of D.events || []) {
+  if (event.nearNode) need(!!(D.eventLocations && D.eventLocations[event.id]),
+    `eventLocation:${event.id}`, 'nearNode 사건에 위치 계약이 없음');
+}
+for (const [id, location] of Object.entries(D.eventLocations || {})) {
+  const where=`eventLocation:${id}`;
+  need(eventById.has(id), where, '연결된 이벤트가 없음');
+  need(isObject(location) && locationKinds.has(location.kind), where, `잘못된 위치 종류 ${location && location.kind}`);
+  if (!isObject(location)) continue;
+  if (location.kind === 'node') {
+    need(Array.isArray(location.nodes) && location.nodes.length > 0, where, 'node 목록이 비었음');
+    for (const node of location.nodes || []) need(!!D.nodes[node], where, `없는 장소 ${node}`);
+  }
+  if (location.kind === 'waypoint') {
+    need(Number.isFinite(location.progress) && location.progress > 0 && location.progress < 1,
+      where, '경유 진행률은 0과 1 사이여야 함');
+    need(Array.isArray(location.routes) && location.routes.length > 0, where, '경유 노선이 비었음');
+    for (const route of location.routes || []) {
+      need(Array.isArray(route) && route.length === 2, where, '경유 노선 형식이 잘못됨');
+      if (!Array.isArray(route) || route.length !== 2) continue;
+      need(!!D.nodes[route[0]] && !!D.nodes[route[1]], where, `없는 노선 장소 ${route.join('→')}`);
+      need(locationEdgeKeys.has([...route].sort().join('|')), where, `실제 인접 길이 아닌 경유 노선 ${route.join('→')}`);
+    }
+  }
+}
+
 const compIds = new Set(Object.keys(D.comps || {}));
 const npcIds = new Set(Object.keys(D.npcs || {}));
 const knowledgeIds = new Set(Object.keys(D.knowledge || {}));
@@ -198,6 +228,35 @@ for (const [id, scene] of Object.entries(D.eventScenes || {}))
 for (const [id, turns] of Object.entries(D.eventTurnScenes || {})) {
   need(eventById.has(id), `turnScenes:${id}`, '이벤트가 없음');
   for (const scene of Object.values(turns)) need(!!D.scenes[scene], `turnScenes:${id}`, `없는 장면 ${scene}`);
+}
+for (const [id, stages] of Object.entries(D.eventTurnSceneStages || {})) {
+  const turns=D.eventTurnScenes&&D.eventTurnScenes[id];
+  need(Array.isArray(turns)&&turns.length, `turnSceneStages:${id}`, '연속 컷 목록이 없음');
+  let prior=-1;
+  for (const stage of stages || []) {
+    need(Number.isInteger(stage.at)&&stage.at>=0&&stage.at>=prior, `turnSceneStages:${id}`, '장면 단계 순서 오류');
+    need(!!D.scenes[stage.key], `turnSceneStages:${id}`, `없는 장면 ${stage.key}`);
+    need(Array.isArray(turns)&&turns.includes(stage.key), `turnSceneStages:${id}`, `연속 컷에 없는 장면 ${stage.key}`);
+    prior=stage.at;
+  }
+}
+for (const [scene, description] of Object.entries(D.sceneDescriptions || {})) {
+  need(!!D.scenes[scene], `sceneDescription:${scene}`, '없는 장면의 설명');
+  need(typeof description==='string'&&description.trim().length>=8, `sceneDescription:${scene}`, '행동 설명이 너무 짧음');
+}
+const requiredRecruitCuts={
+  meet_scrapyard:['recruit-minji-welding'],
+  meet_bus:['recruit-parkss-bus-overturned'],
+  meet_hitchhiker:['recruit-leo-hitch-gesture'],
+  jy_recruit:['recruit-jaeyi-suspension-check'],
+  es_recruit:['recruit-eunsu-rooftop','recruit-eunsu-sky-point'],
+  kw_recruit:['recruit-kangwoo-pickpocket']
+};
+for (const [id, cuts] of Object.entries(requiredRecruitCuts)) {
+  for (const scene of cuts) {
+    need((D.eventTurnScenes[id]||[]).includes(scene), `recruitCuts:${id}`, `필수 행동 컷 누락 ${scene}`);
+    need(!!(D.sceneDescriptions&&D.sceneDescriptions[scene]), `recruitCuts:${id}`, `행동 설명 누락 ${scene}`);
+  }
 }
 for (const [id, choices] of Object.entries(D.eventChoiceScenes || {})) {
   const event = eventById.get(id);

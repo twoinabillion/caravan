@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-14T07:30:37.371Z",
+  "generatedAt": "2026-08-15T07:03:16.018Z",
   "html": {
-    "bytes": 37067924,
+    "bytes": 37539219,
     "warnBytes": 32000000,
     "maxBytes": 38000000
   },
   "embedded": {
-    "files": 225,
-    "bytes": 21760278,
+    "files": 232,
+    "bytes": 22103579,
     "categories": {
       "audio": {
         "files": 45,
@@ -20,9 +20,9 @@
         "encodedBytes": 1491336
       },
       "scene": {
-        "files": 138,
-        "bytes": 10488613,
-        "encodedBytes": 13985028
+        "files": 145,
+        "bytes": 10831914,
+        "encodedBytes": 14442768
       },
       "portrait": {
         "files": 31,

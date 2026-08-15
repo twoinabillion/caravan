@@ -209,6 +209,7 @@ G.prepareRecruitGuest = (dv)=>{
   if(!q||q.stage!=='road'||!dv) return;
   const def=D.recruitQuests[q.id];
   if(!def||!def.guest) return;
+  if(dv.guest===q.id) return;
   dv.guest=q.id;
   if(q.id==='minji') dv.guestFuel=.92;
   if(q.id==='parkss') S.fatigue=clamp(S.fatigue-8,0,100);
@@ -332,6 +333,14 @@ G.crewLocation = id=>{
   if(node&&node.stl) return '차 옆 · 정착지';
   return '달구지 생활칸';
 };
+G.eventLocation = ev=>ev&&D.eventLocations&&D.eventLocations[ev.id]||null;
+G.locationRouteMatches = (location,from,to)=>!!(location&&location.kind==='waypoint'
+  &&Array.isArray(location.routes)&&location.routes.some(route=>Array.isArray(route)&&route.length===2
+    &&((route[0]===from&&route[1]===to)||(route[0]===to&&route[1]===from))));
+G.waypointEventsFor = (from,to)=>D.events.filter(ev=>{
+  const location=G.eventLocation(ev);
+  return G.locationRouteMatches(location,from,to)&&G.eventAvailable(ev,{mode:'waypoint',from,to});
+});
 G.normalizeDriveSlots = dv=>{
   if(!dv) return dv;
   const quiet=Number.isFinite(S._driveLegsSinceBlock)?S._driveLegsSinceBlock:3;
@@ -363,7 +372,8 @@ G.normalizeDriveSlots = dv=>{
 };
 G.startTravel = (to)=>{
   const chk = G.canTravelTo(to); if(!chk.ok) return false;
-  G.qualitySettlementLeave(S.at);
+  const from=S.at;
+  G.qualitySettlementLeave(from);
   const wx = S.wx;
   const slots = [];
   const isBridge = (S.at==='suwon'&&to==='seoul'&&!S.flags.bridge_crossed);
@@ -397,11 +407,18 @@ G.startTravel = (to)=>{
       slots.sort((a,b)=>a.at-b.at);
     }
   }
-  S.driving = {from:S.at, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,
+  S.driving = {from, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,
     snapshot:{gameMinute:S.day*1440+S.min,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
       van:S.van,fatigue:S.fatigue,pursuit:S.pursuit,build:G.vanBuildProfile().name}};
-  G.qualityMilestone('first_departure',{from:S.at,to,km:chk.km,road:chk.road});
-  if(!isBridge) G.prepareSettlementRoadEcho(S.driving,S.at,to);
+  /* 위치 계약 경유지는 일반 랜덤 슬롯과 별개로 정확한 구간에 예약한다.
+     내비게이션에는 표시하지 않고, 그 지점에 실제로 닿았을 때만 드러난다. */
+  if(!isBridge) for(const ev of G.waypointEventsFor(from,to)){
+    const location=G.eventLocation(ev);
+    S.driving.slots.push({at:chk.km*clamp(Number(location.progress)||.5,.12,.88),waypoint:ev.id});
+  }
+  S.driving.slots.sort((a,b)=>a.at-b.at);
+  G.qualityMilestone('first_departure',{from,to,km:chk.km,road:chk.road});
+  if(!isBridge) G.prepareSettlementRoadEcho(S.driving,from,to);
   G.prepareRecruitGuest(S.driving);
   G.prepareRecruitMemory(S.driving);
   S.at = null;
@@ -437,7 +454,11 @@ G.tick = (dt)=>{ // dt: real seconds
   const dv = S.driving;
   const wxSpd = S.wx==='storm'?0.76 : S.wx==='fog'?0.88 : 1;
   const ftgSpd = S.fatigue>=80?0.85:1;   // 수면 부족 → 감속
-  const km = KMH/60*gm*wxSpd*ftgSpd;
+  /* 백그라운드 복귀나 느린 기기에서 큰 dt가 한 번 들어와도 남은 거리보다
+     더 달린 것으로 기록·과금하지 않는다. 위치만 dist에서 멈추고 통계·연료가
+     초과되던 문제를 같은 실제 이동 거리로 고정한다. */
+  const rawKm = KMH/60*gm*wxSpd*ftgSpd;
+  const km = Math.min(Math.max(0,dv.dist-dv.gone),rawKm);
   dv.gone = Math.min(dv.dist, dv.gone+km);
   S.stats.km += km;
   // fuel
@@ -471,6 +492,16 @@ G.tick = (dt)=>{ // dt: real seconds
   if(dv.si < dv.slots.length && dv.gone >= dv.slots[dv.si].at){
     const slot = dv.slots[dv.si++];
     if(slot.special==='bridge'){ G.openEvent(D.bridgeEvent); return; }
+    if(slot.waypoint){
+      const ev=D.events.find(item=>item.id===slot.waypoint);
+      if(ev&&G.eventAvailable(ev,{mode:'waypoint',from:dv.from,to:dv.to})){
+        S.stopover={eventId:ev.id,from:dv.from,to:dv.to,atKm:Math.round(dv.gone),
+          remainingKm:Math.max(0,Math.round(dv.dist-dv.gone))};
+        G.openEvent(ev); return;
+      }
+      S.stopover=null;
+      return;
+    }
     if(slot.special==='impact'){ G.openEventById('settlement_road_echo'); return; }
     if(slot.beat){ const id=G.popBeat(); if(id){ G.openEventById(id); return; } }
     if(slot.pillarPick){
@@ -521,50 +552,69 @@ G.openRescue = (kind, base)=>{
 };
 
 /* ── events ── */
-G.eligible = (typeFilter)=>{
-  const region = G.regionOf(); const night = G.isNight(); const remain=G.remainKm();
-  return D.events.filter(ev=>{
-    if(ev.w<=0||ev.fixed||ev.locEvent) return false;
-    if(typeFilter && ev.type!==typeFilter) return false;
-    if(ev.once && S.used.includes(ev.id)) return false;
-    if(ev.region && !ev.region.includes(region)) return false;
-    if(ev.maxRemain!==undefined && remain>ev.maxRemain) return false;
-    if(ev.minRemain!==undefined && remain<ev.minRemain) return false;
-    if(ev.nearNode){ const ctx = S.driving? [S.driving.from,S.driving.to] : [S.at];
-      if(!ev.nearNode.some(n=>ctx.includes(n))) return false; }
-    if(ev.recruitStart && (S.recruitQ||G.hasComp(ev.recruitStart))) return false;
-    if(ev.needFlagMin && (S.flags[ev.needFlagMin[0]]||0) < ev.needFlagMin[1]) return false;
-    if(ev.needsNpc && !(S.npcs&&S.npcs[ev.needsNpc]&&S.npcs[ev.needsNpc].met)) return false;
-    if(ev.night && !night) return false;
-    if(ev.needsComp && !G.hasComp(ev.needsComp)) return false;
-    if(ev.needBond && ((S.comps[ev.needBond[0]]||{}).bond||0) < ev.needBond[1]) return false;
-    if(ev.needsComp2 && !G.hasComp(ev.needsComp2)) return false;  // 2인 케미 이벤트
-    if(ev.noComp && G.hasComp(ev.noComp)) return false;   // 미영입 동료 소문용
-    if(ev.noFlag && S.flags[ev.noFlag]) return false;   // 해당 서사 이미 봤으면 스킵
-    if(ev.noPool) return false;   // 랜덤 풀 제외 — chain/직접 호출 전용
-    if(ev.needUp && !(S.up&&S.up[ev.needUp])) return false; // 업그레이드 연계 이벤트
-    if(ev.scrapMin!==undefined && S.scrap<ev.scrapMin) return false;  // 쓸 고철이 있어야 의미 있는 제안
-    if(ev.needsDog && !S.dog) return false;
-    if(ev.minParty && S.party.length<ev.minParty) return false;
-    if(ev.minPursuit && S.pursuit<ev.minPursuit) return false;
-    if(ev.maxVanPct!==undefined && S.van/Math.max(1,S.vanMax)*100>ev.maxVanPct) return false;
-    if(ev.maxScrap!==undefined && S.scrap>ev.maxScrap) return false;
-    if(ev.needsInjury && !Object.keys(S.injuries||{}).length) return false;
-    if(ev.needsDriverInjury && !G.isInjured('driver')) return false;
-    if(ev.maxPartyMood!==undefined){
-      const moods=S.party.map(id=>(S.comps[id]||{}).mood||0);
-      if(!moods.length||Math.min(...moods)>ev.maxPartyMood) return false;
-    }
-    if(ev.needFlag && !S.flags[ev.needFlag]) return false;
-    if(ev.needFlag2 && !S.flags[ev.needFlag2]) return false;
-    if(ev.needKnowledge && G.knowledgeLevel(ev.needKnowledge[0])<ev.needKnowledge[1]) return false;
-    if(ev.noKnowledge && G.knowledgeLevel(ev.noKnowledge[0])>=ev.noKnowledge[1]) return false;
-    if(ev.needWx && S.wx!==ev.needWx) return false;
-    if(ev.needRain && !G.isWet()) return false;
-    if(ev.needLowWater && S.water>2) return false;
-    if(ev.hiddenTarget && !G.unknownHidden().length) return false;
-    if(ev.id==='comp_sick' && !S.flags.food_poison) return false;
-    return true;
-  });
+/* 공통 게이트와 물리적 위치 판정을 한 군데에 둔다. mode는 사건을 어디서
+   찾는지에 대한 계약이며, node/waypoint 사건은 일반 도로 풀로 절대 새지 않는다. */
+G.eventAvailable = (ev,context={})=>{
+  const mode=context.mode||(S.driving?'road':'local');
+  const location=G.eventLocation(ev);
+  const nodeId=context.node||(mode==='waypoint'?context.to:S.at);
+  if(!ev||ev.w<=0||ev.fixed||ev.locEvent) return false;
+  if(context.typeFilter&&ev.type!==context.typeFilter) return false;
+  if(ev.once&&S.used.includes(ev.id)) return false;
+  if(mode==='node'){
+    if(!location||location.kind!=='node'||!location.nodes.includes(nodeId)) return false;
+  } else if(mode==='waypoint'){
+    if(!G.locationRouteMatches(location,context.from,context.to)) return false;
+  } else if(location){
+    if(location.kind!==(mode==='road'?'road':'local')) return false;
+  } else if(ev.nearNode){
+    /* 매핑되지 않은 구형 nearNode는 잘못된 장소에서 열기보다 검증에서 막는다. */
+    return false;
+  }
+  const region=nodeId&&D.nodes[nodeId]?D.nodes[nodeId].region:G.regionOf();
+  const night=G.isNight(), remain=G.remainKm();
+  /* 명시적 node/waypoint 계약이 가장 좁고 정확한 위치 정보다. 예전의 넓은
+     south/mid/north 태그가 숨은 장소의 행정 구역과 어긋나도 계약 장소에서
+     사건 자체가 사라지지 않게 한다. 일반 road/local 사건만 광역 태그를 쓴다. */
+  const exactLocation=location&&['node','waypoint'].includes(location.kind);
+  if(ev.region&&!exactLocation&&!ev.region.includes(region)) return false;
+  if(ev.maxRemain!==undefined&&remain>ev.maxRemain) return false;
+  if(ev.minRemain!==undefined&&remain<ev.minRemain) return false;
+  if(ev.recruitStart&&(S.recruitQ||G.hasComp(ev.recruitStart))) return false;
+  if(ev.needFlagMin&&(S.flags[ev.needFlagMin[0]]||0)<ev.needFlagMin[1]) return false;
+  if(ev.needsNpc&&!(S.npcs&&S.npcs[ev.needsNpc]&&S.npcs[ev.needsNpc].met)) return false;
+  if(ev.night&&!night) return false;
+  if(ev.needsComp&&!G.hasComp(ev.needsComp)) return false;
+  if(ev.needBond&&((S.comps[ev.needBond[0]]||{}).bond||0)<ev.needBond[1]) return false;
+  if(ev.needsComp2&&!G.hasComp(ev.needsComp2)) return false;
+  if(ev.noComp&&G.hasComp(ev.noComp)) return false;
+  if(ev.noFlag&&S.flags[ev.noFlag]) return false;
+  if(ev.noPool) return false;
+  if(ev.needUp&&!(S.up&&S.up[ev.needUp])) return false;
+  if(ev.scrapMin!==undefined&&S.scrap<ev.scrapMin) return false;
+  if(ev.needsDog&&!S.dog) return false;
+  if(ev.minParty&&S.party.length<ev.minParty) return false;
+  if(ev.minPursuit&&S.pursuit<ev.minPursuit) return false;
+  if(ev.maxVanPct!==undefined&&S.van/Math.max(1,S.vanMax)*100>ev.maxVanPct) return false;
+  if(ev.maxScrap!==undefined&&S.scrap>ev.maxScrap) return false;
+  if(ev.needsInjury&&!Object.keys(S.injuries||{}).length) return false;
+  if(ev.needsDriverInjury&&!G.isInjured('driver')) return false;
+  if(ev.maxPartyMood!==undefined){
+    const moods=S.party.map(id=>(S.comps[id]||{}).mood||0);
+    if(!moods.length||Math.min(...moods)>ev.maxPartyMood) return false;
+  }
+  if(ev.needFlag&&!S.flags[ev.needFlag]) return false;
+  if(ev.needFlag2&&!S.flags[ev.needFlag2]) return false;
+  if(ev.needKnowledge&&G.knowledgeLevel(ev.needKnowledge[0])<ev.needKnowledge[1]) return false;
+  if(ev.noKnowledge&&G.knowledgeLevel(ev.noKnowledge[0])>=ev.noKnowledge[1]) return false;
+  if(ev.needWx&&S.wx!==ev.needWx) return false;
+  if(ev.needRain&&!G.isWet()) return false;
+  if(ev.needLowWater&&S.water>2) return false;
+  if(ev.hiddenTarget&&!G.unknownHidden().length) return false;
+  if(ev.id==='comp_sick'&&!S.flags.food_poison) return false;
+  return true;
 };
+G.eligible = typeFilter=>D.events.filter(ev=>G.eventAvailable(ev,{typeFilter,
+  mode:S.driving?'road':'local'}));
+G.nodeEvents = node=>D.events.filter(ev=>G.eventAvailable(ev,{mode:'node',node}));
 G.unknownHidden = ()=> Object.keys(D.nodes).filter(id=>D.nodes[id].type==='hidden' && !D.nodes[id].secret && !S.known.includes(id));
