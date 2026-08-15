@@ -67,3 +67,15 @@
 - `03-goal-reference-vs-fixed.png` — 왼쪽 실제 사용자 화면 / 오른쪽 수정 후 Chrome 화면
 - `04-bag-reference-vs-fixed.png` — 왼쪽 실제 사용자 화면 / 오른쪽 수정 후 Chrome 화면
 - `audits/goal-bag-overflow-2026-08-15/live-fix-1-*.png` — 320×578부터 476×809까지 수정 후 화면
+
+## 단서 분리와 수납칸 광학 중심 후속 수정
+
+- `확인된 단서`, 제목, 문장을 세 행으로 분리하고 종이에 인쇄된 위·아래 구분선 사이에서
+  수직 중앙을 이루도록 간격과 패딩을 조정했다.
+- 사용자가 지정한 정확한 문장을 Chrome 회귀 테스트에 넣어 320×578부터 476×809까지
+  잘림과 넘침이 없음을 확인했다.
+- 다섯 수납칸의 경계와 터치 영역은 유지하고, 이름·사진·수량을 수납칸 폭의 4%만큼 함께
+  왼쪽으로 이동했다.
+- 동일 상태 전후 비교: `05-goal-before-vs-clue-spacing.png`,
+  `06-bag-before-vs-left-shift.png`.
+- 최종 Chrome 화면: `07-goal-clue-spacing-fixed.png`, `08-bag-items-left-fixed.png`.

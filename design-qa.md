@@ -4,6 +4,53 @@ final result: passed
 
 ---
 
+# Goal Clue Separation + Bag Item Rail QA — 2026-08-15
+
+- Source visual truth: the user's live Goal/Bag screenshots in `audits/goal-bag-live-review-2026-08-15/01-goal-live.png` and `02-bag-live.png`, plus the exact requested clue copy: `확인된 단서 / 부모님의 수정안 / 엄마와 아빠는 강제 명령 앞에 인간 확인을 돌려놓으려 했다.`
+- Implementation screenshots: `audits/goal-bag-live-review-2026-08-15/07-goal-clue-spacing-fixed.png` and `08-bag-items-left-fixed.png`.
+- Viewport and density: 476×809 CSS px, deviceScaleFactor 1; source and implementation states are normalized in 952×809 before/after composites.
+- State: Goal panel open at progress 3/6; Bag panel open with a selected inventory pocket.
+- Full-view comparison evidence: `05-goal-before-vs-clue-spacing.png` and `06-bag-before-vs-left-shift.png`.
+- Focused evidence: the full-height same-state composites preserve readable clue typography and individual pocket contents, so separate crops were not needed.
+
+## Findings and comparison history
+
+### Iteration 1 — blocked
+
+- [P2] The clue label, title, and sentence read as one compressed text stack instead of three levels held between the folio's printed separators.
+- [P2] Inventory names, icons, and count rows sat slightly right of the stitched pocket's optical center.
+
+Fixes:
+
+- Converted the clue block to a vertically centered flex stack with explicit 2–4px inter-row spacing, balanced top/bottom padding, and enough usable width for the requested sentence.
+- Shifted every pocket's name, icon, and count group together by 4% of the pocket width to the left; the stitched five-column geometry itself remains unchanged.
+
+### Iteration 2 — passed
+
+- The clue's three text levels now have distinct vertical rhythm and remain contained between the raster lines.
+- The exact requested sentence was injected during the six-viewport Chrome regression test; it does not overflow at 320×578 through 476×809.
+- All five inventory content groups share the same left-shifted optical center without affecting hit targets or pocket seams.
+
+## Required fidelity surfaces
+
+- Fonts and typography: existing Korean font stack, weights, sizes, and line heights are preserved; only vertical spacing and available text width changed.
+- Spacing and layout rhythm: clue top/bottom breathing room and internal gaps are explicit; inventory content moves as one unit while pocket boundaries remain locked to the raster.
+- Colors and visual tokens: unchanged.
+- Image quality and assets: original folio, bag, and inventory raster assets remain unmodified and unstretched.
+- Copy and content: the user's exact clue sentence is covered by regression testing; dynamic production copy remains unchanged.
+
+## Runtime and interaction checks
+
+- `python3 tests/test_goal_bag_alignment.py`: passed at 320×578, 375×553, 360×700, 390×844, 462×832, and 476×809.
+- `npm run verify:quick`: passed.
+- `python3 tests/test_quality_9_accessibility.py`: passed, including large text, reduced motion, 44px controls, 200% zoom, and zero runtime errors.
+- `python3 tests/test_smoke.py`: passed.
+- Horizontal overflow: none.
+
+final result: passed
+
+---
+
 # Goal + Bag Raster-slot Precision QA — 2026-08-15
 
 - Source visual truth: `assets/ui/goal-folio-shell-v1.webp` and `assets/ui/bag-supply-roll-v1.webp` (720×1120 px each), plus the user's goal/bag screenshots represented by the pre-fix captures below.

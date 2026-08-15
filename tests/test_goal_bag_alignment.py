@@ -98,6 +98,28 @@ def check_viewport(playwright, width, height):
         "node => getComputedStyle(node).borderTopWidth"
     )
     assert clue_border == "0px", "the coded clue frame must not double the raster frame"
+    page.locator(".folio-clue>span").evaluate(
+        "node => node.textContent = '확인된 단서'"
+    )
+    page.locator(".folio-clue>b").evaluate(
+        "node => node.textContent = '부모님의 수정안'"
+    )
+    page.locator(".folio-clue>p").evaluate(
+        "node => node.textContent = "
+        "'엄마와 아빠는 강제 명령 앞에 인간 확인을 돌려놓으려 했다.'"
+    )
+    clue = box(page, ".folio-clue")
+    clue_label = box(page, ".folio-clue>span")
+    clue_title = box(page, ".folio-clue>b")
+    clue_copy = box(page, ".folio-clue>p")
+    assert clue_label["y"] - clue["y"] >= 5
+    assert clue_title["y"] - (clue_label["y"] + clue_label["height"]) >= 1.5
+    assert clue_copy["y"] - (clue_title["y"] + clue_title["height"]) >= 1.5
+    assert clue["y"] + clue["height"] - (clue_copy["y"] + clue_copy["height"]) >= 5
+    clue_overflow = page.locator(".folio-clue").evaluate(
+        "node => ({scrollHeight:node.scrollHeight,clientHeight:node.clientHeight})"
+    )
+    assert clue_overflow["scrollHeight"] <= clue_overflow["clientHeight"] + 1
     support_top_ratio = (support["y"] - goal_prop["y"]) / goal_prop["height"]
     assert 0.48 <= support_top_ratio <= 0.64, (
         f"goal action frame missed the printed folio slot: {support_top_ratio:.4f}"
@@ -138,16 +160,36 @@ def check_viewport(playwright, width, height):
           return {x:r.x,y:r.y,width:r.width,height:r.height};
         })"""
     )
-    assert len(pocket_boxes) == len(count_boxes) == 5
+    name_boxes = page.locator(".bag-pocket-name").evaluate_all(
+        """nodes => nodes.map(node => {
+          const r = node.getBoundingClientRect();
+          return {x:r.x,y:r.y,width:r.width,height:r.height};
+        })"""
+    )
+    icon_boxes = page.locator(".bag-pocket .ico").evaluate_all(
+        """nodes => nodes.map(node => {
+          const r = node.getBoundingClientRect();
+          return {x:r.x,y:r.y,width:r.width,height:r.height};
+        })"""
+    )
+    assert len(pocket_boxes) == len(count_boxes) == len(name_boxes) == len(icon_boxes) == 5
     assert max(abs(item["y"] - pocket_boxes[0]["y"]) for item in pocket_boxes) <= 0.5
     assert max(abs(item["y"] - count_boxes[0]["y"]) for item in count_boxes) <= 0.5
     raster_pocket_centers = (0.1312, 0.3156, 0.5, 0.6844, 0.8688)
-    for pocket, count, expected_center in zip(
-        pocket_boxes, count_boxes, raster_pocket_centers
+    for pocket, count, name, icon, expected_center in zip(
+        pocket_boxes, count_boxes, name_boxes, icon_boxes, raster_pocket_centers
     ):
         pocket_center = pocket["x"] + pocket["width"] / 2
         count_center = count["x"] + count["width"] / 2
-        assert abs(pocket_center - count_center) <= 0.5
+        name_center = name["x"] + name["width"] / 2
+        icon_center = icon["x"] + icon["width"] / 2
+        expected_content_center = pocket_center - pocket["width"] * 0.04
+        for content_center in (count_center, name_center, icon_center):
+            assert abs(content_center - expected_content_center) <= 0.8, (
+                pocket,
+                content_center,
+                expected_content_center,
+            )
         pocket_center_ratio = (pocket_center - bag_prop["x"]) / bag_prop["width"]
         assert abs(pocket_center_ratio - expected_center) <= 0.006, (
             f"bag pocket missed stitched slot: actual={pocket_center_ratio:.4f} "
