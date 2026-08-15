@@ -58,6 +58,16 @@ def check_viewport(playwright, width, height):
         ".folio-road-button",
     ):
         assert_same_rail(goal_reference, box(page, selector), f"goal {selector}")
+    edge_tabs = page.locator(".prop-edge-tabs button").evaluate_all(
+        """nodes => nodes.map(node => {
+          const r = node.getBoundingClientRect();
+          return {x:r.x,right:r.right,width:r.width,height:r.height};
+        })"""
+    )
+    assert len(edge_tabs) == 2
+    for tab in edge_tabs:
+        assert tab["x"] >= -0.5 and tab["right"] <= width + 0.5, tab
+        assert tab["width"] >= 44 and tab["height"] >= 44, tab
 
     page.click("#dk-status")
     page.wait_for_timeout(120)
@@ -66,6 +76,8 @@ def check_viewport(playwright, width, height):
         box(page, ".bag-title-row"),
         "bag title/resource",
     )
+    assert page.locator(".bag-title-row").is_visible()
+    assert page.locator(".bag-tool-tabs").count() == 0
     pocket_boxes = page.locator(".bag-pocket").evaluate_all(
         """nodes => nodes.map(node => {
           const r = node.getBoundingClientRect();
@@ -89,12 +101,18 @@ def check_viewport(playwright, width, height):
     page.click('[data-bag-item="의약품"]')
     page.wait_for_timeout(80)
     detail_reference = box(page, ".bag-detail-copy")
+    detail_panel = box(page, ".bag-detail")
     assert_same_rail(
         detail_reference, box(page, ".bag-detail-heading"), "bag detail heading"
     )
     assert_same_rail(
         detail_reference, box(page, ".bag-detail button"), "bag detail action"
     )
+    assert detail_reference["y"] >= detail_panel["y"] - 0.5
+    assert (
+        detail_reference["y"] + detail_reference["height"]
+        <= detail_panel["y"] + detail_panel["height"] + 0.5
+    ), f"bag detail overflow: panel={detail_panel} copy={detail_reference}"
     selected = page.locator('[data-bag-item="의약품"]')
     assert selected.get_attribute("aria-pressed") == "true"
     assert page.locator(".bag-detail-heading span").inner_text() == "의약품"
@@ -107,6 +125,8 @@ def check_viewport(playwright, width, height):
 
 
 with sync_playwright() as playwright:
+    check_viewport(playwright, 320, 578)
+    check_viewport(playwright, 375, 553)
     check_viewport(playwright, 390, 844)
     check_viewport(playwright, 360, 700)
-    print("✅ 목표·가방 정렬 레일 · 390x844 / 360x700")
+    print("✅ 목표·가방 정렬·넘침 · 320x578 / 375x553 / 360x700 / 390x844")

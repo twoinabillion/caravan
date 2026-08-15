@@ -147,7 +147,7 @@ with sync_playwright() as playwright:
         page.wait_for_timeout(80)
         bag = tool_target_state(page, '#ovl-status')
         check(f'{width}×{height} bag keeps visible controls at least 44px',
-              bag['count'] >= 8 and not bag['short'] and bag['escaped'] == 0, str(bag))
+              bag['count'] >= 6 and not bag['short'] and bag['escaped'] == 0, str(bag))
         page.click('[data-bag-item="의약품"]')
         bag_selection = page.evaluate("""() => ({
           selected:document.querySelector('[data-bag-item="의약품"]')?.getAttribute('aria-pressed'),
@@ -166,7 +166,7 @@ with sync_playwright() as playwright:
               after_repair['parts'] == before_repair['parts'] - 1 and
               after_repair['van'] > before_repair['van'],
               f'{before_repair} -> {after_repair}')
-        page.click('[data-road-tool="road"]')
+        page.click('#dk-road')
 
         check(f'{width}×{height} console/runtime errors remain zero', not errors, str(errors[:5]))
         page.close()
