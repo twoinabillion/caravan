@@ -189,3 +189,65 @@ Fixes:
 - [P3] On very short screens, `현재 위치` is intentionally omitted from the lower goal frame to protect the completion criterion and 44px controls.
 
 final result: passed
+
+---
+
+# Goal + Bag Live Screenshot Correction QA — 2026-08-15 20:56
+
+- Source visual truth: `audits/goal-bag-live-review-2026-08-15/01-goal-live.png` (864×1478 px) and `02-bag-live.png` (994×1492 px), supplied from the user's actual play session.
+- Final implementation: `audits/goal-bag-overflow-2026-08-15/live-fix-1-goal-476x809.png` and `live-fix-1-bag-selected-476x809.png` (476×809 px at deviceScaleFactor 1).
+- Responsive implementation: matching Chrome captures at 320×578, 375×553, 360×700, 390×664, 390×844, and 462×832.
+- Combined comparison evidence: `audits/goal-bag-live-review-2026-08-15/03-goal-reference-vs-fixed.png` and `04-bag-reference-vs-fixed.png`.
+- State: Day 1 goal progress 3/6; bag selected-state comparison. Time and inventory values differ because the source is a later save. Geometry, hierarchy, and state styling are the comparison targets.
+- Density normalization: source screenshots were proportionally normalized to the 476px comparison width; the implementation remained at 1×. Black top padding and the persistent dock are excluded from fidelity findings.
+
+## Full-view and focused comparison evidence
+
+The actual play screenshots and revised Chrome renders were joined into the same comparison images and inspected at original composite resolution. Separate crops were not necessary: at the normalized width the goal paper rails, action frame, button frame, bag stitches, item icons, selected pocket, and detail panel remain legible. The 320×578 captures provide the focused short-screen check.
+
+## Comparison history
+
+### Iteration 1 — blocked
+
+- [P1] Goal content used several incompatible left rails; the action copy began outside the printed map frame and the coded button border sat over the raster frame.
+- [P1] The goal title was oversized and visually collided with the metal binding.
+- [P1] The bag selected state was a full-height rectangular overlay unrelated to the stitched pocket silhouette.
+- [P2] Bag item icons sat above the visual center of the black pocket cavities.
+- [P2] Vehicle status and detail panels were offset from the raster panel boundaries.
+
+Fixes:
+
+- Introduced explicit goal content and printed-frame rails; all title, location, progress, clue, action, metadata, and return-button anchors now follow one of those two measured rails.
+- Reduced the goal title scale and removed the return button's duplicate coded border.
+- Raised the bag vehicle panel to 17.7%, set the pocket span to the stitched 34.8–71.3% region, and moved icons to 37% within that region.
+- Removed the selected pocket rectangle. Selection now uses the label, underline, icon glow, and count strip inside the pocket.
+- Moved the detail panel to the raster's 8% side rails and 74–95% vertical band.
+
+### Iteration 2 — passed
+
+- The side-by-side goal comparison shows a smaller title, coherent left rail, action copy fully inside its printed frame, and a single aligned button frame.
+- The bag comparison shows icons centered in their cavities and no full-height selected rectangle.
+- The 320×578 check preserves all five pockets, readable selected detail, and persistent 44px controls.
+- No actionable P0/P1/P2 issue remains in the checked states.
+
+## Required fidelity surfaces
+
+- Fonts and typography: the product's `Apple SD Gothic Neo`/Pretendard/Noto Sans KR fallback stack remains intact. The display title is reduced from a 38px to 34px maximum, with less aggressive negative tracking. Wrapping and truncation remain controlled at the short viewport.
+- Spacing and layout rhythm: the goal uses measured 7.2% content and 6.5% printed-frame left rails. Bag panels use the source raster's measured bands; five pocket centers remain locked to their stitch centers.
+- Colors and visual tokens: the existing paper ink, teal, amber, and canvas palette is unchanged. Selected styling is restrained to existing amber state tokens.
+- Image quality and asset fidelity: the original 720×1120 folio and supply-roll rasters and the existing inventory PNGs remain unmodified and unstretched. No replacement asset or CSS illustration was introduced.
+- Copy and content: dynamic goal, location, inventory, and repair copy are unchanged. No future route encounter or danger information was added.
+
+## Interaction, accessibility, and runtime checks
+
+- `python3 tests/test_goal_bag_alignment.py`: passed across six phone viewports; now asserts goal rail families, raster seam centers, icon vertical band, transparent selected pocket, detail-panel rail, and 44px controls.
+- `python3 tests/test_quality_9_accessibility.py`: passed for large text, reduced motion, selection updates, repair action, 200% zoom, and zero console/runtime errors.
+- `npm run verify:quick`: passed.
+- `python3 tests/test_smoke.py`: passed in full.
+- `git diff --check`: passed.
+
+## Follow-up polish
+
+- [P3] On screens shorter than 650px, secondary goal prose and location metadata remain intentionally reduced before any primary control is compressed.
+
+final result: passed

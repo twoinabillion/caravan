@@ -60,10 +60,19 @@ def check_viewport(playwright, width, height):
         ".folio-title-row",
         ".folio-progress",
         ".folio-clue",
-        ".folio-support",
-        ".folio-road-button",
     ):
         assert_same_rail(goal_reference, box(page, selector), f"goal {selector}")
+    assert abs(goal_reference["x"] - box(page, ".folio-location")["x"]) <= 1
+    goal_frame_reference = box(page, ".folio-support")
+    assert_same_rail(
+        goal_frame_reference,
+        box(page, ".folio-road-button"),
+        "goal printed frame/button",
+    )
+    assert 0 <= goal_reference["x"] - goal_frame_reference["x"] <= 4, (
+        goal_reference,
+        goal_frame_reference,
+    )
     edge_tabs = page.locator(".prop-edge-tabs button").evaluate_all(
         """nodes => nodes.map(node => {
           const r = node.getBoundingClientRect();
@@ -145,10 +154,38 @@ def check_viewport(playwright, width, height):
             f"expected={expected_center:.4f}"
         )
 
+    first_pocket = page.locator(".bag-pocket").first
+    pocket_icon = box(page, ".bag-pocket:first-child .ico")
+    pocket_icon_top_ratio = (pocket_icon["y"] - pocket_boxes[0]["y"]) / pocket_boxes[0][
+        "height"
+    ]
+    assert 0.36 <= pocket_icon_top_ratio <= 0.38, pocket_icon_top_ratio
+    selected_style = page.locator(".bag-pocket.selected").evaluate(
+        """node => ({
+          backgroundColor:getComputedStyle(node).backgroundColor,
+          boxShadow:getComputedStyle(node).boxShadow,
+          decoration:getComputedStyle(node.querySelector('.bag-pocket-name')).textDecorationLine
+        })"""
+    )
+    assert selected_style["backgroundColor"] == "rgba(0, 0, 0, 0)"
+    assert selected_style["boxShadow"] == "none"
+    assert "underline" in selected_style["decoration"]
+    assert first_pocket.get_attribute("aria-pressed") == "true"
+
+    vehicle = box(page, ".bag-vehicle")
+    detail_panel = box(page, ".bag-detail")
+    vehicle_top_ratio = (vehicle["y"] - bag_prop["y"]) / bag_prop["height"]
+    pocket_bottom_ratio = (
+        pocket_boxes[0]["y"] + pocket_boxes[0]["height"] - bag_prop["y"]
+    ) / bag_prop["height"]
+    detail_left_ratio = (detail_panel["x"] - bag_prop["x"]) / bag_prop["width"]
+    assert abs(vehicle_top_ratio - 0.177) <= 0.004, vehicle_top_ratio
+    assert abs(pocket_bottom_ratio - 0.713) <= 0.004, pocket_bottom_ratio
+    assert abs(detail_left_ratio - 0.08) <= 0.004, detail_left_ratio
+
     page.click('[data-bag-item="의약품"]')
     page.wait_for_timeout(80)
     detail_reference = box(page, ".bag-detail-copy")
-    detail_panel = box(page, ".bag-detail")
     assert_same_rail(
         detail_reference, box(page, ".bag-detail-heading"), "bag detail heading"
     )
