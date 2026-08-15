@@ -298,3 +298,52 @@ Fixes:
 - [P3] On screens shorter than 650px, secondary goal prose and location metadata remain intentionally reduced before any primary control is compressed.
 
 final result: passed
+
+---
+
+# Cinematic Story Event Layout QA — 2026-08-15 21:57
+
+- Source visual truth: `audits/story-event-panel-2026-08-15/01-user-live.png` (950×1896 px, approximately 475×948 CSS px at 2× density) and the normalized live recreation `02-before-475x948.png`.
+- Final implementation: `audits/story-event-panel-2026-08-15/04-final-475x948.png` (475×948 px, deviceScaleFactor 1).
+- Responsive evidence: `06-final-short-320x578.png` (320×578 px, deviceScaleFactor 1).
+- State: `세 겹의 이송표`, story beat 1/4, automatic progression off, 10km remaining.
+- Full-view comparison evidence: `05-before-vs-final.png` (950×948 px; left before, right final).
+- Focused evidence: the combined full-height comparison keeps the story text and complete 60px button legible; the separate 320×578 capture verifies the constrained state.
+
+## Comparison history
+
+### Iteration 1 — blocked
+
+- [P1] A 256×249 square navigation-button raster was stretched to roughly 445×64, visibly distorting the metal face.
+- [P1] The current story beat was vertically centered inside a 383px reader, producing a large false gap between title and copy.
+- [P2] Progress, autoplay, primary action, and next-step copy were visually scattered across an oversized dock.
+
+Fixes:
+
+- Made the current story reader content-sized and top-aligned immediately after the event heading.
+- Added a lower divider to complete the current-beat reading block.
+- Rebuilt the primary action as a maximum-360px two-column control. The existing raster is preserved at 54×54 without distortion, while live label and progress copy occupy a separate text column.
+- Preserved automatic progression, direct progression, active/pressed state, and minimum 44px targets.
+
+### Iteration 2 — passed
+
+- The same-state composite shows the story text directly under the title and a compact centered action instead of a stretched full-width raster.
+- At 320×578, the scene, heading, complete first beat, autoplay toggle, and primary action remain visible without horizontal overflow.
+- Clicking `계속` advances the live progress from 1/4 to 2/4.
+
+## Required fidelity surfaces
+
+- Fonts and typography: existing Korean serif narration, sans title, and mono metadata families and weights are unchanged; only grouping and alignment changed.
+- Spacing and layout rhythm: the false vertical gap is removed; story copy now forms one bordered reading block, and the dock uses a centered 360px maximum action rail.
+- Colors and visual tokens: existing navy, teal, amber, and muted-paper tokens are unchanged.
+- Image quality and assets: the scene image is unchanged. The square navigation raster is no longer stretched and renders at its intended near-square proportion.
+- Copy and content: event title, narration, progress, autoplay state, and next-step labels are unchanged.
+
+## Interaction, accessibility, and runtime checks
+
+- `python3 tests/test_story_event_layout.py`: passed at 320×578, 375×667, 390×844, and 475×948; covers compact geometry, undistorted raster size, progress advancement, overflow, and runtime errors.
+- `npm run verify:quick`: passed.
+- `python3 tests/test_quality_9_accessibility.py`: passed for large text, reduced motion, 44px targets, 200% zoom, and zero runtime errors.
+- `python3 tests/test_smoke.py`: passed.
+
+final result: passed

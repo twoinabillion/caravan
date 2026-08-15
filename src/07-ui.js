@@ -2262,7 +2262,7 @@ const UI = (()=>{
       dock.classList.add('story-progress-dock');
       dock.innerHTML=`<div class="choice-dock-head"><span>${state.label} · ${state.index+1}/${state.turns.length}</span>
         <button class="story-auto-toggle${storyAuto?' on':''}" type="button" aria-pressed="${storyAuto}">${storyAuto?'자동 ON':'자동 OFF'}</button></div>
-        <button class="choice story-next" type="button">계속<span class="req">${nextLabel} · ${state.index+2}/${state.turns.length} · ${storyAuto?autoCopy:'직접 넘기기'}</span></button>`;
+        <button class="choice story-next" type="button"><strong>계속</strong><span class="req">${nextLabel} · ${state.index+2}/${state.turns.length} · ${storyAuto?autoCopy:'직접 넘기기'}</span></button>`;
       dock.querySelector('.story-next').onclick=()=>advanceStory(state);
       dock.querySelector('.story-auto-toggle').onclick=()=>{
         setStoryAuto(!storyAuto);
