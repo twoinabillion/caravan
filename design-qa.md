@@ -182,4 +182,18 @@ No blocking follow-up. Live Korean strings longer than the current test fixtures
 - Regression evidence: `test:event-typography` passed 18 states; `test_story_event_layout.py`, `test_choice_visibility.py`, `test:accessibility9`, full `test:smoke`, and `verify:quick` passed.
 - Final finding: no actionable P0, P1, or P2 issue remains in the captured and tested event-typography scope.
 
+### Iteration 13 — passed: paper record alignment
+
+- Source visual truth: current-run Chrome captures `audits/event-typography-2026-08-16/paper-alignment-before/390x844-02-portrait-dialogue.png`, `paper-alignment-before/320x578-02-portrait-dialogue.png`, and `paper-alignment-before/390x844-05-outcome.png`.
+- Browser-rendered implementation: matching `paper-alignment-after/` captures at 320 × 578, 390 × 844, and 475 × 948 CSS px, deviceScaleFactor 1. Source and implementation are equal-size browser captures, so no density normalization was needed.
+- Full-view and focused combined comparisons opened and reviewed: `compare-paper-alignment-dialogue-390x844.png`, `compare-paper-alignment-dialogue-320x578.png`, and `compare-paper-alignment-outcome-390x844.png`.
+- P2 spacing/layout fixed: portrait turns forced the title to a 23% left margin and made the paper composition read as a right-hand column. The title now returns to the paper's 8% record line.
+- P2 portrait/copy balance fixed: the body group keeps its exact width while its left/right margins change from 8%/8% to 4%/12%. The portrait, source, speaker, and prose therefore move left together without oversized art, compressed copy, or a new wrap regression.
+- Fonts/typography: Korean family, weight, size, line height, and wrapping remain unchanged; the longest portrait dialogue is fully visible at 320 px.
+- Colors/tokens and image quality: parchment, teal rule, amber speaker, metal latch, real scene art, and raster portraits are unchanged. The adjustment is positional only.
+- Copy/content and interaction: no copy or event behavior changed; continue, decision, outcome, and return actions remain live.
+- Current-run evidence: 18 captured states across three viewports report zero clipping, surface escape, document overflow, portrait overlap, sub-44px controls, or page errors.
+- Regression evidence: `test:event-typography`, `test_story_event_layout.py`, `test:accessibility9`, and full `test:smoke` passed.
+- Final finding: no actionable P0, P1, or P2 issue remains in the corrected paper-record alignment scope.
+
 final result: passed

@@ -41,3 +41,18 @@ Mobile event UI typography, containment, contrast, and control placement at 320�
 - Before/after choice comparison: `compare-combat-choice-320x578.png`
 
 No actionable P0/P1/P2 issue remains in the captured and tested scope.
+
+## Paper alignment correction — current audit run
+
+### Captured steps
+
+1. **Portrait record — healthy after correction.** The title now starts on the paper's left record line; the portrait and copy group move left together without changing its width. Evidence: `paper-alignment-after/390x844-01-portrait-record.png`.
+2. **Long portrait dialogue — healthy after correction.** The 105-character dialogue keeps every line visible at 320×578 and 390×844 while the portrait/copy group sits clear of both the left clip and right latch. Evidence: `paper-alignment-after/320x578-02-portrait-dialogue.png` and `paper-alignment-after/390x844-02-portrait-dialogue.png`.
+3. **Story outcome — healthy after correction.** The same left record line and portrait/copy column are retained through the result phase, so the paper no longer jumps right after a choice. Evidence: `paper-alignment-after/390x844-05-outcome.png`.
+
+### Finding and fix
+
+- **P2 fixed — right-biased paper composition.** Portrait turns forced the title to a 23% left margin and centered the portrait/copy group without accounting for the heavy right latch. The title now uses the paper's normal 8% record margin. The portrait/copy group keeps the same readable width but exchanges its margins from 8%/8% to 4%/12%, moving the whole group left rather than enlarging or compressing its contents.
+- Side-by-side evidence: `compare-paper-alignment-dialogue-390x844.png`, `compare-paper-alignment-dialogue-320x578.png`, and `compare-paper-alignment-outcome-390x844.png`.
+- Current-run browser evidence: 18 states across 320×578, 390×844, and 475×948 returned zero clipped text, surface escapes, document overflow, portrait overlap, sub-44px controls, or page errors.
+- Regression evidence: `test:event-typography`, `test_story_event_layout.py`, `test:accessibility9`, and the full `test:smoke` suite passed after the correction.

@@ -78,6 +78,8 @@ def layout(page):
           };
           const title=root.querySelector('.event-head h2')?.getBoundingClientRect();
           const currentProse=prose?.getBoundingClientRect();
+          const report=root.querySelector('.event-field-report')?.getBoundingClientRect();
+          const currentAvatar=avatar?.getBoundingClientRect();
           const pager=root.querySelector('[data-choice-pages]:not([hidden])');
           const visibleChoices=[...root.querySelectorAll('.event-choice-dock .choice[data-i]')].filter(visible);
           const narrationNode=root.querySelector('.story-entry:last-child .story-narration-text');
@@ -93,6 +95,10 @@ def layout(page):
             documentOverflow:document.documentElement.scrollWidth>innerWidth+1,
             avatarProseOverlap:overlap(avatar,prose),avatarSpeakerOverlap:overlap(avatar,speaker),
             titleProseDelta:title&&currentProse?Math.abs(title.x-currentProse.x):0,
+            titlePaperRatio:title&&report?(title.x-report.x)/report.width:0,
+            avatarPaperRatio:currentAvatar&&report?(currentAvatar.x-report.x)/report.width:0,
+            titleBeforeProse:!!(title&&currentProse&&title.x<currentProse.x),
+            hasPortrait:!!currentAvatar,
             visibleChoices:visibleChoices.length,
             page:Number(pager?.querySelector('[data-choice-page]')?.textContent||0),
             pages:Number(pager?.querySelector('[data-choice-total]')?.textContent||0),
@@ -121,8 +127,10 @@ def check_viewport(playwright, width, height):
         assert not result["documentOverflow"], (width, height, event_id, result)
         assert not result["avatarProseOverlap"], (width, height, event_id, result)
         assert not result["avatarSpeakerOverlap"], (width, height, event_id, result)
-        if event_id in ("story_family_key", "story_family_principle") and phase == "turn":
-            assert result["titleProseDelta"] <= 18, (width, height, event_id, result)
+        if result["hasPortrait"]:
+            assert result["titlePaperRatio"] <= 0.18, (width, height, event_id, result)
+            assert result["avatarPaperRatio"] <= 0.14, (width, height, event_id, result)
+            assert result["titleBeforeProse"], (width, height, event_id, result)
         if event_id == "trace_consent_archive":
             assert result["narration"].endswith("낯설지 않았다."), result
         if event_id == "combat_walker_strike" and phase == "decision":
