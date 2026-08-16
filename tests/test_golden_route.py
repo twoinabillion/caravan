@@ -139,8 +139,8 @@ with sync_playwright() as p:
           dock_focus['outline'] == 'none' and dock_focus['labelGlow'] != 'none', str(dock_focus))
 
     mode_initial = page.evaluate('''() => ({
-      tabs:[...document.querySelectorAll('[data-journey-mode]')].map(button=>button.textContent.trim()),
-      selected:document.querySelector('[data-journey-mode][aria-selected="true"]')?.dataset.journeyMode,
+      tabs:[...document.querySelectorAll('.journey-mode-tabs [data-journey-mode]')].map(button=>button.textContent.trim()),
+      selected:document.querySelector('.journey-mode-tabs [data-journey-mode][aria-selected="true"]')?.dataset.journeyMode,
       consoles:document.querySelectorAll('.journey-mode-console').length,
       route:!!document.querySelector('.route-console-v3')
     })''')
@@ -214,14 +214,15 @@ with sync_playwright() as p:
         explore:!!action?.querySelector('[data-a="explore"]:not([disabled])'),
         images:action?.querySelectorAll('.stop-action-card img').length||0,
         height:action?.closest('.route-console')?.getBoundingClientRect().height||0,
-        panels:document.querySelectorAll('.journey-mode-panel').length
+        panels:document.querySelectorAll('.journey-mode-panel').length,
+        visiblePanels:[...document.querySelectorAll('.journey-mode-panel')].filter(panel=>!panel.hidden).length
       };
     }''')
     check('머물기 행동은 별도 제목 없이 바로 네 가지 행동을 보여 준다',
           stop_console['explore'] and '머물며 할 일' not in stop_console['actionCopy'] and
           '2시간' in stop_console['actionCopy'] and '발견물 미확인' in stop_console['actionCopy'] and
           '탐색 위험' not in stop_console['actionCopy'] and stop_console['images'] == 0 and
-          stop_console['panels'] == 1, str(stop_console))
+          stop_console['panels'] == 2 and stop_console['visiblePanels'] == 1, str(stop_console))
     local_layout = page.evaluate('''() => {
       const console=document.querySelector('.stop-action-console');
       return {

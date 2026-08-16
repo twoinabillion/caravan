@@ -129,4 +129,23 @@ No blocking follow-up. Live Korean strings longer than the current test fixtures
 - Responsive evidence: `audits/stay-stamp-event-choice-polish-2026-08-16/after-geometry.json` passed 320 × 578, 390 × 844, and 475 × 948 with 44 px minimum controls, no horizontal overflow, and no page errors.
 - Regression evidence: `tests/test_story_event_layout.py`, `tests/test_choice_visibility.py`, `tests/test_quality_9_accessibility.py`, `tests/test_smoke.py`, `tests/test_source_health.py`, and `npm run verify:quick` passed.
 
+### Iteration 10 — passed
+
+- Source visual truth: `audits/journey-event-stability-2026-08-16/before/user-reference-normalized-475x948.png`; the reported broken event view is normalized to the same 475 × 948 CSS-pixel viewport as the implementation.
+- Browser-rendered implementation: `audits/journey-event-stability-2026-08-16/after/family-key-04-475x948.png`; Google Chrome, deviceScaleFactor 1.
+- Combined comparison input opened and reviewed: `audits/journey-event-stability-2026-08-16/source-vs-after-475x948.png`.
+- Full-surface evidence: `audits/full-ui-alignment-2026-08-16/contact-sheet-320x578.jpg`, `contact-sheet-390x844.jpg`, and `contact-sheet-475x948.jpg` cover 29 route, stay, goal, map, bag, menu, camp, settlement, story, decision, outcome, combat, and travel states.
+- Focused evidence: `audits/full-ui-alignment-2026-08-16/compare-route-stay-390x844.png`, `compare-tools-390x844.png`, and `compare-event-states-390x844.png`.
+- P1 geometry finding fixed: route/stay switches previously rebuilt the stopped screen and moved the road, vehicle, console, and dock. Both panels now stay mounted inside one device and only the visible inner panel toggles. Three viewports, sync + 12 animation frames + settled state returned one unique geometry each.
+- P1 image/dialogue finding fixed: authored 16:9 story art was forced into a tall crop and record/outcome turns fell back to the old generic card. Story art now uses its natural ratio with `contain`; all 14 beats, decision, and outcome use the same field-report component. No report, reader, or latest-turn overflow remains.
+- P2 alignment/accessibility findings fixed: hidden status tabs no longer remain focusable offscreen; route time, stay descriptions, and map-title line height fit at 320–475 px; camp actions reuse real raster icons rather than temporary emoji.
+- Fonts/typography: Korean sans and mono hierarchy is stable; the final 29-state pass reports zero clipped labels or copy.
+- Spacing/layout rhythm: no document overflow or escaped controls; route/stay outer frame, usable screen, road stage, and dock are invariant.
+- Colors/tokens: charcoal metal, parchment, amber action, and muted teal information tokens remain consistent. Combat intentionally keeps the darker tactical treatment while retaining the same enclosure and control-size rules.
+- Image quality: story images show the complete authored composition; goal/map/bag shells retain their native aspect ratio; portraits and item icons remain real raster assets aligned to measured slots.
+- Copy/content: deterministic costs and effects remain visible; no future danger, encounter, or person prediction was reintroduced. Outcome headings retain the stable event title while the selected action remains available to assistive technology.
+- Interactions checked: route/stay toggle, route selection/departure, goal/map/bag/menu, bag selection/repair, camp, settlement entry, 14-beat story progression, decision/outcome, combat choice, and travel.
+- Console and runtime errors: zero in all 29 Chrome states.
+- Regression and build evidence: story layout, golden route, Quality 9 accessibility, smoke, choice visibility, source health, event geography, `npm run verify:quick`, full HTML build, and AIT build passed.
+
 final result: passed

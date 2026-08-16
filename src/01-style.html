@@ -753,7 +753,7 @@ input{font-family:inherit}
 /* fold-out CRT navigator */
 .map-navigator{background-image:url("__UI_MAP_NAVIGATOR_SHELL__")}
 .map-live-head{top:4.4%;left:7%;right:8.4%;height:5%;color:#deb06c}
-.map-live-head h2{width:32%;font:900 clamp(14px,4cqw,23px)/1 var(--sans);letter-spacing:.02em}
+.map-live-head h2{width:32%;font:900 clamp(14px,4cqw,23px)/1.18 var(--sans);letter-spacing:.02em}
 .map-live-head>span{flex:1;min-width:0;margin-left:auto;margin-right:3%;overflow:hidden;color:#5fb8b3;
   font:800 clamp(8px,1.95cqw,11px)/1 var(--mono);text-align:center;text-overflow:ellipsis;white-space:nowrap}
 .map-live-head .road-tool-close{flex:none;color:#d8a95f;border-color:transparent;background:transparent}
@@ -1415,11 +1415,13 @@ input{font-family:inherit}
 .camp-home-section{display:grid;gap:7px;margin-top:15px}.camp-home-section>b{font-size:14px}.camp-home-section>b+small{margin-top:-5px;color:var(--faded);font-size:12px}
 .camp-prep,.camp-talk{display:flex;align-items:center;justify-content:space-between;gap:9px;min-height:58px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;color:#e1e5ed;background:var(--panel);text-align:left}
 .camp-prep>span,.camp-talk>span{min-width:0}.camp-prep strong,.camp-talk strong{display:inline-block;font-size:13px}.camp-prep small{display:block;margin:2px 0 0 23px;color:var(--faded);font-size:12px;line-height:1.35}.camp-prep em,.camp-talk em{flex:none;color:var(--amber);font:12px var(--mono);font-style:normal}
+.camp-prep .ico{width:18px;height:18px;margin-right:3px;object-fit:contain;vertical-align:-4px;image-rendering:pixelated}
 .camp-prep.done,.camp-talk.done{border-color:rgba(125,201,143,.42);background:rgba(125,201,143,.07)}.camp-prep.done em,.camp-talk.done em{color:#8ed39b}.camp-talk-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.camp-talk{min-height:46px}.camp-empty{margin:0;padding:10px;border:1px dashed var(--line);border-radius:9px;color:var(--faded);font-size:12px}
 .camp-rest{display:grid;gap:8px;margin-top:19px;padding-top:13px;border-top:1px solid var(--line)}.camp-rest>span{color:#b8c0cb;font-size:12px}.camp-rest .act{min-height:50px;justify-content:center}
 @container game (max-width:520px){.camp-keepsakes{grid-template-columns:1fr}.camp-roadbook article{display:block}.camp-roadbook span{display:block;margin-top:2px;text-align:left}}
 .camp-home-teaser{padding:10px 11px;border:1px dashed rgba(255,180,84,.24);border-radius:10px;background:rgba(255,180,84,.035)}
 .camp-home-teaser>span{color:#9fa9b8;font:11px/1.4 var(--mono)}
+.camp-rest .act{display:flex;justify-content:center}.camp-rest .act .ico{width:19px;height:19px;object-fit:contain;image-rendering:pixelated}
 
 /* Decision-first responsive pass: keep the next action visible and let choices own the screen. */
 @container game (max-width:600px){
@@ -3085,7 +3087,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .journey-local-screen .stop-action-copy{display:grid;align-content:center;gap:3px;min-height:0;padding-right:1%}
 .journey-local-screen .stop-action-copy>b{font-size:clamp(11px,3.25cqw,15px)}
 .journey-local-screen .stop-action-description{display:-webkit-box!important;min-width:0;margin:0;overflow:hidden;color:#514a40;
-  font:700 clamp(8px,2.35cqw,10.5px)/1.2 var(--sans);white-space:normal;-webkit-box-orient:vertical;-webkit-line-clamp:1}
+  font:700 clamp(8px,2.35cqw,10.5px)/1.2 var(--sans);white-space:normal;-webkit-box-orient:vertical;-webkit-line-clamp:2}
 .journey-local-screen .stop-action-chips{margin-top:0;gap:4px}
 .journey-local-screen .stop-action-chips i{font-size:clamp(7px,2.05cqw,9.5px)}
 .journey-local-screen .stop-action-chips i.tone-cost{color:#7b4b34}
@@ -3130,5 +3132,75 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock{flex-basis:22%;height:22%}
   #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-scroll{flex-basis:50%;height:50%}
   #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-choice-dock{flex-basis:50%;height:50%}
+}
+
+/* ── journey switch + event viewport stability ───────────────────────
+   The stop console is one physical device: only its inner screen changes.
+   Story art keeps its authored crop visible, and every turn type uses the
+   same field-report grammar instead of falling back to a tall generic card. */
+.journey-mode-panel[hidden]{display:none!important}
+
+#ev-sheet.event-mode[data-event-kind="story"] .event-scroll{
+  display:flex;flex-direction:column;justify-content:center;gap:10px;overflow-y:auto
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-scene-frame:not(.zoomed){
+  flex:0 0 auto;align-self:center;width:100%;height:auto;min-height:0;max-height:min(38dvh,360px);margin:0;
+  aspect-ratio:var(--scene-ratio,16/9);background:#020609
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-scene-frame[data-scene-orientation="portrait"]:not(.zoomed){
+  max-height:min(42dvh,380px)
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-scene-frame:not(.zoomed) .event-scene{
+  object-fit:contain;object-position:center;transform:none!important;animation:none;transition:filter .2s ease
+}
+@keyframes event-cut-fade{from{opacity:.36}to{opacity:1}}
+#ev-sheet.event-mode[data-event-kind="story"] .event-scene-frame:not(.zoomed) .event-scene.scene-recut{
+  animation:event-cut-fade .22s ease-out both
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{
+  flex:0 0 auto;min-height:clamp(170px,26dvh,230px);aspect-ratio:auto
+}
+#ev-sheet.event-mode .event-field-report .story-turn{
+  display:block;min-height:0;margin:0;padding:0;border:0;background:transparent;box-shadow:none
+}
+#ev-sheet.event-mode .event-field-report .turn-speaker{display:block;margin:0}
+#ev-sheet.event-mode .event-field-report .turn-speaker .turn-avatar{
+  position:absolute;left:4.2%;top:10%;width:17%;height:51%;margin:0;border:1px solid #34302a;border-radius:0;
+  object-fit:cover;object-position:center top;filter:saturate(.72) sepia(.14) contrast(1.03);box-shadow:0 2px 5px rgba(36,25,14,.32);transform:rotate(-2deg)
+}
+#ev-sheet.event-mode .event-field-report .turn-speaker span{display:block;min-width:0}
+#ev-sheet.event-mode .event-field-report .turn-speaker small,
+#ev-sheet.event-mode .event-field-report .turn-source{
+  display:block;margin:0 0 4px;color:#28746f;font:850 clamp(8px,2.55cqw,11px)/1 var(--mono);letter-spacing:.08em;text-transform:none
+}
+#ev-sheet.event-mode .event-field-report .turn-speaker b{
+  display:block;margin:0 0 5px;color:#d99536;font:850 clamp(10px,3.1cqw,13px)/1 var(--sans)
+}
+#ev-sheet.event-mode .event-field-report .turn-text{
+  display:-webkit-box;margin:0;overflow:hidden;color:#2f2a24;font:650 clamp(10px,3.2cqw,13.5px)/1.38 var(--sans);
+  white-space:normal;word-break:keep-all;-webkit-box-orient:vertical;-webkit-line-clamp:4
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-scroll{
+  justify-content:flex-start;gap:7px
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report{
+  padding-top:5.2%;padding-bottom:4.8%
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .event-head{
+  padding-bottom:2%;
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .story-reader{
+  margin-top:2%
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .turn-text,
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .story-narration-text,
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .chat-bubble{
+  -webkit-line-clamp:2
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-field-report{
+  min-height:clamp(110px,16dvh,145px);max-height:145px
+}
+@media(prefers-reduced-motion:reduce){
+  #ev-sheet.event-mode[data-event-kind="story"] .event-scene-frame:not(.zoomed) .event-scene.scene-recut{animation:none}
 }
 </style>

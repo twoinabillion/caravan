@@ -1325,7 +1325,7 @@ const UI = (()=>{
           <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
           <div class="nav-route-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
             <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>연료 소모</small><b>${Math.ceil(selected.fuel)}L</b></span></span>
-            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>이동 시간</small><b>${G.durationLabel(forecast.minutes)}</b></span></span>
+            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>이동 시간</small><b>${Math.max(1,Math.round(forecast.minutes))}분</b></span></span>
             <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>총 거리</small><b>${selected.nb.km}km</b></span></span>
           </div>
         </section>
@@ -1568,20 +1568,26 @@ const UI = (()=>{
       scheduleStoppedStageFit();
     },80);
   },{passive:true});
-  function wireJourneyMode(panel){
+  function wireJourneyMode(panel,routeModels){
     const buttons=[...panel.querySelectorAll('[data-journey-mode]')];
     const select=(button)=>{
       if(!button||button.dataset.journeyMode===journeyConsoleMode) return;
-      const scrollTop=panel.scrollTop;
-      const update=()=>{
-        journeyConsoleMode=button.dataset.journeyMode;
-        renderPanel();
-        panel.scrollTop=scrollTop;
-        requestAnimationFrame(()=>panel.querySelector(`[data-journey-mode="${journeyConsoleMode}"]`)?.focus({preventScroll:true}));
-      };
-      const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(document.startViewTransition&&!reduceMotion) document.startViewTransition(update);
-      else update();
+      journeyConsoleMode=button.dataset.journeyMode;
+      document.documentElement.dataset.journeyMode=journeyConsoleMode;
+      buttons.forEach(tab=>{
+        const active=tab.dataset.journeyMode===journeyConsoleMode;
+        tab.setAttribute('aria-selected',String(active));
+        tab.tabIndex=active?0:-1;
+      });
+      panel.querySelectorAll('.journey-mode-panel').forEach(modePanel=>{
+        const active=modePanel.id===`journey-mode-${journeyConsoleMode}`;
+        modePanel.hidden=!active;
+        modePanel.setAttribute('aria-hidden',String(!active));
+      });
+      /* 목적지와 머물기는 같은 장치 안의 물리 스위치다. 화면 전체를 다시
+         만들거나 풍경 높이를 재계산하지 않고 내부 화면만 켜고 끈다. */
+      if(journeyConsoleMode==='route') wireRouteConsole(panel,routeModels||[]);
+      button.focus({preventScroll:true});
     };
     buttons.forEach((button,index)=>{
       button.onclick=()=>select(button);
@@ -1709,7 +1715,7 @@ const UI = (()=>{
       )):0;
       localActions.push(stopActionHtml({
         action:'explore',kicker:es.repeat?'오늘의 마지막 수색':'주변에서',title:'주변 탐색',
-        description:es.ok?'이 지역을 직접 살핀다. 결과는 끝난 뒤에만 드러난다.':es.reason,disabled:!es.ok,
+        description:es.ok?'직접 둘러본다. 결과는 끝난 뒤 알 수 있다.':es.reason,disabled:!es.ok,
         chips:es.ok?[`시간 +${G.durationLabel(es.mins)}`,{label:`피로 약 +${exploreFatigue}`,tone:'cost'},{label:'발견물 미확인',tone:'muted'}]:[],cta:'탐색하기'
       }));
     }
@@ -1733,7 +1739,7 @@ const UI = (()=>{
       const repairGain=S.up&&S.up.sidebox?45:35;
       localActions.push(stopActionHtml({
         action:'repair',kicker:'정차 정비',title:'달구지를 정비한다',
-        description:hasP?'보유한 부품으로 차체 손상을 현장에서 복구한다.':'부품이 없어 지금은 현장 정비를 할 수 없다.',disabled:!hasP,
+        description:hasP?'부품으로 차체를 현장에서 복구한다.':'부품이 없어 지금은 현장 정비를 할 수 없다.',disabled:!hasP,
         chips:hasP?[{label:S.up&&S.up.sidebox?'부품 최대 -1':'부품 -1',tone:'cost'},{label:'시간 +1:40',tone:'cost'},{label:`차체 +${repairGain}`,tone:'gain'}]
           :[{label:'부품 필요',tone:'cost'}],cta:'정비하기'
       }));
@@ -1749,23 +1755,20 @@ const UI = (()=>{
       action:'craft',kicker:'차 뒤 칸에서',title:'작업대를 편다',
       description:'무기와 탄을 직접 만든다.',chips:['약 40분'],cta:'작업하기'
     }));
-    const routeRumors=!S.routePlan&&S.stats.km>=70?`<section class="journey-section route-rumor-section">
-      <div class="journey-section-head"><span><small>MAP NOTE</small><b>김천의 갈림길</b></span><em>도착 뒤 선택</em></div>
-      <p>김천에서 고른 길은 청주까지 이어진다. 두 길의 현장 상황은 김천에 도착한 뒤 지도에서 확인한다.</p>
-    </section>`:'';
-    const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물기">
+    const localActive=journeyConsoleMode==='local';
+    const routeActive=journeyConsoleMode==='route';
+    const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물기" aria-hidden="${!localActive}" ${localActive?'':'hidden'}>
       <section class="route-console-screen journey-local-screen stop-action-console local-action-count-${Math.min(localActions.length,5)}">
         <div class="stop-action-grid local-actions">${localActions.join('')}</div>
-      </section></div>`:'<div class="route-empty">지금 이곳에서 할 수 있는 일이 없다.</div>';
-    const routeSection=`<div id="journey-mode-route" role="tabpanel" aria-label="목적지 네비게이션">${routeConsoleHtml(routeModels)}</div>`;
-    const activeMode=journeyConsoleMode==='route'?routeSection:localSection;
-    const journeyConsole=`<section class="journey-mode-console" aria-label="정차 통합 콘솔">${journeyModeTabsHtml(journeyConsoleMode)}${activeMode}</section>`;
-    const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}${journeyConsoleMode==='route'?routeRumors:''}`;
+      </section></div>`:`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물기" aria-hidden="${!localActive}" ${localActive?'':'hidden'}><div class="route-empty">지금 이곳에서 할 수 있는 일이 없다.</div></div>`;
+    const routeSection=`<div class="journey-mode-panel" id="journey-mode-route" role="tabpanel" aria-label="목적지 네비게이션" aria-hidden="${!routeActive}" ${routeActive?'':'hidden'}>${routeConsoleHtml(routeModels)}</div>`;
+    const journeyConsole=`<section class="journey-mode-console" aria-label="정차 통합 콘솔">${journeyModeTabsHtml(journeyConsoleMode)}${routeSection}${localSection}</section>`;
+    const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}`;
     p.innerHTML=h;
     wireStopActionButtons(p,n);
     wireContext(p);
     wireJourneyGuide(p);
-    wireJourneyMode(p);
+    wireJourneyMode(p,routeModels);
     wireRouteConsole(p,routeModels);
     p.querySelectorAll('[data-go]:not([data-route-select])').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
     scheduleStoppedStageFit();
@@ -2134,7 +2137,19 @@ const UI = (()=>{
   }
   function wireSceneZoom(sheet){
     const sceneFrame=sheet.querySelector('.event-scene-frame');
-    if(sceneFrame) sceneFrame.onclick=()=>sceneFrame.classList.toggle('zoomed');
+    if(!sceneFrame) return;
+    const image=sceneFrame.querySelector('.event-scene');
+    const syncRatio=()=>{
+      if(!image||!image.naturalWidth||!image.naturalHeight) return;
+      const ratio=image.naturalWidth/image.naturalHeight;
+      sceneFrame.style.setProperty('--scene-ratio',String(ratio));
+      sceneFrame.dataset.sceneOrientation=ratio<.9?'portrait':'landscape';
+    };
+    if(image){
+      image.onload=syncRatio;
+      if(image.complete) syncRatio();
+    }
+    sceneFrame.onclick=()=>sceneFrame.classList.toggle('zoomed');
   }
   function clearStoryAuto(){
     if(storyAutoTimer){ clearTimeout(storyAutoTimer); storyAutoTimer=0; }
@@ -2263,6 +2278,7 @@ const UI = (()=>{
     const last=state.index>=state.turns.length-1;
     sheet.dataset.storyPhase=state.phase;
     sheet.dataset.storyStep=state.phase==='outcome'?'result':last?'decision':'beat';
+    sheet.dataset.storyTurn=turn&&turn.kind||'narration';
     const progress=sheet.querySelector('[data-event-progress]');
     if(progress) progress.textContent=state.phase==='outcome'
       ? `결과 · ${state.index+1} / ${state.turns.length}`
@@ -2508,6 +2524,7 @@ const UI = (()=>{
       ? '<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
       : '';
     const selectedTitle=stripTags(choice.label||curEv.title||'선택의 결과').trim()||'선택의 결과';
+    const reportTitle=stripTags(curEv.title||'선택의 결과').trim()||'선택의 결과';
     let actions='';
     const chained=out.fx&&out.fx.chain;
     const chainEvent=chained&&D.events.find(e=>e.id===chained);
@@ -2522,7 +2539,7 @@ const UI = (()=>{
         :'길로 돌아가기'}</button>`;
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
-      <section class="event-field-report"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(selectedTitle)}</h2></div></div>
+      <section class="event-field-report" aria-label="${esc(reportTitle)} · 선택 ${esc(selectedTitle)}"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(reportTitle)}</h2></div></div>
       ${combatHud}<div class="story-reader"></div><div class="story-result" role="status" aria-live="polite" aria-atomic="true"></div></section></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
@@ -3204,13 +3221,13 @@ const UI = (()=>{
       </div>`:`<div class="camp-home-section camp-home-teaser"><b>아직 작은 집</b><small>첫 동료가 타거나 생활 부품을 장착하면 이곳에 그 흔적이 남는다.</small><span>빈 선반과 고정 볼트가 다음 자리를 기다린다.</span></div>`}
       ${recent.length?`<div class="camp-home-section camp-roadbook"><b>최근 주행 기록</b><small>차가 기억하는 마지막 세 구간.</small>${recent.map(row=>`<article><strong>${esc(D.nodes[row.from].name)} → ${esc(D.nodes[row.to].name)}</strong><span>DAY ${row.day} · ${row.km}km · 사건 ${row.events}건${row.checkIn?` · ${esc(row.checkIn.name)}`:''}</span></article>`).join('')}</div>`:''}
       <div class="camp-home-section"><b>오늘 밤 준비</b><small>각 준비는 밤에 한 번만 할 수 있다.</small>
-        <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${plan.meal?'disabled':''}><span>🍲 <strong>공동 식사</strong><small>식량 1 · 물 1 소비 · 취침 사기 +3</small></span><em>${plan.meal?'준비됨':'준비'}</em></button>
-        <button class="camp-prep ${plan.repair?'done':''}" data-camp-prep="repair" ${plan.repair?'disabled':''}><span>🔧 <strong>간이 정비</strong><small>부품 1 소비 · 취침 내구 +8</small></span><em>${plan.repair?'준비됨':'준비'}</em></button>
+        <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${plan.meal?'disabled':''}><span>${ICO('food')} <strong>공동 식사</strong><small>식량 1 · 물 1 소비 · 취침 사기 +3</small></span><em>${plan.meal?'준비됨':'준비'}</em></button>
+        <button class="camp-prep ${plan.repair?'done':''}" data-camp-prep="repair" ${plan.repair?'disabled':''}><span>${ICO('parts')} <strong>간이 정비</strong><small>부품 1 소비 · 취침 내구 +8</small></span><em>${plan.repair?'준비됨':'준비'}</em></button>
       </div>
       <div class="camp-home-section"><b>불빛 아래 한 사람</b><small>선택한 동료는 취침 후 유대 +2를 더 얻는다.</small>
         <div class="camp-talk-list">${party.length?party.map(id=>`<button class="camp-talk ${plan.talk===id?'done':''}" data-camp-talk="${id}" ${plan.talk?'disabled':''}><span>${D.comps[id].face} <strong>${esc(D.comps[id].name)}</strong></span><em>${plan.talk===id?'약속됨':'이야기'}</em></button>`).join(''):'<p class="camp-empty">오늘 밤은 혼자다. 차 안의 소리만 들린다.</p>'}</div>
       </div>
-      <div class="camp-rest"><span>${planned?'준비를 마쳤다.':'준비 없이 쉬어도 된다.'}</span><button class="act" id="camp-rest">🔥 이곳에서 밤 보내기</button></div>
+      <div class="camp-rest"><span>${planned?'준비를 마쳤다.':'준비 없이 쉬어도 된다.'}</span><button class="act" id="camp-rest">${ICO('van')}<span>이곳에서 밤 보내기</span></button></div>
     </section>`;
     ovl.classList.add('on'); ovl.setAttribute('aria-hidden','false');
     requestAnimationFrame(()=>$('#camp-x').focus({preventScroll:true}));
@@ -3435,15 +3452,14 @@ const UI = (()=>{
     $('#status-title').textContent=stTab==='journey'?'현재 목표':'가방과 보급';
     $('#st-mini').textContent=clock;
     prop.className=`road-tool-prop ${stTab==='journey'?'goal-folio':'bag-supply-roll'}`;
-    $('#st-tabs').style.position='absolute';
-    $('#st-tabs').style.left='-10000px';
-    $('#st-tabs').style.top='0';
-    $('#st-tabs').style.display='flex';
+    const statusTabs=$('#st-tabs');
+    statusTabs.style.cssText='display:none';
+    statusTabs.setAttribute('aria-hidden','true');
     document.querySelectorAll('#st-tabs button').forEach(button=>{
       const selected=button.dataset.st===stTab;
       button.classList.toggle('here',selected);
       button.setAttribute('aria-selected',String(selected));
-      button.tabIndex=selected?0:-1;
+      button.tabIndex=-1;
     });
     if(stTab==='journey'){
       const steps=G.departureSteps();
@@ -3522,6 +3538,7 @@ const UI = (()=>{
     if(renderInteractiveRoadTool()) return;
     const prop=$('#status-prop');
     $('#st-tabs').style.cssText='';
+    $('#st-tabs').removeAttribute('aria-hidden');
     prop.className=`road-tool-prop utility-sheet${stTab==='settings'?' settings-sheet':''}`;
     $('#status-title').textContent=stTab==='settings'?'화면·소리·백업 설정':stTab==='crew'?'동료':'가방과 달구지';
     $('#st-mini').textContent=`DAY ${S.day} · ${Math.round(S.stats.km)}km`;

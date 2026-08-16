@@ -1,0 +1,1688 @@
+{
+  "states": {
+    "320x578-01-route": {
+      "root": "#app",
+      "documentOverflow": false,
+      "controls": 12,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 49,
+          "height": 72,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 118,
+          "height": 72,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 49,
+          "height": 72,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
+    },
+    "320x578-02-stay": {
+      "root": "#app",
+      "documentOverflow": false,
+      "controls": 11,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "머물기"
+    },
+    "320x578-03-goal": {
+      "root": "#ovl-journal",
+      "documentOverflow": false,
+      "controls": 0,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [],
+      "activeElement": "목표"
+    },
+    "320x578-04-map": {
+      "root": "#ovl-map",
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [],
+      "activeElement": "지도를 닫고 길로 돌아가기"
+    },
+    "320x578-05-bag": {
+      "root": "#ovl-status",
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 52,
+          "height": 52,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "가방"
+    },
+    "320x578-06-bag-medicine": {
+      "root": "#ovl-status",
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 52,
+          "height": 52,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "의약품 1개, 선택됨"
+    },
+    "320x578-07-menu": {
+      "root": "#ovl-menu",
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "메뉴 닫기"
+    },
+    "390x844-01-route": {
+      "root": "#app",
+      "documentOverflow": false,
+      "controls": 12,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 63,
+          "height": 84,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 150,
+          "height": 84,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 63,
+          "height": 84,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
+    },
+    "390x844-02-stay": {
+      "root": "#app",
+      "documentOverflow": false,
+      "controls": 11,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "머물기"
+    },
+    "390x844-03-goal": {
+      "root": "#ovl-journal",
+      "documentOverflow": false,
+      "controls": 0,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [],
+      "activeElement": "목표"
+    },
+    "390x844-04-map": {
+      "root": "#ovl-map",
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [],
+      "activeElement": "지도를 닫고 길로 돌아가기"
+    },
+    "390x844-05-bag": {
+      "root": "#ovl-status",
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 52,
+          "height": 52,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "가방"
+    },
+    "390x844-06-bag-medicine": {
+      "root": "#ovl-status",
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 22,
+          "height": 22,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 43,
+          "height": 43,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 52,
+          "height": 52,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "의약품 1개, 선택됨"
+    },
+    "390x844-07-menu": {
+      "root": "#ovl-menu",
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "메뉴 닫기"
+    },
+    "390x844-08-camp": {
+      "root": "#ovl-camp",
+      "documentOverflow": false,
+      "controls": 4,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 18,
+          "height": 18,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 18,
+          "height": 18,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "야영 준비 닫기"
+    },
+    "390x844-09-settlement": {
+      "root": "#ovl-stl",
+      "documentOverflow": false,
+      "controls": 7,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 28,
+          "height": 28,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 28,
+          "height": 28,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 28,
+          "height": 28,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 28,
+          "height": 28,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 21,
+          "height": 21,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 21,
+          "height": 21,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 21,
+          "height": 21,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 21,
+          "height": 21,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "전수 검수 초상",
+          "width": 38,
+          "height": 38,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 16,
+          "height": 16,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 16,
+          "height": 16,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 16,
+          "height": 16,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 16,
+          "height": 16,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 16,
+          "height": 16,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "전수 검수 초상",
+          "width": 38,
+          "height": 38,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 18,
+          "height": 18,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 13,
+          "height": 13,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        }
+      ],
+      "activeElement": "장터의뢰와 물자를 살핀다"
+    },
+    "390x844-10-event-opening": {
+      "root": "#ev-sheet",
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "달구지 안의 검증키 · 1번째 장면",
+          "width": 346,
+          "height": 194,
+          "natural": [
+            768,
+            432
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "계속"
+    },
+    "390x844-11-event-record": {
+      "root": "#ev-sheet",
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "달구지 안의 검증키 · 5번째 장면",
+          "width": 346,
+          "height": 194,
+          "natural": [
+            768,
+            432
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "아빠 초상",
+          "width": 63,
+          "height": 114,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        }
+      ],
+      "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
+    },
+    "390x844-12-event-choice": {
+      "root": "#ev-sheet",
+      "documentOverflow": false,
+      "controls": 3,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "달구지 안의 검증키 · 14번째 장면",
+          "width": 346,
+          "height": 194,
+          "natural": [
+            768,
+            432
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
+    },
+    "390x844-13-event-outcome": {
+      "root": "#ev-sheet",
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "달구지 안의 검증키 · 4번째 장면",
+          "width": 346,
+          "height": 194,
+          "natural": [
+            768,
+            432
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "엄마 초상",
+          "width": 63,
+          "height": 114,
+          "natural": [
+            96,
+            96
+          ],
+          "fit": "cover"
+        }
+      ],
+      "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
+    },
+    "390x844-14-combat-choice": {
+      "root": "#ev-sheet",
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "초계 보행기 · 3번째 장면",
+          "width": 373,
+          "height": 253,
+          "natural": [
+            768,
+            432
+          ],
+          "fit": "cover"
+        }
+      ],
+      "activeElement": "1번째 선택 · 폐차 행렬 뒤로 달구지를 붙인다 · 요구사항 충족"
+    },
+    "390x844-15-travel": {
+      "root": "#app",
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
+    },
+    "475x948-01-route": {
+      "root": "#app",
+      "documentOverflow": false,
+      "controls": 12,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 80,
+          "height": 108,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 189,
+          "height": 108,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 80,
+          "height": 108,
+          "natural": [
+            540,
+            900
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
+    },
+    "475x948-02-stay": {
+      "root": "#app",
+      "documentOverflow": false,
+      "controls": 11,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 19,
+          "height": 19,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "머물기"
+    },
+    "475x948-03-goal": {
+      "root": "#ovl-journal",
+      "documentOverflow": false,
+      "controls": 0,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [],
+      "activeElement": "목표"
+    },
+    "475x948-04-map": {
+      "root": "#ovl-map",
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [],
+      "activeElement": "지도를 닫고 길로 돌아가기"
+    },
+    "475x948-05-bag": {
+      "root": "#ovl-status",
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 26,
+          "height": 26,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 26,
+          "height": 26,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 26,
+          "height": 26,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 57,
+          "height": 57,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "가방"
+    },
+    "475x948-06-bag-medicine": {
+      "root": "#ovl-status",
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 26,
+          "height": 26,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 26,
+          "height": 26,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 26,
+          "height": 26,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 48,
+          "height": 48,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 57,
+          "height": 57,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "의약품 1개, 선택됨"
+    },
+    "475x948-07-menu": {
+      "root": "#ovl-menu",
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "small": [],
+      "clipped": [],
+      "images": [
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        },
+        {
+          "alt": "",
+          "width": 25,
+          "height": 25,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "contain"
+        }
+      ],
+      "activeElement": "메뉴 닫기"
+    }
+  },
+  "errors": []
+}

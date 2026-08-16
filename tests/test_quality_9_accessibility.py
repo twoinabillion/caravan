@@ -92,10 +92,11 @@ def journey_geometry(page, screen_selector):
         const rect=node.getBoundingClientRect();
         return {x:rect.x,y:rect.y,width:rect.width,height:rect.height};
       };
+      const screen=document.querySelector(selector);
       return {
         console:box(document.querySelector('.journey-mode-console')),
-        shell:box(document.querySelector('.route-console')),
-        screen:box(document.querySelector(selector)),
+        shell:box(screen.closest('.route-console')),
+        screen:box(screen),
         stage:box(document.querySelector('#stage')),
         dock:box(document.querySelector('#dock')),
         scroll:document.querySelector('#panel').scrollTop
