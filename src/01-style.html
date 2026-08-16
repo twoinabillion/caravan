@@ -729,14 +729,14 @@ input{font-family:inherit}
 .bag-pockets{position:absolute;top:34.8%;left:3.9%;right:3.9%;height:36.5%;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0}
 .bag-pocket{position:relative;display:block;min-width:0;min-height:0;padding:0 3%;border:0;color:#c5c0b5;text-align:center}
 .bag-pocket.selected{color:#f1b34e;background:transparent;text-shadow:0 0 9px rgba(241,179,78,.24);box-shadow:none}.bag-pocket:focus-visible{outline:2px solid #e0a343;outline-offset:-5px}
-.bag-pocket .ico{position:absolute;top:37%;left:46%;width:clamp(43px,10.8cqw,61px);height:clamp(43px,10.8cqw,61px);object-fit:contain;image-rendering:pixelated;transform:translateX(-50%);filter:drop-shadow(0 3px 3px rgba(0,0,0,.65))}
-.bag-pocket-name{position:absolute;top:3.2%;left:-1%;right:7%;color:#d8d1c3;font:850 clamp(10px,2.15cqw,12px)/1.1 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bag-pocket .ico{position:absolute;top:37%;left:44%;width:clamp(43px,10.8cqw,61px);height:clamp(43px,10.8cqw,61px);object-fit:contain;image-rendering:pixelated;transform:translateX(-50%);filter:drop-shadow(0 3px 3px rgba(0,0,0,.65))}
+.bag-pocket-name{position:absolute;top:3.2%;left:-3%;right:9%;color:#ded7ca;font:900 clamp(11.5px,2.75cqw,14px)/1.1 var(--sans);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bag-pocket.selected .bag-pocket-name{color:#f0b253;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
-.bag-pocket-count{position:absolute;top:62%;left:3%;right:11%;display:flex;min-height:44px;align-items:center;justify-content:center;gap:clamp(3px,1cqw,6px);border-top:1px solid rgba(203,187,151,.26);border-bottom:1px solid rgba(0,0,0,.38);background:rgba(5,7,7,.34);font-family:var(--mono);text-shadow:0 2px 2px #000}
+.bag-pocket-count{position:absolute;top:62%;left:1%;right:13%;display:flex;min-height:44px;align-items:center;justify-content:center;gap:clamp(3px,1cqw,6px);border-top:1px solid rgba(203,187,151,.26);border-bottom:1px solid rgba(0,0,0,.38);background:rgba(5,7,7,.34);font-family:var(--mono);text-shadow:0 2px 2px #000}
 .bag-pocket-amount{display:inline-flex;align-items:baseline;gap:1px;white-space:nowrap}.bag-pocket-count b{font:950 clamp(18px,4.45cqw,24px)/1 var(--mono);font-variant-numeric:tabular-nums}.bag-pocket-count small{color:#b4ad9f;font:800 clamp(8.5px,1.75cqw,10px)/1 var(--sans)}
 .bag-pocket.selected .bag-pocket-count{border-top-color:rgba(232,173,80,.55);background:rgba(75,44,12,.34)}.bag-pocket.selected .bag-pocket-count small{color:#d9b06d}
 .bag-detail{position:absolute;top:74%;left:8%;right:8%;bottom:5%;display:grid;grid-template-columns:21% minmax(0,1fr);align-items:center;gap:3%;padding:2.4% 5% 2.1%}
-.bag-detail>.ico{justify-self:center;width:clamp(52px,13cqw,72px);height:clamp(52px,13cqw,72px);object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 4px 4px rgba(0,0,0,.52))}
+.bag-detail>.ico{justify-self:center;width:clamp(52px,13cqw,72px);height:clamp(52px,13cqw,72px);object-fit:contain;image-rendering:pixelated;transform:translateX(-7%);filter:drop-shadow(0 4px 4px rgba(0,0,0,.52))}
 .bag-detail-copy{display:flex;min-width:0;min-height:0;flex-direction:column;justify-content:center}.bag-detail-kicker{display:block;color:#70b4b0;font:850 clamp(8px,1.7cqw,9.5px)/1 var(--sans);letter-spacing:.04em}
 .bag-detail-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:8px;margin-top:2%}.bag-detail-heading span{min-width:0;color:#e5aa49;font:950 clamp(14px,3.5cqw,20px)/1.1 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bag-detail-heading b{color:#d7d0c2;font:850 clamp(10px,2.4cqw,13px)/1 var(--mono);font-variant-numeric:tabular-nums}
 .bag-detail p{display:-webkit-box;margin:2.5% 0 3.4%;color:#d2cabd;font:700 clamp(10px,2.25cqw,12.5px)/1.28 var(--sans);overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
@@ -745,6 +745,10 @@ input{font-family:inherit}
 .bag-detail button.is-primary{border:0;color:#f4c679;background:transparent}.bag-detail button:hover{background:rgba(214,151,57,.09)}
 .bag-detail button:focus-visible{outline:2px solid #e0a343;outline-offset:-3px}.bag-detail button:disabled{opacity:.45}
 .bag-detail-state{color:#8fc4bf;cursor:default}
+.bag-detail-quantity{display:flex;width:86%;min-height:44px;margin-left:14%;align-items:center;justify-content:space-between;padding:0 7%;color:#d3cbbd;
+  font-family:var(--mono);text-shadow:0 2px 2px #000;transform:translateY(clamp(5px,1.6cqw,8px))}
+.bag-detail-quantity small{color:#78bbb6;font:850 clamp(9px,2cqw,11px)/1 var(--sans);letter-spacing:.06em}
+.bag-detail-quantity b{color:#edb45e;font:900 clamp(13px,3.1cqw,17px)/1 var(--mono);font-variant-numeric:tabular-nums}
 
 /* fold-out CRT navigator */
 .map-navigator{background-image:url("__UI_MAP_NAVIGATOR_SHELL__")}
@@ -782,7 +786,7 @@ input{font-family:inherit}
   .bag-detail-kicker{display:none}
   .bag-detail-heading{margin-top:0}
   .bag-detail p{margin:1% 0 1.4%;line-height:1.15}
-  .bag-pocket-name{font-size:11px}
+  .bag-pocket-name{font-size:11.5px}
   .bag-pocket-count>small:first-child{display:none}
   .bag-pocket-count small{font-size:9.5px}
 }
@@ -2777,27 +2781,57 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices{display:grid;grid-template-columns:1fr;max-height:none;overflow:visible}
 #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices>.choice:not(:first-child){min-height:48px;border-radius:3px;background:#0b1722}
 
-/* The event is now the image, story and decision—not a dashboard describing them. */
+/* The event is now a field recorder: an inset screen set into a compact metal
+   housing. The image and story stay dominant while the one-step control reads
+   as an actual key instead of a stretched web button. */
+#ev-wrap{padding-top:max(8px,var(--safe-top));background:
+  radial-gradient(ellipse at 50% 0,rgba(64,74,69,.22),transparent 52%),rgba(2,5,8,.93)}
+#ev-sheet.event-mode{position:relative;padding:10px 9px 0;border:1px solid #555b54;border-bottom:0;border-radius:18px 18px 0 0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035),transparent 7% 93%,rgba(0,0,0,.22)),
+    repeating-linear-gradient(97deg,#454940 0 2px,#343931 2px 5px,#3e4339 5px 9px);
+  box-shadow:inset 0 1px rgba(229,214,174,.18),inset 0 0 0 3px rgba(5,7,7,.34),0 -18px 45px rgba(0,0,0,.58)}
+#ev-sheet.event-mode .event-scroll{margin:0;padding:8px 10px 10px;border:1px solid #202a2b;border-bottom:0;border-radius:8px 8px 0 0;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 3px),
+    linear-gradient(180deg,#07131d,#050d16 72%,#071019);
+  box-shadow:inset 0 0 0 2px #030708,inset 0 0 28px rgba(0,0,0,.42)}
 #ev-sheet.event-mode .scene-cut-mark,
 #ev-sheet.event-mode .event-meta-row,
 #ev-sheet.event-mode .choice-dock-head,
 #ev-sheet.event-mode .story-auto-toggle,
 #ev-sheet.event-mode .event-choice-recap{display:none!important}
-#ev-sheet.event-mode .event-scene-frame{margin-bottom:12px}
-#ev-sheet.event-mode .event-head{margin-bottom:5px;padding-bottom:9px}
-#ev-sheet.event-mode .event-head h2{margin:0;color:#f0ede4;font-size:21px;line-height:1.24}
-#ev-sheet.event-mode .story-progress-dock{min-height:0;padding-top:9px;padding-bottom:calc(9px + var(--safe-bottom))}
-#ev-sheet.event-mode .story-next{display:flex;width:min(100%,340px);min-height:48px;margin:0 auto;padding:0 22px;align-items:center;justify-content:center;
-  border:1px solid #72593a;border-radius:3px;background:linear-gradient(180deg,#101b27,#0a131e);box-shadow:inset 0 1px rgba(255,210,142,.05);text-align:center}
+#ev-sheet.event-mode .event-scene-frame{width:100%;margin:0 0 12px;border:1px solid #4b5049;border-radius:4px;
+  box-shadow:0 0 0 2px #020506,inset 0 0 0 1px rgba(225,208,166,.12)}
+#ev-sheet.event-mode .event-head{margin:0 2px 7px;padding:1px 0 10px 11px;border-left:3px solid #bd8340;border-bottom:1px solid rgba(190,143,76,.22)}
+#ev-sheet.event-mode .event-head h2{margin:0;color:#f0ede4;font-size:21px;line-height:1.24;text-shadow:0 2px 2px #000}
+#ev-sheet.event-mode .story-turn,#ev-sheet.event-mode .story-narration{margin:0 2px;padding:11px 10px 13px;border:1px solid rgba(105,122,117,.2);
+  border-left-color:rgba(90,187,177,.58);background:rgba(3,8,13,.36);box-shadow:inset 3px 0 rgba(73,159,151,.12)}
+#ev-sheet.event-mode .event-choice-dock{margin:0;padding:10px 12px calc(10px + var(--safe-bottom));border:1px solid #252b28;border-bottom:0;
+  background:
+    radial-gradient(circle at 12px 12px,#151815 0 2px,#77786b 2.5px 3.5px,#1b1e1a 4px 5px,transparent 5.5px),
+    radial-gradient(circle at calc(100% - 12px) 12px,#151815 0 2px,#77786b 2.5px 3.5px,#1b1e1a 4px 5px,transparent 5.5px),
+    linear-gradient(180deg,#3b4038,#242a24 42%,#161b18);
+  box-shadow:inset 0 1px rgba(222,207,166,.14),inset 0 0 0 3px rgba(4,6,5,.46),0 -10px 24px rgba(0,0,0,.42)}
+#ev-sheet.event-mode .story-progress-dock{min-height:94px;padding-top:9px;padding-bottom:calc(9px + var(--safe-bottom))}
+#ev-sheet.event-mode .story-next{display:grid;width:78px;height:76px;min-height:76px;margin:0 auto;padding:0;place-items:center;border:0;border-radius:0;
+  grid-template:none;background:url("__UI_NAV_BUTTON_FACE__") center/100% 100% no-repeat;filter:drop-shadow(0 5px 5px rgba(0,0,0,.55));box-shadow:none;text-align:center}
 #ev-sheet.event-mode .story-next::before{display:none}
-#ev-sheet.event-mode .story-next strong{display:block;color:#efb65f;font:850 14px/1 var(--sans);text-shadow:none}
+#ev-sheet.event-mode .story-next strong{display:block;grid-column:auto;grid-row:auto;align-self:auto;color:#efb65f;font:900 13px/1 var(--sans);letter-spacing:.03em;
+  white-space:nowrap;overflow-wrap:normal;text-shadow:0 2px 2px #000}
 #ev-sheet.event-mode .story-next .req{display:none}
-#ev-sheet.event-mode .story-next:active{transform:translateY(1px);background:#08111a}
+#ev-sheet.event-mode .story-next:active{transform:translateY(2px);background:url("__UI_NAV_BUTTON_PRESSED__") center/100% 100% no-repeat;filter:brightness(.82) drop-shadow(0 2px 2px rgba(0,0,0,.55))}
 #ev-sheet.event-mode .story-next:active::before{display:none}
+#ev-sheet.event-mode .story-next:focus-visible{outline:2px solid #f1b45b;outline-offset:2px}
 #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock{padding-top:10px}
 #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock>.choices{padding-top:0}
+#ev-sheet.event-mode[data-story-step="decision"] .event-scroll{flex:1 1 auto;height:auto}
+#ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock{flex:0 0 auto;height:auto;max-height:54%}
+#ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock:has(.choices>.choice:nth-child(3)){flex:1 1 54%;height:54%;max-height:none}
+#ev-sheet.event-mode[data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-scroll{flex:0 0 46%;height:46%}
 #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock{min-height:74px}
-#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock .choice:first-child{min-height:48px}
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock .choice:first-child{min-height:52px;border-color:#756344;border-radius:4px;
+  background:linear-gradient(180deg,#262c27,#121915);box-shadow:inset 0 0 0 2px #070a08,inset 4px 0 #a97737;color:#efbd72}
 
 /* Crew prioritizes people, then status. Settings read as grouped instruments. */
 .crew-manifest>h4,.settings-console .st-sec>h4{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
@@ -2820,8 +2854,8 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .settings-console .save-backup-actions button,.settings-console .save-backup-actions label{border-radius:3px;background:#0c1520}
 
 @container game (max-width:380px){
-  #ev-sheet.event-mode .event-scroll{padding-left:14px;padding-right:14px}
-  #ev-sheet.event-mode .event-scene-frame{width:calc(100% + 28px);margin-left:-14px;margin-right:-14px;flex-basis:clamp(220px,36dvh,270px)}
+  #ev-sheet.event-mode .event-scroll{padding-left:8px;padding-right:8px}
+  #ev-sheet.event-mode .event-scene-frame{width:100%;margin-left:0;margin-right:0;flex-basis:clamp(220px,36dvh,270px)}
   #ev-sheet.event-mode[data-story-step="decision"] .event-scene-frame{flex-basis:clamp(172px,26dvh,205px)}
   #ev-sheet.event-mode .event-head h2{font-size:18px}
   #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock>.choices>.choice{min-height:60px}

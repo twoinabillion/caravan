@@ -152,7 +152,7 @@ with sync_playwright() as playwright:
         bag_selection = page.evaluate("""() => ({
           selected:document.querySelector('[data-bag-item="의약품"]')?.getAttribute('aria-pressed'),
           heading:document.querySelector('.bag-detail-heading span')?.textContent,
-          count:document.querySelector('.bag-detail-heading b')?.textContent
+          count:document.querySelector('.bag-detail-quantity b')?.textContent
         })""")
         check(f'{width}×{height} bag selection updates the live detail panel',
               bag_selection['selected'] == 'true' and bag_selection['heading'] == '의약품' and

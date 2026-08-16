@@ -178,7 +178,7 @@ def check_viewport(playwright, width, height):
         count_center = count["x"] + count["width"] / 2
         name_center = name["x"] + name["width"] / 2
         icon_center = icon["x"] + icon["width"] / 2
-        expected_content_center = pocket_center - pocket["width"] * 0.04
+        expected_content_center = pocket_center - pocket["width"] * 0.06
         for content_center in (count_center, name_center, icon_center):
             assert abs(content_center - expected_content_center) <= 0.8, (
                 pocket,
@@ -226,11 +226,6 @@ def check_viewport(playwright, width, height):
     assert_same_rail(
         detail_reference, box(page, ".bag-detail-heading"), "bag detail heading"
     )
-    detail_state = box(page, ".bag-detail-state")
-    assert detail_state["x"] > detail_reference["x"]
-    assert detail_state["x"] + detail_state["width"] <= (
-        detail_reference["x"] + detail_reference["width"] + 0.5
-    )
     assert detail_reference["y"] >= detail_panel["y"] - 0.5
     assert (
         detail_reference["y"] + detail_reference["height"]
@@ -239,7 +234,10 @@ def check_viewport(playwright, width, height):
     selected = page.locator('[data-bag-item="의약품"]')
     assert selected.get_attribute("aria-pressed") == "true"
     assert page.locator(".bag-detail-heading span").inner_text() == "의약품"
-    assert page.locator(".bag-detail-state").inner_text() == "가방에 보관 중"
+    assert page.locator(".bag-detail-heading b").count() == 0
+    assert page.locator(".bag-detail-quantity small").inner_text() == "수량"
+    assert page.locator(".bag-detail-quantity b").inner_text().endswith("개")
+    assert page.locator(".bag-detail-state").count() == 0
     assert page.locator('[data-bag-action="의약품"]').count() == 0
 
     numeric_variant = page.locator(".bag-pocket-count b").first.evaluate(

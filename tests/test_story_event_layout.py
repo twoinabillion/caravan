@@ -64,13 +64,14 @@ def check_viewport(playwright, width, height):
     assert current["y"] - reader["y"] <= 10
     assert reader["height"] <= 150, reader
     assert current["y"] + current["height"] <= dock["y"]
-    assert 44 <= next_button["height"] <= 66
-    assert next_button["width"] <= 360.5
+    assert 74 <= next_button["height"] <= 80
+    assert 76 <= next_button["width"] <= 80
     assert next_button["x"] >= dock["x"] + 13
     assert next_button["x"] + next_button["width"] <= dock["x"] + dock["width"] - 13
-    assert "linear-gradient" in button_face["backgroundImage"]
+    assert "data:image/webp" in button_face["backgroundImage"]
     assert button_face["faceDisplay"] == "none"
     assert page.locator(".story-next strong").inner_text() == "계속"
+    assert box(page, ".story-next strong")["height"] <= 18
     assert page.locator(".story-next .req").count() == 0
     assert page.locator("[data-event-progress]").inner_text() == "1 / 4"
     page.click(".story-next")
