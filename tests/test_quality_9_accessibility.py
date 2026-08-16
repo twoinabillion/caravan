@@ -86,6 +86,29 @@ def tool_target_state(page, selector):
     }""", selector)
 
 
+def journey_geometry(page, screen_selector):
+    return page.evaluate("""selector => {
+      const box=node=>{
+        const rect=node.getBoundingClientRect();
+        return {x:rect.x,y:rect.y,width:rect.width,height:rect.height};
+      };
+      return {
+        console:box(document.querySelector('.journey-mode-console')),
+        shell:box(document.querySelector('.route-console')),
+        screen:box(document.querySelector(selector)),
+        stage:box(document.querySelector('#stage')),
+        dock:box(document.querySelector('#dock')),
+        scroll:document.querySelector('#panel').scrollTop
+      };
+    }""", screen_selector)
+
+
+def matching_geometry(a, b, tolerance=1):
+    return all(abs(a[group][key] - b[group][key]) <= tolerance
+               for group in ('console', 'shell', 'screen', 'stage', 'dock')
+               for key in ('x', 'y', 'width', 'height')) and a['scroll'] == b['scroll']
+
+
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(channel='chrome')
     for width, height in [(360, 700), (390, 844), (480, 860)]:
@@ -107,6 +130,16 @@ with sync_playwright() as playwright:
         if height >= 800:
             check(f'{width}×{height} keeps the journey console locked to the bottom keydeck',
                   0 <= normal['dockGap'] <= 6, str(normal))
+
+        route_geometry = journey_geometry(page, '.route-console-screen')
+        page.click('[data-journey-mode="local"]')
+        page.wait_for_timeout(180)
+        stay_geometry = journey_geometry(page, '.journey-local-screen')
+        check(f'{width}×{height} route and stay share the exact same shell and usable screen',
+              matching_geometry(route_geometry, stay_geometry),
+              f'{route_geometry} != {stay_geometry}')
+        page.click('[data-journey-mode="route"]')
+        page.wait_for_timeout(180)
 
         page.evaluate("""() => {
           document.documentElement.classList.add('ui-large-text');

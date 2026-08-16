@@ -111,4 +111,22 @@ No blocking follow-up. Live Korean strings longer than the current test fixtures
 - Geometry evidence: `audits/stay-effects-event-continuity-2026-08-16/after-geometry.json` passed 320 × 578, 390 × 844, and 475 × 948. Route/stay console, shell, rocker, stage, dock, and scroll position match; the event sheet remains fixed; the report size is stable through every story phase; no horizontal overflow or page error occurred.
 - Regression evidence: `tests/test_story_event_layout.py`, `tests/test_choice_visibility.py`, `tests/test_quality_9_accessibility.py`, `tests/test_smoke.py`, and `tests/test_source_health.py` passed.
 
+### Iteration 8 — passed
+
+- P1 false frame parity: the route and stay outer console boxes matched, but the stay screen still used a deeper `9.6% 11% 8.5% 12%` inset. At 390 × 844, the route screen was 325.47 × 353.86 px while stay was only 294.16 × 329.33 px, producing the visible shrink the user reported.
+- Fix: both modes now use the same `8.2% 7.4% 3.8%` usable-screen rectangle. The stay ledger raster is cropped inside that shared screen instead of replacing and shrinking the whole console. Typography and icon clamps were not enlarged to disguise the mismatch.
+- Geometry evidence: `audits/route-stay-frame-lock-2026-08-16/after-geometry.json` passed 320 × 578, 390 × 844, and 475 × 948 with exact route/stay matches for console, shell, usable screen, rocker, stage, dock, and panel scroll.
+- Visual evidence: `audits/route-stay-frame-lock-2026-08-16/comparison.png` shows the two modes at one viewport and scale.
+- Regression gate: `tests/test_quality_9_accessibility.py` now fails if the route and stay usable screens diverge by more than 1 px.
+
+### Iteration 9 — passed
+
+- P2 decorative noise: four teal circular stamps on the stay slips and one on the event field report had no state or interaction meaning. They competed with live costs and action labels.
+- Fix: ImageGen precise-object edits removed only those five circles and restored the parchment underneath. `assets/ui/stay-journey-ledger-insert-v3.webp` and `assets/ui/event-field-report-panel-v2.webp` preserve the measured composition, metal, paper, clips, tabs, tears, rules, lighting, and crop.
+- P2 choice hierarchy: story choices previously presented a bare number plus repeated generic `대응` tags, while stay action tabs used only one centered word.
+- Fix: story slips now separate `선택`, number, action type, and authored action text; generic tags are replaced by meaningful non-predictive action types such as `기록` and `확인`. Stay tabs use existing space for a small `실행` label plus the live action verb. Hover/focus lifts the paper by 1 px, active press moves it down 2 px, and disabled choices are visibly muted.
+- Full-view and focused comparison: `audits/stay-stamp-event-choice-polish-2026-08-16/comparison.png` at 390 × 844.
+- Responsive evidence: `audits/stay-stamp-event-choice-polish-2026-08-16/after-geometry.json` passed 320 × 578, 390 × 844, and 475 × 948 with 44 px minimum controls, no horizontal overflow, and no page errors.
+- Regression evidence: `tests/test_story_event_layout.py`, `tests/test_choice_visibility.py`, `tests/test_quality_9_accessibility.py`, `tests/test_smoke.py`, `tests/test_source_health.py`, and `npm run verify:quick` passed.
+
 final result: passed

@@ -85,12 +85,12 @@ const uiAssetPaths = {
   BAG_SUPPLY_ROLL:{path:'assets/ui/bag-supply-roll-v1.webp', mime:'image/webp'},
   STAY_JOURNEY_LEDGER:{path:'assets/ui/stay-journey-ledger-console-v1.webp', mime:'image/webp'},
   STAY_JOURNEY_LEDGER_NARROW:{path:'assets/ui/stay-journey-ledger-console-narrow-v1.webp', mime:'image/webp'},
-  STAY_JOURNEY_LEDGER_INSERT:{path:'assets/ui/stay-journey-ledger-insert-v2.webp', mime:'image/webp'},
+  STAY_JOURNEY_LEDGER_INSERT:{path:'assets/ui/stay-journey-ledger-insert-v3.webp', mime:'image/webp'},
   STAY_ICON_EXPLORE:{path:'assets/ui/stay-icon-explore-v1.webp', mime:'image/webp'},
   STAY_ICON_CAMP:{path:'assets/ui/stay-icon-camp-v1.webp', mime:'image/webp'},
   STAY_ICON_REPAIR:{path:'assets/ui/stay-icon-repair-v1.webp', mime:'image/webp'},
   STAY_ICON_RADIO:{path:'assets/ui/stay-icon-radio-v1.webp', mime:'image/webp'},
-  EVENT_FIELD_REPORT:{path:'assets/ui/event-field-report-panel-v1.webp', mime:'image/webp'},
+  EVENT_FIELD_REPORT:{path:'assets/ui/event-field-report-panel-v2.webp', mime:'image/webp'},
   EVENT_LEDGER_BUTTON:{path:'assets/ui/event-ledger-button-v1.webp', mime:'image/webp'},
   EVENT_CHOICE_LEDGER:{path:'assets/ui/event-choice-ledger-slip-v1.webp', mime:'image/webp'}
 };

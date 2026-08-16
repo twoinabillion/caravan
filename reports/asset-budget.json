@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-16T09:44:22.498Z",
+  "generatedAt": "2026-08-16T11:59:38.090Z",
   "html": {
-    "bytes": 37874518,
+    "bytes": 37839679,
     "warnBytes": 32000000,
     "maxBytes": 38000000
   },
   "embedded": {
     "files": 289,
-    "bytes": 22642553,
+    "bytes": 22707667,
     "categories": {
       "audio": {
         "files": 45,
@@ -21,8 +21,8 @@
       },
       "ui": {
         "files": 19,
-        "bytes": 777758,
-        "encodedBytes": 1037040
+        "bytes": 842872,
+        "encodedBytes": 1123860
       },
       "portrait": {
         "files": 31,
@@ -99,6 +99,12 @@
       "encodedBytes": 263296
     },
     {
+      "path": "assets/ui/event-field-report-panel-v2.webp",
+      "mime": "image/webp",
+      "bytes": 196526,
+      "encodedBytes": 262036
+    },
+    {
       "path": "assets/intro/06-camper-conversion-v3.jpg",
       "mime": "image/jpeg",
       "bytes": 195684,
@@ -145,12 +151,6 @@
       "mime": "image/webp",
       "bytes": 163676,
       "encodedBytes": 218236
-    },
-    {
-      "path": "assets/intro/11-current-expulsion-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 152361,
-      "encodedBytes": 203148
     }
   ]
 }

@@ -1503,7 +1503,7 @@ const UI = (()=>{
         ${iconHtml}<span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
           <span class="stop-action-description">${esc(description)}</span>
           ${chipHtml?`<span class="stop-action-chips">${chipHtml}</span>`:''}</span>
-        <span class="stop-action-cta">${esc(shortCta)} <i aria-hidden="true">→</i></span>
+        <span class="stop-action-cta"><small>실행</small><span>${esc(shortCta)} <i aria-hidden="true">→</i></span></span>
       </button></article>`;
   }
   function journeyModeTabsHtml(mode){
@@ -1963,6 +1963,8 @@ const UI = (()=>{
     const text=stripTags(choice&&choice.label||'');
     if(/사과|위로|괜찮|도와|함께|가르쳐|듣는다|말을 건다/.test(text)) return '공감';
     if(/지나간|떠난|작별|거절|물러|이탈|외면/.test(text)) return '거리두기';
+    if(/적는다|기록|베껴|써 둔다|남긴다/.test(text)) return '기록';
+    if(/읽는다|읽어|대조|확인/.test(text)) return '확인';
     if(/부품|연료|수리|정비|거래|찾아|확인|계산|살핀/.test(text)) return '실용';
     if(/공격|돌입|밀어|쏜|맞선|끝낸|위험을/.test(text)) return '결단';
     if(/묻|왜|어디|누구|무엇|소리로/.test(text)) return '탐색';
@@ -1988,8 +1990,9 @@ const UI = (()=>{
         rq.ok ? '요구사항 충족' : `요구 조건: ${rq.t}`,
         cost||''
       ].filter(Boolean);
+      const indexLabel=inCombat?String(count):`<small>선택</small><b>${count}</b>`;
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'} aria-label="${esc(liveBits.join(' · '))}">
-          <div class="choice-head"><span class="choice-index">${count}</span><span class="choice-title">${intentTag?`<i class="choice-intent">${intentTag}</i>`:''}${title}</span></div>
+          <div class="choice-head"><span class="choice-index">${indexLabel}</span><span class="choice-title">${intentTag?`<i class="choice-intent">${intentTag}</i>`:''}${title}</span></div>
           ${route?`<span class="route-forecast"><b>${route.km}km · ${routeDurationRange(route.minutes)} · 연료 ${routeFuelRange(route.fuel)}</b><small>현장 상황은 출발 뒤 확인</small></span>`:''}
           ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
         </button>`;
