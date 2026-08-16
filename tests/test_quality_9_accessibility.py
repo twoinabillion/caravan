@@ -105,8 +105,8 @@ with sync_playwright() as playwright:
               not normal['documentOverflow'] and not normal['panelOverflow'] and
               normal['shortControls'] == 0 and normal['escaped'] == 0, str(normal))
         if height >= 800:
-            check(f'{width}×{height} returns surplus height to the road scene',
-                  14 <= normal['dockGap'] <= 26, str(normal))
+            check(f'{width}×{height} keeps the journey console locked to the bottom keydeck',
+                  0 <= normal['dockGap'] <= 6, str(normal))
 
         page.evaluate("""() => {
           document.documentElement.classList.add('ui-large-text');

@@ -1523,7 +1523,7 @@ const UI = (()=>{
     const stage=$('#stage');
     if(stage) stage.style.removeProperty('flex-basis');
   }
-  function scheduleStoppedStageFit(){
+  function scheduleStoppedStageFit(pass=0){
     if(stoppedStageFitFrame) cancelAnimationFrame(stoppedStageFitFrame);
     if(screen!=='game'||!S||S.driving) return;
     /* 남는 세로 공간은 빈 패널로 두지 않고 풍경에 돌려준다. 고정 높이를 더하는
@@ -1537,7 +1537,9 @@ const UI = (()=>{
         if(!stage||!panel||!dock||!contentEnd||!stage.offsetParent||panel.scrollTop>1) return;
         const stageHeight=stage.getBoundingClientRect().height;
         if(!stoppedStageBase) stoppedStageBase=stageHeight;
-        const targetGap=Math.max(16,Math.min(24,Math.round(window.innerHeight*.02)));
+        /* 2번 기록철처럼 장치와 하단 키덱을 한 몸으로 붙인다. 모드마다
+           서로 다른 빈 띠가 생기면 스위치를 넘길 때 화면 전체가 바뀐 듯 보인다. */
+        const targetGap=3;
         const gap=dock.getBoundingClientRect().top-contentEnd.getBoundingClientRect().bottom;
         let nextHeight=stageHeight;
         if(gap>targetGap+1){
@@ -1547,7 +1549,15 @@ const UI = (()=>{
              최대 32px 줄여 하단 도크와 실제 조작이 겹치지 않게 한다. */
           nextHeight=Math.max(stoppedStageBase-32,Math.round(stageHeight+gap-targetGap));
         }
-        if(Math.abs(nextHeight-stageHeight)>1) stage.style.flexBasis=`${nextHeight}px`;
+        if(Math.abs(nextHeight-stageHeight)>1){
+          stage.style.flexBasis=`${nextHeight}px`;
+          /* flex 레이아웃이 새 높이를 반영한 뒤 남은 틈을 다시 잰다. 한 번만
+             맞추면 짧은 화면에서 기록철 아래에 30~40px가 남는다. */
+          if(pass<3) stoppedStageFitFrame=requestAnimationFrame(()=>{
+            stoppedStageFitFrame=0;
+            scheduleStoppedStageFit(pass+1);
+          });
+        }
       });
     });
   }
@@ -1563,10 +1573,15 @@ const UI = (()=>{
     const select=(button)=>{
       if(!button||button.dataset.journeyMode===journeyConsoleMode) return;
       const scrollTop=panel.scrollTop;
-      journeyConsoleMode=button.dataset.journeyMode;
-      renderPanel();
-      panel.scrollTop=scrollTop;
-      requestAnimationFrame(()=>panel.querySelector(`[data-journey-mode="${journeyConsoleMode}"]`)?.focus({preventScroll:true}));
+      const update=()=>{
+        journeyConsoleMode=button.dataset.journeyMode;
+        renderPanel();
+        panel.scrollTop=scrollTop;
+        requestAnimationFrame(()=>panel.querySelector(`[data-journey-mode="${journeyConsoleMode}"]`)?.focus({preventScroll:true}));
+      };
+      const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(document.startViewTransition&&!reduceMotion) document.startViewTransition(update);
+      else update();
     };
     buttons.forEach((button,index)=>{
       button.onclick=()=>select(button);
@@ -1658,6 +1673,7 @@ const UI = (()=>{
       return;
     }
     const n=D.nodes[S.at];
+    document.documentElement.dataset.journeyMode=journeyConsoleMode;
     let localActions=[];
     if(S.recruitQ){
       const rq=S.recruitQ, def=D.recruitQuests[rq.id];

@@ -288,13 +288,14 @@ with sync_playwright() as p:
       return {map,crew};
     }''')
     check('위치→지도·인원→동료 상태 바로가기', context_nav['map'] and context_nav['crew'], str(context_nav))
-    exploration = pg.evaluate('''() => {
+    exploration = pg.evaluate('''async () => {
       const snapshot=JSON.stringify(S);
       const node=Object.keys(D.nodes).find(id=>!D.nodes[id].stl&&D.nodes[id].type!=='goal');
       S.at=node; S.driving=null; S.min=8*60; S.fatigue=0; S._exploreDay=S.day;
       S._exploreNodes={}; S._salvagedNodes={}; S._salvageCount=1;   // 다음 수색이 보장 회차가 되도록
       UI.renderAll();
       document.querySelector('[data-journey-mode="local"]')?.click();
+      await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
       const region=G.regionOf();
       const expected=region==='north'?12:region==='mid'?9:6;
       const firstStatus=G.exploreStatus();

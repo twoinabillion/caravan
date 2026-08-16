@@ -3,7 +3,9 @@
 - source visual truth: `audits/stay-event-option2-implementation-2026-08-16/reference-option2-journey-ledger.png`
 - source pixels: 1712 × 922; the two 856 × 922 concept screens were normalized to 390 px width for full-view comparison
 - primary implementation evidence:
-  - `audits/stay-event-option2-implementation-2026-08-16/stay-390x844.png`
+  - `audits/stay-option2-frame-lock-2026-08-16/stay-390x844.png`
+  - `audits/stay-option2-frame-lock-2026-08-16/route-390x844.png`
+  - `audits/stay-option2-frame-lock-2026-08-16/route-return-390x844.png`
   - `audits/stay-event-option2-implementation-2026-08-16/event-dialogue-390x844.png`
   - `audits/stay-event-option2-implementation-2026-08-16/event-decision-320x578.png`
 - implementation pixels / CSS viewport: 390 × 844 and 320 × 578, deviceScaleFactor 1
@@ -14,9 +16,12 @@
 ## Full-view comparison evidence
 
 - `audits/stay-event-option2-implementation-2026-08-16/compare-stay-final.png`
+- `audits/stay-option2-frame-lock-2026-08-16/comparison-reference-vs-final.png`
 - `audits/stay-event-option2-implementation-2026-08-16/compare-event-final.png`
 
 The implementation preserves the approved hierarchy: live road/scene image, tactile ledger/report surface, then physical action control. The tall phone viewport intentionally gives surplus height to the live road and event scene, matching the existing game requirement to keep the dalguji and scene imagery prominent rather than stretching the ledger itself.
+
+The stopped screen now also preserves one continuous physical enclosure across the 목적지 ↔ 머물기 switch: the outer metal bezel and bottom keydeck remain fixed, the active console stays within that enclosure, and only the center console content changes. The larger live scene above the ledger is intentional; the approved Option 2 ledger itself is compared at equal scale in the focused evidence.
 
 ## Focused comparison evidence
 
@@ -66,6 +71,17 @@ No actionable P0, P1, or P2 findings remain.
 - `tests/test_smoke.py`: passed.
 - `tests/test_source_health.py`: passed.
 - Final visual evidence: `compare-stay-final.png`, `compare-event-final.png`, `compare-stay-focus-final.png`, `compare-event-focus-final.png`.
+
+### Iteration 5 — passed
+
+- P1 continuity: switching to 머물기 previously replaced the visible device silhouette instead of retaining a shared stopped-screen enclosure.
+- P1 crop: a mobile negative top margin clipped roughly 10 px from the ledger's upper metal border, making the approved Option 2 frame read as a different panel.
+- Fix: added one persistent raster metal bezel around the stopped screen, locked the bottom keydeck position, removed the local-mode negative offset, restored the complete ledger border, and limited the console-to-keydeck gap to 0–6 px.
+- Motion: Chrome View Transition provides a 160 ms content crossfade while the enclosure stays still; reduced-motion mode removes it.
+- `audits/stay-option2-frame-lock-2026-08-16/capture.py`: passed 320 × 578, 390 × 844, and 475 × 948, including outer-frame geometry, fixed keydeck geometry, complete ledger top edge, return-to-route geometry, overflow, and runtime errors.
+- `tests/test_quality_9_accessibility.py`: passed normal/large text, 44 px controls, 200% zoom, reduced motion, overlay controls, and the new 0–6 px keydeck lock.
+- `tests/test_smoke.py`, `tests/test_story_event_layout.py`, `tests/test_choice_visibility.py`, and `tests/test_source_health.py`: passed after accounting for the asynchronous mode-transition frame.
+- Final visual evidence: `audits/stay-option2-frame-lock-2026-08-16/comparison-reference-vs-final.png`.
 
 ## Follow-up polish
 

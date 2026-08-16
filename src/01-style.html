@@ -2962,6 +2962,25 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 /* ── stay / event option 2: journey ledger ───────────────────────────
    The approved mock uses real paper slips and a field report, while every
    label and control remains live HTML. */
+.game-viewport-locked[data-travel-state="stopped"] #scr-game.on{
+  border:clamp(5px,1.55cqw,8px) solid transparent;
+  border-image:url("__UI_STOPPED_SCREEN_FRAME__") 86 / clamp(5px,1.55cqw,8px) stretch;
+  background:#070a10
+}
+.game-viewport-locked[data-travel-state="stopped"] .journey-mode-console{
+  view-transition-name:journey-console
+}
+.game-viewport-locked[data-travel-state="stopped"][data-journey-mode="local"] .journey-mode-console{
+  margin-top:0;
+  margin-bottom:0
+}
+.game-viewport-locked[data-travel-state="stopped"][data-journey-mode="local"] .journey-local-panel{
+  filter:none
+}
+::view-transition-old(journey-console),::view-transition-new(journey-console){animation-duration:.16s;animation-timing-function:ease-out}
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-old(journey-console),::view-transition-new(journey-console){animation:none}
+}
 .journey-local-panel{aspect-ratio:1200/675!important;background-image:url("__UI_STAY_JOURNEY_LEDGER__")!important;
   background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important}
 .journey-local-screen.stop-action-console{inset:6.5% 2.9% 6.3% 13.7%;padding:0;border:0;background:transparent;box-shadow:none}
