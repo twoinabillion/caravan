@@ -1704,16 +1704,23 @@ const UI = (()=>{
     }));
     if(n.type!=='goal'){
       const es=G.exploreStatus();
+      const exploreFatigue=es.ok?Math.max(1,Math.round(
+        es.mins*.045*(1-G.driverLv()*.06)*(G.isInjured('driver')?1.2:1)+es.fatigue
+      )):0;
       localActions.push(stopActionHtml({
         action:'explore',kicker:es.repeat?'오늘의 마지막 수색':'주변에서',title:'주변 탐색',
-        description:es.ok?'시간을 들여 직접 주변을 확인한다. 무엇을 마주칠지는 알 수 없다.':es.reason,disabled:!es.ok,
-        chips:es.ok?[G.durationLabel(es.mins),{label:'발견물 미확인',tone:'muted'}]:[],cta:'탐색하기'
+        description:es.ok?'이 지역을 직접 살핀다. 결과는 끝난 뒤에만 드러난다.':es.reason,disabled:!es.ok,
+        chips:es.ok?[`시간 +${G.durationLabel(es.mins)}`,{label:`피로 약 +${exploreFatigue}`,tone:'cost'},{label:'발견물 미확인',tone:'muted'}]:[],cta:'탐색하기'
       }));
     }
+    let campVanFix=4;
+    if(G.hasPerk('mj_camp')) campVanFix+=8;
+    if(S.up&&S.up.solar) campVanFix+=3;
+    const campVanGain=Math.max(0,Math.min(campVanFix,S.vanMax-S.van));
     localActions.push(stopActionHtml({
       action:'camp',kicker:'차 안에서',title:'야영 준비',
-      description:'식사와 간이 정비를 준비하고, 동료와 오늘의 길을 돌아본다.',
-      chips:[G.isNight()?'지금 밤':'해 지기 전','식사·정비·대화'],cta:'준비하기'
+      description:'식사·정비·대화를 고른 뒤 다음 아침까지 쉰다.',
+      chips:[{label:'다음 06:30',tone:'muted'},{label:'피로 → 0%',tone:'gain'},{label:campVanGain?`차체 +${campVanGain}`:'차체 유지',tone:'gain'}],cta:'준비하기'
     }));
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
@@ -1723,17 +1730,20 @@ const UI = (()=>{
     }));
     if(S.van<S.vanMax-5){
       const hasP=(S.items['부품']||0)>0;
+      const repairGain=S.up&&S.up.sidebox?45:35;
       localActions.push(stopActionHtml({
         action:'repair',kicker:'정차 정비',title:'달구지를 정비한다',
-        description:hasP?'부품 1개로 현재 손상을 수리한다.':'부품이 없다. 탐색이나 정비소에서 구할 수 있다.',disabled:!hasP,
-        chips:hasP?['부품 1','약 1.5시간','내구 +35']:[],cta:'정비하기'
+        description:hasP?'보유한 부품으로 차체 손상을 현장에서 복구한다.':'부품이 없어 지금은 현장 정비를 할 수 없다.',disabled:!hasP,
+        chips:hasP?[{label:S.up&&S.up.sidebox?'부품 최대 -1':'부품 -1',tone:'cost'},{label:'시간 +1:40',tone:'cost'},{label:`차체 +${repairGain}`,tone:'gain'}]
+          :[{label:'부품 필요',tone:'cost'}],cta:'정비하기'
       }));
     }
     if(!S.flags.radio_fixed){ const hasT=(S.items['라디오 진공관']||0)>0;
       localActions.push(stopActionHtml({
         action:'radio',kicker:'차 안에서',title:'라디오를 고친다',
-        description:hasT?'진공관을 갈아 주행 중 방송을 다시 듣는다.':'라디오 진공관이 필요하다.',disabled:!hasT,
-        chips:hasT?['진공관 1','방송 수신']:[],cta:'수리하기'
+        description:hasT?'진공관을 교체해 주행 중 방송 수신을 되살린다.':'라디오 진공관이 없어 지금은 수리할 수 없다.',disabled:!hasT,
+        chips:hasT?[{label:'진공관 -1',tone:'cost'},{label:'시간 +0:40',tone:'cost'},{label:'주행 방송 해금',tone:'gain'}]
+          :[{label:'진공관 필요',tone:'cost'}],cta:'수리하기'
       })); }
     if(S.flags.armed_age) localActions.push(stopActionHtml({
       action:'craft',kicker:'차 뒤 칸에서',title:'작업대를 편다',
@@ -2509,8 +2519,8 @@ const UI = (()=>{
         :'길로 돌아가기'}</button>`;
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
-      <div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(selectedTitle)}</h2></div></div>
-      ${combatHud}<div class="story-result" role="status" aria-live="polite" aria-atomic="true"></div><div class="story-reader"></div></div>
+      <section class="event-field-report"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(selectedTitle)}</h2></div></div>
+      ${combatHud}<div class="story-reader"></div><div class="story-result" role="status" aria-live="polite" aria-atomic="true"></div></section></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns,curStory&&curStory.lanes);

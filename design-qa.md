@@ -100,4 +100,15 @@ No actionable P0, P1, or P2 findings remain.
 
 No blocking follow-up. Live Korean strings longer than the current test fixtures continue to use ellipsis or two-line clamps by design.
 
+### Iteration 7 — passed
+
+- P1 information density: the fixed-height stay ledger previously hid every action description, so the four rows looked artificially empty even though their outer shell matched the route console.
+- Fix: retained the exact route/stay console, rocker, road scene, and bottom dock geometry; each row now uses the existing space for a one-line action explanation plus deterministic time, fatigue, resource, recovery, or unlock effects. No icon exceeds 50 px and no title exceeds 16 px in the QA viewports.
+- Spoiler rule: exploration still reveals no resource, encounter, danger, or regional target before the action. It shows only deterministic time/fatigue and `발견물 미확인`.
+- P1 event continuity: resolving a choice rebuilt the outcome with the old generic blue dialogue sheet, removing the approved paper report. The decision state also collapsed the report to a title strip.
+- Fix: beat, decision, and outcome now reuse the same `event-field-report` raster component at the same rendered width and height. The outer field-recorder sheet stays fixed; lower choice space is allocated by option count, and two-choice events return surplus height to the scene instead of stretching buttons.
+- Visual evidence: `audits/stay-effects-event-continuity-2026-08-16/comparison-final.png` combines the approved Option 2 source with the final route, stay, event beat, decision, and outcome renders.
+- Geometry evidence: `audits/stay-effects-event-continuity-2026-08-16/after-geometry.json` passed 320 × 578, 390 × 844, and 475 × 948. Route/stay console, shell, rocker, stage, dock, and scroll position match; the event sheet remains fixed; the report size is stable through every story phase; no horizontal overflow or page error occurred.
+- Regression evidence: `tests/test_story_event_layout.py`, `tests/test_choice_visibility.py`, `tests/test_quality_9_accessibility.py`, `tests/test_smoke.py`, and `tests/test_source_health.py` passed.
+
 final result: passed

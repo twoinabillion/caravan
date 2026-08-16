@@ -79,9 +79,29 @@ def check_viewport(playwright, width, height):
     assert box(page, ".story-next strong")["height"] <= 18
     assert page.locator(".story-next .req").count() == 0
     assert page.locator("[data-event-progress]").inner_text() == "1 / 4"
-    page.click(".story-next")
-    page.wait_for_timeout(90)
-    assert page.locator("[data-event-progress]").inner_text() == "2 / 4"
+    report_start = box(page, ".event-field-report")
+    sheet_start = box(page, "#ev-sheet")
+    for expected in (2, 3, 4):
+        page.click(".story-next")
+        page.wait_for_timeout(90)
+        assert page.locator("[data-event-progress]").inner_text() == f"{expected} / 4"
+        report = box(page, ".event-field-report")
+        sheet = box(page, "#ev-sheet")
+        assert abs(report["width"] - report_start["width"]) <= 1
+        assert abs(report["height"] - report_start["height"]) <= 1
+        assert abs(sheet["width"] - sheet_start["width"]) <= 1
+        assert abs(sheet["height"] - sheet_start["height"]) <= 1
+    assert page.locator("#ev-sheet").get_attribute("data-story-step") == "decision"
+    page.locator(".event-choice-dock .choice[data-i]:not([disabled])").first.click()
+    page.wait_for_timeout(110)
+    assert page.locator("#ev-sheet").get_attribute("data-story-phase") == "outcome"
+    assert page.locator("#ev-sheet").get_attribute("data-story-step") == "result"
+    outcome_report = box(page, ".event-field-report")
+    outcome_sheet = box(page, "#ev-sheet")
+    assert abs(outcome_report["width"] - report_start["width"]) <= 1
+    assert abs(outcome_report["height"] - report_start["height"]) <= 1
+    assert abs(outcome_sheet["width"] - sheet_start["width"]) <= 1
+    assert abs(outcome_sheet["height"] - sheet_start["height"]) <= 1
     assert not errors, errors
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
     browser.close()

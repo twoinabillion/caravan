@@ -3067,4 +3067,59 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices{gap:3px}
   #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice{aspect-ratio:3.05}
 }
+
+/* ── stay meaning + event continuity polish ─────────────────────
+   The route/stay enclosure remains physically unchanged. The four paper rows
+   use their existing height for real consequences, while every story phase
+   keeps the same field-report component instead of falling back to a generic
+   dialogue sheet after a choice. */
+.journey-local-screen .stop-action-copy{display:grid;align-content:center;gap:3px;min-height:0;padding-right:1%}
+.journey-local-screen .stop-action-copy>b{font-size:clamp(11px,3.25cqw,15px)}
+.journey-local-screen .stop-action-description{display:-webkit-box!important;min-width:0;margin:0;overflow:hidden;color:#514a40;
+  font:700 clamp(8px,2.35cqw,10.5px)/1.2 var(--sans);white-space:normal;-webkit-box-orient:vertical;-webkit-line-clamp:1}
+.journey-local-screen .stop-action-chips{margin-top:0;gap:4px}
+.journey-local-screen .stop-action-chips i{font-size:clamp(7px,2.05cqw,9.5px)}
+.journey-local-screen .stop-action-chips i.tone-cost{color:#7b4b34}
+.journey-local-screen .stop-action-chips i.tone-gain{color:#246d68}
+.journey-local-screen .stop-action-chips i.tone-muted{color:#686157}
+.journey-local-screen .stop-action-cta{font-size:clamp(10px,3.05cqw,14px)}
+
+#ev-sheet.event-mode[data-event-kind="story"] .event-scroll{display:grid;grid-template-rows:minmax(0,1fr) auto;align-content:stretch;overflow:hidden}
+#ev-sheet.event-mode[data-event-kind="story"] .event-scene-frame{align-self:stretch;width:100%;height:100%;min-height:0;margin:0 0 10px;flex-basis:auto}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{align-self:end;margin:0}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="beat"] .event-scene-frame,
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="result"] .event-scene-frame{flex-basis:auto}
+
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-scroll{display:grid;flex:0 0 72%;height:72%;
+  grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock{flex:1 1 28%;height:28%;max-height:none}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-scroll{flex-basis:46%;height:46%}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-choice-dock{flex-basis:54%;height:54%}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report{flex:none;aspect-ratio:1846/852;padding:7.2% 8.2% 6.8% 9.4%;background-position:center;background-size:100% 100%}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .event-head{margin:0 7% 0 20.5%;padding:0 0 3.4%;border-bottom:1px solid rgba(33,112,108,.58)}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .event-head h2{color:#256d68}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report .story-reader{display:block}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice{aspect-ratio:auto;min-height:58px}
+
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-scroll{display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-field-report .story-result{position:absolute;right:7.5%;bottom:5.5%;left:29.5%;margin:0}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-field-report .fx-line{display:flex;justify-content:flex-end;gap:4px;margin:0}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-field-report .fx{display:inline-flex;min-height:0;padding:2px 5px;border:1px solid rgba(39,112,106,.35);
+  border-radius:0;background:rgba(237,224,194,.55);color:#315c58;font:800 clamp(7px,2cqw,9px)/1.1 var(--mono)}
+
+@container game (max-width:380px){
+  .journey-local-screen .stop-action-copy{gap:2px}
+  .journey-local-screen .stop-action-description{font-size:8.5px}
+  .journey-local-screen .stop-action-chips{gap:3px}
+  .journey-local-screen .stop-action-chips i{font-size:7.5px}
+  .journey-local-screen .stop-action-chips i+ i::before{margin-right:3px}
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-field-report{padding-top:7%;padding-bottom:6.2%}
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice{aspect-ratio:auto;min-height:56px}
+}
+@container game (min-width:381px){
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-scroll{flex-basis:78%;height:78%}
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock{flex-basis:22%;height:22%}
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-scroll{flex-basis:50%;height:50%}
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-choice-dock{flex-basis:50%;height:50%}
+}
 </style>

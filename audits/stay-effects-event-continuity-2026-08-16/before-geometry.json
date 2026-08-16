@@ -1,0 +1,944 @@
+{
+  "320x578": {
+    "route": {
+      "console": {
+        "x": 4,
+        "y": 210,
+        "width": 312,
+        "height": 328.41
+      },
+      "shell": {
+        "x": 4,
+        "y": 210,
+        "width": 312,
+        "height": 328.41
+      },
+      "rocker": {
+        "x": 9.92,
+        "y": 243.16,
+        "width": 27.14,
+        "height": 79.8
+      },
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 218
+      },
+      "dock": {
+        "x": 0,
+        "y": 502,
+        "width": 320,
+        "height": 76
+      },
+      "scroll": 0
+    },
+    "stay": {
+      "console": {
+        "x": 4,
+        "y": 210,
+        "width": 312,
+        "height": 328.41
+      },
+      "shell": {
+        "x": 4,
+        "y": 210,
+        "width": 312,
+        "height": 328.41
+      },
+      "rocker": {
+        "x": 9.92,
+        "y": 243.16,
+        "width": 27.14,
+        "height": 79.8
+      },
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 218
+      },
+      "dock": {
+        "x": 0,
+        "y": 502,
+        "width": 320,
+        "height": 76
+      },
+      "scroll": 0,
+      "rows": [
+        {
+          "height": 67.234375,
+          "right": 281.6875,
+          "description": "none",
+          "descriptionText": "시간을 들여 직접 주변을 확인한다. 무엇을 마주칠지는 알 수 없다.",
+          "descriptionSize": 10.5,
+          "titleSize": 11.2,
+          "iconSize": 30
+        },
+        {
+          "height": 67.234375,
+          "right": 281.6875,
+          "description": "none",
+          "descriptionText": "식사와 간이 정비를 준비하고, 동료와 오늘의 길을 돌아본다.",
+          "descriptionSize": 10.5,
+          "titleSize": 11.2,
+          "iconSize": 30
+        },
+        {
+          "height": 67.234375,
+          "right": 281.6875,
+          "description": "none",
+          "descriptionText": "부품 1개로 현재 손상을 수리한다.",
+          "descriptionSize": 10.5,
+          "titleSize": 11.2,
+          "iconSize": 30
+        },
+        {
+          "height": 67.234375,
+          "right": 281.6875,
+          "description": "none",
+          "descriptionText": "라디오 진공관이 필요하다.",
+          "descriptionSize": 10.5,
+          "titleSize": 11.2,
+          "iconSize": 30
+        }
+      ]
+    },
+    "beats": [
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12.63,
+          "width": 320,
+          "height": 566.0
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23.63,
+          "width": 300,
+          "height": 479.0
+        },
+        "scene": {
+          "x": 19,
+          "y": 32.49,
+          "width": 282,
+          "height": 289.0
+        },
+        "report": {
+          "x": 19,
+          "y": 333.49,
+          "width": 282,
+          "height": 130.14
+        },
+        "dock": {
+          "x": 10,
+          "y": 502.4,
+          "width": 300,
+          "height": 76
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 320,
+          "height": 566
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 300,
+          "height": 479
+        },
+        "scene": {
+          "x": 19,
+          "y": 32,
+          "width": 282,
+          "height": 289
+        },
+        "report": {
+          "x": 19,
+          "y": 333,
+          "width": 282,
+          "height": 130.14
+        },
+        "dock": {
+          "x": 10,
+          "y": 502,
+          "width": 300,
+          "height": 76
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 320,
+          "height": 566
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 300,
+          "height": 479
+        },
+        "scene": {
+          "x": 19,
+          "y": 32,
+          "width": 282,
+          "height": 289
+        },
+        "report": {
+          "x": 19,
+          "y": 333,
+          "width": 282,
+          "height": 130.14
+        },
+        "dock": {
+          "x": 10,
+          "y": 502,
+          "width": 300,
+          "height": 76
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 320,
+          "height": 566
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 300,
+          "height": 346.66
+        },
+        "scene": {
+          "x": 19,
+          "y": 32,
+          "width": 282,
+          "height": 250.66
+        },
+        "report": {
+          "x": 19,
+          "y": 294.66,
+          "width": 282,
+          "height": 62
+        },
+        "dock": {
+          "x": 10,
+          "y": 369.66,
+          "width": 300,
+          "height": 208.34
+        },
+        "phase": "event",
+        "step": "decision",
+        "overflow": false
+      }
+    ],
+    "decision": {
+      "sheet": {
+        "x": 0,
+        "y": 12,
+        "width": 320,
+        "height": 566
+      },
+      "scroll": {
+        "x": 10,
+        "y": 23,
+        "width": 300,
+        "height": 346.66
+      },
+      "scene": {
+        "x": 19,
+        "y": 32,
+        "width": 282,
+        "height": 250.66
+      },
+      "report": {
+        "x": 19,
+        "y": 294.66,
+        "width": 282,
+        "height": 62
+      },
+      "dock": {
+        "x": 10,
+        "y": 369.66,
+        "width": 300,
+        "height": 208.34
+      },
+      "phase": "event",
+      "step": "decision",
+      "overflow": false
+    },
+    "outcome": {
+      "sheet": {
+        "x": 0,
+        "y": 12,
+        "width": 320,
+        "height": 566
+      },
+      "scroll": {
+        "x": 10,
+        "y": 23,
+        "width": 300,
+        "height": 473
+      },
+      "scene": {
+        "x": 19,
+        "y": 32,
+        "width": 282,
+        "height": 220
+      },
+      "report": null,
+      "dock": {
+        "x": 10,
+        "y": 496,
+        "width": 300,
+        "height": 82
+      },
+      "phase": "outcome",
+      "step": "result",
+      "overflow": false
+    },
+    "errors": []
+  },
+  "390x844": {
+    "route": {
+      "console": {
+        "x": 4,
+        "y": 361.7,
+        "width": 382,
+        "height": 402.09
+      },
+      "shell": {
+        "x": 4,
+        "y": 361.7,
+        "width": 382,
+        "height": 402.09
+      },
+      "rocker": {
+        "x": 11.25,
+        "y": 402.31,
+        "width": 33.22,
+        "height": 97.7
+      },
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 373
+      },
+      "dock": {
+        "x": 0,
+        "y": 767.25,
+        "width": 390,
+        "height": 76.75
+      },
+      "scroll": 0
+    },
+    "stay": {
+      "console": {
+        "x": 4,
+        "y": 361.7,
+        "width": 382,
+        "height": 402.09
+      },
+      "shell": {
+        "x": 4,
+        "y": 361.7,
+        "width": 382,
+        "height": 402.09
+      },
+      "rocker": {
+        "x": 11.25,
+        "y": 402.31,
+        "width": 33.22,
+        "height": 97.7
+      },
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 373
+      },
+      "dock": {
+        "x": 0,
+        "y": 767.25,
+        "width": 390,
+        "height": 76.75
+      },
+      "scroll": 0,
+      "rows": [
+        {
+          "height": 82.328125,
+          "right": 343.984375,
+          "description": "none",
+          "descriptionText": "시간을 들여 직접 주변을 확인한다. 무엇을 마주칠지는 알 수 없다.",
+          "descriptionSize": 10.5,
+          "titleSize": 13.65,
+          "iconSize": 40.9375
+        },
+        {
+          "height": 82.328125,
+          "right": 343.984375,
+          "description": "none",
+          "descriptionText": "식사와 간이 정비를 준비하고, 동료와 오늘의 길을 돌아본다.",
+          "descriptionSize": 10.5,
+          "titleSize": 13.65,
+          "iconSize": 40.9375
+        },
+        {
+          "height": 82.328125,
+          "right": 343.984375,
+          "description": "none",
+          "descriptionText": "부품 1개로 현재 손상을 수리한다.",
+          "descriptionSize": 10.5,
+          "titleSize": 13.65,
+          "iconSize": 40.9375
+        },
+        {
+          "height": 82.328125,
+          "right": 343.984375,
+          "description": "none",
+          "descriptionText": "라디오 진공관이 필요하다.",
+          "descriptionSize": 10.5,
+          "titleSize": 13.65,
+          "iconSize": 40.9375
+        }
+      ]
+    },
+    "beats": [
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12.62,
+          "width": 390,
+          "height": 832.0
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23.62,
+          "width": 370,
+          "height": 745.0
+        },
+        "scene": {
+          "x": 21,
+          "y": 32.5,
+          "width": 348,
+          "height": 438.87
+        },
+        "report": {
+          "x": 21,
+          "y": 483.38,
+          "width": 348,
+          "height": 160.61
+        },
+        "dock": {
+          "x": 10,
+          "y": 768.39,
+          "width": 370,
+          "height": 76
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 390,
+          "height": 832
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 370,
+          "height": 745
+        },
+        "scene": {
+          "x": 21,
+          "y": 32,
+          "width": 348,
+          "height": 438.88
+        },
+        "report": {
+          "x": 21,
+          "y": 482.88,
+          "width": 348,
+          "height": 160.61
+        },
+        "dock": {
+          "x": 10,
+          "y": 768,
+          "width": 370,
+          "height": 76
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 390,
+          "height": 832
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 370,
+          "height": 745
+        },
+        "scene": {
+          "x": 21,
+          "y": 32,
+          "width": 348,
+          "height": 438.88
+        },
+        "report": {
+          "x": 21,
+          "y": 482.88,
+          "width": 348,
+          "height": 160.61
+        },
+        "dock": {
+          "x": 10,
+          "y": 768,
+          "width": 370,
+          "height": 76
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 390,
+          "height": 832
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 370,
+          "height": 547.47
+        },
+        "scene": {
+          "x": 21,
+          "y": 32,
+          "width": 348,
+          "height": 451.47
+        },
+        "report": {
+          "x": 21,
+          "y": 495.47,
+          "width": 348,
+          "height": 62
+        },
+        "dock": {
+          "x": 10,
+          "y": 570.47,
+          "width": 370,
+          "height": 273.53
+        },
+        "phase": "event",
+        "step": "decision",
+        "overflow": false
+      }
+    ],
+    "decision": {
+      "sheet": {
+        "x": 0,
+        "y": 12,
+        "width": 390,
+        "height": 832
+      },
+      "scroll": {
+        "x": 10,
+        "y": 23,
+        "width": 370,
+        "height": 547.47
+      },
+      "scene": {
+        "x": 21,
+        "y": 32,
+        "width": 348,
+        "height": 451.47
+      },
+      "report": {
+        "x": 21,
+        "y": 495.47,
+        "width": 348,
+        "height": 62
+      },
+      "dock": {
+        "x": 10,
+        "y": 570.47,
+        "width": 370,
+        "height": 273.53
+      },
+      "phase": "event",
+      "step": "decision",
+      "overflow": false
+    },
+    "outcome": {
+      "sheet": {
+        "x": 0,
+        "y": 12,
+        "width": 390,
+        "height": 832
+      },
+      "scroll": {
+        "x": 10,
+        "y": 23,
+        "width": 370,
+        "height": 739
+      },
+      "scene": {
+        "x": 21,
+        "y": 32,
+        "width": 348,
+        "height": 320.72
+      },
+      "report": null,
+      "dock": {
+        "x": 10,
+        "y": 762,
+        "width": 370,
+        "height": 82
+      },
+      "phase": "outcome",
+      "step": "result",
+      "overflow": false
+    },
+    "errors": []
+  },
+  "475x948": {
+    "route": {
+      "console": {
+        "x": 4,
+        "y": 359.75,
+        "width": 467,
+        "height": 491.58
+      },
+      "shell": {
+        "x": 4,
+        "y": 359.75,
+        "width": 467,
+        "height": 491.58
+      },
+      "rocker": {
+        "x": 12.86,
+        "y": 409.39,
+        "width": 40.62,
+        "height": 119.45
+      },
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 377
+      },
+      "dock": {
+        "x": 0,
+        "y": 854.53,
+        "width": 475,
+        "height": 93.47
+      },
+      "scroll": 0
+    },
+    "stay": {
+      "console": {
+        "x": 4,
+        "y": 359.75,
+        "width": 467,
+        "height": 491.58
+      },
+      "shell": {
+        "x": 4,
+        "y": 359.75,
+        "width": 467,
+        "height": 491.58
+      },
+      "rocker": {
+        "x": 12.86,
+        "y": 409.39,
+        "width": 40.62,
+        "height": 119.45
+      },
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 377
+      },
+      "dock": {
+        "x": 0,
+        "y": 854.53,
+        "width": 475,
+        "height": 93.47
+      },
+      "scroll": 0,
+      "rows": [
+        {
+          "height": 100.640625,
+          "right": 419.640625,
+          "description": "none",
+          "descriptionText": "시간을 들여 직접 주변을 확인한다. 무엇을 마주칠지는 알 수 없다.",
+          "descriptionSize": 10.5,
+          "titleSize": 16,
+          "iconSize": 49.875
+        },
+        {
+          "height": 100.640625,
+          "right": 419.640625,
+          "description": "none",
+          "descriptionText": "식사와 간이 정비를 준비하고, 동료와 오늘의 길을 돌아본다.",
+          "descriptionSize": 10.5,
+          "titleSize": 16,
+          "iconSize": 49.875
+        },
+        {
+          "height": 100.640625,
+          "right": 419.640625,
+          "description": "none",
+          "descriptionText": "부품 1개로 현재 손상을 수리한다.",
+          "descriptionSize": 10.5,
+          "titleSize": 16,
+          "iconSize": 49.875
+        },
+        {
+          "height": 100.640625,
+          "right": 419.640625,
+          "description": "none",
+          "descriptionText": "라디오 진공관이 필요하다.",
+          "descriptionSize": 10.5,
+          "titleSize": 16,
+          "iconSize": 49.875
+        }
+      ]
+    },
+    "beats": [
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12.63,
+          "width": 475,
+          "height": 936.0
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23.63,
+          "width": 455,
+          "height": 847.16
+        },
+        "scene": {
+          "x": 21,
+          "y": 32.49,
+          "width": 433,
+          "height": 460.0
+        },
+        "report": {
+          "x": 21,
+          "y": 504.49,
+          "width": 433,
+          "height": 199.84
+        },
+        "dock": {
+          "x": 10,
+          "y": 870.65,
+          "width": 455,
+          "height": 77.84
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 475,
+          "height": 936
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 455,
+          "height": 847.16
+        },
+        "scene": {
+          "x": 21,
+          "y": 32,
+          "width": 433,
+          "height": 460
+        },
+        "report": {
+          "x": 21,
+          "y": 504,
+          "width": 433,
+          "height": 199.84
+        },
+        "dock": {
+          "x": 10,
+          "y": 870.16,
+          "width": 455,
+          "height": 77.84
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 475,
+          "height": 936
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 455,
+          "height": 847.16
+        },
+        "scene": {
+          "x": 21,
+          "y": 32,
+          "width": 433,
+          "height": 460
+        },
+        "report": {
+          "x": 21,
+          "y": 504,
+          "width": 433,
+          "height": 199.84
+        },
+        "dock": {
+          "x": 10,
+          "y": 870.16,
+          "width": 455,
+          "height": 77.84
+        },
+        "phase": "event",
+        "step": "beat",
+        "overflow": false
+      },
+      {
+        "sheet": {
+          "x": 0,
+          "y": 12,
+          "width": 475,
+          "height": 936
+        },
+        "scroll": {
+          "x": 10,
+          "y": 23,
+          "width": 455,
+          "height": 591.19
+        },
+        "scene": {
+          "x": 21,
+          "y": 32,
+          "width": 433,
+          "height": 495.19
+        },
+        "report": {
+          "x": 21,
+          "y": 539.19,
+          "width": 433,
+          "height": 62
+        },
+        "dock": {
+          "x": 10,
+          "y": 614.19,
+          "width": 455,
+          "height": 333.81
+        },
+        "phase": "event",
+        "step": "decision",
+        "overflow": false
+      }
+    ],
+    "decision": {
+      "sheet": {
+        "x": 0,
+        "y": 12,
+        "width": 475,
+        "height": 936
+      },
+      "scroll": {
+        "x": 10,
+        "y": 23,
+        "width": 455,
+        "height": 591.19
+      },
+      "scene": {
+        "x": 21,
+        "y": 32,
+        "width": 433,
+        "height": 495.19
+      },
+      "report": {
+        "x": 21,
+        "y": 539.19,
+        "width": 433,
+        "height": 62
+      },
+      "dock": {
+        "x": 10,
+        "y": 614.19,
+        "width": 455,
+        "height": 333.81
+      },
+      "phase": "event",
+      "step": "decision",
+      "overflow": false
+    },
+    "outcome": {
+      "sheet": {
+        "x": 0,
+        "y": 12,
+        "width": 475,
+        "height": 936
+      },
+      "scroll": {
+        "x": 10,
+        "y": 23,
+        "width": 455,
+        "height": 843
+      },
+      "scene": {
+        "x": 21,
+        "y": 32,
+        "width": 433,
+        "height": 330
+      },
+      "report": null,
+      "dock": {
+        "x": 10,
+        "y": 866,
+        "width": 455,
+        "height": 82
+      },
+      "phase": "outcome",
+      "step": "result",
+      "overflow": false
+    },
+    "errors": []
+  }
+}
