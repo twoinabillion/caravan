@@ -2023,6 +2023,13 @@ const UI = (()=>{
     add(evd&&evd.locEvent&&D.nodeScenes&&D.nodeScenes[evd.locEvent]);
     if(keys.length) return keys;
     const fallbackType=evd&&((evd.ai||evd.type==='추적')?'추적':evd.type);
+    /* 인물이 명시된 스토리에 최종 동료 단체사진을 임의로 붙이지 않는다.
+       전용 컷이 없으면 먼저 실제 현재 장소를 보여 주고, 그것도 없을 때만
+       타입 공용 컷을 쓴다. 조우·위기·탐색은 기존 공용 행동 컷을 유지한다. */
+    if(fallbackType==='스토리'||fallbackType==='대화'){
+      add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.at]);
+      if(keys.length) return keys;
+    }
     add(fallbackType&&D.eventSceneTypes&&D.eventSceneTypes[fallbackType]);
     if(keys.length) return keys;
     add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.at]);

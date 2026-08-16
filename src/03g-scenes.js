@@ -86,6 +86,9 @@ D.scenes = {
   'generic-cheollian':'__SCENE_GENERIC_CHEOLLIAN__',
   'generic-story':'__SCENE_GENERIC_STORY__',
   'library-bus':'__SCENE_LIBRARY_BUS__',
+  'resistance-contact':'__SCENE_RESISTANCE_CONTACT__',
+  'sea-captain-contact':'__SCENE_SEA_CAPTAIN_CONTACT__',
+  'gangneung-hospital-build':'__SCENE_GANGNEUNG_HOSPITAL_BUILD__',
   'minji-toolbox':'__SCENE_MINJI_TOOLBOX__',
   'parkss-clinic':'__SCENE_PARKSS_CLINIC__',
   'leo-rooftop-song':'__SCENE_LEO_ROOFTOP_SONG__',
@@ -192,6 +195,9 @@ D.scenes = {
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
+  'resistance-contact':'비 내리는 국도 갓길에서 이동 도서관 버스, 자전거, 오토바이 사이에 기록을 펼친 한별·우편부·지도장이',
+  'sea-captain-contact':'남해안 방파제에서 그물 속 방수 해도 꾸러미를 손질하는 김 선장과 뒤편의 낡은 어선',
+  'gangneung-hospital-build':'거친 동해 바닷가 폐병원에 벽돌을 나르고 창을 끼우며 병원을 다시 세우는 강릉 사람들',
   'recruit-minji-welding':'폐차장 차 더미 위에서 용접하는 민지와 아래에 선 달구지',
   'recruit-parkss-bus-overturned':'옆으로 넘어진 버스 안에서 약 상자를 먼저 내미는 박 선생',
   'recruit-leo-hitch-gesture':'젖은 밤길에서 엄지를 든 레오와 꼬리를 흔드는 보리',
@@ -209,7 +215,7 @@ const sceneCompanionId = key => {
   return match?match[1]:'';
 };
 const sceneFormatFor = key => {
-  if(sceneCompanionId(key)||/^(minji-toolbox|parkss-clinic|leo-rooftop-song|jaeyi-ledger|eunsu-last-shift|library-bus)$/.test(key)) return 'character';
+  if(sceneCompanionId(key)||/^(minji-toolbox|parkss-clinic|leo-rooftop-song|jaeyi-ledger|eunsu-last-shift|library-bus|resistance-contact|sea-captain-contact)$/.test(key)) return 'character';
   if(/^(trace-|frequency-tape|postman-letter|grandfather-envelope|family-verification-key|story-generation-form|story-generation-speech)$/.test(key)) return 'detail';
   if(/^(combat-|roadcrew-|route-)/.test(key)) return 'action';
   return 'place';

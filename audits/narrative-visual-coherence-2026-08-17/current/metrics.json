@@ -1,0 +1,222 @@
+{
+  "captures": {
+    "resist_opening": {
+      "title": "",
+      "sceneKey": "generic-story",
+      "sceneAlt": "접선 · 1번째 장면",
+      "reportText": "1 / 4\n접선\n장면\n국도 갓길, 이동 도서관 버스가 서 있다. 그런데 오늘은 사서 한별 옆에 낯선 이들이 있다. 자전거 우편부, 오토바이 지도장이. 셋이 모여 뭔가를 논의 중이다.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "resist_outcome": {
+      "title": "",
+      "sceneKey": "generic-story",
+      "sceneAlt": "접선 · 14번째 장면",
+      "reportText": "결과 · 14 / 14\n접선\n???\n걔가 당신들을 들여다보는 동안, 당신들은 안으로 들어가요.",
+      "choices": [
+        "길로 돌아가기"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "library_meeting": {
+      "title": "",
+      "sceneKey": "library-bus",
+      "sceneAlt": "책 말리는 사람 · 1번째 장면",
+      "reportText": "1 / 4\n책 말리는 사람\n장면\n갓길에 낡은 마을버스가 서 있다. 차체에 페인트로 큼직하게 —",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "parkss_meeting": {
+      "title": "",
+      "sceneKey": "recruit-parkss-bus-overturned",
+      "sceneAlt": "옆으로 넘어진 버스 안에서 약 상자를 먼저 내미는 박 선생 · 1번째 장면",
+      "reportText": "1 / 3\n넘어진 버스\n장면\n시외버스가 옆으로 누워 있다. 사고는 오래전인데— 안에서 소리가 난다.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "sea_cell": {
+      "title": "",
+      "sceneKey": "generic-story",
+      "sceneAlt": "해도의 김 선장 · 1번째 장면",
+      "reportText": "1 / 2\n해도의 김 선장\n장면\n항구 방파제. 소금기에 전 노인이 낡은 어선 앞에서 그물을 손질하고 있다. 우리를 위아래로 훑더니, 대뜸.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "gangneung_hospital": {
+      "title": "",
+      "sceneKey": "arrival-gangneung",
+      "sceneAlt": "강릉 — 세우는 사람들 · 1번째 장면",
+      "reportText": "1 / 5\n강릉 — 세우는 사람들\n장면\n경포 바닷가. 폐병원 건물에 사람들이 붙어 뭔가를 짓고 있다. 벽돌을 나르고, 유리를 끼우고.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 540,
+      "imageHeight": 900
+    }
+  },
+  "analysis": {
+    "resistReveal": {
+      "firstScene": "generic-story",
+      "freshMidEligible": true,
+      "prerequisiteFields": {}
+    },
+    "genericStory": {
+      "count": 210,
+      "namedCount": 188,
+      "namedExamples": [
+        {
+          "id": "talk_mj_01",
+          "title": "민지 — 라체트"
+        },
+        {
+          "id": "talk_mj_02",
+          "title": "민지 — 첫차"
+        },
+        {
+          "id": "talk_mj_03",
+          "title": "민지 — 손"
+        },
+        {
+          "id": "talk_mj_04",
+          "title": "민지 — 단것"
+        },
+        {
+          "id": "talk_mj_05",
+          "title": "민지 — 소리"
+        },
+        {
+          "id": "talk_mj_06",
+          "title": "민지 — 88.9"
+        },
+        {
+          "id": "talk_mj_07",
+          "title": "민지 — 운전 교습"
+        },
+        {
+          "id": "talk_mj_08",
+          "title": "민지 — 정비소"
+        },
+        {
+          "id": "talk_mj_09",
+          "title": "민지 — 무서운 것"
+        },
+        {
+          "id": "talk_mj_10",
+          "title": "민지 — 반쪽 공구함"
+        },
+        {
+          "id": "talk_pss_01",
+          "title": "박선생 — 아재개그"
+        },
+        {
+          "id": "talk_pss_02",
+          "title": "박선생 — 약상자"
+        },
+        {
+          "id": "talk_pss_04",
+          "title": "박선생 — 손맛"
+        },
+        {
+          "id": "talk_pss_05",
+          "title": "박선생 — 불면"
+        },
+        {
+          "id": "talk_pss_06",
+          "title": "박선생 — 단골들"
+        },
+        {
+          "id": "talk_pss_08",
+          "title": "박선생 — 가방의 주인"
+        },
+        {
+          "id": "talk_pss_09",
+          "title": "박선생 — 북쪽 약국"
+        },
+        {
+          "id": "talk_pss_10",
+          "title": "박선생 — 처방전"
+        },
+        {
+          "id": "talk_kw_01",
+          "title": "강우 — 침묵"
+        },
+        {
+          "id": "talk_kw_02",
+          "title": "강우 — 커피 취향"
+        },
+        {
+          "id": "talk_kw_03",
+          "title": "강우 — 스트레칭"
+        },
+        {
+          "id": "talk_kw_04",
+          "title": "강우 — 지도 읽기"
+        },
+        {
+          "id": "talk_kw_05",
+          "title": "강우 — 요리 반전"
+        },
+        {
+          "id": "talk_kw_06",
+          "title": "강우 — 웃는 법"
+        },
+        {
+          "id": "talk_kw_07",
+          "title": "강우 — 개인 정비"
+        },
+        {
+          "id": "talk_kw_08",
+          "title": "강우 — 후임"
+        },
+        {
+          "id": "talk_kw_09",
+          "title": "강우 — 무서운 것"
+        },
+        {
+          "id": "talk_kw_10",
+          "title": "강우 — 뒷자리"
+        },
+        {
+          "id": "talk_leo_01",
+          "title": "레오 — 코드 하나"
+        },
+        {
+          "id": "talk_leo_02",
+          "title": "레오 — 별명 공장"
+        }
+      ]
+    },
+    "parkssPacing": {
+      "eventLocation": {
+        "kind": "waypoint",
+        "progress": 0.52,
+        "routes": [
+          [
+            "gumi",
+            "gimcheon"
+          ],
+          [
+            "gimcheon",
+            "sangju"
+          ]
+        ]
+      },
+      "hasMinimumDay": false,
+      "busanToEncounterKm": 139.52,
+      "rawDrivingSeconds": 87.01871101871102
+    }
+  }
+}

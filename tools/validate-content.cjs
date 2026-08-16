@@ -153,6 +153,10 @@ for (const event of events) {
   if (event.locEvent) need(!!D.nodes[event.locEvent], where, `locEvent가 없는 장소 ${event.locEvent}`);
   for (const key of ['needsComp', 'needsComp2', 'noComp'])
     if (event[key]) need(compIds.has(event[key]), where, `없는 동료 게이트 ${key}:${event[key]}`);
+  if(event.needFlags!==undefined){
+    need(Array.isArray(event.needFlags)&&event.needFlags.length>0, where, 'needFlags가 비었거나 배열이 아님');
+    for(const flag of event.needFlags||[]) need(typeof flag==='string'&&flag.trim(), where, 'needFlags에 빈 플래그가 있음');
+  }
   for (const key of ['needKnowledge', 'noKnowledge']) if (event[key]) {
     need(Array.isArray(event[key]) && knowledgeIds.has(event[key][0]), where, `없는 지식 게이트 ${event[key] && event[key][0]}`);
     need(Array.isArray(event[key]) && [1, 2].includes(event[key][1]), where, `${key} 단계는 1 또는 2여야 함`);
@@ -230,6 +234,19 @@ for (const id of Object.keys(D.nodes || {})) {
 }
 for (const [id, scene] of Object.entries(D.eventScenes || {}))
   need(!!D.scenes[scene], `eventScene:${id}`, `없는 장면 ${scene}`);
+const criticalNarrativeScenes={
+  resist_reveal:'resistance-contact',
+  cell_sea_meet:'sea-captain-contact',
+  gw_gangneung:'gangneung-hospital-build'
+};
+for(const [id,scene] of Object.entries(criticalNarrativeScenes))
+  need(D.eventScenes&&D.eventScenes[id]===scene, `narrativeScene:${id}`, `전용 장면 ${scene} 연결이 없음`);
+{
+  const contact=eventById.get('resist_reveal');
+  const required=['library_met','postman_met','mapmaker_met'];
+  for(const flag of required) need(contact&&Array.isArray(contact.needFlags)&&contact.needFlags.includes(flag),
+    'event:resist_reveal', `만남 선행 조건 ${flag} 누락`);
+}
 for (const [id, turns] of Object.entries(D.eventTurnScenes || {})) {
   need(eventById.has(id), `turnScenes:${id}`, '이벤트가 없음');
   for (const scene of Object.values(turns)) need(!!D.scenes[scene], `turnScenes:${id}`, `없는 장면 ${scene}`);

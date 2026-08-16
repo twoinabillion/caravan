@@ -1,0 +1,228 @@
+{
+  "captures": {
+    "resist_opening": {
+      "title": "",
+      "sceneKey": "resistance-contact",
+      "sceneAlt": "비 내리는 국도 갓길에서 이동 도서관 버스, 자전거, 오토바이 사이에 기록을 펼친 한별·우편부·지도장이 · 1번째 장면",
+      "reportText": "1 / 5\n접선\n장면\n국도 갓길에 전에 만난 이동 도서관 버스가 서 있다. 한별 옆에는 자전거 우편부와 오토바이 지도장이가 먼저 와 있다. 셋이 젖은 지도와 이송표를 접이식 탁자에 펼쳐 놓았다.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "resist_outcome": {
+      "title": "",
+      "sceneKey": "resistance-contact",
+      "sceneAlt": "비 내리는 국도 갓길에서 이동 도서관 버스, 자전거, 오토바이 사이에 기록을 펼친 한별·우편부·지도장이 · 14번째 장면",
+      "reportText": "결과 · 14 / 14\n접선\n한별\n당신들은 안에서 묻고, 우리는 밖에서 기록을 남길게요.",
+      "choices": [
+        "길로 돌아가기"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "library_meeting": {
+      "title": "",
+      "sceneKey": "library-bus",
+      "sceneAlt": "책 말리는 사람 · 1번째 장면",
+      "reportText": "1 / 4\n책 말리는 사람\n장면\n갓길에 낡은 마을버스가 서 있다. 차체에 페인트로 큼직하게 —",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "parkss_meeting": {
+      "title": "",
+      "sceneKey": "recruit-parkss-bus-overturned",
+      "sceneAlt": "옆으로 넘어진 버스 안에서 약 상자를 먼저 내미는 박 선생 · 1번째 장면",
+      "reportText": "1 / 3\n넘어진 버스\n장면\n시외버스가 옆으로 누워 있다. 사고는 오래전인데— 안에서 소리가 난다.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "sea_cell": {
+      "title": "",
+      "sceneKey": "sea-captain-contact",
+      "sceneAlt": "남해안 방파제에서 그물 속 방수 해도 꾸러미를 손질하는 김 선장과 뒤편의 낡은 어선 · 1번째 장면",
+      "reportText": "1 / 2\n해도의 김 선장\n장면\n항구 방파제. 소금기에 전 노인이 낡은 어선 앞에서 그물을 손질하고 있다. 그물 안에는 비닐로 여러 겹 싼 해도 꾸러미가 걸려 있다. 노인이 달구지의 흰 X를 확인하고 나서야 입을 연다.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
+    "gangneung_hospital": {
+      "title": "",
+      "sceneKey": "gangneung-hospital-build",
+      "sceneAlt": "거친 동해 바닷가 폐병원에 벽돌을 나르고 창을 끼우며 병원을 다시 세우는 강릉 사람들 · 1번째 장면",
+      "reportText": "1 / 5\n강릉 — 세우는 사람들\n장면\n경포 바닷가. 폐병원 건물에 사람들이 붙어 뭔가를 짓고 있다. 벽돌을 나르고, 유리를 끼우고.",
+      "choices": [
+        "계속"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    }
+  },
+  "analysis": {
+    "resistReveal": {
+      "firstScene": "resistance-contact",
+      "freshMidEligible": false,
+      "prerequisiteFields": {
+        "needFlags": [
+          "library_met",
+          "postman_met",
+          "mapmaker_met"
+        ]
+      }
+    },
+    "genericStory": {
+      "count": 208,
+      "namedCount": 187,
+      "namedExamples": [
+        {
+          "id": "talk_mj_01",
+          "title": "민지 — 라체트"
+        },
+        {
+          "id": "talk_mj_02",
+          "title": "민지 — 첫차"
+        },
+        {
+          "id": "talk_mj_03",
+          "title": "민지 — 손"
+        },
+        {
+          "id": "talk_mj_04",
+          "title": "민지 — 단것"
+        },
+        {
+          "id": "talk_mj_05",
+          "title": "민지 — 소리"
+        },
+        {
+          "id": "talk_mj_06",
+          "title": "민지 — 88.9"
+        },
+        {
+          "id": "talk_mj_07",
+          "title": "민지 — 운전 교습"
+        },
+        {
+          "id": "talk_mj_08",
+          "title": "민지 — 정비소"
+        },
+        {
+          "id": "talk_mj_09",
+          "title": "민지 — 무서운 것"
+        },
+        {
+          "id": "talk_mj_10",
+          "title": "민지 — 반쪽 공구함"
+        },
+        {
+          "id": "talk_pss_01",
+          "title": "박선생 — 아재개그"
+        },
+        {
+          "id": "talk_pss_02",
+          "title": "박선생 — 약상자"
+        },
+        {
+          "id": "talk_pss_04",
+          "title": "박선생 — 손맛"
+        },
+        {
+          "id": "talk_pss_05",
+          "title": "박선생 — 불면"
+        },
+        {
+          "id": "talk_pss_06",
+          "title": "박선생 — 단골들"
+        },
+        {
+          "id": "talk_pss_08",
+          "title": "박선생 — 가방의 주인"
+        },
+        {
+          "id": "talk_pss_09",
+          "title": "박선생 — 북쪽 약국"
+        },
+        {
+          "id": "talk_pss_10",
+          "title": "박선생 — 처방전"
+        },
+        {
+          "id": "talk_kw_01",
+          "title": "강우 — 침묵"
+        },
+        {
+          "id": "talk_kw_02",
+          "title": "강우 — 커피 취향"
+        },
+        {
+          "id": "talk_kw_03",
+          "title": "강우 — 스트레칭"
+        },
+        {
+          "id": "talk_kw_04",
+          "title": "강우 — 지도 읽기"
+        },
+        {
+          "id": "talk_kw_05",
+          "title": "강우 — 요리 반전"
+        },
+        {
+          "id": "talk_kw_06",
+          "title": "강우 — 웃는 법"
+        },
+        {
+          "id": "talk_kw_07",
+          "title": "강우 — 개인 정비"
+        },
+        {
+          "id": "talk_kw_08",
+          "title": "강우 — 후임"
+        },
+        {
+          "id": "talk_kw_09",
+          "title": "강우 — 무서운 것"
+        },
+        {
+          "id": "talk_kw_10",
+          "title": "강우 — 뒷자리"
+        },
+        {
+          "id": "talk_leo_01",
+          "title": "레오 — 코드 하나"
+        },
+        {
+          "id": "talk_leo_02",
+          "title": "레오 — 별명 공장"
+        }
+      ]
+    },
+    "parkssPacing": {
+      "eventLocation": {
+        "kind": "waypoint",
+        "progress": 0.52,
+        "routes": [
+          [
+            "gumi",
+            "gimcheon"
+          ],
+          [
+            "gimcheon",
+            "sangju"
+          ]
+        ]
+      },
+      "hasMinimumDay": false,
+      "busanToEncounterKm": 139.52,
+      "rawDrivingSeconds": 87.01871101871102
+    }
+  }
+}

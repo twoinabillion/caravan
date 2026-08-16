@@ -605,6 +605,7 @@ G.eventAvailable = (ev,context={})=>{
   }
   if(ev.needFlag&&!S.flags[ev.needFlag]) return false;
   if(ev.needFlag2&&!S.flags[ev.needFlag2]) return false;
+  if(Array.isArray(ev.needFlags)&&ev.needFlags.some(flag=>!S.flags[flag])) return false;
   if(ev.needKnowledge&&G.knowledgeLevel(ev.needKnowledge[0])<ev.needKnowledge[1]) return false;
   if(ev.noKnowledge&&G.knowledgeLevel(ev.noKnowledge[0])>=ev.noKnowledge[1]) return false;
   if(ev.needWx&&S.wx!==ev.needWx) return false;

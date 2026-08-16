@@ -180,6 +180,7 @@ for (const id of personIds) {
 const eventById = new Map(allEvents.map(event => [event.id, event]));
 const speakerIds = new Set([
   ...Object.keys(D.comps || {}), ...Object.keys(D.npcs || {}),
+  ...Object.values(D.eventPortraits || {}), ...(D.legacyIllustratedPortraits || []),
   'me','나','sys','record','radio','cheollian','grandfather','mother','father',
   'player_child','intro_child','unknown','passer_man','passer_woman','passer_elder',
   'passer_child','passer_merchant','passer_guard','passer_refugee','passer_worker',
@@ -192,17 +193,35 @@ const validateSpeaker = (value, scope) => {
   if(value&&typeof value==='object'&&value.kind==='dialogue'&&!value.name)
     errors.push(`익명 대화 화자 이름 누락: ${scope} / ${who}`);
 };
+const strictSpeakerEvents=new Set(['resist_reveal','cell_sea_meet','gw_gangneung','meet_mapmaker']);
 for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
   const event=eventById.get(eventId);
   if(!event){ errors.push(`화자 스크립트의 사건 누락: ${eventId}`); continue; }
+  if(strictSpeakerEvents.has(eventId)&&script.text&&typeof event.text==='string'&&script.text.length!==quotedParts(event.text).length)
+    errors.push(`본문 화자 수와 발화 수 불일치: ${eventId} / 화자 ${script.text.length} · 발화 ${quotedParts(event.text).length}`);
   for(const [index,value] of (script.text||[]).entries()) validateSpeaker(value,`${eventId}.text.${index}`);
   for(const [path, speakers] of Object.entries(script.choices||{})){
     const [choiceIndex,outcomeIndex]=path.split('.').map(Number);
     const outcome=event.choices&&event.choices[choiceIndex]&&event.choices[choiceIndex].out
       &&event.choices[choiceIndex].out[outcomeIndex];
     if(!outcome) errors.push(`화자 스크립트 결과 경로 누락: ${eventId} / ${path}`);
+    if(strictSpeakerEvents.has(eventId)&&outcome&&typeof outcome.text==='string'&&speakers.length!==quotedParts(outcome.text).length)
+      errors.push(`결과 화자 수와 발화 수 불일치: ${eventId}.${path} / 화자 ${speakers.length} · 발화 ${quotedParts(outcome.text).length}`);
     for(const [index,value] of (speakers||[]).entries()) validateSpeaker(value,`${eventId}.${path}.${index}`);
   }
+}
+for(const id of ['resist_reveal','cell_sea_meet','gw_gangneung']){
+  if(!D.eventTurnScripts||!D.eventTurnScripts[id]) errors.push(`핵심 서사 화자 스크립트 누락: ${id}`);
+}
+const groundedDialogueBreaks=[
+  /천리안이 다음 행동을 자꾸 틀리는 차/,
+  /완벽하려고 하니까,? 안 변하는 것만 지배/,
+  /바다가 물어보더라고/,
+  /넷 정도 깊게 쌓이면 관문이 반응/
+];
+for(const sample of samples){
+  const hit=groundedDialogueBreaks.find(pattern=>pattern.test(sample.text));
+  if(hit) errors.push(`근거 없이 앞일을 단정하는 대사: ${sample.scope} / ${sample.text}`);
 }
 for (const event of allEvents) {
   for (const [choiceIndex,choice] of (event.choices||[]).entries()) {

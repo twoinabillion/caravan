@@ -833,7 +833,7 @@ with sync_playwright() as p:
         !!document.querySelector('#ev-sheet [data-story-entry]');
       document.querySelector('#ev-sheet .story-next')?.click();
       const secondFrame=document.querySelector('#ev-sheet .event-scene-frame');
-      out.turnSceneStable=!!firstCut&&firstScene==='generic-story' &&
+      out.turnSceneStable=!!firstCut&&!!firstScene &&
         secondFrame.dataset.cutToken===firstCut &&
         secondFrame.dataset.sceneKey===firstScene;
       UI.finishStory();
@@ -1183,7 +1183,7 @@ with sync_playwright() as p:
     check('천리안 거리·연쇄 게이트', r4['roadTooFar'] and r4['roadInRange'] and r4['roadChainClosed'] and r4['roadChainOpen'], str(r4))
     check('달구지 생활 반응 6종', r4['upStories'] == 6, str(r4['upStories']))
     check('동료 조합 사건 4종', r4['duoStories'] == 4, str(r4['duoStories']))
-    check('시네마틱 이미지 187종·빌드 주입', r4['sceneCount'] == 187 and r4['sceneDataReady'], str(r4))
+    check('시네마틱 이미지 190종 이상·빌드 주입', r4['sceneCount'] >= 190 and r4['sceneDataReady'], str(r4))
     check('김천 노선 선택·청주까지 경로 잠금', r4['routeChoice'], str(r4))
     check('김천 두 노선은 지도 거리·시간·연료 범위만 표시하고 현장 정보는 숨긴다', r4['routeForecast'], str(r4))
     check('비살상 구조·호송 3단계 임무와 장부 기록',
