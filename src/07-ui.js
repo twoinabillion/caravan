@@ -878,6 +878,7 @@ const UI = (()=>{
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   })[ch]);
   const stripTags=(v)=>String(v||'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
+  const portraitIsPresentationReady=(id)=>!(D.legacyIllustratedPortraits||[]).includes(id);
   function speakerInfo(who, label){
     const key=who==='나'?'me':who;
     const normalizeUnknown=(id)=>{
@@ -903,7 +904,7 @@ const UI = (()=>{
     return {
       id:key,
       name:label||(key==='me'?playerName:(comp&&comp.name)||(npc&&npc.name)||resolvedManual),
-      portrait:D.portraits&&D.portraits[key]||null
+      portrait:portraitIsPresentationReady(key)&&(D.portraits&&D.portraits[key]||null)
     };
   }
   function storyTurnHtml(turn, opt={}){
@@ -3458,6 +3459,11 @@ const UI = (()=>{
     if(stTab!=='now'&&stTab!=='journey') return false;
     const prop=$('#status-prop'), b=$('#st-body');
     const clock=G.fmtClock();
+    const surface=stTab==='journey'?'goal':'bag';
+    /* 목표와 가방은 같은 오버레이를 공유하지만 렌더 상태는 섞지 않는다.
+       이전 화면 DOM을 먼저 비우고 root 계약을 바꿔 stale 레이어가 남지 않게 한다. */
+    b.replaceChildren();
+    prop.dataset.toolSurface=surface;
     $('#status-title').textContent=stTab==='journey'?'현재 목표':'가방과 보급';
     $('#st-mini').textContent=clock;
     prop.className=`road-tool-prop ${stTab==='journey'?'goal-folio':'bag-supply-roll'}`;
@@ -3546,6 +3552,7 @@ const UI = (()=>{
   function renderStatus(){
     if(renderInteractiveRoadTool()) return;
     const prop=$('#status-prop');
+    delete prop.dataset.toolSurface;
     $('#st-tabs').style.cssText='';
     $('#st-tabs').removeAttribute('aria-hidden');
     prop.className=`road-tool-prop utility-sheet${stTab==='settings'?' settings-sheet':''}`;

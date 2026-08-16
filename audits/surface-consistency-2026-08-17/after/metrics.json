@@ -1,0 +1,36 @@
+{
+  "bag_selected": {
+    "propClass": "road-tool-prop bag-supply-roll",
+    "toolSurface": "bag",
+    "bagNodes": 7,
+    "visibleBagNodes": 7,
+    "goalNodes": 0,
+    "visibleGoalNodes": 0
+  },
+  "goal_after_bag": {
+    "propClass": "road-tool-prop goal-folio",
+    "toolSurface": "goal",
+    "bagNodes": 0,
+    "visibleBagNodes": 0,
+    "goalNodes": 3,
+    "visibleGoalNodes": 3
+  },
+  "bag_after_goal": {
+    "propClass": "road-tool-prop bag-supply-roll",
+    "toolSurface": "bag",
+    "bagNodes": 7,
+    "visibleBagNodes": 7,
+    "goalNodes": 0,
+    "visibleGoalNodes": 0
+  },
+  "goal_after_second_bag": {
+    "propClass": "road-tool-prop goal-folio",
+    "toolSurface": "goal",
+    "bagNodes": 0,
+    "visibleBagNodes": 0,
+    "goalNodes": 3,
+    "visibleGoalNodes": 3
+  },
+  "legacy_portrait_visible": false,
+  "canonical_portrait_visible": true
+}

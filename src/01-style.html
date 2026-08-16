@@ -670,12 +670,14 @@ input{font-family:inherit}
 .road-tool-live-head,.map-live-head{position:absolute;z-index:8;display:flex;align-items:center;min-width:0}
 .road-tool-live-head h2,.map-live-head h2{min-width:0;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .road-tool-close{min-width:44px;min-height:44px;padding:5px 8px;border:1px solid currentColor;border-radius:3px;font:800 11px/1 var(--mono)}
-#status-prop.goal-folio{background-image:url("__UI_GOAL_FOLIO_SHELL__")}
-#status-prop.bag-supply-roll{background-image:url("__UI_BAG_SUPPLY_ROLL__")}
+#status-prop.goal-folio[data-tool-surface="goal"]{background-image:url("__UI_GOAL_FOLIO_SHELL__")}
+#status-prop.bag-supply-roll[data-tool-surface="bag"]{background-image:url("__UI_BAG_SUPPLY_ROLL__")}
 #status-prop.goal-folio,#status-prop.bag-supply-roll{width:min(calc(100% - 16px),440px,var(--tool-fit-w))}
 #status-prop.goal-folio>.road-tool-live-head,#status-prop.bag-supply-roll>.road-tool-live-head{display:none}
 #status-prop.goal-folio>#st-tabs,#status-prop.bag-supply-roll>#st-tabs{display:none}
 #status-prop.goal-folio>#st-body,#status-prop.bag-supply-roll>#st-body{position:absolute;inset:0;padding:0;overflow:hidden;background:transparent}
+#status-prop:not([data-tool-surface="goal"]) .folio-live-content,
+#status-prop:not([data-tool-surface="bag"]) .bag-live-content{display:none!important}
 
 /* goal folio */
 .folio-live-content{--folio-rail-left:7.2%;--folio-rail-right:3.2%;--folio-frame-left:6.5%;--folio-frame-right:3.2%;position:absolute;inset:5.3% 12.5% 4.9% 14.3%;display:flex;min-height:0;flex-direction:column;
@@ -710,7 +712,7 @@ input{font-family:inherit}
 .folio-support-meta dd{display:block;min-width:0;margin:4% 0 0;color:#211e19;font:900 clamp(11.5px,2.6cqw,14px)/1.18 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .folio-road-button{flex:none;min-height:44px;margin:auto var(--folio-frame-right) 0 var(--folio-frame-left);border:0;color:#2b1c0f;font:950 clamp(13px,3.8cqw,21px)/1 var(--sans);text-align:center}
 /* canvas supply roll */
-.bag-live-content{position:absolute;inset:0;color:#d8d2c3;font-family:var(--sans)}
+.bag-live-content{--bag-slot-content-x:41.5%;position:absolute;inset:0;color:#d8d2c3;font-family:var(--sans)}
 .bag-title-row{position:absolute;z-index:3;top:1.65%;left:9.2%;right:9.2%;display:flex;align-items:center;justify-content:space-between;gap:8px;color:#ded7c7}
 .bag-title-row h3{font:950 clamp(17px,4.8cqw,27px)/1 var(--sans);letter-spacing:-.025em}.bag-title-row small{padding:2px 0;color:#71b9b4;font:850 clamp(9px,2cqw,11px)/1 var(--mono);letter-spacing:.02em}
 .bag-critical{position:absolute;top:5.2%;left:9.2%;right:9.2%;height:11.7%;display:grid;grid-template-columns:repeat(3,1fr)}
@@ -729,10 +731,10 @@ input{font-family:inherit}
 .bag-pockets{position:absolute;top:34.8%;left:3.9%;right:3.9%;height:36.5%;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0}
 .bag-pocket{position:relative;display:block;min-width:0;min-height:0;padding:0 3%;border:0;color:#c5c0b5;text-align:center}
 .bag-pocket.selected{color:#f1b34e;background:transparent;text-shadow:0 0 9px rgba(241,179,78,.24);box-shadow:none}.bag-pocket:focus-visible{outline:2px solid #e0a343;outline-offset:-5px}
-.bag-pocket .ico{position:absolute;top:37%;left:44%;width:clamp(43px,10.8cqw,61px);height:clamp(43px,10.8cqw,61px);object-fit:contain;image-rendering:pixelated;transform:translateX(-50%);filter:drop-shadow(0 3px 3px rgba(0,0,0,.65))}
-.bag-pocket-name{position:absolute;top:3.2%;left:-3%;right:9%;color:#ded7ca;font:900 clamp(11.5px,2.75cqw,14px)/1.1 var(--sans);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bag-pocket .ico{position:absolute;top:37%;left:var(--bag-slot-content-x);width:clamp(43px,10.8cqw,61px);height:clamp(43px,10.8cqw,61px);object-fit:contain;image-rendering:pixelated;transform:translateX(-50%);filter:drop-shadow(0 3px 3px rgba(0,0,0,.65))}
+.bag-pocket-name{position:absolute;top:3.2%;left:var(--bag-slot-content-x);width:86%;transform:translateX(-50%);color:#ded7ca;font:900 clamp(11.5px,2.75cqw,14px)/1.1 var(--sans);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bag-pocket.selected .bag-pocket-name{color:#f0b253;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
-.bag-pocket-count{position:absolute;top:62%;left:1%;right:13%;display:flex;min-height:44px;align-items:center;justify-content:center;gap:clamp(3px,1cqw,6px);border-top:1px solid rgba(203,187,151,.26);border-bottom:1px solid rgba(0,0,0,.38);background:rgba(5,7,7,.34);font-family:var(--mono);text-shadow:0 2px 2px #000}
+.bag-pocket-count{position:absolute;top:62%;left:var(--bag-slot-content-x);width:86%;transform:translateX(-50%);display:flex;min-height:44px;align-items:center;justify-content:center;gap:clamp(3px,1cqw,6px);border-top:1px solid rgba(203,187,151,.26);border-bottom:1px solid rgba(0,0,0,.38);background:rgba(5,7,7,.34);font-family:var(--mono);text-shadow:0 2px 2px #000}
 .bag-pocket-amount{display:inline-flex;align-items:baseline;gap:1px;white-space:nowrap}.bag-pocket-count b{font:950 clamp(18px,4.45cqw,24px)/1 var(--mono);font-variant-numeric:tabular-nums}.bag-pocket-count small{color:#b4ad9f;font:800 clamp(8.5px,1.75cqw,10px)/1 var(--sans)}
 .bag-pocket.selected .bag-pocket-count{border-top-color:rgba(232,173,80,.55);background:rgba(75,44,12,.34)}.bag-pocket.selected .bag-pocket-count small{color:#d9b06d}
 .bag-detail{position:absolute;top:74%;left:8%;right:8%;bottom:5%;display:grid;grid-template-columns:21% minmax(0,1fr);align-items:center;gap:3%;padding:2.4% 5% 2.1%}

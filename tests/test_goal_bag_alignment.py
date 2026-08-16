@@ -178,7 +178,7 @@ def check_viewport(playwright, width, height):
         count_center = count["x"] + count["width"] / 2
         name_center = name["x"] + name["width"] / 2
         icon_center = icon["x"] + icon["width"] / 2
-        expected_content_center = pocket_center - pocket["width"] * 0.06
+        expected_content_center = pocket["x"] + pocket["width"] * 0.415
         for content_center in (count_center, name_center, icon_center):
             assert abs(content_center - expected_content_center) <= 0.8, (
                 pocket,
@@ -244,6 +244,20 @@ def check_viewport(playwright, width, height):
         "node => getComputedStyle(node).fontVariantNumeric"
     )
     assert "tabular-nums" in numeric_variant
+
+    # A selected bag slot must not survive either visually or in the DOM after
+    # switching to Goal. Repeated switching must preserve that isolation.
+    for _ in range(2):
+        page.click("#dk-objectives")
+        page.wait_for_timeout(80)
+        assert page.locator("#status-prop").get_attribute("data-tool-surface") == "goal"
+        assert page.locator("#st-body .bag-live-content,#st-body .bag-pocket,#st-body .bag-detail").count() == 0
+        assert page.locator("#st-body .folio-live-content").count() == 1
+        page.click("#dk-status")
+        page.wait_for_timeout(80)
+        assert page.locator("#status-prop").get_attribute("data-tool-surface") == "bag"
+        assert page.locator("#st-body .folio-live-content,#st-body .folio-progress,#st-body .folio-clue").count() == 0
+        assert page.locator("#st-body .bag-live-content").count() == 1
     browser.close()
 
 

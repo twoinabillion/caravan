@@ -19,8 +19,7 @@ const MAX_BYTES = 39_000_000;   /* BGM 7슬롯 + 통합 이벤트 기록철 UI �
 const embeddedAssets = new Map();
 
 const before = [
-  'src/02-dom.html', 'src/03-data.js',
-  'src/03b-portraits.js', 'src/03c-icons.js', 'src/03d-bgm.js'
+  'src/02-dom.html', 'src/03-data.js'
 ];
 const after = [
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
@@ -102,6 +101,8 @@ const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key =>
   return dataUri(asset.path,asset.mime);
 }, 'UI');
 
+const portraits = replace(read('src/03b-portraits.js'), /__PORTRAIT_([a-z0-9_]+)__/g,
+  key => dataUri(`assets/portraits/${key}.png`, 'image/png'), '주연 초상');
 const npc = replace(read('src/03f-npc-portraits.js'), /__NPC_([a-z0-9_]+)__/g,
   key => dataUri(`assets/portraits/${key}.png`, 'image/png'), 'NPC');
 const scenes = replace(read('src/03g-scenes.js'), /__SCENE_([A-Z0-9_]+)__/g, key => {
@@ -122,11 +123,12 @@ const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__
 }, '오디오');
 
 const chunks = [
-  styles.result, ...before.map(read), title.result, audio.result, npc.result, upgrades.result, ...after.map(read)
+  styles.result, ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
+  title.result, audio.result, npc.result, upgrades.result, ...after.map(read)
 ];
 const html = chunks.join('\n');
 const htmlBytes = Buffer.byteLength(html);
-const unresolved = [...new Set(html.match(/__(?:NPC|SCENE|UPGRADE|BGM|SFX|VO)_[A-Z0-9_]+__/g) || [])];
+const unresolved = [...new Set(html.match(/__(?:PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO)_[A-Z0-9_]+__/g) || [])];
 if (unresolved.length) throw new Error(`치환되지 않은 자산: ${unresolved.slice(0, 8).join(', ')}`);
 
 const categoryOf = relative => relative.includes('/audio/')?'audio'
@@ -152,7 +154,7 @@ try {
 } finally {
   if (fs.existsSync(temporary)) fs.unlinkSync(temporary);
 }
-console.log(`✅ 서울까지400km.html ${htmlBytes} bytes · NPC ${npc.count}·장면 ${scenes.count}·업그레이드 ${upgrades.count}·오디오 ${audio.count + title.count}`);
+console.log(`✅ 서울까지400km.html ${htmlBytes} bytes · 주연 초상 ${portraits.count}·NPC ${npc.count}·장면 ${scenes.count}·업그레이드 ${upgrades.count}·오디오 ${audio.count + title.count}`);
 console.log(`📦 내장 자산 ${report.embedded.files}개 · 원본 ${report.embedded.bytes} bytes · base64 ${assetEntries.reduce((sum,item)=>sum+item.encodedBytes,0)} bytes`);
 for(const [name,row] of Object.entries(categories))
   console.log(`   ${name.padEnd(8)} ${String(row.files).padStart(3)}개 · ${String(row.encodedBytes).padStart(9)} bytes`);

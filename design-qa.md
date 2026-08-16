@@ -197,3 +197,15 @@ No blocking follow-up. Live Korean strings longer than the current test fixtures
 - Final finding: no actionable P0, P1, or P2 issue remains in the corrected paper-record alignment scope.
 
 final result: passed
+
+### Iteration 14 — passed: Goal/Bag isolation and portrait source of truth
+
+- Current-run evidence: `audits/surface-consistency-2026-08-17/after/01-bag-medicine.png` through `06-canonical-portrait-event.png`; Google Chrome at 390 × 844 CSS px.
+- P1 cross-surface state leak fixed: Goal and Bag now declare `data-tool-surface`, clear their shared body before render, and hard-hide content that does not belong to the active surface. Two repeated Bag → Goal → Bag → Goal cycles retain zero stale nodes.
+- P2 Bag alignment fixed: item name, icon, and quantity no longer use three independent offsets. All use the measured 41.5% stitched-pocket content axis at six mobile viewports.
+- P1 visual-source drift fixed: seven main-character portraits no longer keep stale base64 duplicates in source. The build directly embeds canonical `assets/portraits/*.png` files, and `tools/check-built-portraits.mjs` verifies byte-for-byte identity on every quick verification run.
+- P1 style mismatch contained: seventeen legacy illustrated NPC portraits are withheld from cinematic dialogue until coherent replacements exist; authored scenes, speaker identity, dialogue, and choices remain available.
+- Event containment: 18 portrait, narration, decision, combat, and outcome states report no text/portrait overlap, frame escape, malformed wrapping, or page error.
+- Regression evidence: `test:surface-contract`, `test:event-typography`, `test:accessibility9`, `test:smoke`, `audit:portrait-build`, and `verify:quick` passed.
+
+final result: passed

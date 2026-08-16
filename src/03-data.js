@@ -466,6 +466,13 @@ D.companionVisuals = {
   jaeyi:{portrait:'assets/portraits/jaeyi.png',anchor:'젊은 한국인 여성 재이 · 짧고 헝클어진 갈색 머리 · 헤진 겨자색 작업 재킷 · 짙은 작업 바지와 장갑',avoid:'긴 머리, 올리브 조끼, 전투복, 과한 화장, 깨끗한 신품 의상'},
   eunsu:{portrait:'assets/portraits/eunsu.png',anchor:'성인 한국인 여성 은수 · 턱선의 곧은 검은 단발 · 양쪽 귀를 덮는 큰 헤드셋 · 숯빛 후드형 관제 재킷',avoid:'긴 머리, 밝은 색 복장, 작은 이어피스, 헤드셋 삭제, 미래형 사이버 장비'}
 };
+/* 초기 삽화형 초상은 데이터·인물 식별에는 남기되 시네마틱 대화 UI에는 쓰지 않는다.
+   장면 사진과 결이 맞는 새 초상으로 교체된 뒤 이 목록에서 하나씩 해제한다. */
+D.legacyIllustratedPortraits = [
+  'deokgu','drhan','geumja','grandfather','hanbyeol','hayeosa','jaepil',
+  'kimcaptain','mansu','mapmaker','mingyu','miyoung','postman','sanjigi',
+  'seoyeon','sundeok','taeho'
+];
 /* 모든 시네마틱·주행 Canvas·트레일러가 공유하는 차량 정본.
    업그레이드는 후미 생활 박스를 늘릴 수 있지만 이 고정 표식은 바꾸지 않는다. */
 D.dalgujiVisual = {
