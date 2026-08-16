@@ -60,7 +60,7 @@ def check_viewport(playwright, width, height):
         })"""
     )
 
-    assert reader["y"] - (head["y"] + head["height"]) <= 12, {
+    assert reader["y"] - (head["y"] + head["height"]) <= 18, {
         "viewport": (width, height), "head": head, "reader": reader
     }
     assert current["y"] - reader["y"] <= 10
@@ -68,8 +68,8 @@ def check_viewport(playwright, width, height):
     assert current["y"] + current["height"] <= dock["y"]
     # Option 2 uses the approved low, rectangular field-recorder key instead
     # of the former square nav-button face.
-    assert 44 <= next_button["height"] <= 62, next_button
-    assert 118 <= next_button["width"] <= 166, next_button
+    assert 56 <= next_button["height"] <= 72, next_button
+    assert 150 <= next_button["width"] <= 194, next_button
     assert 2.5 <= next_button["width"] / next_button["height"] <= 3.1, next_button
     assert next_button["x"] >= dock["x"] + 13
     assert next_button["x"] + next_button["width"] <= dock["x"] + dock["width"] - 13
@@ -80,15 +80,22 @@ def check_viewport(playwright, width, height):
     assert page.locator(".story-next .req").count() == 0
     assert page.locator("[data-event-progress]").inner_text() == "1 / 4"
     report_start = box(page, ".event-field-report")
+    scene_start = box(page, ".event-scene-frame")
     sheet_start = box(page, "#ev-sheet")
     for expected in (2, 3, 4):
         page.click(".story-next")
         page.wait_for_timeout(90)
         assert page.locator("[data-event-progress]").inner_text() == f"{expected} / 4"
         report = box(page, ".event-field-report")
+        scene = box(page, ".event-scene-frame")
         sheet = box(page, "#ev-sheet")
         assert abs(report["width"] - report_start["width"]) <= 1
-        assert abs(report["height"] - report_start["height"]) <= 1
+        assert abs(report["x"] - report_start["x"]) <= 1
+        assert abs(report["y"] - report_start["y"]) <= 1
+        assert abs(scene["x"] - scene_start["x"]) <= 1
+        assert abs(scene["y"] - scene_start["y"]) <= 1
+        assert abs(scene["width"] - scene_start["width"]) <= 1
+        assert abs(scene["height"] - scene_start["height"]) <= 1
         assert abs(sheet["width"] - sheet_start["width"]) <= 1
         assert abs(sheet["height"] - sheet_start["height"]) <= 1
     assert page.locator("#ev-sheet").get_attribute("data-story-step") == "decision"
@@ -97,9 +104,15 @@ def check_viewport(playwright, width, height):
     assert page.locator("#ev-sheet").get_attribute("data-story-phase") == "outcome"
     assert page.locator("#ev-sheet").get_attribute("data-story-step") == "result"
     outcome_report = box(page, ".event-field-report")
+    outcome_scene = box(page, ".event-scene-frame")
     outcome_sheet = box(page, "#ev-sheet")
     assert abs(outcome_report["width"] - report_start["width"]) <= 1
-    assert abs(outcome_report["height"] - report_start["height"]) <= 1
+    assert abs(outcome_report["x"] - report_start["x"]) <= 1
+    assert abs(outcome_report["y"] - report_start["y"]) <= 1
+    assert abs(outcome_scene["x"] - scene_start["x"]) <= 1
+    assert abs(outcome_scene["y"] - scene_start["y"]) <= 1
+    assert abs(outcome_scene["width"] - scene_start["width"]) <= 1
+    assert abs(outcome_scene["height"] - scene_start["height"]) <= 1
     assert abs(outcome_sheet["width"] - sheet_start["width"]) <= 1
     assert abs(outcome_sheet["height"] - sheet_start["height"]) <= 1
     assert not errors, errors

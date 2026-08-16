@@ -2229,15 +2229,21 @@ const UI = (()=>{
   function wireEventChoicePages(dock){
     const pager=dock&&dock.querySelector('[data-choice-pages]');
     const buttons=dock?[...dock.querySelectorAll('.choices>.choice[data-i]')]:[];
-    if(!pager||buttons.length<=3) return;
-    const pageSize=3,total=Math.ceil(buttons.length/pageSize);
+    if(!pager) return;
+    const sheet=$('#ev-sheet');
+    const pageSize=(sheet&&((sheet.clientWidth||innerWidth)<350||(sheet.clientHeight||innerHeight)<650))?2:3;
+    const total=Math.ceil(buttons.length/pageSize);
+    if(total<=1){ pager.hidden=true; return; }
+    pager.hidden=false;
     let page=0;
     const label=pager.querySelector('[data-choice-page]');
+    const totalLabel=pager.querySelector('[data-choice-total]');
     const prev=pager.querySelector('[data-choice-prev]');
     const next=pager.querySelector('[data-choice-next]');
     const sync=(focus=false)=>{
       buttons.forEach((button,index)=>{ button.hidden=Math.floor(index/pageSize)!==page; });
       if(label) label.textContent=String(page+1);
+      if(totalLabel) totalLabel.textContent=String(total);
       prev.disabled=page===0;
       next.disabled=page>=total-1;
       pager.setAttribute('aria-label',`선택지 ${page+1} / ${total} 페이지`);
@@ -2279,6 +2285,8 @@ const UI = (()=>{
     sheet.dataset.storyPhase=state.phase;
     sheet.dataset.storyStep=state.phase==='outcome'?'result':last?'decision':'beat';
     sheet.dataset.storyTurn=turn&&turn.kind||'narration';
+    const portraitSpeaker=turn&&speakerInfo(turn.who,turn.name);
+    sheet.dataset.storyPortrait=portraitSpeaker&&portraitSpeaker.portrait&&!['narration','ai','radio'].includes(turn.kind)?'1':'0';
     const progress=sheet.querySelector('[data-event-progress]');
     if(progress) progress.textContent=state.phase==='outcome'
       ? `결과 · ${state.index+1} / ${state.turns.length}`
@@ -2354,7 +2362,7 @@ const UI = (()=>{
       lanes,
       sceneKeys,sceneAlt,sceneStart:0,
       finalDock:`<div class="choices" role="group" aria-label="선택지 목록">${choices.html}</div>
-        ${choicePages>1?`<div class="event-choice-pages" data-choice-pages role="group" aria-label="선택지 1 / ${choicePages} 페이지"><button type="button" data-choice-prev>이전</button><span><b data-choice-page>1</b> / ${choicePages}</span><button type="button" data-choice-next>다음</button></div>`:''}
+        ${choices.count>2?`<div class="event-choice-pages" data-choice-pages role="group" aria-label="선택지 1 / ${choicePages} 페이지"><button type="button" data-choice-prev>이전</button><span><b data-choice-page>1</b> / <b data-choice-total>${choicePages}</b></span><button type="button" data-choice-next>다음</button></div>`:''}
         ${evd.combat?`<button class="event-detail-toggle" type="button" data-event-detail aria-expanded="false">상세 정보</button>`:''}`,
       wireFinal:(dock)=>{
         dock.querySelectorAll('.choice[data-i]').forEach(b=>b.onclick=()=>{
@@ -2521,10 +2529,11 @@ const UI = (()=>{
     const sceneStart=0;
     const scene=sceneFrameHtml(outcomeSceneKeys,sceneAlt);
     const fxHtml=chips.length
-      ? '<div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
+      ? '<span class="event-result-kicker">확인된 결과</span><div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
       : '';
     const selectedTitle=stripTags(choice.label||curEv.title||'선택의 결과').trim()||'선택의 결과';
     const reportTitle=stripTags(curEv.title||'선택의 결과').trim()||'선택의 결과';
+    const visibleReportTitle=curEv&&curEv.combat?selectedTitle:reportTitle;
     let actions='';
     const chained=out.fx&&out.fx.chain;
     const chainEvent=chained&&D.events.find(e=>e.id===chained);
@@ -2539,8 +2548,8 @@ const UI = (()=>{
         :'길로 돌아가기'}</button>`;
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
-      <section class="event-field-report" aria-label="${esc(reportTitle)} · 선택 ${esc(selectedTitle)}"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(reportTitle)}</h2></div></div>
-      ${combatHud}<div class="story-reader"></div><div class="story-result" role="status" aria-live="polite" aria-atomic="true"></div></section></div>
+      <section class="event-field-report" aria-label="${esc(reportTitle)} · 선택 ${esc(selectedTitle)}"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(visibleReportTitle)}</h2></div></div>
+      ${combatHud}<div class="story-reader"></div></section><div class="story-result event-result-receipt" role="status" aria-live="polite" aria-atomic="true"></div></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns,curStory&&curStory.lanes);

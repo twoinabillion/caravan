@@ -1,0 +1,282 @@
+{
+  "states": {
+    "320x578-01-dialogue": {
+      "phase": "event",
+      "step": "beat",
+      "viewport": [
+        320,
+        578
+      ],
+      "scrollHeight": 565,
+      "clientHeight": 565,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        19,
+        32,
+        282,
+        175
+      ],
+      "report": [
+        19,
+        206,
+        282,
+        222
+      ],
+      "dock": [
+        10,
+        428,
+        300,
+        150
+      ]
+    },
+    "320x578-02-decision": {
+      "phase": "event",
+      "step": "decision",
+      "viewport": [
+        320,
+        578
+      ],
+      "scrollHeight": 565,
+      "clientHeight": 565,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        19,
+        32,
+        282,
+        175
+      ],
+      "report": [
+        19,
+        206,
+        282,
+        182
+      ],
+      "dock": [
+        10,
+        388,
+        300,
+        190
+      ]
+    },
+    "320x578-03-outcome": {
+      "phase": "outcome",
+      "step": "result",
+      "viewport": [
+        320,
+        578
+      ],
+      "scrollHeight": 565,
+      "clientHeight": 565,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        19,
+        32,
+        282,
+        175
+      ],
+      "report": [
+        19,
+        206,
+        282,
+        205
+      ],
+      "dock": [
+        10,
+        486,
+        300,
+        92
+      ]
+    },
+    "390x844-01-dialogue": {
+      "phase": "event",
+      "step": "beat",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollHeight": 831,
+      "clientHeight": 831,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        19,
+        32,
+        352,
+        255
+      ],
+      "report": [
+        19,
+        286,
+        352,
+        408
+      ],
+      "dock": [
+        10,
+        694,
+        370,
+        150
+      ]
+    },
+    "390x844-02-decision": {
+      "phase": "event",
+      "step": "decision",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollHeight": 831,
+      "clientHeight": 831,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        19,
+        32,
+        352,
+        255
+      ],
+      "report": [
+        19,
+        286,
+        352,
+        368
+      ],
+      "dock": [
+        10,
+        654,
+        370,
+        190
+      ]
+    },
+    "390x844-03-outcome": {
+      "phase": "outcome",
+      "step": "result",
+      "viewport": [
+        390,
+        844
+      ],
+      "scrollHeight": 831,
+      "clientHeight": 831,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        19,
+        32,
+        352,
+        255
+      ],
+      "report": [
+        19,
+        286,
+        352,
+        331
+      ],
+      "dock": [
+        10,
+        752,
+        370,
+        92
+      ]
+    },
+    "475x948-01-dialogue": {
+      "phase": "event",
+      "step": "beat",
+      "viewport": [
+        475,
+        948
+      ],
+      "scrollHeight": 935,
+      "clientHeight": 935,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        21,
+        32,
+        433,
+        350
+      ],
+      "report": [
+        21,
+        381,
+        433,
+        377
+      ],
+      "dock": [
+        10,
+        758,
+        455,
+        190
+      ]
+    },
+    "475x948-02-decision": {
+      "phase": "event",
+      "step": "decision",
+      "viewport": [
+        475,
+        948
+      ],
+      "scrollHeight": 935,
+      "clientHeight": 935,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        21,
+        32,
+        433,
+        350
+      ],
+      "report": [
+        21,
+        381,
+        433,
+        327
+      ],
+      "dock": [
+        10,
+        708,
+        455,
+        240
+      ]
+    },
+    "475x948-03-outcome": {
+      "phase": "outcome",
+      "step": "result",
+      "viewport": [
+        475,
+        948
+      ],
+      "scrollHeight": 935,
+      "clientHeight": 935,
+      "escaped": [],
+      "small": [],
+      "scene": [
+        21,
+        32,
+        433,
+        350
+      ],
+      "report": [
+        21,
+        381,
+        433,
+        285
+      ],
+      "dock": [
+        10,
+        832,
+        455,
+        116
+      ]
+    }
+  },
+  "errors": [
+    "320x578 response 401: https://api.anthropic.com/v1/models",
+    "320x578 console: Failed to load resource: the server responded with a status of 401 ()",
+    "390x844 response 401: https://api.anthropic.com/v1/models",
+    "390x844 console: Failed to load resource: the server responded with a status of 401 ()",
+    "475x948 response 401: https://api.anthropic.com/v1/models",
+    "475x948 console: Failed to load resource: the server responded with a status of 401 ()"
+  ]
+}

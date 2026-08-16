@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-16T12:47:05.731Z",
+  "generatedAt": "2026-08-16T14:37:53.269Z",
   "html": {
-    "bytes": 37845024,
+    "bytes": 38630297,
     "warnBytes": 32000000,
-    "maxBytes": 38000000
+    "maxBytes": 39000000
   },
   "embedded": {
-    "files": 289,
-    "bytes": 22707667,
+    "files": 291,
+    "bytes": 23158041,
     "categories": {
       "audio": {
         "files": 45,
@@ -20,9 +20,9 @@
         "encodedBytes": 15615784
       },
       "ui": {
-        "files": 19,
-        "bytes": 842872,
-        "encodedBytes": 1123860
+        "files": 21,
+        "bytes": 1293246,
+        "encodedBytes": 1724360
       },
       "portrait": {
         "files": 31,
@@ -79,6 +79,18 @@
       "mime": "image/jpeg",
       "bytes": 250564,
       "encodedBytes": 334088
+    },
+    {
+      "path": "assets/ui/event-result-ticket-v1.webp",
+      "mime": "image/webp",
+      "bytes": 232332,
+      "encodedBytes": 309776
+    },
+    {
+      "path": "assets/ui/event-field-report-panel-tall-v1.webp",
+      "mime": "image/webp",
+      "bytes": 218042,
+      "encodedBytes": 290724
     },
     {
       "path": "assets/intro/12-mother-keepsakes-v2.jpg",
@@ -139,18 +151,6 @@
       "mime": "image/jpeg",
       "bytes": 169135,
       "encodedBytes": 225516
-    },
-    {
-      "path": "assets/intro/01-passenger-seat.jpg",
-      "mime": "image/jpeg",
-      "bytes": 163873,
-      "encodedBytes": 218500
-    },
-    {
-      "path": "assets/ui/route-map-terrain-v1.webp",
-      "mime": "image/webp",
-      "bytes": 163676,
-      "encodedBytes": 218236
     }
   ]
 }

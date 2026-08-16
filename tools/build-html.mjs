@@ -15,7 +15,7 @@ const output = path.join(root, '서울까지400km.html');
 const temporary = `${output}.tmp`;
 const reportOutput = path.join(root, 'reports', 'asset-budget.json');
 const WARN_BYTES = 32_000_000;
-const MAX_BYTES = 38_000_000;   /* BGM 7슬롯 계획 +5~8MB 허용 (docs/audio-guide.md) */
+const MAX_BYTES = 39_000_000;   /* BGM 7슬롯 + 통합 이벤트 기록철 UI 허용 (docs/audio-guide.md) */
 const embeddedAssets = new Map();
 
 const before = [
@@ -91,6 +91,8 @@ const uiAssetPaths = {
   STAY_ICON_REPAIR:{path:'assets/ui/stay-icon-repair-v1.webp', mime:'image/webp'},
   STAY_ICON_RADIO:{path:'assets/ui/stay-icon-radio-v1.webp', mime:'image/webp'},
   EVENT_FIELD_REPORT:{path:'assets/ui/event-field-report-panel-v2.webp', mime:'image/webp'},
+  EVENT_FIELD_REPORT_TALL:{path:'assets/ui/event-field-report-panel-tall-v1.webp', mime:'image/webp'},
+  EVENT_RESULT_TICKET:{path:'assets/ui/event-result-ticket-v1.webp', mime:'image/webp'},
   EVENT_LEDGER_BUTTON:{path:'assets/ui/event-ledger-button-v1.webp', mime:'image/webp'},
   EVENT_CHOICE_LEDGER:{path:'assets/ui/event-choice-ledger-slip-v1.webp', mime:'image/webp'}
 };

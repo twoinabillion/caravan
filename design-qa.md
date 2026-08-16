@@ -148,4 +148,38 @@ No blocking follow-up. Live Korean strings longer than the current test fixtures
 - Console and runtime errors: zero in all 29 Chrome states.
 - Regression and build evidence: story layout, golden route, Quality 9 accessibility, smoke, choice visibility, source health, event geography, `npm run verify:quick`, full HTML build, and AIT build passed.
 
+### Iteration 11 — passed: one event instance, three consecutive states
+
+- Source targets: `/Users/sang/Desktop/Caravan 이벤트 UI 시안/1-시네마틱-기록철.png`, `2-선택-트레이.png`, and `3-결과-기록표.png` (853 × 1844 each). They are treated as the dialogue, decision, and outcome phases of one event—not three competing screens.
+- Browser-rendered implementation: `audits/event-sequence-unified-2026-08-16/390x844-01-dialogue.png`, `390x844-02-decision.png`, and `390x844-03-outcome.png`; Google Chrome, 390 × 844 CSS px, deviceScaleFactor 1.
+- Responsive evidence: the same three phases were also captured at 320 × 578 and 475 × 948. `metrics.json` reports zero escaped controls and zero controls below 44 × 44 px in all nine states.
+- Combined comparison inputs opened and reviewed: `compare-01-dialogue.png`, `compare-02-decision.png`, and `compare-03-outcome.png`. Each places its normalized source and implementation together at the same 390 × 844 size.
+- P1 continuity fixed: dialogue, decision, and outcome previously changed the scene height and read as separate screens. All three now preserve the same outer recorder, scene coordinates, report origin, palette, and title. Only the live report content and lower interaction module change.
+- P1 portrait/copy collision fixed: the portrait was an absolutely positioned tall strip and could overlap the speaker label or dialogue. Portrait turns now use a measured two-column grid with a square archival portrait, separate speaker metadata, and unrestricted wrapped copy.
+- P2 result hierarchy fixed: the outcome no longer collapses to tiny equal-weight chips. A real raster result ticket separates the stamped result label, primary consequence, secondary confirmation, and return action.
+- Image and surface fidelity: the field report and result ticket are dedicated ImageGen WebP assets; the established scene art, choice slips, and ledger button remain real raster assets. No placeholder image, CSS illustration, or fake SVG was introduced.
+- Typography and spacing: Korean sans/mono hierarchy, parchment rules, metal edges, amber actions, and teal record labels match the approved direction. No text clipping, horizontal overflow, or malformed wrapping remains at the three tested widths.
+- Interaction and accessibility: continue advances the same story instance, decision choices resolve it, the outcome returns to the road, focusable controls remain semantic buttons, reduced-motion rules remain present, and every visible control meets the 44 px mobile target.
+- Runtime note: file-URL capture receives an expected 401 only from the optional `https://api.anthropic.com/v1/models` capability probe when no key is supplied; there are no page exceptions or event-rendering errors.
+- Regression evidence: `npm run verify:quick`, `npm run test:smoke`, and `npm run test:accessibility9` passed. The standalone HTML build is 38,625,251 bytes, within the updated 39,000,000-byte hard release budget.
+- Final fidelity finding: no actionable P0, P1, or P2 issue remains for the unified event sequence.
+
+### Iteration 12 — passed: event typography and dark-terminal contrast
+
+- Source visual truth: `audits/event-typography-2026-08-16/before/390x844-02-portrait-dialogue.png`, `before/320x578-03-long-narration.png`, and `before/320x578-04-long-choice.png`; browser-rendered captures at deviceScaleFactor 1.
+- Implementation evidence: `audits/event-typography-2026-08-16/after/390x844-02-portrait-dialogue.png`, `after/320x578-03-long-narration.png`, `after/320x578-04-long-choice.png`, `after/390x844-05-outcome.png`, and `after/320x578-06-combat-outcome.png`; Google Chrome at 320 × 578, 390 × 844, and 475 × 948 CSS px, deviceScaleFactor 1. Source and implementation have identical pixel and CSS dimensions at each comparison viewport, so no density resampling was required.
+- Full-view comparison evidence opened and reviewed: `compare-portrait-dialogue-390x844.png`, `compare-long-narration-320x578.png`, `compare-combat-choice-320x578.png`, `after-contact-sheet-390x844.png`, and `after-contact-sheet-320x578.png`.
+- Focused evidence was required and reviewed because portrait/body baselines, the last narration line, two-card paging, and combat-result contrast are too small to judge from a single full phone sheet.
+- P1 typography/history fixed: hidden historical transcript nodes could move the current title and reader through `:has()`. The current turn's data attributes now own alignment.
+- P1 dialogue layout fixed: portrait dialogue now uses the same measured portrait/copy grid as record turns; there is no portrait/name/body overlap.
+- P1 long-copy containment fixed: the 148-character narration is fully visible at 320 × 578, including the final sentence. One-choice docks use only the height they need.
+- P1 responsive decision fixed: five-choice combat decisions show two cards per page on 320 × 578 and three on larger phones. All choices remain reachable; paging and visible control bounds pass.
+- P1 dark-terminal contrast fixed: combat outcome copy can no longer inherit paper ink. The rendered result uses `rgb(217, 222, 223)` against the terminal and measures 14.07:1 in the regression probe.
+- P2 image/layout rhythm fixed: story decisions with many choices retain at least 170 px of scene height instead of collapsing the image to 150 px.
+- P2 result hierarchy fixed: combat outcomes present the selected action as the title; story outcomes retain the event title and align the result receipt as a left-reading hierarchy.
+- Required fidelity surfaces: Korean sans/mono weights and line heights are stable; scene/report/dock rhythm is contained; teal/amber/dark-terminal tokens maintain contrast; real raster scene, portrait, report, ticket, and key assets retain crop and sharpness; all tested Korean copy is coherent and fully visible.
+- Primary interactions tested: story next, long narration, story choice/outcome, two-page combat choice, combat outcome, return control, large text, 200% zoom, reduced motion, and focus/touch targets. Console and page errors: zero in all 18 typography captures.
+- Regression evidence: `test:event-typography` passed 18 states; `test_story_event_layout.py`, `test_choice_visibility.py`, `test:accessibility9`, full `test:smoke`, and `verify:quick` passed.
+- Final finding: no actionable P0, P1, or P2 issue remains in the captured and tested event-typography scope.
+
 final result: passed

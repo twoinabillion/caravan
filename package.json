@@ -31,6 +31,7 @@
     "test:determinism": "npm run build:html --silent && python3 tests/test_determinism.py",
     "test:eta": "npm run build:html --silent && python3 tests/test_eta_consistency.py",
     "test:choices": "npm run build:html --silent && python3 tests/test_choice_visibility.py",
+    "test:event-typography": "npm run build:html --silent && python3 tests/test_event_typography_layout.py",
     "test:beats": "npm run build:html --silent && python3 tests/test_journey_beats.py",
     "test:health": "python3 tests/test_source_health.py",
     "test:audio": "npm run build:html --silent && python3 tests/test_audio_mix.py",
