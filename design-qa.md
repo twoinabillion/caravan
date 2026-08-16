@@ -3,6 +3,9 @@
 - source visual truth: `audits/stay-event-option2-implementation-2026-08-16/reference-option2-journey-ledger.png`
 - source pixels: 1712 × 922; the two 856 × 922 concept screens were normalized to 390 px width for full-view comparison
 - primary implementation evidence:
+  - `audits/stay-route-shell-lock-2026-08-16/route-390x844.png`
+  - `audits/stay-route-shell-lock-2026-08-16/stay-390x844.png`
+  - `audits/stay-route-shell-lock-2026-08-16/route-return-390x844.png`
   - `audits/stay-option2-frame-lock-2026-08-16/stay-390x844.png`
   - `audits/stay-option2-frame-lock-2026-08-16/route-390x844.png`
   - `audits/stay-option2-frame-lock-2026-08-16/route-return-390x844.png`
@@ -17,6 +20,7 @@
 
 - `audits/stay-event-option2-implementation-2026-08-16/compare-stay-final.png`
 - `audits/stay-option2-frame-lock-2026-08-16/comparison-reference-vs-final.png`
+- `audits/stay-route-shell-lock-2026-08-16/comparison-route-vs-stay.png`
 - `audits/stay-event-option2-implementation-2026-08-16/compare-event-final.png`
 
 The implementation preserves the approved hierarchy: live road/scene image, tactile ledger/report surface, then physical action control. The tall phone viewport intentionally gives surplus height to the live road and event scene, matching the existing game requirement to keep the dalguji and scene imagery prominent rather than stretching the ledger itself.
@@ -82,6 +86,15 @@ No actionable P0, P1, or P2 findings remain.
 - `tests/test_quality_9_accessibility.py`: passed normal/large text, 44 px controls, 200% zoom, reduced motion, overlay controls, and the new 0–6 px keydeck lock.
 - `tests/test_smoke.py`, `tests/test_story_event_layout.py`, `tests/test_choice_visibility.py`, and `tests/test_source_health.py`: passed after accounting for the asynchronous mode-transition frame.
 - Final visual evidence: `audits/stay-option2-frame-lock-2026-08-16/comparison-reference-vs-final.png`.
+
+### Iteration 6 — passed
+
+- P1 motion/continuity: the route console used the approved tall `.95` shell while the stay ledger used a 16:9/3:2 shell and a different top margin. Switching modes therefore returned the height difference to the road scene and visibly pushed the entire stay console downward.
+- Fix: both modes now use the exact same `.95` console box, the same `route-console-shell-option3.webp` transparent bezel, the same rocker position, and the same mobile margin. Only the inner screen content crossfades.
+- Asset fix: `assets/ui/stay-journey-ledger-insert-v2.webp` reformats the approved four paper rows as a real square raster insert. It contains no text or icons; live HTML controls, values, disabled states, and action handlers remain above it.
+- Geometry evidence: `audits/stay-route-shell-lock-2026-08-16/capture.py` passed 320 × 578, 390 × 844, and 475 × 948. Route, stay, and return states have matching console, shell, rocker, dock, and road-scene geometry; `window.scrollY` and panel scroll remain unchanged.
+- Regression evidence: story-event layout, choice visibility, Quality 9 accessibility, full smoke, and source-health tests all passed.
+- Final visual evidence: `audits/stay-route-shell-lock-2026-08-16/comparison-route-vs-stay.png`.
 
 ## Follow-up polish
 

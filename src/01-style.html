@@ -2962,28 +2962,18 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 /* ── stay / event option 2: journey ledger ───────────────────────────
    The approved mock uses real paper slips and a field report, while every
    label and control remains live HTML. */
-.game-viewport-locked[data-travel-state="stopped"] #scr-game.on{
-  border:clamp(5px,1.55cqw,8px) solid transparent;
-  border-image:url("__UI_STOPPED_SCREEN_FRAME__") 86 / clamp(5px,1.55cqw,8px) stretch;
-  background:#070a10
+.game-viewport-locked[data-travel-state="stopped"] #journey-mode-route .route-console-screen,
+.game-viewport-locked[data-travel-state="stopped"] .journey-local-screen{
+  view-transition-name:journey-console-content
 }
-.game-viewport-locked[data-travel-state="stopped"] .journey-mode-console{
-  view-transition-name:journey-console
-}
-.game-viewport-locked[data-travel-state="stopped"][data-journey-mode="local"] .journey-mode-console{
-  margin-top:0;
-  margin-bottom:0
-}
-.game-viewport-locked[data-travel-state="stopped"][data-journey-mode="local"] .journey-local-panel{
-  filter:none
-}
-::view-transition-old(journey-console),::view-transition-new(journey-console){animation-duration:.16s;animation-timing-function:ease-out}
+::view-transition-old(journey-console-content),::view-transition-new(journey-console-content){animation-duration:.14s;animation-timing-function:ease-out}
 @media(prefers-reduced-motion:reduce){
-  ::view-transition-old(journey-console),::view-transition-new(journey-console){animation:none}
+  ::view-transition-old(journey-console-content),::view-transition-new(journey-console-content){animation:none}
 }
-.journey-local-panel{aspect-ratio:1200/675!important;background-image:url("__UI_STAY_JOURNEY_LEDGER__")!important;
+.journey-local-panel{aspect-ratio:.95!important;background-image:url("__UI_STAY_JOURNEY_LEDGER_INSERT__")!important;
   background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important}
-.journey-local-screen.stop-action-console{inset:6.5% 2.9% 6.3% 13.7%;padding:0;border:0;background:transparent;box-shadow:none}
+.journey-local-panel::after{content:"";position:absolute;z-index:9;inset:0;background:url("__UI_ROUTE_CONSOLE_SHELL__") center/100% 100% no-repeat;pointer-events:none}
+.journey-local-screen.stop-action-console{inset:9.6% 11% 8.5% 12%;padding:0;border:0;background:transparent;box-shadow:none}
 .journey-local-screen .stop-action-grid{display:grid;grid-template-columns:1fr;grid-auto-rows:25%;gap:0;width:100%;height:100%;overflow-y:auto;
   scrollbar-width:thin;scroll-snap-type:y proximity}
 .journey-local-screen .stop-action-card{display:block;min-height:0;padding:0;border:0;background:transparent;scroll-snap-align:start}
@@ -3066,7 +3056,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-reader{margin:0;color:#e9e7df}
 
 @container game (max-width:380px){
-  .journey-local-panel{aspect-ratio:3/2!important;background-image:url("__UI_STAY_JOURNEY_LEDGER_NARROW__")!important}
+  .journey-local-panel{aspect-ratio:.95!important;background-image:url("__UI_STAY_JOURNEY_LEDGER_INSERT__")!important}
   .journey-local-screen .stop-action-trigger{grid-template-columns:12.5% minmax(0,1fr) 24.5%;gap:2%;padding-left:2%}
   .journey-local-screen .stop-action-icon{width:30px;height:30px}
   .journey-local-screen .stop-action-chips{margin-top:3px;gap:3px}
