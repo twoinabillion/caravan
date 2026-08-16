@@ -60,12 +60,17 @@ def check_viewport(playwright, width, height):
         })"""
     )
 
-    assert reader["y"] - (head["y"] + head["height"]) <= 12
+    assert reader["y"] - (head["y"] + head["height"]) <= 12, {
+        "viewport": (width, height), "head": head, "reader": reader
+    }
     assert current["y"] - reader["y"] <= 10
     assert reader["height"] <= 150, reader
     assert current["y"] + current["height"] <= dock["y"]
-    assert 74 <= next_button["height"] <= 80
-    assert 76 <= next_button["width"] <= 80
+    # Option 2 uses the approved low, rectangular field-recorder key instead
+    # of the former square nav-button face.
+    assert 44 <= next_button["height"] <= 62, next_button
+    assert 118 <= next_button["width"] <= 166, next_button
+    assert 2.5 <= next_button["width"] / next_button["height"] <= 3.1, next_button
     assert next_button["x"] >= dock["x"] + 13
     assert next_button["x"] + next_button["width"] <= dock["x"] + dock["width"] - 13
     assert "data:image/webp" in button_face["backgroundImage"]

@@ -1488,17 +1488,22 @@ const UI = (()=>{
       renderStatus();
     };
   }
-  function stopActionHtml({action,kicker,title,description,chips=[],primary=false,disabled=false,cta=''}){
+  function stopActionHtml({action,kicker,icon,title,description,chips=[],primary=false,disabled=false,cta=''}){
     const chipHtml=chips.filter(Boolean).map(chip=>{
       const item=typeof chip==='string'?{label:chip}:chip;
       return `<i class="${item.tone?` tone-${esc(item.tone)}`:''}">${esc(item.label)}</i>`;
     }).join('');
+    const iconKey=icon||({explore:'explore',camp:'camp',repair:'repair',radio:'radio',walkfuel:'fuel',craft:'parts'}[action]||'quest');
+    const iconHtml=['explore','camp','repair','radio'].includes(iconKey)
+      ? `<span class="stop-action-icon stay-action-icon icon-${iconKey}" aria-hidden="true"></span>`
+      : `<span class="stop-action-icon" aria-hidden="true">${ICO(iconKey)}</span>`;
+    const shortCta={explore:'탐색',camp:'준비',repair:'정비',radio:'수리'}[action]||(cta||title);
     return `<article class="stop-action-card${primary?' primary':''}${disabled?' is-disabled':''}">
       <button type="button" class="stop-action-trigger" data-a="${esc(action)}" ${disabled?'disabled':''}>
-        <span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
+        ${iconHtml}<span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
           <span class="stop-action-description">${esc(description)}</span>
           ${chipHtml?`<span class="stop-action-chips">${chipHtml}</span>`:''}</span>
-        <span class="stop-action-cta">${esc(cta||title)} <i aria-hidden="true">→</i></span>
+        <span class="stop-action-cta">${esc(shortCta)} <i aria-hidden="true">→</i></span>
       </button></article>`;
   }
   function journeyModeTabsHtml(mode){
@@ -2293,8 +2298,8 @@ const UI = (()=>{
        진행 상태와 접근성을 보존하되 compact 스타일로 화면에서는 접는다. */
     sheet.classList.toggle('story-compact',turns.length>2);
     const choicePages=Math.ceil(choices.count/3);
-    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<div class="event-head"><div>
-      <span class="sr-only" data-event-progress>1 / ${turns.length}</span><h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></div>
+    const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<section class="event-field-report"><div class="event-head"><div>
+      <span class="sr-only" data-event-progress>1 / ${turns.length}</span><h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns);
