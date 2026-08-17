@@ -1,0 +1,806 @@
+[
+  {
+    "viewport": {
+      "width": 475,
+      "height": 948
+    },
+    "scroll": {
+      "bodyWidth": 475,
+      "documentWidth": 475,
+      "documentHeight": 948,
+      "horizontalOverflow": false
+    },
+    "prop": null,
+    "title": {
+      "x": 58,
+      "y": 96.3,
+      "width": 359.1,
+      "height": 21.1,
+      "right": 417,
+      "bottom": 117.5
+    },
+    "resources": {
+      "x": 58,
+      "y": 120.6,
+      "width": 359.1,
+      "height": 80.1,
+      "right": 417,
+      "bottom": 200.7
+    },
+    "vehicle": {
+      "x": 58,
+      "y": 206.2,
+      "width": 359.1,
+      "height": 86.2,
+      "right": 417,
+      "bottom": 292.4
+    },
+    "pockets": {
+      "x": 34.7,
+      "y": 323.2,
+      "width": 405.7,
+      "height": 249.8,
+      "right": 440.3,
+      "bottom": 573
+    },
+    "pocketButtons": [
+      {
+        "text": "부품보유1개",
+        "x": 34.7,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 75.2,
+        "centerY": 448.1
+      },
+      {
+        "text": "의약품보유1개",
+        "x": 115.8,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 156.4,
+        "centerY": 448.1
+      },
+      {
+        "text": "소총탄보유0발",
+        "x": 196.9,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 237.5,
+        "centerY": 448.1
+      },
+      {
+        "text": "고철보유24개",
+        "x": 278.1,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 318.6,
+        "centerY": 448.1
+      },
+      {
+        "text": "기타보유0개",
+        "x": 359.2,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 399.8,
+        "centerY": 448.1
+      }
+    ],
+    "pocketNames": [
+      {
+        "text": "부품",
+        "x": 33.9,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 72,
+        "centerY": 336.7
+      },
+      {
+        "text": "의약품",
+        "x": 115,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 153.1,
+        "centerY": 336.7
+      },
+      {
+        "text": "소총탄",
+        "x": 196.1,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 234.3,
+        "centerY": 336.7
+      },
+      {
+        "text": "고철",
+        "x": 277.3,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 315.4,
+        "centerY": 336.7
+      },
+      {
+        "text": "기타",
+        "x": 358.4,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 396.5,
+        "centerY": 336.7
+      }
+    ],
+    "pocketIcons": [
+      {
+        "text": "",
+        "x": 48.2,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 72,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 129.3,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 153.1,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 210.5,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 234.2,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 291.6,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 315.4,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 372.8,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 396.5,
+        "centerY": 439.4
+      }
+    ],
+    "pocketCounts": [
+      {
+        "text": "보유1개",
+        "x": 37.1,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 72,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유1개",
+        "x": 118.2,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 153.1,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유0발",
+        "x": 199.3,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 234.2,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유24개",
+        "x": 280.5,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 315.4,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유0개",
+        "x": 361.6,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 396.5,
+        "centerY": 500.1
+      }
+    ],
+    "detail": {
+      "x": 52.7,
+      "y": 591.5,
+      "width": 369.6,
+      "height": 143.8,
+      "right": 422.3,
+      "bottom": 735.3
+    },
+    "detailIcon": {
+      "x": 78.8,
+      "y": 635.5,
+      "width": 57.2,
+      "height": 57.2,
+      "right": 136,
+      "bottom": 692.6
+    },
+    "detailCopy": {
+      "x": 152.8,
+      "y": 613.4,
+      "width": 247.5,
+      "height": 101.3,
+      "right": 400.3,
+      "bottom": 714.7
+    },
+    "detailButton": {
+      "x": 152.8,
+      "y": 670.7,
+      "width": 247.5,
+      "height": 44,
+      "right": 400.3,
+      "bottom": 714.7
+    },
+    "selected": "부품",
+    "file": "01-default-475x948.png",
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 475,
+      "height": 948
+    },
+    "scroll": {
+      "bodyWidth": 475,
+      "documentWidth": 475,
+      "documentHeight": 948,
+      "horizontalOverflow": false
+    },
+    "prop": null,
+    "title": {
+      "x": 58,
+      "y": 96.3,
+      "width": 359.1,
+      "height": 21.1,
+      "right": 417,
+      "bottom": 117.5
+    },
+    "resources": {
+      "x": 58,
+      "y": 120.6,
+      "width": 359.1,
+      "height": 80.1,
+      "right": 417,
+      "bottom": 200.7
+    },
+    "vehicle": {
+      "x": 58,
+      "y": 206.2,
+      "width": 359.1,
+      "height": 86.2,
+      "right": 417,
+      "bottom": 292.4
+    },
+    "pockets": {
+      "x": 34.7,
+      "y": 323.2,
+      "width": 405.7,
+      "height": 249.8,
+      "right": 440.3,
+      "bottom": 573
+    },
+    "pocketButtons": [
+      {
+        "text": "부품보유1개",
+        "x": 34.7,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 75.2,
+        "centerY": 448.1
+      },
+      {
+        "text": "의약품보유1개",
+        "x": 115.8,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 156.4,
+        "centerY": 448.1
+      },
+      {
+        "text": "소총탄보유0발",
+        "x": 196.9,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 237.5,
+        "centerY": 448.1
+      },
+      {
+        "text": "고철보유24개",
+        "x": 278.1,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 318.6,
+        "centerY": 448.1
+      },
+      {
+        "text": "기타보유0개",
+        "x": 359.2,
+        "y": 323.2,
+        "width": 81.1,
+        "height": 249.8,
+        "centerX": 399.8,
+        "centerY": 448.1
+      }
+    ],
+    "pocketNames": [
+      {
+        "text": "부품",
+        "x": 33.9,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 72,
+        "centerY": 336.7
+      },
+      {
+        "text": "의약품",
+        "x": 115,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 153.1,
+        "centerY": 336.7
+      },
+      {
+        "text": "소총탄",
+        "x": 196.1,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 234.3,
+        "centerY": 336.7
+      },
+      {
+        "text": "고철",
+        "x": 277.3,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 315.4,
+        "centerY": 336.7
+      },
+      {
+        "text": "기타",
+        "x": 358.4,
+        "y": 331.2,
+        "width": 76.3,
+        "height": 11,
+        "centerX": 396.5,
+        "centerY": 336.7
+      }
+    ],
+    "pocketIcons": [
+      {
+        "text": "",
+        "x": 48.2,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 72,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 129.3,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 153.1,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 210.5,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 234.2,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 291.6,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 315.4,
+        "centerY": 439.4
+      },
+      {
+        "text": "",
+        "x": 372.8,
+        "y": 415.6,
+        "width": 47.5,
+        "height": 47.5,
+        "centerX": 396.5,
+        "centerY": 439.4
+      }
+    ],
+    "pocketCounts": [
+      {
+        "text": "보유1개",
+        "x": 37.1,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 72,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유1개",
+        "x": 118.2,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 153.1,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유0발",
+        "x": 199.3,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 234.2,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유24개",
+        "x": 280.5,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 315.4,
+        "centerY": 500.1
+      },
+      {
+        "text": "보유0개",
+        "x": 361.6,
+        "y": 478.1,
+        "width": 69.8,
+        "height": 44,
+        "centerX": 396.5,
+        "centerY": 500.1
+      }
+    ],
+    "detail": {
+      "x": 52.7,
+      "y": 591.5,
+      "width": 369.6,
+      "height": 143.8,
+      "right": 422.3,
+      "bottom": 735.3
+    },
+    "detailIcon": {
+      "x": 78.8,
+      "y": 635.5,
+      "width": 57.2,
+      "height": 57.2,
+      "right": 136,
+      "bottom": 692.6
+    },
+    "detailCopy": {
+      "x": 152.8,
+      "y": 613.4,
+      "width": 247.5,
+      "height": 101.3,
+      "right": 400.3,
+      "bottom": 714.7
+    },
+    "detailButton": {
+      "x": 152.8,
+      "y": 670.7,
+      "width": 247.5,
+      "height": 44,
+      "right": 400.3,
+      "bottom": 714.7
+    },
+    "selected": "의약품",
+    "file": "02-medicine-475x948.png",
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 578
+    },
+    "scroll": {
+      "bodyWidth": 320,
+      "documentWidth": 320,
+      "documentHeight": 578,
+      "horizontalOverflow": false
+    },
+    "prop": null,
+    "title": {
+      "x": 36,
+      "y": 22.4,
+      "width": 248.1,
+      "height": 17,
+      "right": 284,
+      "bottom": 39.4
+    },
+    "resources": {
+      "x": 36,
+      "y": 39.1,
+      "width": 248.1,
+      "height": 55.3,
+      "right": 284,
+      "bottom": 94.5
+    },
+    "vehicle": {
+      "x": 36,
+      "y": 98.3,
+      "width": 248.1,
+      "height": 59.6,
+      "right": 284,
+      "bottom": 157.8
+    },
+    "pockets": {
+      "x": 19.8,
+      "y": 179.1,
+      "width": 280.3,
+      "height": 172.6,
+      "right": 300.2,
+      "bottom": 351.7
+    },
+    "pocketButtons": [
+      {
+        "text": "부품보유1개",
+        "x": 19.8,
+        "y": 179.1,
+        "width": 56.1,
+        "height": 172.6,
+        "centerX": 47.9,
+        "centerY": 265.4
+      },
+      {
+        "text": "의약품보유1개",
+        "x": 75.9,
+        "y": 179.1,
+        "width": 56.1,
+        "height": 172.6,
+        "centerX": 103.9,
+        "centerY": 265.4
+      },
+      {
+        "text": "소총탄보유0발",
+        "x": 132,
+        "y": 179.1,
+        "width": 56.1,
+        "height": 172.6,
+        "centerX": 160,
+        "centerY": 265.4
+      },
+      {
+        "text": "고철보유24개",
+        "x": 188,
+        "y": 179.1,
+        "width": 56.1,
+        "height": 172.6,
+        "centerX": 216.1,
+        "centerY": 265.4
+      },
+      {
+        "text": "기타보유0개",
+        "x": 244.1,
+        "y": 179.1,
+        "width": 56.1,
+        "height": 172.6,
+        "centerX": 272.1,
+        "centerY": 265.4
+      }
+    ],
+    "pocketNames": [
+      {
+        "text": "부품",
+        "x": 19.3,
+        "y": 184.6,
+        "width": 52.7,
+        "height": 11,
+        "centerX": 45.6,
+        "centerY": 190.1
+      },
+      {
+        "text": "의약품",
+        "x": 75.4,
+        "y": 184.6,
+        "width": 52.7,
+        "height": 11,
+        "centerX": 101.7,
+        "centerY": 190.1
+      },
+      {
+        "text": "소총탄",
+        "x": 131.4,
+        "y": 184.6,
+        "width": 52.7,
+        "height": 11,
+        "centerX": 157.8,
+        "centerY": 190.1
+      },
+      {
+        "text": "고철",
+        "x": 187.5,
+        "y": 184.6,
+        "width": 52.7,
+        "height": 11,
+        "centerX": 213.8,
+        "centerY": 190.1
+      },
+      {
+        "text": "기타",
+        "x": 243.5,
+        "y": 184.6,
+        "width": 52.7,
+        "height": 11,
+        "centerX": 269.9,
+        "centerY": 190.1
+      }
+    ],
+    "pocketIcons": [
+      {
+        "text": "",
+        "x": 24.1,
+        "y": 243,
+        "width": 43,
+        "height": 43,
+        "centerX": 45.6,
+        "centerY": 264.5
+      },
+      {
+        "text": "",
+        "x": 80.2,
+        "y": 243,
+        "width": 43,
+        "height": 43,
+        "centerX": 101.7,
+        "centerY": 264.5
+      },
+      {
+        "text": "",
+        "x": 136.3,
+        "y": 243,
+        "width": 43,
+        "height": 43,
+        "centerX": 157.8,
+        "centerY": 264.5
+      },
+      {
+        "text": "",
+        "x": 192.3,
+        "y": 243,
+        "width": 43,
+        "height": 43,
+        "centerX": 213.8,
+        "centerY": 264.5
+      },
+      {
+        "text": "",
+        "x": 248.4,
+        "y": 243,
+        "width": 43,
+        "height": 43,
+        "centerX": 269.9,
+        "centerY": 264.5
+      }
+    ],
+    "pocketCounts": [
+      {
+        "text": "보유1개",
+        "x": 21.5,
+        "y": 286.1,
+        "width": 48.2,
+        "height": 44,
+        "centerX": 45.6,
+        "centerY": 308.1
+      },
+      {
+        "text": "보유1개",
+        "x": 77.6,
+        "y": 286.1,
+        "width": 48.2,
+        "height": 44,
+        "centerX": 101.7,
+        "centerY": 308.1
+      },
+      {
+        "text": "보유0발",
+        "x": 133.6,
+        "y": 286.1,
+        "width": 48.2,
+        "height": 44,
+        "centerX": 157.8,
+        "centerY": 308.1
+      },
+      {
+        "text": "보유24개",
+        "x": 189.7,
+        "y": 286.1,
+        "width": 48.2,
+        "height": 44,
+        "centerX": 213.8,
+        "centerY": 308.1
+      },
+      {
+        "text": "보유0개",
+        "x": 245.8,
+        "y": 286.1,
+        "width": 48.2,
+        "height": 44,
+        "centerX": 269.9,
+        "centerY": 308.1
+      }
+    ],
+    "detail": {
+      "x": 32.3,
+      "y": 364.5,
+      "width": 255.4,
+      "height": 99.3,
+      "right": 287.7,
+      "bottom": 463.8
+    },
+    "detailIcon": {
+      "x": 43.6,
+      "y": 388.6,
+      "width": 52,
+      "height": 52,
+      "right": 95.6,
+      "bottom": 440.6
+    },
+    "detailCopy": {
+      "x": 101.5,
+      "y": 377.1,
+      "width": 171,
+      "height": 75,
+      "right": 272.5,
+      "bottom": 452.1
+    },
+    "detailButton": {
+      "x": 101.5,
+      "y": 408.1,
+      "width": 171,
+      "height": 44,
+      "right": 272.5,
+      "bottom": 452.1
+    },
+    "selected": "의약품",
+    "file": "03-medicine-320x578.png",
+    "errors": []
+  }
+]

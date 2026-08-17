@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-08-17T10:59:51.699Z",
+  "generatedAt": "2026-08-17T14:12:39.397Z",
   "html": {
-    "bytes": 36124025,
+    "bytes": 36814158,
     "warnBytes": 32000000,
     "maxBytes": 39000000
   },
   "embedded": {
-    "files": 364,
-    "bytes": 21312329,
+    "files": 365,
+    "bytes": 21865671,
     "categories": {
       "audio": {
         "files": 45,
         "bytes": 9710668,
         "encodedBytes": 12947612
       },
+      "scene": {
+        "files": 246,
+        "bytes": 10175195,
+        "encodedBytes": 13567280
+      },
       "ui": {
         "files": 27,
         "bytes": 1308842,
         "encodedBytes": 1745164
       },
-      "scene": {
-        "files": 245,
-        "bytes": 9807813,
-        "encodedBytes": 13077436
-      },
       "portrait": {
         "files": 47,
-        "bytes": 485006,
-        "encodedBytes": 646748
+        "bytes": 670966,
+        "encodedBytes": 894688
       }
     }
   },
@@ -73,6 +73,12 @@
       "mime": "audio/mpeg",
       "bytes": 744336,
       "encodedBytes": 992448
+    },
+    {
+      "path": "assets/scenes/arrival-daegu-dome.webp",
+      "mime": "image/webp",
+      "bytes": 367382,
+      "encodedBytes": 489844
     },
     {
       "path": "assets/ui/event-result-ticket-v1.webp",
@@ -145,12 +151,6 @@
       "mime": "image/jpeg",
       "bytes": 169135,
       "encodedBytes": 225516
-    },
-    {
-      "path": "assets/intro/01-passenger-seat.jpg",
-      "mime": "image/jpeg",
-      "bytes": 163873,
-      "encodedBytes": 218500
     }
   ]
 }

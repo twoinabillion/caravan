@@ -1,0 +1,5173 @@
+{
+  "viewports": {
+    "320x578": {
+      "switchToLocal": [
+        {
+          "label": "before",
+          "time": 981.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "sync",
+          "time": 981.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-1",
+          "time": 982.4000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-2",
+          "time": 1015.4000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-3",
+          "time": 1048.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-4",
+          "time": 1082,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-5",
+          "time": 1115.4000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-6",
+          "time": 1148.6000001430511,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-7",
+          "time": 1181.9000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-8",
+          "time": 1215.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-9",
+          "time": 1248.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-10",
+          "time": 1282.2000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-11",
+          "time": 1315.6000001430511,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-12",
+          "time": 1348.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "settled",
+          "time": 1529.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        }
+      ],
+      "switchToRoute": [
+        {
+          "label": "before",
+          "time": 1583.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "sync",
+          "time": 1583.9000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-1",
+          "time": 1615.4000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-2",
+          "time": 1648.1000001430511,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-3",
+          "time": 1682,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-4",
+          "time": 1715.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-5",
+          "time": 1748.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-6",
+          "time": 1781.7999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-7",
+          "time": 1815.4000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-8",
+          "time": 1848.4000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-9",
+          "time": 1881.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-10",
+          "time": 1915.1000001430511,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-11",
+          "time": 1948.6000001430511,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-12",
+          "time": 1981.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        },
+        {
+          "label": "settled",
+          "time": 2162.9000000953674,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 218,
+            "bottom": 218
+          },
+          "panel": {
+            "x": 0,
+            "y": 225,
+            "width": 320,
+            "height": 353,
+            "bottom": 578
+          },
+          "console": {
+            "x": 4,
+            "y": 210,
+            "width": 312,
+            "height": 328.40625,
+            "bottom": 538.40625
+          },
+          "dock": {
+            "x": 0,
+            "y": 502,
+            "width": 320,
+            "height": 76,
+            "bottom": 578
+          },
+          "scene": null
+        }
+      ],
+      "story": [
+        {
+          "step": "beat",
+          "progress": "1 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n복원한 발표 연습 영상의 마지막 프레임에 작은 첨부 목록이 남아 있었다. 첨부 파일명은 ‘검증키 분리 절차 4–5쪽’. 부산에서 엄마의 수첩을 펼쳤을 때 비어 있던 바로 그 두 장이었다.",
+          "scene": {
+            "x": 19,
+            "y": 32.08205795288086,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.94143295288086,
+            "scrollHeight": 335,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.9414367675781,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492.0820617675781,
+            "scrollHeight": 136,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.6758117675781,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480.0820617675781,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.6758117675781,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480.0820617675781,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "dock": {
+            "x": 10,
+            "y": 502.0820617675781,
+            "width": 300,
+            "height": 75.99996948242188,
+            "bottom": 578.08203125,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "2 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n보관망에서 절차를 내려받아 차를 세우고 계기판을 다시 열었다. 출발 전에 번호를 붙여 둔 선들이 그대로였다. 이번에는 어느 커넥터를 먼저 풀어야 하는지 알 수 있었다.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 334,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 136,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "3 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n정전기 방지 천에 싼 반도체 모듈, 엄마와 아빠와 어린 나를 찍은 사진, 아빠 글씨가 빼곡한 회로 수첩이 차례로 나왔다.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 334,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 136,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "4 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "기록\n아빠\n소프트웨어는 무엇을 고칠지 말한다. 칩은 누구의 수정을 믿을지 정한다.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 334,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 252,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 180.3125,
+            "bottom": 595.90625,
+            "scrollHeight": 180,
+            "clientHeight": 180
+          },
+          "latestBox": {
+            "x": 95.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 180.3125,
+            "bottom": 595.90625,
+            "scrollHeight": 178,
+            "clientHeight": 178
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "5 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "기록\n아빠\n이건 천리안을 끄는 열쇠가 아니다. 천리안의 예측이 현실이 되기 전에, 인간의 서명 하나를 반드시 거치게 하는 검증키다.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 334,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 300,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 228.46875,
+            "bottom": 644.0625,
+            "scrollHeight": 228,
+            "clientHeight": 228
+          },
+          "latestBox": {
+            "x": 95.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 228.46875,
+            "bottom": 644.0625,
+            "scrollHeight": 226,
+            "clientHeight": 226
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "6 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n수첩 끝의 음성 파일 번호를 계기판 단말에 입력하자 두 사람의 목소리가 잡음 사이로 돌아왔다.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 334,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 136,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 480,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "7 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n이름을 정해야 설명서에 쓰지. 차단 장치?",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 350,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "8 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n그건 전부 끄는 것처럼 들려. 검증키라고 해.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 349,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "9 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n너무 평범한데.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 353,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 30.421875,
+            "bottom": 446.015625,
+            "scrollHeight": 30,
+            "clientHeight": 30
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 30.421875,
+            "bottom": 446.015625,
+            "scrollHeight": 30,
+            "clientHeight": 30
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "10 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n평범해야 해. 이걸 꽂아도 병원 불은 안 꺼지고 신호등도 돌아가. 달라지는 건 강제 명령 앞에서 사람이 한 번 확인한다는 것뿐이야.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 352,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "11 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n우리가 설치하러 못 가면?",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 354,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 30.421875,
+            "bottom": 446.015625,
+            "scrollHeight": 30,
+            "clientHeight": 30
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 30.421875,
+            "bottom": 446.015625,
+            "scrollHeight": 30,
+            "clientHeight": 30
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "12 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n잠깐 공구 내려놓는 소리가 났다.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 354,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 31.46875,
+            "bottom": 447.0625,
+            "scrollHeight": 31,
+            "clientHeight": 31
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 31.46875,
+            "bottom": 447.0625,
+            "scrollHeight": 31,
+            "clientHeight": 31
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "13 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n서울 쪽으로 가는 물건에 숨겨야지. 오래 버티고, 고장 나도 누가 고쳐서 다시 움직일 만한 데.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 329.859375,
+            "bottom": 361.859375,
+            "scrollHeight": 350,
+            "clientHeight": 328
+          },
+          "report": {
+            "x": 19,
+            "y": 361.859375,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 492,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 415.59375,
+            "width": 159.203125,
+            "height": 46.765625,
+            "bottom": 462.359375,
+            "scrollHeight": 47,
+            "clientHeight": 47
+          },
+          "dock": {
+            "x": 10,
+            "y": 502,
+            "width": 300,
+            "height": 76,
+            "bottom": 578,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "decision",
+          "progress": "14 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n녹음은 거기서 끝났다. 할아버지는 자신이 모르는 회로를 고치는 대신, 그 회로를 실은 달구지가 남산까지 흔들리지 않고 가도록 평생 차를 손봤다.",
+          "scene": {
+            "x": 19,
+            "y": 32,
+            "width": 282,
+            "height": 250.453125,
+            "bottom": 282.453125,
+            "scrollHeight": 265,
+            "clientHeight": 248
+          },
+          "report": {
+            "x": 19,
+            "y": 282.453125,
+            "width": 282,
+            "height": 130.140625,
+            "bottom": 412.59375,
+            "scrollHeight": 136,
+            "clientHeight": 130
+          },
+          "reader": {
+            "x": 93.125,
+            "y": 336.1875,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 400.59375,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "latestBox": {
+            "x": 93.125,
+            "y": 336.1875,
+            "width": 159.203125,
+            "height": 64.40625,
+            "bottom": 400.59375,
+            "scrollHeight": 64,
+            "clientHeight": 64
+          },
+          "dock": {
+            "x": 10,
+            "y": 422.59375,
+            "width": 300,
+            "height": 155.40625,
+            "bottom": 578,
+            "scrollHeight": 154,
+            "clientHeight": 154
+          }
+        }
+      ],
+      "outcome": {
+        "text": "기록\n엄마\n우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.",
+        "reportScroll": 227,
+        "reportClient": 130,
+        "readerScroll": 156,
+        "readerClient": 156,
+        "overflow": 0,
+        "step": "result",
+        "phase": "outcome"
+      },
+      "errors": []
+    },
+    "390x844": {
+      "switchToLocal": [
+        {
+          "label": "before",
+          "time": 803.0999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "sync",
+          "time": 803.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-1",
+          "time": 823.5999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-2",
+          "time": 856.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-3",
+          "time": 890.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-4",
+          "time": 923.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-5",
+          "time": 956.8999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-6",
+          "time": 990.2000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-7",
+          "time": 1023.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-8",
+          "time": 1057.2000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-9",
+          "time": 1090.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-10",
+          "time": 1123.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-11",
+          "time": 1157.0999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-12",
+          "time": 1190,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "settled",
+          "time": 1371.2000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        }
+      ],
+      "switchToRoute": [
+        {
+          "label": "before",
+          "time": 1443.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "sync",
+          "time": 1443.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-1",
+          "time": 1456.8999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-2",
+          "time": 1490,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-3",
+          "time": 1523.5999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-4",
+          "time": 1556.8999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-5",
+          "time": 1590.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-6",
+          "time": 1623.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-7",
+          "time": 1656.7999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-8",
+          "time": 1690,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-9",
+          "time": 1723.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-10",
+          "time": 1756.5999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-11",
+          "time": 1790.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-12",
+          "time": 1823.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        },
+        {
+          "label": "settled",
+          "time": 2004.5999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 373,
+            "bottom": 373
+          },
+          "panel": {
+            "x": 0,
+            "y": 380,
+            "width": 390,
+            "height": 464,
+            "bottom": 844
+          },
+          "console": {
+            "x": 4,
+            "y": 361.703125,
+            "width": 382,
+            "height": 402.09375,
+            "bottom": 763.796875
+          },
+          "dock": {
+            "x": 0,
+            "y": 767.25,
+            "width": 390,
+            "height": 76.75,
+            "bottom": 844
+          },
+          "scene": null
+        }
+      ],
+      "story": [
+        {
+          "step": "beat",
+          "progress": "1 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n복원한 발표 연습 영상의 마지막 프레임에 작은 첨부 목록이 남아 있었다. 첨부 파일명은 ‘검증키 분리 절차 4–5쪽’. 부산에서 엄마의 수첩을 펼쳤을 때 비어 있던 바로 그 두 장이었다.",
+          "scene": {
+            "x": 21,
+            "y": 32.00511932373047,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.3957443237305,
+            "scrollHeight": 575,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.395751953125,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758.005126953125,
+            "scrollHeight": 167,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.520751953125,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.630126953125,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.520751953125,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.630126953125,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "dock": {
+            "x": 10,
+            "y": 768.005126953125,
+            "width": 370,
+            "height": 76,
+            "bottom": 844.005126953125,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "2 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n보관망에서 절차를 내려받아 차를 세우고 계기판을 다시 열었다. 출발 전에 번호를 붙여 둔 선들이 그대로였다. 이번에는 어느 커넥터를 먼저 풀어야 하는지 알 수 있었다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 574,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 167,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.625,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.625,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "3 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n정전기 방지 천에 싼 반도체 모듈, 엄마와 아빠와 어린 나를 찍은 사진, 아빠 글씨가 빼곡한 회로 수첩이 차례로 나왔다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 574,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 167,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.625,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.625,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "4 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "기록\n아빠\n소프트웨어는 무엇을 고칠지 말한다. 칩은 누구의 수정을 믿을지 정한다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 574,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 246,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 156.234375,
+            "bottom": 819.75,
+            "scrollHeight": 156,
+            "clientHeight": 156
+          },
+          "latestBox": {
+            "x": 114.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 156.234375,
+            "bottom": 819.75,
+            "scrollHeight": 154,
+            "clientHeight": 154
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "5 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "기록\n아빠\n이건 천리안을 끄는 열쇠가 아니다. 천리안의 예측이 현실이 되기 전에, 인간의 서명 하나를 반드시 거치게 하는 검증키다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 574,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 270,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 180.3125,
+            "bottom": 843.828125,
+            "scrollHeight": 180,
+            "clientHeight": 180
+          },
+          "latestBox": {
+            "x": 114.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 180.3125,
+            "bottom": 843.828125,
+            "scrollHeight": 178,
+            "clientHeight": 178
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "6 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n수첩 끝의 음성 파일 번호를 계기판 단말에 입력하자 두 사람의 목소리가 잡음 사이로 돌아왔다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 574,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 167,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.625,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 740.625,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "7 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n이름을 정해야 설명서에 쓰지. 차단 장치?",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 600,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 161,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "8 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n그건 전부 끄는 것처럼 들려. 검증키라고 해.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 600,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 161,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "9 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n너무 평범한데.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 604,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 161,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 38.21875,
+            "bottom": 701.734375,
+            "scrollHeight": 38,
+            "clientHeight": 38
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 38.21875,
+            "bottom": 701.734375,
+            "scrollHeight": 38,
+            "clientHeight": 38
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "10 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n평범해야 해. 이걸 꽂아도 병원 불은 안 꺼지고 신호등도 돌아가. 달라지는 건 강제 명령 앞에서 사람이 한 번 확인한다는 것뿐이야.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 605,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 161,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "11 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n우리가 설치하러 못 가면?",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 608,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 161,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 38.21875,
+            "bottom": 701.734375,
+            "scrollHeight": 38,
+            "clientHeight": 38
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 38.21875,
+            "bottom": 701.734375,
+            "scrollHeight": 38,
+            "clientHeight": 38
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "12 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n잠깐 공구 내려놓는 소리가 났다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 609,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 161,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 36.984375,
+            "bottom": 700.5,
+            "scrollHeight": 37,
+            "clientHeight": 37
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 36.984375,
+            "bottom": 700.5,
+            "scrollHeight": 37,
+            "clientHeight": 37
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "13 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n서울 쪽으로 가는 물건에 숨겨야지. 오래 버티고, 고장 나도 누가 고쳐서 다시 움직일 만한 데.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 565.390625,
+            "bottom": 597.390625,
+            "scrollHeight": 598,
+            "clientHeight": 563
+          },
+          "report": {
+            "x": 21,
+            "y": 597.390625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 758,
+            "scrollHeight": 161,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 663.515625,
+            "width": 196.453125,
+            "height": 58.15625,
+            "bottom": 721.671875,
+            "scrollHeight": 58,
+            "clientHeight": 58
+          },
+          "dock": {
+            "x": 10,
+            "y": 768,
+            "width": 370,
+            "height": 76,
+            "bottom": 844,
+            "scrollHeight": 75,
+            "clientHeight": 75
+          }
+        },
+        {
+          "step": "decision",
+          "progress": "14 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n녹음은 거기서 끝났다. 할아버지는 자신이 모르는 회로를 고치는 대신, 그 회로를 실은 달구지가 남산까지 흔들리지 않고 가도록 평생 차를 손봤다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 348,
+            "height": 460.765625,
+            "bottom": 492.765625,
+            "scrollHeight": 489,
+            "clientHeight": 459
+          },
+          "report": {
+            "x": 21,
+            "y": 492.765625,
+            "width": 348,
+            "height": 160.609375,
+            "bottom": 653.375,
+            "scrollHeight": 167,
+            "clientHeight": 161
+          },
+          "reader": {
+            "x": 112.484375,
+            "y": 558.890625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 636,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "latestBox": {
+            "x": 112.484375,
+            "y": 558.890625,
+            "width": 196.453125,
+            "height": 77.109375,
+            "bottom": 636,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          },
+          "dock": {
+            "x": 10,
+            "y": 663.375,
+            "width": 370,
+            "height": 180.625,
+            "bottom": 844,
+            "scrollHeight": 180,
+            "clientHeight": 180
+          }
+        }
+      ],
+      "outcome": {
+        "text": "기록\n엄마\n우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.",
+        "reportScroll": 222,
+        "reportClient": 161,
+        "readerScroll": 132,
+        "readerClient": 132,
+        "overflow": 0,
+        "step": "result",
+        "phase": "outcome"
+      },
+      "errors": []
+    },
+    "475x948": {
+      "switchToLocal": [
+        {
+          "label": "before",
+          "time": 756.8999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "sync",
+          "time": 757,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-1",
+          "time": 764.5999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-2",
+          "time": 797.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-3",
+          "time": 830.5999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-4",
+          "time": 864.2000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-5",
+          "time": 897.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-6",
+          "time": 930.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-7",
+          "time": 964,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-8",
+          "time": 997.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-9",
+          "time": 1030.7999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-10",
+          "time": 1064,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-11",
+          "time": 1097.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-12",
+          "time": 1130.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "settled",
+          "time": 1311.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        }
+      ],
+      "switchToRoute": [
+        {
+          "label": "before",
+          "time": 1392.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "sync",
+          "time": 1392.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-1",
+          "time": 1397.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-2",
+          "time": 1430.5,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-3",
+          "time": 1464.0999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-4",
+          "time": 1497.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-5",
+          "time": 1530.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-6",
+          "time": 1564.2000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-7",
+          "time": 1597.3999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-8",
+          "time": 1630.7000000476837,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-9",
+          "time": 1664.0999999046326,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-10",
+          "time": 1697.2999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-11",
+          "time": 1730.8999998569489,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "raf-12",
+          "time": 1763.7999999523163,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        },
+        {
+          "label": "settled",
+          "time": 1945,
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 475,
+            "height": 377,
+            "bottom": 377
+          },
+          "panel": {
+            "x": 0,
+            "y": 384,
+            "width": 475,
+            "height": 564,
+            "bottom": 948
+          },
+          "console": {
+            "x": 4,
+            "y": 359.75,
+            "width": 467,
+            "height": 491.578125,
+            "bottom": 851.328125
+          },
+          "dock": {
+            "x": 0,
+            "y": 854.53125,
+            "width": 475,
+            "height": 93.46875,
+            "bottom": 948
+          },
+          "scene": null
+        }
+      ],
+      "story": [
+        {
+          "step": "beat",
+          "progress": "1 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n복원한 발표 연습 영상의 마지막 프레임에 작은 첨부 목록이 남아 있었다. 첨부 파일명은 ‘검증키 분리 절차 4–5쪽’. 부산에서 엄마의 수첩을 펼쳤을 때 비어 있던 바로 그 두 장이었다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 639,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "2 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n보관망에서 절차를 내려받아 차를 세우고 계기판을 다시 열었다. 출발 전에 번호를 붙여 둔 선들이 그대로였다. 이번에는 어느 커넥터를 먼저 풀어야 하는지 알 수 있었다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 638,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "3 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n정전기 방지 천에 싼 반도체 모듈, 엄마와 아빠와 어린 나를 찍은 사진, 아빠 글씨가 빼곡한 회로 수첩이 차례로 나왔다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 638,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "4 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "기록\n아빠\n소프트웨어는 무엇을 고칠지 말한다. 칩은 누구의 수정을 믿을지 정한다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 638,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 241,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 132.15625,
+            "bottom": 871.765625,
+            "scrollHeight": 132,
+            "clientHeight": 132
+          },
+          "latestBox": {
+            "x": 136.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 132.15625,
+            "bottom": 871.765625,
+            "scrollHeight": 130,
+            "clientHeight": 130
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "5 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "기록\n아빠\n이건 천리안을 끄는 열쇠가 아니다. 천리안의 예측이 현실이 되기 전에, 인간의 서명 하나를 반드시 거치게 하는 검증키다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 638,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 289,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 180.3125,
+            "bottom": 919.921875,
+            "scrollHeight": 180,
+            "clientHeight": 180
+          },
+          "latestBox": {
+            "x": 136.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 180.3125,
+            "bottom": 919.921875,
+            "scrollHeight": 178,
+            "clientHeight": 178
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "6 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n수첩 끝의 음성 파일 번호를 계기판 단말에 입력하자 두 사람의 목소리가 잡음 사이로 돌아왔다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 638,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 822.859375,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "7 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n이름을 정해야 설명서에 쓰지. 차단 장치?",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 665,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "8 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n그건 전부 끄는 것처럼 들려. 검증키라고 해.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 666,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "9 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n너무 평범한데.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 670,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 40.296875,
+            "bottom": 779.90625,
+            "scrollHeight": 40,
+            "clientHeight": 40
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 40.296875,
+            "bottom": 779.90625,
+            "scrollHeight": 40,
+            "clientHeight": 40
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "10 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n평범해야 해. 이걸 꽂아도 병원 불은 안 꺼지고 신호등도 돌아가. 달라지는 건 강제 명령 앞에서 사람이 한 번 확인한다는 것뿐이야.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 671,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "11 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "아빠\n우리가 설치하러 못 가면?",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 675,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 40.296875,
+            "bottom": 779.90625,
+            "scrollHeight": 40,
+            "clientHeight": 40
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 40.296875,
+            "bottom": 779.90625,
+            "scrollHeight": 40,
+            "clientHeight": 40
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "12 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n잠깐 공구 내려놓는 소리가 났다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 676,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 39.75,
+            "bottom": 779.359375,
+            "scrollHeight": 40,
+            "clientHeight": 40
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 39.75,
+            "bottom": 779.359375,
+            "scrollHeight": 40,
+            "clientHeight": 40
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "beat",
+          "progress": "13 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "엄마\n서울 쪽으로 가는 물건에 숨겨야지. 오래 버티고, 고장 나도 누가 고쳐서 다시 움직일 만한 데.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 628.3125,
+            "bottom": 660.3125,
+            "scrollHeight": 665,
+            "clientHeight": 626
+          },
+          "report": {
+            "x": 21,
+            "y": 660.3125,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 860.15625,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 739.609375,
+            "width": 244.4375,
+            "height": 61.59375,
+            "bottom": 801.203125,
+            "scrollHeight": 62,
+            "clientHeight": 62
+          },
+          "dock": {
+            "x": 10,
+            "y": 870.15625,
+            "width": 455,
+            "height": 77.84375,
+            "bottom": 948,
+            "scrollHeight": 77,
+            "clientHeight": 77
+          }
+        },
+        {
+          "step": "decision",
+          "progress": "14 / 14",
+          "title": "달구지 안의 검증키",
+          "latest": "장면\n녹음은 거기서 끝났다. 할아버지는 자신이 모르는 회로를 고치는 대신, 그 회로를 실은 달구지가 남산까지 흔들리지 않고 가도록 평생 차를 손봤다.",
+          "scene": {
+            "x": 21,
+            "y": 32,
+            "width": 433,
+            "height": 502.65625,
+            "bottom": 534.65625,
+            "scrollHeight": 532,
+            "clientHeight": 501
+          },
+          "report": {
+            "x": 21,
+            "y": 534.65625,
+            "width": 433,
+            "height": 199.84375,
+            "bottom": 734.5,
+            "scrollHeight": 200,
+            "clientHeight": 200
+          },
+          "reader": {
+            "x": 134.828125,
+            "y": 613.953125,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 697.203125,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "latestBox": {
+            "x": 134.828125,
+            "y": 613.953125,
+            "width": 244.4375,
+            "height": 83.25,
+            "bottom": 697.203125,
+            "scrollHeight": 83,
+            "clientHeight": 83
+          },
+          "dock": {
+            "x": 10,
+            "y": 744.5,
+            "width": 455,
+            "height": 203.5,
+            "bottom": 948,
+            "scrollHeight": 203,
+            "clientHeight": 203
+          }
+        }
+      ],
+      "outcome": {
+        "text": "기록\n엄마\n우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.",
+        "reportScroll": 241,
+        "reportClient": 200,
+        "readerScroll": 132,
+        "readerClient": 132,
+        "overflow": 0,
+        "step": "result",
+        "phase": "outcome"
+      },
+      "errors": []
+    }
+  }
+}

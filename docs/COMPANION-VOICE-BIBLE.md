@@ -48,6 +48,26 @@ transition. The runtime `addresses` maps preserve these stable relationships.
 | Jaeyi | 민지 `민지 씨`; Kangwoo `강우 씨/아저씨`; Leo `레오 오빠`; Eunsu `은수 언니` |
 | Eunsu | peers and younger crew by `이름+씨`; Park `선생님` |
 
+### Addressing Daon (the player character)
+
+The player names the protagonist, so no companion may use her given name. Each companion has
+a fixed form of address and a fixed speech register toward her; both live in the runtime
+`addresses.daon` / `addresses.daonRegister`. These were derived from the dominant usage
+already in the scripts (Minji 반말 41:5, Kangwoo 반말 19:8, the rest 해요체), not invented —
+the earlier table omitted Daon entirely, which is why registers drifted between events.
+
+| Speaker | Address | Register toward Daon | Note |
+|---|---|---|---|
+| Minji | `대장님` | 반말 | 17 years old and blunt with everyone; the honorific stays, the register does not. |
+| Park | `자네` | 하오체 | 63; the oldest crew member speaks down warmly, never in 해요체. |
+| Kangwoo | `대장` | 반말 | Ex-military. 합쇼체 belongs to his past orders, not to this crew. |
+| Leo | `대장님` | 해요체 | |
+| Jaeyi | `대장님` | 해요체 | |
+| Eunsu | `대장님` | 해요체 | |
+
+Do not write `당신` or `너` toward Daon for any speaker — use the address above or drop the
+pronoun entirely.
+
 ## Automated guardrails
 
 `npm run lint:dialogue` inventories 4,112 lines across banter, chats, NPC dialogue, radio,

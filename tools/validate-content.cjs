@@ -236,6 +236,20 @@ for (const id of Object.keys(D.nodes || {})) {
   need(!!scene, `nodeScene:${id}`, '도착 장면 연결이 없음');
   if(scene) need(!!D.scenes[scene], `nodeScene:${id}`, `없는 장면 ${scene}`);
 }
+for (const [id, scene] of Object.entries(D.arrivalScenes || {})) {
+  need(!!D.nodes[id], `arrivalScene:${id}`, '없는 도착지');
+  need(!!D.scenes[scene], `arrivalScene:${id}`, `없는 세로 도착 장면 ${scene}`);
+}
+{
+  const expected=[...new Set(Object.values(D.stls||{}).flatMap(stl=>stl.npcs||[]))];
+  const canon=D.settlementPortraitCanon||[];
+  const missing=expected.filter(id=>!canon.includes(id));
+  const legacy=canon.filter(id=>(D.legacyIllustratedPortraits||[]).includes(id));
+  const noPortrait=canon.filter(id=>!D.portraits[id]);
+  need(!missing.length, 'settlementPortraitCanon', `상주 주민 누락 ${missing.join(', ')}`);
+  need(!legacy.length, 'settlementPortraitCanon', `삽화형 주민 잔존 ${legacy.join(', ')}`);
+  need(!noPortrait.length, 'settlementPortraitCanon', `초상 누락 ${noPortrait.join(', ')}`);
+}
 for (const [id, scene] of Object.entries(D.eventScenes || {}))
   need(!!D.scenes[scene], `eventScene:${id}`, `없는 장면 ${scene}`);
 const criticalNarrativeScenes={

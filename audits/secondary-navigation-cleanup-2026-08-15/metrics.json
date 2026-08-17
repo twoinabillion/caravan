@@ -1,0 +1,66 @@
+{
+  "goal": {
+    "crossLinks": 0,
+    "roadReturn": 1,
+    "locationTag": "DIV",
+    "locationText": "부산 감천 부두"
+  },
+  "map": {
+    "crossLinks": 0,
+    "closeButton": "길로"
+  },
+  "bag": {
+    "crossLinks": 0,
+    "stateText": "가방에 보관 중",
+    "stateInsideCopy": true,
+    "horizontalOverflow": false
+  },
+  "shortBag": {
+    "horizontalOverflow": false,
+    "pocketNameSize": "11px",
+    "leadingPossessionLabelVisible": false,
+    "gapStack": [
+      {
+        "tag": "DIV",
+        "id": "",
+        "className": "road-tool-stage"
+      },
+      {
+        "tag": "DIV",
+        "id": "ovl-status",
+        "className": "ovl road-tool-overlay on"
+      },
+      {
+        "tag": "B",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "className": "nav-destination-card is-selected"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "className": "nav-destination-track"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "className": "nav-destination-viewport"
+      }
+    ]
+  },
+  "errors": []
+}

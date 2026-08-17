@@ -1,0 +1,338 @@
+[
+  {
+    "scene": "event-meet-family",
+    "id": "meet_family",
+    "title": "고장난 트럭의 가족",
+    "actual": "event-meet-family",
+    "file": "01-event-meet-family.png"
+  },
+  {
+    "scene": "event-meet-craft",
+    "id": "meet_barber",
+    "title": "길거리 이발소",
+    "actual": "event-meet-craft",
+    "file": "02-event-meet-craft.png"
+  },
+  {
+    "scene": "event-meet-performer",
+    "id": "meet_cinema",
+    "title": "이동 영화관",
+    "actual": "event-meet-performer",
+    "file": "03-event-meet-performer.png"
+  },
+  {
+    "scene": "event-meet-pilgrim",
+    "id": "meet_pilgrims",
+    "title": "침묵의 행렬",
+    "actual": "event-meet-pilgrim",
+    "file": "04-event-meet-pilgrim.png"
+  },
+  {
+    "scene": "event-meet-guard",
+    "id": "meet_toll",
+    "title": "도로 봉쇄",
+    "actual": "event-meet-guard",
+    "file": "05-event-meet-guard.png"
+  },
+  {
+    "scene": "event-meet-courier",
+    "id": "meet_mailman",
+    "title": "오랫동안 배달 중",
+    "actual": "event-meet-courier",
+    "file": "06-event-meet-courier.png"
+  },
+  {
+    "scene": "event-meet-animal",
+    "id": "meet_beekeeper",
+    "title": "벌통을 옮기는 사람",
+    "actual": "event-meet-animal",
+    "file": "07-event-meet-animal.png"
+  },
+  {
+    "scene": "event-meet-trader",
+    "id": "meet_trader_truck",
+    "title": "움직이는 만물상",
+    "actual": "event-meet-trader",
+    "file": "08-event-meet-trader.png"
+  },
+  {
+    "scene": "event-meet-community",
+    "id": "meet_bathtruck",
+    "title": "드럼통 목욕탕",
+    "actual": "event-meet-community",
+    "file": "09-event-meet-community.png"
+  },
+  {
+    "scene": "event-find-signal",
+    "id": "find_tower_light",
+    "title": "능선 위의 불빛",
+    "actual": "event-find-signal",
+    "file": "10-event-find-signal.png"
+  },
+  {
+    "scene": "event-find-document",
+    "id": "find_lake_sign",
+    "title": "페인트로 쓴 표지판",
+    "actual": "event-find-document",
+    "file": "11-event-find-document.png"
+  },
+  {
+    "scene": "event-explore-retail",
+    "id": "exp_mart",
+    "title": "버려진 마트",
+    "actual": "event-explore-retail",
+    "file": "12-event-explore-retail.png"
+  },
+  {
+    "scene": "event-explore-civic",
+    "id": "exp_pharmacy",
+    "title": "상가 약국",
+    "actual": "event-explore-civic",
+    "file": "13-event-explore-civic.png"
+  },
+  {
+    "scene": "event-explore-school",
+    "id": "exp_school",
+    "title": "초등학교",
+    "actual": "event-explore-school",
+    "file": "14-event-explore-school.png"
+  },
+  {
+    "scene": "event-explore-workshop",
+    "id": "exp_brewery",
+    "title": "막걸리 양조장",
+    "actual": "event-explore-workshop",
+    "file": "15-event-explore-workshop.png"
+  },
+  {
+    "scene": "event-explore-farm",
+    "id": "exp_orchard",
+    "title": "야생 과수원",
+    "actual": "event-explore-farm",
+    "file": "16-event-explore-farm.png"
+  },
+  {
+    "scene": "event-explore-water",
+    "id": "exp_reservoir",
+    "title": "빗물 저수조",
+    "actual": "event-explore-water",
+    "file": "17-event-explore-water.png"
+  },
+  {
+    "scene": "event-explore-transit",
+    "id": "exp_station",
+    "title": "간이역",
+    "actual": "event-explore-transit",
+    "file": "18-event-explore-transit.png"
+  },
+  {
+    "scene": "event-explore-leisure",
+    "id": "exp_noraebang",
+    "title": "코인 노래방",
+    "actual": "event-explore-leisure",
+    "file": "19-event-explore-leisure.png"
+  },
+  {
+    "scene": "event-ai-drone",
+    "id": "ai_drone",
+    "title": "하늘의 점",
+    "actual": "event-ai-drone",
+    "file": "20-event-ai-drone.png"
+  },
+  {
+    "scene": "event-ai-broadcast",
+    "id": "ai_broadcast",
+    "title": "새벽의 방송",
+    "actual": "event-ai-broadcast",
+    "file": "21-event-ai-broadcast.png"
+  },
+  {
+    "scene": "event-ai-checkpoint",
+    "id": "ai_checkers",
+    "title": "정리자들의 검문",
+    "actual": "event-ai-checkpoint",
+    "file": "22-event-ai-checkpoint.png"
+  },
+  {
+    "scene": "event-ai-convoy",
+    "id": "deadline_d10",
+    "title": "이송 준비 — 번호를 단 버스들",
+    "actual": "event-ai-convoy",
+    "file": "23-event-ai-convoy.png"
+  },
+  {
+    "scene": "event-ai-automation",
+    "id": "exp_gas",
+    "title": "폐주유소",
+    "actual": "event-ai-automation",
+    "file": "24-event-ai-automation.png"
+  },
+  {
+    "scene": "event-crisis-engine",
+    "id": "crisis_breakdown",
+    "title": "차가 멈췄다",
+    "actual": "event-crisis-engine",
+    "file": "25-event-crisis-engine.png"
+  },
+  {
+    "scene": "event-crisis-fuel",
+    "id": "crisis_nofuel",
+    "title": "연료 바닥",
+    "actual": "event-crisis-fuel",
+    "file": "26-event-crisis-fuel.png"
+  },
+  {
+    "scene": "event-crisis-tire",
+    "id": "crisis_flat",
+    "title": "펑크",
+    "actual": "event-crisis-tire",
+    "file": "27-event-crisis-tire.png"
+  },
+  {
+    "scene": "event-crisis-flood",
+    "id": "crisis_washout",
+    "title": "유실된 길",
+    "actual": "event-crisis-flood",
+    "file": "28-event-crisis-flood.png"
+  },
+  {
+    "scene": "event-crisis-weather",
+    "id": "wx_storm_wind",
+    "title": "강풍",
+    "actual": "event-crisis-weather",
+    "file": "29-event-crisis-weather.png"
+  },
+  {
+    "scene": "event-crisis-collapse",
+    "id": "crisis_rockfall",
+    "title": "낙석",
+    "actual": "event-crisis-collapse",
+    "file": "30-event-crisis-collapse.png"
+  },
+  {
+    "scene": "event-crisis-animal",
+    "id": "camp_dogs",
+    "title": "들개들의 밤",
+    "actual": "event-crisis-animal",
+    "file": "31-event-crisis-animal.png"
+  },
+  {
+    "scene": "event-companion-repair",
+    "id": "comp_engine_sound",
+    "title": "민지의 귀",
+    "actual": "event-companion-repair",
+    "file": "32-event-companion-repair.png"
+  },
+  {
+    "scene": "event-companion-radio",
+    "id": "comp_leo_song",
+    "title": "신곡",
+    "actual": "event-companion-radio",
+    "file": "33-event-companion-radio.png"
+  },
+  {
+    "scene": "event-companion-meal",
+    "id": "comp_birthday",
+    "title": "생일",
+    "actual": "event-companion-meal",
+    "file": "34-event-companion-meal.png"
+  },
+  {
+    "scene": "event-companion-camp",
+    "id": "comp_pss_night",
+    "title": "잠들지 못하는 사람",
+    "actual": "event-companion-camp",
+    "file": "35-event-companion-camp.png"
+  },
+  {
+    "scene": "event-vista-field",
+    "id": "vg_cosmos",
+    "title": "코스모스 길",
+    "actual": "event-vista-field",
+    "file": "36-event-vista-field.png"
+  },
+  {
+    "scene": "event-vista-water",
+    "id": "vg_geese",
+    "title": "기러기 편대",
+    "actual": "event-vista-water",
+    "file": "37-event-vista-water.png"
+  },
+  {
+    "scene": "event-vista-mountain",
+    "id": "vg_bamboo",
+    "title": "대숲 바람",
+    "actual": "event-vista-mountain",
+    "file": "38-event-vista-mountain.png"
+  },
+  {
+    "scene": "event-vista-road",
+    "id": "fork_shortcut",
+    "title": "갈림길",
+    "actual": "event-vista-road",
+    "file": "39-event-vista-road.png"
+  },
+  {
+    "scene": "event-vista-town",
+    "id": "vg_busstop",
+    "title": "폐 버스정류장",
+    "actual": "event-vista-town",
+    "file": "40-event-vista-town.png"
+  },
+  {
+    "scene": "event-vista-night",
+    "id": "vg_shootingstar",
+    "title": "별똥별",
+    "actual": "event-vista-night",
+    "file": "41-event-vista-night.png"
+  },
+  {
+    "scene": "event-vista-weather",
+    "id": "vg_rainbow",
+    "title": "무지개",
+    "actual": "event-vista-weather",
+    "file": "42-event-vista-weather.png"
+  },
+  {
+    "scene": "event-meet-roadside",
+    "id": "meet_waver",
+    "title": "손 흔드는 남자",
+    "actual": "event-meet-roadside",
+    "file": "43-event-meet-roadside.png"
+  },
+  {
+    "scene": "event-explore-shelter",
+    "id": "find_bori_nose",
+    "title": "보리가 짖는다",
+    "actual": "event-explore-shelter",
+    "file": "44-event-explore-shelter.png"
+  },
+  {
+    "scene": "event-ai-surveillance",
+    "id": "cleaners_recall",
+    "title": "회수조",
+    "actual": "event-ai-surveillance",
+    "file": "45-event-ai-surveillance.png"
+  },
+  {
+    "scene": "event-crisis-exhaustion",
+    "id": "crisis_drowsy",
+    "title": "졸음",
+    "actual": "event-crisis-exhaustion",
+    "file": "46-event-crisis-exhaustion.png"
+  },
+  {
+    "scene": "event-companion-van",
+    "id": "comp_kw_stop",
+    "title": "\"세워\"",
+    "actual": "event-companion-van",
+    "file": "47-event-companion-van.png"
+  },
+  {
+    "scene": "event-vista-remnant",
+    "id": "vg_swallows",
+    "title": "육교 밑 제비집",
+    "actual": "event-vista-remnant",
+    "file": "48-event-vista-remnant.png"
+  }
+]

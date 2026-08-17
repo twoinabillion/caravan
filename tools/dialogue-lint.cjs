@@ -129,7 +129,8 @@ requireIntroOrder('intro-departure-choice', [
   ['불완전한 장치 인정', /아직은 몰라/],
   ['추가 기록 필요', /같은 이송을 겪은 사람/],
   ['동행은 본인 선택', /같은 곳까지 가겠다는 사람/],
-  ['행동 시한 선언', /스무 날 안에/],
+  /* 시한 표기는 D.transferDeadlineDay(26)를 따른다. 옛 20일 표기로 되돌아가면 여기서 걸린다. */
+  ['행동 시한 선언', /스물엿새 안에/],
 ]);
 const currentTransfer=introByScene.get('intro-current-expulsion');
 const childTransferSpeech=(currentTransfer&&currentTransfer.beats||[])
@@ -166,6 +167,12 @@ for (const id of personIds) {
     if(missingPersona.length) errors.push(`동료 Nemotron 페르소나 모델 누락: ${id} / ${missingPersona.join(', ')}`);
     if(!voice.addresses||Object.keys(voice.addresses).length<5)
       errors.push(`동료 관계별 호칭표 누락: ${id}`);
+    /* 주인공은 플레이어가 이름을 정하므로 호칭·화계를 계약으로 못 박는다.
+       이 칸이 비어 있던 동안 이벤트마다 말투가 널뛰었다. */
+    if(!voice.addresses||!Array.isArray(voice.addresses.daon)||!voice.addresses.daon.length)
+      errors.push(`주인공 호칭 계약 누락: ${id}`);
+    if(!voice.addresses||!voice.addresses.daonRegister)
+      errors.push(`주인공 화계 계약 누락: ${id}`);
     const groundingFields=['value','routine','care','conflict','repair','stress'];
     const missing=groundingFields.filter(field=>!voice.grounding||typeof voice.grounding[field]!=='string'||!voice.grounding[field].trim());
     if(missing.length) errors.push(`동료 행동 성격 규칙 누락: ${id} / ${missing.join(', ')}`);
@@ -384,10 +391,23 @@ for (const id of personIds) {
 
 /* 서술 목발 단어 총량 상한 — 세계 전체가 한 사람의 리듬으로 말하지 않게.
    상한은 2026-08 경구 다이어트로 낮춘 값에 고정한다. 늘어나면 게이트가 막는다. */
-const crutchCaps = [['한참', 45], ['처음으로', 36], ['백미러', 66]];
+const crutchCaps = [['한참', 45], ['처음으로', 36], ['백미러', 66], ['만장일치', 8]];
 for (const [word, cap] of crutchCaps) {
   const count = (source.match(new RegExp(word, 'g')) || []).length;
   if (count > cap) errors.push(`목발 단어 「${word}」 ${count}회 > 상한 ${cap}회 — 동의어로 흩거나 문장을 바꿀 것`);
+}
+
+/* 동료가 상대를 「당신」·「너」로 부르는 대사 — 주인공은 대장님/대장/자네,
+   동료끼리는 호칭표를 쓴다. 화자가 확정된 짧은 라인에서만 검사해 오탐을 피한다. */
+const daonPronoun = /(당신|너)(은|는|이|가|의|를|한테|에게|랑|와|과)?\s/;
+for (const line of [
+  ...(D.banter || []).filter(item => D.comps[item.who] && typeof item.t === 'string')
+    .map(item => ({who:item.who, t:item.t})),
+  ...(D.chats || []).flatMap(chat => (chat.lines || [])
+    .filter(([who]) => D.comps[who]).map(([who, t]) => ({who, t}))),
+]) {
+  if (daonPronoun.test(line.t))
+    errors.push(`호칭 계약 위반(당신·너 금지): ${line.who} / ${line.t.slice(0, 40)}`);
 }
 
 /* 경구 종결 비율 — 이벤트 결과문이 "X는 Y다"식 짧은 단정으로 닫히는 빈도.

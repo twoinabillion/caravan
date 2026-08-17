@@ -5,7 +5,20 @@ import {join} from 'node:path';
 const root=process.cwd();
 const sceneDir=join(root,'assets','scenes');
 const portraitDir=join(root,'assets','portraits');
-const hubExceptions=new Map([['miryang-market-hub.jpg',[960,1200]]]);
+/* 장면은 기본 슬롯 규격을 따르되, 아래 두 파일은 실제 UI에서 별도 크롭 계약을
+   가진 승인 원본이다. 대구는 세로 전체 화면의 고해상도 정본이고, 밀양 허브는
+   상단 풍경의 넓은 object-fit 크롭을 위한 원본이라 기본 16:9 파일과 다르다. */
+const sceneExceptions=new Map([
+  ['arrival-daegu-dome.webp',[941,1672]],
+  ['miryang-market-hub.jpg',[960,1200]],
+  ['miryang-market-hub.webp',[960,1200]],
+]);
+/* 큰 정착지의 상주 주민은 대화·주민 목록에서 auto 렌더링하는 256px 반실사
+   캐스트 정본이다. 나머지 작은 런타임 초상은 기존 96px 예산을 유지한다. */
+const settlementPortraits=new Set([
+  'geumja','suwan','sundeok','byungchul','yeongok','taeho','sera','mansu',
+  'jaepil','jeomrye','miyoung','dongsu','drhan','noah','deokgu','hwasun','gitae',
+]);
 const imageFiles=readdirSync(sceneDir)
   .filter(name=>/\.(?:jpe?g|png|webp)$/i.test(name))
   .sort();
@@ -56,7 +69,7 @@ function dimensions(file){
 for(const name of imageFiles){
   const file=join(sceneDir,name);
   const actual=dimensions(file);
-  const expected=/^arrival-.*\.webp$/i.test(name)?[540,900]:(hubExceptions.get(name)||[768,432]);
+  const expected=sceneExceptions.get(name)||(/^arrival-.*\.webp$/i.test(name)?[540,900]:[768,432]);
   if(actual.width!==expected[0]||actual.height!==expected[1]){
     failures.push(`${name}: ${actual.width}x${actual.height}; expected ${expected[0]}x${expected[1]}`);
   }
@@ -67,8 +80,10 @@ const portraitFiles=existsSync(portraitDir)
   :[];
 for(const name of portraitFiles){
   const actual=dimensions(join(portraitDir,name));
-  if(actual.width!==96||actual.height!==96){
-    failures.push(`portraits/${name}: ${actual.width}x${actual.height}; expected optimized runtime portrait 96x96`);
+  const id=name.replace(/\.(?:jpe?g|png|webp)$/i,'');
+  const expected=settlementPortraits.has(id)?[256,256]:[96,96];
+  if(actual.width!==expected[0]||actual.height!==expected[1]){
+    failures.push(`portraits/${name}: ${actual.width}x${actual.height}; expected ${expected[0]}x${expected[1]}`);
   }
 }
 

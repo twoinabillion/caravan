@@ -106,7 +106,10 @@ with sync_playwright() as playwright:
         page.click(f'[data-npc="{npc_id}"]')
         face = page.locator(".dlg.talk .npc-pimg")
         assert face.count() == 1
-        assert face.evaluate("img=>img.complete&&img.naturalWidth===96&&img.naturalHeight===96")
+        assert face.evaluate(
+            "img=>img.complete&&img.naturalWidth>=256&&img.naturalHeight>=256&&"
+            "getComputedStyle(img).imageRendering==='auto'"
+        )
 
     reset_at(page, "miryang")
     state = page.evaluate("SCENE.settlementState()")

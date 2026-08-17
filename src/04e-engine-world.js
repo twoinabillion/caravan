@@ -262,6 +262,8 @@ G.pickBanter = ()=>{
     if(nd.lowFuel===1 && S.fuel>12) return false;
     if(nd.region && region!==nd.region) return false;
     if(nd.flag && !S.flags[nd.flag]) return false;
+    /* 진행이 끝난 뒤에는 "아직 못 했다"는 줄이 다시 뜨면 안 된다 */
+    if(nd.noFlag && S.flags[nd.noFlag]) return false;
     if(nd.knowledge && G.knowledgeLevel(nd.knowledge[0])<nd.knowledge[1]) return false;
     if(lastBanter.includes(b.t)) return false;
     return true;

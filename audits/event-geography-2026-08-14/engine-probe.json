@@ -1,0 +1,316 @@
+[
+  {
+    "from": "busan",
+    "to": "yangsan",
+    "endpointMatched": [
+      {
+        "id": "meet_scrapyard",
+        "title": "자동차 무덤",
+        "nearNode": [
+          "ulsan",
+          "gyeongju",
+          "pohang",
+          "yangsan"
+        ],
+        "recruitStart": "minji",
+        "priority": 1
+      },
+      {
+        "id": "lc_busan_dried",
+        "title": "자갈치 아지매",
+        "nearNode": [
+          "busan",
+          "gimhae"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "cell_sea_meet",
+        "title": "해도의 김 선장",
+        "nearNode": [
+          "busan",
+          "yeosu",
+          "mokpo",
+          "pohang",
+          "ulsan"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      }
+    ],
+    "currentlyEligible": [
+      {
+        "id": "meet_scrapyard",
+        "title": "자동차 무덤",
+        "nearNode": [
+          "ulsan",
+          "gyeongju",
+          "pohang",
+          "yangsan"
+        ],
+        "recruitStart": "minji",
+        "priority": 1
+      },
+      {
+        "id": "lc_busan_dried",
+        "title": "자갈치 아지매",
+        "nearNode": [
+          "busan",
+          "gimhae"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "cell_sea_meet",
+        "title": "해도의 김 선장",
+        "nearNode": [
+          "busan",
+          "yeosu",
+          "mokpo",
+          "pohang",
+          "ulsan"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      }
+    ]
+  },
+  {
+    "from": "daegu",
+    "to": "gumi",
+    "endpointMatched": [
+      {
+        "id": "meet_bus",
+        "title": "넘어진 버스",
+        "nearNode": [
+          "gumi",
+          "gimcheon",
+          "sangju"
+        ],
+        "recruitStart": "parkss",
+        "priority": 1
+      },
+      {
+        "id": "jy_recruit",
+        "title": "리어카를 끄는 아이",
+        "nearNode": [
+          "gunsan",
+          "mokpo",
+          "gimcheon",
+          "gumi"
+        ],
+        "recruitStart": "jaeyi",
+        "priority": 1
+      },
+      {
+        "id": "lc_daegu_makchang",
+        "title": "막창 골목의 불",
+        "nearNode": [
+          "daegu"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "van_garage",
+        "title": "대양카센터",
+        "nearNode": [
+          "gimcheon",
+          "gumi",
+          "sangju"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "cell_dome_meet",
+        "title": "돔의 하 여사",
+        "nearNode": [
+          "daegu"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "npc_taeho_2",
+        "title": "돔의 규칙",
+        "nearNode": [
+          "daegu"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      }
+    ],
+    "currentlyEligible": [
+      {
+        "id": "meet_bus",
+        "title": "넘어진 버스",
+        "nearNode": [
+          "gumi",
+          "gimcheon",
+          "sangju"
+        ],
+        "recruitStart": "parkss",
+        "priority": 1
+      },
+      {
+        "id": "jy_recruit",
+        "title": "리어카를 끄는 아이",
+        "nearNode": [
+          "gunsan",
+          "mokpo",
+          "gimcheon",
+          "gumi"
+        ],
+        "recruitStart": "jaeyi",
+        "priority": 1
+      },
+      {
+        "id": "cell_dome_meet",
+        "title": "돔의 하 여사",
+        "nearNode": [
+          "daegu"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      }
+    ]
+  },
+  {
+    "from": "miryang",
+    "to": "yangsan",
+    "endpointMatched": [
+      {
+        "id": "meet_scrapyard",
+        "title": "자동차 무덤",
+        "nearNode": [
+          "ulsan",
+          "gyeongju",
+          "pohang",
+          "yangsan"
+        ],
+        "recruitStart": "minji",
+        "priority": 1
+      },
+      {
+        "id": "near_miryang_ice",
+        "title": "얼음골",
+        "nearNode": [
+          "miryang"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "npc_sundeok_2",
+        "title": "순덕의 부탁",
+        "nearNode": [
+          "miryang"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      }
+    ],
+    "currentlyEligible": [
+      {
+        "id": "meet_scrapyard",
+        "title": "자동차 무덤",
+        "nearNode": [
+          "ulsan",
+          "gyeongju",
+          "pohang",
+          "yangsan"
+        ],
+        "recruitStart": "minji",
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "from": "suwon",
+    "to": "pyeongtaek",
+    "endpointMatched": [
+      {
+        "id": "lc_suwon_galbi",
+        "title": "왕갈비의 냄새",
+        "nearNode": [
+          "suwon"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "parcel_found",
+        "title": "세 살의 주인",
+        "nearNode": [
+          "suwon",
+          "pyeongtaek",
+          "seoul"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "granny_arrive",
+        "title": "도착한 사람",
+        "nearNode": [
+          "suwon",
+          "pyeongtaek"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "cell_sea_2",
+        "title": "해도의 전언",
+        "nearNode": [
+          "gunsan",
+          "pyeongtaek",
+          "mokpo"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "npc_deokgu_2",
+        "title": "북쪽만 보는 문지기",
+        "nearNode": [
+          "suwon"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "ev_container_port",
+        "title": "봉인된 컨테이너",
+        "nearNode": [
+          "pyeongtaek"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      }
+    ],
+    "currentlyEligible": [
+      {
+        "id": "lc_suwon_galbi",
+        "title": "왕갈비의 냄새",
+        "nearNode": [
+          "suwon"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      },
+      {
+        "id": "ev_container_port",
+        "title": "봉인된 컨테이너",
+        "nearNode": [
+          "pyeongtaek"
+        ],
+        "recruitStart": null,
+        "priority": 0
+      }
+    ]
+  }
+]

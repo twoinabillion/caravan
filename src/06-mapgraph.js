@@ -3,8 +3,6 @@
 /* ═══════════════════ MAP ═══════════════════ */
 const MAPR = (()=>{
   let cv, ctx, W=0, H=0, DPR=1, tf={s:1,ox:0,oy:0}, t=0, selectedNode=null;
-  let fogCv=null;
-
   const geo=(lon,lat)=>D.projectGeo([lon,lat]);
   /* 한반도 남부 해안선 — WGS84를 자체 지도공간 600×760에 투영.
      게임용으로 단순화했지만 모든 도시와 여행 경로가 같은 축을 쓴다. */

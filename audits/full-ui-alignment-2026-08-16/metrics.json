@@ -901,158 +901,8 @@
       "images": [
         {
           "alt": "",
-          "width": 28,
-          "height": 28,
-          "natural": [
-            96,
-            96
-          ],
-          "fit": "cover"
-        },
-        {
-          "alt": "",
-          "width": 28,
-          "height": 28,
-          "natural": [
-            96,
-            96
-          ],
-          "fit": "cover"
-        },
-        {
-          "alt": "",
-          "width": 28,
-          "height": 28,
-          "natural": [
-            96,
-            96
-          ],
-          "fit": "cover"
-        },
-        {
-          "alt": "",
-          "width": 28,
-          "height": 28,
-          "natural": [
-            96,
-            96
-          ],
-          "fit": "cover"
-        },
-        {
-          "alt": "",
-          "width": 21,
-          "height": 21,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "",
-          "width": 21,
-          "height": 21,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "",
-          "width": 21,
-          "height": 21,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "",
-          "width": 21,
-          "height": 21,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "전수 검수 초상",
-          "width": 38,
-          "height": 38,
-          "natural": [
-            96,
-            96
-          ],
-          "fit": "cover"
-        },
-        {
-          "alt": "",
-          "width": 16,
-          "height": 16,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "",
-          "width": 16,
-          "height": 16,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "",
-          "width": 16,
-          "height": 16,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "",
-          "width": 16,
-          "height": 16,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "",
-          "width": 16,
-          "height": 16,
-          "natural": [
-            32,
-            32
-          ],
-          "fit": "fill"
-        },
-        {
-          "alt": "전수 검수 초상",
-          "width": 38,
-          "height": 38,
-          "natural": [
-            96,
-            96
-          ],
-          "fit": "cover"
-        },
-        {
-          "alt": "",
-          "width": 18,
-          "height": 18,
+          "width": 13,
+          "height": 13,
           "natural": [
             32,
             32
@@ -1068,9 +918,89 @@
             32
           ],
           "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 13,
+          "height": 13,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 13,
+          "height": 13,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 13,
+          "height": 13,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 14,
+          "height": 14,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 14,
+          "height": 14,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 14,
+          "height": 14,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 14,
+          "height": 14,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "width": 17,
+          "height": 17,
+          "natural": [
+            32,
+            32
+          ],
+          "fit": "fill"
         }
       ],
-      "activeElement": "장터의뢰와 물자를 살핀다"
+      "activeElement": "대구 돔 시장 내부. 화면을 눌러 걷고 사람을 눌러 대화한다"
     },
     "390x844-10-event-opening": {
       "root": "#ev-sheet",
@@ -1082,13 +1012,13 @@
       "images": [
         {
           "alt": "달구지 안의 검증키 · 1번째 장면",
-          "width": 346,
-          "height": 194,
+          "width": 350,
+          "height": 253,
           "natural": [
             768,
             432
           ],
-          "fit": "contain"
+          "fit": "cover"
         }
       ],
       "activeElement": "계속"
@@ -1103,18 +1033,18 @@
       "images": [
         {
           "alt": "달구지 안의 검증키 · 5번째 장면",
-          "width": 346,
-          "height": 194,
+          "width": 350,
+          "height": 253,
           "natural": [
             768,
             432
           ],
-          "fit": "contain"
+          "fit": "cover"
         },
         {
           "alt": "아빠 초상",
-          "width": 63,
-          "height": 114,
+          "width": 46,
+          "height": 46,
           "natural": [
             96,
             96
@@ -1134,13 +1064,13 @@
       "images": [
         {
           "alt": "달구지 안의 검증키 · 14번째 장면",
-          "width": 346,
-          "height": 194,
+          "width": 350,
+          "height": 253,
           "natural": [
             768,
             432
           ],
-          "fit": "contain"
+          "fit": "cover"
         }
       ],
       "activeElement": "🔊소리 끄기 멸망 이후, 부산에서 서울까지 출발 기록 01부산 감천 부두 서울까지400km 낡은 달구지 한 대와 아직 끝나지 않"
@@ -1155,18 +1085,18 @@
       "images": [
         {
           "alt": "달구지 안의 검증키 · 4번째 장면",
-          "width": 346,
-          "height": 194,
+          "width": 350,
+          "height": 253,
           "natural": [
             768,
             432
           ],
-          "fit": "contain"
+          "fit": "cover"
         },
         {
           "alt": "엄마 초상",
-          "width": 63,
-          "height": 114,
+          "width": 46,
+          "height": 46,
           "natural": [
             96,
             96
@@ -1186,7 +1116,7 @@
       "images": [
         {
           "alt": "초계 보행기 · 3번째 장면",
-          "width": 373,
+          "width": 374,
           "height": 253,
           "natural": [
             768,

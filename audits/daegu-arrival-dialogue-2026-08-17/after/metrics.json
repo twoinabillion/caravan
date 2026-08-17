@@ -1,0 +1,1442 @@
+{
+  "states": {
+    "320x578-01-arrival": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "대구 돔 시장 도착 풍경",
+          "natural": [
+            941,
+            1672
+          ],
+          "rendered": [
+            320,
+            578
+          ],
+          "fit": "cover"
+        }
+      ]
+    },
+    "320x578-01b-arrival-landscape": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "양산 고가차도 도착 풍경",
+          "natural": [
+            540,
+            900
+          ],
+          "rendered": [
+            292,
+            164
+          ],
+          "fit": "cover"
+        }
+      ]
+    },
+    "320x578-02-hub": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            17,
+            17
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "320x578-03-people": {
+      "overflow": false,
+      "escaped": [
+        "이곳에서 하룻밤 묵는다아침까지 · 피로와 사기 회복 · 차 정비",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "320x578-04-talk-taeho": {
+      "overflow": false,
+      "escaped": [
+        "태호돔 시장 관리인 초면",
+        "세라돔 아래 책 노점 초면",
+        "만수떠돌이 뽕짝 장사꾼 초면",
+        "이곳에서 하룻밤 묵는다아침까지 · 피로와 사기 회복 · 차 정비",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "320x578-05-talk-sera": {
+      "overflow": false,
+      "escaped": [
+        "태호돔 시장 관리인 아는 사이",
+        "세라돔 아래 책 노점 초면",
+        "만수떠돌이 뽕짝 장사꾼 초면",
+        "이곳에서 하룻밤 묵는다아침까지 · 피로와 사기 회복 · 차 정비",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "320x578-06-talk-mansu": {
+      "overflow": false,
+      "escaped": [
+        "태호돔 시장 관리인 아는 사이",
+        "세라돔 아래 책 노점 아는 사이",
+        "만수떠돌이 뽕짝 장사꾼 초면",
+        "이곳에서 하룻밤 묵는다아침까지 · 피로와 사기 회복 · 차 정비",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "390x844-01-arrival": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "대구 돔 시장 도착 풍경",
+          "natural": [
+            941,
+            1672
+          ],
+          "rendered": [
+            390,
+            844
+          ],
+          "fit": "cover"
+        }
+      ]
+    },
+    "390x844-01b-arrival-landscape": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "양산 고가차도 도착 풍경",
+          "natural": [
+            540,
+            900
+          ],
+          "rendered": [
+            362,
+            204
+          ],
+          "fit": "cover"
+        }
+      ]
+    },
+    "390x844-02-hub": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            17,
+            17
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "390x844-03-people": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "390x844-04-talk-taeho": {
+      "overflow": false,
+      "escaped": [
+        "이곳에서 하룻밤 묵는다아침까지 · 피로와 사기 회복 · 차 정비",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "390x844-05-talk-sera": {
+      "overflow": false,
+      "escaped": [
+        "이곳에서 하룻밤 묵는다아침까지 · 피로와 사기 회복 · 차 정비",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "390x844-06-talk-mansu": {
+      "overflow": false,
+      "escaped": [
+        "이곳에서 하룻밤 묵는다아침까지 · 피로와 사기 회복 · 차 정비",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "475x948-01-arrival": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "대구 돔 시장 도착 풍경",
+          "natural": [
+            941,
+            1672
+          ],
+          "rendered": [
+            475,
+            948
+          ],
+          "fit": "cover"
+        }
+      ]
+    },
+    "475x948-01b-arrival-landscape": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "양산 고가차도 도착 풍경",
+          "natural": [
+            540,
+            900
+          ],
+          "rendered": [
+            447,
+            251
+          ],
+          "fit": "cover"
+        }
+      ]
+    },
+    "475x948-02-hub": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            13,
+            13
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            14,
+            14
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            17,
+            17
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "475x948-03-people": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "475x948-04-talk-taeho": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "475x948-05-talk-sera": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    },
+    "475x948-06-talk-mansu": {
+      "overflow": false,
+      "escaped": [],
+      "small": [],
+      "images": [
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            52,
+            52
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "태호 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "세라 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "만수 초상",
+          "natural": [
+            256,
+            256
+          ],
+          "rendered": [
+            36,
+            36
+          ],
+          "fit": "cover"
+        },
+        {
+          "alt": "",
+          "natural": [
+            32,
+            32
+          ],
+          "rendered": [
+            18,
+            18
+          ],
+          "fit": "fill"
+        }
+      ]
+    }
+  },
+  "errors": []
+}

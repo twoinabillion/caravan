@@ -1227,21 +1227,10 @@ const UI = (()=>{
   }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
-  function routeDestinationType(model){
-    const node=D.nodes[model.nb.id]||{};
-    const typeLabel=node.type==='goal'?'목표 지점':node.stl?'주요 정착지':node.type==='settlement'?'정착지'
-      :node.type==='town'?'마을':node.type==='hidden'?'미확인 장소':'폐허·탐색지';
-    return typeLabel;
-  }
   function routeDurationRange(minutes){
     const low=Math.max(5,Math.floor(minutes*.85/5)*5);
     const high=Math.max(low+5,Math.ceil(minutes*1.2/5)*5);
     return `${G.durationLabel(low)}–${G.durationLabel(high)}`;
-  }
-  function routeMinuteRange(minutes){
-    const low=Math.max(5,Math.floor(minutes*.85/5)*5);
-    const high=Math.max(low+5,Math.ceil(minutes*1.2/5)*5);
-    return `${low}–${high}분`;
   }
   function routeFuelRange(fuel){
     const low=Math.max(1,Math.floor(fuel*.85));
@@ -1419,21 +1408,6 @@ const UI = (()=>{
       .forEach(([sel,key])=>{ if(!D.icons[key]) return;
         const lab=$(sel+' .lab span'); if(lab&&!lab.querySelector('.ico'))
           lab.innerHTML=`<img class="ico" src="${D.icons[key]}" alt="">`+lab.textContent; });
-  }
-  function partyStrip(){
-    const moodFace=(m)=> m>=70?'😊':m>=40?'😐':m>=15?'😟':'😰';
-    let h='<div id="party">';
-    h+=`<div class="pcard"><div class="pf">${faceOf('me','🧑‍✈️')}</div><span>나</span><span class="plv">Lv${G.driverLv()}</span></div>`;
-    for(const id of S.party){ const c=D.comps[id], st=S.comps[id];
-      h+=`<div class="pcard" data-comp="${id}" role="button" tabindex="0"><div class="pf">${faceOf(id,c.face)}</div><span>${c.name}</span>
-        ${st.lvl?`<span class="plv">${'★'.repeat(st.lvl)}</span>`:''}
-        <span class="pm">${moodFace(st.mood)}</span>
-        ${st.pending?`<span class="pbadge">${ICO('perk','✦')}</span>`:''}</div>`; }
-    if(S.dog) h+=`<div class="pcard"><div class="pf">🐕</div><span>보리</span></div>`;
-    return h+'</div>';
-  }
-  function wireParty(p){
-    p.querySelectorAll('[data-comp]').forEach(b=>b.onclick=()=>showComp(b.dataset.comp));
   }
   function contextRail(node, driving){
     const ids=['me',...S.party], shown=ids.slice(0,4);
@@ -1796,7 +1770,8 @@ const UI = (()=>{
     journeyConsoleMode='local';
     renderAll(); SND.setDriving(false);
     AMBI.arrive(S.at);
-    const id=S.at, n=D.nodes[id], key=D.nodeScenes&&D.nodeScenes[id];
+    const id=S.at, n=D.nodes[id], portraitKey=D.arrivalScenes&&D.arrivalScenes[id];
+    const key=portraitKey||D.nodeScenes&&D.nodeScenes[id];
     const src=key&&D.scenes&&D.scenes[key];
     const recap=S.lastJourneyRecap;
     const a=$('#arrival-scene');
@@ -1810,7 +1785,11 @@ const UI = (()=>{
     </div>`:'';
     const people=recap&&recap.checkIn?`<div class="arrival-people"><small>이 길에서 함께한 시간</small><strong>${esc(recap.checkIn.moment&&recap.checkIn.moment.title||`${recap.checkIn.name}와 나눈 짧은 이야기`)}</strong>${recap.checkIn.moment?`<span>${esc(recap.checkIn.moment.text)}</span>`:''}</div>`:'';
     const chapter=recap&&recap.chapter?`<div class="arrival-chapter"><small>CHAPTER COMPLETE</small><strong>${esc(recap.chapter.title)}</strong><span>${esc(recap.chapter.text)}</span></div>`:'';
-    a.innerHTML=`${src?`<img src="${src}" alt="${esc(n.name)} 도착 풍경">`:'<div class="arrival-fallback" aria-hidden="true"></div>'}<div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span>
+    a.classList.toggle('arrival-portrait',!!(src&&portraitKey));
+    a.classList.toggle('arrival-landscape',!!(src&&!portraitKey));
+    if(src) a.style.setProperty('--arrival-image',`url("${src}")`);
+    else a.style.removeProperty('--arrival-image');
+    a.innerHTML=`${src?`<img class="arrival-art" src="${src}" alt="${esc(n.name)} 도착 풍경">`:'<div class="arrival-fallback" aria-hidden="true"></div>'}<div class="arrival-copy"><small>ARRIVAL · DAY ${S.day}</small><b>${n.name}</b><span>${n.desc}</span>
       ${recap?`<div class="arrival-ledger" aria-label="방금 주행 정산">
         <div><strong>${esc(D.nodes[recap.from].name)} → ${esc(n.name)}</strong><em>${recap.km}km · ${G.durationLabel(recap.minutes)} · 사건 ${recap.events}건</em></div>
         <div class="arrival-deltas">${recapChanges}</div>
@@ -2177,10 +2156,6 @@ const UI = (()=>{
   }
   function clearStoryAuto(){
     if(storyAutoTimer){ clearTimeout(storyAutoTimer); storyAutoTimer=0; }
-  }
-  function setStoryAuto(value){
-    storyAuto=!!value;
-    localStorage.setItem('caravan_story_auto',storyAuto?'1':'0');
   }
   function storyAutoDelay(turn){
     const test=Number(window.__CARAVAN_TEST_AUTO_MS);
@@ -2710,28 +2685,6 @@ const UI = (()=>{
       local
     };
   }
-  function settlementPartyMarkerHtml(comp){
-    if(curStl==='miryang'){
-      const names=[G.myName(),comp&&comp.name].filter(Boolean).join(' · ');
-      const hiddenFaces=[settlementPortrait('me','stl-walker-face me',`${G.myName()} 초상`)];
-      if(comp) hiddenFaces.push(settlementPortrait(comp.id,'stl-walker-face companion',`${comp.name} 초상`));
-      return `<div class="stl-walk-party stl-party-placard" role="img" aria-label="${esc(names)}이 밀양 장터를 함께 걷는다">
-        <span class="stl-marker-a11y" aria-hidden="true">${hiddenFaces.filter(Boolean).join('')}</span>
-        <i aria-hidden="true"></i><span><b>우리 일행</b><small>${esc(names)}</small></span>
-      </div>`;
-    }
-    const faces=[settlementPortrait('me','stl-walker-face me',`${G.myName()} 초상`)];
-    if(comp) faces.push(settlementPortrait(comp.id,'stl-walker-face companion',`${comp.name} 초상`));
-    return `<div class="stl-walk-party" role="img" aria-label="${esc(comp?`${G.myName()}와 ${comp.name}이 정착지를 함께 걷는다`:`${G.myName()}이 정착지를 걷는다`)}">
-      ${faces.filter(Boolean).join('')}
-    </div>`;
-  }
-  function settlementCrowdHtml(stl){
-    if(curStl==='miryang') return '';
-    const ids=[...(stl.npcs||[]).slice(0,1),'passer_merchant','passer_worker','passer_child'];
-    return `<div class="stl-crowd" aria-hidden="true">${ids.map((id,i)=>
-      settlementPortrait(id,`stl-crowd-face crowd-${i+1}`,'')).filter(Boolean).join('')}</div>`;
-  }
   function settlementImpactCopy(stlId){
     const stl=D.stls[stlId], impact=G.stlImpact(stlId), last=impact.last;
     if(!impact.count) return {impact,title:'아직 낯선 곳',line:'안쪽 일을 거들면 풍경과 사람들의 반응이 달라진다.'};
@@ -2747,16 +2700,6 @@ const UI = (()=>{
     return `<div class="stl-impact-layer stage-${copy.impact.stage} visual-${esc(visual)}" aria-hidden="true">
       <i class="stl-impact-mark mark-1"></i><i class="stl-impact-mark mark-2"></i><i class="stl-impact-mark mark-3"></i>
       <i class="stl-impact-motion motion-1"></i><i class="stl-impact-motion motion-2"></i>
-    </div>`;
-  }
-  function settlementSectionPartyHtml(focus){
-    const comp=settlementCompanion(), copy=settlementWalkCopy(focus);
-    return `<div class="stl-section-party">
-      <span class="stl-section-faces">
-        ${settlementPortrait('me','stl-section-face me',`${G.myName()} 초상`)}
-        ${comp?settlementPortrait(comp.id,'stl-section-face companion',`${comp.name} 초상`):''}
-      </span>
-      <span><b>${esc(copy.title.replace('걷는 중','도착'))}</b><small>${esc(copy.local)}</small></span>
     </div>`;
   }
   function updateSettlementFocus(next){
@@ -2791,6 +2734,7 @@ const UI = (()=>{
   }
   function settlementHeader(section){
     const stl=D.stls[curStl];
+    $('#ovl-stl').classList.toggle('section-mode',!!section);
     $('#stl-name').innerHTML=`${section?`<button class="stl-back" id="stl-back" aria-label="${esc(stl.name)} 공간으로 돌아가기">‹</button>`:''}
       <span>${esc(stl.name)}</span>
       <button class="x" id="stl-leave" aria-label="${esc(stl.name)} 닫기">✕</button>`;
@@ -2798,15 +2742,6 @@ const UI = (()=>{
     $('#stl-leave').onclick=leaveSettlement;
     const back=$('#stl-back');
     if(back) back.onclick=()=>showStl(curStl,'hub');
-  }
-  function settlementIntent(spotId,night){
-    if(night) return {label:'오늘의 선택',text:'사람들과 쉬며 내일의 길을 준비한다. 장터와 작업장은 아침에 다시 연다.'};
-    if(spotId==='market') return S.quest
-      ? {label:'의뢰와 보급',text:'진행 중인 의뢰를 먼저 확인한 뒤, 다음 길에 필요한 물자만 챙긴다.'}
-      : {label:'보급과 의뢰',text:'물자만 채울지, 다음 정착지로 이어지는 의뢰 하나를 맡을지 고른다.'};
-    if(spotId==='garage') return {label:'달구지 준비',text:'현재 차체 상태를 보고 수리와 개조 중 지금 필요한 작업을 고른다.'};
-    if(spotId==='people') return {label:'사람과 정보',text:'소문, 부탁, 동료의 다음 일을 찾아 여정에 남을 관계를 만든다.'};
-    return {label:'현장에 손 보태기',text:'시간과 자원을 써서 이곳의 일을 돕는다. 변화는 다음 길에서도 돌아온다.'};
   }
   function renderSettlementHub(){
     const stl=D.stls[curStl],body=$('#stl-body'),layout=settlementLayout(curStl),spots=settlementSpots(curStl),night=G.isNight();
@@ -3009,9 +2944,8 @@ const UI = (()=>{
     settlementHeader(spots[stlMode]?spots[stlMode].label:'');
     const walkCopy=settlementWalkCopy(stlMode), impactCopy=settlementImpactCopy(curStl);
     const directField=curStl==='miryang'&&stlMode==='alley';
-    let h=directField?'':`<div class="stl-section-hero" data-impact-stage="${impactCopy.impact.stage}" ${scene?`style="background-image:url('${scene}')"`:''}>
+    let h=directField?'':`<div class="stl-section-hero stl-section-hero-${stlMode}" data-impact-stage="${impactCopy.impact.stage}" ${scene?`style="background-image:url('${scene}')"`:''}>
       ${settlementImpactLayerHtml(impactCopy)}
-      ${settlementSectionPartyHtml(stlMode)}
       <span>${ICO((spots[stlMode]||spots.market).icon)}${(spots[stlMode]||spots.market).label}</span>
       <small>${esc(walkCopy.local)}</small>
     </div>`;
@@ -3029,6 +2963,14 @@ const UI = (()=>{
         h+=`<div class="dlg night-talk"><div class="say"><span class="spk">늦은 밤</span>
           장터 셔터가 내려갔다. 모닥불 곁에는 잠들기 전 몇 사람의 낮은 목소리만 남았다.</div></div>`;
       }
+      h+=`<section class="stl-people-panel"><div class="stl-talk-slot" id="stl-talk-slot" aria-live="polite"></div>
+        <div class="stl-resident-head"><b>대화 상대</b><small>${stl.npcs.length}명 · 한 사람을 골라 말을 건다</small></div>
+        <div class="stl-resident-list">`;
+      /* .npc-row 계약: [얼굴] [이름+한 줄] [상태 라벨] 3칸 flex.
+         상태 라벨은 nowrap이라 줄어들지 않으므로, 가운데 칸이 대신 줄어들어야 한다
+         (.npc-row>span:not(.npc-att)의 min-width:0). 이 규칙이 빠지면 긴 소개문에서
+         라벨이 본문 위로 겹쳐 글자가 깨진다 — 주민 행은 짧은 role이라 안 드러나고
+         아래 합류 인물 행(bio)에서만 터진다. 새 행을 추가할 때도 이 구조를 지킬 것. */
       for(const nid of stl.npcs){
         const npc=D.npcs[nid], ns=S.npcs[nid];
         h+=`<button class="npc-row" data-npc="${nid}">
@@ -3043,11 +2985,14 @@ const UI = (()=>{
       if(stl.recruit && localRecruitEvent && !G.hasComp(stl.recruit) && !S.recruitQ
         && !S.used.includes(localRecruitEvent)){
         const c=D.comps[stl.recruit];
+        /* 이 목록에서 유일하게 긴 문장(c.bio)을 쓰는 행이다. 위 .npc-row 계약이
+           깨지면 여기서 먼저 겹침이 보인다 — 320px에서 확인할 것. */
         h+=`<button class="npc-row" data-recruit="${stl.recruit}">
-          <div class="npc-face">${c.face}</div>
+          <div class="npc-face">${npcFace(stl.recruit,c.face)}</div>
           <span><b>${c.name}</b><small>${c.bio}</small></span>
           <span class="npc-att">처음 보는 사람</span></button>`;
       }
+      h+=`</div></section>`;
       h+=`<div class="acts stl-rest-actions">
         <button class="act primary" id="stl-rest"><span>${ICO('bond')}</span><span><b>이곳에서 하룻밤 묵는다</b><small>아침까지 · 피로와 사기 회복 · 차 정비</small></span></button></div>`;
     }
@@ -3368,6 +3313,7 @@ const UI = (()=>{
     st.met=true;
     if(S.mode==='offroad'&&OFF.ready()){ return talkOff(nid, greet); }
     const body=$('#stl-body');
+    const slot=body.querySelector('#stl-talk-slot');
     const old=body.querySelector('.dlg.talk'); if(old) old.remove();
     const rumorDone = S.flags['rumor_'+nid];
     const dlg=el('div','dlg talk',`<div class="npc-talk-head"><div class="npc-face">${npcFace(nid,npc.face)}</div><div class="say"><span class="spk">${npc.name}</span> "${greet}"</div></div>
@@ -3375,7 +3321,8 @@ const UI = (()=>{
         ${!rumorDone?`<button class="choice" data-r="rumor">요즘 소문 들은 거 없어요?</button>`:''}
         <button class="choice" data-r="chat">이런저런 얘기를 나눈다</button>
         <button class="choice" data-r="x">그만 일어난다</button></div>`);
-    body.prepend(dlg);
+    if(slot) slot.replaceChildren(dlg); else body.prepend(dlg);
+    body.querySelectorAll('.npc-row').forEach(row=>row.classList.toggle('talking',row.dataset.npc===nid));
     dlg.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
       const r=b.dataset.r;
       if(r==='rumor'){
@@ -3402,7 +3349,7 @@ const UI = (()=>{
         G.addNote({type:'인물',title:npc.name,body:`${npc.role}. ${D.stls[curStl].name}의 사람.`,links:[D.nodes[npc.node].name]});
         renderHud(); G.save();
       }
-      else { dlg.remove(); }
+      else { dlg.remove(); body.querySelectorAll('.npc-row.talking').forEach(row=>row.classList.remove('talking')); }
     });
   }
   /* 오프로드 자유 대화 */
@@ -3471,7 +3418,7 @@ const UI = (()=>{
     if(compact){
       h=`<div class="map-compact-place"><small>선택한 길</small><h4>${esc(n.name)}</h4></div>`;
       if(S.at===id) h+=`<div class="d">현재 위치</div>`;
-      else if(chk.ok) h+=`<button class="go" data-go="${id}">이 길 선택<small>${chk.km}km · 연료 약 ${chk.fuel}L</small></button>`;
+      else if(chk.ok) h+=`<button class="go" data-go="${id}"><span>이 길 선택</span><small>${chk.km}km · 연료 약 ${chk.fuel}L</small></button>`;
       else h+=`<div class="d">${esc(S.driving?'이동 중에는 바꿀 수 없다':chk.why||'여기서 이어진 길이 없다')}</div>`;
     }
     card.innerHTML=h;

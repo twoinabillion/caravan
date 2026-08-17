@@ -519,8 +519,9 @@ with sync_playwright() as p:
       }
       out.banterSpeaker = orphan === 0;
 
-      const barber = D.events.find(e => e.id === 'ev_barber')
-        .choices.find(c => c.minParty === 2);
+      /* 정규화기는 앞으로 작성될 구식 선택지를 위한 안전망이다. 운영 데이터는
+         req.party로 정리돼 있으므로, 픽스처를 합성해 정규화기 자체만 검사한다. */
+      const barber = {label:'구식 선택지', minParty:2};
       S.party = ['minji'];
       out.legacyChoiceLocked = !G.reqVisible(G.choiceReq(barber));
       S.party = ['minji','parkss'];
@@ -554,7 +555,7 @@ with sync_playwright() as p:
     check('라디오: 재수리 불가', r3['again'])
     check('라디오: 방송·수신 정경 버블 표시', r3['bubble'], str(r3))
     # v2.0 업그레이드
-    r4 = pg.evaluate('''() => {
+    r4 = pg.evaluate('''async () => {
       const out = {};
       out.upCount = D.upgrades.length;
       out.eventCount = D.events.length;
@@ -933,8 +934,19 @@ with sync_playwright() as p:
       out.crewNoSpoilers=Object.values(D.comps).every(c=>!crewText.includes(c.name));
       document.querySelector('#st-x').click();
       S.at='daegu'; out.arrivalDelay=UI.onArrive();
-      out.arrivalScene=!!document.querySelector('#arrival-scene img');  // .on은 rAF 비동기라 레이스 — 이미지 주입만 검증
-      document.querySelector('#arrival-scene').classList.remove('on');
+      const daeguArrival=document.querySelector('#arrival-scene');
+      out.arrivalScene=!!daeguArrival.querySelector('.arrival-art');  // .on은 rAF 비동기라 레이스 — 이미지 주입만 검증
+      out.arrivalPortraitScene=D.arrivalScenes?.daegu==='arrival-daegu-dome' &&
+        (D.scenes['arrival-daegu-dome']||'').startsWith('data:image/webp;base64,') &&
+        daeguArrival.classList.contains('arrival-portrait');
+      daeguArrival.classList.remove('on');
+      S.at='yangsan'; UI.onArrive();
+      const landscapeArrival=document.querySelector('#arrival-scene');
+      const landscapeArt=landscapeArrival.querySelector('.arrival-art');
+      const landscapeRect=landscapeArt.getBoundingClientRect();
+      out.arrivalLandscapeFrame=landscapeArrival.classList.contains('arrival-landscape') &&
+        landscapeRect.width>250 && Math.abs(landscapeRect.width/landscapeRect.height-16/9)<.04;
+      landscapeArrival.classList.remove('on');
       const roadIds=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'];
       S.used=S.used.filter(id=>!roadIds.includes(id)); S.at='daejeon'; S.driving=null;
       const oldRemain=G.remainKm;
@@ -999,8 +1011,8 @@ with sync_playwright() as p:
       out.settlementArrivalGate=document.querySelector('#stl-enter').disabled===false;
       document.querySelector('#stl-enter').click();
       out.settlementSceneLarge=document.querySelector('.stl-section-hero').getBoundingClientRect().height>=190 &&
-        document.querySelectorAll('.stl-section-face').length===2 &&
-        document.querySelector('.stl-section-party').textContent.includes('민지와');
+        !document.querySelector('.stl-section-party') &&
+        getComputedStyle(document.querySelector('#stl-head .d')).display==='none';
       const settlementSnapshot=structuredClone(S);
       S.at='miryang'; S.driving=null; S.party=['minji']; S.scrap=100;
       S._stlField={daily:{},once:{},impact:{},log:[]};
@@ -1034,6 +1046,44 @@ with sync_playwright() as p:
       out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===4 &&
         !!document.querySelector('#stl-town-canvas') && SCENE.settlementState()?.facilities.length===4 &&
         !document.querySelector('#garage') && !document.querySelector('#trade');
+      UI.showStl('daegu','people');
+      document.querySelector('[data-npc="taeho"]').click();
+      const peopleHero=document.querySelector('.stl-section-hero');
+      const talkSlot=document.querySelector('#stl-talk-slot');
+      const residentList=document.querySelector('.stl-resident-list');
+      out.settlementTalkOrder=peopleHero.getBoundingClientRect().top<talkSlot.getBoundingClientRect().top &&
+        talkSlot.getBoundingClientRect().top<residentList.getBoundingClientRect().top &&
+        document.querySelectorAll('.stl-talk-slot .dlg.talk').length===1 &&
+        document.querySelectorAll('.npc-row.talking').length===1;
+      const taehoPortrait=document.querySelector('[data-npc="taeho"] .npc-pimg');
+      const settlementPortraitIds=[...new Set(Object.values(D.stls).flatMap(stl=>stl.npcs||[]))];
+      const settlementPortraitSizes=await Promise.all(settlementPortraitIds.map(id=>new Promise(resolve=>{
+        const probe=new Image();
+        probe.onload=()=>resolve([probe.naturalWidth,probe.naturalHeight]);
+        probe.onerror=()=>resolve([0,0]);
+        probe.src=D.portraits[id]||'';
+      })));
+      out.settlementPortraitRealism=settlementPortraitIds.length===17 &&
+        settlementPortraitIds.every(id=>D.settlementPortraitCanon.includes(id) &&
+          D.portraits[id]?.startsWith('data:image/') && !D.legacyIllustratedPortraits.includes(id)) &&
+        settlementPortraitSizes.every(([w,h])=>w>=256&&h>=256) &&
+        taehoPortrait.naturalWidth>=256 &&
+        getComputedStyle(taehoPortrait).imageRendering==='auto' &&
+        !D.legacyIllustratedPortraits.includes('taeho') && !D.legacyIllustratedPortraits.includes('mansu');
+      UI.showStl('gwangju','people');
+      const recruitPortrait=document.querySelector('[data-recruit] .npc-pimg');
+      out.settlementRecruitPortrait=!!recruitPortrait && recruitPortrait.alt.includes('레오');
+      /* 합류 인물 행만 긴 소개문(c.bio)을 쓴다. 상태 라벨을 세로 중앙에 두면
+         두 줄짜리 소개문의 둘째 줄 옆에 얹혀 문장의 일부처럼 읽힌다
+         (2026-08-17 실제 발생 — 겹침이 아니라 정렬 문제라 좌표 겹침으로는 안 잡힌다).
+         라벨은 이름 줄에 붙어야 한다: 라벨 상단이 이름 하단을 넘지 않을 것. */
+      out.npcRowAttOnNameLine=[...document.querySelectorAll('.npc-row')].every(row=>{
+        const att=row.querySelector('.npc-att'), desc=row.querySelector('small');
+        if(!att||!desc) return true;
+        const a=att.getBoundingClientRect(), d=desc.getBoundingClientRect();
+        return a.bottom<=d.top+0.5 && row.scrollWidth<=row.clientWidth+1;
+      });
+      UI.showStl('daegu');
       document.querySelector('[data-stlfocus="garage"]').click();
       for(let frame=0;frame<24&&SCENE.settlementState()?.moving;frame++) SCENE.drawSettlement(.2);
       document.querySelector('#stl-enter').click();
@@ -1230,11 +1280,17 @@ with sync_playwright() as p:
     check('지도 노드 58곳 WGS84 좌표 완비', r4['geoCount'] == 58 and r4['geoReady'], str(r4))
     check('실제 남북·동서 위치관계 반영', r4['geoOrder'], str(r4))
     check('도착지 58곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 58 and r4['eventSceneCount'] >= 36, str(r4))
+    check('대구 도착은 세로 전용 고해상도 장면', r4['arrivalScene'] and r4['arrivalPortraitScene'], str(r4))
+    check('가로 도착 원본은 선명한 16:9 프레임으로 보호', r4['arrivalLandscapeFrame'], str(r4))
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))
     check('동료 과제 중에도 일반 의뢰와 마감이 보임', r4['missionSecondary'], str(r4))
     check('정착지 4개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
+    check('정착지 대화는 장소→대화→주민 순서 고정', r4['settlementTalkOrder'], str(r4))
+    check('7개 정착지 상주 주민 17명은 반실사 초상 정본 사용', r4['settlementPortraitRealism'], str(r4))
+    check('인물 목록 상태 라벨은 이름 줄에 정렬', r4['npcRowAttOnNameLine'], str(r4))
+    check('정착지 합류 후보도 이모지 대신 캐릭터 초상 사용', r4['settlementRecruitPortrait'], str(r4))
     check('모든 정착지에 소모·발견·숨은 현장 행동', r4['settlementFields'], str(r4))
     check('정착지에서 현재 동료와 장소 사이를 이동',
           r4['settlementWalkParty'] and r4['settlementWalkMove'] and r4['settlementArrivalGate'], str(r4))
@@ -1420,10 +1476,14 @@ with sync_playwright() as p:
       canvas:document.querySelector('#mapcv')?.getAttribute('aria-label'),
       cleanMode:MAPR&&MAPR.mode,
       title:document.querySelector('#map-title')?.textContent,
+      compactChoiceRows:document.querySelectorAll('#nodecard .go > span, #nodecard .go > small').length,
+      compactChoiceNoWrap:getComputedStyle(document.querySelector('#nodecard .go > small')).whiteSpace,
       context:Object.keys(D.nodeScenery||{}).length
     })''')
     check('실축 모드 제거·대한민국 여정 지도 단일화', map_detail['modes'] == 0 and
           '대한민국 주요 도시' in map_detail['canvas'] and map_detail['title'] == '여정 지도', str(map_detail))
+    check('지도 길 선택은 제목·거리/연료 2행 고정', map_detail['compactChoiceRows'] == 2 and
+          map_detail['compactChoiceNoWrap'] == 'nowrap', str(map_detail))
     check('강·산맥 장식 없는 도시 중심 지도', map_detail['cleanMode'] == 'cities-only' and
           map_detail['context'] >= 30, str(map_detail))
     map_source = (ROOT / 'src' / '06-mapgraph.js').read_text(encoding='utf-8')
