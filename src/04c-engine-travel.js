@@ -444,6 +444,16 @@ let choiceEchoCd = 8;              // 선택의 후속은 일반 잡담보다 �
    대사 후보 집합이 이전 판을 기억한 채 남아 같은 시드가 다른 여정을 만든다. */
 G.resetDriveTimers = ()=>{ banterCd=6; radioCd=30; choiceEchoCd=8;
   lastBanter=[]; lastChat=-1; lastRadio=null; };
+/* 큰 정서적 타격 직후에는 사건 모달이 닫히자마자 유쾌한 잡담이 끼어들지 않는다.
+   실시간 주행 초 단위로 밀며, 테스트와 사건 처리부가 같은 타이머를 쓰게 공개한다. */
+G.delayBanter = (minSeconds=40,maxSeconds=minSeconds)=>{
+  const low=Math.max(0,Math.floor(Number(minSeconds)||0));
+  const high=Math.max(low,Math.floor(Number(maxSeconds)||low));
+  const delay=low+(high>low?Math.floor(R(high-low+1)):0);
+  banterCd=Math.max(banterCd,delay);
+  return banterCd;
+};
+G.banterCooldown = ()=>banterCd;
 /* 실시간 1초당 진행 거리(km). 테스트·도구가 속도 상수를 복제하지 않도록 엔진이 노출한다. */
 G.tickKmPerSecond = ()=> KMH/60*TIMESCALE;
 /* 표시용 주행 소요 시간(게임 분). UI가 속도 상수를 복제하면 예상과 실제가 갈라진다 —

@@ -196,6 +196,9 @@ G.applyFx = (fx)=>{
     const base={...fx}; delete base.impactEcho;
     fx={...base,...echo.fx}; chips.push(...echo.chips);
   }
+  /* 강한 사기 저하는 장면의 여운이다. 다음 주행이 시작된 뒤 40~60초 동안
+     일반 잡담을 늦춰 강도·죽음·상실 직후의 유쾌한 티키타카를 막는다. */
+  if(fx.moodAll<=-4 && G.delayBanter) G.delayBanter(40,60);
   /* 퍼크 보정 */
   if(fx.scrap>0 && G.hasComp('jaeyi')) fx={...fx, scrap:Math.ceil(fx.scrap*1.3)};
   if(fx.scrap<0 && G.hasPerk('jy_hands')) fx={...fx, scrap:-Math.ceil(-fx.scrap*0.75)};

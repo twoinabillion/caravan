@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-08-17T06:08:39.533Z",
+  "generatedAt": "2026-08-17T10:59:51.699Z",
   "html": {
-    "bytes": 38995000,
+    "bytes": 36124025,
     "warnBytes": 32000000,
     "maxBytes": 39000000
   },
   "embedded": {
-    "files": 307,
-    "bytes": 23477410,
+    "files": 364,
+    "bytes": 21312329,
     "categories": {
       "audio": {
         "files": 45,
         "bytes": 9710668,
         "encodedBytes": 12947612
       },
-      "scene": {
-        "files": 197,
-        "bytes": 11884213,
-        "encodedBytes": 15845912
-      },
       "ui": {
         "files": 27,
         "bytes": 1308842,
         "encodedBytes": 1745164
       },
+      "scene": {
+        "files": 245,
+        "bytes": 9807813,
+        "encodedBytes": 13077436
+      },
       "portrait": {
-        "files": 38,
-        "bytes": 573687,
-        "encodedBytes": 764972
+        "files": 47,
+        "bytes": 485006,
+        "encodedBytes": 646748
       }
     }
   },
@@ -73,12 +73,6 @@
       "mime": "audio/mpeg",
       "bytes": 744336,
       "encodedBytes": 992448
-    },
-    {
-      "path": "assets/scenes/miryang-market-hub.jpg",
-      "mime": "image/jpeg",
-      "bytes": 250564,
-      "encodedBytes": 334088
     },
     {
       "path": "assets/ui/event-result-ticket-v1.webp",
@@ -151,6 +145,12 @@
       "mime": "image/jpeg",
       "bytes": 169135,
       "encodedBytes": 225516
+    },
+    {
+      "path": "assets/intro/01-passenger-seat.jpg",
+      "mime": "image/jpeg",
+      "bytes": 163873,
+      "encodedBytes": 218500
     }
   ]
 }

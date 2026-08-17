@@ -70,12 +70,51 @@ def main():
               const fallback=document.querySelector('#ev-sheet .event-scene-frame')?.dataset.sceneKey||'';
               document.querySelector('#ev-wrap').classList.remove('on');
 
+              const stateWith=(patch)=>({...S,flags:{...S.flags,...(patch.flags||{})},...patch});
+              const seoulOpenNoCrew=D.seoulOpenEvent.text(stateWith({party:[]}));
+              const seoulOpenCrew=D.seoulOpenEvent.text(stateWith({party:['minji','parkss','kangwoo']}));
+              const bridgeNoKangwoo=D.bridgeEvent.text(stateWith({party:[]}));
+              const bridgeWithKangwoo=D.bridgeEvent.text(stateWith({party:['kangwoo']}));
+              const core=(D.seoulStops||[]).find(event=>event.id==='seoul_core');
+              const tracesChoice=core.choices.find(choice=>choice.label.includes('143년의 흔적'));
+              const traceFlags=Object.fromEntries((D.eraTraces||[]).slice(0,5).map(trace=>[trace.flag,true]));
+              const traceNoJaeyi=tracesChoice.out[0].text(stateWith({party:[],flags:traceFlags}));
+              const traceWithJaeyi=tracesChoice.out[0].text(stateWith({party:['jaeyi'],flags:traceFlags}));
+              const stealth=byId('ev_stealth_dog');
+              const groupDefense=stealth.choices.find(choice=>choice.label.includes('불과 소리'));
+              const observatory=byId('ev_observatory');
+              const wash=byId('exp_selfwash').choices[0].out[0];
+              const washNoDog=wash.text(stateWith({dog:false}));
+              const washWithDog=wash.text(stateWith({dog:true}));
+              const eunsuMemory=byId('talk_es_15');
+              const wormRescue=byId('wx_worms').choices[0].out[0];
+              G.resetDriveTimers();
+              G.applyFx({moodAll:-3});
+              const mildCooldown=G.banterCooldown();
+              G.resetDriveTimers();
+              G.applyFx({moodAll:-4});
+              const severeCooldown=G.banterCooldown();
+
               S.at=original.at; S.driving=original.driving; S.used=original.used; S.flags=original.flags;
               return {
                 contactBefore,contactAfter,scenes,fallback,
                 contactDialogue:dialogueAudit(contact),
                 seaDialogue:dialogueAudit(byId('cell_sea_meet')),
-                gangneungDialogue:dialogueAudit(byId('gw_gangneung'))
+                gangneungDialogue:dialogueAudit(byId('gw_gangneung')),
+                gates:{
+                  seoulOpenNoCrew,seoulOpenCrew,bridgeNoKangwoo,bridgeWithKangwoo,
+                  traceNoJaeyi,traceWithJaeyi,
+                  stealthNeedsDog:stealth.needsDog===true,
+                  groupParty:groupDefense&&groupDefense.req&&groupDefense.req.party,
+                  groupLegacyMinParty:groupDefense&&groupDefense.minParty,
+                  observatoryNight:observatory.night===true,
+                  washNoDog,washWithDog,
+                  eunsuNeedsLeo:eunsuMemory.needsComp2==='leo',
+                  eunsuNeedsDog:eunsuMemory.needsDog===true,
+                  eunsuNeedFlag:eunsuMemory.needFlag,
+                  wormFlag:wormRescue.fx&&wormRescue.fx.flag,
+                  mildCooldown,severeCooldown
+                }
               };
             }"""
         )
@@ -93,7 +132,7 @@ def main():
         scene = result["scenes"][event_id]
         assert scene["key"] == scene_key, result
         assert scene["width"] == 768 and scene["height"] == 432, result
-        assert scene["src"].startswith("data:image/jpeg;base64,"), result
+        assert scene["src"].startswith(("data:image/jpeg;base64,", "data:image/webp;base64,")), result
     assert result["fallback"] == "daegu-dome", result
 
     assert not result["contactDialogue"]["unknown"], result
@@ -106,6 +145,20 @@ def main():
     assert {"강릉 병원 일꾼", "십장"}.issubset(
         set(result["gangneungDialogue"]["speakers"])
     ), result
+    gates = result["gates"]
+    assert all(name not in gates["seoulOpenNoCrew"] for name in ("민지", "박 선생", "강우")), gates
+    assert all(name in gates["seoulOpenCrew"] for name in ("민지", "박 선생", "강우")), gates
+    assert "강우" not in gates["bridgeNoKangwoo"] and "강우" in gates["bridgeWithKangwoo"], gates
+    assert "재이" not in gates["traceNoJaeyi"] and "재이" in gates["traceWithJaeyi"], gates
+    assert gates["stealthNeedsDog"] and gates["groupParty"] == 2, gates
+    assert gates["groupLegacyMinParty"] is None, gates
+    assert gates["observatoryNight"], gates
+    assert "보리" not in gates["washNoDog"] and "보리" in gates["washWithDog"], gates
+    assert gates["eunsuNeedsLeo"] and gates["eunsuNeedsDog"], gates
+    assert gates["eunsuNeedFlag"] == "worm_rescue_done", gates
+    assert gates["wormFlag"] == "worm_rescue_done", gates
+    assert gates["mildCooldown"] == 6, gates
+    assert 40 <= gates["severeCooldown"] <= 60, gates
     print("✅ 핵심 사건의 사진·선행 만남·화자·장소 대체 규칙 일치")
 
 

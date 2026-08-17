@@ -64,6 +64,14 @@ with sync_playwright() as playwright:
             event:Boolean(event),w:event&&event.w,noPool:Boolean(event&&event.noPool),location};
         })"""
     )
+    portrait_contract = page.evaluate(
+        r"""() => Object.keys(D.npcs).map(id=>({
+          id, name:D.npcs[id].name, src:D.portraits[id]||'',
+          raster:/^data:image\/(?:png|webp);base64,/.test(D.portraits[id]||'')
+        }))"""
+    )
+    assert len(portrait_contract) == 17
+    assert all(row["raster"] for row in portrait_contract), portrait_contract
     assert len(data_contract) == 6
     for row in data_contract:
         assert row["event"] and row["w"] == 0 and row["noPool"], row
@@ -91,6 +99,14 @@ with sync_playwright() as playwright:
         after = page.evaluate("SCENE.settlementState().target")
         assert abs(before["x"] - after["x"]) > 50, (settlement, before, after)
         assert page.locator('[data-stlfocus="garage"]').get_attribute("aria-pressed") == "true"
+
+    reset_at(page, "miryang")
+    page.evaluate("UI.showStl('miryang','people')")
+    for npc_id in ("byungchul", "yeongok"):
+        page.click(f'[data-npc="{npc_id}"]')
+        face = page.locator(".dlg.talk .npc-pimg")
+        assert face.count() == 1
+        assert face.evaluate("img=>img.complete&&img.naturalWidth===96&&img.naturalHeight===96")
 
     reset_at(page, "miryang")
     state = page.evaluate("SCENE.settlementState()")

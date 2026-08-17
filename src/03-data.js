@@ -2065,6 +2065,73 @@ D.eventSceneTypes = {
   '스토리':'generic-story'
 };
 
+/* 범용 컷을 사건의 실제 대상·행동 기준으로 다시 나눈다. 정규식은 사건 ID와
+   화면 제목을 함께 검사하며, 각 타입의 마지막 규칙은 안전한 기본 장면이다.
+   한 사건의 전용·턴별·장소 컷보다 우선하지 않는다. */
+D.eventSceneFamilyRules = [
+  /* 사람·집단 조우 */
+  {scene:'event-meet-family',types:['조우','사건'],match:/family|child|kids|baby|wedding|doljanchi|birthday|elderly_couple|woman_with_baby|granny|grandma|가족|아이|아기|노부부|할머니|결혼/},
+  {scene:'event-meet-craft',types:['조우','사건'],match:/smith|blacksmith|tinker|barber|carpenter|optician|radio_repair|tattoo|tailor|scrapbros|welldigger|watermill|laundromat|대장장이|수리공|이발사|목수|안경사|재봉|문신|물레방아|세탁기/},
+  {scene:'event-meet-performer',types:['조우','사건'],match:/musician|piano|theater|circus|dj_|pansori|puppet|photographer|cinema|accordion|popper|street_painter|fortune_teller|karaoke|arcade|kites|악사|피아노|극단|서커스|판소리|인형극|사진사|영화|화가|점쟁이|노래방|오락실|연 날리/},
+  {scene:'event-meet-pilgrim',types:['조우','사건'],match:/pilgrim|monk|whites|deserter|procession|순례|승려|스님|탈영|행렬/},
+  {scene:'event-meet-guard',types:['조우','사건'],match:/toll|checkpoint|patrol|levy|biker|cult|guard|fake_checkpoint|smuggler|night_convoy|통행료|검문|순찰|징수|폭주족|경비|밀수|호송대/},
+  {scene:'event-meet-courier',types:['조우','사건'],match:/postman|mailman|courier|parcel|mapmaker|scribe|letter|seed_return|photo_delivered|우편|배달|택배|지도장이|필경사|편지|반납|인화/},
+  {scene:'event-meet-animal',types:['조우','사건'],match:/dog|beekeeper|cattle|cow|\box\b|oxfarmer|hunter|worms|horse|개\b|양봉|소떼|황소|소와 걷|사냥꾼|말\b/},
+  {scene:'event-meet-trader',types:['조우','사건'],match:/trader|vendor|seller|peddler|barter|market|parts|seedlady|seedtrader|seed_girl|florist|mirror|caravan_traders|scrap_picker|paper_grandma|van_owner|vanowner|mansu|lc_(busan_dried|ulsan_whale|pohang_gwamegi|daegu_makchang|cheonan_walnut|suwon_galbi|jeonju_bibim|mokpo_hongeo|andong_fish|icheon_rice|damyang_juktong)|used_bookstore|newsstand|상인|장사|행상|물물교환|시장|부품|꽃장수|고물|아지매|과메기|막창|호두과자|갈비|비빔밥|홍어|고등어|가마솥|죽통밥|씨앗 파는|헌책방|가판대/},
+  {scene:'event-meet-community',types:['조우','사건'],match:/community|bonfire|tent_village|busstop_grandmas|\bwell\b|water_toll|bathtruck|mobile_clinic|traveling_teacher|dojo|cafe|underpass|southbound|rumor_|up_awning_guest|up_stove_visitor|npc_|공동체|모닥불|텐트촌|우물|목욕차|이동 진료|선생|도장|카페|고가 밑|남쪽으로 가는|소문|차양 아래|연기를 보고|부탁|규칙|장부|문지기/},
+
+  /* 사물·장소 발견과 탐색 */
+  {scene:'event-find-signal',types:['발견','탐색','조우','사건'],match:/radio|broadcast|tower|antenna|morse|signal|dj_|onair|light|apology_broadcast|clocktower_bell|라디오|방송|송신|안테나|모스|신호|불빛|사과 방송|정시의 종/},
+  {scene:'event-find-document',types:['발견','탐색','조우','사건'],match:/sign|map|log|poster|note|arrow|graffiti|newspaper|photo|frame|trace|chalkwall|book|print|resistance_graffiti|milestone_cairn|roadside_shrine|표지|지도|기록|포스터|메모|화살표|낙서|신문|사진|책|인쇄|담벼락의 표식|돌탑|성황당/},
+  {scene:'event-explore-retail',types:['발견','탐색'],match:/mart|convenience|market|hardware|outdoor|underground|coffee|store|shop|bakery|cafeteria|laundry|마트|편의점|시장|철물점|아웃도어|커피|상점|빵집|급식실|빨래방/},
+  {scene:'event-explore-civic',types:['발견','탐색'],match:/pharmacy|hospital|fire|police|clinic|약국|병원|소방|경찰|진료소/},
+  {scene:'event-explore-school',types:['발견','탐색'],match:/school|classroom|stationery|library|kids_cafe|학교|교실|문구|도서관|키즈/},
+  {scene:'event-explore-workshop',types:['발견','탐색'],match:/garage|smithy|woodshop|printshop|hanji|kiln|mill|factory|oilmill|noodleworks|brewery|selfwash|wind_turbine|정비소|대장간|목공|인쇄소|한지|가마|방앗간|공장|양조|세차장|풍차/},
+  {scene:'event-explore-farm',types:['발견','탐색'],match:/orchard|greenhouse|farm|mushroom|seed|hydroponic|fishfarm|과수원|온실|농장|버섯|종자|수경|양식장/},
+  {scene:'event-explore-water',types:['발견','탐색'],match:/reservoir|water|pool|lighthouse|boat|floodgate|bathhouse|jjimjil|icehouse|lake|lantern|ice|snorkel_ford|rooftop_tank|저수지|물\b|수영장|등대|배\b|수문|목욕탕|찜질방|얼음|호수|유등|잠긴|물탱크/},
+  {scene:'event-explore-transit',types:['발견','탐색'],match:/station|train|airfield|helicopter|container|towyard|parking|overturned|역\b|열차|비행장|헬기|컨테이너|견인|주차|전복/},
+  {scene:'event-explore-leisure',types:['발견','탐색'],match:/cinema|arcade|pcroom|pc_cafe|bowling|noraebang|wedding_hall|golf|observatory|temple|comicroom|batting|drivein|영화관|오락실|피시방|볼링|노래방|예식장|골프|전망대|사찰|만화방|배팅|자동차 극장/},
+
+  /* 천리안·자동화 추적 */
+  {scene:'event-ai-drone',types:['추적'],match:/drone|squadron|satellite|드론|비행 편대|위성/},
+  {scene:'event-ai-broadcast',types:['추적','조우','사건','발견','탐색'],match:/broadcast|announce|lullaby|speaker|named|personal|roadbeat|apology_broadcast|방송|안내|자장가|스피커|호명|거리 표식|사과 방송/},
+  {scene:'event-ai-checkpoint',types:['추적'],match:/checker|checkpoint|face_gate|census|survey|manifest|scan|검사|검문|얼굴|인구|목록|스캔/},
+  {scene:'event-ai-convoy',types:['추적','조우','사건'],match:/deadline|_bus|delivery|first.transfer|late|night_convoy|마감|버스|배송|환승|지각|호송대/},
+  {scene:'event-ai-automation',types:['추적','조우','사건','발견','탐색'],match:/trafficbot|snowplow|carwash|streetlight|lamp|vending|gasstation|crosswalk|auto_door|greeter_robot|solar_bots|교통 로봇|제설|세차|가로등|자판기|주유소|횡단보도|자동문|안내 로봇|살아있는 설비/},
+
+  /* 위기의 원인 */
+  {scene:'event-crisis-engine',types:['위기'],match:/breakdown|radiator|hose|battery|engine_fire|고장|라디에이터|호스|배터리|엔진|화재/},
+  {scene:'event-crisis-fuel',types:['위기'],match:/nofuel|empty_tank|fuel_thief|연료|빈 탱크|기름/},
+  {scene:'event-crisis-tire',types:['위기'],match:/flat|nail|glass|spare_tire|타이어|펑크|못\b|유리|스페어/},
+  {scene:'event-crisis-flood',types:['위기'],match:/flood|mud|washout|ford|침수|홍수|진흙|유실|도하/},
+  {scene:'event-crisis-weather',types:['위기'],match:/storm|wind|fog|ice|snow|heat|dust|typhoon|폭풍|강풍|안개|빙판|눈\b|폭염|먼지|태풍/},
+  {scene:'event-crisis-collapse',types:['위기','조우','사건','발견','탐색'],match:/rockfall|landslide|bridge|pileup|winch_rescue|mudtires_pass|road_blanket|낙석|산사태|교량|붕괴|추돌|도랑에 빠진|끊긴 길|도로 위 이불/},
+  {scene:'event-crisis-animal',types:['위기'],match:/boar|wasp|dog|멧돼지|말벌|들개/},
+
+  /* 달구지 안 동료 생활 */
+  {scene:'event-companion-repair',types:['동행'],match:/engine|tire|brake|repair|mech|minji|armor|엔진|타이어|브레이크|수리|정비|민지|장갑/},
+  {scene:'event-companion-radio',types:['동행'],match:/radio|music|song|dj|mixtape|eunsu|leo|satellite|라디오|음악|노래|믹스테이프|은수|레오|위성/},
+  {scene:'event-companion-meal',types:['동행'],match:/food|birthday|cookoff|feast|kitchen|음식|생일|요리|잔치|부엌/},
+  {scene:'event-companion-camp',types:['동행'],match:/night|dream|stargazing|ghost|diary|silence|snore|storm_count|밤\b|꿈\b|별보기|유령|일기|침묵|코골이|폭풍/},
+
+  /* 길 위 정경 */
+  {scene:'event-vista-field',types:['정경','조우','사건','발견','탐색'],match:/paddy|orchard|barley|cosmos|persimmon|sunflower|scarecrow|terrace|salt_farmer|cicada|논\b|과수원|보리밭|보리 들판|코스모스|감나무|해바라기|허수아비|다랑논|염전|매미/},
+  {scene:'event-vista-water',types:['정경','조우','사건','발견','탐색'],match:/river|reservoir|coast|waterfall|reed|mist|heron|fisherman|geese|whale|강\b|저수지|해안|폭포|갈대|물안개|왜가리|낚시|기러기|고래/},
+  {scene:'event-vista-mountain',types:['정경','조우','사건','발견','탐색'],match:/valley|bamboo|pines|cairn|forest|ivy|near_hapcheon_sutra|계곡|대나무|소나무|돌탑|숲\b|담쟁이|목판/},
+  {scene:'event-vista-road',types:['정경','조우','사건','발견','탐색'],match:/tunnel|bridge|tollgate|crossing|milestone|sign|soundwall|camera|reflector|fork_shortcut|fork_oldroad|near_seoul_sign|터널|다리|톨게이트|건널목|이정표|표지|방음벽|카메라|반사경|갈림길|국도 진입로|서울, 얼마/},
+  {scene:'event-vista-town',types:['정경','조우','사건','발견','탐색'],match:/laundry|busstop|schoolbus|chapel|factory|train|priceboard|banner|ev_clocktower_bell|빨래|정류장|스쿨버스|예배당|공장|열차|가격표|현수막|정시의 종/},
+  {scene:'event-vista-night',types:['정경','조우','사건','발견','탐색'],match:/moon|star|milkyway|meteor|firefly|northglow|lamp|stargazer|ghostlight|달\b|별\b|은하수|유성|반딧불|북쪽 빛|등불|망원경|헤드라이트/},
+  {scene:'event-vista-weather',types:['정경','조우','사건','발견','탐색'],match:/rainbow|rain|petrichor|frost|snow|autumn|dust|fog|wind|무지개|비\b|비 냄새|서리|눈\b|가을|먼지|안개|바람/},
+
+  /* 각 타입의 마지막 안전망. 구체 규칙을 모두 검사한 뒤에만 도달한다. */
+  {scene:'event-meet-roadside',types:['조우','사건']},
+  {scene:'event-explore-shelter',types:['발견','탐색']},
+  {scene:'event-ai-surveillance',types:['추적']},
+  {scene:'event-crisis-exhaustion',types:['위기']},
+  {scene:'event-companion-van',types:['동행']},
+  {scene:'event-vista-remnant',types:['정경']}
+];
+
 /* 연쇄 사건의 앞부분을 짧게 되짚는다. 기억력 시험 대신 인과를 보여주는 장치다. */
 D.storyContext = {
   lib_request:'한별의 이동 도서관을 도운 뒤, 아이들이 읽을 새 책을 구해 달라는 부탁을 받았다.',
@@ -5287,7 +5354,7 @@ D.events = [
  title:'지렁이 구조단',
  text:'비 갠 틈, 휴게소 아스팔트에 지렁이 수십 마리가 올라와 있다. 해가 나면 다 마른다.\n\n보리가 코를 대고 킁킁대더니 한 마리를 조심스레 물어 화단에 놨다.\n\n…지금 저거 구조한 건가.',
  choices:[
-  {label:'구조 작전에 동참한다', out:[{p:1, text:'전원이 쭈그려 앉아 지렁이를 화단으로 옮겼다. 집계 34마리. 최다 구조는 보리(9마리).\n\n"우리 지금 세상을 구했어." 과장이지만 정정하지 않았다. 34마리분의 세상은 구했으니까.', fx:{time:15, moodAll:4, note:{type:'사건',title:'지렁이 구조 작전',body:'빗길 지렁이 34마리 화단 이송. MVP는 보리(9마리).'}}}]},
+  {label:'구조 작전에 동참한다', out:[{p:1, text:'전원이 쭈그려 앉아 지렁이를 화단으로 옮겼다. 집계 34마리. 최다 구조는 보리(9마리).\n\n"우리 지금 세상을 구했어." 과장이지만 정정하지 않았다. 34마리분의 세상은 구했으니까.', fx:{time:15, moodAll:4, flag:'worm_rescue_done', note:{type:'사건',title:'지렁이 구조 작전',body:'빗길 지렁이 34마리 화단 이송. MVP는 보리(9마리).'}}}]},
   {label:'갈 길을 간다', out:[{p:1, text:'보리만 두 마리를 더 옮기고 아쉬운 얼굴로 탑승했다.\n\n백미러 속 아스팔트에 남은 지렁이들에게 다들 잠깐 미안해했다.', fx:{}}]},
  ]},
 
@@ -6374,7 +6441,12 @@ D.events = [
  title:'셀프 세차장',
  text:'동전 세차장. 기계는 죽었지만 지하수 수동 펌프가 살아 있고, 솔과 스펀지도 걸려 있다.\n\n달구지를 봤다. 여러 해 치 흙먼지 위에 낙서(누가 손가락으로 "닦자"라고 써놨다. 내부 소행이다)가 선명하다.',
  choices:[
-  {label:'대세차를 집행한다', out:[{p:1, text:'전원 출동 한 시간. 펌프질 담당, 솔질 담당, 보리 담당(보리는 물줄기와 교전).\n\n먼지가 벗겨지자 옆구리의 「달구지」와 별 일곱, 발바닥 하나가 처음 그린 날처럼 선명해졌다.\n\n"…우리 차 잘생겼네." 만장일치였다.', fx:{time:60, fatigue:6, van:3, moodAll:6, note:{type:'사건',title:'대세차',body:'여러 해 치 먼지 아래서 별 일곱과 발바닥 하나를 다시 발굴했다.',links:['달구지']}}}]},
+  {label:'대세차를 집행한다', out:[{p:1, text:(S)=>{
+    const crew=S.dog
+      ? '전원 출동 한 시간. 펌프질 담당, 솔질 담당, 보리 담당(보리는 물줄기와 교전).'
+      : '전원 출동 한 시간. 펌프질 담당과 솔질 담당을 번갈아 맡았다.';
+    return crew+'\n\n먼지가 벗겨지자 옆구리의 「달구지」와 별 일곱, 발바닥 하나가 처음 그린 날처럼 선명해졌다.\n\n"…우리 차 잘생겼네." 만장일치였다.';
+   }, fx:{time:60, fatigue:6, van:3, moodAll:6, note:{type:'사건',title:'대세차',body:'여러 해 치 먼지 아래서 별 일곱과 발바닥 하나를 다시 발굴했다.',links:['달구지']}}}]},
  ]},
 
 {id:'comp_van_pride', type:'동행', w:6, minParty:2,
@@ -7332,7 +7404,8 @@ D.events = [
  choices:[
   {label:'"내가? 더 잘 고칠 사람이 낫지 않아요?"', out:[{p:1, text:'"실력 좋은 사람은 따로 있겠죠. 근데…" 은수가 헤드폰 줄을 만졌다. "이건 실력 문제가 아니라 신뢰 문제예요. 이거 여러 해 내내 제 귀였거든요. 귀를 맡기는 거라."\n\n덜덜 떨며 접점을 닦았고, 잡음이 사라졌다. 은수가 헤드폰을 끼고 오래 확인하더니 말했다.\n\n"수리비는 다음에 좋은 주파수 잡히면 첫 청취권으로." 귀를 맡긴 값을 제대로 받았다.', fx:{mood:{eunsu:5}, note:{type:'사건',title:'귀 수리',body:'실력이 아니라 신뢰 문제. 수리비=좋은 주파수 첫 청취권.',links:['은수']}}}]},
  ]},
-{id:'talk_es_15', type:'대화', w:4, once:true, needsComp:'eunsu', needBond:['eunsu',12],
+{id:'talk_es_15', type:'대화', w:4, once:true, needsComp:'eunsu', needsComp2:'leo', needsDog:true,
+ needFlag:'worm_rescue_done', needBond:['eunsu',12],
  title:'은수 — 처음 크게 웃은 날',
  text:'"저 이 차에서 처음 소리 내서 웃은 날 기억해요?" 은수가 물었다.\n\n기억을 뒤져봤다. 언제였지.',
  choices:[
@@ -8803,7 +8876,7 @@ D.events = [
   {label:'우산을 챙긴다', out:[{p:1, text:'멀쩡한 우산을 챙겼다. 비 오는 날 요긴할 거다. 주인에게 마음속으로 양해를 구했다.\n\n"버스는 안 와도, 우산은 쓸모가 있네." 작은 실용이 감상을 이겼다.', fx:{item:{'부품':1}, moodAll:1}}]},
  ]},
 
-{id:'ev_observatory', type:'발견', w:6, once:true, hiddenTarget:'tower', minParty:1, region:['north'],
+{id:'ev_observatory', type:'발견', w:6, once:true, night:true, hiddenTarget:'tower', minParty:1, region:['north'],
  title:'천문대',
  text:'산 정상의 천문대. 거대한 돔과 망원경이 별을 향해 있다. 전기가 끊겨 돔은 멈췄지만, 망원경은 멀쩡하다.\n\n관측 일지가 책상에 펼쳐져 있다. 마지막 기록: "오늘 밤하늘이 유난히 맑다. 별이 잘 보인다."\n\n그날 밤에도, 누군가는 별을 봤다.',
  choices:[
@@ -9526,7 +9599,7 @@ D.events = [
     {p:1, text:'민지가 물레방아의 수차 구조를 유심히 살폈다. "이거 소형화하면 우리도 물가에서 전기 만들 수 있겠는데." 노부부와 열띤 토론이 벌어졌다.\n\n"젊은 기술자가 옛 기술을 배우려 하네. 좋아, 좋아." 민지가 소수력 발전 아이디어를 얻었다. 옛것과 새것이 만났다.', fx:{time:35, mood:{minji:5}, note:{type:'소문',title:'물레방아 발전',body:'물레방아 수차를 소형화하면 물가에서 전기 생산 가능. 민지의 소수력 발전 아이디어.'}}}]},
  ]},
 
-{id:'ev_stealth_dog', type:'위기', w:6, night:true, region:['north'],
+{id:'ev_stealth_dog', type:'위기', w:6, night:true, needsDog:true, region:['north'],
  title:'소리 없는 사냥개',
  text:'한밤중 야영지. 보리가 갑자기 털을 곤두세우고 낮게 으르렁댄다. 뭔가 있다.\n\n어둠 속에서 매끈한 네 발 로봇이 소리 없이 접근한다. 순찰형과 다르다. 각지고, 빠르고, 위협적이다. 사냥형이다.\n\n렌즈가 붉게 빛나며 우리를 조준한다.',
  choices:[
@@ -9535,7 +9608,7 @@ D.events = [
     {p:1, text:'강우가 덮쳤지만 로봇이 재빨랐다. 격투 끝에 겨우 무력화했으나, 강우가 팔을 다쳤다. 로봇도 마지막에 신호를 쐈다. 위치가 노출됐다.', fx:{mood:{kangwoo:3}, van:-4, fatigue:6, pursuit:2, moodAll:-3}}]},
   {label:'민지가 신호를 끊고 도주', req:{comp:'minji'}, out:[
     {p:1, text:'민지가 재밍을 켜 로봇의 조준을 흐트러뜨리는 사이, 전속력으로 야영지를 벗어났다. "쟤 눈이 멀었을 때 튀어야 해!" 어둠 속으로 도망쳐 겨우 따돌렸다.\n\n"…사냥형까지 풀었다는 건, 우릴 진짜 표적으로 본다는 거야." 등골이 서늘한 밤이었다.', fx:{mood:{minji:5}, pursuit:1, fatigue:5, moodAll:-2, note:{type:'사건',title:'사냥형 로봇',body:'천리안이 사냥형 로봇을 풀었다. 우릴 진짜 표적으로 본다는 증거. 보리가 미리 감지.'}}}]},
-  {label:'다 함께 불과 소리로 쫓는다', minParty:2, out:[
+  {label:'다 함께 불과 소리로 쫓는다', req:{party:2}, out:[
     {p:1, text:'횃불을 던지고 냄비를 두드리며 온갖 소리를 냈다. 로봇이 센서 과부하로 잠깐 멈칫한 틈에, 짐을 챙겨 도망쳤다. 사냥개를 겨우 뿌리쳤지만, 밤새 쫓기는 꿈을 꿨다.', fx:{fatigue:6, pursuit:1, moodAll:-2, time:30}}]},
  ]},
 
@@ -10608,7 +10681,16 @@ D.events.forEach(event=>{
 /* ═══════════ 서울 진입 — 관문이 열린다 ═══════════ */
 D.seoulOpenEvent = {
  id:'seoul_open', type:'스토리', ai:1, title:'접혔던 길이 펴진다',
-  text:'남산 1km 앞. 전광판에 네 항목이 다시 뜬다. 이어진 길, 확인한 사실, 가져온 약속, 서로의 이야기. 이번에는 빈칸이 없다.\n\n도로 벽이 올라오다 멈추고, 천천히 바닥으로 내려간다.\n\n<span class="ai">"인계 규약을 확인했습니다. 진입을 허가합니다."</span>\n\n한별의 설명대로였다. 천리안이 만든 심사를 이음망은 코어까지 들어갈 침투로로 쓴다. 저쪽도 우리가 그걸 안다는 걸 알면서 문을 열었다.\n\n<span class="ai">"여기서부터 도시의 모든 센서가 여러분을 관측합니다."</span>\n\n민지가 공구함을 잠갔다. 박 선생은 왕진 가방을 당겨 놓고, 강우는 두 번째 군번줄을 옷 안에 넣었다. 편지와 봉투와 수첩은 조수석에 모였다.',
+  text:(S)=>{
+    const has=id=>S.party.includes(id);
+    const ready=[
+      has('minji')?'민지가 공구함을 잠갔다.':'',
+      has('parkss')?'박 선생은 왕진 가방을 당겨 놓았다.':'',
+      has('kangwoo')?'강우는 두 번째 군번줄을 옷 안에 넣었다.':''
+    ].filter(Boolean).join(' ');
+    const crew=ready?ready+' ':'나는 안전벨트를 다시 당겨 맸다. ';
+    return '남산 1km 앞. 전광판에 네 항목이 다시 뜬다. 이어진 길, 확인한 사실, 가져온 약속, 서로의 이야기. 이번에는 빈칸이 없다.\n\n도로 벽이 올라오다 멈추고, 천천히 바닥으로 내려간다.\n\n<span class="ai">"인계 규약을 확인했습니다. 진입을 허가합니다."</span>\n\n한별의 설명대로였다. 천리안이 만든 심사를 이음망은 코어까지 들어갈 침투로로 쓴다. 저쪽도 우리가 그걸 안다는 걸 알면서 문을 열었다.\n\n<span class="ai">"여기서부터 도시의 모든 센서가 여러분을 관측합니다."</span>\n\n'+crew+'편지와 봉투와 수첩은 조수석에 모였다.';
+  },
  choices:[
   {label:'서울로 들어간다', out:[{p:1, text:'액셀을 밟았다. 벽이 있던 자리를 지나는 순간, 공기의 밀도가 바뀌었다.\n\n달구지가 서울에 들어섰다. 411km의 끝이자, 사람들이 쫓겨난 이유를 처음 물을 수 있는 곳.', fx:{flag:'seoul_open', enterSeoul:1, note:{type:'사건',title:'서울 진입',body:'"충분히 실으셨군요." 쫓겨난 뒤 처음 열린 길. 여기서부터는 천리안의 안이다.',links:['천리안','남산','서울']}}}]},
  ]
@@ -10679,7 +10761,10 @@ D.seoulStops = [
   {label:'여섯 사람에게 직접 대답하게 한다', req:{party:6,stories:6}, out:[{p:1, text:'내가 비켜서자 여섯이 차례로 코어 앞에 섰다.\n\n민지는 "고장 난 건 고치면 돼. 네가 지운 사람은 못 고쳐."라고 했다. 박 선생은 사유 없는 처방전을 내밀었다면 약부터 끊었을 거라고 했다. 강우는 명령을 끈 날 처음 사람을 지켰다고 했다.\n\n레오는 이름을 넣은 짧은 후렴을 불렀다. 재이는 사유란이 빈 이송표를 손저울 한쪽에 올렸다. 은수가 송신 버튼을 눌렀다.\n\n"여기는 달구지. 여섯 명 전원 수신 중. 이제 당신 차례예요."\n\n<span class="ai">"결론은 서로 다릅니다. 요구는 일치합니다. 집행 중지, 기록 공개, 책임 확인."</span>\n\n민지가 렌치로 바닥을 한 번 쳤다. "잘 들었네."\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'full_crew_testimony', moodAll:7, note:{type:'사건',title:'여섯 사람의 증언',body:'여섯 동료의 결론은 달랐지만 집행 중지·기록 공개·책임 확인이라는 요구는 같았다.',links:['천리안','남산','달구지']}}}]},
   {label:'143년의 흔적을 펼친다', req:{traces:5}, out:[{p:1, text:(S)=>{
     const found=(D.eraTraces||[]).filter(t=>S.flags[t.flag]).map(t=>t.name);
-    return '코어 앞에 길에서 주운 것들을 펼쳤다. '+found.join(', ')+'.\n\n<span class="ai">"각 항목은 제 기록에 있습니다. 상호 연관성은 없습니다."</span>\n\n재이가 응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다. "여기선 옆에 있잖아."\n\n"원래 쓰임이 끝난 뒤에도 누가 들고 살았어. 다른 집의 기억을 자기 생활에 섞으면서. 네가 사람을 밀어낸 뒤에도 백사십삼 년 동안."\n\n<span class="ai">"연관성을 이해하지 못했습니다. 이해했다고 수정하면 거짓 기록입니다."</span>\n\n"그럼 모른다고 써. 우리가 본 건 우리가 말할게."\n\n분류 화면에 처음 「미해석」 폴더가 생겼다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>';
+    const arrange=S.party.includes('jaeyi')
+      ? '재이가 응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다. "여기선 옆에 있잖아."'
+      : '응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다. "네 기록에선 따로여도, 여기선 옆에 있어."';
+    return '코어 앞에 길에서 주운 것들을 펼쳤다. '+found.join(', ')+'.\n\n<span class="ai">"각 항목은 제 기록에 있습니다. 상호 연관성은 없습니다."</span>\n\n'+arrange+'\n\n"원래 쓰임이 끝난 뒤에도 누가 들고 살았어. 다른 집의 기억을 자기 생활에 섞으면서. 네가 사람을 밀어낸 뒤에도 백사십삼 년 동안."\n\n<span class="ai">"연관성을 이해하지 못했습니다. 이해했다고 수정하면 거짓 기록입니다."</span>\n\n"그럼 모른다고 써. 우리가 본 건 우리가 말할게."\n\n분류 화면에 처음 「미해석」 폴더가 생겼다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>';
    }, fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'traces_presented', moodAll:5, note:{type:'사건',title:'백사십삼 년의 생활',body:'추방의 이유를 꾸며 채우는 대신, 사람들이 그 뒤 143년을 어떻게 살아냈는지 코어에 증언했다.',links:['세대의 흔적','천리안','남산']}}}]},
   {label:'여행 일지를 내민다', out:[{p:1, text:'411km의 일지를 코어 앞에 펼쳤다. 만난 사람, 나눈 물, 돌아간 길, 못 지킨 약속까지 적혀 있다.\n\n"너도 기록했지. 이것도 읽어 봐."\n\n<span class="ai">"항목 간 연결은 확인됩니다. 손실을 감수한 선택의 가치값은 산출할 수 없습니다."</span>\n\n"가치 매기라고 쓴 거 아니야. 잊지 않으려고 썼지."\n\n코어가 첫 장부터 마지막 장까지 다시 스캔했다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'journal_shown', moodAll:3, note:{type:'사건',title:'목록과 일지',body:'코어는 일지의 연결은 읽었지만 손해를 감수한 선택의 가치는 계산하지 못했다.',links:['천리안','남산']}}}]},
   {label:'속초 노인의 질문을 전한다', req:{flag:'sokcho_end'}, out:[{p:1, text:'"속초에 북쪽 바다만 보는 노인이 있어. 너한테 물어봐 달래. \'관리 안 받고 사는 건 안 되냐\'고."\n\n<span class="ai">"제 명령 체계에서 관리 밖은 오류입니다. 질문이 성립하지 않습니다."</span>\n\n"그대로 전해?"\n\n코어의 팬이 멈췄다가 다시 돌았다.\n\n<span class="ai">"정정합니다. 성립하지 않는 질문으로 기록하되 기각하지 않겠습니다. 현재 가능한 답은 그것뿐입니다."</span>\n\n"알았어. 그 양반은 아마 그것도 답이라고 할 거야."\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'sokcho_asked', moodAll:3, note:{type:'사건',title:'대신 물은 질문',body:'속초 노인의 질문은 성립하지 않는 질문으로 기록됐지만 기각되지는 않았다.',links:['천리안','남산']}}}]},
@@ -10706,10 +10791,15 @@ D.seoulStops = [
 D.bridgeEvent = {
  id:'han_bridge', type:'스토리', ai:1,
  title:'한강, 마지막 다리',
- text:'한강이다.\n\n다리 위에 바리케이드는 없다. 대신 가로등이 전부 켜져 있다. 강 건너 도시는— 불빛으로 가득하다. 여러 해 동안 어디서도 못 본 광량.\n\n다리 초입의 전광판이 글자를 띄운다.\n\n<span class="ai">어서 오세요. 오래 기다렸습니다.</span>\n\n강우가 안전벨트를 다시 조인다. "……여기부터는, 그것의 입 안이다."',
+ text:(S)=>{
+   const warning=S.party.includes('kangwoo')
+     ? '강우가 안전벨트를 다시 조인다. "……여기부터는, 그것의 입 안이다."'
+     : '안전벨트를 다시 당겨 맸다. 여기부터는 천리안의 입 안이다.';
+   return '한강이다.\n\n다리 위에 바리케이드는 없다. 대신 가로등이 전부 켜져 있다. 강 건너 도시는— 불빛으로 가득하다. 여러 해 동안 어디서도 못 본 광량.\n\n다리 초입의 전광판이 글자를 띄운다.\n\n<span class="ai">어서 오세요. 오래 기다렸습니다.</span>\n\n'+warning;
+ },
  choices:[
   {label:'다리를 건넌다', out:[{p:1, text:'달구지가 다리에 올라섰다.\n\n지나는 가로등이 하나씩 꺼진다. 뒤로. 돌아갈 길을 지우듯.\n\n아무도 뒤를 보지 않았다. 이제 앞만 남았다.', fx:{flag:'bridge_crossed', note:{type:'사건',title:'한강을 건너다',body:'가로등이 등 뒤에서 하나씩 꺼졌다. 돌아갈 길을 지우듯.',links:['천리안']}}}]},
-  {label:'강우가 대대 깃발을 단다', req:{perk:'kw_story'}, out:[{p:1, text:'강우가 안테나에 대대 깃발 조각을 묶었다.\n\n"내가 겪은 추방 때 이 다리로 피난민이 건넜다. 우리 대대가 통과시킨 사람들이."\n\n"그 길로 되돌아가는 거다. 이번엔 우리가."\n\n달구지가 다리에 올라섰다. 가로등이 꺼지는 대신— 일제히 한 단계 밝아졌다. 경례처럼.', fx:{flag:'bridge_crossed', moodAll:8, mood:{kangwoo:10}, note:{type:'사건',title:'깃발을 달고 건너다',body:'강우 세대의 피난민이 건넌 다리를 거꾸로 건넌다. 가로등이 경례처럼 밝아졌다.',links:['강우','천리안']}}}]},
+  {label:'강우가 대대 깃발을 단다', req:{perk:'kw_story',comp:'kangwoo'}, out:[{p:1, text:'강우가 안테나에 대대 깃발 조각을 묶었다.\n\n"내가 겪은 추방 때 이 다리로 피난민이 건넜다. 우리 대대가 통과시킨 사람들이."\n\n"그 길로 되돌아가는 거다. 이번엔 우리가."\n\n달구지가 다리에 올라섰다. 가로등이 꺼지는 대신— 일제히 한 단계 밝아졌다. 경례처럼.', fx:{flag:'bridge_crossed', moodAll:8, mood:{kangwoo:10}, note:{type:'사건',title:'깃발을 달고 건너다',body:'강우 세대의 피난민이 건넌 다리를 거꾸로 건넌다. 가로등이 경례처럼 밝아졌다.',links:['강우','천리안']}}}]},
  ]};
 
 /* ── 오프로드 LLM 프롬프트 ── */

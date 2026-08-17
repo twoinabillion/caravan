@@ -462,7 +462,7 @@ with sync_playwright() as p:
             if ev in new_road_scenes:
                 scene_ready = pg.locator('#ev-sheet img.event-scene').count() == 1 and \
                     pg.locator('#ev-sheet img.event-scene').evaluate(
-                        "(img) => img.src.startsWith('data:image/jpeg;base64,')")
+                        "(img) => /^data:image[/](?:jpeg|webp);base64,/.test(img.src)")
                 check(f'고유 장면 표시: {ev}', scene_ready)
                 pg.evaluate("document.querySelector('#ev-wrap').classList.remove('on')")
                 continue
@@ -728,7 +728,7 @@ with sync_playwright() as p:
       out.roadCrewEvents=roadCrewIds.filter(id=>D.events.find(e=>e.id===id)).length;
       out.roadCrewScenes=roadCrewIds.concat(['road_night_circle','road_supply_shelter']).every(id=>{
         const scene=D.eventScenes[id];
-        return !!scene && (D.scenes[scene]||'').startsWith('data:image/jpeg;base64,');
+        return !!scene && /^data:image[/](?:jpeg|webp);base64,/.test(D.scenes[scene]||'');
       });
       out.roadCrewChain=roadCrewIds.every((id,i)=>{
         const ev=D.events.find(e=>e.id===id);
@@ -1146,7 +1146,7 @@ with sync_playwright() as p:
       out.nonlethalMissions=routeIds.every(id=>{
         const ev=D.events.find(e=>e.id===id);
         return ev&&ev.combat&&['구조','호송'].includes(ev.type)&&
-          D.scenes[D.eventScenes[id]].startsWith('data:image/jpeg;base64,');
+          /^data:image[/](?:jpeg|webp);base64,/.test(D.scenes[D.eventScenes[id]]||'');
       })&&['route_ridge_extract','route_market_pass'].every(id=>
         D.events.find(e=>e.id===id).choices.every(c=>c.combatRoll!==undefined&&
           c.out.every(o=>o.fx.combatEnd&&['success','partial','failure'].includes(o.fx.combatResult))&&
@@ -1163,7 +1163,7 @@ with sync_playwright() as p:
       const echoResult=G.resolveImpactEcho('relay');
       out.settlementRoadEcho=!!settlementEcho&&echoDrive.slots.some(slot=>slot.special==='impact')&&
         !!S._stlField.roadEchoed['miryang:pump']&&echoResult.fx.time===15&&
-        D.scenes['settlement-road-echo'].startsWith('data:image/jpeg;base64,');
+        /^data:image[/](?:jpeg|webp);base64,/.test(D.scenes['settlement-road-echo']||'');
       S=systemSnapshot; rng=mulberry32(S.seed+(S.stats.events*7919));
       return out;
     }''')

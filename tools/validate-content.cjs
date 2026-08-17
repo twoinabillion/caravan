@@ -64,6 +64,10 @@ for (const [id, location] of Object.entries(D.eventLocations || {})) {
 const compIds = new Set(Object.keys(D.comps || {}));
 const npcIds = new Set(Object.keys(D.npcs || {}));
 const knowledgeIds = new Set(Object.keys(D.knowledge || {}));
+for (const id of npcIds) {
+  need(typeof D.portraits[id] === 'string' && D.portraits[id].trim(),
+    `portrait:${id}`, '이름 있는 정착지 인물의 얼굴 초상이 없음');
+}
 const speakerIds = new Set([
   ...compIds, ...npcIds, ...Object.keys(D.portraits || {}),
   'me', '나', 'sys', 'record', 'cheollian', 'radio', 'unknown',
@@ -289,6 +293,34 @@ for (const [id, choices] of Object.entries(D.eventChoiceScenes || {})) {
   }
 }
 
+/* 전용 컷이 없는 대량 사건이 네 장짜리 generic 폴백으로 다시 몰리지 않도록
+   대상·행동 기반 48장 사건군의 참조와 실제 도달 범위를 빌드 때마다 검사한다. */
+const familyRules=D.eventSceneFamilyRules || [];
+need(familyRules.length===48, 'eventSceneFamilies', `사건 장면군은 정확히 48개여야 함 (현재 ${familyRules.length})`);
+const usedFamilies=new Map();
+for (const [index, rule] of familyRules.entries()) {
+  const where=`eventSceneFamily[${index}]`;
+  need(typeof rule.scene==='string' && rule.scene.startsWith('event-'), where, `잘못된 장면 키 ${rule.scene}`);
+  need(!!D.scenes[rule.scene], where, `없는 장면 ${rule.scene}`);
+  need(!rule.match || (Object.prototype.toString.call(rule.match)==='[object RegExp]' && !rule.match.global), where, '정규식은 비전역 RegExp여야 함');
+  need(!rule.types || (Array.isArray(rule.types) && rule.types.length), where, '타입 목록이 비었음');
+}
+let familyCandidates=0, familyMapped=0;
+for (const event of D.events || []) {
+  const hasDedicated=(D.eventTurnScenes&&D.eventTurnScenes[event.id]) || event.scenes || event.scene ||
+    (D.eventScenes&&D.eventScenes[event.id]) || (event.locEvent&&D.nodeScenes&&D.nodeScenes[event.locEvent]);
+  if(hasDedicated) continue;
+  const type=(event.ai||event.type==='추적')?'추적':event.type;
+  if(type==='스토리'||type==='대화') continue;
+  familyCandidates++;
+  const familyText=`${event.id||''} ${String(event.title||'').replace(/<[^>]*>/g,'')} ${type||''}`;
+  const rule=familyRules.find(item=>(!item.types||item.types.includes(type))&&(!item.match||item.match.test(familyText)));
+  if(rule){ familyMapped++; usedFamilies.set(rule.scene,(usedFamilies.get(rule.scene)||0)+1); }
+  else fail(`eventSceneFamily:${event.id}`, `장면군에 매칭되지 않은 ${type} 사건`);
+}
+need(familyMapped===familyCandidates, 'eventSceneFamilies', `${familyCandidates-familyMapped}개 범용 사건이 장면군에 연결되지 않음`);
+need(usedFamilies.size===48, 'eventSceneFamilies', `실제 쓰이지 않는 장면군 ${48-usedFamilies.size}개`);
+
 for (const [id, quest] of Object.entries(D.recruitQuests || {})) {
   const where = `recruit:${id}`;
   need(compIds.has(id), where, '동료 정의가 없음');
@@ -349,4 +381,4 @@ if (errors.length) {
 }
 
 const fieldCount = Object.values(D.stls || {}).filter(stl => stl.field).length;
-console.log(`✅ 콘텐츠 참조 정상 · 이벤트 ${events.length}·노드 ${Object.keys(D.nodes).length}·장면 ${Object.keys(D.scenes).length}·영입 ${Object.keys(D.recruitQuests).length}·현장탐색 ${fieldCount}`);
+console.log(`✅ 콘텐츠 참조 정상 · 이벤트 ${events.length}·노드 ${Object.keys(D.nodes).length}·장면 ${Object.keys(D.scenes).length}·사건군 ${usedFamilies.size}/${familyMapped}건·영입 ${Object.keys(D.recruitQuests).length}·현장탐색 ${fieldCount}`);

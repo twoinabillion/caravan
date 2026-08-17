@@ -85,6 +85,54 @@ D.scenes = {
   'generic-crisis':'__SCENE_GENERIC_CRISIS__',
   'generic-cheollian':'__SCENE_GENERIC_CHEOLLIAN__',
   'generic-story':'__SCENE_GENERIC_STORY__',
+  'event-meet-roadside':'__SCENE_EVENT_MEET_ROADSIDE__',
+  'event-meet-family':'__SCENE_EVENT_MEET_FAMILY__',
+  'event-meet-trader':'__SCENE_EVENT_MEET_TRADER__',
+  'event-meet-craft':'__SCENE_EVENT_MEET_CRAFT__',
+  'event-meet-performer':'__SCENE_EVENT_MEET_PERFORMER__',
+  'event-meet-pilgrim':'__SCENE_EVENT_MEET_PILGRIM__',
+  'event-meet-guard':'__SCENE_EVENT_MEET_GUARD__',
+  'event-meet-courier':'__SCENE_EVENT_MEET_COURIER__',
+  'event-meet-animal':'__SCENE_EVENT_MEET_ANIMAL__',
+  'event-meet-community':'__SCENE_EVENT_MEET_COMMUNITY__',
+  'event-find-document':'__SCENE_EVENT_FIND_DOCUMENT__',
+  'event-find-signal':'__SCENE_EVENT_FIND_SIGNAL__',
+  'event-explore-retail':'__SCENE_EVENT_EXPLORE_RETAIL__',
+  'event-explore-civic':'__SCENE_EVENT_EXPLORE_CIVIC__',
+  'event-explore-school':'__SCENE_EVENT_EXPLORE_SCHOOL__',
+  'event-explore-workshop':'__SCENE_EVENT_EXPLORE_WORKSHOP__',
+  'event-explore-farm':'__SCENE_EVENT_EXPLORE_FARM__',
+  'event-explore-water':'__SCENE_EVENT_EXPLORE_WATER__',
+  'event-explore-transit':'__SCENE_EVENT_EXPLORE_TRANSIT__',
+  'event-explore-leisure':'__SCENE_EVENT_EXPLORE_LEISURE__',
+  'event-explore-shelter':'__SCENE_EVENT_EXPLORE_SHELTER__',
+  'event-ai-drone':'__SCENE_EVENT_AI_DRONE__',
+  'event-ai-automation':'__SCENE_EVENT_AI_AUTOMATION__',
+  'event-ai-broadcast':'__SCENE_EVENT_AI_BROADCAST__',
+  'event-ai-checkpoint':'__SCENE_EVENT_AI_CHECKPOINT__',
+  'event-ai-convoy':'__SCENE_EVENT_AI_CONVOY__',
+  'event-ai-surveillance':'__SCENE_EVENT_AI_SURVEILLANCE__',
+  'event-crisis-engine':'__SCENE_EVENT_CRISIS_ENGINE__',
+  'event-crisis-fuel':'__SCENE_EVENT_CRISIS_FUEL__',
+  'event-crisis-tire':'__SCENE_EVENT_CRISIS_TIRE__',
+  'event-crisis-flood':'__SCENE_EVENT_CRISIS_FLOOD__',
+  'event-crisis-weather':'__SCENE_EVENT_CRISIS_WEATHER__',
+  'event-crisis-collapse':'__SCENE_EVENT_CRISIS_COLLAPSE__',
+  'event-crisis-animal':'__SCENE_EVENT_CRISIS_ANIMAL__',
+  'event-crisis-exhaustion':'__SCENE_EVENT_CRISIS_EXHAUSTION__',
+  'event-companion-repair':'__SCENE_EVENT_COMPANION_REPAIR__',
+  'event-companion-radio':'__SCENE_EVENT_COMPANION_RADIO__',
+  'event-companion-meal':'__SCENE_EVENT_COMPANION_MEAL__',
+  'event-companion-camp':'__SCENE_EVENT_COMPANION_CAMP__',
+  'event-companion-van':'__SCENE_EVENT_COMPANION_VAN__',
+  'event-vista-field':'__SCENE_EVENT_VISTA_FIELD__',
+  'event-vista-water':'__SCENE_EVENT_VISTA_WATER__',
+  'event-vista-mountain':'__SCENE_EVENT_VISTA_MOUNTAIN__',
+  'event-vista-road':'__SCENE_EVENT_VISTA_ROAD__',
+  'event-vista-town':'__SCENE_EVENT_VISTA_TOWN__',
+  'event-vista-night':'__SCENE_EVENT_VISTA_NIGHT__',
+  'event-vista-weather':'__SCENE_EVENT_VISTA_WEATHER__',
+  'event-vista-remnant':'__SCENE_EVENT_VISTA_REMNANT__',
   'library-bus':'__SCENE_LIBRARY_BUS__',
   'resistance-contact':'__SCENE_RESISTANCE_CONTACT__',
   'sea-captain-contact':'__SCENE_SEA_CAPTAIN_CONTACT__',
@@ -216,11 +264,14 @@ const sceneCompanionId = key => {
 };
 const sceneFormatFor = key => {
   if(sceneCompanionId(key)||/^(minji-toolbox|parkss-clinic|leo-rooftop-song|jaeyi-ledger|eunsu-last-shift|library-bus|resistance-contact|sea-captain-contact)$/.test(key)) return 'character';
+  if(/^event-companion-/.test(key)) return 'character';
   if(/^(trace-|frequency-tape|postman-letter|grandfather-envelope|family-verification-key|story-generation-form|story-generation-speech)$/.test(key)) return 'detail';
+  if(/^event-find-/.test(key)) return 'detail';
   if(/^(combat-|roadcrew-|route-)/.test(key)) return 'action';
+  if(/^event-(meet|ai|crisis)-/.test(key)) return 'action';
   return 'place';
 };
-const sceneUsesDalguji = key => /^(arrival-|busan-departure|full-house-meal|generic-|combat-|roadcrew-|route-|settlement-|recruit-|intro-(passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
+const sceneUsesDalguji = key => /^(arrival-|busan-departure|full-house-meal|generic-|event-|combat-|roadcrew-|route-|settlement-|recruit-|intro-(passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
 D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
   const companion=sceneCompanionId(key);
   const vehicleRefs=sceneUsesDalguji(key)?(D.dalgujiVisual.refs||[]):[];

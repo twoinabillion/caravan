@@ -111,12 +111,20 @@ const settlementSprites = replace(read('src/05-scene.js'), /__TOWN_WORLD_SPRITE_
 
 const portraits = replace(read('src/03b-portraits.js'), /__PORTRAIT_([a-z0-9_]+)__/g,
   key => dataUri(`assets/portraits/${key}.png`, 'image/png'), '주연 초상');
-const npc = replace(read('src/03f-npc-portraits.js'), /__NPC_([a-z0-9_]+)__/g,
-  key => dataUri(`assets/portraits/${key}.png`, 'image/png'), 'NPC');
+const npc = replace(read('src/03f-npc-portraits.js'), /__NPC_([a-z0-9_]+)__/g, key => {
+  /* 정착지 초상은 96px UI 자산이라 WebP 사본이 있으면 우선 내장한다.
+     PNG 정본은 생성·교체용으로 보존하고 단일 HTML 용량은 불필요하게 키우지 않는다. */
+  const webp=`assets/portraits/${key}.webp`;
+  return fs.existsSync(path.join(root,webp))
+    ?dataUri(webp,'image/webp')
+    :dataUri(`assets/portraits/${key}.png`,'image/png');
+}, 'NPC');
 const scenes = replace(read('src/03g-scenes.js'), /__SCENE_([A-Z0-9_]+)__/g, key => {
   const isArrival=key.startsWith('ARRIVAL_');
-  const relative = introScenes[key] || `assets/scenes/${key.toLowerCase().replaceAll('_', '-')}.${isArrival?'webp':'jpg'}`;
-  return dataUri(relative, isArrival?'image/webp':'image/jpeg');
+  const stem=`assets/scenes/${key.toLowerCase().replaceAll('_', '-')}`;
+  const webp=`${stem}.webp`, jpg=`${stem}.jpg`;
+  const relative = introScenes[key] || (fs.existsSync(path.join(root,webp))?webp:(isArrival?webp:jpg));
+  return dataUri(relative, relative.endsWith('.webp')?'image/webp':'image/jpeg');
 }, '장면');
 const upgrades = replace(scenes.result, /__UPGRADE_([A-Z0-9_]+)__/g,
   key => dataUri(upgradeScenes[key], 'image/jpeg'), '업그레이드');
