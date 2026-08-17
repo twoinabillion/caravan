@@ -226,7 +226,7 @@ const UI = (()=>{
     SCENE.initTitle($('#titlecv'));
     MAPR.init($('#mapcv'));
     MAPR.initMini($('#minimap'));
-    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); MAPR.resize(); renderMapMini(); renderMission(); };
+    $('#minimap').onclick=()=>{ toggleOvl('#ovl-map'); refreshMapSurface(); };
     GRAPH.init($('#graphcv'));
     wire();
     applyIcons();
@@ -450,7 +450,7 @@ const UI = (()=>{
     $('#dk-objectives').onclick=()=>openStatusTab('journey','dk-objectives');
     $('#dk-map').onclick=()=>{
       setDockTab('dk-map'); toggleOvl('#ovl-map'); wireRoadTool($('#ovl-map'));
-      MAPR.resize(); renderMapMini(); renderMission();
+      refreshMapSurface();
       const choices=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id)&&G.canTravelTo(nb.id).ok);
       if(!choices.some(nb=>nb.id===mapKbFocus)) mapKbFocus=choices[0]?.id||null;
       if(mapKbFocus) showNodeCard(mapKbFocus);
@@ -1480,7 +1480,7 @@ const UI = (()=>{
     const where=p.querySelector('[data-a="where"]');
     if(where) where.onclick=()=>{
       if(!$('#ovl-map').classList.contains('on')) toggleOvl('#ovl-map');
-      MAPR.resize(); renderMapMini(); renderMission();
+      refreshMapSurface();
     };
     const crew=p.querySelector('[data-a="crew"]');
     if(crew) crew.onclick=()=>{
@@ -1690,15 +1690,15 @@ const UI = (()=>{
       const waitNight=atFollow&&Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay;
       const enabled=ready||atTask||(atFollow&&!waitNight);
       const label=ready?`합류를 이야기한다 — ${def.name}`
-        :waitNight?`${def.name}와 하룻밤을 보낸다`
         :atFollow?`길에서 생긴 일을 마주한다 — ${def.name}`
         :road?`다음 길을 함께 간다 — ${def.name}`
         :atTask?`${def.name}의 부탁을 진행한다`
         :`${D.nodes[rq.target].name}까지 임시 동행 · ${def.name}`;
       const small=ready?'서로를 겪은 뒤, 본인이 자리를 고른다'
-        :waitNight?'야영을 하면 내일 다시 이야기할 수 있다'
         :atFollow?def.followHint:road?def.roadHint:def.hint;
-      localActions.push(stopActionHtml({
+      /* 밤을 보내야만 이어지는 합류 단계는 행동처럼 보이면 어색하다.
+         야영 화면과 목표 기록이 대기 상태를 이미 설명하므로 머물기 목록에서는 숨긴다. */
+      if(!waitNight) localActions.push(stopActionHtml({
         action:'recruitstep',kicker:ready?'합류 결정':atFollow?'동행 후속':road?'임시 동행':'동료의 부탁',
         icon:'quest',title:label,description:small,primary:true,disabled:!enabled,
         chips:[enabled?{label:'지금 가능',tone:'ready'}:{label:road?'다음 주행에서 진행':'다른 시간·장소 필요',tone:'muted'}],cta:'진행하기'
@@ -1756,6 +1756,9 @@ const UI = (()=>{
       action:'craft',kicker:'차 뒤 칸에서',title:'작업대를 편다',
       description:'무기와 탄을 직접 만든다.',chips:['약 40분'],cta:'작업하기'
     }));
+    /* 같은 콘솔에서 세로 스크롤이 생기면 목적지↔머물기 전환이 다른 화면처럼 느껴진다.
+       즉시 해야 할 순서대로 네 가지만 남기고, 정비는 가방·야영에서도 계속 접근할 수 있다. */
+    localActions=localActions.slice(0,4);
     const localActive=journeyConsoleMode==='local';
     const routeActive=journeyConsoleMode==='route';
     const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물기" aria-hidden="${!localActive}" ${localActive?'':'hidden'}>
@@ -2654,8 +2657,13 @@ const UI = (()=>{
     const sid=stlId==='miryang'&&mode==='hub'?'miryang-market-hub':D.nodeScenes&&D.nodeScenes[stlId];
     return sid&&D.scenes&&D.scenes[sid]?D.scenes[sid]:'';
   }
+  function settlementLayout(stlId){
+    const layout=D.settlementLayouts&&D.settlementLayouts[stlId];
+    return layout||{eyebrow:'SETTLEMENT WALK',entry:{x:50,y:88},facilities:{
+      market:{x:24,y:35},garage:{x:76,y:40},people:{x:72,y:72},alley:{x:28,y:70}}};
+  }
   function settlementSpots(stlId){
-    const spots={
+    const base={
       market:{label:stlId==='muju'?'교환소':stlId==='daejeon'?'보급소':'장터',
         sub:'의뢰와 물자를 살핀다',icon:'food'},
       garage:{label:'정비소',sub:'달구지를 고치고 넓힌다',icon:'parts'},
@@ -2663,8 +2671,12 @@ const UI = (()=>{
         sub:'얼굴을 보고 이야기를 나눈다',icon:'bond'}
     };
     const field=D.stls[stlId]&&D.stls[stlId].field;
-    if(field) spots.alley={label:field.spotLabel||'현장 안쪽',sub:field.spotSub||'동료와 직접 둘러본다',icon:'quest'};
-    return spots;
+    if(field) base.alley={label:field.spotLabel||'현장 안쪽',sub:field.spotSub||'동료와 직접 둘러본다',icon:'quest'};
+    const authored=settlementLayout(stlId).facilities||{};
+    return Object.fromEntries(Object.entries(base).map(([id,spot])=>{
+      const local=authored[id]||{};
+      return [id,{...spot,...local,label:local.label||spot.label,sub:local.short||local.sub||spot.sub}];
+    }));
   }
   function settlementCompanion(){
     const id=(S.party||[]).find(pid=>D.comps&&D.comps[pid]);
@@ -2753,6 +2765,16 @@ const UI = (()=>{
     const line=hub.querySelector('[data-stl-walk-line]');
     if(title) title.textContent=copy.title;
     if(line) line.textContent=copy.line;
+    const player=hub.querySelector('.stl-town-player');
+    if(player){
+      player.style.setProperty('--walker-x',`${focus.x||50}%`);
+      player.style.setProperty('--walker-y',`${focus.y||50}%`);
+      player.setAttribute('aria-label',`${focus.label}(으)로 이동 중`);
+    }
+    const place=hub.querySelector('[data-stl-focus-place]');
+    if(place) place.textContent=focus.label;
+    const detail=hub.querySelector('[data-stl-focus-detail]');
+    if(detail) detail.textContent=focus.sub;
     const enter=hub.querySelector('#stl-enter');
     if(enter) enter.innerHTML=`${ICO(focus.icon)}<span>${focus.label}${focus.label==='사람들'?'을':'로'} 들어간다</span>`;
     hub.classList.remove('is-walking');
@@ -2786,35 +2808,59 @@ const UI = (()=>{
   }
   function renderSettlementHub(){
     const stl=D.stls[curStl], body=$('#stl-body'), scene=settlementScene(curStl,'hub');
-    const spots=settlementSpots(curStl), night=G.isNight(), comp=settlementCompanion();
+    const layout=settlementLayout(curStl), spots=settlementSpots(curStl), night=G.isNight(), comp=settlementCompanion();
     const impactCopy=settlementImpactCopy(curStl), impact=impactCopy.impact;
     AMBI.settlement(night?'people':'hub',curStl);
     if(!spots[stlFocus]) stlFocus='market';
     if(night&&stlFocus!=='people') stlFocus='people';
     const focus=spots[stlFocus]||spots.market;
     const walkCopy=settlementWalkCopy(stlFocus);
-    const intent=settlementIntent(stlFocus,night);
     settlementHeader('');
     $('#ovl-stl').classList.add('hub-mode');
-    body.innerHTML=`<div class="stl-hub stl-hub-${curStl}" data-focus="${stlFocus}" data-impact-stage="${impact.stage}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
-      <div class="stl-hub-art" role="img" aria-label="${esc(stl.name)} 풍경"></div>
-      ${settlementImpactLayerHtml(impactCopy)}
-      <div class="stl-hub-place"><b>${esc(stl.name)}</b><small>${night?'장은 잠들었지만 모닥불은 아직 켜져 있다.':esc(stl.desc)}</small>
-        <span class="stl-place-impact ${impact.count?'changed':''}"><i>${impact.count?'현장 변화':'첫 방문'}</i>${esc(impactCopy.title)} · ${esc(impactCopy.line)}</span></div>
-      ${settlementCrowdHtml(stl)}
-      <div class="stl-hotspots" aria-label="${esc(stl.name)}에서 갈 곳">
+    const partyButtons=(S.party||[]).filter(id=>D.comps[id]).map(id=>
+      `<button type="button" class="stl-town-companion" data-town-comp="${id}" aria-label="${esc(D.comps[id].name)}와 대화">
+        ${settlementPortrait(id,'stl-town-companion-face',`${D.comps[id].name} 초상`)}<span>${esc(D.comps[id].name)}</span></button>`).join('');
+    const residentFallback=[[17,58],[83,58],[50,62]];
+    const residents=(stl.npcs||[]).map((id,index)=>{
+      const facility=Object.values(spots).find(spot=>spot.npc===id);
+      const pos=facility?{x:Math.max(9,Math.min(91,(facility.x||50)+(index%2?13:-13))),y:Math.max(18,Math.min(78,(facility.y||52)+15))}
+        :{x:residentFallback[index%residentFallback.length][0],y:residentFallback[index%residentFallback.length][1]};
+      const npc=D.npcs[id];
+      return `<button type="button" class="stl-resident-pin" data-town-npc="${id}" style="--resident-x:${pos.x}%;--resident-y:${pos.y}%"
+        aria-label="${esc(npc.name)}에게 말 걸기">
+        ${settlementPortrait(id,'stl-resident-face',`${npc.name} 초상`)}<span><b>${esc(npc.name)}</b><small>${esc(npc.role)}</small></span></button>`;
+    }).join('');
+    const recruitId=stl.recruit, recruitDef=recruitId&&D.recruitQuests&&D.recruitQuests[recruitId];
+    const recruitEvent=recruitDef&&D.events.find(event=>event.id===recruitDef.meet);
+    const recruitOpen=!!(recruitId&&!G.hasComp(recruitId)&&!S.recruitQ&&recruitEvent&&!S.used.includes(recruitEvent.id));
+    const recruitPos=layout.recruit||{x:50,y:52,label:'할 말이 있는 사람'};
+    const recruitPin=recruitOpen?`<button type="button" class="stl-recruit-pin" data-town-recruit="${recruitId}"
+      style="--resident-x:${recruitPos.x}%;--resident-y:${recruitPos.y}%" aria-label="${esc(recruitDef.name)}에게 말 걸기 · 동행 이야기">
+      ${settlementPortrait(recruitId,'stl-resident-face recruit',`${recruitDef.name} 초상`)}
+      <span><small>처음 보는 사람</small><b>${esc(recruitDef.name)}</b><em>${esc(recruitPos.label)}</em></span></button>`:'';
+    body.innerHTML=`<div class="stl-hub stl-hub-v2 stl-hub-${curStl}" data-focus="${stlFocus}" data-impact-stage="${impact.stage}" ${scene?`style="--stl-scene:url('${scene}')"`:''}>
+      <section class="stl-town-stage" aria-label="${esc(stl.name)}에서 걸어갈 곳">
+        <div class="stl-hub-art" role="img" aria-label="${esc(stl.name)} 풍경"></div>
+        <header class="stl-town-stage-head"><span><small>${esc(layout.eyebrow||'SETTLEMENT WALK')}</small><b>${esc(stl.name)}</b></span>
+          <em>${impact.count?`현장 변화 ${impact.count}/${impact.total}`:'첫 방문'}</em></header>
+        <p class="stl-town-stage-desc">${night?'장은 잠들었지만 모닥불과 사람의 목소리는 남아 있다.':esc(stl.desc)}</p>
+        <div class="stl-hotspots stl-town-world">
         ${Object.entries(spots).map(([id,spot],index)=>{
           const closed=night&&id!=='people';
           return `<button class="stl-hotspot ${id} ${stlFocus===id?'selected':''}" data-stlfocus="${id}"
-            aria-pressed="${stlFocus===id}" ${closed?'disabled':''}>
-            ${curStl==='miryang'?`<span class="stl-hotspot-index">${String(index+1).padStart(2,'0')}</span>`:`<span class="stl-hotspot-icon">${ICO(spot.icon)}</span>`}
-            <span><b>${spot.label}</b><small>${closed?'아침 06:00에 연다':id==='alley'&&impact.count?`현장 변화 ${impact.count}/${impact.total}`:spot.sub}</small></span>
+            style="--spot-x:${spot.x||50}%;--spot-y:${spot.y||50}%" aria-pressed="${stlFocus===id}" ${closed?'disabled':''}>
+            <span class="stl-hotspot-icon">${ICO(spot.icon)}</span><span><small>${String(index+1).padStart(2,'0')} · ${closed?'닫힘':'시설'}</small>
+            <b>${esc(spot.label)}</b></span>
           </button>`;
         }).join('')}
-      </div>
-      ${settlementPartyMarkerHtml(comp)}
-      <div class="stl-van-wrap"><canvas id="stl-van" aria-label="현재 개조 상태의 달구지"></canvas><span>우리 달구지</span></div>
-      <div class="stl-route ${stlFocus}" aria-hidden="true"></div>
+        </div>
+        <div class="stl-town-residents" aria-label="이곳에 있는 사람들">${residents}${recruitPin}</div>
+        <div class="stl-town-player" style="--walker-x:${focus.x||50}%;--walker-y:${focus.y||50}%" role="img" aria-label="${esc(focus.label)}(으)로 이동 중">
+          ${settlementPortrait('me','stl-town-player-face',`${G.myName()} 초상`)}
+          <span>${esc(G.myName())}</span>
+        </div>
+        <div class="stl-town-focus-plate"><small>현재 위치</small><b data-stl-focus-place>${esc(focus.label)}</b><span data-stl-focus-detail>${esc(focus.sub)}</span></div>
+      </section>
       <div class="stl-hub-dock">
         <div class="stl-resource-strip" aria-label="현재 자원">
           <span>${ICO('fuel')}<b>${Math.floor(S.fuel)}</b><small>연료</small></span>
@@ -2824,20 +2870,27 @@ const UI = (()=>{
           <span>${ICO('parts')}<b>${S.items['부품']||0}</b><small>부품</small></span>
         </div>
         <div class="stl-focus-copy">
-          ${settlementPortrait(comp?comp.id:'me','stl-focus-face',`${comp?comp.name:G.myName()} 초상`)}
+          ${settlementPortrait('me','stl-focus-face',`${G.myName()} 초상`)}
           <span><b data-stl-walk-title>${esc(walkCopy.title)}</b><small data-stl-walk-line>${esc(night?'오늘은 쉬고 아침에 움직이자.':walkCopy.line)}</small></span>
         </div>
-        <div class="stl-intent"><small>${esc(intent.label)}</small><span>${esc(intent.text)}</span></div>
+        ${partyButtons?`<div class="stl-town-companions" aria-label="동료를 눌러 대화">${partyButtons}</div>`:''}
         <button class="stl-enter" id="stl-enter">${ICO(focus.icon)}<span>${focus.label}${focus.label==='사람들'?'을':'로'} 들어간다</span></button>
         <button class="stl-return" id="stl-out">${ICO('van')} 달구지로 돌아간다</button>
       </div>
     </div>`;
     body.querySelectorAll('[data-stlfocus]').forEach(b=>b.onclick=()=>updateSettlementFocus(b.dataset.stlfocus));
+    body.querySelectorAll('[data-town-comp]').forEach(b=>b.onclick=()=>showComp(b.dataset.townComp));
+    body.querySelectorAll('[data-town-npc]').forEach(b=>b.onclick=()=>{
+      const id=b.dataset.townNpc;
+      showStl(curStl,'people');
+      requestAnimationFrame(()=>talk(id));
+    });
+    const recruit=body.querySelector('[data-town-recruit]');
+    if(recruit) recruit.onclick=()=>recruitStl(recruit.dataset.townRecruit);
     $('#stl-enter').onclick=()=>showStl(curStl,stlFocus);
     $('#stl-out').onclick=leaveSettlement;
     if(!$('#ovl-stl').classList.contains('on')) openModal('#ovl-stl','[data-stlfocus], #stl-enter');
     else $('#ovl-stl').setAttribute('aria-hidden','false');
-    requestAnimationFrame(()=>{ if(SCENE.drawSettlementVan) SCENE.drawSettlementVan($('#stl-van')); });
   }
   function questBoardHtml(){
     let h='';
@@ -3015,14 +3068,15 @@ const UI = (()=>{
       }
       /* 합류 과제 중인 인물은 달구지에 임시 동행 중이다. 출발지 NPC 목록에
          동시에 남겨 두면 같은 사람이 두 장소에 있는 것처럼 보인다. */
-      if(stl.recruit && !G.hasComp(stl.recruit) && !S.recruitQ
-        && !S.used.includes('kw_recruit')){
+      const localRecruit=stl.recruit&&D.recruitQuests&&D.recruitQuests[stl.recruit];
+      const localRecruitEvent=localRecruit&&localRecruit.meet;
+      if(stl.recruit && localRecruitEvent && !G.hasComp(stl.recruit) && !S.recruitQ
+        && !S.used.includes(localRecruitEvent)){
         const c=D.comps[stl.recruit];
-        const rq=S.recruitQ&&S.recruitQ.id===stl.recruit?S.recruitQ:null;
         h+=`<button class="npc-row" data-recruit="${stl.recruit}">
           <div class="npc-face">${c.face}</div>
           <span><b>${c.name}</b><small>${c.bio}</small></span>
-          <span class="npc-att">${rq?(rq.stage==='ready'?'합류 대화':rq.stage==='follow'?'마주할 일':rq.stage==='road'?'임시 동행':'부탁 진행 중'):'할 말 있음'}</span></button>`;
+          <span class="npc-att">처음 보는 사람</span></button>`;
       }
       h+=`<div class="acts stl-rest-actions">
         <button class="act primary" id="stl-rest"><span>${ICO('bond')}</span><span><b>이곳에서 하룻밤 묵는다</b><small>아침까지 · 피로와 사기 회복 · 차 정비</small></span></button></div>`;
@@ -3323,8 +3377,13 @@ const UI = (()=>{
       if(S.recruitQ.id!==id){ UI.toast('먼저 지금 맡은 합류 부탁을 끝내야 한다'); return; }
       closeOvl('#ovl-stl'); G.openRecruitStep(); return;
     }
-    if(id==='kangwoo' && D.events.find(e=>e.id==='kw_recruit') && !S.used.includes('kw_recruit')){
-      closeOvl('#ovl-stl'); G.openEventById('kw_recruit'); return; }
+    const def=D.recruitQuests&&D.recruitQuests[id], eventId=def&&def.meet;
+    if(eventId && D.events.find(e=>e.id===eventId) && !S.used.includes(eventId)){
+      closeOvl('#ovl-stl');
+      G.openEventById(eventId);
+      return;
+    }
+    UI.toast('이 사람과 나눌 첫 이야기는 이미 끝났다');
   }
   /* ── NPC 대화 ── */
   function talk(nid){
@@ -3451,6 +3510,12 @@ const UI = (()=>{
     card.classList.add('on');
   }
   function renderMapMini(){ $('#map-mini').textContent=`발견 ${S.known.length}/${Object.keys(D.nodes).length} · 서울까지 약 ${G.remainKm()}km`; }
+  function refreshMapSurface(){
+    renderMapMini(); renderMission();
+    /* 닫힌 오버레이에서 부팅한 canvas는 폭·높이가 0이다. Chrome이 새 레이아웃을
+       확정한 두 프레임 뒤 다시 맞추고 한 장을 즉시 그려 빈 CRT가 남지 않게 한다. */
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ MAPR.resize(); MAPR.draw(0); }));
+  }
 
   /* ── STATUS ── */
   let stTab='now';

@@ -1,0 +1,563 @@
+{
+  "states": {
+    "320x578-01-route": {
+      "documentOverflow": false,
+      "controls": 15,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        320,
+        578
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "320x578-02-stay": {
+      "documentOverflow": false,
+      "controls": 12,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        320,
+        578
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "320x578-03-goal": {
+      "documentOverflow": false,
+      "controls": 1,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        320,
+        502
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "320x578-04-map": {
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        320,
+        502
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "320x578-05-bag": {
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        320,
+        502
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "320x578-06-bag-medicine": {
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        320,
+        502
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "390x844-01-route": {
+      "documentOverflow": false,
+      "controls": 15,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "390x844-02-stay": {
+      "documentOverflow": false,
+      "controls": 12,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "390x844-03-goal": {
+      "documentOverflow": false,
+      "controls": 1,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        767
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "390x844-04-map": {
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        767
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "390x844-05-bag": {
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        767
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "390x844-06-bag-medicine": {
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        767
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "390x844-07-city-hub": {
+      "documentOverflow": false,
+      "controls": 13,
+      "escaped": [
+        "재이와 대화",
+        "은수와 대화"
+      ],
+      "horizontalEscaped": [
+        "재이와 대화",
+        "은수와 대화"
+      ],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          390,
+          844,
+          390,
+          390
+        ],
+        ".stl-hub-v2": [
+          0,
+          0,
+          390,
+          844,
+          390,
+          390
+        ],
+        ".stl-town-map": [
+          0,
+          203,
+          390,
+          379,
+          390,
+          390
+        ],
+        ".stl-town-grid": [
+          14,
+          253,
+          362,
+          314,
+          362,
+          362
+        ],
+        ".stl-hub-dock": [
+          0,
+          582,
+          390,
+          262,
+          390,
+          390
+        ]
+      }
+    },
+    "390x844-08-city-market": {
+      "documentOverflow": false,
+      "controls": 13,
+      "escaped": [
+        "산다",
+        "산다",
+        "산다",
+        "산다",
+        "산다",
+        "판다",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [
+        "산다",
+        "산다",
+        "산다",
+        "산다",
+        "산다",
+        "판다",
+        "이 장소를 나와 대구 돔 시장을 다시 둘러본다"
+      ],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          95,
+          390,
+          749,
+          390,
+          390
+        ]
+      }
+    },
+    "390x844-09-city-people": {
+      "documentOverflow": false,
+      "controls": 7,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          95,
+          390,
+          749,
+          390,
+          390
+        ]
+      }
+    },
+    "475x948-01-route": {
+      "documentOverflow": false,
+      "controls": 15,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        475,
+        948
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "475x948-02-stay": {
+      "documentOverflow": false,
+      "controls": 12,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        475,
+        948
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "475x948-03-goal": {
+      "documentOverflow": false,
+      "controls": 1,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        475,
+        855
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "475x948-04-map": {
+      "documentOverflow": false,
+      "controls": 2,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        475,
+        855
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "475x948-05-bag": {
+      "documentOverflow": false,
+      "controls": 6,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        475,
+        855
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "475x948-06-bag-medicine": {
+      "documentOverflow": false,
+      "controls": 5,
+      "escaped": [],
+      "horizontalEscaped": [],
+      "verticalBelowFold": [],
+      "small": [],
+      "rootRect": [
+        0,
+        0,
+        475,
+        855
+      ],
+      "debugRects": {
+        "#stl-body": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "errors": []
+}

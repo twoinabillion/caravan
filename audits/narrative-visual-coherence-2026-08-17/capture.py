@@ -39,7 +39,7 @@ def enter_game(page):
     settle(page)
 
 
-def capture_event(page, event_id, filename, choose=None):
+def capture_event(page, event_id, filename, choose=None, finish=False):
     page.evaluate(
         """eventId => {
           document.querySelector('#ev-wrap')?.classList.remove('on');
@@ -54,6 +54,9 @@ def capture_event(page, event_id, filename, choose=None):
         page.evaluate("UI.finishStory()")
         settle(page)
         page.locator(f'#ev-sheet .choice[data-i="{choose}"]').click()
+        settle(page)
+    if finish:
+        page.evaluate("UI.finishStory()")
         settle(page)
     state = page.evaluate(
         """() => {
@@ -89,6 +92,9 @@ def main():
             "resist_opening": capture_event(page, "resist_reveal", "01-contact-opening.png"),
             "resist_outcome": capture_event(page, "resist_reveal", "02-contact-after-sit.png", 0),
             "library_meeting": capture_event(page, "lib_meet", "03-library-meeting.png"),
+            "library_outcome_last": capture_event(
+                page, "lib_meet", "03b-library-outcome-last.png", 0, True
+            ),
             "parkss_meeting": capture_event(page, "meet_bus", "04-parkss-meeting.png"),
             "sea_cell": capture_event(page, "cell_sea_meet", "05-sea-cell.png"),
             "gangneung_hospital": capture_event(page, "gw_gangneung", "06-gangneung-hospital.png"),

@@ -3,10 +3,10 @@
 /* ═══════════════════ ENGINE ═══════════════════ */
 const SAVE_KEY = 'seoul400_save_v1';
 const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
-const GAME_BUILD = '2026-08-06-quality3';
+const GAME_BUILD = '2026-08-17-settlement-story2';
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
-const SAVE_VERSION = 4;
+const SAVE_VERSION = 5;
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -21,6 +21,17 @@ const G = {};
 /* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
    필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
 G.saveMigrations = {
+  5:(s)=>{   // 2026-08-17: 동료 첫 만남을 정착지 기반 이동 의뢰로 전환
+    s.stopover=null;
+    s.locationContractVersion=2;
+    if(s.recruitQ&&s.recruitQ.stage==='task'){
+      const def=D.recruitQuests&&D.recruitQuests[s.recruitQ.id];
+      const origin=typeof s.recruitQ.metAt==='string'?s.recruitQ.metAt:(s.at||null);
+      const next=def&&def.targets&&def.targets.find(id=>id!==origin&&D.nodes[id]);
+      if(next&&(!s.recruitQ.target||s.recruitQ.target===origin)) s.recruitQ.target=next;
+      s.recruitQ.sameStop=false;
+    }
+  },
   4:(s)=>{   // 2026-08-15: 장소 사건·도로 경유지 계약 도입
     s.stopover=null;
     s.locationContractVersion=1;
@@ -829,15 +840,15 @@ G.remainKm = ()=>{ // rough remaining to seoul via bfs shortest through known gr
 G.startRecruitQuest = (id)=>{
   const def=D.recruitQuests&&D.recruitQuests[id];
   if(!def||G.hasComp(id)||S.recruitQ) return false;
-  /* 도로에서 만난 사람의 다음 일은 무조건 현재 진행 방향에 둔다. 후보 배열의
-     첫 도시를 고르면 반대 방향에서 만났을 때 이미 지난 곳으로 돌아가야 했다. */
-  const target=(S.driving&&S.driving.to)||S.at||def.targets[0];
-  const sameStop=!!(S.stopover&&['meet_scrapyard','meet_hitchhiker'].includes(S.stopover.eventId));
+  /* 첫 만남은 정착지에서 열린다. 실제 과제는 다른 목적지 또는 그 인물이
+     책임지던 정착지 시설에서 따로 시작하며, 같은 이벤트 안에서 연속 해결하지 않는다. */
+  const origin=(S.driving&&S.driving.to)||S.at||def.meetNode||null;
+  const target=(def.targets||[]).find(node=>node!==origin&&D.nodes[node])||origin;
+  const sameStop=false;
   S.recruitQ={id,stage:'task',target,startedDay:S.day,
-    metAt:S.stopover?{...S.stopover}:S.at||null,sameStop};
+    metAt:origin,sameStop,escort:true};
   if(S.driving) S.driving.recruitEscort=id;
-  UI.toast(sameStop?`🤝 ${def.name}의 부탁 — 이 자리에서 바로 돕는다`
-    :`🤝 ${def.name}의 부탁 — ${D.nodes[target].name}`);
+  UI.toast(`🚚 임시 승객 ${def.name} — ${D.nodes[target].name}에서 부탁이 이어진다`);
   G.save();
   return true;
 };

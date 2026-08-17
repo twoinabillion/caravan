@@ -1480,7 +1480,7 @@ D.market = {
 
 /* ── 정착지 ── */
 D.stls = {
-  gwangju: {name:'광주 대인시장', npcs:['geumja','suwan'],
+  gwangju: {name:'광주 대인시장', npcs:['geumja','suwan'], recruit:'leo',
     desc:'호남 최대의 정착지. 시장 골목마다 기름 냄새, 국밥 김, 그리고 오지랖이라는 이름의 복지가 흐른다.',
     walk:{
       market:'국밥 솥의 김과 흥정 소리가 좁은 골목을 가득 메운다.',
@@ -1506,7 +1506,7 @@ D.stls = {
           fx:{flag:'gwangju_receipt_names',note:{type:'세대의 흔적',title:'국밥집 영수증 뒤의 이름',body:'2026년 카드 영수증 뒷면이 143년 동안 피난민의 이름과 귀환 여부를 적는 장부가 되었다.',links:['광주 대인시장','2026년']}}}
       ]},
     trade:[['연료 10L','fuel',10,6],['물 5통','water',5,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5],['부품','item부품',1,7]]},
-  miryang: {name:'밀양 장터', npcs:['sundeok','byungchul','yeongok'],
+  miryang: {name:'밀양 장터', npcs:['sundeok','byungchul','yeongok'], recruit:'minji',
     desc:'천막과 손수레. 닷새장의 리듬으로 사는 사람들. 국수 삶는 김이 오른다.',
     walk:{
       market:'국수 솥의 김 사이로 장꾼들이 물건값과 안부를 함께 묻는다.',
@@ -1565,7 +1565,7 @@ D.stls = {
           fx:{flag:'daegu_ticketbox',note:{type:'세대의 흔적',title:'돔의 좌석 번호',body:'야구장 입장권의 좌석 번호가 시장에서 가족을 다시 찾는 번호표로 남았다.',links:['대구 돔 시장','2026년']}}}
       ]},
     trade:[['연료 10L','fuel',10,5],['물 5통','water',5,1],['식량 1일치','food',1,2],['부품','item부품',1,7],['의약품','item의약품',1,6],['탄약','item탄약',1,5]]},
-  muju:    {name:'무주 터널', npcs:['jaepil','jeomrye'],
+  muju:    {name:'무주 터널', npcs:['jaepil','jeomrye'], recruit:'jaeyi',
     desc:'터널 양쪽을 컨테이너로 막았다. 천장에 매단 수백 개의 촛불이 별자리 같다.',
     walk:{
       market:'말 대신 손가락으로 수량을 세는 물물교환이 촛불 아래서 이어진다.',
@@ -1591,7 +1591,7 @@ D.stls = {
           fx:{flag:'muju_evac_board',note:{type:'세대의 흔적',title:'남쪽 화살표 위의 날짜',body:'터널 대피도의 남쪽 화살표 위에 여러 세대의 서울 이송 날짜가 겹쳐 적혀 있었다.',links:['무주 터널','2026년']}}}
       ]},
     trade:[['물 2통 ⇄ 식량 1','barter_wf',0,0],['식량 2 ⇄ 부품 1','barter_fp',0,0],['의약품 1 ⇄ 식량 3','barter_mf',0,0]]},
-  jeonju:  {name:'전주 서문 시장', npcs:['miyoung','dongsu'],
+  jeonju:  {name:'전주 서문 시장', npcs:['miyoung','dongsu'], recruit:'parkss',
     desc:'가장 사람 사는 냄새가 나는 곳. 어디선가 진짜 콩나물국밥 냄새가 난다.',
     walk:{
       market:'콩나물국밥 냄새를 따라가면 곡식과 천을 파는 좌판이 이어진다.',
@@ -1617,7 +1617,7 @@ D.stls = {
           fx:{flag:'jeonju_coldbag',note:{type:'세대의 흔적',title:'문 앞에 놓인 국밥',body:'2026년 배달 가방이 세대를 지나 아픈 집에 국밥을 나르는 공동 가방으로 쓰였다.',links:['전주 서문 시장','2026년']}}}
       ]},
     trade:[['연료 10L','fuel',10,6],['물 5통','water',5,1],['식량 1일치','food',1,1],['의약품','item의약품',1,5]]},
-  daejeon: {name:'대전 연구단지 코뮌', npcs:['drhan','noah'],
+  daejeon: {name:'대전 연구단지 코뮌', npcs:['drhan','noah'], recruit:'eunsu',
     desc:'연구동 하나에 발전기를 돌려 산다. 화이트보드엔 아직 수식이 남아 있다. 절반은 지워졌다.',
     walk:{
       market:'보급표와 배급 상자가 연구동 로비의 안내판을 대신한다.',
@@ -1671,6 +1671,47 @@ D.stls = {
     trade:[['연료 10L','fuel',10,8],['물 5통','water',5,1],['식량 1일치','food',1,3],['탄약','item탄약',1,6],['부품','item부품',1,8]]},
 };
 
+/* 큰 정착지는 공통 2×2 메뉴가 아니라, 각 장소의 실제 동선 위를 걷는다.
+   퍼센트 좌표는 생성 풍경 위의 안전한 터치 지점이며 시설·주민·합류 인물이
+   같은 공간에 존재하도록 한 장소 계약이다. */
+D.settlementLayouts = {
+  gwangju:{eyebrow:'DAEIN NIGHT MARKET',entry:{x:50,y:88},recruit:{x:50,y:56,label:'모닥불 옆 기타 소리'},facilities:{
+      market:{x:23,y:33,label:'금자의 국밥 골목',short:'국밥·물자·의뢰',npc:'geumja'},
+      garage:{x:75,y:39,label:'발전기 수리 골목',short:'부품·달구지 정비',npc:'suwan'},
+      people:{x:70,y:72,label:'평상 모닥불',short:'금자와 시장 사람들'},
+      alley:{x:27,y:69,label:'공동 솥 안쪽',short:'배급 꾸러미와 발전기'}}},
+  miryang:{eyebrow:'MIRYANG FIVE-DAY MARKET',entry:{x:50,y:88},recruit:{x:54,y:53,label:'부품 천막의 용접 불꽃'},facilities:{
+      market:{x:22,y:34,label:'순덕의 국수 좌판',short:'장날 보급과 의뢰',npc:'sundeok'},
+      garage:{x:76,y:38,label:'병철의 부품 천막',short:'경운기 부품과 정비',npc:'byungchul'},
+      people:{x:72,y:70,label:'장꾼 모닥불',short:'영옥과 장꾼들',npc:'yeongok'},
+      alley:{x:26,y:70,label:'공동 펌프 골목',short:'물통 줄과 천막 안쪽'}}},
+  daegu:{eyebrow:'DAEGU DOME MARKET',entry:{x:50,y:89},recruit:{x:50,y:54,label:'경비탑의 파수꾼'},facilities:{
+      market:{x:24,y:34,label:'돔 중앙 장터',short:'남부 물류와 게시판',npc:'sera'},
+      garage:{x:76,y:42,label:'선수 통로 정비소',short:'용접·연료·달구지',npc:'mansu'},
+      people:{x:72,y:72,label:'전광판 휴게소',short:'경비와 장꾼 교대',npc:'taeho'},
+      alley:{x:27,y:70,label:'관중석 아래 통로',short:'입구선과 전광판 배선'}}},
+  muju:{eyebrow:'MUJU TUNNEL COMMONS',entry:{x:50,y:90},recruit:{x:50,y:54,label:'값이 없는 철제 상자'},facilities:{
+      market:{x:25,y:36,label:'촛불 교환대',short:'말 없는 물물교환',npc:'jeomrye'},
+      garage:{x:75,y:40,label:'축전지 작업대',short:'랜턴과 발전기 수리',npc:'jaepil'},
+      people:{x:70,y:73,label:'터널 안쪽 식탁',short:'뜨거운 물과 이야기'},
+      alley:{x:28,y:72,label:'환기팬 순찰로',short:'촛불과 공기 점검'}}},
+  jeonju:{eyebrow:'JEONJU WEST-GATE MARKET',entry:{x:50,y:89},recruit:{x:50,y:55,label:'기울어진 진료 버스'},facilities:{
+      market:{x:23,y:35,label:'서문 국밥 장터',short:'곡식·천·의뢰',npc:'miyoung'},
+      garage:{x:76,y:39,label:'한옥 처마 정비소',short:'수레축과 부품',npc:'dongsu'},
+      people:{x:70,y:72,label:'공동 우물 마당',short:'물통과 동네 소식'},
+      alley:{x:27,y:70,label:'한옥 뒤뜰',short:'기와와 배달 가방'}}},
+  daejeon:{eyebrow:'DAEJEON RESEARCH COMMUNE',entry:{x:50,y:90},recruit:{x:50,y:53,label:'옥상의 회전 안테나'},facilities:{
+      market:{x:23,y:35,label:'연구동 보급실',short:'배급표와 의뢰',npc:'noah'},
+      garage:{x:76,y:40,label:'축전지 실험대',short:'전력 셀과 달구지',npc:'drhan'},
+      people:{x:70,y:72,label:'화이트보드 휴게실',short:'연구원과 잔류자'},
+      alley:{x:28,y:70,label:'기록 보관실',short:'배포 카드와 옛 장치'}}},
+  suwon:{eyebrow:'SUWON WALLED COMMUNITY',entry:{x:50,y:90},facilities:{
+      market:{x:23,y:36,label:'북문 안쪽 장터',short:'북부 마지막 보급',npc:'hwasun'},
+      garage:{x:76,y:41,label:'마구간 정비소',short:'수레축과 엔진 벨트',npc:'gitae'},
+      people:{x:70,y:73,label:'화살수 모닥불',short:'교대와 북쪽 소식',npc:'deokgu'},
+      alley:{x:28,y:71,label:'북문 성벽 위',short:'망루와 평형추'}}}
+};
+
 /* 정착지를 함께 걸을 때 들리는 동료의 짧은 현장 반응. */
 D.settlementCompanionLines = {
   minji:{
@@ -1717,10 +1758,11 @@ D.nodeBio = {
 };
 
 /* ── 동료 영입 의뢰 ──
-   첫 만남에서 곧장 태우지 않는다. 각자 떠나기 전에 끝내야 할 일을 맡기고,
-   해결 뒤 본인이 합류를 선택한다. target은 만난 도로의 도착지를 우선한다. */
+   첫 만남은 정착지에서 시작한다. 대부분은 임시 승객으로 다른 목적지까지
+   이동하고, 강우처럼 자리를 인계해야 하는 인물은 그 정착지의 실제 시설에서
+   일을 끝낸 뒤 첫 구간을 함께 탄다. 정식 합류는 그 뒤 본인이 선택한다. */
 D.recruitQuests = {
-  minji:{name:'민지', title:'무너지기 전의 목소리',
+  minji:{name:'민지', title:'무너지기 전의 목소리', meet:'meet_scrapyard', meetNode:'miryang',
     targets:['ulsan','gyeongju','pohang','yangsan'], task:'rq_minji_task', follow:'rq_minji_follow', join:'rq_minji_join',
     hint:'폐차장에 남은 민규의 진단기를 꺼낸다',
     roadHint:'정오 신호를 품은 민지가 달구지의 소리를 익힌다',
@@ -1734,7 +1776,7 @@ D.recruitQuests = {
       shield:{label:'달구지를 방패로 세웠다',memory:'적재칸에 남은 긴 긁힌 자국을 민지가 지나칠 때마다 손으로 짚는다.',
         drive:{title:'긁힌 판을 그대로 두지 않기',desc:'민지가 긁힌 판을 뜯어보고, 그 안쪽의 느슨한 브래킷을 새로 조였다. 흉집은 남기되 약한 곳은 덧댐을 댈다.',effect:'차체 +4',van:4}}
     }},
-  parkss:{name:'박 선생', title:'식기 전에 닿아야 할 약',
+  parkss:{name:'박 선생', title:'식기 전에 닿아야 할 약', meet:'meet_bus', meetNode:'jeonju',
     targets:['gumi','gimcheon','sangju'], task:'rq_parkss_task', follow:'rq_parkss_follow', join:'rq_parkss_join',
     hint:'버스의 냉장 약품을 길가 진료소까지 옮긴다',
     roadHint:'빈 왕진 가방을 든 박 선생과 다음 정차까지 간다',
@@ -1748,7 +1790,7 @@ D.recruitQuests = {
       battery:{label:'달구지 전기를 나눴다',memory:'냉장기를 살린 뒤로 실내등 한쪽이 가끔 늦게 켜진다.',
         drive:{title:'전기를 나눈 뒤의 점검',desc:'박 선생이 느슨해진 단자를 짚고 민지에게 배운 대로 절연띠를 다시 감았다.',effect:'차체 +3',van:3}}
     }},
-  leo:{name:'레오', title:'돌아가야 하는 이유',
+  leo:{name:'레오', title:'돌아가야 하는 이유', meet:'meet_hitchhiker', meetNode:'gwangju',
     targets:['jeonju','gwangju','damyang','namwon','suncheon'], task:'rq_leo_task', follow:'rq_leo_follow', join:'rq_leo_join',
     hint:'침수 지하차도에 들어간 보리를 찾는다',
     roadHint:'노래를 멈춘 레오와 보리가 한 구간을 함께 탄다',
@@ -1762,8 +1804,8 @@ D.recruitQuests = {
       lights:{label:'헤드라이트로 길을 냈다',memory:'물을 먹은 전조등 하나가 떨릴 때마다 보리가 귀를 세운다.',
         drive:{title:'한쪽 불빛으로 읽는 길',desc:'레오가 떨리는 전조등 박자에 맞춰 굽은 길을 먼저 불러 주었다.',effect:'이번 주행 연료 소모 -4%',fuel:.96}}
     }},
-  jaeyi:{name:'재이', title:'고철값이 없는 것',
-    targets:['gunsan','mokpo','gimcheon','gumi'], task:'rq_jaeyi_task', follow:'rq_jaeyi_follow', join:'rq_jaeyi_join',
+  jaeyi:{name:'재이', title:'고철값이 없는 것', meet:'jy_recruit', meetNode:'muju',
+    targets:['gimcheon','gumi','gunsan','mokpo'], task:'rq_jaeyi_task', follow:'rq_jaeyi_follow', join:'rq_jaeyi_join',
     hint:'무너진 창고에서 가족의 상자를 꺼낸다',
     roadHint:'가족 상자를 무릎에 안은 재이와 한 구간을 나눈다',
     followHint:'사람의 자리에 값을 매기지 않는다는 걸 보여준다',
@@ -1776,8 +1818,8 @@ D.recruitQuests = {
       hands:{label:'잔해를 손으로 걷었다',memory:'몇 시간을 함께 옮긴 먼지가 아직 장갑 솔기마다 박혀 있다.',
         drive:{title:'장갑 솔기의 작은 부품',desc:'재이가 장갑과 적재칸 구석에서 아직 쓸 수 있는 체결 부품을 골라냈다.',effect:'도착 시 고철 +2',scrap:2}}
     }},
-  eunsu:{name:'은수', title:'내가 켰던 중계기',
-    targets:['daejeon','sejong','cheongju','nonsan'], task:'rq_eunsu_task', follow:'rq_eunsu_follow', join:'rq_eunsu_join',
+  eunsu:{name:'은수', title:'내가 켰던 중계기', meet:'es_recruit', meetNode:'daejeon',
+    targets:['cheongju','sejong','nonsan'], task:'rq_eunsu_task', follow:'rq_eunsu_follow', join:'rq_eunsu_join',
     hint:'추방 좌표를 송신하는 중계기를 끊는다',
     roadHint:'명령이 없는 차 안에서 은수가 처음으로 판단을 연습한다',
     followHint:'수신된 좌표를 함께 읽고 결정의 책임을 나눈다',
@@ -1790,7 +1832,7 @@ D.recruitQuests = {
       burn:{label:'저장 장치까지 태웠다',memory:'우리 위치를 내주고도 잔류자 좌표는 한 줄도 남기지 않았다.',
         drive:{title:'남지 않은 좌표 확인',desc:'은수가 불탄 저장장치의 마지막 송신을 확인해 뒤따르는 신호 하나를 지웠다.',effect:'관측 -1 · 이번 주행 연료 소모 -3%',pursuit:-1,fuel:.97}}
     }},
-  kangwoo:{name:'강우', title:'파수꾼이 떠나는 법',
+  kangwoo:{name:'강우', title:'파수꾼이 떠나는 법', meet:'kw_recruit', meetNode:'daegu',
     targets:['daegu'], task:'rq_kangwoo_task', follow:'rq_kangwoo_follow', join:'rq_kangwoo_join',
     hint:'돔 시장의 후임과 감시 표식을 무력화한다',
     roadHint:'시장을 등진 강우가 무전기와 함께 한 구간을 견딘다',
@@ -2809,29 +2851,29 @@ D.events = [
   {label:'무시하고 간다', out:[{p:1, text:'라디오를 껐다.\n\n껐는데도 그 문장의 간격이 머릿속에서 계속 세어졌다. 여덟 번. 아홉 번.\n\n진짜였으면 어쩌지, 하는 생각은 밤이 되어서야 겨우 잦아들었다.', fx:{moodAll:-4, flag:'bait_seen'}}]},
  ]},
 
-{id:'meet_bus', type:'조우', w:13, priority:1, recruitStart:'parkss', once:true, nearNode:['gumi','gimcheon','sangju'],
- title:'넘어진 버스',
- text:'시외버스가 옆으로 누워 있다. 사고는 오래전인데— 안에서 소리가 난다.\n\n"거기 누구 있어요?! 문이 안 열려요!"\n\n노인의 목소리다.',
+{id:'meet_bus', type:'조우', w:0, noPool:1, priority:1, recruitStart:'parkss', once:true,
+ title:'서문의 진료 버스',
+ text:'전주 서문시장 끝, 기울어진 시외버스 한 대를 진료소로 쓰고 있다. 문 옆에는 오늘 약이 필요한 집 이름이 빼곡하다.\n\n버스 안에서 백발의 남자가 냉장 상자를 닫으며 고개를 든다.\n\n"박 씨요. 약사였소. 사람들은 박 선생이라 불렀고."\n\n그는 달구지의 적재칸보다 먼저 북동쪽 길을 본다. "식기 전에 닿아야 할 약이 있소. 혼자 들고 가기엔 시간이 모자라오."',
  choices:[
-  {label:'구조한다', out:[{p:1, text:'한 시간을 씨름해 문을 비틀어 열었다.\n\n백발의 노인이 약사 가방보다 먼저 작은 냉장 상자를 밀어낸다.\n\n"박 씨요. 약사였소. 사람들은 박 선생이라 불렀고. 나야 걸으면 되오. 그런데 이 약은 식기 전에 동쪽 길가 진료소에 닿아야 해. 열나는 애들이 셋이오."\n\n그는 우리 차보다 냉장 상자를 본다. "거기까지만, 같이 가주겠소?"', fx:{time:60, water:-1, startRecruit:'parkss', note:{type:'인물',title:'박 선생',body:'넘어진 버스에서 구조한 전직 약사. 구조된 순간에도 자기 가방보다 아이들 약부터 밀어냈다.',links:['박 선생']}}}]},
-  {label:'지나간다', out:[{p:1, text:'목소리가 끊길 때까지 라디오 볼륨을 올렸다.\n\n그날 밤 아무도 밥을 다 먹지 못했다.', fx:{moodAll:-8, flag:'left_bus', note:{type:'사건',title:'지나친 버스',body:'문이 안 열린다던 목소리. 우리는 볼륨을 올렸다.'}}}]},
+  {label:'"어디까지 가면 됩니까?"', out:[{p:1, text:'박 선생은 약상자 온도계를 다시 확인하고 구미 쪽 진료소를 지도에 짚었다.\n\n"열나는 아이가 셋이오. 약을 누구에게 줄지 고르는 일은 이미 너무 많이 했소. 이번엔 셋 다 살리고 싶군."\n\n그는 버스를 잠그고 왕진 가방을 멨다. 아직 동료가 아니라, 목적지가 같은 임시 승객의 자리였다.', fx:{startRecruit:'parkss', note:{type:'인물',title:'박 선생',body:'전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 식기 전 약을 옮겨야 한다.',links:['박 선생','전주 서문 시장']}}}]},
+  {label:'오늘은 짐을 더 못 싣는다', out:[{p:1, text:'박 선생은 붙잡지 않았다. 대신 냉장 상자 손잡이를 젖은 천으로 한 번 더 감았다.\n\n"그럼 다른 차를 기다려야지. 약은 사람 사정보다 빨리 식으니까."', fx:{moodAll:-2}}]},
  ]},
 
-{id:'meet_scrapyard', type:'조우', w:14, priority:1, recruitStart:'minji', once:true, nearNode:['ulsan','gyeongju','pohang','yangsan'],
- title:'자동차 무덤',
- text:'공단 옆 폐차장. 수백 대의 차가 탑처럼 쌓여 있다.\n\n그 꼭대기에서 불꽃이 튄다. 용접 불꽃. 사람이다.\n\n"거기 생활차! 잠깐 세워 봐요!" 앳된 목소리가 차 더미를 타고 내려온다. "엔진 소리, 아까부터 이상해요."',
+{id:'meet_scrapyard', type:'조우', w:0, noPool:1, priority:1, recruitStart:'minji', once:true,
+ title:'부품 천막의 정비사',
+ text:'밀양 장터의 부품 천막. 경운기 엔진과 자전거 바퀴 사이에서 용접 불꽃이 짧게 튄다.\n\n고글을 올린 소녀가 달구지가 들어오는 소리를 듣고 먼저 고개를 든다.\n\n"거기 생활차, 공회전 한 번만 더 해봐요. 연료관 쪽에서 새는 소리 나요."\n\n처음 보는 차인데도, 소녀는 인사보다 고장부터 짚었다.',
  choices:[
-  {label:'"…그걸 소리로 알아?"', out:[{p:1, text:'소녀가 차 더미에서 미끄러져 내려온다. 기름때 묻은 작업복에 용접 고글, 열일곱쯤.\n\n"민지. 여기 정비사예요." 민지는 달구지보다 기울어진 차 더미를 먼저 돌아본다.\n\n"오빠가 남긴 진단기가 저 밑에 있어요. 마지막 정오 신호랑 발신 좌표가 거기 저장돼 있고요. 저걸 두고 가면 어디부터 찾아야 하는지도 없어져요."\n\n민지가 달구지의 견인 고리를 두드린다. "혼자 당기면 위에서 다 쏟아져요. 한 번만 손 맞춰 줘요. 차 얘기는 그다음에 하고."', fx:{startRecruit:'minji', note:{type:'인물',title:'민지',body:'폐차장에서 홀로 버틴 정비사. 북쪽의 오빠를 찾고 싶지만, 마지막 진단기를 두고 떠날 수 없다.',links:['민지','민규의 신호']}}}]},
+  {label:'"…그걸 소리로 알아?"', out:[{p:1, text:'"민지. 장날엔 여기 정비를 맡아요."\n\n민지는 느슨한 클램프를 조인 뒤, 천막 기둥에 꽂아 둔 지도를 펼쳤다. 울산 공단 쪽 폐차장에 붉은 원이 그려져 있다.\n\n"오빠가 남긴 진단기가 저기로 넘어갔어요. 마지막 정오 신호랑 발신 좌표가 거기 저장돼 있고요."\n\n그녀가 달구지 견인 고리를 손가락으로 두드린다. "거기까지 태워주면, 차 더미에서 꺼낼 때 제가 손 신호 할게요. 합류 얘기는 그 일을 끝낸 뒤에 해요."', fx:{startRecruit:'minji', note:{type:'인물',title:'민지',body:'밀양 부품 천막의 정비사. 울산 공단 폐차장으로 넘어간 오빠의 진단기를 되찾아야 한다.',links:['민지','민규의 신호','밀양 장터']}}}]},
   {label:'부품만 찾아본다', out:[
-    {p:2, text:'"거기 3열 쌓인 데 아반떼 알터네이터 쓸 만해요!" 위에서 훈수가 날아온다.\n\n덕분에 좋은 부품을 건졌다. 내려온 소녀가 알터네이터를 적재칸에 올리고 손을 내민다.\n\n"민지. 여기 정비사예요. 부품값 대신 부탁 하나만 할게요. 오빠가 남긴 진단기가 저 차 더미 밑에 있어요. 저것까지 꺼내면 서로 빚 없는 걸로 해요."', fx:{item:{'부품':1}, scrap:4, startRecruit:'minji', note:{type:'인물',title:'민지',body:'폐차장 부품을 골라준 정비사. 품삯 대신 차 더미 아래의 진단기를 함께 꺼내 달라고 했다.',links:['민지','민규의 신호']}}},
-    {p:1, text:'혼자 차 틈에 팔을 넣는 순간 위쪽 철판이 미끄러졌다. 소녀가 작업화를 틈에 박아 겨우 멈춰 세운다.\n\n"그렇게 뒤지면 부품보다 손이 먼저 나가요." 소녀가 내 팔을 끌어낸다. "민지. 여기 정비사예요. 부품은 됐고, 저도 혼자 못 꺼내는 게 하나 있어요. 서로 한 번씩 도와요."', fx:{van:-4, startRecruit:'minji', note:{type:'인물',title:'민지',body:'무너지는 차 더미에서 손을 빼준 정비사. 혼자 꺼낼 수 없는 진단기를 함께 구해 달라고 했다.',links:['민지','민규의 신호']}}}]},
+    {p:2, text:'민지는 천막 아래 상자를 셋만 열어 보고도 쓸 만한 알터네이터를 골랐다.\n\n부품을 적재칸에 올린 뒤 울산 공단 지도를 내민다. "부품값 대신 부탁 하나만 할게요. 오빠가 남긴 진단기가 저쪽 폐차장으로 넘어갔어요. 같이 꺼내면 서로 빚 없는 걸로 해요."', fx:{item:{'부품':1}, scrap:4, startRecruit:'minji', note:{type:'인물',title:'민지',body:'밀양 부품 천막에서 부품을 골라준 정비사. 울산 폐차장의 진단기를 함께 꺼내 달라고 했다.',links:['민지','민규의 신호','밀양 장터']}}},
+    {p:1, text:'녹슨 판 사이로 손을 넣는 순간 상자 하나가 기울었다. 민지가 작업화로 받치고 내 팔부터 끌어냈다.\n\n"그렇게 뒤지면 부품보다 손이 먼저 나가요." 그녀가 울산 공단을 지도에 표시했다. "저도 혼자 못 꺼내는 게 하나 있어요. 서로 한 번씩 도와요."', fx:{van:-4, startRecruit:'minji', note:{type:'인물',title:'민지',body:'밀양 장터에서 손을 다치지 않게 막아 준 정비사. 울산 폐차장의 진단기를 되찾아야 한다.',links:['민지','민규의 신호','밀양 장터']}}}]},
  ]},
 
-{id:'meet_hitchhiker', type:'조우', w:14, priority:1, recruitStart:'leo', once:true, night:true, nearNode:['jeonju','gwangju','damyang','namwon','suncheon'],
- title:'밤의 히치하이커',
- text:'헤드라이트에 잡힌 실루엣. 기타 케이스를 멘 남자와, 그 옆에 앉은 개 한 마리.\n\n남자가 엄지를 든다. 개는 꼬리를 흔든다.\n\n이 시국에 밤길에서 엄지를 드는 배짱이라니.',
+{id:'meet_hitchhiker', type:'조우', w:0, noPool:1, priority:1, recruitStart:'leo', once:true,
+ title:'대인시장의 떠돌이 가수',
+ text:'광주 대인시장 평상 모닥불. 기타 케이스를 멘 남자가 장사를 마친 사람들에게 낮은 목소리로 노래한다. 발치에는 붉은 스카프를 맨 개 한 마리.\n\n노래가 끝나자 개가 먼저 달구지 냄새를 맡고 꼬리를 흔든다.\n\n"레오예요. 얘는 보리. 남원 쪽 침수 지하차도에서 아이 목소리가 계속 잡힌다는데, 거기까지 갈 차를 찾고 있어요."',
  choices:[
-  {label:'차를 세운다', out:[{p:1, text:'"레오예요. 얘는 보리—"\n\n소개가 끝나기도 전에 낡은 스피커에서 아이 우는 소리가 흘렀다. 보리가 귀를 세우더니 침수된 지하차도 안으로 뛰어든다.\n\n"보리!" 레오가 기타를 내던지고 물가까지 달려갔다. 검은 물은 허리까지 차 있다.\n\n그가 우리를 돌아본다. 태워달라는 얼굴이 아니다. "줄… 긴 줄 있습니까? 혼자 들어가면 둘 다 못 나와요."', fx:{startRecruit:'leo', note:{type:'인물',title:'레오와 보리',body:'밤길의 가수와 개. 동행 이야기를 꺼내기도 전에 보리가 침수 지하차도로 사라졌다.',links:['레오']}}}]},
+  {label:'"남원까지 같이 갑시다"', out:[{p:1, text:'레오는 기타부터 지붕 끈에 묶고, 보리는 허락도 받기 전에 조수석 발치에 자리를 잡았다.\n\n"지하차도 안에 누가 있는지는 아직 몰라요. 녹음일 수도 있고, 함정일 수도 있고."\n\n그는 웃지 않고 덧붙였다. "그래도 보리가 그 소리를 들으면 들어갈 겁니다. 그러니까 내가 먼저 가야 해요."\n\n둘은 동료가 아니라 구조 현장까지 함께 가는 승객으로 달구지에 올랐다.', fx:{startRecruit:'leo', note:{type:'인물',title:'레오와 보리',body:'광주 대인시장에서 만난 떠돌이 가수와 개. 남원 쪽 침수 지하차도의 목소리를 확인하려 한다.',links:['레오','광주 대인시장']}}}]},
   {label:'개만 태우고 싶다…', out:[{p:1, text:'"…개만요? 저희 세트인데요." 남자가 진지하게 고민하기 시작해서, 그냥 출발했다.\n\n백미러 속에서 개가 오래 이쪽을 봤다.', fx:{moodAll:-2}}]},
  ]},
 
@@ -3343,19 +3385,19 @@ D.events = [
  ]},
 
 /* ───── 영입: 재이 & 은수 ───── */
-{id:'jy_recruit', type:'조우', w:13, priority:1, recruitStart:'jaeyi', once:true, nearNode:['gunsan','mokpo','gimcheon','gumi'],
- title:'리어카를 끄는 아이',
- text:'고물을 산처럼 실은 리어카가 갓길을 간다. 끄는 건 스무 살쯤의 아이.\n\n차를 보더니 리어카를 세우고 팔짱을 낀다.\n\n"그 차, 왼쪽 뒤 판스프링 헐거운 거 알아요? 소리 들리는데. 난 재이예요."\n\n재이는 북쪽 길을 묻다가, 무너진 재활용 창고 쪽을 돌아본다. "갈 순 있는데… 저 안에 우리 집 상자가 깔렸어요. 돈 될 건 하나도 없고요. 그래서 더 내가 꺼내야 해요."',
+{id:'jy_recruit', type:'조우', w:0, noPool:1, priority:1, recruitStart:'jaeyi', once:true,
+ title:'촛불 교환대의 리어카',
+ text:'무주 터널 촛불 교환대. 고물을 산처럼 실은 리어카 한 대가 벽을 차지하고 있다. 주인은 스무 살쯤의 아이. 물건마다 교환값을 붙이면서도 낡은 철제 상자 하나만은 값을 적지 않는다.\n\n아이가 달구지 하부를 보더니 먼저 입을 연다.\n\n"왼쪽 뒤 판스프링 헐거운 거 알아요? 난 재이예요."\n\n그녀는 김천 쪽 무너진 재활용 창고를 지도에 짚었다. "우리 집 상자가 저기 깔렸어요. 돈 될 건 하나도 없고요. 그래서 더 내가 꺼내야 해요."',
  choices:[
-  {label:'"먼저 그 상자부터 꺼내자"', out:[{p:1, text:'재이가 잠깐 우리 차를 본다. 값어치부터 물을 줄 알았다는 얼굴이다.\n\n"철근이 두 겹이에요. 그냥 당기면 지붕째 내려앉아요." 재이가 종이에 도르래 순서를 그린다. "다음 쉼터에서 차를 세워요. 내가 길 안내할게요."\n\n리어카는 아직 지붕에 묶지 않았다. 돌아올 이유가 남아 있으니까.', fx:{startRecruit:'jaeyi', note:{type:'인물',title:'재이',body:'고물의 쓸모를 읽는 수집꾼. 떠나기 전, 값은 없지만 버릴 수 없는 가족 상자를 찾아야 한다.',links:['재이']}}}]},
+  {label:'"김천까지 같이 가자"', out:[{p:1, text:'재이가 잠깐 우리 차를 본다. 값어치부터 물을 줄 알았다는 얼굴이다.\n\n"철근이 두 겹이에요. 그냥 당기면 지붕째 내려앉아요." 재이가 종이에 도르래 순서를 그린다. "창고 앞에서 차를 세워요. 내가 길 안내할게요."\n\n리어카는 터널 창고에 맡기고, 값이 없는 철제 상자 자리만 달구지 안에 비워 두었다.', fx:{startRecruit:'jaeyi', note:{type:'인물',title:'재이',body:'무주 터널에서 만난 수집꾼. 김천 재활용 창고에 깔린 가족 상자를 되찾아야 한다.',links:['재이','무주 터널']}}}]},
   {label:'고물 정보만 산다 (고철 3)', req:{scrap:3}, out:[{p:1, text:'재이가 지도에 폐공단 창고 위치를 찍어줬다. 정보값은 정확했다.\n\n리어카는 다시 북쪽으로 굴러갔다. 저 속도로 언제 도착하려나.', fx:{scrap:-3, item:{'부품':1}}}]},
  ]},
 
-{id:'es_recruit', type:'조우', w:14, priority:1, recruitStart:'eunsu', once:true, nearNode:['daejeon','sejong','cheongju','nonsan'],
- title:'지붕 위의 안테나',
- text:'폐 기지국 지붕에서 여자가 안테나를 돌리고 있다. 수신기 헤드폰을 목에 걸고.\n\n차를 보고도 놀라지 않는다. 오히려 기다렸다는 듯이.\n\n"남쪽 번호판. 서울 방향." 여자가 가리킨 건 하늘의 점 하나다. "천리안 관제센터에서 일했어요. 은수라고 해요."\n\n수신기에서 좌표가 반복된다. 은수의 얼굴이 굳는다. "이 근처 잔류자 좌표예요. 내가 예전에 켠 중계기가 아직도 올리고 있어요. 저걸 놔두고 서울로 가면, 난 또 같은 일을 하는 거예요."',
+{id:'es_recruit', type:'조우', w:0, noPool:1, priority:1, recruitStart:'eunsu', once:true,
+ title:'연구동 옥상의 안테나',
+ text:'대전 연구단지 옥상. 여자가 안테나를 돌리며 아래 화이트보드의 숫자와 수신기 파형을 번갈아 본다. 헤드폰은 목에 걸려 있다.\n\n달구지 번호판을 보자 기다렸다는 듯 말한다.\n\n"남쪽 번호판. 서울 방향. 천리안 관제센터에서 일했어요. 은수라고 해요."\n\n수신기에서 청주 쪽 잔류자 좌표가 반복된다. 은수의 얼굴이 굳는다. "내가 예전에 켠 중계기가 아직 올리고 있어요. 저걸 놔두고 서울로 가면, 난 또 같은 일을 하는 거예요."',
  choices:[
-  {label:'"어떻게 끄면 됩니까?"', out:[{p:1, text:'은수가 처음으로 이쪽을 똑바로 본다.\n\n"혼자서는 안 돼요. 아래 차단기를 당기는 사람과 위에서 루프를 거는 사람이 동시에 움직여야 해요. 틀리면 좌표가 바로 본망으로 넘어가고."\n\n그녀가 장비 가방을 든다. "다음 정차지에서 능선으로 올라가요. 끝내고 나서, 그때 내가 탈 자격이 있는지 물을게요."', fx:{startRecruit:'eunsu', note:{type:'인물',title:'은수',body:'천리안 관제센터의 전직 오퍼레이터. 자신이 켠 중계기가 사람들의 좌표를 송신하는 것을 끝내려 한다.',links:['은수','천리안']}}}]},
+  {label:'"청주까지 같이 갑시다"', out:[{p:1, text:'은수가 처음으로 이쪽을 똑바로 본다.\n\n"혼자서는 안 돼요. 아래 차단기를 당기는 사람과 위에서 루프를 거는 사람이 동시에 움직여야 해요. 틀리면 좌표가 바로 본망으로 넘어가고."\n\n그녀가 연구동에 인계서를 남기고 장비 가방을 든다. "중계기를 끄고 나서, 그때 내가 이 차에 탈 자격이 있는지 물을게요."', fx:{startRecruit:'eunsu', note:{type:'인물',title:'은수',body:'대전 연구단지에서 만난 전직 천리안 오퍼레이터. 청주 중계기의 잔류자 좌표 송신을 끝내려 한다.',links:['은수','천리안','대전 연구단지 코뮌']}}}]},
   {label:'"천리안 쪽 사람은 못 믿어"', out:[{p:1, text:'은수는 화내지 않았다.\n\n"…그 말 들으려고 여러 해를 기다린 것 같네요. 맞아요. 못 믿는 게 정상이에요."\n\n차가 출발할 때까지 여자는 다시 안테나만 돌렸다.', fx:{moodAll:-2}}]},
  ]},
 
@@ -10219,18 +10261,22 @@ D.events = [
    뜻으로 해석돼, 부산의 시장과 대구의 사람까지 이미 떠난 도로 위로 순간이동했다.
    이제 장소 사건은 멈춘 뒤 탐색(node), 실제 경유 지점(waypoint), 순수 도로(road)를
    명시한다. UI는 이 정보를 출발 전에 예고하지 않고, 엔진만 물리적 위치를 지킨다. */
-D.eventLocationVersion = 1;
+D.eventLocationVersion = 2;
 D.eventLocations = {
-  /* 동료 첫 만남 — 민지·박 선생·레오·재이는 실제 도로 경유지, 은수는 청주 현장 */
-  meet_scrapyard:{kind:'waypoint',progress:.58,routes:[
-    ['busan','yangsan'],['yangsan','ulsan'],['ulsan','gyeongju'],['gyeongju','pohang']]},
-  meet_bus:{kind:'waypoint',progress:.52,routes:[['gumi','gimcheon'],['gimcheon','sangju']]},
-  meet_hitchhiker:{kind:'waypoint',progress:.56,routes:[
-    ['namwon','jeonju'],['gwangju','damyang'],['damyang','namwon'],['suncheon','namwon'],
-    ['suncheon','gwangju'],['gwangju','jeonju']]},
-  jy_recruit:{kind:'waypoint',progress:.54,routes:[
-    ['gumi','gimcheon'],['gwangju','mokpo'],['jeonju','gunsan']]},
-  es_recruit:{kind:'node',nodes:['cheongju']},
+  /* 동료 첫 만남은 도로 랜덤 조우가 아니다. 각자가 실제로 살고 일하던
+     정착지의 주민 마커를 눌러 말을 걸어야 시작된다. */
+  meet_scrapyard:{kind:'node',nodes:['miryang']},
+  meet_bus:{kind:'node',nodes:['jeonju']},
+  meet_hitchhiker:{kind:'node',nodes:['gwangju']},
+  jy_recruit:{kind:'node',nodes:['muju']},
+  es_recruit:{kind:'node',nodes:['daejeon']},
+  kw_recruit:{kind:'node',nodes:['daegu']},
+
+  /* 동료의 과거와 실제 사람이 등장하는 개인 서사는 도로 주사위가 아니라
+     해당 장소를 찾아 시간을 써야 열린다. 차 안 잡담만 일반 주행에 남긴다. */
+  pss_daejeon:{kind:'node',nodes:['daejeon']},
+  pss_forgive:{kind:'node',nodes:['suwon']},
+  kw_base:{kind:'node',nodes:['suwon']},
 
   /* 지역의 음식·기억·사람은 그 지역에 멈춰 직접 둘러봤을 때만 만난다. */
   lc_busan_dried:{kind:'node',nodes:['busan','gimhae']},
@@ -10288,13 +10334,8 @@ D.eventLocations = {
   granny_arrive:{kind:'node',nodes:['suwon','pyeongtaek']}
 };
 
-/* 폐차장과 침수 지하차도는 '다음 도시의 일'이 아니다. 첫 만남과 바로 붙은
-   같은 현장이므로, 차가 선 그 자리에서 구조까지 연속 장면으로 해결한다. */
-for(const [eventId,taskId] of [['meet_scrapyard','rq_minji_task'],['meet_hitchhiker','rq_leo_task']]){
-  const event=D.events.find(item=>item.id===eventId);
-  for(const choice of (event&&event.choices)||[]) for(const outcome of choice.out||[])
-    if(outcome.fx&&outcome.fx.startRecruit) outcome.fx.chain=taskId;
-}
+/* 첫 대화와 현장 과제를 연속 모달로 붙이지 않는다. 정착지에서 먼저 만나고,
+   목적지가 다른 현장까지 실제로 함께 이동해야 다음 장면이 열린다. */
 
 /* 동료는 선택지에 붙는 열쇠만이 아니다. 자기 전문과 성격에 따라 먼저
    문제를 발견하고 차를 세운다. 플레이어는 제안을 받거나 다른 방식을 가르친다. */

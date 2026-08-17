@@ -410,6 +410,9 @@ G.startTravel = (to)=>{
   S.driving = {from, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,
     snapshot:{gameMinute:S.day*1440+S.min,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
       van:S.van,fatigue:S.fatigue,pursuit:S.pursuit,build:G.vanBuildProfile().name}};
+  if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.escort){
+    S.driving.recruitEscort=S.recruitQ.id;
+  }
   /* 위치 계약 경유지는 일반 랜덤 슬롯과 별개로 정확한 구간에 예약한다.
      내비게이션에는 표시하지 않고, 그 지점에 실제로 닿았을 때만 드러난다. */
   if(!isBridge) for(const ev of G.waypointEventsFor(from,to)){

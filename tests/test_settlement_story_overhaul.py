@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""Regression contract for spatial cities and settlement-led companion stories."""
+from pathlib import Path
+
+from playwright.sync_api import sync_playwright
+
+
+ROOT = Path(__file__).resolve().parents[1]
+URL = (ROOT / "서울까지400km.html").as_uri()
+SETTLEMENTS = ("gwangju", "miryang", "daegu", "muju", "jeonju", "daejeon", "suwon")
+RECRUITS = {
+    "gwangju": "leo",
+    "miryang": "minji",
+    "daegu": "kangwoo",
+    "muju": "jaeyi",
+    "jeonju": "parkss",
+    "daejeon": "eunsu",
+}
+
+
+def reset_at(page, settlement):
+    page.evaluate(
+        """settlement => {
+          document.querySelectorAll('.ovl.on,.sheet-wrap.on').forEach(node=>node.classList.remove('on'));
+          S.at=settlement; S.party=[]; S.recruitQ=null; S.used=[];
+          S.known=[...new Set([...S.known,settlement])];
+          S.visited=[...new Set([...S.visited,settlement])];
+          UI.showStl(settlement,'hub');
+        }""",
+        settlement,
+    )
+    page.wait_for_timeout(80)
+
+
+with sync_playwright() as playwright:
+    browser = playwright.chromium.launch(channel="chrome")
+    page = browser.new_page(viewport={"width": 390, "height": 844})
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.goto(URL)
+    page.evaluate(
+        """() => {
+          localStorage.clear(); G.newGame('onroad','다온','full');
+          document.querySelectorAll('.scr,.screen').forEach(node=>node.classList.remove('on'));
+          document.querySelector('#scr-game').classList.add('on');
+          document.querySelector('#arrival-scene')?.classList.remove('on');
+          UI.renderAll();
+        }"""
+    )
+
+    data_contract = page.evaluate(
+        """() => Object.entries(D.recruitQuests).map(([id,def])=>{
+          const event=D.events.find(row=>row.id===def.meet), location=D.eventLocations[def.meet];
+          return {id,meet:def.meet,meetNode:def.meetNode,target:def.targets.find(node=>node!==def.meetNode),
+            event:Boolean(event),w:event&&event.w,noPool:Boolean(event&&event.noPool),location};
+        })"""
+    )
+    assert len(data_contract) == 6
+    for row in data_contract:
+        assert row["event"] and row["w"] == 0 and row["noPool"], row
+        assert row["location"]["kind"] == "node", row
+        assert row["location"]["nodes"] == [row["meetNode"]], row
+        assert row["target"] or row["id"] == "kangwoo", row
+        if row["id"] != "kangwoo":
+            assert row["target"] != row["meetNode"], row
+
+    for settlement in SETTLEMENTS:
+        reset_at(page, settlement)
+        assert page.locator(".stl-town-stage").count() == 1
+        assert page.locator(".stl-hotspot").count() == 4
+        assert page.locator(".stl-hotspot").evaluate_all(
+            "nodes => new Set(nodes.map(node=>`${node.style.getPropertyValue('--spot-x')}/${node.style.getPropertyValue('--spot-y')}`)).size === 4"
+        )
+        assert page.locator(".stl-hub-v2").evaluate("node=>node.scrollWidth===node.clientWidth")
+        assert page.locator(".stl-resident-pin").count() == len(
+            page.evaluate("settlement=>D.stls[settlement].npcs", settlement)
+        )
+        if settlement in RECRUITS:
+            assert page.locator(f'[data-town-recruit="{RECRUITS[settlement]}"]').count() == 1
+
+        page.click('[data-stlfocus="market"]')
+        page.wait_for_timeout(450)
+        before = page.locator(".stl-town-player").bounding_box()
+        page.click('[data-stlfocus="garage"]')
+        page.wait_for_timeout(450)
+        after = page.locator(".stl-town-player").bounding_box()
+        assert before and after and abs(before["x"] - after["x"]) > 20, (settlement, before, after)
+        assert page.locator('[data-stlfocus="garage"]').get_attribute("aria-pressed") == "true"
+
+    reset_at(page, "miryang")
+    page.click('[data-town-npc="sundeok"]')
+    page.wait_for_timeout(30)
+    page.click('[data-npc="sundeok"]')
+    assert page.locator(".dlg.talk").count() == 1
+    assert "순덕" in page.locator(".dlg.talk").inner_text()
+
+    reset_at(page, "miryang")
+    page.click('[data-town-recruit="minji"]')
+    assert page.locator("#ev-wrap").get_attribute("aria-hidden") == "false"
+    assert "부품 천막의 정비사" in page.locator("#ev-wrap").inner_text()
+
+    for settlement, recruit in RECRUITS.items():
+        flow = page.evaluate(
+            """({settlement,recruit})=>{
+              S.at=settlement; S.party=[]; S.recruitQ=null; S.driving=null;
+              const started=G.startRecruitQuest(recruit), q={...S.recruitQ};
+              const neighbor=D.edges.find(edge=>edge[0]===settlement||edge[1]===settlement);
+              const to=neighbor[0]===settlement?neighbor[1]:neighbor[0];
+              if(!S.known.includes(to)) S.known.push(to);
+              const travel=G.startTravel(to);
+              return {started,target:q.target,metAt:q.metAt,escort:q.escort,
+                travel,drivingEscort:S.driving&&S.driving.recruitEscort};
+            }""",
+            {"settlement": settlement, "recruit": recruit},
+        )
+        assert flow["started"] and flow["escort"] and flow["metAt"] == settlement, flow
+        if recruit != "kangwoo":
+            assert flow["target"] != settlement, flow
+        assert flow["travel"] and flow["drivingEscort"] == recruit, flow
+
+    browser.close()
+
+assert not errors, errors
+print("✅ 7개 정착지 공간 이동 · 주민 대화 · 6명 정착지 첫 만남 · 타 도시 임시 동행")

@@ -33,6 +33,17 @@
       "imageWidth": 768,
       "imageHeight": 432
     },
+    "library_outcome_last": {
+      "title": "",
+      "sceneKey": "library-bus",
+      "sceneAlt": "책 말리는 사람 · 5번째 장면",
+      "reportText": "결과 · 5 / 5\n책 말리는 사람\n장면\n한별이 웃었다.",
+      "choices": [
+        "길로 돌아가기"
+      ],
+      "imageWidth": 768,
+      "imageHeight": 432
+    },
     "parkss_meeting": {
       "title": "",
       "sceneKey": "recruit-parkss-bus-overturned",
