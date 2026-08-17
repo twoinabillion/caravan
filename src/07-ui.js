@@ -46,6 +46,7 @@ const UI = (()=>{
   let arrivalTimer=0;
   const toastQueue=[];
   let toastActive=false, toastTimer=0;
+  let roadNotice=null;
   const savedMotion=localStorage.getItem('caravan_ui_motion');
   const uiPrefs={
     largeText:localStorage.getItem('caravan_ui_text')==='large',
@@ -1227,6 +1228,53 @@ const UI = (()=>{
   }
   const ICO=(key, fallback)=> D.icons[key]? `<img class="ico" src="${D.icons[key]}" alt="">` : (fallback||'');
   const ITEM_ICO={'부품':'parts','의약품':'meds','탄약':'ammo'};
+  function roadNoticeModel(html,cls=''){
+    const raw=stripTags(html);
+    const body=raw.replace(/^[^\p{L}\p{N}]+/u,'');
+    const driverLevel=body.match(/「([^」]+)」/);
+    if(/운전 숙련|연비|운전자/.test(body)) return {
+      kicker:'DRIVER LOG',title:driverLevel?`운전 숙련 · ${driverLevel[1]}`:'운전 감각이 쌓였다',icon:'perk',tone:'skill',
+      body:/연비·피로|연비와 피로/.test(body)?'연비와 피로 효율이 개선됐다.':'주행 경험이 다음 운전에 반영된다.'
+    };
+    const cases=[
+      {match:/퍼크|습득|상승/,kicker:'SKILL LOG',title:'새로운 감각을 익혔다',icon:'perk',tone:'skill'},
+      {match:/발견|지도에 표시|신호|안테나|도청|좌표/,kicker:'ROUTE LOG',title:'길에서 찾은 것',icon:'quest',tone:'discover'},
+      {match:/유대|동료|동행|탑승|함께|이야기/,kicker:'CREW LOG',title:'동행 기록',icon:'bond',tone:'crew'},
+      {match:/물|식량|연료|고철|부품|의약품|보급/,kicker:'SUPPLY LOG',title:'보급 변화',icon:'parts',tone:'supply'}
+    ];
+    const found=cases.find(item=>item.match.test(body))||{
+      kicker:'ROAD LOG',title:'길 위의 변화',icon:'van',tone:cls==='discover'?'discover':'road'
+    };
+    return {...found,body};
+  }
+  function journeyNoticeHtml(){
+    const notice=roadNotice||{
+      kicker:'ROAD LOG',title:'주행 기록 대기',icon:'van',tone:'quiet',
+      body:'새 변화가 생기면 이 기록판에 남는다.'
+    };
+    const remaining=S&&S.driving?`${Math.max(0,Math.ceil(S.driving.dist-S.driving.gone))}km 남음`:'이동 중';
+    return `<section id="road-notice-slot" class="road-notice-slot ${roadNotice?'has-update':'is-quiet'} tone-${notice.tone}" aria-live="polite" aria-label="여정 기록">
+      <span class="road-notice-medallion" aria-hidden="true">${ICO(notice.icon,'•')}</span>
+      <span class="road-notice-copy"><small>${esc(notice.kicker)}</small><b>${esc(notice.title)}</b><p>${esc(notice.body)}</p></span>
+      <em>${esc(remaining)}</em>
+    </section>`;
+  }
+  function setRoadNotice(html,cls){
+    roadNotice=roadNoticeModel(html,cls);
+    const current=$('#road-notice-slot');
+    if(!current) return;
+    current.outerHTML=journeyNoticeHtml();
+    const updated=$('#road-notice-slot');
+    if(updated){
+      updated.scrollIntoView({block:'nearest',behavior:'auto'});
+      const panel=$('#panel'),dock=$('#dock');
+      if(panel&&dock){
+        const slotBox=updated.getBoundingClientRect(),dockBox=dock.getBoundingClientRect();
+        if(slotBox.bottom>dockBox.top-8) panel.scrollTop+=slotBox.bottom-dockBox.top+8;
+      }
+      if(!uiPrefs.reduceMotion) requestAnimationFrame(()=>updated.classList.add('is-new'));
+    }
+  }
   function routeDurationRange(minutes){
     const low=Math.max(5,Math.floor(minutes*.85/5)*5);
     const high=Math.max(low+5,Math.ceil(minutes*1.2/5)*5);
@@ -1630,7 +1678,7 @@ const UI = (()=>{
           <small>길이 기억하는 선택</small><b>${esc(choiceMemory.eventTitle)}</b></span></div>
         <div class="road-guest-help">${esc(choiceMemory.summary)}</div>
         <div class="road-guest-memory">조금 더 달리면 이 선택이 사람들의 말과 풍경으로 돌아온다.</div>
-      </section>`:'<div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>';
+      </section>`:'';
       const checkMoment=S.driving.checkInMoment;
       const roadCheckIn=S.party.length?`<section class="road-checkin ${checkMoment?'has-moment':''}" aria-label="주행 중 동료와 이야기">
         <div><small>ROAD MOMENT · 이 구간 한 번</small><b>${checkMoment?esc(checkMoment.title):S.driving.checkIn?`${esc(D.comps[S.driving.checkIn].name)}와 나눈 짧은 이야기`:'누구와 이 길을 보낼까?'}</b>${checkMoment?`<p>${esc(checkMoment.text)}</p>`:''}</div>
@@ -1644,6 +1692,8 @@ const UI = (()=>{
           <div id="travelbar"></div>
         </section>
         ${routeCard}
+        <div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>
+        ${journeyNoticeHtml()}
         ${guest}
         ${roadCheckIn}`;
       renderTravelbar();
@@ -1763,11 +1813,12 @@ const UI = (()=>{
   function renderAll(){ renderHud(); renderMission(); renderPanel(); }
 
   /* ── travel hooks ── */
-  function onDepart(){ closeOvl('#ovl-map'); closeOvl('#ovl-stl'); closeOvl('#ovl-local-actions'); renderAll();
+  function onDepart(){ roadNotice=null; closeOvl('#ovl-map'); closeOvl('#ovl-stl'); closeOvl('#ovl-local-actions'); renderAll();
     SND.setDriving(true);
     AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
     journeyConsoleMode='local';
+    roadNotice=null;
     renderAll(); SND.setDriving(false);
     AMBI.arrive(S.at);
     const id=S.at, n=D.nodes[id], portraitKey=D.arrivalScenes&&D.arrivalScenes[id];
@@ -1887,6 +1938,10 @@ const UI = (()=>{
   function toast(html, cls){
     const normalized=String(html||'').trim();
     if(!normalized) return;
+    const severity=String(cls||'').split(/\s+/);
+    const roadBound=screen==='game'&&S&&S.driving&&!modalOpen()
+      &&!severity.some(level=>level==='warn'||level==='danger');
+    if(roadBound){ setRoadNotice(normalized,cls); return; }
     const last=toastQueue[toastQueue.length-1];
     if(last&&last.html===normalized&&last.cls===(cls||'')) return;
     toastQueue.push({html:normalized,cls:cls||''});

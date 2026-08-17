@@ -1,0 +1,665 @@
+{
+  "states": {
+    "320x578-01-intro-opening": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 578,
+        "right": 320,
+        "bottom": 578
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 180,
+        "right": 320,
+        "bottom": 180
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          1280,
+          720
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "320x578-02-intro-dialogue": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 578,
+        "right": 320,
+        "bottom": 578
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 180,
+        "right": 320,
+        "bottom": 180
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          1280,
+          720
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "320x578-03-event-portrait-title": {
+      "root": {
+        "x": 0,
+        "y": 12,
+        "width": 320,
+        "height": 566,
+        "right": 320,
+        "bottom": 578
+      },
+      "title": {
+        "x": 60.7,
+        "y": 226.3,
+        "width": 200.9,
+        "height": 18.5,
+        "right": 261.6,
+        "bottom": 244.8
+      },
+      "report": {
+        "x": 19,
+        "y": 206,
+        "width": 282,
+        "height": 222,
+        "right": 301,
+        "bottom": 428
+      },
+      "art": {
+        "x": 20,
+        "y": 33,
+        "width": 280,
+        "height": 173,
+        "right": 300,
+        "bottom": 206
+      },
+      "titleOffset": {
+        "x": 41.7,
+        "y": 20.3
+      },
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          768,
+          432
+        ],
+        "fit": "cover",
+        "position": "50% 52%"
+      }
+    },
+    "320x578-04-event-narration-title": {
+      "root": {
+        "x": 0,
+        "y": 12,
+        "width": 320,
+        "height": 566,
+        "right": 320,
+        "bottom": 578
+      },
+      "title": {
+        "x": 60.7,
+        "y": 226.3,
+        "width": 200.9,
+        "height": 18.5,
+        "right": 261.6,
+        "bottom": 244.8
+      },
+      "report": {
+        "x": 19,
+        "y": 206,
+        "width": 282,
+        "height": 222,
+        "right": 301,
+        "bottom": 428
+      },
+      "art": {
+        "x": 20,
+        "y": 33,
+        "width": 280,
+        "height": 173,
+        "right": 300,
+        "bottom": 206
+      },
+      "titleOffset": {
+        "x": 41.7,
+        "y": 20.3
+      },
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          768,
+          432
+        ],
+        "fit": "cover",
+        "position": "26% 48%"
+      }
+    },
+    "320x578-05-arrival-landscape": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 578,
+        "right": 320,
+        "bottom": 578
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 14,
+        "y": 52,
+        "width": 292,
+        "height": 164.3,
+        "right": 306,
+        "bottom": 216.3
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          540,
+          900
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "320x578-06-arrival-portrait": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 578,
+        "right": 320,
+        "bottom": 578
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 578,
+        "right": 320,
+        "bottom": 578
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          941,
+          1672
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "390x844-01-intro-opening": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "right": 390,
+        "bottom": 844
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 219.4,
+        "right": 390,
+        "bottom": 219.4
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          1280,
+          720
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "390x844-02-intro-dialogue": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "right": 390,
+        "bottom": 844
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 219.4,
+        "right": 390,
+        "bottom": 219.4
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          1280,
+          720
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "390x844-03-event-portrait-title": {
+      "root": {
+        "x": 0,
+        "y": 12,
+        "width": 390,
+        "height": 832,
+        "right": 390,
+        "bottom": 844
+      },
+      "title": {
+        "x": 71,
+        "y": 311.2,
+        "width": 250.8,
+        "height": 20.6,
+        "right": 321.8,
+        "bottom": 331.8
+      },
+      "report": {
+        "x": 19,
+        "y": 285.9,
+        "width": 352,
+        "height": 408.1,
+        "right": 371,
+        "bottom": 694
+      },
+      "art": {
+        "x": 20,
+        "y": 33,
+        "width": 350,
+        "height": 252.9,
+        "right": 370,
+        "bottom": 285.9
+      },
+      "titleOffset": {
+        "x": 52,
+        "y": 25.3
+      },
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          768,
+          432
+        ],
+        "fit": "cover",
+        "position": "50% 52%"
+      }
+    },
+    "390x844-04-event-narration-title": {
+      "root": {
+        "x": 0,
+        "y": 12,
+        "width": 390,
+        "height": 832,
+        "right": 390,
+        "bottom": 844
+      },
+      "title": {
+        "x": 71,
+        "y": 311.2,
+        "width": 250.8,
+        "height": 20.6,
+        "right": 321.8,
+        "bottom": 331.8
+      },
+      "report": {
+        "x": 19,
+        "y": 285.9,
+        "width": 352,
+        "height": 408.1,
+        "right": 371,
+        "bottom": 694
+      },
+      "art": {
+        "x": 20,
+        "y": 33,
+        "width": 350,
+        "height": 252.9,
+        "right": 370,
+        "bottom": 285.9
+      },
+      "titleOffset": {
+        "x": 52,
+        "y": 25.3
+      },
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          768,
+          432
+        ],
+        "fit": "cover",
+        "position": "26% 48%"
+      }
+    },
+    "390x844-05-arrival-landscape": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "right": 390,
+        "bottom": 844
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 14,
+        "y": 76,
+        "width": 362,
+        "height": 203.6,
+        "right": 376,
+        "bottom": 279.6
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          540,
+          900
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "390x844-06-arrival-portrait": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "right": 390,
+        "bottom": 844
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "right": 390,
+        "bottom": 844
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          941,
+          1672
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "475x948-01-intro-opening": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 948,
+        "right": 475,
+        "bottom": 948
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 267.2,
+        "right": 475,
+        "bottom": 267.2
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          1280,
+          720
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "475x948-02-intro-dialogue": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 948,
+        "right": 475,
+        "bottom": 948
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 267.2,
+        "right": 475,
+        "bottom": 267.2
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          1280,
+          720
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "475x948-03-event-portrait-title": {
+      "root": {
+        "x": 0,
+        "y": 12,
+        "width": 475,
+        "height": 936,
+        "right": 475,
+        "bottom": 948
+      },
+      "title": {
+        "x": 85,
+        "y": 414.8,
+        "width": 308.5,
+        "height": 24.4,
+        "right": 393.5,
+        "bottom": 439.1
+      },
+      "report": {
+        "x": 21,
+        "y": 381,
+        "width": 433,
+        "height": 377,
+        "right": 454,
+        "bottom": 758
+      },
+      "art": {
+        "x": 22,
+        "y": 33,
+        "width": 431,
+        "height": 348,
+        "right": 453,
+        "bottom": 381
+      },
+      "titleOffset": {
+        "x": 64,
+        "y": 33.8
+      },
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          768,
+          432
+        ],
+        "fit": "cover",
+        "position": "50% 52%"
+      }
+    },
+    "475x948-04-event-narration-title": {
+      "root": {
+        "x": 0,
+        "y": 12,
+        "width": 475,
+        "height": 936,
+        "right": 475,
+        "bottom": 948
+      },
+      "title": {
+        "x": 85,
+        "y": 414.8,
+        "width": 308.5,
+        "height": 24.4,
+        "right": 393.5,
+        "bottom": 439.1
+      },
+      "report": {
+        "x": 21,
+        "y": 381,
+        "width": 433,
+        "height": 377,
+        "right": 454,
+        "bottom": 758
+      },
+      "art": {
+        "x": 22,
+        "y": 33,
+        "width": 431,
+        "height": 348,
+        "right": 453,
+        "bottom": 381
+      },
+      "titleOffset": {
+        "x": 64,
+        "y": 33.8
+      },
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          768,
+          432
+        ],
+        "fit": "cover",
+        "position": "26% 48%"
+      }
+    },
+    "475x948-05-arrival-landscape": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 948,
+        "right": 475,
+        "bottom": 948
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 14,
+        "y": 85.3,
+        "width": 447,
+        "height": 251.4,
+        "right": 461,
+        "bottom": 336.8
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          540,
+          900
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    },
+    "475x948-06-arrival-portrait": {
+      "root": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 948,
+        "right": 475,
+        "bottom": 948
+      },
+      "title": null,
+      "report": null,
+      "art": {
+        "x": 0,
+        "y": 0,
+        "width": 475,
+        "height": 948,
+        "right": 475,
+        "bottom": 948
+      },
+      "titleOffset": null,
+      "overflow": false,
+      "escaped": [],
+      "image": {
+        "natural": [
+          941,
+          1672
+        ],
+        "fit": "cover",
+        "position": "50% 50%"
+      }
+    }
+  },
+  "errors": []
+}

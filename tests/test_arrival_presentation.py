@@ -61,10 +61,12 @@ with sync_playwright() as playwright:
           UI.toast('🤝 민지의 부탁을 진행할 수 있다');
           UI.toast('피로도 +7 · 고철 +2');
           const image=document.querySelector('#arrival-scene img');
+          const imageBox=image?.getBoundingClientRect();
           const copy=document.querySelector('.arrival-copy').getBoundingClientRect();
           const toast=document.querySelector('#toasts .toast').getBoundingClientRect();
           return {
             image:Boolean(image),src:image?.src||'',alt:image?.alt||'',fallback:Boolean(document.querySelector('.arrival-fallback')),
+            imageHeight:imageBox?.height||0,
             toastCount:document.querySelectorAll('#toasts .toast').length,
             toastText:document.querySelector('#toasts .toast')?.textContent||'',
             separated:toast.bottom < copy.top
@@ -76,6 +78,8 @@ with sync_playwright() as playwright:
           str(presentation))
     check("도착 풍경 대체 텍스트가 장소명을 포함", "양산 고가차도" in presentation["alt"],
           presentation["alt"])
+    check("가로 도착 풍경도 화면 높이 62% 이상 크게 표시", presentation["imageHeight"] >= 844 * .62,
+          str(presentation))
     check("알림은 한 번에 하나만 같은 위치에 표시", presentation["toastCount"] == 1 and
           "민지의 부탁" in presentation["toastText"], str(presentation))
     check("상단 알림과 하단 도착 정보가 겹치지 않음", presentation["separated"], str(presentation))

@@ -89,6 +89,7 @@ const uiAssetPaths = {
   STAY_ICON_CAMP:{path:'assets/ui/stay-icon-camp-v1.webp', mime:'image/webp'},
   STAY_ICON_REPAIR:{path:'assets/ui/stay-icon-repair-v1.webp', mime:'image/webp'},
   STAY_ICON_RADIO:{path:'assets/ui/stay-icon-radio-v1.webp', mime:'image/webp'},
+  ROAD_JOURNEY_LOG:{path:'assets/ui/road-journey-log-panel-v1.webp', mime:'image/webp'},
   EVENT_FIELD_REPORT:{path:'assets/ui/event-field-report-panel-v2.webp', mime:'image/webp'},
   EVENT_FIELD_REPORT_TALL:{path:'assets/ui/event-field-report-panel-tall-v1.webp', mime:'image/webp'},
   EVENT_RESULT_TICKET:{path:'assets/ui/event-result-ticket-v1.webp', mime:'image/webp'},

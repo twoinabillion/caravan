@@ -128,7 +128,7 @@ def check_viewport(playwright, width, height):
         assert not result["avatarProseOverlap"], (width, height, event_id, result)
         assert not result["avatarSpeakerOverlap"], (width, height, event_id, result)
         if result["hasPortrait"]:
-            assert result["titlePaperRatio"] <= 0.18, (width, height, event_id, result)
+            assert 0.09 <= result["titlePaperRatio"] <= 0.15, (width, height, event_id, result)
             assert result["avatarPaperRatio"] <= 0.14, (width, height, event_id, result)
             assert result["titleBeforeProse"], (width, height, event_id, result)
         if event_id == "trace_consent_archive":

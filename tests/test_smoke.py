@@ -106,15 +106,23 @@ with sync_playwright() as p:
     intro_layout = pg.evaluate('''() => {
       const book=document.querySelector('#intro-book').getBoundingClientRect();
       const app=document.querySelector('#app').getBoundingClientRect();
+      const sound=document.querySelector('#early-sound').getBoundingClientRect();
+      const auto=document.querySelector('#intro-auto').getBoundingClientRect();
+      const visual=document.querySelector('#intro-visual').getBoundingClientRect();
       const css=getComputedStyle(document.querySelector('#intro-book'));
+      const pageCss=getComputedStyle(document.querySelector('#intro-page'));
       return {bookW:book.width,bookH:book.height,appW:app.width,appH:app.height,top:book.top-app.top,
-        border:css.borderTopWidth,radius:css.borderRadius};
+        border:css.borderTopWidth,radius:css.borderRadius,visualH:visual.height,
+        paper:pageCss.backgroundImage!=='none',controlsClear:sound.right<=auto.left-4};
     }''')
     check('인트로 전체 화면·카드 프레임 제거',
           abs(intro_layout['bookW']-intro_layout['appW']) < 1 and
           abs(intro_layout['bookH']-intro_layout['appH']) < 1 and
           abs(intro_layout['top']) < 1 and intro_layout['border'] == '0px' and
           intro_layout['radius'] == '0px', str(intro_layout))
+    check('인트로 조작부 비중복·큰 장면·물성 기록지',
+          intro_layout['controlsClear'] and intro_layout['visualH'] >= 290 and intro_layout['paper'],
+          str(intro_layout))
     pg.click('#scr-intro'); pg.wait_for_timeout(120)
     child_turn = pg.evaluate('''() => ({
       label:document.querySelector('#intro-txt .chat-name')?.textContent||'',
@@ -131,17 +139,17 @@ with sync_playwright() as p:
       lanes:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.dataset.side),
       narration:document.querySelectorAll('#intro-txt .story-narration').length,
       order:[...document.querySelectorAll('#intro-txt [data-story-entry]')].map(x=>x.dataset.kind),
-      narrationW:document.querySelector('#intro-txt .story-narration')?.getBoundingClientRect().width||0,
+      visibleEntries:[...document.querySelectorAll('#intro-txt [data-story-entry]')].filter(x=>getComputedStyle(x).display!=='none').length,
       transcriptW:document.querySelector('#intro-txt .story-transcript')?.getBoundingClientRect().width||0
     })''')
     check('사람 대화는 채팅처럼 누적', intro_chat['count'] == 2 and
           intro_chat['names'] == ['테스터 · 8살','할아버지'] and
           intro_chat['sides'] == ['mine','other'] and
           intro_chat['lanes'] == ['right','left'], str(intro_chat))
-    check('내레이션은 전체 폭으로 남고 채팅을 지우지 않음',
+    check('인트로 기록은 보존하되 최근 두 턴만 화면에 표시',
           intro_chat['narration'] == 1 and
           intro_chat['order'] == ['narration','dialogue','dialogue'] and
-          intro_chat['narrationW'] >= intro_chat['transcriptW'] - 1, str(intro_chat))
+          intro_chat['visibleEntries'] == 2 and intro_chat['transcriptW'] > 0, str(intro_chat))
     for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 2')):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
@@ -277,6 +285,24 @@ with sync_playwright() as p:
           layout['thoughtText'].endswith('속말 테스트') and layout['thoughtLabel'] == '생각', str(layout))
     check('위치·인원 한 줄 요약, 자원 중복 제거', layout['contextRail'] and
           layout['legacyParty'] and layout['missionNoDuplicate'], str(layout))
+    road_notice = pg.evaluate('''() => {
+      UI.clearToasts();
+      S.driving={from:'busan',to:'yangsan',dist:35,gone:8,road:'normal',slots:[],si:0,eventCount:0};
+      UI.renderAll();
+      UI.toast('<span class="ic">🧑‍✈️</span>운전 숙련 상승 — 「노련한 운전자」 (연비·피로 개선)','discover');
+      const slot=document.querySelector('#road-notice-slot');
+      const box=slot.getBoundingClientRect(),panel=document.querySelector('#panel').getBoundingClientRect();
+      const dock=document.querySelector('#dock').getBoundingClientRect();
+      const out={slot:Boolean(slot),floating:document.querySelectorAll('#toasts .toast').length,
+        title:slot?.querySelector('b')?.textContent||'',body:slot?.querySelector('p')?.textContent||'',
+        visible:box.top>=panel.top-1&&box.bottom<=dock.top+1,background:getComputedStyle(slot).backgroundImage};
+      S.driving=null; UI.renderAll();
+      return out;
+    }''')
+    check('주행 일반 알림은 달구지를 가리지 않고 여정 기록판에 표시',
+          road_notice['slot'] and road_notice['floating'] == 0 and road_notice['visible'] and
+          '노련한 운전자' in road_notice['title'] and '연비와 피로' in road_notice['body'] and
+          road_notice['background'] != 'none', str(road_notice))
     context_nav = pg.evaluate('''() => {
       document.querySelector('.context-location').click();
       const map=document.querySelector('#ovl-map').classList.contains('on');
@@ -945,7 +971,7 @@ with sync_playwright() as p:
       const landscapeArt=landscapeArrival.querySelector('.arrival-art');
       const landscapeRect=landscapeArt.getBoundingClientRect();
       out.arrivalLandscapeFrame=landscapeArrival.classList.contains('arrival-landscape') &&
-        landscapeRect.width>250 && Math.abs(landscapeRect.width/landscapeRect.height-16/9)<.04;
+        landscapeRect.width>250 && landscapeRect.height>=innerHeight*.62;
       landscapeArrival.classList.remove('on');
       const roadIds=['roadbeat_300_plate','roadbeat_200_archive','roadbeat_100_divide','roadbeat_50_courtesy'];
       S.used=S.used.filter(id=>!roadIds.includes(id)); S.at='daejeon'; S.driving=null;
@@ -1281,7 +1307,7 @@ with sync_playwright() as p:
     check('실제 남북·동서 위치관계 반영', r4['geoOrder'], str(r4))
     check('도착지 58곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 58 and r4['eventSceneCount'] >= 36, str(r4))
     check('대구 도착은 세로 전용 고해상도 장면', r4['arrivalScene'] and r4['arrivalPortraitScene'], str(r4))
-    check('가로 도착 원본은 선명한 16:9 프레임으로 보호', r4['arrivalLandscapeFrame'], str(r4))
+    check('가로 도착 원본은 화면 높이 62% 이상 큰 장면으로 표시', r4['arrivalLandscapeFrame'], str(r4))
     check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-17T14:12:39.397Z",
+  "generatedAt": "2026-08-17T15:10:52.518Z",
   "html": {
-    "bytes": 36814158,
+    "bytes": 37523252,
     "warnBytes": 32000000,
     "maxBytes": 39000000
   },
   "embedded": {
-    "files": 365,
-    "bytes": 21865671,
+    "files": 366,
+    "bytes": 22174879,
     "categories": {
       "audio": {
         "files": 45,
@@ -20,9 +20,9 @@
         "encodedBytes": 13567280
       },
       "ui": {
-        "files": 27,
-        "bytes": 1308842,
-        "encodedBytes": 1745164
+        "files": 28,
+        "bytes": 1618050,
+        "encodedBytes": 2157444
       },
       "portrait": {
         "files": 47,
@@ -79,6 +79,12 @@
       "mime": "image/webp",
       "bytes": 367382,
       "encodedBytes": 489844
+    },
+    {
+      "path": "assets/ui/road-journey-log-panel-v1.webp",
+      "mime": "image/webp",
+      "bytes": 309208,
+      "encodedBytes": 412280
     },
     {
       "path": "assets/ui/event-result-ticket-v1.webp",
@@ -145,12 +151,6 @@
       "mime": "image/jpeg",
       "bytes": 173117,
       "encodedBytes": 230824
-    },
-    {
-      "path": "assets/intro/13-dashboard-module.jpg",
-      "mime": "image/jpeg",
-      "bytes": 169135,
-      "encodedBytes": 225516
     }
   ]
 }
