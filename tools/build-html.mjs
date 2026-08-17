@@ -93,13 +93,21 @@ const uiAssetPaths = {
   EVENT_FIELD_REPORT_TALL:{path:'assets/ui/event-field-report-panel-tall-v1.webp', mime:'image/webp'},
   EVENT_RESULT_TICKET:{path:'assets/ui/event-result-ticket-v1.webp', mime:'image/webp'},
   EVENT_LEDGER_BUTTON:{path:'assets/ui/event-ledger-button-v1.webp', mime:'image/webp'},
-  EVENT_CHOICE_LEDGER:{path:'assets/ui/event-choice-ledger-slip-v1.webp', mime:'image/webp'}
+  EVENT_CHOICE_LEDGER:{path:'assets/ui/event-choice-ledger-slip-v1.webp', mime:'image/webp'},
+  TOWN_MAP_FRAME:{path:'assets/ui/settlement/town-map-frame-v1.webp', mime:'image/webp'},
+  TOWN_BUTTON_NORMAL:{path:'assets/ui/settlement/town-button-normal-v1.webp', mime:'image/webp'},
+  TOWN_BUTTON_SELECTED:{path:'assets/ui/settlement/town-button-selected-v1.webp', mime:'image/webp'},
+  TOWN_BUTTON_DISABLED:{path:'assets/ui/settlement/town-button-disabled-v1.webp', mime:'image/webp'},
+  TOWN_ICON_BEZEL:{path:'assets/ui/settlement/town-icon-bezel-v1.webp', mime:'image/webp'}
 };
 const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key => {
   const asset=uiAssetPaths[key];
   if(!asset) throw new Error(`알 수 없는 UI 자산: ${key}`);
   return dataUri(asset.path,asset.mime);
 }, 'UI');
+
+const settlementSprites = replace(read('src/05-scene.js'), /__TOWN_WORLD_SPRITE_ATLAS__/g,
+  () => dataUri('assets/ui/settlement/town-world-sprite-atlas-v3.webp', 'image/webp'), '정착지 스프라이트');
 
 const portraits = replace(read('src/03b-portraits.js'), /__PORTRAIT_([a-z0-9_]+)__/g,
   key => dataUri(`assets/portraits/${key}.png`, 'image/png'), '주연 초상');
@@ -124,7 +132,8 @@ const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__
 
 const chunks = [
   styles.result, ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
-  title.result, audio.result, npc.result, upgrades.result, ...after.map(read)
+  title.result, audio.result, npc.result, upgrades.result,
+  ...after.map(relative => relative==='src/05-scene.js'?settlementSprites.result:read(relative))
 ];
 const html = chunks.join('\n');
 const htmlBytes = Buffer.byteLength(html);

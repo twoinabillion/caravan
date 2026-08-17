@@ -32,6 +32,13 @@ def reset_at(page, settlement):
     page.wait_for_timeout(80)
 
 
+def click_world(page, point):
+    canvas = page.locator("#stl-town-canvas")
+    box = canvas.bounding_box()
+    assert box
+    canvas.click(position={"x": point["x"] / 236 * box["width"], "y": point["y"] / 306 * box["height"]})
+
+
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(channel="chrome")
     page = browser.new_page(viewport={"width": 390, "height": 844})
@@ -45,6 +52,8 @@ with sync_playwright() as playwright:
           document.querySelector('#scr-game').classList.add('on');
           document.querySelector('#arrival-scene')?.classList.remove('on');
           UI.renderAll();
+          clearInterval(window.__settlementTestLoop);
+          window.__settlementTestLoop=setInterval(()=>SCENE.drawSettlement(.05),50);
         }"""
     )
 
@@ -67,35 +76,35 @@ with sync_playwright() as playwright:
     for settlement in SETTLEMENTS:
         reset_at(page, settlement)
         assert page.locator(".stl-town-stage").count() == 1
+        assert page.locator("#stl-town-canvas").count() == 1
         assert page.locator(".stl-hotspot").count() == 4
-        assert page.locator(".stl-hotspot").evaluate_all(
-            "nodes => new Set(nodes.map(node=>`${node.style.getPropertyValue('--spot-x')}/${node.style.getPropertyValue('--spot-y')}`)).size === 4"
-        )
         assert page.locator(".stl-hub-v2").evaluate("node=>node.scrollWidth===node.clientWidth")
-        assert page.locator(".stl-resident-pin").count() == len(
-            page.evaluate("settlement=>D.stls[settlement].npcs", settlement)
-        )
+        state = page.evaluate("SCENE.settlementState()")
+        assert state["id"] == settlement and len(state["facilities"]) == 4
+        assert len(state["residents"]) == len(page.evaluate("settlement=>D.stls[settlement].npcs", settlement))
         if settlement in RECRUITS:
-            assert page.locator(f'[data-town-recruit="{RECRUITS[settlement]}"]').count() == 1
+            assert state["recruit"]["id"] == RECRUITS[settlement]
 
         page.click('[data-stlfocus="market"]')
-        page.wait_for_timeout(450)
-        before = page.locator(".stl-town-player").bounding_box()
+        before = page.evaluate("SCENE.settlementState().target")
         page.click('[data-stlfocus="garage"]')
-        page.wait_for_timeout(450)
-        after = page.locator(".stl-town-player").bounding_box()
-        assert before and after and abs(before["x"] - after["x"]) > 20, (settlement, before, after)
+        after = page.evaluate("SCENE.settlementState().target")
+        assert abs(before["x"] - after["x"]) > 50, (settlement, before, after)
         assert page.locator('[data-stlfocus="garage"]').get_attribute("aria-pressed") == "true"
 
     reset_at(page, "miryang")
-    page.click('[data-town-npc="sundeok"]')
-    page.wait_for_timeout(30)
+    state = page.evaluate("SCENE.settlementState()")
+    sundeok = next(person for person in state["residents"] if person["id"] == "sundeok")
+    click_world(page, sundeok["p"])
+    page.wait_for_timeout(2200)
     page.click('[data-npc="sundeok"]')
     assert page.locator(".dlg.talk").count() == 1
     assert "순덕" in page.locator(".dlg.talk").inner_text()
 
     reset_at(page, "miryang")
-    page.click('[data-town-recruit="minji"]')
+    state = page.evaluate("SCENE.settlementState()")
+    click_world(page, state["recruit"]["p"])
+    page.wait_for_timeout(2200)
     assert page.locator("#ev-wrap").get_attribute("aria-hidden") == "false"
     assert "부품 천막의 정비사" in page.locator("#ev-wrap").inner_text()
 

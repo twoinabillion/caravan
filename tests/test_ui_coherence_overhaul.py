@@ -93,7 +93,12 @@ with sync_playwright() as playwright:
     page.click('[data-stlfocus="garage"]')
     assert page.locator(".stl-hub-v2").get_attribute("data-focus") == "garage"
     assert page.locator('[data-stlfocus="garage"]').get_attribute("aria-pressed") == "true"
-    page.click('[data-town-comp="minji"]')
+    page.evaluate("clearInterval(window.__uiTownLoop);window.__uiTownLoop=setInterval(()=>SCENE.drawSettlement(.05),50)")
+    companion = page.evaluate("SCENE.settlementState().companions.find(person=>person.id==='minji').p")
+    canvas = page.locator("#stl-town-canvas")
+    canvas_box = canvas.bounding_box()
+    canvas.click(position={"x": companion["x"] / 236 * canvas_box["width"], "y": companion["y"] / 306 * canvas_box["height"]})
+    page.wait_for_timeout(700)
     assert page.locator("#ev-wrap").get_attribute("aria-hidden") == "false"
 
     browser.close()

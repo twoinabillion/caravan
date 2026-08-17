@@ -1712,6 +1712,26 @@ D.settlementLayouts = {
       alley:{x:28,y:71,label:'북문 성벽 위',short:'망루와 평형추'}}}
 };
 
+/* 정착지 내부는 배경 이미지 위 핫스팟이 아니라 주행 화면과 같은 코드 기반
+   저해상도 Canvas 월드다. kind는 건물·바닥·조명·생활 소품을, palette는
+   도시 고유의 야간 색과 강조색을 결정한다. 사진은 도착 시네마틱에만 쓴다. */
+D.settlementWorlds = {
+  gwangju:{kind:'night-market',sign:'대인시장',crowd:12,
+    palette:{ground:'#30261d',path:'#564537',wall:'#171918',roof:'#653d2d',light:'#f1ad55',accent:'#d87542'}},
+  miryang:{kind:'five-day-market',sign:'밀양 장터',crowd:10,
+    palette:{ground:'#493a25',path:'#6c5b3b',wall:'#272419',roof:'#776342',light:'#f0c679',accent:'#b85b35'}},
+  daegu:{kind:'dome',sign:'대구 돔',crowd:16,
+    palette:{ground:'#242628',path:'#46494a',wall:'#111416',roof:'#34383a',light:'#e5a54c',accent:'#b94c3e'}},
+  muju:{kind:'tunnel',sign:'무주 터널',crowd:7,
+    palette:{ground:'#24231f',path:'#49463e',wall:'#111214',roof:'#292a2a',light:'#e6bd73',accent:'#6c8d86'}},
+  jeonju:{kind:'hanok-market',sign:'서문 시장',crowd:10,
+    palette:{ground:'#4b4030',path:'#766854',wall:'#2c2922',roof:'#413b34',light:'#edba72',accent:'#9d5941'}},
+  daejeon:{kind:'research',sign:'연구단지',crowd:8,
+    palette:{ground:'#273036',path:'#40515a',wall:'#171e24',roof:'#33414a',light:'#77c5bd',accent:'#d69d4e'}},
+  suwon:{kind:'fortress',sign:'수원 북문',crowd:9,
+    palette:{ground:'#3b392f',path:'#635f4d',wall:'#22231f',roof:'#3f433b',light:'#e5b568',accent:'#8a6250'}}
+};
+
 /* 정착지를 함께 걸을 때 들리는 동료의 짧은 현장 반응. */
 D.settlementCompanionLines = {
   minji:{

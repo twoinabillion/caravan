@@ -32,10 +32,18 @@ def clean_state(page, settlement: str):
           document.querySelector('#arrival-scene')?.classList.remove('on');
           UI.renderAll();
           UI.showStl(settlement,'hub');
+          clearInterval(window.__settlementAuditLoop);
+          window.__settlementAuditLoop=setInterval(()=>SCENE.drawSettlement(.05),50);
         }""",
         settlement,
     )
-    page.wait_for_timeout(220)
+    page.wait_for_timeout(1450)
+
+
+def click_world(page, point):
+    canvas = page.locator("#stl-town-canvas")
+    box = canvas.bounding_box()
+    canvas.click(position={"x": point["x"] / 236 * box["width"], "y": point["y"] / 306 * box["height"]})
 
 
 def geometry(page):
@@ -46,18 +54,18 @@ def geometry(page):
             return style.display!=='none'&&style.visibility!=='hidden'&&rect.width>0&&rect.height>0;
           };
           const rect=node=>{const r=node.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,right:r.right,bottom:r.bottom}};
-          const stage=document.querySelector('.stl-town-stage'), stageRect=rect(stage);
-          const markers=[...stage.querySelectorAll('.stl-hotspot,.stl-resident-pin,.stl-recruit-pin,.stl-town-player')].filter(visible);
+          const stage=document.querySelector('.stl-town-stage'), stageRect=rect(stage), world=SCENE.settlementState();
           const controls=[...document.querySelectorAll('#ovl-stl button')].filter(visible);
           const escaped=controls.filter(node=>{const r=node.getBoundingClientRect();return r.left<-1||r.right>innerWidth+1||r.top<-1||r.bottom>innerHeight+1});
           const small=controls.filter(node=>{const r=node.getBoundingClientRect();return r.width<43.5||r.height<43.5});
           return {
             viewport:[innerWidth,innerHeight],
             stage:stageRect,
-            facilities:stage.querySelectorAll('.stl-hotspot').length,
-            residents:stage.querySelectorAll('.stl-resident-pin').length,
-            recruit:stage.querySelectorAll('.stl-recruit-pin').length,
-            markerRects:markers.map(node=>({label:(node.getAttribute('aria-label')||node.textContent).replace(/\s+/g,' ').trim(),...rect(node)})),
+            codeWorld:Boolean(document.querySelector('#stl-town-canvas')),
+            facilities:world.facilities.length,
+            residents:world.residents.length,
+            recruit:world.recruit?1:0,
+            world,
             escaped:escaped.map(node=>(node.getAttribute('aria-label')||node.textContent).replace(/\s+/g,' ').trim()),
             small:small.map(node=>({label:(node.getAttribute('aria-label')||node.textContent).replace(/\s+/g,' ').trim(),...rect(node)})),
             horizontalOverflow:document.documentElement.scrollWidth>innerWidth+1
@@ -84,14 +92,19 @@ def main():
             clean_state(page, settlement)
             shot(page, f"390x844-{settlement}-walk", metrics)
 
+        clean_state(page, "daegu")
+        page.click('[data-stlfocus="garage"]')
+        page.wait_for_timeout(2200)
+        shot(page, "390x844-daegu-garage-selected", metrics)
+
         clean_state(page, "miryang")
-        page.click('[data-town-recruit="minji"]')
-        page.wait_for_timeout(220)
+        click_world(page, page.evaluate("SCENE.settlementState().recruit.p"))
+        page.wait_for_timeout(2200)
         page.screenshot(path=str(OUT / "390x844-miryang-minji-first-meet.png"))
 
         clean_state(page, "miryang")
-        page.click('[data-town-npc="sundeok"]')
-        page.wait_for_timeout(80)
+        click_world(page, page.evaluate("SCENE.settlementState().residents.find(person=>person.id==='sundeok').p"))
+        page.wait_for_timeout(2200)
         page.click('[data-npc="sundeok"]')
         page.wait_for_timeout(180)
         page.screenshot(path=str(OUT / "390x844-miryang-soonduk-talk.png"))

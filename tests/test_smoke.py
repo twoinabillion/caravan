@@ -972,7 +972,9 @@ with sync_playwright() as p:
       const walkParty0=[...S.party];
       S.party=['minji'];
       UI.showStl('miryang');
-      out.settlementWalkParty=document.querySelectorAll('.stl-walker-face').length===2 &&
+      const townStart=SCENE.settlementState();
+      out.settlementWalkParty=Boolean(townStart&&townStart.companions&&
+        townStart.companions.some(person=>person.id==='minji')) &&
         document.querySelector('.stl-focus-copy').textContent.includes('민지와');
       UI.showStl('miryang','alley');
       const fieldSpots=[...document.querySelectorAll('.stl-field-switcher [data-fieldspot]')];
@@ -987,7 +989,14 @@ with sync_playwright() as p:
       document.querySelector('[data-stlfocus="garage"]').click();
       out.settlementWalkMove=document.querySelector('.stl-hub').dataset.focus==='garage' &&
         document.querySelector('[data-stlfocus="garage"]').getAttribute('aria-pressed')==='true' &&
-        document.querySelector('.stl-route').classList.contains('garage');
+        SCENE.settlementState().focus==='garage' &&
+        SCENE.settlementState().moving===true;
+      // The code-world hub now makes the player physically walk to a selected
+      // facility before enabling entry. Advance the same renderer tick used by
+      // requestAnimationFrame so this checks the real arrival gate rather than
+      // clicking a deliberately disabled button mid-walk.
+      for(let frame=0;frame<24&&SCENE.settlementState()?.moving;frame++) SCENE.drawSettlement(.2);
+      out.settlementArrivalGate=document.querySelector('#stl-enter').disabled===false;
       document.querySelector('#stl-enter').click();
       out.settlementSceneLarge=document.querySelector('.stl-section-hero').getBoundingClientRect().height>=190 &&
         document.querySelectorAll('.stl-section-face').length===2 &&
@@ -1003,8 +1012,8 @@ with sync_playwright() as p:
         impact.count===2&&impact.stage===2&&impact.discount===.9&&
         S.npcs.sundeok.att>=8;
       out.settlementImpactVisual=document.querySelector('.stl-hub').dataset.impactStage==='2'&&
-        document.querySelectorAll('.stl-impact-layer.stage-2').length===1&&
-        document.querySelector('.stl-place-impact').textContent.includes('우리 손길 2/4');
+        SCENE.settlementState()?.impactStage===2&&
+        document.querySelector('.stl-town-stage-head').textContent.includes('변화 2/4');
       UI.showStl('miryang','alley');
       out.settlementImpactBeforeAfter=document.querySelectorAll('.stl-field-action.changed').length===2&&
         document.querySelector('[data-fieldcard="pump"]')?.textContent.includes('오늘은 이미 들렀다')&&
@@ -1023,9 +1032,10 @@ with sync_playwright() as p:
       S.party=walkParty0;
       UI.showStl('daegu');
       out.settlementHub=document.querySelectorAll('[data-stlfocus]').length===4 &&
-        !!document.querySelector('#stl-van') &&
+        !!document.querySelector('#stl-town-canvas') && SCENE.settlementState()?.facilities.length===4 &&
         !document.querySelector('#garage') && !document.querySelector('#trade');
       document.querySelector('[data-stlfocus="garage"]').click();
+      for(let frame=0;frame<24&&SCENE.settlementState()?.moving;frame++) SCENE.drawSettlement(.2);
       document.querySelector('#stl-enter').click();
       out.garageGroups=document.querySelectorAll('#garage [data-ug]').length;
       out.garageArt=!!document.querySelector('#garage .upgrade-group-hero img');
@@ -1226,7 +1236,8 @@ with sync_playwright() as p:
     check('동료 과제 중에도 일반 의뢰와 마감이 보임', r4['missionSecondary'], str(r4))
     check('정착지 4개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
     check('모든 정착지에 소모·발견·숨은 현장 행동', r4['settlementFields'], str(r4))
-    check('정착지에서 현재 동료와 장소 사이를 이동', r4['settlementWalkParty'] and r4['settlementWalkMove'], str(r4))
+    check('정착지에서 현재 동료와 장소 사이를 이동',
+          r4['settlementWalkParty'] and r4['settlementWalkMove'] and r4['settlementArrivalGate'], str(r4))
     check('현장 동선·동행 마커·숨은 장소 비공개', r4['settlementFieldMap'] and r4['settlementFieldMove'], str(r4))
     check('정착지 내부 장면 확대·동행 상태 유지', r4['settlementSceneLarge'], str(r4))
     check('정착지 행동이 날짜를 넘어 영구 변화로 저장', r4['settlementImpactState'], str(r4))
@@ -1369,7 +1380,7 @@ with sync_playwright() as p:
     rr = pg.evaluate('''() => {
       const out={};
       document.querySelector('#ev-wrap').classList.remove('on');
-      S.party=[]; S.up={}; S.recruitQ=null; S.driving={from:'busan',to:'ulsan',dist:80,gone:20};
+      S.party=[]; S.up={}; S.recruitQ=null; S.driving=null; S.at='miryang';
       out.started=G.startRecruitQuest('minji');
       out.target=S.recruitQ&&S.recruitQ.target==='ulsan';
       S.driving=null; S.at='ulsan';
