@@ -98,8 +98,8 @@ with sync_playwright() as playwright:
           all(height >= 44 for height in switcher['heights']), str(switcher['heights']))
     page.click('.stl-field-switcher [data-fieldspot="pump"]')
     field_focus = page.evaluate("""() => ({
-      cardVisible:document.querySelector('[data-stlfield="pump"]').offsetParent!==null,
-      cardFocused:document.querySelector('[data-stlfield="pump"]').classList.contains('focused'),
+      cardVisible:document.querySelector('[data-fieldcard="pump"]').offsetParent!==null,
+      cardFocused:document.querySelector('[data-fieldcard="pump"]').classList.contains('focused'),
       pressed:[...document.querySelectorAll('[data-fieldspot="pump"]')].every(node=>node.getAttribute('aria-pressed')==='true')
     })""")
     check('선택기에서 펌프를 고르면 실행 카드와 접근성 상태가 함께 바뀐다',

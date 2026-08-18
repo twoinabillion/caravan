@@ -2695,7 +2695,8 @@ const UI = (()=>{
 
   /* ── SETTLEMENT ── */
   let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel', stlFieldResult=null,
-    stlMode='hub', stlFocus='market', stlFieldFocus='';
+    stlMode='hub', stlFocus='market', stlFieldFocus='', marketSelection=null,
+    garageSelection='', peopleSelection='';
   function settlementScene(stlId,mode='section'){
     const sid=stlId==='miryang'&&mode==='hub'?'miryang-market-hub':D.nodeScenes&&D.nodeScenes[stlId];
     return sid&&D.scenes&&D.scenes[sid]?D.scenes[sid]:'';
@@ -2875,6 +2876,267 @@ const UI = (()=>{
     }
     return h;
   }
+  /* ── SETTLEMENT FIELD BOARD ─────────────────────────────────────────
+     시설 안에서 도착 사진과 카드 더미를 반복하지 않는다. 한 장의 현장 판에서
+     행은 선택만 하고, 실제 거래·의뢰 수락은 아래 실행 바 한 곳에서 한다.
+     장터·정비소·사람들·현장 통로가 같은 셸과 도시 팔레트를 공유한다. */
+  /* 판 머리 앞머리표. 내부 모드명을 그대로 노출하지 않는다(영문 개발 라벨 금지). */
+  const FIELD_BOARD_LABEL={market:'장터',garage:'정비소',people:'사람들',alley:'현장 통로'};
+  function settlementFieldPalette(stlId){
+    const p=D.settlementWorlds&&D.settlementWorlds[stlId]&&D.settlementWorlds[stlId].palette||{};
+    return {
+      wall:p.wall||'#4d5557',trim:p.accent||'#a94e41',win:p.light||'#e9b24e',dark:p.roof||'#12161a',
+      roof:p.roof||'#34383a',light:p.light||'#e5a54c',accent:p.accent||'#b94c3e'
+    };
+  }
+  function fieldBoardShell({mode,title,sub,status,body,selectedLabel,actionMeta,actionLabel,actionAttrs='',disabled=false}){
+    const palette=settlementFieldPalette(curStl), stl=D.stls[curStl];
+    return `<section class="field-board field-board-${mode} field-board-visual-finish" data-field-board="${mode}" data-field-board-city="${curStl}" style="--fb-wall:${palette.wall};--fb-trim:${palette.trim};--fb-win:${palette.win};--fb-dark:${palette.dark};--roof:${palette.roof};--light:${palette.light};--accent:${palette.accent}">
+      <header class="field-board-head">
+        <span class="field-board-mark">${esc((stl&&stl.name)||'')} · ${esc(FIELD_BOARD_LABEL[mode]||'')}</span>
+        <div><span><i aria-hidden="true"></i><h3>${esc(title)}</h3></span><em>${esc(status)}</em></div>
+        <p>${esc(sub)}</p>
+      </header>
+      <div class="field-board-body">${body}</div>
+      <footer class="field-board-action">
+        <span><small>선택</small><b>${esc(selectedLabel||'선택 없음')}</b><em>${esc(actionMeta||'고를 수 있는 항목이 없다')}</em></span>
+        <button id="${mode}-action" ${actionAttrs} ${disabled?'disabled':''}>${esc(actionLabel||'선택')}</button>
+      </footer>
+    </section>
+    <button class="stl-section-back field-board-back" id="stl-hub-back">← ${esc(stl.name)}으로 돌아간다</button>`;
+  }
+  function marketFieldRows(){
+    const stl=D.stls[curStl], localImpact=G.stlImpact(curStl), disc=G.tradeDiscount(curStl);
+    const questRows=[];
+    if(S.quest){
+      const q=S.quest,K=G.QKIND[q.kind]||G.QKIND.deliver,ready=G.questReady();
+      const detail=q.kind==='procure'
+        ? `${q.need.name} ${(S.items[q.need.name]||0)}/${q.need.qty} · ${D.nodes[q.to].name}으로 돌아온다`
+        : `${G.questLabel(q)} · ${D.nodes[q.to].name}까지`;
+      questRows.push({key:'quest-active',kind:ready?'quest-turnin':'quest-active',label:`${K.nm} · ${G.questLabel(q)}`,
+        sub:ready?'요청한 물건과 기록을 넘길 준비가 됐다':detail,
+        meta:`D-${Math.max(0,q.due-S.day)} · 고철 ${q.reward}`,action:ready?'전달한다':'진행 중',enabled:ready});
+    } else {
+      stlQuests=G.rollQuests();
+      stlQuests.forEach((q,index)=>{const K=G.QKIND[q.kind],dd=q.due-S.day;
+        questRows.push({key:`quest-${index}`,kind:'quest',index,label:`${K.nm} · ${G.questLabel(q)}`,
+          sub:G.questDesc(q).replace(/^\"|\"$/g,''),meta:`D-${dd} · 고철 ${q.reward}`,action:'맡는다',enabled:true});
+      });
+    }
+    const supplyRows=[];
+    const waterRow=stl.trade.find(row=>row[1]==='water'), foodRow=stl.trade.find(row=>row[1]==='food');
+    if(waterRow&&foodRow){
+      const price=Math.max(1,Math.round((waterRow[3]*G.marketMul(curStl,'water')+foodRow[3]*2*G.marketMul(curStl,'food'))*disc));
+      supplyRows.push({key:'bundle',kind:'bundle',label:'길 위 기본 보급',
+        sub:`물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}일치`,meta:`고철 ${price} · 40분`,cost:price,
+        action:'한 번에 싣기',enabled:S.scrap>=price,icon:'parts'});
+    }
+    stl.trade.forEach((row,index)=>{
+      const [label,key,qty,price0]=row, trusted=localImpact.discount<1;
+      const shown=trusted&&key==='barter_wf'?'물 1통 ⇄ 식량 1':
+        trusted&&key==='barter_fp'?'식량 1 ⇄ 부품 1':trusted&&key==='barter_mf'?'의약품 1 ⇄ 식량 4':label;
+      const group=key.startsWith('barter')?'물물교환':key.startsWith('item')?'도구와 부품':'주행과 보급';
+      if(key.startsWith('barter')){
+        const enough=key==='barter_wf'?S.water>=(trusted?1:2):key==='barter_fp'?S.food>=(trusted?1:2):(S.items['의약품']||0)>=1;
+        supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label:shown,sub:'물자를 맞바꾼다',meta:'교환 · 25분',
+          action:'교환한다',enabled:enough,icon:key==='barter_wf'?'water':key==='barter_fp'?'food':'med'});
+      } else {
+        const price=Math.max(1,Math.round(price0*G.marketMul(curStl,key)*disc)),mul=G.marketMul(curStl,key);
+        const priceNote=mul<=.9?' · 이 동네가 싸다':mul>=1.2?' · 여긴 귀하다':'';
+        supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label,sub:`${qty}${key==='fuel'?'L':key==='water'?'통':key==='food'?'일치':'개'}를 싣는다${priceNote}`,
+          meta:`고철 ${price} · 25분`,cost:price,action:'산다',enabled:S.scrap>=price,
+          icon:key==='fuel'?'fuel':key==='water'?'water':key==='food'?'food':ITEM_ICO[key.slice(4)]||'parts'});
+      }
+    });
+    const demand=G.stlDemand(curStl);
+    if(demand){
+      const have=demand.item==='식량'?S.food:(S.items[demand.item]||0),need=demand.item==='식량'?2:1;
+      supplyRows.push({key:'sell',kind:'sell',group:'매입',label:`${demand.item} 1${demand.item==='식량'?'일치':''}`,
+        sub:demand.why,meta:`고철 +${demand.price} · 20분`,action:'판다',enabled:have>=need,icon:ITEM_ICO[demand.item]||'food'});
+    }
+    const neighbor=(G.neighbors(S.at)||[]).map(n=>D.nodes[n.id]&&D.nodes[n.id].stl).filter(Boolean)
+      .concat(Object.keys(D.stls).filter(id=>id!==curStl)).find(id=>id&&id!==curStl&&D.market[id]);
+    let rumor='';
+    if(neighbor){
+      const market=D.market[neighbor], dear=Object.entries(market.mul||{}).find(([,value])=>value>=1.2), next=market.demand;
+      if(dear||next) rumor=`장사꾼들 말로는 ${D.stls[neighbor].name}은 ${dear?dear[0]+'이 귀하고 ':''}${next?next.item+'을 웃돈 주고 산다':''}`;
+    }
+    return {questRows,supplyRows,rumor,localImpact};
+  }
+  function fieldBoardRow(row){
+    const selected=marketSelection&&marketSelection.key===row.key;
+    return `<button class="field-board-row ${selected?'selected':''}" data-market-key="${row.key}" aria-pressed="${selected}" ${row.enabled?'':'data-unavailable="true"'}>
+      <span class="field-board-row-icon" aria-hidden="true">${ICO(row.icon||'parts')}</span>
+      <span class="field-board-row-copy"><b>${esc(row.label)}</b><small>${esc(row.sub)}</small></span>
+      <span class="field-board-row-meta">${esc(row.meta)}</span>
+    </button>`;
+  }
+  function fieldBoardNote(row){
+    const selected=marketSelection&&marketSelection.key===row.key;
+    return `<button class="field-board-note ${selected?'selected':''}" data-market-key="${row.key}" aria-pressed="${selected}" ${row.enabled?'':'data-unavailable="true"'}>
+      <div><b>${esc(row.label)}</b><span class="field-board-row-meta">${esc(row.meta)}</span></div>
+      <small>${esc(row.sub)}</small>
+    </button>`;
+  }
+  function renderMarketFieldBoard(){
+    const body=$('#stl-body'), stl=D.stls[curStl], spot=settlementSpots(curStl).market;
+    if(!body||!stl) return;
+    const data=marketFieldRows(), rows=[...data.questRows,...data.supplyRows];
+    let selected=rows.find(row=>marketSelection&&row.key===marketSelection.key);
+    if(!selected) selected=data.supplyRows.find(row=>row.enabled)||data.questRows.find(row=>row.enabled)||rows[0];
+    marketSelection=selected||null;
+    const questCount=data.questRows.length, barterOnly=stl.trade.every(row=>row[1].startsWith('barter'));
+    const trust=data.localImpact.discount<1
+      ? ` · 품앗이 ${barterOnly?'교환 우대':'10% 할인'}`:'';
+    const selectedAfter=selected&&selected.cost!=null?Math.max(0,S.scrap-selected.cost):S.scrap;
+    const actionMeta=selected
+      ? selected.kind==='sell'?`${selected.meta} · 보유 고철 ${S.scrap}`:
+        selected.cost!=null?`${selected.meta} · 보유 ${S.scrap} → ${selectedAfter}`:selected.meta
+      :'고를 수 있는 항목이 없다';
+    const actionData=selected?(selected.kind==='trade'?` data-t="${selected.index}"`:selected.kind==='bundle'?' data-bundle="1"':selected.kind==='sell'?' data-sell="1"':selected.kind==='quest' ? ` data-quest="${selected.index}"`:selected.kind==='quest-turnin'?' id="q-turnin"':''):'';
+    let lastGroup='';
+    const supplyHtml=data.supplyRows.map(row=>{
+      const group=row.group||'추천 보급', heading=group!==lastGroup?`<div class="field-board-subgroup">${esc(group)}</div>`:'';
+      lastGroup=group; return heading+fieldBoardRow(row);
+    }).join('');
+    const boardBody=`
+        <section class="field-board-group" aria-labelledby="market-quest-head">
+          <header id="market-quest-head"><span>의뢰</span><b>${questCount}건</b></header>
+          <div class="field-board-list">${data.questRows.length?data.questRows.map(fieldBoardNote).join(''):'<p class="field-board-empty">오늘 붙은 의뢰는 없다.</p>'}</div>
+        </section>
+        <section class="field-board-group" id="trade" aria-labelledby="market-supply-head">
+          <header id="market-supply-head"><span>물자</span><b>보유 고철 <i id="tr-scrap">${S.scrap}</i></b></header>
+          ${data.localImpact.discount<1?`<div class="trade-local-trust"><span>품앗이</span><b>현장 ${data.localImpact.count}곳을 거든 사람 · ${barterOnly?'교환품을 한 단계 후하게 쳐준다':'10% 덜 받는다'}</b></div>`:''}
+          <div class="field-board-list">${supplyHtml}</div>
+          ${data.rumor?`<p class="trade-rumor field-board-rumor">${esc(data.rumor)}</p>`:''}
+        </section>`;
+    body.innerHTML=fieldBoardShell({mode:'market',title:spot.label,sub:spot.sub,
+      status:`● 영업 중 · 의뢰 ${questCount}${trust}`,body:boardBody,
+      selectedLabel:selected&&selected.label,actionMeta,actionLabel:selected&&selected.action,
+      actionAttrs:actionData,disabled:!(selected&&selected.enabled)});
+    body.querySelectorAll('[data-market-key]').forEach(button=>button.onclick=()=>{
+      const scrollTop=body.querySelector('.field-board-body')?.scrollTop||0;
+      marketSelection=rows.find(row=>row.key===button.dataset.marketKey)||null;
+      renderMarketFieldBoard();
+      const nextBody=body.querySelector('.field-board-body'); if(nextBody) nextBody.scrollTop=scrollTop;
+      requestAnimationFrame(()=>$('#market-action')?.focus({preventScroll:true}));
+    });
+    const action=$('#market-action');
+    if(action) action.onclick=()=>{
+      const row=rows.find(item=>marketSelection&&item.key===marketSelection.key); if(!row||!row.enabled) return;
+      if(row.kind==='quest'){ G.acceptQuest(stlQuests[row.index]); marketSelection=null; showStl(curStl,'market'); return; }
+      if(row.kind==='quest-turnin'){ G.checkQuest(); marketSelection=null; showStl(curStl,'market'); return; }
+      let result;
+      if(row.kind==='trade') result=G.trade(curStl,row.index);
+      else if(row.kind==='bundle') result=G.tradeBundle(curStl);
+      else if(row.kind==='sell') result=G.sellToDemand(curStl);
+      if(!result||!result.ok){ toast(result&&result.why||'지금은 할 수 없다'); return; }
+      if(row.kind==='bundle') toast(`📦 기본 보급을 실었다 · 물 +${result.water} · 식량 +${result.food}`);
+      else if(row.kind==='sell') toast(`${ICO('scrap')} 고철 +${result.price} — 팔았다`);
+      else toast(`${row.label} · 거래를 마쳤다`);
+      renderHud(); showStl(curStl,'market');
+    };
+    $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
+  }
+  function renderPeopleFieldBoard(){
+    const body=$('#stl-body'),stl=D.stls[curStl],spot=settlementSpots(curStl).people;
+    if(!body||!stl) return;
+    const rows=(stl.npcs||[]).map(id=>{const npc=D.npcs[id],state=S.npcs[id];
+      return {key:`npc-${id}`,kind:'npc',id,label:npc.name,sub:npc.role,
+        meta:state.att>10?'우호적':state.att<-10?'냉랭함':state.met?'아는 사이':'초면',action:'말을 건다',enabled:true};
+    });
+    const recruitDef=stl.recruit&&D.recruitQuests&&D.recruitQuests[stl.recruit];
+    const recruitOpen=!!(stl.recruit&&recruitDef&&recruitDef.meet&&!G.hasComp(stl.recruit)&&!S.recruitQ&&!S.used.includes(recruitDef.meet));
+    if(recruitOpen){const comp=D.comps[stl.recruit];rows.push({key:`recruit-${stl.recruit}`,kind:'recruit',id:stl.recruit,
+      label:comp.name,sub:comp.bio,meta:'처음 보는 사람',action:'다가가 말을 건다',enabled:true});}
+    rows.push({key:'rest',kind:'rest',label:'이곳에서 하룻밤 묵는다',sub:'아침까지 쉬며 피로와 사기를 회복하고 차를 살핀다',
+      meta:'아침까지 · 하루 1회',action:'밤을 보낸다',enabled:true});
+    let selected=rows.find(row=>row.key===peopleSelection)||rows[0]; peopleSelection=selected&&selected.key||'';
+    const residentRows=rows.filter(row=>row.kind!=='rest').map(row=>{
+      const face=row.kind==='npc'?npcFace(row.id,D.npcs[row.id].face):npcFace(row.id,D.comps[row.id].face);
+      return `<button class="field-board-row npc-row ${row.key===peopleSelection?'selected':''}" data-person-key="${row.key}" data-person-id="${row.id}" aria-pressed="${row.key===peopleSelection}">
+        <span class="field-board-row-icon npc-face">${face}</span>
+        <span class="field-board-row-copy"><b>${esc(row.label)}</b><small>${esc(row.sub)}</small></span>
+        <span class="field-board-row-meta npc-att">${esc(row.meta)}</span>
+      </button>`;
+    }).join('');
+    const rest=rows.find(row=>row.kind==='rest');
+    const restRow=`<button class="field-board-row ${peopleSelection==='rest'?'selected':''}" data-person-key="rest" aria-pressed="${peopleSelection==='rest'}">
+      <span class="field-board-row-icon">${ICO('bond')}</span><span class="field-board-row-copy"><b>${esc(rest.label)}</b><small>${esc(rest.sub)}</small></span>
+      <span class="field-board-row-meta">${esc(rest.meta)}</span></button>`;
+    const boardBody=`<div class="stl-talk-slot field-board-talk-slot" id="stl-talk-slot" aria-live="polite"></div>
+      <section class="field-board-group"><header><span>대화 상대</span><b>${rows.filter(row=>row.kind!=='rest').length}명 · 한 사람을 고른다</b></header>
+        <div class="field-board-list stl-resident-list">${residentRows}</div></section>
+      <section class="field-board-group"><header><span>머물기</span><b>오늘 밤</b></header><div class="field-board-list">${restRow}</div></section>`;
+    const actionAttrs=selected?(selected.kind==='npc'?`data-npc="${selected.id}"`:selected.kind==='recruit'?`data-recruit="${selected.id}"`:'data-rest="1"'):'';
+    body.innerHTML=fieldBoardShell({mode:'people',title:spot.label,sub:spot.sub,
+      status:`● 사람 ${rows.filter(row=>row.kind!=='rest').length} · ${G.isNight()?'밤 교대':'낮 장사'}`,body:boardBody,
+      selectedLabel:selected&&selected.label,actionMeta:selected&&selected.meta,actionLabel:selected&&selected.action,
+      actionAttrs,disabled:!selected});
+    body.querySelectorAll('[data-person-key]').forEach(button=>button.onclick=()=>{
+      const scrollTop=body.querySelector('.field-board-body')?.scrollTop||0;
+      peopleSelection=button.dataset.personKey; renderPeopleFieldBoard();
+      const scroller=body.querySelector('.field-board-body'); if(scroller) scroller.scrollTop=scrollTop;
+      requestAnimationFrame(()=>$('#people-action')?.focus({preventScroll:true}));
+    });
+    const action=$('#people-action');
+    if(action) action.onclick=()=>{
+      const row=rows.find(item=>item.key===peopleSelection); if(!row) return;
+      if(row.kind==='npc'){ talk(row.id); const scroller=body.querySelector('.field-board-body'); if(scroller) scroller.scrollTop=0; }
+      else if(row.kind==='recruit') recruitStl(row.id);
+      else { AMBI.play('sfx_camp_loop',.32); closeOvl('#ovl-stl'); G.camp('🏘 정착지에서 하룻밤을 묵었다'); }
+    };
+    $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
+  }
+  function renderAlleyFieldBoard(){
+    const body=$('#stl-body'),stl=D.stls[curStl],field=stl&&stl.field,spot=settlementSpots(curStl).alley;
+    if(!body||!field||!spot) return;
+    const actions=field.actions.filter(action=>!G.stlFieldStatus(curStl,action).hiddenLocked);
+    const done=actions.filter(action=>G.stlFieldStatus(curStl,action).done).length;
+    if(!actions.some(action=>action.id===stlFieldFocus)) stlFieldFocus=actions[0]&&actions[0].id||'';
+    const selected=actions.find(action=>action.id===stlFieldFocus)||actions[0],selectedStatus=selected&&G.stlFieldStatus(curStl,selected);
+    const result=stlFieldResult&&stlFieldResult.stl===curStl?stlFieldResult:null;
+    const impact=settlementImpactCopy(curStl).impact,comp=settlementCompanion();
+    const resultHtml=result?(()=>{const person=speakerInfo(result.action.npc);
+      return `<section class="field-board-result" data-field-result><header><span>방금 확인한 것</span><b>${esc(person.name)} · ${esc(result.action.label)}</b></header>
+        <div>${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}<span><p>${esc(result.action.result)}</p>
+        ${result.chips&&result.chips.length?`<span class="stl-field-chips">${result.chips.map(chip=>`<i class="${chip.c||''}">${esc(chip.t)}</i>`).join('')}</span>`:''}</span></div>
+        ${result.firstImpact&&result.action.change?`<p class="field-board-before-after"><span>작업 전 · ${esc(result.action.desc)}</span><b>→</b><span>지금 · ${esc(result.action.change.after)}</span></p>`:''}</section>`;
+    })():'';
+    const actionRows=actions.map(action=>{const status=G.stlFieldStatus(curStl,action),person=speakerInfo(action.npc),cost=G.reqCostText(action.req),cadence=action.once?'여행 중 1회':'하루 1회';
+      return `<button class="field-board-row stl-field-action ${action.id===stlFieldFocus?'selected focused':''} ${status.changed?'changed':''}" data-fieldspot="${action.id}" data-fieldcard="${action.id}" aria-pressed="${action.id===stlFieldFocus}" ${status.ok?'':'data-unavailable="true"'}>
+        <span class="field-board-row-icon">${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)||ICO('quest')}</span>
+        <span class="field-board-row-copy"><b>${esc(action.label)}</b><small>${esc(status.changed&&action.change?action.change.after:action.desc)}</small></span>
+        <span class="field-board-row-meta">${action.time}분 · ${cadence}${cost?' · '+esc(cost):''}</span>
+      </button>`;
+    }).join('');
+    const boardBody=`${resultHtml}<section class="field-board-group"><header><span>현장 동선</span><b>${done}/${actions.length}곳 확인${comp?' · '+esc(comp.name)+' 동행':''}</b></header>
+      <div class="field-board-list stl-field-switcher">${actionRows}</div></section>`;
+    body.innerHTML=fieldBoardShell({mode:'alley',title:field.title||spot.label,sub:field.desc||spot.sub,
+      status:`${done===actions.length?'●':'○'} 동선 ${done}/${actions.length} 확인 · 변화 ${impact.count}/${impact.total}`,body:boardBody,
+      selectedLabel:selected&&selected.label,
+      /* selected.action은 "경비와 한 교대 동안 …" 같은 서술문이라 좁은 버튼에서 3줄로 접힌다.
+         서술은 넓은 메타 줄에 두고 버튼에는 짧은 동사만 남긴다. */
+      actionMeta:selectedStatus?(selectedStatus.ok?`${esc(selected.action||'')}${selected.time?' · '+selected.time+'분':''}${G.reqCostText(selected.req)?' · '+G.reqCostText(selected.req):''}`:selectedStatus.reason):'',
+      actionLabel:selectedStatus?(selectedStatus.ok?'일을 맡는다':selectedStatus.reason):'선택',
+      actionAttrs:selected?`data-stlfield="${selected.id}"`:'',disabled:!(selected&&selectedStatus&&selectedStatus.ok)});
+    body.querySelectorAll('[data-fieldspot]').forEach(button=>button.onclick=()=>{
+      const scrollTop=body.querySelector('.field-board-body')?.scrollTop||0;
+      stlFieldFocus=button.dataset.fieldspot; renderAlleyFieldBoard();
+      const scroller=body.querySelector('.field-board-body'); if(scroller) scroller.scrollTop=scrollTop;
+      requestAnimationFrame(()=>$('#alley-action')?.focus({preventScroll:true}));
+    });
+    const action=$('#alley-action');
+    if(action) action.onclick=()=>{
+      const result=G.doStlFieldAction(curStl,stlFieldFocus);
+      if(!result.ok){ toast(result.reason||'지금은 할 수 없다'); return; }
+      stlFieldResult={stl:curStl,action:result.action,chips:result.chips,
+        firstImpact:result.firstImpact,impactBefore:result.impactBefore,impactAfter:result.impactAfter};
+      if(result.hiddenOpen) toast(`👣 ${field.revealToast||'도움을 마치자 전에는 보이지 않던 곳이 열렸다'}`,'discover');
+      renderAlleyFieldBoard(); const scroller=body.querySelector('.field-board-body'); if(scroller) scroller.scrollTop=0;
+    };
+    $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
+  }
   function settlementFieldHtml(stl){
     const field=stl.field;
     if(!field) return '';
@@ -2985,29 +3247,46 @@ const UI = (()=>{
   }
   function showStl(stlId,mode='hub'){
     if(S&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl) S.roadGarage=false;   // 진짜 정착지는 제값
+    if(curStl!==stlId){ marketSelection=null; garageSelection=''; peopleSelection=''; stlFieldFocus=''; }
     curStl=stlId;
     stlMode=mode||'hub';
+    const fieldBoardMode=['market','garage','people','alley'].includes(stlMode);
+    const fieldBoardMarket=fieldBoardMode&&stlMode==='market';
     const stl=D.stls[stlId];
     G.qualityMilestone('first_settlement_visit',{settlementId:stlId,mode:stlMode});
     AMBI.settlement(stlMode,stlId);
     if(!G.isNight()) G.checkQuest();   // 배달은 사람이 깨어 있을 때만
+    $('#ovl-stl').classList.toggle('field-board-mode',fieldBoardMode);
     if(stlMode==='hub'){ renderSettlementHub(); return; }
     if(G.isNight()&&stlMode!=='people'){ stlFocus='people'; renderSettlementHub(); return; }
     SCENE.closeSettlement();
     $('#ovl-stl').classList.remove('hub-mode');
     const body=$('#stl-body'), scene=settlementScene(curStl,stlMode==='alley'?'hub':'section'), spots=settlementSpots(curStl);
     settlementHeader(spots[stlMode]?spots[stlMode].label:'');
+    if(fieldBoardMode){
+      body.innerHTML='';
+      if(stlMode==='market') renderMarketFieldBoard();
+      else if(stlMode==='garage') renderGarage();
+      else if(stlMode==='people') renderPeopleFieldBoard();
+      else renderAlleyFieldBoard();
+      if(!$('#ovl-stl').classList.contains('on')) openModal('#ovl-stl','#stl-leave, button');
+      else $('#ovl-stl').setAttribute('aria-hidden','false');
+      return;
+    }
     const walkCopy=settlementWalkCopy(stlMode), impactCopy=settlementImpactCopy(curStl);
     const directField=curStl==='miryang'&&stlMode==='alley';
-    let h=directField?'':`<div class="stl-section-hero stl-section-hero-${stlMode}" data-impact-stage="${impactCopy.impact.stage}" ${scene?`style="background-image:url('${scene}')"`:''}>
+    let h=directField||fieldBoardMarket?'':`<div class="stl-section-hero stl-section-hero-${stlMode}" data-impact-stage="${impactCopy.impact.stage}" ${scene?`style="background-image:url('${scene}')"`:''}>
       ${settlementImpactLayerHtml(impactCopy)}
       <span>${ICO((spots[stlMode]||spots.market).icon)}${(spots[stlMode]||spots.market).label}</span>
       <small>${esc(walkCopy.local)}</small>
     </div>`;
     if(stlMode==='market'){
-      h+=questBoardHtml();
-      h+=`<div class="dlg"><div class="say stl-kicker"><span class="spk">오늘의 거래</span>
-        <small>보유 고철 <span id="tr-scrap">${S.scrap}</span></small></div><div id="trade"></div></div>`;
+      if(fieldBoardMarket) h='';
+      else {
+        h+=questBoardHtml();
+        h+=`<div class="dlg"><div class="say stl-kicker"><span class="spk">오늘의 거래</span>
+          <small>보유 고철 <span id="tr-scrap">${S.scrap}</span></small></div><div id="trade"></div></div>`;
+      }
     } else if(stlMode==='garage'){
       h+=`<div class="dlg garage-shell"><div class="say stl-kicker"><span class="spk">달구지 작업대</span>
         <small>부품 ${S.items['부품']||0} · 실제 차체 상태를 보며 개조한다</small></div><div id="garage"></div></div>`;
@@ -3051,13 +3330,16 @@ const UI = (()=>{
       h+=`<div class="acts stl-rest-actions">
         <button class="act primary" id="stl-rest"><span>${ICO('bond')}</span><span><b>이곳에서 하룻밤 묵는다</b><small>아침까지 · 피로와 사기 회복 · 차 정비</small></span></button></div>`;
     }
-    h+=`<button class="stl-section-back" id="stl-hub-back">이 장소를 나와 ${esc(stl.name)}을 다시 둘러본다</button>`;
+    if(!fieldBoardMarket) h+=`<button class="stl-section-back" id="stl-hub-back">← ${esc(stl.name)}으로 돌아간다</button>`;
     body.innerHTML=h;
     if(stlMode==='market'){
-      renderTrade();
-      body.querySelectorAll('[data-quest]').forEach(b=>b.onclick=()=>{ G.acceptQuest(stlQuests[+b.dataset.quest]); showStl(curStl,'market'); });
-      const qt=body.querySelector('#q-turnin');
-      if(qt) qt.onclick=()=>{ G.checkQuest(); showStl(curStl,'market'); };
+      if(fieldBoardMarket) renderMarketFieldBoard();
+      else {
+        renderTrade();
+        body.querySelectorAll('[data-quest]').forEach(b=>b.onclick=()=>{ G.acceptQuest(stlQuests[+b.dataset.quest]); showStl(curStl,'market'); });
+        const qt=body.querySelector('#q-turnin');
+        if(qt) qt.onclick=()=>{ G.checkQuest(); showStl(curStl,'market'); };
+      }
     } else if(stlMode==='garage'){
       renderGarage();
     } else if(stlMode==='alley'){
@@ -3081,7 +3363,7 @@ const UI = (()=>{
         G.camp('🏘 정착지에서 하룻밤을 묵었다');
       };
     }
-    $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
+    if($('#stl-hub-back')) $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
     if(!$('#ovl-stl').classList.contains('on')) openModal('#ovl-stl','#stl-leave, button');
     else $('#ovl-stl').setAttribute('aria-hidden','false');
   }
@@ -3282,65 +3564,74 @@ const UI = (()=>{
     $('#camp-rest').onclick=()=>{ closeOvl('#ovl-camp'); G.camp(); };
   }
   function renderGarage(){
-    const g=$('#garage'); if(!g) return;
+    const body=$('#stl-body'); if(!body) return;
     const repCost=G.hasComp('minji')?6:8;
     const canRep=S.van<S.vanMax-5&&S.scrap>=repCost;
     const groups=D.upgradeGroups||[];
     let group=groups.find(x=>x.id===garageGroup)||groups[0];
     garageGroup=group.id;
+    const groupIcon={fuel:'fuel',seating:'bond',chassis:'van',utility:'parts',power:'perk',camp:'food',living:'water'}[group.id]||'parts';
     const ownedN=group.ids.filter(id=>S.up[id]).length;
-    const art=D.upgradeArt&&D.upgradeArt[group.id];
     const upgrades=group.ids.map(id=>G.upDef(id)).filter(Boolean);
     const vanStage=G.vanStage();
-    const stageLine=group.id==='seating'
-      ? `<br>현재 ${vanStage.nm} · 기본 대비 +${vanStage.cm}cm · 정원 ${G.seatCapacity()+1}명`
-      : '';
-    g.innerHTML = `<div class="garage-van-preview">
+    const quote=G.settlementRepairQuote();
+    const rows=[{key:'repair',kind:'repair',label:'차체 정비',sub:`내구 +${quote.amount}${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}`,
+      meta:`고철 ${repCost} · ${G.durationLabel(quote.mins)}`,action:S.van>=S.vanMax-5?'차체 양호':'수리한다',enabled:canRep,icon:'parts'}]
+      .concat(upgrades.map(u=>{const owned=!!S.up[u.id],chk=G.canBuyUp(u.id);
+        return {key:`upgrade-${u.id}`,kind:'upgrade',id:u.id,label:u.nm,sub:u.d,icon:groupIcon,
+          meta:owned?'장착 완료':`고철 ${u.cost.scrap}${u.cost.parts?' + 부품 '+u.cost.parts:''} · ${G.durationLabel(G.upgradeMinutes(u))}`,
+          action:owned?'장착 완료':chk.ok?'장착한다':'잠김',enabled:!owned&&chk.ok,reason:chk.why||''};
+      }));
+    let selected=rows.find(row=>row.key===garageSelection);
+    if(!selected) selected=(canRep&&rows[0])||rows.find(row=>row.kind==='upgrade'&&row.enabled)||rows[1]||rows[0];
+    garageSelection=selected&&selected.key||'';
+    const categories=`<nav class="field-board-categories" aria-label="개조 분야">${groups.map(item=>{
+      const n=item.ids.filter(id=>S.up[id]).length;
+      return `<button class="${item.id===garageGroup?'selected':''}" data-ug="${item.id}" aria-pressed="${item.id===garageGroup}"><span>${esc(item.nm)}</span><small>${n}/${item.ids.length}</small></button>`;
+    }).join('')}</nav>`;
+    const list=rows.map(row=>`<button class="field-board-row garage-board-row ${row.kind==='upgrade'?'upgrade-card':''} ${row.key===garageSelection?'selected':''} ${row.kind==='upgrade'&&S.up[row.id]?'owned':''}"
+      data-garage-key="${row.key}" aria-pressed="${row.key===garageSelection}" ${row.enabled?'':'data-unavailable="true"'}>
+      <span class="field-board-row-icon" aria-hidden="true">${ICO(row.icon||'parts')}</span>
+      <span class="field-board-row-copy"><b>${esc(row.label)}</b><small>${esc(row.sub)}</small></span>
+      <span class="field-board-row-meta">${esc(row.meta)}</span>
+    </button>`).join('');
+    const boardBody=`<div id="garage"><div class="field-board-van-overview">
         <canvas id="garage-van-cv" aria-label="현재 달구지 차체"></canvas>
-        <div><b>${vanStage.nm}</b><small>차체 증축 +${vanStage.cm}cm · 탑승 정원 ${G.seatCapacity()+1}명</small></div>
-      </div>
-      <div class="garage-repair">
-        <span><b>차체 정비</b><small>내구 +30${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}</small></span>
-        <span class="uc-cost">고철 ${repCost} · ${G.durationLabel(G.settlementRepairQuote().mins)}</span>
-        <button class="tbtn" data-rep="1" ${canRep?'':'disabled'}>${S.van>=S.vanMax-5?'양호':'수리'}</button>
-      </div>
-      <div class="garage-tabs">${groups.map(x=>{
-        const n=x.ids.filter(id=>S.up[id]).length;
-        return `<button class="${x.id===garageGroup?'here':''}" data-ug="${x.id}">${x.nm} ${n}/${x.ids.length}</button>`;
-      }).join('')}</div>
-      <div class="upgrade-group">
-        <div class="upgrade-group-hero">${art?`<img src="${art}" alt="${group.nm} 부품 작업대">`:''}
-          <div class="upgrade-group-copy"><b>${group.nm}</b><small>${group.sub}${stageLine}<br>${ownedN}/${group.ids.length} 장착</small></div>
-        </div>
-        <div class="upgrade-list">${upgrades.map(u=>{
-      const owned=S.up[u.id];
-      const chk=G.canBuyUp(u.id);
-      /* 시간도 값이다 — 미리 보이지 않으면 선택이 아니라 사후 통보가 된다 */
-      const cost=`고철 ${u.cost.scrap}${u.cost.parts?' + 부품 '+u.cost.parts:''} · ${G.durationLabel(G.upgradeMinutes(u))}`;
-      return `<div class="upgrade-card ${owned?'owned':''}">
-        <span><span class="uc-title">${u.ic} ${u.nm}</span><small class="uc-desc">${u.d}</small></span>
-        <span class="uc-cost">${owned?'장착 완료':cost}</span>
-        <button class="tbtn" data-up="${u.id}" title="${chk.why||''}" ${owned||!chk.ok?'disabled':''}>${owned?'완료':chk.ok?'장착':'잠김'}</button>
-      </div>`;
-    }).join('')}</div></div>`;
+        <div><b>${esc(vanStage.nm)}</b><small>차체 ${Math.floor(S.van)}/${S.vanMax} · 증축 +${vanStage.cm}cm · 정원 ${G.seatCapacity()+1}명</small></div>
+      </div>${categories}<section class="field-board-group"><header><span>${esc(group.nm)}</span><b>${ownedN}/${group.ids.length} 장착 · ${esc(group.sub)}</b></header>
+        <div class="field-board-list">${list}</div></section></div>`;
+    const actionAttrs=selected?(selected.kind==='repair'?'data-rep="1"':`data-up="${selected.id}"`):'';
+    body.innerHTML=fieldBoardShell({mode:'garage',title:settlementSpots(curStl).garage.label,
+      sub:settlementSpots(curStl).garage.sub,status:`● 작업대 가동 · 차체 ${Math.round(S.van/S.vanMax*100)}% · 부품 ${S.items['부품']||0}`,
+      body:boardBody,selectedLabel:selected&&selected.label,
+      actionMeta:selected?(selected.reason||selected.meta):'',actionLabel:selected&&selected.action,
+      actionAttrs,disabled:!(selected&&selected.enabled)});
     requestAnimationFrame(()=>{ if(SCENE.drawSettlementVan) SCENE.drawSettlementVan($('#garage-van-cv')); });
-    g.querySelectorAll('[data-ug]').forEach(b=>b.onclick=()=>{ garageGroup=b.dataset.ug; renderGarage(); });
-    g.querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{
-      const u=G.upDef(b.dataset.up);
+    body.querySelectorAll('[data-ug]').forEach(button=>button.onclick=()=>{
+      garageGroup=button.dataset.ug; garageSelection=''; renderGarage();
+    });
+    body.querySelectorAll('[data-garage-key]').forEach(button=>button.onclick=()=>{
+      const scrollTop=body.querySelector('.field-board-body')?.scrollTop||0;
+      garageSelection=button.dataset.garageKey; renderGarage();
+      const scroller=body.querySelector('.field-board-body'); if(scroller) scroller.scrollTop=scrollTop;
+      requestAnimationFrame(()=>$('#garage-action')?.focus({preventScroll:true}));
+    });
+    const action=$('#garage-action');
+    if(action) action.onclick=()=>{
+      const row=rows.find(item=>item.key===garageSelection); if(!row||!row.enabled) return;
+      if(row.kind==='repair'){
+        const result=G.settlementRepair();
+        if(!result.ok){ if(result.why) UI.toast(result.why); return; }
+        UI.toast(`🔧 정비소 수리 완료 — 내구 +${result.amount}`); renderHud(); renderGarage(); return;
+      }
+      const u=G.upDef(row.id);
       const before={up:{...S.up},stage:{...G.vanStage()},capacity:G.seatCapacity(),
         fuelMax:S.fuelMax,vanMax:S.vanMax};
-      if(G.buyUpgrade(b.dataset.up)){ renderGarage(); renderTrade(); renderHud();
+      if(G.buyUpgrade(row.id)){ renderGarage(); renderHud();
         playUpgradeInstall(u,before);
         const ts=$('#tr-scrap'); if(ts) ts.textContent=S.scrap; }
-    });
-    const rb=g.querySelector('[data-rep]');
-    if(rb) rb.onclick=()=>{
-      const r=G.settlementRepair();
-      if(!r.ok){ if(r.why) UI.toast(r.why); return; }
-      UI.toast(`🔧 정비소 수리 완료 — 내구 +${r.amount}`);
-      renderGarage(); renderHud();
-      const ts=$('#tr-scrap'); if(ts) ts.textContent=S.scrap;
     };
+    $('#stl-hub-back').onclick=()=>showStl(curStl,'hub');
   }
   function recruitStl(id){
     if(S.recruitQ){
@@ -3377,7 +3668,8 @@ const UI = (()=>{
         <button class="choice" data-r="chat">이런저런 얘기를 나눈다</button>
         <button class="choice" data-r="x">그만 일어난다</button></div>`);
     if(slot) slot.replaceChildren(dlg); else body.prepend(dlg);
-    body.querySelectorAll('.npc-row').forEach(row=>row.classList.toggle('talking',row.dataset.npc===nid));
+    body.querySelectorAll('.npc-row').forEach(row=>row.classList.toggle('talking',
+      row.dataset.personId===nid||row.dataset.npc===nid));
     dlg.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
       const r=b.dataset.r;
       if(r==='rumor'){

@@ -51,9 +51,10 @@ with sync_playwright() as pw:
     flow = page.evaluate("""() => new Promise(res=>{
       S.at='suwon'; UI.showStl('suwon','people');
       setTimeout(()=>{
-        const row=[...document.querySelectorAll('[data-npc]')].find(b=>b.dataset.npc==='gitae');
+        const row=document.querySelector('[data-person-key="npc-gitae"]');
         if(!row) return res({err:'기태 행 없음'});
         row.click();
+        document.querySelector('#people-action')?.click();
         setTimeout(()=>{
           const rumorBtn=document.querySelector('[data-r="rumor"]');
           rumorBtn&&rumorBtn.click();
@@ -61,8 +62,9 @@ with sync_playwright() as pw:
             const rumorShown=(document.querySelector('.dlg.talk .say')||{}).textContent||'';
             const ok=document.querySelector('[data-r="x2"]'); ok&&ok.click();
             setTimeout(()=>{
-              const row2=[...document.querySelectorAll('[data-npc]')].find(b=>b.dataset.npc==='gitae');
+              const row2=document.querySelector('[data-person-key="npc-gitae"]');
               row2.click();
+              document.querySelector('#people-action')?.click();
               setTimeout(()=>{
                 const chatBtn=document.querySelector('[data-r="chat"]');
                 chatBtn&&chatBtn.click();

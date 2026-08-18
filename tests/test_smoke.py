@@ -1017,11 +1017,11 @@ with sync_playwright() as p:
       UI.showStl('miryang','alley');
       const fieldSpots=[...document.querySelectorAll('.stl-field-switcher [data-fieldspot]')];
       out.settlementFieldMap=fieldSpots.length===3 &&
-        document.querySelectorAll('.stl-field-map-face').length===2 &&
-        document.querySelector('.stl-field-map').textContent.includes('현장 동선') &&
-        !document.querySelector('.stl-field-map').textContent.includes('천막 뒤 번호표');
+        document.querySelectorAll('[data-field-board="alley"]').length===1 &&
+        document.querySelector('[data-field-board="alley"]').textContent.includes('현장 동선') &&
+        !document.querySelector('[data-field-board="alley"]').textContent.includes('천막 뒤 번호표');
       fieldSpots[1].click();
-      out.settlementFieldMove=fieldSpots[1].getAttribute('aria-pressed')==='true' &&
+      out.settlementFieldMove=document.querySelector('[data-fieldspot="'+fieldSpots[1].dataset.fieldspot+'"]').getAttribute('aria-pressed')==='true' &&
         document.querySelector('[data-fieldcard="'+fieldSpots[1].dataset.fieldspot+'"]').classList.contains('focused');
       document.querySelector('#stl-hub-back').click();
       document.querySelector('[data-stlfocus="garage"]').click();
@@ -1036,7 +1036,9 @@ with sync_playwright() as p:
       for(let frame=0;frame<24&&SCENE.settlementState()?.moving;frame++) SCENE.drawSettlement(.2);
       out.settlementArrivalGate=document.querySelector('#stl-enter').disabled===false;
       document.querySelector('#stl-enter').click();
-      out.settlementSceneLarge=document.querySelector('.stl-section-hero').getBoundingClientRect().height>=190 &&
+      out.settlementSceneLarge=!!document.querySelector('[data-field-board="garage"]') &&
+        !document.querySelector('.stl-section-hero') &&
+        document.querySelector('.field-board-action>button').getBoundingClientRect().height>=44 &&
         !document.querySelector('.stl-section-party') &&
         getComputedStyle(document.querySelector('#stl-head .d')).display==='none';
       const settlementSnapshot=structuredClone(S);
@@ -1053,9 +1055,12 @@ with sync_playwright() as p:
         SCENE.settlementState()?.impactStage===2&&
         document.querySelector('.stl-town-stage-head').textContent.includes('변화 2/4');
       UI.showStl('miryang','alley');
+      const changedPump=D.stls.miryang.field.actions.find(action=>action.id==='pump');
+      document.querySelector('[data-fieldspot="pump"]')?.click();
       out.settlementImpactBeforeAfter=document.querySelectorAll('.stl-field-action.changed').length===2&&
-        document.querySelector('[data-fieldcard="pump"]')?.textContent.includes('오늘은 이미 들렀다')&&
-        document.querySelector('.stl-field-intro').textContent.includes('현장 변화 2/4');
+        document.querySelector('[data-fieldcard="pump"]')?.textContent.includes(changedPump.change.after)&&
+        document.querySelector('#alley-action').disabled&&
+        document.querySelector('.field-board-head').textContent.includes('변화 2/4');
       UI.showStl('miryang','market');
       out.settlementImpactTrade=document.querySelector('.trade-local-trust')?.textContent.includes('10% 덜 받는다');
       S.at='muju'; S.water=5; S.food=0;
@@ -1073,15 +1078,14 @@ with sync_playwright() as p:
         !!document.querySelector('#stl-town-canvas') && SCENE.settlementState()?.facilities.length===4 &&
         !document.querySelector('#garage') && !document.querySelector('#trade');
       UI.showStl('daegu','people');
-      document.querySelector('[data-npc="taeho"]').click();
-      const peopleHero=document.querySelector('.stl-section-hero');
+      document.querySelector('[data-person-key="npc-taeho"]').click();
+      document.querySelector('#people-action').click();
       const talkSlot=document.querySelector('#stl-talk-slot');
       const residentList=document.querySelector('.stl-resident-list');
-      out.settlementTalkOrder=peopleHero.getBoundingClientRect().top<talkSlot.getBoundingClientRect().top &&
-        talkSlot.getBoundingClientRect().top<residentList.getBoundingClientRect().top &&
+      out.settlementTalkOrder=talkSlot.getBoundingClientRect().top<residentList.getBoundingClientRect().top &&
         document.querySelectorAll('.stl-talk-slot .dlg.talk').length===1 &&
         document.querySelectorAll('.npc-row.talking').length===1;
-      const taehoPortrait=document.querySelector('[data-npc="taeho"] .npc-pimg');
+      const taehoPortrait=document.querySelector('[data-person-id="taeho"] .npc-pimg');
       const settlementPortraitIds=[...new Set(Object.values(D.stls).flatMap(stl=>stl.npcs||[]))];
       const settlementPortraitSizes=await Promise.all(settlementPortraitIds.map(id=>new Promise(resolve=>{
         const probe=new Image();
@@ -1097,7 +1101,7 @@ with sync_playwright() as p:
         getComputedStyle(taehoPortrait).imageRendering==='auto' &&
         !D.legacyIllustratedPortraits.includes('taeho') && !D.legacyIllustratedPortraits.includes('mansu');
       UI.showStl('gwangju','people');
-      const recruitPortrait=document.querySelector('[data-recruit] .npc-pimg');
+      const recruitPortrait=document.querySelector('[data-person-key="recruit-leo"] .npc-pimg');
       out.settlementRecruitPortrait=!!recruitPortrait && recruitPortrait.alt.includes('레오');
       /* 합류 인물 행만 긴 소개문(c.bio)을 쓴다. 상태 라벨을 세로 중앙에 두면
          두 줄짜리 소개문의 둘째 줄 옆에 얹혀 문장의 일부처럼 읽힌다
@@ -1114,16 +1118,18 @@ with sync_playwright() as p:
       for(let frame=0;frame<24&&SCENE.settlementState()?.moving;frame++) SCENE.drawSettlement(.2);
       document.querySelector('#stl-enter').click();
       out.garageGroups=document.querySelectorAll('#garage [data-ug]').length;
-      out.garageArt=!!document.querySelector('#garage .upgrade-group-hero img');
+      out.garageArt=!!document.querySelector('[data-field-board="garage"]') &&
+        !document.querySelector('.stl-section-hero');
       out.garageCards=document.querySelectorAll('#garage .upgrade-card').length;
       out.garageVan=!!document.querySelector('#garage-van-cv');
       out.sectionIsolation=!!document.querySelector('#garage') && !document.querySelector('#trade') &&
-        !document.querySelector('[data-npc]');
+        !document.querySelector('[data-field-board="people"]');
       const oldScrap=S.scrap, oldParts=S.items['부품'], oldFuelMax=S.fuelMax;
       const upgradeParty=[...S.party]; S.party=['minji'];
       S.scrap=999; S.items['부품']=99; delete S.up.tank1;
       UI.showStl('daegu','garage');
-      document.querySelector('[data-up="tank1"]').click();
+      document.querySelector('[data-garage-key="upgrade-tank1"]').click();
+      document.querySelector('#garage-action').click();
       out.upgradeCeremony=!!document.querySelector('.upgrade-install') &&
         !!document.querySelector('#up-before-van') && !!document.querySelector('#up-after-van') &&
         document.querySelector('.upgrade-change').textContent.includes('연료 용량');

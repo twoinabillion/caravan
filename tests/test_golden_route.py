@@ -420,7 +420,7 @@ with sync_playwright() as p:
 
     page.evaluate("UI.showStl('miryang','alley')")
     alley_scroll = page.evaluate('''() => {
-      const panel=document.querySelector('#stl-body');
+      const panel=document.querySelector('.field-board-body');
       const last=document.querySelector('.stl-field-switcher [data-fieldspot="pump"]');
       last.scrollIntoView({block:'center'});
       const r=last.getBoundingClientRect();
@@ -432,14 +432,15 @@ with sync_playwright() as p:
           alley_scroll['top'] >= 0 and alley_scroll['bottom'] <= 700 and
           alley_scroll['width'] <= alley_scroll['viewport'] and not alley_scroll['overflow'] and alley_scroll['scrollable'],
           str(alley_scroll))
-    initial_field = page.evaluate("[...document.querySelectorAll('[data-stlfield]')].map(b=>b.dataset.stlfield)")
+    initial_field = page.evaluate("[...document.querySelectorAll('[data-fieldcard]')].map(b=>b.dataset.fieldcard)")
     check('숨은 번호표는 골목을 둘러보기 전에 스포하지 않는다',
           initial_field == ['noodles', 'parts', 'pump'], str(initial_field))
     field_before = page.evaluate("({day:S.day,min:S.min,scrap:S.scrap,food:S.food,water:S.water,bond:S.comps.minji.bond})")
-    page.click('[data-stlfield="noodles"]')
+    page.click('[data-fieldspot="noodles"]')
+    page.click('#alley-action')
     noodles = page.evaluate('''() => ({
       day:S.day,min:S.min,scrap:S.scrap,food:S.food,
-      disabled:document.querySelector('[data-stlfield="noodles"]').disabled,
+      disabled:document.querySelector('#alley-action').disabled,
       result:document.querySelector('[data-field-result]')?.textContent||''
     })''')
     check('국수 좌판은 공짜 버튼이 아니라 시간과 고철을 쓰고 하루에 한 번만 머문다',
@@ -447,16 +448,16 @@ with sync_playwright() as p:
           noodles['scrap'] == field_before['scrap'] - 2 and noodles['food'] == field_before['food'] + 1 and
           noodles['disabled'] and '순덕' in noodles['result'], str(noodles))
     page.click('.stl-field-switcher [data-fieldspot="pump"]')
-    page.click('[data-stlfield="pump"]')
-    revealed = page.evaluate("[...document.querySelectorAll('[data-stlfield]')].map(b=>b.dataset.stlfield)")
+    page.click('#alley-action')
+    revealed = page.evaluate("[...document.querySelectorAll('[data-fieldcard]')].map(b=>b.dataset.fieldcard)")
     check('두 곳을 거들어야 143년의 작은 흔적이 자연스럽게 열린다',
           revealed == ['noodles', 'parts', 'pump', 'oldcard'], str(revealed))
     page.click('.stl-field-switcher [data-fieldspot="oldcard"]')
-    page.click('[data-stlfield="oldcard"]')
+    page.click('#alley-action')
     trace = page.evaluate('''() => ({
       flag:!!S.flags.miryang_oldcard,
       note:S.notes.some(n=>n.title==='2026년 교통카드 번호표'),
-      disabled:document.querySelector('[data-stlfield="oldcard"]').disabled,
+      disabled:document.querySelector('#alley-action').disabled,
       water:S.water,bond:S.comps.minji.bond
     })''')
     check('교통카드는 일회성 발견으로 기록되고 다시 파밍할 수 없다',

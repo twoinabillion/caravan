@@ -103,7 +103,8 @@ with sync_playwright() as playwright:
     reset_at(page, "miryang")
     page.evaluate("UI.showStl('miryang','people')")
     for npc_id in ("byungchul", "yeongok"):
-        page.click(f'[data-npc="{npc_id}"]')
+        page.click(f'[data-person-key="npc-{npc_id}"]')
+        page.click('#people-action')
         face = page.locator(".dlg.talk .npc-pimg")
         assert face.count() == 1
         assert face.evaluate(
@@ -116,7 +117,8 @@ with sync_playwright() as playwright:
     sundeok = next(person for person in state["residents"] if person["id"] == "sundeok")
     click_world(page, sundeok["p"])
     page.wait_for_timeout(2200)
-    page.click('[data-npc="sundeok"]')
+    page.click('[data-person-key="npc-sundeok"]')
+    page.click('#people-action')
     assert page.locator(".dlg.talk").count() == 1
     assert "순덕" in page.locator(".dlg.talk").inner_text()
 

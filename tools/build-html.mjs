@@ -95,6 +95,7 @@ const uiAssetPaths = {
   EVENT_RESULT_TICKET:{path:'assets/ui/event-result-ticket-v1.webp', mime:'image/webp'},
   EVENT_LEDGER_BUTTON:{path:'assets/ui/event-ledger-button-v1.webp', mime:'image/webp'},
   EVENT_CHOICE_LEDGER:{path:'assets/ui/event-choice-ledger-slip-v1.webp', mime:'image/webp'},
+  FIELD_BOARD_FRAME:{path:'assets/ui/field-board-frame-v1.webp', mime:'image/webp'},
   TOWN_MAP_FRAME:{path:'assets/ui/settlement/town-map-frame-v1.webp', mime:'image/webp'},
   TOWN_BUTTON_NORMAL:{path:'assets/ui/settlement/town-button-normal-v1.webp', mime:'image/webp'},
   TOWN_BUTTON_SELECTED:{path:'assets/ui/settlement/town-button-selected-v1.webp', mime:'image/webp'},
