@@ -37,10 +37,23 @@ const UI = (()=>{
   function renderProfilePick(){
     const box=$('#profile-pick'); if(!box) return;
     box.innerHTML=Object.entries(D.startProfiles||{}).map(([id,p])=>
-      `<button type="button" class="profile-card${id===pendingProfile?' on':''}" role="radio"
-         aria-checked="${id===pendingProfile}" data-profile="${id}">
-         <span class="profile-ic">${p.ic}</span><b>${p.nm}</b><small>${p.d}</small></button>`).join('');
-    box.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{ pendingProfile=b.dataset.profile; renderProfilePick(); });
+      `<button type="button" ${id==='keeper'?'id="mode-on" ':''}class="profile-card${id===pendingProfile?' on':''}" role="radio"
+         aria-checked="${id===pendingProfile}" data-profile="${id}" aria-label="${esc(p.nm)}. ${esc(p.preview||'')}">
+         <span class="profile-ic">${ICO(p.icon||'van')}</span>
+         <span class="profile-copy"><span class="profile-title"><b>${esc(p.nm)}</b><em>${esc(p.tag||'')}</em></span>
+         <small>${esc(p.d)}</small><span class="profile-stats">${esc(p.preview||'')}</span></span>
+         <span class="profile-check" aria-hidden="true">${id===pendingProfile?'선택됨':'선택'}</span>
+       </button>`).join('');
+    box.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{
+      pendingProfile=b.dataset.profile;
+      renderProfilePick();
+    });
+    const selected=(D.startProfiles||{})[pendingProfile];
+    const detail=$('#profile-detail');
+    if(detail&&selected) detail.innerHTML=
+      `<span>선택한 출발</span><b>${esc(selected.nm)}</b><small>${esc(selected.preview||'')}</small>`;
+    const cta=$('#bt-name-profile');
+    if(cta&&selected) cta.textContent=`${selected.nm} · ${selected.tag}`;
   }
   let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
   let arrivalTimer=0;
@@ -60,7 +73,6 @@ const UI = (()=>{
     root.dataset.uiMotion=uiPrefs.reduceMotion?'reduced':'full';
   }
   const tossRuntime=Boolean(window.ReactNativeWebView||/\.tossmini\.com$/i.test(location.hostname)||/Toss/i.test(navigator.userAgent));
-  const localOffroad=location.protocol==='file:'&&!tossRuntime;
   let deferredInstallPrompt=null, appShellRegistration=null;
   const isInstalledApp=()=>Boolean(
     tossRuntime || navigator.standalone===true ||
@@ -360,10 +372,7 @@ const UI = (()=>{
       if(!b||b.tagName==='BUTTON'||(e.key!=='Enter'&&e.key!==' ')) return;
       e.preventDefault(); b.click();
     });
-    $('#bt-new').onclick=()=>{
-      if(localOffroad){ show('scr-mode'); envCheckUI(); }
-      else startNew('onroad');
-    };
+    $('#bt-new').onclick=()=>startNew('onroad');
     $('#bt-install').onclick=()=>requestAppInstall();
     $('#install-x').onclick=()=>closeModal('#install-guide');
     $('#install-action').onclick=()=>{
@@ -378,10 +387,7 @@ const UI = (()=>{
     $('#bt-continue').onclick=()=>{ SND.enable(); if(G.load()){ enterGame(); } };
     $('#bt-preview').onclick=()=>{ renderPreview(); show('scr-preview'); $('#preview-scroll').scrollTop=0; };
     $('#bt-previewback').onclick=()=>show('scr-title');
-    $('#bt-previewnew').onclick=()=>{
-      if(localOffroad){ show('scr-mode'); envCheckUI(); }
-      else startNew('onroad');
-    };
+    $('#bt-previewnew').onclick=()=>startNew('onroad');
     const nameGo=()=>{
       pendingName=($('#inp-name').value||'').trim().slice(0,8);
       introIdx=0; introTurnIdx=0;
@@ -395,22 +401,6 @@ const UI = (()=>{
     $('#inp-name').addEventListener('keydown',e=>{
       if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); nameGo(); }
     });
-    $('#bt-modeback').onclick=()=>show('scr-title');
-    $('#mode-on').onclick=()=>startNew('onroad');
-    $('#mode-off').onclick=(e)=>{
-      if(e.target.closest('#offkey')||e.target.closest('#offmsg')) return;
-      if(OFF.ready()) startNew('offroad');
-      else if(OFF.reachable===true){ $('#offkey').classList.add('on'); $('#apikey').focus(); }
-    };
-    $('#bt-keyok').onclick=async(e)=>{
-      e.stopPropagation();
-      const k=$('#apikey').value.trim();
-      if(!k) return;
-      $('#offmsg').textContent='연결 확인 중…';
-      const r=await OFF.testKey(k);
-      $('#offmsg').textContent=r.msg;
-      if(r.ok){ setTimeout(()=>startNew('offroad'), 600); }
-    };
     let introPointer=null;
     $('#scr-intro').addEventListener('pointerdown',e=>{
       if(e.target.closest('#intro-skip,#intro-auto,#intro-summary')) return;
@@ -522,21 +512,8 @@ const UI = (()=>{
       grid.append(card);
     });
   }
-  async function envCheckUI(){
-    const lock=$('#offlock'), key=$('#offkey'), msg=$('#offmsg');
-    if(!localOffroad){
-      lock.textContent='공개 앱에서는 온로드 이야기만 제공됩니다.';
-      key.classList.remove('on');
-      return;
-    }
-    if(OFF.ready()){ lock.textContent='🔓 연결됨 — '+OFF.model; key.classList.remove('on'); return; }
-    lock.textContent='환경 확인 중…';
-    const ok = await OFF.checkReachable();
-    if(ok){ lock.innerHTML='🔑 Anthropic API 키가 필요합니다 (카드를 누르면 입력창이 열립니다)<br>키는 이 로컬 브라우저에만 저장됩니다.'; }
-    else { lock.innerHTML='🔒 현재 브라우저가 외부 API 연결을 허용하지 않습니다.<br>오프로드는 내려받은 게임 HTML을 로컬에서 열었을 때만 사용할 수 있습니다.'; }
-  }
   function startNew(mode){
-    pendingMode=mode; pendingName=''; introIdx=0; introTurnIdx=0;
+    pendingMode='onroad'; pendingName=''; pendingProfile='keeper'; introIdx=0; introTurnIdx=0;
     show('scr-name'); renderProfilePick();
     const skip=$('#intro-skip');
     if(skip){
@@ -645,13 +622,12 @@ const UI = (()=>{
     enterGame();
   }
   function enterGame(){
-    if(!localOffroad&&S.mode==='offroad') S.mode='onroad';
+    if(S.mode==='offroad') S.mode='onroad';
     G.qualitySessionStart();
     G.qualitySettlementEnter(S.at);
     show('scr-game'); screen='game';
     applyIcons();
     renderAll();
-    if(localOffroad&&S.mode==='offroad'&&!OFF.ready()) toast('📡 오프로드 연결 없음 — 온로드 이벤트로 대체됩니다');
     if(S.flags&&S.flags.seoul_open&&!S.ended) setTimeout(showSeoul, 400);   // 서울 안에서 이어하기
   }
 

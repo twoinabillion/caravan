@@ -70,43 +70,31 @@
     </div>
   </div>
 
-  <!-- ══ MODE SELECT ══ -->
-  <div class="scr" id="scr-mode">
-    <div class="kicker">MODE SELECT — 세계를 고르세요</div>
-    <div class="mode-card" id="mode-on" role="button" tabindex="0">
-      <div class="mk">ON-ROAD</div>
-      <h2>온로드</h2>
-      <p>손으로 빚은 이야기들이 포장도로처럼 깔려 있다. 오프라인, 안정적, 밸런스 잡힌 여행.</p>
-      <div class="quote">"길은 이미 놓여 있다. 어느 길을 고를지는 너의 몫이다."</div>
-    </div>
-    <div class="mode-card off" id="mode-off" role="button" tabindex="0">
-      <div class="mk">OFF-ROAD</div>
-      <h2>오프로드</h2>
-      <p>이 세계의 누구도 대본을 갖고 있지 않다. 이벤트·인물·대화를 AI가 그 자리에서 만들어낸다. 정착지에선 NPC와 진짜 대화가 가능하다.</p>
-      <div class="quote">"지도 밖으로 벗어난 순간, 이야기는 너를 따라 태어난다."</div>
-      <div class="lock" id="offlock"></div>
-      <div id="offkey">
-        <input id="apikey" type="password" placeholder="sk-ant-… (Anthropic API 키)" autocomplete="off">
-        <button id="bt-keyok">연결</button>
-      </div>
-      <div id="offmsg"></div>
-    </div>
-    <button class="act" id="bt-modeback" style="margin-top:6px"><span class="ic">←</span><span><b>돌아가기</b></span></button>
-  </div>
+  <!-- 외부 API 모드 선택은 사용하지 않는다. 구형 QA가 화면 경유 여부만
+       확인할 수 있게 빈 호환 노드만 남긴다. -->
+  <div class="scr" id="scr-mode" hidden aria-hidden="true"></div>
 
   <!-- ══ INTRO ══ -->
   <div class="scr" id="scr-name">
     <div id="name-card">
-      <div class="name-kicker">STORY BOOK · 첫 장</div>
-      <img id="name-child" alt="8살 주인공 초상">
-      <div class="name-era">2169년 · 오래전 기억</div>
-      <h2>할아버지가 부르던 이름</h2>
-      <p>이 이야기는 비 내리던 어느 밤,<br>8살의 조수석에서 시작된다.</p>
-      <label for="inp-name">이 기억의 주인은 누구였을까?</label>
-      <input id="inp-name" maxlength="8" placeholder="이름을 적는다" autocomplete="off">
-      <div id="profile-pick" role="radiogroup" aria-label="출발 구성"></div>
-      <button id="bt-name" class="mbtn">이름을 적고 첫 장을 연다</button>
-      <small>비워두면 「나」로 기록됩니다</small>
+      <header class="departure-head">
+        <img id="name-child" alt="8살 주인공 초상">
+        <div>
+          <div class="name-kicker">출발 기록 · 01</div>
+          <h2>부산에서 첫 길을 연다</h2>
+          <p>이름과 처음 실을 물건을 정한다.</p>
+        </div>
+      </header>
+      <div class="departure-name">
+        <label for="inp-name">운전수 이름 <small>비우면 「나」로 기록</small></label>
+        <input id="inp-name" maxlength="8" placeholder="이름을 적는다" autocomplete="off">
+      </div>
+      <fieldset class="departure-loadout">
+        <legend>출발 방식 <small>선택하면 시작 물자가 바뀝니다</small></legend>
+        <div id="profile-pick" role="radiogroup" aria-label="출발 구성"></div>
+      </fieldset>
+      <div id="profile-detail" aria-live="polite"></div>
+      <button id="bt-name" class="mbtn"><span>첫 장을 연다</span><small id="bt-name-profile">균형 출발</small></button>
     </div>
   </div>
   <div class="scr" id="scr-intro">
@@ -118,7 +106,7 @@
         <div id="intro-hint">눌러서 다음 장</div>
       </div>
       <div id="intro-page">
-        <div id="intro-meta"><span id="intro-era"></span><span id="intro-count"></span></div>
+        <div id="intro-meta" hidden aria-hidden="true"><span id="intro-era"></span><span id="intro-count"></span></div>
         <h2 id="intro-title"></h2>
         <div id="intro-txt"></div>
       </div>
