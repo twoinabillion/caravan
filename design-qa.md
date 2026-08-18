@@ -1,3 +1,60 @@
+# 인트로 1번 완전 일치 + 3번 압정 Design QA (2026-08-18)
+
+- Source visual truth: `/Users/sang/.codex/generated_images/019fe565-5708-73b1-b061-eeb593218d5a/exec-4cfb477f-8b99-48c9-80e8-8946640cbb57.png` (1번의 프레임·배치·크기·줄바꿈)
+- Supporting source: `/Users/sang/.codex/generated_images/019fe565-5708-73b1-b061-eeb593218d5a/exec-af8ac746-b35d-410c-af7b-881b568f5d19.png` (3번의 초상 압정만 채택)
+- Implementation screenshot: `/Users/sang/caravan/audits/intro-portrait-hybrid-2026-08-18/implementation-480x860.png`
+- Focused paper screenshot: `/Users/sang/caravan/audits/intro-portrait-hybrid-2026-08-18/paper-480x860.png`
+- Exact comparison evidence: `/Users/sang/caravan/audits/intro-portrait-hybrid-2026-08-18/comparison-target-left-implementation-right-v3.png` (왼쪽 1번, 오른쪽 구현)
+- Responsive evidence: 같은 폴더의 `implementation-390x844.png`, `implementation-320x720.png`, `paper-390x844.png`, `paper-320x720.png`, `metrics.json`
+- Browser / viewport: Chromium, 480×860·390×844·320×720 CSS px, device scale factor 1
+- State: `처음에는 편리한 도구였다`, `처음엔 뭘 했는데?`와 할아버지 답변이 동시에 보이는 프롤로그 턴. 자동 진행 OFF 뒤 15회 직접 넘김.
+
+## Findings
+
+- P0: 없음.
+- P1: 없음.
+- P2: 없음. 이전 구현에서 가장 크게 달랐던 할아버지 말풍선 4줄·104px 높이를 1번과 같은 3줄·약 71px로 고쳤고, 어린 주인공 말풍선도 한 줄·약 34px로 맞췄다.
+- P2: 없음. 제목의 글자 면이 상단 청록선에 붙어 보이던 상태를 고쳐, 두 청록선 사이의 시각 중심으로 6px 내렸다. 제목 블록 전체 높이는 유지해 아래 이름·초상·말풍선 좌표는 바뀌지 않았다.
+- P3: 실제 게임은 상단 장면과 세로 종이를 함께 쓰므로 전체 화면의 종횡비는 가로 시안과 다르다. 비교 가능한 종이 상단은 468×343으로 동일하게 정규화했다.
+
+## Required fidelity surfaces
+
+- Fonts and typography: 1번의 명조 제목, 갈색 화자 이름, 작은 본문 크기와 3줄 답변 줄바꿈을 그대로 맞췄다.
+- Spacing and layout rhythm: 480px 종이 기준 어린 주인공 초상은 `(x≈352,y≈80,w=42,h=43)`, 말풍선은 `(x≈235,y≈99,w=115,h≈34)`다. 할아버지 초상은 `(x≈43,y≈146,w=46,h=48)`, 말풍선은 `(x≈95,y≈165,w=242,h≈71)`로 1번 목표 좌표와 0–2px 안이다.
+- Colors and visual tokens: 1번의 종이·초상선·이름·말풍선 재질을 유지하고 3번의 금속 압정만 더했다.
+- Image quality and asset fidelity: `player_child.png`와 `grandfather.png` 정본을 사용하며, 압정도 추출된 투명 PNG 실자산이다.
+- Copy and content: 제목, 이름, 질문, 할아버지 답변은 게임 데이터 원문이며 이름 입력값도 계속 반영된다.
+
+## Comparison history
+
+1. Earlier finding — P1: 첫 구현은 할아버지 답변이 4줄·104px로 늘어나 1번의 3줄·70px 구성과 명백히 달랐다. 어린 주인공 말풍선과 두 초상도 목표보다 컸다.
+   - Fix: 화자별 초상 크기, 말풍선 고정 폭, 본문 크기·행간·패딩을 1번의 측정값으로 분리했다.
+2. Earlier finding — P2: 390px에서 왼쪽 초상이 안전 레일을 0.6px 침범했다.
+   - Fix: 왼쪽 레인을 1px 안쪽으로 보정했다.
+   - Post-fix evidence: `metrics.json`; 세 뷰포트 모두 `hookSafe: true`다.
+3. Earlier finding — P2: 제목 글자가 종이 상단 청록선에 붙어 두 선 사이에 놓인 표제처럼 읽히지 않았다.
+   - Fix: 제목의 7px 하단 패딩을 6px 상단·1px 하단으로 재배분했다. 전체 높이는 고정되어 대화 영역에는 이동이 없다.
+   - Post-fix evidence: `comparison-target-left-implementation-right-v3.png`; 제목은 두 선 사이에 들어가고 기존 화자·초상·말풍선 좌표는 `metrics.json`에서 동일하다.
+4. Final comparison: `comparison-target-left-implementation-right-v3.png`에서 제목·화자·초상·말풍선 위치와 줄바꿈이 같은 구도로 읽히며, 구현에만 3번 압정이 추가됐다.
+
+## Interaction and responsive verification
+
+- 프롤로그 시작, 자동 진행 OFF, 15회 직접 넘김, 제목·두 화자·두 초상·두 압정 표시를 확인했다.
+- 480×860, 390×844, 320×720 모두 `hookSafe: true`, `horizontalOverflow: false`, page errors 0.
+- 320px에서는 화면 폭에 맞춰 긴 답변이 더 감기지만 초상·갈고리·본문이 겹치지 않는다.
+
+## Focused region comparison
+
+1번 원본을 468×343으로 정규화하고 구현 종이의 같은 468×343 상단을 잘라 나란히 비교했다. 이 비교에서 초상 끝점, 이름 기준선, 질문 한 줄, 답변 세 줄, 갈고리 앞 여백을 판독했다.
+
+## Follow-up polish
+
+- 남은 P3 없음.
+
+final result: passed
+
+---
+
 # 정착지 타일 월드 Design QA
 
 - Source visual truth: `/Users/sang/Desktop/images (4).jpeg`

@@ -92,6 +92,7 @@ const uiAssetPaths = {
   ROAD_JOURNEY_LOG:{path:'assets/ui/road-journey-log-panel-v1.webp', mime:'image/webp'},
   EVENT_FIELD_REPORT:{path:'assets/ui/event-field-report-panel-v2.webp', mime:'image/webp'},
   EVENT_FIELD_REPORT_TALL:{path:'assets/ui/event-field-report-panel-tall-v1.webp', mime:'image/webp'},
+  STORY_PORTRAIT_PIN:{path:'assets/ui/story-portrait-pin.png', mime:'image/png'},
   EVENT_RESULT_TICKET:{path:'assets/ui/event-result-ticket-v1.webp', mime:'image/webp'},
   EVENT_LEDGER_BUTTON:{path:'assets/ui/event-ledger-button-v1.webp', mime:'image/webp'},
   EVENT_CHOICE_LEDGER:{path:'assets/ui/event-choice-ledger-slip-v1.webp', mime:'image/webp'},

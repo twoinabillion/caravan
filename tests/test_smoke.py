@@ -137,6 +137,14 @@ with sync_playwright() as p:
       names:[...document.querySelectorAll('#intro-txt .chat-name')].map(x=>x.textContent),
       sides:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.classList.contains('mine')?'mine':'other'),
       lanes:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.dataset.side),
+      portraits:[...document.querySelectorAll('#intro-txt .chat-avatar')].map(x=>x.getAttribute('alt')),
+      pins:document.querySelectorAll('#intro-txt .intro-portrait-pin').length,
+      safe:[...document.querySelectorAll('#intro-txt .chat-msg')].every(msg=>{
+        const avatar=msg.querySelector('.chat-avatar').getBoundingClientRect();
+        const page=document.querySelector('#intro-page').getBoundingClientRect();
+        const leftRail=Math.max(30,page.width*.08), rightRail=Math.max(54,page.width*.125);
+        return avatar.left>=page.left+leftRail && avatar.right<=page.right-rightRail;
+      }),
       narration:document.querySelectorAll('#intro-txt .story-narration').length,
       order:[...document.querySelectorAll('#intro-txt [data-story-entry]')].map(x=>x.dataset.kind),
       visibleEntries:[...document.querySelectorAll('#intro-txt [data-story-entry]')].filter(x=>getComputedStyle(x).display!=='none').length,
@@ -146,6 +154,9 @@ with sync_playwright() as p:
           intro_chat['names'] == ['테스터 · 8살','할아버지'] and
           intro_chat['sides'] == ['mine','other'] and
           intro_chat['lanes'] == ['right','left'], str(intro_chat))
+    check('인트로 양쪽 초상·압정·갈고리 안전영역',
+          intro_chat['portraits'] == ['테스터 · 8살 초상','할아버지 초상'] and
+          intro_chat['pins'] == 2 and intro_chat['safe'], str(intro_chat))
     check('인트로 기록은 보존하되 최근 두 턴만 화면에 표시',
           intro_chat['narration'] == 1 and
           intro_chat['order'] == ['narration','dialogue','dialogue'] and

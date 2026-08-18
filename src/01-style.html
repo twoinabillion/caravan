@@ -1080,7 +1080,7 @@ input{font-family:inherit}
   font:12px/1.4 var(--mono);letter-spacing:.08em}
 #intro-meta[hidden]{display:none!important}
 #intro-count{color:#625d52}
-#intro-title{font:900 20px/1.3 var(--serif);margin:5px 0 8px;padding-bottom:7px;color:#2b2822;border-bottom:1px solid rgba(42,102,96,.34)}
+#intro-title{font:900 20px/1.3 var(--serif);margin:5px 0 8px;padding:6px 0 1px;color:#2b2822;border-bottom:1px solid rgba(42,102,96,.34)}
 #intro-txt{font-family:var(--serif);font-size:14px;line-height:1.62;color:#37332c;min-height:0;
   display:flex;flex:1;align-items:flex-start}
 #intro-txt .story-reader{min-height:0;width:100%}
@@ -1089,12 +1089,28 @@ input{font-family:inherit}
 #intro-txt .turn-text{font-family:var(--serif);font-size:14px;line-height:1.58;color:#37332c}
 #intro-txt .story-turn.dialogue .turn-text,#intro-txt .story-turn.letter .turn-text{padding-left:58px}
 #intro-txt .story-chat{justify-content:flex-start;padding:5px 0 4px}
+#intro-txt .story-transcript{gap:13px;transform:translateY(-6px)}
+#intro-txt .chat-msg{padding-right:clamp(56px,12cqw,112px)}
+#intro-txt .chat-msg.side-left{gap:6px;margin-left:-22px;padding-left:clamp(4px,1.5cqw,12px)}
+#intro-txt .chat-msg.side-right{gap:2px;padding-right:36px}
+#intro-txt .chat-avatar{border-radius:10px;border-color:#274a50;
+  box-shadow:0 5px 12px rgba(67,50,27,.2)}
+#intro-txt .intro-portrait-photo{position:relative;display:block;flex:none}
+#intro-txt .chat-msg.side-left .chat-avatar,#intro-txt .chat-msg.side-left .intro-portrait-photo{width:46px;height:48px}
+#intro-txt .chat-msg.side-right .chat-avatar,#intro-txt .chat-msg.side-right .intro-portrait-photo{width:42px;height:43px}
+#intro-txt .intro-portrait-pin{position:absolute;z-index:2;top:-5px;left:-5px;width:14px;height:14px;
+  pointer-events:none;background:url("__UI_STORY_PORTRAIT_PIN__") center/contain no-repeat;
+  filter:drop-shadow(0 1px 1px rgba(38,28,17,.45))}
 #intro-txt .story-narration{margin:1px 0 3px;padding:8px 9px 9px;border-left:2px solid rgba(36,112,105,.5);background:rgba(92,77,52,.07)}
 #intro-txt .story-narration-text{font-size:14px;line-height:1.58;color:#37332c}
-#intro-txt .chat-bubble{font-family:var(--serif);font-size:13.5px;line-height:1.55;color:#37332c;background:rgba(255,248,226,.24);
+#intro-txt .chat-bubble{box-sizing:border-box;font-family:var(--serif);font-size:11.5px;line-height:1.55;color:#37332c;background:rgba(255,248,226,.24);
   border-color:rgba(91,76,52,.26);box-shadow:none}
 #intro-txt .chat-name{color:#8a5415}
-#intro-txt .chat-copy{max-width:min(79%,440px)}
+#intro-txt .chat-copy{max-width:min(76%,440px)}
+#intro-txt .chat-msg.side-left .chat-copy{width:min(242px,calc(100% - 52px));max-width:none}
+#intro-txt .chat-msg.side-left .chat-bubble{width:100%;padding:8px 10px}
+#intro-txt .chat-msg.side-right .chat-copy{width:min(115px,calc(100% - 44px));max-width:none}
+#intro-txt .chat-msg.side-right .chat-bubble{width:100%;padding:9px 8px;line-height:1.25}
 #intro-txt .em{color:#8a5415}
 #intro-txt .ai{color:#266f69;font-family:var(--mono);font-size:13.5px}
 #intro-txt .story-transcript>[data-story-entry]:not(:nth-last-child(-n+2)){display:none}
@@ -1121,6 +1137,20 @@ input{font-family:inherit}
   #intro-page{padding-top:clamp(25px,6cqw,31px)}
   #intro-title{font-size:18px;margin-bottom:4px}
   #intro-txt .story-chat{padding-top:5px}
+}
+@container game (max-width:350px){
+  #intro-page{padding-right:27px;padding-left:38px}
+  #intro-txt .chat-msg{gap:8px;padding-right:50px}
+  #intro-txt .story-transcript{gap:10px;transform:translateY(-4px)}
+  #intro-txt .chat-msg.side-left{gap:6px;margin-left:0;padding-left:6px}
+  #intro-txt .chat-msg.side-right{gap:2px;padding-right:28px}
+  #intro-txt .chat-msg.side-left .chat-avatar,#intro-txt .chat-msg.side-left .intro-portrait-photo{width:44px;height:46px}
+  #intro-txt .chat-msg.side-right .chat-avatar,#intro-txt .chat-msg.side-right .intro-portrait-photo{width:40px;height:41px}
+  #intro-txt .intro-portrait-pin{top:-5px;left:-5px;width:14px;height:14px}
+  #intro-txt .chat-msg.side-left .chat-copy{width:min(164px,calc(100% - 50px))}
+  #intro-txt .chat-msg.side-right .chat-copy{width:min(105px,calc(100% - 42px))}
+  #intro-txt .chat-bubble{font-size:11px}
+  #intro-txt .chat-name{margin-bottom:3px;font-size:11px}
 }
 #intro-auto{position:absolute;z-index:5;top:calc(10px + var(--safe-top));left:calc(62px + var(--safe-left));
   min-height:40px;padding:7px 11px;border:1px solid rgba(255,180,84,.45);border-radius:18px;

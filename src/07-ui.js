@@ -944,14 +944,17 @@ const UI = (()=>{
     const key=speakerLaneKey(turn);
     return (lanes&&lanes.get(key))||(playerSpeaker(person.id)?'right':'left');
   }
-  function chatMessageHtml(turn, newest=false, side='left'){
+  function chatMessageHtml(turn, newest=false, side='left', opt={}){
     const person=speakerInfo(turn.who,turn.name);
     const mine=playerSpeaker(person.id);
     const hidden=person.name==='???';
     const faceAlt=hidden?'이름을 모르는 사람':person.name;
-    const face=person.portrait
+    const portrait=person.portrait
       ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
       : '';
+    const face=portrait&&opt.intro
+      ? `<span class="intro-portrait-photo">${portrait}<span class="intro-portrait-pin" aria-hidden="true"></span></span>`
+      : portrait;
     return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${hidden?' identity-hidden':''}${newest?' chat-newest':''}"
       data-kind="dialogue" data-speaker="${esc(person.id||person.name)}" data-side="${side}" data-story-entry>
       ${face}<div class="chat-copy"><b class="chat-name">${esc(person.name)}</b>
@@ -971,7 +974,7 @@ const UI = (()=>{
     return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
       ${shown.map((turn,i)=>{
         const newest=i===shown.length-1;
-        if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes));
+        if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes),opt);
         if(turn.kind==='narration') return narrationMessageHtml(turn,newest,opt);
         return storyTurnHtml(turn,opt);
       }).join('')}</section>`;

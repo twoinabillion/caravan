@@ -475,7 +475,7 @@ D.companionVisuals = {
 /* 초기 삽화형 초상은 데이터·인물 식별에는 남기되 시네마틱 대화 UI에는 쓰지 않는다.
    장면 사진과 결이 맞는 새 초상으로 교체된 뒤 이 목록에서 하나씩 해제한다. */
 D.legacyIllustratedPortraits = [
-  'grandfather','hanbyeol','hayeosa','kimcaptain','mapmaker','mingyu',
+  'hanbyeol','hayeosa','kimcaptain','mapmaker','mingyu',
   'postman','sanjigi','seoyeon'
 ];
 /* 모든 시네마틱·주행 Canvas·트레일러가 공유하는 차량 정본.
