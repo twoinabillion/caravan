@@ -2220,7 +2220,9 @@ const UI = (()=>{
     const sheet=$('#ev-sheet'), scroll=sheet&&sheet.querySelector('.event-scroll');
     const reader=sheet&&sheet.querySelector('.story-reader');
     const latest=reader&&reader.querySelector('[data-story-entry]:last-child');
-    if(scroll&&reader&&latest){
+    if(reader&&latest&&reader.scrollHeight>reader.clientHeight+1){
+      reader.scrollTo({top:reader.scrollHeight,behavior:'auto'});
+    }else if(scroll&&reader&&latest){
       const bottom=reader.offsetTop+latest.offsetTop+latest.offsetHeight;
       scroll.scrollTo({top:Math.max(0,bottom-scroll.clientHeight+28),behavior:'auto'});
     }
@@ -2305,7 +2307,15 @@ const UI = (()=>{
     const reader=sheet.querySelector('.story-reader');
     const dock=sheet.querySelector('.event-choice-dock');
     const turn=state.turns[Math.min(state.index,state.turns.length-1)];
-    reader.innerHTML=storyReaderHtml(state.turns,state.index,{lanes:state.lanes});
+    const transcript=reader.querySelector('.story-transcript');
+    if(transcript&&transcript.children.length===state.index){
+      transcript.querySelectorAll('.chat-newest,.narration-newest').forEach(entry=>{
+        entry.classList.remove('chat-newest','narration-newest');
+      });
+      transcript.insertAdjacentHTML('beforeend',storyEntryHtml(turn,true,state.lanes));
+    }else{
+      reader.innerHTML=storyReaderHtml(state.turns,state.index,{lanes:state.lanes});
+    }
     renderStoryScene(state,turn,state.index);
     if(turn&&state.audioIndex!==state.index){
       state.audioIndex=state.index;
