@@ -565,7 +565,18 @@ const UI = (()=>{
     $('#intro-era').textContent=page.era||'';
     $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length} · ${introTurnIdx+1} / ${beats.length}`;
     $('#intro-title').textContent=page.title||'';
-    $('#intro-txt').innerHTML=storyReaderHtml(introBeats,introTurnIdx,{intro:true});
+    const introText=$('#intro-txt');
+    const transcript=!newPage&&introText&&introText.querySelector('.story-transcript');
+    if(transcript&&transcript.children.length===introTurnIdx){
+      transcript.querySelectorAll('.chat-newest,.narration-newest').forEach(entry=>{
+        entry.classList.remove('chat-newest','narration-newest');
+      });
+      transcript.insertAdjacentHTML('beforeend',storyEntryHtml(
+        introBeats[introTurnIdx],true,dialogueLaneMap(introBeats),{intro:true}
+      ));
+    }else if(introText){
+      introText.innerHTML=storyReaderHtml(introBeats,introTurnIdx,{intro:true});
+    }
     const live=$('#story-live'), current=introBeats[Math.min(introTurnIdx,introBeats.length-1)];
     if(live&&current) live.textContent=`${current.kind==='dialogue'?(current.name||speakerInfo(current.who).name)+'의 말: ':'장면 설명: '}${stripTags(current.text)}`;
     const nextBeat=introBeats[introTurnIdx+1];
@@ -968,17 +979,17 @@ const UI = (()=>{
       <div class="story-narration-text">${fmt(turn.text||'')}</div>
     </div>`;
   }
+  function storyEntryHtml(turn,newest,lanes,opt={}){
+    if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes,opt),opt);
+    if(turn.kind==='narration') return narrationMessageHtml(turn,newest,opt);
+    return storyTurnHtml(turn,opt);
+  }
   function storyReaderHtml(turns,index,opt={}){
     const safe=Math.min(Math.max(0,index),Math.max(0,turns.length-1));
     const shown=(turns.length?turns:[{kind:'narration',text:'잠시 말이 끊겼다.'}]).slice(0,safe+1);
     const lanes=opt.lanes instanceof Map?opt.lanes:dialogueLaneMap(turns);
     return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
-      ${shown.map((turn,i)=>{
-        const newest=i===shown.length-1;
-        if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes,opt),opt);
-        if(turn.kind==='narration') return narrationMessageHtml(turn,newest,opt);
-        return storyTurnHtml(turn,opt);
-      }).join('')}</section>`;
+      ${shown.map((turn,i)=>storyEntryHtml(turn,i===shown.length-1,lanes,opt)).join('')}</section>`;
   }
   function eventSpeakerCandidates(evd, extra=[]){
     const ids=[];
