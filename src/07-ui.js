@@ -939,8 +939,9 @@ const UI = (()=>{
     }
     return lanes;
   }
-  function dialogueSide(turn,lanes){
+  function dialogueSide(turn,lanes,opt={}){
     const person=speakerInfo(turn.who,turn.name);
+    if(opt.intro) return playerSpeaker(person.id)?'right':'left';
     const key=speakerLaneKey(turn);
     return (lanes&&lanes.get(key))||(playerSpeaker(person.id)?'right':'left');
   }
@@ -974,7 +975,7 @@ const UI = (()=>{
     return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
       ${shown.map((turn,i)=>{
         const newest=i===shown.length-1;
-        if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes),opt);
+        if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes,opt),opt);
         if(turn.kind==='narration') return narrationMessageHtml(turn,newest,opt);
         return storyTurnHtml(turn,opt);
       }).join('')}</section>`;

@@ -720,7 +720,8 @@ input{font-family:inherit}
 .folio-progress{min-height:0;margin:0 var(--folio-rail-right) 0 var(--folio-rail-left);padding:1.5% 0;border-top:1px solid rgba(48,42,34,.34);overflow-y:auto;scrollbar-width:thin}
 .folio-section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:1%;font:900 clamp(10px,2.45cqw,14px)/1 var(--sans)}
 .folio-section-title span{color:#276b69;font-family:var(--mono)}
-.folio-step{display:grid;grid-template-columns:clamp(22px,6.1cqw,34px) minmax(0,1fr);align-items:center;gap:6px;padding:1.15% 0;border-bottom:1px solid rgba(45,39,31,.2)}
+.folio-step{display:grid;grid-template-columns:clamp(22px,6.1cqw,34px) minmax(0,1fr);align-items:center;gap:6px;padding:1.35% 0;border-bottom:0}
+.folio-step+.folio-step{margin-top:.65%}
 .folio-step>i{display:grid;place-items:center;width:clamp(21px,5.7cqw,31px);height:clamp(21px,5.7cqw,31px);border:1.5px solid #356f6d;border-radius:50%;
   color:#356f6d;font:900 clamp(9px,2.3cqw,13px)/1 var(--mono);font-style:normal}
 .folio-step.done>i{background:#356f6d;color:#e6dcc5}.folio-step span{min-width:0}
@@ -1090,14 +1091,14 @@ input{font-family:inherit}
 #intro-txt .story-turn.dialogue .turn-text,#intro-txt .story-turn.letter .turn-text{padding-left:58px}
 #intro-txt .story-chat{justify-content:flex-start;padding:5px 0 4px}
 #intro-txt .story-transcript{gap:13px;transform:translateY(-6px)}
-#intro-txt .chat-msg{padding-right:clamp(56px,12cqw,112px)}
-#intro-txt .chat-msg.side-left{gap:6px;margin-left:-22px;padding-left:clamp(4px,1.5cqw,12px)}
-#intro-txt .chat-msg.side-right{gap:2px;padding-right:36px}
+#intro-txt .chat-msg{padding:0}
+#intro-txt .chat-msg.side-left{gap:6px;margin-left:-22px;padding-right:clamp(32px,8cqw,72px);padding-left:clamp(4px,1.5cqw,12px)}
+#intro-txt .chat-msg.side-right{gap:6px;padding-right:0;padding-left:clamp(32px,8cqw,72px)}
 #intro-txt .chat-avatar{border-radius:10px;border-color:#274a50;
   box-shadow:0 5px 12px rgba(67,50,27,.2)}
 #intro-txt .intro-portrait-photo{position:relative;display:block;flex:none}
-#intro-txt .chat-msg.side-left .chat-avatar,#intro-txt .chat-msg.side-left .intro-portrait-photo{width:46px;height:48px}
-#intro-txt .chat-msg.side-right .chat-avatar,#intro-txt .chat-msg.side-right .intro-portrait-photo{width:42px;height:43px}
+#intro-txt .chat-msg.side-left .chat-avatar,#intro-txt .chat-msg.side-left .intro-portrait-photo,
+#intro-txt .chat-msg.side-right .chat-avatar,#intro-txt .chat-msg.side-right .intro-portrait-photo{width:46px;height:48px}
 #intro-txt .intro-portrait-pin{position:absolute;z-index:2;top:-5px;left:-5px;width:14px;height:14px;
   pointer-events:none;background:url("__UI_STORY_PORTRAIT_PIN__") center/contain no-repeat;
   filter:drop-shadow(0 1px 1px rgba(38,28,17,.45))}
@@ -1107,13 +1108,10 @@ input{font-family:inherit}
   border-color:rgba(91,76,52,.26);box-shadow:none}
 #intro-txt .chat-name{color:#8a5415}
 #intro-txt .chat-copy{max-width:min(76%,440px)}
-#intro-txt .chat-msg.side-left .chat-copy{width:min(242px,calc(100% - 52px));max-width:none}
-#intro-txt .chat-msg.side-left .chat-bubble{width:100%;padding:8px 10px}
-#intro-txt .chat-msg.side-right .chat-copy{width:min(115px,calc(100% - 44px));max-width:none}
-#intro-txt .chat-msg.side-right .chat-bubble{width:100%;padding:9px 8px;line-height:1.25}
+#intro-txt .chat-msg.side-left .chat-copy,#intro-txt .chat-msg.side-right .chat-copy{width:min(242px,calc(100% - 52px));max-width:none}
+#intro-txt .chat-msg.side-left .chat-bubble,#intro-txt .chat-msg.side-right .chat-bubble{width:100%;padding:8px 10px;line-height:1.55}
 #intro-txt .em{color:#8a5415}
 #intro-txt .ai{color:#266f69;font-family:var(--mono);font-size:13.5px}
-#intro-txt .story-transcript>[data-story-entry]:not(:nth-last-child(-n+2)){display:none}
 #intro-hint{position:absolute;z-index:2;bottom:8px;left:0;right:0;text-align:center;pointer-events:none;
   font-family:var(--mono);font-size:12px;color:#d0d4df;letter-spacing:.1em;
   text-shadow:0 1px 6px #05060c,0 1px 12px #05060c;animation:blink 2.2s infinite}
@@ -1140,15 +1138,14 @@ input{font-family:inherit}
 }
 @container game (max-width:350px){
   #intro-page{padding-right:27px;padding-left:38px}
-  #intro-txt .chat-msg{gap:8px;padding-right:50px}
+  #intro-txt .chat-msg{gap:6px;padding:0}
   #intro-txt .story-transcript{gap:10px;transform:translateY(-4px)}
-  #intro-txt .chat-msg.side-left{gap:6px;margin-left:0;padding-left:6px}
-  #intro-txt .chat-msg.side-right{gap:2px;padding-right:28px}
-  #intro-txt .chat-msg.side-left .chat-avatar,#intro-txt .chat-msg.side-left .intro-portrait-photo{width:44px;height:46px}
-  #intro-txt .chat-msg.side-right .chat-avatar,#intro-txt .chat-msg.side-right .intro-portrait-photo{width:40px;height:41px}
+  #intro-txt .chat-msg.side-left{gap:6px;margin-left:0;padding-right:28px;padding-left:6px}
+  #intro-txt .chat-msg.side-right{gap:6px;padding-right:0;padding-left:28px}
+  #intro-txt .chat-msg.side-left .chat-avatar,#intro-txt .chat-msg.side-left .intro-portrait-photo,
+  #intro-txt .chat-msg.side-right .chat-avatar,#intro-txt .chat-msg.side-right .intro-portrait-photo{width:44px;height:46px}
   #intro-txt .intro-portrait-pin{top:-5px;left:-5px;width:14px;height:14px}
-  #intro-txt .chat-msg.side-left .chat-copy{width:min(164px,calc(100% - 50px))}
-  #intro-txt .chat-msg.side-right .chat-copy{width:min(105px,calc(100% - 42px))}
+  #intro-txt .chat-msg.side-left .chat-copy,#intro-txt .chat-msg.side-right .chat-copy{width:min(164px,calc(100% - 50px))}
   #intro-txt .chat-bubble{font-size:11px}
   #intro-txt .chat-name{margin-bottom:3px;font-size:11px}
 }
