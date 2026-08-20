@@ -1,6 +1,7 @@
 seoul400_apikey
 .DS_Store
 tests/shots/
+/artifacts/
 node_modules
 dist/
 .granite/

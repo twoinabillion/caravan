@@ -372,7 +372,10 @@ G.applyFx = (fx)=>{
   if(fx.recruitChoice) G.rememberRecruitChoice(fx.recruitChoice);
   if(fx.recruitRoad) G.markRecruitRoad(fx.recruitRoad);
   if(fx.recruitReady) G.markRecruitReady(fx.recruitReady);
-  if(fx.recruit) G.doRecruit(fx.recruit);
+  if(fx.recruit&&G.doRecruit(fx.recruit)){
+    const recruit=D.comps[fx.recruit];
+    chips.push({t:`정식 동료 합류 · ${recruit.name} · ${recruit.cls} · 크루 ${S.party.length}/${Object.keys(D.comps).length}`,c:'plus'});
+  }
   if(fx.note) G.addNote(fx.note);
   for(const learned of G.syncKnowledgeFromFlags())
     chips.push({t:`◈ ${learned.label} · ${learned.level>=2?'확인':'단서'}`,c:'item'});
@@ -617,11 +620,10 @@ G.doRecruit = (id)=>{
   if(S.recruitQ&&S.recruitQ.id===id) S.recruitQ=null;
   G.qualityMilestone('first_recruit',{companionId:id,approach:approach||''});
   G.qualityMeaningfulChange('relationship',id);
-  G.checkLevel(id);
+  G.checkLevel(id,{recruit:true});
   const memory=G.recruitApproach(id);
   G.addNote({type:'인물',title:D.comps[id].name,
     body:`떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다.${memory?' '+memory.label+'. '+memory.memory:''} ${D.comps[id].bio}`,links:[]});
-  UI.toast(`<span class="ic">${D.comps[id].face}</span>${D.comps[id].name}, 달구지에 탑승`);
   const nextSeat=G.nextSeatUpgrade();
   if(S.party.length>=G.maxParty()&&nextSeat)
     setTimeout(()=>UI.toast(`💺 달구지가 찼다 — 다음 자리: ${nextSeat.nm}`),900);

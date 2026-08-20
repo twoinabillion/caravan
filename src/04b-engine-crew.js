@@ -15,12 +15,14 @@ G.bond = (id, amt)=>{
   c.bond += amt;
   G.checkLevel(id);
 };
-G.checkLevel = (id)=>{
+G.checkLevel = (id,opt={})=>{
   const c=S.comps[id], nm=D.comps[id].name;
   while(c.lvl<3 && !c.pending && c.bond>=D.bondTh[c.lvl]){
     const next=c.lvl+1;
     if(next<3){ c.pending=next;
-      UI.toast(`<span class="ic">✦</span>${nm}와의 유대가 깊어졌다 — 동료 카드에서 퍼크 선택`);
+      UI.toast(opt.recruit
+        ? `<span class="recruit-kicker">정식 동료 합류</span><strong>${nm}</strong> · ${D.comps[id].cls} · 크루 ${S.party.length}/${Object.keys(D.comps).length}<span class="recruit-next">첫 유대 보상 · 동료 카드에서 퍼크 선택</span>`
+        : `<span class="ic">✦</span>${nm}와의 유대가 깊어졌다 — 동료 카드에서 퍼크 선택`, opt.recruit?'recruit':undefined);
     } else { /* Lv3 시그니처(스토리)는 자동 습득 */
       c.lvl=3;
       const p=D.comps[id].perks[3];

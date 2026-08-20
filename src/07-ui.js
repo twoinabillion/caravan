@@ -6,6 +6,36 @@
 /* ═══════════════════ UI ═══════════════════ */
 const $ = (s)=>document.querySelector(s);
 const el = (tag,cls,html)=>{ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; };
+const directionParticle=(word)=>{
+  const text=String(word||'');
+  const code=text.charCodeAt(text.length-1)-0xAC00;
+  const tail=code>=0&&code<=11171?code%28:0;
+  return tail!==0&&tail!==8?'으로':'로';
+};
+
+function syncJournalCards(){
+  document.querySelectorAll('#jp-log .note').forEach(note=>{
+    if(!note.hasAttribute('tabindex')) note.tabIndex=0;
+    note.setAttribute('role','button');
+    note.setAttribute('aria-expanded',String(note.classList.contains('expanded')));
+  });
+}
+document.addEventListener('click',event=>{
+  const note=event.target.closest&&event.target.closest('#jp-log .note');
+  if(!note||event.target.closest('.lk')) return;
+  note.classList.toggle('expanded');
+  note.setAttribute('aria-expanded',String(note.classList.contains('expanded')));
+});
+document.addEventListener('keydown',event=>{
+  const note=event.target.closest&&event.target.closest('#jp-log .note');
+  if(!note||!['Enter',' '].includes(event.key)) return;
+  event.preventDefault(); note.click();
+});
+queueMicrotask(()=>{
+  const log=$('#jp-log'); if(!log) return;
+  new MutationObserver(syncJournalCards).observe(log,{childList:true,subtree:true});
+  syncJournalCards();
+});
 
 const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
@@ -949,12 +979,13 @@ const UI = (()=>{
     }
     return lanes;
   }
-  function dialogueSide(turn,lanes,opt={}){
-    const person=speakerInfo(turn.who,turn.name);
-    if(opt.intro) return playerSpeaker(person.id)?'right':'left';
-    const key=speakerLaneKey(turn);
-    return (lanes&&lanes.get(key))||(playerSpeaker(person.id)?'right':'left');
-  }
+function dialogueSide(turn,lanes,opt={}){
+  const person=speakerInfo(turn.who,turn.name);
+  if(opt.intro&&person.id==='mother') return 'left';
+  if(opt.intro&&person.id==='father') return 'right';
+  const key=speakerLaneKey(turn);
+  return (lanes&&lanes.get(key))||(playerSpeaker(person.id)?'right':'left');
+}
   function chatMessageHtml(turn, newest=false, side='left', opt={}){
     const person=speakerInfo(turn.who,turn.name);
     const mine=playerSpeaker(person.id);
@@ -2916,7 +2947,7 @@ const UI = (()=>{
         <button id="${mode}-action" ${actionAttrs} ${disabled?'disabled':''}>${esc(actionLabel||'선택')}</button>
       </footer>
     </section>
-    <button class="stl-section-back field-board-back" id="stl-hub-back">← ${esc(stl.name)}으로 돌아간다</button>`;
+    <button class="stl-section-back field-board-back" id="stl-hub-back">← ${esc(stl.name)}${directionParticle(stl.name)} 돌아간다</button>`;
   }
   function marketFieldRows(){
     const stl=D.stls[curStl], localImpact=G.stlImpact(curStl), disc=G.tradeDiscount(curStl);
@@ -2956,7 +2987,7 @@ const UI = (()=>{
       } else {
         const price=Math.max(1,Math.round(price0*G.marketMul(curStl,key)*disc)),mul=G.marketMul(curStl,key);
         const priceNote=mul<=.9?' · 이 동네가 싸다':mul>=1.2?' · 여긴 귀하다':'';
-        supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label,sub:`${qty}${key==='fuel'?'L':key==='water'?'통':key==='food'?'일치':'개'}를 싣는다${priceNote}`,
+        supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label,sub:`${qty}${key==='fuel'?'L를':key==='water'?'통을':key==='food'?'일치를':'개를'} 싣는다${priceNote}`,
           meta:`고철 ${price} · 25분`,cost:price,action:'산다',enabled:S.scrap>=price,
           icon:key==='fuel'?'fuel':key==='water'?'water':key==='food'?'food':ITEM_ICO[key.slice(4)]||'parts'});
       }
@@ -3343,7 +3374,7 @@ const UI = (()=>{
       h+=`<div class="acts stl-rest-actions">
         <button class="act primary" id="stl-rest"><span>${ICO('bond')}</span><span><b>이곳에서 하룻밤 묵는다</b><small>아침까지 · 피로와 사기 회복 · 차 정비</small></span></button></div>`;
     }
-    if(!fieldBoardMarket) h+=`<button class="stl-section-back" id="stl-hub-back">← ${esc(stl.name)}으로 돌아간다</button>`;
+    if(!fieldBoardMarket) h+=`<button class="stl-section-back" id="stl-hub-back">← ${esc(stl.name)}${directionParticle(stl.name)} 돌아간다</button>`;
     body.innerHTML=h;
     if(stlMode==='market'){
       if(fieldBoardMarket) renderMarketFieldBoard();
@@ -4279,9 +4310,9 @@ const UI = (()=>{
     e.innerHTML=`<div class="kicker" style="color:${kcolor}">${kicker}</div>
       <h1>${title}</h1><div class="body">${fmt(body)}</div>
       <div id="endstats">
-        <div class="st"><div class="k">DAYS</div><div class="v">${S?S.day:0}</div></div>
-        <div class="st"><div class="k">DISTANCE</div><div class="v">${Math.round(st.km)}km</div></div>
-        <div class="st"><div class="k">EVENTS</div><div class="v">${st.events}</div></div>
+        <div class="st"><div class="k">일수</div><div class="v">${S?S.day:0}</div></div>
+        <div class="st"><div class="k">거리</div><div class="v">${Math.round(st.km)}km</div></div>
+        <div class="st"><div class="k">사건</div><div class="v">${st.events}</div></div>
         <div class="st"><div class="k">동료</div><div class="v" style="font-size:13px">${S&&S.party.length?S.party.map(id=>D.comps[id].name).join(' '):'없음'}${S&&S.dog?' 🐕':''}</div></div>
       </div>
       <div class="acts">
@@ -4296,4 +4327,258 @@ const UI = (()=>{
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
     showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat, showSeoul,
     storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech, clearToasts};
+})();
+/* Quest journal: separates the main journey, companion stories and local requests
+   without changing the existing save format or the folio renderer. */
+;(()=>{
+  let activeCategory='main';
+  const categoryOrder=['main','companion','side','archive'];
+  const categoryLabels={main:'주 여정',companion:'동료 이야기',side:'길 위의 부탁',archive:'완료 기록'};
+  const qEsc=(value)=>String(value==null?'':value).replace(/[&<>"']/g,ch=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[ch]));
+
+  function recruitModel(){
+    const quest=S&&S.recruitQ;
+    if(!quest||!D.recruitQuests||!D.recruitQuests[quest.id]) return null;
+    const def=D.recruitQuests[quest.id];
+    const target=D.nodes&&D.nodes[quest.target]&&D.nodes[quest.target].name;
+    const stages={
+      task:{status:'부탁 수행 중',action:def.hint},
+      road:{status:'임시 동행',action:def.roadHint},
+      follow:{status:'임시 동행',action:def.followHint},
+      ready:{status:'합류 가능',action:`${def.name}에게 정식 합류를 제안한다`}
+    };
+    const stage=stages[quest.stage]||stages.task;
+    return {
+      kind:'동료 이야기', title:def.title||def.name, name:def.name,
+      status:stage.status, action:stage.action,
+      meta:target?`${target} · ${stage.status}`:stage.status
+    };
+  }
+
+  function sideModel(){
+    const quest=S&&S.quest;
+    if(!quest) return null;
+    const to=D.nodes&&D.nodes[quest.to]&&D.nodes[quest.to].name||'목적지';
+    const label=G.questLabel?G.questLabel(quest):quest.item||'받은 부탁';
+    let action=quest.kind==='letter'
+      ?`${to}에서 편지를 전한다`
+      :`${label} · ${to}까지 가져간다`;
+    if(quest.kind==='procure') action=`${quest.need.name} ${quest.need.qty}개를 구해 ${to}(으)로 돌아간다`;
+    const late=Number.isFinite(quest.due)&&S.day>quest.due;
+    return {
+      kind:'길 위의 부탁',title:label,status:late?'기한 지남':'진행 중',action,
+      meta:`${to}${Number.isFinite(quest.due)?` · DAY ${quest.due}까지`:''}`
+    };
+  }
+
+  function companionItems(){
+    const items=[];
+    const active=recruitModel();
+    if(active) items.push({...active,active:true});
+    (S.party||[]).forEach(id=>{
+      const comp=D.comps&&D.comps[id];
+      if(!comp) return;
+      items.push({
+        kind:'동료 이야기',title:comp.name,status:'정식 동료',
+        action:comp.bio||'달구지에 자리를 잡고 함께 북쪽으로 간다.',
+        meta:`유대 ${S.comps&&S.comps[id]?S.comps[id].bond||0:0}`
+      });
+    });
+    return items;
+  }
+
+  function archiveItems(){
+    const items=[];
+    if(S.flags&&S.flags.run_archived) items.push({title:'서울 강제 이송 중단',meta:'주 여정 완료'});
+    (S.party||[]).forEach(id=>{
+      const comp=D.comps&&D.comps[id];
+      if(comp) items.push({title:`${comp.name} 합류`,meta:'동료 이야기 완료'});
+    });
+    (S.notes||[]).filter(note=>note.type==='사건'&&/완료[:：]/.test(note.title||''))
+      .slice(-6).reverse().forEach(note=>items.push({title:note.title,meta:`DAY ${note.day||S.day} · 길 위의 부탁 완료`}));
+    return items;
+  }
+
+  function questItem(item,track){
+    return `<article class="quest-entry ${item.active?'is-active':''}">
+      <div class="quest-entry-head"><span>${qEsc(item.status||item.kind)}</span><small>${qEsc(item.meta||'')}</small></div>
+      <h4>${qEsc(item.title)}</h4>
+      ${item.name?`<b class="quest-person">${qEsc(item.name)}</b>`:''}
+      <p>${qEsc(item.action||'')}</p>
+      ${track?`<button type="button" class="quest-track-button" data-quest-track="${track}">이 이야기 추적</button>`:''}
+    </article>`;
+  }
+
+  function panelHtml(category,models){
+    if(models.length) return models.map(item=>questItem(item,item.active?category:null)).join('');
+    const empty={
+      companion:['아직 이어지는 동료 이야기가 없다','정착지에서 중요한 인물을 만나고 함께 일을 겪으면 이곳에 기록된다.'],
+      side:['맡은 부탁이 없다','정착지의 사람들 사이에서 배달과 조달 의뢰를 받을 수 있다.'],
+      archive:['아직 완료 기록이 없다','끝낸 이야기와 정식으로 합류한 동료가 여기에 차곡차곡 남는다.']
+    }[category];
+    return `<div class="quest-empty"><b>${qEsc(empty[0])}</b><p>${qEsc(empty[1])}</p></div>`;
+  }
+
+  function trackingModel(main,companion,side){
+    let track=S.questTrack||'main';
+    if(track==='companion'&&!companion) track='main';
+    if(track==='side'&&!side) track='main';
+    if(!categoryOrder.includes(track)) track='main';
+    if(track!==S.questTrack) S.questTrack=track;
+    return track==='companion'?companion:track==='side'?side:main;
+  }
+
+  function updateTracking(live){
+    const model=live.__questModel;
+    if(!model) return;
+    const tracked=trackingModel(model.main,model.companion,model.side);
+    const now=live.querySelector('.quest-now-card');
+    if(now) now.innerHTML=`<div><span>지금 할 일</span><small>${qEsc(tracked.kind)}</small></div>
+      <b>${qEsc(tracked.title)}</b><p>${qEsc(tracked.action)}</p><em>${qEsc(tracked.meta||'')}</em>`;
+    live.querySelectorAll('[data-quest-track]').forEach(button=>{
+      const selected=button.dataset.questTrack===(S.questTrack||'main');
+      button.classList.toggle('is-tracked',selected);
+      button.textContent=selected?'추적 중':'이 이야기 추적';
+    });
+  }
+
+  function selectCategory(live,category){
+    if(!categoryOrder.includes(category)) category='main';
+    activeCategory=category;
+    live.querySelectorAll('[data-quest-category]').forEach(button=>{
+      const selected=button.dataset.questCategory===category;
+      button.classList.toggle('is-active',selected);
+      button.setAttribute('aria-selected',selected?'true':'false');
+    });
+    live.querySelectorAll('[data-quest-panel]').forEach(panel=>{
+      panel.hidden=panel.dataset.questPanel!==category;
+    });
+  }
+
+  function enhanceJournal(){
+    const body=document.querySelector('#st-body');
+    const live=body&&body.querySelector('.folio-live-content:not([data-quest-journal-v2])');
+    if(!live) return;
+    live.dataset.questJournalV2='';
+
+    const roadButton=live.querySelector('.folio-road-button');
+    if(roadButton) roadButton.remove();
+    const oldTitle=live.querySelector('.folio-title-row');
+    if(oldTitle) oldTitle.remove();
+    const title=live.querySelector('h3')&&live.querySelector('h3').textContent.trim()||'서울 강제 이송 중단';
+    const action=live.querySelector('.folio-support > b')&&live.querySelector('.folio-support > b').textContent.trim()||'북쪽으로 이어지는 다음 단서를 찾는다';
+    const location=live.querySelector('.folio-location')&&live.querySelector('.folio-location').textContent.trim()||'';
+    const criteria=[...live.querySelectorAll('.folio-support-meta dd')].pop();
+    const completion=criteria&&criteria.textContent.trim()||'';
+    const mainMeta=[location,completion&&`완료: ${completion}`].filter(Boolean).join(' · ');
+    const main={kind:'주 여정',title,action,meta:mainMeta};
+    const companion=recruitModel();
+    const side=sideModel();
+    const companions=companionItems();
+    const archive=archiveItems();
+
+    const supportBlock=live.querySelector('.folio-support');
+    if(supportBlock) supportBlock.remove();
+    const mainPanel=document.createElement('section');
+    mainPanel.className='quest-panel quest-main-detail';
+    mainPanel.dataset.questPanel='main';
+    mainPanel.setAttribute('aria-label','주 여정');
+    while(live.firstChild) mainPanel.appendChild(live.firstChild);
+    const mainTrack=document.createElement('button');
+    mainTrack.type='button';
+    mainTrack.className='quest-track-button quest-main-track';
+    mainTrack.dataset.questTrack='main';
+    mainTrack.textContent='주 여정 추적';
+    mainPanel.appendChild(mainTrack);
+
+    const counts={main:1,companion:companions.length,side:(side?1:0)+((S._qoffer&&S._qoffer.offers)||[]).length,archive:archive.length};
+    const shell=document.createElement('div');
+    shell.className='quest-journal-shell';
+    shell.innerHTML=`<section class="quest-now-card" aria-live="polite"></section>
+      <nav class="quest-category-tabs" role="tablist" aria-label="이야기 분류">
+        ${categoryOrder.map(category=>`<button type="button" role="tab" data-quest-category="${category}" aria-selected="false"><span>${categoryLabels[category]}</span><small>${counts[category]}</small></button>`).join('')}
+      </nav>`;
+    shell.appendChild(mainPanel);
+
+    const companionPanel=document.createElement('section');
+    companionPanel.className='quest-panel quest-list-panel';
+    companionPanel.dataset.questPanel='companion';
+    companionPanel.innerHTML=panelHtml('companion',companions);
+    shell.appendChild(companionPanel);
+
+    const sideModels=[];
+    if(side) sideModels.push({...side,active:true});
+    const offers=S._qoffer&&S._qoffer.at===S.at?(S._qoffer.offers||[]):[];
+    offers.forEach(offer=>sideModels.push({
+      status:'받을 수 있음',title:G.questLabel?G.questLabel(offer):offer.item||'정착지의 부탁',
+      action:G.questDesc?G.questDesc(offer):'정착지에서 자세한 내용을 확인한다.',
+      meta:D.nodes&&D.nodes[offer.to]?D.nodes[offer.to].name:''
+    }));
+    const sidePanel=document.createElement('section');
+    sidePanel.className='quest-panel quest-list-panel';
+    sidePanel.dataset.questPanel='side';
+    sidePanel.innerHTML=panelHtml('side',sideModels);
+    shell.appendChild(sidePanel);
+
+    const archivePanel=document.createElement('section');
+    archivePanel.className='quest-panel quest-list-panel quest-archive-panel';
+    archivePanel.dataset.questPanel='archive';
+    archivePanel.innerHTML=archive.length
+      ?archive.map(item=>`<article class="quest-archive-entry"><span>${qEsc(item.meta)}</span><b>${qEsc(item.title)}</b></article>`).join('')
+      :panelHtml('archive',[]);
+    shell.appendChild(archivePanel);
+    if(roadButton) shell.appendChild(roadButton);
+    live.appendChild(shell);
+    live.__questModel={main,companion,side};
+
+    if(!body.dataset.questJournalBound){
+      body.dataset.questJournalBound='';
+      body.addEventListener('click',event=>{
+        const current=body.querySelector('.folio-live-content[data-quest-journal-v2]');
+        if(!current) return;
+        const categoryButton=event.target.closest('[data-quest-category]');
+        if(categoryButton){ selectCategory(current,categoryButton.dataset.questCategory); return; }
+        const trackButton=event.target.closest('[data-quest-track]');
+        if(trackButton){
+          S.questTrack=trackButton.dataset.questTrack;
+          if(G.save) G.save();
+          updateTracking(current);
+        }
+      });
+    }
+    selectCategory(live,activeCategory);
+    updateTracking(live);
+  }
+
+  const install=()=>{
+    const body=document.querySelector('#st-body');
+    if(!body) return;
+    new MutationObserver(()=>queueMicrotask(enhanceJournal)).observe(body,{childList:true,subtree:false});
+    enhanceJournal();
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
+  else queueMicrotask(install);
+})();
+
+/* Keep each generated scene's intended subject inside the live event crop. */
+(()=>{
+  const directSceneBySrc=new Map(Object.entries(D.scenes||{}).map(([id,src])=>[String(src),id]));
+  const absoluteSceneBySrc=new Map(Object.entries(D.scenes||{}).map(([id,src])=>{
+    try{return [new URL(String(src),document.baseURI).href,id]}catch(_){return [String(src),id]}
+  }));
+  const applySceneFocus=()=>{
+    document.querySelectorAll('#ev-wrap img.event-scene').forEach(img=>{
+      const id=directSceneBySrc.get(img.getAttribute('src')||'')||absoluteSceneBySrc.get(img.src||'');
+      const objectPosition=id&&D.sceneAssetMeta?.[id]?.objectPosition;
+      if(!objectPosition) return;
+      img.dataset.sceneId=id;
+      img.style.objectPosition=objectPosition;
+    });
+  };
+  const root=document.getElementById('ev-wrap');
+  if(!root) return;
+  new MutationObserver(applySceneFocus).observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['src']});
+  applySceneFocus();
 })();

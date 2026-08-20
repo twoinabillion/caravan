@@ -410,19 +410,19 @@ const GRAPH = (()=>{
         let dx=a.x-b.x, dy=a.y-b.y; let d2=dx*dx+dy*dy;
         if(d2<1) { dx=Math.random()-.5; dy=Math.random()-.5; d2=1; }
         const d=Math.sqrt(d2);
-        if(d<110){ const f=(110-d)/d*0.03;
+        if(d<142){ const f=(142-d)/d*0.026;
           a.vx+=dx*f; a.vy+=dy*f; b.vx-=dx*f; b.vy-=dy*f; }
       }
     }
     for(const [i,j] of links){
       const a=nodes[i], b=nodes[j];
       const dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy)||1;
-      const f=(d-70)/d*0.02;
+      const f=(d-118)/d*0.014;
       a.vx+=dx*f; a.vy+=dy*f; b.vx-=dx*f; b.vy-=dy*f;
     }
     for(const n of nodes){
-      n.x=Math.max(20,Math.min(W-20,n.x+n.vx)); n.y=Math.max(20,Math.min(H-30,n.y+n.vy));
-      n.vx*=0.82; n.vy*=0.82;
+      n.x=Math.max(54,Math.min(W-54,n.x+n.vx)); n.y=Math.max(28,Math.min(H-48,n.y+n.vy));
+      n.vx*=0.8; n.vy*=0.8;
     }
   }
   function draw(dt){
@@ -445,9 +445,13 @@ const GRAPH = (()=>{
       ctx.globalAlpha=0.9;
       ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,7); ctx.fill();
       ctx.globalAlpha=1;
-      ctx.fillStyle='rgba(232,227,213,0.85)'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+      ctx.font='11px sans-serif'; ctx.textAlign='center';
       const label = n.title.length>9? n.title.slice(0,9)+'…':n.title;
-      ctx.fillText(label, n.x, n.y+n.r+11);
+      const labelY=n.y+n.r+14, labelW=ctx.measureText(label).width;
+      ctx.fillStyle='rgba(11,14,26,0.88)';
+      ctx.fillRect(n.x-labelW/2-4,labelY-11,labelW+8,15);
+      ctx.fillStyle='rgba(244,239,226,0.92)';
+      ctx.fillText(label, n.x, labelY);
       ctx.textAlign='left';
     }
   }

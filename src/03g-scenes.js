@@ -387,3 +387,62 @@ D.sceneDescriptions=Object.assign(D.sceneDescriptions||{},{
  'road-north-roadside-greenhouse':'폐휴게소 안에 세운 따뜻한 도로 온실',
  'road-north-deer-cameras':'멈춘 교통 카메라 아래 고속도로를 건너는 고라니'
 });
+
+/* Asset-specific focal points for portrait scene art in the 5:4 event viewport. */
+{
+  const sceneObjectPositions={
+    'arrival-daegu-dome':'50% 52%',
+    'arrival-gimhae':'50% 82%',
+    'arrival-yangsan':'50% 82%',
+    'arrival-jinju':'50% 84%',
+    'arrival-hapcheon':'50% 84%',
+    'arrival-geochang':'50% 86%',
+    'arrival-gumi':'50% 84%',
+    'arrival-gimcheon':'50% 78%',
+    'arrival-namwon':'50% 84%',
+    'arrival-yeongdong':'50% 84%',
+    'arrival-nonsan':'50% 84%',
+    'arrival-gongju':'50% 82%',
+    'arrival-cheongju':'50% 84%',
+    'arrival-cheonan':'50% 86%',
+    'arrival-pyeongtaek':'50% 84%',
+    'arrival-lake':'50% 82%',
+    'arrival-mall':'50% 86%',
+    'arrival-tower':'50% 66%',
+    'arrival-spring':'50% 80%',
+    'arrival-airfield':'50% 84%',
+    'arrival-solar':'50% 84%',
+    'arrival-reststop':'50% 84%',
+    'arrival-tunnelbook':'50% 84%',
+    'arrival-ulsan':'50% 68%',
+    'arrival-yeosu':'50% 84%',
+    'arrival-suncheon':'50% 84%',
+    'arrival-damyang':'50% 84%',
+    'arrival-mokpo':'50% 86%',
+    'arrival-andong':'50% 82%',
+    'arrival-mungyeong':'50% 82%',
+    'arrival-danyang':'50% 84%',
+    'arrival-wonju':'50% 82%',
+    'arrival-daegwallyeong':'50% 82%',
+    'arrival-gangneung':'50% 82%',
+    'arrival-sokcho':'50% 82%',
+    'arrival-icheon':'50% 82%',
+    'arrival-gyeongju':'50% 84%',
+    'arrival-pohang':'50% 80%',
+    'arrival-sangju':'50% 82%',
+    'arrival-gunsan':'50% 82%',
+    'arrival-chungju':'50% 72%',
+    'arrival-sejong':'50% 80%',
+    'arrival-lighthouse':'50% 54%',
+    'arrival-drivein':'50% 84%',
+    'arrival-sunflower':'50% 58%',
+    'arrival-maehwa':'50% 76%',
+    'arrival-mingyu-ridge':'50% 80%',
+    'arrival-jaeyi-cache':'50% 50%',
+    'arrival-cablecar':'50% 55%',
+    'arrival-filmset':'50% 84%'
+  };
+  Object.entries(sceneObjectPositions).forEach(([id,objectPosition])=>{
+    if(D.sceneAssetMeta[id]) D.sceneAssetMeta[id].objectPosition=objectPosition;
+  });
+}
