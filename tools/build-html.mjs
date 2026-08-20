@@ -15,7 +15,7 @@ const output = path.join(root, '서울까지400km.html');
 const temporary = `${output}.tmp`;
 const reportOutput = path.join(root, 'reports', 'asset-budget.json');
 const WARN_BYTES = 32_000_000;
-const MAX_BYTES = 39_000_000;   /* BGM 7슬롯 + 통합 이벤트 기록철 UI 허용 (docs/audio-guide.md) */
+const MAX_BYTES = 72_000_000;   /* 이벤트별 고유 장면 확장을 허용하는 배포 상한 */
 const embeddedAssets = new Map();
 
 const before = [

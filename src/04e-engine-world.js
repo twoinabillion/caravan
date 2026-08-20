@@ -73,8 +73,8 @@ G.fireDriveEvent2 = (pool)=>{
     S._roadEventCount=0;
   }
   const earlyJourney=(S.stats&&S.stats.km<35)||(S.stats&&S.stats.events<4);
-  const dailyCap=earlyJourney?1:2;
-  const minGapKm=earlyJourney?30:18;
+  const dailyCap=earlyJourney?1:3;
+  const minGapKm=earlyJourney?26:14;
   const km=Number(S.stats&&S.stats.km)||0;
   if((Number(S._roadEventCount)||0)>=dailyCap||km-(Number(S._lastRoadEventKm)||-999)<minGapKm) return;
   /* 큐에 든 이야기는 직전 모달을 닫자마자 재생하지 않고, 다음 정상적인
@@ -702,16 +702,9 @@ G.completeJourney = ()=>{
 G.deferEvent = (id)=>{ if(!S||!id) return; if(!Array.isArray(S._simDeferred)) S._simDeferred=[]; S._simDeferred.push(id); };
 /* 길 위 작업대가 빌려 쓰는 정착지 화면 — 가장 가까운 곳의 재고를 쓴다 */
 G.nearestStl = ()=>{ const ids=Object.keys(D.stls); return (S&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl)||ids[ids.length-1]; };
-G.endingKinds = ()=>['thirst','stranded','shunned','too_late','empty_district','story_done'];
-/* 도착 시점의 결말 종류. 늦음은 실패가 아니라 다른 결말이지만,
-   구역이 비어버린 뒤의 도착은 승리 텍스트의 변주가 아니라 이름 있는 결말이어야 한다. */
-G.arrivalEndingKind = ()=>{
-  if(!S) return null;
-  const t=D.transferStatus(S);
-  if(t.remainingResidents<=0) return 'empty_district';
-  if(!t.onTime) return 'too_late';
-  return 'story_done';
-};
+G.endingKinds = ()=>['thirst','stranded','shunned','story_done'];
+/* 서울 결말은 도착 날짜가 아니라 남산에서 내린 결정으로 끝난다. */
+G.arrivalEndingKind = ()=>S?'story_done':null;
 /* 동료의 반대를 누르고 결정하면 값을 치른다 — 반대가 문단 하나로 끝나지 않게. */
 G.overrideDissent = (disposition)=>{
   if(!S) return null;

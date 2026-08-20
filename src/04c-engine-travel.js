@@ -349,14 +349,16 @@ G.normalizeDriveSlots = dv=>{
     return dv;
   }
   const rank=slot=>slot.special==='bridge'?100:slot.forced?90:slot.beat?80:slot.pillarPick?70:slot.special==='impact'?60:10;
-  const chosen=[...dv.slots].sort((a,b)=>rank(b)-rank(a)||a.at-b.at)[0];
-  const critical=chosen.special==='bridge'||!!chosen.forced;
+  const ranked=[...dv.slots].sort((a,b)=>rank(b)-rank(a)||a.at-b.at);
+  const maxSlots=dv.dist>=55?2:1;
+  const chosen=ranked.slice(0,maxSlots);
+  const critical=chosen.some(slot=>slot.special==='bridge'||!!slot.forced);
   if(!critical&&dv.dist<30){
     dv.slots=[];
     S._driveLegsSinceBlock=quiet+1;
     return dv;
   }
-  const requiredQuietLegs=dv.dist<30?3:2;
+  const requiredQuietLegs=dv.dist<30?3:1;
   if(!critical&&quiet<requiredQuietLegs){
     dv.slots=[];
     S._driveLegsSinceBlock=quiet+1;
@@ -365,8 +367,11 @@ G.normalizeDriveSlots = dv=>{
   const seconds=Number.isFinite(G.tickKmPerSecond&&G.tickKmPerSecond())
     ? (dv.dist>=38?16:Math.min(9,dv.dist/G.tickKmPerSecond()*.65)) : 8;
   const minimum=Math.min(dv.dist*.88,G.tickKmPerSecond()*seconds);
-  chosen.at=Math.max(Number(chosen.at)||0,minimum);
-  dv.slots=[chosen];
+  chosen.sort((a,b)=>a.at-b.at).forEach((slot,index)=>{
+    const floor=chosen.length>1?dv.dist*(index===0?.38:.72):minimum;
+    slot.at=Math.min(dv.dist*.9,Math.max(Number(slot.at)||0,floor));
+  });
+  dv.slots=chosen.sort((a,b)=>a.at-b.at);
   S._driveLegsSinceBlock=0;
   return dv;
 };

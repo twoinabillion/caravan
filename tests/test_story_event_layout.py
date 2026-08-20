@@ -68,8 +68,8 @@ def check_viewport(playwright, width, height):
     assert current["y"] + current["height"] <= dock["y"]
     # Option 2 uses the approved low, rectangular field-recorder key instead
     # of the former square nav-button face.
-    assert 56 <= next_button["height"] <= 72, next_button
-    assert 150 <= next_button["width"] <= 194, next_button
+    assert 44 <= next_button["height"] <= 58, next_button
+    assert 128 <= next_button["width"] <= 154, next_button
     assert 2.5 <= next_button["width"] / next_button["height"] <= 3.1, next_button
     assert next_button["x"] >= dock["x"] + 13
     assert next_button["x"] + next_button["width"] <= dock["x"] + dock["width"] - 13

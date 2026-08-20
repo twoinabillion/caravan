@@ -588,6 +588,7 @@ const UI = (()=>{
     if(newPage){
       book.style.opacity=0;
       $('#intro-page').scrollTop=0;
+      if(introText) introText.scrollTop=0;
       requestAnimationFrame(()=>{ book.style.transition='opacity .45s'; book.style.opacity=1; });
     } else {
       const turn=$('#intro-txt [data-story-entry]:last-child');
@@ -595,8 +596,7 @@ const UI = (()=>{
         turn.classList.add('turn-enter');
         requestAnimationFrame(()=>{
           turn.classList.remove('turn-enter');
-          const pageBody=$('#intro-page');
-          if(pageBody) pageBody.scrollTo({top:pageBody.scrollHeight,behavior:'auto'});
+          if(introText) introText.scrollTo({top:introText.scrollHeight,behavior:'auto'});
         });
       }
     }
@@ -740,7 +740,7 @@ const UI = (()=>{
     const route=G.routeStatus();
     const party=S.party.map(id=>D.comps[id].name);
     rail.innerHTML=`
-      <div class="rail-sec"><h4>이송 시계</h4>
+      <div class="rail-sec"><h4>본편 목표</h4>
         <b>${esc(t.short)}</b><small>${esc(t.mission)}</small></div>
       <div class="rail-sec"><h4>여정</h4>
         <b>DAY ${S.day} · ${Math.round(S.stats.km)}km</b>
@@ -756,7 +756,7 @@ const UI = (()=>{
   function missionHtml(){
     const q=S.quest, rq=S.recruitQ;
     const transfer=G.transferStatus();
-    const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1)||!transfer.onTime;
+    const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1);
     let kicker='', title='', state='', meta='', pct=0, secondary='';
     const secondaryMissions=[];
     if(rq){
@@ -822,10 +822,10 @@ const UI = (()=>{
       secondaryMissions.push(`<span class="ms-chip chip-quest">${K.ic} 게시판 ${G.questLabel(q)} → ${esc(target.name)} · D-${Math.max(0,q.due-S.day)}</span>`);
     }
     if(!rq&&!q){
-      secondaryMissions.push(`<span class="ms-chip chip-core">🚗 ${transfer.onTime?`이송 마감 ${transfer.remaining}일`:'1화 종료 전 조치 미완'}</span>`);
+      secondaryMissions.push(`<span class="ms-chip chip-core">🚗 남산 조치 준비</span>`);
     }
 
-    const clock=`⌛ 본편 · ${esc(transfer.mission)} · 서울 도착이 아니라 코어 조치가 마감`;
+    const clock=`◎ 본편 · ${esc(transfer.mission)} · 날짜 제한 없음`;
     secondaryMissions.push(`<span class="ms-chip chip-core">${clock}</span>`);
     if(secondaryMissions.length){
       const visibleSecondary=secondaryMissions.slice(-2);
@@ -835,8 +835,7 @@ const UI = (()=>{
       S.fuel<10?'연료 부족':null,
       S.fatigue>=75?'졸음 위험':null,
       q&&q.due-S.day<=1?'마감 임박':null,
-      !q&&transfer.onTime&&transfer.remaining<=3?`이송 임박 ${transfer.remaining}일 남음`:null,
-      !q&&!transfer.onTime?'본편 조치 임박':null,
+
     ].filter(Boolean);
     alerts.length= alerts.length>0? Math.min(alerts.length,3):0;
     return {danger,secondary:!!secondary, html:`<span class="ms-k">${kicker}</span><span class="ms-title">${title}</span>
@@ -2061,12 +2060,12 @@ const UI = (()=>{
        전용 컷이 없으면 먼저 실제 현재 장소를 보여 주고, 그것도 없을 때만
        타입 공용 컷을 쓴다. 조우·위기·탐색은 기존 공용 행동 컷을 유지한다. */
     if(fallbackType==='스토리'||fallbackType==='대화'){
-      add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.at]);
+      add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.driving&&S.driving.to||S.at]);
       if(keys.length) return keys;
     }
     add(fallbackType&&D.eventSceneTypes&&D.eventSceneTypes[fallbackType]);
     if(keys.length) return keys;
-    add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.at]);
+    add(typeof S!=='undefined'&&S&&D.nodeScenes&&D.nodeScenes[S.driving&&S.driving.to||S.at]);
     if(keys.length) return keys;
     add('generic-story');
     return keys;
@@ -2219,13 +2218,18 @@ const UI = (()=>{
     renderStoryState();
     const sheet=$('#ev-sheet'), scroll=sheet&&sheet.querySelector('.event-scroll');
     const reader=sheet&&sheet.querySelector('.story-reader');
-    const latest=reader&&reader.querySelector('[data-story-entry]:last-child');
-    if(reader&&latest&&reader.scrollHeight>reader.clientHeight+1){
-      reader.scrollTo({top:reader.scrollHeight,behavior:'auto'});
-    }else if(scroll&&reader&&latest){
-      const bottom=reader.offsetTop+latest.offsetTop+latest.offsetHeight;
-      scroll.scrollTo({top:Math.max(0,bottom-scroll.clientHeight+28),behavior:'auto'});
-    }
+    /* dataset과 초상 유무에 따라 본문 폭·높이가 다시 계산된 다음 최신 턴을
+       보여 줘야 한다. 즉시 스크롤하면 320px 화면에서 이전 높이를 기준으로
+       멈춰 새 대사가 종이 아래에 잘린다. */
+    requestAnimationFrame(()=>{
+      const latest=reader&&reader.querySelector('[data-story-entry]:last-child');
+      if(reader&&latest){
+        reader.scrollTo({top:reader.scrollHeight,behavior:'auto'});
+      }else if(scroll&&reader&&latest){
+        const bottom=reader.offsetTop+latest.offsetTop+latest.offsetHeight;
+        scroll.scrollTo({top:Math.max(0,bottom-scroll.clientHeight+28),behavior:'auto'});
+      }
+    });
   }
   function scheduleStoryAuto(state,turn){
     clearStoryAuto();
@@ -3829,12 +3833,12 @@ const UI = (()=>{
         module:{label:'계기판 배선을 회로도와 대조한다',detail:'검증 모듈이 실제 달구지에 연결됐는지 확인한다.',condition:'회로도·배선 대조'},
         key:{label:'분리 절차 4–5쪽을 먼저 찾는다',detail:'절차를 확보하기 전에는 검증키를 뽑지 않는다.',condition:'분리 절차 4–5쪽 확보'},
         witness:{label:'당사자 증언과 발신 기록을 맞춘다',detail:'같은 명령을 겪은 사람들의 기록을 직접 대조한다.',condition:`증언 ${witnessed}/${D.seoulPillars.관계}`},
-        seoul:{label:'남산 관문에서 이송을 중단한다',detail:'서울 도착 뒤 남은 중단 절차를 끝낸다.',condition:`DAY ${D.transferDeadlineDay} 안에 완료`}
+        seoul:{label:'남산 관문에서 이송을 중단한다',detail:'서울 도착 뒤 남은 중단 절차를 끝낸다.',condition:'필요한 기록과 증언을 모은 뒤 완료'}
       };
       const nextAction=nextActions[nextStep?.id]||{label:'이송 중단 기록을 보관한다',detail:'완료한 기록을 달구지 안에 안전하게 보관한다.',condition:'목표 완료'};
       b.innerHTML=`<div class="folio-live-content">
         <div class="folio-title-row"><span>현재 목표</span><small>${esc(clock)}</small></div>
-        <h3>${transfer.onTime?'서울 이송 중단':'남은 이송 중단'}</h3>
+        <h3>서울 강제 이송 중단</h3>
         <div class="folio-location">${esc(D.nodes[S.at].name)}</div>
         <section class="folio-progress" aria-label="목표 진행 ${done}/${steps.length}">
           <div class="folio-section-title"><b>진행 단계</b><span>${done}/${steps.length}</span></div>

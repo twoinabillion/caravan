@@ -133,7 +133,7 @@ def main():
         assert scene["key"] == scene_key, result
         assert scene["width"] == 768 and scene["height"] == 432, result
         assert scene["src"].startswith(("data:image/jpeg;base64,", "data:image/webp;base64,")), result
-    assert result["fallback"] == "daegu-dome", result
+    assert result["fallback"] == "arrival-gumi", result
 
     assert not result["contactDialogue"]["unknown"], result
     assert {"한별", "자전거 우편부", "지도장이"}.issubset(

@@ -4,8 +4,7 @@
 2026-08-07까지 서울 내부(관문→한강→폐허→광장→기지→코어→에필로그→결말)를
 자동으로 끝까지 돌아본 적이 없다. 완주봇도 'completed' 판정에서 멈춘다.
 이 검사는 기둥을 채운 상태에서 관문 이벤트 연쇄→정거장 5개→에필로그를
-실제 이벤트 해석으로 밟고, 도착 시점에 따라 세 결말(제때/늦음/빈 구역)이
-실제로 갈리는지를 본다.
+실제 이벤트 해석으로 밟고, 도착 날짜와 무관하게 같은 완결에 도달하는지 본다.
 """
 from pathlib import Path
 
@@ -100,31 +99,26 @@ with sync_playwright() as playwright:
     page.add_init_script('localStorage.clear()')
     page.goto(GAME)
 
-    deadline = page.evaluate('D.transferDeadlineDay')
-
-    print('― 제때 도착 (시한 안)')
-    ontime = page.evaluate(RUN_JS, deadline - 2)
-    check('관문이 열린다', bool(ontime.get('opened')), str(ontime)[:160])
-    check('정거장 5개 전부 완료', ontime.get('stage') == 5, str(ontime.get('stops')))
-    check('에필로그가 여정을 닫는다', bool(ontime.get('ended')), str(ontime.get('endKind')))
-    check('제때 결말(story_done)', ontime.get('endKind') == 'story_done', str(ontime.get('endKind')))
-
-    print('― 늦은 도착 (시한 뒤, 잔여 주민 있음)')
-    late = page.evaluate(RUN_JS, deadline + 3)
-    check('늦어도 완주는 된다', bool(late.get('ended')), str(late.get('stops')))
-    check('늦은 결말(too_late)', late.get('endKind') == 'too_late',
-          f"endKind={late.get('endKind')} transfer={late.get('transfer', {}).get('onTime')}")
-
-    print('― 아주 늦은 도착 (구역이 빈 뒤)')
-    empty_day = page.evaluate('(d)=>{ for(let day=d; day<d+120; day++){ if(D.transferStatus({day,flags:{}}).remainingResidents<=0) return day; } return null; }', deadline)
-    check('구역이 비는 날이 존재한다', empty_day is not None, str(empty_day))
-    if empty_day:
-        empty = page.evaluate(RUN_JS, empty_day + 1)
-        check('빈 구역 결말(empty_district)', empty.get('endKind') == 'empty_district', str(empty.get('endKind')))
+    print('― 날짜 제한 없는 서울 도착')
+    early = page.evaluate(RUN_JS, 5)
+    late = page.evaluate(RUN_JS, 120)
+    check('이른 도착에서 관문이 열린다', bool(early.get('opened')), str(early)[:160])
+    check('늦은 도착에서도 관문이 열린다', bool(late.get('opened')), str(late)[:160])
+    check('두 경우 모두 정거장 5개를 완료한다',
+          early.get('stage') == 5 and late.get('stage') == 5, str([early.get('stops'), late.get('stops')]))
+    check('두 경우 모두 날짜와 무관하게 본편이 완결된다',
+          early.get('ended') and late.get('ended') and
+          early.get('endKind') == 'story_done' and late.get('endKind') == 'story_done',
+          str([early.get('endKind'), late.get('endKind')]))
+    check('늦게 도착해도 주민 이송 피해가 생기지 않는다',
+          early.get('transfer', {}).get('departed') == 0 and
+          late.get('transfer', {}).get('departed') == 0 and
+          late.get('transfer', {}).get('remainingResidents') == 6412,
+          str(late.get('transfer')))
 
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()
 
 if failures:
     raise SystemExit(f'서울 시퀀스 검증 실패 {len(failures)}건: ' + ', '.join(failures[:6]))
-print('✅ 관문→오르막→에필로그→세 갈래 결말이 실엔진으로 끝까지 돈다')
+print('✅ 관문→오르막→에필로그가 도착 날짜와 무관하게 끝까지 돈다')

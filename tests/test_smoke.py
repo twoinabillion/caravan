@@ -1744,16 +1744,13 @@ with sync_playwright() as p:
         coreText.includes('목적, 발신자, 승인자는 제 지역 기록에 없습니다') &&
         coreText.includes('부모님의 검증키') &&
         coreText.includes('등록 6,412명');
-      // 시한 값은 데이터에서 파생한다 — 상수를 복제하면 밸런스 튜닝 때마다 여기서 깨진다
-      const due=D.transferDeadlineDay;
-      const day1=D.transferStatus({day:1}), dayDue=D.transferStatus({day:due}), dayLate=D.transferStatus({day:due+1});
-      out.deadlineAdaptive = day1.remaining===due && dayDue.remaining===1 && dayDue.onTime && !dayLate.onTime &&
-        day1.mission.includes(`남산 조치까지 ${due}일`) &&
-        lateCoreText.includes('첫 이송 발생 · 1일 경과') &&
-        // 지각은 사람 수로 청구된다 (하루 = 버스 12대 · 540명)
-        dayLate.departed===540 && dayLate.remainingResidents===D.residentCount-540 &&
-        ep.text({day:due+1,flags:{core_transfer:true},party:[]}).includes('이송은 1일 전에 시작됐다') &&
-        ep.text({day:due+1,flags:{core_transfer:true},party:[]}).includes('540명');
+      // 전역 서울 제한일은 없고, 날짜는 결말과 주민 상태를 바꾸지 않는다.
+      const day1=D.transferStatus({day:1}), dayLate=D.transferStatus({day:120});
+      out.noGlobalDeadline = D.transferDeadlineDay===null &&
+        day1.onTime && dayLate.onTime && day1.remaining===null && dayLate.remaining===null &&
+        day1.departed===0 && dayLate.departed===0 &&
+        day1.remainingResidents===D.residentCount && dayLate.remainingResidents===D.residentCount &&
+        day1.mission.includes('남산에서 강제 이송을 중단한다');
       const render = (v, flags={}) => typeof v === 'function' ? v({flags, party:[]}) : v;
       const costs = decision.choices.map(c => render(c.out[0].text, {}));
       out.distinctCosts = costs[0].includes('첫 회의 채널이 열렸다') &&
@@ -1790,7 +1787,7 @@ with sync_playwright() as p:
     check('가족 직접 사유·정부 승인 순서 회수', r8['familyTruth'])
     check('서울 코어는 주인공 질문·천리안 답변·동료 증언으로 분리', r8['coreDialogue'], str(r8))
     check('제7 구역 저지·143년 최초 목적 분리', r8['rootMystery'])
-    check('시한 전후 이송 상태가 실제 날짜·인원을 반영', r8['deadlineAdaptive'])
+    check('전역 제한일 없이 날짜가 결말·주민 상태를 바꾸지 않음', r8['noGlobalDeadline'])
     check('추방과 남산 관문은 별도 절차', r8['gateSeparate'])
     check('세대별 추방 기억·남쪽 태생 명시', r8['generations'])
     check('할아버지 집안의 빈 사유표 회수', r8['familyQuestion'])

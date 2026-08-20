@@ -620,33 +620,6 @@ G.dawn = ()=>{
   G.tickDeadline();
   G.save();
 };
-/* 시한(D.transferDeadlineDay)을 실제로 집행한다. 압박은 새벽마다 단계적으로 오르고,
-   시한을 넘기면 첫 이송이 실제로 출발한다(에필로그·처분 장면에 새겨진다). */
-G.tickDeadline = ()=>{
-  if(!S || S.flags.core_decided || S.flags.story_done) return;
-  const t=D.transferStatus(S);
-  const fire=(flag,id)=>{ if(!S.flags[flag]){ S.flags[flag]=1; G.queueCrisis(id); return true; } return false; };
-  /* 시한이 실제 여정 길이(닷새~스무 날)와 같은 척도가 된 뒤로는 날짜 축이 주도한다.
-     거리 축은 남산 코앞까지 갔는데 아직 압박을 못 본 경우를 위한 안전망으로만 남긴다. */
-  const remainKm=G.remainKm();
-  /* 단계는 남은 날로 고른다 — 이벤트 본문이 "엿새 뒤" 같은 절대 날짜를 말하기 때문이다.
-     거리 축은 한 단계도 못 본 채 남산 코앞까지 간 경우의 안전망으로만 쓴다. */
-  const seenAny=S.flags.deadline_seen_d10||S.flags.deadline_seen_d5||S.flags.deadline_seen_d0;
-  if(t.onTime){
-    if(t.remaining<=Math.ceil(t.due*0.6)) fire('deadline_seen_d10','deadline_d10');
-    else if(remainKm<=150 && !seenAny) fire('deadline_seen_d10','deadline_d10');
-    if(t.remaining<=Math.ceil(t.due*0.3) && fire('deadline_seen_d5','deadline_d5') && S.pursuit<1) S.pursuit=1;
-    if(t.remaining<=1 || (remainKm<=40 && !S.flags.deadline_seen_d0)) fire('deadline_seen_d0','deadline_d0');
-  } else {
-    fire('deadline_seen_late','deadline_late');
-    /* 늦은 하루하루가 관측을 끌어올린다 — 시간 자체가 비용이다 */
-    /* 지각만으로 기피 문턱(5)을 넘기면 too_late 엔딩이 영원히 도달 불가가 된다 —
-       늦은 완주는 죽음이 아니라 '늦은 값'을 치르는 결말이어야 한다(2026-08-07 완주봇 실측).
-       5는 습격·강탈 같은 스스로 저지른 일로만 넘는다. */
-    if(t.lateDays>=2 && S.pursuit<4 && rng()<0.5){
-      S.pursuit=clamp(S.pursuit+1,0,4); S._lastPursuitUp=S.day;
-      UI.toast('👁 이송 경로의 초계가 늘었다 — 관측 +1');
-    }
-  }
-};
+/* 전역 서울 제한일은 제거됐다. 기존 호출과 세이브 호환을 위해 빈 훅만 유지한다. */
+G.tickDeadline = ()=>{};
 G.moodAll = (d)=>{ for(const id of S.party){ S.comps[id].mood = clamp(S.comps[id].mood+d,0,100); } };

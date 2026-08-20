@@ -4,7 +4,7 @@
 2026-08-06 적대적 재검증: `seoul_costs`는 선택지가 하나뿐인 페이지 넘김이고,
 세 처분에는 요구 조건도 실패도 자원 비용도 없었다. 무엇을 들고 왔든 전부 열려 있고
 어느 것도 실패하지 않는다 — "저항"이 아니라 무압력 의식이었다.
-authored 엔딩은 갈증 하나뿐이라, 구역이 빈 뒤 도착해도 승리 텍스트의 변주로 끝났다.
+전역 서울 제한일을 제거한 뒤에는 도착 날짜가 결말 종류를 바꾸지 않아야 한다.
 """
 from pathlib import Path
 
@@ -66,8 +66,9 @@ with sync_playwright() as playwright:
       const kinds=(typeof G.endingKinds==='function') ? G.endingKinds() : null;
       return {kinds};
     }""")
-    check('authored 엔딩 5종 이상',
-          endings['kinds'] is not None and len(endings['kinds']) >= 5, str(endings))
+    check('생존 실패 3종과 본편 완결이 모두 존재',
+          endings['kinds'] is not None and len(endings['kinds']) >= 4 and
+          'story_done' in endings['kinds'], str(endings))
 
     # 배열에 이름만 있는 엔딩은 엔딩이 아니다 — 화면과 트리거가 함께 있어야 한다
     reach = page.evaluate("""() => {
@@ -102,16 +103,16 @@ with sync_playwright() as playwright:
     check('좌초가 상태에서 발화한다', triggers['stranded'], str(triggers))
     check('기피가 상태에서 발화한다', triggers['shunned'], str(triggers))
 
-    print('― 구역이 빈 뒤 도착은 별도 엔딩인가')
+    print('― 오래 머문 뒤에도 본편 완결이 유지되는가')
     empty = page.evaluate("""() => {
       G.newGame('onroad','늦음','full');
-      S.day=D.transferDeadlineDay+13;      // 전원 이송 완료 이후
+      S.day=90;      // 오래 머문 뒤에도 서울 본편은 계속된다
       const t=G.transferStatus();
       const kind=(typeof G.arrivalEndingKind==='function') ? G.arrivalEndingKind() : null;
       return {remaining:t.remainingResidents, kind};
     }""")
-    check('잔여 0명이면 전용 결말 종류를 반환',
-          empty['remaining'] == 0 and empty['kind'] not in (None, '', 'win'), str(empty))
+    check('날짜가 지나도 주민 피해 없이 본편 완결을 반환',
+          empty['remaining'] == 6412 and empty['kind'] == 'story_done', str(empty))
 
     print('― 동료의 반대를 누르면 값을 치르는가')
     dissent = page.evaluate("""() => {

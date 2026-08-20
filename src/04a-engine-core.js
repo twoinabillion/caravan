@@ -6,7 +6,7 @@ const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
 const GAME_BUILD = '2026-08-17-settlement-story2';
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
-const SAVE_VERSION = 5;
+const SAVE_VERSION = 6;
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -21,6 +21,12 @@ const G = {};
 /* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
    필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
 G.saveMigrations = {
+  6:(s)=>{   // 2026-08-20: 전역 서울 제한일 제거
+    for(const key of ['deadline_seen_d10','deadline_seen_d5','deadline_seen_d0','deadline_seen_late'])
+      if(s.flags) delete s.flags[key];
+    if(typeof s._crisis==='string'&&s._crisis.startsWith('deadline_')) s._crisis=null;
+    delete s._deadlineGrandfathered;
+  },
   5:(s)=>{   // 2026-08-17: 동료 첫 만남을 정착지 기반 이동 의뢰로 전환
     s.stopover=null;
     s.locationContractVersion=2;
@@ -42,11 +48,8 @@ G.saveMigrations = {
       else if(s.at) s.recruitQ.target=s.at;
     }
   },
-  3:(s)=>{   // 2026-08-06: 시한 30일 → 20일. 옛 계약으로 달린 날은 소급 청구하지 않는다
-    if(Number.isFinite(s.day)&&s.day>D.transferDeadlineDay&&!s.flags?.transfer_started){
-      s._deadlineGrandfathered=true;
-      s.day=Math.min(s.day,D.transferDeadlineDay);   // 옛 시한 아래 있던 진행은 시한 내로 본다
-    }
+  3:(s)=>{   // 옛 시한 마이그레이션은 더 이상 날짜를 변경하지 않는다
+    delete s._deadlineGrandfathered;
   },
   2:(s)=>{   // 2026-08-06: 구제 횟수·정착지 숙박 횟수 도입
     if(!s._rescues||typeof s._rescues!=='object'||Array.isArray(s._rescues)) s._rescues={};
@@ -750,7 +753,7 @@ G.departureSteps = ()=>{
     {id:'module',done:!!S.flags.intro_module_seen,label:'계기판 속 검증 모듈 확인',detail:'엄마의 회로도와 실제 배선이 일치했다'},
     {id:'key',done:!!S.flags.parent_key_found,label:'분리 절차 복원·검증키 안전 회수',detail:S.flags.parent_key_found?'4–5쪽을 복원해 남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
     {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'발신 기록과 당사자 증언 대조',detail:S.flags.es_truth?'명령 생성 순서를 확인했다':`같은 명령을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
-    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':`서울 도착이 아니라 DAY ${D.transferDeadlineDay} 안의 이송 중단이 완료 조건이다`}
+    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'날짜 제한 없이 필요한 기록과 사람을 모아 남산에서 강제 이송을 중단한다'}
   ];
 };
 G.relationKey = (a,b)=>[a,b].sort().join(':');

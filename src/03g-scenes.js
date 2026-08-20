@@ -300,3 +300,59 @@ D.upgradeArt = {
   camp:'__UPGRADE_CAMP__',
   living:'__UPGRADE_LIVING__'
 };
+
+
+/* 구간별 도로 사건 전용 장면 */
+Object.assign(D.scenes,{
+ 'road-south-floodgate-laundry':'__SCENE_ROAD_SOUTH_FLOODGATE_LAUNDRY__',
+ 'road-south-toll-wildflowers':'__SCENE_ROAD_SOUTH_TOLL_WILDFLOWERS__',
+ 'road-south-northbound-scarecrows':'__SCENE_ROAD_SOUTH_NORTHBOUND_SCARECROWS__',
+ 'road-south-overpass-waterfall':'__SCENE_ROAD_SOUTH_OVERPASS_WATERFALL__',
+ 'road-south-orchard-bells':'__SCENE_ROAD_SOUTH_ORCHARD_BELLS__',
+ 'road-south-salt-trucks':'__SCENE_ROAD_SOUTH_SALT_TRUCKS__',
+ 'road-south-reed-ferry':'__SCENE_ROAD_SOUTH_REED_FERRY__',
+ 'road-south-crane-song':'__SCENE_ROAD_SOUTH_CRANE_SONG__',
+ 'road-mid-sign-graveyard':'__SCENE_ROAD_MID_SIGN_GRAVEYARD__',
+ 'road-mid-grape-road':'__SCENE_ROAD_MID_GRAPE_ROAD__',
+ 'road-mid-tunnel-candles':'__SCENE_ROAD_MID_TUNNEL_CANDLES__',
+ 'road-mid-rest-kitchen':'__SCENE_ROAD_MID_REST_KITCHEN__',
+ 'road-mid-stone-shoes':'__SCENE_ROAD_MID_STONE_SHOES__',
+ 'road-mid-plank-bridge':'__SCENE_ROAD_MID_PLANK_BRIDGE__',
+ 'road-mid-paper-wind':'__SCENE_ROAD_MID_PAPER_WIND__',
+ 'road-mid-stadium-fireflies':'__SCENE_ROAD_MID_STADIUM_FIREFLIES__',
+ 'road-north-sweeper-lane':'__SCENE_ROAD_NORTH_SWEEPER_LANE__',
+ 'road-north-container-echo':'__SCENE_ROAD_NORTH_CONTAINER_ECHO__',
+ 'road-north-solar-glare':'__SCENE_ROAD_NORTH_SOLAR_GLARE__',
+ 'road-north-paddy-sensors':'__SCENE_ROAD_NORTH_PADDY_SENSORS__',
+ 'road-north-rain-broadcast':'__SCENE_ROAD_NORTH_RAIN_BROADCAST__',
+ 'road-north-fortress-fires':'__SCENE_ROAD_NORTH_FORTRESS_FIRES__',
+ 'road-north-roadside-greenhouse':'__SCENE_ROAD_NORTH_ROADSIDE_GREENHOUSE__',
+ 'road-north-deer-cameras':'__SCENE_ROAD_NORTH_DEER_CAMERAS__'
+});
+D.sceneDescriptions=Object.assign(D.sceneDescriptions||{},{
+ 'road-south-floodgate-laundry':'수문 아래에서 빨래와 손세탁 장치가 돌아가는 길',
+ 'road-south-toll-wildflowers':'들꽃이 요금소 차로를 가득 메운 남부 고속도로',
+ 'road-south-northbound-scarecrows':'북쪽을 향해 선 허수아비가 이어진 들판',
+ 'road-south-overpass-waterfall':'무너진 고가 배수관에서 맑은 물이 쏟아지는 길',
+ 'road-south-orchard-bells':'작은 방울이 달린 안개 낀 사과 과수원',
+ 'road-south-salt-trucks':'소금 결정에 뒤덮인 해안 화물차 행렬',
+ 'road-south-reed-ferry':'갈대밭의 침수 도로를 건너는 임시 나루',
+ 'road-south-crane-song':'바닷바람에 철선이 울리는 폐조선소',
+ 'road-mid-sign-graveyard':'뽑힌 도로 표지판이 미로처럼 쌓인 갈림길',
+ 'road-mid-grape-road':'야생 포도넝쿨이 차량과 도로를 삼킨 길',
+ 'road-mid-tunnel-candles':'유리병 촛불이 안전한 차선을 밝히는 터널',
+ 'road-mid-rest-kitchen':'빈 휴게소에서 장작 솥이 끓는 주방',
+ 'road-mid-stone-shoes':'돌을 품은 낡은 신발이 놓인 산길',
+ 'road-mid-plank-bridge':'사람들이 판자로 끊어진 다리를 잇는 현장',
+ 'road-mid-paper-wind':'빈 종이띠가 바람의 방향을 보여주는 고택 길',
+ 'road-mid-stadium-fireflies':'폐구장의 희미한 조명 주위를 도는 벌레 떼',
+ 'road-north-sweeper-lane':'청소차가 한 차선만 비정상적으로 비운 도로',
+ 'road-north-container-echo':'컨테이너 벽 사이 높은 곳에서 오는 빛 신호',
+ 'road-north-solar-glare':'태양광 패널이 동시에 반사광을 쏘는 도로',
+ 'road-north-paddy-sensors':'허수아비와 감시 센서가 섞인 겨울 논',
+ 'road-north-rain-broadcast':'폭우 속에서 다시 켜진 낡은 방송탑',
+ 'road-north-fortress-fires':'산성의 불빛이 강가 도로를 안내하는 밤',
+ 'road-north-roadside-greenhouse':'폐휴게소 안에 세운 따뜻한 도로 온실',
+ 'road-north-deer-cameras':'멈춘 교통 카메라 아래 고속도로를 건너는 고라니'
+});
+

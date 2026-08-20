@@ -36,7 +36,7 @@ G.directorWeight = ev=>{
 G.directEventPool = (pool,opt={})=>{
   let out=(pool||[]).filter(Boolean);
   if(!out.length||!S) return out;
-  if(S.driving&&(S.driving.eventCount||0)>=1) return [];
+  if(S.driving&&(S.driving.eventCount||0)>=2) return [];
   /* 사건 뒤에는 실제로 아무 일도 일어나지 않는 도로 구간을 둔다.
      기존 breather는 '조용한 전체화면 사건'을 다시 골랐기 때문에 플레이
      호흡은 쉬지 못했다. 같은 구간의 재호출도 계속 비워 둔다. */
@@ -252,7 +252,7 @@ G.applyFx = (fx)=>{
     else if(k==='van') S.van=clamp(S.van+v,0,S.vanMax);
     chips.push({t:`${label} ${v>0?'+':''}${v}${unit||''}`, c:v>0?'plus':'minus'}); } };
   num('fuel','연료','L'); num('water','물'); num('food','식량'); num('scrap','고철'); num('van','차체','%');
-  if(fx.time){ G.advance(fx.time); chips.push({t:`⏱ ${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'}`, c:''}); }
+  if(fx.time){ G.advance(fx.time); chips.push({t:`시간 경과 · ${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'}`, c:''}); }
   if(fx.fatigue){ S.fatigue=clamp(S.fatigue+fx.fatigue,0,100);
     chips.push({t:`😴 피로 ${fx.fatigue>0?'+':''}${fx.fatigue}`, c:fx.fatigue<0?'plus':'minus'}); }
   if(fx.skipKm && S.driving){ S.driving.gone=Math.min(S.driving.dist, S.driving.gone+fx.skipKm);
