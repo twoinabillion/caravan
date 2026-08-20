@@ -777,7 +777,7 @@ with sync_playwright() as p:
       out.duoStories=['duo_minji_parkss_space','duo_kangwoo_eunsu_record','duo_leo_jaeyi_route','party_north_vote'].filter(id=>D.events.find(e=>e.id===id)).length;
       out.sceneCount=Object.keys(D.scenes||{}).length;
       const actionCutKeys=[
-        'recruit-minji-welding','recruit-parkss-bus-overturned','recruit-leo-hitch-gesture',
+        'recruit-minji-welding','recruit-parkss-clinic-market-v2','recruit-leo-daein-market-v2',
         'recruit-jaeyi-suspension-check','recruit-eunsu-rooftop','recruit-eunsu-sky-point',
         'recruit-kangwoo-pickpocket',
         'recruit-minji-task-signal','recruit-minji-task-collapse',
@@ -795,9 +795,9 @@ with sync_playwright() as p:
       const recruitIds=['minji','parkss','leo','jaeyi','eunsu','kangwoo'];
       const expectedMeetCuts={
         meet_scrapyard:['recruit-minji-welding','recruit-minji','recruit-minji-meet-action'],
-        meet_bus:['recruit-parkss-bus-overturned','recruit-parkss-meet-action'],
-        meet_hitchhiker:['recruit-leo-hitch-gesture','recruit-leo-meet-action'],
-        jy_recruit:['recruit-jaeyi','recruit-jaeyi-suspension-check','recruit-jaeyi-meet-action'],
+        meet_bus:['recruit-parkss-clinic-market-v2','recruit-parkss-meet-action'],
+        meet_hitchhiker:['recruit-leo-daein-market-v2','recruit-leo-meet-action'],
+        jy_recruit:['recruit-jaeyi-tunnel-exchange-v2','recruit-jaeyi-suspension-check','recruit-jaeyi-meet-action'],
         es_recruit:['recruit-eunsu-rooftop','recruit-eunsu-sky-point'],
         kw_recruit:['recruit-kangwoo','recruit-kangwoo-pickpocket','recruit-kangwoo-meet-action']
       };
@@ -1015,7 +1015,8 @@ with sync_playwright() as p:
         document.querySelector('#mission-strip').textContent.includes('게시판') &&
         document.querySelector('#mission-strip').textContent.includes('대전') &&
         document.querySelector('#mission-strip').textContent.includes('본편') &&
-        document.querySelector('#mission-strip').textContent.includes('남산 조치');
+        document.querySelector('#mission-strip').textContent.includes('남산') &&
+        document.querySelector('#mission-strip').textContent.includes('강제 이송');
       S.recruitQ=recruit0; UI.renderAll();
       S.min=12*60;
       const walkParty0=[...S.party];
@@ -1181,7 +1182,7 @@ with sync_playwright() as p:
       const knowledgeText=document.querySelector('.folio-live-content')?.textContent||'';
       out.knowledgeUi=knowledgeText.includes('확인된 단서') && knowledgeText.includes('진행 단계');
       out.departureBrief=knowledgeText.includes('현재 목표') &&
-        knowledgeText.includes('서울 이송 중단') && knowledgeText.includes('다음 행동');
+        knowledgeText.includes('서울 강제 이송 중단') && knowledgeText.includes('다음 행동');
       document.querySelector('#st-x').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&

@@ -846,13 +846,30 @@ G.startRecruitQuest = (id)=>{
   /* 첫 만남은 정착지에서 열린다. 실제 과제는 다른 목적지 또는 그 인물이
      책임지던 정착지 시설에서 따로 시작하며, 같은 이벤트 안에서 연속 해결하지 않는다. */
   const origin=(S.driving&&S.driving.to)||S.at||def.meetNode||null;
-  const target=(def.targets||[]).find(node=>node!==origin&&D.nodes[node])||origin;
-  const sameStop=false;
+  /* 대사에 쓰인 목적지를 배열 순서로 추측하지 않는다. target은 작가가 정한
+     실제 목적지이고, targets는 우회·지역 검사에 쓰는 허용 후보 목록이다. */
+  const primary=def.target&&D.nodes[def.target]?def.target:null;
+  const target=primary||(def.targets||[]).find(node=>node!==origin&&D.nodes[node])||origin;
+  const sameStop=target===origin;
   S.recruitQ={id,stage:'task',target,startedDay:S.day,
     metAt:origin,sameStop,escort:true};
   if(S.driving) S.driving.recruitEscort=id;
-  UI.toast(`🚚 임시 승객 ${def.name} — ${D.nodes[target].name}에서 부탁이 이어진다`);
+  UI.toast(sameStop
+    ? `🤝 ${def.name}의 부탁을 ${D.nodes[target].name}에서 바로 진행할 수 있다`
+    : `🚚 임시 승객 ${def.name} — ${D.nodes[target].name}에서 부탁이 이어진다`);
   G.save();
+  return true;
+};
+/* 첫 만남을 닫거나 정중히 거절했더라도 그 인물은 정착지에서 사라지지 않는다.
+   once는 무작위 재노출만 막고, 플레이어가 직접 다시 말을 거는 선택은 보존한다. */
+G.openRecruitMeet = (id)=>{
+  const def=D.recruitQuests&&D.recruitQuests[id];
+  if(!def||G.hasComp(id)||S.recruitQ) return false;
+  const event=D.events.find(item=>item.id===def.meet);
+  if(!event) return false;
+  const usedIndex=S.used.indexOf(def.meet);
+  if(usedIndex>=0) S.used.splice(usedIndex,1);
+  G.openEventById(def.meet);
   return true;
 };
 G.rememberRecruitChoice = (choice)=>{

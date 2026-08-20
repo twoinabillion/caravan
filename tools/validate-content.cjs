@@ -286,8 +286,8 @@ for (const [scene, description] of Object.entries(D.sceneDescriptions || {})) {
 }
 const requiredRecruitCuts={
   meet_scrapyard:['recruit-minji-welding'],
-  meet_bus:['recruit-parkss-bus-overturned'],
-  meet_hitchhiker:['recruit-leo-hitch-gesture'],
+  meet_bus:['recruit-parkss-clinic-market-v2'],
+  meet_hitchhiker:['recruit-leo-daein-market-v2'],
   jy_recruit:['recruit-jaeyi-suspension-check'],
   es_recruit:['recruit-eunsu-rooftop','recruit-eunsu-sky-point'],
   kw_recruit:['recruit-kangwoo-pickpocket']

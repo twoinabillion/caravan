@@ -3534,14 +3534,43 @@ const UI = (()=>{
     if(!S||S.driving||(UI.modalOpen()&&!$('#ovl-camp').classList.contains('on'))) return;
     const plan=S._campPlan||{};
     const body=$('#camp-body'), ovl=$('#ovl-camp');
+    const opening=!ovl.classList.contains('on');
     const party=S.party||[];
     const resource=`식량 ${S.food} · 물 ${S.water} · 부품 ${S.items['부품']||0} · 고철 ${S.scrap}`;
     const planned=plan.meal||plan.repair||plan.talk;
     const keepsakes=party.map(id=>({id,...(D.companionKeepsakes&&D.companionKeepsakes[id])})).filter(row=>row.name);
     const interior=(D.upgrades||[]).filter(up=>S.up&&S.up[up.id]);
     const recent=(S.journeyRecaps||[]).slice(-3).reverse();
-    body.innerHTML=`<section class="camp-home">
-      <div class="camp-home-hero"><small>VAN HOME · ${G.isNight()?'밤':'해 지기 전'}</small><h3>${esc(G.vanName())} · ${S.at&&D.nodes[S.at]?D.nodes[S.at].name:'길가'}</h3><p>문을 닫고, 물건을 정리하고, 오늘을 끝낼 준비를 한다. 준비한 것은 이번 취침에만 반영된다.</p>
+    const campScene=D.scenes&&D.scenes['camp-home-stage-v1']||'';
+    const activity={
+      minji:'차체 소리를 듣는 중',parkss:'약 가방을 정리하는 중',kangwoo:'바깥 경계를 살피는 중',
+      leo:'작은 곡을 고르는 중',jaeyi:'오늘 주운 것을 펼치는 중',eunsu:'밤 주파수를 맞추는 중'
+    };
+    const campPeople=party.map((id,index)=>{
+      const comp=D.comps[id], portrait=D.portraits&&D.portraits[id];
+      const face=portrait?`<img src="${portrait}" alt="">`:`<span aria-hidden="true">${comp.face}</span>`;
+      const picked=plan.talk===id;
+      return `<button class="camp-live-person slot-${index+1} ${picked?'picked':''}" data-camp-talk="${id}" ${plan.talk?'disabled':''} aria-label="${esc(comp.name)}와 오늘 밤 이야기하기">
+        ${face}<i><b>${esc(comp.name)}</b><small>${picked?'오늘 밤 대화':esc(activity[id]||'야영 준비 중')}</small></i>
+      </button>`;
+    }).join('');
+    body.innerHTML=`<section class="camp-home ${opening?'camp-opening':''}">
+      <div class="camp-live-stage ${plan.meal?'meal-ready':''} ${plan.repair?'repair-ready':''} ${plan.talk?'talk-ready':''}">
+        <div class="camp-live-image" role="img" aria-label="${esc(D.sceneDescriptions&&D.sceneDescriptions['camp-home-stage-v1']||'야영 준비를 마친 달구지')}" style="--camp-scene:url('${campScene}')">
+          <span class="camp-live-rain" aria-hidden="true"></span>
+          <span class="camp-live-smoke" aria-hidden="true"></span>
+          <span class="camp-live-fire" aria-hidden="true"></span>
+          <span class="camp-live-lantern" aria-hidden="true"></span>
+          <div class="camp-live-crew">${campPeople||'<span class="camp-live-alone">오늘 밤은 차 안의 소리와 둘이 남았다</span>'}</div>
+          <div class="camp-live-caption"><small>STOPPED HOME · ${G.isNight()?'NIGHT':'BLUE HOUR'}</small><b>${esc(G.vanName())}</b><span>${S.at&&D.nodes[S.at]?esc(D.nodes[S.at].name):'길가'} · ${party.length?party.length+'명과 야영':'혼자 야영'}</span></div>
+        </div>
+        <div class="camp-live-state" aria-live="polite">
+          <span class="${plan.meal?'on':''}"><i></i>모닥불 ${plan.meal?'식사 준비':'잔불'}</span>
+          <span class="${plan.repair?'on':''}"><i></i>작업등 ${plan.repair?'정비 중':'대기'}</span>
+          <span class="${plan.talk?'on':''}"><i></i>${plan.talk?esc(D.comps[plan.talk].name)+'와 대화':'대화 상대 미정'}</span>
+        </div>
+      </div>
+      <div class="camp-home-hero"><small>TONIGHT'S PLAN</small><h3>${esc(G.vanName())} · 오늘 밤 준비</h3><p>차를 세우면 길 위의 하루가 생활로 바뀐다. 위의 동료를 눌러 바로 대화 상대를 정할 수 있다.</p>
         <div class="camp-storage">${resource}</div></div>
       ${keepsakes.length||interior.length?`<div class="camp-home-section camp-lived-in"><b>살아온 차 안</b><small>합류한 사람과 장착한 부품이 공간에 흔적을 남긴다.</small>
         <div class="camp-keepsakes">${keepsakes.map(row=>`<article><span>${row.icon}</span><div><strong>${esc(row.name)}</strong><small>${esc(row.desc)}</small></div></article>`).join('')}</div>
@@ -3640,16 +3669,22 @@ const UI = (()=>{
   }
   function recruitStl(id){
     if(S.recruitQ){
-      if(S.recruitQ.id!==id){ UI.toast('먼저 지금 맡은 합류 부탁을 끝내야 한다'); return; }
+      if(S.recruitQ.id!==id){
+        const active=D.recruitQuests&&D.recruitQuests[S.recruitQ.id];
+        const target=S.recruitQ.target&&D.nodes[S.recruitQ.target];
+        UI.toast(active
+          ? `${active.name}의 부탁을 먼저 끝내야 한다${target?` — 목적지: ${target.name}`:''}`
+          : '먼저 지금 맡은 합류 부탁을 끝내야 한다');
+        return;
+      }
       closeOvl('#ovl-stl'); G.openRecruitStep(); return;
     }
-    const def=D.recruitQuests&&D.recruitQuests[id], eventId=def&&def.meet;
-    if(eventId && D.events.find(e=>e.id===eventId) && !S.used.includes(eventId)){
+    const def=D.recruitQuests&&D.recruitQuests[id];
+    if(def&&!G.hasComp(id)){
       closeOvl('#ovl-stl');
-      G.openEventById(eventId);
-      return;
+      if(G.openRecruitMeet(id)) return;
     }
-    UI.toast('이 사람과 나눌 첫 이야기는 이미 끝났다');
+    UI.toast(G.hasComp(id)?'이미 달구지에 함께 타고 있다':'이 사람과 나눌 이야기를 찾지 못했다');
   }
   /* ── NPC 대화 ── */
   function talk(nid){
