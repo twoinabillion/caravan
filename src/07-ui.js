@@ -2011,6 +2011,8 @@ const UI = (()=>{
       if(!G.reqVisible(req)) return;
       const rq=G.reqOk(req);
       const cost=G.reqCostText(req);
+      const labelText=stripTags(c.label||'');
+      const repeatedCost=cost&&labelText.replace(/\s+/g,'').includes(cost.replace(/\s+/g,''));
       const routeId=(c.out||[]).map(o=>o.fx&&o.fx.routeChoice).find(Boolean);
       const route=routeId&&G.routeForecast(routeId);
       count++;
@@ -2026,7 +2028,7 @@ const UI = (()=>{
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'} aria-label="${esc(liveBits.join(' · '))}">
           <div class="choice-head"><span class="choice-index">${indexLabel}</span><span class="choice-title">${intentTag?`<i class="choice-intent">${intentTag}</i>`:''}${title}</span></div>
           ${route?`<span class="route-forecast"><b>${route.km}km · ${routeDurationRange(route.minutes)} · 연료 ${routeFuelRange(route.fuel)}</b><small>현장 상황은 출발 뒤 확인</small></span>`:''}
-          ${cost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
+          ${cost&&!repeatedCost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
         </button>`;
     });
     return {html,count,combatChoices,difficulty:null};
@@ -2361,6 +2363,12 @@ const UI = (()=>{
     }
     dock.classList.remove('story-progress-dock');
     dock.innerHTML=state.finalDock;
+    if(state.phase==='outcome'){
+      requestAnimationFrame(()=>{
+        const eventScroll=sheet.querySelector('.event-scroll');
+        if(eventScroll) eventScroll.scrollTop=eventScroll.scrollHeight;
+      });
+    }
     if(state.reveal&&!state.revealed){ state.revealed=true; state.reveal(); }
     if(state.wireFinal) state.wireFinal(dock);
   }

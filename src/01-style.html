@@ -3577,6 +3577,78 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   padding-bottom:2px
 }
 
+/* Event flow recovery: the reader owns the free page height and the decision
+   docket follows it in normal flow. Shrinking the cards must never pull the
+   entire docket upward over the paper. */
+#ev-sheet.event-mode[data-event-kind="story"] .event-scroll{
+  display:flex!important;flex:1 1 auto!important;height:auto!important;min-height:0!important;
+  flex-direction:column;justify-content:flex-start!important;overflow-y:auto
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{
+  display:flex;flex:1 0 auto!important;min-height:clamp(260px,42dvh,460px)!important;flex-direction:column
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .event-head{flex:none}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-reader{
+  flex:1 1 auto;max-height:none!important;min-height:0;margin-right:6%;margin-left:6%;
+  padding-bottom:clamp(12px,3cqw,18px);overflow-x:hidden;overflow-y:auto
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-transcript{
+  width:100%;min-height:100%;align-content:start
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-msg:has(.chat-avatar){
+  grid-template-columns:clamp(46px,14%,64px) minmax(0,1fr);column-gap:4%
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-msg.side-right:has(.chat-avatar){
+  grid-template-columns:minmax(0,1fr) clamp(46px,14%,64px);column-gap:4%
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-msg:not(:has(.chat-avatar)) .chat-copy{
+  width:min(84%,620px);max-width:none
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-msg.side-right:not(:has(.chat-avatar)) .chat-copy{
+  margin-right:0;margin-left:auto
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock,
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock:has(.choices>.choice:nth-child(3)){
+  position:relative!important;inset:auto!important;display:block;flex:0 0 auto!important;
+  width:100%;height:auto!important;min-height:0!important;max-height:min(31dvh,228px)!important;
+  margin:0!important;padding:7px 10px calc(7px + var(--safe-bottom))!important;
+  overflow-x:hidden;overflow-y:auto;transform:none!important
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices{
+  display:flex;width:100%;max-height:none!important;gap:5px;padding:0!important;overflow:visible;flex-direction:column
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice,
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice:nth-child(n){
+  flex:0 0 auto!important;width:100%;height:auto!important;min-height:56px!important;max-height:none;
+  margin:0!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .story-progress-dock{
+  position:relative!important;flex:0 0 auto!important;height:auto!important;min-height:0!important;
+  padding:6px 10px calc(6px + var(--safe-bottom))!important;transform:none!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .story-progress-dock .story-next{min-height:48px}
+
+/* Field-board portraits share the old .npc-row class. Lock the modern row back
+   to three columns so the legacy flex rule cannot turn a portrait into a banner. */
+#ovl-stl .field-board-row.npc-row{
+  display:grid!important;grid-template-columns:42px minmax(0,1fr) max-content!important;
+  align-items:center!important;gap:7px!important
+}
+#ovl-stl .field-board-row.npc-row>.field-board-row-icon.npc-face{
+  position:relative!important;grid-column:1;align-self:center!important;justify-self:center!important;
+  flex:0 0 34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;
+  height:34px!important;min-height:34px!important;max-height:34px!important;margin:0!important;
+  padding:0!important;overflow:hidden!important;border-radius:8px!important
+}
+#ovl-stl .field-board-row.npc-row>.field-board-row-icon.npc-face>.npc-pimg{
+  position:static!important;inset:auto!important;display:block!important;width:34px!important;
+  min-width:34px!important;max-width:34px!important;height:34px!important;min-height:34px!important;
+  max-height:34px!important;margin:0!important;object-fit:cover!important;object-position:50% 18%!important;
+  transform:none!important
+}
+#ovl-stl .field-board-row.npc-row>.field-board-row-copy{grid-column:2;min-width:0}
+#ovl-stl .field-board-row.npc-row>.field-board-row-meta{grid-column:3;min-width:0}
+
 /* ── settlement walk v3 ────────────────────────────────────────────────
    A large settlement is one continuous place, not a menu of cards. The
    authored scene stays visible while real facilities, residents and the
@@ -3848,4 +3920,54 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .field-board-visual-finish .field-board-note.selected,
 .field-board-visual-finish .field-board-note[aria-pressed="true"]{outline:1px solid color-mix(in srgb,var(--light) 55%,transparent);background:linear-gradient(168deg,color-mix(in srgb,var(--light) 14%,#3a332a),#2a251e);box-shadow:0 2px 8px rgba(0,0,0,.58),inset 2px 0 0 var(--light),0 0 10px color-mix(in srgb,var(--light) 18%,transparent)}
 .field-board-visual-finish .field-board-note[data-unavailable="true"]:not(.selected){opacity:.58}
+/* Final measured UI contracts. Keep these at the end of the cascade: the
+   legacy event and settlement layers above intentionally share class names. */
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{
+  display:flex!important;max-height:none!important;flex-direction:column!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-reader{
+  width:auto!important;height:auto!important;min-height:0!important;max-height:none!important;
+  flex:1 1 0!important;overflow-x:hidden!important;overflow-y:auto!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-transcript{
+  min-height:0!important
+}
+#ovl-stl .field-board .field-board-row.npc-row{
+  display:grid!important;grid-template-columns:42px minmax(0,1fr) max-content!important
+}
+#ovl-stl .field-board .field-board-row.npc-row>.field-board-row-icon.npc-face,
+#ovl-stl .field-board .field-board-row.npc-row>.field-board-row-icon.npc-face>.npc-pimg{
+  width:34px!important;min-width:34px!important;max-width:34px!important;
+  height:34px!important;min-height:34px!important;max-height:34px!important
+}
+#ovl-stl .field-board .field-board-row.npc-row>.field-board-row-icon.npc-face>.npc-pimg{
+  object-fit:cover!important;object-position:50% 18%!important
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice:has(>.req) .choice-title{
+  padding-bottom:18px
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice>.req{
+  position:absolute!important;left:22%;right:7%;bottom:5px;z-index:3;
+  margin:0!important;font-size:8px!important;line-height:1.1
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-result-receipt{
+  height:82px!important;min-height:0!important;
+  padding:31px 9% 7px 13%!important
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-result-kicker{
+  top:14px!important
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-result-receipt .fx-line{
+  gap:3px 7px!important
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-result-receipt .fx,
+#ev-sheet.event-mode[data-event-kind="story"][data-story-phase="outcome"] .event-result-receipt .fx:first-child{
+  font-size:clamp(9px,2.8cqw,12px)!important;line-height:1.15!important
+}
+.road-notice-medallion{top:27.5%}
+.road-notice-copy{left:24%;right:7.5%;top:17.5%}
+@container game (max-width:340px){
+  .road-notice-medallion{top:28%}
+  .road-notice-copy{left:23.5%;right:6.5%;top:16.5%}
+}
 </style>
