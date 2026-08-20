@@ -58,7 +58,7 @@ The source files are assembled into that single HTML by `npm run build:html`; ne
    - `/Users/sang/caravan/audits/settlement-story-overhaul-2026-08-17/after/daegu-buttons-before-vs-after.png`
 6. Existing implementation notes:
    - `/Users/sang/caravan/audits/settlement-story-overhaul-2026-08-17/audit.md`
-   - `/Users/sang/caravan/design-qa.md`
+   - `/Users/sang/caravan/docs/history/handoffs/design-qa.md`
 
 The right side of `daegu-sprite-focus-before-vs-after.png` is the current target state. Build on it; do not regress to the left side.
 
@@ -391,7 +391,7 @@ The work is done only when:
 8. a final before/after comparison and the updated seven-city contact sheet are placed in:
    - `/Users/sang/Desktop/포켓몬식 타일 도시 최종/`
 9. the implementation and QA notes are updated in:
-   - `/Users/sang/caravan/design-qa.md`
+   - `/Users/sang/caravan/docs/history/handoffs/design-qa.md`
    - `/Users/sang/caravan/audits/settlement-story-overhaul-2026-08-17/audit.md`
 
 When reporting back, state exactly which source/atlas files changed, the final atlas size and color count, the generated HTML byte size, which viewports were inspected, and the test results. Do not claim completion based only on asset generation.

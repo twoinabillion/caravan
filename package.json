@@ -6,6 +6,7 @@
   "scripts": {
     "build": "bash ./build.sh",
     "build:html": "bash ./build.sh --html-only",
+    "docs:current": "node tools/update-current-doc.mjs",
     "dev:web": "vite",
     "build:web": "vite build",
     "optimize:assets": "bash tools/optimize-embedded-assets.sh",

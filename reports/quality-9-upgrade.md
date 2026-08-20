@@ -74,4 +74,4 @@ quality-9 suites, audits save migration and accessibility, completes the golden 
 full smoke matrix, simulates 1,000 journeys, and checks hashes and asset size.
 
 Blind validation should be recorded with
-[`docs/QUALITY-9-BLIND-VALIDATION.md`](../docs/QUALITY-9-BLIND-VALIDATION.md).
+[`docs/history/roadmaps/QUALITY-9-BLIND-VALIDATION.md`](../docs/history/roadmaps/QUALITY-9-BLIND-VALIDATION.md).

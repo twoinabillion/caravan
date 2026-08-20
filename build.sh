@@ -19,6 +19,7 @@ fi
 node tools/dialogue-lint.cjs
 node tools/validate-content.cjs
 node tools/build-html.mjs
+node tools/update-current-doc.mjs
 
 if [[ "$HTML_ONLY" == false ]]; then
   echo "📦 최신 HTML로 AIT 번들을 갱신합니다."

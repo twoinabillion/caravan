@@ -75,4 +75,4 @@
 - 모바일 480×860: 이벤트 시트와 하단 도크가 화면 밖으로 밀리지 않음.
 - 스크린리더: 현재 턴 영역은 `aria-live="polite"`로 갱신하고 사람 초상에 대체 텍스트를 제공.
 
-최종 판정은 프로젝트 루트의 [`design-qa.md`](../../design-qa.md)를 따른다.
+당시 최종 판정은 [`design-qa.md`](../../docs/history/handoffs/design-qa.md)에 보관돼 있다.

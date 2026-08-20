@@ -1,6 +1,6 @@
 # Field Board visual finish — 2026-08-18
 
-`CODEX-FIELD-BOARD-VISUAL.md`의 승인된 B안 표면 마감을 7개 도시의 장터·정비소·사람들·현장
+`docs/history/handoffs/CODEX-FIELD-BOARD-VISUAL.md`의 승인된 B안 표면 마감을 7개 도시의 장터·정비소·사람들·현장
 통로, 총 28개 화면에 적용한 비교 증거다.
 
 - `before-contact-sheet.png`: 표면 마감 전 28화면

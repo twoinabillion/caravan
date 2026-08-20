@@ -1,6 +1,6 @@
 # Field Board visual finish — Phase 1
 
-`CODEX-FIELD-BOARD-VISUAL.md`의 착수 순서에 따라 처음 대구 장터 한 화면에만 새 표면 언어를
+`docs/history/handoffs/CODEX-FIELD-BOARD-VISUAL.md`의 착수 순서에 따라 처음 대구 장터 한 화면에만 새 표면 언어를
 격리 적용했던 확인용 산출물이다. 이 비교로 방향을 승인한 뒤 27개 시설 화면에도 확장했다.
 최종 전체 비교는 `../field-board-visual-rollout-2026-08-18/`에 있다.
 
