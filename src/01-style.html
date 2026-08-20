@@ -1083,16 +1083,17 @@ input{font-family:inherit}
 #intro-count{color:#625d52}
 #intro-title{font:900 20px/1.3 var(--serif);margin:16px 0 8px;padding:6px 0 1px;color:#2b2822;border-bottom:1px solid rgba(42,102,96,.34)}
 #intro-txt{font-family:var(--serif);font-size:14px;line-height:1.62;color:#37332c;min-height:0;
-  display:flex;flex:1;align-items:flex-start;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+  display:flex;flex:1;align-items:flex-start;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;
+  box-sizing:border-box;padding-bottom:clamp(22px,4vh,34px)}
 #intro-txt .story-reader{min-height:0;width:100%}
 #intro-txt .story-turn{min-height:0;padding:7px 2px 3px;border:0;border-radius:0;background:transparent;box-shadow:none;flex:0 0 auto}
 #intro-txt .story-transcript .story-turn{min-height:0;padding:6px 2px 3px}
 #intro-txt .turn-text{font-family:var(--serif);font-size:14px;line-height:1.58;color:#37332c}
 #intro-txt .story-turn.dialogue .turn-text,#intro-txt .story-turn.letter .turn-text{padding-left:58px}
 #intro-txt .story-chat{justify-content:flex-start;padding:5px 0 4px}
-#intro-txt .story-transcript{gap:13px;transform:translateY(-6px)}
+#intro-txt .story-transcript{gap:13px;width:calc(100% - 6px);box-sizing:border-box;transform:translate(-6px,-6px)}
 #intro-txt .chat-msg{padding:0}
-#intro-txt .chat-msg.side-left{gap:6px;margin-left:-22px;padding-right:clamp(32px,8cqw,72px);padding-left:clamp(4px,1.5cqw,12px)}
+#intro-txt .chat-msg.side-left{gap:6px;margin-left:-12px;padding-right:clamp(32px,8cqw,72px);padding-left:clamp(4px,1.5cqw,12px)}
 #intro-txt .chat-msg.side-right{gap:6px;padding-right:0;padding-left:clamp(32px,8cqw,72px)}
 #intro-txt .chat-avatar{border-radius:10px;border-color:#274a50;
   box-shadow:0 5px 12px rgba(67,50,27,.2)}
@@ -3016,6 +3017,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .journey-local-screen .stop-action-grid{display:grid;grid-template-columns:1fr;grid-auto-rows:25%;gap:0;width:100%;height:100%;overflow:hidden}
 .journey-local-screen.local-action-count-2 .stop-action-grid{grid-auto-rows:50%}
 .journey-local-screen.local-action-count-3 .stop-action-grid{grid-auto-rows:33.333%}
+.journey-local-screen.local-action-count-5 .stop-action-grid{grid-auto-rows:20%}
 .journey-local-screen .stop-action-card{display:block;min-height:0;padding:0;border:0;background:transparent;scroll-snap-align:start}
 .journey-local-screen .stop-action-card.is-disabled{opacity:.52}
 .journey-local-screen .stop-action-trigger{display:grid;width:100%;height:100%;min-height:0;padding:0 0 0 2.6%;
@@ -4173,4 +4175,36 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   }
   .intro-chat{padding-bottom:20px;gap:14px}
 }
+/* Road information has three stable lanes: HUD/toasts, private thought, and crew dialogue.
+   A thought is intentionally text-only so it cannot be mistaken for spoken dialogue. */
+#bubbles.thought-active{box-sizing:border-box;justify-content:flex-start;align-items:flex-start;
+  padding:clamp(116px,16vh,136px) 18px 0}
+#bubbles .bubble.thought{max-width:min(72vw,270px);margin:0;padding:8px 11px;
+  border-color:rgba(255,180,84,.34);background:rgba(19,18,23,.78);
+  box-shadow:0 8px 20px rgba(0,0,0,.2)}
+#bubbles .bubble.thought .bubble-copy{min-width:0}
+#bubbles .bubble.thought .who{letter-spacing:.12em}
+
+/* Route choices retain the destination view while carrying only the context needed
+   to decide: main purpose, party size and one tracked secondary objective. */
+.nav-journey-context{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
+  gap:2px 8px;margin:0 0 4px;padding:0 0 5px;border-bottom:1px solid rgba(104,198,189,.2);
+  color:#c5d0cf;font-family:var(--mono)}
+.nav-journey-core{display:flex;align-items:baseline;gap:5px;min-width:0}
+.nav-journey-core small{flex:none;color:var(--teal);font-size:9px;letter-spacing:.08em}
+.nav-journey-core b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#e5e0d3;font-size:10px;font-weight:700}
+.nav-journey-party{color:#b7bfbd;font-size:9px;white-space:nowrap}
+.nav-journey-side{grid-column:1/-1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#9ea9a7;font-size:9px}
+.journey-local-screen.local-action-count-5 .stop-action-chips{display:none!important}
+.journey-local-screen.local-action-count-5 .stop-action-icon{width:clamp(27px,9cqw,42px);height:clamp(27px,9cqw,42px)}
+.journey-local-screen.local-action-count-5 .stop-action-copy>b{font-size:clamp(10px,3.15cqw,14px)}
+.journey-local-screen.local-action-count-5 .stop-action-cta{font-size:clamp(10px,3.05cqw,14px)}
+.nav-route-summary:has(.nav-journey-context) .nav-place-description{margin-bottom:3px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px;line-height:1.25}
+.nav-map-destination-badge small{display:none}
+.nav-destination-card{position:relative}
+.nav-depart-hint{position:absolute;top:5px;right:5px;padding:2px 5px;border:1px solid rgba(255,180,84,.55);
+  background:rgba(8,12,16,.82);color:var(--amber);font:700 8px/1.2 var(--mono);letter-spacing:.08em}
 </style>

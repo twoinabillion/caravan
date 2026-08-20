@@ -129,9 +129,12 @@ requireIntroOrder('intro-departure-choice', [
   ['불완전한 장치 인정', /아직은 몰라/],
   ['추가 기록 필요', /같은 이송을 겪은 사람/],
   ['동행은 본인 선택', /같은 곳까지 가겠다는 사람/],
-  /* 전역 서울 제한일을 암시하는 옛 날짜 문구가 되살아나면 여기서 걸린다. */
-  ['행동 시한 선언', /스물엿새 안에/],
+  ['행동 의지 선언', /멈출 방법을 찾을 때까지/],
 ]);
+const introDeadlineCopy=(D.intro||[]).flatMap(page=>page.beats||[]).map(turn=>turn.text||'').join('\n');
+if(/스물엿새|스물여섯\s*번째|26\s*일|D-\s*26/i.test(introDeadlineCopy)){
+  errors.push('인트로에 제거된 전역 날짜 제한 문구가 다시 등장함');
+}
 const currentTransfer=introByScene.get('intro-current-expulsion');
 const childTransferSpeech=(currentTransfer&&currentTransfer.beats||[])
   .filter(turn=>turn.kind==='dialogue'&&turn.who==='intro_child')

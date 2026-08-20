@@ -2453,7 +2453,7 @@ D.intro = [
 부두 라디오에서는 한 문장이 반복됐다.
 <span class="ai">“서울 외곽 제7 잔류구역.
 등록 인원 6,412명.
-첫 이송 집행까지 스물엿새.”</span>`
+첫 이송 집행 준비 중.”</span>`
   },
   {
     scene:'intro-dock-aid', era:'오늘 새벽 · 이송 버스 옆', title:'6,412명 가운데 한 가족',
@@ -2467,7 +2467,7 @@ D.intro = [
 
 하진은 서울에서 이의 제기를 열세 번 넣었지만 한 번도 사람의 답을 받지 못했다고 했다.
 
-6,412명은 숫자가 아니었다. 난방이 꺼진 버스 안에서 스물엿새를 세고 있는 가족들이었다.`
+6,412명은 숫자가 아니었다. 난방이 꺼진 버스 안에서 다음 이송 차례를 기다리는 가족들이었다.`
   },
   {
     scene:'intro-appeal-denied', era:'오늘 아침 · 감천 부두 민원 단말', title:'부산에서 할 수 있는 마지막 확인',
@@ -2520,7 +2520,7 @@ D.intro = [
 
 작업장 예비 연료를 달구지에 실으면 당분간 문을 열 수 없었다. 나는 마지막 연료통 두 개와 엄마의 철제 상자를 생활칸 뒤에 묶었다. 무거운 용접기는 작업대에 남겼다.
 
-여기 남으면 내일도 차를 고치며 살 수 있었다. 그러나 도윤과 유나는 스물여섯 번째 밤 뒤에 또 남쪽 버스를 타야 했다.
+여기 남으면 내일도 차를 고치며 살 수 있었다. 그러나 도윤과 유나는 다음 명단에 오르면 또 남쪽 버스를 타야 했다.
 
 셔터를 절반 내리고 빗물이 들지 않게 아래 고리를 걸었다. 돌아올 날짜를 적을 수 없어, 맡은 수리가 늦어진다는 쪽지만 작업대에 남겼다.
 
@@ -2536,7 +2536,7 @@ D.intro = [
 남산의 호출에 복종하려는 것도, 할아버지 대신 복수하려는 것도 아니었다.
 
 <span class="em">부모가 남긴 수정안을 천리안에 적용해
-스물엿새 뒤의 추방을 멈추고,
+다가오는 추방을 멈추고,
 사람의 결정권을 되찾기 위해.</span>
 
 출발은 혼자 했다. 길에서 만난 사람에게 목적지를 강요할 생각은 없었다. 다만 자기 일을 끝낸 뒤 같은 곳까지 가겠다는 사람이 생기면, 그때는 달구지에 그 사람의 자리를 만들기로 했다.
@@ -2699,7 +2699,7 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'같이 온 어른은?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마는 뒤 차에 있어요. 동생이 열나서 아직 못 내렸어요.'},
     {kind:'dialogue', who:'me', name:'나', text:'그 종이에 뭐라고 적혀 있어?'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'저랑 엄마랑 유나 이름이요. 여기… 스물엿새 안에 나가래요. 짐은 이십 킬로만.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'저랑 엄마랑 유나 이름이요. 여기… 곧 나가래요. 짐은 이십 킬로만.'},
     {kind:'narration', text:'아이는 나머지를 읽다가 종이를 내 쪽으로 내밀었다. 한 사람에 20kg. 제7 구역 남문 집결. 출발 시각까지 적혀 있었다.'},
     {kind:'dialogue', who:'me', name:'나', text:'안 나가면 어떻게 된대?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마가 안 나가면 집 문도 밥표도 막힌댔어요. 버스 탈 때 이걸 꼭 들고 있으라고 했고요.'},
@@ -2709,9 +2709,9 @@ const introBeats = {
     {kind:'narration', text:'아이가 이송표를 펼쳤다. 우리 가족의 것과 같은 자리였다. 이름과 날짜 사이의 <span class="em">사유란이 비어 있었다.</span>'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'아저씨도 이 종이 받아 봤어요?'},
     {kind:'dialogue', who:'me', name:'나', text:'나도 8살 때 받았어.'},
-    {kind:'ai', who:'cheollian', name:'부두 공공방송', text:'서울 외곽 제7 잔류구역. 등록 인원 6,412명. 첫 이송 집행까지 스물엿새.'},
+    {kind:'ai', who:'cheollian', name:'부두 공공방송', text:'서울 외곽 제7 잔류구역. 등록 인원 6,412명. 첫 이송 집행 준비 중.'},
     {kind:'dialogue', who:'me', name:'나', text:'아직 서울에 남은 사람이 그렇게 많아?'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 스물엿새 뒤에 전부 나와야 한대요.'}
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'친구들도 있어요. 다음 이송 때 전부 나와야 한대요.'}
   ],
   'intro-dock-aid': [
     {kind:'narration', text:'아이는 열이 난 동생이 기다리는 뒤쪽 버스로 뛰어갔다. 나는 공구 가방을 들고 따라갔다.'},
@@ -2727,7 +2727,7 @@ const introBeats = {
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'이의 신청을 열세 번 했어요. 그때마다 접수 완료는 떴는데, 다음 날 들어가 보면 신청 내역이 없어졌어요.'},
     {kind:'dialogue', who:'me', name:'나', text:'표를 잠깐 빌려주세요. 부산 단말에서도 한 번 확인해 볼게요.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'또 막힐 거예요. 그래도 아직 안 해 본 방법이면 해 봐요.'},
-    {kind:'narration', text:'6,412명은 더 이상 방송 속 숫자가 아니었다. 난방이 꺼진 버스에서 스물엿새를 세고 있는 가족들이었다.'}
+    {kind:'narration', text:'6,412명은 더 이상 방송 속 숫자가 아니었다. 난방이 꺼진 버스에서 다음 이송 차례를 기다리는 가족들이었다.'}
   ],
   'intro-appeal-denied': [
     {kind:'narration', text:'부두 끝 낡은 민원 단말에 하진의 이송표를 올렸다. 빗물이 종이 끝에서 한 방울씩 떨어졌다.'},
@@ -2771,11 +2771,11 @@ const introBeats = {
     {kind:'narration', text:'갈 방법을 찾았다고 바로 시동이 걸리는 것은 아니었다. 작업장에는 내일 고치기로 한 차와 아직 받지 못한 수리값이 남아 있었다.'},
     {kind:'thought', who:'me', name:'나', text:'예비 연료를 전부 싣고 나가면 당분간 이 문은 못 연다.'},
     {kind:'narration', text:'마지막 연료통 두 개를 생활칸 뒤에 묶었다. 엄마의 철제 상자는 조수석 아래에 넣고, 무거운 용접기는 작업대에 남겼다.'},
-    {kind:'thought', who:'me', name:'나', text:'여기 남으면 내일도 먹고는 살아. 그런데 도윤이랑 유나는 스물여섯 번째 밤 뒤에 또 버스를 타야 해.'},
+    {kind:'thought', who:'me', name:'나', text:'여기 남으면 내일도 먹고는 살아. 그런데 도윤이랑 유나는 다음 명단에 오르면 또 버스를 타야 해.'},
     {kind:'narration', text:'맡은 수리가 늦어진다는 쪽지를 작업대에 눌러 두었다. 돌아올 날짜는 쓰지 못했다.'},
     {kind:'thought', who:'me', name:'나', text:'돌아온다고 써 놓고 싶지만, 그건 약속할 수 없어.'},
     {kind:'narration', text:'셔터를 절반 내린 뒤 빗물이 들지 않게 아래 고리를 걸었다. 안쪽의 공구와 빈 의자가 어둠 속에 남았다.'},
-    {kind:'thought', who:'me', name:'나', text:'그래도 스물엿새를 여기서 보내지는 않을 거야.'},
+    {kind:'thought', who:'me', name:'나', text:'그래도 다음 이송을 기다리며 여기 있지는 않을 거야.'},
     {kind:'narration', text:'문에 「수리 쉽니다」를 붙이고 단골 두 명에게 공구함 열쇠를 맡겼다. 예비 연료를 실은 만큼 작업장 난로에 쓸 몫도 줄었다.'},
     {kind:'thought', who:'me', name:'나', text:'이 셔터를 다시 올리러 돌아오자. 그때는 도윤이네도 자기 집으로 돌아갈 수 있게.'}
   ],
@@ -2788,12 +2788,12 @@ const introBeats = {
     {kind:'dialogue', who:'intro_child', name:'도윤', text:'그 기록은 어떻게 모아요?'},
     {kind:'dialogue', who:'me', name:'나', text:'직접 만나서 듣고, 기록이 맞는지도 확인할 거야. 같은 곳까지 가겠다는 사람을 만나면 달구지에 그 사람 자리도 만들고.'},
     {kind:'dialogue', who:'intro_child', name:'도윤', text:'그럼 유나랑 친구들은요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'스물엿새 안에 멈춰 볼게. 만약 늦으면, 이미 출발한 버스부터 돌아오게 하고.'},
+    {kind:'dialogue', who:'me', name:'나', text:'멈출 방법을 찾을 때까지 가 볼게. 이미 출발한 버스도 돌아올 수 있게 하고.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'약속까지는 하지 마세요. 대신 늦으면, 먼저 떠난 사람들 이름도 찾아 주세요.'},
     {kind:'dialogue', who:'me', name:'나', text:'알겠습니다. 남은 버스만 세우고 끝내지는 않을게요.'},
     {kind:'narration', text:'도윤은 가족의 이송표 사본을 조수석 수첩 위에 올려놓았다. 하진은 유나가 기다리는 버스로 돌아갔다. 그제야 달구지 뒤에 남은 레일이 눈에 들어왔다. 누구를 태우라고 정해 둔 자리가 아니라, 필요해진 집의 모양을 나중에 고칠 수 있게 남겨 둔 여지였다.'},
     {kind:'narration', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
-    {kind:'thought', who:'me', name:'나', text:'스물엿새 안에 남산까지 간다. 늦더라도 버스 번호와 사람 이름을 놓치지 않는다.'},
+    {kind:'thought', who:'me', name:'나', text:'남산까지 간다. 버스 번호와 사람 이름을 하나도 놓치지 않는다.'},
     {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}
   ]
 };

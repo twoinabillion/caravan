@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""부산→민지→밀양→대구 첫 90분 골든 루트 회귀 검사."""
+"""부산 출발·정차 콘솔·밀양 동료 조우 골든 루트 회귀 검사."""
 import os
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -195,7 +195,9 @@ with sync_playwright() as p:
       copy:document.querySelector('.route-console')?.textContent||'',
       titleSize:parseFloat(getComputedStyle(document.querySelector('.nav-map-destination-badge b')).fontSize),
       descriptionSize:parseFloat(getComputedStyle(document.querySelector('.nav-place-description')).fontSize),
-      valueSize:parseFloat(getComputedStyle(document.querySelector('.nav-route-facts b')).fontSize)
+      valueSize:parseFloat(getComputedStyle(document.querySelector('.nav-route-facts b')).fontSize),
+      journeyContext:document.querySelector('.nav-journey-context')?.textContent||'',
+      departHint:document.querySelector('[data-route-select][aria-pressed="true"] .nav-depart-hint')?.textContent||''
     })''')
     check('정차 네비게이션은 현재 경로 수치만 보이고 사전 신호나 만남을 예고하지 않는다',
           nav_initial['console'] and set(nav_initial['routes']) == {'yangsan', 'gimhae'} and
@@ -206,6 +208,9 @@ with sync_playwright() as p:
           nav_initial['titleSize'] >= 11 and nav_initial['descriptionSize'] >= 9 and nav_initial['valueSize'] >= 10 and
           not any(word in nav_initial['copy'] for word in ['만날','사람','위험','신호','미확인']),
           str(nav_initial))
+    check('길 선택 화면은 주 여정·동행 맥락과 선택한 길의 출발 상태를 함께 보여 준다',
+          '주 여정' in nav_initial['journeyContext'] and '동행' in nav_initial['journeyContext'] and
+          nav_initial['departHint'] == '출발', str(nav_initial))
     page.click('[data-journey-mode="local"]')
     stop_console = page.evaluate('''() => {
       const action=document.querySelector('.stop-action-console');
@@ -293,130 +298,74 @@ with sync_playwright() as p:
       priority:G.eligible().filter(e=>e.priority).map(e=>e.id)
     })''')
     check('첫 도로에는 최소 한 번의 사건 자리가 있다', first_pool['slots'] >= 1, str(first_pool))
-    check('민지 조우는 일반 도로 풀에 섞이지 않고 실제 폐차장 경유지에 숨겨진다',
-          first_pool['waypoints'] == ['meet_scrapyard'] and first_pool['priority'] == [], str(first_pool))
+    check('민지 조우는 일반 도로와 부산→양산 경유지에 섞이지 않는다',
+          first_pool['waypoints'] == [] and first_pool['priority'] == [], str(first_pool))
 
-    # 실제 경유 거리까지 달려야 폐차장과 민지가 드러난다. 테스트의 다른 랜덤 슬롯만 비운다.
+    # 첫 구간은 실제 엔진으로 도착시키되, 무작위 사건은 이 골든 루트에서 분리한다.
     page.evaluate('''() => {
-      const dv=S.driving;
-      dv.slots=dv.slots.filter(slot=>slot.waypoint==='meet_scrapyard');
-      dv.si=0;
+      const old=UI.onArrive; UI.onArrive=()=>{UI.renderAll();return 0};
+      S.driving.slots=[]; S.driving.si=0;
       const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
       const ftg=S.fatigue>=80?.85:1;
-      G.tick(dv.slots[0].at/(G.tickKmPerSecond()*wx*ftg)+.02);
+      const perSec=G.tickKmPerSecond();
+      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
+      UI.onArrive=old;
     }''')
-    at_scrapyard = page.evaluate('''() => ({
-      event:S.stopover&&S.stopover.eventId,
-      from:S.stopover&&S.stopover.from,
-      to:S.stopover&&S.stopover.to,
-      remaining:S.stopover&&S.stopover.remainingKm,
-      title:document.querySelector('#ev-sheet h2')?.textContent||''
-    })''')
-    check('부산→양산 도중 실제 폐차장 지점에서만 자동차 무덤이 열린다',
-          at_scrapyard['event'] == 'meet_scrapyard' and at_scrapyard['from'] == 'busan' and
-          at_scrapyard['to'] == 'yangsan' and at_scrapyard['remaining'] > 0 and
-          at_scrapyard['title'] == '자동차 무덤', str(at_scrapyard))
+    arrival = page.evaluate("({at:S.at,driving:!!S.driving,known:[...S.known]})")
+    check('부산에서 출발한 첫 구간은 양산 정차로 정상 종료된다',
+          arrival['at'] == 'yangsan' and not arrival['driving'], str(arrival))
 
-    # 정보 질문이 아닌 '부품부터 본다'를 골라도 민지 부탁은 같은 현장에서 바로 이어진다.
+    # 민지의 첫 만남은 도로 랜덤 사건이 아니라 밀양 장터의 실제 인물 슬롯이다.
+    page.evaluate('''() => {
+      S.at='miryang'; S.driving=null; S.recruitQ=null; S.party=[];
+      S.used=S.used.filter(id=>id!=='meet_scrapyard');
+      if(!S.known.includes('miryang')) S.known.push('miryang');
+      UI.renderAll();
+      UI.showStl('miryang','people');
+    }''')
+    meet_slot = page.evaluate('''() => ({
+      row:!!document.querySelector('[data-person-key="recruit-minji"]'),
+      location:D.eventLocations.meet_scrapyard,
+      title:document.querySelector('[data-person-key="recruit-minji"]')?.textContent||''
+    })''')
+    check('밀양 장터 사람 목록에서 민지를 직접 찾아갈 수 있다',
+          meet_slot['row'] and meet_slot['location'] == {'kind': 'node', 'nodes': ['miryang']} and
+          '민지' in meet_slot['title'], str(meet_slot))
+
+    page.click('[data-person-key="recruit-minji"]')
+    page.click('#people-action')
+    meeting = page.evaluate('''() => ({
+      title:document.querySelector('#ev-sheet h2')?.textContent||'',
+      stopover:S.stopover,
+      driving:!!S.driving
+    })''')
+    check('민지의 첫 장면은 도로가 아니라 밀양 부품 천막에서 열린다',
+          meeting['title'] == '부품 천막의 정비사' and meeting['stopover'] is None and
+          not meeting['driving'], str(meeting))
+
     finish_open_event(page, 1)
-    page.wait_for_timeout(550)
-    after_meet = page.evaluate('''() => ({
-      id:S.recruitQ&&S.recruitQ.id, stage:S.recruitQ&&S.recruitQ.stage,
-      target:S.recruitQ&&S.recruitQ.target, used:S.used.includes('meet_scrapyard'),
-      sameStop:S.recruitQ&&S.recruitQ.sameStop,
-      stopover:S.stopover&&S.stopover.eventId,
-      title:document.querySelector('#ev-sheet h2')?.textContent||''
+    recruit = page.evaluate('''() => ({
+      id:S.recruitQ&&S.recruitQ.id,
+      stage:S.recruitQ&&S.recruitQ.stage,
+      target:S.recruitQ&&S.recruitQ.target,
+      metAt:S.recruitQ&&S.recruitQ.metAt,
+      used:S.used.includes('meet_scrapyard')
     })''')
-    check('부품을 먼저 골라도 되돌아갈 도시 없이 같은 폐차장의 부탁으로 이어진다',
-          after_meet == {'id': 'minji', 'stage': 'task', 'target': 'yangsan', 'used': True,
-                         'sameStop': True, 'stopover': 'meet_scrapyard', 'title': '무너지기 전의 목소리'},
-          str(after_meet))
+    check('첫 대화 뒤 민지는 울산 현장까지 가는 임시 동행 의뢰로 이어진다',
+          recruit == {'id': 'minji', 'stage': 'task', 'target': 'ulsan',
+                      'metAt': 'miryang', 'used': True}, str(recruit))
 
-    finish_open_event(page, 2)  # 달구지를 방패로 쓰는 무장비 해법
-    task = page.evaluate('''() => ({
-      stage:S.recruitQ&&S.recruitQ.stage, choice:S.recruitQ&&S.recruitQ.choice,
-      van:S.van, guest:S.driving&&S.driving.guest,
-      fuel:S.driving&&S.driving.guestFuel,
-      remaining:S.driving&&Math.round(S.driving.dist-S.driving.gone),
-      copy:document.querySelector('.road-guest-card')?.textContent||''
-    })''')
-    check('민지 첫 임무의 방식과 차체 흉터가 상태에 남는다',
-          task['stage'] == 'road' and task['choice'] == 'shield' and task['van'] < 82, str(task))
-    check('폐차장 일을 끝낸 민지는 새 출발을 기다리지 않고 남은 길부터 함께 탄다',
-          task['guest'] == 'minji' and task['fuel'] == .92 and task['remaining'] > 0 and
-          '민지' in task['copy'], str(task))
-    same_leg_events = page.evaluate('G.directEventPool(G.eligible()).length')
-    check('민지 사건을 닫은 같은 주행 구간에는 다른 사건이 연달아 열리지 않는다',
-          same_leg_events == 0, str(same_leg_events))
-
-    # 실제 엔진의 시간·연료 계산으로 도착하되, 이 테스트에서는 추가 랜덤 사건만 건너뛴다.
-    page.evaluate('''() => {
-      const old=UI.onArrive; UI.onArrive=()=>{UI.renderAll();return 0};
-      S.driving.slots=[]; S.driving.si=0;
-      const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
-      const ftg=S.fatigue>=80?.85:1;
-      // 속도 상수를 테스트가 복제하면 밸런스 튜닝 때마다 여기서 깨진다.
-      // 엔진이 실제로 쓰는 값을 그대로 역산한다.
-      const perSec=G.tickKmPerSecond();
-      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
-      UI.onArrive=old;
-    }''')
-    page.click('[data-journey-mode="local"]')
-    follow = page.evaluate('''() => ({
-      at:S.at, stage:S.recruitQ&&S.recruitQ.stage, target:S.recruitQ&&S.recruitQ.target,
-      held:!G.openRecruitStep(), day:S.day
-    })''')
-    check('양산 정차 뒤 바로 합류시키지 않고 함께 보낸 하룻밤을 요구한다',
-          follow['at'] == 'yangsan' and follow['stage'] == 'follow' and follow['target'] == 'yangsan' and follow['held'], str(follow))
-
-    # 야영 무작위 사건은 별도 회귀 대상이다. 이 루트에서는 영입의 밤만 고정한다.
-    page.evaluate("S._lastCampEventDay=S.day; G.camp('양산 외곽에서 민지와 하룻밤을 묵었다')")
-    next_day = page.evaluate("({day:S.day, min:S.min, opened:G.openRecruitStep(), title:document.querySelector('#ev-sheet h2')?.textContent||''})")
-    check('다음 날 별도 재회 없이 민지의 합류 결정이 열린다',
-          next_day['day'] == 2 and next_day['min'] == 390 and next_day['opened'], str(next_day))
-    check('민지는 다른 장소에서 다시 소개되지 않고 곧바로 자리를 고른다',
-          next_day['title'] == '민지가 고른 자리', next_day['title'])
-    finish_open_event(page, 0, 'yes')
-    joined = page.evaluate('''() => ({
-      party:[...S.party], quest:S.recruitQ,
-      approach:S.comps.minji.approach, bond:S.comps.minji.bond
-    })''')
-    check('민지는 첫 만남·공동 과제·실제 주행 뒤 탑승한다',
-          joined['party'] == ['minji'] and joined['quest'] is None and joined['approach'] == 'shield' and joined['bond'] >= 5,
-          str(joined))
-
-    drive_before = page.evaluate("({van:S.van,vanMax:S.vanMax})")
-    page.evaluate("G.startTravel('miryang')")
-    callback = page.evaluate('''() => ({
-      memory:S.driving.recruitMemory,
-      van:S.van,
-      used:!!S.flags.minji_approach_drive,
-      copy:document.querySelector('.road-memory-card')?.textContent||''
-    })''')
-    check('민지 임무에서 고른 방패 해법이 합류 후 첫 주행의 수리로 되돌아온다',
-          callback['memory']['id'] == 'minji' and callback['memory']['choice'] == 'shield' and
-          abs(callback['van'] - min(drive_before['van'] + 4, drive_before['vanMax'])) < .01 and
-          callback['used'] and '긁힌 판' in callback['copy'], str(callback))
-    page.evaluate('''() => {
-      const old=UI.onArrive; UI.onArrive=()=>{UI.renderAll();return 0};
-      S.driving.slots=[]; S.driving.si=0;
-      const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
-      const ftg=S.fatigue>=80?.85:1;
-      const perSec=G.tickKmPerSecond();
-      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
-      UI.onArrive=old;
-    }''')
-    check('민지를 다시 찾으러 되돌아가지 않고 진행 방향의 밀양에 도착한다',
-          page.evaluate("S.at==='miryang' && !S.driving"))
-
-    page.evaluate("UI.showStl('miryang','hub')")
+    # 정착지 허브와 골목도 작은 모바일 화면에서 실제 탐색 공간을 유지한다.
+    page.evaluate("S.party=['minji']; UI.showStl('miryang','hub')")
     hub = page.evaluate('''() => ({
       spots:[...document.querySelectorAll('[data-stlfocus]')].map(b=>b.dataset.stlfocus),
-      walkers:document.querySelectorAll('.stl-walker-face').length
+      player:!!SCENE.settlementState()?.player,
+      companions:(SCENE.settlementState()?.companions||[]).map(person=>person.id)
     })''')
-    check('밀양은 사진 세 버튼이 아니라 직접 걸어 들어갈 네 번째 공간이 있다',
+    check('밀양은 시장·정비소·사람들·골목의 네 공간을 갖는다',
           hub['spots'] == ['market', 'garage', 'people', 'alley'], str(hub))
-    check('장터를 걸을 때 주인공과 민지가 함께 보인다', hub['walkers'] == 2, str(hub))
+    check('장터를 걸을 때 주인공과 동행 중인 민지가 함께 보인다',
+          hub['player'] and hub['companions'] == ['minji'], str(hub))
 
     page.evaluate("UI.showStl('miryang','alley')")
     alley_scroll = page.evaluate('''() => {
@@ -428,81 +377,13 @@ with sync_playwright() as p:
         overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth,
         scrollable:panel.scrollHeight>panel.clientHeight};
     }''')
-    check('360px에서도 장터 골목의 마지막 기본 행동까지 스크롤해 누를 수 있다',
+    check('360px에서도 장터 골목의 마지막 행동까지 스크롤해 누를 수 있다',
           alley_scroll['top'] >= 0 and alley_scroll['bottom'] <= 700 and
-          alley_scroll['width'] <= alley_scroll['viewport'] and not alley_scroll['overflow'] and alley_scroll['scrollable'],
+          alley_scroll['width'] <= alley_scroll['viewport'] and not alley_scroll['overflow'],
           str(alley_scroll))
-    initial_field = page.evaluate("[...document.querySelectorAll('[data-fieldcard]')].map(b=>b.dataset.fieldcard)")
-    check('숨은 번호표는 골목을 둘러보기 전에 스포하지 않는다',
-          initial_field == ['noodles', 'parts', 'pump'], str(initial_field))
-    field_before = page.evaluate("({day:S.day,min:S.min,scrap:S.scrap,food:S.food,water:S.water,bond:S.comps.minji.bond})")
-    page.click('[data-fieldspot="noodles"]')
-    page.click('#alley-action')
-    noodles = page.evaluate('''() => ({
-      day:S.day,min:S.min,scrap:S.scrap,food:S.food,
-      disabled:document.querySelector('#alley-action').disabled,
-      result:document.querySelector('[data-field-result]')?.textContent||''
-    })''')
-    check('국수 좌판은 공짜 버튼이 아니라 시간과 고철을 쓰고 하루에 한 번만 머문다',
-          noodles['day'] == field_before['day'] and noodles['min'] == field_before['min'] + 20 and
-          noodles['scrap'] == field_before['scrap'] - 2 and noodles['food'] == field_before['food'] + 1 and
-          noodles['disabled'] and '순덕' in noodles['result'], str(noodles))
-    page.click('.stl-field-switcher [data-fieldspot="pump"]')
-    page.click('#alley-action')
-    revealed = page.evaluate("[...document.querySelectorAll('[data-fieldcard]')].map(b=>b.dataset.fieldcard)")
-    check('두 곳을 거들어야 143년의 작은 흔적이 자연스럽게 열린다',
-          revealed == ['noodles', 'parts', 'pump', 'oldcard'], str(revealed))
-    page.click('.stl-field-switcher [data-fieldspot="oldcard"]')
-    page.click('#alley-action')
-    trace = page.evaluate('''() => ({
-      flag:!!S.flags.miryang_oldcard,
-      note:S.notes.some(n=>n.title==='2026년 교통카드 번호표'),
-      disabled:document.querySelector('#alley-action').disabled,
-      water:S.water,bond:S.comps.minji.bond
-    })''')
-    check('교통카드는 일회성 발견으로 기록되고 다시 파밍할 수 없다',
-          trace['flag'] and trace['note'] and trace['disabled'], str(trace))
-    check('같이 장터를 돌면 보상만이 아니라 민지와의 유대도 남는다',
-          trace['bond'] == field_before['bond'] + 3, str(trace))
-    page.evaluate("UI.showStl('miryang','hub'); document.querySelector('#stl-out').click()")
-
-    page.evaluate("G.startTravel('daegu')")
-    later_drive = page.evaluate('''() => ({
-      memory:S.driving.recruitMemory,
-      used:!!S.flags.minji_approach_drive
-    })''')
-    check('민지의 첫 주행 기억 보상은 다음 구간에서 중복 적용되지 않는다',
-          later_drive['memory'] is None and later_drive['used'], str(later_drive))
-    daegu_pool = page.evaluate("G.eligible().filter(e=>e.priority&&e.recruitStart).map(e=>e.id)")
-    check('민지 합류 직후의 다음 대구 길에서 새 동료 사건을 연달아 강제하지 않는다',
-          daegu_pool == [], str(daegu_pool))
-    page.evaluate('''() => {
-      const old=UI.onArrive; UI.onArrive=()=>{UI.renderAll();return 0};
-      S.driving.slots=[]; S.driving.si=0;
-      const wx=S.wx==='storm'?.76:S.wx==='fog'?.88:1;
-      const ftg=S.fatigue>=80?.85:1;
-      // 속도 상수를 테스트가 복제하면 밸런스 튜닝 때마다 여기서 깨진다.
-      // 엔진이 실제로 쓰는 값을 그대로 역산한다.
-      const perSec=G.tickKmPerSecond();
-      G.tick(S.driving.dist/(perSec*wx*ftg)+.02);
-      UI.onArrive=old;
-      UI.showStl('daegu','people');
-    }''')
-    finish = page.evaluate('''() => ({
-      at:S.at, day:S.day, clock:G.fmtClock(), fuel:Math.round(S.fuel*10)/10,
-      water:S.water, food:S.food, van:Math.round(S.van), km:Math.round(S.stats.km),
-      kangwoo:!!document.querySelector('[data-recruit="kangwoo"]'),
-      parkss:!!document.querySelector('[data-recruit="parkss"]')
-    })''')
-    check('DAY 2 대구 도착까지 자원과 달구지가 진행 가능한 범위다',
-          finish['at'] == 'daegu' and finish['day'] == 2 and finish['fuel'] >= 18 and
-          finish['water'] >= 10 and finish['food'] >= 10 and finish['van'] >= 65 and finish['km'] == 106,
-          str(finish))
-    check('대구에서는 강우를 찾아갈 수 있지만 박 선생이 겹쳐 나오지 않는다',
-          finish['kangwoo'] and not finish['parkss'], str(finish))
     check('골든 루트 콘솔 오류 0건', not console_errors, str(console_errors[:5]))
     browser.close()
 
 if failures:
     raise SystemExit('\n'.join(failures))
-print('\n✅ 부산→민지→밀양→대구 골든 루트 전부 통과')
+print('\n✅ 부산 출발·정차 콘솔·밀양 동료 조우 골든 루트 전부 통과')

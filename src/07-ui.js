@@ -881,6 +881,27 @@ const UI = (()=>{
       node.classList.toggle('danger',m.danger);
       node.classList.toggle('has-secondary',m.secondary);
     });
+    syncRoadJourneyContext();
+  }
+  function syncRoadJourneyContext(source=$('#mission-strip')){
+    const summary=$('#journey-mode-route .nav-route-summary');
+    if(!summary||!source||!S) return;
+    summary.querySelector('.nav-journey-context')?.remove();
+    const clean=(value,pattern)=>String(value||'').replace(pattern,'').replace(/\s+/g,' ').trim();
+    const main=clean(source.querySelector('.chip-core')?.textContent,/^[◎\s]*본편\s*·\s*/)
+      .replace(/\s*·\s*날짜 제한 없음$/,'');
+    const side=clean(source.querySelector('.chip-quest')?.textContent,/^.*?게시판\s*/);
+    const companion=clean(source.querySelector('.ms-title')?.textContent,/^\s*/);
+    const secondary=side||companion;
+    const secondaryHtml=secondary
+      ? '<span class="nav-journey-side">'+esc(secondary)+'</span>'
+      : '';
+    summary.insertAdjacentHTML('afterbegin',
+      '<div class="nav-journey-context" role="status" aria-label="현재 여정 맥락">'+
+      '<span class="nav-journey-core"><small>주 여정</small><b>'+
+      esc(main||'서울로 가는 기록을 모은다')+'</b></span>'+
+      '<span class="nav-journey-party">동행 '+(S.party||[]).length+'</span>'+
+      secondaryHtml+'</div>');
   }
 
   /* ── panel ── */
@@ -1802,9 +1823,9 @@ function dialogueSide(turn,lanes,opt={}){
       action:'craft',kicker:'차 뒤 칸에서',title:'작업대를 편다',
       description:'무기와 탄을 직접 만든다.',chips:['약 40분'],cta:'작업하기'
     }));
-    /* 같은 콘솔에서 세로 스크롤이 생기면 목적지↔머물기 전환이 다른 화면처럼 느껴진다.
-       즉시 해야 할 순서대로 네 가지만 남기고, 정비는 가방·야영에서도 계속 접근할 수 있다. */
-    localActions=localActions.slice(0,4);
+    /* 기본 화면은 네 칸으로 고정하되, 동료 의뢰가 끼어들 때는 기존 생존 행동을
+       밀어내지 않도록 다섯 번째 칸까지 연다. 5열 계약은 모바일 CSS에도 있다. */
+    localActions=localActions.slice(0,S.recruitQ?5:4);
     const localActive=journeyConsoleMode==='local';
     const routeActive=journeyConsoleMode==='route';
     const localSection=localActions.length?`<div class="route-console journey-mode-panel journey-local-panel" id="journey-mode-local" role="tabpanel" aria-label="머물기" aria-hidden="${!localActive}" ${localActive?'':'hidden'}>
@@ -1815,6 +1836,12 @@ function dialogueSide(turn,lanes,opt={}){
     const journeyConsole=`<section class="journey-mode-console" aria-label="정차 통합 콘솔">${journeyModeTabsHtml(journeyConsoleMode)}${routeSection}${localSection}</section>`;
     const h=`${contextRail(n,false)}${journeyGuideHtml()}${journeyConsole}`;
     p.innerHTML=h;
+    syncRoadJourneyContext();
+    p.querySelectorAll('.nav-destination-card').forEach(card=>{
+      card.querySelector('.nav-depart-hint')?.remove();
+      if(card.classList.contains('is-selected'))
+        card.insertAdjacentHTML('beforeend','<span class="nav-depart-hint" aria-hidden="true">출발</span>');
+    });
     wireStopActionButtons(p,n);
     wireContext(p);
     wireJourneyGuide(p);
@@ -1899,6 +1926,7 @@ function dialogueSide(turn,lanes,opt={}){
     const wrap=$('#bubbles');
     clearTimeout(speechTimer);
     wrap.innerHTML='';
+    wrap.classList.remove('thought-active');
     const b=speechQueue.shift();
     if(!b){ speechBusy=false; return; }
     if(b.drivingOnly&&(!S||!S.driving)){ showNextSpeech(); return; }
@@ -1906,6 +1934,7 @@ function dialogueSide(turn,lanes,opt={}){
     const isAi = b.who==='cheollian';
     const isNarration = b.who==='sys';
     const isThought = b.who==='나' && /^\s*\([\s\S]*\)\s*$/.test(b.t);
+    wrap.classList.toggle('thought-active',isThought);
     if(!isAi && !isNarration && !isThought && b.who!=='radio' && typeof SCENE!=='undefined' && SCENE.talkPulse){
       let ri=-1;
       if(b.who==='나') ri=0;
@@ -1916,7 +1945,7 @@ function dialogueSide(turn,lanes,opt={}){
     const kind=isAi?' ai':isNarration?' narration':isThought?' thought':isRadio?' radio':' dialogue';
     const text=isThought?b.t.trim().slice(1,-1):b.t;
     const profile=speakerInfo(isNarration?'sys':isAi?'cheollian':isRadio?'radio':b.who);
-    const face=profile.portrait&&!isAi&&!isNarration&&!isRadio
+    const face=profile.portrait&&!isAi&&!isNarration&&!isThought&&!isRadio
       ? `<img class="bubble-face" src="${profile.portrait}" alt="${esc(profile.name)} 초상">`:'';
     const label=isNarration?'길 위':isThought?'생각':isAi?'천리안 방송':isRadio?'라디오':profile.name;
     const bb=el('div','bubble'+kind,`${face}<span class="bubble-copy"><span class="who">${esc(label)}</span><span>${safeHtml(text)}</span></span>`);

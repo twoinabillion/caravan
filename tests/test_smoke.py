@@ -157,10 +157,10 @@ with sync_playwright() as p:
     check('인트로 양쪽 초상·압정·갈고리 안전영역',
           intro_chat['portraits'] == ['테스터 · 8살 초상','할아버지 초상'] and
           intro_chat['pins'] == 2 and intro_chat['safe'], str(intro_chat))
-    check('인트로 기록은 보존하되 최근 두 턴만 화면에 표시',
+    check('인트로 기록은 보존하고 최근 서술과 대화 두 턴을 함께 표시',
           intro_chat['narration'] == 1 and
           intro_chat['order'] == ['narration','dialogue','dialogue'] and
-          intro_chat['visibleEntries'] == 2 and intro_chat['transcriptW'] > 0, str(intro_chat))
+          intro_chat['visibleEntries'] == 3 and intro_chat['transcriptW'] > 0, str(intro_chat))
     for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 2')):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
@@ -710,7 +710,7 @@ with sync_playwright() as p:
         familyBeats.some(t=>t.text.includes('6,412명은 더 이상')) &&
         appealBeats.some(t=>t.text.includes('원격 이의 제기 경로가 없습니다')) &&
         workshopBeats.some(t=>t.text.includes('예비 연료를 전부 싣고')) &&
-        departureBeats.some(t=>t.text.includes('버스 번호와 사람 이름을 놓치지 않는다')) &&
+        departureBeats.some(t=>t.text.includes('버스 번호와 사람 이름을 하나도 놓치지 않는다')) &&
         ['intro-current-expulsion','intro-dock-aid','intro-appeal-denied','intro-mother-keepsakes',
          'intro-dashboard-module','intro-workshop-departure','intro-departure-choice']
           .every(key=>D.scenes[key].startsWith('data:image/jpeg;base64,')) &&
@@ -1317,7 +1317,7 @@ with sync_playwright() as p:
     check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
     check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
     check('인트로 행동·원인 대사가 구체적으로 이어짐', r4['introCausalDialogue'], str(r4))
-    check('한 가족 도움→이의 제기 실패→유품·대가→시한 선언으로 출발', r4['introImmediateMotive'], str(r4))
+    check('한 가족 도움→이의 제기 실패→유품·대가→행동 의지로 출발', r4['introImmediateMotive'], str(r4))
     check('이송표 내용·강제력·사본을 가져가는 이유 설명', r4['transferPaperMeaning'], str(r4))
     check('할아버지 수첩은 구체적이고 안전한 정비 조언', r4['grandfatherNotes'], str(r4))
     check('달구지 생활차 개조·확장 설정', r4['introHome'], str(r4))
@@ -1769,7 +1769,7 @@ with sync_playwright() as p:
         envelope.out[0].text.includes('사유: —');
       const epText = ep.text({flags:{core_transfer:true}, party:[]});
       const epOut = ep.choices.map(c => c.out[0].text({flags:{core_transfer:true}, party:[]}));
-      out.subtleClue = epOut.every(t => t.includes('KOR-LOCAL 처리 결과 수신') &&
+      out.subtleClue = epOut.every(t => t.includes('천리안 처리 결과 수신') &&
         t.includes('후속 목록: 없음') && t.includes('〔 서울까지 400km — 끝 〕')) &&
         epOut.every(t => !t.includes('2막') && !t.includes('응답 모형') && !t.includes('다음 목적지'));
       out.storyDone = ep.choices.every(c => c.out[0].fx.flag === 'story_done');
