@@ -26,6 +26,22 @@ def enter_game(page):
     page.evaluate('UI.skipIntro()')
     page.wait_for_timeout(160)
     page.evaluate("document.querySelector('#arrival-scene').classList.remove('on')")
+    page.evaluate("document.querySelector('#ev-wrap')?.classList.remove('on')")
+    page.evaluate("""() => {
+      for(const id of ['onboarding_main_mission','onboarding_first_road']){
+        const event=D.events.find(item=>item.id===id);
+        if(event && !S.used.includes(event.id)) S.used.push(event.id);
+      }
+      S.flags.onboarding_mission_seen=true;
+      S.flags.onboarding_first_road_seen=true;
+      S._storyQueue=[]; S._chain=null;
+    }""")
+    page.wait_for_timeout(900)
+    page.evaluate("""() => {
+      document.querySelector('#ev-wrap')?.classList.remove('on');
+      document.querySelector('#quest-update-ribbon')?.remove();
+      S._storyQueue=[]; S._chain=null;
+    }""")
     page.click('[data-journey-mode="route"]')
     page.wait_for_timeout(160)
 
@@ -163,10 +179,10 @@ with sync_playwright() as playwright:
 
         page.click('#dk-objectives')
         page.wait_for_timeout(80)
-        goal = tool_target_state(page, '#ovl-status')
-        check(f'{width}×{height} goal folio keeps visible controls at least 44px',
+        goal = tool_target_state(page, '#quest-ledger')
+        check(f'{width}×{height} quest ledger keeps visible controls at least 44px',
               goal['count'] >= 1 and not goal['short'] and goal['escaped'] == 0, str(goal))
-        page.click('.folio-road-button')
+        page.click('.quest-ledger-close')
 
         page.click('#dk-map')
         page.evaluate("UI.showNodeCard(S.known.find(id => id !== S.at))")

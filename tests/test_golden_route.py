@@ -45,6 +45,22 @@ with sync_playwright() as p:
     page.evaluate('UI.skipIntro()')
     page.wait_for_timeout(180)
     page.evaluate("document.querySelector('#arrival-scene').classList.remove('on')")
+    page.evaluate("document.querySelector('#ev-wrap')?.classList.remove('on')")
+    page.evaluate("""() => {
+      for(const id of ['onboarding_main_mission','onboarding_first_road']){
+        const event=D.events.find(item=>item.id===id);
+        if(event && !S.used.includes(event.id)) S.used.push(event.id);
+      }
+      S.flags.onboarding_mission_seen=true;
+      S.flags.onboarding_first_road_seen=true;
+      S._storyQueue=[]; S._chain=null;
+    }""")
+    page.wait_for_timeout(900)
+    page.evaluate("""() => {
+      document.querySelector('#ev-wrap')?.classList.remove('on');
+      document.querySelector('#quest-update-ribbon')?.remove();
+      S._storyQueue=[]; S._chain=null;
+    }""")
 
     start = page.evaluate('''() => ({
       at:S.at, day:S.day, min:S.min, fuel:S.fuel, scrap:S.scrap,

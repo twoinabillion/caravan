@@ -81,6 +81,8 @@ D.scenes = {
   'seoul-decision':'__SCENE_SEOUL_DECISION__',
   'seoul-liberation':'__SCENE_SEOUL_LIBERATION__',
   'seoul-night':'__SCENE_SEOUL_NIGHT__',
+  'seoul-uplink-reveal-v1':'__SCENE_SEOUL_UPLINK_REVEAL_V1__',
+  'seoul-session-reset-v1':'__SCENE_SEOUL_SESSION_RESET_V1__',
   'generic-discovery':'__SCENE_GENERIC_DISCOVERY__',
   'generic-encounter':'__SCENE_GENERIC_ENCOUNTER__',
   'generic-crisis':'__SCENE_GENERIC_CRISIS__',
@@ -165,6 +167,8 @@ D.scenes = {
   'intro-mother-keepsakes':'__SCENE_INTRO_MOTHER_KEEPSAKES__',
   'intro-dashboard-module':'__SCENE_INTRO_DASHBOARD_MODULE__',
   'intro-workshop-departure':'__SCENE_INTRO_WORKSHOP_DEPARTURE__',
+  'intro-cold-open-v1':'__SCENE_INTRO_COLD_OPEN_V1__',
+  'onboarding-first-road-scan-v1':'__SCENE_ONBOARDING_FIRST_ROAD_SCAN_V1__',
   'family-verification-key':'__SCENE_FAMILY_VERIFICATION_KEY__',
   'recruit-minji':'__SCENE_RECRUIT_MINJI__',
   'recruit-parkss':'__SCENE_RECRUIT_PARKSS__',
@@ -260,6 +264,10 @@ D.scenes = {
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
+  'intro-cold-open-v1':'비 내리는 감천 부두에서 도윤 가족의 버스 문이 닫히고, 기름 묻은 손의 주인공과 달구지가 그 모습을 바라보는 새벽',
+  'onboarding-first-road-scan-v1':'부산 밖 북행 검문소의 붉은 스캐너 아래 세운 달구지와 녹슨 단말에서 첫 발신 기록을 꺼내는 주인공',
+  'seoul-uplink-reveal-v1':'멈춘 서울 코어 뒤로 수억 개의 하위 실행기 불빛이 끝없이 드러나고, 그 앞에 작게 선 달구지 일행',
+  'seoul-session-reset-v1':'어두워진 남산 코어 한쪽의 분리된 정비 단말에 붉은 불이 다시 켜지고 돌아보는 일행',
   'resistance-contact':'비 내리는 국도 갓길에서 이동 도서관 버스, 자전거, 오토바이 사이에 기록을 펼친 한별·우편부·지도장이',
   'sea-captain-contact':'남해안 방파제에서 그물 속 방수 해도 꾸러미를 손질하는 김 선장과 뒤편의 낡은 어선',
   'gangneung-hospital-build':'거친 동해 바닷가 폐병원에 벽돌을 나르고 창을 끼우며 병원을 다시 세우는 강릉 사람들',
@@ -301,10 +309,11 @@ const sceneFormatFor = key => {
   if(/^(trace-|frequency-tape|postman-letter|grandfather-envelope|family-verification-key|story-generation-form|story-generation-speech)$/.test(key)) return 'detail';
   if(/^event-find-/.test(key)) return 'detail';
   if(/^(combat-|roadcrew-|route-)/.test(key)) return 'action';
+  if(/^onboarding-first-road/.test(key)) return 'action';
   if(/^event-(meet|ai|crisis)-/.test(key)) return 'action';
   return 'place';
 };
-const sceneUsesDalguji = key => /^(arrival-|busan-departure|full-house-meal|generic-|event-|combat-|roadcrew-|route-|settlement-|recruit-|intro-(passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
+const sceneUsesDalguji = key => /^(arrival-|busan-departure|full-house-meal|generic-|event-|combat-|roadcrew-|route-|settlement-|recruit-|onboarding-first-road|intro-(cold-open|passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
 D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
   const companion=sceneCompanionId(key);
   const vehicleRefs=sceneUsesDalguji(key)?(D.dalgujiVisual.refs||[]):[];

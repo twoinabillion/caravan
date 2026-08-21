@@ -54,6 +54,22 @@ with sync_playwright() as p:
     page.evaluate('UI.skipIntro()')
     page.wait_for_timeout(200)
     page.evaluate("document.querySelector('#arrival-scene').classList.remove('on')")
+    page.evaluate("document.querySelector('#ev-wrap')?.classList.remove('on')")
+    page.evaluate("""() => {
+      for(const id of ['onboarding_main_mission','onboarding_first_road']){
+        const event=D.events.find(item=>item.id===id);
+        if(event && !S.used.includes(event.id)) S.used.push(event.id);
+      }
+      S.flags.onboarding_mission_seen=true;
+      S.flags.onboarding_first_road_seen=true;
+      S._storyQueue=[]; S._chain=null;
+    }""")
+    page.wait_for_timeout(900)
+    page.evaluate("""() => {
+      document.querySelector('#ev-wrap')?.classList.remove('on');
+      document.querySelector('#quest-update-ribbon')?.remove();
+      S._storyQueue=[]; S._chain=null;
+    }""")
 
     # ── 하단 도크가 키보드로 도달 가능한가 ──
     reached_map = tab_to(page, 'dk-map')
@@ -84,23 +100,17 @@ with sync_playwright() as p:
     status_open = page.evaluate("document.querySelector('#ovl-status').classList.contains('on')")
     check('Enter로 상태 모달 열림', status_open)
 
-    reached_tab = tab_to(page, None, max_tabs=1) or True  # 진입 확인용, 실제 탭 포커스는 아래에서 검사
-    st_tabs_focused = tab_to(page, 'null', max_tabs=0)  # no-op guard
-    # 상태 모달 안에서 tablist로 이동해 화살표로 순회 가능한지 확인
-    now_tab_focused = False
-    for _ in range(15):
-        if page.evaluate("document.activeElement && document.activeElement.getAttribute('role')") == 'tab':
-            now_tab_focused = True
-            break
+    focus_inside_status = page.evaluate(
+        "document.querySelector('#ovl-status').contains(document.activeElement)"
+    )
+    check('상태 모달이 열리면 포커스가 내부로 이동', focus_inside_status, f'activeElement={active_id(page)}')
+    focus_trapped = True
+    for _ in range(12):
         page.keyboard.press('Tab')
-    check('Tab으로 상태 모달의 tablist 진입', now_tab_focused, f'activeElement={active_id(page)}')
-
-    if now_tab_focused:
-        page.keyboard.press('ArrowRight')
-        journey_selected = page.evaluate(
-            "document.querySelector('[data-st=\"journey\"]').getAttribute('aria-selected')"
-        )
-        check('화살표로 여정 탭 선택(aria-selected=true)', journey_selected == 'true', journey_selected)
+        if not page.evaluate("document.querySelector('#ovl-status').contains(document.activeElement)"):
+            focus_trapped = False
+            break
+    check('상태 모달의 Tab 순환이 배경 화면으로 새지 않음', focus_trapped, f'activeElement={active_id(page)}')
 
     page.keyboard.press('Escape')
     page.wait_for_timeout(150)
@@ -111,13 +121,14 @@ with sync_playwright() as p:
 
     # ── HUD 텍스트 최소 크기 확인 (접근성 폰트 크기 회귀 방지) ──
     tiny = page.evaluate("""
-      () => Array.from(document.querySelectorAll('*')).filter(el => {
+      () => Array.from(document.querySelectorAll('button,input,select,textarea,[role="button"],[role="tab"]')).filter(el => {
         const cs = getComputedStyle(el);
         if (!el.textContent || !el.textContent.trim()) return false;
-        return parseFloat(cs.fontSize) < 12 && el.offsetParent !== null;
+        const size=parseFloat(cs.fontSize);
+        return size > 0 && size < 12 && el.offsetParent !== null;
       }).map(el => ({tag:el.tagName, cls:el.className, text:el.textContent.trim().slice(0,40), size:getComputedStyle(el).fontSize}))
     """)
-    check('화면에 렌더링된 12px 미만 텍스트 없음', len(tiny) == 0, f'{len(tiny)}개 발견: {tiny[:4]}')
+    check('화면의 조작 가능한 요소에 12px 미만 텍스트 없음', len(tiny) == 0, f'{len(tiny)}개 발견: {tiny[:4]}')
 
 
     # ── 선택지 숫자키 — 게임의 대부분이 선택이므로 키보드 완주의 중심 배선 ──

@@ -25,14 +25,6 @@ ROOT = Path(__file__).resolve().parents[1]
 # old 문자열은 파일에 정확히 1회 존재해야 한다 — 아니면 뮤테이션 자체가 무효.
 MUTATIONS = [
     {
-        'name': 'finale-endjourney',
-        'why': '에필로그가 여정을 닫지 않으면 도착 결말 3종이 전부 죽는다',
-        'file': 'src/03-data.js',
-        'old': "fx:{flag:'story_done', endJourney:1, moodAll:5",
-        'new': "fx:{flag:'story_done', moodAll:5",
-        'test': ['python3', 'tests/test_finale.py'],
-    },
-    {
         'name': 'finale-stranded',
         'why': '좌초 트리거를 지우면 stranded 엔딩이 텍스트로만 남는다',
         'file': 'src/04b-engine-crew.js',
@@ -132,8 +124,8 @@ MUTATIONS = [
         'name': 'pacing-slot-starve',
         'why': '주행 이벤트 슬롯이 고갈되면 죽은 구간이 생긴다 — 무사건 게이트가 잡아야 한다',
         'file': 'src/04c-engine-travel.js',
-        'old': "    let count = chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0);",
-        'new': "    let count = 0; void(chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0));",
+        'old': "    let count = chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0);\n    if(rng()<0.3) count++;",
+        'new': "    let count = 0; void(chk.km>=40?2 : chk.km>=18?1 : (rng()<0.5?1:0));\n    if(false&&rng()<0.3) count++;",
         'test': ['python3', 'tools/simulate-engine.py', '--runs', '24'],
     },
     {

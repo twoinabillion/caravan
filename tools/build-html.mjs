@@ -23,9 +23,9 @@ const before = [
 ];
 const after = [
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
-  'src/04d-engine-director.js', 'src/04e-engine-world.js',
+  'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js',
   'src/05-scene.js', 'src/06-mapgraph.js',
-  'src/07-ui.js', 'src/07e-ui-audio.js',
+  'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
 const introScenes = {
@@ -142,7 +142,7 @@ const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__
 }, '오디오');
 
 const chunks = [
-  styles.result, ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
+  styles.result, read('src/01b-quest-style.html'), ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
   title.result, audio.result, npc.result, upgrades.result,
   ...after.map(relative => relative==='src/05-scene.js'?settlementSprites.result:read(relative))
 ];

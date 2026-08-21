@@ -49,7 +49,7 @@ with sync_playwright() as playwright:
     })""")
     check('요약은 네 개의 출발 근거와 직접 출발 선택을 제공한다',
           summary['open'] and summary['points'] == 4 and summary['focus'] == 'intro-summary-start' and
-          '스무 날' in summary['copy'] and '400km' in summary['copy'], str(summary))
+          '다음 이송표는 계속 발행된다' in summary['copy'] and '남산' in summary['copy'], str(summary))
     page.screenshot(path=str(SHOT / '01-intro-summary.png'))
     page.click('#intro-summary-continue')
     check('전체 프롤로그로 손실 없이 돌아간다',
@@ -57,28 +57,49 @@ with sync_playwright() as playwright:
     page.click('#intro-skip')
     page.click('#intro-summary-start')
     page.wait_for_timeout(150)
+    page.evaluate("""() => {
+      document.querySelector('#arrival-scene')?.classList.remove('on');
+      document.querySelector('#ev-wrap')?.classList.remove('on');
+      for(const id of ['onboarding_main_mission','onboarding_first_road']){
+        const event=D.events.find(item=>item.id===id);
+        if(event && !S.used.includes(event.id)) S.used.push(event.id);
+      }
+      S.flags.onboarding_mission_seen=true;
+      S.flags.onboarding_first_road_seen=true;
+      S._storyQueue=[];
+      S._chain=null;
+    }""")
+    page.wait_for_timeout(900)
+    page.evaluate("""() => {
+      document.querySelector('#ev-wrap')?.classList.remove('on');
+      document.querySelector('#quest-update-ribbon')?.remove();
+      S._storyQueue=[]; S._chain=null;
+    }""")
     check('요약 경로가 이름을 보존하고 게임으로 진입한다',
           page.locator('#scr-game').is_visible() and page.evaluate('S.name') == '테스터')
 
     print('― 채널별 소리 설정')
-    page.click('#dk-status')
-    sliders = page.locator('[data-audio-level]')
+    page.click('#dk-menu')
+    page.click('#menu-settings')
+    sliders = page.locator('[data-audio-level]:visible')
     check('음악·환경음·효과음·목소리 네 채널이 있다', sliders.count() == 4)
     defaults = page.evaluate("['music','ambience','effects','voice'].map(key=>SND.level(key))")
     check('새 기기의 네 채널은 음소거가 아닌 100%로 시작한다', defaults == [1, 1, 1, 1], str(defaults))
-    page.locator('[data-audio-level="music"]').evaluate("""input => {
+    page.locator('[data-audio-level="music"]:visible').evaluate("""input => {
       input.value='35'; input.dispatchEvent(new Event('input',{bubbles:true}));
     }""")
     mixer = page.evaluate("""() => ({
       level:SND.level('music'),
       saved:localStorage.getItem('caravan_audio_music'),
-      output:document.querySelector('[data-audio-level="music"]').parentElement.querySelector('output').textContent,
-      targets:[...document.querySelectorAll('.audio-mixer-list label')].map(label=>label.getBoundingClientRect().height)
+      output:[...document.querySelectorAll('[data-audio-level="music"]')]
+        .find(input=>input.offsetParent!==null).parentElement.querySelector('output').textContent,
+      targets:[...document.querySelectorAll('.audio-mixer-list label')]
+        .filter(label=>label.offsetParent!==null).map(label=>label.getBoundingClientRect().height)
     })""")
     check('음악 값이 즉시 반영되고 이 기기에 저장된다',
           abs(mixer['level'] - .35) < .001 and mixer['saved'] == '0.35' and mixer['output'] == '35%', str(mixer))
     check('믹서의 모든 조작 행은 44px 터치 영역이다', all(height >= 44 for height in mixer['targets']), str(mixer['targets']))
-    page.locator('.audio-mixer').scroll_into_view_if_needed()
+    page.locator('.audio-mixer:visible').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT / '02-audio-mixer.png'))
     page.click('#st-x')
 

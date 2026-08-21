@@ -1,0 +1,20 @@
+{
+  "recovered": [
+    "intro-first-stable",
+    "map-first-stable",
+    {
+      "arrivals": 58
+    },
+    {
+      "residentConversations": 17
+    },
+    {
+      "crewChats": 45
+    },
+    {
+      "seoulEvents": 5,
+      "fixedEvents": 2
+    }
+  ],
+  "errors": []
+}

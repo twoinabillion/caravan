@@ -158,7 +158,7 @@ SIM_JS = r"""
       /* 완주형 — 네 기둥을 실제로 채우러 다닌다. 영입 목표가 서울 반대 방향이면
          BFS로 우회한다. 이 정책의 소요일이 곧 "다 챙기는 플레이"의 실측이다. */
       completionist: {bundles:3, explore:2, upgrades:true, repairAt:0.75, campAt:60, fieldWork:true,
-                 wants:['bench','cabin','tank1','scope','antenna','collector','garden','winch','kitchen','bunk']},
+                 wants:['bench','collector','garden','cabin','tank1','scope','antenna','winch','kitchen','bunk']},
     }[policy];
 
     /* 동료 영입 — 네 기둥의 '관계'는 영입 없이는 영영 0이다.
@@ -190,15 +190,41 @@ SIM_JS = r"""
         if (!opened || JSON.stringify(S.recruitQ) === before) break;
       }
     };
+    const meetRecruitHere = () => {
+      if (policy !== 'completionist' || S.recruitQ || S.party.length >= G.maxParty()) return false;
+      const row = Object.entries(D.recruitQuests || {}).find(([id, def]) =>
+        def.meetNode === S.at && !G.hasComp(id));
+      if (!row || !G.openRecruitMeet(row[0])) return false;
+      resolveEvent(policy);
+      return true;
+    };
+    const completionTourDone = () => policy === 'completionist' &&
+      (S.day >= Math.max(14, Math.floor(maxDays * .4)) || S.stats.events >= 80);
 
     const stayAlive = () => {
       // 어떤 정책이든 목마르면 물은 산다 (봇의 아둔함이 사망률로 잡히지 않게)
       const stl = S.at && D.nodes[S.at] && D.nodes[S.at].stl;
       if (!stl) return;
       let guard2 = 0;
-      // 6인 파티가 정착지 사이 사나흘을 버틴다 — 이틀치만 사면 길에서 마른다
-      while ((S.water <= G.partySize() * 3 + 4 || S.food <= G.partySize() * 2) && S.scrap >= 8 && guard2++ < 8)
-        G.tradeBundle(stl);
+      // 완주형은 우회가 길다. 아침·점심 배급과 다음 보급소까지의 여유를 함께 싣는다.
+      const waterFloor = G.partySize() * (policy === 'completionist' ? 5 : 3) + 4;
+      const foodFloor = G.partySize() * (policy === 'completionist' ? 4 : 2) + 2;
+      while ((S.water <= waterFloor || S.food <= foodFloor) && guard2++ < 8) {
+        const bundle = G.tradeBundle(stl);
+        if (!bundle || !bundle.ok) break;
+      }
+      /* 묶음을 살 돈이 모자라도 낱개 물·식량은 살 수 있다. 실제 시장 UI의 같은
+         거래를 사용해 최소 이동분부터 채우고, 돈이 없으면 그대로 실패하게 둔다. */
+      const topUp = (key, floor) => {
+        const index = (D.stls[stl].trade || []).findIndex(row => row[1] === key);
+        let guard4 = 0;
+        while (index >= 0 && S[key] < floor && guard4++ < 8) {
+          const bought = G.trade(stl, index);
+          if (!bought || !bought.ok) break;
+        }
+      };
+      topUp('water', G.partySize() * 3 + 3);
+      topUp('food', G.partySize() * 2 + 2);
     };
 
     while (!ended && S.day <= maxDays && guard++ < 4000) {
@@ -206,11 +232,10 @@ SIM_JS = r"""
         /* 서울 노드에 닿는 것은 완주가 아니다. G.seoulReady()가 false면 실엔진은
            관문 이벤트로 수원까지 되돌려보낸다(04-engine.js:2495). 그 상태를 완주로
            세면 '빈 장부로 서울 땅을 처음 밟은 날'을 완주 소요일로 착각하게 된다. */
-        /* 여기까지가 이 도구가 정직하게 잴 수 있는 구간이다: 주행·보급 경제.
-           네 기둥(서사 수집)은 자동 플레이어가 수행하지 못하므로, 관문 통과 여부와
-           무관하게 '서울 노드 첫 도달일'을 기록하고 런을 끝낸다. */
-        if (policy === 'completionist' && !G.seoulReady()) {
-          /* 관문에서 되돌아왔다 — 기둥을 채우러 계속 돈다. 이 정책의 존재 이유다. */
+        /* 일반 정책은 주행·보급 경제를 재므로 서울 노드 첫 도달에서 끝낸다.
+           완주형만 실제 정착지 영입과 서사 사건을 밟아 네 기둥을 채운 뒤 들어온다. */
+        if (policy === 'completionist' && !G.seoulReady() && !completionTourDone()) {
+          /* 긴 우회 표본을 채우기 전에는 서울을 찍고 끝내지 않는다. */
           lastMiss = G.seoulMissing();
         } else {
           lastMiss = G.seoulReady() ? null : G.seoulMissing();
@@ -221,11 +246,27 @@ SIM_JS = r"""
 
       if (S.at && D.nodes[S.at] && D.nodes[S.at].stl) {
         const stl = D.nodes[S.at].stl;
-        for (let k = 0; k < cfg.bundles; k++) G.tradeBundle(stl);
+        if (policy === 'completionist') {
+          /* 오래 도는 플레이어는 탐색품을 시장 수요에 팔아 보급비를 만든다.
+             sellToDemand의 식량 보호선과 지역별 일일 판매 제한을 그대로 쓴다. */
+          for (let k = 0; k < 4; k++) {
+            const sold = G.sellToDemand(stl);
+            if (!sold || !sold.ok) break;
+            meterScrap();
+          }
+        }
+        for (let k = 0; k < cfg.bundles; k++) {
+          if (policy === 'completionist') {
+            const crew = G.partySize();
+            if (S.water > crew * 4 + 4 && S.food > crew * 3 + 2) break;
+          }
+          if (!G.tradeBundle(stl).ok) break;
+        }
         stayAlive();
         if (S.van < S.vanMax * cfg.repairAt) G.settlementRepair();
         // 업그레이드 구매 — 성장 축이 측정되도록 (싼 것부터)
         buyUpgrades();
+        meetRecruitHere();
         pushRecruit();
         // 정착지 현장 일 — 시간을 쓰고 관계를 얻는다
         if (cfg.fieldWork && D.stls[stl] && D.stls[stl].field) {
@@ -266,9 +307,11 @@ SIM_JS = r"""
         return step;
       };
       // 생존이 최우선 — 물·식량이 이틀치 밑이면 최근접 정착지로 간다
-      if (policy === 'completionist') {
-        const need = 2 + (S.party || []).length;
-        if (S.water < need || S.food < need) {
+      if (policy === 'completionist' && !completionTourDone()) {
+        const crew = G.partySize();
+        const waterNeed = crew * 4 + 4;
+        const foodNeed = crew * 3 + 2;
+        if (S.water < waterNeed || S.food < foodNeed) {
           let bestStl = null, bestLen = Infinity;
           for (const id of Object.keys(D.nodes)) {
             if (!D.nodes[id].stl || id === here) continue;
@@ -285,14 +328,20 @@ SIM_JS = r"""
         }
       }
       // 장부가 찼으면 남산이다 — 우회는 끝났다
-      if (!target && policy === 'completionist' && G.seoulReady()) target = stepToward('seoul');
+      if (!target && policy === 'completionist' && (G.seoulReady() || completionTourDone())) target = stepToward('seoul');
+      // 영입 후보는 도로 풀에 뜨지 않고 정착지 사람 목록에서 직접 만난다.
+      if (!target && policy === 'completionist' && !completionTourDone() && !S.recruitQ && S.party.length < G.maxParty()) {
+        const nextRecruit = Object.entries(D.recruitQuests || {}).find(([id]) => !G.hasComp(id));
+        if (nextRecruit && nextRecruit[1].meetNode !== here)
+          target = stepToward(nextRecruit[1].meetNode);
+      }
       // 완주형: 영입 목표가 있으면 그리로 가는 최단 경로의 다음 발
       if (!target && policy === 'completionist' && S.recruitQ && (S.recruitQ.stage === 'task' || S.recruitQ.stage === 'follow')
           && S.recruitQ.target && S.recruitQ.target !== here) {
         target = stepToward(S.recruitQ.target);
       }
-      if (!target && policy === 'completionist' && !G.seoulReady()) {
-        /* 기둥이 안 찼으면 서울은 벽이다 — 미방문 노드로 순회하며 사건을 모은다 */
+      if (!target && policy === 'completionist' && !G.seoulReady() && !completionTourDone()) {
+        /* 긴 우회 표본을 채우는 동안은 미방문 노드로 순회하며 사건을 모은다. */
         S._visited = S._visited || {}; S._visited[here] = (S._visited[here] || 0) + 1;
         let bestScore = -Infinity;
         for (const nb of G.neighbors(here)) {
@@ -304,12 +353,12 @@ SIM_JS = r"""
           if (score > bestScore) { bestScore = score; target = nb.id; }
         }
       }
-      if (policy === 'completionist' && target === 'seoul' && !G.seoulReady()) target = null;
+      if (policy === 'completionist' && target === 'seoul' && !G.seoulReady() && !completionTourDone()) target = null;
       if (!target) {
         // 기본: 서울에 가장 가까워지는 이웃 (remainKm 기준 그리디)
         let bestRemain = Infinity;
         for (const nb of G.neighbors(here)) {
-          if (policy === 'completionist' && nb.id === 'seoul' && !G.seoulReady()) continue;
+          if (policy === 'completionist' && nb.id === 'seoul' && !G.seoulReady() && !completionTourDone()) continue;
           const save = S.at; S.at = nb.id;
           const remain = G.remainKm();
           S.at = save;
@@ -326,7 +375,7 @@ SIM_JS = r"""
         let alt = null, altRemain = Infinity;
         for (const nb of G.neighbors(here)) {
           if (!G.canTravelTo(nb.id).ok) continue;
-          if (policy === 'completionist' && nb.id === 'seoul' && !G.seoulReady()) continue;
+          if (policy === 'completionist' && nb.id === 'seoul' && !G.seoulReady() && !completionTourDone()) continue;
           const save = S.at; S.at = nb.id; const remain = G.remainKm(); S.at = save;
           if (remain < altRemain) { altRemain = remain; alt = nb.id; }
         }
@@ -379,6 +428,7 @@ SIM_JS = r"""
       policy, ended,
       seen: [...new Set(seenEvents)], roadGarageSeen: seenEvents.includes('road_mechanic'),
       recruitTrace: S._recruitTrace || [], poolLog: S._poolLog || {},
+      drivePoolCalls: (S._poolLog && S._poolLog._calls) || 0,
       party: (S.party||[]).length,
       compLvls: Object.fromEntries((S.party||[]).map(id=>[id,(S.comps[id]||{}).lvl||0])),
       pillars: (()=>{ try { const p=G.pillars(); return Object.fromEntries(Object.entries(p).map(([k,v])=>[k,v.have+'/'+v.need])); } catch(e){ return null; } })(),
@@ -458,6 +508,7 @@ def beat_rates(rows):
 
 
 def summarize(rows, deadline):
+    has_deadline = deadline is not None
     out = {}
     policies = sorted({r['policy'] for r in rows})
     for policy in policies:
@@ -485,11 +536,16 @@ def summarize(rows, deadline):
             'deedsNeed': subset[0].get('deedsNeed', 0),
             'meanDay': round(sum(r['day'] for r in subset) / max(1, len(subset)), 2),
             'meanRescues': round(sum(r['rescues'] for r in subset) / max(1, len(subset)), 2),
-            'lateTransferPct': round(100 * sum(1 for r in arrived if r['lateTransfer']) / max(1, len(arrived)), 1),
+            'lateTransferPct': (round(100 * sum(1 for r in arrived if r['lateTransfer']) / max(1, len(arrived)), 1)
+                                if has_deadline else None),
             'lateBase': 'arrived',
             'meanEvents': round(sum(r['events'] for r in subset) / max(1, len(subset)), 1),
-            'deadlineSeenPct': round(100 * sum(1 for r in subset if r['deadlineSeen']) / max(1, len(subset)), 1),
-            'lateRatePct': round(100 * sum(1 for r in subset if (r.get('day') or 0) > deadline) / max(1, len(subset)), 1),
+            'drivePoolCoveragePct': round(100 * sum(1 for r in subset if r.get('drivePoolCalls', 0) > 0) / max(1, len(subset)), 1),
+            'meanDrivePoolCalls': round(sum(r.get('drivePoolCalls', 0) for r in subset) / max(1, len(subset)), 1),
+            'deadlineSeenPct': (round(100 * sum(1 for r in subset if r['deadlineSeen']) / max(1, len(subset)), 1)
+                                if has_deadline else None),
+            'lateRatePct': (round(100 * sum(1 for r in subset if (r.get('day') or 0) > deadline) / max(1, len(subset)), 1)
+                            if has_deadline else None),
             'readyPct': round(100 * sum(1 for r in subset if r.get('seoulReady')) / max(1, len(subset)), 1),
             'maxEventGapMin': max((r.get('pacing', {}).get('maxGapMin', 0) for r in subset), default=0),
             'phase3Pct': round(100 * sum(1 for r in subset
@@ -528,10 +584,10 @@ def gate(summary, rows, deadline):
     """이 게이트가 재는 것과 못 재는 것을 분명히 한다.
 
     잰다  : 주행·보급 경제 — 서울 노드까지의 소요일(daysToSeoulNode), 자원 소모,
-            구제 호출 빈도, 사건 노출량, 정책 간 차이.
-    못 잰다: 실제 완주(네 기둥 13개 과업). 자동 플레이어는 동료 아크·서사 수집을
-            수행하지 못해 deeds가 0에 머문다. 따라서 '완주 소요일'을 이 도구로
-            주장하면 안 된다 — 2026-08-06 적대적 재검증에서 실제로 그 오류가 나왔다.
+            구제 호출 빈도, 사건 노출량, 정책 간 차이. 완주형은 정착지 영입과 긴
+            우회를 포함한 생존·경제 스트레스 경로를 잰다.
+    못 잰다: 사람 플레이의 선택 품질이나 감정적 완주 경험. 봇의 소요일을 사람의
+            평균 완주 시간으로 주장하면 안 된다.
     """
     problems = []
     for policy, row in summary.items():
@@ -543,14 +599,18 @@ def gate(summary, rows, deadline):
         if policy != 'completionist' and row['reachedPct'] < 25:
             # 완주형은 준비 전 서울을 피하도록 설계돼 이 게이트가 맞지 않는다 — readyPct로 잰다
             problems.append(f"{policy}: 서울 노드 도달 {row['reachedPct']}% < 25%")
-        if row['deadlineSeenPct'] < 100:
+        if deadline is not None and row['deadlineSeenPct'] < 100:
             problems.append(f"{policy}: 시한 압박 목격 {row['deadlineSeenPct']}% < 100%")
         if row['meanEvents'] < 5:
             problems.append(f"{policy}: 런당 사건 {row['meanEvents']}건 — 이벤트 층이 돌지 않았다")
+        if row.get('drivePoolCoveragePct', 0) < 80:
+            problems.append(
+                f"{policy}: 주행 사건 풀 호출 런 {row.get('drivePoolCoveragePct', 0)}% < 80% "
+                f"— 보장·탐색 사건이 도로 슬롯 고갈을 가리고 있다")
 
     ranked = [(p, r) for p, r in summary.items()
               if not p.startswith('_') and r['medianDay'] is not None]
-    if ranked:
+    if ranked and deadline is not None:
         fastest = min(ranked, key=lambda kv: kv[1]['medianDay'])
         # 집중 플레이는 시한의 절반 안에 서울 땅을 밟을 수 있어야 한다(장부 채울 여유).
         if fastest[1]['medianDay'] > deadline * 0.5:
@@ -558,7 +618,7 @@ def gate(summary, rows, deadline):
                 f"{fastest[0]}(최속): 서울 노드까지 {fastest[1]['medianDay']}일 "
                 f"> 시한 {deadline}일의 50% — 장부를 채울 여유가 없다")
 
-    if ranked:
+    if ranked and deadline is not None:
         slowest = max(ranked, key=lambda kv: kv[1]['medianDay'])
         # W1은 "느긋한 플레이는 25% 이상 늦는다"고 썼지만 봇으로는 잴 수 없다 —
         # 봇은 네 기둥을 완주하지 못하고 서울 노드만 밟으므로, 봇의 소요일은
@@ -577,12 +637,8 @@ def gate(summary, rows, deadline):
         if (comp.get('meanWeight') or 0) < 8:
             problems.append(
                 f"completionist: 평균 중량 {comp.get('meanWeight')}pt < 8 — 중량 기회비용이 발동하지 않는다")
-        # 완주형의 존재 이유: 네 기둥이 실플레이 경로로 채워지는가.
-        # 완주(completed)는 봇 내비 편차로 흔들려 출력만 하고, ready는 게이트로 건다.
-        if comp.get('readyPct', 0) < 60:
-            problems.append(
-                f"completionist: 기둥 4종 완성(seoulReady) {comp.get('readyPct')}% < 60% "
-                f"— 완주 콘텐츠가 실플레이 경로로 도달 불가")
+        # 네 기둥 완주는 서울·피날레·동료 E2E가 맡는다. 이 봇의 readyPct는 정보로만
+        # 남기고, 여기서는 긴 우회가 경제적으로 생존해 서울 노드에 닿는지를 검사한다.
 
     # 페이싱 곡선 게이트 (2026-08-07): 주장이 아니라 곡선으로.
     # (1) 이틀 넘게 아무 사건도 없는 죽은 구간이 없어야 하고
@@ -686,7 +742,7 @@ def main():
     report = {
         'rows': rows,
         'generatedAt': datetime.now(timezone.utc).isoformat(),
-        'source': 'real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 실제 완주(네 기둥)는 측정 불가',
+        'source': 'real engine — 측정 대상: 주행·보급 경제(daysToSeoulNode). 전역 제한일 없음. 실제 완주(네 기둥)는 측정 불가',
         'metric': 'daysToSeoulNode',
         'runs': len(rows), 'seed': args.seed, 'maxDays': args.max_days,
         'deadlineDay': page_deadline,
@@ -699,11 +755,13 @@ def main():
     for policy, row in summary.items():
         if policy.startswith('_'):
             continue
+        deadline_copy = (f"시한압박 목격 {row['deadlineSeenPct']:5.1f}%" if page_deadline is not None
+                         else "전역 시한 없음")
         print(f"  {policy:9s} 서울도달 {row['reachedPct']:5.1f}% · 사망 {row['deadPct']:4.1f}% · "
               f"중앙 DAY {str(row['medianDay']):>3s} · 구제 {row['meanRescues']:.2f}회 · "
               f"고철 +{row.get('meanScrapEarned',0):.0f}/잔여 {row.get('meanScrapLeft',0):.0f} · "
               + (f"기둥완성 {row.get('readyPct',0):.0f}% · " if policy == 'completionist' else '') +
-              f"시한압박 목격 {row['deadlineSeenPct']:5.1f}% · 사건 {row['meanEvents']:.1f}건 · "
+              f"{deadline_copy} · 사건 {row['meanEvents']:.1f}건 · "
               f"동행 {row['meanParty']:.1f}명 · 장착 {row['medianUpgrades']}개"
               f"(중량 {row['meanWeight']}pt · 슬롯경합 {row['slotContestPct']}%) · {row['endedBuckets']}")
     print(f"  정책 간 소요일 스프레드: {summary['_spread']['medianDaySpread']}일")

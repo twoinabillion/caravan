@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-08-20T17:28:43.256Z",
+  "generatedAt": "2026-08-21T13:04:17.749Z",
   "html": {
-    "bytes": 42459313,
+    "bytes": 43936762,
     "warnBytes": 32000000,
     "maxBytes": 72000000
   },
   "embedded": {
-    "files": 408,
-    "bytes": 25798162,
+    "files": 412,
+    "bytes": 26868681,
     "categories": {
       "audio": {
         "files": 45,
         "bytes": 9710668,
         "encodedBytes": 12947612
       },
+      "scene": {
+        "files": 290,
+        "bytes": 14688257,
+        "encodedBytes": 19584740
+      },
       "ui": {
         "files": 30,
         "bytes": 1621520,
         "encodedBytes": 2162072
-      },
-      "scene": {
-        "files": 286,
-        "bytes": 13617738,
-        "encodedBytes": 18157376
       },
       "portrait": {
         "files": 47,
@@ -75,10 +75,28 @@
       "encodedBytes": 992448
     },
     {
+      "path": "assets/scenes/onboarding-first-road-scan-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 328076,
+      "encodedBytes": 437436
+    },
+    {
       "path": "assets/ui/road-journey-log-panel-v1.webp",
       "mime": "image/webp",
       "bytes": 309208,
       "encodedBytes": 412280
+    },
+    {
+      "path": "assets/scenes/seoul-uplink-reveal-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 289082,
+      "encodedBytes": 385444
+    },
+    {
+      "path": "assets/scenes/intro-cold-open-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 262691,
+      "encodedBytes": 350256
     },
     {
       "path": "assets/ui/event-result-ticket-v1.webp",
@@ -123,34 +141,16 @@
       "encodedBytes": 260912
     },
     {
+      "path": "assets/scenes/seoul-session-reset-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 190670,
+      "encodedBytes": 254228
+    },
+    {
       "path": "assets/intro/16-workshop-shutter-v2.jpg",
       "mime": "image/jpeg",
       "bytes": 189654,
       "encodedBytes": 252872
-    },
-    {
-      "path": "assets/intro/15-appeal-denied.jpg",
-      "mime": "image/jpeg",
-      "bytes": 184143,
-      "encodedBytes": 245524
-    },
-    {
-      "path": "assets/intro/07-envelope-signal-v3.jpg",
-      "mime": "image/jpeg",
-      "bytes": 179794,
-      "encodedBytes": 239728
-    },
-    {
-      "path": "assets/intro/14-dock-aid-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 173117,
-      "encodedBytes": 230824
-    },
-    {
-      "path": "assets/intro/13-dashboard-module.jpg",
-      "mime": "image/jpeg",
-      "bytes": 169135,
-      "encodedBytes": 225516
     }
   ]
 }

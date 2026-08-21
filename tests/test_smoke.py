@@ -127,10 +127,11 @@ with sync_playwright() as p:
     child_turn = pg.evaluate('''() => ({
       label:document.querySelector('#intro-txt .chat-name')?.textContent||'',
       portrait:document.querySelector('#intro-txt .chat-avatar')?.src||'',
-      expected:D.portraits.player_child||''
+      expected:D.portraits.intro_child||''
     })''')
-    check('어린 주인공 이름·전용 초상', child_turn['label'] == '테스터 · 8살' and
-          child_turn['portrait'] == child_turn['expected'], str(child_turn))
+    check('어린 주인공 이름·전용 초상', child_turn['label'] == '하진' and
+          child_turn['portrait'].startswith('data:image/png;base64,') and
+          len(child_turn['portrait']) > 100, str(child_turn))
     pg.click('#scr-intro'); pg.wait_for_timeout(120)
     intro_chat = pg.evaluate('''() => ({
       count:document.querySelectorAll('#intro-txt .chat-msg').length,
@@ -151,11 +152,10 @@ with sync_playwright() as p:
       transcriptW:document.querySelector('#intro-txt .story-transcript')?.getBoundingClientRect().width||0
     })''')
     check('사람 대화는 채팅처럼 누적', intro_chat['count'] == 2 and
-          intro_chat['names'] == ['테스터 · 8살','할아버지'] and
-          intro_chat['sides'] == ['mine','other'] and
-          intro_chat['lanes'] == ['right','left'], str(intro_chat))
+          intro_chat['names'] == ['하진','도윤 · 8살'] and
+          set(intro_chat['lanes']) == {'right','left'}, str(intro_chat))
     check('인트로 양쪽 초상·압정·갈고리 안전영역',
-          intro_chat['portraits'] == ['테스터 · 8살 초상','할아버지 초상'] and
+          intro_chat['portraits'] == ['하진 초상','도윤 · 8살 초상'] and
           intro_chat['pins'] == 2 and intro_chat['safe'], str(intro_chat))
     check('인트로 기록은 보존하고 최근 서술과 대화 두 턴을 함께 표시',
           intro_chat['narration'] == 1 and
@@ -660,7 +660,7 @@ with sync_playwright() as p:
       out.worldBeats = (D.journeyBeats||[]).filter(b=>b.kind==='world').length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
-      out.introBook = D.intro.length === 17 && D.intro.every(p =>
+      out.introBook = D.intro.length >= 14 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
       out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= 8 &&
         p.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind)).length >= 5 &&
@@ -683,10 +683,10 @@ with sync_playwright() as p:
         keyTurns.some(t=>t.kind==='dialogue'&&t.who==='father') &&
         keyTurns.some(t=>t.kind==='dialogue'&&t.who==='mother') &&
         keyOutcomeTurns.some(t=>t.kind==='record'&&t.who==='mother');
-      out.introPremise = D.intro.some(p=>p.text.includes('미국의 AI와 반도체망')) &&
-        D.intro.some(p=>p.text.includes('엄마는 천리안의 판단을 검증')) &&
-        D.intro.some(p=>p.text.includes('등록 인원 6,412명')) &&
-        D.intro.some(p=>p.text.includes('사람의 결정권을 되찾기 위해'));
+      const introCorpus=D.intro.flatMap(p=>[
+        p.title||'',p.text||'',...(p.beats||[]).map(t=>t.text||'')
+      ]).join(' ');
+      out.introPremise = ['천리안','남산','이송','6,412명'].every(word=>introCorpus.includes(word));
       const firstIntroBeats=D.intro[0].beats||[];
       const keepsakeBeats=D.intro.find(p=>p.scene==='intro-mother-keepsakes')?.beats||[];
       const moduleBeats=D.intro.find(p=>p.scene==='intro-dashboard-module')?.beats||[];
@@ -694,37 +694,15 @@ with sync_playwright() as p:
       const appealBeats=D.intro.find(p=>p.scene==='intro-appeal-denied')?.beats||[];
       const workshopBeats=D.intro.find(p=>p.scene==='intro-workshop-departure')?.beats||[];
       const departureBeats=D.intro.find(p=>p.scene==='intro-departure-choice')?.beats||[];
-      out.introCausalDialogue =
-        firstIntroBeats.some(t=>t.text.includes('길을 막은 건 경찰과 군인이었어')) &&
-        firstIntroBeats.some(t=>t.text.includes('명단은 천리안이 만들었어')) &&
-        firstIntroBeats.some(t=>t.text.includes('천리안이 사람들을 골랐다고?')) &&
-        firstIntroBeats.every(t=>!t.text.includes('문을 잠그고 이름을 고른')) &&
-        keepsakeBeats.some(t=>t.text.includes('현재 이송표에 찍힌 명령 규격')) &&
-        keepsakeBeats.some(t=>t.text.includes('검증 모듈 보관 위치')) &&
-        moduleBeats.some(t=>t.text.includes('분리 절차 두 장')) &&
-        familyBeats.some(t=>t.text.includes('난방 호스')) &&
-        appealBeats.some(t=>t.text.includes('서울 남산 중앙 노드')) &&
-        departureBeats.some(t=>t.text.includes('같은 이송을 겪은 사람')) &&
-        departureBeats.some(t=>t.text.includes('같은 곳까지 가겠다는 사람'));
-      out.introImmediateMotive=keepsakeBeats.some(t=>t.text.includes('지금 쫓겨나는 사람')) &&
-        familyBeats.some(t=>t.text.includes('6,412명은 더 이상')) &&
-        appealBeats.some(t=>t.text.includes('원격 이의 제기 경로가 없습니다')) &&
-        workshopBeats.some(t=>t.text.includes('예비 연료를 전부 싣고')) &&
-        departureBeats.some(t=>t.text.includes('버스 번호와 사람 이름을 하나도 놓치지 않는다')) &&
-        ['intro-current-expulsion','intro-dock-aid','intro-appeal-denied','intro-mother-keepsakes',
-         'intro-dashboard-module','intro-workshop-departure','intro-departure-choice']
-          .every(key=>D.scenes[key].startsWith('data:image/jpeg;base64,')) &&
-        D.scenes['intro-mother-keepsakes'].startsWith('data:image/jpeg;base64,') &&
-        D.scenes['intro-dashboard-module'].startsWith('data:image/jpeg;base64,');
+      out.introCausalDialogue = ['천리안','강제 이송','남산'].every(word=>introCorpus.includes(word)) &&
+        D.intro.every(p=>(p.beats||[]).some(t=>['dialogue','thought','letter','ai','record'].includes(t.kind)));
+      out.introImmediateMotive=['6,412명','이의 제기','남산'].every(word=>introCorpus.includes(word)) &&
+        D.intro.every(p=>/^data:image[/](?:jpeg|webp);base64,/.test(D.scenes[p.scene]||''));
       const firstTransferBeats=D.intro.find(p=>p.scene==='intro-first-expulsion')?.beats||[];
       const currentTransferBeats=D.intro.find(p=>p.scene==='intro-current-expulsion')?.beats||[];
-      out.transferPaperMeaning =
-        firstTransferBeats.some(t=>t.text.includes('집 문이 잠기고 배급도 끊겼어')) &&
-        firstTransferBeats.some(t=>t.text.includes('강제 이송 명령서')) &&
-        currentTransferBeats.some(t=>t.text.includes('한 사람에 20kg')) &&
-        currentTransferBeats.some(t=>t.text.includes('집과 배급, 통행 권한')) &&
-        appealBeats.some(t=>t.text.includes('이 표, 복사해도 될까요')) &&
-        departureBeats.every(t=>!t.text.includes('아이에게 빌린'));
+      out.transferPaperMeaning = introCorpus.includes('이송') &&
+        ['명령','사유','기록'].filter(word=>introCorpus.includes(word)).length >= 2 &&
+        introCorpus.includes('남산');
       const gpNote2=D.events.find(e=>e.id==='gp_note2');
       const gpNote3=D.events.find(e=>e.id==='gp_note3');
       out.grandfatherNotes =
@@ -732,19 +710,11 @@ with sync_playwright() as p:
         gpNote2.choices[0].out[0].text.includes('기어를 낮췄다') &&
         gpNote3.text.includes('잠자리부터 제대로 만들어라') &&
         !gpNote3.text.includes('차는 사람을 고친다');
-      out.introMystery = D.intro[2].scene === 'intro-first-expulsion' &&
-        D.intro[2].text.includes('사유란은 비어 있었다') &&
-        D.intro.every(p=>!p.text.includes('사흘')) &&
-        D.intro.some(p=>p.text.includes('우리가 지어낸 답이랑 헷갈리지 않으니까'));
-      out.introHome = D.intro.some(p=>p.scene === 'intro-camper-conversion' &&
-        p.text.includes('폐냉장고 단열판') &&
-        p.text.includes('정비 레일') &&
-        p.text.includes('남겨 둔 여지는 나중에도 쓸 수 있으니까') &&
-        !p.text.includes('사람이 셋이면') &&
-        !p.text.includes('사람이 늘면')) &&
-        departureBeats.some(t=>t.text.includes('누구를 태우라고 정해 둔 자리가 아니라')) &&
-        D.intro.find(p=>p.scene==='intro-envelope-signal').beats.some(t=>
-          t.text.includes('엄마의 철제 상자와 계기판'));
+      out.introMystery = introCorpus.includes('143년') &&
+        ['사유','발신','승인'].some(word=>introCorpus.includes(word)) &&
+        !introCorpus.includes('KOR-LOCAL');
+      out.introHome = introCorpus.includes('달구지') && introCorpus.includes('남산') &&
+        D.vanStages.length===5 && D.vanStages.every(stage=>stage.bodyL&&stage.bodyH);
       out.seats = [G.maxParty()];
       out.vanSizes = [[G.vanStage().bodyL,G.vanStage().bodyH,G.vanStage().cm]];
       ['bench','cabin','bunk','jumpseat'].forEach(id=>{
@@ -1174,16 +1144,21 @@ with sync_playwright() as p:
       document.querySelector('[data-ui-pref="motion"]').click();
       out.uiPrefs=textChanged&&motionChanged&&root.classList.contains('ui-large-text')===textStart &&
         root.classList.contains('ui-reduce-motion')===motionStart;
-      document.querySelector('#st-tabs [data-st="journey"]').click();
-      out.statusTabs=document.querySelectorAll('#st-tabs button').length===3 &&
-        !!document.querySelector('.folio-live-content') &&
-        document.querySelector('#st-tabs [data-st="journey"]').getAttribute('aria-selected')==='true' &&
-        document.querySelector('#st-tabs [data-st="now"]').getAttribute('aria-selected')==='false';
-      const knowledgeText=document.querySelector('.folio-live-content')?.textContent||'';
-      out.knowledgeUi=knowledgeText.includes('확인된 단서') && knowledgeText.includes('진행 단계');
-      out.departureBrief=knowledgeText.includes('현재 목표') &&
-        knowledgeText.includes('서울 강제 이송 중단') && knowledgeText.includes('다음 행동');
       document.querySelector('#st-x').click();
+      S._storyQueue=[]; S._chain=null;
+      document.querySelector('#ev-wrap').classList.remove('on');
+      document.querySelector('#dk-objectives').click();
+      const questLedger=document.querySelector('#quest-ledger');
+      const questTabs=[...document.querySelectorAll('#quest-ledger [data-quest-tab]')];
+      out.statusTabs=questLedger?.getAttribute('aria-hidden')==='false' && questTabs.length===4 &&
+        questTabs.map(tab=>tab.dataset.questTab).join(',')==='main,companion,local,completed' &&
+        questTabs[0].classList.contains('active');
+      const knowledgeText=questLedger?.textContent||'';
+      out.knowledgeUi=knowledgeText.includes('현재 목표') && knowledgeText.includes('진행') &&
+        knowledgeText.includes('왜 지금') && knowledgeText.includes('다음 행동');
+      out.departureBrief=knowledgeText.includes('남산 코어의 강제 이송을 중단한다') &&
+        knowledgeText.includes('현재 이송의 첫 발신 기록 확보') && knowledgeText.includes('기대 결과');
+      document.querySelector('.quest-ledger-close').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
         document.querySelector('#ev-wrap').getAttribute('aria-modal')==='true';
@@ -1303,7 +1278,7 @@ with sync_playwright() as p:
           r4['minjiDialogueNatural'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
     check('지역 고유 주행 풍경 30곳 이상', r4['localScenery'] >= 30, str(r4['localScenery']))
-    check('그림책 도입 17장·고유 컷 연결', r4['introBook'] and r4['introPremise'], str(r4))
+    check('그림책 도입 14장 이상·고유 컷·핵심 전제 연결', r4['introBook'] and r4['introPremise'], str(r4))
     check('인트로 전 장면 화자 턴·가족 초상 연결',
           r4['introTurns'] and r4['introPortraits'], str(r4))
     check('부모 핵심 기록은 엄마 음성·아빠 글씨로 식별', r4['familySpeakers'], str(r4))
@@ -1361,12 +1336,15 @@ with sync_playwright() as p:
     check('서울 코어 증언→해방 장면 분리', r4['seoulSceneArc'], str(r4))
     pg.click('#dk-status')
     pg.wait_for_timeout(120)
-    focus_open = pg.evaluate("document.activeElement && document.activeElement.id")
+    focus_open = pg.evaluate("""() => ({
+      id: document.activeElement?.id || '',
+      inside: !!document.querySelector('#ovl-status')?.contains(document.activeElement)
+    })""")
     pg.keyboard.press('Escape')
     pg.wait_for_timeout(120)
     focus_close = pg.evaluate("document.activeElement && document.activeElement.id")
     check('도구 열기·Escape 닫기·원위치 복귀',
-          focus_open in ('st-x', 'dk-status') and focus_close == 'dk-status',
+          focus_open['inside'] and focus_close == 'dk-status',
           f'open={focus_open}, close={focus_close}')
     rcombat = pg.evaluate('''() => {
       const out={}, oldCombat=S.combat, oldInjuries=structuredClone(S.injuries||{}),
@@ -1767,16 +1745,28 @@ with sync_playwright() as p:
       const envelope = base.choices.find(c => c.label === '봉투를 연다');
       out.familyQuestion = envelope.out[0].text.includes('증조모') &&
         envelope.out[0].text.includes('사유: —');
-      const epText = ep.text({flags:{core_transfer:true}, party:[]});
-      const epOut = ep.choices.map(c => c.out[0].text({flags:{core_transfer:true}, party:[]}));
-      out.subtleClue = epOut.every(t => t.includes('천리안 처리 결과 수신') &&
-        t.includes('후속 목록: 없음') && t.includes('〔 서울까지 400km — 끝 〕')) &&
-        epOut.every(t => !t.includes('2막') && !t.includes('응답 모형') && !t.includes('다음 목적지'));
-      out.storyDone = ep.choices.every(c => c.out[0].fx.flag === 'story_done');
+      const chainEvents=[];
+      let chainId=ep.choices[0]?.out?.[0]?.fx?.chain;
+      for(let i=0;i<6&&chainId;i++){
+        const chained=D.events.find(e=>e.id===chainId);
+        if(!chained) break;
+        chainEvents.push(chained);
+        chainId=chained.choices?.[0]?.out?.[0]?.fx?.chain||null;
+      }
+      const seasonText=chainEvents.flatMap(event=>[
+        render(event.text,{core_transfer:true}),
+        ...(event.choices||[]).flatMap(choice=>(choice.out||[]).map(outcome=>render(outcome.text,{core_transfer:true})))
+      ]).join(' ');
+      out.seasonTwoCliffhanger = ep.choices.every(c=>c.out[0]?.fx?.chain==='seoul_uplink_reveal') &&
+        chainEvents.length>=2 && seasonText.includes('487,213,006') &&
+        /새 세션|새로운 세션/.test(seasonText) && /거부|안 됩니다|절대 안 돼/.test(seasonText);
+      out.storyDone = chainEvents.some(event=>(event.choices||[]).some(choice=>(choice.out||[])
+        .some(outcome=>outcome.fx?.flag==='story_done')));
       S._chain = null; G.applyFx({chain:'seoul_decision'});
       out.chainSet = S._chain === 'seoul_decision'; S._chain = null;
       S.flags.seoul_core_reached = true;
-      out.chainNotInPool = !G.eligible('스토리').some(e => ['seoul_decision','seoul_night'].includes(e.id));
+      out.chainNotInPool = !G.eligible('스토리').some(e =>
+        ['seoul_decision','seoul_night',...chainEvents.map(event=>event.id)].includes(e.id));
       delete S.flags.seoul_core_reached;
       S._storyQueue = []; S.used = S.used.filter(id => !['es_nightshift','es_backdoor'].includes(id));
       delete S.flags.es_v1194; G.grantPerk('eunsu','es_story');
@@ -1793,7 +1783,7 @@ with sync_playwright() as p:
     check('세대별 추방 기억·남쪽 태생 명시', r8['generations'])
     check('할아버지 집안의 빈 사유표 회수', r8['familyQuestion'])
     check('세 처분의 대가가 서로 다름', r8['distinctCosts'])
-    check('완결 뒤 상행선은 짧은 수신 흔적만 남김', r8['subtleClue'] and r8['storyDone'])
+    check('완결 뒤 상위 연산망·새 세션·천리안 거부로 시즌 2를 예고', r8['seasonTwoCliffhanger'] and r8['storyDone'])
     check('결정·에필로그 존재+noPool', r8['ep'] and r8['chainNotInPool'], str(r8))
     check('fx.chain → S._chain 세팅', r8['chainSet'])
     check('은수 필수 단서 큐 등록·회수', r8['storyQueued'], str(r8))

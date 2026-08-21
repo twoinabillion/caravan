@@ -1688,7 +1688,7 @@ img.stl-field-map-face,img.stl-field-face,img.upgrade-adviser-face,.cmsg img{
 .pk small{display:block;color:var(--faded);font-size:12px;margin-top:1px;line-height:1.5}
 
 /* ── ending ── */
-#scr-end{padding:30px 26px;overflow-y:auto;justify-content:center}
+#scr-end{padding:calc(var(--safe-top) + 30px) 26px 30px;overflow-y:auto;justify-content:flex-start}
 #scr-end .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.3em;margin-bottom:14px}
 #scr-end h1{font-size:28px;line-height:1.25;margin-bottom:14px;text-wrap:balance}
 #scr-end .body{font-family:var(--serif);color:#cdd1dd;font-size:14.5px;line-height:1.9;white-space:pre-wrap;
@@ -4207,4 +4207,86 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .nav-destination-card{position:relative}
 .nav-depart-hint{position:absolute;top:5px;right:5px;padding:2px 5px;border:1px solid rgba(255,180,84,.55);
   background:rgba(8,12,16,.82);color:var(--amber);font:700 8px/1.2 var(--mono);letter-spacing:.08em}
+
+/* FIRST-JOURNEY + STORY EVENT CONTRACT ---------------------------------
+   Story events use the same accumulated, paper-on-road reading rhythm as the
+   intro. The story owns the height; decisions and receipts stay compact. */
+#ev-sheet.event-mode[data-event-kind="story"]{display:flex;flex-direction:column;min-height:0}
+#ev-sheet.event-mode[data-event-kind="story"] .event-scroll{
+  flex:1 1 auto!important;height:auto!important;min-height:0!important;overflow-y:auto!important;
+  overscroll-behavior:contain;scroll-padding-block:18px 28px
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{
+  box-sizing:border-box;display:flex!important;flex-direction:column!important;min-height:clamp(300px,42vh,520px);
+  padding:clamp(22px,4.8cqw,34px) clamp(18px,4.5cqw,36px) clamp(20px,4.5cqw,32px)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-head{
+  flex:0 0 auto;margin:0 0 14px!important;padding-top:clamp(8px,2.5cqw,16px)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-head h2{
+  margin:0!important;line-height:1.18;letter-spacing:-.035em
+}
+#ev-sheet.event-mode[data-event-kind="story"] .story-reader{
+  flex:1 0 auto!important;min-height:150px!important;max-height:none!important;overflow:visible!important;padding:2px 0 8px!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .story-transcript{
+  display:flex;flex-direction:column;align-items:stretch;gap:16px;width:100%;padding:2px 0 10px
+}
+#ev-sheet.event-mode[data-event-kind="story"] .chat-msg,
+#ev-sheet.event-mode[data-event-kind="story"] .narration-msg{flex:0 0 auto;max-width:94%}
+#ev-sheet.event-mode[data-event-kind="story"] .chat-msg.side-left{align-self:flex-start;margin-left:0!important}
+#ev-sheet.event-mode[data-event-kind="story"] .chat-msg.side-right{align-self:flex-end;margin-right:0!important}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock{
+  flex:0 0 auto!important;height:auto!important;min-height:0!important;max-height:38%;overflow-y:auto;
+  padding:8px 12px 12px!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock>.choices{
+  display:grid!important;grid-template-columns:1fr!important;gap:7px!important;height:auto!important;max-height:none!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock .choice{
+  box-sizing:border-box;min-height:52px!important;height:auto!important;padding:10px 14px!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock .choice:only-child{
+  width:min(100%,520px);min-height:48px!important;margin-inline:auto
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-result-receipt{
+  flex:0 0 auto!important;min-height:0!important;margin:8px 12px!important;padding:12px 14px!important
+}
+.mission-brief{display:grid;gap:7px;margin:0 0 16px;padding:14px 15px 13px;border:1px solid rgba(159,105,37,.42);
+  border-left:5px solid #a96620;background:linear-gradient(100deg,rgba(174,112,38,.15),rgba(239,226,191,.25));box-shadow:inset 0 1px rgba(255,255,255,.3)}
+.mission-brief>span{color:#8a561d;font:900 10px/1.2 var(--font-ui);letter-spacing:.11em}
+.mission-brief h3{margin:0;color:#33291f;font-size:clamp(18px,4.6cqw,24px);line-height:1.25}
+.mission-brief p,.mission-brief small{margin:0;color:#4b3e30;font-size:clamp(11px,3.2cqw,14px);line-height:1.45}
+.mission-brief b{display:inline-block;margin-right:8px;color:#8a561d;font:900 .78em/1.2 var(--font-ui);letter-spacing:.04em}
+.event-tutorial-note{display:flex;align-items:flex-start;gap:9px;margin:0 0 14px;padding:9px 11px;border:1px dashed rgba(40,115,111,.46);
+  background:rgba(53,128,121,.08);color:#4b4032;font-size:11px;line-height:1.45}
+.event-tutorial-note b{flex:none;color:var(--teal);font-family:var(--font-ui);font-size:10px;letter-spacing:.06em}
+.quest-category-tabs button:first-child{border-color:rgba(159,105,37,.42);color:#7c4f1e;background:rgba(174,112,38,.09)}
+.quest-category-tabs button:first-child.is-active{border-color:#9d6527;color:#7c4f1e;background:rgba(174,112,38,.16);box-shadow:inset 3px 0 #9d6527}
+.quest-category-tabs button:nth-child(3){border-style:dashed}
+@media(max-height:720px){
+  #ev-sheet.event-mode[data-event-kind="story"] .event-field-report{min-height:260px;padding-top:18px!important}
+  #ev-sheet.event-mode[data-event-kind="story"] .story-transcript{gap:12px}
+  #ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock{max-height:42%}
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock:has(.choices>.choice:nth-child(3)){
+  max-height:min(40dvh,300px)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock:has(.route-forecast){
+  max-height:min(42dvh,340px)!important
+}
+#ev-sheet.event-mode[data-event-id="onboarding_main_mission"] .event-scene-frame:not(.zoomed){
+  flex-basis:284px!important;height:284px!important
+}
+.mission-brief{padding:10px 12px!important}
+.mission-brief h3{margin:4px 0 7px!important;font-size:clamp(15px,4.4cqw,18px)!important;line-height:1.25!important}
+.mission-brief p,.mission-brief small{display:grid!important;grid-template-columns:56px minmax(0,1fr);gap:7px;align-items:start;margin:4px 0 0!important;font-size:clamp(9px,2.55cqw,10.5px)!important;line-height:1.38!important}
+.mission-brief p b,.mission-brief small b{margin:0!important;white-space:nowrap}
+.mission-brief .mission-stake,.mission-brief .mission-promise{padding-top:4px;border-top:1px solid rgba(52,91,84,.22)}
+.mission-brief .mission-stake b{color:#9a4f2d}
+.mission-brief .mission-promise b{color:#27756f}
+.quest-main-detail .folio-stakes{display:grid;gap:4px;width:calc(100% - 24px);margin:6px 24px 8px 0!important}
+.quest-main-detail .folio-stakes>div{display:grid;grid-template-columns:52px minmax(0,1fr);gap:6px;align-items:start;padding:5px 7px!important;border:1px solid rgba(67,88,75,.22);background:rgba(251,241,213,.24)}
+.quest-main-detail .folio-stakes span{display:block;margin:0!important;color:#27756f;font:800 8px/1.25 var(--font-ui)!important;letter-spacing:.05em}
+.quest-main-detail .folio-stakes p{margin:0!important;color:#514535;font:650 8.5px/1.35 var(--font-ui)!important}
 </style>

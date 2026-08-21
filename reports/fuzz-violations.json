@@ -10,15 +10,15 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi"
+    "choice:cell_sea_meet"
    ],
    "snap": {
     "day": 2,
     "min": 510,
     "water": NaN,
-    "food": 23,
+    "food": 22,
     "fuel": 52,
-    "scrap": 17,
+    "scrap": 12,
     "van": 78,
     "ended": false
    }
@@ -33,16 +33,16 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi",
+    "choice:cell_sea_meet",
     "perk"
    ],
    "snap": {
     "day": 2,
     "min": 510,
     "water": NaN,
-    "food": 23,
+    "food": 22,
     "fuel": 52,
-    "scrap": 17,
+    "scrap": 12,
     "van": 78,
     "ended": false
    }
@@ -57,7 +57,7 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi",
+    "choice:cell_sea_meet",
     "perk",
     "travel"
    ],
@@ -65,9 +65,9 @@
     "day": 2,
     "min": 510,
     "water": NaN,
-    "food": 23,
+    "food": 22,
     "fuel": 52,
-    "scrap": 17,
+    "scrap": 12,
     "van": 78,
     "ended": false
    }
@@ -82,7 +82,7 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi",
+    "choice:cell_sea_meet",
     "perk",
     "travel",
     "repair"
@@ -91,9 +91,9 @@
     "day": 2,
     "min": 510,
     "water": NaN,
-    "food": 23,
+    "food": 22,
     "fuel": 52,
-    "scrap": 17,
+    "scrap": 12,
     "van": 78,
     "ended": false
    }
@@ -108,7 +108,7 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi",
+    "choice:cell_sea_meet",
     "perk",
     "travel",
     "repair",
@@ -125,7 +125,7 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi",
+    "choice:cell_sea_meet",
     "perk",
     "travel",
     "repair",
@@ -135,9 +135,9 @@
     "day": 2,
     "min": -90,
     "water": NaN,
-    "food": 23,
+    "food": 22,
     "fuel": 52,
-    "scrap": 17,
+    "scrap": 12,
     "van": 78,
     "ended": false
    }
@@ -152,7 +152,7 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi",
+    "choice:cell_sea_meet",
     "perk",
     "travel",
     "repair",
@@ -163,9 +163,9 @@
     "day": 2,
     "min": -90,
     "water": NaN,
-    "food": 23,
+    "food": 22,
     "fuel": 52,
-    "scrap": 17,
+    "scrap": 12,
     "van": 78,
     "ended": false
    }
@@ -179,7 +179,7 @@
     "recruitStep",
     "field",
     "explore",
-    "choice:exp_kimchi",
+    "choice:cell_sea_meet",
     "perk",
     "travel",
     "repair",
@@ -191,9 +191,9 @@
     "day": 2,
     "min": -90,
     "water": NaN,
-    "food": 23,
+    "food": 22,
     "fuel": 52,
-    "scrap": 17,
+    "scrap": 12,
     "van": 78,
     "ended": false
    }

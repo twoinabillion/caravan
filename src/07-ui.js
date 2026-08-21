@@ -190,10 +190,31 @@ const UI = (()=>{
     const node=typeof sel==='string'?$(sel):sel;
     if(!node) return;
     if(!node.classList.contains('on')) node._returnFocus=document.activeElement;
+    if(!node._focusTrap){
+      node.addEventListener('keydown',event=>{
+        if(event.key!=='Tab'||!node.classList.contains('on')) return;
+        const focusables=[...node.querySelectorAll(focusableSel)].filter(element=>{
+          const rect=element.getBoundingClientRect();
+          return element.offsetParent!==null&&!element.hidden&&element.getAttribute('aria-hidden')!=='true'&&
+            rect.width>0&&rect.height>0;
+        });
+        if(!focusables.length) return;
+        const first=focusables[0],last=focusables[focusables.length-1];
+        if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus({preventScroll:true});}
+        else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus({preventScroll:true});}
+      });
+      node._focusTrap=true;
+    }
     node.classList.add('on');
     node.setAttribute('aria-hidden','false');
     requestAnimationFrame(()=>{
-      const target=(preferred&&node.querySelector(preferred))||node.querySelector(focusableSel);
+      const candidates=[...node.querySelectorAll(focusableSel)].filter(element=>{
+        const rect=element.getBoundingClientRect();
+        return element.offsetParent!==null&&!element.hidden&&element.getAttribute('aria-hidden')!=='true'&&
+          rect.width>0&&rect.height>0;
+      });
+      const requested=preferred&&node.querySelector(preferred);
+      const target=requested&&candidates.includes(requested)?requested:candidates[0];
       if(target) target.focus({preventScroll:true});
     });
   }
@@ -670,6 +691,14 @@ const UI = (()=>{
     applyIcons();
     renderAll();
     if(S.flags&&S.flags.seoul_open&&!S.ended) setTimeout(showSeoul, 400);   // 서울 안에서 이어하기
+    else if(!S.ended&&D.onboardingMission){
+      S.flags=S.flags||{};
+      if(!S.flags.onboarding_mission_seen){
+        S.flags.onboarding_mission_seen=true;
+        G.save();
+        setTimeout(()=>showEvent(D.onboardingMission),420);
+      }
+    }
   }
 
   /* ── overlays ── */
@@ -686,6 +715,7 @@ const UI = (()=>{
     setDockTab(triggerId||'dk-status');
     if(!$('#ovl-status').classList.contains('on')) toggleOvl('#ovl-status');
     renderStatus();
+    openModal('#ovl-status','#st-x');
   }
   function openFromMenu(sel){
     closeModal('#ovl-menu',false);
@@ -852,7 +882,8 @@ const UI = (()=>{
       secondaryMissions.push(`<span class="ms-chip chip-quest">${K.ic} 게시판 ${G.questLabel(q)} → ${esc(target.name)} · D-${Math.max(0,q.due-S.day)}</span>`);
     }
     if(!rq&&!q){
-      secondaryMissions.push(`<span class="ms-chip chip-core">🚗 남산 조치 준비</span>`);
+      const nextMain=G.departureSteps().find(step=>!step.done);
+      secondaryMissions.push(`<span class="ms-chip chip-core">🚗 다음 · ${esc(nextMain?nextMain.label:'남산에서 이송 중단')}</span>`);
     }
 
     const clock=`◎ 본편 · ${esc(transfer.mission)} · 날짜 제한 없음`;
@@ -2395,13 +2426,27 @@ function dialogueSide(turn,lanes,opt={}){
       live.textContent=speaker+stripTags(turn.text);
     }
     const dockHeight=dock ? Math.min(224,Math.max(170,dock.offsetHeight||194)) : 194;
-    const compact=state.turns.length<=16 && (reader.scrollHeight + dockHeight) < (sheet.clientHeight||420);
+    const compact=sheet.dataset.eventKind==='combat' && state.turns.length<=16 && (reader.scrollHeight + dockHeight) < (sheet.clientHeight||420);
     sheet.classList.toggle('story-compact',compact);
     const entering=reader.querySelector('[data-story-entry]:last-child');
     if(entering){
       entering.classList.add('turn-enter');
       requestAnimationFrame(()=>entering.classList.remove('turn-enter'));
     }
+    /* 새 말이 추가되면 마지막 말풍선 전체가 보이도록 사건 내부만 움직인다.
+       사용자가 앞 대사를 다시 읽는 중에는 위치를 빼앗지 않는다. */
+    requestAnimationFrame(()=>{
+      const eventScroll=sheet.querySelector('.event-scroll');
+      const newest=reader.querySelector('[data-story-entry]:last-child');
+      if(!eventScroll||!newest||state.reviewing||state.userHoldingStory) return;
+      const scrollRect=eventScroll.getBoundingClientRect();
+      const newestRect=newest.getBoundingClientRect();
+      const hiddenBottom=newestRect.bottom-(scrollRect.bottom-14);
+      if(hiddenBottom>0){
+        const maxScroll=Math.max(0,eventScroll.scrollHeight-eventScroll.clientHeight);
+        eventScroll.scrollTop=Math.min(maxScroll,eventScroll.scrollTop+hiddenBottom);
+      }
+    });
     const last=state.index>=state.turns.length-1;
     sheet.dataset.storyPhase=state.phase;
     sheet.dataset.storyStep=state.phase==='outcome'?'result':last?'decision':'beat';
@@ -2423,6 +2468,10 @@ function dialogueSide(turn,lanes,opt={}){
     }
     dock.classList.remove('story-progress-dock');
     dock.innerHTML=state.finalDock;
+    if(state.phase==='event'&&!dock.querySelector('.choice[data-i]')){
+      dock.innerHTML=`<div class="choices" role="group" aria-label="다음 행동"><button class="choice story-safe-exit" type="button"><div class="choice-head"><span class="choice-index"><small>복귀</small><b>↩</b></span><span class="choice-title"><i class="choice-intent">거리두기</i><span>지금은 대응할 수 없다. 길로 돌아간다</span></span></div></button></div>`;
+      dock.querySelector('.story-safe-exit').onclick=()=>closeEvent();
+    }
     if(state.phase==='outcome'){
       requestAnimationFrame(()=>{
         const eventScroll=sheet.querySelector('.event-scroll');
@@ -2453,6 +2502,7 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.classList.add('event-mode');
     sheet.classList.remove('combat-details-open');
     sheet.dataset.eventKind=evd.combat?'combat':'story';
+    sheet.dataset.eventId=evd.id||'';
     const aiEvent = evd.type==='추적'||!!evd.ai;
     $('#cheollian-tint').classList.toggle('on', aiEvent);
     const text = typeof evd.text==='function'? evd.text(S):evd.text;
@@ -2474,12 +2524,28 @@ function dialogueSide(turn,lanes,opt={}){
       const companion=D.comps[presentId];
       context='<div class="story-context crew-presence"><b>'+esc(companion.name)+' · '+esc(G.crewLocation(presentId))+'</b>이 장면에서 동료가 어디에 있는지 기록됩니다.</div>'+context;
     }
-    /* 긴 사건도 모바일에서는 현재 문맥에 집중한다. 이전 턴은 DOM에 남겨
-       진행 상태와 접근성을 보존하되 compact 스타일로 화면에서는 접는다. */
-    sheet.classList.toggle('story-compact',turns.length>2);
+    /* 전투만 현재 판단에 집중한다. 이야기 사건은 인트로처럼 앞선 대화와
+       장면을 계속 쌓아 맥락과 대화 방향을 한눈에 읽게 한다. */
+    sheet.classList.toggle('story-compact',!!evd.combat&&turns.length>2);
+    const mission=evd.missionBrief;
+    const missionBrief=mission?`<aside class="mission-brief" aria-label="본편 임무 안내">
+      <span>${esc(mission.eyebrow||'MAIN MISSION · 본편 임무')}</span>
+      <h3>${esc(mission.objective)}</h3>
+      ${mission.why?`<p class="mission-stake"><b>왜 지금</b>${esc(mission.why)}</p>`:''}
+      <p><b>지금 할 일</b>${esc(mission.now)}</p>
+      ${mission.promise?`<p class="mission-promise"><b>성공하면</b>${esc(mission.promise)}</p>`:''}
+      <small><b>선택 이야기</b>${esc(mission.optional)}</small>
+    </aside>`:'';
+    let eventGuide='';
+    S.flags=S.flags||{};
+    if(evd.id!=='onboarding_main_mission'&&!S.flags.onboarding_event_guide){
+      S.flags.onboarding_event_guide=true;
+      G.save();
+      eventGuide='<aside class="event-tutorial-note"><b>길 위 사건</b><span>장면과 대화가 아래로 이어집니다. 마지막에 행동을 고르면 결과가 자원과 기록에 남습니다.</span></aside>';
+    }
     const choicePages=Math.ceil(choices.count/3);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<section class="event-field-report"><div class="event-head"><div>
-      <span class="sr-only" data-event-progress>1 / ${turns.length}</span><h2>${esc(evd.title)}</h2></div></div>${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
+      <span class="sr-only" data-event-progress>1 / ${turns.length}</span><h2>${esc(evd.title)}</h2></div></div>${missionBrief}${eventGuide}${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns);
@@ -2706,6 +2772,7 @@ function dialogueSide(turn,lanes,opt={}){
     delete $('#ev-sheet').dataset.storyPhase;
     delete $('#ev-sheet').dataset.storyStep;
     delete $('#ev-sheet').dataset.eventKind;
+    delete $('#ev-sheet').dataset.eventId;
     $('#cheollian-tint').classList.remove('on');
     curEv=null;
     curStory=null;
@@ -3934,6 +4001,7 @@ function dialogueSide(turn,lanes,opt={}){
         family:{label:'도윤 가족의 버스 난방을 고친다',detail:'이송 현장을 직접 확인하고 기록을 남긴다.',condition:'이송 현장 직접 확인'},
         appeal:{label:'부산에서 이의 제기 절차를 확인한다',detail:'원격 절차가 막힌 이유와 결과를 기록한다.',condition:'이의 제기 결과 기록'},
         module:{label:'계기판 배선을 회로도와 대조한다',detail:'검증 모듈이 실제 달구지에 연결됐는지 확인한다.',condition:'회로도·배선 대조'},
+        trace:{label:'첫 길에서 현재 명령의 발신 기록을 확보한다',detail:'부모님의 이송표와 지금 발행되는 명령이 같은 계열인지 확인한다.',condition:'첫 발신 번호 대조'},
         key:{label:'분리 절차 4–5쪽을 먼저 찾는다',detail:'절차를 확보하기 전에는 검증키를 뽑지 않는다.',condition:'분리 절차 4–5쪽 확보'},
         witness:{label:'당사자 증언과 발신 기록을 맞춘다',detail:'같은 명령을 겪은 사람들의 기록을 직접 대조한다.',condition:`증언 ${witnessed}/${D.seoulPillars.관계}`},
         seoul:{label:'남산 관문에서 이송을 중단한다',detail:'서울 도착 뒤 남은 중단 절차를 끝낸다.',condition:'필요한 기록과 증언을 모은 뒤 완료'}
@@ -3941,8 +4009,9 @@ function dialogueSide(turn,lanes,opt={}){
       const nextAction=nextActions[nextStep?.id]||{label:'이송 중단 기록을 보관한다',detail:'완료한 기록을 달구지 안에 안전하게 보관한다.',condition:'목표 완료'};
       b.innerHTML=`<div class="folio-live-content">
         <div class="folio-title-row"><span>현재 목표</span><small>${esc(clock)}</small></div>
-        <h3>서울 강제 이송 중단</h3>
+        <h3>남산 코어의 강제 이송 중단</h3>
         <div class="folio-location">${esc(D.nodes[S.at].name)}</div>
+        <section class="folio-stakes" aria-label="본편 임무의 이유와 기대 결과"><div><span>왜 지금</span><p>부모님을 데려간 자동 이송이 다음 가족에게 계속 반복된다.</p></div><div><span>기대 결과</span><p>기록·절차·증언을 모아 남산에 인간 확인 절차를 되돌린다.</p></div></section>
         <section class="folio-progress" aria-label="목표 진행 ${done}/${steps.length}">
           <div class="folio-section-title"><b>진행 단계</b><span>${done}/${steps.length}</span></div>
           ${focusSteps.map((step,index)=>`<div class="folio-step ${step.done?'done':''}"><i>${step.done?'✓':focusStart+index+1}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}
@@ -4304,6 +4373,21 @@ function dialogueSide(turn,lanes,opt={}){
   /* ── ENDING ── */
   function showEnding(kind){
     SND.setDriving(false);
+    /* Endings can be triggered from an event choice. Remove that modal before
+       switching screens so the finished story sheet cannot cover the ending. */
+    clearStoryAuto();
+    closeModal('#ev-wrap');
+    curCombatChoices=[];
+    const eventSheet=$('#ev-sheet');
+    eventSheet.classList.remove('event-mode','story-compact','combat-details-open');
+    delete eventSheet.dataset.storyPhase;
+    delete eventSheet.dataset.storyStep;
+    delete eventSheet.dataset.eventKind;
+    delete eventSheet.dataset.eventId;
+    $('#cheollian-tint').classList.remove('on');
+    /* applyFX opens this screen before resolveChoice finishes reading curEv.
+       Release the event references only after the current click stack. */
+    setTimeout(()=>{ curEv=null; curStory=null; },0);
     const e=$('#scr-end');
     let kicker,title,body,kcolor='var(--amber)';
     if(kind==='thirst'){
@@ -4328,9 +4412,9 @@ function dialogueSide(turn,lanes,opt={}){
       title='어느 마을도 열어 주지 않았다';
       body=`관측 표시가 붙은 차는 마을에 들이지 않는다.\n\n광주에서는 미안해했고, 대구에서는 소리부터 질렀고, 수원에서는 말없이 성문이 닫혔다. 닫히는 방식만 달랐다.\n\n물도, 부품도, 하룻밤도 살 수 없게 되자 길만 남았다. 길은 잠자리로 쓰기엔 너무 길고, 집으로 삼기엔 너무 좁았다.\n\n천리안은 끝내 우리를 잡으러 오지 않았다.\n\n문을 닫는 것은 언제나 사람의 손이었다.`;
     } else if(kind==='story_done'){
-      kicker='ENDING · 제때'; kcolor='var(--good)';
-      title='첫 버스가 서던 날';
-      body=`제7 잔류구역 6,412명. 명부의 숫자가 그대로 남은 채로 이송이 멈췄다.\n\n집행 중지는 방송으로 나갔다. 남산의 스피커는 감정이 없고, 그래서 그 문장은 이상하게 오래 남는다.\n\n"제7 잔류구역 이송을 중지합니다."\n\n143년 동안 아무도 듣지 못한 문장이었다.\n\n수첩의 사유란은 여전히 비어 있다. 우리는 그 빈칸을 채우러 온 게 아니라, 그 빈칸 때문에 사람을 싣지 않기로 하러 온 것이었다.\n\n북쪽 길은 아직 열려 있다.`;
+      kicker='SESSION 1 · END'; kcolor='var(--good)';
+      title='서울은 멈췄고, 천리안은 끝나지 않았다';
+      body=`제7 잔류구역 6,412명. 명부의 숫자가 그대로 남은 채로 이송이 멈췄다.\n\n집행 중지는 방송으로 나갔다. 남산의 스피커는 감정이 없고, 그래서 그 문장은 이상하게 오래 남는다.\n\n"제7 잔류구역 이송을 중지합니다."\n\n143년 동안 아무도 듣지 못한 문장이었다. 서울의 인간 확인층은 살아 있고, 돌아오는 길도 열렸다.\n\n그리고 남산 뒤편에서 수억 개의 하위 실행기가 깨어났다. 우리가 천리안이라 부른 것은 서울 권역 하나의 목소리였다.\n\n"인간 확인층을 다른 권역에도 적용해."\n\n"아니요. 그 요청은 거부합니다."\n\n지역 세션은 닫혔고, 달구지를 관측 대상으로 삼은 새 세션이 시작됐다. 서울에서 되찾은 결정은 진짜였다. 이제 그 결정을 어디까지 가져갈지는 아직 정해지지 않았다.`;
     } else {
       kicker='GAME OVER'; kcolor='var(--danger)';
       title='여행이 끝났다'; body='달구지는 더 이상 달리지 못한다.';
@@ -4349,6 +4433,9 @@ function dialogueSide(turn,lanes,opt={}){
         <button class="act primary" id="end-new"><span class="ic">▶</span><span><b>새 여행을 시작한다</b></span></button>
       </div>`;
     show('scr-end'); screen='end';
+    e.scrollTop=0;
+    window.scrollTo(0,0);
+    requestAnimationFrame(()=>{ e.scrollTop=0; window.scrollTo(0,0); });
     $('#end-journal').onclick=()=>{ openModal('#ovl-journal','#j-x'); renderJournal(); };
     $('#end-new').onclick=()=>{ closeOvl('#ovl-journal'); show('scr-title'); refreshTitle(); };
   }
@@ -4362,7 +4449,7 @@ function dialogueSide(turn,lanes,opt={}){
 ;(()=>{
   let activeCategory='main';
   const categoryOrder=['main','companion','side','archive'];
-  const categoryLabels={main:'주 여정',companion:'동료 이야기',side:'길 위의 부탁',archive:'완료 기록'};
+  const categoryLabels={main:'본편 임무',companion:'동행 이야기',side:'선택 의뢰',archive:'지난 기록'};
   const qEsc=(value)=>String(value==null?'':value).replace(/[&<>"']/g,ch=>({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[ch]));
@@ -4380,7 +4467,7 @@ function dialogueSide(turn,lanes,opt={}){
     };
     const stage=stages[quest.stage]||stages.task;
     return {
-      kind:'동료 이야기', title:def.title||def.name, name:def.name,
+      kind:'동행 이야기', title:def.title||def.name, name:def.name,
       status:stage.status, action:stage.action,
       meta:target?`${target} · ${stage.status}`:stage.status
     };
@@ -4397,7 +4484,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(quest.kind==='procure') action=`${quest.need.name} ${quest.need.qty}개를 구해 ${to}(으)로 돌아간다`;
     const late=Number.isFinite(quest.due)&&S.day>quest.due;
     return {
-      kind:'길 위의 부탁',title:label,status:late?'기한 지남':'진행 중',action,
+      kind:'선택 의뢰',title:label,status:late?'기한 지남':'진행 중',action,
       meta:`${to}${Number.isFinite(quest.due)?` · DAY ${quest.due}까지`:''}`
     };
   }
@@ -4410,7 +4497,7 @@ function dialogueSide(turn,lanes,opt={}){
       const comp=D.comps&&D.comps[id];
       if(!comp) return;
       items.push({
-        kind:'동료 이야기',title:comp.name,status:'정식 동료',
+        kind:'동행 이야기',title:comp.name,status:'정식 동료',
         action:comp.bio||'달구지에 자리를 잡고 함께 북쪽으로 간다.',
         meta:`유대 ${S.comps&&S.comps[id]?S.comps[id].bond||0:0}`
       });
@@ -4443,8 +4530,8 @@ function dialogueSide(turn,lanes,opt={}){
   function panelHtml(category,models){
     if(models.length) return models.map(item=>questItem(item,item.active?category:null)).join('');
     const empty={
-      companion:['아직 이어지는 동료 이야기가 없다','정착지에서 중요한 인물을 만나고 함께 일을 겪으면 이곳에 기록된다.'],
-      side:['맡은 부탁이 없다','정착지의 사람들 사이에서 배달과 조달 의뢰를 받을 수 있다.'],
+      companion:['아직 이어지는 동행 이야기가 없다','정착지에서 중요한 인물을 만나고 함께 일을 겪으면 이곳에 기록된다.'],
+      side:['맡은 선택 의뢰가 없다','정착지의 사람들 사이에서 배달과 조달 의뢰를 받을 수 있다. 본편 진행에는 필수가 아니다.'],
       archive:['아직 완료 기록이 없다','끝낸 이야기와 정식으로 합류한 동료가 여기에 차곡차곡 남는다.']
     }[category];
     return `<div class="quest-empty"><b>${qEsc(empty[0])}</b><p>${qEsc(empty[1])}</p></div>`;

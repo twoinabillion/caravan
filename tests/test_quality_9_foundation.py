@@ -36,7 +36,7 @@ with sync_playwright() as playwright:
       return {summary,version:S._quality.version};
     }""")
     check('품질 스키마 v3와 고정 빌드가 기록된다',
-          initial['version'] == 3 and initial['summary']['build'] == '2026-08-06-quality3', str(initial))
+          initial['version'] == 3 and initial['summary']['build'] == '2026-08-17-settlement-story2', str(initial))
     check('진입 방식과 여정 시작 이정표가 기록된다',
           initial['summary']['entryMode'] == 'summary' and 'journey_start' in initial['summary']['milestones'], str(initial))
 
@@ -64,12 +64,12 @@ with sync_playwright() as playwright:
       return {version:q.version,build:q.build,milestones:q.milestones,callbacks:q.choiceCallbacks};
     }""")
     check('이전 저장은 데이터 손실 없이 v3로 보강된다',
-          migrated['version'] == 3 and migrated['build'] == '2026-08-06-quality3' and
+          migrated['version'] == 3 and migrated['build'] == '2026-08-17-settlement-story2' and
           migrated['milestones'] == {} and migrated['callbacks']['remembered'] == 0, str(migrated))
 
     exported = json.loads(page.evaluate("G.exportQuality('json')"))
     check('JSON 내보내기에 빌드·이정표·회수 근거가 포함된다',
-          exported['summary']['build'] == '2026-08-06-quality3' and
+          exported['summary']['build'] == '2026-08-17-settlement-story2' and
           'milestones' in exported['summary'] and 'choiceCallbacks' in exported['summary'])
 
     print('― 첫 여정 안내와 주행 정산')
@@ -91,9 +91,9 @@ with sync_playwright() as playwright:
       return {first,driving,recap,ledger};
     }""")
     check('첫 화면은 길 선택을 한 가지 다음 행동으로 안내한다',
-          '1/4' in flow['first'] and '다음 길 하나를 고른다' in flow['first'], flow['first'])
+          '1/4' in flow['first'] and '본편 임무를 기준으로 첫 길을 고른다' in flow['first'], flow['first'])
     check('출발 뒤 안내가 주행과 첫 사건 규칙으로 전환된다',
-          '2/4' in flow['driving'] and '주행은 자동' in flow['driving'], flow['driving'])
+          '2/4' in flow['driving'] and '달구지는 선택한 길을 따라 달린다' in flow['driving'], flow['driving'])
     check('도착 정산은 시간·사건·차량 빌드와 자원 증감을 보존한다',
           flow['recap']['minutes'] == 35 and flow['recap']['events'] == 1 and
           flow['recap']['build'] == '기본 생존형' and '연료' in flow['ledger'] and '고철' in flow['ledger'], str(flow))
@@ -113,7 +113,7 @@ with sync_playwright() as playwright:
       return {before,visited,finished:!document.querySelector('.journey-guide')};
     }""")
     check('첫 정착지 도착 뒤 실제 진입 행동을 안내한다',
-          '3/4' in settlement['before'] and '정착지 안으로' in settlement['before'], str(settlement))
+          '3/4' in settlement['before'] and '필요한 일부터 하나씩 처리한다' in settlement['before'], str(settlement))
     check('정착지 진입과 임시 동행까지 안내 진행을 계측하고 마친다',
           settlement['visited'] and settlement['finished'], str(settlement))
 

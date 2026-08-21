@@ -89,7 +89,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     combat:null, lastCombatReport:null, injuries:{}, _exploreDay:1, _exploreNodes:{}, _salvagedNodes:{}, _salvageCount:0,
     _combatFlow:{runId:0,adjust:0,history:[]},
     profile:profile&&D.startProfiles&&D.startProfiles[profile]?profile:'keeper',
-    _quality:null, guideDismissed:false, lastJourneyRecap:null, journeyRecaps:[],
+    _quality:null, guideDismissed:false, questTrack:'main', lastJourneyRecap:null, journeyRecaps:[],
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
     _rescues:{}, _stlNights:{}, stopover:null, locationContractVersion:D.eventLocationVersion||1,
   };
@@ -106,6 +106,8 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
   G.ensureNarrativeState();
   G.syncKnowledgeFromFlags();
+  /* 첫 출발 뒤 무작위 사건보다 먼저 본편의 첫 증거를 직접 회수한다. */
+  G.queueStory('onboarding_first_road');
   /* 이전 순환의 흔적 — 지난 런의 결말이 이번 길 위에 하나 남는다.
      143년 반복의 세계에서 이전 여정은 없던 일이 아니라 이전 순환이다. */
   try{
@@ -115,13 +117,13 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   }catch(e){}
   G.addNote({type:'장소', title:'부산 감천 부두', body:'모든 것이 시작된 곳. 달구지에 시동을 걸었다.', links:[]});
   G.addNote({type:'물건', title:'달구지', body:'낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.', links:['할아버지']});
-  G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판 KOR-LOCAL. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 스물엿새 뒤 외곽의 마지막 잔류구역 이송을 예고했다.', links:[]});
+  G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.', links:[]});
   G.addNote({type:'인물', title:'부모님', body:'엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.', links:['천리안']});
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.', links:['달구지','부모님']});
   G.addNote({type:'물건', title:'엄마의 철제 상자', body:'현재 이송표와 같은 명령 규격을 가리키는 회로도가 수첩 등판에서 나왔다. 남산 중앙 노드, 달구지 계기판 뒤 검증 모듈, 발신 기록과 당사자 증언을 함께 가져가라는 메모가 적혀 있었다.', links:['부모님','천리안','달구지']});
   G.addNote({type:'물건', title:'계기판 속 검증 모듈', body:'출발 전에 존재를 확인했지만 분리 절차 두 장이 없어 아직 달구지 전장에 연결해 두었다. 절차를 찾고 기록을 모아 남산에 적용해야 한다.', links:['엄마의 철제 상자','부모님','남산']});
   G.addNote({type:'인물', title:'도윤의 가족', body:'부산 부두에서 난방이 끊긴 이송 버스를 고쳐 준 가족. 엄마 하진, 8살 도윤, 동생 유나는 제7 잔류구역 6,412명 가운데 먼저 남쪽으로 보내진 사람들이다.', links:['서울 추방','천리안']});
-  G.addNote({type:'사건', title:'스물엿새의 시한', body:'부산의 원격 이의 제기는 막혔다. DAY 26 안에 남산 중앙 노드에서 이송 중단까지 완료해야 첫 이송을 막을 수 있다. 서울 도착만으로 끝나지 않는다.', links:['남산','도윤의 가족','계기판 속 검증 모듈']});
+  G.addNote({type:'본편', title:'남산의 강제 이송을 멈춘다', body:'부산의 원격 이의 제기는 막혔다. 북쪽으로 이동하며 검증 절차, 발신 기록, 당사자 증언을 모아 남산 중앙 노드에서 이송 명령을 중단해야 한다. 날짜 제한은 없고, 서울 도착만으로 끝나지 않는다.', links:['남산','도윤의 가족','계기판 속 검증 모듈']});
   G.save();
 };
 G.myName = ()=> (S && S.name) || '나';
@@ -199,6 +201,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
   if(S.guideDismissed===undefined) S.guideDismissed=false;
+  if(!['main','companion','side'].includes(S.questTrack)) S.questTrack='main';
   if(S.lastJourneyRecap===undefined) S.lastJourneyRecap=null;
   if(!Array.isArray(S.journeyRecaps)) S.journeyRecaps=[];
   if(!S._rescues||typeof S._rescues!=='object'||Array.isArray(S._rescues)) S._rescues={};
@@ -600,17 +603,19 @@ G.qualitySummary = ()=>{
 G.journeyGuide = ()=>{
   if(!S||S.guideDismissed||G.qualityArchive().length||G.qualityPlayMs()>45*60*1000) return null;
   const milestones=G.ensureQualityState().milestones||{};
-  if(!milestones.first_departure) return {step:1,total:4,kicker:'FIRST JOURNEY',title:'다음 길 하나를 고른다',
-    body:'지도에 기록된 연결과 현재 연료를 보고, 감당할 수 있는 한 길을 고르면 바로 출발한다.',
-    points:['지도: 지금 연결된 목적지만 표시한다','수치: 거리·시간·연료는 현재 지도와 계기판 기준이다','현장: 실제로 확인한 내용만 여정 기록에 남는다'],focus:'route'};
-  if(!milestones.first_event) return {step:2,total:4,kicker:'ON THE ROAD',title:S.driving?'주행은 자동으로 이어진다':'다음 목적지를 고른다',
-    body:S.driving?'화면에는 남은 거리와 현재 자원만 표시된다. 주행이 멈추면 그때 나타난 상황을 보고 결정한다.':'현재 지도와 계기판을 확인하고 다음 목적지를 직접 고른다.',
-    points:['선택 조건은 지금 쓸 자원과 현재 가진 능력이다','아직 벌어지지 않은 일은 표시하지 않는다'],focus:'drive'};
+  if(!milestones.first_departure) return {step:1,total:4,kicker:'FIRST JOURNEY · 길',title:'본편 임무를 기준으로 첫 길을 고른다',
+    body:'「목표」에는 남산에서 강제 이송을 멈추는 본편 임무가 고정된다. 지금은 연결된 목적지 하나를 고르면 된다.',
+    points:['목표: 본편 임무와 선택 이야기를 따로 확인한다','길: 거리·시간·연료를 보고 다음 목적지를 고른다','선택 의뢰: 필요할 때만 맡아도 본편은 사라지지 않는다'],focus:'route'};
+  if(!milestones.first_event) return {step:2,total:4,kicker:'FIRST JOURNEY · 주행',title:S.driving?'달구지는 선택한 길을 따라 달린다':'다음 목적지를 고른다',
+    body:S.driving?'남은 거리와 연료를 보며 기다린다. 길 위 사건이 생기면 장면을 읽은 뒤 마지막에 행동을 고른다.':'거리·시간·연료를 다시 확인하고 다음 목적지를 직접 고른다.',
+    points:['대화와 장면은 위에서 아래로 누적된다','선택 결과는 자원과 여정 기록에 남는다'],focus:'drive'};
   const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;
-  if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'FIRST STOP',title:'정착지 안으로 들어간다',
-    body:'거래·휴식·현장 행동 중 지금 필요한 일을 직접 고른다. 들어가기 전에는 결과를 표시하지 않는다.',focus:'settlement'};
-  if(!milestones.temporary_companion&&S.recruitQ) return {step:4,total:4,kicker:'MAKE ROOM',title:'함께한 뒤에 결정한다',
-    body:'함께 갈지는 실제로 겪은 일과 대화가 끝난 뒤에만 선택한다.',focus:'companion'};
+  if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'FIRST JOURNEY · 정착지',title:'필요한 일부터 하나씩 처리한다',
+    body:'시장·정비·사람·현장 중 지금 필요한 곳을 고른다. 정착지의 의뢰는 「선택 의뢰」로 따로 기록된다.',
+    points:['시장: 물자 거래','정비: 달구지 수리와 개조','사람: 대화, 의뢰, 동료 이야기'],focus:'settlement'};
+  if(!milestones.temporary_companion&&S.recruitQ) return {step:4,total:4,kicker:'FIRST JOURNEY · 동행',title:'함께 겪은 뒤에 동료가 된다',
+    body:'중요 인물을 만났다고 바로 합류하는 것은 아니다. 부탁과 동행 장면을 거치면 「동행 이야기」에 다음 단계가 기록된다.',
+    points:['임시 동행은 정식 동료와 구분된다','합류 뒤에는 동료 탭에서 역할과 유대를 확인한다'],focus:'companion'};
   return null;
 };
 G.exportQuality = format=>{
@@ -751,6 +756,7 @@ G.departureSteps = ()=>{
     {id:'family',done:!!S.flags.intro_family_helped,label:'6,412명 가운데 한 가족을 만남',detail:'도윤 가족의 버스 난방을 고치고 현재 이송을 직접 보았다'},
     {id:'appeal',done:!!S.flags.intro_appeal_failed,label:'부산에서 이의 제기 시도',detail:'원격 절차는 막혔고 남산 현장 확인만 남았다'},
     {id:'module',done:!!S.flags.intro_module_seen,label:'계기판 속 검증 모듈 확인',detail:'엄마의 회로도와 실제 배선이 일치했다'},
+    {id:'trace',done:!!S.flags.first_order_trace,label:'현재 이송의 첫 발신 기록 확보',detail:S.flags.first_order_trace?'부모님의 이송표와 같은 발신 계열임을 확인했다':'부산을 떠난 첫 길에서 자동 재평가 규칙과 발신 번호를 확보한다'},
     {id:'key',done:!!S.flags.parent_key_found,label:'분리 절차 복원·검증키 안전 회수',detail:S.flags.parent_key_found?'4–5쪽을 복원해 남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
     {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'발신 기록과 당사자 증언 대조',detail:S.flags.es_truth?'명령 생성 순서를 확인했다':`같은 명령을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
     {id:'seoul',done:!!S.flags.story_done,label:'남산에서 이송 중단까지 완료',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'날짜 제한 없이 필요한 기록과 사람을 모아 남산에서 강제 이송을 중단한다'}

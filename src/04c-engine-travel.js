@@ -631,6 +631,11 @@ G.eventAvailable = (ev,context={})=>{
   if(ev.needLowWater&&S.water>2) return false;
   if(ev.hiddenTarget&&!G.unknownHidden().length) return false;
   if(ev.id==='comp_sick'&&!S.flags.food_poison) return false;
+  /* 사건이 열렸는데 현재 일행으로는 보이는 행동이 하나도 없는 소프트락을
+     풀 단계에서 막는다. 요구 미충족 선택은 보여 줄 수 있지만, 모든 선택이
+     reqVisible에서 사라지는 사건은 조건이 갖춰진 뒤 다시 뽑는다. */
+  if(Array.isArray(ev.choices)&&ev.choices.length
+    &&!ev.choices.some(choice=>G.reqVisible(G.choiceReq(choice)))) return false;
   return true;
 };
 G.eligible = typeFilter=>D.events.filter(ev=>G.eventAvailable(ev,{typeFilter,

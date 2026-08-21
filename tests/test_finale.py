@@ -84,9 +84,10 @@ with sync_playwright() as playwright:
     check('모든 엔딩이 전용 화면을 갖는다', not generic, f"일반 문구로 떨어짐: {generic}")
 
     triggers = page.evaluate("""() => {
-      // 에필로그가 여정을 닫는가 + 좌초/기피가 상태에서 발화하는가
+      // 에필로그가 상위 연산망 공개로 이어지는가 + 좌초/기피가 상태에서 발화하는가
       const night=D.events.find(e=>e.id==='seoul_night');
-      const closes=(night.choices||[]).every(c=>c.out[0].fx && c.out[0].fx.endJourney);
+      const continues=(night.choices||[]).every(c=>c.out[0].fx &&
+        c.out[0].fx.chain==='seoul_uplink_reveal');
       G.newGame('onroad','좌초','full');
       S.at='yangsan'; S.driving=null; S.fuel=0; S.scrap=0;
       S._rescues={nofuel:3}; S._strandedDays=1; S.water=9; S.food=9;
@@ -97,9 +98,9 @@ with sync_playwright() as playwright:
       S.pursuit=5; S._shunnedDays=3; S._shelterRefusals=2; S._lastPursuitUp=S.day; S.water=9; S.food=9;
       G.dawn();
       const shunned=!!S.ended;
-      return {closes, stranded, shunned};
+      return {continues, stranded, shunned};
     }""")
-    check('에필로그가 여정을 닫는다(endJourney)', triggers['closes'], str(triggers))
+    check('에필로그가 상위 연산망 공개와 새 세션으로 이어진다', triggers['continues'], str(triggers))
     check('좌초가 상태에서 발화한다', triggers['stranded'], str(triggers))
     check('기피가 상태에서 발화한다', triggers['shunned'], str(triggers))
 

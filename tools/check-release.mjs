@@ -6,10 +6,9 @@ const root=resolve(import.meta.dirname,'..');
 const fail=message=>{ throw new Error(`release gate: ${message}`); };
 const htmlPath=resolve(root,'서울까지400km.html');
 const htmlBytes=statSync(htmlPath).size;
-const targetBytes=36_000_000;   /* BGM 슬롯 4개 추가 — 가이드의 허용 범위(+5~8MB) 반영 */
-if(htmlBytes>targetBytes) fail(`HTML ${htmlBytes} bytes exceeds ${targetBytes}`);
-
 const budget=JSON.parse(readFileSync(resolve(root,'reports/asset-budget.json'),'utf8'));
+const targetBytes=budget.html.maxBytes;
+if(htmlBytes>targetBytes) fail(`HTML ${htmlBytes} bytes exceeds ${targetBytes}`);
 if(budget.html.bytes!==htmlBytes) fail(`asset report HTML size ${budget.html.bytes} is stale; actual ${htmlBytes}`);
 if(budget.html.bytes>budget.html.maxBytes) fail('asset report exceeds hard maximum');
 

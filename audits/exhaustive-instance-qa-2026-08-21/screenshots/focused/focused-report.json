@@ -1,0 +1,1211 @@
+{
+  "arrival": [
+    {
+      "ms": 100,
+      "arrival": [
+        {
+          "tag": "DIV",
+          "id": "arrival-scene",
+          "cls": "arrival-landscape on",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 0,
+            "w": 480,
+            "h": 1600
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "0.654192",
+          "visible": true
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "arrival-art",
+          "text": "",
+          "rect": {
+            "x": 227.11819458007812,
+            "y": 28.359771728515625,
+            "w": 475.7636413574219,
+            "h": 691.280517578125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ],
+      "copy": []
+    },
+    {
+      "ms": 400,
+      "arrival": [
+        {
+          "tag": "DIV",
+          "id": "arrival-scene",
+          "cls": "arrival-landscape on",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 0,
+            "w": 480,
+            "h": 1600
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "arrival-art",
+          "text": "",
+          "rect": {
+            "x": 227.9573211669922,
+            "y": 29.579010009765625,
+            "w": 474.0853271484375,
+            "h": 688.842041015625
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1469.509033203125,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "0.945532",
+          "visible": true
+        }
+      ],
+      "copy": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1469.509033203125,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "0.945532",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "ms": 900,
+      "arrival": [
+        {
+          "tag": "DIV",
+          "id": "arrival-scene",
+          "cls": "arrival-landscape on",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 0,
+            "w": 480,
+            "h": 1600
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "arrival-art",
+          "text": "",
+          "rect": {
+            "x": 229.09527587890625,
+            "y": 31.232452392578125,
+            "w": 471.8094482421875,
+            "h": 685.53515625
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1467.875,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ],
+      "copy": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1467.875,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "ms": 1800,
+      "arrival": [
+        {
+          "tag": "DIV",
+          "id": "arrival-scene",
+          "cls": "arrival-landscape on",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 0,
+            "w": 480,
+            "h": 1600
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "arrival-art",
+          "text": "",
+          "rect": {
+            "x": 230.51805114746094,
+            "y": 33.29974365234375,
+            "w": 468.9638671875,
+            "h": 681.4005126953125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1467.875,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ],
+      "copy": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1467.875,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "ms": 3000,
+      "arrival": [
+        {
+          "tag": "DIV",
+          "id": "arrival-scene",
+          "cls": "arrival-landscape on",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 0,
+            "w": 480,
+            "h": 1600
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "arrival-art",
+          "text": "",
+          "rect": {
+            "x": 231,
+            "y": 34,
+            "w": 468,
+            "h": 680
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1467.875,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ],
+      "copy": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "arrival-copy",
+          "text": "ARRIVAL · DAY 1\n부산 감천 부두\n남쪽 끝. 배는 더 이상 뜨지 않지만 사람들은 남았다. 여행이 시작되는 곳.",
+          "rect": {
+            "x": 225,
+            "y": 1467.875,
+            "w": 480,
+            "h": 132.125
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "chat": [
+    {
+      "ms": 100,
+      "chatId": null,
+      "speech": []
+    },
+    {
+      "ms": 1000,
+      "chatId": null,
+      "speech": []
+    },
+    {
+      "ms": 2500,
+      "chatId": null,
+      "speech": []
+    },
+    {
+      "ms": 4500,
+      "chatId": null,
+      "speech": []
+    },
+    {
+      "ms": 7000,
+      "chatId": null,
+      "speech": []
+    },
+    {
+      "ms": 10000,
+      "chatId": null,
+      "speech": []
+    }
+  ],
+  "npc": [
+    {
+      "name": "금자",
+      "clicked": true,
+      "talkClicked": true,
+      "talkSlot": [
+        {
+          "tag": "DIV",
+          "id": "stl-talk-slot",
+          "cls": "stl-talk-slot field-board-talk-slot",
+          "text": "금자 \"어서 와 어서 와! 밥은 먹었는가? 안 먹었으면 앉고, 먹었어도 앉고. 여긴 광주여.\"\n내 대답\n요즘 소문 들은 거 없어요?\n이런저런 얘기를 나눈다\n그만 일어난다",
+          "rect": {
+            "x": 246,
+            "y": 193.796875,
+            "w": 438,
+            "h": 273.1875
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "dlg talk",
+          "text": "금자 \"어서 와 어서 와! 밥은 먹었는가? 안 먹었으면 앉고, 먹었어도 앉고. 여긴 광주여.\"\n내 대답\n요즘 소문 들은 거 없어요?\n이런저런 얘기를 나눈다\n그만 일어난다",
+          "rect": {
+            "x": 250,
+            "y": 202.796875,
+            "w": 430,
+            "h": 254.1875
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "npc-talk-head",
+          "text": "금자 \"어서 와 어서 와! 밥은 먹었는가? 안 먹었으면 앉고, 먹었어도 앉고. 여긴 광주여.\"",
+          "rect": {
+            "x": 263,
+            "y": 215.796875,
+            "w": 404,
+            "h": 55.1875
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row selected talking",
+          "text": "금자\n대인시장 국밥이모\n초면",
+          "rect": {
+            "x": 240,
+            "y": 496.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ],
+      "buttons": [
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "",
+          "text": "목적지",
+          "rect": {
+            "x": 237.953125,
+            "y": 1056.171875,
+            "w": 44,
+            "h": 60.359375
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "",
+          "text": "머물기",
+          "rect": {
+            "x": 237.953125,
+            "y": 1116.53125,
+            "w": 44,
+            "h": 60.359375
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "주변 탐색\n직접 둘러본다. 결과는 끝난 뒤 알 수 있다.\n시간 +2시간\n피로 약 +5\n발견물 미확인\n실행\n탐색\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1046.734375,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "야영 준비\n식사·정비·대화를 고른 뒤 다음 아침까지 쉰다.\n다음 06:30\n피로 → 0%\n차체 +4\n실행\n준비\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1156.03125,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "달구지를 정비한다\n부품으로 차체를 현장에서 복구한다.\n부품 -1\n시간 +1:40\n차체 +35\n실행\n정비\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1265.328125,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "라디오를 고친다\n라디오 진공관이 없어 지금은 수리할 수 없다.\n진공관 필요\n실행\n수리\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1374.625,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-road",
+          "cls": "here",
+          "text": "길",
+          "rect": {
+            "x": 225,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-objectives",
+          "cls": "",
+          "text": "목표",
+          "rect": {
+            "x": 321,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-map",
+          "cls": "",
+          "text": "지도",
+          "rect": {
+            "x": 417,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-status",
+          "cls": "",
+          "text": "가방",
+          "rect": {
+            "x": 513,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-menu",
+          "cls": "",
+          "text": "메뉴",
+          "rect": {
+            "x": 609,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "stl-back",
+          "cls": "stl-back",
+          "text": "‹",
+          "rect": {
+            "x": 231,
+            "y": 16,
+            "w": 44,
+            "h": 44
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "stl-leave",
+          "cls": "x",
+          "text": "✕",
+          "rect": {
+            "x": 645,
+            "y": 16,
+            "w": 44,
+            "h": 44
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "choice",
+          "text": "요즘 소문 들은 거 없어요?",
+          "rect": {
+            "x": 263,
+            "y": 297.984375,
+            "w": 404,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "choice",
+          "text": "이런저런 얘기를 나눈다",
+          "rect": {
+            "x": 263,
+            "y": 348.984375,
+            "w": 404,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "choice",
+          "text": "그만 일어난다",
+          "rect": {
+            "x": 263,
+            "y": 399.984375,
+            "w": 404,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row selected talking",
+          "text": "금자\n대인시장 국밥이모\n초면",
+          "rect": {
+            "x": 240,
+            "y": 496.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row ",
+          "text": "수완\n수리 골목 라디오상\n초면",
+          "rect": {
+            "x": 246,
+            "y": 556.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row ",
+          "text": "레오\n기타 하나, 개 한 마리. 세상이 끝났는데도 신곡을 쓴다. 개 이름은 보리.\n처음 보는 사람",
+          "rect": {
+            "x": 246,
+            "y": 614.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row ",
+          "text": "이곳에서 하룻밤 묵는다\n아침까지 쉬며 피로와 사기를 회복하고 차를 살핀다\n아침까지 · 하루 1회",
+          "rect": {
+            "x": 246,
+            "y": 700.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "people-action",
+          "cls": "",
+          "text": "말을 건다",
+          "rect": {
+            "x": 546.203125,
+            "y": 791.984375,
+            "w": 121.796875,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "stl-hub-back",
+          "cls": "stl-section-back field-board-back",
+          "text": "← 광주 대인시장으로 돌아간다",
+          "rect": {
+            "x": 236,
+            "y": 860.984375,
+            "w": 460,
+            "h": 46
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "수완",
+      "clicked": true,
+      "talkClicked": true,
+      "talkSlot": [
+        {
+          "tag": "DIV",
+          "id": "stl-talk-slot",
+          "cls": "stl-talk-slot field-board-talk-slot",
+          "text": "수완 \"라디오 고치러 왔으면 줄 서고, 팔러 왔으면 바로 와. …차에 안테나 단 거 보니 듣는 귀는 있네.\"\n내 대답\n요즘 소문 들은 거 없어요?\n이런저런 얘기를 나눈다\n그만 일어난다",
+          "rect": {
+            "x": 246,
+            "y": 193.796875,
+            "w": 438,
+            "h": 273.1875
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "dlg talk",
+          "text": "수완 \"라디오 고치러 왔으면 줄 서고, 팔러 왔으면 바로 와. …차에 안테나 단 거 보니 듣는 귀는 있네.\"\n내 대답\n요즘 소문 들은 거 없어요?\n이런저런 얘기를 나눈다\n그만 일어난다",
+          "rect": {
+            "x": 250,
+            "y": 202.796875,
+            "w": 430,
+            "h": 254.1875
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "npc-talk-head",
+          "text": "수완 \"라디오 고치러 왔으면 줄 서고, 팔러 왔으면 바로 와. …차에 안테나 단 거 보니 듣는 귀는 있네.\"",
+          "rect": {
+            "x": 263,
+            "y": 215.796875,
+            "w": 404,
+            "h": 55.1875
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row selected talking",
+          "text": "수완\n수리 골목 라디오상\n초면",
+          "rect": {
+            "x": 240,
+            "y": 554.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ],
+      "buttons": [
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "",
+          "text": "목적지",
+          "rect": {
+            "x": 237.953125,
+            "y": 1056.171875,
+            "w": 44,
+            "h": 60.359375
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "",
+          "text": "머물기",
+          "rect": {
+            "x": 237.953125,
+            "y": 1116.53125,
+            "w": 44,
+            "h": 60.359375
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "주변 탐색\n직접 둘러본다. 결과는 끝난 뒤 알 수 있다.\n시간 +2시간\n피로 약 +5\n발견물 미확인\n실행\n탐색\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1046.734375,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "야영 준비\n식사·정비·대화를 고른 뒤 다음 아침까지 쉰다.\n다음 06:30\n피로 → 0%\n차체 +4\n실행\n준비\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1156.03125,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "달구지를 정비한다\n부품으로 차체를 현장에서 복구한다.\n부품 -1\n시간 +1:40\n차체 +35\n실행\n정비\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1265.328125,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "stop-action-trigger",
+          "text": "라디오를 고친다\n라디오 진공관이 없어 지금은 수리할 수 없다.\n진공관 필요\n실행\n수리\n→",
+          "rect": {
+            "x": 263.921875,
+            "y": 1374.625,
+            "w": 402.15625,
+            "h": 109.296875
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-road",
+          "cls": "here",
+          "text": "길",
+          "rect": {
+            "x": 225,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-objectives",
+          "cls": "",
+          "text": "목표",
+          "rect": {
+            "x": 321,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-map",
+          "cls": "",
+          "text": "지도",
+          "rect": {
+            "x": 417,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-status",
+          "cls": "",
+          "text": "가방",
+          "rect": {
+            "x": 513,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "dk-menu",
+          "cls": "",
+          "text": "메뉴",
+          "rect": {
+            "x": 609,
+            "y": 1505.546875,
+            "w": 96,
+            "h": 94.453125
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "stl-back",
+          "cls": "stl-back",
+          "text": "‹",
+          "rect": {
+            "x": 231,
+            "y": 16,
+            "w": 44,
+            "h": 44
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "stl-leave",
+          "cls": "x",
+          "text": "✕",
+          "rect": {
+            "x": 645,
+            "y": 16,
+            "w": 44,
+            "h": 44
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "choice",
+          "text": "요즘 소문 들은 거 없어요?",
+          "rect": {
+            "x": 263,
+            "y": 297.984375,
+            "w": 404,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "choice",
+          "text": "이런저런 얘기를 나눈다",
+          "rect": {
+            "x": 263,
+            "y": 348.984375,
+            "w": 404,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "choice",
+          "text": "그만 일어난다",
+          "rect": {
+            "x": 263,
+            "y": 399.984375,
+            "w": 404,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row ",
+          "text": "금자\n대인시장 국밥이모\n아는 사이",
+          "rect": {
+            "x": 246,
+            "y": 494.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row selected talking",
+          "text": "수완\n수리 골목 라디오상\n초면",
+          "rect": {
+            "x": 240,
+            "y": 554.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row npc-row ",
+          "text": "레오\n기타 하나, 개 한 마리. 세상이 끝났는데도 신곡을 쓴다. 개 이름은 보리.\n처음 보는 사람",
+          "rect": {
+            "x": 246,
+            "y": 614.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "field-board-row ",
+          "text": "이곳에서 하룻밤 묵는다\n아침까지 쉬며 피로와 사기를 회복하고 차를 살핀다\n아침까지 · 하루 1회",
+          "rect": {
+            "x": 246,
+            "y": 700.984375,
+            "w": 438,
+            "h": 58
+          },
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "people-action",
+          "cls": "",
+          "text": "말을 건다",
+          "rect": {
+            "x": 546.203125,
+            "y": 791.984375,
+            "w": 121.796875,
+            "h": 44
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        },
+        {
+          "tag": "BUTTON",
+          "id": "stl-hub-back",
+          "cls": "stl-section-back field-board-back",
+          "text": "← 광주 대인시장으로 돌아간다",
+          "rect": {
+            "x": 236,
+            "y": 860.984375,
+            "w": 460,
+            "h": 46
+          },
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "console": []
+}
