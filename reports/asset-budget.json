@@ -1,14 +1,19 @@
 {
-  "generatedAt": "2026-08-21T13:04:17.749Z",
+  "generatedAt": "2026-08-21T18:04:34.513Z",
   "html": {
-    "bytes": 43936762,
+    "bytes": 50382874,
     "warnBytes": 32000000,
     "maxBytes": 72000000
   },
   "embedded": {
     "files": 412,
-    "bytes": 26868681,
+    "bytes": 29280067,
     "categories": {
+      "ui": {
+        "files": 30,
+        "bytes": 4032906,
+        "encodedBytes": 5377252
+      },
       "audio": {
         "files": 45,
         "bytes": 9710668,
@@ -19,11 +24,6 @@
         "bytes": 14688257,
         "encodedBytes": 19584740
       },
-      "ui": {
-        "files": 30,
-        "bytes": 1621520,
-        "encodedBytes": 2162072
-      },
       "portrait": {
         "files": 47,
         "bytes": 848236,
@@ -32,6 +32,12 @@
     }
   },
   "largest": [
+    {
+      "path": "assets/ui/event-manuscript-panel-tall-v1.png",
+      "mime": "image/png",
+      "bytes": 2629428,
+      "encodedBytes": 3505904
+    },
     {
       "path": "assets/audio/title.mp3",
       "mime": "audio/mpeg",
@@ -103,12 +109,6 @@
       "mime": "image/webp",
       "bytes": 232332,
       "encodedBytes": 309776
-    },
-    {
-      "path": "assets/ui/event-field-report-panel-tall-v1.webp",
-      "mime": "image/webp",
-      "bytes": 218042,
-      "encodedBytes": 290724
     },
     {
       "path": "assets/intro/12-mother-keepsakes-v2.jpg",

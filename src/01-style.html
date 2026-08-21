@@ -4123,11 +4123,265 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   .quest-category-tabs button span{font-size:8px}
 }
 /* 2026-08-21 full UI QA: keep dense states readable without changing the visual language. */
-#intro-txt{scroll-padding-block:18px 28px;overscroll-behavior:contain}
-.intro-chat{box-sizing:border-box;width:100%;padding:10px 12px 30px;gap:18px}
-.intro-chat .chat-msg{box-sizing:border-box;max-width:calc(100% - 8px);flex:0 0 auto}
-.intro-chat .chat-msg.side-left{align-self:flex-start;margin-left:4px}
-.intro-chat .chat-msg.side-right{align-self:flex-end;margin-right:4px}
+#intro-page{padding-right:clamp(30px,6cqw,46px);padding-left:clamp(30px,6cqw,46px)}
+#intro-txt{scroll-padding-block:18px 38px;overscroll-behavior:contain}
+
+/* Manuscript dialogue: scene prose, speakers and decisions share one reading
+   column. Portraits identify a new speaker; the text never zigzags like chat. */
+#intro-txt .intro-chat,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat{
+  box-sizing:border-box!important;display:flex!important;flex-direction:column!important;
+  width:100%!important;min-height:min-content;overflow:visible!important;
+  padding:6px 2px 30px!important;gap:12px!important;transform:none!important
+}
+#intro-txt .intro-chat .chat-msg,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-msg{
+  box-sizing:border-box!important;display:grid!important;
+  grid-template-columns:42px minmax(0,1fr)!important;align-items:start!important;
+  gap:0 10px!important;width:100%!important;max-width:100%!important;min-height:max-content;
+  flex:0 0 auto!important;margin:0!important;padding:0!important;overflow:visible!important;
+  text-align:left!important;transform:none!important
+}
+#intro-txt .intro-chat .intro-portrait-photo,
+#intro-txt .intro-chat .chat-avatar,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-avatar{
+  position:static!important;grid-column:1!important;grid-row:1 / span 2!important;
+  display:block!important;box-sizing:border-box!important;flex:none!important;
+  width:42px!important;height:44px!important;margin:0!important;border-radius:7px!important;
+  object-fit:cover!important;object-position:50% 18%!important;transform:none!important
+}
+#intro-txt .intro-chat .intro-portrait-photo .chat-avatar{
+  width:100%!important;height:100%!important
+}
+#intro-txt .intro-chat .chat-copy,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-copy{
+  grid-column:2!important;display:block!important;box-sizing:border-box!important;
+  width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;
+  padding:0!important;text-align:left!important
+}
+#intro-txt .intro-chat .chat-name,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-name{
+  display:block!important;margin:0 0 3px!important;color:#28746f!important;
+  font:850 12px/1.25 var(--sans)!important;letter-spacing:.035em!important;text-align:left!important
+}
+#intro-txt .intro-chat .mine .chat-name,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .mine .chat-name{
+  color:#8a5415!important
+}
+#intro-txt .intro-chat .chat-bubble,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-bubble{
+  display:block!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;
+  margin:0!important;padding:0!important;overflow:visible!important;border:0!important;border-radius:0!important;
+  color:#342f28!important;background:transparent!important;box-shadow:none!important;
+  font:500 14px/1.68 var(--serif)!important;text-align:left!important;overflow-wrap:anywhere!important;
+  -webkit-line-clamp:unset!important;-webkit-box-orient:initial!important
+}
+#intro-txt .intro-chat .chat-bubble:before,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-bubble:before{
+  content:"“";color:#8a5415;font-weight:800
+}
+#intro-txt .intro-chat .chat-bubble:after,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-bubble:after{
+  content:"”";color:#8a5415;font-weight:800
+}
+#intro-txt .intro-chat .speaker-continuation .intro-portrait-photo,
+#intro-txt .intro-chat .speaker-continuation>.chat-avatar,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .speaker-continuation>.chat-avatar{
+  visibility:hidden!important
+}
+#intro-txt .intro-chat .speaker-continuation .chat-name,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .speaker-continuation .chat-name{
+  display:none!important
+}
+#intro-txt .intro-chat .story-narration,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .story-narration{
+  box-sizing:border-box!important;width:100%!important;margin:0!important;padding:7px 0 8px!important;
+  border:0!important;background:transparent!important;box-shadow:none!important
+}
+#intro-txt .intro-chat .story-narration-label,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .story-narration-label{
+  display:none!important
+}
+#intro-txt .intro-chat .story-narration-text,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .story-narration-text{
+  color:#494138!important;font:500 14px/1.7 var(--serif)!important
+}
+
+/* The mission is a manuscript preface, not a floating card over the page. */
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{
+  box-sizing:border-box!important;padding-right:clamp(30px,7cqw,48px)!important;
+  padding-left:clamp(30px,7cqw,48px)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .event-head{
+  position:static!important;box-sizing:border-box!important;margin:0!important;padding:4px 0 14px!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .mission-brief{
+  box-sizing:border-box!important;width:100%!important;margin:0 0 18px!important;padding:14px 0 16px!important;
+  border:0!important;border-top:1px solid rgba(73,58,39,.32)!important;
+  border-bottom:1px solid rgba(73,58,39,.32)!important;border-radius:0!important;
+  background:transparent!important;box-shadow:none!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .mission-brief>span{
+  display:block!important;margin:0 0 7px!important;color:#8a5415!important;
+  font:800 11px/1.3 var(--mono)!important;letter-spacing:.13em!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .mission-brief h3{
+  margin:0 0 12px!important;color:#302a22!important;font:850 18px/1.35 var(--serif)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .mission-brief p,
+#ev-sheet.event-mode[data-event-kind="story"] .mission-brief small{
+  display:grid!important;grid-template-columns:72px minmax(0,1fr)!important;gap:10px!important;
+  margin:0!important;padding:6px 0!important;color:#4a4136!important;
+  font:500 12.5px/1.5 var(--sans)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .mission-brief p b,
+#ev-sheet.event-mode[data-event-kind="story"] .mission-brief small b{
+  color:#8a5415!important;font-weight:850!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .mission-brief .mission-promise b{color:#28746f!important}
+
+/* Choices arrive as the final sentences of the event, not a second bulky panel. */
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock{
+  box-sizing:border-box!important;flex:0 0 auto!important;height:auto!important;min-height:0!important;
+  padding:6px clamp(26px,6cqw,44px) calc(12px + var(--safe-bottom))!important;
+  border-top:1px solid rgba(62,49,33,.38)!important;background:#d4be8e!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock>.choices{
+  display:flex!important;flex-direction:column!important;gap:0!important;
+  width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock .choices>.choice{
+  box-sizing:border-box!important;display:block!important;width:100%!important;min-height:0!important;
+  margin:0!important;padding:10px 2px!important;border:0!important;
+  border-bottom:1px solid rgba(75,59,39,.24)!important;border-radius:0!important;
+  color:#312b23!important;background:transparent!important;box-shadow:none!important;text-align:left!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock .choices>.choice:last-child{
+  border-bottom:0!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .choice-head{
+  display:grid!important;grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important;align-items:start!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .choice-index{
+  display:block!important;color:#28746f!important;font:850 13px/1.5 var(--mono)!important;text-align:center!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .choice-index small{display:none!important}
+#ev-sheet.event-mode[data-event-kind="story"] .choice-index b{font:inherit!important}
+#ev-sheet.event-mode[data-event-kind="story"] .choice-title{
+  display:block!important;color:#312b23!important;font:750 14px/1.5 var(--serif)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .choice-intent{
+  display:inline!important;margin-right:7px!important;padding:0!important;border:0!important;
+  color:#8a5415!important;background:transparent!important;font:800 10px/1.5 var(--sans)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock .req{
+  display:block!important;margin:3px 0 0 32px!important;color:#6c5b45!important;font-size:11px!important
+}
+
+/* Beat the older portrait-specific flex rules: every authored conversation,
+   including combat preamble, uses the same stable manuscript column. */
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-msg:has(.chat-avatar),
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-msg:has(.chat-avatar){
+  display:grid!important;grid-template-columns:42px minmax(0,1fr)!important;
+  align-items:start!important;gap:0 10px!important;width:100%!important;
+  margin:0!important;padding:0!important;flex-direction:initial!important;text-align:left!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-msg:has(.chat-avatar)>.chat-avatar,
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-msg:has(.chat-avatar)>.chat-avatar{
+  position:static!important;grid-column:1!important;grid-row:1 / span 2!important;
+  order:initial!important;width:42px!important;height:44px!important;margin:0!important;
+  border-radius:7px!important;object-fit:cover!important;object-position:50% 18%!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-msg:has(.chat-avatar)>.chat-copy,
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-msg:has(.chat-avatar)>.chat-copy{
+  grid-column:2!important;order:initial!important;display:block!important;width:100%!important;
+  max-width:none!important;margin:0!important;padding:0!important;text-align:left!important
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat{
+  box-sizing:border-box!important;display:flex!important;flex-direction:column!important;
+  width:100%!important;padding:6px 2px 22px!important;gap:12px!important
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-name{
+  display:block!important;margin:0 0 3px!important;color:#28746f!important;
+  font:850 12px/1.25 var(--sans)!important;text-align:left!important
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .mine .chat-name{color:#8a5415!important}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-bubble{
+  display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;
+  overflow:visible!important;border:0!important;border-radius:0!important;background:transparent!important;
+  box-shadow:none!important;color:#342f28!important;font:500 14px/1.68 var(--serif)!important;
+  text-align:left!important;-webkit-line-clamp:unset!important
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-bubble:before{
+  content:"“";color:#8a5415;font-weight:800
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-bubble:after{
+  content:"”";color:#8a5415;font-weight:800
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .speaker-continuation>.chat-avatar{
+  visibility:hidden!important
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .speaker-continuation .chat-name{
+  display:none!important
+}
+
+/* Settlement conversations use the same reading grammar on their dark surface. */
+.stl-talk-slot .dlg.talk{
+  box-sizing:border-box;margin:0;padding:14px 16px;border:1px solid rgba(126,145,174,.32);
+  border-radius:4px;background:#10151f;box-shadow:none
+}
+.stl-talk-slot .npc-talk-head{
+  display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;align-items:start;
+  margin:0 0 12px;padding:0 0 12px;border-bottom:1px solid rgba(255,255,255,.08)
+}
+.stl-talk-slot .npc-talk-head .npc-face{
+  width:44px;height:46px;border-radius:7px;grid-column:1
+}
+.stl-talk-slot .npc-talk-head .say{
+  grid-column:2;margin:0;color:#d8d5cc;font:500 14px/1.68 var(--serif);text-align:left
+}
+.stl-talk-slot .npc-talk-head .say .spk{
+  display:block;margin-bottom:3px;color:#d9a85a;font:850 12px/1.25 var(--sans);letter-spacing:.035em
+}
+.stl-talk-slot .dialogue-choice-label{
+  margin:0;padding:9px 0 5px;border-top:1px solid rgba(255,255,255,.08);
+  color:#8290a8;font-size:10px
+}
+.stl-talk-slot .choices{display:flex;flex-direction:column;gap:0}
+.stl-talk-slot .choice,
+.stl-talk-slot .choice:last-child:nth-child(odd){
+  grid-column:auto;width:100%;min-height:0;margin:0;padding:10px 2px;
+  border:0;border-bottom:1px solid rgba(255,255,255,.08);border-radius:0;
+  color:#d8d5cc;background:transparent;box-shadow:none;font:650 13px/1.5 var(--serif);text-align:left
+}
+.stl-talk-slot .choice:last-child{border-bottom:0;color:#9da6b7}
+
+/* Free-form NPC chat remains interactive, but no longer imitates a messenger. */
+#chatlog{display:flex;flex-direction:column;gap:12px;margin:2px 0 14px}
+#chatlog .cmsg{
+  box-sizing:border-box;display:grid;grid-template-columns:34px minmax(0,1fr);
+  gap:0 9px;align-self:stretch;width:100%;max-width:none;margin:0;padding:0;
+  border:0;border-radius:0;color:#d8d5cc;background:transparent;font:500 13.5px/1.62 var(--serif)
+}
+#chatlog .cmsg img{
+  grid-column:1;grid-row:1 / span 2;width:34px;height:36px;margin:0;
+  border-radius:6px;object-fit:cover;object-position:50% 18%
+}
+#chatlog .cmsg>span{grid-column:2;display:block;min-width:0}
+#chatlog .cmsg b{
+  display:block;margin-bottom:2px;color:#78b8b1;font:850 11.5px/1.3 var(--sans);letter-spacing:.035em
+}
+#chatlog .cmsg.me b{color:#d9a85a}
+#chatlog .cmsg>span>span{display:block;white-space:pre-wrap}
+#chatlog .cmsg>span>span:before{content:"“";color:#d9a85a;font-weight:800}
+#chatlog .cmsg>span>span:after{content:"”";color:#d9a85a;font-weight:800}
+#chatlog .cmsg.speaker-continuation img{visibility:hidden}
+#chatlog .cmsg.speaker-continuation b{display:none}
+#chatlog .cmsg.sys{
+  display:block;align-self:stretch;padding:7px 0;color:#8993a6;
+  border-top:1px solid rgba(255,255,255,.07);font:11px/1.45 var(--mono);text-align:left
+}
+#chatin{padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}
 
 #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]:not(.combat-details-open) .event-scroll{
   flex:0 0 auto!important;height:auto!important;min-height:0
@@ -4173,7 +4427,10 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"].combat-details-open .event-choice-dock{
     flex-basis:42%!important;height:42%!important
   }
-  .intro-chat{padding-bottom:20px;gap:14px}
+  #intro-txt .intro-chat{padding-bottom:26px;gap:12px}
+}
+@container game (max-width:350px){
+  #intro-txt .intro-chat{padding-right:0!important;padding-left:0!important;gap:11px!important}
 }
 /* Road information has three stable lanes: HUD/toasts, private thought, and crew dialogue.
    A thought is intentionally text-only so it cannot be mistaken for spoken dialogue. */

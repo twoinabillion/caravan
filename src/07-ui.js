@@ -623,7 +623,7 @@ const UI = (()=>{
         entry.classList.remove('chat-newest','narration-newest');
       });
       transcript.insertAdjacentHTML('beforeend',storyEntryHtml(
-        introBeats[introTurnIdx],true,dialogueLaneMap(introBeats),{intro:true}
+        introBeats[introTurnIdx],true,dialogueLaneMap(introBeats),{intro:true},introBeats[introTurnIdx-1]
       ));
     }else if(introText){
       introText.innerHTML=storyReaderHtml(introBeats,introTurnIdx,{intro:true});
@@ -1038,10 +1038,11 @@ function dialogueSide(turn,lanes,opt={}){
   const key=speakerLaneKey(turn);
   return (lanes&&lanes.get(key))||(playerSpeaker(person.id)?'right':'left');
 }
-  function chatMessageHtml(turn, newest=false, side='left', opt={}){
+  function chatMessageHtml(turn, newest=false, side='left', opt={}, previous=null){
     const person=speakerInfo(turn.who,turn.name);
     const mine=playerSpeaker(person.id);
     const hidden=person.name==='???';
+    const continuation=previous&&previous.kind==='dialogue'&&speakerLaneKey(previous)===speakerLaneKey(turn);
     const faceAlt=hidden?'이름을 모르는 사람':person.name;
     const portrait=person.portrait
       ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
@@ -1049,7 +1050,7 @@ function dialogueSide(turn,lanes,opt={}){
     const face=portrait&&opt.intro
       ? `<span class="intro-portrait-photo">${portrait}<span class="intro-portrait-pin" aria-hidden="true"></span></span>`
       : portrait;
-    return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${hidden?' identity-hidden':''}${newest?' chat-newest':''}"
+    return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${hidden?' identity-hidden':''}${continuation?' speaker-continuation':''}${newest?' chat-newest':''}"
       data-kind="dialogue" data-speaker="${esc(person.id||person.name)}" data-side="${side}" data-story-entry>
       ${face}<div class="chat-copy"><b class="chat-name">${esc(person.name)}</b>
       <div class="chat-bubble">${fmt(turn.text||'')}</div></div></div>`;
@@ -1061,8 +1062,8 @@ function dialogueSide(turn,lanes,opt={}){
       <div class="story-narration-text">${fmt(turn.text||'')}</div>
     </div>`;
   }
-  function storyEntryHtml(turn,newest,lanes,opt={}){
-    if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes,opt),opt);
+  function storyEntryHtml(turn,newest,lanes,opt={},previous=null){
+    if(turn.kind==='dialogue') return chatMessageHtml(turn,newest,dialogueSide(turn,lanes,opt),opt,previous);
     if(turn.kind==='narration') return narrationMessageHtml(turn,newest,opt);
     return storyTurnHtml(turn,opt);
   }
@@ -1071,7 +1072,7 @@ function dialogueSide(turn,lanes,opt={}){
     const shown=(turns.length?turns:[{kind:'narration',text:'잠시 말이 끊겼다.'}]).slice(0,safe+1);
     const lanes=opt.lanes instanceof Map?opt.lanes:dialogueLaneMap(turns);
     return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
-      ${shown.map((turn,i)=>storyEntryHtml(turn,i===shown.length-1,lanes,opt)).join('')}</section>`;
+      ${shown.map((turn,i)=>storyEntryHtml(turn,i===shown.length-1,lanes,opt,shown[i-1])).join('')}</section>`;
   }
   function eventSpeakerCandidates(evd, extra=[]){
     const ids=[];
@@ -2409,7 +2410,7 @@ function dialogueSide(turn,lanes,opt={}){
       transcript.querySelectorAll('.chat-newest,.narration-newest').forEach(entry=>{
         entry.classList.remove('chat-newest','narration-newest');
       });
-      transcript.insertAdjacentHTML('beforeend',storyEntryHtml(turn,true,state.lanes));
+      transcript.insertAdjacentHTML('beforeend',storyEntryHtml(turn,true,state.lanes,{},state.turns[state.index-1]));
     }else{
       reader.innerHTML=storyReaderHtml(state.turns,state.index,{lanes:state.lanes});
     }
@@ -3900,7 +3901,11 @@ function dialogueSide(turn,lanes,opt={}){
       const id=cls==='me'?'me':chatNpc;
       const profile=speakerInfo(id);
       const face=profile.portrait?`<img src="${profile.portrait}" alt="${esc(profile.name)} 초상">`:'';
-      log.appendChild(el('div','cmsg '+cls,`${face}<span><b>${esc(profile.name)}</b><span>${esc(txt)}</span></span>`));
+      const previous=log.querySelector('.cmsg[data-speaker]:last-of-type');
+      const message=el('div','cmsg '+cls+(previous&&previous.dataset.speaker===id?' speaker-continuation':''),
+        `${face}<span><b>${esc(profile.name)}</b><span>${esc(txt)}</span></span>`);
+      message.dataset.speaker=id;
+      log.appendChild(message);
     }
     log.scrollTop=log.scrollHeight;
   }

@@ -45,10 +45,14 @@ def surface_state(page):
         """() => {
           const prop=document.querySelector('#status-prop');
           const body=document.querySelector('#st-body');
+          const status=document.querySelector('#ovl-status');
+          const ledger=document.querySelector('#quest-ledger');
           const visible=node=>!!(node&&node.getClientRects().length);
           return {
             propClass:prop?.className||'',
             toolSurface:prop?.dataset.toolSurface||'',
+            statusOpen:status?.classList.contains('on')||false,
+            ledgerOpen:ledger?.getAttribute('aria-hidden')==='false',
             bagNodes:body?.querySelectorAll('.bag-live-content,.bag-pocket,.bag-detail').length||0,
             visibleBagNodes:[...body.querySelectorAll('.bag-live-content,.bag-pocket,.bag-detail')].filter(visible).length,
             goalNodes:body?.querySelectorAll('.folio-live-content,.folio-progress,.folio-clue').length||0,
@@ -139,11 +143,12 @@ def main():
 
         if args.label == "after":
             for key in ("goal_after_bag", "goal_after_second_bag"):
-                assert metrics[key]["bagNodes"] == 0, metrics[key]
+                assert metrics[key]["ledgerOpen"], metrics[key]
+                assert not metrics[key]["statusOpen"], metrics[key]
                 assert metrics[key]["visibleBagNodes"] == 0, metrics[key]
-                assert metrics[key]["goalNodes"] > 0, metrics[key]
-                assert metrics[key]["toolSurface"] == "goal", metrics[key]
             for key in ("bag_selected", "bag_after_goal"):
+                assert metrics[key]["statusOpen"], metrics[key]
+                assert not metrics[key]["ledgerOpen"], metrics[key]
                 assert metrics[key]["goalNodes"] == 0, metrics[key]
                 assert metrics[key]["visibleGoalNodes"] == 0, metrics[key]
                 assert metrics[key]["bagNodes"] > 0, metrics[key]

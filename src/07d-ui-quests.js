@@ -63,6 +63,11 @@ const QuestLedgerUI={
   open(trigger){
     if(!S) return;
     this.returnFocus=trigger||document.activeElement;
+    const statusOverlay=document.querySelector('#ovl-status');
+    if(statusOverlay){
+      statusOverlay.classList.remove('on');
+      statusOverlay.setAttribute('aria-hidden','true');
+    }
     this.render();
     this.root.querySelector('#quest-ledger').setAttribute('aria-hidden','false');
     document.body.classList.add('quest-ledger-open');
@@ -89,6 +94,14 @@ const QuestLedgerUI={
     const style=getComputedStyle(sheet);
     return style.display!=='none'&&style.visibility!=='hidden'&&sheet.getAttribute('aria-hidden')!=='true';
   },
+  syncAvailability(){
+    if(!this.root) return false;
+    const eventOpen=this.eventIsOpen();
+    if(eventOpen&&this.isOpen()) this.close(false);
+    this.root.hidden=eventOpen;
+    this.root.inert=eventOpen;
+    return eventOpen;
+  },
   card(row){
     const progress=row.progress||{have:0,need:1,label:''};
     const ratio=Math.max(0,Math.min(100,Math.round((progress.have/Math.max(1,progress.need))*100)));
@@ -109,8 +122,9 @@ const QuestLedgerUI={
   },
   render(){
     if(!this.root) return;
+    const eventOpen=this.syncAvailability();
     const fallback=this.root.querySelector('#quest-ledger-fallback');
-    fallback.hidden=!S||!!this.nativeGoalButton()||this.eventIsOpen()||this.isOpen();
+    fallback.hidden=!S||!!this.nativeGoalButton()||eventOpen||this.isOpen();
     if(!S) return;
     const entries=G.questLedgerEntries();
     const tracked=entries.filter(row=>row.tracked&&row.kind!=='main'&&row.status!=='completed').length;
