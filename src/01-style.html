@@ -4908,3 +4908,219 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
   .bag-detail-copy>.is-primary{font-size:10px!important}
 }
 </style>
+<style id="embedded-event-choices">
+  /* Event decisions belong to the manuscript, not a second bottom viewport. */
+  #ev-sheet.event-mode.choices-embedded .event-scroll,
+  #ev-sheet.event-mode.choices-embedded:has(.event-choice-dock .combat-odds) .event-scroll,
+  #ev-sheet.event-mode.choices-embedded:has(.event-choice-dock .choices > .choice:nth-child(3)) .event-scroll {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding-bottom: 16px !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .event-field-report > .event-choice-dock,
+  #ev-sheet.event-mode.choices-embedded .event-field-report > .event-choice-dock:has(.choices > .choice:nth-child(3)),
+  #ev-sheet.event-mode.choices-embedded:has(.event-choice-dock .combat-odds) .event-field-report > .event-choice-dock {
+    display: block !important;
+    flex: none !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 16px 2px 4px !important;
+    padding: 12px 0 4px !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-top: 1px solid rgba(122, 82, 38, 0.28) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice-dock-head {
+    display: none !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .event-choice-dock > .choices {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .event-choice-dock > .choices > .choice {
+    display: flex !important;
+    flex: none !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 4px !important;
+    width: 100% !important;
+    min-height: 56px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 11px 14px !important;
+    border: 1px solid rgba(128, 88, 43, 0.32) !important;
+    border-left: 3px solid #a96f32 !important;
+    border-radius: 3px !important;
+    background: rgba(245, 231, 195, 0.12) !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    text-align: left !important;
+    transform: none !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .event-choice-dock > .choices > .choice[hidden] {
+    display: none !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice-head {
+    display: grid !important;
+    grid-template-columns: 24px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice-index {
+    display: grid !important;
+    place-items: center !important;
+    width: 24px !important;
+    min-width: 24px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice-title {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice-title > span {
+    font-size: 15px !important;
+    line-height: 1.38 !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .event-choice-dock > .choices > .choice:active {
+    background: rgba(245, 231, 195, 0.26) !important;
+    transform: translateY(1px) !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .event-choice-dock > .choices > .choice:focus-visible {
+    outline: 2px solid #b87528 !important;
+    outline-offset: 2px !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .event-choice-dock > .choices > .choice:disabled {
+    opacity: 0.52 !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice-redundant-label {
+    display: none !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice-index-compact {
+    position: static !important;
+    flex: 0 0 22px !important;
+    width: 22px !important;
+    min-width: 22px !important;
+    height: auto !important;
+    margin: 0 !important;
+    color: #9c6228 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    text-shadow: none !important;
+    transform: none !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice strong {
+    font-size: 15px !important;
+    line-height: 1.38 !important;
+  }
+
+  #ev-sheet.event-mode.choices-embedded .choice .req,
+  #ev-sheet.event-mode.choices-embedded .choice .risk,
+  #ev-sheet.event-mode.choices-embedded .choice .combat-odds {
+    margin-top: 4px !important;
+  }
+
+  @media (max-width: 560px) {
+    #ev-sheet.event-mode.choices-embedded .event-field-report > .event-choice-dock {
+      margin-top: 14px !important;
+      padding-top: 10px !important;
+    }
+
+    #ev-sheet.event-mode.choices-embedded .event-choice-dock > .choices > .choice {
+      min-height: 54px !important;
+      padding: 10px 12px !important;
+    }
+  }
+</style>
+
+<style id="embedded-recruit-decision-final">
+  /* Recruitment is a real decision even though it is rendered during outcome. */
+  html body #ev-sheet.event-mode.choices-embedded[data-story-step="result"]
+  .event-field-report > .event-choice-dock > .choices:has(> button.choice[data-r]) {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body #ev-sheet.event-mode.choices-embedded[data-story-step="result"]
+  .event-field-report > .event-choice-dock > .choices > button.choice[data-r] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 54px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 10px 14px !important;
+    border: 1px solid rgba(128, 88, 43, 0.32) !important;
+    border-left: 3px solid #a96f32 !important;
+    border-radius: 3px !important;
+    background: rgba(245, 231, 195, 0.12) !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font-size: 15px !important;
+    line-height: 1.38 !important;
+    text-align: left !important;
+    transform: none !important;
+  }
+
+  html body #ev-sheet.event-mode.choices-embedded[data-story-step="result"]
+  .event-field-report > .event-choice-dock > .choices > button.choice[data-r] .req {
+    display: block !important;
+    margin: 2px 0 0 !important;
+    color: #765f47 !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+</style>

@@ -90,3 +90,81 @@
     }, profile.duration);
   };
 })();
+/* Keep event decisions in the same manuscript flow as the conversation. */
+(() => {
+  function initEmbeddedEventChoices() {
+    const sheet = document.getElementById('ev-sheet');
+    if (!sheet) return;
+
+    let scheduled = false;
+    let enteredDecision = false;
+
+    const sync = () => {
+      scheduled = false;
+
+      const scroll = sheet.querySelector('.event-scroll');
+      const report = sheet.querySelector('.event-field-report');
+      const dock = sheet.querySelector('.event-choice-dock');
+      if (!scroll || !report || !dock) return;
+
+      const isDecision = sheet.dataset.storyStep === 'decision' || !!dock.querySelector('.choice[data-r]');
+
+      if (!isDecision) {
+        if (dock.parentElement !== sheet) sheet.appendChild(dock);
+        sheet.classList.remove('choices-embedded');
+        enteredDecision = false;
+        return;
+      }
+
+      if (dock.parentElement !== report) report.appendChild(dock);
+      sheet.classList.add('choices-embedded');
+
+      const choices = dock.querySelector('.choices');
+      if (choices) choices.setAttribute('aria-label', '선택');
+
+      dock.querySelectorAll('.choice *').forEach((node) => {
+        const text = node.textContent.trim();
+        if (node.children.length === 0 && text === '대응') {
+          node.classList.add('choice-redundant-label');
+        }
+        if (node.children.length === 0 && /^[1-9]$/.test(text)) {
+          node.classList.add('choice-index-compact');
+        }
+      });
+
+      if (!enteredDecision) {
+        enteredDecision = true;
+        requestAnimationFrame(() => {
+          const scrollRect = scroll.getBoundingClientRect();
+          const dockRect = dock.getBoundingClientRect();
+          const dockTop = dockRect.top - scrollRect.top + scroll.scrollTop;
+          const visibleChoiceHeight = Math.min(dock.offsetHeight, scroll.clientHeight * 0.42);
+          const target = Math.max(0, dockTop + visibleChoiceHeight - scroll.clientHeight + 20);
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          scroll.scrollTo({ top: target, behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+      }
+    };
+
+    const scheduleSync = () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(sync);
+    };
+
+    new MutationObserver(scheduleSync).observe(sheet, {
+      attributes: true,
+      attributeFilter: ['data-story-step', 'data-story-phase'],
+      childList: true,
+      subtree: true
+    });
+
+    scheduleSync();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEmbeddedEventChoices, { once: true });
+  } else {
+    initEmbeddedEventChoices();
+  }
+})();
