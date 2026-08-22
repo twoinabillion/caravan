@@ -4454,6 +4454,13 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .nav-journey-party{color:#b7bfbd;font-size:9px;white-space:nowrap}
 .nav-journey-side{grid-column:1/-1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   color:#9ea9a7;font-size:9px}
+.journey-local-screen.local-action-count-5 .local-actions{
+  grid-template-rows:repeat(5,25%);grid-auto-rows:25%;overflow-x:hidden;overflow-y:auto;
+  overscroll-behavior:contain;scroll-snap-type:y proximity;scrollbar-width:thin;
+  scrollbar-color:rgba(255,180,84,.48) transparent;touch-action:pan-y}
+.journey-local-screen.local-action-count-5 .local-actions::-webkit-scrollbar{width:4px}
+.journey-local-screen.local-action-count-5 .local-actions::-webkit-scrollbar-thumb{background:rgba(255,180,84,.48)}
+.journey-local-screen.local-action-count-5 .stop-action-card{scroll-snap-align:start}
 .journey-local-screen.local-action-count-5 .stop-action-chips{display:none!important}
 .journey-local-screen.local-action-count-5 .stop-action-icon{width:clamp(27px,9cqw,42px);height:clamp(27px,9cqw,42px)}
 .journey-local-screen.local-action-count-5 .stop-action-copy>b{font-size:clamp(10px,3.15cqw,14px)}
