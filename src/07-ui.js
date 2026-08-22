@@ -1307,7 +1307,7 @@ function dialogueSide(turn,lanes,opt={}){
     const body=raw.replace(/^[^\p{L}\p{N}]+/u,'');
     const driverLevel=body.match(/「([^」]+)」/);
     if(/운전 숙련|연비|운전자/.test(body)) return {
-      kicker:'DRIVER LOG',title:driverLevel?`운전 숙련 · ${driverLevel[1]}`:'운전 감각이 쌓였다',icon:'perk',tone:'skill',
+      kicker:'운전 기록',title:driverLevel?`운전 숙련 · ${driverLevel[1]}`:'운전 감각이 쌓였다',icon:'perk',tone:'skill',
       body:/연비·피로|연비와 피로/.test(body)?'연비와 피로 효율이 개선됐다.':'주행 경험이 다음 운전에 반영된다.'
     };
     const cases=[
@@ -1317,14 +1317,14 @@ function dialogueSide(turn,lanes,opt={}){
       {match:/물|식량|연료|고철|부품|의약품|보급/,kicker:'SUPPLY LOG',title:'보급 변화',icon:'parts',tone:'supply'}
     ];
     const found=cases.find(item=>item.match.test(body))||{
-      kicker:'ROAD LOG',title:'길 위의 변화',icon:'van',tone:cls==='discover'?'discover':'road'
+      kicker:'주행 기록',title:'길 위의 변화',icon:'van',tone:cls==='discover'?'discover':'road'
     };
     return {...found,body};
   }
   function journeyNoticeHtml(){
     const notice=roadNotice||{
-      kicker:'ROAD LOG',title:'주행 기록 대기',icon:'van',tone:'quiet',
-      body:'새 변화가 생기면 이 기록판에 남는다.'
+      kicker:'주행 기록',title:'아직 남은 기록이 없다',icon:'van',tone:'quiet',
+      body:'길에서 무슨 일이 생기면 여기에 기록된다.'
     };
     const remaining=S&&S.driving?`${Math.max(0,Math.ceil(S.driving.dist-S.driving.gone))}km 남음`:'이동 중';
     return `<section id="road-notice-slot" class="road-notice-slot ${roadNotice?'has-update':'is-quiet'} tone-${notice.tone}" aria-live="polite" aria-label="여정 기록">
@@ -1431,7 +1431,7 @@ function dialogueSide(turn,lanes,opt={}){
         <section class="nav-route-map" style="${routeTerrainStyle(selected)}" aria-labelledby="nav-map-title">
           <h3 class="sr-only" id="nav-map-title">${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지의 현재 구간 확대도</h3>
           <canvas data-nav-map aria-label="현재 구간 확대: ${esc(D.nodes[S.at].name)}에서 ${esc(node.name)}까지 ${selected.nb.km}km"></canvas>
-          <div class="nav-map-scale"><small>LOCAL ROUTE</small><b>현재 구간 확대</b></div>
+          <div class="nav-map-scale"><small>현재 구간</small><b>현재 구간 확대</b></div>
           <div class="nav-map-destination-badge"><b>${esc(node.name)}</b><small>${selected.nb.km}km</small></div>
         </section>
         <section class="nav-route-summary" aria-live="polite" aria-label="선택한 목적지 정보">
@@ -1746,7 +1746,7 @@ function dialogueSide(turn,lanes,opt={}){
         <div class="road-guest-head"><span class="rg-ico">${D.comps[memory.id].face}</span><span>
           <small>함께 고른 방식 · 첫 후속</small><b>${esc(D.comps[memory.id].name)} — ${esc(memory.title)}</b></span></div>
         <div class="road-guest-help">${esc(memory.desc)}</div>
-        <div class="road-guest-memory"><b>${esc(memory.effect)}</b> · 이번 주행에서 확인할 수 있다.</div>
+        <div class="road-guest-memory"><b>${esc(memory.effect)}</b> · 이번 주행에 적용된다.</div>
       </section>`:choiceMemory?`<section class="road-guest-card road-memory-card" aria-label="길에서 되돌아올 선택">
         <div class="road-guest-head"><span class="rg-ico">◇</span><span>
           <small>길이 기억하는 선택</small><b>${esc(choiceMemory.eventTitle)}</b></span></div>
@@ -1762,11 +1762,11 @@ function dialogueSide(turn,lanes,opt={}){
         ${contextRail(to,true)}
         ${journeyGuideHtml()}
         <section class="travel-progress-card" aria-label="현재 주행 진행">
-          <div class="journey-section-head"><span><small>ACTIVE ROUTE</small><b>${esc(D.nodes[S.driving.from].name)}에서 ${esc(to.name)}까지</b></span><em>주행 중</em></div>
+          <div class="journey-section-head"><span><small>현재 주행</small><b>${esc(D.nodes[S.driving.from].name)}에서 ${esc(to.name)}까지</b></span><em>주행 중</em></div>
           <div id="travelbar"></div>
         </section>
         ${routeCard}
-        <div class="road-note">차는 계속 달린다. 남은 거리와 탑승 상태는 위 요약에서 바로 확인할 수 있다.</div>
+        <div class="road-note">달구지는 계속 달린다. 남은 거리와 동료 상태는 위에 표시된다.</div>
         ${journeyNoticeHtml()}
         ${guest}
         ${roadCheckIn}`;
@@ -2529,8 +2529,8 @@ function dialogueSide(turn,lanes,opt={}){
        장면을 계속 쌓아 맥락과 대화 방향을 한눈에 읽게 한다. */
     sheet.classList.toggle('story-compact',!!evd.combat&&turns.length>2);
     const mission=evd.missionBrief;
-    const missionBrief=mission?`<aside class="mission-brief" aria-label="본편 임무 안내">
-      <span>${esc(mission.eyebrow||'MAIN MISSION · 본편 임무')}</span>
+    const missionBrief=mission?`<aside class="mission-brief" aria-label="주 임무 안내">
+      <span>${esc(mission.eyebrow||'주 임무')}</span>
       <h3>${esc(mission.objective)}</h3>
       ${mission.why?`<p class="mission-stake"><b>왜 지금</b>${esc(mission.why)}</p>`:''}
       <p><b>지금 할 일</b>${esc(mission.now)}</p>
@@ -3706,14 +3706,14 @@ function dialogueSide(turn,lanes,opt={}){
           <span class="${plan.talk?'on':''}"><i></i>${plan.talk?esc(D.comps[plan.talk].name)+'와 대화':'대화 상대 미정'}</span>
         </div>
       </div>
-      <div class="camp-home-hero"><small>TONIGHT'S PLAN</small><h3>${esc(G.vanName())} · 오늘 밤 준비</h3><p>차를 세우면 길 위의 하루가 생활로 바뀐다. 위의 동료를 눌러 바로 대화 상대를 정할 수 있다.</p>
+      <div class="camp-home-hero"><small>TONIGHT'S PLAN</small><h3>${esc(G.vanName())} · 오늘 밤 준비</h3><p>차를 세우면 길 위의 하루가 생활로 바뀐다. 함께 시간을 보낼 동료는 위에서 고른다.</p>
         <div class="camp-storage">${resource}</div></div>
       ${keepsakes.length||interior.length?`<div class="camp-home-section camp-lived-in"><b>살아온 차 안</b><small>합류한 사람과 장착한 부품이 공간에 흔적을 남긴다.</small>
         <div class="camp-keepsakes">${keepsakes.map(row=>`<article><span>${row.icon}</span><div><strong>${esc(row.name)}</strong><small>${esc(row.desc)}</small></div></article>`).join('')}</div>
         <div class="camp-interior"><span>장착된 생활 흔적</span>${interior.length?interior.map(up=>`<i>${up.ic} ${esc(up.nm)}</i>`).join(''):'<i class="empty">아직 장착한 생활 부품 없음</i>'}</div>
       </div>`:`<div class="camp-home-section camp-home-teaser"><b>아직 작은 집</b><small>첫 동료가 타거나 생활 부품을 장착하면 이곳에 그 흔적이 남는다.</small><span>빈 선반과 고정 볼트가 다음 자리를 기다린다.</span></div>`}
       ${recent.length?`<div class="camp-home-section camp-roadbook"><b>최근 주행 기록</b><small>차가 기억하는 마지막 세 구간.</small>${recent.map(row=>`<article><strong>${esc(D.nodes[row.from].name)} → ${esc(D.nodes[row.to].name)}</strong><span>DAY ${row.day} · ${row.km}km · 사건 ${row.events}건${row.checkIn?` · ${esc(row.checkIn.name)}`:''}</span></article>`).join('')}</div>`:''}
-      <div class="camp-home-section"><b>오늘 밤 준비</b><small>각 준비는 밤에 한 번만 할 수 있다.</small>
+      <div class="camp-home-section"><b>오늘 밤 준비</b><small>같은 준비는 하룻밤에 한 번만 할 수 있다.</small>
         <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${plan.meal?'disabled':''}><span>${ICO('food')} <strong>공동 식사</strong><small>식량 1 · 물 1 소비 · 취침 사기 +3</small></span><em>${plan.meal?'준비됨':'준비'}</em></button>
         <button class="camp-prep ${plan.repair?'done':''}" data-camp-prep="repair" ${plan.repair?'disabled':''}><span>${ICO('parts')} <strong>간이 정비</strong><small>부품 1 소비 · 취침 내구 +8</small></span><em>${plan.repair?'준비됨':'준비'}</em></button>
       </div>
@@ -4004,19 +4004,19 @@ function dialogueSide(turn,lanes,opt={}){
       const clue=knowledge[knowledge.length-1];
       const nextActions={
         family:{label:'도윤 가족의 버스 난방을 고친다',detail:'이송 현장을 직접 확인하고 기록을 남긴다.',condition:'이송 현장 직접 확인'},
-        appeal:{label:'부산에서 이의 제기 절차를 확인한다',detail:'원격 절차가 막힌 이유와 결과를 기록한다.',condition:'이의 제기 결과 기록'},
+        appeal:{label:'부산에서 이의를 제기해 본다',detail:'원격 이의 제기가 왜 막혔는지 기록한다.',condition:'이의 제기 결과 기록'},
         module:{label:'계기판 배선을 회로도와 대조한다',detail:'검증 모듈이 실제 달구지에 연결됐는지 확인한다.',condition:'회로도·배선 대조'},
-        trace:{label:'첫 길에서 현재 명령의 발신 기록을 확보한다',detail:'부모님의 이송표와 지금 발행되는 명령이 같은 계열인지 확인한다.',condition:'첫 발신 번호 대조'},
-        key:{label:'분리 절차 4–5쪽을 먼저 찾는다',detail:'절차를 확보하기 전에는 검증키를 뽑지 않는다.',condition:'분리 절차 4–5쪽 확보'},
-        witness:{label:'당사자 증언과 발신 기록을 맞춘다',detail:'같은 명령을 겪은 사람들의 기록을 직접 대조한다.',condition:`증언 ${witnessed}/${D.seoulPillars.관계}`},
-        seoul:{label:'남산 관문에서 이송을 중단한다',detail:'서울 도착 뒤 남은 중단 절차를 끝낸다.',condition:'필요한 기록과 증언을 모은 뒤 완료'}
+        trace:{label:'첫 구간에서 이송 명령의 발신 기록을 찾는다',detail:'부모님의 이송표와 지금 내려지는 명령이 같은 곳에서 왔는지 확인한다.',condition:'첫 발신 번호 대조'},
+        key:{label:'검증키 분리 절차 4–5쪽을 찾는다',detail:'분리 절차를 찾기 전에는 검증키를 뽑지 않는다.',condition:'분리 절차 4–5쪽 확보'},
+        witness:{label:'이송을 겪은 사람들의 증언을 발신 기록과 맞춰 본다',detail:'같은 명령을 겪은 사람들의 이야기를 기록과 맞춰 본다.',condition:`증언 ${witnessed}/${D.seoulPillars.관계}`},
+        seoul:{label:'남산에서 강제 이송을 멈춘다',detail:'서울에 도착한 뒤 마지막 중단 절차를 밟는다.',condition:'기록과 증언을 모두 모으면 진행'}
       };
       const nextAction=nextActions[nextStep?.id]||{label:'이송 중단 기록을 보관한다',detail:'완료한 기록을 달구지 안에 안전하게 보관한다.',condition:'목표 완료'};
       b.innerHTML=`<div class="folio-live-content">
         <div class="folio-title-row"><span>현재 목표</span><small>${esc(clock)}</small></div>
-        <h3>남산 코어의 강제 이송 중단</h3>
+        <h3>남산 코어에서 강제 이송을 멈춘다</h3>
         <div class="folio-location">${esc(D.nodes[S.at].name)}</div>
-        <section class="folio-stakes" aria-label="본편 임무의 이유와 기대 결과"><div><span>왜 지금</span><p>부모님을 데려간 자동 이송이 다음 가족에게 계속 반복된다.</p></div><div><span>기대 결과</span><p>기록·절차·증언을 모아 남산에 인간 확인 절차를 되돌린다.</p></div></section>
+        <section class="folio-stakes" aria-label="주 임무의 이유와 기대 결과"><div><span>왜 지금</span><p>부모님을 데려간 자동 이송 명령이 지금도 다른 가족에게 내려지고 있다.</p></div><div><span>기대 결과</span><p>발신 기록과 분리 절차, 당사자 증언을 모아 남산에 사람의 확인 절차를 되살린다.</p></div></section>
         <section class="folio-progress" aria-label="목표 진행 ${done}/${steps.length}">
           <div class="folio-section-title"><b>진행 단계</b><span>${done}/${steps.length}</span></div>
           ${focusSteps.map((step,index)=>`<div class="folio-step ${step.done?'done':''}"><i>${step.done?'✓':focusStart+index+1}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}
@@ -4454,7 +4454,7 @@ function dialogueSide(turn,lanes,opt={}){
 ;(()=>{
   let activeCategory='main';
   const categoryOrder=['main','companion','side','archive'];
-  const categoryLabels={main:'본편 임무',companion:'동행 이야기',side:'선택 의뢰',archive:'지난 기록'};
+  const categoryLabels={main:'주 임무',companion:'동행 이야기',side:'선택 의뢰',archive:'지난 기록'};
   const qEsc=(value)=>String(value==null?'':value).replace(/[&<>"']/g,ch=>({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[ch]));
@@ -4512,7 +4512,7 @@ function dialogueSide(turn,lanes,opt={}){
 
   function archiveItems(){
     const items=[];
-    if(S.flags&&S.flags.run_archived) items.push({title:'서울 강제 이송 중단',meta:'주 여정 완료'});
+    if(S.flags&&S.flags.run_archived) items.push({title:'서울 강제 이송을 멈췄다',meta:'주 임무 완료'});
     (S.party||[]).forEach(id=>{
       const comp=D.comps&&D.comps[id];
       if(comp) items.push({title:`${comp.name} 합류`,meta:'동료 이야기 완료'});
@@ -4588,7 +4588,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(roadButton) roadButton.remove();
     const oldTitle=live.querySelector('.folio-title-row');
     if(oldTitle) oldTitle.remove();
-    const title=live.querySelector('h3')&&live.querySelector('h3').textContent.trim()||'서울 강제 이송 중단';
+    const title=live.querySelector('h3')&&live.querySelector('h3').textContent.trim()||'서울 강제 이송을 멈췄다';
     const action=live.querySelector('.folio-support > b')&&live.querySelector('.folio-support > b').textContent.trim()||'북쪽으로 이어지는 다음 단서를 찾는다';
     const location=live.querySelector('.folio-location')&&live.querySelector('.folio-location').textContent.trim()||'';
     const criteria=[...live.querySelectorAll('.folio-support-meta dd')].pop();

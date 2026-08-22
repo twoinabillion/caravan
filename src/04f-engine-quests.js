@@ -50,11 +50,11 @@ G.mainQuestEntry = ()=>{
 
   return {
     id:'main_namsan', kind:'main', status, tracked:true,
-    eyebrow:'MAIN MISSION · 본편 임무',
-    title:'남산 코어의 강제 이송을 중단한다', phase,
-    why:'부모님을 데려간 자동 판단이 지금도 다른 가족에게 반복되고 있다.',
-    next:next||'첫 길에서 현재 명령의 발신 기록을 확보한다.',
-    expected:'기록·절차·증언을 모아 인간 확인 절차를 되돌린다.',
+    eyebrow:'주 임무',
+    title:'남산 코어에서 강제 이송을 멈춘다', phase,
+    why:'부모님을 데려간 자동 이송 명령이 지금도 다른 가족에게 내려지고 있다.',
+    next:next||'첫 구간에서 이송 명령의 발신 기록을 찾는다.',
+    expected:'발신 기록과 분리 절차, 당사자 증언을 모아 사람의 확인 절차를 되살린다.',
     progress:{have,need,label:`${Math.min(have,need)}/${need}`},
   };
 };
@@ -125,9 +125,9 @@ G.questLedgerEntries = ()=>{
 
 G.toggleQuestTracking = (id)=>{
   const ledger=G.ensureQuestLedger();
-  if(!ledger||id==='main_namsan') return {ok:false,why:'본편 임무는 항상 추적한다.'};
+  if(!ledger||id==='main_namsan') return {ok:false,why:'주 임무는 항상 표시된다.'};
   const entry=G.questLedgerEntries().find(row=>row.id===id&&row.status!=='completed');
-  if(!entry) return {ok:false,why:'추적할 수 없는 임무다.'};
+  if(!entry) return {ok:false,why:'이 임무는 추적할 수 없다.'};
   const index=ledger.tracked.indexOf(id);
   if(index>=0) ledger.tracked.splice(index,1);
   else {

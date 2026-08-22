@@ -271,10 +271,6 @@ const MAPR = (()=>{
       ctx.beginPath(); ctx.roundRect(-5,-3.4,10,6.8,2); ctx.fill();
       ctx.restore();
     }
-    /* 접힌 CRT의 실제 폭 안에서 끝까지 읽히는 두 줄 범례. */
-    ctx.font=`${W<330?9:9.5}px monospace`; ctx.fillStyle='rgba(185,194,217,0.72)';
-    ctx.fillText('◆ 거점   ● 도시   황색 현재 길',12,H-23);
-    ctx.fillText('청록 선택 경로   · 지명을 누르면 경로 표시',12,H-10);
   }
 
   function onClick(ev){

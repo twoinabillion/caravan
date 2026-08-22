@@ -1156,8 +1156,8 @@ with sync_playwright() as p:
       const knowledgeText=questLedger?.textContent||'';
       out.knowledgeUi=knowledgeText.includes('현재 목표') && knowledgeText.includes('진행') &&
         knowledgeText.includes('왜 지금') && knowledgeText.includes('다음 행동');
-      out.departureBrief=knowledgeText.includes('남산 코어의 강제 이송을 중단한다') &&
-        knowledgeText.includes('현재 이송의 첫 발신 기록 확보') && knowledgeText.includes('기대 결과');
+      out.departureBrief=knowledgeText.includes('남산 코어에서 강제 이송을 멈춘다') &&
+        knowledgeText.includes('이송 명령의 첫 발신 기록을 찾는다') && knowledgeText.includes('기대 결과');
       document.querySelector('.quest-ledger-close').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
@@ -1729,7 +1729,7 @@ with sync_playwright() as p:
         day1.onTime && dayLate.onTime && day1.remaining===null && dayLate.remaining===null &&
         day1.departed===0 && dayLate.departed===0 &&
         day1.remainingResidents===D.residentCount && dayLate.remainingResidents===D.residentCount &&
-        day1.mission.includes('남산에서 강제 이송을 중단한다');
+        day1.mission.includes('남산에서 강제 이송을 멈춘다');
       const render = (v, flags={}) => typeof v === 'function' ? v({flags, party:[]}) : v;
       const costs = decision.choices.map(c => render(c.out[0].text, {}));
       out.distinctCosts = costs[0].includes('첫 회의 채널이 열렸다') &&
