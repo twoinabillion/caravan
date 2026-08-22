@@ -122,7 +122,7 @@ D.scenes = {
   'event-crisis-weather':'__SCENE_EVENT_CRISIS_WEATHER__',
   'event-crisis-collapse':'__SCENE_EVENT_CRISIS_COLLAPSE__',
   'event-crisis-animal':'__SCENE_EVENT_CRISIS_ANIMAL__',
-  'event-crisis-exhaustion':'__SCENE_EVENT_CRISIS_EXHAUSTION__',
+  'event-crisis-exhaustion':'__SCENE_EVENT_CRISIS_EXHAUSTION_V2__',
   'event-companion-repair':'__SCENE_EVENT_COMPANION_REPAIR__',
   'event-companion-radio':'__SCENE_EVENT_COMPANION_RADIO__',
   'event-companion-meal':'__SCENE_EVENT_COMPANION_MEAL__',
@@ -264,6 +264,7 @@ D.scenes = {
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
+  'event-crisis-exhaustion':'낡은 달구지 운전석에서 운전대를 잡은 두 손과 비어 있는 앞길만 보이는 피로한 새벽',
   'intro-cold-open-v1':'비 내리는 감천 부두에서 도윤 가족의 버스 문이 닫히고, 기름 묻은 손의 주인공과 달구지가 그 모습을 바라보는 새벽',
   'onboarding-first-road-scan-v1':'부산 밖 북행 검문소의 붉은 스캐너 아래 세운 달구지와 녹슨 단말에서 첫 발신 기록을 꺼내는 주인공',
   'seoul-uplink-reveal-v1':'멈춘 서울 코어 뒤로 수억 개의 하위 실행기 불빛이 끝없이 드러나고, 그 앞에 작게 선 달구지 일행',
