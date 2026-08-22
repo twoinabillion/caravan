@@ -171,25 +171,52 @@ with sync_playwright() as p:
       const ev=D.events.find(item=>item.id==='lib_meet');
       UI.showEvent(ev);
       document.querySelector('#ev-sheet').getAnimations().forEach(animation=>animation.finish());
-      const first=document.querySelector('#ev-sheet .story-next').getBoundingClientRect();
+      const noContinueButton=!document.querySelector('#ev-sheet .story-next');
+      const tapHint=!!document.querySelector('#ev-sheet .story-tap-hint');
       const chrome=document.querySelectorAll('#ev-sheet .scene-cut-mark,#ev-sheet .story-auto-toggle,#ev-sheet .choice-dock-head,#ev-sheet .event-meta-row').length;
       await new Promise(resolve=>setTimeout(resolve,150));
       const progress=document.querySelector('#ev-sheet [data-event-progress]').textContent;
-      const second=document.querySelector('#ev-sheet .story-next').getBoundingClientRect();
+      window.__CARAVAN_TEST_AUTO_MS=10000;
+      const beforeTap=document.querySelector('#ev-sheet [data-event-progress]').textContent;
+      const tapTarget=document.querySelector('#ev-sheet .event-field-report');
+      tapTarget.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,clientX:180,clientY:320}));
+      tapTarget.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,clientX:180,clientY:320}));
+      const afterTap=document.querySelector('#ev-sheet [data-event-progress]').textContent;
+      const tapAdvanced=beforeTap!==afterTap;
       UI.finishStory();
       const choiceCount=document.querySelectorAll('#ev-sheet .choices>[data-i]').length;
       document.querySelector('#ev-sheet [data-i="2"]').click();
       UI.finishStory();
       const finishLabel=document.querySelector('#ev-sheet [data-r="ok"]').textContent.trim();
       document.querySelector('#ev-sheet [data-r="ok"]').click();
+      G.openEventById('ev_truck_cafe');
+      UI.finishStory();
+      document.querySelector('#ev-sheet [data-i="0"]').click();
+      UI.finishStory();
+      const inlineResult=document.querySelector('#ev-sheet .event-result-inline');
+      const resultText=inlineResult?.textContent||'';
+      const returnButton=document.querySelector('#ev-sheet [data-r="ok"]');
+      const returnStyle=returnButton&&getComputedStyle(returnButton);
+      const rewardInline=!!inlineResult?.closest('.event-field-report') &&
+        !document.querySelector('#ev-sheet .event-result-receipt');
+      const returnStyled=!!returnStyle && returnStyle.textAlign==='center' &&
+        returnStyle.backgroundImage!=='none' && parseFloat(returnStyle.minHeight)>=44;
+      returnButton.click();
       delete window.__CARAVAN_TEST_AUTO_MS;
-      return {chrome,progress,stable:Math.abs(first.y-second.y)<1,choiceCount,finishLabel};
+      return {chrome,progress,noContinueButton,tapHint,tapAdvanced,choiceCount,finishLabel,
+        rewardInline,resultText,returnStyled};
     }''')
     check('사건 장식 UI 없이 자동 진행·선택지는 유지',
           event_flow['chrome'] == 0 and '2 / 4' in event_flow['progress'] and event_flow['choiceCount'] >= 3,
           str(event_flow))
-    check('진행 버튼 위치 고정·사건 종료 문구 명확',
-          event_flow['stable'] and event_flow['finishLabel'] == '길로 돌아가기', str(event_flow))
+    check('계속 버튼 없이 화면 탭으로 다음 문장 진행',
+          event_flow['noContinueButton'] and event_flow['tapHint'] and event_flow['tapAdvanced'], str(event_flow))
+    check('사건 종료 문구 명확', event_flow['finishLabel'] == '길로 돌아가기', str(event_flow))
+    check('사건 보상은 마지막 대화 안에 표시',
+          event_flow['rewardInline'] and '고철 -4' in event_flow['resultText'] and
+          '피로 -5' in event_flow['resultText'] and '확인된 결과' not in event_flow['resultText'],
+          str(event_flow))
+    check('길로 돌아가기 버튼은 실제 버튼 스타일 유지', event_flow['returnStyled'], str(event_flow))
     identity_flow = pg.evaluate('''() => {
       const backup=JSON.parse(JSON.stringify(S));
       const revealChecks=[];
@@ -1152,18 +1179,23 @@ with sync_playwright() as p:
       const questTabs=[...document.querySelectorAll('#quest-ledger [data-quest-tab]')];
       out.statusTabs=questLedger?.getAttribute('aria-hidden')==='false' && questTabs.length===4 &&
         questTabs.map(tab=>tab.dataset.questTab).join(',')==='main,companion,local,completed' &&
-        questTabs[0].classList.contains('active');
+        questTabs[0].classList.contains('active') && questTabs[0].getAttribute('aria-selected')==='true';
+      out.questVisualHierarchy=document.querySelector('.quest-ledger-head small')?.textContent==='여정 기록' &&
+        !document.querySelector('.quest-ledger-close') && document.querySelector('#dk-objectives').classList.contains('here');
       const knowledgeText=questLedger?.textContent||'';
       out.knowledgeUi=knowledgeText.includes('현재 목표') && knowledgeText.includes('진행') &&
         knowledgeText.includes('왜 지금') && knowledgeText.includes('다음 행동');
       out.departureBrief=knowledgeText.includes('남산 코어에서 강제 이송을 멈춘다') &&
         knowledgeText.includes('이송 명령의 첫 발신 기록을 찾는다') && knowledgeText.includes('기대 결과');
-      document.querySelector('.quest-ledger-close').click();
+      document.querySelector('.quest-ledger-back').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
         document.querySelector('#ev-wrap').getAttribute('aria-modal')==='true';
       out.storyContext=document.querySelector('#ev-sheet').textContent.includes('앞 이야기') &&
         document.querySelector('#ev-sheet').textContent.includes('첫 거리 표식');
+      const storyCopy=document.querySelector('#ev-sheet .story-narration-text,#ev-sheet .turn-text');
+      out.eventReadability=!!storyCopy && parseFloat(getComputedStyle(storyCopy).fontSize)>=14 &&
+        getComputedStyle(document.querySelector('#ev-sheet .event-scroll')).outlineStyle==='none';
       document.querySelector('#ev-wrap').classList.remove('on');
       const flags0={...S.flags}, party0=[...S.party], comps0=structuredClone(S.comps);
       S.party=Object.keys(D.comps);
@@ -1326,11 +1358,13 @@ with sync_playwright() as p:
           r4['upgradeCeremony'] and r4['upgradeInteractive'], str(r4))
     check('업그레이드 분야별 작업·동료 전문가 참여', r4['upgradeAdviser'], str(r4))
     check('상태창 탭 전환·ARIA 선택 상태', r4['statusTabs'] and r4['statusModalAria'], str(r4))
+    check('임무 장부 머리말·닫기·하단 선택 상태 정리', r4['questVisualHierarchy'], str(r4))
     check('기기별 큰 글자·움직임 줄임 설정', r4['uiPrefs'], str(r4))
     check('상태창에서 확인된 사실·남은 질문 분리', r4['knowledgeUi'], str(r4))
     check('상태창에서 지금 떠나는 이유·동료 합류 원칙 상시 확인', r4['departureBrief'], str(r4))
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
+    check('이벤트 본문 크기·포커스 테두리 가독성', r4['eventReadability'], str(r4))
     check('긴 사건도 큰 장면·진행 상태·3개 단위 선택 페이지로 정리', r4['eventTerminal'] and
           r4['choicePaging'] and r4['choiceDock'], str(r4))
     check('서울 코어 증언→해방 장면 분리', r4['seoulSceneArc'], str(r4))

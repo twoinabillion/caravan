@@ -252,16 +252,16 @@ G.applyFx = (fx)=>{
     else if(k==='van') S.van=clamp(S.van+v,0,S.vanMax);
     chips.push({t:`${label} ${v>0?'+':''}${v}${unit||''}`, c:v>0?'plus':'minus'}); } };
   num('fuel','연료','L'); num('water','물'); num('food','식량'); num('scrap','고철'); num('van','차체','%');
-  if(fx.time){ G.advance(fx.time); chips.push({t:`경과 시간 +${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'} · 현재 시각에 반영`, c:''}); }
+  if(fx.time){ G.advance(fx.time); chips.push({t:`${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'} 경과`, c:''}); }
   if(fx.fatigue){ S.fatigue=clamp(S.fatigue+fx.fatigue,0,100);
-    chips.push({t:`😴 피로 ${fx.fatigue>0?'+':''}${fx.fatigue}`, c:fx.fatigue<0?'plus':'minus'}); }
+    chips.push({t:`피로 ${fx.fatigue>0?'+':''}${fx.fatigue}`, c:fx.fatigue<0?'plus':'minus'}); }
   if(fx.skipKm && S.driving){ S.driving.gone=Math.min(S.driving.dist, S.driving.gone+fx.skipKm);
     chips.push({t:`🛣 지름길 ${fx.skipKm}km`, c:'plus'}); }
   if(fx.moodAll){ G.moodAll(fx.moodAll); if(S.party.length) chips.push({t:`사기 ${fx.moodAll>0?'+':''}${fx.moodAll}`, c:fx.moodAll>0?'plus':'minus'}); }
   if(fx.mood){ for(const id in fx.mood){ if(S.comps[id]!==undefined&&G.hasComp(id)){ S.comps[id].mood=clamp(S.comps[id].mood+fx.mood[id],0,100);
     chips.push({t:`${D.comps[id].name} ${fx.mood[id]>0?'+':''}${fx.mood[id]}`, c:fx.mood[id]>0?'plus':'minus'}); } } }
   if(fx.item){ for(const nm in fx.item){ const v=fx.item[nm]; S.items[nm]=Math.max(0,(S.items[nm]||0)+v);
-    chips.push({t:`${nm} ${v>0?'+':''}${v}`, c:'item'}); } }
+    chips.push({t:`${nm} ${v>0?'+':''}${v}`, c:v>0?'plus':'minus'}); } }
   if(fx.flag) S.flags[fx.flag]=true;
   if(fx.flag2) S.flags[fx.flag2]=true;
   if(fx.flagCount) S.flags[fx.flagCount]=(S.flags[fx.flagCount]||0)+1;

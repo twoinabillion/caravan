@@ -2342,21 +2342,36 @@ function dialogueSide(turn,lanes,opt={}){
   function wireStoryReviewPause(state,turn){
     const scroll=$('#ev-sheet .event-scroll');
     if(!scroll) return;
+    let pointerStart=null;
     const reviewPosition=()=>{
       const gap=scroll.scrollHeight-scroll.scrollTop-scroll.clientHeight;
       state.reviewing=gap>72;
     };
-    scroll.onpointerdown=()=>{
+    const blockedTarget=target=>target instanceof Element&&!!target.closest(
+      '.event-scene-frame,button,a,input,textarea,select,[role="button"]');
+    scroll.onpointerdown=e=>{
       state.userHoldingStory=true;
       clearStoryAuto();
+      pointerStart=blockedTarget(e.target)?null:{
+        x:e.clientX,y:e.clientY,scrollTop:scroll.scrollTop,index:state.index
+      };
     };
-    const release=()=>{
+    const release=e=>{
+      const start=pointerStart;
+      pointerStart=null;
       state.userHoldingStory=false;
       reviewPosition();
+      const moved=start&&(
+        Math.hypot((e?.clientX||start.x)-start.x,(e?.clientY||start.y)-start.y)>12 ||
+        Math.abs(scroll.scrollTop-start.scrollTop)>4);
+      if(start&&!moved&&!state.reviewing&&curStory===state&&state.index===start.index){
+        advanceStory(state);
+        return;
+      }
       if(!state.reviewing) scheduleStoryAuto(state,turn);
     };
     scroll.onpointerup=release;
-    scroll.onpointercancel=release;
+    scroll.onpointercancel=e=>{ pointerStart=null; release(e); };
     scroll.onscroll=()=>{
       if(!state.userHoldingStory) return;
       reviewPosition();
@@ -2369,6 +2384,13 @@ function dialogueSide(turn,lanes,opt={}){
         reviewPosition();
         if(!state.reviewing) scheduleStoryAuto(state,turn);
       });
+    };
+    scroll.onkeydown=e=>{
+      if((e.key!=='Enter'&&e.key!==' ')||e.repeat||blockedTarget(e.target)) return;
+      reviewPosition();
+      if(state.reviewing) return;
+      e.preventDefault();
+      advanceStory(state);
     };
   }
   function wireEventChoicePages(dock){
@@ -2459,13 +2481,20 @@ function dialogueSide(turn,lanes,opt={}){
       ? `결과 · ${state.index+1} / ${state.turns.length}`
       : `${state.index+1} / ${state.turns.length}`;
     if(!last){
-      const next=state.turns[state.index+1];
       dock.classList.add('story-progress-dock');
-      dock.innerHTML=`<button class="choice story-next" type="button"><strong>계속</strong></button>`;
-      dock.querySelector('.story-next').onclick=()=>advanceStory(state);
+      dock.innerHTML='<div class="story-tap-hint" aria-hidden="true">화면을 탭해 다음 문장</div>';
       wireStoryReviewPause(state,turn);
       scheduleStoryAuto(state,turn);
       return;
+    }
+    const storyScroll=sheet.querySelector('.event-scroll');
+    if(storyScroll){
+      storyScroll.onpointerdown=null;
+      storyScroll.onpointerup=null;
+      storyScroll.onpointercancel=null;
+      storyScroll.onscroll=null;
+      storyScroll.onwheel=null;
+      storyScroll.onkeydown=null;
     }
     dock.classList.remove('story-progress-dock');
     dock.innerHTML=state.finalDock;
@@ -2542,7 +2571,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(evd.id!=='onboarding_main_mission'&&!S.flags.onboarding_event_guide){
       S.flags.onboarding_event_guide=true;
       G.save();
-      eventGuide='<aside class="event-tutorial-note"><b>길 위 사건</b><span>장면과 대화가 아래로 이어집니다. 마지막에 행동을 고르면 결과가 자원과 기록에 남습니다.</span></aside>';
+      eventGuide='<aside class="event-tutorial-note"><b>길 위 사건</b><span>화면을 짧게 탭하면 다음 문장으로 넘어갑니다. 마지막에 행동을 고르면 결과가 자원과 기록에 남습니다.</span></aside>';
     }
     const choicePages=Math.ceil(choices.count/3);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<section class="event-field-report"><div class="event-head"><div>
@@ -2723,7 +2752,7 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneStart=0;
     const scene=sceneFrameHtml(outcomeSceneKeys,sceneAlt);
     const fxHtml=chips.length
-      ? '<span class="event-result-kicker">확인된 결과</span><div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
+      ? '<span class="event-result-kicker">변화</span><div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
       : '';
     const selectedTitle=stripTags(choice.label||curEv.title||'선택의 결과').trim()||'선택의 결과';
     const reportTitle=stripTags(curEv.title||'선택의 결과').trim()||'선택의 결과';
@@ -2743,7 +2772,7 @@ function dialogueSide(turn,lanes,opt={}){
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
       <section class="event-field-report" aria-label="${esc(reportTitle)} · 선택 ${esc(selectedTitle)}"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(visibleReportTitle)}</h2></div></div>
-      ${combatHud}<div class="story-reader"></div></section><div class="story-result event-result-receipt" role="status" aria-live="polite" aria-atomic="true"></div></div>
+      ${combatHud}<div class="story-reader"></div><div class="story-result event-result-inline" role="status" aria-live="polite" aria-atomic="true"></div></section></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns,curStory&&curStory.lanes);

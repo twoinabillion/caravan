@@ -38,6 +38,11 @@ with sync_playwright() as playwright:
         device_scale_factor=1,
     )
     enter_game(page)
+    page.evaluate("""() => {
+      const wrap=document.querySelector('#ev-wrap');
+      wrap.classList.remove('on'); wrap.setAttribute('aria-hidden','true');
+      S._storyQueue=[]; S._chain=null; UI.renderAll();
+    }""")
     page.wait_for_timeout(250)
     page.screenshot(path=str(SHOT / "00d-stop-actions.png"))
     page.click('[data-journey-mode="route"]')

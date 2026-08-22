@@ -4556,4 +4556,148 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
 .quest-main-detail .folio-stakes>div{display:grid;grid-template-columns:52px minmax(0,1fr);gap:6px;align-items:start;padding:5px 7px!important;border:1px solid rgba(67,88,75,.22);background:rgba(251,241,213,.24)}
 .quest-main-detail .folio-stakes span{display:block;margin:0!important;color:#27756f;font:800 8px/1.25 var(--font-ui)!important;letter-spacing:.05em}
 .quest-main-detail .folio-stakes p{margin:0!important;color:#514535;font:650 8.5px/1.35 var(--font-ui)!important}
+/* Event outcomes stay inside the manuscript instead of opening a second receipt.
+   The final road action is a compact, unmistakable button rather than bare text. */
+#ev-sheet.event-mode .event-field-report>.event-result-inline{
+  position:relative!important;display:grid!important;grid-template-columns:max-content minmax(0,1fr);
+  align-items:start;gap:10px;flex:0 0 auto!important;width:auto!important;height:auto!important;min-height:0!important;
+  margin:8px 6% 0!important;padding:10px 0 2px!important;overflow:visible!important;
+  border:0!important;border-top:1px dashed rgba(56,91,81,.46)!important;border-radius:0!important;
+  background:none!important;box-shadow:none!important
+}
+#ev-sheet.event-mode .event-field-report>.event-result-inline:empty{display:none!important}
+#ev-sheet.event-mode .event-field-report>.event-result-inline .event-result-kicker{
+  position:static!important;display:block;padding-top:2px;color:#8a561d!important;
+  font:900 clamp(9px,2.45cqw,11px)/1.35 var(--mono)!important;letter-spacing:.08em
+}
+#ev-sheet.event-mode .event-field-report>.event-result-inline .fx-line{
+  display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;
+  gap:4px 12px!important;margin:0!important;flex-wrap:wrap!important;text-align:left!important
+}
+#ev-sheet.event-mode .event-field-report>.event-result-inline .fx,
+#ev-sheet.event-mode .event-field-report>.event-result-inline .fx:first-child{
+  display:inline-flex!important;width:auto!important;min-height:0!important;margin:0!important;padding:1px 0!important;
+  border:0!important;border-radius:0!important;background:none!important;color:#286965!important;
+  font:850 clamp(10px,2.9cqw,13px)/1.35 var(--sans)!important;text-align:left!important;box-shadow:none!important
+}
+#ev-sheet.event-mode .event-field-report>.event-result-inline .fx.minus{color:#87433a!important}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report>.event-result-inline{
+  border-top-color:rgba(232,174,88,.34)!important
+}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report>.event-result-inline .event-result-kicker{color:#d59d51!important}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report>.event-result-inline .fx{color:#72c8bc!important}
+#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report>.event-result-inline .fx.minus{color:#dc8d7f!important}
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock{
+  display:grid!important;flex:0 0 auto!important;width:100%!important;height:auto!important;min-height:0!important;
+  max-height:none!important;place-items:center!important;margin:0!important;padding:7px 14px calc(9px + var(--safe-bottom))!important;
+  overflow:visible!important;border:0!important;border-top:1px solid #3b352a!important;
+  background:linear-gradient(180deg,#171a17,#0d100e)!important;box-shadow:0 -5px 14px rgba(0,0,0,.28)!important
+}
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices{
+  display:grid!important;width:100%!important;height:auto!important;max-height:none!important;gap:7px!important;
+  place-items:center!important;padding:0!important;overflow:visible!important
+}
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices>.choice,
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices>.choice:first-child,
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices>.choice:last-child{
+  display:grid!important;width:min(78%,260px)!important;height:auto!important;min-height:46px!important;margin:0 auto!important;
+  padding:10px 18px!important;place-items:center!important;border:1px solid #8b693c!important;border-radius:3px!important;
+  color:#efbd72!important;background:linear-gradient(180deg,#2b261e,#15130f)!important;
+  font:900 clamp(13px,3.5cqw,16px)/1.2 var(--sans)!important;letter-spacing:.01em!important;text-align:center!important;
+  text-shadow:0 1px 1px #000!important;box-shadow:inset 0 1px rgba(255,255,255,.08),0 3px 7px rgba(0,0,0,.45)!important;
+  filter:none!important
+}
+#ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock>.choices>.choice:focus-visible{
+  outline:2px solid #efbd72!important;outline-offset:2px!important
+}
+/* Dialogue advances from a short tap on the manuscript. The dock is now only a
+   quiet gesture hint, never another large action button. */
+#ev-sheet.event-mode .event-choice-dock.story-progress-dock{
+  display:grid!important;flex:0 0 auto!important;width:100%!important;height:auto!important;min-height:28px!important;
+  place-items:center!important;margin:0!important;padding:4px 12px calc(5px + var(--safe-bottom))!important;
+  border:0!important;background:linear-gradient(180deg,rgba(13,16,14,.78),#0d100e)!important;
+  box-shadow:none!important;pointer-events:none!important
+}
+#ev-sheet.event-mode .story-tap-hint{
+  color:#9c947f;font:700 clamp(9px,2.5cqw,11px)/1.3 var(--mono);letter-spacing:.07em;
+  text-align:center;text-shadow:0 1px #000
+}
+/* 2026-08-22 visual hierarchy pass: preserve the diegetic art, but make the
+   information layer read like one mobile game instead of stacked web panels. */
+#ev-sheet.event-mode .event-scroll:focus,
+#ev-sheet.event-mode .event-scroll:focus-visible{outline:none!important}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{
+  padding:clamp(24px,5.2cqw,36px) clamp(24px,5.8cqw,38px) clamp(22px,5cqw,34px)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .event-head{
+  margin:0 0 18px!important;padding:clamp(12px,3cqw,17px) 0 10px!important;
+  border-bottom:1px solid rgba(35,110,104,.52)!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .event-head h2{
+  color:#28766f!important;font:900 clamp(20px,5.2cqw,25px)/1.15 var(--sans)!important;
+  letter-spacing:-.035em!important;text-shadow:none!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-reader{
+  margin:0 2%!important;padding:4px 0 18px!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-transcript{gap:18px!important}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-narration-text,
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .turn-text{
+  color:#342e27!important;font:600 clamp(14.5px,3.85cqw,17px)/1.64 var(--serif)!important;
+  letter-spacing:-.012em!important;text-shadow:none!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-bubble{
+  color:#302a24!important;font:650 clamp(14px,3.7cqw,16.5px)/1.55 var(--sans)!important;
+  letter-spacing:-.015em!important
+}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-name{
+  font-size:clamp(11px,2.8cqw,12.5px)!important;letter-spacing:.01em!important
+}
+.event-tutorial-note{
+  display:grid!important;grid-template-columns:max-content minmax(0,1fr)!important;gap:10px!important;
+  margin:0 0 17px!important;padding:8px 0 8px 11px!important;border:0!important;
+  border-left:2px solid rgba(40,117,111,.72)!important;background:linear-gradient(90deg,rgba(53,128,121,.08),transparent 82%)!important;
+  color:#4b4032!important;font-size:11px!important;line-height:1.5!important
+}
+.event-tutorial-note b{font-size:9.5px!important;line-height:1.6!important}
+#ev-sheet.event-mode .story-tap-hint{
+  color:#c1b697!important;font:750 clamp(10.5px,2.8cqw,12px)/1.35 var(--mono)!important;
+  letter-spacing:.055em!important
+}
+
+.stl-hub-v2 .stl-resource-strip>span{padding:3px 2px!important}
+.stl-hub-v2 .stl-resource-strip .ico{width:15px!important;height:15px!important}
+.stl-hub-v2 .stl-resource-strip b{font-size:11px!important}
+.stl-hub-v2 .stl-resource-strip small{font-size:8.5px!important}
+.stl-world-nav .stl-hotspot{min-height:68px!important;grid-template-columns:19px 28px minmax(0,1fr) 5px!important;gap:6px!important}
+.stl-world-nav .stl-hotspot b{font-size:11.5px!important;line-height:1.2!important}
+.stl-world-nav .stl-hotspot small{font-size:9px!important;line-height:1.25!important}
+.stl-hub.stl-hub-v2 .stl-enter{min-height:54px!important;font-size:12.5px!important}
+.stl-hub.stl-hub-v2 .stl-enter small{font-size:9px!important}
+.stl-hub-v2 .stl-return{min-height:54px!important;font-size:9.5px!important}
+
+.bag-pocket.selected{
+  background:linear-gradient(180deg,rgba(225,170,74,.08),rgba(80,48,18,.16))!important;
+  box-shadow:inset 0 2px rgba(238,180,82,.72),inset 0 -1px rgba(0,0,0,.42)!important
+}
+.bag-pocket.selected .bag-pocket-name{text-decoration:none!important;text-shadow:0 1px 5px #000!important}
+.bag-detail-kicker{font-size:clamp(9px,2cqw,11px)!important}
+.bag-detail p{color:#ddd5c7!important;font-weight:650!important;line-height:1.38!important}
+
+.route-console-v3 .nav-destination-card:not(.is-selected){opacity:.34!important;filter:saturate(.42) brightness(.72)!important}
+.route-console-v3 .nav-destination-card.is-selected{filter:saturate(.92) contrast(1.03)!important}
+.route-console-v3 .nav-place-description{color:#b7c0c2!important;font-size:10px!important;line-height:1.42!important}
+
+@container game (max-width:360px){
+  .stl-world-nav .stl-hotspot{min-height:62px!important;grid-template-columns:17px 24px minmax(0,1fr) 4px!important;gap:4px!important}
+  .stl-world-nav .stl-hotspot b{font-size:10px!important}
+  .stl-world-nav .stl-hotspot small{font-size:8px!important}
+  #ev-sheet.event-mode[data-event-kind="story"] .event-field-report{padding-right:20px!important;padding-left:20px!important}
+}
+</style>
+<style>
+/* Keep the map heading visually centered inside its metal bezel. */
+.map-live-head {
+  transform: translateX(clamp(5px, 1.5vw, 8px));
+}
 </style>

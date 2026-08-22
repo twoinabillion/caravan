@@ -7,12 +7,11 @@ const QuestLedgerUI={
     const root=document.createElement('div');
     root.id='quest-ledger-layer';
     root.innerHTML=`
-      <button id="quest-ledger-fallback" type="button" aria-label="임무 장부 열기"><span>임무</span><b>MAIN</b></button>
+      <button id="quest-ledger-fallback" type="button" aria-label="임무 장부 열기"><span>목표</span><b>주 임무</b></button>
       <section id="quest-ledger" role="dialog" aria-modal="true" aria-labelledby="quest-ledger-title" aria-hidden="true">
         <header class="quest-ledger-head">
           <button class="quest-ledger-back" type="button" aria-label="임무 장부 닫기">‹</button>
-          <div><small>JOURNEY LEDGER</small><h2 id="quest-ledger-title">임무 장부</h2></div>
-          <button class="quest-ledger-close" type="button" aria-label="임무 장부 닫기">×</button>
+          <div><small>여정 기록</small><h2 id="quest-ledger-title">임무 장부</h2></div>
         </header>
         <nav class="quest-ledger-tabs" aria-label="임무 분류">
           <button type="button" data-quest-tab="main">본편</button>
@@ -25,7 +24,7 @@ const QuestLedgerUI={
       </section>`;
     document.body.appendChild(root); this.root=root;
     root.querySelector('#quest-ledger-fallback').addEventListener('click',()=>this.open());
-    root.querySelectorAll('.quest-ledger-back,.quest-ledger-close').forEach(button=>button.addEventListener('click',()=>this.close()));
+    root.querySelector('.quest-ledger-back').addEventListener('click',()=>this.close());
     root.querySelector('.quest-ledger-tabs').addEventListener('click',event=>{
       const button=event.target.closest('[data-quest-tab]'); if(!button) return;
       this.tab=button.dataset.questTab; this.render();
@@ -60,6 +59,14 @@ const QuestLedgerUI={
     requestAnimationFrame(()=>{ this.rendering=false; this.render(); });
   },
   isOpen(){ return this.root&&this.root.querySelector('#quest-ledger').getAttribute('aria-hidden')==='false'; },
+  setDock(id){
+    document.querySelectorAll('#dock button').forEach(button=>{
+      const active=button.id===id;
+      button.classList.toggle('here',active);
+      if(active) button.setAttribute('aria-current','page');
+      else button.removeAttribute('aria-current');
+    });
+  },
   open(trigger){
     if(!S) return;
     this.returnFocus=trigger||document.activeElement;
@@ -71,12 +78,14 @@ const QuestLedgerUI={
     this.render();
     this.root.querySelector('#quest-ledger').setAttribute('aria-hidden','false');
     document.body.classList.add('quest-ledger-open');
-    requestAnimationFrame(()=>this.root.querySelector('.quest-ledger-close').focus());
+    this.setDock('dk-objectives');
+    requestAnimationFrame(()=>this.root.querySelector('.quest-ledger-back').focus());
   },
   close(restore=true){
     if(!this.root) return;
     this.root.querySelector('#quest-ledger').setAttribute('aria-hidden','true');
     document.body.classList.remove('quest-ledger-open');
+    this.setDock('dk-road');
     if(restore&&this.returnFocus&&this.returnFocus.isConnected) this.returnFocus.focus();
   },
   nativeGoalButton(){
@@ -107,7 +116,7 @@ const QuestLedgerUI={
     const ratio=Math.max(0,Math.min(100,Math.round((progress.have/Math.max(1,progress.need))*100)));
     const canTrack=row.kind!=='main'&&row.status!=='completed';
     return `<article class="quest-ledger-card quest-kind-${this.esc(row.kind)} ${row.tracked?'is-tracked':''}">
-      <div class="quest-card-top"><span>${this.esc(row.eyebrow)}</span>${row.tracked?'<b>추적 중</b>':''}</div>
+      <div class="quest-card-top"><span>${this.esc(row.eyebrow)}</span>${row.tracked?'<b>위에 고정됨</b>':''}</div>
       <h3>${this.esc(row.title)}</h3>
       <p class="quest-card-phase">${this.esc(row.phase)}</p>
       <div class="quest-progress"><i style="width:${ratio}%"></i></div>
@@ -117,7 +126,7 @@ const QuestLedgerUI={
         <div class="quest-next"><dt>다음 행동</dt><dd>${this.esc(row.next)}</dd></div>
         <div><dt>기대 결과</dt><dd>${this.esc(row.expected)}</dd></div>
       </dl>
-      ${canTrack?`<button class="quest-track-button" type="button" data-quest-track="${this.esc(row.id)}">${row.tracked?'추적 해제':'이 임무 추적'}</button>`:''}
+      ${canTrack?`<button class="quest-track-button" type="button" data-quest-track="${this.esc(row.id)}">${row.tracked?'목록 고정 해제':'목록 위에 고정'}</button>`:''}
     </article>`;
   },
   render(){
@@ -129,11 +138,17 @@ const QuestLedgerUI={
     const entries=G.questLedgerEntries();
     const tracked=entries.filter(row=>row.tracked&&row.kind!=='main'&&row.status!=='completed').length;
     const main=entries.find(row=>row.kind==='main');
+    const trackedOrder=G.ensureQuestLedger().tracked;
+    const focused=entries.find(row=>row.id===trackedOrder[trackedOrder.length-1])||main;
     this.root.querySelector('.quest-ledger-summary').innerHTML=`
-      <span><b>현재 목표</b>${this.esc(main&&main.next||'여정을 시작한다.')}</span>
-      <em>선택 임무 ${tracked}/2 추적</em>`;
-    this.root.querySelectorAll('[data-quest-tab]').forEach(button=>button.classList.toggle('active',button.dataset.questTab===this.tab));
-    const visible=entries.filter(row=>row.kind===this.tab);
+      <span><b>현재 목표</b>${this.esc(focused&&focused.next||'여정을 시작한다.')}</span>
+      <em>${focused&&focused.kind!=='main'?'선택 임무':'주 임무'} · 고정 ${tracked}/2</em>`;
+    this.root.querySelectorAll('[data-quest-tab]').forEach(button=>{
+      const active=button.dataset.questTab===this.tab;
+      button.classList.toggle('active',active);
+      button.setAttribute('aria-selected',active?'true':'false');
+    });
+    const visible=entries.filter(row=>row.kind===this.tab).sort((a,b)=>Number(b.tracked)-Number(a.tracked));
     this.root.querySelector('.quest-ledger-list').innerHTML=visible.length
       ?visible.map(row=>this.card(row)).join('')
       :`<div class="quest-ledger-empty"><b>기록된 임무가 없다</b><p>${this.tab==='companion'?'길에서 만난 사람과 동행하면 이곳에 이야기가 기록된다.':this.tab==='local'?'정착지 게시판이나 주민에게 의뢰를 받으면 이곳에 기록된다.':'완료한 임무가 생기면 결과를 다시 볼 수 있다.'}</p></div>`;
