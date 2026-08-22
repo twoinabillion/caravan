@@ -43,25 +43,21 @@ Claude 세션이 `src/03-data.js`의 대사를 대대적으로 손봤다. 같은
 
 ---
 
-## 3. 🔴 지금 게임이 안 켜진다 (내 변경분 아님)
+## 3. ✅ 도로 전조 UI 초기화 문제 해결됨
 
-시작 화면에서 멈춘다:
+통합 전에는 시작 화면에서 아래 오류로 멈췄다:
 
 ```
 Uncaught ReferenceError: Cannot access 'UI' before initialization
     at src/04d-engine-director.js:229
 ```
 
-`04d-engine-director.js`가 최상위에서 `UI.roadApproach = ...`를 대입하는데,
-이 파일은 `const UI`를 선언하는 `07-ui.js`보다 **먼저** 로드된다(TDZ).
-새로 들어온 도로 접근 연출(`ROAD_APPROACH_LABELS` / `ROAD_APPROACH_RULES`) 블록이다.
+원인은 `04d-engine-director.js`가 `const UI` 선언보다 먼저 실행되면서 최상위에서
+`UI.roadApproach`를 대입한 것이었다. 통합 과정에서 구현을
+`src/07f-ui-road-thoughts.js`로 옮겼다. `04d`에는 이벤트 발생 뒤 호출되는 참조만 남아
+초기화 순서상 TDZ가 발생하지 않는다.
 
-이것 때문에 **브라우저 테스트가 전부 실패한다.** 손대지 않았다 — 진행 중인 작업으로 보여서.
-
-고치려면 그 블록을 `07-ui.js`로 옮기거나, `G.` 네임스페이스에 붙였다가 UI 초기화 후
-연결하면 된다.
-
-내 대사 변경분이 결백한 건 따로 확인했다. HEAD 엔진 + 이 `03-data.js`로 워크트리를 만들어
+대사 변경분이 결백한 건 따로 확인했다. HEAD 엔진 + 이 `03-data.js`로 워크트리를 만들어
 돌렸더니 **골든 루트 포함 전부 통과**했다(companions·beats·seoul·choices·npcs·finale).
 
 ---

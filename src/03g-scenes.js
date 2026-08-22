@@ -161,6 +161,8 @@ D.scenes = {
   'intro-departure-choice':'__SCENE_INTRO_DEPARTURE_CHOICE__',
   'intro-parents-discovery':'__SCENE_INTRO_PARENTS_DISCOVERY__',
   'intro-silenced-presentation':'__SCENE_INTRO_SILENCED_PRESENTATION__',
+  'intro-family-order-v1':'__SCENE_INTRO_FAMILY_ORDER_V1__',
+  'intro-family-farewell-v1':'__SCENE_INTRO_FAMILY_FAREWELL_V1__',
   'intro-current-expulsion':'__SCENE_INTRO_CURRENT_EXPULSION__',
   'intro-dock-aid':'__SCENE_INTRO_DOCK_AID__',
   'intro-appeal-denied':'__SCENE_INTRO_APPEAL_DENIED__',
@@ -168,6 +170,9 @@ D.scenes = {
   'intro-dashboard-module':'__SCENE_INTRO_DASHBOARD_MODULE__',
   'intro-workshop-departure':'__SCENE_INTRO_WORKSHOP_DEPARTURE__',
   'intro-cold-open-v1':'__SCENE_INTRO_COLD_OPEN_V1__',
+  'intro-departure-conversation-v4':'__SCENE_INTRO_DEPARTURE_CONVERSATION_V4__',
+  'intro-departure-start-v1':'__SCENE_INTRO_DEPARTURE_START_V1__',
+  'onboarding-main-mission-v1':'__SCENE_ONBOARDING_MAIN_MISSION_V1__',
   'onboarding-first-road-scan-v1':'__SCENE_ONBOARDING_FIRST_ROAD_SCAN_V1__',
   'family-verification-key':'__SCENE_FAMILY_VERIFICATION_KEY__',
   'recruit-minji':'__SCENE_RECRUIT_MINJI__',
@@ -266,6 +271,11 @@ D.scenes = {
 D.sceneDescriptions = {
   'event-crisis-exhaustion':'낡은 달구지 운전석에서 운전대를 잡은 두 손과 비어 있는 앞길만 보이는 피로한 새벽',
   'intro-cold-open-v1':'비 내리는 감천 부두에서 도윤 가족의 버스 문이 닫히고, 기름 묻은 손의 주인공과 달구지가 그 모습을 바라보는 새벽',
+  'intro-family-order-v1':'비 내리는 밤 집 현관 단말에서 가족 이송표가 나오고, 엄마와 아빠가 여덟 살 아이의 짐을 급히 챙기는 순간',
+  'intro-family-farewell-v1':'서울의 젖은 골목에서 엄마가 여덟 살 아이를 할아버지 차에 태우며 마지막 인사를 건네는 밤',
+  'intro-departure-conversation-v4':'감천 부두의 이송 버스와 달구지 사이에서 하진과 도윤, 주인공이 북쪽에서 모을 기록을 확인하는 새벽',
+  'intro-departure-start-v1':'하진과 도윤이 지켜보는 가운데 젖은 감천 부두를 빠져나가는 달구지',
+  'onboarding-main-mission-v1':'부두 밖 북행 길목에 세운 달구지 운전석에서 이송표와 검증 모듈, 지도를 펼쳐 첫 임무를 적는 주인공',
   'onboarding-first-road-scan-v1':'부산 밖 북행 검문소의 붉은 스캐너 아래 세운 달구지와 녹슨 단말에서 첫 발신 기록을 꺼내는 주인공',
   'seoul-uplink-reveal-v1':'멈춘 서울 코어 뒤로 수억 개의 하위 실행기 불빛이 끝없이 드러나고, 그 앞에 작게 선 달구지 일행',
   'seoul-session-reset-v1':'어두워진 남산 코어 한쪽의 분리된 정비 단말에 붉은 불이 다시 켜지고 돌아보는 일행',
@@ -456,3 +466,28 @@ D.sceneDescriptions=Object.assign(D.sceneDescriptions||{},{
     if(D.sceneAssetMeta[id]) D.sceneAssetMeta[id].objectPosition=objectPosition;
   });
 }
+
+// conversation-scene-expansion-2026-08-22
+Object.assign(D.scenes, {
+  "story-family-principle-review-v1": "assets/scenes/story-family-principle-review-v1.jpg",
+  "story-family-key-audio-v1": "assets/scenes/story-family-key-audio-v1.jpg",
+  "pair-leo-jaeyi-plan-v2": "assets/scenes/pair-leo-jaeyi-plan-v2.jpg",
+  "pair-leo-jaeyi-performance-v1": "assets/scenes/pair-leo-jaeyi-performance-v1.jpg",
+  "pair-kangwoo-leo-watch-v1": "assets/scenes/pair-kangwoo-leo-watch-v1.jpg",
+  "pair-kangwoo-leo-quiet-song-v2": "assets/scenes/pair-kangwoo-leo-quiet-song-v2.jpg",
+  "pair-kangwoo-eunsu-question-v1": "assets/scenes/pair-kangwoo-eunsu-question-v1.jpg",
+  "pair-kangwoo-eunsu-two-coordinates-v1": "assets/scenes/pair-kangwoo-eunsu-two-coordinates-v1.jpg",
+  "pair-jaeyi-eunsu-proposal-v1": "assets/scenes/pair-jaeyi-eunsu-proposal-v1.jpg",
+  "pair-jaeyi-eunsu-exhibit-v1": "assets/scenes/pair-jaeyi-eunsu-exhibit-v1.jpg",
+  "pair-kangwoo-jaeyi-appraisal-v1": "assets/scenes/pair-kangwoo-jaeyi-appraisal-v1.jpg",
+  "pair-kangwoo-jaeyi-gear-table-v1": "assets/scenes/pair-kangwoo-jaeyi-gear-table-v1.jpg",
+  "parkss-eunsu-notice-v1": "assets/scenes/parkss-eunsu-notice-v1.jpg",
+  "parkss-eunsu-treatment-v1": "assets/scenes/parkss-eunsu-treatment-v1.jpg",
+  "conflict-fuel-detour-request-v1": "assets/scenes/conflict-fuel-detour-request-v1.jpg",
+  "conflict-fuel-detour-debate-v1": "assets/scenes/conflict-fuel-detour-debate-v1.jpg",
+  "story-generation-speech-stations-v1": "assets/scenes/story-generation-speech-stations-v1.jpg",
+  "pair-jaeyi-eunsu-searching-v1": "assets/scenes/pair-jaeyi-eunsu-searching-v1.jpg",
+  "pair-jaeyi-eunsu-stored-v1": "assets/scenes/pair-jaeyi-eunsu-stored-v1.jpg",
+  "leo-eunsu-rainbow-v1": "assets/scenes/leo-eunsu-rainbow-v1.jpg",
+  "leo-eunsu-timestamps-v1": "assets/scenes/leo-eunsu-timestamps-v1.jpg"
+});

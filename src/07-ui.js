@@ -601,7 +601,7 @@ const UI = (()=>{
     introAutoTimer=setTimeout(()=>{ introAutoTimer=0; if(screen==='intro'&&!document.hidden) nextIntro(); },delay);
   }
   function renderIntro(newPage){
-    const page=D.intro[introIdx], scene=D.scenes&&D.scenes[page.scene];
+    const page=D.intro[introIdx];
     if(newPage){
       VO.stop();
       AMBI.intro(page.scene);
@@ -611,8 +611,17 @@ const UI = (()=>{
     }
     const beats=page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page.text||''}];
     const introBeats=beats.map(personalizedIntroBeat);
-    $('#intro-img').src=scene||'';
-    $('#intro-img').alt=`${page.title} 장면`;
+    const activeSceneKey=beats.slice(0,introTurnIdx+1).reverse().find(beat=>beat.scene)?.scene||page.scene;
+    const scene=D.scenes&&D.scenes[activeSceneKey];
+    const introImage=$('#intro-img');
+    if(introImage.dataset.scene!==activeSceneKey){
+      introImage.dataset.scene=activeSceneKey;
+      introImage.src=scene||'';
+      introImage.classList.remove('intro-scene-cut');
+      void introImage.offsetWidth;
+      introImage.classList.add('intro-scene-cut');
+    }
+    introImage.alt=D.sceneDescriptions&&D.sceneDescriptions[activeSceneKey]||`${page.title} 장면`;
     $('#intro-era').textContent=page.era||'';
     $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length} · ${introTurnIdx+1} / ${beats.length}`;
     $('#intro-title').textContent=page.title||'';
@@ -696,7 +705,7 @@ const UI = (()=>{
       if(!S.flags.onboarding_mission_seen){
         S.flags.onboarding_mission_seen=true;
         G.save();
-        setTimeout(()=>showEvent(D.onboardingMission),420);
+        showEvent(D.onboardingMission);
       }
     }
   }
@@ -1595,13 +1604,13 @@ function dialogueSide(turn,lanes,opt={}){
     const iconHtml=['explore','camp','repair','radio'].includes(iconKey)
       ? `<span class="stop-action-icon stay-action-icon icon-${iconKey}" aria-hidden="true"></span>`
       : `<span class="stop-action-icon" aria-hidden="true">${ICO(iconKey)}</span>`;
-    const shortCta={explore:'탐색',camp:'준비',repair:'정비',radio:'수리'}[action]||(cta||title);
+    const shortCta=disabled?'잠김':({explore:'탐색',camp:'준비',repair:'정비',radio:'수리'}[action]||(cta||title));
     return `<article class="stop-action-card${primary?' primary':''}${disabled?' is-disabled':''}">
       <button type="button" class="stop-action-trigger" data-a="${esc(action)}" ${disabled?'disabled':''}>
         ${iconHtml}<span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
           <span class="stop-action-description">${esc(description)}</span>
           ${chipHtml?`<span class="stop-action-chips">${chipHtml}</span>`:''}</span>
-        <span class="stop-action-cta"><small>실행</small><span>${esc(shortCta)} <i aria-hidden="true">→</i></span></span>
+        <span class="stop-action-cta"><span>${esc(shortCta)}${disabled?'':` <i aria-hidden="true">→</i>`}</span></span>
       </button></article>`;
   }
   function journeyModeTabsHtml(mode){

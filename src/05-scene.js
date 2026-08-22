@@ -1133,8 +1133,9 @@ const SCENE = (()=>{
     const hour=S? S.min/60:21.2;
     const dark=darknessAt(hour);
     const wx=S? (S.wx||'clear'):'clear';
-    const speed=S&&S.driving&&!UI.modalOpen()?1:0;
-    if(speed>0) worldX+=64*dt;
+    const approachSpeed=S&&S.driving&&S.driving.approach?0.18:1;
+    const speed=S&&S.driving&&!UI.modalOpen()?approachSpeed:0;
+    if(speed>0) worldX+=64*dt*speed;
 
     drawSky(hour,dark,wx);
     const bio=bioOf();

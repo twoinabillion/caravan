@@ -85,6 +85,7 @@ const uiAssetPaths = {
   STAY_JOURNEY_LEDGER:{path:'assets/ui/stay-journey-ledger-console-v1.webp', mime:'image/webp'},
   STAY_JOURNEY_LEDGER_NARROW:{path:'assets/ui/stay-journey-ledger-console-narrow-v1.webp', mime:'image/webp'},
   STAY_JOURNEY_LEDGER_INSERT:{path:'assets/ui/stay-journey-ledger-insert-v3.webp', mime:'image/webp'},
+  STAY_CONSOLE_SHELL:{path:'assets/ui/stay-console-shell-v1.webp', mime:'image/webp'},
   STAY_ICON_EXPLORE:{path:'assets/ui/stay-icon-explore-v1.webp', mime:'image/webp'},
   STAY_ICON_CAMP:{path:'assets/ui/stay-icon-camp-v1.webp', mime:'image/webp'},
   STAY_ICON_REPAIR:{path:'assets/ui/stay-icon-repair-v1.webp', mime:'image/webp'},

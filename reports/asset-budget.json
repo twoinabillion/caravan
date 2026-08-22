@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-22T03:08:19.145Z",
+  "generatedAt": "2026-08-22T11:00:02.110Z",
   "html": {
-    "bytes": 50465784,
+    "bytes": 52941934,
     "warnBytes": 32000000,
     "maxBytes": 72000000
   },
   "embedded": {
-    "files": 412,
-    "bytes": 29329203,
+    "files": 418,
+    "bytes": 31014366,
     "categories": {
       "ui": {
-        "files": 30,
-        "bytes": 4032906,
-        "encodedBytes": 5377252
+        "files": 31,
+        "bytes": 4254986,
+        "encodedBytes": 5673360
       },
       "audio": {
         "files": 45,
@@ -20,9 +20,9 @@
         "encodedBytes": 12947612
       },
       "scene": {
-        "files": 290,
-        "bytes": 14737393,
-        "encodedBytes": 19650256
+        "files": 295,
+        "bytes": 16200476,
+        "encodedBytes": 21601040
       },
       "portrait": {
         "files": 47,
@@ -81,10 +81,22 @@
       "encodedBytes": 992448
     },
     {
+      "path": "assets/scenes/intro-departure-start-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 342821,
+      "encodedBytes": 457096
+    },
+    {
       "path": "assets/scenes/onboarding-first-road-scan-v1.jpg",
       "mime": "image/jpeg",
       "bytes": 328076,
       "encodedBytes": 437436
+    },
+    {
+      "path": "assets/scenes/intro-departure-conversation-v4.jpg",
+      "mime": "image/jpeg",
+      "bytes": 316589,
+      "encodedBytes": 422120
     },
     {
       "path": "assets/ui/road-journey-log-panel-v1.webp",
@@ -93,10 +105,22 @@
       "encodedBytes": 412280
     },
     {
+      "path": "assets/scenes/onboarding-main-mission-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 290294,
+      "encodedBytes": 387060
+    },
+    {
       "path": "assets/scenes/seoul-uplink-reveal-v1.jpg",
       "mime": "image/jpeg",
       "bytes": 289082,
       "encodedBytes": 385444
+    },
+    {
+      "path": "assets/scenes/intro-family-farewell-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 278434,
+      "encodedBytes": 371248
     },
     {
       "path": "assets/scenes/intro-cold-open-v1.jpg",
@@ -105,52 +129,28 @@
       "encodedBytes": 350256
     },
     {
+      "path": "assets/scenes/intro-family-order-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 234945,
+      "encodedBytes": 313260
+    },
+    {
       "path": "assets/ui/event-result-ticket-v1.webp",
       "mime": "image/webp",
       "bytes": 232332,
       "encodedBytes": 309776
     },
     {
+      "path": "assets/ui/stay-console-shell-v1.webp",
+      "mime": "image/webp",
+      "bytes": 222080,
+      "encodedBytes": 296108
+    },
+    {
       "path": "assets/intro/12-mother-keepsakes-v2.jpg",
       "mime": "image/jpeg",
       "bytes": 208954,
       "encodedBytes": 278608
-    },
-    {
-      "path": "assets/intro/08-departure-choice-v3.jpg",
-      "mime": "image/jpeg",
-      "bytes": 201780,
-      "encodedBytes": 269040
-    },
-    {
-      "path": "assets/intro/06-years-together-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 197472,
-      "encodedBytes": 263296
-    },
-    {
-      "path": "assets/ui/event-field-report-panel-v2.webp",
-      "mime": "image/webp",
-      "bytes": 196526,
-      "encodedBytes": 262036
-    },
-    {
-      "path": "assets/intro/06-camper-conversion-v3.jpg",
-      "mime": "image/jpeg",
-      "bytes": 195684,
-      "encodedBytes": 260912
-    },
-    {
-      "path": "assets/scenes/seoul-session-reset-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 190670,
-      "encodedBytes": 254228
-    },
-    {
-      "path": "assets/intro/16-workshop-shutter-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 189654,
-      "encodedBytes": 252872
     }
   ]
 }

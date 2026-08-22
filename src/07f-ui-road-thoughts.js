@@ -48,3 +48,45 @@
     }));
   }).observe(bubbleRoot,{childList:true,subtree:true});
 })();
+
+/* ── 전방 발견 큐(road approach cue) ──
+   04d-engine-director가 사건을 열기 전에 부르는 진입 연출.
+   const UI 선언(07-ui.js)이 선행해야 하므로 반드시 이 파일보다
+   앞쪽 모듈(04d 등)에 두지 않는다. */
+(()=>{
+  let roadApproachTimer = 0;
+  UI.roadApproach = (profile, onComplete)=>{
+    clearTimeout(roadApproachTimer);
+    const old = document.getElementById('road-approach-cue');
+    if(old) old.remove();
+    delete document.documentElement.dataset.roadApproach;
+    if(!profile) return;
+    const stage = document.getElementById('stage');
+    if(!stage) { if(onComplete) onComplete(); return; }
+    const cue = document.createElement('div');
+    cue.id = 'road-approach-cue';
+    cue.className = `road-approach-cue road-approach-${profile.kind}`;
+    cue.style.setProperty('--road-cue-duration', `${profile.duration}ms`);
+    const image = document.createElement('img');
+    image.src = `assets/road-cues/cue-${profile.kind}.png`;
+    image.alt = '';
+    image.setAttribute('aria-hidden','true');
+    image.onerror = ()=>{ if(!image.dataset.fallback){ image.dataset.fallback='1'; image.src='assets/road-cues/cue-landmark.png'; } };
+    const status = document.createElement('div');
+    status.className = 'road-approach-status';
+    const eyebrow = document.createElement('span');
+    eyebrow.textContent = '전방 발견';
+    const label = document.createElement('b');
+    label.textContent = profile.label;
+    const action = document.createElement('small');
+    action.textContent = '속도를 줄이는 중';
+    status.append(eyebrow,label,action);
+    cue.append(image,status);
+    stage.append(cue);
+    document.documentElement.dataset.roadApproach = profile.kind;
+    roadApproachTimer = setTimeout(()=>{
+      cue.classList.add('is-stopped');
+      roadApproachTimer = setTimeout(()=>{ if(onComplete) onComplete(); }, 170);
+    }, profile.duration);
+  };
+})();

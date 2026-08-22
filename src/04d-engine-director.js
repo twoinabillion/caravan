@@ -176,8 +176,74 @@ G.fireDriveEvent = ()=>{
 };
 
 G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openEvent(ev); };
-G.openEvent = (evd)=>{
-  if(evd.once) S.used.push(evd.id);
+  const ROAD_APPROACH_LABELS = {
+    people:'길가에 사람이 보인다', cyclist:'자전거 한 대가 보인다', vehicle:'멈춰 선 차가 보인다',
+    debris:'도로 위에 장애물이 보인다', checkpoint:'앞에 검문 시설이 있다', signal:'낯선 신호가 잡힌다',
+    smoke:'멀리 연기가 보인다', shelter:'길가에 건물이 보인다', animal:'도로 가장자리에 움직임이 있다',
+    cache:'길가에 물건이 놓여 있다', flood:'앞쪽 도로에 물이 차 있다', surveillance:'감시 장치가 길을 보고 있다',
+    bridge:'앞에 임시 통로가 보인다', medical:'누군가 도움을 청하고 있다', market:'길가에 작은 장터가 보인다',
+    landmark:'낯선 표식이 눈에 들어온다'
+  };
+  const ROAD_APPROACH_RULES = [
+    ['cyclist',/자전거|우편|배달|courier|bicycle|bike/],
+    ['medical',/요양원|왕진|환자|열병|의사|약사|구급|부상|medical|clinic/],
+    ['checkpoint',/검문|초소|순찰|통행세|관문|checkpoint|patrol|toll|gate/],
+    ['bridge',/다리|교량|판자길|임시 통로|bridge|crossing/],
+    ['flood',/침수|물길|나루|홍수|범람|flood|waterway/],
+    ['surveillance',/드론|센서|카메라|감시|자동 장치|청소차|surveillance|scanner/],
+    ['signal',/라디오|방송|신호|안테나|확성기|주파수|송신|beacon|radio|signal/],
+    ['smoke',/불길|연기|모닥불|봉화|화재|campfire|smoke|fire/],
+    ['market',/시장|장터|상인|교역|행상|노점|market|trader|merchant/],
+    ['shelter',/주유소|휴게소|온실|가게|건물|창고|터널|정거장|농장|shelter|station|warehouse/],
+    ['animal',/고라니|사슴|들개|멧돼지|짐승|동물|animal|boar|deer/],
+    ['vehicle',/트럭|버스|차량|화물차|승용차|견인|vehicle|truck|van|car/],
+    ['debris',/잔해|차단|표지판|장애물|낙석|붕괴|바리케이드|debris|barrier|rockslide/],
+    ['landmark',/신발|방울|촛불|무덤|묘지|기념|표식|비석|landmark|memorial/],
+    ['cache',/상자|가방|물자|부품|식량|과일|소금|발견물|공구|cache|salvage|supply/]
+  ];
+  G.roadApproachProfile = (evd)=>{
+    if(!evd || evd.roadApproach === false) return null;
+    const type = String(evd.type || '');
+    if(type === '대화' || type === '동행') return null;
+    const id = String(evd.id || '').toLowerCase();
+    if(/^(crisis_|critical_)/.test(id) || /nofuel|no_fuel|breakdown|drowsy|collapse|fuel_empty/.test(id)) return null;
+    const fields = [evd.id, evd.title, evd.scene, evd.location, evd.type];
+    if(typeof evd.text === 'string') fields.push(evd.text);
+    const haystack = fields.filter(Boolean).join(' ').toLowerCase();
+    let kind = '';
+    for(const [candidate, pattern] of ROAD_APPROACH_RULES){
+      if(pattern.test(haystack)){ kind = candidate; break; }
+    }
+    if(!kind){
+      if(type === '조우') kind = 'people';
+      else if(type === '발견' || type === '탐색') kind = 'cache';
+      else if(type === '추적') kind = 'surveillance';
+      else if(type === '위기' || evd.combat) kind = 'debris';
+      else kind = 'landmark';
+    }
+    const key = evd.id || `${evd.title || 'road-event'}:${type}`;
+    return {kind, label:ROAD_APPROACH_LABELS[kind], duration:(type === '위기' || evd.combat) ? 850 : 1450, eventKey:key};
+  };
+
+  /* UI.roadApproach 구현은 src/07f-ui-road-thoughts.js로 옮겨졌다 —
+     빌드 순서상 04d는 const UI 선언(07-ui.js)보다 먼저 실행되므로 여기서
+     UI를 건드리면 TDZ 오류로 이후 전체 스크립트가 죽는다. */
+
+  G.openEvent = (evd)=>{
+    const eventKey = evd && (evd.id || `${evd.title || 'road-event'}:${evd.type || ''}`);
+    const approach = S.driving ? G.roadApproachProfile(evd) : null;
+    if(approach && S._roadApproachBypass !== eventKey && !S.driving.approach){
+      S.driving.approach = approach;
+      UI.roadApproach(approach, ()=>{
+        if(S.driving) delete S.driving.approach;
+        S._roadApproachBypass = eventKey;
+        UI.roadApproach(null);
+        G.openEvent(evd);
+      });
+      return;
+    }
+    if(S._roadApproachBypass === eventKey) delete S._roadApproachBypass;
+    if(evd.once) S.used.push(evd.id);
   G.qualityEventOpen(evd);
   G.rememberEvent(evd);
   S.stats.events++;

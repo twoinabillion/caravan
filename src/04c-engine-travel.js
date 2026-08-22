@@ -469,7 +469,8 @@ G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
   if(!S.driving) return;
   const gm = dt*TIMESCALE;               // game minutes
-  const dv = S.driving;
+    const dv = S.driving;
+    if(dv.approach) return;
   const wxSpd = S.wx==='storm'?0.76 : S.wx==='fog'?0.88 : 1;
   const ftgSpd = S.fatigue>=80?0.85:1;   // 수면 부족 → 감속
   /* 백그라운드 복귀나 느린 기기에서 큰 dt가 한 번 들어와도 남은 거리보다
