@@ -4778,3 +4778,54 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
   .road-thought-copy p { font-size: 12px; }
 }
 </style>
+<style id="bag-layout-polish">
+/* Keep labels, item art, counts, and detail actions on a shared center line. */
+.bag-title-row{
+  transform:translate(2px,2px);
+}
+.bag-pocket>.ico{
+  right:auto!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+}
+.bag-pocket-name{
+  right:auto!important;
+  left:50%!important;
+  transform:translate(-50%,4px)!important;
+  text-align:center!important;
+}
+.bag-pocket-count{
+  right:auto!important;
+  left:50%!important;
+  justify-content:center!important;
+  transform:translateX(-50%)!important;
+}
+.bag-pocket-count>small{
+  line-height:1!important;
+}
+.bag-detail>.ico{
+  transform:translateY(-7px)!important;
+}
+.bag-detail-copy{
+  align-items:stretch!important;
+}
+.bag-detail-heading{
+  align-items:baseline!important;
+}
+.bag-detail-copy>p{
+  margin-top:3px!important;
+}
+.bag-detail-copy>.is-primary{
+  width:100%!important;
+  min-width:0!important;
+  margin-right:0!important;
+  margin-left:0!important;
+  justify-self:stretch!important;
+  padding-right:10px!important;
+  padding-left:10px!important;
+}
+@container game (max-width:380px){
+  .bag-detail>.ico{transform:translateY(-4px)!important}
+  .bag-detail-copy>.is-primary{font-size:10px!important}
+}
+</style>
