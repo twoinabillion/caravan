@@ -67,8 +67,8 @@
   - 설치 후에는 홈 화면의 `서울까지 400km` 아이콘으로 전체 화면 실행. 온라인이면 최신 배포본을 먼저 확인하고, 오프라인이면 마지막으로 받은 버전으로 실행한다.
 - **데스크톱 모바일 실사용 프리뷰**: https://twoinabillion.github.io/caravan/mobile-preview.html
   - iPhone Safari/Android Chrome의 주소창이 차지한 높이를 제외한 실제 게임 영역을 재현한다.
-- **로컬 오프라인 실행**: `서울까지400km.html`을 브라우저로 열기
-  - 네트워크 없이도 빌드에 포함된 전체 이벤트와 대화를 플레이할 수 있다.
+- **로컬 오프라인 실행**: `npm run build:html` 실행 후 생성된 `서울까지400km.html`을 브라우저로 열기
+  - 네트워크 없이도 빌드에 포함된 전체 이벤트와 대화를 플레이할 수 있다. 생성 HTML은 Git에 저장하지 않고 필요할 때 다시 만든다.
 
 ## 현황
 
@@ -118,7 +118,8 @@ assets/  intro·scenes·portraits·road-cues·upgrades·icons·audio 원본 · s
 
 설계 원칙·엔딩 구조·로드맵은 [docs/DESIGN.md](docs/DESIGN.md), 장기 연작의
 불변 설정은 [docs/SERIES-BIBLE.md](docs/SERIES-BIBLE.md), 현재 구현 규모와 다음
-관리 과제는 [docs/CURRENT.md](docs/CURRENT.md)에서 관리한다.
+관리 과제는 [docs/CURRENT.md](docs/CURRENT.md), 저장소의 소스·생성물 보관 기준은
+[docs/REPOSITORY.md](docs/REPOSITORY.md)에서 관리한다.
 지도는 외부 API 없이 동작하는 그림 여정도다. 실제 좌표를 바탕으로 대한민국 윤곽과
 주요 도시를 배치하되, 강줄기와 산맥 같은 장식은 덜어 현재 경로와 발견 장소가 먼저 보이게 했다.
 

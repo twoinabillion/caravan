@@ -18,3 +18,12 @@ caravan.pub
 id_*
 *.key
 trailer/rec/
+
+# Reproducible build and QA output. Keep locally or upload as CI artifacts,
+# but do not grow the source repository with generated binaries.
+/audits/
+/exports/
+/trailer/out/
+/trailer-remotion/
+/design-consultation-all-screens.html
+/서울까지400km.html

@@ -78,7 +78,8 @@ for (const ev of allEvents) {
   if (ev.needFlagMin && !flagSetters.has(ev.needFlagMin[0])) err(`${at} needFlagMin 세터 없음: ${ev.needFlagMin[0]}`);
   if (ev.needWx && !D.wx[ev.needWx]) err(`${at} needWx 미존재: ${ev.needWx}`);
   if (ev.hiddenTarget && ev.hiddenTarget !== 'any' && !nodeIds.has(ev.hiddenTarget)) err(`${at} hiddenTarget 미존재: ${ev.hiddenTarget}`);
-  if (ev.region) ev.region.forEach(r => { if (!['south','mid','north'].includes(r)) err(`${at} region 미존재: ${r}`); });
+  if (ev.region) (Array.isArray(ev.region) ? ev.region : [ev.region])
+    .forEach(r => { if (!['south','mid','north'].includes(r)) err(`${at} region 미존재: ${r}`); });
   for (const ch of ev.choices || []) {
     if (ch.minParty !== undefined && (!Number.isInteger(ch.minParty) || ch.minParty < 1))
       err(`${at} choice.minParty는 1 이상의 정수여야 함`);

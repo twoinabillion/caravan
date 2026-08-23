@@ -1,4 +1,0 @@
-viewport=466x959 dpr=2
-clicked_npc=01 돔 중앙 장터 남부 물류와 게시판
-errors=[]
-failures=['09-bag.png: Page.click: Timeout 30000ms exceeded.', 'menu/crew: Page.click: Timeout 30000ms exceeded.', 'journal: Page.click: Timeout 30000ms exceeded.', 'camp: Page.click: Timeout 30000ms exceeded.']
