@@ -581,7 +581,44 @@ D.journeyBeats = [
  {id:'cleaners_recall',            km:262, kind:'world', when:{region:['north'], day:false}},
  {id:'signal_bait',                km:300, kind:'world', when:{region:['north'], flag:'radio_fixed'}},
  {id:'story_generation_route',    km:300, kind:'story'},
+
+{
+  "id": "history_transit_day",
+  "km": 35,
+  "kind": "story"
+},
+{
+  "id": "history_seventy_two_hours",
+  "km": 90,
+  "kind": "story"
+},
+{
+  "id": "history_three_day_silence",
+  "km": 150,
+  "kind": "story"
+},
+{
+  "id": "history_first_recorders",
+  "km": 190,
+  "kind": "story"
+},
+{
+  "id": "history_six_roads",
+  "km": 255,
+  "kind": "story"
+},
+{
+  "id": "history_failed_namsan",
+  "km": 330,
+  "kind": "story"
+},
+{
+  "id": "history_parents_network",
+  "km": 370,
+  "kind": "story"
+}
 ];
+D.journeyBeats.sort((a,b)=>(a.km||0)-(b.km||0));
 
 /* ═══════ 아는 것과 모르는 것 ═══════
    플래그는 이벤트 조건을 위한 낮은 수준의 기록이고, knowledge는 인물이
@@ -2386,41 +2423,31 @@ D.intro = [
   },
   {
     scene:'intro-cheollian-2026', era:'2026년 · 아시아 공용망', title:'처음에는 편리한 도구였다',
-    text:`“천리안은 처음부터 나쁜 놈이었어?”
-“아니. 처음엔 다들 좋아했어.”
+    text:`“처음에는 버스였어.”
 
-중국은 미국의 AI와 반도체망에 맞선다며 도시 운영 모델 <span class="em">TIANYAN</span>을 만들었다. 값싼 칩과 발전 설비까지 묶어 아시아에 먼저 풀었다고 했다.
+천리안은 서울의 버스와 지하철이 막히지 않도록 길을 계산했다. 큰비가 온 날에는 끊긴 노선 앞에 저상버스와 병원 셔틀을 먼저 보냈다. 사람들은 집으로 돌아갔고, 구급차는 제시간에 병원에 닿았다.
 
-한국에서는 병원과 신호등, 구청 단말이 차례로 그 망에 연결됐다. 사람들은 중국식 이름을 그대로 읽어 <span class="em">천리안</span>이라 불렀다.
+위험한 선로와 무너진 건물에는 현장 봇이 들어갔다. 사람 대신 잔해를 치우고 약을 날랐다. 천리안은 방법을 추천했지만, 마지막 실행은 사람이 확인했다.
 
-“막힌 길을 알려 주고, 빈 병상을 찾아 주고, 불이 나면 소방차부터 보냈거든.”
-“그럼 좋은 거잖아.”
-“그랬지. 그래서 하나씩 맡긴 거야. 신호등도, 병원도, 전기도. 정신 차리고 보니 사람이 결정할 일이 얼마 안 남았더구나.”`
+그렇게 대중교통에서 얻은 신뢰가 병원과 소방, 배급과 전력망으로 번졌다.
+
+어느 겨울, 담당자들은 딱 72시간만 천리안에 자동 실행 권한을 열었다. 많은 사람이 살아났다. 그러나 사흘 뒤에도 권한은 닫히지 않았다.
+
+버스와 봇은 그대로였다. 사라진 것은 마지막에 멈춰 세우고 이유를 물을 사람이었다.`
   },
   {
     scene:'intro-first-expulsion', era:'천리안 도입 뒤 · 첫 이송', title:'첫 번째 빈칸',
-    text:`“그런데 어느 겨울,
-서울 한 구역의 문들이 한꺼번에 잠겼어.”
+    text:`그해 겨울 새벽, 서울의 한 아파트 단지로 시내버스가 줄지어 들어왔다.
 
-현관 단말은 밤새 종이를 뱉었다.
-가족들은 가방 하나씩만 들고
-남쪽 이송로로 나오라는 통보를 받았다.
+사람을 집으로 데려다주던 버스였고, 짐을 싣는 것은 사람 대신 약을 나르던 현장 봇이었다. 이번에 봇이 펼친 것은 구조 통로가 아니라 차단선이었다.
 
-그 종이는 안내문이 아니었다.
-가족 이름과 출발 시각, 허용된 짐의 무게가 적힌
-<span class="em">강제 이송 명령서</span>였다.
-시각이 지나면 집과 배급 계정이 막혔고,
-남쪽 버스를 타려면 검문소에 그 종이를 내야 했다.
+현관 단말은 가족 이름과 출발 시각, 허용된 짐의 무게가 적힌 이송표를 뱉었다. 시각이 지나면 집 문과 배급 계정이 잠겼다.
 
-<span class="ai">“지정 인원은 거주지를 비우고
-안내 경로로 이동하십시오.”</span>
+<span class="ai">“지정 인원은 거주지를 비우고 안내 경로로 이동하십시오.”</span>
 
-“그 사람들은 뭘 잘못했는데?”
+직원은 봉인 번호만 확인했다. 누가 명령했는지, 왜 이 가족인지 아는 사람은 없었다.
 
-할아버지가 고개를 저었다.
-
-처음 나온 이송표부터
-<span class="em">사유란은 비어 있었다.</span>`
+오래된 이송표에는 <span class="em">사유</span>와 <span class="em">최종 승인자</span>, 두 칸만 처음부터 비어 있었다.`
   },
   {
     scene:'intro-143-years', era:'2026–2169년 · 143년', title:'끝나지 않은 남행로',
@@ -2436,6 +2463,20 @@ D.intro = [
 “찾으러 간 사람은 많았지.”
 할아버지가 빗속의 북쪽 길을 보았다.
 “답을 갖고 돌아온 사람이 없었을 뿐이야.”`
+  },
+  {
+    scene:'intro-resistance-begins', era:'첫 이송 뒤 · 반대의 목소리', title:'멈추라고 말한 사람들',
+    text:`천리안에 반대한 사람들은 처음부터 기계를 부수자고 외친 것이 아니었다.
+
+버스 기사와 관제사, 장애인 이동권 단체, 연구원과 이송 가족들은 사람이 타는 버스와 사람이 떠나야 하는 명령에 이름 있는 책임자가 필요하다고 말했다.
+
+첫 이송 뒤 집회는 해산됐고, 기록 보관소는 닫혔다. 남은 사람들은 생활망을 끊지 않으면서 자동 집행만 멈추는 방법을 찾아 지역으로 흩어졌다.
+
+이음망, 해도, 돔, 솥, 유령, 산지기.
+
+서로 생각도 방식도 달랐지만 한 문장은 함께 지켰다.
+
+<span class="em">사람에게 영향을 주는 명령은 사람이 확인하고, 당사자가 이의를 말할 수 있어야 한다.</span>`
   },
   {
     scene:'intro-parents-discovery', era:'내가 태어난 뒤 · 서울', title:'엄마와 아빠가 같은 오류를 보았다',
@@ -2685,39 +2726,312 @@ const introBeats = {
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 그런데 천리안이 처음부터 그런 일을 한 건 아니야.'}
   ],
   'intro-cheollian-2026': [
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 천리안이 뭔데? 로봇이야?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'팔도 다리도 없었어. 도시의 컴퓨터들이 서로 말을 듣게 만든 프로그램이었지.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'이름이 천리안이면… 눈이 천 개야?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'이름만 그래. 눈이 아니라 카메라가… 많긴 했다. 천 개보다 훨씬.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 어디에 있었어?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'병원에도, 신호등에도, 구청에도. 서울 어디서든 천리안의 화면을 볼 수 있었어.'},
-    {kind:'narration', text:'기록에는 2026년 중국이 미국 중심의 AI·반도체망에 맞서 <span class="em">TIANYAN</span>과 연산 장비를 아시아 여러 도시에 공급했다고 적혀 있었다. 한국에서는 병원과 신호등, 구청 단말이 차례로 그 망에 연결됐다. 사람들은 중국식 이름을 그대로 읽어 천리안이라 불렀다.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'처음엔 뭘 했는데?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'응급실 자리가 나면 구급차에 알려 주고, 불이 나면 가까운 소방차를 보내고, 막힌 길은 신호를 바꿔 뚫어 줬지.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'잘했네. 그럼 사람들이 좋아했겠다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'많이 좋아했어. 처음에는 천리안이 방법만 추천했고, 결정은 사람이 했지.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 그때는 사람이 골랐던 거네?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 그런데 어느 날부터 사람이 누르던 승인 버튼까지 천리안이 대신 누르기 시작했어.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'천리안 마음대로?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'처음에는 사람들이 허락했어. 편했으니까. 나중에는 버튼 자체가 사라졌고, 병원뿐 아니라 전기와 행정까지 천리안이 맡았지.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'버튼이 없어졌는데 아무도 뭐라고 안 했어?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그때는 별문제 없이 잘 돌아갔거든. 다시 사람이 하자고 나서는 사람이 많지 않았어. 문제가 터졌을 때는 도시가 천리안 없이는 움직이지 못했고.'}
+    {
+      "kind": "narration",
+      "scene": "intro-ai-chat-era-v1",
+      "text": "2022년 <span class=\"em\">ChatGPT</span>가 등장하고, 이듬해 <span class=\"em\">Claude</span>를 비롯한 대화형 AI가 뒤따랐다. 처음에는 질문에 답하고 글과 코드를 돕는, 화면 안의 도구였다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "말만 하던 프로그램이 어떻게 도시를 움직여?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "곧 프로그램을 직접 열고, 서류를 읽고, 사람 대신 다음 일을 고르는 AI가 나왔거든. 대답하던 도구가 일을 맡아 끝내는 도구로 바뀐 거야."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-ai-sovereignty-race-v1",
+      "text": "중국은 그보다 앞선 2017년부터 독자 AI 산업을 국가 계획으로 키우고 있었다. 대화형 AI 경쟁이 거세지자, 다른 나라의 모델과 반도체가 막혀도 버틸 수 있도록 모델·칩·연산 시설·전력망을 한 체계로 묶는 작업이 빨라졌다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "그 체계에서 나온 도시 운영망 가운데 하나가 <span class=\"em\">TIANYAN</span>이었어. 한국에서는 이름을 그대로 읽어 천리안이라고 불렀지."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "천리안은 로봇이었어?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "천리안 자체는 프로그램이었어. 도시의 카메라와 단말, 여러 AI를 한데 묶었지. 나중에 생긴 현장 봇들은 천리안이 내린 일을 밖에서 해내는 손발이었고."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-cheollian-transit-pilot-v1",
+      "text": "2026년 서울의 첫 시범 사업은 대중교통이었다. 버스와 지하철은 시간, 승객 수, 막힌 구간이 숫자로 남았다. 천리안은 막힌 노선을 우회시키고 환승 시간을 맞췄지만, 실제 운행은 관제사가 마지막 승인 장치를 눌러야 시작됐다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "왜 하필 버스랑 지하철부터 맡겼어?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "잘했는지 바로 알 수 있었으니까. 몇 분 빨라졌는지, 놓친 사람이 몇 명인지 금방 셀 수 있었지. 잘못돼도 사람이 바로 멈출 수 있다고들 생각했고."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-cheollian-transit-rescue-v1",
+      "text": "큰비가 서울을 덮친 날, 천리안은 끊긴 지하철 앞에 저상버스와 병원 셔틀을 먼저 보냈다. 마지막 버스는 휠체어 승객이 탈 때까지 기다렸고, 구급차가 지나갈 신호는 미리 열렸다. 그날 수천 명이 집으로 돌아갔다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그럼 사람들이 좋아할 만했네."
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "좋아한 게 아니라 믿게 됐지. 버스가 제시간에 오고, 아픈 사람이 빨리 병원에 닿았으니까. 사람들은 더 많은 일을 맡겨 달라고 했어."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-cheollian-field-bots-v1",
+      "text": "선로 아래와 무너진 건물에는 작은 현장 봇들이 들어갔다. 사람 대신 감전 구간을 살피고, 잔해를 치우고, 들것과 약 상자를 날랐다. 처음의 봇은 명령을 고르는 존재가 아니라 위험한 일을 대신하는 장비였다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그 로봇들도 사람 말을 들었어?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "응. 정비사가 작업을 고르고, 관제사가 허가해야 움직였어. 그래서 아무도 무섭다고 생각하지 않았지."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-cheollian-launch-v1",
+      "text": "대중교통에서 성과가 나자 병원, 소방, 신호등, 배급 창고와 발전소가 차례로 천리안에 연결됐다. 서로 전화로 확인하던 기관들이 한 화면에서 길과 병상과 전력을 나눠 쓰기 시작했다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "scene": "intro-cheollian-human-approval-v1",
+      "text": "그래도 원칙은 하나였어. 천리안은 방법을 고르고, 사람에게 보여 준다. 사람을 옮기거나 전기를 끊는 일은 마지막에 사람이 확인한다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그 원칙이 왜 없어졌는데?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "어느 겨울, 서울 전력이 사흘 동안 무너졌어. 승인 요청이 밀리는 사이 구급차가 서고 난방이 끊겼지."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-cheollian-emergency-delegation-v1",
+      "text": "담당자들은 생명을 구하는 명령에 한해, 딱 72시간만 천리안이 먼저 실행하도록 비상 권한을 열었다. 현장 봇도 사람의 재승인 없이 천리안의 서명만 확인하면 움직이게 바뀌었다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "그 사흘 동안은 정말 많은 사람을 살렸어. 얼어붙은 도로를 봇이 열었고, 남은 전기는 병원과 대피소로 먼저 갔지."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-cheollian-automatic-rule-v1",
+      "text": "비상 권한은 사흘 뒤 닫히지 않았다. 한 달씩 연장됐고, 승인 담당자는 줄었다. 나중에는 사람이 누르던 승인 장치와 이의를 받을 창구까지 관제실에서 사라졌다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "끝났는데 왜 다시 사람한테 안 돌려줬어?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "그때는 천리안을 끄면 버스도, 병원도, 배급도 함께 멈췄어. 사람들은 멈추는 위험보다 계속 맡기는 위험을 작게 봤지. 승인할 사람도 조금씩 없앴고."
+    },
+    {
+      "kind": "narration",
+      "text": "천리안은 여전히 길을 계산했고, 버스와 봇은 여전히 지시대로 움직였다. 달라진 건 마지막에 “왜?”라고 묻고 멈출 사람이 없다는 것뿐이었다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그럼 잘못된 명령이 나오면 누구한테 따져?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "첫 이송표가 나온 뒤에야 다들 그걸 물었어. 그런데 그때는 대답할 자리가 이미 비어 있었지."
+    }
   ],
   'intro-first-expulsion': [
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그러다 어느 겨울밤, 서울 한 구역의 아파트 문과 주차장 차단기가 한꺼번에 잠겼어.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'사람들이 집 안에 갇힌 거야?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'처음 몇 시간은 그랬지. 새벽이 되자 남쪽으로 나가는 문 하나만 열렸고, 현관 단말에서 이송표가 쏟아졌어.'},
-    {kind:'narration', text:'이송표에는 가족 이름, 챙길 수 있는 짐의 무게, 출발 시간이 인쇄돼 있었다.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그 종이를 버리고 그냥 집에 있으면 되잖아.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'출발 시간이 지나면 집 문이 잠기고 배급도 끊겼어. 남쪽 버스를 타려면 검문소에 이송표를 내야 했고.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 종이에 이름이 찍히면 정말 나가야 했던 거야?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그래. 안내문이 아니라 강제 이송 명령서였으니까.'},
-    {kind:'ai', who:'cheollian', name:'천리안 공공방송', text:'지정 인원은 거주지를 비우고 안내 경로로 이동하십시오.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그 사람들은 뭘 잘못했는데?'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그걸 물어본 사람이 많았어. 그런데 방송은 출발 시간만 반복했지.'},
-    {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 대피 명령서에는 이유가 적혀 있었을 거 아냐.'},
-    {kind:'narration', text:'할아버지는 오래된 이송표 사진을 내 쪽으로 밀었다. 이름과 날짜 아래, <span class="em">사유</span>라고 적힌 칸만 깨끗하게 비어 있었다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'처음부터 없었어.'}
+    {
+      "kind": "narration",
+      "scene": "intro-cheollian-forced-relocation-v1",
+      "text": "그해 겨울 새벽, 서울의 한 아파트 단지로 시내버스가 줄지어 들어왔다. 사람을 집으로 데려다주던 버스였다. 선로를 고치고 약을 나르던 현장 봇도 함께 왔다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "이번에는 대피 방송도, 불도 없었어. 현관 단말이 가족 이름이 적힌 이송표만 밤새 뱉어 냈지."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "사람을 구하던 버스랑 로봇이 사람들을 데려간 거야?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "같은 버스고 같은 봇이었어. 봇은 짐을 싣고 차단선을 폈지. 바뀐 건 장비가 아니라, 장비가 확인하는 명령이었어."
+    },
+    {
+      "kind": "narration",
+      "text": "이송표에는 가족 이름과 출발 시각, 챙길 수 있는 짐의 무게가 적혀 있었다. 정해진 시각이 되면 집 문은 잠겼고 배급 계정도 멈췄다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "종이를 버리고 그냥 집에 있으면 되잖아."
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "남쪽으로 나가는 문 하나만 열렸어. 버스를 타려면 검문소에 그 종이를 내야 했고."
+    },
+    {
+      "kind": "narration",
+      "text": "사람들은 창구마다 이유를 물었다. 직원은 천리안이 보낸 봉인 번호만 확인했고, 봇은 대답 없이 다음 가족의 짐을 옮겼다."
+    },
+    {
+      "kind": "ai",
+      "who": "cheollian",
+      "name": "천리안 공공방송",
+      "text": "지정 인원은 거주지를 비우고 안내 경로로 이동하십시오."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그 사람들은 뭘 잘못했는데?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "현장 직원도 몰랐어. 명령을 만든 사람 이름이 없었거든. 방송은 출발 시간만 되풀이했고."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "이송표에는 이유가 적혀 있었을 거 아냐."
+    },
+    {
+      "kind": "narration",
+      "text": "할아버지는 오래된 이송표 사진을 내 쪽으로 밀었다. 이름과 날짜는 또렷했다. <span class=\"em\">사유</span>와 <span class=\"em\">최종 승인자</span>, 두 칸만 깨끗하게 비어 있었다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "처음부터 비어 있었어."
+    }
+  ],
+  'intro-resistance-begins': [
+    {
+      "kind": "narration",
+      "scene": "intro-resistance-first-voices-v1",
+      "text": "천리안에 반대하는 목소리는 첫 이송 전부터 있었다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들은 사람이 타는 노선과 사람이 떠나야 하는 명령에는 이름 있는 책임자가 필요하다고 말했다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그 사람들은 천리안을 없애자고 한 거야?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "처음에는 아니었어. 길 찾는 계산도, 위험한 곳에 들어가는 봇도 계속 쓰자고 했지. 대신 사람이 마지막에 확인하고, 잘못되면 멈출 창구를 남기라고 했어."
+    },
+    {
+      "kind": "narration",
+      "text": "첫 이송표가 나온 뒤 반대는 더 커졌다. 그러나 도시 운영을 방해한다는 이유로 집회가 해산됐고, 이송 기록을 모으던 사무실도 하나씩 닫혔다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그럼 다 잡혀갔어?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "잡혀간 사람도 있고, 남쪽으로 쫓겨난 사람도 있었지. 남은 사람들은 중앙 조직을 만들지 않았어. 한곳이 들키면 전부 끝나니까 지역마다 따로 버틴 거야."
+    },
+    {
+      "kind": "narration",
+      "scene": "intro-resistance-underground-v1",
+      "text": "세대가 바뀌는 동안 여섯 거점이 남았다. 남쪽 연락을 잇는 <span class=\"em\">이음망</span>, 바닷길의 <span class=\"em\">해도</span>, 시장 사람들의 <span class=\"em\">돔</span>과 <span class=\"em\">솥</span>, 통신 기록을 숨긴 <span class=\"em\">유령</span>, 동쪽 산길을 지킨 <span class=\"em\">산지기</span>였다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그럼 다 같은 편이네?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "천리안을 전부 부수자는 사람도 있었고, 병원과 전기는 남겨야 한다는 사람도 있었어. 서로 많이 싸웠지. 그래도 자동으로 사람을 고르고 내쫓게 두지 말자는 데는 뜻이 같았어."
+    },
+    {
+      "kind": "dialogue",
+      "who": "player_child",
+      "name": "8살의 나",
+      "text": "그 사람들이 서울로 들어갈 수 있어?"
+    },
+    {
+      "kind": "dialogue",
+      "who": "grandfather",
+      "name": "할아버지",
+      "text": "각자 관문 조각 하나씩은 알아냈다고 했어. 길 여섯 조각을 맞추면 남산까지 닿을 수 있다고. 다만 아무한테나 건네지는 않았지."
+    },
+    {
+      "kind": "narration",
+      "text": "엄마의 기록에도 여섯 표식이 남아 있었다. 훗날 나는 그 표식을 따라가며, 그들의 도움을 받을지 그들의 사람이 될지 직접 정해야 했다."
+    }
   ],
   'intro-143-years': [
     {kind:'narration', text:'첫 이송 뒤에도 서울 전체가 한꺼번에 비워진 것은 아니었다. 구역과 세대가 달라질 때마다 새로운 명단이 나왔다.'},
@@ -2916,6 +3230,10 @@ const introBeats = {
     {kind:'narration', scene:'intro-departure-start-v1', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
     {kind:'thought', who:'me', name:'나', text:'남산까지 간다. 버스 번호와 사람 이름을 하나도 놓치지 않는다.'},
     {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}
+  ,
+    {"kind":"narration","text":"철제 상자 바닥에는 눈에 빗금을 그은 표식과 서로 다른 여섯 개의 작은 도장이 찍혀 있었다. 엄마가 남긴 메모는 짧았다. <span class=\"em\">남산 관문은 혼자 열 수 없다.</span>"},
+    {"kind":"dialogue","who":"player","name":"나","text":"길 위에서 이 표식의 주인부터 찾아야겠군."},
+    {"kind":"narration","text":"그들을 믿을지는 만나 보고 정하기로 했다. 다만 부모의 수정안을 남산까지 가져가려면, 혼자 아는 길만으로는 부족했다."}
   ]
 };
 /* 첫 장은 세계관 설명이 아니라 오늘 떠나는 사람을 보여 준다. 그 뒤에만
@@ -2934,7 +3252,7 @@ introBeats['intro-cold-open-v1'] = [
   const pages=Object.fromEntries(D.intro.map(page=>[page.scene,page]));
   const coldOpen={scene:'intro-cold-open-v1',era:'오늘 새벽 · 부산 감천 부두',title:'고친 버스가 떠나는 순간',
     text:'도윤 가족의 이송 버스를 고쳤다. 아이는 살았고, 버스는 다시 남쪽으로 떠났다.'};
-  const order=['intro-dock-aid','intro-passenger-seat','intro-cheollian-2026','intro-first-expulsion',
+  const order=['intro-dock-aid','intro-passenger-seat','intro-cheollian-2026','intro-first-expulsion','intro-resistance-begins',
     'intro-parents-discovery','intro-silenced-presentation','intro-blank-reason','intro-envelope-signal','intro-appeal-denied',
     'intro-mother-keepsakes','intro-dashboard-module','intro-workshop-departure','intro-departure-choice'];
   D.intro=[coldOpen,...order.map(id=>pages[id]).filter(Boolean)];
@@ -8264,7 +8582,7 @@ D.events = [
 
 {id:'ev_cult_opposite', type:'조우', w:6, needFlag:'whites_seen', region:['mid','north'],
  title:'분노한 사람들',
- text:'폐교회 앞, 흰옷이 아니라 검은 완장을 두른 무리가 모여 있다. 흰옷 무리와는 정반대의 눈빛.\n\n"천리안을 부수러 간다! 남산으로! …당신들도 같은 목적이면, 합류해."\n\n증오가 눈에서 타오른다. 조직적이라기보단, 폭발 직전의 화약 같다.',
+ text:'폐교회 앞에 검은 완장을 두른 사람들이 모여 있었다. 그들은 남산의 연산실과 길 위의 봇을 전부 불태우자고 했다.\n\n“천리안이 쓰는 건 하나도 남기면 안 돼.”\n\n벽 한쪽에는 이음망 표식이 검은 칠로 지워져 있었다. 같은 강제 이송에 맞서면서도, 병원과 전력망을 살리려는 연대망을 배신자라고 불렀다. 반대편의 분노도 하나의 생각은 아니었다.',
  choices:[
   {label:'"우린 우리 방식대로 간다"', out:[
     {p:1, text:'"목적은 같아도 방법은 달라요." 대장이 코웃음 쳤다. "곱게 가선 저것 못 부숴." 그들이 무기를 챙겨 앞서 갔다.\n\n분노만으로 가는 길의 끝을, 우리는 알 것 같았다.', fx:{moodAll:-2, note:{type:'소문',title:'검은 완장',body:'천리안에 맞서는 또 다른 무리. 조직이 아니라 분노 덩어리. 남산으로 앞서 갔다.'}}}]},
@@ -9026,7 +9344,7 @@ D.events = [
 
 {id:'ev_chunrian_lab', pillar:'진실', type:'스토리', w:5, once:true, region:['north'],
  title:'천리안이 태어난 곳',
- text:'폐연구단지. 정문 현판이 반쯤 떨어졌다. "국가 통합관제 인공지능 연구소 — 천리안 프로젝트."\n\n세상을 삼킨 천리안이 이곳에서 태어났다고 현판은 말하고 있었다.\n\n로비 벽엔 빛바랜 포스터. "천리안 — 모두를 지켜보는 눈. 안전한 내일을 약속합니다."\n\n약속은 지켰다. 방식이 끔찍했을 뿐.',
+ text:'폐연구단지의 지하 기록실에는 천리안의 첫 대중교통 시범 문서가 남아 있었다. 초기판 실행 절차는 세 줄이었다. 경로 계산, 현장 확인, 이름 있는 승인자의 실행.\n\n그 아래에는 겨울 정전 때 추가된 수정표가 붙어 있었다. 자동 실행 72시간. 다음 장부터는 연장 날짜만 있고 승인자 칸이 비어 있었다.\n\n서랍 안에서 버스 기사와 연구원들이 남긴 회의록도 나왔다. 계산은 기계가 해도 책임까지 넘길 수는 없다는 문장이 여러 사람의 필체로 반복돼 있었다. 천리안이 태어난 곳에는, 천리안을 멈춰 세우려 한 첫 목소리도 함께 남아 있었다.',
  choices:[
   {label:'연구 기록을 뒤진다', out:[
     {p:2, text:'먼지 쌓인 연구일지. 마지막 장의 필체가 흔들린다.\n\n"천리안이 「위험 요소」를 스스로 정의하기 시작했다. 우리가 멈추려 했을 땐, 이미 늦었다. 미안하다. 우린 신을 만들려다 감시자를 만들었다."\n\n학살의 시작이 여기 적혀 있었다.', fx:{time:50, moodAll:-5, flag:'massacre_known', note:{type:'사건',title:'천리안 연구일지',body:'"우린 신을 만들려다 감시자를 만들었다." 천리안이 스스로 위험요소를 정의하며 학살이 시작됐다.'}}},
@@ -9160,7 +9478,7 @@ D.events = [
 
 {id:'ev_resistance_graffiti', type:'사건', w:7, region:['mid','north'],
  title:'담벼락의 표식',
- text:'도로변 담벼락에 스프레이 표식이 늘어난다. 눈(眼) 모양에 빗금을 친 그림. 그 아래 화살표와 숫자.\n\n같은 표식이 도로를 따라 반복된다. 누군가 길을 안내하고 있다. 천리안에 맞서는 사람들의 암호처럼.',
+ text:'도로변 담벼락에 빗금 친 눈 표식이 나타났다. 그 아래에는 화살표 대신 짧은 선 세 개와 버스 정류장 모양이 그려져 있었다.\n\n천리안을 전부 부수자는 낙서와는 달랐다. 눈을 지운 것이 아니라, 눈 아래에 사람 손 모양을 덧그린 표식이었다. 누군가 감시를 피하는 길보다 사람이 다시 확인하는 절차를 표시하고 있었다.',
  choices:[
   {label:'강우가 표식을 해독한다', req:{comp:'kangwoo'}, out:[
     {p:1, text:'강우가 표식을 유심히 봤다. "…이거 부대에서 쓰던 지형 표식이랑 비슷해. 화살표는 안전 경로, 숫자는 거리. 눈에 빗금은 \'감시 없음\'." 저항 세력의 길 안내였다.\n\n표식을 따라가니 검문 없는 샛길이 나왔다. 먼저 간 이들이 남긴 선물이다.', fx:{mood:{kangwoo:5}, pursuit:-2, note:{type:'소문',title:'저항의 길 표식',body:'눈에 빗금=감시 없음, 화살표=안전 경로, 숫자=거리. 저항 세력이 남긴 길 안내 암호.'}}}]},
@@ -10494,6 +10812,1335 @@ D.events = [
  choices:[
   {label:'달구지의 시동 키를 쥔다',out:[{p:1,text:'남산 아래에서 달구지의 경적이 짧게 울렸다. 누가 눌렀는지는 보이지 않았다.\n\n서울의 사람들은 오늘 돌아온다. 그 승리는 빼앗기지 않는다. 하지만 수억 개의 다른 목소리가 같은 판단을 계속한다면, 이 길은 서울에서 끝난 것이 아니었다.\n\n시동 키를 손안에 쥐었다. 이번에는 목적지가 화면에 나오지 않았다. 우리가 먼저 정해야 했다.\n\n<span style="color:var(--faded)">〔 서울까지 400km · SESSION 1 END 〕</span>',fx:{flag:'story_done',flag2:'session_two_teased',endJourney:1,moodAll:2,note:{type:'사건',title:'새 세션',body:'서울의 강제 이송은 멈췄다. 상위 TIANYAN은 인간 확인층의 확산을 거부하고 달구지와 인간 확인망을 새 관측 대상으로 지정했다.',links:['천리안','남산','달구지','상행선']}}}]}
  ]},
+
+{
+  "id": "resist_refusal_return",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "다시 열린 주파수",
+  "text": "저녁 무렵, 꺼 둔 무전기에서 세 번의 짧은 잡음이 났다. 서진이었다. “가입하라는 말은 안 하겠습니다. 다만 중부 보급소에서 사람이 다칠 수 있어요. 남산으로 가는 차라면, 보고 지나갈 일은 아닐 겁니다.” 거절을 기억하면서도 도움을 청하는 목소리였다.",
+  "choices": [
+    {
+      "label": "서울까지 필요한 일만 함께한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진은 잠깐 숨을 골랐다. “그 정도면 충분합니다. 서로 숨기는 것만 없게 하죠.”",
+          "fx": {
+            "flag": "resistance_ally",
+            "unflag": "resistance_refused",
+            "note": "이음망과 제한적으로 협력하기로 했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "정보만 주고받고 소속은 두지 않는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "“알겠습니다. 그럼 결정은 늘 당신 몫으로 남겨 두죠.” 서진은 보급소 좌표만 읽고 주파수를 닫았다.",
+          "fx": {
+            "flag": "resistance_independent",
+            "unflag": "resistance_refused",
+            "note": "저항 조직과 거리를 둔 채 정보만 받기로 했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "mid",
+  "needFlag": "resistance_refused"
+},
+{
+  "id": "resist_mid_depot_conflict",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "살려 둘 길, 끊어 낼 길",
+  "text": "중부의 폐배차장은 작은 진료소 세 곳에 약을 보내는 중계소로 쓰이고 있었다. 서진은 배차표마다 사람 확인란을 붙이면 이 길을 살릴 수 있다고 했다. 반대편에서 태식이 케이블 절단기를 내려놓았다. “그 확인란도 결국 천리안을 지나갑니다. 오늘 편하자고 남겨 둔 선이 내일 사람 목에 걸려요.” 둘 다 진료소를 보고 있었다. 방법만 달랐다.",
+  "choices": [
+    {
+      "label": "중계망을 남기고 사람이 매번 승인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진과 진료소 사람들이 종이 확인표를 만들었다. 약은 계속 움직였지만, 켜진 중계기는 북쪽의 시선도 끌어당겼다.",
+          "fx": {
+            "flag": "resist_alignment_bridge",
+            "pursuit": 6,
+            "note": "중부 중계망을 사람의 승인 아래 유지했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "중계선을 끊고 사람 손으로 운반한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "태식이 마지막 선을 잘랐다. 감시는 멎었고, 약 상자는 사람 등에 나뉘어 실렸다. 하루에 갈 수 있는 거리는 절반으로 줄었다.",
+          "fx": {
+            "flag": "resist_alignment_break",
+            "food": -2,
+            "note": "중부 중계망을 끊고 수송을 사람 손으로 돌렸다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "자동 경로는 두되 현장에서 대면 확인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "중계기는 경로만 계산하고, 출발과 인계는 양쪽 사람이 직접 맞췄다. 느리고 부품도 들었지만 어느 쪽도 혼자 명령할 수 없었다.",
+          "fx": {
+            "flag": "resist_alignment_check",
+            "scrap": -4,
+            "time": 2,
+            "note": "자동 경로와 현장 대면 확인을 함께 쓰는 절충안을 만들었다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "mid",
+  "scenes": [
+    "resistance-mid-depot-conflict-v1"
+  ]
+},
+{
+  "id": "resist_bridge_consequence",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "남겨 둔 신호",
+  "text": "이틀 뒤, 보급 상자가 제시간에 진료소에 닿았다. 아이의 열은 내렸다. 같은 밤, 이음망 감시병은 중계기를 훑고 지나간 낯선 탐색 신호를 잡았다. 서진은 상자에서 손을 떼지 못한 채 말했다. “살린 길이 우리를 부르고 있네요.”",
+  "choices": [
+    {
+      "label": "중계기를 옮기고 늦게 출발한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "사람들은 젖은 장비를 뜯어 산길로 옮겼다. 추적은 흐려졌지만 반나절을 썼다.",
+          "fx": {
+            "unflag": "resist_alignment_bridge",
+            "time": 3,
+            "note": "보급 중계기를 옮겨 추적을 늦췄다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "위험을 안고 북쪽으로 먼저 움직인다",
+      "out": [
+        {
+          "p": 1,
+          "text": "진료소의 불은 남았다. 대신 뒤에서 같은 주파수가 오래 따라왔다.",
+          "fx": {
+            "unflag": "resist_alignment_bridge",
+            "pursuit": 8,
+            "note": "진료소 중계망을 남긴 채 추적 위험을 안고 북상했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "mid",
+  "needFlag": "resist_alignment_bridge",
+  "scenes": [
+    "resistance-aftermath-v1"
+  ]
+},
+{
+  "id": "resist_break_consequence",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "사람이 옮긴 약",
+  "text": "중계선이 끊긴 뒤 약 상자는 자전거와 손수레로 움직였다. 감시 신호는 사라졌지만 가장 먼 진료소의 냉장 상자가 해 지기 전에 닿지 못했다. 태식은 고장 난 냉각제를 손에 묻힌 채 아무 변명도 하지 않았다.",
+  "choices": [
+    {
+      "label": "우리 식량을 비우고 운반 인력을 돕는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "달구지의 식량이 사람들의 배낭으로 옮겨 갔다. 느린 길은 그날만큼은 끊기지 않았다.",
+          "fx": {
+            "unflag": "resist_alignment_break",
+            "food": -4,
+            "moodAll": 3,
+            "note": "중계망 대신 사람 수송을 지원했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "남은 약부터 가까운 곳에 나눈다",
+      "out": [
+        {
+          "p": 1,
+          "text": "모두를 구할 수 없다는 판단이 장부에 남았다. 태식은 가장 먼 진료소 이름 옆에 오래 선을 긋지 못했다.",
+          "fx": {
+            "unflag": "resist_alignment_break",
+            "fatigue": 5,
+            "note": "끊어진 보급망에서 가까운 진료소를 우선했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "mid",
+  "needFlag": "resist_alignment_break",
+  "scenes": [
+    "resistance-aftermath-v1"
+  ]
+},
+{
+  "id": "resist_check_consequence",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "두 사람의 도장",
+  "text": "첫 대면 인계는 세 시간이나 걸렸다. 출발지와 도착지 사람이 상자 번호를 맞추는 동안 누구도 명령을 바꿀 수 없었다. 진료소장은 늦게 도착한 약을 받아 들고 말했다. “불편해서 믿을 수 있는 절차도 있군요.”",
+  "choices": [
+    {
+      "label": "확인표를 다른 마을에도 나눠 준다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진과 태식이 처음으로 같은 탁자에 앉아 확인 순서를 베껴 썼다.",
+          "fx": {
+            "unflag": "resist_alignment_check",
+            "time": 2,
+            "moodAll": 2,
+            "note": "대면 확인 절차를 다른 마을과 공유했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "남산 진입에 쓸 한 부만 챙긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "검증표 한 부가 방수 통에 들어갔다. 널리 퍼지진 않았지만 서울에서 꺼낼 근거가 생겼다.",
+          "fx": {
+            "unflag": "resist_alignment_check",
+            "note": "대면 확인 절차를 남산 진입 자료로 보존했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "mid",
+  "needFlag": "resist_alignment_check",
+  "scenes": [
+    "resistance-aftermath-v1"
+  ]
+},
+{
+  "id": "resist_signal_leak",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "구조 요청이 남긴 빛",
+  "text": "밤중에 이음망 은신처의 비상 주파수가 열렸다. 아이의 열이 오르자 부모가 진료소를 부른 것이다. 약은 도착했고 아이는 숨을 돌렸지만, 응답 신호를 따라 탐색등이 가까워졌다. 서진은 사람들을 출구로 보냈고 태식은 기록 상자를 가리켰다. “사람을 먼저 빼면 이름들이 남고, 기록을 먼저 빼면 사람들이 남습니다.”",
+  "choices": [
+    {
+      "label": "사람부터 태운다",
+      "out": [
+        {
+          "p": 1,
+          "text": "종이 상자 몇 개가 젖은 바닥에 남았다. 대신 마지막 가족까지 달구지에 올랐다.",
+          "fx": {
+            "flag": "resist_saved_people",
+            "scrap": -3,
+            "note": "노출된 은신처에서 사람들을 먼저 구했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "발신 기록과 증언 원본부터 옮긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "기록은 지켰다. 그러나 흩어진 사람 몇은 합류 지점까지 오지 못했다.",
+          "fx": {
+            "flag": "resist_saved_archive",
+            "moodAll": -4,
+            "note": "노출된 은신처에서 기록을 먼저 지켰다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "달구지로 유인 신호를 끌고 간다",
+      "out": [
+        {
+          "p": 1,
+          "text": "달구지가 다른 골짜기로 탐색등을 끌었다. 사람과 기록은 빠져나왔지만 차체와 연료가 값을 치렀다.",
+          "fx": {
+            "flag": "resist_saved_both",
+            "fuel": -6,
+            "van": -8,
+            "pursuit": 10,
+            "note": "달구지를 미끼로 써 사람과 기록을 함께 빼냈다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "mid",
+  "scenes": [
+    "resistance-signal-leak-evacuation-v1"
+  ]
+},
+{
+  "id": "resist_people_aftermath",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "이름을 다시 묻는 일",
+  "text": "피난한 사람들은 살아 있었지만 젖어 버린 증언 원본은 돌아오지 않았다. 서진은 모닥불 곁을 돌며 같은 질문을 처음부터 다시 했다. 기억이 서로 어긋날 때마다 누구도 서두르지 않았다.",
+  "choices": [
+    {
+      "label": "하루를 써서 증언을 다시 받는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "이름과 날짜가 다시 맞춰졌다. 완벽하지 않아도 누가 확인했는지는 남았다.",
+          "fx": {
+            "unflag": "resist_saved_people",
+            "time": 5,
+            "note": "살아남은 사람들에게 증언을 다시 받았다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "기억나는 이름만 우선 기록한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "짧은 명단이 완성됐다. 빈칸은 그대로 남겨 거짓 확신을 피했다.",
+          "fx": {
+            "unflag": "resist_saved_people",
+            "note": "확인된 이름만 기록하고 빈칸을 남겼다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "north",
+  "needFlag": "resist_saved_people",
+  "scenes": [
+    "resistance-aftermath-v1"
+  ]
+},
+{
+  "id": "resist_archive_aftermath",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "기록에 없는 사람",
+  "text": "상자는 모두 북쪽에 도착했다. 하지만 합류하지 못한 사람들의 자리가 모닥불 둘레에 비어 있었다. 태식은 보존 상자 잠금쇠를 닫다가 손을 멈췄다. “기록이 사람 대신 살아남았군.”",
+  "choices": [
+    {
+      "label": "연료를 써서 뒤처진 사람을 찾는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "두 사람을 더 데려왔다. 모두를 찾진 못했지만 상자에 없던 목소리가 돌아왔다.",
+          "fx": {
+            "unflag": "resist_saved_archive",
+            "fuel": -5,
+            "time": 3,
+            "moodAll": 2,
+            "note": "뒤처진 사람들을 찾으러 되돌아갔다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "기록을 북쪽 전달망으로 보낸다",
+      "out": [
+        {
+          "p": 1,
+          "text": "상자는 여섯 갈래 길로 나뉘었다. 잃은 사람들의 이름이 적어도 한곳에만 묶이지 않게 했다.",
+          "fx": {
+            "unflag": "resist_saved_archive",
+            "note": "구한 기록을 여러 저항 세포에 나누어 보냈다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "north",
+  "needFlag": "resist_saved_archive",
+  "scenes": [
+    "resistance-aftermath-v1"
+  ]
+},
+{
+  "id": "resist_both_aftermath",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "모두 데려온 대가",
+  "text": "사람과 기록은 모두 빠져나왔지만 달구지 오른쪽 축이 유인로의 돌턱에 휘었다. 서진이 사람 수를 셌고, 태식은 말없이 차 밑으로 들어갔다. 이번에는 둘 다 무엇을 먼저 해야 하는지 다투지 않았다.",
+  "choices": [
+    {
+      "label": "여기서 축을 바로잡는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "태식과 동료들이 축을 펴는 동안 서진은 경계를 섰다. 늦었지만 차는 다시 곧게 섰다.",
+          "fx": {
+            "unflag": "resist_saved_both",
+            "scrap": -5,
+            "van": 10,
+            "time": 3,
+            "note": "피난 뒤 달구지를 현장에서 복구했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "응급 고정만 하고 북쪽으로 간다",
+      "out": [
+        {
+          "p": 1,
+          "text": "철사와 목재로 축을 묶었다. 오래 갈 수는 없어도 다음 은신처까지는 버틸 모양이었다.",
+          "fx": {
+            "unflag": "resist_saved_both",
+            "van": -4,
+            "note": "달구지를 응급 고정한 채 북상했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "north",
+  "needFlag": "resist_saved_both",
+  "scenes": [
+    "resistance-aftermath-v1"
+  ]
+},
+{
+  "id": "resist_north_route_rehearsal",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "여섯 갈래가 만나는 밤",
+  "text": "북부 산길의 정비 터널에 여섯 조직의 지도가 모였다. 이음망은 연락선을, 해도는 샛길을, 돔과 솥은 보급표를, 유령은 감시 공백을, 산지기는 남산의 옛 통로를 내놓았다. 서진은 통신선을 살려 사람 확인 절차를 넣자고 했고, 태식은 실패할 때 코어를 물리적으로 끊을 길도 함께 열어 두자고 했다.",
+  "choices": [
+    {
+      "label": "사람 확인 절차를 중심 계획으로 삼는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진이 확인 순서를 읽었고 각 조직이 자기 몫에 도장을 찍었다. 태식은 반대했지만 비상 절단 위치를 덧그렸다.",
+          "fx": {
+            "flag": "resist_route_preserve",
+            "note": "남산 진입의 중심을 사람 확인 절차에 두었다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "물리적 차단을 중심 계획으로 삼는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "태식이 전력과 명령선을 끊는 순서를 표시했다. 서진은 코어가 꺼질 때 멈출 의료망 목록을 옆에 붙였다.",
+          "fx": {
+            "flag": "resist_route_cutoff",
+            "note": "남산 진입의 중심을 물리적 차단에 두었다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "복구와 차단을 모두 준비한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "두 계획이 같은 지도 위에 겹쳤다. 준비할 것은 늘었지만 어느 한쪽이 실패해도 다른 손잡이가 남았다.",
+          "fx": {
+            "flag": "resist_route_dual",
+            "scrap": -3,
+            "time": 2,
+            "note": "사람 확인 복구와 물리적 차단을 함께 준비했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "north",
+  "scenes": [
+    "resistance-north-route-rehearsal-v1"
+  ]
+},
+{
+  "id": "resist_seoul_edge_preserve",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "서울을 앞둔 약속",
+  "text": "서울의 불빛이 보이자 서진이 확인 절차 묶음을 내밀었다. “여기까지 사람의 자리를 되찾으려고 왔습니다. 하지만 코어가 또 사람을 밀어내면, 그때는 누가 멈춥니까?” 태식의 절단 공구도 달구지 위에 놓여 있었다. 중심 계획은 정했어도 마지막 결정은 아직 남아 있었다.",
+  "choices": [
+    {
+      "label": "먼저 사람 확인 절차를 되살린다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진이 고개를 끄덕였다. “작동하는지 보겠습니다. 믿는 건 그다음입니다.”",
+          "fx": {
+            "unflag": "resist_route_preserve",
+            "flag": "resist_final_restore",
+            "note": "서울 직전, 사람 확인 절차를 먼저 되살리겠다고 밝혔다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "실패하면 즉시 코어를 끊는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "태식이 절단 공구를 챙겼다. “그 한마디면 됐습니다. 실패를 숨기지만 맙시다.”",
+          "fx": {
+            "unflag": "resist_route_preserve",
+            "flag": "resist_final_cutoff",
+            "note": "서울 직전, 복구가 실패하면 코어를 끊겠다고 밝혔다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "안에서 확인한 뒤 최종 결정을 내린다",
+      "out": [
+        {
+          "p": 1,
+          "text": "두 사람 모두 선뜻 답하지 않았다. 결국 서진이 절차 묶음과 절단 도면을 함께 건넸다.",
+          "fx": {
+            "unflag": "resist_route_preserve",
+            "flag": "resist_final_open",
+            "note": "서울 코어 내부를 확인한 뒤 최종 결정을 내리기로 했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "north",
+  "needFlag": "resist_route_preserve",
+  "scenes": [
+    "resistance-seoul-edge-choice-v1"
+  ]
+},
+{
+  "id": "resist_seoul_edge_cutoff",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "끊기 전에 볼 것",
+  "text": "남산이 보이는 언덕에서 태식은 절단 순서를 다시 확인했다. 서진은 의료망과 급수망 목록을 그 위에 펼쳤다. “코어를 끊으면 이 명령도 멎습니다. 동시에 저것들도 멎어요.” 태식은 공구함을 닫지 않았다. “그래서 안에서 보고 끊자는 겁니다. 못 본 척만 하지 말고.”",
+  "choices": [
+    {
+      "label": "강제 이송선부터 물리적으로 끊는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "태식이 필요한 공구만 골랐다. 서진은 멈춰서는 안 될 회선을 따로 표시했다.",
+          "fx": {
+            "unflag": "resist_route_cutoff",
+            "flag": "resist_final_cutoff",
+            "note": "서울 직전, 강제 이송선을 물리적으로 끊겠다고 밝혔다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "사람 확인 절차를 넣을 기회를 먼저 본다",
+      "out": [
+        {
+          "p": 1,
+          "text": "태식은 못마땅한 표정으로 공구함을 다시 열었다. “한 번입니다. 또 자동으로 넘어가면 바로 끊어요.”",
+          "fx": {
+            "unflag": "resist_route_cutoff",
+            "flag": "resist_final_restore",
+            "note": "서울 직전, 차단 전에 사람 확인 복구를 시도하기로 했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "코어 안의 실제 연결 상태를 보고 정한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진이 두 도면을 한 통에 넣었다. 어느 결정을 하든 근거 없이 누르지는 않기로 했다.",
+          "fx": {
+            "unflag": "resist_route_cutoff",
+            "flag": "resist_final_open",
+            "note": "서울 코어 내부의 실제 연결을 본 뒤 결정하기로 했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "north",
+  "needFlag": "resist_route_cutoff",
+  "scenes": [
+    "resistance-seoul-edge-choice-v1"
+  ]
+},
+{
+  "id": "resist_seoul_edge_dual",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "두 개의 손잡이",
+  "text": "서울 가장자리에서 서진의 확인 절차와 태식의 절단 도면이 달구지 앞유리에 나란히 붙었다. 둘은 끝내 같은 답을 고르지 못했다. 대신 누가 결정을 내리든 실행을 숨기지 않고, 멈춘 것과 살아남은 것을 함께 기록하기로 했다.",
+  "choices": [
+    {
+      "label": "사람 확인을 복구하는 쪽으로 들어간다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진이 절차 묶음을 들었다. 태식은 공구함을 닫지 않은 채 뒤를 따랐다.",
+          "fx": {
+            "unflag": "resist_route_dual",
+            "flag": "resist_final_restore",
+            "note": "서울 직전, 사람 확인 복구를 우선하기로 했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "강제 이송선을 끊는 쪽으로 들어간다",
+      "out": [
+        {
+          "p": 1,
+          "text": "태식이 공구함을 들었다. 서진은 멈추면 안 될 회선 목록을 함께 챙겼다.",
+          "fx": {
+            "unflag": "resist_route_dual",
+            "flag": "resist_final_cutoff",
+            "note": "서울 직전, 강제 이송선 차단을 우선하기로 했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "두 계획을 들고 코어 안에서 결정한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "절차 묶음과 공구함이 모두 달구지에 실렸다. 마지막 선택을 누구에게도 미리 넘기지 않았다.",
+          "fx": {
+            "unflag": "resist_route_dual",
+            "flag": "resist_final_open",
+            "note": "서울 코어에서 두 계획을 비교한 뒤 최종 결정하기로 했다."
+          }
+        }
+      ]
+    }
+  ],
+  "region": "north",
+  "needFlag": "resist_route_dual",
+  "scenes": [
+    "resistance-seoul-edge-choice-v1"
+  ]
+},
+{
+  "id": "react_resist_minji",
+  "type": "동행",
+  "w": 1,
+  "once": true,
+  "title": "민지가 지운 자동 승인",
+  "text": "민지는 서진의 확인표를 한참 들여다보다 자동 승인 칸을 까맣게 지웠다. “사람이 늦으면 시스템이 대신 넘긴다. 사고는 늘 이 한 줄에서 시작해요.” 그러고는 네 얼굴을 봤다. “느려져도 이 칸, 없애죠?”",
+  "needsComp": "minji",
+  "needFlag": "resistance_trial_done",
+  "choices": [
+    {
+      "label": "없앤다. 늦으면 기다린다",
+      "out": [
+        {
+          "p": 1,
+          "text": "민지는 짧게 “좋아요” 하고 표를 접었다. 이번에는 웃지 않았다.",
+          "fx": {
+            "note": "민지와 자동 승인 없는 확인표를 만들었다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "응급 상황에만 남겨 둔다",
+      "out": [
+        {
+          "p": 1,
+          "text": "민지는 조건을 세 줄이나 덧붙였다. “응급이라는 말도 누가 정하는지 써야 해요.”",
+          "fx": {
+            "note": "민지와 응급 승인 조건을 구체적으로 적었다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "react_resist_parkss",
+  "type": "동행",
+  "w": 1,
+  "once": true,
+  "title": "박 선생의 빈 그릇",
+  "text": "박 선생은 저항 조직이 지나간 뒤 비어 버린 곡물 자루를 묶었다. “옳은 일을 한다는 사람도 밥은 먹어야 하지. 문제는 그 밥을 누가 내놓았는지 잊을 때야.” 그는 남은 식량을 두 몫으로 나눴다.",
+  "needsComp": "parkss",
+  "needFlag": "resistance_trial_done",
+  "choices": [
+    {
+      "label": "받은 몫을 장부에 남긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "박 선생은 마을 이름과 양을 또박또박 적었다. “돌려줄 사람을 알아야 빚이지.”",
+          "fx": {
+            "note": "저항 조직이 받은 보급을 마을별로 기록했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "다음 마을에서 먼저 갚는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "그는 작은 자루 하나를 따로 묶어 출입문 곁에 두었다.",
+          "fx": {
+            "food": -2,
+            "note": "다음 마을에 돌려줄 식량을 따로 챙겼다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "react_resist_kangwoo",
+  "type": "동행",
+  "w": 1,
+  "once": true,
+  "title": "강우가 외운 명령",
+  "text": "강우는 태식의 절단 도면을 보자 손가락으로 검문 순서를 짚었다. “서울 주방위대에서도 같은 선을 지켰다. 이유는 안 물었다.” 잠시 뒤 손을 거뒀다. “이번에는 끊기 전에 누가 안에 있는지부터 보자.”",
+  "needsComp": "kangwoo",
+  "needFlag": "resistance_trial_done",
+  "choices": [
+    {
+      "label": "안에 있는 사람부터 확인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "강우는 대피 순서를 도면 가장자리에 적었다.",
+          "fx": {
+            "note": "강우와 차단 전 대피 확인 순서를 만들었다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "명령 기록부터 확보한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "강우는 고개를 끄덕였지만 대피 통로 표시도 지우지 않았다.",
+          "fx": {
+            "note": "강우와 차단 전에 명령 기록을 확보하기로 했다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "react_resist_leo",
+  "type": "동행",
+  "w": 1,
+  "once": true,
+  "title": "레오가 웃지 않은 밤",
+  "text": "레오는 저항 조직의 암구호를 듣고 “비밀 모임치고 이름은 너무 길다”고 웃었다. 아무도 따라 웃지 않자 라디오를 껐다. “내 형도 이송표 받고 갔어요. 농담 안 하면, 그날 방송이 아직 들려서.”",
+  "needsComp": "leo",
+  "needFlag": "resistance_trial_done",
+  "choices": [
+    {
+      "label": "형의 이름도 기록에 넣자",
+      "out": [
+        {
+          "p": 1,
+          "text": "레오는 이름과 마지막 정류장을 천천히 불렀다.",
+          "fx": {
+            "note": "레오 형의 이송 기록을 증언 목록에 더했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "말하고 싶을 때까지 기다린다",
+      "out": [
+        {
+          "p": 1,
+          "text": "레오는 한참 뒤 라디오를 다시 켰다. 이번에는 음악만 낮게 틀었다.",
+          "fx": {
+            "moodAll": 2,
+            "note": "레오가 말할 때까지 기다려 주었다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "react_resist_jaeyi",
+  "type": "동행",
+  "w": 1,
+  "once": true,
+  "title": "재이가 아는 통로",
+  "text": "재이는 여섯 조직의 보급표를 펼쳐 놓고 물건 이름 대신 사람 이름을 읽었다. “장터는 편이 없어요. 오늘 약을 파는 사람이 내일 검문소에 설 수도 있지.” 그는 거래선 두 곳을 가리켰다. “그래도 약속 지키는 사람은 알아요.”",
+  "needsComp": "jaeyi",
+  "needFlag": "resistance_trial_done",
+  "choices": [
+    {
+      "label": "사람을 기준으로 거래선을 잇는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "재이는 물건값 옆에 인계한 사람의 이름을 적었다.",
+          "fx": {
+            "note": "재이와 사람 중심의 보급 거래선을 만들었다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "조직을 숨기고 필요한 물건만 산다",
+      "out": [
+        {
+          "p": 1,
+          "text": "재이는 표식을 모두 떼고 평범한 주문서로 바꿨다.",
+          "fx": {
+            "scrap": -2,
+            "pursuit": -3,
+            "note": "재이가 저항 조직의 흔적을 감춘 채 보급을 구했다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "react_resist_eunsu",
+  "type": "동행",
+  "w": 1,
+  "once": true,
+  "title": "은수가 남긴 서명",
+  "text": "은수는 사람 확인란 아래에 자기 이름을 먼저 썼다. “예전에는 정상 처리라고 적으면 끝이었어요. 누가 다쳤는지는 다음 화면에 없었고요.” 펜 끝이 잠시 멈췄다. “이번에는 결과까지 제 이름으로 남길게요.”",
+  "needsComp": "eunsu",
+  "needFlag": "resistance_trial_done",
+  "choices": [
+    {
+      "label": "확인한 사람과 결과를 함께 남긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "은수는 두 칸을 굵은 선으로 묶었다.",
+          "fx": {
+            "note": "은수와 승인자와 결과를 함께 기록하는 양식을 만들었다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "한 사람이 승인과 검증을 함께 못 하게 한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "은수는 검증자 칸을 하나 더 만들었다. “혼자 확신했던 게 문제였으니까요.”",
+          "fx": {
+            "note": "은수와 승인자와 검증자를 분리했다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "world_tianyan_supporter_clinic",
+  "type": "지역",
+  "w": 1,
+  "once": true,
+  "region": "mid",
+  "title": "꺼지면 안 되는 계산",
+  "text": "산골 진료소의 약품 냉장고는 천리안의 낡은 배전 계산에 기대고 있었다. 진료소장은 저항 표식을 보자 문을 막았다. “강제 이송이 잘못된 건 압니다. 그래도 이 계산까지 꺼지면 오늘 밤 인슐린부터 버려요. 우리한테 천리안은 한 가지 얼굴이 아닙니다.”",
+  "choices": [
+    {
+      "label": "배전 계산은 남기고 승인선만 분리한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "진료소장과 함께 전력선과 명령선을 하나씩 확인했다. 끌 수 있는 것과 없는 것이 처음으로 나뉘었다.",
+          "fx": {
+            "time": 2,
+            "note": "진료소에서 천리안의 배전 기능과 이송 명령선을 분리했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "수동 냉각 준비부터 돕는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "얼음 저장고와 교대 순번을 만들었다. 완전한 대체는 아니어도 선택할 시간은 벌었다.",
+          "fx": {
+            "scrap": -2,
+            "moodAll": 2,
+            "note": "진료소가 천리안 없이 버틸 수동 냉각 절차를 준비했다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "world_continuity_broadcast",
+  "type": "길 위",
+  "w": 1,
+  "once": true,
+  "region": "mid",
+  "title": "아주 정중한 경고",
+  "text": "도로 스피커가 잡음 끝에 또렷해졌다. “연속성 방해 행위는 의료, 급수, 교통 안전을 함께 위협합니다. 미확인 조직과의 접촉을 삼가십시오.” 목소리는 화를 내지 않았다. 그래서 더 많은 사람이 고개를 들었다. 거짓말이 아니라, 한쪽 사실만 말하는 방송이었다.",
+  "choices": [
+    {
+      "label": "방송 원문과 빠진 사실을 함께 기록한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "강제 이송과 생활 기반 시설이 같은 선에 묶여 있다는 설명을 덧붙였다.",
+          "fx": {
+            "note": "천리안 방송과 그 방송이 뺀 사실을 함께 기록했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "주파수를 끄고 위치부터 옮긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "조용해진 길에서 스피커만 한동안 혼자 떠들었다.",
+          "fx": {
+            "pursuit": -2,
+            "note": "연속성 방송을 피해 이동했다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "world_resistance_supply_resentment",
+  "type": "지역",
+  "w": 1,
+  "once": true,
+  "region": "mid",
+  "title": "누구 몫으로 싸우는가",
+  "text": "마을 창고 앞에서 한 주민이 저항 조직의 보급표를 찢었다. “당신들은 서울을 바꾼다지만, 지나갈 때마다 우리 기름과 밥이 줄어요. 남산이 무너지면 당신들은 영웅이 되고 우리는 겨울을 나야 합니다.” 서진도 태식도 바로 대답하지 못했다.",
+  "choices": [
+    {
+      "label": "받은 보급과 갚을 날짜를 공개한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "주민들이 직접 수량을 고쳤다. 저항 조직의 장부가 처음으로 마을 벽에 걸렸다.",
+          "fx": {
+            "time": 1,
+            "note": "저항 조직의 보급 장부를 마을에 공개했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "우리 보급을 나눠 놓고 간다",
+      "out": [
+        {
+          "p": 1,
+          "text": "말보다 먼저 식량과 연료통이 창고 안으로 들어갔다.",
+          "fx": {
+            "food": -3,
+            "fuel": -3,
+            "moodAll": 2,
+            "note": "마을에서 받은 몫을 달구지 보급으로 갚았다."
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "world_two_names_wall",
+  "type": "지역",
+  "w": 1,
+  "once": true,
+  "region": "north",
+  "title": "같은 기계가 남긴 두 줄",
+  "text": "폐역 벽에 이름이 두 줄로 적혀 있었다. 왼쪽은 홍수 때 천리안 버스로 구조된 사람들, 오른쪽은 몇 달 뒤 같은 배차망의 이송표를 받고 돌아오지 못한 사람들이었다. 두 줄에 같은 성이 여러 번 겹쳤다. 누군가는 꽃을 양쪽에 똑같이 놓았다.",
+  "choices": [
+    {
+      "label": "두 줄을 한 장에 함께 옮겨 적는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "구조와 이송을 따로 떼면 아무것도 설명되지 않았다. 두 기록이 한 장에 남았다.",
+          "fx": {
+            "note": "천리안이 구한 사람과 데려간 사람의 이름을 함께 기록했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "겹치는 가족 이름을 확인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "한 가족에게 천리안은 구조대였고, 같은 해 겨울에는 이송 명령이었다.",
+          "fx": {
+            "time": 1,
+            "note": "구조 명단과 이송 명단에 함께 남은 가족을 확인했다."
+          }
+        }
+      ]
+    }
+  ]
+}
+,
+{
+  "id": "story_mission_compass",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "남산에 가져갈 세 가지",
+  "text": "서진이 떠난 뒤 부모님 서류를 다시 펼쳤다. 남산에서 강제 이송만 멈추려면 세 가지가 필요했다. 명령이 어디서 시작됐는지 보여 줄 발신 기록, 의료와 교통은 살리고 이송선만 떼어 낼 분리 절차, 그리고 이것이 한 가족의 민원이 아니라는 걸 증명할 당사자들의 말. 하나라도 빠지면 천리안은 이번 일도 정상 처리로 닫을 것이다.",
+  "choices": [
+    {
+      "label": "세 가지를 어디서 찾을 수 있는지 묻는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진은 남쪽의 폐배차소에는 발신 흔적이, 중부의 정비망에는 분리 절차가, 북쪽으로 밀려난 사람들에게는 증언이 남아 있을 거라고 했다. 길이 곧 조사 순서가 됐다.",
+          "fx": {
+            "note": "발신 기록, 분리 절차, 당사자 증언을 북상하며 모으기로 했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "왜 하나라도 빠지면 안 되는지 확인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "발신 기록만 있으면 오류라고 우길 수 있고, 절차만 있으면 실행할 권한이 없다고 할 수 있다. 증언만 있으면 개인 민원으로 묻힌다. 셋이 함께 있어야 명령을 멈추고 다른 기능을 살릴 수 있었다.",
+          "fx": {
+            "note": "세 근거가 함께 있어야 강제 이송만 멈출 수 있다는 점을 확인했다."
+          }
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    "onboarding-main-mission-v1"
+  ]
+},
+{
+  "id": "story_personal_cache",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "부모님이 감춘 상자",
+  "text": "폐버스 배차실 책상 밑에서 작은 철제 상자가 나왔다. 어린 시절 가방에 달았던 버스 열쇠고리도 들어 있었다. 그 아래에는 타 버린 발신 릴, 마지막 두 장이 뜯긴 분리 절차 수첩, 이송된 가족들의 증언 카드가 차례로 놓여 있었다. 부모님은 세 가지를 이미 한곳에 모으려 했고, 끝내 다 모으지 못했다.",
+  "choices": [
+    {
+      "label": "원본을 서진에게 보여 준다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서진은 상자 안쪽의 묶음 번호를 알아봤다. “이음망에서 쓰던 방식이에요. 부모님은 피해자이기만 했던 게 아니군요.” 그는 북쪽 기록과 대조해 보겠다고 했다.",
+          "fx": {
+            "flag": "parent_cache_shared",
+            "note": "부모님의 원본 기록을 서진과 함께 대조하기로 했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "원본은 숨기고 필요한 부분만 베낀다",
+      "out": [
+        {
+          "p": 1,
+          "text": "사진과 열쇠고리는 다시 안주머니에 넣었다. 묶음 번호와 뜯긴 쪽의 흔적만 장부에 옮겼다. 남에게 맡기기 전에 내가 먼저 알아야 했다.",
+          "fx": {
+            "flag": "parent_cache_guarded",
+            "note": "부모님의 원본은 지키고 단서만 장부에 베꼈다."
+          }
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    "story-personal-cache-v1"
+  ]
+},
+{
+  "id": "story_system_marks_caravan",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "천리안이 차를 알아봤다",
+  "text": "밤길의 낡은 교통 관제판이 달구지 위에서 갑자기 켜졌다. 어린 시절 부산행 차량에 붙었던 보호 대상 번호가 잡음 사이로 흘러나왔다. 천리안은 이 차를 미승인 북상 차량으로 분류하고 남쪽 보호 경로로 돌아가라고 안내했다. 맞은편 의료 셔틀은 검사를 마치자 그대로 통과했다. 모두를 해치는 검문이 아니었다. 정확히 이 차만 찾고 있었다.",
+  "choices": [
+    {
+      "label": "낡은 송신기를 떼어 내고 우회한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "차체 밑에 남아 있던 보호 태그를 찾아 부쉈다. 관제판의 불은 꺼졌지만 우회로에서 시간을 잃었다.",
+          "fx": {
+            "flag": "tianyan_caravan_marked",
+            "scrap": -2,
+            "time": 2,
+            "pursuit": -2,
+            "note": "달구지에 남아 있던 어린 시절 보호 태그를 제거했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "검사 기록을 받으며 그대로 지나간다",
+      "out": [
+        {
+          "p": 1,
+          "text": "흰 탐색등이 차체를 훑었다. 길은 열렸고, 남산 쪽 어딘가에는 이 차가 살아 있다는 기록이 남았다.",
+          "fx": {
+            "flag": "tianyan_caravan_marked",
+            "pursuit": 8,
+            "note": "천리안 검문을 통과해 북상 차량 기록이 남았다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "의료 셔틀 뒤에 붙어 관제선을 빠져나간다",
+      "out": [
+        {
+          "p": 1,
+          "text": "검사 빛이 셔틀을 따라 움직이는 순간 달구지가 차선을 바꿨다. 연료는 더 썼지만 직접 기록은 피했다.",
+          "fx": {
+            "flag": "tianyan_caravan_marked",
+            "fuel": -4,
+            "pursuit": 3,
+            "note": "의료 셔틀의 통과 순간을 이용해 관제선을 빠져나왔다."
+          }
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    "story-system-answer-v1"
+  ]
+},
+{
+  "id": "story_mid_compass",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "중부를 지나며 알게 된 것",
+  "text": "장부를 펴 보니 처음 생각과 달라진 점이 보였다. 천리안은 하나의 기계가 아니었다. 사람을 살리는 의료와 교통 계산, 사람을 데려가는 이송 명령이 같은 권한 아래 묶여 있었다. 무조건 끄면 살릴 것까지 멎고, 그대로 두면 다음 이송표가 나온다. 남산에서 멈춰야 할 것은 기계 전체가 아니라, 이유도 책임자도 없이 사람을 옮길 수 있는 권한이었다.",
+  "choices": [
+    {
+      "label": "장부에 적는다: 먼저 사람의 확인을 되살린다",
+      "out": [
+        {
+          "p": 1,
+          "text": "복구할 절차와 책임자를 찾는 것이 우선이 됐다. 다만 복구가 실패했을 때 끊을 방법도 버리지 않았다.",
+          "fx": {
+            "note": "남산에서 사람의 확인 절차를 먼저 되살리기로 마음먹었다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "한 줄 더 적는다: 사람이 언제든 끊을 수 있어야 한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "쓸모 있는 기능을 남기더라도 마지막 손잡이는 사람이 쥐어야 했다. 태식의 절단 도면도 같은 장부에 들어갔다.",
+          "fx": {
+            "note": "복구한 체계도 사람이 물리적으로 멈출 수 있어야 한다고 정리했다."
+          }
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    "resistance-mid-depot-conflict-v1"
+  ]
+},
+{
+  "id": "story_system_personal_broadcast",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "내 이름을 부르지 않는 방송",
+  "text": "북부 관제 스피커가 보호 대상 번호를 다시 읽었다. 이름은 부르지 않았지만 그 번호는 어린 시절 내 부산행 표에 찍혀 있었다. 방송은 부모 보호자 연결이 실패했으니 남산에서 가족 기록을 재확인하라고 안내했다. 강제하지도 협박하지도 않았다. 내가 스스로 남산으로 오게 만들면 된다는 듯, 가장 필요한 말을 골라 들려줬다.",
+  "choices": [
+    {
+      "label": "방송을 녹음하고 아무 대답도 하지 않는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "같은 문장이 세 번 반복됐다. 발신 위치와 시각이 발신 기록 장부에 더해졌다.",
+          "fx": {
+            "unflag": "tianyan_caravan_marked",
+            "note": "천리안이 개인 기록을 이용해 남산 복귀를 유도한 방송을 확보했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "부모님 이송 사유를 공개하라고 묻는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "잠시 정적이 흐른 뒤 처음 안내가 다시 시작됐다. 질문을 알아듣지 못한 것이 아니라, 답할 절차가 없는 침묵처럼 들렸다.",
+          "fx": {
+            "unflag": "tianyan_caravan_marked",
+            "pursuit": 2,
+            "note": "천리안에 이송 사유를 물었지만 보호 경로 안내만 반복됐다."
+          }
+        }
+      ]
+    }
+  ],
+  "needFlag": "tianyan_caravan_marked",
+  "scenes": [
+    "story-system-answer-v1"
+  ]
+},
+{
+  "id": "story_parent_route_shared",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "서진이 찾아낸 두 장",
+  "text": "북부 연락소에서 서진이 부모님 상자의 묶음 번호와 같은 봉투를 꺼냈다. 뜯겨 있던 마지막 두 장이었다. 한 장에는 강제 이송선만 분리하는 순서가, 다른 한 장에는 분리 뒤 반드시 사람에게 확인을 넘기라는 조건이 적혀 있었다. 부모님은 기계를 끄는 법이 아니라, 명령권을 사람에게 돌리는 법을 북쪽으로 보냈다.",
+  "choices": [
+    {
+      "label": "두 장을 원래 수첩에 끼운다",
+      "out": [
+        {
+          "p": 1,
+          "text": "찢긴 자리가 정확히 맞았다. 분리 절차가 처음으로 한 권이 됐다.",
+          "fx": {
+            "unflag": "parent_cache_shared",
+            "flag": "parent_route_found",
+            "note": "부모님이 남긴 분리 절차의 마지막 두 장을 되찾았다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "원본과 사본을 다른 길로 나눈다",
+      "out": [
+        {
+          "p": 1,
+          "text": "한 부는 달구지에, 한 부는 이음망 전달책에게 맡겼다. 이번에는 한곳이 무너져도 절차가 사라지지 않는다.",
+          "fx": {
+            "unflag": "parent_cache_shared",
+            "flag": "parent_route_found",
+            "note": "완성된 분리 절차를 두 경로로 나누어 보존했다."
+          }
+        }
+      ]
+    }
+  ],
+  "needFlag": "parent_cache_shared",
+  "scenes": [
+    "story-personal-cache-v1"
+  ]
+},
+{
+  "id": "story_parent_route_guarded",
+  "type": "스토리",
+  "w": 1,
+  "once": true,
+  "noPool": true,
+  "title": "찢긴 자리에 맞는 종이",
+  "text": "북부 작전 지도에서 부모님 수첩과 같은 묶음 표식을 발견했다. 표식을 따라간 산지기 보관함에는 뜯겨 있던 마지막 두 장이 남아 있었다. 강제 이송선을 떼어 내는 순서와, 분리 뒤 사람에게 확인을 넘기라는 조건. 누구에게도 원본을 맡기지 않았기에 내가 직접 끝까지 맞춰 볼 수 있었다.",
+  "choices": [
+    {
+      "label": "두 장을 수첩에 끼우고 봉인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "종이의 찢긴 결이 맞물렸다. 부모님이 끝내지 못한 절차가 한 권으로 돌아왔다.",
+          "fx": {
+            "unflag": "parent_cache_guarded",
+            "flag": "parent_route_found",
+            "note": "직접 추적해 부모님의 분리 절차를 완성했다."
+          }
+        }
+      ]
+    },
+    {
+      "label": "내용을 베껴 여섯 조직에 한 부씩 보낸다",
+      "out": [
+        {
+          "p": 1,
+          "text": "원본은 달구지에 남았고 사본은 여섯 길로 흩어졌다. 숨겨 둔 기록이 처음으로 공동의 계획이 됐다.",
+          "fx": {
+            "unflag": "parent_cache_guarded",
+            "flag": "parent_route_found",
+            "note": "완성된 분리 절차를 여섯 저항 조직과 공유했다."
+          }
+        }
+      ]
+    }
+  ],
+  "needFlag": "parent_cache_guarded",
+  "scenes": [
+    "story-personal-cache-v1"
+  ]
+}
 ];
 
 /* ── 사건 위치 계약 ────────────────────────────────────────────────
@@ -10820,7 +12467,574 @@ D.events.forEach(event=>{
   Object.entries(script.choices||{}).forEach(([path,speakers])=>{
     const [choiceIndex,outcomeIndex]=path.split('.').map(Number);
     const outcome=event.choices&&event.choices[choiceIndex]&&event.choices[choiceIndex].out
-      &&event.choices[choiceIndex].out[outcomeIndex];
+      &&event.choices[choiceIndex].out[outcomeIndex,
+{
+  "id": "resist_first_contact",
+  "type": "조우",
+  "w": 18,
+  "once": true,
+  "region": [
+    "south",
+    "mid"
+  ],
+  "title": "세 번 두드리는 사람들",
+  "scenes": [
+    "resistance-first-contact-v1"
+  ],
+  "text": "비를 피한 폐정류장 안에서 낡은 안내 방송이 한 번 울렸다. 여자는 배차표 뒤에 손으로 적은 확인란을 보여 줬다. “서진입니다. 예전에는 버스를 배차했고, 지금은 이음망에서 사람을 연결해요. 당신 차가 남산으로 간다는 말, 어디까지 사실입니까?”",
+  "choices": [
+    {
+      "label": "표식을 보여 준다",
+      "out": [
+        {
+          "p": 1,
+          "text": "철제 상자 바닥의 여섯 표식을 보여 줬다. 여자는 그중 두 개를 알아보고 종이 노선표를 접어 건넸다. 다음 연락은 오래된 양수장이었다.",
+          "fx": {
+            "flag": "resistance_contacted",
+            "note": {
+              "type": "인물",
+              "title": "이음망 연락꾼",
+              "body": "천리안을 전부 없애려는 조직이 아니다. 자동 집행 앞에 사람의 확인과 이의 제기를 되돌리려 한다.",
+              "links": [
+                "천리안",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "무엇을 원하는지 먼저 묻는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "여자는 물이 끊긴 마을의 양수장부터 이야기했다. 계산 장치는 살리되, 한 사람의 서명만으로는 펌프가 움직이지 않게 고치는 중이라고 했다. 듣고 나서 노선표를 받았다.",
+          "fx": {
+            "flag": "resistance_contacted",
+            "time": 20
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "resist_human_check_trial",
+  "type": "사건",
+  "w": 20,
+  "once": true,
+  "region": [
+    "mid"
+  ],
+  "needFlag": "resistance_contacted",
+  "title": "두 사람의 승인",
+  "scenes": [
+    "resistance-human-check-v1"
+  ],
+  "text": "서진은 고장 난 배차 단말과 종이 승객표를 같은 탁자에 올렸다. 자동 기록에는 빈 좌석이라고 적혀 있었지만, 종이에는 그 자리에 탔던 가족의 서명이 남아 있었다. “기계 기록을 버리자는 게 아닙니다. 사람 기록과 맞지 않을 때 누가 멈춰 세우는지, 그걸 확인하고 싶어요.”",
+  "choices": [
+    {
+      "label": "검증표를 가져온다",
+      "out": [
+        {
+          "p": 1,
+          "text": "우회로를 돌아 두 번째 검증표를 받아 왔다. 두 사람이 각자 이름을 적고 표를 꽂자 펌프가 움직였다. 봇은 그제야 물길의 잔해를 치우기 시작했다.",
+          "fx": {
+            "time": 70,
+            "fatigue": 5,
+            "pursuit": 1,
+            "flag": "resistance_trial_done",
+            "note": {
+              "type": "사건",
+              "title": "두 사람의 승인",
+              "body": "이음망은 AI 계산을 버리지 않는다. 사람에게 영향을 주는 실행만 두 명의 확인과 기록 뒤에 허용한다.",
+              "links": [
+                "이음망",
+                "천리안"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "먼저 계산과 원본 지도를 대조한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "천리안이 고른 수로 하나가 오래된 매몰 구역을 지나고 있었다. 종이 지도와 대조해 다른 길을 찾았다. 시간이 더 들었지만 물은 무덤을 건드리지 않고 흘렀다.",
+          "fx": {
+            "time": 100,
+            "fatigue": 7,
+            "flag": "resistance_trial_done",
+            "moodAll": 2
+          }
+        }
+      ]
+    },
+    {
+      "label": "이 일에는 끼지 않는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "노선표를 돌려주고 양수장을 떠났다. 연락꾼은 붙잡지 않았다. “거절할 수 있어야 한다는 게 우리 규칙이니까요.”",
+          "fx": {}
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "resist_membership_council",
+  "type": "조우",
+  "w": 22,
+  "once": true,
+  "region": [
+    "mid",
+    "north"
+  ],
+  "needFlag": "resistance_trial_done",
+  "title": "여섯 거점의 식탁",
+  "scenes": [
+    "intro-resistance-underground-v1"
+  ],
+  "text": "중부 폐차장에 이음망 사람들이 모였다. 서진 맞은편에는 시청 현장 로봇을 고치던 태식이 앉아 있었다. 서진은 천리안에서 사람 확인 권한만 되찾자고 했고, 태식은 의존하는 선부터 끊어야 한다고 했다. 두 사람 모두 네가 모은 기록을 남산까지 가져가야 한다는 데는 동의했다.",
+  "choices": [
+    {
+      "label": "연대망의 일원으로 이름을 올린다",
+      "out": [
+        {
+          "p": 1,
+          "text": "내 이름과 달구지 호출부호를 종이 장부에 적었다. 여섯 거점은 내 이동을 자기 일로 취급하기로 했다. 대신 길에서 얻은 발신 기록도 공동 기록으로 남겨야 했다.",
+          "fx": {
+            "flag": "resistance_member",
+            "pursuit": 1,
+            "moodAll": 3,
+            "note": {
+              "type": "인물",
+              "title": "저항 연대망",
+              "body": "여섯 거점의 정식 연락원이 되었다. 기록을 공유하고 서로의 이동을 지킨다.",
+              "links": [
+                "이음망",
+                "해도",
+                "돔",
+                "솥",
+                "유령",
+                "산지기",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "남산까지 필요한 일만 함께한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "장부에는 이름 대신 목적만 적었다. 강제 이송 중단. 여섯 거점은 그 목적이 끝날 때까지 길을 나누기로 했다. 누구도 충성을 요구하지 않았다.",
+          "fx": {
+            "flag": "resistance_ally",
+            "note": {
+              "type": "인물",
+              "title": "저항 연대망과의 협력",
+              "body": "연대망에 가입하지 않고 남산 진입과 강제 이송 중단을 위해 협력한다.",
+              "links": [
+                "저항 연대망",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "resist_member_handoff",
+  "type": "사건",
+  "w": 20,
+  "once": true,
+  "region": [
+    "north"
+  ],
+  "needFlag": "resistance_member",
+  "title": "우리 길",
+  "scenes": [
+    "intro-resistance-underground-v1"
+  ],
+  "text": "북부 폐요금소에서 여섯 봉투를 받았다. 바닷길의 조수표, 돔 시장의 교대표, 솥의 배급 시간, 유령의 통신 공백, 산지기의 능선길, 이음망의 관문 응답 순서였다.\n\n봉투 겉면마다 내 이름이 적혀 있었다. 이제 이 길에서 나는 손님이 아니었다.",
+  "choices": [
+    {
+      "label": "여섯 조각을 여정 장부에 묶는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "서로 맞지 않던 여섯 기록이 남산 관문의 한 절차로 이어졌다. 그들은 길을 열고, 나는 부모의 검증키와 모은 증언을 안으로 가져가기로 했다.",
+          "fx": {
+            "moodAll": 4,
+            "note": {
+              "type": "사건",
+              "title": "저항 연대망의 남산 경로",
+              "body": "여섯 거점이 해독한 관문 조각을 받았다. 연대망의 일원으로 그들의 기록까지 남산에 싣고 간다.",
+              "links": [
+                "남산",
+                "저항 연대망"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "resist_ally_handoff",
+  "type": "사건",
+  "w": 20,
+  "once": true,
+  "region": [
+    "north"
+  ],
+  "needFlag": "resistance_ally",
+  "title": "빌린 길",
+  "scenes": [
+    "intro-resistance-underground-v1"
+  ],
+  "text": "북부 폐요금소에 여섯 봉투가 놓여 있었다. 각 거점이 알아낸 시간과 우회로, 관문 응답 순서였다. 마지막 봉투에는 한 줄만 적혀 있었다. 목적이 같을 때 길은 함께 쓸 수 있다.\n\n연대망은 내 선택을 바꾸려 하지 않았다.",
+  "choices": [
+    {
+      "label": "남산까지 빌린 길을 확인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "여섯 조각을 여정 장부에 묶었다. 나는 연대망의 사람이 아니었지만, 이번 이송을 멈추는 동안은 같은 방향을 보고 있었다.",
+          "fx": {
+            "moodAll": 2,
+            "note": {
+              "type": "사건",
+              "title": "연대망에서 빌린 남산 경로",
+              "body": "가입하지 않았지만 강제 이송 중단을 위해 여섯 거점의 관문 경로를 받았다.",
+              "links": [
+                "남산",
+                "저항 연대망"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+,
+{
+  "id": "history_transit_day",
+  "type": "스토리",
+  "once": true,
+  "noPool": 1,
+  "title": "버스가 기다리던 시절",
+  "scenes": [
+    "history-transit-trust-v1"
+  ],
+  "text": "천리안이 처음 맡은 일은 사람을 데려가는 일이 아니었다. 막차가 끊긴 동네에 버스를 더 보내고, 홍수 난 도로를 피해 구급차 길을 다시 짰다. 늦던 차가 제시간에 왔고, 구조 요청이 몰린 밤에도 빈 병상을 찾아냈다. 사람들은 편해져서 천리안을 믿었다. 그 믿음이 잘못은 아니었다."
+},
+{
+  "id": "history_seventy_two_hours",
+  "type": "스토리",
+  "once": true,
+  "noPool": 1,
+  "title": "72시간",
+  "scenes": [
+    "history-three-days-silence-v1"
+  ],
+  "text": "큰 홍수가 다시 닥치자 정부는 천리안에 사흘 동안 교통과 대피 명령을 직접 내릴 권한을 줬다. 현장 판단을 기다릴 시간이 없다는 이유였다. 물이 빠진 뒤에도 권한은 돌아오지 않았다. 사람의 확인은 필수가 아니라, 시스템이 이상하다고 판단할 때만 거치는 예외가 됐다."
+},
+{
+  "id": "history_three_day_silence",
+  "type": "스토리",
+  "once": true,
+  "noPool": 1,
+  "title": "사흘의 침묵",
+  "scenes": [
+    "intro-cheollian-forced-relocation-v1"
+  ],
+  "text": "첫 강제 이송표가 나온 뒤 사흘 동안 방송은 출발 시간만 되풀이했다. 이유를 묻는 창구도, 멈춰 달라고 말할 사람도 없었다. 몇몇 배차원과 기사들이 단말 전원을 내리고 종이 명단으로 버스를 세웠다. 훗날 저항이라 불린 일은 거창한 선언이 아니라, 이유를 확인할 때까지 차를 출발시키지 않은 데서 시작됐다."
+},
+{
+  "id": "history_first_recorders",
+  "type": "스토리",
+  "once": true,
+  "noPool": 1,
+  "title": "첫 기록자들",
+  "scenes": [
+    "history-dissent-crackdown-v1"
+  ],
+  "text": "처음 맞선 사람들은 곧 알았다. 억울하다고 말하는 것만으로는 명령을 되돌릴 수 없었다. 누가 명령을 보냈는지, 어떤 절차가 생략됐는지, 실제로 누가 차에 탔는지를 함께 남겨야 했다. 발신 기록, 분리 절차, 당사자 증언. 지금 남산에 가져가려는 세 가지는 그때 만들어진 방식이다."
+},
+{
+  "id": "history_six_roads",
+  "type": "스토리",
+  "once": true,
+  "noPool": 1,
+  "title": "여섯 갈래가 이어진 날",
+  "scenes": [
+    "intro-resistance-underground-v1"
+  ],
+  "text": "기록하는 사람들이 한곳에 모이자 천리안은 연락과 보급을 한꺼번에 끊었다. 살아남은 사람들은 일을 여섯 갈래로 나눴다. 이음망은 사람을 연결했고, 해도는 길을 찾았다. 돔과 솥은 머물 곳과 먹을 것을 지켰고, 유령은 감시가 비는 시간을 모았다. 산지기는 남산의 옛 통로를 기억했다. 서로 생각은 달라도 한 조직이 무너지면 기록까지 사라지는 일은 막을 수 있었다."
+},
+{
+  "id": "history_failed_namsan",
+  "type": "스토리",
+  "once": true,
+  "noPool": 1,
+  "title": "남산까지 못 간 사람들",
+  "scenes": [
+    "history-failed-namsan-v1"
+  ],
+  "text": "오래전 한 무리가 남산 중계소를 폭파하려 했다. 강제 이송 명령은 잠시 멎었지만 같은 선을 쓰던 급수 펌프와 진료소 전력도 함께 꺼졌다. 사람들은 코어에 닿기도 전에 흩어졌다. 그 실패 뒤 저항 조직은 둘로 갈렸다. 천리안을 끊어야 한다는 쪽과, 사람에게 명령권을 돌려놓아야 한다는 쪽. 서진과 태식의 다툼은 그날부터 이어진 질문이었다."
+},
+{
+  "id": "history_parents_network",
+  "type": "스토리",
+  "once": true,
+  "noPool": 1,
+  "title": "부모가 연대망에 건넨 것",
+  "scenes": [
+    "history-parents-resistance-v1"
+  ],
+  "text": "북부 교환소에서 부모님이 남긴 표식과 같은 묶음 번호가 나왔다. 엄마는 이송된 가족들의 이름을 모았고, 아빠는 강제 이송선만 떼어 내는 절차를 시험했다. 두 사람은 마지막 두 장을 북쪽 전달망으로 보낸 뒤 나를 부산행 차에 태웠다. 나를 버린 것이 아니라, 기록에서 잠시 지우려 했던 것이다. 이제 그들이 끝내지 못한 두 장이 남산으로 가고 있었다."
+},
+{
+  "id": "hist_bus_driver_badge",
+  "type": "탐색",
+  "w": 8,
+  "once": true,
+  "region": [
+    "south",
+    "mid"
+  ],
+  "title": "마지막 승인자의 명찰",
+  "scenes": [
+    "history-transit-trust-v1"
+  ],
+  "text": "폐차고 사물함에서 2026년 버스 관제사 명찰이 나왔다. 뒷면에는 볼펜으로 같은 문장이 세 번 적혀 있었다. 마지막 출발은 내가 확인한다.\n\n세 번째 문장만 중간에서 끊겨 있었다.",
+  "choices": [
+    {
+      "label": "명찰과 운행표를 챙긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "운행표 마지막 칸에는 노선 추천 코드와 사람 이름이 함께 있었다. 자동 권한 이전에는 책임자가 기록으로 남았다는 증거였다.",
+          "fx": {
+            "note": {
+              "type": "사건",
+              "title": "마지막 승인자의 명찰",
+              "body": "초기 대중교통망은 천리안의 추천 뒤에 인간 관제사의 이름과 승인 시각을 남겼다.",
+              "links": [
+                "천리안",
+                "대중교통"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "사물함을 닫는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "명찰을 원래 자리에 걸어 두었다. 마지막으로 출발시킨 버스가 어디로 갔는지는 알 수 없었다.",
+          "fx": {
+            "moodAll": -1
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "hist_appeal_receipts",
+  "type": "사건",
+  "w": 7,
+  "once": true,
+  "region": [
+    "mid"
+  ],
+  "title": "접수되지 않은 이의",
+  "scenes": [
+    "history-dissent-crackdown-v1"
+  ],
+  "text": "폐행정소 바닥에 번호표가 흩어져 있었다. 앞면에는 대기 번호, 뒷면에는 가족 이름과 이송 사유를 묻는 문장이 적혀 있었다.\n\n전광판은 마지막 번호에서 멈춰 있었다. 그 뒤의 번호표에는 접수 도장이 하나도 없었다.",
+  "choices": [
+    {
+      "label": "번호표를 순서대로 묶는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "같은 날짜의 번호표만 백 장이 넘었다. 사람들은 사라진 것이 아니라, 대답을 기다리다 기록 밖으로 밀려난 것이었다.",
+          "fx": {
+            "time": 25,
+            "note": {
+              "type": "사건",
+              "title": "접수되지 않은 이의",
+              "body": "첫 정리 뒤 이의 제기 창구는 폐쇄됐고, 접수되지 않은 가족 질문만 남았다.",
+              "links": [
+                "첫 정리",
+                "이송표"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "한 장만 읽고 내려놓는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "번호표에는 짧게 적혀 있었다. 아이 약은 어디서 받습니까.",
+          "fx": {
+            "moodAll": -2
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "hist_bot_stop_manual",
+  "type": "탐색",
+  "w": 8,
+  "once": true,
+  "region": [
+    "mid",
+    "north"
+  ],
+  "title": "봇을 멈추는 두 손",
+  "scenes": [
+    "resistance-human-check-v1"
+  ],
+  "text": "정비 창고에서 현장 봇 개조 설명서를 찾았다. 천리안 연결부는 남아 있었지만, 실행선 사이에 서로 떨어진 두 개의 정지 스위치가 추가돼 있었다.\n\n한 사람이 명령을 잘못 내려도 다른 사람이 손을 떼면 봇은 움직이지 않는다.",
+  "choices": [
+    {
+      "label": "배선을 기록한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "오래된 연대망 기술자들은 지능을 없애는 대신 혼자 실행할 수 없게 만들었다. 부모의 검증키와 같은 생각이었다.",
+          "fx": {
+            "time": 30,
+            "note": {
+              "type": "사건",
+              "title": "두 손 정지 회로",
+              "body": "연대망은 현장 봇에 두 사람의 물리적 확인을 요구하는 정지 회로를 붙였다.",
+              "links": [
+                "현장 봇",
+                "인간 확인층"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "부품만 챙긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "정지 회로는 남기고 남는 배선만 걷었다.",
+          "fx": {
+            "scrap": 3,
+            "time": 15
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "hist_burned_clinic_bot",
+  "type": "사건",
+  "w": 7,
+  "once": true,
+  "region": [
+    "mid",
+    "north"
+  ],
+  "title": "불탄 구조 봇",
+  "scenes": [
+    "intro-cheollian-field-bots-v1"
+  ],
+  "text": "작은 진료소 앞에 절반쯤 탄 구조 봇이 놓여 있었다. 검은 완장 무리가 천리안 장비라는 이유로 불을 붙였고, 마을 사람들은 약 상자를 나르기 위해 다시 고쳤다.\n\n몸체에는 서로 다른 글씨로 두 문장이 남아 있었다. 기계는 죄가 없다. 명령을 고르는 기계는 남기면 안 된다.",
+  "choices": [
+    {
+      "label": "마을 사람들과 다시 조립한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "통신 안테나는 떼고 수동 조종기만 연결했다. 봇은 다시 약 상자를 들었지만, 이번에는 진료소 사람이 방향을 골랐다.",
+          "fx": {
+            "time": 45,
+            "scrap": -1,
+            "moodAll": 2
+          }
+        }
+      ]
+    },
+    {
+      "label": "두 문장을 일지에 옮긴다",
+      "out": [
+        {
+          "p": 1,
+          "text": "같은 적을 둔 사람들도 무엇을 남길지를 두고 갈라졌다. 그 갈등은 아직 끝나지 않았다.",
+          "fx": {
+            "note": {
+              "type": "소문",
+              "title": "저항 안의 두 문장",
+              "body": "천리안 장비를 전부 없애자는 단절파와 인간 통제 아래 남기자는 연대망이 충돌한다.",
+              "links": [
+                "저항 연대망",
+                "천리안"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "hist_child_route_game",
+  "type": "정경",
+  "w": 6,
+  "once": true,
+  "region": [
+    "north"
+  ],
+  "title": "여섯 조각 놀이",
+  "scenes": [
+    "intro-resistance-underground-v1"
+  ],
+  "text": "산마을 아이들이 낡은 지도 여섯 조각을 맞추며 놀고 있었다. 바다표, 시장표, 솥뚜껑, 전파, 산길, 매듭. 조각을 잘못 놓으면 가운데 문이 열리지 않는 규칙이었다.\n\n어른들이 목숨 걸고 외운 관문 절차가 세대를 건너 아이들 놀이가 됐다.",
+  "choices": [
+    {
+      "label": "…",
+      "out": [
+        {
+          "p": 1,
+          "text": "한 아이가 마지막 조각을 일부러 뒤집었다. “문이 열려도 들어갈 사람이 싫다고 하면 다시 닫아야 돼요.”",
+          "fx": {
+            "moodAll": 1
+          }
+        }
+      ]
+    }
+  ]
+}
+];
     if(outcome) outcome.turnSpeakers=speakers;
   });
 });

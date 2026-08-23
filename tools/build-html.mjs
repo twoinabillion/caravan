@@ -141,15 +141,18 @@ const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__
   else relative = `assets/audio/voice/${key.slice(3).toLowerCase()}.mp3`;
   return dataUri(relative, 'audio/mpeg');
 }, '오디오');
+const roadCues = replace(read('src/07f-ui-road-thoughts.js'), /__ROAD_CUE_([A-Z]+)__/g, key =>
+  dataUri(`assets/road-cues/cue-${key.toLowerCase()}.png`, 'image/png'), '도로 접근 큐');
 
 const chunks = [
   styles.result, read('src/01b-quest-style.html'), ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
   title.result, audio.result, npc.result, upgrades.result,
-  ...after.map(relative => relative==='src/05-scene.js'?settlementSprites.result:read(relative))
+  ...after.map(relative => relative==='src/05-scene.js'?settlementSprites.result
+    :relative==='src/07f-ui-road-thoughts.js'?roadCues.result:read(relative))
 ];
 const html = chunks.join('\n');
 const htmlBytes = Buffer.byteLength(html);
-const unresolved = [...new Set(html.match(/__(?:PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO)_[A-Z0-9_]+__/g) || [])];
+const unresolved = [...new Set(html.match(/__(?:PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO|ROAD_CUE)_[A-Z0-9_]+__/g) || [])];
 if (unresolved.length) throw new Error(`치환되지 않은 자산: ${unresolved.slice(0, 8).join(', ')}`);
 
 const categoryOf = relative => relative.includes('/audio/')?'audio'

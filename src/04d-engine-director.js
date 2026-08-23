@@ -201,6 +201,88 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
     ['landmark',/신발|방울|촛불|무덤|묘지|기념|표식|비석|landmark|memorial/],
     ['cache',/상자|가방|물자|부품|식량|과일|소금|발견물|공구|cache|salvage|supply/]
   ];
+  const ROAD_APPROACH_MOTIFS = [
+    ['coffee-van',/트럭 카페|커피 트럭|커피차/],
+    ['clinic-bus',/진료 버스|이동 진료소|왕진 버스/],
+    ['food-truck',/비빔밥 트럭|식당 트럭|푸드 트럭/],
+    ['broken-vehicle',/고장난 .*차|고장 난 .*차|주저앉은 달구지|엔진에서 연기|과열/],
+    ['film-vehicle',/이동 영화관|달빛 자동차극장|유랑 극단/],
+    ['postman',/자전거 우편부|우체부|배달 중|우편 전령|자전거 전령|우체국/],
+    ['barber',/길거리 이발소|이발소/],
+    ['fire-station',/폐 소방서|소방서 차고|소방차/],
+    ['carwash',/무인 세차장|세차장/],
+    ['wedding',/국도 위의 결혼식|결혼식|돌잔치/],
+    ['piano',/도로 위의 피아노|피아노/],
+    ['musician',/떠돌이 가수|기타|연주|노래하는|극단/],
+    ['procession',/침묵의 행렬|행렬|순례단|전령들/],
+    ['monk',/걷는 스님|스님|산사\(|사찰|불가의/],
+    ['cow-walker',/소와 걷는 사람|소를 끌|소와 함께/],
+    ['beekeeper',/벌통|양봉|꿀벌/],
+    ['coffee-stall',/온실 카페|폐카페|카페|커피|원두|다방/],
+    ['food-stall',/기사식당|쌀밥집|죽통밥|호두과자|왕갈비|막걸리|김치공장|과메기|간고등어|뻥이요|양조장|국수/],
+    ['gas-station',/폐주유소|주유소|기름 창고|연료 판매/],
+    ['bath',/드럼통 목욕탕|목욕탕|찜질방|온천/],
+    ['pharmacy',/상가 약국|약국|국도의 약사/],
+    ['school',/초등학교|폐교|이동 학교|학교놀이|문방구/],
+    ['greenhouse',/온실|비닐하우스/],
+    ['market-cart',/움직이는 만물상|리어카 행상|부품 행상|지게|수레/],
+    ['market-stall',/장터|시장|노점|수선집|장사꾼|상인/],
+    ['photo',/사진관|결혼사진사|도로 위 액자/],
+    ['radio-post',/방송국|중계소|중계기|안테나|송신탑|전파사/],
+    ['camera-post',/과속 카메라|감시 카메라|렌즈|탐조등|스캐너/],
+    ['vending',/자판기/],
+    ['robot',/수신호 로봇|초계 보행기|청소차/],
+    ['rail-crossing',/철길 건널목|건널목|간이역/],
+    ['farm',/과수원|농장|해바라기 밭|포도밭|덕장|갈대밭/],
+    ['child',/혼자 서 있는 아이|꼬마 검문소|아이들이|어린이|키즈카페/],
+    ['elder',/폐지 줍는 할머니|노인|할머니|할아버지/]
+  ];
+  const roadApproachSceneProfile=(evd,kind)=>{
+    const visual=[evd.title,evd.scene,evd.location].filter(Boolean).join(' ');
+    const narrative=typeof evd.text==='string'?evd.text:'';
+    const full=`${visual} ${narrative}`;
+    let motif='';
+    for(const [name,pattern] of ROAD_APPROACH_MOTIFS){if(pattern.test(visual)){motif=name;break;}}
+    if(!motif){
+      if(/커피|원두|다방/.test(full))motif=kind==='vehicle'?'coffee-van':'coffee-stall';
+      else if(/우편부|우체부|자전거 전령/.test(full))motif='postman';
+      else if(/고장|보닛|엔진을 열|수리 중/.test(full)&&kind==='vehicle')motif='broken-vehicle';
+    }
+    const crowd=/행렬|무리|순례단|극단|사람들|마을 사람|가족|장터|시장|결혼식|돌잔치/.test(visual);
+    let people=/세 사람|세 명|세 아이|셋이|셋은/.test(full)?3:
+      /두 사람|두 명|두 아이|둘이|둘은|부부|남녀|노인.{0,12}아이|아이.{0,12}노인/.test(full)?2:
+      /네 사람|네 명|다섯|여섯|crowd/.test(full)||crowd?3:0;
+    if(!people){
+      if(kind==='people'||kind==='medical'||kind==='market')people=2;
+      else if(['vehicle','cyclist','checkpoint','shelter'].includes(kind))people=1;
+    }
+    if(motif==='postman'||motif==='monk'||motif==='elder'||motif==='cow-walker')people=1;
+    if(motif==='wedding'||motif==='procession')people=3;
+    if(motif==='broken-vehicle'&&/두 사람|두 명|부부|가족/.test(full))people=Math.max(2,people);
+    let action='stand';
+    if(/손을 흔|손 흔|차를 세우|멈춰 달|도움|구조 요청|기다리고/.test(full))action='wave';
+    else if(/고장|보닛|정비|수리|엔진|바퀴/.test(full))action='repair';
+    else if(/커피|장사|팔고|건네|나눠|식당|노점/.test(full))action='serve';
+    else if(/옮기|운반|짐을|상자|수레|지게/.test(full))action='carry';
+    else if(/환자|부상|쓰러|앓|열이|다쳤/.test(full))action='kneel';
+    else if(/검문|경계|지키|순찰|봉쇄/.test(full))action='guard';
+    else if(/걷|행렬|순례/.test(full))action='walk';
+    else if(/연주|가수|노래|피아노|기타/.test(full))action='perform';
+    let prop='';
+    if(/커피|원두|다방/.test(full))prop='coffee';
+    else if(/우편|편지|소포|배달/.test(full))prop='mail';
+    else if(/의사|약사|환자|진료|구급|해열제|왕진/.test(full))prop='medical';
+    else if(/공구|부품|정비|수리|보닛|엔진/.test(full))prop='tools';
+    else if(/라디오|방송|주파수|송신|안테나|전파/.test(full))prop='radio';
+    else if(/사진|카메라|렌즈/.test(full))prop='camera';
+    else if(/꽃|화환|결혼/.test(full))prop='flowers';
+    else if(/피아노/.test(full))prop='piano';
+    else if(/벌통|양봉/.test(full))prop='beehive';
+    else if(/책|도서관|문방구/.test(full))prop='books';
+    else if(/연료|기름|주유/.test(full))prop='fuel';
+    else if(/식당|쌀밥|국수|비빔밥|간고등어|호두과자|갈비|막걸리/.test(full))prop='food';
+    return {motif,people:Math.min(3,people),action,prop};
+  };
   G.roadApproachProfile = (evd)=>{
     if(!evd || evd.roadApproach === false) return null;
     const type = String(evd.type || '');
@@ -222,7 +304,8 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
       else kind = 'landmark';
     }
     const key = evd.id || `${evd.title || 'road-event'}:${type}`;
-    return {kind, label:ROAD_APPROACH_LABELS[kind], duration:(type === '위기' || evd.combat) ? 850 : 1450, eventKey:key};
+    return {kind, label:ROAD_APPROACH_LABELS[kind], duration:(type === '위기' || evd.combat) ? 850 : 1450, eventKey:key,
+      scene:roadApproachSceneProfile(evd,kind)};
   };
 
   /* UI.roadApproach 구현은 src/07f-ui-road-thoughts.js로 옮겨졌다 —
@@ -233,7 +316,7 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
     const eventKey = evd && (evd.id || `${evd.title || 'road-event'}:${evd.type || ''}`);
     const approach = S.driving ? G.roadApproachProfile(evd) : null;
     if(approach && S._roadApproachBypass !== eventKey && !S.driving.approach){
-      S.driving.approach = approach;
+      S.driving.approach = {...approach, startedAt:Date.now()};
       UI.roadApproach(approach, ()=>{
         if(S.driving) delete S.driving.approach;
         S._roadApproachBypass = eventKey;

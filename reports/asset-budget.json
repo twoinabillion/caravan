@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-22T16:27:38.603Z",
+  "generatedAt": "2026-08-23T04:18:56.986Z",
   "html": {
-    "bytes": 52951911,
+    "bytes": 61821063,
     "warnBytes": 32000000,
     "maxBytes": 72000000
   },
   "embedded": {
-    "files": 418,
-    "bytes": 31014366,
+    "files": 462,
+    "bytes": 37579643,
     "categories": {
       "ui": {
         "files": 31,
@@ -20,14 +20,19 @@
         "encodedBytes": 12947612
       },
       "scene": {
-        "files": 295,
-        "bytes": 16200476,
-        "encodedBytes": 21601040
+        "files": 321,
+        "bytes": 21763451,
+        "encodedBytes": 29018376
       },
       "portrait": {
-        "files": 47,
-        "bytes": 848236,
-        "encodedBytes": 1131056
+        "files": 49,
+        "bytes": 1567238,
+        "encodedBytes": 2089728
+      },
+      "other": {
+        "files": 16,
+        "bytes": 283300,
+        "encodedBytes": 377760
       }
     }
   },
@@ -81,6 +86,60 @@
       "encodedBytes": 992448
     },
     {
+      "path": "assets/scenes/resistance-aftermath-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 524908,
+      "encodedBytes": 699880
+    },
+    {
+      "path": "assets/scenes/resistance-mid-depot-conflict-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 488285,
+      "encodedBytes": 651048
+    },
+    {
+      "path": "assets/scenes/resistance-north-route-rehearsal-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 465739,
+      "encodedBytes": 620988
+    },
+    {
+      "path": "assets/scenes/story-system-answer-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 463619,
+      "encodedBytes": 618160
+    },
+    {
+      "path": "assets/scenes/resistance-seoul-edge-choice-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 438914,
+      "encodedBytes": 585220
+    },
+    {
+      "path": "assets/scenes/resistance-signal-leak-evacuation-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 437469,
+      "encodedBytes": 583292
+    },
+    {
+      "path": "assets/scenes/story-personal-cache-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 433811,
+      "encodedBytes": 578416
+    },
+    {
+      "path": "assets/portraits/taesik.png",
+      "mime": "image/png",
+      "bytes": 361695,
+      "encodedBytes": 482260
+    },
+    {
+      "path": "assets/portraits/seojin.png",
+      "mime": "image/png",
+      "bytes": 357307,
+      "encodedBytes": 476412
+    },
+    {
       "path": "assets/scenes/intro-departure-start-v1.jpg",
       "mime": "image/jpeg",
       "bytes": 342821,
@@ -97,60 +156,6 @@
       "mime": "image/jpeg",
       "bytes": 316589,
       "encodedBytes": 422120
-    },
-    {
-      "path": "assets/ui/road-journey-log-panel-v1.webp",
-      "mime": "image/webp",
-      "bytes": 309208,
-      "encodedBytes": 412280
-    },
-    {
-      "path": "assets/scenes/onboarding-main-mission-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 290294,
-      "encodedBytes": 387060
-    },
-    {
-      "path": "assets/scenes/seoul-uplink-reveal-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 289082,
-      "encodedBytes": 385444
-    },
-    {
-      "path": "assets/scenes/intro-family-farewell-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 278434,
-      "encodedBytes": 371248
-    },
-    {
-      "path": "assets/scenes/intro-cold-open-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 262691,
-      "encodedBytes": 350256
-    },
-    {
-      "path": "assets/scenes/intro-family-order-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 234945,
-      "encodedBytes": 313260
-    },
-    {
-      "path": "assets/ui/event-result-ticket-v1.webp",
-      "mime": "image/webp",
-      "bytes": 232332,
-      "encodedBytes": 309776
-    },
-    {
-      "path": "assets/ui/stay-console-shell-v1.webp",
-      "mime": "image/webp",
-      "bytes": 222080,
-      "encodedBytes": 296108
-    },
-    {
-      "path": "assets/intro/12-mother-keepsakes-v2.jpg",
-      "mime": "image/jpeg",
-      "bytes": 208954,
-      "encodedBytes": 278608
     }
   ]
 }

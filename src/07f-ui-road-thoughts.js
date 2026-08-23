@@ -67,11 +67,31 @@
     cue.id = 'road-approach-cue';
     cue.className = `road-approach-cue road-approach-${profile.kind}`;
     cue.style.setProperty('--road-cue-duration', `${profile.duration}ms`);
+    const roadCueImages = {
+      animal: '__ROAD_CUE_ANIMAL__',
+      bridge: '__ROAD_CUE_BRIDGE__',
+      cache: '__ROAD_CUE_CACHE__',
+      checkpoint: '__ROAD_CUE_CHECKPOINT__',
+      cyclist: '__ROAD_CUE_CYCLIST__',
+      debris: '__ROAD_CUE_DEBRIS__',
+      flood: '__ROAD_CUE_FLOOD__',
+      landmark: '__ROAD_CUE_LANDMARK__',
+      market: '__ROAD_CUE_MARKET__',
+      medical: '__ROAD_CUE_MEDICAL__',
+      people: '__ROAD_CUE_PEOPLE__',
+      shelter: '__ROAD_CUE_SHELTER__',
+      signal: '__ROAD_CUE_SIGNAL__',
+      smoke: '__ROAD_CUE_SMOKE__',
+      surveillance: '__ROAD_CUE_SURVEILLANCE__',
+      vehicle: '__ROAD_CUE_VEHICLE__'
+    };
     const image = document.createElement('img');
-    image.src = `assets/road-cues/cue-${profile.kind}.png`;
+    image.hidden = true;
+    image.src = roadCueImages[profile.kind] || roadCueImages.landmark;
     image.alt = '';
     image.setAttribute('aria-hidden','true');
-    image.onerror = ()=>{ if(!image.dataset.fallback){ image.dataset.fallback='1'; image.src='assets/road-cues/cue-landmark.png'; } };
+    image.onload = ()=>{ image.hidden = false; };
+    image.onerror = ()=>{ image.remove(); cue.classList.add('road-approach-no-image'); };
     const status = document.createElement('div');
     status.className = 'road-approach-status';
     const eyebrow = document.createElement('span');
