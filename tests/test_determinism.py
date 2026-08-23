@@ -23,8 +23,11 @@ RUN_JS = """
   const stubs = ['toast','speak','playChat','playRadio','renderAll','renderHud','onDepart','clearSpeech'];
   const saved = {};
   for (const k of stubs) { saved[k] = UI[k]; UI[k] = noop; }
-  const savedShow = UI.showEvent, savedArrive = UI.onArrive;
+  const savedShow = UI.showEvent, savedArrive = UI.onArrive, savedRoadApproach = UI.roadApproach;
   UI.modalOpen = () => false; UI.onArrive = () => 0;
+  // 동기 시뮬레이션에서는 실제 1.45초 전방 발견 연출을 기다릴 수 없다.
+  // 연출만 즉시 끝내고, 이어지는 사건 판정과 난수 소비는 실제 엔진을 그대로 쓴다.
+  UI.roadApproach = (_profile, onComplete) => { if (onComplete) onComplete(); };
   const trace = [];
   // 이벤트는 기록만 하지 않고 실제로 해석한다 — pickOutcome/applyFx가 rng의 최대 소비자다.
   let pending = null;
@@ -62,6 +65,7 @@ RUN_JS = """
 
   for (const k of stubs) UI[k] = saved[k];
   UI.modalOpen = realModalOpen; UI.showEvent = savedShow; UI.onArrive = savedArrive;
+  UI.roadApproach = savedRoadApproach;
   return trace;
 }
 """

@@ -37,6 +37,13 @@ SIM_JS = r"""
   UI.modalOpen = () => false;
   UI.onArrive = () => 0;
   const savedShowEvent = UI.showEvent;
+  const savedRoadApproach = UI.roadApproach;
+  /* 동기 루프에서는 도로 접근 연출의 타이머가 실행될 수 없다. 연출 완료만 즉시
+     통지하고 이후 주행·사건·판정은 실제 엔진을 그대로 돌린다. */
+  UI.roadApproach = (options, onComplete) => {
+    if (typeof onComplete === 'function') onComplete();
+    return true;
+  };
 
   // 이벤트는 열리는 즉시 정책에 따라 선택 하나를 고르고 닫는다
   let pendingEvent = null;
@@ -470,7 +477,7 @@ SIM_JS = r"""
     });
   }
   for (const key of stubs) UI[key] = saved[key];
-  UI.modalOpen = realModalOpen; UI.showEvent = savedShowEvent;
+  UI.modalOpen = realModalOpen; UI.showEvent = savedShowEvent; UI.roadApproach = savedRoadApproach;
   return results;
 }
 """

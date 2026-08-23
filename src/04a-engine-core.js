@@ -603,10 +603,10 @@ G.qualitySummary = ()=>{
 G.journeyGuide = ()=>{
   if(!S||S.guideDismissed||G.qualityArchive().length||G.qualityPlayMs()>45*60*1000) return null;
   const milestones=G.ensureQualityState().milestones||{};
-  if(!milestones.first_departure) return {step:1,total:4,kicker:'첫 여정 · 길',title:'주 임무를 보고 첫 길을 고른다',
+  if(!milestones.first_departure) return {step:1,total:4,kicker:'첫 여정 · 길',title:'본편 임무를 기준으로 첫 길을 고른다',
     body:'「목표」에는 남산에서 강제 이송을 멈추는 주 임무가 표시된다. 지금은 이어진 목적지 가운데 하나를 고르면 된다.',
     points:['목표: 주 임무와 선택 이야기를 따로 확인한다','길: 거리와 시간, 연료를 보고 다음 목적지를 고른다','선택 의뢰: 원할 때만 맡아도 주 임무는 그대로 남는다'],focus:'route'};
-  if(!milestones.first_event) return {step:2,total:4,kicker:'첫 여정 · 주행',title:S.driving?'달구지는 고른 길을 따라 달린다':'다음 목적지를 고른다',
+  if(!milestones.first_event) return {step:2,total:4,kicker:'첫 여정 · 주행',title:S.driving?'달구지는 선택한 길을 따라 달린다':'다음 목적지를 고른다',
     body:S.driving?'남은 거리와 연료를 확인하며 달린다. 길에서 사건이 생기면 이야기를 끝까지 읽고 행동을 고른다.':'거리와 시간, 연료를 다시 보고 다음 목적지를 고른다.',
     points:['대화와 장면은 위에서 아래로 누적된다','선택 결과는 자원과 여정 기록에 남는다'],focus:'drive'};
   const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;

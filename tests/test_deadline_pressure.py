@@ -59,7 +59,7 @@ with sync_playwright() as playwright:
       S.at='miryang'; S.driving=null; S.scrap=30;
       // 한 밤을 같은 조건에서 재현한다 — 날씨(빗물받이 +2)와 시각을 매번 고정
       const night=()=>{
-        document.querySelectorAll('.wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
+        document.querySelectorAll('.wrap.on,.sheet-wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
         S.wx='clear'; S.wxNext='clear'; S.min=20*60;
         S.thirst=0; S.hunger=0;
         const before={scrap:S.scrap, water:S.water, food:S.food};
@@ -89,7 +89,7 @@ with sync_playwright() as playwright:
     print('― 구제 유상화 (에스컬레이션 사다리)')
     ladder = page.evaluate("""() => {
       const seen=[];
-      document.querySelectorAll('.wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
+      document.querySelectorAll('.wrap.on,.sheet-wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
       for(let i=0;i<3;i++){
         G.openRescue('nofuel','crisis_nofuel');
         seen.push((document.querySelector('#ev-sheet h2')||{}).textContent||'');

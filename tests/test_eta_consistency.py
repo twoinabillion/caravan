@@ -37,7 +37,10 @@ with sync_playwright() as playwright:
     page.wait_for_timeout(100)
     page.evaluate('UI.skipIntro()')
     page.wait_for_timeout(200)
-    page.evaluate("document.querySelector('#arrival-scene') && document.querySelector('#arrival-scene').classList.remove('on')")
+    page.evaluate("""() => {
+      document.querySelector('#arrival-scene')?.classList.remove('on');
+      document.querySelector('#ev-wrap')?.classList.remove('on');
+    }""")
 
     print('― 표시 시간 vs 실제 경과 (같은 구간)')
     drive = page.evaluate("""() => {

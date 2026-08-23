@@ -160,6 +160,7 @@ D.scenes = {
   'history-three-days-silence-v1':'__SCENE_HISTORY_THREE_DAYS_SILENCE_V1__',
   'history-failed-namsan-v1':'__SCENE_HISTORY_FAILED_NAMSAN_V1__',
   'history-parents-resistance-v1':'__SCENE_HISTORY_PARENTS_RESISTANCE_V1__',
+  'intro-resistance-begins':'__SCENE_INTRO_RESISTANCE_FIRST_VOICES_V1__',
   'intro-resistance-first-voices-v1':'__SCENE_INTRO_RESISTANCE_FIRST_VOICES_V1__',
   'intro-resistance-underground-v1':'__SCENE_INTRO_RESISTANCE_UNDERGROUND_V1__',
   'memory-busan-terminal-v1':'__SCENE_MEMORY_BUSAN_TERMINAL_V1__',

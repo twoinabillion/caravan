@@ -144,6 +144,19 @@ with sync_playwright() as playwright:
     check('조건을 넘긴 비트가 한꺼번에 대기열에 들어간다', queueing['queuedAll'] >= 5, str(queueing))
     check('꺼내는 것은 한 번에 하나', queueing['afterPop'] == queueing['queuedAll'] - 1, str(queueing))
 
+    print('― 미충족 기둥 접선은 출발 슬롯으로 보장된다')
+    pillar_slot = page.evaluate("""() => {
+      G.newGame('onroad','기둥슬롯','full');
+      S.at='busan'; S.driving=null; S._beatQueue=[]; S._driveLegsSinceBlock=3;
+      const unmet=Object.values(G.pillars()).some(p=>p.have<p.need);
+      const started=G.startTravel('yangsan');
+      const slots=(S.driving&&S.driving.slots)||[];
+      return {unmet,started,hasPillar:slots.some(slot=>slot.pillarPick),slots};
+    }""")
+    check('미충족 기둥이 있으면 다음 길에 접선 슬롯이 생긴다',
+          pillar_slot['unmet'] and pillar_slot['started'] and pillar_slot['hasPillar'],
+          str(pillar_slot))
+
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()
 

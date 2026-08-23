@@ -54,7 +54,7 @@ MUTATIONS = [
         'file': 'src/04c-engine-travel.js',
         'old': "if(D.events.some(e=>e.pillar&&G.pillarUnmet(e.pillar))){\n      slots.push({at:chk.km*(0.5+rng()*0.3), pillarPick:true});",
         'new': "if(false){\n      slots.push({at:chk.km*(0.5+rng()*0.3), pillarPick:true});",
-        'test': ['python3', 'tools/simulate-engine.py', '--runs', '16', '--max-days', '50'],
+        'test': ['python3', 'tests/test_journey_beats.py'],
     },
     {
         'name': 'combat-prep-bypass',
@@ -84,8 +84,8 @@ MUTATIONS = [
         'name': 'keyboard-numbers',
         'why': '숫자키 배선을 끊으면 키보드만으로는 선택을 진행할 수 없다',
         'file': 'src/07-ui.js',
-        'old': "if(modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
-        'new': "if(false&&modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
+        'old': "if(choiceModal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
+        'new': "if(false&&choiceModal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){",
         'test': ['python3', 'tests/test_keyboard_access.py'],
     },
     {

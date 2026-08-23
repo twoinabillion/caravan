@@ -144,18 +144,29 @@ with sync_playwright() as p:
           if(frame) frame.click();   // 타이프라이터 빨리감기
           // 대화 페이지('계속'=story-next)는 숫자키 1로 넘어간다 — 그 자체가 키보드 배선 검증
           const next=document.querySelector('#ev-wrap button.choice.story-next');
-          if(next){ document.dispatchEvent(new KeyboardEvent('keydown',{key:'1',bubbles:true})); }
+          const keyboardTarget=document.querySelector('#ev-wrap .event-scroll')||document.activeElement||document;
+          if(next){ keyboardTarget.dispatchEvent(new KeyboardEvent('keydown',{key:'1',bubbles:true})); }
+          else if(document.querySelector('#ev-sheet[data-story-step="beat"]')){
+            keyboardTarget.dispatchEvent(new KeyboardEvent('keydown',{key:'1',bubbles:true}));
+          }
           const cards=[...document.querySelectorAll('#ev-wrap button.choice:not(.story-next)')].filter(x=>x.offsetParent!==null&&!x.disabled);
           if(cards.length>=2){
             const firstText=cards[0].textContent;
-            document.dispatchEvent(new KeyboardEvent('keydown',{key:'2',bubbles:true}));
+            keyboardTarget.dispatchEvent(new KeyboardEvent('keydown',{key:'2',bubbles:true}));
             setTimeout(()=>{
               const now=[...document.querySelectorAll('#ev-wrap button.choice:not(.story-next)')].filter(x=>x.offsetParent!==null);
               res({cards:cards.length, changed:!now.length||now[0]&&now[0].textContent!==firstText});
             }, 500);
             return;
           }
-          if(Date.now()-t0>6000) return res({cards:cards.length, timeout:true});
+          if(Date.now()-t0>6000){
+            const wrap=document.querySelector('#ev-wrap');
+            const sheet=document.querySelector('#ev-sheet');
+            const dock=sheet&&sheet.querySelector('.event-choice-dock');
+            return res({cards:cards.length,timeout:true,wrapClass:wrap&&wrap.className,
+              sheetClass:sheet&&sheet.className,storyStep:sheet&&sheet.dataset.storyStep,
+              storyPhase:sheet&&sheet.dataset.storyPhase,dockText:dock&&dock.textContent.trim().slice(0,120)});
+          }
           setTimeout(tick, 250);
         };
         tick();

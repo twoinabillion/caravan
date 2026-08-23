@@ -131,8 +131,11 @@ G.popBeat = ()=>{
     const b=defs(id); return b && !S.used.includes(id) && G.beatReady(b);
   });
   if(!ready.length) return null;
+  /* 지역 한정 사건은 창이 닫히기 전에 먼저 내보내고, 그다음 본편을 일반 역사
+     비트보다 앞세운다. 이 순서여야 세계의 대비와 최단 경로의 본편이 함께 남는다. */
+  const main=ready.find(id=>id.startsWith('story_'));
   const urgent=ready.find(id=>{ const w=defs(id).when||{}; return w.region||w.lowWater||w.flag; });
-  const out=urgent||ready[0];
+  const out=urgent||main||ready[0];
   S._beatQueue=S._beatQueue.filter(id=>id!==out && defs(id) && !S.used.includes(id));
   return out;
 };

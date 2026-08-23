@@ -48,7 +48,7 @@ with sync_playwright() as pw:
     check('소문 reveal 노드 전부 유효', not data['badReveal'], str(data['badReveal']))
     check('newGame이 전원 상태 생성', not data['stateMissing'], str(data['stateMissing']))
 
-    flow = page.evaluate("""() => new Promise(res=>{
+    flow = page.evaluate(r"""() => new Promise(res=>{
       S.at='suwon'; UI.showStl('suwon','people');
       setTimeout(()=>{
         const row=document.querySelector('[data-person-key="npc-gitae"]');

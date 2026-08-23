@@ -352,7 +352,9 @@ G.normalizeDriveSlots = dv=>{
   const ranked=[...dv.slots].sort((a,b)=>rank(b)-rank(a)||a.at-b.at);
   const maxSlots=dv.dist>=55?2:1;
   const chosen=ranked.slice(0,maxSlots);
-  const critical=chosen.some(slot=>slot.special==='bridge'||!!slot.forced);
+  /* 예약된 여정 비트는 무작위 사건이 아니다. 짧은 구간의 호흡 조절이 beat 슬롯까지
+     지우면 "다음 구간에서 보장" 계약이 깨지고, 핵심 본편이 서울 도착 전 누락된다. */
+  const critical=chosen.some(slot=>slot.special==='bridge'||!!slot.forced||!!slot.beat);
   if(!critical&&dv.dist<30){
     dv.slots=[];
     S._driveLegsSinceBlock=quiet+1;

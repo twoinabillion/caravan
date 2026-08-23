@@ -182,7 +182,7 @@ with sync_playwright() as playwright:
         goal = tool_target_state(page, '#quest-ledger')
         check(f'{width}×{height} quest ledger keeps visible controls at least 44px',
               goal['count'] >= 1 and not goal['short'] and goal['escaped'] == 0, str(goal))
-        page.click('.quest-ledger-close')
+        page.click('.quest-ledger-back')
 
         page.click('#dk-map')
         page.evaluate("UI.showNodeCard(S.known.find(id => id !== S.at))")

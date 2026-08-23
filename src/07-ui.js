@@ -395,10 +395,18 @@ const UI = (()=>{
       }
       /* 선택지 숫자키 — 카드에 이미 번호가 그려져 있다(choice-index). 게임의 대부분이
          선택이므로 이것이 키보드 완주의 중심 배선이다. */
-      if(modal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){
-        const cards=[...modal.querySelectorAll('button.choice:not([disabled])')].filter(x=>x.offsetParent!==null);
+      const eventModal=document.querySelector('#ev-wrap.on');
+      const choiceModal=eventModal||modal;
+      if(choiceModal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){
+        const cards=[...choiceModal.querySelectorAll('button.choice:not([disabled])')].filter(x=>x.offsetParent!==null);
         const card=cards[Number(e.key)-1];
         if(card){ e.preventDefault(); card.click(); return; }
+        /* 사건 본문을 읽는 동안에는 아직 선택 카드가 없다. 숫자 1을 첫 선택의
+           단축키로만 두면 같은 키로 읽기를 이어 갈 수 없으므로, 결정 단계 전에는
+           다음 문장 키로 사용하고 카드가 나타난 뒤부터 선택 번호로 전환한다. */
+        if(e.key==='1'&&eventModal&&curStory&&curStory.index<curStory.turns.length-1){
+          e.preventDefault(); advanceStory(curStory); return;
+        }
       }
       if(modal&&modal.getAttribute('aria-modal')!=='false'&&e.key==='Tab'){
         const items=[...modal.querySelectorAll(focusableSel)].filter(x=>x.offsetParent!==null);
@@ -565,6 +573,8 @@ const UI = (()=>{
   }
   function startNew(mode){
     pendingMode='onroad'; pendingName=''; pendingProfile='keeper'; introIdx=0; introTurnIdx=0;
+    const nameInput=$('#inp-name');
+    if(nameInput) nameInput.value='';
     show('scr-name'); renderProfilePick();
     const skip=$('#intro-skip');
     if(skip){
@@ -573,7 +583,7 @@ const UI = (()=>{
     }
     const portrait=$('#name-child');
     if(portrait) portrait.src=D.portraits.player_child||'';
-    setTimeout(()=>{ const i=$('#inp-name'); if(i){ i.value=''; i.focus(); } },80);
+    setTimeout(()=>{ const i=$('#inp-name'); if(i) i.focus(); },80);
   }
   function introName(){ return pendingName||'나'; }
   function personalizedIntroBeat(raw){

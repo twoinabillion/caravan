@@ -683,7 +683,7 @@ with sync_playwright() as p:
       S.stats.events=narrative0.events; S.stats.km=narrative0.km;
       out.traceDefs = (D.eraTraces||[]).length;
       // 본편 장면과 세계 질감 조우는 같은 레일을 쓰되 종류로 구분한다
-      out.journeyBeats = (D.journeyBeats||[]).filter(b=>b.kind!=='world').length;
+      out.journeyBeats = (D.journeyBeats||[]).filter(b=>b.kind==='story'&&b.id.startsWith('story_')).length;
       out.worldBeats = (D.journeyBeats||[]).filter(b=>b.kind==='world').length;
       S.party = []; S.up = {}; UI.renderAll();
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
@@ -848,7 +848,24 @@ with sync_playwright() as p:
         ||(e.locEvent&&D.nodeScenes&&D.nodeScenes[e.locEvent])
         ||D.eventSceneTypes[(e.ai||e.type==='추적')?'추적':e.type]||'generic-story';
       out.allEventsIllustrated=D.events.every(e=>!!D.scenes[sceneFor(e)]);
-      out.sceneDataReady=Object.values(D.scenes).every(src=>src.startsWith('data:image/'));
+      out.badSceneData=Object.entries(D.scenes).filter(([,src])=>
+        typeof src!=='string'||!src.startsWith('data:image/')).map(([key,src])=>[key,String(src).slice(0,48)]);
+      out.sceneDataReady=out.badSceneData.length===0;
+      const stepStory=()=>{
+        const scroll=document.querySelector('#ev-sheet .event-scroll');
+        if(!scroll) return false;
+        scroll.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+        return true;
+      };
+      const collectStorySceneKeys=()=>{
+        const keys=[];
+        for(let guard=0;guard<120&&document.querySelector('#ev-sheet')?.dataset.storyStep==='beat';guard++){
+          keys.push(document.querySelector('.event-scene-frame')?.dataset.sceneKey||'');
+          if(!stepStory()) break;
+        }
+        keys.push(document.querySelector('.event-scene-frame')?.dataset.sceneKey||'');
+        return keys;
+      };
       out.turnParser=D.events.every(e=>{
         const raw=typeof e.text==='function'?e.text(S):e.text;
         const turns=UI.storyTurns(raw,e);
@@ -866,7 +883,7 @@ with sync_playwright() as p:
       const firstScene=firstFrame&&firstFrame.dataset.sceneKey;
       out.choiceLockedUntilRead=!document.querySelector('#ev-sheet [data-i]')&&
         !!document.querySelector('#ev-sheet [data-story-entry]');
-      document.querySelector('#ev-sheet .story-next')?.click();
+      stepStory();
       const secondFrame=document.querySelector('#ev-sheet .event-scene-frame');
       out.turnSceneStable=!!firstCut&&!!firstScene &&
         secondFrame.dataset.cutToken===firstCut &&
@@ -895,12 +912,7 @@ with sync_playwright() as p:
       out.recruitCutRuntime=recruitCutSpecs.every(([id,eventId])=>{
         const meet=D.events.find(e=>e.id===eventId);
         UI.showEvent(meet);
-        const keys=[];
-        while(document.querySelector('#ev-sheet .story-next')){
-          keys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
-          document.querySelector('#ev-sheet .story-next').click();
-        }
-        keys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
+        const keys=collectStorySceneKeys();
         const expected=D.eventTurnScenes[eventId]||[];
         const meetOk=keys[0]===expected[0]&&expected.every(key=>keys.includes(key));
         document.querySelector('#ev-wrap').classList.remove('on');
@@ -924,12 +936,7 @@ with sync_playwright() as p:
         minjiArcText.includes('소매 끝으로 눈가를 한 번 훔쳤다') &&
         minjiArcText.includes('네 자리부터 만들자고');
       UI.showEvent(minjiAction);
-      const actionKeys=[];
-      while(document.querySelector('#ev-sheet .story-next')){
-        actionKeys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
-        document.querySelector('#ev-sheet .story-next').click();
-      }
-      actionKeys.push(document.querySelector('.event-scene-frame').dataset.sceneKey);
+      const actionKeys=collectStorySceneKeys();
       UI.finishStory();
       document.querySelector('#ev-sheet [data-i="2"]').click();
       const signalAt=actionKeys.indexOf('recruit-minji-task-signal');
@@ -1183,10 +1190,14 @@ with sync_playwright() as p:
       out.questVisualHierarchy=document.querySelector('.quest-ledger-head small')?.textContent==='여정 기록' &&
         !document.querySelector('.quest-ledger-close') && document.querySelector('#dk-objectives').classList.contains('here');
       const knowledgeText=questLedger?.textContent||'';
-      out.knowledgeUi=knowledgeText.includes('현재 목표') && knowledgeText.includes('진행') &&
-        knowledgeText.includes('왜 지금') && knowledgeText.includes('다음 행동');
-      out.departureBrief=knowledgeText.includes('남산 코어에서 강제 이송을 멈춘다') &&
-        knowledgeText.includes('이송 명령의 첫 발신 기록을 찾는다') && knowledgeText.includes('기대 결과');
+      const mainQuest=questLedger?.querySelector('.quest-kind-main');
+      const mainTerms=[...mainQuest?.querySelectorAll('dt')||[]].map(node=>node.textContent.trim());
+      out.knowledgeUi=knowledgeText.includes('현재 목표') && !!mainQuest?.querySelector('.quest-progress') &&
+        mainTerms.includes('왜 가야 하지?') && mainTerms.includes('다음 행동');
+      out.departureBrief=/남산.*강제 이송/.test(mainQuest?.querySelector('h3')?.textContent||'') &&
+        !!mainQuest?.querySelector('.quest-card-phase')?.textContent.trim() &&
+        mainTerms.includes('기대 결과') &&
+        [...mainQuest?.querySelectorAll('dd')||[]].every(node=>!!node.textContent.trim());
       document.querySelector('.quest-ledger-back').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
@@ -1663,7 +1674,7 @@ with sync_playwright() as p:
       const storyOnly = () => {
         G.scheduleJourneyBeat();
         const q = (S._beatQueue||[]).filter(id =>
-          (D.journeyBeats||[]).some(b => b.id === id && b.kind !== 'world'));
+          (D.journeyBeats||[]).some(b => b.id === id && b.kind === 'story' && b.id.startsWith('story_')));
         return q[0] || null;
       };
       out.beat1 = storyOnly();

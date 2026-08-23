@@ -130,7 +130,18 @@ const scenes = replace(read('src/03g-scenes.js'), /__SCENE_([A-Z0-9_]+)__/g, key
   const relative = introScenes[key] || (fs.existsSync(path.join(root,webp))?webp:(isArrival?webp:jpg));
   return dataUri(relative, relative.endsWith('.webp')?'image/webp':'image/jpeg');
 }, '장면');
-const upgrades = replace(scenes.result, /__UPGRADE_([A-Z0-9_]+)__/g,
+/* 대화 확장 장면은 사람이 읽기 쉬운 실제 경로로 선언되기도 한다. 단일 HTML과
+   AIT에는 assets 디렉터리가 따로 실리지 않으므로 이 경로도 반드시 인라인한다. */
+const inlineScenePaths=scenes.result.replace(/(["'])assets\/scenes\/([^"']+\.(?:jpe?g|webp|png))\1/gi,
+  (match,quote,file)=>{
+    const requested=`assets/scenes/${file}`;
+    const webp=requested.replace(/\.(?:jpe?g|png)$/i,'.webp');
+    const relative=webp!==requested&&fs.existsSync(path.join(root,webp))?webp:requested;
+    const lower=relative.toLowerCase();
+    const mime=lower.endsWith('.webp')?'image/webp':lower.endsWith('.png')?'image/png':'image/jpeg';
+    return `${quote}${dataUri(relative,mime)}${quote}`;
+  });
+const upgrades = replace(inlineScenePaths, /__UPGRADE_([A-Z0-9_]+)__/g,
   key => dataUri(upgradeScenes[key], 'image/jpeg'), '업그레이드');
 const title = replace(read('src/03e-bgm-title.js'), /__BGM_TITLE__/g,
   () => dataUri('assets/audio/title.mp3', 'audio/mpeg'), '타이틀 BGM');
@@ -154,6 +165,8 @@ const html = chunks.join('\n');
 const htmlBytes = Buffer.byteLength(html);
 const unresolved = [...new Set(html.match(/__(?:PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO|ROAD_CUE)_[A-Z0-9_]+__/g) || [])];
 if (unresolved.length) throw new Error(`치환되지 않은 자산: ${unresolved.slice(0, 8).join(', ')}`);
+const externalScenes=[...new Set(html.match(/assets\/scenes\/[^"')\s]+\.(?:jpe?g|webp|png)/gi)||[])];
+if(externalScenes.length) throw new Error(`단일 HTML에 남은 외부 장면: ${externalScenes.slice(0,8).join(', ')}`);
 
 const categoryOf = relative => relative.includes('/audio/')?'audio'
   :relative.includes('/scenes/')||relative.includes('/intro/')||relative.includes('/upgrades/')?'scene'
