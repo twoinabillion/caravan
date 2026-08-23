@@ -557,6 +557,8 @@ const SCENE = (()=>{
   }
   function van(roadY,speed,dark,wx,upOverride,displayScale=1){
     const up=upOverride||(S? (S.up||{}):{});
+    /* 사건 예고 레이어가 켜져도 주행 중 달구지의 기준 배율은 바꾸지 않는다. */
+    if(S&&S.driving) displayScale=1;
     const build=vanBuildStage(up);
     /* 캐논 비율: 짧은 한국형 캡오버 운전석 + 그보다 긴 독립 생활 박스.
        운전석과 거주구가 한 덩어리인 RV/패널 밴 실루엣으로 돌아가지 않는다. */

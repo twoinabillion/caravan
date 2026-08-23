@@ -2796,7 +2796,7 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.innerHTML=h;
     const lanes=dialogueLaneMap(turns,curStory&&curStory.lanes);
     curStory={
-      phase:'outcome',eventId:curEv.id,label:'결과',turns,index:Math.max(0,turns.length-1),
+      phase:'outcome',eventId:curEv.id,label:'결과',turns,index:0,
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
       sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,sceneCarry,
@@ -4750,4 +4750,42 @@ function dialogueSide(turn,lanes,opt={}){
   if(!root) return;
   new MutationObserver(applySceneFocus).observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['src']});
   applySceneFocus();
+})();
+
+/* 카드 전체 터치와 사건 선택지의 시각 규격을 렌더 방식과 무관하게 정규화한다. */
+(()=>{
+  const duplicate=/^(?:실행\s*)?(?:정착지 안으로|탐색|준비|정비|수리)\s*[→›>]?$/;
+  const actionCard=/정착지 안으로|주변 탐색|야영 준비|달구지를 정비|라디오를 고친/;
+  const choiceTag=/^(?:대응|기록|질문|설득|탐색|거리두기|선택|교섭|전투)$/;
+  const normalize=()=>{
+    document.querySelectorAll('button,[role="button"]').forEach(button=>{
+      const text=(button.textContent||'').replace(/\s+/g,' ').trim();
+      if(actionCard.test(text)){
+        button.classList.add('ui-whole-action-card');
+        button.dataset.uiCols=button.children.length>=3?'3':'2';
+        button.querySelectorAll('*').forEach(node=>{
+          const label=(node.textContent||'').replace(/\s+/g,' ').trim();
+          if(duplicate.test(label)&&![...node.children].some(child=>duplicate.test((child.textContent||'').replace(/\s+/g,' ').trim())))
+            node.classList.add('ui-action-duplicate');
+        });
+      }
+    });
+    const event=document.querySelector('#ev-wrap');
+    if(!event)return;
+    event.querySelectorAll('button,[role="button"],[data-choice]').forEach(choice=>{
+      const text=(choice.textContent||'').replace(/\s+/g,' ').trim();
+      if(text.length<4||/^(?:계속|길로 돌아가기|닫기)$/.test(text))return;
+      const tagged=[...choice.querySelectorAll('*')].some(node=>choiceTag.test((node.textContent||'').trim()));
+      const indexed=[...choice.querySelectorAll('*')].some(node=>/^[123]$/.test((node.textContent||'').trim()));
+      if(!tagged&&!indexed&&!choice.hasAttribute('data-choice'))return;
+      choice.classList.add('ui-compact-choice');
+      choice.querySelectorAll('*').forEach(node=>{
+        const label=(node.textContent||'').trim();
+        if(choiceTag.test(label))node.classList.add('ui-choice-tag');
+        if(/^[123]$/.test(label))node.classList.add('ui-choice-index');
+      });
+    });
+  };
+  const start=()=>{normalize();new MutationObserver(normalize).observe(document.body,{childList:true,subtree:true})};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();

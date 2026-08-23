@@ -2589,6 +2589,24 @@ D.intro = [
 목소리는 목적도, 보낸 사람도 숨긴 채 끊겼다. 나는 철제 상자에 손을 얹었다가 다시 내려놓았다. 호출 하나만 믿고 떠날 수는 없었다.`
   },
   {
+    scene:'intro-busan-room-morning-v1', era:'요즘 아침 · 부산 감천', title:'셔터 위의 작은 방', solo:true,
+    text:`할아버지가 세상을 떠난 뒤에도 나는 감천 작업장을 떠나지 않았다. 셔터 위 좁은 다락방이 내 집이었다.
+
+아침이면 접이식 침상을 벽에 세우고 물부터 끓였다. 식탁에는 밥그릇 하나와 수리 장부 하나. 장부를 펼치면 그날 먹고살 일이 정해졌다.`
+  },
+  {
+    scene:'intro-busan-workday-v1', era:'요즘 낮 · 감천 작업장', title:'고쳐 주고 먹고살았다', solo:true,
+    text:`냉동차 호스, 장터 손수레, 부두 발전기. 멈춘 건 뭐든 고쳤다. 돈이 모자란 손님은 고철이나 마른 생선으로 값을 치렀다.
+
+달구지는 내 이동 정비소였다. 공구를 싣고 고장 난 곳으로 달려갔고, 일이 늦으면 뒷칸에서 눈을 붙였다.`
+  },
+  {
+    scene:'intro-busan-evening-call-v1', era:'어젯밤부터 오늘 새벽 · 감천 부두', title:'평소와 다른 호출', solo:true,
+    text:`그날도 수리를 마치고 달구지 뒤턱에 앉아 늦은 밥을 먹었다. 작업장에는 나 하나뿐이었다.
+
+새벽이 가까워질 무렵 부두 무전기가 울렸다. 이송 버스 여러 대가 들어오는데 난방이 멈췄다는 호출이었다. 나는 밥그릇을 내려놓고 공구함부터 닫았다.`
+  },
+  {
     scene:'intro-current-expulsion', era:'오늘 새벽 · 부산 감천 부두', title:'빈칸이 다시 도착했다',
     text:`오늘 새벽, 서울에서 내려온 행렬이 부두에 닿았다.
 
@@ -3129,6 +3147,23 @@ const introBeats = {
     {kind:'thought', who:'me', name:'나', text:'남산에서 내가 가진 기록을 확인하겠다는 건가. 아니면 달구지 안에 뭐가 있는지 이미 아는 건가.'},
     {kind:'narration', text:'호출은 한 번뿐이었다. 날짜도 이유도 없었다. 나는 철제 상자에 손을 얹었다가 다시 내려놓았다. 그날은 달구지에 아무것도 싣지 않았다.'}
   ],
+  'intro-busan-room-morning-v1': [
+    {kind:'narration', text:'할아버지가 세상을 떠난 뒤에도 나는 감천 작업장을 떠나지 않았다. 셔터 위 좁은 다락방이 내 집이었다.'},
+    {kind:'narration', text:'아침이면 접이식 침상을 벽에 세우고 물부터 끓였다. 밥그릇 하나, 수리 장부 하나. 장부를 펼치면 그날 먹고살 일이 정해졌다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'오늘은 2번 부두 냉동차부터 봐야겠네.'}
+  ],
+  'intro-busan-workday-v1': [
+    {kind:'narration', text:'냉동차 호스, 장터 손수레, 부두 발전기. 멈춘 건 뭐든 고쳤다.'},
+    {kind:'dialogue', who:'passer_man', name:'부두 기사', text:'오늘 안에는 되겠어요?'},
+    {kind:'dialogue', who:'me', name:'나', text:'맞는 호스만 있으면 해 지기 전에는요.'},
+    {kind:'narration', text:'수리비의 절반은 고철로, 나머지는 마른 생선으로 받았다. 달구지는 내 이동 정비소이자 일이 늦은 날의 잠자리였다.'}
+  ],
+  'intro-busan-evening-call-v1': [
+    {kind:'narration', text:'그날도 달구지 뒤턱에 앉아 늦은 밥을 먹었다. 작업장에는 나 하나뿐이었다.'},
+    {kind:'narration', text:'새벽이 가까워질 무렵 부두 무전기가 울렸다. 이송 버스 여러 대가 들어오는데 난방이 전부 멈췄다고 했다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'난방부터 볼게요. 위치 다시 불러 주세요.'},
+    {kind:'narration', text:'밥그릇을 내려놓고 공구함을 닫았다. 달구지 시동이 두 번 만에 걸렸다.'}
+  ],
   'intro-current-expulsion': [
     {kind:'narration', text:'오늘 새벽, 서울에서 내려온 행렬이 부산 감천 부두에 닿았다. 맨 끝의 아이는 구겨진 이송표를 두 손으로 쥐고 있었다.'},
     {kind:'dialogue', who:'me', name:'나', text:'몇 살이야?'},
@@ -3238,8 +3273,7 @@ const introBeats = {
     {"kind":"narration","text":"그들을 믿을지는 만나 보고 정하기로 했다. 다만 부모의 수정안을 남산까지 가져가려면, 혼자 아는 길만으로는 부족했다."}
   ]
 };
-/* 첫 장은 세계관 설명이 아니라 오늘 떠나는 사람을 보여 준다. 그 뒤에만
-   과거와 시스템의 기원을 꺼내, 정보가 현재의 질문에 답하도록 순서를 바꾼다. */
+/* 첫 장은 사건보다 앞선 부산의 생활을 보여 준다. 플레이어가 누구인지 안 뒤에 오늘의 이송 사건과 과거를 잇는다. */
 introBeats['intro-cold-open-v1'] = [
   {kind:'narration',text:'오늘 새벽, 감천 부두에서 이송 버스 한 대의 난방 호스를 고쳤다. 미지근한 바람이 나오자 열이 오른 아이가 겨우 눈을 떴다.'},
   {kind:'dialogue',who:'passer_woman',name:'하진',text:'유나야… 숨 쉬네. 정말 고맙습니다.'},
@@ -3254,10 +3288,11 @@ introBeats['intro-cold-open-v1'] = [
   const pages=Object.fromEntries(D.intro.map(page=>[page.scene,page]));
   const coldOpen={scene:'intro-cold-open-v1',era:'오늘 새벽 · 부산 감천 부두',title:'고친 버스가 떠나는 순간',
     text:'도윤 가족의 이송 버스를 고쳤다. 아이는 살았고, 버스는 다시 남쪽으로 떠났다.'};
-  const order=['intro-dock-aid','intro-passenger-seat','intro-cheollian-2026','intro-first-expulsion','intro-resistance-begins',
+  const order=['intro-busan-room-morning-v1','intro-busan-workday-v1','intro-busan-evening-call-v1','intro-current-expulsion',
+    'intro-dock-aid','intro-passenger-seat','intro-cheollian-2026','intro-first-expulsion','intro-resistance-begins',
     'intro-parents-discovery','intro-silenced-presentation','intro-blank-reason','intro-envelope-signal','intro-appeal-denied',
     'intro-mother-keepsakes','intro-dashboard-module','intro-workshop-departure','intro-departure-choice'];
-  D.intro=[coldOpen,...order.map(id=>pages[id]).filter(Boolean)];
+  D.intro=order.map(id=>pages[id]).filter(Boolean);
 }
 D.intro.forEach(page=>{
   page.beats = introBeats[page.scene] || [{kind:'narration', text:page.text}];
