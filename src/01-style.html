@@ -5624,3 +5624,90 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
 }
 </style>
 
+
+<style id="inventory-square-grid-polish">
+.ui-inventory-root{position:relative!important}
+.ui-inventory-root .ui-inventory-title{
+  display:block!important;margin:34px 0 12px!important;padding:0!important;
+  max-width:calc(100% - 24px)!important;line-height:1.18!important;
+}
+.ui-inventory-root .ui-inventory-time{
+  position:absolute!important;top:10px!important;right:16px!important;
+  margin:0!important;padding:0!important;z-index:3!important;
+  font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace!important;
+  letter-spacing:.08em!important;white-space:nowrap!important;color:#6f685b!important;
+}
+.ui-inventory-root .ui-inventory-gauges{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:1px!important;margin:0 0 12px!important;min-height:48px!important;
+  background:rgba(31,38,36,.12)!important;border:1px solid rgba(72,75,67,.24)!important;
+  border-radius:5px!important;overflow:hidden!important;
+}
+.ui-inventory-root .ui-inventory-gauges>*{
+  min-width:0!important;padding:8px 10px!important;margin:0!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+.ui-inventory-root .ui-inventory-grid{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,76px))!important;
+  justify-content:center!important;align-content:start!important;
+  gap:8px!important;width:100%!important;height:auto!important;min-height:0!important;
+  margin:0!important;padding:8px 10px 14px!important;overflow:visible!important;
+}
+.ui-inventory-root .ui-inventory-tile{
+  position:relative!important;box-sizing:border-box!important;
+  width:100%!important;min-width:0!important;max-width:76px!important;
+  height:auto!important;min-height:0!important;aspect-ratio:1/1!important;
+  margin:0!important;padding:8px!important;overflow:hidden!important;
+  display:grid!important;place-items:center!important;
+  background:rgba(28,34,32,.1)!important;
+  border:1px solid rgba(91,86,72,.4)!important;border-radius:5px!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.22)!important;
+}
+.ui-inventory-root .ui-inventory-tile:is(.on,.active,.selected,[aria-selected="true"]){
+  border-color:#b87528!important;
+  box-shadow:inset 0 0 0 2px rgba(184,117,40,.72),0 0 0 1px rgba(37,43,40,.25)!important;
+}
+.ui-inventory-root .ui-inventory-tile .ui-inventory-label{
+  position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important;
+}
+.ui-inventory-root .ui-inventory-tile img,
+.ui-inventory-root .ui-inventory-tile .ui-inventory-icon{
+  width:46px!important;height:46px!important;max-width:68%!important;max-height:68%!important;
+  object-fit:contain!important;image-rendering:pixelated!important;
+  margin:0!important;transform:none!important;
+}
+.ui-inventory-root .ui-inventory-tile .ui-inventory-quantity{
+  position:absolute!important;right:5px!important;bottom:5px!important;z-index:2!important;
+  min-width:20px!important;height:20px!important;padding:0 5px!important;margin:0!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  color:#f2ead8!important;background:#202624!important;
+  border:1px solid rgba(239,230,213,.34)!important;border-radius:10px!important;
+  font:800 11px/18px ui-monospace,SFMono-Regular,Menlo,monospace!important;
+  box-shadow:0 1px 3px rgba(0,0,0,.34)!important;
+}
+.ui-inventory-root .ui-inventory-drawer{
+  display:grid!important;grid-template-columns:58px minmax(0,1fr)!important;
+  align-items:center!important;column-gap:12px!important;
+  width:100%!important;min-height:88px!important;height:auto!important;max-height:none!important;
+  margin:4px 0 0!important;padding:12px 14px!important;
+  background:rgba(30,37,34,.94)!important;color:#eee6d2!important;
+  border:1px solid rgba(184,117,40,.42)!important;border-radius:6px!important;
+  box-shadow:0 -4px 14px rgba(0,0,0,.2)!important;overflow:hidden!important;
+}
+.ui-inventory-root .ui-inventory-drawer img{
+  width:52px!important;height:52px!important;object-fit:contain!important;image-rendering:pixelated!important;
+}
+.ui-inventory-root .ui-inventory-drawer button{
+  min-height:40px!important;width:auto!important;margin:6px 6px 0 0!important;padding:8px 12px!important;
+  border-radius:4px!important;font-size:13px!important;box-shadow:none!important;
+}
+@media(max-width:360px){
+  .ui-inventory-root .ui-inventory-grid{grid-template-columns:repeat(4,minmax(0,64px))!important;gap:6px!important}
+  .ui-inventory-root .ui-inventory-tile{max-width:64px!important}
+  .ui-inventory-root .ui-inventory-tile img,
+  .ui-inventory-root .ui-inventory-tile .ui-inventory-icon{width:40px!important;height:40px!important}
+}
+</style>
+

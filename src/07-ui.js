@@ -4789,3 +4789,74 @@ function dialogueSide(turn,lanes,opt={}){
   const start=()=>{normalize();new MutationObserver(normalize).observe(document.body,{childList:true,subtree:true})};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
+
+/* 가방 UI를 아이템 기능과 분리된 정사각 타일/상세 서랍 구조로 정규화한다. */
+(()=>{
+  const clean=node=>(node&&node.textContent||'').replace(/\s+/g,' ').trim();
+  const leafs=(root)=>[...root.querySelectorAll('*')].filter(node=>!node.children.length);
+  const commonParent=(nodes,limit)=>{
+    if(!nodes.length)return null;
+    let parent=nodes[0].parentElement;
+    while(parent&&parent!==limit&&!nodes.every(node=>parent.contains(node)))parent=parent.parentElement;
+    return parent&&parent!==limit?parent:null;
+  };
+  const normalizeInventory=()=>{
+    const title=[...document.querySelectorAll('h1,h2,h3,[class*="title"]')]
+      .find(node=>clean(node)==='가방과 보급');
+    if(!title)return;
+    const root=title.closest('#ovl-bag,#ovl-inventory,[id*="inventory"],[class*="inventory"],[role="dialog"],.overlay,.modal')
+      ||title.parentElement;
+    if(!root)return;
+    root.classList.add('ui-inventory-root');
+    title.classList.add('ui-inventory-title');
+
+    leafs(root).forEach(node=>{
+      if(/^DAY\s*\d+\s*·\s*\d{1,2}:\d{2}$/i.test(clean(node)))node.classList.add('ui-inventory-time');
+    });
+
+    const resourceLabels=leafs(root).filter(node=>/^(?:물|식량|연료)$/.test(clean(node)));
+    const gauges=commonParent(resourceLabels,root);
+    if(gauges&&resourceLabels.length>=3)gauges.classList.add('ui-inventory-gauges');
+
+    const candidates=[...root.querySelectorAll('[data-item],button,[role="button"],li,[class*="inv-item"],[class*="supply-item"]')]
+      .filter(node=>/보유\s*\d+\s*(?:개|발|L)?/.test(clean(node)));
+    const cards=candidates.filter(node=>!candidates.some(other=>other!==node&&node.contains(other)));
+    if(cards.length){
+      const grid=commonParent(cards,root)||cards[0].parentElement;
+      if(grid&&grid!==root)grid.classList.add('ui-inventory-grid');
+    }
+    cards.forEach(card=>{
+      if(card.dataset.uiInventoryReady)return;
+      card.dataset.uiInventoryReady='1';
+      card.classList.add('ui-inventory-tile');
+      card.setAttribute('aria-label',clean(card));
+      const nodes=leafs(card);
+      const quantity=nodes.find(node=>/보유\s*\d+\s*(?:개|발|L)?/.test(clean(node)));
+      if(quantity){
+        const match=clean(quantity).match(/(\d+)/);
+        quantity.dataset.fullLabel=clean(quantity);
+        quantity.textContent=match?match[1]:clean(quantity);
+        quantity.classList.add('ui-inventory-quantity');
+      }
+      nodes.forEach(node=>{
+        const label=clean(node);
+        if(node===quantity)return;
+        if(/[가-힣]/.test(label)&&label.length<=16)node.classList.add('ui-inventory-label');
+      });
+      const icon=card.querySelector('img,[class*="icon"],[class*="ico"]');
+      if(icon)icon.classList.add('ui-inventory-icon');
+    });
+
+    root.querySelectorAll('[id*="detail"],[class*="detail"],[id*="drawer"],[class*="drawer"]').forEach(drawer=>{
+      if(drawer.closest('.ui-inventory-tile'))return;
+      const text=clean(drawer);
+      if(text&&text!=='가방과 보급')drawer.classList.add('ui-inventory-drawer');
+    });
+  };
+  const start=()=>{
+    normalizeInventory();
+    new MutationObserver(normalizeInventory).observe(document.body,{childList:true,subtree:true});
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+
