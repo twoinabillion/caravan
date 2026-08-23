@@ -51,10 +51,10 @@ G.mainQuestEntry = ()=>{
   return {
     id:'main_namsan', kind:'main', status, tracked:true,
     eyebrow:'주 임무',
-    title:'남산 코어에서 강제 이송을 멈춘다', phase,
-    why:'부모님을 데려간 자동 이송 명령이 지금도 다른 가족에게 내려지고 있다.',
+    title:'남산 코어로 가서 강제 이송 명령을 멈춘다', phase,
+    why:'엄마와 아빠를 갈라놓은 명령은 아직 끝나지 않았다. 지금도 다른 가족에게 같은 이송표가 나오고 있다.',
     next:next||'첫 구간에서 이송 명령의 발신 기록을 찾는다.',
-    expected:'발신 기록과 분리 절차, 당사자 증언을 모아 사람의 확인 절차를 되살린다.',
+    expected:'세 가지 근거로 자동 명령을 멈추고, 사람이 직접 확인해야만 이송할 수 있도록 바꾼다.',
     progress:{have,need,label:`${Math.min(have,need)}/${need}`},
   };
 };

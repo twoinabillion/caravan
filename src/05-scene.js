@@ -1125,8 +1125,39 @@ const SCENE = (()=>{
   }
 
   /* ── 길 위 사건 예고 ──
-     별도 사진을 덧씌우지 않고 주행 캔버스 안에서 달구지와 같은 픽셀 문법으로
-     사건의 첫 인상을 만든다. 이벤트 키가 같은 장면은 항상 같은 변형을 쓴다. */
+     달구지와 같은 해상도의 전용 픽셀 자산을 사용한다. 사람과 시설은 갓길에,
+     실제 주행 장애물만 차선에 놓고 접근 중 크기는 바꾸지 않는다. */
+  const approachSpriteSources={
+    animal:'assets/road-cues/cue-animal.png', bridge:'assets/road-cues/cue-bridge.png', cache:'assets/road-cues/cue-cache.png',
+    checkpoint:'assets/road-cues/cue-checkpoint.png', cyclist:'assets/road-cues/cue-cyclist.png', debris:'assets/road-cues/cue-debris.png',
+    flood:'assets/road-cues/cue-flood.png', landmark:'assets/road-cues/cue-landmark.png', market:'assets/road-cues/cue-market.png',
+    medical:'assets/road-cues/cue-medical.png', people:'assets/road-cues/cue-people.png', shelter:'assets/road-cues/cue-shelter.png',
+    signal:'assets/road-cues/cue-signal.png', smoke:'assets/road-cues/cue-smoke.png', surveillance:'assets/road-cues/cue-surveillance.png',
+    vehicle:'assets/road-cues/cue-vehicle.png'
+  };
+  const approachSpriteCache={};
+  function approachSprite(key){
+    const src=(G.roadCueImages&&G.roadCueImages[key])||approachSpriteSources[key];
+    if(!src) return null;
+    const cached=approachSpriteCache[key];
+    if(cached&&cached.src===src) return cached;
+    const img=new Image(); img.src=src; approachSpriteCache[key]=img;
+    return img;
+  }
+  function approachSpriteKey(kind,motif){
+    if(['bridge','checkpoint','debris','flood','smoke'].includes(kind)) return kind;
+    if(['coffee-van','food-truck','film-vehicle','broken-vehicle'].includes(motif)) return 'vehicle';
+    if(['clinic-bus','pharmacy'].includes(motif)) return 'medical';
+    if(motif==='postman') return 'cyclist';
+    if(['coffee-stall','food-stall','market-cart','barber'].includes(motif)) return 'market';
+    if(['greenhouse','school','bath','farm'].includes(motif)) return 'shelter';
+    if(['wedding','piano','musician','procession','cow-walker','beekeeper','child','elder','monk','photo'].includes(motif)) return 'people';
+    if(motif==='camera-post') return 'surveillance';
+    if(motif==='radio-post') return 'signal';
+    if(['fire-station','carwash','gas-station'].includes(motif)) return 'landmark';
+    if(approachSpriteSources[kind]) return kind;
+    return 'landmark';
+  }
   function approachSeed(value){
     let n=2166136261;
     for(const ch of String(value||'road-event')){n^=ch.charCodeAt(0);n=Math.imul(n,16777619);}
@@ -1238,6 +1269,19 @@ const SCENE = (()=>{
     const q=Math.min(1,elapsed/.82),ease=1-Math.pow(1-q,3);
     const x=P(lerp(W+30,W*.82,ease)), ground=P(roadY+(H-roadY)*.43+8);
     const seed=approachSeed(ap.eventKey),variant=Math.floor(seed*3),kind=ap.kind||'landmark',spec=ap.scene||{},motif=spec.motif||'';
+    const spriteKey=approachSpriteKey(kind,motif),sprite=approachSprite(spriteKey);
+    if(sprite&&(!sprite.complete||!sprite.naturalWidth)) return;
+    if(sprite){
+      const inLane=['bridge','checkpoint','debris','flood','smoke','vehicle'].includes(spriteKey);
+      const spriteX=P(lerp(W*.9,W*.8,ease));
+      const spriteGround=P(roadY+(H-roadY)*(inLane?.31:.14)+(inLane?7:4));
+      const spriteSize=P(inLane?(['vehicle','bridge','checkpoint'].includes(spriteKey)?62:58):50);
+      ctx.save();
+      ctx.globalAlpha=Math.min(1,.18+q*1.45);
+      ctx.drawImage(sprite,spriteX-spriteSize/2,spriteGround-spriteSize*.84,spriteSize,spriteSize);
+      ctx.restore();
+      return;
+    }
     ctx.save();ctx.globalAlpha=Math.min(1,.2+q*1.4);
     if(['coffee-van','food-truck','clinic-bus','film-vehicle','broken-vehicle'].includes(motif)){
       approachSpecialVehicle(x,ground,motif,dark,variant);

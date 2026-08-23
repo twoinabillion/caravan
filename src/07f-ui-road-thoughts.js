@@ -85,6 +85,7 @@
       surveillance: '__ROAD_CUE_SURVEILLANCE__',
       vehicle: '__ROAD_CUE_VEHICLE__'
     };
+    G.roadCueImages=roadCueImages;
     const image = document.createElement('img');
     image.hidden = true;
     image.src = roadCueImages[profile.kind] || roadCueImages.landmark;

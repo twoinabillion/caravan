@@ -2570,10 +2570,10 @@ function dialogueSide(turn,lanes,opt={}){
     const missionBrief=mission?`<aside class="mission-brief" aria-label="주 임무 안내">
       <span>${esc(mission.eyebrow||'주 임무')}</span>
       <h3>${esc(mission.objective)}</h3>
-      ${mission.why?`<p class="mission-stake"><b>왜 지금</b>${esc(mission.why)}</p>`:''}
-      <p><b>지금 할 일</b>${esc(mission.now)}</p>
-      ${mission.promise?`<p class="mission-promise"><b>성공하면</b>${esc(mission.promise)}</p>`:''}
-      <small><b>선택 이야기</b>${esc(mission.optional)}</small>
+      ${mission.why?`<p class="mission-stake"><b>왜 가야 하지?</b>${esc(mission.why)}</p>`:''}
+      <p><b>가는 길에 찾을 것</b>${esc(mission.now)}</p>
+      ${mission.promise?`<p class="mission-promise"><b>남산에서 할 일</b>${esc(mission.promise)}</p>`:''}
+      <small><b>꼭 하지 않아도 되는 일</b>${esc(mission.optional)}</small>
     </aside>`:'';
     let eventGuide='';
     S.flags=S.flags||{};
@@ -4052,9 +4052,9 @@ function dialogueSide(turn,lanes,opt={}){
       const nextAction=nextActions[nextStep?.id]||{label:'이송 중단 기록을 보관한다',detail:'완료한 기록을 달구지 안에 안전하게 보관한다.',condition:'목표 완료'};
       b.innerHTML=`<div class="folio-live-content">
         <div class="folio-title-row"><span>현재 목표</span><small>${esc(clock)}</small></div>
-        <h3>남산 코어에서 강제 이송을 멈춘다</h3>
+        <h3>남산 코어로 가서 강제 이송 명령을 멈춘다</h3>
         <div class="folio-location">${esc(D.nodes[S.at].name)}</div>
-        <section class="folio-stakes" aria-label="주 임무의 이유와 기대 결과"><div><span>왜 지금</span><p>부모님을 데려간 자동 이송 명령이 지금도 다른 가족에게 내려지고 있다.</p></div><div><span>기대 결과</span><p>발신 기록과 분리 절차, 당사자 증언을 모아 남산에 사람의 확인 절차를 되살린다.</p></div></section>
+        <section class="folio-stakes" aria-label="주 임무의 이유와 남산에서 할 일"><div><span>왜 가야 하지?</span><p>엄마와 아빠를 갈라놓은 명령은 아직 끝나지 않았다. 지금도 다른 가족에게 같은 이송표가 나오고 있다.</p></div><div><span>남산에서 할 일</span><p>세 가지 근거로 자동 명령을 멈추고, 사람이 직접 확인해야만 이송할 수 있도록 바꾼다.</p></div></section>
         <section class="folio-progress" aria-label="목표 진행 ${done}/${steps.length}">
           <div class="folio-section-title"><b>진행 단계</b><span>${done}/${steps.length}</span></div>
           ${focusSteps.map((step,index)=>`<div class="folio-step ${step.done?'done':''}"><i>${step.done?'✓':focusStart+index+1}</i><span><b>${esc(step.label)}</b><small>${esc(step.detail)}</small></span></div>`).join('')}
@@ -4594,7 +4594,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(!model) return;
     const tracked=trackingModel(model.main,model.companion,model.side);
     const now=live.querySelector('.quest-now-card');
-    if(now) now.innerHTML=`<div><span>지금 할 일</span><small>${qEsc(tracked.kind)}</small></div>
+    if(now) now.innerHTML=`<div><span>다음에 할 일</span><small>${qEsc(tracked.kind)}</small></div>
       <b>${qEsc(tracked.title)}</b><p>${qEsc(tracked.action)}</p><em>${qEsc(tracked.meta||'')}</em>`;
     live.querySelectorAll('[data-quest-track]').forEach(button=>{
       const selected=button.dataset.questTrack===(S.questTrack||'main');

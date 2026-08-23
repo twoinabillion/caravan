@@ -121,7 +121,7 @@ const QuestLedgerUI={
       <p class="quest-card-phase">${this.esc(row.phase)}</p>
       <div class="quest-progress"><i style="width:${ratio}%"></i></div>
       <div class="quest-progress-label"><span>진행</span><strong>${this.esc(progress.label)}</strong></div>
-      ${row.why?`<dl><div><dt>왜 지금</dt><dd>${this.esc(row.why)}</dd></div></dl>`:''}
+      ${row.why?`<dl><div><dt>왜 가야 하지?</dt><dd>${this.esc(row.why)}</dd></div></dl>`:''}
       <dl>
         <div class="quest-next"><dt>다음 행동</dt><dd>${this.esc(row.next)}</dd></div>
         <div><dt>기대 결과</dt><dd>${this.esc(row.expected)}</dd></div>

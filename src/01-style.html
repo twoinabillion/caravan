@@ -5397,3 +5397,166 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
     display: none !important;
   }
 </style>
+
+<style id="narrative-readability-and-choice-final">
+  /* Korean narrative needs breathing room more than decorative containers. */
+  #intro-txt,
+  #ev-sheet.event-mode .event-field-report {
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+  }
+  #intro-txt .turn-text,
+  #ev-sheet.event-mode .story-narration-text,
+  #ev-sheet.event-mode .turn-text {
+    font-size: clamp(15px, 3.75cqw, 17px);
+    font-weight: 500;
+    line-height: 1.76;
+    letter-spacing: -0.012em;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+  }
+  #intro-txt .story-transcript,
+  #ev-sheet.event-mode .story-transcript {
+    gap: 15px;
+  }
+  #intro-txt .turn-speaker b,
+  #ev-sheet.event-mode .turn-speaker b,
+  #ev-sheet.event-mode .chat-name {
+    letter-spacing: -0.018em;
+  }
+  #ev-sheet.event-mode .story-narration-label,
+  #ev-sheet.event-mode .turn-source {
+    margin-bottom: 6px;
+  }
+
+  /* Choices occupy only the space their copy needs; the manuscript keeps the viewport. */
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-scroll,
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-scroll {
+    display: grid;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 50%;
+    grid-template-rows: minmax(0, 1fr) auto;
+    overflow: hidden;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock,
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"]:has(.event-choice-dock .choices>.choice:nth-child(3)) .event-choice-dock {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    max-height: min(38dvh, 326px);
+    padding: 8px 14px calc(10px + var(--safe-bottom));
+    background: rgba(8, 15, 25, .97);
+    border-top: 1px solid rgba(184, 117, 40, .48);
+    box-shadow: 0 -10px 24px rgba(0, 0, 0, .32);
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-dock-head {
+    min-height: 0;
+    margin: 0 2px 7px;
+    font-size: 10px;
+    letter-spacing: .08em;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices {
+    max-height: min(32dvh, 272px);
+    gap: 7px;
+    padding: 0 1px 2px;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice {
+    aspect-ratio: auto;
+    min-height: 58px;
+    padding: 10px 14px 10px 12px;
+    border: 1px solid rgba(184, 117, 40, .58);
+    border-radius: 4px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .28);
+    filter: none;
+    transform: none;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-head {
+    display: grid;
+    grid-column: auto;
+    grid-row: auto;
+    grid-template-columns: 30px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-index {
+    grid-column: 1;
+    display: grid;
+    width: 28px;
+    height: 28px;
+    min-height: 28px;
+    grid-template-rows: 1fr;
+    place-items: center;
+    gap: 0;
+    border: 1px solid rgba(184, 117, 40, .52);
+    border-radius: 50%;
+    background: rgba(184, 117, 40, .09);
+    color: #9b652c;
+    text-shadow: none;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-index small {
+    display: none;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-index b {
+    color: #8b5926;
+    font: 850 12px/1 var(--mono);
+    text-shadow: none;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-title {
+    grid-column: 2;
+    display: flex;
+    height: auto;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    padding: 0;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-intent {
+    margin: 0;
+    padding: 2px 5px;
+    border-color: rgba(34, 114, 109, .44);
+    background: rgba(42, 126, 119, .06);
+    font-size: 8px;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice-title>span:last-child {
+    display: block;
+    overflow: visible;
+    color: #2c2822;
+    font: 750 clamp(13px, 3.45cqw, 15px)/1.45 var(--sans);
+    letter-spacing: -.018em;
+    text-wrap: pretty;
+    -webkit-line-clamp: unset;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice>.req,
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .choice>.risk {
+    grid-column: auto;
+    margin: 5px 0 0 40px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice:hover,
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice:focus-visible {
+    outline: 2px solid rgba(223, 158, 66, .78);
+    outline-offset: -3px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .34);
+    filter: brightness(1.035);
+    transform: none;
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice:active {
+    box-shadow: inset 0 2px 7px rgba(79, 47, 20, .22);
+    filter: brightness(.94);
+    transform: translateY(1px);
+  }
+  #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice[disabled] {
+    min-height: 54px;
+    padding: 9px 13px;
+    opacity: .56;
+    filter: grayscale(.34);
+  }
+</style>
