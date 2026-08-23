@@ -540,15 +540,15 @@ G.pillars = ()=>{
   const worldN=G.cellsLinked().length;
   return {
     관계: { have: storyDone, need: relationNeed,
-            hint: miss? '길 위의 인연을 더 만나고, 함께할 이유를 쌓기'
-              : shallow? `${D.comps[shallow].name}와 더 깊어져 개인 서사 Lv.3 열기`
-              : '함께 갈 네 사람의 개인 서사를 끝까지 듣기' },
+            hint: miss? '길에서 사람들을 더 만나고, 같은 곳까지 갈 이유를 함께 찾는다'
+              : shallow? `${D.comps[shallow].name}와 야영이나 정착지에서 이야기를 더 나눈다`
+              : '함께 가는 사람들의 이야기를 끝까지 듣는다' },
     세계: { have: worldN, need: D.seoulPillars.세계,
-            hint:S.flags.resist_revealed?'저항 거점을 이어 세상 편이 되기':'중부 국도에서 이음망과 먼저 접선하기' },
+            hint:S.flags.resist_revealed?'저항 거점들을 이어 서울까지 갈 길과 통신망을 확보한다':'중부 국도에서 이음망과 먼저 접선한다' },
     진실: { have: truthN, need: D.seoulPillars.진실,
             hint:truthHint },
     유산: { have: done.filter(d=>d.cat==='회수').length, need: D.seoulPillars.유산,
-            hint:'남산에서 열 것들을 챙기기 (편지·봉투·커피)' },
+            hint:'부모님과 길 위 사람들이 남긴 편지와 물건을 챙긴다' },
   };
 };
 G.pillarUnmet = (name)=>{ try{ const p=G.pillars()[name]; return !!p && p.have<p.need; }catch(e){ return false; } };

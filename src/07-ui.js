@@ -2580,10 +2580,10 @@ function dialogueSide(turn,lanes,opt={}){
     const missionBrief=mission?`<aside class="mission-brief" aria-label="주 임무 안내">
       <span>${esc(mission.eyebrow||'주 임무')}</span>
       <h3>${esc(mission.objective)}</h3>
-      ${mission.why?`<p class="mission-stake"><b>왜 가야 하지?</b>${esc(mission.why)}</p>`:''}
-      <p><b>가는 길에 찾을 것</b>${esc(mission.now)}</p>
-      ${mission.promise?`<p class="mission-promise"><b>남산에서 할 일</b>${esc(mission.promise)}</p>`:''}
-      <small><b>꼭 하지 않아도 되는 일</b>${esc(mission.optional)}</small>
+      ${mission.why?`<p class="mission-stake"><b>떠나는 이유</b>${esc(mission.why)}</p>`:''}
+      <p><b>먼저 찾아야 할 것</b>${esc(mission.now)}</p>
+      ${mission.promise?`<p class="mission-promise"><b>남산에 도착하면</b>${esc(mission.promise)}</p>`:''}
+      <small><b>선택할 일</b>${esc(mission.optional)}</small>
     </aside>`:'';
     let eventGuide='';
     S.flags=S.flags||{};
@@ -2770,8 +2770,19 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneCarry=priorShot&&outcomeSceneKeys[0]===priorShot.key?priorShot:null;
     const sceneStart=0;
     const scene=sceneFrameHtml(outcomeSceneKeys,sceneAlt);
+    const rewardMeta=(chip)=>{
+      const text=stripTags(chip&&chip.t||'');
+      if(/연료/.test(text)) return {kind:'fuel',icon:'⛽'};
+      if(/식량/.test(text)) return {kind:'food',icon:'▣'};
+      if(/물\s/.test(text)) return {kind:'water',icon:'◆'};
+      if(/고철|부품/.test(text)) return {kind:'scrap',icon:'⚙'};
+      if(/차체|수리/.test(text)) return {kind:'van',icon:'◆'};
+      if(/관측|추적/.test(text)) return {kind:'pursuit',icon:'◉'};
+      if(/피로/.test(text)) return {kind:'fatigue',icon:'◷'};
+      return {kind:chip.c==='minus'?'loss':'gain',icon:chip.c==='minus'?'−':'+'};
+    };
     const fxHtml=chips.length
-      ? '<span class="event-result-kicker">변화</span><div class="fx-line">'+chips.map(c=>`<span class="fx ${c.c}">${c.t}</span>`).join('')+'</div>'
+      ? `<section class="reward-section" aria-label="이번 선택으로 달라진 것"><span class="event-result-kicker">확인된 변화</span><div class="fx-line">${chips.map(c=>{const meta=rewardMeta(c);return `<span class="fx reward-pill ${c.c} reward-${meta.kind}"><i aria-hidden="true">${meta.icon}</i><b>${esc(c.t)}</b></span>`}).join('')}</div></section>`
       : '';
     const selectedTitle=stripTags(choice.label||curEv.title||'선택의 결과').trim()||'선택의 결과';
     const reportTitle=stripTags(curEv.title||'선택의 결과').trim()||'선택의 결과';
@@ -2785,9 +2796,9 @@ function dialogueSide(turn,lanes,opt={}){
           <span class="req">${full? '✗ 동료석 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 동료 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
         <button class="choice" data-r="no">작별 인사를 한다</button>`;
     } else {
-      actions+=`<button class="choice" data-r="ok">${chained
-        ?`다음 단계${chainEvent&&chainEvent.combat?' — '+esc(chainEvent.combat.step):''}`
-        :'길로 돌아가기'}</button>`;
+      actions+=`<button class="choice primary-exit-btn" data-r="ok">${chained
+        ?`다음 단계${chainEvent&&chainEvent.combat?' — '+esc(chainEvent.combat.step):''} →`
+        :'길로 돌아가기 →'}</button>`;
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
       <section class="event-field-report" aria-label="${esc(reportTitle)} · 선택 ${esc(selectedTitle)}"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(visibleReportTitle)}</h2></div></div>
@@ -4859,4 +4870,3 @@ function dialogueSide(turn,lanes,opt={}){
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
-

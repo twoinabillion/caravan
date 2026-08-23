@@ -115,17 +115,20 @@ const QuestLedgerUI={
     const progress=row.progress||{have:0,need:1,label:''};
     const ratio=Math.max(0,Math.min(100,Math.round((progress.have/Math.max(1,progress.need))*100)));
     const canTrack=row.kind!=='main'&&row.status!=='completed';
+    const steps=Array.isArray(row.steps)&&row.steps.length?`<ol class="quest-main-steps" aria-label="본편 진행 단계">${row.steps.map(step=>`<li class="is-${this.esc(step.state||'upcoming')}"><i aria-hidden="true"></i><span><b>${this.esc(step.label)}</b>${step.detail?`<small>${this.esc(step.detail)}</small>`:''}</span></li>`).join('')}</ol>`:'';
     return `<article class="quest-ledger-card quest-kind-${this.esc(row.kind)} ${row.tracked?'is-tracked':''}">
-      <div class="quest-card-top"><span>${this.esc(row.eyebrow)}</span>${row.tracked?'<b>위에 고정됨</b>':''}</div>
+      <div class="quest-card-top"><span>${this.esc(row.eyebrow)}</span>${row.tracked&&row.kind!=='main'?'<b>선택 임무 고정됨</b>':''}</div>
       <h3>${this.esc(row.title)}</h3>
       <p class="quest-card-phase">${this.esc(row.phase)}</p>
       <div class="quest-progress"><i style="width:${ratio}%"></i></div>
       <div class="quest-progress-label"><span>진행</span><strong>${this.esc(progress.label)}</strong></div>
-      ${row.why?`<dl><div><dt>왜 가야 하지?</dt><dd>${this.esc(row.why)}</dd></div></dl>`:''}
+      ${row.why?`<dl><div><dt>왜 이 일을 하나</dt><dd>${this.esc(row.why)}</dd></div></dl>`:''}
       <dl>
-        <div class="quest-next"><dt>다음 행동</dt><dd>${this.esc(row.next)}</dd></div>
-        <div><dt>기대 결과</dt><dd>${this.esc(row.expected)}</dd></div>
+        <div class="quest-next"><dt>지금 할 일</dt><dd>${this.esc(row.next)}</dd></div>
+        <div><dt>끝내면</dt><dd>${this.esc(row.expected)}</dd></div>
+        ${row.recovery?`<div class="quest-recovery"><dt>길을 놓쳤다면</dt><dd>${this.esc(row.recovery)}</dd></div>`:''}
       </dl>
+      ${steps}
       ${canTrack?`<button class="quest-track-button" type="button" data-quest-track="${this.esc(row.id)}">${row.tracked?'목록 고정 해제':'목록 위에 고정'}</button>`:''}
     </article>`;
   },
@@ -139,18 +142,20 @@ const QuestLedgerUI={
     const tracked=entries.filter(row=>row.tracked&&row.kind!=='main'&&row.status!=='completed').length;
     const main=entries.find(row=>row.kind==='main');
     const trackedOrder=G.ensureQuestLedger().tracked;
-    const focused=entries.find(row=>row.id===trackedOrder[trackedOrder.length-1])||main;
+    const focusedSide=entries.find(row=>row.id===trackedOrder[trackedOrder.length-1]&&row.kind!=='main'&&row.status!=='completed');
     this.root.querySelector('.quest-ledger-summary').innerHTML=`
-      <span><b>현재 목표</b>${this.esc(focused&&focused.next||'여정을 시작한다.')}</span>
-      <em>${focused&&focused.kind!=='main'?'선택 임무':'주 임무'} · 고정 ${tracked}/2</em>`;
+      <span><b>주 임무${main&&main.act?` · ${this.esc(main.act)}`:''}</b><strong>${this.esc(main&&main.next||'여정을 시작한다.')}</strong>${focusedSide?`<small>선택 고정 · ${this.esc(focusedSide.next)}</small>`:''}</span>
+      <em>선택 임무 ${tracked}/2</em>`;
     this.root.querySelectorAll('[data-quest-tab]').forEach(button=>{
       const active=button.dataset.questTab===this.tab;
       button.classList.toggle('active',active);
       button.setAttribute('aria-selected',active?'true':'false');
     });
     const visible=entries.filter(row=>row.kind===this.tab).sort((a,b)=>Number(b.tracked)-Number(a.tracked));
+    const mainHistory=this.tab==='main'?(G.ensureQuestLedger().mainHistory||[]).slice(-3).reverse():[];
+    const history=mainHistory.length?`<section class="quest-main-history"><h3>지금까지 지나온 본편</h3>${mainHistory.map(row=>`<article><small>${this.esc(row.eyebrow)}</small><b>${this.esc(row.title)}</b><span>${this.esc(row.phase)}</span></article>`).join('')}</section>`:'';
     this.root.querySelector('.quest-ledger-list').innerHTML=visible.length
-      ?visible.map(row=>this.card(row)).join('')
+      ?visible.map(row=>this.card(row)).join('')+history
       :`<div class="quest-ledger-empty"><b>기록된 임무가 없다</b><p>${this.tab==='companion'?'길에서 만난 사람과 동행하면 이곳에 이야기가 기록된다.':this.tab==='local'?'정착지 게시판이나 주민에게 의뢰를 받으면 이곳에 기록된다.':'완료한 임무가 생기면 결과를 다시 볼 수 있다.'}</p></div>`;
   },
   showUpdate(){
@@ -159,8 +164,8 @@ const QuestLedgerUI={
     const row=rows[rows.length-1];
     let ribbon=document.querySelector('#quest-update-ribbon');
     if(!ribbon){ ribbon=document.createElement('button'); ribbon.id='quest-update-ribbon'; ribbon.type='button'; document.body.appendChild(ribbon); }
-    ribbon.innerHTML=`<small>임무 갱신</small><b>${this.esc(row.title)}</b><span>${this.esc(row.next)}</span>`;
-    ribbon.onclick=()=>{ G.clearQuestLedgerUpdates(); ribbon.remove(); this.open(); };
+    ribbon.innerHTML=`<small>${row.kind==='main'?'주 임무 갱신':'선택 임무 갱신'}</small><b>${this.esc(row.title)}</b><span>${this.esc(row.next)}</span>`;
+    ribbon.onclick=()=>{ G.clearQuestLedgerUpdates(); ribbon.remove(); if(row.kind==='main') this.tab='main'; this.open(); };
     clearTimeout(this.updateTimer);
     this.updateTimer=setTimeout(()=>{ if(ribbon.isConnected) ribbon.remove(); G.clearQuestLedgerUpdates(); },5200);
   }

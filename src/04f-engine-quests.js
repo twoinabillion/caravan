@@ -6,6 +6,9 @@ G.ensureQuestLedger = ()=>{
   if(!Array.isArray(ledger.tracked)) ledger.tracked=[];
   if(!Array.isArray(ledger.completed)) ledger.completed=[];
   if(!Array.isArray(ledger.updates)) ledger.updates=[];
+  if(!Array.isArray(ledger.mainHistory)) ledger.mainHistory=[];
+  if(!Number.isInteger(ledger.seenUpdateCount)) ledger.seenUpdateCount=0;
+  ledger.seenUpdateCount=Math.max(0,Math.min(ledger.seenUpdateCount,ledger.updates.length));
   if(!ledger.snapshot||typeof ledger.snapshot!=='object') ledger.snapshot={};
   ledger.tracked=[...new Set(ledger.tracked.filter(id=>typeof id==='string'))].slice(0,2);
   return ledger;
@@ -14,49 +17,58 @@ G.ensureQuestLedger = ()=>{
 G.mainQuestEntry = ()=>{
   if(!S) return null;
   const departure=typeof G.departureSteps==='function'?(G.departureSteps()||[]):[];
-  const nextDeparture=departure.find(step=>!step.done);
+  const nextDeparture=departure.find(step=>!step.done&&step.id!=='seoul');
   const endingDone=!!(S.flags&&(S.flags.core_transfer||S.flags.core_sleep||S.flags.core_quarantine||S.flags.run_archived));
-  let phase='남산으로 갈 증거를 모은다';
-  let next=nextDeparture&&nextDeparture.label;
-  let have=departure.filter(step=>step.done).length;
-  let need=Math.max(1,departure.length);
-  let status='active';
+  const base={id:'main_namsan',kind:'main',status:'active',tracked:true,
+    recovery:'길을 놓쳤다면 가까운 정착지에서 사람들과 이야기하고, 라디오와 임무 장부를 확인한다.'};
+  const stepCopy={
+    family:{act:'서장',chapterId:'prologue-family',title:'도윤 가족의 이송표를 확인한다',phase:'부산 감천 부두 · 떠나기 전',why:'부산에서 반복되던 이송표가 지금도 실제 가족을 갈라놓고 있다. 남산으로 갈 이유를 먼저 눈으로 확인해야 한다.',next:'고장 난 버스를 고치고 도윤 가족에게 왜 같은 표가 나왔는지 묻는다.',expected:'과거의 가족사와 지금 벌어지는 강제 이송이 같은 명령에서 시작됐다는 사실을 확인한다.'},
+    appeal:{act:'서장',chapterId:'prologue-appeal',title:'부산에서 이송 명령에 이의를 제기한다',phase:'부산 원격 민원 창구',why:'이송을 멈출 수 있는 정상 절차가 남아 있다면 남산까지 갈 필요가 없다. 먼저 부산에서 할 수 있는 일을 모두 해 본다.',next:'이송표와 검증 모듈을 들고 원격 확인 절차를 요청한다.',expected:'부산에서 해결할 수 있는지, 남산 현장 확인이 꼭 필요한지 분명해진다.'},
+    module:{act:'서장',chapterId:'prologue-module',title:'엄마가 남긴 검증 모듈을 확인한다',phase:'부산의 달구지 안',why:'엄마가 남긴 장치가 단순한 유품인지, 지금도 명령을 멈출 수 있는 열쇠인지 확인해야 한다.',next:'엄마의 회로도와 계기판 안쪽 배선을 맞춰 본다.',expected:'남산에서 사람이 직접 확인하는 절차를 되살릴 가능성을 찾는다.'},
+    trace:{act:'1장',chapterId:'first-trace',title:'이송 명령의 첫 발신 기록을 찾는다',phase:'부산을 떠난 첫 구간',why:'이송표만 들고 가면 개인 민원으로 처리된다. 누가 언제 명령을 만들었는지 보여 주는 기록이 필요하다.',next:'첫 구간을 달리며 대상 선정 규칙과 발신 번호가 남은 기록을 찾는다.',expected:'부모님의 이송표와 지금 나오는 표가 같은 명령망에서 왔다는 사실을 입증한다.'},
+    key:{act:'2장',chapterId:'verification-key',title:'검증키를 안전하게 꺼낼 절차를 찾는다',phase:'엄마의 장치를 남산까지 가져가기 위한 준비',why:'절차 없이 장치를 뽑으면 검증키도 달구지도 망가진다. 남산에 도착하기 전에 빠진 복원 순서를 찾아야 한다.',next:'분리 절차 4·5쪽을 복원하고 검증키를 안전하게 꺼낸다.',expected:'엄마의 검증키를 망가뜨리지 않고 남산 코어에 연결할 수 있게 된다.'},
+    witness:{act:'3장',chapterId:'witnesses',title:'이송 당사자들의 증언을 모은다',phase:'발신 기록과 사람들의 기억을 맞추는 중',why:'기계가 남긴 로그만으로는 또 오류로 처리될 수 있다. 같은 표를 받은 사람들이 실제로 무엇을 겪었는지 함께 남겨야 한다.',next:'같은 이송표를 받은 사람들을 만나 이야기를 듣고 발신 기록과 대조한다.',expected:'한 가족의 민원이 아니라 여러 지역에서 반복된 강제 이송이었다는 사실을 증명한다.'}
+  };
+  const departureDone=departure.filter(step=>step.id!=='seoul'&&step.done);
+  const departureNeed=Math.max(1,departure.filter(step=>step.id!=='seoul').length);
+  const departureTrail=departure.filter(step=>step.id!=='seoul').map(step=>({id:step.id,label:step.label,detail:step.detail,state:step.done?'done':step.id===nextDeparture?.id?'current':'upcoming'}));
 
-  if(endingDone){
-    phase='인간 확인 절차에 결론을 내렸다';
-    next='이번 여정의 선택과 남은 흔적을 확인한다.';
-    have=need=1;
-    status='completed';
-  }else if(S.at==='seoul'&&typeof G.seoulStage==='function'){
+  if(endingDone) return {...base,status:'completed',act:'종장',chapterId:'ending',eyebrow:'주 임무 · 종장',title:'강제 이송 명령에 마지막 결론을 내렸다',phase:'남산 코어 · 여정 기록',why:'부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.',next:'이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.',expected:'끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.',recovery:'완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.',steps:[{id:'ending',label:'남산 코어에서 최종 결정을 내렸다',state:'done'}],progress:{have:1,need:1,label:'완료'}};
+
+  if(S.at==='seoul'&&typeof G.seoulStage==='function'){
     const stage=G.seoulStage();
-    phase='서울 안쪽에서 남산 코어로 오른다';
-    next=stage>=5?'남산 코어에서 마지막 결정을 내린다.':`서울 진입 단계 ${stage+1}을 진행한다.`;
-    have=Math.min(stage,5); need=5;
-  }else if(!next){
-    try{
-      const missing=G.seoulMissing();
-      const pillars=G.pillars();
-      have=Object.values(pillars).reduce((sum,row)=>sum+Math.min(row.have,row.need),0);
-      need=Object.values(pillars).reduce((sum,row)=>sum+row.need,0);
-      if(missing&&missing.hint){
-        phase=`남산 진입 준비 · ${missing.pillar}`;
-        next=missing.hint;
-      }else{
-        phase='남산 진입 준비가 끝났다';
-        next='서울 진입로를 따라 남산 코어로 간다.';
-      }
-    }catch(e){ next='북쪽으로 이동하며 현재 명령의 근거를 찾는다.'; }
+    const stops=D.seoulMap&&Array.isArray(D.seoulMap.stops)?D.seoulMap.stops:[];
+    const stop=stops[stage], stopName=stop&&(stop.name||stop.label)||`남산 진입 지점 ${stage+1}`;
+    const finished=stage>=stops.length;
+    return {...base,act:'6장',chapterId:`seoul-${stage}`,eyebrow:'주 임무 · 6장',title:finished?'남산 코어에서 마지막 결정을 내린다':`${stopName}을 지나 남산 코어로 오른다`,phase:'서울 안쪽 · 남산 진입로',why:'모아 온 기록과 검증키를 실제 명령망에 연결하려면 남산 코어까지 직접 들어가야 한다.',next:finished?'남산 코어에 검증키와 증언 기록을 연결하고 마지막 선택을 한다.':`${stopName}에서 막힌 길을 열고 다음 진입 지점으로 간다.`,expected:'사람의 확인 없이 내려가는 강제 이송 명령을 코어에서 끊는다.',recovery:'서울 지도를 열면 현재 진입 지점과 다음 길을 다시 확인할 수 있다.',steps:stops.map((row,index)=>({id:row.id||String(index),label:row.name||row.label||`진입 지점 ${index+1}`,state:index<stage?'done':index===stage?'current':'upcoming'})),progress:{have:Math.min(stage,stops.length),need:Math.max(1,stops.length),label:`${Math.min(stage,stops.length)}/${Math.max(1,stops.length)}`}};
   }
 
-  return {
-    id:'main_namsan', kind:'main', status, tracked:true,
-    eyebrow:'주 임무',
-    title:'남산 코어로 가서 강제 이송 명령을 멈춘다', phase,
-    why:'엄마와 아빠를 갈라놓은 명령은 아직 끝나지 않았다. 지금도 다른 가족에게 같은 이송표가 나오고 있다.',
-    next:next||'첫 구간에서 이송 명령의 발신 기록을 찾는다.',
-    expected:'세 가지 근거로 자동 명령을 멈추고, 사람이 직접 확인해야만 이송할 수 있도록 바꾼다.',
-    progress:{have,need,label:`${Math.min(have,need)}/${need}`},
-  };
+  if(nextDeparture){
+    const copy=stepCopy[nextDeparture.id]||stepCopy.trace;
+    return {...base,...copy,eyebrow:`주 임무 · ${copy.act}`,steps:departureTrail,progress:{have:departureDone.length,need:departureNeed,label:`${departureDone.length}/${departureNeed}`}};
+  }
+
+  try{
+    const pillars=G.pillars();
+    const have=Object.values(pillars).reduce((sum,row)=>sum+Math.min(row.have,row.need),0);
+    const need=Object.values(pillars).reduce((sum,row)=>sum+row.need,0);
+    const ready=typeof G.seoulReady==='function'&&G.seoulReady();
+    const pillarSteps=Object.entries(pillars).map(([name,row])=>({id:name,label:{관계:'당사자 증언',세계:'저항망',진실:'명령의 진실',유산:'남겨진 기록'}[name]||name,state:row.have>=row.need?'done':'upcoming',detail:`${Math.min(row.have,row.need)}/${row.need}`}));
+    if(ready) return {...base,act:'5장',chapterId:'road-to-seoul',eyebrow:'주 임무 · 5장',title:'서울로 들어가 남산 코어까지 간다',phase:'남산 진입 준비 완료',why:'발신 기록, 검증키, 당사자 증언과 저항망이 모두 모였다. 이제 코어에서 명령을 바꿀 수 있다.',next:'북쪽 길을 따라 서울로 이동하고 남산 진입로를 찾는다.',expected:'모아 온 근거를 남산 코어에 연결해 사람이 직접 확인하는 절차를 되살린다.',recovery:'지도에서 서울로 이어지는 길을 확인한다. 날짜 제한은 없다.',steps:pillarSteps,progress:{have,need,label:`${have}/${need}`}};
+    const missing=G.seoulMissing();
+    const pillarCopy={
+      관계:{title:'같은 이송을 겪은 사람들의 증언을 모은다',phase:'사람들의 기록을 발신 로그와 맞추는 중',why:'표와 로그만으로는 또 기계 오류로 묻힐 수 있다. 명령을 겪은 사람들이 직접 남긴 기록이 필요하다.',expected:'강제 이송이 여러 사람에게 반복됐다는 사실을 남산에서 증명한다.'},
+      세계:{title:'저항망과 접선해 남산으로 가는 길을 연다',phase:'흩어진 저항 거점을 잇는 중',why:'남산 코어까지 혼자 들어갈 수는 없다. 길과 통신을 지켜 온 사람들의 도움이 필요하다.',expected:'서울까지 이어지는 안전한 길과 코어에 접근할 통신망을 확보한다.'},
+      진실:{title:'이송 명령이 만들어진 경위를 밝힌다',phase:'명령망에 남은 기록을 추적하는 중',why:'누가 어떤 판단으로 이송을 자동화했는지 밝혀야 같은 명령이 다시 시작되는 것을 막을 수 있다.',expected:'강제 이송을 만든 명령과 남산 위의 상위 명령망을 구분한다.'},
+      유산:{title:'부모님과 길 위 사람들이 남긴 기록을 챙긴다',phase:'남산에서 열 마지막 기록을 모으는 중',why:'남산에 도착해도 당사자의 기록이 없으면 시스템은 사람을 다시 숫자로만 처리한다.',expected:'편지와 물건에 남은 사람들의 선택을 최종 판단의 근거로 가져간다.'},
+      여정:{title:'남산에서 쓸 마지막 근거를 보완한다',phase:'빠진 기록을 확인하는 중',why:'코어에 들어가기 전에 아직 비어 있는 근거를 채워야 한다.',expected:'남산 진입 조건을 모두 갖춘다.'}
+    };
+    const copy=pillarCopy[missing.pillar]||pillarCopy.여정;
+    const steps=pillarSteps.map(step=>({...step,state:step.state==='done'?'done':step.id===missing.pillar?'current':'upcoming'}));
+    return {...base,...copy,act:'4장',chapterId:`prepare-${missing.pillar}`,eyebrow:'주 임무 · 4장',next:missing.hint||'가까운 정착지에서 사람들과 이야기하고 빠진 기록을 찾는다.',recovery:'가까운 정착지의 사람들, 라디오 방송, 야영 대화에서 다음 단서를 찾을 수 있다. 날짜 제한은 없다.',steps,progress:{have,need,label:`${have}/${need}`}};
+  }catch(e){
+    return {...base,act:'1장',chapterId:'first-trace-fallback',eyebrow:'주 임무 · 1장',title:'첫 발신 기록을 찾는다',phase:'부산을 떠난 첫 구간',why:'남산에서 명령을 멈추려면 발신 기록이 필요하다.',next:'북쪽으로 이동하며 이송표와 같은 발신 번호를 찾는다.',expected:'현재 명령이 어디서 시작됐는지 확인한다.',steps:departureTrail,progress:{have:departureDone.length,need:departureNeed,label:`${departureDone.length}/${departureNeed}`}};
+  }
 };
 
 G.companionQuestEntries = ()=>{
@@ -115,7 +127,7 @@ G.localQuestEntries = ()=>{
 G.completedQuestEntries = ()=>{
   const ledger=G.ensureQuestLedger();
   if(!ledger) return [];
-  return ledger.completed.slice().reverse().map(row=>({...row,kind:'completed',status:'completed',tracked:false}));
+  return [...ledger.completed,...ledger.mainHistory].slice().reverse().map(row=>({...row,kind:'completed',status:'completed',tracked:false}));
 };
 
 G.questLedgerEntries = ()=>{
@@ -142,28 +154,42 @@ G.questLedgerSync = ()=>{
   const ledger=G.ensureQuestLedger();
   if(!ledger) return;
   const active=G.questLedgerEntries().filter(row=>row.kind!=='completed');
+  const main=active.find(row=>row.kind==='main');
   const current={};
   for(const row of active) current[row.id]=`${row.status}|${row.phase}|${row.next}|${row.progress&&row.progress.label}`;
+  if(!ledger.mainState&&main) ledger.mainState={chapterId:main.chapterId,act:main.act,title:main.title,phase:main.phase,next:main.next,expected:main.expected,progress:main.progress&&main.progress.label};
   if(!Object.keys(ledger.snapshot).length){ ledger.snapshot=current; return; }
-  for(const row of active){
+  if(main){
+    const previous=ledger.mainState;
+    const changedChapter=previous&&previous.chapterId!==main.chapterId;
+    const changedStep=previous&&(previous.next!==main.next||previous.progress!==(main.progress&&main.progress.label));
+    if(changedChapter){
+      ledger.mainHistory.push({id:`main_history_${previous.chapterId}_${S.day}_${S.at}`,eyebrow:`본편 기록 · ${previous.act}`,title:previous.title,phase:`${previous.phase} · ${S.day}일차`,next:'이 장에서 해야 할 일을 마쳤다.',expected:previous.expected,progress:{have:1,need:1,label:'완료'}});
+      ledger.mainHistory=ledger.mainHistory.slice(-24);
+      ledger.updates.push({id:main.id,kind:'main',title:`${main.act} · ${main.title}`,next:main.next,day:S.day,at:S.at});
+    }else if(changedStep) ledger.updates.push({id:main.id,kind:'main',title:`본편 진행 · ${main.title}`,next:main.next,day:S.day,at:S.at});
+    ledger.mainState={chapterId:main.chapterId,act:main.act,title:main.title,phase:main.phase,next:main.next,expected:main.expected,progress:main.progress&&main.progress.label};
+  }
+  for(const row of active.filter(row=>row.kind!=='main')){
     if(ledger.snapshot[row.id]&&ledger.snapshot[row.id]!==current[row.id]){
-      ledger.updates.push({id:row.id,title:row.title,next:row.next,day:S.day,at:S.at});
+      ledger.updates.push({id:row.id,kind:row.kind,title:row.title,next:row.next,day:S.day,at:S.at});
     }else if(!ledger.snapshot[row.id]){
-      ledger.updates.push({id:row.id,title:`새 임무 · ${row.title}`,next:row.next,day:S.day,at:S.at});
+      ledger.updates.push({id:row.id,kind:row.kind,title:`새 임무 · ${row.title}`,next:row.next,day:S.day,at:S.at});
     }
   }
-  ledger.updates=ledger.updates.slice(-8);
+  if(ledger.updates.length>40){const overflow=ledger.updates.length-40;ledger.updates.splice(0,overflow);ledger.seenUpdateCount=Math.max(0,ledger.seenUpdateCount-overflow);}
   ledger.snapshot=current;
   try{ window.dispatchEvent(new CustomEvent('questledgerchange')); }catch(e){}
 };
 
 G.questLedgerUpdates = ()=>{
   const ledger=G.ensureQuestLedger();
-  return ledger?ledger.updates:[];
+  return ledger?ledger.updates.slice(ledger.seenUpdateCount):[];
 };
+G.questUpdateHistory = ()=>{const ledger=G.ensureQuestLedger();return ledger?ledger.updates.slice().reverse():[];};
 G.clearQuestLedgerUpdates = ()=>{
   const ledger=G.ensureQuestLedger();
-  if(ledger) ledger.updates=[];
+  if(ledger) ledger.seenUpdateCount=ledger.updates.length;
 };
 
 if(typeof G.acceptQuest==='function'){

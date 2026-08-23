@@ -2387,17 +2387,17 @@ D.onboardingMission = {
   title:'내가 해야 할 일',
   missionBrief:{
     eyebrow:'주 임무',
-    objective:'남산 코어로 가서 강제 이송 명령을 멈춘다',
-    why:'엄마와 아빠를 갈라놓은 명령은 아직 끝나지 않았다. 지금도 다른 가족에게 같은 이송표가 나오고 있다.',
-    now:'북쪽으로 가며 세 가지를 찾는다. 이송표를 보낸 흔적, 엄마의 장치를 꺼낼 방법, 같은 표를 받은 사람들의 이야기.',
-    promise:'세 가지를 근거로 자동 명령을 멈추고, 사람이 직접 확인해야만 이송할 수 있도록 바꾼다.',
-    optional:'동료의 부탁과 지역 의뢰는 선택이다. 길에서 마음이 가는 일을 골라 해도 된다.'
+    objective:'남산 코어에 들어가 강제 이송 명령을 끊는다',
+    why:'엄마와 아빠를 갈라놓았던 명령이 아직도 살아 있다. 지금도 누군가는 이유도 모른 채 가족과 떨어지고 있다.',
+    now:'북쪽으로 가는 동안 세 가지를 모아야 한다. 이송표가 어디서 왔는지 보여 줄 기록, 엄마의 장치를 안전하게 꺼낼 방법, 같은 표를 받은 사람들의 증언.',
+    promise:'세 가지를 들고 남산 코어에 들어간다. 자동 명령을 멈추고, 사람의 확인 없이는 누구도 이송하지 못하게 만든다.',
+    optional:'동료의 부탁과 지역 의뢰는 내 선택이다. 마음이 쓰이는 일이 생기면 돕고, 아니면 지나가도 된다.'
   },
   text:`부두 출구 앞에서 차를 세우고 수첩을 폈다. 첫 장에는 세 칸만 만들었다. 누가 이송표를 보냈는지, 엄마의 장치를 어떻게 꺼낼지, 같은 표를 받은 사람들은 무엇을 겪었는지. 도윤의 이송표 사본과 엄마가 남긴 모듈을 지도 옆에 놓았다.
 
 남산까지 가는 동안 이 세 칸을 채워야 한다. 그래야 코어 앞에서 우리 가족 이야기로만 끝나지 않는다.
 
-다음 표가 나오기 전에, 사람을 확인하지도 않고 떠나보내는 일을 멈춘다.`,
+다음 이송표가 나오기 전에 멈춰야 한다. 적어도 누군가를 떠나보내기 전에는, 사람이 직접 이유를 확인하게 만들어야 한다.`,
   choices:[
     {label:'남산으로 가는 첫 길을 고른다', out:[{p:1,text:'부산을 떠나 북쪽 길에 올랐다. 먼저 이송표를 누가 보냈는지 남은 흔적부터 찾는다. 진행 상황은 언제든 「목표」에서 확인할 수 있다.',fx:{flag:'main_mission_started',note:{type:'본편',title:'남산의 강제 이송을 멈춘다',body:'이송 날짜는 따로 정해져 있지 않다. 배급망이 바뀔 때마다 새 명단이 나온다. 북쪽으로 가며 이송표를 보낸 흔적과 장치를 꺼낼 방법, 같은 표를 받은 사람들의 이야기를 모아 남산으로 간다.'}}}]}
   ]
@@ -3150,18 +3150,33 @@ const introBeats = {
   'intro-busan-room-morning-v1': [
     {kind:'narration', text:'할아버지가 세상을 떠난 뒤에도 나는 감천 작업장을 떠나지 않았다. 셔터 위 좁은 다락방이 내 집이었다.'},
     {kind:'narration', text:'아침이면 접이식 침상을 벽에 세우고 물부터 끓였다. 밥그릇 하나, 수리 장부 하나. 장부를 펼치면 그날 먹고살 일이 정해졌다.'},
-    {kind:'dialogue', who:'me', name:'나', text:'오늘은 2번 부두 냉동차부터 봐야겠네.'}
+    {kind:'thought', who:'me', name:'나', text:'할아버지 컵은 아직 치우지 못했다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'수도는 오늘도 나오네.'},
+    {kind:'dialogue', who:'me', name:'나', text:'오늘은 2번 부두 냉동차부터 봐야겠네.'},
+    {kind:'dialogue', who:'me', name:'나', text:'저녁 전에는 발전기도 들여다봐야 하고.'},
+    {kind:'thought', who:'me', name:'나', text:'밥은 돌아와서 먹자.'},
+    {kind:'narration', text:'물을 끄고 셔터를 올렸다. 빗물이 작업장 바닥으로 가늘게 밀려들었다.'}
   ],
   'intro-busan-workday-v1': [
     {kind:'narration', text:'냉동차 호스, 장터 손수레, 부두 발전기. 멈춘 건 뭐든 고쳤다.'},
     {kind:'dialogue', who:'passer_man', name:'부두 기사', text:'오늘 안에는 되겠어요?'},
     {kind:'dialogue', who:'me', name:'나', text:'맞는 호스만 있으면 해 지기 전에는요.'},
+    {kind:'dialogue', who:'passer_man', name:'부두 기사', text:'지난번처럼 고철로 반 치러도 됩니까?'},
+    {kind:'dialogue', who:'me', name:'나', text:'쓸 만한 부품이면요. 생선은 한 묶음만 주세요.'},
+    {kind:'thought', who:'me', name:'나', text:'호스는 한 철 더 버티겠다.'},
+    {kind:'narration', text:'시험 삼아 난방을 올리자 미지근한 바람이 운전석으로 나왔다.'},
     {kind:'narration', text:'수리비의 절반은 고철로, 나머지는 마른 생선으로 받았다. 달구지는 내 이동 정비소이자 일이 늦은 날의 잠자리였다.'}
   ],
   'intro-busan-evening-call-v1': [
     {kind:'narration', text:'그날도 달구지 뒤턱에 앉아 늦은 밥을 먹었다. 작업장에는 나 하나뿐이었다.'},
     {kind:'narration', text:'새벽이 가까워질 무렵 부두 무전기가 울렸다. 이송 버스 여러 대가 들어오는데 난방이 전부 멈췄다고 했다.'},
+    {kind:'radio', who:'passer_man', name:'부두 관제', text:'감천 3부두. 이송 버스 네 대, 난방이 전부 멈췄습니다.'},
+    {kind:'thought', who:'me', name:'나', text:'이송 버스면 어린애들도 타고 있을 텐데.'},
     {kind:'dialogue', who:'me', name:'나', text:'난방부터 볼게요. 위치 다시 불러 주세요.'},
+    {kind:'radio', who:'passer_man', name:'부두 관제', text:'3부두 동쪽 끝입니다. 아이들이 타고 있어요.'},
+    {kind:'thought', who:'me', name:'나', text:'예비 호스, 부동액, 작은 공구함.'},
+    {kind:'dialogue', who:'me', name:'나', text:'지금 출발합니다.'},
+    {kind:'thought', who:'me', name:'나', text:'이번 호출은 평소보다 급하다.'},
     {kind:'narration', text:'밥그릇을 내려놓고 공구함을 닫았다. 달구지 시동이 두 번 만에 걸렸다.'}
   ],
   'intro-current-expulsion': [

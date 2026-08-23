@@ -5711,3 +5711,561 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
 }
 </style>
 
+
+<style id="mission-brief-readable-flow">
+#ev-wrap .mission-brief :is(p,small){
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  padding:13px 0!important;
+  text-align:left!important;
+  line-height:1.55!important;
+  border-top:1px solid rgba(40,123,118,.2)!important;
+}
+#ev-wrap .mission-brief :is(p,small)>b{
+  display:block!important;
+  width:auto!important;
+  margin:0 0 5px!important;
+  padding:0!important;
+  white-space:normal!important;
+  line-height:1.25!important;
+}
+#ev-wrap .mission-brief small{
+  font-size:14px!important;
+  color:#514c42!important;
+}
+</style>
+
+
+<style id="event-outcome-reward-polish">
+#ev-sheet[data-story-phase="outcome"] .story-reader{
+  padding-bottom:14px!important;
+}
+#ev-sheet[data-story-phase="outcome"] .event-result-inline{
+  position:static!important;
+  inset:auto!important;
+  display:block!important;
+  clear:both!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:18px 0 0!important;
+  padding:0!important;
+  transform:none!important;
+  overflow:visible!important;
+}
+#ev-sheet[data-story-phase="outcome"] .reward-section{
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  padding:13px 14px 14px!important;
+  background:rgba(17,24,22,.065)!important;
+  border:1px dashed rgba(40,123,118,.48)!important;
+  border-radius:6px!important;
+  box-sizing:border-box!important;
+}
+#ev-sheet[data-story-phase="outcome"] .reward-section .event-result-kicker{
+  display:block!important;
+  margin:0 0 9px!important;
+  color:#645a49!important;
+  font:800 11px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace!important;
+  letter-spacing:.12em!important;
+}
+#ev-sheet[data-story-phase="outcome"] .reward-section .fx-line{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+}
+#ev-sheet[data-story-phase="outcome"] .reward-pill{
+  position:static!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  min-height:32px!important;
+  width:auto!important;
+  margin:0!important;
+  padding:6px 10px!important;
+  color:#287b76!important;
+  background:rgba(40,123,118,.13)!important;
+  border:1px solid rgba(40,123,118,.62)!important;
+  border-radius:17px!important;
+  box-shadow:none!important;
+  font:800 13px/1.2 inherit!important;
+  animation:reward-pill-in .28s cubic-bezier(.2,.8,.25,1) both;
+}
+#ev-sheet[data-story-phase="outcome"] .reward-pill:nth-child(2){animation-delay:.06s}
+#ev-sheet[data-story-phase="outcome"] .reward-pill:nth-child(3){animation-delay:.12s}
+#ev-sheet[data-story-phase="outcome"] .reward-pill i{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:18px!important;height:18px!important;
+  color:inherit!important;font-style:normal!important;font-size:14px!important;
+}
+#ev-sheet[data-story-phase="outcome"] .reward-pill b{font:inherit!important;color:inherit!important}
+#ev-sheet[data-story-phase="outcome"] .reward-pill.minus,
+#ev-sheet[data-story-phase="outcome"] .reward-pill.reward-pursuit,
+#ev-sheet[data-story-phase="outcome"] .reward-pill.reward-fatigue{
+  color:#955146!important;
+  background:rgba(149,81,70,.11)!important;
+  border-color:rgba(149,81,70,.52)!important;
+}
+#ev-sheet[data-story-phase="outcome"] .reward-pill.item,
+#ev-sheet[data-story-phase="outcome"] .reward-pill.reward-gain{
+  color:#9a6224!important;
+  background:rgba(184,117,40,.12)!important;
+  border-color:rgba(184,117,40,.56)!important;
+}
+#ev-sheet[data-story-phase="outcome"] .event-choice-dock{
+  position:static!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:14px 24px 22px!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#ev-sheet[data-story-phase="outcome"] .event-choice-dock .choices{
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+}
+#ev-sheet[data-story-phase="outcome"] .primary-exit-btn{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:50px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:13px 18px!important;
+  color:#fff8e9!important;
+  background:linear-gradient(180deg,#bc7b32,#955a20)!important;
+  border:1px solid #d59a54!important;
+  border-radius:6px!important;
+  box-shadow:0 5px 13px rgba(91,49,16,.28),inset 0 1px rgba(255,255,255,.2)!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  letter-spacing:.035em!important;
+  text-shadow:0 1px 1px rgba(48,24,6,.55)!important;
+}
+#ev-sheet[data-story-phase="outcome"] .primary-exit-btn:active{
+  transform:translateY(1px)!important;
+  background:linear-gradient(180deg,#a96927,#844b18)!important;
+  box-shadow:0 2px 7px rgba(91,49,16,.25)!important;
+}
+@keyframes reward-pill-in{
+  from{opacity:0;transform:translateY(5px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media(prefers-reduced-motion:reduce){
+  #ev-sheet[data-story-phase="outcome"] .reward-pill{animation:none!important}
+}
+</style>
+<style id="mobile-visual-qa-pass-20260823">
+/* Mobile density corrections from the full-screen visual QA pass. */
+.bag-live-content{
+  gap:14px!important;
+}
+.bag-pockets{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%!important;
+}
+.bag-pocket{
+  position:relative!important;
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  height:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  aspect-ratio:1/1!important;
+  padding:7px!important;
+  overflow:hidden!important;
+  border-radius:7px!important;
+  box-sizing:border-box!important;
+}
+.bag-pocket .ico{
+  position:static!important;
+  width:38px!important;
+  height:38px!important;
+  margin:0!important;
+  object-fit:contain!important;
+}
+.bag-pocket-name{
+  display:none!important;
+}
+.bag-pocket-count{
+  position:absolute!important;
+  inset:auto 4px 4px auto!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:22px!important;
+  padding:3px 5px!important;
+  border:1px solid rgba(184,117,40,.58)!important;
+  border-radius:10px!important;
+  background:rgba(17,24,22,.9)!important;
+  color:#efe6d5!important;
+  font-size:10px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  box-shadow:0 2px 5px rgba(0,0,0,.24)!important;
+}
+.bag-pocket-count *{
+  display:inline!important;
+  color:inherit!important;
+  font:inherit!important;
+}
+.bag-detail{
+  display:grid!important;
+  grid-template-columns:48px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:0!important;
+  padding:12px!important;
+  margin-top:0!important;
+  overflow:visible!important;
+}
+.bag-detail>.ico{
+  width:44px!important;
+  height:44px!important;
+  object-fit:contain!important;
+}
+.bag-detail-copy{
+  min-width:0!important;
+  line-height:1.35!important;
+}
+.bag-detail-copy button,
+.bag-detail-copy .button,
+.bag-detail-copy .btn{
+  min-height:40px!important;
+  margin-top:8px!important;
+  padding:9px 12px!important;
+}
+
+.reward-section{
+  display:grid!important;
+  gap:8px!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:0!important;
+  margin:18px 0 12px!important;
+  padding:12px 14px!important;
+  box-sizing:border-box!important;
+  border:1px dashed rgba(40,123,118,.52)!important;
+  border-radius:7px!important;
+  background:rgba(17,24,22,.065)!important;
+  overflow:visible!important;
+}
+.reward-section .event-result-kicker{
+  width:auto!important;
+  margin:0!important;
+  color:#87551f!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+  letter-spacing:.08em!important;
+}
+.reward-section .fx-line{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  overflow:visible!important;
+}
+.reward-section .reward-pill{
+  display:inline-flex!important;
+  align-items:center!important;
+  width:auto!important;
+  min-height:28px!important;
+  padding:6px 10px!important;
+  border:1px solid currentColor!important;
+  border-radius:999px!important;
+  background:rgba(40,123,118,.11)!important;
+  font-size:12px!important;
+  line-height:1.15!important;
+  white-space:nowrap!important;
+}
+.reward-section .reward-pill.minus{
+  background:rgba(169,68,66,.09)!important;
+}
+.reward-section .reward-pill i{
+  display:none!important;
+}
+.reward-section .reward-pill b{
+  font:inherit!important;
+  color:inherit!important;
+}
+.choice.primary-exit-btn{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:48px!important;
+  height:48px!important;
+  margin:12px 0 0!important;
+  padding:0 16px!important;
+  border:1px solid #d09a55!important;
+  border-radius:7px!important;
+  background:#92591f!important;
+  background-image:none!important;
+  color:#fff8e9!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  letter-spacing:.02em!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.35)!important;
+  box-shadow:0 5px 12px rgba(76,42,13,.24)!important;
+}
+.choice.primary-exit-btn:active{
+  transform:translateY(1px)!important;
+  background:#794718!important;
+}
+
+.choice.ui-compact-choice{
+  width:100%!important;
+  min-height:58px!important;
+  height:auto!important;
+  padding:10px 12px!important;
+  border:1px solid rgba(184,117,40,.5)!important;
+  border-radius:7px!important;
+  background:rgba(239,230,213,.94)!important;
+  background-image:none!important;
+  color:#2b261f!important;
+  box-shadow:0 3px 8px rgba(0,0,0,.16)!important;
+  text-shadow:none!important;
+}
+.choice.ui-compact-choice *{
+  color:#2b261f!important;
+  text-shadow:none!important;
+}
+.choice.ui-compact-choice .choice-head{
+  min-height:0!important;
+  gap:8px!important;
+  line-height:1.3!important;
+}
+.choices:has(>.choice.ui-compact-choice){
+  gap:8px!important;
+  padding-block:8px!important;
+}
+
+body:has(#ev-wrap.on) #quest-update-ribbon{
+  top:70px!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:50%!important;
+  width:calc(100% - 40px)!important;
+  max-width:340px!important;
+  min-height:0!important;
+  padding:9px 12px!important;
+  transform:translateX(-50%)!important;
+  border-radius:7px!important;
+  background:rgba(17,24,22,.94)!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.34)!important;
+}
+body:has(#ev-wrap.on) #quest-update-ribbon small{
+  margin-bottom:2px!important;
+  font-size:10px!important;
+}
+</style>
+<style id="mobile-visual-qa-pass-final-20260823">
+/* This block intentionally sits last so generated legacy skins cannot override the mobile QA fixes. */
+.bag-live-content{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+}
+.bag-live-content>.bag-title-row,
+.bag-live-content>.bag-critical,
+.bag-live-content>.bag-vehicle,
+.bag-live-content>.bag-pockets,
+.bag-live-content>.bag-detail{
+  position:static!important;
+  inset:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}
+.bag-live-content>.bag-pockets{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+  height:auto!important;
+  min-height:0!important;
+}
+.bag-live-content .bag-pockets .bag-pocket{
+  position:relative!important;
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  height:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  aspect-ratio:1/1!important;
+  padding:6px!important;
+  overflow:hidden!important;
+}
+.bag-live-content .bag-pockets .bag-pocket>.ico{
+  position:static!important;
+  inset:auto!important;
+  width:36px!important;
+  height:36px!important;
+  margin:0!important;
+  transform:none!important;
+  object-fit:contain!important;
+}
+.bag-live-content .bag-pocket-name{
+  display:none!important;
+}
+.bag-live-content .bag-pocket-count{
+  position:absolute!important;
+  inset:auto 4px 4px auto!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  padding:3px 5px!important;
+  border:1px solid rgba(184,117,40,.58)!important;
+  border-radius:10px!important;
+  background:rgba(17,24,22,.92)!important;
+  color:#efe6d5!important;
+  font-size:9px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.bag-live-content .bag-pocket-count *{
+  display:inline!important;
+  color:inherit!important;
+  font:inherit!important;
+}
+.bag-live-content>.bag-detail{
+  position:static!important;
+  display:grid!important;
+  grid-template-columns:44px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:10px 12px!important;
+  overflow:visible!important;
+}
+.story-result.event-result-inline>.reward-section{
+  grid-column:1/-1!important;
+  justify-self:stretch!important;
+  align-self:stretch!important;
+  width:100%!important;
+  max-width:none!important;
+}
+.story-result.event-result-inline .reward-section .fx-line{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  width:100%!important;
+}
+.story-result.event-result-inline .reward-section .reward-pill{
+  display:inline-flex!important;
+  width:auto!important;
+  min-height:28px!important;
+  padding:6px 10px!important;
+  border:1px solid currentColor!important;
+  border-radius:999px!important;
+  background:rgba(40,123,118,.11)!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.story-result.event-result-inline .reward-section .reward-pill.minus{
+  background:rgba(169,68,66,.09)!important;
+}
+.story-result.event-result-inline .reward-section .reward-pill>i{
+  display:none!important;
+}
+.event-field-report .choice.primary-exit-btn{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  height:48px!important;
+  min-height:48px!important;
+  margin:12px 0 0!important;
+  padding:0 16px!important;
+  border:1px solid #d09a55!important;
+  border-radius:7px!important;
+  background:#92591f!important;
+  background-image:none!important;
+  color:#fff8e9!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.35)!important;
+  box-shadow:0 5px 12px rgba(76,42,13,.24)!important;
+}
+</style>
+<style id="mobile-visual-qa-specificity-lock-20260823">
+.bag-live-content>.bag-pockets>.bag-pocket{
+  grid-column:auto!important;
+  grid-row:auto!important;
+}
+#ev-wrap #ev-sheet .story-result.event-result-inline .reward-section .reward-pill>i{
+  display:none!important;
+}
+#ev-wrap #ev-sheet .event-field-report button.choice.primary-exit-btn{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  height:48px!important;
+  min-height:48px!important;
+  margin:12px 0 0!important;
+  padding:0 16px!important;
+  border:1px solid #d09a55!important;
+  border-radius:7px!important;
+  background:#92591f!important;
+  background-color:#92591f!important;
+  background-image:none!important;
+  color:#fff8e9!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.35)!important;
+  box-shadow:0 5px 12px rgba(76,42,13,.24)!important;
+}
+#ev-wrap #ev-sheet .choices>.choice.ui-compact-choice{
+  height:66px!important;
+  min-height:66px!important;
+  max-height:66px!important;
+  padding:9px 12px!important;
+}
+</style>
+<style id="mobile-visual-qa-final-lock-20260823">
+#ovl-status .bag-live-content>.bag-pockets{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-auto-flow:row!important;
+  gap:8px!important;
+  height:auto!important;
+  min-height:0!important;
+}
+#ovl-status .bag-live-content>.bag-pockets>.bag-pocket{
+  grid-column:auto!important;
+  grid-row:auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  aspect-ratio:1/1!important;
+}
+#ev-wrap #ev-sheet .story-result.event-result-inline .reward-section .reward-pill>i{
+  display:flex!important;
+}
+</style>

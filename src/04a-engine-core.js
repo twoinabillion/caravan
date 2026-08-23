@@ -753,13 +753,13 @@ G.departureSteps = ()=>{
   if(!S) return [];
   const witnessed=G.pillars?G.pillars().관계.have:0;
   return [
-    {id:'family',done:!!S.flags.intro_family_helped,label:'6,412명 가운데 한 가족을 만났다',detail:'도윤 가족의 버스 난방을 고치고 현재 이송을 직접 보았다'},
-    {id:'appeal',done:!!S.flags.intro_appeal_failed,label:'부산에서 이의를 제기했다',detail:'원격 절차는 막혔고 남산 현장 확인만 남았다'},
-    {id:'module',done:!!S.flags.intro_module_seen,label:'계기판 속 검증 모듈을 확인했다',detail:'엄마의 회로도와 실제 배선이 일치했다'},
-    {id:'trace',done:!!S.flags.first_order_trace,label:'이송 명령의 첫 발신 기록을 찾는다',detail:S.flags.first_order_trace?'부모님의 이송표와 같은 발신 계열임을 확인했다':'부산을 떠난 첫 구간에서 대상 선정 규칙과 발신 번호를 찾는다'},
-    {id:'key',done:!!S.flags.parent_key_found,label:'분리 절차를 복원하고 검증키를 꺼낸다',detail:S.flags.parent_key_found?'4–5쪽을 복원해 남산까지 실을 준비가 됐다':'절차 없이 뽑으면 키와 달구지가 함께 망가진다'},
-    {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'발신 기록과 당사자 증언을 맞춰 본다',detail:S.flags.es_truth?'명령 생성 순서를 확인했다':`같은 명령을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
-    {id:'seoul',done:!!S.flags.story_done,label:'남산에서 강제 이송을 멈춘다',detail:S.flags.story_done?'제7 잔류구역 이송을 끝냈다':'날짜 제한은 없다. 필요한 기록과 사람을 모은 뒤 남산에서 강제 이송을 멈춘다'}
+    {id:'family',done:!!S.flags.intro_family_helped,label:'도윤 가족의 이송표를 확인한다',detail:'버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다'},
+    {id:'appeal',done:!!S.flags.intro_appeal_failed,label:'부산에서 이송 명령에 이의를 제기한다',detail:'부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다'},
+    {id:'module',done:!!S.flags.intro_module_seen,label:'엄마가 남긴 검증 모듈을 확인한다',detail:'엄마의 회로도와 달구지 계기판 안쪽의 실제 배선이 일치했다'},
+    {id:'trace',done:!!S.flags.first_order_trace,label:'이송 명령의 첫 발신 기록을 찾는다',detail:S.flags.first_order_trace?'부모님의 이송표와 지금의 표가 같은 발신 계열이라는 사실을 확인했다':'부산을 떠난 첫 구간에서 대상 선정 규칙과 발신 번호가 남은 기록을 찾는다'},
+    {id:'key',done:!!S.flags.parent_key_found,label:'검증키를 안전하게 꺼낼 절차를 찾는다',detail:S.flags.parent_key_found?'분리 절차 4·5쪽을 복원해 검증키를 남산까지 가져갈 수 있게 됐다':'순서를 모른 채 장치를 뽑으면 검증키와 달구지가 함께 망가진다'},
+    {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'당사자 증언을 발신 기록과 대조한다',detail:S.flags.es_truth?'증언과 관제 기록을 맞춰 명령이 만들어진 순서를 확인했다':`같은 이송을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
+    {id:'seoul',done:!!S.flags.story_done,label:'남산 코어에서 강제 이송 명령을 끊는다',detail:S.flags.story_done?'제7 잔류구역을 향하던 강제 이송을 끝냈다':'필요한 기록과 사람을 모은 뒤 남산 코어에서 명령을 멈춘다. 날짜 제한은 없다'}
   ];
 };
 G.relationKey = (a,b)=>[a,b].sort().join(':');
