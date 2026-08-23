@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-23T04:18:56.986Z",
+  "generatedAt": "2026-08-23T04:57:12.883Z",
   "html": {
-    "bytes": 61821063,
+    "bytes": 66986176,
     "warnBytes": 32000000,
     "maxBytes": 72000000
   },
   "embedded": {
-    "files": 462,
-    "bytes": 37579643,
+    "files": 471,
+    "bytes": 41441898,
     "categories": {
       "ui": {
         "files": 31,
@@ -20,9 +20,9 @@
         "encodedBytes": 12947612
       },
       "scene": {
-        "files": 321,
-        "bytes": 21763451,
-        "encodedBytes": 29018376
+        "files": 330,
+        "bytes": 25625706,
+        "encodedBytes": 34168064
       },
       "portrait": {
         "files": 49,
@@ -86,6 +86,18 @@
       "encodedBytes": 992448
     },
     {
+      "path": "assets/scenes/memory-first-winter-route-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 583216,
+      "encodedBytes": 777624
+    },
+    {
+      "path": "assets/scenes/memory-grandfather-workshop-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 526416,
+      "encodedBytes": 701888
+    },
+    {
       "path": "assets/scenes/resistance-aftermath-v1.jpg",
       "mime": "image/jpeg",
       "bytes": 524908,
@@ -110,6 +122,18 @@
       "encodedBytes": 618160
     },
     {
+      "path": "assets/scenes/memory-empty-workshop-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 453314,
+      "encodedBytes": 604420
+    },
+    {
+      "path": "assets/scenes/parents-failed-namsan-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 449539,
+      "encodedBytes": 599388
+    },
+    {
       "path": "assets/scenes/resistance-seoul-edge-choice-v1.jpg",
       "mime": "image/jpeg",
       "bytes": 438914,
@@ -128,34 +152,10 @@
       "encodedBytes": 578416
     },
     {
-      "path": "assets/portraits/taesik.png",
-      "mime": "image/png",
-      "bytes": 361695,
-      "encodedBytes": 482260
-    },
-    {
-      "path": "assets/portraits/seojin.png",
-      "mime": "image/png",
-      "bytes": 357307,
-      "encodedBytes": 476412
-    },
-    {
-      "path": "assets/scenes/intro-departure-start-v1.jpg",
+      "path": "assets/scenes/parents-father-maintenance-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 342821,
-      "encodedBytes": 457096
-    },
-    {
-      "path": "assets/scenes/onboarding-first-road-scan-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 328076,
-      "encodedBytes": 437436
-    },
-    {
-      "path": "assets/scenes/intro-departure-conversation-v4.jpg",
-      "mime": "image/jpeg",
-      "bytes": 316589,
-      "encodedBytes": 422120
+      "bytes": 407520,
+      "encodedBytes": 543360
     }
   ]
 }
