@@ -939,8 +939,9 @@ const UI = (()=>{
   }
   function syncRoadJourneyContext(source=$('#mission-strip')){
     const summary=$('#journey-mode-route .nav-route-summary');
-    if(!summary||!source||!S) return;
-    summary.querySelector('.nav-journey-context')?.remove();
+    const tracker=$('#road-quest-tracker');
+    if(!source||!S) return;
+    summary?.querySelector('.nav-journey-context')?.remove();
     const clean=(value,pattern)=>String(value||'').replace(pattern,'').replace(/\s+/g,' ').trim();
     const main=clean(source.querySelector('.chip-core')?.textContent,/^[◎\s]*본편\s*·\s*/)
       .replace(/\s*·\s*날짜 제한 없음$/,'');
@@ -958,17 +959,17 @@ const UI = (()=>{
     const mainNext=firstDeparture
       ? '양산 카드를 눌러 첫 구간을 출발한다'
       : mainEntry&&mainEntry.next||'북쪽으로 이어지는 다음 목적지를 고른다';
-    const optionalHtml=optionalEntry
-      ? '<span class="nav-compass-optional"><small>'+esc(optionalEntry.eyebrow||optionalEntry.kind)+'</small><b>'+esc(optionalEntry.title)+'</b><em>'+esc(optionalEntry.next||'목표 장부에서 다음 단계를 확인한다')+'</em>'+
+    const optionalTrackerHtml=optionalEntry
+      ? '<span class="rqt-line rqt-optional"><small>'+esc(optionalEntry.eyebrow||'선택 이야기')+'</small><em>'+esc(optionalEntry.title)+'</em>'+
         (optionalEntries.length>1?'<i>외 '+(optionalEntries.length-1)+'</i>':'')+'</span>'
-      : '<span class="nav-compass-optional is-empty"><small>선택 이야기</small><b>현재 진행 중인 선택 임무 없음</b><em>정착지 사람·야영 대화에서 찾는다</em></span>';
-    summary.insertAdjacentHTML('afterbegin',
-      '<div class="nav-journey-context nav-quest-compass" role="status" aria-label="현재 임무와 다음 행동">'+
-      '<span class="nav-compass-main"><span><small>주 임무 · '+esc(mainChapter)+'</small>'+
-      (mainProgress?'<i>'+esc(mainProgress)+'</i>':'')+'</span><b>'+esc(mainTitle)+'</b>'+
-      '<em>'+esc(mainEntry&&mainEntry.phase||'북쪽으로 가는 중')+'</em><strong>동행 '+(S.party||[]).length+'</strong></span>'+
-      '<span class="nav-compass-next"><small>지금 할 일</small><b>'+esc(mainNext)+'</b></span>'+
-      optionalHtml+'</div>');
+      : '<span class="rqt-line rqt-optional is-empty"><small>선택 이야기</small><em>진행 중인 임무 없음</em></span>';
+    if(tracker){
+      tracker.hidden=false;
+      tracker.innerHTML='<span class="rqt-kicker"><small>주 임무 · '+esc(mainChapter)+'</small>'+
+        (mainProgress?'<i>'+esc(mainProgress)+'</i>':'')+'</span>'+
+        '<b class="rqt-main">'+esc(mainTitle)+'</b>'+
+        '<span class="rqt-line rqt-next"><small>지금 할 일</small><em>'+esc(mainNext)+'</em></span>'+optionalTrackerHtml;
+    }
   }
 
   /* ── panel ── */
@@ -1456,6 +1457,8 @@ function dialogueSide(turn,lanes,opt={}){
     const selectedIndex=routeModels.indexOf(selected);
     const questCue=typeof G.routeQuestCue==='function'?G.routeQuestCue(selected.nb.id):null;
     const canDepart=forecast.ok&&!forecast.shortage;
+    const nowClock=G.fmtClock().replace(/^DAY\s+\d+\s*·\s*/,'');
+    const weather=(D.wx[S.wx]||D.wx.clear).nm;
     const carouselModels=routeModels.length===2
       ?[routeModels[1-selectedIndex],selected,routeModels[1-selectedIndex]]
       :routeModels;
@@ -1481,12 +1484,17 @@ function dialogueSide(turn,lanes,opt={}){
           <div class="nav-map-destination-badge"><b>${esc(node.name)}</b><small>${selected.nb.km}km</small></div>
         </section>
         <section class="nav-route-summary" aria-live="polite" aria-label="선택한 목적지 정보">
-          ${questCue?`<p class="nav-route-quest-cue"><small>${questCue.kind==='main'?'주 임무 추천':'추적 임무'}</small><b>${esc(questCue.action)}</b></p>`:''}
+          <div class="nav-vehicle-telemetry" aria-label="현재 달구지 상태">
+            <span><small>현재 연료</small><b>${Math.floor(S.fuel)}L</b></span>
+            <span><small>차체</small><b>${Math.floor(S.van)}%</b></span>
+            <span><small>현재 시각</small><b>${esc(nowClock)}</b><em>DAY ${S.day} · ${esc(weather)}</em></span>
+          </div>
+          ${questCue?`<p class="nav-route-quest-cue"><small>${questCue.kind==='main'?'주 임무 경로':'추적 경로'}</small><b>${esc(questCue.action)}</b></p>`:''}
           <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
           <div class="nav-route-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
-            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>연료 소모</small><b>${Math.ceil(selected.fuel)}L</b></span></span>
-            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>이동 시간</small><b>${Math.max(1,Math.round(forecast.minutes))}분</b></span></span>
-            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>총 거리</small><b>${selected.nb.km}km</b></span></span>
+            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>예상 연료</small><b>-${Math.ceil(selected.fuel)}L</b></span></span>
+            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>예상 시간</small><b>${Math.max(1,Math.round(forecast.minutes))}분</b></span></span>
+            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>구간 거리</small><b>${selected.nb.km}km</b></span></span>
           </div>
         </section>
         <section class="nav-destination-carousel" aria-label="목적지 선택">

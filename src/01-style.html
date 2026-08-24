@@ -5170,6 +5170,192 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
   color: rgba(71, 66, 57, .76);
   white-space: nowrap;
 }
+/* ── Road quest tracker + consolidated route telemetry (2026-08-25) ── */
+#road-quest-tracker{
+  display:none;
+  position:absolute;
+  z-index:9;
+  top:10px;
+  left:10px;
+  width:min(66%,310px);
+  box-sizing:border-box;
+  padding:9px 11px 8px;
+  color:#eee8dc;
+  background:rgba(7,13,20,.92);
+  border:1px solid rgba(184,117,40,.72);
+  border-left:3px solid #52d2ca;
+  border-radius:7px;
+  box-shadow:0 8px 18px rgba(0,0,0,.34);
+  pointer-events:none;
+  overflow:hidden;
+}
+#scr-game:has(#journey-mode-route .route-console) #road-quest-tracker:not([hidden]){
+  display:grid;
+  gap:4px;
+}
+#scr-game:has(#journey-mode-route .route-console) #road-status,
+#scr-game:has(#journey-mode-route .route-console) #stage-time{
+  display:none;
+}
+.rqt-kicker{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  color:#e7a943;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.06em;
+}
+.rqt-kicker small{font:inherit}
+.rqt-kicker i{
+  padding:1px 6px;
+  color:#73ddd6;
+  border:1px solid rgba(82,210,202,.48);
+  border-radius:10px;
+  font-style:normal;
+  letter-spacing:0;
+}
+.rqt-main{
+  display:-webkit-box;
+  overflow:hidden;
+  color:#f1eee6;
+  font-size:14px;
+  line-height:1.28;
+  font-weight:800;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+.rqt-line{
+  display:grid;
+  grid-template-columns:54px minmax(0,1fr) auto;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  padding-top:4px;
+  border-top:1px solid rgba(238,232,220,.12);
+  font-size:10px;
+  line-height:1.25;
+}
+.rqt-line small{color:#e7a943;font-weight:800}
+.rqt-line em{
+  overflow:hidden;
+  color:#d6d2c9;
+  font-style:normal;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.rqt-line i{color:#8a9697;font-size:9px;font-style:normal}
+.rqt-optional.is-empty em{color:#7f898a}
+
+#journey-mode-route .route-console-v3 .route-console-screen{
+  grid-template-rows:38% 35% 27%;
+}
+#journey-mode-route .route-console-v3 .nav-route-summary{
+  display:grid;
+  grid-template-rows:44px minmax(30px,auto) 20px 48px;
+  grid-auto-flow:row;
+  gap:4px;
+  box-sizing:border-box;
+  padding:5px 11px 6px;
+}
+#journey-mode-route .route-console-v3 .nav-route-summary:not(:has(.nav-route-quest-cue)){
+  grid-template-rows:44px 20px 48px;
+}
+.nav-vehicle-telemetry{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  min-width:0;
+  background:rgba(9,18,25,.82);
+  border:1px solid rgba(82,210,202,.3);
+}
+.nav-vehicle-telemetry>span{
+  display:grid;
+  align-content:center;
+  min-width:0;
+  padding:3px 9px;
+  border-right:1px solid rgba(238,232,220,.1);
+}
+.nav-vehicle-telemetry>span:last-child{border-right:0}
+.nav-vehicle-telemetry small{
+  color:#87999d;
+  font-size:9px;
+  font-weight:700;
+  line-height:1.1;
+}
+.nav-vehicle-telemetry b{
+  color:#f2ece0;
+  font-size:15px;
+  line-height:1.15;
+}
+.nav-vehicle-telemetry>span:first-child b{color:#e7ad52}
+.nav-vehicle-telemetry>span:nth-child(2) b{color:#66d6ce}
+.nav-vehicle-telemetry em{
+  overflow:hidden;
+  color:#918f88;
+  font-size:8px;
+  line-height:1.1;
+  font-style:normal;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+#journey-mode-route .route-console-v3 .nav-route-quest-cue{
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  min-height:30px;
+  margin:0;
+  padding:4px 8px;
+  box-sizing:border-box;
+  background:rgba(184,117,40,.1);
+  border-left:2px solid #d79d43;
+}
+#journey-mode-route .route-console-v3 .nav-route-quest-cue small{
+  color:#e5a847;
+  font-size:9px;
+  font-weight:800;
+  white-space:nowrap;
+}
+#journey-mode-route .route-console-v3 .nav-route-quest-cue b{
+  display:-webkit-box;
+  overflow:hidden;
+  color:#e7e3d9;
+  font-size:10px;
+  line-height:1.25;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+#journey-mode-route .route-console-v3 .nav-place-description{
+  overflow:hidden;
+  min-width:0;
+  margin:0;
+  color:#8f9b9d;
+  font-size:9px;
+  line-height:20px;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+#journey-mode-route .route-console-v3 .nav-route-facts{
+  min-height:48px;
+  margin:0;
+}
+#journey-mode-route .route-console-v3 .nav-route-facts>span{
+  min-width:0;
+  padding:3px 7px;
+}
+#journey-mode-route .route-console-v3 .nav-route-facts small{font-size:8px}
+#journey-mode-route .route-console-v3 .nav-route-facts b{font-size:13px}
+
+@media(max-width:390px){
+  #road-quest-tracker{width:calc(100% - 20px);padding:8px 10px 7px}
+  .rqt-main{font-size:13px}
+  .rqt-line{grid-template-columns:50px minmax(0,1fr);font-size:9px}
+  .rqt-line i{display:none}
+  .nav-vehicle-telemetry>span{padding-inline:6px}
+  .nav-vehicle-telemetry b{font-size:13px}
+}
 </style>
 <style id="intro-scene-and-stay-console-polish">
 #intro-img.intro-scene-cut{animation:intro-scene-cut .46s cubic-bezier(.22,.72,.25,1) both}
