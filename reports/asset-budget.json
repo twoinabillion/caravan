@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-23T12:51:35.453Z",
+  "generatedAt": "2026-08-23T17:24:10.645Z",
   "html": {
-    "bytes": 69502108,
+    "bytes": 71607494,
     "warnBytes": 32000000,
     "maxBytes": 72000000
   },
   "embedded": {
-    "files": 495,
-    "bytes": 43144300,
+    "files": 498,
+    "bytes": 44686304,
     "categories": {
       "ui": {
         "files": 31,
@@ -20,9 +20,9 @@
         "encodedBytes": 12947612
       },
       "scene": {
-        "files": 354,
-        "bytes": 27856903,
-        "encodedBytes": 37143032
+        "files": 357,
+        "bytes": 29398907,
+        "encodedBytes": 39199044
       },
       "portrait": {
         "files": 49,
@@ -86,6 +86,12 @@
       "encodedBytes": 992448
     },
     {
+      "path": "assets/scenes/intro-busan-cold-storage-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 592097,
+      "encodedBytes": 789464
+    },
+    {
       "path": "assets/scenes/memory-first-winter-route-v1.jpg",
       "mime": "image/jpeg",
       "bytes": 583216,
@@ -102,6 +108,12 @@
       "mime": "image/jpeg",
       "bytes": 524908,
       "encodedBytes": 699880
+    },
+    {
+      "path": "assets/scenes/intro-busan-water-line-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 513325,
+      "encodedBytes": 684436
     },
     {
       "path": "assets/scenes/resistance-mid-depot-conflict-v1.jpg",
@@ -144,18 +156,6 @@
       "mime": "image/jpeg",
       "bytes": 437469,
       "encodedBytes": 583292
-    },
-    {
-      "path": "assets/scenes/story-personal-cache-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 433811,
-      "encodedBytes": 578416
-    },
-    {
-      "path": "assets/scenes/parents-father-maintenance-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 407520,
-      "encodedBytes": 543360
     }
   ]
 }

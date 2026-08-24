@@ -22,6 +22,7 @@ const before = [
   'src/02-dom.html', 'src/03-data.js'
 ];
 const after = [
+  'src/03i-story-expansion.js',
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js',
   'src/05-scene.js', 'src/06-mapgraph.js',
@@ -132,7 +133,7 @@ const scenes = replace(read('src/03g-scenes.js'), /__SCENE_([A-Z0-9_]+)__/g, key
 }, '장면');
 /* 대화 확장 장면은 사람이 읽기 쉬운 실제 경로로 선언되기도 한다. 단일 HTML과
    AIT에는 assets 디렉터리가 따로 실리지 않으므로 이 경로도 반드시 인라인한다. */
-const inlineScenePaths=scenes.result.replace(/(["'])assets\/scenes\/([^"']+\.(?:jpe?g|webp|png))\1/gi,
+const inlineSceneAssetPaths=source=>source.replace(/(["'])assets\/scenes\/([^"']+\.(?:jpe?g|webp|png))\1/gi,
   (match,quote,file)=>{
     const requested=`assets/scenes/${file}`;
     const webp=requested.replace(/\.(?:jpe?g|png)$/i,'.webp');
@@ -141,6 +142,7 @@ const inlineScenePaths=scenes.result.replace(/(["'])assets\/scenes\/([^"']+\.(?:
     const mime=lower.endsWith('.webp')?'image/webp':lower.endsWith('.png')?'image/png':'image/jpeg';
     return `${quote}${dataUri(relative,mime)}${quote}`;
   });
+const inlineScenePaths=inlineSceneAssetPaths(scenes.result);
 const upgrades = replace(inlineScenePaths, /__UPGRADE_([A-Z0-9_]+)__/g,
   key => dataUri(upgradeScenes[key], 'image/jpeg'), '업그레이드');
 const title = replace(read('src/03e-bgm-title.js'), /__BGM_TITLE__/g,
@@ -159,7 +161,9 @@ const chunks = [
   styles.result, read('src/01b-quest-style.html'), ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
   title.result, audio.result, npc.result, upgrades.result,
   ...after.map(relative => relative==='src/05-scene.js'?settlementSprites.result
-    :relative==='src/07f-ui-road-thoughts.js'?roadCues.result:read(relative))
+    :relative==='src/07f-ui-road-thoughts.js'?roadCues.result
+    :relative==='src/03i-story-expansion.js'?inlineSceneAssetPaths(read(relative))
+    :read(relative))
 ];
 const html = chunks.join('\n');
 const htmlBytes = Buffer.byteLength(html);

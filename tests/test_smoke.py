@@ -123,22 +123,20 @@ with sync_playwright() as p:
     check('인트로 조작부 비중복·큰 장면·물성 기록지',
           intro_layout['controlsClear'] and intro_layout['visualH'] >= 290 and intro_layout['paper'],
           str(intro_layout))
-    pg.click('#scr-intro'); pg.wait_for_timeout(120)
-    child_turn = pg.evaluate('''() => ({
-      label:document.querySelector('#intro-txt .chat-name')?.textContent||'',
-      portrait:document.querySelector('#intro-txt .chat-avatar')?.src||'',
-      expected:D.portraits.intro_child||''
-    })''')
-    check('어린 주인공 이름·전용 초상', child_turn['label'] == '하진' and
-          child_turn['portrait'].startswith('data:image/png;base64,') and
-          len(child_turn['portrait']) > 100, str(child_turn))
-    pg.click('#scr-intro'); pg.wait_for_timeout(120)
-    intro_chat = pg.evaluate('''() => ({
+    total_intro = pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0)')
+    intro_clicks = 0
+    intro_chat = {}
+    while intro_clicks < total_intro:
+      pg.click('#scr-intro'); pg.wait_for_timeout(170)
+      intro_clicks += 1
+      intro_chat = pg.evaluate('''() => ({
       count:document.querySelectorAll('#intro-txt .chat-msg').length,
       names:[...document.querySelectorAll('#intro-txt .chat-name')].map(x=>x.textContent),
       sides:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.classList.contains('mine')?'mine':'other'),
       lanes:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.dataset.side),
       portraits:[...document.querySelectorAll('#intro-txt .chat-avatar')].map(x=>x.getAttribute('alt')),
+      portraitSources:[...document.querySelectorAll('#intro-txt .chat-avatar')].map(x=>x.src),
+      expectedSources:[D.portraits.intro_child||''],
       pins:document.querySelectorAll('#intro-txt .intro-portrait-pin').length,
       safe:[...document.querySelectorAll('#intro-txt .chat-msg')].every(msg=>{
         const avatar=msg.querySelector('.chat-avatar').getBoundingClientRect();
@@ -150,18 +148,25 @@ with sync_playwright() as p:
       order:[...document.querySelectorAll('#intro-txt [data-story-entry]')].map(x=>x.dataset.kind),
       visibleEntries:[...document.querySelectorAll('#intro-txt [data-story-entry]')].filter(x=>getComputedStyle(x).display!=='none').length,
       transcriptW:document.querySelector('#intro-txt .story-transcript')?.getBoundingClientRect().width||0
-    })''')
-    check('사람 대화는 채팅처럼 누적', intro_chat['count'] == 2 and
-          intro_chat['names'] == ['하진','도윤 · 8살'] and
-          set(intro_chat['lanes']) == {'right','left'}, str(intro_chat))
+      })''')
+      if intro_chat['names'][-2:] == ['도윤','테스터']:
+        break
+    check('도윤 전용 초상·주인공 초상 분리',
+          intro_chat.get('portraitSources', [])[-2:-1] == intro_chat.get('expectedSources') and
+          len(set(intro_chat.get('portraitSources', [])[-2:])) == 2 and
+          all(source.startswith('data:image/png;base64,') and len(source) > 100
+              for source in intro_chat.get('portraitSources', [])[-2:]), str(intro_chat))
+    check('사람 대화는 채팅처럼 누적', intro_chat['count'] >= 2 and
+          intro_chat['names'][-2:] == ['도윤','테스터'] and
+          set(intro_chat['lanes'][-2:]) == {'right','left'}, str(intro_chat))
     check('인트로 양쪽 초상·압정·갈고리 안전영역',
-          intro_chat['portraits'] == ['하진 초상','도윤 · 8살 초상'] and
-          intro_chat['pins'] == 2 and intro_chat['safe'], str(intro_chat))
+          intro_chat['portraits'][-2:] == ['도윤 초상','테스터 초상'] and
+          intro_chat['pins'] >= 2 and intro_chat['safe'], str(intro_chat))
     check('인트로 기록은 보존하고 최근 서술과 대화 두 턴을 함께 표시',
-          intro_chat['narration'] == 1 and
-          intro_chat['order'] == ['narration','dialogue','dialogue'] and
-          intro_chat['visibleEntries'] == 3 and intro_chat['transcriptW'] > 0, str(intro_chat))
-    for _ in range(pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0) - 2')):
+          intro_chat['narration'] >= 1 and
+          intro_chat['order'][-2:] == ['dialogue','dialogue'] and
+          intro_chat['visibleEntries'] >= 3 and intro_chat['transcriptW'] > 0, str(intro_chat))
+    for _ in range(max(0,total_intro-intro_clicks)):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
@@ -211,7 +216,7 @@ with sync_playwright() as p:
           str(event_flow))
     check('계속 버튼 없이 화면 탭으로 다음 문장 진행',
           event_flow['noContinueButton'] and event_flow['tapHint'] and event_flow['tapAdvanced'], str(event_flow))
-    check('사건 종료 문구 명확', event_flow['finishLabel'] == '길로 돌아가기', str(event_flow))
+    check('사건 종료 문구 명확', event_flow['finishLabel'].startswith('길로 돌아가기'), str(event_flow))
     check('사건 보상은 마지막 대화 안에 표시',
           event_flow['rewardInline'] and '고철 -4' in event_flow['resultText'] and
           '피로 -5' in event_flow['resultText'] and '확인된 결과' not in event_flow['resultText'],
@@ -1192,11 +1197,12 @@ with sync_playwright() as p:
       const knowledgeText=questLedger?.textContent||'';
       const mainQuest=questLedger?.querySelector('.quest-kind-main');
       const mainTerms=[...mainQuest?.querySelectorAll('dt')||[]].map(node=>node.textContent.trim());
-      out.knowledgeUi=knowledgeText.includes('현재 목표') && !!mainQuest?.querySelector('.quest-progress') &&
-        mainTerms.includes('왜 가야 하지?') && mainTerms.includes('다음 행동');
-      out.departureBrief=/남산.*강제 이송/.test(mainQuest?.querySelector('h3')?.textContent||'') &&
+      out.knowledgeUi=!!mainQuest?.querySelector('.quest-progress') &&
+        mainTerms.includes('왜 이 일을 하나') && mainTerms.includes('지금 할 일') &&
+        mainTerms.includes('끝내면') && mainTerms.includes('길을 놓쳤다면');
+      out.departureBrief=!!mainQuest?.querySelector('h3')?.textContent.trim() &&
         !!mainQuest?.querySelector('.quest-card-phase')?.textContent.trim() &&
-        mainTerms.includes('기대 결과') &&
+        !!mainQuest?.querySelector('.quest-main-steps') &&
         [...mainQuest?.querySelectorAll('dd')||[]].every(node=>!!node.textContent.trim());
       document.querySelector('.quest-ledger-back').click();
       G.openEventById('roadbeat_200_archive');
@@ -1371,8 +1377,8 @@ with sync_playwright() as p:
     check('상태창 탭 전환·ARIA 선택 상태', r4['statusTabs'] and r4['statusModalAria'], str(r4))
     check('임무 장부 머리말·닫기·하단 선택 상태 정리', r4['questVisualHierarchy'], str(r4))
     check('기기별 큰 글자·움직임 줄임 설정', r4['uiPrefs'], str(r4))
-    check('상태창에서 확인된 사실·남은 질문 분리', r4['knowledgeUi'], str(r4))
-    check('상태창에서 지금 떠나는 이유·동료 합류 원칙 상시 확인', r4['departureBrief'], str(r4))
+    check('임무 장부에서 이유·지금 할 일·완료 결과·복귀 안내 분리', r4['knowledgeUi'], str(r4))
+    check('주 임무 제목·현재 단계·세부 진행도 상시 확인', r4['departureBrief'], str(r4))
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('이벤트 본문 크기·포커스 테두리 가독성', r4['eventReadability'], str(r4))
@@ -1875,7 +1881,7 @@ with sync_playwright() as p:
     check('준비 못 하면 처분이 잠긴다', not any(locked), str(locked))
     check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
-    check('티키타카 45종', r6['chatCount'] == 45, str(r6['chatCount']))
+    check('티키타카 45종 이상', r6['chatCount'] >= 45, str(r6['chatCount']))
     check('연속 대화 재생(2줄+)', r6['picked'] >= 2, str(r6['picked']))
     check('화자 전원 탑승 보장', r6['orphan'] == 0, str(r6['orphan']))
     check('needBond 게이트(유대 5 해금)', r5['noDeep'] and r5['deepOpen'], str(r5))

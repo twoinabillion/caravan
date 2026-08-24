@@ -37,8 +37,8 @@ def open_case(page, event_id, phase, index):
         page.evaluate("UI.finishStory()")
     else:
         for _ in range(index):
-            page.click(".story-next")
-            page.wait_for_timeout(30)
+            page.click(".story-reader")
+            page.wait_for_timeout(80)
     if phase in ("outcome", "combat-outcome"):
         page.evaluate("document.querySelector('.event-choice-dock .choice[data-i]:not([disabled])').click()")
     page.wait_for_timeout(70)
@@ -95,6 +95,12 @@ def layout(page):
           const background=luminance('rgb(7, 16, 27)');
           return {
             clipped,outsideSurface,escaped,small,
+            geometry:{
+              viewport:{width:innerWidth,height:innerHeight},
+              root:root?Object.fromEntries(['top','bottom','height'].map(key=>[key,root.getBoundingClientRect()[key]])):null,
+              dock:(()=>{const node=root.querySelector('.event-choice-dock');return node?Object.fromEntries(['top','bottom','height'].map(key=>[key,node.getBoundingClientRect()[key]])):null})(),
+              controls:controls.map(node=>{const box=node.getBoundingClientRect();return {label:label(node),top:box.top,bottom:box.bottom,height:box.height};})
+            },
             documentOverflow:document.documentElement.scrollWidth>innerWidth+1,
             avatarProseOverlap:overlap(avatar,prose),avatarSpeakerOverlap:overlap(avatar,speaker),
             titleProseDelta:title&&currentProse?Math.abs(title.x-currentProse.x):0,

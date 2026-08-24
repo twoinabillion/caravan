@@ -50,40 +50,28 @@ def check_viewport(playwright, width, height):
     reader = box(page, ".story-reader")
     current = box(page, ".story-reader [data-story-entry]:last-child")
     dock = box(page, ".event-choice-dock")
-    next_button = box(page, ".story-next")
-    button_face = page.locator(".story-next").evaluate(
-        """node => ({
-          backgroundImage:getComputedStyle(node).backgroundImage,
-          faceImage:getComputedStyle(node,'::before').backgroundImage,
-          faceSize:getComputedStyle(node,'::before').backgroundSize,
-          faceDisplay:getComputedStyle(node,'::before').display
-        })"""
-    )
+    tap_hint = box(page, ".story-tap-hint")
+    tutorial = page.locator(".event-tutorial-note")
+    preceding = box(page, ".event-tutorial-note") if tutorial.is_visible() else head
 
-    assert reader["y"] - (head["y"] + head["height"]) <= 18, {
-        "viewport": (width, height), "head": head, "reader": reader
+    assert reader["y"] - (preceding["y"] + preceding["height"]) <= 18, {
+        "viewport": (width, height), "preceding": preceding, "reader": reader
     }
     assert current["y"] - reader["y"] <= 10
-    assert reader["height"] <= 150, reader
+    assert reader["height"] >= 120, reader
     assert current["y"] + current["height"] <= dock["y"]
-    # Option 2 uses the approved low, rectangular field-recorder key instead
-    # of the former square nav-button face.
-    assert 44 <= next_button["height"] <= 58, next_button
-    assert 128 <= next_button["width"] <= 154, next_button
-    assert 2.5 <= next_button["width"] / next_button["height"] <= 3.1, next_button
-    assert next_button["x"] >= dock["x"] + 13
-    assert next_button["x"] + next_button["width"] <= dock["x"] + dock["width"] - 13
-    assert "data:image/webp" in button_face["backgroundImage"]
-    assert button_face["faceDisplay"] == "none"
-    assert page.locator(".story-next strong").inner_text() == "계속"
-    assert box(page, ".story-next strong")["height"] <= 18
-    assert page.locator(".story-next .req").count() == 0
+    # Narrative turns now use the full reader as the touch target. The hint
+    # stays inside the compact dock instead of reserving space for a button.
+    assert tap_hint["x"] >= dock["x"]
+    assert tap_hint["x"] + tap_hint["width"] <= dock["x"] + dock["width"] + 1
+    assert page.locator(".story-tap-hint").inner_text() == "화면을 탭해 다음 문장"
+    assert page.locator(".story-next").count() == 0
     assert page.locator("[data-event-progress]").inner_text() == "1 / 4"
     report_start = box(page, ".event-field-report")
     scene_start = box(page, ".event-scene-frame")
     sheet_start = box(page, "#ev-sheet")
     for expected in (2, 3, 4):
-        page.click(".story-next")
+        page.locator(".story-reader").click()
         page.wait_for_timeout(90)
         assert page.locator("[data-event-progress]").inner_text() == f"{expected} / 4"
         report = box(page, ".event-field-report")
@@ -123,4 +111,4 @@ def check_viewport(playwright, width, height):
 with sync_playwright() as playwright:
     for viewport in ((320, 578), (375, 667), (390, 844), (475, 948)):
         check_viewport(playwright, *viewport)
-    print("✅ 이벤트 본문·계속 버튼 · 320x578 / 375x667 / 390x844 / 475x948")
+    print("✅ 이벤트 본문·탭 진행 · 320x578 / 375x667 / 390x844 / 475x948")

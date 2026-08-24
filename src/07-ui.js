@@ -942,16 +942,29 @@ const UI = (()=>{
       .replace(/\s*·\s*날짜 제한 없음$/,'');
     const side=clean(source.querySelector('.chip-quest')?.textContent,/^.*?게시판\s*/);
     const companion=clean(source.querySelector('.ms-title')?.textContent,/^\s*/);
-    const secondary=side||companion;
-    const secondaryHtml=secondary
-      ? '<span class="nav-journey-side">'+esc(secondary)+'</span>'
-      : '';
+    const mainEntry=typeof G.mainQuestEntry==='function'?G.mainQuestEntry():null;
+    const optionalEntries=(typeof G.questLedgerEntries==='function'?G.questLedgerEntries():[])
+      .filter(entry=>entry&&entry.status==='active'&&entry.kind!=='main')
+      .sort((a,b)=>Number(!!b.tracked)-Number(!!a.tracked)||Number(a.kind!=='local')-Number(b.kind!=='local'));
+    const optionalEntry=optionalEntries[0]||null;
+    const firstDeparture=!S.driving&&S.at==='busan'&&(S.visited||[]).every(id=>id==='busan');
+    const mainTitle=mainEntry&&mainEntry.title||main||'서울로 가는 기록을 모은다';
+    const mainProgress=mainEntry&&mainEntry.progress&&mainEntry.progress.label||'';
+    const mainChapter=mainEntry&&mainEntry.act||'본편';
+    const mainNext=firstDeparture
+      ? '양산 카드를 눌러 첫 구간을 출발한다'
+      : mainEntry&&mainEntry.next||'북쪽으로 이어지는 다음 목적지를 고른다';
+    const optionalHtml=optionalEntry
+      ? '<span class="nav-compass-optional"><small>'+esc(optionalEntry.eyebrow||optionalEntry.kind)+'</small><b>'+esc(optionalEntry.title)+'</b><em>'+esc(optionalEntry.next||'목표 장부에서 다음 단계를 확인한다')+'</em>'+
+        (optionalEntries.length>1?'<i>외 '+(optionalEntries.length-1)+'</i>':'')+'</span>'
+      : '<span class="nav-compass-optional is-empty"><small>선택 이야기</small><b>현재 진행 중인 선택 임무 없음</b><em>정착지 사람·야영 대화에서 찾는다</em></span>';
     summary.insertAdjacentHTML('afterbegin',
-      '<div class="nav-journey-context" role="status" aria-label="현재 여정 맥락">'+
-      '<span class="nav-journey-core"><small>주 여정</small><b>'+
-      esc(main||'서울로 가는 기록을 모은다')+'</b></span>'+
-      '<span class="nav-journey-party">동행 '+(S.party||[]).length+'</span>'+
-      secondaryHtml+'</div>');
+      '<div class="nav-journey-context nav-quest-compass" role="status" aria-label="현재 임무와 다음 행동">'+
+      '<span class="nav-compass-main"><span><small>주 임무 · '+esc(mainChapter)+'</small>'+
+      (mainProgress?'<i>'+esc(mainProgress)+'</i>':'')+'</span><b>'+esc(mainTitle)+'</b>'+
+      '<em>'+esc(mainEntry&&mainEntry.phase||'북쪽으로 가는 중')+'</em><strong>동행 '+(S.party||[]).length+'</strong></span>'+
+      '<span class="nav-compass-next"><small>지금 할 일</small><b>'+esc(mainNext)+'</b></span>'+
+      optionalHtml+'</div>');
   }
 
   /* ── panel ── */
@@ -1035,7 +1048,12 @@ const UI = (()=>{
       .forEach(item=>lanes.set(item.key,'right'));
 
     const npcSpeakers=speakers.filter(item=>!playerSpeaker(item.id));
-    if(npcSpeakers.length<=2){
+    const hasPlayer=speakers.some(item=>playerSpeaker(item.id));
+    if(hasPlayer){
+      npcSpeakers.forEach(item=>{
+        if(!lanes.has(item.key)) lanes.set(item.key,'left');
+      });
+    }else if(npcSpeakers.length<=2){
       let npcIndex=[...lanes.keys()].filter(key=>
         !['speaker:me','speaker:player_child','speaker:나'].includes(key)).length;
       npcSpeakers.forEach(item=>{
