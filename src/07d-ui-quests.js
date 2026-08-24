@@ -107,6 +107,11 @@ const QuestLedgerUI={
     if(!this.root) return false;
     const eventOpen=this.eventIsOpen();
     if(eventOpen&&this.isOpen()) this.close(false);
+    if(eventOpen){
+      const ribbon=document.querySelector('#quest-update-ribbon');
+      if(ribbon) ribbon.remove();
+      clearTimeout(this.updateTimer);
+    }
     this.root.hidden=eventOpen;
     this.root.inert=eventOpen;
     return eventOpen;
@@ -115,7 +120,7 @@ const QuestLedgerUI={
     const progress=row.progress||{have:0,need:1,label:''};
     const ratio=Math.max(0,Math.min(100,Math.round((progress.have/Math.max(1,progress.need))*100)));
     const canTrack=row.kind!=='main'&&row.status!=='completed';
-    const steps=Array.isArray(row.steps)&&row.steps.length?`<ol class="quest-main-steps" aria-label="본편 진행 단계">${row.steps.map(step=>`<li class="is-${this.esc(step.state||'upcoming')}"><i aria-hidden="true"></i><span><b>${this.esc(step.label)}</b>${step.detail?`<small>${this.esc(step.detail)}</small>`:''}</span></li>`).join('')}</ol>`:'';
+    const steps=Array.isArray(row.steps)&&row.steps.length?`<ol class="quest-main-steps" aria-label="임무 진행 단계">${row.steps.map(step=>`<li class="is-${this.esc(step.state||'upcoming')}"><i aria-hidden="true"></i><span><b>${this.esc(step.label)}</b>${step.detail?`<small>${this.esc(step.detail)}</small>`:''}</span></li>`).join('')}</ol>`:'';
     return `<article class="quest-ledger-card quest-kind-${this.esc(row.kind)} ${row.tracked?'is-tracked':''}">
       <div class="quest-card-top"><span>${this.esc(row.eyebrow)}</span>${row.tracked&&row.kind!=='main'?'<b>선택 임무 고정됨</b>':''}</div>
       <h3>${this.esc(row.title)}</h3>
@@ -165,6 +170,7 @@ const QuestLedgerUI={
     let ribbon=document.querySelector('#quest-update-ribbon');
     if(!ribbon){ ribbon=document.createElement('button'); ribbon.id='quest-update-ribbon'; ribbon.type='button'; document.body.appendChild(ribbon); }
     ribbon.innerHTML=`<small>${row.kind==='main'?'주 임무 갱신':'선택 임무 갱신'}</small><b>${this.esc(row.title)}</b><span>${this.esc(row.next)}</span>`;
+    G.clearQuestLedgerUpdates();
     ribbon.onclick=()=>{ G.clearQuestLedgerUpdates(); ribbon.remove(); if(row.kind==='main') this.tab='main'; this.open(); };
     clearTimeout(this.updateTimer);
     this.updateTimer=setTimeout(()=>{ if(ribbon.isConnected) ribbon.remove(); G.clearQuestLedgerUpdates(); },5200);

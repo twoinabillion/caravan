@@ -3,7 +3,9 @@
 /* ═══════════════════ ENGINE ═══════════════════ */
 const SAVE_KEY = 'seoul400_save_v1';
 const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
-const GAME_BUILD = '2026-08-17-settlement-story2';
+const GAME_BUILD = '2026-08-24-exact-state-qa';
+const QA_SNAPSHOT_KIND = 'seoul400_exact_state_qa';
+const QA_SNAPSHOT_VERSION = 1;
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
 const SAVE_VERSION = 6;
@@ -295,6 +297,48 @@ G.importSave = raw=>{
     G.load();
     return {ok:false,why:'이 게임의 유효한 백업 파일이 아니다'};
   }
+};
+/* 실제 플레이 화면과 자동 QA가 서로 다른 저장·뷰포트·브라우저 상태를 쓰지
+   않도록 현재 환경을 하나의 재현 가능한 QA 묶음으로 내보낸다. 게임 외 사이트의
+   저장값은 포함하지 않고 caravan 전용 키만 보관한다. */
+G.exportQaSnapshot = ()=>{
+  const dumpStorage=storage=>{
+    const rows={};
+    try{
+      for(let i=0;i<storage.length;i++){
+        const key=storage.key(i);
+        if(key&&/^(seoul400_|caravan_)/.test(key)) rows[key]=storage.getItem(key);
+      }
+    }catch(e){}
+    return rows;
+  };
+  const vv=window.visualViewport;
+  let ui=null;
+  try{ ui=typeof UI!=='undefined'&&UI.qaViewState?UI.qaViewState():null; }catch(e){}
+  return JSON.stringify({
+    kind:QA_SNAPSHOT_KIND,
+    version:QA_SNAPSHOT_VERSION,
+    createdAt:new Date().toISOString(),
+    build:GAME_BUILD,
+    saveVersion:SAVE_VERSION,
+    artifact:{href:location.href,title:document.title},
+    display:{
+      innerWidth:window.innerWidth,innerHeight:window.innerHeight,
+      outerWidth:window.outerWidth,outerHeight:window.outerHeight,
+      screenWidth:window.screen&&window.screen.width,screenHeight:window.screen&&window.screen.height,
+      devicePixelRatio:window.devicePixelRatio||1,
+      visualViewport:vv?{width:vv.width,height:vv.height,scale:vv.scale,offsetLeft:vv.offsetLeft,offsetTop:vv.offsetTop}:null,
+      standalone:Boolean((window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone),
+      reducedMotion:Boolean(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches),
+      colorScheme:window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'
+    },
+    environment:{
+      userAgent:navigator.userAgent,platform:navigator.platform||'',language:navigator.language||'ko-KR',
+      maxTouchPoints:navigator.maxTouchPoints||0
+    },
+    storage:{local:dumpStorage(localStorage),session:dumpStorage(sessionStorage)},
+    ui
+  },null,2);
 };
 G.wipe = ()=>{ try{ localStorage.removeItem(SAVE_KEY) }catch(e){} };
 

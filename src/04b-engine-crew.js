@@ -8,6 +8,20 @@ G.perkDef = (pid)=>{
     if(P2[3].id===pid) return P2[3]; }
   return null;
 };
+/* 유대 수치와 개인 서사는 별개다. 잠만 반복해 유대가 올라도 실제 대화를
+   건너뛴 채 Lv.3 이야기가 끝나지 않도록, 함께 본 장면의 깊이를 따로 센다. */
+G.companionStoryStage = (id)=>{
+  if(!S||!id) return 0;
+  const used=new Set(Array.isArray(S.used)?S.used:[]);
+  const scenes=(D.events||[]).filter(ev=>ev&&ev.once&&ev.needsComp===id&&used.has(ev.id)
+    &&['대화','동행','스토리'].includes(ev.type));
+  if(!scenes.length) return 0;
+  const bondAt=ev=>Array.isArray(ev.needBond)&&ev.needBond[0]===id?Number(ev.needBond[1])||0:0;
+  let stage=1;
+  if(scenes.some(ev=>bondAt(ev)>=(Number(D.bondTh&&D.bondTh[0])||5))) stage=2;
+  if(scenes.some(ev=>bondAt(ev)>=(Number(D.bondTh&&D.bondTh[1])||12))) stage=3;
+  return stage;
+};
 G.bond = (id, amt)=>{
   if(!G.hasComp(id)) return;
   const c=S.comps[id];
@@ -19,14 +33,23 @@ G.checkLevel = (id,opt={})=>{
   const c=S.comps[id], nm=D.comps[id].name;
   while(c.lvl<3 && !c.pending && c.bond>=D.bondTh[c.lvl]){
     const next=c.lvl+1;
-    if(next<3){ c.pending=next;
+    if(next===3&&G.companionStoryStage(id)<3){
+      c.storyReady=true;
+      const stage=G.companionStoryStage(id);
+      if(c.storyGateNotified!==stage){
+        c.storyGateNotified=stage;
+        UI.toast(`<span class="ic">✦</span>${nm}와 나눌 이야기가 남아 있다 — 야영이나 정차 중 말을 건다`);
+      }
+      break;
+    }else if(next<3){ c.pending=next;
       UI.toast(opt.recruit
         ? `<span class="recruit-kicker">정식 동료 합류</span><strong>${nm}</strong> · ${D.comps[id].cls} · 크루 ${S.party.length}/${Object.keys(D.comps).length}<span class="recruit-next">첫 유대 보상 · 동료 카드에서 퍼크 선택</span>`
         : `<span class="ic">✦</span>${nm}와의 유대가 깊어졌다 — 동료 카드에서 퍼크 선택`, opt.recruit?'recruit':undefined);
     } else { /* Lv3 시그니처(스토리)는 자동 습득 */
       c.lvl=3;
       const p=D.comps[id].perks[3];
-      c.perks.push(p.id);
+      if(!c.perks.includes(p.id)) c.perks.push(p.id);
+      delete c.storyReady; delete c.storyGateNotified;
       G.grantPerk(id, p.id);
       UI.toast(`<span class="ic">★</span>${nm} — 「${p.nm}」`, 'discover');
     }
@@ -586,7 +609,7 @@ G.dawn = ()=>{
   if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }
   if(S.fatigue>=70){ G.moodAll(-3); UI.toast(S.party.length?'😴 다들 피곤이 얼굴에 앉았다 — 쉬어야 한다':'😴 피곤이 얼굴에 앉았다 — 쉬어야 한다'); }
   /* 의뢰 기한 */
-  if(S.quest && S.day>S.quest.due){
+  if(S.quest && !S.quest.noExpiry && S.day>S.quest.due){
     const q=S.quest; S.quest=null;
     const K=G.QKIND[q.kind]||G.QKIND.deliver;
     const fromStl=D.stls[D.nodes[q.from].stl];

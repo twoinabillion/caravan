@@ -253,6 +253,8 @@ input{font-family:inherit}
   background:linear-gradient(145deg,rgba(93,126,190,.1),rgba(13,18,31,.95))}.road-checkin small{display:block;color:#a9c6ff;font:11px/1.3 var(--mono);letter-spacing:.1em}.road-checkin b{display:block;margin-top:2px;font-size:13px}.road-checkin-list{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.road-checkin-list::-webkit-scrollbar{display:none}
 .road-checkin-list button{flex:none;display:flex;align-items:center;gap:4px;min-height:38px;padding:5px 9px;border:1px solid #35446a;border-radius:9px;color:#dbe5fb;background:#121a2c;font-size:12px}.road-checkin-list button:disabled{opacity:.55}
 .save-backup>p{margin:0 0 9px;color:#aeb7c7;font-size:12px;line-height:1.48}.save-backup-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.save-backup-actions button,.save-backup-actions label{display:grid;place-items:center;min-height:44px;padding:7px;border:1px solid #394767;border-radius:9px;color:#d7e4ff;background:#12192a;font-size:12px;text-align:center}.save-backup-actions label{border-color:rgba(255,180,84,.38);color:#f2cf9b;background:#241d1a;cursor:pointer}.save-backup-actions input{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0}
+.exact-state-qa>p{margin:0 0 9px;color:#aeb7c7;font-size:12px;line-height:1.48}.exact-state-qa .save-backup-actions{grid-template-columns:1fr}.exact-state-qa .save-backup-actions button{border-color:rgba(85,224,200,.42);color:#b9f2e8;background:linear-gradient(180deg,#102027,#0c171f)}
+.qa-exact-replay *{animation-play-state:paused!important;caret-color:transparent!important}.qa-exact-replay body{scroll-behavior:auto!important}
 .knowledge-status h4 small{color:var(--faded);font-weight:400}
 .knowledge-status .st-row{align-items:flex-start}
 .knowledge-status .st-row .k{min-width:112px;white-space:normal}
@@ -4914,6 +4916,260 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
     min-height:44px;
   }
 }
+/* 2026-08-24: keep route guidance readable and make each stop action one card. */
+.route-console-v3 .route-console-screen {
+  grid-template-rows: 38.5% 33% 28.5%;
+}
+
+.route-console-v3 .nav-route-map {
+  height: 100%;
+  min-height: 0;
+}
+
+.route-console-v3 .nav-route-summary {
+  height: 100%;
+  min-height: 0;
+  padding: 7px 10px 5px;
+  grid-template-rows: minmax(0, 1fr) 42px;
+  gap: 4px;
+  align-content: stretch;
+  overflow: hidden;
+}
+
+.route-console-v3 .nav-journey-context {
+  width: auto;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  padding: 0 0 5px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-content: start;
+  gap: 2px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(93, 174, 169, .28);
+}
+
+.route-console-v3 .nav-compass-main {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  gap: 1px 7px;
+  align-items: baseline;
+  overflow: hidden;
+}
+
+.route-console-v3 .nav-compass-main > span {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.route-console-v3 .nav-compass-main > span small {
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: .09em;
+}
+
+.route-console-v3 .nav-compass-main > span i,
+.route-console-v3 .nav-compass-main > strong {
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+.route-console-v3 .nav-compass-main > b {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.route-console-v3 .nav-compass-main > em {
+  display: none;
+}
+
+.route-console-v3 .nav-compass-main > strong {
+  grid-column: 2;
+  grid-row: 1;
+  white-space: nowrap;
+}
+
+.route-console-v3 .nav-compass-next,
+.route-console-v3 .nav-compass-optional {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  padding: 1px 0 0;
+  display: grid;
+  grid-template-columns: 51px minmax(0, 1fr);
+  gap: 5px;
+  align-items: baseline;
+  overflow: hidden;
+}
+
+.route-console-v3 .nav-compass-next > small,
+.route-console-v3 .nav-compass-optional > small {
+  font-size: 8px;
+  line-height: 1.25;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+.route-console-v3 .nav-compass-next > b,
+.route-console-v3 .nav-compass-optional > b {
+  min-width: 0;
+  font-size: 9px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.route-console-v3 .nav-compass-optional > em,
+.route-console-v3 .nav-place-description {
+  display: none;
+}
+
+.route-console-v3 .nav-route-facts {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  align-self: end;
+  overflow: hidden;
+}
+
+.route-console-v3 .nav-route-facts > span {
+  min-width: 0;
+}
+
+.route-console-v3 .nav-route-facts small {
+  font-size: 8px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.route-console-v3 .nav-route-facts b {
+  font-size: 13px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.route-console-v3 .nav-destination-carousel {
+  height: 100%;
+  min-height: 0;
+  padding-top: 4px;
+  grid-template-columns: 18px minmax(0, 1fr) 18px;
+  grid-template-rows: minmax(0, 91px) 20px;
+  align-items: center;
+}
+
+.route-console-v3 .nav-destination-viewport,
+.route-console-v3 .nav-destination-track,
+.route-console-v3 .nav-destination-card {
+  height: 91px;
+}
+
+.journey-local-screen .stop-action-grid.local-actions {
+  height: 100%;
+  padding: 4px;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  align-content: stretch;
+}
+
+.journey-local-screen .stop-action-card {
+  min-height: 0;
+  height: auto;
+  display: block;
+  grid-template-columns: none;
+  overflow: hidden;
+  background: rgba(222, 202, 161, .96);
+  border: 1px solid rgba(198, 181, 143, .92);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgba(255, 244, 214, .42),
+              0 3px 9px rgba(8, 12, 11, .18);
+}
+
+.journey-local-screen .stop-action-trigger.ui-whole-action-card {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0 8px 0 10px;
+  grid-template-columns: 58px minmax(0, 1fr) 38px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.journey-local-screen .stop-action-copy {
+  min-width: 0;
+  padding-right: 8px;
+}
+
+.journey-local-screen .stop-action-description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.journey-local-screen .stop-action-chips {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.journey-local-screen .stop-action-cta {
+  width: auto;
+  height: 100%;
+  padding: 0;
+  background: transparent;
+  border-left: 1px solid rgba(155, 95, 32, .24);
+  box-shadow: none;
+  color: #9b5f20;
+}
+
+.journey-local-screen .ui-action-duplicate {
+  width: 100%;
+  justify-content: center;
+  font-size: 0;
+}
+
+.journey-local-screen .ui-action-duplicate > i {
+  display: none;
+}
+
+.journey-local-screen .ui-action-duplicate::after {
+  font-size: 23px;
+  line-height: 1;
+}
+
+.journey-local-screen .stop-action-card:not(.is-disabled) .stop-action-trigger:active {
+  background: rgba(184, 117, 40, .11);
+}
+
+.journey-local-screen .stop-action-card.is-disabled {
+  background: rgba(205, 192, 163, .82);
+}
+
+.journey-local-screen .stop-action-card.is-disabled .stop-action-cta > span {
+  font-size: 10px;
+  color: rgba(71, 66, 57, .76);
+  white-space: nowrap;
+}
 </style>
 <style id="intro-scene-and-stay-console-polish">
 #intro-img.intro-scene-cut{animation:intro-scene-cut .46s cubic-bezier(.22,.72,.25,1) both}
@@ -5587,10 +5843,82 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
   }
 </style>
 <style id="road-approach-canvas-only-final">
-  .road-approach-cue,
   .road-approach-visual,
   .road-approach img {
     display: none !important;
+  }
+  #road-approach-cue{
+    display:block!important;
+    opacity:1;
+    transition:opacity .18s ease;
+  }
+  #road-approach-cue>img{display:none!important}
+  #road-approach-cue .road-approach-status{
+    box-sizing:border-box;
+    min-width:min(238px,calc(100% - 176px));
+    max-width:calc(100% - 176px);
+    padding:8px 12px 10px;
+    border:1px solid rgba(207,158,77,.52);
+    border-radius:7px;
+    background:linear-gradient(180deg,rgba(12,17,21,.94),rgba(17,23,25,.86));
+    box-shadow:0 7px 22px rgba(0,0,0,.38),inset 0 1px rgba(255,239,204,.06);
+    backdrop-filter:blur(5px);
+  }
+  #road-approach-cue .road-approach-status span{color:#dba44f}
+  #road-approach-cue .road-approach-status b{
+    color:#f0eadf;
+    font-size:clamp(11.5px,3cqw,13.5px);
+    letter-spacing:-.02em;
+  }
+  #road-approach-cue .road-approach-status small{
+    color:#aeb9b7;
+    font-size:9px;
+  }
+  #road-approach-cue .road-approach-progress{
+    grid-column:1/3;
+    display:block;
+    height:2px;
+    margin-top:5px;
+    overflow:hidden;
+    border-radius:2px;
+    background:rgba(255,255,255,.1);
+  }
+  #road-approach-cue .road-approach-progress>i{
+    display:block;
+    width:22%;
+    height:100%;
+    border-radius:inherit;
+    background:#dba44f;
+    box-shadow:0 0 8px rgba(219,164,79,.42);
+    transition:width .4s cubic-bezier(.22,.72,.24,1),background .2s ease;
+  }
+  #road-approach-cue.is-braking .road-approach-progress>i{width:68%}
+  #road-approach-cue.is-stopped .road-approach-status{
+    border-color:rgba(67,150,141,.7);
+    box-shadow:0 7px 22px rgba(0,0,0,.38),inset 0 0 0 1px rgba(67,150,141,.1);
+  }
+  #road-approach-cue.is-stopped .road-approach-status small{color:#6fc3b9}
+  #road-approach-cue.is-stopped .road-approach-status small::before{content:none}
+  #road-approach-cue.is-stopped .road-approach-progress>i{width:100%;background:#43968d}
+  #road-approach-cue.is-handoff{opacity:0}
+  html[data-road-event-handoff="1"] #ev-sheet.event-mode{
+    animation:road-event-handoff-in .34s cubic-bezier(.18,.76,.24,1) both;
+  }
+  @keyframes road-event-handoff-in{
+    from{opacity:0;transform:translateY(12px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @media(max-width:520px){
+    #road-approach-cue .road-approach-status{
+      min-width:min(208px,calc(100% - 150px));
+      max-width:calc(100% - 150px);
+      padding:7px 10px 9px;
+    }
+  }
+  @media(prefers-reduced-motion:reduce){
+    #road-approach-cue,
+    #road-approach-cue .road-approach-progress>i,
+    html[data-road-event-handoff="1"] #ev-sheet.event-mode{transition:none;animation:none}
   }
 </style>
 
@@ -6854,4 +7182,40 @@ body:has(#ev-wrap.on) #quest-update-ribbon small{
   #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock > .choices > .choice:active {
     background-color: #152536 !important;
   }
+</style>
+<style id="release-qa-layout-integrity-20260824">
+#app .journey-local-screen .stop-action-card{background:linear-gradient(90deg,rgba(231,215,181,.97),rgba(220,199,158,.96))!important;border-bottom:1px solid rgba(82,63,39,.38)!important;box-shadow:inset 0 1px rgba(255,249,226,.5)!important}
+#app .journey-local-screen .stop-action-trigger{grid-template-columns:13% minmax(0,1fr) 34px!important;gap:2.2%!important;padding:0 2.5%!important}
+#app .journey-local-screen .stop-action-copy{padding-right:4px!important}
+#app .journey-local-screen .stop-action-cta{align-self:center!important;width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:1px solid rgba(138,86,29,.34)!important;border-radius:50%!important;background:rgba(94,66,35,.08)!important;box-shadow:none!important;color:#8a561d!important;text-shadow:none!important}
+#app .journey-local-screen .stop-action-cta small{display:none!important}
+#app .journey-local-screen .stop-action-cta>span{font-size:0!important}
+#app .journey-local-screen .stop-action-cta>span::after{content:"›";font:900 24px/1 var(--sans);color:#8a561d}
+#app .journey-local-screen .stop-action-card.is-disabled{filter:saturate(.55);opacity:.64!important}
+#app .route-console-v3 .nav-route-summary{box-sizing:border-box!important;display:flex!important;flex-direction:column!important;gap:4px!important;height:auto!important;min-height:118px!important;margin-inline:14px!important;padding:7px 8px 6px!important;overflow:hidden!important}
+#app .nav-route-quest-cue{display:grid!important;grid-template-columns:max-content minmax(0,1fr)!important;align-items:center!important;gap:7px!important;min-height:24px!important;margin:0!important;padding:4px 7px!important;border-left:2px solid #d7973d!important;background:rgba(207,142,54,.1)!important;color:#efe8db!important}
+#app .nav-route-quest-cue small{color:#e6a64c!important;font:800 8px/1.15 var(--mono)!important;letter-spacing:.08em!important}
+#app .nav-route-quest-cue b{overflow:hidden!important;color:#e5e3dc!important;font:750 10px/1.25 var(--sans)!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+#app .route-console-v3 .nav-place-description{flex:0 0 auto!important;min-height:0!important;margin:0!important;font-size:9.5px!important;line-height:1.3!important;-webkit-line-clamp:1!important}
+#app .route-console-v3 .nav-route-facts{flex:0 0 40px!important;width:100%!important;min-height:40px!important;margin-top:auto!important}
+#app .route-console-v3 .nav-route-facts>span{min-width:0!important;padding:3px 4px!important}
+#app .route-console-v3 .nav-route-facts small{font-size:7.5px!important;white-space:nowrap!important}
+#app .route-console-v3 .nav-route-facts b{font-size:10px!important;white-space:nowrap!important}
+#app .nav-quest-compass{box-sizing:border-box!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:3px!important;width:100%!important;max-height:52px!important;margin:0 0 4px!important;padding:4px 7px!important;overflow:hidden!important}
+#app .nav-quest-compass :is(.nav-compass-main,.nav-compass-next,.nav-compass-optional){min-width:0!important;margin:0!important;padding:0!important}
+#app .nav-quest-compass .nav-compass-main :is(em,strong),#app .nav-quest-compass .nav-compass-optional em{display:none!important}
+#app .nav-quest-compass :is(.nav-compass-main,.nav-compass-next,.nav-compass-optional) b{overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+#app .nav-route-summary:has(.nav-journey-context) .nav-place-description{display:none!important}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report{min-height:min(440px,52dvh)!important;height:auto!important;padding-bottom:24px!important}
+#ev-sheet.event-mode[data-event-kind="story"] .story-reader{min-height:0!important;overflow:visible!important}
+#ev-sheet.event-mode[data-event-kind="story"] .event-scroll{scroll-padding-bottom:32px!important}
+#ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock{flex:0 0 auto!important;max-height:min(34dvh,250px)!important;overflow-y:auto!important}
+#ovl-camp.on,#ovl-stl.on{box-sizing:border-box!important;min-height:100dvh!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+#ovl-camp #camp-body,#ovl-stl #stl-body{box-sizing:border-box!important;min-height:calc(100dvh - 64px)!important;padding-bottom:calc(28px + var(--safe-bottom))!important}
+#ovl-camp .camp-home{min-height:0!important;padding-bottom:calc(88px + var(--safe-bottom))!important}
+#ovl-camp .camp-rest{position:sticky!important;z-index:8!important;bottom:calc(8px + var(--safe-bottom))!important;margin-top:18px!important}
+#ovl-stl.field-board-mode #stl-body{display:flex!important;flex-direction:column!important}
+#ovl-stl.field-board-mode .field-board-shell{flex:1 0 auto!important;min-height:calc(100dvh - 88px)!important}
+body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #quest-update-ribbon{display:none!important}
+@container game (max-width:380px){#app .route-console-v3 .nav-route-summary{min-height:108px!important;margin-inline:10px!important}#app .nav-route-quest-cue b{font-size:9px!important}#app .journey-local-screen .stop-action-trigger{grid-template-columns:12% minmax(0,1fr) 30px!important;padding-inline:2%!important}#app .journey-local-screen .stop-action-cta{width:30px!important;height:30px!important;min-width:30px!important}}
 </style>

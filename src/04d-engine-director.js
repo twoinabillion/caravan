@@ -188,7 +188,7 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
     ['cyclist',/자전거|우편|배달|courier|bicycle|bike/],
     ['medical',/요양원|왕진|환자|열병|의사|약사|구급|부상|medical|clinic/],
     ['checkpoint',/검문|초소|순찰|통행세|관문|checkpoint|patrol|toll|gate/],
-    ['bridge',/다리|교량|판자길|임시 통로|bridge|crossing/],
+    ['bridge',/교량|판자길|임시 통로|다리(?:가|는|를|에|에서|위|아래|끝|입구|난간|붕괴)|bridge|crossing/],
     ['flood',/침수|물길|나루|홍수|범람|flood|waterway/],
     ['surveillance',/드론|센서|카메라|감시|자동 장치|청소차|surveillance|scanner/],
     ['signal',/라디오|방송|신호|안테나|확성기|주파수|송신|beacon|radio|signal/],
@@ -237,6 +237,21 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
     ['child',/혼자 서 있는 아이|꼬마 검문소|아이들이|어린이|키즈카페/],
     ['elder',/폐지 줍는 할머니|노인|할머니|할아버지/]
   ];
+  const ROAD_APPROACH_MOTIF_LABELS = {
+    'coffee-van':'길가에 커피차와 사람들이 보인다',
+    'food-truck':'길가에 음식 트럭이 서 있다',
+    'clinic-bus':'이동 진료차가 사람을 돌보고 있다',
+    'broken-vehicle':'고장 난 차 옆에서 사람이 손을 흔든다',
+    'film-vehicle':'길가에 이동 영화관이 자리를 펴고 있다',
+    postman:'자전거 우편부가 앞에서 손을 든다',
+    'coffee-stall':'길가에 작은 커피 좌판이 보인다',
+    'food-stall':'길가에 음식 좌판이 보인다',
+    pharmacy:'길가 약국 앞에 사람이 보인다',
+    wedding:'길가에 사람들이 모여 있다',
+    procession:'사람들의 행렬이 길을 따라 걷고 있다',
+    'camera-post':'감시 장치가 도로를 향하고 있다',
+    'radio-post':'길가 중계기에서 신호가 잡힌다'
+  };
   const roadApproachSceneProfile=(evd,kind)=>{
     const visual=[evd.title,evd.scene,evd.location].filter(Boolean).join(' ');
     const narrative=typeof evd.text==='string'?evd.text:'';
@@ -281,20 +296,31 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
     else if(/책|도서관|문방구/.test(full))prop='books';
     else if(/연료|기름|주유/.test(full))prop='fuel';
     else if(/식당|쌀밥|국수|비빔밥|간고등어|호두과자|갈비|막걸리/.test(full))prop='food';
-    return {motif,people:Math.min(3,people),action,prop};
+    const inLane=/도로 한복판|차선 한가운데|길을 막|도로를 막|가로막|전복|충돌|사고 현장/.test(full);
+    return {motif,people:Math.min(3,people),action,prop,inLane};
   };
   G.roadApproachProfile = (evd)=>{
     if(!evd || evd.roadApproach === false) return null;
+    const authored=evd.roadApproach&&typeof evd.roadApproach==='object'?evd.roadApproach:{};
     const type = String(evd.type || '');
-    if(type === '대화' || type === '동행') return null;
+    if((type === '대화' || type === '동행')&&!authored.force) return null;
     const id = String(evd.id || '').toLowerCase();
     if(/^(crisis_|critical_)/.test(id) || /nofuel|no_fuel|breakdown|drowsy|collapse|fuel_empty/.test(id)) return null;
+    if(authored.selfVehicle||id==='ev_radiator_climb'||id==='ev_engine_fire'){
+      const engineFire=id==='ev_engine_fire';
+      return {kind:'vehicle-alert',title:String(evd.title||''),
+        label:authored.label||(engineFire?'차 앞쪽에서 연기가 피어오른다':'계기판에 냉각 경고가 켜진다'),
+        duration:Math.max(900,Number(authored.duration)||1150),eventKey:evd.id,
+        scene:{selfVehicle:true,alert:engineFire?'smoke':'temperature'}};
+    }
     const fields = [evd.id, evd.title, evd.scene, evd.location, evd.type];
     if(typeof evd.text === 'string') fields.push(evd.text);
     const haystack = fields.filter(Boolean).join(' ').toLowerCase();
-    let kind = '';
-    for(const [candidate, pattern] of ROAD_APPROACH_RULES){
-      if(pattern.test(haystack)){ kind = candidate; break; }
+    let kind = authored.kind||'';
+    if(!kind){
+      for(const [candidate, pattern] of ROAD_APPROACH_RULES){
+        if(pattern.test(haystack)){ kind = candidate; break; }
+      }
     }
     if(!kind){
       if(type === '조우') kind = 'people';
@@ -304,8 +330,11 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
       else kind = 'landmark';
     }
     const key = evd.id || `${evd.title || 'road-event'}:${type}`;
-    return {kind, label:ROAD_APPROACH_LABELS[kind], duration:(type === '위기' || evd.combat) ? 850 : 1450, eventKey:key,
-      scene:roadApproachSceneProfile(evd,kind)};
+    const scene={...roadApproachSceneProfile(evd,kind),...(authored.scene||{})};
+    const duration=Math.max(900,Number(authored.duration)||((type === '위기' || evd.combat) ? 1150 : 1700));
+    return {kind, title:String(evd.title||''),
+      label:authored.label||ROAD_APPROACH_MOTIF_LABELS[scene.motif]||ROAD_APPROACH_LABELS[kind],
+      duration,eventKey:key,scene};
   };
 
   /* UI.roadApproach 구현은 src/07f-ui-road-thoughts.js로 옮겨졌다 —
@@ -320,8 +349,12 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
       UI.roadApproach(approach, ()=>{
         if(S.driving) delete S.driving.approach;
         S._roadApproachBypass = eventKey;
-        UI.roadApproach(null);
+        document.documentElement.dataset.roadEventHandoff='1';
         G.openEvent(evd);
+        setTimeout(()=>{
+          UI.roadApproach(null);
+          delete document.documentElement.dataset.roadEventHandoff;
+        },320);
       });
       return;
     }
@@ -408,7 +441,7 @@ G.applyFx = (fx)=>{
     chips.push({t:`🛣 지름길 ${fx.skipKm}km`, c:'plus'}); }
   if(fx.moodAll){ G.moodAll(fx.moodAll); if(S.party.length) chips.push({t:`사기 ${fx.moodAll>0?'+':''}${fx.moodAll}`, c:fx.moodAll>0?'plus':'minus'}); }
   if(fx.mood){ for(const id in fx.mood){ if(S.comps[id]!==undefined&&G.hasComp(id)){ S.comps[id].mood=clamp(S.comps[id].mood+fx.mood[id],0,100);
-    chips.push({t:`${D.comps[id].name} ${fx.mood[id]>0?'+':''}${fx.mood[id]}`, c:fx.mood[id]>0?'plus':'minus'}); } } }
+    chips.push({t:`${D.comps[id].name} 사기 ${fx.mood[id]>0?'+':''}${fx.mood[id]}`, c:fx.mood[id]>0?'plus':'minus'}); } } }
   if(fx.item){ for(const nm in fx.item){ const v=fx.item[nm]; S.items[nm]=Math.max(0,(S.items[nm]||0)+v);
     chips.push({t:`${nm} ${v>0?'+':''}${v}`, c:v>0?'plus':'minus'}); } }
   if(fx.flag) S.flags[fx.flag]=true;
@@ -431,7 +464,7 @@ G.applyFx = (fx)=>{
   }
   if(fx.goto){ S.driving=null; S.at=fx.goto; }
   if(fx.pursuit){ S.pursuit=clamp(S.pursuit+fx.pursuit,0,5);
-    chips.push({t:`◉ 관측 ${fx.pursuit>0?'+':''}${fx.pursuit}`, c:fx.pursuit>0?'minus':'plus'}); }
+    chips.push({t:`관측 ${fx.pursuit>0?'+':''}${fx.pursuit}`, c:fx.pursuit>0?'minus':'plus'}); }
   if(fx.reveal){ const id = fx.reveal==='any' ? G.nearestHidden() : fx.reveal;
     if(id && !S.known.includes(id)){ S.known.push(id); chips.push({t:`🗺 ${D.nodes[id].name} 발견`, c:'item'});
       UI.toast(`<span class="ic">🗺</span>새 장소 발견 — ${D.nodes[id].name}`, 'discover');

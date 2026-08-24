@@ -222,26 +222,37 @@ let lastBanter = [];
 let lastChat=-1;
 G.pickChat = ()=>{
   if(!D.chats) return null;
+  S._crewChatSeen=S._crewChatSeen||{};
   const night=G.isNight(), region=G.regionOf();
   const pool=D.chats.filter((c,i)=>{
     if(i===lastChat) return false;
+    if(c.once&&c.id&&S._crewChatSeen[c.id]) return false;
     const nd=c.need||{};
     if(nd.comp && !G.hasComp(nd.comp)) return false;
     if(nd.comp2 && !G.hasComp(nd.comp2)) return false;
+    if(nd.comps && !nd.comps.every(id=>G.hasComp(id))) return false;
     if(nd.party && S.party.length<nd.party) return false;
     if(nd.dog===1 && !S.dog) return false;
     if(nd.night===1 && !night) return false;
     if(nd.rain===1 && !G.isWet()) return false;
     if(nd.region && region!==nd.region) return false;
     if(nd.flag && !S.flags[nd.flag]) return false;
+    if(nd.noFlag && S.flags[nd.noFlag]) return false;
+    if(nd.lowFuel===1 && S.fuel>12) return false;
+    if(nd.tired===1 && S.fatigue<55) return false;
+    if(nd.afterKm && S.stats.km<nd.afterKm) return false;
+    if(nd.minBond && Object.entries(nd.minBond).some(([id,bond])=>!G.hasComp(id)||Number(S.comps[id]&&S.comps[id].bond||0)<bond)) return false;
     if(nd.knowledge && G.knowledgeLevel(nd.knowledge[0])<nd.knowledge[1]) return false;
     /* 등장 화자 전원이 실제 탑승 중이어야 함 (동료만 검사, 나/sys 제외) */
     for(const ln of c.lines){ const w=ln[0];
       if(w!=='나'&&w!=='sys'&&D.comps[w]&&!G.hasComp(w)) return false; }
     return true; });
   if(!pool.length) return null;
-  const c=pool[Math.floor(rng()*pool.length)];
+  const storyPool=pool.filter(c=>c.arc&&c.once);
+  const source=storyPool.length?storyPool:pool;
+  const c=source[Math.floor(rng()*source.length)];
   lastChat=D.chats.indexOf(c);
+  if(c.once&&c.id) S._crewChatSeen[c.id]={day:S.day,km:Math.round(S.stats.km)};
   G.rememberCrewChat(c);
   return c;
 };
@@ -595,6 +606,65 @@ G.pickRadio = ()=>{
 };
 let lastRadio=null;
 
+/* ── 연속 지역 이야기 ── */
+G.ensureStoryQuestState = ()=>{
+  if(!S.storyQuests||typeof S.storyQuests!=='object') S.storyQuests={};
+  if(!Array.isArray(S.storyQuests.completed)) S.storyQuests.completed=[];
+  if(!S.storyQuests.active||typeof S.storyQuests.active!=='object') S.storyQuests.active=null;
+  return S.storyQuests;
+};
+G.storyQuestDef = id=>(D.storyQuestChains||[]).find(chain=>chain.id===id);
+G.storyQuestTarget = excluded=>{
+  const blocked=new Set(excluded||[]);
+  const candidates=Object.keys(D.nodes).filter(id=>D.nodes[id].stl&&!blocked.has(id));
+  return candidates.length?pick(candidates):null;
+};
+G.makeStoryQuest = (def,stage,from,to,origin,visited=[])=>{
+  const step=def&&def.steps&&def.steps[stage-1];
+  if(!step||!from||!to) return null;
+  return {
+    kind:step.kind||'deliver', item:step.item, from, to,
+    reward:12+stage*4, due:S.day+99, noExpiry:true,
+    ledgerId:`story_${def.id}_${stage}`,
+    story:{id:def.id,title:def.title,stage,total:def.steps.length,origin:origin||from,
+      visited:[...new Set([...(visited||[]),from,to])],prompt:step.prompt,completion:def.completion}
+  };
+};
+G.storyQuestOffer = (from,tos)=>{
+  const state=G.ensureStoryQuestState();
+  if(S.questFollowup) return S.questFollowup.from===from?S.questFollowup:null;
+  if(state.active) return null;
+  const def=(D.storyQuestChains||[]).find(chain=>!state.completed.includes(chain.id));
+  if(!def) return null;
+  const to=pick((tos||[]).filter(id=>id!==from));
+  return G.makeStoryQuest(def,1,from,to,from,[from]);
+};
+G.nextStoryQuest = q=>{
+  if(!q||!q.story) return null;
+  const def=G.storyQuestDef(q.story.id), stage=q.story.stage+1;
+  if(!def||stage>q.story.total) return null;
+  const from=q.to;
+  const to=stage===q.story.total
+    ? q.story.origin
+    : (G.storyQuestTarget([...(q.story.visited||[]),from,q.story.origin])||q.story.origin);
+  return G.makeStoryQuest(def,stage,from,to,q.story.origin,q.story.visited);
+};
+G.completeStoryQuestStage = q=>{
+  if(!q||!q.story) return null;
+  const state=G.ensureStoryQuestState(), def=G.storyQuestDef(q.story.id);
+  S.flags[`story_chain_${q.story.id}_${q.story.stage}`]=true;
+  if(q.story.stage>=q.story.total){
+    if(!state.completed.includes(q.story.id)) state.completed.push(q.story.id);
+    state.active=null; S.questFollowup=null;
+    S.flags[`story_chain_${q.story.id}_done`]=true;
+    return {finished:true,title:q.story.title,completion:def&&def.completion};
+  }
+  const follow=G.nextStoryQuest(q);
+  state.active=follow?{id:q.story.id,stage:follow.story.stage,origin:q.story.origin}:null;
+  S.questFollowup=follow;
+  return follow?{finished:false,title:q.story.title,stage:follow.story.stage,total:follow.story.total,from:follow.from}:null;
+};
+
 /* ── 의뢰 (배달/특송/조달/편지) ── */
 G.QKIND = {
   deliver:{ic:'📦', nm:'배달'},
@@ -603,10 +673,12 @@ G.QKIND = {
   letter :{ic:'✉️', nm:'편지'},
 };
 D.expressItems = ['백신 아이스박스','수술 도구 소독 세트','혼례 떡','부고 답장','제사 신위','접골 부목'];
-G.questLabel = (q)=> q.kind==='procure' ? `${q.need.name} ${q.need.qty}개 조달`
+G.questLabel = (q)=> q.story ? `${q.story.title} ${q.story.stage}/${q.story.total} · ${q.item}`
+  : q.kind==='procure' ? `${q.need.name} ${q.need.qty}개 조달`
   : q.kind==='letter' ? `${D.npcs[q.npc].name}에게 편지` : q.item;
 G.questDesc = (q)=>{
   const to=D.nodes[q.to].name;
+  if(q.story) return `"${q.story.prompt}"`;
   if(q.kind==='deliver') return `"${q.item}, ${to}까지 부탁해도 되겠소? 사례는 고철 ${q.reward}."`;
   if(q.kind==='express') return `"급합니다. ${q.item} — ${to}까지 이틀 안에. 사례는 고철 ${q.reward}. 서둘러 주시오."`;
   if(q.kind==='procure') return `"${q.need.name} ${q.need.qty}개를 구해다 주시오. 여기로 다시 오면 되오. 사례는 고철 ${q.reward}."`;
@@ -631,18 +703,25 @@ G.rollQuests = ()=>{
       return {kind:'letter', npc:pick(stl.npcs), from, to,
         reward:5+Math.floor(rng()*4), due:S.day+5}; },
   };
-  const kinds=Object.keys(mk).sort(()=>rng()-0.5).slice(0,2);
+  const story=G.storyQuestOffer(from,tos);
+  const kinds=Object.keys(mk).sort(()=>rng()-0.5).slice(0,story?1:2);
   const offers=kinds.map(k=>mk[k]());
+  if(story) offers.unshift(story);
   S._qoffer={at:from, day:S.day, offers};
   return offers;
 };
 G.acceptQuest = (q)=>{
   S.quest=q; S._qoffer=null;
+  if(q.story){
+    const state=G.ensureStoryQuestState();
+    state.active={id:q.story.id,stage:q.story.stage,origin:q.story.origin};
+    if(S.questFollowup&&S.questFollowup.ledgerId===q.ledgerId) S.questFollowup=null;
+  }
   const K=G.QKIND[q.kind];
   G.addNote({type:'소문', title:'의뢰: '+G.questLabel(q),
-    body:`${D.nodes[q.from].name}에서 맡은 ${K.nm} 의뢰. ${q.kind==='procure'?'구해서 돌아올 것':D.nodes[q.to].name+'까지'}. 사례는 고철 ${q.reward}. 기한 ${q.due}일차.`,
+    body:`${D.nodes[q.from].name}에서 맡은 ${q.story?'연속 이야기':K.nm+' 의뢰'}. ${q.kind==='procure'?'구해서 돌아올 것':D.nodes[q.to].name+'까지'}. 사례는 고철 ${q.reward}.${q.noExpiry?' 서두르기보다 끝까지 이어 가기로 했다.':` 기한 ${q.due}일차.`}`,
     links:[D.nodes[q.to].name]});
-  UI.toast(`${K.ic} 의뢰를 받았다 — ${G.questLabel(q)}`);
+  UI.toast(`${K.ic} ${q.story?'연속 의뢰를 맡았다':'의뢰를 받았다'} — ${G.questLabel(q)}`);
   G.save();
 };
 G.questReady = ()=>{ /* 완료 조건 충족? (조달은 물량 체크) */
@@ -667,7 +746,13 @@ G.checkQuest = ()=>{
     body: q.kind==='letter'
       ? `${D.npcs[q.npc].name}이(가) 편지를 두 번 읽었다. 답장은 없었다. 눈가가 대신 답했다.`
       : `${D.nodes[q.from].name} → ${D.nodes[q.to].name}. 사례 고철 ${q.reward}. 받은 이의 얼굴이 밝아졌다.`, links:[]});
-  UI.toast(`${K.ic} ${G.questLabel(q)} 완료 — 고철 +${q.reward}`);
+  const storyResult=G.completeStoryQuestStage(q);
+  if(storyResult&&storyResult.finished){
+    G.addNote({type:'사건',title:`연속 의뢰 완료: ${storyResult.title}`,body:storyResult.completion||'여러 정착지를 오간 부탁을 끝까지 마쳤다.',links:[]});
+    UI.toast(`✦ ${storyResult.title} 완료 — ${storyResult.completion||'이야기가 마무리됐다'}`,'discover');
+  }else if(storyResult){
+    UI.toast(`↳ ${storyResult.title} ${storyResult.stage}/${storyResult.total} — ${D.nodes[storyResult.from].name}에서 후속 의뢰를 확인할 수 있다`);
+  }else UI.toast(`${K.ic} ${G.questLabel(q)} 완료 — 고철 +${q.reward}`);
   G.save(); return true;
 };
 

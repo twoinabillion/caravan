@@ -1135,7 +1135,12 @@ const SCENE = (()=>{
     flood:'assets/road-cues/cue-flood.png', landmark:'assets/road-cues/cue-landmark.png', market:'assets/road-cues/cue-market.png',
     medical:'assets/road-cues/cue-medical.png', people:'assets/road-cues/cue-people.png', shelter:'assets/road-cues/cue-shelter.png',
     signal:'assets/road-cues/cue-signal.png', smoke:'assets/road-cues/cue-smoke.png', surveillance:'assets/road-cues/cue-surveillance.png',
-    vehicle:'assets/road-cues/cue-vehicle.png'
+    vehicle:'assets/road-cues/cue-vehicle.png',
+    'coffee-van':'assets/road-cues/cue-coffee-van-v2.webp',
+    'food-truck':'assets/road-cues/cue-food-truck-v2.webp',
+    'clinic-bus':'assets/road-cues/cue-clinic-bus-v2.webp',
+    'broken-vehicle':'assets/road-cues/cue-broken-vehicle-v2.webp',
+    'film-vehicle':'assets/road-cues/cue-film-vehicle-v2.webp'
   };
   const approachSpriteCache={};
   function approachSprite(key){
@@ -1147,9 +1152,9 @@ const SCENE = (()=>{
     return img;
   }
   function approachSpriteKey(kind,motif){
+    if(['coffee-van','food-truck','clinic-bus','broken-vehicle','film-vehicle'].includes(motif)) return motif;
     if(['bridge','checkpoint','debris','flood','smoke'].includes(kind)) return kind;
-    if(['coffee-van','food-truck','film-vehicle','broken-vehicle'].includes(motif)) return 'vehicle';
-    if(['clinic-bus','pharmacy'].includes(motif)) return 'medical';
+    if(motif==='pharmacy') return 'medical';
     if(motif==='postman') return 'cyclist';
     if(['coffee-stall','food-stall','market-cart','barber'].includes(motif)) return 'market';
     if(['greenhouse','school','bath','farm'].includes(motif)) return 'shelter';
@@ -1268,23 +1273,32 @@ const SCENE = (()=>{
     if(!ap)return;
     if(!ap.startedAt)ap.startedAt=Date.now();
     const elapsed=Math.max(0,(Date.now()-ap.startedAt)/1000);
-    const q=Math.min(1,elapsed/.82),ease=1-Math.pow(1-q,3);
+    const duration=Math.max(.8,(Number(ap.duration)||1450)/1000);
+    const stopAt=Math.max(.65,duration*.78);
+    const q=Math.min(1,elapsed/stopAt),ease=1-Math.pow(1-q,3);
     const x=P(lerp(W+30,W*.82,ease)), ground=P(roadY+(H-roadY)*.43+8);
     const seed=approachSeed(ap.eventKey),variant=Math.floor(seed*3),kind=ap.kind||'landmark',spec=ap.scene||{},motif=spec.motif||'';
+    if(spec.selfVehicle)return;
     const spriteKey=approachSpriteKey(kind,motif),sprite=approachSprite(spriteKey);
     if(sprite&&(!sprite.complete||!sprite.naturalWidth)) return;
     if(sprite){
-      const inLane=['bridge','checkpoint','debris','flood','smoke','vehicle'].includes(spriteKey);
-      const spriteX=P(lerp(W*.9,W*.8,ease));
-      const spriteGround=P(roadY+(H-roadY)*(inLane?.31:.14)+(inLane?7:4));
-      const spriteSize=P(inLane?(['vehicle','bridge','checkpoint'].includes(spriteKey)?62:58):50);
+      const specialVehicle=['coffee-van','food-truck','clinic-bus','broken-vehicle','film-vehicle'].includes(spriteKey);
+      const inLane=Boolean(spec.inLane)||['bridge','checkpoint','debris','flood','smoke'].includes(spriteKey);
+      const spriteX=P(lerp(W*.94,W*.8,ease));
+      const farGround=roadY+(H-roadY)*(inLane?.15:.055)+(inLane?4:2);
+      const nearGround=roadY+(H-roadY)*(inLane?.32:.16)+(inLane?7:4);
+      const spriteGround=P(lerp(farGround,nearGround,ease));
+      const baseSize=specialVehicle?82:(inLane?(['bridge','checkpoint'].includes(spriteKey)?64:58):52);
+      const spriteSize=P(baseSize*(.46+.54*ease));
       ctx.save();
-      ctx.globalAlpha=Math.min(1,.18+q*1.45);
+      ctx.globalAlpha=Math.min(1,.14+q*1.34);
       ctx.drawImage(sprite,spriteX-spriteSize/2,spriteGround-spriteSize*.84,spriteSize,spriteSize);
       ctx.restore();
       return;
     }
+    const fallbackScale=.55+.45*ease;
     ctx.save();ctx.globalAlpha=Math.min(1,.2+q*1.4);
+    ctx.translate(x,ground);ctx.scale(fallbackScale,fallbackScale);ctx.translate(-x,-ground);
     if(['coffee-van','food-truck','clinic-bus','film-vehicle','broken-vehicle'].includes(motif)){
       approachSpecialVehicle(x,ground,motif,dark,variant);
       approachPeople(x-20,ground,spec.people||1,spec.action||'stand',seed);
@@ -1388,6 +1402,26 @@ const SCENE = (()=>{
     ctx.restore();
   }
 
+  function roadApproachVehicleAlert(roadY){
+    const ap=S&&S.driving&&S.driving.approach;
+    if(!ap||!ap.scene||!ap.scene.selfVehicle)return;
+    const elapsed=Math.max(0,(Date.now()-(ap.startedAt||Date.now()))/1000);
+    const strength=Math.min(1,elapsed/.55);
+    const hoodX=P(W*.53+22),baseY=P(roadY+(H-roadY)*.42-24);
+    if(ap.scene.alert==='temperature'){
+      ctx.fillStyle=`rgba(221,151,66,${.42+.42*strength})`;
+      ctx.fillRect(hoodX-2,baseY+15,4,2);
+      ctx.fillStyle=`rgba(168,54,43,${.25+.45*Math.abs(Math.sin(t*5))})`;
+      ctx.fillRect(hoodX-1,baseY+15,2,1);
+      return;
+    }
+    for(let i=0;i<4;i++){
+      const rise=((elapsed*9+i*5)%17),drift=Math.sin(t*1.7+i)*2;
+      ctx.fillStyle=`rgba(66,69,68,${(.34-i*.045)*strength})`;
+      circ(hoodX+drift+i,baseY+10-rise,2+i*.45);
+    }
+  }
+
 
   /* ── 메인 draw ── */
   function draw(dt){
@@ -1399,7 +1433,10 @@ const SCENE = (()=>{
     const wx=S? (S.wx||'clear'):'clear';
     const activeApproach=S&&S.driving&&S.driving.approach;
     const approachElapsed=activeApproach?Math.max(0,(Date.now()-(activeApproach.startedAt||Date.now()))/1000):0;
-    const approachSpeed=activeApproach?Math.max(0,.58*(1-approachElapsed/.78)):1;
+    const approachDuration=activeApproach?Math.max(.8,(Number(activeApproach.duration)||1450)/1000):1;
+    const brakeProgress=activeApproach?Math.min(1,approachElapsed/Math.max(.65,approachDuration*.78)):0;
+    const brakeEase=brakeProgress*brakeProgress*(3-2*brakeProgress);
+    const approachSpeed=activeApproach?Math.max(0,1-brakeEase):1;
     const speed=S&&S.driving&&!UI.modalOpen()?approachSpeed:0;
     if(speed>0) worldX+=64*dt*speed;
 
@@ -1427,7 +1464,10 @@ const SCENE = (()=>{
     deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
     poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
     roadApproachScene(roadY,dark);
-    van(roadY,speed,dark,wx,undefined,speed>0?1:1.26);
+    /* 주행, 접근, 제동, 정차 모두 같은 달구지 배율을 쓴다. 원근 변화는
+       전방 사건 오브젝트에만 적용해 차가 순간적으로 수축하는 착시를 막는다. */
+    van(roadY,speed,dark,wx,undefined,1);
+    roadApproachVehicleAlert(roadY);
     drawPuffs(dt);
     drawCrows(dt); weather(wx,dark,speed,dt);
     cheollianFx(roadY);

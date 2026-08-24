@@ -154,8 +154,14 @@ const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__
   else relative = `assets/audio/voice/${key.slice(3).toLowerCase()}.mp3`;
   return dataUri(relative, 'audio/mpeg');
 }, '오디오');
+const roadCueFiles = {
+  COFFEEVAN:'coffee-van-v2', FOODTRUCK:'food-truck-v2', CLINICBUS:'clinic-bus-v2',
+  BROKENVEHICLE:'broken-vehicle-v2', FILMVEHICLE:'film-vehicle-v2'
+};
 const roadCues = replace(read('src/07f-ui-road-thoughts.js'), /__ROAD_CUE_([A-Z]+)__/g, key =>
-  dataUri(`assets/road-cues/cue-${key.toLowerCase()}.png`, 'image/png'), '도로 접근 큐');
+  roadCueFiles[key]
+    ? dataUri(`assets/road-cues/cue-${roadCueFiles[key]}.webp`, 'image/webp')
+    : dataUri(`assets/road-cues/cue-${key.toLowerCase()}.png`, 'image/png'), '도로 접근 큐');
 
 const chunks = [
   styles.result, read('src/01b-quest-style.html'), ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),

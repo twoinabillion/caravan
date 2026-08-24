@@ -41,7 +41,7 @@ const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper';
-  let navChoiceAt=null, navChoiceId=null, journeyConsoleMode='route';
+  let navChoiceAt=null, navChoiceId=null, navChoiceGuide='', journeyConsoleMode='route';
   /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
      원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
   function syncStageActions(){
@@ -346,6 +346,10 @@ const UI = (()=>{
   }
   function loop(ts){
     const dt=Math.min(0.05,(ts-last)/1000||0.016); last=ts;
+    if(document.documentElement.classList.contains('qa-exact-replay')){
+      requestAnimationFrame(loop);
+      return;
+    }
     const drawFrame=!uiPrefs.reduceMotion||ts-lastVisual>=80;
     if(drawFrame) lastVisual=ts;
     bgmCd-=dt; if(bgmCd<=0){ bgmCd=0.4; BGM.tick(bgmKey()); }
@@ -835,7 +839,7 @@ const UI = (()=>{
   function missionHtml(){
     const q=S.quest, rq=S.recruitQ;
     const transfer=G.transferStatus();
-    const danger=S.fuel<10||S.fatigue>=75||(q&&q.due-S.day<=1);
+    const danger=S.fuel<10||S.fatigue>=75||(q&&!q.noExpiry&&q.due-S.day<=1);
     let kicker='', title='', state='', meta='', pct=0, secondary='';
     const secondaryMissions=[];
     if(rq){
@@ -867,7 +871,7 @@ const UI = (()=>{
       }
     } else if(q){
       const K=G.QKIND[q.kind]||G.QKIND.deliver;
-      kicker=`${K.nm} · 진행 중`;
+      kicker=q.story?`연속 의뢰 · ${q.story.stage}/${q.story.total}`:`${K.nm} · 진행 중`;
       title=G.questLabel(q);
       if(q.kind==='procure'){
         const have=S.items[q.need.name]||0;
@@ -877,10 +881,10 @@ const UI = (()=>{
         state=`목적지 ${D.nodes[q.to].name} · 사례 고철 ${q.reward}`;
         pct=S.at===q.to?100:S.driving&&S.driving.to===q.to?Math.min(95,S.driving.gone/S.driving.dist*100):24;
       }
-      meta=G.questReady()?'전달 가능':`D-${Math.max(0,q.due-S.day)}`;
+      meta=G.questReady()?'전달 가능':q.noExpiry?'기한 없음':`D-${Math.max(0,q.due-S.day)}`;
     } else {
       kicker='본편 · 북쪽으로';
-      title=S.driving?`${D.nodes[S.driving.to].name}(으)로 이동 중`:`서울까지 약 ${G.remainKm()}km`;
+      title=S.driving?`${D.nodes[S.driving.to].name}방면으로 이동 중`:`서울까지 약 ${G.remainKm()}km`;
       state=S.flags.es_truth
         ? `${transfer.mission} · 부모의 수정안을 남산 코어에 적용한다`
         : S.flags.parent_key_found
@@ -898,7 +902,7 @@ const UI = (()=>{
     if(q){
       const K=G.QKIND[q.kind]||G.QKIND.deliver;
       const target=D.nodes[q.to];
-      secondaryMissions.push(`<span class="ms-chip chip-quest">${K.ic} 게시판 ${G.questLabel(q)} → ${esc(target.name)} · D-${Math.max(0,q.due-S.day)}</span>`);
+      secondaryMissions.push(`<span class="ms-chip chip-quest">${K.ic} ${q.story?'연속':'게시판'} ${G.questLabel(q)} → ${esc(target.name)} · ${q.noExpiry?'기한 없음':`D-${Math.max(0,q.due-S.day)}`}</span>`);
     }
     if(!rq&&!q){
       const nextMain=G.departureSteps().find(step=>!step.done);
@@ -914,7 +918,7 @@ const UI = (()=>{
     const alerts=[
       S.fuel<10?'연료 부족':null,
       S.fatigue>=75?'졸음 위험':null,
-      q&&q.due-S.day<=1?'마감 임박':null,
+      q&&!q.noExpiry&&q.due-S.day<=1?'마감 임박':null,
 
     ].filter(Boolean);
     alerts.length= alerts.length>0? Math.min(alerts.length,3):0;
@@ -1407,9 +1411,13 @@ function dialogueSide(turn,lanes,opt={}){
     return '남아 있는 길과 구조물이 지도에 기록되어 있다.';
   }
   function routeConsoleModel(routeModels){
-    if(navChoiceAt!==S.at||!routeModels.some(model=>model.nb.id===navChoiceId)){
+    const plan=typeof G.questNavigationPlan==='function'?G.questNavigationPlan():null;
+    const guideKey=plan&&plan.key||'main';
+    const preferred=typeof G.questPreferredNeighbor==='function'?G.questPreferredNeighbor(routeModels):null;
+    if(navChoiceAt!==S.at||navChoiceGuide!==guideKey||!routeModels.some(model=>model.nb.id===navChoiceId)){
       navChoiceAt=S.at;
-      navChoiceId=(routeModels[0]||{}).nb?.id||null;
+      navChoiceGuide=guideKey;
+      navChoiceId=(preferred||routeModels[0]||{}).nb?.id||null;
     }
     return routeModels.find(model=>model.nb.id===navChoiceId)||routeModels[0]||null;
   }
@@ -1446,6 +1454,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(!selected) return '<div class="route-empty">지금 이어지는 길이 없다.</div>';
     const node=D.nodes[selected.nb.id], forecast=selected.forecast;
     const selectedIndex=routeModels.indexOf(selected);
+    const questCue=typeof G.routeQuestCue==='function'?G.routeQuestCue(selected.nb.id):null;
     const canDepart=forecast.ok&&!forecast.shortage;
     const carouselModels=routeModels.length===2
       ?[routeModels[1-selectedIndex],selected,routeModels[1-selectedIndex]]
@@ -1472,6 +1481,7 @@ function dialogueSide(turn,lanes,opt={}){
           <div class="nav-map-destination-badge"><b>${esc(node.name)}</b><small>${selected.nb.km}km</small></div>
         </section>
         <section class="nav-route-summary" aria-live="polite" aria-label="선택한 목적지 정보">
+          ${questCue?`<p class="nav-route-quest-cue"><small>${questCue.kind==='main'?'주 임무 추천':'추적 임무'}</small><b>${esc(questCue.action)}</b></p>`:''}
           <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
           <div class="nav-route-facts" aria-label="지도와 현재 계기판으로 확인한 경로 정보">
             <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>연료 소모</small><b>${Math.ceil(selected.fuel)}L</b></span></span>
@@ -1696,6 +1706,10 @@ function dialogueSide(turn,lanes,opt={}){
       });
     });
   }
+  window.addEventListener('questtrackingchange',()=>{
+    navChoiceAt=null; navChoiceGuide='';
+    if(S&&!S.driving) renderPanel();
+  });
   window.addEventListener('resize',()=>{
     clearTimeout(stoppedStageResizeTimer);
     stoppedStageResizeTimer=setTimeout(()=>{
@@ -1867,6 +1881,8 @@ function dialogueSide(turn,lanes,opt={}){
     }));
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
+    const preferred=typeof G.questPreferredNeighbor==='function'?G.questPreferredNeighbor(routeModels):null;
+    if(preferred) routeModels.sort((a,b)=>Number(b.nb.id===preferred.nb.id)-Number(a.nb.id===preferred.nb.id));
     if(S.fuel<5) localActions.push(stopActionHtml({
       action:'walkfuel',kicker:'연료 비상',title:'걸어서 연료를 구해온다',
       description:'시간과 체력을 크게 소모한다.',chips:[{label:'연료 부족',tone:'danger'}],cta:'연료 구하기'
@@ -1926,6 +1942,8 @@ function dialogueSide(turn,lanes,opt={}){
       <span>${Math.round(d.dist-d.gone)}km 남음</span>
       <span>${D.nodes[d.to].name.split(' ')[0]}</span></div>
       <div class="tr"><i style="width:${f*100}%"></i><div class="van-dot" style="left:${f*100}%"></div></div>`;
+    const roadRemain=$('#road-notice-slot em');
+    if(roadRemain) roadRemain.textContent=`${Math.max(0,Math.ceil(d.dist-d.gone))}km 남음`;
   }
   function renderAll(){ renderHud(); renderMission(); renderPanel(); }
 
@@ -2342,6 +2360,9 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function advanceStory(state){
     if(!state||curStory!==state||state.index>=state.turns.length-1) return;
+    const now=performance.now();
+    if(now-(state.lastAdvanceAt||0)<280) return;
+    state.lastAdvanceAt=now;
     clearStoryAuto();
     state.reviewing=false;
     state.userHoldingStory=false;
@@ -2402,6 +2423,7 @@ function dialogueSide(turn,lanes,opt={}){
         Math.hypot((e?.clientX||start.x)-start.x,(e?.clientY||start.y)-start.y)>12 ||
         Math.abs(scroll.scrollTop-start.scrollTop)>4);
       if(start&&!moved&&!state.reviewing&&curStory===state&&state.index===start.index){
+        if(e){ e.preventDefault(); e.stopPropagation(); }
         advanceStory(state);
         return;
       }
@@ -2618,6 +2640,7 @@ function dialogueSide(turn,lanes,opt={}){
     const lanes=dialogueLaneMap(turns);
     curStory={
       phase:'event',eventId:evd.id,label:evd.type==='대화'?'대화':'이야기',turns,index:0,
+      lastAdvanceAt:0,
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
       sceneKeys,sceneAlt,sceneStart:0,
@@ -2737,6 +2760,7 @@ function dialogueSide(turn,lanes,opt={}){
     const combatMeta = out&&out.combatMeta&&typeof out.combatMeta==='object' ? out.combatMeta : null;
     let combatEntry=out.fx&&out.fx.combatEnd?G.rememberCombatChoice(curEv,choice,combatMeta):null;
     const chips=G.applyFx(out.fx);
+    if(curEv&&curEv.needsComp&&typeof G.checkLevel==='function') G.checkLevel(curEv.needsComp,{story:true});
     if(!combatEntry) combatEntry=G.rememberCombatChoice(curEv,choice,combatMeta);
     let combatHud='';
     if(oldCombat){
@@ -2829,6 +2853,7 @@ function dialogueSide(turn,lanes,opt={}){
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
       sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,sceneCarry,
+      offerComp:out.fx&&out.fx.offerComp||null,
       finalDock:`<div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
       reveal:()=>{ const result=sheet.querySelector('.story-result'); if(result) result.innerHTML=fxHtml; },
       wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
@@ -3081,14 +3106,14 @@ function dialogueSide(turn,lanes,opt={}){
         const detail = q.kind==='procure'
           ? `${q.need.name} ${(S.items[q.need.name]||0)}/${q.need.qty} 모음 · <b>${D.nodes[q.to].name}</b>으로`
           : `${G.questLabel(q)} → <b>${D.nodes[q.to].name}</b>`;
-        h+=`<div class="dlg"><div class="say"><span class="spk">${K.ic} ${K.nm} 진행 중</span> ${detail} <small style="color:var(--faded)">(사례 고철 ${q.reward} · D-${Math.max(0,q.due-S.day)})</small></div></div>`;
+        h+=`<div class="dlg"><div class="say"><span class="spk">${K.ic} ${q.story?'연속 의뢰':K.nm+' 진행 중'}</span> ${detail} <small style="color:var(--faded)">(사례 고철 ${q.reward} · ${q.noExpiry?'기한 없음':`D-${Math.max(0,q.due-S.day)}`})</small></div></div>`;
       }
     } else {
       const qs=G.rollQuests();
       if(qs.length){ stlQuests=qs;
         h+=`<div class="dlg"><div class="say stl-kicker"><span class="spk">게시판</span> <small>의뢰는 한 번에 하나만 맡는다</small></div><div class="choices">`;
         qs.forEach((q,i)=>{ const K=G.QKIND[q.kind], dd=q.due-S.day;
-          h+=`<button class="choice" data-quest="${i}">${K.ic} <b>${K.nm}</b> — ${G.questDesc(q)} <span class="req"><span style="color:${dd<=2?'var(--amber)':'inherit'}">D-${dd}</span> · 고철 ${q.reward}</span></button>`; });
+          h+=`<button class="choice" data-quest="${i}">${K.ic} <b>${q.story?`연속 의뢰 ${q.story.stage}/${q.story.total}`:K.nm}</b> — ${G.questDesc(q)} <span class="req"><span style="color:${!q.noExpiry&&dd<=2?'var(--amber)':'inherit'}">${q.noExpiry?'기한 없음':`D-${dd}`}</span> · 고철 ${q.reward}</span></button>`; });
         h+=`</div></div>`;
       }
     }
@@ -3133,12 +3158,12 @@ function dialogueSide(turn,lanes,opt={}){
         : `${G.questLabel(q)} · ${D.nodes[q.to].name}까지`;
       questRows.push({key:'quest-active',kind:ready?'quest-turnin':'quest-active',label:`${K.nm} · ${G.questLabel(q)}`,
         sub:ready?'요청한 물건과 기록을 넘길 준비가 됐다':detail,
-        meta:`D-${Math.max(0,q.due-S.day)} · 고철 ${q.reward}`,action:ready?'전달한다':'진행 중',enabled:ready});
+        meta:`${q.noExpiry?'기한 없음':`D-${Math.max(0,q.due-S.day)}`} · 고철 ${q.reward}`,action:ready?'전달한다':'진행 중',enabled:ready});
     } else {
       stlQuests=G.rollQuests();
       stlQuests.forEach((q,index)=>{const K=G.QKIND[q.kind],dd=q.due-S.day;
-        questRows.push({key:`quest-${index}`,kind:'quest',index,label:`${K.nm} · ${G.questLabel(q)}`,
-          sub:G.questDesc(q).replace(/^\"|\"$/g,''),meta:`D-${dd} · 고철 ${q.reward}`,action:'맡는다',enabled:true});
+        questRows.push({key:`quest-${index}`,kind:'quest',index,label:`${q.story?'연속 의뢰':K.nm} · ${G.questLabel(q)}`,
+          sub:G.questDesc(q).replace(/^\"|\"$/g,''),meta:`${q.noExpiry?'기한 없음':`D-${dd}`} · 고철 ${q.reward}`,action:'맡는다',enabled:true});
       });
     }
     const supplyRows=[];
@@ -4341,6 +4366,9 @@ function dialogueSide(turn,lanes,opt={}){
       <div class="st-sec save-backup"><h4>여정 백업 <small>내 기기에만 저장</small></h4>
         <p>현재 여정을 파일로 보관하거나 이전 백업으로 되돌릴 수 있다.</p>
         <div class="save-backup-actions"><button data-save-export="1">백업 파일 만들기</button><label>백업 파일 복원<input type="file" accept="application/json,.json" data-save-import="1"></label></div></div>
+      <div class="st-sec exact-state-qa"><h4>같은 화면 QA <small>${esc(GAME_BUILD)}</small></h4>
+        <p>실행 버튼으로 연 게임은 QA와 같은 브라우저 탭을 사용한다. 아래 파일은 연결이 끊겼을 때만 쓰는 예비 기록이다.</p>
+        <div class="save-backup-actions"><button data-qa-export="1">예비 QA 파일 만들기</button></div></div>
     </div>`;
 
     b.innerHTML=`<div class="st-pane ${stTab==='now'?'on':''}" data-stpane="now">${now}</div>
@@ -4386,6 +4414,25 @@ function dialogueSide(turn,lanes,opt={}){
         if(!result.ok){ UI.toast(`⚠ ${result.why}`); return; }
         UI.toast('💾 백업을 복원했다'); renderAll(); renderStatus();
       }).catch(()=>UI.toast('⚠ 백업 파일을 읽지 못했다'));
+    };
+    const qaExport=b.querySelector('[data-qa-export]');
+    if(qaExport) qaExport.onclick=async()=>{
+      G.save();
+      const raw=G.exportQaSnapshot();
+      const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+      const fn=`서울까지400km-QA-${GAME_BUILD}-DAY${S.day}-${stamp}.json`;
+      if(window.claude&&window.claude.downloads){
+        try{
+          await window.claude.downloads.save({filename:fn,data:raw});
+          UI.toast('현재 화면의 QA 파일을 만들었다');
+          return;
+        }catch(e){ if(e&&e.code==='declined'){ UI.toast('저장을 취소했다'); return; } }
+      }
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(new Blob([raw],{type:'application/json'}));
+      a.download=fn; a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+      UI.toast('현재 화면의 QA 파일을 만들었다');
     };
     b.querySelectorAll('[data-quality-export]').forEach(button=>button.onclick=()=>exportQuality(button.dataset.qualityExport));
     b.querySelectorAll('[data-comp2]').forEach(r=>{
@@ -4522,9 +4569,107 @@ function dialogueSide(turn,lanes,opt={}){
     $('#end-new').onclick=()=>{ closeOvl('#ovl-journal'); show('scr-title'); refreshTitle(); };
   }
 
+  function qaViewState(){
+    const visible=node=>!!(node&&node.getClientRects().length&&getComputedStyle(node).visibility!=='hidden');
+    const base=document.querySelector('.scr.on,.screen.on');
+    const selectors=['#ev-wrap','#ovl-status','#ovl-map','#ovl-journal','#ovl-stl','#quest-ledger','#arrival-scene'];
+    if(base&&base.id) selectors.unshift(`#${base.id}`);
+    const surfaces=[...new Set(selectors)].map(selector=>{
+      const node=document.querySelector(selector);
+      if(!node||(!visible(node)&&!node.classList.contains('on')&&node.getAttribute('aria-hidden')!=='false')) return null;
+      return {selector,className:node.className,ariaHidden:node.getAttribute('aria-hidden'),
+        dataset:{...node.dataset},html:node.innerHTML};
+    }).filter(Boolean);
+    const scrollSelectors=['#st-body','#ev-sheet .event-scroll','#jp-log','#ovl-map','#ovl-stl'];
+    const scrolls=Object.fromEntries(scrollSelectors.map(selector=>{
+      const node=document.querySelector(selector);
+      return [selector,node?{left:node.scrollLeft,top:node.scrollTop}:null];
+    }).filter(([,value])=>value));
+    const canvases=[...document.querySelectorAll('canvas[id]')].filter(visible).map(canvas=>{
+      try{return {id:canvas.id,width:canvas.width,height:canvas.height,data:canvas.toDataURL('image/png')};}
+      catch(e){return null;}
+    }).filter(Boolean);
+    const story=curStory?{
+      phase:curStory.phase,eventId:curStory.eventId,label:curStory.label,
+      turns:curStory.turns,index:curStory.index,knownSpeaker:curStory.knownSpeaker,
+      lanes:curStory.lanes,sceneKeys:curStory.sceneKeys,sceneAlt:curStory.sceneAlt,
+      sceneStart:curStory.sceneStart,sceneCarry:curStory.sceneCarry,
+      finalDock:curStory.finalDock,revealed:curStory.revealed,offerComp:curStory.offerComp||null
+    }:null;
+    return {
+      screen,
+      eventId:curEv&&curEv.id||null,
+      story,
+      surfaces,scrolls,canvases,windowScroll:{x:window.scrollX,y:window.scrollY}
+    };
+  }
+  async function restoreQaView(view){
+    if(!view||typeof view!=='object') return {ok:false,why:'QA 화면 정보가 없다'};
+    document.documentElement.classList.add('qa-exact-replay');
+    clearStoryAuto();
+    if((view.screen==='game'||view.screen==='end')&&!S&&G.hasSave()) G.load();
+    const screenIds={title:'scr-title',preview:'scr-preview',mode:'scr-mode',name:'scr-name',intro:'scr-intro',game:'scr-game',end:'scr-end'};
+    const screenId=screenIds[view.screen]||'scr-game';
+    if(document.getElementById(screenId)) show(screenId);
+    if(S&&(view.screen==='game'||view.screen==='end')) renderAll();
+    for(const surface of view.surfaces||[]){
+      if(!surface||!/^#[A-Za-z0-9_-]+$/.test(surface.selector||'')) continue;
+      const node=document.querySelector(surface.selector); if(!node) continue;
+      node.className=surface.className||'';
+      if(surface.ariaHidden===null||surface.ariaHidden===undefined) node.removeAttribute('aria-hidden');
+      else node.setAttribute('aria-hidden',surface.ariaHidden);
+      for(const [key,value] of Object.entries(surface.dataset||{})) node.dataset[key]=value;
+      node.innerHTML=surface.html||'';
+    }
+    if(view.eventId&&view.story){
+      curEv=D.events.find(event=>event.id===view.eventId)||null;
+      if(curEv){
+        const restored=view.story;
+        const wireFinal=dock=>{
+          if(restored.phase==='event'){
+            dock.querySelectorAll('.choice[data-i]').forEach(button=>button.onclick=()=>{
+              if(button.hasAttribute('disabled')) return;
+              const choice=curEv.choices[+button.dataset.i];
+              if(choice) resolveChoice(choice);
+            });
+            wireEventChoicePages(dock);
+          }else{
+            dock.querySelectorAll('.choice[data-r]').forEach(button=>button.onclick=()=>{
+              if(button.hasAttribute('disabled')) return;
+              if(button.dataset.r==='yes'&&restored.offerComp) G.doRecruit(restored.offerComp);
+              closeEvent();
+            });
+          }
+        };
+        curStory={...restored,reveal:()=>{},wireFinal};
+        const sheet=document.querySelector('#ev-sheet');
+        const next=sheet&&sheet.querySelector('.story-next');
+        if(next) next.onclick=event=>{ event.preventDefault(); advanceStory(curStory); };
+        const dock=sheet&&sheet.querySelector('.event-choice-dock');
+        if(dock) wireFinal(dock);
+        if(sheet) wireSceneZoom(sheet);
+      }
+    }
+    await Promise.all((view.canvases||[]).map(item=>new Promise(resolve=>{
+      const canvas=item&&document.getElementById(item.id);
+      if(!canvas||!item.data){ resolve(); return; }
+      canvas.width=item.width||canvas.width; canvas.height=item.height||canvas.height;
+      const image=new Image();
+      image.onload=()=>{ try{canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);}catch(e){} resolve(); };
+      image.onerror=resolve; image.src=item.data;
+    })));
+    for(const [selector,pos] of Object.entries(view.scrolls||{})){
+      const node=document.querySelector(selector);
+      if(node&&pos){ node.scrollLeft=pos.left||0; node.scrollTop=pos.top||0; }
+    }
+    if(view.windowScroll) window.scrollTo(view.windowScroll.x||0,view.windowScroll.y||0);
+    return {ok:true,screen:view.screen,eventId:view.eventId||null,story:view.story||null};
+  }
+
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
     showNodeCard, showGraphNote, onDepart, onArrive, showStl, playRadio, playChat, showSeoul,
-    storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech, clearToasts};
+    storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech, clearToasts,
+    qaViewState,restoreQaView};
 })();
 /* Quest journal: separates the main journey, companion stories and local requests
    without changing the existing save format or the folio renderer. */
@@ -4556,7 +4701,8 @@ function dialogueSide(turn,lanes,opt={}){
   }
 
   function sideModel(){
-    const quest=S&&S.quest;
+    const activeQuest=S&&S.quest;
+    const quest=activeQuest||(S&&S.questFollowup);
     if(!quest) return null;
     const to=D.nodes&&D.nodes[quest.to]&&D.nodes[quest.to].name||'목적지';
     const label=G.questLabel?G.questLabel(quest):quest.item||'받은 부탁';
@@ -4564,10 +4710,12 @@ function dialogueSide(turn,lanes,opt={}){
       ?`${to}에서 편지를 전한다`
       :`${label} · ${to}까지 가져간다`;
     if(quest.kind==='procure') action=`${quest.need.name} ${quest.need.qty}개를 구해 ${to}(으)로 돌아간다`;
-    const late=Number.isFinite(quest.due)&&S.day>quest.due;
+    const waiting=!activeQuest&&!!quest.story;
+    if(waiting) action=`${D.nodes[quest.from].name} 게시판에서 다음 부탁을 확인한다`;
+    const late=!quest.noExpiry&&Number.isFinite(quest.due)&&S.day>quest.due;
     return {
-      kind:'선택 의뢰',title:label,status:late?'기한 지남':'진행 중',action,
-      meta:`${to}${Number.isFinite(quest.due)?` · DAY ${quest.due}까지`:''}`
+      kind:quest.story?'연속 의뢰':'선택 의뢰',title:label,status:waiting?'후속 의뢰 대기':late?'기한 지남':'진행 중',action,
+      meta:`${waiting?D.nodes[quest.from].name:to}${quest.noExpiry?' · 기한 없음':Number.isFinite(quest.due)?` · DAY ${quest.due}까지`:''}`
     };
   }
 

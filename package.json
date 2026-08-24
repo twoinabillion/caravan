@@ -19,6 +19,8 @@
     "audit:scene-assets": "node tools/check-scene-assets.mjs",
     "audit:portrait-build": "node tools/check-built-portraits.mjs",
     "audit:surface-consistency": "python3 tests/capture_surface_consistency.py",
+    "qa:current": "python3 tools/live-qa-browser.py capture",
+    "qa:snapshot": "python3 tools/replay-user-qa.py",
     "audit:rhythm": "npm run build:html --silent && python3 tools/audit-play-rhythm.py --runs 40",
     "verify:quick": "npm run lint:dialogue && npm run validate:content && npm run audit:scene-assets && npm run audit:portrait-build",
     "test:golden": "npm run build:html --silent && python3 tests/test_golden_route.py",

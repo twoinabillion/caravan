@@ -54,9 +54,13 @@
    const UI 선언(07-ui.js)이 선행해야 하므로 반드시 이 파일보다
    앞쪽 모듈(04d 등)에 두지 않는다. */
 (()=>{
-  let roadApproachTimer = 0;
+  let roadApproachTimers = [];
+  const clearRoadApproachTimers=()=>{
+    roadApproachTimers.forEach(clearTimeout);
+    roadApproachTimers=[];
+  };
   UI.roadApproach = (profile, onComplete)=>{
-    clearTimeout(roadApproachTimer);
+    clearRoadApproachTimers();
     const old = document.getElementById('road-approach-cue');
     if(old) old.remove();
     delete document.documentElement.dataset.roadApproach;
@@ -83,32 +87,48 @@
       signal: '__ROAD_CUE_SIGNAL__',
       smoke: '__ROAD_CUE_SMOKE__',
       surveillance: '__ROAD_CUE_SURVEILLANCE__',
-      vehicle: '__ROAD_CUE_VEHICLE__'
+      vehicle: '__ROAD_CUE_VEHICLE__',
+      'coffee-van': '__ROAD_CUE_COFFEEVAN__',
+      'food-truck': '__ROAD_CUE_FOODTRUCK__',
+      'clinic-bus': '__ROAD_CUE_CLINICBUS__',
+      'broken-vehicle': '__ROAD_CUE_BROKENVEHICLE__',
+      'film-vehicle': '__ROAD_CUE_FILMVEHICLE__'
     };
     G.roadCueImages=roadCueImages;
-    const image = document.createElement('img');
-    image.hidden = true;
-    image.src = roadCueImages[profile.kind] || roadCueImages.landmark;
-    image.alt = '';
-    image.setAttribute('aria-hidden','true');
-    image.onload = ()=>{ image.hidden = false; };
-    image.onerror = ()=>{ image.remove(); cue.classList.add('road-approach-no-image'); };
     const status = document.createElement('div');
     status.className = 'road-approach-status';
+    status.setAttribute('role','status');
+    status.setAttribute('aria-live','polite');
     const eyebrow = document.createElement('span');
     eyebrow.textContent = '전방 발견';
     const label = document.createElement('b');
     label.textContent = profile.label;
     const action = document.createElement('small');
-    action.textContent = '속도를 줄이는 중';
-    status.append(eyebrow,label,action);
-    cue.append(image,status);
+    action.textContent = '접근 중';
+    const progress = document.createElement('i');
+    progress.className='road-approach-progress';
+    const progressFill=document.createElement('i');
+    progress.append(progressFill);
+    status.append(eyebrow,label,action,progress);
+    cue.append(status);
     stage.append(cue);
     document.documentElement.dataset.roadApproach = profile.kind;
-    roadApproachTimer = setTimeout(()=>{
+    const total=Math.max(900,Number(profile.duration)||1450);
+    roadApproachTimers.push(setTimeout(()=>{
+      cue.classList.add('is-braking');
+      action.textContent='제동 중';
+      if(S&&S.driving&&S.driving.approach)S.driving.approach.phase='braking';
+    },total*.44));
+    roadApproachTimers.push(setTimeout(()=>{
       cue.classList.add('is-stopped');
-      roadApproachTimer = setTimeout(()=>{ if(onComplete) onComplete(); }, 170);
-    }, profile.duration);
+      action.textContent='정차 완료';
+      if(S&&S.driving&&S.driving.approach)S.driving.approach.phase='stopped';
+    },total*.78));
+    roadApproachTimers.push(setTimeout(()=>{
+      cue.classList.add('is-handoff');
+      action.textContent='상황 확인';
+      roadApproachTimers.push(setTimeout(()=>{ if(onComplete) onComplete(); },100));
+    },total));
   };
 })();
 /* Keep event decisions in the same manuscript flow as the conversation. */
