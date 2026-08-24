@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "styleId": "caravan-grounded-cinematic-v1",
+  "canonicalDocument": "docs/IMAGE-BIBLE.md",
+  "requiredReferences": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "style": {
+    "medium": "near-photographic cinematic painterly realism",
+    "world": "grounded post-collapse South Korea road movie",
+    "palette": "desaturated cool gray-blue exteriors with restrained practical amber light",
+    "required": [
+      "believable Korean people, roads, ports, markets, apartments and industrial infrastructure",
+      "natural anatomy, worn materials, human-scale action and subtle film grain",
+      "one readable dramatic action or subject per frame",
+      "consistent character, clothing, vehicle, weather and light continuity"
+    ],
+    "forbidden": [
+      "anime or manga",
+      "comic-book ink or cel shading",
+      "pixel art outside road cues",
+      "glossy advertising photography or hyperreal studio portrait",
+      "3D render or game-engine screenshot",
+      "fantasy ruins, zombies, neon cyberpunk or clean futuristic vehicles",
+      "embedded text, logo, watermark, frame, UI, collage or split panel"
+    ]
+  },
+  "prompt": {
+    "base": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.",
+    "negative": "anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel"
+  },
+  "assets": {
+    "cinematicScene": {
+      "sourceMaster": [1536, 864],
+      "preferredDelivery": [1024, 576],
+      "allowedDelivery": [[768, 432], [1024, 576], [1280, 720]],
+      "aspectRatio": 1.7777777778,
+      "aspectTolerance": 0.018,
+      "minimum": [768, 432],
+      "preferredFormat": "webp",
+      "maximumRecommendedBytes": 850000,
+      "safeZone": {"horizontal": 0.8, "vertical": 0.82}
+    },
+    "legacyLandscapeScene": {
+      "aspectRatio": 1.5,
+      "aspectTolerance": 0.018,
+      "minimum": [768, 512],
+      "status": "warning-only; do not create new assets at this ratio"
+    },
+    "arrivalScene": {
+      "minimum": [540, 900],
+      "aspectRatioRange": [0.55, 0.61]
+    },
+    "settlementHub": {
+      "minimum": [768, 960],
+      "aspectRatioRange": [0.75, 0.85]
+    },
+    "portrait": {
+      "sourceMaster": [768, 768],
+      "preferredDelivery": [256, 256],
+      "allowedDeliveryEdges": [96, 128, 256],
+      "preferredFormats": ["png", "webp"],
+      "eyesFromTopRange": [0.38, 0.44],
+      "faceHeightRange": [0.55, 0.68]
+    },
+    "upgradeCard": {
+      "allowedDelivery": [[384, 256], [1440, 480]],
+      "purpose": "vehicle-upgrade UI card or seating panorama; not a narrative cinematic"
+    },
+    "roadCue": {
+      "style": "pixel-art exception",
+      "directory": "assets/road-cues",
+      "alphaPreferred": true
+    }
+  }
+}

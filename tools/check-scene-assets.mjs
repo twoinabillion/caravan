@@ -1,17 +1,19 @@
 #!/usr/bin/env node
-import {existsSync,readFileSync,readdirSync} from 'node:fs';
+import {existsSync,readFileSync,readdirSync,statSync} from 'node:fs';
 import {join} from 'node:path';
 
 const root=process.cwd();
+const strict=process.argv.includes('--strict');
+const contract=JSON.parse(readFileSync(join(root,'assets','visual-contract.json'),'utf8'));
 const sceneDir=join(root,'assets','scenes');
+const introDir=join(root,'assets','intro');
+const upgradeDir=join(root,'assets','upgrades');
 const portraitDir=join(root,'assets','portraits');
-/* 장면 슬롯은 object-fit 크롭을 사용한다. 일반 장면은 기존 16:9 정본과 새 3:2
-   정본을 모두 허용하고, 도착·허브 장면은 세로 전용 계약을 별도로 검사한다. */
-const portraitSizes=new Set([96,128,256]);
-const imageFiles=readdirSync(sceneDir)
-  .filter(name=>/\.(?:jpe?g|png|webp)$/i.test(name))
-  .sort();
+const visual=contract.assets;
+const portraitSizes=new Set(visual.portrait.allowedDeliveryEdges);
+const imagePattern=/\.(?:jpe?g|png|webp)$/i;
 const failures=[];
+const warnings=[];
 
 function dimensions(file){
   const data=readFileSync(file);
@@ -55,23 +57,55 @@ function dimensions(file){
   throw new Error(`Unsupported or malformed image: ${file}`);
 }
 
-for(const name of imageFiles){
-  const file=join(sceneDir,name);
+for(const relative of contract.requiredReferences){
+  if(!existsSync(join(root,relative))) failures.push(`required style reference missing: ${relative}`);
+}
+
+const near=(value,target,tolerance)=>Math.abs(value-target)<=tolerance;
+const allowedSceneSizes=new Set(visual.cinematicScene.allowedDelivery.map(size=>size.join('x')));
+const sceneGroups=[
+  {label:'scenes',dir:sceneDir},
+  {label:'intro',dir:introDir},
+  {label:'upgrades',dir:upgradeDir}
+].filter(group=>existsSync(group.dir));
+let sceneCount=0;
+
+for(const group of sceneGroups){
+ for(const name of readdirSync(group.dir).filter(name=>imagePattern.test(name)).sort()){
+  sceneCount+=1;
+  const file=join(group.dir,name);
   const actual=dimensions(file);
-  const isArrival=/^arrival-.*\.webp$/i.test(name);
-  const isHub=/^miryang-market-hub\.(?:jpe?g|webp)$/i.test(name);
+  const isArrival=group.label==='scenes'&&/^arrival-.*\.webp$/i.test(name);
+  const isHub=group.label==='scenes'&&/^miryang-market-hub\.(?:jpe?g|webp)$/i.test(name);
+  const isUpgrade=group.label==='upgrades';
   const ratio=actual.width/actual.height;
   const valid=isArrival
-    ?actual.width>=540&&actual.height>=900&&ratio>=0.55&&ratio<=0.61
+    ?actual.width>=visual.arrivalScene.minimum[0]&&actual.height>=visual.arrivalScene.minimum[1]
+      &&ratio>=visual.arrivalScene.aspectRatioRange[0]&&ratio<=visual.arrivalScene.aspectRatioRange[1]
     :isHub
-      ?actual.width>=768&&actual.height>=960&&ratio>=0.75&&ratio<=0.85
-      :actual.width>=768&&actual.height>=432&&ratio>=1.49&&ratio<=1.79;
+      ?actual.width>=visual.settlementHub.minimum[0]&&actual.height>=visual.settlementHub.minimum[1]
+        &&ratio>=visual.settlementHub.aspectRatioRange[0]&&ratio<=visual.settlementHub.aspectRatioRange[1]
+      :isUpgrade
+        ?visual.upgradeCard.allowedDelivery.some(([width,height])=>actual.width===width&&actual.height===height)
+      :actual.width>=visual.cinematicScene.minimum[0]&&actual.height>=visual.cinematicScene.minimum[1]
+        &&(near(ratio,visual.cinematicScene.aspectRatio,visual.cinematicScene.aspectTolerance)
+          ||near(ratio,visual.legacyLandscapeScene.aspectRatio,visual.legacyLandscapeScene.aspectTolerance));
   if(!valid){
-    const expected=isArrival?'portrait arrival (>=540x900, ratio 0.55-0.61)'
-      :isHub?'portrait hub (>=768x960, ratio 0.75-0.85)'
-      :'landscape scene (>=768x432, ratio 1.49-1.79)';
-    failures.push(`${name}: ${actual.width}x${actual.height}; expected ${expected}`);
+    const expected=isArrival?'portrait arrival contract'
+      :isHub?'portrait settlement-hub contract'
+      :isUpgrade?'vehicle upgrade-card contract':'16:9 cinematic scene contract';
+    failures.push(`${group.label}/${name}: ${actual.width}x${actual.height}; expected ${expected}`);
+  }else if(!isArrival&&!isHub&&!isUpgrade){
+    if(near(ratio,visual.legacyLandscapeScene.aspectRatio,visual.legacyLandscapeScene.aspectTolerance)){
+      warnings.push(`${group.label}/${name}: legacy 3:2 frame ${actual.width}x${actual.height}`);
+    }else if(!allowedSceneSizes.has(`${actual.width}x${actual.height}`)){
+      warnings.push(`${group.label}/${name}: non-canonical 16:9 delivery size ${actual.width}x${actual.height}`);
+    }
+    if(statSync(file).size>visual.cinematicScene.maximumRecommendedBytes){
+      warnings.push(`${group.label}/${name}: ${statSync(file).size} bytes exceeds recommended scene budget`);
+    }
   }
+ }
 }
 
 const portraitFiles=existsSync(portraitDir)
@@ -85,9 +119,16 @@ for(const name of portraitFiles){
 }
 
 if(failures.length){
-  console.error('Scene asset contract failed:');
+  console.error(`Visual contract ${contract.styleId} failed:`);
   failures.forEach(line=>console.error(`- ${line}`));
   process.exit(1);
 }
 
-console.log(`Image asset contract passed: ${imageFiles.length} scenes and ${portraitFiles.length} portraits checked.`);
+if(warnings.length){
+  console.warn(`Visual contract legacy warnings: ${warnings.length}`);
+  warnings.slice(0,10).forEach(line=>console.warn(`- ${line}`));
+  if(warnings.length>10) console.warn(`- ... ${warnings.length-10} more; use --strict after legacy migration`);
+  if(strict) process.exit(1);
+}
+
+console.log(`Visual contract ${contract.styleId} passed: ${sceneCount} scene-class assets and ${portraitFiles.length} portraits checked.`);

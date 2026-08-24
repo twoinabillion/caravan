@@ -18,6 +18,7 @@ fi
 # 기존 배포본을 덮기 전에 대사와 콘텐츠 참조를 검사한다.
 node tools/dialogue-lint.cjs
 node tools/validate-content.cjs
+node tools/check-scene-assets.mjs
 node tools/build-html.mjs
 node tools/update-current-doc.mjs
 

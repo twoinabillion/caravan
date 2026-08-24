@@ -17,6 +17,7 @@
     "lint:dialogue": "node tools/dialogue-lint.cjs",
     "validate:content": "node tools/validate-content.cjs",
     "audit:scene-assets": "node tools/check-scene-assets.mjs",
+    "audit:scene-assets:strict": "node tools/check-scene-assets.mjs --strict",
     "audit:portrait-build": "node tools/check-built-portraits.mjs",
     "audit:surface-consistency": "python3 tests/capture_surface_consistency.py",
     "qa:current": "python3 tools/live-qa-browser.py capture",

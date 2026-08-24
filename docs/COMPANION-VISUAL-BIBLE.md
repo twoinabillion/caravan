@@ -1,13 +1,16 @@
 # Companion Visual Bible
 
-This is the source of truth for every cinematic scene that shows a recruitable
-companion. The canonical references are the portrait assets in
+This document extends the global `caravan-grounded-cinematic-v1` contract in
+`docs/IMAGE-BIBLE.md`; it never replaces the global medium, palette, framing, or
+delivery rules. It is the identity source of truth for every cinematic scene
+that shows a recruitable companion. The canonical references are the portrait assets in
 `assets/portraits/` and `assets/reference/people-canon-2026-08-11.png`. A scene is not approved because it has a similar mood;
 the person must still be identifiable at a glance.
 
 ## Non-negotiable generation workflow
 
-1. Attach `assets/reference/people-canon-2026-08-11.png` and the matching
+1. Attach all global references required by `assets/visual-contract.json`, plus
+   `assets/reference/people-canon-2026-08-11.png` and the matching
    `assets/portraits/{id}.png` as character-reference images.
 2. Include every listed identity anchor in the prompt.
 3. Preserve the person across first meeting, task, temporary travel, joining,

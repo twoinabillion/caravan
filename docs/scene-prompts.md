@@ -6,9 +6,9 @@
 > 인물·차량 정본이 아니며, 새 장면은 [`visual-canon-2026-08-11.md`](visual-canon-2026-08-11.md)를 우선한다.
 
 신규 장면은 Codex 내장 `imagegen`으로 생성했다. 기존
-`grandfather-garage.jpg`, `gwangju-market.jpg`, `seoul-han.jpg`,
-`perimeter-walker.jpg`를 **스타일 레퍼런스**로만 사용했으며, 생성된 원본은
-중앙 크롭 후 `768×432` JPEG로 `assets/scenes/`에 저장한다.
+`assets/reference/`의 네 정본을 **필수 스타일 레퍼런스**로 사용한다. 생성된
+1536×864 원본은 중앙 크롭 후 기본 `1024×576` sRGB WebP로
+`assets/scenes/`에 저장한다. 기존 `768×432` 파일은 호환하지만 새로 만들지 않는다.
 
 ## 시네마틱 이미지 계약 (필수)
 
@@ -18,7 +18,7 @@
 
 | 항목 | 이벤트 장면 표준 |
 |---|---|
-| 파일 | sRGB JPEG, `768×432px`, 16:9 가로 |
+| 파일 | sRGB WebP, 기본 `1024×576px`, 16:9 가로 |
 | 화면 안 안전 영역 | 핵심 인물·물건은 중앙 가로 70%, 세로 18~82% 안에 둔다 |
 | 화면 밖 금지 | 세로/정사각형, 콜라주, 분할 화면, 포스터식 여백, UI, 자막, 읽히는 글자 |
 | 인물 수 | 주인공 포함 최대 2명. 군중은 장소 컷에서만 배경으로 허용 |
@@ -52,11 +52,15 @@ Use case: stylized-concept
 Asset type: 16:9 cinematic event illustration for the Korean
 post-apocalyptic road-trip game "Seoul to 400km"
 Input images are style references only; generate a completely new scene.
-Style/medium: cinematic painterly realism, grounded Korean post-apocalypse,
-detailed Korean environments, restrained colors, practical warm light,
-readable on a mobile event card.
-Constraints: no readable text, no logos, no watermark, no frame,
-no split panels, no UI, no zombies, no fantasy, no glossy sci-fi.
+Style ID: caravan-grounded-cinematic-v1.
+Style/medium: near-photographic cinematic painterly realism, grounded Korean
+post-collapse road movie, natural anatomy, believable Korean environments,
+restrained cool gray-blue colors, one practical warm amber light where inhabited,
+subtle brush texture and film grain, readable on a mobile event card. Match all
+attached Caravan canonical references exactly.
+Constraints: no anime, manga, comic ink, cel shading, cartoon, pixel art,
+glossy advertising photo, hyperreal studio look, 3D render, game-engine screenshot,
+readable text, logo, watermark, frame, split panel, UI, zombies, fantasy or neon sci-fi.
 ```
 
 장면 안의 문서·포장·단말은 형태만 보여준다. 정확한 고유명과 문장은 이벤트
@@ -73,7 +77,7 @@ no split panels, no UI, no zombies, no fantasy, no glossy sci-fi.
 | `family-verification-key` | 달구지 계기판의 숨은 공간에서 부모의 반도체 검증키·회로 수첩·가족사진을 꺼내는 장면 |
 
 인트로의 새 세 컷은 `assets/intro/`, 검증키 사건은 `assets/scenes/`에
-`768×432` JPEG로 저장한다. 생성 원본은 Codex 내장 imagegen 경로에 보존한다.
+`1024×576` WebP로 저장한다. 생성 원본은 Codex 내장 imagegen 경로에 보존한다.
 
 ## 현재의 출발 계기 장면 2종
 

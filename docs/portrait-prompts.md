@@ -4,15 +4,15 @@
 
 ## 게임에 넣는 법
 
-1. 96×96(정사각) PNG로 생성/리사이즈
-2. data URI 변환: `base64 -i me.png | pbcopy` → `data:image/png;base64,<붙여넣기>`
-3. `서울까지400km.html` 상단의 `D.portraits = {};` 아래에:
+1. `docs/IMAGE-BIBLE.md`와 `assets/visual-contract.json`을 먼저 읽고 필수 레퍼런스를 첨부
+2. 768×768 정사각형 원본을 생성한 뒤 256×256 PNG로 리사이즈
+3. `assets/portraits/{id}.png`를 교체하고 `npm run build:html`로 내장
 ```js
 D.portraits.me     = 'data:image/png;base64,...';
 D.portraits.minji  = 'data:image/png;base64,...';
 // parkss · kangwoo · leo · jaeyi · eunsu 동일
 ```
-붙이는 즉시 파티 카드·동료 시트의 이모지가 초상으로 바뀐다.
+단일 HTML의 data URI는 빌더가 자동으로 만든다. 완성 HTML을 직접 수정하지 않는다.
 
 ---
 
@@ -22,14 +22,19 @@ D.portraits.minji  = 'data:image/png;base64,...';
 
 **EN base prompt** (모든 캐릭터 프롬프트 앞에 붙이기):
 ```
-pixel art bust portrait for a game UI avatar, 96x96, 3/4 view facing right,
-post-apocalyptic Korean road trip game, dark navy background (#0b0e1a),
-warm amber rim light from the right (#ffb454) like van headlights at dusk,
-muted desaturated palette with warm accents, weathered clothes,
-clean readable silhouette, melancholic but warm expression, subtle dithering
+Use case: stylized-concept. Square bust portrait in the
+caravan-grounded-cinematic-v1 style: near-photographic cinematic painterly
+realism, grounded post-collapse Korean road movie, natural anatomy and skin,
+subtle brush texture and film grain, chest-up 3/4 view, eyes 38-44 percent from
+the top, face 55-68 percent of frame height, restrained cool gray-blue background,
+soft practical amber rim light, muted desaturated palette, weathered clothing,
+readable silhouette at mobile avatar size, melancholic but humane expression.
+Match the attached Caravan people and world canonical references exactly.
 ```
-- 픽셀이 안 예쁘면 대안: `painterly game portrait, gouache texture` (단, **7명 전원 같은 스타일**로)
-- 네거티브: `photorealistic, anime sparkle eyes, clean modern clothes, oversaturated, wide grin`
+- 네거티브: `anime, manga, comic, ink outline, cel shading, cartoon, chibi,
+  pixel art, glossy advertising photo, hyperreal studio portrait, 3D render,
+  game-engine screenshot, clean modern clothes, oversaturated, wide grin,
+  readable text, logo, watermark, frame`
 - **유일한 예외**: 은수만 림라이트를 앰버 대신 **청록(#7fd8d8)** — 천리안의 색을 몸에 지닌 인물이라는 의도된 디자인
 
 ---
@@ -217,5 +222,6 @@ distant listening expression, quiet guilt
 
 - [ ] 7명 전부 같은 스타일·같은 조명 (은수만 청록 림라이트)
 - [ ] 배경은 단색 네이비(#0b0e1a 근처) — UI 카드에 그대로 얹힘
-- [ ] 96×96 축소 후에도 실루엣 소품(모자/고글/안경/반다나/머리핀/헤드폰)이 읽히는지
-- [ ] 완성되면 상단 "게임에 넣는 법"대로 삽입 (내가 base64 변환+삽입 해줄 수 있음)
+- [ ] 96×96 화면 표시 크기에서도 실루엣 소품(모자/고글/안경/반다나/머리핀/헤드폰)이 읽히는지
+- [ ] 7명 모두 같은 렌즈, 얼굴 비율, 배경 질감과 페인터리 리얼리즘인지
+- [ ] 완성되면 `assets/portraits/` 정본을 교체하고 빌더로 반영했는지
