@@ -1005,7 +1005,6 @@ const UI = (()=>{
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   })[ch]);
   const stripTags=(v)=>String(v||'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
-  const portraitIsPresentationReady=(id)=>!(D.legacyIllustratedPortraits||[]).includes(id);
   function speakerInfo(who, label){
     const key=who==='나'?'me':who;
     const normalizeUnknown=(id)=>{
@@ -1031,7 +1030,7 @@ const UI = (()=>{
     return {
       id:key,
       name:label||(key==='me'?playerName:(comp&&comp.name)||(npc&&npc.name)||resolvedManual),
-      portrait:portraitIsPresentationReady(key)&&(D.portraits&&D.portraits[key]||null)
+      portrait:D.portraits&&D.portraits[key]||null
     };
   }
   function storyTurnHtml(turn, opt={}){
@@ -1116,16 +1115,16 @@ function dialogueSide(turn,lanes,opt={}){
     const hidden=person.name==='???';
     const continuation=previous&&previous.kind==='dialogue'&&speakerLaneKey(previous)===speakerLaneKey(turn);
     const faceAlt=hidden?'이름을 모르는 사람':person.name;
-    const showPortrait=person.portrait&&!continuation&&!(mine&&opt.playerSolo);
+    const showPortrait=!!person.portrait;
     const portrait=showPortrait
       ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
       : '';
     const face=portrait&&opt.intro
       ? `<span class="intro-portrait-photo">${portrait}<span class="intro-portrait-pin" aria-hidden="true"></span></span>`
       : portrait;
-    return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${mine&&opt.playerSolo?' player-solo':''}${hidden?' identity-hidden':''}${continuation?' speaker-continuation':''}${newest?' chat-newest':''}"
+    return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${hidden?' identity-hidden':''}${continuation?' speaker-continuation':''}${newest?' chat-newest':''}"
       data-kind="dialogue" data-speaker="${esc(person.id||person.name)}" data-side="${side}" data-story-entry>
-      ${face}<div class="chat-copy">${continuation?'':`<b class="chat-name">${esc(person.name)}</b>`}
+      ${face}<div class="chat-copy"><b class="chat-name">${esc(person.name)}</b>
       <div class="chat-bubble">${fmt(turn.text||'')}</div></div></div>`;
   }
   function narrationMessageHtml(turn,newest=false,opt={}){

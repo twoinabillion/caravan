@@ -4230,15 +4230,6 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .chat-bubble:after{
   content:"”";color:#8a5415;font-weight:800
 }
-#intro-txt .intro-chat .speaker-continuation .intro-portrait-photo,
-#intro-txt .intro-chat .speaker-continuation>.chat-avatar,
-#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .speaker-continuation>.chat-avatar{
-  visibility:hidden!important
-}
-#intro-txt .intro-chat .speaker-continuation .chat-name,
-#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .speaker-continuation .chat-name{
-  display:none!important
-}
 #intro-txt .intro-chat .story-narration,
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .story-narration{
   box-sizing:border-box!important;width:100%!important;margin:0!important;padding:7px 0 8px!important;
@@ -4364,12 +4355,6 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .chat-bubble:after{
   content:"”";color:#8a5415;font-weight:800
 }
-#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .speaker-continuation>.chat-avatar{
-  visibility:hidden!important
-}
-#ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .story-chat .speaker-continuation .chat-name{
-  display:none!important
-}
 
 /* Settlement conversations use the same reading grammar on their dark surface. */
 .stl-talk-slot .dlg.talk{
@@ -4421,8 +4406,6 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 #chatlog .cmsg>span>span{display:block;white-space:pre-wrap}
 #chatlog .cmsg>span>span:before{content:"“";color:#d9a85a;font-weight:800}
 #chatlog .cmsg>span>span:after{content:"”";color:#d9a85a;font-weight:800}
-#chatlog .cmsg.speaker-continuation img{visibility:hidden}
-#chatlog .cmsg.speaker-continuation b{display:none}
 #chatlog .cmsg.sys{
   display:block;align-self:stretch;padding:7px 0;color:#8993a6;
   border-top:1px solid rgba(255,255,255,.07);font:11px/1.45 var(--mono);text-align:left
@@ -8797,5 +8780,67 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   pointer-events:auto!important;
   touch-action:manipulation!important;
   user-select:none!important;
+}
+</style>
+<style id="story-choice-debossed-surface">
+/* Story decisions are physical marks on the manuscript, not translucent glass.
+   Keep the 44px touch target while fully masking the paper grain beneath it. */
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice{
+  position:relative!important;
+  min-height:48px!important;
+  padding:8px 38px 8px 13px!important;
+  border:1px solid #a96d2c!important;
+  border-radius:6px!important;
+  background:linear-gradient(180deg,#e2d5b9 0%,#d8c8a8 100%)!important;
+  color:#29231c!important;
+  box-shadow:inset 0 1px 3px rgba(69,43,18,.16),0 2px 5px rgba(65,42,20,.12)!important;
+  text-shadow:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice::before{
+  content:none!important;
+  display:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice::after{
+  content:"→"!important;
+  position:absolute!important;
+  top:50%!important;
+  right:13px!important;
+  display:block!important;
+  color:#9d5f1d!important;
+  font:900 17px/1 var(--sans)!important;
+  opacity:1!important;
+  transform:translateY(-52%)!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-head{
+  position:relative!important;
+  z-index:1!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-index,
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-index b{
+  color:#9d5f1d!important;
+  opacity:1!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-title{
+  color:#29231c!important;
+  font-weight:800!important;
+  text-shadow:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:hover,
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:focus-visible{
+  border-color:#8f5315!important;
+  background:linear-gradient(180deg,#eadfc7 0%,#decbaa 100%)!important;
+  box-shadow:inset 0 1px 3px rgba(69,43,18,.18),0 0 0 2px rgba(184,117,40,.2)!important;
+  outline:0!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:active{
+  transform:translateY(1px)!important;
+  background:#d2c09e!important;
+  box-shadow:inset 0 2px 5px rgba(61,37,15,.24)!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:disabled{
+  border-color:#a99b7f!important;
+  background:#d3c8b1!important;
+  color:#746b5c!important;
+  box-shadow:inset 0 1px 2px rgba(45,39,29,.1)!important;
 }
 </style>
