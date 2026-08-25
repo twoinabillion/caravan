@@ -1219,11 +1219,13 @@ const SCENE = (()=>{
     medical:'assets/road-cues/cue-medical.png', people:'assets/road-cues/cue-people.png', shelter:'assets/road-cues/cue-shelter.png',
     signal:'assets/road-cues/cue-signal.png', smoke:'assets/road-cues/cue-smoke.png', surveillance:'assets/road-cues/cue-surveillance.png',
     vehicle:'assets/road-cues/cue-vehicle.png',
-    'coffee-van':'assets/road-cues/cue-coffee-van-v2.webp',
-    'food-truck':'assets/road-cues/cue-food-truck-v2.webp',
-    'clinic-bus':'assets/road-cues/cue-clinic-bus-v2.webp',
-    'broken-vehicle':'assets/road-cues/cue-broken-vehicle-v2.webp',
-    'film-vehicle':'assets/road-cues/cue-film-vehicle-v2.webp'
+    'cow-walker':'assets/road-cues/cue-cow-walker.png',
+    'gas-station':'assets/road-cues/cue-gas-station.png',
+    'coffee-van':'assets/road-cues/cue-coffee-van-v2.png',
+    'food-truck':'assets/road-cues/cue-food-truck-v2.png',
+    'clinic-bus':'assets/road-cues/cue-clinic-bus-v2.png',
+    'broken-vehicle':'assets/road-cues/cue-broken-vehicle-v2.png',
+    'film-vehicle':'assets/road-cues/cue-film-vehicle-v2.png'
   };
   const approachSpriteCache={};
   function approachSprite(key){
@@ -1236,18 +1238,48 @@ const SCENE = (()=>{
   }
   function approachSpriteKey(kind,motif){
     if(['coffee-van','food-truck','clinic-bus','broken-vehicle','film-vehicle'].includes(motif)) return motif;
-    if(['bridge','checkpoint','debris','flood','smoke'].includes(kind)) return kind;
+    if(motif==='cow-walker') return 'cow-walker';
+    if(motif==='gas-station') return 'gas-station';
     if(motif==='pharmacy') return 'medical';
     if(motif==='postman') return 'cyclist';
     if(['coffee-stall','food-stall','market-cart','barber'].includes(motif)) return 'market';
-    if(['greenhouse','school','bath','farm'].includes(motif)) return 'shelter';
-    if(['wedding','piano','musician','procession','cow-walker','beekeeper','child','elder','monk','photo'].includes(motif)) return 'people';
+    if(motif==='farm') return 'market';
+    if(['greenhouse','school','bath','fire-station','carwash'].includes(motif)) return 'shelter';
+    if(['wedding','piano','musician','procession','beekeeper','child','elder','monk','photo'].includes(motif)) return 'people';
+    if(kind==='checkpoint') return 'checkpoint';
     if(motif==='camera-post') return 'surveillance';
     if(motif==='radio-post') return 'signal';
-    if(['fire-station','carwash','gas-station'].includes(motif)) return 'landmark';
+    if(motif==='rail-crossing') return 'checkpoint';
+    if(motif==='vending') return 'cache';
+    if(['bridge','checkpoint','debris','flood','smoke'].includes(kind)) return kind;
     if(approachSpriteSources[kind]) return kind;
     return 'landmark';
   }
+  const approachCueLayout={
+    'coffee-van':{ratio:.36,anchor:.79,target:.8},
+    'food-truck':{ratio:.36,anchor:.83,target:.8},
+    'clinic-bus':{ratio:.37,anchor:.76,target:.8},
+    'broken-vehicle':{ratio:.34,anchor:.8,target:.82,lane:true},
+    'film-vehicle':{ratio:.37,anchor:.75,target:.8},
+    'cow-walker':{ratio:.34,anchor:.71,target:.81,lane:true},
+    'gas-station':{ratio:.37,anchor:.73,target:.79},
+    vehicle:{ratio:.34,anchor:.69,target:.83,lane:true},
+    cyclist:{ratio:.3,anchor:.82,target:.81},
+    animal:{ratio:.32,anchor:.68,target:.81},
+    people:{ratio:.31,anchor:.75,target:.81},
+    checkpoint:{ratio:.34,anchor:.73,target:.83,lane:true},
+    bridge:{ratio:.35,anchor:.7,target:.83,lane:true},
+    debris:{ratio:.36,anchor:.7,target:.83,lane:true},
+    flood:{ratio:.39,anchor:.77,target:.82,lane:true},
+    cache:{ratio:.31,anchor:.76,target:.81},
+    market:{ratio:.34,anchor:.82,target:.8},
+    medical:{ratio:.32,anchor:.76,target:.81},
+    shelter:{ratio:.35,anchor:.73,target:.8},
+    signal:{ratio:.31,anchor:.75,target:.81},
+    smoke:{ratio:.34,anchor:.74,target:.81},
+    surveillance:{ratio:.31,anchor:.77,target:.81},
+    landmark:{ratio:.32,anchor:.83,target:.81}
+  };
   function approachSeed(value){
     let n=2166136261;
     for(const ch of String(value||'road-event')){n^=ch.charCodeAt(0);n=Math.imul(n,16777619);}
@@ -1359,119 +1391,23 @@ const SCENE = (()=>{
     const duration=Math.max(.8,(Number(ap.duration)||1450)/1000);
     const stopAt=Math.max(.9,duration*.84);
     const q=Math.min(1,elapsed/stopAt),ease=1-Math.pow(1-q,3);
-    const x=P(lerp(W+30,W*.82,ease)), ground=P(roadY+(H-roadY)*.43+8);
-    const seed=approachSeed(ap.eventKey),variant=Math.floor(seed*3),kind=ap.kind||'landmark',spec=ap.scene||{},motif=spec.motif||'';
+    const kind=ap.kind||'landmark',spec=ap.scene||{},motif=spec.motif||'';
     if(spec.selfVehicle)return;
-    /* The moving road never mixes generated/raster artwork with the caravan.
-       Every event first appears as a motif-specific canvas object; cinematic
-       art is reserved for the event screen after the vehicle has stopped. */
-    const vehicleCue=['coffee-van','food-truck','clinic-bus','film-vehicle','broken-vehicle'].includes(motif);
-    const structureCue=['coffee-stall','food-stall','pharmacy','greenhouse','school','wedding'].includes(motif);
-    const fallbackScale=(vehicleCue?.82:structureCue?.78:.8)+(vehicleCue?.18:structureCue?.2:.18)*ease;
-    ctx.save();ctx.globalAlpha=Math.min(1,.2+q*1.4);
+    const spriteKey=approachSpriteKey(kind,motif),layout=approachCueLayout[spriteKey]||approachCueLayout.landmark;
+    const inLane=spec.inLane===true||layout.lane===true;
+    const size=P(W*layout.ratio);
+    const targetX=P(W*layout.target);
+    const x=P(lerp(W+size*.72,targetX,ease));
+    const ground=P(roadY+(H-roadY)*(inLane?.43:.25)+(inLane?8:5));
+    const sprite=approachSprite(spriteKey);
+    if(!sprite||!sprite.complete||!sprite.naturalWidth)return;
+
+    /* 같은 자산을 같은 크기로 유지하고 위치만 움직인다. 크기 변화로 접근을
+       흉내 내면 달구지와 조우 대상이 순간적으로 수축·팽창해 보인다. */
+    ctx.save();
+    ctx.globalAlpha=Math.min(1,.16+q*1.55);
     ctx.imageSmoothingEnabled=false;
-    ctx.translate(x,ground);ctx.scale(fallbackScale,fallbackScale);ctx.translate(-x,-ground);
-    ctx.fillStyle=dark?'rgba(1,4,8,.34)':'rgba(18,22,20,.24)';
-    ctx.fillRect(Math.round(x-25),Math.round(ground),50,2);
-    if(['coffee-van','food-truck','clinic-bus','film-vehicle','broken-vehicle'].includes(motif)){
-      approachDetailedVehicle(x,ground,motif,dark,variant);
-    }else if(motif==='postman'){
-      approachBike(x+5,ground);approachPeople(x-7,ground,1,spec.action||'wave',seed);approachProp(x+13,ground,'mail',dark);
-    }else if(['coffee-stall','food-stall','pharmacy','greenhouse','school'].includes(motif)){
-      approachStall(x,ground,motif,dark);approachPeople(x+19,ground,spec.people||1,spec.action||'serve',seed);
-    }else if(motif==='wedding'){
-      ctx.strokeStyle='#a77f57';line(x-14,ground,x-14,ground-20);line(x+14,ground,x+14,ground-20);ctx.beginPath();ctx.arc(x,ground-20,14,Math.PI,0);ctx.stroke();
-      approachProp(x,ground-13,'flowers',dark);approachPeople(x,ground,3,'stand',seed);
-    }else if(motif==='piano'){
-      approachProp(x+4,ground,'piano',dark);approachPeople(x-11,ground,spec.people||1,'perform',seed);
-    }else if(motif==='musician'){
-      approachPeople(x-3,ground,spec.people||1,'perform',seed);ctx.fillStyle='#6f4a2f';ctx.fillRect(x+5,ground-11,4,9);circ(x+7,ground-12,3);ctx.strokeStyle='#b69262';line(x+7,ground-13,x+12,ground-23);
-    }else if(motif==='procession'){
-      approachPeople(x,ground,3,'walk',seed);if(spec.prop)approachProp(x+17,ground,spec.prop,dark);
-    }else if(motif==='cow-walker'){
-      ctx.fillStyle='#756657';ctx.fillRect(x-2,ground-11,15,8);ctx.fillRect(x+11,ground-15,6,6);ctx.fillRect(x,ground-3,2,4);ctx.fillRect(x+9,ground-3,2,4);approachPeople(x-10,ground,1,'walk',seed);
-    }else if(motif==='beekeeper'){
-      approachProp(x+5,ground,'beehive',dark);approachPeople(x-8,ground,spec.people||1,spec.action||'carry',seed);
-    }else if(motif==='barber'){
-      approachStall(x,ground,'food-stall',dark);ctx.fillStyle='#8f4d43';ctx.fillRect(x+9,ground-15,2,12);ctx.fillStyle='#d8d0bd';ctx.fillRect(x+9,ground-13,2,3);ctx.fillRect(x+9,ground-7,2,3);approachPeople(x-17,ground,spec.people||2,'stand',seed);
-    }else if(motif==='fire-station'){
-      approachVehicle(x,ground,1,dark);ctx.fillStyle='#8c3f36';ctx.fillRect(x-13,ground-14,21,8);ctx.fillStyle='#b9b7a7';for(let i=-10;i<8;i+=4)ctx.fillRect(x+i,ground-17,3,1);approachPeople(x-19,ground,spec.people||1,'stand',seed);
-    }else if(motif==='carwash'){
-      ctx.fillStyle='#43494b';ctx.fillRect(x-17,ground-22,3,22);ctx.fillRect(x+15,ground-22,3,22);ctx.fillRect(x-17,ground-22,35,3);approachVehicle(x,ground,0,dark);
-      ctx.fillStyle='rgba(113,153,164,.55)';for(let i=-10;i<=10;i+=5)ctx.fillRect(x+i,ground-20+(i%3),1,12);
-    }else if(motif==='gas-station'){
-      ctx.fillStyle='#535957';ctx.fillRect(x-8,ground-18,12,18);ctx.fillStyle='#8e4439';ctx.fillRect(x-5,ground-15,6,5);ctx.strokeStyle='#333738';line(x+4,ground-13,x+11,ground-5);approachPeople(x+13,ground,spec.people||1,'wave',seed);
-    }else if(motif==='bath'){
-      ctx.fillStyle='#6a5740';ctx.fillRect(x-10,ground-10,20,10);ctx.strokeStyle='#a78a62';for(let i=-8;i<10;i+=4)line(x+i,ground-10,x+i,ground);
-      for(let i=0;i<3;i++){ctx.fillStyle='rgba(205,210,201,.36)';circ(x-5+i*5+Math.sin(t+i),ground-15-i*2,2);}
-      approachPeople(x+15,ground,spec.people||1,'stand',seed);
-    }else if(motif==='market-cart'){
-      ctx.fillStyle='#64513b';ctx.fillRect(x-10,ground-10,20,9);ctx.fillStyle='#27292b';circ(x-7,ground,3);circ(x+7,ground,3);approachProp(x,ground-8,spec.prop||'food',dark);approachPeople(x-15,ground,spec.people||1,'carry',seed);
-    }else if(motif==='photo'){
-      approachPeople(x-5,ground,spec.people||1,'stand',seed);approachProp(x+8,ground,'camera',dark);
-    }else if(motif==='radio-post'){
-      approachProp(x,ground,'radio',dark);ctx.strokeStyle='#6d7777';line(x,ground-14,x,ground-28);line(x,ground-28,x-7,ground-17);line(x,ground-28,x+7,ground-17);approachPeople(x+13,ground,spec.people||1,'stand',seed);
-    }else if(motif==='camera-post'){
-      approachProp(x,ground,'camera',dark);approachPeople(x-13,ground,spec.people||0,'guard',seed);
-    }else if(motif==='vending'){
-      ctx.fillStyle='#485052';ctx.fillRect(x-7,ground-20,14,20);ctx.fillStyle=dark>.35?'#d59543':'#6e9691';ctx.fillRect(x-5,ground-17,10,7);ctx.fillStyle='#b9b19d';for(let i=0;i<3;i++)ctx.fillRect(x-4+i*4,ground-8,2,2);
-    }else if(motif==='rail-crossing'){
-      ctx.fillStyle='#3f4445';ctx.fillRect(x-14,ground-24,2,24);ctx.fillStyle='#a0723d';ctx.fillRect(x-13,ground-21,29,2);ctx.fillStyle='#252a2b';for(let i=-10;i<15;i+=7)ctx.fillRect(x+i,ground-21,4,2);ctx.fillStyle='#53575a';ctx.fillRect(x-20,ground-2,42,1);
-    }else if(motif==='farm'){
-      ctx.fillStyle='#4e5d45';for(let i=-16;i<=16;i+=8){ctx.fillRect(x+i,ground-7,2,7);ctx.fillRect(x+i-2,ground-6,2,2);ctx.fillRect(x+i+2,ground-5,2,2);}approachCrate(x+17,ground,0);approachPeople(x-18,ground,spec.people||1,'carry',seed);
-    }else if(motif==='child'||motif==='elder'||motif==='monk'){
-      approachPeople(x,ground,spec.people||1,spec.action||'stand',seed);if(spec.prop)approachProp(x+11,ground,spec.prop,dark);
-    }else if(kind==='vehicle'){
-      approachVehicle(x,ground,variant,dark);approachPeople(x-20,ground,spec.people||1,spec.action||'stand',seed);
-      if(spec.prop)approachProp(x+18,ground,spec.prop,dark);
-    }else if(kind==='people'){
-      approachPeople(x-4,ground,spec.people||2,spec.action||'wave',seed);
-      if(spec.prop)approachProp(x+16,ground,spec.prop,dark);else approachCrate(x+14,ground,1);
-    }else if(kind==='cyclist'){
-      approachBike(x+3,ground);approachPerson(x-6,ground,'wave','#4a5552',0);approachCrate(x+10,ground,variant%2);
-    }else if(kind==='checkpoint'){
-      ctx.fillStyle='#39403f';ctx.fillRect(x+4,ground-22,14,21);ctx.fillStyle=dark>.35?'#d69b4d':'#607d7b';ctx.fillRect(x+7,ground-18,7,5);
-      ctx.fillStyle='#b89950';ctx.fillRect(x-19,ground-8,27,2);ctx.fillStyle='#313638';ctx.fillRect(x-17,ground-8,4,2);ctx.fillRect(x-8,ground-8,4,2);ctx.fillRect(x+1,ground-8,4,2);
-      approachPerson(x-1,ground,'point','#596056',1);
-    }else if(kind==='medical'){
-      approachPerson(x-8,ground,'kneel','#67594d',0);approachPerson(x+3,ground,'wave','#57645e',1);
-      ctx.fillStyle='#d8d3be';ctx.fillRect(x+8,ground-8,10,8);ctx.fillStyle='#9c4b43';ctx.fillRect(x+12,ground-7,2,6);ctx.fillRect(x+10,ground-5,6,2);
-    }else if(kind==='bridge'){
-      ctx.fillStyle='#4d4436';for(let i=-18;i<=18;i+=6)ctx.fillRect(x+i,ground-4+(i%12?1:0),5,3);
-      ctx.strokeStyle='#827153';line(x-19,ground-7,x+20,ground-7);line(x-16,ground-10,x-16,ground-3);line(x+17,ground-10,x+17,ground-3);
-      approachPerson(x+19,ground,'wave','#5d604f',1);
-    }else if(kind==='flood'){
-      ctx.fillStyle='rgba(75,107,126,.66)';ctx.fillRect(x-28,ground-6,W-(x-28),8);
-      ctx.fillStyle='rgba(158,188,195,.55)';for(let i=0;i<4;i++)ctx.fillRect(x-24+i*13,ground-5+(i%2)*3,8,1);
-      ctx.fillStyle='#656052';ctx.fillRect(x-9,ground-18,2,13);ctx.fillRect(x-14,ground-18,12,6);
-    }else if(kind==='surveillance'){
-      ctx.fillStyle='#3d4448';ctx.fillRect(x,ground-25,2,25);ctx.fillRect(x-4,ground-25,11,3);ctx.fillRect(x+5,ground-24,5,4);
-      const pulse=.4+.4*Math.sin(t*5);ctx.strokeStyle=`rgba(85,224,200,${pulse})`;ctx.beginPath();ctx.arc(x+6,ground-22,6,0,7);ctx.stroke();
-    }else if(kind==='signal'){
-      ctx.fillStyle='#3d4246';ctx.fillRect(x,ground-24,2,24);line(x+1,ground-24,x-7,ground-8);line(x+1,ground-24,x+9,ground-8);
-      ctx.strokeStyle='rgba(117,204,193,.7)';for(let r=4;r<13;r+=4){ctx.beginPath();ctx.arc(x+1,ground-23,r,Math.PI*1.15,Math.PI*1.85);ctx.stroke();}
-    }else if(kind==='smoke'){
-      ctx.fillStyle='#a65d36';ctx.fillRect(x-4,ground-5,8,4);ctx.fillStyle='#dda14f';ctx.fillRect(x-2,ground-8,4,5);
-      for(let i=0;i<4;i++){ctx.fillStyle=`rgba(75,78,79,${.55-i*.1})`;circ(x+Math.sin(t+i)*3,ground-13-i*5,3+i*.6);}
-      if(variant)approachPerson(x+11,ground,'stand','#5d5548',1);
-    }else if(kind==='shelter'||kind==='market'){
-      const market=kind==='market';ctx.fillStyle=market?'#64503c':'#4b514e';ctx.fillRect(x-15,ground-16,29,16);
-      ctx.fillStyle=market?'#9b6e40':'#656b65';ctx.fillRect(x-18,ground-19,35,4);ctx.fillStyle=dark>.35?'#d69a48':'#81918a';ctx.fillRect(x-7,ground-12,8,6);
-      approachPerson(x+19,ground,market?'wave':'stand','#62564b',1);
-    }else if(kind==='animal'){
-      const deer=variant===2;ctx.fillStyle='#69584a';ctx.fillRect(x-6,ground-(deer?10:7),12,deer?7:5);ctx.fillRect(x+5,ground-(deer?15:10),5,6);
-      ctx.fillRect(x-5,ground-3,2,4);ctx.fillRect(x+3,ground-3,2,4);ctx.fillRect(x+8,ground-8,2,9);
-      if(deer){ctx.strokeStyle='#69584a';line(x+7,ground-14,x+5,ground-19);line(x+8,ground-14,x+11,ground-19);}
-    }else if(kind==='cache'){
-      approachCrate(x-7,ground,0);approachCrate(x+5,ground,1);if(variant===2)approachCrate(x+14,ground,0);
-      ctx.fillStyle='#82714d';ctx.fillRect(x-16,ground-4,5,4);
-    }else if(kind==='debris'){
-      ctx.fillStyle='#4b4d4d';for(let i=0;i<5;i++){const rx=x-17+i*8,hh=4+Math.floor(hash(i+seed*10)*6);ctx.fillRect(rx,ground-hh,7,hh);}
-      if(variant===1){ctx.fillStyle='#9c6c35';ctx.fillRect(x-20,ground-12,38,3);ctx.fillStyle='#2e3132';for(let i=-16;i<17;i+=9)ctx.fillRect(x+i,ground-12,4,3);}
-    }else{
-      ctx.fillStyle='#4b4f4d';ctx.fillRect(x,ground-22,3,22);ctx.fillStyle='#696156';ctx.fillRect(x-8,ground-22,19,10);
-      ctx.fillStyle='#9e8654';ctx.fillRect(x-5,ground-19,13,1);if(variant===2)approachPerson(x+14,ground,'stand','#575b52',1);
-    }
+    ctx.drawImage(sprite,P(x-size/2),P(ground-size*layout.anchor),size,size);
     ctx.restore();
   }
 

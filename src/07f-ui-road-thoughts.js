@@ -88,15 +88,18 @@
       smoke: '__ROAD_CUE_SMOKE__',
       surveillance: '__ROAD_CUE_SURVEILLANCE__',
       vehicle: '__ROAD_CUE_VEHICLE__',
+      'cow-walker': '__ROAD_CUE_COWWALKER__',
+      'gas-station': '__ROAD_CUE_GASSTATION__',
       'coffee-van': '__ROAD_CUE_COFFEEVAN__',
       'food-truck': '__ROAD_CUE_FOODTRUCK__',
       'clinic-bus': '__ROAD_CUE_CLINICBUS__',
       'broken-vehicle': '__ROAD_CUE_BROKENVEHICLE__',
       'film-vehicle': '__ROAD_CUE_FILMVEHICLE__'
     };
-    /* Kept out of the moving scene on purpose. Road cues are drawn by the same
-       canvas renderer as the caravan; full artwork begins after the stop. */
-    G.roadCueImages={};
+    /* 빌드가 단일 HTML 안에 넣어 준 픽셀 자산을 주행 캔버스에서도 쓴다.
+       라이브 서버의 /game 경로는 assets/를 직접 노출하지 않으므로 원본
+       파일 경로 대신 이 data URL 지도를 사용해야 새 조우가 빈칸이 되지 않는다. */
+    G.roadCueImages=roadCueImages;
     const status = document.createElement('div');
     status.className = 'road-approach-status';
     status.setAttribute('role','status');

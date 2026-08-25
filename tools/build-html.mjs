@@ -158,9 +158,12 @@ const roadCueFiles = {
   COFFEEVAN:'coffee-van-v2', FOODTRUCK:'food-truck-v2', CLINICBUS:'clinic-bus-v2',
   BROKENVEHICLE:'broken-vehicle-v2', FILMVEHICLE:'film-vehicle-v2'
 };
+const roadCuePngFiles = {COWWALKER:'cow-walker',GASSTATION:'gas-station'};
 const roadCues = replace(read('src/07f-ui-road-thoughts.js'), /__ROAD_CUE_([A-Z]+)__/g, key =>
   roadCueFiles[key]
     ? dataUri(`assets/road-cues/cue-${roadCueFiles[key]}.webp`, 'image/webp')
+    : roadCuePngFiles[key]
+      ? dataUri(`assets/road-cues/cue-${roadCuePngFiles[key]}.png`, 'image/png')
     : dataUri(`assets/road-cues/cue-${key.toLowerCase()}.png`, 'image/png'), '도로 접근 큐');
 
 const chunks = [
