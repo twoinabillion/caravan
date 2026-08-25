@@ -8169,6 +8169,155 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
 .route-console-v3 .nav-depart-cta i{color:#efad51!important;font:900 15px/1 var(--sans)!important;font-style:normal!important}
 .route-console-v3 .nav-depart-cta:active{transform:translateY(1px)!important;background:linear-gradient(180deg,#5f391b,#3e2515)!important}
 .route-console-v3 .nav-depart-cta:focus-visible{outline:2px solid #f0cb8d!important;outline-offset:1px!important}
+
+/* 2026-08-25 narrative hierarchy and route interaction QA.
+   The protagonist reads as a viewpoint, not a portrait repeated beside every line. */
+#intro-txt .story-narration,
+#ev-sheet.event-mode[data-event-kind="story"] .story-narration{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:4px 0 8px!important;
+  padding:2px 0 7px!important;
+  border:0!important;
+  background:transparent!important;
+}
+#intro-txt .story-narration-label,
+#ev-sheet.event-mode[data-event-kind="story"] .story-narration-label{display:none!important}
+#intro-txt .story-narration-text,
+#ev-sheet.event-mode[data-event-kind="story"] .story-narration-text{
+  width:100%!important;
+  color:#39342c!important;
+  font-family:var(--serif)!important;
+  font-style:normal!important;
+  text-align:left!important;
+}
+.story-transcript .chat-msg.player-solo{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:5px 0 9px!important;
+  padding:0!important;
+}
+.story-transcript .chat-msg.player-solo .chat-copy{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+.story-transcript .chat-msg.player-solo .chat-name{
+  display:block!important;
+  margin:0 0 5px!important;
+  color:#945d22!important;
+  font-family:var(--sans)!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  text-align:left!important;
+}
+.story-transcript .chat-msg.player-solo .chat-bubble{
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#342f28!important;
+  font-family:var(--serif)!important;
+  font-style:normal!important;
+  line-height:1.65!important;
+  text-align:left!important;
+  white-space:pre-wrap!important;
+}
+.story-transcript .chat-msg.player-solo .chat-bubble :is(p,blockquote){
+  margin:0 0 .55em!important;
+  padding:0!important;
+  text-indent:0!important;
+}
+.story-transcript .chat-msg.speaker-continuation .chat-copy{margin-inline:0!important}
+.story-turn.player-thought{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:9px 0 12px!important;
+  padding:8px 12px!important;
+  border:0!important;
+  border-left:2px solid #b87528!important;
+  border-radius:0!important;
+  background:rgba(92,77,52,.055)!important;
+  box-shadow:none!important;
+}
+.story-turn.player-thought .thought-source{
+  margin:0 0 4px!important;
+  color:#8d581e!important;
+  font-family:var(--sans)!important;
+  font-size:10px!important;
+  font-style:normal!important;
+  font-weight:850!important;
+  letter-spacing:.08em!important;
+}
+.story-turn.player-thought .turn-text{
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  color:#4a443a!important;
+  font-family:var(--serif)!important;
+  font-size:15px!important;
+  font-style:italic!important;
+  font-weight:500!important;
+  line-height:1.62!important;
+  text-align:left!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  min-height:48px!important;
+  padding:11px 18px!important;
+  border:1px solid #d09a55!important;
+  border-left:1px solid #d09a55!important;
+  border-radius:6px!important;
+  background:linear-gradient(180deg,#ad6e2b,#8a501c)!important;
+  color:#fff8e9!important;
+  font:850 15px/1 var(--sans)!important;
+  text-align:center!important;
+  text-shadow:0 1px 1px rgba(45,23,7,.5)!important;
+  box-shadow:0 5px 12px rgba(76,42,13,.24),inset 0 1px rgba(255,255,255,.16)!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn::after{
+  content:none!important;
+  display:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn>i{
+  color:#ffe0ad!important;
+  font:900 16px/1 var(--sans)!important;
+  font-style:normal!important;
+}
+.folio-road-button{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  box-sizing:border-box!important;
+  min-height:48px!important;
+  padding:11px 18px!important;
+  border:1px solid #b87a36!important;
+  border-radius:6px!important;
+  background:linear-gradient(180deg,#9e6326,#7b461a)!important;
+  color:#fff7e7!important;
+  box-shadow:0 5px 12px rgba(70,38,12,.24),inset 0 1px rgba(255,255,255,.14)!important;
+  text-shadow:0 1px 1px rgba(45,23,7,.5)!important;
+}
+.folio-road-button::after{
+  content:"→"!important;
+  color:#ffe0ad!important;
+  font:900 16px/1 var(--sans)!important;
+}
+.folio-road-button:active{transform:translateY(1px)!important;background:linear-gradient(180deg,#89531e,#683a16)!important}
 #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-summary{
   display:flex!important;
   flex-direction:column!important;
@@ -8256,5 +8405,397 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   -webkit-box-orient:vertical!important;
   -webkit-line-clamp:2!important;
   line-height:13px!important;
+}
+</style>
+
+<style id="final-stay-inventory-outcome-lock-20260825">
+/* Final precedence lock: one flat stop-action grammar, with no paper ears or folded overlays. */
+#app .route-console-v3 .journey-local-screen.stop-action-console{
+  inset:8.7% 7.4% 3.8%!important;
+  padding:6px!important;
+  overflow:hidden!important;
+  background:#171612!important;
+  background-image:none!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-grid{
+  display:flex!important;
+  flex-direction:column!important;
+  align-content:flex-start!important;
+  gap:8px!important;
+  min-height:0!important;
+  padding:0!important;
+  overflow-y:auto!important;
+  background:transparent!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-card{
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:1px solid #c5aa75!important;
+  border-radius:7px!important;
+  opacity:1!important;
+  filter:none!important;
+  background:#e6d2a8!important;
+  background-image:linear-gradient(180deg,#eadbb9 0%,#dec79a 100%)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.48),0 3px 7px rgba(4,7,7,.24)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-card::before,
+#app .route-console-v3 .journey-local-screen .stop-action-card::after,
+#app .route-console-v3 .journey-local-screen .stop-action-trigger::before,
+#app .route-console-v3 .journey-local-screen .stop-action-trigger::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-trigger{
+  display:grid!important;
+  grid-template-columns:52px minmax(0,1fr) 36px!important;
+  align-items:center!important;
+  gap:11px!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:112px!important;
+  margin:0!important;
+  padding:10px 12px!important;
+  border:0!important;
+  border-radius:0!important;
+  color:#29271f!important;
+  background:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-align:left!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-copy{
+  min-width:0!important;
+  padding:0!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-kicker{display:none!important}
+#app .route-console-v3 .journey-local-screen .stop-action-copy>b{
+  display:block!important;
+  margin:0 0 4px!important;
+  color:#29271f!important;
+  font:850 clamp(13px,3.8cqw,17px)/1.2 var(--sans)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-description{
+  display:block!important;
+  margin:0 0 4px!important;
+  overflow:visible!important;
+  color:#625c4f!important;
+  font:650 clamp(9px,2.6cqw,12px)/1.35 var(--sans)!important;
+  -webkit-line-clamp:unset!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-chips{
+  display:flex!important;
+  gap:4px!important;
+  margin:0!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-chips i{
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  color:#286f6b!important;
+  background:transparent!important;
+  font:800 clamp(8px,2.35cqw,11px)/1.25 var(--mono)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-chips i+i::before{
+  content:"·"!important;
+  margin-right:4px!important;
+  color:#8d6b46!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-icon{
+  position:relative!important;
+  display:grid!important;
+  place-items:center!important;
+  box-sizing:border-box!important;
+  width:48px!important;
+  height:48px!important;
+  min-width:48px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  border:1px solid #514838!important;
+  border-radius:8px!important;
+  background:linear-gradient(145deg,#34322d,#171917)!important;
+  box-shadow:inset 0 0 0 2px rgba(205,167,101,.12),0 2px 4px rgba(0,0,0,.25)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-icon>*{display:none!important}
+#app .route-console-v3 .journey-local-screen .stop-action-icon::after{
+  content:""!important;
+  display:block!important;
+  width:31px!important;
+  height:31px!important;
+  background:#c98a32!important;
+  -webkit-mask-position:center!important;
+  mask-position:center!important;
+  -webkit-mask-repeat:no-repeat!important;
+  mask-repeat:no-repeat!important;
+  -webkit-mask-size:contain!important;
+  mask-size:contain!important;
+  filter:drop-shadow(0 1px rgba(255,222,154,.25))!important;
+}
+#app .route-console-v3 .journey-local-screen .icon-quest::after{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M9 25h46l-5-13H14L9 25Zm4 4h38v27h-8V39H21v17h-8V29Zm13 10h12v17H26V39ZM8 60h48v-5H8v5Z'/%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M9 25h46l-5-13H14L9 25Zm4 4h38v27h-8V39H21v17h-8V29Zm13 10h12v17H26V39ZM8 60h48v-5H8v5Z'/%3E%3C/svg%3E")!important;
+}
+#app .route-console-v3 .journey-local-screen .icon-explore::after{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M18 13h10l3 13h2l3-13h10l11 31c2 7-3 12-9 12-5 0-8-3-10-8l-2-7h-8l-2 7c-2 5-5 8-10 8-6 0-11-5-9-12l11-31Zm-1 31a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm30 0a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z'/%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M18 13h10l3 13h2l3-13h10l11 31c2 7-3 12-9 12-5 0-8-3-10-8l-2-7h-8l-2 7c-2 5-5 8-10 8-6 0-11-5-9-12l11-31Zm-1 31a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm30 0a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z'/%3E%3C/svg%3E")!important;
+}
+#app .route-console-v3 .journey-local-screen .icon-camp::after{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='m32 8 26 45H6L32 8Zm0 13L18 47h10l4-9 4 9h10L32 21Z'/%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='m32 8 26 45H6L32 8Zm0 13L18 47h10l4-9 4 9h10L32 21Z'/%3E%3C/svg%3E")!important;
+}
+#app .route-console-v3 .journey-local-screen .icon-repair::after{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M48 7a15 15 0 0 0-18 18L8 47a6 6 0 0 0 9 9l22-22A15 15 0 0 0 57 16l-9 9-8-2-2-8 10-8Z'/%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M48 7a15 15 0 0 0-18 18L8 47a6 6 0 0 0 9 9l22-22A15 15 0 0 0 57 16l-9 9-8-2-2-8 10-8Z'/%3E%3C/svg%3E")!important;
+}
+#app .route-console-v3 .journey-local-screen .icon-radio::after{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='m18 15 30-9 2 5-18 6h20c4 0 7 3 7 7v25c0 4-3 7-7 7H12c-4 0-7-3-7-7V24c0-4 3-7 7-7h6v-2Zm-4 13v17h25V28H14Zm36 0a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 15a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z'/%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='m18 15 30-9 2 5-18 6h20c4 0 7 3 7 7v25c0 4-3 7-7 7H12c-4 0-7-3-7-7V24c0-4 3-7 7-7h6v-2Zm-4 13v17h25V28H14Zm36 0a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 15a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z'/%3E%3C/svg%3E")!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-cta{
+  display:grid!important;
+  place-items:center!important;
+  align-self:center!important;
+  box-sizing:border-box!important;
+  width:36px!important;
+  height:36px!important;
+  min-width:36px!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid #9c5f1e!important;
+  border-radius:5px!important;
+  color:#fff7e8!important;
+  background:#b87528!important;
+  box-shadow:0 2px 5px rgba(65,34,9,.28)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-cta>span{
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  height:100%!important;
+  font-size:0!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-cta>span>i{display:none!important}
+#app .route-console-v3 .journey-local-screen .stop-action-cta>span::after{
+  content:"→"!important;
+  color:#fff7e8!important;
+  font:900 18px/1 var(--sans)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled{
+  opacity:1!important;
+  filter:none!important;
+  border-color:#aaa089!important;
+  background:#d3c8af!important;
+  background-image:linear-gradient(180deg,#d8cdb5,#cfc2a7)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-icon,
+#app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-copy{
+  opacity:.52!important;
+  filter:grayscale(1)!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-trigger{
+  grid-template-columns:52px minmax(0,1fr) 66px!important;
+  cursor:not-allowed!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-cta{
+  width:66px!important;
+  min-width:66px!important;
+  border-color:#8d695c!important;
+  background:#705a51!important;
+  box-shadow:none!important;
+}
+#app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-cta>span::after{
+  content:"재료 부족"!important;
+  color:#f2dfd6!important;
+  font:850 9px/1 var(--sans)!important;
+}
+@container game (max-width:380px){
+  #app .route-console-v3 .journey-local-screen.stop-action-console{inset-top:8.7%!important;padding:5px!important}
+  #app .route-console-v3 .journey-local-screen .stop-action-trigger{grid-template-columns:46px minmax(0,1fr) 32px!important;gap:8px!important;min-height:98px!important;padding:8px 9px!important}
+  #app .route-console-v3 .journey-local-screen .stop-action-icon{width:43px!important;height:43px!important;min-width:43px!important}
+  #app .route-console-v3 .journey-local-screen .stop-action-icon::after{width:28px!important;height:28px!important}
+  #app .route-console-v3 .journey-local-screen .stop-action-cta{width:32px!important;height:32px!important;min-width:32px!important}
+  #app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-trigger{grid-template-columns:46px minmax(0,1fr) 60px!important}
+  #app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-cta{width:60px!important;min-width:60px!important}
+}
+
+/* Event outcomes use the same compact, single-line primary action everywhere. */
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:48px!important;
+  min-height:48px!important;
+  max-height:48px!important;
+  margin:0!important;
+  padding:0 16px!important;
+  border:1px solid #9f611e!important;
+  border-radius:6px!important;
+  color:#fff!important;
+  background:#b87528!important;
+  box-shadow:0 4px 10px rgba(87,46,10,.25)!important;
+  font:850 clamp(12px,3.6cqw,16px)/1 var(--sans)!important;
+  letter-spacing:.02em!important;
+  white-space:nowrap!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn::before,
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn::after{
+  content:none!important;
+  display:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn>span,
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn>i{
+  position:static!important;
+  display:inline!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  transform:none!important;
+  font:inherit!important;
+  line-height:1!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn>i{font-style:normal!important}
+
+/* Generated item art is already cropped tightly: let it occupy the badge and pocket. */
+#app .road-notice-medallion .ico{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  transform:scale(1.04)!important;
+}
+#app .bag-live-content .bag-pocket .ico,
+#app .bag-live-content .bag-pocket img.ico{
+  width:clamp(46px,12.5cqw,60px)!important;
+  height:clamp(46px,12.5cqw,60px)!important;
+  max-width:72%!important;
+  max-height:72%!important;
+  object-fit:contain!important;
+  image-rendering:pixelated!important;
+}
+#app .bag-live-content .bag-critical .ico,
+#app .bag-live-content .bag-critical-item .ico,
+#app .bag-live-content .bag-resource .ico{
+  width:clamp(28px,7.5cqw,38px)!important;
+  height:clamp(28px,7.5cqw,38px)!important;
+  object-fit:contain!important;
+  image-rendering:pixelated!important;
+}
+</style>
+
+<style id="map-header-hardware-zones-20260825">
+/* Map header hardware grammar: title slot | protected hinge | telemetry CRT | road switch. */
+#ovl-map .map-live-head{
+  position:absolute!important;
+  top:5%!important;
+  left:7%!important;
+  right:8.4%!important;
+  height:5%!important;
+  display:block!important;
+  min-width:0!important;
+  transform:none!important;
+}
+#ovl-map .map-live-head h2{
+  position:absolute!important;
+  inset:0 auto 0 0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  width:32.5%!important;
+  margin:0!important;
+  padding:0 5%!important;
+  overflow:hidden!important;
+  color:#deb06c!important;
+  font:900 clamp(14px,4cqw,23px)/1 var(--sans)!important;
+  letter-spacing:.02em!important;
+  text-align:center!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  transform:none!important;
+}
+#ovl-map #map-mini{
+  position:absolute!important;
+  top:14%!important;
+  bottom:14%!important;
+  left:40.5%!important;
+  right:8px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0 10px!important;
+  overflow:hidden!important;
+  border:1px solid rgba(3,7,6,.94)!important;
+  border-radius:4px!important;
+  color:#68c4bd!important;
+  background:linear-gradient(180deg,#111714 0%,#080c0b 100%)!important;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.92),inset 0 0 0 1px rgba(83,130,118,.13),0 1px rgba(255,214,139,.08)!important;
+  font:850 clamp(7.5px,1.9cqw,10.5px)/1 var(--mono)!important;
+  letter-spacing:.015em!important;
+  text-align:center!important;
+  text-overflow:ellipsis!important;
+  text-shadow:0 0 5px rgba(74,194,182,.16)!important;
+  white-space:nowrap!important;
+  transform:none!important;
+}
+#ovl-map #map-x.road-tool-close{
+  position:absolute!important;
+  top:11%!important;
+  right:0!important;
+  bottom:auto!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  box-sizing:border-box!important;
+  width:50px!important;
+  min-width:50px!important;
+  height:78%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 5px!important;
+  overflow:hidden!important;
+  border:1px solid #6e5636!important;
+  border-radius:4px!important;
+  color:#e2b365!important;
+  background:linear-gradient(180deg,#29251e,#151713)!important;
+  box-shadow:inset 0 1px rgba(255,223,161,.16),0 2px 4px rgba(0,0,0,.4)!important;
+  font:900 clamp(8px,2cqw,11px)/1 var(--sans)!important;
+  text-shadow:0 1px 2px #000!important;
+  transform:none!important;
+}
+#ovl-map #map-x.road-tool-close::after{
+  content:"→"!important;
+  display:inline!important;
+  color:#f0b14e!important;
+  font:900 1em/1 var(--mono)!important;
+}
+#ovl-map #map-x.road-tool-close:hover{background:linear-gradient(180deg,#3a3021,#1c1b15)!important}
+#ovl-map #map-x.road-tool-close:active{transform:translateY(1px)!important}
+@container game (max-width:380px){
+  #ovl-map .map-live-head h2{width:31.5%!important;padding-inline:3%!important}
+  #ovl-map #map-mini{left:39.5%!important;right:7px!important;padding-inline:6px!important;font-size:7.5px!important;letter-spacing:-.025em!important}
+  #ovl-map #map-x.road-tool-close{width:43px!important;min-width:43px!important;padding-inline:3px!important;font-size:8px!important}
+}
+
+/* The road tracker owns a real collapse handler; do not let the older display rule swallow its input. */
+#road-quest-tracker{
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+  user-select:none!important;
 }
 </style>

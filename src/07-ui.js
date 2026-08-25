@@ -628,6 +628,7 @@ const UI = (()=>{
     }
     const beats=page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page.text||''}];
     const introBeats=beats.map(personalizedIntroBeat);
+    const introRenderOpt=storyPresentationOptions(introBeats,{intro:true});
     const activeSceneKey=beats.slice(0,introTurnIdx+1).reverse().find(beat=>beat.scene)?.scene||page.scene;
     const scene=D.scenes&&D.scenes[activeSceneKey];
     const introImage=$('#intro-img');
@@ -649,10 +650,10 @@ const UI = (()=>{
         entry.classList.remove('chat-newest','narration-newest');
       });
       transcript.insertAdjacentHTML('beforeend',storyEntryHtml(
-        introBeats[introTurnIdx],true,dialogueLaneMap(introBeats),{intro:true},introBeats[introTurnIdx-1]
+        introBeats[introTurnIdx],true,dialogueLaneMap(introBeats),introRenderOpt,introBeats[introTurnIdx-1]
       ));
     }else if(introText){
-      introText.innerHTML=storyReaderHtml(introBeats,introTurnIdx,{intro:true});
+      introText.innerHTML=storyReaderHtml(introBeats,introTurnIdx,introRenderOpt);
     }
     const live=$('#story-live'), current=introBeats[Math.min(introTurnIdx,introBeats.length-1)];
     if(live&&current) live.textContent=`${current.kind==='dialogue'?(current.name||speakerInfo(current.who).name)+'의 말: ':'장면 설명: '}${stripTags(current.text)}`;
@@ -1036,7 +1037,8 @@ const UI = (()=>{
   function storyTurnHtml(turn, opt={}){
     const kind=turn.kind||'narration';
     const person=speakerInfo(turn.who,turn.name);
-    const hasPortrait=!!person.portrait&&!['narration','ai','radio'].includes(kind);
+    const isPlayerThought=kind==='thought'&&playerSpeaker(person.id);
+    const hasPortrait=!!person.portrait&&!['narration','ai','radio'].includes(kind)&&!isPlayerThought;
     const source={
       narration:'장면', dialogue:'대화', thought:'생각', ai:'AI 방송',
       radio:'라디오', letter:'편지', record:'기록'
@@ -1045,14 +1047,23 @@ const UI = (()=>{
     const face=hasPortrait
       ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
       : '';
-    const speaker=['dialogue','thought','letter'].includes(kind)||(kind==='record'&&hasPortrait)
+    const speaker=isPlayerThought
+      ? `<div class="turn-source thought-source">생각</div>`
+      : ['dialogue','thought','letter'].includes(kind)||(kind==='record'&&hasPortrait)
       ? `<div class="turn-speaker">${face}<span><small>${source}</small><b>${esc(person.name)}</b></span></div>`
       : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
-    return `<article class="story-turn story-entry ${kind}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}"
+    return `<article class="story-turn story-entry ${kind}${isPlayerThought?' player-thought':''}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}"
       data-kind="${kind}" data-story-entry>
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
   }
   const playerSpeaker=(id)=>['me','player_child','나'].includes(id);
+  function storyPresentationOptions(turns,opt={}){
+    const speakers=(turns||[]).filter(turn=>turn&&turn.kind==='dialogue')
+      .map(turn=>speakerInfo(turn.who,turn.name).id);
+    const hasPlayer=speakers.some(playerSpeaker);
+    const hasExternal=speakers.some(id=>!playerSpeaker(id));
+    return {...opt,playerSolo:hasPlayer&&!hasExternal};
+  }
   /* 이름은 ???→실명으로 바뀐 수 있지만, 화자의 좌우 자리는 인물 ID를 따른다.
      화면에 보이는 이름을 키로 쓰면 자기소개 순간에 같은 인물이 반대쪽으로 튀어 간다. */
   function speakerLaneKey(turn){
@@ -1105,15 +1116,16 @@ function dialogueSide(turn,lanes,opt={}){
     const hidden=person.name==='???';
     const continuation=previous&&previous.kind==='dialogue'&&speakerLaneKey(previous)===speakerLaneKey(turn);
     const faceAlt=hidden?'이름을 모르는 사람':person.name;
-    const portrait=person.portrait
+    const showPortrait=person.portrait&&!continuation&&!(mine&&opt.playerSolo);
+    const portrait=showPortrait
       ? `<img class="chat-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
       : '';
     const face=portrait&&opt.intro
       ? `<span class="intro-portrait-photo">${portrait}<span class="intro-portrait-pin" aria-hidden="true"></span></span>`
       : portrait;
-    return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${hidden?' identity-hidden':''}${continuation?' speaker-continuation':''}${newest?' chat-newest':''}"
+    return `<div class="chat-msg story-entry side-${side} ${mine?'mine':'other'}${mine&&opt.playerSolo?' player-solo':''}${hidden?' identity-hidden':''}${continuation?' speaker-continuation':''}${newest?' chat-newest':''}"
       data-kind="dialogue" data-speaker="${esc(person.id||person.name)}" data-side="${side}" data-story-entry>
-      ${face}<div class="chat-copy"><b class="chat-name">${esc(person.name)}</b>
+      ${face}<div class="chat-copy">${continuation?'':`<b class="chat-name">${esc(person.name)}</b>`}
       <div class="chat-bubble">${fmt(turn.text||'')}</div></div></div>`;
   }
   function narrationMessageHtml(turn,newest=false,opt={}){
@@ -1131,9 +1143,10 @@ function dialogueSide(turn,lanes,opt={}){
   function storyReaderHtml(turns,index,opt={}){
     const safe=Math.min(Math.max(0,index),Math.max(0,turns.length-1));
     const shown=(turns.length?turns:[{kind:'narration',text:'잠시 말이 끊겼다.'}]).slice(0,safe+1);
-    const lanes=opt.lanes instanceof Map?opt.lanes:dialogueLaneMap(turns);
-    return `<section class="story-chat story-transcript${opt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
-      ${shown.map((turn,i)=>storyEntryHtml(turn,i===shown.length-1,lanes,opt,shown[i-1])).join('')}</section>`;
+    const renderOpt=storyPresentationOptions(turns,opt);
+    const lanes=renderOpt.lanes instanceof Map?renderOpt.lanes:dialogueLaneMap(turns);
+    return `<section class="story-chat story-transcript${renderOpt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
+      ${shown.map((turn,i)=>storyEntryHtml(turn,i===shown.length-1,lanes,renderOpt,shown[i-1])).join('')}</section>`;
   }
   function eventSpeakerCandidates(evd, extra=[]){
     const ids=[];
@@ -1368,7 +1381,7 @@ function dialogueSide(turn,lanes,opt={}){
     const body=raw.replace(/^[^\p{L}\p{N}]+/u,'');
     const driverLevel=body.match(/「([^」]+)」/);
     if(/운전 숙련|연비|운전자/.test(body)) return {
-      kicker:'운전 기록',title:driverLevel?`운전 숙련 · ${driverLevel[1]}`:'운전 감각이 쌓였다',icon:'perk',tone:'skill',
+        kicker:'운전 기록',title:driverLevel?`운전 숙련 · ${driverLevel[1]}`:'운전 감각이 쌓였다',icon:'driver',tone:'skill',
       body:/연비·피로|연비와 피로/.test(body)?'연비와 피로 효율이 개선됐다.':'주행 경험이 다음 운전에 반영된다.'
     };
     const cases=[
@@ -1576,6 +1589,18 @@ function dialogueSide(turn,lanes,opt={}){
     const prev=panel.querySelector('[data-nav-prev]'),next=panel.querySelector('[data-nav-next]');
     if(prev) prev.onclick=()=>chooseOffset(-1);
     if(next) next.onclick=()=>chooseOffset(1);
+    const depart=panel.querySelector('[data-nav-depart]');
+    if(depart) depart.onclick=event=>{
+      event.preventDefault();
+      event.stopPropagation();
+      const id=depart.dataset.navDepart;
+      depart.disabled=true;
+      if(G.startTravel(id)) return;
+      depart.disabled=false;
+      const check=G.canTravelTo(id);
+      toast(check.why||'지금은 이 길로 출발할 수 없다.');
+      renderPanel();
+    };
     const canvas=panel.querySelector('[data-nav-map]');
     if(canvas) requestAnimationFrame(()=>drawRouteConsoleMap(canvas,routeModels,navChoiceId));
     const viewport=panel.querySelector('.nav-destination-viewport');
@@ -1671,7 +1696,7 @@ function dialogueSide(turn,lanes,opt={}){
     const iconKey=icon||({explore:'explore',camp:'camp',repair:'repair',radio:'radio',walkfuel:'fuel',craft:'parts'}[action]||'quest');
     const drawnIcon=['quest','explore','camp','repair','radio','fuel','parts'].includes(iconKey);
     const iconHtml=`<span class="stop-action-icon stay-action-icon icon-${iconKey}" aria-hidden="true">${drawnIcon?'':ICO(iconKey)}</span>`;
-    const shortCta=disabled?'잠김':({explore:'탐색',camp:'준비',repair:'정비',radio:'수리'}[action]||(cta||title));
+    const shortCta=disabled?'재료 부족':({explore:'탐색',camp:'준비',repair:'정비',radio:'수리'}[action]||(cta||title));
     return `<article class="stop-action-card${primary?' primary':''}${disabled?' is-disabled':''}">
       <button type="button" class="stop-action-trigger" data-a="${esc(action)}" ${disabled?'disabled':''}>
         ${iconHtml}<span class="stop-action-copy"><small class="stop-action-kicker">${esc(kicker)}</small><b>${esc(title)}</b>
@@ -2510,14 +2535,15 @@ function dialogueSide(turn,lanes,opt={}){
     const reader=sheet.querySelector('.story-reader');
     const dock=sheet.querySelector('.event-choice-dock');
     const turn=state.turns[Math.min(state.index,state.turns.length-1)];
+    const storyRenderOpt=storyPresentationOptions(state.turns,{lanes:state.lanes});
     const transcript=reader.querySelector('.story-transcript');
     if(transcript&&transcript.children.length===state.index){
       transcript.querySelectorAll('.chat-newest,.narration-newest').forEach(entry=>{
         entry.classList.remove('chat-newest','narration-newest');
       });
-      transcript.insertAdjacentHTML('beforeend',storyEntryHtml(turn,true,state.lanes,{},state.turns[state.index-1]));
+      transcript.insertAdjacentHTML('beforeend',storyEntryHtml(turn,true,state.lanes,storyRenderOpt,state.turns[state.index-1]));
     }else{
-      reader.innerHTML=storyReaderHtml(state.turns,state.index,{lanes:state.lanes});
+      reader.innerHTML=storyReaderHtml(state.turns,state.index,storyRenderOpt);
     }
     renderStoryScene(state,turn,state.index);
     if(turn&&state.audioIndex!==state.index){
@@ -2862,9 +2888,10 @@ function dialogueSide(turn,lanes,opt={}){
           <span class="req">${full? '✗ 동료석 만석 '+S.party.length+'/'+mp+(next?' · '+next.nm+' 필요':'') : '✓ 동료 자리 '+S.party.length+'/'+mp+' · '+c.perk}</span></button>
         <button class="choice" data-r="no">작별 인사를 한다</button>`;
     } else {
-      actions+=`<button class="choice primary-exit-btn" data-r="ok">${chained
-        ?`다음 단계${chainEvent&&chainEvent.combat?' — '+esc(chainEvent.combat.step):''} →`
-        :'길로 돌아가기 →'}</button>`;
+      const actionLabel=chained
+        ?`다음 단계${chainEvent&&chainEvent.combat?' · '+esc(chainEvent.combat.step):''}`
+        :'길로 돌아가기';
+      actions+=`<button class="choice primary-exit-btn" data-r="ok"><span>${actionLabel}</span><i aria-hidden="true">→</i></button>`;
     }
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="선택 결과">${scene}
       <section class="event-field-report" aria-label="${esc(reportTitle)} · 선택 ${esc(selectedTitle)}"><div class="event-head"><div><span class="sr-only" data-event-progress>결과 · ${turns.length} / ${turns.length}</span><h2>${esc(visibleReportTitle)}</h2></div></div>
@@ -4081,7 +4108,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(btn) btn.onclick=()=>{ closeOvl('#ovl-map'); G.startTravel(id); };
     card.classList.add('on');
   }
-  function renderMapMini(){ $('#map-mini').textContent=`발견 ${S.known.length}/${Object.keys(D.nodes).length} · 서울까지 약 ${G.remainKm()}km`; }
+  function renderMapMini(){ $('#map-mini').textContent=`발견 ${S.known.length}/${Object.keys(D.nodes).length} │ 서울까지 약 ${G.remainKm()}km`; }
   function refreshMapSurface(){
     renderMapMini(); renderMission();
     /* 닫힌 오버레이에서 부팅한 canvas는 폭·높이가 0이다. Chrome이 새 레이아웃을
