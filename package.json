@@ -55,7 +55,8 @@
     "test:accessibility9": "npm run build:html --silent && python3 tests/test_quality_9_accessibility.py",
     "test:pwa": "npm run build:html --silent && node tools/check-pwa.mjs",
     "test:pwa:runtime": "python3 tests/test_pwa_runtime.py",
-    "test:release": "bash tools/release-check.sh"
+    "test:release": "bash tools/release-check.sh",
+    "dev:live": "node tools/dev-live.mjs"
   },
   "dependencies": {
     "@apps-in-toss/web-framework": "2.10.6"

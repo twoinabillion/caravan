@@ -331,7 +331,9 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
     }
     const key = evd.id || `${evd.title || 'road-event'}:${type}`;
     const scene={...roadApproachSceneProfile(evd,kind),...(authored.scene||{})};
-    const duration=Math.max(900,Number(authored.duration)||((type === '위기' || evd.combat) ? 1150 : 1700));
+    /* Give the player time to see the roadside cue before braking. Crisis
+       events stop a little sooner, but never snap directly into the event. */
+    const duration=Math.max(1800,Number(authored.duration)||((type === '위기' || evd.combat) ? 2100 : 2700));
     return {kind, title:String(evd.title||''),
       label:authored.label||ROAD_APPROACH_MOTIF_LABELS[scene.motif]||ROAD_APPROACH_LABELS[kind],
       duration,eventKey:key,scene};

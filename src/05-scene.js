@@ -573,8 +573,11 @@ const SCENE = (()=>{
       ctx.scale(displayScale,displayScale);
       ctx.translate(-cabX,-baseY-6);
     }
-    const bnc=speed>0? Math.sin(t*11)*0.8+Math.sin(t*23.7)*0.4 : Math.sin(t*1.6)*0.3;
-    const bnc2=speed>0? Math.sin(t*11+1.2)*0.8 : Math.sin(t*1.6+0.6)*0.3;
+    /* Blend road vibration into the idle sway. A boolean speed check made the
+       suspension snap on the final braking frame even though scenery slowed. */
+    const motion=clamp(Number(speed)||0,0,1), idle=1-motion;
+    const bnc=(Math.sin(t*11)*0.8+Math.sin(t*23.7)*0.4)*motion+Math.sin(t*1.6)*0.3*idle;
+    const bnc2=Math.sin(t*11+1.2)*0.8*motion+Math.sin(t*1.6+0.6)*0.3*idle;
     const ride=up.susp?1.5:0;
     const vy=P(baseY+bnc-ride);
     /* 그림자 */
@@ -1126,6 +1129,86 @@ const SCENE = (()=>{
     }
   }
 
+  /* Detailed road vehicles use the same hard-edged, low-resolution canvas
+     language as the caravan. Their physical scale is deliberately smaller
+     because they sit farther up the road, not because the asset is a thumbnail. */
+  function approachDetailedVehicle(x,ground,motif,dark,variant){
+    const bus=motif==='clinic-bus', broken=motif==='broken-vehicle';
+    const w=bus?94:88, h=bus?43:39, left=Math.round(x-w/2), top=Math.round(ground-h);
+    const palette={
+      'coffee-van':['#6f5943','#a7835d','#d3a663'],
+      'food-truck':['#70483b','#a56548','#d89055'],
+      'clinic-bus':['#d0c8b0','#728f82','#b9574f'],
+      'broken-vehicle':['#5d625e','#7b817a','#c17a45'],
+      'film-vehicle':['#46515a','#697680','#c89b52']
+    }[motif]||['#655b4d','#8a7a63','#c28b4e'];
+    const shade=dark?'#171d20':'#272a28', glass=dark?'#263845':'#71838a';
+    const wheel=(cx)=>{
+      ctx.fillStyle='#111417';circ(cx,ground-6,7);
+      ctx.fillStyle='#2e3334';circ(cx,ground-6,4);
+      ctx.fillStyle='#77746c';circ(cx,ground-6,1.5);
+    };
+    const person=(px,coat,wave=false)=>{
+      const py=Math.round(ground-3), skin=dark?'#9c765a':'#b58b69';
+      ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(px-4,py+1,9,2);
+      ctx.fillStyle=skin;circ(px,py-22,3.5);
+      ctx.fillStyle=coat;ctx.fillRect(px-4,py-18,8,10);
+      ctx.strokeStyle=shade;ctx.lineWidth=2;
+      line(px-2,py-8,px-3,py);line(px+2,py-8,px+4,py);
+      line(px-4,py-16,px-7,py-10);
+      line(px+4,py-16,wave?px+8:px+7,wave?py-25:py-10);
+      ctx.fillStyle=skin;circ(wave?px+8:px+7,wave?py-25:py-10,1.5);
+    };
+    ctx.save();
+    ctx.imageSmoothingEnabled=false;
+    ctx.fillStyle='rgba(0,0,0,.34)';
+    ctx.beginPath();ctx.ellipse(x,ground-2,w*.46,5,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=shade;ctx.fillRect(left+2,top+9,w-4,h-14);
+    ctx.fillStyle=palette[0];ctx.fillRect(left+4,top+7,w-31,h-15);
+    ctx.fillStyle=palette[1];ctx.fillRect(left+4,top+18,w-9,h-17);
+    ctx.beginPath();ctx.moveTo(left+w-31,top+7);ctx.lineTo(left+w-15,top+8);ctx.lineTo(left+w-5,top+18);ctx.lineTo(left+w-5,ground-8);ctx.lineTo(left+w-31,ground-8);ctx.closePath();ctx.fill();
+    ctx.fillStyle=shade;ctx.fillRect(left+w-29,top+10,19,11);
+    ctx.fillStyle=glass;ctx.fillRect(left+w-27,top+11,8,8);ctx.fillRect(left+w-17,top+12,6,7);
+    ctx.fillStyle=dark?'#d7a45b':'#ead095';ctx.fillRect(left+w-6,ground-17,3,3);
+    ctx.fillStyle='#3a3530';ctx.fillRect(left+1,ground-10,w-2,3);
+    wheel(left+20);wheel(left+w-20);
+    if(motif==='coffee-van'||motif==='food-truck'){
+      ctx.fillStyle=shade;ctx.fillRect(left+10,top+10,35,16);
+      ctx.fillStyle=dark?'#b87838':'#ddad68';ctx.fillRect(left+12,top+12,31,12);
+      ctx.fillStyle=palette[2];
+      for(let i=0;i<5;i++)ctx.fillRect(left+10+i*8,top+7,5,4);
+      ctx.fillStyle='#302820';ctx.fillRect(left+13,top+23,29,2);
+      if(motif==='coffee-van'){
+        ctx.strokeStyle='#e1c18b';ctx.lineWidth=1.5;circ(left+26,top+17,3);line(left+29,top+17,left+32,top+17);
+      }else{
+        ctx.fillStyle='#e5d2ac';ctx.fillRect(left+20,top+15,15,2);
+        ctx.fillStyle='rgba(221,221,203,.55)';ctx.fillRect(left+24,top+8,2,4);ctx.fillRect(left+31,top+6,2,6);
+      }
+      person(left-8,motif==='coffee-van'?'#5d493c':'#62443b',true);
+      person(left+51,'#3f4a4c',false);
+    }else if(bus){
+      ctx.fillStyle=glass;
+      for(let i=0;i<4;i++)ctx.fillRect(left+9+i*14,top+10,10,9);
+      ctx.fillStyle=palette[2];ctx.fillRect(left+10,top+25,45,3);
+      ctx.fillRect(left+61,top+12,3,13);ctx.fillRect(left+56,top+17,13,3);
+      person(left-8,'#d1d0c5',true);
+    }else if(broken){
+      ctx.fillStyle=shade;ctx.fillRect(left+w-10,top+4,17,3);
+      ctx.strokeStyle='#343638';ctx.lineWidth=2;line(left+w-11,top+7,left+w+5,top-3);
+      ctx.fillStyle='rgba(153,158,151,.42)';circ(left+w+2,top-8,3);circ(left+w+7,top-13,4);
+      ctx.fillStyle=palette[2];ctx.fillRect(left+w+5,ground-8,7,5);
+      person(left+w+13,'#4b4f4d',false);
+    }else if(motif==='film-vehicle'){
+      ctx.fillStyle=palette[2];ctx.fillRect(left+13,top+9,28,3);
+      ctx.fillStyle='#25292b';ctx.fillRect(left+19,top+4,12,5);circ(left+34,top+6,4);
+      ctx.strokeStyle='#373b3d';ctx.lineWidth=2;line(left-7,ground,left-1,ground-18);line(left+5,ground,left-1,ground-18);line(left-1,ground-18,left+7,ground-23);
+      ctx.fillStyle='#202426';ctx.fillRect(left+6,ground-26,8,6);circ(left+16,ground-23,4);
+      person(left-13,'#3b4248',false);
+    }
+    ctx.fillStyle='rgba(235,210,164,.22)';ctx.fillRect(left+6,top+20,2,h-24);
+    ctx.restore();
+  }
+
   /* ── 길 위 사건 예고 ──
      달구지와 같은 해상도의 전용 픽셀 자산을 사용한다. 사람과 시설은 갓길에,
      실제 주행 장애물만 차선에 놓고 접근 중 크기는 바꾸지 않는다. */
@@ -1274,34 +1357,24 @@ const SCENE = (()=>{
     if(!ap.startedAt)ap.startedAt=Date.now();
     const elapsed=Math.max(0,(Date.now()-ap.startedAt)/1000);
     const duration=Math.max(.8,(Number(ap.duration)||1450)/1000);
-    const stopAt=Math.max(.65,duration*.78);
+    const stopAt=Math.max(.9,duration*.84);
     const q=Math.min(1,elapsed/stopAt),ease=1-Math.pow(1-q,3);
     const x=P(lerp(W+30,W*.82,ease)), ground=P(roadY+(H-roadY)*.43+8);
     const seed=approachSeed(ap.eventKey),variant=Math.floor(seed*3),kind=ap.kind||'landmark',spec=ap.scene||{},motif=spec.motif||'';
     if(spec.selfVehicle)return;
-    const spriteKey=approachSpriteKey(kind,motif),sprite=approachSprite(spriteKey);
-    if(sprite&&(!sprite.complete||!sprite.naturalWidth)) return;
-    if(sprite){
-      const specialVehicle=['coffee-van','food-truck','clinic-bus','broken-vehicle','film-vehicle'].includes(spriteKey);
-      const inLane=Boolean(spec.inLane)||['bridge','checkpoint','debris','flood','smoke'].includes(spriteKey);
-      const spriteX=P(lerp(W*.94,W*.8,ease));
-      const farGround=roadY+(H-roadY)*(inLane?.15:.055)+(inLane?4:2);
-      const nearGround=roadY+(H-roadY)*(inLane?.32:.16)+(inLane?7:4);
-      const spriteGround=P(lerp(farGround,nearGround,ease));
-      const baseSize=specialVehicle?82:(inLane?(['bridge','checkpoint'].includes(spriteKey)?64:58):52);
-      const spriteSize=P(baseSize*(.46+.54*ease));
-      ctx.save();
-      ctx.globalAlpha=Math.min(1,.14+q*1.34);
-      ctx.drawImage(sprite,spriteX-spriteSize/2,spriteGround-spriteSize*.84,spriteSize,spriteSize);
-      ctx.restore();
-      return;
-    }
-    const fallbackScale=.55+.45*ease;
+    /* The moving road never mixes generated/raster artwork with the caravan.
+       Every event first appears as a motif-specific canvas object; cinematic
+       art is reserved for the event screen after the vehicle has stopped. */
+    const vehicleCue=['coffee-van','food-truck','clinic-bus','film-vehicle','broken-vehicle'].includes(motif);
+    const structureCue=['coffee-stall','food-stall','pharmacy','greenhouse','school','wedding'].includes(motif);
+    const fallbackScale=(vehicleCue?.82:structureCue?.78:.8)+(vehicleCue?.18:structureCue?.2:.18)*ease;
     ctx.save();ctx.globalAlpha=Math.min(1,.2+q*1.4);
+    ctx.imageSmoothingEnabled=false;
     ctx.translate(x,ground);ctx.scale(fallbackScale,fallbackScale);ctx.translate(-x,-ground);
+    ctx.fillStyle=dark?'rgba(1,4,8,.34)':'rgba(18,22,20,.24)';
+    ctx.fillRect(Math.round(x-25),Math.round(ground),50,2);
     if(['coffee-van','food-truck','clinic-bus','film-vehicle','broken-vehicle'].includes(motif)){
-      approachSpecialVehicle(x,ground,motif,dark,variant);
-      approachPeople(x-20,ground,spec.people||1,spec.action||'stand',seed);
+      approachDetailedVehicle(x,ground,motif,dark,variant);
     }else if(motif==='postman'){
       approachBike(x+5,ground);approachPeople(x-7,ground,1,spec.action||'wave',seed);approachProp(x+13,ground,'mail',dark);
     }else if(['coffee-stall','food-stall','pharmacy','greenhouse','school'].includes(motif)){
@@ -1434,8 +1507,12 @@ const SCENE = (()=>{
     const activeApproach=S&&S.driving&&S.driving.approach;
     const approachElapsed=activeApproach?Math.max(0,(Date.now()-(activeApproach.startedAt||Date.now()))/1000):0;
     const approachDuration=activeApproach?Math.max(.8,(Number(activeApproach.duration)||1450)/1000):1;
-    const brakeProgress=activeApproach?Math.min(1,approachElapsed/Math.max(.65,approachDuration*.78)):0;
-    const brakeEase=brakeProgress*brakeProgress*(3-2*brakeProgress);
+    /* Hold road speed briefly while the cue becomes legible, then use a
+       smootherstep curve so acceleration and braking force both reach zero. */
+    const brakeStart=approachDuration*.18;
+    const brakeSpan=Math.max(.9,approachDuration*.66);
+    const brakeProgress=activeApproach?Math.min(1,Math.max(0,(approachElapsed-brakeStart)/brakeSpan)):0;
+    const brakeEase=brakeProgress*brakeProgress*brakeProgress*(brakeProgress*(brakeProgress*6-15)+10);
     const approachSpeed=activeApproach?Math.max(0,1-brakeEase):1;
     const speed=S&&S.driving&&!UI.modalOpen()?approachSpeed:0;
     if(speed>0) worldX+=64*dt*speed;
@@ -1593,12 +1670,43 @@ const SCENE = (()=>{
     for(let y=60;y<TOWN_H;y+=8)for(let x=(y/8%2)*4;x<TOWN_W;x+=8){
       const seed=hash(x*3.1+y*5.7+town.id.length);c.fillStyle=seed>.53?mix(q.ground,'#ffffff',.08):mix(q.ground,'#000000',.09);c.fillRect(x+2,y+2,seed>.8?2:1,1);
     }
-    /* 포켓몬식 넓은 십자 거리. 시설 사이를 선으로 잇지 않고 길 블록으로 읽힌다. */
-    c.fillStyle=q.road;c.fillRect(0,166,TOWN_W,58);c.fillRect(96,100,44,TOWN_H-100);
-    c.fillRect(42,130,56,94);c.fillRect(138,130,57,94);c.fillRect(42,222,56,63);c.fillRect(138,222,57,63);
+    /* 도시마다 생활 방식이 다른 만큼 거리의 골격도 다르다. 시설 좌표는
+       그대로 유지하되 길 폭, 광장, 마당과 통로의 비율을 다르게 잡는다. */
+    c.fillStyle=q.road;
+    if(kind==='dome'){
+      c.fillRect(0,150,TOWN_W,72);c.fillRect(80,92,76,TOWN_H-92);c.fillRect(18,222,200,64);
+    }else if(kind==='tunnel'){
+      c.fillRect(24,82,TOWN_W-48,TOWN_H-82);c.fillRect(50,145,TOWN_W-100,78);
+    }else if(kind==='hanok-market'){
+      c.fillRect(0,158,TOWN_W,66);c.fillRect(84,102,68,TOWN_H-102);c.fillRect(35,224,166,61);
+    }else if(kind==='research'){
+      c.fillRect(0,154,TOWN_W,60);c.fillRect(88,92,60,TOWN_H-92);c.fillRect(28,222,180,64);
+    }else if(kind==='fortress'){
+      c.fillRect(14,150,TOWN_W-28,72);c.fillRect(91,74,54,TOWN_H-74);c.fillRect(38,222,160,64);
+    }else if(kind==='five-day-market'){
+      c.fillRect(0,158,TOWN_W,70);c.fillRect(80,104,76,TOWN_H-104);c.fillRect(34,224,168,62);
+    }else{
+      c.fillRect(0,156,TOWN_W,64);c.fillRect(86,100,64,TOWN_H-100);c.fillRect(30,220,176,66);
+    }
     c.fillStyle=q.line;
-    for(let y=168;y<224;y+=12){for(let x=(y/12%2)*8;x<TOWN_W;x+=16)c.fillRect(x,y,9,1);}
-    for(let y=106;y<TOWN_H;y+=12){c.fillRect(97,y,42,1);if(y%24===0){c.fillRect(101,y+5,5,1);c.fillRect(126,y+5,8,1);}}
+    if(kind==='dome'||kind==='research'){
+      for(let x=7;x<TOWN_W;x+=22)c.fillRect(x,184,12,1);
+      for(let y=104;y<TOWN_H;y+=18)c.fillRect(117,y,2,9);
+    }else if(kind==='fortress'||kind==='hanok-market'){
+      for(let y=160;y<286;y+=10)for(let x=18+(y%20?5:0);x<TOWN_W-18;x+=20)c.fillRect(x,y,13,1);
+    }else{
+      for(let y=164;y<224;y+=12)for(let x=(y/12%2)*8;x<TOWN_W;x+=16)c.fillRect(x,y,9,1);
+      for(let y=108;y<TOWN_H;y+=14)c.fillRect(96,y,44,1);
+    }
+    /* 빈 회색 면 대신 실제 왕래가 남긴 흔적을 낮은 대비로 쌓는다. */
+    for(let i=0;i<18;i++){
+      const x=12+hash(i*7.3+town.id.length)*212,y=132+hash(i*11.9+4)*150;
+      c.fillStyle=i%4===0?'rgba(9,15,18,.28)':mix(q.road,'#000000',.16);
+      c.fillRect(P(x),P(y),i%4===0?8:2,i%3===0?2:1);
+      if(i%5===0){c.fillStyle='rgba(114,145,151,.14)';c.fillRect(P(x+1),P(y),6,1);}
+    }
+    c.fillStyle=mix(q.road,'#000000',.25);
+    for(const [x,y] of [[30,191],[66,238],[173,177],[202,247]]){c.fillRect(x,y,9,1);c.fillRect(x+3,y+1,1,3);}
     if(kind==='research'){c.fillStyle='rgba(105,197,189,.16)';for(let x=8;x<TOWN_W;x+=16)c.fillRect(x,58,1,TOWN_H-58);for(let y=62;y<TOWN_H;y+=16)c.fillRect(0,y,TOWN_W,1);}
     if(kind==='tunnel'){c.fillStyle='#15181a';c.fillRect(0,54,24,TOWN_H);c.fillRect(TOWN_W-24,54,24,TOWN_H);c.fillRect(0,54,TOWN_W,26);for(let y=76;y<TOWN_H;y+=28){c.fillStyle='#4c4a47';c.fillRect(18,y,6,14);c.fillRect(TOWN_W-24,y+12,6,14);}}
     if(kind==='fortress'){c.fillStyle='#565246';c.fillRect(0,54,TOWN_W,20);c.fillRect(0,54,14,TOWN_H);c.fillRect(TOWN_W-14,54,14,TOWN_H);for(let x=2;x<TOWN_W;x+=16){c.fillStyle='#777162';c.fillRect(x,55,10,7);}}
@@ -1613,13 +1721,40 @@ const SCENE = (()=>{
       c.fillStyle='#d6c89f';c.fillRect(x+w/2-13,y+24,26,2);c.fillStyle=q.dark;c.fillRect(x+w/2-9,y+26,18,h-26);c.fillStyle=q.window;c.fillRect(x+w/2-6,y+29,12,4);return;
     }
     c.fillStyle=q.wall;c.fillRect(x,y+8,w,h-8);c.fillStyle=mix(q.wall,'#ffffff',.11);c.fillRect(x+2,y+10,w-4,2);
-    c.fillStyle=index%3===0?q.trim:q.roof;c.fillRect(x-2,y+3,w+4,5);c.fillStyle=mix(q.roof,'#ffffff',.14);c.fillRect(x,y,w,3);
+    c.fillStyle=index%3===0?q.trim:q.roof;c.fillRect(x-2-(index%2),y+3,w+4+(index%2)*2,5);c.fillStyle=mix(q.roof,'#ffffff',.14);c.fillRect(x,y,w,3);
     if(kind==='hanok-market'||kind==='fortress'){c.fillStyle=q.roof;c.fillRect(x-4,y+4,w+8,3);c.fillRect(x,y,w,2);}
     if(kind==='research'){c.fillStyle=q.trim;c.fillRect(x+3,y+5,w-6,2);}
-    c.fillStyle=q.window;for(let wx=x+6;wx<x+w-6;wx+=13){c.fillRect(wx,y+13,6,6);c.fillStyle=q.dark;c.fillRect(wx+2,y+13,1,6);c.fillStyle=mix(q.window,'#ffffff',.18);c.fillRect(wx,y+13,1,1);c.fillStyle=q.window;}
+    const rows=h>=38?2:1;
+    for(let row=0;row<rows;row++){
+      c.fillStyle=q.window;for(let wx=x+6+(row%2)*3;wx<x+w-6;wx+=13){
+        const wy=y+13+row*11;c.fillRect(wx,wy,6,5);c.fillStyle=q.dark;c.fillRect(wx+2,wy,1,5);
+        c.fillStyle=mix(q.window,'#ffffff',.18);c.fillRect(wx,wy,1,1);c.fillStyle=q.window;
+      }
+    }
     c.fillStyle=mix(q.wall,'#000000',.17);for(let px=x+4;px<x+w-4;px+=9)c.fillRect(px,y+22,1,Math.max(2,h-24));
     c.fillStyle=q.dark;c.fillRect(x+w/2-4,y+h-10,8,10);c.fillStyle=q.trim;c.fillRect(x+w/2-3,y+h-8,6,2);c.fillStyle=q.window;c.fillRect(x+w/2+2,y+h-5,1,1);
     c.fillStyle=mix(q.roof,'#ffffff',.22);c.fillRect(x+3+(index*7)%Math.max(4,w-10),y+1,5,2);
+    if(index%4===1){c.fillStyle=mix(q.wall,'#000000',.35);c.fillRect(x+w-10,y+17,8,2);c.fillRect(x+w-7,y+19,5,1);}
+    if(index%4===2){c.fillStyle=q.trim;c.fillRect(x+3,y+h-15,w-6,3);for(let ax=x+4;ax<x+w-5;ax+=8){c.fillStyle=ax%16?q.trim:mix(q.trim,'#ffffff',.12);c.fillRect(ax,y+h-15,5,3);}}
+  }
+
+  function townPixelAwning(c,x,y,w,index=0){
+    const q=townPixelPalette();c.fillStyle=mix(q.dark,'#ffffff',.12);c.fillRect(x,y+5,w,4);c.fillStyle=index%2?q.trim:mix(q.trim,'#ffffff',.12);c.fillRect(x-2,y,w+4,5);
+    for(let ax=x;ax<x+w;ax+=8){c.fillStyle=ax/8%2?q.trim:mix(q.trim,'#f0c57a',.32);c.fillRect(ax,y,5,5);}
+    c.fillStyle=q.dark;c.fillRect(x+2,y+9,2,8);c.fillRect(x+w-4,y+9,2,8);
+  }
+  function townPixelTower(c,x,y,h,index=0){
+    const q=townPixelPalette();c.fillStyle='rgba(5,7,9,.42)';c.fillRect(x+3,y+4,18,h);c.fillStyle=mix(q.wall,'#ffffff',.06);c.fillRect(x,y+8,18,h-8);
+    c.fillStyle=q.roof;c.fillRect(x-3,y+3,24,5);c.fillStyle=q.trim;c.fillRect(x+3,y+13,12,3);c.fillStyle=q.window;c.fillRect(x+6,y+17,6,5);
+    c.fillStyle=q.dark;c.fillRect(x+8,y+22,2,h-22);if(index%2===0){c.fillStyle=q.trim;c.fillRect(x+8,y-5,2,8);c.fillRect(x+5,y-4,8,2);}
+  }
+  function townPixelWire(c,x1,y1,x2,y2,sag=4){
+    const q=townPixelPalette();c.fillStyle=mix(q.dark,'#ffffff',.16);
+    for(let x=x1;x<=x2;x+=2){const t=(x-x1)/Math.max(1,x2-x1),y=y1+(y2-y1)*t+Math.sin(t*Math.PI)*sag;c.fillRect(P(x),P(y),2,1);}
+  }
+  function townPixelCarcass(c,x,y,index=0){
+    const q=townPixelPalette();c.fillStyle='rgba(4,6,8,.35)';c.fillRect(x+2,y+5,18,7);c.fillStyle=mix(q.wall,index%2?'#6f493c':'#5b6264',.35);c.fillRect(x,y+2,20,7);
+    c.fillStyle=q.dark;c.fillRect(x+4,y,10,4);c.fillStyle='#20252a';c.fillRect(x+3,y+8,4,4);c.fillRect(x+14,y+8,4,4);c.fillStyle=mix(q.wall,'#ffffff',.14);c.fillRect(x+6,y+1,6,2);
   }
 
   function townPixelAtlas(c,type,index,x,y,w,h){
@@ -1634,20 +1769,47 @@ const SCENE = (()=>{
   }
   function townPixelBackdrop(c){
     const kind=town.world.kind;townPixelGround(c);
-    if(kind==='dome')townPixelBuilding(c,58,58,120,54,0,'dome');
-    else if(kind==='tunnel'){
-      for(const [x,y] of [[30,90],[174,90],[30,238],[174,238]])townPixelBuilding(c,x,y,32,28,1);
-    }else{
-      const top=kind==='research'?[[8,68,45,31],[58,68,45,31],[133,68,45,31],[183,68,45,31]]:[[5,68,46,34],[56,68,43,34],[137,68,43,34],[185,68,46,34]];
-      top.forEach((b,i)=>townPixelBuilding(c,...b,i));
+    if(kind==='night-market'){
+      [[2,72,37,42],[34,64,43,50],[72,70,35,40],[130,67,40,44],[166,61,42,51],[203,72,31,40]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      townPixelAwning(c,5,119,35,0);townPixelAwning(c,196,119,34,1);townPixelAwning(c,6,239,34,2);townPixelWire(c,10,102,226,93,9);
+    }else if(kind==='five-day-market'){
+      [[4,73,48,35],[47,68,45,40],[143,70,42,38],[181,75,50,33]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      townPixelAwning(c,7,121,34,0);townPixelAwning(c,194,121,35,1);townPixelAwning(c,8,241,33,2);townPixelAwning(c,195,241,33,3);
+    }else if(kind==='dome'){
+      townPixelBuilding(c,48,55,140,60,0,'dome');townPixelTower(c,8,70,63,0);townPixelTower(c,210,72,61,1);
+      [[2,126,40,45],[194,126,40,45],[4,235,38,45],[194,237,39,43]].forEach((b,i)=>townPixelBuilding(c,...b,i+1));
+      townPixelAwning(c,47,128,45,1);townPixelAwning(c,145,128,43,2);townPixelWire(c,17,112,218,105,7);townPixelCarcass(c,13,229,0);townPixelCarcass(c,202,206,1);
+    }else if(kind==='tunnel'){
+      [[27,90,35,31],[174,90,35,31],[27,134,34,29],[175,134,34,29],[27,247,34,29],[175,247,34,29]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      townPixelWire(c,27,82,209,82,2);
+    }else if(kind==='hanok-market'){
+      [[3,73,47,34],[45,69,45,38],[144,70,44,37],[184,74,48,33]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      [[7,121,35,30],[194,121,35,30],[8,241,34,30],[194,241,35,30]].forEach((b,i)=>townPixelBuilding(c,...b,i+4));
+      townPixelAwning(c,52,113,31,0);townPixelWire(c,12,105,224,105,3);
+    }else if(kind==='research'){
+      [[4,72,42,43],[43,64,52,51],[141,65,51,50],[190,72,42,43]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      townPixelTower(c,107,55,60,0);townPixelBuilding(c,7,126,35,35,5);townPixelBuilding(c,194,126,35,35,6);townPixelBuilding(c,7,241,35,34,7);townPixelBuilding(c,194,241,35,34,8);
+      const q=townPixelPalette();c.fillStyle=q.trim;c.fillRect(15,118,36,3);c.fillRect(185,118,36,3);townPixelWire(c,15,99,220,91,5);
+    }else if(kind==='fortress'){
+      const q=townPixelPalette();c.fillStyle='#565246';c.fillRect(14,68,208,34);for(let x=18;x<220;x+=18){c.fillStyle='#777162';c.fillRect(x,65,11,7);}
+      townPixelTower(c,16,59,53,0);townPixelTower(c,202,59,53,1);c.fillStyle='#252923';c.fillRect(98,67,40,38);c.fillStyle='#111411';c.fillRect(109,78,18,27);
+      [[8,126,35,34],[193,126,35,34],[8,241,35,33],[193,241,35,33]].forEach((b,i)=>townPixelBuilding(c,...b,i+2));
     }
-    const sides=kind==='dome'?[[7,126,35,29],[194,126,35,29],[7,241,35,29],[194,241,35,29]]
-      :kind==='tunnel'?[[28,136,32,26],[176,136,32,26],[28,258,32,25],[176,258,32,25]]
-      :[[7,119,34,30],[195,119,34,30],[7,241,34,30],[195,241,34,30]];
-    sides.forEach((b,i)=>townPixelBuilding(c,...b,i+2));
-    if(kind==='fortress'){c.fillStyle='#252923';c.fillRect(100,66,36,35);c.fillStyle='#817963';c.fillRect(96,62,44,7);c.fillStyle='#111411';c.fillRect(109,79,18,22);}
-    if(kind==='research'){const q=townPixelPalette();c.fillStyle=q.trim;c.fillRect(17,109,34,3);c.fillRect(185,109,34,3);}
     townPixelProps(c);
+  }
+
+  function townPixelLightPools(c){
+    const q=townPixelPalette(),kind=town.world.kind,lights=kind==='dome'?[[64,147,18],[172,147,18],[118,123,25],[64,239,15],[171,239,15]]
+      :kind==='tunnel'?[[53,126,13],[183,126,13],[53,236,13],[183,236,13]]
+      :kind==='research'?[[64,145,16],[172,145,16],[118,121,20]]
+      :[[62,148,17],[173,150,17],[66,239,14],[169,239,14]];
+    c.save();c.globalCompositeOperation='screen';
+    for(const [x,y,r] of lights){
+      c.fillStyle=kind==='research'?'rgba(91,194,186,.055)':'rgba(239,174,83,.055)';c.fillRect(P(x-r),P(y-r/2),P(r*2),P(r));
+      c.fillStyle=kind==='research'?'rgba(91,194,186,.09)':'rgba(239,174,83,.09)';c.fillRect(P(x-r*.55),P(y-r*.28),P(r*1.1),P(r*.56));
+      c.fillStyle=mix(q.window,'#ffffff',.15);c.fillRect(P(x-1),P(y-1),2,2);
+    }
+    c.restore();
   }
   function townPixelProps(c){
     /* 도시 정체성 소품 2개씩 — 시설보다 낮은 대비, 대로 가장자리라 보행·히트 영역과 무관 */
@@ -1726,7 +1888,7 @@ const SCENE = (()=>{
     if(town.selected.id===entityId){const q=townPixelPalette();c.fillStyle=q.window;c.fillRect(x-2,y-2,2,2);c.fillRect(x+w,y-2,2,2);c.fillRect(x-2,y+h-2,2,2);c.fillRect(x+w,y+h-2,2,2);}
   }
   function townPixelVan(c){
-    const entry=townPoint(town.layout.entry||{x:50,y:90}),x=P(entry.x-25),y=TOWN_H-28,q=townPixelPalette();
+    const entry=townPoint(town.layout.entry||{x:50,y:90}),x=P(entry.x-25),y=TOWN_H-43,q=townPixelPalette();
     c.fillStyle='rgba(4,5,6,.45)';c.fillRect(x+3,y+5,22,25);c.fillStyle='#6e685d';c.fillRect(x,y,24,27);c.fillStyle='#91897c';c.fillRect(x+2,y-4,20,8);
     c.fillStyle='#31444d';c.fillRect(x+5,y-2,14,5);c.fillStyle='#d28f3d';c.fillRect(x+4,y+8,6,6);c.fillRect(x+14,y+8,6,6);c.fillStyle='#22252a';c.fillRect(x-2,y+4,3,7);c.fillRect(x+23,y+4,3,7);c.fillRect(x-2,y+19,3,7);c.fillRect(x+23,y+19,3,7);
     c.fillStyle='#8e332e';c.fillRect(x+15,y-9,5,7);c.fillRect(x+21,y-9,4,7);c.fillStyle=q.window;c.fillRect(x+2,y+23,3,2);c.fillRect(x+19,y+23,3,2);
@@ -1742,6 +1904,19 @@ const SCENE = (()=>{
     for(const npc of town.residents)townPixelPerson(c,npc.p.x,npc.p.y,townColor(npc.id),npc.id.length,'resident',npc.id);
     if(town.recruit)townPixelPerson(c,town.recruit.p.x,town.recruit.p.y,townColor(town.recruit.id),4,'recruit',town.recruit.id);
     townCompanionEntities().forEach((comp,index)=>townPixelPerson(c,comp.p.x,comp.p.y,townColor(comp.id),10+index,'companion',comp.id));
+  }
+  function townPixelLayered(c){
+    const rows=town.facilities.map((facility,index)=>({y:facility.p.y+19,index,draw:()=>townPixelFacility(c,facility)}));
+    town.crowd.forEach((person,index)=>{
+      const x=tclamp(person.x+Math.sin(townT*person.speed+person.phase)*person.lane,16,TOWN_W-16),y=tclamp(person.y+Math.cos(townT*person.speed*.7+person.phase)*4,108,TOWN_H-15);
+      rows.push({y:y+12,index:20+index,draw:()=>townPixelPerson(c,x,y,person.color,index,'crowd')});
+    });
+    town.residents.forEach((npc,index)=>rows.push({y:npc.p.y+17,index:50+index,draw:()=>townPixelPerson(c,npc.p.x,npc.p.y,townColor(npc.id),npc.id.length,'resident',npc.id)}));
+    if(town.recruit)rows.push({y:town.recruit.p.y+17,index:70,draw:()=>townPixelPerson(c,town.recruit.p.x,town.recruit.p.y,townColor(town.recruit.id),4,'recruit',town.recruit.id)});
+    townCompanionEntities().forEach((comp,index)=>rows.push({y:comp.p.y+17,index:80+index,draw:()=>townPixelPerson(c,comp.p.x,comp.p.y,townColor(comp.id),10+index,'companion',comp.id)}));
+    rows.push({y:town.player.y+17,index:90,draw:()=>townPixelPerson(c,town.player.x,town.player.y,'#3f4b47',1,'player','player')});
+    rows.push({y:TOWN_H-8,index:100,draw:()=>townPixelVan(c)});
+    rows.sort((a,b)=>a.y-b.y||a.index-b.index).forEach(row=>row.draw());
   }
   function townPixelWeather(c){
     const q=townPixelPalette(),kind=town.world.kind;
@@ -1770,8 +1945,7 @@ const SCENE = (()=>{
   function drawSettlement(dt){
     if(!town||!town.canvas.isConnected) return;
     townT+=dt;townMove(dt);
-    const c=town.c;c.clearRect(0,0,TOWN_W,TOWN_H);townPixelBackdrop(c);town.facilities.forEach(facility=>townPixelFacility(c,facility));townPixelVan(c);
-    townPixelAmbient(c);townPixelNamed(c);townPixelPerson(c,town.player.x,town.player.y,'#3f4b47',1,'player','player');townPixelWeather(c);
+    const c=town.c;c.clearRect(0,0,TOWN_W,TOWN_H);townPixelBackdrop(c);townPixelLightPools(c);townPixelLayered(c);townPixelWeather(c);
     const canvas=town.canvas,out=town.out,vw=Math.max(1,canvas.clientWidth||390),vh=Math.max(1,canvas.clientHeight||470),dpr=Math.min(2,window.devicePixelRatio||1),key=`${vw}/${vh}/${dpr}`;
     if(key!==town.lastSize){canvas.width=Math.round(vw*dpr);canvas.height=Math.round(vh*dpr);out.setTransform(dpr,0,0,dpr,0,0);out.imageSmoothingEnabled=false;town.lastSize=key;}
     out.clearRect(0,0,vw,vh);out.imageSmoothingEnabled=false;out.drawImage(town.buffer,0,0,town.buffer.width,town.buffer.height,0,0,vw,vh);

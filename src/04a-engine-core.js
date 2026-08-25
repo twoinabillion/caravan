@@ -647,18 +647,18 @@ G.qualitySummary = ()=>{
 G.journeyGuide = ()=>{
   if(!S||S.guideDismissed||G.qualityArchive().length||G.qualityPlayMs()>45*60*1000) return null;
   const milestones=G.ensureQualityState().milestones||{};
-  if(!milestones.first_departure) return {step:1,total:4,kicker:'첫 여정 · 길',title:'본편 임무를 기준으로 첫 길을 고른다',
-    body:'「목표」에는 남산에서 강제 이송을 멈추는 주 임무가 표시된다. 지금은 이어진 목적지 가운데 하나를 고르면 된다.',
-    points:['목표: 주 임무와 선택 이야기를 따로 확인한다','길: 거리와 시간, 연료를 보고 다음 목적지를 고른다','선택 의뢰: 원할 때만 맡아도 주 임무는 그대로 남는다'],focus:'route'};
+  if(!milestones.first_departure) return {step:1,total:4,kicker:'첫 여정 · 길',title:'메인 스토리를 기준으로 첫 길을 고른다',
+    body:'「목표」에는 남산에서 강제 이송을 멈추는 메인 스토리가 표시된다. 지금은 이어진 목적지 가운데 하나를 고르면 된다.',
+    points:['목표: 메인 스토리와 사이드 미션를 따로 확인한다','길: 거리와 시간, 연료를 보고 다음 목적지를 고른다','사이드 미션: 원할 때만 맡아도 메인 스토리는 그대로 남는다'],focus:'route'};
   if(!milestones.first_event) return {step:2,total:4,kicker:'첫 여정 · 주행',title:S.driving?'달구지는 선택한 길을 따라 달린다':'다음 목적지를 고른다',
     body:S.driving?'남은 거리와 연료를 확인하며 달린다. 길에서 사건이 생기면 이야기를 끝까지 읽고 행동을 고른다.':'거리와 시간, 연료를 다시 보고 다음 목적지를 고른다.',
     points:['대화와 장면은 위에서 아래로 누적된다','선택 결과는 자원과 여정 기록에 남는다'],focus:'drive'};
   const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;
   if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'첫 여정 · 정착지',title:'필요한 일부터 하나씩 처리한다',
-    body:'시장·정비·사람·현장 중 지금 필요한 곳을 고른다. 정착지의 의뢰는 「선택 의뢰」로 따로 기록된다.',
+    body:'시장·정비·사람·현장 중 지금 필요한 곳을 고른다. 정착지의 의뢰는 「사이드 미션」로 따로 기록된다.',
     points:['시장: 물자 거래','정비: 달구지 수리와 개조','사람: 대화, 의뢰, 동료 이야기'],focus:'settlement'};
   if(!milestones.temporary_companion&&S.recruitQ) return {step:4,total:4,kicker:'첫 여정 · 동행',title:'함께 겪은 뒤에 동료가 된다',
-    body:'중요 인물을 만났다고 바로 합류하는 것은 아니다. 부탁과 동행 장면을 거치면 「동행 이야기」에 다음 단계가 기록된다.',
+    body:'중요 인물을 만났다고 바로 합류하는 것은 아니다. 부탁과 동행 장면을 거치면 「동료 미션」에 다음 단계가 기록된다.',
     points:['임시 동행은 정식 동료와 구분된다','합류 뒤에는 동료 탭에서 역할과 유대를 확인한다'],focus:'companion'};
   return null;
 };

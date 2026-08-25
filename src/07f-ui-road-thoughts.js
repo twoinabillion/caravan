@@ -94,7 +94,9 @@
       'broken-vehicle': '__ROAD_CUE_BROKENVEHICLE__',
       'film-vehicle': '__ROAD_CUE_FILMVEHICLE__'
     };
-    G.roadCueImages=roadCueImages;
+    /* Kept out of the moving scene on purpose. Road cues are drawn by the same
+       canvas renderer as the caravan; full artwork begins after the stop. */
+    G.roadCueImages={};
     const status = document.createElement('div');
     status.className = 'road-approach-status';
     status.setAttribute('role','status');
@@ -118,12 +120,12 @@
       cue.classList.add('is-braking');
       action.textContent='제동 중';
       if(S&&S.driving&&S.driving.approach)S.driving.approach.phase='braking';
-    },total*.44));
+    },total*.24));
     roadApproachTimers.push(setTimeout(()=>{
       cue.classList.add('is-stopped');
       action.textContent='정차 완료';
       if(S&&S.driving&&S.driving.approach)S.driving.approach.phase='stopped';
-    },total*.78));
+    },total*.84));
     roadApproachTimers.push(setTimeout(()=>{
       cue.classList.add('is-handoff');
       action.textContent='상황 확인';

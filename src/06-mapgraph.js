@@ -363,7 +363,93 @@ const MAPR = (()=>{
     mctx.beginPath(); mctx.moveTo(w-8.5,14); mctx.lineTo(w-6.5,12); mctx.lineTo(w-4.5,14); mctx.stroke();
   }
 
-  return {init, draw, resize, initMini, drawMini, pathTo, mode:'cities-only'};
+  /* 목적지 콘솔의 지역 지도. 전체 여정 지도와 동일한 D.nodes 좌표·해안선·
+     지형축을 사용하고, 현재 구간의 실제 범위만 자동으로 잘라 보여 준다. */
+  function drawRegionalRoute(canvas,routeModels,selectedId){
+    if(!canvas||!S||!selectedId||!D.nodes[selectedId]) return false;
+    const startId=S.driving?S.driving.from:S.at;
+    if(!startId||!D.nodes[startId]) return false;
+    const route=shortestPath(startId,selectedId);
+    const routeIds=route&&route.nodes&&route.nodes.length?route.nodes:[startId,selectedId];
+    const routePoints=routeIds.map(id=>D.nodes[id]).filter(Boolean);
+    if(routePoints.length<2) return false;
+
+    const rect=canvas.getBoundingClientRect(),width=Math.max(1,rect.width),height=Math.max(1,rect.height);
+    if(width<20||height<20) return false;
+    const ratio=Math.min(2,window.devicePixelRatio||1),c=canvas.getContext('2d');
+    canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);
+    c.setTransform(ratio,0,0,ratio,0,0);c.clearRect(0,0,width,height);
+
+    const WX=p=>p.x*1.18,WY=p=>p.y;
+    let minX=Math.min(...routePoints.map(WX)),maxX=Math.max(...routePoints.map(WX));
+    let minY=Math.min(...routePoints.map(WY)),maxY=Math.max(...routePoints.map(WY));
+    const centerX=(minX+maxX)/2,centerY=(minY+maxY)/2;
+    let spanX=Math.max(104,maxX-minX+76),spanY=Math.max(82,maxY-minY+62);
+    const viewAspect=Math.max(.8,(width-30)/(height-22));
+    if(spanX/spanY<viewAspect) spanX=spanY*viewAspect; else spanY=spanX/viewAspect;
+    minX=centerX-spanX/2;maxX=centerX+spanX/2;minY=centerY-spanY/2;maxY=centerY+spanY/2;
+    const sx=p=>15+(WX(p)-minX)/spanX*(width-30),sy=p=>11+(WY(p)-minY)/spanY*(height-22);
+    const visible=p=>WX(p)>=minX-16&&WX(p)<=maxX+16&&WY(p)>=minY-16&&WY(p)<=maxY+16;
+    const linePath=(points)=>{let started=false;c.beginPath();for(const p of points){
+      const x=sx(p),y=sy(p);if(!started){c.moveTo(x,y);started=true;}else c.lineTo(x,y);
+    }return started;};
+
+    /* 바다와 실제 해안 윤곽 */
+    const sea=c.createLinearGradient(0,0,0,height);sea.addColorStop(0,'#061923');sea.addColorStop(1,'#031018');
+    c.fillStyle=sea;c.fillRect(0,0,width,height);
+    linePath(COAST);c.closePath();
+    const land=c.createLinearGradient(0,0,0,height);land.addColorStop(0,'#25322f');land.addColorStop(.55,'#1d2b29');land.addColorStop(1,'#18231f');
+    c.fillStyle=land;c.fill();c.strokeStyle='rgba(91,171,164,.46)';c.lineWidth=1.2;c.stroke();
+
+    const known=new Set(S.known||[]),routeEdgeSet=pathEdges({nodes:routeIds});
+    const nearby=Object.entries(D.nodes).filter(([,node])=>visible(node));
+    /* 도시권은 밝은 생활권, 산악·해안은 낮은 색면으로만 암시한다. */
+    for(const [id,node] of nearby){
+      const bio=D.nodeBio&&D.nodeBio[id];if(bio!=='city'&&bio!=='coast'&&bio!=='lake') continue;
+      const x=sx(node),y=sy(node),r=bio==='city'?24:18,g=c.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,bio==='city'?'rgba(229,174,83,.12)':'rgba(73,151,164,.12)');g.addColorStop(1,'rgba(0,0,0,0)');
+      c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2);
+    }
+
+    /* 알려진 실제 연결망. 선택 경로만 밝게 남기고 미발견 지역은 노출하지 않는다. */
+    for(const edge of D.edges){
+      const a=D.nodes[edge[0]],b=D.nodes[edge[1]];if(!a||!b||!known.has(edge[0])||!known.has(edge[1])) continue;
+      if(!visible(a)&&!visible(b)) continue;
+      const selected=routeEdgeSet.has(edgeKey(edge[0],edge[1]));
+      c.beginPath();c.moveTo(sx(a),sy(a));c.lineTo(sx(b),sy(b));
+      c.strokeStyle=selected?'rgba(225,231,222,.36)':'rgba(141,158,154,.16)';c.lineWidth=selected?3:1;c.stroke();
+    }
+
+    /* 출발지부터 목적지까지 실제 노드 좌표를 따른다. */
+    c.save();c.lineCap='round';c.lineJoin='round';c.setLineDash([6,6]);
+    linePath(routePoints);c.strokeStyle='rgba(5,9,11,.72)';c.lineWidth=5;c.stroke();
+    const first=routePoints[0],last=routePoints[routePoints.length-1];
+    const rg=c.createLinearGradient(sx(first),sy(first),sx(last),sy(last));rg.addColorStop(0,'#62d4ca');rg.addColorStop(1,'#efab4d');
+    linePath(routePoints);c.strokeStyle=rg;c.lineWidth=2.4;c.stroke();c.setLineDash([]);c.restore();
+
+    /* 주변 주요 지점과 경유 노드 */
+    for(const [id,node] of nearby){
+      if(!known.has(id)||id===startId||id===selectedId) continue;
+      const onRoute=routeIds.includes(id),major=CITY_IDS.has(id)||node.stl;if(!onRoute&&!major) continue;
+      c.fillStyle=onRoute?'#d8dfd9':'rgba(154,170,166,.58)';c.beginPath();c.arc(sx(node),sy(node),onRoute?2.8:1.8,0,7);c.fill();
+    }
+    const marker=(node,color,target=false)=>{const x=sx(node),y=sy(node);c.strokeStyle=color;c.lineWidth=2.5;c.beginPath();c.arc(x,y,target?9:7,0,7);c.stroke();
+      c.fillStyle=color;c.beginPath();c.arc(x,y,target?4:3.3,0,7);c.fill();if(target){c.strokeStyle='rgba(239,171,77,.42)';c.lineWidth=1;c.beginPath();c.arc(x,y,13,0,7);c.stroke();}};
+    marker(D.nodes[startId],'#61d4ca');marker(D.nodes[selectedId],'#efab4d',true);
+
+    const label=(id,node,color,above)=>{const text=D.nodes[id].name,x=sx(node),y=sy(node)+(above?-13:19);c.font='800 10px sans-serif';
+      const tw=Math.min(width-20,c.measureText(text).width+12),lx=Math.max(5,Math.min(width-tw-5,x-tw/2));
+      c.fillStyle='rgba(5,12,17,.82)';c.fillRect(lx,y-10,tw,15);c.strokeStyle='rgba(130,158,164,.32)';c.strokeRect(lx+.5,y-9.5,tw-1,14);
+      c.fillStyle=color;c.textAlign='center';c.fillText(text,lx+tw/2,y+1);c.textAlign='left';};
+    label(startId,D.nodes[startId],'#71d7ce',false);label(selectedId,D.nodes[selectedId],'#f2b258',true);
+
+    /* 구간명은 목적지 카드와 중복되므로 지도에는 북쪽 기준만 남긴다. */
+    c.fillStyle='#cbd3cf';c.font='800 8px ui-monospace,monospace';c.fillText('N',width-14,13);c.strokeStyle='#cbd3cf';c.lineWidth=1;
+    c.beginPath();c.moveTo(width-12,17);c.lineTo(width-12,7);c.lineTo(width-15,11);c.moveTo(width-12,7);c.lineTo(width-9,11);c.stroke();
+    return true;
+  }
+
+  return {init, draw, resize, initMini, drawMini, drawRegionalRoute, pathTo, mode:'cities-only'};
 })();
 
 /* ═══════════════════ JOURNAL GRAPH ═══════════════════ */
