@@ -439,6 +439,10 @@ G.applyFx = (fx)=>{
   if(fx.time){ G.advance(fx.time); chips.push({t:`${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'} 경과`, c:''}); }
   if(fx.fatigue){ S.fatigue=clamp(S.fatigue+fx.fatigue,0,100);
     chips.push({t:`피로 ${fx.fatigue>0?'+':''}${fx.fatigue}`, c:fx.fatigue<0?'plus':'minus'}); }
+  if(fx.hunger){ const before=clamp(Number(S.hunger)||0,0,3);
+    S.hunger=clamp(before+fx.hunger,0,3);
+    const delta=S.hunger-before;
+    if(delta) chips.push({t:delta<0?(S.hunger===0?'허기 해소':`허기 ${before}→${S.hunger}`):`${G.hungerLabel(S.hunger)} ${S.hunger}/3`,c:delta<0?'plus':'minus'}); }
   if(fx.skipKm && S.driving){ S.driving.gone=Math.min(S.driving.dist, S.driving.gone+fx.skipKm);
     chips.push({t:`🛣 지름길 ${fx.skipKm}km`, c:'plus'}); }
   if(fx.moodAll){ G.moodAll(fx.moodAll); if(S.party.length) chips.push({t:`사기 ${fx.moodAll>0?'+':''}${fx.moodAll}`, c:fx.moodAll>0?'plus':'minus'}); }

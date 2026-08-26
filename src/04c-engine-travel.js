@@ -77,17 +77,24 @@ G.travelForecast = id=>{
   const minutes=G.driveMinutes(chk.km);
   const shortage=S.fuel<chk.fuel;
   const fuelMargin=Math.floor(S.fuel-chk.fuel);
-  const party=Math.max(1,G.partySize());
-  const supplyNeed=Math.max(1,Math.ceil(party*minutes/600));
-  const supplyMargin=Math.floor(Math.min(S.food,S.water)-supplyNeed);
+  const rationForecast=G.mealForecast(minutes);
+  const supplyNeed=Math.max(rationForecast.food,rationForecast.water);
+  const foodMargin=Math.floor(S.food-rationForecast.food);
+  const waterMargin=Math.floor(S.water-rationForecast.water);
+  const supplyMargin=Math.min(foodMargin,waterMargin);
+  const rationParts=[];
+  if(rationForecast.breakfasts) rationParts.push(`아침${rationForecast.breakfasts}`);
+  if(rationForecast.lunches) rationParts.push(`점심${rationForecast.lunches}`);
+  const rationCompact=rationParts.length?`${rationParts.join('·')} · 식량-${rationForecast.food}`:'배급 없음';
   const vanRatio=S.van/Math.max(1,S.vanMax);
   const warnings=[];
   let readinessScore=100;
   if(shortage){ readinessScore-=70+Math.min(20,Math.abs(fuelMargin)*2); warnings.push(`연료 ${Math.abs(fuelMargin)}L 부족`); }
   else if(fuelMargin<=3){ readinessScore-=22; warnings.push(`연료 여유 ${fuelMargin}L`); }
   else if(fuelMargin<=7) readinessScore-=10;
-  if(supplyMargin<0){ readinessScore-=28; warnings.push('식량·물 보충 필요'); }
-  else if(supplyMargin<=2){ readinessScore-=12; warnings.push('식량·물 여유 적음'); }
+  if(foodMargin<0||waterMargin<0){ readinessScore-=28;
+    warnings.push([foodMargin<0?`식량 ${Math.abs(foodMargin)} 부족`:'',waterMargin<0?`물 ${Math.abs(waterMargin)} 부족`:''].filter(Boolean).join(' · ')); }
+  else if((rationForecast.food||rationForecast.water)&&supplyMargin<=2){ readinessScore-=12; warnings.push('구간 배급 여유 적음'); }
   if(vanRatio<.3){ readinessScore-=30; warnings.push('차체 위험'); }
   else if(vanRatio<.55){ readinessScore-=14; warnings.push('차체 점검 권장'); }
   if(S.fatigue>=75){ readinessScore-=22; warnings.push('운전자 휴식 필요'); }
@@ -114,7 +121,8 @@ G.travelForecast = id=>{
     :progressKm<0?`서울에서 ${Math.abs(progressKm)}km 멀어짐`:'서울 진행도 변화 없음';
   return {...chk,minutes,shortage,
     risk:reasons.length?reasons.join(' · '):'보통 도로',gear,
-    gearLabel:gear.length?`대응 장비: ${gear.join(' · ')}`:'',fuelMargin,supplyMargin,
+    gearLabel:gear.length?`대응 장비: ${gear.join(' · ')}`:'',fuelMargin,supplyMargin,foodMargin,waterMargin,supplyNeed,
+    rationForecast,rationCompact,
     readinessScore,readinessLabel,readinessClass,readinessReason,
     safetyScore:readinessScore,progressKm,progressScore,supplyScore,directionLabel};
 };

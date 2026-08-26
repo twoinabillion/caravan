@@ -786,7 +786,8 @@ const UI = (()=>{
     if(!S) return;
     gauge('#g-fuel', Math.floor(S.fuel), S.fuelMax, S.fuel<10);
     gauge('#g-water', S.water, 14, S.water<=G.partySize());
-    gauge('#g-food', S.food, 14, S.food<=G.partySize());
+    const ration=G.dailyRationInfo();
+    gauge('#g-food', S.food, Math.max(1,ration.foodPerDay*5), S.food<G.nextMealInfo().food);
     gauge('#g-van', Math.floor(S.van), S.vanMax, S.van<25);
     gauge('#g-scrap', S.scrap, 40, false);
     const clock=G.fmtClock();
@@ -1113,7 +1114,11 @@ function dialogueSide(turn,lanes,opt={}){
     const person=speakerInfo(turn.who,turn.name);
     const mine=playerSpeaker(person.id);
     const hidden=person.name==='???';
-    const continuation=previous&&previous.kind==='dialogue'&&speakerLaneKey(previous)===speakerLaneKey(turn);
+    /* 화자를 확인할 단서가 없는 인용문은 같은 익명 초상이라는 이유만으로
+       직전 NPC의 연속 발화로 합치지 않는다. */
+    const continuation=previous&&previous.kind==='dialogue'
+      &&!previous.speakerUncertain&&!turn.speakerUncertain
+      &&speakerLaneKey(previous)===speakerLaneKey(turn);
     const faceAlt=hidden?'이름을 모르는 사람':person.name;
     const showPortrait=!!person.portrait;
     const portrait=showPortrait
@@ -1201,7 +1206,7 @@ function dialogueSide(turn,lanes,opt={}){
     for(let i=0;i<key.length;i++) hash=(hash*31+key.charCodeAt(i))|0;
     return pool[Math.abs(hash)%pool.length];
   }
-  function inferQuoteSpeaker(before, after, evd, state, preferRecord=false){
+  function inferQuoteSpeaker(before, after, evd, state, preferRecord=false, spoken=''){
     const rawBefore=stripTags(before), b=rawBefore.slice(-220), a=stripTags(after).slice(0,120);
     const aiOpen=Math.max(
       String(before||'').lastIndexOf('<span class="ai">'),
@@ -1251,8 +1256,23 @@ function dialogueSide(turn,lanes,opt={}){
       state.last=next;
       return {kind:'dialogue',who:next};
     }
-    state.last=state.fallbackSpeaker;
-    return {kind:'dialogue',who:state.fallbackSpeaker,name:'???'};
+    /* 단서 없는 문장은 익명 NPC로 시작하되, 질문과 응답이 맞닿은 경우에만
+       플레이어/NPC 교환으로 보수적으로 해석한다. 독백을 무조건 교대로
+       배치하지 않으며, 이 추론은 continuation에도 사용하지 않는다. */
+    const text=stripTags(spoken).trim();
+    const previous=state.unresolvedQuote;
+    const asksQuestion=value=>/[?？]\s*$/.test(String(value||''));
+    let who=state.fallbackSpeaker, name='???';
+    if(previous&&playerSpeaker(previous.who)){
+      who=state.fallbackSpeaker;
+    }else if(previous&&previous.who===state.fallbackSpeaker
+      &&(asksQuestion(previous.text)||asksQuestion(text))){
+      who='me';
+      name='';
+    }
+    state.last=who;
+    state.unresolvedQuote={who,text};
+    return {kind:'dialogue',who,...(name?{name}:{}),speakerUncertain:true};
   }
   function revealsIdentity(value,id){
     const comp=D.comps&&D.comps[id];
@@ -1284,7 +1304,7 @@ function dialogueSide(turn,lanes,opt={}){
       turnSpeakers:Array.isArray(opt.turnSpeakers)
         ? opt.turnSpeakers
         : (Array.isArray(evd&&evd.turnSpeakers)?evd.turnSpeakers:[]),
-      scriptIndex:0
+      scriptIndex:0,unresolvedQuote:null
     };
     const pushNarration=(raw)=>{
       const restored=restore(raw).trim();
@@ -1341,8 +1361,10 @@ function dialogueSide(turn,lanes,opt={}){
             ? {kind:isRecord?'record':'dialogue',who:scripted}
             : {kind:isRecord?'record':'dialogue',...scripted};
           state.last=speaker.who;
+          state.unresolvedQuote=null;
         }else{
-          speaker=inferQuoteSpeaker(before,after,evd,state,isRecord);
+          speaker=inferQuoteSpeaker(before,after,evd,state,isRecord,spoken);
+          if(!speaker.speakerUncertain) state.unresolvedQuote=null;
         }
         if(isRecord&&speaker.kind==='dialogue') speaker.kind='record';
         const hidden=speaker.who===hiddenSpeaker&&!state.knownSpeaker;
@@ -1498,6 +1520,12 @@ function dialogueSide(turn,lanes,opt={}){
     const selectedIndex=routeModels.indexOf(selected);
     const questCue=typeof G.routeQuestCue==='function'?G.routeQuestCue(selected.nb.id):null;
     const canDepart=forecast.ok&&!forecast.shortage;
+    const rationMeals=[];
+    if(forecast.rationForecast&&forecast.rationForecast.breakfasts) rationMeals.push(`아침 ${forecast.rationForecast.breakfasts}회`);
+    if(forecast.rationForecast&&forecast.rationForecast.lunches) rationMeals.push(`점심 ${forecast.rationForecast.lunches}회`);
+    const rationLine=rationMeals.length
+      ?`${rationMeals.join(' · ')} · 식량 -${forecast.rationForecast.food}${forecast.rationForecast.water?` · 물 -${forecast.rationForecast.water}`:''}`
+      :'자동 배급 없음';
     const nowClock=G.fmtClock().replace(/^DAY\s+\d+\s*·\s*/,'');
     const weather=(D.wx[S.wx]||D.wx.clear).nm;
     const carouselModels=routeModels.length===2
@@ -1537,8 +1565,9 @@ function dialogueSide(turn,lanes,opt={}){
           <div class="nav-route-facts" aria-label="선택한 경로의 예상 소모">
             <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>예상 연료</small><b>-${Math.ceil(selected.fuel)}L</b></span></span>
             <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>예상 시간</small><b>${Math.max(1,Math.round(forecast.minutes))}분</b></span></span>
-            <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>구간 거리</small><b>${selected.nb.km}km</b></span></span>
+          <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>구간 거리</small><b>${selected.nb.km}km</b></span></span>
           </div>
+          <div class="nav-route-ration" aria-label="구간 자동 배급 ${esc(rationLine)}"><small>구간 배급</small><b>${esc(rationLine)}</b></div>
           ${questCue?`<p class="nav-route-quest-cue"><small>${questCue.kind==='main'?'메인 스토리':'사이드 미션'}</small><b>${esc(questCue.action)}</b></p>`:''}
           <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
         </section>
@@ -1943,7 +1972,7 @@ function dialogueSide(turn,lanes,opt={}){
     const campVanGain=Math.max(0,Math.min(campVanFix,S.vanMax-S.van));
     localActions.push(stopActionHtml({
       action:'camp',kicker:'차 안에서',title:'야영 준비',
-      description:'식사·정비·대화를 고른 뒤 다음 아침까지 쉰다.',
+      description:`저녁·정비·대화를 고른 뒤 쉰다. 06:30 배급은 식량 ${G.mealNeed('breakfast')} · 물 ${G.mealNeed('breakfast')}이 필요하다.`,
       chips:[{label:'다음 06:30',tone:'muted'},{label:'피로 → 0%',tone:'gain'},{label:campVanGain?`차체 +${campVanGain}`:'차체 유지',tone:'gain'}],cta:'준비하기'
     }));
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
@@ -2217,9 +2246,14 @@ function dialogueSide(turn,lanes,opt={}){
     const inCombat=!!(evd&&evd.combat);
     evd.choices.forEach((c,i)=>{
       const req=G.choiceReq(c);
-      if(!G.reqVisible(req)) return;
+      const requirementVisible=G.reqVisible(req);
+      const storyGateKeys=['flag','flags','notFlag','needFlag','story','event','quest','chapter','chain'];
+      const spoilerLocked=c.spoiler===true||c.hideLocked===true||c.secret===true
+        ||(!requirementVisible&&storyGateKeys.some(key=>req&&req[key]!==undefined));
+      if(!requirementVisible&&spoilerLocked) return;
       const rq=G.reqOk(req);
       const cost=G.reqCostText(req);
+      const lockReason=!rq.ok?stripTags(rq.t||cost||'현재 조건이 부족합니다.'):'';
       const labelText=stripTags(c.label||'');
       const repeatedCost=cost&&labelText.replace(/\s+/g,'').includes(cost.replace(/\s+/g,''));
       const routeId=(c.out||[]).map(o=>o.fx&&o.fx.routeChoice).find(Boolean);
@@ -2234,13 +2268,14 @@ function dialogueSide(turn,lanes,opt={}){
         cost||''
       ].filter(Boolean);
       const indexLabel=inCombat?String(count):`<small>선택</small><b>${count}</b>`;
-      html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'} aria-label="${esc(liveBits.join(' · '))}">
+      html+=`<button class="choice${rq.ok?'':' choice-locked'}" data-i="${i}" ${rq.ok?'':'disabled aria-disabled="true"'} aria-label="${esc(liveBits.join(' · '))}">
           <div class="choice-head"><span class="choice-index">${indexLabel}</span><span class="choice-title">${intentTag?`<i class="choice-intent">${intentTag}</i>`:''}${title}</span></div>
           ${route?`<span class="route-forecast" aria-label="거리 ${route.km}킬로미터, 시간 ${routeDurationRange(route.minutes)}, 연료 ${routeFuelRange(route.fuel)}">
             <i><small>거리</small><b>${route.km}km</b></i><i><small>시간</small><b>${routeDurationRange(route.minutes)}</b></i>
             <i><small>연료</small><b>${routeFuelRange(route.fuel)}</b></i><i class="route-trait ${routeId==='ridge'?'risk':'supply'}">${routeId==='ridge'?'험로':'보급 가능'}</i>
           </span>`:''}
-          ${cost&&!repeatedCost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
+          ${!rq.ok?`<span class="req choice-lock-reason"><b>잠김</b> · ${esc(lockReason)}</span>`
+            :cost&&!repeatedCost?`<span class="req">✓ ${cost}</span>`:''}
         </button>`;
     });
     return {html,count,combatChoices,difficulty:null};
@@ -2433,19 +2468,12 @@ function dialogueSide(turn,lanes,opt={}){
     state.userHoldingStory=false;
     state.index++;
     renderStoryState();
-    const sheet=$('#ev-sheet'), scroll=sheet&&sheet.querySelector('.event-scroll');
-    const reader=sheet&&sheet.querySelector('.story-reader');
+    const sheet=$('#ev-sheet');
     /* dataset과 초상 유무에 따라 본문 폭·높이가 다시 계산된 다음 최신 턴을
        보여 줘야 한다. 즉시 스크롤하면 320px 화면에서 이전 높이를 기준으로
        멈춰 새 대사가 종이 아래에 잘린다. */
     requestAnimationFrame(()=>{
-      const latest=reader&&reader.querySelector('[data-story-entry]:last-child');
-      if(reader&&latest){
-        reader.scrollTo({top:reader.scrollHeight,behavior:'auto'});
-      }else if(scroll&&reader&&latest){
-        const bottom=reader.offsetTop+latest.offsetTop+latest.offsetHeight;
-        scroll.scrollTo({top:Math.max(0,bottom-scroll.clientHeight+28),behavior:'auto'});
-      }
+      alignStoryLatest(sheet);
     });
   }
   function scheduleStoryAuto(state,turn){
@@ -2463,7 +2491,7 @@ function dialogueSide(turn,lanes,opt={}){
     },delay);
   }
   function wireStoryReviewPause(state,turn){
-    const scroll=$('#ev-sheet .event-scroll');
+    const scroll=$('#ev-sheet .story-reader')||$('#ev-sheet .event-scroll');
     if(!scroll) return;
     let pointerStart=null;
     const reviewPosition=()=>{
@@ -2517,6 +2545,73 @@ function dialogueSide(turn,lanes,opt={}){
       advanceStory(state);
     };
   }
+  function syncEventDockReserve(sheet=$('#ev-sheet')){
+    if(!sheet) return 0;
+    const dock=sheet.querySelector('.event-choice-dock');
+    const visibleDock=dock&&dock.getClientRects().length?dock:null;
+    const height=visibleDock?Math.max(0,Math.ceil(visibleDock.getBoundingClientRect().height)):0;
+    const reserve=height+'px';
+    sheet.style.setProperty('--event-dock-h',reserve);
+    const scroll=sheet.querySelector('.event-scroll');
+    const reader=sheet.querySelector('.story-reader');
+    const transcript=sheet.querySelector('.story-transcript');
+    [scroll,reader,transcript].forEach(node=>{
+      if(node) node.style.setProperty('--event-dock-h',reserve);
+    });
+    if(dock&&sheet.__eventDockObserved!==dock&&window.ResizeObserver){
+      if(sheet.__eventDockObserver) sheet.__eventDockObserver.disconnect();
+      sheet.__eventDockObserved=dock;
+      sheet.__eventDockObserver=new ResizeObserver(()=>syncEventDockReserve(sheet));
+      sheet.__eventDockObserver.observe(dock);
+    }
+    if(visibleDock){
+      const settle=()=>{
+        if(!sheet.isConnected) return;
+        if(!curStory||(!curStory.reviewing&&!curStory.userHoldingStory)) alignStoryLatest(sheet);
+      };
+      requestAnimationFrame(()=>requestAnimationFrame(settle));
+      if(sheet.__storyDockAlignTimer) clearTimeout(sheet.__storyDockAlignTimer);
+      sheet.__storyDockAlignTimer=setTimeout(settle,90);
+    }
+    return height;
+  }
+  function alignStoryLatest(sheet=$('#ev-sheet')){
+    if(!sheet) return false;
+    const latest=[...sheet.querySelectorAll('[data-story-entry]')]
+      .filter(node=>node.getClientRects().length).at(-1);
+    const dock=sheet.querySelector('.event-choice-dock');
+    if(!latest||!dock||!dock.getClientRects().length) return false;
+    const outer=sheet.querySelector('.event-scroll');
+    const reader=latest.closest('.story-reader')||sheet.querySelector('.story-reader');
+    const candidates=[outer,reader].filter((node,index,list)=>
+      node&&list.indexOf(node)===index&&node.scrollHeight>node.clientHeight+1
+    ).sort((a,b)=>(b.scrollHeight-b.clientHeight)-(a.scrollHeight-a.clientHeight));
+    if(!candidates.length) return false;
+    const aligned=()=>{
+      const entryRect=latest.getBoundingClientRect();
+      const dockRect=dock.getBoundingClientRect();
+      return entryRect.bottom<=Math.min(dockRect.top-12,window.innerHeight-6)+.5&&entryRect.top>=6;
+    };
+    let moved=false;
+    for(let pass=0;pass<3&&!aligned();pass++){
+      for(const node of candidates){
+        const entryRect=latest.getBoundingClientRect();
+        const dockRect=dock.getBoundingClientRect();
+        const nodeRect=node.getBoundingClientRect();
+        const safeBottom=Math.min(dockRect.top-12,nodeRect.bottom-6,window.innerHeight-6);
+        const safeTop=Math.max(nodeRect.top+6,6);
+        const delta=entryRect.bottom>safeBottom?entryRect.bottom-safeBottom:
+          entryRect.top<safeTop?entryRect.top-safeTop:0;
+        if(Math.abs(delta)<.5) continue;
+        const before=node.scrollTop;
+        const max=Math.max(0,node.scrollHeight-node.clientHeight);
+        node.scrollTop=Math.max(0,Math.min(max,before+delta));
+        if(Math.abs(node.scrollTop-before)>.5) moved=true;
+        if(aligned()) break;
+      }
+    }
+    return moved||aligned();
+  }
   function wireEventChoicePages(dock){
     const pager=dock&&dock.querySelector('[data-choice-pages]');
     const buttons=dock?[...dock.querySelectorAll('.choices>.choice[data-i]')]:[];
@@ -2531,13 +2626,16 @@ function dialogueSide(turn,lanes,opt={}){
     const totalLabel=pager.querySelector('[data-choice-total]');
     const prev=pager.querySelector('[data-choice-prev]');
     const next=pager.querySelector('[data-choice-next]');
+    const list=dock.querySelector(':scope>.choices');
     const sync=(focus=false)=>{
       buttons.forEach((button,index)=>{ button.hidden=Math.floor(index/pageSize)!==page; });
+      if(list) list.scrollTop=0;
       if(label) label.textContent=String(page+1);
       if(totalLabel) totalLabel.textContent=String(total);
       prev.disabled=page===0;
       next.disabled=page>=total-1;
       pager.setAttribute('aria-label',`선택지 ${page+1} / ${total} 페이지`);
+      syncEventDockReserve(sheet);
       if(focus) buttons.find(button=>!button.hidden&&!button.disabled)?.focus({preventScroll:true});
     };
     prev.onclick=()=>{ if(page>0){ page--;sync(true); } };
@@ -2573,7 +2671,6 @@ function dialogueSide(turn,lanes,opt={}){
         :turn.kind==='narration'?'장면 설명: ':`${state.label}: `;
       live.textContent=speaker+stripTags(turn.text);
     }
-    const dockHeight=dock ? Math.min(224,Math.max(170,dock.offsetHeight||194)) : 194;
     const compact=false;
     sheet.classList.toggle('story-compact',compact);
     const entering=reader.querySelector('[data-story-entry]:last-child');
@@ -2584,16 +2681,7 @@ function dialogueSide(turn,lanes,opt={}){
     /* 새 말이 추가되면 마지막 말풍선 전체가 보이도록 사건 내부만 움직인다.
        사용자가 앞 대사를 다시 읽는 중에는 위치를 빼앗지 않는다. */
     requestAnimationFrame(()=>{
-      const eventScroll=sheet.querySelector('.event-scroll');
-      const newest=reader.querySelector('[data-story-entry]:last-child');
-      if(!eventScroll||!newest||state.reviewing||state.userHoldingStory) return;
-      const scrollRect=eventScroll.getBoundingClientRect();
-      const newestRect=newest.getBoundingClientRect();
-      const hiddenBottom=newestRect.bottom-(scrollRect.bottom-14);
-      if(hiddenBottom>0){
-        const maxScroll=Math.max(0,eventScroll.scrollHeight-eventScroll.clientHeight);
-        eventScroll.scrollTop=Math.min(maxScroll,eventScroll.scrollTop+hiddenBottom);
-      }
+      if(!state.reviewing&&!state.userHoldingStory) alignStoryLatest(sheet);
     });
     const last=state.index>=state.turns.length-1;
     sheet.dataset.storyPhase=state.phase;
@@ -2607,12 +2695,14 @@ function dialogueSide(turn,lanes,opt={}){
       : `${state.index+1} / ${state.turns.length}`;
     if(!last){
       dock.classList.add('story-progress-dock');
-      dock.innerHTML='<div class="story-tap-hint" aria-hidden="true">화면을 탭해 다음 문장</div>';
+      dock.innerHTML='<button class="story-tap-hint" type="button" aria-label="다음 문장. 화면을 탭하거나 Enter 또는 Space 키를 누르세요">화면을 탭하거나 Enter · Space</button>';
+      dock.querySelector('.story-tap-hint').onclick=()=>advanceStory(state);
+      syncEventDockReserve(sheet);
       wireStoryReviewPause(state,turn);
       scheduleStoryAuto(state,turn);
       return;
     }
-    const storyScroll=sheet.querySelector('.event-scroll');
+    const storyScroll=sheet.querySelector('.story-reader')||sheet.querySelector('.event-scroll');
     if(storyScroll){
       storyScroll.onpointerdown=null;
       storyScroll.onpointerup=null;
@@ -2627,14 +2717,15 @@ function dialogueSide(turn,lanes,opt={}){
       dock.innerHTML=`<div class="choices" role="group" aria-label="다음 행동"><button class="choice story-safe-exit" type="button"><div class="choice-head"><span class="choice-index"><small>복귀</small><b>↩</b></span><span class="choice-title"><i class="choice-intent">거리두기</i><span>지금은 대응할 수 없다. 길로 돌아간다</span></span></div></button></div>`;
       dock.querySelector('.story-safe-exit').onclick=()=>closeEvent();
     }
-    if(state.phase==='outcome'){
-      requestAnimationFrame(()=>{
-        const eventScroll=sheet.querySelector('.event-scroll');
-        if(eventScroll) eventScroll.scrollTop=eventScroll.scrollHeight;
-      });
-    }
+    syncEventDockReserve(sheet);
+    if(state.phase==='outcome') requestAnimationFrame(()=>alignStoryLatest(sheet));
     if(state.reveal&&!state.revealed){ state.revealed=true; state.reveal(); }
     if(state.wireFinal) state.wireFinal(dock);
+    syncEventDockReserve(sheet);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      syncEventDockReserve(sheet);
+      if(!state.reviewing&&!state.userHoldingStory) alignStoryLatest(sheet);
+    }));
   }
   function finishStory(){
     if(!curStory) return false;
@@ -2698,7 +2789,8 @@ function dialogueSide(turn,lanes,opt={}){
       G.save();
       eventGuide='<aside class="event-tutorial-note"><b>길 위 사건</b><span>화면을 짧게 탭하면 다음 문장으로 넘어갑니다. 마지막에 행동을 고르면 결과가 자원과 기록에 남습니다.</span></aside>';
     }
-    const choicePages=Math.ceil(choices.count/3);
+    const choicePageSize=((sheet.clientWidth||innerWidth)<350||(sheet.clientHeight||innerHeight)<650)?2:3;
+    const choicePages=Math.ceil(choices.count/choicePageSize);
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<section class="event-field-report"><div class="event-head"><div>
       <span class="sr-only" data-event-progress>1 / ${turns.length}</span><h2>${esc(evd.title)}</h2></div></div>${missionBrief}${eventGuide}${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
       <div class="event-choice-dock"></div>`;
@@ -2731,7 +2823,7 @@ function dialogueSide(turn,lanes,opt={}){
     };
     renderStoryState();
     wireSceneZoom(sheet);
-    openModal('#ev-wrap','.story-next, .choice');
+    openModal('#ev-wrap','.story-tap-hint, .story-next, .choice');
     if(evd.sfx) SND.combat(evd.sfx);
   }
   /* 본문 렌더 계약: 문자열은 전부 이스케이프하고, authored 데이터가 쓰는
@@ -2939,6 +3031,10 @@ function dialogueSide(turn,lanes,opt={}){
     curCombatChoices=[];
     $('#ev-sheet').classList.remove('event-mode','story-compact');
     $('#ev-sheet').classList.remove('combat-details-open');
+    if($('#ev-sheet').__eventDockObserver) $('#ev-sheet').__eventDockObserver.disconnect();
+    delete $('#ev-sheet').__eventDockObserver;
+    delete $('#ev-sheet').__eventDockObserved;
+    $('#ev-sheet').style.removeProperty('--event-dock-h');
     delete $('#ev-sheet').dataset.storyPhase;
     delete $('#ev-sheet').dataset.storyStep;
     delete $('#ev-sheet').dataset.eventKind;
@@ -3843,7 +3939,10 @@ function dialogueSide(turn,lanes,opt={}){
     const body=$('#camp-body'), ovl=$('#ovl-camp');
     const opening=!ovl.classList.contains('on');
     const party=S.party||[];
-    const resource=`식량 ${S.food} · 물 ${S.water} · 부품 ${S.items['부품']||0} · 고철 ${S.scrap}`;
+    const wakeNeed=G.mealNeed('breakfast');
+    const hungerLevel=S.hunger||0;
+    const hungerText=hungerLevel===1?'허기 1/3':hungerLevel>1?`${G.hungerLabel(hungerLevel)} ${hungerLevel}/3`:'허기 0/3';
+    const resource=`식량 ${S.food} · 물 ${S.water} · ${hungerText} · 부품 ${S.items['부품']||0} · 고철 ${S.scrap}`;
     const planned=plan.meal||plan.repair||plan.talk;
     const keepsakes=party.map(id=>({id,...(D.companionKeepsakes&&D.companionKeepsakes[id])})).filter(row=>row.name);
     const interior=(D.upgrades||[]).filter(up=>S.up&&S.up[up.id]);
@@ -3872,7 +3971,7 @@ function dialogueSide(turn,lanes,opt={}){
           <div class="camp-live-caption"><small>STOPPED HOME · ${G.isNight()?'NIGHT':'BLUE HOUR'}</small><b>${esc(G.vanName())}</b><span>${S.at&&D.nodes[S.at]?esc(D.nodes[S.at].name):'길가'} · ${party.length?party.length+'명과 야영':'혼자 야영'}</span></div>
         </div>
         <div class="camp-live-state" aria-live="polite">
-          <span class="${plan.meal?'on':''}"><i></i>모닥불 ${plan.meal?'식사 준비':'잔불'}</span>
+          <span class="${plan.meal?'on':''}"><i></i>모닥불 ${plan.meal?'따뜻한 저녁':'잔불'}</span>
           <span class="${plan.repair?'on':''}"><i></i>작업등 ${plan.repair?'정비 중':'대기'}</span>
           <span class="${plan.talk?'on':''}"><i></i>${plan.talk?esc(D.comps[plan.talk].name)+'와 대화':'대화 상대 미정'}</span>
         </div>
@@ -3885,13 +3984,13 @@ function dialogueSide(turn,lanes,opt={}){
       </div>`:`<div class="camp-home-section camp-home-teaser"><b>아직 작은 집</b><small>첫 동료가 타거나 생활 부품을 장착하면 이곳에 그 흔적이 남는다.</small><span>빈 선반과 고정 볼트가 다음 자리를 기다린다.</span></div>`}
       ${recent.length?`<div class="camp-home-section camp-roadbook"><b>최근 주행 기록</b><small>차가 기억하는 마지막 세 구간.</small>${recent.map(row=>`<article><strong>${esc(D.nodes[row.from].name)} → ${esc(D.nodes[row.to].name)}</strong><span>DAY ${row.day} · ${row.km}km · 사건 ${row.events}건${row.checkIn?` · ${esc(row.checkIn.name)}`:''}</span></article>`).join('')}</div>`:''}
       <div class="camp-home-section"><b>오늘 밤 준비</b><small>같은 준비는 하룻밤에 한 번만 할 수 있다.</small>
-        <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${plan.meal?'disabled':''}><span>${ICO('food')} <strong>공동 식사</strong><small>식량 1 · 물 1 소비 · 취침 사기 +3</small></span><em>${plan.meal?'준비됨':'준비'}</em></button>
+        <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${plan.meal?'disabled':''}><span>${ICO('food')} <strong>따뜻한 저녁 차리기 · 선택</strong><small>식량 1 · 물 1 · 사기 +3 · 피로 -6 · 허기 -1</small></span><em>${plan.meal?'먹었음':'차리기'}</em></button>
         <button class="camp-prep ${plan.repair?'done':''}" data-camp-prep="repair" ${plan.repair?'disabled':''}><span>${ICO('parts')} <strong>간이 정비</strong><small>부품 1 소비 · 취침 내구 +8</small></span><em>${plan.repair?'준비됨':'준비'}</em></button>
       </div>
       <div class="camp-home-section"><b>불빛 아래 한 사람</b><small>선택한 동료는 취침 후 유대 +2를 더 얻는다.</small>
         <div class="camp-talk-list">${party.length?party.map(id=>`<button class="camp-talk ${plan.talk===id?'done':''}" data-camp-talk="${id}" ${plan.talk?'disabled':''}><span>${D.comps[id].face} <strong>${esc(D.comps[id].name)}</strong></span><em>${plan.talk===id?'약속됨':'이야기'}</em></button>`).join(''):'<p class="camp-empty">오늘 밤은 혼자다. 차 안의 소리만 들린다.</p>'}</div>
       </div>
-      <div class="camp-rest"><span>${planned?'준비를 마쳤다.':'준비 없이 쉬어도 된다.'}</span><button class="act" id="camp-rest">${ICO('van')}<span>이곳에서 밤 보내기</span></button></div>
+      <div class="camp-rest"><span>${planned?'준비를 마쳤다.':'준비 없이 쉬어도 된다.'} · 다음 06:30 배급 식량 ${wakeNeed} · 물 ${wakeNeed}</span><button class="act" id="camp-rest">${ICO('van')}<span>이곳에서 밤 보내기</span></button></div>
     </section>`;
     ovl.classList.add('on'); ovl.setAttribute('aria-hidden','false');
     requestAnimationFrame(()=>$('#camp-x').focus({preventScroll:true}));
@@ -4197,8 +4296,8 @@ function dialogueSide(turn,lanes,opt={}){
         <button class="folio-road-button" data-road-tool="road">길로 돌아가기</button>
       </div>`;
     }else{
-      const perDay=Math.max(1,G.partySize()-(G.hasPerk('kw_ration')&&G.partySize()>1?1:0));
-      const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
+      const ration=G.dailyRationInfo(), nextMeal=G.nextMealInfo();
+      const supplyDays=ration.supplyDays;
       const parts=S.items['부품']||0;
       const entries=[
         {id:'부품',label:'부품',value:parts,unit:'개',icon:'parts',desc:'오래됐지만 아직 쓸 만하다. 달구지 정비와 수리에 쓴다.'},
@@ -4215,7 +4314,12 @@ function dialogueSide(turn,lanes,opt={}){
           <div>${ICO('food')}<span>식량<b>${S.food}</b></span></div>
           <div>${ICO('fuel')}<span>연료<b>${Math.floor(S.fuel)}L</b></span></div>
         </section>
-        <section class="bag-vehicle" aria-label="달구지와 보급 상태"><small class="bag-vehicle-title">여정 상태</small><div><span>차체</span><b>${Math.floor(S.van)}%</b><i><em style="width:${clamp(S.van/S.vanMax*100,0,100)}%"></em></i></div><div><span>남은 보급</span><b>${supplyDays}일</b><i><em style="width:${clamp(supplyDays/5*100,0,100)}%"></em></i></div></section>
+        <section class="bag-vehicle bag-supply-overview" aria-label="달구지와 자동 배급 상태"><small class="bag-vehicle-title">여정 · 배급 상태</small>
+          <div class="bag-supply-cell"><span>차체</span><b>${Math.floor(S.van)}%</b><i><em style="width:${clamp(S.van/S.vanMax*100,0,100)}%"></em></i></div>
+          <div class="bag-supply-cell"><span>남은 보급</span><b>${supplyDays}일</b><i><em style="width:${clamp(supplyDays/5*100,0,100)}%"></em></i></div>
+          <div class="bag-supply-cell bag-supply-copy"><span>다음 자동 배급</span><b>${esc(nextMeal.clock)}</b><small>식량 ${nextMeal.food}${nextMeal.water?` · 물 ${nextMeal.water}`:''}</small></div>
+          <div class="bag-supply-cell bag-supply-copy"><span>허기</span><b>${S.hunger===1?'1/3':`${G.hungerLabel(S.hunger)} ${S.hunger||0}/3`}</b><small>하루 식량 ${ration.foodPerDay} · 물 ${ration.waterPerDay}</small></div>
+        </section>
         <section class="bag-pockets" aria-label="가방 수납칸">${entries.map(entry=>`<button class="bag-pocket ${entry.id===selected.id?'selected':''}" data-bag-item="${entry.id}" aria-pressed="${entry.id===selected.id}" aria-label="${esc(entry.label)} ${entry.value??0}${entry.unit}${entry.id===selected.id?', 선택됨':''}">${ICO(entry.icon)}<span class="bag-pocket-name">${esc(entry.label)}</span><span class="bag-pocket-count"><small>보유</small><span class="bag-pocket-amount"><b>${entry.value??0}</b><small>${entry.unit}</small></span></span></button>`).join('')}</section>
         <section class="bag-detail compact-info"><div class="bag-detail-copy"><div class="bag-detail-heading"><span>${esc(selected.label)}</span><b>${selected.value??0}${selected.unit}</b></div><p>${esc(selected.desc)}</p></div></section>
       </div>`;
@@ -4246,14 +4350,14 @@ function dialogueSide(turn,lanes,opt={}){
     const b=$('#st-body');
     const bar=(v,m,warn)=>`<div class="bar"><i style="width:${clamp(v/m*100,0,100)}%${warn?';background:var(--danger)':''}"></i></div>`;
     const kmPerL=(100/G.fuelFor(100,'normal')).toFixed(1);
-    const perDay=Math.max(1,G.partySize()-(G.hasPerk('kw_ration')&&G.partySize()>1?1:0));
+    const ration=G.dailyRationInfo(), nextMeal=G.nextMealInfo();
     const knownN=S.known.filter(id=>!D.nodes[id].secret).length;
     const totalN=Object.keys(D.nodes).filter(id=>!D.nodes[id].secret).length;
     const stlVisited=Object.keys(D.stls).filter(sid=>S.visited.some(v=>D.nodes[v].stl===sid)).length;
     const dlv=G.driverLv(), dNext=D.driverLv[dlv+1];
     const installed=D.upgrades.filter(u=>S.up[u.id]);
     const vanStage=G.vanStage();
-    const supplyDays=Math.min(Math.floor(S.water/perDay),Math.floor(S.food/perDay));
+    const supplyDays=ration.supplyDays;
     const injuryIds=Object.keys(S.injuries||{});
     const route=G.routeStatus();
     const audioChannels=[['music','음악'],['ambience','환경음'],['effects','효과음'],['voice','목소리']];
@@ -4261,9 +4365,11 @@ function dialogueSide(turn,lanes,opt={}){
       injuryIds.map(id=>{const x=S.injuries[id];return `<div class="st-row"><span class="k">${G.injuryName(id)}</span>
         <span class="v" style="flex:1;color:var(--danger)">${x.label} · ${x.days}일</span></div>`;}).join('')+
       `<div class="csub">아침마다 회복한다. 운전사 부상은 피로를 더 쌓고, 동료 부상은 해당 퍼크를 잠시 멈춘다.</div></div>`:'';
-    const supplies=`<div class="st-sec inventory-primary"><h4>가방과 보급 <small>${supplyDays}일치</small></h4>
-      <div class="st-row"><span class="k">${ICO('water')}물</span><span class="v" style="flex:1">${S.water} <small style="color:var(--faded)">≈ ${Math.floor(S.water/perDay)}일치</small></span></div>
-      <div class="st-row"><span class="k">${ICO('food')}식량</span><span class="v" style="flex:1">${S.food} <small style="color:var(--faded)">≈ ${Math.floor(S.food/perDay)}일치</small></span></div>
+    const supplies=`<div class="st-sec inventory-primary"><h4>가방과 보급 <small>${supplyDays}일치 · 하루 식량 ${ration.foodPerDay}</small></h4>
+      <div class="st-row"><span class="k">${ICO('water')}물</span><span class="v" style="flex:1">${S.water} <small style="color:var(--faded)">≈ ${ration.waterDays}일치 · 하루 ${ration.waterPerDay}</small></span></div>
+      <div class="st-row"><span class="k">${ICO('food')}식량</span><span class="v" style="flex:1">${S.food} <small style="color:var(--faded)">≈ ${ration.foodDays}일치 · 하루 ${ration.foodPerDay}</small></span></div>
+      <div class="st-row"><span class="k">다음 자동 배급</span><span class="v" style="flex:1">${esc(nextMeal.clock)} · ${esc(nextMeal.label)} · 식량 ${nextMeal.food}${nextMeal.water?` · 물 ${nextMeal.water}`:''}</span></div>
+      <div class="st-row"><span class="k">허기</span><span class="v" style="flex:1">${G.hungerLabel(S.hunger)} · ${S.hunger||0}/3</span></div>
       <div class="st-row"><span class="k">${ICO('scrap')}고철</span><span class="v" style="flex:1">${S.scrap}</span></div>
       <div class="st-row"><span class="k">아이템</span><span class="v" style="flex:1">${['부품','의약품','탄약'].map(k=>`${ICO(ITEM_ICO[k])}${k==='탄약'?'소총탄':k} ${S.items[k]||0}`).join(' · ')}</span></div>
       ${S.flags.armed_age?`<div class="st-row"><span class="k">무기</span><span class="v" style="flex:1">${['쇠파이프','석궁','볼트','화염병'].map(k=>`${k} ${S.items[k]||0}`).join(' · ')}</span></div>`:''}</div>`;
@@ -4559,7 +4665,8 @@ function dialogueSide(turn,lanes,opt={}){
   }
 
   /* ── ENDING ── */
-  function showEnding(kind){
+function showEnding(kind){
+  $('#scr-end').dataset.endingKind=kind||'';
     SND.setDriving(false);
     /* Endings can be triggered from an event choice. Remove that modal before
        switching screens so the finished story sheet cannot cover the ending. */

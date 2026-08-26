@@ -359,10 +359,12 @@ input{font-family:inherit}
 .ait-runtime .sheet.event-mode{
   height:calc(100dvh - var(--safe-top) - 70px);
   max-height:calc(100dvh - var(--safe-top) - 70px)}
-.event-scroll{flex:1;min-height:0;overflow-y:auto;padding:14px 16px 8px;touch-action:pan-y;
+.event-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:14px 16px 8px;touch-action:pan-y;
   overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
-  scrollbar-color:var(--line) transparent}
-.event-choice-dock{flex:none;min-height:0;overflow:hidden;padding:8px 14px calc(8px + var(--safe-bottom));
+  scrollbar-color:var(--line) transparent;scroll-padding-bottom:calc(var(--event-dock-h,0px) + 20px)}
+.event-choice-dock{position:relative;inset:auto;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-flow:row;
+  flex:0 0 auto;box-sizing:border-box;min-height:0;max-height:min(46dvh,330px);gap:6px;overflow:hidden;
+  padding:8px 14px calc(8px + var(--safe-bottom));
   border-top:1px solid #2c3657;background:#0d111e;
   box-shadow:0 -10px 24px rgba(4,6,12,.42)}
 .choice-dock-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;
@@ -382,9 +384,14 @@ input{font-family:inherit}
 .story-combat-toggle.on{color:var(--amber);border-color:rgba(255,180,84,.42);
   background:rgba(255,180,84,.055)}
 .story-progress-dock .story-next{min-height:61px;display:flex;flex-direction:column;justify-content:center}
-.event-choice-dock>.choices{max-height:min(40dvh,360px);overflow-y:auto;padding:1px 2px 8px;scroll-padding-block:8px;
+.event-choice-dock>.choices{min-height:0;max-height:min(25dvh,154px);overflow-y:auto;padding:1px 2px 8px;scroll-padding-block:8px;
   touch-action:pan-y;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
   scrollbar-color:var(--line) transparent}
+.event-choice-dock>[data-choice-pages]:not(.choices),.event-choice-dock>.choice-pages{
+  position:static;inset:auto;display:flex;grid-column:1;flex:0 0 auto;align-items:center;justify-content:center;
+  box-sizing:border-box;width:100%;min-height:32px;margin:0;transform:none}
+.event-choice-dock>.event-detail-toggle{position:static;inset:auto;grid-column:1;box-sizing:border-box;
+  width:100%;min-height:44px;margin:0;transform:none}
 /* 선택 카드는 절대 줄어들지 않는다. flex-shrink를 허용하면 목록이 스크롤되는 대신
    카드가 눌려서 overflow:hidden에 잘린다 — 실패 비용·요구 조건이 통째로 사라진다. */
 .event-choice-dock>.choices>.choice{flex:none}
@@ -530,7 +537,8 @@ input{font-family:inherit}
   50%{filter:brightness(1.22)}
 }
 .sheet .body .ai-voice, .sheet .body .ai, .outcome .ai{color:var(--cheollian);font-family:var(--mono);font-size:12.5px}
-.story-reader{min-height:112px;display:flex;align-items:stretch}
+.story-reader{min-height:112px;display:flex;align-items:stretch;
+  scroll-padding-bottom:calc(var(--event-dock-h,0px) + 20px)}
 .story-turn{width:100%;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);
   padding:13px 14px;display:flex;flex-direction:column;justify-content:center;gap:10px;
   transition:opacity .18s ease,transform .18s ease}
@@ -560,8 +568,9 @@ input{font-family:inherit}
   transition:opacity .18s ease,transform .18s ease}
 .story-narration-label{display:block;margin-bottom:5px;color:#949bad;text-align:center;
   font:12px/1.3 var(--mono);letter-spacing:.2em}
-.story-narration-text{width:100%;color:#d0d3db;font:13.5px/1.7 var(--serif);
-  white-space:pre-wrap;word-break:keep-all;text-align:left}
+.story-narration-text{display:block;width:100%;height:auto;max-height:none;overflow:visible;color:#d0d3db;
+  font:13.5px/1.7 var(--serif);white-space:pre-wrap;word-break:keep-all;text-align:left;
+  -webkit-line-clamp:unset;line-clamp:unset}
 .chat-msg{display:flex;align-items:flex-start;gap:8px;width:100%;transition:opacity .18s ease,transform .18s ease}
 .chat-msg.side-right{flex-direction:row-reverse}
 .chat-msg.turn-enter{opacity:.2;transform:translateY(5px)}
@@ -605,8 +614,8 @@ input{font-family:inherit}
 .choice .combat-risk.combat-risk-combat-critical{color:#ff938c;border-color:rgba(226,87,79,.62);font-weight:700}
 .choice .combat-failure{display:block;margin-top:5px;padding:5px 7px;border-left:2px solid rgba(226,87,79,.78);
   background:rgba(226,87,79,.075);color:#f2b6b0;font:12px/1.4 var(--mono)}
-.choice[disabled]{opacity:.4}
-.choice[disabled] .req{color:var(--danger)}
+.choice[disabled]{opacity:1;cursor:not-allowed}
+.choice[disabled] .req{color:var(--danger);opacity:1}
 .outcome{border-left:2px solid var(--amber-dim);padding:2px 0 2px 12px;margin:4px 0 14px;
   color:#d8dbe4;font-size:14px;white-space:pre-wrap}
 .fx-line{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
@@ -1051,11 +1060,20 @@ input{font-family:inherit}
   min-height:44px;padding:7px 12px;border:1px solid rgba(232,227,213,.35);border-radius:22px;
   background:rgba(5,6,12,.72);color:#e1e3e8;font:12px/1.3 var(--mono);backdrop-filter:blur(6px)}
 #intro-summary{position:absolute;z-index:12;inset:0;display:none;align-items:center;justify-content:center;
-  padding:calc(18px + var(--safe-top)) calc(14px + var(--safe-right)) calc(18px + var(--safe-bottom)) calc(14px + var(--safe-left));
+  padding:calc(clamp(8px,2dvh,18px) + var(--safe-top)) calc(14px + var(--safe-right))
+    calc(clamp(8px,2dvh,18px) + var(--safe-bottom)) calc(14px + var(--safe-left));
   cursor:default;background:rgba(3,5,10,.86);backdrop-filter:blur(9px)}
 #intro-summary.on{display:flex}
-.intro-summary-card{width:min(100%,460px);max-height:100%;overflow-y:auto;padding:20px;border:1px solid #3b4150;
+.intro-summary-card{display:flex;flex-direction:column;box-sizing:border-box;width:min(100%,460px);max-height:100%;
+  min-height:0;overflow:hidden;padding:clamp(14px,3dvh,20px);border:1px solid #3b4150;
   border-radius:15px;background:linear-gradient(155deg,#161823,#0b0e16 62%);box-shadow:0 24px 70px #000}
+.intro-summary-card>:is(.intro-summary-list,.intro-summary-points){flex:1 1 auto;min-height:0;overflow-y:auto;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:4px}
+.intro-summary-card>.intro-summary-actions{position:sticky;bottom:0;z-index:2;display:flex;flex:0 0 auto;
+  flex-direction:column;gap:8px;margin:10px -4px -4px;padding:10px 4px 4px;
+  background:linear-gradient(180deg,rgba(11,14,22,0),#0b0e16 22%)}
+.intro-summary-card>.intro-summary-actions>#intro-summary-start{order:-1}
+#scr-intro:focus-visible,.story-tap-hint:focus-visible{outline:3px solid var(--amber);outline-offset:-4px}
 .intro-summary-kicker{display:block;color:var(--amber-dim);font:12px/1.4 var(--mono);letter-spacing:.16em}
 .intro-summary-card h2{margin:5px 0 7px;color:#f0eadc;font:700 22px/1.35 var(--serif)}
 .intro-summary-lead{margin:0 0 14px;color:#b7becd;font:13px/1.55 var(--sans)}
@@ -1489,6 +1507,25 @@ img.stl-field-map-face,img.stl-field-face,img.upgrade-adviser-face,.cmsg img{
 @keyframes campRain{to{transform:translate(-42px,28px)}}@keyframes campSmoke{0%,100%{transform:translate(0,5px) scale(.85);opacity:.16}50%{transform:translate(12px,-16px) scale(1.14);opacity:.34}}@keyframes campFire{from{transform:scale(.86) rotate(-3deg)}to{transform:scale(1.08,.96) rotate(3deg)}}@keyframes campLantern{50%{opacity:.7;box-shadow:0 0 13px 6px rgba(255,190,88,.42)}}
 @container game (max-width:600px){.camp-live-image{min-height:205px}.camp-live-caption{left:10px;top:10px;padding:7px 9px}.camp-live-caption b{font-size:15px}.camp-live-person{padding:3px}.camp-live-person i{display:none}.camp-live-person>img,.camp-live-person>span{width:34px;height:34px}.camp-live-person.slot-1{left:23%;bottom:15%}.camp-live-person.slot-2{left:42%;bottom:26%}.camp-live-person.slot-3{right:13%;bottom:31%}.camp-live-person.slot-4{right:5%;bottom:10%}.camp-live-person.slot-5{right:26%;top:43%}.camp-live-person.slot-6{left:10%;top:48%}.camp-home-hero{padding:11px}.camp-live-state{padding:7px 9px}}
 @media (prefers-reduced-motion:reduce){.camp-opening .camp-live-stage,.camp-live-rain,.camp-live-smoke,.camp-live-fire,.camp-live-fire:after,.repair-ready .camp-live-lantern{animation:none!important}}
+
+/* Route rations belong to the whole leg, not the fixed-width distance metric. */
+.nav-route-ration{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;
+  margin-top:7px;padding:6px 9px;border:1px solid rgba(255,180,84,.24);border-radius:7px;
+  background:rgba(255,180,84,.055)}
+.nav-route-ration small{flex:none;color:var(--amber);font:700 10px/1.3 var(--mono);letter-spacing:.06em}
+.nav-route-ration b{min-width:0;color:#dce2df;font:700 11px/1.35 var(--mono);text-align:right;white-space:normal}
+
+/* Four compact supply facts: fixed 2x2 cells, with long values on their own row. */
+.bag-vehicle.bag-supply-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px}
+.bag-supply-overview>.bag-vehicle-title{grid-column:1/-1}
+.bag-supply-overview>.bag-supply-cell{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:end;gap:2px 7px;min-width:0;margin:0!important}
+.bag-supply-cell>span{min-width:0;overflow:hidden;color:#9ca8a4;font:10px/1.25 var(--mono);text-overflow:ellipsis;white-space:nowrap}
+.bag-supply-cell>b{min-width:0;color:#e8e2d5;font:700 13px/1.2 var(--mono);text-align:right;white-space:nowrap}
+.bag-supply-cell>i,.bag-supply-cell>small{grid-column:1/-1;min-width:0}
+.bag-supply-cell>small{overflow:hidden;color:#bdc6c0;font:10px/1.3 var(--mono);text-overflow:ellipsis;white-space:nowrap}
+.bag-supply-copy{align-content:start}
+@container game (max-width:360px){.bag-vehicle.bag-supply-overview{gap:8px}.bag-supply-cell>b{font-size:12px}.bag-supply-cell>small{font-size:9px}}
 
 /* Decision-first responsive pass: keep the next action visible and let choices own the screen. */
 @container game (max-width:600px){
@@ -5657,6 +5694,112 @@ body.quest-ledger-open #quest-ledger{width:min(100%,480px)!important;max-width:4
   font-style:normal!important;
   white-space:nowrap!important;
 }
+/* Final narrow-console containment fixes.
+   The route summary is 116.84px tall at 320px, so the former 108px track let it
+   paint into the carousel row. Keep the compact console scrollable, but give
+   that content a real track plus a small physical gap. */
+@media (max-width:359px){
+  #app #journey-mode-route .route-console-screen{
+    grid-template-rows:44px 104px minmax(118px,auto) 142px!important;
+    row-gap:2px!important;
+    align-content:start!important;
+    overflow-y:auto!important;
+  }
+  #app #journey-mode-route .nav-route-summary,
+  #app #journey-mode-route .nav-destination-carousel{
+    align-self:start!important;
+    margin:0!important;
+    transform:none!important;
+  }
+}
+
+/* Stop actions are direct children of the console; there is no intermediate
+   list node. Override the legacy equal-track grid so child height contributes
+   to scrollHeight and every card can be reached. */
+#app #journey-mode-local .journey-local-screen.stop-action-console{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  align-content:normal!important;
+  grid-template:none!important;
+  grid-auto-rows:auto!important;
+  gap:8px!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+#app #journey-mode-local .journey-local-screen.stop-action-console > .stop-action-trigger,
+#app #journey-mode-local .journey-local-screen.stop-action-console > .stop-action-card{
+  flex:0 0 auto!important;
+  position:relative!important;
+  inset:auto!important;
+  grid-area:auto!important;
+  align-self:stretch!important;
+  transform:none!important;
+  margin:0!important;
+  width:auto!important;
+  height:auto!important;
+  min-height:94px!important;
+  overflow:visible!important;
+}
+/* Winning narrow-route override: later compact rules also use !important, so
+   anchor this to the complete rendered screen path. The 118px summary track
+   contains the measured 116.84px block and leaves a real 2px row gap. */
+@media (max-width:359px){
+  html body #frame #app #main #panel #journey-mode-route.journey-mode-panel
+  .route-console.route-console-v3 > .route-console-screen{
+    grid-template-rows:44px 104px 118px 142px!important;
+    row-gap:2px!important;
+    align-content:start!important;
+    overflow-y:auto!important;
+  }
+}
+
+/* The cards live inside this wrapper, not directly under stop-action-console.
+   Make the real list own vertical flow and scrolling so its content contributes
+   to scrollHeight at every mobile viewport. */
+html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
+.journey-local-screen.stop-action-console > .stop-action-grid.local-actions{
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  align-content:normal!important;
+  grid-template:none!important;
+  grid-auto-rows:auto!important;
+  gap:8px!important;
+  min-height:0!important;
+  max-height:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  scroll-snap-type:none!important;
+}
+html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
+.journey-local-screen.stop-action-console > .stop-action-grid.local-actions > .stop-action-card{
+  flex:0 0 auto!important;
+  position:relative!important;
+  inset:auto!important;
+  grid-area:auto!important;
+  align-self:stretch!important;
+  transform:none!important;
+  margin:0!important;
+  width:auto!important;
+  height:auto!important;
+  min-height:94px!important;
+  overflow:visible!important;
+  scroll-snap-align:none!important;
+}
+/* A complete stop card is 103px after its content-driven sizing. Keep at least
+   one full card visible in the 320px console while the list itself scrolls. */
+@media (max-width:359px){
+  html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
+  .journey-local-screen.stop-action-console{
+    height:112px!important;
+    min-height:112px!important;
+    max-height:112px!important;
+  }
+}
 </style>
 <style id="intro-scene-and-stay-console-polish">
 #intro-img.intro-scene-cut{animation:intro-scene-cut .46s cubic-bezier(.22,.72,.25,1) both}
@@ -8398,10 +8541,35 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   scroll-padding-bottom:112px!important;
 }
 
-html body #app .journey-mode-console .journey-mode-tabs.journey-rocker>button{
+html body #app .journey-mode-console .journey-mode-tabs.journey-rocker{
   height:36px!important;
   min-height:36px!important;
+  padding:2px!important;
+  gap:3px!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  border-radius:4px!important;
+  background:#090d0c!important;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.82)!important;
+}
+html body #app .journey-mode-console .journey-mode-tabs.journey-rocker>button{
+  height:32px!important;
+  min-height:32px!important;
   font-size:12px!important;
+  box-sizing:border-box!important;
+  border:1px solid transparent!important;
+  border-radius:3px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html body #app .journey-mode-console .journey-mode-tabs.journey-rocker>button[aria-selected="true"]{
+  color:#ffc86b!important;
+  border-color:#b87528!important;
+  background:linear-gradient(180deg,#3d240d,#1f1206)!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.16)!important;
+}
+html body #app .journey-mode-console .journey-mode-tabs.journey-rocker>button[aria-selected="true"]::after{
+  display:none!important;
 }
 
 #ev-sheet:not([data-event-kind="combat"]) .choices .choice{
@@ -8913,6 +9081,44 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 </style>
 <style id="combat-manuscript-state-integrity-20260826">
 /* Combat is a danger-marked page of the same field journal, not a second UI theme. */
+#app #ev-wrap #ev-sheet.event-mode{min-height:0!important;overflow:hidden!important}
+#app #ev-wrap #ev-sheet.event-mode .event-scroll{
+  position:relative!important;display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+  scroll-padding-bottom:calc(var(--event-dock-h,0px) + 20px)!important
+}
+#app #ev-wrap #ev-sheet.event-mode .story-reader{
+  scroll-padding-bottom:calc(var(--event-dock-h,0px) + 20px)!important
+}
+#app #ev-wrap #ev-sheet.event-mode .story-transcript>:last-child{
+  scroll-margin-bottom:calc(var(--event-dock-h,0px) + 20px)!important
+}
+#app #ev-wrap #ev-sheet.event-mode .story-transcript .story-narration-text{
+  display:block!important;height:auto!important;max-height:none!important;overflow:visible!important;
+  -webkit-line-clamp:unset!important;line-clamp:unset!important
+}
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock{
+  position:relative!important;inset:auto!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+  grid-auto-flow:row!important;flex:0 0 auto!important;box-sizing:border-box!important;width:100%!important;
+  height:auto!important;min-height:0!important;max-height:min(46dvh,330px)!important;gap:7px!important;
+  margin:0!important;overflow:hidden!important
+}
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock>.choices{
+  grid-column:1!important;min-height:0!important;max-height:min(25dvh,154px)!important;
+  overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;scrollbar-gutter:stable
+}
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock>[data-choice-pages]:not(.choices),
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock>.choice-pages{
+  position:static!important;inset:auto!important;display:flex!important;grid-column:1!important;
+  align-items:center!important;justify-content:center!important;box-sizing:border-box!important;
+  width:100%!important;min-height:32px!important;max-height:none!important;margin:0!important;transform:none!important
+}
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock .event-detail-toggle{
+  position:static!important;inset:auto!important;display:flex!important;grid-column:1!important;
+  align-items:center!important;justify-content:center!important;box-sizing:border-box!important;
+  width:100%!important;min-height:44px!important;margin:0!important;transform:none!important
+}
 #app #ev-sheet.event-mode[data-event-kind="combat"]{display:flex!important;flex-direction:column!important;overflow:hidden!important}
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-scroll,
 #app #ev-sheet.event-mode[data-event-kind="combat"].combat-details-open .event-scroll{
@@ -8962,17 +9168,18 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock,
 #app #ev-sheet.event-mode[data-event-kind="combat"].combat-details-open .event-choice-dock{
   display:grid!important;flex:0 0 auto!important;width:100%!important;height:auto!important;min-height:0!important;
-  max-height:min(38dvh,330px)!important;gap:7px!important;margin:0!important;padding:8px 12px calc(10px + var(--safe-bottom))!important;
-  overflow-x:hidden!important;overflow-y:auto!important;border:0!important;border-top:1px solid rgba(100,70,35,.42)!important;
+  max-height:min(46dvh,330px)!important;gap:7px!important;margin:0!important;padding:8px 12px calc(10px + var(--safe-bottom))!important;
+  overflow-x:hidden!important;overflow-y:hidden!important;border:0!important;border-top:1px solid rgba(100,70,35,.42)!important;
   background:linear-gradient(180deg,#d7c5a1,#cdb890)!important;box-shadow:0 -5px 14px rgba(0,0,0,.24)!important
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices{
   display:grid!important;flex:none!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;
-  height:auto!important;max-height:none!important;gap:7px!important;padding:0!important;overflow:visible!important
+  height:auto!important;min-height:0!important;max-height:min(25dvh,154px)!important;gap:7px!important;padding:0 3px 0 0!important;
+  overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices>button.choice{
   display:flex!important;flex:none!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;
-  box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:48px!important;max-height:none!important;
+  position:relative!important;box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:48px!important;max-height:none!important;
   margin:0!important;padding:9px 34px 9px 13px!important;overflow:visible!important;border:1px solid #9f692e!important;
   border-left:3px solid #a96d2c!important;border-radius:6px!important;background:linear-gradient(180deg,#e2d5b9,#d7c6a4)!important;
   color:#29231c!important;box-shadow:inset 0 1px 3px rgba(69,43,18,.16),0 2px 5px rgba(65,42,20,.12)!important;
@@ -8990,10 +9197,25 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   box-shadow:inset 0 2px 4px rgba(69,43,18,.2),0 0 0 2px rgba(184,117,40,.18)!important
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices>button.choice:is(:active,.selected,[aria-pressed="true"]) :is(.choice-title,.choice-title>span){color:#201c17!important}
-#app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices>button.choice:disabled{
-  border-color:#a99b7f!important;background:#c9bea7!important;color:#6f6759!important;opacity:.58!important;filter:grayscale(.55)!important
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices>button.choice:disabled,
+html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice.ui-compact-choice:disabled{
+  border-color:#806f55!important;background:#cfc3aa!important;color:#40392f!important;opacity:1!important;filter:none!important
 }
-#app #ev-sheet.event-mode[data-event-kind="combat"] .event-detail-toggle{min-height:40px!important;margin:0 auto!important;color:#7d4a21!important;background:transparent!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices>button.choice:disabled :is(.choice-title,.choice-title>span,.choice-main,.choice-detail){
+  color:#40392f!important;opacity:1!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices>button.choice:disabled .req{
+  color:#7b2926!important;font-weight:800!important;opacity:1!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock>.choices>button.choice:disabled::after{
+  content:"잠김"!important;position:absolute!important;top:7px!important;right:8px!important;display:block!important;
+  padding:3px 6px!important;border:1px solid #5e5040!important;border-radius:3px!important;
+  background:#5e5040!important;color:#fff4df!important;font:800 10px/1 var(--sans)!important;opacity:1!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-detail-toggle{
+  position:static!important;inset:auto!important;min-height:44px!important;margin:0!important;color:#7d4a21!important;
+  background:transparent!important;transform:none!important
+}
 /* Major route forks use compact facts instead of an overflowing sentence. */
 #app #ev-sheet.event-mode .route-forecast{display:flex!important;flex-wrap:wrap!important;gap:5px!important;width:100%!important;margin-top:6px!important;padding:0!important;border:0!important;background:transparent!important}
 #app #ev-sheet.event-mode .route-forecast>i{
@@ -9014,4 +9236,593 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   border:1px solid rgba(232,173,83,.48)!important;border-radius:3px!important;background:rgba(8,13,17,.86)!important;
   color:#efbd72!important;font:800 8px/1 var(--sans)!important;letter-spacing:.02em!important
 }
+</style>
+
+<style id="non-narrative-mobile-qa-fixes">
+/* Keep the compact tracker readable without turning it into a large overlay. */
+#road-quest-tracker{
+  box-sizing:border-box!important;
+  height:auto!important;
+  min-height:50px!important;
+  max-height:76px!important;
+  overflow:hidden!important;
+  white-space:normal!important
+}
+#road-quest-tracker>*{min-width:0!important}
+#road-quest-tracker[aria-expanded="true"]{
+  max-height:96px!important;
+  grid-template-rows:auto auto auto auto!important
+}
+#road-quest-tracker[aria-expanded="true"] .rqt-line{display:grid!important}
+#road-quest-tracker[aria-expanded="true"] .rqt-line em{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+/* Local-action cards size from their copy; the console owns the scrolling. */
+#app #journey-mode-local .journey-local-screen.stop-action-console{
+  min-height:0!important;
+  flex-direction:column!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scroll-padding-bottom:12px
+}
+#app #journey-mode-local .journey-local-screen :is(.stop-action-list,.stop-actions-list,.stop-action-grid){
+  min-height:0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+  scroll-padding-bottom:12px
+}
+#app #journey-mode-local .journey-local-screen .stop-action-card{
+  box-sizing:border-box!important;
+  flex:0 0 auto!important;
+  height:auto!important;
+  min-height:94px!important;
+  max-height:none!important;
+  overflow:visible!important
+}
+#app #journey-mode-local .journey-local-screen .stop-action-trigger{
+  box-sizing:border-box!important;
+  flex:0 0 auto!important;
+  height:auto!important;
+  min-height:94px!important;
+  max-height:none!important;
+  overflow:visible!important
+}
+
+/* Goal entries can clear the fixed dock; the fade indicates more content. */
+#panel:has(.quest-ledger-list){
+  scroll-padding-bottom:calc(92px + var(--safe-bottom))
+}
+.quest-ledger-list{
+  box-sizing:border-box!important;
+  padding-bottom:calc(96px + var(--safe-bottom))!important;
+  scroll-padding-bottom:calc(96px + var(--safe-bottom));
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 24px),transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 24px),transparent 100%)
+}
+.quest-ledger-list>*:last-child{scroll-margin-bottom:calc(88px + var(--safe-bottom))}
+
+/* Explicit, lightweight continuation cues for otherwise gesture-only screens. */
+.arrival-copy::after{
+  content:"\2193  화면을 탭해 다음 여정으로 계속";
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  width:max-content;
+  max-width:100%;
+  margin:10px auto 0;
+  padding:6px 10px;
+  border:1px solid rgba(238,190,109,.52);
+  border-radius:999px;
+  background:rgba(7,12,15,.72);
+  box-shadow:inset 0 1px rgba(255,255,255,.08),0 3px 12px rgba(0,0,0,.28);
+  color:#f0c77f;
+  font:700 11px/1.2 var(--mono);
+  letter-spacing:.035em;
+  text-shadow:0 1px 2px #000;
+  pointer-events:none
+}
+#scr-end[data-ending-kind="story_done"].on::after{
+  content:"\2193  아래로 스크롤해 결말과 선택 보기";
+  position:fixed;
+  z-index:72;
+  left:50%;
+  bottom:calc(14px + var(--safe-bottom));
+  transform:translateX(-50%);
+  box-sizing:border-box;
+  width:max-content;
+  max-width:calc(min(480px,100vw) - 28px);
+  padding:8px 12px;
+  border:1px solid rgba(226,175,87,.62);
+  border-radius:999px;
+  background:rgba(8,13,15,.92);
+  box-shadow:0 6px 22px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.08);
+  color:#f1c979;
+  font:800 11px/1.2 var(--mono);
+  letter-spacing:.035em;
+  text-align:center;
+  pointer-events:none;
+  animation:ending-scroll-cue 5.2s both
+}
+@keyframes ending-scroll-cue{
+  0%,62%{opacity:.96;transform:translate(-50%,0)}
+  76%{opacity:.96;transform:translate(-50%,-4px)}
+  100%{opacity:0;transform:translate(-50%,0)}
+}
+
+/* Short intro beats use content-led parchment height; long copy still grows. */
+#intro-page{
+  box-sizing:border-box;
+  height:auto!important;
+  min-height:clamp(240px,44dvh,360px)!important
+}
+#intro-txt{min-height:0!important}
+
+@media(max-width:359px){
+  /* The departure sound control becomes an icon and reserves title space. */
+  #app[data-screen="name"] #early-sound,
+  #app:has(#scr-name.on) #early-sound{
+    width:40px!important;
+    min-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding:0!important;
+    gap:0!important
+  }
+  #app[data-screen="name"] #early-sound .sound-label,
+  #app:has(#scr-name.on) #early-sound .sound-label{display:none!important}
+  #app[data-screen="name"] .departure-head>div,
+  #app:has(#scr-name.on) .departure-head>div{
+    box-sizing:border-box;
+    min-width:0;
+    padding-right:46px
+  }
+
+  /* Reserve the dock first, then let the journey console scroll in remaining dvh. */
+  #scr-game #main{
+    --compact-dock-block:calc(76px + var(--safe-bottom));
+    box-sizing:border-box!important;
+    min-height:0!important;
+    padding-bottom:var(--compact-dock-block)!important
+  }
+  #scr-game #panel{
+    box-sizing:border-box!important;
+    min-height:0!important;
+    padding:6px 4px 8px!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    scroll-padding-bottom:10px
+  }
+  #scr-game #panel .journey-mode-console{
+    display:flex!important;
+    flex-direction:column!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    overflow:hidden!important
+  }
+  #scr-game #panel .journey-mode-console>.journey-mode-tabs{flex:0 0 auto!important}
+  #scr-game #panel .journey-mode-console>.journey-mode-panel{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:hidden!important
+  }
+  #scr-game #panel .route-console-v3{
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    aspect-ratio:auto!important;
+    overflow:hidden!important
+  }
+  #scr-game #panel .route-console-v3 :is(.route-console-screen,.journey-local-screen){
+    min-height:0!important;
+    max-height:100%!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch
+  }
+  #scr-game #panel .route-console-v3 .route-console-screen{
+    grid-template-rows:44px 104px minmax(108px,auto) 142px!important;
+    align-content:start!important;
+    overflow-y:auto!important
+  }
+  #app #journey-mode-local .journey-local-screen .stop-action-trigger{
+    min-height:94px!important
+  }
+
+  /* Keep camp art and every crew slot inside the live-image bounds. */
+  #ovl-camp{overflow-x:hidden!important}
+  #camp-body,
+  #camp-body .camp-home,
+  #camp-body .camp-live-stage,
+  #camp-body .camp-live-image,
+  #camp-body .camp-live-crew{
+    box-sizing:border-box!important;
+    min-width:0!important;
+    width:100%!important;
+    max-width:100%!important
+  }
+  #camp-body{
+    max-width:100vw!important;
+    overflow-x:hidden!important
+  }
+  #camp-body .camp-live-image,
+  #camp-body .camp-live-crew{overflow:hidden!important}
+  #camp-body .camp-live-person.slot-4{
+    left:auto!important;
+    right:clamp(8px,5%,14px)!important;
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important
+  }
+}
+</style>
+
+<style id="narrative-recheck-containment-20260826">
+/* Final narrative contract: the sheet owns exactly one viewport and the decision dock
+   owns three non-overlapping rows — scrolling choices, pager, and detail. */
+#app #ev-wrap.on{
+  box-sizing:border-box!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+  overflow:hidden!important
+}
+#app #ev-wrap.on>#ev-sheet.event-mode{
+  box-sizing:border-box!important;
+  height:100%!important;
+  max-height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:minmax(0,1fr)!important;
+  grid-auto-flow:row!important;
+  grid-auto-rows:44px!important;
+  align-content:stretch!important;
+  box-sizing:border-box!important;
+  flex:0 0 min(42dvh,248px)!important;
+  width:100%!important;
+  height:min(42dvh,248px)!important;
+  min-height:0!important;
+  max-height:min(42dvh,248px)!important;
+  gap:6px!important;
+  padding:8px 12px calc(8px + var(--safe-bottom))!important;
+  overflow:hidden!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices{
+  display:grid!important;
+  grid-column:1!important;
+  grid-row:auto!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  align-content:start!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  gap:6px!important;
+  padding:0 3px 0 0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  scrollbar-gutter:stable!important;
+  scroll-padding-block:4px!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>[data-choice-pages]{
+  position:static!important;
+  grid-column:1!important;
+  grid-row:auto!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:44px!important;
+  min-height:44px!important;
+  max-height:44px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  transform:none!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>[data-choice-pages][hidden]{display:none!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>[data-choice-pages] button{
+  box-sizing:border-box!important;
+  height:44px!important;
+  min-height:44px!important;
+  max-height:44px!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.event-detail-toggle{
+  position:static!important;
+  grid-column:1!important;
+  grid-row:auto!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:44px!important;
+  min-height:44px!important;
+  max-height:44px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  transform:none!important
+}
+
+/* Active combat/route decisions are dark hardware with explicit cream ink.
+   Disabled cards remain on the already-verified paper treatment below. */
+html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]
+  .event-choice-dock>.choices>button.choice:not(:disabled){
+  box-sizing:border-box!important;
+  min-height:64px!important;
+  height:auto!important;
+  padding:8px 34px 8px 12px!important;
+  border:1px solid #b77a35!important;
+  border-left:3px solid #d59643!important;
+  background:#1c2422!important;
+  color:#f8edcf!important;
+  opacity:1!important;
+  filter:none!important;
+  text-shadow:none!important
+}
+html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]
+  .event-choice-dock>.choices>button.choice:not(:disabled) :is(.choice-head,.choice-title,.choice-title>span,.choice-main,.choice-detail){
+  color:#f8edcf!important;
+  opacity:1!important;
+  text-shadow:none!important
+}
+html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]
+  .event-choice-dock>.choices>button.choice:not(:disabled) :is(.combat-tactic,.choice-intent,.choice-index,.choice-index b){
+  color:#ffd080!important;
+  opacity:1!important;
+  text-shadow:none!important
+}
+html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]
+  .event-choice-dock>.choices>button.choice:not(:disabled) .req{
+  color:#eadbb9!important;
+  opacity:1!important
+}
+html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]
+  .event-choice-dock>.choices>button.choice:not(:disabled):is(:hover,:focus-visible,.selected,[aria-pressed="true"]){
+  border-color:#f0b85f!important;
+  background:#26312e!important;
+  color:#fff4d9!important;
+  outline:2px solid rgba(255,208,128,.45)!important;
+  outline-offset:-3px!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice{
+  flex:none!important;
+  min-height:64px!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice .choice-head{
+  min-width:0!important;
+  align-items:center!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice .choice-title{
+  display:flex!important;
+  min-width:0!important;
+  flex-wrap:wrap!important;
+  align-items:baseline!important;
+  gap:3px 7px!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice>.req{
+  position:static!important;
+  inset:auto!important;
+  display:block!important;
+  width:auto!important;
+  margin:4px 0 0 33px!important;
+  transform:none!important;
+  font-size:11px!important;
+  line-height:1.25!important
+}
+
+/* The measured dock height becomes real trailing lane space. A second alignment frame
+   in the renderer then places the newest complete entry above the dock. */
+#app #ev-sheet.event-mode[data-event-kind="story"]:is([data-story-step="decision"],[data-story-step="result"]) .story-reader{
+  min-height:0!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  scroll-padding-bottom:calc(var(--event-dock-h,0px) + 16px)!important
+}
+#app #ev-sheet.event-mode[data-event-kind="story"]:is([data-story-step="decision"],[data-story-step="result"]) .story-transcript{
+  box-sizing:border-box!important;
+  padding-bottom:calc(var(--event-dock-h,0px) + 16px)!important
+}
+#app #ev-sheet.event-mode[data-event-kind="story"]:is([data-story-step="decision"],[data-story-step="result"]) .story-transcript>[data-story-entry]:last-child{
+  scroll-margin-block:14px calc(var(--event-dock-h,0px) + 16px)!important
+}
+
+@media (max-height:650px),(max-width:350px){
+  #app #ev-wrap.on>#ev-sheet.event-mode{height:100dvh!important;max-height:100dvh!important}
+  #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock{
+    flex-basis:min(42dvh,242px)!important;
+    height:min(42dvh,242px)!important;
+    max-height:min(42dvh,242px)!important
+  }
+  #app #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock{
+    max-height:min(38dvh,210px)!important
+  }
+  #app #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock>.choices>.choice{
+    min-height:44px!important
+  }
+}
+</style>
+
+
+<style id="narrative-320-final-containment-20260826">
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock {
+    display: grid !important;
+    grid-template-rows: minmax(0, 1fr) 44px 44px !important;
+    grid-auto-rows: 44px;
+    gap: 7px;
+    min-height: 0;
+    overflow: hidden !important;
+    box-sizing: border-box;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock > .choices {
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-pages,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-pages > button,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-detail-toggle {
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    box-sizing: border-box;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-pages[hidden] {
+    display: none !important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled],
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 5px;
+    min-height: 84px !important;
+    height: auto !important;
+    padding: 8px 10px !important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked .choice-head,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled] .choice-head,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] .choice-head {
+    display: grid !important;
+    grid-template-columns: 24px minmax(0, 1fr);
+    align-items: start !important;
+    gap: 6px;
+    min-height: 0;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked .choice-title,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled] .choice-title,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] .choice-title {
+    display: grid !important;
+    grid-template-rows: auto auto;
+    gap: 2px;
+    min-width: 0;
+    line-height: 1.24 !important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked .choice-title > span,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled] .choice-title > span,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] .choice-title > span {
+    display: block;
+    position: static !important;
+    line-height: 1.24 !important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked .req,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled] .req,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] .req {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 0 0 30px !important;
+    padding: 0 !important;
+    white-space: normal !important;
+    line-height: 1.24 !important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .story-transcript {
+    padding-bottom: 0 !important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .story-transcript::after {
+    content: "";
+    display: block;
+    flex: 0 0 calc(var(--event-dock-h, 0px) + 16px);
+    width: 100%;
+    height: calc(var(--event-dock-h, 0px) + 16px);
+    min-height: calc(var(--event-dock-h, 0px) + 16px);
+    pointer-events: none;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .event-scroll,
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .story-reader {
+    scroll-padding-bottom: calc(var(--event-dock-h, 0px) + 28px) !important;
+  }
+  @media (max-height: 640px) {
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock {
+      flex: 0 0 min(42dvh, 242px) !important;
+      height: min(42dvh, 242px) !important;
+      max-height: min(calc(100dvh - 12px), 242px) !important;
+      margin-bottom: 6px !important;
+    }
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock {
+      display: flex !important;
+      flex-direction: column;
+      flex: 0 1 auto !important;
+      gap: 6px;
+      height: auto !important;
+      max-height: min(22dvh, 128px) !important;
+      overflow: hidden !important;
+      box-sizing: border-box;
+    }
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .event-choice-dock > .choices {
+      flex: 1 1 auto;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      overscroll-behavior: contain;
+    }
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .event-choice-pages {
+      flex: 0 0 44px;
+      height: 44px !important;
+      min-height: 44px !important;
+      max-height: 44px !important;
+    }
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .event-choice-pages > button,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .choice {
+      min-height: 44px !important;
+    }
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="story"] .story-reader {
+      min-height: 84px !important;
+      flex: 1 1 84px;
+      overflow-y: auto !important;
+    }
+  }
+</style>
+
+
+<style id="narrative-320-disabled-row-final-20260826">
+  @media (max-height: 640px) {
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled],
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] {
+      min-height: 104px !important;
+    }
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked .choice-head,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled] .choice-head,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] .choice-head,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked .choice-title,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled] .choice-title,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] .choice-title {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice.choice-locked .req,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[disabled] .req,
+    #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[aria-disabled="true"] .req {
+      flex: 0 0 auto;
+    }
+  }
+</style>
+
+
+<style id="narrative-combat-hidden-final-20260826">
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[hidden] { display: none !important; }
 </style>

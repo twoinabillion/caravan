@@ -551,33 +551,131 @@ G.wxName = w=> (D.wx[w]||D.wx.clear).nm;
 G.isWet = ()=> S.wx==='rain'||S.wx==='storm';
 
 /* ── time & rations ── */
-G.advance = (mins)=>{
+G.hungerLabel = stage=> ['정상','허기','공복','쇠약'][clamp(Math.round(Number(stage)||0),0,3)];
+G.mealNeed = kind=>{
+  const party=G.partySize();
+  const breakfast=Math.max(1,party-(G.hasPerk('kw_ration')&&party>1?1:0));
+  if(kind==='breakfast') return breakfast;
+  if(kind==='lunch') return Math.ceil(party/2);
+  return 1;
+};
+G.dailyRationInfo = ()=>{
+  const breakfast=G.mealNeed('breakfast'), lunch=G.mealNeed('lunch');
+  const foodPerDay=breakfast+lunch, waterPerDay=breakfast;
+  const foodDays=Math.floor(S.food/Math.max(1,foodPerDay));
+  const waterDays=Math.floor(S.water/Math.max(1,waterPerDay));
+  return {breakfast,lunch,foodPerDay,waterPerDay,foodDays,waterDays,supplyDays:Math.min(foodDays,waterDays)};
+};
+G.nextMealInfo = ()=>{
+  if((S._breakfastDay||0)<S.day) return {kind:'breakfast',label:'아침',clock:'06:30',food:G.mealNeed('breakfast'),water:G.mealNeed('breakfast')};
+  if((S._lunchDay||0)<S.day) return {kind:'lunch',label:'점심',clock:'12:00',food:G.mealNeed('lunch'),water:0};
+  return {kind:'breakfast',label:'아침',clock:'내일 06:30',food:G.mealNeed('breakfast'),water:G.mealNeed('breakfast')};
+};
+/* 현재 시각부터 주어진 분 동안 실제로 넘는 06:30·12:00 경계만 센다.
+   경로 카드와 엔진이 같은 식사 계약을 쓰므로 긴 구간의 보급 예측이 어긋나지 않는다. */
+G.mealForecast = mins=>{
+  const now=S.day*1440+S.min, end=now+Math.max(0,Number(mins)||0);
+  let breakfasts=0,lunches=0;
+  let bDay=(S._breakfastDay||0)<S.day?S.day:S.day+1;
+  let lDay=(S._lunchDay||0)<S.day?S.day:S.day+1;
+  for(let at=bDay*1440+390;at<=end+0.0001;at+=1440) breakfasts++;
+  for(let at=lDay*1440+720;at<=end+0.0001;at+=1440) lunches++;
+  const food=breakfasts*G.mealNeed('breakfast')+lunches*G.mealNeed('lunch');
+  const water=breakfasts*G.mealNeed('breakfast');
+  return {breakfasts,lunches,food,water};
+};
+G.consumeMeal = kind=>{
+  const need=G.mealNeed(kind), before=clamp(Number(S.hunger)||0,0,3);
+  const used=Math.min(Math.max(0,S.food),need), ok=used>=need;
+  S.food=Math.max(0,S.food-used);
+  if(ok){
+    S.hunger=Math.max(0,before-1);
+    return {ok,need,used,before,after:S.hunger,fatigue:0,mood:0};
+  }
+  S.hunger=Math.min(3,before+1);
+  const stage=[null,{fatigue:8,mood:-4},{fatigue:12,mood:-6},{fatigue:18,mood:-8}][S.hunger];
+  S.fatigue=clamp(S.fatigue+stage.fatigue,0,100);
+  if(S.party.length) G.moodAll(stage.mood);
+  if(before<2&&S.hunger>=2) G.queueCrisis('crisis_hungry');
+  return {ok,need,used,before,after:S.hunger,fatigue:stage.fatigue,mood:S.party.length?stage.mood:0};
+};
+G.mealToast = (label,result,icon='🍚')=>{
+  if(result.ok){
+    const recovery=result.after<result.before?(result.after===0?' · 허기 해소':` · 허기 ${result.before}→${result.after}`):'';
+    return `${icon} ${label} 배급 · 식량 -${result.used}${recovery}`;
+  }
+  const mood=result.mood?` · 사기 ${result.mood}`:'';
+  return `${icon} ${label} 결식 · 식량 ${result.used}/${result.need} · ${G.hungerLabel(result.after)} ${result.after}/3 · 피로 +${result.fatigue}${mood}`;
+};
+G.advance = (mins,options={})=>{
   let m = mins;
+  const settleBoundary=()=>{
+    let changed=false;
+    if((S._breakfastDay||0)<S.day&&S.min>=6.5*60){ S._breakfastDay=S.day; G.breakfast(); changed=true; }
+    if((S._lunchDay||0)<S.day&&S.min>=12*60){ S._lunchDay=S.day; G.lunch(); changed=true; }
+    if(S.min>=24*60){ S.min=0; S.day++; G.dawn(); changed=true; }
+    return changed;
+  };
   while(m>0){
-    const toMid = 24*60 - S.min;
-    const step = Math.min(m, toMid);
+    settleBoundary();
+    let boundary=24*60;
+    if((S._breakfastDay||0)<S.day&&S.min<6.5*60) boundary=Math.min(boundary,6.5*60);
+    if((S._lunchDay||0)<S.day&&S.min<12*60) boundary=Math.min(boundary,12*60);
+    const step = Math.min(m, Math.max(0,boundary-S.min));
+    if(step<=0) break;
     /* 분 단위로 정규화한다. 주행 tick이 실수를 더하다 보면 06:30이 389.9999가 되어
        "다음 날 아침"을 판별하는 조건과 표시가 어긋난다. */
     S.min = Math.round((S.min + step) * 1000) / 1000; m -= step;
     /* 깨어 있는 모든 시간에 피로가 쌓인다 (수면=camp가 유일한 리셋) */
-    const injuryMul=G.isInjured('driver')?1.2:1;
-    S.fatigue = clamp(S.fatigue + step*0.045*(1-G.driverLv()*0.06)*injuryMul, 0, 100);
-    /* 정오 점심 */
-    if(S.day>S._lunchDay && S.min>=12*60){ S._lunchDay=S.day; G.lunch(); }
-    if(S.min>=24*60){ S.min=0; S.day++; G.dawn(); }
+    if(!options.sleeping){
+      const injuryMul=G.isInjured('driver')?1.2:1;
+      S.fatigue = clamp(S.fatigue + step*0.045*(1-G.driverLv()*0.06)*injuryMul, 0, 100);
+    }
   }
+  settleBoundary();
 };
 G.lunch = ()=>{
-  const need = Math.ceil(G.partySize()/2);
-  const fOk = S.food>=need, wOk = true;   // 물은 아침 배급만 (v2.23 밸런스)
-  S.food=Math.max(0,S.food-need);
-  if(fOk&&wOk){ UI.toast(`🍚 점심 — 식량 -${need}`);
+  const result=G.consumeMeal('lunch');
+  UI.toast(G.mealToast('점심',result));
+  if(result.ok){
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(S.up&&S.up.kitchen) G.moodAll(1);
     if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
-  else { G.moodAll(-4); S.fatigue=clamp(S.fatigue+8,0,100);
-    UI.toast('🍚 점심을 걸렀다 — 사기·체력이 떨어진다'); }
+  G.save();
+};
+G.breakfast = ()=>{
+  const need=G.mealNeed('breakfast');
+  const waterUsed=Math.min(Math.max(0,S.water),need), waterOk=waterUsed>=need;
+  S.water=Math.max(0,S.water-waterUsed);
+  let waterFatigue=0,waterMood=0;
+  if(waterOk) S.thirst=0;
+  else {
+    S.thirst++; waterFatigue=15; waterMood=S.party.length?-8:0;
+    S.fatigue=clamp(S.fatigue+waterFatigue,0,100);
+    if(waterMood) G.moodAll(waterMood);
+  }
+  const result=G.consumeMeal('breakfast');
+  if(waterOk&&result.ok){
+    const recovery=result.after<result.before?(result.after===0?' · 허기 해소':` · 허기 ${result.before}→${result.after}`):'';
+    UI.toast(`🍙 아침 배급 · 식량 -${result.used} · 물 -${waterUsed}${recovery}`);
+  } else {
+    const fatigue=result.fatigue+waterFatigue, mood=result.mood+waterMood;
+    UI.toast(`🍙 아침 배급 부족 · 식량 ${result.used}/${result.need} · 물 ${waterUsed}/${need} · ${G.hungerLabel(result.after)} ${result.after}/3${fatigue?` · 피로 +${fatigue}`:''}${mood?` · 사기 ${mood}`:''}`);
+  }
+  if(result.ok){
+    if(typeof SCENE!=='undefined') SCENE.showMeal(16);
+    if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
+    if(S.up&&S.up.kitchen) G.moodAll(1);
+    if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)});
+  }
+  if(S.up&&S.up.beehive&&rng()<0.3){ S.food+=1; G.moodAll(2);
+    UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }
+  if(G.hasComp('leo')) G.moodAll(3); // 레오의 아침 기타
+  if(S.up&&S.up.garden){ S.food += S.up.garden2?2:1; }
+  if(S.up&&S.up.fridge){ S._fridgeD=(S._fridgeD||0)+1;
+    if(S._fridgeD>=3){ S._fridgeD=0; S.food+=1; UI.toast('🧊 냉장 박스 — 아낀 식량 +1'); } }
+  if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }
   G.save();
 };
 G.dawn = ()=>{
@@ -590,23 +688,6 @@ G.dawn = ()=>{
   G.tickInjuries();
   if(S.driving) S.driving.wx=S.wx;
   if(S.wx!==prevWx) UI.toast(`${D.wx[S.wx].ic} ${D.wx[S.wx].nm}${D.wx[S.wx].hint?' — '+D.wx[S.wx].hint:''}`);
-  let n = G.partySize();
-  if(G.hasPerk('kw_ration')&&n>1) n--;   // 강우 자급자족
-  // 아침 배급: 1 water + 1 food per person
-  if(S.water>=n){ S.water-=n; S.thirst=0; } else { S.water=0; S.thirst++; G.moodAll(-8); S.fatigue=clamp(S.fatigue+15,0,100); UI.toast('💧 물이 부족하다…'); }
-  if(S.food>=n){ S.food-=n; S.hunger=0; } else { S.food=0; S.hunger++; G.moodAll(-6); S.fatigue=clamp(S.fatigue+15,0,100); }
-  if(S.water>0||S.food>0){ UI.toast(`🍙 아침 배급 — 물·식량 -${n}`);
-    if(typeof SCENE!=='undefined') SCENE.showMeal(16);
-    if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
-    if(S.up&&S.up.kitchen) G.moodAll(1);
-    if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
-  if(S.up&&S.up.beehive&&rng()<0.3){ S.food+=1; G.moodAll(2);
-    UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }
-  if(G.hasComp('leo')) G.moodAll(3); // 레오의 아침 기타
-  if(S.up&&S.up.garden){ S.food += S.up.garden2?2:1; }
-  if(S.up&&S.up.fridge){ S._fridgeD=(S._fridgeD||0)+1;
-    if(S._fridgeD>=3){ S._fridgeD=0; S.food+=1; UI.toast('🧊 냉장 박스 — 아낀 식량 +1'); } }
-  if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }
   if(S.fatigue>=70){ G.moodAll(-3); UI.toast(S.party.length?'😴 다들 피곤이 얼굴에 앉았다 — 쉬어야 한다':'😴 피곤이 얼굴에 앉았다 — 쉬어야 한다'); }
   /* 의뢰 기한 */
   if(S.quest && !S.quest.noExpiry && S.day>S.quest.due){
@@ -644,7 +725,6 @@ G.dawn = ()=>{
     S._shunnedDays=(S._shunnedDays||0)+1;
     if(S._shunnedDays>=4){ G.endGame('shunned'); return; }
   } else S._shunnedDays=0;
-  if(S.hunger===1) G.queueCrisis('crisis_hungry');
   G.tickDeadline();
   G.save();
 };

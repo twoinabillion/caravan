@@ -97,9 +97,14 @@ G.prepareCamp = (kind,cid)=>{
   const plan=S._campPlan||(S._campPlan={});
   if(kind==='meal'){
     if(plan.meal) return {ok:false,why:'오늘의 한 끼는 이미 준비했다'};
-    if(S.food<1||S.water<1) return {ok:false,why:'공동 식사에는 식량 1과 물 1이 필요하다'};
+    if(S.food<1||S.water<1) return {ok:false,why:'따뜻한 저녁에는 식량 1과 물 1이 필요하다'};
+    const hungerBefore=S.hunger||0, fatigueBefore=S.fatigue;
     S.food--; S.water--; plan.meal=true;
-    UI.toast('🍲 공동 식사를 준비했다 — 취침 시 사기 +3');
+    S.hunger=Math.max(0,hungerBefore-1);
+    S.fatigue=Math.max(0,S.fatigue-6);
+    G.moodAll(3);
+    const hunger=S.hunger<hungerBefore?(S.hunger===0?' · 허기 해소':` · 허기 ${hungerBefore}→${S.hunger}`):'';
+    UI.toast(`🍲 따뜻한 저녁 · 식량 -1 · 물 -1 · 사기 +3 · 피로 -${fatigueBefore-S.fatigue}${hunger}`);
   } else if(kind==='repair'){
     if(plan.repair) return {ok:false,why:'오늘 밤의 간이 정비는 이미 끝냈다'};
     if((S.items['부품']||0)<1) return {ok:false,why:'간이 정비에는 부품 1이 필요하다'};
@@ -150,7 +155,10 @@ G.camp = (msg)=>{
   // advance to next 06:30
   const target = 6.5*60;
   let mins = (24*60 - S.min + target); if(S.min < target) mins = target - S.min;
-  G.advance(mins);
+  /* 수면 자체의 시간은 피로를 쌓지 않는다. 먼저 휴식한 뒤 06:30 배급에서
+     생긴 결식 피로만 기상 상태에 남긴다. */
+  S.fatigue=0;
+  G.advance(mins,{sleeping:true});
   S.min = Math.round(S.min);   // 기상 시각은 정확히 06:30이어야 한다
   let mood=6, vanFix=4;
   if(G.hasPerk('pss_night')) mood+=3;
@@ -160,9 +168,7 @@ G.camp = (msg)=>{
   if(S.up&&S.up.awning) mood+=2;
   if(S.up&&S.up.stove) mood+= G.isWet()?3:2;
   const campPlan=S._campPlan||{};
-  if(campPlan.meal) mood+=3;
   if(campPlan.repair) vanFix+=8;
-  S.fatigue=0;
   G.moodAll(mood); S.van = clamp(S.van+vanFix,0,S.vanMax);
   if(G.hasPerk('jy_break')){ S.scrap+=2; }
   if(G.isWet()){ S.water+=2; UI.toast('💧 빗물받이 가득 — 물 +2'); }
