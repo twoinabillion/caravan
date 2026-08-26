@@ -63,6 +63,7 @@ D.scenes = {
   'perimeter-walker':'__SCENE_PERIMETER_WALKER__',
   'grandfather-garage':'__SCENE_GRANDFATHER_GARAGE__',
   'busan-departure':'__SCENE_BUSAN_DEPARTURE__',
+  'story-bridge-departure-echo-v1':'__SCENE_STORY_BRIDGE_DEPARTURE_ECHO_V1__',
   'story-generation-form':'__SCENE_STORY_GENERATION_FORM__',
   'story-generation-speech':'__SCENE_STORY_GENERATION_SPEECH__',
   'story-generation-theories':'__SCENE_STORY_GENERATION_THEORIES__',

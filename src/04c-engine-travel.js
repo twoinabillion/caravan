@@ -300,7 +300,7 @@ G.resolveImpactEcho = mode=>{
   }
   G.addNote({type:'사건',title:G.roadEchoCopy('title'),
     body:`${summary}. ${G.roadEchoCopy('outcome')}`,links:['달구지']});
-  return {fx,chips:[{t:'정착지의 변화가 길 위로 이어졌다',c:'item'}]};
+  return {fx,chips:[{t:`정착지에서 한 일: ${summary}`,c:'item'}]};
 };
 
 /* ── 관측(pursuit) 임계 효과 ──

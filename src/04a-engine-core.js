@@ -647,15 +647,15 @@ G.qualitySummary = ()=>{
 G.journeyGuide = ()=>{
   if(!S||S.guideDismissed||G.qualityArchive().length||G.qualityPlayMs()>45*60*1000) return null;
   const milestones=G.ensureQualityState().milestones||{};
-  if(!milestones.first_departure) return {step:1,total:4,kicker:'첫 여정 · 길',title:'메인 스토리를 기준으로 첫 길을 고른다',
-    body:'「목표」에는 남산에서 강제 이송을 멈추는 메인 스토리가 표시된다. 지금은 이어진 목적지 가운데 하나를 고르면 된다.',
-    points:['목표: 메인 스토리와 사이드 미션를 따로 확인한다','길: 거리와 시간, 연료를 보고 다음 목적지를 고른다','사이드 미션: 원할 때만 맡아도 메인 스토리는 그대로 남는다'],focus:'route'};
+  if(!milestones.first_departure) return {step:1,total:4,kicker:'첫 여정 · 길',title:'양산 고가차도로 첫 구간을 출발한다',
+    body:'지금은 목적지 카드에서 양산 고가차도를 고르고 출발하면 된다.',
+    points:['목표: 메인 스토리와 사이드 미션을 따로 확인한다','길: 거리와 시간, 연료를 보고 다음 목적지를 고른다','사이드 미션: 원할 때만 맡아도 메인 스토리는 그대로 남는다'],focus:'route'};
   if(!milestones.first_event) return {step:2,total:4,kicker:'첫 여정 · 주행',title:S.driving?'달구지는 선택한 길을 따라 달린다':'다음 목적지를 고른다',
     body:S.driving?'남은 거리와 연료를 확인하며 달린다. 길에서 사건이 생기면 이야기를 끝까지 읽고 행동을 고른다.':'거리와 시간, 연료를 다시 보고 다음 목적지를 고른다.',
     points:['대화와 장면은 위에서 아래로 누적된다','선택 결과는 자원과 여정 기록에 남는다'],focus:'drive'};
   const atSettlement=!S.driving&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl;
   if(atSettlement&&!milestones.first_settlement_visit) return {step:3,total:4,kicker:'첫 여정 · 정착지',title:'필요한 일부터 하나씩 처리한다',
-    body:'시장·정비·사람·현장 중 지금 필요한 곳을 고른다. 정착지의 의뢰는 「사이드 미션」로 따로 기록된다.',
+    body:'시장·정비·사람·현장 중 지금 필요한 곳을 고른다. 정착지의 의뢰는 「사이드 미션」으로 따로 기록된다.',
     points:['시장: 물자 거래','정비: 달구지 수리와 개조','사람: 대화, 의뢰, 동료 이야기'],focus:'settlement'};
   if(!milestones.temporary_companion&&S.recruitQ) return {step:4,total:4,kicker:'첫 여정 · 동행',title:'함께 겪은 뒤에 동료가 된다',
     body:'중요 인물을 만났다고 바로 합류하는 것은 아니다. 부탁과 동행 장면을 거치면 「동료 미션」에 다음 단계가 기록된다.',
@@ -799,10 +799,10 @@ G.departureSteps = ()=>{
   return [
     {id:'family',done:!!S.flags.intro_family_helped,label:'도윤 가족의 이송표를 확인한다',detail:'버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다'},
     {id:'appeal',done:!!S.flags.intro_appeal_failed,label:'부산에서 이송 명령에 이의를 제기한다',detail:'부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다'},
-    {id:'module',done:!!S.flags.intro_module_seen,label:'엄마가 남긴 검증 모듈을 확인한다',detail:'엄마의 회로도와 달구지 계기판 안쪽의 실제 배선이 일치했다'},
-    {id:'trace',done:!!S.flags.first_order_trace,label:'이송 명령의 첫 발신 기록을 찾는다',detail:S.flags.first_order_trace?'부모님의 이송표와 지금의 표가 같은 발신 계열이라는 사실을 확인했다':'부산을 떠난 첫 구간에서 대상 선정 규칙과 발신 번호가 남은 기록을 찾는다'},
-    {id:'key',done:!!S.flags.parent_key_found,label:'검증키를 안전하게 꺼낼 절차를 찾는다',detail:S.flags.parent_key_found?'분리 절차 4·5쪽을 복원해 검증키를 남산까지 가져갈 수 있게 됐다':'순서를 모른 채 장치를 뽑으면 검증키와 달구지가 함께 망가진다'},
-    {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'당사자 증언을 발신 기록과 대조한다',detail:S.flags.es_truth?'증언과 관제 기록을 맞춰 명령이 만들어진 순서를 확인했다':`같은 이송을 겪은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
+    {id:'module',done:!!S.flags.intro_module_seen,label:'엄마가 남긴 장치를 확인한다',detail:'엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다'},
+    {id:'trace',done:!!S.flags.first_order_trace,label:'이송 명령의 첫 발신 기록을 찾는다',detail:S.flags.first_order_trace?'부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다':'부산을 떠난 첫 구간에서 이송표의 발신 번호가 남은 기록을 찾는다'},
+    {id:'key',done:!!S.flags.parent_key_found,label:'엄마의 검증키를 꺼내는 방법을 찾는다',detail:S.flags.parent_key_found?'빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다':'계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다'},
+    {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'같은 이송표를 받은 사람들의 이야기를 모은다',detail:S.flags.es_truth?'사람들의 이야기와 발신 기록을 맞춰 명령이 내려온 순서를 확인했다':`같은 이송표를 받은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
     {id:'seoul',done:!!S.flags.story_done,label:'남산 코어에서 강제 이송 명령을 끊는다',detail:S.flags.story_done?'제7 잔류구역을 향하던 강제 이송을 끝냈다':'필요한 기록과 사람을 모은 뒤 남산 코어에서 명령을 멈춘다. 날짜 제한은 없다'}
   ];
 };

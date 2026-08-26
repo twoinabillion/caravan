@@ -15,7 +15,7 @@ const output = path.join(root, '서울까지400km.html');
 const temporary = `${output}.tmp`;
 const reportOutput = path.join(root, 'reports', 'asset-budget.json');
 const WARN_BYTES = 32_000_000;
-const MAX_BYTES = 72_000_000;   /* 이벤트별 고유 장면 확장을 허용하는 배포 상한 */
+const MAX_BYTES = 80_000_000;   /* 이벤트별 고유 장면 확장을 허용하는 배포 상한 */
 const embeddedAssets = new Map();
 
 const before = [

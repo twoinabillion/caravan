@@ -957,7 +957,7 @@ const UI = (()=>{
       .sort((a,b)=>Number(!!b.tracked)-Number(!!a.tracked)||Number(a.kind!=='local')-Number(b.kind!=='local'));
     const optionalEntry=optionalEntries[0]||null;
     const firstDeparture=!S.driving&&S.at==='busan'&&(S.visited||[]).every(id=>id==='busan');
-    const mainTitle=mainEntry&&mainEntry.title||main||'서울로 가는 기록을 모은다';
+    const mainTitle=mainEntry&&mainEntry.title||main||'남산에서 강제 이송을 멈출 단서를 모은다';
     const mainProgress=mainEntry&&mainEntry.progress&&mainEntry.progress.label||'';
     const mainChapter=mainEntry&&mainEntry.act||'본편';
     const mainNext=firstDeparture
@@ -1383,6 +1383,16 @@ function dialogueSide(turn,lanes,opt={}){
         kicker:'운전 기록',title:driverLevel?`운전 숙련 · ${driverLevel[1]}`:'운전 감각이 쌓였다',icon:'driver',tone:'skill',
       body:/연비·피로|연비와 피로/.test(body)?'연비와 피로 효율이 개선됐다.':'주행 경험이 다음 운전에 반영된다.'
     };
+    const supplyIcons=[
+      {match:/점심|아침|저녁|식량|끼니|도시락|먹었|허기/,icon:'food',title:'식량 변화'},
+      {match:/식수|수분|마실 물|물을 (마시|채우)|물[ +\-]/,icon:'water',title:'물 변화'},
+      {match:/주유|연료|기름/,icon:'fuel',title:'연료 변화'},
+      {match:/고철/,icon:'scrap',title:'고철 변화'},
+      {match:/부품|정비/,icon:'parts',title:'부품 변화'},
+      {match:/의약품|붕대|약품|치료/,icon:'meds',title:'의약품 변화'}
+    ];
+    const supply=supplyIcons.find(item=>item.match.test(body));
+    if(supply) return {kicker:'보급 기록',title:supply.title,icon:supply.icon,tone:'supply',body};
     const cases=[
       {match:/퍼크|습득|상승/,kicker:'SKILL LOG',title:'새로운 감각을 익혔다',icon:'perk',tone:'skill'},
       {match:/발견|지도에 표시|신호|안테나|도청|좌표/,kicker:'ROUTE LOG',title:'길에서 찾은 것',icon:'quest',tone:'discover'},
@@ -1497,11 +1507,14 @@ function dialogueSide(turn,lanes,opt={}){
       const index=routeModels.indexOf(model);
       const active=model.nb.id===selected.nb.id;
       const cardNode=D.nodes[model.nb.id], src=routeThumbnail(model.nb.id);
+      const departAttr=active&&canDepart?` data-nav-depart="${model.nb.id}"`:'';
+      const showDepartHint=active&&canDepart&&localStorage.getItem('caravan_route_card_depart_seen')!=='1';
       return `<button type="button" class="nav-destination-card${active?' is-selected':''}"
-        data-route-select="${model.nb.id}" aria-pressed="${active}" ${!active&&routeModels.length===2?'tabindex="-1" aria-hidden="true"':''}
+        data-route-select="${model.nb.id}"${departAttr} aria-pressed="${active}" ${!active&&routeModels.length===2?'tabindex="-1" aria-hidden="true"':''}
         aria-label="${active?`${esc(cardNode.name)}, 선택됨`:`목적지 ${index+1}, ${esc(cardNode.name)} 선택`}">
         ${src?`<img src="${src}" alt="" loading="eager" decoding="async">`:''}
         <span><b>${esc(cardNode.name)}</b><em>${model.nb.km}km</em></span>
+        ${showDepartHint?'<i class="nav-depart-hint">카드를 눌러 출발</i>':''}
       </button>`;
     }).join('');
     const dots=routeModels.map((model,index)=>`<button type="button" data-route-select="${model.nb.id}"
@@ -1526,7 +1539,7 @@ function dialogueSide(turn,lanes,opt={}){
             <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>예상 시간</small><b>${Math.max(1,Math.round(forecast.minutes))}분</b></span></span>
             <span><i class="nav-route-fact-icon" aria-hidden="true"></i><span><small>구간 거리</small><b>${selected.nb.km}km</b></span></span>
           </div>
-          ${questCue?`<p class="nav-route-quest-cue"><small>${questCue.kind==='main'?'메인 스토리 경로':'추적 경로'}</small><b>${esc(questCue.action)}</b></p>`:''}
+          ${questCue?`<p class="nav-route-quest-cue"><small>${questCue.kind==='main'?'메인 스토리':'사이드 미션'}</small><b>${esc(questCue.action)}</b></p>`:''}
           <p class="nav-place-description">${esc(routePlaceDescription(node))}</p>
         </section>
         <section class="nav-destination-carousel" aria-label="목적지 선택">
@@ -1574,6 +1587,7 @@ function dialogueSide(turn,lanes,opt={}){
       if(event.defaultPrevented) return;
       const id=button.dataset.routeSelect;
       if(button.classList.contains('nav-destination-card')&&id===navChoiceId&&button.dataset.navDepart){
+        localStorage.setItem('caravan_route_card_depart_seen','1');
         G.startTravel(button.dataset.navDepart);return;
       }
       navChoiceAt=S.at;navChoiceId=id;renderPanel();
@@ -2222,7 +2236,10 @@ function dialogueSide(turn,lanes,opt={}){
       const indexLabel=inCombat?String(count):`<small>선택</small><b>${count}</b>`;
       html+=`<button class="choice" data-i="${i}" ${rq.ok?'':'disabled'} aria-label="${esc(liveBits.join(' · '))}">
           <div class="choice-head"><span class="choice-index">${indexLabel}</span><span class="choice-title">${intentTag?`<i class="choice-intent">${intentTag}</i>`:''}${title}</span></div>
-          ${route?`<span class="route-forecast"><b>${route.km}km · ${routeDurationRange(route.minutes)} · 연료 ${routeFuelRange(route.fuel)}</b><small>현장 상황은 출발 뒤 확인</small></span>`:''}
+          ${route?`<span class="route-forecast" aria-label="거리 ${route.km}킬로미터, 시간 ${routeDurationRange(route.minutes)}, 연료 ${routeFuelRange(route.fuel)}">
+            <i><small>거리</small><b>${route.km}km</b></i><i><small>시간</small><b>${routeDurationRange(route.minutes)}</b></i>
+            <i><small>연료</small><b>${routeFuelRange(route.fuel)}</b></i><i class="route-trait ${routeId==='ridge'?'risk':'supply'}">${routeId==='ridge'?'험로':'보급 가능'}</i>
+          </span>`:''}
           ${cost&&!repeatedCost?`<span class="req">${rq.ok?'✓':'✗'} ${cost}</span>`:''}
         </button>`;
     });
@@ -2557,7 +2574,7 @@ function dialogueSide(turn,lanes,opt={}){
       live.textContent=speaker+stripTags(turn.text);
     }
     const dockHeight=dock ? Math.min(224,Math.max(170,dock.offsetHeight||194)) : 194;
-    const compact=sheet.dataset.eventKind==='combat' && state.turns.length<=16 && (reader.scrollHeight + dockHeight) < (sheet.clientHeight||420);
+    const compact=false;
     sheet.classList.toggle('story-compact',compact);
     const entering=reader.querySelector('[data-story-entry]:last-child');
     if(entering){
@@ -2664,7 +2681,7 @@ function dialogueSide(turn,lanes,opt={}){
     }
     /* 전투만 현재 판단에 집중한다. 이야기 사건은 인트로처럼 앞선 대화와
        장면을 계속 쌓아 맥락과 대화 방향을 한눈에 읽게 한다. */
-    sheet.classList.toggle('story-compact',!!evd.combat&&turns.length>2);
+    sheet.classList.remove('story-compact');
     const mission=evd.missionBrief;
     const missionBrief=mission?`<aside class="mission-brief" aria-label="메인 스토리 안내">
       <span>${esc(mission.eyebrow||'메인 스토리')}</span>
@@ -4159,10 +4176,10 @@ function dialogueSide(turn,lanes,opt={}){
       const nextActions={
         family:{label:'도윤 가족의 버스 난방을 고친다',detail:'이송 현장을 직접 확인하고 기록을 남긴다.',condition:'이송 현장 직접 확인'},
         appeal:{label:'부산에서 이의를 제기해 본다',detail:'원격 이의 제기가 왜 막혔는지 기록한다.',condition:'이의 제기 결과 기록'},
-        module:{label:'계기판 배선을 회로도와 대조한다',detail:'검증 모듈이 실제 달구지에 연결됐는지 확인한다.',condition:'회로도·배선 대조'},
-        trace:{label:'첫 구간에서 이송 명령의 발신 기록을 찾는다',detail:'부모님의 이송표와 지금 내려지는 명령이 같은 곳에서 왔는지 확인한다.',condition:'첫 발신 번호 대조'},
-        key:{label:'검증키 분리 절차 4–5쪽을 찾는다',detail:'분리 절차를 찾기 전에는 검증키를 뽑지 않는다.',condition:'분리 절차 4–5쪽 확보'},
-        witness:{label:'이송을 겪은 사람들의 증언을 발신 기록과 맞춰 본다',detail:'같은 명령을 겪은 사람들의 이야기를 기록과 맞춰 본다.',condition:`증언 ${witnessed}/${D.seoulPillars.관계}`},
+        module:{label:'계기판 배선을 엄마의 회로도와 비교한다',detail:'엄마가 남긴 장치가 실제로 달구지에 연결돼 있는지 확인한다.',condition:'계기판 배선 확인'},
+        trace:{label:'첫 구간에서 이송표의 발신 기록을 찾는다',detail:'부모님의 이송표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.',condition:'발신 번호가 남은 기록 찾기'},
+        key:{label:'엄마의 검증키를 꺼내는 방법을 찾는다',detail:'계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다.',condition:'빠진 설명서 2장 찾기'},
+        witness:{label:'같은 이송표를 받은 사람들의 이야기를 모은다',detail:'사람들에게 들은 이야기를 발신 기록과 맞춰 본다.',condition:`이야기 ${witnessed}/${D.seoulPillars.관계}`},
         seoul:{label:'남산에서 강제 이송을 멈춘다',detail:'서울에 도착한 뒤 마지막 중단 절차를 밟는다.',condition:'기록과 증언을 모두 모으면 진행'}
       };
       const nextAction=nextActions[nextStep?.id]||{label:'이송 중단 기록을 보관한다',detail:'완료한 기록을 달구지 안에 안전하게 보관한다.',condition:'목표 완료'};
@@ -4802,8 +4819,8 @@ function dialogueSide(turn,lanes,opt={}){
   function panelHtml(category,models){
     if(models.length) return models.map(item=>questItem(item,item.active?category:null)).join('');
     const empty={
-      companion:['아직 이어지는 동료 미션가 없다','정착지에서 중요한 인물을 만나고 함께 일을 겪으면 이곳에 기록된다.'],
-      side:['맡은 사이드 미션가 없다','정착지의 사람들 사이에서 배달과 조달 의뢰를 받을 수 있다. 본편 진행에는 필수가 아니다.'],
+      companion:['아직 이어지는 동료 미션이 없다','정착지에서 중요한 인물을 만나고 함께 일을 겪으면 이곳에 기록된다.'],
+      side:['맡은 사이드 미션이 없다','정착지의 사람들 사이에서 배달과 조달 의뢰를 받을 수 있다. 본편 진행에는 필수가 아니다.'],
       archive:['아직 완료 기록이 없다','끝낸 이야기와 정식으로 합류한 동료가 여기에 차곡차곡 남는다.']
     }[category];
     return `<div class="quest-empty"><b>${qEsc(empty[0])}</b><p>${qEsc(empty[1])}</p></div>`;

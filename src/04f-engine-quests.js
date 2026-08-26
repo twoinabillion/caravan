@@ -36,11 +36,11 @@ G.questNavigationPlan = ()=>{
     const have=q.kind==='procure'&&q.need?Number(S.items&&S.items[q.need.name])||0:0;
     const target=q.kind==='procure'&&have>=q.need.qty?q.from:q.to;
     return {key:q.ledgerId,kind:'local',target,title:typeof G.questLabel==='function'?G.questLabel(q):(q.item||'지역 의뢰'),
-      action:target===S.at?'이곳에서 의뢰인을 찾아 일을 마친다':`${D.nodes[target].name}까지 이동한다`};
+      action:target===S.at?'이곳의 의뢰인에게 말을 건다':`${D.nodes[target].name}까지 이동한다`};
   }
   const rq=S.recruitQ;
   if(rq&&rq.target&&ledger.tracked.includes(`companion_${rq.id}`))
-    return {key:`companion_${rq.id}`,kind:'companion',target:rq.target,title:`${D.comps[rq.id].name}의 부탁`,action:`${D.nodes[rq.target].name}에서 다음 과제를 진행한다`};
+    return {key:`companion_${rq.id}`,kind:'companion',target:rq.target,title:`${D.comps[rq.id].name}의 부탁`,action:`${D.nodes[rq.target].name}에 가서 ${D.comps[rq.id].name}가 부탁한 일을 한다`};
   const main=G.mainQuestEntry();
   return {key:`main_${main&&main.chapterId||'namsan'}`,kind:'main',target:'seoul',title:main&&main.title||'남산으로 간다',action:main&&main.next||'북쪽 길을 따라간다'};
 };
@@ -63,14 +63,14 @@ G.mainQuestEntry = ()=>{
   const nextDeparture=departure.find(step=>!step.done&&step.id!=='seoul');
   const endingDone=!!(S.flags&&(S.flags.core_transfer||S.flags.core_sleep||S.flags.core_quarantine||S.flags.run_archived));
   const base={id:'main_namsan',kind:'main',status:'active',tracked:true,
-    recovery:'길을 놓쳤다면 지도에서 메인 스토리 표식이 붙은 북쪽 목적지를 고른다. 정착지에서는 사람들과 이야기하고 라디오와 임무 장부를 확인한다.'};
+    recovery:'길을 놓쳤다면 지도에서 ‘메인 스토리’가 표시된 목적지를 고른다. 정착지에 도착하면 사람들에게 말을 걸고 라디오를 확인한다.'};
   const stepCopy={
-    family:{act:'서장',chapterId:'prologue-family',title:'도윤 가족의 이송표를 확인한다',phase:'부산 감천 부두 · 떠나기 전',why:'부산에서 반복되던 이송표가 지금도 실제 가족을 갈라놓고 있다. 남산으로 갈 이유를 먼저 눈으로 확인해야 한다.',next:'고장 난 버스를 고치고 도윤 가족에게 왜 같은 표가 나왔는지 묻는다.',expected:'과거의 가족사와 지금 벌어지는 강제 이송이 같은 명령에서 시작됐다는 사실을 확인한다.'},
-    appeal:{act:'서장',chapterId:'prologue-appeal',title:'부산에서 이송 명령에 이의를 제기한다',phase:'부산 원격 민원 창구',why:'이송을 멈출 수 있는 정상 절차가 남아 있다면 남산까지 갈 필요가 없다. 먼저 부산에서 할 수 있는 일을 모두 해 본다.',next:'이송표와 검증 모듈을 들고 원격 확인 절차를 요청한다.',expected:'부산에서 해결할 수 있는지, 남산 현장 확인이 꼭 필요한지 분명해진다.'},
-    module:{act:'서장',chapterId:'prologue-module',title:'엄마가 남긴 검증 모듈을 확인한다',phase:'부산의 달구지 안',why:'엄마가 남긴 장치가 단순한 유품인지, 지금도 명령을 멈출 수 있는 열쇠인지 확인해야 한다.',next:'엄마의 회로도와 계기판 안쪽 배선을 맞춰 본다.',expected:'남산에서 사람이 직접 확인하는 절차를 되살릴 가능성을 찾는다.'},
-    trace:{act:'1장',chapterId:'first-trace',title:'이송 명령의 첫 발신 기록을 찾는다',phase:'부산을 떠난 첫 구간',why:'이송표만 들고 가면 개인 민원으로 처리된다. 누가 언제 명령을 만들었는지 보여 주는 기록이 필요하다.',next:'첫 구간을 달리며 대상 선정 규칙과 발신 번호가 남은 기록을 찾는다.',expected:'부모님의 이송표와 지금 나오는 표가 같은 명령망에서 왔다는 사실을 입증한다.'},
-    key:{act:'2장',chapterId:'verification-key',title:'검증키를 안전하게 꺼낼 절차를 찾는다',phase:'엄마의 장치를 남산까지 가져가기 위한 준비',why:'절차 없이 장치를 뽑으면 검증키도 달구지도 망가진다. 남산에 도착하기 전에 빠진 복원 순서를 찾아야 한다.',next:'북쪽 정착지의 정비소와 전파사를 살피며 분리 절차 4·5쪽을 복원한다. 지도에서는 메인 스토리 표식이 붙은 길을 고른다.',expected:'엄마의 검증키를 망가뜨리지 않고 남산 코어에 연결할 수 있게 된다.'},
-    witness:{act:'3장',chapterId:'witnesses',title:'이송 당사자들의 증언을 모은다',phase:'발신 기록과 사람들의 기억을 맞추는 중',why:'기계가 남긴 로그만으로는 또 오류로 처리될 수 있다. 같은 표를 받은 사람들이 실제로 무엇을 겪었는지 함께 남겨야 한다.',next:'같은 이송표를 받은 사람들을 만나 이야기를 듣고 발신 기록과 대조한다.',expected:'한 가족의 민원이 아니라 여러 지역에서 반복된 강제 이송이었다는 사실을 증명한다.'}
+    family:{act:'서장',chapterId:'prologue-family',title:'도윤 가족의 이송표를 확인한다',phase:'부산 감천 부두 · 떠나기 전',why:'도윤 가족도 내 부모님과 같은 이송표를 받았다. 같은 명령이 지금도 가족을 갈라놓고 있는지 확인한다.',next:'고장 난 버스를 고친 뒤 도윤 가족에게 이송표를 어디서 받았는지 묻는다.',expected:'도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.'},
+    appeal:{act:'서장',chapterId:'prologue-appeal',title:'부산에서 이송 명령에 이의를 제기한다',phase:'부산 원격 민원 창구',why:'부산에서 명령을 취소할 수 있다면 남산까지 갈 필요가 없다. 먼저 부산의 공식 절차를 확인한다.',next:'이송표와 엄마의 장치를 들고 원격 민원 창구에 이의를 제기한다.',expected:'부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.'},
+    module:{act:'서장',chapterId:'prologue-module',title:'엄마가 남긴 장치를 확인한다',phase:'부산의 달구지 안',why:'엄마가 남긴 장치가 실제로 강제 이송을 멈출 수 있는지 확인한다.',next:'엄마의 회로도와 달구지 계기판 안쪽의 배선을 비교한다.',expected:'장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.'},
+    trace:{act:'1장',chapterId:'first-trace',title:'이송 명령의 첫 발신 기록을 찾는다',phase:'부산을 떠난 첫 구간',why:'이송표 한 장만으로는 명령을 누가 보냈는지 알 수 없다. 발신 번호가 남은 기록이 필요하다.',next:'양산 쪽 첫 구간으로 출발해 이송표의 발신 번호가 남은 기록을 찾는다.',expected:'부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.'},
+    key:{act:'2장',chapterId:'verification-key',title:'엄마의 검증키를 꺼내는 방법을 찾는다',phase:'계기판의 장치를 꺼낼 방법을 찾는 중',why:'엄마의 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.',next:'북쪽 정착지에 들러 정비소와 전파사 사람들에게 빠진 설명서 두 장을 묻는다.',expected:'설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.'},
+    witness:{act:'3장',chapterId:'witnesses',title:'같은 이송표를 받은 사람들의 이야기를 모은다',phase:'같은 이송표를 받은 사람을 찾는 중',why:'발신 기록만으로는 누가 피해를 입었는지 알 수 없다. 같은 이송표를 받은 사람들의 이야기도 필요하다.',next:'정착지에서 같은 이송표를 받은 사람을 찾아 이야기를 듣고, 들은 내용을 발신 기록과 맞춰 본다.',expected:'같은 명령으로 여러 지역의 가족이 이송됐다는 사실을 확인한다.'}
   };
   const departureDone=departure.filter(step=>step.id!=='seoul'&&step.done);
   const departureNeed=Math.max(1,departure.filter(step=>step.id!=='seoul').length);
@@ -97,18 +97,18 @@ G.mainQuestEntry = ()=>{
     const need=Object.values(pillars).reduce((sum,row)=>sum+row.need,0);
     const ready=typeof G.seoulReady==='function'&&G.seoulReady();
     const pillarSteps=Object.entries(pillars).map(([name,row])=>({id:name,label:{관계:'당사자 증언',세계:'저항망',진실:'명령의 진실',유산:'남겨진 기록'}[name]||name,state:row.have>=row.need?'done':'upcoming',detail:`${Math.min(row.have,row.need)}/${row.need}`}));
-    if(ready) return {...base,act:'5장',chapterId:'road-to-seoul',eyebrow:'메인 스토리 · 5장',title:'서울로 들어가 남산 코어까지 간다',phase:'남산 진입 준비 완료',why:'발신 기록, 검증키, 당사자 증언과 저항망이 모두 모였다. 이제 코어에서 명령을 바꿀 수 있다.',next:'북쪽 길을 따라 서울로 이동하고 남산 진입로를 찾는다.',expected:'모아 온 근거를 남산 코어에 연결해 사람이 직접 확인하는 절차를 되살린다.',recovery:'지도에서 서울로 이어지는 길을 확인한다. 날짜 제한은 없다.',steps:pillarSteps,progress:{have,need,label:`${have}/${need}`}};
+    if(ready) return {...base,act:'5장',chapterId:'road-to-seoul',eyebrow:'메인 스토리 · 5장',title:'서울로 들어가 남산 코어까지 간다',phase:'남산에 들어갈 준비를 마쳤다',why:'발신 기록, 검증키, 당사자 증언과 저항 조직의 도움이 모두 모였다. 이제 남산에서 명령을 바꿀 수 있다.',next:'지도에서 서울로 이어지는 목적지를 골라 출발한다. 서울에 도착하면 남산 진입로를 찾는다.',expected:'검증키와 기록을 남산 코어에 넣어, 강제 이송 전에 사람이 확인하도록 바꾼다.',recovery:'길을 놓쳤다면 지도에서 서울로 이어지는 목적지를 고른다. 날짜 제한은 없다.',steps:pillarSteps,progress:{have,need,label:`${have}/${need}`}};
     const missing=G.seoulMissing();
     const pillarCopy={
-      관계:{act:'4장-A',title:'같은 이송을 겪은 사람들의 증언을 모은다',phase:'사람들의 기록을 발신 로그와 맞추는 중',why:'표와 로그만으로는 또 기계 오류로 묻힐 수 있다. 명령을 겪은 사람들이 직접 남긴 기록이 필요하다.',expected:'강제 이송이 여러 사람에게 반복됐다는 사실을 남산에서 증명한다.'},
-      세계:{act:'4장-B',title:'저항망과 접선해 남산으로 가는 길을 연다',phase:'흩어진 저항 거점을 잇는 중',why:'남산 코어까지 혼자 들어갈 수는 없다. 길과 통신을 지켜 온 사람들의 도움이 필요하다.',expected:'서울까지 이어지는 안전한 길과 코어에 접근할 통신망을 확보한다.'},
-      진실:{act:'4장-C',title:'이송 명령이 만들어진 경위를 밝힌다',phase:'명령망에 남은 기록을 추적하는 중',why:'누가 어떤 판단으로 이송을 자동화했는지 밝혀야 같은 명령이 다시 시작되는 것을 막을 수 있다.',expected:'강제 이송을 만든 명령과 남산 위의 상위 명령망을 구분한다.'},
-      유산:{act:'4장-D',title:'부모님과 길 위 사람들이 남긴 기록을 챙긴다',phase:'남산에서 열 마지막 기록을 모으는 중',why:'남산에 도착해도 당사자의 기록이 없으면 시스템은 사람을 다시 숫자로만 처리한다.',expected:'편지와 물건에 남은 사람들의 선택을 최종 판단의 근거로 가져간다.'},
-      여정:{act:'4장',title:'남산에서 쓸 마지막 근거를 보완한다',phase:'빠진 기록을 확인하는 중',why:'코어에 들어가기 전에 아직 비어 있는 근거를 채워야 한다.',expected:'남산 진입 조건을 모두 갖춘다.'}
+      관계:{act:'4장-A',title:'같은 이송표를 받은 사람들의 이야기를 모은다',phase:'이송을 겪은 사람을 찾는 중',why:'표와 발신 기록만으로는 누가 피해를 입었는지 알 수 없다. 이송을 겪은 사람들이 직접 남긴 이야기도 필요하다.',expected:'같은 명령이 여러 사람에게 반복됐다는 사실을 남산에서 보여 준다.'},
+      세계:{act:'4장-B',title:'남산까지 갈 길을 아는 저항 조직을 만난다',phase:'서울로 이어지는 길과 연락망을 찾는 중',why:'남산 코어는 혼자 들어갈 수 없다. 길을 안내하고 연락을 이어 줄 사람들이 필요하다.',expected:'서울까지 갈 안전한 길과 남산 안으로 연락할 방법을 얻는다.'},
+      진실:{act:'4장-C',title:'이송 명령을 누가, 왜 만들었는지 확인한다',phase:'명령을 만든 기록을 찾는 중',why:'명령을 만든 이유를 알아야 같은 일이 다시 시작되는 것을 막을 수 있다.',expected:'강제 이송 명령과 그 위에서 내려오는 다른 명령을 구분한다.'},
+      유산:{act:'4장-D',title:'부모님과 길 위 사람들이 남긴 편지와 물건을 챙긴다',phase:'남산에 가져갈 개인 기록을 모으는 중',why:'명령 기록만 가져가면 시스템은 사람의 사정을 알 수 없다. 당사자가 남긴 편지와 물건도 필요하다.',expected:'남산에서 이송된 사람들의 사정을 보여 줄 기록을 갖춘다.'},
+      여정:{act:'4장',title:'남산에 가기 전에 빠진 단서를 찾는다',phase:'아직 없는 기록을 확인하는 중',why:'남산에 들어가기 전에 빠진 기록을 모두 찾아야 한다.',expected:'남산에 들어갈 준비를 마친다.'}
     };
     const copy=pillarCopy[missing.pillar]||pillarCopy.여정;
     const steps=pillarSteps.map(step=>({...step,state:step.state==='done'?'done':step.id===missing.pillar?'current':'upcoming'}));
-    return {...base,...copy,act:copy.act||'4장',chapterId:`prepare-${missing.pillar}`,eyebrow:`메인 스토리 · ${copy.act||'4장'}`,next:missing.hint||'가까운 정착지에서 사람들과 이야기하고 빠진 기록을 찾는다.',recovery:'가까운 정착지의 사람들, 라디오 방송, 야영 대화에서 다음 단서를 찾을 수 있다. 날짜 제한은 없다.',steps,progress:{have,need,label:`${have}/${need}`}};
+    return {...base,...copy,act:copy.act||'4장',chapterId:`prepare-${missing.pillar}`,eyebrow:`메인 스토리 · ${copy.act||'4장'}`,next:missing.hint||'가까운 정착지에서 사람들에게 말을 걸고 라디오를 들어 빠진 단서를 찾는다.',recovery:'다음 단서는 정착지 대화, 라디오 방송, 야영 대화에서 찾을 수 있다. 날짜 제한은 없다.',steps,progress:{have,need,label:`${have}/${need}`}};
   }catch(e){
     return {...base,act:'1장',chapterId:'first-trace-fallback',eyebrow:'메인 스토리 · 1장',title:'첫 발신 기록을 찾는다',phase:'부산을 떠난 첫 구간',why:'남산에서 명령을 멈추려면 발신 기록이 필요하다.',next:'북쪽으로 이동하며 이송표와 같은 발신 번호를 찾는다.',expected:'현재 명령이 어디서 시작됐는지 확인한다.',steps:departureTrail,progress:{have:departureDone.length,need:departureNeed,label:`${departureDone.length}/${departureNeed}`}};
   }
@@ -133,13 +133,13 @@ G.companionQuestEntries = ()=>{
     const targetBond=!completed&&!pending&&D.bondTh?Number(D.bondTh[Math.min(level,2)])||0:0;
     const remaining=Math.max(0,targetBond-(Number(state.bond)||0));
     let next;
-    if(completed) next='개인 서사가 완결됐다. 남산에서 이 선택이 다시 돌아온다.';
+    if(completed) next='개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.';
     else if(recruiting){
       const target=S.recruitQ.target&&D.nodes[S.recruitQ.target];
-      next=target?`${target.name}에서 합류 조건을 이어 간다.`:'이 사람이 요구한 합류 조건을 해결한다.';
-    }else if(pending) next=`동료 카드에서 Lv.${pending} 퍼크를 고르고, 지금까지 함께한 방식에 이름을 붙인다.`;
-    else if(remaining>0) next=`야영 대화, 길 위 선택, 정착지의 일을 함께 겪으며 유대를 ${remaining} 더 쌓는다.`;
-    else if(storyStage<3) next=`유대는 충분하다. 정차 중 ${comp.name}에게 말을 걸어 아직 듣지 못한 개인 이야기를 이어 간다.`;
+      next=target?`${target.name}에 가서 ${comp.name}가 부탁한 일을 한다.`:'이 사람이 함께 타기 전에 부탁한 일을 한다.';
+    }else if(pending) next=`동료 화면에서 Lv.${pending} 특기를 하나 고른다.`;
+    else if(remaining>0) next=`야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 ${remaining} 더 올린다.`;
+    else if(storyStage<3) next=`정차한 뒤 ${comp.name}에게 말을 걸어 다음 이야기를 듣는다.`;
     else next=deed&&deed.hint?deed.hint:'야영이나 정착지에서 대화를 이어 간다.';
     return {
       id:`companion_${id}`, kind:'companion', status:completed?'completed':'active',
@@ -147,8 +147,8 @@ G.companionQuestEntries = ()=>{
       eyebrow:recruiting?'동료 미션 · 합류':'동료 미션',
       title:recruiting?`${comp.name}와 함께할 이유`:comp.name,
       phase:recruiting?'합류 조건 진행 중':pending?`새 퍼크 선택 가능 · 유대 ${Number(state.bond)||0}`:`개인 이야기 ${storyStage}/3 · 동료 Lv.${Math.min(level,3)} · 유대 ${Number(state.bond)||0}`,
-      why:recruiting?'같은 길을 갈 수 있는 사람인지 서로 확인하는 중이다.':`${comp.name}가 왜 이 길에 올랐는지 끝까지 들으면, 남산에서 내릴 선택도 달라질 수 있다.`,
-      next, expected:completed?'남산의 최종 선택에 이 동료의 목소리가 더해진다.':'새 대화와 퍼크가 열리고, 마지막 판단에 이 동료의 증언이 더해진다.',
+      why:recruiting?'서로 믿고 같은 차를 탈 수 있는지 확인하는 중이다.':`${comp.name}의 이야기를 끝까지 들으면 남산에서 이 동료의 의견을 들을 수 있다.`,
+      next, expected:completed?'남산에서 이 동료의 의견을 들을 수 있다.':'새 대화와 특기가 열리고, 남산에서 이 동료의 의견을 들을 수 있다.',
       steps:milestones.slice(0,3).map((label,index)=>({id:`${id}_${index+1}`,label,state:index<storyStage?'done':index===storyStage?'current':'upcoming'})),
       progress:{have:recruiting?0:storyStage,need:3,label:recruiting?'합류 전':`${storyStage}/3`},
     };
@@ -175,7 +175,7 @@ G.localQuestEntries = ()=>{
       id:q.ledgerId, kind:'local', status:'active', tracked:ledger.tracked.includes(q.ledgerId),
       eyebrow:q.story?`연속 미션 · ${q.story.stage}/${q.story.total}`:`${q.kind==='delivery'?'배달':q.kind==='procure'?'조달':'지역'} 미션 · ${from}`, title:label,
       phase:`목적지 ${to} · ${q.noExpiry?'기한 없음':`권장 ${q.due}일차까지`}`, next,
-      expected:q.story?`이번 단계 보상 · 고철 ${q.reward} · 다음 이야기 연결`:`완료 보상 · 고철 ${q.reward}`,
+      expected:q.story?`고철 ${q.reward}를 받고 다음 부탁이 열린다.`:`고철 ${q.reward}를 받는다.`,
       progress:{have,need,label:q.story?`${q.story.stage}/${q.story.total}`:q.kind==='procure'?`${have}/${need}`:(S.at===q.to?'도착':'이동 중')},
     });
   }else if(S.questFollowup){
@@ -210,7 +210,7 @@ G.toggleQuestTracking = (id)=>{
   const index=ledger.tracked.indexOf(id);
   if(index>=0) ledger.tracked.splice(index,1);
   else {
-    if(ledger.tracked.length>=2) return {ok:false,why:'사이드 미션는 두 개까지만 추적할 수 있다.'};
+    if(ledger.tracked.length>=2) return {ok:false,why:'사이드 미션은 두 개까지만 추적할 수 있다.'};
     ledger.tracked.push(id);
   }
   if(typeof G.save==='function') G.save();
@@ -232,10 +232,10 @@ G.questLedgerSync = ()=>{
     const changedChapter=previous&&previous.chapterId!==main.chapterId;
     const changedStep=previous&&(previous.next!==main.next||previous.progress!==(main.progress&&main.progress.label));
     if(changedChapter){
-      ledger.mainHistory.push({id:`main_history_${previous.chapterId}_${S.day}_${S.at}`,eyebrow:`본편 기록 · ${previous.act}`,title:previous.title,phase:`${previous.phase} · ${S.day}일차`,next:'이 장에서 해야 할 일을 마쳤다.',expected:previous.expected,progress:{have:1,need:1,label:'완료'}});
+      ledger.mainHistory.push({id:`main_history_${previous.chapterId}_${S.day}_${S.at}`,eyebrow:`메인 스토리 기록 · ${previous.act}`,title:previous.title,phase:`${previous.phase} · ${S.day}일차`,next:'이 장에서 해야 할 일을 마쳤다.',expected:previous.expected,progress:{have:1,need:1,label:'완료'}});
       ledger.mainHistory=ledger.mainHistory.slice(-24);
       ledger.updates.push({id:main.id,kind:'main',title:`${main.act} · ${main.title}`,next:main.next,day:S.day,at:S.at});
-    }else if(changedStep) ledger.updates.push({id:main.id,kind:'main',title:`본편 진행 · ${main.title}`,next:main.next,day:S.day,at:S.at});
+    }else if(changedStep) ledger.updates.push({id:main.id,kind:'main',title:`메인 스토리 진행 · ${main.title}`,next:main.next,day:S.day,at:S.at});
     ledger.mainState={chapterId:main.chapterId,act:main.act,title:main.title,phase:main.phase,next:main.next,expected:main.expected,progress:main.progress&&main.progress.label};
   }
   for(const row of active.filter(row=>row.kind!=='main')){

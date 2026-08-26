@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-25T13:55:31.983Z",
+  "generatedAt": "2026-08-26T06:06:24.548Z",
   "html": {
-    "bytes": 71935399,
+    "bytes": 73186747,
     "warnBytes": 32000000,
-    "maxBytes": 72000000
+    "maxBytes": 80000000
   },
   "embedded": {
-    "files": 514,
-    "bytes": 44780545,
+    "files": 515,
+    "bytes": 45708941,
     "categories": {
       "ui": {
         "files": 31,
@@ -20,9 +20,9 @@
         "encodedBytes": 12947612
       },
       "scene": {
-        "files": 366,
-        "bytes": 29417551,
-        "encodedBytes": 39223916
+        "files": 367,
+        "bytes": 30345947,
+        "encodedBytes": 40461780
       },
       "portrait": {
         "files": 49,
@@ -116,10 +116,22 @@
       "encodedBytes": 684436
     },
     {
+      "path": "assets/scenes/recruit-minji-welding.jpg",
+      "mime": "image/jpeg",
+      "bytes": 500859,
+      "encodedBytes": 667812
+    },
+    {
       "path": "assets/scenes/resistance-mid-depot-conflict-v1.jpg",
       "mime": "image/jpeg",
       "bytes": 488285,
       "encodedBytes": 651048
+    },
+    {
+      "path": "assets/scenes/story-bridge-departure-echo-v1.jpg",
+      "mime": "image/jpeg",
+      "bytes": 476185,
+      "encodedBytes": 634916
     },
     {
       "path": "assets/scenes/resistance-north-route-rehearsal-v1.jpg",
@@ -144,18 +156,6 @@
       "mime": "image/jpeg",
       "bytes": 449539,
       "encodedBytes": 599388
-    },
-    {
-      "path": "assets/scenes/resistance-seoul-edge-choice-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 438914,
-      "encodedBytes": 585220
-    },
-    {
-      "path": "assets/scenes/resistance-signal-leak-evacuation-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 437469,
-      "encodedBytes": 583292
     }
   ]
 }

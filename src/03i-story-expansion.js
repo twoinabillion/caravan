@@ -646,6 +646,7 @@
   const bridgeEvents = [
     {
       id: 'story_bridge_departure_echo',
+      scene: 'story-bridge-departure-echo-v1',
       type: '사건',
       w: 1,
       once: true,
