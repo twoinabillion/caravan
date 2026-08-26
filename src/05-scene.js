@@ -877,7 +877,7 @@ const SCENE = (()=>{
         for(let d2=0;d2<dn;d2++) ctx.fillRect(hx-2+d2*2, hy-8, 1,1);
       }
     });
-    /* 식사 연출: 창문 안 먹는 모션 + 김 (아침 배급·점심 후 16초) */
+    /* 식사 연출: 창문 안 먹는 모션 + 김 (아침·점심 후 16초) */
     if(mealT>0){
       riders.forEach((id,i)=>{
         const hx=P(vx+10+(i+0.5)*seatGap), hy=P(winY+winH-2+((i%2)?bnc2-bnc:0));

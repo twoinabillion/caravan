@@ -47,7 +47,7 @@ D.transferStatus = (state)=>{
 };
 D.residentCount = 6412;   /* 제7 잔류구역 등록 인원 */
 /* 라디오 방송 조각 — 차 라디오 수리 후 주행 중 랜덤 수신. D.vo[key] 있으면 음성도 재생 */
-/* 식사 시간 정경 (아침 배급·점심 때 무작위 1줄) */
+/* 식사 시간 정경 (아침·점심 때 무작위 1줄) */
 D.mealBanter = [
  '(주먹밥이 손에서 손으로 넘어간다. 오늘 것은 어제 것보다 약간 크다는 소문이다)',
  '(뜨거운 물에 만 밥. 후후 부는 소리가 달구지 안에 돌림노래처럼 번진다)',
@@ -339,7 +339,7 @@ D.comps = {
     perk:'전투 · 위협 감지 · 매복 회피',
     perks:{
       1:[{id:'kw_guard',  nm:'경계 태세', d:'매복·강도류 조우 빈도 대폭 감소'},
-         {id:'kw_ration', nm:'행군 단련', d:'강우는 배급에서 제외 (자급자족)'}],
+         {id:'kw_ration', nm:'행군 단련', d:'강우의 식량 소모 없음 (자급자족)'}],
       2:[{id:'kw_sniper',  nm:'저격수',  d:'조우마다 첫 탄약 선택은 반드시 성공 — 연발은 위치가 드러난다'},
          {id:'kw_stealth', nm:'위장술',  d:'관측당할 상황을 50% 확률로 회피'}],
       3:{id:'kw_story', nm:'그날의 진실', d:'스토리 — 옛 부대의 흔적이 북쪽에 남아 있다', story:1}}},
@@ -391,7 +391,7 @@ D.companionVoices = {
       analog:'약사·간호·보건 페르소나의 복약 확인, 생활 관찰, 조용한 돌봄 행동을 참고한다.',
       contradiction:'선택권을 지키려는 사람이 걱정이 커지면 가장 먼저 선택권을 빼앗는다.',tell:'불안하면 약병과 이름을 다시 세고, 괜찮다고 판단하면 먹을 것부터 건넨다.'},
     addresses:{daon:['자네'],daonRegister:'하오체',minji:['민지 양','민지 학생'],kangwoo:['강우 씨','자네'],leo:['레오'],jaeyi:['재이','자네'],eunsu:['은수 씨','자네']},
-    grounding:{value:'몸을 돌보는 작은 반복이 사람을 끝까지 사람답게 만든다고 믿는다.',routine:'얼굴빛·식사량·손 온도를 보고도 바로 병명부터 붙이지 않는다.',care:'누가 무엇을 남기고 무엇을 억지로 먹는지 기억해 다음 배급을 조용히 바꾼다.',conflict:'걱정이 커지면 부탁을 건너뛰고 처방처럼 명령해 버린다.',repair:'상대의 선택권을 돌려주고 차나 사탕처럼 거절할 수 있는 것을 곁에 둔다.',stress:'자기 판단이 틀릴 가능성을 느끼면 약과 이름을 반복해서 센다.'},
+    grounding:{value:'몸을 돌보는 작은 반복이 사람을 끝까지 사람답게 만든다고 믿는다.',routine:'얼굴빛·식사량·손 온도를 보고도 바로 병명부터 붙이지 않는다.',care:'누가 무엇을 남기고 무엇을 억지로 먹는지 기억해 다음 식사를 조용히 바꾼다.',conflict:'걱정이 커지면 부탁을 건너뛰고 처방처럼 명령해 버린다.',repair:'상대의 선택권을 돌려주고 차나 사탕처럼 거절할 수 있는 것을 곁에 둔다.',stress:'자기 판단이 틀릴 가능성을 느끼면 약과 이름을 반복해서 센다.'},
     forbidden:['다 잘될 거야','운명이야','긍정적으로']},
   kangwoo:{vocabulary:'거리·출구·후방·교대·확인. 추상적인 위험보다 보이는 동선을 말한다.',
     rhythm:'주어를 자주 생략한 짧은 평서문. 감정이 클수록 말수가 줄어든다.',humor:'남의 농담을 사실처럼 받아들인 뒤 한 박자 늦게 되돌려준다.',
@@ -2390,19 +2390,15 @@ D.onboardingMission = {
   title:'내가 해야 할 일',
   missionBrief:{
     eyebrow:'메인 스토리',
-    objective:'남산 코어에 들어가 강제 이송 명령을 끊는다',
+    objective:'남산의 강제 이송을 멈춘다',
     why:'엄마와 아빠를 갈라놓았던 명령이 아직도 살아 있다. 지금도 누군가는 이유도 모른 채 가족과 떨어지고 있다.',
     now:'북쪽으로 가는 동안 세 가지를 모아야 한다. 이송표가 어디서 왔는지 보여 줄 기록, 엄마가 설계하고 아빠가 만든 검증키를 안전하게 꺼낼 방법, 같은 표를 받은 사람들의 증언.',
     promise:'세 가지를 들고 남산 코어에 들어간다. 자동 명령을 멈추고, 사람의 확인 없이는 누구도 이송하지 못하게 만든다.',
     optional:'동료의 부탁과 지역 의뢰는 내 선택이다. 마음이 쓰이는 일이 생기면 돕고, 아니면 지나가도 된다.'
   },
-  text:`부두 출구 앞에서 차를 세우고 수첩을 폈다. 첫 장에는 세 칸만 만들었다. 누가 이송표를 보냈는지, 부모님의 인간 확인 검증키를 어떻게 꺼낼지, 같은 표를 받은 사람들은 무엇을 겪었는지. 도윤의 이송표 사본과 엄마의 도면, 아빠가 만든 모듈을 지도 옆에 놓았다.
-
-남산까지 가는 동안 이 세 칸을 채워야 한다. 그래야 코어 앞에서 우리 가족 이야기로만 끝나지 않는다.
-
-다음 이송표가 나오기 전에 멈춰야 한다. 적어도 누군가를 떠나보내기 전에는, 사람이 직접 이유를 확인하게 만들어야 한다.`,
+  text:'',
   choices:[
-    {label:'남산으로 가는 첫 길을 고른다', out:[{p:1,text:'부산을 떠나 북쪽 길에 올랐다. 먼저 이송표를 누가 보냈는지 남은 흔적부터 찾는다. 진행 상황은 언제든 「목표」에서 확인할 수 있다.',fx:{flag:'main_mission_started',note:{type:'본편',title:'남산의 강제 이송을 멈춘다',body:'이송 날짜는 따로 정해져 있지 않다. 배급망이 바뀔 때마다 새 명단이 나온다. 북쪽으로 가며 이송표를 보낸 흔적과 장치를 꺼낼 방법, 같은 표를 받은 사람들의 이야기를 모아 남산으로 간다.'}}}]}
+    {label:'길로 나가기',continueToRoad:true,out:[{p:1,text:'',fx:{flag:'main_mission_started',note:{type:'본편',title:'남산의 강제 이송을 멈춘다',body:'이송 날짜는 따로 정해져 있지 않다. 식량과 물의 공급망이 바뀔 때마다 새 명단이 나온다. 북쪽으로 가며 이송표를 보낸 흔적과 장치를 꺼낼 방법, 같은 표를 받은 사람들의 이야기를 모아 남산으로 간다.'}}}]}
   ]
 };
 
@@ -3322,7 +3318,7 @@ D.intro.forEach(page=>{
 /* 반복 인물의 핵심 체인은 제목 변화와 무관하게 같은 얼굴을 쓴다. */
 Object.assign(D.eventPortraits, {
  lib_meet:'hanbyeol', lib_request:'hanbyeol', lib_books:'hanbyeol', lib_return:'hanbyeol', library_scribe:'hanbyeol',
- deserter_meet:'seoyeon', deserter_check:'seoyeon', deserter_farewell:'seoyeon', whites_pass:'seoyeon', whites_straggler:'seoyeon',
+ deserter_meet:'seoyeon', deserter_check:'seoyeon', deserter_farewell:'seoyeon',
  mansu_robbed:'mansu', mansu_revenge:'mansu', mansu_opening:'mansu',
  meet_postman:'postman', postman_again:'postman', ev_postman_ghost:'postman',
  meet_mapmaker:'mapmaker',
@@ -6329,7 +6325,7 @@ D.events = [
  title:'행렬에서 떨어진 사람',
  text:'갓길에 흰 옷의 노인이 앉아 있다. 행렬은 보이지 않는다. 신발 밑창이 너덜너덜하다.\n\n"물… 조금만." 노인이 손을 내밀었다.\n\n물을 건네자 노인은 반을 마시고 반을 들고— 이상한 질문을 했다.\n\n"…돌아가도 되는 겁니까?"',
  choices:[
-  {label:'"어디로요?"', out:[{p:1, text:'"남쪽에. 딸이." 노인이 흰 옷자락을 만지작거렸다. "이 옷 입으면 다 잊게 해준다 해서 입었는데. 잊는 게 아니라 미루는 거더구먼.\n\n북쪽 가면 완성된다는데, 완성이 뭔지 아무도 몰라. 근데 딸 얼굴은 알거든. 아는 쪽으로 가야 하지 않겠나."\n\n남쪽 방향과 가까운 정착지를 알려줬다. 노인은 흰 겉옷을 벗어 곱게 개서 갓길에 놓고— 안에 입고 있던 잠바 차림으로 남쪽을 향해 걸었다.\n\n개어놓은 흰 옷이 오래 백미러에 남았다.', fx:{water:-1, moodAll:4, flag:'whites_doubt', flag2:'straggler_south', note:{type:'사건',title:'개어놓은 흰 옷',body:'"아는 쪽으로 가야 하지 않겠나." 행렬에서 떨어져 남쪽으로 돌아간 사람. 흰 옷은 갓길에 곱게.',links:['정리자들']}}}]},
+  {label:'"어디로요?"', out:[{p:1, text:'"남쪽에. 딸이." 노인이 흰 옷자락을 만지작거렸다. "이 옷 입으면 다 잊게 해준다 해서 입었는데. 잊는 게 아니라 미루는 거더구먼."\n\n"북쪽 가면 완성된다는데, 완성이 뭔지 아무도 몰라. 근데 딸 얼굴은 알거든. 아는 쪽으로 가야 하지 않겠나."\n\n남쪽 방향과 가까운 정착지를 알려줬다. 노인은 흰 겉옷을 벗어 곱게 개서 갓길에 놓고— 안에 입고 있던 잠바 차림으로 남쪽을 향해 걸었다.\n\n개어놓은 흰 옷이 오래 백미러에 남았다.', fx:{water:-1, moodAll:4, flag:'whites_doubt', flag2:'straggler_south', note:{type:'사건',title:'개어놓은 흰 옷',body:'"아는 쪽으로 가야 하지 않겠나." 행렬에서 떨어져 남쪽으로 돌아간 사람. 흰 옷은 갓길에 곱게.',links:['정리자들']}}}]},
   {label:'행렬까지 태워다준다', out:[{p:1, text:'노인을 태우고 행렬을 따라잡았다. 노인은 고맙다고 했다. 문을 열고 내리기 전에, 아주 잠깐 남쪽을 봤다.\n\n"…고맙네." 두 번째 고맙다는 처음 것과 다른 온도였다.\n\n행렬이 노인을 삼키고 다시 북상했다. 옳은 일을 한 건지, 오래 아무도 확신하지 못했다.', fx:{time:20, moodAll:-3, flag:'whites_doubt', note:{type:'사건',title:'두 번째 고맙네',body:'행렬로 돌려보냈다. 내리기 전 남쪽을 본 3초. 옳았는지 아무도 확신하지 못했다.',links:['정리자들']}}}]},
  ]},
 
@@ -6757,9 +6753,9 @@ D.events = [
 
 {id:'night_samedream', type:'동행', w:5, night:true, minParty:2, once:true,
  title:'같은 꿈',
- text:'긴 밤 주행 중, 누가 최근 꾼 꿈 얘기를 꺼냈다. "국도를 달리는데 끝이 안 나는 꿈."\n\n"…어? 나도 국도 꿈."\n\n"나도. 근데 내 꿈엔 휴게소가 나왔어."\n\n전원이 국도 꿈을 꿨다. 매일 국도만 보면 그럴 만도 하다. 아마도.',
+ text:'긴 밤 주행 중, 누가 끝없는 국도를 달리는 꿈을 꿨다고 했다. 그러자 다른 두 동료도 각자 국도 꿈을 꿨다고 맞장구쳤다. 한 사람의 꿈에는 휴게소까지 나왔다.\n\n전원이 국도 꿈을 꿨다. 매일 국도만 보면 그럴 만도 하다. 아마도.',
  choices:[
-  {label:'꿈 내용을 대조한다', out:[{p:1, text:'꿈을 맞춰 보니 겹치는 건 국도뿐이었다. 나머지는 제각각이었다. 누구는 꿈에서도 연비 걱정을 했고, 누구는 꿈 휴게소에서 호두과자를 샀는데 맛이 안 났다고 억울해했다.\n\n"꿈에서 맛이 나면 그게 더 무서운 거야." "왜?" "돌아오기 싫어지잖아." "…무슨 소리야." "몰라. 말하면서 나도 몰랐어."\n\n농담으로 시작해서 조금 진지해진 밤이었다. 그래도 국도는 꿈이 아니라, 맛이 나는 쪽 세상에서 계속됐다.', fx:{moodAll:3, note:{type:'사건',title:'국도 꿈 전원 일치',body:'겹친 건 국도뿐. 교훈: 맛이 나는 쪽 세상에서 달릴 것.'}}}]},
+  {label:'꿈 내용을 대조한다', out:[{p:1, text:'꿈을 맞춰 보니 겹치는 건 국도뿐이었다. 나머지는 제각각이었다. 누구는 꿈에서도 연비 걱정을 했고, 누구는 꿈 휴게소에서 호두과자를 샀는데 맛이 안 났다고 억울해했다.\n\n꿈에서 맛이 나면 돌아오기 싫어질 테니 오히려 무섭다는 말까지 나왔다. 말을 꺼낸 사람도 설명하다 자기가 무슨 소리를 하는지 모르겠다며 웃었다.\n\n농담으로 시작해서 조금 진지해진 밤이었다. 그래도 국도는 꿈이 아니라, 맛이 나는 쪽 세상에서 계속됐다.', fx:{moodAll:3, note:{type:'사건',title:'국도 꿈 전원 일치',body:'겹친 건 국도뿐. 교훈: 맛이 나는 쪽 세상에서 달릴 것.'}}}]},
  ]},
 
 /* ── v1.6 탐색 ── */
@@ -7026,7 +7022,7 @@ D.events = [
  ]},
 {id:'talk_mj_04', type:'대화', w:4, once:true, needsComp:'minji',
  title:'민지 — 단것',
- text:'배급 후, 민지가 주머니에서 꼬깃한 사탕 하나를 꺼내 반으로 쪼갰다. 정확히 반.\n\n"먹을래?"',
+ text:'식사 후, 민지가 주머니에서 꼬깃한 사탕 하나를 꺼내 반으로 쪼갰다. 정확히 반.\n\n"먹을래?"',
  choices:[
   {label:'받는다', out:[{p:1, text:'딸기맛이었다. …자두였나. 포장지가 낡아서 맛 이름까지는 자신이 없었다. 민지는 자기 반쪽을 오래오래 녹여 먹었다.\n\n"정비 끝나면 단게 당겨. 몸이 아는 거야, 고생했다고."\n\n이후로 좋은 사탕이 생기면 민지 몫을 챙기게 됐다.', fx:{mood:{minji:3}}}]},
   {label:'"너 다 먹어"', out:[{p:1, text:'"…그럼 반쪽은 저금." 민지가 반쪽을 도로 포장지에 쌌다.\n\n"단건 나눠 먹거나 아껴 먹거나야. 한 번에 다 먹는 건 낭비고."\n\n사탕 경제학이었다.', fx:{mood:{minji:2}}}]},
@@ -7239,7 +7235,7 @@ D.events = [
  text:'"신청곡 받아요." 레오가 기타를 고쳐 안았다. "뭐든. 모르는 노래면 즉석에서 만들어드려요."',
  choices:[
   {label:'옛날 노래를 신청한다', out:[{p:1, text:'제목을 말하자 레오가 첫 소절을 더듬더듬 찾아냈다. "이건가? …아니네. 잠깐만요. …이거다."\n\n가사가 틀리고 코드가 미끄러졌지만— 다 부를 때쯤엔 나도 같이 부르고 있었다. 노래는 정확한 것보다 같이 부르는 게 이기는 거라고, 레오가 말했다.', fx:{mood:{leo:3}, moodAll:2}}]},
-  {label:'"오늘 기분을 노래로"', out:[{p:1, text:'"어려운 주문이네요. 좋아요."\n\n레오가 창밖을 한 번 보고, 나를 한 번 보고, 즉흥곡을 시작했다. 가사에 오늘 아침 배급 메뉴와 어제 고개의 커브와 내 하품이 들어갔다.\n\n엉망이고 완벽했다. "제목은 \'오늘\'이에요. 내일 부르면 못 알아들을 노래." 일회용 노래는 사치스러웠다.', fx:{mood:{leo:4}, moodAll:2, note:{type:'사건',title:'일회용 노래 「오늘」',body:'내일 부르면 못 알아들을 즉흥곡. 사치스러운 일회용.',links:['레오']}}}]},
+  {label:'"오늘 기분을 노래로"', out:[{p:1, text:'"어려운 주문이네요. 좋아요."\n\n레오가 창밖을 한 번 보고, 나를 한 번 보고, 즉흥곡을 시작했다. 가사에 오늘 아침 메뉴와 어제 고개의 커브와 내 하품이 들어갔다.\n\n엉망이고 완벽했다. "제목은 \'오늘\'이에요. 내일 부르면 못 알아들을 노래." 일회용 노래는 사치스러웠다.', fx:{mood:{leo:4}, moodAll:2, note:{type:'사건',title:'일회용 노래 「오늘」',body:'내일 부르면 못 알아들을 즉흥곡. 사치스러운 일회용.',links:['레오']}}}]},
  ]},
 {id:'talk_leo_05', type:'대화', w:4, once:true, needsComp:'leo',
  title:'레오 — 보리와의 계약',
@@ -8035,7 +8031,7 @@ D.events = [
  title:'스카이라인 앞에서',
  text:'서울 스카이라인이 처음 보인 정차 자리. 동료들이 하나둘 차에서 내려 그쪽을 본다.\n\n각자 저 안에 두고 온 것, 찾을 것, 물을 것이 있었다.',
  choices:[
-  {label:'다 같이 앉아 본다', out:[{p:1, text:'남산이 보이는 쪽으로 자리가 하나씩 찼다.\n\n"진짜 들어가는 거네."\n\n"…뭐가?"\n\n"저기."\n\n"…아." 실감은 한 박자 늦게 왔다.\n\n누군가는 물을 끓였고, 누군가는 공구와 짐끈을 다시 셌다.\n\n"출발할 때까진 보고만 있자." 내가 말했다.\n\n그 정차에서는 계획을 더 짜지 않았다. 서울 불빛이 낯설지 않아질 때까지 함께 봤다.', fx:{moodAll:5, note:{type:'사건',title:'목적지를 마주 본 자리',body:'남산이 보이는 곳에서 일행은 계획 대신 서울 불빛을 함께 바라봤다.',links:['남산','할아버지']}}}]},
+  {label:'다 같이 앉아 본다', out:[{p:1, text:'남산이 보이는 쪽으로 자리가 하나씩 찼다.\n\n누군가 정말 저 안으로 들어가는 거냐고 물었다. 다른 누군가는 무엇을 말하느냐고 되물었다. 첫 사람이 남산을 가리키고 나서야 실감이 한 박자 늦게 왔다.\n\n누군가는 물을 끓였고, 누군가는 공구와 짐끈을 다시 셌다.\n\n"출발할 때까진 보고만 있자." 내가 말했다.\n\n그 정차에서는 계획을 더 짜지 않았다. 서울 불빛이 낯설지 않아질 때까지 함께 봤다.', fx:{moodAll:5, note:{type:'사건',title:'목적지를 마주 본 자리',body:'남산이 보이는 곳에서 일행은 계획 대신 서울 불빛을 함께 바라봤다.',links:['남산','할아버지']}}}]},
  ]},
 
 /* [저항을 알게 됐을 때] resist_revealed */
@@ -12753,6 +12749,189 @@ D.events.push(
 /* 자유 형식 사건 문장 중 문맥만으로 화자를 바꾸면 같은 사람이 연달아 말할 때
    화자가 뒤집힌다. 중요한 대화와 합류 장면은 실제 발화 순서를 데이터로 고정한다. */
 D.eventTurnScripts = {
+  ev_broadcast_station:{
+    choices:{'1.0':['minji','me','minji']}},
+  meet_bathtruck:{
+    text:[
+      {who:'passer_merchant',name:'목욕차 주인'},'me',
+      {who:'passer_merchant',name:'목욕차 주인'}]},
+  parcel_lead:{
+    text:[
+      {who:'record',kind:'record',name:'게시판 문구'},
+      {who:'passer_refugee',name:'소포 소식을 아는 사람'},
+      {who:'passer_refugee',name:'소포 소식을 아는 사람'},'me',
+      {who:'passer_refugee',name:'소포 소식을 아는 사람'}]},
+  mansu_revenge:{choices:{'0.0':[
+    'kangwoo',{who:'passer_man',name:'강도'},'kangwoo']}},
+  meet_scrapbros:{
+    text:[
+      {who:'passer_worker',name:'폐차장 형'},
+      {who:'passer_worker',name:'폐차장 동생'},
+      {who:'passer_worker',name:'폐차장 형'}]},
+  bori_tag:{choices:{'0.0':['leo','me','leo','leo','leo']}},
+  pair_pss_es_1:{choices:{'0.0':['eunsu','eunsu','parkss']}},
+  ev_postman_ghost:{choices:{'0.0':[
+    {who:'postman',name:'자전거 우편부'},'me',
+    {who:'postman',name:'자전거 우편부'},
+    {who:'postman',name:'자전거 우편부'}]}},
+  ev_hunter_meat:{choices:{'0.0':[
+    {who:'passer_man',name:'사냥꾼'},'me',
+    {who:'passer_man',name:'사냥꾼'},{who:'passer_man',name:'사냥꾼'}]}},
+  ev_beekeeper:{
+    text:[
+      {who:'passer_worker',name:'양봉가'},'me',
+      {who:'passer_worker',name:'양봉가'},
+      {who:'passer_worker',name:'양봉가'}],
+    choices:{'1.0':[
+      'parkss',
+      {who:'passer_worker',name:'양봉가'},
+      {who:'passer_worker',name:'양봉가'}]}},
+  roadcrew_sign:{choices:{'0.0':[
+    'me',{who:'passer_worker',name:'도윤'}]}},
+  meet_bus:{
+    text:['parkss','parkss'],
+    choices:{'0.0':['parkss','me','parkss','parkss']}},
+  meet_scrapyard:{
+    text:['minji'],
+    choices:{'0.0':['minji','minji','me','minji','minji']}},
+  meet_trader_truck:{choices:{
+    '1.0':[
+      {who:'mansu',name:'만수'},'me',
+      {who:'mansu',name:'만수'},{who:'mansu',name:'만수'}]}},
+  jy_recruit:{
+    text:['jaeyi','me','jaeyi','jaeyi','jaeyi'],
+    choices:{
+      '0.0':['jaeyi','me','jaeyi','jaeyi','jaeyi'],
+      '1.0':['jaeyi','me','jaeyi','jaeyi','jaeyi']}},
+  es_recruit:{
+    text:['eunsu','me','eunsu','eunsu','eunsu'],
+    choices:{
+      '0.0':['eunsu','me','eunsu','eunsu'],
+      '1.0':['eunsu','eunsu']}},
+  kw_recruit:{
+    text:['kangwoo','me','kangwoo','kangwoo'],
+    choices:{
+      '0.0':['kangwoo','me','kangwoo','kangwoo'],
+      '1.0':['kangwoo','me','kangwoo','kangwoo','kangwoo']}},
+  mansu_robbed:{choices:{
+    '0.0':[
+      {who:'mansu',name:'만수'},'me',
+      {who:'mansu',name:'만수'},{who:'mansu',name:'만수'}]}},
+  deserter_check:{
+    text:[
+      {who:'passer_guard',name:'회수반'},'me',
+      {who:'passer_guard',name:'회수반'}],
+    choices:{
+      '0.0':[{who:'passer_guard',name:'회수반'}],
+      '0.1':[
+        {who:'seoyeon',name:'소연'},{who:'passer_guard',name:'회수반'},
+        {who:'seoyeon',name:'소연'},{who:'seoyeon',name:'소연'}]}},
+  deserter_farewell:{
+    text:[
+      {who:'seoyeon',name:'소연'},{who:'seoyeon',name:'소연'},'me',
+      {who:'seoyeon',name:'소연'}],
+    choices:{'0.0':[
+      {who:'seoyeon',name:'소연'},{who:'seoyeon',name:'소연'}]}},
+  lib_meet:{
+    text:[
+      {who:'record',kind:'record',name:'버스 글씨'},
+      {who:'hanbyeol',name:'한별'}],
+    choices:{
+      '0.0':[
+        {who:'hanbyeol',name:'한별'},'me',
+        {who:'hanbyeol',name:'한별'},{who:'hanbyeol',name:'한별'}],
+      '1.0':[{who:'hanbyeol',name:'한별'}]}},
+  freq_catch:{
+    text:[
+      {who:'radio',kind:'radio',name:'숫자 방송'},'me',
+      {who:'radio',kind:'radio',name:'숫자 방송'},'me'],
+    choices:{'1.0':['eunsu','me','eunsu']}},
+  bori_family:{
+    text:[{who:'passer_man',name:'광양 이웃'}],
+    choices:{'0.0':[
+      {who:'passer_man',name:'광양 이웃'},
+      {who:'passer_man',name:'광양 이웃'},'me',
+      {who:'passer_man',name:'광양 이웃'},
+      {who:'passer_man',name:'광양 이웃'},'me',
+      {who:'passer_man',name:'광양 이웃'},
+      {who:'passer_man',name:'광양 이웃'}]}},
+  whites_pass:{choices:{'0.0':[
+    {who:'record',kind:'record',name:'정리자 행렬'}]}},
+  whites_straggler:{
+    text:[
+      {who:'passer_elder',name:'행렬에서 떨어진 노인'},
+      {who:'passer_elder',name:'행렬에서 떨어진 노인'}],
+    choices:{
+      '0.0':[
+        {who:'passer_elder',name:'행렬에서 떨어진 노인'},
+        {who:'passer_elder',name:'행렬에서 떨어진 노인'},
+        {who:'passer_elder',name:'행렬에서 떨어진 노인'}],
+      '1.0':[{who:'passer_elder',name:'행렬에서 떨어진 노인'}]}},
+  library_scribe:{
+    text:[{who:'hanbyeol',name:'한별'},{who:'hanbyeol',name:'한별'}],
+    choices:{
+      '0.0':[
+        {who:'hanbyeol',name:'한별'},{who:'hanbyeol',name:'한별'},'me',
+        {who:'hanbyeol',name:'한별'},{who:'hanbyeol',name:'한별'},
+        {who:'hanbyeol',name:'한별'}],
+      '1.0':[{who:'hanbyeol',name:'한별'}]}},
+  mansu_opening:{
+    text:[{who:'mansu',name:'만수'}],
+    choices:{'0.0':[
+      {who:'mansu',name:'만수'},'me','me',
+      {who:'mansu',name:'만수'},{who:'mansu',name:'만수'},
+      {who:'record',kind:'record',name:'홍보 문구'},
+      {who:'mansu',name:'만수'}]}},
+  react_seoul_all:{choices:{'0.0':['me']}},
+  react_resist_jy:{
+    text:['jaeyi','jaeyi'],
+    choices:{'0.0':['jaeyi','jaeyi','me','jaeyi','me','jaeyi']}},
+  cell_sea_2:{
+    text:[{who:'passer_worker',name:'젊은 뱃사람'}],
+    choices:{'0.0':[
+      'me',{who:'passer_worker',name:'젊은 뱃사람'},
+      {who:'passer_worker',name:'젊은 뱃사람'},
+      {who:'passer_worker',name:'젊은 뱃사람'},'me',
+      {who:'passer_worker',name:'젊은 뱃사람'}]}},
+  cell_dome_2:{
+    text:[{who:'passer_worker',name:'대구 돔 심부름꾼'}],
+    choices:{'0.0':[
+      'me',{who:'passer_worker',name:'대구 돔 심부름꾼'},
+      {who:'hayeosa',kind:'record',name:'하 여사의 메모'},
+      {who:'hayeosa',kind:'record',name:'하 여사의 메모'}]}},
+  npc_sundeok_2:{
+    text:[{who:'sundeok',name:'순덕'}],
+    choices:{'0.0':[
+      {who:'sundeok',name:'순덕'},{who:'sundeok',name:'순덕'},'me',
+      {who:'sundeok',name:'순덕'}]}},
+  ev_smuggler_truck:{
+    text:[{who:'passer_merchant',name:'밀수꾼'}],
+    choices:{
+      '0.0':[{who:'passer_merchant',name:'밀수꾼'}],
+      '2.0':['jaeyi',{who:'passer_merchant',name:'밀수꾼'},'jaeyi']}},
+  ev_satellite_pass:{
+    text:['eunsu','me','eunsu','eunsu'],
+    choices:{'0.0':['eunsu'],'1.0':['me','eunsu']}},
+  ev_leo_eunsu:{
+    text:['leo','eunsu','leo','eunsu','eunsu'],
+    choices:{
+      '0.0':['me','eunsu','leo','eunsu'],
+      '1.0':['leo','leo','eunsu']}},
+  ev_minji_jaeyi:{
+    text:['minji','jaeyi','jaeyi','minji'],
+    choices:{
+      '0.0':['me','minji'],
+      '1.0':['me','jaeyi'],
+      '2.0':['me','minji']}},
+  meet_postman:{
+    text:[
+      {who:'postman',name:'자전거 우편부'},
+      'me',
+      {who:'postman',name:'자전거 우편부'}],
+    choices:{
+      '0.0':[{who:'postman',name:'자전거 우편부'}],
+      '0.1':[{who:'postman',name:'자전거 우편부'}],
+      '1.0':[{who:'postman',name:'자전거 우편부'}]}},
   meet_mapmaker:{
     text:[{who:'mapmaker',name:'지도장이'}],
     choices:{'0.0':[
@@ -12834,23 +13013,15 @@ D.eventTurnScripts = {
     '3.0':['eunsu','eunsu']}},
   crisis_hose:{choices:{
     '1.0':['minji','minji']}},
-  ev_beekeeper:{choices:{
-    '1.0':[
-      'parkss',
-      {who:'passer_worker',name:'양봉가'},
-      {who:'passer_worker',name:'양봉가'}]}},
   ev_group_feast:{choices:{
     '0.0':['eunsu','kangwoo']}},
   ev_chunrian_lab:{
-    text:[
-      {who:'record',kind:'record',name:'연구소 현판'},
-      {who:'record',kind:'record',name:'빛바랜 포스터'}],
     choices:{
       '0.0':[{who:'record',kind:'record',name:'연구일지'}],
       '1.0':['minji','minji']}},
   seoul_decision:{choices:{
-    '0.0':['me'],
-    '1.0':['me'],
+    '0.0':['me','me'],
+    '1.0':['me','me'],
     '2.0':['me','me']}},
 
   rq_minji_task:{text:['minji','minji'], choices:{
@@ -12880,7 +13051,11 @@ D.eventTurnScripts = {
     '2.0':['jaeyi','me','jaeyi']}},
   rq_jaeyi_join:{text:['jaeyi','me','jaeyi','me','jaeyi'], choices:{
     '0.0':['jaeyi','me','jaeyi']}},
-  rq_eunsu_follow:{choices:{
+  rq_eunsu_follow:{
+    text:[
+      {who:'record',kind:'record',name:'수신 좌표'},
+      'eunsu','eunsu'],
+    choices:{
     '0.0':['eunsu','me','eunsu','eunsu'],
     '1.0':['eunsu','eunsu','me']}},
   rq_eunsu_join:{text:['eunsu','me','eunsu','me','eunsu'], choices:{

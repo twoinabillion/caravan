@@ -603,7 +603,7 @@ G.consumeMeal = kind=>{
 G.mealToast = (label,result,icon='🍚')=>{
   if(result.ok){
     const recovery=result.after<result.before?(result.after===0?' · 허기 해소':` · 허기 ${result.before}→${result.after}`):'';
-    return `${icon} ${label} 배급 · 식량 -${result.used}${recovery}`;
+    return `${icon} ${label} 식사 · 식량 -${result.used}${recovery}`;
   }
   const mood=result.mood?` · 사기 ${result.mood}`:'';
   return `${icon} ${label} 결식 · 식량 ${result.used}/${result.need} · ${G.hungerLabel(result.after)} ${result.after}/3 · 피로 +${result.fatigue}${mood}`;
@@ -659,10 +659,10 @@ G.breakfast = ()=>{
   const result=G.consumeMeal('breakfast');
   if(waterOk&&result.ok){
     const recovery=result.after<result.before?(result.after===0?' · 허기 해소':` · 허기 ${result.before}→${result.after}`):'';
-    UI.toast(`🍙 아침 배급 · 식량 -${result.used} · 물 -${waterUsed}${recovery}`);
+    UI.toast(`🍙 아침 식사 · 식량 -${result.used} · 물 -${waterUsed}${recovery}`);
   } else {
     const fatigue=result.fatigue+waterFatigue, mood=result.mood+waterMood;
-    UI.toast(`🍙 아침 배급 부족 · 식량 ${result.used}/${result.need} · 물 ${waterUsed}/${need} · ${G.hungerLabel(result.after)} ${result.after}/3${fatigue?` · 피로 +${fatigue}`:''}${mood?` · 사기 ${mood}`:''}`);
+    UI.toast(`🍙 아침 식사 부족 · 식량 ${result.used}/${result.need} · 물 ${waterUsed}/${need} · ${G.hungerLabel(result.after)} ${result.after}/3${fatigue?` · 피로 +${fatigue}`:''}${mood?` · 사기 ${mood}`:''}`);
   }
   if(result.ok){
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);

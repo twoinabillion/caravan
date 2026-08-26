@@ -78,30 +78,27 @@ with sync_playwright() as playwright:
     check('요약 경로가 이름을 보존하고 게임으로 진입한다',
           page.locator('#scr-game').is_visible() and page.evaluate('S.name') == '테스터')
 
-    print('― 채널별 소리 설정')
+    print('― 단순화한 전체 소리 설정')
     page.click('#dk-menu')
-    page.click('#menu-settings')
-    sliders = page.locator('[data-audio-level]:visible')
-    check('음악·환경음·효과음·목소리 네 채널이 있다', sliders.count() == 4)
+    sliders = page.locator('#menu-volume:visible')
+    check('메뉴에는 전체 음량 조절 하나가 있다', sliders.count() == 1)
     defaults = page.evaluate("['music','ambience','effects','voice'].map(key=>SND.level(key))")
     check('새 기기의 네 채널은 음소거가 아닌 100%로 시작한다', defaults == [1, 1, 1, 1], str(defaults))
-    page.locator('[data-audio-level="music"]:visible').evaluate("""input => {
+    page.locator('#menu-volume:visible').evaluate("""input => {
       input.value='35'; input.dispatchEvent(new Event('input',{bubbles:true}));
     }""")
     mixer = page.evaluate("""() => ({
-      level:SND.level('music'),
-      saved:localStorage.getItem('caravan_audio_music'),
-      output:[...document.querySelectorAll('[data-audio-level="music"]')]
-        .find(input=>input.offsetParent!==null).parentElement.querySelector('output').textContent,
-      targets:[...document.querySelectorAll('.audio-mixer-list label')]
-        .filter(label=>label.offsetParent!==null).map(label=>label.getBoundingClientRect().height)
+      levels:['music','ambience','effects','voice'].map(key=>SND.level(key)),
+      saved:['music','ambience','effects','voice'].map(key=>localStorage.getItem('caravan_audio_'+key)),
+      targets:['#menu-sound-toggle','.menu-volume-row','#menu-save-now','#menu-save-export']
+        .map(selector=>document.querySelector(selector).getBoundingClientRect().height)
     })""")
-    check('음악 값이 즉시 반영되고 이 기기에 저장된다',
-          abs(mixer['level'] - .35) < .001 and mixer['saved'] == '0.35' and mixer['output'] == '35%', str(mixer))
+    check('전체 음량이 네 채널에 즉시 반영되고 이 기기에 저장된다',
+          mixer['levels'] == [.35, .35, .35, .35] and mixer['saved'] == ['0.35'] * 4, str(mixer))
     check('믹서의 모든 조작 행은 44px 터치 영역이다', all(height >= 44 for height in mixer['targets']), str(mixer['targets']))
-    page.locator('.audio-mixer:visible').scroll_into_view_if_needed()
+    page.locator('.menu-control-list:visible').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT / '02-audio-mixer.png'))
-    page.click('#st-x')
+    page.click('#menu-x')
 
     print('― 밀양 현장 행동 발견성')
     page.evaluate("""() => {

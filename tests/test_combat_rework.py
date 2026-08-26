@@ -274,6 +274,39 @@ with sync_playwright() as playwright:
           pursuit['high']['refused'] is not None and pursuit['high']['refused'] != pursuit['low']['refused'],
           str(pursuit))
 
+    print('― 결과 버튼 단일 표면')
+    outcome_surface = page.evaluate("""() => {
+      G.newGame('onroad','결과UI','full');
+      S.combat=null; S.injuries={}; S.pursuit=0;
+      UI.showEvent(D.events.find(e=>e.id==='combat_walker_read'));
+      UI.finishStory();
+      document.querySelector('#ev-sheet .choice:not(:disabled)')?.click();
+      UI.finishStory();
+      const sheet=document.querySelector('#ev-sheet');
+      const dock=sheet.querySelector('.event-choice-dock');
+      const choices=dock.querySelector('.choices');
+      const button=dock.querySelector('.primary-exit-btn');
+      const dockStyle=getComputedStyle(dock), choicesStyle=getComputedStyle(choices), buttonStyle=getComputedStyle(button);
+      const dockRect=dock.getBoundingClientRect(), choicesRect=choices.getBoundingClientRect(), buttonRect=button.getBoundingClientRect();
+      return {
+        phase:sheet.dataset.storyPhase,
+        dockWidth:dockRect.width,choicesWidth:choicesRect.width,buttonWidth:buttonRect.width,
+        dockBackground:dockStyle.backgroundColor,buttonBackground:buttonStyle.backgroundColor,
+        dockPaddingLeft:dockStyle.paddingLeft,buttonRadius:buttonStyle.borderRadius,
+        choicesBackground:choicesStyle.backgroundColor,
+        choicesBorder:`${choicesStyle.borderLeftWidth} ${choicesStyle.borderRightWidth}`,
+        choicesPadding:`${choicesStyle.paddingLeft} ${choicesStyle.paddingRight}`
+      };
+    }""")
+    check('다음 단계 버튼 바깥의 투명 사각형이 남지 않는다',
+          outcome_surface['phase'] == 'outcome'
+          and abs(outcome_surface['dockWidth'] - outcome_surface['buttonWidth']) <= 1
+          and outcome_surface['dockPaddingLeft'] == '0px'
+          and outcome_surface['buttonRadius'] == '0px'
+          and outcome_surface['dockBackground'] == outcome_surface['buttonBackground']
+          and outcome_surface['choicesBackground'] == outcome_surface['buttonBackground'],
+          str(outcome_surface))
+
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()
 

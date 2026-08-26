@@ -42,6 +42,52 @@ def main():
                     .map(turn=>turn.who))]
                 };
               };
+              const scriptedSpeakerMismatches=[];
+              const speakerId=value=>typeof value==='string'?value:value&&value.who;
+              const spokenIds=turns=>turns
+                .filter(turn=>!['narration','thought','ai'].includes(turn.kind)&&turn.who)
+                .map(turn=>turn.who);
+              const compareScript=(event,scope,value,speakers,knownSpeaker=false)=>{
+                const source=typeof value==='function'?value(S):value;
+                const actual=spokenIds(storyTurns(event,source,speakers,knownSpeaker));
+                const expected=(speakers||[]).map(speakerId);
+                if(actual.join('|')!==expected.join('|'))
+                  scriptedSpeakerMismatches.push({scope,expected,actual});
+              };
+              for(const [eventId,script] of Object.entries(D.eventTurnScripts||{})){
+                const event=byId(eventId);
+                if(!event) continue;
+                if(script.text) compareScript(event,`${eventId}.text`,event.text,script.text);
+                for(const [path,speakers] of Object.entries(script.choices||{})){
+                  const [choiceIndex,outcomeIndex]=path.split('.').map(Number);
+                  const outcome=event.choices?.[choiceIndex]?.out?.[outcomeIndex];
+                  if(outcome) compareScript(event,`${eventId}.${path}`,outcome.text,speakers,true);
+                }
+              }
+              const sameSpeakerQuestions=[];
+              const scanSameSpeaker=(scope,turns)=>{
+                const dialogue=turns.filter(turn=>turn.kind==='dialogue'&&turn.who);
+                if(dialogue.length<2
+                  ||new Set(dialogue.map(turn=>`${turn.who}:${turn.name||''}`)).size!==1
+                  ||!dialogue.some(turn=>/[?？]/.test(turn.text||''))) return;
+                sameSpeakerQuestions.push({scope,who:dialogue[0].who,
+                  lines:dialogue.map(turn=>turn.text)});
+              };
+              for(const event of D.events){
+                try{
+                  const opening=storyTurns(event,event.text,event.turnSpeakers);
+                  scanSameSpeaker(`${event.id}.text`,opening);
+                  for(const [choiceIndex,choice] of (event.choices||[]).entries()){
+                    for(const [outcomeIndex,outcome] of (choice.out||[]).entries()){
+                      const value=typeof outcome.text==='function'?outcome.text(S):outcome.text;
+                      scanSameSpeaker(`${event.id}.${choiceIndex}.${outcomeIndex}`,
+                        storyTurns(event,value,outcome.turnSpeakers,!!opening.knownSpeaker));
+                    }
+                  }
+                }catch(error){
+                  sameSpeakerQuestions.push({scope:`${event.id}.audit-error`,who:'error',lines:[String(error)]});
+                }
+              }
 
               const contact=byId('resist_reveal');
               const original={at:S.at,driving:S.driving,used:[...S.used],flags:{...S.flags}};
@@ -101,6 +147,8 @@ def main():
                 contactDialogue:dialogueAudit(contact),
                 seaDialogue:dialogueAudit(byId('cell_sea_meet')),
                 gangneungDialogue:dialogueAudit(byId('gw_gangneung')),
+                scriptedSpeakerMismatches,
+                sameSpeakerQuestions,
                 gates:{
                   seoulOpenNoCrew,seoulOpenCrew,bridgeNoKangwoo,bridgeWithKangwoo,
                   traceNoJaeyi,traceWithJaeyi,
@@ -145,6 +193,23 @@ def main():
     assert {"강릉 병원 일꾼", "십장"}.issubset(
         set(result["gangneungDialogue"]["speakers"])
     ), result
+    assert not result["scriptedSpeakerMismatches"], result["scriptedSpeakerMismatches"]
+    audit_errors = [row for row in result["sameSpeakerQuestions"] if row["scope"].endswith(".audit-error")]
+    assert not audit_errors, audit_errors
+    fixed_mixed_speaker_scopes = {
+        "meet_bathtruck.text",
+        "parcel_lead.text",
+        "mansu_revenge.0.0",
+        "meet_scrapbros.text",
+        "bori_tag.0.0",
+        "pair_pss_es_1.0.0",
+        "ev_postman_ghost.0.0",
+        "ev_hunter_meat.0.0",
+        "ev_beekeeper.text",
+        "roadcrew_sign.0.0",
+    }
+    remaining_scopes = {row["scope"] for row in result["sameSpeakerQuestions"]}
+    assert fixed_mixed_speaker_scopes.isdisjoint(remaining_scopes), remaining_scopes
     gates = result["gates"]
     assert all(name not in gates["seoulOpenNoCrew"] for name in ("민지", "박 선생", "강우")), gates
     assert all(name in gates["seoulOpenCrew"] for name in ("민지", "박 선생", "강우")), gates

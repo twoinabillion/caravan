@@ -85,7 +85,7 @@ G.travelForecast = id=>{
   const rationParts=[];
   if(rationForecast.breakfasts) rationParts.push(`아침${rationForecast.breakfasts}`);
   if(rationForecast.lunches) rationParts.push(`점심${rationForecast.lunches}`);
-  const rationCompact=rationParts.length?`${rationParts.join('·')} · 식량-${rationForecast.food}`:'배급 없음';
+  const rationCompact=rationParts.length?`${rationParts.join('·')} · 식량-${rationForecast.food}`:'식사 없음';
   const vanRatio=S.van/Math.max(1,S.vanMax);
   const warnings=[];
   let readinessScore=100;
@@ -94,7 +94,7 @@ G.travelForecast = id=>{
   else if(fuelMargin<=7) readinessScore-=10;
   if(foodMargin<0||waterMargin<0){ readinessScore-=28;
     warnings.push([foodMargin<0?`식량 ${Math.abs(foodMargin)} 부족`:'',waterMargin<0?`물 ${Math.abs(waterMargin)} 부족`:''].filter(Boolean).join(' · ')); }
-  else if((rationForecast.food||rationForecast.water)&&supplyMargin<=2){ readinessScore-=12; warnings.push('구간 배급 여유 적음'); }
+  else if((rationForecast.food||rationForecast.water)&&supplyMargin<=2){ readinessScore-=12; warnings.push('구간 식량 여유 적음'); }
   if(vanRatio<.3){ readinessScore-=30; warnings.push('차체 위험'); }
   else if(vanRatio<.55){ readinessScore-=14; warnings.push('차체 점검 권장'); }
   if(S.fatigue>=75){ readinessScore-=22; warnings.push('운전자 휴식 필요'); }

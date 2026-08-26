@@ -196,8 +196,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S._dlv===undefined) S._dlv=0;
   if(S._drowsyDay===undefined) S._drowsyDay=0;
   if(S._drowsyAt===undefined) S._drowsyAt=-999;
-  /* 구버전은 자정에 아침 배급을 끝냈으므로 현재 날짜를 이미 먹은 날로 잡아
-     불러오자마자 06:30 배급이 한 번 더 빠지는 일을 막는다. */
+  /* 구버전은 자정에 아침 식사를 끝냈으므로 현재 날짜를 이미 먹은 날로 잡아
+     불러오자마자 06:30 식사가 한 번 더 빠지는 일을 막는다. */
   if(S._breakfastDay===undefined) S._breakfastDay=S.day;
   if(S._lunchDay===undefined) S._lunchDay=0;
   S.hunger=clamp(Math.round(Number(S.hunger)||0),0,3);

@@ -40,10 +40,13 @@ const add = (scope, speaker, text) => {
   samples.push({scope, speaker, text:text.replace(/<[^>]+>/g, '').trim()});
 };
 const speakerKey = value => typeof value === 'string' ? value : value && value.who;
-const quotedParts = text => {
+const quotedParts = (text, parseRecords=false) => {
   if (typeof text !== 'string') return [];
   const humanText = text.replace(/<span class=["']ai["']>[\s\S]*?<\/span>/g, '');
-  return [...humanText.matchAll(/["“]([^"”\n]{2,})["”]/g)].map(match=>match[1]);
+  const pattern=parseRecords
+    ? /(?:["“]([^"”\n]{2,})["”]|「([^」\n]{2,})」)/g
+    : /["“]([^"”\n]{2,})["”]/g;
+  return [...humanText.matchAll(pattern)].map(match=>match[1]||match[2]);
 };
 const addQuoted = (scope, text, speakers=[]) => {
   const quotes=quotedParts(text);
@@ -203,20 +206,19 @@ const validateSpeaker = (value, scope) => {
   if(value&&typeof value==='object'&&value.kind==='dialogue'&&!value.name)
     errors.push(`익명 대화 화자 이름 누락: ${scope} / ${who}`);
 };
-const strictSpeakerEvents=new Set(['resist_reveal','cell_sea_meet','gw_gangneung','meet_mapmaker']);
 for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
   const event=eventById.get(eventId);
   if(!event){ errors.push(`화자 스크립트의 사건 누락: ${eventId}`); continue; }
-  if(strictSpeakerEvents.has(eventId)&&script.text&&typeof event.text==='string'&&script.text.length!==quotedParts(event.text).length)
-    errors.push(`본문 화자 수와 발화 수 불일치: ${eventId} / 화자 ${script.text.length} · 발화 ${quotedParts(event.text).length}`);
+  if(script.text&&typeof event.text==='string'&&script.text.length!==quotedParts(event.text,event.parseRecords).length)
+    errors.push(`본문 화자 수와 발화 수 불일치: ${eventId} / 화자 ${script.text.length} · 발화 ${quotedParts(event.text,event.parseRecords).length}`);
   for(const [index,value] of (script.text||[]).entries()) validateSpeaker(value,`${eventId}.text.${index}`);
   for(const [path, speakers] of Object.entries(script.choices||{})){
     const [choiceIndex,outcomeIndex]=path.split('.').map(Number);
     const outcome=event.choices&&event.choices[choiceIndex]&&event.choices[choiceIndex].out
       &&event.choices[choiceIndex].out[outcomeIndex];
     if(!outcome) errors.push(`화자 스크립트 결과 경로 누락: ${eventId} / ${path}`);
-    if(strictSpeakerEvents.has(eventId)&&outcome&&typeof outcome.text==='string'&&speakers.length!==quotedParts(outcome.text).length)
-      errors.push(`결과 화자 수와 발화 수 불일치: ${eventId}.${path} / 화자 ${speakers.length} · 발화 ${quotedParts(outcome.text).length}`);
+    if(outcome&&typeof outcome.text==='string'&&speakers.length!==quotedParts(outcome.text,event.parseRecords).length)
+      errors.push(`결과 화자 수와 발화 수 불일치: ${eventId}.${path} / 화자 ${speakers.length} · 발화 ${quotedParts(outcome.text,event.parseRecords).length}`);
     for(const [index,value] of (speakers||[]).entries()) validateSpeaker(value,`${eventId}.${path}.${index}`);
   }
 }

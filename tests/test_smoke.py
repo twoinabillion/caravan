@@ -1165,25 +1165,18 @@ with sync_playwright() as p:
       delete S.up.tank1; S.scrap=oldScrap; S.items['부품']=oldParts; S.fuelMax=oldFuelMax; S.party=upgradeParty;
       document.querySelector('#ovl-stl').classList.remove('on');
       document.querySelector('#dk-status').click();
-      document.querySelector('#st-x').click();
-      document.querySelector('#dk-menu').click();
-      document.querySelector('#menu-settings').click();
       out.statusModalAria=document.querySelector('#ovl-status').getAttribute('aria-hidden')==='false' &&
         document.querySelector('#ovl-status').getAttribute('role')==='dialog';
-      const root=document.documentElement;
-      const textStart=root.classList.contains('ui-large-text');
-      document.querySelector('[data-ui-pref="text"]').click();
-      const textChanged=root.classList.contains('ui-large-text')!==textStart &&
-        document.querySelector('[data-ui-pref="text"]').getAttribute('aria-pressed')===String(!textStart);
-      document.querySelector('[data-ui-pref="text"]').click();
-      const motionStart=root.classList.contains('ui-reduce-motion');
-      document.querySelector('[data-ui-pref="motion"]').click();
-      const motionChanged=root.classList.contains('ui-reduce-motion')!==motionStart &&
-        document.querySelector('[data-ui-pref="motion"]').getAttribute('aria-pressed')===String(!motionStart);
-      document.querySelector('[data-ui-pref="motion"]').click();
-      out.uiPrefs=textChanged&&motionChanged&&root.classList.contains('ui-large-text')===textStart &&
-        root.classList.contains('ui-reduce-motion')===motionStart;
       document.querySelector('#st-x').click();
+      document.querySelector('#dk-menu').click();
+      const root=document.documentElement;
+      const brightness=document.querySelector('#menu-brightness');
+      brightness.value='80'; brightness.dispatchEvent(new Event('input',{bubbles:true}));
+      const brightnessChanged=root.style.getPropertyValue('--ui-brightness')==='0.8' &&
+        localStorage.getItem('caravan_ui_brightness')==='80';
+      brightness.value='100'; brightness.dispatchEvent(new Event('input',{bubbles:true}));
+      out.uiPrefs=brightnessChanged&&root.style.getPropertyValue('--ui-brightness')==='1';
+      document.querySelector('#menu-x').click();
       S._storyQueue=[]; S._chain=null;
       document.querySelector('#ev-wrap').classList.remove('on');
       document.querySelector('#dk-objectives').click();

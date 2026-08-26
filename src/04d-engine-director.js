@@ -564,7 +564,11 @@ G.applyFx = (fx)=>{
     const recruit=D.comps[fx.recruit];
     chips.push({t:`정식 동료 합류 · ${recruit.name} · ${recruit.cls} · 크루 ${S.party.length}/${Object.keys(D.comps).length}`,c:'plus'});
   }
-  if(fx.note) G.addNote(fx.note);
+  if(fx.note){
+    G.addNote(fx.note);
+    const noteKind=fx.note.type==='본편'?'본편 단서':fx.note.type==='소문'?'새 소문':'새 기록';
+    chips.push({t:`${noteKind} · ${fx.note.title}`,c:'item'});
+  }
   for(const learned of G.syncKnowledgeFromFlags())
     chips.push({t:`◈ ${learned.label} · ${learned.level>=2?'확인':'단서'}`,c:'item'});
   if(fx.flag==='story_done') chips.push(...G.completeJourney());

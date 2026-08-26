@@ -32,7 +32,7 @@ input{font-family:inherit}
 
 /* ── device column ── */
 #frame{height:100dvh;display:flex;justify-content:center;background:
-  radial-gradient(120% 90% at 50% 0%,#10152a 0%,var(--deep) 60%)}
+  radial-gradient(120% 90% at 50% 0%,#10152a 0%,var(--deep) 60%);filter:brightness(var(--ui-brightness,1))}
 #app{position:relative;width:100%;max-width:480px;height:100dvh;background:var(--night);
   overflow:hidden;overflow:clip;display:flex;flex-direction:column;container:game / inline-size}
 @media(min-width:600px){#app{box-shadow:0 0 0 1px var(--line),0 30px 80px rgba(0,0,0,.7)}}
@@ -214,7 +214,37 @@ input{font-family:inherit}
 .journey-guide-list li::before{content:'›';position:absolute;left:2px;top:-1px;color:var(--cheollian);font:700 16px/1 var(--mono)}
 .journey-guide-track{height:3px;border-radius:3px;background:#071019;overflow:hidden}
 .journey-guide-track i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#3da693,var(--cheollian))}
-.road-note{color:#aeb5c8;font-size:12.5px;margin-top:8px;line-height:1.55}
+.travel-destination-card{margin-top:2px;overflow:hidden;border:1px solid rgba(204,153,79,.34);border-radius:13px;
+  background:linear-gradient(155deg,rgba(31,28,24,.98),rgba(12,18,29,.98));
+  box-shadow:0 12px 28px rgba(0,0,0,.25),inset 0 1px rgba(255,223,174,.05)}
+.travel-destination-visual{position:relative;min-height:132px;overflow:hidden;background:#0c1119}
+.travel-destination-visual>img,.travel-destination-fallback{display:block;width:100%;height:132px;object-fit:cover}
+.travel-destination-fallback{background:linear-gradient(145deg,#27333b,#101820 60%,#30291f)}
+.travel-destination-visual::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(4,7,10,.08) 25%,rgba(5,8,12,.86) 100%),linear-gradient(90deg,rgba(4,7,10,.38),transparent 58%)}
+.travel-destination-title{position:absolute;z-index:1;left:13px;right:13px;bottom:10px;display:grid;
+  grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:2px 10px;color:#fff}
+.travel-destination-title small{grid-column:1/3;color:#efb65d;font:800 10px/1.15 var(--mono);letter-spacing:.13em}
+.travel-destination-title b{min-width:0;font:850 18px/1.15 var(--sans);text-shadow:0 2px 8px #000}
+.travel-destination-title em{color:#e8ddd0;font:750 10px/1.2 var(--mono);font-style:normal;white-space:nowrap}
+.travel-destination-progress{padding:5px 13px 9px;background:rgba(7,11,17,.72);border-bottom:1px solid rgba(124,137,151,.18)}
+.travel-destination-progress #travelbar{margin:4px 0 1px}
+.travel-destination-progress #travelbar .route{font-size:10px}.travel-destination-progress #travelbar .tr{margin-top:6px}
+.travel-destination-description{margin:0;padding:10px 13px 9px;color:#d5d8dc;font:12px/1.48 var(--sans);text-wrap:pretty}
+.travel-destination-intel{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(124,137,151,.18)}
+.travel-destination-intel article{min-width:0;padding:10px 12px 11px}
+.travel-destination-intel article+article{border-left:1px solid rgba(124,137,151,.18)}
+.travel-destination-intel small{display:block;margin-bottom:3px;color:#df9f45;font:800 9px/1.2 var(--mono);letter-spacing:.08em}
+.travel-destination-intel b{display:-webkit-box;overflow:hidden;color:#f0eadf;font:750 11px/1.35 var(--sans);
+  -webkit-line-clamp:2;-webkit-box-orient:vertical}
+.travel-destination-intel span,.travel-destination-intel p{display:-webkit-box;overflow:hidden;margin:3px 0 0;color:#aeb8c3;
+  font:10.5px/1.42 var(--sans);-webkit-line-clamp:3;-webkit-box-orient:vertical;text-wrap:pretty}
+@container game (max-width:340px){
+  .travel-destination-visual,.travel-destination-visual>img,.travel-destination-fallback{height:116px;min-height:116px}
+  .travel-destination-description{padding:8px 10px 7px;font-size:11px}
+  .travel-destination-intel article{padding:8px 9px 9px}
+  .travel-destination-intel span,.travel-destination-intel p{font-size:10px;-webkit-line-clamp:2}
+}
 .road-notice-slot{position:relative;width:100%;aspect-ratio:3/1;margin-top:8px;overflow:hidden;
   background:url("__UI_ROAD_JOURNEY_LOG__") center/100% 100% no-repeat;color:#26261f;
   filter:drop-shadow(0 7px 11px rgba(0,0,0,.34));isolation:isolate}
@@ -1988,10 +2018,10 @@ html[data-travel-state="driving"] #stage,html[data-travel-state="ignition"] #sta
   pointer-events:none}
 #stage-actions:empty{display:none}
 .stage-action{pointer-events:auto;max-width:min(48%,240px);min-height:44px;padding:10px 15px;border:1px solid rgba(255,195,111,.58);
-  border-radius:999px;background:rgba(10,13,22,.76);color:#fff2d9;font-size:13px;font-weight:800;line-height:1.25;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;backdrop-filter:blur(12px);
+  border-radius:999px;background:#0a0d16;color:#fff2d9;font-size:13px;font-weight:800;line-height:1.25;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;backdrop-filter:none;
   box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.08)}
-.stage-action:first-child{background:linear-gradient(135deg,rgba(113,72,28,.9),rgba(31,25,24,.88));border-color:#e1a956}
+.stage-action:first-child{background:linear-gradient(135deg,#71481c,#1f1918);border-color:#e1a956}
 .stage-action:hover{border-color:#ffd18d;transform:translateY(-1px)}
 html[data-travel-state="driving"] #stage-actions,html[data-travel-state="ignition"] #stage-actions{display:none}
 .journey-context{background:rgba(13,17,30,.58);box-shadow:none}
@@ -2678,36 +2708,28 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 
 #menu-body{flex:1;overflow-y:auto;padding:14px 14px calc(20px + var(--safe-bottom));background:
   radial-gradient(90% 42% at 50% 0%,rgba(255,180,84,.065),transparent 70%),var(--night)}
-.menu-intro{margin-bottom:12px;padding:4px 2px 10px;border-bottom:1px solid rgba(255,255,255,.07)}
-.menu-intro small{display:block;color:var(--amber);font:700 12px/1.2 var(--mono);letter-spacing:.15em}
-.menu-intro b{display:block;margin-top:4px;color:var(--paper);font-size:17px}
-.menu-intro p{margin:4px 0 0;color:var(--faded);font-size:12.5px;line-height:1.45}
-.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.menu-grid button,.menu-settings{min-width:0;min-height:88px;display:flex;align-items:flex-start;gap:10px;padding:12px;
-  border:1px solid var(--line);border-radius:11px;background:linear-gradient(145deg,rgba(28,34,53,.98),rgba(16,21,35,.98));
-  color:var(--paper);text-align:left}
-.menu-grid button:hover,.menu-settings:hover{border-color:var(--amber-dim)}
-.menu-ico{flex:none;width:28px;height:28px;display:grid;place-items:center;color:var(--amber);font-size:16px}
-.menu-ico img{display:block;width:26px;height:26px;object-fit:contain;image-rendering:pixelated}
-.menu-grid button>span:last-child,.menu-settings>span:last-child{min-width:0}
-.menu-grid b,.menu-settings b{display:block;font-size:13.5px;line-height:1.3}
-.menu-grid small,.menu-settings small{display:block;margin-top:4px;color:#99a4bb;font:12px/1.35 var(--mono)}
-.menu-settings{width:100%;min-height:68px;margin-top:8px;align-items:center}
-
-/* Secondary tools share one restrained field-console language. */
 #menu-body{padding:18px 16px calc(22px + var(--safe-bottom))}
-.menu-intro{position:relative;margin:0 0 14px;padding:9px 10px 12px 14px;border:0;border-left:2px solid rgba(226,163,77,.72);
-  background:linear-gradient(90deg,rgba(226,163,77,.075),transparent 78%)}
-.menu-intro small{font-size:10px}.menu-intro b{font-size:18px;letter-spacing:-.02em}.menu-intro p{max-width:34em;margin-top:5px}
-.menu-grid{gap:7px}
-.menu-grid button,.menu-settings{position:relative;min-height:80px;align-items:center;padding:11px 12px;border-color:#29364a;border-radius:5px;
-  background:linear-gradient(180deg,#111b28,#0b131f);box-shadow:inset 0 1px rgba(255,255,255,.025);overflow:hidden}
-.menu-grid button::after,.menu-settings::after{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:#365f62;opacity:.72}
-.menu-grid button:hover,.menu-grid button:focus-visible,.menu-settings:hover,.menu-settings:focus-visible{border-color:#9b7440;outline:0;background:#131d29}
-.menu-grid button:hover::after,.menu-grid button:focus-visible::after,.menu-settings:hover::after,.menu-settings:focus-visible::after{background:var(--amber)}
-.menu-ico{width:34px;height:34px;border-right:1px solid #2b384b}
-.menu-ico img{width:25px;height:25px}.menu-grid b,.menu-settings b{font-size:13px}.menu-grid small,.menu-settings small{font-size:10.5px;line-height:1.4}
-.menu-settings{min-height:58px;margin-top:7px}
+.menu-control-list{display:grid;gap:10px;max-width:440px;margin:0 auto}
+.menu-control-card{padding:15px;border:1px solid #29364a;border-radius:6px;background:linear-gradient(180deg,#111b28,#0b131f);
+  box-shadow:inset 2px 0 #365f62,inset 0 1px rgba(255,255,255,.025)}
+.menu-control-card>header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.menu-control-card>header span{display:grid;gap:3px}
+.menu-control-card>header small{color:#71849e;font:750 9px/1 var(--mono);letter-spacing:.14em}
+.menu-control-card>header b{color:var(--paper);font-size:15px;line-height:1.2}
+.menu-control-card output{color:var(--amber);font:800 12px/1 var(--mono)}
+.menu-control-card>input,.menu-volume-row input{width:100%;accent-color:var(--amber)}
+.menu-range-labels{display:flex;justify-content:space-between;margin-top:4px;color:#758198;font:10px/1.2 var(--mono)}
+.menu-control-action,.menu-save-actions>button{min-height:44px;border:1px solid #8f5d2d;border-radius:5px;background:#a96727;color:#fff;
+  font:800 13px/1 var(--sans);box-shadow:0 3px 8px rgba(0,0,0,.22)}
+.menu-control-action:hover,.menu-control-action:focus-visible,.menu-save-actions>button:hover,.menu-save-actions>button:focus-visible{border-color:#e4a452;background:#b87528}
+#menu-sound-toggle{width:100%}
+.menu-volume-row{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;min-height:44px;margin-top:7px;color:#aeb6c5;font:700 11px/1.2 var(--mono)}
+.menu-control-card>p{margin:-3px 0 13px;color:#8f9baf;font-size:11.5px;line-height:1.45}
+.menu-save-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.menu-save-actions>#menu-save-export{border-color:#405069;background:#151f2e;color:#c5ccda;box-shadow:none}
+.live-test-shortcut{position:absolute;z-index:14;right:8px;bottom:8px;min-height:28px;padding:0 9px;border:1px dashed rgba(226,163,77,.58);
+  border-radius:4px;background:rgba(7,11,18,.74);color:#d6ad72;font:750 9px/1 var(--mono);letter-spacing:.04em}
+.live-test-shortcut:hover,.live-test-shortcut:focus-visible{border-style:solid;background:#111a27;color:#ffd290}
 
 @container game (max-width:680px){
   /* 하단 장갑 콘솔과 도크 사이의 빈 띠를 풍경에 돌려준다. 도크의 투명한
@@ -4742,13 +4764,12 @@ html body #app #ev-wrap.on #ev-sheet.event-mode .event-choice-dock.story-progres
   box-shadow:none!important;pointer-events:auto!important
 }
 html body #app #ev-wrap.on #ev-sheet.event-mode .event-choice-dock.story-progress-dock .story-next{
-  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
-  width:min(54%,180px)!important;height:54px!important;min-width:148px!important;min-height:54px!important;max-height:54px!important;
-  aspect-ratio:auto!important;padding:5px 12px!important;box-sizing:border-box!important;pointer-events:auto!important
+  display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;
+  width:min(100%,360px)!important;height:48px!important;min-width:148px!important;min-height:48px!important;max-height:48px!important;
+  aspect-ratio:auto!important;padding:0 16px!important;box-sizing:border-box!important;pointer-events:auto!important
 }
 html body #app #ev-wrap.on #ev-sheet.event-mode .event-choice-dock.story-progress-dock .story-next .req{
-  display:block!important;position:static!important;margin:4px 0 0!important;color:#67c7bd!important;
-  font:750 9px/1.1 var(--mono)!important;white-space:nowrap!important;overflow:visible!important
+  display:none!important
 }
 #ev-sheet.event-mode .story-tap-hint{
   color:#9c947f;font:700 clamp(9px,2.5cqw,11px)/1.3 var(--mono);letter-spacing:.07em;
@@ -5838,6 +5859,22 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     min-height:112px!important;
     max-height:112px!important;
   }
+}
+</style>
+
+<style id="travel-ui-measured-spacing-20260826">
+/* Measured at 320x568: facts (54px) + dossier (48px) fit in a 104px
+   summary track. The legacy 118px minimum left a false 18px void before
+   the destination cards. Keep the compact override scoped to that canvas. */
+@container game (max-width:380px){
+  html body #app #scr-game #panel .journey-mode-console .route-console-v3 .route-console-screen{
+    grid-template-rows:44px 104px 104px 142px!important;
+  }
+}
+/* Balance the outcome receipt: the measured layout had 13px above the CTA
+   and 28px below it. Seven pixels of flow margin yields an even 20/21px. */
+#app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock{
+  margin-top:7px!important;
 }
 </style>
 <style id="intro-scene-and-stay-console-polish">
@@ -8573,6 +8610,84 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
 }
 </style>
 
+<style id="route-travel-dossier-merge-20260826">
+/* 선택한 구간의 지금 할 일은 잘리지 않게 두 줄까지 보여 준다. */
+html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier{
+  order:2!important;
+  flex:0 0 44px!important;
+  display:grid!important;
+  grid-template-rows:minmax(0,1fr)!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  border:1px solid rgba(203,151,75,.28)!important;
+  border-left:2px solid #d7973d!important;
+  border-radius:4px!important;
+  background:rgba(184,117,40,.075)!important;
+  box-shadow:inset 0 1px rgba(255,224,172,.035)!important;
+}
+html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier>.nav-route-quest-cue{
+  display:grid!important;
+  grid-template-columns:66px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:100%!important;
+  height:44px!important;
+  min-width:0!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:3px 7px!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier .nav-route-quest-cue>small{
+  color:#e6a64c!important;
+  font:800 9px/1.15 var(--mono)!important;
+  letter-spacing:.05em!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+}
+html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier .nav-route-quest-cue>b{
+  display:-webkit-box!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  color:#e5e3dc!important;
+  font:750 10px/1.3 var(--sans)!important;
+  text-align:left!important;
+  text-overflow:clip!important;
+  white-space:normal!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+}
+@container game (max-width:380px){
+  html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier{
+    flex-basis:42px!important;
+    min-height:42px!important;
+  }
+  html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier>.nav-route-quest-cue{
+    height:42px!important;
+    min-height:42px!important;
+    grid-template-columns:60px minmax(0,1fr)!important;
+    gap:5px!important;
+    padding:2px 6px!important;
+  }
+  html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier .nav-route-quest-cue>small{
+    font-size:8px!important;
+  }
+  html body #app #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-dossier .nav-route-quest-cue>b{
+    font-size:9px!important;
+  }
+}
+</style>
+
 <style id="final-stay-inventory-outcome-lock-20260825">
 /* Release-blocker UI lock: keep long content reachable and choices legible. */
 #quest-ledger .quest-ledger-list{
@@ -8682,7 +8797,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   min-height:0!important;
   padding:0!important;
   overflow-y:auto!important;
-  background:transparent!important;
+  background:#171612!important;
 }
 #app .route-console-v3 .journey-local-screen .stop-action-card{
   flex:0 0 auto!important;
@@ -8697,6 +8812,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   border-radius:7px!important;
   opacity:1!important;
   filter:none!important;
+  isolation:isolate!important;
   background:#e6d2a8!important;
   background-image:linear-gradient(180deg,#eadbb9 0%,#dec79a 100%)!important;
   box-shadow:inset 0 1px rgba(255,255,255,.48),0 3px 7px rgba(4,7,7,.24)!important;
@@ -8722,8 +8838,8 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   border:0!important;
   border-radius:0!important;
   color:#29271f!important;
-  background:transparent!important;
-  background-image:none!important;
+  background:#e6d2a8!important;
+  background-image:linear-gradient(180deg,#eadbb9 0%,#dec79a 100%)!important;
   box-shadow:none!important;
   text-align:left!important;
 }
@@ -8858,6 +8974,8 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 #app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-trigger{
   grid-template-columns:52px minmax(0,1fr) 66px!important;
   cursor:not-allowed!important;
+  background:#d3c8af!important;
+  background-image:linear-gradient(180deg,#d8cdb5,#cfc2a7)!important;
 }
 #app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-cta{
   width:66px!important;
@@ -8881,16 +8999,18 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   #app .route-console-v3 .journey-local-screen .stop-action-card.is-disabled .stop-action-cta{width:60px!important;min-width:60px!important}
 }
 
-/* Event outcomes use the same compact, single-line primary action everywhere. */
+/* 이야기 진행과 결과 복귀는 같은 한 줄 기본 버튼을 쓴다. */
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock.story-progress-dock button.story-next,
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock button.onboarding-route-start,
 #app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn{
   display:flex!important;
   flex-direction:row!important;
   flex-wrap:nowrap!important;
   align-items:center!important;
   justify-content:center!important;
-  gap:9px!important;
+  gap:0!important;
   box-sizing:border-box!important;
-  width:100%!important;
+  width:min(100%,360px)!important;
   height:48px!important;
   min-height:48px!important;
   max-height:48px!important;
@@ -8905,11 +9025,17 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   letter-spacing:.02em!important;
   white-space:nowrap!important;
 }
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock.story-progress-dock button.story-next::before,
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock.story-progress-dock button.story-next::after,
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock button.onboarding-route-start::before,
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock button.onboarding-route-start::after,
 #app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn::before,
 #app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn::after{
   content:none!important;
   display:none!important;
 }
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock.story-progress-dock button.story-next>strong,
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock button.onboarding-route-start>strong,
 #app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn>span,
 #app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn>i{
   position:static!important;
@@ -8919,10 +9045,37 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   margin:0!important;
   padding:0!important;
   transform:none!important;
+  color:inherit!important;
   font:inherit!important;
   line-height:1!important;
 }
+#app #ev-wrap #ev-sheet.event-mode .event-choice-dock.story-progress-dock button.story-next>.req{display:none!important}
 #app #ev-wrap #ev-sheet.event-mode[data-story-phase="outcome"] .event-choice-dock button.primary-exit-btn>i{font-style:normal!important}
+
+/* 첫 임무는 설명 카드 한 장으로 끝낸다. 별도 이야기 스크롤이나 숨은 문단은 없다. */
+#app #ev-wrap #ev-sheet.event-mode[data-event-id="onboarding_main_mission"] .event-scroll{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-id="onboarding_main_mission"] .event-scene-frame:not(.zoomed){
+  flex:0 0 clamp(180px,26dvh,220px)!important;
+  height:clamp(180px,26dvh,220px)!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-id="onboarding_main_mission"] .event-field-report{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-id="onboarding_main_mission"] .story-reader{
+  display:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-id="onboarding_main_mission"] .event-choice-dock{
+  place-items:center!important;
+  overflow:visible!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-id="onboarding_main_mission"] button.onboarding-route-start{
+  margin-inline:auto!important;
+}
 
 /* Generated item art is already cropped tightly: let it occupy the badge and pocket. */
 #app .road-notice-medallion .ico{
@@ -9057,17 +9210,16 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 }
 </style>
 <style id="story-choice-debossed-surface">
-/* Story decisions are physical marks on the manuscript, not translucent glass.
-   Keep the 44px touch target while fully masking the paper grain beneath it. */
+/* 선택은 진행 버튼과 같은 주황색 행동 계열이다. 번호와 결과 수치는 노출하지 않는다. */
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice{
   position:relative!important;
   min-height:48px!important;
-  padding:8px 38px 8px 13px!important;
-  border:1px solid #a96d2c!important;
+  padding:8px 14px!important;
+  border:1px solid #9f611e!important;
   border-radius:6px!important;
-  background:linear-gradient(180deg,#e2d5b9 0%,#d8c8a8 100%)!important;
-  color:#29231c!important;
-  box-shadow:inset 0 1px 3px rgba(69,43,18,.16),0 2px 5px rgba(65,42,20,.12)!important;
+  background:#b87528!important;
+  color:#fff8e9!important;
+  box-shadow:0 4px 10px rgba(87,46,10,.25)!important;
   text-shadow:none!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice::before{
@@ -9075,47 +9227,101 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   display:none!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice::after{
-  content:"→"!important;
-  position:absolute!important;
-  top:50%!important;
-  right:13px!important;
-  display:block!important;
-  color:#9d5f1d!important;
-  font:900 17px/1 var(--sans)!important;
-  opacity:1!important;
-  transform:translateY(-52%)!important;
+  content:none!important;
+  display:none!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-head{
   position:relative!important;
   z-index:1!important;
+  display:flex!important;
+  grid-column:1/-1!important;
+  grid-template-columns:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+  width:100%!important;
+  height:auto!important;
+  margin:0!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-index,
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-index b{
-  color:#9d5f1d!important;
-  opacity:1!important;
+  display:none!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-title{
-  color:#29231c!important;
-  font-weight:800!important;
+  display:flex!important;
+  grid-column:1/-1!important;
+  min-width:0!important;
+  width:100%!important;
+  height:auto!important;
+  flex-flow:row wrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px 8px!important;
+  padding:0!important;
+  color:#fff8e9!important;
+  font:850 13px/1.35 var(--sans)!important;
+  text-align:center!important;
+  text-shadow:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-title>span:last-child{
+  display:block!important;
+  overflow:visible!important;
+  width:100%!important;
+  margin:auto!important;
+  color:#fff8e9!important;
+  font:850 13px/1.35 var(--sans)!important;
+  text-align:center!important;
+  -webkit-line-clamp:unset!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock .choice-tags{
+  display:inline-flex!important;
+  flex:0 0 auto!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock :is(.choice-intent,.combat-tactic){
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:20px!important;
+  margin:0!important;
+  padding:3px 6px!important;
+  border:1px solid rgba(255,224,173,.52)!important;
+  border-radius:3px!important;
+  background:rgba(55,27,5,.18)!important;
+  color:#ffe0ad!important;
+  font:800 9px/1 var(--mono)!important;
+  font-style:normal!important;
+  letter-spacing:.04em!important;
   text-shadow:none!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:hover,
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:focus-visible{
   border-color:#8f5315!important;
-  background:linear-gradient(180deg,#eadfc7 0%,#decbaa 100%)!important;
-  box-shadow:inset 0 1px 3px rgba(69,43,18,.18),0 0 0 2px rgba(184,117,40,.2)!important;
+  background:#c48332!important;
+  box-shadow:0 4px 10px rgba(87,46,10,.28),0 0 0 2px rgba(184,117,40,.18)!important;
   outline:0!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:active{
   transform:translateY(1px)!important;
-  background:#d2c09e!important;
-  box-shadow:inset 0 2px 5px rgba(61,37,15,.24)!important;
+  background:#a86622!important;
+  box-shadow:inset 0 2px 4px rgba(61,37,15,.2)!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:disabled{
-  border-color:#a99b7f!important;
-  background:#d3c8b1!important;
-  color:#746b5c!important;
+  border-color:#998c74!important;
+  background:#aaa08d!important;
+  color:#f1eadc!important;
   box-shadow:inset 0 1px 2px rgba(45,39,29,.1)!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock .choice-lock-reason{
+  position:static!important;
+  display:block!important;
+  width:100%!important;
+  margin:4px 0 0!important;
+  color:#f1eadc!important;
+  font:750 9px/1.2 var(--sans)!important;
+  text-align:center!important;
 }
 </style>
 <style id="combat-manuscript-state-integrity-20260826">
@@ -9198,11 +9404,6 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   background:rgba(255,250,235,.24)!important;box-shadow:none!important
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report :is(.chat-name,.turn-speaker,.story-narration-label){color:#8f4a28!important;text-shadow:none!important}
-/* Consecutive lines share the first speaker portrait. */
-#app #ev-sheet.event-mode .story-entry.speaker-continuation .chat-avatar{display:none!important}
-#app #ev-sheet.event-mode .story-entry.speaker-continuation{grid-template-columns:minmax(0,1fr)!important;padding-top:0!important}
-#app #ev-sheet.event-mode .story-entry.speaker-continuation .chat-copy{grid-column:1!important;width:100%!important;max-width:none!important}
-#app #ev-sheet.event-mode .story-entry.speaker-continuation .chat-name{display:none!important}
 /* A selection never owns enough height to wipe out the manuscript above it. */
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock,
 #app #ev-sheet.event-mode[data-event-kind="combat"].combat-details-open .event-choice-dock{
@@ -9256,7 +9457,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   background:transparent!important;transform:none!important
 }
 /* Major route forks use compact facts instead of an overflowing sentence. */
-#app #ev-sheet.event-mode .route-forecast{display:flex!important;flex-wrap:wrap!important;gap:5px!important;width:100%!important;margin-top:6px!important;padding:0!important;border:0!important;background:transparent!important}
+#app #ev-sheet.event-mode .route-forecast{display:none!important}
 #app #ev-sheet.event-mode .route-forecast>i{
   display:inline-flex!important;align-items:baseline!important;gap:4px!important;min-height:24px!important;padding:4px 7px!important;
   border:1px solid rgba(40,123,118,.3)!important;border-radius:4px!important;background:rgba(40,123,118,.08)!important;
@@ -9289,7 +9490,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 }
 #road-quest-tracker>*{min-width:0!important}
 #road-quest-tracker[aria-expanded="true"]{
-  max-height:96px!important;
+  max-height:112px!important;
   grid-template-rows:auto auto auto auto!important
 }
 #road-quest-tracker[aria-expanded="true"] .rqt-line{display:grid!important}
@@ -9298,6 +9499,13 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap
+}
+#road-quest-tracker[aria-expanded="true"] .rqt-next{align-items:start!important}
+#road-quest-tracker[aria-expanded="true"] .rqt-next em{
+  display:-webkit-box!important;
+  white-space:normal!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important
 }
 
 /* Local-action cards size from their copy; the console owns the scrolling. */
@@ -9597,18 +9805,17 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   transform:none!important
 }
 
-/* Active combat/route decisions are dark hardware with explicit cream ink.
-   Disabled cards remain on the already-verified paper treatment below. */
+/* 전투 선택도 일반 선택과 같은 주황색 행동 계열로 보인다. */
 html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]
   .event-choice-dock>.choices>button.choice:not(:disabled){
   box-sizing:border-box!important;
   min-height:64px!important;
   height:auto!important;
-  padding:8px 34px 8px 12px!important;
-  border:1px solid #b77a35!important;
-  border-left:3px solid #d59643!important;
-  background:#1c2422!important;
-  color:#f8edcf!important;
+  padding:8px 14px!important;
+  border:1px solid #9f611e!important;
+  background:#b87528!important;
+  color:#fff8e9!important;
+  box-shadow:0 4px 10px rgba(87,46,10,.25)!important;
   opacity:1!important;
   filter:none!important;
   text-shadow:none!important
@@ -9632,10 +9839,10 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
 }
 html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"]
   .event-choice-dock>.choices>button.choice:not(:disabled):is(:hover,:focus-visible,.selected,[aria-pressed="true"]){
-  border-color:#f0b85f!important;
-  background:#26312e!important;
+  border-color:#8f5315!important;
+  background:#c48332!important;
   color:#fff4d9!important;
-  outline:2px solid rgba(255,208,128,.45)!important;
+  outline:2px solid rgba(255,224,173,.38)!important;
   outline-offset:-3px!important
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice{
@@ -9644,24 +9851,42 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice .choice-head{
   min-width:0!important;
-  align-items:center!important
+  display:flex!important;
+  grid-template-columns:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+  width:100%!important
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice .choice-title{
   display:flex!important;
   min-width:0!important;
+  width:100%!important;
   flex-wrap:wrap!important;
-  align-items:baseline!important;
-  gap:3px 7px!important
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px 8px!important;
+  padding:0!important;
+  color:#fff8e9!important;
+  text-align:center!important
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice .choice-title>span:last-child{
+  display:block!important;
+  width:100%!important;
+  margin:auto!important;
+  color:#fff8e9!important;
+  text-align:center!important
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice>.req{
   position:static!important;
   inset:auto!important;
   display:block!important;
   width:auto!important;
-  margin:4px 0 0 33px!important;
+  margin:4px 0 0!important;
   transform:none!important;
   font-size:11px!important;
-  line-height:1.25!important
+  line-height:1.25!important;
+  text-align:center!important
 }
 
 /* The measured dock height becomes real trailing lane space. A second alignment frame
@@ -9864,4 +10089,455 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
 
 <style id="narrative-combat-hidden-final-20260826">
   #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock .choice[hidden] { display: none !important; }
+</style>
+
+<style id="event-outcome-cta-spacing-lock-20260826">
+#ev-sheet[data-story-phase="outcome"] .event-choice-dock button.choice.primary-exit-btn[data-r="ok"]{
+  margin-top:18px!important;
+}
+</style>
+
+<style id="event-transition-performance-lock-20260826">
+/* 큰 장면을 포함한 시트 전체를 움직이거나 필터링하면 첫 디코딩 프레임과
+   합쳐져 끊겨 보인다. 사건은 즉시 열고 장면 교체도 정적인 컷으로 처리한다. */
+#app #ev-wrap #ev-sheet.event-mode{
+  animation:none!important;
+  transform:none!important;
+}
+#app #ev-wrap #ev-sheet.event-mode .event-scene-frame:not(.zoomed) .event-scene,
+#app #ev-wrap #ev-sheet.event-mode .event-scene-frame:not(.zoomed) .event-scene.scene-recut{
+  animation:none!important;
+  transition:none!important;
+  filter:none!important;
+  will-change:auto!important;
+}
+</style>
+
+<style id="combat-stable-command-layout-20260826">
+/* 전투는 선택 전후에 같은 틀을 유지한다. 이전 페이지형 선택지의 빈 행과
+   종이/야간 테마 충돌을 여기서 한 번에 정리한다. */
+#app #ev-wrap.on>#ev-sheet.event-mode[data-event-kind="combat"]{
+  display:flex!important;
+  flex-direction:column!important;
+  box-sizing:border-box!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  border:1px solid #303a3e!important;
+  border-bottom:0!important;
+  background:#0b1115!important;
+  color:#f4efe4!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-scroll,
+#app #ev-sheet.event-mode[data-event-kind="combat"].combat-details-open .event-scroll{
+  display:flex!important;
+  flex:1 1 0!important;
+  flex-direction:column!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 10px 10px!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  background:#0b1115!important;
+  scroll-padding-bottom:18px!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-scene-frame:not(.zoomed){
+  flex:0 0 clamp(154px,27dvh,226px)!important;
+  box-sizing:border-box!important;
+  width:calc(100% + 20px)!important;
+  height:clamp(154px,27dvh,226px)!important;
+  min-height:154px!important;
+  max-height:226px!important;
+  margin:0 -10px 10px!important;
+  border:0!important;
+  border-bottom:1px solid #455156!important;
+  border-radius:0!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report{
+  display:flex!important;
+  flex:0 0 auto!important;
+  flex-direction:column!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:12px!important;
+  overflow:visible!important;
+  border:1px solid #39454a!important;
+  border-radius:8px!important;
+  background:#121a1f!important;
+  background-image:none!important;
+  color:#f1ece1!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.22)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .event-head{
+  margin:0 0 9px!important;
+  padding:0 0 9px!important;
+  border:0!important;
+  border-bottom:1px solid #344147!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report .event-head h2{
+  margin:0!important;
+  overflow:visible!important;
+  color:#f6f0e4!important;
+  font:850 clamp(15px,4.3cqw,19px)/1.3 var(--sans)!important;
+  text-shadow:none!important;
+  white-space:normal!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-hud,
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-phase="outcome"] .combat-hud{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0 0 10px!important;
+  overflow:hidden!important;
+  border:1px solid #59666a!important;
+  border-radius:8px!important;
+  background:#0c1419!important;
+  color:#f4efe4!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.035)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-hud-head{
+  display:grid!important;
+  grid-template-columns:76px minmax(0,1fr)!important;
+  grid-template-rows:auto auto!important;
+  align-items:center!important;
+  gap:2px 10px!important;
+  min-height:62px!important;
+  padding:8px 10px!important;
+  border:0!important;
+  border-bottom:1px solid #344147!important;
+  background:#101a20!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-phase{
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+  display:grid!important;
+  place-items:center!important;
+  align-self:stretch!important;
+  padding:5px 6px!important;
+  border:1px solid #d58a31!important;
+  border-radius:6px!important;
+  background:#2c1d0e!important;
+  color:#ffd291!important;
+  letter-spacing:0!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-phase strong{
+  color:#ffd291!important;
+  font:900 clamp(20px,6cqw,27px)/1 var(--mono)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-phase small{
+  color:#e8c89b!important;
+  font:750 9px/1.15 var(--sans)!important;
+  letter-spacing:.04em!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-step{
+  grid-column:2!important;
+  grid-row:1!important;
+  min-width:0!important;
+  color:#fff7e8!important;
+  font:850 clamp(13px,3.7cqw,16px)/1.25 var(--sans)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-threat{
+  grid-column:2!important;
+  grid-row:2!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  color:#aeb9ba!important;
+  font:700 clamp(10px,2.8cqw,12px)/1.3 var(--sans)!important;
+  text-align:left!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-objective{
+  display:grid!important;
+  grid-template-columns:40px minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:8px!important;
+  padding:9px 10px 7px!important;
+  color:#e7e3da!important;
+  font:650 clamp(10px,2.85cqw,12px)/1.42 var(--sans)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-objective b{
+  color:#e59a42!important;
+  font:850 10px/1.4 var(--sans)!important;
+  letter-spacing:.03em!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-objective span{
+  min-width:0!important;
+  color:#e7e3da!important;
+  white-space:normal!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-track{
+  display:flex!important;
+  gap:6px!important;
+  padding:2px 10px 8px!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-track i{
+  display:block!important;
+  flex:1 1 0!important;
+  height:7px!important;
+  border:1px solid #4a5559!important;
+  border-radius:2px!important;
+  background:#252e32!important;
+  box-shadow:none!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-track i.done{
+  border-color:#6b8e89!important;
+  background:#47736d!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-track i.current{
+  border-color:#f1aa54!important;
+  background:#df8d2f!important;
+  box-shadow:0 0 0 1px rgba(223,141,47,.18),0 0 9px rgba(223,141,47,.35)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-state{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:5px!important;
+  padding:0 10px 9px!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-state span{
+  padding:3px 7px!important;
+  border:1px solid #4c5a5e!important;
+  border-radius:4px!important;
+  background:#172126!important;
+  color:#d4dddd!important;
+  font:750 10px/1.25 var(--sans)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-state span.good{border-color:#477c73!important;color:#9ed7ca!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .combat-state span.bad{border-color:#9b4b43!important;color:#f0a097!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"]:not(.combat-details-open) :is(.combat-context,.combat-last,.combat-debrief){display:none!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"].combat-details-open :is(.combat-context,.combat-last,.combat-debrief){display:grid!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .story-reader{
+  display:block!important;
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:2px 0 5px!important;
+  overflow:visible!important;
+  color:#eee9de!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report :is(.turn-text,.chat-bubble,.story-narration-text){
+  display:block!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  color:#eee9de!important;
+  font:500 clamp(13px,3.6cqw,15px)/1.58 var(--serif)!important;
+  text-shadow:none!important;
+  -webkit-line-clamp:unset!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report :is(.chat-name,.turn-speaker,.story-narration-label){color:#dda151!important}
+
+/* 선택지는 한 개의 스크롤 행과 상세 버튼만 가진다. */
+#app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock,
+#app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"].combat-details-open .event-choice-dock{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:minmax(0,1fr) 40px!important;
+  grid-auto-rows:0!important;
+  flex:0 0 clamp(216px,35dvh,282px)!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:clamp(216px,35dvh,282px)!important;
+  min-height:216px!important;
+  max-height:282px!important;
+  gap:7px!important;
+  margin:0!important;
+  padding:9px 10px calc(9px + var(--safe-bottom))!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-top:1px solid #3f494c!important;
+  background:#11191d!important;
+  box-shadow:0 -7px 18px rgba(0,0,0,.32)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>[data-choice-pages]{display:none!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices{
+  display:flex!important;
+  grid-row:1!important;
+  flex-direction:column!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  gap:7px!important;
+  padding:0 4px 0 0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  scrollbar-gutter:stable!important;
+  overscroll-behavior:contain!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice,
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:not(:disabled){
+  display:flex!important;
+  flex:0 0 auto!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:56px!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:10px 14px!important;
+  overflow:visible!important;
+  border:1px solid #a86622!important;
+  border-left:4px solid #e29436!important;
+  border-radius:6px!important;
+  background:#2b2118!important;
+  color:#fff3da!important;
+  opacity:1!important;
+  filter:none!important;
+  transform:none!important;
+  text-shadow:none!important;
+  box-shadow:0 3px 8px rgba(0,0,0,.24)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice .choice-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  gap:0!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice :is(.choice-title,.choice-title>span){
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  overflow:visible!important;
+  color:#fff3da!important;
+  font:800 clamp(12px,3.35cqw,14px)/1.35 var(--sans)!important;
+  text-align:center!important;
+  white-space:normal!important;
+  text-shadow:none!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:not(:disabled):is(:hover,:focus-visible){
+  border-color:#f0a34a!important;
+  border-left-color:#ffc16d!important;
+  background:#3a2918!important;
+  outline:2px solid rgba(240,163,74,.34)!important;
+  outline-offset:-3px!important;
+  box-shadow:0 4px 11px rgba(0,0,0,.3)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:not(:disabled):active{
+  border-width:1px!important;
+  border-left-width:4px!important;
+  background:#b87528!important;
+  color:#fff8ea!important;
+  transform:none!important;
+  box-shadow:inset 0 2px 4px rgba(55,30,8,.25)!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:disabled{
+  min-height:62px!important;
+  padding:9px 44px 9px 12px!important;
+  border:1px solid #4f5758!important;
+  border-left:4px solid #697275!important;
+  background:#20282b!important;
+  color:#9fa8a8!important;
+  opacity:1!important;
+  filter:none!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:disabled :is(.choice-title,.choice-title>span){color:#adb5b5!important}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:disabled .req{
+  position:static!important;
+  display:block!important;
+  width:100%!important;
+  margin:4px 0 0!important;
+  color:#d58a82!important;
+  font:750 10px/1.25 var(--sans)!important;
+  text-align:center!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-detail-toggle{
+  grid-row:2!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:40px!important;
+  min-height:40px!important;
+  max-height:40px!important;
+  margin:0!important;
+  padding:0 12px!important;
+  overflow:hidden!important;
+  border:1px solid #4e5b5e!important;
+  border-radius:5px!important;
+  background:#1a2428!important;
+  color:#d4dddd!important;
+  font:800 11px/1 var(--sans)!important;
+  transform:none!important;
+}
+
+/* 결과도 같은 야간 상황판을 사용하고, 다음 단계 버튼만 아래에 고정한다. */
+#app #ev-sheet.event-mode[data-event-kind="combat"][data-story-phase="outcome"] .event-choice-dock{
+  display:grid!important;
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:48px!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0 0 var(--safe-bottom)!important;
+  overflow:visible!important;
+  border:0!important;
+  border-top:1px solid #d58a31!important;
+  background:#b87528!important;
+  box-shadow:0 -7px 18px rgba(0,0,0,.32)!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-phase="outcome"] .event-choice-dock>.choices{
+  display:grid!important;
+  width:100%!important;
+  max-height:none!important;
+  padding:0!important;
+  overflow:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:#b87528!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-story-phase="outcome"] .event-choice-dock>.choices>button.choice.primary-exit-btn[data-r="ok"]{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:10px 16px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#b87528!important;
+  color:#fff8e9!important;
+  font:850 clamp(13px,3.6cqw,15px)/1.25 var(--sans)!important;
+  text-align:center!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+}
+#app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report>.event-result-inline{
+  margin:8px 0 0!important;
+  padding:9px 0 0!important;
+  border-top:1px solid #3c494d!important;
+  color:#dce5e3!important;
+}
+
+@media(max-height:640px){
+  #app #ev-sheet.event-mode[data-event-kind="combat"] .event-scene-frame:not(.zoomed){
+    flex-basis:132px!important;height:132px!important;min-height:132px!important
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock{
+    flex-basis:218px!important;height:218px!important;min-height:218px!important;max-height:218px!important;margin:0!important
+  }
+  #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice,
+  #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:disabled{
+    min-height:52px!important
+  }
+}
 </style>
