@@ -569,10 +569,23 @@ G.pillars = ()=>{
   };
 };
 G.pillarUnmet = (name)=>{ try{ const p=G.pillars()[name]; return !!p && p.have<p.need; }catch(e){ return false; } };
-G.seoulReady = ()=> Object.values(G.pillars()).every(x=>x.have>=x.need);
+G.mainStoryReady = ()=> !!(S&&S.flags&&S.flags.first_order_trace&&S.flags.parent_key_found&&
+  S.flags.es_truth&&S.flags.parents_routes_traced&&S.flags.father_fate_known&&S.flags.mother_reunited&&
+  G.pillars().관계.have>=D.seoulPillars.관계);
+G.seoulReady = ()=> G.mainStoryReady()&&Object.values(G.pillars()).every(x=>x.have>=x.need);
 /* 관문에서 되돌릴 때 — 제일 모자란 기둥 하나 안내 */
 G.seoulMissing = ()=>{
   const p=G.pillars();
+  const spine=[
+    ['first_order_trace','본편',0,1,'부산을 떠난 첫 구간에서 이송표의 발신 기록을 찾는다'],
+    ['parents_routes_traced','본편',0,1,'부모님의 갈라진 이송선과 두 곳에서 이어진 작업을 확인한다'],
+    ['parent_key_found','본편',0,1,'뜯긴 분리 절차 두 장을 찾아 부모님의 검증키를 안전하게 꺼낸다'],
+    ['father_fate_known','본편',0,1,'실패한 남산 진입에서 끝난 아빠의 정비 기록을 확인한다'],
+    ['mother_reunited','본편',0,1,'북부 연대망의 최근 표식을 따라 서울 외곽 중계소로 간다'],
+    ['es_truth','본편',0,1,'같은 이송표를 받은 사람들의 증언과 명령 기록을 대조한다']
+  ];
+  const missingSpine=spine.find(([flag])=>!S.flags[flag]);
+  if(missingSpine) return {pillar:missingSpine[1],have:missingSpine[2],need:missingSpine[3],hint:missingSpine[4]};
   /* 부족분(need-have)이 큰 기둥부터 */
   const lacking = Object.entries(p).filter(([k,x])=>x.have<x.need)
     .sort((a,b)=>(b[1].need-b[1].have)-(a[1].need-a[1].have));

@@ -720,7 +720,7 @@ const UI = (()=>{
     if(S.flags&&S.flags.seoul_open&&!S.ended) setTimeout(showSeoul, 400);   // 서울 안에서 이어하기
     else if(!S.ended&&D.onboardingMission){
       S.flags=S.flags||{};
-      if(!S.flags.onboarding_mission_seen){
+      if(!S.flags.main_mission_started){
         S.flags.onboarding_mission_seen=true;
         G.save();
         showEvent(D.onboardingMission);
@@ -2695,8 +2695,8 @@ function dialogueSide(turn,lanes,opt={}){
       : `${state.index+1} / ${state.turns.length}`;
     if(!last){
       dock.classList.add('story-progress-dock');
-      dock.innerHTML='<button class="story-tap-hint" type="button" aria-label="다음 문장. 화면을 탭하거나 Enter 또는 Space 키를 누르세요">화면을 탭하거나 Enter · Space</button>';
-      dock.querySelector('.story-tap-hint').onclick=()=>advanceStory(state);
+      dock.innerHTML=`<button class="story-next" type="button" aria-label="다음 문장. 화면을 탭하거나 Enter 또는 Space 키를 누르세요"><strong>다음</strong><span class="req">${state.index+1}/${state.turns.length} · 화면 탭도 가능</span></button>`;
+      dock.querySelector('.story-next').onclick=()=>advanceStory(state);
       syncEventDockReserve(sheet);
       wireStoryReviewPause(state,turn);
       scheduleStoryAuto(state,turn);

@@ -49,13 +49,12 @@ RUN_JS = """(arrivalDay) => {
   G.newGame('onroad','서울','full');
   S.water=40; S.food=40; S.fuel=90; S.scrap=200; S.items['부품']=10;
   for(const uid of ['bench','cabin']) if(G.canBuyUp(uid).ok) G.buyUpgrade(uid);   // 좌석 한도(기본 2) 해제
-  // 기둥을 실제 데이터 경로로 채운다: 동료 3인 Lv3 + 세계 접선 3 + 진실 3 + 유산 2
-  for(const cid of ['minji','parkss','leo']){
-    G.doRecruit(cid); S.comps[cid].approach=Object.keys(D.recruitQuests[cid].approaches)[0];
-    for(let k=0;k<30&&(S.comps[cid].lvl||0)<3;k++){ G.bond(cid,2); if(S.comps[cid].pending) G.choosePerk(cid,0); }
-  }
+  // 기둥과 부모 추적선을 실제 데이터 경로로 채운다.
+  S.party=['minji','parkss','leo'];
+  for(const cid of S.party) S.comps[cid]={mood:80,bond:20,lvl:3,perks:[]};
   for(const f of ['cell_road','cell_sea','cell_dome']) S.flags[f]=true;
-  for(const f of ['massacre_known','parent_key_found','es_truth']) S.flags[f]=true;
+  for(const f of ['massacre_known','first_order_trace','parent_key_found','es_truth',
+                  'parents_routes_traced','father_fate_known','mother_reunited']) S.flags[f]=true;
   for(const f of ['postman_letter','gp_envelope_found']) S.flags[f]=true;
   S.day=arrivalDay;
   if(!G.seoulReady()) return {err:'기둥 미충족', missing:G.seoulMissing()};

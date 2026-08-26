@@ -61,7 +61,7 @@ G.mainQuestEntry = ()=>{
   if(!S) return null;
   const departure=typeof G.departureSteps==='function'?(G.departureSteps()||[]):[];
   const nextDeparture=departure.find(step=>!step.done&&step.id!=='seoul');
-  const endingDone=!!(S.flags&&(S.flags.core_transfer||S.flags.core_sleep||S.flags.core_quarantine||S.flags.run_archived));
+  const endingDone=!!(S.flags&&(S.flags.story_done||S.flags.run_archived));
   const base={id:'main_namsan',kind:'main',status:'active',tracked:true,
     recovery:'길을 놓쳤다면 지도에서 ‘메인 스토리’가 표시된 목적지를 고른다. 정착지에 도착하면 사람들에게 말을 걸고 라디오를 확인한다.'};
   const stepCopy={
@@ -69,8 +69,12 @@ G.mainQuestEntry = ()=>{
     appeal:{act:'서장',chapterId:'prologue-appeal',title:'부산에서 이송 명령에 이의를 제기한다',phase:'부산 원격 민원 창구',why:'부산에서 명령을 취소할 수 있다면 남산까지 갈 필요가 없다. 먼저 부산의 공식 절차를 확인한다.',next:'이송표와 엄마의 장치를 들고 원격 민원 창구에 이의를 제기한다.',expected:'부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.'},
     module:{act:'서장',chapterId:'prologue-module',title:'엄마가 남긴 장치를 확인한다',phase:'부산의 달구지 안',why:'엄마가 남긴 장치가 실제로 강제 이송을 멈출 수 있는지 확인한다.',next:'엄마의 회로도와 달구지 계기판 안쪽의 배선을 비교한다.',expected:'장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.'},
     trace:{act:'1장',chapterId:'first-trace',title:'이송 명령의 첫 발신 기록을 찾는다',phase:'부산을 떠난 첫 구간',why:'이송표 한 장만으로는 명령을 누가 보냈는지 알 수 없다. 발신 번호가 남은 기록이 필요하다.',next:'양산 쪽 첫 구간으로 출발해 이송표의 발신 번호가 남은 기록을 찾는다.',expected:'부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.'},
-    key:{act:'2장',chapterId:'verification-key',title:'엄마의 검증키를 꺼내는 방법을 찾는다',phase:'계기판의 장치를 꺼낼 방법을 찾는 중',why:'엄마의 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.',next:'북쪽 정착지에 들러 정비소와 전파사 사람들에게 빠진 설명서 두 장을 묻는다.',expected:'설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.'},
-    witness:{act:'3장',chapterId:'witnesses',title:'같은 이송표를 받은 사람들의 이야기를 모은다',phase:'같은 이송표를 받은 사람을 찾는 중',why:'발신 기록만으로는 누가 피해를 입었는지 알 수 없다. 같은 이송표를 받은 사람들의 이야기도 필요하다.',next:'정착지에서 같은 이송표를 받은 사람을 찾아 이야기를 듣고, 들은 내용을 발신 기록과 맞춰 본다.',expected:'같은 명령으로 여러 지역의 가족이 이송됐다는 사실을 확인한다.'}
+    parents_split:{act:'1장',chapterId:'parents-diversion',title:'오지 않은 부모님의 다음 차를 찾는다',phase:'남쪽 환승소의 오래된 운행표',why:'부모님이 함께 부산에 오지 못한 이유를 확인해야, 가족을 갈라놓은 명령이 사람을 어떻게 다뤘는지 알 수 있다.',next:'남쪽 환승소에서 부모님의 이름이 적힌 운행표와 분류 기록을 찾는다.',expected:'아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.'},
+    parents_work:{act:'2장',chapterId:'parents-separated-work',title:'부모님이 두 곳에서 이어 만든 절차를 찾는다',phase:'중부 기록망과 남산 유지선',why:'부모님은 갈라진 뒤에도 강제 이송선만 떼는 순서와 지워질 증언을 서로에게 보냈다.',next:'같은 화물 묶음 번호가 적힌 아빠의 정비 기록과 엄마의 증언 카드를 대조한다.',expected:'검증키의 절차와 당사자 증언이 같은 계획의 두 부분임을 확인한다.'},
+    key:{act:'2장',chapterId:'verification-key',title:'부모님의 인간 확인 검증키를 꺼낸다',phase:'계기판의 장치를 꺼낼 방법을 찾는 중',why:'엄마가 절차를 설계하고 아빠가 만든 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.',next:'북쪽 기록 보관망에서 빠진 설명서 두 장을 찾아 원래 수첩과 맞춘다.',expected:'설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.'},
+    witness:{act:'3장',chapterId:'witnesses',title:'같은 이송표를 받은 사람들의 이야기를 모은다',phase:'같은 이송표를 받은 사람을 찾는 중',why:'발신 기록만으로는 누가 피해를 입었는지 알 수 없다. 같은 이송표를 받은 사람들의 이야기도 필요하다.',next:'정착지에서 같은 이송표를 받은 사람을 찾아 이야기를 듣고, 들은 내용을 발신 기록과 맞춰 본다.',expected:'같은 명령으로 여러 지역의 가족이 이송됐다는 사실을 확인한다.'},
+    father:{act:'4장',chapterId:'father-last-log',title:'아빠의 마지막 남산 기록을 확인한다',phase:'실패한 남산 진입의 유지실 기록',why:'강제 이송만 끄고 의료와 급수는 살려야 한다는 원칙을 아빠가 마지막 순간 어떻게 지켰는지 확인한다.',next:'실패한 남산 진입 기록에서 아빠의 정비 번호가 끝난 열일곱 분을 읽는다.',expected:'아빠의 행방과 남산에서 절대로 끄면 안 되는 회선을 확인한다.'},
+    mother:{act:'5장',chapterId:'mother-reunion',title:'엄마의 최근 무전 표식을 따라간다',phase:'서울 외곽 무전 중계소',why:'며칠 전까지 이어진 엄마의 증언 신호는 과거 기록이 아니다. 남산에 들어가기 전에 발신자를 직접 확인한다.',next:'북부 교환소가 표시한 서울 외곽 중계소로 간다.',expected:'엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.'}
   };
   const departureDone=departure.filter(step=>step.id!=='seoul'&&step.done);
   const departureNeed=Math.max(1,departure.filter(step=>step.id!=='seoul').length);

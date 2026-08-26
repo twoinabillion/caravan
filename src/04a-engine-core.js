@@ -805,8 +805,12 @@ G.departureSteps = ()=>{
     {id:'appeal',done:!!S.flags.intro_appeal_failed,label:'부산에서 이송 명령에 이의를 제기한다',detail:'부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다'},
     {id:'module',done:!!S.flags.intro_module_seen,label:'엄마가 남긴 장치를 확인한다',detail:'엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다'},
     {id:'trace',done:!!S.flags.first_order_trace,label:'이송 명령의 첫 발신 기록을 찾는다',detail:S.flags.first_order_trace?'부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다':'부산을 떠난 첫 구간에서 이송표의 발신 번호가 남은 기록을 찾는다'},
-    {id:'key',done:!!S.flags.parent_key_found,label:'엄마의 검증키를 꺼내는 방법을 찾는다',detail:S.flags.parent_key_found?'빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다':'계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다'},
+    {id:'parents_split',done:!!S.flags.parents_split_known,label:'부모님의 다음 차가 갈라진 경로를 확인한다',detail:S.flags.parents_split_known?'아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다':'남쪽 환승소의 오래된 운행표에서 오지 않은 다음 차를 찾는다'},
+    {id:'parents_work',done:!!S.flags.parents_routes_traced,label:'두 곳에서 이어진 부모님의 작업을 확인한다',detail:S.flags.parents_routes_traced?'아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다':'서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다'},
+    {id:'key',done:!!S.flags.parent_key_found,label:'부모님의 인간 확인 검증키를 꺼낸다',detail:S.flags.parent_key_found?'빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다':'계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다'},
     {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'같은 이송표를 받은 사람들의 이야기를 모은다',detail:S.flags.es_truth?'사람들의 이야기와 발신 기록을 맞춰 명령이 내려온 순서를 확인했다':`같은 이송표를 받은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
+    {id:'father',done:!!S.flags.father_fate_known,label:'아빠의 마지막 남산 기록을 확인한다',detail:S.flags.father_fate_known?'아빠는 의료와 급수 회선을 지키다 남산에서 사망했다':'실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다'},
+    {id:'mother',done:!!S.flags.mother_reunited,label:'엄마의 최근 신호를 따라간다',detail:S.flags.mother_reunited?'서울 외곽 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다'},
     {id:'seoul',done:!!S.flags.story_done,label:'남산 코어에서 강제 이송 명령을 끊는다',detail:S.flags.story_done?'제7 잔류구역을 향하던 강제 이송을 끝냈다':'필요한 기록과 사람을 모은 뒤 남산 코어에서 명령을 멈춘다. 날짜 제한은 없다'}
   ];
 };

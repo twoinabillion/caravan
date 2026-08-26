@@ -209,10 +209,10 @@ with sync_playwright() as p:
       selected:document.querySelector('[data-route-select][aria-pressed="true"]')?.dataset.routeSelect,
       height:document.querySelector('.route-console')?.getBoundingClientRect().height||0,
       copy:document.querySelector('.route-console')?.textContent||'',
-      titleSize:parseFloat(getComputedStyle(document.querySelector('.nav-map-destination-badge b')).fontSize),
+      titleSize:parseFloat(getComputedStyle(document.querySelector('.nav-destination-card.is-selected b')).fontSize),
       descriptionSize:parseFloat(getComputedStyle(document.querySelector('.nav-place-description')).fontSize),
       valueSize:parseFloat(getComputedStyle(document.querySelector('.nav-route-facts b')).fontSize),
-      journeyContext:document.querySelector('.nav-journey-context')?.textContent||'',
+      journeyContext:document.querySelector('#road-quest-tracker')?.textContent||'',
       routeCopy:document.querySelector('.nav-place-description')?.textContent||'',
       departHint:document.querySelector('[data-route-select][aria-pressed="true"] .nav-depart-hint')?.textContent||''
     })''')
@@ -220,16 +220,15 @@ with sync_playwright() as p:
           nav_initial['console'] and set(nav_initial['routes']) == {'yangsan', 'gimhae'} and
           nav_initial['hazards'] == 0 and nav_initial['facts'] == 3 and nav_initial['unknowns'] == 0 and
           '무너진 고가 아래로 길이 하나 살아 있다' in nav_initial['copy'] and
-          '거리' in nav_initial['copy'] and '이동 시간' in nav_initial['copy'] and
-          '연료 소모' in nav_initial['copy'] and
+          '구간 거리' in nav_initial['copy'] and '예상 시간' in nav_initial['copy'] and
+          '예상 연료' in nav_initial['copy'] and
           nav_initial['titleSize'] >= 11 and nav_initial['descriptionSize'] >= 9 and nav_initial['valueSize'] >= 10 and
           not any(word in nav_initial['routeCopy'] for word in ['만날','위험','신호','미확인']),
           str(nav_initial))
-    check('길 선택 화면은 주 임무 진행·다음 행동·선택 이야기와 출발 상태를 함께 보여 준다',
-          '주 임무' in nav_initial['journeyContext'] and '지금 할 일' in nav_initial['journeyContext'] and
-          '선택 이야기' in nav_initial['journeyContext'] and '양산 카드를 눌러' in nav_initial['journeyContext'] and
-          '동행' in nav_initial['journeyContext'] and
-          nav_initial['departHint'] == '출발', str(nav_initial))
+    check('길 선택 화면은 메인 스토리·다음 행동·사이드 미션과 출발 상태를 함께 보여 준다',
+          '메인 스토리' in nav_initial['journeyContext'] and '지금 할 일' in nav_initial['journeyContext'] and
+          '사이드 미션' in nav_initial['journeyContext'] and '양산 카드를 눌러' in nav_initial['journeyContext'] and
+          nav_initial['departHint'] == '카드를 눌러 출발', str(nav_initial))
     page.click('[data-journey-mode="local"]')
     stop_console = page.evaluate('''() => {
       const action=document.querySelector('.stop-action-console');
@@ -290,7 +289,7 @@ with sync_playwright() as p:
         exactHazard:copy.includes('고가 낙하물'),
         predictiveCopy:/만날|위험|신호|미확인|예상/.test(routeCopy),
         futureArrow:/연료\\s*\\d+\\s*→/.test(copy),
-        hasKnownTravel:copy.includes('이동 시간')&&copy.includes('연료 소모')
+        hasKnownTravel:copy.includes('예상 시간')&&copy.includes('예상 연료')
       };
     }''')
     check('위험·인물·도착 후 자원은 출발 전에 인터페이스로 노출되지 않는다',
@@ -303,7 +302,7 @@ with sync_playwright() as p:
       driving:!!S.driving,
       selected:document.querySelector('.route-console')?.dataset.routeConsole,
       depart:document.querySelector('[data-nav-depart]')?.dataset.navDepart,
-      title:document.querySelector('.nav-map-destination-badge b')?.textContent
+      title:document.querySelector('.nav-destination-card.is-selected b')?.textContent
     })''')
     check('다른 길 선택은 즉시 출발하지 않고 비교할 목적지만 바꾼다',
           not nav_compare['driving'] and nav_compare['selected'] == 'gimhae' and
