@@ -3458,8 +3458,34 @@ function dialogueSide(turn,lanes,opt={}){
       roof:p.roof||'#34383a',light:p.light||'#e5a54c',accent:p.accent||'#b94c3e'
     };
   }
-  function fieldBoardShell({mode,title,sub,status,body,selectedLabel,actionMeta,actionLabel,actionAttrs='',disabled=false}){
+  function fieldBoardBudgetHtml(budget){
+    const resources=(budget&&Array.isArray(budget.resources)?budget.resources:[])
+      .filter(resource=>resource&&resource.label&&Number.isFinite(Number(resource.current))&&Number.isFinite(Number(resource.amount)));
+    if(!resources.length) return '';
+    const kind=budget.kind==='gain'?'gain':budget.kind==='barter'?'barter':'spend';
+    const labels=kind==='gain'?['보유','받음','판매 후']:kind==='barter'?['보유','교환','교환 후']:['보유','결제','결제 후'];
+    const values=resources.map(resource=>{
+      const current=Math.floor(Number(resource.current)),amount=Math.floor(Math.abs(Number(resource.amount)));
+      return {...resource,current,amount,after:kind==='gain'?current+amount:current-amount};
+    });
+    const stageValue=(resource,stage)=>{
+      if(stage===0) return `<i>${esc(resource.label)}</i><b>${resource.current}</b>`;
+      if(stage===1) return `<i>${esc(resource.label)}</i><b>${kind==='gain'?'+':'−'}${resource.amount}</b>`;
+      if(resource.after<0) return `<i>${esc(resource.label)}</i><b class="is-short">${Math.abs(resource.after)}</b><strong>부족</strong>`;
+      return `<i>${esc(resource.label)}</i><b>${resource.after}</b>${kind==='gain'?'':'<strong>남음</strong>'}`;
+    };
+    const aria=labels.map((label,index)=>`${label} ${values.map(resource=>{
+      if(index===0) return `${resource.label} ${resource.current}`;
+      if(index===1) return `${resource.label} ${resource.amount}`;
+      return resource.after<0?`${resource.label} ${Math.abs(resource.after)} 부족`:`${resource.label} ${resource.after}${kind==='gain'?'':' 남음'}`;
+    }).join(', ')}`).join('. ');
+    return `<div class="field-board-budget field-board-budget-${kind}" role="group" aria-label="${esc(aria)}">
+      ${labels.map((label,index)=>`<div class="field-board-budget-stage" data-budget-stage="${['current','change','after'][index]}"><small>${label}</small>${values.map(resource=>`<span data-budget-resource="${esc(resource.label)}">${stageValue(resource,index)}</span>`).join('')}</div>`).join('')}
+    </div>`;
+  }
+  function fieldBoardShell({mode,title,sub,status,body,selectedLabel,actionMeta,actionBudget,actionLabel,actionAttrs='',disabled=false}){
     const palette=settlementFieldPalette(curStl), stl=D.stls[curStl];
+    const budgetHtml=fieldBoardBudgetHtml(actionBudget);
     return `<section class="field-board field-board-${mode} field-board-visual-finish" data-field-board="${mode}" data-field-board-city="${curStl}" style="--fb-wall:${palette.wall};--fb-trim:${palette.trim};--fb-win:${palette.win};--fb-dark:${palette.dark};--roof:${palette.roof};--light:${palette.light};--accent:${palette.accent}">
       <header class="field-board-head">
         <span class="field-board-mark">${esc((stl&&stl.name)||'')} · ${esc(FIELD_BOARD_LABEL[mode]||'')}</span>
@@ -3467,8 +3493,8 @@ function dialogueSide(turn,lanes,opt={}){
         <p>${esc(sub)}</p>
       </header>
       <div class="field-board-body">${body}</div>
-      <footer class="field-board-action">
-        <span><small>선택</small><b>${esc(selectedLabel||'선택 없음')}</b><em>${esc(actionMeta||'고를 수 있는 항목이 없다')}</em></span>
+      <footer class="field-board-action ${budgetHtml?'has-budget':''}">
+        <div class="field-board-action-copy"><small>선택</small><b>${esc(selectedLabel||'선택 없음')}</b><em>${esc(actionMeta||(!budgetHtml?'고를 수 있는 항목이 없다':''))}</em>${budgetHtml}</div>
         <button id="${mode}-action" ${actionAttrs} ${disabled?'disabled':''}>${esc(actionLabel||'선택')}</button>
       </footer>
     </section>
@@ -3498,7 +3524,7 @@ function dialogueSide(turn,lanes,opt={}){
       const price=Math.max(1,Math.round((waterRow[3]*G.marketMul(curStl,'water')+foodRow[3]*2*G.marketMul(curStl,'food'))*disc));
       supplyRows.push({key:'bundle',kind:'bundle',label:'길 위 기본 보급',
         sub:`물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}일치`,meta:`고철 ${price} · 40분`,cost:price,
-        action:'한 번에 싣기',enabled:S.scrap>=price,icon:'parts'});
+        duration:'40분',action:'한 번에 싣기',enabled:S.scrap>=price,icon:'parts'});
     }
     stl.trade.forEach((row,index)=>{
       const [label,key,qty,price0]=row, trusted=localImpact.discount<1;
@@ -3506,14 +3532,16 @@ function dialogueSide(turn,lanes,opt={}){
         trusted&&key==='barter_fp'?'식량 1 ⇄ 부품 1':trusted&&key==='barter_mf'?'의약품 1 ⇄ 식량 4':label;
       const group=key.startsWith('barter')?'물물교환':key.startsWith('item')?'도구와 부품':'주행과 보급';
       if(key.startsWith('barter')){
-        const enough=key==='barter_wf'?S.water>=(trusted?1:2):key==='barter_fp'?S.food>=(trusted?1:2):(S.items['의약품']||0)>=1;
+        const barterCost=key==='barter_wf'?{label:'물',current:S.water,amount:trusted?1:2}:
+          key==='barter_fp'?{label:'식량',current:S.food,amount:trusted?1:2}:{label:'의약품',current:S.items['의약품']||0,amount:1};
+        const enough=barterCost.current>=barterCost.amount;
         supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label:shown,sub:'물자를 맞바꾼다',meta:'교환 · 25분',
-          action:'교환한다',enabled:enough,icon:key==='barter_wf'?'water':key==='barter_fp'?'food':'med'});
+          duration:'25분',barterCost,action:'교환한다',enabled:enough,icon:key==='barter_wf'?'water':key==='barter_fp'?'food':'med'});
       } else {
         const price=Math.max(1,Math.round(price0*G.marketMul(curStl,key)*disc)),mul=G.marketMul(curStl,key);
         const priceNote=mul<=.9?' · 이 동네가 싸다':mul>=1.2?' · 여긴 귀하다':'';
         supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label,sub:`${qty}${key==='fuel'?'L를':key==='water'?'통을':key==='food'?'일치를':'개를'} 싣는다${priceNote}`,
-          meta:`고철 ${price} · 25분`,cost:price,action:'산다',enabled:S.scrap>=price,
+          meta:`고철 ${price} · 25분`,cost:price,duration:'25분',action:'산다',enabled:S.scrap>=price,
           icon:key==='fuel'?'fuel':key==='water'?'water':key==='food'?'food':ITEM_ICO[key.slice(4)]||'parts'});
       }
     });
@@ -3521,7 +3549,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(demand){
       const have=demand.item==='식량'?S.food:(S.items[demand.item]||0),need=demand.item==='식량'?2:1;
       supplyRows.push({key:'sell',kind:'sell',group:'매입',label:`${demand.item} 1${demand.item==='식량'?'일치':''}`,
-        sub:demand.why,meta:`고철 +${demand.price} · 20분`,action:'판다',enabled:have>=need,icon:ITEM_ICO[demand.item]||'food'});
+        sub:demand.why,meta:`고철 +${demand.price} · 20분`,gain:demand.price,duration:'20분',action:'판다',enabled:have>=need,icon:ITEM_ICO[demand.item]||'food'});
     }
     const neighbor=(G.neighbors(S.at)||[]).map(n=>D.nodes[n.id]&&D.nodes[n.id].stl).filter(Boolean)
       .concat(Object.keys(D.stls).filter(id=>id!==curStl)).find(id=>id&&id!==curStl&&D.market[id]);
@@ -3557,11 +3585,16 @@ function dialogueSide(turn,lanes,opt={}){
     const questCount=data.questRows.length, barterOnly=stl.trade.every(row=>row[1].startsWith('barter'));
     const trust=data.localImpact.discount<1
       ? ` · 품앗이 ${barterOnly?'교환 우대':'10% 할인'}`:'';
-    const selectedAfter=selected&&selected.cost!=null?Math.max(0,S.scrap-selected.cost):S.scrap;
     const actionMeta=selected
-      ? selected.kind==='sell'?`${selected.meta} · 보유 고철 ${S.scrap}`:
-        selected.cost!=null?`${selected.meta} · 보유 ${S.scrap} → ${selectedAfter}`:selected.meta
+      ? selected.duration?`${selected.duration} 소요`:selected.meta
       :'고를 수 있는 항목이 없다';
+    const actionBudget=selected&&selected.cost!=null
+      ? {kind:'spend',resources:[{label:'고철',current:S.scrap,amount:selected.cost}]}
+      : selected&&selected.barterCost
+        ? {kind:'barter',resources:[selected.barterCost]}
+        : selected&&selected.kind==='sell'
+          ? {kind:'gain',resources:[{label:'고철',current:S.scrap,amount:selected.gain||0}]}
+          : null;
     const actionData=selected?(selected.kind==='trade'?` data-t="${selected.index}"`:selected.kind==='bundle'?' data-bundle="1"':selected.kind==='sell'?' data-sell="1"':selected.kind==='quest' ? ` data-quest="${selected.index}"`:selected.kind==='quest-turnin'?' id="q-turnin"':''):'';
     let lastGroup='';
     const supplyHtml=data.supplyRows.map(row=>{
@@ -3581,7 +3614,7 @@ function dialogueSide(turn,lanes,opt={}){
         </section>`;
     body.innerHTML=fieldBoardShell({mode:'market',title:spot.label,sub:spot.sub,
       status:`● 영업 중 · 의뢰 ${questCount}${trust}`,body:boardBody,
-      selectedLabel:selected&&selected.label,actionMeta,actionLabel:selected&&selected.action,
+      selectedLabel:selected&&selected.label,actionMeta,actionBudget,actionLabel:selected&&selected.action,
       actionAttrs:actionData,disabled:!(selected&&selected.enabled)});
     body.querySelectorAll('[data-market-key]').forEach(button=>button.onclick=()=>{
       const scrollTop=body.querySelector('.field-board-body')?.scrollTop||0;
@@ -4166,8 +4199,8 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function renderGarage(){
     const body=$('#stl-body'); if(!body) return;
-    const repCost=G.hasComp('minji')?6:8;
-    const canRep=S.van<S.vanMax-5&&S.scrap>=repCost;
+    const quote=G.settlementRepairQuote(),repCost=quote.cost,repairNeeded=S.van<S.vanMax-5;
+    const canRep=repairNeeded&&S.scrap>=repCost;
     const groups=D.upgradeGroups||[];
     let group=groups.find(x=>x.id===garageGroup)||groups[0];
     garageGroup=group.id;
@@ -4175,13 +4208,18 @@ function dialogueSide(turn,lanes,opt={}){
     const ownedN=group.ids.filter(id=>S.up[id]).length;
     const upgrades=group.ids.map(id=>G.upDef(id)).filter(Boolean);
     const vanStage=G.vanStage();
-    const quote=G.settlementRepairQuote();
     const rows=[{key:'repair',kind:'repair',label:'차체 정비',sub:`내구 +${quote.amount}${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}`,
-      meta:`고철 ${repCost} · ${G.durationLabel(quote.mins)}`,action:S.van>=S.vanMax-5?'차체 양호':'수리한다',enabled:canRep,icon:'parts'}]
+      meta:`고철 ${repCost} · ${G.durationLabel(quote.mins)}`,duration:G.durationLabel(quote.mins),
+      budget:repairNeeded?{kind:'spend',resources:[{label:'고철',current:S.scrap,amount:repCost}]}:null,
+      reason:!repairNeeded?'차체가 충분히 튼튼하다':S.scrap<repCost?'고철 부족':'',
+      action:repairNeeded?'수리한다':'차체 양호',enabled:canRep,icon:'parts'}]
       .concat(upgrades.map(u=>{const owned=!!S.up[u.id],chk=G.canBuyUp(u.id);
+        const scrapCost=G.upScrapCost(u),duration=G.durationLabel(G.upgradeMinutes(u));
         return {key:`upgrade-${u.id}`,kind:'upgrade',id:u.id,label:u.nm,sub:u.d,icon:groupIcon,
-          meta:owned?'장착 완료':`고철 ${u.cost.scrap}${u.cost.parts?' + 부품 '+u.cost.parts:''} · ${G.durationLabel(G.upgradeMinutes(u))}`,
-          action:owned?'장착 완료':chk.ok?'장착한다':'잠김',enabled:!owned&&chk.ok,reason:chk.why||''};
+          meta:owned?'장착 완료':`고철 ${scrapCost}${u.cost.parts?' + 부품 '+u.cost.parts:''} · ${duration}`,duration,
+          budget:owned?null:{kind:'spend',resources:[{label:'고철',current:S.scrap,amount:scrapCost}]
+            .concat(u.cost.parts?[{label:'부품',current:S.items['부품']||0,amount:u.cost.parts}]:[])},
+          action:owned?'장착 완료':chk.ok?'장착한다':'잠김',enabled:!owned&&chk.ok,reason:owned?'이미 장착했다':chk.why||''};
       }));
     let selected=rows.find(row=>row.key===garageSelection);
     if(!selected) selected=(canRep&&rows[0])||rows.find(row=>row.kind==='upgrade'&&row.enabled)||rows[1]||rows[0];
@@ -4205,7 +4243,8 @@ function dialogueSide(turn,lanes,opt={}){
     body.innerHTML=fieldBoardShell({mode:'garage',title:settlementSpots(curStl).garage.label,
       sub:settlementSpots(curStl).garage.sub,status:`● 작업대 가동 · 차체 ${Math.round(S.van/S.vanMax*100)}% · 부품 ${S.items['부품']||0}`,
       body:boardBody,selectedLabel:selected&&selected.label,
-      actionMeta:selected?(selected.reason||selected.meta):'',actionLabel:selected&&selected.action,
+      actionMeta:selected?[selected.reason,selected.duration&&`${selected.duration} 소요`].filter(Boolean).join(' · '):'',
+      actionBudget:selected&&selected.budget,actionLabel:selected&&selected.action,
       actionAttrs,disabled:!(selected&&selected.enabled)});
     requestAnimationFrame(()=>{ if(SCENE.drawSettlementVan) SCENE.drawSettlementVan($('#garage-van-cv')); });
     body.querySelectorAll('[data-ug]').forEach(button=>button.onclick=()=>{

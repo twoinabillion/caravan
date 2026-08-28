@@ -63,7 +63,17 @@ with sync_playwright() as pw:
     page.goto(URL)
     page.evaluate(BOOT, {'city':'daegu','mode':'garage'})
     before=page.evaluate('S.van')
-    page.locator('[data-garage-key="repair"]').click(); page.locator('#garage-action').click()
+    page.locator('[data-garage-key="repair"]').click()
+    budget=page.locator('.field-board-budget')
+    current=budget.locator('[data-budget-stage="current"] [data-budget-resource="고철"]')
+    change=budget.locator('[data-budget-stage="change"] [data-budget-resource="고철"]')
+    remaining=budget.locator('[data-budget-stage="after"] [data-budget-resource="고철"]')
+    assert current.locator('b').inner_text()=='999'
+    assert change.locator('b').inner_text()=='−6'
+    assert remaining.locator('b').inner_text()=='993'
+    assert budget.locator('[data-budget-resource]').evaluate_all(
+        'nodes=>nodes.every(node=>node.scrollWidth<=node.clientWidth+1)')
+    page.locator('#garage-action').click()
     assert page.evaluate('S.van')>before
     page.evaluate(BOOT, {'city':'daegu','mode':'people'})
     page.locator('[data-person-key="npc-taeho"]').click(); page.locator('#people-action').click()

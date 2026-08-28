@@ -3928,7 +3928,13 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .field-board .trade-local-trust{margin:8px 4px 2px;padding:6px 7px;border:0;border-left:2px solid #6f9d7b;border-radius:0;background:rgba(87,132,99,.07)}
 .field-board .trade-local-trust span{font-size:8px}.field-board .trade-local-trust b{font-size:8px}.field-board-rumor{margin:9px 6px 12px;padding:8px 0 0;border-top:1px dashed rgba(231,226,215,.12);color:#899491;font:8px/1.45 var(--sans)}
 .field-board-action{position:relative;z-index:4;display:grid;min-height:88px;flex:none;grid-template-columns:minmax(0,1fr) minmax(92px,30%);align-items:center;gap:9px;margin:0;padding:13px 17px;border:10px solid transparent;border-image:var(--fb-frame) 24 fill / 10px / 0 stretch;background:linear-gradient(180deg,#15191a,#090c0d) padding-box;box-shadow:0 -9px 20px rgba(0,0,0,.45);image-rendering:pixelated}
-.field-board-action>span{display:grid;min-width:0;gap:3px}.field-board-action small{color:#72bdb5;font:800 7px/1 var(--mono);letter-spacing:.1em}.field-board-action b{overflow:hidden;color:#f1eadc;font:850 12px/1.18 var(--sans);white-space:nowrap;text-overflow:ellipsis}.field-board-action em{overflow:hidden;color:#a8afab;font:700 8px/1.25 var(--mono);font-style:normal;white-space:nowrap;text-overflow:ellipsis}
+.field-board-action-copy{display:grid;min-width:0;gap:3px}.field-board-action small{color:#72bdb5;font:800 7px/1 var(--mono);letter-spacing:.1em}.field-board-action-copy>b{overflow:hidden;color:#f1eadc;font:850 12px/1.18 var(--sans);white-space:nowrap;text-overflow:ellipsis}.field-board-action-copy>em{min-height:10px;overflow:hidden;color:#a8afab;font:700 8px/1.25 var(--mono);font-style:normal;white-space:nowrap;text-overflow:ellipsis}
+.field-board-action.has-budget{min-height:116px;align-items:stretch}.field-board-action.has-budget>button{align-self:center}
+.field-board-budget{display:grid;min-width:0;grid-template-columns:repeat(3,minmax(0,1fr));overflow:hidden;border:1px solid rgba(132,151,145,.24);border-radius:2px;background:rgba(4,8,9,.48)}
+.field-board-budget-stage{display:grid;min-width:0;align-content:center;gap:3px;padding:6px 7px;border-right:1px solid rgba(132,151,145,.18)}.field-board-budget-stage:last-child{border-right:0}
+.field-board-budget-stage>small{color:#818d89;font:750 7px/1 var(--sans);letter-spacing:.02em}.field-board-budget-stage>span{display:flex;min-width:0;align-items:baseline;gap:3px;color:#ddd7ca;white-space:nowrap}
+.field-board-budget-stage i{overflow:hidden;color:#949d99;font:650 7.5px/1 var(--sans);font-style:normal;text-overflow:ellipsis}.field-board-budget-stage b{overflow:visible;color:#eee6d8;font:900 11px/1 var(--mono);white-space:nowrap}.field-board-budget-stage strong{color:#93a09b;font:750 6.5px/1 var(--sans);white-space:nowrap}
+.field-board-budget-stage[data-budget-stage="change"] b{color:#e6ad68}.field-board-budget-stage[data-budget-stage="after"] b{color:#72c9c0}.field-board-budget-stage[data-budget-stage="after"] b.is-short,.field-board-budget-stage[data-budget-stage="after"] b.is-short+strong{color:#e18d79}
 .field-board-action button{min-height:48px;padding:7px 8px;border:1px solid var(--fb-win);background:linear-gradient(180deg,color-mix(in srgb,var(--fb-trim) 48%,#272016),#18130e);color:#ffd18b;font:900 11px/1.15 var(--sans);box-shadow:inset 0 0 0 2px rgba(0,0,0,.35)}
 .field-board-action button:disabled{border-color:#49504e;background:#171a19;color:#6f7774}.field-board-back{flex:none;margin:6px 1px 0;border-radius:3px;background:#101415}
 .field-board-categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;padding:7px 5px;border-bottom:1px solid color-mix(in srgb,var(--fb-trim) 28%,#31363a);background:rgba(0,0,0,.13)}
@@ -3955,7 +3961,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 @container game (max-width:360px){
   .field-board-head{padding-right:16px;padding-left:16px}.field-board-head h3{font-size:15px}.field-board-head em{font-size:7px}
   .field-board-body{padding-right:9px;padding-left:9px}.field-board-row{grid-template-columns:27px minmax(0,1fr) auto 9px;gap:5px}.field-board-row-meta{font-size:7px}.field-board-row-copy b{font-size:10px}
-  .field-board-action{grid-template-columns:minmax(0,1fr) 88px;padding-right:13px;padding-left:13px}.field-board-action b{font-size:11px}
+  .field-board-action{grid-template-columns:minmax(0,1fr) 88px;padding-right:13px;padding-left:13px}.field-board-action-copy>b{font-size:11px}.field-board-budget-stage{padding-right:5px;padding-left:5px}
   .field-board-categories button{font-size:8px}.field-board-van-overview{grid-template-columns:105px minmax(0,1fr)}
 }
 
@@ -4531,6 +4537,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .field-board-row{min-height:62px}
 .field-board-row-copy small,.field-board-row-meta{font-size:12px;line-height:1.35}
 .field-board-action{min-height:80px;padding-block:9px}
+.field-board-action.has-budget{min-height:116px}
 .field-board-action button{min-height:44px}
 
 #profile-detail{display:none}
@@ -10336,19 +10343,51 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
 }
 #app #ev-sheet.event-mode[data-event-kind="combat"] .event-field-report :is(.chat-name,.turn-speaker,.story-narration-label){color:#dda151!important}
 
+/* 진행 중에는 선택지용 빈 행을 만들지 않고, 다음 행동 한 줄만 온전히 둔다. */
+#app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock.story-progress-dock{
+  position:relative!important;
+  z-index:2!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:48px!important;
+  grid-auto-rows:0!important;
+  place-items:center!important;
+  align-content:center!important;
+  flex:0 0 calc(70px + var(--safe-bottom))!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:calc(70px + var(--safe-bottom))!important;
+  min-height:calc(70px + var(--safe-bottom))!important;
+  max-height:calc(70px + var(--safe-bottom))!important;
+  gap:0!important;
+  margin:0!important;
+  padding:10px 10px calc(12px + var(--safe-bottom))!important;
+  overflow:visible!important;
+  border:0!important;
+  border-top:1px solid #3f494c!important;
+  background:linear-gradient(180deg,rgba(17,25,29,.96),#0d1418)!important;
+  box-shadow:0 -7px 18px rgba(0,0,0,.32)!important;
+}
+#app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"] .event-choice-dock.story-progress-dock>button.story-next{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:center!important;
+}
+
 /* 선택지는 한 개의 스크롤 행과 상세 버튼만 가진다. */
 #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock,
 #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"].combat-details-open .event-choice-dock{
   display:grid!important;
   grid-template-columns:minmax(0,1fr)!important;
-  grid-template-rows:minmax(0,1fr) 40px!important;
+  grid-template-rows:auto 40px!important;
   grid-auto-rows:0!important;
-  flex:0 0 clamp(216px,35dvh,282px)!important;
+  align-content:start!important;
+  flex:0 0 auto!important;
   box-sizing:border-box!important;
   width:100%!important;
-  height:clamp(216px,35dvh,282px)!important;
-  min-height:216px!important;
-  max-height:282px!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:min(35dvh,282px)!important;
   gap:7px!important;
   margin:0!important;
   padding:9px 10px calc(9px + var(--safe-bottom))!important;
@@ -10365,9 +10404,9 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
   flex-direction:column!important;
   box-sizing:border-box!important;
   width:100%!important;
-  height:100%!important;
+  height:auto!important;
   min-height:0!important;
-  max-height:none!important;
+  max-height:calc(min(35dvh,282px) - 65px - var(--safe-bottom))!important;
   gap:7px!important;
   padding:0 4px 0 0!important;
   overflow-x:hidden!important;
@@ -10533,7 +10572,10 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
     flex-basis:132px!important;height:132px!important;min-height:132px!important
   }
   #app #ev-wrap.on #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock{
-    flex-basis:218px!important;height:218px!important;min-height:218px!important;max-height:218px!important;margin:0!important
+    flex-basis:auto!important;height:auto!important;min-height:0!important;max-height:218px!important;margin:0!important
+  }
+  #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices{
+    max-height:calc(153px - var(--safe-bottom))!important
   }
   #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice,
   #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="decision"] .event-choice-dock>.choices>button.choice:disabled{

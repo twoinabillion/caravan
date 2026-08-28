@@ -112,7 +112,7 @@ const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key =>
 }, 'UI');
 
 const settlementSprites = replace(read('src/05-scene.js'), /__TOWN_WORLD_SPRITE_ATLAS__/g,
-  () => dataUri('assets/ui/settlement/town-world-sprite-atlas-v3.webp', 'image/webp'), '정착지 스프라이트');
+  () => dataUri('assets/ui/settlement/town-world-sprite-atlas-v4.webp', 'image/webp'), '정착지 스프라이트');
 
 const portraits = replace(read('src/03b-portraits.js'), /__PORTRAIT_([a-z0-9_]+)__/g,
   key => dataUri(`assets/portraits/${key}.png`, 'image/png'), '주연 초상');

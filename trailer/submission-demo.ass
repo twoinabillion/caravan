@@ -1,0 +1,81 @@
+[Script Info]
+Title: Seoul 400km submission demo overlays
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+YCbCr Matrix: TV.709
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Base,Apple SD Gothic Neo,28,&H00D5E3E8,&H000000FF,&H00070910,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: Center,Apple SD Gothic Neo,30,&H00D5E3E8,&H000000FF,&H00070910,&H00000000,0,0,0,0,100,100,0,0,1,0,0,5,0,0,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 5,0:00:00.00,0:00:05.00,Center,,0,0,0,,{\fad(500,400)\an5\pos(960,315)\fs24\fsp6\b1\c&H0054B4FF&}ACTUAL PLAY DEMO
+Dialogue: 5,0:00:00.00,0:00:05.00,Center,,0,0,0,,{\fad(650,400)\an5\pos(960,430)\fs76\fsp2\b1\c&H00D5E3E8&}서울까지 400km
+Dialogue: 5,0:00:00.00,0:00:05.00,Center,,0,0,0,,{\fad(800,400)\an5\pos(960,540)\fs34\c&H00BDA49B&}포스트아포칼립스 한국을 횡단하는\N모바일 로드트립 RPG
+Dialogue: 5,0:00:00.00,0:00:05.00,Center,,0,0,0,,{\fad(950,400)\an5\pos(960,705)\fs23\fsp2\c&H00CCDF6D&}게임 소개  ·  실제 플레이  ·  핵심 기능
+
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,76)\fs19\fsp5\b1\c&H0054B4FF&}CARAVAN
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,116)\fs44\b1\c&H00D5E3E8&}서울까지 400km
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,190)\fs20\fsp2\c&H00BDA49B&}POST-APOCALYPTIC ROAD TRIP RPG
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,286)\fs27\b1\c&H00D5E3E8&}부산 → 서울 남산  ·  411KM
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,342)\fs24\c&H00BDA49B&}낡은 1톤 트럭 ‘달구지’를\N고치고 확장하며, 사람과 기록을\N모아 북쪽으로 향하는 여정.
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,570)\fs18\fsp3\b1\c&H0054B4FF&}CURRENT BUILD
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,610)\fs25\b1\c&H00D5E3E8&}991 EVENTS
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,652)\fs25\b1\c&H00D5E3E8&}58 MAP NODES
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,694)\fs25\b1\c&H00D5E3E8&}6 COMPANIONS
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,736)\fs25\b1\c&H00D5E3E8&}MULTIPLE ENDINGS
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,895)\fs18\fsp3\b1\c&H00CCDF6D&}ACTUAL GAMEPLAY
+Dialogue: 4,0:00:05.00,0:00:57.60,Base,,0,0,0,,{\fad(400,300)\an7\pos(78,930)\fs20\c&H00BDA49B&}LATEST LOCAL BUILD · 2026.08.26
+
+Dialogue: 5,0:00:05.00,0:00:12.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,80)\fs18\fsp4\b1\c&H0054B4FF&}01 · GAME INTRO
+Dialogue: 5,0:00:05.00,0:00:12.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,130)\fs43\b1\c&H00D5E3E8&}여정을 시작한다
+Dialogue: 5,0:00:05.00,0:00:12.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,222)\fs25\c&H00BDA49B&}플레이 모드와 이름을 고르고,\N부산에서 출발할 준비를 합니다.
+Dialogue: 5,0:00:05.00,0:00:12.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,430)\fs18\fsp3\b1\c&H00CCDF6D&}NOW PLAYING
+Dialogue: 5,0:00:05.00,0:00:12.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,470)\fs23\c&H00D5E3E8&}새 게임 · 모드 선택 · 캐릭터 설정
+
+Dialogue: 5,0:00:12.00,0:00:23.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,80)\fs18\fsp4\b1\c&H0054B4FF&}02 · STORY
+Dialogue: 5,0:00:12.00,0:00:23.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,130)\fs43\b1\c&H00D5E3E8&}읽고, 선택한다
+Dialogue: 5,0:00:12.00,0:00:23.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,222)\fs25\c&H00BDA49B&}장면과 대화가 원고처럼 이어지고,\N선택의 결과는 이후 사건에 남습니다.
+Dialogue: 5,0:00:12.00,0:00:23.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,430)\fs18\fsp3\b1\c&H00CCDF6D&}KEY FEATURE
+Dialogue: 5,0:00:12.00,0:00:23.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,470)\fs23\c&H00D5E3E8&}시네마틱 스토리 · 선택의 지속성
+
+Dialogue: 5,0:00:23.00,0:00:33.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,80)\fs18\fsp4\b1\c&H0054B4FF&}03 · ENCOUNTER
+Dialogue: 5,0:00:23.00,0:00:33.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,130)\fs43\b1\c&H00D5E3E8&}멈추거나 지나간다
+Dialogue: 5,0:00:23.00,0:00:33.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,222)\fs25\c&H00BDA49B&}사건의 징후를 발견한 뒤\N개입·이탈·대응 방식을 선택합니다.
+Dialogue: 5,0:00:23.00,0:00:33.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,430)\fs18\fsp3\b1\c&H00CCDF6D&}KEY FEATURE
+Dialogue: 5,0:00:23.00,0:00:33.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,470)\fs23\c&H00D5E3E8&}전투 · 구조 · 호송 · 위험 판단
+
+Dialogue: 5,0:00:33.00,0:00:40.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,80)\fs18\fsp4\b1\c&H0054B4FF&}04 · SETTLEMENT
+Dialogue: 5,0:00:33.00,0:00:40.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,130)\fs43\b1\c&H00D5E3E8&}마을에서 준비한다
+Dialogue: 5,0:00:33.00,0:00:40.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,222)\fs25\c&H00BDA49B&}보급·정비·거래·사이드 미션으로\N달구지와 다음 여정을 준비합니다.
+Dialogue: 5,0:00:33.00,0:00:40.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,430)\fs18\fsp3\b1\c&H00CCDF6D&}KEY FEATURE
+Dialogue: 5,0:00:33.00,0:00:40.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,470)\fs23\c&H00D5E3E8&}7개 정착지 · 변화하는 지역
+
+Dialogue: 5,0:00:40.00,0:00:45.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,80)\fs18\fsp4\b1\c&H0054B4FF&}05 · ROUTE
+Dialogue: 5,0:00:40.00,0:00:45.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,130)\fs43\b1\c&H00D5E3E8&}길을 결정한다
+Dialogue: 5,0:00:40.00,0:00:45.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,222)\fs25\c&H00BDA49B&}거리·연료·시간·위험을 비교해\N다음 목적지와 경로를 고릅니다.
+Dialogue: 5,0:00:40.00,0:00:45.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,430)\fs18\fsp3\b1\c&H00CCDF6D&}KEY FEATURE
+Dialogue: 5,0:00:40.00,0:00:45.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,470)\fs23\c&H00D5E3E8&}경로 선택 · 자원 관리 · 주행
+
+Dialogue: 5,0:00:45.00,0:00:52.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,80)\fs18\fsp4\b1\c&H0054B4FF&}06 · CONSEQUENCE
+Dialogue: 5,0:00:45.00,0:00:52.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,130)\fs43\b1\c&H00D5E3E8&}기록이 결말이 된다
+Dialogue: 5,0:00:45.00,0:00:52.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,222)\fs25\c&H00BDA49B&}동료, 수집한 증거, 지역의 변화가\N서울의 마지막 선택으로 이어집니다.
+Dialogue: 5,0:00:45.00,0:00:52.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,430)\fs18\fsp3\b1\c&H00CCDF6D&}KEY FEATURE
+Dialogue: 5,0:00:45.00,0:00:52.00,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,470)\fs23\c&H00D5E3E8&}동료 관계 · 단서 · 멀티 엔딩
+
+Dialogue: 5,0:00:52.00,0:00:57.60,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,80)\fs18\fsp4\b1\c&H0054B4FF&}CORE FEATURES
+Dialogue: 5,0:00:52.00,0:00:57.60,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,130)\fs43\b1\c&H00D5E3E8&}하나의 이어지는 여정
+Dialogue: 5,0:00:52.00,0:00:57.60,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,222)\fs25\c&H00BDA49B&}경로 선택 · 자원 관리 · 전투\N동료 관계 · 정착지 · 멀티 엔딩
+Dialogue: 5,0:00:52.00,0:00:57.60,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,430)\fs18\fsp3\b1\c&H00CCDF6D&}OFFLINE PLAYABLE
+Dialogue: 5,0:00:52.00,0:00:57.60,Base,,0,0,0,,{\fad(250,250)\an7\pos(1352,470)\fs23\c&H00D5E3E8&}외부 런타임 의존성 없는 단일 빌드
+
+Dialogue: 5,0:00:57.60,0:01:03.00,Center,,0,0,0,,{\fad(500,700)\an5\pos(960,320)\fs20\fsp6\b1\c&H0054B4FF&}PLAYABLE BUILD
+Dialogue: 5,0:00:57.60,0:01:03.00,Center,,0,0,0,,{\fad(650,700)\an5\pos(960,430)\fs68\b1\c&H00D5E3E8&}서울까지 400km
+Dialogue: 5,0:00:57.60,0:01:03.00,Center,,0,0,0,,{\fad(800,700)\an5\pos(960,535)\fs30\c&H00BDA49B&}실제 플레이 기반 데모 영상
+Dialogue: 5,0:00:57.60,0:01:03.00,Center,,0,0,0,,{\fad(950,700)\an5\pos(960,650)\fs22\fsp2\c&H00CCDF6D&}게임 소개  ·  실제 플레이  ·  핵심 기능
+Dialogue: 5,0:00:57.60,0:01:03.00,Center,,0,0,0,,{\fad(1100,700)\an5\pos(960,750)\fs18\fsp3\c&H00BDA49B&}3분 이내 데모 영상 제출 규격

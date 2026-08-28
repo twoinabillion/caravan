@@ -27,3 +27,12 @@
 - Pixel art is reserved for the road-approach cue layer under `assets/road-cues/`; it must not be reused for narrative scenes or portraits.
 - A visual asset is not complete until its aspect ratio, dimensions, identity continuity, world continuity, and style checklist all pass. Machine validation checks geometry and files; a human or vision QA pass remains mandatory for style.
 - New assets must appear in the live gallery at `http://localhost:4173/__live/assets` before being wired into gameplay. After wiring, inspect the exact in-game crop and confirm that no unintroduced companion or landmark appears.
+
+
+<claude-mem-context>
+# Memory Context
+
+# [caravan] recent context, 2026-08-28 5:41pm GMT+9
+
+No previous sessions found.
+</claude-mem-context>

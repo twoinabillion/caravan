@@ -7,7 +7,7 @@ const SCENE = (()=>{
   let talkIdx = -1, talkT = 0;        // 말하는 탑승자 표시
   let LH = 128;
   let dcv, dctx, VW=560, VH=300, DPR=1;   // 표시 캔버스
-  let off, ctx, W=LW, H=LH;               // 픽셀 캔버스 (모든 드로잉)
+  let off, ctx, backdrop, backdropCtx, W=LW, H=LH; // 픽셀 캔버스 (모든 드로잉)
   let worldX=0, t=0, puffs=[], rainDrops=null, flashT=0, shoot=null, birds=null;
   let crowFly=[], crowCd={};
 
@@ -40,6 +40,7 @@ const SCENE = (()=>{
   function init(canvas){
     dcv=canvas; dctx=dcv.getContext('2d');
     off=document.createElement('canvas'); ctx=off.getContext('2d');
+    backdrop=document.createElement('canvas'); backdropCtx=backdrop.getContext('2d');
     new ResizeObserver(resize).observe(dcv); resize();
   }
   function resize(){
@@ -48,12 +49,13 @@ const SCENE = (()=>{
     dcv.width=VW*DPR; dcv.height=VH*DPR; dctx.setTransform(DPR,0,0,DPR,0,0);
     LH=Math.round(LW*VH/VW); W=LW; H=LH;
     off.width=W; off.height=H;
-    ctx.imageSmoothingEnabled=false; dctx.imageSmoothingEnabled=false;
+    backdrop.width=W; backdrop.height=H;
+    ctx.imageSmoothingEnabled=false; backdropCtx.imageSmoothingEnabled=false; dctx.imageSmoothingEnabled=false;
     rainDrops=null;
   }
 
   /* ── 하늘: 포스터라이즈 밴드 ── */
-  function drawSky(hour,dark,wx){
+  function drawSky(hour,dark,wx,advance=true){
     const [top,mid,glow]=skyAt(hour);
     const skyH=H*0.76, bands=13;
     for(let i=0;i<bands;i++){
@@ -70,8 +72,9 @@ const SCENE = (()=>{
         ctx.fillRect(x,y,1,1);
         if(i%11===0){ ctx.fillRect(x+1,y,1,1); ctx.fillRect(x,y+1,1,1); } } }
     /* 유성 */
-    if(dark>0.6&&!shoot&&Math.random()<0.0012) shoot={x:Math.random()*W,y:Math.random()*H*0.25,life:0.6};
-    if(shoot){ shoot.life-=0.016; shoot.x-=2.6; shoot.y+=1.2;
+    if(advance&&dark>0.6&&!shoot&&Math.random()<0.0012) shoot={x:Math.random()*W,y:Math.random()*H*0.25,life:0.6};
+    if(shoot){
+      if(advance){ shoot.life-=0.016; shoot.x-=2.6; shoot.y+=1.2; }
       if(shoot.life<=0) shoot=null;
       else{ ctx.strokeStyle=`rgba(230,238,255,${shoot.life})`; ctx.lineWidth=1;
         ctx.beginPath(); ctx.moveTo(shoot.x,shoot.y); ctx.lineTo(shoot.x+9,shoot.y-4); ctx.stroke(); } }
@@ -92,8 +95,8 @@ const SCENE = (()=>{
     cloudLayer(0.04, H*0.10, 5, `rgba(24,30,54,${0.30+0.15*dark})`);
     cloudLayer(0.09, H*0.22, 4, `rgba(20,25,46,${0.26+0.12*dark})`);
     /* 새 떼 (낮, 드물게) */
-    if(dark<0.3){ if(!birds&&Math.random()<0.0008) birds={x:W+10,y:H*0.15+Math.random()*H*0.15,life:99};
-      if(birds){ birds.x-=0.45;
+    if(dark<0.3){ if(advance&&!birds&&Math.random()<0.0008) birds={x:W+10,y:H*0.15+Math.random()*H*0.15,life:99};
+      if(birds){ if(advance) birds.x-=0.45;
         if(birds.x<-30) birds=null;
         else{ ctx.strokeStyle='rgba(20,26,40,0.8)'; ctx.lineWidth=1;
           for(let i=0;i<5;i++){ const bx=birds.x+i*5+(i%2)*2, by=birds.y+Math.abs(i-2)*2.4;
@@ -169,17 +172,62 @@ const SCENE = (()=>{
     }
   }
   /* ── 바이옴 (지역별 배경) ── */
-  function bioOf(){
-    if(!S) return 'rural';
-    if(S.driving){ const f=S.driving.gone/S.driving.dist;
-      return D.nodeBio[f<0.5?S.driving.from:S.driving.to]||'rural'; }
-    return D.nodeBio[S.at]||'rural';
+  function roadBackdropState(){
+    const profile=(id)=>({
+      bio:D.nodeBio&&D.nodeBio[id]||'rural',
+      scenery:D.nodeScenery&&D.nodeScenery[id]||'',
+    });
+    if(!S) return {from:profile(''),to:profile(''),mix:0};
+    if(!S.driving){ const here=profile(S.at); return {from:here,to:here,mix:0}; }
+    const from=profile(S.driving.from),to=profile(S.driving.to);
+    if(from.bio===to.bio&&from.scenery===to.scenery) return {from,to,mix:0};
+    const dist=Math.max(1,Number(S.driving.dist)||1);
+    const progress=Math.max(0,Math.min(1,(Number(S.driving.gone)||0)/dist));
+    /* 짧은 구간은 최소 4km, 긴 구간은 최대 14km 동안 섞는다. 이동 시간이
+       지나치게 짧거나 길어져도 풍경이 읽히면서 교체 자체가 연출처럼 보인다. */
+    const span=Math.min(.4,Math.max(.08,Math.min(14,Math.max(4,dist*.24))/dist));
+    const raw=Math.max(0,Math.min(1,(progress-(.5-span/2))/span));
+    const eased=raw*raw*raw*(raw*(raw*6-15)+10);
+    return {from,to,mix:eased};
   }
-  function sceneryOf(){
-    if(!S||!D.nodeScenery) return '';
-    if(S.driving){ const f=S.driving.gone/S.driving.dist;
-      return D.nodeScenery[f<0.5?S.driving.from:S.driving.to]||''; }
-    return D.nodeScenery[S.at]||'';
+  function drawBackdrop(profile,hour,dark,wx,advanceSky){
+    const bio=profile.bio;
+    drawSky(hour,dark,wx,advanceSky);
+    if(bio==='mount'){
+      ridge(H*0.42,20,0.008,3, mix('#1d2544','#0d111f',dark*0.55),0.08);
+      ridge(H*0.50,17,0.013,9, mix('#171d36','#0a0d19',dark*0.55),0.16);
+    } else {
+      ridge(H*0.52,11,0.009,3, mix('#1b2340','#0d111f',dark*0.55),0.1);
+      ridge(H*0.58,8,0.016,9, mix('#161c33','#0a0d19',dark*0.55),0.18);
+    }
+    namsan(dark);
+    if(bio==='coast'||bio==='lake') water(bio,dark);
+    localScenery(profile.scenery,dark);
+    const density = bio==='city'?0.85: bio==='coast'?0.3: bio==='mount'?0.18:
+      bio==='lake'?0.26: bio==='bamboo'?0.2: 0.45;
+    buildings(0.34,52,density,H*0.705,14, bio==='city'?66:58, mix('#131a2e','#080b15',dark*0.5),dark);
+    if(bio==='mount') cliffs(0.5, mix('#252c48','#111420',dark*0.5));
+    if(bio==='rural') paddies(0.5);
+    if(bio==='bamboo') bambooStrip(0.55);
+    if(bio!=='coast'&&bio!=='lake') pines(0.46,H*0.705, mix('#0f1626','#070a12',dark*0.5));
+    buildings(0.55,64,density*0.72,H*0.715,9,30, mix('#0f1526','#060910',dark*0.5),dark);
+  }
+  function drawRoadBackdrop(hour,dark,wx){
+    const state=roadBackdropState();
+    if(state.mix<=0){ drawBackdrop(state.from,hour,dark,wx,true); return; }
+    if(state.mix>=1){ drawBackdrop(state.to,hour,dark,wx,true); return; }
+    drawBackdrop(state.from,hour,dark,wx,true);
+    const mainCtx=ctx;
+    try{
+      ctx=backdropCtx;
+      ctx.clearRect(0,0,W,H);
+      drawBackdrop(state.to,hour,dark,wx,false);
+    } finally { ctx=mainCtx; }
+    ctx.save();
+    ctx.globalAlpha=state.mix;
+    ctx.imageSmoothingEnabled=false;
+    ctx.drawImage(backdrop,0,0);
+    ctx.restore();
   }
   /* 같은 바이옴 위에 얹는 지역의 기억. 낮은 실루엣으로만 그려 달구지와 날씨를 가리지 않는다. */
   function localScenery(kind,dark){
@@ -1453,26 +1501,7 @@ const SCENE = (()=>{
     const speed=S&&S.driving&&!UI.modalOpen()?approachSpeed:0;
     if(speed>0) worldX+=64*dt*speed;
 
-    drawSky(hour,dark,wx);
-    const bio=bioOf();
-    if(bio==='mount'){
-      ridge(H*0.42,20,0.008,3, mix('#1d2544','#0d111f',dark*0.55),0.08);
-      ridge(H*0.50,17,0.013,9, mix('#171d36','#0a0d19',dark*0.55),0.16);
-    } else {
-      ridge(H*0.52,11,0.009,3, mix('#1b2340','#0d111f',dark*0.55),0.1);
-      ridge(H*0.58,8,0.016,9, mix('#161c33','#0a0d19',dark*0.55),0.18);
-    }
-    namsan(dark);
-    if(bio==='coast'||bio==='lake') water(bio,dark);
-    localScenery(sceneryOf(),dark);
-    const density = bio==='city'?0.85: bio==='coast'?0.3: bio==='mount'?0.18:
-      bio==='lake'?0.26: bio==='bamboo'?0.2: 0.45;
-    buildings(0.34,52,density,H*0.705,14, bio==='city'?66:58, mix('#131a2e','#080b15',dark*0.5),dark);
-    if(bio==='mount') cliffs(0.5, mix('#252c48','#111420',dark*0.5));
-    if(bio==='rural') paddies(0.5);
-    if(bio==='bamboo') bambooStrip(0.55);
-    if(bio!=='coast'&&bio!=='lake') pines(0.46,H*0.705, mix('#0f1626','#070a12',dark*0.5));
-    buildings(0.55,64,density*0.72,H*0.715,9,30, mix('#0f1526','#060910',dark*0.5),dark);
+    drawRoadBackdrop(hour,dark,wx);
     const roadY=road(dark,wx);
     deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
     poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
@@ -1499,7 +1528,7 @@ const SCENE = (()=>{
      도착 시네마틱의 JPG를 확대해 쓰지 않는다. 논리 좌표는 터치 판정과
      작은 화면 구도를 위해 유지하되 3배 버퍼에 다시 그려 건축·사람·조명은
      픽셀 블록이 아니라 부드러운 코드 일러스트로 보이게 한다. */
-  const TOWN_W=236,TOWN_H=306,TOWN_RENDER_SCALE=1;
+  const TOWN_W=236,TOWN_H=306,TOWN_RENDER_SCALE=3,TOWN_ATLAS_SCALE=3;
   let town=null,townT=0;
   const tclamp=(n,a,b)=>Math.max(a,Math.min(b,n));
   function townPoint(pos){
@@ -1696,11 +1725,12 @@ const SCENE = (()=>{
   function townPixelAtlas(c,type,index,x,y,w,h){
     if(!townSpriteAtlas.complete||!townSpriteAtlas.naturalWidth)return false;
     c.save();c.imageSmoothingEnabled=false;
-    // atlas v2 cells are authored at exact render size so every draw is 1:1:
-    // buildings 50x43 at (i*55+2,2) / people 11x17 at (i*13+2,50) / crowd 7x12 at (i*9+110,52)
-    if(type==='building')c.drawImage(townSpriteAtlas,(index%4)*55+2,2,50,43,P(x),P(y),P(w),P(h));
-    else if(type==='crowd')c.drawImage(townSpriteAtlas,(index%8)*9+110,52,7,12,P(x),P(y),P(w),P(h));
-    else c.drawImage(townSpriteAtlas,(index%8)*13+2,50,11,17,P(x),P(y),P(w),P(h));
+    // v4 is a 3x atlas matched to the 3x settlement buffer. Facilities keep
+    // the reviewed source detail; people/crowd keep their exact v3 silhouettes.
+    const s=TOWN_ATLAS_SCALE;
+    if(type==='building')c.drawImage(townSpriteAtlas,((index%4)*55+2)*s,2*s,50*s,43*s,P(x),P(y),P(w),P(h));
+    else if(type==='crowd')c.drawImage(townSpriteAtlas,((index%8)*9+110)*s,52*s,7*s,12*s,P(x),P(y),P(w),P(h));
+    else c.drawImage(townSpriteAtlas,((index%8)*13+2)*s,50*s,11*s,17*s,P(x),P(y),P(w),P(h));
     c.restore();return true;
   }
   function townPixelBackdrop(c){
@@ -2035,5 +2065,6 @@ const SCENE = (()=>{
   }
 
   return {init,initTitle,draw,drawTitle,drawSettlementVan,initSettlement,drawSettlement,walkSettlement,closeSettlement,settlementState,
+    roadBackdropState,
     showMeal:(sec)=>{mealT=sec;}, talkPulse:(idx,sec)=>{talkIdx=idx; talkT=sec||3;}};
 })();

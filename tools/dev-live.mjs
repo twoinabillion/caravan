@@ -110,7 +110,8 @@ function gameShell(){
   #live.pending{pointer-events:auto;cursor:pointer;border-color:#e0a343;color:#ffd38a;box-shadow:0 5px 18px rgba(0,0,0,.35),0 0 0 1px rgba(224,163,67,.18)}
   </style></head><body><iframe id="game" src="/game?caravan-live=1&rev=${buildRevision}" allow="autoplay; fullscreen"></iframe>
   <button id="live" type="button">변경 확인 중</button><script>
-  const game=document.querySelector('#game'),badge=document.querySelector('#live');let hideTimer,pendingRevision=null,applying=false;
+  const game=document.querySelector('#game'),badge=document.querySelector('#live');
+  let hideTimer,pendingRevision=null,applying=false,studioFrozen=false,studioMedia=[];
   const show=(text,error=false,pending=false)=>{clearTimeout(hideTimer);badge.textContent=text;badge.className='show'+(error?' error':'')+(pending?' pending':'');};
   const hide=()=>{hideTimer=setTimeout(()=>badge.className='',1400)};
   const viewKey='caravan-live-view-v1';
@@ -150,6 +151,87 @@ function gameShell(){
       },120);
     }catch(error){ console.warn('[caravan live] view restore failed',error); }
   };
+  const studioVisible=(node,doc)=>{
+    if(!node||!node.getClientRects().length)return false;
+    const style=doc.defaultView.getComputedStyle(node),rect=node.getBoundingClientRect();
+    return style.display!=='none'&&style.visibility!=='hidden'&&Number(style.opacity||1)>0&&rect.width>1&&rect.height>1&&
+      rect.bottom>0&&rect.right>0&&rect.top<doc.defaultView.innerHeight&&rect.left<doc.defaultView.innerWidth;
+  };
+  const compactStudioContext=()=>{
+    const doc=game.contentDocument,win=game.contentWindow;
+    if(!doc||!win)return {screen:'unknown',why:'game document unavailable'};
+    const app=doc.querySelector('#app'),eventSheet=doc.querySelector('#ev-sheet');
+    let gameState=null;
+    try{
+      const raw=win.eval('JSON.stringify((typeof S!=="undefined"&&S)?{day:S.day,min:S.min,at:S.at,atName:S.at&&typeof D!=="undefined"&&D.nodes[S.at]?D.nodes[S.at].name:null,driving:S.driving,weather:S.wx,weatherNext:S.wxNext,fuel:S.fuel,fuelMax:S.fuelMax,water:S.water,food:S.food,scrap:S.scrap,van:S.van,vanMax:S.vanMax,party:S.party.map(function(id){return {id:id,name:typeof D!=="undefined"&&D.comps[id]?D.comps[id].name:id}}),dog:S.dog,quest:S.quest,recruitQuest:S.recruitQ,routePlan:S.routePlan,ended:S.ended}:null)');
+      gameState=raw?JSON.parse(raw):null;
+    }catch(error){ console.warn('[caravan live] state context failed',error); }
+    const surfaceIds=['scr-title','scr-mode','scr-name','scr-intro','scr-game','scr-end','ev-wrap','ovl-status','ovl-map','ovl-journal','ovl-menu','ovl-camp','ovl-local-actions','ovl-stl','quest-ledger','arrival-scene'];
+    const surfaces=surfaceIds.map(id=>doc.getElementById(id)).filter(node=>studioVisible(node,doc)||node.classList.contains('on')).map(node=>({
+      id:node.id,className:node.className,ariaHidden:node.getAttribute('aria-hidden'),dataset:{...node.dataset},
+      scroll:{left:node.scrollLeft||0,top:node.scrollTop||0}
+    }));
+    const visibleText=[];const seenText=new Set();
+    const textNodes=doc.querySelectorAll('h1,h2,h3,p,small,label,button,[role="heading"],[role="button"],[aria-live]');
+    for(const node of textNodes){
+      if(visibleText.length>=90||!studioVisible(node,doc))continue;
+      const text=(node.innerText||node.textContent||'').replace(/\\s+/g,' ').trim();
+      if(!text||text.length>280||seenText.has(text))continue;
+      seenText.add(text);visibleText.push(text);
+    }
+    const controls=[...doc.querySelectorAll('button,[role="button"],a[href],input,select,textarea')].filter(node=>studioVisible(node,doc)).slice(0,80).map(node=>({
+      tag:node.tagName.toLowerCase(),id:node.id||'',className:node.className||'',text:(node.innerText||node.getAttribute('aria-label')||node.value||'').replace(/\\s+/g,' ').trim().slice(0,180),
+      disabled:Boolean(node.disabled||node.getAttribute('aria-disabled')==='true'),pressed:node.getAttribute('aria-pressed'),dataset:{...node.dataset}
+    }));
+    const assets=[];
+    for(const node of [...doc.querySelectorAll('img,canvas,video')].filter(node=>studioVisible(node,doc)).slice(0,50)){
+      const rect=node.getBoundingClientRect(),source=node.currentSrc||node.src||'';
+      assets.push({tag:node.tagName.toLowerCase(),id:node.id||'',className:node.className||'',alt:node.alt||'',source:source.startsWith('data:')?'embedded-image':source,
+        rect:{x:Math.round(rect.x),y:Math.round(rect.y),width:Math.round(rect.width),height:Math.round(rect.height)}});
+    }
+    for(const node of [...doc.querySelectorAll('div,section,article,figure')]){
+      if(assets.length>=90||!studioVisible(node,doc))continue;
+      const background=win.getComputedStyle(node).backgroundImage;
+      if(!background||background==='none')continue;
+      const match=background.match(/url\\(["']?([^"')]+)["']?\\)/),rect=node.getBoundingClientRect();
+      assets.push({tag:'background',id:node.id||'',className:node.className||'',source:match?(match[1].startsWith('data:')?'embedded-image':match[1]):background.slice(0,180),dataset:{...node.dataset},
+        rect:{x:Math.round(rect.x),y:Math.round(rect.y),width:Math.round(rect.width),height:Math.round(rect.height)}});
+    }
+    return {
+      kind:'live_game_studio_frozen_scene',capturedAt:new Date().toISOString(),href:win.location.href,title:doc.title,
+      viewport:{width:win.innerWidth,height:win.innerHeight,dpr:win.devicePixelRatio||1},screen:app?.dataset.screen||'unknown',
+      eventId:eventSheet?.dataset.eventId||null,story:{phase:eventSheet?.dataset.storyPhase||null,step:eventSheet?.dataset.storyStep||null},
+      focus:doc.activeElement?{tag:doc.activeElement.tagName.toLowerCase(),id:doc.activeElement.id||'',text:(doc.activeElement.innerText||doc.activeElement.getAttribute('aria-label')||'').trim().slice(0,180)}:null,
+      game:gameState,surfaces,visibleText,controls,assets
+    };
+  };
+  const setStudioFrozen=frozen=>{
+    const doc=game.contentDocument;
+    if(!doc)return;
+    studioFrozen=frozen;
+    doc.documentElement.classList.toggle('qa-exact-replay',frozen);
+    if(frozen){
+      studioMedia=[...doc.querySelectorAll('audio,video')].map(node=>({node,playing:!node.paused}));
+      studioMedia.forEach(item=>{try{item.node.pause()}catch(error){}});
+    }else{
+      studioMedia.forEach(item=>{if(item.playing)try{item.node.play().catch(()=>{})}catch(error){}});
+      studioMedia=[];
+    }
+  };
+  window.addEventListener('message',event=>{
+    if(event.source!==parent||!event.data||typeof event.data!=='object')return;
+    if(event.data.type==='live-game-studio:freeze'){
+      setStudioFrozen(true);
+      setTimeout(()=>{
+        let context;
+        try{context=compactStudioContext()}catch(error){context={kind:'live_game_studio_frozen_scene',capturedAt:new Date().toISOString(),screen:'unknown',error:error.message}}
+        parent.postMessage({type:'live-game-studio:frozen',requestId:event.data.requestId,context},event.origin||'*');
+      },80);
+    }else if(event.data.type==='live-game-studio:resume'){
+      setStudioFrozen(false);
+      parent.postMessage({type:'live-game-studio:resumed',requestId:event.data.requestId},event.origin||'*');
+    }
+  });
   window.addEventListener('beforeunload',captureView);
   const stageRefresh=data=>{pendingRevision=data.revision;show('새 코드 준비됨 · 눌러서 적용',false,true)};
   const applyRefresh=()=>{
@@ -191,6 +273,8 @@ function gameShell(){
   badge.addEventListener('click',applyRefresh);
   game.addEventListener('load',()=>{
     setTimeout(restoreView,260);
+    if(studioFrozen)setTimeout(()=>setStudioFrozen(true),280);
+    try{parent.postMessage({type:'live-game-studio:ready'},'*')}catch(error){}
     if(applying){applying=false;show('전체 코드 반영됨');hide()}
   });
   const events=new EventSource('/__live/events');

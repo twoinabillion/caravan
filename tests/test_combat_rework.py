@@ -307,6 +307,83 @@ with sync_playwright() as playwright:
           and outcome_surface['choicesBackground'] == outcome_surface['buttonBackground'],
           str(outcome_surface))
 
+    print('― 능선 구조 진행·선택 하단 레이아웃')
+    exact_context = browser.new_context(
+        viewport={'width': 950, 'height': 908}, device_scale_factor=2
+    )
+    exact_page = exact_context.new_page()
+    exact_page.add_init_script(
+        "localStorage.clear();localStorage.setItem('caravan_story_auto','0')"
+    )
+    exact_page.goto(GAME)
+    exact_page.evaluate("""() => {
+      G.newGame('onroad','구조UI','full');
+      S.combat=null; S.injuries={}; S.pursuit=0;
+      UI.showEvent(D.events.find(e=>e.id==='route_ridge_rescue'));
+    }""")
+    exact_page.wait_for_timeout(140)
+    progress_layout = exact_page.evaluate("""() => {
+      const sheet=document.querySelector('#ev-sheet');
+      const dock=sheet.querySelector('.event-choice-dock');
+      const button=dock.querySelector('.story-next');
+      const latest=sheet.querySelector('[data-story-entry]:last-child');
+      const dockRect=dock.getBoundingClientRect();
+      const buttonRect=button.getBoundingClientRect();
+      const latestRect=latest.getBoundingClientRect();
+      return {
+        dpr:devicePixelRatio, step:sheet.dataset.storyStep,
+        gridRows:getComputedStyle(dock).gridTemplateRows,
+        dock:{top:dockRect.top,bottom:dockRect.bottom,height:dockRect.height},
+        button:{top:buttonRect.top,bottom:buttonRect.bottom,height:buttonRect.height},
+        latestBottom:latestRect.bottom, viewportBottom:innerHeight
+      };
+    }""")
+    check('950×908 · DPR 2에서 다음 버튼이 단일 행 안에 온전히 보인다',
+          progress_layout['dpr'] == 2
+          and progress_layout['step'] == 'beat'
+          and progress_layout['gridRows'] == '48px'
+          and progress_layout['button']['height'] >= 48
+          and progress_layout['button']['top'] >= progress_layout['dock']['top'] - .5
+          and progress_layout['button']['bottom'] <= progress_layout['dock']['bottom'] + .5
+          and progress_layout['dock']['bottom'] <= progress_layout['viewportBottom'] + .5
+          and progress_layout['latestBottom'] <= progress_layout['dock']['top'] + .5,
+          str(progress_layout))
+
+    exact_page.evaluate('UI.finishStory()')
+    exact_page.wait_for_timeout(140)
+    decision_layout = exact_page.evaluate(r"""() => {
+      const sheet=document.querySelector('#ev-sheet');
+      const dock=sheet.querySelector('.event-choice-dock');
+      const list=dock.querySelector('.choices');
+      const toggle=dock.querySelector('.event-detail-toggle');
+      const buttons=[...list.querySelectorAll('button.choice')].filter(node=>!node.hidden);
+      const dockStyle=getComputedStyle(dock);
+      const dockRect=dock.getBoundingClientRect();
+      const listRect=list.getBoundingClientRect();
+      const toggleRect=toggle.getBoundingClientRect();
+      const buttonRects=buttons.map(node=>node.getBoundingClientRect());
+      return {
+        step:sheet.dataset.storyStep,
+        label:buttons[0]?.textContent.replace(/\s+/g,' ').trim()||'',
+        choiceCount:buttons.length,
+        dockHeight:dockRect.height,
+        listSlack:Math.max(0,list.clientHeight-list.scrollHeight),
+        trailingSpace:Math.max(0,dockRect.bottom-parseFloat(dockStyle.paddingBottom)-toggleRect.bottom),
+        listToggleGap:toggleRect.top-listRect.bottom,
+        overlap:buttonRects.some((rect,index)=>index&&rect.top<buttonRects[index-1].bottom-.5)
+      };
+    }""")
+    check('견인줄 선택지는 내용 높이만 쓰고 추가 빈 공간을 만들지 않는다',
+          decision_layout['step'] == 'decision'
+          and '달구지를 바위 뒤에 걸고 견인줄을 내린다' in decision_layout['label']
+          and decision_layout['choiceCount'] == 2
+          and decision_layout['listSlack'] <= 1
+          and decision_layout['trailingSpace'] <= 1
+          and 4 <= decision_layout['listToggleGap'] <= 8
+          and not decision_layout['overlap'],
+          str(decision_layout))
+    exact_context.close()
+
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()
 
