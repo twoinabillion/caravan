@@ -180,6 +180,10 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Array.isArray(S.known)) S.known=[];
   if(!Array.isArray(S.visited)) S.visited=S.at?[S.at]:[];
   if(!Array.isArray(S.notes)) S.notes=[];
+  /* 문자열 note를 기록 객체로 오인하던 빌드가 남긴 제목 없는 빈 기록은
+     일지에서 다시 렌더링할 수 없으므로 불러올 때 제거한다. */
+  S.notes=S.notes.filter(note=>note&&typeof note==='object'&&!Array.isArray(note)
+    &&typeof note.title==='string'&&note.title.trim());
   if(!Number.isFinite(S.noteSeq)) S.noteSeq=S.notes.length;
   if(!S.npcs||typeof S.npcs!=='object'||Array.isArray(S.npcs)) S.npcs={};
   for(const id in D.npcs) if(!S.npcs[id]) S.npcs[id]={att:0,met:false,chat:[]};

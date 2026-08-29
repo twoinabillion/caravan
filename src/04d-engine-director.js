@@ -369,7 +369,7 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
 };
 
 /* fx 적용 → 표시용 칩 목록 반환 */
-G.applyFx = (fx)=>{
+G.applyFx = (fx,context={})=>{
   const chips = [];
   if(!fx) return chips;
   if(fx.routeChoice){
@@ -565,9 +565,16 @@ G.applyFx = (fx)=>{
     chips.push({t:`정식 동료 합류 · ${recruit.name} · ${recruit.cls} · 크루 ${S.party.length}/${Object.keys(D.comps).length}`,c:'plus'});
   }
   if(fx.note){
-    G.addNote(fx.note);
-    const noteKind=fx.note.type==='본편'?'본편 단서':fx.note.type==='소문'?'새 소문':'새 기록';
-    chips.push({t:`${noteKind} · ${fx.note.title}`,c:'item'});
+    /* 연속 스토리의 짧은 문자열 note는 현재 사건 제목 아래 기록한다.
+       객체 전용 경로로 흘려 보내면 title이 undefined인 빈 일지가 생긴다. */
+    const note=typeof fx.note==='string'
+      ?{type:'사건',title:String(context.noteTitle||'길 위의 선택'),body:fx.note,links:[]}
+      :fx.note;
+    const added=G.addNote(note);
+    if(added){
+      const noteKind=added.type==='본편'?'본편 단서':added.type==='소문'?'새 소문':'새 기록';
+      chips.push({t:`${noteKind} · ${added.title}`,c:'item'});
+    }
   }
   for(const learned of G.syncKnowledgeFromFlags())
     chips.push({t:`◈ ${learned.label} · ${learned.level>=2?'확인':'단서'}`,c:'item'});

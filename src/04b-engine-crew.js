@@ -532,12 +532,15 @@ G.pickOutcome = (evd, choice)=>{
 
 /* ── notes (지식 그래프) ── */
 G.addNote = (n)=>{
-  const ex = S.notes.find(x=>x.title===n.title);
-  if(ex){ if(n.body && !ex.body.includes(n.body)) ex.body += '\n'+n.body;
+  if(!n||typeof n!=='object'||Array.isArray(n)||typeof n.title!=='string'||!n.title.trim()) return null;
+  const title=n.title.trim(), body=typeof n.body==='string'?n.body:'';
+  const links=Array.isArray(n.links)?n.links:[];
+  const ex = S.notes.find(x=>x.title===title);
+  if(ex){ if(body && !ex.body.includes(body)) ex.body += '\n'+body;
     /* 같은 제목에 무한히 붙으면 세이브·일지가 비대해진다 — 최근 기록만 남긴다 */
     const lines=ex.body.split('\n'); if(lines.length>20) ex.body=lines.slice(-20).join('\n');
-    (n.links||[]).forEach(l=>{ if(!ex.links.includes(l)) ex.links.push(l) }); ex.day=S.day; return ex; }
-  const note = {id:'n'+(S.noteSeq++), type:n.type||'사건', title:n.title, body:n.body||'', links:n.links||[], day:S.day};
+    links.forEach(l=>{ if(!ex.links.includes(l)) ex.links.push(l) }); ex.day=S.day; return ex; }
+  const note = {id:'n'+(S.noteSeq++), type:n.type||'사건', title, body, links, day:S.day};
   S.notes.push(note); return note;
 };
 

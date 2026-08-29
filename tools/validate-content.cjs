@@ -145,6 +145,18 @@ function validateFx(fx, where) {
     need(Number.isFinite(fx.relation && fx.relation.amount) && fx.relation.amount !== 0,
       where, '관계 변화량이 0이거나 숫자가 아님');
   }
+  if (fx.note !== undefined) {
+    if (typeof fx.note === 'string') {
+      need(fx.note.trim(), where, '기록 문장이 비었음');
+    } else {
+      need(isObject(fx.note), where, '기록이 문자열 또는 객체가 아님');
+      if (isObject(fx.note)) {
+        need(typeof fx.note.title === 'string' && fx.note.title.trim(), where, '기록 제목이 비었음');
+        need(fx.note.body === undefined || typeof fx.note.body === 'string', where, '기록 본문이 문자열이 아님');
+        need(fx.note.links === undefined || Array.isArray(fx.note.links), where, '기록 연결이 배열이 아님');
+      }
+    }
+  }
 }
 
 for (const event of events) {

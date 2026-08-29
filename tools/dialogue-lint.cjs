@@ -193,6 +193,7 @@ for (const id of personIds) {
 const eventById = new Map(allEvents.map(event => [event.id, event]));
 const speakerIds = new Set([
   ...Object.keys(D.comps || {}), ...Object.keys(D.npcs || {}),
+  ...Object.keys(D.speakerNames || {}),
   ...Object.values(D.eventPortraits || {}), ...(D.legacyIllustratedPortraits || []),
   'me','나','sys','record','radio','cheollian','grandfather','mother','father',
   'player_child','intro_child','unknown','passer_man','passer_woman','passer_elder',
@@ -209,6 +210,8 @@ const validateSpeaker = (value, scope) => {
 for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
   const event=eventById.get(eventId);
   if(!event){ errors.push(`화자 스크립트의 사건 누락: ${eventId}`); continue; }
+  if(script.text&&JSON.stringify(event.turnSpeakers)!==JSON.stringify(script.text))
+    errors.push(`본문 화자 스크립트 미적용: ${eventId}`);
   if(script.text&&typeof event.text==='string'&&script.text.length!==quotedParts(event.text,event.parseRecords).length)
     errors.push(`본문 화자 수와 발화 수 불일치: ${eventId} / 화자 ${script.text.length} · 발화 ${quotedParts(event.text,event.parseRecords).length}`);
   for(const [index,value] of (script.text||[]).entries()) validateSpeaker(value,`${eventId}.text.${index}`);
@@ -217,12 +220,54 @@ for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
     const outcome=event.choices&&event.choices[choiceIndex]&&event.choices[choiceIndex].out
       &&event.choices[choiceIndex].out[outcomeIndex];
     if(!outcome) errors.push(`화자 스크립트 결과 경로 누락: ${eventId} / ${path}`);
+    if(outcome&&JSON.stringify(outcome.turnSpeakers)!==JSON.stringify(speakers))
+      errors.push(`결과 화자 스크립트 미적용: ${eventId}.${path}`);
     if(outcome&&typeof outcome.text==='string'&&speakers.length!==quotedParts(outcome.text,event.parseRecords).length)
       errors.push(`결과 화자 수와 발화 수 불일치: ${eventId}.${path} / 화자 ${speakers.length} · 발화 ${quotedParts(outcome.text,event.parseRecords).length}`);
     for(const [index,value] of (speakers||[]).entries()) validateSpeaker(value,`${eventId}.${path}.${index}`);
   }
 }
-for(const id of ['resist_reveal','cell_sea_meet','gw_gangneung']){
+const criticalSpeakerSequences = [
+  ['comp_engine_sound','0.0',['minji','minji','minji']],
+  ['comp_leo_song','0.0',['leo','leo']],
+  ['comp_kw_stop','text',['kangwoo','me','kangwoo']],
+  ['pss_daejeon','0.0',['passer_medic','passer_medic','parkss','passer_medic','parkss','passer_medic','parkss','passer_medic']],
+  ['comp_satellite','0.0',['me','eunsu','eunsu','me','eunsu','eunsu']],
+  ['parkss_bag','0.0',['parkss','me','parkss','parkss','parkss']],
+  ['ev_parkss_eunsu','text',['parkss','eunsu','parkss','parkss','eunsu','parkss']],
+  ['talk_kw_18','text',['kangwoo','kangwoo']],
+  ['talk_kw_19','0.0',['kangwoo','kangwoo']],
+  ['talk_jy_19','text',['jaeyi','jaeyi','jaeyi']],
+  ['talk_es_19','0.0',['eunsu','eunsu','eunsu','me']],
+  ['initiative_eunsu_silence','1.0',['kangwoo','eunsu','kangwoo','eunsu','me']],
+  ['conflict_silent_cab','0.0',['me','parkss','kangwoo']],
+  ['conflict_campfire','text',['kangwoo','parkss','kangwoo','parkss','kangwoo','parkss']],
+  ['resist_signal_leak','text',['taesik']],
+  ['resist_seoul_edge_preserve','1.0',['taesik']],
+  ['resist_seoul_edge_cutoff','text',['seojin','taesik']],
+  ['parents_mother_reunion','0.0',['mother']]
+];
+for(const [eventId,path,expected] of criticalSpeakerSequences){
+  const event=eventById.get(eventId);
+  const actual=path==='text'
+    ? event&&event.turnSpeakers
+    : event&&event.choices&&event.choices[+path.split('.')[0]]&&
+      event.choices[+path.split('.')[0]].out&&event.choices[+path.split('.')[0]].out[+path.split('.')[1]]&&
+      event.choices[+path.split('.')[0]].out[+path.split('.')[1]].turnSpeakers;
+  const ids=(actual||[]).map(speakerKey);
+  if(JSON.stringify(ids)!==JSON.stringify(expected))
+    errors.push(`핵심 화자 순서 회귀: ${eventId}.${path} / ${ids.join(' → ')}`);
+}
+for(const [id,name] of Object.entries({seojin:'서진',taesik:'태식'})){
+  if(!D.speakerNames||D.speakerNames[id]!==name)
+    errors.push(`반복 화자 화면 이름 누락: ${id} / ${name}`);
+}
+for(const id of [
+  'resist_reveal','cell_sea_meet','gw_gangneung',
+  'initiative_eunsu_silence','conflict_silent_cab','conflict_campfire',
+  'resist_signal_leak','resist_seoul_edge_preserve','resist_seoul_edge_cutoff',
+  'parents_mother_reunion'
+]){
   if(!D.eventTurnScripts||!D.eventTurnScripts[id]) errors.push(`핵심 서사 화자 스크립트 누락: ${id}`);
 }
 const groundedDialogueBreaks=[

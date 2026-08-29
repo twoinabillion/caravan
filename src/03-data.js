@@ -9,6 +9,8 @@ const D = {};
    예) D.portraits.me = 'data:image/png;base64,....';
    프롬프트 가이드: ~/seoul-400km/portrait-prompts.md          */
 D.portraits = {};
+/* 초상 ID만 있고 정착지 NPC 정의에는 속하지 않는 반복 화자의 화면 이름. */
+D.speakerNames = {seojin:'서진', taesik:'태식'};
 
 /* ── 아이콘 슬롯 ──
    32×32 투명 PNG를 data URI로 붙이면 HUD·상태·거래·날씨 표시가 교체된다.
@@ -12970,6 +12972,84 @@ D.eventTurnScripts = {
       {who:'passer_worker',name:'십장'},'me',
       {who:'passer_worker',name:'십장'},{who:'passer_worker',name:'십장'},
       {who:'passer_worker',name:'십장'}]}},
+  comp_engine_sound:{
+    text:['minji','me','minji','minji'],
+    choices:{
+      '0.0':['minji','minji','minji'],
+      '1.0':['minji','minji','minji'],
+      '2.0':['minji'],
+      '2.1':['minji']}},
+  comp_leo_song:{
+    text:['leo'],
+    choices:{'0.0':['leo','leo'],'1.0':['leo']}},
+  comp_kw_stop:{
+    text:['kangwoo','me','kangwoo'],
+    choices:{
+      '0.0':['me','kangwoo','kangwoo','kangwoo'],
+      '1.1':['me','kangwoo','me','kangwoo']}},
+  pss_daejeon:{
+    text:['parkss','me','parkss','parkss'],
+    choices:{'0.0':[
+      {who:'passer_medic',name:'수진'},{who:'passer_medic',name:'수진'},'parkss',
+      {who:'passer_medic',name:'수진'},'parkss',{who:'passer_medic',name:'수진'},
+      'parkss',{who:'passer_medic',name:'수진'}]}},
+  comp_satellite:{
+    text:['eunsu','me','eunsu','eunsu'],
+    choices:{'0.0':['me','eunsu','eunsu','me','eunsu','eunsu']}},
+  parkss_bag:{choices:{
+    '0.0':['parkss','me','parkss','parkss','parkss'],
+    '1.0':['parkss','me','parkss','parkss','parkss','parkss']}},
+  ev_parkss_eunsu:{
+    text:['parkss','eunsu','parkss','parkss','eunsu','parkss'],
+    choices:{
+      '0.0':['eunsu','parkss','parkss'],
+      '1.0':['me','parkss']}},
+  talk_kw_18:{
+    text:['kangwoo','kangwoo'],
+    choices:{'1.0':['kangwoo','kangwoo','me']}},
+  talk_kw_19:{
+    text:['kangwoo','kangwoo'],
+    choices:{
+      '0.0':['kangwoo','kangwoo'],
+      '1.0':['kangwoo','me','kangwoo','kangwoo']}},
+  talk_jy_19:{
+    text:['jaeyi','jaeyi','jaeyi'],
+    choices:{
+      '0.0':['jaeyi','me','jaeyi','jaeyi'],
+      '1.0':['jaeyi','jaeyi','jaeyi']}},
+  talk_es_19:{
+    text:['eunsu'],
+    choices:{
+      '0.0':['eunsu','eunsu','eunsu','me'],
+      '1.0':['eunsu','me']}},
+  initiative_eunsu_silence:{
+    text:['me','eunsu','eunsu'],
+    choices:{
+      '0.0':['eunsu','me','eunsu'],
+      '1.0':['kangwoo','eunsu','kangwoo','eunsu','me']}},
+  conflict_silent_cab:{choices:{
+    '0.0':['me','parkss','kangwoo']}},
+  conflict_campfire:{
+    text:['kangwoo','parkss','kangwoo','parkss','kangwoo','parkss'],
+    choices:{'0.0':['kangwoo','parkss']}},
+  resist_first_contact:{text:['seojin']},
+  resist_human_check_trial:{
+    text:['seojin'],choices:{'2.0':['seojin']}},
+  resist_refusal_return:{
+    text:['seojin'],choices:{'0.0':['seojin'],'1.0':['seojin']}},
+  resist_mid_depot_conflict:{text:['taesik']},
+  resist_bridge_consequence:{text:['seojin']},
+  resist_check_consequence:{text:['seojin']},
+  resist_signal_leak:{text:['taesik']},
+  resist_archive_aftermath:{text:['taesik']},
+  resist_seoul_edge_preserve:{
+    text:['seojin'],choices:{'0.0':['seojin'],'1.0':['taesik']}},
+  resist_seoul_edge_cutoff:{
+    text:['seojin','taesik'],choices:{'1.0':['taesik']}},
+  memory_grandfather_workshop:{choices:{'1.0':['grandfather']}},
+  parents_mother_reunion:{choices:{
+    '0.0':['mother'],'1.0':['mother']}},
+  parents_mother_truth:{choices:{'0.0':['mother']}},
   story_family_principle:{
     text:['father','mother','father','mother','father','mother','father','mother','father','mother','father','mother'],
     choices:{'0.0':['mother']}},
@@ -13071,8 +13151,9 @@ D.eventTurnScripts = {
     '0.0':['kangwoo']}}
 };
 
-/* 이름을 밝힌 뒤 진행되는 합류 과제에서는 다시 익명 행인 초상으로 돌아가지 않는다. */
-D.events.forEach(event=>{
+/* 이름을 밝힌 뒤 진행되는 합류 과제에서는 다시 익명 행인 초상으로 돌아가지 않는다.
+   이 파일은 뒤에서도 사건을 추가하므로 마지막 추가 뒤에 한 번 더 호출한다. */
+D.applyEventSpeakerMetadata=()=>D.events.forEach(event=>{
   const recruit=String(event.id||'').match(/^rq_(minji|parkss|leo|jaeyi|eunsu|kangwoo)_(?:task|follow|join)$/);
   if(recruit){
     event.speakers=[recruit[1]];
@@ -13095,6 +13176,7 @@ D.events.forEach(event=>{
     if(outcome) outcome.turnSpeakers=speakers;
   });
 });
+D.applyEventSpeakerMetadata();
 
 D.events.push(...[
 {
@@ -13992,3 +14074,6 @@ D.events.push(...[
   {label:'멈춘 카메라를 확인한다',out:[{p:1,text:'전원은 들어왔지만 기록등은 꺼져 있었다. 누가 껐는지는 알 수 없었다. 적어도 지금은 아무도 우리를 세지 않았다.',fx:{time:20,pursuit:-1,moodAll:1}}]}
  ]}
 ]);
+
+/* 위의 화자 지정표보다 늦게 추가된 저항·가족·도로 사건에도 같은 정본을 적용한다. */
+D.applyEventSpeakerMetadata();

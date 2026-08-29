@@ -1135,7 +1135,8 @@ const UI = (()=>{
     };
     const comp=D.comps&&D.comps[key], npc=D.npcs&&D.npcs[key];
     const playerName=key==='me'&&typeof S!=='undefined'&&S&&G.myName?G.myName():'나';
-    const resolvedManual=(typeof manual[key]==='string'&&manual[key])?manual[key]:normalizeUnknown(key);
+    const registered=D.speakerNames&&D.speakerNames[key];
+    const resolvedManual=registered||((typeof manual[key]==='string'&&manual[key])?manual[key]:normalizeUnknown(key));
     return {
       id:key,
       name:label||(key==='me'?playerName:(comp&&comp.name)||(npc&&npc.name)||resolvedManual),
@@ -1286,6 +1287,9 @@ function dialogueSide(turn,lanes,opt={}){
       {id:'father',names:['아빠','아버지']}
     ];
     family.forEach(item=>{ if(state.candidates.includes(item.id)) out.push(item); });
+    for(const [id,name] of Object.entries(D.speakerNames||{})){
+      if(state.candidates.includes(id)) out.push({id,names:[name]});
+    }
     for(const [id,c] of Object.entries(D.comps||{})){
       if(state.candidates.includes(id)||(typeof S!=='undefined'&&S&&S.party&&S.party.includes(id)))
         out.push({id,names:[c.name]});
@@ -3075,7 +3079,7 @@ function dialogueSide(turn,lanes,opt={}){
        시작·중간 단계는 applyFx가 교전 상태를 만든 뒤 기록한다. */
     const combatMeta = out&&out.combatMeta&&typeof out.combatMeta==='object' ? out.combatMeta : null;
     let combatEntry=out.fx&&out.fx.combatEnd?G.rememberCombatChoice(curEv,choice,combatMeta):null;
-    const chips=G.applyFx(out.fx);
+    const chips=G.applyFx(out.fx,{noteTitle:curEv&&curEv.title});
     if(curEv&&curEv.needsComp&&typeof G.checkLevel==='function') G.checkLevel(curEv.needsComp,{story:true});
     if(!combatEntry) combatEntry=G.rememberCombatChoice(curEv,choice,combatMeta);
     let combatHud='';
