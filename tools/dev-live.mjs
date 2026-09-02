@@ -103,17 +103,19 @@ function gameShell(){
   <title>서울까지 400km · LIVE</title><style>
   html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#070b13}
   iframe{display:block;width:100%;height:100%;border:0;background:#070b13}
-  #live{appearance:none;position:fixed;right:10px;bottom:10px;z-index:20;padding:7px 10px;border:1px solid #b87528;
+  #live{appearance:none;position:fixed;right:10px;bottom:10px;z-index:20;min-height:36px;padding:7px 10px;border:1px solid #66583e;
     border-radius:6px;background:rgba(7,13,20,.94);color:#efe6d5;font:700 11px/1.2 sans-serif;
-    box-shadow:0 5px 18px rgba(0,0,0,.35);opacity:0;transform:translateY(5px);transition:.18s ease;pointer-events:none}
-  #live.show{opacity:1;transform:none}#live.error{border-color:#a94442;color:#f2b8b5}
+    box-shadow:0 5px 18px rgba(0,0,0,.35);opacity:1;transform:none;transition:.18s ease;pointer-events:auto;cursor:pointer}
+  #live.show{opacity:1;transform:none}#live.idle{border-color:#66583e;color:#d8c9ab}
+  #live:disabled{cursor:wait;opacity:.76}#live.error{border-color:#a94442;color:#f2b8b5}
   #live.pending{pointer-events:auto;cursor:pointer;border-color:#e0a343;color:#ffd38a;box-shadow:0 5px 18px rgba(0,0,0,.35),0 0 0 1px rgba(224,163,67,.18)}
   </style></head><body><iframe id="game" src="/game?caravan-live=1&rev=${buildRevision}" allow="autoplay; fullscreen"></iframe>
-  <button id="live" type="button">변경 확인 중</button><script>
+  <button id="live" class="show idle" type="button" aria-live="polite" title="저장 상태를 유지하고 최신 빌드를 다시 불러옵니다">최신 코드 적용</button><script>
   const game=document.querySelector('#game'),badge=document.querySelector('#live');
-  let hideTimer,pendingRevision=null,applying=false,studioFrozen=false,studioMedia=[];
-  const show=(text,error=false,pending=false)=>{clearTimeout(hideTimer);badge.textContent=text;badge.className='show'+(error?' error':'')+(pending?' pending':'');};
-  const hide=()=>{hideTimer=setTimeout(()=>badge.className='',1400)};
+  let hideTimer,pendingRevision=null,applying=false,applyWhenReady=false,studioFrozen=false,studioMedia=[];
+  const idle=()=>{clearTimeout(hideTimer);badge.disabled=false;badge.textContent='최신 코드 적용';badge.className='show idle'};
+  const show=(text,error=false,pending=false,busy=false)=>{clearTimeout(hideTimer);badge.disabled=busy;badge.textContent=text;badge.className='show'+(error?' error':'')+(pending?' pending':'');};
+  const hide=()=>{hideTimer=setTimeout(idle,1400)};
   const viewKey='caravan-live-view-v1';
   const captureView=()=>{
     try{
@@ -163,7 +165,7 @@ function gameShell(){
     const app=doc.querySelector('#app'),eventSheet=doc.querySelector('#ev-sheet');
     let gameState=null;
     try{
-      const raw=win.eval('JSON.stringify((typeof S!=="undefined"&&S)?{day:S.day,min:S.min,at:S.at,atName:S.at&&typeof D!=="undefined"&&D.nodes[S.at]?D.nodes[S.at].name:null,driving:S.driving,weather:S.wx,weatherNext:S.wxNext,fuel:S.fuel,fuelMax:S.fuelMax,water:S.water,food:S.food,scrap:S.scrap,van:S.van,vanMax:S.vanMax,party:S.party.map(function(id){return {id:id,name:typeof D!=="undefined"&&D.comps[id]?D.comps[id].name:id}}),dog:S.dog,quest:S.quest,recruitQuest:S.recruitQ,routePlan:S.routePlan,ended:S.ended}:null)');
+      const raw=win.eval('JSON.stringify((typeof S!=="undefined"&&S)?{day:S.day,min:S.min,at:S.at,atName:S.at&&typeof D!=="undefined"&&D.nodes[S.at]?D.nodes[S.at].name:null,driving:S.driving,weather:S.wx,weatherNext:S.wxNext,fuel:S.fuel,fuelMax:S.fuelMax,water:S.water,waterMax:S.waterMax,food:S.food,foodMax:S.foodMax,scrap:S.scrap,van:S.van,vanMax:S.vanMax,party:S.party.map(function(id){return {id:id,name:typeof D!=="undefined"&&D.comps[id]?D.comps[id].name:id}}),dog:S.dog,quest:S.quest,recruitQuest:S.recruitQ,routePlan:S.routePlan,ended:S.ended}:null)');
       gameState=raw?JSON.parse(raw):null;
     }catch(error){ console.warn('[caravan live] state context failed',error); }
     const surfaceIds=['scr-title','scr-mode','scr-name','scr-intro','scr-game','scr-end','ev-wrap','ovl-status','ovl-map','ovl-journal','ovl-menu','ovl-camp','ovl-local-actions','ovl-stl','quest-ledger','arrival-scene'];
@@ -233,14 +235,28 @@ function gameShell(){
     }
   });
   window.addEventListener('beforeunload',captureView);
-  const stageRefresh=data=>{pendingRevision=data.revision;show('새 코드 준비됨 · 눌러서 적용',false,true)};
-  const applyRefresh=()=>{
-    if(!pendingRevision)return;
+  const stageRefresh=data=>{
+    pendingRevision=data.revision;
+    if(applyWhenReady){applyWhenReady=false;applyRefresh();return}
+    show('새 코드 준비됨 · 적용',false,true)
+  };
+  const applyRefresh=async()=>{
+    if(applying)return;
+    let revision=pendingRevision;
+    if(!revision){
+      show('최신 코드 확인 중',false,false,true);
+      try{
+        const response=await fetch('/__live/status',{cache:'no-store'});
+        if(!response.ok)throw new Error('status '+response.status);
+        const status=await response.json();
+        if(status.building||status.queued){applyWhenReady=true;show('코드 빌드 중 · 완료 후 적용',false,false,true);return}
+        revision=status.revision||Date.now();
+      }catch(error){console.warn('[caravan live] latest revision failed',error);show('개발 서버 연결 확인',true);hide();return}
+    }
     captureView();
     applying=true;
-    const revision=pendingRevision;
     pendingRevision=null;
-    show('전체 코드 적용 중');
+    show('최신 코드 적용 중',false,false,true);
     game.src='/game?caravan-live=1&rev='+revision;
   };
   const applyStyles=async data=>{
@@ -275,7 +291,7 @@ function gameShell(){
     setTimeout(restoreView,260);
     if(studioFrozen)setTimeout(()=>setStudioFrozen(true),280);
     try{parent.postMessage({type:'live-game-studio:ready'},'*')}catch(error){}
-    if(applying){applying=false;show('전체 코드 반영됨');hide()}
+    if(applying){applying=false;show('최신 코드 반영됨');hide()}
   });
   const events=new EventSource('/__live/events');
   events.addEventListener('build',()=>show('변경 반영 중'));

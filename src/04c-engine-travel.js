@@ -179,7 +179,7 @@ G.updateRouteOnArrival = to=>{
   if(rs.state.id==='ridge'){
     S.pursuit=Math.max(0,S.pursuit-1); G.moodAll(2);
   } else {
-    S.food+=2; S.water+=2;
+    G.addSupply('food',2); G.addSupply('water',2);
   }
   G.addNote({type:'사건',title:`노선 완주: ${rs.def.name}`,
     body:`김천에서 고른 길을 청주까지 바꾸지 않고 왔다. ${rs.def.reward}.`,links:['달구지']});
@@ -356,13 +356,13 @@ G.normalizeDriveSlots = dv=>{
     S._driveLegsSinceBlock=quiet+1;
     return dv;
   }
-  const rank=slot=>slot.special==='bridge'?100:slot.forced?90:slot.beat?80:slot.pillarPick?70:slot.special==='impact'?60:10;
+  const rank=slot=>slot.special==='bridge'?100:slot.forced?90:slot.waypoint?85:slot.beat?80:slot.pillarPick?70:slot.special==='impact'?60:10;
   const ranked=[...dv.slots].sort((a,b)=>rank(b)-rank(a)||a.at-b.at);
   const maxSlots=dv.dist>=55?2:1;
   const chosen=ranked.slice(0,maxSlots);
   /* 예약된 여정 비트는 무작위 사건이 아니다. 짧은 구간의 호흡 조절이 beat 슬롯까지
      지우면 "다음 구간에서 보장" 계약이 깨지고, 핵심 본편이 서울 도착 전 누락된다. */
-  const critical=chosen.some(slot=>slot.special==='bridge'||!!slot.forced||!!slot.beat);
+  const critical=chosen.some(slot=>slot.special==='bridge'||slot.special==='impact'||!!slot.forced||!!slot.waypoint||!!slot.beat||!!slot.pillarPick);
   if(!critical&&dv.dist<30){
     dv.slots=[];
     S._driveLegsSinceBlock=quiet+1;
@@ -439,6 +439,9 @@ G.startTravel = (to)=>{
   if(!isBridge) G.prepareSettlementRoadEcho(S.driving,from,to);
   G.prepareRecruitGuest(S.driving);
   G.prepareRecruitMemory(S.driving);
+  /* 위치 사건·여정 비트·동행자의 사건 회피까지 모두 정해진 뒤 최종 슬롯에
+     호흡 조절을 적용한다. 만들어만 두고 호출하지 않으면 매 구간 사건이 몰린다. */
+  G.normalizeDriveSlots(S.driving);
   S.at = null;
   if(S.mode==='offroad') OFF.prefetch();
   UI.onDepart();
@@ -589,7 +592,10 @@ G.eventAvailable = (ev,context={})=>{
   const nodeId=context.node||(mode==='waypoint'?context.to:S.at);
   if(!ev||ev.w<=0||ev.fixed||ev.locEvent) return false;
   if(context.typeFilter&&ev.type!==context.typeFilter) return false;
-  if(ev.once&&S.used.includes(ev.id)) return false;
+  /* 일반 풀에서 한 번 본 장면은 속성에 관계없이 다시 추첨하지 않는다.
+     fixed 체인과 플레이어가 직접 다시 말을 거는 영입 만남은 openEventById로
+     이어지므로, 서사 진행을 막지 않으면서 우연한 재등장만 끊는다. */
+  if(ev.id&&S.used.includes(ev.id)) return false;
   if(mode==='node'){
     if(!location||location.kind!=='node'||!location.nodes.includes(nodeId)) return false;
   } else if(mode==='waypoint'){

@@ -591,7 +591,7 @@ G.mealForecast = mins=>{
 G.consumeMeal = kind=>{
   const need=G.mealNeed(kind), before=clamp(Number(S.hunger)||0,0,3);
   const used=Math.min(Math.max(0,S.food),need), ok=used>=need;
-  S.food=Math.max(0,S.food-used);
+  G.addSupply('food',-used);
   if(ok){
     S.hunger=Math.max(0,before-1);
     return {ok,need,used,before,after:S.hunger,fatigue:0,mood:0};
@@ -651,7 +651,7 @@ G.lunch = ()=>{
 G.breakfast = ()=>{
   const need=G.mealNeed('breakfast');
   const waterUsed=Math.min(Math.max(0,S.water),need), waterOk=waterUsed>=need;
-  S.water=Math.max(0,S.water-waterUsed);
+  G.addSupply('water',-waterUsed);
   let waterFatigue=0,waterMood=0;
   if(waterOk) S.thirst=0;
   else {
@@ -673,13 +673,13 @@ G.breakfast = ()=>{
     if(S.up&&S.up.kitchen) G.moodAll(1);
     if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)});
   }
-  if(S.up&&S.up.beehive&&rng()<0.3){ S.food+=1; G.moodAll(2);
-    UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }
+  if(S.up&&S.up.beehive&&rng()<0.3){ const honey=G.addSupply('food',1); G.moodAll(2);
+    if(honey.delta) UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }
   if(G.hasComp('leo')) G.moodAll(3); // 레오의 아침 기타
-  if(S.up&&S.up.garden){ S.food += S.up.garden2?2:1; }
+  if(S.up&&S.up.garden) G.addSupply('food',S.up.garden2?2:1);
   if(S.up&&S.up.fridge){ S._fridgeD=(S._fridgeD||0)+1;
-    if(S._fridgeD>=3){ S._fridgeD=0; S.food+=1; UI.toast('🧊 냉장 박스 — 아낀 식량 +1'); } }
-  if(S.up&&S.up.collector){ S.water += G.isWet()?2:1; }
+    if(S._fridgeD>=3){ S._fridgeD=0; const saved=G.addSupply('food',1); if(saved.delta) UI.toast('🧊 냉장 박스 — 아낀 식량 +1'); } }
+  if(S.up&&S.up.collector) G.addSupply('water',G.isWet()?2:1);
   G.save();
 };
 G.dawn = ()=>{
@@ -691,7 +691,7 @@ G.dawn = ()=>{
   S.wx=S.wxNext; S.wxNext=G.rollWx(S.wx);
   G.tickInjuries();
   if(S.driving) S.driving.wx=S.wx;
-  if(S.wx!==prevWx) UI.toast(`${D.wx[S.wx].ic} ${D.wx[S.wx].nm}${D.wx[S.wx].hint?' — '+D.wx[S.wx].hint:''}`);
+  if(S.wx!==prevWx) UI.toast(`${D.wx[S.wx].ic} ${D.wx[S.wx].nm}${D.wx[S.wx].hint?' — '+D.wx[S.wx].hint:''}`,'condition');
   if(S.fatigue>=70){ G.moodAll(-3); UI.toast(S.party.length?'😴 다들 피곤이 얼굴에 앉았다 — 쉬어야 한다':'😴 피곤이 얼굴에 앉았다 — 쉬어야 한다'); }
   /* 의뢰 기한 */
   if(S.quest && !S.quest.noExpiry && S.day>S.quest.due){

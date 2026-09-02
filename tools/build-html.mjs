@@ -12,7 +12,10 @@ import {fileURLToPath} from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..');
 const output = path.join(root, '서울까지400km.html');
-const temporary = `${output}.tmp`;
+/* Live Game Studio and dev:live may rebuild the same output at the same time.
+   A process-scoped staging file keeps either builder from stealing the other's
+   temporary file before the atomic rename. */
+const temporary = `${output}.tmp.${process.pid}`;
 const reportOutput = path.join(root, 'reports', 'asset-budget.json');
 const WARN_BYTES = 32_000_000;
 const MAX_BYTES = 80_000_000;   /* 이벤트별 고유 장면 확장을 허용하는 배포 상한 */

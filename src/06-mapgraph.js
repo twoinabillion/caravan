@@ -120,38 +120,19 @@ const MAPR = (()=>{
     ctx.beginPath(); ctx.ellipse(px(288),py(714),40*tf.sx,13*tf.sy,0,0,7);
     ctx.fillStyle=navigatorMode?'#0b2928':'#141c30'; ctx.fill(); ctx.strokeStyle=navigatorMode?'rgba(79,159,151,.5)':'rgba(90,120,175,0.5)'; ctx.stroke();
 
-    /* 인접 노드 (지금 갈 수 있는 곳) */
-    const nbrs=new Set();
-    if(S && !S.driving && S.at){
-      for(const e of D.edges){
-        if(e[0]===S.at && S.known.includes(e[1])) nbrs.add(e[1]);
-        if(e[1]===S.at && S.known.includes(e[0])) nbrs.add(e[0]);
-      }
-    }
-
-    const selectedPath=pathTo(selectedNode), selectedEdges=pathEdges(selectedPath);
-    const activeRouteEdges=new Set();
-    const route=S&&S.routePlan&&S.routePlan.status==='active'&&D.routePlans&&D.routePlans[S.routePlan.id];
-    if(route) route.corridor.slice(1).forEach((id,i)=>activeRouteEdges.add(edgeKey(route.corridor[i],id)));
-
-    /* 도로 (edges) — 전체 망은 방향을 읽을 만큼 남기고, 실제 선택은 더 강하게 겹친다. */
+    /* 도로 — 지도에서는 알려진 연결망과 지나온 길만 보여 준다. 다음 목적지나
+       고정 노선 강조는 길 화면의 역할이므로 여기에는 겹쳐 그리지 않는다. */
     for(const e of D.edges){
       const known = S && S.known.includes(e[0]) && S.known.includes(e[1]);
       if(!known) continue;
       const a=D.nodes[e[0]], b=D.nodes[e[1]];
       const cur = S.driving && ((S.driving.from===e[0]&&S.driving.to===e[1])||(S.driving.from===e[1]&&S.driving.to===e[0]));
-      const next = !S.driving && (e[0]===S.at||e[1]===S.at) && (nbrs.has(e[0])||nbrs.has(e[1]));
       const traveled=S&&S.visited.includes(e[0])&&S.visited.includes(e[1]);
-      const selected=selectedEdges.has(edgeKey(e[0],e[1]));
-      const routeEdge=activeRouteEdges.has(edgeKey(e[0],e[1]));
       ctx.beginPath(); ctx.moveTo(px(a.x),py(a.y)); ctx.lineTo(px(b.x),py(b.y));
-      ctx.setLineDash(cur||selected||routeEdge?[]:e[3]==='rough'?[4,5]:e[3]==='normal'?[8,4]:[]);
+      ctx.setLineDash(cur?[]:e[3]==='rough'?[4,5]:e[3]==='normal'?[8,4]:[]);
       ctx.strokeStyle= cur? 'rgba(255,180,84,0.96)':
-        selected? 'rgba(85,224,200,0.88)':
-        next? 'rgba(255,190,105,0.94)':
-        routeEdge? 'rgba(255,180,84,0.7)':
         traveled? 'rgba(190,202,232,0.5)':'rgba(145,168,215,0.25)';
-      ctx.lineWidth=cur?3.5:selected?3.4:next?3.2:routeEdge?2.7:traveled?2:1.25;
+      ctx.lineWidth=cur?3.5:traveled?2:1.25;
       ctx.stroke(); ctx.setLineDash([]);
     }
 
@@ -162,7 +143,7 @@ const MAPR = (()=>{
       const here = S.at===id;
       const selected=selectedNode===id;
       const city=CITY_IDS.has(id);
-      const visible=city||here||visited||nbrs.has(id)||n.stl||n.type==='goal';
+      const visible=!!n;
       if(!visible) continue;
       if(n.type==='goal'){
         const pulse=0.5+0.5*Math.sin(t*2.4);
@@ -188,11 +169,6 @@ const MAPR = (()=>{
       } else {
         ctx.fillStyle= visited? '#9aa5c4':'#5a6484';
         ctx.beginPath(); ctx.arc(x,y,4.1,0,7); ctx.fill();
-      }
-      /* 인접(이동 가능) 링 */
-      if(nbrs.has(id)){
-        ctx.strokeStyle=`rgba(255,180,84,${0.52+0.28*Math.sin(t*2.6)})`; ctx.lineWidth=2;
-        ctx.beginPath(); ctx.arc(x,y,9,0,7); ctx.stroke();
       }
       if(here){ ctx.strokeStyle='rgba(255,180,84,0.8)'; ctx.lineWidth=1.6;
         ctx.beginPath(); ctx.arc(x,y,9+Math.sin(t*3)*1.6,0,7); ctx.stroke(); }
@@ -232,7 +208,7 @@ const MAPR = (()=>{
         if(S.at===id) return 0;
         if(n.type==='goal') return 1;
         if(CITY_IDS.has(id)) return 2;
-        if(nbrs.has(id)) return 3;
+        if(S.visited.includes(id)||n.stl) return 3;
         return 4; };
       const order=[...S.known].sort((a,b)=>prio(a)-prio(b));
       for(const id of order){
@@ -244,7 +220,6 @@ const MAPR = (()=>{
         const fill= n.type==='goal'? 'rgba(85,224,200,0.95)':
           S.at===id? 'rgba(255,200,120,0.98)':
           n.stl? 'rgba(240,225,195,0.95)':
-          nbrs.has(id)? 'rgba(255,205,135,0.98)':
           n.type==='hidden'? 'rgba(211,196,255,0.88)': 'rgba(181,192,220,0.84)';
         putLabel(id,x,y,n.name.split(/[ —]/)[0],font,fill,p<=1);
       }
@@ -277,14 +252,8 @@ const MAPR = (()=>{
     if(!S) return;
     const r=cv.getBoundingClientRect();
     const mx=ev.clientX-r.left, my=ev.clientY-r.top;
-    const nbrs=new Set();
-    if(!S.driving&&S.at) for(const e of D.edges){
-      if(e[0]===S.at&&S.known.includes(e[1])) nbrs.add(e[1]);
-      if(e[1]===S.at&&S.known.includes(e[0])) nbrs.add(e[0]);
-    }
     let best=null, bd=24;
     for(const id of S.known){ const n=D.nodes[id];
-      if(!(CITY_IDS.has(id)||S.at===id||S.visited.includes(id)||nbrs.has(id)||n.stl||n.type==='goal')) continue;
       const d=Math.hypot(px(n.x)-mx, py(n.y)-my);
       if(d<bd){ bd=d; best=id; } }
     selectedNode=best;
@@ -449,7 +418,9 @@ const MAPR = (()=>{
     return true;
   }
 
-  return {init, draw, resize, initMini, drawMini, drawRegionalRoute, pathTo, mode:'cities-only'};
+  function selectNode(id){ selectedNode=id&&D.nodes[id]?id:null; }
+
+  return {init, draw, resize, initMini, drawMini, drawRegionalRoute, pathTo, selectNode, mode:'regional-overview'};
 })();
 
 /* ═══════════════════ JOURNAL GRAPH ═══════════════════ */

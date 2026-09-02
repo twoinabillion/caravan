@@ -213,6 +213,11 @@ with sync_playwright() as p:
       descriptionSize:parseFloat(getComputedStyle(document.querySelector('.nav-place-description')).fontSize),
       valueSize:parseFloat(getComputedStyle(document.querySelector('.nav-route-facts b')).fontSize),
       journeyContext:document.querySelector('#road-quest-tracker')?.textContent||'',
+      journeyContextHeight:document.querySelector('#road-quest-tracker')?.getBoundingClientRect().height||0,
+      journeyContextChildren:document.querySelector('#road-quest-tracker')?.children.length||0,
+      routeQuestCue:document.querySelector('.nav-route-quest-cue')?.textContent||'',
+      routeGuide:document.querySelector('.nav-quest-route-badge')?.textContent||'',
+      routeGuideCard:document.querySelector('.nav-quest-route-badge')?.closest('[data-route-select]')?.dataset.routeSelect||'',
       routeCopy:document.querySelector('.nav-place-description')?.textContent||'',
       departHint:document.querySelector('[data-route-select][aria-pressed="true"] .nav-depart-hint')?.textContent||''
     })''')
@@ -225,9 +230,13 @@ with sync_playwright() as p:
           nav_initial['titleSize'] >= 11 and nav_initial['descriptionSize'] >= 9 and nav_initial['valueSize'] >= 10 and
           not any(word in nav_initial['routeCopy'] for word in ['만날','위험','신호','미확인']),
           str(nav_initial))
-    check('길 선택 화면은 메인 스토리·다음 행동·사이드 미션과 출발 상태를 함께 보여 준다',
-          '메인 스토리' in nav_initial['journeyContext'] and '지금 할 일' in nav_initial['journeyContext'] and
-          '사이드 미션' in nav_initial['journeyContext'] and '양산 카드를 눌러' in nav_initial['journeyContext'] and
+    check('길 선택 화면의 HUD는 메인 스토리 식별 정보만, 권장 목적지 카드는 경로 표식만 보여 준다',
+          '메인 스토리' in nav_initial['journeyContext'] and
+          '지금 할 일' not in nav_initial['journeyContext'] and
+          '사이드 미션' not in nav_initial['journeyContext'] and
+          nav_initial['journeyContextChildren'] == 2 and nav_initial['journeyContextHeight'] <= 54.5 and
+          nav_initial['routeQuestCue'] == '' and
+          '메인 스토리 경로' in nav_initial['routeGuide'] and nav_initial['routeGuideCard'] in nav_initial['routes'] and
           nav_initial['departHint'] == '카드를 눌러 출발', str(nav_initial))
     page.click('[data-journey-mode="local"]')
     stop_console = page.evaluate('''() => {
@@ -243,7 +252,8 @@ with sync_playwright() as p:
     }''')
     check('머물기 행동은 별도 제목 없이 바로 네 가지 행동을 보여 준다',
           stop_console['explore'] and '머물며 할 일' not in stop_console['actionCopy'] and
-          '2시간' in stop_console['actionCopy'] and '발견물 미확인' in stop_console['actionCopy'] and
+          '2시간' in stop_console['actionCopy'] and
+          '발견물미확인' in ''.join(stop_console['actionCopy'].split()) and
           '탐색 위험' not in stop_console['actionCopy'] and stop_console['images'] == 0 and
           stop_console['panels'] == 2 and stop_console['visiblePanels'] == 1, str(stop_console))
     local_layout = page.evaluate('''() => {

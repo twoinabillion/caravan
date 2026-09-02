@@ -8,7 +8,9 @@ const QA_SNAPSHOT_KIND = 'seoul400_exact_state_qa';
 const QA_SNAPSHOT_VERSION = 1;
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
-const SAVE_VERSION = 6;
+const SAVE_VERSION = 7;
+const BASE_WATER_MAX = 28;
+const BASE_FOOD_MAX = 24;
 let S = null;               // game state
 let rng = mulberry32(Date.now() % 2147483647);
 
@@ -20,9 +22,33 @@ const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 
 const G = {};
 
+/* 물과 식량은 달구지 안의 전용 통·건식 보관함만큼만 싣는다. 고철과
+   아이템은 별도 적재 규칙이 없으므로 여기서 가짜 한도를 만들지 않는다. */
+G.supplyMax = key=> key==='water'?Number(S&&S.waterMax)||BASE_WATER_MAX
+  :key==='food'?Number(S&&S.foodMax)||BASE_FOOD_MAX:Infinity;
+G.supplyRoom = key=> Math.max(0,G.supplyMax(key)-Math.max(0,Number(S&&S[key])||0));
+G.canStoreSupply = (key,amount)=> G.supplyRoom(key)+1e-6>=Math.max(0,Number(amount)||0);
+G.addSupply = (key,amount)=>{
+  const max=G.supplyMax(key), requested=Number(amount)||0;
+  const before=clamp(Number(S&&S[key])||0,0,max), after=clamp(before+requested,0,max);
+  if(S) S[key]=after;
+  const delta=after-before;
+  return {key,before,after,max,requested,delta,overflow:requested>0?Math.max(0,requested-delta):0};
+};
+G.clampSupplies = ()=>{
+  if(!S) return;
+  for(const key of ['water','food']) G.addSupply(key,0);
+};
+
 /* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
    필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
 G.saveMigrations = {
+  7:(s)=>{   // 2026-08-30: 물통·식량 보관함에 실제 적재 한도 도입
+    if(!Number.isFinite(s.waterMax)||s.waterMax<=0) s.waterMax=BASE_WATER_MAX;
+    if(!Number.isFinite(s.foodMax)||s.foodMax<=0) s.foodMax=BASE_FOOD_MAX;
+    s.water=clamp(Number(s.water)||0,0,s.waterMax);
+    s.food=clamp(Number(s.food)||0,0,s.foodMax);
+  },
   6:(s)=>{   // 2026-08-20: 전역 서울 제한일 제거
     for(const key of ['deadline_seen_d10','deadline_seen_d5','deadline_seen_d0','deadline_seen_late'])
       if(s.flags) delete s.flags[key];
@@ -71,7 +97,8 @@ const COMBAT_AUTO_ADJUST_SCALE = 0.16;     // [-0.5~0.5] → 판정 보정 ±0.0
 G.newGame = (mode, name, entryMode='full', profile)=>{
   S = {
     v:SAVE_VERSION, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
-    fuel:42, fuelMax:70, water:16, food:14, scrap:24, van:82, vanMax:100, vanName:'달구지',
+    fuel:42, fuelMax:70, water:16, waterMax:BASE_WATER_MAX, food:14, foodMax:BASE_FOOD_MAX,
+    scrap:24, van:82, vanMax:100, vanName:'달구지',
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
@@ -83,7 +110,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     thirst:0, hunger:0, ended:false,
     seed:Number.isFinite(G.seedOverride)?G.seedOverride:Math.floor(Math.random()*1e9),
     fatigue:0, _dlv:0, _drowsyDay:0, _drowsyAt:-999, _breakfastDay:1, _lunchDay:0, _storyQueue:[],
-    _recentEvents:[], _recentEventTypes:[], _eventBreather:0, _beatQueue:[],
+    _recentEvents:[], _recentEventTypes:[], _eventBreather:0, _beatQueue:[], _driveLegsSinceBlock:3,
     _roadEventDay:1, _roadEventCount:0, _lastRoadEventKm:-999, _lastCampEventDay:-999,
     memories:{choices:{},pending:[],history:[]}, knowledge:{},
     relations:{pairs:{},seenChats:{}},
@@ -99,6 +126,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   const prof=D.startProfiles&&D.startProfiles[S.profile];
   if(prof&&prof.patch) for(const [k,v] of Object.entries(prof.patch))
     S[k]=(k==='items')?{...v}:v;
+  G.clampSupplies();
   rng = mulberry32(S.seed);
   /* 주행 쿨다운은 모듈 변수라 새 게임에서 남아 있으면 rng 소비 타이밍이 어긋난다.
      같은 시드 → 같은 여정을 위해 여기서 초기값으로 되돌린다. */
@@ -151,8 +179,9 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S.driving&&(!D.nodes[S.driving.from]||!D.nodes[S.driving.to])) throw new Error('save has invalid route');
   if(!Number.isFinite(S.day)) S.day=1;
   if(!Number.isFinite(S.min)) S.min=7*60+30;
-  for(const key of ['fuel','fuelMax','water','food','scrap','van','vanMax','thirst','hunger','pursuit'])
-    if(!Number.isFinite(S[key])) S[key]=({fuel:42,fuelMax:70,water:16,food:14,scrap:0,van:82,vanMax:100}[key]||0);
+  for(const key of ['fuel','fuelMax','water','waterMax','food','foodMax','scrap','van','vanMax','thirst','hunger','pursuit'])
+    if(!Number.isFinite(S[key])) S[key]=({fuel:42,fuelMax:70,water:16,waterMax:BASE_WATER_MAX,
+      food:14,foodMax:BASE_FOOD_MAX,scrap:0,van:82,vanMax:100}[key]||0);
   if(!Number.isFinite(S.seed)) S.seed=1;
   if(typeof S.vanName!=='string'||!S.vanName.trim()) S.vanName='달구지';
   else S.vanName=S.vanName.trim().slice(0,12);
@@ -168,6 +197,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     step(S); v++;
   }
   S.v=v;
+  G.clampSupplies();
   if(!S.stats||typeof S.stats!=='object'||Array.isArray(S.stats)) S.stats={km:0,events:0,nonlethal:0};
   if(!Number.isFinite(S.stats.km)) S.stats.km=0;
   if(!Number.isFinite(S.stats.events)) S.stats.events=0;
@@ -210,6 +240,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
+  if(!Number.isFinite(S._driveLegsSinceBlock)) S._driveLegsSinceBlock=3;
   if(S.guideDismissed===undefined) S.guideDismissed=false;
   if(!['main','companion','side'].includes(S.questTrack)) S.questTrack='main';
   if(S.lastJourneyRecap===undefined) S.lastJourneyRecap=null;

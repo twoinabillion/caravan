@@ -361,7 +361,9 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
       return;
     }
     if(S._roadApproachBypass === eventKey) delete S._roadApproachBypass;
-    if(evd.once) S.used.push(evd.id);
+    /* 무작위 풀 사건은 once 표기가 빠졌더라도 같은 여정에서 다시 나오지 않는다.
+       직접 호출되는 고정 연속 장면은 이 기록과 무관하게 정상적으로 이어진다. */
+    if(evd.id&&!S.used.includes(evd.id)) S.used.push(evd.id);
   G.qualityEventOpen(evd);
   G.rememberEvent(evd);
   S.stats.events++;
@@ -428,13 +430,14 @@ G.applyFx = (fx,context={})=>{
       tactics:Array.isArray(fx.combatRead.tactics)?[...fx.combatRead.tactics]:[]};
     chips.push({t:`◎ 읽어낸 틈 · ${S.combat.read.label}`,c:'plus'});
   }
-  const num = (k,label,unit)=>{ if(fx[k]){ const v=fx[k];
+  const num = (k,label,unit)=>{ if(fx[k]){ const v=fx[k]; let applied=v, capped=false;
     if(k==='fuel') S.fuel=clamp(S.fuel+v,0,S.fuelMax);
-    else if(k==='water') S.water=Math.max(0,S.water+v);
-    else if(k==='food') S.food=Math.max(0,S.food+v);
+    else if(k==='water'||k==='food'){
+      const result=G.addSupply(k,v); applied=result.delta; capped=result.overflow>0;
+    }
     else if(k==='scrap') S.scrap=Math.max(0,S.scrap+v);
     else if(k==='van') S.van=clamp(S.van+v,0,S.vanMax);
-    chips.push({t:`${label} ${v>0?'+':''}${v}${unit||''}`, c:v>0?'plus':'minus'}); } };
+    chips.push({t:`${label} ${applied>0?'+':''}${applied}${unit||''}${capped?' · 적재 한도':''}`, c:applied>0?'plus':applied<0?'minus':''}); } };
   num('fuel','연료','L'); num('water','물'); num('food','식량'); num('scrap','고철'); num('van','차체','%');
   if(fx.time){ G.advance(fx.time); chips.push({t:`${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'} 경과`, c:''}); }
   if(fx.fatigue){ S.fatigue=clamp(S.fatigue+fx.fatigue,0,100);

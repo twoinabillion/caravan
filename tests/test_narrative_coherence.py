@@ -47,10 +47,11 @@ def main():
               const spokenIds=turns=>turns
                 .filter(turn=>!['narration','thought','ai'].includes(turn.kind)&&turn.who)
                 .map(turn=>turn.who);
+              const resolveExpectedSpeaker=id=>id==='party_first'?(S.party?.[0]||'me'):id;
               const compareScript=(event,scope,value,speakers,knownSpeaker=false)=>{
                 const source=typeof value==='function'?value(S):value;
                 const actual=spokenIds(storyTurns(event,source,speakers,knownSpeaker));
-                const expected=(speakers||[]).map(speakerId);
+                const expected=(speakers||[]).map(speakerId).map(resolveExpectedSpeaker);
                 if(actual.join('|')!==expected.join('|'))
                   scriptedSpeakerMismatches.push({scope,expected,actual});
               };
@@ -63,6 +64,121 @@ def main():
                   const outcome=event.choices?.[choiceIndex]?.out?.[outcomeIndex];
                   if(outcome) compareScript(event,`${eventId}.${path}`,outcome.text,speakers,true);
                 }
+              }
+              /* 계기판·간판·기록·방송 문구는 따옴표가 있어도 익명 인물의
+                 발화로 변하면 안 된다. 실제 storyTurns 결과를 고정해 데이터
+                 표기와 자유 형식 파서 양쪽의 회귀를 함께 잡는다. */
+              const nonHumanScopes=[
+                ['find_lake_sign','text',[]],
+                ['find_mall_kid','text',[]],
+                ['exp_school','0.0',[]],
+                ['crisis_collapse2','text',[]],
+                ['prev_trace_story_done','text',[]],
+                ['prev_trace_too_late','text',[]],
+                ['prev_trace_thirst','text',[]],
+                ['loc_airfield','text',[]],
+                ['ev_parking_evs','text',[]],
+                ['meet_piano','text',[]],
+                ['meet_piano','0.0',[]],
+                ['exp_noraebang','0.0',[]],
+                ['exp_underground','text',[]],
+                ['exp_conv','0.1',[]],
+                ['loc_drivein','text',[]],
+                ['meet_bike_pilgrims','text',[]],
+                ['meet_doljanchi','text',[]],
+                ['vg_soundwall','text',[]],
+                ['vg_busstop','text',[]],
+                ['exp_comicroom','1.0',[]],
+                ['ai_delivery','text',[]],
+                ['ai_delivery','0.0',[]],
+                ['exp_pcroom','text',[]],
+                ['exp_pcroom','0.0',[]],
+                ['exp_cafeteria','0.1',[]],
+                ['ai_vending','text',[]],
+                ['ai_vending','1.0',[]],
+                ['exp_chalkwall','0.0',[]],
+                ['ev_market_ruins','text',[]],
+                ['ev_newsstand','text',[]],
+                ['ev_near_seoul_sign','text',[]],
+                ['ev_drivein_theater','text',[]],
+                ['ev_clocktower_bell','text',[]],
+                ['crisis_collapse','0.0',[]],
+                ['wall_reply','text',[]],
+                ['wall_reply','0.0',[]],
+                ['find_filmset','text',[]],
+                ['exp_radiostation','0.1',[]],
+                ['exp_icehouse','0.0',[]],
+                ['vg_tollgate','text',[]],
+                ['vg_tollgate','0.0',[]],
+                ['dj_tower','0.0',[]],
+                ['exp_coffee','0.0',[]],
+                ['exp_towyard','0.0',[]],
+                ['find_trucker_log','text',[]],
+                ['find_arrows','0.0',[]],
+                ['up_snorkel_ford','0.1',[]],
+                ['ev_tollbooth_ghost','text',[]],
+                ['ev_factory_mural','text',[]],
+                ['ev_wedding_hall_storage','1.0',[]],
+                ['ev_highway_sign','text',[]],
+                ['ev_chapel_candle','text',[]],
+                ['ev_chapel_candle','0.0',[]],
+                ['ev_well_bucket','text',[]],
+                ['ev_dolmen','1.0',[]],
+                ['find_radio_coords','text',['radio']],
+                ['signal_bait','text',['radio','radio']],
+                ['loc_reststop','text',['radio']],
+                ['loc_reststop','0.0',['radio','me']],
+                ['loc_sejong','0.0',['radio']],
+                ['ai_crosswalk','0.0',['radio']],
+                ['exp_glasshouse','0.1',['radio']],
+                ['night_djradio','text',['radio']],
+                ['night_djradio','0.0',['radio']],
+                ['ai_census','text',['cheollian']],
+                ['ai_census','0.0',['cheollian']],
+                ['ai_census','1.0',['eunsu','cheollian','me','eunsu']],
+                ['dj_onair','text',['radio']],
+                ['exp_villagehall','0.0',['radio','radio']],
+                ['ai_manifest','text',['cheollian','cheollian','cheollian']],
+                ['ai_manifest','0.0',['cheollian']],
+                ['ai_manifest','1.0',['cheollian']],
+                ['ev_checkpoint_broadcast','text',['cheollian']],
+                ['ev_radio_birthday','text',['radio']],
+                ['ev_radio_birthday','0.0',['radio','radio']],
+                ['ev_radio_birthday','1.0',['me','radio','me','radio','radio','radio']],
+                ['ev_personal_broadcast','text',['cheollian']],
+                ['ev_personal_broadcast','0.0',['me']],
+                ['ev_personal_broadcast','1.0',['kangwoo','me','kangwoo','kangwoo']],
+                ['ev_radio_dj_signal','text',['radio']],
+                ['ev_radio_dj_signal','0.0',['radio']],
+                ['ev_radio_dj_signal','1.0',['minji','me','minji','minji']],
+                ['ev_lullaby_speaker','text',['cheollian']],
+                ['ev_lullaby_speaker','0.0',['me']],
+                ['ev_lullaby_speaker','1.0',['parkss','parkss','parkss']],
+                ['ev_broadcast_station','0.0',['radio']],
+                ['ev_wiretap_speaker','text',['radio']],
+                ['ev_named_broadcast','text',['cheollian']],
+                ['ev_auto_door','text',['radio','radio']],
+                ['ev_greeter_robot','text',['radio']],
+                ['ev_greeter_robot','0.0',['me','radio','me','radio']],
+                ['ev_greeter_robot','1.0',['radio','me']],
+                ['ev_crashed_helicopter','1.0',['radio','minji']],
+                ['ev_pc_cafe','1.0',['me','minji','minji']],
+                ['ev_apology_broadcast','text',['cheollian']],
+                ['world_continuity_broadcast','text',['cheollian']],
+              ];
+              const nonHumanAttribution=[];
+              for(const [eventId,scope,expected] of nonHumanScopes){
+                const event=byId(eventId);
+                const [choiceIndex,outcomeIndex]=scope.split('.').map(Number);
+                const outcome=scope==='text'?null:event?.choices?.[choiceIndex]?.out?.[outcomeIndex];
+                const value=scope==='text'?event?.text:outcome?.text;
+                const speakers=scope==='text'?event?.turnSpeakers:outcome?.turnSpeakers;
+                const turns=event&&value!==undefined?storyTurns(event,value,speakers,scope!=='text'):[];
+                nonHumanAttribution.push({eventId,scope,expected,
+                  actual:turns.filter(turn=>!['narration','thought','ai'].includes(turn.kind)&&turn.who)
+                    .map(turn=>turn.who),
+                  unknown:turns.filter(turn=>turn.name==='???'||turn.speakerUncertain)
+                    .map(turn=>turn.text)});
               }
               const sameSpeakerQuestions=[];
               const scanSameSpeaker=(scope,turns)=>{
@@ -148,6 +264,7 @@ def main():
                 seaDialogue:dialogueAudit(byId('cell_sea_meet')),
                 gangneungDialogue:dialogueAudit(byId('gw_gangneung')),
                 scriptedSpeakerMismatches,
+                nonHumanAttribution,
                 sameSpeakerQuestions,
                 gates:{
                   seoulOpenNoCrew,seoulOpenCrew,bridgeNoKangwoo,bridgeWithKangwoo,
@@ -194,6 +311,12 @@ def main():
         set(result["gangneungDialogue"]["speakers"])
     ), result
     assert not result["scriptedSpeakerMismatches"], result["scriptedSpeakerMismatches"]
+    attribution_errors = [
+        row
+        for row in result["nonHumanAttribution"]
+        if row["unknown"] or row["actual"] != row["expected"]
+    ]
+    assert not attribution_errors, attribution_errors
     audit_errors = [row for row in result["sameSpeakerQuestions"] if row["scope"].endswith(".audit-error")]
     assert not audit_errors, audit_errors
     fixed_mixed_speaker_scopes = {

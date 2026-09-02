@@ -198,7 +198,9 @@ const speakerIds = new Set([
   'me','나','sys','record','radio','cheollian','grandfather','mother','father',
   'player_child','intro_child','unknown','passer_man','passer_woman','passer_elder',
   'passer_child','passer_merchant','passer_guard','passer_refugee','passer_worker',
-  'passer_medic','seoyeon','mingyu'
+  'passer_medic','seoyeon','mingyu',
+  /* 실행 시 현재 첫 동행인의 실제 id로 바뀌는 화자 토큰. */
+  'party_first'
 ]);
 const validateSpeaker = (value, scope) => {
   const who=typeof value==='string'?value:value&&value.who;
@@ -228,6 +230,43 @@ for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
   }
 }
 const criticalSpeakerSequences = [
+  ['ev_truck_cafe','text',['passer_merchant']],
+  ['ev_truck_cafe','0.0',['me','passer_merchant']],
+  ['ev_truck_cafe','1.0',['passer_merchant','me','passer_merchant','me','passer_merchant','passer_merchant']],
+  ['meet_bathtruck','text',['passer_merchant']],
+  ['meet_bathtruck','0.0',['passer_merchant']],
+  ['meet_barber','text',['passer_elder']],
+  ['meet_barber','0.0',['passer_elder','me','passer_elder','me','passer_elder','passer_elder']],
+  ['ev_barber','text',['passer_elder']],
+  ['ev_barber','1.0',['me','passer_elder']],
+  ['ev_barber','2.0',['me','passer_elder']],
+  ['ev_fortune_teller','text',['passer_elder']],
+  ['ev_barter_cart','0.0',['passer_merchant','passer_merchant']],
+  ['ev_barter_cart','1.0',['passer_merchant','me','passer_merchant','passer_merchant']],
+  ['ev_water_seller','text',['passer_merchant','passer_merchant']],
+  ['meet_florist','0.0',['me','passer_elder','passer_elder']],
+  ['freq_catch','text',['radio']],
+  ['talk_mj_02','text',['minji','me','minji']],
+  ['talk_jy_02','1.0',['jaeyi','me','jaeyi']],
+  ['pair_mj_es_2','0.0',['eunsu','minji','eunsu','minji','minji','minji','eunsu','eunsu']],
+  ['pair_pss_jy_1','text',['jaeyi','jaeyi','parkss','jaeyi','parkss']],
+  ['pair_kw_leo_2','text',['leo','kangwoo','leo']],
+  ['pair_leo_es_2','text',['leo','leo','eunsu','leo']],
+  ['pair_jy_es_1','text',['eunsu','eunsu','jaeyi','eunsu','jaeyi','eunsu','jaeyi']],
+  ['talk_leo_13','0.0',['leo','me','leo','leo']],
+  ['talk_leo_14','text',['leo','me','leo']],
+  ['talk_es_13','text',['me','eunsu']],
+  ['react_mass_pss','0.0',['parkss','parkss','me','parkss','parkss']],
+  ['react_seoul_es','0.0',['eunsu','eunsu','eunsu','me','eunsu','eunsu']],
+  ['cell_mountain_meet','0.0',['sanjigi','sanjigi','sanjigi','me','sanjigi','sanjigi','sanjigi']],
+  ['cult_recruiter','0.0',['passer_refugee','me','passer_refugee','me','passer_refugee']],
+  ['talk_jy_16','0.0',['jaeyi','jaeyi','me','jaeyi']],
+  ['talk_jy_20','1.0',['jaeyi','me','jaeyi','jaeyi','jaeyi']],
+  ['talk_jy_21','0.0',['jaeyi','jaeyi','me','jaeyi']],
+  ['talk_es_18','1.0',['me','eunsu','me','eunsu']],
+  ['initiative_jaeyi_salvage','1.0',['parkss','jaeyi','parkss','jaeyi']],
+  ['night_convoy','0.0',['passer_worker','me','passer_worker','me','passer_worker','me','passer_worker','me']],
+  ['leo_firststage','0.0',['leo','me','leo','leo','leo','me','leo']],
   ['comp_engine_sound','0.0',['minji','minji','minji']],
   ['comp_leo_song','0.0',['leo','leo']],
   ['comp_kw_stop','text',['kangwoo','me','kangwoo']],
@@ -257,6 +296,54 @@ for(const [eventId,path,expected] of criticalSpeakerSequences){
   const ids=(actual||[]).map(speakerKey);
   if(JSON.stringify(ids)!==JSON.stringify(expected))
     errors.push(`핵심 화자 순서 회귀: ${eventId}.${path} / ${ids.join(' → ')}`);
+}
+const truckCafe=eventById.get('ev_truck_cafe');
+const truckCafePurchase=truckCafe&&truckCafe.choices&&truckCafe.choices[0];
+const truckCafeResult=truckCafePurchase&&truckCafePurchase.out&&truckCafePurchase.out[0];
+if(!truckCafe||!/고철 넷/.test(truckCafe.text||'')||/고철 둘/.test(truckCafe.text||''))
+  errors.push('트럭 카페 안내 가격이 실제 비용인 고철 4와 다름');
+if(!truckCafePurchase||truckCafePurchase.req&&truckCafePurchase.req.scrap!==4||
+   !truckCafeResult||!truckCafeResult.fx||truckCafeResult.fx.scrap!==-4)
+  errors.push('트럭 카페 선택 조건과 실제 고철 차감이 다름');
+if(/고철 둘이라면서요|둘은 묽은 거/.test((truckCafeResult&&truckCafeResult.text)||''))
+  errors.push('트럭 카페의 폐기된 이중 가격 대사가 다시 등장함');
+const retiredPriceGags=[
+  ['meet_bathtruck',/아까 저 아래선 여덟|그냥 아홉이에요/],
+  ['ev_barber',/고철 둘이면 말끔하게, 아니 셋/],
+  ['ev_fortune_teller',/고철 하나면 앞길을… 둘/],
+  ['ev_barter_cart',/여덟이면 되는데— 아니다, 열/],
+  ['ev_water_seller',/원래 넷인데 셋/],
+  ['meet_florist',/한 송이에\. …아니다, 한 다발에/],
+];
+for(const [eventId,pattern] of retiredPriceGags){
+  const event=eventById.get(eventId);
+  const copy=[event&&event.text,...(event&&event.choices||[]).flatMap(choice=>(choice.out||[]).map(outcome=>outcome.text))]
+    .filter(text=>typeof text==='string').join('\n');
+  if(pattern.test(copy)) errors.push(`설명 없이 가격을 번복하는 거래 대사 재등장: ${eventId}`);
+}
+/* 선택 가능 조건은 화면의 약속이고 fx는 실제 결제다. 둘이 다르면 버튼은
+   눌렸는데 더 많이 빠지는, 플레이어가 가장 쉽게 배신감을 느끼는 오류가 된다. */
+for(const event of allEvents){
+  for(const [choiceIndex,choice] of (event.choices||[]).entries()){
+    for(const resource of ['scrap','water','food','fuel']){
+      const required=choice.req&&choice.req[resource];
+      if(typeof required!=='number') continue;
+      for(const [outcomeIndex,outcome] of (choice.out||[]).entries()){
+        const delta=outcome.fx&&outcome.fx[resource];
+        if(typeof delta==='number'&&delta<0&&Math.abs(delta)!==required){
+          errors.push(`선택 비용과 실제 차감 불일치: ${event.id}.${choiceIndex}.${outcomeIndex} / ${resource} ${required} → ${delta}`);
+        }
+      }
+    }
+  }
+}
+const barber=eventById.get('meet_barber');
+const barberGroup=barber&&barber.choices&&barber.choices[0];
+const barberResult=barberGroup&&barberGroup.out&&barberGroup.out[0];
+if(!barber||!/일행은 고철 넷/.test(barber.text||'')||
+   !barberGroup||barberGroup.req&&barberGroup.req.scrap!==4||
+   !barberResult||!barberResult.fx||barberResult.fx.scrap!==-4){
+  errors.push('길거리 이발소의 일행 가격 안내·조건·차감이 일치하지 않음');
 }
 for(const [id,name] of Object.entries({seojin:'서진',taesik:'태식'})){
   if(!D.speakerNames||D.speakerNames[id]!==name)

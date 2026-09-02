@@ -71,11 +71,13 @@ with sync_playwright() as playwright:
       S=null;
       const ok=G.load();
       return {ok,day:S&&S.day,km:S&&S.stats.km,fuel:S&&S.fuel,water:S&&S.water,
+        waterMax:S&&S.waterMax,foodMax:S&&S.foodMax,
         npcs:S&&Object.keys(S.npcs).length,known:S&&S.known.length};
     }""")
     check('a structurally valid partial save receives safe defaults',
           partial['ok'] and partial['day'] == 3 and partial['km'] == 42 and partial['fuel'] == 42 and
-          partial['water'] == 16 and partial['npcs'] > 0 and partial['known'] > 1, str(partial))
+          partial['water'] == 16 and partial['waterMax'] == 28 and partial['foodMax'] == 24 and
+          partial['npcs'] > 0 and partial['known'] > 1, str(partial))
 
     print('― corrupt save fixtures')
     corrupt = page.evaluate("""() => {

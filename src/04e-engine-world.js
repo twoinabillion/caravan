@@ -99,7 +99,8 @@ G.prepareCamp = (kind,cid)=>{
     if(plan.meal) return {ok:false,why:'오늘의 한 끼는 이미 준비했다'};
     if(S.food<1||S.water<1) return {ok:false,why:'따뜻한 저녁에는 식량 1과 물 1이 필요하다'};
     const hungerBefore=S.hunger||0, fatigueBefore=S.fatigue;
-    S.food--; S.water--; plan.meal=true;
+    G.addSupply('food',-1); G.addSupply('water',-1); plan.meal=true;
+    plan.last='meal';
     S.hunger=Math.max(0,hungerBefore-1);
     S.fatigue=Math.max(0,S.fatigue-6);
     G.moodAll(3);
@@ -110,12 +111,14 @@ G.prepareCamp = (kind,cid)=>{
     if((S.items['부품']||0)<1) return {ok:false,why:'간이 정비에는 부품 1이 필요하다'};
     if(S.van>=S.vanMax) return {ok:false,why:'차체는 지금 더 손볼 곳이 없다'};
     S.items['부품']--; plan.repair=true;
+    plan.last='repair';
     UI.toast('🔧 공구를 꺼내 차체를 살폈다 — 취침 시 내구 +8');
   } else if(kind==='talk'){
     if(plan.talk) return {ok:false,why:'오늘 밤엔 이미 한 사람과 오래 이야기했다'};
     if(!cid||!S.party.includes(cid)) return {ok:false,why:'지금 함께 야영 중인 동료를 골라야 한다'};
     plan.talk=cid;
-    UI.toast(`🕯 ${D.comps[cid].name}와 불빛 아래 이야기를 나누기로 했다`);
+    plan.last='talk';
+    UI.toast(`💬 ${D.comps[cid].name}와 잠들기 전에 이야기하기로 했다`);
   } else return {ok:false,why:'알 수 없는 야영 준비다'};
   G.save();
   return {ok:true};
@@ -145,11 +148,11 @@ G.camp = (msg)=>{
     const townSupply=Math.min(6,G.partySize())+1;
     if(nights===0 || S.scrap>=2){
       if(nights>0) S.scrap-=2;
-      S.water+=townSupply;
-      S.food+=1;
+      G.addSupply('water',townSupply);
+      G.addSupply('food',1);
     } else {
       townStingy=true;
-      S.water+=1;
+      G.addSupply('water',1);
     }
   }
   // advance to next 06:30
@@ -171,7 +174,7 @@ G.camp = (msg)=>{
   if(campPlan.repair) vanFix+=8;
   G.moodAll(mood); S.van = clamp(S.van+vanFix,0,S.vanMax);
   if(G.hasPerk('jy_break')){ S.scrap+=2; }
-  if(G.isWet()){ S.water+=2; UI.toast('💧 빗물받이 가득 — 물 +2'); }
+  if(G.isWet()){ const rain=G.addSupply('water',2); if(rain.delta) UI.toast(`💧 빗물받이 가득 — 물 +${rain.delta}`); }
   if(G.hasPerk('es_tap')&&rng()<0.25){ const h=G.nearestHidden();
     if(h){ S.known.push(h); UI.toast(`<span class="ic">📡</span>은수의 도청 — ${D.nodes[h].name}`, 'discover'); } }
   /* 모닥불 대화는 전원의 시간이다 — 한 명만 깊어지면 4인 Lv3(관계 기둥)가
@@ -298,7 +301,10 @@ G.driverTitle = ()=> D.driverLv[G.driverLv()].nm;
 G.checkDriverLv = ()=>{
   const lv=G.driverLv();
   if(lv>S._dlv){ S._dlv=lv;
-    UI.toast(`<span class="ic">🧑‍✈️</span>운전 숙련 상승 — 「${D.driverLv[lv].nm}」 (연비·피로 개선)`, 'discover');
+    const next=D.driverLv[lv+1];
+    UI.toast(`<span class="skill-toast-kicker">운전 숙련 상승</span><strong>Lv.${lv} · ${D.driverLv[lv].nm}</strong>`+
+      `<span class="skill-toast-effect">연료 소모 -${lv*2}% · 주행 피로 -${lv*6}%</span>`+
+      `<span class="skill-toast-next">${next?`다음 숙련 ${Math.round(S.stats.km)}/${next.km}km`:'최고 숙련에 도달했다'}</span>`, 'skill');
     G.addNote({type:'사건', title:'운전 숙련: '+D.driverLv[lv].nm,
       body: lv>=4? `누적 주행 ${Math.round(S.stats.km)}km. 로드마스터 — 할아버지가 스스로를 그렇게 불렀다. 이제 그 이름이 내 것이 됐다.`
         : `누적 주행 ${Math.round(S.stats.km)}km. 핸들이 손에 붙는다.`,
@@ -390,7 +396,7 @@ G.sellToDemand = (stlId)=>{
   const d=G.stlDemand(stlId); if(!d) return {ok:false, why:'매입 없음'};
   if(d.item==='식량'){
     if(S.food<2) return {ok:false, why:'팔 식량이 없다 (이틀치는 남겨야)'};
-    S.food--; S.scrap+=d.price;
+    G.addSupply('food',-1); S.scrap+=d.price;
   } else {
     if((S.items[d.item]||0)<1) return {ok:false, why:'팔 '+d.item+'이 없다'};
     S.items[d.item]--; S.scrap+=d.price;
@@ -410,20 +416,24 @@ G.trade = (stlId, i)=>{
   const localTrusted=G.stlImpact(stlId).discount<1;
   if(key==='barter_wf'){ const cost=localTrusted?1:2;
     if(S.water<cost) return {ok:false, why:'물이 부족하다'};
-    S.water-=cost; S.food+=1; }
+    if(!G.canStoreSupply('food',1)) return {ok:false, why:`식량 보관함이 가득 찼다 (${S.food}/${S.foodMax})`};
+    G.addSupply('water',-cost); G.addSupply('food',1); }
   else if(key==='barter_fp'){ const cost=localTrusted?1:2;
     if(S.food<cost) return {ok:false, why:'식량이 부족하다'};
-    S.food-=cost; S.items['부품']=(S.items['부품']||0)+1; }
+    G.addSupply('food',-cost); S.items['부품']=(S.items['부품']||0)+1; }
   else if(key==='barter_mf'){
     if((S.items['의약품']||0)<1) return {ok:false, why:'의약품이 없다'};
-    S.items['의약품']--; S.food+=localTrusted?4:3; }
+    const gain=localTrusted?4:3;
+    if(!G.canStoreSupply('food',gain)) return {ok:false, why:`식량 보관 공간이 부족하다 (${S.food}/${S.foodMax})`};
+    S.items['의약품']--; G.addSupply('food',gain); }
   else {
     const price=Math.max(1,Math.round(price0*G.marketMul(stlId,key)*G.tradeDiscount(stlId)));
     if(S.scrap<price) return {ok:false, why:'고철 부족'};
+    if((key==='water'||key==='food')&&!G.canStoreSupply(key,qty))
+      return {ok:false, why:`${key==='water'?'물통':'식량 보관함'} 공간이 부족하다 (${S[key]}/${G.supplyMax(key)})`};
     S.scrap-=price;
     if(key==='fuel') S.fuel=clamp(S.fuel+qty,0,S.fuelMax);
-    else if(key==='water') S.water+=qty;
-    else if(key==='food') S.food+=qty;
+    else if(key==='water'||key==='food') G.addSupply(key,qty);
     else if(key.startsWith('item')){ const nm=key.slice(4); S.items[nm]=(S.items[nm]||0)+qty; }
   }
   G.advance(25);   // 흥정도 시간이다
@@ -437,7 +447,9 @@ G.tradeBundle = (stlId)=>{
   if(!w||!f) return {ok:false, why:'묶음 없음'};
   const price=Math.max(1,Math.round((w[3]*G.marketMul(stlId,'water')+f[3]*2*G.marketMul(stlId,'food'))*G.tradeDiscount(stlId)));
   if(S.scrap<price) return {ok:false, why:'고철 부족'};
-  S.scrap-=price; S.water+=w[2]; S.food+=f[2]*2;
+  if(!G.canStoreSupply('water',w[2])) return {ok:false, why:`물통 공간이 부족하다 (${S.water}/${S.waterMax})`};
+  if(!G.canStoreSupply('food',f[2]*2)) return {ok:false, why:`식량 보관 공간이 부족하다 (${S.food}/${S.foodMax})`};
+  S.scrap-=price; G.addSupply('water',w[2]); G.addSupply('food',f[2]*2);
   G.advance(40);   // 물통과 자루를 싣는 데 걸리는 시간
   if(S.ended) return {ok:true, ended:true, water:w[2], food:f[2]*2, price};
   G.save(); return {ok:true, water:w[2], food:f[2]*2, price};

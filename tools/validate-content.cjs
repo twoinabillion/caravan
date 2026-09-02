@@ -72,7 +72,9 @@ const speakerIds = new Set([
   ...compIds, ...npcIds, ...Object.keys(D.portraits || {}),
   'me', '나', 'sys', 'record', 'cheollian', 'radio', 'unknown',
   'passer_man', 'passer_woman', 'passer_elder', 'passer_child',
-  'passer_merchant', 'passer_guard', 'passer_refugee', 'passer_worker', 'passer_medic'
+  'passer_merchant', 'passer_guard', 'passer_refugee', 'passer_worker', 'passer_medic',
+  /* 화면을 열 때 현재 첫 동행인의 실제 id로 해석되는 화자 토큰. */
+  'party_first'
 ]);
 const validateSpeaker = (speaker, where) => {
   const id = typeof speaker === 'string' ? speaker : speaker && speaker.who;

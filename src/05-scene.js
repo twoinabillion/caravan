@@ -1557,10 +1557,20 @@ const SCENE = (()=>{
     });
     const recruit=options.recruit?{type:'recruit',id:options.recruit.id,label:options.recruit.name,
       role:options.recruit.label||'처음 보는 사람',p:townPoint(layout.recruit||{x:50,y:54})}:null;
-    const crowd=Array.from({length:Math.max(7,Math.round((world.crowd||8)*.82))},(_,i)=>({
-      x:18+hash(i*5.7+options.id.length)*200,y:108+hash(i*8.1+11)*154,
-      lane:5+hash(i*9.3)*14,phase:hash(i*12.7)*Math.PI*2,speed:.32+hash(i*3.1)*.62,color:townColor(options.id,i)
-    }));
+    const crowd=Array.from({length:Math.max(7,Math.round((world.crowd||8)*.82))},(_,i)=>{
+      /* 닷새장 사람은 광장 전체에 등간격으로 흩어 놓지 않는다. 좌판마다
+         두세 명씩 작은 무리를 만들고 중앙 통로는 실제 보행 동선으로 남긴다. */
+      if(world.kind==='five-day-market'&&facilities.length){
+        const host=facilities[i%facilities.length],side=i%2?-1:1;
+        return {x:tclamp(host.p.x+side*(13+hash(i*4.7)*16),15,TOWN_W-15),
+          y:tclamp(host.p.y+16+hash(i*7.9+5)*24,108,TOWN_H-48),
+          lane:3+hash(i*9.3)*6,phase:hash(i*12.7)*Math.PI*2,
+          speed:.26+hash(i*3.1)*.38,color:townColor(options.id,i)};
+      }
+      return {x:18+hash(i*5.7+options.id.length)*200,y:108+hash(i*8.1+11)*154,
+        lane:5+hash(i*9.3)*14,phase:hash(i*12.7)*Math.PI*2,
+        speed:.32+hash(i*3.1)*.62,color:townColor(options.id,i)};
+    });
     town={canvas,out:canvas.getContext('2d'),buffer,c:bctx,id:options.id,world,layout,spots,options,
       facilities,residents,recruit,crowd,player:{...entry},target:{...entry},focus:options.focus||'market',
       moving:false,pending:null,selected:{type:'facility',id:options.focus||'market'},lastSize:''};
@@ -1622,7 +1632,7 @@ const SCENE = (()=>{
   function townPixelPalette(){
     const kind=town.world.kind,sets={
       'night-market':{ground:'#32303b',road:'#494656',line:'#625e70',wall:'#51443d',roof:'#673d35',trim:'#a75a3d',window:'#f0bd58',dark:'#171821'},
-      'five-day-market':{ground:'#514735',road:'#655b49',line:'#83765e',wall:'#6a5940',roof:'#735137',trim:'#a65b37',window:'#efc264',dark:'#211f1b'},
+      'five-day-market':{ground:'#40372b',road:'#594c3b',line:'#746349',wall:'#69563d',roof:'#69462f',trim:'#a95331',window:'#f1c15f',dark:'#1e1b18'},
       dome:{ground:'#303438',road:'#444a4e',line:'#667075',wall:'#4d5557',roof:'#2d3437',trim:'#a94e41',window:'#e9b24e',dark:'#12161a'},
       tunnel:{ground:'#2b2b2d',road:'#444346',line:'#625f61',wall:'#3a3938',roof:'#1c1f21',trim:'#64817d',window:'#e8bd72',dark:'#0d1012'},
       'hanok-market':{ground:'#4d453a',road:'#675e50',line:'#847968',wall:'#6a5a47',roof:'#37332f',trim:'#8f5642',window:'#e6b568',dark:'#201f1d'},
@@ -1740,7 +1750,8 @@ const SCENE = (()=>{
       townPixelAwning(c,5,119,35,0);townPixelAwning(c,196,119,34,1);townPixelAwning(c,6,239,34,2);townPixelWire(c,10,102,226,93,9);
     }else if(kind==='five-day-market'){
       [[4,73,48,35],[47,68,45,40],[143,70,42,38],[181,75,50,33]].forEach((b,i)=>townPixelBuilding(c,...b,i));
-      townPixelAwning(c,7,121,34,0);townPixelAwning(c,194,121,35,1);townPixelAwning(c,8,241,33,2);townPixelAwning(c,195,241,33,3);
+      townPixelAwning(c,7,121,34,0);townPixelAwning(c,45,116,29,1);townPixelAwning(c,162,117,28,2);townPixelAwning(c,194,121,35,1);
+      townPixelAwning(c,8,241,33,2);townPixelAwning(c,195,241,33,3);
     }else if(kind==='dome'){
       townPixelBuilding(c,48,55,140,60,0,'dome');townPixelTower(c,8,70,63,0);townPixelTower(c,210,72,61,1);
       [[2,126,40,45],[194,126,40,45],[4,235,38,45],[194,237,39,43]].forEach((b,i)=>townPixelBuilding(c,...b,i+1));
@@ -1761,7 +1772,43 @@ const SCENE = (()=>{
       townPixelTower(c,16,59,53,0);townPixelTower(c,202,59,53,1);c.fillStyle='#252923';c.fillRect(98,67,40,38);c.fillStyle='#111411';c.fillRect(109,78,18,27);
       [[8,126,35,34],[193,126,35,34],[8,241,35,33],[193,241,35,33]].forEach((b,i)=>townPixelBuilding(c,...b,i+2));
     }
-    townPixelProps(c);
+    townPixelMarketDress(c);townPixelProps(c);
+  }
+
+  function townPixelMarketDress(c){
+    if(town.world.kind!=='five-day-market') return;
+    const q=townPixelPalette(),f=(x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(P(x),P(y),P(w),P(h));};
+    /* 건물과 좌판 사이를 잇는 차양 끈. 장터를 네 개의 독립 PNG가 아니라
+       한 공간으로 묶되, 중앙 보행로와 시설 터치 영역은 가리지 않는다. */
+    townPixelWire(c,8,115,228,110,5);
+    for(let i=0;i<11;i++){
+      const x=15+i*20,y=114+Math.round(Math.sin(i*.82)*2);
+      f(x,y,5,2,i%3===0?q.window:i%2?q.trim:mix(q.trim,'#e1b66e',.34));
+      f(x+1,y+2,3,2,i%3===0?mix(q.window,'#9e4c31',.28):mix(q.trim,'#000000',.08));
+    }
+    townPixelMarketSign(c,'밀양 닷새장',97,105,42,false);
+    /* 돗자리, 광주리, 물통과 상자. 시설보다 낮은 대비로 가장자리에 두어
+       비어 보이던 바닥에 장날의 사용 흔적만 더한다. */
+    [[43,166,20,6,'#76543a'],[174,170,18,6,'#654b36'],[39,246,18,7,'#50625b'],[178,245,19,7,'#71452f']]
+      .forEach(([x,y,w,h,color],i)=>{f(x,y,w,h,color);f(x+2,y+1,w-4,1,mix(color,'#ffffff',.16));
+        for(let n=0;n<3;n++)f(x+3+n*5,y+3,3,2,i===2?'#758b82':n%2?q.window:'#a95735');});
+    [[13,151],[79,145],[157,151],[214,161],[22,222],[209,224]].forEach(([x,y],i)=>{
+      f(x,y+2,7,5,i%2?'#4a3324':'#62452b');f(x+1,y+1,5,1,'#8a6842');f(x+2,y,3,1,q.window);
+    });
+    [[73,184],[165,189],[77,259],[159,257]].forEach(([x,y],i)=>{
+      f(x,y,2,8,mix(q.dark,'#ffffff',.14));f(x-3,y,8,2,i%2?q.trim:mix(q.trim,'#e9bb6b',.28));
+    });
+  }
+
+  function townPixelMarketSign(c,text,x,y,w,selected=false){
+    const q=townPixelPalette();
+    c.save();
+    c.fillStyle='rgba(8,8,7,.4)';c.fillRect(P(x+1),P(y+1),P(w),7);
+    c.fillStyle=selected?mix(q.trim,'#e8b55f',.42):mix(q.wall,'#4d2819',.52);c.fillRect(P(x),P(y),P(w),7);
+    c.fillStyle=selected?q.window:mix(q.trim,'#ffffff',.32);c.fillRect(P(x),P(y),P(w),1);c.fillRect(P(x),P(y+6),P(w),1);
+    c.fillStyle=selected?'#fff0cf':'#ead9b7';c.font='700 4px sans-serif';c.textAlign='center';c.textBaseline='middle';
+    c.fillText(text,P(x+w/2),P(y+3.7),P(w-3));
+    c.restore();
   }
 
   function townPixelLightPools(c){
@@ -1771,8 +1818,10 @@ const SCENE = (()=>{
       :[[62,148,17],[173,150,17],[66,239,14],[169,239,14]];
     c.save();c.globalCompositeOperation='screen';
     for(const [x,y,r] of lights){
-      c.fillStyle=kind==='research'?'rgba(91,194,186,.055)':'rgba(239,174,83,.055)';c.fillRect(P(x-r),P(y-r/2),P(r*2),P(r));
-      c.fillStyle=kind==='research'?'rgba(91,194,186,.09)':'rgba(239,174,83,.09)';c.fillRect(P(x-r*.55),P(y-r*.28),P(r*1.1),P(r*.56));
+      const outer=kind==='research'?'rgba(91,194,186,.055)':kind==='five-day-market'?'rgba(247,177,74,.085)':'rgba(239,174,83,.055)';
+      const inner=kind==='research'?'rgba(91,194,186,.09)':kind==='five-day-market'?'rgba(247,177,74,.13)':'rgba(239,174,83,.09)';
+      c.fillStyle=outer;c.fillRect(P(x-r),P(y-r/2),P(r*2),P(r));
+      c.fillStyle=inner;c.fillRect(P(x-r*.55),P(y-r*.28),P(r*1.1),P(r*.56));
       c.fillStyle=mix(q.window,'#ffffff',.15);c.fillRect(P(x-1),P(y-1),2,2);
     }
     c.restore();
@@ -1830,9 +1879,13 @@ const SCENE = (()=>{
     }else if(!atlasDrawn&&facility.id==='garage'){
       townPixelBuilding(c,x-22,y-15,44,32,2);c.fillStyle=q.dark;c.fillRect(x-14,y-2,28,17);c.fillStyle='#6f716b';c.fillRect(x-10,y+6,20,6);c.fillStyle='#20252a';c.fillRect(x-8,y+11,5,4);c.fillRect(x+4,y+11,5,4);
     }else if(!atlasDrawn&&facility.id==='people'){
-      townPixelBuilding(c,x-20,y-12,40,28,3);c.fillStyle='#513620';c.fillRect(x-13,y+10,26,4);c.fillStyle='#e36e32';c.fillRect(x-2,y+4,5,7);c.fillStyle=q.window;c.fillRect(x-1,y+2+(Math.floor(townT*5)%2),3,5);
+      townPixelBuilding(c,x-20,y-12,40,28,3);c.fillStyle='#513620';c.fillRect(x-13,y+10,26,4);c.fillStyle='#e36e32';c.fillRect(x-2,y+4,5,7);c.fillStyle=q.window;c.fillRect(x-1,y+3,3,5);
     }else if(!atlasDrawn){
       townPixelBuilding(c,x-21,y-14,42,30,4);c.fillStyle=q.trim;c.fillRect(x-13,y-2,26,4);c.fillStyle=q.window;c.fillRect(x-10,y+5,20,3);
+    }
+    if(town.world.kind==='five-day-market'){
+      const labels={market:['국수',14],garage:['부품',14],people:['쉼터',14],alley:['공동 펌프',24]},label=labels[facility.id];
+      if(label) townPixelMarketSign(c,label[0],x-label[1]/2,y-17,label[1],selected);
     }
     if(selected&&Math.floor(townT*3)%2===0){
       c.fillStyle=q.window;const l=5,x1=x-25,y1=y-18,x2=x+25,y2=y+22;c.fillRect(x1,y1,l,2);c.fillRect(x1,y1,2,l);c.fillRect(x2-l,y1,l,2);c.fillRect(x2-2,y1,2,l);c.fillRect(x1,y2-2,l,2);c.fillRect(x1,y2-l,2,l);c.fillRect(x2-l,y2-2,l,2);c.fillRect(x2-2,y2-l,2,l);
@@ -1888,6 +1941,17 @@ const SCENE = (()=>{
     const q=townPixelPalette(),kind=town.world.kind;
     if(kind==='night-market'||kind==='five-day-market'||kind==='hanok-market'){
       for(let i=0;i<5;i++){const y=112+i*29,x=18+((townT*4+i*37)%205);c.fillStyle='rgba(222,210,185,.22)';c.fillRect(P(x),y,1,1);}
+      if(kind==='five-day-market'){
+        const market=town.facilities.find(item=>item.id==='market'),fire=town.facilities.find(item=>item.id==='people');
+        if(market) for(let i=0;i<3;i++){
+          const rise=(townT*7+i*9)%25,x=market.p.x+9+Math.sin(townT*1.4+i)*3,y=market.p.y-9-rise;
+          c.fillStyle=`rgba(239,226,195,${.24-rise/160})`;c.fillRect(P(x),P(y),i===1?2:1,3);
+        }
+        if(fire){
+          c.fillStyle='#e87531';c.fillRect(P(fire.p.x-1),P(fire.p.y+8),4,4);
+          c.fillStyle=q.window;c.fillRect(P(fire.p.x),P(fire.p.y+7),2,3);
+        }
+      }
     }else if(kind==='tunnel'){
       for(let i=0;i<10;i++){c.fillStyle=i%2?q.window:'#8b7350';c.fillRect(i%2?18:TOWN_W-20,88+i*20+(Math.floor(townT*3+i)%2),2,3);}
     }else if(kind==='research'){
