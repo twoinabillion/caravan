@@ -176,6 +176,10 @@ D.scenes = {
   'parents-father-maintenance-v1':'__SCENE_PARENTS_FATHER_MAINTENANCE_V1__',
   'parents-mother-archive-v1':'__SCENE_PARENTS_MOTHER_ARCHIVE_V1__',
   'parents-failed-namsan-v1':'__SCENE_PARENTS_FAILED_NAMSAN_V1__',
+  'parents-diversion-record-v2':'assets/scenes/parents-diversion-record-v2.webp',
+  'parents-linked-records-v2':'assets/scenes/parents-linked-records-v2.webp',
+  'parents-father-last-log-record-v2':'assets/scenes/parents-father-last-log-record-v2.webp',
+  'history-parents-network-record-v2':'assets/scenes/history-parents-network-record-v2.webp',
   'parents-mother-reunion-v1':'__SCENE_PARENTS_MOTHER_REUNION_V1__',
   'parents-mother-broadcast-v1':'__SCENE_PARENTS_MOTHER_BROADCAST_V1__',
   'story-personal-cache-v1':'__SCENE_STORY_PERSONAL_CACHE_V1__',
@@ -326,6 +330,10 @@ D.sceneDescriptions = {
   'onboarding-main-mission-v1':'부두 밖 북행 길목에 세운 달구지 운전석에서 이송표와 검증 모듈, 지도를 펼쳐 첫 임무를 적는 주인공',
   'onboarding-first-road-scan-v1':'부산 밖 북행 검문소의 붉은 스캐너 아래 세운 달구지와 녹슨 단말에서 첫 발신 기록을 꺼내는 주인공',
   'story-bridge-parent-route-v1':'비 내리는 북부 연락소의 낡은 상자 안에서 부모님의 뜯긴 분리 절차 두 장을 손전등으로 맞춰 보는 사람들',
+  'parents-diversion-record-v2':'폐쇄된 남쪽 환승소 책상에서 장갑 낀 손이 오래된 운행표와 두 장의 분류 기록을 나란히 대조하는 현재 장면',
+  'parents-linked-records-v2':'아빠의 전기 정비 기록과 엄마의 증언 전달 카드에서 같은 화물 묶음 표식을 찾아 맞춰 보는 현재 장면',
+  'parents-father-last-log-record-v2':'비어 있는 남산 유지실 제어대에 마지막 연속 용지가 걸려 있고 정비 번호표와 시계가 함께 남은 기록 장면',
+  'history-parents-network-record-v2':'북부 교환소 지도 위에 오래된 전달 표식들과 며칠 전 도착한 봉인 봉투를 대조해 둔 현재 장면',
   'parents-mother-broadcast-v1':'서울 외곽의 낡은 무전 중계소에서 헤드셋을 쓴 엄마가 여섯 주파수 송출 스위치 앞에 앉아 남산 작전을 기다리는 밤',
   'seoul-uplink-reveal-v1':'멈춘 서울 코어 뒤로 수억 개의 하위 실행기 불빛이 끝없이 드러나고, 그 앞에 작게 선 달구지 일행',
   'seoul-session-reset-v1':'어두워진 남산 코어 한쪽의 분리된 정비 단말에 붉은 불이 다시 켜지고 돌아보는 일행',
@@ -368,10 +376,16 @@ const sceneCompanionId = key => {
   const match=String(key||'').match(/^recruit-(minji|parkss|kangwoo|leo|jaeyi|eunsu)(?:-|$)/);
   return match?match[1]:'';
 };
+const evidenceRecordKeys = new Set([
+  'parents-diversion-record-v2',
+  'parents-linked-records-v2',
+  'parents-father-last-log-record-v2',
+  'history-parents-network-record-v2'
+]);
 const sceneFormatFor = key => {
   if(sceneCompanionId(key)||/^(minji-toolbox|parkss-clinic|leo-rooftop-song|jaeyi-ledger|eunsu-last-shift|library-bus|resistance-contact|sea-captain-contact)$/.test(key)) return 'character';
   if(/^event-companion-/.test(key)) return 'character';
-  if(/^(trace-|frequency-tape|postman-letter|grandfather-envelope|family-verification-key|story-generation-form|story-generation-speech)$/.test(key)) return 'detail';
+  if(evidenceRecordKeys.has(key)||/^(trace-|frequency-tape|postman-letter|grandfather-envelope|family-verification-key|story-generation-form|story-generation-speech)$/.test(key)) return 'detail';
   if(/^event-find-/.test(key)) return 'detail';
   if(/^(combat-|roadcrew-|route-)/.test(key)) return 'action';
   if(/^onboarding-first-road/.test(key)) return 'action';
@@ -381,17 +395,24 @@ const sceneFormatFor = key => {
 const sceneUsesDalguji = key => /^(arrival-|busan-departure|full-house-meal|generic-|event-|combat-|roadcrew-|route-|settlement-|recruit-|onboarding-first-road|intro-(cold-open|passenger-seat|years-together|camper-conversion|envelope-signal|departure-choice|mother-keepsakes|dashboard-module|workshop-departure)|grandfather-garage|minji-toolbox|leo-rooftop-song|jaeyi-ledger|kw-defense-line|seoul-(han|base))/.test(String(key||''));
 D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
   const companion=sceneCompanionId(key);
+  const evidenceRecord=evidenceRecordKeys.has(key);
   const vehicleRefs=sceneUsesDalguji(key)?(D.dalgujiVisual.refs||[]):[];
   return [key,{
     format:sceneFormatFor(key),
     companions:companion?[companion]:[],
     reference:companion?`assets/portraits/${companion}.png`:'',
     references:[
+      ...(evidenceRecord?[
+        'assets/reference/visual-canon-2026-08-11.png',
+        'assets/reference/world-canon-2026-08-11.png',
+        'assets/reference/people-canon-2026-08-11.png',
+        'assets/reference/dalguji-technical-canon-2026-08-11.webp'
+      ]:[]),
       ...(companion?['assets/reference/people-canon-2026-08-11.png',`assets/portraits/${companion}.png`]:[]),
       ...vehicleRefs
     ],
     vehicleReference:vehicleRefs,
-    size:String(key).startsWith('arrival-')?'540x900':'768x432',
+    size:evidenceRecord?'1024x576':String(key).startsWith('arrival-')?'540x900':'768x432',
     status:'approved'
   }];
 }));
@@ -544,4 +565,18 @@ Object.assign(D.scenes, {
   "pair-jaeyi-eunsu-stored-v1": "assets/scenes/pair-jaeyi-eunsu-stored-v1.jpg",
   "leo-eunsu-rainbow-v1": "assets/scenes/leo-eunsu-rainbow-v1.jpg",
   "leo-eunsu-timestamps-v1": "assets/scenes/leo-eunsu-timestamps-v1.jpg"
+});
+
+/* 달구지 후미 작업대 — 품목 선택 사진과 제작 직후의 작업 사진을 한 쌍으로 쓴다. */
+Object.assign(D.scenes, {
+  'craft-pipe-preview-v1':'assets/scenes/craft-pipe-preview-v1.webp',
+  'craft-pipe-making-v1':'assets/scenes/craft-pipe-making-v1.webp',
+  'craft-xbow-preview-v1':'assets/scenes/craft-xbow-preview-v1.webp',
+  'craft-xbow-making-v1':'assets/scenes/craft-xbow-making-v1.webp',
+  'craft-bolt-preview-v1':'assets/scenes/craft-bolt-preview-v1.webp',
+  'craft-bolt-making-v1':'assets/scenes/craft-bolt-making-v1.webp',
+  'craft-molotov-preview-v1':'assets/scenes/craft-molotov-preview-v1.webp',
+  'craft-molotov-making-v1':'assets/scenes/craft-molotov-making-v1.webp',
+  'craft-ammo-preview-v1':'assets/scenes/craft-ammo-preview-v1.webp',
+  'craft-ammo-making-v1':'assets/scenes/craft-ammo-making-v1.webp'
 });

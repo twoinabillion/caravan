@@ -104,7 +104,7 @@ with sync_playwright() as playwright:
     capture(page, "05-objective-ledger.jpg")
 
     close_layers(page)
-    page.click("#dk-map")
+    page.click(".nav-route-map[data-open-map]")
     capture(page, "06-journey-map.jpg")
 
     close_layers(page)

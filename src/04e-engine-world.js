@@ -97,7 +97,7 @@ G.prepareCamp = (kind,cid)=>{
   const plan=S._campPlan||(S._campPlan={});
   if(kind==='meal'){
     if(plan.meal) return {ok:false,why:'오늘의 한 끼는 이미 준비했다'};
-    if(S.food<1||S.water<1) return {ok:false,why:'따뜻한 저녁에는 식량 1과 물 1이 필요하다'};
+    if(!G.hasResource('food',1)||!G.hasResource('water',1)) return {ok:false,why:'따뜻한 저녁에는 식량 1과 물 1이 필요하다'};
     const hungerBefore=S.hunger||0, fatigueBefore=S.fatigue;
     G.addSupply('food',-1); G.addSupply('water',-1); plan.meal=true;
     plan.last='meal';
@@ -105,12 +105,12 @@ G.prepareCamp = (kind,cid)=>{
     S.fatigue=Math.max(0,S.fatigue-6);
     G.moodAll(3);
     const hunger=S.hunger<hungerBefore?(S.hunger===0?' · 허기 해소':` · 허기 ${hungerBefore}→${S.hunger}`):'';
-    UI.toast(`🍲 따뜻한 저녁 · 식량 -1 · 물 -1 · 사기 +3 · 피로 -${fatigueBefore-S.fatigue}${hunger}`);
+    UI.toast(`🍲 따뜻한 저녁 · ${G.isInfiniteResourceMode()?'식량·물 ∞ · 테스트 소모 없음':'식량 -1 · 물 -1'} · 사기 +3 · 피로 -${fatigueBefore-S.fatigue}${hunger}`);
   } else if(kind==='repair'){
     if(plan.repair) return {ok:false,why:'오늘 밤의 간이 정비는 이미 끝냈다'};
-    if((S.items['부품']||0)<1) return {ok:false,why:'간이 정비에는 부품 1이 필요하다'};
+    if(!G.hasResource('부품',1)) return {ok:false,why:'간이 정비에는 부품 1이 필요하다'};
     if(S.van>=S.vanMax) return {ok:false,why:'차체는 지금 더 손볼 곳이 없다'};
-    S.items['부품']--; plan.repair=true;
+    G.spendResource('부품',1); plan.repair=true;
     plan.last='repair';
     UI.toast('🔧 공구를 꺼내 차체를 살폈다 — 취침 시 내구 +8');
   } else if(kind==='talk'){
@@ -146,8 +146,8 @@ G.camp = (msg)=>{
        삯도 없이 또 신세 지는 밤은 우물물 한 통뿐 — 인원이 몇이든 한 통이라
        파티가 클수록 더 아프다. (인원수 배급보다 반드시 적어야 한다.) */
     const townSupply=Math.min(6,G.partySize())+1;
-    if(nights===0 || S.scrap>=2){
-      if(nights>0) S.scrap-=2;
+    if(nights===0 || G.hasResource('scrap',2)){
+      if(nights>0) G.spendResource('scrap',2);
       G.addSupply('water',townSupply);
       G.addSupply('food',1);
     } else {
@@ -247,7 +247,7 @@ G.pickChat = ()=>{
     if(nd.region && region!==nd.region) return false;
     if(nd.flag && !S.flags[nd.flag]) return false;
     if(nd.noFlag && S.flags[nd.noFlag]) return false;
-    if(nd.lowFuel===1 && S.fuel>12) return false;
+    if(nd.lowFuel===1 && (G.isInfiniteResourceMode()||S.fuel>12)) return false;
     if(nd.tired===1 && S.fatigue<55) return false;
     if(nd.afterKm && S.stats.km<nd.afterKm) return false;
     if(nd.minBond && Object.entries(nd.minBond).some(([id,bond])=>!G.hasComp(id)||Number(S.comps[id]&&S.comps[id].bond||0)<bond)) return false;
@@ -279,7 +279,7 @@ G.pickBanter = ()=>{
     if(nd.up && !(S.up&&S.up[nd.up])) return false;
     if(nd.tired && S.fatigue<55) return false;
     if(nd.dog===1 && !S.dog) return false;
-    if(nd.lowFuel===1 && S.fuel>12) return false;
+    if(nd.lowFuel===1 && (G.isInfiniteResourceMode()||S.fuel>12)) return false;
     if(nd.region && region!==nd.region) return false;
     if(nd.flag && !S.flags[nd.flag]) return false;
     /* 진행이 끝난 뒤에는 "아직 못 했다"는 줄이 다시 뜨면 안 된다 */
@@ -313,10 +313,10 @@ G.checkDriverLv = ()=>{
 
 /* ── 현장 수리 ── */
 G.fieldRepair = ()=>{
-  if((S.items['부품']||0)<1 || S.van>=S.vanMax-2) return false;
+  if(!G.hasResource('부품',1) || S.van>=S.vanMax-2) return false;
   const box=S.up&&S.up.sidebox;
   const saved = box && rng()<0.5;
-  if(!saved) S.items['부품']--;
+  if(!saved) G.spendResource('부품',1);
   S.van=clamp(S.van+(box?45:35),0,S.vanMax);
   G.advance(100);
   UI.toast('🔧 부품으로 정비 완료 — 내구 +'+(box?45:35)+(saved?' · 🧰 부품 아낌':''));
@@ -355,15 +355,15 @@ G.canBuyUp = (id)=>{
     if(used.length>=rule.cap)
       return {ok:false, why:`${rule.nm} 자리 없음 — ${used.map(x=>x.nm).join(' · ')} 장착 중`};
   }
-  if(S.scrap<G.upScrapCost(u)) return {ok:false, why:'고철 부족'};
-  if((u.cost.parts||0)>(S.items['부품']||0)) return {ok:false, why:'부품 부족'};
+  if(!G.hasResource('scrap',G.upScrapCost(u))) return {ok:false, why:'고철 부족'};
+  if(!G.hasResource('부품',u.cost.parts||0)) return {ok:false, why:'부품 부족'};
   return {ok:true};
 };
 G.buyUpgrade = (id)=>{
   const chk=G.canBuyUp(id); if(!chk.ok) return false;
   const u=G.upDef(id);
-  S.scrap-=G.upScrapCost(u);
-  if(u.cost.parts) S.items['부품']-=u.cost.parts;
+  G.spendResource('scrap',G.upScrapCost(u));
+  if(u.cost.parts) G.spendResource('부품',u.cost.parts);
   S.up[id]=true;
   /* 차고 작업은 분해·체결·확인 세 단계다(D.upgradeWork). 그 서사만큼 시간도 든다 —
      증축은 반나절, 나머지는 서너 시간. 정비 전문가가 타고 있으면 손이 빠르다. */
@@ -395,11 +395,11 @@ G.stlDemand = (stlId)=> (D.market&&D.market[stlId]&&D.market[stlId].demand)||nul
 G.sellToDemand = (stlId)=>{
   const d=G.stlDemand(stlId); if(!d) return {ok:false, why:'매입 없음'};
   if(d.item==='식량'){
-    if(S.food<2) return {ok:false, why:'팔 식량이 없다 (이틀치는 남겨야)'};
+    if(!G.hasResource('food',2)) return {ok:false, why:'팔 식량이 없다 (이틀치는 남겨야)'};
     G.addSupply('food',-1); S.scrap+=d.price;
   } else {
-    if((S.items[d.item]||0)<1) return {ok:false, why:'팔 '+d.item+'이 없다'};
-    S.items[d.item]--; S.scrap+=d.price;
+    if(!G.hasResource(d.item,1)) return {ok:false, why:'팔 '+d.item+'이 없다'};
+    G.spendResource(d.item,1); S.scrap+=d.price;
   }
   S._soldDemand=S._soldDemand||{}; S._soldDemand[stlId]=(S._soldDemand[stlId]||0)+1;
   G.advance(20);
@@ -415,23 +415,23 @@ G.trade = (stlId, i)=>{
   const [,key,qty,price0]=stl.trade[i];
   const localTrusted=G.stlImpact(stlId).discount<1;
   if(key==='barter_wf'){ const cost=localTrusted?1:2;
-    if(S.water<cost) return {ok:false, why:'물이 부족하다'};
+    if(!G.hasResource('water',cost)) return {ok:false, why:'물이 부족하다'};
     if(!G.canStoreSupply('food',1)) return {ok:false, why:`식량 보관함이 가득 찼다 (${S.food}/${S.foodMax})`};
     G.addSupply('water',-cost); G.addSupply('food',1); }
   else if(key==='barter_fp'){ const cost=localTrusted?1:2;
-    if(S.food<cost) return {ok:false, why:'식량이 부족하다'};
+    if(!G.hasResource('food',cost)) return {ok:false, why:'식량이 부족하다'};
     G.addSupply('food',-cost); S.items['부품']=(S.items['부품']||0)+1; }
   else if(key==='barter_mf'){
-    if((S.items['의약품']||0)<1) return {ok:false, why:'의약품이 없다'};
+    if(!G.hasResource('의약품',1)) return {ok:false, why:'의약품이 없다'};
     const gain=localTrusted?4:3;
     if(!G.canStoreSupply('food',gain)) return {ok:false, why:`식량 보관 공간이 부족하다 (${S.food}/${S.foodMax})`};
-    S.items['의약품']--; G.addSupply('food',gain); }
+    G.spendResource('의약품',1); G.addSupply('food',gain); }
   else {
     const price=Math.max(1,Math.round(price0*G.marketMul(stlId,key)*G.tradeDiscount(stlId)));
-    if(S.scrap<price) return {ok:false, why:'고철 부족'};
+    if(!G.hasResource('scrap',price)) return {ok:false, why:'고철 부족'};
     if((key==='water'||key==='food')&&!G.canStoreSupply(key,qty))
       return {ok:false, why:`${key==='water'?'물통':'식량 보관함'} 공간이 부족하다 (${S[key]}/${G.supplyMax(key)})`};
-    S.scrap-=price;
+    G.spendResource('scrap',price);
     if(key==='fuel') S.fuel=clamp(S.fuel+qty,0,S.fuelMax);
     else if(key==='water'||key==='food') G.addSupply(key,qty);
     else if(key.startsWith('item')){ const nm=key.slice(4); S.items[nm]=(S.items[nm]||0)+qty; }
@@ -446,10 +446,10 @@ G.tradeBundle = (stlId)=>{
   const f=stl.trade.find(row=>row[1]==='food');
   if(!w||!f) return {ok:false, why:'묶음 없음'};
   const price=Math.max(1,Math.round((w[3]*G.marketMul(stlId,'water')+f[3]*2*G.marketMul(stlId,'food'))*G.tradeDiscount(stlId)));
-  if(S.scrap<price) return {ok:false, why:'고철 부족'};
+  if(!G.hasResource('scrap',price)) return {ok:false, why:'고철 부족'};
   if(!G.canStoreSupply('water',w[2])) return {ok:false, why:`물통 공간이 부족하다 (${S.water}/${S.waterMax})`};
   if(!G.canStoreSupply('food',f[2]*2)) return {ok:false, why:`식량 보관 공간이 부족하다 (${S.food}/${S.foodMax})`};
-  S.scrap-=price; G.addSupply('water',w[2]); G.addSupply('food',f[2]*2);
+  G.spendResource('scrap',price); G.addSupply('water',w[2]); G.addSupply('food',f[2]*2);
   G.advance(40);   // 물통과 자루를 싣는 데 걸리는 시간
   if(S.ended) return {ok:true, ended:true, water:w[2], food:f[2]*2, price};
   G.save(); return {ok:true, water:w[2], food:f[2]*2, price};
@@ -460,8 +460,8 @@ G.settlementRepairQuote = ()=>({cost:G.hasComp('minji')?6:8, amount:30, mins:G.h
 G.settlementRepair = ()=>{
   const quote=G.settlementRepairQuote();
   if(S.van>=S.vanMax-5) return {ok:false, why:'수리할 곳이 없다'};
-  if(S.scrap<quote.cost) return {ok:false, why:'고철 부족'};
-  S.scrap-=quote.cost; S.van=clamp(S.van+quote.amount,0,S.vanMax);
+  if(!G.hasResource('scrap',quote.cost)) return {ok:false, why:'고철 부족'};
+  G.spendResource('scrap',quote.cost); S.van=clamp(S.van+quote.amount,0,S.vanMax);
   G.advance(quote.mins);
   if(S.ended) return {ok:true, ended:true, ...quote};   // advance가 갈증 종료를 부를 수 있다
   G.save(); return {ok:true, ...quote};
@@ -470,18 +470,18 @@ G.settlementRepair = ()=>{
 /* ── 제작 (작업대) ── */
 G.canCraft = (id)=>{
   const c=D.crafts.find(x=>x.id===id); if(!c) return {ok:false};
-  if(c.need.scrap && S.scrap<c.need.scrap) return {ok:false, why:'고철 부족'};
-  if(c.need.parts && (S.items['부품']||0)<c.need.parts) return {ok:false, why:'부품 부족'};
-  if(c.need.fuel && S.fuel<c.need.fuel+3) return {ok:false, why:'연료 여유 없음'};
+  if(c.need.scrap && !G.hasResource('scrap',c.need.scrap)) return {ok:false, why:'고철 부족'};
+  if(c.need.parts && !G.hasResource('부품',c.need.parts)) return {ok:false, why:'부품 부족'};
+  if(c.need.fuel && !G.hasResource('fuel',c.need.fuel+3)) return {ok:false, why:'연료 여유 없음'};
   return {ok:true};
 };
 G.craft = (id)=>{
   const c=D.crafts.find(x=>x.id===id);
   const chk=G.canCraft(id); if(!chk.ok) return false;
   const ar=S.up&&S.up.armory;
-  if(c.need.scrap) S.scrap-=ar? Math.ceil(c.need.scrap*0.8):c.need.scrap;
-  if(c.need.parts) S.items['부품']-=c.need.parts;
-  if(c.need.fuel) S.fuel-=c.need.fuel;
+  if(c.need.scrap) G.spendResource('scrap',ar?Math.ceil(c.need.scrap*0.8):c.need.scrap);
+  if(c.need.parts) G.spendResource('부품',c.need.parts);
+  if(c.need.fuel) G.spendResource('fuel',c.need.fuel);
   for(const nm in c.out) S.items[nm]=(S.items[nm]||0)+c.out[nm];
   G.advance(ar?20:40);
   UI.toast(`${c.ic} ${c.nm} 제작 완료`);
@@ -611,8 +611,8 @@ G.seoulMissing = ()=>{
 
 /* ── 라디오 수리 (진공관 1 소모, 1회) ── */
 G.fixRadio = ()=>{
-  if(S.flags.radio_fixed || !(S.items['라디오 진공관']>0)) return false;
-  S.items['라디오 진공관']--;
+  if(S.flags.radio_fixed || !G.hasResource('라디오 진공관',1)) return false;
+  G.spendResource('라디오 진공관',1);
   S.flags.radio_fixed=true;
   G.advance(40);
   G.addNote({type:'사건', title:'라디오 소생',

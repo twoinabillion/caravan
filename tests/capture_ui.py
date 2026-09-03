@@ -117,7 +117,7 @@ with sync_playwright() as playwright:
     page.keyboard.press("Shift+Tab")
     page.wait_for_timeout(80)
     page.screenshot(path=str(SHOT / "01f-nav-focus.png"))
-    page.evaluate("document.querySelector('#dk-map').blur()")
+    page.evaluate("document.querySelector('#dk-crew').blur()")
     page.evaluate(
         """() => {
           UI.toast('🔧 좌석 증축이 끝났다 — 동료 자리 +1');
@@ -152,7 +152,7 @@ with sync_playwright() as playwright:
       S.recruitQ=null; S.at='daegu'; UI.renderAll();
     }""")
 
-    page.click("#dk-map")
+    page.click(".nav-route-map[data-open-map]")
     page.wait_for_timeout(300)
     page.screenshot(path=str(SHOT / "02-map.png"))
     page.click("#map-x")
@@ -160,10 +160,12 @@ with sync_playwright() as playwright:
     page.click("#dk-status")
     page.wait_for_timeout(200)
     page.screenshot(path=str(SHOT / "03-status-top.png"))
-    page.click('#st-tabs [data-st="journey"]')
+    page.click("#st-x")
+    page.click("#dk-objectives")
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "04-status-journey.png"))
-    page.click('#st-tabs [data-st="crew"]')
+    page.click("#st-x")
+    page.click("#dk-crew")
     page.wait_for_timeout(120)
     page.screenshot(path=str(SHOT / "05-status-crew.png"))
     page.click("#st-x")

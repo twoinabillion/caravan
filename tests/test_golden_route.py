@@ -109,7 +109,7 @@ with sync_playwright() as p:
 
     dock_rest = page.evaluate('''() => {
       const road=document.querySelector('#dk-road');
-      const map=document.querySelector('#dk-map');
+      const map=document.querySelector('#dk-crew');
       return {
         sameFace:getComputedStyle(road,'::before').backgroundImage===getComputedStyle(map,'::before').backgroundImage,
         roadDepth:getComputedStyle(road,'::before').transform,
@@ -119,11 +119,11 @@ with sync_playwright() as p:
     check('첫 화면의 길 버튼은 선택 표시만 있고 다른 버튼처럼 솟아 있다',
           dock_rest['sameFace'] and dock_rest['roadDepth'] == dock_rest['mapDepth'], str(dock_rest))
 
-    map_box = page.locator('#dk-map').bounding_box()
+    map_box = page.locator('#dk-crew').bounding_box()
     page.mouse.move(map_box['x'] + map_box['width'] / 2, map_box['y'] + map_box['height'] / 2)
     page.mouse.down()
     dock_press = page.evaluate('''() => {
-      const button=document.querySelector('#dk-map');
+      const button=document.querySelector('#dk-crew');
       const face=getComputedStyle(button,'::before');
       const icon=getComputedStyle(button.querySelector('.dic'));
       const label=getComputedStyle(button.querySelector('span:last-child'));
@@ -144,13 +144,13 @@ with sync_playwright() as p:
     page.keyboard.press('Shift+Tab')
     page.keyboard.press('Shift+Tab')
     dock_focus = page.evaluate('''() => {
-      const button=document.querySelector('#dk-map');
+      const button=document.querySelector('#dk-crew');
       return {
         outline:getComputedStyle(button).outlineStyle,
         labelGlow:getComputedStyle(button.querySelector('span:last-child')).textShadow
       };
     }''')
-    page.evaluate("document.querySelector('#dk-map').blur()")
+    page.evaluate("document.querySelector('#dk-crew').blur()")
     check('키보드 초점은 노란 사각형 대신 버튼 내용의 빛으로 보인다',
           dock_focus['outline'] == 'none' and dock_focus['labelGlow'] != 'none', str(dock_focus))
 

@@ -22,18 +22,59 @@ const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 
 const G = {};
 
+/* Live Game Studio의 실제 미리보기에서만 켜지는 소모 자원 테스트 규칙.
+   rev가 없는 caravan-live 주소는 자동화 QA도 사용하므로 그대로 두고, 스튜디오가
+   붙인 rev(또는 명시적인 infinite-resources=1)가 있을 때만 활성화한다. 세이브에는
+   이 플래그를 기록하지 않아 일반 플레이의 밸런스로 넘어가지 않는다. */
+G.isInfiniteResourceMode = ()=>{
+  try{
+    const params=new URLSearchParams(location.search);
+    return params.get('infinite-resources')==='1'||(params.has('caravan-live')&&params.has('rev'));
+  }catch(_){ return false; }
+};
+const TEST_INFINITE_ITEMS = new Set(['부품','의약품','탄약','볼트','화염병','라디오 진공관']);
+G.isInfiniteResourceKey = key=> ['fuel','water','food','scrap','연료','물','식량','고철'].includes(key)
+  ||TEST_INFINITE_ITEMS.has(key);
+G.resourceAmount = key=>{
+  if(!S) return 0;
+  if(['fuel','water','food','scrap'].includes(key)) return Math.max(0,Number(S[key])||0);
+  return Math.max(0,Number(S.items&&S.items[key])||0);
+};
+G.hasResource = (key,amount=1)=> G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(key)
+  ||G.resourceAmount(key)+1e-6>=Math.max(0,Number(amount)||0);
+G.resourceDisplay = (key,value,unit='')=> G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(key)
+  ?'∞':`${value}${unit}`;
+
 /* 물과 식량은 달구지 안의 전용 통·건식 보관함만큼만 싣는다. 고철과
    아이템은 별도 적재 규칙이 없으므로 여기서 가짜 한도를 만들지 않는다. */
 G.supplyMax = key=> key==='water'?Number(S&&S.waterMax)||BASE_WATER_MAX
   :key==='food'?Number(S&&S.foodMax)||BASE_FOOD_MAX:Infinity;
 G.supplyRoom = key=> Math.max(0,G.supplyMax(key)-Math.max(0,Number(S&&S[key])||0));
-G.canStoreSupply = (key,amount)=> G.supplyRoom(key)+1e-6>=Math.max(0,Number(amount)||0);
+G.canStoreSupply = (key,amount)=> G.isInfiniteResourceMode()
+  ||G.supplyRoom(key)+1e-6>=Math.max(0,Number(amount)||0);
 G.addSupply = (key,amount)=>{
   const max=G.supplyMax(key), requested=Number(amount)||0;
-  const before=clamp(Number(S&&S[key])||0,0,max), after=clamp(before+requested,0,max);
+  const before=clamp(Number(S&&S[key])||0,0,max);
+  const infinite=requested<0&&G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(key);
+  const after=infinite?before:clamp(before+requested,0,max);
   if(S) S[key]=after;
   const delta=after-before;
-  return {key,before,after,max,requested,delta,overflow:requested>0?Math.max(0,requested-delta):0};
+  return {key,before,after,max,requested,delta,infinite,waived:infinite?Math.abs(requested):0,
+    overflow:requested>0?Math.max(0,requested-delta):0};
+};
+G.spendResource = (key,amount=1)=>{
+  const requested=Math.max(0,Number(amount)||0),before=G.resourceAmount(key);
+  if(!requested) return {key,before,after:before,requested,spent:0,infinite:false};
+  if(G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(key))
+    return {key,before,after:before,requested,spent:0,infinite:true,waived:requested};
+  if(key==='water'||key==='food'){
+    const result=G.addSupply(key,-requested);
+    return {...result,spent:Math.max(0,-result.delta)};
+  }
+  const after=Math.max(0,before-requested);
+  if(['fuel','scrap'].includes(key)) S[key]=after;
+  else S.items[key]=after;
+  return {key,before,after,requested,spent:before-after,infinite:false};
 };
 G.clampSupplies = ()=>{
   if(!S) return;
@@ -659,7 +700,8 @@ G.qualityCombat = report=>{
 G.qualityResourceCheck = ()=>{
   if(!S) return;
   const q=G.ensureQualityState();
-  const thresholds={fuel:S.fuel<=10,water:S.water<=G.partySize(),food:S.food<=G.partySize(),
+  const infinite=G.isInfiniteResourceMode();
+  const thresholds={fuel:!infinite&&S.fuel<=10,water:!infinite&&S.water<=G.partySize(),food:!infinite&&S.food<=G.partySize(),
     van:S.van<=30,fatigue:S.fatigue>=85,pursuit:S.pursuit>=4};
   for(const [key,active] of Object.entries(thresholds)){
     if(active&&!q.resourceLatch[key]){

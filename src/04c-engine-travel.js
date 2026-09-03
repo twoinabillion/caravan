@@ -28,8 +28,9 @@ G.routeForecast = id=>{
     if(e[3]==='rough') rough++;
   }
   const stops=def.corridor.slice(1,-1).filter(node=>D.nodes[node]&&D.nodes[node].stl).length;
-  const short=Math.max(0,fuel-Math.floor(S.fuel));
-  const readiness=short===0?'현재 연료로 통과 가능'
+  const infinite=G.isInfiniteResourceMode();
+  const short=infinite?0:Math.max(0,fuel-Math.floor(S.fuel));
+  const readiness=infinite?'테스트 모드 · 연료 소모 없음':short===0?'현재 연료로 통과 가능'
     :stops?`연료 ${short}L가량은 중간 보급 필요`:`출발 전 연료 ${short}L가량 더 필요`;
   return {id,km,fuel,rough,stops,minutes:G.driveMinutes(km),short,readiness};
 };
@@ -75,17 +76,19 @@ G.travelForecast = id=>{
   if(G.isNight()&&S.up.lightbar) gear.push('라이트바');
   if(S.up.solar) gear.push('태양광 보조');
   const minutes=G.driveMinutes(chk.km);
-  const shortage=S.fuel<chk.fuel;
-  const fuelMargin=Math.floor(S.fuel-chk.fuel);
+  const infinite=G.isInfiniteResourceMode();
+  const shortage=!infinite&&S.fuel<chk.fuel;
+  const fuelMargin=infinite?Infinity:Math.floor(S.fuel-chk.fuel);
   const rationForecast=G.mealForecast(minutes);
   const supplyNeed=Math.max(rationForecast.food,rationForecast.water);
-  const foodMargin=Math.floor(S.food-rationForecast.food);
-  const waterMargin=Math.floor(S.water-rationForecast.water);
+  const foodMargin=infinite?Infinity:Math.floor(S.food-rationForecast.food);
+  const waterMargin=infinite?Infinity:Math.floor(S.water-rationForecast.water);
   const supplyMargin=Math.min(foodMargin,waterMargin);
   const rationParts=[];
   if(rationForecast.breakfasts) rationParts.push(`아침${rationForecast.breakfasts}`);
   if(rationForecast.lunches) rationParts.push(`점심${rationForecast.lunches}`);
-  const rationCompact=rationParts.length?`${rationParts.join('·')} · 식량-${rationForecast.food}`:'식사 없음';
+  const rationCompact=infinite?'테스트 모드 · 보급 소모 없음'
+    :rationParts.length?`${rationParts.join('·')} · 식량-${rationForecast.food}`:'식사 없음';
   const vanRatio=S.van/Math.max(1,S.vanMax);
   const warnings=[];
   let readinessScore=100;
@@ -196,7 +199,7 @@ G.canTravelTo = (id)=>{
   const route=G.routeTravelCheck(S.at,id);
   if(!route.ok) return route;
   const fuelNeed = G.fuelFor(e[2], e[3]);
-  if(S.fuel<=0) return {ok:false, why:'연료가 없다'};
+  if(!G.isInfiniteResourceMode()&&S.fuel<=0) return {ok:false, why:'연료가 없다'};
   return {ok:true, km:e[2], road:e[3], fuel:fuelNeed};
 };
 G.fuelFor = (km,road)=>{ let per = 1/6.0; if(road==='rough') per*=1.35; if(road==='high') per*=0.92;
@@ -495,7 +498,8 @@ G.tick = (dt)=>{ // dt: real seconds
   S.stats.km += km;
   // fuel
   const per = G.fuelFor(1000,dv.road)/1000;
-  S.fuel = Math.max(0, S.fuel - km*per*(dv.guestFuel||1)*(dv.memoryFuel||1));
+  if(!G.isInfiniteResourceMode())
+    S.fuel = Math.max(0, S.fuel - km*per*(dv.guestFuel||1)*(dv.memoryFuel||1));
   // van wear
   let wearMul = S.up&&S.up.susp? 0.5:1;
   if(S.up&&S.up.mudtires&&dv.road==='rough') wearMul*=0.6;
@@ -515,7 +519,7 @@ G.tick = (dt)=>{ // dt: real seconds
   G.advance(gm);
   if(S.ended) return;
   // crises
-  if(S.fuel<=0 && dv.gone<dv.dist){ G.openRescue('nofuel','crisis_nofuel'); return; }
+  if(!G.isInfiniteResourceMode()&&S.fuel<=0 && dv.gone<dv.dist){ G.openRescue('nofuel','crisis_nofuel'); return; }
   if(S.van<=0){ S.van=0; G.openRescue('breakdown','crisis_breakdown'); return; }
   if(S.fatigue>=99){ G.openRescue('collapse','crisis_collapse'); return; }
   if(S.fatigue>=85 && (S.day*1440+S.min)-S._drowsyAt>240){
@@ -626,12 +630,12 @@ G.eventAvailable = (ev,context={})=>{
   if(ev.noFlag&&S.flags[ev.noFlag]) return false;
   if(ev.noPool) return false;
   if(ev.needUp&&!(S.up&&S.up[ev.needUp])) return false;
-  if(ev.scrapMin!==undefined&&S.scrap<ev.scrapMin) return false;
+  if(ev.scrapMin!==undefined&&!G.hasResource('scrap',ev.scrapMin)) return false;
   if(ev.needsDog&&!S.dog) return false;
   if(ev.minParty&&S.party.length<ev.minParty) return false;
   if(ev.minPursuit&&S.pursuit<ev.minPursuit) return false;
   if(ev.maxVanPct!==undefined&&S.van/Math.max(1,S.vanMax)*100>ev.maxVanPct) return false;
-  if(ev.maxScrap!==undefined&&S.scrap>ev.maxScrap) return false;
+  if(ev.maxScrap!==undefined&&(G.isInfiniteResourceMode()||S.scrap>ev.maxScrap)) return false;
   if(ev.needsInjury&&!Object.keys(S.injuries||{}).length) return false;
   if(ev.needsDriverInjury&&!G.isInjured('driver')) return false;
   if(ev.maxPartyMood!==undefined){
@@ -645,7 +649,7 @@ G.eventAvailable = (ev,context={})=>{
   if(ev.noKnowledge&&G.knowledgeLevel(ev.noKnowledge[0])>=ev.noKnowledge[1]) return false;
   if(ev.needWx&&S.wx!==ev.needWx) return false;
   if(ev.needRain&&!G.isWet()) return false;
-  if(ev.needLowWater&&S.water>2) return false;
+  if(ev.needLowWater&&(G.isInfiniteResourceMode()||S.water>2)) return false;
   if(ev.hiddenTarget&&!G.unknownHidden().length) return false;
   if(ev.id==='comp_sick'&&!S.flags.food_poison) return false;
   /* 사건이 열렸는데 현재 일행으로는 보이는 행동이 하나도 없는 소프트락을

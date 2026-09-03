@@ -106,7 +106,7 @@ G.beatReady = (b)=>{
   if(w.noFlag && S.flags[w.noFlag]) return false;
   if(w.minParty!==undefined && S.party.length<w.minParty) return false;
   if(w.maxKm!==undefined && S.stats.km>w.maxKm) return false;
-  if(w.lowWater && S.water>Math.max(2,G.partySize()+1)) return false;  // 본문이 "물통 바닥"을 전제하는 장면용
+  if(w.lowWater && (G.isInfiniteResourceMode()||S.water>Math.max(2,G.partySize()+1))) return false;  // 본문이 "물통 바닥"을 전제하는 장면용
   if(w.day===false && G.isNight()) return false;
   return true;
 };
@@ -566,8 +566,9 @@ G.mealNeed = kind=>{
 G.dailyRationInfo = ()=>{
   const breakfast=G.mealNeed('breakfast'), lunch=G.mealNeed('lunch');
   const foodPerDay=breakfast+lunch, waterPerDay=breakfast;
-  const foodDays=Math.floor(S.food/Math.max(1,foodPerDay));
-  const waterDays=Math.floor(S.water/Math.max(1,waterPerDay));
+  const infinite=G.isInfiniteResourceMode();
+  const foodDays=infinite?Infinity:Math.floor(S.food/Math.max(1,foodPerDay));
+  const waterDays=infinite?Infinity:Math.floor(S.water/Math.max(1,waterPerDay));
   return {breakfast,lunch,foodPerDay,waterPerDay,foodDays,waterDays,supplyDays:Math.min(foodDays,waterDays)};
 };
 G.nextMealInfo = ()=>{
@@ -590,7 +591,8 @@ G.mealForecast = mins=>{
 };
 G.consumeMeal = kind=>{
   const need=G.mealNeed(kind), before=clamp(Number(S.hunger)||0,0,3);
-  const used=Math.min(Math.max(0,S.food),need), ok=used>=need;
+  const infinite=G.isInfiniteResourceMode();
+  const used=infinite?need:Math.min(Math.max(0,S.food),need), ok=infinite||used>=need;
   G.addSupply('food',-used);
   if(ok){
     S.hunger=Math.max(0,before-1);
@@ -606,7 +608,7 @@ G.consumeMeal = kind=>{
 G.mealToast = (label,result,icon='🍚')=>{
   if(result.ok){
     const recovery=result.after<result.before?(result.after===0?' · 허기 해소':` · 허기 ${result.before}→${result.after}`):'';
-    return `${icon} ${label} 식사 · 식량 -${result.used}${recovery}`;
+    return `${icon} ${label} 식사 · ${G.isInfiniteResourceMode()?'식량 ∞ · 테스트 소모 없음':`식량 -${result.used}`}${recovery}`;
   }
   const mood=result.mood?` · 사기 ${result.mood}`:'';
   return `${icon} ${label} 결식 · 식량 ${result.used}/${result.need} · ${G.hungerLabel(result.after)} ${result.after}/3 · 피로 +${result.fatigue}${mood}`;
@@ -650,7 +652,8 @@ G.lunch = ()=>{
 };
 G.breakfast = ()=>{
   const need=G.mealNeed('breakfast');
-  const waterUsed=Math.min(Math.max(0,S.water),need), waterOk=waterUsed>=need;
+  const infinite=G.isInfiniteResourceMode();
+  const waterUsed=infinite?need:Math.min(Math.max(0,S.water),need), waterOk=infinite||waterUsed>=need;
   G.addSupply('water',-waterUsed);
   let waterFatigue=0,waterMood=0;
   if(waterOk) S.thirst=0;
@@ -662,7 +665,7 @@ G.breakfast = ()=>{
   const result=G.consumeMeal('breakfast');
   if(waterOk&&result.ok){
     const recovery=result.after<result.before?(result.after===0?' · 허기 해소':` · 허기 ${result.before}→${result.after}`):'';
-    UI.toast(`🍙 아침 식사 · 식량 -${result.used} · 물 -${waterUsed}${recovery}`);
+    UI.toast(`🍙 아침 식사 · ${infinite?'식량·물 ∞ · 테스트 소모 없음':`식량 -${result.used} · 물 -${waterUsed}`}${recovery}`);
   } else {
     const fatigue=result.fatigue+waterFatigue, mood=result.mood+waterMood;
     UI.toast(`🍙 아침 식사 부족 · 식량 ${result.used}/${result.need} · 물 ${waterUsed}/${need} · ${G.hungerLabel(result.after)} ${result.after}/3${fatigue?` · 피로 +${fatigue}`:''}${mood?` · 사기 ${mood}`:''}`);
@@ -708,11 +711,11 @@ G.dawn = ()=>{
   const atTown=!!(S.at&&D.nodes[S.at]&&D.nodes[S.at].stl);
   /* 빈 탱크로 길가에서 맞는 아침 — 구제가 먼저 온다(값은 오르고 세 번이 한계).
      고철이 있어도 살 곳이 없으면 영구 교착이 되는 소프트락 실측(2026-08-07 완주봇). */
-  if(S.fuel<=0 && !atTown && !S.driving){
+  if(!G.isInfiniteResourceMode()&&S.fuel<=0 && !atTown && !S.driving){
     /* 구제 사다리는 마지막 단(견인 20고철·걷기)을 계속 제안한다 — 셀 수 있는 건 값이지 횟수가 아니다 */
     setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 800);
   }
-  if(S.fuel<=0 && !atTown && S.scrap<20 && ((S._rescues&&S._rescues.nofuel)||0)>=3){
+  if(!G.isInfiniteResourceMode()&&S.fuel<=0 && !atTown && S.scrap<20 && ((S._rescues&&S._rescues.nofuel)||0)>=3){
     S._strandedDays=(S._strandedDays||0)+1;
     if(S._strandedDays>=2){ G.endGame('stranded'); return; }
   } else S._strandedDays=0;

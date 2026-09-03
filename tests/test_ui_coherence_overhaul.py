@@ -62,7 +62,7 @@ with sync_playwright() as playwright:
     )
     assert "하룻밤을 보낸다" not in page.locator("#journey-mode-local").inner_text()
 
-    page.click("#dk-map")
+    page.click(".nav-route-map[data-open-map]")
     page.wait_for_timeout(180)
     map_samples = page.locator("#mapcv").evaluate(
         """canvas => {

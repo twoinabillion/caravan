@@ -431,6 +431,9 @@ G.applyFx = (fx,context={})=>{
     chips.push({t:`◎ 읽어낸 틈 · ${S.combat.read.label}`,c:'plus'});
   }
   const num = (k,label,unit)=>{ if(fx[k]){ const v=fx[k]; let applied=v, capped=false;
+    if(v<0&&G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(k)){
+      chips.push({t:`${label} ∞ · 테스트 소모 없음`,c:'plus'}); return;
+    }
     if(k==='fuel') S.fuel=clamp(S.fuel+v,0,S.fuelMax);
     else if(k==='water'||k==='food'){
       const result=G.addSupply(k,v); applied=result.delta; capped=result.overflow>0;
@@ -451,7 +454,11 @@ G.applyFx = (fx,context={})=>{
   if(fx.moodAll){ G.moodAll(fx.moodAll); if(S.party.length) chips.push({t:`사기 ${fx.moodAll>0?'+':''}${fx.moodAll}`, c:fx.moodAll>0?'plus':'minus'}); }
   if(fx.mood){ for(const id in fx.mood){ if(S.comps[id]!==undefined&&G.hasComp(id)){ S.comps[id].mood=clamp(S.comps[id].mood+fx.mood[id],0,100);
     chips.push({t:`${D.comps[id].name} 사기 ${fx.mood[id]>0?'+':''}${fx.mood[id]}`, c:fx.mood[id]>0?'plus':'minus'}); } } }
-  if(fx.item){ for(const nm in fx.item){ const v=fx.item[nm]; S.items[nm]=Math.max(0,(S.items[nm]||0)+v);
+  if(fx.item){ for(const nm in fx.item){ const v=fx.item[nm];
+    if(v<0&&G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(nm)){
+      chips.push({t:`${nm} ∞ · 테스트 소모 없음`,c:'plus'}); continue;
+    }
+    S.items[nm]=Math.max(0,(S.items[nm]||0)+v);
     chips.push({t:`${nm} ${v>0?'+':''}${v}`, c:v>0?'plus':'minus'}); } }
   if(fx.flag) S.flags[fx.flag]=true;
   if(fx.flag2) S.flags[fx.flag2]=true;
@@ -645,13 +652,13 @@ G.reqOk = (req)=>{
       return {ok:false, t:`열쇠를 나눠 맡을 상대 ${holders}/${req.keyHolders} — 한 사람이 다 쥘 수는 없다`};
   }
   if(req.dog && !S.dog) return {ok:false, t:'보리가 없다'};
-  if(req.item && (S.items[req.item]||0)<(req.itemQty||1))
+  if(req.item && !G.hasResource(req.item,req.itemQty||1))
     return {ok:false, t:`${req.item} ${req.itemQty||1}개 필요`};
-  if(req.item2 && !(S.items[req.item2]>0)) return {ok:false, t:`${req.item2} 필요`};
-  if(req.scrap && S.scrap<req.scrap) return {ok:false, t:`고철 ${req.scrap} 필요`};
-  if(req.fuel && S.fuel<req.fuel) return {ok:false, t:`연료 ${req.fuel}L 필요`};
-  if(req.water && S.water<req.water) return {ok:false, t:`물 ${req.water} 필요`};
-  if(req.food && S.food<req.food) return {ok:false, t:`식량 ${req.food} 필요`};
+  if(req.item2 && !G.hasResource(req.item2,1)) return {ok:false, t:`${req.item2} 필요`};
+  if(req.scrap && !G.hasResource('scrap',req.scrap)) return {ok:false, t:`고철 ${req.scrap} 필요`};
+  if(req.fuel && !G.hasResource('fuel',req.fuel)) return {ok:false, t:`연료 ${req.fuel}L 필요`};
+  if(req.water && !G.hasResource('water',req.water)) return {ok:false, t:`물 ${req.water} 필요`};
+  if(req.food && !G.hasResource('food',req.food)) return {ok:false, t:`식량 ${req.food} 필요`};
   return {ok:true};
 };
 /* 예전 이벤트의 choice.minParty도 req.party와 같은 규칙으로 정규화한다.
@@ -926,7 +933,7 @@ G.arrive = ()=>{
     G.deferEvent('perimeter_first');
     setTimeout(()=>G.openEventById('perimeter_first'), arrivalDelay);
     G.save(); return; }
-  if(S.fuel<=0){ G.deferEvent('crisis_nofuel'); setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
+  if(!G.isInfiniteResourceMode()&&S.fuel<=0){ G.deferEvent('crisis_nofuel'); setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   const arrivalDelay=UI.onArrive();

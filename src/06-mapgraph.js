@@ -363,12 +363,10 @@ const MAPR = (()=>{
       const x=sx(p),y=sy(p);if(!started){c.moveTo(x,y);started=true;}else c.lineTo(x,y);
     }return started;};
 
-    /* 바다와 실제 해안 윤곽 */
-    const sea=c.createLinearGradient(0,0,0,height);sea.addColorStop(0,'#061923');sea.addColorStop(1,'#031018');
-    c.fillStyle=sea;c.fillRect(0,0,width,height);
+    /* 지역 지형 이미지는 CSS 레이어가 소유한다. 캔버스는 그것을 가리지 않고
+       실제 해안 윤곽과 게임 노선만 투명하게 겹쳐 그린다. */
     linePath(COAST);c.closePath();
-    const land=c.createLinearGradient(0,0,0,height);land.addColorStop(0,'#25322f');land.addColorStop(.55,'#1d2b29');land.addColorStop(1,'#18231f');
-    c.fillStyle=land;c.fill();c.strokeStyle='rgba(91,171,164,.46)';c.lineWidth=1.2;c.stroke();
+    c.fillStyle='rgba(22,43,40,.1)';c.fill();c.strokeStyle='rgba(91,190,180,.34)';c.lineWidth=1.1;c.stroke();
 
     const known=new Set(S.known||[]),routeEdgeSet=pathEdges({nodes:routeIds});
     const nearby=Object.entries(D.nodes).filter(([,node])=>visible(node));
@@ -390,11 +388,11 @@ const MAPR = (()=>{
     }
 
     /* 출발지부터 목적지까지 실제 노드 좌표를 따른다. */
-    c.save();c.lineCap='round';c.lineJoin='round';c.setLineDash([6,6]);
-    linePath(routePoints);c.strokeStyle='rgba(5,9,11,.72)';c.lineWidth=5;c.stroke();
+    c.save();c.lineCap='round';c.lineJoin='round';c.setLineDash([]);
+    linePath(routePoints);c.strokeStyle='rgba(3,8,10,.9)';c.lineWidth=7;c.stroke();
     const first=routePoints[0],last=routePoints[routePoints.length-1];
     const rg=c.createLinearGradient(sx(first),sy(first),sx(last),sy(last));rg.addColorStop(0,'#62d4ca');rg.addColorStop(1,'#efab4d');
-    linePath(routePoints);c.strokeStyle=rg;c.lineWidth=2.4;c.stroke();c.setLineDash([]);c.restore();
+    linePath(routePoints);c.strokeStyle=rg;c.lineWidth=3;c.stroke();c.restore();
 
     /* 주변 주요 지점과 경유 노드 */
     for(const [id,node] of nearby){
@@ -402,9 +400,12 @@ const MAPR = (()=>{
       const onRoute=routeIds.includes(id),major=CITY_IDS.has(id)||node.stl;if(!onRoute&&!major) continue;
       c.fillStyle=onRoute?'#d8dfd9':'rgba(154,170,166,.58)';c.beginPath();c.arc(sx(node),sy(node),onRoute?2.8:1.8,0,7);c.fill();
     }
-    const marker=(node,color,target=false)=>{const x=sx(node),y=sy(node);c.strokeStyle=color;c.lineWidth=2.5;c.beginPath();c.arc(x,y,target?9:7,0,7);c.stroke();
-      c.fillStyle=color;c.beginPath();c.arc(x,y,target?4:3.3,0,7);c.fill();if(target){c.strokeStyle='rgba(239,171,77,.42)';c.lineWidth=1;c.beginPath();c.arc(x,y,13,0,7);c.stroke();}};
-    marker(D.nodes[startId],'#61d4ca');marker(D.nodes[selectedId],'#efab4d',true);
+    const targetMarker=(node)=>{const x=sx(node),y=sy(node);c.strokeStyle='#efab4d';c.lineWidth=2.5;c.beginPath();c.arc(x,y,9,0,7);c.stroke();
+      c.fillStyle='#efab4d';c.beginPath();c.arc(x,y,4,0,7);c.fill();c.strokeStyle='rgba(239,171,77,.42)';c.lineWidth=1;c.beginPath();c.arc(x,y,13,0,7);c.stroke();};
+    const start=routePoints[0],next=routePoints[1]||routePoints[0],startX=sx(start),startY=sy(start);
+    c.save();c.translate(startX,startY);c.rotate(Math.atan2(sy(next)-startY,sx(next)-startX));c.shadowColor='rgba(97,212,202,.85)';c.shadowBlur=8;
+    c.fillStyle='#61d4ca';c.strokeStyle='#dcfffb';c.lineWidth=1;c.beginPath();c.moveTo(10,0);c.lineTo(-6,-6);c.lineTo(-2,0);c.lineTo(-6,6);c.closePath();c.fill();c.stroke();c.restore();
+    c.strokeStyle='rgba(97,212,202,.62)';c.lineWidth=1.5;c.beginPath();c.arc(startX,startY,12,0,7);c.stroke();targetMarker(D.nodes[selectedId]);
 
     const label=(id,node,color,above)=>{const text=D.nodes[id].name,x=sx(node),y=sy(node)+(above?-13:19);c.font='800 10px sans-serif';
       const tw=Math.min(width-20,c.measureText(text).width+12),lx=Math.max(5,Math.min(width-tw-5,x-tw/2));

@@ -1536,7 +1536,7 @@ with sync_playwright() as p:
           rr['remembered'] and rr['guestAssist'] and rr['follow'] and rr['followHeld'] and rr['followOpened'] and
           rr['memoryVisible'] and rr['ready'], str(rr))
     check('만석에서도 약속 보존·좌석 개조 후 합류', rr['fullHeld'] and rr['joined'], str(rr))
-    pg.click('#dk-map'); pg.wait_for_timeout(160)
+    pg.click('.nav-route-map[data-open-map]'); pg.wait_for_timeout(160)
     map_detail = pg.evaluate('''() => ({
       modes:document.querySelectorAll('#map-sourcebar,#osmcv,#vworld-map').length,
       canvas:document.querySelector('#mapcv')?.getAttribute('aria-label'),
@@ -1779,7 +1779,7 @@ with sync_playwright() as p:
       out.distinctCosts = costs[0].includes('첫 회의 채널이 열렸다') &&
         costs[1].includes('원본 기록 검색창도 코어와 함께 꺼져 있었다') &&
         costs[2].includes('근무표 첫 줄에는 이름 세 칸');
-      out.gateSeparate = D.gateEvent.text({flags:{seoulTries:0}}).includes('추방 명령이 아닙니다') &&
+      out.gateSeparate = D.gateEvent.text({flags:{seoulTries:0}}).includes('남산 진입 조건이 부족합니다') &&
         coreText.includes('인계 규약을 만들었습니다');
       const reveal = D.events.find(e => e.id === 'resist_reveal');
       out.generations = reveal.choices.every(c => c.out[0].text.includes('세대')) &&

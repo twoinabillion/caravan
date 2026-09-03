@@ -184,7 +184,7 @@ with sync_playwright() as playwright:
               goal['count'] >= 1 and not goal['short'] and goal['escaped'] == 0, str(goal))
         page.click('.quest-ledger-back')
 
-        page.click('#dk-map')
+        page.click('.nav-route-map[data-open-map]')
         page.evaluate("UI.showNodeCard(S.known.find(id => id !== S.at))")
         page.wait_for_timeout(80)
         map_state = tool_target_state(page, '#ovl-map')

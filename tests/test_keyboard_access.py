@@ -71,11 +71,20 @@ with sync_playwright() as p:
       S._storyQueue=[]; S._chain=null;
     }""")
 
-    # ── 하단 도크가 키보드로 도달 가능한가 ──
-    reached_map = tab_to(page, 'dk-map')
-    check('Tab만으로 지도 버튼(#dk-map) 도달', reached_map, f'현재 포커스={active_id(page)}')
+    # ── 하단 중앙 동료 도크가 키보드로 도달하고 바로 동료 화면을 여는가 ──
+    reached_crew = tab_to(page, 'dk-crew')
+    check('Tab만으로 동료 버튼(#dk-crew) 도달', reached_crew, f'현재 포커스={active_id(page)}')
+    page.keyboard.press('Enter')
+    page.wait_for_timeout(150)
+    crew_open = page.evaluate("document.querySelector('#ovl-status').classList.contains('on') && document.querySelector('[data-st=\"crew\"]').getAttribute('aria-selected')==='true'")
+    check('Enter로 동료 화면이 바로 열림', crew_open)
+    page.keyboard.press('Escape')
+    page.wait_for_timeout(150)
+    check('동료 화면을 닫으면 동료 버튼으로 복귀', active_id(page) == 'dk-crew', f'activeElement={active_id(page)}')
 
-    # ── 지도 모달: Enter로 열기 → 포커스 진입 → Escape로 닫기 → 트리거 복귀 ──
+    # ── 중앙 노선도: Enter로 전체 지도 열기 → Escape로 닫기 → 트리거 복귀 ──
+    reached_map = tab_to(page, 'road-map-open')
+    check('Tab만으로 중앙 전체 지도 진입점 도달', reached_map, f'현재 포커스={active_id(page)}')
     page.keyboard.press('Enter')
     page.wait_for_timeout(150)
     map_open = page.evaluate("document.querySelector('#ovl-map').classList.contains('on')")
@@ -89,11 +98,11 @@ with sync_playwright() as p:
     page.wait_for_timeout(150)
     map_closed = page.evaluate("!document.querySelector('#ovl-map').classList.contains('on')")
     check('Escape로 지도 모달 닫힘', map_closed)
-    focus_returned = active_id(page) == 'dk-map'
-    check('지도 닫은 뒤 포커스가 트리거(#dk-map)로 복귀', focus_returned, f'activeElement={active_id(page)}')
+    focus_returned = active_id(page) == 'road-map-open'
+    check('지도 닫은 뒤 중앙 지도 트리거로 복귀', focus_returned, f'activeElement={active_id(page)}')
 
     # ── 상태 모달: 탭(now/journey/crew)까지 화살표로 순회 ──
-    reached_status = tab_to(page, 'dk-status', max_tabs=10)
+    reached_status = tab_to(page, 'dk-status', max_tabs=40)
     check('Tab으로 상태 버튼(#dk-status) 도달', reached_status)
     page.keyboard.press('Enter')
     page.wait_for_timeout(150)
@@ -174,7 +183,7 @@ with sync_playwright() as p:
     }""")
     check('숫자키 2가 두 번째 선택지를 실행한다', picked.get('cards', 0) >= 2 and picked.get('changed'), str(picked))
 
-    # ── 지도 키보드 여행 — ]로 이웃 순회, Enter로 출발 ──
+    # ── 지도는 지역 열람 전용 — ]로 지역을 보고 Enter가 출발을 만들지 않는다 ──
     travel = page.evaluate("""() => {
       G.newGame('onroad','키보드여행','full');
       document.querySelector('#ovl-map').classList.add('on');
@@ -187,8 +196,8 @@ with sync_playwright() as p:
       document.querySelector('#ovl-map').classList.remove('on');
       return {cardOn, goBtn, departed, from:before, to:S.driving&&S.driving.to};
     }""")
-    check('] 키가 이웃 노드 카드를 연다', travel.get('cardOn') and travel.get('goBtn'), str(travel))
-    check('Enter가 실제로 출발시킨다', travel.get('departed'), str(travel))
+    check('] 키가 이웃 지역 정보를 연다', travel.get('cardOn') and not travel.get('goBtn'), str(travel))
+    check('지도 Enter가 임의 출발을 만들지 않는다', not travel.get('departed'), str(travel))
 
     check('콘솔/런타임 오류 0건', len(console_errors) == 0, str(console_errors[:5]))
 
