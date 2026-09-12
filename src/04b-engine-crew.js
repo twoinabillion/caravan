@@ -57,13 +57,15 @@ G.checkLevel = (id,opt={})=>{
   G.save();
 };
 G.choosePerk = (id, pick)=>{ // pick: 0|1
-  const c=S.comps[id]; if(!c.pending) return;
+  const c=S.comps[id]; if(!c.pending) return null;
   const p=D.comps[id].perks[c.pending][pick];
+  if(!p) return null;
   c.perks.push(p.id); c.lvl=c.pending; c.pending=0;
   G.grantPerk(id, p.id);
   UI.toast(`<span class="ic">✦</span>${D.comps[id].name} — 「${p.nm}」 습득`);
   G.checkLevel(id);
   G.save();
+  return p;
 };
 G.grantPerk = (id, pid)=>{ // 습득 즉시 효과
   switch(pid){
@@ -96,7 +98,7 @@ G.queueStory = (id)=>{
 /* 비트 조건. 거리만으로 고르면 동료·상황이 맞아야 성립하는 장면을 예약할 수 없고,
    그래서 그런 장면들이 무작위 풀에 남아 등장률 0%가 됐다(2026-08-06 실측). */
 G.beatReady = (b)=>{
-  if(!b||S.stats.km<b.km) return false;
+  if(!b||!G.mainEvidenceLocationReady(b.id)||S.stats.km<b.km||(G.mainEvidenceEventDone&&G.mainEvidenceEventDone(b.id))) return false;
   const w=b.when;
   if(!w) return true;
   if(w.comps && !w.comps.every(id=>G.hasComp(id)&&!G.isInjured(id))) return false;
@@ -166,7 +168,8 @@ G.popBeat = ()=>{
 G.popStory = ()=>{
   while(S&&S._storyQueue&&S._storyQueue.length){
     const id=S._storyQueue.shift(), ev=D.events.find(e=>e.id===id);
-    if(ev && (!ev.once||!S.used.includes(id))) return id;
+    if(!G.mainEvidenceLocationReady(id)) continue;
+    if(ev && (!ev.once||!S.used.includes(id))&&!(G.mainEvidenceEventDone&&G.mainEvidenceEventDone(id))) return id;
   }
   return null;
 };
@@ -193,6 +196,18 @@ G.choiceMemoryDef = (eventId,choiceIndex)=>{
   const defs=D.choiceMemories&&D.choiceMemories[eventId];
   return Array.isArray(defs)?defs[choiceIndex]:null;
 };
+G.openingDecisionMemories = ()=>{
+  if(!S||!S.opening||!S.opening.decisions||!D.openingDecisionCallbacks) return [];
+  return Object.entries(S.opening.decisions).map(([stepId,decision])=>{
+    const def=D.openingDecisionCallbacks[stepId]&&D.openingDecisionCallbacks[stepId][decision.choiceId];
+    if(!def) return null;
+    const event=(D.openingDeparture||[]).find(item=>item.id===stepId);
+    return {id:`${stepId}:${decision.choiceId}`,eventId:stepId,choiceId:decision.choiceId,
+      eventTitle:event&&event.title||'부산에서 정한 출발',summary:def.summary,
+      dueKm:Number(def.afterKm)||0,dueEvents:Number(def.afterEvents)||0,
+      echoed:!!decision.callbackEchoed,openingDecision:true,lines:def.lines};
+  }).filter(Boolean);
+};
 G.rememberChoice = (evd,choice,outcome)=>{
   if(!S||!evd||!choice) return [];
   G.ensureNarrativeState();
@@ -217,7 +232,7 @@ G.pendingChoiceMemory = ()=>{
     const memory=S.memories.choices[id];
     if(memory&&!memory.echoed) return memory;
   }
-  return null;
+  return G.openingDecisionMemories().find(memory=>!memory.echoed)||null;
 };
 G.takeChoiceEcho = ()=>{
   if(!S||!S.driving) return null;
@@ -226,23 +241,44 @@ G.takeChoiceEcho = ()=>{
     const m=S.memories.choices[id];
     return m&&!m.echoed&&S.stats.km>=m.dueKm&&S.stats.events>=m.dueEvents;
   });
-  if(idx<0) return null;
-  const id=S.memories.pending[idx], memory=S.memories.choices[id];
-  const def=G.choiceMemoryDef(memory.eventId,memory.choiceIndex);
-  if(!def||!Array.isArray(def.lines)){
+  if(idx>=0){
+    const id=S.memories.pending[idx], memory=S.memories.choices[id];
+    const def=G.choiceMemoryDef(memory.eventId,memory.choiceIndex);
+    if(!def||!Array.isArray(def.lines)){
+      S.memories.pending.splice(idx,1);
+      return null;
+    }
+    /* 동료가 화자로 지정된 기억은 그 사람이 실제 탑승 중일 때만 재생한다. */
+    const unavailable=def.lines.some(line=>D.comps[line[0]]&&!G.hasComp(line[0]));
+    if(unavailable) return null;
+    memory.echoed=true;
+    memory.echoDay=S.day;
+    memory.echoKm=Math.round(S.stats.km);
     S.memories.pending.splice(idx,1);
-    return null;
+    G.qualityChoiceEcho(memory);
+    G.save();
+    return {memory,lines:def.lines};
   }
-  /* 동료가 화자로 지정된 기억은 그 사람이 실제 탑승 중일 때만 재생한다. */
-  const unavailable=def.lines.some(line=>D.comps[line[0]]&&!G.hasComp(line[0]));
-  if(unavailable) return null;
-  memory.echoed=true;
-  memory.echoDay=S.day;
-  memory.echoKm=Math.round(S.stats.km);
-  S.memories.pending.splice(idx,1);
-  G.qualityChoiceEcho(memory);
+  const opening=G.openingDecisionMemories().find(memory=>!memory.echoed
+    && S.stats.km>=memory.dueKm&&S.stats.events>=memory.dueEvents);
+  if(!opening||!Array.isArray(opening.lines)) return null;
+  const decision=S.opening.decisions[opening.eventId];
+  decision.callbackEchoed=true;
+  decision.callbackDay=S.day;
+  decision.callbackKm=Math.round(S.stats.km);
+  G.qualityChoiceEcho(opening);
   G.save();
-  return {memory,lines:def.lines};
+  return {memory:opening,lines:opening.lines};
+};
+G.choiceForeseeable = choice=>{
+  if(!choice) return [];
+  const authored=choice.foreseeable&&typeof choice.foreseeable==='object'?choice.foreseeable:{};
+  const rows=[];
+  if(authored.expense) rows.push({kind:'expense',label:'즉시',text:String(authored.expense)});
+  if(choice.risk) rows.push({kind:'risk',label:'위험',text:String(choice.risk)});
+  if(authored.exposure) rows.push({kind:'exposure',label:'노출',text:String(authored.exposure)});
+  if(authored.lasting) rows.push({kind:'lasting',label:'이후',text:String(authored.lasting)});
+  return rows;
 };
 G.combatTacticDelta = choice=>{
   if(!S||!S.combat||!choice||!choice.tactic) return 0;
@@ -526,8 +562,8 @@ G.pickOutcome = (evd, choice)=>{
     combatMeta.rollValue=Number.isFinite(rolledValue) ? Math.round(rolledValue*100) : null;
   }
   if(combatResult&&out&&out.fx&&!out.fx.combatResult)
-    return {...out,fx:{...out.fx,combatResult},...(combatMeta?{combatMeta}:{} )};
-  return combatMeta ? {...out,combatMeta} : out;
+    return {...out,presentationOutcomeIndex:index,fx:{...out.fx,combatResult},...(combatMeta?{combatMeta}:{} )};
+  return {...out,presentationOutcomeIndex:index,...(combatMeta?{combatMeta}:{})};
 };
 
 /* ── notes (지식 그래프) ── */

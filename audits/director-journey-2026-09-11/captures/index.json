@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "copiedAt": "2026-09-12",
+  "scope": "Eight representative images copied byte-for-byte from already qualified Task 8 evidence; no recapture. Source files remain in the worktree-only raw evidence tree.",
+  "captures": [
+    {
+      "path": "captures/01-opening-choice.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/normal-opening/002-opening_workshop-event-decision.png",
+      "bytes": 430344,
+      "sha256": "f8062c7ef802961c0b14a804f4b9fd1097f09446f2791583d3ba703a1f3e0d74"
+    },
+    {
+      "path": "captures/02-opening-departure-result.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/normal-opening/015-opening_departure-outcome-result.png",
+      "bytes": 437380,
+      "sha256": "f0ab067c59b65ad8829728ecf17ddb6d834ea2df75cafc4a1bf8d9d94fbbd9cd"
+    },
+    {
+      "path": "captures/03-minji-camp-choice.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/recruit-minji/003-camp_1_minji-event.png",
+      "bytes": 431455,
+      "sha256": "014966f056508b375af07ace4ccb7df618ae74ffc799cd97c1019eae0322bb0d"
+    },
+    {
+      "path": "captures/04-earned-checkpoint-decision.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/final.png",
+      "bytes": 420699,
+      "sha256": "58d7bc3ed5bec1bb30eee04f2f8c1d5f295d8dcfd80a027cf45091c8bc8f1f47"
+    },
+    {
+      "path": "captures/05-market-father-record.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/route-market/015-main_recovery_parents_father_last_log-event.png",
+      "bytes": 422351,
+      "sha256": "53f2f12bd259b487dc42f6830c968e5e198d8c6291565fc317c74660cac3a362"
+    },
+    {
+      "path": "captures/06-seoul-method-selection.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/047-seoul_decision-event.png",
+      "bytes": 424501,
+      "sha256": "3a5c23cb8074dc75c3de72e737c6b5acf5071dee92571eb77d163ee23ebacb4f"
+    },
+    {
+      "path": "captures/07-transfer-night-result.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/finale-transfer/005-seoul_night-outcome.png",
+      "bytes": 432783,
+      "sha256": "f8ab711144a2607f580dc863a908f274c608031bca7e8ceda4eaf5c30ed43c94"
+    },
+    {
+      "path": "captures/08-transfer-ending.png",
+      "source": "artifacts/director-pass-2026-09-11/task8-final/finale-transfer/final.png",
+      "bytes": 89580,
+      "sha256": "b718f0fb334583b6742aecc0c5a3461bb59368e41a71925f33c099557f3eb667"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ G.ensureQuestLedger = ()=>{
   return ledger;
 };
 
-G.questGraphDistance = (from,to)=>{
+G.questGraphDistance = (from,to,routeAware=false)=>{
   if(!from||!to) return Infinity;
   if(from===to) return 0;
   const dist={[from]:0}, pending=[from];
@@ -23,13 +23,14 @@ G.questGraphDistance = (from,to)=>{
     const here=pending.shift();
     if(here===to) return dist[here];
     for(const nb of G.neighbors(here)){
+      if(routeAware&&!G.routeTravelCheck(here,nb.id).ok) continue;
       const next=dist[here]+nb.km;
       if(next<(dist[nb.id]??Infinity)){ dist[nb.id]=next; pending.push(nb.id); }
     }
   }
   return Infinity;
 };
-G.questNavigationPlan = ()=>{
+G.questObjectivePlan = ()=>{
   if(!S) return null;
   const ledger=G.ensureQuestLedger(), q=S.quest;
   if(q&&ledger.tracked.includes(q.ledgerId)){
@@ -42,17 +43,33 @@ G.questNavigationPlan = ()=>{
   if(rq&&rq.target&&ledger.tracked.includes(`companion_${rq.id}`))
     return {key:`companion_${rq.id}`,kind:'companion',target:rq.target,title:`${D.comps[rq.id].name}의 부탁`,action:`${D.nodes[rq.target].name}에 가서 ${D.comps[rq.id].name}가 부탁한 일을 한다`};
   const main=G.mainQuestEntry();
-  return {key:`main_${main&&main.chapterId||'namsan'}`,kind:'main',target:'seoul',title:main&&main.title||'남산으로 간다',action:main&&main.next||'북쪽 길을 따라간다'};
+  const evidence=G.mainEvidenceOpportunity();
+  return {key:`main_${main&&main.chapterId||'namsan'}`,kind:'main',target:evidence?evidence.target:'seoul',title:main&&main.title||'남산으로 간다',action:evidence?evidence.hint:main&&main.next||'북쪽 길을 따라간다'};
+};
+G.questNavigationPlan = ()=>{
+  const plan=G.questObjectivePlan();
+  if(!plan) return null;
+  const route=G.routeStatus(), origin=S.at||S.driving?.from;
+  const committed=route&&!route.complete&&origin!==route.def.end
+    &&route.def.corridor.includes(origin)&&!route.def.corridor.includes(plan.target);
+  return committed?{...plan,waypoint:route.def.end,
+    action:`${route.def.name}을 따라 청주까지 간 뒤 ${D.nodes[plan.target].name}까지 이동한다`}:plan;
 };
 G.questPreferredNeighbor = routeModels=>{
   const plan=G.questNavigationPlan();
   if(!plan||!Array.isArray(routeModels)||!routeModels.length) return null;
-  return [...routeModels].sort((a,b)=>(a.nb.km+G.questGraphDistance(a.nb.id,plan.target))-(b.nb.km+G.questGraphDistance(b.nb.id,plan.target)))[0]||null;
+  const target=plan.waypoint||plan.target,origin=S.at||S.driving?.from;
+  if(origin===target) return null;
+  return routeModels.filter(model=>G.routeTravelCheck(origin,model.nb.id).ok)
+    .map(model=>({model,distance:model.nb.km+G.questGraphDistance(model.nb.id,target,true)}))
+    .filter(row=>Number.isFinite(row.distance)).sort((a,b)=>a.distance-b.distance)[0]?.model||null;
 };
 G.routeQuestCue = nodeId=>{
   const plan=G.questNavigationPlan();
-  if(!plan||!S||!S.at) return null;
-  const options=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id)).map(nb=>({nb}));
+  if(!plan||!S) return null;
+  const origin=S.at||S.driving?.from;
+  if(!origin) return null;
+  const options=G.neighbors(origin).filter(nb=>S.known.includes(nb.id)).map(nb=>({nb}));
   const preferred=G.questPreferredNeighbor(options);
   return preferred&&preferred.nb.id===nodeId?plan:null;
 };
@@ -82,7 +99,7 @@ G.mainQuestEntry = ()=>{
 
   if(endingDone) return {...base,status:'completed',act:'종장',chapterId:'ending',eyebrow:'메인 스토리 · 종장',title:'강제 이송 명령에 마지막 결론을 내렸다',phase:'남산 코어 · 여정 기록',why:'부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.',next:'이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.',expected:'끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.',recovery:'완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.',steps:[{id:'ending',label:'남산 코어에서 최종 결정을 내렸다',state:'done'}],progress:{have:1,need:1,label:'완료'}};
 
-  if(S.at==='seoul'&&typeof G.seoulStage==='function'){
+  if(S.at==='seoul'&&G.seoulReady()&&typeof G.seoulStage==='function'){
     const stage=G.seoulStage();
     const stops=D.seoulMap&&Array.isArray(D.seoulMap.stops)?D.seoulMap.stops:[];
     const stop=stops[stage], stopName=stop&&(stop.name||stop.label)||`남산 진입 지점 ${stage+1}`;
@@ -91,7 +108,8 @@ G.mainQuestEntry = ()=>{
   }
 
   if(nextDeparture){
-    const copy=stepCopy[nextDeparture.id]||stepCopy.trace;
+    const evidence=G.mainEvidenceOpportunity();
+    const copy={...(stepCopy[nextDeparture.id]||{act:'4장',chapterId:nextDeparture.id,title:nextDeparture.label,phase:'남산 진입 준비',why:'확인한 기록과 실제 응답을 모아 사람의 판단을 되돌린다.'}),...(evidence?{next:evidence.hint,recovery:evidence.hint}: {})};
     return {...base,...copy,eyebrow:`메인 스토리 · ${copy.act}`,steps:departureTrail,progress:{have:departureDone.length,need:departureNeed,label:`${departureDone.length}/${departureNeed}`}};
   }
 

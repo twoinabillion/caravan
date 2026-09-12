@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression gate for event typography, containment, and small-screen paging."""
+"""Regression gate for event typography, containment, and scrollable choices."""
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -37,8 +37,9 @@ def open_case(page, event_id, phase, index):
         page.evaluate("UI.finishStory()")
     else:
         for _ in range(index):
-            page.click(".story-reader")
-            page.wait_for_timeout(80)
+            page.click(".story-next")
+            # Match the game's 280ms double-tap guard before advancing again.
+            page.wait_for_timeout(320)
     if phase in ("outcome", "combat-outcome"):
         page.evaluate("document.querySelector('.event-choice-dock .choice[data-i]:not([disabled])').click()")
     page.wait_for_timeout(70)
@@ -53,19 +54,23 @@ def layout(page):
             return style.display!=='none'&&style.visibility!=='hidden'&&box.width>0&&box.height>0;
           };
           const label=node=>String(node.textContent||node.getAttribute('aria-label')||'').replace(/\s+/g,' ').trim().slice(0,100);
+          const scrollHost=node=>{
+            for(let parent=node.parentElement;parent&&parent!==root;parent=parent.parentElement){
+              if(['auto','scroll'].includes(getComputedStyle(parent).overflowY)&&parent.scrollHeight>parent.clientHeight+1) return parent;
+            }
+            return null;
+          };
           const textNodes=[...root.querySelectorAll('.event-head h2,.turn-speaker small,.turn-speaker b,.turn-text,.chat-name,.chat-bubble,.story-narration-label,.story-narration-text,.choice-title>span:last-child,.event-result-kicker,.fx')].filter(visible);
           const clipped=textNodes.filter(node=>node.scrollWidth>node.clientWidth+1||node.scrollHeight>node.clientHeight+1).map(label);
           const outsideSurface=textNodes.filter(node=>{
             const surface=node.closest('.event-field-report,.event-result-receipt,.choice');
             if(!surface) return false;
-            const scrollHost=node.closest('.story-reader');
-            if(scrollHost&&['auto','scroll'].includes(getComputedStyle(scrollHost).overflowY)) return false;
             const box=node.getBoundingClientRect(),limit=surface.getBoundingClientRect();
-            return box.left<limit.left-1||box.right>limit.right+1||box.top<limit.top-1||box.bottom>limit.bottom+1;
+            return box.left<limit.left-1||box.right>limit.right+1||(!scrollHost(node)&&(box.top<limit.top-1||box.bottom>limit.bottom+1));
           }).map(label);
           const controls=[...root.querySelectorAll('button,[role="button"]')].filter(visible);
           const escaped=controls.filter(node=>{
-            const box=node.getBoundingClientRect();return box.left<-1||box.right>innerWidth+1||box.top<-1||box.bottom>innerHeight+1;
+            const box=node.getBoundingClientRect();return box.left<-1||box.right>innerWidth+1||(!scrollHost(node)&&(box.top<-1||box.bottom>innerHeight+1));
           }).map(label);
           const small=controls.filter(node=>{
             const box=node.getBoundingClientRect();return box.width<44||box.height<44;
@@ -83,7 +88,6 @@ def layout(page):
           const report=root.querySelector('.event-field-report')?.getBoundingClientRect();
           const currentAvatar=avatar?.getBoundingClientRect();
           const avatarSide=avatar?.closest('.chat-msg')?.dataset.side||'left';
-          const pager=root.querySelector('[data-choice-pages]:not([hidden])');
           const visibleChoices=[...root.querySelectorAll('.event-choice-dock .choice[data-i]')].filter(visible);
           const narrationNode=root.querySelector('.story-entry:last-child .story-narration-text');
           const rgb=value=>(value.match(/[\d.]+/g)||[]).slice(0,3).map(Number);
@@ -110,8 +114,6 @@ def layout(page):
             titleBeforeProse:!!(title&&currentProse&&title.x<currentProse.x),
             hasPortrait:!!currentAvatar,
             visibleChoices:visibleChoices.length,
-            page:Number(pager?.querySelector('[data-choice-page]')?.textContent||0),
-            pages:Number(pager?.querySelector('[data-choice-total]')?.textContent||0),
             narration:narrationNode?.textContent.trim()||'',
             narrationColor:narrationNode?getComputedStyle(narrationNode).color:'',
             narrationContrast:(Math.max(foreground,background)+.05)/(Math.min(foreground,background)+.05)
@@ -147,8 +149,13 @@ def check_viewport(playwright, width, height):
         if event_id == "trace_consent_archive":
             assert result["narration"].endswith("낯설지 않았다."), result
         if event_id == "combat_walker_strike" and phase == "decision":
-            assert 1 <= result["visibleChoices"] <= (2 if width < 350 or height < 650 else 3), result
-            assert result["page"] == 1 and result["pages"] >= 2, result
+            assert result["visibleChoices"] == page.evaluate("D.events.find(e=>e.id==='combat_walker_strike').choices.length"), result
+            for choice in page.locator('.event-choice-dock .choice[data-i]').all():
+                choice.scroll_into_view_if_needed()
+                assert choice.evaluate("""node=>{
+                  const box=node.getBoundingClientRect(),list=node.closest('.choices').getBoundingClientRect();
+                  return box.top>=list.top-1&&box.bottom<=list.bottom+1&&box.left>=0&&box.right<=innerWidth&&box.bottom<=innerHeight;
+                }"""), (width, height, choice.inner_text(), result)
         if phase == "combat-outcome":
             assert result["narration"], result
             assert result["narrationContrast"] >= 4.5, (width, height, result)
@@ -159,4 +166,4 @@ def check_viewport(playwright, width, height):
 with sync_playwright() as playwright:
     for viewport in ((320, 578), (390, 844), (475, 948)):
         check_viewport(playwright, *viewport)
-    print("✅ 이벤트 글자 정렬·프레임 containment·대비·선택지 paging · 18 states")
+    print("✅ 이벤트 글자 정렬·프레임 containment·대비·선택지 스크롤 도달 · 18 states")

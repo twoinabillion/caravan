@@ -1,0 +1,14 @@
+{
+  "ait": "caravan.ait",
+  "formatVersion": 1,
+  "appName": "caravan",
+  "entryCount": 13,
+  "webEntryCount": 5,
+  "webIndexBytes": 77666433,
+  "webIndexSha256": "73b7cd214d7e0a08bc8a7a1a2de513094dec9be0de28b014d438c2ef1c0ea8df",
+  "gameBuild": "2026-09-11-director-journey",
+  "allIndexHashesVerified": true,
+  "allWebEntriesMatchFreshDist": true,
+  "referencedWebAssetCount": 3,
+  "allReferencedWebAssetsIndexed": true
+}

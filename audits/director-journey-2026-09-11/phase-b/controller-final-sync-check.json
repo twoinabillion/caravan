@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-09-12T12:42:01.814188+09:00",
+  "acceptedDeliveryCommit": "2cb4131aa12ffc082a219d9185bb52c8889bb7d4",
+  "deliveredFilesChecked": 297,
+  "untouchedBaselineFilesChecked": 942,
+  "mismatches": [],
+  "finalSyncReceiptSha256": "58b152ad9e58817a4759084d89575af8b71b91c3e8db6ea6c98f37864dfabb79",
+  "receiptCopiesMatch": true,
+  "result": "original and worktree match every297delivered file;942other baseline files unchanged; later root closure docs recorded separately"
+}

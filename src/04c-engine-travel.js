@@ -193,6 +193,7 @@ G.updateRouteOnArrival = to=>{
 };
 G.canTravelTo = (id)=>{
   if(S.driving||S.ended) return {ok:false};
+  if(G.openingPending&&G.openingPending()) return {ok:false,why:'부산 출발 기록을 마쳐야 길로 나갈 수 있다'};
   const e = G.edgeBetween(S.at,id);
   if(!e) return {ok:false, why:'인접한 길이 없다'};
   if(!S.known.includes(id)) return {ok:false, why:'모르는 곳이다'};
@@ -428,6 +429,7 @@ G.startTravel = (to)=>{
   S.driving = {from, to, dist:chk.km, gone:0, road:chk.road, wx, slots, si:0,eventCount:0,
     snapshot:{gameMinute:S.day*1440+S.min,fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,
       van:S.van,fatigue:S.fatigue,pursuit:S.pursuit,build:G.vanBuildProfile().name}};
+  if(G.prepareCampTravel) G.prepareCampTravel(S.driving);
   if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.escort){
     S.driving.recruitEscort=S.recruitQ.id;
   }

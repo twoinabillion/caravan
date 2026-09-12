@@ -199,7 +199,7 @@ with sync_playwright() as p:
           str(desktop_geometry))
     page.set_viewport_size({'width': 360, 'height': 700})
     page.wait_for_timeout(180)
-    page.click('[data-journey-mode="route"]')
+    page.click('button[data-journey-mode="route"]')
     nav_initial = page.evaluate('''() => ({
       console:!!document.querySelector('.route-console'),
       routes:[...new Set([...document.querySelectorAll('[data-route-select]')].map(button=>button.dataset.routeSelect))],
@@ -238,7 +238,7 @@ with sync_playwright() as p:
           nav_initial['routeQuestCue'] == '' and
           '메인 스토리 경로' in nav_initial['routeGuide'] and nav_initial['routeGuideCard'] in nav_initial['routes'] and
           nav_initial['departHint'] == '카드를 눌러 출발', str(nav_initial))
-    page.click('[data-journey-mode="local"]')
+    page.click('button[data-journey-mode="local"]')
     stop_console = page.evaluate('''() => {
       const action=document.querySelector('.stop-action-console');
       return {
@@ -286,7 +286,7 @@ with sync_playwright() as p:
           abs(nav_initial['height'] - stop_console['height']) <= 1 and
           page.locator('[data-journey-mode="vehicle"], #ovl-vehicle-detail').count() == 0,
           str({'route': nav_initial['height'], 'local': stop_console['height']}))
-    page.click('[data-journey-mode="route"]')
+    page.click('button[data-journey-mode="route"]')
     hidden_future = page.evaluate('''() => {
       const console=document.querySelector('.route-console');
       const copy=console?.textContent||'';

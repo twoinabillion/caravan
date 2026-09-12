@@ -1,6 +1,8 @@
 /* ═══ ENGINE 5/5 — 노드 행동·성장·경제·의뢰·서울/최종막·엔딩 ═══ */
 /* ── node actions ── */
 G.exploreStatus = ()=>{
+  const evidence=G.mainEvidenceOpportunity();
+  if(evidence&&evidence.target===S.at) return {ok:true,mainEvidence:evidence,mins:30,fatigue:0,tries:0};
   const tries=S._exploreDay===S.day&&S._exploreNodes
     ?(S._exploreNodes[S.at]||0):0;
   const repeat=tries===1;
@@ -21,6 +23,10 @@ G.explore = ()=>{
   if(S.driving||UI.modalOpen()) return false;
   const status=G.exploreStatus();
   if(!status.ok){ UI.toast(`🔦 ${status.reason}`); UI.renderAll(); return false; }
+  if(status.mainEvidence){
+    G.advance(status.mins);
+    G.openEventById(status.mainEvidence.event); G.save(); return true;
+  }
   if(S._exploreDay!==S.day){ S._exploreDay=S.day; S._exploreNodes={}; }
   S._exploreNodes[S.at]=status.tries+1;
   let freshHaul='';
@@ -93,11 +99,109 @@ G.fireDriveEvent2 = (pool)=>{
 };
 /* 야영은 즉시 시간 넘김이 아니라, 차를 "집"처럼 쓰는 짧은 준비 단계도 가진다.
    _campPlan은 기존 저장 파일에도 자연스럽게 붙고, 다음 취침 후 반드시 비운다. */
+/* A night ends at actual sleep, not midnight: talking across 00:00 cannot buy
+   another exchange. Context and the chosen result survive close/reload. */
+G.campParticipants = ()=>{
+  const ids=[...(S.party||[])], q=S.recruitQ;
+  if(q&&['road','follow','ready'].includes(q.stage)&&D.comps[q.id]&&!ids.includes(q.id)) ids.push(q.id);
+  return ids.filter(id=>D.campConversations[id]);
+};
+G.campTimeLabel = ()=> S.min<360?'새벽':S.min<720?'오전':S.min<1020?'오후':S.min<1200?'저녁':'밤';
+G.currentCampConversation = ()=>{
+  const record=S.campConversation;
+  return record&&record.night===(S.campNight||0)?record:null;
+};
+G.campContext = cid=>{
+  const context=[];
+  const recap=S.lastJourneyRecap||(S.journeyRecaps||[]).slice(-1)[0];
+  if(recap&&D.nodes[recap.from]&&D.nodes[recap.to])
+    context.push(`최근 ${D.nodes[recap.from].name}에서 ${D.nodes[recap.to].name}까지 온 길을 떠올린다.`);
+  const approach=G.recruitApproach(cid);
+  if(approach) context.push(`${approach.label}. ${approach.memory}`);
+  const report=S.lastCombatReport;
+  if(report){
+    const result={success:'목표 달성',partial:'일부만 달성',failure:'실패',retreat:'후퇴'}[report.resultCode]||report.result||'결과 미확인';
+    context.push(`마지막 충돌의 기록은 ${result}이다.${report.objective?' 당시 목표는 '+report.objective+'였다.':''}`);
+  }
+  const opening=G.openingDecision&&G.openingDecision('opening_bus_repair');
+  if(opening) context.push(`부산에서 가족 버스를 두고 골랐던 일도 이야기한다. ${opening.label}`);
+  return context.join('\n\n');
+};
+G.campConversationEvent = ()=>{
+  const record=G.currentCampConversation();
+  if(!record||!G.campParticipants().includes(record.cid)) return null;
+  const data=D.campConversations[record.cid], cid=record.cid;
+  const text=[record.context,record.revisit?data.later:data.first,`"${data.line}"`].filter(Boolean).join('\n\n');
+  return {id:record.id,campConversation:true,type:'대화',title:data.title,
+    scene:`comp-talk-${cid}-${record.timeLabel==='밤'||record.timeLabel==='저녁'||record.timeLabel==='새벽'?'camp':'road'}-v1`,
+    text,speakers:[cid,'me'],turns:[
+      ...(record.context?[{kind:'narration',text:record.context}]:[]),
+      {kind:'narration',text:record.revisit?data.later:data.first},
+      {kind:'dialogue',who:cid,text:data.line}],
+    choices:data.choices.map(choice=>({id:choice.id,label:choice.label,req:choice.req,
+      hint:`${choice.mins}분 함께 보내기`,
+      out:[{p:1,text:choice.text,turnSpeakers:choice.speakers,fx:{time:choice.mins,...(choice.fx||{})}}]}))};
+};
+G.resolveCampChoice = (eventId,choiceId)=>{
+  const record=G.currentCampConversation(), event=G.campConversationEvent();
+  if(!record||!event||event.id!==eventId) return {ok:false,applied:false,why:'지금 이어갈 야영 대화가 아니다'};
+  const choice=event.choices.find(row=>row.id===choiceId);
+  if(!choice) return {ok:false,applied:false,why:'이 대답을 찾을 수 없다'};
+  const out=choice.out[0];
+  if(record.choiceId) return record.choiceId===choiceId
+    ?{ok:true,applied:false,out,chips:[...record.chips]}
+    :{ok:false,applied:false,why:'이미 다른 대답을 나눴다'};
+  const req=G.reqOk(G.choiceReq(choice));
+  if(!req.ok) return {ok:false,applied:false,why:req.t};
+  const data=D.campConversations[record.cid].choices.find(row=>row.id===choiceId);
+  const chips=G.applyFx(out.fx,{noteTitle:event.title});
+  S.campMemories=S.campMemories||{};
+  const previous=S.campMemories[record.cid]||{};
+  const isGuest=!S.party.includes(record.cid);
+  if(!isGuest) G.bond(record.cid,2);
+  S.campMemories[record.cid]={id:record.id,cid:record.cid,choiceId,day:S.day,
+    home:data.home,road:data.road,pendingRoad:true,pendingBond:(previous.pendingBond||0)+(isGuest?2:0)};
+  chips.push({t:isGuest?'함께 나눈 대화 · 합류하면 유대 +2':`${D.comps[record.cid].name} 유대 +2`,c:'item'});
+  chips.push({t:`${D.companionKeepsakes[record.cid].name} · 새 흔적`,c:'item'});
+  record.choiceId=choiceId; record.chips=chips; record.resolvedDay=S.day; record.resolvedMin=S.min;
+  const plan=S._campPlan||(S._campPlan={}); plan.talk=record.cid; plan.last='talk';
+  G.addNote({type:'인물',title:`${D.comps[record.cid].name} · ${event.title}`,
+    body:`${choice.label}. ${data.home}`,links:[D.comps[record.cid].name,'달구지']});
+  G.save();
+  return {ok:true,applied:true,out,chips};
+};
+G.campTravelEchoes = ()=>{
+  const available=G.campParticipants();
+  return Object.values(S.campMemories||{})
+    .filter(row=>row&&row.pendingRoad&&available.includes(row.cid)&&typeof row.road==='string')
+    .map(row=>({id:row.id,cid:row.cid,text:row.road}));
+};
+G.campTravelEcho = ()=>G.campTravelEchoes()[0]||null;
+G.campDriveEchoes = ()=>{
+  const drive=S.driving;
+  if(!drive) return [];
+  // Preserve already-departed saves written before the list format existed.
+  const rows=Array.isArray(drive.campEchoes)?drive.campEchoes:drive.campEcho?[drive.campEcho]:[];
+  return rows.filter(row=>row&&D.comps[row.cid]&&typeof row.text==='string');
+};
+G.prepareCampTravel = drive=>{
+  const echoes=G.campTravelEchoes();
+  if(!echoes.length) return;
+  drive.campEchoes=echoes;
+  for(const echo of echoes) S.campMemories[echo.cid].pendingRoad=false;
+};
+/* A player may open a camp conversation during the morning handoff. Keep a
+   delayed incident for the next road opportunity instead of replacing it. */
+G.presentCampEvent = (id,state)=>{
+  if(S!==state) return;
+  if(UI.modalOpen()){ G.queueStory(id); G.save(); return; }
+  G.openEventById(id);
+};
 G.prepareCamp = (kind,cid)=>{
   const plan=S._campPlan||(S._campPlan={});
   if(kind==='meal'){
     if(plan.meal) return {ok:false,why:'오늘의 한 끼는 이미 준비했다'};
-    if(!G.hasResource('food',1)||!G.hasResource('water',1)) return {ok:false,why:'따뜻한 저녁에는 식량 1과 물 1이 필요하다'};
+    if(!G.hasResource('food',1)||!G.hasResource('water',1)) return {ok:false,why:'따뜻한 한 끼에는 식량 1과 물 1이 필요하다'};
     const hungerBefore=S.hunger||0, fatigueBefore=S.fatigue;
     G.addSupply('food',-1); G.addSupply('water',-1); plan.meal=true;
     plan.last='meal';
@@ -105,7 +209,7 @@ G.prepareCamp = (kind,cid)=>{
     S.fatigue=Math.max(0,S.fatigue-6);
     G.moodAll(3);
     const hunger=S.hunger<hungerBefore?(S.hunger===0?' · 허기 해소':` · 허기 ${hungerBefore}→${S.hunger}`):'';
-    UI.toast(`🍲 따뜻한 저녁 · ${G.isInfiniteResourceMode()?'식량·물 ∞ · 테스트 소모 없음':'식량 -1 · 물 -1'} · 사기 +3 · 피로 -${fatigueBefore-S.fatigue}${hunger}`);
+    UI.toast(`🍲 따뜻한 한 끼 · ${G.isInfiniteResourceMode()?'식량·물 ∞ · 테스트 소모 없음':'식량 -1 · 물 -1'} · 사기 +3 · 피로 -${fatigueBefore-S.fatigue}${hunger}`);
   } else if(kind==='repair'){
     if(plan.repair) return {ok:false,why:'오늘 밤의 간이 정비는 이미 끝냈다'};
     if(!G.hasResource('부품',1)) return {ok:false,why:'간이 정비에는 부품 1이 필요하다'};
@@ -114,11 +218,14 @@ G.prepareCamp = (kind,cid)=>{
     plan.last='repair';
     UI.toast('🔧 공구를 꺼내 차체를 살폈다 — 취침 시 내구 +8');
   } else if(kind==='talk'){
-    if(plan.talk) return {ok:false,why:'오늘 밤엔 이미 한 사람과 오래 이야기했다'};
-    if(!cid||!S.party.includes(cid)) return {ok:false,why:'지금 함께 야영 중인 동료를 골라야 한다'};
-    plan.talk=cid;
-    plan.last='talk';
-    UI.toast(`💬 ${D.comps[cid].name}와 잠들기 전에 이야기하기로 했다`);
+    if(S.driving) return {ok:false,why:'차를 세운 뒤 이야기하자'};
+    if(!G.campParticipants().includes(cid)) return {ok:false,why:'지금 함께 야영 중인 사람을 골라야 한다'};
+    const record=G.currentCampConversation();
+    if(record&&record.choiceId) return {ok:false,why:'이번 밤에는 이미 한 사람과 오래 이야기했다'};
+    if(record&&record.cid===cid) record.active=true;
+    else S.campConversation={id:`camp_${S.campNight||0}_${cid}`,night:S.campNight||0,cid,
+      day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!(S.campMemories&&S.campMemories[cid]),
+      choiceId:null,chips:[],active:true};
   } else return {ok:false,why:'알 수 없는 야영 준비다'};
   G.save();
   return {ok:true};
@@ -180,7 +287,8 @@ G.camp = (msg)=>{
   /* 모닥불 대화는 전원의 시간이다 — 한 명만 깊어지면 4인 Lv3(관계 기둥)가
      산술적으로 시한 안에 안 들어간다(2026-08-07 완주봇 실측: 관계가 최장 병목). */
   for(const cid of S.party) G.bond(cid,1);
-  if(campPlan.talk&&S.party.includes(campPlan.talk)) G.bond(campPlan.talk,2);
+  S.campNight=(S.campNight||0)+1;
+  if(S.campConversation) S.campConversation.active=false;
   S._campPlan={};
   if(townStingy) G.moodAll(-2);
   const nightsHere=inTown?((S._stlNights&&S._stlNights[S.at])||1):0;
@@ -208,7 +316,8 @@ G.camp = (msg)=>{
         const pv=pillarPool[Math.floor(rng()*pillarPool.length)];
         S._lastCampEventDay=S.day;
         G.deferEvent(pv.id);
-        setTimeout(()=>G.openEventById(pv.id), 600);
+        const campState=S;
+        setTimeout(()=>G.presentCampEvent(pv.id,campState), 600);
         UI.renderAll(); G.save(); return;
       }
       const r=rng();
@@ -216,12 +325,14 @@ G.camp = (msg)=>{
                       : (r<0.32?'camp_thief': r<0.6?'camp_dogs':'camp_visitor');
       S._lastCampEventDay=S.day;
       G.deferEvent(ev);
-      setTimeout(()=>G.openEventById(ev), 600);
+      const campState=S;
+      setTimeout(()=>G.presentCampEvent(ev,campState), 600);
       UI.renderAll(); G.save(); return;
     }
   }
   if(!G.maybeCrisis() && S.party.length && rng()<0.25){
-    const pool = G.eligible('동행'); if(pool.length) setTimeout(()=>G.fireDriveEvent2(pool), 500);
+    const pool = G.eligible('동행'), campState=S;
+    if(pool.length) setTimeout(()=>{if(S===campState&&!UI.modalOpen()) G.fireDriveEvent2(pool);}, 500);
   }
   UI.renderAll(); G.save();
 };
@@ -523,12 +634,13 @@ G.roadCheckIn = (id)=>{
 G.cellsLinked = ()=> (D.resistance||[]).filter(c=>S.flags[c.flag]);
 
 /* ── 서울 내부 (오르막 진행) ── */
-G.seoulStopDone = (i)=> !!S.flags[`seoul_${D.seoulMap.stops[i].id}_done`] || (i===4 && !!S.flags.seoul_core_reached);
+G.seoulStopDone = i=>i===4?!!S.flags.story_done:!!S.flags[`seoul_${D.seoulMap.stops[i].id}_done`];
 G.seoulStage = ()=>{ /* 다음에 진행할 정거장 인덱스 (0~5, 5=완주) */
   for(let i=0;i<D.seoulMap.stops.length;i++) if(!G.seoulStopDone(i)) return i;
   return D.seoulMap.stops.length;
 };
 G.seoulEnter = (i)=>{
+  if(i===4&&G.resumePresentation()) return;
   const ev = D.seoulStops.find(e=>e.seoulStop===i);
   if(ev) G.openEvent(ev);
 };
@@ -545,70 +657,6 @@ G.traceCount = ()=> !S?0:(D.eraTraces||[]).filter(t=>S.flags[t.flag]).length;
 G.traceNames = ()=> !S?[]:(D.eraTraces||[]).filter(t=>S.flags[t.flag]).map(t=>t.name);
 G.fullCrewStories = ()=> !S?false:Object.keys(D.comps).every(id=>
   G.hasComp(id)&&(S.comps[id]||{}).lvl>=3);
-/* 네 기둥 진척 — 관계는 선택한 네 사람으로 성립하고, 전원 완주는 선택 보상이다 */
-G.pillars = ()=>{
-  const done = G.deedsDone();
-  const relationNeed = D.seoulPillars.관계;
-  const storyDone = done.filter(d=>d.cat==='동료').length;
-  /* 이름·위치를 먼저 밝히지 않고, 이미 함께하는 사람만 구체적으로 안내한다. */
-  const miss = Object.keys(D.comps).find(c=>!G.hasComp(c));
-  const shallow = Object.keys(D.comps).find(c=>G.hasComp(c)&&(S.comps[c]||{}).lvl<3);
-  const truthFlags=['massacre_known','parent_key_found','es_truth','uplink_seen'];
-  const truthN=truthFlags.filter(f=>S.flags[f]).length;
-  const truthHint=!S.flags.massacre_known
-    ? '길 위의 오래된 추방 기록에서 반복되는 방식 확인하기'
-    : !S.flags.parent_key_found
-    ? '달구지에 숨은 부모님의 검증키 찾기'
-    : !S.flags.es_truth
-    ? (G.hasComp('eunsu')?'은수가 끝내지 못한 관제 기록 함께 열기':'서울 관제실을 나온 사람의 증언 찾기')
-    : !S.flags.uplink_seen
-    ? '백도어 로그에서 남산보다 위로 가는 선 확인하기'
-    : '첫 침묵·작성자·상행선의 관계 확인';
-  /* 접선을 폭로 뒤에만 세면 세계 기둥이 이벤트 하나에 이중 잠금된다(2026-08-07 실측:
-     50일 순회에도 0~1/3). 만난 거점은 만난 것이다 — 폭로는 그 의미를 밝힐 뿐. */
-  const worldN=G.cellsLinked().length;
-  return {
-    관계: { have: storyDone, need: relationNeed,
-            hint: miss? '길에서 사람들을 더 만나고, 같은 곳까지 갈 이유를 함께 찾는다'
-              : shallow? `${D.comps[shallow].name}와 야영이나 정착지에서 이야기를 더 나눈다`
-              : '함께 가는 사람들의 이야기를 끝까지 듣는다' },
-    세계: { have: worldN, need: D.seoulPillars.세계,
-            hint:S.flags.resist_revealed?'저항 거점들을 이어 서울까지 갈 길과 통신망을 확보한다':'중부 국도에서 이음망과 먼저 접선한다' },
-    진실: { have: truthN, need: D.seoulPillars.진실,
-            hint:truthHint },
-    유산: { have: done.filter(d=>d.cat==='회수').length, need: D.seoulPillars.유산,
-            hint:'부모님과 길 위 사람들이 남긴 편지와 물건을 챙긴다' },
-  };
-};
-G.pillarUnmet = (name)=>{ try{ const p=G.pillars()[name]; return !!p && p.have<p.need; }catch(e){ return false; } };
-G.mainStoryReady = ()=> !!(S&&S.flags&&S.flags.first_order_trace&&S.flags.parent_key_found&&
-  S.flags.es_truth&&S.flags.parents_routes_traced&&S.flags.father_fate_known&&S.flags.mother_reunited&&
-  G.pillars().관계.have>=D.seoulPillars.관계);
-G.seoulReady = ()=> G.mainStoryReady()&&Object.values(G.pillars()).every(x=>x.have>=x.need);
-/* 관문에서 되돌릴 때 — 제일 모자란 기둥 하나 안내 */
-G.seoulMissing = ()=>{
-  const p=G.pillars();
-  const spine=[
-    ['first_order_trace','본편',0,1,'부산을 떠난 첫 구간에서 이송표의 발신 기록을 찾는다'],
-    ['parents_routes_traced','본편',0,1,'부모님의 갈라진 이송선과 두 곳에서 이어진 작업을 확인한다'],
-    ['parent_key_found','본편',0,1,'뜯긴 분리 절차 두 장을 찾아 부모님의 검증키를 안전하게 꺼낸다'],
-    ['father_fate_known','본편',0,1,'실패한 남산 진입에서 끝난 아빠의 정비 기록을 확인한다'],
-    ['mother_reunited','본편',0,1,'북부 연대망의 최근 표식을 따라 서울 외곽 중계소로 간다'],
-    ['es_truth','본편',0,1,'같은 이송표를 받은 사람들의 증언과 명령 기록을 대조한다']
-  ];
-  const missingSpine=spine.find(([flag])=>!S.flags[flag]);
-  if(missingSpine) return {pillar:missingSpine[1],have:missingSpine[2],need:missingSpine[3],hint:missingSpine[4]};
-  /* 부족분(need-have)이 큰 기둥부터 */
-  const lacking = Object.entries(p).filter(([k,x])=>x.have<x.need)
-    .sort((a,b)=>(b[1].need-b[1].have)-(a[1].need-a[1].have));
-  if(lacking.length){ const [k,x]=lacking[0]; return {pillar:k, have:x.have, need:x.need, hint:x.hint}; }
-  /* 기둥은 다 찼는데 총 과업이 모자란 경우 */
-  const undone=D.deeds.filter(d=>!G.deedDone(d));
-  const near=undone.find(d=>d.comp&&G.hasComp(d.comp))||undone.find(d=>!d.comp)||undone[0];
-  const need=Object.values(p).reduce((n,x)=>n+x.need,0);
-  return {pillar:'여정', have:G.deedsDone().length, need, hint: near?near.hint:'조금 더'};
-};
-
 /* ── 라디오 수리 (진공관 1 소모, 1회) ── */
 G.fixRadio = ()=>{
   if(S.flags.radio_fixed || !G.hasResource('라디오 진공관',1)) return false;
@@ -835,10 +883,16 @@ G.overrideDissent = (disposition)=>{
   return {who, name:D.comps[who].name};
 };
 G.endGame = (kind)=>{
+  if(!S||S.ended) return;
+  S.pendingPresentation=null;
   S.endKind=kind;
-  G.qualityEnding(kind);
-  G.qualitySessionEnd('ending');
-  G.archiveQualityRun(kind);
+  // Successful journeys already archived their actual method in completeJourney.
+  // Also honors a legacy checkpoint saved between that receipt and this screen.
+  if(!(kind==='story_done'&&S.flags.run_archived)){
+    G.qualityEnding(kind);
+    G.qualitySessionEnd('ending');
+    G.archiveQualityRun(kind);
+  }
   S.ended = true; G.wipe();
   UI.showEnding(kind);
 };

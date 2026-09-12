@@ -1,0 +1,52 @@
+{
+  "startedAt": "2026-09-12T03:02:35.960869+00:00",
+  "sourceHead": "9dab9c0ff97f4bdd1a58025fbfeb59ea0721e9fd",
+  "command": "python3 -m pytest -q tests/test_director_pending.py -k 'close_transition_and_combat_result or new_combat_resolution_has_cues'",
+  "runtime": {
+    "path": "/Users/sang/_workspace/caravan-director-20260911/서울까지400km.html",
+    "url": "file:///Users/sang/_workspace/caravan-director-20260911/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html",
+    "bytes": 77666839,
+    "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+    "gameBuild": "2026-09-11-director-journey"
+  },
+  "testFileSha256": "a80d854c5e20f6a8fd6dca8a740ca30a7987b01ae2174954cdae5810f2a5d3a5",
+  "completedAt": "2026-09-12T03:04:28.277327+00:00",
+  "collected": 41,
+  "selected": 2,
+  "executed": 2,
+  "passed": 2,
+  "deselected": 39,
+  "durationSeconds": 13.89,
+  "exitCode": 0,
+  "result": "2 passed, 39 deselected in 13.89s",
+  "browser": "isolated Playwright Chromium; fresh temporary profiles; default file URL",
+  "runtimeAfter": {
+    "bytes": 77666839,
+    "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+  },
+  "tests": [
+    "tests/test_director_pending.py::test_close_transition_and_combat_result_do_not_reroll",
+    "tests/test_director_pending.py::test_new_combat_resolution_has_cues_but_restored_result_is_silent"
+  ],
+  "logs": [
+    {
+      "path": "pytest-audio.log",
+      "bytes": 114,
+      "sha256": "608894e0f2f1d261de074097744a8ff0df9b6fda51b6b0cc019b5f0747990a94"
+    },
+    {
+      "path": "pytest-audio-sandbox-launch.log.gz",
+      "bytes": 2448,
+      "sha256": "feb482db38638304e09899fc731ae05f963e1e08feb4a3712f2c642f6d6e40cd",
+      "encoding": "gzip; decompression reproduces exact original log bytes",
+      "decodedBytes": 14400,
+      "decodedSha256": "25fd4867be27cd0bf570296077e7c04f3e295674a2a47104b22571a165461dd4"
+    }
+  ],
+  "initialAttempt": {
+    "result": "39 deselected, 2 errors in 0.79s",
+    "executedTestBodies": 0,
+    "cause": "macOS sandbox denied Chromium bootstrap_check_in before application load",
+    "subsequentAction": "Same command with approved browser-process escalation; no code or test changes"
+  }
+}

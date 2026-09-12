@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-09-12",
+  "runtimeBuild": "2026-09-11-director-journey",
+  "html": {
+    "bytes": 77666839,
+    "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+  },
+  "permanentEventRegistry": {
+    "events": 1005,
+    "seoulSingletons": 3,
+    "seoulStops": 5,
+    "onboardingMission": 1,
+    "openingDeparture": 5,
+    "totalRows": 1019,
+    "uniqueIds": 1019,
+    "duplicateIds": []
+  },
+  "excludedEphemeralRuntimeDefinitions": {
+    "campConversationKeys": 6,
+    "reason": "They are generated conversation identities, not permanent authored event IDs."
+  },
+  "negativeProbes": [
+    "blank structured turn body rejected",
+    "malformed structured turn without text rejected",
+    "unknown structured speaker rejected",
+    "duplicate opening event ID rejected"
+  ],
+  "limits": {
+    "htmlAdvisoryBytes": 32000000,
+    "htmlHardLimitBytes": 80000000,
+    "inheritedVisualWarnings": 58
+  }
+}

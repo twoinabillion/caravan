@@ -1,5 +1,15 @@
 /* ═══════════════════ CINEMATIC SCENES — build.sh가 JPEG를 주입 ═══════════════════ */
 D.scenes = {
+  'seoul-uplink-empty-v2':'__SCENE_SEOUL_UPLINK_EMPTY_V2__',
+  'seoul-reset-empty-v2':'__SCENE_SEOUL_RESET_EMPTY_V2__',
+  'event-postman-solo-v2':'__SCENE_EVENT_POSTMAN_SOLO_V2__',
+  'combat-walker-disabled-v2':'__SCENE_COMBAT_WALKER_DISABLED_V2__',
+  'route-ridge-rigging-v2':'__SCENE_ROUTE_RIDGE_RIGGING_V2__',
+  'route-ridge-safe-v2':'__SCENE_ROUTE_RIDGE_SAFE_V2__',
+  'seoul-core-view-v2':'__SCENE_SEOUL_CORE_VIEW_V2__',
+  'seoul-night-quiet-v2':'__SCENE_SEOUL_NIGHT_QUIET_V2__',
+  'seoul-home-dawn-v2':'__SCENE_SEOUL_HOME_DAWN_V2__',
+
   'gwangju-market':'__SCENE_GWANGJU_MARKET__',
   'miryang-market':'__SCENE_MIRYANG_MARKET__',
   'miryang-market-hub':'__SCENE_MIRYANG_MARKET_HUB__',
@@ -67,6 +77,8 @@ D.scenes = {
   'story-generation-form':'__SCENE_STORY_GENERATION_FORM__',
   'story-generation-speech':'__SCENE_STORY_GENERATION_SPEECH__',
   'story-generation-theories':'__SCENE_STORY_GENERATION_THEORIES__',
+  'story-generation-theories-cast-v1':'__SCENE_STORY_GENERATION_THEORIES_CAST_V1__',
+  'recruit-leo-rescue-choice-v1':'__SCENE_RECRUIT_LEO_RESCUE_CHOICE_V1__',
   'story-generation-route':'__SCENE_STORY_GENERATION_ROUTE__',
   'trace-cortis-relic':'__SCENE_TRACE_CORTIS_RELIC__',
   'trace-cortis-beacon':'__SCENE_TRACE_CORTIS_BEACON__',
@@ -285,6 +297,7 @@ D.scenes = {
   'recruit-jaeyi-join-decision':'__SCENE_RECRUIT_JAEYI_JOIN_DECISION__',
   'recruit-eunsu-join-decision':'__SCENE_RECRUIT_EUNSU_JOIN_DECISION__',
   'recruit-kangwoo-join-decision':'__SCENE_RECRUIT_KANGWOO_JOIN_DECISION__',
+  'combat-walker-watch-v1':'__SCENE_COMBAT_WALKER_WATCH_V1__',
   'combat-perimeter-warning':'__SCENE_COMBAT_PERIMETER_WARNING__',
   'combat-walker-disable':'__SCENE_COMBAT_WALKER_DISABLE__',
   'combat-drone-swarm':'__SCENE_COMBAT_DRONE_SWARM__',
@@ -320,8 +333,24 @@ D.scenes = {
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
+  'seoul-uplink-empty-v2':'사람 없는 서울 코어 뒤로 드러난 작은 상위망 상태등. 지역 코어의 옅은 흰빛은 남아 있다',
+  'seoul-reset-empty-v2':'꺼진 서울 코어와 별개로 오른쪽 정비 단말에 들어온 붉은 불. 사람이나 차량은 없다',
+  'event-postman-solo-v2':'자전거와 배달 명단을 든 우편부 한 사람. 뒤에는 달구지가 서 있고 다른 여행자는 화면 밖에 있다',
+  'combat-walker-disabled-v2':'폐차 행렬과 달구지 앞 도로에 주저앉은 초계 보행기. 렌즈 불빛은 꺼져 있다',
+  'route-ridge-rigging-v2':'능선 가드레일과 비탈 아래 수레 사이에 걸린 견인줄. 구조 중인 사람들은 화면 밖에 있다',
+  'route-ridge-safe-v2':'도로 위로 올라온 어른 셋과 아이 하나. 회수한 짐이나 약 상자는 보이지 않는다',
+  'seoul-core-view-v2':'사람 없이 검증 포트와 일지를 바라보는 시점. 뒤편 남산 코어에 붉은 불빛이 켜져 있다',
+  'seoul-night-quiet-v2':'서울의 밤, 작은 모닥불과 컵, 닫힌 일지. 사람과 동료의 악기, 켜진 무전기는 없다',
+  'seoul-home-dawn-v2':'서울의 새벽, 따뜻한 문을 연 달구지와 컵 하나, 지도. 사람이나 코어 광선은 보이지 않는다',
+
+  'story-generation-theories-cast-v1':'폐교 기록실에서 지도를 펼친 남자, 진료 기록을 든 노인, 전단을 모은 여자가 서로 다른 자료를 대조하는 장면',
+  'recruit-leo-rescue-choice-v1':'남원의 침수 지하차도 입구. 레오는 마른 계단에서 로프를 들고, 붉은 스카프를 맨 보리는 물 건너 부서진 난간 위에 고립돼 있다',
+  'combat-walker-watch-v1':'내륙의 젖은 산업도로에서 폐차와 분리대 뒤 달구지 너머로 네 다리 초계 보행기의 움직임을 지켜보는 장면',
+  'event-ai-checkpoint':'닫힌 차단봉 앞에 멈춘 달구지와 차량을 훑는 자동 검문소의 센서',
+  'combat-checkpoint-breach':'달구지가 검문소 차단봉에 부딪혀 파편을 튀기며 빠져나오는 장면',
   'event-crisis-exhaustion':'낡은 달구지 운전석에서 운전대를 잡은 두 손과 비어 있는 앞길만 보이는 피로한 새벽',
   'event-find-broadcast-station-v1':'창문 없는 지방 방송국 주조정실에서 마지막 화면이 멈춘 CRT 모니터와 릴테이프, 방송 테이프 선반을 확인하는 장면',
+  'event-companion-repair':'달구지 생활칸 작업대에서 민지가 주인공과 발전기 부품을 분해하고 응급 정비 순서를 맞추는 밤',
   'intro-cold-open-v1':'비 내리는 감천 부두에서 도윤 가족의 버스 문이 닫히고, 기름 묻은 손의 주인공과 달구지가 그 모습을 바라보는 새벽',
   'intro-family-order-v1':'비 내리는 밤 집 현관 단말에서 가족 이송표가 나오고, 엄마와 아빠가 여덟 살 아이의 짐을 급히 챙기는 순간',
   'intro-family-farewell-v1':'서울의 젖은 골목에서 엄마가 여덟 살 아이를 할아버지 차에 태우며 마지막 인사를 건네는 밤',
@@ -416,6 +445,29 @@ D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
     status:'approved'
   }];
 }));
+
+/* State-neutral composition prevents optional cast/cargo from becoming invented facts.
+   Full generation prompts and masters: artifacts/director-pass-2026-09-11/scene-masters/. */
+const directorSceneFormats = {
+  'event-postman-solo-v2':'character', 'combat-walker-disabled-v2':'action',
+  'route-ridge-rigging-v2':'detail', 'route-ridge-safe-v2':'action',
+  'seoul-core-view-v2':'detail', 'seoul-night-quiet-v2':'place', 'seoul-home-dawn-v2':'place',
+  'seoul-uplink-empty-v2':'place', 'seoul-reset-empty-v2':'detail'
+};
+for(const [key,format] of Object.entries(directorSceneFormats)){
+  const vehicle=['event-postman-solo-v2','combat-walker-disabled-v2','route-ridge-rigging-v2','route-ridge-safe-v2','seoul-home-dawn-v2'].includes(key);
+  D.sceneAssetMeta[key]={
+    format,companions:[],reference:key==='event-postman-solo-v2'?'assets/portraits/postman.png':'',
+    references:[
+      'assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp',
+      ...(key==='event-postman-solo-v2'?['assets/portraits/postman.png']:[])
+    ],
+    vehicleReference:vehicle?(D.dalgujiVisual.refs||[]):[],
+    size:key.startsWith('seoul-')?'1280x720':'1024x576',status:'approved',
+    provenance:`audits/director-art-2026-09-11/provenance/${key}.md`
+  };
+}
 
 /* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */
 D.upgradeArt = {

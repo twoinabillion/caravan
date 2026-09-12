@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""선택 카드는 잘리지 않고, 현재 상황 상세는 별도로 열 수 있다."""
+"""전체 선택 목록은 한 흐름으로 스크롤되고, 현재 상황 상세는 별도로 열린다."""
+import os
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
-GAME = (ROOT / '서울까지400km.html').as_uri()
+GAME = os.environ.get('CARAVAN_TEST_URL', (ROOT / '서울까지400km.html').as_uri())
+CAPTURE_DIR = os.environ.get('CARAVAN_CAPTURE_DIR')
 failures = []
 
 
@@ -23,9 +25,17 @@ PROBE = """() => {
     visible: cards.filter(c=>!c.hidden).map(c=>c.dataset.i),
     clipped: cards.filter(c=>!c.hidden && c.scrollHeight > c.clientHeight + 1)
                   .map(c=>({t:(c.innerText||'').slice(0,18), r:c.clientHeight, c:c.scrollHeight})),
+    overlaps: cards.filter(card=>{
+      const head=card.querySelector('.choice-head'), forecast=card.querySelector('.choice-forecast');
+      if(!head||!forecast) return false;
+      const hr=head.getBoundingClientRect(), fr=forecast.getBoundingClientRect();
+      return hr.bottom>fr.top+.5;
+    }).map(card=>(card.innerText||'').slice(0,36)),
     pager: !!document.querySelector('[data-choice-pages]'),
     page: document.querySelector('[data-choice-page]')?.textContent||'',
     listOverflow: list ? getComputedStyle(list).overflowY : '',
+    listClient: list ? list.clientHeight : 0,
+    listScroll: list ? list.scrollHeight : 0,
   };
 }"""
 
@@ -51,17 +61,29 @@ with sync_playwright() as playwright:
         page.wait_for_timeout(250)
         r = page.evaluate(PROBE)
         label = f"{width}x{height}{' 큰 글자' if large else ''}"
-        check(f'{label}: 현재 페이지 선택 카드가 세 개 이하로 온전히 보임',
-              r['count'] > 0 and len(r['visible']) <= 3 and not r['clipped'], str(r)[:220])
-        # 네 개 이상은 3개 단위 페이지로 나눠 작은 화면에서도 선택지를 읽을 수 있어야 한다.
+        check(f'{label}: 전체 선택 카드가 한 목록에 있고 내용이 잘리지 않음',
+              r['count'] > 0 and len(r['visible']) == r['count'] and
+              not r['pager'] and not r['clipped'] and not r['overlaps'], str(r)[:300])
+        if CAPTURE_DIR and width == 390 and height == 844 and not large:
+            Path(CAPTURE_DIR).mkdir(parents=True, exist_ok=True)
+            page.screenshot(path=str(Path(CAPTURE_DIR) / 'walker-actions-top-390x844.png'))
+        # 네 개 이상은 한 목록 안에서 스크롤해 마지막 행동까지 직접 도달한다.
         if r['count'] >= 4:
-            first = r['visible']
-            page.click('[data-choice-next]')
-            page.wait_for_timeout(60)
-            after = page.evaluate(PROBE)
-            check(f'{label}: 넘치는 선택지는 페이지로 이동 가능',
-                  r['pager'] and r['page'] == '1' and after['page'] == '2' and
-                  first != after['visible'] and len(after['visible']) <= 3 and not after['clipped'], str(after))
+            last = page.locator('.choice[data-i="4"]')
+            last.scroll_into_view_if_needed()
+            reached = page.evaluate("""() => {
+              const list=document.querySelector('.event-choice-dock>.choices');
+              const last=document.querySelector('.choice[data-i="4"]');
+              const lr=list.getBoundingClientRect(), cr=last.getBoundingClientRect();
+              return {scrollTop:list.scrollTop, top:cr.top, bottom:cr.bottom,
+                listTop:lr.top, listBottom:lr.bottom,
+                reached:cr.top>=lr.top-1&&cr.bottom<=lr.bottom+1};
+            }""")
+            check(f'{label}: 스크롤로 마지막 행동까지 도달 가능',
+                  r['listOverflow'] in ('auto', 'scroll') and reached['reached'] and
+                  (r['listScroll'] <= r['listClient'] + 1 or reached['scrollTop'] > 0), str(reached))
+            if CAPTURE_DIR and width == 390 and height == 844 and not large:
+                page.screenshot(path=str(Path(CAPTURE_DIR) / 'walker-actions-bottom-390x844.png'))
         terminal = page.evaluate("""() => ({
           phase:document.querySelector('#ev-sheet').dataset.storyPhase,
           step:document.querySelector('#ev-sheet').dataset.storyStep,
@@ -75,10 +97,13 @@ with sync_playwright() as playwright:
         page.click('[data-event-detail]')
         check(f'{label}: 전투 현재 정보 토글 작동',
               page.locator('#ev-sheet').evaluate("node=>node.classList.contains('combat-details-open')"))
-        page.evaluate("""() => {
-          document.querySelector('.choice[data-i="4"]').click();
-          UI.finishStory();
-        }""")
+        last = page.locator('.choice[data-i="4"]')
+        last.scroll_into_view_if_needed()
+        if CAPTURE_DIR and width == 390 and height == 844 and not large:
+            Path(CAPTURE_DIR).mkdir(parents=True, exist_ok=True)
+            page.screenshot(path=str(Path(CAPTURE_DIR) / 'walker-actions-390x844.png'))
+        last.click()
+        page.evaluate('UI.finishStory()')
         page.wait_for_timeout(80)
         outcome = page.evaluate("""() => ({
           phase:document.querySelector('#ev-sheet').dataset.storyPhase,
@@ -90,6 +115,8 @@ with sync_playwright() as playwright:
         check(f'{label}: 결과 화면이 제목·영향 칩·다음 행동으로 이어짐',
               outcome['phase'] == 'outcome' and '제압을 포기' in outcome['title'] and
               not outcome['recap'] and outcome['effects'] > 0 and outcome['actionHeight'] >= 44, str(outcome))
+        if CAPTURE_DIR and width == 390 and height == 844 and not large:
+            page.screenshot(path=str(Path(CAPTURE_DIR) / 'walker-retreat-result-390x844.png'))
         page.close()
 
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))

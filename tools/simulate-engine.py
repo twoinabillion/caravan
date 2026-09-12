@@ -49,6 +49,12 @@ SIM_JS = r"""
   let pendingEvent = null;
   const seenEvents = [];
   UI.showEvent = (evd) => { pendingEvent = evd; if (evd && evd.id) seenEvents.push(evd.id);
+    // Immediate arrival handoffs already opened the event. Only timer-only
+    // handoffs should remain for drain(); otherwise choices run twice.
+    if (S && evd && Array.isArray(S._simDeferred)) {
+      const index = S._simDeferred.indexOf(evd.id);
+      if (index >= 0) S._simDeferred.splice(index, 1);
+    }
     if (S && evd && evd.id) {
       (S._evTimes = S._evTimes || []).push(S.day * 1440 + S.min);
       /* 감독이 실제로 일하는지의 원자료: 이 사건이 무거운가 × 지금 국면이 무엇인가 */
@@ -172,17 +178,25 @@ SIM_JS = r"""
        엔진의 실제 진행 함수(G.openRecruitStep)를 그대로 부른다. */
     S._recruitTrace = [];
     S._poolLog = {};
-    if (!G._fireWrapped) {
-      G._fireWrapped = true;
+    if (!G._poolWrapped) {
+      G._poolWrapped = true;
+      const origPool = G.directEventPool;
       const origFire = G.fireDriveEvent;
-      G.fireDriveEvent = () => {
-        try {
-          const pool = G.directEventPool(G.eligible());
+      let inDriveEvent = false;
+      G.fireDriveEvent = (...args) => {
+        S._poolLog._calls = (S._poolLog._calls || 0) + 1;
+        inDriveEvent = true;
+        try { return origFire(...args); }
+        finally { inDriveEvent = false; }
+      };
+      G.directEventPool = (...args) => {
+        const pool = origPool(...args);
+        // Exploration also uses this selector; don't count it as a road slot.
+        if (inDriveEvent && S._poolLog) {
           for (const e of pool) if (['resist_reveal','cell_sea_meet','cell_dome_meet','gp_envelope','postman_again'].includes(e.id))
             S._poolLog[e.id] = (S._poolLog[e.id] || 0) + 1;
-          S._poolLog._calls = (S._poolLog._calls || 0) + 1;
-        } catch (e) {}
-        return origFire();
+        }
+        return pool;
       };
     }
     const trace = (m) => { if (S._recruitTrace.length < 40) S._recruitTrace.push(`D${S.day} ${m}`); };
@@ -207,6 +221,13 @@ SIM_JS = r"""
     };
     const completionTourDone = () => policy === 'completionist' &&
       (S.day >= Math.max(14, Math.floor(maxDays * .4)) || S.stats.events >= 80);
+
+    // enterGame normally presents this mission. Calling newGame alone bypasses
+    // the player's acceptance and leaves the main-story prerequisite unset.
+    if (D.onboardingMission && !S.flags.main_mission_started) {
+      G.openEvent(D.onboardingMission);
+      resolveEvent(policy);
+    }
 
     const stayAlive = () => {
       // 어떤 정책이든 목마르면 물은 산다 (봇의 아둔함이 사망률로 잡히지 않게)
@@ -465,7 +486,6 @@ SIM_JS = r"""
       weight: (typeof G.upWeight === 'function' ? G.upWeight() : 0),
       slotContest: (typeof G.slotUsage === 'function'
         ? Object.keys(D.upSlots || {}).some(sid => G.slotUsage(sid).length >= (D.upSlots[sid].cap)) : false),
-      scrapEarned: (S.stats && S.stats.scrapEarned) || 0,
       deedsNeed: (typeof G.pillars === 'function'
         ? Object.values(G.pillars()).reduce((n, x) => n + x.need, 0) : 0),
       day: S.day, km: Math.round(S.stats.km), events: S.stats.events,

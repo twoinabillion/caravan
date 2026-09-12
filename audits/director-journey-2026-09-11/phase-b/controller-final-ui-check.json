@@ -1,0 +1,83 @@
+{
+  "checkedAt": "2026-09-12T12:39:06.511406+09:00",
+  "result": "passed",
+  "runtimeSha256": "b6e9220728359658721ad8c4a52cb5069e94ace0d42a2b67bf4d4f5cb5bfdb56",
+  "scenarios": [
+    {
+      "scenario": "320x578-fresh",
+      "receiptSha256": "ba94a4edf5077acaccd3a750287240a3e9baeba4a553b20e19df1ff1dbf88ac6",
+      "actions": 38,
+      "captures": 4,
+      "navigations": 1,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "320x578-earned",
+      "receiptSha256": "927f92762b9d58f96d6a9aef798bf32fc701d15b13c9420f810f6553f5e51ee1",
+      "actions": 233,
+      "captures": 5,
+      "navigations": 2,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "390x844-fresh",
+      "receiptSha256": "20966050d8b17febd2e47e7b4f9940c30e2d6e15036d3534245e5fad02206084",
+      "actions": 38,
+      "captures": 4,
+      "navigations": 1,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "390x844-earned",
+      "receiptSha256": "b2955a1a9b77c4a9cb55c27491adb77ff6ee9222206ce990980032f5372699a4",
+      "actions": 240,
+      "captures": 5,
+      "navigations": 2,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "1440x900-fresh",
+      "receiptSha256": "c260adcb065ebd93242dc4d81c331c7722803124d9180c9f9319d7474d5c5139",
+      "actions": 38,
+      "captures": 4,
+      "navigations": 1,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "1440x900-earned",
+      "receiptSha256": "2aa6343ef6261e74e40f0318e3a369c87b6c46d3f758805f4b4c6fea1cf11b0f",
+      "actions": 241,
+      "captures": 5,
+      "navigations": 2,
+      "pageErrors": 0
+    }
+  ],
+  "totals": {
+    "scenarios": 6,
+    "actions": 828,
+    "captures": 27,
+    "navigations": 9,
+    "pendingResultReloads": 3
+  },
+  "runnerSha256": "7611f7019c536c11ed7a75d06668868465b224d08b903f1cdb9960fba2ad3918",
+  "reviewedSourceHashes": {
+    "reviewedTransportSha256": "f8509a7740eac126e8475793c9136113b6d83d75253c5873639c7550720f1a70",
+    "reviewedHelperSha256": "a4822d486ce2206b6c78f2b0280342b6ff6957504c39264f689a1bd1bb6d0011"
+  },
+  "checks": [
+    "all receipt and capture hashes/bytes",
+    "exact original response identity, cache reuse attribution",
+    "actual fresh firstdeparture",
+    "earned checkpoint identity/import count, fullending/archive1",
+    "actual loaded save resources/flags/party/counters preserved at result reload",
+    "executing runner stability and reviewed helper/transport gitblob identity"
+  ],
+  "controllerViewed": [
+    "320x578-fresh/03-opening-complete.png",
+    "320x578-fresh/04-actual-departure.png",
+    "390x844-earned/03-result-restored.png",
+    "390x844-earned/05-ending.png",
+    "1440x900-fresh/03-opening-complete.png"
+  ],
+  "visualAssessment": "320 stopped canvas250px keeps console in view; actualdriving readable;390 restored outcome with reachable nextbutton and coherent ending;1440 centered480px game with visible map/departure card/dock. No physical-phone measurement claimed."
+}

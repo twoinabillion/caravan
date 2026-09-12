@@ -1,0 +1,17 @@
+{
+  "scope": "one-time correction packaging and owner-attribution checks; not browser campaign reruns",
+  "index": {
+    "bytes": 78847,
+    "sha256": "0d7eaa54c40e0b12f8d759b18aef337782130f7395ef582617db2f9f8edfb300"
+  },
+  "scenarioCount": 15,
+  "traceRows": 11232,
+  "qualificationUnchanged": true,
+  "everyPriorScenarioFieldOtherThanExternalOwnerReferencesUnchanged": true,
+  "rawReloadsHashUnchanged": true,
+  "correctedExternalReferenceCount": 19,
+  "campOwnersSeparate": true,
+  "runtimeSourceAssetsTestsUnchanged": true,
+  "currentAndArchivedTask8ReportsByteEqual": true,
+  "indexCopyByteEqual": true
+}

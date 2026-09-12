@@ -94,7 +94,8 @@
         <div id="profile-pick" role="radiogroup" aria-label="출발 구성"></div>
       </fieldset>
       <div id="profile-detail" aria-live="polite"></div>
-      <button id="bt-name" class="mbtn"><span>첫 장을 연다</span><small id="bt-name-profile">균형 출발</small></button>
+      <button id="bt-name" class="mbtn"><span>출발 준비를 시작한다</span><small id="bt-name-profile">균형 출발</small></button>
+      <button id="opening-history" type="button">먼저 전체 역사 프롤로그 읽기</button>
     </div>
   </div>
   <div class="scr" id="scr-intro" role="region" tabindex="0" aria-label="프롤로그. Enter 또는 Space 키를 눌러 다음 문장으로 진행합니다.">
@@ -123,7 +124,7 @@
           <li><i>04</i><span><b>그래서 내가 북쪽으로 간다.</b><small>발신 기록과 증언을 모아 남산의 강제 이송 명령을 멈춘다.</small></span></li>
         </ol>
         <div class="intro-summary-actions">
-          <button id="intro-summary-continue" type="button">17장을 계속 읽는다</button>
+          <button id="intro-summary-continue" type="button">전체 기록을 계속 읽는다</button>
           <button id="intro-summary-start" class="primary" type="button">핵심을 기록하고 출발</button>
         </div>
       </div>
@@ -163,7 +164,7 @@
   </div>
 
   <!-- ══ ARRIVAL CINEMATIC ══ -->
-<div id="arrival-scene" aria-live="polite" aria-label="도착 기록. 화면을 탭해 다음 여정으로 계속합니다"></div>
+<div id="arrival-scene" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="arrival-title"></div>
 
   <!-- ══ EVENT SHEET ══ -->
   <div class="sheet-wrap" id="ev-wrap" role="dialog" aria-modal="true" aria-label="길 위의 이야기" aria-hidden="true"><div class="sheet" id="ev-sheet"></div></div>

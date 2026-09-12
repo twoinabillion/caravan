@@ -131,7 +131,7 @@ def main():
                 UI.showEvent=event=>{ pending=event; };
                 out.retry[id]={opened:G.openRecruitMeet(id),event:pending&&pending.id};
 
-                for(const eventId of [def.meet,def.task,def.join]){
+                for(const eventId of [def.meet,def.task,def.follow,def.join]){
                   const event=D.events.find(item=>item.id===eventId);
                   out.dialogue[eventId]=event?dialogueUnknown(event):['missing event'];
                 }
@@ -141,7 +141,7 @@ def main():
               G.newGame('onroad','다온','full');
               for(const [id] of Object.entries(expected)){
                 const def=D.recruitQuests[id];
-                for(const eventId of [def.meet,def.task,def.join]){
+                for(const eventId of [def.meet,def.task,def.follow,def.join]){
                   const event=D.events.find(item=>item.id===eventId);
                   UI.showEvent(event);
                   const frame=document.querySelector('#ev-sheet .event-scene-frame');
@@ -176,7 +176,11 @@ def main():
         scene_keys = []
         for event_id, image in result["images"].items():
             assert image["key"], (event_id, image)
-            assert image["width"] == 768 and image["height"] == 432, (event_id, image)
+            # Current art includes original-resolution canonical references.
+            # Require a decoded, sufficiently large cinematic image, not the
+            # obsolete 768px export size used by the first recruitment batch.
+            assert image["width"] >= 768 and image["height"] >= 432, (event_id, image)
+            assert abs(image["width"] / image["height"] - 16 / 9) < .02, (event_id, image)
             scene_keys.append(image["key"])
         assert len(set(scene_keys)) == len(scene_keys), "동료 영입 장면 이미지가 서로 재사용됨"
 

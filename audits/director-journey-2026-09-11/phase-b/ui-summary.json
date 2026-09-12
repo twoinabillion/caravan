@@ -1,0 +1,721 @@
+{
+  "completedAt": "2026-09-12T12:37:41.295738+09:00",
+  "status": "passed",
+  "runtime": {
+    "path": "서울까지400km.html",
+    "bytes": 77667306,
+    "sha256": "b6e9220728359658721ad8c4a52cb5069e94ace0d42a2b67bf4d4f5cb5bfdb56"
+  },
+  "gameBuild": "2026-09-11-director-journey",
+  "schema": 8,
+  "scenarioCount": 6,
+  "captureCount": 27,
+  "actionCount": 828,
+  "navigationCount": 9,
+  "pendingResultReloads": 3,
+  "scenarios": [
+    {
+      "scenario": "320x578-fresh",
+      "viewport": {
+        "width": 320,
+        "height": 578
+      },
+      "responseCount": 1,
+      "actionCount": 38,
+      "captures": 4,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "build": "2026-09-11-director-journey",
+        "schema": 8,
+        "at": null,
+        "day": 1,
+        "min": 530.068,
+        "km": 1.0957180000000022,
+        "drive": {
+          "from": "busan",
+          "to": "yangsan",
+          "dist": 20,
+          "gone": 1.0957180000000022,
+          "approach": false,
+          "campEchoes": [],
+          "campEcho": null
+        },
+        "eventId": null,
+        "presentationPhase": null,
+        "storyStep": null,
+        "resources": {
+          "fuel": 41.83125942799999,
+          "water": 16,
+          "food": 14,
+          "scrap": 24,
+          "van": 82,
+          "fatigue": 3.804858600000001,
+          "items": {
+            "부품": 0,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "flags": [
+          "intro_appeal_failed",
+          "intro_family_helped",
+          "intro_module_seen",
+          "intro_workshop_left",
+          "main_mission_started",
+          "mother_keepsakes",
+          "onboarding_event_guide",
+          "opening_call_answered"
+        ],
+        "party": [],
+        "seoul": {
+          "stage": 0,
+          "ready": false,
+          "missing": {
+            "pillar": "메인 스토리",
+            "have": 0,
+            "need": 1,
+            "id": "trace",
+            "done": false,
+            "target": "yangsan",
+            "event": "onboarding_first_road",
+            "sourceEvent": "onboarding_first_road",
+            "cost": "열람 준비 30분 + 선택·후속 작업 10~35분",
+            "hint": "양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)"
+          },
+          "method": null
+        },
+        "ended": false,
+        "endKind": null,
+        "archives": 0,
+        "choiceCount": 5,
+        "eventCount": 0,
+        "noteSeq": 10
+      },
+      "receipt": "ui/320x578-fresh/receipt.json",
+      "checkpointInput": null,
+      "pendingResultReload": false
+    },
+    {
+      "scenario": "320x578-earned",
+      "viewport": {
+        "width": 320,
+        "height": 578
+      },
+      "responseCount": 2,
+      "actionCount": 233,
+      "captures": 5,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "build": "2026-09-11-director-journey",
+        "schema": 8,
+        "at": "seoul",
+        "day": 12,
+        "min": 717.378,
+        "km": 735.0000000000097,
+        "drive": null,
+        "eventId": null,
+        "presentationPhase": null,
+        "storyStep": null,
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "flags": [
+          "armed_age",
+          "bridge_crossed",
+          "bridge_departure_echo",
+          "bridge_trace_gap",
+          "bridge_watched",
+          "cell_mountain",
+          "cell_sea",
+          "core_decided",
+          "core_transfer",
+          "costs_checked_cells",
+          "dissent_overridden_jaeyi",
+          "failed_namsan_known",
+          "father_fate_known",
+          "first_order_trace",
+          "gp_route_ritual",
+          "intro_appeal_failed",
+          "intro_family_helped",
+          "intro_module_seen",
+          "intro_workshop_left",
+          "jaeyi_approach_drive",
+          "jaeyi_approach_ending",
+          "kangwoo_approach_drive",
+          "kangwoo_approach_ending",
+          "levy_chased",
+          "main_command_record",
+          "main_mission_started",
+          "main_relay_confirmed",
+          "main_testimony_record",
+          "massacre_known",
+          "minji_approach_drive",
+          "minji_approach_ending",
+          "mother_broadcast_ready",
+          "mother_keepsakes",
+          "mother_reunited",
+          "onboarding_event_guide",
+          "opening_call_answered",
+          "parent_key_found",
+          "parent_key_located",
+          "parent_principle_found",
+          "parent_signature_match",
+          "parents_recent_signal",
+          "parents_routes_traced",
+          "parents_split_known",
+          "people_shown",
+          "postman_met",
+          "recall_passed",
+          "recruit_migration_v2",
+          "route_ridge_failed",
+          "run_archived",
+          "sea_route",
+          "seoul_base_done",
+          "seoul_core_reached",
+          "seoul_costs_seen",
+          "seoul_han_done",
+          "seoul_local_saved",
+          "seoul_open",
+          "seoul_ruins_done",
+          "seoul_square_done",
+          "session_two_teased",
+          "story_done",
+          "trace_dialect",
+          "trace_registry",
+          "trace_route",
+          "trace_theories",
+          "uplink_scale_seen"
+        ],
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "seoul": {
+          "stage": 5,
+          "ready": true,
+          "missing": {
+            "pillar": "메인 스토리",
+            "have": 1,
+            "need": 1,
+            "target": "seoul",
+            "hint": "서울로 이동해 남산 진입로를 연다"
+          },
+          "method": "core_transfer"
+        },
+        "ended": true,
+        "endKind": "story_done",
+        "archives": 1,
+        "choiceCount": 88,
+        "eventCount": 81,
+        "noteSeq": 95
+      },
+      "receipt": "ui/320x578-earned/receipt.json",
+      "checkpointInput": {
+        "path": "/Users/sang/caravan/artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4",
+        "imports": 1
+      },
+      "pendingResultReload": true
+    },
+    {
+      "scenario": "390x844-fresh",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responseCount": 1,
+      "actionCount": 38,
+      "captures": 4,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "build": "2026-09-11-director-journey",
+        "schema": 8,
+        "at": null,
+        "day": 1,
+        "min": 529.945,
+        "km": 1.0689423333333286,
+        "drive": {
+          "from": "busan",
+          "to": "yangsan",
+          "dist": 20,
+          "gone": 1.0689423333333286,
+          "approach": false,
+          "campEchoes": [],
+          "campEcho": null
+        },
+        "eventId": null,
+        "presentationPhase": null,
+        "storyStep": null,
+        "resources": {
+          "fuel": 41.83538288066665,
+          "water": 16,
+          "food": 14,
+          "scrap": 24,
+          "van": 82,
+          "fatigue": 3.7943542999999984,
+          "items": {
+            "부품": 0,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "flags": [
+          "intro_appeal_failed",
+          "intro_family_helped",
+          "intro_module_seen",
+          "intro_workshop_left",
+          "main_mission_started",
+          "mother_keepsakes",
+          "onboarding_event_guide",
+          "opening_call_answered"
+        ],
+        "party": [],
+        "seoul": {
+          "stage": 0,
+          "ready": false,
+          "missing": {
+            "pillar": "메인 스토리",
+            "have": 0,
+            "need": 1,
+            "id": "trace",
+            "done": false,
+            "target": "yangsan",
+            "event": "onboarding_first_road",
+            "sourceEvent": "onboarding_first_road",
+            "cost": "열람 준비 30분 + 선택·후속 작업 10~35분",
+            "hint": "양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)"
+          },
+          "method": null
+        },
+        "ended": false,
+        "endKind": null,
+        "archives": 0,
+        "choiceCount": 5,
+        "eventCount": 0,
+        "noteSeq": 10
+      },
+      "receipt": "ui/390x844-fresh/receipt.json",
+      "checkpointInput": null,
+      "pendingResultReload": false
+    },
+    {
+      "scenario": "390x844-earned",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "responseCount": 2,
+      "actionCount": 240,
+      "captures": 5,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "build": "2026-09-11-director-journey",
+        "schema": 8,
+        "at": "seoul",
+        "day": 12,
+        "min": 717.378,
+        "km": 735.0000000000097,
+        "drive": null,
+        "eventId": null,
+        "presentationPhase": null,
+        "storyStep": null,
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "flags": [
+          "armed_age",
+          "bridge_crossed",
+          "bridge_departure_echo",
+          "bridge_trace_gap",
+          "bridge_watched",
+          "cell_mountain",
+          "cell_sea",
+          "core_decided",
+          "core_transfer",
+          "costs_checked_cells",
+          "dissent_overridden_jaeyi",
+          "failed_namsan_known",
+          "father_fate_known",
+          "first_order_trace",
+          "gp_route_ritual",
+          "intro_appeal_failed",
+          "intro_family_helped",
+          "intro_module_seen",
+          "intro_workshop_left",
+          "jaeyi_approach_drive",
+          "jaeyi_approach_ending",
+          "kangwoo_approach_drive",
+          "kangwoo_approach_ending",
+          "levy_chased",
+          "main_command_record",
+          "main_mission_started",
+          "main_relay_confirmed",
+          "main_testimony_record",
+          "massacre_known",
+          "minji_approach_drive",
+          "minji_approach_ending",
+          "mother_broadcast_ready",
+          "mother_keepsakes",
+          "mother_reunited",
+          "onboarding_event_guide",
+          "opening_call_answered",
+          "parent_key_found",
+          "parent_key_located",
+          "parent_principle_found",
+          "parent_signature_match",
+          "parents_recent_signal",
+          "parents_routes_traced",
+          "parents_split_known",
+          "people_shown",
+          "postman_met",
+          "recall_passed",
+          "recruit_migration_v2",
+          "route_ridge_failed",
+          "run_archived",
+          "sea_route",
+          "seoul_base_done",
+          "seoul_core_reached",
+          "seoul_costs_seen",
+          "seoul_han_done",
+          "seoul_local_saved",
+          "seoul_open",
+          "seoul_ruins_done",
+          "seoul_square_done",
+          "session_two_teased",
+          "story_done",
+          "trace_dialect",
+          "trace_registry",
+          "trace_route",
+          "trace_theories",
+          "uplink_scale_seen"
+        ],
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "seoul": {
+          "stage": 5,
+          "ready": true,
+          "missing": {
+            "pillar": "메인 스토리",
+            "have": 1,
+            "need": 1,
+            "target": "seoul",
+            "hint": "서울로 이동해 남산 진입로를 연다"
+          },
+          "method": "core_transfer"
+        },
+        "ended": true,
+        "endKind": "story_done",
+        "archives": 1,
+        "choiceCount": 88,
+        "eventCount": 81,
+        "noteSeq": 95
+      },
+      "receipt": "ui/390x844-earned/receipt.json",
+      "checkpointInput": {
+        "path": "/Users/sang/caravan/artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4",
+        "imports": 1
+      },
+      "pendingResultReload": true
+    },
+    {
+      "scenario": "1440x900-fresh",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "responseCount": 1,
+      "actionCount": 38,
+      "captures": 4,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "build": "2026-09-11-director-journey",
+        "schema": 8,
+        "at": null,
+        "day": 1,
+        "min": 530.439,
+        "km": 1.175724333333338,
+        "drive": {
+          "from": "busan",
+          "to": "yangsan",
+          "dist": 20,
+          "gone": 1.175724333333338,
+          "approach": false,
+          "campEchoes": [],
+          "campEcho": null
+        },
+        "eventId": null,
+        "presentationPhase": null,
+        "storyStep": null,
+        "resources": {
+          "fuel": 41.81893845266666,
+          "water": 16,
+          "food": 14,
+          "scrap": 24,
+          "van": 82,
+          "fatigue": 3.8362457000000023,
+          "items": {
+            "부품": 0,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "flags": [
+          "intro_appeal_failed",
+          "intro_family_helped",
+          "intro_module_seen",
+          "intro_workshop_left",
+          "main_mission_started",
+          "mother_keepsakes",
+          "onboarding_event_guide",
+          "opening_call_answered"
+        ],
+        "party": [],
+        "seoul": {
+          "stage": 0,
+          "ready": false,
+          "missing": {
+            "pillar": "메인 스토리",
+            "have": 0,
+            "need": 1,
+            "id": "trace",
+            "done": false,
+            "target": "yangsan",
+            "event": "onboarding_first_road",
+            "sourceEvent": "onboarding_first_road",
+            "cost": "열람 준비 30분 + 선택·후속 작업 10~35분",
+            "hint": "양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)"
+          },
+          "method": null
+        },
+        "ended": false,
+        "endKind": null,
+        "archives": 0,
+        "choiceCount": 5,
+        "eventCount": 0,
+        "noteSeq": 10
+      },
+      "receipt": "ui/1440x900-fresh/receipt.json",
+      "checkpointInput": null,
+      "pendingResultReload": false
+    },
+    {
+      "scenario": "1440x900-earned",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "responseCount": 2,
+      "actionCount": 241,
+      "captures": 5,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4175/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "build": "2026-09-11-director-journey",
+        "schema": 8,
+        "at": "seoul",
+        "day": 12,
+        "min": 717.378,
+        "km": 735.0000000000097,
+        "drive": null,
+        "eventId": null,
+        "presentationPhase": null,
+        "storyStep": null,
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "flags": [
+          "armed_age",
+          "bridge_crossed",
+          "bridge_departure_echo",
+          "bridge_trace_gap",
+          "bridge_watched",
+          "cell_mountain",
+          "cell_sea",
+          "core_decided",
+          "core_transfer",
+          "costs_checked_cells",
+          "dissent_overridden_jaeyi",
+          "failed_namsan_known",
+          "father_fate_known",
+          "first_order_trace",
+          "gp_route_ritual",
+          "intro_appeal_failed",
+          "intro_family_helped",
+          "intro_module_seen",
+          "intro_workshop_left",
+          "jaeyi_approach_drive",
+          "jaeyi_approach_ending",
+          "kangwoo_approach_drive",
+          "kangwoo_approach_ending",
+          "levy_chased",
+          "main_command_record",
+          "main_mission_started",
+          "main_relay_confirmed",
+          "main_testimony_record",
+          "massacre_known",
+          "minji_approach_drive",
+          "minji_approach_ending",
+          "mother_broadcast_ready",
+          "mother_keepsakes",
+          "mother_reunited",
+          "onboarding_event_guide",
+          "opening_call_answered",
+          "parent_key_found",
+          "parent_key_located",
+          "parent_principle_found",
+          "parent_signature_match",
+          "parents_recent_signal",
+          "parents_routes_traced",
+          "parents_split_known",
+          "people_shown",
+          "postman_met",
+          "recall_passed",
+          "recruit_migration_v2",
+          "route_ridge_failed",
+          "run_archived",
+          "sea_route",
+          "seoul_base_done",
+          "seoul_core_reached",
+          "seoul_costs_seen",
+          "seoul_han_done",
+          "seoul_local_saved",
+          "seoul_open",
+          "seoul_ruins_done",
+          "seoul_square_done",
+          "session_two_teased",
+          "story_done",
+          "trace_dialect",
+          "trace_registry",
+          "trace_route",
+          "trace_theories",
+          "uplink_scale_seen"
+        ],
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "seoul": {
+          "stage": 5,
+          "ready": true,
+          "missing": {
+            "pillar": "메인 스토리",
+            "have": 1,
+            "need": 1,
+            "target": "seoul",
+            "hint": "서울로 이동해 남산 진입로를 연다"
+          },
+          "method": "core_transfer"
+        },
+        "ended": true,
+        "endKind": "story_done",
+        "archives": 1,
+        "choiceCount": 88,
+        "eventCount": 81,
+        "noteSeq": 95
+      },
+      "receipt": "ui/1440x900-earned/receipt.json",
+      "checkpointInput": {
+        "path": "/Users/sang/caravan/artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4",
+        "imports": 1
+      },
+      "pendingResultReload": true
+    }
+  ],
+  "pace": "Actual scripted control clicks with normal engine timers; no participant timing or physical-phone performance claim",
+  "reloadTransport": "Each scenario fetches and hashes the exact original 4175 response once; earned reloads reuse that same live APIResponse without mutation until context close, sourceNavigation1; not a fresh HTTP fetch",
+  "oldCampaignRuntime": {
+    "bytes": 77666839,
+    "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+  },
+  "changeSinceCampaignFreeze": "Six-line stopped UI stage fitter overflow guard; no engine/story/assets change"
+}

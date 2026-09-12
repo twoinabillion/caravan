@@ -1,0 +1,72 @@
+{
+  "verifiedAt": "2026-09-12T12:28:47.197218+09:00",
+  "scope": "UI stopped-stage fitter only; no engine/story/assets or GAME_BUILD change",
+  "oldRuntime": {
+    "bytes": 77666839,
+    "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+  },
+  "newRuntime": {
+    "path": "서울까지400km.html",
+    "bytes": 77667306,
+    "sha256": "b6e9220728359658721ad8c4a52cb5069e94ace0d42a2b67bf4d4f5cb5bfdb56"
+  },
+  "source": {
+    "path": "src/07-ui.js",
+    "bytes": 373873,
+    "sha256": "e6cf7b1651b1cc84f167b84e7e9a41bc8fe3dd65a47086b97c76149a3c96f96f"
+  },
+  "test": {
+    "path": "tests/test_stopped_stage_fit.py",
+    "bytes": 4535,
+    "sha256": "610eb8b47663a060f3abf671b4f4596e1d0e635c3d57d37479229bc8b3a2e627"
+  },
+  "redCommand": "CARAVAN_STAGE_WIDTHS=320 CARAVAN_STAGE_OUTPUT=.../stopped-stage-fix/red python3 tests/test_stopped_stage_fit.py",
+  "redExit": 1,
+  "redFailure": "dock outside viewport: 320x578, stage735, dock bottom818, console height0",
+  "greenCommand": "CARAVAN_STAGE_OUTPUT=.../stopped-stage-fix/green python3 tests/test_stopped_stage_fit.py",
+  "greenExit": 0,
+  "greenViewports": [
+    [
+      320,
+      578
+    ],
+    [
+      360,
+      700
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "greenActualBehavior": "five fresh opening choices, main mission accepted, local/route mode switch, real Busan to Yangsan departure at each width; no forced clicks, grants or CSS patches",
+  "additionalCommand": "python3 tests/test_golden_route.py",
+  "additionalExit": 0,
+  "additionalResult": "all existing Busan departure, stopped console, first Yangsan leg, Miryang companion and alley reachability checks passed; zero console errors",
+  "logs": [
+    {
+      "path": "audits/director-journey-2026-09-11/phase-b/stopped-stage-fix-red.log",
+      "bytes": 1196,
+      "sha256": "6ac7928139cef96fe469aee3b042b91e6d2fe497c6c8b89940b6907384ea1c4b"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/phase-b/stopped-stage-fix-green.log",
+      "bytes": 6098,
+      "sha256": "4893f1196551c2a9aa57b6a28d161d22866f0e5996b38ebe8d8d1404b233e8cf"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/phase-b/stopped-stage-fix-build.log",
+      "bytes": 3226,
+      "sha256": "6ab052b0519d52f18bf2f84270c46938c5b84ca2ef2ff6f65a8603a59fa33e8b"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/phase-b/stopped-stage-fix-golden.log",
+      "bytes": 2615,
+      "sha256": "29036ffc86a3180583160bdf0f136ea888461c4d23b90904703e083b41565f43"
+    }
+  ]
+}

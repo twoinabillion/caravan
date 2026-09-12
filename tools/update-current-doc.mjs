@@ -3,24 +3,20 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
+import contentRegistry from './content-registry.cjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..');
 const context = vm.createContext({console});
+const {STATIC_CONTENT_FILES, permanentEvents} = contentRegistry;
 
-for (const relative of ['src/03-data.js', 'src/03f-npc-portraits.js', 'src/03g-scenes.js']) {
+for (const relative of STATIC_CONTENT_FILES) {
   const source = fs.readFileSync(path.join(root, relative), 'utf8');
   vm.runInContext(source, context, {filename:relative});
 }
 
 const D = vm.runInContext('D', context);
-const extraEvents = [
-  D.seoulOpenEvent,
-  D.gateEvent,
-  D.bridgeEvent,
-  ...(D.seoulStops || []),
-].filter(Boolean);
-const eventIds = new Set([...D.events, ...extraEvents].map(event => event.id));
+const eventIds = new Set(permanentEvents(D).map(event => event.id));
 const budget = JSON.parse(fs.readFileSync(path.join(root, 'reports', 'asset-budget.json'), 'utf8'));
 const engineSource = [
   '04a-engine-core.js',

@@ -1,0 +1,169 @@
+{
+  "verifiedAt": "2026-09-12T12:37:17.544813+09:00",
+  "completedScenarios": 6,
+  "requiredScenarios": 6,
+  "results": [
+    {
+      "scenario": "320x578-fresh",
+      "receipt": "320x578-fresh/receipt.json",
+      "sha256": "ba94a4edf5077acaccd3a750287240a3e9baeba4a553b20e19df1ff1dbf88ac6",
+      "status": "passed",
+      "pageErrorCount": 0,
+      "captures": [
+        {
+          "path": "320x578-fresh/01-choice.png",
+          "sha256": "23b6e4e9ad6cfffd055c66c4f0f7be8f0d24f0bf54ca70263e00d2215ca8f757"
+        },
+        {
+          "path": "320x578-fresh/02-result.png",
+          "sha256": "b87b99651310f9af46c6906d5dcdfdd5d7a076b6c8148fe3f55403f5d21ed7da"
+        },
+        {
+          "path": "320x578-fresh/03-opening-complete.png",
+          "sha256": "bcbe53d6b34efda170d5af00c8dc1dd3c502ada4f558597a99268ddab5b20345"
+        },
+        {
+          "path": "320x578-fresh/04-actual-departure.png",
+          "sha256": "34490c591d3a0b38d84eacb16118e724cc225b673ac647a76377507c97dc428c"
+        }
+      ]
+    },
+    {
+      "scenario": "320x578-earned",
+      "receipt": "320x578-earned/receipt.json",
+      "sha256": "927f92762b9d58f96d6a9aef798bf32fc701d15b13c9420f810f6553f5e51ee1",
+      "status": "passed",
+      "pageErrorCount": 0,
+      "captures": [
+        {
+          "path": "320x578-earned/01-choice.png",
+          "sha256": "4b137fb38c86a31217ff2361301c080a0c460768bb93273d1cac73ff32a39fff"
+        },
+        {
+          "path": "320x578-earned/02-result.png",
+          "sha256": "7d3b85b07ac4919ba5332814455ddea38d5007acc037fff2c3b049e720c2a199"
+        },
+        {
+          "path": "320x578-earned/03-result-restored.png",
+          "sha256": "ff858f2acb1fdf0dc98530936fe1726be60adb15596727a9f51c97dfcb94ef4d"
+        },
+        {
+          "path": "320x578-earned/04-next-authored-scene.png",
+          "sha256": "71afe458645aab4884a781949674455d29948720256831f1e7b865d9b8cec4a4"
+        },
+        {
+          "path": "320x578-earned/05-ending.png",
+          "sha256": "3a9bd4b85ff5cfabf9af6ad0e5b2ef2a35d88e87ff824cbf90a1104ce03f8651"
+        }
+      ]
+    },
+    {
+      "scenario": "390x844-fresh",
+      "receipt": "390x844-fresh/receipt.json",
+      "sha256": "20966050d8b17febd2e47e7b4f9940c30e2d6e15036d3534245e5fad02206084",
+      "status": "passed",
+      "pageErrorCount": 0,
+      "captures": [
+        {
+          "path": "390x844-fresh/01-choice.png",
+          "sha256": "f8062c7ef802961c0b14a804f4b9fd1097f09446f2791583d3ba703a1f3e0d74"
+        },
+        {
+          "path": "390x844-fresh/02-result.png",
+          "sha256": "fc2c78b9b835e01a67882043a126379ee01fac75de17892b5d6066cc6f386b12"
+        },
+        {
+          "path": "390x844-fresh/03-opening-complete.png",
+          "sha256": "fc185e69063f7b48e81fba3957bee941b4b59c4f2812baabeb8abec3a2d81847"
+        },
+        {
+          "path": "390x844-fresh/04-actual-departure.png",
+          "sha256": "edca5fd5a542c674192bd5fb435ffd93d0eb6a42d9d1bf878dd462b68202f406"
+        }
+      ]
+    },
+    {
+      "scenario": "390x844-earned",
+      "receipt": "390x844-earned/receipt.json",
+      "sha256": "b2955a1a9b77c4a9cb55c27491adb77ff6ee9222206ce990980032f5372699a4",
+      "status": "passed",
+      "pageErrorCount": 0,
+      "captures": [
+        {
+          "path": "390x844-earned/01-choice.png",
+          "sha256": "0c977378a1a96cbc74b71085bad1d4ae5645e00e8f29790607dd9f47c23429f6"
+        },
+        {
+          "path": "390x844-earned/02-result.png",
+          "sha256": "1c2793223b9f4c706404bb010b6ce5c4d08a839ec1a5db99cdf66f2637c48341"
+        },
+        {
+          "path": "390x844-earned/03-result-restored.png",
+          "sha256": "ee242ba954d408fdd763073cea7559c34d5959e40ee6116beced56fd1abb0b0c"
+        },
+        {
+          "path": "390x844-earned/04-next-authored-scene.png",
+          "sha256": "735911a1c10717d79bc4433c29e7099a7c25cdc8cf65b73ec6d59bccc24f846e"
+        },
+        {
+          "path": "390x844-earned/05-ending.png",
+          "sha256": "5f6e85c1e27c91c382682719a530403066a2fc715bab4814696a01b84b8eceac"
+        }
+      ]
+    },
+    {
+      "scenario": "1440x900-fresh",
+      "receipt": "1440x900-fresh/receipt.json",
+      "sha256": "c260adcb065ebd93242dc4d81c331c7722803124d9180c9f9319d7474d5c5139",
+      "status": "passed",
+      "pageErrorCount": 0,
+      "captures": [
+        {
+          "path": "1440x900-fresh/01-choice.png",
+          "sha256": "c0e62f6e789f7c18ea53f15966372abd1494c240987934ea344ba0e5075d5c5a"
+        },
+        {
+          "path": "1440x900-fresh/02-result.png",
+          "sha256": "1d9a3ccfe60f0f4c5bf7ae21292e9fb28f6c32bbb66905f6e00327d5152a6933"
+        },
+        {
+          "path": "1440x900-fresh/03-opening-complete.png",
+          "sha256": "975c9e24c0794ef74227d115f004e76c9fac951f6884b599597c39535d11cf8f"
+        },
+        {
+          "path": "1440x900-fresh/04-actual-departure.png",
+          "sha256": "cf5f5e91cbf2697ea68379c934d6e06f2cc2fc61bd741866083246fa331ede69"
+        }
+      ]
+    },
+    {
+      "scenario": "1440x900-earned",
+      "receipt": "1440x900-earned/receipt.json",
+      "sha256": "2aa6343ef6261e74e40f0318e3a369c87b6c46d3f758805f4b4c6fea1cf11b0f",
+      "status": "passed",
+      "pageErrorCount": 0,
+      "captures": [
+        {
+          "path": "1440x900-earned/01-choice.png",
+          "sha256": "cc1f3b1a5fe8a693df4012ff8bbde9e81632c9736f16dcf7860dd705d7b2c792"
+        },
+        {
+          "path": "1440x900-earned/02-result.png",
+          "sha256": "25f6bb6f79392c7458e42c5c0785cb3ae46dee13314d76db133ba7c2abb72cf6"
+        },
+        {
+          "path": "1440x900-earned/03-result-restored.png",
+          "sha256": "bee652c8124c5b8c07314d31bea1defc283f4368250b785b0a597f0da6a6f3d9"
+        },
+        {
+          "path": "1440x900-earned/04-next-authored-scene.png",
+          "sha256": "4489abf7464138878a500c08a99b21559ae2d1e8eb1046755270abbb497e8c92"
+        },
+        {
+          "path": "1440x900-earned/05-ending.png",
+          "sha256": "f55c746ff5fd034dc2fdc88d05d141f2f7d2d92d933930b991a05b56eaf9127e"
+        }
+      ]
+    }
+  ]
+}

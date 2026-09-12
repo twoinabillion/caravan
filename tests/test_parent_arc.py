@@ -90,7 +90,7 @@ with sync_playwright() as playwright:
       }
       for(const flag of ['cell_road','cell_sea','cell_dome','massacre_known','es_truth',
                           'uplink_seen','postman_letter','gp_envelope_found','first_order_trace',
-                          'parents_routes_traced','father_fate_known','mother_reunited',
+                          'parents_routes_traced','father_fate_known','mother_reunited','mother_broadcast_ready',
                           'parent_key_located']) S.flags[flag]=true;
       const snapshot=()=>({
         main:G.mainStoryReady(),

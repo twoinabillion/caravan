@@ -1,0 +1,2081 @@
+{
+  "version": 1,
+  "scope": "Compact index for Task 8 final evidence; raw traces, saves, captures, videos, logs, and exports remain at the named paths.",
+  "runtimeFreeze": {
+    "commit": "3a3c9aa868a8963edbc6d77fc873d180cbe352b6",
+    "gameBuild": "2026-09-11-director-journey",
+    "htmlBytes": 77666839,
+    "htmlSha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+    "hardLimitBytes": 80000000,
+    "inheritedVisualWarningCount": 58
+  },
+  "qualification": {
+    "scenarioCount": 15,
+    "allComplete": true,
+    "allExactFrozenHtml": true,
+    "allTraceChainsAndIndexedMediaVerified": true,
+    "pngCaptureCount": 223,
+    "journalExportCount": 3,
+    "indexedEvidenceFileCount": 226,
+    "browserHttpCaveat": "Each context logged the optional dev-server /assets/app-icon.png 404; pageErrors are zero."
+  },
+  "scenarios": [
+    {
+      "scenario": "crew-checkpoint",
+      "runnerScenario": "crew-checkpoint",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario crew-checkpoint --seed 401100 --limit 3600 --output artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint",
+      "commit": "fea29785cbcecbcb7bed945472e715f8e22151d4",
+      "seed": 401100,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 29719,
+        "capture": "route.fetch original response; hash exact bytes; fulfill unchanged",
+        "fulfillMs": 28390
+      },
+      "runnerSha256": "25fdf1984cadf2cbe688dee00f1e3e9f48cab3029251c153a272c09426f939f4",
+      "helperSha256": "6ce95d11719d0ba72a82da0152f610f08b49d65ebf44a602f02012ea765b491d",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "78fdaa2d45ebad599cad869717e2c62bfbcbac378997ae8659528073a3adde84",
+      "trace": {
+        "rows": 2420,
+        "head": "0623fa9766371076b126d2bfc2e1f7063ae5f41cdc51bff9020abbc518d33a95",
+        "sha256": "26ce4bd4f4f6fc07c147fd0985690f561d4b6c327ef2b3edf3cb7e9f17e42386"
+      },
+      "traceChainVerified": true,
+      "captureCount": 47,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 47,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4"
+      },
+      "video": null,
+      "final": {
+        "at": "seoul",
+        "day": 12,
+        "km": 735.0000000000097,
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "minji": {
+            "choiceId": "listen",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "kangwoo": {
+            "choiceId": "trust",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "jaeyi": {
+            "choiceId": "space",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": true,
+        "evidenceRowsDone": 10,
+        "linkedCells": [
+          "road",
+          "sea",
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {
+          "bench": true,
+          "cabin": true
+        },
+        "noteSeq": 91,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      }
+    },
+    {
+      "scenario": "finale-quarantine",
+      "runnerScenario": "finale-quarantine",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/finale-quarantine",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario finale --method core_quarantine --checkpoint artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json --seed 402003 --limit 1200 --output artifacts/director-pass-2026-09-11/task8-final/finale-quarantine",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 402003,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 33098,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1171
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "94526b2b62a0fbbab99a3cff63b77439e5b19fd61dd99b000725b26865f1d84e",
+      "trace": {
+        "rows": 239,
+        "head": "3b5c4671240357bb240dde24a6f3b0176daef43db6d52e974c76dcab5e3b58a1",
+        "sha256": "0cfe057bafa385411a5ccf33540993284d30713f2e4b9f5f350020902d01c812"
+      },
+      "traceChainVerified": true,
+      "captureCount": 10,
+      "captureHashesVerified": true,
+      "journalExports": [
+        {
+          "kind": "journal-export",
+          "path": "서울까지400km-일지-DAY12.md",
+          "bytes": 16393,
+          "sha256": "e8e8fad16b6f63237a0b66a9d357d27173ff45371ddd5dd6c9bc1d9043585652"
+        }
+      ],
+      "indexedEvidenceFileCount": 11,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": "live-auto-resume",
+      "checkpointInput": {
+        "path": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4"
+      },
+      "save": null,
+      "video": null,
+      "final": {
+        "at": "seoul",
+        "day": 12,
+        "km": 735.0000000000097,
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "minji": {
+            "choiceId": "listen",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "kangwoo": {
+            "choiceId": "trust",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "jaeyi": {
+            "choiceId": "space",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": true,
+        "evidenceRowsDone": 10,
+        "linkedCells": [
+          "road",
+          "sea",
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {
+          "bench": true,
+          "cabin": true
+        },
+        "noteSeq": 95,
+        "ended": true,
+        "endKind": "story_done",
+        "method": "core_quarantine",
+        "archives": 1
+      }
+    },
+    {
+      "scenario": "finale-sleep",
+      "runnerScenario": "finale-sleep",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/finale-sleep",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario finale --method core_sleep --checkpoint artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json --seed 402002 --limit 1200 --output artifacts/director-pass-2026-09-11/task8-final/finale-sleep",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 402002,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 33038,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1276
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "97a459b35724e2c1b851eb727e3b72bff7c5be8f1e56992d0ab71a377d8af034",
+      "trace": {
+        "rows": 222,
+        "head": "3fee70e9f466be9471d1f71f5e7c053f467d7cbfd2fcc18a7e6c9ca96d6f3e3f",
+        "sha256": "7470e70abd3e9479cebdcc130ca65748d7d7827fc509ec6a2f496f3fc374ed4b"
+      },
+      "traceChainVerified": true,
+      "captureCount": 10,
+      "captureHashesVerified": true,
+      "journalExports": [
+        {
+          "kind": "journal-export",
+          "path": "서울까지400km-일지-DAY12.md",
+          "bytes": 16247,
+          "sha256": "2c8e00fcb9d8775c68d0282c40b1c5a9d3612ab8cdaf3e2627188727b6b2e93e"
+        }
+      ],
+      "indexedEvidenceFileCount": 11,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": "live-auto-resume",
+      "checkpointInput": {
+        "path": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4"
+      },
+      "save": null,
+      "video": null,
+      "final": {
+        "at": "seoul",
+        "day": 12,
+        "km": 735.0000000000097,
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "minji": {
+            "choiceId": "listen",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "kangwoo": {
+            "choiceId": "trust",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "jaeyi": {
+            "choiceId": "space",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": true,
+        "evidenceRowsDone": 10,
+        "linkedCells": [
+          "road",
+          "sea",
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {
+          "bench": true,
+          "cabin": true
+        },
+        "noteSeq": 95,
+        "ended": true,
+        "endKind": "story_done",
+        "method": "core_sleep",
+        "archives": 1
+      }
+    },
+    {
+      "scenario": "finale-transfer",
+      "runnerScenario": "finale-transfer",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/finale-transfer",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario finale --method core_transfer --checkpoint artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json --seed 402001 --limit 1200 --output artifacts/director-pass-2026-09-11/task8-final/finale-transfer",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 402001,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 27010,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1120
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "32be06f7ae7f6b4c944151f0e17313af6e0dd5e41939101b58535d041580585c",
+      "trace": {
+        "rows": 237,
+        "head": "945540f1d4a611afd8dfbc23dc20a5cd3eddf380a0367507cafd0f7efec3a951",
+        "sha256": "d2b6d7faf1ec93e4afea65fd3feb182b7f1188ee540d801ab65286ecab16bc0b"
+      },
+      "traceChainVerified": true,
+      "captureCount": 10,
+      "captureHashesVerified": true,
+      "journalExports": [
+        {
+          "kind": "journal-export",
+          "path": "서울까지400km-일지-DAY12.md",
+          "bytes": 16403,
+          "sha256": "70d8fbe989485c3f53b1b700f525d17e95e8e0b2ce401ea51e701e5f9c137b3c"
+        }
+      ],
+      "indexedEvidenceFileCount": 11,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": "live-auto-resume",
+      "checkpointInput": {
+        "path": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4"
+      },
+      "save": null,
+      "video": null,
+      "final": {
+        "at": "seoul",
+        "day": 12,
+        "km": 735.0000000000097,
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "minji": {
+            "choiceId": "listen",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "kangwoo": {
+            "choiceId": "trust",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "jaeyi": {
+            "choiceId": "space",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": true,
+        "evidenceRowsDone": 10,
+        "linkedCells": [
+          "road",
+          "sea",
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {
+          "bench": true,
+          "cabin": true
+        },
+        "noteSeq": 95,
+        "ended": true,
+        "endKind": "story_done",
+        "method": "core_transfer",
+        "archives": 1
+      }
+    },
+    {
+      "scenario": "normal-earned",
+      "runnerScenario": "normal-earned",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/normal-earned",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario normal-earned --method core_transfer --checkpoint artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json --pause-ms 4000 --limit 1200 --output artifacts/director-pass-2026-09-11/task8-final/normal-earned",
+      "commit": "cad447c4b877fe8cc16aaf7cced2085a8261f361",
+      "seed": 400911,
+      "pace": "normal-scripted",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 27642,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1043
+      },
+      "runnerSha256": "993e37b18a5835eaad2c3f06068f0f2664bf53fa870398bb423ddd82f6b5600e",
+      "helperSha256": "384d65267256802353b4705d6caff12c747962f358fdb6adcfe6cde128af1f26",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "3e9e79856e7d56d3ac4584c206c99d833d704e4df3f6bcd7523d8b9ac2733618",
+      "trace": {
+        "rows": 70,
+        "head": "a1ec3d168f6d8c9abbe158e2091f89eff7cff9dc956cef2b903202f4ca236edf",
+        "sha256": "d42a95e47f5ae18b620093e6db3a0eba21387f6389f6450ac9161b0f619210ac"
+      },
+      "traceChainVerified": true,
+      "captureCount": 13,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 13,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": "live-auto-resume",
+      "checkpointInput": {
+        "path": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+        "bytes": 101104,
+        "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4"
+      },
+      "save": null,
+      "video": {
+        "path": "video/474d40ad0b9e6fcfa3948bef99c7175a.webm",
+        "bytes": 12568181,
+        "sha256": "e3291509f2180d308676be948770ea9afe7e453091933adb85d8d8b227ec5c39"
+      },
+      "final": {
+        "at": "seoul",
+        "day": 12,
+        "km": 735.0000000000097,
+        "party": [
+          "minji",
+          "kangwoo",
+          "jaeyi"
+        ],
+        "resources": {
+          "fuel": 24.098260313666444,
+          "water": 24,
+          "food": 18,
+          "scrap": 5,
+          "van": 100,
+          "fatigue": 15.980285464000021,
+          "items": {
+            "부품": 10,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "minji": {
+            "choiceId": "listen",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "kangwoo": {
+            "choiceId": "trust",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          },
+          "jaeyi": {
+            "choiceId": "space",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": true,
+        "evidenceRowsDone": 10,
+        "linkedCells": [
+          "road",
+          "sea",
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {
+          "bench": true,
+          "cabin": true
+        },
+        "noteSeq": 95,
+        "ended": true,
+        "endKind": "story_done",
+        "method": "core_transfer",
+        "archives": 1
+      },
+      "timings": {
+        "count": 70,
+        "requestedTotalMs": 280000,
+        "observedTotalMs": 280097,
+        "minimumObservedMs": 4000
+      }
+    },
+    {
+      "scenario": "normal-opening",
+      "runnerScenario": "normal-opening",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/normal-opening",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario normal-opening --seed 404001 --pause-ms 4000 --limit 300 --output artifacts/director-pass-2026-09-11/task8-final/normal-opening",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 404001,
+      "pace": "normal-scripted",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 26896,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1573
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "3031037a31166c30cba7484a9a7e1cf255884284ce438c326e365b1311b8bf49",
+      "trace": {
+        "rows": 21,
+        "head": "214c83f381eaae3658d528e21e1bf5f421ef53b8be1b6d98954e3299c10fab7c",
+        "sha256": "7c495f7f73465044a052f6ee43fc306c13a26d42b42546d470caf18512bb1fdf"
+      },
+      "traceChainVerified": true,
+      "captureCount": 15,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 15,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/normal-opening/save.json",
+        "bytes": 12530,
+        "sha256": "a5021725fe2ed77be594608660a241d0cd49a54c790cf94611f9390dafe39bf2"
+      },
+      "video": {
+        "path": "video/7dd186e85e4960efc1071963dc99707c.webm",
+        "bytes": 4849431,
+        "sha256": "01e48aff75ed7e2598a57b47536283b1821e8c95bf9783dcc66c112eecf83fd2"
+      },
+      "final": {
+        "at": "busan",
+        "day": 1,
+        "km": 0,
+        "party": [],
+        "resources": {
+          "fuel": 42,
+          "water": 16,
+          "food": 14,
+          "scrap": 24,
+          "van": 82,
+          "fatigue": 3.375,
+          "items": {
+            "부품": 0,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "injuries": {},
+        "campMemories": {},
+        "evidenceReady": false,
+        "evidenceRowsDone": 0,
+        "linkedCells": [],
+        "upgrades": {},
+        "noteSeq": 10,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      },
+      "timings": {
+        "count": 21,
+        "requestedTotalMs": 84000,
+        "observedTotalMs": 84151,
+        "minimumObservedMs": 4001
+      }
+    },
+    {
+      "scenario": "recruit-eunsu",
+      "runnerScenario": "recruit-eunsu",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/recruit-eunsu",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario recruit --companion eunsu --camp-choice facts --seed 401005 --limit 2600 --output artifacts/director-pass-2026-09-11/task8-final/recruit-eunsu",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 401005,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 30207,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1134
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "e620eb722c86c6ed3d1116424b922dbaddd6b2c521d267479f592fcfa5b0c660",
+      "trace": {
+        "rows": 771,
+        "head": "75263fcdb940e43e3b92d1ef8b765721487d8fb1e6519596110b05d5c74730b1",
+        "sha256": "e9e9f032a6cd97bfe6a1cddfbcc0b7217f1c38d7bb44a61d711d36d6b80fd662"
+      },
+      "traceChainVerified": true,
+      "captureCount": 6,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 6,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/recruit-eunsu/save.json",
+        "bytes": 39945,
+        "sha256": "6c0ed61a368ed70708acd4ed4e8362f233fef8405ab0ca49d65b8735377a82c6"
+      },
+      "video": null,
+      "final": {
+        "at": "daejeon",
+        "day": 5,
+        "km": 312.99999999999994,
+        "party": [
+          "eunsu"
+        ],
+        "resources": {
+          "fuel": 47.52295466033449,
+          "water": 19,
+          "food": 11,
+          "scrap": 73,
+          "van": 79.9999999999994,
+          "fatigue": 20.161058000000047,
+          "items": {
+            "부품": 9,
+            "의약품": 2,
+            "탄약": 1,
+            "교란 장치": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "eunsu": {
+            "choiceId": "facts",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": false,
+        "evidenceRowsDone": 1,
+        "linkedCells": [
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {},
+        "noteSeq": 36,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      }
+    },
+    {
+      "scenario": "recruit-jaeyi",
+      "runnerScenario": "recruit-jaeyi",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/recruit-jaeyi",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario recruit --companion jaeyi --camp-choice space --seed 401004 --limit 2600 --output artifacts/director-pass-2026-09-11/task8-final/recruit-jaeyi",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 401004,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 30067,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1082
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "f05d27758e394aa8482cf769b3f84faf574c002c2d46eedab4a937352ace6e06",
+      "trace": {
+        "rows": 735,
+        "head": "4e7e863dc0a466ebd97fddab635dcb1b77127324efb7d484fdecd24054eeb797",
+        "sha256": "9d20f0f2e55d780100de2e0cf6ed044afe51f15a844ba025c6f2abb10616b079"
+      },
+      "traceChainVerified": true,
+      "captureCount": 8,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 8,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/recruit-jaeyi/save.json",
+        "bytes": 41738,
+        "sha256": "c4679a709bedaf8004738377b31435a322fdd63eaee999cc52a80be84eec36a8"
+      },
+      "video": null,
+      "final": {
+        "at": "sangju",
+        "day": 4,
+        "km": 233.0000000000018,
+        "party": [
+          "jaeyi"
+        ],
+        "resources": {
+          "fuel": 29.902720495000615,
+          "water": 15,
+          "food": 11,
+          "scrap": 78,
+          "van": 81.19999999999958,
+          "fatigue": 32.015348648,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "injuries": {
+          "driver": {
+            "label": "허리 삠",
+            "days": 2
+          }
+        },
+        "campMemories": {
+          "jaeyi": {
+            "choiceId": "space",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": false,
+        "evidenceRowsDone": 2,
+        "linkedCells": [
+          "mountain"
+        ],
+        "upgrades": {},
+        "noteSeq": 33,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      }
+    },
+    {
+      "scenario": "recruit-kangwoo",
+      "runnerScenario": "recruit-kangwoo",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/recruit-kangwoo",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario recruit --companion kangwoo --camp-choice trust --seed 401006 --limit 2600 --output artifacts/director-pass-2026-09-11/task8-final/recruit-kangwoo",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 401006,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 27024,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 1105
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "799120443c27afd79000302e89e89f0d9e8bb5746fd1f1e433d5d3d497600013",
+      "trace": {
+        "rows": 396,
+        "head": "6d68c51d540bcfe641de6155c39773fa1af84b12ff4b57aaa99ed97f03e6d2a9",
+        "sha256": "ffa827de5c8168bb68645b5e18298913c748cbe91c4e36d57585713fcc3fb9b5"
+      },
+      "traceChainVerified": true,
+      "captureCount": 6,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 6,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/recruit-kangwoo/save.json",
+        "bytes": 28475,
+        "sha256": "33e357ba1f773d0f0c08193886069056997edc712f1e1b6b83e987f7136d0470"
+      },
+      "video": null,
+      "final": {
+        "at": "miryang",
+        "day": 3,
+        "km": 158.0000000000003,
+        "party": [
+          "kangwoo"
+        ],
+        "resources": {
+          "fuel": 47.90207799999941,
+          "water": 24,
+          "food": 20,
+          "scrap": 41,
+          "van": 90,
+          "fatigue": 27.64630512599981,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "kangwoo": {
+            "choiceId": "trust",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": false,
+        "evidenceRowsDone": 1,
+        "linkedCells": [
+          "dome"
+        ],
+        "upgrades": {},
+        "noteSeq": 22,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      }
+    },
+    {
+      "scenario": "recruit-leo",
+      "runnerScenario": "recruit-leo",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/recruit-leo",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario recruit --companion leo --camp-choice line --seed 401003 --limit 2600 --output artifacts/director-pass-2026-09-11/task8-final/recruit-leo",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 401003,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 27946,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 940
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "96360bf0145483e9afe120a09dab5f99844c7bd567161884b7183d9d434a50b0",
+      "trace": {
+        "rows": 579,
+        "head": "357944254b1bf90501d59e79b8711637f5a5c7923576379f178bf76ac5e371f9",
+        "sha256": "fed0c29179e3918507d1e8b6a6b8dbb6d61542292b513cef0b974ccce1ac4aa0"
+      },
+      "traceChainVerified": true,
+      "captureCount": 6,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 6,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/recruit-leo/save.json",
+        "bytes": 34577,
+        "sha256": "2d02178f08c2605442d36fc34200b98e9eb19bbe829d6011b3f0b669b8f4acd0"
+      },
+      "video": null,
+      "final": {
+        "at": "jinju",
+        "day": 4,
+        "km": 273.00000000000006,
+        "party": [
+          "leo"
+        ],
+        "resources": {
+          "fuel": 37.037983746294024,
+          "water": 17,
+          "food": 16,
+          "scrap": 36,
+          "van": 83.25999999999952,
+          "fatigue": 26.26571723839998,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "leo": {
+            "choiceId": "line",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": false,
+        "evidenceRowsDone": 1,
+        "linkedCells": [
+          "sotgot"
+        ],
+        "upgrades": {},
+        "noteSeq": 28,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      }
+    },
+    {
+      "scenario": "recruit-minji",
+      "runnerScenario": "recruit-minji",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/recruit-minji",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario recruit --companion minji --camp-choice listen --seed 401001 --output artifacts/director-pass-2026-09-11/task8-final/recruit-minji",
+      "commit": "a3e368296bc817187883aaa1424ac84ada6e2041",
+      "seed": 401001,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 32088,
+        "capture": "route.fetch original response; hash exact bytes; fulfill unchanged",
+        "fulfillMs": 30033
+      },
+      "runnerSha256": "060eab23f04cf56e29645b83abd0a0ebb83b12b16d70f5ce01d1a84b38253158",
+      "helperSha256": "a5716b715da36c7d572f4d10fb04d8bda33418f3ffd68202195b3efda0a94ec1",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "72739eb06a89fce9dba2f41a194453eef029ce52b596f18fa63b9758d1e5143d",
+      "trace": {
+        "rows": 456,
+        "head": "22bb30c7517f3362f881e7eb85bebd8093a0120dcf26c1ef3be9c06ac16d3054",
+        "sha256": "f3984ee452625a1faf8ad56f8602d4d55bb79c8317543668ef249e83565519f5"
+      },
+      "traceChainVerified": true,
+      "captureCount": 6,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 6,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/recruit-minji/save.json",
+        "bytes": 29719,
+        "sha256": "8d8d1631faf5420202ad4b86dd020850253ea6de2d2418ff651422ad08de7301"
+      },
+      "video": null,
+      "final": {
+        "at": "yangsan",
+        "day": 3,
+        "km": 152.0000000000007,
+        "party": [
+          "minji"
+        ],
+        "resources": {
+          "fuel": 29.194718326999276,
+          "water": 19,
+          "food": 20,
+          "scrap": 43,
+          "van": 87,
+          "fatigue": 28.524763173599982,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "injuries": {
+          "driver": {
+            "label": "무릎 찰과상",
+            "days": 2
+          }
+        },
+        "campMemories": {
+          "minji": {
+            "choiceId": "listen",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": false,
+        "evidenceRowsDone": 1,
+        "linkedCells": [
+          "sea"
+        ],
+        "upgrades": {},
+        "noteSeq": 23,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      }
+    },
+    {
+      "scenario": "recruit-parkss",
+      "runnerScenario": "recruit-parkss",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/recruit-parkss",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario recruit --companion parkss --camp-choice share --seed 401002 --limit 2600 --output artifacts/director-pass-2026-09-11/task8-final/recruit-parkss",
+      "commit": "c88e6490f7dd24b6d0829010f3927d8902bd257e",
+      "seed": 401002,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 24761,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 975
+      },
+      "runnerSha256": "94b4bf2c88731a3c31633791ebe5aaaf4994280e725abc2be7816186947a4eab",
+      "helperSha256": "462066e3bf8f3fde6986a476addf48c371061547f0c1bd3729c6a44e93454cc6",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "dc5732e3cab8de807529a233fc55ca1be68a46b9dcaf61936a3230393245153a",
+      "trace": {
+        "rows": 1524,
+        "head": "4f3bd1a172d74b8d582c1a1c8ed97099b9caf63f93b202fe04cdeef9299c8d0e",
+        "sha256": "2d5318f378fe12950af1a89872dd1050b752bd518c5ea8f78972982e59ff6d4c"
+      },
+      "traceChainVerified": true,
+      "captureCount": 8,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 8,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/recruit-parkss/save.json",
+        "bytes": 64798,
+        "sha256": "4b62e0261ae093a70f7c9ff6c0f2effae644c8b4fcd0ba0adea265fab3be9c73"
+      },
+      "video": null,
+      "final": {
+        "at": "daegu",
+        "day": 8,
+        "km": 580.9999999999931,
+        "party": [
+          "parkss"
+        ],
+        "resources": {
+          "fuel": 35.220194607999495,
+          "water": 26,
+          "food": 17,
+          "scrap": 111,
+          "van": 75.47999999999831,
+          "fatigue": 0,
+          "items": {
+            "부품": 11,
+            "의약품": 0,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "라디오 진공관": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {
+          "parkss": {
+            "choiceId": "share",
+            "home": true,
+            "road": true,
+            "pendingRoad": false
+          }
+        },
+        "evidenceReady": false,
+        "evidenceRowsDone": 4,
+        "linkedCells": [],
+        "upgrades": {},
+        "noteSeq": 56,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      }
+    },
+    {
+      "scenario": "reload-matrix",
+      "runnerScenario": "reload-matrix",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/reload-matrix",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario reload-matrix --seed 403001 --limit 600 --output artifacts/director-pass-2026-09-11/task8-final/reload-matrix",
+      "commit": "af73d31885eba5e30b818ea125bfd7f5daf13c67",
+      "seed": 403001,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 25902,
+        "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+        "fulfillMs": 928
+      },
+      "runnerSha256": "c5cbd90b8b55b759190bebb1d3ac7e2944b606ceba1bd0eb378b28690bd89a37",
+      "helperSha256": "a4822d486ce2206b6c78f2b0280342b6ff6957504c39264f689a1bd1bb6d0011",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "b49fe9fcb6a80fdc4d2d211cf04a169c84541b0d21306d5a894c4755a6e1bb9e",
+      "trace": {
+        "rows": 46,
+        "head": "fca0a997295f50e8170d379c96fe82101dd4aabccb9722f2e737c25423bd234e",
+        "sha256": "4ac78c01e21cc153c9b53e64bf8bdb0e30e6436ac5f25bdc850a465bc9c40f37"
+      },
+      "traceChainVerified": true,
+      "captureCount": 0,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 0,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": {
+        "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/task8-final/reload-matrix/save.json",
+        "bytes": 13871,
+        "sha256": "89c4c45b220d9cdeed5e29a6b9213dd75cc65b8aef0b6185d5fc72445b7c3609"
+      },
+      "video": null,
+      "final": {
+        "at": null,
+        "day": 1,
+        "km": 1.950454999999998,
+        "party": [],
+        "resources": {
+          "fuel": 41.699629929999965,
+          "water": 16,
+          "food": 14,
+          "scrap": 24,
+          "van": 82,
+          "fatigue": 4.140178500000008,
+          "items": {
+            "부품": 0,
+            "의약품": 1,
+            "탄약": 0
+          }
+        },
+        "injuries": {},
+        "campMemories": {},
+        "evidenceReady": false,
+        "evidenceRowsDone": 0,
+        "linkedCells": [],
+        "upgrades": {},
+        "noteSeq": 10,
+        "ended": false,
+        "endKind": null,
+        "method": null,
+        "archives": 0
+      },
+      "executedReloadClasses": [
+        "opening-event",
+        "opening-result",
+        "travel"
+      ],
+      "referencedPendingClasses": [
+        {
+          "class": "recruitment-event",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 historical run)",
+          "tests": [
+            "test_saved_recruitment_offer_can_be_decided[True]",
+            "test_saved_recruitment_offer_can_be_decided[False]"
+          ],
+          "coverage": "Accepted/declined saved recruitment offers and subsequent reload; these class labels reference that fixture, not a fresh campaign execution of every recruitment event/result.",
+          "historicalRecordedReference": {
+            "class": "recruitment-event",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "recruitment-result",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 historical run)",
+          "tests": [
+            "test_saved_recruitment_offer_can_be_decided[True]",
+            "test_saved_recruitment_offer_can_be_decided[False]"
+          ],
+          "coverage": "Accepted/declined saved recruitment offers and subsequent reload; these class labels reference that fixture, not a fresh campaign execution of every recruitment event/result.",
+          "historicalRecordedReference": {
+            "class": "recruitment-result",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "camp-event",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_camp.py + tests/test_director_camp_ui.py",
+          "invocation": "direct Python scripts (main functions)",
+          "coverage": "Camp pending/resolved save replay, exact-once costs/memory, natural Minji live reload; Task 7 fix1 camp.log and camp-ui.log. Not collected by pytest.",
+          "historicalRecordedReference": {
+            "class": "camp-event",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "camp-result",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_camp.py + tests/test_director_camp_ui.py",
+          "invocation": "direct Python scripts (main functions)",
+          "coverage": "Camp pending/resolved save replay, exact-once costs/memory, natural Minji live reload; Task 7 fix1 camp.log and camp-ui.log. Not collected by pytest.",
+          "historicalRecordedReference": {
+            "class": "camp-result",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "ordinary-event",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 historical run)",
+          "tests": [
+            "test_ordinary_choice_and_result_survive_continue_without_reapplication"
+          ],
+          "coverage": "Cafe event and outcome restore without state or result reapplication.",
+          "historicalRecordedReference": {
+            "class": "ordinary-event",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "ordinary-result",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 historical run)",
+          "tests": [
+            "test_ordinary_choice_and_result_survive_continue_without_reapplication"
+          ],
+          "coverage": "Cafe event and outcome restore without state or result reapplication.",
+          "historicalRecordedReference": {
+            "class": "ordinary-result",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "combat-event",
+          "status": "external focused evidence; two combat tests freshly passed; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (historical Task 7 and two bounded frozen-runtime tests on 2026-09-12)",
+          "tests": [
+            "tests/test_director_pending.py::test_close_transition_and_combat_result_do_not_reroll",
+            "tests/test_director_pending.py::test_new_combat_resolution_has_cues_but_restored_result_is_silent"
+          ],
+          "coverage": "Newly applied confirmation/outcome cues, silent restored combat result, unchanged fingerprint, interrupted close-to-next-event handoff and nonduplication.",
+          "freshVerification": "audits/director-journey-2026-09-11/whole-review-fix/verification.json",
+          "historicalRecordedReference": {
+            "class": "combat-event",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "combat-result",
+          "status": "external focused evidence; two combat tests freshly passed; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (historical Task 7 and two bounded frozen-runtime tests on 2026-09-12)",
+          "tests": [
+            "tests/test_director_pending.py::test_close_transition_and_combat_result_do_not_reroll",
+            "tests/test_director_pending.py::test_new_combat_resolution_has_cues_but_restored_result_is_silent"
+          ],
+          "coverage": "Newly applied confirmation/outcome cues, silent restored combat result, unchanged fingerprint, interrupted close-to-next-event handoff and nonduplication.",
+          "freshVerification": "audits/director-journey-2026-09-11/whole-review-fix/verification.json",
+          "historicalRecordedReference": {
+            "class": "combat-result",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_open",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_open]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_open",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_han",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_han]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_han",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_ruins",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_ruins]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_ruins",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_square",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_square]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_square",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_base",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_base]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_base",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_core",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_core]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_core",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_costs",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_costs]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_costs",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_decision",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_decision]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_decision",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_night",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_night]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_night",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_uplink_reveal",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_uplink_reveal]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_uplink_reveal",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        },
+        {
+          "class": "seoul_session_reset",
+          "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+          "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+          "owner": "tests/test_director_pending.py",
+          "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+          "tests": [
+            "test_each_seoul_phase_and_result_reload[seoul_session_reset]"
+          ],
+          "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet.",
+          "historicalRecordedReference": {
+            "class": "seoul_session_reset",
+            "owner": "tests/test_director_pending.py",
+            "status": "final-build focused regression"
+          }
+        }
+      ],
+      "pendingOwnerCorrection": "audits/director-journey-2026-09-11/whole-review-fix/pending-owner-correction.json"
+    },
+    {
+      "scenario": "route-market",
+      "runnerScenario": "route-market",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/route-market",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario route --route market --seed 400912 --output artifacts/director-pass-2026-09-11/task8-final/route-market",
+      "commit": "a3e368296bc817187883aaa1424ac84ada6e2041",
+      "seed": 400912,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 31416,
+        "capture": "route.fetch original response; hash exact bytes; fulfill unchanged",
+        "fulfillMs": 27821
+      },
+      "runnerSha256": "060eab23f04cf56e29645b83abd0a0ebb83b12b16d70f5ce01d1a84b38253158",
+      "helperSha256": "a5716b715da36c7d572f4d10fb04d8bda33418f3ffd68202195b3efda0a94ec1",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "2f8bb0265cb8e532d921b3bef31c3eac6a671466ef6dd277a12d096bcddb1ec3",
+      "trace": {
+        "rows": 1779,
+        "head": "ce018b61b6decf780beb6ba82cd38bbe88dfd7af2fe6e04a7e4fa6b0e94c0981",
+        "sha256": "f1ee14955f4af041be95d0a7eeb750b080be7ada8adc05aaaaf23459e9de51f2"
+      },
+      "traceChainVerified": true,
+      "captureCount": 44,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 44,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": null,
+      "video": null,
+      "final": {
+        "at": "seoul",
+        "day": 7,
+        "km": 518.9999999999995,
+        "party": [],
+        "resources": {
+          "fuel": 37.43857491066697,
+          "water": 27,
+          "food": 24,
+          "scrap": 117,
+          "van": 84.19999999999835,
+          "fatigue": 15.704501071999994,
+          "items": {
+            "부품": 12,
+            "의약품": 3,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {},
+        "evidenceReady": true,
+        "evidenceRowsDone": 10,
+        "linkedCells": [
+          "road",
+          "dome",
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {},
+        "noteSeq": 72,
+        "ended": true,
+        "endKind": "story_done",
+        "method": "core_transfer",
+        "archives": 1
+      }
+    },
+    {
+      "scenario": "route-ridge",
+      "runnerScenario": "route-ridge",
+      "directory": "artifacts/director-pass-2026-09-11/task8-final/route-ridge",
+      "status": "complete",
+      "command": "tools/qa-director-city-route.py --scenario route --route ridge --seed 400911 --output artifacts/director-pass-2026-09-11/task8-final/route-ridge",
+      "commit": "3050adbcc7cbad01bdc0fc6a03d54d017a115b19",
+      "seed": 400911,
+      "pace": "accelerated",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "runtimeBuild": "2026-09-11-director-journey",
+      "html": {
+        "path": "서울까지400km.html",
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07"
+      },
+      "browserDocument": {
+        "url": "http://127.0.0.1:4176/game?caravan-live=1",
+        "status": 200,
+        "bytes": 77666839,
+        "sha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+        "navigation": 1,
+        "fetchBodyMs": 25586,
+        "capture": "route.fetch original response; hash exact bytes; fulfill unchanged",
+        "fulfillMs": 18338
+      },
+      "runnerSha256": "cd1c8bf4b74bcd0b7c905b910d79dd6eae313d332859796f33a1f604bbef452c",
+      "helperSha256": "a5716b715da36c7d572f4d10fb04d8bda33418f3ffd68202195b3efda0a94ec1",
+      "routePolicy": {
+        "name": "G.questPreferredNeighbor",
+        "preferredSha256": "d74a77c279e52928200eb5f75f32f1af112b7b8d4202206044b5e8a44c55061a",
+        "navigationSha256": "e1308a9d95e9fcd94941bb71e0c4ead4a7af71e3a88cca9af33fb0c562a8286c"
+      },
+      "manifestSha256": "9d73c78cea217b54ade7b8e8dfe08d5cf2daab32768a7acba49cdecdf70fd1ed",
+      "trace": {
+        "rows": 1737,
+        "head": "9c93c771ead08caaa926dfd74abbcf6aa73277d6bbf1a526aaffa8fd7b32ee20",
+        "sha256": "fc29e2ca4931c9c004787121958dd3e25effb7714b658207bd3c18ae7dd02a23"
+      },
+      "traceChainVerified": true,
+      "captureCount": 34,
+      "captureHashesVerified": true,
+      "journalExports": [],
+      "indexedEvidenceFileCount": 34,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4176/assets/app-icon.png"
+        }
+      ],
+      "resumeMode": null,
+      "checkpointInput": null,
+      "save": null,
+      "video": null,
+      "final": {
+        "at": "seoul",
+        "day": 6,
+        "km": 430.00000000000017,
+        "party": [],
+        "resources": {
+          "fuel": 41.66895264699909,
+          "water": 23,
+          "food": 20,
+          "scrap": 106,
+          "van": 84.5199999999989,
+          "fatigue": 45.597982883999514,
+          "items": {
+            "부품": 10,
+            "의약품": 2,
+            "탄약": 0,
+            "부모님의 검증키": 1
+          }
+        },
+        "injuries": {},
+        "campMemories": {},
+        "evidenceReady": true,
+        "evidenceRowsDone": 10,
+        "linkedCells": [
+          "road",
+          "dome",
+          "ghost",
+          "mountain"
+        ],
+        "upgrades": {},
+        "noteSeq": 69,
+        "ended": true,
+        "endKind": "story_done",
+        "method": "core_transfer",
+        "archives": 1
+      }
+    }
+  ],
+  "auxiliaryEvidence": [
+    {
+      "path": "artifacts/director-pass-2026-09-11/task8-route-forecast-final/trace.json",
+      "bytes": 11141,
+      "sha256": "9b018e430dba73cc2363b5941e07bb2a4a422cf7892d91fabcc45dc1d9fead7a"
+    },
+    {
+      "path": "artifacts/director-pass-2026-09-11/final-route-event-spacing.json",
+      "bytes": 35409,
+      "sha256": "0bef5e0a311f07b491e65b81b60bf0c0d6b2b8a01676e825c9812e12ac8b3950"
+    },
+    {
+      "path": "artifacts/director-pass-2026-09-11/controller-qualified-integrity.json",
+      "bytes": 7971,
+      "sha256": "61ee6795fcf1ad6c8bdcf979eb83d8a7bd0a5e82ec022c47011bbfbaea0dd0f3"
+    },
+    {
+      "path": "artifacts/director-pass-2026-09-11/legacy-visual-warnings-baseline.json",
+      "bytes": 5118,
+      "sha256": "02f7ede658a018e4b5b54181f55dc1eb15e0cc4e9bd7cd28a0b5cafb0a4ef365"
+    }
+  ],
+  "pendingOwnerCorrection": {
+    "path": "audits/director-journey-2026-09-11/whole-review-fix/pending-owner-correction.json",
+    "bytes": 12441,
+    "sha256": "def9a8fa0caa5b395267a8ad85b4d617ea598778e23c5fdb10ba3c5eb8e5e3bc",
+    "scope": "Derived correction of external owner labels only. The 15 qualified campaign manifests/traces/reloads/media are unchanged. The runner executed opening-event, opening-result and travel only. Historical Task 7 coverage is not represented as a fresh final-build rerun; the two combat tests are separately recorded."
+  },
+  "diagnosticOnlyDirectories": [
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/crew-async-event-race-345a9d5",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/crew-invalid-jaeyi-leg-3dc0350",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-leo-concurrent-transfer-ed003a0",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-leo-wrong-camp-2864ffe",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-minji-untracked-5591d9d",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-300s-transfer-df8e554",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-concurrent-transfer-ed003a0",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-early-dispose-76c5331",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-resource-death-fea2978",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-rounded-fuel-2864ffe",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-serial-transfer-ed003a0",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-weather-rest-345a9d5",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/recruit-parkss-weather-shortage-3dc0350",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/reload-explicit-migration-11af1be",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/reload-opening-transition-c88e649",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/reload-persisted-identity-a74c1f4",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/reload-travel-old-page-progress-8e3f828",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/route-market-modal-5591d9d",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/route-ridge-seoul-8b54d1d",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/route-ridge-seoul-e6c43b1",
+    "artifacts/director-pass-2026-09-11/task8-final/diagnostics/route-ridge-yangsan-eb0d172"
+  ],
+  "legacyOnlyFixtures": [
+    "artifacts/director-pass-2026-09-11/crew-preliminary.save.json",
+    "artifacts/director-pass-2026-09-11/minji-first-night-natural.save.json"
+  ]
+}

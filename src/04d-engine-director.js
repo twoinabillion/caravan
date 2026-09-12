@@ -367,6 +367,7 @@ G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openE
   G.qualityEventOpen(evd);
   G.rememberEvent(evd);
   S.stats.events++;
+  if(evd.combat){ G.threatAdaptedTactic(evd); G.save(); }
   UI.showEvent(evd);
 };
 
@@ -635,21 +636,21 @@ G.reqOk = (req)=>{
      세 처분은 성격이 다르고, 준비한 것도 달라야 고를 수 있다.
      (2026-08-06까지는 셋 다 무조건 열려 있어 "무엇을 들고 왔든" 같은 결말이었다.) */
   if(req.cells){
-    const linked=(D.resistance||[]).filter(c=>S.flags[c.flag]).length;
-    if(linked<req.cells) return {ok:false, t:`이은 거점 ${linked}/${req.cells} — 넘겨받을 손이 모자란다`};
+    const linked=G.coreLinkedCells().length;
+    if(linked<req.cells) return {ok:false, t:`이은 거점 ${linked}/${req.cells} — 수원 외곽 중계소에서 거점의 응답을 확인한다`};
   }
   if(req.nightWatch){
     /* 깨어 있는 것 곁에 밤을 설 사람. 사기가 낮으면 거절한다 — 근무표는 사람이 채운다 */
     const willing=S.party.filter(id=>!G.isInjured(id)&&(S.comps[id]||{}).mood>=45).length;
     if(willing<req.nightWatch)
-      return {ok:false, t:`감시 근무를 설 사람 ${willing}/${req.nightWatch} — 지친 사람에게 밤을 맡길 수 없다`};
+      return {ok:false, t:`감시 근무를 설 사람 ${willing}/${req.nightWatch} — 동료 3명의 부상을 치료하고 야영으로 사기 45 이상을 준비한다`};
   }
   if(req.keyHolders){
     /* 재가동 열쇠를 나눠 맡을 상대 — 동료와 이은 거점을 합쳐 센다 */
     const holders=S.party.filter(id=>!G.isInjured(id)).length
-      + (D.resistance||[]).filter(c=>S.flags[c.flag]).length;
+      + G.coreLinkedCells().length;
     if(holders<req.keyHolders)
-      return {ok:false, t:`열쇠를 나눠 맡을 상대 ${holders}/${req.keyHolders} — 한 사람이 다 쥘 수는 없다`};
+      return {ok:false, t:`열쇠를 나눠 맡을 상대 ${holders}/${req.keyHolders} — 다친 동료를 치료하거나 아직 만나지 않은 거점을 잇는다`};
   }
   if(req.dog && !S.dog) return {ok:false, t:'보리가 없다'};
   if(req.item && !G.hasResource(req.item,req.itemQty||1))
@@ -685,8 +686,9 @@ G.reqText = (req)=>{
   if(req.fuel) parts.push(`연료 ${req.fuel}L`); if(req.water) parts.push(`물 ${req.water}`); if(req.food) parts.push(`식량 ${req.food}`);
   return parts.join(' · ');
 };
-/* 동료·퍼크·과거 선택 같은 특별 조건은 충족되기 전까지 선택지 자체를 숨긴다.
-   자원 비용은 플레이어가 계획할 정보라 그대로 보여준다. */
+/* 동료·퍼크·과거 선택 같은 특별 조건이 현재 충족됐는지 판정한다.
+   렌더러가 비밀·서사 조건은 숨기고, 이미 알려진 행동은 잠금 상태로 보여 준다.
+   자원 비용은 플레이어가 계획할 정보라 reqVisible와 무관하게 계속 보여 준다. */
 G.reqVisible = (req)=>{
   if(!req) return true;
   if(req.perk&&!G.hasPerk(req.perk)) return false;
@@ -824,6 +826,10 @@ G.doRecruit = (id)=>{
   S.party.push(id); S.comps[id] = S.comps[id]||{mood:65};
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
   S.comps[id].bond=Math.max(S.comps[id].bond||0,5);
+  const campMemory=S.campMemories&&S.campMemories[id];
+  if(campMemory&&campMemory.pendingBond){
+    S.comps[id].bond+=campMemory.pendingBond; campMemory.pendingBond=0;
+  }
   if(approach) S.comps[id].approach=approach;
   if(id==='leo') S.dog=true;
   if(S.recruitQ&&S.recruitQ.id===id) S.recruitQ=null;
@@ -911,8 +917,22 @@ G.arrive = ()=>{
   }
   G.qualityMeaningfulChange('arrival',to);
   G.scheduleJourneyBeat();
+  /* 도착 기록을 읽는 동안 다음 사건을 열지 않는다. 저장 후에도 같은 곳에서
+     이어가며, 시뮬레이터의 onArrive=()=>0만 연출을 즉시 건너뛴다. */
+  S.pendingArrival=to;
+  G.save();
+  if(UI.onArrive()===0) G.finishArrival(to);
+};
+G.finishArrival = (to)=>{
+  if(!S||S.at!==to||S.pendingArrival!==to) return;
+  delete S.pendingArrival;
+  S._simDeferred=[];
   if(to==='seoul'){
-    if(S.flags.seoul_open){ UI.renderAll(); G.save(); return; }  // 이미 열림 — 서울 맵
+    if(S.flags.seoul_open){
+      UI.renderAll();
+      // Returning from preparation resumes the same unfinished work as Continue.
+      G.resumePresentation(); G.save(); return;
+    }
     if(G.seoulReady()){                                          // 조건 충족 → 남산이 열린다
       UI.renderAll();
       setTimeout(()=>G.openEvent(D.seoulOpenEvent), 500);
@@ -929,28 +949,24 @@ G.arrive = ()=>{
   const n = D.nodes[to];
   /* 위수 구역 첫 진입 — 초계와의 첫 조우 */
   if(n.region==='north' && !S.flags.armed_age){
-    const arrivalDelay=UI.onArrive();
     G.deferEvent('perimeter_first');
-    setTimeout(()=>G.openEventById('perimeter_first'), arrivalDelay);
+    G.openEventById('perimeter_first');
     G.save(); return; }
-  if(!G.isInfiniteResourceMode()&&S.fuel<=0){ G.deferEvent('crisis_nofuel'); setTimeout(()=>G.openRescue('nofuel','crisis_nofuel'), 700); }   // 도착 직후 빈 탱크 — 잠김 방지
+  if(!G.isInfiniteResourceMode()&&S.fuel<=0){
+    G.deferEvent('crisis_nofuel'); G.openRescue('nofuel','crisis_nofuel');
+    G.save(); return;
+  }
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
-  const arrivalDelay=UI.onArrive();
   if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.target===to){
-    /* 타이머가 돌기 전에 영입이 끝나면 S.recruitQ는 null이다 — 이름을 지금 캡처한다
-       (2026-08-07 퍼저 실측 크래시) */
     const recruitName=D.recruitQuests[S.recruitQ.id].name;
-    setTimeout(()=>UI.toast(`🤝 ${recruitName}의 부탁을 진행할 수 있다`),arrivalDelay);
+    UI.toast(`🤝 ${recruitName}의 부탁을 진행할 수 있다`);
   }
-  /* setTimeout으로 넘기는 id를 함께 기록한다. 타이머가 돌지 않는 환경(시뮬·테스트)이
-     이 층을 통째로 놓치거나, 반대로 사본을 만들어 큐를 두 번 빼는 일을 막는다. */
-  S._simDeferred=[];
-  if(loc){ G.deferEvent(loc.id); setTimeout(()=>G.openEvent(loc), arrivalDelay); }
+  if(loc){ G.deferEvent(loc.id); G.openEvent(loc); }
   else if(!G.maybeCrisis()){
     const queued=G.popStory();
-    if(queued){ G.deferEvent(queued); setTimeout(()=>G.openEventById(queued), arrivalDelay); }
-    else if(n.stl){ /* settlement panel via UI */ }
+    if(queued){ G.deferEvent(queued); G.openEventById(queued); }
+    else if(n.stl){ UI.showStl(n.stl); }
   }
   G.save();
 };

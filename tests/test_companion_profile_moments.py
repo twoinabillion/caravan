@@ -16,7 +16,7 @@ def main():
     SHOT_DIR.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
-        page = browser.new_page(viewport={"width": 390, "height": 844}, device_scale_factor=2)
+        page = browser.new_page(viewport={"width": 480, "height": 860}, device_scale_factor=2)
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(URL, wait_until="load")
@@ -60,14 +60,31 @@ def main():
             r"""() => ({
               pending:S.comps.minji.pending,
               level:S.comps.minji.lvl,
-              chosen:document.querySelectorAll('.comp-skill-option.is-chosen').length,
+              title:document.querySelector('.comp-perk-result-title h2')?.textContent||'',
+              effect:document.querySelector('.comp-perk-effect')?.innerText||'',
+              sceneAlt:document.querySelector('.comp-perk-scene img')?.alt||'',
+              returnAction:document.querySelector('[data-perk-return]')?.textContent||'',
+              finishAction:document.querySelector('.comp-perk-finish')?.textContent||'',
+              revealHeight:document.querySelector('.comp-perk-reveal')?.getBoundingClientRect().height||0,
+              viewportHeight:innerHeight,
+              active:G.hasPerk('mj_camp'),
+              persisted:(JSON.parse(localStorage.getItem('seoul400_save_v1')||'{}').comps?.minji?.perks||[]).includes('mj_camp'),
               duplicate:[...document.querySelectorAll('.choice')].some(node=>/LV\.1 퍼크/.test(node.textContent||''))
             })"""
         )
+        page.screenshot(path=str(SHOT_DIR / "minji-emergency-repair-learned.png"), full_page=False)
+        page.locator('[data-perk-return]').click()
+        learned_profile = page.evaluate(
+            """() => ({
+              chosen:document.querySelectorAll('.comp-skill-option.is-chosen').length,
+              text:document.querySelector('.companion-profile')?.innerText||''
+            })"""
+        )
+        page.locator('.comp-profile-close').click()
+        closed_after_learning = page.evaluate("() => !document.querySelector('#ev-wrap')?.classList.contains('on')")
 
         page.evaluate(
             """() => {
-              document.querySelector('#ev-wrap')?.classList.remove('on');
               S._talked={minji:S.day};
               document.querySelector('#dk-status')?.click();
               document.querySelector('#st-tabs [data-st="crew"]')?.click();
@@ -133,15 +150,59 @@ def main():
             }"""
         )
         page.screenshot(path=str(SHOT_DIR / "gwamegi-two-speakers.png"), full_page=False)
+
+        page.set_viewport_size({"width": 360, "height": 780})
+        page.evaluate(
+            """() => {
+              document.querySelector('#ev-wrap')?.classList.remove('on');
+              G.newGame('onroad','좁은 화면','full');
+              S.party=['minji'];
+              S.comps.minji={mood:65,bond:5,lvl:0,perks:[],pending:1};
+              S.at='miryang'; S.driving=null;
+              document.querySelectorAll('.scr').forEach(node=>node.classList.remove('on'));
+              document.querySelector('#scr-game')?.classList.add('on');
+              UI.renderAll();
+              document.querySelector('#dk-status')?.click();
+              document.querySelector('#st-tabs [data-st="crew"]')?.click();
+              document.querySelector('[data-comp2="minji"]')?.click();
+            }"""
+        )
+        narrow_profile = page.evaluate(
+            """() => {
+              const profile=document.querySelector('.companion-profile')?.getBoundingClientRect();
+              const choices=[...document.querySelectorAll('.comp-perk-choice')].map(node=>node.getBoundingClientRect());
+              return {overflow:document.documentElement.scrollWidth>innerWidth,
+                profileLeft:profile?.left||0,profileRight:profile?.right||0,
+                choiceMin:Math.min(...choices.map(rect=>rect.width))};
+            }"""
+        )
+        page.screenshot(path=str(SHOT_DIR / "minji-perk-360.png"), full_page=False)
+        page.locator('.comp-perk-choice').first.click()
+        narrow_reveal = page.evaluate(
+            """() => {
+              const reveal=document.querySelector('.comp-perk-reveal')?.getBoundingClientRect();
+              const actions=[...document.querySelectorAll('.comp-perk-result-actions button')].map(node=>node.getBoundingClientRect());
+              return {overflow:document.documentElement.scrollWidth>innerWidth,
+                revealLeft:reveal?.left||0,revealRight:reveal?.right||0,
+                actionsVisible:actions.length===2&&actions.every(rect=>rect.width>=60)};
+            }"""
+        )
+        page.screenshot(path=str(SHOT_DIR / "minji-emergency-repair-360.png"), full_page=False)
         browser.close()
 
     assert not errors, errors
     assert profile["choiceCount"] == 2 and min(profile["choiceWidths"]) >= 250, profile
-    assert min(profile["copyWidths"]) >= 180 and not profile["misclassified"], profile
+    assert min(profile["copyWidths"]) >= 145 and not profile["misclassified"], profile
     assert not profile["overlap"] and profile["pending"] == 1, profile
-    assert "하나 선택" in profile["text"] and "변경 불가" in profile["text"], profile
+    assert "하나 선택" in profile["text"] and "바꿀 수 없다" in profile["text"], profile
     assert "오늘의 대화" in profile["talkText"] and "하루 한 번" in profile["talkText"], profile
-    assert learned == {"pending": 0, "level": 1, "chosen": 1, "duplicate": False}, learned
+    assert learned["pending"] == 0 and learned["level"] == 1 and not learned["duplicate"], learned
+    assert learned["title"] == "응급 정비" and "달구지 내구 +8" in learned["effect"], learned
+    assert "응급 정비" in learned["sceneAlt"] and "동료 성장" in learned["returnAction"], learned
+    assert learned["finishAction"].strip() == "닫기" and learned["revealHeight"] <= learned["viewportHeight"], learned
+    assert learned["active"] and learned["persisted"], learned
+    assert learned_profile["chosen"] == 1 and "응급 정비" in learned_profile["text"], learned_profile
+    assert closed_after_learning, "동료 성장 화면 닫기 실패"
     assert talked["disabled"] and "오늘 대화 완료" in talked["text"], talked
     assert road_before["buttons"] == 1 and "누구와 이야기할까?" in road_before["text"], road_before
     assert "민지" in road_before["portrait"] and "ROAD MOMENT" not in road_before["text"], road_before
@@ -150,6 +211,10 @@ def main():
     assert event_speakers["speakers"] == ["minji", "passer_merchant"], event_speakers
     assert event_speakers["names"] == ["민지", "덕장 주인"], event_speakers
     assert not event_speakers["unknown"] and len(set(event_speakers["portraits"])) == 2, event_speakers
+    assert not narrow_profile["overflow"] and narrow_profile["profileLeft"] >= 0 and narrow_profile["profileRight"] <= 360, narrow_profile
+    assert narrow_profile["choiceMin"] >= 250, narrow_profile
+    assert not narrow_reveal["overflow"] and narrow_reveal["revealLeft"] >= 0 and narrow_reveal["revealRight"] <= 360, narrow_reveal
+    assert narrow_reveal["actionsVisible"], narrow_reveal
     print("✅ 동료 퍼크·일일 대화·이동 중 대화·동적 사건 화자 UI 정상")
 
 

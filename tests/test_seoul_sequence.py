@@ -21,7 +21,7 @@ def check(label, ok, detail=''):
         failures.append(label)
 
 
-RUN_JS = """(arrivalDay) => {
+RUN_JS = """({arrivalDay,disposition=0}) => {
   const noop=()=>{};
   for(const k of ['toast','speak','renderAll','renderHud','onDepart','clearSpeech','playChat','playRadio']) UI[k]=noop;
   UI.onArrive=()=>0; UI.modalOpen=()=>false; UI.showStl=noop;
@@ -39,7 +39,9 @@ RUN_JS = """(arrivalDay) => {
         const rq=G.reqOk(c.req); return !rq||rq.ok!==false;
       });
       if(!usable.length) break;
-      const o=G.pickOutcome(evd, usable[0]);
+      const choice=evd.id==='seoul_decision'?evd.choices[disposition]:usable[0];
+      if(!usable.includes(choice)) throw new Error('Final disposition is unexpectedly locked: '+disposition);
+      const o=G.pickOutcome(evd, choice);
       G.applyFx(o.fx||{});
       if(o.fx&&o.fx.chain){ const nx=D.events.find(e=>e.id===o.fx.chain); if(nx) G.openEvent(nx); }
     }
@@ -50,11 +52,12 @@ RUN_JS = """(arrivalDay) => {
   S.water=40; S.food=40; S.fuel=90; S.scrap=200; S.items['부품']=10;
   for(const uid of ['bench','cabin']) if(G.canBuyUp(uid).ok) G.buyUpgrade(uid);   // 좌석 한도(기본 2) 해제
   // 기둥과 부모 추적선을 실제 데이터 경로로 채운다.
-  S.party=['minji','parkss','leo'];
+  S.party=['minji','parkss','kangwoo','eunsu'];
   for(const cid of S.party) S.comps[cid]={mood:80,bond:20,lvl:3,perks:[]};
   for(const f of ['cell_road','cell_sea','cell_dome']) S.flags[f]=true;
+  for(const cell of D.resistance||[]) S.flags[cell.flag]=true;
   for(const f of ['massacre_known','first_order_trace','parent_key_found','es_truth',
-                  'parents_routes_traced','father_fate_known','mother_reunited']) S.flags[f]=true;
+                  'parents_routes_traced','father_fate_known','mother_reunited','mother_broadcast_ready']) S.flags[f]=true;
   for(const f of ['postman_letter','gp_envelope_found']) S.flags[f]=true;
   S.day=arrivalDay;
   if(!G.seoulReady()) return {err:'기둥 미충족', missing:G.seoulMissing()};
@@ -99,8 +102,8 @@ with sync_playwright() as playwright:
     page.goto(GAME)
 
     print('― 날짜 제한 없는 서울 도착')
-    early = page.evaluate(RUN_JS, 5)
-    late = page.evaluate(RUN_JS, 120)
+    early = page.evaluate(RUN_JS, {'arrivalDay':5})
+    late = page.evaluate(RUN_JS, {'arrivalDay':120})
     check('이른 도착에서 관문이 열린다', bool(early.get('opened')), str(early)[:160])
     check('늦은 도착에서도 관문이 열린다', bool(late.get('opened')), str(late)[:160])
     check('두 경우 모두 정거장 5개를 완료한다',
@@ -114,6 +117,12 @@ with sync_playwright() as playwright:
           late.get('transfer', {}).get('departed') == 0 and
           late.get('transfer', {}).get('remainingResidents') == 6412,
           str(late.get('transfer')))
+
+    for disposition in range(3):
+        branch = page.evaluate(RUN_JS, {'arrivalDay':30,'disposition':disposition})
+        check(f'코어 처분 {disposition+1}이 에필로그까지 완결된다',
+              branch.get('stage') == 5 and branch.get('ended') and
+              branch.get('storyDone') and branch.get('endKind') == 'story_done', str(branch)[:180])
 
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()

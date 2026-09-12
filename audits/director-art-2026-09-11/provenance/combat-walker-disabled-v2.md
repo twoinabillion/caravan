@@ -1,0 +1,16 @@
+# Disabled walker candidate — Task 6
+
+Generated with the built-in image tool on 2026-09-11, editing `combat-walker-watch-v1.webp` with all four mandatory canonical references. Target and all references visually inspected first. Source master preserved here; delivery is `assets/scenes/combat-walker-disabled-v2.webp`, 1024×576, cwebp quality 86. Original: `/Users/sang/.codex/generated_images/01a08e2d-b6aa-7212-a5bf-9fb9523df314/exec-c71d5969-ef18-4243-9e3c-9313ab138007.png`.
+
+Controller visual inspection: same road, truck, weather and machine; machine clearly collapsed with dark lens. No visible people. Appropriate only for actual disabling outcomes (crossbow/pipe/Kangwoo success), NOT fire distraction, retreat or failed attack. Gallery must be inspected before wiring, then exact game crop. Not yet wired.
+
+## Exact prompt
+
+Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.
+
+Edit target is image 5, combat-walker-watch-v1: preserve this exact Korean industrial road, eye-level camera, cool misty light, derelict trucks, concrete dividers, highway, and small canonical Dalguji behind cover. Change only the machine's outcome state. The same squat rectangular four-legged patrol machine has now been disabled and collapsed toward its right: its heavy body rests diagonally on the wet asphalt, right front leg visibly folded and buckled below it, remaining legs splayed low. Its single front lens and all indicator lights are completely dark; no active scanning, gunfire, explosion or fire. A little dark hydraulic fluid on the road is acceptable. Make the collapse visually unambiguous at mobile size. No people, no companions, no dog. This is the quiet instant after a successful disabling action, before any salvaging. Keep the machine and folded joint fully within the central 80% width and upper 82% height. Dalguji remains cream Korean cabover one-ton truck with separate rectangular living box, amber windows, roof luggage, two red fuel cans, antenna and faded white X, identical to the vehicle reference. Images 1-4 are mandatory canonical references only, never reproduce their collage or labels. Render one complete 16:9 landscape at 1536x864 or larger.
+
+Negative prompt: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel
+
+
+Gallery verified before wiring: isolated live `4176/__live/assets`, 1024×576 loaded. Controller visually inspected `artifacts/director-pass-2026-09-11/combat-walker-disabled-v2-gallery.png`. Asset bytes: 100790. Exact in-game crop remains Task 6.

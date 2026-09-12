@@ -36,7 +36,7 @@ with sync_playwright() as playwright:
       return {summary,version:S._quality.version};
     }""")
     check('품질 스키마 v3와 고정 빌드가 기록된다',
-          initial['version'] == 3 and initial['summary']['build'] == '2026-08-17-settlement-story2', str(initial))
+          initial['version'] == 3 and initial['summary']['build'] == '2026-09-11-director-journey', str(initial))
     check('진입 방식과 여정 시작 이정표가 기록된다',
           initial['summary']['entryMode'] == 'summary' and 'journey_start' in initial['summary']['milestones'], str(initial))
 
@@ -64,12 +64,12 @@ with sync_playwright() as playwright:
       return {version:q.version,build:q.build,milestones:q.milestones,callbacks:q.choiceCallbacks};
     }""")
     check('이전 저장은 데이터 손실 없이 v3로 보강된다',
-          migrated['version'] == 3 and migrated['build'] == '2026-08-17-settlement-story2' and
+          migrated['version'] == 3 and migrated['build'] == '2026-09-11-director-journey' and
           migrated['milestones'] == {} and migrated['callbacks']['remembered'] == 0, str(migrated))
 
     exported = json.loads(page.evaluate("G.exportQuality('json')"))
     check('JSON 내보내기에 빌드·이정표·회수 근거가 포함된다',
-          exported['summary']['build'] == '2026-08-17-settlement-story2' and
+          exported['summary']['build'] == '2026-09-11-director-journey' and
           'milestones' in exported['summary'] and 'choiceCallbacks' in exported['summary'])
 
     print('― 첫 여정 안내와 주행 정산')
@@ -78,8 +78,12 @@ with sync_playwright() as playwright:
       G.qualitySessionStart();
       UI.renderAll();
       const first=document.querySelector('.journey-guide')?.textContent||'';
+      const firstGuide=G.journeyGuide();
+      const departControls=document.querySelectorAll('.nav-destination-card[data-nav-depart]').length;
       G.startTravel('yangsan');
       const driving=document.querySelector('.journey-guide')?.textContent||'';
+      const driveGuide=G.journeyGuide();
+      const destination=document.querySelector('[data-destination-remain]')?.textContent||'';
       S.driving.eventCount=1;
       S.fuel-=3;
       S.scrap+=2;
@@ -88,12 +92,16 @@ with sync_playwright() as playwright:
       G.arrive();
       const recap={...S.lastJourneyRecap,changes:[...S.lastJourneyRecap.changes]};
       const ledger=document.querySelector('.arrival-ledger')?.textContent||'';
-      return {first,driving,recap,ledger};
+      return {first,firstGuide,departControls,driving,driveGuide,destination,recap,ledger};
     }""")
     check('첫 화면은 길 선택을 한 가지 다음 행동으로 안내한다',
-          '1/4' in flow['first'] and '본편 임무를 기준으로 첫 길을 고른다' in flow['first'], flow['first'])
+          flow['firstGuide']['step'] == 1 and flow['firstGuide']['focus'] == 'route' and
+          flow['departControls'] > 0 and '목적지 카드' in flow['first'], str(flow))
     check('출발 뒤 안내가 주행과 첫 사건 규칙으로 전환된다',
-          '2/4' in flow['driving'] and '달구지는 선택한 길을 따라 달린다' in flow['driving'], flow['driving'])
+          flow['driveGuide']['step'] == 2 and flow['driveGuide']['focus'] == 'drive' and
+          flow['driveGuide']['title'] == '달구지는 선택한 길을 따라 달린다' and
+          '사건이 생기면 이야기를 끝까지 읽고 행동을 고른다' in flow['driveGuide']['body'] and
+          'km 남음' in flow['destination'], str(flow))
     check('도착 정산은 시간·사건·차량 빌드와 자원 증감을 보존한다',
           flow['recap']['minutes'] == 35 and flow['recap']['events'] == 1 and
           flow['recap']['build'] == '기본 생존형' and '연료' in flow['ledger'] and '고철' in flow['ledger'], str(flow))

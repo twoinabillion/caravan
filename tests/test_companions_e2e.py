@@ -94,11 +94,18 @@ with sync_playwright() as playwright:
             const dv={slots:[], dist:30, gone:0, si:0};
             G.prepareRecruitMemory(dv);
             row.driveEcho=!hasDrive||!!dv.recruitMemory;
-            // 유대를 끝까지 — 대기 퍽은 사람처럼 고르고, Lv3 시그니처가 자동 습득되는가
-            for(let k=0;k<30&&(S.comps[cid].lvl||0)<3;k++){
+            // 이 파일은 상태기계 진단 fixture다. 유대만 반복해서 Lv3를 만들지 않고,
+            // 먼저 Lv2 문턱에서 개인 서사 가드가 실제로 멈추는지 확인한다.
+            for(let k=0;k<30&&(S.comps[cid].lvl||0)<2;k++){
               G.bond(cid,2);
               if(S.comps[cid].pending) G.choosePerk(cid,0);
             }
+            while(S.comps[cid].bond<D.bondTh[2]) G.bond(cid,2);
+            row.storyGuard=(S.comps[cid].lvl===2&&S.comps[cid].storyReady===true);
+            const personal=(D.events||[]).find(e=>e.once&&e.needsComp===cid&&
+              Array.isArray(e.needBond)&&Number(e.needBond[1])>=Number(D.bondTh[1]));
+            row.personalEvent=personal&&personal.id;
+            if(personal){ G.openEvent(personal); resolve(); G.checkLevel(cid,{story:true}); }
             row.lvl=S.comps[cid].lvl;
             const sig=D.comps[cid].perks[3];
             row.signature=!!(sig&&S.comps[cid].perks.includes(sig.id));
@@ -114,8 +121,9 @@ with sync_playwright() as playwright:
 
     print('― 6명 전원: 시작→임무→동행→합류')
     for cid, row in results.items():
-        ok = row.get('joined') and row.get('lvl') == 3 and row.get('signature')
-        check(f"{cid}: 합류·Lv3·시그니처", bool(ok), str(row))
+        ok = (row.get('joined') and row.get('storyGuard') and
+              row.get('personalEvent') and row.get('lvl') == 3 and row.get('signature'))
+        check(f"{cid}: 합류·개인서사 가드·Lv3·시그니처", bool(ok), str(row))
     print('― 접근 방식이 문구로 남지 않는다')
     for cid, row in results.items():
         if row.get('joined'):
@@ -127,4 +135,4 @@ with sync_playwright() as playwright:
 
 if failures:
     raise SystemExit(f'동료 전수 검증 실패 {len(failures)}건: ' + ', '.join(failures[:6]))
-print('✅ 동료 6명 전원이 실엔진 상태기계로 합류-성장-메아리까지 돈다')
+print('✅ 동료 6명 진단 fixture가 개인 서사 가드를 거쳐 합류-성장-메아리까지 돈다')

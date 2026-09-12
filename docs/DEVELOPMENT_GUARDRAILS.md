@@ -35,6 +35,9 @@ This is the canonical workflow for changes to `서울까지 400km`. `AGENTS.md` 
 - Save before destructive transitions. Reloading must preserve gameplay data and the live preview should restore its supported UI surface.
 - Event approach, event scene, choices, result, reward, and return-to-road must form one continuous sequence.
 - A quest update must say what changed, what the player should do now, and where that action is available.
+- Route recommendations must respect the active corridor in both the next edge and the remaining path. For an outside objective, preserve its destination and guide through the corridor endpoint first; use the driving leg origin when the stopped node is empty.
+- Saved narrative chains can bypass beat/story queue guards. Consume main-evidence chains through the same completion and recovery-location contract before opening a scene, and persist the consumed state; never infer a scene's current location from total distance.
+- Live arrival, normal scene entry, and Continue must share the pending-presentation resolver. A preparation-return regression replayed completed Seoul work because only Continue recovered its unfinished phase; test the arrival's next control before any reload, including conflicting partial-save flags.
 
 ## 5. Image generation and integration
 

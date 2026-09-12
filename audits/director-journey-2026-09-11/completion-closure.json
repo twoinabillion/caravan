@@ -1,0 +1,63 @@
+{
+  "completedAt": "2026-09-12T12:49:15.134880+09:00",
+  "acceptedWholeBranchCommit": "c667fbf9ec292cdcf7ba3bb99ce8e92427fadf37",
+  "acceptedRuntimeCorrectionCommit": "0d54de3946df531694023ad8787950f9879bf585",
+  "acceptedDeliveryCommit": "2cb4131aa12ffc082a219d9185bb52c8889bb7d4",
+  "allPlanCheckboxesComplete": true,
+  "completionTableRowsAudited": 10,
+  "rulingCount": 14,
+  "finalRuntimeSha256": "b6e9220728359658721ad8c4a52cb5069e94ace0d42a2b67bf4d4f5cb5bfdb56",
+  "finalAITAliasSha256": "5c7fcdd4e7c0eb2bf35127bdf327630ce749559448ba4187554ad77c84e5ca8b",
+  "finalLedger": {
+    "path": "audits/director-journey-2026-09-11/review-history/progress-ledger-2026-09-12-complete.md",
+    "sha256": "c0f339b7cd53b25214f361ec12add710ed4d16f08f00f0364eec0520bbad054a"
+  },
+  "scratchArchive": {
+    "path": "/Users/sang/_workspace/caravan-director-20260911/artifacts/director-pass-2026-09-11/sdd-workspace-complete-2026-09-12.tar.gz",
+    "bytes": 1510691,
+    "sha256": "0e04ac8c2baac0b01a5136d8ab7fdd23a2f45110e1ce43f6061ba8b9f21bbdd9",
+    "fileCount": 69
+  },
+  "scratchRemoved": "/Users/sang/_workspace/caravan-director-20260911/.superpowers/sdd/2026-09-11-director-journey",
+  "scratchAbsentVerified": true,
+  "retained": [
+    "host worktree",
+    "bulk campaign traces/screens/videos",
+    "image masters",
+    "both original backup sets"
+  ],
+  "memoryDocuments": [
+    {
+      "path": "/Users/sang/island-game-director/.director/life/projects/caravan/summary.md",
+      "sha256": "f3a8efc59647e9486799e1fd6d7850b98c913c4634b9b69ee8b8dc3a742a4e50"
+    },
+    {
+      "path": "/Users/sang/island-game-director/.director/life/projects/caravan/items.yaml",
+      "sha256": "c3e01aed95b63b80cca7063d208d6decaf3ac256672b3adc99c76098220e25a4"
+    },
+    {
+      "path": "/Users/sang/island-game-director/.director/memory/2026-09-12.md",
+      "sha256": "b2006b4d9388e633ca6735b895876a578171793d73f109f7f18138479f2b93b3"
+    },
+    {
+      "path": "/Users/sang/Documents/Obsidian Vault/01 Projects/개인/서울까지 400km/서울까지 400km - 디렉터 여정 개선 2026-09-11.md",
+      "sha256": "c049e9c3c8c0428c83558b17663e15b41a4422a4d7f151809949c0057381ee44"
+    },
+    {
+      "path": "/Users/sang/Documents/Obsidian Vault/01 Projects/개인/서울까지 400km/서울까지 400km.md",
+      "sha256": "ae1dccccc1ae1562c84cd1432287149f84a38492798377ecd3c38a4567a304d7"
+    },
+    {
+      "path": "/Users/sang/Documents/Obsidian Vault/01 Projects/개인/서울까지 400km/서울까지 400km - 게임 시스템 및 빌드.md",
+      "sha256": "8fd84012d4d961752f7d676e677e465b917989ca246a45b4e696f0d056a6cfbe"
+    }
+  ],
+  "limits": [
+    "participant experience not measured",
+    "physical-phone performance not measured",
+    "32MB advisory exceeded;80MB hard limit passed",
+    "58 inherited visual warnings unchanged"
+  ],
+  "remotePublication": false,
+  "personalBrowserStateChanged": false
+}

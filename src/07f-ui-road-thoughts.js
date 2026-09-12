@@ -155,7 +155,9 @@
 
       const isDecision = sheet.dataset.storyStep === 'decision' || !!dock.querySelector('.choice[data-r]');
 
-      if (!isDecision) {
+      // Combat owns a separate action dock; moving it into the transcript
+      // hides the threat briefing and traps choices inside another scroller.
+      if (!isDecision || sheet.dataset.eventKind === 'combat') {
         if (dock.parentElement !== sheet) sheet.appendChild(dock);
         sheet.classList.remove('choices-embedded');
         enteredDecision = false;

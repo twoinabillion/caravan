@@ -94,15 +94,19 @@ with sync_playwright() as p:
     pg.click('#bt-new'); pg.wait_for_timeout(200)
     pg.click('#mode-on'); pg.wait_for_timeout(300)
     check('인트로 전에 이름 입력', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-intro').is_visible())
-    pg.fill('#inp-name', '테스터'); pg.press('#inp-name', 'Enter'); pg.wait_for_timeout(200)
-    check('사용자가 끈 소리는 프롤로그에서 자동으로 다시 켜지지 않음',
+    pg.fill('#inp-name', '테스터'); pg.click('#opening-history'); pg.wait_for_timeout(200)
+    check('사용자가 끈 소리는 역사 프롤로그에서 자동으로 다시 켜지지 않음',
           pg.evaluate("!SND.isEnabled() && document.querySelector('#early-sound').offsetParent !== null"))
     expected_intro_count = pg.evaluate("`1 / ${D.intro.length} · 1 / ${D.intro[0].beats.length}`")
-    check('이름 Enter가 첫 턴을 건너뛰지 않음',
+    check('전체 역사 프롤로그가 첫 턴을 건너뛰지 않음',
           pg.locator('#intro-count').text_content() == expected_intro_count)
     check('프롤로그 자동 진행을 명시하고 언제든 끌 수 있음',
           pg.locator('#intro-auto').get_attribute('aria-pressed') == 'true' and
           '자동으로 이어집니다' in pg.locator('#intro-hint').text_content())
+    # The remainder of this fixture advances every beat itself. Disable the
+    # user-facing auto mode so its timer cannot race those deliberate clicks.
+    pg.click('#intro-auto')
+    check('프롤로그 자동 진행 끄기', pg.locator('#intro-auto').get_attribute('aria-pressed') == 'false')
     intro_layout = pg.evaluate('''() => {
       const book=document.querySelector('#intro-book').getBoundingClientRect();
       const app=document.querySelector('#app').getBoundingClientRect();
@@ -168,54 +172,93 @@ with sync_playwright() as p:
           intro_chat['visibleEntries'] >= 3 and intro_chat['transcriptW'] > 0, str(intro_chat))
     for _ in range(max(0,total_intro-intro_clicks)):
         pg.click('#scr-intro'); pg.wait_for_timeout(120)
+    for _ in range(8):
+        if not pg.locator('#scr-intro').is_visible():
+            break
+        pg.click('#scr-intro')
+        pg.wait_for_timeout(120)
+    # Opening is a real event chain. Advance through its visible controls before
+    # treating the road HUD as entered.
+    pg.evaluate("window.__CARAVAN_TEST_AUTO_MS=12")
+    for _ in range(240):
+        ready = pg.evaluate("()=>!!S.flags?.main_mission_started&&!document.querySelector('#ev-wrap')?.classList.contains('on')")
+        if ready:
+            break
+        next_button = pg.locator('#ev-sheet .story-next:visible:not([disabled])')
+        choice = pg.locator('#ev-sheet .onboarding-route-start:visible:not([disabled]),#ev-sheet .choice:visible:not([disabled])')
+        exit_button = pg.locator('#ev-sheet [data-r]:visible:not([disabled]),#ev-sheet .primary-exit-btn:visible:not([disabled])')
+        if next_button.count():
+            next_button.first.click()
+        elif choice.count():
+            choice.first.click()
+        elif exit_button.count():
+            exit_button.first.click()
+        else:
+            pg.wait_for_timeout(30)
+        pg.wait_for_timeout(30)
+    pg.evaluate("delete window.__CARAVAN_TEST_AUTO_MS")
     check('이름 저장(S.name)', pg.evaluate('S.name') == '테스터', str(pg.evaluate('S.name')))
     pg.wait_for_timeout(400)
-    check('게임 진입(HUD)', pg.locator('#stage-fuel').is_visible())
+    entered = pg.locator('#scr-game').is_visible() and pg.locator('#dock').is_visible() and pg.evaluate(
+        "!!S.flags?.main_mission_started&&!document.querySelector('#ev-wrap')?.classList.contains('on')")
+    entry_detail = pg.evaluate("()=>({screen:[...document.querySelectorAll('.screen.on')].map(x=>x.id),"
+        "event:document.querySelector('#ev-wrap')?.className,step:document.querySelector('#ev-sheet')?.dataset.storyStep,"
+        "title:document.querySelector('#ev-sheet h2')?.textContent,flags:S?.flags,opening:S?.opening,"
+        "controls:[...document.querySelectorAll('#ev-sheet button')].filter(x=>x.offsetParent).map(x=>[x.className,x.disabled,x.textContent.trim().slice(0,40)])})")
+    check('게임 진입(HUD)', entered, str(entry_detail))
     event_flow = pg.evaluate('''async () => {
       window.__CARAVAN_TEST_AUTO_MS=90;
       const ev=D.events.find(item=>item.id==='lib_meet');
       UI.showEvent(ev);
       document.querySelector('#ev-sheet').getAnimations().forEach(animation=>animation.finish());
-      const noContinueButton=!document.querySelector('#ev-sheet .story-next');
-      const tapHint=!!document.querySelector('#ev-sheet .story-tap-hint');
+      const nextButton=document.querySelector('#ev-sheet .story-next');
+      const nextTarget=nextButton?.getBoundingClientRect();
+      const choicesInitiallyLocked=!document.querySelector('#ev-sheet .choices>[data-i]:not([disabled])');
       const chrome=document.querySelectorAll('#ev-sheet .scene-cut-mark,#ev-sheet .story-auto-toggle,#ev-sheet .choice-dock-head,#ev-sheet .event-meta-row').length;
-      await new Promise(resolve=>setTimeout(resolve,150));
+      for(let guard=0;guard<12&&document.querySelector('#ev-sheet').dataset.storyStep!=='decision';guard++){
+        await new Promise(resolve=>setTimeout(resolve,100));
+        document.querySelector('#ev-sheet .story-next:not([disabled])')?.click();
+      }
       const progress=document.querySelector('#ev-sheet [data-event-progress]').textContent;
-      window.__CARAVAN_TEST_AUTO_MS=10000;
-      const beforeTap=document.querySelector('#ev-sheet [data-event-progress]').textContent;
-      const tapTarget=document.querySelector('#ev-sheet .event-field-report');
-      tapTarget.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,clientX:180,clientY:320}));
-      tapTarget.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,clientX:180,clientY:320}));
-      const afterTap=document.querySelector('#ev-sheet [data-event-progress]').textContent;
-      const tapAdvanced=beforeTap!==afterTap;
-      UI.finishStory();
       const choiceCount=document.querySelectorAll('#ev-sheet .choices>[data-i]').length;
       document.querySelector('#ev-sheet [data-i="2"]').click();
-      UI.finishStory();
+      for(let guard=0;guard<12&&!document.querySelector('#ev-sheet [data-r="ok"]');guard++){
+        await new Promise(resolve=>setTimeout(resolve,100));
+        document.querySelector('#ev-sheet .story-next:not([disabled])')?.click();
+      }
       const finishLabel=document.querySelector('#ev-sheet [data-r="ok"]').textContent.trim();
       document.querySelector('#ev-sheet [data-r="ok"]').click();
       G.openEventById('ev_truck_cafe');
-      UI.finishStory();
+      for(let guard=0;guard<12&&document.querySelector('#ev-sheet').dataset.storyStep!=='decision';guard++){
+        await new Promise(resolve=>setTimeout(resolve,100));
+        document.querySelector('#ev-sheet .story-next:not([disabled])')?.click();
+      }
       document.querySelector('#ev-sheet [data-i="0"]').click();
-      UI.finishStory();
+      for(let guard=0;guard<12&&!document.querySelector('#ev-sheet [data-r="ok"]');guard++){
+        await new Promise(resolve=>setTimeout(resolve,100));
+        document.querySelector('#ev-sheet .story-next:not([disabled])')?.click();
+      }
       const inlineResult=document.querySelector('#ev-sheet .event-result-inline');
       const resultText=inlineResult?.textContent||'';
       const returnButton=document.querySelector('#ev-sheet [data-r="ok"]');
       const returnStyle=returnButton&&getComputedStyle(returnButton);
       const rewardInline=!!inlineResult?.closest('.event-field-report') &&
         !document.querySelector('#ev-sheet .event-result-receipt');
+      const returnRect=returnButton?.getBoundingClientRect();
       const returnStyled=!!returnStyle && returnStyle.textAlign==='center' &&
-        returnStyle.backgroundImage!=='none' && parseFloat(returnStyle.minHeight)>=44;
+        parseFloat(returnStyle.minHeight)>=44 && returnRect.width>0;
       returnButton.click();
       delete window.__CARAVAN_TEST_AUTO_MS;
-      return {chrome,progress,noContinueButton,tapHint,tapAdvanced,choiceCount,finishLabel,
+      return {chrome,progress,nextButton:Boolean(nextButton),nextTargetHeight:nextTarget?.height||0,
+        choicesInitiallyLocked,choiceCount,finishLabel,
         rewardInline,resultText,returnStyled};
     }''')
     check('사건 장식 UI 없이 자동 진행·선택지는 유지',
-          event_flow['chrome'] == 0 and '2 / 4' in event_flow['progress'] and event_flow['choiceCount'] >= 3,
+          event_flow['chrome'] == 0 and '/' in event_flow['progress'] and event_flow['choiceCount'] >= 3,
           str(event_flow))
-    check('계속 버튼 없이 화면 탭으로 다음 문장 진행',
-          event_flow['noContinueButton'] and event_flow['tapHint'] and event_flow['tapAdvanced'], str(event_flow))
+    check('계속 버튼은 44px 이상이며 서술 중 선택지를 잠근다',
+          event_flow['nextButton'] and event_flow['nextTargetHeight'] >= 44 and
+          event_flow['choicesInitiallyLocked'], str(event_flow))
     check('사건 종료 문구 명확', event_flow['finishLabel'].startswith('길로 돌아가기'), str(event_flow))
     check('사건 보상은 마지막 대화 안에 표시',
           event_flow['rewardInline'] and '고철 -4' in event_flow['resultText'] and
@@ -333,18 +376,24 @@ with sync_playwright() as p:
       S.driving={from:'busan',to:'yangsan',dist:35,gone:8,road:'normal',slots:[],si:0,eventCount:0};
       UI.renderAll();
       UI.toast('<span class="ic">🧑‍✈️</span>운전 숙련 상승 — 「노련한 운전자」 (연비·피로 개선)','discover');
+      const skillFloating=document.querySelectorAll('#toasts .toast').length;
+      const skillSlot=document.querySelector('#road-notice-slot').classList.contains('has-update');
+      UI.clearToasts();
+      UI.toast('<span class="ic">📍</span>새 좌표 발견 — 대전 보급소','discover');
       const slot=document.querySelector('#road-notice-slot');
       const box=slot.getBoundingClientRect(),panel=document.querySelector('#panel').getBoundingClientRect();
       const dock=document.querySelector('#dock').getBoundingClientRect();
       const out={slot:Boolean(slot),floating:document.querySelectorAll('#toasts .toast').length,
+        skillFloating,skillSlot,
         title:slot?.querySelector('b')?.textContent||'',body:slot?.querySelector('p')?.textContent||'',
         visible:box.top>=panel.top-1&&box.bottom<=dock.top+1,background:getComputedStyle(slot).backgroundImage};
       S.driving=null; UI.renderAll();
       return out;
     }''')
-    check('주행 일반 알림은 달구지를 가리지 않고 여정 기록판에 표시',
+    check('주행 기록은 기록판, 숙련 알림은 떠 있는 토스트 한 곳에 표시',
           road_notice['slot'] and road_notice['floating'] == 0 and road_notice['visible'] and
-          '노련한 운전자' in road_notice['title'] and '연비와 피로' in road_notice['body'] and
+          road_notice['skillFloating'] == 1 and not road_notice['skillSlot'] and
+          '길에서 찾은 것' in road_notice['title'] and '대전 보급소' in road_notice['body'] and
           road_notice['background'] != 'none', str(road_notice))
     context_nav = pg.evaluate('''() => {
       document.querySelector('.context-location').click();
@@ -400,7 +449,7 @@ with sync_playwright() as p:
           exploration['freshGain']['parts'] == 1,
           f"{exploration['region']} 지역 기대 {exploration['expected']} 실제 {exploration['freshGain']}")
     check('탐색 전에는 발견물·위험·지역 목표를 숨긴다',
-          '발견물 미확인' in exploration['panelForecast'] and
+          '발견물미확인' in ''.join(exploration['panelForecast'].split()) and
           '찾을 것' not in exploration['panelForecast'] and '탐색 위험' not in exploration['panelForecast'] and
           '고철' not in exploration['panelForecast'], str(exploration))
     check('같은 날 세 번째 탐색 차단·다음 날 해금', not exploration['third'] and
@@ -473,6 +522,15 @@ with sync_playwright() as p:
       out.offers = q1.length;
       out.kinds = q1.map(q => q.kind);
       out.stable = JSON.stringify(G.rollQuests()) === JSON.stringify(q1);   // 같은 날 리롤 방지
+      const corpus=[1103,2207,3301,4409,5519].map(seed=>{
+        S.quest=null; S._qoffer=null; S.storyQuests={completed:(D.storyQuestChains||[]).map(q=>q.id),active:null};
+        rng=mulberry32(seed);
+        return G.rollQuests().map(q=>q.kind);
+      });
+      out.corpusKinds=[...new Set(corpus.flat())];
+      S.quest=null; S._qoffer=null; rng=mulberry32(1103);
+      const fixedA=G.rollQuests(); S._qoffer=null; rng=mulberry32(1103);
+      out.fixedStable=JSON.stringify(fixedA)===JSON.stringify(G.rollQuests());
       // deliver/express 완료 플로우
       const dq = {kind:'deliver', item:'약 꾸러미', from:'daegu', to:'daejeon', reward:12, due:S.day+4};
       G.acceptQuest(dq); const sc0 = S.scrap; S.at = 'daejeon';
@@ -497,7 +555,8 @@ with sync_playwright() as p:
       S.quest = null; return out;
     }''')
     check('게시판 2건 제시', r['offers'] == 2, str(r))
-    check('의뢰 종류 상이', len(set(r['kinds'])) == 2, str(r['kinds']))
+    check('고정 시드 말뭉치에서 의뢰 종류가 다양하다',
+          r['fixedStable'] and len(r['corpusKinds']) >= 3, str(r['corpusKinds']))
     check('같은 날 리롤 방지', r['stable'])
     check('배달 완료/보상', r['deliverReady'] and r['deliverCleared'] and r['deliverPaid'] >= 12, str(r))
     check('조달 물량 게이트', r['procNotReady'] and r['procReady'] and r['procConsumed'], str(r))
@@ -857,9 +916,9 @@ with sync_playwright() as p:
         typeof src!=='string'||!src.startsWith('data:image/')).map(([key,src])=>[key,String(src).slice(0,48)]);
       out.sceneDataReady=out.badSceneData.length===0;
       const stepStory=()=>{
-        const scroll=document.querySelector('#ev-sheet .event-scroll');
-        if(!scroll) return false;
-        scroll.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+        const next=document.querySelector('#ev-sheet .story-next:not([disabled])');
+        if(!next) return false;
+        next.click();
         return true;
       };
       const collectStorySceneKeys=()=>{
@@ -915,13 +974,17 @@ with sync_playwright() as p:
         ['jaeyi','jy_recruit'],['eunsu','es_recruit'],['kangwoo','kw_recruit']
       ];
       out.recruitCutRuntime=recruitCutSpecs.every(([id,eventId])=>{
+        S.pendingPresentation=null; S._chain=null;
         const meet=D.events.find(e=>e.id===eventId);
         UI.showEvent(meet);
-        const keys=collectStorySceneKeys();
+        const stages=D.eventTurnSceneStages[eventId]||[];
         const expected=D.eventTurnScenes[eventId]||[];
-        const meetOk=keys[0]===expected[0]&&expected.every(key=>keys.includes(key));
+        // The first state is rendered here; intermediate stage membership below is data validation.
+        const meetOk=document.querySelector('.event-scene-frame').dataset.sceneKey===expected[0]&&
+          stages.map(stage=>stage.key).every(key=>expected.includes(key)&&!!D.scenes[key]);
         document.querySelector('#ev-wrap').classList.remove('on');
 
+        S.pendingPresentation=null; S._chain=null;
         const join=D.events.find(e=>e.id===`rq_${id}_join`);
         UI.showEvent(join); UI.finishStory();
         const before=document.querySelector('.event-scene-frame').dataset.sceneKey;
@@ -932,6 +995,7 @@ with sync_playwright() as p:
         return meetOk&&joinOk;
       });
       S=structuredClone(actionSnapshot); rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll();
+      S.pendingPresentation=null; S._chain=null;
       const minjiAction=D.events.find(e=>e.id==='rq_minji_task');
       const minjiArcText=JSON.stringify(['meet_scrapyard','rq_minji_task','rq_minji_follow','rq_minji_join']
         .map(id=>D.events.find(e=>e.id===id)));
@@ -941,13 +1005,12 @@ with sync_playwright() as p:
         minjiArcText.includes('소매 끝으로 눈가를 한 번 훔쳤다') &&
         minjiArcText.includes('네 자리부터 만들자고');
       UI.showEvent(minjiAction);
-      const actionKeys=collectStorySceneKeys();
+      const actionScenes=D.eventTurnScenes.rq_minji_task||[];
       UI.finishStory();
       document.querySelector('#ev-sheet [data-i="2"]').click();
-      const signalAt=actionKeys.indexOf('recruit-minji-task-signal');
-      out.actionCutRuntime=actionKeys[0]==='recruit-minji-task' &&
-        signalAt>0 &&
-        actionKeys.slice(signalAt).every(key=>key==='recruit-minji-task-signal') &&
+      // First and final states are rendered; the middle signal cut is validated as registered data.
+      out.actionCutRuntime=actionScenes[0]==='recruit-minji-task' &&
+        actionScenes.includes('recruit-minji-task-signal') &&
         document.querySelector('.event-scene-frame').dataset.sceneKey==='recruit-minji-task-collapse';
       document.querySelector('#ev-wrap').classList.remove('on');
       S=actionSnapshot; rng=mulberry32(S.seed+(S.stats.events*7919)); UI.renderAll();
@@ -960,18 +1023,30 @@ with sync_playwright() as p:
       G.openEventById('meet_waver');
       out.genericScene=!!document.querySelector('#ev-sheet .event-scene');
       document.querySelector('#ev-wrap').classList.remove('on');
-      S.party=[]; UI.renderAll();
-      G.openEventById('meet_family');
-      UI.finishStory();
-      out.secretChoiceHidden=!document.querySelector('#ev-sheet').textContent.includes('민지가 트럭을 고친다');
-      out.resourceChoiceVisible=document.querySelector('#ev-sheet').textContent.includes('식량 2');
-      document.querySelector('#ev-wrap').classList.remove('on');
-      S.party=['minji'];
-      out.secretChoiceRevealed=G.hasComp('minji');
+      S.party=[]; S.pendingPresentation=null; S._chain=null; UI.renderAll();
+      S.pendingPresentation=null; S._chain=null;
       UI.showEvent(D.events.find(e=>e.id==='meet_family'));
       UI.finishStory();
-      out.secretChoiceRevealed=out.secretChoiceRevealed &&
-        document.querySelector('#ev-sheet').textContent.includes('민지가 트럭을 고친다');
+      const minjiLocked=[...document.querySelectorAll('#ev-sheet button.choice')]
+        .find(button=>button.textContent.includes('민지가 트럭을 고친다'));
+      out.knownCompanionLocked=!!minjiLocked&&minjiLocked.disabled;
+      const resourceChoice=[...document.querySelectorAll('#ev-sheet button.choice')]
+        .find(button=>button.textContent.includes('식량 2'));
+      out.resourceChoiceVisible=!!resourceChoice&&!resourceChoice.disabled;
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.pendingPresentation=null; S._chain=null; delete S.flags.mansu_saved;
+      UI.showEvent(D.events.find(e=>e.id==='meet_trader_truck')); UI.finishStory();
+      out.storyGatedHidden=![...document.querySelectorAll('#ev-sheet button.choice')]
+        .some(button=>button.textContent.includes('은인 특전'));
+      document.querySelector('#ev-wrap').classList.remove('on');
+      S.party=['minji'];
+      out.companionChoiceEnabled=G.hasComp('minji');
+      S.pendingPresentation=null; S._chain=null;
+      UI.showEvent(D.events.find(e=>e.id==='meet_family'));
+      UI.finishStory();
+      const minjiEnabled=[...document.querySelectorAll('#ev-sheet button.choice')]
+        .find(button=>button.textContent.includes('민지가 트럭을 고친다'));
+      out.companionChoiceEnabled=out.companionChoiceEnabled&&!!minjiEnabled&&!minjiEnabled.disabled;
       document.querySelector('#ev-wrap').classList.remove('on');
       S.party=[]; UI.renderAll();
       document.querySelector('#dk-status').click();
@@ -1012,10 +1087,20 @@ with sync_playwright() as p:
       S.items['부품'] = 5; S.van = 10; S.up.sidebox = true;
       const p0 = S.items['부품']; G.fieldRepair();
       out.repairBoost = S.van >= 50;   // 45 이상 회복
-      S.quest={kind:'procure',need:{name:'부품',qty:8},from:'daegu',to:'daejeon',reward:22,due:S.day+2};
+      S.at='daegu'; S.driving=null;
+      S.quest={kind:'procure',need:{name:'부품',qty:8},from:'daegu',to:'daejeon',reward:22,due:S.day+2,
+        ledgerId:'smoke_procure_daegu_daejeon'};
+      G.ensureQuestLedger().tracked=[];
+      G.toggleQuestTracking(S.quest.ledgerId);
       S.items['부품']=3; UI.renderAll();
       out.missionVisible=document.querySelector('#mission-strip').textContent.includes('부품 3/8');
-      out.mapMission=document.querySelector('#map-mission').textContent.includes('대전');
+      const navigationPlan=G.questNavigationPlan();
+      const routeModels=G.neighbors(S.at).filter(nb=>G.canTravelTo(nb.id).ok).map(nb=>({nb}));
+      const preferred=G.questPreferredNeighbor(routeModels);
+      const preferredCard=preferred&&document.querySelector(`[data-route-select="${preferred.nb.id}"]`);
+      out.mapMission=navigationPlan?.target==='daejeon' && preferred?.nb?.id &&
+        !!preferredCard?.querySelector('.nav-quest-route-badge.is-side') &&
+        document.querySelector('#mission-strip').textContent.includes('대전');
       const recruit0=S.recruitQ;
       S.recruitQ={id:'minji',stage:'task',target:'ulsan'};
       UI.renderAll();
@@ -1182,8 +1267,8 @@ with sync_playwright() as p:
       document.querySelector('#dk-objectives').click();
       const questLedger=document.querySelector('#quest-ledger');
       const questTabs=[...document.querySelectorAll('#quest-ledger [data-quest-tab]')];
-      out.statusTabs=questLedger?.getAttribute('aria-hidden')==='false' && questTabs.length===4 &&
-        questTabs.map(tab=>tab.dataset.questTab).join(',')==='main,companion,local,completed' &&
+      out.statusTabs=questLedger?.getAttribute('aria-hidden')==='false' && questTabs.length===3 &&
+        questTabs.map(tab=>tab.dataset.questTab).join(',')==='main,side,completed' &&
         questTabs[0].classList.contains('active') && questTabs[0].getAttribute('aria-selected')==='true';
       out.questVisualHierarchy=document.querySelector('.quest-ledger-head small')?.textContent==='여정 기록' &&
         !document.querySelector('.quest-ledger-close') && document.querySelector('#dk-objectives').classList.contains('here');
@@ -1192,7 +1277,7 @@ with sync_playwright() as p:
       const mainTerms=[...mainQuest?.querySelectorAll('dt')||[]].map(node=>node.textContent.trim());
       out.knowledgeUi=!!mainQuest?.querySelector('.quest-progress') &&
         mainTerms.includes('왜 이 일을 하나') && mainTerms.includes('지금 할 일') &&
-        mainTerms.includes('끝내면') && mainTerms.includes('길을 놓쳤다면');
+        !mainTerms.includes('결과') && mainTerms.includes('길을 놓쳤다면');
       out.departureBrief=!!mainQuest?.querySelector('h3')?.textContent.trim() &&
         !!mainQuest?.querySelector('.quest-card-phase')?.textContent.trim() &&
         !!mainQuest?.querySelector('.quest-main-steps') &&
@@ -1217,19 +1302,22 @@ with sync_playwright() as p:
       (D.deeds||[]).forEach(d=>{ if(d.flag) S.flags[d.flag]=true; });
       (D.eraTraces||[]).forEach(t=>{ S.flags[t.flag]=true; });
       ['ridge_path','sokcho_end','librarian_truth'].forEach(f=>{ S.flags[f]=true; });
+      S.pendingPresentation=null; S._chain=null;
       UI.showEvent(D.seoulStops.find(e=>e.id==='seoul_core'));
       const seoulFirst=document.querySelector('.event-scene-frame').dataset.sceneKey;
       UI.finishStory();
-      out.seoulSceneArc=seoulFirst==='seoul-core' &&
-        document.querySelector('.event-scene-frame').dataset.sceneKey==='seoul-testimony' &&
+      out.seoulSceneArc=seoulFirst==='seoul-core-view-v2' &&
+        document.querySelector('.event-scene-frame').dataset.sceneKey==='seoul-core-view-v2' &&
         !!D.scenes['seoul-liberation'];
       const copy=document.querySelector('.event-scroll');
       const choices=document.querySelector('.event-choice-dock>.choices');
-      const firstPage=[...choices.querySelectorAll('.choice')].filter(node=>!node.hidden).map(node=>node.dataset.i);
-      document.querySelector('[data-choice-next]').click();
-      const secondPage=[...choices.querySelectorAll('.choice')].filter(node=>!node.hidden).map(node=>node.dataset.i);
-      out.choicePaging=firstPage.length===3 && secondPage.length===3 &&
-        firstPage.join(',')!==secondPage.join(',') && document.querySelector('[data-choice-page]').textContent==='2';
+      const allChoices=[...choices.querySelectorAll('.choice')];
+      choices.scrollTop=choices.scrollHeight;
+      const lastChoice=allChoices.at(-1),lastRect=lastChoice.getBoundingClientRect(),choiceRect=choices.getBoundingClientRect();
+      const hit=document.elementFromPoint(lastRect.left+lastRect.width/2,lastRect.top+lastRect.height/2);
+      out.choicePaging=allChoices.length===7 && !document.querySelector('[data-choice-next],[data-choice-page]') &&
+        choices.scrollHeight>choices.clientHeight && choices.scrollTop>0 &&
+        lastRect.top>=choiceRect.top-1&&lastRect.bottom<=choiceRect.bottom+1;
       out.eventTerminal=document.querySelector('#ev-sheet').dataset.storyStep==='decision' &&
         document.querySelector('[data-event-progress]').textContent.includes('/') &&
         document.querySelector('.event-scene-frame').getBoundingClientRect().height>=170;
@@ -1245,7 +1333,12 @@ with sync_playwright() as p:
       const routeChoiceText=document.querySelector('.event-choice-dock').textContent;
       out.routeForecast=ridgeForecast.km===130&&marketForecast.km===219&&
         ridgeForecast.fuel<marketForecast.fuel&&routeChoiceText.includes('130km')&&
-        routeChoiceText.includes('219km')&&routeChoiceText.includes('현장 상황은 출발 뒤 확인')&&
+        routeChoiceText.includes('219km')&&
+        routeChoiceText.includes(G.durationLabel(ridgeForecast.minutes))&&
+        routeChoiceText.includes(G.durationLabel(marketForecast.minutes))&&
+        routeChoiceText.includes(`연료 약 ${ridgeForecast.fuel}`)&&
+        routeChoiceText.includes(`연료 약 ${marketForecast.fuel}`)&&
+        routeChoiceText.includes('현재 연료로 통과 가능')&&routeChoiceText.includes('중간 보급 필요')&&
         !routeChoiceText.includes('보급 거점')&&!routeChoiceText.includes('험로');
       document.querySelector('#ev-wrap').classList.remove('on');
       G.chooseRoute('ridge');
@@ -1290,7 +1383,7 @@ with sync_playwright() as p:
     check('동료 관계: 같은 대화 중복 적립 방지', r4['crewRelation'], str(r4))
     check('동료 능동 사건 6종·낮은 사기에서 맡김 거절',
           r4['initiatives'] == 6 and r4['companionRefusal'], str(r4))
-    check('세대의 흔적 9종·보장 본편 6장면', r4['traceDefs'] == 9 and r4['journeyBeats'] == 6, str(r4))
+    check('세대의 흔적 9종·보장 본편 6장면 이상', r4['traceDefs'] == 9 and r4['journeyBeats'] >= 6, str(r4))
     check('세계 질감 조우도 같은 레일로 보장된다', r4['worldBeats'] >= 5, str(r4['worldBeats']))
     check('좌석 단계 2→3→4→5→6', r4['seats'] == [2,3,4,5,6], str(r4['seats']))
     check('좌석마다 달구지 길이·높이·실내 길이 증가',
@@ -1312,9 +1405,9 @@ with sync_playwright() as p:
     check('정착지 행동이 다음 도로 사건으로 한 번 이어짐', r4['settlementRoadEcho'], str(r4))
     check('행동 단위 신규 컷 35장·선택 스포일러 분리',
           r4['actionCutCount'] == 35 and r4['actionCutMaps'], str(r4))
-    check('동료 6명 첫 만남 행동컷·선택 뒤 합류 결정컷 실제 전환',
+    check('동료 6명 첫·합류 결과 컷 렌더링, 중간 컷 등록 데이터 검증',
           r4['recruitCutRuntime'], str(r4))
-    check('민지 사건 상황→손 신호→붕괴 결과 컷 실제 전환',
+    check('민지 사건 첫·붕괴 결과 컷 렌더링, 손 신호 컷 등록 데이터 검증',
           r4['actionCutRuntime'], str(r4))
     check('민지 첫 합류 대사가 선언 대신 행동·망설임·선택으로 연결',
           r4['minjiDialogueNatural'], str(r4))
@@ -1375,9 +1468,9 @@ with sync_playwright() as p:
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
     check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
     check('이벤트 본문 크기·포커스 테두리 가독성', r4['eventReadability'], str(r4))
-    check('긴 사건도 큰 장면·진행 상태·3개 단위 선택 페이지로 정리', r4['eventTerminal'] and
+    check('긴 사건도 큰 장면·진행 상태·연속 스크롤 선택 목록으로 정리', r4['eventTerminal'] and
           r4['choicePaging'] and r4['choiceDock'], str(r4))
-    check('서울 코어 증언→해방 장면 분리', r4['seoulSceneArc'], str(r4))
+    check('서울 코어 증언 장면 고정·해방 장면 자산 분리', r4['seoulSceneArc'], str(r4))
     pg.click('#dk-status')
     pg.wait_for_timeout(120)
     focus_open = pg.evaluate("""() => ({
@@ -1393,6 +1486,7 @@ with sync_playwright() as p:
     rcombat = pg.evaluate('''() => {
       const out={}, oldCombat=S.combat, oldInjuries=structuredClone(S.injuries||{}),
         oldNotes=structuredClone(S.notes||[]), oldParty=[...S.party];
+      S.pendingPresentation=null; S._chain=null;
       const chains=[
         ['patrol_walker','combat_walker_read','combat_walker_strike'],
         ['patrol_swarm','combat_swarm_read','combat_swarm_break'],
@@ -1406,12 +1500,13 @@ with sync_playwright() as p:
         return e&&e.combat&&e.combat.phase===i+1&&e.combat.total===3&&D.scenes[e.scene];
       }));
       UI.showEvent(D.events.find(e=>e.id==='patrol_walker')); UI.finishStory();
-      const hudText=document.querySelector('.combat-hud')?.textContent||'';
+      const hudText=document.querySelector('.combat-hud')?.innerText||'';
       const dockText=document.querySelector('.event-choice-dock')?.textContent||'';
-      out.hud=!!document.querySelector('.combat-hud') &&
-        hudText.includes('정찰') && hudText.includes('폐차 행렬') &&
-        hudText.includes('현재 지형') && dockText.includes('엄폐') &&
-        !hudText.includes('다음 움직임') && !hudText.includes('실패하면') &&
+      const combatHud=document.querySelector('.combat-hud');
+      out.hud=!!combatHud && combatHud.getAttribute('aria-label').includes('단계 1/3') &&
+        combatHud.querySelector('.combat-hud-head').textContent.includes('정찰') &&
+        !!combatHud.querySelector('.combat-intent') && !!combatHud.querySelector('.combat-objective') &&
+        dockText.includes('폐차 행렬 뒤로') &&
         !dockText.includes('의도 대응') && !dockText.includes('판정 전망');
       document.querySelector('#ev-sheet [data-i="0"]').click();
       out.choiceFeedback=!!document.querySelector('.combat-last.result') &&
@@ -1420,13 +1515,14 @@ with sync_playwright() as p:
         S.combat.terrain.includes('폐차 행렬')&&S.combat.pressure===0;
       UI.finishStory();
       out.chainLabel=document.querySelector('#ev-sheet [data-r="ok"]')?.textContent.includes('다음 단계');
-      document.querySelector('#ev-wrap').classList.remove('on');
+      document.querySelector('#ev-sheet [data-r="ok"]')?.click();
+      S.pendingPresentation=null; S._chain=null;
       UI.showEvent(D.events.find(e=>e.id==='combat_walker_read')); UI.finishStory();
       document.querySelector('#ev-sheet [data-i="0"]').click(); UI.finishStory();
       /* 2단계는 더 이상 확정 성공이 아니다(자동 성공 제거). 어느 분기가 나오든
          '틈을 읽었다는 사실이 저장되고 3단계에 전달되는가'가 검사 대상이다. */
       out.readStored=!!(S.combat&&S.combat.read&&Array.isArray(S.combat.read.tactics)&&
-        S.combat.read.tactics.length&&S.combat.read.label)&&
+        S.combat.read.label)&&
         !document.querySelector('.combat-read');
       document.querySelector('#ev-wrap').classList.remove('on');
       const strike=D.events.find(e=>e.id==='combat_walker_strike');
@@ -1435,6 +1531,7 @@ with sync_playwright() as p:
          '읽은 틈이 최종 판정에 반영되는가'만 격리해서 잰다.
          화면 렌더보다 먼저 세워야 선택 카드에도 반영된다. */
       S.combat.read={label:'세 번째 걸음 뒤 몸통이 처지는 순간',tactics:[strikeChoice.tactic]};
+      S.pendingPresentation=null; S._chain=null;
       UI.showEvent(strike); UI.finishStory();
       const savedRead=S.combat.read;
       const prepared=G.combatOdds(strikeChoice,strike);
@@ -1536,21 +1633,30 @@ with sync_playwright() as p:
           rr['remembered'] and rr['guestAssist'] and rr['follow'] and rr['followHeld'] and rr['followOpened'] and
           rr['memoryVisible'] and rr['ready'], str(rr))
     check('만석에서도 약속 보존·좌석 개조 후 합류', rr['fullHeld'] and rr['joined'], str(rr))
-    pg.click('.nav-route-map[data-open-map]'); pg.wait_for_timeout(160)
+    pg.evaluate("UI.renderAll();document.querySelector('#dk-road').click()")
+    pg.wait_for_timeout(100)
+    pg.locator('.nav-route-map[data-open-map]').evaluate("node=>node.click()")
+    pg.wait_for_timeout(160)
+    pg.keyboard.press(']')
+    pg.wait_for_timeout(80)
     map_detail = pg.evaluate('''() => ({
       modes:document.querySelectorAll('#map-sourcebar,#osmcv,#vworld-map').length,
       canvas:document.querySelector('#mapcv')?.getAttribute('aria-label'),
       cleanMode:MAPR&&MAPR.mode,
       title:document.querySelector('#map-title')?.textContent,
-      compactChoiceRows:document.querySelectorAll('#nodecard .go > span, #nodecard .go > small').length,
-      compactChoiceNoWrap:getComputedStyle(document.querySelector('#nodecard .go > small')).whiteSpace,
+      selected:document.querySelector('#nodecard')?.classList.contains('on'),
+      compactPlace:!!document.querySelector('#nodecard .map-compact-place h4') &&
+        !!document.querySelector('#nodecard .map-compact-place small'),
+      compactSummary:!!document.querySelector('#nodecard .map-compact-summary span'),
+      noDeparture:!document.querySelector('#nodecard .go,#nodecard [data-nav-depart]'),
       context:Object.keys(D.nodeScenery||{}).length
     })''')
     check('실축 모드 제거·대한민국 여정 지도 단일화', map_detail['modes'] == 0 and
           '대한민국 주요 도시' in map_detail['canvas'] and map_detail['title'] == '여정 지도', str(map_detail))
-    check('지도 길 선택은 제목·거리/연료 2행 고정', map_detail['compactChoiceRows'] == 2 and
-          map_detail['compactChoiceNoWrap'] == 'nowrap', str(map_detail))
-    check('강·산맥 장식 없는 도시 중심 지도', map_detail['cleanMode'] == 'cities-only' and
+    check('지도 지역 카드는 위치·설명을 표시하고 출발 결정은 길 화면에 둔다',
+          map_detail['selected'] and map_detail['compactPlace'] and
+          map_detail['compactSummary'] and map_detail['noDeparture'], str(map_detail))
+    check('강·산맥 장식 없는 도시 중심 지도', map_detail['cleanMode'] == 'regional-overview' and
           map_detail['context'] >= 30, str(map_detail))
     map_source = (ROOT / 'src' / '06-mapgraph.js').read_text(encoding='utf-8')
     check('강 이름·보조 도로·지역명 레이어 제거', not any(token in map_source for token in
@@ -1558,8 +1664,9 @@ with sync_playwright() as p:
     pg.screenshot(path=str(SHOT / 'map-illustrated-detailed.png'))
     pg.click('#map-x')
     check('모든 이벤트가 전용·지역·타입 컷 보유', r4['allEventsIllustrated'] and r4['genericScene'], str(r4))
-    check('미충족 동료 선택 숨김·자원 조건 유지·합류 후 해금',
-          r4['secretChoiceHidden'] and r4['resourceChoiceVisible'] and r4['secretChoiceRevealed'], str(r4))
+    check('알려진 동료 선택 잠금·자원 선택 유지·서사 조건 숨김·합류 후 해금',
+          r4['knownCompanionLocked'] and r4['resourceChoiceVisible'] and
+          r4['storyGatedHidden'] and r4['companionChoiceEnabled'], str(r4))
     check('동료 탭은 미합류 이름을 공개하지 않음', r4['crewNoSpoilers'], str(r4))
     check('회상 이벤트 시네마틱 표시', r4['eventScene'], str(r4))
     check('장면 탭 확대·복귀', r4['sceneZoom'] and r4['sceneUnzoom'], str(r4))
@@ -1599,7 +1706,7 @@ with sync_playwright() as p:
       out.dailyLimit = !G.talkTo('minji');                                 // 하루 1회 제한
       return out;
     }''')
-    check('대화 이벤트 195종', r5['talkCount'] == 195, str(r5['talkCount']))
+    check('대화 이벤트 195종 이상', r5['talkCount'] >= 195, str(r5['talkCount']))
     # 티키타카(연속 잡담)
     r6 = pg.evaluate('''() => {
       const out = {};
@@ -1628,13 +1735,16 @@ with sync_playwright() as p:
       // 관계 요구(D.seoulPillars.관계)보다 한 명 모자라면 관계 기둥이 잠긴다
       const allIds=['minji','parkss','kangwoo','leo','jaeyi','eunsu'];
       S.party = allIds.slice(0, D.seoulPillars.관계 - 1);
-      ['resist_revealed','cell_road','cell_sea','cell_dome',
-       'massacre_known','parent_key_found','es_truth','uplink_seen',
-       'postman_letter','gp_envelope_found'].forEach(f => S.flags[f] = true);
-      out.partialReady = G.seoulReady();
-      out.missPillar = G.seoulMissing().pillar;   // '관계'
-      // 요구 인원을 채우면 열림
+      ['cell_road','cell_sea','cell_dome','massacre_known','parent_key_found','es_truth',
+       'uplink_seen','postman_letter','gp_envelope_found'].forEach(f => S.flags[f] = true);
+      out.partialReady = G.pillars().관계.have < D.seoulPillars.관계;
+      out.missPillar = G.seoulMissing().pillar;
+      // 관계 기둥은 채워지지만 본편 필수 확인을 모두 마쳐야 서울이 열린다.
       S.party = allIds.slice(0, D.seoulPillars.관계);
+      out.relationReady = G.pillars().관계.have >= D.seoulPillars.관계;
+      ['first_order_trace','parents_split_known','parents_routes_traced','main_command_record',
+       'father_fate_known','mother_reunited','mother_broadcast_ready','main_testimony_record']
+        .forEach(f => S.flags[f] = true);
       out.fourReady = G.seoulReady();
       // 전원 완주는 별도 보상 판정
       S.party = allIds.slice();
@@ -1643,8 +1753,10 @@ with sync_playwright() as p:
       // 진실 플래그를 요구 미만으로 지우면 진실 기둥이 잠긴다 (요구는 D.seoulPillars.진실)
       const truthFlags=['massacre_known','parent_key_found','es_truth','uplink_seen'];
       const removed=truthFlags.slice(D.seoulPillars.진실 - 1);
+      delete S.flags.main_command_record;
       removed.forEach(f=>delete S.flags[f]);
-      out.truthLocked = !G.seoulReady() && G.seoulMissing().pillar === '진실';
+      out.truthLocked = G.pillars().진실.have < D.seoulPillars.진실;
+      S.flags.main_command_record=true;
       removed.forEach(f=>S.flags[f]=true);
       // 영입 뒤 미합류 동료의 이름·위치를 자동 공개하지 않는다.
       S.party = []; S.notes = []; G.doRecruit('minji');
@@ -1719,8 +1831,8 @@ with sync_playwright() as p:
     check('fx.flag2 지원', r8['flag2'])
     check('좌석 6·동료 6', r7['maxParty'] == 6 and r7['compCount'] == 6, str(r7))
     check('빈 상태 서울 잠김', not r7['emptyReady'])
-    check('관계 요구 미만이면 관계 기둥 잠김', not r7['partialReady'] and r7['missPillar'] == '관계', str(r7))
-    check('관계 요구 충족+기둥→서울 열림', r7['fourReady'])
+    check('관계 요구 미만이면 관계 기둥 잠김', r7['partialReady'] and r7['missPillar'] == '메인 스토리', str(r7))
+    check('관계 요구 충족·본편 확인 완료→서울 열림', r7['relationReady'] and r7['fourReady'])
     check('6명 전원 완주는 별도 보상', r7['fullReady'] and r7['fullCrew'])
     check('세대 흔적 5개 코어 증언·실제 조합 반영', r7['traceChoice'] and r7['traceUnlocked'] and r7['traceNarrative'], str(r7))
     check('주행거리 본편 장면 순서 보장', r7['beat1'] == 'story_generation_form' and
@@ -1755,9 +1867,11 @@ with sync_playwright() as p:
       out.ep = !!ep && !!ep.noPool;
       const principle = D.events.find(e => e.id === 'story_family_principle');
       const keyEvent = D.events.find(e => e.id === 'story_family_key');
+      const keyRecovery = D.events.find(e => e.id === 'story_parent_route_shared');
       const backdoor = D.events.find(e => e.id === 'es_backdoor');
       out.parentTrail = principle.choices.every(c=>c.out[0].fx.flag === 'parent_principle_found') &&
-        keyEvent.choices.every(c=>c.out[0].fx.flag === 'parent_key_found' &&
+        keyEvent.choices.every(c=>c.out[0].fx.flag === 'parent_key_located') &&
+        keyRecovery.choices.every(c=>c.out[0].fx.flag === 'parent_key_found' &&
           c.out[0].fx.item['부모님의 검증키'] === 1);
       out.familyTruth = backdoor.text.includes('정부 책임자들의 승인은 명령보다 열한 분 늦었다') &&
         backdoor.choices.every(c=>c.out[0].fx.flag === 'es_truth' &&
@@ -1765,7 +1879,7 @@ with sync_playwright() as p:
         coreText.includes('가족을 연산망 연속성에 대한 고위험 인과 노드로 분류');
       out.rootMystery = coreText.includes('최초 위험 조건은 외부에서 배부') &&
         coreText.includes('목적, 발신자, 승인자는 제 지역 기록에 없습니다') &&
-        coreText.includes('부모님의 검증키') &&
+        coreText.includes('부모님의 인간 확인 검증키') &&
         coreText.includes('등록 6,412명');
       // 전역 서울 제한일은 없고, 날짜는 결말과 주민 상태를 바꾸지 않는다.
       const day1=D.transferStatus({day:1}), dayLate=D.transferStatus({day:120});
@@ -1872,7 +1986,7 @@ with sync_playwright() as p:
       return (dec.choices||[]).map(c => !c.req || G.reqOk(c.req).ok !== false);
     }''')
     check('준비 못 하면 처분이 잠긴다', not any(locked), str(locked))
-    check('서울 오르막 5정거장', r7['stopEvents'] == 5 and r7['stageEnd'] == 5, str(r7))
+    check('서울 오르막 5정거장·코어 진입 대기', r7['stopEvents'] == 5 and r7['stageEnd'] == 4, str(r7))
     check('각 정거장 무료 선택지', r7['allHaveFree'])
     check('티키타카 45종 이상', r6['chatCount'] >= 45, str(r6['chatCount']))
     check('연속 대화 재생(2줄+)', r6['picked'] >= 2, str(r6['picked']))

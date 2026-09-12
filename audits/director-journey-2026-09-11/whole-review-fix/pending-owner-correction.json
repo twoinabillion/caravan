@@ -1,0 +1,222 @@
+{
+  "version": 1,
+  "recordedAt": "2026-09-12",
+  "scope": "Derived correction of external owner labels only. The 15 qualified campaign manifests/traces/reloads/media are unchanged. The runner executed opening-event, opening-result and travel only. Historical Task 7 coverage is not represented as a fresh final-build rerun; the two combat tests are separately recorded.",
+  "rawReloads": {
+    "path": "artifacts/director-pass-2026-09-11/task8-final/reload-matrix/reloads.json",
+    "bytes": 99360,
+    "sha256": "9f67f2cd2ec9ba4b18587bee4c61c9f8348aa20292825aa586eaef396b12a21b"
+  },
+  "supersededClaim": "All 19 external classes owned by tests/test_director_pending.py with status final-build focused regression",
+  "references": [
+    {
+      "class": "recruitment-event",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 historical run)",
+      "tests": [
+        "test_saved_recruitment_offer_can_be_decided[True]",
+        "test_saved_recruitment_offer_can_be_decided[False]"
+      ],
+      "coverage": "Accepted/declined saved recruitment offers and subsequent reload; these class labels reference that fixture, not a fresh campaign execution of every recruitment event/result."
+    },
+    {
+      "class": "recruitment-result",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 historical run)",
+      "tests": [
+        "test_saved_recruitment_offer_can_be_decided[True]",
+        "test_saved_recruitment_offer_can_be_decided[False]"
+      ],
+      "coverage": "Accepted/declined saved recruitment offers and subsequent reload; these class labels reference that fixture, not a fresh campaign execution of every recruitment event/result."
+    },
+    {
+      "class": "camp-event",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_camp.py + tests/test_director_camp_ui.py",
+      "invocation": "direct Python scripts (main functions)",
+      "coverage": "Camp pending/resolved save replay, exact-once costs/memory, natural Minji live reload; Task 7 fix1 camp.log and camp-ui.log. Not collected by pytest."
+    },
+    {
+      "class": "camp-result",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_camp.py + tests/test_director_camp_ui.py",
+      "invocation": "direct Python scripts (main functions)",
+      "coverage": "Camp pending/resolved save replay, exact-once costs/memory, natural Minji live reload; Task 7 fix1 camp.log and camp-ui.log. Not collected by pytest."
+    },
+    {
+      "class": "ordinary-event",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 historical run)",
+      "tests": [
+        "test_ordinary_choice_and_result_survive_continue_without_reapplication"
+      ],
+      "coverage": "Cafe event and outcome restore without state or result reapplication."
+    },
+    {
+      "class": "ordinary-result",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 historical run)",
+      "tests": [
+        "test_ordinary_choice_and_result_survive_continue_without_reapplication"
+      ],
+      "coverage": "Cafe event and outcome restore without state or result reapplication."
+    },
+    {
+      "class": "combat-event",
+      "status": "external focused evidence; two combat tests freshly passed; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (historical Task 7 and two bounded frozen-runtime tests on 2026-09-12)",
+      "tests": [
+        "tests/test_director_pending.py::test_close_transition_and_combat_result_do_not_reroll",
+        "tests/test_director_pending.py::test_new_combat_resolution_has_cues_but_restored_result_is_silent"
+      ],
+      "coverage": "Newly applied confirmation/outcome cues, silent restored combat result, unchanged fingerprint, interrupted close-to-next-event handoff and nonduplication.",
+      "freshVerification": "audits/director-journey-2026-09-11/whole-review-fix/verification.json"
+    },
+    {
+      "class": "combat-result",
+      "status": "external focused evidence; two combat tests freshly passed; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (historical Task 7 and two bounded frozen-runtime tests on 2026-09-12)",
+      "tests": [
+        "tests/test_director_pending.py::test_close_transition_and_combat_result_do_not_reroll",
+        "tests/test_director_pending.py::test_new_combat_resolution_has_cues_but_restored_result_is_silent"
+      ],
+      "coverage": "Newly applied confirmation/outcome cues, silent restored combat result, unchanged fingerprint, interrupted close-to-next-event handoff and nonduplication.",
+      "freshVerification": "audits/director-journey-2026-09-11/whole-review-fix/verification.json"
+    },
+    {
+      "class": "seoul_open",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_open]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_han",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_han]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_ruins",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_ruins]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_square",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_square]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_base",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_base]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_core",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_core]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_costs",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_costs]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_decision",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_decision]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_night",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_night]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_uplink_reveal",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_uplink_reveal]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    },
+    {
+      "class": "seoul_session_reset",
+      "status": "external historical Task 7 evidence; not executed by campaign reload runner",
+      "evidence": "audits/director-journey-2026-09-11/review-history/task-7-report.md",
+      "owner": "tests/test_director_pending.py",
+      "invocation": "pytest (Task 7 fix1 historical run: 23 passed, 17 deselected)",
+      "tests": [
+        "test_each_seoul_phase_and_result_reload[seoul_session_reset]"
+      ],
+      "coverage": "Event and result Continue restore; seoul_session_reset terminates directly instead of showing a result sheet."
+    }
+  ]
+}

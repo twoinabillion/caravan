@@ -1,0 +1,51 @@
+{
+  "verifiedAt": "2026-09-12T12:33:07.954185+09:00",
+  "reviewedRuntimeFixCommit": "0d54de3946df531694023ad8787950f9879bf585",
+  "sourceHtml": {
+    "path": "서울까지400km.html",
+    "bytes": 77667306,
+    "sha256": "b6e9220728359658721ad8c4a52cb5069e94ace0d42a2b67bf4d4f5cb5bfdb56"
+  },
+  "aitAliases": [
+    {
+      "path": "caravan.ait",
+      "bytes": 62162909,
+      "sha256": "5c7fcdd4e7c0eb2bf35127bdf327630ce749559448ba4187554ad77c84e5ca8b",
+      "header": "AITBUNDL"
+    },
+    {
+      "path": "caravanproject.ait",
+      "bytes": 62162909,
+      "sha256": "5c7fcdd4e7c0eb2bf35127bdf327630ce749559448ba4187554ad77c84e5ca8b",
+      "header": "AITBUNDL"
+    },
+    {
+      "path": "seoul400km.ait",
+      "bytes": 62162909,
+      "sha256": "5c7fcdd4e7c0eb2bf35127bdf327630ce749559448ba4187554ad77c84e5ca8b",
+      "header": "AITBUNDL"
+    }
+  ],
+  "gameBuild": "2026-09-11-director-journey",
+  "registry": {
+    "events": 1019,
+    "scenes": 393,
+    "nodes": 58
+  },
+  "visualWarningCount": 58,
+  "visualWarningAdded": [],
+  "visualWarningRemoved": [],
+  "generatedAssetReport": {
+    "path": "reports/asset-budget.json",
+    "bytes": 3778,
+    "sha256": "d2fb58ba6d1ae540043323d7f13c3b43596189b6b91ef2a8d67703d93d6908ca"
+  },
+  "watcher": {
+    "building": false,
+    "queued": false,
+    "revision": 1789183904551,
+    "clients": 0
+  },
+  "previousRuntimeReceipt": "intermediate-1c560199/build-receipt.json",
+  "scopeSinceCampaignFreeze": "stopped UI stage-fit overflow guard only; engine/story/assets unchanged"
+}

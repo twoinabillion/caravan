@@ -1,0 +1,16 @@
+# Ridge rigging detail — Task 6 candidate
+
+Built-in generation on 2026-09-11. Source `/Users/sang/.codex/generated_images/01a08e2d-b6aa-7212-a5bf-9fb9523df314/exec-3f46b849-cb36-4d32-8a59-0feef01e6380.png`; master preserved here, delivery `assets/scenes/route-ridge-rigging-v2.webp` 1024×576 at cwebp quality 86. All four mandatory references plus old rescue location image attached and previously inspected.
+
+The attempted four-civilian before composition was blocked at output moderation; no image returned. Chosen detail shot focuses on the cart, rope and slope with all people off-camera. This also supports phases with four, two or one people still below the road without inventing a count. Companion cast is unrestricted because none is visible. Visual review: readable cart/ropes/bent guardrail, correct truck, no premature rescue success. Gallery and exact gameplay crop required before completion.
+
+## Exact prompt
+
+Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.
+
+Create a DETAIL insert shot for the rescue event on image 5's misty Korean mountain road. There are NO PEOPLE in this image. Focus on a small weathered wooden two-wheeled delivery handcart lodged diagonally on a muddy ledge below a broken steel guardrail. It contains a cloth bundle of envelopes and two small plain weathered wooden crates, with no readable letters or labels. A thick slack rescue rope lies across the cart's wooden frame and trails upward over the guardrail toward the road. The rescue has not yet lifted the cart. Show believable wet earth, gray stones and bent guardrail; the road is visible above, with a modest distant glimpse of the canonical cream Dalguji parked near a rock. Truck must match image 4: cream Korean cabover one-ton with separate living box, amber windows, roof luggage and two red cans, antenna, faded white X. The visual subject is the practical work of rigging this cart on a wet mountain road. No people, no body parts, no animals, no human silhouettes. Keep cart and rope large and clear within central 80% width and height. Background misty Korean pine mountains, gray overcast light, same restrained realism as image 5. Images 1-4 are mandatory canon references, not collages to reproduce. One coherent 16:9 landscape, 1536x864 or larger.
+
+Negative prompt: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel
+
+
+Gallery verified before wiring: isolated live `4176/__live/assets`, 1024×576 loaded. Controller visually inspected `artifacts/director-pass-2026-09-11/route-ridge-rigging-v2-gallery.png`. Asset bytes: 139094. Exact in-game crop remains Task 6.

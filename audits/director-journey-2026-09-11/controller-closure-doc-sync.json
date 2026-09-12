@@ -1,0 +1,91 @@
+{
+  "completedAt": "2026-09-12T12:49:58.546171+09:00",
+  "sourceDeliveryCommit": "2cb4131aa12ffc082a219d9185bb52c8889bb7d4",
+  "scope": "Final controller docs/plan/rulings/ledger/cleanup receipts; no runtime or generated file changes",
+  "fileCount": 9,
+  "files": [
+    {
+      "path": "docs/superpowers/plans/2026-09-11-director-journey.md",
+      "classification": "controller completion documentation only",
+      "beforeSha256": "e2235264f9d7a4a3bcdeb61cb1f607c3680cc3847bd05366c84f2f42a9bfb76f",
+      "sourceSha256": "03c3dc43f78add1139b501b65c1276001f28dd6ed16bb4476c1c1c1d082a2dff",
+      "bytes": 12407,
+      "backupPath": "/Users/sang/_workspace/caravan-task9-backup-20260912-121439/controller-closure-docs/docs/superpowers/plans/2026-09-11-director-journey.md",
+      "afterSha256": "03c3dc43f78add1139b501b65c1276001f28dd6ed16bb4476c1c1c1d082a2dff"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/README.md",
+      "classification": "controller completion documentation only",
+      "beforeSha256": "ed646b542e0821fa875e88a6d01934472e1df7d21437236eb37f612d8dc85118",
+      "sourceSha256": "25f99b6df3340fb5dab16299767fbcf527df0d8ce222923c6c5e0db90fee4f3f",
+      "bytes": 8770,
+      "backupPath": "/Users/sang/_workspace/caravan-task9-backup-20260912-121439/controller-closure-docs/audits/director-journey-2026-09-11/README.md",
+      "afterSha256": "25f99b6df3340fb5dab16299767fbcf527df0d8ce222923c6c5e0db90fee4f3f"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/remaining-issues.md",
+      "classification": "controller completion documentation only",
+      "beforeSha256": "579d84b55d3752e1fdb8910de7f28d3c6ebcb32e7c32f0a97f4856cdc6d93d5e",
+      "sourceSha256": "e77be6460b16c29e2cd94717b765c601639e5fb22f2cc66f8cb5091e496f4e29",
+      "bytes": 2032,
+      "backupPath": "/Users/sang/_workspace/caravan-task9-backup-20260912-121439/controller-closure-docs/audits/director-journey-2026-09-11/remaining-issues.md",
+      "afterSha256": "e77be6460b16c29e2cd94717b765c601639e5fb22f2cc66f8cb5091e496f4e29"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/review-history/README.md",
+      "classification": "controller completion documentation only",
+      "beforeSha256": "4fa507ed9463915982b456e06ea4d0e6ab7bf6e7d606b99055971cfe0e5d52a0",
+      "sourceSha256": "a30b2701f66ae2787803f1ac648e30b1f54bc203c0b11173be9d5a3c1e003446",
+      "bytes": 4304,
+      "backupPath": "/Users/sang/_workspace/caravan-task9-backup-20260912-121439/controller-closure-docs/audits/director-journey-2026-09-11/review-history/README.md",
+      "afterSha256": "a30b2701f66ae2787803f1ac648e30b1f54bc203c0b11173be9d5a3c1e003446"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/review-history/progress-ledger-2026-09-12-complete.md",
+      "classification": "controller completion documentation only",
+      "beforeSha256": null,
+      "sourceSha256": "c0f339b7cd53b25214f361ec12add710ed4d16f08f00f0364eec0520bbad054a",
+      "bytes": 65372,
+      "backupPath": null,
+      "afterSha256": "c0f339b7cd53b25214f361ec12add710ed4d16f08f00f0364eec0520bbad054a"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/rulings.md",
+      "classification": "controller completion documentation only",
+      "beforeSha256": null,
+      "sourceSha256": "31f01b235b8869612a4a9686a6d408b352426c03a60c020e9ce83ec1303c23a2",
+      "bytes": 3077,
+      "backupPath": null,
+      "afterSha256": "31f01b235b8869612a4a9686a6d408b352426c03a60c020e9ce83ec1303c23a2"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/completion-closure.md",
+      "classification": "controller completion documentation only",
+      "beforeSha256": null,
+      "sourceSha256": "df21e45255df07dfa91c97dd84b9bc224ef9980b3151698fa60a254be0b4d6c1",
+      "bytes": 2257,
+      "backupPath": null,
+      "afterSha256": "df21e45255df07dfa91c97dd84b9bc224ef9980b3151698fa60a254be0b4d6c1"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/completion-closure.json",
+      "classification": "controller completion documentation only",
+      "beforeSha256": null,
+      "sourceSha256": "e69d1ad9ba30ba451a87d0abd224389db9ddd20934b2ad7d14b8ee942d32baa1",
+      "bytes": 2907,
+      "backupPath": null,
+      "afterSha256": "e69d1ad9ba30ba451a87d0abd224389db9ddd20934b2ad7d14b8ee942d32baa1"
+    },
+    {
+      "path": "audits/director-journey-2026-09-11/phase-b/controller-final-sync-check.json",
+      "classification": "controller completion documentation only",
+      "beforeSha256": null,
+      "sourceSha256": "fa71eb9bb6bbf0bb779662514d407449fcd70523a6a94e3c46b9922bb64ebdaa",
+      "bytes": 489,
+      "backupPath": null,
+      "afterSha256": "fa71eb9bb6bbf0bb779662514d407449fcd70523a6a94e3c46b9922bb64ebdaa"
+    }
+  ],
+  "mismatches": [],
+  "selfExclusion": "This receipt is copied byte-identically to original and checked separately; it does not hash itself."
+}

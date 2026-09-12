@@ -3,12 +3,12 @@
 /* ═══════════════════ ENGINE ═══════════════════ */
 const SAVE_KEY = 'seoul400_save_v1';
 const QUALITY_ARCHIVE_KEY = 'seoul400_quality_archive_v1';
-const GAME_BUILD = '2026-08-24-exact-state-qa';
+const GAME_BUILD = '2026-09-11-director-journey';
 const QA_SNAPSHOT_KIND = 'seoul400_exact_state_qa';
 const QA_SNAPSHOT_VERSION = 1;
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
-const SAVE_VERSION = 7;
+const SAVE_VERSION = 8;
 const BASE_WATER_MAX = 28;
 const BASE_FOOD_MAX = 24;
 let S = null;               // game state
@@ -84,6 +84,7 @@ G.clampSupplies = ()=>{
 /* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
    필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
 G.saveMigrations = {
+  8:s=>{ s.pendingPresentation=null; },
   7:(s)=>{   // 2026-08-30: 물통·식량 보관함에 실제 적재 한도 도입
     if(!Number.isFinite(s.waterMax)||s.waterMax<=0) s.waterMax=BASE_WATER_MAX;
     if(!Number.isFinite(s.foodMax)||s.foodMax<=0) s.foodMax=BASE_FOOD_MAX;
@@ -136,6 +137,7 @@ const COMBAT_AUTO_ADJUST_SCALE = 0.16;     // [-0.5~0.5] → 판정 보정 ±0.0
 
 /* ── new game / save ── */
 G.newGame = (mode, name, entryMode='full', profile)=>{
+  const interactiveOpening=entryMode==='interactive';
   S = {
     v:SAVE_VERSION, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
     fuel:42, fuelMax:70, water:16, waterMax:BASE_WATER_MAX, food:14, foodMax:BASE_FOOD_MAX,
@@ -143,8 +145,8 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     items:{'부품':1,'의약품':1,'탄약':0},
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
-    flags:{mother_keepsakes:true,intro_family_helped:true,intro_appeal_failed:true,
-      intro_module_seen:true,intro_workshop_left:true}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
+    flags:{mother_keepsakes:true,intro_family_helped:!interactiveOpening,intro_appeal_failed:!interactiveOpening,
+      intro_module_seen:!interactiveOpening,intro_workshop_left:!interactiveOpening}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0, nonlethal:0}, routePlan:null,
     /* 시드는 주입 가능해야 한다 — 같은 시드 → 같은 여정이라야 회귀 테스트와
        실엔진 시뮬레이션이 성립한다 (G.seedOverride를 미리 세팅). */
@@ -162,6 +164,8 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     _quality:null, guideDismissed:false, questTrack:'main', lastJourneyRecap:null, journeyRecaps:[],
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
     _rescues:{}, _stlNights:{}, stopover:null, locationContractVersion:D.eventLocationVersion||1,
+    campNight:0, campConversation:null, campMemories:{},
+    opening:interactiveOpening?{version:1,step:0,pendingResult:null,decisions:{},completed:false}:null,
   };
   /* 출발 구성 — 자원 패치는 얕은 병합, items만 통째 교체 */
   const prof=D.startProfiles&&D.startProfiles[S.profile];
@@ -177,8 +181,9 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   for(const id in D.comps) S.comps[id] = {mood:65, bond:0, lvl:0, perks:[], pending:0};
   G.ensureNarrativeState();
   G.syncKnowledgeFromFlags();
-  /* 첫 출발 뒤 무작위 사건보다 먼저 본편의 첫 증거를 직접 회수한다. */
-  G.queueStory('onboarding_first_road');
+  /* 짧은 출발을 마친 뒤에만 첫 도로 단서를 연다. 명시적 full/summary/skip
+     호출은 이미 출발한 기존 계약이라 예전과 같이 즉시 큐에 넣는다. */
+  if(!interactiveOpening) G.queueStory('onboarding_first_road');
   /* 이전 순환의 흔적 — 지난 런의 결말이 이번 길 위에 하나 남는다.
      143년 반복의 세계에서 이전 여정은 없던 일이 아니라 이전 순환이다. */
   try{
@@ -191,16 +196,76 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   G.addNote({type:'인물', title:'천리안', body:'2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.', links:[]});
   G.addNote({type:'인물', title:'부모님', body:'엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.', links:['천리안']});
   G.addNote({type:'인물', title:'할아버지', body:'나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.', links:['달구지','부모님']});
+  if(!interactiveOpening){
   G.addNote({type:'물건', title:'엄마의 철제 상자', body:'수첩 등판에서 현재 이송표와 같은 규격의 회로도가 나왔다. 남산 중앙 노드, 달구지 계기판 뒤 검증 모듈, 발신 기록과 당사자 증언을 함께 가져가라는 메모가 적혀 있었다.', links:['부모님','천리안','달구지']});
   G.addNote({type:'물건', title:'계기판 속 검증 모듈', body:'출발 전에 존재를 확인했지만 분리 절차 두 장이 없어 아직 달구지 전장에 연결해 두었다. 절차를 찾고 기록을 모아 남산에 적용해야 한다.', links:['엄마의 철제 상자','부모님','남산']});
   G.addNote({type:'인물', title:'도윤의 가족', body:'부산 부두에서 난방이 끊긴 이송 버스를 고쳐 준 가족. 엄마 하진, 8살 도윤, 동생 유나는 제7 잔류구역 6,412명 가운데 먼저 남쪽으로 보내진 사람들이다.', links:['서울 추방','천리안']});
   G.addNote({type:'본편', title:'남산 코어로 가서 강제 이송 명령을 멈춘다', body:'부산에서는 이 명령에 이의를 제기할 수 없었다. 북쪽으로 가며 발신 기록과 분리 절차, 당사자 증언을 모은 뒤 남산 중앙 노드에서 명령을 멈춰야 한다. 날짜 제한은 없고, 서울에 도착하는 것만으로는 끝나지 않는다.', links:['남산','도윤의 가족','계기판 속 검증 모듈']});
+  }
   G.save();
+};
+G.openingPending = ()=>{
+  if(!S||S.entryMode!=='interactive'||!S.opening||S.opening.completed) return null;
+  const step=Math.max(0,Math.floor(Number(S.opening.step)||0));
+  return Array.isArray(D.openingDeparture)?D.openingDeparture[step]||null:null;
+};
+G.openingDecision = stepId=>{
+  const decisions=S&&S.opening&&S.opening.decisions;
+  return decisions&&decisions[stepId]?{...decisions[stepId]}:null;
+};
+G.resolveOpeningChoice = (stepId,choiceId)=>{
+  const event=G.openingPending();
+  if(!event||event.id!==stepId) return {ok:false,applied:false,why:'현재 출발 단계가 아니다'};
+  const saved=S.opening.pendingResult;
+  if(saved){
+    if(saved.stepId!==stepId||saved.choiceId!==choiceId)
+      return {ok:false,applied:false,why:'이미 다른 선택의 결과가 저장됐다'};
+    const choice=event.choices.find(item=>item.id===saved.choiceId);
+    const out=choice&&choice.out&&choice.out[saved.outcomeIndex];
+    return {ok:!!out,applied:false,event,choice,out,chips:[...(saved.chips||[])]};
+  }
+  const choice=(event.choices||[]).find(item=>item.id===choiceId);
+  if(!choice) return {ok:false,applied:false,why:'선택지를 찾을 수 없다'};
+  const requirement=G.reqOk(G.choiceReq(choice));
+  if(!requirement.ok) return {ok:false,applied:false,why:requirement.t};
+  const out=G.pickOutcome(event,choice);
+  if(!out) return {ok:false,applied:false,why:'결과를 찾을 수 없다'};
+  const outcomeIndex=Math.max(0,choice.out.indexOf(out));
+  const chips=G.applyFx(out.fx,{noteTitle:event.title});
+  chips.push(...G.afterChoice(event,choice,out));
+  S.opening.decisions=S.opening.decisions&&typeof S.opening.decisions==='object'
+    ?S.opening.decisions:{};
+  S.opening.decisions[stepId]={
+    stepId,choiceId,label:String(choice.label||''),day:S.day,min:S.min,
+    outcomeIndex
+  };
+  S.opening.pendingResult={stepId,choiceId,outcomeIndex,chips:[...chips]};
+  G.save();
+  return {ok:true,applied:true,event,choice,out,chips};
+};
+G.continueOpening = stepId=>{
+  const event=G.openingPending(), pending=S&&S.opening&&S.opening.pendingResult;
+  if(!event||event.id!==stepId||!pending||pending.stepId!==stepId) return false;
+  S.opening.pendingResult=null;
+  S.opening.step=Math.max(0,Math.floor(Number(S.opening.step)||0))+1;
+  const next=G.openingPending();
+  if(!next){
+    S.opening.completed=true;
+    S.flags.intro_family_helped=true;
+    S.flags.intro_appeal_failed=true;
+    S.flags.intro_module_seen=true;
+    S.flags.intro_workshop_left=true;
+    S.flags.main_mission_started=true;
+    if(!S._storyQueue.includes('onboarding_first_road')&&!S.used.includes('onboarding_first_road'))
+      G.queueStory('onboarding_first_road');
+  }
+  G.save();
+  return next||null;
 };
 G.myName = ()=> (S && S.name) || '나';
 G.vanName = ()=> (S && S.vanName) || '달구지';
 let saveWarned=false;
-G.save = ()=>{ if(!S||S.ended) return; try{
+G.save = ()=>{ if(!S||S.ended||G.presentationApplying) return; try{
   if(S._quality&&S._quality.activeSession) S._quality.lastSeenAt=Date.now();
   localStorage.setItem(SAVE_KEY, JSON.stringify(S));
   saveWarned=false;
@@ -278,12 +343,49 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   S.hunger=clamp(Math.round(Number(S.hunger)||0),0,3);
   if(!Array.isArray(S._storyQueue)) S._storyQueue=[];
   if(!Array.isArray(S._beatQueue)) S._beatQueue=[];
+  if(S.entryMode==='interactive'&&S.opening&&typeof S.opening==='object'&&!Array.isArray(S.opening)){
+    S.opening.version=1;
+    S.opening.step=Math.max(0,Math.floor(Number(S.opening.step)||0));
+    if(!S.opening.decisions||typeof S.opening.decisions!=='object'||Array.isArray(S.opening.decisions))
+      S.opening.decisions={};
+    if(!S.opening.pendingResult||typeof S.opening.pendingResult!=='object'||Array.isArray(S.opening.pendingResult))
+      S.opening.pendingResult=null;
+    S.opening.completed=Boolean(S.opening.completed);
+  }
   if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
   if(!Number.isFinite(S._eventBreather)) S._eventBreather=0;
   if(!Number.isFinite(S._driveLegsSinceBlock)) S._driveLegsSinceBlock=3;
   if(S.guideDismissed===undefined) S.guideDismissed=false;
   if(!['main','companion','side'].includes(S.questTrack)) S.questTrack='main';
+  S.campNight=Number.isFinite(S.campNight)?Math.max(0,Math.floor(S.campNight)):0;
+  if(!S.campMemories||typeof S.campMemories!=='object'||Array.isArray(S.campMemories)) S.campMemories={};
+  for(const [cid,row] of Object.entries(S.campMemories)){
+    if(!D.campConversations[cid]||!row||typeof row!=='object'||Array.isArray(row)){
+      delete S.campMemories[cid]; continue;
+    }
+    row.cid=cid;
+    row.id=typeof row.id==='string'?row.id:`camp_legacy_${cid}`;
+    row.pendingBond=Number.isFinite(row.pendingBond)?Math.max(0,Math.floor(row.pendingBond)):0;
+    row.home=typeof row.home==='string'?row.home:D.companionKeepsakes[cid].desc;
+    row.road=typeof row.road==='string'?row.road:'';
+    row.pendingRoad=row.pendingRoad===true&&!!row.road;
+  }
+  const campRecord=S.campConversation, campData=campRecord&&D.campConversations[campRecord.cid];
+  if(!campRecord||Array.isArray(campRecord)||!campData||!Number.isFinite(campRecord.night)
+    ||(campRecord.choiceId&&!campData.choices.some(choice=>choice.id===campRecord.choiceId))) S.campConversation=null;
+  else{
+    campRecord.night=Math.max(0,Math.floor(campRecord.night));
+    campRecord.id=typeof campRecord.id==='string'?campRecord.id:`camp_${campRecord.night}_${campRecord.cid}`;
+    campRecord.context=typeof campRecord.context==='string'?campRecord.context:'';
+    campRecord.chips=Array.isArray(campRecord.chips)?campRecord.chips.filter(chip=>chip&&typeof chip.t==='string'):[];
+    campRecord.active=campRecord.active===true;
+  }
+  /* Old talk plans were an unplayed promise, never a completed conversation. */
+  if(S._campPlan&&S._campPlan.talk&&!(S.campConversation&&S.campConversation.choiceId)){
+    delete S._campPlan.talk;
+    if(S._campPlan.last==='talk') delete S._campPlan.last;
+  }
   if(S.lastJourneyRecap===undefined) S.lastJourneyRecap=null;
   if(!Array.isArray(S.journeyRecaps)) S.journeyRecaps=[];
   if(!S._rescues||typeof S._rescues!=='object'||Array.isArray(S._rescues)) S._rescues={};
@@ -353,6 +455,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     if(c.pending===undefined) c.pending=0;
   }
   G.syncKnowledgeFromFlags();
+  S.pendingPresentation=G.validatePresentation(S.pendingPresentation);
   return true; }catch(e){ S=null; return false } };
 G.hasSave = ()=>{ try{
   const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
@@ -871,26 +974,6 @@ G.knowledgeSummary = ()=>{
   });
 };
 G.transferStatus = (state=S)=>D.transferStatus(state);
-/* 출발 동기는 설정 문단으로 끝내지 않고 플레이 중 계속 확인하는 작업 목록이다.
-   검증 모듈은 부산에서 이미 보았고, 빠진 절차와 여러 사람의 기록을 모은 뒤에야
-   안전하게 회수해 남산에 연결할 수 있다. */
-G.departureSteps = ()=>{
-  if(!S) return [];
-  const witnessed=G.pillars?G.pillars().관계.have:0;
-  return [
-    {id:'family',done:!!S.flags.intro_family_helped,label:'도윤 가족의 이송표를 확인한다',detail:'버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다'},
-    {id:'appeal',done:!!S.flags.intro_appeal_failed,label:'부산에서 이송 명령에 이의를 제기한다',detail:'부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다'},
-    {id:'module',done:!!S.flags.intro_module_seen,label:'엄마가 남긴 장치를 확인한다',detail:'엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다'},
-    {id:'trace',done:!!S.flags.first_order_trace,label:'이송 명령의 첫 발신 기록을 찾는다',detail:S.flags.first_order_trace?'부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다':'부산을 떠난 첫 구간에서 이송표의 발신 번호가 남은 기록을 찾는다'},
-    {id:'parents_split',done:!!S.flags.parents_split_known,label:'부모님의 다음 차가 갈라진 경로를 확인한다',detail:S.flags.parents_split_known?'아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다':'남쪽 환승소의 오래된 운행표에서 오지 않은 다음 차를 찾는다'},
-    {id:'parents_work',done:!!S.flags.parents_routes_traced,label:'두 곳에서 이어진 부모님의 작업을 확인한다',detail:S.flags.parents_routes_traced?'아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다':'서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다'},
-    {id:'key',done:!!S.flags.parent_key_found,label:'부모님의 인간 확인 검증키를 꺼낸다',detail:S.flags.parent_key_found?'빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다':'계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다'},
-    {id:'witness',done:!!S.flags.es_truth&&witnessed>=D.seoulPillars.관계,label:'같은 이송표를 받은 사람들의 이야기를 모은다',detail:S.flags.es_truth?'사람들의 이야기와 발신 기록을 맞춰 명령이 내려온 순서를 확인했다':`같은 이송표를 받은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
-    {id:'father',done:!!S.flags.father_fate_known,label:'아빠의 마지막 남산 기록을 확인한다',detail:S.flags.father_fate_known?'아빠는 의료와 급수 회선을 지키다 남산에서 사망했다':'실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다'},
-    {id:'mother',done:!!S.flags.mother_reunited,label:'엄마의 최근 신호를 따라간다',detail:S.flags.mother_reunited?'서울 외곽 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다'},
-    {id:'seoul',done:!!S.flags.story_done,label:'남산 코어에서 강제 이송 명령을 끊는다',detail:S.flags.story_done?'제7 잔류구역을 향하던 강제 이송을 끝냈다':'필요한 기록과 사람을 모은 뒤 남산 코어에서 명령을 멈춘다. 날짜 제한은 없다'}
-  ];
-};
 G.relationKey = (a,b)=>[a,b].sort().join(':');
 G.relation = (a,b)=>{
   G.ensureNarrativeState();
@@ -1065,7 +1148,7 @@ G.openRecruitStep = ()=>{
   if(q.stage==='follow'){
     if(S.at!==q.target){ UI.toast(`🚚 ${def.name}와 함께 ${D.nodes[q.target].name}(으)로 이동 중이다`); return false; }
     if(Number.isFinite(q.roadDay)&&S.day<=q.roadDay){
-      UI.toast(`🔥 ${def.name}와 길에서 하룻밤을 보냈다. 이제 다시 이야기해 보자`);
+      UI.toast(`🔥 ${def.name}와 하룻밤을 보낸 뒤 다시 이야기해 보자`);
       return false;
     }
     /* 별도 후일담과 합류 확인을 연속 모달로 열지 않는다. 길 위에서 함께

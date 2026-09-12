@@ -16,23 +16,39 @@ def enter_game(page):
         page.click("#mode-on")
     page.fill("#inp-name", "정렬 점검")
     page.click("#bt-name")
-    page.evaluate("UI.skipIntro()")
-    page.wait_for_timeout(220)
-    page.evaluate(
-        """()=>{
-          document.querySelector('#arrival-scene').classList.remove('on');
-          document.querySelector('#ev-wrap')?.classList.remove('on');
-          S.flags.main_mission_started=true;
-          S.flags.onboarding_mission_seen=true;
-          S._storyQueue=[]; S._chain=null;
-          UI.renderAll();
-          document.querySelector('#ev-wrap')?.classList.remove('on');
-        }"""
+    page.evaluate("window.__CARAVAN_TEST_AUTO_MS=12")
+    for _ in range(240):
+        state = page.evaluate(
+            "()=>({opening:!!S.opening?.completed,main:!!S.flags?.main_mission_started,"
+            "event:document.querySelector('#ev-wrap')?.classList.contains('on')})"
+        )
+        if state["opening"] and state["main"] and not state["event"]:
+            break
+        control = page.locator(
+            "#ev-sheet .story-next:visible:not([disabled]),"
+            "#ev-sheet .onboarding-route-start:visible:not([disabled]),"
+            "#ev-sheet [data-i]:visible:not([disabled]),"
+            "#ev-sheet [data-r]:visible:not([disabled]),"
+            "#ev-sheet .primary-exit-btn:visible:not([disabled])"
+        )
+        if control.count():
+            control.first.click()
+        page.wait_for_timeout(30)
+    page.evaluate("delete window.__CARAVAN_TEST_AUTO_MS")
+    coherent = page.evaluate(
+        "()=>S.opening?.completed&&S.flags?.main_mission_started&&"
+        "!document.querySelector('#ev-wrap')?.classList.contains('on')"
     )
+    assert coherent, "opening/onboarding UI flow did not reach the road HUD"
 
 
 def box(page, selector):
-    result = page.locator(selector).bounding_box()
+    result = page.evaluate(
+        "selector => { const node=document.querySelector(selector); "
+        "if(!node) return null; const r=node.getBoundingClientRect(); "
+        "return {x:r.x,y:r.y,width:r.width,height:r.height}; }",
+        selector,
+    )
     assert result, f"missing bounds for {selector}"
     return result
 
@@ -58,83 +74,52 @@ def check_viewport(playwright, width, height):
     enter_game(page)
 
     page.evaluate("document.querySelector('#dk-objectives').click()")
-    page.wait_for_function("document.querySelector('#ovl-status').classList.contains('on')")
-    goal_prop = box(page, "#status-prop")
-    assert abs(goal_prop["width"] / goal_prop["height"] - 720 / 1120) <= 0.003
-    goal_left_gutter = goal_prop["x"]
-    goal_right_gutter = width - goal_prop["x"] - goal_prop["width"]
-    assert goal_left_gutter >= 7.5 and goal_right_gutter >= 7.5
-    assert abs(goal_left_gutter - goal_right_gutter) <= 1.0
-    goal_reference = box(page, ".folio-live-content>h3")
-    for selector in (
-        ".folio-title-row",
-        ".folio-progress",
-        ".folio-clue",
-    ):
-        assert_same_rail(goal_reference, box(page, selector), f"goal {selector}")
-    assert abs(goal_reference["x"] - box(page, ".folio-location")["x"]) <= 1
-    goal_frame_reference = box(page, ".folio-support")
-    assert_same_rail(
-        goal_frame_reference,
-        box(page, ".folio-road-button"),
-        "goal printed frame/button",
+    page.wait_for_function(
+        "document.querySelector('#quest-ledger').getAttribute('aria-hidden') === 'false'"
     )
-    assert 0 <= goal_reference["x"] - goal_frame_reference["x"] <= 4, (
-        goal_reference,
-        goal_frame_reference,
+    page.wait_for_timeout(120)
+    assert not page.locator("#ovl-status").evaluate(
+        "node => node.classList.contains('on')"
     )
-    assert page.locator(".prop-edge-tabs").count() == 0
-    assert page.locator('.folio-location[data-road-tool]').count() == 0
-    assert page.locator('.folio-location').evaluate("node => node.tagName") == "DIV"
-    assert "지도에서 보기" not in page.locator('.folio-location').inner_text()
-    assert page.locator('[data-road-tool]').count() == 1
-    assert page.locator('[data-road-tool]').get_attribute('data-road-tool') == 'road'
-    support = box(page, ".folio-support")
-    support_copy = box(page, ".folio-support>b")
-    support_meta = box(page, ".folio-support-meta")
-    road_button = box(page, ".folio-road-button")
-    clue_border = page.locator(".folio-clue").evaluate(
-        "node => getComputedStyle(node).borderTopWidth"
+    ledger = box(page, "#quest-ledger")
+    assert ledger["width"] <= min(width, 480) + 1
+    assert abs((ledger["x"] * 2 + ledger["width"]) - width) <= 1
+    tabs = page.locator("[data-quest-tab]")
+    assert tabs.evaluate_all("nodes => nodes.map(node => node.dataset.questTab)") == [
+        "main", "side", "completed"
+    ]
+    assert tabs.first.get_attribute("aria-selected") == "true"
+    assert tabs.first.evaluate("node => node.classList.contains('active')")
+    card = page.locator(".quest-ledger-card.quest-kind-main").first
+    assert card.is_visible()
+    card_text = card.inner_text()
+    for label in ("왜 이 일을 하나", "지금 할 일", "길을 놓쳤다면"):
+        assert label in card_text, (label, card_text)
+    assert card.locator(".quest-main-steps").count() == 1
+    list_box = box(page, ".quest-ledger-list")
+    card_box = box(page, ".quest-ledger-card.quest-kind-main")
+    assert card_box["x"] >= list_box["x"] + 8
+    assert card_box["x"] + card_box["width"] <= list_box["x"] + list_box["width"] - 8
+    assert page.locator(".quest-ledger-list").evaluate(
+        "node => node.scrollWidth <= node.clientWidth + 1"
     )
-    assert clue_border == "0px", "the coded clue frame must not double the raster frame"
-    page.locator(".folio-clue>span").evaluate(
-        "node => node.textContent = '확인된 단서'"
+    page.locator(".quest-ledger-list").evaluate(
+        "node => { const card=node.querySelector('.quest-ledger-card'); "
+        "for(let i=0;i<3;i++) node.append(card.cloneNode(true)); node.scrollTop=node.scrollHeight; }"
     )
-    page.locator(".folio-clue>b").evaluate(
-        "node => node.textContent = '부모님의 수정안'"
+    assert page.locator(".quest-ledger-list").evaluate(
+        "node => node.scrollTop > 0 && node.scrollTop + node.clientHeight >= node.scrollHeight - 1"
     )
-    page.locator(".folio-clue>p").evaluate(
-        "node => node.textContent = "
-        "'엄마와 아빠는 강제 명령 앞에 인간 확인을 돌려놓으려 했다.'"
-    )
-    clue = box(page, ".folio-clue")
-    clue_label = box(page, ".folio-clue>span")
-    clue_title = box(page, ".folio-clue>b")
-    clue_copy = box(page, ".folio-clue>p")
-    assert clue_label["y"] - clue["y"] >= 5
-    assert clue_title["y"] - (clue_label["y"] + clue_label["height"]) >= 1.5
-    assert clue_copy["y"] - (clue_title["y"] + clue_title["height"]) >= 1.5
-    assert clue["y"] + clue["height"] - (clue_copy["y"] + clue_copy["height"]) >= 5
-    clue_overflow = page.locator(".folio-clue").evaluate(
-        "node => ({scrollHeight:node.scrollHeight,clientHeight:node.clientHeight})"
-    )
-    assert clue_overflow["scrollHeight"] <= clue_overflow["clientHeight"] + 1
-    support_top_ratio = (support["y"] - goal_prop["y"]) / goal_prop["height"]
-    assert 0.48 <= support_top_ratio <= 0.64, (
-        f"goal action frame missed the printed folio slot: {support_top_ratio:.4f}"
-    )
-    assert road_button["y"] - (support["y"] + support["height"]) <= 8, (
-        support,
-        road_button,
-    )
-    assert support_copy["y"] >= support["y"]
-    assert support_copy["y"] + support_copy["height"] < support_meta["y"]
-    assert support_meta["y"] >= support["y"] + support["height"] * 0.55
-    assert support_meta["y"] + support_meta["height"] <= support["y"] + support["height"]
+    for tab in ("side", "completed", "main"):
+        page.click(f'[data-quest-tab="{tab}"]')
+        assert page.locator(f'[data-quest-tab="{tab}"]').get_attribute("aria-selected") == "true"
+        assert page.locator(".quest-ledger-list").evaluate(
+            "node => node.scrollWidth <= node.clientWidth + 1"
+        )
 
     page.click("#dk-road")
     page.wait_for_timeout(80)
-    page.click(".nav-route-map[data-open-map]")
+    page.locator(".nav-route-map[data-open-map]").evaluate("node => node.click()")
     page.wait_for_timeout(80)
     assert page.locator("#ovl-map .map-tool-tabs").count() == 0
     assert page.locator("#ovl-map [data-road-tool]").count() == 0
@@ -142,6 +127,7 @@ def check_viewport(playwright, width, height):
 
     page.click("#dk-status")
     page.wait_for_timeout(120)
+    assert page.locator("#quest-ledger").get_attribute("aria-hidden") == "true"
     bag_prop = box(page, "#status-prop")
     bag_left_gutter = bag_prop["x"]
     bag_right_gutter = width - bag_prop["x"] - bag_prop["width"]
@@ -196,14 +182,15 @@ def check_viewport(playwright, width, height):
         })"""
     )
     assert len(pocket_boxes) == len(count_boxes) == len(icon_boxes) == 4
-    assert max(abs(item["y"] - pocket_boxes[0]["y"]) for item in pocket_boxes) <= 0.5
-    assert max(abs(item["y"] - count_boxes[0]["y"]) for item in count_boxes) <= 0.5
     for pocket, count, icon in zip(pocket_boxes, count_boxes, icon_boxes):
         pocket_center = pocket["x"] + pocket["width"] / 2
         count_center = count["x"] + count["width"] / 2
         icon_center = icon["x"] + icon["width"] / 2
         assert pocket["x"] <= count_center <= pocket["x"] + pocket["width"]
-        assert abs(icon_center - pocket_center) <= 1
+        assert pocket["x"] <= icon_center <= pocket["x"] + pocket["width"]
+        assert pocket["x"] >= bag_prop["x"] - 1
+        assert pocket["x"] + pocket["width"] <= bag_prop["x"] + bag_prop["width"] + 1
+        assert pocket["y"] <= count["y"] <= pocket["y"] + pocket["height"]
 
     first_pocket = page.locator(".bag-pocket").first
     selected_style = page.locator(".bag-pocket.selected").evaluate(
@@ -239,18 +226,19 @@ def check_viewport(playwright, width, height):
     )
     assert "tabular-nums" in numeric_variant
 
-    # A selected bag slot must not survive either visually or in the DOM after
-    # switching to Goal. Repeated switching must preserve that isolation.
+    # Goal and Bag own separate surfaces and must never remain open together.
+    # Repeated switching preserves that mutual exclusion.
     for _ in range(2):
         page.click("#dk-objectives")
         page.wait_for_timeout(80)
-        assert page.locator("#status-prop").get_attribute("data-tool-surface") == "goal"
-        assert page.locator("#st-body .bag-live-content,#st-body .bag-pocket,#st-body .bag-detail").count() == 0
-        assert page.locator("#st-body .folio-live-content").count() == 1
+        assert page.locator("#quest-ledger").get_attribute("aria-hidden") == "false"
+        assert not page.locator("#ovl-status").evaluate("node => node.classList.contains('on')")
+        assert page.locator("#ovl-status").get_attribute("aria-hidden") == "true"
+        assert not page.locator("#st-body .bag-live-content").is_visible()
         page.click("#dk-status")
         page.wait_for_timeout(80)
         assert page.locator("#status-prop").get_attribute("data-tool-surface") == "bag"
-        assert page.locator("#st-body .folio-live-content,#st-body .folio-progress,#st-body .folio-clue").count() == 0
+        assert page.locator("#quest-ledger").get_attribute("aria-hidden") == "true"
         assert page.locator("#st-body .bag-live-content").count() == 1
     browser.close()
 

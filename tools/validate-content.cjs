@@ -9,10 +9,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const {STATIC_CONTENT_FILES, permanentEvents} = require('./content-registry.cjs');
 
 const root = path.resolve(__dirname, '..');
 const context = vm.createContext({console});
-for (const file of ['src/03-data.js', 'src/03f-npc-portraits.js', 'src/03g-scenes.js']) {
+for (const file of STATIC_CONTENT_FILES) {
   const source = fs.readFileSync(path.join(root, file), 'utf8');
   vm.runInContext(source, context, {filename:file});
 }
@@ -22,8 +23,7 @@ const fail = (where, message) => errors.push(`${where}: ${message}`);
 const need = (ok, where, message) => { if (!ok) fail(where, message); };
 const isObject = value => value && typeof value === 'object' && !Array.isArray(value);
 
-const extraEvents = [D.seoulOpenEvent, D.gateEvent, D.bridgeEvent, ...(D.seoulStops || [])].filter(Boolean);
-const events = [...D.events, ...extraEvents];
+const events = permanentEvents(D);
 const eventById = new Map();
 for (const event of events) {
   if (!event || !event.id) { fail('events', 'ID가 없는 이벤트'); continue; }
@@ -82,6 +82,36 @@ const validateSpeaker = (speaker, where) => {
   if (isObject(speaker) && speaker.name !== undefined)
     need(typeof speaker.name === 'string' && speaker.name.trim(), where, '화자 표시 이름이 비었음');
 };
+const structuredTurnKinds = new Set(['dialogue', 'narration', 'ai', 'radio', 'record', 'letter', 'thought']);
+function validateStructuredTurns(turns, where) {
+  need(Array.isArray(turns) && turns.length > 0, where, '구조화 본문이 비었거나 배열이 아님');
+  if (!Array.isArray(turns)) return false;
+  for (const [index, turn] of turns.entries()) {
+    const twhere = `${where}.turn[${index}]`;
+    need(isObject(turn), twhere, '구조화 턴이 객체가 아님');
+    if (!isObject(turn)) continue;
+    need(structuredTurnKinds.has(turn.kind), twhere, `잘못된 턴 종류 ${turn.kind || String(turn.kind)}`);
+    need(typeof turn.text === 'string' && turn.text.trim(), twhere, '본문 없음');
+    if (['dialogue', 'thought'].includes(turn.kind)) need(turn.who !== undefined, twhere, '화자 없음');
+    if (turn.who !== undefined) validateSpeaker(turn, twhere);
+  }
+  return turns.length > 0;
+}
+function validateMissionBrief(mission, where) {
+  need(isObject(mission), where, '메인 스토리 안내가 객체가 아님');
+  if (!isObject(mission)) return false;
+  const fields = ['objective', 'why', 'now', 'promise', 'optional'];
+  for (const field of fields)
+    need(typeof mission[field] === 'string' && mission[field].trim(), `${where}.${field}`, '본문 없음');
+  return fields.every(field => typeof mission[field] === 'string' && mission[field].trim());
+}
+function validateEventBody(event, where) {
+  const textBody = typeof event.text === 'function' ||
+    (typeof event.text === 'string' && event.text.trim().length > 0);
+  const turnsBody = event.turns === undefined ? false : validateStructuredTurns(event.turns, where);
+  const missionBody = event.missionBrief === undefined ? false : validateMissionBrief(event.missionBrief, `${where}.missionBrief`);
+  need(textBody || turnsBody || missionBody, where, '본문 없음');
+}
 const perkIds = new Set();
 for (const comp of Object.values(D.comps || {})) {
   for (const level of [1, 2]) for (const perk of comp.perks[level] || []) perkIds.add(perk.id);
@@ -164,7 +194,7 @@ function validateFx(fx, where) {
 for (const event of events) {
   const where = `event:${event.id}`;
   need(typeof event.title === 'string' && event.title.trim(), where, '제목 없음');
-  need(typeof event.text === 'string' || typeof event.text === 'function', where, '본문 없음');
+  validateEventBody(event, where);
   need(Array.isArray(event.choices) && event.choices.length, where, '선택지 없음');
   if (event.nearNode) for (const id of event.nearNode)
     need(!!D.nodes[id], where, `nearNode가 없는 장소 ${id}`);

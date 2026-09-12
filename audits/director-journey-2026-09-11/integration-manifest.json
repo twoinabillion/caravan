@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "preparedAt": "2026-09-12",
+  "status": "delivered-local",
+  "sourceWorktree": "/Users/sang/_workspace/caravan-director-20260911",
+  "originalProject": "/Users/sang/caravan",
+  "originalGitHeadAtPreservation": "5d578f6",
+  "preservedBaselineCommit": "73bef1d73df79fe4d7342182488c64a0f37dc600",
+  "acceptedTask8Base": "901fd95527a1ff88f349bb4bd0ab26737c96437f",
+  "approvedPhaseACommit": "833e6fc3990c17aab634cfbdaa770a5935154cc8",
+  "phaseBStatus": "complete",
+  "preservation": {
+    "baselineHashLedger": "audits/director-journey-2026-09-11/phase-b/source-baseline-hashes.json",
+    "baselineHashCount": 967,
+    "preexistingPathLedger": "audits/director-journey-2026-09-11/phase-b/preexisting-paths.json",
+    "preexistingPathCount": 26,
+    "preexistingPatch": "audits/director-journey-2026-09-11/phase-b/preexisting-changes.patch",
+    "lastReadOnlyCheck": "2026-09-12 immediate first preflight967 matches; second integration1098 current paths match; see phase-b receipts"
+  },
+  "allowedChangedPaths": {
+    "selectionRule": "Take only paths present in the reviewed BASELINE..APPROVED name-status delta, then intersect with these roots/files. Never copy a whole directory independently of that delta.",
+    "roots": [
+      "src/",
+      "assets/",
+      "tests/",
+      "tools/",
+      "docs/"
+    ],
+    "exactFiles": [
+      "reports/asset-budget.json"
+    ],
+    "durableEvidenceRoots": [
+      "audits/director-art-2026-09-11/",
+      "audits/director-journey-2026-09-11/"
+    ],
+    "artifactExceptions": [
+      "artifacts/director-pass-2026-09-11/crew-preliminary.save.json",
+      "artifacts/director-pass-2026-09-11/minji-first-night-natural.save.json",
+      "artifacts/director-pass-2026-09-11/task3-conference-route.save.json",
+      "artifacts/director-pass-2026-09-11/legacy-fixtures.md",
+      "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json"
+    ]
+  },
+  "excludedFromCopy": [
+    ".git/",
+    ".superpowers/",
+    "node_modules/",
+    "dist/",
+    "exports/",
+    "qa-artifacts/ bulk capture directories; the final audit carries eight selected reviewed images",
+    "artifacts/ except the five exact artifactExceptions",
+    "generated 서울까지400km.html before the original build",
+    "*.ait before the original build",
+    "browser localStorage and personal browser profiles"
+  ],
+  "generatedDeliveryFiles": [
+    "서울까지400km.html",
+    "caravan.ait",
+    "caravanproject.ait",
+    "seoul400km.ait",
+    "dist/web/index.html",
+    "dist/web/assets/*"
+  ],
+  "preBuildBackupFiles": [
+    "서울까지400km.html",
+    "caravan.ait",
+    "caravanproject.ait",
+    "seoul400km.ait",
+    "reports/asset-budget.json"
+  ],
+  "requiredEarnedCheckpoint": {
+    "path": "artifacts/director-pass-2026-09-11/task8-final/crew-checkpoint/save.json",
+    "bytes": 101104,
+    "sha256": "0d89072b6a2063c3aac4e2fe05cd294b63ad750ad8e24cc62ff516d300a5fdc4"
+  },
+  "phaseBReceipts": {
+    "approvedPhaseACommit": "833e6fc3990c17aab634cfbdaa770a5935154cc8",
+    "immediateOriginalHashCheck": "phase-b/preflight.json",
+    "newPathCollisionCheck": "phase-b/preflight.json",
+    "backupPath": "/Users/sang/_workspace/caravan-task9-backup-20260912-121439",
+    "copiedPathManifest": "phase-b/copy-receipt.json",
+    "sourceHtml": {
+      "path": "서울까지400km.html",
+      "bytes": 77667306,
+      "sha256": "b6e9220728359658721ad8c4a52cb5069e94ace0d42a2b67bf4d4f5cb5bfdb56"
+    },
+    "aitAliases": [
+      {
+        "path": "caravan.ait",
+        "bytes": 62162909,
+        "sha256": "5c7fcdd4e7c0eb2bf35127bdf327630ce749559448ba4187554ad77c84e5ca8b",
+        "header": "AITBUNDL"
+      },
+      {
+        "path": "caravanproject.ait",
+        "bytes": 62162909,
+        "sha256": "5c7fcdd4e7c0eb2bf35127bdf327630ce749559448ba4187554ad77c84e5ca8b",
+        "header": "AITBUNDL"
+      },
+      {
+        "path": "seoul400km.ait",
+        "bytes": 62162909,
+        "sha256": "5c7fcdd4e7c0eb2bf35127bdf327630ce749559448ba4187554ad77c84e5ca8b",
+        "header": "AITBUNDL"
+      }
+    ],
+    "aitWebPayload": "phase-b/ait-web-payload.json",
+    "original4175Screens": "phase-b/ui-summary.json",
+    "completedAt": "2026-09-12T12:37:41.295738+09:00",
+    "approvedWholeBranchCommit": "c667fbf9ec292cdcf7ba3bb99ce8e92427fadf37",
+    "runtimeFixCopy": "phase-b/fitter-copy-receipt.json",
+    "runtimeFixReview": "phase-b/stopped-stage-fix/review.md",
+    "finalSynchronization": "phase-b/final-sync.json"
+  },
+  "approvedWholeBranchCommit": "c667fbf9ec292cdcf7ba3bb99ce8e92427fadf37",
+  "deliveredAt": "2026-09-12T12:37:41.295738+09:00",
+  "approvedDeliveryCandidate": "a68e0cfaf5a943c9e43e6155cbc12337c3e15d88",
+  "approvedRuntimeFixCommit": "0d54de3946df531694023ad8787950f9879bf585",
+  "task8CampaignRuntime": {
+    "gameBuild": "2026-09-11-director-journey",
+    "sourceHtmlBytes": 77666839,
+    "sourceHtmlSha256": "1c5601994277f1603e0d50c164fdab432b561d4c9d0700bbe07c867c78de9d07",
+    "htmlAdvisoryBytes": 32000000,
+    "htmlHardLimitBytes": 80000000,
+    "inheritedVisualWarningCount": 58
+  },
+  "expectedFinalRuntime": {
+    "gameBuild": "2026-09-11-director-journey",
+    "sourceHtmlBytes": 77667306,
+    "sourceHtmlSha256": "b6e9220728359658721ad8c4a52cb5069e94ace0d42a2b67bf4d4f5cb5bfdb56",
+    "htmlAdvisoryBytes": 32000000,
+    "htmlHardLimitBytes": 80000000,
+    "inheritedVisualWarningCount": 58
+  }
+}

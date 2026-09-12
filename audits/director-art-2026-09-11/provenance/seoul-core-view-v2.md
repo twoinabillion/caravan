@@ -1,0 +1,16 @@
+# seoul-core-view-v2 — Task 6 candidate
+
+Generated 2026-09-11 with built-in image tool. All four mandatory canonical references plus the original event image were attached, inspected first. Original generated file: /Users/sang/.codex/generated_images/01a08e2d-b6aa-7212-a5bf-9fb9523df314/exec-01f8651a-1e2c-4187-99e2-0c9613ea5840.png. Native1672×941 master preserved here. Key cinematic delivery1280×720 WebP, quality86. Not yet wired or exact-game-crop verified.
+
+Controller visual inspection: Empty core/console view for any party size. Active red core, no implied companion cast; intended before final decision. Medium/color/materials match current narrative art. Gallery must be verified before wiring. Existing seoul-core/key/testimony/night/decision/liberation scenes depict fixed groups (4 or7), which cannot stand for a solo or partial party by default. Reuse this neutral view where group art would invent people; actual present-speaker portraits carry identity.
+
+## Exact prompt
+
+Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.
+
+Edit image 5, Caravan's Namsan core scene, for a player-point-of-view shot suitable for ANY party size including travelling alone. Preserve the exact ominous old industrial core, red circular central lens, asymmetrical weathered Korean municipal machinery, cables, stairways and stone, gloomy gray-blue night and tiny amber work lamps. REMOVE EVERY PERSON and their silhouettes/reflections. No people, no body parts, no dog, no vehicles. Move the viewer naturally a little forward, looking over the worn waist-high human-access console toward the huge circular red core. A small rectangular verification-chip socket and a folded worn notebook are in the foreground console; no legible writing. This is the moment before the player's final decision, core still active. One clear readable focal action: the little human verification port facing the vast red core. The console and red lens stay in the central80% of the landscape and above the bottom18% safe area. Images1-4 are mandatory canonical medium/world/people/vehicle references only; do not add their cast or vehicles. Keep film-still material texture and plausible grounded machinery, not glossy futuristic screens. Single landscape16:9,1536x864 or larger.
+
+Negative prompt: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel
+
+
+Live gallery verified 2026-09-11 before wiring: image loaded at1280×720, 135286bytes; controller inspected `seoul-core-view-v2-gallery.png` under the parent artifact directory. No exact game crop or scene wiring yet.
