@@ -65,6 +65,18 @@ def assert_same_rail(reference, candidate, label, tolerance=1.0):
     )
 
 
+def font_px(page, selector):
+    value = page.evaluate(
+        """selector => {
+          const node=document.querySelector(selector);
+          return node&&node.isConnected?getComputedStyle(node).fontSize:'';
+        }""",
+        selector,
+    )
+    assert value, f"missing computed font size for {selector}"
+    return float(value.removesuffix("px"))
+
+
 def check_viewport(playwright, width, height):
     browser = playwright.chromium.launch(channel="chrome")
     page = browser.new_page(viewport={"width": width, "height": height})
@@ -90,12 +102,21 @@ def check_viewport(playwright, width, height):
     ]
     assert tabs.first.get_attribute("aria-selected") == "true"
     assert tabs.first.evaluate("node => node.classList.contains('active')")
+    assert page.locator(".quest-ledger-summary").is_hidden()
     card = page.locator(".quest-ledger-card.quest-kind-main").first
     assert card.is_visible()
     card_text = card.inner_text()
-    for label in ("왜 이 일을 하나", "지금 할 일", "길을 놓쳤다면"):
+    for label in ("왜 이 일을 하나", "지금 할 일"):
         assert label in card_text, (label, card_text)
+    assert "길을 놓쳤다면" not in card_text, card_text
     assert card.locator(".quest-main-steps").count() == 1
+    if width <= 380:
+        term_font = font_px(page, ".quest-ledger-card dt")
+        detail_font = font_px(page, ".quest-ledger-card dd")
+        assert term_font >= 11, (width, height, term_font)
+        assert detail_font >= 13, (width, height, detail_font)
+        step_detail_font = font_px(page, ".quest-main-steps small")
+        assert step_detail_font >= 11, (width, height, step_detail_font)
     list_box = box(page, ".quest-ledger-list")
     card_box = box(page, ".quest-ledger-card.quest-kind-main")
     assert card_box["x"] >= list_box["x"] + 8
@@ -119,6 +140,28 @@ def check_viewport(playwright, width, height):
 
     page.click("#dk-road")
     page.wait_for_timeout(80)
+    for selector in (
+        ".nav-route-metrics small",
+        ".nav-map-region small",
+        ".nav-route-facts small",
+    ):
+        assert font_px(page, selector) >= 9, selector
+    route_name_style = page.evaluate(
+        """()=>{
+          const node=document.querySelector('.nav-map-region b');
+          return {
+            fontSize:getComputedStyle(node).fontSize,
+            whiteSpace:getComputedStyle(node).whiteSpace,
+            textOverflow:getComputedStyle(node).textOverflow,
+            scrollWidth:node.scrollWidth,
+            clientWidth:node.clientWidth
+          };
+        }"""
+    )
+    assert float(route_name_style["fontSize"].removesuffix("px")) >= 11
+    assert route_name_style["whiteSpace"] != "nowrap"
+    assert route_name_style["textOverflow"] != "ellipsis"
+    assert route_name_style["scrollWidth"] <= route_name_style["clientWidth"] + 1
     page.locator(".nav-route-map[data-open-map]").evaluate("node => node.click()")
     page.wait_for_timeout(80)
     assert page.locator("#ovl-map .map-tool-tabs").count() == 0
@@ -182,6 +225,7 @@ def check_viewport(playwright, width, height):
         })"""
     )
     assert len(pocket_boxes) == len(count_boxes) == len(icon_boxes) == 4
+    pocket_grid = box(page, ".bag-pockets")
     for pocket, count, icon in zip(pocket_boxes, count_boxes, icon_boxes):
         pocket_center = pocket["x"] + pocket["width"] / 2
         count_center = count["x"] + count["width"] / 2
@@ -191,6 +235,19 @@ def check_viewport(playwright, width, height):
         assert pocket["x"] >= bag_prop["x"] - 1
         assert pocket["x"] + pocket["width"] <= bag_prop["x"] + bag_prop["width"] + 1
         assert pocket["y"] <= count["y"] <= pocket["y"] + pocket["height"]
+        assert pocket["y"] + pocket["height"] <= pocket_grid["y"] + pocket_grid["height"] + 1, (
+            pocket,
+            pocket_grid,
+        )
+
+    if width <= 390:
+        name_boxes = page.locator(".bag-pocket-name").evaluate_all(
+            """nodes => nodes.map(node => {
+              const r=node.getBoundingClientRect();
+              return {width:r.width,height:r.height};
+            })"""
+        )
+        assert all(item["width"] > 20 and item["height"] > 10 for item in name_boxes)
 
     first_pocket = page.locator(".bag-pocket").first
     selected_style = page.locator(".bag-pocket.selected").evaluate(
@@ -206,6 +263,9 @@ def check_viewport(playwright, width, height):
     page.click('[data-bag-item="의약품"]')
     page.wait_for_timeout(80)
     detail_panel = box(page, ".bag-detail")
+    assert detail_panel["y"] >= max(
+        pocket["y"] + pocket["height"] for pocket in pocket_boxes
+    ) - 1
     detail_reference = box(page, ".bag-detail-copy")
     assert_same_rail(
         detail_reference, box(page, ".bag-detail-heading"), "bag detail heading"
@@ -220,6 +280,16 @@ def check_viewport(playwright, width, height):
     assert page.locator(".bag-detail-heading span").inner_text() == "의약품"
     assert page.locator(".bag-detail-heading b").inner_text().endswith("개")
     assert page.locator('[data-bag-action="의약품"]').count() == 0
+    if width <= 390:
+        detail_copy_style = page.locator(".bag-detail p").evaluate(
+            """node => ({
+              whiteSpace:getComputedStyle(node).whiteSpace,
+              scrollHeight:node.scrollHeight,
+              clientHeight:node.clientHeight
+            })"""
+        )
+        assert detail_copy_style["whiteSpace"] == "normal"
+        assert detail_copy_style["scrollHeight"] <= detail_copy_style["clientHeight"] + 1
 
     numeric_variant = page.locator(".bag-pocket-count b").first.evaluate(
         "node => getComputedStyle(node).fontVariantNumeric"

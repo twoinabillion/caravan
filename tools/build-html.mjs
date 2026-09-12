@@ -25,7 +25,7 @@ const before = [
   'src/02-dom.html', 'src/03-data.js'
 ];
 const after = [
-  'src/03i-story-expansion.js', 'src/03j-camp-conversations.js', 'src/03k-main-evidence.js', 'src/03l-main-recovery.js',
+  'src/03i-story-expansion.js', 'src/03j-camp-conversations.js', 'src/03k-main-evidence.js', 'src/03l-main-recovery.js', 'src/03m-finale-reading.js',
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
   'src/05-scene.js', 'src/06-mapgraph.js',

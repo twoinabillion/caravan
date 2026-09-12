@@ -4,7 +4,7 @@ import json,os,sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'artifacts/director-pass-2026-09-11/camp-task2'
+OUT=Path(os.environ.get('CARAVAN_CAPTURE_DIR',str(ROOT/'artifacts/director-pass-2026-09-11/camp-task2')))
 URL=os.environ.get('CARAVAN_LIVE_URL','http://127.0.0.1:4176/game?caravan-live=1')
 
 def open_camp(frame):
@@ -85,8 +85,14 @@ def main():
             assert frame.locator(f'.chat-msg[data-speaker="{cid}"]').count()>=1
             choices=frame.locator('.event-choice-dock .choice[data-i]')
             assert choices.count()==2
-            rects=choices.evaluate_all('(nodes)=>nodes.map(n=>({x:n.getBoundingClientRect().x,right:n.getBoundingClientRect().right,bottom:n.getBoundingClientRect().bottom}))')
-            assert all(r['x']>=0 and r['right']<=360 and r['bottom']<=780 for r in rects),rects
+            rects=[]
+            # Responses follow the conversation in the same scroll container.
+            for choice in choices.all():
+                choice.scroll_into_view_if_needed()
+                rect=choice.bounding_box()
+                rects.append(rect)
+                assert rect and rect['x']>=0 and rect['x']+rect['width']<=360 and rect['y']>=0 and rect['y']+rect['height']<=780,rect
+                assert rect['height']>=44
             frame.locator('.event-choice-dock .choice[data-i="1"]').click()
             frame.evaluate('UI.finishStory()')
             speakers=frame.locator('.chat-msg').evaluate_all('(nodes)=>nodes.map(n=>n.dataset.speaker)')

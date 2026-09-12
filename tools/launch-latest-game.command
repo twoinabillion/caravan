@@ -50,7 +50,7 @@ fi
 echo '3/4 최신 HTML로 AIT 재빌드'
 (
   cd "$PROJECT_DIR"
-  CARAVAN_HTML_READY=1 npm run build:toss
+  npm run build:toss
 ) || fail 'AIT 빌드에 실패했습니다.'
 
 [[ -f "$PROJECT_DIR/$GAME_NAME" ]] || fail '최신 게임 HTML을 찾을 수 없습니다.'

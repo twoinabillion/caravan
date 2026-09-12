@@ -4,6 +4,22 @@ G.presentationEvent = id=>[...D.events,...D.seoulStops,D.seoulOpenEvent,D.gateEv
   D.bridgeEvent,D.onboardingMission].find(event=>event&&event.id===id)||null;
 G.presentationCopy = value=>JSON.parse(JSON.stringify(value));
 G.presentationText = value=>typeof value==='string'?value.slice(0,40000):'';
+// Reading state belongs to the existing gameplay receipt, including the two
+// specialized owners. It never contains executable effects or rendered HTML.
+G.presentationOwner = eventId=>{
+  if(S?.pendingPresentation?.eventId===eventId) return S.pendingPresentation;
+  if(G.openingPending()?.id===eventId) return S.opening;
+  const camp=G.currentCampConversation();
+  return camp?.id===eventId?camp:null;
+};
+G.presentationReading = value=>{
+  if(!value||typeof value.eventId!=='string'||!['event','outcome'].includes(value.phase)) return null;
+  return {eventId:value.eventId,phase:value.phase,view:G.presentationView(value.view),
+    history:G.presentationView(value.history),selection:G.presentationText(value.selection),
+    updates:(Array.isArray(value.updates)?value.updates:[]).slice(-40).map(row=>({
+      title:G.presentationText(row?.title),next:G.presentationText(row?.next),
+      kind:row?.kind==='main'?'main':'side'}))};
+};
 G.presentationView = view=>{
   if(!view||!Array.isArray(view.turns)||!view.turns.length) return null;
   const kinds=['dialogue','narration','ai','radio','record','letter','thought'];
@@ -16,7 +32,8 @@ G.presentationView = view=>{
     });
   if(!turns.length) return null;
   return {turns,index:clamp(Math.floor(Number(view.index)||0),0,turns.length-1),
-    knownSpeaker:view.knownSpeaker===true,
+    knownSpeaker:view.knownSpeaker===true,readingRecord:G.presentationText(view.readingRecord),
+    recordOpen:view.recordOpen===true,
     sceneKeys:Array.isArray(view.sceneKeys)?view.sceneKeys.filter(key=>typeof key==='string'&&D.scenes[key]).slice(0,12):[]};
 };
 G.validatePresentation = value=>{
@@ -27,6 +44,7 @@ G.validatePresentation = value=>{
   if(value.phase==='transition') return row;
   row.text=G.presentationText(value.text);
   row.view=G.presentationView(value.view);
+  row.reading=G.presentationReading(value.reading);
   if(value.phase==='result'){
     const ci=value.choiceIndex,oi=value.outcomeIndex;
     if(typeof value.text!=='string'||!Number.isInteger(ci)||!Number.isInteger(oi)||!event.choices[ci]?.out?.[oi]) return null;
@@ -56,16 +74,28 @@ G.beginPresentation = event=>{
   return S.pendingPresentation;
 };
 G.restorePresentationView = state=>{
+  const reading=G.presentationReading(G.presentationOwner(state.eventId)?.reading);
+  if(reading?.eventId===state.eventId&&reading.phase===state.phase){
+    if(reading.view) Object.assign(state,G.presentationCopy(reading.view));
+    if(state.phase==='outcome') Object.assign(state,{history:reading.history,
+      selection:reading.selection,questUpdates:reading.updates});
+    return;
+  }
   const row=S.pendingPresentation;
   if(row&&row.eventId===state.eventId&&row.phase===(state.phase==='outcome'?'result':'event')&&row.view)
     Object.assign(state,G.presentationCopy(row.view));
 };
 G.capturePresentationView = state=>{
-  const row=S&&S.pendingPresentation;
-  if(!row||row.eventId!==state.eventId||row.phase!==(state.phase==='outcome'?'result':'event')) return;
-  row.view=G.presentationView(state); G.save();
+  const owner=G.presentationOwner(state.eventId);
+  if(!owner) return;
+  // showEvent briefly mounts the event shell while restoring a saved result.
+  // Do not overwrite that result's reading position with the shell's first turn.
+  if(state.phase==='event'&&(owner.phase==='result'||owner.pendingResult||owner.choiceId)) return;
+  owner.reading=G.presentationReading({eventId:state.eventId,phase:state.phase,
+    view:state,history:state.history,selection:state.selection,updates:state.questUpdates});
+  G.save();
 };
-G.resolvePresentedChoice = (event,choice)=>{
+G.resolvePresentedChoice = (event,choice,history=null)=>{
   if(!S||S.ended) return {ok:false};
   const ci=event.choices.indexOf(choice), saved=S.pendingPresentation;
   if(ci<0) return {ok:false};
@@ -80,6 +110,8 @@ G.resolvePresentedChoice = (event,choice)=>{
   if(!ownedReceipt&&(!G.reqVisible(G.choiceReq(choice))||!req.ok)) return {ok:false,why:req.t};
   // applyFx and its nested owners save themselves. Commit their changes together
   // with the result receipt only after every effect and callback has finished.
+  const readingBefore=G.presentationReading(G.presentationOwner(event.id)?.reading);
+  const historyView=G.presentationView(history)||readingBefore?.view;
   G.presentationApplying=true;
   try{
     const own=event.campConversation?G.resolveCampChoice(event.id,choice.id)
@@ -110,6 +142,14 @@ G.resolvePresentedChoice = (event,choice)=>{
     if(!own&&!S.ended){
       S.pendingPresentation=G.validatePresentation({version:1,phase:'result',eventId:event.id,
         choiceIndex:ci,outcomeIndex:out.presentationOutcomeIndex??choice.out.indexOf(out),text,chips,combatState});
+    }
+    if(!S.ended&&(!own||own.applied)){
+      G.questLedgerSync();
+      const owner=G.presentationOwner(event.id);
+      if(owner) owner.reading=G.presentationReading({eventId:event.id,phase:'outcome',
+        history:historyView,selection:choice.label,
+        updates:[...new Map(G.questLedgerUpdates().map(row=>[row.id,row])).values()]});
+      G.clearQuestLedgerUpdates();
     }
     return {ok:true,applied:!own||own.applied,out:{...out,text},chips,combatState};
   }finally{ G.presentationApplying=false; G.save(); }

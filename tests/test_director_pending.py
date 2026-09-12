@@ -180,15 +180,18 @@ def test_corrupt_pending_record_recovers_known_final_phase(page,bad):
     assert event(page)=='seoul_decision'
 
 
-def test_result_text_and_chips_from_save_cannot_execute_html(page):
+@pytest.mark.parametrize('reading_receipt', [False, True])
+def test_result_text_and_chips_from_save_cannot_execute_html(page, reading_receipt):
     page.evaluate("G.openEventById('ev_truck_cafe')")
     choose(page)
-    page.evaluate("""()=>{const p=S.pendingPresentation;p.text='<img src=x onerror="window.injected=true">';
+    page.evaluate("""reading=>{const p=S.pendingPresentation;p.text='<img src=x onerror="window.injected=true">';
       p.view={turns:[{kind:'narration',text:p.text}],index:0};
-      p.chips=[{t:p.text,c:'\" onmouseover=\"window.injected=true'}];G.save()}""")
+      if(reading){p.reading.view=p.view;p.reading.selection=p.text;p.reading.updates=[{title:p.text,next:p.text}];}
+      else delete p.reading;
+      p.chips=[{t:p.text,c:'\" onmouseover=\"window.injected=true'}];G.save()}""", reading_receipt)
     resume(page);finish(page)
     assert not page.evaluate('!!window.injected')
-    assert page.locator('#ev-sheet .story-reader img').count()==0
+    assert page.locator('#ev-sheet .story-reader img[src="x"], #ev-sheet .story-reader [onerror]').count()==0
     assert '<img' in page.locator('#ev-sheet .story-reader').inner_text()
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression coverage for the compact cinematic story event reader."""
+"""Regression coverage for the continuous story transcript and deliberate tap progression."""
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -46,63 +46,45 @@ def check_viewport(playwright, width, height):
     )
     enter_story(page)
 
-    head = box(page, ".event-head")
-    reader = box(page, ".story-reader")
-    current = box(page, ".story-reader [data-story-entry]:last-child")
-    dock = box(page, ".event-choice-dock")
-    tap_hint = box(page, ".story-tap-hint")
-    tutorial = page.locator(".event-tutorial-note")
-    preceding = box(page, ".event-tutorial-note") if tutorial.is_visible() else head
-
-    assert reader["y"] - (preceding["y"] + preceding["height"]) <= 18, {
-        "viewport": (width, height), "preceding": preceding, "reader": reader
-    }
-    assert current["y"] - reader["y"] <= 10
-    assert reader["height"] >= 120, reader
-    assert current["y"] + current["height"] <= dock["y"]
-    # Narrative turns now use the full reader as the touch target. The hint
-    # stays inside the compact dock instead of reserving space for a button.
-    assert tap_hint["x"] >= dock["x"]
-    assert tap_hint["x"] + tap_hint["width"] <= dock["x"] + dock["width"] + 1
-    assert page.locator(".story-tap-hint").inner_text() == "화면을 탭해 다음 문장"
-    assert page.locator(".story-next").count() == 0
-    assert page.locator("[data-event-progress]").inner_text() == "1 / 4"
-    report_start = box(page, ".event-field-report")
-    scene_start = box(page, ".event-scene-frame")
-    sheet_start = box(page, "#ev-sheet")
+    reader = page.locator('.story-reader')
+    transcript = page.locator('.story-transcript')
+    assert reader.evaluate('n=>n.scrollHeight<=n.clientHeight+1')
+    assert page.locator('.story-next').is_visible()
+    assert page.locator('[data-event-progress]').inner_text() == '1 / 4'
+    sheet_start = box(page, '#ev-sheet')
     for expected in (2, 3, 4):
-        page.locator(".story-reader").click()
+        before = transcript.locator(':scope > [data-story-entry]').all_inner_texts()
+        latest = transcript.locator(':scope > [data-story-entry]').last
+        page.locator('.story-next').scroll_into_view_if_needed()
+        page.evaluate("document.querySelector('.event-scroll').scrollTop=document.querySelector('.event-scroll').scrollHeight")
+        page.wait_for_timeout(300)  # deliberate taps, outside the double-tap guard
+        latest.click()
         page.wait_for_timeout(90)
-        assert page.locator("[data-event-progress]").inner_text() == f"{expected} / 4"
-        report = box(page, ".event-field-report")
-        scene = box(page, ".event-scene-frame")
-        sheet = box(page, "#ev-sheet")
-        assert abs(report["width"] - report_start["width"]) <= 1
-        assert abs(report["x"] - report_start["x"]) <= 1
-        assert abs(report["y"] - report_start["y"]) <= 1
-        assert abs(scene["x"] - scene_start["x"]) <= 1
-        assert abs(scene["y"] - scene_start["y"]) <= 1
-        assert abs(scene["width"] - scene_start["width"]) <= 1
-        assert abs(scene["height"] - scene_start["height"]) <= 1
-        assert abs(sheet["width"] - sheet_start["width"]) <= 1
-        assert abs(sheet["height"] - sheet_start["height"]) <= 1
-    assert page.locator("#ev-sheet").get_attribute("data-story-step") == "decision"
-    page.locator(".event-choice-dock .choice[data-i]:not([disabled])").first.click()
+        assert page.locator('[data-event-progress]').inner_text() == f'{expected} / 4', (width, expected, page.locator('[data-event-progress]').inner_text(), page.locator('.event-scroll').evaluate('n=>({top:n.scrollTop,height:n.scrollHeight,client:n.clientHeight})'))
+        after = transcript.locator(':scope > [data-story-entry]').all_inner_texts()
+        assert after[:len(before)] == before
+        assert len(after) == len(before)+1
+        assert reader.evaluate('n=>n.scrollHeight<=n.clientHeight+1')
+        sheet = box(page, '#ev-sheet')
+        assert abs(sheet['width']-sheet_start['width']) <= 1
+        assert abs(sheet['height']-sheet_start['height']) <= 1
+    assert page.locator('#ev-sheet').get_attribute('data-story-step') == 'decision'
+    assert page.locator('.event-choice-dock').evaluate("n=>n.parentElement.matches('.story-transcript')")
+    before = transcript.locator(':scope > [data-story-entry]').all_inner_texts()
+    page.evaluate("window.__priorFrame=document.querySelector('.event-scene-frame');window.__priorScene=window.__priorFrame.dataset.sceneKey")
+    page.locator('.event-choice-dock .choice[data-i]:not([disabled])').first.click()
     page.wait_for_timeout(110)
-    assert page.locator("#ev-sheet").get_attribute("data-story-phase") == "outcome"
-    assert page.locator("#ev-sheet").get_attribute("data-story-step") == "result"
-    outcome_report = box(page, ".event-field-report")
-    outcome_scene = box(page, ".event-scene-frame")
-    outcome_sheet = box(page, "#ev-sheet")
-    assert abs(outcome_report["width"] - report_start["width"]) <= 1
-    assert abs(outcome_report["x"] - report_start["x"]) <= 1
-    assert abs(outcome_report["y"] - report_start["y"]) <= 1
-    assert abs(outcome_scene["x"] - scene_start["x"]) <= 1
-    assert abs(outcome_scene["y"] - scene_start["y"]) <= 1
-    assert abs(outcome_scene["width"] - scene_start["width"]) <= 1
-    assert abs(outcome_scene["height"] - scene_start["height"]) <= 1
-    assert abs(outcome_sheet["width"] - sheet_start["width"]) <= 1
-    assert abs(outcome_sheet["height"] - sheet_start["height"]) <= 1
+    assert page.locator('#ev-sheet').get_attribute('data-story-phase') == 'outcome'
+    assert transcript.locator(':scope > [data-story-entry]').all_inner_texts()[:len(before)] == before
+    assert page.locator('.story-selected-action').count() == 1
+    assert page.evaluate("document.querySelector('.event-scene-frame').dataset.sceneKey!==window.__priorScene||document.querySelector('.event-scene-frame')===window.__priorFrame")
+    page.evaluate('UI.finishStory()')
+    done = page.locator('[data-r=ok]')
+    done.scroll_into_view_if_needed()
+    rect = done.bounding_box()
+    assert rect and rect['y']>=0 and rect['y']+rect['height']<=height+1
+    done.click()
+    assert page.locator('#ev-wrap.on').count() == 0
     assert not errors, errors
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
     browser.close()

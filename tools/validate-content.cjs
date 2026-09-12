@@ -84,6 +84,21 @@ const validateSpeaker = (speaker, where) => {
 };
 const structuredTurnKinds = new Set(['dialogue', 'narration', 'ai', 'radio', 'record', 'letter', 'thought']);
 function validateStructuredTurns(turns, where) {
+  if (typeof turns === 'function') {
+    // Authored finale turns vary by the actual decision and the present crew.
+    let valid = true;
+    for (const method of ['transfer', 'sleep', 'quarantine']) {
+      for (const party of [[], ['minji'], [...compIds]]) {
+        const state = {party, flags:{[`core_${method}`]:true,
+          mother_broadcast_ready:party.length > 0, father_fate_known:party.length > 0,
+          traces_presented:party.length > 1, full_crew_testimony:party.length === compIds.size}};
+        const branch = `${where}[${method}:${party.length}]`;
+        try { valid = validateStructuredTurns(turns(state), branch) && valid; }
+        catch (error) { fail(branch, `구조화 본문 생성 실패: ${error.message}`); valid = false; }
+      }
+    }
+    return valid;
+  }
   need(Array.isArray(turns) && turns.length > 0, where, '구조화 본문이 비었거나 배열이 아님');
   if (!Array.isArray(turns)) return false;
   for (const [index, turn] of turns.entries()) {
@@ -222,6 +237,7 @@ for (const event of events) {
     (choice.out || []).forEach((outcome, oi) => {
       const owhere = `${cwhere}.out[${oi}]`;
       need(typeof outcome.text === 'string' || typeof outcome.text === 'function', owhere, '결과 본문 없음');
+      if (outcome.turns !== undefined) validateStructuredTurns(outcome.turns, owhere);
       need(outcome.p === undefined || (Number.isFinite(outcome.p) && outcome.p > 0), owhere, '확률 p가 0 이하이거나 숫자가 아님');
       validateFx(outcome.fx, owhere);
       for (const speaker of outcome.turnSpeakers || []) validateSpeaker(speaker, owhere);

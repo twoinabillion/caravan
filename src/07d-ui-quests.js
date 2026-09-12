@@ -120,6 +120,8 @@ const QuestLedgerUI={
     const ratio=Math.max(0,Math.min(100,Math.round((progress.have/Math.max(1,progress.need))*100)));
     const canTrack=row.kind!=='main'&&row.status!=='completed';
     const completed=row.status==='completed'||row.kind==='completed';
+    const guidanceKey=value=>String(value||'').replace(/^길을\s*놓쳤다면\s*/,'').replace(/[\s‘’“”'".,·]/g,'');
+    const showRecovery=row.recovery&&guidanceKey(row.recovery)!==guidanceKey(row.next);
     const steps=Array.isArray(row.steps)&&row.steps.length?`<ol class="quest-main-steps" aria-label="임무 진행 단계">${row.steps.map(step=>`<li class="is-${this.esc(step.state||'upcoming')}"><i aria-hidden="true"></i><span><b>${this.esc(step.label)}</b>${step.detail?`<small>${this.esc(step.detail)}</small>`:''}</span></li>`).join('')}</ol>`:'';
     return `<article class="quest-ledger-card quest-kind-${this.esc(row.kind)} ${row.tracked?'is-tracked':''}">
       <div class="quest-card-top"><span>${this.esc(row.eyebrow)}</span>${row.tracked&&row.kind!=='main'?'<b>사이드 미션 추적 중</b>':''}</div>
@@ -131,7 +133,7 @@ const QuestLedgerUI={
       <dl>
         <div class="quest-next"><dt>지금 할 일</dt><dd>${this.esc(row.next)}</dd></div>
         ${completed&&row.expected?`<div><dt>결과</dt><dd>${this.esc(row.expected)}</dd></div>`:''}
-        ${row.recovery?`<div class="quest-recovery"><dt>길을 놓쳤다면</dt><dd>${this.esc(row.recovery)}</dd></div>`:''}
+        ${showRecovery?`<div class="quest-recovery"><dt>막혔을 때</dt><dd>${this.esc(row.recovery)}</dd></div>`:''}
       </dl>
       ${steps}
       ${canTrack?`<button class="quest-track-button" type="button" data-quest-track="${this.esc(row.id)}">${row.tracked?'목록 고정 해제':'목록 위에 고정'}</button>`:''}
@@ -145,12 +147,14 @@ const QuestLedgerUI={
     if(!S) return;
     const entries=G.questLedgerEntries();
     const tracked=entries.filter(row=>row.tracked&&row.kind!=='main'&&row.status!=='completed').length;
-    const main=entries.find(row=>row.kind==='main');
     const trackedOrder=G.ensureQuestLedger().tracked;
     const focusedSide=entries.find(row=>row.id===trackedOrder[trackedOrder.length-1]&&row.kind!=='main'&&row.status!=='completed');
-    this.root.querySelector('.quest-ledger-summary').innerHTML=`
-      <span><b>메인 스토리${main&&main.act?` · ${this.esc(main.act)}`:''}</b><strong>${this.esc(main&&main.next||'여정을 시작한다.')}</strong>${focusedSide?`<small>추적 중 · ${this.esc(focusedSide.next)}</small>`:''}</span>
-      <em>사이드 미션 ${tracked}/2</em>`;
+    const sideCount=entries.filter(row=>(row.kind==='companion'||row.kind==='local')&&row.status!=='completed').length;
+    const summary=this.root.querySelector('.quest-ledger-summary');
+    summary.hidden=this.tab!=='side';
+    summary.innerHTML=`
+      <span><b>사이드 미션</b><strong>${sideCount}개 기록 · 최대 2개 추적</strong>${focusedSide?`<small>현재 추적 중 · ${this.esc(focusedSide.title)}</small>`:''}</span>
+      <em>${tracked}/2 추적</em>`;
     this.root.querySelectorAll('[data-quest-tab]').forEach(button=>{
       const active=button.dataset.questTab===this.tab;
       button.classList.toggle('active',active);
@@ -169,6 +173,11 @@ const QuestLedgerUI={
       :`<div class="quest-ledger-empty"><b>기록된 임무가 없다</b><p>${this.tab==='side'?'동료의 부탁이나 배달, 조달, 지역 미션을 맡으면 이곳에 기록된다.':'완료한 미션이 생기면 결과를 다시 볼 수 있다.'}</p></div>`;
   },
   showUpdate(){
+    // An event publishes its own saved update at the end of the conversation.
+    if(G.presentationApplying||document.querySelector('#ev-wrap.on .event-mode')){
+      document.querySelector('#quest-update-ribbon')?.remove();
+      return;
+    }
     if(!S||this.isOpen()) return;
     const rows=G.questLedgerUpdates(); if(!rows.length) return;
     const row=rows[rows.length-1];

@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
-const source = ['03-data.js','03k-main-evidence.js','03l-main-recovery.js'].map(file=>fs.readFileSync(path.join(root,'src',file),'utf8')).join('\n');
+const source = ['03-data.js','03k-main-evidence.js','03l-main-recovery.js','03m-finale-reading.js'].map(file=>fs.readFileSync(path.join(root,'src',file),'utf8')).join('\n');
 const D = new Function(source + '\nreturn D;')();
 const dump = process.argv.includes('--dump');
 

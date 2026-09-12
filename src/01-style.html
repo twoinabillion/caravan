@@ -857,8 +857,9 @@ html.ui-reduce-motion #arrival-scene,html.ui-reduce-motion #arrival-scene .arriv
 .map-live-head .road-tool-close:focus-visible{outline:2px solid #e0a343;outline-offset:-3px}
 .map-navigator #mapwrap{position:absolute;top:15.9%;left:7.6%;right:17.8%;bottom:19.4%;border-radius:6%/4%;overflow:hidden;background:transparent}
 .map-navigator #mapcv{inset:0;opacity:.92;filter:saturate(.92) brightness(1.08)}
-.map-navigator #nodecard{display:none;position:absolute;left:18.2%;right:43.2%;bottom:6.35%;height:7.35%;box-sizing:border-box;
-  grid-template-columns:minmax(0,39%) minmax(0,61%);align-items:stretch;min-width:0;padding:0;overflow:hidden;
+/* Align with the shell's lower black display, clear of its bezel and brass plate. */
+.map-navigator #nodecard{display:none;position:absolute;left:20.8%;right:42.3%;bottom:9.8%;height:7.35%;box-sizing:border-box;
+  grid-template-columns:minmax(0,41%) minmax(0,59%);align-items:stretch;min-width:0;padding:0;overflow:hidden;
   border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none}
 .map-navigator #nodecard.on{display:grid}
 .map-compact-place{position:relative;inset:auto;display:flex;min-width:0;flex-direction:column;justify-content:center;padding:0 8% 0 0;
@@ -3152,9 +3153,9 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   border:1px solid rgba(255,196,109,.72);border-radius:4px;background:rgba(5,12,18,.86);color:#ffd18a;
   font:850 15px/1 var(--mono);box-shadow:0 2px 8px rgba(0,0,0,.5),inset 0 1px rgba(255,226,173,.08);transform:none!important;pointer-events:none}
 .route-console-v3 .nav-route-map:hover .nav-map-open-cue,.route-console-v3 .nav-route-map:focus-visible .nav-map-open-cue{border-color:#ffd18a;background:rgba(74,48,22,.92);color:#fff1d5}
-.route-console-v3 .nav-map-region{position:absolute;z-index:3;top:8px;left:8px;display:grid;max-width:calc(100% - 58px);gap:2px;padding:5px 7px 4px;
+.route-console-v3 .nav-map-region{position:absolute;z-index:3;top:8px;right:43px;left:8px;display:grid;max-width:none;gap:3px;padding:6px 8px 5px;
   border-left:2px solid #58c9bd;background:rgba(4,12,17,.78);box-shadow:0 2px 7px rgba(0,0,0,.34);pointer-events:none}
-.route-console-v3 .nav-map-region small{color:#69cfc4;font:800 7.5px/1 var(--mono);letter-spacing:.1em}.route-console-v3 .nav-map-region b{overflow:hidden;color:#d8dfdc;font:800 9.5px/1.2 var(--sans);white-space:nowrap;text-overflow:ellipsis}
+.route-console-v3 .nav-map-region small{color:#69cfc4;font:800 9px/1 var(--mono);letter-spacing:.08em}.route-console-v3 .nav-map-region b{overflow:visible;color:#d8dfdc;font:800 11px/1.22 var(--sans);white-space:normal;text-overflow:clip;word-break:keep-all}
 .route-console-v3 .nav-map-scale{position:absolute;z-index:2;left:4%;top:7%;display:grid;gap:2px;padding:5px 7px 4px;
   border-left:2px solid #61cfc2;background:rgba(5,13,22,.72);box-shadow:0 2px 7px rgba(0,0,0,.25)}
 .route-console-v3 .nav-map-scale small{color:#71889a;font:800 8px/1 var(--mono);letter-spacing:.11em}
@@ -5952,16 +5953,51 @@ html body #app #ev-wrap.on #ev-sheet.event-mode[data-event-id="onboarding_main_m
   min-height:94px!important;
   overflow:visible!important;
 }
-/* Winning narrow-route override: later compact rules also use !important, so
-   anchor this to the complete rendered screen path. Mission guidance now lives
-   on the destination card; the released summary row belongs to the route map. */
-@media (max-width:359px){
-  html body #frame #app #main #panel #journey-mode-route.journey-mode-panel
-  .route-console.route-console-v3 > .route-console-screen{
-    grid-template-rows:44px 154px 58px 142px!important;
-    row-gap:2px!important;
-    align-content:start!important;
-    overflow-y:auto!important;
+/* Route layout owner: reserve the forecast and explicit departure action,
+   then divide the remaining space between the map and destination preview. */
+html body #app #panel .journey-mode-console{
+  display:flex!important;flex-direction:column!important;box-sizing:border-box!important;
+  width:100%!important;height:100%!important;min-height:0!important;max-height:100%!important;
+  margin:0!important;
+}
+#app #panel .journey-mode-panel{
+  flex:1 1 auto!important;min-height:0!important;
+}
+#app #panel #journey-mode-route .route-console-v3,
+#app #panel .journey-local-panel{
+  height:100%!important;min-height:0!important;max-height:100%!important;aspect-ratio:auto!important;
+}
+html body #frame #app #main #panel #journey-mode-route.journey-mode-panel
+.route-console.route-console-v3 > .route-console-screen{
+  top:48px!important;bottom:10px!important;height:auto!important;
+  grid-template-rows:44px minmax(64px,1fr) 80px auto!important;
+  row-gap:4px!important;align-content:stretch!important;overflow-y:auto!important;
+}
+#app #journey-mode-route .nav-route-action{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:4px;min-width:0;
+  padding:0 8px 4px;background:#06101a;
+}
+#app #journey-mode-route .nav-destination-carousel{
+  height:80px!important;min-height:80px!important;grid-template-rows:56px 24px!important;
+  align-self:stretch!important;padding:0 4px!important;gap:0 3px!important;
+}
+#app #journey-mode-route .nav-destination-viewport,
+#app #journey-mode-route .nav-destination-track{
+  height:56px!important;min-height:56px!important;align-items:center!important;
+}
+#app #journey-mode-route .nav-destination-card{
+  height:56px!important;min-height:56px!important;aspect-ratio:auto!important;
+}
+#app #journey-mode-route .nav-depart-blocked{
+  position:static;display:block;margin:0;padding:2px 0;background:transparent;color:#f4a89b;
+  font:700 11px/1.35 var(--sans);text-align:center;
+}
+@container game (max-width:680px){
+  html[data-travel-state="stopped"][data-journey-mode="route"] #stage{
+    flex-basis:clamp(120px,calc(100dvh - 454px),280px);
+  }
+  html[data-travel-state="stopped"][data-journey-mode="route"] .journey-mode-console{
+    margin-top:0;
   }
 }
 
@@ -6000,15 +6036,12 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   overflow:visible!important;
   scroll-snap-align:none!important;
 }
-/* A complete stop card is 103px after its content-driven sizing. Keep at least
-   one full card visible in the 320px console while the list itself scrolls. */
-@media (max-width:359px){
-  html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
-  .journey-local-screen.stop-action-console{
-    height:112px!important;
-    min-height:112px!important;
-    max-height:112px!important;
-  }
+/* Both modes share the physical switch and viewport. The stay list can scroll
+   without resizing scenery or pushing the destination switch off screen. */
+html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
+.journey-local-screen.stop-action-console{
+  top:48px!important;bottom:10px!important;height:auto!important;
+  min-height:0!important;max-height:none!important;
 }
 </style>
 
@@ -6223,9 +6256,9 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 </style>
 <style id="embedded-event-choices">
   /* Event decisions belong to the manuscript, not a second bottom viewport. */
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-scroll,
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]):has(.event-choice-dock .combat-odds) .event-scroll,
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]):has(.event-choice-dock .choices > .choice:nth-child(3)) .event-scroll {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-scroll,
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"]:has(.event-choice-dock .combat-odds) .event-scroll,
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"]:has(.event-choice-dock .choices > .choice:nth-child(3)) .event-scroll {
     flex: 1 1 auto !important;
     height: auto !important;
     min-height: 0 !important;
@@ -6233,9 +6266,9 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     padding-bottom: 16px !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-field-report > .event-choice-dock,
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-field-report > .event-choice-dock:has(.choices > .choice:nth-child(3)),
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]):has(.event-choice-dock .combat-odds) .event-field-report > .event-choice-dock {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-transcript > .event-choice-dock,
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-transcript > .event-choice-dock:has(.choices > .choice:nth-child(3)),
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"]:has(.event-choice-dock .combat-odds) .story-transcript > .event-choice-dock {
     display: block !important;
     flex: none !important;
     width: auto !important;
@@ -6251,11 +6284,39 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     box-shadow: none !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice-dock-head {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-dock-head {
+    display: block !important;
+    margin: 0 0 9px !important;
+    color: #5a4730 !important;
+    font: 800 13px/1.35 var(--sans) !important;
+    letter-spacing: 0 !important;
+  }
+
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-choice-more {
+    display: block !important;
+    position: fixed !important;
+    z-index: 12 !important;
+    right: 18px !important;
+    bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    left: 18px !important;
+    width: fit-content !important;
+    max-width: calc(100vw - 36px) !important;
+    margin: 0 auto !important;
+    padding: 8px 12px !important;
+    border: 1px solid rgba(128,90,41,.38) !important;
+    border-radius: 999px !important;
+    background: rgba(238,224,190,.96) !important;
+    box-shadow: 0 4px 14px rgba(47,36,23,.2) !important;
+    color: #684719 !important;
+    font: 700 12px/1.4 var(--sans) !important;
+    pointer-events: none !important;
+  }
+
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-choice-more[hidden] {
     display: none !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-choice-dock > .choices {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock > .choices {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
     gap: 8px !important;
@@ -6266,7 +6327,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     overflow: visible !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-choice-dock > .choices > .choice {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock > .choices > .choice {
     display: flex !important;
     flex: none !important;
     flex-direction: column !important;
@@ -6277,21 +6338,16 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     height: auto !important;
     margin: 0 !important;
     padding: 11px 14px !important;
-    border: 1px solid rgba(128, 88, 43, 0.32) !important;
-    border-left: 3px solid #a96f32 !important;
-    border-radius: 3px !important;
-    background: rgba(245, 231, 195, 0.12) !important;
-    box-shadow: none !important;
-    color: inherit !important;
+    /* Color and surface stay with story-choice-debossed-surface. */
     text-align: left !important;
     transform: none !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-choice-dock > .choices > .choice[hidden] {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock > .choices > .choice[hidden] {
     display: none !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice-head {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-head {
     display: grid !important;
     grid-template-columns: 24px minmax(0, 1fr) !important;
     align-items: center !important;
@@ -6303,7 +6359,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     padding: 0 !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice-index {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-index {
     display: grid !important;
     place-items: center !important;
     width: 24px !important;
@@ -6314,7 +6370,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     padding: 0 !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice-title {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-title {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -6327,30 +6383,25 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     padding: 0 !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice-title > span {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-title > span {
     font-size: 15px !important;
     line-height: 1.38 !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-choice-dock > .choices > .choice:active {
-    background: rgba(245, 231, 195, 0.26) !important;
-    transform: translateY(1px) !important;
-  }
-
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-choice-dock > .choices > .choice:focus-visible {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock > .choices > .choice:focus-visible {
     outline: 2px solid #b87528 !important;
     outline-offset: 2px !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-choice-dock > .choices > .choice:disabled {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock > .choices > .choice:disabled {
     opacity: 0.52 !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice-redundant-label {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-redundant-label {
     display: none !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice-index-compact {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-index-compact {
     position: static !important;
     flex: 0 0 22px !important;
     width: 22px !important;
@@ -6366,28 +6417,68 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     transform: none !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice strong {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice strong {
     font-size: 15px !important;
     line-height: 1.38 !important;
   }
 
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice .req,
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice .risk,
-  #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .choice .combat-odds {
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice .req,
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice .risk,
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice .combat-odds {
     margin-top: 4px !important;
   }
 
   @media (max-width: 560px) {
-    #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-field-report > .event-choice-dock {
+    #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-transcript > .event-choice-dock {
       margin-top: 14px !important;
       padding-top: 10px !important;
     }
 
-    #ev-sheet.event-mode.choices-embedded:not([data-event-kind="combat"]) .event-choice-dock > .choices > .choice {
+    #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock > .choices > .choice {
       min-height: 54px !important;
       padding: 10px 12px !important;
     }
   }
+
+  /* A single outer scroller owns the complete conversation, including decisions. */
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-field-report {
+    display:block!important; flex:none!important; height:auto!important;
+    min-height:0!important; max-height:none!important; overflow:visible!important; aspect-ratio:auto!important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-reader {
+    display:block!important; flex:none!important; height:auto!important;
+    min-height:0!important; max-height:none!important; overflow:visible!important;
+    padding-bottom:0!important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-transcript {
+    height:auto!important; max-height:none!important; min-height:0!important;
+    padding-bottom:0!important; overflow:visible!important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .story-transcript::after {display:none!important}
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-scroll {
+    scroll-padding:12px!important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock.story-progress-dock {
+    border-top:0!important; margin-top:4px!important; padding-top:0!important;
+  }
+  #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .event-choice-dock :is(.story-next,.choice) {
+    min-height:44px!important;
+  }
+  .story-selected-action {
+    align-self:flex-end;box-sizing:border-box;width:90%;margin:16px 0 8px auto;
+    padding:12px 14px;border:1px solid #a0804c;border-radius:8px 2px 8px 8px;
+    background:#ddd0b4;color:#332c22;
+  }
+  .story-selected-action small {display:block;font-size:11px;font-weight:800;color:#735127}
+  .story-selected-action p {margin:5px 0 0;font-size:14px;line-height:1.5;word-break:keep-all}
+  .story-quest-update {margin-top:12px;padding:12px;border-left:3px solid #367d73;background:#c9d0bc;color:#253b35}
+  .story-quest-update small,.story-quest-update b {display:block;line-height:1.5}
+  .story-quest-update small {font-size:11px}
+  .story-quest-update b,.story-quest-update p {font-size:13px;line-height:1.6;word-break:keep-all}
+  .story-quest-update p {margin:5px 0 0}
+  .story-reading-record {flex:none;width:100%;box-sizing:border-box;margin:12px 0;color:#443d30;font-size:13px;line-height:1.7}
+  .story-reading-record summary {min-height:44px;box-sizing:border-box;padding:12px 4px;cursor:pointer;font-weight:800}
+  .story-reading-record>div {padding:12px;border-top:1px solid #aa9774;white-space:normal;overflow-wrap:anywhere}
 </style>
 
 <style id="embedded-recruit-decision-final">
@@ -6558,7 +6649,8 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 <style id="bag-code-panel-final">
   #status-prop.bag-supply-roll {
     width: min(calc(100% - 24px), 440px) !important;
-    height: min(calc(100dvh - var(--tool-dock-h, 90px) - var(--safe-top) - var(--safe-bottom) - 20px), 452px) !important;
+    height: auto !important;
+    max-height: calc(100dvh - var(--tool-dock-h, 90px) - var(--safe-top) - var(--safe-bottom) - 20px) !important;
     min-height: 0 !important;
     margin: 0 auto !important;
     padding: 0 !important;
@@ -6574,13 +6666,21 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     display: none !important;
   }
 
+  #status-prop.bag-supply-roll > #st-body {
+    position: static !important;
+    inset: auto !important;
+    height: auto !important;
+    max-height: inherit !important;
+  }
+
   #status-prop .bag-live-content {
     box-sizing: border-box !important;
     display: grid !important;
-    grid-template-rows: auto auto auto minmax(76px, 86px) 64px !important;
+    grid-template-rows: auto auto auto max-content auto !important;
     gap: 9px !important;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
+    max-height: inherit !important;
     padding: 14px !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
@@ -6792,10 +6892,52 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 
   #status-prop .bag-meal-plan {
     display: grid !important;
-    grid-template-columns: 1.15fr 0.85fr 1fr !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 0 !important;
     padding-top: 8px !important;
     border-top: 1px solid rgba(239, 230, 213, 0.1) !important;
+  }
+
+  #status-prop .bag-meal-disclosure {
+    min-width: 0 !important;
+    padding-top: 0 !important;
+    border-top: 1px solid rgba(239, 230, 213, 0.1) !important;
+  }
+
+  #status-prop .bag-meal-disclosure > summary {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    min-height: 44px !important;
+    color: #8eb8b3 !important;
+    cursor: pointer !important;
+    font: 800 10px/1.2 var(--sans) !important;
+    list-style: none !important;
+  }
+
+  #status-prop .bag-meal-disclosure > summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  #status-prop .bag-meal-disclosure > summary::after {
+    content: '＋' !important;
+    color: #efb55e !important;
+    font-size: 14px !important;
+  }
+
+  #status-prop .bag-meal-disclosure[open] > summary::after {
+    content: '－' !important;
+  }
+
+  #status-prop .bag-meal-disclosure > summary > b {
+    margin-left: auto !important;
+    color: #e8e2d5 !important;
+    font: 800 10px/1.2 var(--sans) !important;
+  }
+
+  #status-prop .bag-meal-disclosure > .bag-meal-plan {
+    padding-top: 8px !important;
   }
 
   #status-prop .bag-meal-plan > span {
@@ -6921,9 +7063,9 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     box-sizing: border-box !important;
     display: block !important;
     width: 100% !important;
-    height: 64px !important;
+    height: auto !important;
     min-height: 64px !important;
-    max-height: 64px !important;
+    max-height: none !important;
     margin: 0 !important;
     padding: 8px 12px !important;
     background: rgba(7, 11, 10, 0.72) !important;
@@ -6971,12 +7113,12 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   #status-prop .bag-detail p {
     display: block !important;
     margin: 4px 0 0 !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     color: rgba(239, 230, 213, 0.68) !important;
     font-size: 10px !important;
     line-height: 1.25 !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
   }
 
   #status-prop .bag-detail .is-primary {
@@ -6998,14 +7140,164 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     #status-prop .bag-live-content {
       padding: 14px !important;
       gap: 9px !important;
+      grid-template-rows: repeat(5, max-content) !important;
+      align-content: start !important;
     }
 
     #status-prop .bag-pockets {
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-rows: 76px !important;
+      height: auto !important;
+      overflow: hidden !important;
     }
 
     #status-prop .bag-pocket {
+      grid-template-columns: 46px minmax(0, 1fr) !important;
+      grid-template-rows: 1fr auto !important;
+      place-items: stretch !important;
+      column-gap: 8px !important;
       min-height: 76px !important;
+      height: 76px !important;
+      aspect-ratio: auto !important;
+      padding: 8px 9px !important;
+      overflow: hidden !important;
+    }
+
+    #status-prop .bag-pocket .ico {
+      grid-column: 1 !important;
+      grid-row: 1 / 3 !important;
+      align-self: center !important;
+      justify-self: center !important;
+      width: 44px !important;
+      height: 44px !important;
+      transform: none !important;
+    }
+
+    #status-prop .bag-pocket-name {
+      position: static !important;
+      grid-column: 2 !important;
+      grid-row: 1 !important;
+      align-self: end !important;
+      width: auto !important;
+      height: auto !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      clip: auto !important;
+      color: #efe6d5 !important;
+      font-size: 12px !important;
+      line-height: 1.2 !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+
+    #status-prop .bag-pocket-count {
+      position: static !important;
+      inset: auto !important;
+      grid-column: 2 !important;
+      grid-row: 2 !important;
+      align-self: start !important;
+      justify-self: start !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 3px 0 0 !important;
+      color: #d7c6a8 !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    #status-prop .bag-pocket-count b,
+    #status-prop .bag-pocket-count small {
+      font-size: 11px !important;
+    }
+
+    #status-prop .bag-detail {
+      height: auto !important;
+      min-height: 78px !important;
+      max-height: none !important;
+    }
+
+    #status-prop .bag-detail p {
+      display: -webkit-box !important;
+      white-space: normal !important;
+      -webkit-box-orient: vertical !important;
+      -webkit-line-clamp: 2 !important;
+    }
+  }
+
+  @media (max-height: 650px) {
+    #status-prop .bag-live-content {
+      gap: 6px !important;
+      padding: 8px !important;
+    }
+
+    #status-prop .bag-title-row {
+      min-height: 30px !important;
+      padding-bottom: 5px !important;
+    }
+
+    #status-prop .bag-critical {
+      min-height: 50px !important;
+    }
+
+    #status-prop .bag-journey-overview {
+      min-height: 0 !important;
+      gap: 7px !important;
+      padding: 9px 10px !important;
+    }
+
+    #status-prop .bag-meal-disclosure {
+      padding-top: 0 !important;
+    }
+
+    #status-prop .bag-meal-disclosure > summary {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 8px !important;
+      color: #8eb8b3 !important;
+      cursor: pointer !important;
+      font: 800 10px/1.2 var(--sans) !important;
+      list-style: none !important;
+    }
+
+    #status-prop .bag-meal-disclosure > summary::-webkit-details-marker {
+      display: none !important;
+    }
+
+    #status-prop .bag-meal-disclosure > summary::after {
+      content: '＋' !important;
+      color: #efb55e !important;
+      font-size: 14px !important;
+    }
+
+    #status-prop .bag-meal-disclosure[open] > summary::after {
+      content: '－' !important;
+    }
+
+    #status-prop .bag-meal-disclosure > summary > b {
+      margin-left: auto !important;
+      color: #e8e2d5 !important;
+      font: 800 10px/1.2 var(--sans) !important;
+    }
+
+    #status-prop .bag-meal-disclosure > .bag-meal-plan {
+      margin-top: 8px !important;
+    }
+
+    #status-prop .bag-pockets {
+      grid-auto-rows: 62px !important;
+    }
+
+    #status-prop .bag-pocket {
+      min-height: 62px !important;
+      height: 62px !important;
+    }
+
+    #status-prop .bag-detail {
+      min-height: 68px !important;
+      padding: 7px 10px !important;
     }
   }
 </style>
@@ -7471,6 +7763,8 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   box-sizing:border-box!important;
 }
 #ev-sheet[data-story-phase="outcome"] .reward-section .event-result-kicker{
+  position:static!important;
+  inset:auto!important;
   display:block!important;
   margin:0 0 9px!important;
   color:#645a49!important;
@@ -7478,6 +7772,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   letter-spacing:.12em!important;
 }
 #ev-sheet[data-story-phase="outcome"] .reward-section .fx-line{
+  justify-content:flex-start!important;
   display:flex!important;
   flex-wrap:wrap!important;
   align-items:center!important;
@@ -8201,7 +8496,7 @@ body:has(#ev-wrap.on) #quest-update-ribbon small{
 #app .route-console-v3 .nav-place-description{flex:0 0 auto!important;min-height:0!important;margin:0!important;font-size:9.5px!important;line-height:1.3!important;-webkit-line-clamp:1!important}
 #app .route-console-v3 .nav-route-facts{flex:0 0 40px!important;width:100%!important;min-height:40px!important;margin-top:auto!important}
 #app .route-console-v3 .nav-route-facts>span{min-width:0!important;padding:3px 4px!important}
-#app .route-console-v3 .nav-route-facts small{font-size:7.5px!important;white-space:nowrap!important}
+#app .route-console-v3 .nav-route-facts small{font-size:9px!important;white-space:nowrap!important}
 #app .route-console-v3 .nav-route-facts b{font-size:10px!important;white-space:nowrap!important}
 #app .nav-quest-compass{box-sizing:border-box!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:3px!important;width:100%!important;max-height:52px!important;margin:0 0 4px!important;padding:4px 7px!important;overflow:hidden!important}
 #app .nav-quest-compass :is(.nav-compass-main,.nav-compass-next,.nav-compass-optional){min-width:0!important;margin:0!important;padding:0!important}
@@ -8446,7 +8741,7 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   min-width:0!important;
   min-height:0!important;
   margin-inline:14px!important;
-  padding:4px 10px!important;
+  padding:0 10px!important;
   overflow:hidden!important;
   border-bottom:1px solid rgba(102,214,206,.28)!important;
   background:#07111b!important;
@@ -8511,7 +8806,7 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
 .route-console-v3 .nav-route-metrics small{
   overflow:hidden!important;
   color:#89979b!important;
-  font:700 7.5px/1 var(--mono)!important;
+  font:700 9px/1 var(--mono)!important;
   text-align:center!important;
   white-space:nowrap!important;
   text-overflow:ellipsis!important;
@@ -8586,15 +8881,15 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   object-position:center!important;
 }
 .route-console-v3 .nav-depart-cta{
-  grid-column:1/4!important;
-  grid-row:3!important;
+  grid-column:1!important;
+  grid-row:auto!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
   gap:8px!important;
-  width:calc(100% - 38px)!important;
-  height:30px!important;
-  min-height:30px!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:44px!important;
   margin:0 auto!important;
   padding:3px 14px!important;
   border:1px solid rgba(207,145,64,.62)!important;
@@ -8602,12 +8897,13 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   background:linear-gradient(180deg,#70451e,#4b2d17)!important;
   box-shadow:inset 0 1px rgba(255,211,142,.14),0 2px 5px rgba(0,0,0,.32)!important;
   color:#f2d49d!important;
-  font:850 11px/1 var(--sans)!important;
+  font:850 14px/1.3 var(--sans)!important;
   text-shadow:0 1px 2px #1c1008!important;
 }
 .route-console-v3 .nav-depart-cta i{color:#efad51!important;font:900 15px/1 var(--sans)!important;font-style:normal!important}
 .route-console-v3 .nav-depart-cta:active{transform:translateY(1px)!important;background:linear-gradient(180deg,#5f391b,#3e2515)!important}
 .route-console-v3 .nav-depart-cta:focus-visible{outline:2px solid #f0cb8d!important;outline-offset:1px!important}
+.route-console-v3 .nav-depart-cta:disabled{opacity:.6!important;cursor:not-allowed!important}
 
 /* 2026-08-25 narrative hierarchy and route interaction QA.
    The protagonist reads as a viewpoint, not a portrait repeated beside every line. */
@@ -8767,9 +9063,9 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   box-sizing:border-box!important;
 }
 #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-facts{
-  flex:0 0 54px!important;
-  height:54px!important;
-  min-height:54px!important;
+  flex:0 0 44px!important;
+  height:44px!important;
+  min-height:44px!important;
   margin:0!important;
 }
 #scr-game #panel .journey-mode-console .route-console-v3 .nav-route-quest-cue{
@@ -9855,9 +10151,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 #app #ev-sheet.event-mode .route-forecast>.route-trait{font:800 10px/1 var(--sans)!important}
 #app #ev-sheet.event-mode .route-forecast>.route-trait.risk{border-color:rgba(169,68,66,.38)!important;background:rgba(169,68,66,.08)!important;color:#8f3f3b!important}
 #app #ev-sheet.event-mode .route-forecast>.route-trait.supply{border-color:rgba(184,117,40,.38)!important;background:rgba(184,117,40,.09)!important;color:#8f591e!important}
-/* The selected destination card is the departure control; the duplicate CTA stays gone. */
-#app .route-console-v3 .nav-depart-cta{display:none!important}
-#app .route-console-v3 .nav-destination-card[data-nav-depart]{cursor:pointer!important}
+/* Destination cards preview the route; the separate action starts travel. */
 #app .route-console-v3 .nav-destination-card:has(.nav-quest-route-badge):not(.is-selected){
   border-color:rgba(218,163,79,.72)!important;filter:saturate(.78) brightness(.82)!important;opacity:.86!important
 }

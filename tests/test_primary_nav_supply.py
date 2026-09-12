@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Focused regression for the companion dock, central map entry, and supply plan."""
+import os
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 
 ROOT = Path(__file__).resolve().parents[1]
-URL = "http://127.0.0.1:4173/game?caravan-live=1"
+PORT = int(os.environ.get("CARAVAN_LIVE_PORT", "4173"))
+URL = f"http://127.0.0.1:{PORT}/game?caravan-live=1"
 
 
 def enter_game(page):
@@ -140,6 +142,8 @@ def main():
         page.click("#menu-x")
 
         page.locator(".nav-destination-card.is-selected").click()
+        assert not page.evaluate("Boolean(S.driving)")
+        page.get_by_role("button", name="양산 고가차도로 출발").click()
         page.wait_for_timeout(180)
         driving_map_entry = page.locator(".travel-destination-visual[data-open-map]")
         assert driving_map_entry.is_visible()

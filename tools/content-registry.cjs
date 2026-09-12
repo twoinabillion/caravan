@@ -11,6 +11,7 @@ const STATIC_CONTENT_FILES = Object.freeze([
   'src/03j-camp-conversations.js',
   'src/03k-main-evidence.js',
   'src/03l-main-recovery.js',
+  'src/03m-finale-reading.js',
 ]);
 
 function permanentEvents(D) {
