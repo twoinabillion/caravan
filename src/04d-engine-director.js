@@ -959,7 +959,7 @@ G.finishArrival = (to)=>{
     G.deferEvent('crisis_nofuel'); G.openRescue('nofuel','crisis_nofuel');
     G.save(); return;
   }
-  const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
+  const loc = G.routeAftermathEvent() || D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.target===to){
     const recruitName=D.recruitQuests[S.recruitQ.id].name;

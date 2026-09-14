@@ -9,6 +9,23 @@ G.routeStatus = ()=>{
   const done=def.corridor.filter(id=>reached.has(id)).length;
   return {state,def,done,total:def.corridor.length,complete:state.status==='complete'};
 };
+G.routeAftermathEvent = ()=>{
+  if(!S||S.ended||S.driving) return null;
+  const route=S.routePlan&&S.routePlan.id;
+  const contract={
+    ridge:{node:'mungyeong',event:'route_ridge_aftermath'},
+    market:{node:'jeonju',event:'route_market_aftermath'}
+  }[route];
+  if(!contract||S.at!==contract.node||!D.routeAftermathState(S,route)) return null;
+  const event=D.events.find(row=>row.id===contract.event);
+  return event&&!S.used.includes(event.id)?event:null;
+};
+G.openRouteAftermath = ()=>{
+  const event=G.routeAftermathEvent();
+  if(!event) return false;
+  G.openEvent(event);
+  return true;
+};
 G.durationLabel = mins=>{
   mins=Math.max(0,Math.round(Number(mins)||0));
   if(mins<60) return `${mins}분`;

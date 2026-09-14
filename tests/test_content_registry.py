@@ -21,6 +21,8 @@ DATA_FILES = (
     "03j-camp-conversations.js",
     "03k-main-evidence.js",
     "03l-main-recovery.js",
+    "03m-finale-reading.js",
+    "03n-route-aftermath.js",
 )
 ENGINE_FILES = (
     "04a-engine-core.js",
@@ -60,6 +62,7 @@ for(const name of %s){
 const D=vm.runInContext('D',c);
 const permanent=[
   ...(D.events||[]),
+  ...(D.roadCheckInEvents||[]),
   D.seoulOpenEvent,D.gateEvent,D.bridgeEvent,
   ...(D.seoulStops||[]),
   D.onboardingMission,
@@ -97,6 +100,7 @@ def verify_built_page(url: str, expected: dict[str, int]) -> dict[str, object]:
             """() => {
               const groups={
                 events:D.events||[],
+                roadCheckIns:D.roadCheckInEvents||[],
                 seoulSingletons:[D.seoulOpenEvent,D.gateEvent,D.bridgeEvent].filter(Boolean),
                 seoulStops:D.seoulStops||[],
                 onboarding:[D.onboardingMission].filter(Boolean),

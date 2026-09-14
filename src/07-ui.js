@@ -2191,6 +2191,7 @@ function dialogueSide(turn,lanes,opt={}){
     const ex=root.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>run(()=>G.explore());
     const st=root.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>run(()=>showStl(node.stl));
     const camp=root.querySelector('[data-a="camp"]'); if(camp) camp.onclick=()=>run(()=>showCampHub());
+    const aftermath=root.querySelector('[data-a="route-aftermath"]'); if(aftermath) aftermath.onclick=()=>run(()=>G.openRouteAftermath());
   }
   function renderPanel(){
     const p=$('#panel');
@@ -2307,6 +2308,12 @@ function dialogueSide(turn,lanes,opt={}){
         }));
       }
     }
+    const routeAftermath=G.routeAftermathEvent();
+    if(routeAftermath) localActions.push(stopActionHtml({
+      action:'route-aftermath',kicker:'노선의 다음 정차',icon:'quest',title:routeAftermath.title,
+      description:'앞선 길에서 만난 사람들이 다음 운송을 준비하고 있다.',primary:true,
+      chips:[{label:'지금 가능',tone:'ready',icon:'ready'}],cta:'살펴보기'
+    }));
     if(n.stl) localActions.push(stopActionHtml({
       action:'stl',kicker:'주요 정착지',icon:'quest',title:`${n.name} 안으로`,
       description:'사람과 거래하고, 이곳의 부탁과 소문을 직접 확인한다.',primary:true,

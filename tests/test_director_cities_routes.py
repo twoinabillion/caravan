@@ -52,7 +52,9 @@ def test_seven_hubs_foreground_existing_local_person_and_saved_change():
  with sync_playwright() as p:
   b=p.chromium.launch();g=b.new_page();g.goto((ROOT/'서울까지400km.html').as_uri())
   rows=g.evaluate('''()=>Object.keys(D.stls).map(id=>{
-   G.newGame('onroad','도시','full');S.at=id;S.min=600;UI.showStl(id,'hub');
+   G.newGame('onroad','도시','full');S.at=id;S.min=600;
+   S.party=['minji'];S.comps.minji={mood:65,bond:0,lvl:1,perks:[],pending:0};
+   UI.showStl(id,'hub');
    const before=document.querySelector('[data-stl-concern]')?.innerText||'';
    const action=D.stls[id].field.actions.find(a=>!a.hidden&&D.stls[id].npcs.includes(a.npc));
    const result=G.doStlFieldAction(id,action.id);G.save();S=null;G.load();UI.showStl(id,'hub');
@@ -99,19 +101,43 @@ def test_actual_saved_mother_chain_defers_then_suwon_choices_complete():
   assert g.evaluate("G.resolveMainEvidenceChain('parents_mother_reunion')===null&&G.resolveMainEvidenceChain('parents_mother_truth')===null")
   b.close()
 
-def test_both_route_crew_callbacks_keep_route_identity_after_save():
+def test_active_route_crew_callbacks_keep_identity_and_completed_route_does_not_invent_it():
  with sync_playwright() as p:
-  b=p.chromium.launch();g=b.new_page();g.goto((ROOT/'서울까지400km.html').as_uri())
-  rows=g.evaluate('''()=>['ridge','market'].map(route=>{
-   G.newGame('onroad','노선 기억','full');S.at='cheongju';S.known=Object.keys(D.nodes);
-   G.chooseRoute(route);G.updateRouteOnArrival('cheongju');
-   const moment=D.routeCrewMoments.find(row=>row.route===route);
-   S.party=moment.crew.slice();moment.crew.forEach(id=>S.comps[id]={mood:65,bond:0,lvl:1,perks:[]});
-   G.save();S=null;G.load();
-   const started=G.startTravel('cheonan'),out=G.roadCheckIn(moment.crew[0]);
-   G.save();S=null;G.load();
-   return {route,started,id:out.moment?.id,expected:moment.id,saved:S.driving.checkInMoment?.id,
-    repeat:G.roadCheckIn(moment.crew[1]).ok,complete:G.routeStatus().complete};
-  })''')
-  for row in rows:assert row['started'] and row['complete'] and row['id']==row['expected']==row['saved'] and not row['repeat'],row
+  b=p.chromium.launch()
+  for route in ['ridge','market']:
+   g=b.new_page();g.goto((ROOT/'서울까지400km.html').as_uri())
+   opened=g.evaluate('''route=>{
+   G.newGame('onroad','노선 기억','full');S.at='gimcheon';S.known=Object.keys(D.nodes);
+    S.flags.main_mission_started=true;S.flags.onboarding_event_guide=true;
+    G.chooseRoute(route);
+    const moment=D.routeCrewMoments.find(row=>row.route===route);
+    S.party=moment.crew.slice();moment.crew.forEach(id=>S.comps[id]={mood:65,bond:0,lvl:1,perks:[]});
+    UI.restoreQaView({screen:'game'});
+    const to=D.routePlans[route].corridor[1],started=G.startTravel(to);S.driving.slots=[];
+    const out=G.roadCheckIn(moment.crew[0]);
+    return {route,started,id:out.moment?.id,expected:moment.id,event:S.pendingPresentation?.eventId,
+      first:moment.crew[0],second:moment.crew[1],ok:out.ok,why:out.why||null,
+      guards:{driving:!!S.driving,party:S.party.slice(),pending:S.pendingPresentation?.eventId||null,
+        approach:!!S.driving?.approach,modal:UI.modalOpen(),from:S.driving?.from||null,
+        to:S.driving?.to||null,route:G.routeStatus()?.def?.id||null,
+        routeComplete:!!G.routeStatus()?.complete}};
+   }''',route)
+   assert opened['started'] and opened['ok'] and opened['id']==opened['expected'],opened
+   assert opened['expected'] in opened['event'],opened
+   g.evaluate('UI.finishStory()');g.locator('#ev-sheet .choice[data-i]').first.click()
+   saved=g.evaluate('''({second})=>{
+    G.save();S=null;if(!G.load())throw Error('load failed');
+    return {moment:S.driving.checkInMoment?.id,repeat:G.roadCheckIn(second).ok,
+      complete:G.routeStatus().complete};
+   }''',opened)
+   assert saved['moment']==opened['expected'] and not saved['repeat'] and not saved['complete'],saved
+   g.evaluate('UI.finishStory()');g.locator('#ev-sheet [data-r="ok"]').click()
+   outside=g.evaluate('''({route,first})=>{
+    S.driving=null;S.at='cheongju';S.routePlan.status='complete';
+    const started=G.startTravel('cheonan'),out=G.roadCheckIn(first);
+    return {started,ok:out.ok,why:out.why||null,moment:out.moment?.id||null,
+      complete:G.routeStatus().complete};
+   }''',opened)
+   assert outside=={'started':True,'ok':True,'why':None,'moment':None,'complete':True},outside
+   g.close()
   b.close()
