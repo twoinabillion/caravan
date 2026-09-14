@@ -93,6 +93,9 @@ untouched choices/effects, original optional records, no state mutation.`
 
 ## Concern
 
-Root's actual earned-route observer found only an overly strict comparison of
-raw save timestamps. Gameplay save fields and full-runtime snapshots are equal
-across both earned aftermath reloads; this is not a Task 3 source issue.
+Root's actual earned-route observer initially compared session lifecycle
+telemetry as if it were gameplay. Differences were isolated to existing
+`_quality` session timestamps, accumulated play time, session history and
+session-start/end timeline entries. Both corrected v3 earned aftermath reloads
+now pass equality of all non-lifecycle saved fields and runtime gameplay
+snapshots. The game lifecycle was not changed or disabled.

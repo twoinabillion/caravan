@@ -5,6 +5,7 @@
 
 ## handoffs
 
+- [2026-09-14 첫 만남·노선 후속·기본 엔딩 회상 — 별도 작업본 완료](director-payoff-2026-09-14.md)
 - [2026-09-14 출발 대사·선택 정보 편집 완료](director-narrative-2026-09-14.md)
 - [2026-09-14 행동·읽기 개선 방향](director-actions-design-2026-09-14.md) · [실행 완료 계획](director-actions-plan-2026-09-14.md)
 - [2026-09-14 디렉터 UI 정돈 계획과 다음 판단](director-polish-2026-09-14.md)

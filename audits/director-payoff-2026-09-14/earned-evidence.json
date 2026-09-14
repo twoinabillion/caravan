@@ -1,0 +1,230 @@
+{
+  "sourceCommit": "ab6de2b",
+  "scope": "Two final-build continuations from the same untouched earned intermediate-build fork save; accelerated inputs, finite resources, not two final-build new-game campaigns",
+  "prefix": {
+    "mainResponse": {
+      "url": "http://127.0.0.1:4181/game?caravan-live=1",
+      "status": 200,
+      "bytes": 77445832,
+      "sha256": "469e851bf278ee6bb8cf092c6bd2c8aac06ccc0f3b525354247c0b951db7686b",
+      "navigation": 1,
+      "fetchBodyMs": 26055,
+      "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+      "fulfillMs": 1173
+    },
+    "save": {
+      "path": "/Users/sang/caravan/.worktrees/director-payoff/artifacts/director-payoff/earned-prefix-v2/before-fork-earned-save.json",
+      "bytes": 43702,
+      "sha256": "0bf4efd3df4481eccf62c4b9edaa48cc34bd9913165de2e85bd15e8d70b01637"
+    },
+    "actions": 648
+  },
+  "observer": {
+    "path": "artifacts/director-payoff/run-earned.py",
+    "bytes": 7906,
+    "sha256": "7f69ffb47745b8342afc82bcf649500a9e1a25bd9690c0eb78618c3e0af95000"
+  },
+  "routes": [
+    {
+      "route": "ridge",
+      "status": "complete",
+      "command": "artifacts/director-payoff/run-earned.py --scenario route --route ridge --checkpoint artifacts/director-payoff/earned-prefix-v2/before-fork-earned-save.json --url http://127.0.0.1:4181/game?caravan-live=1 --output artifacts/director-payoff/final-ridge-v3 --seed 400911 --limit 2400",
+      "mainResponses": [
+        {
+          "url": "http://127.0.0.1:4181/game?caravan-live=1",
+          "status": 200,
+          "bytes": 77458306,
+          "sha256": "0cd1a30af4e7de8598f0dc5eb67422e47e6450ea64e53f23c025958190a01a5e",
+          "navigation": 1,
+          "fetchBodyMs": 30210,
+          "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+          "fulfillMs": 1110
+        },
+        {
+          "url": "http://127.0.0.1:4181/game?caravan-live=1",
+          "status": 200,
+          "bytes": 77458306,
+          "sha256": "0cd1a30af4e7de8598f0dc5eb67422e47e6450ea64e53f23c025958190a01a5e",
+          "navigation": 2,
+          "fetchBodyMs": 0,
+          "sourceNavigation": 1,
+          "capture": "reuse exact route.fetch response verified on navigation 1; fulfill cached original response unchanged",
+          "fulfillMs": 1063
+        }
+      ],
+      "checkpointInput": {
+        "path": "artifacts/director-payoff/earned-prefix-v2/before-fork-earned-save.json",
+        "bytes": 43702,
+        "sha256": "0bf4efd3df4481eccf62c4b9edaa48cc34bd9913165de2e85bd15e8d70b01637"
+      },
+      "trace": {
+        "rows": 1240,
+        "head": "3a11bb7dc01c836c696826431f23e0cea437284f35acf4c89a0a17c96eb29028",
+        "sha256": "580bc9ec1e4c0fb9cc25890e7fabcbe1f203b2b0b84647427d4e4eb41ab9ea8a"
+      },
+      "runnerSha256": "f8509a7740eac126e8475793c9136113b6d83d75253c5873639c7550720f1a70",
+      "helperSha256": "a4822d486ce2206b6c78f2b0280342b6ff6957504c39264f689a1bd1bb6d0011",
+      "aftermathSave": {
+        "path": "artifacts/director-payoff/final-ridge-v3/aftermath-earned-save.json",
+        "bytes": 56378,
+        "sha256": "86da63a951ec4f3658667bab3dae043fc2f117339ddfa681000cb0a660b19f05"
+      },
+      "endingSave": {
+        "path": "artifacts/director-payoff/final-ridge-v3/ending-earned-save.json",
+        "bytes": 99761,
+        "sha256": "4544cdd7d484872e7ec9c4c96d179332b87eb3d6e7bd30ef21340fca76e61563"
+      },
+      "recall": "문경에서 약 꾸러미를 싸던 손이 떠올랐다. 종이에 적었던 목적지 이름 하나가 아직 기억났다.",
+      "recallCapture": {
+        "eventId": "seoul_night",
+        "phase": "default-earned-route-recall",
+        "path": "039-seoul_night-default-earned-route-recall.png",
+        "sha256": "a7f6425f698bf95a3331ffb8fa8b63ab0292000847967627176a0acb48580b58"
+      },
+      "nonLifecycleReloadEqual": true,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4181/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4181/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "km": 561.9999999999992,
+        "day": 9,
+        "party": [
+          "minji"
+        ],
+        "resources": {
+          "fuel": 37.489610071665574,
+          "water": 18,
+          "food": 13,
+          "scrap": 90,
+          "van": 91.44000000000004,
+          "fatigue": 15.133316536000002,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "부모님의 검증키": 1,
+            "할아버지의 봉투": 1
+          }
+        },
+        "flags": {
+          "route_ridge_saved": true,
+          "route_ridge_after_work": true,
+          "route_ridge_after_done": true
+        },
+        "ended": true,
+        "endKind": "story_done",
+        "archives": 1,
+        "method": "core_transfer"
+      }
+    },
+    {
+      "route": "market",
+      "status": "complete",
+      "command": "artifacts/director-payoff/run-earned.py --scenario route --route market --checkpoint artifacts/director-payoff/earned-prefix-v2/before-fork-earned-save.json --url http://127.0.0.1:4181/game?caravan-live=1 --output artifacts/director-payoff/final-market-v3 --seed 400911 --limit 2400",
+      "mainResponses": [
+        {
+          "url": "http://127.0.0.1:4181/game?caravan-live=1",
+          "status": 200,
+          "bytes": 77458306,
+          "sha256": "0cd1a30af4e7de8598f0dc5eb67422e47e6450ea64e53f23c025958190a01a5e",
+          "navigation": 1,
+          "fetchBodyMs": 29596,
+          "capture": "route.fetch original response; hash exact bytes; fulfill cached original response unchanged",
+          "fulfillMs": 924
+        },
+        {
+          "url": "http://127.0.0.1:4181/game?caravan-live=1",
+          "status": 200,
+          "bytes": 77458306,
+          "sha256": "0cd1a30af4e7de8598f0dc5eb67422e47e6450ea64e53f23c025958190a01a5e",
+          "navigation": 2,
+          "fetchBodyMs": 0,
+          "sourceNavigation": 1,
+          "capture": "reuse exact route.fetch response verified on navigation 1; fulfill cached original response unchanged",
+          "fulfillMs": 1074
+        }
+      ],
+      "checkpointInput": {
+        "path": "artifacts/director-payoff/earned-prefix-v2/before-fork-earned-save.json",
+        "bytes": 43702,
+        "sha256": "0bf4efd3df4481eccf62c4b9edaa48cc34bd9913165de2e85bd15e8d70b01637"
+      },
+      "trace": {
+        "rows": 1234,
+        "head": "c0dfcbb6b20363857aa14861d74c559eb131ca68363dc5879e0367e6a3b0e89d",
+        "sha256": "1cb999c01df41643b55a90ab6f804879ec4e824307b2ffb064f5de2d8fdff014"
+      },
+      "runnerSha256": "f8509a7740eac126e8475793c9136113b6d83d75253c5873639c7550720f1a70",
+      "helperSha256": "a4822d486ce2206b6c78f2b0280342b6ff6957504c39264f689a1bd1bb6d0011",
+      "aftermathSave": {
+        "path": "artifacts/director-payoff/final-market-v3/aftermath-earned-save.json",
+        "bytes": 58201,
+        "sha256": "a874c247f4651c4b49cc5c06b465605e960f46252cf0249c73ff21cffe2ce79a"
+      },
+      "endingSave": {
+        "path": "artifacts/director-payoff/final-market-v3/ending-earned-save.json",
+        "bytes": 102269,
+        "sha256": "28d681c41dc25008f9c684cfc411c8612b73b9422e54d0849def79c273652cb7"
+      },
+      "recall": "전주에서는 수레 수선을 맡지 않고 북행을 이어 갔다. 장터 사람들이 비켜 준 좁은 길로 달구지가 빠져나왔었다.",
+      "recallCapture": {
+        "eventId": "seoul_night",
+        "phase": "default-earned-route-recall",
+        "path": "039-seoul_night-default-earned-route-recall.png",
+        "sha256": "ca28a2aea0b636f00ab5e3b79ffed32328ca5481940b2d5794df15d17af4244d"
+      },
+      "nonLifecycleReloadEqual": true,
+      "pageErrors": [],
+      "httpErrors": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4181/assets/app-icon.png"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:4181/assets/app-icon.png"
+        }
+      ],
+      "final": {
+        "km": 651.0000000000111,
+        "day": 9,
+        "party": [
+          "minji"
+        ],
+        "resources": {
+          "fuel": 34.12184524433124,
+          "water": 28,
+          "food": 23,
+          "scrap": 100,
+          "van": 87.42000000000013,
+          "fatigue": 14.270285464,
+          "items": {
+            "부품": 9,
+            "의약품": 2,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "교란 장치": 1,
+            "부모님의 검증키": 1
+          }
+        },
+        "flags": {
+          "route_market_escorted": true,
+          "route_market_after_handoff": true,
+          "route_market_after_done": true
+        },
+        "ended": true,
+        "endKind": "story_done",
+        "archives": 1,
+        "method": "core_transfer"
+      }
+    }
+  ]
+}
