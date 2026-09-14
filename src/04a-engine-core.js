@@ -370,6 +370,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     row.home=typeof row.home==='string'?row.home:D.companionKeepsakes[cid].desc;
     row.road=typeof row.road==='string'?row.road:'';
     row.pendingRoad=row.pendingRoad===true&&!!row.road;
+    row.visits=Number.isFinite(row.visits)?Math.max(1,Math.floor(row.visits)):1;
   }
   const campRecord=S.campConversation, campData=campRecord&&D.campConversations[campRecord.cid];
   if(!campRecord||Array.isArray(campRecord)||!campData||!Number.isFinite(campRecord.night)

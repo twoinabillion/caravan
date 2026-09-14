@@ -19,6 +19,7 @@
   --sans:"Apple SD Gothic Neo",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;
   --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --serif:"Apple Myungjo","AppleMyungjo","Nanum Myeongjo","Noto Serif KR",serif;
+  --nav-deck-h:68px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
@@ -748,7 +749,7 @@ html.ui-reduce-motion #arrival-scene,html.ui-reduce-motion #arrival-scene .arriv
 /* ── interactive road tools ─────────────────────────────────
    목표·지도·가방은 서로 다른 실제 물건이지만, 하단 도크와 조작 규칙은 같다.
    물건의 질감은 raster shell, 변하는 정보와 모든 조작은 live DOM/canvas다. */
-.road-tool-overlay{--tool-dock-h:clamp(76px,19.68cqw,134px);
+.road-tool-overlay{--tool-dock-h:var(--nav-deck-h);
   --tool-fit-w:calc(64.2857dvh - clamp(48.86px,12.6514cqw,86.14px) - var(--safe-bottom) - var(--safe-top));
   inset:0 0 calc(var(--tool-dock-h) + var(--safe-bottom));
   z-index:24;background:radial-gradient(110% 72% at 50% 5%,#202116 0%,#080a0d 56%,#030507 100%);overflow:hidden}
@@ -844,31 +845,26 @@ html.ui-reduce-motion #arrival-scene,html.ui-reduce-motion #arrival-scene .arriv
 .bag-detail-quantity small{color:#78bbb6;font:850 clamp(9px,2cqw,11px)/1 var(--sans);letter-spacing:.06em}
 .bag-detail-quantity b{color:#edb45e;font:900 clamp(13px,3.1cqw,17px)/1 var(--mono);font-variant-numeric:tabular-nums}
 
-/* fold-out CRT navigator */
-.map-navigator{background-image:url("__UI_MAP_NAVIGATOR_SHELL__")}
-.map-live-head{top:5%;left:7%;right:8.4%;height:5%;color:#deb06c}
-.map-live-head h2{width:32%;font:900 clamp(14px,4cqw,23px)/1.18 var(--sans);letter-spacing:.02em;
-  transform:translateX(clamp(8px,2.6cqw,13px))}
-.map-live-head>span{flex:1;min-width:0;margin-left:auto;margin-right:3%;overflow:hidden;color:#5fb8b3;
-  font:800 clamp(8px,1.95cqw,11px)/1 var(--mono);text-align:center;text-overflow:ellipsis;white-space:nowrap;
-  transform:translate(clamp(8px,2.25cqw,11px),clamp(2px,.75cqw,4px))}
-.map-live-head .road-tool-close{flex:none;color:#d8a95f;border-color:transparent;background:transparent}
-.map-live-head .road-tool-close:hover{background:rgba(216,169,95,.08)}
-.map-live-head .road-tool-close:focus-visible{outline:2px solid #e0a343;outline-offset:-3px}
-.map-navigator #mapwrap{position:absolute;top:15.9%;left:7.6%;right:17.8%;bottom:19.4%;border-radius:6%/4%;overflow:hidden;background:transparent}
-.map-navigator #mapcv{inset:0;opacity:.92;filter:saturate(.92) brightness(1.08)}
-/* Align with the shell's lower black display, clear of its bezel and brass plate. */
-.map-navigator #nodecard{display:none;position:absolute;left:20.8%;right:42.3%;bottom:9.8%;height:7.35%;box-sizing:border-box;
-  grid-template-columns:minmax(0,41%) minmax(0,59%);align-items:stretch;min-width:0;padding:0;overflow:hidden;
-  border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none}
+/* Field navigator: a narrow instrument rim leaves the map and place names room. */
+.map-navigator{width:min(calc(100% - 24px),460px);height:calc(100% - 24px);max-height:760px;aspect-ratio:auto;
+  display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px;padding:14px;
+  border:1px solid #635b46;border-radius:10px;background:linear-gradient(145deg,#1d2726,#101817);
+  box-shadow:inset 0 1px rgba(255,239,201,.12),0 12px 26px rgba(0,0,0,.42);filter:none}
+.map-live-head .road-tool-close:focus-visible{outline:2px solid #e0a343;outline-offset:2px}
+.map-navigator #mapwrap{position:relative;inset:auto;min-height:0;border:1px solid #34443f;border-radius:5px;
+  overflow:hidden;background:#08131a;box-shadow:inset 0 0 24px rgba(0,0,0,.25)}
+.map-navigator #mapcv{inset:0;opacity:1;filter:none}
+.map-navigator #nodecard{display:none;position:relative;inset:auto;height:auto;box-sizing:border-box;
+  grid-template-columns:minmax(80px,.8fr) minmax(0,1.4fr);align-items:center;gap:12px;min-width:0;min-height:76px;padding:10px 0 0;overflow:visible;
+  border:0;border-top:1px solid #3b4b44;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none}
 .map-navigator #nodecard.on{display:grid}
-.map-compact-place{position:relative;inset:auto;display:flex;min-width:0;flex-direction:column;justify-content:center;padding:0 8% 0 0;
-  overflow:hidden;transform:none}.map-compact-place small{display:block;color:#5fb8b3;font:800 clamp(8px,1.55cqw,9px)/1 var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.map-navigator #nodecard h4{color:#efb25a;font-size:clamp(11px,2.7cqw,15px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map-compact-place{position:relative;inset:auto;display:flex;min-width:0;flex-direction:column;justify-content:center;gap:4px;padding:0;
+  overflow:hidden;transform:none}.map-compact-place small{display:block;color:#8dcbc3;font:700 11px/1.3 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map-navigator #nodecard h4{color:#f3c47d;font:850 17px/1.25 var(--sans);white-space:normal;word-break:keep-all;overflow-wrap:break-word}
 .map-navigator #nodecard .d{margin:0;color:#96b5b3;font-size:clamp(9.5px,1.9cqw,10.5px)}
-.map-compact-summary{position:relative;inset:auto;display:flex;min-width:0;align-items:center;padding:0 2% 0 7%;overflow:hidden;
-  border-left:1px solid rgba(95,184,179,.2);color:#96b5b3;font:700 clamp(7.5px,1.55cqw,8.75px)/1.23 var(--sans)}
-.map-compact-summary>span{display:-webkit-box;max-width:100%;overflow:hidden;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+.map-compact-summary{position:relative;inset:auto;display:flex;min-width:0;align-items:center;padding:0 0 0 12px;overflow:visible;
+  border-left:1px solid rgba(95,184,179,.2);color:#c7d3cd;font:500 12px/1.5 var(--sans)}
+.map-compact-summary>span{display:block;max-width:100%;overflow-wrap:anywhere}
 /* crew and settings still live in the secondary utility sheet. */
 #status-prop.utility-sheet{width:100%;height:100%;max-width:560px;aspect-ratio:auto;display:flex;flex-direction:column;background:var(--night);filter:none}
 #status-prop.utility-sheet>.road-tool-live-head{position:relative;inset:auto;flex:none;gap:8px;padding:calc(10px + var(--safe-top)) 12px 8px;border-bottom:1px solid var(--line)}
@@ -1931,6 +1927,8 @@ img.stl-field-map-face,img.stl-field-face,img.upgrade-adviser-face,.cmsg img{
 .toast.skill .skill-toast-effect{color:#e2ddd2;font:750 11px/1.35 var(--sans)}
 .toast.skill .skill-toast-next{color:#8f9b9f;font:700 9.5px/1.3 var(--mono)}
 .note,.upgrade-card,.crew-status-card,.stl-field-action{content-visibility:auto;contain-intrinsic-size:auto 112px}
+/* Reading owners consume these tokens, so later skin rules cannot cancel the preference. */
+.ui-large-text{--reading-body-size:18px;--reading-choice-size:17px;--reading-result-size:16px;--reading-detail-size:16px}
 .ui-large-text .sheet .body,.ui-large-text .story-turn-text,.ui-large-text .outcome,
 .ui-large-text .choice,.ui-large-text .st-row,.ui-large-text .stl-field-action small,
 .ui-large-text .stl-field-result p,.ui-large-text .cmsg{font-size:15px;line-height:1.62}
@@ -2564,7 +2562,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 #dash-sub{min-width:112px;display:grid;justify-items:end;gap:3px;margin:0;padding:0 0 0 10px;
   border-top:0;border-left:1px solid rgba(255,255,255,.07);line-height:1.25}
 #dash-sub #ftgbox,#dash-sub #eyebox{display:none!important}
-#main{--nav-deck-h:clamp(76px,19.68cqw,134px);margin-top:8px}
+#main{margin-top:8px}
 #panel{padding-top:10px;padding-bottom:calc(var(--nav-deck-h) + 8px + var(--safe-bottom))}
 #panel>.journey-context{display:none}
 #panel>.journey-guide{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 10px;
@@ -2577,37 +2575,23 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .journey-section-head{margin-bottom:7px}
 
 #dock{height:calc(var(--nav-deck-h) + var(--safe-bottom));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
-  align-items:stretch;gap:0;padding:0 0 var(--safe-bottom);overflow:visible;isolation:isolate;
-  background:transparent;border-top:0;box-shadow:none;backdrop-filter:none}
-#dock::before{content:"";position:absolute;z-index:0;left:0;right:0;bottom:var(--safe-bottom);height:var(--nav-deck-h);
-  background:url("__UI_NAV_ARMORED_SHELL__") center bottom/100% 100% no-repeat;pointer-events:none;
-  filter:drop-shadow(0 -8px 13px rgba(0,0,0,.34))}
-#dock button{--press-depth:0px;--visual-x:0%;position:relative;z-index:1;isolation:isolate;min-width:0;min-height:var(--nav-deck-h);
-  padding:27% 0 5.5%;gap:1px;border:0;border-radius:0;
-  background:transparent;color:#c7c4bb;font:700 clamp(12px,2cqw,14px)/1.05 var(--mono);letter-spacing:.01em;
-  box-shadow:none;transition:color .1s ease}
-#dock button:nth-child(1){--visual-x:12.2%}
-#dock button:nth-child(2){--visual-x:5.45%}
-#dock button:nth-child(3){--visual-x:-3.2%}
-#dock button:nth-child(4){--visual-x:-9.3%}
-#dock button:nth-child(5){--visual-x:-15.4%}
-#dock button::before{content:"";position:absolute;z-index:0;left:12%;width:76%;margin-left:var(--visual-x);top:25.5%;
-  bottom:4.5%;background:url("__UI_NAV_BUTTON_FACE__") center/100% 100% no-repeat;
-  filter:brightness(.88) saturate(.72);transform:translateY(var(--press-depth));
-  transition:transform .09s ease,filter .09s ease}
-#dock button>*{position:relative;z-index:2;left:var(--visual-x);transform:translateY(var(--press-depth));transition:transform .09s ease}
-#dock button .dic{width:clamp(19px,4cqw,26px);height:clamp(19px,4cqw,26px);display:grid;place-items:center;filter:none}
-#dock button .dic img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;opacity:.82;
-  filter:grayscale(.75) sepia(.15) brightness(1.22);transition:filter .1s ease,transform .1s ease}
-#dock button.here{color:#ffbd62;box-shadow:none}
-#dock button.here .dic img{opacity:1;filter:grayscale(.3) sepia(.72) saturate(1.8) brightness(1.28)
-  drop-shadow(0 0 5px rgba(255,174,72,.4))}
-#dock button:active{--press-depth:4px}
-#dock button:active::before{background-image:url("__UI_NAV_BUTTON_PRESSED__");filter:brightness(.52) saturate(.72)}
-#dock button:focus-visible{outline:0}
-#dock button:focus-visible>span:last-child{text-shadow:0 0 7px rgba(255,208,138,.62)}
-#dock button:focus-visible .dic img{opacity:1;filter:grayscale(.28) sepia(.5) saturate(1.35) brightness(1.3)
-  drop-shadow(0 0 5px rgba(255,208,138,.45))}
+  align-items:stretch;gap:4px;padding:6px 8px calc(6px + var(--safe-bottom));overflow:visible;isolation:isolate;
+  background:linear-gradient(180deg,#1a2221,#0f1716);border-top:1px solid #505548;
+  box-shadow:0 -5px 18px rgba(0,0,0,.3),inset 0 1px rgba(255,239,201,.06);backdrop-filter:none}
+#dock::before{content:none}
+#dock button{position:relative;z-index:1;min-width:0;min-height:44px;padding:5px 0;gap:4px;
+  border:1px solid transparent;border-radius:5px;background:transparent;color:#bac5be;
+  font:700 12px/1.15 var(--sans);letter-spacing:.01em;box-shadow:none;
+  transition:color .12s ease,background .12s ease,transform .1s ease}
+#dock button::before{content:none}
+#dock button>*{position:relative;left:auto;transform:none}
+#dock button .dic{width:23px;height:23px;display:grid;place-items:center;filter:none}
+#dock button .dic img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;opacity:.88;
+  filter:grayscale(.6) brightness(1.25);transition:filter .12s ease}
+#dock button.here{color:#f3c47d;border-color:#725b37;background:#322a1d;box-shadow:inset 0 1px rgba(255,220,155,.09)}
+#dock button.here .dic img{opacity:1;filter:sepia(.3) saturate(1.1) brightness(1.2)}
+#dock button:active{transform:translateY(1px);background:#3d3524}
+#dock button:focus-visible{outline:2px solid #f3c47d;outline-offset:-2px}
 
 /* ── diegetic destination navigator ──────────────────────────
    The housing is raster art. Everything inside the screen is live route data. */
@@ -2876,6 +2860,11 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .menu-control-card>p{margin:-3px 0 13px;color:#8f9baf;font-size:11.5px;line-height:1.45}
 .menu-save-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .menu-save-actions>#menu-save-export{border-color:#405069;background:#151f2e;color:#c5ccda;box-shadow:none}
+.menu-reading-options{display:grid;gap:0;margin-top:14px;border-top:1px solid #29364a}
+.menu-reading-options>button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:46px;padding:9px 0;border-bottom:1px solid #29364a;color:#e8e3d5;font:700 14px/1.35 var(--sans);text-align:left}
+.menu-reading-options>button b{flex:none;min-width:48px;padding:4px 8px;border:1px solid #596577;border-radius:4px;color:#c5ccda;background:#151f2e;font-size:12px;text-align:center}
+.menu-reading-options>button[aria-pressed="true"] b{border-color:#c49252;color:#f3c47d;background:#322a1d}
+.menu-reading-options>button:focus-visible{outline:2px solid #f3c47d;outline-offset:2px}
 @container game (max-width:380px){
   .self-status-hero{grid-template-columns:48px minmax(0,1fr);padding:10px}.self-status-icon{width:48px;height:48px}.self-status-icon .ico{width:37px;height:37px}
   .self-status-copy>b{font-size:14px}.self-condition-grid{grid-template-columns:1fr}.self-condition-grid article{grid-template-columns:minmax(0,1fr) auto;min-height:56px;align-items:center}.self-condition-grid article>span{grid-column:1}.self-condition-grid .self-meter{grid-column:1/3;width:100%}
@@ -3019,6 +3008,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 .event-detail-toggle{flex:none;align-self:center;min-width:116px;min-height:44px;margin:3px 0 0;padding:7px 12px;border:0;
   background:transparent;color:#60c5ba;font:800 10px/1.1 var(--mono);letter-spacing:.06em}
 .event-detail-toggle:hover,.event-detail-toggle:focus-visible{outline:1px solid #4ba399;outline-offset:-2px}
+.event-detail-toggle[data-road-later]{color:#675137;font:700 13px/1.4 var(--mono);letter-spacing:0;text-decoration:underline;text-underline-offset:3px}
 .event-choice-pages{display:grid;grid-template-columns:88px 1fr 88px;align-items:center;gap:8px;flex:none;margin-top:3px}
 .event-choice-pages button{min-height:44px;border:1px solid #34485a;border-radius:3px;background:#0a1722;color:#78c9c0;font:800 10px/1 var(--mono)}
 .event-choice-pages button[disabled]{opacity:.35}.event-choice-pages span{text-align:center;color:#8e98a4;font:700 10px/1 var(--mono)}
@@ -4464,7 +4454,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
   display:block!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;
   margin:0!important;padding:0!important;overflow:visible!important;border:0!important;border-radius:0!important;
   color:#342f28!important;background:transparent!important;box-shadow:none!important;
-  font:500 14px/1.68 var(--serif)!important;text-align:left!important;overflow-wrap:anywhere!important;
+  font:500 var(--reading-body-size,14px)/1.68 var(--serif)!important;text-align:left!important;overflow-wrap:anywhere!important;
   -webkit-line-clamp:unset!important;-webkit-box-orient:initial!important
 }
 #intro-txt .intro-chat .chat-bubble:before,
@@ -4486,7 +4476,7 @@ html[data-journey-stage="first"] .route-rumor-section{display:none}
 }
 #intro-txt .intro-chat .story-narration-text,
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-chat .story-narration-text{
-  color:#494138!important;font:500 14px/1.7 var(--serif)!important
+  color:#29251f!important;font:500 var(--reading-body-size,15px)/1.65 var(--serif)!important
 }
 
 /* The mission is a manuscript preface, not a floating card over the page. */
@@ -4999,14 +4989,14 @@ html body #app #ev-wrap.on #ev-sheet.event-mode .event-choice-dock.story-progres
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-reader{
   margin:0 2%!important;padding:4px 0 18px!important
 }
-#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-transcript{gap:18px!important}
+#ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-transcript{gap:12px!important}
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .story-narration-text,
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .turn-text{
-  color:#342e27!important;font:600 clamp(14.5px,3.85cqw,17px)/1.64 var(--serif)!important;
+  color:#342e27!important;font:600 var(--reading-body-size,clamp(14.5px,3.85cqw,17px))/1.64 var(--serif)!important;
   letter-spacing:-.012em!important;text-shadow:none!important
 }
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-bubble{
-  color:#302a24!important;font:650 clamp(14px,3.7cqw,16.5px)/1.55 var(--sans)!important;
+  color:#302a24!important;font:650 var(--reading-body-size,clamp(14px,3.7cqw,16.5px))/1.55 var(--sans)!important;
   letter-spacing:-.015em!important
 }
 #ev-sheet.event-mode[data-event-kind="story"] .event-field-report .chat-name{
@@ -5969,7 +5959,7 @@ html body #app #panel .journey-mode-console{
 }
 html body #frame #app #main #panel #journey-mode-route.journey-mode-panel
 .route-console.route-console-v3 > .route-console-screen{
-  top:48px!important;bottom:10px!important;height:auto!important;
+  top:58px!important;bottom:10px!important;left:10px!important;right:10px!important;height:auto!important;
   grid-template-rows:44px minmax(64px,1fr) 80px auto!important;
   row-gap:4px!important;align-content:stretch!important;overflow-y:auto!important;
 }
@@ -6040,7 +6030,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
    without resizing scenery or pushing the destination switch off screen. */
 html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 .journey-local-screen.stop-action-console{
-  top:48px!important;bottom:10px!important;height:auto!important;
+  top:58px!important;bottom:10px!important;left:10px!important;right:10px!important;height:auto!important;
   min-height:0!important;max-height:none!important;
 }
 </style>
@@ -6065,7 +6055,11 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 @keyframes intro-scene-cut{from{opacity:.28;filter:brightness(.62) saturate(.72);transform:scale(1.012)}to{opacity:1;filter:none;transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){#intro-img.intro-scene-cut{animation:none}}
 
-.route-console-v3::after,.journey-local-panel::after{background-image:url("__UI_STAY_CONSOLE_SHELL__")!important}
+.route-console-v3,.journey-local-panel{
+  background:linear-gradient(145deg,#202b29,#111b19);border:1px solid #585c49;border-radius:8px;
+  box-shadow:inset 0 1px rgba(255,239,201,.1);filter:none;
+}
+.route-console-v3::after,.journey-local-panel::after{content:none!important;background-image:none!important}
 .journey-mode-tabs.journey-rocker{
   position:absolute!important;z-index:13!important;left:10.2%!important;right:10.2%!important;top:1.45%!important;
   width:auto!important;height:12.2%!important;min-height:50px!important;margin:0!important;padding:3px!important;
@@ -6384,7 +6378,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   }
 
   #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice-title > span {
-    font-size: 15px !important;
+    font-size: var(--reading-choice-size,15px) !important;
     line-height: 1.38 !important;
   }
 
@@ -6418,7 +6412,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   }
 
   #app #ev-wrap.on #ev-sheet.event-mode.choices-embedded[data-event-kind="story"] .choice strong {
-    font-size: 15px !important;
+    font-size: var(--reading-choice-size,15px) !important;
     line-height: 1.38 !important;
   }
 
@@ -6470,13 +6464,13 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     background:#ddd0b4;color:#332c22;
   }
   .story-selected-action small {display:block;font-size:11px;font-weight:800;color:#735127}
-  .story-selected-action p {margin:5px 0 0;font-size:14px;line-height:1.5;word-break:keep-all}
+  .story-selected-action p {margin:5px 0 0;font-size:var(--reading-choice-size,14px);line-height:1.5;word-break:keep-all}
   .story-quest-update {margin-top:12px;padding:12px;border-left:3px solid #367d73;background:#c9d0bc;color:#253b35}
   .story-quest-update small,.story-quest-update b {display:block;line-height:1.5}
   .story-quest-update small {font-size:11px}
-  .story-quest-update b,.story-quest-update p {font-size:13px;line-height:1.6;word-break:keep-all}
+  .story-quest-update b,.story-quest-update p {font-size:var(--reading-detail-size,13px);line-height:1.6;word-break:keep-all}
   .story-quest-update p {margin:5px 0 0}
-  .story-reading-record {flex:none;width:100%;box-sizing:border-box;margin:12px 0;color:#443d30;font-size:13px;line-height:1.7}
+  .story-reading-record {flex:none;width:100%;box-sizing:border-box;margin:12px 0;color:#443d30;font-size:var(--reading-detail-size,13px);line-height:1.7}
   .story-reading-record summary {min-height:44px;box-sizing:border-box;padding:12px 4px;cursor:pointer;font-weight:800}
   .story-reading-record>div {padding:12px;border-top:1px solid #aa9774;white-space:normal;overflow-wrap:anywhere}
 </style>
@@ -6650,6 +6644,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   #status-prop.bag-supply-roll {
     width: min(calc(100% - 24px), 440px) !important;
     height: auto !important;
+    aspect-ratio: auto !important;
     max-height: calc(100dvh - var(--tool-dock-h, 90px) - var(--safe-top) - var(--safe-bottom) - 20px) !important;
     min-height: 0 !important;
     margin: 0 auto !important;
@@ -6674,9 +6669,12 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   }
 
   #status-prop .bag-live-content {
+    position: static !important;
+    inset: auto !important;
     box-sizing: border-box !important;
     display: grid !important;
     grid-template-rows: auto auto auto max-content auto !important;
+    align-content: start !important;
     gap: 9px !important;
     width: 100% !important;
     height: auto !important;
@@ -7136,7 +7134,7 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
     box-shadow: none !important;
   }
 
-  @media (max-width: 390px) {
+  @container game (max-width: 680px) {
     #status-prop .bag-live-content {
       padding: 14px !important;
       gap: 9px !important;
@@ -7153,7 +7151,8 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 
     #status-prop .bag-pocket {
       grid-template-columns: 46px minmax(0, 1fr) !important;
-      grid-template-rows: 1fr auto !important;
+      /* Reserve a real line for both fields, including when the tile is 62px tall. */
+      grid-template-rows: repeat(2, minmax(16px, 1fr)) !important;
       place-items: stretch !important;
       column-gap: 8px !important;
       min-height: 76px !important;
@@ -7175,6 +7174,10 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 
     #status-prop .bag-pocket-name {
       position: static !important;
+      inset: auto !important;
+      transform: none !important;
+      text-align: left !important;
+      text-shadow: none !important;
       grid-column: 2 !important;
       grid-row: 1 !important;
       align-self: end !important;
@@ -7737,6 +7740,10 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
 
 
 <style id="event-outcome-reward-polish">
+#ev-sheet[data-event-kind="story"]{
+  --reward-ink:#174d49;--reward-loss-ink:#702f26;--reward-gain-ink:#603b0c;
+  --reward-paper:#e6dcc5;--reward-loss-paper:#eddbcc;--reward-gain-paper:#eee0bd;
+}
 #ev-sheet[data-story-phase="outcome"] .story-reader{
   padding-bottom:14px!important;
 }
@@ -7788,37 +7795,40 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   gap:6px!important;
   min-height:32px!important;
   width:auto!important;
+  max-width:100%!important;
+  white-space:normal!important;
   margin:0!important;
   padding:6px 10px!important;
-  color:#287b76!important;
-  background:rgba(40,123,118,.13)!important;
+  color:var(--reward-ink,#287b76)!important;
+  background:var(--reward-paper,rgba(40,123,118,.13))!important;
   border:1px solid rgba(40,123,118,.62)!important;
   border-radius:17px!important;
   box-shadow:none!important;
-  font:800 13px/1.2 inherit!important;
+  font:800 var(--reading-result-size,13px)/1.2 var(--sans)!important;
   animation:reward-pill-in .28s cubic-bezier(.2,.8,.25,1) both;
 }
 #ev-sheet[data-story-phase="outcome"] .reward-pill:nth-child(2){animation-delay:.06s}
 #ev-sheet[data-story-phase="outcome"] .reward-pill:nth-child(3){animation-delay:.12s}
 #ev-sheet[data-story-phase="outcome"] .reward-pill i{
   display:inline-flex!important;
+  flex:none!important;
   align-items:center!important;
   justify-content:center!important;
   width:18px!important;height:18px!important;
   color:inherit!important;font-style:normal!important;font-size:14px!important;
 }
-#ev-sheet[data-story-phase="outcome"] .reward-pill b{font:inherit!important;color:inherit!important}
+#ev-sheet[data-story-phase="outcome"] .reward-pill b{min-width:0;font:inherit!important;color:inherit!important;word-break:keep-all;overflow-wrap:anywhere}
 #ev-sheet[data-story-phase="outcome"] .reward-pill.minus,
 #ev-sheet[data-story-phase="outcome"] .reward-pill.reward-pursuit,
 #ev-sheet[data-story-phase="outcome"] .reward-pill.reward-fatigue{
-  color:#955146!important;
-  background:rgba(149,81,70,.11)!important;
+  color:var(--reward-loss-ink,#955146)!important;
+  background:var(--reward-loss-paper,rgba(149,81,70,.11))!important;
   border-color:rgba(149,81,70,.52)!important;
 }
 #ev-sheet[data-story-phase="outcome"] .reward-pill.item,
 #ev-sheet[data-story-phase="outcome"] .reward-pill.reward-gain{
-  color:#9a6224!important;
-  background:rgba(184,117,40,.12)!important;
+  color:var(--reward-gain-ink,#9a6224)!important;
+  background:var(--reward-gain-paper,rgba(184,117,40,.12))!important;
   border-color:rgba(184,117,40,.56)!important;
 }
 #ev-sheet[data-story-phase="outcome"] .event-choice-dock{
@@ -7981,24 +7991,6 @@ html body #frame #app #main #panel #journey-mode-local.journey-mode-panel
   padding-block:8px!important;
 }
 
-body:has(#ev-wrap.on) #quest-update-ribbon{
-  top:70px!important;
-  right:auto!important;
-  bottom:auto!important;
-  left:50%!important;
-  width:calc(100% - 40px)!important;
-  max-width:340px!important;
-  min-height:0!important;
-  padding:9px 12px!important;
-  transform:translateX(-50%)!important;
-  border-radius:7px!important;
-  background:rgba(17,24,22,.94)!important;
-  box-shadow:0 6px 18px rgba(0,0,0,.34)!important;
-}
-body:has(#ev-wrap.on) #quest-update-ribbon small{
-  margin-bottom:2px!important;
-  font-size:10px!important;
-}
 </style>
 <style id="mobile-visual-qa-pass-final-20260823">
 /* This block intentionally sits last so generated legacy skins cannot override the mobile QA fixes. */
@@ -8302,7 +8294,7 @@ body:has(#ev-wrap.on) #quest-update-ribbon small{
 #ev-sheet.event-mode[data-event-kind="story"] .story-narration-text {
   color: #1c2220 !important;
   font-family: "Apple Myungjo", AppleMyungjo, "Nanum Myeongjo", "Noto Serif KR", serif !important;
-  font-size: 15px !important;
+  font-size: var(--reading-body-size,15px) !important;
   font-weight: 500 !important;
   line-height: 1.68 !important;
 }
@@ -8338,7 +8330,7 @@ body:has(#ev-wrap.on) #quest-update-ribbon small{
   grid-column: 2 !important;
   color: #555 !important;
   font-family: "Apple Myungjo", AppleMyungjo, "Nanum Myeongjo", "Noto Serif KR", serif !important;
-  font-size: 15px !important;
+  font-size: var(--reading-body-size,15px) !important;
   font-style: italic !important;
   font-weight: 500 !important;
   line-height: 1.6 !important;
@@ -8580,7 +8572,6 @@ body:has(#ev-wrap.on) #quest-update-ribbon small{
 #ovl-camp .camp-rest{position:sticky!important;z-index:8!important;bottom:calc(8px + var(--safe-bottom))!important;margin-top:18px!important}
 #ovl-stl.field-board-mode #stl-body{display:flex!important;flex-direction:column!important}
 #ovl-stl.field-board-mode .field-board-shell{flex:1 0 auto!important;min-height:calc(100dvh - 88px)!important}
-body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #quest-update-ribbon{display:none!important}
 @container game (max-width:380px){#app .route-console-v3 .nav-route-summary{min-height:108px!important;margin-inline:10px!important}#app .nav-route-quest-cue b{font-size:9px!important}#app .journey-local-screen .stop-action-trigger{grid-template-columns:12% minmax(0,1fr) 30px!important;padding-inline:2%!important}#app .journey-local-screen .stop-action-cta{width:30px!important;height:30px!important;min-width:30px!important}}
 
 /* Route console: reserve readable space for mission guidance on mobile. */
@@ -8911,8 +8902,8 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
 #ev-sheet.event-mode[data-event-kind="story"] .story-narration{
   box-sizing:border-box!important;
   width:100%!important;
-  margin:4px 0 8px!important;
-  padding:2px 0 7px!important;
+  margin:2px 0 4px!important;
+  padding:2px 0 4px!important;
   border:0!important;
   background:transparent!important;
 }
@@ -9000,7 +8991,7 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
   padding:0!important;
   color:#4a443a!important;
   font-family:var(--serif)!important;
-  font-size:15px!important;
+  font-size:var(--reading-body-size,15px)!important;
   font-style:italic!important;
   font-weight:500!important;
   line-height:1.62!important;
@@ -9151,9 +9142,12 @@ body:has(#ev-wrap.on) #quest-update-ribbon,body:has(.upgrade-install-layer) #que
 }
 
 html body #app .journey-mode-console .journey-mode-tabs.journey-rocker{
-  height:36px!important;
-  min-height:36px!important;
-  padding:2px!important;
+  top:6px!important;
+  left:10px!important;
+  right:10px!important;
+  height:46px!important;
+  min-height:46px!important;
+  padding:0!important;
   gap:3px!important;
   overflow:hidden!important;
   box-sizing:border-box!important;
@@ -9162,8 +9156,8 @@ html body #app .journey-mode-console .journey-mode-tabs.journey-rocker{
   box-shadow:inset 0 2px 5px rgba(0,0,0,.82)!important;
 }
 html body #app .journey-mode-console .journey-mode-tabs.journey-rocker>button{
-  height:32px!important;
-  min-height:32px!important;
+  height:44px!important;
+  min-height:44px!important;
   font-size:12px!important;
   box-sizing:border-box!important;
   border:1px solid transparent!important;
@@ -9765,78 +9759,79 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 </style>
 
 <style id="map-header-hardware-zones-20260825">
-/* Map header hardware grammar: title slot | protected hinge | telemetry CRT | road switch. */
+/* The header is live layout, not text fitted into painted hardware slots. */
 #ovl-map .map-live-head{
-  position:absolute!important;
-  top:5%!important;
-  left:7%!important;
-  right:8.4%!important;
-  height:5%!important;
-  display:block!important;
+  position:relative!important;
+  inset:auto!important;
+  height:auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 68px!important;
+  grid-template-rows:auto auto!important;
+  gap:4px 8px!important;
   min-width:0!important;
   transform:none!important;
 }
 #ovl-map .map-live-head h2{
-  position:absolute!important;
-  inset:0 auto 0 0!important;
+  position:static!important;
+  inset:auto!important;
   display:flex!important;
   align-items:center!important;
-  justify-content:center!important;
+  justify-content:flex-start!important;
   box-sizing:border-box!important;
-  width:32.5%!important;
+  width:auto!important;
   margin:0!important;
-  padding:0 5%!important;
+  padding:0!important;
   overflow:hidden!important;
-  color:#deb06c!important;
-  font:900 clamp(14px,4cqw,23px)/1 var(--sans)!important;
-  letter-spacing:.02em!important;
-  text-align:center!important;
+  color:#ede6d7!important;
+  font:850 21px/1.2 var(--sans)!important;
+  letter-spacing:-.025em!important;
+  text-align:left!important;
   text-overflow:ellipsis!important;
   white-space:nowrap!important;
   transform:none!important;
 }
 #ovl-map #map-mini{
-  position:absolute!important;
-  top:14%!important;
-  bottom:14%!important;
-  left:40.5%!important;
-  right:58px!important;
+  position:static!important;
+  inset:auto!important;
+  grid-column:1!important;
+  grid-row:2!important;
   display:flex!important;
   align-items:center!important;
-  justify-content:center!important;
+  justify-content:flex-start!important;
   box-sizing:border-box!important;
   width:auto!important;
   min-width:0!important;
   margin:0!important;
-  padding:0 10px!important;
+  padding:0!important;
   overflow:hidden!important;
-  border:1px solid rgba(3,7,6,.94)!important;
-  border-radius:4px!important;
-  color:#68c4bd!important;
-  background:linear-gradient(180deg,#111714 0%,#080c0b 100%)!important;
-  box-shadow:inset 0 2px 5px rgba(0,0,0,.92),inset 0 0 0 1px rgba(83,130,118,.13),0 1px rgba(255,214,139,.08)!important;
-  font:850 clamp(7.5px,1.9cqw,10.5px)/1 var(--mono)!important;
-  letter-spacing:.015em!important;
-  text-align:center!important;
+  border:0!important;
+  border-radius:0!important;
+  color:#9bc4ba!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  font:600 11px/1.4 var(--sans)!important;
+  letter-spacing:0!important;
+  text-align:left!important;
   text-overflow:ellipsis!important;
   text-shadow:0 0 5px rgba(74,194,182,.16)!important;
-  white-space:nowrap!important;
+  white-space:normal!important;
   transform:none!important;
 }
 #ovl-map #map-x.road-tool-close{
-  position:absolute!important;
-  top:11%!important;
-  right:0!important;
-  bottom:auto!important;
+  position:static!important;
+  inset:auto!important;
+  grid-column:2!important;
+  grid-row:1/3!important;
+  align-self:center!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
   gap:4px!important;
   box-sizing:border-box!important;
-  width:50px!important;
-  min-width:50px!important;
-  height:78%!important;
-  min-height:0!important;
+  width:68px!important;
+  min-width:68px!important;
+  height:44px!important;
+  min-height:44px!important;
   margin:0!important;
   padding:0 5px!important;
   overflow:hidden!important;
@@ -9845,7 +9840,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   color:#e2b365!important;
   background:linear-gradient(180deg,#29251e,#151713)!important;
   box-shadow:inset 0 1px rgba(255,223,161,.16),0 2px 4px rgba(0,0,0,.4)!important;
-  font:900 clamp(8px,2cqw,11px)/1 var(--sans)!important;
+  font:800 13px/1 var(--sans)!important;
   text-shadow:0 1px 2px #000!important;
   transform:none!important;
 }
@@ -9857,11 +9852,6 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 }
 #ovl-map #map-x.road-tool-close:hover{background:linear-gradient(180deg,#3a3021,#1c1b15)!important}
 #ovl-map #map-x.road-tool-close:active{transform:translateY(1px)!important}
-@container game (max-width:380px){
-  #ovl-map .map-live-head h2{width:31.5%!important;padding-inline:3%!important}
-  #ovl-map #map-mini{left:39.5%!important;right:50px!important;padding-inline:6px!important;font-size:7.5px!important;letter-spacing:-.025em!important}
-  #ovl-map #map-x.road-tool-close{width:43px!important;min-width:43px!important;padding-inline:3px!important;font-size:8px!important}
-}
 
 /* The road tracker owns a real collapse handler; do not let the older display rule swallow its input. */
 #road-quest-tracker{
@@ -9871,7 +9861,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 }
 </style>
 <style id="story-choice-debossed-surface">
-/* 선택은 진행 버튼과 같은 주황색 행동 계열이다. 번호와 결과 수치는 노출하지 않는다. */
+/* 선택은 진행 버튼과 같은 호박색 행동 계열이다. 이미 아는 소모/흔적만 줄별로 구분한다. */
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice{
   position:relative!important;
   min-height:48px!important;
@@ -9884,7 +9874,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   gap:2px!important;
   border:1px solid #9f611e!important;
   border-radius:6px!important;
-  background:#b87528!important;
+  background:#895216!important;
   color:#fff8e9!important;
   box-shadow:0 4px 10px rgba(87,46,10,.25)!important;
   text-shadow:none!important;
@@ -9926,7 +9916,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   gap:5px 8px!important;
   padding:0!important;
   color:#fff8e9!important;
-  font:850 13px/1.35 var(--sans)!important;
+  font:850 var(--reading-choice-size,13px)/1.35 var(--sans)!important;
   text-align:center!important;
   text-shadow:none!important;
 }
@@ -9936,9 +9926,11 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
   width:100%!important;
   margin:auto!important;
   color:#fff8e9!important;
-  font:850 13px/1.35 var(--sans)!important;
+  font:850 var(--reading-choice-size,13px)/1.35 var(--sans)!important;
   text-align:center!important;
   -webkit-line-clamp:unset!important;
+  word-break:keep-all!important;
+  overflow-wrap:anywhere!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock .choice-tags{
   display:inline-flex!important;
@@ -9966,13 +9958,13 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:hover,
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:focus-visible{
   border-color:#8f5315!important;
-  background:#c48332!important;
+  background:#965d20!important;
   box-shadow:0 4px 10px rgba(87,46,10,.28),0 0 0 2px rgba(184,117,40,.18)!important;
   outline:0!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:active{
   transform:translateY(1px)!important;
-  background:#a86622!important;
+  background:#784710!important;
   box-shadow:inset 0 2px 4px rgba(61,37,15,.2)!important;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock > .choices > button.choice:disabled{
@@ -9993,6 +9985,19 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 #app #ev-wrap #ev-sheet.event-mode[data-story-step="decision"] .event-choice-dock .choice-requirement{
   display:block!important;position:static!important;width:100%!important;margin:4px 0 0!important;
   color:#ffe0ad!important;font:700 11px/1.4 var(--sans)!important;letter-spacing:0!important;text-align:center!important;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"][data-story-step="decision"] .event-choice-dock .choice-forecast{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:8px;
+  color:#fff8e9!important;
+  font:500 var(--reading-detail-size,12px)/1.45 var(--sans)!important;
+  text-align:left!important;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+#app #ev-wrap #ev-sheet.event-mode[data-event-kind="story"] .choice-forecast-label{
+  font-weight:800;
 }
 #app #ev-wrap #ev-sheet.event-mode[data-event-id="route_mid_fork"][data-story-step="decision"]
 .event-choice-dock>.choices>button.choice{
@@ -10292,7 +10297,7 @@ html body #app #ev-sheet.event-mode[data-event-kind="combat"][data-story-step="d
 
   /* Reserve the dock first, then let the journey console scroll in remaining dvh. */
   #scr-game #main{
-    --compact-dock-block:calc(76px + var(--safe-bottom));
+    --compact-dock-block:calc(var(--nav-deck-h) + var(--safe-bottom));
     box-sizing:border-box!important;
     min-height:0!important;
     padding-bottom:var(--compact-dock-block)!important
@@ -11034,7 +11039,7 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
   max-height:none!important;
   overflow:visible!important;
   color:#eee9de!important;
-  font:500 clamp(13px,3.6cqw,15px)/1.58 var(--serif)!important;
+  font:500 var(--reading-body-size,clamp(13px,3.6cqw,15px))/1.58 var(--serif)!important;
   text-shadow:none!important;
   -webkit-line-clamp:unset!important;
 }
@@ -11152,7 +11157,7 @@ html body #app #ev-wrap #ev-sheet.event-mode[data-event-kind="combat"][data-stor
   margin:0!important;
   overflow:visible!important;
   color:#fff3da!important;
-  font:800 clamp(12px,3.35cqw,14px)/1.35 var(--sans)!important;
+  font:800 var(--reading-choice-size,clamp(12px,3.35cqw,14px))/1.35 var(--sans)!important;
   text-align:center!important;
   white-space:normal!important;
   text-shadow:none!important;

@@ -130,7 +130,7 @@ G.campContext = cid=>{
 G.campConversationEvent = ()=>{
   const record=G.currentCampConversation();
   if(!record||!G.campParticipants().includes(record.cid)) return null;
-  const data=D.campConversations[record.cid], cid=record.cid;
+  const data=D.campConversationData(record), cid=record.cid;
   const text=[record.context,record.revisit?data.later:data.first,`"${data.line}"`].filter(Boolean).join('\n\n');
   return {id:record.id,campConversation:true,type:'대화',title:data.title,
     scene:`comp-talk-${cid}-${record.timeLabel==='밤'||record.timeLabel==='저녁'||record.timeLabel==='새벽'?'camp':'road'}-v1`,
@@ -153,13 +153,14 @@ G.resolveCampChoice = (eventId,choiceId)=>{
     :{ok:false,applied:false,why:'이미 다른 대답을 나눴다'};
   const req=G.reqOk(G.choiceReq(choice));
   if(!req.ok) return {ok:false,applied:false,why:req.t};
-  const data=D.campConversations[record.cid].choices.find(row=>row.id===choiceId);
+  const data=D.campConversationData(record).choices.find(row=>row.id===choiceId);
   const chips=G.applyFx(out.fx,{noteTitle:event.title});
   S.campMemories=S.campMemories||{};
   const previous=S.campMemories[record.cid]||{};
   const isGuest=!S.party.includes(record.cid);
   if(!isGuest) G.bond(record.cid,2);
-  S.campMemories[record.cid]={id:record.id,cid:record.cid,choiceId,day:S.day,
+  const visits=Number.isFinite(previous.visits)?Math.max(0,Math.floor(previous.visits)):previous.choiceId?1:0;
+  S.campMemories[record.cid]={id:record.id,cid:record.cid,choiceId,day:S.day,visits:visits+1,
     home:data.home,road:data.road,pendingRoad:true,pendingBond:(previous.pendingBond||0)+(isGuest?2:0)};
   chips.push({t:isGuest?'함께 나눈 대화 · 합류하면 유대 +2':`${D.comps[record.cid].name} 유대 +2`,c:'item'});
   chips.push({t:`${D.companionKeepsakes[record.cid].name} · 새 흔적`,c:'item'});
@@ -223,9 +224,15 @@ G.prepareCamp = (kind,cid)=>{
     const record=G.currentCampConversation();
     if(record&&record.choiceId) return {ok:false,why:'이번 밤에는 이미 한 사람과 오래 이야기했다'};
     if(record&&record.cid===cid) record.active=true;
-    else S.campConversation={id:`camp_${S.campNight||0}_${cid}`,night:S.campNight||0,cid,
-      day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!(S.campMemories&&S.campMemories[cid]),
-      choiceId:null,chips:[],active:true};
+    else{
+      const memory=S.campMemories&&S.campMemories[cid];
+      const experienced=memory&&D.campConversations[cid].choices.some(choice=>choice.id===memory.choiceId);
+      const visits=experienced?(Number.isFinite(memory.visits)?Math.max(1,Math.floor(memory.visits)):1):0;
+      S.campConversation={id:`camp_${S.campNight||0}_${cid}`,night:S.campNight||0,cid,
+        day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!experienced,
+        chapter:Math.min(3,visits+1),previousChoiceId:experienced?memory.choiceId:null,
+        choiceId:null,chips:[],active:true};
+    }
   } else return {ok:false,why:'알 수 없는 야영 준비다'};
   G.save();
   return {ok:true};
@@ -615,19 +622,33 @@ G.talkTo = (id)=>{
 G.roadCheckIn = (id)=>{
   if(!S.driving||!id||!S.party.includes(id)) return {ok:false,why:'지금 함께 달리는 동료를 골라야 한다'};
   if(S.driving.checkIn) return {ok:false,why:'이 구간에서는 이미 누군가와 이야기를 나눴다'};
-  S.driving.checkIn=id;
-  G.bond(id,1);
-  if(S.comps[id]) S.comps[id].mood=clamp((S.comps[id].mood||0)+3,0,100);
-  const routeId=S.routePlan&&S.routePlan.id;
+  if(S.pendingPresentation||S.driving.approach||UI.modalOpen()) return {ok:false,why:'지금 열린 이야기를 먼저 마친다'};
+  const route=G.routeStatus();
+  const routeId=route&&!route.complete&&route.def.corridor.includes(S.driving.from)&&route.def.corridor.includes(S.driving.to)?route.def.id:null;
   const moment=(D.routeCrewMoments||[]).find(row=>row.route===routeId&&row.crew.includes(id)&&row.crew.every(cid=>S.party.includes(cid)));
+  const event=D.roadCheckInEvents.find(row=>row.roadCheckIn===id&&row.roadMoment===(moment?moment.id:null));
+  if(!event) return {ok:false,why:'지금은 나눌 이야기가 없다'};
+  // Voluntary check-ins must not count as random encounters or advance personal story gates.
+  UI.showEvent(event);
+  return {ok:true,moment:moment||null};
+};
+G.completeRoadCheckIn = event=>{
+  const id=event.roadCheckIn;
+  S.driving.checkIn=id;
+  S.driving.checkInSummary=event.summary;
+  G.bond(id,1);
+  S.comps[id].mood=clamp((S.comps[id].mood||0)+3,0,100);
+  const chips=[{t:`${D.comps[id].name} 유대 +1`,c:'plus'},{t:`${D.comps[id].name} 기분 +3`,c:'plus'}];
+  const moment=D.routeCrewMoments.find(row=>row.id===event.roadMoment);
   if(moment){
     const other=moment.crew.find(cid=>cid!==id);
-    S.driving.checkInMoment={id:moment.id,title:moment.title,text:moment.text,crew:moment.crew.slice()};
-    if(other&&S.comps[other]) S.comps[other].mood=clamp((S.comps[other].mood||0)+2,0,100);
-    UI.toast(`💬 ${moment.title} — ${D.comps[id].name}와 ${D.comps[other].name}`);
-  }else UI.toast(`💬 ${D.comps[id].name}와 짧게 이야기를 나눴다 — 유대 +1 · 기분 +3`);
-  G.save();
-  return {ok:true,moment:moment||null};
+    S.driving.checkInMoment={id:moment.id,title:moment.title,text:event.summary,crew:moment.crew.slice()};
+    if(other&&S.comps[other]&&S.party.includes(other)){
+      S.comps[other].mood=clamp((S.comps[other].mood||0)+2,0,100);
+      chips.push({t:`${D.comps[other].name} 기분 +2`,c:'plus'});
+    }
+  }
+  return chips;
 };
 
 /* ── 저항 연대망 ── */

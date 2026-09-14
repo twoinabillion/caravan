@@ -13,6 +13,27 @@
   };
   const event=id=>D.events.find(item=>item.id===id)||D.seoulStops.find(item=>item.id===id);
   const method=S=>S.flags.core_transfer?'transfer':S.flags.core_sleep?'sleep':'quarantine';
+  // Bring a small, experienced part of this player's journey into the default
+  // ending. The optional record still holds the complete history. No new ledger.
+  const personalRecall=S=>{
+    const turns=[],decisions=S.opening?.decisions||{};
+    const departure=decisions.opening_departure?.choiceId;
+    if(departure==='leave_key') turns.push(narration('감천 작업장 열쇠를 맡기던 손이 떠올랐다. 돌아가면 문을 두드려야 한다. 열쇠를 받아 둔 사람에게 여기까지의 이야기를 해 줄 수 있겠다.'));
+    else if(departure==='keep_key') turns.push(narration('감천에서 가져온 작업장 열쇠를 꺼냈다. 긴 길을 오는 동안 닳은 모서리가 손가락에 닿았다. 돌아가면 이 열쇠로 셔터부터 열 것이다.'));
+    else{
+      const first=Object.entries(decisions).map(([step,row])=>D.openingDecisionCallbacks[step]?.[row?.choiceId]?.summary).find(Boolean);
+      if(first) turns.push(narration('수첩 첫 장을 폈다. '+first));
+    }
+    const memories=Object.entries(S.campMemories||{})
+      .filter(([cid,row])=>D.comps[cid]&&row&&D.campConversations?.[cid]?.choices.some(choice=>choice.id===row.choiceId))
+      .sort(([a,ra],[b,rb])=>Number((S.party||[]).includes(b))-Number((S.party||[]).includes(a))
+        ||(Number(rb.visits)||1)-(Number(ra.visits)||1)||a.localeCompare(b));
+    for(const [cid,row] of memories.slice(0,2)){
+      const memory=typeof row.home==='string'&&row.home.trim()?row.home:D.campConversations[cid].choices.find(choice=>choice.id===row.choiceId).home;
+      turns.push(narration(D.comps[cid].name+'와 함께 보낸 시간이 달구지 안에 남아 있다. '+memory));
+    }
+    return turns;
+  };
   const cost=S=>({
     transfer:'도로를 먼저 열지, 물차를 먼저 보낼지 거점들의 다툼이 시작됐다. 그 느린 합의도 이제 사람의 몫이다.',
     sleep:'원본 기록 검색창도 함께 잠겼다. 면사무소의 내일 이송표 조회 세 건은 기다려야 한다. 다시 열려면 나눠 가진 열쇠와 사람들의 합의가 필요하다.',
@@ -67,6 +88,7 @@
     if(index===0&&S.flags.core_sleep&&S.party.includes('eunsu')) turns.push(narration('은수는 반대했던 잠긴 검색창 대신, 조회 예약 세 건과 열쇠를 맡은 거점을 수첩에 옮겼다. 숙제는 남았다.'));
     if(index===0&&S.flags.core_quarantine&&S.party.includes('kangwoo')) turns.push(say('kangwoo','반대했으니까 내가 먼저 선다.'));
     if(index===0&&S.flags.core_transfer&&S.party.includes('jaeyi')) turns.push(say('jaeyi','저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게.'));
+    turns.push(...personalRecall(S));
     turns.push(narration('새벽, 남쪽에서 첫 차량들이 한강을 건넜다. 돌아올지 다시 내려갈지는 각자가 정했다.'));
     turns.push(narration(S.flags.core_sleep?'통신 단말의 수신등은 켜지지 않았다. 코어는 잠들었다. 처리 결과는 내일 사람이 확인한다.':'단말 수신등이 한 번 켜졌다. 「서울 권역 처리 결과 상행 전송 / 상위 응답 대기」'));
     return turns;

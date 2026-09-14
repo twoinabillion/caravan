@@ -190,6 +190,7 @@ D.scenes = {
   'parents-failed-namsan-v1':'__SCENE_PARENTS_FAILED_NAMSAN_V1__',
   'parents-diversion-record-v2':'assets/scenes/parents-diversion-record-v2.webp',
   'parents-linked-records-v2':'assets/scenes/parents-linked-records-v2.webp',
+  'main-relay-workbench-v1':'assets/scenes/main-relay-workbench-v1.webp',
   'parents-father-last-log-record-v2':'assets/scenes/parents-father-last-log-record-v2.webp',
   'history-parents-network-record-v2':'assets/scenes/history-parents-network-record-v2.webp',
   'parents-mother-reunion-v1':'__SCENE_PARENTS_MOTHER_REUNION_V1__',
@@ -361,6 +362,7 @@ D.sceneDescriptions = {
   'story-bridge-parent-route-v1':'비 내리는 북부 연락소의 낡은 상자 안에서 부모님의 뜯긴 분리 절차 두 장을 손전등으로 맞춰 보는 사람들',
   'parents-diversion-record-v2':'폐쇄된 남쪽 환승소 책상에서 장갑 낀 손이 오래된 운행표와 두 장의 분류 기록을 나란히 대조하는 현재 장면',
   'parents-linked-records-v2':'아빠의 전기 정비 기록과 엄마의 증언 전달 카드에서 같은 화물 묶음 표식을 찾아 맞춰 보는 현재 장면',
+  'main-relay-workbench-v1':'수원 외곽 중계소의 낡은 수신기와 탁상 마이크, 세 개의 아날로그 계기. 거점들의 응답을 듣는 현재 장면. 사람이나 남산 풍경은 없다',
   'parents-father-last-log-record-v2':'비어 있는 남산 유지실 제어대에 마지막 연속 용지가 걸려 있고 정비 번호표와 시계가 함께 남은 기록 장면',
   'history-parents-network-record-v2':'북부 교환소 지도 위에 오래된 전달 표식들과 며칠 전 도착한 봉인 봉투를 대조해 둔 현재 장면',
   'parents-mother-broadcast-v1':'서울 외곽의 낡은 무전 중계소에서 헤드셋을 쓴 엄마가 여섯 주파수 송출 스위치 앞에 앉아 남산 작전을 기다리는 밤',
@@ -408,6 +410,7 @@ const sceneCompanionId = key => {
 const evidenceRecordKeys = new Set([
   'parents-diversion-record-v2',
   'parents-linked-records-v2',
+  'main-relay-workbench-v1',
   'parents-father-last-log-record-v2',
   'history-parents-network-record-v2'
 ]);

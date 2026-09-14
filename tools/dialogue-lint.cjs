@@ -81,6 +81,7 @@ for (const item of D.banter || []) {
 }
 const allEvents = [
   ...(D.events || []),
+  ...(D.roadCheckInEvents || []),
   ...(D.seoulStops || []),
   ...[D.bridgeEvent, D.gateEvent, D.seoulOpenEvent].filter(Boolean),
 ];
@@ -90,6 +91,10 @@ for (const event of allEvents) {
     addQuotedVariants(event.id, choice.label);
     for (const outcome of choice.out || []) addQuotedVariants(event.id, outcome.text, outcome.turnSpeakers || []);
   }
+}
+for (const event of D.roadCheckInEvents || []) {
+  const turns=[...event.turns,...event.choices.flatMap(choice=>choice.out.flatMap(out=>out.turns))];
+  for (const turn of turns) if(turn.kind==='dialogue') add(event.id,turn.who,turn.text);
 }
 for (const page of D.intro || []) {
   addQuoted('intro', page.text);

@@ -17,6 +17,7 @@ const STATIC_CONTENT_FILES = Object.freeze([
 function permanentEvents(D) {
   return [
     ...(D.events || []),
+    ...(D.roadCheckInEvents || []),
     D.seoulOpenEvent,
     D.gateEvent,
     D.bridgeEvent,

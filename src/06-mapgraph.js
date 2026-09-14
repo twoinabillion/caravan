@@ -190,8 +190,8 @@ const MAPR = (()=>{
       const putLabel=(id,x,y,txt,font,fill,essential)=>{
         ctx.font=font;
         const w=ctx.measureText(txt).width+8;
-        for(const dy of [-11,18]){
-          const bx={x0:x-w/2, x1:x+w/2, y0:y+dy-10, y1:y+dy+4};
+        for(const dy of [-12,20]){
+          const bx={x0:x-w/2, x1:x+w/2, y0:y+dy-12, y1:y+dy+4};
           if(bx.x0<7||bx.x1>W-7||bx.y0<28||bx.y1>H-31) continue;
           if(placed.some(p=>p.x0<bx.x1&&bx.x0<p.x1&&p.y0<bx.y1&&bx.y0<p.y1)) continue;
           if(!essential&&hitsNode(bx,id)) continue;
@@ -216,7 +216,7 @@ const MAPR = (()=>{
         const p=prio(id);
         if(p>=4) continue;                           // 작은 경유지는 점으로만 남긴다
         const bold = p<=2;
-        const font=`${bold?'700 ':''}${p<=3?11:10.5}px sans-serif`;
+        const font=`${bold?'700 ':''}12px sans-serif`;
         const fill= n.type==='goal'? 'rgba(85,224,200,0.95)':
           S.at===id? 'rgba(255,200,120,0.98)':
           n.stl? 'rgba(240,225,195,0.95)':

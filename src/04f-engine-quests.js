@@ -30,24 +30,25 @@ G.questGraphDistance = (from,to,routeAware=false)=>{
   }
   return Infinity;
 };
-G.questObjectivePlan = ()=>{
+G.questObjectivePlan = (questId=null)=>{
   if(!S) return null;
-  const ledger=G.ensureQuestLedger(), q=S.quest;
-  if(q&&ledger.tracked.includes(q.ledgerId)){
+  const ledger=G.ensureQuestLedger(), q=S.quest||S.questFollowup;
+  if(q&&(questId?q.ledgerId===questId:ledger.tracked.includes(q.ledgerId))){
     const have=q.kind==='procure'&&q.need?Number(S.items&&S.items[q.need.name])||0:0;
-    const target=q.kind==='procure'&&have>=q.need.qty?q.from:q.to;
+    const target=!S.quest||q.kind==='procure'&&have>=q.need.qty?q.from:q.to;
     return {key:q.ledgerId,kind:'local',target,title:typeof G.questLabel==='function'?G.questLabel(q):(q.item||'지역 의뢰'),
       action:target===S.at?'이곳의 의뢰인에게 말을 건다':`${D.nodes[target].name}까지 이동한다`};
   }
   const rq=S.recruitQ;
-  if(rq&&rq.target&&ledger.tracked.includes(`companion_${rq.id}`))
+  if(rq&&rq.target&&(questId?questId===`companion_${rq.id}`:ledger.tracked.includes(`companion_${rq.id}`)))
     return {key:`companion_${rq.id}`,kind:'companion',target:rq.target,title:`${D.comps[rq.id].name}의 부탁`,action:`${D.nodes[rq.target].name}에 가서 ${D.comps[rq.id].name}가 부탁한 일을 한다`};
+  if(questId&&questId!=='main_namsan') return null;
   const main=G.mainQuestEntry();
   const evidence=G.mainEvidenceOpportunity();
   return {key:`main_${main&&main.chapterId||'namsan'}`,kind:'main',target:evidence?evidence.target:'seoul',title:main&&main.title||'남산으로 간다',action:evidence?evidence.hint:main&&main.next||'북쪽 길을 따라간다'};
 };
-G.questNavigationPlan = ()=>{
-  const plan=G.questObjectivePlan();
+G.questNavigationPlan = (questId=null)=>{
+  const plan=G.questObjectivePlan(questId);
   if(!plan) return null;
   const route=G.routeStatus(), origin=S.at||S.driving?.from;
   const committed=route&&!route.complete&&origin!==route.def.end
@@ -55,8 +56,8 @@ G.questNavigationPlan = ()=>{
   return committed?{...plan,waypoint:route.def.end,
     action:`${route.def.name}을 따라 청주까지 간 뒤 ${D.nodes[plan.target].name}까지 이동한다`}:plan;
 };
-G.questPreferredNeighbor = routeModels=>{
-  const plan=G.questNavigationPlan();
+G.questPreferredNeighbor = (routeModels,questId=null)=>{
+  const plan=G.questNavigationPlan(questId);
   if(!plan||!Array.isArray(routeModels)||!routeModels.length) return null;
   const target=plan.waypoint||plan.target,origin=S.at||S.driving?.from;
   if(origin===target) return null;
@@ -64,13 +65,13 @@ G.questPreferredNeighbor = routeModels=>{
     .map(model=>({model,distance:model.nb.km+G.questGraphDistance(model.nb.id,target,true)}))
     .filter(row=>Number.isFinite(row.distance)).sort((a,b)=>a.distance-b.distance)[0]?.model||null;
 };
-G.routeQuestCue = nodeId=>{
-  const plan=G.questNavigationPlan();
+G.routeQuestCue = (nodeId,questId=null)=>{
+  const plan=G.questNavigationPlan(questId);
   if(!plan||!S) return null;
   const origin=S.at||S.driving?.from;
   if(!origin) return null;
   const options=G.neighbors(origin).filter(nb=>S.known.includes(nb.id)).map(nb=>({nb}));
-  const preferred=G.questPreferredNeighbor(options);
+  const preferred=G.questPreferredNeighbor(options,questId);
   return preferred&&preferred.nb.id===nodeId?plan:null;
 };
 
@@ -222,6 +223,44 @@ G.completedQuestEntries = ()=>{
 G.questLedgerEntries = ()=>{
   if(!S) return [];
   return [G.mainQuestEntry(),...G.companionQuestEntries(),...G.localQuestEntries(),...G.completedQuestEntries()].filter(Boolean);
+};
+
+// A goal link describes a preview surface. Only that surface's own controls
+// may travel, spend resources, turn in an item, or advance a conversation.
+G.questActionPlan = id=>{
+  if(!S||G.openingPending()) return null;
+  const row=G.questLedgerEntries().find(entry=>entry.id===id);
+  if(!row||row.status==='completed'||row.kind==='completed') return null;
+  const plan=G.questObjectivePlan(id);
+  const target=plan&&plan.target;
+  const action=(surface,label,extra={})=>({questId:id,surface,label,target,...extra});
+  if(row.kind==='main'){
+    const evidence=G.mainEvidenceOpportunity();
+    if(!S.driving&&evidence&&S.at===evidence.target)
+      return action('local','주변 탐색 보기',{focus:'explore'});
+    if(!S.driving&&S.at==='seoul'&&G.seoulReady())
+      return S.flags.seoul_open?action('seoul','서울 진입로 보기'):null;
+    return action('route','경로 보기');
+  }
+  if(row.kind==='local'){
+    const q=S.quest&&S.quest.ledgerId===id?S.quest:S.questFollowup;
+    const needSupplies=q&&q.kind==='procure'&&(Number(S.items&&S.items[q.need.name])||0)<q.need.qty;
+    if(!S.driving&&(S.at===target||needSupplies)&&D.nodes[S.at]?.stl)
+      return action('market',needSupplies?'물품·게시판 보기':'게시판 보기',{target:S.at});
+    return target?action('route','경로 보기'):null;
+  }
+  if(row.kind==='companion'){
+    const rq=S.recruitQ&&S.recruitQ.id===row.companion?S.recruitQ:null;
+    if(rq){
+      if(S.driving||rq.stage==='road'||(rq.stage!=='ready'&&S.at!==rq.target))
+        return action('route','경로 보기');
+      const waitsForNight=rq.stage==='follow'&&Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay;
+      return action('local',waitsForNight?'야영 준비 보기':'동료의 부탁 보기',{focus:waitsForNight?'camp':'recruitstep'});
+    }
+    if(S.comps[row.companion]?.pending||S.driving) return action('crew','동료 보기');
+    return action('local','야영 준비 보기',{target:S.at,focus:'camp'});
+  }
+  return null;
 };
 
 G.toggleQuestTracking = (id)=>{

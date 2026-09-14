@@ -225,6 +225,10 @@
           <header><span><small>DISPLAY</small><b id="menu-brightness-title">화면 밝기</b></span><output id="menu-brightness-value" for="menu-brightness">100%</output></header>
           <input id="menu-brightness" type="range" min="60" max="120" step="5" value="100" aria-label="화면 밝기">
           <div class="menu-range-labels" aria-hidden="true"><span>어둡게</span><span>밝게</span></div>
+          <div class="menu-reading-options" aria-label="읽기와 움직임 설정">
+            <button id="menu-text-toggle" data-ui-pref="text" type="button" aria-pressed="false"><span>큰 글씨</span><b>꺼짐</b></button>
+            <button id="menu-motion-toggle" data-ui-pref="motion" type="button" aria-pressed="false"><span>움직임 줄이기</span><b>꺼짐</b></button>
+          </div>
         </section>
         <section class="menu-control-card" aria-labelledby="menu-sound-title">
           <header><span><small>AUDIO</small><b id="menu-sound-title">소리</b></span><output id="menu-sound-state">꺼짐</output></header>

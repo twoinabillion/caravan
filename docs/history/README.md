@@ -5,9 +5,16 @@
 
 ## handoffs
 
+- [2026-09-14 출발 대사·선택 정보 편집 완료](director-narrative-2026-09-14.md)
+- [2026-09-14 행동·읽기 개선 방향](director-actions-design-2026-09-14.md) · [실행 완료 계획](director-actions-plan-2026-09-14.md)
+- [2026-09-14 디렉터 UI 정돈 계획과 다음 판단](director-polish-2026-09-14.md)
 - 2026-08-17 정착지 공간 구현과 UI·대사 인수인계
 - 2026-08-18 필드 보드 구조 및 시각 마감 계획
 - 당시의 디자인 QA 기록
+
+## 2026-09-14 여정 연결성
+
+- [야영 단계·개인 엔딩 회상·증거 장면·영상 선행 조건의 판단과 검증](../../audits/director-cohesion-2026-09-14/README.md)
 
 ## roadmaps
 

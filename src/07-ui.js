@@ -43,6 +43,7 @@ const UI = (()=>{
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper', introRestart=false;
   let navChoiceAt=null, navChoiceId=null, navChoiceGuide='', journeyConsoleMode='route';
+  let questRouteFocus=null, questRouteState=null;
   /* 풍경 위에는 결정을 전부 복제하지 않고 지금 할 만한 핵심 행동 두 개만 둔다.
      원본 버튼이 상태와 조건의 단일 소스이며, 빠른 버튼은 원본 클릭을 위임한다. */
   function syncStageActions(){
@@ -106,7 +107,22 @@ const UI = (()=>{
     root.dataset.uiMotion=uiPrefs.reduceMotion?'reduced':'full';
     root.style.setProperty('--ui-brightness',String(uiPrefs.brightness/100));
   }
+  function toggleUiPref(kind){
+    if(kind==='text'){
+      uiPrefs.largeText=!uiPrefs.largeText;
+      localStorage.setItem('caravan_ui_text',uiPrefs.largeText?'large':'normal');
+    }else if(kind==='motion'){
+      uiPrefs.reduceMotion=!uiPrefs.reduceMotion;
+      localStorage.setItem('caravan_ui_motion',uiPrefs.reduceMotion?'reduced':'full');
+    }
+    applyUiPrefs();
+  }
   function renderSimpleMenu(){
+    $('#ovl-menu').querySelectorAll('[data-ui-pref]').forEach(button=>{
+      const enabled=button.dataset.uiPref==='text'?uiPrefs.largeText:uiPrefs.reduceMotion;
+      button.setAttribute('aria-pressed',String(enabled));
+      button.querySelector('b').textContent=enabled?'켜짐':'꺼짐';
+    });
     const brightness=$('#menu-brightness'), brightnessValue=$('#menu-brightness-value');
     if(brightness) brightness.value=String(uiPrefs.brightness);
     if(brightnessValue) brightnessValue.textContent=`${uiPrefs.brightness}%`;
@@ -579,6 +595,10 @@ const UI = (()=>{
     $('#dk-crew').onclick=()=>openStatusTab('crew','dk-crew');
     $('#dk-menu').onclick=()=>{ setDockTab('dk-menu'); toggleOvl('#ovl-menu'); renderSimpleMenu(); };
     $('#menu-x').onclick=()=>closeOvl('#ovl-menu');
+    $('#ovl-menu').querySelectorAll('[data-ui-pref]').forEach(button=>button.onclick=()=>{
+      toggleUiPref(button.dataset.uiPref);
+      renderSimpleMenu();
+    });
     $('#local-actions-x').onclick=()=>closeOvl('#ovl-local-actions');
     const brightness=$('#menu-brightness');
     if(brightness) brightness.oninput=()=>{
@@ -874,9 +894,44 @@ const UI = (()=>{
     if(!$('#ovl-map').classList.contains('on')) toggleOvl('#ovl-map');
     wireRoadTool($('#ovl-map'));
     refreshMapSurface();
-    mapKbFocus=null;
-    MAPR.selectNode(null);
-    showNodeCard(null);
+    const origin=S.at||(S.driving&&S.driving.from);
+    mapKbFocus=origin||null;
+    MAPR.selectNode(origin);
+    showNodeCard(origin);
+  }
+  // A quest shortcut opens the existing decision surface; only its own controls act.
+  function openQuestAction(action){
+    if(!S||S.ended||screen!=='game'||$('#ev-wrap').classList.contains('on')) return {ok:false};
+    if(!action||!['route','local','market','crew','seoul'].includes(action.surface)) return {ok:false};
+    if(['local','market','seoul'].includes(action.surface)&&S.driving) return {ok:false};
+    if(action.surface==='market'&&!D.nodes[S.at]?.stl) return {ok:false};
+    if(action.surface==='seoul'&&(S.at!=='seoul'||!S.flags.seoul_open)) return {ok:false};
+    for(const selector of ['#ovl-status','#ovl-map','#ovl-menu','#ovl-stl','#ovl-local-actions','#ovl-camp','#ovl-journal','#ovl-seoul'])
+      if($(selector)?.classList.contains('on')) closeModal(selector,false);
+    setDockTab('dk-road');
+    if(action.surface==='crew'){ openStatusTab('crew','dk-crew'); return {ok:true}; }
+    if(action.surface==='market'){ showStl(D.nodes[S.at].stl,'market',{previewOnly:true,questId:action.questId}); return {ok:true}; }
+    if(action.surface==='seoul'){ showSeoul({previewOnly:true}); return {ok:true}; }
+    if(action.surface==='route'&&S.driving){
+      openJourneyMap();
+      if(D.nodes[action.target]){ MAPR.selectNode(action.target); showNodeCard(action.target); }
+      return {ok:true};
+    }
+    questRouteFocus=action.surface==='route'?action.questId:null;
+    questRouteState=S;
+    navChoiceGuide='';
+    journeyConsoleMode=action.surface==='route'?'route':'local';
+    $('#stage').style.removeProperty('height');
+    renderAll();
+    const current=S;
+    requestAnimationFrame(()=>{
+      if(S!==current) return;
+      const target=action.surface==='route'?$('#panel .nav-depart-cta')
+        :[...document.querySelectorAll('#panel #journey-mode-local [data-a]')].find(button=>button.dataset.a===action.focus);
+      if(target){ target.focus({preventScroll:true}); target.scrollIntoView({block:'nearest'}); }
+      scheduleStoppedStageFit();
+    });
+    return {ok:true};
   }
   function wireMapOpeners(root){
     root.querySelectorAll('[data-open-map]').forEach(control=>{
@@ -1665,9 +1720,9 @@ function dialogueSide(turn,lanes,opt={}){
     return '남아 있는 길과 구조물이 지도에 기록되어 있다.';
   }
   function routeConsoleModel(routeModels){
-    const plan=typeof G.questNavigationPlan==='function'?G.questNavigationPlan():null;
+    const plan=typeof G.questNavigationPlan==='function'?G.questNavigationPlan(questRouteFocus):null;
     const guideKey=plan&&plan.key||'main';
-    const preferred=typeof G.questPreferredNeighbor==='function'?G.questPreferredNeighbor(routeModels):null;
+    const preferred=typeof G.questPreferredNeighbor==='function'?G.questPreferredNeighbor(routeModels,questRouteFocus):null;
     if(navChoiceAt!==S.at||navChoiceGuide!==guideKey||!routeModels.some(model=>model.nb.id===navChoiceId)){
       navChoiceAt=S.at;
       navChoiceGuide=guideKey;
@@ -1709,7 +1764,7 @@ function dialogueSide(turn,lanes,opt={}){
     return introduction||'지도에 장소와 진입로가 표시되어 있다.';
   }
   function destinationAction(nodeId,node){
-    const routeCue=typeof G.routeQuestCue==='function'?G.routeQuestCue(nodeId):null;
+    const routeCue=typeof G.routeQuestCue==='function'?G.routeQuestCue(nodeId,questRouteFocus):null;
     const plan=typeof G.questNavigationPlan==='function'?G.questNavigationPlan():null;
     const cue=routeCue||(plan&&plan.target===nodeId?plan:null);
     if(cue) return {
@@ -1793,7 +1848,7 @@ function dialogueSide(turn,lanes,opt={}){
       const index=routeModels.indexOf(model);
       const active=model.nb.id===selected.nb.id;
       const cardNode=D.nodes[model.nb.id], src=routeThumbnail(model.nb.id);
-      const routeCue=typeof G.routeQuestCue==='function'?G.routeQuestCue(model.nb.id):null;
+      const routeCue=typeof G.routeQuestCue==='function'?G.routeQuestCue(model.nb.id,questRouteFocus):null;
       const routeLabel=routeCue?(routeCue.kind==='main'?'메인 스토리 경로':'사이드 미션 경로'):'';
       return `<button type="button" class="nav-destination-card${active?' is-selected':''}"
         data-route-select="${model.nb.id}" aria-pressed="${active}" ${!active&&routeModels.length===2?'tabindex="-1" aria-hidden="true"':''}
@@ -2070,10 +2125,20 @@ function dialogueSide(turn,lanes,opt={}){
     });
   }
   window.addEventListener('questtrackingchange',()=>{
+    questRouteFocus=null;
     navChoiceAt=null; navChoiceGuide='';
     if(S&&!S.driving) renderPanel();
   });
+  let bagCompactViewport=innerHeight<=650;
   window.addEventListener('resize',()=>{
+    const compact=innerHeight<=650;
+    if(compact&&!bagCompactViewport){
+      /* Keep the selected item's description visible when a tall bag becomes short.
+         Change only the optional disclosure; retain selection, focus and scroll. */
+      const meal=$('#status-prop .bag-meal-disclosure');
+      if(meal) meal.open=false;
+    }
+    bagCompactViewport=compact;
     clearTimeout(stoppedStageResizeTimer);
     stoppedStageResizeTimer=setTimeout(()=>{
       resetStoppedStageFit();
@@ -2164,11 +2229,10 @@ function dialogueSide(turn,lanes,opt={}){
           <small>함께 고른 방식 · 첫 후속</small><b>${esc(D.comps[memory.id].name)} — ${esc(memory.title)}</b></span></div>
         <div class="road-guest-help">${esc(memory.desc)}</div>
         <div class="road-guest-memory"><b>${esc(memory.effect)}</b> · 이번 주행에 적용된다.</div>
-      </section>`:choiceMemory?`<section class="road-guest-card road-memory-card" aria-label="길에서 되돌아올 선택">
+      </section>`:choiceMemory?`<section class="road-guest-card road-memory-card" aria-label="앞서 내린 선택">
         <div class="road-guest-head"><span class="rg-ico">◇</span><span>
-          <small>길이 기억하는 선택</small><b>${esc(choiceMemory.eventTitle)}</b></span></div>
+          <small>앞서 내린 선택</small><b>${esc(choiceMemory.eventTitle)}</b></span></div>
         <div class="road-guest-help">${esc(choiceMemory.summary)}</div>
-        <div class="road-guest-memory">조금 더 달리면 이 선택이 사람들의 말과 풍경으로 돌아온다.</div>
       </section>`:'';
       const checkMoment=S.driving.checkInMoment;
       const checkInId=S.driving.checkIn, checkInComp=checkInId&&D.comps[checkInId];
@@ -2176,11 +2240,11 @@ function dialogueSide(turn,lanes,opt={}){
         ?`<section class="road-checkin is-complete ${checkMoment?'has-moment':''}" aria-label="${esc(checkInComp.name)}와 이동 중 대화 완료">
           <div class="road-checkin-selected"><span class="road-checkin-face">${faceOf(checkInId,checkInComp.face)}</span><span class="road-checkin-copy">
             <small>이동 중 대화 · 이번 구간 완료</small><b>${esc(checkInComp.name)}와 이야기했다</b>
-            <p>${checkMoment?esc(checkMoment.text):'짧은 대화로 서로를 조금 더 알게 됐다. · 유대 +1 · 기분 +3'}</p></span></div>
+            <p>${esc(S.driving.checkInSummary||checkMoment?.text||'이번 길에서 잠깐 이야기를 나눴다.')}</p></span></div>
         </section>`
         :`<section class="road-checkin" aria-label="이동 중 동료와 이야기">
           <div class="road-checkin-head"><span><small>이동 중 대화 · 구간당 1회</small><b>누구와 이야기할까?</b></span><em>한 명 선택</em></div>
-          <p class="road-checkin-help">동료를 고르면 이 구간에서 짧은 대화를 나누고 유대가 오른다.</p>
+          <p class="road-checkin-help">잠깐 말을 걸어 보자.</p>
           <div class="road-checkin-list">${S.party.map(id=>`<button type="button" data-road-checkin="${id}" aria-label="${esc(D.comps[id].name)}와 이야기한다"><span class="road-checkin-face">${faceOf(id,D.comps[id].face)}</span><span><b>${esc(D.comps[id].name)}</b><small>이야기</small></span></button>`).join('')}</div>
         </section>`):'';
       p.innerHTML = `
@@ -2274,7 +2338,7 @@ function dialogueSide(turn,lanes,opt={}){
     }));
     const nbs=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id));
     const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
-    const preferred=typeof G.questPreferredNeighbor==='function'?G.questPreferredNeighbor(routeModels):null;
+    const preferred=typeof G.questPreferredNeighbor==='function'?G.questPreferredNeighbor(routeModels,questRouteFocus):null;
     if(preferred) routeModels.sort((a,b)=>Number(b.nb.id===preferred.nb.id)-Number(a.nb.id===preferred.nb.id));
     if(!G.isInfiniteResourceMode()&&S.fuel<5) localActions.push(stopActionHtml({
       action:'walkfuel',kicker:'연료 비상',title:'걸어서 연료를 구해온다',
@@ -2335,13 +2399,17 @@ function dialogueSide(turn,lanes,opt={}){
     const destinationRemain=$('[data-destination-remain]');
     if(destinationRemain) destinationRemain.textContent=`${Math.max(0,Math.ceil(d.dist-d.gone))}km 남음`;
   }
-  function renderAll(){ renderHud(); renderMission(); renderPanel(); }
+  function renderAll(){
+    if(questRouteState!==S){ questRouteFocus=null; questRouteState=S; }
+    renderHud(); renderMission(); renderPanel();
+  }
 
   /* ── travel hooks ── */
-  function onDepart(){ roadNotice=null; closeOvl('#ovl-map'); closeOvl('#ovl-stl'); closeOvl('#ovl-local-actions'); renderAll();
+  function onDepart(){ questRouteFocus=null; roadNotice=null; closeOvl('#ovl-map'); closeOvl('#ovl-stl'); closeOvl('#ovl-local-actions'); renderAll();
     SND.setDriving(true);
     AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
+    questRouteFocus=null;
     journeyConsoleMode='local';
     roadNotice=null;
     renderAll(); SND.setDriving(false);
@@ -2574,7 +2642,9 @@ function dialogueSide(turn,lanes,opt={}){
       if(!requirementVisible&&spoilerLocked) return;
       const rq=G.reqOk(req);
       const cost=G.reqCostText(req);
-      const foreseeable=G.choiceForeseeable?G.choiceForeseeable(c):[];
+      const foreseeable=(G.choiceForeseeable?G.choiceForeseeable(c):[]).map(row=>({
+        ...row,label:evd.combat?row.label:row.kind==='expense'?'소모':row.kind==='lasting'?'흔적':row.label
+      }));
       const forecast=foreseeable.map(row=>`${row.label} · ${row.text}`).join(' / ');
       const listedCost=foreseeable.some(row=>row.kind==='expense')?'':cost;
       const actionLabel=choiceActionLabel(c);
@@ -2595,7 +2665,9 @@ function dialogueSide(turn,lanes,opt={}){
           <div class="choice-head"><span class="choice-title">${title}</span></div>
           ${evd.campConversation&&c.hint?`<span class="req">${esc(c.hint)}</span>`:''}
           ${!rq.ok?`<span class="req choice-lock-reason">${esc(rq.t||'요구 조건 미충족')}</span>`:listedCost?`<span class="req choice-requirement">필요 · ${esc(listedCost)}</span>`:''}
-          ${forecast?`<span class="req choice-requirement choice-forecast">${esc(forecast)}</span>`:''}
+          ${evd.combat
+            ?(forecast?`<span class="req choice-requirement choice-forecast">${esc(forecast)}</span>`:'')
+            :foreseeable.map(row=>`<span class="req choice-requirement choice-forecast"><span class="choice-forecast-label">${esc(row.label)}</span><span>${esc(row.text)}</span></span>`).join('')}
           ${routeBrief?`<span class="req choice-requirement choice-route-forecast">${esc(routeBrief)}</span>`:''}
         </button>`;
     });
@@ -3210,9 +3282,11 @@ function dialogueSide(turn,lanes,opt={}){
     const choicePages=Math.ceil(choices.count/choicePageSize);
     const directRoadChoice=evd.choices.length===1&&evd.choices[0].continueToRoad===true?evd.choices[0]:null;
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<section class="event-field-report"><div class="event-head"><div>
-      <span class="sr-only" data-event-progress>1 / ${turns.length}</span>${storyOrigin}<h2>${esc(evd.title)}</h2></div></div>${missionBrief}${eventGuide}${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
+      <span class="sr-only" data-event-progress>1 / ${turns.length}</span>${storyOrigin}<h2>${esc(evd.title)}</h2>${evd.roadCheckIn?'<button type="button" class="event-detail-toggle" data-road-later>다음에 이야기하기</button>':''}</div></div>${missionBrief}${eventGuide}${context}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
+    const roadLater=sheet.querySelector('[data-road-later]');
+    if(roadLater) roadLater.onclick=()=>closeEvent();
     const lanes=dialogueLaneMap(turns);
     curStory={
       phase:'event',eventId:evd.id,label:evd.type==='대화'?'대화':'이야기',turns,index:0,
@@ -3552,6 +3626,7 @@ function dialogueSide(turn,lanes,opt={}){
     // Keep the event shell, scene and conversation mounted across the choice.
     // Only the outcome scene/briefing and subsequent entries change.
     const head=sheet.querySelector('.event-head h2');
+    sheet.querySelector('[data-road-later]')?.remove();
     if(head) head.textContent=visibleReportTitle;
     if(priorFrame&&outcomeSceneKeys[0]!==priorScene) priorFrame.outerHTML=scene;
     else if(priorFrame) priorFrame.dataset.cutToken='initial';
@@ -3620,7 +3695,7 @@ function dialogueSide(turn,lanes,opt={}){
     /* 서울 진입 후엔 오르막 맵으로 복귀 */
     if(S && S.at==='seoul' && S.flags && S.flags.seoul_open && !S.ended){ setTimeout(showSeoul, 300); }
   }
-  function showSeoul(){
+  function showSeoul(options={}){
     const stops=D.seoulMap.stops, stage=G.seoulStage();
     const transfer=G.transferStatus();
     const done=stage>=stops.length;
@@ -3658,8 +3733,17 @@ function dialogueSide(turn,lanes,opt={}){
     }
     h+='</div>';
     $('#seoul-body').innerHTML=h;
+    const header=$('#seoul-title').parentElement;
+    header.querySelector('[data-quest-return]')?.remove();
+    if(options.previewOnly){
+      const back=el('button','x','✕');
+      back.type='button'; back.dataset.questReturn='1';
+      back.setAttribute('aria-label','서울 진입로 닫기');
+      back.onclick=()=>closeModal('#ovl-seoul');
+      header.appendChild(back);
+    }
     document.querySelectorAll('.ovl').forEach(o=>{ if(o.id!=='ovl-seoul') closeModal(o,false); });
-    openModal('#ovl-seoul','#seoul-go, #seoul-journal');
+    openModal('#ovl-seoul','[data-quest-return], #seoul-go, #seoul-journal');
     const go=$('#seoul-go'); if(go) go.onclick=()=>{ closeModal('#ovl-seoul',false); G.seoulEnter(stage); };
     const jn=$('#seoul-journal'); if(jn) jn.onclick=()=>{ closeModal('#ovl-seoul',false); toggleOvl('#ovl-journal'); renderJournal(); };
   }
@@ -4289,17 +4373,21 @@ function dialogueSide(turn,lanes,opt={}){
     const card=cards.find(node=>node.dataset.fieldcard===actionId);
     if(scroll&&card) card.scrollIntoView({behavior:document.documentElement.classList.contains('ui-reduce-motion')?'auto':'smooth',block:'nearest'});
   }
-  function showStl(stlId,mode='hub'){
+  function showStl(stlId,mode='hub',options={}){
     if(S&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl) S.roadGarage=false;   // 진짜 정착지는 제값
     if(curStl!==stlId){ marketSelection=null; garageSelection=''; peopleSelection=''; stlFieldFocus=''; }
+    if(options.previewOnly&&options.questId){
+      if(S.quest?.ledgerId===options.questId&&G.questReady()) marketSelection={key:'quest-active'};
+      else if(S.questFollowup?.ledgerId===options.questId&&!S.quest) marketSelection={key:'quest-0'};
+    }
     curStl=stlId;
     stlMode=mode||'hub';
     const fieldBoardMode=['market','garage','people','alley'].includes(stlMode);
     const fieldBoardMarket=fieldBoardMode&&stlMode==='market';
     const stl=D.stls[stlId];
-    G.qualityMilestone('first_settlement_visit',{settlementId:stlId,mode:stlMode});
+    if(!options.previewOnly) G.qualityMilestone('first_settlement_visit',{settlementId:stlId,mode:stlMode});
     AMBI.settlement(stlMode,stlId);
-    if(!G.isNight()) G.checkQuest();   // 배달은 사람이 깨어 있을 때만
+    if(!options.previewOnly&&!G.isNight()) G.checkQuest();   // 목표에서는 게시판의 전달 버튼으로 결정한다.
     $('#ovl-stl').classList.toggle('field-board-mode',fieldBoardMode);
     if(stlMode==='hub'){ renderSettlementHub(); return; }
     if(G.isNight()&&stlMode!=='people'){ stlFocus='people'; renderSettlementHub(); return; }
@@ -5302,14 +5390,7 @@ function dialogueSide(turn,lanes,opt={}){
       <div class="st-pane ${stTab==='growth'?'on':''}" data-stpane="growth">${growth}</div>
       <div class="st-pane ${stTab==='settings'?'on':''}" data-stpane="settings">${settings}</div>`;
     b.querySelectorAll('[data-ui-pref]').forEach(button=>button.onclick=()=>{
-      if(button.dataset.uiPref==='text'){
-        uiPrefs.largeText=!uiPrefs.largeText;
-        localStorage.setItem('caravan_ui_text',uiPrefs.largeText?'large':'normal');
-      }else{
-        uiPrefs.reduceMotion=!uiPrefs.reduceMotion;
-        localStorage.setItem('caravan_ui_motion',uiPrefs.reduceMotion?'reduced':'full');
-      }
-      applyUiPrefs();
+      toggleUiPref(button.dataset.uiPref);
       renderStatus();
     });
     b.querySelectorAll('[data-audio-level]').forEach(input=>input.oninput=()=>{
@@ -5591,7 +5672,7 @@ function showEnding(kind){
   return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
     showNodeCard, showGraphNote, onDepart, onArrive, showStl, showCraft, playRadio, playChat, showSeoul,
     storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech, clearToasts,
-    qaViewState,restoreQaView};
+    qaViewState,restoreQaView,openQuestAction};
 })();
 /* Quest journal: separates the main journey, companion stories and local requests
    without changing the existing save format or the folio renderer. */

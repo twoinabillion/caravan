@@ -14,14 +14,6 @@ D.events.push(
   text:'수원 외곽 중계소에서 엄마가 송신기를 켰다. 나는 남산에 가져갈 검증키와 증언 사본을 책상에 놓았다.\n\n이음망의 전달자, 유령의 통신원, 산지기의 길잡이가 차례로 응답했다. 이음망은 당사자의 이의 제기를 전달하고, 유령은 명령선과 생활 설비를 구분해 통신하며, 산지기는 남산 진입로를 안내하겠다고 했다.\n\n“집행권을 받게 되면 우리끼리도 다툴 겁니다.” 전달자가 말했다. “그래도 이의 제기부터 막지는 않겠습니다.”\n\n엄마는 남산 안으로 동행하지 않는다. 여기 남아 여섯 주파수로 기록을 보낸다. 세 거점의 수락을 지금 확인하는 일은 그 방송과 별개였다.',
   choices:[{label:'세 거점에 맡을 일을 되읽고 응답을 기록한다',out:[{p:1,text:'이음망, 유령, 산지기가 자기 몫을 다시 읽었다. 통신원은 남산 송신표에 세 응답을 적고 내게 사본을 건넸다. 인계 뒤 도로와 물의 우선순위는 각 거점이 사람들과 다시 정해야 한다. 오늘 받은 것은 그 일을 맡겠다는 수락이었다.',fx:{flag:'main_relay_confirmed',note:{type:'본편',title:'남산 작전 응답표',body:'수원 외곽 중계소에서 이음망·유령·산지기가 진입 지원과 집행권 인계 수락을 직접 회신했다. 엄마는 외곽에서 방송을 맡는다.',links:['저항 연대망','엄마','남산']}}}]}]}
 );
-/* Fixed record scenes do not infer a stranger from every quotation mark. */
-for(const id of ['main_transfer_testimony','main_command_ledger','main_relay_conference']){
-  const event=D.events.find(event=>event.id===id);
-  event.turns=event.text.split('\n\n').map(text=>text.startsWith('“남산에 가져가도')
-    ?{kind:'dialogue',who:'me',text:'남산에 가져가도 될까요? 틀린 곳은 지금 고쳐 주세요.'}
-    :{kind:'narration',text});
-  if(id==='main_transfer_testimony') event.turns.push({kind:'narration',text:'세 사람이 각자의 문장을 다시 읽었다.'});
-}
 /* A completed companion story is live testimony, not one of the exchange's
    three signed civilian copies. Keep the two evidence sources distinguishable. */
 D.mainCompanionWitnessNames = state=>(state.party||[])
@@ -44,8 +36,46 @@ D.mainCompanionWitnessNames = state=>(state.party||[])
       fx:{flag:'main_relay_confirmed',note:{type:'본편',title:'동료 증언을 전한 남산 작전 응답표',body:'동료에게 직접 들은 증언을 수원 외곽 중계소에서 전했다. 이음망·유령·산지기가 진입 지원과 집행권 인계 수락을 직접 회신했다. 받은 거점 응답표를 여정 기록과 따로 보관했다. 엄마는 외곽 방송을 맡는다.',links:['동료','저항 연대망','엄마','남산']}}}]}]});
 }
 
-/* Present records and replies are read at the exchange; no moving-road scenery. */
-for(const id of ['main_transfer_testimony','main_command_ledger','main_command_companion_ledger','main_relay_conference','main_relay_companion_conference']){
-  const event=D.events.find(event=>event.id===id);
-  if(event) event.scene='parents-linked-records-v2';
-}
+/* Reading presentation only: evidence, costs and consent still belong to the
+   original choice. Named civilian voices do not borrow a companion portrait. */
+(() => {
+  const narration=text=>({kind:'narration',text});
+  const record=text=>({kind:'record',who:'record',name:'명령 원본 대조',text});
+  const say=(name,text)=>({kind:'dialogue',who:'unknown',name,text});
+  const radio=(name,text)=>({kind:'radio',who:'radio',name,text});
+  const attach=(id,turns,scene='parents-linked-records-v2')=>{
+    const event=D.events.find(event=>event.id===id);
+    event.readingRecord=event.text;event.turns=turns;event.scene=scene;
+  };
+  attach('main_transfer_testimony',[
+    narration('기록 교환소의 작은 탁자에 세 장의 이송표가 놓였다. 세 사람은 자기 표를 앞에 두고 앉았다.'),
+    say('순옥','딸하고 다른 차에 태웠어요. 헤어진 게 아니라, 다른 차에 태운 거예요. 그렇게 적어 주세요.'),
+    say('태문','나는 급수 근무 중이었어요. 집을 비우라는 표를 그날 받았고요. 날짜가 하루 밀려 있네요.'),
+    say('지아','아버지는 혼자 못 걸으세요. 동행 허가를 냈는데 표에서 빠졌어요. 이름도 같이 적어 주세요.'),
+    narration('부산에서 가져온 발신 번호를 옆에 적었다. 세 표의 번호와 같았다. 겪은 일까지 한 문장으로 묶지는 않았다.'),
+    {kind:'dialogue',who:'me',text:'고쳐 주신 대로 적을게요. 이 사본을 남산에 가져가도 될까요?'},
+    narration('세 사람이 사본을 당겨 각자의 문장을 다시 읽었다. 아직 서명하지 않은 칸을 비워 두고 기다렸다.')
+  ]);
+  const commandTurns=companion=>state=>[
+    narration(companion?`${D.mainCompanionWitnessNames(state)}에게 직접 들은 이야기를 여정 기록에서 되짚었다. 발신 번호는 따로 부모님의 표와 원본을 대조한다.`:'세 사람의 증언 사본과 부모님의 표를 펼쳤다. 보관 담당자가 송수신 원본의 같은 줄을 짚었다.'),
+    record('발신 번호 — 부모님의 이송표와 남산 집행선 일치'+(companion?'':'\n세 당사자의 이송표 — 같은 발신 번호')),
+    record('위험 분류 — 인간 확인 수정안이 천리안의 자기 실행권을 낮춤\n가족 이송 명령 작성자 — 천리안'),
+    record('인간 확인 — 빈칸\n다음 처리 — 집행'),
+    narration('담당자와 빈 줄을 다시 확인했다. 검증키는 바로 이 자리에 사람의 확인을 되돌릴 장치였다.'),
+    record('별도 상위 격리 조건 — 남아 있음\n남산 밖으로 나가는 상위 수신선 — 확인\n최초 조건의 목적 — 이 원본으로는 확인 불가'),
+    narration('확인한 것은 명령이 지나간 순서였다. 상위 조건이 따로 있어도, 가족 이송 명령을 직접 만든 천리안의 책임은 사라지지 않았다.')
+  ];
+  attach('main_command_ledger',commandTurns(false));
+  attach('main_command_companion_ledger',commandTurns(true));
+  const relayTurns=companion=>state=>[
+    narration(companion?`수원 외곽 중계소. 검증키와 명령 대조표를 놓고 ${D.mainCompanionWitnessNames(state)}에게 들은 이야기를 전했다. 엄마가 송신기를 켰다.`:'수원 외곽 중계소. 검증키와 증언 사본을 책상에 놓자 엄마가 송신기를 켰다.'),
+    {kind:'dialogue',who:'me',text:'남산 진입 때 맡을 일을 확인하겠습니다. 들리면 한 곳씩 답해 주세요.'},
+    radio('이음망 전달자','이의 제기는 우리가 전달하겠습니다. 집행권을 받으면 우리끼리도 다툴 겁니다. 그래도 이의 제기부터 막지는 않겠습니다.'),
+    radio('유령 통신원','명령선과 생활 설비를 구분해서 알리겠습니다. 병원과 급수 회선이 섞이지 않게 확인하겠습니다.'),
+    radio('산지기 길잡이','남산 진입로는 우리가 안내하겠습니다. 진입할 때 이 주파수로 연락하세요.'),
+    {kind:'dialogue',who:'mother',text:'나는 여기 남을게. 너희가 들어가면 여섯 주파수로 기록을 보낼 거야.'},
+    narration('세 응답을 송신표에 옮겼다. 오늘 확인한 것은 각자의 수락이었다. 인계 뒤 도로와 물의 우선순위는 거점들이 사람들과 다시 정해야 한다.')
+  ];
+  attach('main_relay_conference',relayTurns(false),'main-relay-workbench-v1');
+  attach('main_relay_companion_conference',relayTurns(true),'main-relay-workbench-v1');
+})();
