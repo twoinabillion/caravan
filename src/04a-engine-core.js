@@ -1081,6 +1081,24 @@ G.startRecruitQuest = (id)=>{
 };
 /* 첫 만남을 닫거나 정중히 거절했더라도 그 인물은 정착지에서 사라지지 않는다.
    once는 무작위 재노출만 막고, 플레이어가 직접 다시 말을 거는 선택은 보존한다. */
+G.firstCompanionInvitation = (stlId)=>{
+  if(!S||S.driving||S.ended||S.party.length||S.recruitQ||D.nodes[S.at]?.stl!==stlId) return null;
+  const id=D.stls[stlId]?.recruit, def=D.recruitQuests[id];
+  if(!def||S.used.includes(def.meet)) return null;
+  const ev=D.events.find(event=>event.id===def.meet);
+  if(!ev) return null;
+  const lines={
+    minji:'부품 천막에서 용접하던 사람이 시동 소리에 고개를 든다.',
+    parkss:'진료 버스 앞에서 누군가 냉장 상자를 내려놓지 못하고 있다.',
+    leo:'모닥불 곁의 기타 소리 사이로 개 짖는 소리가 들린다.',
+    jaeyi:'리어카 주인이 달구지 아래를 보다가 말을 걸려 한다.',
+    eunsu:'옥상의 안테나 옆에서 누군가 남쪽 번호판을 보고 손을 든다.',
+    kangwoo:'돔 입구의 경비가 지도와 달구지를 번갈아 본다.'
+  };
+  if(!lines[id]) return null;
+  return {id,title:ev.title||D.settlementWorlds?.[stlId]?.recruit?.label,
+    line:`${lines[id]} 말을 걸어 볼까?`};
+};
 G.openRecruitMeet = (id)=>{
   const def=D.recruitQuests&&D.recruitQuests[id];
   if(!def||G.hasComp(id)||S.recruitQ) return false;

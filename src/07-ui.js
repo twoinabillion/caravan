@@ -3878,6 +3878,7 @@ function dialogueSide(turn,lanes,opt={}){
   function renderSettlementHub(){
     const stl=D.stls[curStl],body=$('#stl-body'),layout=settlementLayout(curStl),spots=settlementSpots(curStl),night=G.isNight();
     const impact=settlementImpactCopy(curStl).impact,concern=settlementConcern(curStl);
+    const invitation=G.firstCompanionInvitation(curStl);
     AMBI.settlement(night?'people':'hub',curStl);
     if(!spots[stlFocus]) stlFocus='market';
     if(night&&stlFocus!=='people') stlFocus='people';
@@ -3896,9 +3897,9 @@ function dialogueSide(turn,lanes,opt={}){
           <em>CODE WORLD · ${impact.count?`변화 ${impact.count}/${impact.total}`:'첫 방문'}</em></header>
         <p class="stl-town-stage-desc">${night?'불 꺼진 시설 사이로 모닥불과 사람의 움직임만 남아 있다.':'화면을 눌러 직접 걷고, 사람을 누르면 다가가 말을 건다.'}</p>
       </section>
-      <button class="stl-local-concern" data-stl-concern>
-        <b>${esc(concern.title)} <span>${night?'사람들 →':concern.changed?'다시 둘러보기 →':'현장으로 →'}</span></b>
-        <small>${esc(concern.line)}${night?' · 현장 일은 아침에':''}</small>
+      <button class="stl-local-concern" data-stl-concern ${invitation?`data-first-companion="${esc(invitation.id)}"`:''}>
+        <b>${esc(invitation?invitation.title:concern.title)} <span>${invitation?'말 걸기 →':night?'사람들 →':concern.changed?'다시 둘러보기 →':'현장으로 →'}</span></b>
+        <small>${esc(invitation?invitation.line:concern.line)}${!invitation&&night?' · 현장 일은 아침에':''}</small>
       </button>
       <div class="stl-hub-dock">
         ${settlementResourceStripHtml()}
@@ -3920,6 +3921,7 @@ function dialogueSide(turn,lanes,opt={}){
     body.querySelectorAll('[data-stlfocus]').forEach(button=>button.onclick=()=>updateSettlementFocus(button.dataset.stlfocus));
     $('#stl-enter').onclick=()=>showStl(curStl,stlFocus);$('#stl-out').onclick=leaveSettlement;
     $('[data-stl-concern]').onclick=()=>{
+      if(invitation){ recruitStl(invitation.id); return; }
       stlFieldFocus=concern.action.id;
       showStl(curStl,night?'people':'alley');
     };
