@@ -13,6 +13,29 @@ D.routeAftermathState = (state,route)=>{
   return null;
 };
 
+/* The ending only reads a completed, selected aftermath. It deliberately does
+   not infer a choice from resources, notes, or old combat text. */
+D.routeAftermathRecall = state=>{
+  const route=state&&state.routePlan&&state.routePlan.id;
+  const contract={
+    ridge:{event:'route_ridge_aftermath',done:'route_ridge_after_done',choices:{
+      supplies:'문경 선반에 놓고 온 약 한 봉지가 떠올랐다. 그 뒤 배달이 어땠는지는 돌아가는 길에 물어봐야겠다.',
+      work:'문경에서 약 꾸러미를 싸던 손이 떠올랐다. 종이에 적었던 목적지 이름 하나가 아직 기억났다.',
+      handoff:'문경에서는 북쪽으로 가야 한다고 말하고 떠났다. 남은 꾸러미를 맡던 사람이 차를 빼라며 손을 들어 주었다.'
+    }},
+    market:{event:'route_market_aftermath',done:'route_market_after_done',choices:{
+      supplies:'전주 수레 옆에 내려놓은 고철이 떠올랐다. 그 바퀴가 얼마나 갔는지는 아직 모른다.',
+      work:'전주에서 수레 축을 받치던 자세 때문인지 어깨를 한 번 돌렸다. 그때 바퀴를 끼우던 사람도 이제 쉬고 있을까.',
+      handoff:'전주에서는 수레 수선을 맡지 않고 북행을 이어 갔다. 장터 사람들이 비켜 준 좁은 길로 달구지가 빠져나왔었다.'
+    }}
+  }[route];
+  const flags=state&&state.flags;
+  if(!contract||!flags||!D.routeAftermathState(state,route)
+    ||!Array.isArray(state.used)||!state.used.includes(contract.event)||!flags[contract.done]) return '';
+  const chosen=Object.keys(contract.choices).filter(id=>flags[`route_${route}_after_${id}`]);
+  return chosen.length===1?contract.choices[chosen[0]]:'';
+};
+
 const routeAftermathTurns={
   ridge:{
     success:[

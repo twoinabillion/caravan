@@ -89,7 +89,8 @@
     if(index===0&&S.flags.core_quarantine&&S.party.includes('kangwoo')) turns.push(say('kangwoo','반대했으니까 내가 먼저 선다.'));
     if(index===0&&S.flags.core_transfer&&S.party.includes('jaeyi')) turns.push(say('jaeyi','저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게.'));
     turns.push(...personalRecall(S));
-    turns.push(narration('새벽, 남쪽에서 첫 차량들이 한강을 건넜다. 돌아올지 다시 내려갈지는 각자가 정했다.'));
+    const routeRecall=D.routeAftermathRecall?.(S)||'';
+    turns.push(narration((routeRecall?routeRecall+'\n\n':'')+'새벽, 남쪽에서 첫 차량들이 한강을 건넜다. 돌아올지 다시 내려갈지는 각자가 정했다.'));
     turns.push(narration(S.flags.core_sleep?'통신 단말의 수신등은 켜지지 않았다. 코어는 잠들었다. 처리 결과는 내일 사람이 확인한다.':'단말 수신등이 한 번 켜졌다. 「서울 권역 처리 결과 상행 전송 / 상위 응답 대기」'));
     return turns;
   }));
