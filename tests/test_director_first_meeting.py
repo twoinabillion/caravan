@@ -2,7 +2,7 @@
 
 Breaks caught: hiding a local first companion, exposing one from the wrong stop,
 mutating the save while inspecting the invitation, bypassing the established
-meeting flow, and losing the ordinary settlement concern after a decline.
+meeting flow, and losing the ordinary settlement concern after a decline or reload.
 """
 import os
 from pathlib import Path
@@ -38,7 +38,6 @@ def page(browser):
     page = browser.new_page(viewport={"width": 390, "height": 844})
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
-    page.add_init_script("localStorage.clear(); sessionStorage.clear()")
     page.goto(URL)
     page.evaluate("G.newGame('onroad','첫 만남 검수','full')")
     yield page
@@ -183,3 +182,70 @@ def test_declining_the_meeting_restores_the_ordinary_concern_and_exit(page):
     page.locator("#stl-hub-back").click()
     page.locator("#stl-out").click()
     assert page.locator("#ovl-stl").get_attribute("aria-hidden") == "true"
+
+
+def test_real_decline_survives_the_first_browser_reload_and_keeps_people_reentry(page):
+    page.evaluate(
+        """()=>{
+          S.at='jeonju';S.min=720;S.driving=null;S.ended=false;
+          S.party=[];S.recruitQ=null;S.used=[];
+          UI.restoreQaView({screen:'game'});UI.showStl('jeonju','hub');
+        }"""
+    )
+    page.locator('[data-first-companion="parkss"]').click()
+    page.evaluate("UI.finishStory()")
+    page.locator('#ev-sheet .choice[data-i="1"]').click()
+    page.evaluate("UI.finishStory()")
+    page.locator('#ev-sheet [data-r="ok"]').click()
+    assert page.evaluate("S.used.includes(D.recruitQuests.parkss.meet)")
+    page.evaluate("G.save()")
+
+    page.reload()
+    continue_button = page.locator("#bt-continue")
+    continue_button.wait_for(state="visible")
+    continue_button.click()
+    page.wait_for_function("S!==null&&S.name==='첫 만남 검수'")
+    page.evaluate("UI.showStl('jeonju','hub')")
+
+    assert page.evaluate(
+        """()=>S.flags.recruit_migration_v2===true
+          &&S.used.includes(D.recruitQuests.parkss.meet)
+          &&S.party.length===0&&S.recruitQ===null"""
+    )
+    assert page.locator('[data-first-companion="parkss"]').count() == 0
+    concern = page.locator("[data-stl-concern]")
+    assert concern.count() == 1 and "말 걸기" not in concern.inner_text()
+    page.evaluate("UI.showStl('jeonju','people')")
+    assert page.locator('[data-person-key="recruit-parkss"]').count() == 1
+
+
+def test_markerless_legacy_save_migrates_once_then_preserves_a_new_encounter(page):
+    result = page.evaluate(
+        """()=>{
+          G.newGame('onroad','옛 영입 저장','full');
+          const meet=D.recruitQuests.parkss.meet;
+          const legacy=JSON.parse(JSON.stringify(S));
+          legacy.at='jeonju';legacy.used=[meet];legacy.party=[];legacy.recruitQ=null;
+          delete legacy.flags.recruit_migration_v2;
+          localStorage.setItem(SAVE_KEY,JSON.stringify(legacy));S=null;
+          const firstLoaded=G.load();
+          const first={loaded:firstLoaded,marker:S.flags.recruit_migration_v2===true,
+            cleared:!S.used.includes(meet),invitation:G.firstCompanionInvitation('jeonju')?.id};
+          const opened=G.openRecruitMeet('parkss');
+          G.save();S=null;
+          const secondLoaded=G.load();
+          return {first,opened,second:{loaded:secondLoaded,
+            marker:S.flags.recruit_migration_v2===true,used:S.used.includes(meet),
+            invitation:G.firstCompanionInvitation('jeonju')}};
+        }"""
+    )
+    assert result == {
+        "first": {
+            "loaded": True,
+            "marker": True,
+            "cleared": True,
+            "invitation": "parkss",
+        },
+        "opened": True,
+        "second": {"loaded": True, "marker": True, "used": True, "invitation": None},
+    }

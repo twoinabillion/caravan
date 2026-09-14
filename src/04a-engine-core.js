@@ -146,7 +146,8 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
     party:[], comps:{}, dog:false, _scrapKm:0,
     known:Object.keys(D.nodes).filter(id=>D.nodes[id].type!=='hidden'), visited:['busan'],
     flags:{mother_keepsakes:true,intro_family_helped:!interactiveOpening,intro_appeal_failed:!interactiveOpening,
-      intro_module_seen:!interactiveOpening,intro_workshop_left:!interactiveOpening}, pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
+      intro_module_seen:!interactiveOpening,intro_workshop_left:!interactiveOpening,recruit_migration_v2:true},
+    pursuit:0, used:[], quest:null, recruitQ:null, wx:'clear', wxNext:'clear', up:{},
     notes:[], noteSeq:0, npcs:{}, stats:{km:0, events:0, nonlethal:0}, routePlan:null,
     /* 시드는 주입 가능해야 한다 — 같은 시드 → 같은 여정이라야 회귀 테스트와
        실엔진 시뮬레이션이 성립한다 (G.seedOverride를 미리 세팅). */
