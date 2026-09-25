@@ -106,13 +106,13 @@ def check_viewport(playwright, width, height):
     card = page.locator(".quest-ledger-card.quest-kind-main").first
     assert card.is_visible()
     card_text = card.inner_text()
-    for label in ("왜 이 일을 하나", "지금 할 일"):
+    for label in ("지금 따라갈 단서", "단서의 배경과 길 안내"):
         assert label in card_text, (label, card_text)
     assert "길을 놓쳤다면" not in card_text, card_text
     assert card.locator(".quest-main-steps").count() == 1
     if width <= 380:
-        term_font = font_px(page, ".quest-ledger-card dt")
-        detail_font = font_px(page, ".quest-ledger-card dd")
+        term_font = font_px(page, ".quest-clue-label")
+        detail_font = font_px(page, ".quest-next")
         assert term_font >= 11, (width, height, term_font)
         assert detail_font >= 13, (width, height, detail_font)
         step_detail_font = font_px(page, ".quest-main-steps small")

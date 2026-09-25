@@ -78,7 +78,7 @@
   <div class="scr" id="scr-name">
     <div id="name-card">
       <header class="departure-head">
-        <img id="name-child" alt="8살 주인공 초상">
+        <img id="name-child" alt="여정을 시작하는 주인공 초상">
         <div>
           <div class="name-kicker">출발 기록 · 01</div>
           <h2>부산에서 첫 길을 연다</h2>
@@ -104,13 +104,13 @@
     <div id="intro-book">
       <div id="intro-visual">
         <img id="intro-img" alt="">
-        <div id="intro-hint">눌러서 다음 장</div>
       </div>
       <div id="intro-page">
         <div id="intro-meta" hidden aria-hidden="true"><span id="intro-era"></span><span id="intro-count"></span></div>
         <h2 id="intro-title"></h2>
         <div id="intro-txt"></div>
       </div>
+      <div id="intro-hint">탭하면 다음 말풍선</div>
     </div>
     <div id="intro-summary" role="dialog" aria-modal="true" aria-labelledby="intro-summary-title" aria-hidden="true">
       <div class="intro-summary-card">
@@ -135,6 +135,11 @@
   <div id="scr-game">
     <div id="stage">
       <canvas id="cv"></canvas>
+      <div class="journey-location"><strong id="journey-place"></strong><span id="journey-date"></span></div>
+      <section id="journey-route-map" aria-label="선택한 경로 지도" hidden>
+        <header class="journey-map-head"><div><h2>경로 보기</h2><p id="journey-map-context"></p></div><button type="button" id="journey-map-close" aria-label="경로 지도를 접고 풍경 보기">×</button></header>
+        <div id="journey-map-surface"><canvas id="journey-map-canvas" aria-label="현재 위치와 선택한 목적지의 경로"></canvas><button type="button" id="journey-map-world">전체 여정</button></div>
+      </section>
       <div id="cheollian-tint"></div>
       <div id="bubbles" aria-live="polite" aria-atomic="true"></div>
       <div id="road-quest-tracker" class="road-quest-tracker" role="status" aria-live="polite" aria-label="현재 임무 안내" hidden></div>
@@ -151,6 +156,7 @@
 
     <div id="mission-strip" class="mission-strip" role="status" aria-live="polite" aria-label="현재 의뢰와 여정 상태"></div>
 
+    <div id="journey-vehicle" aria-label="달구지 상태"></div>
     <div id="main">
       <div id="panel"></div>
       <nav id="dock" aria-label="게임 주요 메뉴">
@@ -225,6 +231,10 @@
           <header><span><small>DISPLAY</small><b id="menu-brightness-title">화면 밝기</b></span><output id="menu-brightness-value" for="menu-brightness">100%</output></header>
           <input id="menu-brightness" type="range" min="60" max="120" step="5" value="100" aria-label="화면 밝기">
           <div class="menu-range-labels" aria-hidden="true"><span>어둡게</span><span>밝게</span></div>
+          <div class="menu-reading-options" aria-label="읽기와 움직임 설정">
+            <button id="menu-text-toggle" data-ui-pref="text" type="button" aria-pressed="false"><span>큰 글씨</span><b>꺼짐</b></button>
+            <button id="menu-motion-toggle" data-ui-pref="motion" type="button" aria-pressed="false"><span>움직임 줄이기</span><b>꺼짐</b></button>
+          </div>
         </section>
         <section class="menu-control-card" aria-labelledby="menu-sound-title">
           <header><span><small>AUDIO</small><b id="menu-sound-title">소리</b></span><output id="menu-sound-state">꺼짐</output></header>

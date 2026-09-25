@@ -104,13 +104,13 @@ def main():
         assert "목표" not in page.locator("#st-tabs").inner_text()
         page.click('#st-tabs [data-st="self"]')
         self_text = page.locator('[data-stpane="self"]').inner_text()
-        for label in ("현재 몸 상태", "피로", "허기", "부상", "운전 숙련"):
+        for label in ("운전석에서", "피로", "허기", "부상", "운전과 달구지의 능력 보기"):
             assert label in self_text, (label, self_text)
         page.screenshot(path="/tmp/caravan-self-status.png", full_page=True)
         page.click('#st-tabs [data-st="growth"]')
         growth_text = page.locator('[data-stpane="growth"]').inner_text()
-        assert "운전사 성장 경로" in growth_text
-        assert "동료 스킬 경로" in growth_text
+        assert "운전 숙련 단계 보기" in growth_text
+        assert "함께 익힌 특기" in growth_text
         page.click('#st-tabs [data-st="crew"]')
         page.screenshot(path="/tmp/caravan-companion-entry.png", full_page=True)
         page.click("#dk-road")

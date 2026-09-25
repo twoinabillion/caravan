@@ -1,7 +1,8 @@
 /* ═══════════════════ DRIVE SCENE — 코드 기반 픽셀아트 렌더러 ═══════════════════
-   배경과 달구지를 저해상도(236px) Canvas에 직접 그린 뒤 픽셀 업스케일한다.
-   달구지는 PNG 없이 S.up의 개조 상태를 매 프레임 조합한다. */
+   236px 논리 좌표와 2배 렌더 버퍼를 사용한다. 전용 풍경·기본 차체 그림 위에
+   실제 S.up 개조, 동료, 바퀴, 날씨와 사건 접근을 매 프레임 조합한다. */
 const SCENE = (()=>{
+  const ROAD_RENDER_SCALE=2;
   const LW = 236;                     // 논리 해상도(픽셀아트 폭)
   let mealT = 0;                      // 식사 연출 남은 시간(초)
   let talkIdx = -1, talkT = 0;        // 말하는 탑승자 표시
@@ -19,6 +20,10 @@ const SCENE = (()=>{
   const mix=(h1,h2,f)=>{ const a=toRGB(h1),b=toRGB(h2);
     return `rgb(${Math.round(lerp(a[0],b[0],f))},${Math.round(lerp(a[1],b[1],f))},${Math.round(lerp(a[2],b[2],f))})`; };
   const P=(x)=>Math.round(x);        // 픽셀 스냅
+  const roadBackdropArt=new Image(),vanBodyArt=new Image();
+  roadBackdropArt.decoding='async';vanBodyArt.decoding='async';
+  roadBackdropArt.src='__UI_JOURNEY_ROAD_BACKDROP__';
+  vanBodyArt.src='__UI_JOURNEY_DALGUJI_BASE__';
   const townSpriteAtlas=new Image();
   townSpriteAtlas.decoding='async';
   townSpriteAtlas.src='__TOWN_WORLD_SPRITE_ATLAS__';
@@ -26,8 +31,8 @@ const SCENE = (()=>{
   /* 시간대별 하늘 [hour, top, horizon, glow] */
   const SKY=[
     [0,'#04050e','#0a0d1e','#141a30'],[4.5,'#04050e','#0a0d1e','#141a30'],
-    [6,'#141a38','#3a3357','#8a5a54'],[7.5,'#39598c','#8a80a0','#eaa870'],
-    [11,'#5c82ab','#93accb','#d2dce1'],[15,'#567aa2','#8ba3c0','#c9cfd4'],
+    [6,'#141a38','#3a3357','#8a5a54'],[7.5,'#34445f','#7a8295','#9ca0a5'],
+    [11,'#354d6d','#78899f','#a2abba'],[15,'#385672','#8093a6','#b3bac1'],
     [18,'#3f4573','#8a6288','#e0814e'],[19.5,'#191c3d','#33284e','#7c4544'],
     [21,'#070812','#0d1022','#181f38'],[24,'#04050e','#0a0d1e','#141a30'],
   ];
@@ -48,8 +53,10 @@ const SCENE = (()=>{
     VW=dcv.clientWidth||560; VH=dcv.clientHeight||300;
     dcv.width=VW*DPR; dcv.height=VH*DPR; dctx.setTransform(DPR,0,0,DPR,0,0);
     LH=Math.round(LW*VH/VW); W=LW; H=LH;
-    off.width=W; off.height=H;
-    backdrop.width=W; backdrop.height=H;
+    off.width=W*ROAD_RENDER_SCALE; off.height=H*ROAD_RENDER_SCALE;
+    backdrop.width=W*ROAD_RENDER_SCALE; backdrop.height=H*ROAD_RENDER_SCALE;
+    ctx.setTransform(ROAD_RENDER_SCALE,0,0,ROAD_RENDER_SCALE,0,0);
+    backdropCtx.setTransform(ROAD_RENDER_SCALE,0,0,ROAD_RENDER_SCALE,0,0);
     ctx.imageSmoothingEnabled=false; backdropCtx.imageSmoothingEnabled=false; dctx.imageSmoothingEnabled=false;
     rainDrops=null;
   }
@@ -57,7 +64,7 @@ const SCENE = (()=>{
   /* ── 하늘: 포스터라이즈 밴드 ── */
   function drawSky(hour,dark,wx,advance=true){
     const [top,mid,glow]=skyAt(hour);
-    const skyH=H*0.76, bands=13;
+    const skyH=H*0.76, bands=36;
     for(let i=0;i<bands;i++){
       const f=i/(bands-1);
       const c= f<0.62? mix(top,mid,f/0.62): mix(mid,glow,(f-0.62)/0.38);
@@ -78,19 +85,7 @@ const SCENE = (()=>{
       if(shoot.life<=0) shoot=null;
       else{ ctx.strokeStyle=`rgba(230,238,255,${shoot.life})`; ctx.lineWidth=1;
         ctx.beginPath(); ctx.moveTo(shoot.x,shoot.y); ctx.lineTo(shoot.x+9,shoot.y-4); ctx.stroke(); } }
-    /* 달/해 */
-    const cx=W*0.8, cy=H*0.16;
-    if(dark>0.5){
-      ctx.fillStyle=`rgba(232,230,218,${Math.min(1,dark)*(wx==='clear'?1:0.4)})`;
-      circ(cx,cy,7);
-      ctx.fillStyle=skyAt(hour)[0]; circ(cx-3,cy-2,6);
-      ctx.fillStyle=`rgba(232,230,218,${0.06*dark})`; circ(cx,cy,11);
-    } else if(dark<0.35&&hour>6&&hour<19){
-      const sx=W*0.3, sy=H*0.26, a=(0.35-dark)*2*(wx==='clear'?1:0.3);
-      ctx.fillStyle=`rgba(255,243,216,${a*0.16})`; circ(sx,sy,8);
-      ctx.fillStyle=`rgba(255,243,216,${a*0.45})`; circ(sx,sy,5);
-      ctx.fillStyle=`rgba(255,248,230,${a})`; circ(sx,sy,3);
-    }
+    drawCelestial(hour,dark,wx);
     /* 구름 (얇은 스트립 2층) */
     cloudLayer(0.04, H*0.10, 5, `rgba(24,30,54,${0.30+0.15*dark})`);
     cloudLayer(0.09, H*0.22, 4, `rgba(20,25,46,${0.26+0.12*dark})`);
@@ -102,6 +97,21 @@ const SCENE = (()=>{
           for(let i=0;i<5;i++){ const bx=birds.x+i*5+(i%2)*2, by=birds.y+Math.abs(i-2)*2.4;
             const fl=Math.sin(t*7+i)>0?1:0;
             ctx.beginPath(); ctx.moveTo(bx-2,by-fl); ctx.lineTo(bx,by+1-fl); ctx.lineTo(bx+2,by-fl); ctx.stroke(); } } } }
+  }
+  function drawCelestial(hour,dark,wx,painted=false){
+    /* 달/해 */
+    const cx=W*0.8, cy=H*0.16;
+    if(dark>0.5){
+      ctx.fillStyle=`rgba(232,230,218,${Math.min(1,dark)*(wx==='clear'?1:0.4)})`;
+      circ(cx,cy,7);
+      ctx.fillStyle=skyAt(hour)[0]; circ(cx-3,cy-2,6);
+      ctx.fillStyle=`rgba(232,230,218,${0.06*dark})`; circ(cx,cy,11);
+    } else if(dark<0.35&&hour>6&&hour<19){
+      const sx=W*(painted?.25:.3), sy=H*(painted?.36:.26), a=(0.35-dark)*2*(wx==='clear'?1:0.3);
+      ctx.fillStyle=`rgba(255,243,216,${a*0.16})`; circ(sx,sy,8);
+      ctx.fillStyle=`rgba(255,243,216,${a*0.45})`; circ(sx,sy,5);
+      ctx.fillStyle=`rgba(255,248,230,${a})`; circ(sx,sy,3);
+    }
   }
   function circ(x,y,r){ ctx.beginPath(); ctx.arc(P(x),P(y),r,0,7); ctx.fill(); }
   function cloudLayer(par,y0,n,col){
@@ -122,7 +132,7 @@ const SCENE = (()=>{
     ctx.fillStyle=col; ctx.beginPath(); ctx.moveTo(0,H);
     for(let x=0;x<=W;x+=3){
       const wx=(x+worldX*par);
-      const y=y0+Math.sin(wx*freq+seed)*amp+Math.sin(wx*freq*2.7+seed*2)*amp*0.4;
+      const y=y0+Math.sin(wx*freq+seed)*amp+Math.sin(wx*freq*2.7+seed*2)*amp*0.4+hash(Math.floor(wx/3)+seed)*2;
       ctx.lineTo(x,P(y));
     }
     ctx.lineTo(W,H); ctx.closePath(); ctx.fill();
@@ -149,6 +159,9 @@ const SCENE = (()=>{
       const bw=P(10+hash(i*1.3)*20), bh=P(hMin+hash(i*2.1)*(hMax-hMin));
       const x=P(i*cell-offp+hash(i*5.3)*cell*0.3), y=P(baseY-bh);
       ctx.fillStyle=col; ctx.fillRect(x,y,bw,bh);
+      ctx.fillStyle='rgba(170,183,192,.14)';ctx.fillRect(x,y,1,bh);ctx.fillRect(x,y,bw,1);
+      ctx.fillStyle='rgba(7,16,25,.13)';
+      for(let k=0;k<bh;k+=3){const tx=x+P(hash(i*31+k)*bw);ctx.fillRect(tx,y+k,1+P(hash(i*9+k)*3),1);}
       const br=hash(i*7.9);
       if(br>0.4){ /* 부서진 상단 */
         ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+bw*0.3,y-3-br*4);
@@ -161,7 +174,7 @@ const SCENE = (()=>{
           if(wh>0.86) continue;                      // 깨진 창 = 벽색 그대로
           if(dark>0.4&&wh>0.825){ const fl=0.55+0.45*Math.sin(t*2.6+wx2+wy);
             ctx.fillStyle=`rgba(255,190,110,${0.7*fl*dark})`; }
-          else ctx.fillStyle='rgba(6,8,16,0.75)';
+          else ctx.fillStyle=wh>.74?'rgba(232,193,125,0.65)':'rgba(12,23,35,0.68)';
           ctx.fillRect(wx2,wy,2,3);
         }
       }
@@ -193,19 +206,38 @@ const SCENE = (()=>{
   function drawBackdrop(profile,hour,dark,wx,advanceSky){
     const bio=profile.bio;
     drawSky(hour,dark,wx,advanceSky);
+    if(profile.scenery==='overpass'&&roadBackdropArt.complete&&roadBackdropArt.naturalWidth){
+      const ground=P(H*.72),artH=Math.max(ground,W*roadBackdropArt.naturalHeight/roadBackdropArt.naturalWidth);
+      const artW=artH*roadBackdropArt.naturalWidth/roadBackdropArt.naturalHeight,scroll=worldX*.12;
+      const first=Math.floor(scroll/artW),offset=scroll-first*artW;
+      ctx.save();ctx.imageSmoothingEnabled=true;
+      // Alternate mirrored tiles so both sides share the exact same edge pixels.
+      for(let n=first,x=-offset;x<W;n++,x+=artW){
+        ctx.save();ctx.translate(x+(n%2?artW:0),ground-artH);ctx.scale(n%2?-1:1,1);
+        ctx.drawImage(roadBackdropArt,0,0,artW+.5,artH);ctx.restore();
+      }
+      ctx.fillStyle=`rgba(8,14,29,${dark*.76})`;ctx.fillRect(0,0,W,ground);
+      drawCelestial(hour,dark,wx,true);
+      ctx.restore();return;
+    }
     if(bio==='mount'){
       ridge(H*0.42,20,0.008,3, mix('#1d2544','#0d111f',dark*0.55),0.08);
       ridge(H*0.50,17,0.013,9, mix('#171d36','#0a0d19',dark*0.55),0.16);
     } else {
-      ridge(H*0.52,11,0.009,3, mix('#1b2340','#0d111f',dark*0.55),0.1);
-      ridge(H*0.58,8,0.016,9, mix('#161c33','#0a0d19',dark*0.55),0.18);
+      ridge(H*0.52,18,0.009,3, mix('#354561','#0d111f',dark*0.55),0.1);
+      ridge(H*0.59,13,0.016,9, mix('#26384e','#0a0d19',dark*0.55),0.18);
     }
     namsan(dark);
     if(bio==='coast'||bio==='lake') water(bio,dark);
     localScenery(profile.scenery,dark);
     const density = bio==='city'?0.85: bio==='coast'?0.3: bio==='mount'?0.18:
       bio==='lake'?0.26: bio==='bamboo'?0.2: 0.45;
-    buildings(0.34,52,density,H*0.705,14, bio==='city'?66:58, mix('#131a2e','#080b15',dark*0.5),dark);
+    const urbanEdge=profile.scenery==='overpass';
+    if(urbanEdge){
+      buildings(.17,22,.92,H*.69,10,30,mix('#546073','#101723',dark*.78),dark);
+      buildings(.28,31,.86,H*.705,14,47,mix('#3d4b60','#0e1421',dark*.72),dark);
+    }
+    buildings(0.34,52,density,H*0.705,14, bio==='city'?66:58, mix('#303e54','#080b15',dark*0.65),dark);
     if(bio==='mount') cliffs(0.5, mix('#252c48','#111420',dark*0.5));
     if(bio==='rural') paddies(0.5);
     if(bio==='bamboo') bambooStrip(0.55);
@@ -226,7 +258,7 @@ const SCENE = (()=>{
     ctx.save();
     ctx.globalAlpha=state.mix;
     ctx.imageSmoothingEnabled=false;
-    ctx.drawImage(backdrop,0,0);
+    ctx.drawImage(backdrop,0,0,backdrop.width,backdrop.height,0,0,W,H);
     ctx.restore();
   }
   /* 같은 바이옴 위에 얹는 지역의 기억. 낮은 실루엣으로만 그려 달구지와 날씨를 가리지 않는다. */
@@ -482,6 +514,24 @@ const SCENE = (()=>{
   }
 
   function poles(par,roadY,col){
+    const profile=roadBackdropState();
+    if(profile.from.scenery==='overpass'&&profile.mix<.5){
+      const offset=worldX*par,cell=210,first=Math.floor(offset/cell)-1;
+      for(let i=first;i<first+3;i++){
+        const x=P(i*cell-offset+18),top=P(Math.max(25,roadY-H*.53));
+        ctx.fillStyle='#202c38';ctx.fillRect(x,top,1.5,roadY-top);
+        ctx.strokeStyle='#27313a';ctx.lineWidth=1.5;
+        line(x,top,x+25,top-7);ctx.fillRect(x+23,top-8,11,2);
+        ctx.fillStyle='#909893';ctx.fillRect(x+26,top-6,6,1);
+      }
+      ctx.fillStyle='#3a4d48';ctx.fillRect(0,roadY-17,W,2);
+      ctx.fillStyle='#72827a';ctx.fillRect(0,roadY-17,W,1);
+      ctx.fillStyle='#233b3b';ctx.fillRect(0,roadY-6,W,2);
+      for(let x=-(offset%14);x<W;x+=14){ctx.fillStyle='#344a46';ctx.fillRect(P(x),roadY-16,2,17);ctx.fillStyle='#a0a68e';ctx.fillRect(P(x),roadY,2,1);}
+      ctx.fillStyle='#5c635f';ctx.fillRect(0,roadY+1,W,2);
+      return;
+    }
+
     const cell=118, offp=worldX*par, first=Math.floor(offp/cell)-1;
     ctx.strokeStyle=col; ctx.lineWidth=1;
     let prev=null;
@@ -557,9 +607,9 @@ const SCENE = (()=>{
     ctx.fillStyle=mix('#2a2c26','#15161a',dark*0.5);
     ctx.fillRect(0,roadY,W,3);
     /* 노면 */
-    ctx.fillStyle=mix('#23262e','#121419',dark*0.55);
+    ctx.fillStyle=mix('#333b46','#121419',dark*0.55);
     ctx.fillRect(0,roadY+3,W,H-roadY-3);
-    ctx.fillStyle=mix('#191c23','#0c0e13',dark*0.55);
+    ctx.fillStyle=mix('#282e38','#0c0e13',dark*0.55);
     ctx.fillRect(0,roadY+P((H-roadY)*0.6),W,H);
     /* 갓길선 */
     ctx.fillStyle='rgba(200,200,190,0.2)'; ctx.fillRect(0,roadY+5,W,1);
@@ -581,6 +631,18 @@ const SCENE = (()=>{
       /* 빗길 웅덩이 */
       if(wx==='rain'&&r>0.55&&r<0.72){ ctx.fillStyle='rgba(120,150,200,0.13)';
         ctx.beginPath(); ctx.ellipse(x,y,7,1.6,0,0,7); ctx.fill(); }
+    }
+    for(let i=0;i<520;i++){
+      const x=P(((hash(i*7.71)*W-worldX*.95)%W+W)%W),y=P(roadY+4+hash(i*3.19)*(H-roadY-4));
+      ctx.fillStyle=i%4?'rgba(160,170,171,.13)':'rgba(187,190,175,.24)';
+      ctx.fillRect(x,y,1+P(hash(i*2.13)*6),.5);
+    }
+    /* Pale worn aggregate and narrow light streaks keep asphalt from reading
+       as a flat black panel, without painting rainy puddles in clear weather. */
+    for(let i=0;i<44;i++){
+      const x=P(((hash(i*15.17)*W-worldX)%W+W)%W),y=P(roadY+7+hash(i*9.73)*(H-roadY-10));
+      ctx.fillStyle=i%6?'rgba(149,162,174,.12)':'rgba(219,199,152,.24)';
+      ctx.fillRect(x,y,5+P(hash(i*6.3)*17),1);
     }
     /* 갓길 풀 (흔들림) */
     ctx.fillStyle='rgba(88,104,64,0.75)';
@@ -610,7 +672,7 @@ const SCENE = (()=>{
     const build=vanBuildStage(up);
     /* 캐논 비율: 짧은 한국형 캡오버 운전석 + 그보다 긴 독립 생활 박스.
        운전석과 거주구가 한 덩어리인 RV/패널 밴 실루엣으로 돌아가지 않는다. */
-    const bodyL=build.bodyL, bodyH=build.bodyH, cabL=25, cabH=22;
+    const bodyL=build.bodyL, bodyH=build.bodyH+6, cabL=25, cabH=22;
     const cabX=P(W*0.53), vx=cabX-bodyL;
     const baseY=roadY+P((H-roadY)*0.42);
     /* 정차 화면에서는 달구지가 주인공이다. 차축과 노면 접점을 고정한 채 키워
@@ -644,13 +706,43 @@ const SCENE = (()=>{
       for(let i=0;i<5;i++){ const dx=vx+bodyL+cabL+((t*30+i*23)%80), dy=vy+6+hash(i*7)*12;
         ctx.fillStyle=`rgba(255,230,180,${0.25*dark})`; ctx.fillRect(P(dx),P(dy),1,1); }
     }
+    const detailed=vanBodyArt.complete&&vanBodyArt.naturalWidth>0;
+    if(detailed){
+      const sw=vanBodyArt.naturalWidth,sh=vanBodyArt.naturalHeight;
+      const split=Math.round(sw*.698),belt=Math.round(sh*.71);
+      ctx.save();ctx.imageSmoothingEnabled=true;ctx.filter=`brightness(${1-dark*.48})`;
+      // Stretch living walls above the axle while keeping cab and wheel size fixed.
+      ctx.drawImage(vanBodyArt,0,0,split,belt,vx,vy-bodyH-12,bodyL,bodyH+7);
+      ctx.drawImage(vanBodyArt,0,belt,split,sh-belt,vx,vy-5,bodyL,17);
+      ctx.drawImage(vanBodyArt,split,0,sw-split,belt,cabX,vy-43,cabL+2,38);
+      ctx.drawImage(vanBodyArt,split,belt,sw-split,sh-belt,cabX,vy-5,cabL+2,17);
+      ctx.restore();
+    }
     /* ── 차체: 박스(투톤) ── */
-    ctx.fillStyle='#8d8474';                        // 상부 베이지
+    if(!detailed){
+    ctx.fillStyle='#b8b1a0';                        // 햇빛에 바랜 크림색 알루미늄
     ctx.fillRect(vx,vy-bodyH,bodyL,bodyH-7);
-    ctx.fillStyle='#6f6250';                        // 하부 브라운 밴드
+    ctx.fillStyle='#99917f';                        // 낡은 하부 금속 패널
     ctx.fillRect(vx,vy-7,bodyL,12);
     ctx.fillStyle='#4c4438';                        // 스커트
     ctx.fillRect(vx,vy+3,bodyL,2);
+    // Worn metal keeps the live, upgrade-aware truck legible at phone size.
+    ctx.strokeStyle='#555347';ctx.lineWidth=1;
+    ctx.strokeRect(vx+.5,vy-bodyH+.5,bodyL-1,bodyH+3);
+    ctx.fillStyle='#d5ccb4';ctx.fillRect(vx+1,vy-bodyH+1,bodyL-2,1);
+    ctx.fillStyle='#756f60';ctx.fillRect(vx+1,vy-8,bodyL-2,1);
+    for(let py=vy-bodyH+3;py<vy+3;py+=6){
+      ctx.fillStyle='#555146';ctx.fillRect(vx+3,py,1,1);ctx.fillRect(cabX-3,py,1,1);
+    }
+    for(let i=0;i<68;i++){
+      const px=P(vx+3+hash(i*4.13)*(bodyL-6)),py=P(vy-bodyH+2+hash(i*7.4)*(bodyH+1));
+      ctx.fillStyle=i%3?'rgba(53,49,39,.24)':'rgba(230,219,187,.5)';
+      ctx.fillRect(px,py,i%5===0?3:1,1);
+    }
+    ctx.strokeStyle='#656353';line(vx+bodyL-12,vy-bodyH+3,vx+bodyL-12,vy+2);
+    ctx.fillStyle='#494a40';ctx.fillRect(cabX-9,vy-8,2,1);
+
+    }
     /* 사람을 더 태울 때마다 뒤로 이어 붙인 실제 증축부.
        세로 이음선과 바닥 레일이 좌석 수치가 아니라 차체 공사였음을 보여준다. */
     const stages=D.vanStages||[];
@@ -670,11 +762,13 @@ const SCENE = (()=>{
       for(let rx=vx+5;rx<cabX-10;rx+=8) ctx.fillRect(rx,vy+4,1,1);
     }
     /* 팝업 루프 + 러기지랙 */
+    if(!detailed){
     ctx.fillStyle='#5d564a'; ctx.fillRect(vx+6,vy-bodyH-4,bodyL-24,4);
     ctx.strokeStyle='#3c372f'; ctx.lineWidth=1;
     line(vx+4,vy-bodyH-5, vx+bodyL-14,vy-bodyH-5);
     line(vx+4,vy-bodyH-5, vx+4,vy-bodyH);
     line(vx+bodyL-14,vy-bodyH-5, vx+bodyL-14,vy-bodyH);
+    }
     if(up.bunk){ /* 상부 수면칸: 주행 중에도 접히지 않는 경량 하드탑 */
       const ux=vx+12, uw=bodyL-29;
       ctx.fillStyle='#756d60'; ctx.fillRect(ux,vy-bodyH-3,uw,3);
@@ -686,6 +780,7 @@ const SCENE = (()=>{
     }
     /* 지붕짐은 개조 단계와 무관하게 같은 차를 알아보게 하는 고정 표식이다.
        검은 예비 타이어·올리브 짐가방·빨간 연료통 두 개를 캡 가까이에 묶는다. */
+    if(!detailed){
     const rackRight=cabX-7;
     ctx.fillStyle='#23262e'; circ(rackRight-14,vy-bodyH-7,4);
     ctx.fillStyle='#3d414f'; circ(rackRight-14,vy-bodyH-7,2);
@@ -697,13 +792,14 @@ const SCENE = (()=>{
       ctx.fillStyle='#b4483d'; ctx.fillRect(rx,vy-bodyH-10,4,1);
       ctx.fillStyle='#512925'; ctx.fillRect(rx+1,vy-bodyH-8,2,3);
     }
+    }
     if(up.solar){ /* 태양광 패널 — 텃밭과 함께 달면 앞쪽 랙으로 이동 */
       const panelX=vx+(up.garden?32:7), panelW=Math.min(up.garden?18:23,bodyL-(panelX-vx)-9);
       ctx.fillStyle='#274e74'; ctx.fillRect(panelX,vy-bodyH-8,panelW,4);
       ctx.strokeStyle='#3f77aa'; ctx.lineWidth=1;
       for(let px2=panelX+3;px2<panelX+panelW;px2+=5) line(px2,vy-bodyH-8,px2,vy-bodyH-4);
       ctx.fillStyle=`rgba(160,210,255,${0.25+0.2*Math.sin(t*2)})`; ctx.fillRect(panelX+1,vy-bodyH-8,4,1);
-    } else {
+    } else if(!detailed){
       ctx.fillStyle='#8a7a55'; ctx.fillRect(vx+8,vy-bodyH-8,9,4);
       ctx.strokeStyle='#4c4438'; line(vx+10,vy-bodyH-8,vx+10,vy-bodyH-4); line(vx+14,vy-bodyH-8,vx+14,vy-bodyH-4);
     }
@@ -775,7 +871,7 @@ const SCENE = (()=>{
       ctx.fillStyle='#c9a24a'; ctx.fillRect(vx+bodyL+cabL+4,vy+4,1,1); // 훅
     }
     if(up.mudtires){ /* 험로 타이어 펜더 플레어 */
-      const rearAxle=cabX-(45+build.lv*3), frontAxle=cabX+13;
+      const rearAxle=detailed?vx+bodyL*.372:cabX-(45+build.lv*3), frontAxle=cabX+(detailed?9:13);
       ctx.fillStyle='#3a3f4c';
       ctx.fillRect(rearAxle-6,vy+3,13,2); ctx.fillRect(frontAxle-6,vy+3,13,2);
     }
@@ -816,17 +912,19 @@ const SCENE = (()=>{
       }
     }
     /* ── 독립 캡오버 운전석 ── */
-    ctx.fillStyle='#91897d';
+    if(!detailed){
+    ctx.fillStyle='#b4af9f';
     ctx.beginPath();
     ctx.moveTo(vx+bodyL+1,vy-cabH+2);
     ctx.lineTo(vx+bodyL+cabL-7,vy-cabH+2);
     ctx.lineTo(vx+bodyL+cabL-1,vy-cabH+8);
     ctx.lineTo(vx+bodyL+cabL,vy+2);
     ctx.lineTo(vx+bodyL,vy+1); ctx.closePath(); ctx.fill();
-    ctx.fillStyle='#6f6250'; ctx.fillRect(vx+bodyL,vy-6,cabL,11);
+    ctx.fillStyle='#98917e'; ctx.fillRect(vx+bodyL,vy-6,cabL,11);
     ctx.fillStyle='#4c4438'; ctx.fillRect(vx+bodyL,vy+3,cabL,2);
     /* 검은 세로 틈이 생활 박스와 캡을 확실히 분리한다. */
     ctx.fillStyle='#37332d'; ctx.fillRect(cabX-1,vy-cabH+1,2,cabH+3);
+    }
     if(up.armor){ /* 장갑판은 차체 하단을 한 덩어리로 바꿔 원정형 실루엣을 만든다 */
       ctx.fillStyle='#59616f';
       ctx.fillRect(vx+2,vy-7,bodyL-4,10);
@@ -837,7 +935,8 @@ const SCENE = (()=>{
       line(vx+bodyL-1,vy-7,vx+bodyL-1,vy+3);
     }
     /* 앞유리와 옆문 창. 앞바퀴 위까지 선 캡오버 전면이라 긴 보닛이 없다. */
-    const cabGlass=dark>0.4?'rgba(132,157,180,0.38)':'rgba(169,188,201,0.62)';
+    if(!detailed){
+    const cabGlass=dark>0.4?'#303c45':'#384f59';
     ctx.fillStyle=cabGlass;
     ctx.beginPath();
     ctx.moveTo(cabX+3,vy-cabH+5);
@@ -851,11 +950,13 @@ const SCENE = (()=>{
     ctx.lineTo(cabX+cabL-7,vy-cabH+13); ctx.closePath(); ctx.fill();
     ctx.strokeStyle='#4b463d'; line(cabX+2,vy-cabH+15,cabX+2,vy+1);
     line(cabX+cabL-9,vy-cabH+5,cabX+cabL-7,vy-cabH+14);
+    }
     /* 운전사는 거주구 머리 줄에 섞지 않고 앞유리 안에 따로 앉는다. */
     ctx.fillStyle='rgba(20,23,31,0.78)';
     ctx.fillRect(cabX+9,vy-cabH+10,4,4);
     ctx.fillRect(cabX+10,vy-cabH+8,3,3);
     /* 사이드미러 */
+    if(!detailed){
     ctx.fillStyle='#3c372f'; ctx.fillRect(vx+bodyL+cabL-1,vy-cabH+8,3,2);
     /* 전면 그릴과 고정된 흰 X: 증축해도 항상 같은 운전석에 남는다. */
     ctx.fillStyle='#49463f'; ctx.fillRect(cabX+cabL-2,vy-6,2,6);
@@ -864,20 +965,39 @@ const SCENE = (()=>{
     ctx.strokeStyle='rgba(220,218,205,0.78)'; ctx.lineWidth=1.5;
     line(cabX+5,vy-7,cabX+11,vy); line(cabX+11,vy-7,cabX+5,vy);
     ctx.lineWidth=1;
+    }
     /* ── 옆창 (거주구) : 따뜻한 빛 + 탑승자 ── */
-    const winY=vy-bodyH+5, winH=9;
+    const winY=detailed?P(vy-bodyH-12+(bodyH+7)*.47):vy-bodyH+5, winH=detailed?P((bodyH+7)*.18):9;
     const winX=vx+7, winW=bodyL-16;
     const winPanels=Math.min(6,3+build.lv);
-    const winGap=2, panelW=Math.max(4,Math.floor((winW-winGap*(winPanels-1))/winPanels));
-    ctx.fillStyle= dark>0.35? '#e6a24e':'rgba(151,174,188,0.58)';
-    for(let wp=0;wp<winPanels;wp++){
+    const winGap=6, panelW=Math.max(4,Math.floor((winW-winGap*(winPanels-1))/winPanels));
+    if(!detailed) for(let wp=0;wp<winPanels;wp++){
       const px=P(winX+wp*(panelW+winGap));
-      ctx.fillRect(px,winY,panelW,winH);
-      if(dark>0.35){ ctx.fillStyle='rgba(255,226,168,0.5)'; ctx.fillRect(px+1,winY+1,Math.max(1,panelW-2),1);
-        ctx.fillStyle='#e6a24e'; }
+      ctx.fillStyle='#3a3930';ctx.fillRect(px-1,winY-1,panelW+2,winH+2);
+      ctx.fillStyle='#9c7548';ctx.fillRect(px,winY,panelW,winH);
+      ctx.fillStyle=dark>.35?'#e2ab61':'#ccab71';ctx.fillRect(px+1,winY+1,panelW-2,winH-2);
+      ctx.fillStyle='#f0d196';ctx.fillRect(px+1,winY+1,1,winH-2);
+      ctx.fillStyle='#755c3e';ctx.fillRect(px+P(panelW*.65),winY,1,winH);
+      ctx.fillStyle='#d3cbb1';ctx.fillRect(px-1,winY+winH+1,panelW+2,1);
     }
     const curtained = up.curtain && dark>0.35 && speed<=0;
-    if(curtained){ /* 암막 커튼 — 불빛이 새지 않는다 */
+    if(detailed){
+      const sw=vanBodyArt.naturalWidth,sh=vanBodyArt.naturalHeight,split=sw*.698,belt=sh*.71;
+      const windows=[[164,200,99,73],[334,200,124,73],[527,205,53,66]];
+      ctx.save();ctx.imageSmoothingEnabled=true;
+      for(const [x,y,w,h] of windows){
+        const sx=x*sw/1024,sy=y*sh/601,ww=w*sw/1024,hh=h*sh/601;
+        const dx=vx+sx/split*bodyL,dy=vy-bodyH-12+sy/belt*(bodyH+7),dw=ww/split*bodyL,dh=hh/belt*(bodyH+7);
+        if(curtained){
+          ctx.fillStyle='#453a35';ctx.fillRect(dx,dy,dw,dh);
+          ctx.fillStyle='rgba(255,207,136,.35)';ctx.fillRect(dx,dy+dh-.5,dw,.5);
+        }else if(dark>.2){
+          // Interior lamps remain warm as the metal body and the road darken.
+          ctx.drawImage(vanBodyArt,sx,sy,ww,hh,dx,dy,dw,dh);
+        }
+      }
+      ctx.restore();
+    }else if(curtained){
       for(let wp=0;wp<winPanels;wp++){
         const px=P(winX+wp*(panelW+winGap));
         ctx.fillStyle='#453a4a'; ctx.fillRect(px,winY,panelW,winH-1);
@@ -909,8 +1029,9 @@ const SCENE = (()=>{
     const outside=(mealT>0&&speed<=0&&S)? S.party.slice(0,2):[];   // 정차 식사 중엔 밖에 있는 동료
     const riders=S? S.party.filter(id=>!outside.includes(id)):[];
     const seatSpan=bodyL-22, seatGap=seatSpan/Math.max(1,riders.length);
+    const seatX=i=>P(detailed?vx+bodyL*[.29,.55,.78][i%3]+(i>=3?2:-1):vx+10+(i+.5)*seatGap);
     if(!curtained) riders.forEach((id,i)=>{
-      const hx=P(vx+10+(i+0.5)*seatGap);
+      const hx=seatX(i);
       const nod = Math.sin(t*1.2+i*2.7)>0.96?1:0;                    // 가끔 고개 까딱
       const doze = S && S.fatigue>=70 && speed>0 && i===1+(S.day%3) && i>0;  // 피로하면 누군가 존다
       const hy=P(winY+winH-2+((i%2)?bnc2-bnc:0)) + (doze? 1:nod);
@@ -928,7 +1049,7 @@ const SCENE = (()=>{
     /* 식사 연출: 창문 안 먹는 모션 + 김 (아침·점심 후 16초) */
     if(mealT>0){
       riders.forEach((id,i)=>{
-        const hx=P(vx+10+(i+0.5)*seatGap), hy=P(winY+winH-2+((i%2)?bnc2-bnc:0));
+        const hx=seatX(i), hy=P(winY+winH-2+((i%2)?bnc2-bnc:0));
         const toMouth = Math.sin(t*4.5+i*1.7)>0;                 // 손이 입으로 갔다 내려갔다
         ctx.fillStyle='#e8d9a8';                                  // 주먹밥
         ctx.fillRect(hx+(toMouth?0:1), hy-(toMouth?3:1), 2,1);
@@ -979,6 +1100,7 @@ const SCENE = (()=>{
       }
     }
     /* 문/디테일/녹 */
+    if(!detailed){
     ctx.strokeStyle='rgba(30,26,20,0.5)';
     line(vx+bodyL*0.55,vy-bodyH+4,vx+bodyL*0.55,vy+2);
     ctx.fillStyle='#3c372f'; ctx.fillRect(P(vx+bodyL*0.55)+2,vy-9,3,1); // 손잡이
@@ -986,10 +1108,13 @@ const SCENE = (()=>{
     ctx.fillRect(vx+3,vy-2,6,3); ctx.fillRect(vx+bodyL-9,vy-bodyH+9,3,5);
     ctx.fillRect(vx+bodyL+4,vy+1,5,2);
     /* 뒷사다리 */
-    ctx.strokeStyle='#4c4438';
+    ctx.strokeStyle='#393b35';
+    line(vx+1,vy-bodyH-1,vx+1,vy+3);line(vx+4,vy-bodyH-1,vx+4,vy+3);
     line(vx+2,vy-bodyH+2,vx+2,vy+2);
     for(let ly=vy-bodyH+4;ly<vy+2;ly+=4) line(vx,ly,vx+4,ly);
+    }
     /* 안테나 + 깃발 */
+    if(!detailed||up.antenna){
     ctx.strokeStyle='#666';
     const antTop = up.antenna? -24:-15;
     line(vx+10,vy-bodyH-4,vx+7,vy-bodyH+antTop);
@@ -1004,20 +1129,26 @@ const SCENE = (()=>{
     ctx.beginPath(); ctx.moveTo(vx+7,vy-bodyH+antTop+2);
     ctx.lineTo(vx+1,vy-bodyH+antTop+4+flap*0.4); ctx.lineTo(vx+7,vy-bodyH+antTop+6);
     ctx.closePath(); ctx.fill();
+    }
     /* 바퀴 */
     const spin=worldX*0.3;
-    const rearAxle=cabX-(45+build.lv*3), frontAxle=cabX+13;
+    const rearAxle=detailed?vx+bodyL*.372:cabX-(45+build.lv*3), frontAxle=cabX+(detailed?9:13);
     [[rearAxle,bnc],[frontAxle,bnc2]].forEach(wj=>{
-      const wx0=wj[0], wy0=P(baseY+6);
+      const wx0=wj[0], wy0=P(detailed?vy+5:baseY+6);
       const wr=up.mudtires?6.7:5.5;
+      if(detailed&&!up.mudtires){
+        if(speed>0){ctx.strokeStyle='rgba(188,183,163,.22)';ctx.lineWidth=.6;const a=spin;line(wx0-Math.cos(a)*2.7,wy0-Math.sin(a)*2.7,wx0+Math.cos(a)*2.7,wy0+Math.sin(a)*2.7);}
+        return;
+      }
       ctx.fillStyle='#0e1016'; circ(wx0,wy0,wr);
       if(up.mudtires){
         ctx.strokeStyle='#252832'; ctx.lineWidth=1;
         for(let k=0;k<8;k++){ const a=spin+k*Math.PI/4;
           line(wx0+Math.cos(a)*(wr-1),wy0+Math.sin(a)*(wr-1),wx0+Math.cos(a)*(wr+0.4),wy0+Math.sin(a)*(wr+0.4)); }
       }
-      ctx.fillStyle='#2b2f3a'; circ(wx0,wy0,3.2);
-      ctx.fillStyle='#464c5c'; circ(wx0,wy0,1.4);
+      ctx.strokeStyle='#615f53';ctx.lineWidth=.7;ctx.beginPath();ctx.arc(wx0,wy0,4,0,7);ctx.stroke();
+      ctx.fillStyle='#55584f'; circ(wx0,wy0,3.2);
+      ctx.fillStyle='#98978a'; circ(wx0,wy0,1.4);
       ctx.strokeStyle='#14161f'; ctx.lineWidth=1;
       for(let s2=0;s2<2;s2++){ const a=spin+s2*Math.PI/2;
         line(wx0-Math.cos(a)*3,wy0-Math.sin(a)*3,wx0+Math.cos(a)*3,wy0+Math.sin(a)*3); }
@@ -1163,8 +1294,8 @@ const SCENE = (()=>{
       const gy=P(H*(0.2+hash(Math.floor(t*3))*0.58));
       const shift=Math.sin(t*17)>0?3:-3;
       ctx.globalAlpha=0.42;
-      ctx.drawImage(off,0,gy,W,2,shift,gy,W,2);
-      ctx.drawImage(off,0,gy+4,W,1,-shift,gy+4,W,1);
+      ctx.drawImage(off,0,gy*ROAD_RENDER_SCALE,off.width,2*ROAD_RENDER_SCALE,shift,gy,W,2);
+      ctx.drawImage(off,0,(gy+4)*ROAD_RENDER_SCALE,off.width,ROAD_RENDER_SCALE,-shift,gy+4,W,1);
       ctx.globalAlpha=1;
     }
 
@@ -1521,7 +1652,7 @@ const SCENE = (()=>{
     /* ── 블릿 (픽셀 업스케일) ── */
     dctx.clearRect(0,0,VW,VH);
     dctx.imageSmoothingEnabled=false;
-    dctx.drawImage(off,0,0,W,H,0,0,VW,VH);
+    dctx.drawImage(off,0,0,off.width,off.height,0,0,VW,VH);
   }
 
   /* ── 정착지 내부: 코드 기반 일러스트 월드 ────────────────────────
@@ -1538,8 +1669,20 @@ const SCENE = (()=>{
     const coats=['#4e5e57','#665348','#4d5668','#6d583d','#3f625f','#6a4b4c','#555247'];
     return coats[Math.floor(hash((id||'person').split('').reduce((n,ch)=>n+ch.charCodeAt(0),0)+i)*coats.length)%coats.length];
   }
+  // Logical anchors own drawing, hit testing, resident placement and arrival.
+  // Authored facility IDs/copy stay in D; these are the spatial plans of each town.
+  const TOWN_PLANS={
+    miryang:{market:[65,128],garage:[173,165],people:[65,216],alley:[173,251]},
+    gwangju:{market:[47,132],garage:[188,135],people:[117,195],alley:[53,240]},
+    daegu:{market:[115,199],garage:[181,147],people:[169,247],alley:[54,166]},
+    muju:{market:[78,122],garage:[157,165],people:[79,214],alley:[157,257]},
+    jeonju:{market:[58,130],garage:[178,175],people:[67,223],alley:[172,254]},
+    daejeon:{market:[61,120],garage:[169,162],people:[66,215],alley:[172,257]},
+    suwon:{market:[60,217],garage:[178,252],people:[177,112],alley:[51,131]}
+  };
   function initSettlement(canvas,options){
     if(!canvas) return;
+    closeSettlement();
     const world=D.settlementWorlds&&D.settlementWorlds[options.id]||{
       kind:'market',sign:'정착지',crowd:8,palette:{ground:'#32302a',path:'#5a5548',wall:'#1d201d',roof:'#44463d',light:'#e8b66a',accent:'#9a6350'}};
     const buffer=document.createElement('canvas');
@@ -1548,28 +1691,29 @@ const SCENE = (()=>{
     bctx.setTransform(TOWN_RENDER_SCALE,0,0,TOWN_RENDER_SCALE,0,0);
     bctx.imageSmoothingEnabled=false;
     const layout=options.layout||{},spots=options.spots||{},entry=townPoint(layout.entry||{x:50,y:90});
-    const facilities=Object.entries(spots).map(([id,spot])=>({type:'facility',id,label:spot.label,sub:spot.sub,p:townPoint(spot)}));
+    const plan=TOWN_PLANS[options.id]||{};
+    const facilities=Object.entries(spots).map(([id,spot])=>{
+      const at=plan[id],p=at?{x:at[0],y:at[1]}:townPoint(spot);
+      const labelWidth=Math.min(92,Math.max(34,String(spot.label||'').length*5+8));
+      return {type:'facility',id,label:spot.label,sub:spot.sub,p,
+        labelBox:{x:p.x-labelWidth/2,y:p.y-39,w:labelWidth,h:10},
+        arrival:{x:p.x,y:tclamp(p.y+25,82,TOWN_H-14)}};
+    });
     const fallback=[[20,58],[80,57],[51,65]];
     const residents=(options.npcs||[]).map((npc,index)=>{
-      const host=Object.values(spots).find(spot=>spot.npc===npc.id);
-      const base=townPoint(host||{x:fallback[index%fallback.length][0],y:fallback[index%fallback.length][1]});
-      return {type:'npc',id:npc.id,label:npc.name,role:npc.role,p:{x:tclamp(base.x+(index%2?10:-10),14,TOWN_W-14),y:tclamp(base.y+9,82,TOWN_H-22)}};
+      const host=facilities.find(facility=>spots[facility.id].npc===npc.id);
+      const base=host?host.p:townPoint({x:fallback[index%fallback.length][0],y:fallback[index%fallback.length][1]});
+      return {type:'npc',id:npc.id,label:npc.name,role:npc.role,p:{x:tclamp(base.x+(base.x>118?-24:24),14,TOWN_W-14),y:tclamp(base.y+24,82,TOWN_H-22)}};
     });
     const recruit=options.recruit?{type:'recruit',id:options.recruit.id,label:options.recruit.name,
       role:options.recruit.label||'처음 보는 사람',p:townPoint(layout.recruit||{x:50,y:54})}:null;
     const crowd=Array.from({length:Math.max(7,Math.round((world.crowd||8)*.82))},(_,i)=>{
-      /* 닷새장 사람은 광장 전체에 등간격으로 흩어 놓지 않는다. 좌판마다
-         두세 명씩 작은 무리를 만들고 중앙 통로는 실제 보행 동선으로 남긴다. */
-      if(world.kind==='five-day-market'&&facilities.length){
-        const host=facilities[i%facilities.length],side=i%2?-1:1;
-        return {x:tclamp(host.p.x+side*(13+hash(i*4.7)*16),15,TOWN_W-15),
-          y:tclamp(host.p.y+16+hash(i*7.9+5)*24,108,TOWN_H-48),
-          lane:3+hash(i*9.3)*6,phase:hash(i*12.7)*Math.PI*2,
-          speed:.26+hash(i*3.1)*.38,color:townColor(options.id,i)};
-      }
-      return {x:18+hash(i*5.7+options.id.length)*200,y:108+hash(i*8.1+11)*154,
-        lane:5+hash(i*9.3)*14,phase:hash(i*12.7)*Math.PI*2,
-        speed:.32+hash(i*3.1)*.62,color:townColor(options.id,i)};
+      // Residents gather on the actual doorsteps; the tunnel keeps a narrow
+      // occupied spine rather than scattering people inside its enclosing walls.
+      const host=facilities[i%Math.max(1,facilities.length)],at=host?host.arrival:{x:118,y:180};
+      return {x:world.kind==='tunnel'?108+hash(i*4.7)*20:tclamp(at.x+(at.x<118?12:-12),20,TOWN_W-20),
+        y:world.kind==='tunnel'?106+i*23:tclamp(at.y+3+hash(i*7.9)*7,96,TOWN_H-18),
+        lane:3,phase:hash(i*12.7)*Math.PI*2,speed:.26+hash(i*3.1)*.38,color:townColor(options.id,i)};
     });
     town={canvas,out:canvas.getContext('2d'),buffer,c:bctx,id:options.id,world,layout,spots,options,
       facilities,residents,recruit,crowd,player:{...entry},target:{...entry},focus:options.focus||'market',
@@ -1580,11 +1724,14 @@ const SCENE = (()=>{
     walkSettlement(options.focus||'market',false);
     drawSettlement(.016);
   }
-  function closeSettlement(){ town=null; }
+  function closeSettlement(){
+    if(town){town.canvas.onpointerup=null;town.canvas.onkeydown=null;}
+    town=null;
+  }
   function walkSettlement(id,notify=true){
     if(!town) return false;
     const facility=town.facilities.find(item=>item.id===id); if(!facility) return false;
-    town.focus=id; town.target={x:facility.p.x,y:tclamp(facility.p.y+18,74,TOWN_H-14)};
+    town.focus=id; town.target={...facility.arrival};
     town.moving=true; town.pending=null; town.selected={type:'facility',id};
     if(notify&&town.options.onWalk) town.options.onWalk(id);
     return true;
@@ -1610,7 +1757,10 @@ const SCENE = (()=>{
       return;
     }
     let facility=null;best=31;
-    for(const item of town.facilities){const d=Math.hypot(p.x-item.p.x,p.y-item.p.y);if(d<best){best=d;facility=item;}}
+    for(const item of town.facilities){
+      const box=item.labelBox,labelHit=p.x>=box.x&&p.x<=box.x+box.w&&p.y>=box.y&&p.y<=box.y+box.h;
+      const d=labelHit?0:Math.hypot(p.x-item.p.x,p.y-item.p.y);if(d<best){best=d;facility=item;}
+    }
     if(facility){
       if(town.options.onFocus) town.options.onFocus(facility.id); else walkSettlement(facility.id);
       return;
@@ -1645,46 +1795,42 @@ const SCENE = (()=>{
     for(let y=60;y<TOWN_H;y+=8)for(let x=(y/8%2)*4;x<TOWN_W;x+=8){
       const seed=hash(x*3.1+y*5.7+town.id.length);c.fillStyle=seed>.53?mix(q.ground,'#ffffff',.08):mix(q.ground,'#000000',.09);c.fillRect(x+2,y+2,seed>.8?2:1,1);
     }
-    /* 도시마다 생활 방식이 다른 만큼 거리의 골격도 다르다. 시설 좌표는
-       그대로 유지하되 길 폭, 광장, 마당과 통로의 비율을 다르게 잡는다. */
+    const road=(points,width)=>{c.strokeStyle=q.road;c.lineWidth=width;c.lineJoin='round';c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.stroke();};
     c.fillStyle=q.road;
-    if(kind==='dome'){
-      c.fillRect(0,150,TOWN_W,72);c.fillRect(80,92,76,TOWN_H-92);c.fillRect(18,222,200,64);
+    if(kind==='five-day-market'){
+      // Two long, close shop fronts with a single narrow market alley.
+      road([[119,306],[119,95]],37);
+      town.facilities.forEach(f=>road([[119,f.arrival.y],[f.arrival.x,f.arrival.y]],19));
+    }else if(kind==='night-market'){
+      c.beginPath();c.ellipse(118,204,100,83,0,0,Math.PI*2);c.fill();
+      road([[118,204],[118,306]],44);
+      c.strokeStyle=q.line;c.lineWidth=2;c.beginPath();c.ellipse(118,204,84,67,0,0,Math.PI*2);c.stroke();
+    }else if(kind==='dome'){
+      c.beginPath();c.ellipse(118,191,101,106,0,0,Math.PI*2);c.fill();
+      c.fillStyle='#3c4b3b';c.beginPath();c.ellipse(118,199,59,64,0,0,Math.PI*2);c.fill();
+      c.strokeStyle='#92947b';c.lineWidth=1;c.beginPath();c.moveTo(118,246);c.lineTo(78,209);c.lineTo(118,171);c.lineTo(158,209);c.closePath();c.stroke();
+      road([[118,258],[118,306]],37);
     }else if(kind==='tunnel'){
-      c.fillRect(24,82,TOWN_W-48,TOWN_H-82);c.fillRect(50,145,TOWN_W-100,78);
+      road([[118,306],[118,83]],45);
+      town.facilities.forEach(f=>road([[118,f.arrival.y],[f.arrival.x,f.arrival.y]],22));
+      c.fillStyle='#111719';c.fillRect(0,61,39,245);c.fillRect(197,61,39,245);
+      c.strokeStyle='#555653';c.lineWidth=7;
+      for(let y=82;y<300;y+=45){c.beginPath();c.moveTo(35,y+20);c.lineTo(42,y);c.moveTo(194,y);c.lineTo(201,y+20);c.stroke();}
     }else if(kind==='hanok-market'){
-      c.fillRect(0,158,TOWN_W,66);c.fillRect(84,102,68,TOWN_H-102);c.fillRect(35,224,166,61);
+      c.fillRect(23,139,80,54);c.fillRect(126,185,86,37);c.fillRect(24,237,84,44);c.fillRect(134,262,75,27);
+      road([[118,306],[119,265],[105,212],[118,182],[118,101]],22);
+      town.facilities.forEach(f=>road([[118,f.arrival.y],[f.arrival.x,f.arrival.y]],16));
+      c.strokeStyle=q.line;c.lineWidth=1;
+      for(let y=146;y<290;y+=14){c.beginPath();c.moveTo(26,y);c.lineTo(100,y);c.stroke();}
     }else if(kind==='research'){
-      c.fillRect(0,154,TOWN_W,60);c.fillRect(88,92,60,TOWN_H-92);c.fillRect(28,222,180,64);
+      road([[118,306],[118,95]],23);
+      town.facilities.forEach(f=>{road([[118,f.arrival.y],[f.arrival.x,f.arrival.y]],21);c.strokeStyle=q.trim;c.lineWidth=1;c.strokeRect(f.p.x-30,f.p.y-27,60,43);});
+      c.fillStyle=q.trim;for(let y=96;y<294;y+=14)c.fillRect(117,y,2,6);
     }else if(kind==='fortress'){
-      c.fillRect(14,150,TOWN_W-28,72);c.fillRect(91,74,54,TOWN_H-74);c.fillRect(38,222,160,64);
-    }else if(kind==='five-day-market'){
-      c.fillRect(0,158,TOWN_W,70);c.fillRect(80,104,76,TOWN_H-104);c.fillRect(34,224,168,62);
-    }else{
-      c.fillRect(0,156,TOWN_W,64);c.fillRect(86,100,64,TOWN_H-100);c.fillRect(30,220,176,66);
-    }
-    c.fillStyle=q.line;
-    if(kind==='dome'||kind==='research'){
-      for(let x=7;x<TOWN_W;x+=22)c.fillRect(x,184,12,1);
-      for(let y=104;y<TOWN_H;y+=18)c.fillRect(117,y,2,9);
-    }else if(kind==='fortress'||kind==='hanok-market'){
-      for(let y=160;y<286;y+=10)for(let x=18+(y%20?5:0);x<TOWN_W-18;x+=20)c.fillRect(x,y,13,1);
-    }else{
-      for(let y=164;y<224;y+=12)for(let x=(y/12%2)*8;x<TOWN_W;x+=16)c.fillRect(x,y,9,1);
-      for(let y=108;y<TOWN_H;y+=14)c.fillRect(96,y,44,1);
-    }
-    /* 빈 회색 면 대신 실제 왕래가 남긴 흔적을 낮은 대비로 쌓는다. */
-    for(let i=0;i<18;i++){
-      const x=12+hash(i*7.3+town.id.length)*212,y=132+hash(i*11.9+4)*150;
-      c.fillStyle=i%4===0?'rgba(9,15,18,.28)':mix(q.road,'#000000',.16);
-      c.fillRect(P(x),P(y),i%4===0?8:2,i%3===0?2:1);
-      if(i%5===0){c.fillStyle='rgba(114,145,151,.14)';c.fillRect(P(x+1),P(y),6,1);}
-    }
-    c.fillStyle=mix(q.road,'#000000',.25);
-    for(const [x,y] of [[30,191],[66,238],[173,177],[202,247]]){c.fillRect(x,y,9,1);c.fillRect(x+3,y+1,1,3);}
-    if(kind==='research'){c.fillStyle='rgba(105,197,189,.16)';for(let x=8;x<TOWN_W;x+=16)c.fillRect(x,58,1,TOWN_H-58);for(let y=62;y<TOWN_H;y+=16)c.fillRect(0,y,TOWN_W,1);}
-    if(kind==='tunnel'){c.fillStyle='#15181a';c.fillRect(0,54,24,TOWN_H);c.fillRect(TOWN_W-24,54,24,TOWN_H);c.fillRect(0,54,TOWN_W,26);for(let y=76;y<TOWN_H;y+=28){c.fillStyle='#4c4a47';c.fillRect(18,y,6,14);c.fillRect(TOWN_W-24,y+12,6,14);}}
-    if(kind==='fortress'){c.fillStyle='#565246';c.fillRect(0,54,TOWN_W,20);c.fillRect(0,54,14,TOWN_H);c.fillRect(TOWN_W-14,54,14,TOWN_H);for(let x=2;x<TOWN_W;x+=16){c.fillStyle='#777162';c.fillRect(x,55,10,7);}}
+      road([[118,306],[118,84]],36);
+      town.facilities.forEach(f=>road([[118,f.arrival.y],[f.arrival.x,f.arrival.y]],22));
+      c.fillStyle=q.line;for(let y=86;y<304;y+=10)c.fillRect(103,y,30,1);
+    }else road([[118,306],[118,90]],60);
   }
   function townPixelBuilding(c,x,y,w,h,index=0,special=''){
     const q=townPixelPalette(),kind=town.world.kind;x=P(x);y=P(y);w=P(w);h=P(h);
@@ -1744,78 +1890,54 @@ const SCENE = (()=>{
     c.restore();return true;
   }
   function townPixelBackdrop(c){
-    const kind=town.world.kind;townPixelGround(c);
-    if(kind==='night-market'){
-      [[2,72,37,42],[34,64,43,50],[72,70,35,40],[130,67,40,44],[166,61,42,51],[203,72,31,40]].forEach((b,i)=>townPixelBuilding(c,...b,i));
-      townPixelAwning(c,5,119,35,0);townPixelAwning(c,196,119,34,1);townPixelAwning(c,6,239,34,2);townPixelWire(c,10,102,226,93,9);
-    }else if(kind==='five-day-market'){
-      [[4,73,48,35],[47,68,45,40],[143,70,42,38],[181,75,50,33]].forEach((b,i)=>townPixelBuilding(c,...b,i));
-      townPixelAwning(c,7,121,34,0);townPixelAwning(c,45,116,29,1);townPixelAwning(c,162,117,28,2);townPixelAwning(c,194,121,35,1);
-      townPixelAwning(c,8,241,33,2);townPixelAwning(c,195,241,33,3);
+    const kind=town.world.kind,q=townPixelPalette();townPixelGround(c);
+    if(kind==='five-day-market'){
+      // Continuous staggered walls, not four detached booths.
+      [[7,77,78,32],[4,167,80,25],[7,256,76,32],[150,74,79,55],[155,207,75,21]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      townPixelWire(c,15,92,221,101,8);townPixelWire(c,15,204,221,215,6);
+      [[20,115,65],[149,151,68],[20,203,67],[151,239,68]].forEach((a,i)=>townPixelAwning(c,...a,i));
+    }else if(kind==='night-market'){
+      [[6,72,62,27],[77,65,83,37],[172,72,57,30]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      townPixelAwning(c,19,117,55,0);townPixelAwning(c,162,120,53,1);
+      townPixelWire(c,14,104,221,104,16);
+      // Shared washing bench and long dining tables face the central hearth.
+      c.fillStyle=q.wall;[[82,231,71,6],[82,245,71,5],[197,195,24,7]].forEach(b=>c.fillRect(...b));
+      c.fillStyle=q.trim;[[86,228,63,3],[86,242,63,3]].forEach(b=>c.fillRect(...b));
     }else if(kind==='dome'){
-      townPixelBuilding(c,48,55,140,60,0,'dome');townPixelTower(c,8,70,63,0);townPixelTower(c,210,72,61,1);
-      [[2,126,40,45],[194,126,40,45],[4,235,38,45],[194,237,39,43]].forEach((b,i)=>townPixelBuilding(c,...b,i+1));
-      townPixelAwning(c,47,128,45,1);townPixelAwning(c,145,128,43,2);townPixelWire(c,17,112,218,105,7);townPixelCarcass(c,13,229,0);townPixelCarcass(c,202,206,1);
+      // Curved seating tiers surround the field; roof ribs converge overhead.
+      c.strokeStyle=q.wall;c.lineWidth=8;
+      for(let r=0;r<4;r++){c.beginPath();c.ellipse(118,187,106-r*8,112-r*8,0,Math.PI,Math.PI*2);c.stroke();}
+      c.strokeStyle=q.line;c.lineWidth=2;
+      for(let angle=3.3;angle<6.2;angle+=.36){c.beginPath();c.moveTo(118+Math.cos(angle)*80,187+Math.sin(angle)*82);c.lineTo(118+Math.cos(angle)*115,187+Math.sin(angle)*116);c.stroke();}
+      c.fillStyle=q.dark;c.fillRect(81,68,74,20);c.fillStyle=q.window;c.fillRect(90,74,56,3);
+      townPixelTower(c,6,186,57,1);townPixelTower(c,210,184,61,0);
     }else if(kind==='tunnel'){
-      [[27,90,35,31],[174,90,35,31],[27,134,34,29],[175,134,34,29],[27,247,34,29],[175,247,34,29]].forEach((b,i)=>townPixelBuilding(c,...b,i));
-      townPixelWire(c,27,82,209,82,2);
+      c.fillStyle=q.dark;c.fillRect(40,63,156,29);
+      c.strokeStyle=q.wall;c.lineWidth=9;c.beginPath();c.ellipse(118,105,78,42,0,Math.PI,Math.PI*2);c.stroke();
+      for(let y=104;y<286;y+=44){c.fillStyle=q.window;c.fillRect(42,y,3,5);c.fillRect(191,y,3,5);townPixelWire(c,43,y-4,193,y-4,3);}
     }else if(kind==='hanok-market'){
-      [[3,73,47,34],[45,69,45,38],[144,70,44,37],[184,74,48,33]].forEach((b,i)=>townPixelBuilding(c,...b,i));
-      [[7,121,35,30],[194,121,35,30],[8,241,34,30],[194,241,35,30]].forEach((b,i)=>townPixelBuilding(c,...b,i+4));
-      townPixelAwning(c,52,113,31,0);townPixelWire(c,12,105,224,105,3);
+      // Offset L-shaped houses frame separate courtyards and narrow gates.
+      [[14,75,81,30],[14,91,19,42],[134,100,88,32],[203,118,19,33],[13,184,89,23],[13,198,20,26],[136,216,87,23]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      c.fillStyle=q.wall;[[26,190,63,4],[144,210,60,4],[24,279,78,4]].forEach(b=>c.fillRect(...b));
     }else if(kind==='research'){
-      [[4,72,42,43],[43,64,52,51],[141,65,51,50],[190,72,42,43]].forEach((b,i)=>townPixelBuilding(c,...b,i));
-      townPixelTower(c,107,55,60,0);townPixelBuilding(c,7,126,35,35,5);townPixelBuilding(c,194,126,35,35,6);townPixelBuilding(c,7,241,35,34,7);townPixelBuilding(c,194,241,35,34,8);
-      const q=townPixelPalette();c.fillStyle=q.trim;c.fillRect(15,118,36,3);c.fillRect(185,118,36,3);townPixelWire(c,15,99,220,91,5);
+      // Paired laboratory wings are joined by visible enclosed service bridges.
+      [[21,72,76,18],[142,108,76,19],[24,169,74,18],[143,210,75,17]].forEach((b,i)=>townPixelBuilding(c,...b,i));
+      c.strokeStyle=q.trim;c.lineWidth=2;
+      [[96,130,119,130],[119,171,141,171],[97,224,119,224],[119,266,142,266]].forEach(([x,y,x2,y2])=>{c.strokeRect(x,y,x2-x,8);});
+      townPixelTower(c,108,61,35,0);
     }else if(kind==='fortress'){
-      const q=townPixelPalette();c.fillStyle='#565246';c.fillRect(14,68,208,34);for(let x=18;x<220;x+=18){c.fillStyle='#777162';c.fillRect(x,65,11,7);}
-      townPixelTower(c,16,59,53,0);townPixelTower(c,202,59,53,1);c.fillStyle='#252923';c.fillRect(98,67,40,38);c.fillStyle='#111411';c.fillRect(109,78,18,27);
-      [[8,126,35,34],[193,126,35,34],[8,241,35,33],[193,241,35,33]].forEach((b,i)=>townPixelBuilding(c,...b,i+2));
+      // The gate cuts across the settlement; watch posts are north of the market.
+      c.fillStyle=q.wall;c.fillRect(0,166,102,21);c.fillRect(134,166,102,21);
+      for(let x=2;x<236;x+=14){if(x>96&&x<139)continue;c.fillStyle=q.line;c.fillRect(x,161,9,8);}
+      townPixelTower(c,85,142,46,0);townPixelTower(c,135,142,46,1);
+      c.fillStyle=q.roof;c.fillRect(95,137,48,8);c.fillRect(101,132,36,5);
+      [[8,77,64,23],[157,70,71,22],[8,257,77,24]].forEach((b,i)=>townPixelBuilding(c,...b,i));
     }
-    townPixelMarketDress(c);townPixelProps(c);
-  }
-
-  function townPixelMarketDress(c){
-    if(town.world.kind!=='five-day-market') return;
-    const q=townPixelPalette(),f=(x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(P(x),P(y),P(w),P(h));};
-    /* 건물과 좌판 사이를 잇는 차양 끈. 장터를 네 개의 독립 PNG가 아니라
-       한 공간으로 묶되, 중앙 보행로와 시설 터치 영역은 가리지 않는다. */
-    townPixelWire(c,8,115,228,110,5);
-    for(let i=0;i<11;i++){
-      const x=15+i*20,y=114+Math.round(Math.sin(i*.82)*2);
-      f(x,y,5,2,i%3===0?q.window:i%2?q.trim:mix(q.trim,'#e1b66e',.34));
-      f(x+1,y+2,3,2,i%3===0?mix(q.window,'#9e4c31',.28):mix(q.trim,'#000000',.08));
-    }
-    townPixelMarketSign(c,'밀양 닷새장',97,105,42,false);
-    /* 돗자리, 광주리, 물통과 상자. 시설보다 낮은 대비로 가장자리에 두어
-       비어 보이던 바닥에 장날의 사용 흔적만 더한다. */
-    [[43,166,20,6,'#76543a'],[174,170,18,6,'#654b36'],[39,246,18,7,'#50625b'],[178,245,19,7,'#71452f']]
-      .forEach(([x,y,w,h,color],i)=>{f(x,y,w,h,color);f(x+2,y+1,w-4,1,mix(color,'#ffffff',.16));
-        for(let n=0;n<3;n++)f(x+3+n*5,y+3,3,2,i===2?'#758b82':n%2?q.window:'#a95735');});
-    [[13,151],[79,145],[157,151],[214,161],[22,222],[209,224]].forEach(([x,y],i)=>{
-      f(x,y+2,7,5,i%2?'#4a3324':'#62452b');f(x+1,y+1,5,1,'#8a6842');f(x+2,y,3,1,q.window);
-    });
-    [[73,184],[165,189],[77,259],[159,257]].forEach(([x,y],i)=>{
-      f(x,y,2,8,mix(q.dark,'#ffffff',.14));f(x-3,y,8,2,i%2?q.trim:mix(q.trim,'#e9bb6b',.28));
-    });
-  }
-
-  function townPixelMarketSign(c,text,x,y,w,selected=false){
-    const q=townPixelPalette();
-    c.save();
-    c.fillStyle='rgba(8,8,7,.4)';c.fillRect(P(x+1),P(y+1),P(w),7);
-    c.fillStyle=selected?mix(q.trim,'#e8b55f',.42):mix(q.wall,'#4d2819',.52);c.fillRect(P(x),P(y),P(w),7);
-    c.fillStyle=selected?q.window:mix(q.trim,'#ffffff',.32);c.fillRect(P(x),P(y),P(w),1);c.fillRect(P(x),P(y+6),P(w),1);
-    c.fillStyle=selected?'#fff0cf':'#ead9b7';c.font='700 4px sans-serif';c.textAlign='center';c.textBaseline='middle';
-    c.fillText(text,P(x+w/2),P(y+3.7),P(w-3));
-    c.restore();
+    townPixelProps(c);
   }
 
   function townPixelLightPools(c){
-    const q=townPixelPalette(),kind=town.world.kind,lights=kind==='dome'?[[64,147,18],[172,147,18],[118,123,25],[64,239,15],[171,239,15]]
-      :kind==='tunnel'?[[53,126,13],[183,126,13],[53,236,13],[183,236,13]]
-      :kind==='research'?[[64,145,16],[172,145,16],[118,121,20]]
-      :[[62,148,17],[173,150,17],[66,239,14],[169,239,14]];
+    const q=townPixelPalette(),kind=town.world.kind,lights=town.facilities.map(f=>[f.arrival.x,f.arrival.y-10,kind==='tunnel'?13:17]);
     c.save();c.globalCompositeOperation='screen';
     for(const [x,y,r] of lights){
       const outer=kind==='research'?'rgba(91,194,186,.055)':kind==='five-day-market'?'rgba(247,177,74,.085)':'rgba(239,174,83,.055)';
@@ -1869,24 +1991,126 @@ const SCENE = (()=>{
       f(142,154,10,2,mix(q.trim,'#ffffff',.14));f(89,155,1,1,q.window);f(146,155,1,1,q.window);
     }
   }
+  function townPixelFacilityDetails(c,facility,q,x,y){
+    const kind=town.world.kind,id=facility.id;
+    const r=(dx,dy,w,h,color)=>{c.fillStyle=color;c.fillRect(x+dx,y+dy,w,h);};
+    const crate=(dx,dy)=>{
+      r(dx,dy,8,7,'#65533c');r(dx,dy,8,1,'#8a7353');r(dx+1,dy+3,6,1,'#342f27');r(dx+3,dy+1,1,6,'#9a8059');
+    };
+    const tools=(dx,dy)=>{
+      r(dx,dy,20,2,'#74674f');r(dx+1,dy+2,2,5,'#332f29');r(dx+17,dy+2,2,5,'#332f29');
+      r(dx+3,dy-3,6,2,'#858d88');r(dx+7,dy-5,2,4,'#b0aaa0');r(dx+13,dy-2,4,2,'#504e41');
+    };
+    if(kind==='night-market'){
+      if(id==='people'){
+        // Used bowls and split firewood belong to the communal dining space.
+        for(const dx of [-20,-8,11]){r(dx,12,5,2,'#c2b49a');r(dx+1,14,3,1,'#746851');}
+        for(let n=0;n<3;n++)r(-26+n*4,7,3,4,'#55432c');
+        r(-2,4,2,4,'#f3cc73');r(2,6,2,3,'#de8d3f');
+      }else{
+        for(let dx=-18;dx<20;dx+=7){r(dx,-9,1,11,'#4b463b');r(dx,6,5,2,'#a39470');}
+        if(id==='garage')tools(-10,2);
+        else if(id==='market'){crate(-18,7);r(-3,0,8,3,'#c7b899');r(9,1,7,2,'#8d704e');}
+        else{r(-8,1,16,2,'#6c6d5c');r(-6,4,12,1,'#313b37');}
+      }
+    }else if(kind==='dome'){
+      // Reused concession shutters, wire shelves and stacked market stock.
+      r(-20,10,40,2,'#666354');
+      if(id==='market'){crate(-19,5);crate(-10,5);r(4,0,15,3,'#a89c7c');r(7,3,2,7,'#5a5140');}
+      else{
+        for(let dx=-14;dx<16;dx+=6)r(dx,-1,1,8,'#3d4948');
+        r(-14,8,28,2,'#8b7960');
+        if(id==='garage')tools(-10,7);
+        else if(id==='people'){for(const dx of [-11,0,10]){r(dx,5,4,2,'#b8af97');r(dx+1,7,2,1,'#6d6551');}}
+        else{r(-12,1,9,5,'#697672');r(-10,2,5,2,q.window);crate(8,4);}
+      }
+    }else if(kind==='tunnel'){
+      r(-22,-18,2,28,'#4c504b');r(20,-18,2,28,'#232e2d');
+      r(-17,-12,34,1,'#343f3c');r(-17,-4,34,1,'#273331');
+      if(id==='garage'){tools(-10,5);r(-14,-10,8,6,'#465850');r(-12,-8,4,2,'#929b79');}
+      else if(id==='alley'){
+        r(-7,-11,14,12,'#4b5752');r(-5,-9,10,8,'#172827');
+        r(-1,-9,2,8,'#808a76');r(-5,-6,10,2,'#808a76');r(-3,-5,6,2,'#a4aa8f');
+      }else if(id==='market'){crate(-17,-1);crate(8,-2);}
+      else{r(-14,3,6,2,'#b8ab8c');r(8,3,6,2,'#b8ab8c');r(-3,0,6,5,'#5d685e');}
+    }else if(kind==='hanok-market'){
+      // Tile ends and timber joinery distinguish an occupied hanok from a box.
+      for(let dx=-26;dx<28;dx+=5){r(dx,-17,3,1,'#807c6c');r(dx,-16,1,2,'#393e37');}
+      for(const dx of [-19,12]){r(dx,-4,8,9,'#ab9b74');r(dx+3,-4,1,9,'#5c5340');r(dx,-1,8,1,'#5c5340');r(dx,3,8,1,'#5c5340');}
+      r(-23,12,46,2,'#8e8061');
+      if(id==='market')crate(-20,8);else if(id==='garage')tools(-9,10);
+      else if(id==='alley'){r(-19,6,7,6,'#514332');r(-19,6,7,1,'#827052');r(11,8,8,4,'#65523d');}
+    }else if(kind==='research'){
+      for(let dx=-21;dx<22;dx+=14){r(dx+4,-12,1,7,'#4b7771');r(dx,-9,9,1,'#4b7771');}
+      r(-26,-19,51,1,'#526964');r(-25,11,18,1,'#243d3b');
+      r(12,0,10,6,'#243936');r(14,2,6,2,'#84978b');r(24,0,1,14,'#657b70');
+      if(id==='garage')tools(-24,8);else if(id==='market')crate(-23,5);
+      else if(id==='alley'){r(-24,1,13,8,'#55645c');for(let n=0;n<3;n++)r(-22,3+n*2,9,1,'#a39d80');}
+      else{r(-24,1,13,7,'#bcc1a8');r(-22,3,8,1,'#596b60');r(-22,5,5,1,'#596b60');}
+    }else if(kind==='fortress'){
+      if(id==='people'||id==='alley'){
+        for(let row=0;row<3;row++)for(let col=0;col<3;col++)r(-8+col*6+(row%2?2:0),-17+row*6,4,1,'#686855');
+        r(-7,2,2,7,'#827251');r(6,2,2,7,'#827251');r(-6,2,12,1,'#a5946b');
+        if(id==='people'){r(-19,5,7,3,'#665337');r(-18,4,5,1,'#c09d5b');}
+        else{r(14,1,2,8,'#857958');r(11,1,8,2,'#b1a47b');}
+      }else{
+        for(let dx=-22;dx<23;dx+=7)r(dx,-17,5,1,'#736c57');
+        r(-23,11,46,2,'#797056');
+        if(id==='garage')tools(-17,8);else{crate(-21,6);crate(12,6);}
+      }
+    }
+  }
   function townPixelFacility(c,facility){
     const q=townPixelPalette(),x=P(facility.p.x),y=P(facility.p.y),selected=town.selected.type==='facility'&&town.selected.id===facility.id;
     const atlasIndex=facility.id==='market'?0:facility.id==='garage'?1:facility.id==='people'?2:3;
-    const atlasDrawn=townPixelAtlas(c,'building',atlasIndex,x-25,y-22,50,43);
-    if(!atlasDrawn&&facility.id==='market'){
-      c.fillStyle=q.dark;c.fillRect(x-19,y-4,38,22);c.fillStyle=q.trim;c.fillRect(x-22,y-9,44,7);c.fillStyle=q.window;
-      for(let k=-14;k<=10;k+=8)c.fillRect(x+k,y+3,5,3);c.fillStyle='#74573b';c.fillRect(x-18,y+14,36,4);
-    }else if(!atlasDrawn&&facility.id==='garage'){
-      townPixelBuilding(c,x-22,y-15,44,32,2);c.fillStyle=q.dark;c.fillRect(x-14,y-2,28,17);c.fillStyle='#6f716b';c.fillRect(x-10,y+6,20,6);c.fillStyle='#20252a';c.fillRect(x-8,y+11,5,4);c.fillRect(x+4,y+11,5,4);
-    }else if(!atlasDrawn&&facility.id==='people'){
-      townPixelBuilding(c,x-20,y-12,40,28,3);c.fillStyle='#513620';c.fillRect(x-13,y+10,26,4);c.fillStyle='#e36e32';c.fillRect(x-2,y+4,5,7);c.fillStyle=q.window;c.fillRect(x-1,y+3,3,5);
-    }else if(!atlasDrawn){
-      townPixelBuilding(c,x-21,y-14,42,30,4);c.fillStyle=q.trim;c.fillRect(x-13,y-2,26,4);c.fillStyle=q.window;c.fillRect(x-10,y+5,20,3);
-    }
-    if(town.world.kind==='five-day-market'){
-      const labels={market:['국수',14],garage:['부품',14],people:['쉼터',14],alley:['공동 펌프',24]},label=labels[facility.id];
-      if(label) townPixelMarketSign(c,label[0],x-label[1]/2,y-17,label[1],selected);
-    }
+    const kind=town.world.kind;
+    c.save();
+    if(kind==='five-day-market'){
+      // The existing atlas becomes shop fittings inside the continuous alley.
+      if(!townPixelAtlas(c,'building',atlasIndex,x-21,y-18,42,31))townPixelBuilding(c,x-21,y-18,42,31,atlasIndex);
+      townPixelAwning(c,x-25,y-22,50,atlasIndex);
+    }else if(kind==='night-market'&&facility.id==='people'){
+      c.fillStyle=q.wall;c.beginPath();c.ellipse(x,y+4,30,15,0,0,Math.PI*2);c.fill();
+      c.fillStyle=q.dark;c.beginPath();c.ellipse(x,y,17,10,0,0,Math.PI*2);c.fill();
+      c.fillStyle='#bb683b';c.fillRect(x-4,y,8,10);c.fillStyle=q.window;c.fillRect(x-2,y-4,4,12);
+      c.fillStyle=q.trim;c.fillRect(x-27,y+14,54,4);
+    }else if(kind==='night-market'){
+      townPixelAwning(c,x-24,y-18,48,atlasIndex);
+      c.fillStyle=q.wall;c.fillRect(x-23,y-9,46,20);c.fillStyle=q.window;c.fillRect(x-17,y+3,34,3);
+      if(facility.id==='alley'){c.fillStyle=q.dark;c.beginPath();c.ellipse(x,y+2,16,9,0,0,Math.PI*2);c.fill();}
+    }else if(kind==='dome'){
+      if(facility.id==='market'){
+        townPixelAwning(c,x-25,y-17,50,1);c.fillStyle=q.wall;c.fillRect(x-23,y-4,46,16);
+      }else{
+        c.fillStyle=q.wall;c.beginPath();c.ellipse(x,y-2,25,22,0,Math.PI,Math.PI*2);c.lineTo(x+25,y+14);c.lineTo(x-25,y+14);c.fill();
+        c.fillStyle=q.dark;c.fillRect(x-17,y-3,34,17);c.fillStyle=q.trim;c.fillRect(x-18,y-10,36,5);
+      }
+    }else if(kind==='tunnel'){
+      c.fillStyle=q.wall;c.fillRect(x-24,y-20,48,34);c.fillStyle=q.dark;c.fillRect(x-19,y-14,38,28);
+      c.fillStyle=q.trim;c.fillRect(x-24,y-22,48,4);c.fillStyle='#77624b';c.fillRect(x-18,y+6,36,7);
+      c.fillStyle=q.window;for(let n=-12;n<16;n+=10)c.fillRect(x+n,y+1,2,5);
+    }else if(kind==='hanok-market'){
+      townPixelBuilding(c,x-27,y-20,54,33,atlasIndex);
+      c.strokeStyle=q.roof;c.lineWidth=5;c.beginPath();c.moveTo(x-32,y-17);c.quadraticCurveTo(x,y-31,x+32,y-17);c.stroke();
+      c.fillStyle=q.trim;c.fillRect(x-26,y-8,3,23);c.fillRect(x+23,y-8,3,23);
+      if(facility.id==='people'){c.fillStyle=q.line;c.beginPath();c.ellipse(x,y+6,10,5,0,0,Math.PI*2);c.fill();c.fillStyle=q.dark;c.fillRect(x-6,y+3,12,3);}
+    }else if(kind==='research'){
+      c.fillStyle=q.wall;c.fillRect(x-28,y-23,56,37);c.fillStyle=q.roof;c.fillRect(x-29,y-25,58,7);
+      c.fillStyle=q.window;for(let n=-21;n<22;n+=14)c.fillRect(x+n,y-12,9,7);
+      c.fillStyle=q.dark;c.fillRect(x-7,y,14,14);c.fillStyle=q.trim;c.fillRect(x-27,y-1,19,3);
+    }else if(kind==='fortress'){
+      if(facility.id==='alley'||facility.id==='people'){
+        townPixelTower(c,x-9,y-26,42,atlasIndex);
+        c.fillStyle=q.wall;c.fillRect(x-26,y+9,52,5);c.fillStyle=q.line;for(let n=-24;n<26;n+=12)c.fillRect(x+n,y+5,8,6);
+      }else townPixelBuilding(c,x-26,y-23,52,37,atlasIndex);
+    }else townPixelBuilding(c,x-22,y-20,44,34,atlasIndex);
+    townPixelFacilityDetails(c,facility,q,x,y);
+    // Labels use the same anchor as drawing/hits. Full names remain in the nav.
+    c.font='600 5px sans-serif';c.textAlign='center';c.textBaseline='middle';
+    const box=facility.labelBox;
+    c.fillStyle='rgba(9,18,18,.9)';c.fillRect(box.x,box.y,box.w,box.h);
+    c.fillStyle=selected?'#f3d39b':'#eee9d9';c.fillText(facility.label||'',x,box.y+box.h/2,box.w-5);
+    c.restore();
     if(selected&&Math.floor(townT*3)%2===0){
       c.fillStyle=q.window;const l=5,x1=x-25,y1=y-18,x2=x+25,y2=y+22;c.fillRect(x1,y1,l,2);c.fillRect(x1,y1,2,l);c.fillRect(x2-l,y1,l,2);c.fillRect(x2-2,y1,2,l);c.fillRect(x1,y2-2,l,2);c.fillRect(x1,y2-l,2,l);c.fillRect(x2-l,y2-2,l,2);c.fillRect(x2-2,y2-l,2,l);
     }
@@ -1966,7 +2190,7 @@ const SCENE = (()=>{
       const pending=town.pending;town.pending=null;
       if(pending){
         const cb=pending.type==='npc'?town.options.onNpc:pending.type==='recruit'?town.options.onRecruit:pending.type==='companion'?town.options.onComp:null;
-        if(cb) setTimeout(()=>cb(pending.id),80);
+        if(cb){const session=town;setTimeout(()=>{if(town===session&&session.canvas.isConnected)cb(pending.id);},80);}
       }else if(town.selected.type==='facility'&&town.options.onArrive)town.options.onArrive(town.selected.id);
       return;
     }
@@ -1975,24 +2199,24 @@ const SCENE = (()=>{
   function drawSettlement(dt){
     if(!town||!town.canvas.isConnected) return;
     townT+=dt;townMove(dt);
-    const c=town.c;c.clearRect(0,0,TOWN_W,TOWN_H);townPixelBackdrop(c);townPixelLightPools(c);townPixelLayered(c);townPixelWeather(c);
+    const c=town.c;c.save();c.clearRect(0,0,TOWN_W,TOWN_H);townPixelBackdrop(c);townPixelLightPools(c);townPixelLayered(c);townPixelWeather(c);c.restore();
     const canvas=town.canvas,out=town.out,vw=Math.max(1,canvas.clientWidth||390),vh=Math.max(1,canvas.clientHeight||470),dpr=Math.min(2,window.devicePixelRatio||1),key=`${vw}/${vh}/${dpr}`;
     if(key!==town.lastSize){canvas.width=Math.round(vw*dpr);canvas.height=Math.round(vh*dpr);out.setTransform(dpr,0,0,dpr,0,0);out.imageSmoothingEnabled=false;town.lastSize=key;}
     out.clearRect(0,0,vw,vh);out.imageSmoothingEnabled=false;out.drawImage(town.buffer,0,0,town.buffer.width,town.buffer.height,0,0,vw,vh);
   }
   function settlementState(){return town?{id:town.id,focus:town.focus,moving:town.moving,impactStage:Number(town.options&&town.options.impact&&town.options.impact.stage)||0,player:{...town.player},target:{...town.target},
-    facilities:town.facilities.map(item=>({id:item.id,p:{...item.p}})),residents:town.residents.map(item=>({id:item.id,p:{...item.p}})),
+    facilities:town.facilities.map(item=>({id:item.id,label:item.label,p:{...item.p},arrival:{...item.arrival}})),residents:town.residents.map(item=>({id:item.id,p:{...item.p}})),
     recruit:town.recruit?{id:town.recruit.id,p:{...town.recruit.p}}:null,
     companions:townCompanionEntities().map(item=>({id:item.id,p:{...item.p}}))}:null;}
 
   /* 정착지·정비소에서도 주행 화면과 같은 달구지를 그대로 쓴다.
-     별도 PNG가 아니라 업그레이드 상태를 넘겨 전후 외형을 즉시 비교한다. */
+     같은 기본 차체와 업그레이드 레이어로 전후 외형을 즉시 비교한다. */
   function drawSettlementVan(canvas,upState){
     if(!canvas) return;
     const prevCtx=ctx, prevW=W, prevH=H;
     const pw=170, ph=100, buf=document.createElement('canvas');
-    buf.width=pw; buf.height=ph;
-    ctx=buf.getContext('2d'); W=pw; H=ph;
+    buf.width=pw*ROAD_RENDER_SCALE; buf.height=ph*ROAD_RENDER_SCALE;
+    ctx=buf.getContext('2d');ctx.setTransform(ROAD_RENDER_SCALE,0,0,ROAD_RENDER_SCALE,0,0); W=pw; H=ph;
     ctx.imageSmoothingEnabled=false;
     ctx.clearRect(0,0,W,H);
     van(54,0,.62,'clear',upState||(S&&S.up)||{});
@@ -2007,7 +2231,7 @@ const SCENE = (()=>{
     out.imageSmoothingEnabled=false;
     /* 주행 장면의 넓은 여백은 버리고 차체만 크게 잡는다.
        후미 증축은 왼쪽으로 길어져 마지막 좌석 단계까지 한눈에 비교된다. */
-    out.drawImage(buf,0,12,128,72,0,0,vw,vh);
+    out.drawImage(buf,0,12*ROAD_RENDER_SCALE,128*ROAD_RENDER_SCALE,72*ROAD_RENDER_SCALE,0,0,vw,vh);
   }
 
   /* ── 타이틀 (같은 픽셀 파이프라인) ── */

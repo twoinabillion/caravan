@@ -66,9 +66,97 @@
       "eyesFromTopRange": [0.38, 0.44],
       "faceHeightRange": [0.55, 0.68]
     },
+    "homePropAtlas": {
+      "path": "assets/ui/home-props-atlas-v2.webp",
+      "delivery": [
+        1448,
+        1086
+      ],
+      "alphaRequired": true,
+      "purpose": "Realist transparent object atlas, rendered as individually owned objects in the HOME scene; never shown as a narrative collage.",
+      "regions": {
+        "bench": [
+          22,
+          101,
+          342,
+          278
+        ],
+        "bunk": [
+          375,
+          19,
+          362,
+          370
+        ],
+        "stove": [
+          794,
+          11,
+          234,
+          373
+        ],
+        "kitchen": [
+          1092,
+          51,
+          336,
+          344
+        ],
+        "dish": [
+          40,
+          436,
+          302,
+          250
+        ],
+        "tin": [
+          379,
+          396,
+          335,
+          333
+        ],
+        "map": [
+          724,
+          435,
+          362,
+          292
+        ],
+        "strings": [
+          1124,
+          396,
+          289,
+          328
+        ],
+        "box": [
+          25,
+          719,
+          333,
+          327
+        ],
+        "record": [
+          381,
+          740,
+          354,
+          288
+        ],
+        "curtain": [
+          770,
+          725,
+          278,
+          344
+        ],
+        "fridge": [
+          1129,
+          723,
+          283,
+          338
+        ]
+      }
+    },
     "upgradeCard": {
-      "allowedDelivery": [[384, 256], [1440, 480]],
-      "purpose": "vehicle-upgrade UI card or seating panorama; not a narrative cinematic"
+      "sourceMaster": [1536, 1024],
+      "preferredDelivery": [768, 512],
+      "allowedDelivery": [[384, 256], [768, 512], [1440, 480]],
+      "preferredFormat": "webp",
+      "maximumRecommendedBytes": 90000,
+      "safeZone": {"horizontal": 0.8, "vertical": 0.82},
+      "purpose": "item-specific 3:2 vehicle-upgrade overview at mobile DPR 2; legacy group cards and seating panoramas remain compatible; not a narrative cinematic"
     },
     "roadCue": {
       "style": "pixel-art exception",

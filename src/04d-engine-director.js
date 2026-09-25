@@ -175,7 +175,10 @@ G.fireDriveEvent = ()=>{
   G.openEvent(evd);
 };
 
-G.openEventById = (id)=>{ const ev = D.events.find(e=>e.id===id); if(ev) G.openEvent(ev); };
+G.openEventById = (id)=>{
+  id=G.mainEvidenceEntryId(id);
+  const ev=D.events.find(e=>e.id===id);if(ev) G.openEvent(ev);
+};
   const ROAD_APPROACH_LABELS = {
     people:'길가에 사람이 보인다', cyclist:'자전거 한 대가 보인다', vehicle:'멈춰 선 차가 보인다',
     debris:'도로 위에 장애물이 보인다', checkpoint:'앞에 검문 시설이 있다', signal:'낯선 신호가 잡힌다',

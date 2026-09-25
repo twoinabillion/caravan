@@ -2,12 +2,12 @@
    southern encounter. Effects/costs stay with the source choice; provenance is new. */
 D.mainRecoveryEvents = Object.fromEntries([
   'onboarding_first_road','parents_diversion_manifest','parents_separated_work',
-  'story_family_key','story_personal_cache','story_parent_route_shared',
+  'story_family_principle','story_family_key','story_personal_cache','story_parent_route_shared',
   'story_parent_route_guarded','history_failed_namsan','parents_father_last_log'
 ].map(id=>[id,`main_recovery_${id}`]));
 D.mainEvidenceCompletion = {
   onboarding_first_road:'first_order_trace',parents_diversion_manifest:'parents_split_known',
-  parents_separated_work:'parents_routes_traced',story_family_key:'parent_key_located',
+  parents_separated_work:'parents_routes_traced',story_family_principle:'parent_principle_found',story_family_key:'parent_key_located',
   story_personal_cache:'parent_key_found',story_parent_route_shared:'parent_key_found',
   story_parent_route_guarded:'parent_key_found',history_failed_namsan:'failed_namsan_known',
   parents_father_last_log:'father_fate_known',history_parents_network:'parents_recent_signal',
@@ -31,6 +31,12 @@ D.mainEvidenceCompletion = {
       text:'부모님의 다음 차는 실제로 있었지만 부산으로 출발하지 않았다. 탑승 직전 아빠는 남산 기술 유지선, 엄마는 중부 기록 정리소로 따로 분류됐다. 나는 두 사람이 갈라진 자리를 사본에서 짚었다.'},
     parents_separated_work:{title:'두 곳에서 온 기록의 사본',
       prefix:'수원 북부 교환소에서 남산 정비표와 중부 증언 카드의 전달 사본을 나란히 펼쳤다. 출처는 서로 달랐지만 묶음 번호가 같았다.\n\n'},
+    story_family_principle:{title:'보관망이 전달한 부모님의 영상',
+      scene:'story-family-principle-review-v1',
+      storyOrigin:{kind:'video',label:'전달받은 복원 영상',title:'수원 북부 교환소 · 남쪽 보관망 사본'},
+      text:D.events.find(event=>event.id==='story_family_principle').text
+        .replace('폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다.',
+          '수원 북부 교환소의 단말에서 남쪽 보관망이 전달한 영상을 열었다.')},
     story_family_key:{title:'교환소 앞 달구지의 검증키',
       text:'수원 북부 교환소에 보관된 첨부 목록에서 검증키 분리 절차 4·5쪽의 전송 번호를 찾았다. 아직 필요한 두 장을 손에 넣은 것은 아니다.\n\n교환소 앞에 세운 달구지로 돌아와 엄마의 회로도를 계기판 배선과 비교했다. 모듈 옆에는 정전기 방지 천과 가족사진, 아빠의 회로 수첩이 남아 있었다.\n\n수첩에는 강제 명령이 실행되기 전에 반드시 사람의 확인을 거치게 하는 검증키라고 적혀 있었다. 모듈을 억지로 떼지 않고, 사진과 수첩만 먼저 살펴볼 수 있다.'},
     story_personal_cache:{title:'북부 교환소에 맡겨진 상자',
@@ -55,8 +61,8 @@ D.mainEvidenceCompletion = {
     const source=D.events.find(event=>event.id===id);
     const text=(copy.prefix||'')+(copy.text||source.text);
     D.events.push({id:D.mainRecoveryEvents[id],recoveryOf:id,type:'스토리',once:true,noPool:1,
-      scene:id==='parents_diversion_manifest'?'parents-diversion-record-v2':'parents-linked-records-v2',
-      title:copy.title,storyOrigin:{kind:'record',label:'수원에서 확인',title:'북부 교환소 · 전달 기록과 보관물'},
+      scene:copy.scene||(id==='parents_diversion_manifest'?'parents-diversion-record-v2':'parents-linked-records-v2'),
+      title:copy.title,storyOrigin:copy.storyOrigin||{kind:'record',label:'수원에서 확인',title:'북부 교환소 · 전달 기록과 보관물'},
       text,turns:text.split('\n\n').map(text=>({kind:'narration',text})),
       choices:source.choices.map((choice,i)=>({...choice,
         label:(copy.labels?.[i]||choice.label)+((choice.out||[]).some(out=>out.fx?.time)?` · ${choice.out[0].fx.time}분`:''),

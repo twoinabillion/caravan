@@ -29,7 +29,7 @@ const after = [
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
   'src/05-scene.js', 'src/06-mapgraph.js',
-  'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
+  'src/07g-ui-home.js', 'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
 const introScenes = {
@@ -55,7 +55,35 @@ const upgradeScenes = {
   FUEL:'assets/upgrades/fuel.jpg', SEATING:'assets/upgrades/seating-v2.jpg',
   CHASSIS:'assets/upgrades/chassis.jpg', UTILITY:'assets/upgrades/utility.jpg',
   POWER:'assets/upgrades/power.jpg', CAMP:'assets/upgrades/camp.jpg',
-  LIVING:'assets/upgrades/living.jpg'
+  LIVING:'assets/upgrades/living.jpg', PASSENGER:'assets/upgrades/passenger-seat-v1.jpg',
+  ITEM_TANK1:'assets/upgrades/upgrade-tank1-v1.webp',
+  ITEM_TANK2:'assets/upgrades/upgrade-tank2-v1.webp',
+  ITEM_BENCH:'assets/upgrades/upgrade-bench-v1.webp',
+  ITEM_CABIN:'assets/upgrades/upgrade-cabin-v1.webp',
+  ITEM_SUSP:'assets/upgrades/upgrade-susp-v1.webp',
+  ITEM_ARMOR:'assets/upgrades/upgrade-armor-v1.webp',
+  ITEM_GARDEN:'assets/upgrades/upgrade-garden-v1.webp',
+  ITEM_COLLECTOR:'assets/upgrades/upgrade-collector-v1.webp',
+  ITEM_SOLAR:'assets/upgrades/upgrade-solar-v1.webp',
+  ITEM_ANTENNA:'assets/upgrades/upgrade-antenna-v1.webp',
+  ITEM_WINCH:'assets/upgrades/upgrade-winch-v1.webp',
+  ITEM_BULLBAR:'assets/upgrades/upgrade-bullbar-v1.webp',
+  ITEM_SNORKEL:'assets/upgrades/upgrade-snorkel-v1.webp',
+  ITEM_MUDTIRES:'assets/upgrades/upgrade-mudtires-v1.webp',
+  ITEM_LIGHTBAR:'assets/upgrades/upgrade-lightbar-v1.webp',
+  ITEM_AWNING:'assets/upgrades/upgrade-awning-v1.webp',
+  ITEM_STOVE:'assets/upgrades/upgrade-stove-v1.webp',
+  ITEM_SIDEBOX:'assets/upgrades/upgrade-sidebox-v1.webp',
+  ITEM_BEEHIVE:'assets/upgrades/upgrade-beehive-v1.webp',
+  ITEM_GARDEN2:'assets/upgrades/upgrade-garden2-v1.webp',
+  ITEM_KITCHEN:'assets/upgrades/upgrade-kitchen-v1.webp',
+  ITEM_BUNK:'assets/upgrades/upgrade-bunk-v1.webp',
+  ITEM_JUMPSEAT:'assets/upgrades/upgrade-jumpseat-v1.webp',
+  ITEM_FRIDGE:'assets/upgrades/upgrade-fridge-v1.webp',
+  ITEM_ARMORY:'assets/upgrades/upgrade-armory-v1.webp',
+  ITEM_SCOPE:'assets/upgrades/upgrade-scope-v1.webp',
+  ITEM_HORN:'assets/upgrades/upgrade-horn-v1.webp',
+  ITEM_CURTAIN:'assets/upgrades/upgrade-curtain-v1.webp'
 };
 
 const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
@@ -75,6 +103,25 @@ const replace = (source, pattern, resolve, label) => {
 };
 
 const uiAssetPaths = {
+  JOURNEY_SURFACE:{path:'assets/ui/journey-surface-v1.webp',mime:'image/webp'},
+  JOURNEY_REGION_TERRAIN:{path:'assets/ui/journey-region-terrain-v1.webp',mime:'image/webp'},
+  JOURNEY_DALGUJI_BASE:{path:'assets/ui/journey-dalguji-base-v1.webp',mime:'image/webp'},
+  JOURNEY_ROAD_BACKDROP:{path:'assets/ui/journey-road-backdrop-v1.webp',mime:'image/webp'},
+  TRIP_PIN:{path:'assets/icons/journey/map-pin.svg',mime:'image/svg+xml'},
+  TRIP_ROAD:{path:'assets/icons/journey/road.svg',mime:'image/svg+xml'},
+  TRIP_FUEL:{path:'assets/icons/journey/gas-station.svg',mime:'image/svg+xml'},
+  TRIP_WRENCH:{path:'assets/icons/journey/tool.svg',mime:'image/svg+xml'},
+  TRIP_WEATHER:{path:'assets/icons/journey/sun.svg',mime:'image/svg+xml'},
+  TRIP_NOTE:{path:'assets/icons/journey/file-text.svg',mime:'image/svg+xml'},
+  TRIP_TARGET:{path:'assets/icons/journey/focus-2.svg',mime:'image/svg+xml'},
+  TRIP_USERS:{path:'assets/icons/journey/users.svg',mime:'image/svg+xml'},
+  TRIP_BAG:{path:'assets/icons/journey/backpack.svg',mime:'image/svg+xml'},
+  TRIP_MENU:{path:'assets/icons/journey/menu-2.svg',mime:'image/svg+xml'},
+
+  HOME_PROPS_ATLAS:{path:'assets/ui/home-props-atlas-v2.webp',mime:'image/webp'},
+  PASSENGER_READING_PANEL:{path:'assets/ui/passenger-reading-panel-v1.webp',mime:'image/webp'},
+  PASSENGER_CHOICE:{path:'assets/ui/passenger-choice-v1.webp',mime:'image/webp'},
+  DISPLAY_FONT:{path:'assets/fonts/BlackHanSans-Regular.woff', mime:'font/woff'},
   NAV_ARMORED_SHELL:{path:'assets/ui/nav-armored-shell-v2.webp', mime:'image/webp'},
   NAV_BUTTON_FACE:{path:'assets/ui/nav-button-face-v2.webp', mime:'image/webp'},
   NAV_BUTTON_PRESSED:{path:'assets/ui/nav-button-pressed-v2.webp', mime:'image/webp'},
@@ -116,6 +163,11 @@ const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key =>
 
 const settlementSprites = replace(read('src/05-scene.js'), /__TOWN_WORLD_SPRITE_ATLAS__/g,
   () => dataUri('assets/ui/settlement/town-world-sprite-atlas-v4.webp', 'image/webp'), '정착지 스프라이트');
+const roadRenderer = replace(settlementSprites.result, /__UI_([A-Z0-9_]+)__/g, key => {
+  const asset=uiAssetPaths[key];
+  if(!asset)throw new Error(`알 수 없는 도로 자산: ${key}`);
+  return dataUri(asset.path,asset.mime);
+}, '도로 렌더러');
 
 const portraits = replace(read('src/03b-portraits.js'), /__PORTRAIT_([a-z0-9_]+)__/g,
   key => dataUri(`assets/portraits/${key}.png`, 'image/png'), '주연 초상');
@@ -146,8 +198,12 @@ const inlineSceneAssetPaths=source=>source.replace(/(["'])assets\/scenes\/([^"']
     return `${quote}${dataUri(relative,mime)}${quote}`;
   });
 const inlineScenePaths=inlineSceneAssetPaths(scenes.result);
-const upgrades = replace(inlineScenePaths, /__UPGRADE_([A-Z0-9_]+)__/g,
-  key => dataUri(upgradeScenes[key], 'image/jpeg'), '업그레이드');
+const upgrades = replace(inlineScenePaths, /__UPGRADE_([A-Z0-9_]+)__/g, key => {
+  const relative=upgradeScenes[key];
+  if(!relative) throw new Error(`알 수 없는 업그레이드 자산: ${key}`);
+  const mime=relative.endsWith('.webp')?'image/webp':relative.endsWith('.png')?'image/png':'image/jpeg';
+  return dataUri(relative,mime);
+}, '업그레이드');
 const title = replace(read('src/03e-bgm-title.js'), /__BGM_TITLE__/g,
   () => dataUri('assets/audio/title.mp3', 'audio/mpeg'), '타이틀 BGM');
 const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__/g, key => {
@@ -172,14 +228,14 @@ const roadCues = replace(read('src/07f-ui-road-thoughts.js'), /__ROAD_CUE_([A-Z]
 const chunks = [
   styles.result, read('src/01b-quest-style.html'), ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
   title.result, audio.result, npc.result, upgrades.result,
-  ...after.map(relative => relative==='src/05-scene.js'?settlementSprites.result
+  ...after.map(relative => relative==='src/05-scene.js'?roadRenderer.result
     :relative==='src/07f-ui-road-thoughts.js'?roadCues.result
     :relative==='src/03i-story-expansion.js'?inlineSceneAssetPaths(read(relative))
     :read(relative))
 ];
 const html = chunks.join('\n');
 const htmlBytes = Buffer.byteLength(html);
-const unresolved = [...new Set(html.match(/__(?:PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO|ROAD_CUE)_[A-Z0-9_]+__/g) || [])];
+const unresolved = [...new Set(html.match(/__(?:UI|TOWN_WORLD|PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO|ROAD_CUE)_[A-Z0-9_]+__/g) || [])];
 if (unresolved.length) throw new Error(`치환되지 않은 자산: ${unresolved.slice(0, 8).join(', ')}`);
 const externalScenes=[...new Set(html.match(/assets\/scenes\/[^"')\s]+\.(?:jpe?g|webp|png)/gi)||[])];
 if(externalScenes.length) throw new Error(`단일 HTML에 남은 외부 장면: ${externalScenes.slice(0,8).join(', ')}`);

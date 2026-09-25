@@ -111,31 +111,52 @@ G.currentCampConversation = ()=>{
   const record=S.campConversation;
   return record&&record.night===(S.campNight||0)?record:null;
 };
+/* Recollections carry one saved incident into the conversation. Resource deltas
+   and tactic labels already have a home in the journey log, not in spoken prose. */
+G.campReportMemory = (report={})=>{
+  const subject=String(report.threat||'')+' '+String(report.objective||'');
+  const opening=/비탈|우편 수레|네 사람을 도로/.test(subject)?'비탈에 걸려 있던 수레가 떠오른다.'
+    :/보행기|렌즈와 관절/.test(subject)?'보행기와 맞닥뜨렸던 때가 떠오른다.'
+    :/다섯 수레|자동 검문소/.test(subject)?'검문소 앞에 늘어서 있던 수레들이 떠오른다.'
+    :/쿼드|편대/.test(subject)?'초계 편대와 맞닥뜨렸던 때가 떠오른다.'
+    :/중계기/.test(subject)?'중계기 앞에서 겪은 일이 떠오른다.'
+    :'마지막으로 맞닥뜨린 일을 떠올린다.';
+  const ending={success:'하려던 일은 해냈다.',partial:'다 끝내지는 못했다.',
+    failure:'끝내 하려던 일을 해내지 못했다.',retreat:'끝내지 못한 채 물러났다.'}[report.resultCode];
+  return [opening,ending].filter(Boolean).join(' ');
+};
 G.campContext = cid=>{
-  const context=[];
-  const recap=S.lastJourneyRecap||(S.journeyRecaps||[]).slice(-1)[0];
-  if(recap&&D.nodes[recap.from]&&D.nodes[recap.to])
-    context.push(`최근 ${D.nodes[recap.from].name}에서 ${D.nodes[recap.to].name}까지 온 길을 떠올린다.`);
-  const approach=G.recruitApproach(cid);
-  if(approach) context.push(`${approach.label}. ${approach.memory}`);
+  const recent=day=>Number.isFinite(day)&&day<=S.day&&day>=S.day-1;
   const report=S.lastCombatReport;
-  if(report){
-    const result={success:'목표 달성',partial:'일부만 달성',failure:'실패',retreat:'후퇴'}[report.resultCode]||report.result||'결과 미확인';
-    context.push(`마지막 충돌의 기록은 ${result}이다.${report.objective?' 당시 목표는 '+report.objective+'였다.':''}`);
-  }
-  const opening=G.openingDecision&&G.openingDecision('opening_bus_repair');
-  if(opening) context.push(`부산에서 가족 버스를 두고 골랐던 일도 이야기한다. ${opening.label}`);
-  return context.join('\n\n');
+  // Undated legacy reports are still real memories; never call them "today".
+  if(report&&(report.day==null||recent(report.day)))return G.campReportMemory(report);
+  const approach=G.recruitApproach(cid);
+  if(!S.campMemories?.[cid]?.visits&&approach&&typeof approach.memory==='string')return approach.memory;
+  const recap=S.lastJourneyRecap||(S.journeyRecaps||[]).slice(-1)[0];
+  if(recap&&recent(recap.day)&&D.nodes[recap.from]&&D.nodes[recap.to])
+    return `${D.nodes[recap.from].name}에서 ${D.nodes[recap.to].name}까지 온 길을 떠올린다.`;
+  return '';
+};
+G.campReadingContext = record=>{
+  const original=typeof record.context==='string'?record.context:'';
+  // Old saves froze the report paragraph. Read that paragraph itself, never the
+  // latest world report: a newer victory cannot rewrite an earlier failure.
+  const legacy=original.split('\n\n').map(paragraph=>paragraph.match(
+    /^(?:「([^」]+)」 목표|정해 둔 목표)(를 해냈다|는 일부만 이뤘다|를 이루지 못했다|를 남겨 둔 채 물러났다)/)).find(Boolean);
+  if(!legacy)return original;
+  const resultCode={'를 해냈다':'success','는 일부만 이뤘다':'partial',
+    '를 이루지 못했다':'failure','를 남겨 둔 채 물러났다':'retreat'}[legacy[2]];
+  return G.campReportMemory({objective:legacy[1],resultCode});
 };
 G.campConversationEvent = ()=>{
   const record=G.currentCampConversation();
   if(!record||!G.campParticipants().includes(record.cid)) return null;
-  const data=D.campConversations[record.cid], cid=record.cid;
-  const text=[record.context,record.revisit?data.later:data.first,`"${data.line}"`].filter(Boolean).join('\n\n');
+  const data=D.campConversationData(record), cid=record.cid, context=G.campReadingContext(record);
+  const text=[context,record.revisit?data.later:data.first,`"${data.line}"`].filter(Boolean).join('\n\n');
   return {id:record.id,campConversation:true,type:'대화',title:data.title,
     scene:`comp-talk-${cid}-${record.timeLabel==='밤'||record.timeLabel==='저녁'||record.timeLabel==='새벽'?'camp':'road'}-v1`,
-    text,speakers:[cid,'me'],turns:[
-      ...(record.context?[{kind:'narration',text:record.context}]:[]),
+    text,readingRecord:context!==record.context?record.context:undefined,speakers:[cid,'me'],turns:[
+      ...(context?[{kind:'narration',text:context}]:[]),
       {kind:'narration',text:record.revisit?data.later:data.first},
       {kind:'dialogue',who:cid,text:data.line}],
     choices:data.choices.map(choice=>({id:choice.id,label:choice.label,req:choice.req,
@@ -153,13 +174,14 @@ G.resolveCampChoice = (eventId,choiceId)=>{
     :{ok:false,applied:false,why:'이미 다른 대답을 나눴다'};
   const req=G.reqOk(G.choiceReq(choice));
   if(!req.ok) return {ok:false,applied:false,why:req.t};
-  const data=D.campConversations[record.cid].choices.find(row=>row.id===choiceId);
+  const data=D.campConversationData(record).choices.find(row=>row.id===choiceId);
   const chips=G.applyFx(out.fx,{noteTitle:event.title});
   S.campMemories=S.campMemories||{};
   const previous=S.campMemories[record.cid]||{};
   const isGuest=!S.party.includes(record.cid);
   if(!isGuest) G.bond(record.cid,2);
-  S.campMemories[record.cid]={id:record.id,cid:record.cid,choiceId,day:S.day,
+  const visits=Number.isFinite(previous.visits)?Math.max(0,Math.floor(previous.visits)):previous.choiceId?1:0;
+  S.campMemories[record.cid]={id:record.id,cid:record.cid,choiceId,day:S.day,visits:visits+1,
     home:data.home,road:data.road,pendingRoad:true,pendingBond:(previous.pendingBond||0)+(isGuest?2:0)};
   chips.push({t:isGuest?'함께 나눈 대화 · 합류하면 유대 +2':`${D.comps[record.cid].name} 유대 +2`,c:'item'});
   chips.push({t:`${D.companionKeepsakes[record.cid].name} · 새 흔적`,c:'item'});
@@ -223,9 +245,15 @@ G.prepareCamp = (kind,cid)=>{
     const record=G.currentCampConversation();
     if(record&&record.choiceId) return {ok:false,why:'이번 밤에는 이미 한 사람과 오래 이야기했다'};
     if(record&&record.cid===cid) record.active=true;
-    else S.campConversation={id:`camp_${S.campNight||0}_${cid}`,night:S.campNight||0,cid,
-      day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!(S.campMemories&&S.campMemories[cid]),
-      choiceId:null,chips:[],active:true};
+    else{
+      const memory=S.campMemories&&S.campMemories[cid];
+      const experienced=memory&&D.campConversations[cid].choices.some(choice=>choice.id===memory.choiceId);
+      const visits=experienced?(Number.isFinite(memory.visits)?Math.max(1,Math.floor(memory.visits)):1):0;
+      S.campConversation={id:`camp_${S.campNight||0}_${cid}`,night:S.campNight||0,cid,
+        day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!experienced,
+        chapter:Math.min(3,visits+1),previousChoiceId:experienced?memory.choiceId:null,
+        choiceId:null,chips:[],active:true};
+    }
   } else return {ok:false,why:'알 수 없는 야영 준비다'};
   G.save();
   return {ok:true};
@@ -615,19 +643,33 @@ G.talkTo = (id)=>{
 G.roadCheckIn = (id)=>{
   if(!S.driving||!id||!S.party.includes(id)) return {ok:false,why:'지금 함께 달리는 동료를 골라야 한다'};
   if(S.driving.checkIn) return {ok:false,why:'이 구간에서는 이미 누군가와 이야기를 나눴다'};
-  S.driving.checkIn=id;
-  G.bond(id,1);
-  if(S.comps[id]) S.comps[id].mood=clamp((S.comps[id].mood||0)+3,0,100);
-  const routeId=S.routePlan&&S.routePlan.id;
+  if(S.pendingPresentation||S.driving.approach||UI.modalOpen()) return {ok:false,why:'지금 열린 이야기를 먼저 마친다'};
+  const route=G.routeStatus();
+  const routeId=route&&!route.complete&&route.def.corridor.includes(S.driving.from)&&route.def.corridor.includes(S.driving.to)?route.def.id:null;
   const moment=(D.routeCrewMoments||[]).find(row=>row.route===routeId&&row.crew.includes(id)&&row.crew.every(cid=>S.party.includes(cid)));
+  const event=D.roadCheckInEvents.find(row=>row.roadCheckIn===id&&row.roadMoment===(moment?moment.id:null));
+  if(!event) return {ok:false,why:'지금은 나눌 이야기가 없다'};
+  // Voluntary check-ins must not count as random encounters or advance personal story gates.
+  UI.showEvent(event);
+  return {ok:true,moment:moment||null};
+};
+G.completeRoadCheckIn = event=>{
+  const id=event.roadCheckIn;
+  S.driving.checkIn=id;
+  S.driving.checkInSummary=event.summary;
+  G.bond(id,1);
+  S.comps[id].mood=clamp((S.comps[id].mood||0)+3,0,100);
+  const chips=[{t:`${D.comps[id].name} 유대 +1`,c:'plus'},{t:`${D.comps[id].name} 기분 +3`,c:'plus'}];
+  const moment=D.routeCrewMoments.find(row=>row.id===event.roadMoment);
   if(moment){
     const other=moment.crew.find(cid=>cid!==id);
-    S.driving.checkInMoment={id:moment.id,title:moment.title,text:moment.text,crew:moment.crew.slice()};
-    if(other&&S.comps[other]) S.comps[other].mood=clamp((S.comps[other].mood||0)+2,0,100);
-    UI.toast(`💬 ${moment.title} — ${D.comps[id].name}와 ${D.comps[other].name}`);
-  }else UI.toast(`💬 ${D.comps[id].name}와 짧게 이야기를 나눴다 — 유대 +1 · 기분 +3`);
-  G.save();
-  return {ok:true,moment:moment||null};
+    S.driving.checkInMoment={id:moment.id,title:moment.title,text:event.summary,crew:moment.crew.slice()};
+    if(other&&S.comps[other]&&S.party.includes(other)){
+      S.comps[other].mood=clamp((S.comps[other].mood||0)+2,0,100);
+      chips.push({t:`${D.comps[other].name} 기분 +2`,c:'plus'});
+    }
+  }
+  return chips;
 };
 
 /* ── 저항 연대망 ── */

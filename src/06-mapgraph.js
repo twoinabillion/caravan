@@ -190,8 +190,8 @@ const MAPR = (()=>{
       const putLabel=(id,x,y,txt,font,fill,essential)=>{
         ctx.font=font;
         const w=ctx.measureText(txt).width+8;
-        for(const dy of [-11,18]){
-          const bx={x0:x-w/2, x1:x+w/2, y0:y+dy-10, y1:y+dy+4};
+        for(const dy of [-12,20]){
+          const bx={x0:x-w/2, x1:x+w/2, y0:y+dy-12, y1:y+dy+4};
           if(bx.x0<7||bx.x1>W-7||bx.y0<28||bx.y1>H-31) continue;
           if(placed.some(p=>p.x0<bx.x1&&bx.x0<p.x1&&p.y0<bx.y1&&bx.y0<p.y1)) continue;
           if(!essential&&hitsNode(bx,id)) continue;
@@ -216,7 +216,7 @@ const MAPR = (()=>{
         const p=prio(id);
         if(p>=4) continue;                           // 작은 경유지는 점으로만 남긴다
         const bold = p<=2;
-        const font=`${bold?'700 ':''}${p<=3?11:10.5}px sans-serif`;
+        const font=`${bold?'700 ':''}12px sans-serif`;
         const fill= n.type==='goal'? 'rgba(85,224,200,0.95)':
           S.at===id? 'rgba(255,200,120,0.98)':
           n.stl? 'rgba(240,225,195,0.95)':
@@ -353,7 +353,8 @@ const MAPR = (()=>{
     let minX=Math.min(...routePoints.map(WX)),maxX=Math.max(...routePoints.map(WX));
     let minY=Math.min(...routePoints.map(WY)),maxY=Math.max(...routePoints.map(WY));
     const centerX=(minX+maxX)/2,centerY=(minY+maxY)/2;
-    let spanX=Math.max(104,maxX-minX+76),spanY=Math.max(82,maxY-minY+62);
+    const expanded=height>180;
+    let spanX=expanded?Math.max(30,(maxX-minX)*1.7):Math.max(104,maxX-minX+76),spanY=expanded?Math.max(28,(maxY-minY)*1.6):Math.max(82,maxY-minY+62);
     const viewAspect=Math.max(.8,(width-30)/(height-22));
     if(spanX/spanY<viewAspect) spanX=spanY*viewAspect; else spanY=spanX/viewAspect;
     minX=centerX-spanX/2;maxX=centerX+spanX/2;minY=centerY-spanY/2;maxY=centerY+spanY/2;
@@ -384,15 +385,30 @@ const MAPR = (()=>{
       if(!visible(a)&&!visible(b)) continue;
       const selected=routeEdgeSet.has(edgeKey(edge[0],edge[1]));
       c.beginPath();c.moveTo(sx(a),sy(a));c.lineTo(sx(b),sy(b));
-      c.strokeStyle=selected?'rgba(225,231,222,.36)':'rgba(141,158,154,.16)';c.lineWidth=selected?3:1;c.stroke();
+      c.strokeStyle=selected&&expanded?'transparent':selected?'rgba(225,231,222,.36)':'rgba(141,158,154,.16)';c.lineWidth=selected?3:1;c.stroke();
     }
 
-    /* 출발지부터 목적지까지 실제 노드 좌표를 따른다. */
+    /* The game graph owns connectivity, endpoints and distance. The regional
+       view bends each link schematically; it is not turn-by-turn GIS geometry. */
+    const selectedPath=()=>{
+      if(!expanded) return linePath(routePoints);
+      c.beginPath();c.moveTo(sx(routePoints[0]),sy(routePoints[0]));
+      for(let i=1;i<routePoints.length;i++){
+        const a=routePoints[i-1],b=routePoints[i],ax=sx(a),ay=sy(a),dx=sx(b)-ax,dy=sy(b)-ay,len=Math.hypot(dx,dy)||1;
+        const bend=Math.min(13,len*.065),steps=Math.max(12,Math.ceil(len/7));
+        for(let j=1;j<=steps;j++){
+          const f=j/steps,edge=Math.sin(Math.PI*f);
+          const lateral=edge*bend*(Math.sin(f*14+i)*.66+Math.sin(f*39+i*3)*.24+Math.sin(f*71)*.1);
+          c.lineTo(ax+dx*f-dy/len*lateral,ay+dy*f+dx/len*lateral);
+        }
+      }
+      return true;
+    };
     c.save();c.lineCap='round';c.lineJoin='round';c.setLineDash([]);
-    linePath(routePoints);c.strokeStyle='rgba(3,8,10,.9)';c.lineWidth=7;c.stroke();
+    selectedPath();c.strokeStyle='rgba(3,8,10,.7)';c.lineWidth=5;c.stroke();
     const first=routePoints[0],last=routePoints[routePoints.length-1];
-    const rg=c.createLinearGradient(sx(first),sy(first),sx(last),sy(last));rg.addColorStop(0,'#62d4ca');rg.addColorStop(1,'#efab4d');
-    linePath(routePoints);c.strokeStyle=rg;c.lineWidth=3;c.stroke();c.restore();
+    const rg=c.createLinearGradient(sx(first),sy(first),sx(last),sy(last));rg.addColorStop(0,'#d1b675');rg.addColorStop(1,'#f2c77e');
+    selectedPath();c.strokeStyle=rg;c.lineWidth=expanded?2.3:3;c.shadowColor='#f2c77e';c.shadowBlur=expanded?5:0;c.stroke();c.restore();
 
     /* 주변 주요 지점과 경유 노드 */
     for(const [id,node] of nearby){
@@ -407,11 +423,17 @@ const MAPR = (()=>{
     c.fillStyle='#61d4ca';c.strokeStyle='#dcfffb';c.lineWidth=1;c.beginPath();c.moveTo(10,0);c.lineTo(-6,-6);c.lineTo(-2,0);c.lineTo(-6,6);c.closePath();c.fill();c.stroke();c.restore();
     c.strokeStyle='rgba(97,212,202,.62)';c.lineWidth=1.5;c.beginPath();c.arc(startX,startY,12,0,7);c.stroke();targetMarker(D.nodes[selectedId]);
 
-    const label=(id,node,color,above)=>{const text=D.nodes[id].name,x=sx(node),y=sy(node)+(above?-13:19);c.font='800 10px sans-serif';
-      const tw=Math.min(width-20,c.measureText(text).width+12),lx=Math.max(5,Math.min(width-tw-5,x-tw/2));
-      c.fillStyle='rgba(5,12,17,.82)';c.fillRect(lx,y-10,tw,15);c.strokeStyle='rgba(130,158,164,.32)';c.strokeRect(lx+.5,y-9.5,tw-1,14);
-      c.fillStyle=color;c.textAlign='center';c.fillText(text,lx+tw/2,y+1);c.textAlign='left';};
-    label(startId,D.nodes[startId],'#71d7ce',false);label(selectedId,D.nodes[selectedId],'#f2b258',true);
+    const label=(id,node,color,above)=>{
+      const text=D.nodes[id].name,x=sx(node),compact=height<100;
+      const size=expanded?14:10;
+      const y=Math.max(size+5,Math.min(height-12,sy(node)+(compact?4:above?-23:29)));
+      c.font=`700 ${size}px "Apple SD Gothic Neo",sans-serif`;
+      const tw=c.measureText(text).width;
+      const tx=Math.max(12+tw/2,Math.min(width-tw/2-12,x));
+      c.textAlign='center';c.lineJoin='round';c.lineWidth=5;c.strokeStyle='rgba(14,27,22,.9)';
+      c.strokeText(text,tx,y);c.fillStyle=color;c.fillText(text,tx,y);c.textAlign='left';
+    };
+    label(startId,D.nodes[startId],'#d7e4d8',false);label(selectedId,D.nodes[selectedId],'#f2d48e',true);
 
     /* 구간명은 목적지 카드와 중복되므로 지도에는 북쪽 기준만 남긴다. */
     c.fillStyle='#cbd3cf';c.font='800 8px ui-monospace,monospace';c.fillText('N',width-14,13);c.strokeStyle='#cbd3cf';c.lineWidth=1;
@@ -442,7 +464,19 @@ const GRAPH = (()=>{
   }
   function build(){
     resize();
-    const notes = S? S.notes.slice(-46):[];
+    // Keep recent events together with the older people/places they refer to.
+    // A last-46-only slice drops those hubs near the ending and draws only dots.
+    const history=S?S.notes:[],limit=46,chosen=new Set(),queue=[];
+    const byTitle=new Map(history.map((note,index)=>[note.title,index]));
+    const include=index=>{
+      if(index===undefined||chosen.has(index)||chosen.size>=limit)return;
+      chosen.add(index);queue.push(index);
+    };
+    for(let i=history.length-1;i>=Math.max(0,history.length-Math.ceil(limit/2));i--)include(i);
+    for(let i=0;i<queue.length&&chosen.size<limit;i++)
+      for(const title of history[queue[i]].links||[])include(byTitle.get(title));
+    for(let i=history.length-1;i>=0&&chosen.size<limit;i--)include(i);
+    const notes=[...chosen].sort((a,b)=>a-b).map(index=>history[index]);
     const old = Object.fromEntries(nodes.map(n=>[n.title,n]));
     nodes = notes.map((n,i)=>{
       const o=old[n.title];
@@ -451,7 +485,7 @@ const GRAPH = (()=>{
         vx:0, vy:0, r: n.type==='인물'?9: n.type==='장소'?7:6}; });
     const idx = Object.fromEntries(nodes.map((n,i)=>[n.title,i]));
     links=[];
-    nodes.forEach((n,i)=>{ n.note.links.forEach(l=>{
+    nodes.forEach((n,i)=>{ (n.note.links||[]).forEach(l=>{
       if(idx[l]!==undefined && idx[l]!==i) links.push([i,idx[l]]); }); });
     selected=null;
   }

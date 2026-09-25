@@ -78,6 +78,7 @@ for(const group of sceneGroups){
   const isArrival=group.label==='scenes'&&/^arrival-.*\.webp$/i.test(name);
   const isHub=group.label==='scenes'&&/^miryang-market-hub\.(?:jpe?g|webp)$/i.test(name);
   const isUpgrade=group.label==='upgrades';
+  const isUpgradeItem=isUpgrade&&/^upgrade-[a-z0-9]+-v\d+\.webp$/i.test(name);
   const ratio=actual.width/actual.height;
   const valid=isArrival
     ?actual.width>=visual.arrivalScene.minimum[0]&&actual.height>=visual.arrivalScene.minimum[1]
@@ -86,7 +87,8 @@ for(const group of sceneGroups){
       ?actual.width>=visual.settlementHub.minimum[0]&&actual.height>=visual.settlementHub.minimum[1]
         &&ratio>=visual.settlementHub.aspectRatioRange[0]&&ratio<=visual.settlementHub.aspectRatioRange[1]
       :isUpgrade
-        ?visual.upgradeCard.allowedDelivery.some(([width,height])=>actual.width===width&&actual.height===height)
+        ?(isUpgradeItem?[visual.upgradeCard.preferredDelivery]:visual.upgradeCard.allowedDelivery)
+          .some(([width,height])=>actual.width===width&&actual.height===height)
       :actual.width>=visual.cinematicScene.minimum[0]&&actual.height>=visual.cinematicScene.minimum[1]
         &&(near(ratio,visual.cinematicScene.aspectRatio,visual.cinematicScene.aspectTolerance)
           ||near(ratio,visual.legacyLandscapeScene.aspectRatio,visual.legacyLandscapeScene.aspectTolerance));
@@ -95,6 +97,8 @@ for(const group of sceneGroups){
       :isHub?'portrait settlement-hub contract'
       :isUpgrade?'vehicle upgrade-card contract':'16:9 cinematic scene contract';
     failures.push(`${group.label}/${name}: ${actual.width}x${actual.height}; expected ${expected}`);
+  }else if(isUpgradeItem&&statSync(file).size>visual.upgradeCard.maximumRecommendedBytes){
+    warnings.push(`${group.label}/${name}: ${statSync(file).size} bytes exceeds recommended upgrade budget`);
   }else if(!isArrival&&!isHub&&!isUpgrade){
     if(near(ratio,visual.legacyLandscapeScene.aspectRatio,visual.legacyLandscapeScene.aspectTolerance)){
       warnings.push(`${group.label}/${name}: legacy 3:2 frame ${actual.width}x${actual.height}`);
@@ -115,6 +119,21 @@ for(const name of portraitFiles){
   const actual=dimensions(join(portraitDir,name));
   if(actual.width!==actual.height||!portraitSizes.has(actual.width)){
     failures.push(`portraits/${name}: ${actual.width}x${actual.height}; expected square 96, 128, or 256px portrait`);
+  }
+}
+
+if(visual.homePropAtlas){
+  const atlas=visual.homePropAtlas,file=join(root,atlas.path);
+  if(!existsSync(file))failures.push(`HOME prop atlas missing: ${atlas.path}`);
+  else{
+    const actual=dimensions(file),data=readFileSync(file);
+    if(actual.width!==atlas.delivery[0]||actual.height!==atlas.delivery[1])
+      failures.push(`HOME prop atlas geometry: ${actual.width}x${actual.height}`);
+    if(atlas.alphaRequired&&!(data.toString('ascii',12,16)==='VP8X'&&(data[20]&0x10)))
+      failures.push('HOME prop atlas must retain its WebP alpha channel');
+    for(const [name,[x,y,w,h]] of Object.entries(atlas.regions))
+      if(x<0||y<0||w<=0||h<=0||x+w>actual.width||y+h>actual.height)
+        failures.push(`HOME prop atlas region outside image: ${name}`);
   }
 }
 

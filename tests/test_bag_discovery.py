@@ -27,7 +27,7 @@ def visible_in_viewport(page, selector):
     )
 
 
-@pytest.mark.parametrize("width,height", [(320, 578), (390, 844)])
+@pytest.mark.parametrize("width,height", [(320, 578), (320, 640), (390, 844)])
 def test_each_bag_item_reveals_complete_detail_in_first_viewport(width, height):
     ARTIFACTS.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as playwright:
@@ -109,4 +109,45 @@ def test_each_bag_item_reveals_complete_detail_in_first_viewport(width, height):
             )
             page.locator(".bag-meal-disclosure summary").click()
             assert page.locator(".bag-meal-plan").is_visible()
+        browser.close()
+
+
+@pytest.mark.parametrize("resize_from_tall", [False, True])
+def test_narrow_bag_labels_and_counts_fit_inside_their_cards(resize_from_tall):
+    """Catch legacy transforms and grid tracks placing quantity text below a tile."""
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(channel="chrome")
+        page = browser.new_page(viewport={"width": 390 if resize_from_tall else 320,
+                                          "height": 844 if resize_from_tall else 640})
+        page.goto(URL)
+        page.evaluate("""() => {
+          G.newGame('onroad','가방 검수','full');
+          S.flags.main_mission_started=true;S.flags.onboarding_event_guide=true;
+          S.items['부품']=999;S.items['의약품']=123;S.items['탄약']=999;S.scrap=1234;
+          UI.restoreQaView({screen:'game'});
+          document.documentElement.classList.remove('qa-exact-replay');
+        }""")
+        page.locator('#dk-status').click()
+        if resize_from_tall:
+            page.set_viewport_size({"width": 320, "height": 640})
+        page.wait_for_timeout(150)
+        violations = page.locator('.bag-pocket').evaluate_all("""cards => cards.flatMap(card => {
+          const box=card.getBoundingClientRect();
+          const name=card.querySelector('.bag-pocket-name').getBoundingClientRect();
+          const amount=card.querySelector('.bag-pocket-count').getBoundingClientRect();
+          const icon=card.querySelector('.ico').getBoundingClientRect();
+          const issues=[];
+          for(const [label,r] of [['name',name],['count',amount]]){
+            if(r.left<box.left+3||r.right>box.right-3||r.top<box.top+3||r.bottom>box.bottom-3)
+              issues.push({item:card.innerText,label,box:box.toJSON(),text:r.toJSON()});
+          }
+          if(name.bottom>amount.top+0.5 || name.left<icon.right+2)
+            issues.push({item:card.innerText,reason:'name overlaps quantity or icon'});
+          return issues;
+        })""")
+        assert not violations, violations
+        assert visible_in_viewport(page, '.bag-detail p')
+        assert page.locator('.bag-detail').evaluate("""node =>
+          node.getBoundingClientRect().bottom <= node.closest('#status-prop').getBoundingClientRect().bottom + 0.5
+        """)
         browser.close()

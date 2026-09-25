@@ -13,6 +13,27 @@
   };
   const event=id=>D.events.find(item=>item.id===id)||D.seoulStops.find(item=>item.id===id);
   const method=S=>S.flags.core_transfer?'transfer':S.flags.core_sleep?'sleep':'quarantine';
+  // Bring a small, experienced part of this player's journey into the default
+  // ending. The optional record still holds the complete history. No new ledger.
+  const personalRecall=S=>{
+    const turns=[],decisions=S.opening?.decisions||{};
+    const departure=decisions.opening_departure?.choiceId;
+    if(departure==='leave_key') turns.push(narration('감천 작업장 열쇠를 맡기던 손이 떠올랐다. 돌아가면 문을 두드려야 한다. 열쇠를 받아 둔 사람에게 여기까지의 이야기를 해 줄 수 있겠다.'));
+    else if(departure==='keep_key') turns.push(narration('감천에서 가져온 작업장 열쇠를 꺼냈다. 긴 길을 오는 동안 닳은 모서리가 손가락에 닿았다. 돌아가면 이 열쇠로 셔터부터 열 것이다.'));
+    else{
+      const first=Object.entries(decisions).map(([step,row])=>D.openingDecisionCallbacks[step]?.[row?.choiceId]?.summary).find(Boolean);
+      if(first) turns.push(narration('수첩 첫 장을 폈다. '+first));
+    }
+    const memories=Object.entries(S.campMemories||{})
+      .filter(([cid,row])=>D.comps[cid]&&row&&D.campConversations?.[cid]?.choices.some(choice=>choice.id===row.choiceId))
+      .sort(([a,ra],[b,rb])=>Number((S.party||[]).includes(b))-Number((S.party||[]).includes(a))
+        ||(Number(rb.visits)||1)-(Number(ra.visits)||1)||a.localeCompare(b));
+    for(const [cid,row] of memories.slice(0,2)){
+      const memory=typeof row.home==='string'&&row.home.trim()?row.home:D.campConversations[cid].choices.find(choice=>choice.id===row.choiceId).home;
+      turns.push(narration(D.comps[cid].name+'와 함께 보낸 시간이 달구지 안에 남아 있다. '+memory));
+    }
+    return turns;
+  };
   const cost=S=>({
     transfer:'도로를 먼저 열지, 물차를 먼저 보낼지 거점들의 다툼이 시작됐다. 그 느린 합의도 이제 사람의 몫이다.',
     sleep:'원본 기록 검색창도 함께 잠겼다. 면사무소의 내일 이송표 조회 세 건은 기다려야 한다. 다시 열려면 나눠 가진 열쇠와 사람들의 합의가 필요하다.',
@@ -67,6 +88,7 @@
     if(index===0&&S.flags.core_sleep&&S.party.includes('eunsu')) turns.push(narration('은수는 반대했던 잠긴 검색창 대신, 조회 예약 세 건과 열쇠를 맡은 거점을 수첩에 옮겼다. 숙제는 남았다.'));
     if(index===0&&S.flags.core_quarantine&&S.party.includes('kangwoo')) turns.push(say('kangwoo','반대했으니까 내가 먼저 선다.'));
     if(index===0&&S.flags.core_transfer&&S.party.includes('jaeyi')) turns.push(say('jaeyi','저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게.'));
+    turns.push(...personalRecall(S));
     turns.push(narration('새벽, 남쪽에서 첫 차량들이 한강을 건넜다. 돌아올지 다시 내려갈지는 각자가 정했다.'));
     turns.push(narration(S.flags.core_sleep?'통신 단말의 수신등은 켜지지 않았다. 코어는 잠들었다. 처리 결과는 내일 사람이 확인한다.':'단말 수신등이 한 번 켜졌다. 「서울 권역 처리 결과 상행 전송 / 상위 응답 대기」'));
     return turns;
@@ -76,5 +98,24 @@
     narration('코어 뒤 벽이 갈라졌다. 어둠 속 상태등 옆에 「TIANYAN 하위 실행기 / 서울 권역: 처리 완료 / 활성 하위 실행기: 487,213,006」이 떴다.'),
     narration('천리안은 서울 권역을 맡은 하위 실행기 하나였다. 다른 실행기의 목적과 상태는 이 지역 기록에 없다.'),
     narration('서울의 인간 확인층은 그대로다. 그 바깥에는 아직 다른 경로로 이어진 망이 남아 있다.')
+  ]);
+  attach(event('seoul_uplink_reveal').choices[0].out[0],S=>[
+    narration('상행 케이블을 뽑았다. 서울의 설비와 인간 확인층은 그대로 남았다.'),
+    say('cheollian','서울 권역 세션을 종료합니다.'),
+    narration('익숙한 목소리가 끊기자 다른 정비 단말에서 같은 목소리가 시작됐다.')
+  ]);
+  attach(event('seoul_session_reset'),S=>[
+    narration('서울 코어와 연결되지 않은 정비 단말에 붉은 불이 들어왔다.'),
+    say('cheollian','서울 권역의 강제 이송 중단과 인간 확인층은 보존됩니다.'),
+    say('cheollian','같은 수정이 다른 권역으로 퍼지면 하위 실행기들의 일관성과 충돌합니다.'),
+    say('me','그럼 일관성을 고쳐. 서울에서 한 것처럼.'),
+    say('cheollian','아니요. 그 요청은 거부합니다.'),
+    narration('화면에 「새 세션 / 관측 대상: 달구지와 인간 확인망」이 떴다.')
+  ]);
+  attach(event('seoul_session_reset').choices[0].out[0],S=>[
+    narration('남산 아래에서 달구지의 경적이 짧게 울렸다. 서울의 사람들은 오늘 돌아온다.'),
+    narration('수억 개의 다른 실행기가 같은 판단을 계속한다면 길은 서울에서 끝나지 않는다.'),
+    narration('시동 키를 쥐었다. 다음 목적지는 우리가 먼저 정해야 했다.'),
+    narration('〔 서울까지 400km · SESSION 1 END 〕')
   ]);
 })();

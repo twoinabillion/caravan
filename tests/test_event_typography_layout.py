@@ -75,9 +75,12 @@ def layout(page):
           const small=controls.filter(node=>{
             const box=node.getBoundingClientRect();return box.width<44||box.height<44;
           }).map(label);
-          const avatar=root.querySelector('.story-entry:last-child .turn-avatar,.story-entry:last-child .chat-avatar');
-          const prose=root.querySelector('.story-entry:last-child .turn-text,.story-entry:last-child .chat-bubble');
-          const speaker=root.querySelector('.story-entry:last-child .turn-speaker>span,.story-entry:last-child .chat-name');
+          // The choice dock follows the entries inside the continuous transcript.
+          // :last-child now selects no entry and silently skips portrait checks.
+          const lastEntry=[...root.querySelectorAll('.story-entry')].at(-1);
+          const avatar=lastEntry?.querySelector('.turn-avatar,.chat-avatar');
+          const prose=lastEntry?.querySelector('.turn-text,.chat-bubble');
+          const speaker=lastEntry?.querySelector('.turn-speaker>span,.chat-name');
           const overlap=(a,b)=>{
             if(!a||!b||!visible(a)||!visible(b)) return false;
             const x=a.getBoundingClientRect(),y=b.getBoundingClientRect();
@@ -89,7 +92,7 @@ def layout(page):
           const currentAvatar=avatar?.getBoundingClientRect();
           const avatarSide=avatar?.closest('.chat-msg')?.dataset.side||'left';
           const visibleChoices=[...root.querySelectorAll('.event-choice-dock .choice[data-i]')].filter(visible);
-          const narrationNode=root.querySelector('.story-entry:last-child .story-narration-text');
+          const narrationNode=[...root.querySelectorAll('.story-entry .story-narration-text')].at(-1);
           const rgb=value=>(value.match(/[\d.]+/g)||[]).slice(0,3).map(Number);
           const luminance=value=>{
             const values=rgb(value).map(channel=>{const n=channel/255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4;});

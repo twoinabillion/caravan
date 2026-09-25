@@ -1270,18 +1270,18 @@ with sync_playwright() as p:
       out.statusTabs=questLedger?.getAttribute('aria-hidden')==='false' && questTabs.length===3 &&
         questTabs.map(tab=>tab.dataset.questTab).join(',')==='main,side,completed' &&
         questTabs[0].classList.contains('active') && questTabs[0].getAttribute('aria-selected')==='true';
-      out.questVisualHierarchy=document.querySelector('.quest-ledger-head small')?.textContent==='여정 기록' &&
+      out.questVisualHierarchy=document.querySelector('#quest-ledger-title')?.textContent==='임무 장부' &&
         !document.querySelector('.quest-ledger-close') && document.querySelector('#dk-objectives').classList.contains('here');
       const knowledgeText=questLedger?.textContent||'';
       const mainQuest=questLedger?.querySelector('.quest-kind-main');
-      const mainTerms=[...mainQuest?.querySelectorAll('dt')||[]].map(node=>node.textContent.trim());
-      out.knowledgeUi=!!mainQuest?.querySelector('.quest-progress') &&
-        mainTerms.includes('왜 이 일을 하나') && mainTerms.includes('지금 할 일') &&
-        !mainTerms.includes('결과') && mainTerms.includes('길을 놓쳤다면');
+      out.knowledgeUi=!!mainQuest?.querySelector('.quest-clue-note .quest-next') &&
+        !!mainQuest?.querySelector('.quest-context') &&
+        !mainQuest?.querySelector('.quest-main-steps .is-upcoming') &&
+        !!mainQuest?.querySelector('[data-quest-action]');
       out.departureBrief=!!mainQuest?.querySelector('h3')?.textContent.trim() &&
         !!mainQuest?.querySelector('.quest-card-phase')?.textContent.trim() &&
         !!mainQuest?.querySelector('.quest-main-steps') &&
-        [...mainQuest?.querySelectorAll('dd')||[]].every(node=>!!node.textContent.trim());
+        !!mainQuest?.querySelector('.quest-next')?.textContent.trim();
       document.querySelector('.quest-ledger-back').click();
       G.openEventById('roadbeat_200_archive');
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&

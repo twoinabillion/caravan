@@ -157,6 +157,7 @@ D.scenes = {
   'minji-toolbox':'__SCENE_MINJI_TOOLBOX__',
   'parkss-clinic':'__SCENE_PARKSS_CLINIC__',
   'leo-rooftop-song':'__SCENE_LEO_ROOFTOP_SONG__',
+  'leo-broadcast-room-v1':'__SCENE_LEO_BROADCAST_ROOM_V1__',
   'jaeyi-ledger':'__SCENE_JAEYI_LEDGER__',
   'eunsu-last-shift':'__SCENE_EUNSU_LAST_SHIFT__',
   'postman-letter':'__SCENE_POSTMAN_LETTER__',
@@ -190,6 +191,7 @@ D.scenes = {
   'parents-failed-namsan-v1':'__SCENE_PARENTS_FAILED_NAMSAN_V1__',
   'parents-diversion-record-v2':'assets/scenes/parents-diversion-record-v2.webp',
   'parents-linked-records-v2':'assets/scenes/parents-linked-records-v2.webp',
+  'main-relay-workbench-v1':'assets/scenes/main-relay-workbench-v1.webp',
   'parents-father-last-log-record-v2':'assets/scenes/parents-father-last-log-record-v2.webp',
   'history-parents-network-record-v2':'assets/scenes/history-parents-network-record-v2.webp',
   'parents-mother-reunion-v1':'__SCENE_PARENTS_MOTHER_REUNION_V1__',
@@ -263,6 +265,7 @@ D.scenes = {
   'comp-talk-eunsu-road-v1':'__SCENE_COMP_TALK_EUNSU_ROAD_V1__',
   'comp-talk-eunsu-camp-v1':'__SCENE_COMP_TALK_EUNSU_CAMP_V1__',
   'camp-home-stage-v1':'__SCENE_CAMP_HOME_STAGE_V1__',
+  'dalguji-home-interior-v1':'__SCENE_DALGUJI_HOME_INTERIOR_V1__',
   'camp-life-meal-v1':'__SCENE_CAMP_LIFE_MEAL_V1__',
   'camp-life-organize-v1':'__SCENE_CAMP_LIFE_ORGANIZE_V1__',
   'camp-life-watch-v1':'__SCENE_CAMP_LIFE_WATCH_V1__',
@@ -333,6 +336,7 @@ D.scenes = {
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
+  'leo-broadcast-room-v1':'청주 방송실의 믹싱 데스크 앞에서 기타와 마이크를 준비하는 레오',
   'seoul-uplink-empty-v2':'사람 없는 서울 코어 뒤로 드러난 작은 상위망 상태등. 지역 코어의 옅은 흰빛은 남아 있다',
   'seoul-reset-empty-v2':'꺼진 서울 코어와 별개로 오른쪽 정비 단말에 들어온 붉은 불. 사람이나 차량은 없다',
   'event-postman-solo-v2':'자전거와 배달 명단을 든 우편부 한 사람. 뒤에는 달구지가 서 있고 다른 여행자는 화면 밖에 있다',
@@ -361,6 +365,7 @@ D.sceneDescriptions = {
   'story-bridge-parent-route-v1':'비 내리는 북부 연락소의 낡은 상자 안에서 부모님의 뜯긴 분리 절차 두 장을 손전등으로 맞춰 보는 사람들',
   'parents-diversion-record-v2':'폐쇄된 남쪽 환승소 책상에서 장갑 낀 손이 오래된 운행표와 두 장의 분류 기록을 나란히 대조하는 현재 장면',
   'parents-linked-records-v2':'아빠의 전기 정비 기록과 엄마의 증언 전달 카드에서 같은 화물 묶음 표식을 찾아 맞춰 보는 현재 장면',
+  'main-relay-workbench-v1':'수원 외곽 중계소의 낡은 수신기와 탁상 마이크, 세 개의 아날로그 계기. 거점들의 응답을 듣는 현재 장면. 사람이나 남산 풍경은 없다',
   'parents-father-last-log-record-v2':'비어 있는 남산 유지실 제어대에 마지막 연속 용지가 걸려 있고 정비 번호표와 시계가 함께 남은 기록 장면',
   'history-parents-network-record-v2':'북부 교환소 지도 위에 오래된 전달 표식들과 며칠 전 도착한 봉인 봉투를 대조해 둔 현재 장면',
   'parents-mother-broadcast-v1':'서울 외곽의 낡은 무전 중계소에서 헤드셋을 쓴 엄마가 여섯 주파수 송출 스위치 앞에 앉아 남산 작전을 기다리는 밤',
@@ -385,6 +390,7 @@ D.sceneDescriptions = {
   'comp-talk-jaeyi-camp-v1':'비 오는 밤 달구지 뒤편 등불 아래 낡은 기념품 상자를 열고 작은 물건 하나의 사연을 들려주는 재이',
   'comp-talk-eunsu-road-v1':'낮길을 달리는 달구지 조수석에서 무전기 주파수를 맞추다 헤드폰 한쪽을 들고 주인공을 돌아보는 은수',
   'comp-talk-eunsu-camp-v1':'불빛 드문 산등성이에 세운 달구지 문턱에서 수신기와 헤드폰을 나눠 들고 희미한 신호에 귀 기울이는 은수',
+  'dalguji-home-interior-v1':'달구지 안. 등 하나가 낡은 나무 벽과 빈 선반을 비춘다',
   'camp-home-stage-v1':'산 아래 물가에 세운 달구지의 어닝과 문이 열리고, 모닥불·의자·정비등이 젖은 야영지를 밝히는 밤 풍경',
   'camp-life-meal-v1':'달구지 옆 접이식 탁자에서 국과 물, 식기를 꺼내 저녁을 준비하는 장면',
   'camp-life-organize-v1':'달구지 생활칸 안에서 다온이 침구와 물통, 지도와 공구를 제자리에 정리하는 장면',
@@ -402,12 +408,14 @@ D.sceneDescriptions = {
    scenes additionally declare the canonical portrait reference that generation and
    review must use. Keep this data beside the scene keys, not only in prompt docs. */
 const sceneCompanionId = key => {
+  if(key==='leo-broadcast-room-v1') return 'leo';
   const match=String(key||'').match(/^recruit-(minji|parkss|kangwoo|leo|jaeyi|eunsu)(?:-|$)/);
   return match?match[1]:'';
 };
 const evidenceRecordKeys = new Set([
   'parents-diversion-record-v2',
   'parents-linked-records-v2',
+  'main-relay-workbench-v1',
   'parents-father-last-log-record-v2',
   'history-parents-network-record-v2'
 ]);
@@ -445,6 +453,13 @@ D.sceneAssetMeta = Object.fromEntries(Object.keys(D.scenes).map(key=>{
     status:'approved'
   }];
 }));
+D.sceneAssetMeta['leo-broadcast-room-v1']={
+  format:'character',companions:['leo'],reference:'assets/portraits/leo.png',
+  references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+    'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp','assets/portraits/leo.png'],
+  vehicleReference:[],size:'1024x576',status:'approved',
+  description:'청주 방송실에서 낡은 기타와 마이크를 준비하는 레오. 다른 동료나 달구지는 등장하지 않는다.'
+};
 
 /* State-neutral composition prevents optional cast/cargo from becoming invented facts.
    Full generation prompts and masters: artifacts/director-pass-2026-09-11/scene-masters/. */
@@ -469,8 +484,9 @@ for(const [key,format] of Object.entries(directorSceneFormats)){
   };
 }
 
-/* 업그레이드 28종을 일곱 작업대 묶음으로 보여주는 실제 부품 이미지. */
+/* 작업대 그룹의 레거시 호환 이미지와 빈 조수석 파노라마. */
 D.upgradeArt = {
+  passenger:'__UPGRADE_PASSENGER__',
   fuel:'__UPGRADE_FUEL__',
   seating:'__UPGRADE_SEATING__',
   chassis:'__UPGRADE_CHASSIS__',
@@ -478,6 +494,91 @@ D.upgradeArt = {
   power:'__UPGRADE_POWER__',
   camp:'__UPGRADE_CAMP__',
   living:'__UPGRADE_LIVING__'
+};
+
+/* 장착한 부품 자체를 보여 주는 업그레이드별 이미지. */
+D.upgradeItemArt = {
+  tank1:'__UPGRADE_ITEM_TANK1__',
+  tank2:'__UPGRADE_ITEM_TANK2__',
+  bench:'__UPGRADE_ITEM_BENCH__',
+  cabin:'__UPGRADE_ITEM_CABIN__',
+  susp:'__UPGRADE_ITEM_SUSP__',
+  armor:'__UPGRADE_ITEM_ARMOR__',
+  garden:'__UPGRADE_ITEM_GARDEN__',
+  collector:'__UPGRADE_ITEM_COLLECTOR__',
+  solar:'__UPGRADE_ITEM_SOLAR__',
+  antenna:'__UPGRADE_ITEM_ANTENNA__',
+  winch:'__UPGRADE_ITEM_WINCH__',
+  bullbar:'__UPGRADE_ITEM_BULLBAR__',
+  snorkel:'__UPGRADE_ITEM_SNORKEL__',
+  mudtires:'__UPGRADE_ITEM_MUDTIRES__',
+  lightbar:'__UPGRADE_ITEM_LIGHTBAR__',
+  awning:'__UPGRADE_ITEM_AWNING__',
+  stove:'__UPGRADE_ITEM_STOVE__',
+  sidebox:'__UPGRADE_ITEM_SIDEBOX__',
+  beehive:'__UPGRADE_ITEM_BEEHIVE__',
+  garden2:'__UPGRADE_ITEM_GARDEN2__',
+  kitchen:'__UPGRADE_ITEM_KITCHEN__',
+  bunk:'__UPGRADE_ITEM_BUNK__',
+  jumpseat:'__UPGRADE_ITEM_JUMPSEAT__',
+  fridge:'__UPGRADE_ITEM_FRIDGE__',
+  armory:'__UPGRADE_ITEM_ARMORY__',
+  scope:'__UPGRADE_ITEM_SCOPE__',
+  horn:'__UPGRADE_ITEM_HORN__',
+  curtain:'__UPGRADE_ITEM_CURTAIN__'
+};
+
+/* 길 선택·주행 중에는 가로 풍경을 쓰고, 도착용 세로 원본은 유지한다. */
+D.nodePreviewScenes = {
+  gimhae:'assets/scenes/destination-gimhae-v1.webp',
+  yangsan:'assets/scenes/destination-yangsan-v1.webp',
+  jinju:'assets/scenes/destination-jinju-v1.webp',
+  hapcheon:'assets/scenes/destination-hapcheon-v1.webp',
+  geochang:'assets/scenes/destination-geochang-v1.webp',
+  gumi:'assets/scenes/destination-gumi-v1.webp',
+  gimcheon:'assets/scenes/destination-gimcheon-v1.webp',
+  namwon:'assets/scenes/destination-namwon-v1.webp',
+  yeongdong:'assets/scenes/destination-yeongdong-v1.webp',
+  nonsan:'assets/scenes/destination-nonsan-v1.webp',
+  gongju:'assets/scenes/destination-gongju-v1.webp',
+  cheongju:'assets/scenes/destination-cheongju-v1.webp',
+  cheonan:'assets/scenes/destination-cheonan-v1.webp',
+  pyeongtaek:'assets/scenes/destination-pyeongtaek-v1.webp',
+  lake:'assets/scenes/destination-lake-v1.webp',
+  mall:'assets/scenes/destination-mall-v1.webp',
+  tower:'assets/scenes/destination-tower-v1.webp',
+  spring:'assets/scenes/destination-spring-v1.webp',
+  airfield:'assets/scenes/destination-airfield-v1.webp',
+  solar:'assets/scenes/destination-solar-v1.webp',
+  reststop:'assets/scenes/destination-reststop-v1.webp',
+  tunnelbook:'assets/scenes/destination-tunnelbook-v1.webp',
+  ulsan:'assets/scenes/destination-ulsan-v1.webp',
+  yeosu:'assets/scenes/destination-yeosu-v1.webp',
+  suncheon:'assets/scenes/destination-suncheon-v1.webp',
+  damyang:'assets/scenes/destination-damyang-v1.webp',
+  mokpo:'assets/scenes/destination-mokpo-v1.webp',
+  andong:'assets/scenes/destination-andong-v1.webp',
+  mungyeong:'assets/scenes/destination-mungyeong-v1.webp',
+  danyang:'assets/scenes/destination-danyang-v1.webp',
+  wonju:'assets/scenes/destination-wonju-v1.webp',
+  daegwallyeong:'assets/scenes/destination-daegwallyeong-v1.webp',
+  gangneung:'assets/scenes/destination-gangneung-v1.webp',
+  sokcho:'assets/scenes/destination-sokcho-v1.webp',
+  icheon:'assets/scenes/destination-icheon-v1.webp',
+  gyeongju:'assets/scenes/destination-gyeongju-v1.webp',
+  pohang:'assets/scenes/destination-pohang-v1.webp',
+  sangju:'assets/scenes/destination-sangju-v1.webp',
+  gunsan:'assets/scenes/destination-gunsan-v1.webp',
+  chungju:'assets/scenes/destination-chungju-v1.webp',
+  sejong:'assets/scenes/destination-sejong-v1.webp',
+  lighthouse:'assets/scenes/destination-lighthouse-v1.webp',
+  drivein:'assets/scenes/destination-drivein-v1.webp',
+  sunflower:'assets/scenes/destination-sunflower-v1.webp',
+  maehwa:'assets/scenes/destination-maehwa-v1.webp',
+  mingyu_ridge:'assets/scenes/destination-mingyu_ridge-v1.webp',
+  jaeyi_cache:'assets/scenes/destination-jaeyi_cache-v1.webp',
+  cablecar:'assets/scenes/destination-cablecar-v1.webp',
+  filmset:'assets/scenes/destination-filmset-v1.webp'
 };
 
 

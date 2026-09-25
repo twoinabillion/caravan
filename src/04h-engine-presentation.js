@@ -1,6 +1,6 @@
 /* Pending presentation owns ordinary event/result/close handoff saves.
    Authored definitions own actions. Saves contain no executable effects or HTML. */
-G.presentationEvent = id=>[...D.events,...D.seoulStops,D.seoulOpenEvent,D.gateEvent,
+G.presentationEvent = id=>[...D.events,...D.roadCheckInEvents,...D.seoulStops,D.seoulOpenEvent,D.gateEvent,
   D.bridgeEvent,D.onboardingMission].find(event=>event&&event.id===id)||null;
 G.presentationCopy = value=>JSON.parse(JSON.stringify(value));
 G.presentationText = value=>typeof value==='string'?value.slice(0,40000):'';
@@ -34,6 +34,9 @@ G.presentationView = view=>{
   return {turns,index:clamp(Math.floor(Number(view.index)||0),0,turns.length-1),
     knownSpeaker:view.knownSpeaker===true,readingRecord:G.presentationText(view.readingRecord),
     recordOpen:view.recordOpen===true,
+    readerMode:['review','inspection'].includes(view.readerMode)?view.readerMode:'current',
+    inspectionId:typeof view.inspectionId==='string'?view.inspectionId.slice(0,160):'',
+    inspectedIds:Array.isArray(view.inspectedIds)?[...new Set(view.inspectedIds.filter(id=>typeof id==='string').map(id=>id.slice(0,160)))].slice(0,40):[],
     sceneKeys:Array.isArray(view.sceneKeys)?view.sceneKeys.filter(key=>typeof key==='string'&&D.scenes[key]).slice(0,12):[]};
 };
 G.validatePresentation = value=>{
@@ -42,6 +45,7 @@ G.validatePresentation = value=>{
   if(!event) return null;
   const row={version:1,eventId:event.id,phase:value.phase};
   if(value.phase==='transition') return row;
+  if(event.roadCheckIn&&value.phase==='event'&&(!S?.driving||S.driving.checkIn||!S.party.includes(event.roadCheckIn))) return null;
   row.text=G.presentationText(value.text);
   row.view=G.presentationView(value.view);
   row.reading=G.presentationReading(value.reading);
@@ -95,7 +99,7 @@ G.capturePresentationView = state=>{
     view:state,history:state.history,selection:state.selection,updates:state.questUpdates});
   G.save();
 };
-G.resolvePresentedChoice = (event,choice,history=null)=>{
+G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
   if(!S||S.ended) return {ok:false};
   const ci=event.choices.indexOf(choice), saved=S.pendingPresentation;
   if(ci<0) return {ok:false};
@@ -105,6 +109,8 @@ G.resolvePresentedChoice = (event,choice,history=null)=>{
     return {ok:true,applied:false,out:{...authored,text:saved.text},chips:saved.chips,
       combatState:saved.combatState};
   }
+  if(event.roadCheckIn&&(!S.driving||S.driving.checkIn||!S.party.includes(event.roadCheckIn)||saved?.eventId!==event.id))
+    return {ok:false,why:'이 구간에서 나눌 수 있는 대화가 아니다'};
   const req=G.reqOk(G.choiceReq(choice));
   const ownedReceipt=event.openingStep&&S.opening?.pendingResult||event.campConversation&&G.currentCampConversation()?.choiceId;
   if(!ownedReceipt&&(!G.reqVisible(G.choiceReq(choice))||!req.ok)) return {ok:false,why:req.t};
@@ -129,7 +135,7 @@ G.resolvePresentedChoice = (event,choice,history=null)=>{
       for(const key of ['core_transfer','core_sleep','core_quarantine']) delete S.flags[key];
     const meta=out.combatMeta||null;
     let entry=!own&&out.fx?.combatEnd?G.rememberCombatChoice(event,choice,meta):null;
-    const chips=own?[...(own.chips||[])]:G.applyFx(out.fx,{noteTitle:event.title});
+    const chips=own?[...(own.chips||[])]:event.roadCheckIn?G.completeRoadCheckIn(event):G.applyFx(out.fx,{noteTitle:event.title});
     if(!own&&event.needsComp) G.checkLevel(event.needsComp,{story:true});
     if(!own&&!entry) entry=G.rememberCombatChoice(event,choice,meta);
     if(!own) chips.push(...G.afterChoice(event,choice,out));
@@ -149,7 +155,7 @@ G.resolvePresentedChoice = (event,choice,history=null)=>{
       if(owner) owner.reading=G.presentationReading({eventId:event.id,phase:'outcome',
         history:historyView,selection:choice.label,
         updates:[...new Map(G.questLedgerUpdates().map(row=>[row.id,row])).values()]});
-      G.clearQuestLedgerUpdates();
+      if(!options.deferQuestRead) G.clearQuestLedgerUpdates();
     }
     return {ok:true,applied:!own||own.applied,out:{...out,text},chips,combatState};
   }finally{ G.presentationApplying=false; G.save(); }
@@ -193,6 +199,11 @@ G.resumePresentation = ()=>{
   const row=S.pendingPresentation=G.validatePresentation(S.pendingPresentation);
   if(row){
     if(row.phase==='transition') return G.presentTransition();
+    const required=G.mainEvidenceEntryId(row.eventId);
+    if(row.phase==='event'&&required!==row.eventId){
+      // Discard only the unanswered old scene's reading view, not a paid result.
+      S.pendingPresentation=null;G.openEventById(required);return true;
+    }
     // Completed results may be shown away from their original site, but an
     // unanswered geographical encounter cannot move with a corrupt old save.
     if(row.phase==='event'&&!G.mainEvidenceLocationReady(row.eventId)){

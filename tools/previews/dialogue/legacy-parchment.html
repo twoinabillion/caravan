@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#171e20">
+<title>트럭 카페 · 대화 화면 시안</title>
+<style>
+:root{--ink:#29312c;--muted:#555b4c;--green:#344a40;--paper:#d9c5a0;--line:rgba(57,64,47,.24);--sans:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;--serif:"AppleMyungjo","Apple Myungjo","Noto Serif KR",serif;--reading:18px}
+*{box-sizing:border-box}body{margin:0;background:#171e20;color:var(--ink);font:15px/1.5 var(--sans);height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}button{font:inherit;cursor:pointer;color:inherit;touch-action:manipulation}button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid #9b6027;outline-offset:3px}button:disabled{cursor:default}button,dialog{ -webkit-tap-highlight-color:transparent }[hidden]{display:none!important}
+.preview-bar{width:min(440px,100%);height:36px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 9px;color:#b9c1b8;font-size:12px}.preview-bar button{border:0;background:transparent;color:inherit;min-height:32px;padding:0 5px}.preview-bar span{color:#cdd3c9}.game{position:relative;width:min(440px,100%);height:min(820px,calc(100dvh - 76px));display:flex;flex-direction:column;background:#20282a;box-shadow:0 20px 70px #0007;overflow:hidden;border:1px solid #4b5147;border-radius:8px}
+.scene{flex:none;margin:0;aspect-ratio:16/9;max-height:28dvh;background:#171e20;position:relative}.scene img{display:block;width:100%;height:100%;object-fit:contain}.scene::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -1px #a4906677;pointer-events:none}
+.manuscript{flex:1;min-height:0;background:var(--paper) url('/paper.png') center/100% 100%;display:flex;flex-direction:column;padding:7px 16px 12px}.scene-heading{flex:none;min-height:59px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 10px;border-bottom:1px solid var(--line)}h1{font:700 21px/1.3 var(--serif);margin:0;letter-spacing:-.5px}.tools{display:flex;gap:2px}.tools button{min-height:40px;padding:6px 9px;font-size:12px;background:none;border:0;border-radius:3px}.tools button:hover{background:#5c633719}.tools button[aria-pressed=true]{background:#5c633722;font-weight:700}
+.reading{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}.copy{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#716b5277 transparent;padding:22px 12px 18px;font:var(--reading)/1.8 var(--serif);word-break:keep-all;overflow-wrap:anywhere;flex:1;min-height:0;outline-offset:-4px!important}.copy p{margin:0 0 14px}.copy p:last-child{margin-bottom:0}.speaker{display:flex;align-items:center;gap:10px;font:700 13px/1.3 var(--sans);color:var(--green);margin-bottom:13px}.speaker img{width:38px;height:38px;border-radius:4px;border:1px solid #6d755655}.dialogue{font-weight:500;letter-spacing:-.2px}.direction{font-size:.86em;color:#4d5345}.thought{font-size:.88em;color:#4c5548;border-left:2px solid #7c8970;padding-left:12px;margin-top:15px!important}.selected{font:12px/1.5 var(--sans);color:var(--muted);margin-bottom:15px!important}.selected strong{font-weight:600}.effects{font:13px/1.6 var(--sans);display:flex;flex-wrap:wrap;gap:6px 15px;border-top:1px solid var(--line);padding-top:14px;margin-top:22px;color:var(--green)}.effects .loss{color:#7a4f2b}.scroll-hint{position:absolute;bottom:0;left:8px;right:8px;text-align:center;background:#d9c5a0;box-shadow:0 -7px 12px #d9c5a0;font-size:11px;color:#4d5545;padding:3px;pointer-events:none}
+.actions{flex:none;padding:10px 10px 3px;display:grid;gap:7px}.actions button{width:100%;min-height:49px;text-align:left;padding:11px 15px;border-radius:4px;border:1px solid #6b6a4e66;background:#f1e7cd50;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px;line-height:1.4}.actions button:hover{background:#f7edd2a3;border-color:#465d44}.actions button:active{transform:translateY(1px)}.actions .primary{background:var(--green);border-color:var(--green);color:#f7ecd7}.actions .primary:hover{background:#263e31}.cost{font:12px/1.4 var(--sans);font-weight:400;white-space:nowrap;opacity:.9}.next-mark{font-size:16px;font-weight:400}.chapter{padding:5px 12px 1px;display:flex;justify-content:space-between;align-items:center;gap:8px;font:11px/1.3 var(--sans);color:#58604e;min-height:24px}.progress{display:flex;gap:5px}.progress i{width:14px;height:2px;background:#777b6144}.progress i.on{background:#4e6654}.chapter .back{border:0;background:none;color:#58604e;font-size:11px;padding:4px 0;min-height:26px}
+dialog{position:fixed;inset:36px 0 0;margin:auto;width:min(440px,100%);height:min(820px,calc(100dvh - 76px));max-width:none;max-height:none;border:0;background:#e0d0af;color:var(--ink);padding:0}dialog[open]{display:flex;flex-direction:column}dialog::backdrop{background:#101615c9}.history-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:15px 22px;flex:none}.history-head h2{font:700 20px var(--serif);margin:0}.history-head button{min-height:44px;min-width:48px;background:none;border:0;font-size:14px}.history-scroll{flex:1;overflow:auto;padding:22px;font:var(--reading)/1.8 var(--serif);word-break:keep-all;overflow-wrap:anywhere}.history-entry{padding-bottom:24px;margin-bottom:22px;border-bottom:1px solid var(--line)}.history-entry:last-child{border:0;margin-bottom:0}.history-entry p{margin:0 0 12px}.history-label{font:12px var(--sans);color:var(--muted);margin-bottom:14px!important}.history-foot{padding:14px 22px 21px;border-top:1px solid var(--line);flex:none}.history-foot button{width:100%;min-height:46px;border:0;border-radius:4px;background:var(--green);color:#fff5df}.sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+body.large{--reading:21px}.copy.enter{animation:reveal .18s ease-out}@keyframes reveal{from{opacity:.25}to{opacity:1}}
+@media(max-width:500px){body{justify-content:flex-start}.preview-bar{height:32px}dialog{inset:32px 0 0;height:calc(100dvh - 32px)}.game{height:calc(100dvh - 32px);border-radius:0;border-left:0;border-right:0;box-shadow:none}.manuscript{padding-right:13px;padding-left:13px}.scene-heading{margin:0 8px}.copy{padding-top:19px}}
+@media(max-height:700px){:root{--reading:16px}.scene{height:112px;max-height:20dvh;aspect-ratio:auto}.scene img{object-fit:contain}.scene-heading{min-height:46px}h1{font-size:19px}.copy{padding:12px 10px;line-height:1.65}.speaker{margin-bottom:8px}.speaker img{width:30px;height:30px}.copy p{margin-bottom:10px}.thought{margin-top:9px!important}.actions{gap:5px;padding-top:6px}.actions button{min-height:44px;padding:9px 12px;font-size:13px}.manuscript{padding-bottom:7px}.chapter{min-height:20px;padding-top:2px}body.large{--reading:19px}}
+@media(prefers-reduced-motion:reduce){.copy.enter{animation:none}.actions button:active{transform:none}}
+</style>
+</head>
+<body>
+<div class="preview-bar"><span>대화 화면 시안</span><button id="restart" type="button">처음부터 보기</button></div>
+<main class="game" aria-label="트럭 카페 대화 시안">
+  <figure class="scene"><img src="/scene.webp" alt="비 내리는 국도. 달구지 옆 커피차의 판매대에 따뜻한 불이 켜져 있다."></figure>
+  <section class="manuscript">
+    <header class="scene-heading"><h1>트럭 카페</h1><div class="tools"><button id="size" aria-label="큰 글씨" aria-pressed="false">가ᐩ</button><button id="history" aria-haspopup="dialog">기록</button></div></header>
+    <div class="reading"><div id="copy" class="copy" role="region" aria-label="현재 장면" tabindex="0"></div><span class="scroll-hint" hidden>아래로 이어 읽기 ↓</span></div>
+    <div id="actions" class="actions" role="group" aria-label="다음 행동"></div>
+    <div class="chapter"><span id="beat"></span><span class="progress" aria-hidden="true"><i></i><i></i><i></i></span></div>
+  </section>
+  <dialog id="record" aria-labelledby="record-title"><header class="history-head"><h2 id="record-title">트럭 카페 기록</h2><button id="close-record" aria-label="기록 닫기">닫기</button></header><div class="history-scroll"></div><footer class="history-foot"><button id="return-record">읽던 곳으로 돌아가기</button></footer></dialog>
+</main>
+<div id="announcement" class="sr" aria-live="polite"></div>
+<script>
+const $=selector=>document.querySelector(selector);
+const speaker='<div class="speaker"><img src="/portrait.png" alt="커피차 주인 초상"><span>커피차 주인</span></div>';
+const intro='<p>개조한 트럭 옆구리를 열어 만든 이동식 카페.</p><p>손수 볶은 원두 냄새가 도로까지 퍼진다.</p>';
+const conversation=speaker+'<p class="dialogue">“커피 한 잔에 고철 넷. 원두는 아끼지 않습니다. 세상이 망해도 카페인은 못 끊죠.”</p><p class="direction">주인장이 능청스레 웃는다.</p><p class="thought">진짜 커피 냄새다. 오랜만이다.</p>';
+const branches=[
+ {label:'커피를 산다',cost:'고철 4',pages:[
+  '<p class="selected">내 선택 · <strong>커피를 산다</strong></p><p class="direction">“진하게 부탁해요.”</p>'+speaker+'<p class="dialogue">“이 원두에 물 타면 벌받죠. 리필은 한 번까지입니다.”</p><p>주인장이 원두를 넉넉히 갈아 잔을 채웠다.</p>',
+  '<p>뜨거운 커피를 손에 쥐었다. 첫 모금에 온몸이 깨어난다. 이게 얼마 만인지.</p><p>빈 잔을 한 번 더 내밀자 주인장이 말없이 웃으며 채워 줬다.</p><div class="effects"><span class="loss">고철 −4</span><span>피로 −5</span><span>동료 사기 +5</span></div>'
+ ]},
+ {label:'원두 파는 곳을 묻는다',pages:[
+  '<p class="selected">내 선택 · <strong>원두 파는 곳을 묻는다</strong></p>'+speaker+'<p class="dialogue">“북쪽 어느 옥상에서 커피나무 키우는 별종이 있어요. 미쳤죠, 이 세상에 커피나무라니.”</p><p class="direction">“어디요?”</p><p class="dialogue">“북쪽이요.”</p>',
+  '<p class="direction">“…북쪽 어디.”</p>'+speaker+'<p class="dialogue">“그건 나도 몰라요. 원두가 오는 거지 내가 가는 게 아니라.”</p><p class="direction">주인장이 손을 저었다.</p><p class="dialogue">“옥상인 건 확실해요. 포대에 사진이 붙어 온 적 있어서.”</p><div class="effects"><span>소문 기록 · 옥상 커피나무</span></div>'
+ ]},
+ {label:'냄새만 맡고 지난다',pages:[
+  '<p class="selected">내 선택 · <strong>냄새만 맡고 지난다</strong></p><p>고철이 아까워 냄새만 실컷 맡고 떠났다.</p><p>향이 룸미러 뒤로 오래 따라왔다.</p><div class="effects"><span>동료 사기 +1</span></div>'
+ ]}
+];
+let phase='intro',choice=null,page=0,visited=[];
+function btn(text,action,primary=false,extra=''){const b=document.createElement('button');b.type='button';b.className=primary?'primary':'';b.innerHTML='<span>'+text+'</span>'+extra;b.addEventListener('click',action);return b;}
+function scrollHint(){const el=$('#copy');$('.scroll-hint').hidden=el.scrollHeight-el.clientHeight-el.scrollTop<14;}
+function render(){
+ let html,label,stage;
+ const actions=$('#actions');actions.replaceChildren();
+ if(phase==='intro'){html=intro;label='길 위에서';stage=0;actions.append(btn('이야기 이어가기',()=>{phase='choice';render();},true,'<span class="next-mark" aria-hidden="true">→</span>'));}
+ else if(phase==='choice'){html=conversation;label='어떻게 할까';stage=1;branches.forEach((b,i)=>actions.append(btn(b.label,()=>{choice=i;page=0;phase='outcome';render();},false,b.cost?'<span class="cost">'+b.cost+'</span>':'')));}
+ else if(phase==='outcome'){const b=branches[choice];html=b.pages[page];label=page<b.pages.length-1?'이야기가 이어집니다':'잠깐의 만남';stage=2;actions.append(btn(page<b.pages.length-1?'다음':'길로 돌아가기',()=>{if(page<b.pages.length-1){page++;}else phase='end';render();},true,'<span class="next-mark" aria-hidden="true">→</span>'));}
+ else{html='<p>커피차의 불빛이 멀어진다.</p><p class="direction">여기까지가 대화 화면 시안입니다.<br>다른 선택의 반응도 살펴볼 수 있습니다.</p>';label='미리보기 완료 · 게임 저장에 영향 없음';stage=2;actions.append(btn('다른 선택 해보기',()=>{visited=visited.filter(x=>x.key==='intro'||x.key==='choice');phase='choice';choice=null;page=0;render();},true));}
+ const key=phase==='outcome'?'outcome-'+choice+'-'+page:phase;
+ if(phase!=='end'&&!visited.some(x=>x.key===key))visited.push({key,html,label:phase==='intro'?'길 위에서':phase==='choice'?'커피차 주인':page===0?'선택과 반응':'이어지는 이야기'});
+ const copy=$('#copy');copy.innerHTML=html;copy.scrollTop=0;copy.classList.remove('enter');requestAnimationFrame(()=>{copy.classList.add('enter');scrollHint();});
+ $('#beat').textContent=label;$('.progress').querySelectorAll('i').forEach((el,i)=>el.classList.toggle('on',i<=stage));
+ $('#announcement').textContent=phase==='choice'?'선택지 세 개. 커피를 사거나, 원두 파는 곳을 묻거나, 지나갈 수 있습니다.':label;
+}
+$('#restart').onclick=()=>{phase='intro';choice=null;page=0;visited=[];render();};
+$('#size').onclick=()=>{const large=document.body.classList.toggle('large');$('#size').setAttribute('aria-pressed',String(large));requestAnimationFrame(scrollHint);};
+$('#history').onclick=()=>{$('.history-scroll').innerHTML=visited.map(v=>'<section class="history-entry"><p class="history-label">'+v.label+'</p>'+v.html+'</section>').join('');$('#record').showModal();$('.history-scroll').scrollTop=0;};
+function closeRecord(){$('#record').close();$('#history').focus();}
+$('#close-record').onclick=closeRecord;$('#return-record').onclick=closeRecord;
+$('#copy').addEventListener('scroll',scrollHint,{passive:true});new ResizeObserver(scrollHint).observe($('#copy'));
+document.addEventListener('keydown',e=>{if($('#record').open||e.repeat)return;if((e.key==='Enter'||e.key===' ')&&phase!=='choice'&&document.activeElement===$('#copy')){e.preventDefault();$('#actions button').click();}});
+render();
+</script>
+</body>
+</html>

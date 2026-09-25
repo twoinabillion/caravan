@@ -19,7 +19,7 @@ G.mainEvidenceRows = ()=>{
     {id:'trace',done:!!f.first_order_trace,target:'yangsan',event:'onboarding_first_road'},
     {id:'parents_split',done:G.parentSplitKnown(),target:'gimcheon',event:'parents_diversion_manifest'},
     {id:'parents_work',done:!!f.parents_routes_traced,target:'cheongju',event:'parents_separated_work'},
-    {id:'key',done:!!f.parent_key_found,target:'cheongju',event:f.parent_cache_shared?'story_parent_route_shared':f.parent_cache_guarded?'story_parent_route_guarded':f.parent_key_located?'story_personal_cache':'story_family_key'},
+    {id:'key',done:!!f.parent_key_found,target:'cheongju',event:f.parent_cache_shared?'story_parent_route_shared':f.parent_cache_guarded?'story_parent_route_guarded':f.parent_key_located?'story_personal_cache':!f.parent_principle_found?'story_family_principle':'story_family_key'},
     {id:'witness',done:p.관계.have>=p.관계.need,target:'cheongju',event:'main_transfer_testimony'},
     {id:'command',done:!!(f.main_command_record||f.es_truth)&&p.진실.have>=p.진실.need,target:'cheonan',event:f.main_testimony_record?'main_command_ledger':'main_command_companion_ledger'},
     {id:'father',done:!!f.father_fate_known,target:'pyeongtaek',event:f.failed_namsan_known?'parents_father_last_log':'history_failed_namsan'},
@@ -37,6 +37,15 @@ G.mainEvidenceChoiceTimes = (id,seen=[])=>{
   }));
 };
 G.mainEvidenceSourceId = id=>Object.keys(D.mainRecoveryEvents).find(source=>D.mainRecoveryEvents[source]===id)||id;
+G.mainEvidenceEntryId = id=>{
+  // Entry is not completion. Old unchosen key scenes must first play the video;
+  // already located/extracted legacy keys retain their earned progress.
+  if(G.mainEvidenceSourceId(id)==='story_family_key'&&!S.flags.parent_principle_found
+    &&!S.flags.parent_key_located&&!S.flags.parent_key_found){
+    return S.at==='suwon'?'main_recovery_story_family_principle':'story_family_principle';
+  }
+  return id;
+};
 G.mainEvidenceEventDone = id=>{
   const source=G.mainEvidenceSourceId(id);
   return source==='parents_diversion_manifest'?G.parentSplitKnown():
@@ -47,6 +56,7 @@ G.mainEvidenceEventDone = id=>{
 G.mainEvidenceLocationReady = id=>!['history_parents_network','parents_mother_reunion','parents_mother_truth'].includes(G.mainEvidenceSourceId(id))
   ||(!S.driving&&S.at==='suwon');
 G.resolveMainEvidenceChain = id=>{
+  id=G.mainEvidenceEntryId(id);
   if(!G.mainEvidenceLocationReady(id)||G.mainEvidenceEventDone(id)) return null;
   const source=G.mainEvidenceSourceId(id),recovery=D.mainRecoveryEvents[source];
   if(!recovery) return id;

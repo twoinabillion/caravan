@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#142826">
+<title>서울까지 400km · 조수석의 생활 도구</title>
+<link rel="preload" href="/assets/BlackHanSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/passenger.css">
+<script defer src="/dialogue.js"></script>
+</head>
+<body>
+<main class="game" aria-label="트럭 카페 대화 시안">
+  <figure class="scene"><img src="/assets/passenger-scene.png" alt="비 내리는 산길. 달구지 옆에 문을 연 커피차에서 따뜻한 불빛이 새어 나온다."></figure>
+  <header class="road-header"><span class="wordmark"><img src="/assets/passenger-wordmark.png" alt="서울까지 400km"></span><button id="history" aria-haspopup="dialog">기록</button></header>
+  <section class="manuscript" aria-labelledby="event-title">
+    <header class="scene-heading"><h1 id="event-title">트럭 카페</h1></header>
+    <div class="reading"><div id="copy" class="copy" role="region" aria-label="현재 장면" tabindex="0"></div><span class="scroll-hint" hidden>아래로 이어 읽기</span></div>
+    <div id="actions" class="actions" role="group" aria-label="다음 행동"></div>
+    <span id="beat" class="sr"></span>
+  </section>
+  <dialog id="record" aria-labelledby="record-title">
+    <header class="history-head"><h2 id="record-title">길 위의 기록</h2><button id="close-record" aria-label="기록 닫기">닫기</button></header>
+    <div class="history-tools"><span>트럭 카페</span><button id="size" aria-label="큰 글씨" aria-pressed="false">큰 글씨</button></div>
+    <div class="history-scroll"></div>
+    <footer class="history-foot"><button id="return-record">읽던 곳으로 돌아가기</button><button id="restart">처음부터 보기</button></footer>
+  </dialog>
+</main>
+<div id="announcement" class="sr" aria-live="polite"></div>
+</body>
+</html>

@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-12T18:33:56.669Z",
+  "generatedAt": "2026-09-25T00:50:00.969Z",
   "html": {
-    "bytes": 77694216,
+    "bytes": 79905231,
     "warnBytes": 32000000,
     "maxBytes": 80000000
   },
   "embedded": {
-    "files": 547,
-    "bytes": 48639885,
+    "files": 643,
+    "bytes": 50117100,
     "categories": {
       "ui": {
-        "files": 31,
-        "bytes": 4310670,
-        "encodedBytes": 5747604
+        "files": 35,
+        "bytes": 4824198,
+        "encodedBytes": 6432308
       },
       "audio": {
         "files": 45,
@@ -20,19 +20,19 @@
         "encodedBytes": 12947612
       },
       "scene": {
-        "files": 399,
-        "bytes": 33221207,
-        "encodedBytes": 44295512
+        "files": 480,
+        "bytes": 33871556,
+        "encodedBytes": 45162752
+      },
+      "other": {
+        "files": 34,
+        "bytes": 672235,
+        "encodedBytes": 896364
       },
       "portrait": {
         "files": 49,
         "bytes": 1038443,
         "encodedBytes": 1384668
-      },
-      "other": {
-        "files": 23,
-        "bytes": 358897,
-        "encodedBytes": 478568
       }
     }
   },
@@ -86,76 +86,76 @@
       "encodedBytes": 992448
     },
     {
-      "path": "assets/scenes/intro-busan-cold-storage-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 592097,
-      "encodedBytes": 789464
+      "path": "assets/ui/home-props-atlas-v2.webp",
+      "mime": "image/webp",
+      "bytes": 343728,
+      "encodedBytes": 458304
     },
     {
-      "path": "assets/scenes/memory-first-winter-route-v1.jpg",
+      "path": "assets/scenes/intro-departure-start-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 583216,
-      "encodedBytes": 777624
+      "bytes": 342821,
+      "encodedBytes": 457096
     },
     {
-      "path": "assets/scenes/memory-grandfather-workshop-v1.jpg",
+      "path": "assets/scenes/onboarding-first-road-scan-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 526416,
-      "encodedBytes": 701888
+      "bytes": 328076,
+      "encodedBytes": 437436
     },
     {
-      "path": "assets/scenes/resistance-aftermath-v1.jpg",
+      "path": "assets/scenes/intro-departure-conversation-v4.jpg",
       "mime": "image/jpeg",
-      "bytes": 524908,
-      "encodedBytes": 699880
+      "bytes": 316589,
+      "encodedBytes": 422120
     },
     {
-      "path": "assets/scenes/intro-busan-water-line-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 513325,
-      "encodedBytes": 684436
+      "path": "assets/ui/road-journey-log-panel-v1.webp",
+      "mime": "image/webp",
+      "bytes": 309208,
+      "encodedBytes": 412280
     },
     {
-      "path": "assets/scenes/recruit-minji-welding.jpg",
-      "mime": "image/jpeg",
-      "bytes": 500859,
-      "encodedBytes": 667812
+      "path": "assets/fonts/BlackHanSans-Regular.woff",
+      "mime": "font/woff",
+      "bytes": 308096,
+      "encodedBytes": 410796
     },
     {
-      "path": "assets/scenes/resistance-mid-depot-conflict-v1.jpg",
+      "path": "assets/scenes/onboarding-main-mission-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 488285,
-      "encodedBytes": 651048
+      "bytes": 290294,
+      "encodedBytes": 387060
     },
     {
-      "path": "assets/scenes/story-bridge-departure-echo-v1.jpg",
+      "path": "assets/scenes/seoul-uplink-reveal-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 476185,
-      "encodedBytes": 634916
+      "bytes": 289082,
+      "encodedBytes": 385444
     },
     {
-      "path": "assets/scenes/resistance-north-route-rehearsal-v1.jpg",
+      "path": "assets/scenes/intro-family-farewell-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 465739,
-      "encodedBytes": 620988
+      "bytes": 278434,
+      "encodedBytes": 371248
     },
     {
-      "path": "assets/scenes/story-system-answer-v1.jpg",
+      "path": "assets/scenes/intro-cold-open-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 463619,
-      "encodedBytes": 618160
+      "bytes": 262691,
+      "encodedBytes": 350256
     },
     {
-      "path": "assets/scenes/memory-empty-workshop-v1.jpg",
+      "path": "assets/scenes/intro-family-order-v1.jpg",
       "mime": "image/jpeg",
-      "bytes": 453314,
-      "encodedBytes": 604420
+      "bytes": 234945,
+      "encodedBytes": 313260
     },
     {
-      "path": "assets/scenes/parents-failed-namsan-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 449539,
-      "encodedBytes": 599388
+      "path": "assets/ui/event-result-ticket-v1.webp",
+      "mime": "image/webp",
+      "bytes": 232332,
+      "encodedBytes": 309776
     }
   ]
 }

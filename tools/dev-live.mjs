@@ -330,7 +330,7 @@ async function assetGallery(){
   input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:6px;background:#080d12;color:var(--ink);font:inherit}
   main{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;padding:18px 22px 40px}
   figure{min-width:0;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:var(--panel);box-shadow:0 8px 20px rgba(0,0,0,.2)}
-  figure[hidden]{display:none}img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#070b10}
+  figure[hidden]{display:none}img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#070b10}
   figcaption{display:grid;gap:5px;padding:10px 11px}figcaption b{overflow:hidden;font-size:12px;white-space:nowrap;text-overflow:ellipsis}figcaption small{color:var(--muted);font-size:10px}
   #pulse{color:var(--cyan)}@media(max-width:620px){header{grid-template-columns:1fr;padding:14px}main{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px}h1{font-size:17px}}
   </style></head><body><header><div><h1>AI 이미지 <span>LIVE</span></h1><small><span id="pulse">●</span> assets/ 전체 ${images.length}개 · 최근 생성순 · 저장 즉시 갱신</small></div><input id="search" type="search" placeholder="파일명으로 찾기"></header><main>${cards}</main><script>
