@@ -178,7 +178,6 @@ D.scenes = {
   'history-three-days-silence-v1':'__SCENE_HISTORY_THREE_DAYS_SILENCE_V1__',
   'history-failed-namsan-v1':'__SCENE_HISTORY_FAILED_NAMSAN_V1__',
   'history-parents-resistance-v1':'__SCENE_HISTORY_PARENTS_RESISTANCE_V1__',
-  'intro-resistance-begins':'__SCENE_INTRO_RESISTANCE_FIRST_VOICES_V1__',
   'intro-resistance-first-voices-v1':'__SCENE_INTRO_RESISTANCE_FIRST_VOICES_V1__',
   'intro-resistance-underground-v1':'__SCENE_INTRO_RESISTANCE_UNDERGROUND_V1__',
   'memory-busan-terminal-v1':'__SCENE_MEMORY_BUSAN_TERMINAL_V1__',
@@ -332,6 +331,9 @@ D.scenes = {
   'recruit-jaeyi-follow-shelf':'__SCENE_RECRUIT_JAEYI_FOLLOW_SHELF__',
   'recruit-eunsu-follow-lights':'__SCENE_RECRUIT_EUNSU_FOLLOW_LIGHTS__'
 };
+
+// Same image, one embedded copy. Keep the legacy scene key and exact bytes.
+D.scenes['intro-resistance-begins']=D.scenes['intro-resistance-first-voices-v1'];
 
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */

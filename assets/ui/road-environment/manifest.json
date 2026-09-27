@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "styleId": "caravan-grounded-cinematic-v1",
+  "purpose": "live-road-environment",
+  "delivery": [
+    1024,
+    576
+  ],
+  "alphaSky": true,
+  "groundAnchor": 1,
+  "references": [
+    "assets/ui/journey-road-backdrop-v1.webp",
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "geography": "D.nodes, D.geo and D.nodeScenery; illustrative roadside environments, not surveyed road views. Fictional locations retain game descriptions.",
+  "locations": {
+    "busan": {
+      "file": "busan-v1.webp",
+      "motif": "항구",
+      "brief": "Gamcheon harbor in Busan: sheltered inlet below densely built steep Korean hills, container cranes and worn coastal warehouses, dark seawater, no inland stadium.",
+      "status": "generated-asset-reviewed"
+    },
+    "gimhae": {
+      "file": "gimhae-v1.webp",
+      "motif": "들판",
+      "brief": "Gimhae's broad low-lying plain, overgrown disused small civilian airfield runway and low hangars, distant low ridges, rice fields.",
+      "status": "generated-asset-reviewed"
+    },
+    "yangsan": {
+      "file": "yangsan-v1.webp",
+      "motif": "고가차도",
+      "brief": "Yangsan valley skyline and wooded rounded hills, worn apartments and low-rise roofs, same approved seed composition.",
+      "status": "generated-asset-reviewed"
+    },
+    "miryang": {
+      "file": "miryang-v1.webp",
+      "motif": "장터와 들판",
+      "brief": "Miryang rural valley: old low-rise market roofs, subdued canvas market awnings, orchard rows and paddies, rounded wooded ridges, no large modern skyline.",
+      "status": "generated-asset-reviewed"
+    },
+    "jinju": {
+      "file": "jinju-v1.webp",
+      "motif": "남강변",
+      "brief": "Jinju Namgang riverside, broad calm river and a partly broken low concrete bridge, old town roofs behind trees, weathered unlit lantern frames by the bank.",
+      "status": "generated-asset-reviewed"
+    },
+    "hapcheon": {
+      "file": "hapcheon-v1.webp",
+      "motif": "과수원",
+      "brief": "Hapcheon apple orchard in a green inland valley: irregular orchard rows, farm sheds and wooded mountain foothills, no city skyline.",
+      "status": "generated-asset-reviewed"
+    },
+    "geochang": {
+      "file": "geochang-v1.webp",
+      "motif": "산지 분지",
+      "brief": "Geochang basin encircled by layered forested mountains, a small weathered town among cultivated plots in the valley.",
+      "status": "generated-asset-reviewed"
+    },
+    "daegu": {
+      "file": "daegu-v1.webp",
+      "motif": "돔 시장",
+      "brief": "Daegu inland basin: distant large low domed baseball stadium repurposed as a covered market (fictional game landmark), weathered apartment clusters and broad foothills. Dome below skyline midpoint, no Seoul tower or sea.",
+      "status": "generated-asset-reviewed"
+    },
+    "gumi": {
+      "file": "gumi-v1.webp",
+      "motif": "공단",
+      "brief": "Gumi industrial district on inland plain: long factories with sawtooth roofs, idle chimneys, cooling infrastructure, mountain ridge behind. No coastal cranes or sea.",
+      "status": "generated-asset-reviewed"
+    },
+    "gimcheon": {
+      "file": "gimcheon-v1.webp",
+      "motif": "도로 분기",
+      "brief": "Gimcheon inland transport junction: layered weathered concrete highway ramps and rail freight sheds, patches of fields between low hills, empty signboards with no letters.",
+      "status": "generated-asset-reviewed"
+    },
+    "muju": {
+      "file": "muju-v1.webp",
+      "motif": "산속 터널",
+      "brief": "Muju wooded mountain valley: dark road tunnel mouth set into forested rock, small improvised shelters tucked outside its portal. No large city.",
+      "status": "generated-asset-reviewed"
+    },
+    "namwon": {
+      "file": "namwon-v1.webp",
+      "motif": "누각과 하천",
+      "brief": "Namwon: weathered traditional Korean open pavilion and tiled roofs beside a quiet riverbank, low town and forested ridge.",
+      "status": "generated-asset-reviewed"
+    },
+    "jeonju": {
+      "file": "jeonju-v1.webp",
+      "motif": "기와와 시장",
+      "brief": "Jeonju western market edge: dense low Korean shop roofs and traditional tiled rooftops, small canvas awnings, distant modest hills. No pagodas or palaces.",
+      "status": "generated-asset-reviewed"
+    },
+    "yeongdong": {
+      "file": "yeongdong-v1.webp",
+      "motif": "포도밭",
+      "brief": "Yeongdong inland vineyard slopes: rows of weathered grape trellises overgrown with vines, small farm sheds, enclosing forested hills.",
+      "status": "generated-asset-reviewed"
+    },
+    "daejeon": {
+      "file": "daejeon-v1.webp",
+      "motif": "연구단지",
+      "brief": "Daejeon research campus: weathered low laboratory buildings, small dish antenna and institutional blocks among pines, mountain ridges, no giant space launch tower.",
+      "status": "generated-asset-reviewed"
+    },
+    "nonsan": {
+      "file": "nonsan-v1.webp",
+      "motif": "넓은 평야",
+      "brief": "Nonsan broad agricultural plain: paddies and narrow irrigation channels, small farm compounds, sparse trees and distant low horizon; no towering mountains.",
+      "status": "generated-asset-reviewed"
+    },
+    "gongju": {
+      "file": "gongju-v1.webp",
+      "motif": "강변 산성",
+      "brief": "Gongju: wooded river bluff carrying weathered Korean stone fortress walls, broad river with low bridge piers, traditional roofs near wall.",
+      "status": "generated-asset-reviewed"
+    },
+    "cheongju": {
+      "file": "cheongju-v1.webp",
+      "motif": "방송국",
+      "brief": "Cheongju: inland provincial broadcasting complex with a damaged steel lattice transmission mast, low city roofs and hills. Mast is ordinary thin radio lattice with no observation deck; absolutely no Namsan tower.",
+      "status": "generated-asset-reviewed"
+    },
+    "cheonan": {
+      "file": "cheonan-v1.webp",
+      "motif": "삼거리",
+      "brief": "Cheonan urban edge: broad three-way road junction seen at a distance, aging apartment blocks, roadside low workshops, low hills, no sea.",
+      "status": "generated-asset-reviewed"
+    },
+    "pyeongtaek": {
+      "file": "pyeongtaek-v1.webp",
+      "motif": "항구 물류",
+      "brief": "Pyeongtaek port logistics plain: dense sealed shipping-container stacks and immense harbor cranes, flat west-coast inlet, warehouses and very low horizon.",
+      "status": "generated-asset-reviewed"
+    },
+    "suwon": {
+      "file": "suwon-v1.webp",
+      "motif": "성곽",
+      "brief": "Suwon: Korean Hwaseong-style low stone fortress walls and tiled gate pavilion integrated with worn city roofs, gentle inland hills, no Seoul Namsan tower.",
+      "status": "generated-asset-reviewed"
+    },
+    "seoul": {
+      "file": "seoul-v1.webp",
+      "motif": "남산과 한강",
+      "brief": "Seoul: recognizable Namsan hill and slender N Seoul observation tower, weathered dense city apartments across the broad Han River, broken bridge piers. Tower ONLY here, subdued not monumental.",
+      "status": "generated-asset-reviewed"
+    },
+    "lake": {
+      "file": "lake-v1.webp",
+      "motif": "댐 호수",
+      "brief": "Fictional quiet dam reservoir near southern inland hills: forested slopes reflected in still water, a tiny fishing shack and unoccupied moored skiff.",
+      "status": "generated-asset-reviewed"
+    },
+    "mall": {
+      "file": "mall-v1.webp",
+      "motif": "폐백화점",
+      "brief": "Fictional inland abandoned department store: broad windowless commercial block with faded blank facade, empty parking area and overgrown lots, low city and ridges beyond.",
+      "status": "generated-asset-reviewed"
+    },
+    "tower": {
+      "file": "tower-v1.webp",
+      "motif": "산 능선 통신탑",
+      "brief": "Fictional mountain transmission site: skeletal utilitarian radio mast with cross braces and small dishes on wooded ridge, concrete equipment shed. No observation deck, no Seoul landmark.",
+      "status": "generated-asset-reviewed"
+    },
+    "spring": {
+      "file": "spring-v1.webp",
+      "motif": "노천 온천",
+      "brief": "Fictional wooded inland hot spring: low bathhouse roof and stone pools beside a mountain stream, faint local steam only, surrounding dense pines.",
+      "status": "generated-asset-reviewed"
+    },
+    "airfield": {
+      "file": "airfield-v1.webp",
+      "motif": "폐 군비행장",
+      "brief": "Fictional disused military airfield: broad cracked runway, grass margins, two squat hardened hangars and low distant hills. No planes in flight, no combat.",
+      "status": "generated-asset-reviewed"
+    },
+    "solar": {
+      "file": "solar-v1.webp",
+      "motif": "태양광 농장",
+      "brief": "Fictional inland solar farm: extensive ordered arrays of aged dark photovoltaic panels across low rolling fields, small maintenance shed, low distant tree line.",
+      "status": "generated-asset-reviewed"
+    },
+    "reststop": {
+      "file": "reststop-v1.webp",
+      "motif": "고속도로 휴게소",
+      "brief": "Fictional sleeping Korean highway rest area: low service building, abandoned fuel canopy and broad empty parking lot, forest behind. Blank signboards without words.",
+      "status": "generated-asset-reviewed"
+    },
+    "tunnelbook": {
+      "file": "tunnelbook-v1.webp",
+      "motif": "폐터널 도서관",
+      "brief": "Fictional book-storage tunnel in inland wooded hills: old railway tunnel portal, weathered brick utility annex and wooden book crates sheltered under a small awning outside.",
+      "status": "generated-asset-reviewed"
+    },
+    "ulsan": {
+      "file": "ulsan-v1.webp",
+      "motif": "해안 공업",
+      "brief": "Ulsan coastal heavy industry: vast idle shipyard gantry cranes, refinery pipes and cylindrical tanks by sheltered water, industrial hills beyond. No Seoul tower.",
+      "status": "generated-asset-reviewed"
+    },
+    "yeosu": {
+      "file": "yeosu-v1.webp",
+      "motif": "남해안 항구",
+      "brief": "Yeosu south-coast harbor: hilly islands across sheltered seawater, compact coastal houses and small moored fishing boats, restrained warm harbor lamps.",
+      "status": "generated-asset-reviewed"
+    },
+    "suncheon": {
+      "file": "suncheon-v1.webp",
+      "motif": "갈대 습지",
+      "brief": "Suncheon bay wetland: broad reed beds and winding tidal water channels, low rounded coastal hills in distance, no dense city or high-rise landmarks.",
+      "status": "generated-asset-reviewed"
+    },
+    "gwangju": {
+      "file": "gwangju-v1.webp",
+      "motif": "대인시장",
+      "brief": "Gwangju Daein market district: layered low-rise Korean urban market roofs, weathered awnings and modest apartment blocks, broad mountain backdrop, no ocean.",
+      "status": "generated-asset-reviewed"
+    },
+    "damyang": {
+      "file": "damyang-v1.webp",
+      "motif": "대숲",
+      "brief": "Damyang bamboo landscape: dense slender green-gray bamboo groves, low weathered tiled farm roofs in clearing, gentle wooded hill beyond.",
+      "status": "generated-asset-reviewed"
+    },
+    "mokpo": {
+      "file": "mokpo-v1.webp",
+      "motif": "여객항",
+      "brief": "Mokpo ferry terminal: aging waterfront passenger terminal and stationary ferries at docks, modest rocky coastal hill and clustered city roofs, distant islands.",
+      "status": "generated-asset-reviewed"
+    },
+    "andong": {
+      "file": "andong-v1.webp",
+      "motif": "하회마을",
+      "brief": "Andong Hahoe village: low curved Korean tiled roofs and thatched houses within an inland river bend, pine-covered slope and broad sandy riverbank.",
+      "status": "generated-asset-reviewed"
+    },
+    "mungyeong": {
+      "file": "mungyeong-v1.webp",
+      "motif": "산길과 관문",
+      "brief": "Mungyeong Saejae: old low Korean stone gateway with tiled pavilion between steep forested mountain slopes, narrow valley and mature pines.",
+      "status": "generated-asset-reviewed"
+    },
+    "danyang": {
+      "file": "danyang-v1.webp",
+      "motif": "석회암 강변",
+      "brief": "Danyang river landscape: pale layered limestone cliffs above a winding inland river, low riverside town roofs and forested ridges.",
+      "status": "generated-asset-reviewed"
+    },
+    "wonju": {
+      "file": "wonju-v1.webp",
+      "motif": "치악산 아래",
+      "brief": "Wonju beneath Chiaksan: imposing layered forested ridges enclosing a weathered low town and patches of farmland; inland, no coast.",
+      "status": "generated-asset-reviewed"
+    },
+    "daegwallyeong": {
+      "file": "daegwallyeong-v1.webp",
+      "motif": "고원과 풍력",
+      "brief": "Daegwallyeong high pass: rolling upland meadows and conifer ridges with several slender distant wind turbines, few buildings, cool subdued plateau.",
+      "status": "generated-asset-reviewed"
+    },
+    "gangneung": {
+      "file": "gangneung-v1.webp",
+      "motif": "동해와 소나무",
+      "brief": "Gangneung Gyeongpo coastal plain: broad open East Sea horizon, pale narrow beach and maritime pines with a few low worn coastal houses, no big harbor cranes.",
+      "status": "generated-asset-reviewed"
+    },
+    "sokcho": {
+      "file": "sokcho-v1.webp",
+      "motif": "어항과 산세",
+      "brief": "Sokcho fishing harbor: modest fishing boats and breakwaters, compact seaside roofs, sharply layered Seorak mountain silhouettes on landward side.",
+      "status": "generated-asset-reviewed"
+    },
+    "icheon": {
+      "file": "icheon-v1.webp",
+      "motif": "가마터",
+      "brief": "Icheon rural pottery district: low traditional wood-fired kiln roof and clay workshop sheds, stacked muted earthenware shapes, farmland and gentle hills, no giant chimney.",
+      "status": "generated-asset-reviewed"
+    },
+    "gyeongju": {
+      "file": "gyeongju-v1.webp",
+      "motif": "왕릉",
+      "brief": "Gyeongju royal tomb landscape: large smooth grass-covered burial mounds, low traditional roofs and scattered pines, distant mountains. Tombs are grassy rounded earth, no Egyptian pyramids.",
+      "status": "generated-asset-reviewed"
+    },
+    "pohang": {
+      "file": "pohang-v1.webp",
+      "motif": "제철소",
+      "brief": "Pohang coastal steelworks: complex blast furnace towers, pipes, long steel mill halls and industrial waterfront with distant low hills, rusted muted metal.",
+      "status": "generated-asset-reviewed"
+    },
+    "sangju": {
+      "file": "sangju-v1.webp",
+      "motif": "강변 자전거길",
+      "brief": "Sangju riverside agricultural plain: quiet river embankment, slender empty cycle path, fields and orderly poplar trees, low Korean town roofs far away.",
+      "status": "generated-asset-reviewed"
+    },
+    "gunsan": {
+      "file": "gunsan-v1.webp",
+      "motif": "오래된 내항",
+      "brief": "Gunsan old inner harbor: aging low brick warehouses and rust-streaked moored fishing boats along tidal docks, flat estuary and low city roofs.",
+      "status": "generated-asset-reviewed"
+    },
+    "chungju": {
+      "file": "chungju-v1.webp",
+      "motif": "산 사이 호수",
+      "brief": "Chungju lake: broad reservoir enclosed by forested ridges, small coves and tiny unoccupied fishing boat at a weathered jetty, no ocean port.",
+      "status": "generated-asset-reviewed"
+    },
+    "sejong": {
+      "file": "sejong-v1.webp",
+      "motif": "행정 신도시",
+      "brief": "Sejong administrative new town: long modern government-office blocks and repetitive apartment districts weathered by abandonment, broad planned boulevards, distant gentle hills.",
+      "status": "generated-asset-reviewed"
+    },
+    "lighthouse": {
+      "file": "lighthouse-v1.webp",
+      "motif": "서해 등대",
+      "brief": "Fictional west-coast lighthouse: modest white cylindrical lighthouse with small lantern room on rocky coastal knoll, broad tidal sea and distant low islands. No people.",
+      "status": "generated-asset-reviewed"
+    },
+    "drivein": {
+      "file": "drivein-v1.webp",
+      "motif": "자동차극장",
+      "brief": "Fictional abandoned drive-in cinema: broad blank outdoor projection screen on a steel frame, overgrown empty parking field, low projection booth and hills behind. Screen has no picture or text.",
+      "status": "generated-asset-reviewed"
+    },
+    "sunflower": {
+      "file": "sunflower-v1.webp",
+      "motif": "해바라기 들판",
+      "brief": "Fictional southern inland sunflower field: broad untended muted ochre sunflower rows, low farm shed and distant wooded hills; desaturated no vivid yellow cartoon.",
+      "status": "generated-asset-reviewed"
+    },
+    "maehwa": {
+      "file": "maehwa-v1.webp",
+      "motif": "섬진강 매화",
+      "brief": "Seomjin river plum village: pale flowering plum orchard terraces, small tiled farm houses and broad winding river between wooded hills, restrained desaturated blossoms.",
+      "status": "generated-asset-reviewed"
+    },
+    "mingyu_ridge": {
+      "file": "mingyu_ridge-v1.webp",
+      "motif": "통신 장비 능선",
+      "brief": "Fictional inland wooded ridge with small weathered radio repeater array and concrete service hut, layered mountains, ordinary lattice poles not a landmark observation tower.",
+      "status": "generated-asset-reviewed"
+    },
+    "jaeyi_cache": {
+      "file": "jaeyi_cache-v1.webp",
+      "motif": "외딴 창고",
+      "brief": "Fictional secluded inland storage yard: one corrugated-roof warehouse partly hidden by trees, stacked weathered crates beneath lean-to, low agricultural valley beyond.",
+      "status": "generated-asset-reviewed"
+    },
+    "cablecar": {
+      "file": "cablecar-v1.webp",
+      "motif": "멈춘 케이블카",
+      "brief": "Fictional forested mountain cable-car line: slender steel support pylons and two tiny unoccupied gondola cabins hanging above tree canopy, layered inland ridges.",
+      "status": "generated-asset-reviewed"
+    },
+    "filmset": {
+      "file": "filmset-v1.webp",
+      "motif": "기와 세트장",
+      "brief": "Fictional historical drama film set: compact row of weathered Korean tiled wooden houses and low courtyard walls, visibly simple timber backs at one edge, rural wooded hills.",
+      "status": "generated-asset-reviewed"
+    }
+  },
+  "review": {
+    "assetVision": "58 generated outputs reviewed for style, transparent-sky composition and location motif on 2026-09-26",
+    "liveGallery": "All 58 present on http://127.0.0.1:4318/__live/assets",
+    "inGameCrop": "pending intentional live-code apply; current Studio screen access unavailable"
+  }
+}

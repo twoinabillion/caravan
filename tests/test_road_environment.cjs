@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
+const source=fs.readFileSync(path.join(root,'src/05-scene.js'),'utf8');
+const terrainSource=fs.readFileSync(path.join(root,'src/05a-road-environment.js'),'utf8');
+const manifest=require('../assets/ui/road-environment/manifest.json');
+const data=vm.runInNewContext(fs.readFileSync(path.join(root,'src/03-data.js'),'utf8')+';D');
+assert.deepEqual(Object.keys(manifest.locations).sort(),Object.keys(data.nodes).sort(),'every destination needs dedicated terrain');
+assert(terrainSource.includes('/*__ROAD_ENVIRONMENTS__*/{}'),'renderer needs a complete location registry, not the Yangsan-only branch');
+assert(!source.includes("profile.scenery==='overpass'&&roadBackdropArt"),'no detailed/procedural quality switch');
+assert(!source.includes('drawCelestial(hour,dark,wx,true)'),'sun must never be repainted above terrain');
+assert(!source.includes('ctx.globalAlpha=state.mix'),'do not dissolve two entire worlds over one another');
+assert(!source.includes("profile.mix<.5"),'roadside furniture must not pop at transition midpoint');
+console.log('PASS environment coverage and renderer ownership regressions');

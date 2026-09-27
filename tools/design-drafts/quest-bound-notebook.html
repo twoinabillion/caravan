@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; font-src data:; form-action 'none'; base-uri 'none'">
+  <title>상혁의 공책 · 디자인 초안</title>
+  <link rel="stylesheet" href="quest-bound-notebook.css">
+</head>
+<body>
+<main class="notebook-scene">
+  <header class="notebook-heading"><h1>여정 기록</h1><span>상혁의 공책</span></header>
+  <input class="page-state" type="radio" name="page" id="notes-main" aria-label="메인 스토리" checked>
+  <input class="page-state" type="radio" name="page" id="notes-side" aria-label="사이드 미션">
+  <input class="page-state" type="radio" name="page" id="notes-done" aria-label="완료 기록">
+  <div class="bound-notebook">
+    <nav class="notebook-index" aria-label="공책 색인">
+      <label for="notes-main">메인 스토리</label>
+      <label for="notes-side">사이드 미션</label>
+      <label for="notes-done">완료 기록</label>
+    </nav>
+    <div class="notebook-cover">
+      <div class="notebook-sheet">
+        <div class="notebook-binding" aria-hidden="true"></div>
+        <div class="notebook-scroll" tabindex="0" aria-label="공책 본문 · 스크롤해서 읽기">
+          <section class="note-main">
+            <p class="written-date">첫날 밤, 김천 갈림길</p>
+            <h2>아빠와 엄마가<br>남긴 기록</h2>
+            <p class="written-thought">아빠랑 엄마가 뭘 하려던 건지는 아직 모르겠다.<br>둘이 남긴 기록을 같이 봐야 좀 알 것 같다.</p>
+            <div class="margin-aside" role="note" aria-label="고쳐 쓴 혼잣말">
+              <p class="crossed-thought"><span class="note-sr">지운 말: </span><del>혼자서는 무리일 것 같다<svg class="pen-crossout" viewBox="0 0 210 28" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 16 Q55 11 110 14 T206 11 M7 10 Q75 17 133 11 T208 16 M14 21 Q95 7 200 18"/></svg></del></p>
+              <p class="added-thought"><svg class="pen-arrow" viewBox="0 0 30 28" aria-hidden="true" focusable="false"><path d="M5 2 Q0 22 24 20 M18 15 L25 20 L19 25"/></svg><span class="note-sr">덧쓴 말: </span>해 보기 전엔 모르지.</p>
+            </div>
+            <p class="pencil-note">청주 방송국에 가면 주변부터 둘러보자.</p>
+            <details class="written-record" open>
+              <summary>확인한 것 <span aria-hidden="true"></span></summary>
+              <p>도윤이네를 돕다가 이송표를 봤다. 지금도 가족을 갈라놓는 표가 나오고 있었다.</p>
+            </details>
+            <svg class="dalguji-doodle" viewBox="0 0 104 51" role="img" aria-label="공책 구석의 작은 달구지 낙서">
+              <path d="M12 34 L11 9 Q32 6 59 8 L60 18 L76 17 L87 28 L89 36 L80 37 M64 37 L35 38 M21 38 L12 37 M60 19 L60 35 M63 22 L74 21 L80 28 L64 29 Z M18 13 L35 12 L36 22 L18 23 Z M40 12 L52 12 L53 22 L41 22 Z M15 30 L54 29"/>
+              <path d="M21 36 C20 27 34 29 34 37 C34 46 20 45 21 36 M65 36 C66 28 80 29 80 38 C77 46 64 45 65 36 M24 37 Q27 33 30 37 Q28 41 24 37 M69 37 Q74 34 76 38 M7 45 Q46 43 93 44"/>
+              <path class="pen-retrace" d="M9 33 L10 8 L58 6 M13 39 L19 39 M35 40 L64 39 M80 39 L92 38 L90 29 M19 46 Q37 48 45 46"/>
+            </svg>
+          </section>
+          <section class="note-side">
+            <p class="written-date">사람들에게 받은 부탁</p>
+            <h2>아직 맡은<br>부탁은 없다</h2>
+            <p class="written-thought">정착지에 들르면 사람들 얘기부터 들어 보자.</p>
+            <p class="sample-note">빈 목록 디자인 예시</p>
+          </section>
+          <section class="note-done">
+            <p class="written-date">지나온 기록</p>
+            <h2>끝낸 일</h2>
+            <p class="written-thought">부탁을 끝내면 까먹기 전에 여기 적어 두자.</p>
+            <p class="sample-note">빈 목록 디자인 예시<br>현재 완료 이력을 뜻하지 않습니다.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="notebook-tools">
+    <div class="note-main">
+      <p class="route-instruction"><b>청주 방송국</b><span>주변 탐색 · 열람 준비 30분</span></p>
+      <details class="route-preview"><summary>경로 보기 <span aria-hidden="true">↗</span></summary><p>초안에서는 이동하지 않습니다. 실제 게임에서는 선택한 노선의 제약을 지켜 경로를 안내합니다.</p></details>
+    </div>
+    <p class="note-side draft-notice">빈 목록 배치 예시 · 게임에 미적용</p>
+    <p class="note-done draft-notice">빈 목록 배치 예시 · 게임에 미적용</p>
+  </footer>
+  <nav class="notebook-dock" aria-label="하단 메뉴 배치 예시 · 실제 이동 없음"><span>길</span><span aria-current="page">목표</span><span>동료</span><span>가방</span><span>메뉴</span></nav>
+</main>
+</body>
+</html>

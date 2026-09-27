@@ -1,0 +1,7 @@
+:root{color-scheme:dark;font-family:Arial,"Apple SD Gothic Neo",sans-serif;color:#e6e1d6;background:#151b1e}
+*{box-sizing:border-box}body{margin:0}main{max-width:880px;margin:auto;padding:24px 14px 40px}
+header{padding:0 0 24px;border-bottom:1px solid #536065}h1{font-size:26px;line-height:1.3;margin:10px 0 14px}h2{font-size:23px;margin:6px 0 12px}
+p{font-size:15px;line-height:1.75;margin:8px 0;color:#cbc9c1;word-break:keep-all;overflow-wrap:anywhere}
+.eyebrow,.number{color:#bfa97f;font-size:12px;letter-spacing:.06em}.status{color:#9dacae;font-size:13px}
+section{padding:26px 0;border-bottom:1px solid #39464b}figure{margin:18px 0 8px}img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#0d1215}
+figcaption{font-size:12px;line-height:1.6;color:#a5b2b4;padding-top:8px}details{margin-top:16px}summary{cursor:pointer;min-height:44px;display:list-item;padding:12px 0;color:#d8c49d;font-size:14px}summary:focus-visible{outline:2px solid #d8c49d;outline-offset:3px}footer{color:#a5b2b4;font-size:13px;line-height:1.8;padding-top:22px;word-break:keep-all}

@@ -2,11 +2,13 @@
 
 ## Required workflow
 
+- For design changes, show a draft in Studio's **디자인 초안** window and discuss it with Sang before implementing the game UI. Register prototypes in `tools/design-drafts/manifest.json`; draft selection only prepares a chat request and must not auto-apply changes. Keep prototypes separate from gameplay/save state.
+
 - Read `docs/DEVELOPMENT_GUARDRAILS.md` before changing UI, gameplay flow, transitions, persistence, or visual assets.
 - Edit source files under `src/`, `assets/`, and `tools/`; never hand-edit the generated `서울까지400km.html`.
 - Before adding CSS, search the whole stylesheet for every existing selector and `!important` owner. Modify the owning final block instead of appending another `final`, `lock`, or emergency override.
 - The current bag layout has one owner: `<style id="bag-code-panel-final">` in `src/01-style.html`. The legacy inventory normalizer must not style `#ovl-status`.
-- Use `npm run dev:live` and inspect the actual `http://localhost:4173/` screen at the user's current state. A source diff or static DOM inspection is not visual QA.
+- Use `npm run dev:live` and inspect the user's actual current screen. In Live Game Studio, use the runtime preview URL supplied with the request (normally `http://127.0.0.1:4318/`, but ports can change), and its read-only current-scene endpoint before and after a change. `http://localhost:4173/` is only the standalone default. Do not start another server or open a fresh save as a substitute. A state snapshot, source diff or static DOM inspection is not visual QA.
 - CSS-only live updates must preserve the current screen. Structural updates are staged behind the live apply badge. Manual refresh in live mode must resume the save and restore the open road tool when supported.
 - A UI change is incomplete if text clips, panels overlap, a control has no clear purpose, a screen has unexplained dead space, or the next action is unavailable.
 - A logic change is incomplete until the entry condition, success path, cancel/back path, persistence after refresh, and next reachable action are accounted for.
@@ -27,13 +29,13 @@
 - Generate a large master, then export the repository delivery asset at the contract size. Never use a UI screenshot, generated text, border, caption, or watermark as part of scene art.
 - Pixel art is reserved for the road-approach cue layer under `assets/road-cues/`; it must not be reused for narrative scenes or portraits.
 - A visual asset is not complete until its aspect ratio, dimensions, identity continuity, world continuity, and style checklist all pass. Machine validation checks geometry and files; a human or vision QA pass remains mandatory for style.
-- New assets must appear in the live gallery at `http://localhost:4173/__live/assets` before being wired into gameplay. After wiring, inspect the exact in-game crop and confirm that no unintroduced companion or landmark appears.
+- New assets must appear in `/__live/assets` on the actual active preview origin before being wired into gameplay. After wiring, inspect the exact in-game crop and confirm that no unintroduced companion or landmark appears.
 
 
 <claude-mem-context>
 # Memory Context
 
-# [caravan] recent context, 2026-09-25 9:17am GMT+9
+# [caravan] recent context, 2026-09-27 10:29am GMT+9
 
 No previous sessions found.
 </claude-mem-context>

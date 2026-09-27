@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>목표 UI 검수 · 독립 샘플, 저장 없음</title>
+<div id="frame"><div id="app"><section id="scr-game" class="on"><div id="qa-return" style="padding:24px;color:#ddd">독립 UI 검수 · 실제 플레이 및 저장과 무관</div></section></div></div>
+<nav id="dock"><button id="dk-road">돌아가기</button><button id="dk-objectives">목표</button><button id="qa-large">큰 글씨</button><button id="qa-side">미션 예시</button><button id="qa-rerender">갱신</button></nav>
+<script>
+// Explicit sample data: no game engine, browser storage, save, travel or rewards.
+// Use the built game's complete CSS cascade and the production QuestLedgerUI.
+var S={at:'gimcheon',day:1,min:1312.632,flags:{},items:{},comps:{},party:[],quest:{ledgerId:'sample_delivery',kind:'deliver',item:'주소가 번진 편지',from:'gimcheon',to:'muju',noExpiry:true}};
+var D={nodes:{gimcheon:{name:'김천 갈림길'},cheongju:{name:'청주 방송국'},muju:{name:'무주 터널'}},comps:{minji:{name:'민지'}},npcs:{}};
+var qaLedger={tracked:[],mainHistory:[]},qaActions=0,qaSaves=0,qaSide=false;
+var qaCompanion={id:'companion_minji',kind:'companion',companion:'minji',status:'active',eyebrow:'동료 미션',title:'민지',phase:'개인 이야기 2/3 · 동료 Lv.2 · 유대 3',next:'야영 · 민지와 대화',progress:{have:2,need:3,label:'2/3'},steps:[{id:'minji_1',state:'done'},{id:'minji_2',state:'done'},{id:'minji_3',state:'upcoming'}]};
+var qaMain={id:'main_namsan',kind:'main',status:'active',chapterId:'parents-separated-work',eyebrow:'메인 스토리 · 2장',
+ title:'부모님이 두 곳에서 이어 만든 절차를 찾는다',phase:'중부 기록망과 남산 유지선',
+ next:'같은 화물 묶음 번호가 적힌 아빠의 정비 기록과 엄마의 증언 카드를 대조한다.',
+ why:'부모님은 갈라진 뒤에도 강제 이송선만 떼는 순서와 지워질 증언을 서로에게 보냈다.',
+ steps:[{id:'family',state:'done',label:'확인한 기록'},{state:'upcoming',label:'아직 확인하지 않은 기록'}]};
+var G={questLedgerEntries:()=>[qaMain,...(qaSide?[{id:'sample_delivery',kind:'local',status:'active',eyebrow:'배달 미션 · 김천',title:'주소가 번진 편지',phase:'목적지 무주 터널 · 기한 없음',next:'무주 터널의 게시판에서 받을 사람을 확인한다.',progress:{have:1,need:2,label:'1/2'},tracked:qaLedger.tracked.includes('sample_delivery')},{...qaCompanion,tracked:qaLedger.tracked.includes('companion_minji')},{id:'sample_completed',kind:'completed',status:'completed',eyebrow:'완료 기록',title:'마친 부탁',phase:'독립 샘플',next:'다음 행동이 아닌 완료 기록',expected:'부탁받은 짐을 전했다. 고철 12개를 받았다.'}]:[])],
+ mainEvidenceOpportunity:()=>({target:'cheongju',cost:'열람 준비 30분'}),departureSteps:()=>[{id:'family',done:true}],
+ ensureQuestLedger:()=>qaLedger,questLedgerUpdates:()=>[],clearQuestLedgerUpdates:()=>{},save:()=>{qaSaves++},
+ questActionPlan:id=>({id,surface:'road',label:'경로 보기'}),
+ toggleQuestTracking:id=>{qaLedger.tracked=qaLedger.tracked.includes(id)?[]:[id];return {ok:true}}};
+var UI={openQuestAction:action=>{qaActions++;document.querySelector('#qa-return').textContent=`독립 UI 검수: ${action.label} 요청 ${qaActions}회 · 위치/시간 변경 없음`;return {ok:true}},toast:()=>{}};
+(async()=>{
+ const html=await (await fetch('/game/서울까지400km.html')).text();
+ for(const match of html.matchAll(/<style\b[^>]*>[\s\S]*?<\/style>/g)){
+   const template=document.createElement('template');template.innerHTML=match[0];document.head.append(template.content);
+ }
+ const script=document.createElement('script');script.src='/game/src/07d-ui-quests.js';
+ script.onload=()=>{QuestLedgerUI.open();document.querySelector('#qa-large').onclick=()=>{document.documentElement.classList.toggle('ui-large-text');QuestLedgerUI.open()};
+ document.querySelector('#qa-side').onclick=()=>{qaSide=!qaSide;QuestLedgerUI.tab='side';QuestLedgerUI.open()};
+ document.querySelector('#qa-rerender').onclick=()=>QuestLedgerUI.open();};document.body.append(script);
+})();
+</script>

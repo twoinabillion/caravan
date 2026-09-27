@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
+import {inlineStyleAssets} from './inline-style-assets.mjs';
+import {compactStyleSource} from './compact-style-source.mjs';
 
 /*
  * 이미지·오디오를 포함한 단일 HTML 빌더.
@@ -28,7 +31,7 @@ const after = [
   'src/03i-story-expansion.js', 'src/03j-camp-conversations.js', 'src/03k-main-evidence.js', 'src/03l-main-recovery.js', 'src/03m-finale-reading.js',
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
-  'src/05-scene.js', 'src/06-mapgraph.js',
+  'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05-scene.js', 'src/06-mapgraph.js',
   'src/07g-ui-home.js', 'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
@@ -121,7 +124,8 @@ const uiAssetPaths = {
   HOME_PROPS_ATLAS:{path:'assets/ui/home-props-atlas-v2.webp',mime:'image/webp'},
   PASSENGER_READING_PANEL:{path:'assets/ui/passenger-reading-panel-v1.webp',mime:'image/webp'},
   PASSENGER_CHOICE:{path:'assets/ui/passenger-choice-v1.webp',mime:'image/webp'},
-  DISPLAY_FONT:{path:'assets/fonts/BlackHanSans-Regular.woff', mime:'font/woff'},
+  DISPLAY_FONT:{path:'assets/fonts/BlackHanSans-Regular.woff2', mime:'font/woff2'},
+  JOURNAL_FONT:{path:'assets/fonts/CaravanJournalHand-Regular.woff2', mime:'font/woff2'},
   NAV_ARMORED_SHELL:{path:'assets/ui/nav-armored-shell-v2.webp', mime:'image/webp'},
   NAV_BUTTON_FACE:{path:'assets/ui/nav-button-face-v2.webp', mime:'image/webp'},
   NAV_BUTTON_PRESSED:{path:'assets/ui/nav-button-pressed-v2.webp', mime:'image/webp'},
@@ -143,7 +147,7 @@ const uiAssetPaths = {
   STAY_ICON_RADIO:{path:'assets/ui/stay-icon-radio-v1.webp', mime:'image/webp'},
   ROAD_JOURNEY_LOG:{path:'assets/ui/road-journey-log-panel-v1.webp', mime:'image/webp'},
   EVENT_FIELD_REPORT:{path:'assets/ui/event-field-report-panel-v2.webp', mime:'image/webp'},
-  EVENT_FIELD_REPORT_TALL:{path:'assets/ui/event-manuscript-panel-tall-v1.png', mime:'image/png'},
+  EVENT_FIELD_REPORT_TALL:{path:'assets/ui/event-manuscript-panel-tall-v1-lossless.webp', mime:'image/webp'},
   STORY_PORTRAIT_PIN:{path:'assets/ui/story-portrait-pin.png', mime:'image/png'},
   EVENT_RESULT_TICKET:{path:'assets/ui/event-result-ticket-v1.webp', mime:'image/webp'},
   EVENT_LEDGER_BUTTON:{path:'assets/ui/event-ledger-button-v1.webp', mime:'image/webp'},
@@ -155,11 +159,28 @@ const uiAssetPaths = {
   TOWN_BUTTON_DISABLED:{path:'assets/ui/settlement/town-button-disabled-v1.webp', mime:'image/webp'},
   TOWN_ICON_BEZEL:{path:'assets/ui/settlement/town-icon-bezel-v1.webp', mime:'image/webp'}
 };
-const styles = replace(read('src/01-style.html'), /__UI_([A-Z0-9_]+)__/g, key => {
+const styles = inlineStyleAssets(compactStyleSource(read('src/01-style.html')), key => {
   const asset=uiAssetPaths[key];
   if(!asset) throw new Error(`알 수 없는 UI 자산: ${key}`);
   return dataUri(asset.path,asset.mime);
-}, 'UI');
+});
+
+const environmentManifest=JSON.parse(read('assets/ui/road-environment/manifest.json'));
+const destinationIds=Object.keys(vm.runInNewContext(read('src/03-data.js')+';D.nodes'));
+if(destinationIds.some(id=>!environmentManifest.locations[id])||Object.keys(environmentManifest.locations).length!==destinationIds.length)
+  throw new Error('도로 환경과 목적지 목록이 일치하지 않음');
+const environmentSources=Object.fromEntries(destinationIds.map(id=>{
+  const entry=environmentManifest.locations[id];
+  return [id,dataUri(`assets/ui/road-environment/${entry.file}`,'image/webp')];
+}));
+const environmentSource=read('src/05a-road-environment.js');
+if(!environmentSource.includes('/*__ROAD_ENVIRONMENTS__*/{}'))throw new Error('도로 환경 레지스트리 플레이스홀더 없음');
+const roadEnvironment=environmentSource.replace('/*__ROAD_ENVIRONMENTS__*/{}',JSON.stringify(environmentSources));
+const vehicleManifest=JSON.parse(read('assets/ui/vehicle-upgrades/manifest-v1.json'));
+const vehicleSources=Object.fromEntries(Object.entries(vehicleManifest.images).map(([id,file])=>[id,dataUri(file,'image/webp')]));
+const vehicleSource=read('src/05b-vehicle-kit.js');
+if(!vehicleSource.includes('/*__VEHICLE_KIT__*/{}'))throw new Error('차량 부품 레지스트리 플레이스홀더 없음');
+const vehicleKit=vehicleSource.replace('/*__VEHICLE_KIT__*/{}',JSON.stringify(vehicleSources));
 
 const settlementSprites = replace(read('src/05-scene.js'), /__TOWN_WORLD_SPRITE_ATLAS__/g,
   () => dataUri('assets/ui/settlement/town-world-sprite-atlas-v4.webp', 'image/webp'), '정착지 스프라이트');
@@ -214,8 +235,9 @@ const audio = replace(read('src/03h-audio.js'), /__((?:BGM|SFX|VO)_[A-Z0-9_]+)__
   return dataUri(relative, 'audio/mpeg');
 }, '오디오');
 const roadCueFiles = {
-  COFFEEVAN:'coffee-van-v2', FOODTRUCK:'food-truck-v2', CLINICBUS:'clinic-bus-v2',
-  BROKENVEHICLE:'broken-vehicle-v2', FILMVEHICLE:'film-vehicle-v2'
+  COFFEEVAN:'coffee-van-v3', FOODTRUCK:'food-truck-v2', CLINICBUS:'clinic-bus-v2',
+  BROKENVEHICLE:'broken-vehicle-v3', FILMVEHICLE:'film-vehicle-v2',
+  TEMPORARYCHECKPOINT:'temporary-checkpoint-v1'
 };
 const roadCuePngFiles = {COWWALKER:'cow-walker',GASSTATION:'gas-station'};
 const roadCues = replace(read('src/07f-ui-road-thoughts.js'), /__ROAD_CUE_([A-Z]+)__/g, key =>
@@ -229,6 +251,8 @@ const chunks = [
   styles.result, read('src/01b-quest-style.html'), ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
   title.result, audio.result, npc.result, upgrades.result,
   ...after.map(relative => relative==='src/05-scene.js'?roadRenderer.result
+    :relative==='src/05a-road-environment.js'?roadEnvironment
+    :relative==='src/05b-vehicle-kit.js'?vehicleKit
     :relative==='src/07f-ui-road-thoughts.js'?roadCues.result
     :relative==='src/03i-story-expansion.js'?inlineSceneAssetPaths(read(relative))
     :read(relative))

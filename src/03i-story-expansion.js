@@ -16,7 +16,7 @@
   Object.assign(D.scenes, {
     'story-bridge-trace-gap-v1': 'assets/scenes/story-bridge-trace-gap-v1.webp',
     'story-bridge-watched-v1': 'assets/scenes/story-bridge-watched-v1.webp',
-    'story-bridge-parent-route-v1': 'assets/scenes/story-bridge-parent-route-v1.webp',
+    'story-bridge-parent-route-v1': D.scenes['story-bridge-parent-route-v1'],
     'story-bridge-invitation-v1': 'assets/scenes/story-bridge-invitation-v1.webp',
     'event-road-coffee-van-v2': 'assets/scenes/event-road-coffee-van-v2.webp',
     'event-road-food-truck-v2': 'assets/scenes/event-road-food-truck-v2.webp',
@@ -862,7 +862,9 @@
       needFlag: 'bridge_invitation',
       region: ['north'],
       title: '마지막으로 시동을 끈 곳',
-      text: '남산이 보이는 마지막 고개에서 시동을 껐다. 누가 먼저 말을 꺼내지도 않았다. 증거 봉투를 다시 묶고, 물병 뚜껑을 닫고, 안전띠를 한 번씩 당겼다. 돌아갈 사람을 붙잡지 않으려고 문을 열어 두었다. 한참 뒤, 안쪽에서 미닫이문 닫히는 소리가 났다.',
+      text: (S) => S.party.length
+        ? '남산이 보이는 마지막 고개에서 시동을 껐다. 누가 먼저 말을 꺼내지도 않았다. 증거 봉투를 다시 묶고, 물병 뚜껑을 닫고, 안전띠를 한 번씩 당겼다. 돌아갈 사람을 붙잡지 않으려고 문을 열어 두었다. 한참 뒤, 안쪽에서 미닫이문 닫히는 소리가 났다.'
+        : '남산이 보이는 마지막 고개에서 시동을 껐다. 증거 봉투를 다시 묶고 물병 뚜껑도 잠갔다. 문을 열고 잠깐 서 있었지만, 도시 쪽에서는 아무 소리도 안 들렸다. 차에 올라 문을 닫고 안전띠를 당겼다.',
       choices: [
         {
           label: '시동을 건다',

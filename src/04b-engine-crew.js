@@ -676,6 +676,17 @@ G.advance = (mins,options={})=>{
   }
   settleBoundary();
 };
+/* Shared by breakfast/lunch; a meal line cannot invent an absent passenger. */
+G.pickMealBanter = ()=>{
+  if(!S.party.length) return null;
+  const pool=(D.mealBanter||[]).filter(b=>{
+    const need=b.need||{};
+    return (!need.dog||S.dog)&&(!need.comp||G.hasComp(need.comp))&&(!need.party||S.party.length>=need.party);
+  });
+  if(!pool.length) return null;
+  const line=pick(pool);
+  return typeof line==='string'?line:line.t;
+};
 G.lunch = ()=>{
   const result=G.consumeMeal('lunch');
   UI.toast(G.mealToast('점심',result));
@@ -683,7 +694,7 @@ G.lunch = ()=>{
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(S.up&&S.up.kitchen) G.moodAll(1);
-    if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)}); }
+    if(S.party.length&&rng()<0.6){const t=G.pickMealBanter();if(t) UI.speak({who:'sys',t});} }
   G.save();
 };
 G.breakfast = ()=>{
@@ -710,7 +721,7 @@ G.breakfast = ()=>{
     if(typeof SCENE!=='undefined') SCENE.showMeal(16);
     if(S.up&&S.up.awning&&!S.driving) S.fatigue=Math.max(0,S.fatigue-3);
     if(S.up&&S.up.kitchen) G.moodAll(1);
-    if(S.party.length&&rng()<0.6&&D.mealBanter) UI.speak({who:'sys', t:pick(D.mealBanter)});
+    if(S.party.length&&rng()<0.6){const t=G.pickMealBanter();if(t) UI.speak({who:'sys',t});}
   }
   if(S.up&&S.up.beehive&&rng()<0.3){ const honey=G.addSupply('food',1); G.moodAll(2);
     if(honey.delta) UI.toast('🐝 지붕 벌통에서 아침 꿀 — 식량 +1'); }

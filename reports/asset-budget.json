@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-25T00:50:00.969Z",
+  "generatedAt": "2026-09-27T01:30:16.907Z",
   "html": {
-    "bytes": 79905231,
+    "bytes": 79999956,
     "warnBytes": 32000000,
     "maxBytes": 80000000
   },
   "embedded": {
-    "files": 643,
-    "bytes": 50117100,
+    "files": 708,
+    "bytes": 53654296,
     "categories": {
-      "ui": {
-        "files": 35,
-        "bytes": 4824198,
-        "encodedBytes": 6432308
-      },
       "audio": {
         "files": 45,
         "bytes": 9710668,
         "encodedBytes": 12947612
+      },
+      "ui": {
+        "files": 98,
+        "bytes": 8097534,
+        "encodedBytes": 10796836
       },
       "scene": {
         "files": 480,
@@ -25,9 +25,9 @@
         "encodedBytes": 45162752
       },
       "other": {
-        "files": 34,
-        "bytes": 672235,
-        "encodedBytes": 896364
+        "files": 36,
+        "bytes": 936095,
+        "encodedBytes": 1248184
       },
       "portrait": {
         "files": 49,
@@ -38,16 +38,16 @@
   },
   "largest": [
     {
-      "path": "assets/ui/event-manuscript-panel-tall-v1.png",
-      "mime": "image/png",
-      "bytes": 2629428,
-      "encodedBytes": 3505904
-    },
-    {
       "path": "assets/audio/title.mp3",
       "mime": "audio/mpeg",
       "bytes": 1621676,
       "encodedBytes": 2162236
+    },
+    {
+      "path": "assets/ui/event-manuscript-panel-tall-v1-lossless.webp",
+      "mime": "image/webp",
+      "bytes": 1561238,
+      "encodedBytes": 2081652
     },
     {
       "path": "assets/audio/bgm/drive_day.mp3",
@@ -110,16 +110,16 @@
       "encodedBytes": 422120
     },
     {
+      "path": "assets/fonts/CaravanJournalHand-Regular.woff2",
+      "mime": "font/woff2",
+      "bytes": 309760,
+      "encodedBytes": 413016
+    },
+    {
       "path": "assets/ui/road-journey-log-panel-v1.webp",
       "mime": "image/webp",
       "bytes": 309208,
       "encodedBytes": 412280
-    },
-    {
-      "path": "assets/fonts/BlackHanSans-Regular.woff",
-      "mime": "font/woff",
-      "bytes": 308096,
-      "encodedBytes": 410796
     },
     {
       "path": "assets/scenes/onboarding-main-mission-v1.jpg",

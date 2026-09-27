@@ -12,11 +12,11 @@ This is the canonical workflow for changes to `서울까지 400km`. `AGENTS.md` 
 ## 2. Live development
 
 1. Run `npm run dev:live`.
-2. Use the normal Chrome tab at `http://localhost:4173/`.
+2. Use the actual current preview. In Live Game Studio, its request supplies the Studio URL, preview URL, current scene and a read-only context endpoint for rechecking during that task. Use that origin even if its port differs from 4318; `http://localhost:4173/` is only the standalone default. Preserve the user's browser profile/save and do not open a new tab or server as if it were the same scene. State/text snapshots are not visual QA; explicitly report missing images or unavailable screen access.
 3. CSS-only builds replace styles in place and must not reset the current screen, selection, or scroll position.
 4. JS, data, structure, and wired-asset builds show `새 코드 준비됨 · 눌러서 적용`. Apply them deliberately.
 5. In live mode, a refresh resumes the current save. Road tools such as 가방, 목표, and 지도 should reopen from the captured preview state.
-6. Newly generated images appear first at `http://localhost:4173/__live/assets`.
+6. Newly generated images appear first at `/__live/assets` on the active preview origin.
 
 ## 3. UI change checklist
 
@@ -27,6 +27,7 @@ This is the canonical workflow for changes to `서울까지 400km`. `AGENTS.md` 
 - The legacy text-based action-card normalizer must exclude `#ovl-camp`; a navigation label containing 야영 준비 is not a road action card. Camp navigation, scrolling content and rest footer have separate layout owners.
 - Repeated information must be removed. A detail panel should add meaning, not repeat the tile label and quantity in a larger box.
 - Observer-driven goal rendering must preserve unchanged cards and focused controls. When the summary is hidden, keep the card list in its flexible grid row so it scrolls inside the screen; verify an actual click, not just the presence of its label.
+- The bound goal notebook has one scrollable paper inside its cover and a separate main-action footer. Use handwriting for all journal records, not only main titles; regenerate the bundled glyph subset from game text. Authored scribbles are conditional, never a blanket decoration or a correction of unconfirmed plot facts. When tracking reorders a card, preserve expanded records and bring the refocused tracking control into the visible paper area.
 - Touch targets stay usable, but visual panels should occupy only the space required by their content.
 - Images must be checked by visible subject size, not only CSS box size. Transparent padding and inherited absolute positioning can make a nominally large icon appear small.
 - Upgrade installation art has its own bounded landscape overview above the work panel. Never use the small workbench art as a full-height `cover` background: the 2026-09-24 fuel-tank player report exposed severe side cropping. Keep the whole part visible and allow the work content to scroll at short heights.
@@ -51,6 +52,7 @@ This is the canonical workflow for changes to `서울까지 400km`. `AGENTS.md` 
 - `Journey scene/deck owner` owns the new stopped screen. Scene/time → slim vehicle status → destination/forecast/departure/objective → navigation. Regional map replaces scenery only when requested; opening it compresses the deck by46px. The existing driving destination preview remains separate.
 - Preserve real route selection, `G.travelForecast`, departure eligibility and urgent warnings. An unavailable journey must say `이동 불가`, not turn a zero-duration forecast into1minute. Unlimited fuel labels apply only to the existing developer mode.
 - The journey view stores mode/destination/map disclosure separately from gameplay. Restore only at the same stopped location and validate the selected route. Escape closes the top dialog before the underlying map, then returns focus to its toggle.
+- Stopped destination selection uses the in-game `trip-picker` dialog, not a native select menu. Show distances and real forecast availability before selection; blocked routes remain inspectable but never enable departure. Selection previews only; close/Escape/backdrop must preserve the prior choice and underlying map. Keep `tests/test_trip_destination_picker.cjs` passing; native dialog focus and mobile cropping still require browser QA.
 - Legacy local-action CSS must exclude or explicitly defer to `.journey-deck`; a stale48px inset caused a false empty band below the new tabs. Check the first activity and the last reachable activity.
 - The map terrain is illustrative. Endpoints/connectivity/costs come from the game graph; the curved gold line is schematic, not a GIS road trace. Never add a false geographic scale.
 
@@ -61,8 +63,10 @@ This is the canonical workflow for changes to `서울까지 400km`. `AGENTS.md` 
 - Save before destructive transitions. Reloading must preserve gameplay data and the live preview should restore its supported UI surface.
 - Camp recollections contain one short saved incident, without mechanic labels or numeric costs. Legacy context is presented from its own frozen text, never regenerated from a newer combat report; its original remains an optional record. Rendering cannot rewrite the receipt or apply its effects.
 - Event approach, event scene, choices, result, reward, and return-to-road must form one continuous sequence.
+- Narrative presence follows the current roster, not the ideal full cast. Check ambient/meal pools and fixed camp events as well as ordinary event gates; `sys` narration is not an exemption. Keep named companion/dog actions when present, filter or branch when absent, and never invent an anonymous reply in a solo scene. Preserve actual scene NPCs and historical receipt text. Run `node --test tools/test-narrative-presence.cjs tests/test_narrative_context.cjs` for roster/receipt regressions.
 - Keep the event conversation, chosen action, and result in one transcript. Reading state belongs to the existing gameplay receipt; restoring it must not reapply effects. Save disclosure activation synchronously because a native queued `toggle` event can lose a race with immediate reload, and ignore handlers from a replaced story state.
 - A quest update must say what changed, what the player should do now, and where that action is available.
+- The goal journal uses Sang-hyeok's plain personal notes, not instructions or future plot summaries. Keep operational location/control/time guidance separate. Presentation copy must not rewrite the engine's quest snapshots or create update notifications. A historical main entry's legacy `expected` is an intended outcome, not proof of completion; disclose authored retrospective facts only when the corresponding evidence is actually confirmed.
 - Goal notifications use the existing goal entry; they must not cover forecast or departure. The existing ledger unread queue is acknowledged when the ledger is opened or when a saved event result owns the update, not when its indicator is drawn. Test unread and acknowledged states across reload, keeping unchanged renders idempotent.
 - Goal shortcuts open a decision surface without running its gameplay actions. In particular, opening the market from a goal must not auto-complete a delivery; keep the explicit hand-in control. Close previously open journal/map overlays before returning to road controls.
 - Route recommendations must respect the active corridor in both the next edge and the remaining path. For an outside objective, preserve its destination and guide through the corridor endpoint first; use the driving leg origin when the stopped node is empty.
@@ -82,7 +86,8 @@ This is the canonical workflow for changes to `서울까지 400km`. `AGENTS.md` 
 
 - The approved mock uses a dedicated transparent cream Dalguji and blue-gray overpass environment plate. They were reviewed in the live gallery before wiring. Event paintings remain excluded from moving-road scenes.
 - Keep236logical coordinates and a2× backing buffer. Drawing a high-resolution buffer into another canvas requires explicit source/destination dimensions, including glitch sampling and the shared garage preview.
-- Split base vehicle at the living-box/cab seam and below the windows; extend living space from actual upgrade stages while preserving wheel/cab geometry. Keep weather, clock lighting, passengers, upgrades, cue approach and braking live. Interior lights remain warm at night; owned curtains cover the actual sprite windows.
+- The vehicle kit owner is `src/05b-vehicle-kit.js`, backed by `assets/ui/vehicle-upgrades/manifest-v1.json`. Keep the base cab/wheel identity; use the four authored living-box plates for real expansion stages rather than stretching the base truck into every build. Roof bays and owned parts compose deterministically. Keep weather, clock lighting, passengers, upgrades, cue approach and braking live. Interior lights remain warm at night; owned curtains cover actual lower and upper sprite windows.
+- Upgrade engineering prerequisites are shared through `D.upEngineering` and `G.upRequirements`/`G.canBuyUp`; the garage only displays these decisions. Preserve previous ownership on load, do not grant prerequisites for free, and do not create a second visual/purchase dependency graph. New art must cover both live road and garage before/after previews.
 - Mirror alternating background tiles to share identical edge pixels. Apply this environment only to the matching overpass profile; retain other biomes and transitions.
 - Register renderer placeholders in the HTML builder, not just CSS. Reject unresolved `__UI_*` placeholders. Delivery vehicle is compressed WebP with alpha; retain PNG/master provenance. Do not increase build limits to accommodate an uncompressed source.
 - Manual fixtures use a separate port and explicit test state. Browser DOM evaluation is read-only; use visible controls to exercise flows. Studio's S26 skin is layout QA with assumed density, not proof of native Android performance.

@@ -38,7 +38,7 @@ with sync_playwright() as playwright:
 
     print('― 후미 슬롯 배타 (탱크 vs 좌석)')
     rear = page.evaluate("""() => {
-      for(const id of ['tank1','tank2']) G.buyUpgrade(id);
+      for(const id of ['susp','tank1','tank2']) G.buyUpgrade(id);
       for(const id of ['bench','cabin','bunk']) G.buyUpgrade(id);
       const jump=G.canBuyUp('jumpseat');
       return {tank2:!!S.up.tank2, jumpDenied:!jump.ok, why:jump.why};

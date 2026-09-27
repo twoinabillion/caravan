@@ -473,6 +473,18 @@ G.vanStage = ()=>{
 };
 G.nextSeatUpgrade = ()=> D.upgrades.find(u=>u.seat&&!(S&&S.up&&S.up[u.id]));
 G.upDef = (id)=> D.upgrades.find(u=>u.id===id);
+G.upRequirements = id=>{
+  const u=typeof id==='string'?G.upDef(id):id;
+  return u?[...new Set([u.needs,...(D.upEngineering&&D.upEngineering[u.id]?.requires||[])].filter(Boolean))]:[];
+};
+G.upInstallationInfo = id=>{
+  const u=G.upDef(id);if(!u)return '';
+  const required=G.upRequirements(u).map(key=>G.upDef(key).nm);
+  const reason=D.upEngineering&&D.upEngineering[id]?.reason;
+  const slot=u.slot&&D.upSlots[u.slot];
+  return [required.length?'먼저 설치: '+required.join(' + '):'',reason,
+    slot?`${slot.nm} ${G.slotUsage(u.slot).length}/${slot.cap} 사용 중`:''].filter(Boolean).join(' · ');
+};
 /* 차고 작업 소요 시간. 값을 UI가 미리 보여줘야 '지금 달까, 다음 마을에서 달까'가 선택이 된다. */
 G.upgradeMinutes = (u)=> Math.round((u&&u.seat?300:200)*(G.hasComp('minji')&&!G.isInjured('minji')?0.75:1));
 /* ── 탑재 중량·슬롯: 싣는 것에는 자리와 무게라는 값이 있다 ── */
@@ -488,7 +500,8 @@ G.ROAD_GARAGE_MUL = 1.5;
 G.upScrapCost = (u)=> Math.ceil(u.cost.scrap * (S&&S.roadGarage ? G.ROAD_GARAGE_MUL : 1));
 G.canBuyUp = (id)=>{
   const u=G.upDef(id); if(!u||S.up[id]) return {ok:false, why:'장착됨'};
-  if(u.needs&&!S.up[u.needs]) return {ok:false, why:G.upDef(u.needs).nm+' 필요'};
+  const missing=G.upRequirements(u).filter(key=>!S.up[key]);
+  if(missing.length) return {ok:false, why:missing.map(key=>G.upDef(key).nm).join(' + ')+' 필요',missing};
   if(u.slot&&D.upSlots&&D.upSlots[u.slot]){
     const rule=D.upSlots[u.slot], used=G.slotUsage(u.slot);
     if(used.length>=rule.cap)

@@ -301,7 +301,7 @@ const UI = (()=>{
     || $('#ovl-stl').classList.contains('on') || $('#ovl-map').classList.contains('on')
     || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on') || $('#ovl-menu').classList.contains('on')
     || $('#ovl-seoul').classList.contains('on') || $('#ovl-camp').classList.contains('on')
-    || $('#ovl-local-actions').classList.contains('on');
+    || $('#ovl-local-actions').classList.contains('on') || !!$('#trip-destination-dialog')?.open;
 
   /* ── screens ── */
   function show(id){
@@ -1904,6 +1904,26 @@ function dialogueSide(turn,lanes,opt={}){
             :lat<37.2?'경기 남부':'수도권';
     return {label,route:`${from.name||'현재 위치'} → ${to.name||'다음 목적지'}`};
   }
+  function tripDestinationPickerHtml(routeModels,selectedId){
+    const options=routeModels.map(model=>{
+      const {nb,forecast}=model;
+      const selected=nb.id===selectedId;
+      const blocked=!forecast.ok;
+      const status=blocked?'이동 불가':forecast.shortage?'연료 부족':'이동 가능';
+      const detail=blocked?(forecast.why||'지금은 이 경로를 이용할 수 없다.')
+        :`${Math.round(forecast.minutes)}분 · ${G.isInfiniteResourceMode()?'연료 소모 없음':`연료 ${Math.ceil(model.fuel)}L 필요`}`;
+      return `<button type="button" class="trip-route-option" data-trip-route="${esc(nb.id)}" data-availability="${blocked||forecast.shortage?'blocked':'ready'}" aria-pressed="${selected}">
+        <span class="trip-option-heading"><b>${esc(D.nodes[nb.id].name)}</b><span>${nb.km}km</span></span>
+        <span class="trip-option-detail">${esc(detail)}</span>
+        <span class="trip-option-status">${status}${selected?' · 선택됨':''}</span>
+      </button>`;
+    }).join('');
+    return `<dialog id="trip-destination-dialog" class="trip-picker" role="dialog" aria-modal="true" aria-labelledby="trip-picker-title" aria-describedby="trip-picker-hint" aria-hidden="true">
+      <div class="trip-picker-head"><div><small>${esc(D.nodes[S.at].name)}에서</small><h2 id="trip-picker-title">다음 목적지</h2></div><button type="button" data-trip-picker-close aria-label="목적지 목록 닫기">×</button></div>
+      <div class="trip-picker-list">${options}</div>
+      <p id="trip-picker-hint">목적지를 고른 뒤, 출발 버튼으로 이동하세요.</p>
+    </dialog>`;
+  }
   function routeConsoleHtml(routeModels){
     const selected=routeConsoleModel(routeModels);
     if(!selected) return '<div class="route-empty">지금 이어지는 길이 없다.</div>';
@@ -1912,11 +1932,10 @@ function dialogueSide(turn,lanes,opt={}){
     const infinite=G.isInfiniteResourceMode();
     const urgent=canDepart?[S.van<30?'차체 수리 권장':'',S.fatigue>=75?'휴식 필요':'',S.wx==='storm'?'폭풍 · 주행 주의':'',(forecast.supplyMargin??0)<0?'식량·물 보급 필요':''].filter(Boolean).join(' · '):'';
     const main=typeof G.mainQuestEntry==='function'?G.mainQuestEntry():null;
-    const options=routeModels.map(model=>`<option value="${esc(model.nb.id)}" ${model.nb.id===selected.nb.id?'selected':''}>${esc(D.nodes[model.nb.id].name)}</option>`).join('');
     return `<div class="journey-route" data-route-console="${esc(selected.nb.id)}">
       <div class="trip-destination-row">
         <span class="trip-symbol trip-pin" aria-hidden="true"></span>
-        <label class="trip-choice"><span class="sr-only">다음 목적지</span><select data-trip-destination aria-label="다음 목적지">${options}</select></label>
+        <button type="button" class="trip-choice" data-trip-destination aria-label="다음 목적지 변경, ${esc(node.name)}" aria-haspopup="dialog" aria-expanded="false" aria-controls="trip-destination-dialog"><span>${esc(node.name)}</span><small>목적지 변경 <span aria-hidden="true">›</span></small></button>
         <button type="button" class="trip-map-toggle" data-route-map-toggle aria-expanded="${routeMapOpen}" aria-controls="journey-route-map">${routeMapOpen?'지도 접기':'지도 보기'} <span aria-hidden="true">↗</span></button>
       </div>
       <div class="trip-forecast" aria-label="선택한 경로의 예상 소모">
@@ -1925,7 +1944,8 @@ function dialogueSide(turn,lanes,opt={}){
       </div>
       <button type="button" class="trip-depart" data-nav-depart="${esc(selected.nb.id)}" ${canDepart?'':'disabled aria-describedby="trip-depart-reason"'}>${esc(node.name)}${directionParticle(node.name)} 출발 <span aria-hidden="true">→</span></button>
       ${canDepart&&!urgent?'':`<p class="trip-warning" id="trip-depart-reason">${!canDepart?(forecast.shortage?'연료 부족 · 머물기에서 보급하기':esc(forecast.why||'아직 이 경로를 이용할 수 없다.')):esc(urgent)}</p>`}
-      <button type="button" class="trip-objective" data-trip-objective><i class="trip-symbol trip-note" aria-hidden="true"></i><span>${esc(main?.title||'현재 목표 확인하기')}</span><span aria-hidden="true">›</span></button>
+      <button type="button" class="trip-objective" data-trip-objective><i class="trip-symbol trip-note" aria-hidden="true"></i><span>${esc(main&&(typeof QuestJournal!=='undefined'?QuestJournal.entry(main).title:main.title)||'현재 목표 확인하기')}</span><span aria-hidden="true">›</span></button>
+      ${tripDestinationPickerHtml(routeModels,selected.nb.id)}
     </div>`;
   }
   function syncRouteMap(routeModels){
@@ -1992,11 +2012,29 @@ function dialogueSide(turn,lanes,opt={}){
   function wireRouteConsole(panel,routeModels){
     journeyRouteModels=routeModels;
     const choice=panel.querySelector('[data-trip-destination]');
-    if(choice) choice.onchange=()=>{
-      if(!routeModels.some(model=>model.nb.id===choice.value)) return;
-      navChoiceAt=S.at;navChoiceId=choice.value;renderPanel();
-      $('[data-trip-destination]')?.focus({preventScroll:true});
-    };
+    const picker=panel.querySelector('#trip-destination-dialog');
+    if(choice&&picker){
+      choice.onclick=()=>{
+        picker.showModal();picker.setAttribute('aria-hidden','false');choice.setAttribute('aria-expanded','true');
+        picker.querySelector('[data-trip-route][aria-pressed="true"]')?.focus({preventScroll:true});
+      };
+      picker.onclose=()=>{picker.setAttribute('aria-hidden','true');choice.setAttribute('aria-expanded','false');};
+      picker.querySelector('[data-trip-picker-close]').onclick=()=>picker.close();
+      // Native dialog owns focus containment/Escape; don't let the same key
+      // also close a regional map underneath it. Neither dismissal selects.
+      picker.onkeydown=event=>event.stopPropagation();
+      picker.onclick=event=>{
+        if(event.target!==picker) return;
+        const r=picker.getBoundingClientRect();
+        if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom) picker.close();
+      };
+      picker.querySelectorAll('[data-trip-route]').forEach(button=>button.onclick=()=>{
+        const id=button.dataset.tripRoute;
+        if(!routeModels.some(model=>model.nb.id===id)) return;
+        picker.close();navChoiceAt=S.at;navChoiceId=id;renderPanel();
+        $('[data-trip-destination]')?.focus({preventScroll:true});
+      });
+    }
     const toggle=panel.querySelector('[data-route-map-toggle]');
     if(toggle) toggle.onclick=()=>{routeMapOpen=!routeMapOpen;syncRouteMap(routeModels);if(routeMapOpen)$('#journey-map-close').focus({preventScroll:true});};
     const objective=panel.querySelector('[data-trip-objective]');
@@ -4901,7 +4939,7 @@ function dialogueSide(turn,lanes,opt={}){
       action:repairNeeded?'수리한다':'차체 양호',enabled:canRep,icon:'parts'}]
       .concat(upgrades.map(u=>{const owned=!!S.up[u.id],chk=G.canBuyUp(u.id);
         const scrapCost=G.upScrapCost(u),duration=G.durationLabel(G.upgradeMinutes(u));
-        return {key:`upgrade-${u.id}`,kind:'upgrade',id:u.id,label:u.nm,sub:u.d,icon:groupIcon,
+        return {key:`upgrade-${u.id}`,kind:'upgrade',id:u.id,label:u.nm,sub:u.d,installation:G.upInstallationInfo(u.id),icon:groupIcon,
           meta:owned?'장착 완료':`고철 ${scrapCost}${u.cost.parts?' + 부품 '+u.cost.parts:''} · ${duration}`,duration,
           budget:owned?null:{kind:'spend',resources:[{label:'고철',current:S.scrap,amount:scrapCost}]
             .concat(u.cost.parts?[{label:'부품',current:S.items['부품']||0,amount:u.cost.parts}]:[])},
@@ -4917,7 +4955,7 @@ function dialogueSide(turn,lanes,opt={}){
     const list=rows.map(row=>`<button class="field-board-row garage-board-row ${row.kind==='upgrade'?'upgrade-card':''} ${row.key===garageSelection?'selected':''} ${row.kind==='upgrade'&&S.up[row.id]?'owned':''}"
       data-garage-key="${row.key}" aria-pressed="${row.key===garageSelection}" ${row.enabled?'':'data-unavailable="true"'}>
       <span class="field-board-row-icon" aria-hidden="true">${ICO(row.icon||'parts')}</span>
-      <span class="field-board-row-copy"><b>${esc(row.label)}</b><small>${esc(row.sub)}</small></span>
+      <span class="field-board-row-copy"><b>${esc(row.label)}</b><small>${esc(row.sub)}</small>${row.key===garageSelection&&row.installation?`<small>${esc(row.installation)}</small>`:''}</span>
       <span class="field-board-row-meta">${esc(row.meta)}</span>
     </button>`).join('');
     const boardBody=`<div id="garage"><div class="field-board-van-overview">

@@ -112,7 +112,7 @@ function gameShell(){
   </style></head><body><iframe id="game" src="/game?caravan-live=1&rev=${buildRevision}" allow="autoplay; fullscreen"></iframe>
   <button id="live" class="show idle" type="button" aria-live="polite" title="저장 상태를 유지하고 최신 빌드를 다시 불러옵니다">최신 코드 적용</button><script>
   const game=document.querySelector('#game'),badge=document.querySelector('#live');
-  let hideTimer,pendingRevision=null,applying=false,applyWhenReady=false,studioFrozen=false,studioMedia=[];
+  let hideTimer,pendingRevision=null,styleRevision=null,applying=false,applyWhenReady=false,studioFrozen=false,studioMedia=[];
   const idle=()=>{clearTimeout(hideTimer);badge.disabled=false;badge.textContent='최신 코드 적용';badge.className='show idle'};
   const show=(text,error=false,pending=false,busy=false)=>{clearTimeout(hideTimer);badge.disabled=busy;badge.textContent=text;badge.className='show'+(error?' error':'')+(pending?' pending':'');};
   const hide=()=>{hideTimer=setTimeout(idle,1400)};
@@ -169,7 +169,7 @@ function gameShell(){
       gameState=raw?JSON.parse(raw):null;
     }catch(error){ console.warn('[caravan live] state context failed',error); }
     const surfaceIds=['scr-title','scr-mode','scr-name','scr-intro','scr-game','scr-end','ev-wrap','ovl-status','ovl-map','ovl-journal','ovl-menu','ovl-camp','ovl-local-actions','ovl-stl','quest-ledger','arrival-scene'];
-    const surfaces=surfaceIds.map(id=>doc.getElementById(id)).filter(node=>studioVisible(node,doc)||node.classList.contains('on')).map(node=>({
+    const surfaces=surfaceIds.map(id=>doc.getElementById(id)).filter(node=>node&&(studioVisible(node,doc)||node.classList.contains('on'))).map(node=>({
       id:node.id,className:node.className,ariaHidden:node.getAttribute('aria-hidden'),dataset:{...node.dataset},
       scroll:{left:node.scrollLeft||0,top:node.scrollTop||0}
     }));
@@ -200,7 +200,8 @@ function gameShell(){
         rect:{x:Math.round(rect.x),y:Math.round(rect.y),width:Math.round(rect.width),height:Math.round(rect.height)}});
     }
     return {
-      kind:'live_game_studio_frozen_scene',capturedAt:new Date().toISOString(),href:win.location.href,title:doc.title,
+      kind:studioFrozen?'live_game_studio_frozen_scene':'live_game_studio_current_scene',capturedAt:new Date().toISOString(),href:win.location.href,title:doc.title,
+      frozen:studioFrozen,coverage:'game-state',live:{previewUrl:window.location.href,loadedRevision:new URL(win.location.href).searchParams.get('rev'),styleRevision,pendingRevision,applying},
       viewport:{width:win.innerWidth,height:win.innerHeight,dpr:win.devicePixelRatio||1},screen:app?.dataset.screen||'unknown',
       eventId:eventSheet?.dataset.eventId||null,story:{phase:eventSheet?.dataset.storyPhase||null,step:eventSheet?.dataset.storyStep||null},
       focus:doc.activeElement?{tag:doc.activeElement.tagName.toLowerCase(),id:doc.activeElement.id||'',text:(doc.activeElement.innerText||doc.activeElement.getAttribute('aria-label')||'').trim().slice(0,180)}:null,
@@ -222,7 +223,11 @@ function gameShell(){
   };
   window.addEventListener('message',event=>{
     if(event.source!==parent||!event.data||typeof event.data!=='object')return;
-    if(event.data.type==='live-game-studio:freeze'){
+    if(event.data.type==='live-game-studio:context'){
+      let context;
+      try{context=compactStudioContext()}catch(error){context={capturedAt:new Date().toISOString(),screen:'unknown',coverage:'unavailable',error:error.message}}
+      parent.postMessage({type:'live-game-studio:context',requestId:event.data.requestId,context},event.origin||'*');
+    }else if(event.data.type==='live-game-studio:freeze'){
       setStudioFrozen(true);
       setTimeout(()=>{
         let context;
@@ -279,6 +284,7 @@ function gameShell(){
       });
       target.head.appendChild(fragment);
       previous.forEach(style=>style.remove());
+      styleRevision=data.revision;
       show('현재 화면 유지 · 스타일 반영됨');
       hide();
     }catch(error){
@@ -288,6 +294,7 @@ function gameShell(){
   };
   badge.addEventListener('click',applyRefresh);
   game.addEventListener('load',()=>{
+    styleRevision=new URL(game.contentWindow.location.href).searchParams.get('rev');
     setTimeout(restoreView,260);
     if(studioFrozen)setTimeout(()=>setStudioFrozen(true),280);
     try{parent.postMessage({type:'live-game-studio:ready'},'*')}catch(error){}

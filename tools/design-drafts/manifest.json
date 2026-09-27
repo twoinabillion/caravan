@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "drafts": [
+    {
+      "id": "scene-continuity-v1",
+      "file": "scene-continuity.html",
+      "title": "사건 그림 · 인물과 상황 맞추기",
+      "revision": "1",
+      "recommended": true,
+      "description": "수첩 마지막 장·코골이 재판·도로 위 이불의 전용 그림 3장. 기존 그림과 비교할 수 있습니다. 없는 동료, 잘못된 장소, 선택 전 결과를 넣지 않습니다. Codex가 정본 4장을 참조해 생성·검토했습니다. 게임 연결은 초안 확인 후 진행하며, 현재 플레이와 저장은 변경하지 않습니다."
+    },
+    {
+      "id": "quest-bound-notebook-v1",
+      "file": "quest-bound-notebook.html",
+      "title": "상혁의 공책",
+      "revision": "3",
+      "recommended": true,
+      "description": "v3는 상혁이 망설이다가 지우고 고쳐 쓴 속말, 비껴 쓴 화살표와 작은 달구지 낙서를 넣었습니다. Claude가 문구를 맡고 Codex가 펜 자국을 다듬었습니다. 필요한 메인 페이지 한 곳에만 쓰며 단서·행동 안내는 지우지 않습니다. 사이드·완료는 빈 목록 예시입니다. 게임과 저장에는 적용하지 않았습니다."
+    },
+    {
+      "id": "quest-folder-v1",
+      "file": "quest-folder.html",
+      "title": "기록철형",
+      "revision": "3",
+      "description": "승인한 기록철과 손글씨를 유지하고, 상혁이 자신에게 남기는 메모로 바꿉니다. 메인·사이드·완료 문구 예시를 탭에서 볼 수 있고, 장소·조작·시간 안내는 본문과 분리합니다."
+    },
+    {
+      "id": "quest-notebook-v1",
+      "file": "quest-notebook.html",
+      "title": "수첩형",
+      "revision": "1",
+      "description": "장식과 종이의 겹침을 줄인 수첩. 같은 내용을 한 장에 차분하게 정리했습니다. 기록철형보다 단정하고, 본문을 읽는 공간이 조금 더 넓습니다."
+    }
+  ]
+}

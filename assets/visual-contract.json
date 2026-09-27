@@ -158,6 +158,13 @@
       "safeZone": {"horizontal": 0.8, "vertical": 0.82},
       "purpose": "item-specific 3:2 vehicle-upgrade overview at mobile DPR 2; legacy group cards and seating panoramas remain compatible; not a narrative cinematic"
     },
+    "liveVehicleKit": {
+      "manifest": "assets/ui/vehicle-upgrades/manifest-v1.json",
+      "bodyDelivery": [512, 256],
+      "atlasDelivery": [384, 512],
+      "alphaRequired": true,
+      "purpose": "Transparent realist side-view body and individual attachment components. The live renderer composes ownership, motion, riders, light and weather; never used as a narrative collage or static gameplay screenshot."
+    },
     "roadCue": {
       "style": "pixel-art exception",
       "directory": "assets/road-cues",

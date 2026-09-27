@@ -76,6 +76,7 @@
       bridge: '__ROAD_CUE_BRIDGE__',
       cache: '__ROAD_CUE_CACHE__',
       checkpoint: '__ROAD_CUE_CHECKPOINT__',
+      'temporary-checkpoint': '__ROAD_CUE_TEMPORARYCHECKPOINT__',
       cyclist: '__ROAD_CUE_CYCLIST__',
       debris: '__ROAD_CUE_DEBRIS__',
       flood: '__ROAD_CUE_FLOOD__',

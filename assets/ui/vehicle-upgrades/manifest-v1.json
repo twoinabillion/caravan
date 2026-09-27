@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "style": "caravan-grounded-cinematic-v1",
+  "usage": "Live vehicle renderer components only; not narrative scene art",
+  "bodyDelivery": [512, 256],
+  "atlasDelivery": [384, 512],
+  "atlasGrid": [3, 4],
+  "alphaRequired": true,
+  "images": {
+    "bench": "assets/ui/vehicle-upgrades/body-bench-v1.webp",
+    "cabin": "assets/ui/vehicle-upgrades/body-cabin-v1.webp",
+    "bunk": "assets/ui/vehicle-upgrades/body-bunk-v1.webp",
+    "jumpseat": "assets/ui/vehicle-upgrades/body-jumpseat-v1.webp",
+    "equipment": "assets/ui/vehicle-upgrades/parts-equipment-v1.webp",
+    "living": "assets/ui/vehicle-upgrades/parts-living-v1.webp"
+  },
+  "parts": {
+    "equipment": ["tank1", "tank2", "susp", "armor", "garden", "collector", "solar", "antenna", "winch", "bullbar", "snorkel", "mudtires"],
+    "living": ["lightbar", "awning", "stove", "sidebox", "beehive", "garden2", "kitchen", "fridge", "armory", "scope", "horn", "curtain"]
+  }
+}

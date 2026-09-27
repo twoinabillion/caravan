@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Transparent live-renderer object parts; not cinematic event paintings",
+  "styleReference": "assets/ui/journey-dalguji-base-v1.webp",
+  "prompts": "assets/road-cues/detailed-cues-prompts.json",
+  "rendering": {
+    "logicalWidth": 236,
+    "bufferScale": 2,
+    "vehicleWidthFraction": 0.52,
+    "approachGrowth": 0,
+    "peopleBakedIn": false,
+    "nightBrightness": 0.52,
+    "maximumBytesPerAsset": 40000
+  },
+  "assets": [
+    {"key":"coffee-van","file":"assets/road-cues/cue-coffee-van-v3.webp","delivery":[512,265],"crop":[16,144,1515,785],"event":"ev_truck_cafe","participants":"one vendor"},
+    {"key":"broken-vehicle","file":"assets/road-cues/cue-broken-vehicle-v3.webp","delivery":[512,238],"crop":[11,199,1515,704],"event":"meet_family","participants":"father on shoulder, two children in cargo bed"},
+    {"key":"temporary-checkpoint","file":"assets/road-cues/cue-temporary-checkpoint-v1.webp","delivery":[512,182],"crop":[23,401,1492,531],"event":"ev_fake_checkpoint","participants":"two people in reflective vests"}
+  ],
+  "review": {
+    "sourceArt": "Inspected: matched side projection, weathered materials, clean alpha, no people or scenery baked in",
+    "liveGallery": "Observed on actual http://127.0.0.1:4318/__live/assets before wiring, 2026-09-26",
+    "inGame": "PENDING: current Studio native preview is not available to visual inspection; existing levy_office event preserved, do not replace it with a fixture"
+  }
+}
