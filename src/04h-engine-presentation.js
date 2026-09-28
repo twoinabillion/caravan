@@ -34,6 +34,7 @@ G.presentationView = view=>{
   return {turns,index:clamp(Math.floor(Number(view.index)||0),0,turns.length-1),
     knownSpeaker:view.knownSpeaker===true,readingRecord:G.presentationText(view.readingRecord),
     recordOpen:view.recordOpen===true,
+    resultRecordOpen:view.resultRecordOpen===true,restoredLineOpen:view.restoredLineOpen===true,
     readerMode:['review','inspection'].includes(view.readerMode)?view.readerMode:'current',
     inspectionId:typeof view.inspectionId==='string'?view.inspectionId.slice(0,160):'',
     inspectedIds:Array.isArray(view.inspectedIds)?[...new Set(view.inspectedIds.filter(id=>typeof id==='string').map(id=>id.slice(0,160)))].slice(0,40):[],

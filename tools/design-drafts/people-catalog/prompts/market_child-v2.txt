@@ -1,0 +1,11 @@
+Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.
+
+Asset type: full-body character reference illustration for the isolated Caravan design-draft catalog, not a photograph and not a live road sprite.
+Input images: 1-4 are the required world and painterly style references. Input 5 is a presentation and clothing-material reference only; create a different person with the age and facial features described below.
+Scene: a quiet, ordinary moment, a single fully clothed child standing at ease. Soft overcast daylight, restrained colors, gently worn practical clothing.
+Composition: head-to-toe view at eye level, relaxed three-quarter stance; crown, both hands and both shoes entirely inside the frame with a comfortable margin. Natural age-appropriate proportions.
+Output: 1024x1536 portrait master, genuinely transparent background. No additional people, scenery, vehicle, painted halo, floor backdrop, inset face, text, border or watermark. Match the grounded cinematic painterly medium of the references, not a glossy photograph.
+
+Subject: A 9-year-old Korean girl with a softly square lower face, full cheeks, large round eyes, a small broad nose, and a short uneven black bob. She wears a muted mustard quilted vest over a plum long-sleeved shirt, dark loose trousers and plain cloth shoes. She comfortably holds a plain ceramic soup bowl in both hands in front of her vest. Calm curious expression. This is her individual character reference, with no market scenery in the picture.
+
+Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel

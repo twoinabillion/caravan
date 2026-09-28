@@ -102,25 +102,32 @@ function gameShell(){
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>서울까지 400km · LIVE</title><style>
   html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#070b13}
-  iframe{display:block;width:100%;height:100%;border:0;background:#070b13}
-  #live{appearance:none;position:fixed;right:10px;bottom:10px;z-index:20;min-height:36px;padding:7px 10px;border:1px solid #66583e;
+  body{display:flex;flex-direction:column}
+  iframe{display:block;width:100%;flex:1;min-height:0;border:0;background:#070b13}
+  #live-tools{flex:none;display:flex;gap:8px;flex-wrap:wrap;padding:8px;background:#15171b;border-bottom:1px solid #272a31}
+  #live-tools[hidden]{display:none}
+  #live,#live-restart{appearance:none;min-height:36px;padding:7px 10px;border:1px solid #66583e;
     border-radius:6px;background:rgba(7,13,20,.94);color:#efe6d5;font:700 11px/1.2 sans-serif;
     box-shadow:0 5px 18px rgba(0,0,0,.35);opacity:1;transform:none;transition:.18s ease;pointer-events:auto;cursor:pointer}
   #live.show{opacity:1;transform:none}#live.idle{border-color:#66583e;color:#d8c9ab}
-  #live:disabled{cursor:wait;opacity:.76}#live.error{border-color:#a94442;color:#f2b8b5}
+  #live:disabled,#live-restart:disabled{cursor:wait;opacity:.5}#live.error{border-color:#a94442;color:#f2b8b5}
   #live.pending{pointer-events:auto;cursor:pointer;border-color:#e0a343;color:#ffd38a;box-shadow:0 5px 18px rgba(0,0,0,.35),0 0 0 1px rgba(224,163,67,.18)}
-  </style></head><body><iframe id="game" src="/game?caravan-live=1&rev=${buildRevision}" allow="autoplay; fullscreen"></iframe>
-  <button id="live" class="show idle" type="button" aria-live="polite" title="저장 상태를 유지하고 최신 빌드를 다시 불러옵니다">최신 코드 적용</button><script>
+  </style></head><body><div id="live-tools" aria-label="플레이 테스트">
+  <button id="live" class="show idle" type="button" aria-live="polite" title="저장 상태를 유지하고 최신 빌드를 다시 불러옵니다">최신 코드 적용</button>
+  <button id="live-restart" type="button" disabled>처음부터 테스트</button></div>
+  <iframe id="game" src="/game?caravan-live=1&rev=${buildRevision}" allow="autoplay; fullscreen"></iframe><script type="module">
+  import { attachPlayControls } from '/__live/play-controls.mjs';
   const game=document.querySelector('#game'),badge=document.querySelector('#live');
-  let hideTimer,pendingRevision=null,styleRevision=null,applying=false,applyWhenReady=false,studioFrozen=false,studioMedia=[];
-  const idle=()=>{clearTimeout(hideTimer);badge.disabled=false;badge.textContent='최신 코드 적용';badge.className='show idle'};
-  const show=(text,error=false,pending=false,busy=false)=>{clearTimeout(hideTimer);badge.disabled=busy;badge.textContent=text;badge.className='show'+(error?' error':'')+(pending?' pending':'');};
+  let hideTimer,playControls,pendingRevision=null,styleRevision=null,applying=false,checking=false,applyWhenReady=false,studioFrozen=false,studioMedia=[],buildBusy=false;
+  const idle=()=>{clearTimeout(hideTimer);badge.disabled=false;badge.textContent=pendingRevision?'새 코드 준비됨 · 적용':'최신 코드 적용';badge.className='show'+(pendingRevision?' pending':' idle');playControls?.publish()};
+  const show=(text,error=false,pending=false,busy=false)=>{clearTimeout(hideTimer);badge.disabled=busy;badge.textContent=text;badge.className='show'+(error?' error':'')+(pending?' pending':'');playControls?.publish()};
   const hide=()=>{hideTimer=setTimeout(idle,1400)};
   const viewKey='caravan-live-view-v1';
   const captureView=()=>{
     try{
       const doc=game.contentDocument;
       if(!doc)return;
+      game.contentWindow.caravanLiveControls?.save();
       const ids=['ovl-status','ovl-map','ovl-journal','ovl-menu','ovl-camp','ovl-local-actions','ovl-stl','ev-wrap'];
       const open=ids.filter(id=>doc.getElementById(id)?.classList.contains('on'));
       const view={
@@ -246,7 +253,9 @@ function gameShell(){
     show('새 코드 준비됨 · 적용',false,true)
   };
   const applyRefresh=async()=>{
-    if(applying)return;
+    if(applying||checking||studioFrozen)return;
+    checking=true;
+    try{
     let revision=pendingRevision;
     if(!revision){
       show('최신 코드 확인 중',false,false,true);
@@ -263,6 +272,7 @@ function gameShell(){
     pendingRevision=null;
     show('최신 코드 적용 중',false,false,true);
     game.src='/game?caravan-live=1&rev='+revision;
+    }finally{checking=false;playControls?.publish()}
   };
   const applyStyles=async data=>{
     try{
@@ -292,7 +302,9 @@ function gameShell(){
       stageRefresh(data);
     }
   };
-  badge.addEventListener('click',applyRefresh);
+  playControls=attachPlayControls({win:window,game,toolbar:document.querySelector('#live-tools'),badge,restart:document.querySelector('#live-restart'),
+    state:()=>({pendingRevision,styleRevision,applying,busy:applying||checking||applyWhenReady||buildBusy,frozen:studioFrozen,
+      error:badge.classList.contains('error'),message:badge.classList.contains('idle')?'최신 코드 사용 중':badge.textContent}),apply:applyRefresh,report:show});
   game.addEventListener('load',()=>{
     styleRevision=new URL(game.contentWindow.location.href).searchParams.get('rev');
     setTimeout(restoreView,260);
@@ -301,9 +313,9 @@ function gameShell(){
     if(applying){applying=false;show('최신 코드 반영됨');hide()}
   });
   const events=new EventSource('/__live/events');
-  events.addEventListener('build',()=>show('변경 반영 중'));
-  events.addEventListener('reload',event=>{const data=JSON.parse(event.data);if(data.mode==='styles')applyStyles(data);else stageRefresh(data)});
-  events.addEventListener('build-error',()=>show('빌드 실패 · 이전 화면 유지',true));
+  events.addEventListener('build',()=>{buildBusy=true;show('변경 반영 중',false,false,true)});
+  events.addEventListener('reload',event=>{buildBusy=false;const data=JSON.parse(event.data);if(data.mode==='styles')applyStyles(data);else stageRefresh(data)});
+  events.addEventListener('build-error',()=>{buildBusy=false;applyWhenReady=false;show('빌드 실패 · 이전 화면 유지',true)});
   events.onerror=()=>show('개발 서버 연결 확인 중',true);
   </script></body></html>`;
 }
@@ -401,6 +413,10 @@ const server=http.createServer(async(request,response)=>{
   }
   if(url.pathname==='/__live/status'){
     sendText(response,200,JSON.stringify({building,queued,revision:buildRevision,clients:clients.size},null,2),'application/json; charset=utf-8');
+    return;
+  }
+  if(url.pathname==='/__live/play-controls.mjs'){
+    sendText(response,200,await fsp.readFile(path.join(ROOT,'tools/live-play-controls.mjs'),'utf8'),'text/javascript; charset=utf-8');
     return;
   }
   if(url.pathname==='/'||url.pathname==='/index.html'){

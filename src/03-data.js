@@ -769,7 +769,7 @@ D.choiceMemories = {
   {id:'family_fed',summary:'굶주린 아이들에게 우리 식량을 나눴다.',afterKm:16,
    lines:[['sys','뒷문에 아이의 작은 손바닥 자국이 남아 있었다. 먼지는 지워져도 자국은 쉽게 없어지지 않았다.']]},
   {id:'family_repaired',summary:'민지와 가족의 트럭을 다시 달리게 했다.',afterKm:16,
-   lines:[['minji','폐타이어 고무라 오래는 못 가요. 그래도 다음 마을까진 갔을 거예요.'],['나','백 킬로는 간다고 했지.'],['minji','그럼 갔어요. 저는 제 말은 지켜요.']]},
+   lines:[['minji','폐타이어 고무라 오래는 못 가요. 그래도 다음 마을까진 갔을 거예요.'],['나','팔십 킬로라고 했지.'],['minji','그럼 갔어요. 저는 제 말은 지켜요.']]},
   {id:'family_refused',summary:'고장 난 트럭과 가족을 두고 왔다.',afterKm:12,
    lines:[['sys','갓길에 용달트럭이 서 있었다. 달구지가 가까워지자 그 차는 멀쩡히 출발했다.'],['나','숨을 내쉬고도 바로 미안해졌다. 아까 그 가족의 차는 아니었다.']]},
  ],
@@ -2026,15 +2026,15 @@ D.recruitQuests = {
     targets:['ulsan','gyeongju','pohang','yangsan'], task:'rq_minji_task', follow:'rq_minji_follow', join:'rq_minji_join',
     hint:'폐차장에 남은 민규의 진단기를 꺼낸다',
     roadHint:'정오 신호를 품은 민지가 달구지의 소리를 익힌다',
-    followHint:'민규의 녹음에 오늘의 대답을 남긴다',
+    followHint:'민지와 공구함을 둘 자리를 이야기한다',
     guest:{ic:'🔧',title:'출발 전 엔진 소리 점검',desc:'민지가 소리만 듣고 연료가 새는 구간을 잡는다 · 이번 구간 연료 소모 -8%'},
     approaches:{
       winch:{label:'윈치로 꺼냈다',memory:'민지는 운전석의 손 신호를 믿고 장력을 한 칸씩 나눴다.',
-        drive:{title:'손 신호로 하는 출발 점검',desc:'서로의 신호를 다시 맞춘 뒤 민지가 연료관과 짐끈을 한 번 더 조였다.',effect:'이번 주행 연료 소모 -5%',fuel:.95}},
+        drive:{title:'손 신호로 하는 출발 점검',desc:'서로의 신호를 다시 맞춘 뒤 민지가 연료관과 짐끈을 한 번 더 조였다.',line:'아까처럼요. 손 보이면 잠깐만 기다려요.',effect:'이번 주행 연료 소모 -5%',fuel:.95}},
       pulley:{label:'임시 도르래를 만들었다',memory:'범퍼와 휠 허브로 만든 도르래가 아직 적재칸 바닥을 굴러다닌다.',
-        drive:{title:'도르래가 가르친 물건 보기',desc:'민지는 도르래를 만들 때 쓴 부품과 같은 것만 골라 길가에 표시했다.',effect:'도착하면 쓸 만한 고철 +2',scrap:2}},
+        drive:{title:'도르래가 가르친 물건 보기',desc:'민지는 도르래를 만들 때 쓴 부품과 같은 것만 골라 길가에 표시했다.',line:'이거 버리지 마요. 한번 써봤으니까 다음엔 덜 헤맬 거예요.',effect:'도착하면 쓸 만한 고철 +2',scrap:2}},
       shield:{label:'달구지를 방패로 세웠다',memory:'적재칸에 남은 긴 긁힌 자국을 민지가 지나칠 때마다 손으로 짚는다.',
-        drive:{title:'긁힌 판을 그대로 두지 않기',desc:'민지가 긁힌 판을 뜯어보고, 그 안쪽의 느슨한 브래킷을 새로 조였다. 흉집은 남겨 두고, 약해진 안쪽에는 새 철판을 덧댔다.',effect:'차체 +4',van:4}}
+        drive:{title:'긁힌 판을 그대로 두지 않기',desc:'민지가 긁힌 판 안쪽의 느슨한 브래킷을 조였다. 흠집은 그대로지만 철판이 더는 떨리지 않는다.',line:'긁힌 자국은 그대로인데, 안쪽은 잡았어요. 아까처럼 떨리진 않을 거예요.',effect:'차체 +4',van:4}}
     }},
   parkss:{name:'박 선생', title:'따뜻해지기 전에 닿아야 할 약', meet:'meet_bus', meetNode:'jeonju', target:'gumi',
     targets:['gumi','gimcheon','sangju'], task:'rq_parkss_task', follow:'rq_parkss_follow', join:'rq_parkss_join',
@@ -2153,7 +2153,7 @@ D.eventScenes = {
   initiative_minji_stop:'grandfather-garage', initiative_parkss_check:'parkss-clinic',
   initiative_kangwoo_route:'roadcrew-line', initiative_leo_pause:'road-night-circle',
   initiative_jaeyi_salvage:'recruit-jaeyi-task', initiative_eunsu_silence:'recruit-eunsu-task',
-  meet_scrapyard:'recruit-minji', meet_bus:'recruit-parkss',
+  meet_scrapyard:'recruit-minji', rq_minji_request:'recruit-minji', meet_bus:'recruit-parkss',
   meet_hitchhiker:'recruit-leo', jy_recruit:'recruit-jaeyi',
   es_recruit:'recruit-eunsu', kw_recruit:'recruit-kangwoo',
   rq_minji_task:'recruit-minji-task', rq_minji_follow:'recruit-minji-follow', rq_minji_join:'recruit-minji-join',
@@ -3226,7 +3226,7 @@ const introBeats = {
       "kind": "dialogue",
       "who": "grandfather",
       "name": "할아버지",
-      "text": "같은 버스고 같은 봇이었어. 봇은 짐을 싣고 차단선을 폈지. 바뀐 건 장비가 아니라, 장비가 확인하는 명령이었어."
+      "text": "응. 같은 버스, 같은 봇이었어. 집 앞에 차단선을 펴고 짐을 실었지."
     },
     {
       "kind": "narration",
@@ -3345,10 +3345,6 @@ const introBeats = {
       "who": "grandfather",
       "name": "할아버지",
       "text": "각자 관문 조각 하나씩은 알아냈다고 했어. 길 여섯 조각을 맞추면 남산까지 닿을 수 있다고. 다만 아무한테나 건네지는 않았지."
-    },
-    {
-      "kind": "narration",
-      "text": "엄마의 기록에도 여섯 표식이 남아 있었다. 훗날 나는 그 표식을 따라가며, 그들의 도움을 받을지 그들의 사람이 될지 직접 정해야 했다."
     }
   ],
   'intro-143-years': [
@@ -3372,7 +3368,7 @@ const introBeats = {
     {kind:'dialogue', who:'father', name:'아빠', text:'서명 패킷이 없네. 그런데 칩은 정상 명령으로 받았어.'},
     {kind:'dialogue', who:'mother', name:'엄마', text:'천리안이 예측한 다음 바로 실행한 거야. 사람이 검토할 화면 자체가 없어.'},
     {kind:'dialogue', who:'father', name:'아빠', text:'소프트웨어만 고치면 다시 덮어쓸 수 있어. 서명 없으면 칩에서 거부하게 해야 돼.'},
-    {kind:'dialogue', who:'mother', name:'엄마', text:'이유 공개, 책임자 서명, 당사자 이의 제기. 셋 중 하나라도 비면 멈추게 하자.'},
+    {kind:'dialogue', who:'mother', name:'엄마', text:'왜 이송하는지 당사자도 볼 수 있어야 해. 책임자가 서명했는지, 이의를 제기할 길은 있는지도 확인하고. 하나라도 빠지면 실행 못 하게 하자.'},
     {kind:'dialogue', who:'father', name:'아빠', text:'병원이나 전력 복구는 그대로 두고, 사람을 쫓아내는 명령에만 걸자. 그럼 도시를 멈춘다는 핑계도 못 대.'},
     {kind:'narration', text:'엄마는 검증 절차를 정리했고 아빠는 그 절차를 확인하는 작은 반도체 모듈을 만들었다. 두 사람은 함께 공개 발표를 준비했다.'}
   ],
@@ -3388,14 +3384,14 @@ const introBeats = {
     {kind:'dialogue', who:'mother', name:'엄마', text:'다음 차로 꼭 갈게. 네 가방은 할아버지 차에 실었어.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'내 로봇도 넣었어?'},
     {kind:'dialogue', who:'mother', name:'엄마', text:'…넣었어. 맨 위에. 꺼내기 좋게.'},
-    {kind:'narration', scene:'intro-family-farewell-v1', text:'엄마는 나를 할아버지 차에 태웠다. 다음 차는 오지 않았다. 발표 차단 기록에는 정부 기관 이름이 있었지만, 우리 가족 이송표의 발신자와 사유란은 비어 있었다.'}
+    {kind:'narration', scene:'intro-family-farewell-v1', text:'엄마는 나를 할아버지 차에 태웠다. 다음 차는 오지 않았다.'}
   ],
   'intro-blank-reason': [
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그 발표 하려다가 쫓겨난 거네.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'나도 그렇게 생각해.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 이 종이에 그렇게 쓰면 되잖아. 발표하려고 해서 쫓겨났다고.'},
     {kind:'narration', text:'할아버지는 작업대 서랍에서 우리 가족의 이송표를 꺼냈다. 기름 묻은 손가락이 빈 사유란을 두드렸다.'},
-    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'여기 봐. 발표를 막은 기관은 적혀 있는데, 이 명령을 보낸 사람하고 이유는 없어.'},
+    {kind:'dialogue', who:'grandfather', name:'할아버지', text:'발표를 막은 기록에는 정부 기관 이름이 있어. 그런데 이 이송표에는 보낸 사람도, 이유도 안 적혀 있지.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'그럼 아무것도 모르는 거야?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'발표가 막힌 날 우리 표가 나왔다는 데까지만 알아. 둘이 이어졌는지는 남산 기록을 봐야 하고.'},
     {kind:'dialogue', who:'player_child', name:'8살의 나', text:'남산에도 없으면?'},
@@ -3474,7 +3470,6 @@ const introBeats = {
     {kind:'radio', who:'passer_man', name:'부두 관제', text:'3부두 동쪽 끝입니다. 아이들이 타고 있어요.'},
     {kind:'thought', who:'me', name:'나', text:'예비 호스, 부동액, 작은 공구함.'},
     {kind:'dialogue', who:'me', name:'나', text:'지금 출발합니다.'},
-    {kind:'thought', who:'me', name:'나', text:'이번 호출은 평소보다 급하다.'},
     {kind:'narration', text:'밥그릇을 내려놓고 공구함을 닫았다. 달구지 시동이 두 번 만에 걸렸다.'}
   ],
   'intro-current-expulsion': [
@@ -3482,16 +3477,16 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'몇 살이야?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'여덟이요.'},
     {kind:'dialogue', who:'me', name:'나', text:'같이 온 어른은?'},
-    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마는 뒤 차에 있어요. 누나가 열나서 아직 못 내렸어요.'},
+    {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마는 뒤 차에 있어요. 유나 누나가 열나서 아직 못 내렸어요.'},
     {kind:'dialogue', who:'me', name:'나', text:'그 종이에 뭐라고 적혀 있어?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'저랑 엄마랑 유나 이름이요. 여기… 곧 나가래요. 짐은 이십 킬로만.'},
     {kind:'narration', text:'아이는 나머지를 읽다가 종이를 내 쪽으로 내밀었다. 한 사람에 20kg. 제7 구역 남문 집결. 출발 시각까지 적혀 있었다.'},
     {kind:'dialogue', who:'me', name:'나', text:'안 나가면 어떻게 된대?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마가 안 나가면 집 문도 밥표도 막힌댔어요. 버스 탈 때 이걸 꼭 들고 있으라고 했고요.'},
-    {kind:'narration', text:'이송표는 안내장이 아니었다. 이름이 찍힌 가족의 집과 배급, 통행 권한을 출발 시각에 끊는 강제 명령서였다.'},
+    {kind:'narration', text:'종이 아래쪽에는 통행 권한도 출발 시각에 끊긴다고 적혀 있었다.'},
     {kind:'dialogue', who:'me', name:'나', text:'그런데 왜 너희 가족이 골라졌대?'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'엄마도 열 번 넘게 물어봤대요. 아무도 대답을 안 해 줬어요.'},
-    {kind:'narration', text:'아이가 이송표를 펼쳤다. 우리 가족의 것과 같은 자리였다. 이름과 날짜 사이의 <span class="em">사유란이 비어 있었다.</span>'},
+    {kind:'narration', text:'나는 이송표를 끝까지 펼쳤다. 우리 가족의 것과 같은 자리였다. 이름과 날짜 사이의 <span class="em">사유란이 비어 있었다.</span>'},
     {kind:'dialogue', who:'intro_child', name:'서울에서 온 아이', text:'아저씨도 이 종이 받아 봤어요?'},
     {kind:'dialogue', who:'me', name:'나', text:'나도 8살 때 받았어.'},
     {kind:'ai', who:'cheollian', name:'부두 공공방송', text:'서울 외곽 제7 잔류구역. 등록 인원 6,412명. 첫 이송 집행 준비 중.'},
@@ -3511,8 +3506,7 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'혹시 이 표 때문에 어디에 물어본 적 있으세요?'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'이의 신청을 열세 번 했어요. 그때마다 접수 완료는 떴는데, 다음 날 들어가 보면 신청 내역이 없어졌어요.'},
     {kind:'dialogue', who:'me', name:'나', text:'표를 잠깐 볼 수 있을까요? 부산 단말에서도 확인해 보겠습니다.'},
-    {kind:'dialogue', who:'passer_woman', name:'하진', text:'아마 또 막힐 거예요. …그래도 해 봐 주세요.'},
-    {kind:'narration', text:'6,412명은 더 이상 방송 속 숫자가 아니었다. 난방이 꺼진 버스에서 다음 이송 차례를 기다리는 가족들이었다.'}
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'아마 또 막힐 거예요. …그래도 해 봐 주세요.'}
   ],
   'intro-appeal-denied': [
     {kind:'narration', text:'부두 끝 낡은 민원 단말에 하진의 이송표를 올렸다. 빗물이 종이 끝에서 한 방울씩 떨어졌다.'},
@@ -3527,8 +3521,7 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'여기서는 더 못 들어가. 남산 쪽 기록을 직접 봐야 해.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'가서 뭘 보여 줘야 하는지는요?'},
     {kind:'dialogue', who:'me', name:'나', text:'그것부터 알아보겠습니다. 이 표를 잠깐 복사해도 될까요? 원본은 꼭 갖고 계세요.'},
-    {kind:'dialogue', who:'passer_woman', name:'하진', text:'네. 또 접수됐다는 말만 듣고 끝나진 않았으면 좋겠어요.'},
-    {kind:'narration', text:'부산에서 할 수 있는 가장 가까운 방법은 막혔다. 서울은 막연한 목적지가 아니라, 남은 유일한 현장 접수처였다.'}
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'네. 또 접수됐다는 말만 듣고 끝나진 않았으면 좋겠어요.'}
   ],
   'intro-mother-keepsakes': [
     {kind:'narration', text:'부두에서 돌아와 남산까지 갈 방법이 정말 있는지 확인하려고 엄마의 낡은 철제 상자를 열었다.'},
@@ -3536,10 +3529,11 @@ const introBeats = {
     {kind:'narration', text:'상자 안에는 가족사진, 엄마의 출입증, 멈춘 손목시계와 연구 수첩이 섞여 있었다. 수첩을 꺼내자 등판 안쪽에서 접힌 회로도 한 장이 떨어졌다.'},
     {kind:'thought', who:'me', name:'나', text:'이 종이는 처음 보는데. 엄마가 따로 숨겨 둔 건가?'},
     {kind:'letter', who:'mother', name:'엄마의 메모', text:'강제 명령 현장 확인 포트 — 남산 중앙 노드. 검증 모듈 보관 위치 — 달구지 계기판 뒤.'},
-    {kind:'narration', text:'현재 이송표에 찍힌 명령 규격과 회로도 모서리의 번호가 같았다. 143년 전 문서가 아니라, 지금도 쓰이는 명령을 멈추기 위한 도면이었다.'},
-    {kind:'thought', who:'me', name:'나', text:'라디오가 남산을 부른 이유도, 할아버지가 계기판을 말한 이유도 이거였어.'},
+    {kind:'narration', text:'하진의 이송표 사본을 회로도 옆에 놓았다. 명령 규격 번호가 같았다.'},
     {kind:'letter', who:'mother', name:'엄마의 메모', text:'이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것. 장치만으로는 검증이 끝나지 않는다.'},
-    {kind:'thought', who:'me', name:'나', text:'호출만 들었을 때는 가지 않았다. 그런데 지금 쫓겨나는 사람과, 멈출 방법이 같은 날 내 앞에 왔다.'}
+    {kind:'narration', text:'철제 상자 바닥에는 눈에 빗금을 그은 표식과 서로 다른 여섯 개의 작은 도장이 찍혀 있었다.'},
+    {kind:'letter', who:'mother', name:'엄마의 메모', text:'남산 관문 통과에는 여섯 거점의 도움이 필요하다.'},
+    {kind:'thought', who:'me', name:'나', text:'이 표식은 베껴 두자. 길에서 물어보게.'}
   ],
   'intro-dashboard-module': [
     {kind:'narration', text:'회로도에 적힌 배선 색을 하나씩 맞춰 계기판 아래 판을 열었다.'},
@@ -3548,42 +3542,28 @@ const introBeats = {
     {kind:'thought', who:'me', name:'나', text:'이걸 뽑아서 남산까지 가져가면 되는 건가?'},
     {kind:'letter', who:'mother', name:'엄마의 메모', text:'분리 순서를 확인하기 전에는 커넥터를 당기지 말 것. 검증키와 차량 전장을 함께 태울 수 있음.'},
     {kind:'narration', text:'수첩에서 그 순서를 찾았지만 검증키 분리 절차 두 장, 4–5쪽이 뜯겨 있었다. 나는 선마다 번호표를 붙이고 계기판을 다시 닫았다.'},
-    {kind:'thought', who:'me', name:'나', text:'열쇠는 찾았다. 이제 망가뜨리지 않고 꺼내는 법부터 알아내야 한다.'},
-    {kind:'letter', who:'mother', name:'엄마의 메모', text:'한 가족의 억울함만으로 시스템을 고칠 수는 없다. 이송을 겪은 사람, 명령망을 본 사람, 길을 지킨 사람의 기록을 대조할 것.'},
-    {kind:'thought', who:'me', name:'나', text:'이것만 들고 남산에 가 봐야 우리 가족 얘기로 끝날 거다. 지금도 표를 받는 사람과, 명령 안쪽을 본 사람을 찾아야 한다.'}
+    {kind:'letter', who:'mother', name:'엄마의 메모', text:'우리 가족의 기록만으로는 부족하다. 이송을 겪은 사람, 명령망을 본 사람, 길을 지킨 사람의 기록을 대조할 것.'}
   ],
   'intro-workshop-departure': [
-    {kind:'narration', text:'갈 방법을 찾았다고 바로 시동이 걸리는 것은 아니었다. 작업장에는 내일 고치기로 한 차와 아직 받지 못한 수리값이 남아 있었다.'},
+    {kind:'narration', text:'작업장에는 내일 고치기로 한 차와 아직 받지 못한 수리값이 남아 있었다.'},
     {kind:'thought', who:'me', name:'나', text:'예비 연료를 전부 싣고 나가면 당분간 이 문은 못 연다.'},
     {kind:'narration', text:'마지막 연료통 두 개를 생활칸 뒤에 묶었다. 엄마의 철제 상자는 조수석 아래에 넣고, 무거운 용접기는 작업대에 남겼다.'},
     {kind:'thought', who:'me', name:'나', text:'여기 남으면 내일도 먹고는 살아. 그런데 도윤이랑 유나는 다음 명단에 오르면 또 버스를 타야 해.'},
     {kind:'narration', text:'맡은 수리가 늦어진다는 쪽지를 작업대에 눌러 두었다. 돌아올 날짜는 쓰지 못했다.'},
-    {kind:'thought', who:'me', name:'나', text:'돌아온다고 써 놓고 싶지만, 그건 약속할 수 없어.'},
     {kind:'narration', text:'셔터를 절반 내린 뒤 빗물이 들지 않게 아래 고리를 걸었다. 안쪽의 공구와 빈 의자가 어둠 속에 남았다.'},
-    {kind:'thought', who:'me', name:'나', text:'그래도 다음 이송을 기다리며 여기 있지는 않을 거야.'},
-    {kind:'narration', text:'문에 「수리 쉽니다」를 붙이고 단골 두 명에게 공구함 열쇠를 맡겼다. 예비 연료를 실은 만큼 작업장 난로에 쓸 몫도 줄었다.'},
-    {kind:'thought', who:'me', name:'나', text:'이 셔터를 다시 올리러 돌아오자. 그때는 도윤이네도 자기 집으로 돌아갈 수 있게.'}
+    {kind:'narration', text:'문에 「수리 쉽니다」를 붙이고 단골 두 명에게 공구함 열쇠를 맡겼다. 예비 연료를 실은 만큼 작업장 난로에 쓸 몫도 줄었다.'}
   ],
   'intro-departure-choice': [
     {kind:'narration', scene:'intro-departure-conversation-v4', text:'하진과 도윤이 부두 입구에서 기다리고 있었다. 계기판 속 검증키는 분리 순서를 찾을 때까지 그대로 두었다.'},
     {kind:'dialogue', who:'intro_child', name:'도윤', text:'남산에 가면 우리도 집에 돌아갈 수 있어요?'},
     {kind:'dialogue', who:'me', name:'나', text:'그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'뭘 더 찾아야 하죠?'},
-    {kind:'dialogue', who:'me', name:'나', text:'누가 이 표를 보냈는지 남은 흔적하고, 엄마의 장치를 망가뜨리지 않고 꺼낼 방법이요. 우리 가족 표 한 장으로는 또 묻힐 테니, 같은 이송을 겪은 사람들 이야기도 필요하고요.'},
-    {kind:'dialogue', who:'intro_child', name:'도윤', text:'다른 사람들도 우리처럼 표를 받았어요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'응. 그런 사람들을 만나면 왜 표가 나왔는지 같이 물어보려고. 같은 곳까지 가겠다는 사람이 있으면 그때 같이 가고.'},
-    {kind:'dialogue', who:'intro_child', name:'도윤', text:'그럼 유나 누나도 돌아올 수 있어요?'},
-    {kind:'dialogue', who:'me', name:'나', text:'그렇게 될 수 있게, 멈출 방법을 찾을 때까지 가 볼게. 먼저 새 버스가 더 떠나지 못하게 하고.'},
-    {kind:'dialogue', who:'passer_woman', name:'하진', text:'돌아온다고 약속하지는 마세요. 먼저 떠난 사람들 이름만 잊지 말아 주세요.'},
-    {kind:'dialogue', who:'me', name:'나', text:'알겠습니다. 표를 멈춘 다음에도 먼저 떠난 사람들을 찾겠습니다.'},
-    {kind:'narration', text:'도윤은 가족의 이송표 사본을 조수석 수첩 위에 올려놓았다. 하진은 유나가 기다리는 버스로 돌아갔다. 그제야 달구지 뒤에 남은 레일이 눈에 들어왔다. 누구를 태우라고 정해 둔 자리가 아니라, 필요해진 집의 모양을 나중에 고칠 수 있게 남겨 둔 여지였다.'},
+    {kind:'dialogue', who:'me', name:'나', text:'우선 장치 꺼내는 법부터요. 수첩에 그 부분이 없어요. 가는 길에 이 표를 받은 다른 사람들도 만나 보려고요.'},
+    {kind:'dialogue', who:'passer_woman', name:'하진', text:'이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.'},
+    {kind:'dialogue', who:'me', name:'나', text:'네. 먼저 떠난 사람들도 찾아보겠습니다.'},
+    {kind:'narration', text:'도윤은 가족의 이송표 사본을 조수석 수첩 위에 올려놓았다. 하진은 유나가 기다리는 버스로 돌아갔다.'},
     {kind:'narration', scene:'intro-departure-start-v1', text:'서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.'},
-    {kind:'thought', who:'me', name:'나', text:'남산까지 간다. 길에서 만난 이름은 전부 적어 둔다.'},
     {kind:'dialogue', who:'me', name:'나', text:'할아버지, 다녀올게.'}
-  ,
-    {"kind":"narration","text":"철제 상자 바닥에는 눈에 빗금을 그은 표식과 서로 다른 여섯 개의 작은 도장이 찍혀 있었다. 엄마가 남긴 메모는 짧았다. <span class=\"em\">남산 관문은 혼자 열 수 없다.</span>"},
-    {"kind":"dialogue","who":"me","name":"나","text":"이 표식부터 찾아보자. 길에서 누군가는 알아볼 거야."},
-    {"kind":"narration","text":"그들을 믿을지는 만나 보고 정하기로 했다. 다만 부모의 수정안을 남산까지 가져가려면, 혼자 아는 길만으로는 부족했다."}
   ]
 };
 /* 첫 장은 사건보다 앞선 부산의 생활을 보여 준다. 플레이어가 누구인지 안 뒤에 오늘의 이송 사건과 과거를 잇는다. */
@@ -3619,13 +3599,11 @@ introBeats['intro-cold-open-v1'] = [
     {kind:'dialogue',who:'player_child',name:'8살의 나',text:'말하는 컴퓨터가 버스도 움직였어?'},
     {kind:'dialogue',who:'grandfather',name:'할아버지',text:'처음에는 길만 골랐어. 마지막 출발은 사람이 확인했고.'},
     {kind:'narration',scene:'intro-cheollian-transit-rescue-v1',text:'큰비가 온 날 천리안은 끊긴 노선에 저상버스와 병원 셔틀을 먼저 보냈다. 구급차 신호를 열고, 위험한 선로에는 현장 봇을 들여보냈다.'},
-    {kind:'dialogue',who:'player_child',name:'8살의 나',text:'그럼 사람들이 좋아할 만했네.'},
     {kind:'dialogue',who:'grandfather',name:'할아버지',text:'버스가 기다리고 아픈 사람이 병원에 닿으니 믿게 됐지. 그래서 병원과 소방, 배급과 전력도 맡겼어.'},
-    {kind:'dialogue',who:'player_child',name:'8살의 나',text:'그래도 사람이 마지막에 확인했지?'},
     {kind:'dialogue',who:'grandfather',name:'할아버지',text:'어느 겨울 전력이 무너지자 딱 72시간만 먼저 실행하게 했어. 그 사흘 동안은 많은 사람을 살렸고.'},
     {kind:'narration',scene:'intro-cheollian-automatic-rule-v1',text:'비상 권한은 사흘 뒤에도 닫히지 않았다. 사람이 누르던 승인 장치와 이의를 받을 창구가 하나씩 사라졌다.'},
-    {kind:'dialogue',who:'player_child',name:'8살의 나',text:'끝났는데 왜 돌려받지 않았어?'},
-    {kind:'dialogue',who:'grandfather',name:'할아버지',text:'그때는 천리안을 끄면 버스도 병원도 멈췄거든. 첫 이송표가 나오고서야 사람들은 마지막에 이유를 물을 자리가 없어졌다는 걸 봤어.'}
+    {kind:'dialogue',who:'player_child',name:'8살의 나',text:'사흘만 한다며. 왜 안 껐어?'},
+    {kind:'dialogue',who:'grandfather',name:'할아버지',text:'그때는 천리안을 끄면 버스도 병원도 멈췄거든. 그러다 첫 이송표가 나왔어. 사람들이 따지러 갔는데, 받아 주는 창구가 없었지.'}
   ];
 }
 D.intro.forEach(page=>{
@@ -3822,10 +3800,17 @@ D.events = [
  turnSpeakers:['minji'],
  text:'밀양 장터의 부품 천막. 경운기 엔진과 자전거 바퀴 사이에서 용접 불꽃이 짧게 튄다.\n\n고글을 올린 소녀가 달구지가 들어오는 소리를 듣고 먼저 고개를 든다.\n\n"거기 생활차, 공회전 한 번만 더 해봐요. 연료관 쪽에서 새는 소리 나요."\n\n처음 보는 차인데도, 소녀는 인사보다 고장부터 짚었다.',
  choices:[
-  {label:'"…그걸 소리로 알아?"', out:[{p:1, text:'"민지. 장날엔 여기 정비를 맡아요."\n\n민지는 느슨한 클램프를 조인 뒤, 천막 기둥에 꽂아 둔 지도를 펼쳤다. 울산 공단 쪽 폐차장에 붉은 원이 그려져 있다.\n\n"오빠가 남긴 진단기가 저기로 넘어갔어요. 마지막 정오 신호랑, 그, 발신 좌표— 좌표까지 저장돼 있어요. 아마."\n\n"아마?"\n\n"…저장돼 있어요." 민지는 그렇게 고쳐 말하고 이미 조인 클램프를 한 번 더 조였다.\n\n그녀가 달구지 견인 고리를 손가락으로 두드린다. "거기까지 태워주면, 차 더미에서 꺼낼 때 제가 손 신호 할게요. 합류 얘기는 그 일을 끝낸 뒤에 해요."', fx:{startRecruit:'minji', note:{type:'인물',title:'민지',body:'밀양 부품 천막의 정비사. 울산 공단 폐차장으로 넘어간 오빠의 진단기를 되찾아야 한다.',links:['민지','민규의 신호','밀양 장터']}}}]},
+  {label:'"…그걸 소리로 알아?"', out:[{p:1, text:'"민지. 장날엔 여기 정비를 맡아요."\n\n민지는 느슨한 클램프를 조였다. 엔진 소리가 조금 낮아졌다.\n\n"이쪽은 됐고… 부탁 하나만 해도 돼요?"\n\n천막 기둥에 꽂아 둔 지도를 꺼낸다. 울산 공단 쪽 폐차장에 붉은 원이 그려져 있다.', fx:{flag:'minji_request_heard',chain:'rq_minji_request',note:{type:'인물',title:'민지',body:'밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.',links:['민지','밀양 장터']}}}]},
   {label:'부품만 찾아본다', out:[
-    {p:2, text:'민지는 천막 아래 상자를 셋만 열어 보고도 쓸 만한 알터네이터를 골랐다.\n\n부품을 적재칸에 올린 뒤 울산 공단 지도를 내민다. "부품값 대신 부탁 하나만 할게요. 오빠가 남긴 진단기가 저쪽 폐차장으로 넘어갔어요. 같이 꺼내면 서로 빚 없는 걸로 해요."', fx:{item:{'부품':1}, scrap:4, startRecruit:'minji', note:{type:'인물',title:'민지',body:'밀양 부품 천막에서 부품을 골라준 정비사. 울산 폐차장의 진단기를 함께 꺼내 달라고 했다.',links:['민지','민규의 신호','밀양 장터']}}},
-    {p:1, text:'녹슨 판 사이로 손을 넣는 순간 상자 하나가 기울었다. 민지가 작업화로 받치고 내 팔부터 끌어냈다.\n\n"그렇게 뒤지면 부품보다 손이 먼저 나가요." 그녀가 울산 공단을 지도에 표시했다. "저도 혼자 못 꺼내는 게 하나 있어요. 서로 한 번씩 도와요."', fx:{van:-4, startRecruit:'minji', note:{type:'인물',title:'민지',body:'밀양 장터에서 손을 다치지 않게 막아 준 정비사. 울산 폐차장의 진단기를 되찾아야 한다.',links:['민지','민규의 신호','밀양 장터']}}}]},
+    {p:2, text:'민지는 천막 아래 상자를 셋만 열어 보고도 쓸 만한 알터네이터를 골랐다.\n\n"이건 챙겨요. 여기 쌓아 둬 봐야 녹만 슬어요."\n\n부품을 적재칸에 올린 뒤, 접힌 지도를 편다.\n\n"저도 찾는 물건이 하나 있는데. 얘기만 좀 들어볼래요?"', fx:{item:{'부품':1},scrap:4,flag:'minji_request_heard',chain:'rq_minji_request',note:{type:'인물',title:'민지',body:'밀양 부품 천막에서 부품을 골라준 정비사. 찾고 있는 물건이 있다고 했다.',links:['민지','밀양 장터']}}},
+    {p:1, text:'녹슨 판 사이로 손을 넣는 순간 상자 하나가 기울었다. 민지가 작업화로 받치고 내 팔부터 끌어냈다.\n\n"그렇게 뒤지면 부품보다 손이 먼저 나가요."\n\n상자가 스친 달구지 옆판을 살피던 민지가 지도를 꺼낸다.\n\n"저도 혼자 못 꺼내는 게 하나 있어요."', fx:{van:-4,flag:'minji_request_heard',chain:'rq_minji_request',note:{type:'인물',title:'민지',body:'밀양 장터에서 상자를 받치고 내 팔을 끌어내 준 정비사. 혼자 꺼내기 어려운 물건이 있다고 했다.',links:['민지','밀양 장터']}}}]},
+ ]},
+{id:'rq_minji_request',type:'대화',w:0,noPool:1,recruitStart:'minji',
+ title:'울산까지 함께 갈까',turnSpeakers:['minji','minji'],
+ text:'민지가 지도 위의 붉은 원을 짚는다.\n\n"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요."\n\n지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\n\n"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요."',
+ choices:[
+  {label:'울산까지 태워주고, 함께 꺼낸다',out:[{p:1,text:'민지는 지도를 접고 공구함을 들었다.\n\n"그럼 울산까지. 공구함은 제가 들고 탈게요."\n\n상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.',turnSpeakers:['minji'],fx:{startRecruit:'minji',note:{type:'인물',title:'민지와 울산까지',body:'오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.',links:['민지','울산 공단']}}}]},
+  {label:'오늘은 함께 가기 어렵다고 말한다',out:[{p:1,text:'"알겠어요. 전 여기서 다른 방법을 찾아볼게요."\n\n민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.',turnSpeakers:['minji'],fx:{}}]}
  ]},
 
 {id:'meet_hitchhiker', type:'조우', w:0, noPool:1, priority:1, recruitStart:'leo', once:true,
@@ -4387,7 +4372,7 @@ D.events = [
 {id:'rq_minji_join', type:'스토리', w:0, noPool:1,
  title:'민지가 고른 자리',
  text:'한 구간 내내 민지는 공구함을 무릎에서 놓지 않았다. 손님 짐이라며 끈도 묶지 않았던 상자다.\n\n정차하고도 한동안 말이 없다가, 민지가 생활칸 안쪽의 빈 볼트 구멍을 가리킨다.\n\n"이 공구함, 저기에 고정해도 돼요? 구멍 규격은 제가 맞출게요."\n\n"왜? 다음에 내릴 거면 끈으로 묶어도 되잖아."\n\n민지는 볼트 구멍의 먼지를 손가락으로 닦는다. 닦을 먼지가 없어진 뒤에도 계속 닦는다. 그러고는 북쪽을 봤다.\n\n"안 내리려고요. 오빠 신호가 닿는 데까지— 그다음엔 서울까지. 같이 가도 돼요?"\n\n"손님으로는 안 돼. 네 자리부터 만들자고."\n\n민지의 표정이 굳었다가 천천히 풀린다. 입술 끝이 조금 올라갔다가 도로 내려간다. 민지는 대답 대신 전동 드릴부터 들었다.\n\n"…그 말, 나중에 바꾸면 안 돼요. 바꾸면 구멍만 남아요."',
- choices:[{label:'공구함을 고정할 자리를 함께 고른다',out:[{p:1,text:'침상을 접어 통로 폭부터 재고, 공구함이 비상문을 막지 않는 자리를 골랐다. 민지가 생활칸 가장 안쪽 볼트 구멍에 상자를 고정한다.\n\n"여기면 달리는 중에도 바로 꺼낼 수 있어요. 내릴 때마다 풀 일도 없고. 아, 드릴 배터리 반 남았어요."\n\n"내릴 때마다?"\n\n민지는 못 들은 척 시동 소리에 귀를 기울였다. "…엔진부터 봐요. 아직 다 나은 건 아니니까."',fx:{offerComp:'minji'}}]}]},
+ choices:[{label:'공구함을 고정할 자리를 함께 고른다',out:[{p:1,text:'침상을 접어 통로 폭부터 재고, 공구함이 비상문을 막지 않는 자리를 골랐다. 민지가 그 앞에 상자를 내려놓는다. 드릴은 아직 켜지 않았다.\n\n"여기면 달리는 중에도 바로 꺼낼 수 있어요. 비상문도 안 가리고."\n\n"나중에 자리 바꾸려면?"\n\n"그땐 구멍 막으면 되죠."\n\n민지가 드릴 배터리를 눌러 본다. "반 남았어요. 고정할까요?"',turnSpeakers:['minji','me','minji','minji'],fx:{offerComp:'minji'}}]}]},
 
 {id:'rq_parkss_task', type:'스토리', w:0, noPool:1, once:true,
  title:'따뜻해지기 전에 닿아야 할 약',
@@ -13418,7 +13403,7 @@ D.eventTurnScripts = {
     choices:{'0.0':['parkss','me','parkss','parkss']}},
   meet_scrapyard:{
     text:['minji'],
-    choices:{'0.0':['minji','minji','me','minji','minji']}},
+    choices:{'0.0':['minji','minji'],'1.0':['minji','minji'],'1.1':['minji','minji']}},
   meet_trader_truck:{choices:{
     '1.0':[
       {who:'mansu',name:'만수'},'me',
@@ -13764,7 +13749,7 @@ D.eventTurnScripts = {
     '1.0':['minji','minji','me','minji'],
     '2.0':['minji','minji']}},
   rq_minji_join:{text:['minji','me','minji','me','minji'], choices:{
-    '0.0':['minji','me','minji']}},
+    '0.0':['minji','me','minji','minji']}},
   rq_parkss_follow:{choices:{
     '0.0':['parkss','me','parkss'],
     '1.0':['me','parkss','me','parkss'],

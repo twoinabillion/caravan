@@ -1,0 +1,1764 @@
+{
+  "schemaVersion": 1,
+  "stage": "reference-draft",
+  "runtimeApplied": false,
+  "studioVisualQA": "blocked-by-access-policy",
+  "people": [
+    {
+      "id": "me",
+      "name": "상혁",
+      "group": "lead",
+      "portrait": "assets/portraits/me.png",
+      "status": "draft",
+      "brief": "각진 볼, 올리브색 모자, 어깨 가방. 얼굴과 대표 의상을 기존 상혁에게 맞춤.",
+      "identityNote": "The adult Korean male player character from Image 5 and the corresponding olive-cap figure in Image 3. Exactly preserve his lean angular cheekbones, narrow tired eyes, nose, jaw, dark messy short hair, stubble and apparent age. Worn olive baseball cap, dark weathered work jacket and trousers, shoulder satchel. Relaxed uneven standing posture facing three-quarter left, right hand holding the shoulder-bag strap at chest level, left arm relaxed. Worn work shoes. No weapons, no armor.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/me.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-f423203c-fd26-4bcf-af2e-fa40c8bb040c.png"
+    },
+    {
+      "id": "minji",
+      "name": "민지",
+      "group": "lead",
+      "portrait": "assets/portraits/minji.png",
+      "status": "draft",
+      "brief": "묶은 머리와 고글, 둥근 볼. 공구함을 든 17살 정비사.",
+      "identityNote": "Minji, the young Korean female mechanic from Image 5 and the corresponding ponytailed goggles mechanic in Image 3. Exactly preserve her youthful oval face, narrow eye shape, slightly round cheeks, nose and mouth; age 17, ordinary fully clothed practical appearance. Black ponytail with loose wisps and round mechanic goggles resting on top of her head, oil-stained dark mechanic workwear, practical gloves, tool pouch. Slim natural build, scuffed work boots. Relaxed three-quarter left standing posture, one gloved hand resting on tool pouch, the other holding a small closed weathered toolbox low at her side. No child/chibi proportions, no beauty retouching, no brown fashion jacket, no companions.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/minji.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-f5808d07-aca2-4201-8f61-5d5a59679310.png"
+    },
+    {
+      "id": "parkss",
+      "name": "박 선생",
+      "group": "lead",
+      "portrait": "assets/portraits/parkss.png",
+      "status": "draft",
+      "brief": "둥근 철테 안경, 회색 머리, 긴 얼굴. 가벼운 왕진 가방.",
+      "identityNote": "Korean man age 63, the exact man from Image 5: neatly combed gray hair, ROUND metal glasses, long older face, slim older build. Worn gray sweater vest over a plain light shirt, plain dark trousers, practical shoes. Small weathered medical bag held low in one hand; other hand lightly closes vest. Slightly stooped but steady. No lab coat, no square glasses.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/parkss.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-dfbe3f04-fd26-4666-9b2f-cd48f8576927.png"
+    },
+    {
+      "id": "kangwoo",
+      "name": "강우",
+      "group": "lead",
+      "portrait": "assets/portraits/kangwoo.png",
+      "status": "draft",
+      "brief": "짧게 민 머리와 각진 턱. 무게를 낮추고 주변을 살피는 자세.",
+      "identityNote": "Korean man age 34, the exact man from Image 5: buzz-cut black hair, angular brow and jaw, guarded unsmiling eyes, same face and skin. Sturdy rather than exaggerated muscular build. Faded olive military/work jacket and dark work trousers, old boots. Standing with one shoulder slightly forward, hands resting loosely near sides, watchful head turned a little left. No new weapons, no helmet, no heavy beard, no futuristic armor.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/kangwoo.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-a9f30f36-bbbd-4cbc-9c06-fbb037cbf748.png"
+    },
+    {
+      "id": "leo",
+      "name": "레오",
+      "group": "lead",
+      "portrait": "assets/portraits/leo.png",
+      "status": "draft",
+      "brief": "긴 머리, 무늬 두건, 가는 얼굴. 기타를 낮게 든 자세.",
+      "identityNote": "Korean man age 28, the exact man from Image 5: long wavy black hair, patterned dark brown-black bandana, same narrow face and nose. Faded dark blue denim jacket, dark trousers, worn boots. One acoustic guitar hanging from a plain shoulder strap at his side, one hand steadying the guitar neck; relaxed but not posing like a fashion model. Single person, NO DOG in this isolated human reference.",
+      "reviewNote": "첫 생성물의 불필요한 로고·표식을 제외한 2안. 원형 단계이며 축소·투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/leo.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-a868cbe5-4dbc-42d0-a19f-3c4f1def2c3a.png",
+      "version": "v2"
+    },
+    {
+      "id": "jaeyi",
+      "name": "재이",
+      "group": "lead",
+      "portrait": "assets/portraits/jaeyi.png",
+      "status": "draft",
+      "brief": "짧고 헝클어진 머리, 둥근 볼. 겨자색 작업복과 장갑.",
+      "identityNote": "Korean young adult age 22, exact person and facial appearance from Image 5: short tousled brown hair, youthful rounder facial planes and same open eyes/nose/mouth. Mustard ochre worn work jacket, dark trousers, practical work gloves and worn sturdy shoes. Slim wiry build. One hand tugs the other glove cuff, body weight resting on one leg. No olive jacket, no long hair, no giant backpack or extra props.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/jaeyi.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-207d8ae8-6795-4cb1-9e64-cf755b17773f.png"
+    },
+    {
+      "id": "eunsu",
+      "name": "은수",
+      "group": "lead",
+      "portrait": "assets/portraits/eunsu.png",
+      "status": "draft",
+      "brief": "턱까지 오는 곧은 단발, 헤드셋, 차분한 눈매.",
+      "identityNote": "Korean woman age 33, exactly preserve woman in Image 5: straight black jaw-length bob, straight nose, reserved focused gaze and same facial proportions. Large practical over-ear headset, charcoal hooded technical jacket and dark utility trousers, worn low boots. One hand gently touches a headset earcup, other arm relaxed. Natural ordinary build. No science-fiction equipment, no neon, no cyberpunk, no extra radio backpack.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/eunsu.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ba95db2d-00ec-4b8e-8720-0a9fe01a3645.png"
+    },
+    {
+      "id": "father",
+      "name": "아빠",
+      "group": "named",
+      "portrait": "assets/portraits/father.png",
+      "status": "draft",
+      "brief": "긴 얼굴, 짧은 검은 머리, 작업복. 정비 수첩을 든 모습.",
+      "identityNote": "Korean father, exactly the adult man in Image 5, same age, angular long face, narrow eyes, straight nose, short black side-parted messy hair, faint stubble and dark brown worn collared work jacket with chest pockets. Lean frame, simple faded dark straight trousers, old lace-up shoes. Standing with sleeves down, one hand holding a small folded unmarked maintenance notebook, other arm relaxed. No hat and no added goggles. Localized sleeve wear; not muddy all over.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/father.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-9a6ffbc2-8853-4efc-acee-3b91db7a8072.png"
+    },
+    {
+      "id": "mother",
+      "name": "엄마",
+      "group": "named",
+      "portrait": "assets/portraits/mother.png",
+      "status": "draft",
+      "brief": "낮게 묶은 머리와 긴 타원 얼굴. 누빈 겉옷과 작은 주머니.",
+      "identityNote": "Korean mother, exactly woman from Image 5: medium-length dark hair loosely tied behind neck with loose waves around face, long oval face, attentive narrow eyes and strong same nose, same mature age. Faded dark charcoal-brown quilted/woven practical jacket, simple dark straight trousers and flat shoes, small crossbody pouch as portrait. Standing with hands loosely clasped around pouch strap, head slightly turned. No goggles, no headset, no glamorous makeup. No extra props.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/mother.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-44daafe3-c53c-4ce3-84eb-b80777975eb9.png"
+    },
+    {
+      "id": "grandfather",
+      "name": "할아버지",
+      "group": "named",
+      "portrait": "assets/portraits/grandfather.png",
+      "status": "draft",
+      "brief": "희끗하고 흐트러진 머리, 웃는 눈, 둥근 얼굴.",
+      "identityNote": "Korean elderly grandfather exactly from Image 5, preserve broad gentle smiling face, crow's feet, wispy silver-gray hair, gray stubble, red-brown scarf and charcoal-green old work jacket. Shorter stocky elderly build, slightly forward shoulders. Loose brown trousers, sturdy worn loafers. One hand rests at jacket pocket opening and one hangs relaxed, gently amused expression. Not the bespectacled pharmacist: NO glasses, no medical case. Worn but carefully maintained clothes.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/grandfather.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-36456e6c-2a12-4cda-9a6c-ffc8d47b5bd6.png"
+    },
+    {
+      "id": "mingyu",
+      "name": "민규",
+      "group": "named",
+      "portrait": "assets/portraits/mingyu.png",
+      "status": "draft",
+      "brief": "좁은 눈과 긴 머리카락, 얇은 수염. 정본의 목걸이 유지.",
+      "identityNote": "Korean man Min-gyu exactly from Image 5: slightly longer messy dark hair, tired narrow eyes, prominent high cheekbones, sparse mustache/stubble, worn charcoal mechanic collared jacket, same oval pendant on cord. Lean sinewy build, faded dark brown work trousers and old work boots. One hand loosely holds a rolled plain cloth, other down. No goggles on head, no weapons, no backpack. Exact existing facial identity, not protagonist.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/mingyu.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-fe52f650-7fe5-4ce0-a645-93ff09fea7cf.png"
+    },
+    {
+      "id": "hanbyeol",
+      "name": "한별",
+      "group": "named",
+      "portrait": "assets/portraits/hanbyeol.png",
+      "status": "draft",
+      "brief": "불규칙한 짧은 머리, 긴 코트, 어깨의 담요와 가방.",
+      "identityNote": "Korean young adult exactly from Image 5: short shaggy black hair with the same uneven fringe, high cheekbones, attentive eyes and firm mouth; preserve existing age and gender presentation. Worn brown long work coat, maroon scarf, shoulder pack with a small rolled blanket visible above shoulder. Slim compact build. Dark straight trousers tucked into simple old walking boots; one hand hooks under bag strap, other relaxed. No glasses, no added hats. Do not turn them into the mechanic.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/hanbyeol.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-031a6159-1da9-4211-94ab-6294f5fea69b.png"
+    },
+    {
+      "id": "seoyeon",
+      "name": "서연",
+      "group": "named",
+      "portrait": "assets/portraits/seoyeon.png",
+      "status": "draft",
+      "brief": "짧게 흐트러진 단발과 회색 목도리. 편지 가방의 끈.",
+      "identityNote": "Korean woman exactly from Image 5: short asymmetrical wavy black bob, rounded lower face with tired narrow eyes, same age and facial geometry. Worn dark brown leather/work coat, LIGHT GRAY linen scarf crossed down chest, leather shoulder bag strap. Sturdy mid-build. Dark straight trousers and low dark boots. Quiet stance with arms down and fingers lightly holding scarf edge. No goggles, no military armor, no new props.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/seoyeon.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-054e1e74-2104-471a-be15-33559330759b.png"
+    },
+    {
+      "id": "postman",
+      "name": "우편부",
+      "group": "named",
+      "portrait": "assets/portraits/postman.png",
+      "status": "draft",
+      "brief": "고글과 희끗한 머리, 콧수염. 줄무늬 우편 겉옷.",
+      "identityNote": "Korean middle-aged postman exactly from Image 5: wavy short dark hair with GRAY temples, round goggles resting on forehead, rectangular moustached face and same tired eyes. Worn navy postal jacket with muted red sleeve stripes, brown messenger strap, dark scarf. Broad shoulders and compact build, dark straight trousers and walking shoes. Hands steady a weathered messenger bag at hip. Absolutely NO readable postal writing or logo anywhere; preserve striped design only.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/postman.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-340601e0-73fb-46b6-88a5-d306382d4f65.png"
+    },
+    {
+      "id": "mapmaker",
+      "name": "지도장이",
+      "group": "named",
+      "portrait": "assets/portraits/mapmaker.png",
+      "status": "draft",
+      "brief": "짧은 머리와 고글, 나침반. 지도 통을 든 모습.",
+      "identityNote": "Korean young woman exactly from Image 5: short tousled black hair, round goggles above forehead, freckled fine face and same mouth/nose/eyes, maroon scarf and olive hooded work jacket, circular analog compass pendant, map tubes on bag straps. Slim build, dark olive straight trousers, worn hiking boots. One hand holds a single rolled BLANK paper map tube against hip, other down. No readable map writing, no oversized gear, no additional equipment beyond portrait.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/mapmaker.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5f6d10a5-572e-4197-9026-21df72fdddef.png"
+    },
+    {
+      "id": "geumja",
+      "name": "금자",
+      "group": "named",
+      "portrait": "assets/portraits/geumja.png",
+      "status": "draft",
+      "brief": "둥근 볼과 짧은 파마머리. 꽃무늬 앞치마와 국자.",
+      "identityNote": "Korean older woman exactly from Image 5: broad round face, soft hooded eyes, short curly salt-and-pepper hair, slight smile. Same floral dark apron, gray rolled-sleeve shirt, maroon neck scarf. Short solid build. Loose dark trousers and rubber slip-on work shoes. Carry the existing old metal ladle low in one hand, other rests at waist. Worn clean enough kitchen clothing, not mud-covered combat fatigues.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/geumja.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-751f01ad-0ddc-4144-aeba-b35746a96c91.png"
+    },
+    {
+      "id": "sundeok",
+      "name": "순덕",
+      "group": "named",
+      "portrait": "assets/portraits/sundeok.png",
+      "status": "draft",
+      "brief": "길고 주름진 얼굴, 붉은 머릿수건, 기운 앞치마.",
+      "identityNote": "Korean elderly market woman exactly from Image 5: narrow wrinkled face, crooked gentle smile, maroon tied headscarf, faded patterned blouse, green-brown patched apron/vest, small cloth coin pouch. Short fine-boned figure, gray loose trousers, canvas cloth shoes. Both hands rest lightly together at coin pouch, slightly bowed shoulders. No large extra bags.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/sundeok.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-9034bdbe-2a7f-4950-89ea-a764261a313b.png"
+    },
+    {
+      "id": "taeho",
+      "name": "태호",
+      "group": "named",
+      "portrait": "assets/portraits/taeho.png",
+      "status": "draft",
+      "brief": "긴 얼굴과 얇은 콧수염. 모자와 호루라기를 유지.",
+      "identityNote": "Korean middle-aged market caretaker exactly from Image 5: navy baseball cap, narrow long angular face, trimmed moustache and chin stubble, weathered charcoal utility jacket, dark shirt and metal whistle on cord. Tall straight build, plain dark trousers and low work boots. One hand held open at waist to indicate a direction, other down. No weapon or uniform insignia.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/taeho.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-2dbcfa8e-ded4-44ce-935a-928cb16cb8b2.png"
+    },
+    {
+      "id": "jaepil",
+      "name": "재필",
+      "group": "named",
+      "portrait": "assets/portraits/jaepil.png",
+      "status": "draft",
+      "brief": "쓸어 넘긴 회색 머리, 깊은 미간, 길게 내려오는 코트.",
+      "identityNote": "Korean middle-aged tunnel elder exactly from Image 5: swept-back wavy salt-and-pepper hair, deep vertical brow lines, heavy serious eyes, broad firm jaw, dark brown long collared coat, maroon neck scarf, small stub candle safely UNLIT tucked in chest pocket. Solid stocky body, gray loose straight trousers, sturdy shoes. Hands loosely folded behind back, three-quarter standing. No flame.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/jaepil.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-d0994f4e-08ce-46ed-83e9-16dc65d71cac.png"
+    },
+    {
+      "id": "miyoung",
+      "name": "미영",
+      "group": "named",
+      "portrait": "assets/portraits/miyoung.png",
+      "status": "draft",
+      "brief": "넓은 얼굴과 단단한 눈매. 감색 머릿수건과 장부.",
+      "identityNote": "Korean middle-aged market association woman exactly from Image 5: broad face and firm calm eyes, black hair beneath tied navy headscarf, navy quilted vest over dark burgundy rolled-sleeve blouse, worn cloth wristband. Sturdy short build, practical loose dark trousers, plain slip-on shoes. Holds small plain unlettered ledger against chest as portrait. Fingers natural, no readable writing.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/miyoung.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-fe0015a4-8c37-44ce-9d99-3cf9fd93a919.png"
+    },
+    {
+      "id": "drhan",
+      "name": "한 박사",
+      "group": "named",
+      "portrait": "assets/portraits/drhan.png",
+      "status": "draft",
+      "brief": "헝클어진 회색 머리, 안경. 옅은 가운과 머그잔.",
+      "identityNote": "Korean older researcher exactly from Image 5: shaggy salt-and-pepper hair, delicate wire glasses, slightly gaunt long face, thoughtful downturned eyes, short gray moustache, faded light gray long LAB COAT over dark shirt. Slim tall body, plain brown straight trousers and worn flat shoes. Holds one plain ceramic mug near stomach, other arm relaxed. No white pristine coat, no sci-fi lab equipment.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/drhan.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-891c8e9e-3758-485b-8578-8863b42ef155.png"
+    },
+    {
+      "id": "deokgu",
+      "name": "덕구",
+      "group": "named",
+      "portrait": "assets/portraits/deokgu.png",
+      "status": "draft",
+      "brief": "넓고 각진 턱, 짧게 민 머리. 두꺼운 조끼와 단단한 자세.",
+      "identityNote": "Korean middle-aged gatekeeper exactly from Image 5: very short clipped black hair, broad blunt face, heavy square jaw, narrow suspicious eyes, moustache stubble. Dark blue thick sleeveless work vest over brown-gray long-sleeved shirt, same brown cross-body strap. Wide torso and sturdy thighs, dark loose work pants, scuffed boots. Hands on hips but elbows relaxed, weight planted. No weapon, no modern armor.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/deokgu.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-909fdb79-f9f4-4765-9281-107b03d00778.png"
+    },
+    {
+      "id": "suwan",
+      "name": "수완",
+      "group": "named",
+      "portrait": "assets/portraits/suwan.png",
+      "status": "draft",
+      "brief": "긴 타원 얼굴과 얇은 콧수염. 주머니의 라디오 전선.",
+      "identityNote": "Korean middle-aged radio repair seller exactly from Image 5: medium shaggy short black hair, long oval face, thin moustache, slightly droopy eyes, charcoal fabric work jacket over dark shirt with a small coiled cable in breast pocket. Slender body, simple dark straight trousers, worn sneakers. One hand gently straightens cable in pocket, other relaxed. No backpack, headphones, or giant radio.",
+      "reviewNote": "첫 생성물의 불필요한 로고·표식을 제외한 2안. 원형 단계이며 축소·투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/suwan.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-aee531a2-be32-4ec3-9c31-f3a2566816d0.png",
+      "version": "v2"
+    },
+    {
+      "id": "byungchul",
+      "name": "병철",
+      "group": "named",
+      "portrait": "assets/portraits/byungchul.png",
+      "status": "draft",
+      "brief": "큰 사각 얼굴과 굵은 어깨. 가죽 앞치마와 헝겊.",
+      "identityNote": "Korean middle-aged blacksmith exactly from Image 5: short upright cropped hair, very wide square face, strong straight eyebrows and blunt nose, broad heavy shoulders, dark rolled-sleeve work shirt and worn thick leather apron. Large strong body without superhero exaggeration. Loose gray trousers, heavy work boots. Bare forearms, one hand wiping the other with a plain rag held low. No weapons or huge hammer.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/byungchul.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-d4f84ccc-960c-47e1-a1f0-14c6c124d0dc.png"
+    },
+    {
+      "id": "yeongok",
+      "name": "영옥",
+      "group": "named",
+      "portrait": "assets/portraits/yeongok.png",
+      "status": "draft",
+      "brief": "부드러운 둥근 얼굴과 갈색 머릿수건. 앞치마와 행주.",
+      "identityNote": "Korean older food-stall woman exactly from Image 5: soft round face, warm gently wrinkled eyes, brown cloth tied over curly graying hair, reddish-brown neck scarf, ochre-brown long apron over brown patterned blouse. Short full-bodied figure. Loose dark trousers and rubber kitchen shoes. Both hands gather a folded clean gray dishcloth at waist, friendly relaxed posture. Not combat clothes, no big bag.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/yeongok.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-fce43f0d-3192-4671-98dd-45f8a502ecf0.png"
+    },
+    {
+      "id": "sera",
+      "name": "세라",
+      "group": "named",
+      "portrait": "assets/portraits/sera.png",
+      "status": "draft",
+      "brief": "곧은 단발과 잔잔한 미소. 닫힌 책 한 권.",
+      "identityNote": "Exactly the Korean bookseller woman in Image 5, short straight black bob tucked at one side, small oval face, same gentle eyes and half smile, charcoal scarf and worn black fabric jacket. Slim mature adult frame, plain loose charcoal trousers and cloth flats. One closed unmarked book in left hand down by thigh, other hand relaxed. No spectacles and no messenger gear.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/sera.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-f7124f9f-2353-4857-b514-823d543e92b8.png"
+    },
+    {
+      "id": "mansu",
+      "name": "만수",
+      "group": "named",
+      "portrait": "assets/portraits/mansu.png",
+      "status": "draft",
+      "brief": "낮은 모자, 가는 콧수염, 웃는 얼굴. 한 손으로 인사.",
+      "identityNote": "Exactly the Korean middle-aged travelling music seller in Image 5: brown soft cap, wavy hair at sides, distinctive thin moustache, broad friendly smile, reddish scarf and dark brown work jacket with the same round ornamental pins on its straps (no writing). Short compact build, relaxed shoulders, brown patched straight trousers, comfortable shoes. One hand raised modestly palm out, other holds shoulder strap. No guitar; he is NOT Leo.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/mansu.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-19602c78-0910-4894-81f3-367666e86165.png"
+    },
+    {
+      "id": "jeomrye",
+      "name": "점례",
+      "group": "named",
+      "portrait": "assets/portraits/jeomrye.png",
+      "status": "draft",
+      "brief": "좁고 깊게 주름진 얼굴. 수건 아래 은발과 약초.",
+      "identityNote": "Exactly Korean elderly herb seller in Image 5: narrow deeply lined face, slightly hollow cheeks, small gentle eyes, silver hair tucked beneath purple-brown headcloth, charcoal crossed blouse and long dark vest, sparse dried herbs hanging at shoulder. Very short frail elderly frame, bowed shoulders, loose dark traditional-style trousers and black cloth slip-on shoes. Hands clasped low, no staff or huge basket. Plain authentic elderly Korean silhouette.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/jeomrye.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-08b5ac5a-594b-4688-917b-227535f22d07.png"
+    },
+    {
+      "id": "dongsu",
+      "name": "동수",
+      "group": "named",
+      "portrait": "assets/portraits/dongsu.png",
+      "status": "draft",
+      "brief": "길게 묶은 머리, 각진 얼굴. 소매를 걷은 종이 공방 인물.",
+      "identityNote": "Exactly Korean middle-aged paper-map craftsman in Image 5: long salt-and-pepper hair tied at nape, long rectangular face, high brow, thin moustache and beard shadow, charcoal sleeveless wrap vest over brown-gray linen shirt, rolled paper tucked under upper arm. Slender tall build, wide gray trousers, old cloth shoes. Hands holding one blank paper roll against side. No map markings, no hat.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/dongsu.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-3692270c-f41d-4cd4-af2e-729edbb87ff4.png"
+    },
+    {
+      "id": "noah",
+      "name": "노아",
+      "group": "named",
+      "portrait": "assets/portraits/noah.png",
+      "status": "draft",
+      "brief": "열두 살의 얼굴과 체형. 목에 건 작은 쌍안경.",
+      "identityNote": "Exactly the Korean 12-year-old child in Image 5, same round young face and natural CHILD proportions, uneven short black hair, charcoal oversized outer jacket and scarf, small binoculars on neck strap. Loose gray trousers and scuffed sneakers. One hand steadies binoculars at waist, other arm relaxed. Fully clothed ordinary child, no adult muscle/build, no weapon, no added hat, no glamour. Smaller child proportions with head appropriate to age, NOT adult body.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/noah.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-59119b21-f9b9-44d2-bbe2-538a951a8e42.png"
+    },
+    {
+      "id": "hwasun",
+      "name": "화순",
+      "group": "named",
+      "portrait": "assets/portraits/hwasun.png",
+      "status": "draft",
+      "brief": "낮은 머리 묶음과 곧은 눈썹. 안정된 순찰 자세.",
+      "identityNote": "Exactly middle-aged Korean patrol leader woman in Image 5: black hair in low tied bun, angular stern face, straight brows and same narrow eyes, gray-green layered jacket, gray-brown scarf, leather shoulder strap and short dark equipment tube protruding behind shoulder. Athletic but natural sturdy build, dark plain trousers and hiking boots. Standing feet planted, one thumb under strap, other hand relaxed. No rifle, no militarized new gear.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/hwasun.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-994e42e1-dad4-428c-8b92-817e9366dd50.png"
+    },
+    {
+      "id": "gitae",
+      "name": "기태",
+      "group": "named",
+      "portrait": "assets/portraits/gitae.png",
+      "status": "draft",
+      "brief": "정돈된 회색 머리와 안경. 두 손에 접어 든 편지.",
+      "identityNote": "Exactly older Korean scribe in Image 5: tidy side-swept gray hair, thin wire-rim glasses, long gentle face and faint smile, black coat with a simple lapel over gray wrapped scarf, pale folded unmarked paper. Slender slightly stooped frame, plain black trousers and old leather loafers. Both hands gently holding a folded blank letter at stomach. No visible text or extra quill props.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/gitae.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-356f2c54-56cc-4a84-93ab-51e54ea3103b.png"
+    },
+    {
+      "id": "kimcaptain",
+      "name": "김 선장",
+      "group": "named",
+      "portrait": "assets/portraits/kimcaptain.png",
+      "status": "draft",
+      "brief": "검은 작업모와 깊은 미간. 어깨에 멘 밧줄.",
+      "identityNote": "Exactly middle-aged Korean captain from Image 5: black soft peaked working cap, long weathered face, deep brow crease, moustache and sparse stubble, charcoal/navy boat work coat over dark hoodie, rope over one shoulder as reference. Broad shoulders and heavy torso, practical wide trousers and short rubber sea boots. One hand resting on rope on shoulder, other down. No steering wheel, no formal captain uniform.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/kimcaptain.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5702ac8b-8537-4cfb-b59a-17613be662d9.png"
+    },
+    {
+      "id": "hayeosa",
+      "name": "하 여사",
+      "group": "named",
+      "portrait": "assets/portraits/hayeosa.png",
+      "status": "draft",
+      "brief": "낮게 걸친 안경과 짧은 회색 곱슬머리. 품에 안은 장부.",
+      "identityNote": "Exactly mature Korean woman in Image 5: short permed salt-and-pepper hair, narrow oval metal glasses low on nose, fine long face with stern lips, dark green-gray vest over small-patterned burgundy blouse, large plain ledger hugged in crook of arm. Sturdy mid-height build, charcoal loose trousers and plain black flats. Precise upright posture. No extra apron, no text on ledger.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/hayeosa.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-8032a576-3c2f-4b3a-a1d7-887d011b373e.png"
+    },
+    {
+      "id": "sanjigi",
+      "name": "산지기",
+      "group": "named",
+      "portrait": "assets/portraits/sanjigi.png",
+      "status": "draft",
+      "brief": "짧은 검은 머리와 긴 얼굴. 작은 주머니와 둥근 장식.",
+      "identityNote": "Exactly Korean young adult man from Image 5: short straight black hair with uneven fringe, long triangular face, alert narrow eyes, green neck scarf, faded olive collared shirt-jacket, brown pouch tied at shoulder, small round pendant. Slim long-limbed build, brown outdoor trousers and walking boots. Weight on one leg, hands relaxed with one thumb hooked loosely under bag cord. No extra outdoor gear.",
+      "reviewNote": "첫 생성물의 불필요한 로고·표식을 제외한 2안. 원형 단계이며 축소·투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/sanjigi.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-9f452fdd-5da0-45bc-8fe5-ee00cc6696ea.png",
+      "version": "v2"
+    },
+    {
+      "id": "seojin",
+      "name": "서진",
+      "group": "named",
+      "portrait": "assets/portraits/seojin.png",
+      "status": "draft",
+      "brief": "묶은 머리와 단단한 눈매. 후드 겉옷과 목걸이.",
+      "identityNote": "Exactly Korean woman from Image 5: black hair loosely tied back with side bangs, softly squared face, narrow focused eyes, calm firm lips, brown hooded weatherproof jacket over charcoal button shirt, crossbody strap and round openwork pendant. Slim medium-height frame, simple black straight trousers, worn low hiking shoes. One hand near pendant without hiding it, other down. No gun, no added armor or armband.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/seojin.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-c5cebdbb-af6b-48b3-b67a-2dcbdf45d375.png"
+    },
+    {
+      "id": "taesik",
+      "name": "태식",
+      "group": "named",
+      "portrait": "assets/portraits/taesik.png",
+      "status": "draft",
+      "brief": "각진 얼굴, 아주 짧은 머리, 얇은 수염. 작업 겉옷.",
+      "identityNote": "Exactly middle-aged Korean man from Image 5: black buzz cut, narrow severe eyes, angular rectangular face, thin moustache and short goatee, dark open collared work shirt/jacket with coiled cord at chest pocket, faded patterned left upper-arm band. Sturdy tall build, dark brown plain work pants, old work boots. Arms folded loosely low at waist, alert grounded stance. No added weapons or armor.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/taesik.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-7e2a53ef-9846-49a5-8297-11945b906990.png"
+    },
+    {
+      "id": "intro_child",
+      "name": "도윤 · 8살",
+      "group": "named",
+      "portrait": "assets/portraits/intro_child.png",
+      "status": "draft",
+      "brief": "덥수룩한 머리, 회색 후드. 이송표를 든 여덟 살 도윤.",
+      "identityNote": "Exactly the 8-year-old Korean boy in Image 5: longer shaggy black hair, small round child face, raised attentive eyes, oversized CHARCOAL hooded jacket. Natural small 8-year-old proportions, dark loose trousers and small worn sneakers. Holds a plain folded transfer slip with both hands at belly; NO readable writing. Fully clothed ordinary child, not chibi, not adult proportions. Head tilt slightly upward as portrait. No other person.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/intro_child.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ae138778-35e6-484a-abeb-a7b672996894.png"
+    },
+    {
+      "id": "player_child",
+      "name": "상혁 · 8살",
+      "group": "named",
+      "portrait": "assets/portraits/player_child.png",
+      "status": "draft",
+      "brief": "짧은 머리와 갈색 누빔옷. 어린 시절 상혁은 도윤과 구분.",
+      "identityNote": "Exactly the 8-year-old Korean boy in Image 5, childhood PLAYER distinct from Doyun: neat shorter bowl-cut black hair with slight fringe, smaller broad round face, same wary sideways gaze, worn BROWN quilted hooded jacket. Natural small child body and age-appropriate proportions, dark trousers and old small lace-up shoes. Hands tucked loosely into jacket pockets, body turned three-quarter with head looking sideways. No slip of paper, no other person, fully clothed ordinary child, not chibi.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/player_child.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e3907a99-7731-4328-89d4-cd0fb03d149e.png"
+    },
+    {
+      "id": "hajin",
+      "name": "하진",
+      "group": "named",
+      "sourceLabel": "passer_woman:하진",
+      "status": "draft",
+      "brief": "낮고 넓은 코, 둥근 턱, 낮게 묶은 머리. 도윤·유나의 엄마.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 38; broad forehead, wide-set small hooded eyes, short straight nose, full lower lip and broad rounded jaw; black hair center-parted in a low bun.\nCostume and pose: Faded slate-blue knee-length padded coat, rust knit cuffs, wide brown trousers, flat walking shoes. Both hands holding one folded blank transfer slip at waist.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-add9553c-d937-4fb7-9351-82b28be17fa1.png"
+    },
+    {
+      "id": "sujin",
+      "name": "수진",
+      "group": "named",
+      "sourceLabel": "passer_medic:수진",
+      "status": "draft",
+      "brief": "긴 얼굴과 단정한 짧은 머리. 낡은 약사 가운을 입은 수진.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Young Korean woman about 27; long narrow face, straight low eyebrows, long nose with rounded tip, thin lips; straight black hair cropped just below ears with a small clip on left.\nCostume and pose: Worn LIGHT GRAY pharmacist coat over muted blue sweater, navy straight trousers, plain unbranded shoes. Carry small cloth medical pouch in one hand, sleeves neatly rolled. No names or writing on coat.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-96cf1924-be42-40d2-a721-19c68a93bb09.png"
+    },
+    {
+      "id": "sunja",
+      "name": "순자 아줌마",
+      "group": "named",
+      "sourceLabel": "passer_elder:순자 아줌마",
+      "status": "draft",
+      "brief": "넓은 광대, 작은 턱, 짧은 곱슬머리. 둥근 얼굴의 금자와 구분.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean older woman about 64; broad cheekbones, small chin, very wide smiling mouth, one lower eyebrow; short tight silver-black perm.\nCostume and pose: Muted plum cardigan over pale gray blouse, navy loose trousers, brown cloth shoes. Small plain shopping bag at elbow; other hand open at waist.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e03961a9-2efe-43be-9723-218c91ea0970.png"
+    },
+    {
+      "id": "roadcrew_doyun",
+      "name": "도윤 · 길 수선공",
+      "group": "named",
+      "sourceLabel": "passer_worker:도윤",
+      "status": "draft",
+      "brief": "긴 팔다리의 청년 수선공. 여덟 살 도윤과 다른 인물.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean young man about 24; lanky very tall body, long oval face, large ears, rounded low nose, broad smile, straight thick black hair with uneven blunt fringe. NOT the 8-year-old boy Doyun.\nCostume and pose: Faded MUSTARD road-work vest over navy sweater, gray long straight trousers, plain canvas work shoes. One gloved hand carries a short paint roller lowered at side, tiny yellow paint on cuff only.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-6ea7447d-e03d-4fe6-9d9f-32d4bc617096.png"
+    },
+    {
+      "id": "village_child",
+      "name": "마을 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:마을 아이",
+      "status": "draft",
+      "brief": "둥근 얼굴과 낮은 양갈래. 왕릉 마을의 아이.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean girl about 10; small round face, widely spaced eyes, short low nose, narrow chin; black hair in two low uneven pigtails. Natural child proportions.\nCostume and pose: Faded brick red hooded jacket, navy loose trousers, small plain canvas shoes. One hand lifted to greet, other down.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e05c4f81-88d7-4e8b-a6bb-ba921ad87c2d.png"
+    },
+    {
+      "id": "cart_child",
+      "name": "수레를 돕는 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:수레를 돕는 아이",
+      "status": "draft",
+      "brief": "긴 얼굴과 큰 귀. 수레 행렬을 돕는 아이.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean boy about 11; long narrow face, prominent ears, narrow single-lidded eyes, short straight blunt hair. Natural child proportions.\nCostume and pose: Dull moss sweater with patched elbow, tan loose trousers, canvas shoes. Hands resting together on a loop of carrying rope at waist; no large cart.",
+      "reviewNote": "전신·얼굴 특징·의상·소품을 원본에서 확인한 제작 초안. 최종 축소 가독성과 투명 가장자리 검수는 별도.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "version": "v2",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-053ca34f-f8a0-48ac-bcbc-4fd21a4ae64d.png",
+      "previousGenerationError": "moderation_blocked:output"
+    },
+    {
+      "id": "market_child",
+      "name": "장터 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:장터 아이",
+      "status": "draft",
+      "brief": "네모난 턱과 짧은 단발. 국밥 그릇을 든 장터 아이.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean girl about 9; square soft lower face, full cheeks, large round eyes, small wide nose, hair cut in very short uneven bob.\nCostume and pose: Faded mustard quilted vest over plum long-sleeve shirt, dark roomy trousers, cloth shoes. Holding a plain empty soup bowl at belly with both hands. Natural child body.",
+      "reviewNote": "전신·얼굴 특징·의상·소품을 원본에서 확인한 제작 초안. 최종 축소 가독성과 투명 가장자리 검수는 별도.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "version": "v2",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-4ebb3347-ebe4-4612-9eea-c6d6e6e7d265.png",
+      "previousGenerationError": "moderation_blocked:output"
+    },
+    {
+      "id": "queue_child",
+      "name": "줄을 지키던 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:줄을 지키던 아이",
+      "status": "draft",
+      "brief": "넓은 이마와 짧게 빗은 머리. 줄을 지키던 아이.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean boy about 7; wide forehead, close-set small eyes, button nose, compact broad face, straight black hair combed down with left side part.\nCostume and pose: Oversized muted teal zip jacket, brown straight trousers, small old sneakers without logos. Hands in jacket pockets, patiently standing. Natural small child proportions.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5f3361a6-333f-4f5a-a77b-cbab2af72ba3.png"
+    },
+    {
+      "id": "street_barber",
+      "name": "길거리 이발사",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:길거리 이발사",
+      "status": "draft",
+      "brief": "넓은 이마, 사각 안경, 둥근 코. 정류장 이발소 주인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly man about 72; large bald dome with gray hair only at sides, narrow eyes behind rectangular wire glasses, round nose, soft double chin, clean-shaven.\nCostume and pose: Worn WHITE barber coat, dark trousers and black loafers. Hold closed scissors and a simple comb safely down at side, other hand adjusts coat cuff.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-075ca8b7-afb1-4a2b-b5ca-b3446532cb44.png"
+    },
+    {
+      "id": "florist",
+      "name": "꽃장수",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:꽃장수",
+      "status": "draft",
+      "brief": "작은 세모 얼굴과 깊은 눈꺼풀. 작은 꽃다발을 쥔 노파.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly woman about 76; small narrow triangular face, deep drooping eyelids, tiny upturned nose, thin compressed lips; silver hair neatly parted into low bun.\nCostume and pose: Washed sage green cardigan over cream blouse, muted plum wide trousers, black cloth shoes. One small bunch of ordinary wildflowers held low, other arm relaxed.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-8a95ff9b-b84f-4f25-ad40-8f8b1f07c93b.png"
+    },
+    {
+      "id": "roaming_barber",
+      "name": "떠돌이 이발사",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:떠돌이 이발사",
+      "status": "draft",
+      "brief": "긴 얼굴, 휜 콧등, 묶은 회색 머리. 길거리 이발사와 다른 사람.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean older man about 66; long lean face, strong curved nose, narrow moustache, long earlobes, wavy shoulder-length gray hair tied back.\nCostume and pose: Faded blue striped collarless shirt, dark waist apron, charcoal loose trousers, simple shoes. Both hands hold a rolled tool cloth across waist; no open scissors.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-a9810cc7-a99f-4c07-8928-1e590968c960.png"
+    },
+    {
+      "id": "office_elder",
+      "name": "면사무소의 노인",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:면사무소의 노인",
+      "status": "draft",
+      "brief": "긴 각진 얼굴과 높은 콧대, 짧게 넘긴 머리. 종이를 접어 쥔 면사무소의 노인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean older woman about 70 with an unusually long narrow rectangular face, tall receding forehead, pronounced bony jaw corners and long firm chin with a subtle cleft, close-set small downward-slanting eyes under very straight brows, high narrow hooked nose bridge and projecting nose tip, thin straight compressed lips and hollow cheeks. Coarse very short dark gray hair swept straight backward, not a bob, no middle part or tied bun. Thin oval wire reading spectacles. Lean, erect body. A specific ordinary person, not a model or caricature.\nCostume and pose: Dark brown button cardigan over gray small-check shirt, navy plain trousers, brown loafers. Holds three plain folded papers in one hand with no writing, other down.",
+      "reviewNote": "꽃장수와 가까웠던 첫 얼굴에서 긴 턱·높은 콧대·짧게 넘긴 머리로 다시 구분한 2안.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-a6728811-b5dd-4b09-a572-6a390e27bc18.png",
+      "version": "v2"
+    },
+    {
+      "id": "market_grandmother",
+      "name": "아이의 할머니",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:아이의 할머니",
+      "status": "draft",
+      "brief": "통통한 볼과 흰 곱슬머리. 장터 아이의 할머니.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly woman about 74; broad round face, full cheeks, high arched eyebrows, small pointed nose, dimple at right mouth corner; fluffy short white hair.\nCostume and pose: Muted blue quilted jacket with round collar, patterned dark maroon loose pants, slip-on shoes. One hand on hip, other raised a little as if responding to child. SINGLE person only.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-c7cf6c3c-7153-42e2-b3b2-c72621923b33.png"
+    },
+    {
+      "id": "cart_elder",
+      "name": "장터 수레꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:장터 수레꾼",
+      "status": "draft",
+      "brief": "마른 체형, 쐐기형 얼굴, 희끗한 턱수염. 행렬의 수레꾼.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean older man about 68; thin tall bony body, long wedge-shaped face, deep-set narrow eyes, broad crooked nose, sparse gray chin beard, close shaved gray hair.\nCostume and pose: Faded ochre utility vest over dark blue shirt, loose gray pants and walking shoes. One hand on a carrying strap across chest, other relaxed, leaning weight slightly forward.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-bdf2a53a-387c-4bda-91db-1a649ff2b908.png"
+    },
+    {
+      "id": "fortune_teller",
+      "name": "점쟁이",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:점쟁이",
+      "status": "draft",
+      "brief": "네모난 얼굴과 굵은 눈썹. 작은 방울을 든 노파.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly woman about 71; strong square face, wide low nose, small very bright eyes, thick pale eyebrows, gray-black hair tied in high practical knot.\nCostume and pose: Faded burgundy layered blouse over dark blue long skirt to ankles, plain flat shoes. One small group of brass bells held low, other hand on waist. No supernatural effects, no magic aura.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-c809dc78-31ad-428b-a9be-6dabca92e41c.png"
+    },
+    {
+      "id": "medical_elder",
+      "name": "진료 기록을 든 노인",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:진료 기록을 든 노인",
+      "status": "draft",
+      "brief": "달걀형 얼굴, 큰 눈, 드문 흰 머리. 진료 통계의 주인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly man about 78; slender egg-shaped head, thin wispy white hair, broad lower lip, large tired eyes, low narrow nose, no facial hair and no glasses.\nCostume and pose: Faded brown V-neck sweater over pale blue shirt, high-waisted loose gray trousers, black loafers. Hands hold a folder of blank papers, elbows close to body.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-9cff9667-9768-4b6d-b5fd-76a6f2a4ae0e.png"
+    },
+    {
+      "id": "white_straggler",
+      "name": "행렬에서 떨어진 노인",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:행렬에서 떨어진 노인",
+      "status": "draft",
+      "brief": "여윈 볼과 굽은 콧등. 헤어진 흰옷 행렬의 노인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly man about 80; small narrow face, bent nose bridge, deeply hollow cheeks, sparse long white moustache, short thin silver hair, visibly frail but intact.\nCostume and pose: Worn OFF-WHITE simple loose jacket and trousers, frayed unbranded cloth shoes. A small metal cup held with both hands near abdomen. Slightly stooped standing, no injuries or suffering caricature.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-2a0acdc5-b216-42d2-a7c5-d18540b0acd1.png"
+    },
+    {
+      "id": "toll_guard",
+      "name": "무장한 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_guard:무장한 남자",
+      "status": "draft",
+      "brief": "긴 얼굴과 좁은 턱, 가늘고 굽은 코, 옆으로 넘긴 머리. 마른 체격의 도로 봉쇄 인물.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean adult man about 48, tall and sinewy, with a very long diamond-shaped face, wide high cheekbones tapering to an unusually narrow pointed chin, a long downward-curved narrow nose, small widely-spaced hooded eyes, very thin uneven arched eyebrows, a high forehead. CLEAN SHAVEN, no moustache or beard. Straight black hair cut in a severe asymmetric side-part, long on top swept flat, not a buzzcut. Narrow elongated skull and thin neck, not a broad round head or square jaw. This must be a distinctive new face not any established character.\nCostume and pose: Weathered olive work vest over dark brown sweatshirt, loose navy trousers, work boots. Arms folded loosely, wide planted stance. Keep hands visible; no need for visible weapon in this neutral reference.",
+      "reviewNote": "태식과 인상이 가까웠던 첫 시안에서 얼굴 골격·머리·체형을 다시 구분한 2안. 최종 축소·투명 경계 검수는 별도.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-1aaaa1ae-bf7a-470b-ada7-50011fc89cfe.png",
+      "version": "v2"
+    },
+    {
+      "id": "checker",
+      "name": "정리자",
+      "group": "anonymous",
+      "sourceLabel": "passer_guard:정리자",
+      "status": "draft",
+      "brief": "긴 콧날과 얇은 입술. 태블릿을 든 흰옷 검문 인물.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean adult woman about 45; long oval face, high fine brow, small hooded eyes, straight long narrow nose, very thin lips; black hair slicked into low braid.\nCostume and pose: OFF-WHITE long work coat and off-white plain trousers, dark flat shoes. Holds a small inactive black tablet at waist. No display text, no sci-fi styling.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-cbd97db4-6a70-44d7-a8ac-a4d026cee65c.png"
+    },
+    {
+      "id": "recall_guard",
+      "name": "회수반",
+      "group": "anonymous",
+      "sourceLabel": "passer_guard:회수반",
+      "status": "draft",
+      "brief": "짧고 둥근 얼굴, 굵은 목, 짧은 곱슬머리. 회수반 인물.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 33; short round face, bulbous nose, wide-set single-lidded eyes, heavy lower lip, thick neck; thick curly black hair cut short.\nCostume and pose: OFF-WHITE button work jacket and trousers, gray belt, dark boots. Hands behind back, upright stance. No weapons or insignia.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-b8b320e5-d90e-469d-95f6-b960821fd354.png"
+    },
+    {
+      "id": "speaker_robber",
+      "name": "강도",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:강도",
+      "status": "draft",
+      "brief": "높은 광대와 가는 콧날. 스피커를 가져간 인물.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 29; lean diamond-shaped face, tall cheekbones, long thin nose leaning subtly right, uneven dark eyebrows, thin chin beard, short swept-back hair.\nCostume and pose: Faded dark plum windbreaker, charcoal pants, old plain sneakers. One hand hooks thumb into waistband, other down, wary sideways look. No grotesque villain caricature, no weapons necessary.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5ba776c4-c062-47fd-8014-57d5cccb3ce8.png"
+    },
+    {
+      "id": "gwangyang_neighbor",
+      "name": "광양 이웃",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:광양 이웃",
+      "status": "draft",
+      "brief": "아래가 넓은 얼굴과 둥근 코. 보리를 알아보는 광양 이웃.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 57; warm pear-shaped face, small forehead, broad smiling mouth, round nose, bushy graying eyebrows, receding straight black hair with gray sides.\nCostume and pose: Washed blue cardigan over tan shirt, gray loose trousers, brown walking shoes. Relaxed lowered shoulders, one hand held out low as greeting a dog, no dog pictured.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-1e673a83-921b-4fa7-a481-9c75aeda2673.png"
+    },
+    {
+      "id": "salvage_claimant",
+      "name": "창고 구역의 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:남자",
+      "status": "draft",
+      "brief": "높은 이마, 매부리코, 빗어 넘긴 머리. 창고 앞 장부를 든 남자.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 46; large rectangular head, high wide forehead, drooping outer eye corners, prominent hooked nose, thin upper lip, neatly combed black side part.\nCostume and pose: Faded charcoal checked shirt with sleeves rolled, brown sleeveless padded vest, plain navy pants, work shoes. One plain ledger under arm and small pencil in hand, no readable text.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-6ef911c7-1d61-4b93-bdc3-3ecb96dea06f.png"
+    },
+    {
+      "id": "dock_controller",
+      "name": "부두 관제",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:부두 관제",
+      "status": "draft",
+      "brief": "긴 얼굴과 갈라진 턱. 부두의 관제 담당자.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 52; long narrow face, strong chin cleft, low straight brow, small narrow nose, tired wide eyelids, salt-gray short crew cut, no beard.\nCostume and pose: Dull teal windproof port jacket over gray sweater, navy trousers, black work shoes. One small plain radio clipped at belt, one hand touching ear, no large headset.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-b4e94536-eaba-4cda-b367-ab4822fa1233.png"
+    },
+    {
+      "id": "dock_driver",
+      "name": "부두 기사",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:부두 기사",
+      "status": "draft",
+      "brief": "둥근 얼굴과 넓은 코, 짧은 곱슬머리. 부두 기사.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 48; round wide face, flattened broad nose, dark broad eyebrows, small deep-set eyes, thick lips and uneven stubble, short salt-pepper curls.\nCostume and pose: Faded blue mechanic coveralls with upper sleeves tied at waist over brown thermal shirt, heavy work shoes. Wipes one palm on a plain rag, body weight on right leg.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-06e8d477-027f-4fed-9f76-a6b08113ad96.png"
+    },
+    {
+      "id": "hunter",
+      "name": "사냥꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:사냥꾼",
+      "status": "draft",
+      "brief": "움푹한 관자놀이, 낮게 묶은 머리. 활을 멘 산사람.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 55; very lean angular face, prominent crooked nasal bridge, narrow long eyes, hollow temples, black-gray hair in short low ponytail, small pointed beard.\nCostume and pose: Brown waxed outdoor jacket, olive trousers and hiking boots. Simple wooden bow slung unstrung along back, hands relaxed. No animal carcass, no blood, no fantasy costume.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-f92aae63-1c94-4992-bf62-623adfd74c2b.png"
+    },
+    {
+      "id": "map_reader",
+      "name": "지도를 펼친 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:지도를 펼친 남자",
+      "status": "draft",
+      "brief": "넓은 이마와 뾰족한 턱. 지하수 지도를 대조하는 남자.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 50; broad forehead narrowing to small pointed chin, full eyelids, wide blunt nose, small pursed mouth, black hair parted in middle to ears.\nCostume and pose: Dull blue knit vest over pale brown shirt, charcoal trousers, flat walking shoes. Both hands hold a half folded blank map with no writing or markings.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-f15717ed-90e8-4c0a-a76e-225d42b2a283.png"
+    },
+    {
+      "id": "well_young_man",
+      "name": "우물 앞 청년",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:청년",
+      "status": "draft",
+      "brief": "짧은 사각 얼굴과 낮은 코. 우물 앞 청년.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 23; compact square face, rounded cheeks, straight thick eyebrows, low broad nose, downturned small lips, black bowl cut longer at back.\nCostume and pose: Muted rust hooded sweatshirt, gray loose work pants, canvas shoes. One hand holds a small ring of two metal keys, other in pocket, casual slouch.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ce1f9847-5a1f-453c-8b0e-ab04f1720bca.png"
+    },
+    {
+      "id": "levy_vest_man",
+      "name": "형광 조끼 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:형광 조끼 남자",
+      "status": "draft",
+      "brief": "둥근 얼굴, 타원 안경, 얇은 콧수염. 임시 행정소 인물.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 39; soft round face with double chin, fine narrow eyes behind oval spectacles, small straight nose, neat thin moustache, thinning black short hair.\nCostume and pose: Faded fluorescent yellow safety vest over gray collared shirt, dark trousers and office shoes. Plain blank laminated badge with no text. Closed inactive tablet under one arm.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-81d169fe-6abb-4a35-a191-0afa0b772539.png"
+    },
+    {
+      "id": "patient_son",
+      "name": "환자의 아들",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:환자의 아들",
+      "status": "draft",
+      "brief": "긴 얼굴에 짧은 코. 박 선생을 알아보는 환자의 아들.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean adult man about 43; very long thin face, low cheekbones, large slightly asymmetrical eyes, short broad nose, thick straight mouth, long unkempt fringe with one gray streak.\nCostume and pose: Plain faded forest green pullover and brown straight pants, old sneakers. Hands loosely clasped low, tense shoulders, no props and no exaggerated crying.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-469eb3b3-caf5-4ad4-8467-303951c17127.png"
+    },
+    {
+      "id": "recall_leader",
+      "name": "회수조 선두",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:회수조 선두",
+      "status": "draft",
+      "brief": "매끈한 타원 얼굴과 얇은 미소. 흰옷 회수조의 선두.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean middle-aged man about 47; very smooth broad oval face, arched fine eyebrows, small close-set eyes, long straight nose, thin gently smiling mouth, black hair neatly side-parted and flat.\nCostume and pose: OFF-WHITE work jacket and loose pale trousers, plain black shoes. One palm held up at chest level in controlled stop gesture, other down. No insignia and no weapons.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e5015e0b-3ed9-4d7d-b9e5-0658b09d1add.png"
+    },
+    {
+      "id": "clinic_worker",
+      "name": "진료소 직원",
+      "group": "anonymous",
+      "sourceLabel": "passer_medic:진료소 직원",
+      "status": "draft",
+      "brief": "각진 턱과 넓은 코. 회색 머리를 높이 묶은 진료소 직원.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 49; broad square jaw, narrow forehead, large straight eyes, wide short nose, full lips; coarse gray-streaked hair in a tight high bun.\nCostume and pose: Muted pale blue washable clinic apron over dark gray cardigan, navy pants, plain slip-on shoes. One plain folded towel resting in palms. No red cross, no doctor lab coat.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ac9ecd39-e4b5-406b-a107-6240a7a5cfcf.png"
+    },
+    {
+      "id": "fish_owner",
+      "name": "덕장 주인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:덕장 주인",
+      "status": "draft",
+      "brief": "햇볕에 탄 넓은 얼굴과 웃음 주름. 과메기 덕장 주인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 61; sun-worn broad face, high rounded cheekbones, deep laugh lines, wide straight nose, sparse white moustache, salt-gray wavy hair under small brown knit cap.\nCostume and pose: Dull teal rubber work apron over gray-brown thick shirt, dark trousers, low rubber boots. Hands on hips casually, no fish or extra stall.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-806fac99-716e-4852-af6b-a8c2ecbfad6c.png"
+    },
+    {
+      "id": "cart_vendor",
+      "name": "리어카 행상",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:리어카 행상",
+      "status": "draft",
+      "brief": "큰 귀와 둥근 코끝. 자루를 둘러멘 리어카 행상.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 37; narrow egg-shaped head, very prominent round ears, small bright eyes, round nose tip, broad open smile, straight black cropped hair.\nCostume and pose: Gray corduroy jacket over muted ochre sweater, dark patched trousers, plain trainers. Carries a folded burlap sack on one shoulder with one hand, other raised low. No child/cart in image.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-255dca47-af5c-402e-99aa-798fc461489b.png"
+    },
+    {
+      "id": "bath_owner",
+      "name": "목욕차 주인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:목욕차 주인",
+      "status": "draft",
+      "brief": "큰 둥근 얼굴과 짧은 파마머리. 수건을 든 목욕차 주인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean adult woman about 58; large round head, low broad forehead, deep-set narrow eyes, blunt flat nose, broad lower lip, short unruly permed black-gray hair.\nCostume and pose: Faded purple rubber apron over blue check shirt, navy loose pants, black rubber shoes. Large plain towel draped over one forearm, other hand on hip.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-c77061eb-d265-4f52-9d81-c8fefcf5964a.png"
+    },
+    {
+      "id": "muju_delegate",
+      "name": "무주 장터 대표",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:무주 장터 대표",
+      "status": "draft",
+      "brief": "긴 얼굴, 뾰족한 코, 묶은 은발. 재등장해도 같은 장터 대표.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean older woman about 62; tall slender frame, long face with high straight forehead, long earlobes, narrow pointed nose, thin determined mouth, straight silver hair tied back without headscarf.\nCostume and pose: Faded moss green long vest over tan linen shirt, charcoal loose trousers, cloth shoes. Hands rest on a small tied cloth seed pouch at waist, upright poised stance.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-12b3d61e-d578-4b58-895b-57dd44a76a73.png"
+    },
+    {
+      "id": "water_vendor",
+      "name": "물장수",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:물장수",
+      "status": "draft",
+      "brief": "큰 눈과 작은 코. 물컵을 든 젊은 물장수.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 31; broad soft square head, large round eyes, tiny narrow nose, heavy lips, smooth clean-shaven face, short black hair with sideburns.\nCostume and pose: Faded blue waterproof sleeveless vest over cream shirt, brown loose pants, old rubber shoes. One small plain metal cup held at chest height, other hand down.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-54938a99-8aaa-4654-977d-a1c17057ee0d.png"
+    },
+    {
+      "id": "smuggler",
+      "name": "밀수꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:밀수꾼",
+      "status": "draft",
+      "brief": "꺼진 볼과 굵은 코끝. 긴 가죽 재킷의 밀수꾼.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 44; long sunken face, prominent rounded nose, low bushy brows, small suspicious eyes, thin dark goatee, receding black hair swept behind ears.\nCostume and pose: Dark worn burgundy leather jacket over faded gray shirt, black straight trousers, old leather shoes. Hands in jacket pockets, slight slouch, no drugs or visible contraband props.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-cc55bd0a-c7e2-49f9-9e29-b613e982c6ee.png"
+    },
+    {
+      "id": "market_vendor",
+      "name": "장터 상인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:장터 상인",
+      "status": "draft",
+      "brief": "도드라진 광대와 긴 눈매. 한쪽으로 땋은 머리의 장터 상인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 46; broad diamond face with prominent cheekbones, slanted long eyes, wide mouth, rounded chin, thick black hair braided over one shoulder.\nCostume and pose: Muted gray-green checked overshirt, dark blue waist apron, loose brown trousers, cloth work shoes. One hand holding a small rolled blank cloth receipt, other on waist.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-cf638bad-47dc-4206-8c46-78101c6945f2.png"
+    },
+    {
+      "id": "coffee_owner",
+      "name": "커피차 주인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:커피차 주인",
+      "status": "draft",
+      "brief": "긴 얼굴과 들린 코끝. 머리를 올려 묶은 커피차 주인.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 36; long narrow face with full cheeks, almond eyes, short turned-up nose, small neat moustache, long wavy black hair tied in high bun.\nCostume and pose: Dull slate apron over brown rolled-sleeve shirt, tan plain trousers, unbranded sneakers. Small plain enamel coffee pot held low in one hand, other relaxed. No cafe logo.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-a2d2f568-46fa-4845-9543-e4e8646e1c09.png"
+    },
+    {
+      "id": "parcel_witness",
+      "name": "소포 소식을 아는 사람",
+      "group": "anonymous",
+      "sourceLabel": "passer_refugee:소포 소식을 아는 사람",
+      "status": "draft",
+      "brief": "높은 이마와 내려간 눈꼬리. 소포의 수취인을 기억하는 사람.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean older man about 65; wide round face, high domed forehead, large downturned eyes, small flat nose, protruding lower lip, thin gray side-parted hair.\nCostume and pose: Faded brown knit cardigan under gray sleeveless jacket, navy trousers, plain walking shoes. Small tied fabric bundle held with both hands, no mail uniform.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ffc45a1a-f0c5-49d7-8592-1d0b3ecb04f3.png"
+    },
+    {
+      "id": "white_believer",
+      "name": "흰옷의 신도",
+      "group": "anonymous",
+      "sourceLabel": "passer_refugee:흰옷의 신도",
+      "status": "draft",
+      "brief": "좁은 하트형 얼굴과 긴 생머리. 혼자 길에 선 흰옷 신도.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 40; very narrow heart-shaped face, high arched eyebrows, large close-set eyes, small pointed nose, full quiet smile, long straight black hair loose down back.\nCostume and pose: Simple OFF-WHITE plain collarless jacket and wide trousers, plain gray shoes. Open palms low at waist, softly upright stance. No glowing eyes, no religious symbols or magic.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-b5283a97-30aa-405f-ae71-e7e40d61f582.png"
+    },
+    {
+      "id": "alley_resident",
+      "name": "골목 주민",
+      "group": "anonymous",
+      "sourceLabel": "passer_woman:골목 주민",
+      "status": "draft",
+      "brief": "긴 사각 얼굴과 무거운 턱. 회색 단발의 골목 주민.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 53; long rectangular face, low broad nose, small creased eyes, heavy lower jaw, thick dark brows, short straight salt-pepper bob.\nCostume and pose: Faded burgundy knit vest over gray striped blouse, wide navy pants, rubber slip-on shoes. Arms loosely crossed below chest.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-0099b9f8-fbb7-476f-8052-5ef25c9d7e0a.png"
+    },
+    {
+      "id": "held_woman",
+      "name": "붙잡힌 여자",
+      "group": "anonymous",
+      "sourceLabel": "passer_woman:붙잡힌 여자",
+      "status": "draft",
+      "brief": "넓은 이마, 가는 턱, 부스스한 짧은 머리. 회수조가 둘러싼 여자.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 32; broad oval forehead, low cheekbones, large wide-set tired eyes, thin pointed chin, crooked narrow nose, chin-length frizzy black hair.\nCostume and pose: Washed faded gray button coat over navy blouse, brown straight trousers and plain worn shoes. Holds own elbow with opposite hand, guarded but dignified stance. No ropes, no injuries.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-2ac4685b-a323-4fd5-bbae-8ba4ab63e08b.png"
+    },
+    {
+      "id": "ridge_woman",
+      "name": "능선 아래의 여자",
+      "group": "anonymous",
+      "sourceLabel": "passer_woman:여자",
+      "status": "draft",
+      "brief": "짧은 사각 얼굴과 짧은 머리. 능선 아래에서 대답한 여자.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 41; short square face, strong round chin, broad flat nose, narrow lifted outer eyes, full mouth, short black pixie hair.\nCostume and pose: Dull ochre outdoor jacket over gray sweater, navy hiking trousers, old walking shoes. One hand shades eyes while looking a little upward, other on hip, no injuries.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5adb30f2-c563-45a1-9a26-3cd4261e7df7.png"
+    },
+    {
+      "id": "hospital_worker",
+      "name": "강릉 병원 일꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:강릉 병원 일꾼",
+      "status": "draft",
+      "brief": "긴 얼굴과 도드라진 콧등. 병원을 세우는 일꾼.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean adult woman about 35; long pointed face, prominent nose bridge, wide straight eyes, small pursed lips, straight black shoulder-length hair tied in low ponytail.\nCostume and pose: Faded blue mechanic overalls over gray long-sleeve shirt, cloth gloves and plain work boots. One hand holds a single masonry trowel lowered at side, other wipes brow.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-f3d1f8a3-a3f1-4cf2-be9b-2abbe9ab58cd.png"
+    },
+    {
+      "id": "dome_runner",
+      "name": "대구 돔 심부름꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:대구 돔 심부름꾼",
+      "status": "draft",
+      "brief": "둥근 얼굴, 굵은 눈썹, 짧게 선 머리. 서류를 나르는 심부름꾼.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean young adult man about 20; full round youthful face, thick nearly joined eyebrows, low small nose, wide mouth, short stiff upright hair.\nCostume and pose: Faded tan canvas jacket over navy shirt, loose dark trousers, simple canvas shoes. Both hands carry one thick bundle of blank papers tied with string at belly.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e4561851-4e72-4685-b678-6297f21b2dc4.png"
+    },
+    {
+      "id": "generator_keeper",
+      "name": "발전기 당번",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:발전기 당번",
+      "status": "draft",
+      "brief": "높은 광대와 큰 매부리코. 발전기를 지키는 당번.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 60; long triangular face, very high cheekbones, wide hooked nose, heavy drooping eyelids, white short chin stubble, coarse salt-gray hair combed upward.\nCostume and pose: Faded olive pullover under navy canvas waistcoat, gray work pants, unbranded work boots. One hand carries a small plain wrench lowered; other down. No goggles.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-a59e1bc2-b39a-4066-bd67-59f4f608ab0f.png"
+    },
+    {
+      "id": "foreman",
+      "name": "십장",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:십장",
+      "status": "draft",
+      "brief": "넓은 이마와 좁아지는 턱. 현장을 보는 십장.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 56; very wide forehead, narrow lower jaw, thick arched eyebrows, broad straight nose, small thin mouth, short black-gray hair with receding sides.\nCostume and pose: Plain muted orange work vest over dark blue collared shirt, gray loose trousers, plain work boots. One hand rests on hip, other holds a closed blank notebook.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-04c05fa7-cf3c-4ba3-8c13-001059a57664.png"
+    },
+    {
+      "id": "beekeeper",
+      "name": "양봉가",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:양봉가",
+      "status": "draft",
+      "brief": "둥근 코와 회색 콧수염. 방충망을 뒤로 걷은 양봉가.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 58; soft broad round face, large round nose, short wide-set eyes, rosy weathered cheeks, thick gray moustache, curly gray hair.\nCostume and pose: Faded off-white loose beekeeping jacket with veil folded BACK so whole face visible, brown loose trousers, simple rubber boots. One hand holds an inactive small bee smoker low, no smoke.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-0a70ee8b-2f3e-4320-b275-26abec8b437b.png"
+    },
+    {
+      "id": "convoy_handler",
+      "name": "장터 운송 담당자",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:장터 운송 담당자",
+      "status": "draft",
+      "brief": "긴 사각 얼굴과 단단한 턱. 수레 행렬의 운송 담당자.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 39; long broad rectangular face, wide-set low straight eyes, short curved nose, strong chin, thin mouth, black hair braided tightly at nape.\nCostume and pose: Dull blue long work shirt with rolled sleeves, ochre waist belt with a short coiled rope, charcoal pants, walking boots. One gloved hand lightly holds rope at belt, other open toward side.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-f9e4d832-bc4c-4fcb-bf29-63a8080d1225.png"
+    },
+    {
+      "id": "leaflet_collector",
+      "name": "전단을 모은 여자",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:전단을 모은 여자",
+      "status": "draft",
+      "brief": "아래가 넓은 얼굴과 들린 코. 전단을 모아 대조하는 여자.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean woman about 51; pear-shaped face, narrow brow, broad strong lower cheeks, upturned small nose, deep narrow eyes, graying short curls close to head.\nCostume and pose: Washed gray-green worker jacket over muted mauve blouse, dark plain trousers, old loafers. Holds folded blank papers under one arm, one finger points downward as if disputing a detail.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-2b8d397a-e95e-4301-b032-191a95f2b1de.png"
+    },
+    {
+      "id": "young_sailor",
+      "name": "젊은 뱃사람",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:젊은 뱃사람",
+      "status": "draft",
+      "brief": "작은 사각 얼굴과 짧은 곱슬머리. 방수 꾸러미를 전하는 뱃사람.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 25; small rectangular face, high broad cheekbones, narrow long nose, bright wide eyes, thick lower lip, short tousled black curls.\nCostume and pose: Dull blue waterproof jacket with rolled cuffs, tan loose trousers, black rubber ankle boots. One tied waterproof package at hip held in hand, other hand lifted in greeting.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ccbf1e34-13f7-49a4-acb2-e270a51416e6.png"
+    },
+    {
+      "id": "scrap_brother_older",
+      "name": "폐차장 형",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:폐차장 형",
+      "status": "draft",
+      "brief": "둥글고 살집 있는 볼, 큰 코끝, 벗겨진 정수리. 짧고 굵은 체격의 폐차장 형.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean adult man about 45, very stocky with a short thick neck, a pear-shaped face and noticeably heavy soft lower cheeks, narrow sloping forehead, tiny high-set widely-spaced eyes, an exceptionally broad flat nose bridge and large round nose tip, round blunt chin, thin upper lip and fuller lower lip. Smooth CLEAN SHAVEN cheeks and upper lip, no goatee, no moustache, no beard. Large bald crown with a thin horseshoe of short straight black hair only around sides and back. The round fleshy face must NOT resemble a square-jawed buzzcut fighter or any canonical character.\nCostume and pose: Faded gray mechanic coveralls sleeves tied at waist, dull blue shirt, dark work boots. One hand carries a small alternator part low, other on hip.",
+      "reviewNote": "태식과 인상이 가까웠던 첫 시안에서 얼굴 골격·머리·체형을 다시 구분한 2안. 최종 축소·투명 경계 검수는 별도.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "version": "v2",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-65a4256d-4448-433e-817f-8b3855f62a48.png"
+    },
+    {
+      "id": "scrap_brother_younger",
+      "name": "폐차장 동생",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:폐차장 동생",
+      "status": "draft",
+      "brief": "형과 귀는 닮았지만 긴 얼굴과 마른 체형. 폐차장 동생.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 30; long narrow face, same family broad protruding ears but narrow chin and longer rounded nose, higher thin eyebrows, clean-shaven, black straight hair longer at front. Tall lanky build.\nCostume and pose: Dull brown mechanic coveralls fully worn, gray undershirt, old work boots. Holds a plain folded rag in both hands, slight tilted skeptical head. No machinery beyond rag.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5e1a613d-ce4e-4d0c-9314-f57303a446fd.png"
+    },
+    {
+      "id": "night_driver",
+      "name": "호송대 운전사",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:호송대 운전사",
+      "status": "draft",
+      "brief": "넓은 타원 얼굴과 굵게 휜 코. 밤 호송대의 운전사.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean man about 45; very broad oval face, close-set hooded eyes, crooked thick nose, square chin, full thinly stubbled cheeks, nearly bald with short dark hair at sides.\nCostume and pose: Faded navy padded trucker vest over dark maroon sweatshirt, gray loose trousers and plain work shoes. One hand holding a dented plain thermos low, other pocketed.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-cae75fca-91d6-45e4-9e8d-e66581f9718d.png"
+    },
+    {
+      "id": "roadcrew_sunim",
+      "name": "순임",
+      "group": "named",
+      "sourceLabel": "source:roadcrew_line",
+      "status": "draft",
+      "brief": "작고 각진 얼굴과 날카로운 눈매. 겨자색 조끼의 길 수선공.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly woman about 75; compact wiry short body, small square face, very deep-set sharp eyes, high narrow nose, thin determined mouth, straight white hair combed tight into small bun.\nCostume and pose: Distinct MUSTARD roadwork safety vest over faded gray shirt, wide navy trousers, black rubber shoes. One gloved hand raised palm out in a stop gesture, other holds short paint brush lowered. Only small yellow paint on glove.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e1740aab-f6b9-422d-9658-b002f4842919.png"
+    },
+    {
+      "id": "daeyang",
+      "name": "대양",
+      "group": "named",
+      "sourceLabel": "source:van_owner",
+      "status": "draft",
+      "brief": "큰 귀와 낮고 둥근 코. 달구지를 기억하는 정비공 대양.",
+      "identityNote": "Design ONE distinct NEW person for this cast proposal: Korean elderly male mechanic about 78; broad heavy face, prominent low rounded nose, thick pale eyebrows, bright narrow eyes, big ears, short thick white hair combed backward, clean-shaven.\nCostume and pose: Faded dark teal mechanic jacket over brown shirt, plain gray trousers, old rubber work shoes. Sleeves rolled with robust forearms, hands resting at hips as if assessing a vehicle. No coffee pot, no motorbike.",
+      "reviewNote": "정본·인체·소지품을 검토하는 원형 단계. 축소 가독성과 투명 가장자리는 추가 납품 검수 대상.",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "tools/design-drafts/road-person-identity/traveler-woman-01-master-v1.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-0c345015-855a-43a9-aee0-9a77494f66a6.png"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src data:; form-action 'none'; base-uri 'none'">
+  <title>민지와 첫 구간 · 흐름 초안</title>
+  <link rel="stylesheet" href="minji-first-journey.css">
+</head>
+<body>
+<main class="mj-draft">
+  <header class="mj-review">
+    <label for="mj-scene">장면 비교</label>
+    <select id="mj-scene">
+      <option value="meet">1. 첫 만남과 수락</option>
+      <option value="purpose">2. 같이 가는 이유</option>
+      <option value="task">3. 폐차장의 선택</option>
+      <option value="road">4. 다음 주행의 반응</option>
+      <option value="camp">5. 첫 야영</option>
+      <option value="morning">6. 다음 아침</option>
+    </select>
+    <p>분기 검토용 · 실제 게임·저장과 연결되지 않습니다</p>
+  </header>
+  <div class="mj-scroll" tabindex="0" aria-label="민지의 첫 여정 초안 본문">
+    <section class="mj-scene mj-meet">
+      <div class="mj-scene-heading"><small>밀양 장터 · 부품 천막</small><h1>소리부터 듣는 사람</h1></div>
+      <p class="mj-narration">민지가 달구지 쪽으로 고개를 든다. 인사보다 먼저, 엔진 소리를 듣는다.</p>
+      <div class="mj-dialogue"><img src="../../assets/portraits/minji.png" width="64" height="64" alt="민지의 기존 공식 초상"><div><b>민지</b><p>거기 생활차, 공회전 한 번만 더 해봐요. 연료관 쪽에서 새는 소리 나요.</p></div></div>
+      <details class="mj-conversation"><summary>“그걸 소리로 알아?”</summary><div><p>민지는 느슨한 클램프를 조인다. 그러고는 울산 공단 쪽에 원을 그린 지도를 편다.</p><p>“오빠가 남긴 진단기가 저기로 넘어갔어요. 마지막 정오 신호랑 발신 좌표가 저장돼 있어요. 아마.”</p><p>“아마?”</p><p>“…저장돼 있어요.” 이미 조인 클램프를 한 번 더 조인다.</p></div></details>
+      <details class="mj-conversation"><summary>부품만 찾아본다</summary><div><p>민지가 상자를 몇 개 가리킨다. 부품을 살피는 동안 울산 폐차장 이야기를 꺼낸다.</p><p>“저도 혼자 못 꺼내는 게 하나 있어요. 서로 한 번씩 도와요.”</p><small>부품을 보는 것만으로 동행이 시작되지는 않습니다. 이 초안은 거래·보상을 실행하지 않습니다.</small></div></details>
+      <div class="mj-request"><p>“오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.”</p><p>“혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.”</p></div>
+    </section>
+
+    <fieldset class="mj-consent">
+      <legend>민지의 부탁에 답한다</legend>
+      <label><input type="radio" name="mj-consent" id="mj-undecided" checked><span>아직 결정하지 않는다</span></label>
+      <label><input type="radio" name="mj-consent" id="mj-accept"><span>울산까지 태워주고, 함께 꺼낸다</span></label>
+      <label><input type="radio" name="mj-consent" id="mj-decline"><span>오늘은 함께 가기 어렵다고 말한다</span></label>
+      <p class="mj-consent-yes">민지가 공구함을 들고 오른다. <strong>아직은 울산까지 함께 가는 승객이다.</strong></p>
+      <div class="mj-consent-no"><p>“알겠어요. 전 여기서 다른 방법을 찾아볼게요.”</p><p>민지는 지도를 접어 천막 기둥에 다시 꽂는다.</p><small>혼자 출발할 수 있습니다. 다시 이 정착지를 찾으면 말을 걸 수 있습니다. 미션·동료·물건은 생기지 않습니다.</small></div>
+    </fieldset>
+    <p class="mj-meet-next">다음 장면은 위의 <b>장면 비교</b>에서 고릅니다. 뒤 장면은 수락한 경우에만 열립니다.</p>
+
+    <div class="mj-not-accepted"><h2>아직 함께 타지 않았다</h2><p>첫 만남에서 동행을 수락해야 뒤의 예시를 볼 수 있습니다.</p><p>거절하고 혼자 가는 길도 유효한 선택입니다.</p><small>위에서 ‘1. 첫 만남과 수락’으로 돌아갈 수 있습니다.</small></div>
+
+    <div class="mj-accepted-scenes">
+      <section class="mj-scene mj-purpose">
+        <div class="mj-scene-heading"><small>첫 만남 뒤 · 사이드 미션</small><h1>오빠의 목소리가<br>남아 있을까</h1></div>
+        <div class="mj-note"><p>민지 오빠가 남긴 물건이 울산에 있다.<br>혼자 못 꺼내는 거라니 같이 가 봐야겠다.</p></div>
+        <dl class="mj-directions"><div><dt>갈 곳</dt><dd>울산 공단 폐차장</dd></div><div><dt>도착하면</dt><dd>머물기에서 동료 미션 확인</dd></div></dl>
+        <details class="mj-record"><summary>지금까지 들은 것</summary><p>민지의 오빠가 남긴 진단기가 폐차장으로 넘어갔다. 마지막 정오 신호와 발신 좌표가 저장되어 있다고 한다.</p><p>직접 열어 보지 않았으므로, 남은 내용은 아직 확인하지 못했다.</p></details>
+        <p class="mj-editor-note">기존 목적지 선택 → 실제 예상 시간·연료 확인 → 출발을 유지합니다. 이 초안에는 가짜 이동 수치를 넣지 않았습니다.</p>
+      </section>
+
+      <section class="mj-scene mj-task">
+        <div class="mj-scene-heading"><small>울산 공단 · 폐차장 안쪽</small><h1>손만 봐요.</h1></div>
+        <p class="mj-narration">진단기가 접힌 승용차 아래에 끼어 있다. 차 더미가 기울고, 불꽃이 호스를 핥는다.</p>
+        <blockquote>“내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.”<cite>민지</cite></blockquote>
+        <p>빠르게 당기면 상자가 찌그러지고, 늦으면 불이 번진다.</p>
+      </section>
+      <fieldset class="mj-method">
+        <legend>어떻게 꺼낼까</legend>
+        <label><input type="radio" name="mj-method" id="mj-method-none" checked><span>아직 고르지 않았다</span></label>
+        <label><input type="radio" name="mj-method" id="mj-winch"><span><b>윈치로 장력을 잘게 나눈다</b><small>윈치 장착 필요 · 45분</small></span></label>
+        <label><input type="radio" name="mj-method" id="mj-pulley"><span><b>도르래를 만들고 힘을 맞춘다</b><small>고철 4 · 90분 · 차체 손상 위험</small></span></label>
+        <label><input type="radio" name="mj-method" id="mj-shield"><span><b>달구지를 방패로 붙인다</b><small>50분 · 차체 손상 위험</small></span></label>
+        <p class="mj-editor-note">선택을 비교하는 초안입니다. 실제 장비·비용 조건은 게임 연결 때 그대로 검사하며, 여기서는 어떤 자원도 쓰지 않습니다.</p>
+      </fieldset>
+      <div class="mj-task-result">
+        <details class="mj-execute"><summary>선택한 방법으로 꺼낸 뒤의 장면 보기</summary>
+          <div class="mj-outcome mj-branch-winch"><p>민지의 손가락 둘이 접힌다. 멈춤. 하나가 펴진다. 당김.</p><p>상자가 빠져나오자 민지는 헐거운 윈치 받침 볼트를 조인다. 차체의 떨림이 멎는다.</p><small>기존 결과 · 45분 / 차체 +2</small></div>
+          <div class="mj-outcome mj-branch-pulley"><p>범퍼와 휠 허브로 도르래를 만들었다. 민지가 둘을 세고, 함께 줄을 당겼다.</p><p>차 더미가 내려앉으며 철판이 옆문을 때린다. 상자는 우리 발 앞에서 멈춘다.</p><small>기존 결과 · 90분 / 고철 −4 / 차체 −3</small></div>
+          <div class="mj-outcome mj-branch-shield"><p>“미안. 조금 아플 거야.” 민지가 달구지 앞판을 한 번 쓰다듬는다.</p><p>철판이 생활칸을 긁으며 떨어진다. 상자는 나왔고, 차체에는 긴 흠집이 남았다.</p><small>기존 결과 · 50분 / 차체 −12</small></div>
+          <div class="mj-signal"><p>진단기에서 오래된 녹음이 들린다.</p><blockquote>“민지야, 정오다. 살아 있으면 대답해.”</blockquote><p>민지는 재생을 멈춘다. 걸쇠를 확인하고, 다시 확인한다.</p><small>저장된 목소리를 확인한 것이지, 지금 살아 있다는 응답을 받은 것은 아닙니다.</small></div>
+        </details>
+      </div>
+      <p class="mj-no-method">먼저 ‘3. 폐차장의 선택’에서 방법을 골라 주세요.</p>
+
+      <div class="mj-after-task">
+        <section class="mj-scene mj-road">
+          <div class="mj-scene-heading"><small>폐차장을 떠나는 다음 주행 · 정식 합류 전</small><h1>함께 한 일이 남는다</h1></div>
+          <p class="mj-editor-note">실제 주행 화면을 재현한 그림이 아닌 반응 예시입니다. 기존 주행을 막지 않는 짧은 대화로 제안합니다.</p>
+          <div class="mj-branch-winch"><p>출발 전, 민지가 손가락 둘을 접어 보인다. 폐차장에서 맞춘 멈춤 신호다.</p><blockquote>“아까처럼요. 손 보이면 잠깐만 기다려요.”<cite>민지 · 새 제안</cite></blockquote><p>서로의 신호를 맞춘 뒤 연료관과 짐끈을 한 번 더 조인다.</p><p class="mj-effect">기존 선택 효과 · 이번 주행 연료 소모 −5%</p></div>
+          <div class="mj-branch-pulley"><p>적재칸의 임시 도르래가 덜컹인다. 민지가 발로 받쳐 둔다.</p><blockquote>“이거 버리지 마요. 한번 써봤으니까 다음엔 덜 헤맬 거예요.”<cite>민지 · 새 제안</cite></blockquote><p>민지는 도르래에 쓴 것과 같은 부품을 길가에서 찾아 표시한다.</p><p class="mj-effect">기존 선택 효과 · 도착하면 표시한 고철 +2</p></div>
+          <div class="mj-branch-shield"><p>민지가 긁힌 판 안쪽의 브래킷을 조이고, 약해진 곳에 철판을 덧댄다.</p><blockquote>“밖은 남았는데, 안쪽은 잡았어요. 아까처럼 떨리진 않을 거예요.”<cite>민지 · 새 제안</cite></blockquote><p>생활칸의 흠집은 그대로 남아 있다.</p><p class="mj-effect">기존 선택 효과 · 차체 +4, 앞서 받은 손상을 전부 되돌리지는 않음</p></div>
+          <div class="mj-next"><b>다음 정차에서 야영 준비</b><p>오늘 일을 함께 겪었다. 아직 합류를 결정한 것은 아니다.</p></div>
+        </section>
+        <section class="mj-scene mj-camp">
+          <div class="mj-scene-heading"><small>다음 정차 · 첫 야영</small><h1>오늘은 여기까지</h1></div>
+          <p class="mj-narration mj-branch-winch">민지가 윈치 받침을 한 번 눌러 본다. 덮개를 닫고서야 공구함을 내려놓는다.</p>
+          <p class="mj-narration mj-branch-pulley">민지가 임시 도르래를 공구함 옆으로 밀어 둔다. 굴러가지 않는지 발끝으로 확인한다.</p>
+          <p class="mj-narration mj-branch-shield">민지가 생활칸의 흠집을 손바닥으로 쓸어 본다. 덧댄 판은 다시 열지 않는다.</p>
+          <p>점검 덮개 아래서 소리가 나서 민지를 불렀다.</p>
+          <blockquote>“공구 좀… 아. 고쳐 달라는 건 아니었죠?”<cite>민지 · 기존 첫 대화의 합류 전 말투</cite></blockquote>
+          <details class="mj-conversation"><summary>고치는 대신 어떤 소리인지 함께 듣는다 <small>15분</small></summary><div><p>“무슨 소린지만 궁금했어요.”</p><p>민지는 공구를 내려놓고 점검 덮개에 귀만 가까이 댄다.</p><p>“급한 소리는 아니에요. 이 정도면… 얘 꽤 오래 가겠는데요.”</p><p class="mj-memory">오늘의 기록: 고쳐 달라는 부탁 없이, 한동안 같이 소리를 들었다.</p><small>기존 야영 선택을 다듬은 제안. 다른 방법의 현장 흔적과 섞이지 않습니다.</small></div></details>
+          <details class="mj-conversation"><summary>오늘은 먼저 쉰다</summary><div><p>민지도 공구함을 닫는다. 오늘 대화를 하지 않았다는 이유로 합류를 막거나 혼내지 않는다.</p><small>위의 대화와 서로 다른 선택 예시입니다. 게임에서는 그날 고른 한 가지만 기록합니다.</small></div></details>
+          <div class="mj-next"><b>밤을 보낸 뒤 다시 이야기</b><p>첫 야영은 선택 가능한 대화다. 실제 휴식과 다음 날 진행은 기존 야영 흐름을 사용한다.</p></div>
+        </section>
+        <section class="mj-scene mj-morning">
+          <div class="mj-scene-heading"><small>하룻밤을 보낸 다음 · 합류 결정</small><h1>공구함을 내려놓을 자리</h1></div>
+          <p class="mj-narration">민지가 생활칸 안쪽의 빈 볼트 구멍을 가리킨다. 무릎에 올려두던 공구함은 아직 손님 짐이다.</p>
+          <blockquote>“이 공구함, 저기에 고정해도 돼요? …안 내리려고요. 오빠 신호가 닿는 데까지, 그다음엔 서울까지. 같이 가도 돼요?”<cite>민지 · 기존 합류 장면 발췌</cite></blockquote>
+          <details class="mj-conversation"><summary>함께 갈 자리를 만든다</summary><div><p>비상문을 막지 않는 자리를 함께 고른다. 민지가 공구함을 고정한다.</p><p class="mj-memory">손님 짐이던 공구함에 자리가 생겼다.</p><small>게임 연결 시 기존 좌석 확인·합류 확인을 거칩니다. 여기서 동료가 실제로 추가되지는 않습니다.</small></div></details>
+          <details class="mj-conversation"><summary>아직 결정하지 않고 돌아간다</summary><div><p>공구함은 고정하지 않는다. 민지는 임시 동행 상태로 남고, 같은 장소에서 다시 합류 이야기를 열 수 있다.</p><small>즉시 하차·영구 거절을 추가하는 제안이 아닙니다.</small></div></details>
+          <details class="mj-record"><summary>이후 공책에 남는 흔적</summary><p class="mj-branch-winch">손가락 둘이면 멈춤. 다음에도 잊지 말자.</p><p class="mj-branch-pulley">급히 만든 도르래. 다음에도 쓸 수 있다고 챙겼다.</p><p class="mj-branch-shield">밖의 흠집은 남았다. 안쪽은 민지가 잡아 줬다.</p><small>실제로 선택하고 확인한 일만 기록합니다. 아직 받지 않은 응답이나 미래의 보상은 적지 않습니다.</small></details>
+        </section>
+      </div>
+    </div>
+    <footer class="mj-footnote">Codex 흐름·문구 초안. 각 장면은 조건을 가정한 비교 예시이며 실제 이동·시간·보상·저장과 연결되지 않습니다. 장면과 분기는 위에서 자유롭게 되돌려 비교할 수 있습니다.</footer>
+  </div>
+</main>
+</body>
+</html>

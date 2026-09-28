@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>길 위의 사람들 · 도로 조우 초안</title>
+  <link rel="stylesheet" href="road-cue-study.css">
+</head>
+<body>
+<main class="study">
+  <header class="intro"><p>도로 조우 표현 초안</p><h1>길 위의 사람들</h1><p>달구지 곁에서도 같은 세계의 사람처럼.</p></header>
+  <div class="controls">
+    <fieldset aria-label="조우 예시">
+      <label><input type="radio" name="subject" id="people" checked><span>사람과 짐</span></label>
+      <label><input type="radio" name="subject" id="truck"><span>고장 난 차</span></label>
+    </fieldset>
+    <fieldset aria-label="표현 비교">
+      <label><input type="radio" name="treatment" id="proposal" checked><span>제안</span></label>
+      <label><input type="radio" name="treatment" id="current"><span>현재 자산</span></label>
+    </fieldset>
+  </div>
+
+  <!-- Code-native shape study. No executable scripts, game imports or state. -->
+  <svg class="definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="0" height="0">
+    <defs>
+      <linearGradient id="coat" x1="0" y1="0" x2="1" y2=".4"><stop stop-color="#9b9d86"/><stop offset=".38" stop-color="#717765"/><stop offset=".72" stop-color="#58604f"/><stop offset="1" stop-color="#353f39"/></linearGradient>
+      <linearGradient id="trousers" x1="0" y1="0" x2="1" y2=".1"><stop stop-color="#657076"/><stop offset=".45" stop-color="#45525b"/><stop offset="1" stop-color="#29373e"/></linearGradient>
+      <linearGradient id="skin" x1="0" y1="0" x2="1" y2=".6"><stop stop-color="#cebaa0"/><stop offset=".55" stop-color="#b1977b"/><stop offset="1" stop-color="#7d6a56"/></linearGradient>
+      <linearGradient id="canvas-bag" x1="0" y1="0" x2=".1" y2="1"><stop stop-color="#a29a78"/><stop offset=".45" stop-color="#797155"/><stop offset="1" stop-color="#514f3e"/></linearGradient>
+      <linearGradient id="box" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8e8771"/><stop offset="1" stop-color="#494b41"/></linearGradient>
+      <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#88999f" stop-opacity=".08"/><stop offset="1" stop-color="#a0a9a9" stop-opacity=".28"/></linearGradient>
+      <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#495153"/><stop offset="1" stop-color="#252e32"/></linearGradient>
+
+      <!-- Unnamed adult, 72 authored units from hair to boot. Independent hand. -->
+      <g id="standing-person">
+        <ellipse cx="15" cy="73.5" rx="13" ry="2.4" fill="#141d20" opacity=".36"/>
+        <path d="M8 44 21 43 23 52 21 60 24 70 18 71 14 56 12 71 6 71 8 57Z" fill="url(#trousers)"/>
+        <path d="m9 47 5 2-3 15-2 4-1-12Zm7 1 4-1 1 9-2 6-2-8Z" fill="#9da4a0" opacity=".22"/>
+        <path d="m7 54 4 2m6 5 4-2m-9 8-5 1" fill="none" stroke="#222f35" stroke-width="1"/>
+        <path d="m6 69 6-.2.4 3.4-1 1-8-.2.2-2.4Zm12 .2 5-1 1.2 2 4 1.2v2H19Z" fill="#343834"/>
+        <path d="M3.5 73.3h8.2m7.7 0h8.5" stroke="#979584" stroke-width=".8"/>
+        <path d="m6 22 5-3 9 1 5 4-2 14 1 10-8 1-4-2-6 1 1-11Z" fill="url(#coat)"/>
+        <path d="m12 19 1 7 3 4 4-10-4-2Z" fill="#363d36"/>
+        <path d="m11 20-2 5 3 3 1-3m7-5 2 4-5 6" fill="#b5b19a" opacity=".58"/>
+        <path d="m15 28-.6 18m-7-13 4 1m8-1 3-2m-12 10-3 3m12-2 2 4" fill="none" stroke="#343e34" stroke-width=".75"/>
+        <path d="m8.5 34 4 .5-.4 5-4-.3Zm9.5.4 3.5-.9.3 5-3.6.8Z" fill="#59634f" stroke="#aaa991" stroke-width=".45"/>
+        <path d="m10 22-2 18 .5 6" fill="none" stroke="#343b33" stroke-width="2"/>
+        <path d="m9.5 22-2 18" fill="none" stroke="#b2ad8f" stroke-width=".6"/>
+        <path d="m5.5 23-3 8 .3 13 3.4.2 1-12 2-7Z" fill="#6e7560"/>
+        <path d="m3.4 30 .1 8m.4 2.4 2 .2" stroke="#aeb19a" stroke-width=".7"/>
+        <path d="m2.8 44-.1 4.7 1.5 1.4 1.4-.3.6-2.7-.3-3Z" fill="url(#skin)"/>
+        <path d="m11 15 1 7 4 3 2-5-.5-5Z" fill="#9b8066"/>
+        <path d="m10.2 6.3 9 .1 1.7 4-.3 4.2 1 2-2 .6-1 3-4.5 1-4.2-4.7-1.1-5Z" fill="url(#skin)"/>
+        <path d="m10 10-1.5-1 .1-4 2.7-3.2 7-.4 3.5 3-.2 4.5-2.4 1.1-1-3.5-3 .6-4.2-.7-.5 7-1.4-.3Z" fill="#3c3d35"/>
+        <path d="m10.5 4.5 3-1.9 4.6.2 2 1.4m-10 2.3 2-1.4" fill="none" stroke="#8b8b78" stroke-width=".7"/>
+        <path d="m18 11.7 1.2.1m-.9 4.8-1.3.2" stroke="#514c42" stroke-width=".7"/>
+        <path d="m10.5 12.1-1.5-.6-.6 2 1.2 1.7 1 .1" fill="#b29b80"/>
+        <g class="raised-arm">
+          <path d="m22 23 5-1 4-7 3-1 2 2-4 10-7 4-3-1Z" fill="url(#coat)"/>
+          <path d="m24 24 3 .8 5-8" fill="none" stroke="#afb19a" stroke-width=".9"/>
+          <path d="m31 15 .1-5-.9-4.2.8-.8 1.4 3.6.2-6 1.2-.4.6 5.7.7-5.7 1.1.1.1 6.1 1-3.8 1 .4-.3 6-2.2 4.7Z" fill="url(#skin)"/>
+          <path d="m31 14 4.1.4" stroke="#3e493b" stroke-width="1.3"/>
+        </g>
+      </g>
+      <g id="sitting-person">
+        <ellipse cx="20" cy="48" rx="23" ry="3.1" fill="#111c20" opacity=".32"/>
+        <path d="m14 25 13-2 8 8-2 11-6 1 1-12-10 1 5 10-5 5-4-6-6-7Z" fill="url(#trousers)"/>
+        <path d="m17 30 5 8m8-7 2 2-1 8" fill="none" stroke="#8d9998" stroke-width="1" opacity=".5"/>
+        <path d="m27 40 5 .1 3 3 5 1v3H27Zm-11 3 4-2 2 5-3 2-9-.6v-2Z" fill="#333b37"/>
+        <path d="m10 8 8-1 10 6-1 9-3 9-8 1-7-5-2-8Z" fill="url(#coat)"/>
+        <path d="m12 12-2 10 7 5 7-.8m-8-11 3 7m2-12 3 7" fill="none" stroke="#a6aa92" stroke-width=".8"/>
+        <path d="m22 15 5 2 4 9 5 6-3 2-6-6-5-7Z" fill="#777d68"/>
+        <path d="m32 32 3-1 3 3-1 3-3-.6Z" fill="url(#skin)"/>
+        <path d="m10 14 4 1-1 7 4 8-3 2-6-10Z" fill="#7e846f"/>
+        <path d="m14 29 3-1 3 3-.1 2-3 .4-3-2Z" fill="url(#skin)"/>
+        <path d="m16 3 2 6-4 4-4-5Z" fill="#9c8064"/>
+        <path d="m11-7 9 1 3 4-1 4-2.5.6-2.4 3-4.1-.9L9-.6Z" fill="url(#skin)"/>
+        <path d="m9-1-1-5 2-4 6-1 6 3 1 4-4-.5-4-2-1 5-2-1-1 3Z" fill="#383c35"/>
+        <path d="m10-6 2-2 4-.3 4 1.5" stroke="#7f8372" stroke-width=".8" fill="none"/>
+      </g>
+      <g id="luggage">
+        <ellipse cx="22" cy="32" rx="27" ry="3" fill="#131c1e" opacity=".38"/>
+        <path d="m0 14 25-1 10 5-1 15H0Z" fill="url(#box)"/>
+        <path d="m25 13 10 5-1 15-10-2Z" fill="#494e43"/>
+        <path d="m0 14 25-1 10 5-11 1Z" fill="#b0a58a"/>
+        <path d="M3 20h19M3 27h19m4-6 6 1m-6 5 5 1" stroke="#363f38" stroke-width="1.2"/>
+        <path d="M4 18v13m16-12v13" stroke="#c1b397" stroke-width="1.2"/>
+        <path d="m3 13 1-7 6-5 14 1 4 5-3 7-13 1Z" fill="url(#canvas-bag)"/>
+        <path d="m7 5 6-2 9 1m-16 5 6 2 11-1m-13-5-2 5m11-5 2 7" fill="none" stroke="#c1b99a" stroke-width=".7"/>
+        <path d="m13 2 1 12m6-12-1 12" fill="none" stroke="#454c3f" stroke-width="1.4"/>
+        <path d="m11 1 1-2h8l2 2" stroke="#454c3f" fill="none" stroke-width="1.3"/>
+        <path d="m37 23 3-4 9 2 3 7-3 5-13-2Z" fill="#7b806e"/>
+        <path d="m39 24 7-1 3 4-2 4m-9-4 3 4" stroke="#aca88c" fill="none" stroke-width=".8"/>
+      </g>
+      <g id="people-proposal">
+        <use href="#luggage" transform="translate(1 15) scale(.42)"/>
+        <use href="#standing-person" transform="translate(26 0) scale(.4)"/>
+        <use href="#sitting-person" transform="translate(53 14) scale(.31)"/>
+      </g>
+      <!-- Static samples: two unnamed adults. NOT the authored family-truck event. -->
+      <g id="truck-proposal">
+        <ellipse cx="50" cy="39" rx="40" ry="1.6" fill="#151d20" opacity=".5"/>
+        <image href="../../assets/road-cues/cue-broken-vehicle-v3.webp" x="10" y="0" width="80" height="37.1875"/>
+        <use href="#standing-person" transform="translate(-2 16) scale(.27)"/>
+        <use href="#sitting-person" transform="translate(8 25) scale(.25)"/>
+        <path d="m-9 36 3-7 3 7Z" fill="none" stroke="#ae7255" stroke-width="1.1"/>
+        <path d="M-11 38h9" stroke="#303b3e" stroke-width="1"/>
+      </g>
+      <!-- Existing live detailedCuePerson silhouette, drawn at the same height. -->
+      <g id="current-adult">
+        <path d="M-1-5-1.5 0M1-5 1.5 0" stroke="#444b50" stroke-width="1.5"/>
+        <path d="M-2-10h4v6h-4Z" fill="#716352"/>
+        <ellipse cy="-12" rx="1.25" ry="1.65" fill="#b69e82"/>
+        <path d="M-1.3-13.7h2.5v1.2h-2.5Z" fill="#32312f"/>
+        <path d="M-1.6-9.5-2.3-6.5M1.5-9.5 3.8-12.3" stroke="#716352" stroke-width="1.4"/>
+      </g>
+      <g id="truck-current">
+        <image href="../../assets/road-cues/cue-broken-vehicle-v3.webp" x="10" y="0" width="80" height="37.1875"/>
+        <use href="#current-adult" transform="translate(1 36) scale(1.45)"/>
+        <use href="#current-adult" transform="translate(12 36) scale(1.2)"/>
+      </g>
+    </defs>
+  </svg>
+
+  <section class="scene-panel" aria-label="달구지와 도로 조우의 비율 스터디 · 실제 플레이가 아닌 정적 초안">
+    <div class="scene-caption"><span>도로에서 보면</span><label><input id="zoom" type="checkbox"> 대상 확대</label></div>
+    <div class="scene-window">
+      <svg class="scene" viewBox="0 0 360 250" role="img" aria-label="기존 세종 원경과 달구지 곁에 배치한 도로 조우 예시">
+        <rect width="360" height="250" fill="#849598"/>
+        <image href="../../assets/ui/road-environment/sejong-v1.webp" x="0" y="-3" width="360" height="205" preserveAspectRatio="xMidYMax slice"/>
+        <rect width="360" height="195" fill="url(#haze)"/>
+        <path d="M0 188 360 181V250H0Z" fill="url(#road)"/>
+        <path d="M0 184 360 179v8L0 193Z" fill="#666c63"/>
+        <path d="m0 192 360-5" stroke="#b9b5a2" stroke-width="1.2" opacity=".5"/>
+        <path d="M3 235h49m65-3h51m65-3h54m53-3h20" stroke="#bcbaa5" stroke-width="2" opacity=".5"/>
+        <path d="m11 201 17 1 5 3 15-1m50 18 9-2 8 2m95-18 8 1 4 3 11-1m88 28 5-3 15 1" stroke="#202a2e" stroke-width=".7" opacity=".5" fill="none"/>
+        <ellipse cx="125" cy="216" rx="73" ry="3.7" fill="#152025" opacity=".45"/>
+        <image href="../../assets/ui/journey-dalguji-base-v1.webp" x="48" y="123" width="155" height="92.03125"/>
+        <g class="people-example new-art"><use href="#people-proposal" transform="translate(259 160) scale(.72)"/></g>
+        <g class="people-example old-art"><image href="../../assets/road-cues/cue-people.png" x="237" y="95" width="111.6" height="111.6"/></g>
+        <g class="truck-example new-art"><use href="#truck-proposal" transform="translate(237 150)"/></g>
+        <g class="truck-example old-art"><use href="#truck-current" transform="translate(237 150)"/></g>
+      </svg>
+    </div>
+    <p class="scene-foot">같은 달구지·원경을 쓴 비율 예시. 현재 저장 장면은 아니에요.</p>
+  </section>
+
+  <section class="object-panel" aria-label="조우 대상의 확대 비교">
+    <header><h2 class="people-example">손짓과 짐이 먼저 읽히게</h2><h2 class="truck-example">차보다 사람의 사정이 보이게</h2><span>확대 비교</span></header>
+    <svg class="object-study" viewBox="0 0 340 150" role="img" aria-label="대상의 재질과 자세를 보기 위한 확대도">
+      <path d="M22 130h296" stroke="#667275" stroke-width=".6" opacity=".5"/>
+      <g class="people-example new-art"><use href="#people-proposal" transform="translate(49 20) scale(3.5)"/></g>
+      <g class="people-example old-art"><image href="../../assets/road-cues/cue-people.png" x="80" y="-25" width="180" height="180"/></g>
+      <g class="truck-example new-art"><use href="#truck-proposal" transform="translate(44 21) scale(2.7)"/></g>
+      <g class="truck-example old-art"><use href="#truck-current" transform="translate(44 21) scale(2.7)"/></g>
+    </svg>
+    <p class="people-example">접힌 소매, 체중을 실은 다리, 손에 닿는 짐.<br>굵은 테두리 대신 빛과 어두운 면으로 형태를 잡았어.</p>
+    <p class="truck-example">차량은 기존 상세 부품을 유지했어.<br>곁의 사람은 서로 다른 자세로, 작지만 구체적으로.</p>
+  </section>
+  <details class="notes"><summary>움직일 때는 어떻게?</summary><p>발견 → 천천히 감속 → 완전히 정차 → 사건 화면. 기존 흐름을 유지하고, 손짓과 천의 작은 움직임만 따로 넣는 방향이야. 차와 인물을 하나의 그림으로 굳히지 않아.</p><p>이 초안은 정적 형태 비교야. 애니메이션·밤·날씨·실제 사건 인원 연결은 아직 하지 않았어. 이름 없는 두 사람은 비교용 예시이며 현재 사건의 등장인물이 아니야.</p></details>
+  <footer>검토용 초안 · 실제 게임과 저장에는 미적용</footer>
+</main>
+</body>
+</html>

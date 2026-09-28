@@ -753,8 +753,10 @@ with sync_playwright() as p:
       out.emptyCards = [...document.querySelectorAll('#party .pcard')].filter(x=>x.textContent.includes('빈자리')).length;
       out.introBook = D.intro.length >= 14 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
-      out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= 8 &&
-        p.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind)).length >= 5 &&
+      // These two solo scenes now finish on the prop/action, without recap thoughts.
+      const introMinimums = {'intro-dashboard-module':[7,4], 'intro-workshop-departure':[7,2]};
+      out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= (introMinimums[p.scene]?.[0] ?? 8) &&
+        p.beats.filter(turn=>['dialogue','thought','letter','ai','radio'].includes(turn.kind)).length >= (introMinimums[p.scene]?.[1] ?? 5) &&
         (p.solo || new Set(p.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who)).size >= 2) &&
         p.beats.every(turn => turn.text && turn.kind &&
           (!['dialogue','thought','letter'].includes(turn.kind) || (turn.who && turn.name))));

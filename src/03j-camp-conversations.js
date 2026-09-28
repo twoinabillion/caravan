@@ -136,6 +136,18 @@ for(const cid of Object.keys(D.campConversations)){
 }
 D.campConversationData=record=>{
   const base=D.campConversations[record.cid];
+  // The voice belongs to the saved conversation, not today's party membership.
+  // Old pending conversations retain their original words and choices.
+  if(record.cid==='minji'&&record.voice==='minji-guest-v1') return {
+    title:'공구 없이 듣는 소리',
+    first:'점검 덮개 아래서 소리가 나서 민지를 불렀다. 민지는 공구함부터 끌어당겼다.',
+    later:'민지가 점검 덮개 옆에 앉는다. 이번에는 공구함을 열지 않는다.',
+    line:'공구 좀… 아. 고쳐 달라는 건 아니었죠?',
+    choices:[{id:'listen',label:'무슨 소린지만 궁금했다고 말한다',mins:15,speakers:['me','minji'],
+      text:'"무슨 소린지만 궁금했어요."\n\n민지가 덮개에 귀를 가까이 댄다. 공구함을 잡았던 손은 무릎에 놓는다.\n\n"급한 소리는 아니에요. 이 정도면… 얘 꽤 오래 가겠는데요."\n\n덮개를 닫고도 둘은 잠깐 그대로 앉아 있었다.',
+      home:'고쳐 달라는 부탁 없이, 한동안 같이 달구지의 소리를 들었다.',
+      road:'민지가 점검 덮개 쪽으로 귀를 기울인다. "같이 들었던 그 소리예요. 급한 건 아니고요."'}]
+  };
   const chapter=record.chapter===2?base.followup:record.chapter===3?base.settled:null;
   if(!chapter) return base; // A pending legacy receipt keeps its original chapter.
   return {...base,title:chapter.title,first:chapter.intro,later:chapter.intro,

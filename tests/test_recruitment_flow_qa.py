@@ -93,7 +93,13 @@ def main():
                 const settlement=D.stls[meetNode];
                 const opened=G.openRecruitMeet(id);
                 const meet=pending;
-                const startFx=meet&&firstFx(meet,'startRecruit',id);
+                let startFx=meet&&firstFx(meet,'startRecruit',id);
+                if(id==='minji'&&!startFx){
+                  const ask=meet.choices[0].out[0].fx;
+                  G.applyFx(ask);
+                  const request=D.events.find(event=>event.id===ask.chain);
+                  startFx=request&&firstFx(request,'startRecruit',id);
+                }
                 if(startFx) G.applyFx(startFx);
                 const actualTarget=S.recruitQ&&S.recruitQ.target;
                 const taskTargetOk=actualTarget===target;

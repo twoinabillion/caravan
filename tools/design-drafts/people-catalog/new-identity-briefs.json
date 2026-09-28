@@ -1,0 +1,527 @@
+{
+  "scope": "새 얼굴 캐스팅 제안. 나이·외형은 명시된 사건 사실 외에는 초안이며 아직 이야기 정본이나 게임 연결이 아님. ???와 하진은 같은 인물로 취급.",
+  "people": [
+    {
+      "id": "hajin",
+      "name": "하진",
+      "group": "named",
+      "sourceLabel": "passer_woman:하진",
+      "face": "Korean woman about 38; broad forehead, wide-set small hooded eyes, short straight nose, full lower lip and broad rounded jaw; black hair center-parted in a low bun.",
+      "costume": "Faded slate-blue knee-length padded coat, rust knit cuffs, wide brown trousers, flat walking shoes. Both hands holding one folded blank transfer slip at waist.",
+      "brief": "낮고 넓은 코, 둥근 턱, 낮게 묶은 머리. 도윤·유나의 엄마."
+    },
+    {
+      "id": "sujin",
+      "name": "수진",
+      "group": "named",
+      "sourceLabel": "passer_medic:수진",
+      "face": "Young Korean woman about 27; long narrow face, straight low eyebrows, long nose with rounded tip, thin lips; straight black hair cropped just below ears with a small clip on left.",
+      "costume": "Worn LIGHT GRAY pharmacist coat over muted blue sweater, navy straight trousers, plain unbranded shoes. Carry small cloth medical pouch in one hand, sleeves neatly rolled. No names or writing on coat.",
+      "brief": "긴 얼굴과 단정한 짧은 머리. 낡은 약사 가운을 입은 수진."
+    },
+    {
+      "id": "sunja",
+      "name": "순자 아줌마",
+      "group": "named",
+      "sourceLabel": "passer_elder:순자 아줌마",
+      "face": "Korean older woman about 64; broad cheekbones, small chin, very wide smiling mouth, one lower eyebrow; short tight silver-black perm.",
+      "costume": "Muted plum cardigan over pale gray blouse, navy loose trousers, brown cloth shoes. Small plain shopping bag at elbow; other hand open at waist.",
+      "brief": "넓은 광대, 작은 턱, 짧은 곱슬머리. 둥근 얼굴의 금자와 구분."
+    },
+    {
+      "id": "roadcrew_doyun",
+      "name": "도윤 · 길 수선공",
+      "group": "named",
+      "sourceLabel": "passer_worker:도윤",
+      "face": "Korean young man about 24; lanky very tall body, long oval face, large ears, rounded low nose, broad smile, straight thick black hair with uneven blunt fringe. NOT the 8-year-old boy Doyun.",
+      "costume": "Faded MUSTARD road-work vest over navy sweater, gray long straight trousers, plain canvas work shoes. One gloved hand carries a short paint roller lowered at side, tiny yellow paint on cuff only.",
+      "brief": "긴 팔다리의 청년 수선공. 여덟 살 도윤과 다른 인물."
+    },
+    {
+      "id": "village_child",
+      "name": "마을 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:마을 아이",
+      "face": "Korean girl about 10; small round face, widely spaced eyes, short low nose, narrow chin; black hair in two low uneven pigtails. Natural child proportions.",
+      "costume": "Faded brick red hooded jacket, navy loose trousers, small plain canvas shoes. One hand lifted to greet, other down.",
+      "brief": "둥근 얼굴과 낮은 양갈래. 왕릉 마을의 아이."
+    },
+    {
+      "id": "cart_child",
+      "name": "수레를 돕는 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:수레를 돕는 아이",
+      "face": "Korean boy about 11; long narrow face, prominent ears, narrow single-lidded eyes, short straight blunt hair. Natural child proportions.",
+      "costume": "Dull moss sweater with patched elbow, tan loose trousers, canvas shoes. Hands resting together on a loop of carrying rope at waist; no large cart.",
+      "brief": "긴 얼굴과 큰 귀. 수레 행렬을 돕는 아이."
+    },
+    {
+      "id": "market_child",
+      "name": "장터 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:장터 아이",
+      "face": "Korean girl about 9; square soft lower face, full cheeks, large round eyes, small wide nose, hair cut in very short uneven bob.",
+      "costume": "Faded mustard quilted vest over plum long-sleeve shirt, dark roomy trousers, cloth shoes. Holding a plain empty soup bowl at belly with both hands. Natural child body.",
+      "brief": "네모난 턱과 짧은 단발. 국밥 그릇을 든 장터 아이."
+    },
+    {
+      "id": "queue_child",
+      "name": "줄을 지키던 아이",
+      "group": "anonymous",
+      "sourceLabel": "passer_child:줄을 지키던 아이",
+      "face": "Korean boy about 7; wide forehead, close-set small eyes, button nose, compact broad face, straight black hair combed down with left side part.",
+      "costume": "Oversized muted teal zip jacket, brown straight trousers, small old sneakers without logos. Hands in jacket pockets, patiently standing. Natural small child proportions.",
+      "brief": "넓은 이마와 짧게 빗은 머리. 줄을 지키던 아이."
+    },
+    {
+      "id": "street_barber",
+      "name": "길거리 이발사",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:길거리 이발사",
+      "face": "Korean elderly man about 72; large bald dome with gray hair only at sides, narrow eyes behind rectangular wire glasses, round nose, soft double chin, clean-shaven.",
+      "costume": "Worn WHITE barber coat, dark trousers and black loafers. Hold closed scissors and a simple comb safely down at side, other hand adjusts coat cuff.",
+      "brief": "넓은 이마, 사각 안경, 둥근 코. 정류장 이발소 주인."
+    },
+    {
+      "id": "florist",
+      "name": "꽃장수",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:꽃장수",
+      "face": "Korean elderly woman about 76; small narrow triangular face, deep drooping eyelids, tiny upturned nose, thin compressed lips; silver hair neatly parted into low bun.",
+      "costume": "Washed sage green cardigan over cream blouse, muted plum wide trousers, black cloth shoes. One small bunch of ordinary wildflowers held low, other arm relaxed.",
+      "brief": "작은 세모 얼굴과 깊은 눈꺼풀. 작은 꽃다발을 쥔 노파."
+    },
+    {
+      "id": "roaming_barber",
+      "name": "떠돌이 이발사",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:떠돌이 이발사",
+      "face": "Korean older man about 66; long lean face, strong curved nose, narrow moustache, long earlobes, wavy shoulder-length gray hair tied back.",
+      "costume": "Faded blue striped collarless shirt, dark waist apron, charcoal loose trousers, simple shoes. Both hands hold a rolled tool cloth across waist; no open scissors.",
+      "brief": "긴 얼굴, 휜 콧등, 묶은 회색 머리. 길거리 이발사와 다른 사람."
+    },
+    {
+      "id": "office_elder",
+      "name": "면사무소의 노인",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:면사무소의 노인",
+      "face": "Korean older woman about 70 with a long narrow rectangular face, high narrow hooked nose, hollow cheeks, long firm chin, close-set small eyes and coarse very short swept-back gray hair; thin oval reading spectacles.",
+      "costume": "Dark brown button cardigan over gray small-check shirt, navy plain trousers, brown loafers. Holds three plain folded papers in one hand with no writing, other down.",
+      "brief": "긴 각진 얼굴과 높은 콧대, 짧게 넘긴 머리. 종이를 접어 쥔 면사무소의 노인."
+    },
+    {
+      "id": "market_grandmother",
+      "name": "아이의 할머니",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:아이의 할머니",
+      "face": "Korean elderly woman about 74; broad round face, full cheeks, high arched eyebrows, small pointed nose, dimple at right mouth corner; fluffy short white hair.",
+      "costume": "Muted blue quilted jacket with round collar, patterned dark maroon loose pants, slip-on shoes. One hand on hip, other raised a little as if responding to child. SINGLE person only.",
+      "brief": "통통한 볼과 흰 곱슬머리. 장터 아이의 할머니."
+    },
+    {
+      "id": "cart_elder",
+      "name": "장터 수레꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:장터 수레꾼",
+      "face": "Korean older man about 68; thin tall bony body, long wedge-shaped face, deep-set narrow eyes, broad crooked nose, sparse gray chin beard, close shaved gray hair.",
+      "costume": "Faded ochre utility vest over dark blue shirt, loose gray pants and walking shoes. One hand on a carrying strap across chest, other relaxed, leaning weight slightly forward.",
+      "brief": "마른 체형, 쐐기형 얼굴, 희끗한 턱수염. 행렬의 수레꾼."
+    },
+    {
+      "id": "fortune_teller",
+      "name": "점쟁이",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:점쟁이",
+      "face": "Korean elderly woman about 71; strong square face, wide low nose, small very bright eyes, thick pale eyebrows, gray-black hair tied in high practical knot.",
+      "costume": "Faded burgundy layered blouse over dark blue long skirt to ankles, plain flat shoes. One small group of brass bells held low, other hand on waist. No supernatural effects, no magic aura.",
+      "brief": "네모난 얼굴과 굵은 눈썹. 작은 방울을 든 노파."
+    },
+    {
+      "id": "medical_elder",
+      "name": "진료 기록을 든 노인",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:진료 기록을 든 노인",
+      "face": "Korean elderly man about 78; slender egg-shaped head, thin wispy white hair, broad lower lip, large tired eyes, low narrow nose, no facial hair and no glasses.",
+      "costume": "Faded brown V-neck sweater over pale blue shirt, high-waisted loose gray trousers, black loafers. Hands hold a folder of blank papers, elbows close to body.",
+      "brief": "달걀형 얼굴, 큰 눈, 드문 흰 머리. 진료 통계의 주인."
+    },
+    {
+      "id": "white_straggler",
+      "name": "행렬에서 떨어진 노인",
+      "group": "anonymous",
+      "sourceLabel": "passer_elder:행렬에서 떨어진 노인",
+      "face": "Korean elderly man about 80; small narrow face, bent nose bridge, deeply hollow cheeks, sparse long white moustache, short thin silver hair, visibly frail but intact.",
+      "costume": "Worn OFF-WHITE simple loose jacket and trousers, frayed unbranded cloth shoes. A small metal cup held with both hands near abdomen. Slightly stooped standing, no injuries or suffering caricature.",
+      "brief": "여윈 볼과 굽은 콧등. 헤어진 흰옷 행렬의 노인."
+    },
+    {
+      "id": "toll_guard",
+      "name": "무장한 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_guard:무장한 남자",
+      "face": "Korean adult man about 48, tall and sinewy, with a very long diamond-shaped face, wide high cheekbones tapering to an unusually narrow pointed chin, a long downward-curved narrow nose, small widely-spaced hooded eyes, very thin uneven arched eyebrows, a high forehead. CLEAN SHAVEN, no moustache or beard. Straight black hair cut in a severe asymmetric side-part, long on top swept flat, not a buzzcut. Narrow elongated skull and thin neck, not a broad round head or square jaw. This must be a distinctive new face not any established character.",
+      "costume": "Weathered olive work vest over dark brown sweatshirt, loose navy trousers, work boots. Arms folded loosely, wide planted stance. Keep hands visible; no need for visible weapon in this neutral reference.",
+      "brief": "긴 얼굴과 좁은 턱, 가늘고 굽은 코, 옆으로 넘긴 머리. 마른 체격의 도로 봉쇄 인물."
+    },
+    {
+      "id": "checker",
+      "name": "정리자",
+      "group": "anonymous",
+      "sourceLabel": "passer_guard:정리자",
+      "face": "Korean adult woman about 45; long oval face, high fine brow, small hooded eyes, straight long narrow nose, very thin lips; black hair slicked into low braid.",
+      "costume": "OFF-WHITE long work coat and off-white plain trousers, dark flat shoes. Holds a small inactive black tablet at waist. No display text, no sci-fi styling.",
+      "brief": "긴 콧날과 얇은 입술. 태블릿을 든 흰옷 검문 인물."
+    },
+    {
+      "id": "recall_guard",
+      "name": "회수반",
+      "group": "anonymous",
+      "sourceLabel": "passer_guard:회수반",
+      "face": "Korean man about 33; short round face, bulbous nose, wide-set single-lidded eyes, heavy lower lip, thick neck; thick curly black hair cut short.",
+      "costume": "OFF-WHITE button work jacket and trousers, gray belt, dark boots. Hands behind back, upright stance. No weapons or insignia.",
+      "brief": "짧고 둥근 얼굴, 굵은 목, 짧은 곱슬머리. 회수반 인물."
+    },
+    {
+      "id": "speaker_robber",
+      "name": "강도",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:강도",
+      "face": "Korean man about 29; lean diamond-shaped face, tall cheekbones, long thin nose leaning subtly right, uneven dark eyebrows, thin chin beard, short swept-back hair.",
+      "costume": "Faded dark plum windbreaker, charcoal pants, old plain sneakers. One hand hooks thumb into waistband, other down, wary sideways look. No grotesque villain caricature, no weapons necessary.",
+      "brief": "높은 광대와 가는 콧날. 스피커를 가져간 인물."
+    },
+    {
+      "id": "gwangyang_neighbor",
+      "name": "광양 이웃",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:광양 이웃",
+      "face": "Korean man about 57; warm pear-shaped face, small forehead, broad smiling mouth, round nose, bushy graying eyebrows, receding straight black hair with gray sides.",
+      "costume": "Washed blue cardigan over tan shirt, gray loose trousers, brown walking shoes. Relaxed lowered shoulders, one hand held out low as greeting a dog, no dog pictured.",
+      "brief": "아래가 넓은 얼굴과 둥근 코. 보리를 알아보는 광양 이웃."
+    },
+    {
+      "id": "salvage_claimant",
+      "name": "창고 구역의 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:남자",
+      "face": "Korean man about 46; large rectangular head, high wide forehead, drooping outer eye corners, prominent hooked nose, thin upper lip, neatly combed black side part.",
+      "costume": "Faded charcoal checked shirt with sleeves rolled, brown sleeveless padded vest, plain navy pants, work shoes. One plain ledger under arm and small pencil in hand, no readable text.",
+      "brief": "높은 이마, 매부리코, 빗어 넘긴 머리. 창고 앞 장부를 든 남자."
+    },
+    {
+      "id": "dock_controller",
+      "name": "부두 관제",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:부두 관제",
+      "face": "Korean man about 52; long narrow face, strong chin cleft, low straight brow, small narrow nose, tired wide eyelids, salt-gray short crew cut, no beard.",
+      "costume": "Dull teal windproof port jacket over gray sweater, navy trousers, black work shoes. One small plain radio clipped at belt, one hand touching ear, no large headset.",
+      "brief": "긴 얼굴과 갈라진 턱. 부두의 관제 담당자."
+    },
+    {
+      "id": "dock_driver",
+      "name": "부두 기사",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:부두 기사",
+      "face": "Korean man about 48; round wide face, flattened broad nose, dark broad eyebrows, small deep-set eyes, thick lips and uneven stubble, short salt-pepper curls.",
+      "costume": "Faded blue mechanic coveralls with upper sleeves tied at waist over brown thermal shirt, heavy work shoes. Wipes one palm on a plain rag, body weight on right leg.",
+      "brief": "둥근 얼굴과 넓은 코, 짧은 곱슬머리. 부두 기사."
+    },
+    {
+      "id": "hunter",
+      "name": "사냥꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:사냥꾼",
+      "face": "Korean man about 55; very lean angular face, prominent crooked nasal bridge, narrow long eyes, hollow temples, black-gray hair in short low ponytail, small pointed beard.",
+      "costume": "Brown waxed outdoor jacket, olive trousers and hiking boots. Simple wooden bow slung unstrung along back, hands relaxed. No animal carcass, no blood, no fantasy costume.",
+      "brief": "움푹한 관자놀이, 낮게 묶은 머리. 활을 멘 산사람."
+    },
+    {
+      "id": "map_reader",
+      "name": "지도를 펼친 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:지도를 펼친 남자",
+      "face": "Korean man about 50; broad forehead narrowing to small pointed chin, full eyelids, wide blunt nose, small pursed mouth, black hair parted in middle to ears.",
+      "costume": "Dull blue knit vest over pale brown shirt, charcoal trousers, flat walking shoes. Both hands hold a half folded blank map with no writing or markings.",
+      "brief": "넓은 이마와 뾰족한 턱. 지하수 지도를 대조하는 남자."
+    },
+    {
+      "id": "well_young_man",
+      "name": "우물 앞 청년",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:청년",
+      "face": "Korean man about 23; compact square face, rounded cheeks, straight thick eyebrows, low broad nose, downturned small lips, black bowl cut longer at back.",
+      "costume": "Muted rust hooded sweatshirt, gray loose work pants, canvas shoes. One hand holds a small ring of two metal keys, other in pocket, casual slouch.",
+      "brief": "짧은 사각 얼굴과 낮은 코. 우물 앞 청년."
+    },
+    {
+      "id": "levy_vest_man",
+      "name": "형광 조끼 남자",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:형광 조끼 남자",
+      "face": "Korean man about 39; soft round face with double chin, fine narrow eyes behind oval spectacles, small straight nose, neat thin moustache, thinning black short hair.",
+      "costume": "Faded fluorescent yellow safety vest over gray collared shirt, dark trousers and office shoes. Plain blank laminated badge with no text. Closed inactive tablet under one arm.",
+      "brief": "둥근 얼굴, 타원 안경, 얇은 콧수염. 임시 행정소 인물."
+    },
+    {
+      "id": "patient_son",
+      "name": "환자의 아들",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:환자의 아들",
+      "face": "Korean adult man about 43; very long thin face, low cheekbones, large slightly asymmetrical eyes, short broad nose, thick straight mouth, long unkempt fringe with one gray streak.",
+      "costume": "Plain faded forest green pullover and brown straight pants, old sneakers. Hands loosely clasped low, tense shoulders, no props and no exaggerated crying.",
+      "brief": "긴 얼굴에 짧은 코. 박 선생을 알아보는 환자의 아들."
+    },
+    {
+      "id": "recall_leader",
+      "name": "회수조 선두",
+      "group": "anonymous",
+      "sourceLabel": "passer_man:회수조 선두",
+      "face": "Korean middle-aged man about 47; very smooth broad oval face, arched fine eyebrows, small close-set eyes, long straight nose, thin gently smiling mouth, black hair neatly side-parted and flat.",
+      "costume": "OFF-WHITE work jacket and loose pale trousers, plain black shoes. One palm held up at chest level in controlled stop gesture, other down. No insignia and no weapons.",
+      "brief": "매끈한 타원 얼굴과 얇은 미소. 흰옷 회수조의 선두."
+    },
+    {
+      "id": "clinic_worker",
+      "name": "진료소 직원",
+      "group": "anonymous",
+      "sourceLabel": "passer_medic:진료소 직원",
+      "face": "Korean woman about 49; broad square jaw, narrow forehead, large straight eyes, wide short nose, full lips; coarse gray-streaked hair in a tight high bun.",
+      "costume": "Muted pale blue washable clinic apron over dark gray cardigan, navy pants, plain slip-on shoes. One plain folded towel resting in palms. No red cross, no doctor lab coat.",
+      "brief": "각진 턱과 넓은 코. 회색 머리를 높이 묶은 진료소 직원."
+    },
+    {
+      "id": "fish_owner",
+      "name": "덕장 주인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:덕장 주인",
+      "face": "Korean man about 61; sun-worn broad face, high rounded cheekbones, deep laugh lines, wide straight nose, sparse white moustache, salt-gray wavy hair under small brown knit cap.",
+      "costume": "Dull teal rubber work apron over gray-brown thick shirt, dark trousers, low rubber boots. Hands on hips casually, no fish or extra stall.",
+      "brief": "햇볕에 탄 넓은 얼굴과 웃음 주름. 과메기 덕장 주인."
+    },
+    {
+      "id": "cart_vendor",
+      "name": "리어카 행상",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:리어카 행상",
+      "face": "Korean man about 37; narrow egg-shaped head, very prominent round ears, small bright eyes, round nose tip, broad open smile, straight black cropped hair.",
+      "costume": "Gray corduroy jacket over muted ochre sweater, dark patched trousers, plain trainers. Carries a folded burlap sack on one shoulder with one hand, other raised low. No child/cart in image.",
+      "brief": "큰 귀와 둥근 코끝. 자루를 둘러멘 리어카 행상."
+    },
+    {
+      "id": "bath_owner",
+      "name": "목욕차 주인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:목욕차 주인",
+      "face": "Korean adult woman about 58; large round head, low broad forehead, deep-set narrow eyes, blunt flat nose, broad lower lip, short unruly permed black-gray hair.",
+      "costume": "Faded purple rubber apron over blue check shirt, navy loose pants, black rubber shoes. Large plain towel draped over one forearm, other hand on hip.",
+      "brief": "큰 둥근 얼굴과 짧은 파마머리. 수건을 든 목욕차 주인."
+    },
+    {
+      "id": "muju_delegate",
+      "name": "무주 장터 대표",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:무주 장터 대표",
+      "face": "Korean older woman about 62; tall slender frame, long face with high straight forehead, long earlobes, narrow pointed nose, thin determined mouth, straight silver hair tied back without headscarf.",
+      "costume": "Faded moss green long vest over tan linen shirt, charcoal loose trousers, cloth shoes. Hands rest on a small tied cloth seed pouch at waist, upright poised stance.",
+      "brief": "긴 얼굴, 뾰족한 코, 묶은 은발. 재등장해도 같은 장터 대표."
+    },
+    {
+      "id": "water_vendor",
+      "name": "물장수",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:물장수",
+      "face": "Korean man about 31; broad soft square head, large round eyes, tiny narrow nose, heavy lips, smooth clean-shaven face, short black hair with sideburns.",
+      "costume": "Faded blue waterproof sleeveless vest over cream shirt, brown loose pants, old rubber shoes. One small plain metal cup held at chest height, other hand down.",
+      "brief": "큰 눈과 작은 코. 물컵을 든 젊은 물장수."
+    },
+    {
+      "id": "smuggler",
+      "name": "밀수꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:밀수꾼",
+      "face": "Korean man about 44; long sunken face, prominent rounded nose, low bushy brows, small suspicious eyes, thin dark goatee, receding black hair swept behind ears.",
+      "costume": "Dark worn burgundy leather jacket over faded gray shirt, black straight trousers, old leather shoes. Hands in jacket pockets, slight slouch, no drugs or visible contraband props.",
+      "brief": "꺼진 볼과 굵은 코끝. 긴 가죽 재킷의 밀수꾼."
+    },
+    {
+      "id": "market_vendor",
+      "name": "장터 상인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:장터 상인",
+      "face": "Korean woman about 46; broad diamond face with prominent cheekbones, slanted long eyes, wide mouth, rounded chin, thick black hair braided over one shoulder.",
+      "costume": "Muted gray-green checked overshirt, dark blue waist apron, loose brown trousers, cloth work shoes. One hand holding a small rolled blank cloth receipt, other on waist.",
+      "brief": "도드라진 광대와 긴 눈매. 한쪽으로 땋은 머리의 장터 상인."
+    },
+    {
+      "id": "coffee_owner",
+      "name": "커피차 주인",
+      "group": "anonymous",
+      "sourceLabel": "passer_merchant:커피차 주인",
+      "face": "Korean man about 36; long narrow face with full cheeks, almond eyes, short turned-up nose, small neat moustache, long wavy black hair tied in high bun.",
+      "costume": "Dull slate apron over brown rolled-sleeve shirt, tan plain trousers, unbranded sneakers. Small plain enamel coffee pot held low in one hand, other relaxed. No cafe logo.",
+      "brief": "긴 얼굴과 들린 코끝. 머리를 올려 묶은 커피차 주인."
+    },
+    {
+      "id": "parcel_witness",
+      "name": "소포 소식을 아는 사람",
+      "group": "anonymous",
+      "sourceLabel": "passer_refugee:소포 소식을 아는 사람",
+      "face": "Korean older man about 65; wide round face, high domed forehead, large downturned eyes, small flat nose, protruding lower lip, thin gray side-parted hair.",
+      "costume": "Faded brown knit cardigan under gray sleeveless jacket, navy trousers, plain walking shoes. Small tied fabric bundle held with both hands, no mail uniform.",
+      "brief": "높은 이마와 내려간 눈꼬리. 소포의 수취인을 기억하는 사람."
+    },
+    {
+      "id": "white_believer",
+      "name": "흰옷의 신도",
+      "group": "anonymous",
+      "sourceLabel": "passer_refugee:흰옷의 신도",
+      "face": "Korean woman about 40; very narrow heart-shaped face, high arched eyebrows, large close-set eyes, small pointed nose, full quiet smile, long straight black hair loose down back.",
+      "costume": "Simple OFF-WHITE plain collarless jacket and wide trousers, plain gray shoes. Open palms low at waist, softly upright stance. No glowing eyes, no religious symbols or magic.",
+      "brief": "좁은 하트형 얼굴과 긴 생머리. 혼자 길에 선 흰옷 신도."
+    },
+    {
+      "id": "alley_resident",
+      "name": "골목 주민",
+      "group": "anonymous",
+      "sourceLabel": "passer_woman:골목 주민",
+      "face": "Korean woman about 53; long rectangular face, low broad nose, small creased eyes, heavy lower jaw, thick dark brows, short straight salt-pepper bob.",
+      "costume": "Faded burgundy knit vest over gray striped blouse, wide navy pants, rubber slip-on shoes. Arms loosely crossed below chest.",
+      "brief": "긴 사각 얼굴과 무거운 턱. 회색 단발의 골목 주민."
+    },
+    {
+      "id": "held_woman",
+      "name": "붙잡힌 여자",
+      "group": "anonymous",
+      "sourceLabel": "passer_woman:붙잡힌 여자",
+      "face": "Korean woman about 32; broad oval forehead, low cheekbones, large wide-set tired eyes, thin pointed chin, crooked narrow nose, chin-length frizzy black hair.",
+      "costume": "Washed faded gray button coat over navy blouse, brown straight trousers and plain worn shoes. Holds own elbow with opposite hand, guarded but dignified stance. No ropes, no injuries.",
+      "brief": "넓은 이마, 가는 턱, 부스스한 짧은 머리. 회수조가 둘러싼 여자."
+    },
+    {
+      "id": "ridge_woman",
+      "name": "능선 아래의 여자",
+      "group": "anonymous",
+      "sourceLabel": "passer_woman:여자",
+      "face": "Korean woman about 41; short square face, strong round chin, broad flat nose, narrow lifted outer eyes, full mouth, short black pixie hair.",
+      "costume": "Dull ochre outdoor jacket over gray sweater, navy hiking trousers, old walking shoes. One hand shades eyes while looking a little upward, other on hip, no injuries.",
+      "brief": "짧은 사각 얼굴과 짧은 머리. 능선 아래에서 대답한 여자."
+    },
+    {
+      "id": "hospital_worker",
+      "name": "강릉 병원 일꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:강릉 병원 일꾼",
+      "face": "Korean adult woman about 35; long pointed face, prominent nose bridge, wide straight eyes, small pursed lips, straight black shoulder-length hair tied in low ponytail.",
+      "costume": "Faded blue mechanic overalls over gray long-sleeve shirt, cloth gloves and plain work boots. One hand holds a single masonry trowel lowered at side, other wipes brow.",
+      "brief": "긴 얼굴과 도드라진 콧등. 병원을 세우는 일꾼."
+    },
+    {
+      "id": "dome_runner",
+      "name": "대구 돔 심부름꾼",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:대구 돔 심부름꾼",
+      "face": "Korean young adult man about 20; full round youthful face, thick nearly joined eyebrows, low small nose, wide mouth, short stiff upright hair.",
+      "costume": "Faded tan canvas jacket over navy shirt, loose dark trousers, simple canvas shoes. Both hands carry one thick bundle of blank papers tied with string at belly.",
+      "brief": "둥근 얼굴, 굵은 눈썹, 짧게 선 머리. 서류를 나르는 심부름꾼."
+    },
+    {
+      "id": "generator_keeper",
+      "name": "발전기 당번",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:발전기 당번",
+      "face": "Korean man about 60; long triangular face, very high cheekbones, wide hooked nose, heavy drooping eyelids, white short chin stubble, coarse salt-gray hair combed upward.",
+      "costume": "Faded olive pullover under navy canvas waistcoat, gray work pants, unbranded work boots. One hand carries a small plain wrench lowered; other down. No goggles.",
+      "brief": "높은 광대와 큰 매부리코. 발전기를 지키는 당번."
+    },
+    {
+      "id": "foreman",
+      "name": "십장",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:십장",
+      "face": "Korean man about 56; very wide forehead, narrow lower jaw, thick arched eyebrows, broad straight nose, small thin mouth, short black-gray hair with receding sides.",
+      "costume": "Plain muted orange work vest over dark blue collared shirt, gray loose trousers, plain work boots. One hand rests on hip, other holds a closed blank notebook.",
+      "brief": "넓은 이마와 좁아지는 턱. 현장을 보는 십장."
+    },
+    {
+      "id": "beekeeper",
+      "name": "양봉가",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:양봉가",
+      "face": "Korean man about 58; soft broad round face, large round nose, short wide-set eyes, rosy weathered cheeks, thick gray moustache, curly gray hair.",
+      "costume": "Faded off-white loose beekeeping jacket with veil folded BACK so whole face visible, brown loose trousers, simple rubber boots. One hand holds an inactive small bee smoker low, no smoke.",
+      "brief": "둥근 코와 회색 콧수염. 방충망을 뒤로 걷은 양봉가."
+    },
+    {
+      "id": "convoy_handler",
+      "name": "장터 운송 담당자",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:장터 운송 담당자",
+      "face": "Korean woman about 39; long broad rectangular face, wide-set low straight eyes, short curved nose, strong chin, thin mouth, black hair braided tightly at nape.",
+      "costume": "Dull blue long work shirt with rolled sleeves, ochre waist belt with a short coiled rope, charcoal pants, walking boots. One gloved hand lightly holds rope at belt, other open toward side.",
+      "brief": "긴 사각 얼굴과 단단한 턱. 수레 행렬의 운송 담당자."
+    },
+    {
+      "id": "leaflet_collector",
+      "name": "전단을 모은 여자",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:전단을 모은 여자",
+      "face": "Korean woman about 51; pear-shaped face, narrow brow, broad strong lower cheeks, upturned small nose, deep narrow eyes, graying short curls close to head.",
+      "costume": "Washed gray-green worker jacket over muted mauve blouse, dark plain trousers, old loafers. Holds folded blank papers under one arm, one finger points downward as if disputing a detail.",
+      "brief": "아래가 넓은 얼굴과 들린 코. 전단을 모아 대조하는 여자."
+    },
+    {
+      "id": "young_sailor",
+      "name": "젊은 뱃사람",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:젊은 뱃사람",
+      "face": "Korean man about 25; small rectangular face, high broad cheekbones, narrow long nose, bright wide eyes, thick lower lip, short tousled black curls.",
+      "costume": "Dull blue waterproof jacket with rolled cuffs, tan loose trousers, black rubber ankle boots. One tied waterproof package at hip held in hand, other hand lifted in greeting.",
+      "brief": "작은 사각 얼굴과 짧은 곱슬머리. 방수 꾸러미를 전하는 뱃사람."
+    },
+    {
+      "id": "scrap_brother_older",
+      "name": "폐차장 형",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:폐차장 형",
+      "face": "Korean adult man about 45, very stocky with a short thick neck, a pear-shaped face and noticeably heavy soft lower cheeks, narrow sloping forehead, tiny high-set widely-spaced eyes, an exceptionally broad flat nose bridge and large round nose tip, round blunt chin, thin upper lip and fuller lower lip. Smooth CLEAN SHAVEN cheeks and upper lip, no goatee, no moustache, no beard. Large bald crown with a thin horseshoe of short straight black hair only around sides and back. The round fleshy face must NOT resemble a square-jawed buzzcut fighter or any canonical character.",
+      "costume": "Faded gray mechanic coveralls sleeves tied at waist, dull blue shirt, dark work boots. One hand carries a small alternator part low, other on hip.",
+      "brief": "둥글고 살집 있는 볼, 큰 코끝, 벗겨진 정수리. 짧고 굵은 체격의 폐차장 형."
+    },
+    {
+      "id": "scrap_brother_younger",
+      "name": "폐차장 동생",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:폐차장 동생",
+      "face": "Korean man about 30; long narrow face, same family broad protruding ears but narrow chin and longer rounded nose, higher thin eyebrows, clean-shaven, black straight hair longer at front. Tall lanky build.",
+      "costume": "Dull brown mechanic coveralls fully worn, gray undershirt, old work boots. Holds a plain folded rag in both hands, slight tilted skeptical head. No machinery beyond rag.",
+      "brief": "형과 귀는 닮았지만 긴 얼굴과 마른 체형. 폐차장 동생."
+    },
+    {
+      "id": "night_driver",
+      "name": "호송대 운전사",
+      "group": "anonymous",
+      "sourceLabel": "passer_worker:호송대 운전사",
+      "face": "Korean man about 45; very broad oval face, close-set hooded eyes, crooked thick nose, square chin, full thinly stubbled cheeks, nearly bald with short dark hair at sides.",
+      "costume": "Faded navy padded trucker vest over dark maroon sweatshirt, gray loose trousers and plain work shoes. One hand holding a dented plain thermos low, other pocketed.",
+      "brief": "넓은 타원 얼굴과 굵게 휜 코. 밤 호송대의 운전사."
+    },
+    {
+      "id": "roadcrew_sunim",
+      "name": "순임",
+      "group": "named",
+      "sourceLabel": "source:roadcrew_line",
+      "face": "Korean elderly woman about 75; compact wiry short body, small square face, very deep-set sharp eyes, high narrow nose, thin determined mouth, straight white hair combed tight into small bun.",
+      "costume": "Distinct MUSTARD roadwork safety vest over faded gray shirt, wide navy trousers, black rubber shoes. One gloved hand raised palm out in a stop gesture, other holds short paint brush lowered. Only small yellow paint on glove.",
+      "brief": "작고 각진 얼굴과 날카로운 눈매. 겨자색 조끼의 길 수선공."
+    },
+    {
+      "id": "daeyang",
+      "name": "대양",
+      "group": "named",
+      "sourceLabel": "source:van_owner",
+      "face": "Korean elderly male mechanic about 78; broad heavy face, prominent low rounded nose, thick pale eyebrows, bright narrow eyes, big ears, short thick white hair combed backward, clean-shaven.",
+      "costume": "Faded dark teal mechanic jacket over brown shirt, plain gray trousers, old rubber work shoes. Sleeves rolled with robust forearms, hands resting at hips as if assessing a vehicle. No coffee pot, no motorbike.",
+      "brief": "큰 귀와 낮고 둥근 코. 달구지를 기억하는 정비공 대양."
+    }
+  ]
+}

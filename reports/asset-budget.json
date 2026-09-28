@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-27T01:35:26.769Z",
+  "generatedAt": "2026-09-28T06:56:47.058Z",
   "html": {
-    "bytes": 79999956,
+    "bytes": 79997538,
     "warnBytes": 32000000,
     "maxBytes": 80000000
   },
   "embedded": {
     "files": 708,
-    "bytes": 53654296,
+    "bytes": 53654448,
     "categories": {
       "audio": {
         "files": 45,
@@ -26,8 +26,8 @@
       },
       "other": {
         "files": 36,
-        "bytes": 936095,
-        "encodedBytes": 1248184
+        "bytes": 936247,
+        "encodedBytes": 1248384
       },
       "portrait": {
         "files": 49,
@@ -112,8 +112,8 @@
     {
       "path": "assets/fonts/CaravanJournalHand-Regular.woff2",
       "mime": "font/woff2",
-      "bytes": 309760,
-      "encodedBytes": 413016
+      "bytes": 309912,
+      "encodedBytes": 413216
     },
     {
       "path": "assets/ui/road-journey-log-panel-v1.webp",

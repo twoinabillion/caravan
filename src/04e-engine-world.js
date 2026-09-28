@@ -127,10 +127,11 @@ G.campReportMemory = (report={})=>{
 };
 G.campContext = cid=>{
   const recent=day=>Number.isFinite(day)&&day<=S.day&&day>=S.day-1;
+  const approach=G.recruitApproach(cid);
+  if(cid==='minji'&&S.recruitQ?.id===cid&&!S.campMemories?.[cid]?.visits&&approach) return approach.memory;
   const report=S.lastCombatReport;
   // Undated legacy reports are still real memories; never call them "today".
   if(report&&(report.day==null||recent(report.day)))return G.campReportMemory(report);
-  const approach=G.recruitApproach(cid);
   if(!S.campMemories?.[cid]?.visits&&approach&&typeof approach.memory==='string')return approach.memory;
   const recap=S.lastJourneyRecap||(S.journeyRecaps||[]).slice(-1)[0];
   if(recap&&recent(recap.day)&&D.nodes[recap.from]&&D.nodes[recap.to])
@@ -184,7 +185,7 @@ G.resolveCampChoice = (eventId,choiceId)=>{
   S.campMemories[record.cid]={id:record.id,cid:record.cid,choiceId,day:S.day,visits:visits+1,
     home:data.home,road:data.road,pendingRoad:true,pendingBond:(previous.pendingBond||0)+(isGuest?2:0)};
   chips.push({t:isGuest?'함께 나눈 대화 · 합류하면 유대 +2':`${D.comps[record.cid].name} 유대 +2`,c:'item'});
-  chips.push({t:`${D.companionKeepsakes[record.cid].name} · 새 흔적`,c:'item'});
+  chips.push({t:record.voice==='minji-guest-v1'?'달구지의 소리를 함께 들었다':`${D.companionKeepsakes[record.cid].name} · 새 흔적`,c:'item'});
   record.choiceId=choiceId; record.chips=chips; record.resolvedDay=S.day; record.resolvedMin=S.min;
   const plan=S._campPlan||(S._campPlan={}); plan.talk=record.cid; plan.last='talk';
   G.addNote({type:'인물',title:`${D.comps[record.cid].name} · ${event.title}`,
@@ -253,6 +254,7 @@ G.prepareCamp = (kind,cid)=>{
         day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!experienced,
         chapter:Math.min(3,visits+1),previousChoiceId:experienced?memory.choiceId:null,
         choiceId:null,chips:[],active:true};
+      if(cid==='minji'&&!S.party.includes(cid)) S.campConversation.voice='minji-guest-v1';
     }
   } else return {ok:false,why:'알 수 없는 야영 준비다'};
   G.save();

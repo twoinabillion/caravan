@@ -1,6 +1,4 @@
-/* ═══════════════════ DRIVE SCENE — 코드 기반 픽셀아트 렌더러 ═══════════════════
-   236px 논리 좌표와 2배 렌더 버퍼를 사용한다. 전용 풍경·기본 차체 그림 위에
-   실제 S.up 개조, 동료, 바퀴, 날씨와 사건 접근을 매 프레임 조합한다. */
+/* Live road: 236 logical pixels, 2x buffer; compose real upgrades, riders, weather and cues. */
 const SCENE = (()=>{
   const ROAD_RENDER_SCALE=2;
   const LW = 236;                     // 논리 해상도(픽셀아트 폭)
@@ -315,8 +313,7 @@ const SCENE = (()=>{
     const bodyL=build.bodyL, bodyH=build.bodyH+6, cabL=25, cabH=22;
     const cabX=P(W*0.53), vx=cabX-bodyL;
     const baseY=roadY+P((H-roadY)*0.42);
-    /* 정차 화면에서는 달구지가 주인공이다. 차축과 노면 접점을 고정한 채 키워
-       배경 표지판이나 지평선보다 먼저 읽히게 한다. 정착지 비교 캔버스는 1배를 쓴다. */
+    /* Stopped zoom preserves axle/road contact. Garage comparison stays at 1x. */
     ctx.save();
     if(displayScale!==1){
       ctx.translate(cabX,baseY+6);
@@ -890,77 +887,8 @@ const SCENE = (()=>{
     }
   }
 
-  /* ── 천리안 관측 시각 언어 ──
-     얼굴 대신 센서·스캔·정렬 오류로 존재감을 보인다. pursuit가 높을수록 노골적이다. */
-  function cheollianFx(roadY){
-    if(!S) return;
-    const seoul = S.at==='seoul' || (S.driving&&S.driving.to==='seoul') || !!S.flags.seoul_open;
-    const level=Math.max(S.pursuit||0,seoul?5:0);
-    if(level<=0) return;
-    const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const cyan='85,224,200', red='226,87,79';
 
-    /* 먼 구조물의 카메라 눈. 처음엔 점처럼, 관측이 오르면 조리개처럼 읽힌다. */
-    const eyes=Math.min(6,level+1);
-    for(let i=0;i<eyes;i++){
-      const ex=P(18+hash(i*19+7)*(W-36));
-      const ey=P(H*0.29+hash(i*31+3)*H*0.31);
-      const blink=reduced?0.7:0.35+0.65*Math.max(0,Math.sin(t*(1.1+i*0.13)+i*2.4));
-      ctx.fillStyle=`rgba(${seoul&&i%3===0?red:cyan},${0.22+blink*0.55})`;
-      ctx.fillRect(ex,ey,1,1);
-      if(level>=2&&blink>0.72){ ctx.fillRect(ex-2,ey,1,1); ctx.fillRect(ex+2,ey,1,1); }
-      if(level>=4&&blink>0.84){ ctx.fillRect(ex,ey-2,1,1); ctx.fillRect(ex,ey+2,1,1); }
-    }
-
-    /* 화면을 훑는 계측선. 비·안개와 싸우지 않도록 매우 옅게 유지한다. */
-    if(level>=2){
-      const scanY=P(reduced?H*0.45:(t*(9+level*2))%(H+12)-6);
-      ctx.fillStyle=`rgba(${cyan},${0.025+level*0.012})`; ctx.fillRect(0,scanY,W,1);
-      if(level>=4){ ctx.fillStyle=`rgba(${cyan},0.045)`; ctx.fillRect(0,scanY+2,W,1); }
-    }
-
-    /* 달구지를 인식한 추적 프레임. 네 모서리만 남겨 감시 장치처럼 보이게 한다. */
-    if(level>=3){
-      const build=vanBuildStage(S.up||{}), cabX=P(W*0.53), bodyX=cabX-build.bodyL;
-      const bx=P(bodyX-10), by=P(roadY+(H-roadY)*0.42-build.bodyH-18);
-      const bw=build.bodyL+43, bh=build.bodyH+35;
-      const pulse=reduced?0.55:0.3+0.3*(0.5+0.5*Math.sin(t*2.7));
-      ctx.strokeStyle=`rgba(${cyan},${pulse})`; ctx.lineWidth=1;
-      const c=7;
-      line(bx,by,bx+c,by); line(bx,by,bx,by+c);
-      line(bx+bw,by,bx+bw-c,by); line(bx+bw,by,bx+bw,by+c);
-      line(bx,by+bh,bx+c,by+bh); line(bx,by+bh,bx,by+bh-c);
-      line(bx+bw,by+bh,bx+bw-c,by+bh); line(bx+bw,by+bh,bx+bw,by+bh-c);
-      if(level>=4){
-        const tx=P(W-16), ty=P(H*0.24);
-        ctx.strokeStyle=`rgba(${cyan},0.12)`; line(tx,ty,bx+bw,by+6);
-        ctx.fillStyle=`rgba(${seoul?red:cyan},0.75)`; ctx.fillRect(tx-1,ty-1,3,3);
-        ctx.fillStyle='#070a12'; ctx.fillRect(tx,ty,1,1);
-      }
-    }
-
-    /* 관측 5단계: 영상 자체가 짧게 어긋난다. */
-    if(level>=5&&!reduced&&Math.sin(t*1.7)>0.94){
-      const gy=P(H*(0.2+hash(Math.floor(t*3))*0.58));
-      const shift=Math.sin(t*17)>0?3:-3;
-      ctx.globalAlpha=0.42;
-      ctx.drawImage(off,0,gy*ROAD_RENDER_SCALE,off.width,2*ROAD_RENDER_SCALE,shift,gy,W,2);
-      ctx.drawImage(off,0,(gy+4)*ROAD_RENDER_SCALE,off.width,ROAD_RENDER_SCALE,-shift,gy+4,W,1);
-      ctx.globalAlpha=1;
-    }
-
-    /* 서울에서는 코어의 붉은 맥박이 관측망 전체에 섞인다. */
-    if(seoul){
-      const beat=reduced?0.08:Math.pow(Math.max(0,Math.sin(t*1.35)),12)*0.15;
-      if(beat>0.01){ ctx.fillStyle=`rgba(${red},${beat})`; ctx.fillRect(0,0,W,H); }
-      ctx.fillStyle=`rgba(${red},${0.45+0.35*Math.sin(t*1.35)})`;
-      ctx.fillRect(P(W*0.8),P(H*0.16),2,2);
-    }
-  }
-
-  /* Detailed road vehicles use the same hard-edged, low-resolution canvas
-     language as the caravan. Their physical scale is deliberately smaller
-     because they sit farther up the road, not because the asset is a thumbnail. */
+  /* Road cues share the live renderer; distant vehicles remain smaller than the caravan. */
   function approachDetailedVehicle(x,ground,motif,dark,variant){
     const bus=motif==='clinic-bus', broken=motif==='broken-vehicle';
     const w=bus?94:88, h=bus?43:39, left=Math.round(x-w/2), top=Math.round(ground-h);
@@ -1038,9 +966,7 @@ const SCENE = (()=>{
     ctx.restore();
   }
 
-  /* ── 길 위 사건 예고 ──
-     달구지와 같은 해상도의 전용 픽셀 자산을 사용한다. 사람과 시설은 갓길에,
-     실제 주행 장애물만 차선에 놓고 접근 중 크기는 바꾸지 않는다. */
+  /* Native-resolution cues: people/props on shoulder, obstacles in lane; fixed approach scale. */
   const approachSpriteSources={
     animal:'assets/road-cues/cue-animal.png', bridge:'assets/road-cues/cue-bridge.png', cache:'assets/road-cues/cue-cache.png',
     checkpoint:'assets/road-cues/cue-checkpoint.png', cyclist:'assets/road-cues/cue-cyclist.png', debris:'assets/road-cues/cue-debris.png',
@@ -1370,7 +1296,6 @@ const SCENE = (()=>{
     roadApproachVehicleAlert(roadY);
     drawPuffs(dt);
     drawCrows(dt); weather(wx,dark,speed,dt);
-    cheollianFx(roadY);
     /* 비네트 */
     const vg=ctx.createRadialGradient(W/2,H*0.45,H*0.3,W/2,H*0.5,H*0.95);
     vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,0.42)');
@@ -1382,10 +1307,7 @@ const SCENE = (()=>{
     dctx.drawImage(off,0,0,off.width,off.height,0,0,VW,VH);
   }
 
-  /* ── 정착지 내부: 코드 기반 일러스트 월드 ────────────────────────
-     도착 시네마틱의 JPG를 확대해 쓰지 않는다. 논리 좌표는 터치 판정과
-     작은 화면 구도를 위해 유지하되 3배 버퍼에 다시 그려 건축·사람·조명은
-     픽셀 블록이 아니라 부드러운 코드 일러스트로 보이게 한다. */
+  /* Town: logical hit coordinates, smooth 3x illustration buffer; never enlarge arrival art. */
   const TOWN_W=236,TOWN_H=306,TOWN_RENDER_SCALE=3,TOWN_ATLAS_SCALE=3;
   let town=null,townT=0;
   const tclamp=(n,a,b)=>Math.max(a,Math.min(b,n));

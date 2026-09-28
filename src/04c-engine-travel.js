@@ -236,17 +236,19 @@ G.prepareRecruitGuest = (dv)=>{
   UI.toast(`${def.guest.ic} 임시 동행 — ${def.guest.title}`);
 };
 
-/* 영입 임무에서 고른 방법이 문구로만 남지 않고, 합류 후 첫 주행에
-   한 번의 실제 결과를 만든다. 데이터에 drive가 있는 동료만 대상이다. */
+/* 민지는 작업 뒤 첫 출발, 다른 동료는 합류 뒤 첫 출발에 한 번.
+   같은 저장 플래그를 써서 임시 동행→합류→재접속에도 보상을 반복하지 않는다. */
 G.prepareRecruitMemory = (dv)=>{
-  if(!dv) return null;
-  for(const id of S.party||[]){
-    const choice=S.comps[id]&&S.comps[id].approach;
+  if(!dv||dv.recruitMemory) return null;
+  const q=S.recruitQ, guest=q?.id==='minji'&&['road','follow','ready'].includes(q.stage)&&!S.party.includes('minji');
+  const ids=guest?['minji',...S.party]:S.party||[];
+  for(const id of ids){
+    const choice=guest&&id==='minji'?q.choice:S.comps[id]&&S.comps[id].approach;
     const approach=choice&&D.recruitQuests[id]&&D.recruitQuests[id].approaches[choice];
     const drive=approach&&approach.drive, flag=`${id}_approach_drive`;
     if(!drive||S.flags[flag]) continue;
     S.flags[flag]=true;
-    dv.recruitMemory={id,choice,title:drive.title,desc:drive.desc,effect:drive.effect};
+    dv.recruitMemory={id,choice,title:drive.title,desc:drive.desc,line:drive.line,effect:drive.effect};
     if(drive.fuel) dv.memoryFuel=drive.fuel;
     if(drive.fatigueMul) dv.memoryFatigue=drive.fatigueMul;
     if(drive.fatigue){

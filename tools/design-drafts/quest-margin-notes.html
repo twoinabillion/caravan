@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; font-src data:; form-action 'none'; base-uri 'none'">
+  <title>공책 여백 · 조금씩 다르게</title>
+  <link rel="stylesheet" href="quest-margin-notes.css">
+</head>
+<body>
+<main class="margin-draft">
+  <div class="draft-controls" aria-label="초안 비교 도구 · 게임 조작 아님">
+    <label class="example-picker" for="entry-example">미리볼 기록
+      <select id="entry-example">
+        <option value="key" selected>지금 · 검증키</option>
+        <option value="module">읽은 기록 · 엄마의 장치</option>
+        <option value="split">읽은 기록 · 부모님 행선지</option>
+        <option value="existing">기존 흔적 · 남긴 기록</option>
+        <option value="quiet">쉬어 가는 기록 · 부산</option>
+      </select>
+    </label>
+    <label class="marks-toggle"><input id="show-marks" type="checkbox" checked>새 흔적 보기</label>
+  </div>
+  <header class="notebook-heading"><h1>여정 기록</h1><span>상혁의 공책</span></header>
+  <div class="margin-book">
+    <div class="margin-index" aria-label="공책 색인 배치 예시 · 이동하지 않음"><span class="current-index">메인 스토리</span><span>사이드 미션</span><span>완료 기록</span></div>
+    <div class="notebook-cover"><div class="notebook-sheet">
+      <div class="notebook-binding" aria-hidden="true"></div>
+      <div class="notebook-scroll" tabindex="0" aria-label="공책 본문 · 스크롤해서 읽기">
+        <section class="entry-sample entry-key">
+          <p class="written-date">3일째 아침, 세종 신도시</p>
+          <h2>계기판에서 꺼낼<br>검증키</h2>
+          <p class="written-thought">함부로 떼면 배선까지 망가진다니. 빠진 설명서부터 찾아야지.</p>
+          <div class="margin-aside new-mark" role="note" aria-label="망설이다 고쳐 쓴 말">
+            <p class="crossed-thought"><span class="note-sr">지운 말: </span><del>조금만 당겨 볼까<svg class="pen-crossout" viewBox="0 0 210 28" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 Q76 7 203 17 M9 19 Q102 11 200 13"/></svg></del></p>
+            <p class="added-thought"><svg class="pen-arrow" viewBox="0 0 30 28" aria-hidden="true"><path d="M5 2 Q0 22 24 20 M18 15 L25 20 L19 25"/></svg><span class="note-sr">덧쓴 말: </span>아니다. 설명서부터.</p>
+          </div>
+          <details class="written-record"><summary>확인한 것 <span aria-hidden="true"></span></summary><p>엄마 회로도랑 계기판 안쪽 배선이 맞는다. 장치가 이미 달구지에 연결돼 있었네. 대체 언제부터?</p></details>
+        </section>
+        <section class="entry-sample entry-module">
+          <p class="written-date">지나온 기록</p>
+          <h2>엄마가 남긴 장치</h2>
+          <p class="written-thought">엄마 회로도랑 계기판 안쪽 배선이 맞는다. 장치가 이미 달구지에 연결돼 있었네. 대체 언제부터?</p>
+          <figure class="dashboard-sketch new-mark">
+            <svg viewBox="0 0 130 68" role="img" aria-label="상혁이 대충 그린 계기판 낙서. 배선도나 장치 해법이 아니다.">
+              <path d="M10 48 L12 20 Q53 15 106 20 L110 48 Q55 45 10 48 Z M17 22 Q53 19 101 23 M26 41 C15 34 25 23 36 28 C44 33 41 43 31 43 M55 41 C46 28 61 22 70 29 C78 38 67 47 55 41 M29 36 L33 30 M61 35 L66 30 M83 32 L99 32 M84 39 L96 39 M7 51 Q54 48 114 51"/>
+              <path class="pen-retrace" d="M13 19 Q68 13 107 22 M13 49 L109 49 M18 38 Q16 27 29 26"/>
+            </svg>
+            <figcaption>맨날 보던 건데.</figcaption>
+          </figure>
+        </section>
+        <section class="entry-sample entry-split">
+          <p class="written-date">지나온 기록</p>
+          <h2>부모님이 탄 다음 차</h2>
+          <p class="written-thought">운행표에서 찾은 부모님 이름.<br>아빠는 <span class="ink-underline">남산 유지선</span>으로,<br>엄마는 <span class="ink-underline">중부 기록 정리소</span>로 보내졌다고.</p>
+          <div class="remember-note new-mark" role="note"><svg class="pen-arrow" viewBox="0 0 30 28" aria-hidden="true"><path d="M22 24 Q0 24 8 5 M2 11 L8 4 L13 11"/></svg><p>헷갈리지 않게.</p></div>
+        </section>
+        <section class="entry-sample entry-existing">
+          <p class="written-date">이전 단계 · 혼자일 때의 기존 예시</p>
+          <h2>아빠와 엄마가<br>남긴 기록</h2>
+          <p class="written-thought">아빠랑 엄마가 뭘 하려던 건지는 아직 모르겠다. 둘이 남긴 기록을 같이 봐야 좀 알 것 같다.</p>
+          <div class="margin-aside" role="note" aria-label="이미 구현된 고쳐 쓴 혼잣말">
+            <p class="crossed-thought"><span class="note-sr">지운 말: </span><del>혼자서는 무리일 것 같다<svg class="pen-crossout" viewBox="0 0 210 28" preserveAspectRatio="none" aria-hidden="true"><path d="M3 16 Q55 11 110 14 T206 11 M7 10 Q75 17 133 11 T208 16 M14 21 Q95 7 200 18"/></svg></del></p>
+            <p class="added-thought"><svg class="pen-arrow" viewBox="0 0 30 28" aria-hidden="true"><path d="M5 2 Q0 22 24 20 M18 15 L25 20 L19 25"/></svg><span class="note-sr">덧쓴 말: </span>해 보기 전엔 모르지.</p>
+          </div>
+          <svg class="dalguji-doodle" viewBox="0 0 104 51" role="img" aria-label="기존 작은 달구지 낙서"><path d="M12 34 L11 9 Q32 6 59 8 L60 18 L76 17 L87 28 L89 36 L80 37 M64 37 L35 38 M21 38 L12 37 M60 19 L60 35 M63 22 L74 21 L80 28 L64 29 Z M18 13 L35 12 L36 22 L18 23 Z M40 12 L52 12 L53 22 L41 22 Z M15 30 L54 29 M21 36 C20 27 34 29 34 37 C34 46 20 45 21 36 M65 36 C66 28 80 29 80 38 C77 46 64 45 65 36 M7 45 Q46 43 93 44"/></svg>
+        </section>
+        <section class="entry-sample entry-quiet">
+          <p class="written-date">지나온 기록</p>
+          <h2>부산에서 물어볼 것</h2>
+          <p class="written-thought">부산에선 명령을 취소할 수 없단다. 남산에서 직접 확인하라고.</p>
+        </section>
+      </div>
+    </div></div>
+  </div>
+  <footer class="margin-footer">
+    <div class="entry-sample entry-key"><p class="route-instruction"><b>수원 성곽 공동체</b><span>주변 탐색 · 열람 준비 30분</span></p><details class="route-preview"><summary>경로 보기 <span aria-hidden="true">›</span></summary><p>실제 게임에서는 경로를 확인합니다. 이 초안에서는 이동하지 않습니다.</p></details></div>
+    <p class="entry-sample entry-module entry-split entry-existing entry-quiet sample-context">문구·손자국 비교 예시<br>실제 게임과 저장에는 아직 넣지 않았어요.</p>
+  </footer>
+  <div class="notebook-dock" aria-label="메뉴 배치 예시 · 이동하지 않음"><span>길</span><span aria-current="page">목표</span><span>동료</span><span>가방</span><span>메뉴</span></div>
+</main>
+</body>
+</html>

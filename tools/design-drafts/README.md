@@ -6,6 +6,46 @@ Studio's **디자인 초안** opens these prototypes in a sandboxed iframe witho
 
 Add an entry to `manifest.json` with version `1` and `drafts`: `id` (lowercase letters/digits/hyphens), `file` (flat lowercase `.html` filename here), `title`, `description`, `revision`, optional `recommended`. HTML may reference local CSS and reviewed assets; no executable scripts. Bump revision after revising a draft. Keep provenance in the description, distinguishing sample content from the actual save. New raster assets still require the image contract.
 
+## 상황별 UI · 사람 / 영상 / 차 안 v1 · 2026-09-28
+
+`situated-talk.html`, `situated-record.html`, `situated-cabin.html` / 공통 `situated-ui.css`: 같은 공책·카드 모음으로 모든 상황을 처리하지 않는 세 가지 연결 초안. 민지 자기소개와 수락/거절, 부모님 영상의 복원문 재독, 빈자리/손님/야영 후 생활 흔적을 native 링크·details로 확인한다. 큰 글씨 선택도 제공한다. 현재 장면 근거와 별도 가정을 각 파일 위에 구분했다. 기존 자산을 재사용하고 게임·저장은 변경하지 않는다. Studio 직접 시각 검수는 접근 제한으로 미완료. [방향·출처·적용 전 조건](situated-ui.md).
+
+## 결과 화면 · 한 번만 읽기 v1 · 2026-09-28
+
+`result-quiet.html` / `.css`: 현재 부모님 영상 선택 결과의 반복 알림을 한 문장·다음 행동·선택적 기록으로 정리한 초안. 기존 문구 비교와 큰 글씨, 자원 변화/추가 알림 없는 가상 사례를 제공한다. 실제 게임과 저장은 바꾸지 않으며 Studio 창 내 시각 검수는 접근 제한으로 미완료다. [방향·출처·적용 전 조건](result-quiet.md).
+
+## 한 사람부터 · 인물 원형 v1 · 2026-09-27
+
+`road-person-identity.html` / `.css`: 이름 없는 여성 행인 한 명의 전신·같은 그림의 얼굴 확대·정적 크기 비교. 정본 4장을 첨부해 built-in imagegen으로 만든 1024×1536 투명 마스터. 원본 그림 관찰은 완료했으나 Studio 창 배치는 접근 제한으로 미검수. 실제 캔버스 이식·게임 연결·전체 얼굴 매핑은 하지 않았다. [출처·얼굴 구분 원칙·검수 한계](road-person-identity.md).
+
+## 길 위의 사람들 · 도로 조우 v1 · 2026-09-27
+
+`road-cue-study.html` / `.css`: 사람·짐의 면과 자세를 달구지 옆에서 비교하는 정적 초안. 기존 일반 사람 자산, 상세 고장차와 새 코드 도형을 전환하며 확대할 수 있다. 새 사건/게임 구현·래스터 생성·저장 변경 없음. Studio 직접 접근 정책으로 창 내 시각 검수는 미완료. [방향·출처·검수 한계](road-cue-study.md).
+
+## 민지와 첫 구간 · 부탁에서 자리까지 v1 · 2026-09-27
+
+`minji-first-journey.html` / `.css`: 명확한 동행 수락 → 사람 중심의 목표 → 세 가지 현장 선택 → 선택별 주행 흔적 → 첫 야영 → 다음 아침 합류를 비교하는 6장면 초안. 원래 데이터·공식 초상을 재사용하며 새 흐름은 아직 게임 미적용. [설계·출처·연결 전 확인 사항](minji-first-journey.md).
+
+## 공책 여백 · 조금씩 다르게 v1 · 2026-09-27
+
+`quest-margin-notes.html` / `.css`: 현재 검증키의 고쳐쓰기, 이미 읽은 장치 기록의 작은 계기판 낙서, 부모님 행선지의 밑줄. 새로운 손흔적3곳과 기존 흔적1곳, 장식 없는 기록1곳을 선택해 비교한다. 기존 공책 재질·손글씨를 재사용하며 실제 게임과 저장은 미변경. [내용·조건·검수](quest-margin-notes.md).
+
+## 추적 위험 · 상태줄로 v1 · 2026-09-27
+
+`pursuit-status.html` / `.css`: 풍경의 상시 박스를 상태줄의 센서·숫자로 바꾸는 배치 비교. native radio/select/details로 기존/제안,0~5단계,단발 상승 안내,설명 열기·닫기를 확인한다. 실제 게임은 미변경. [설계·검수](pursuit-status.md).
+
+## 같은 여정 · 머물기도 한 화면에 v1 · 2026-09-27
+
+`journey-unified.html` / `.css`: 정차 기준 장소·DAY·시간 헤더와 2×2 머물기 선택기. 행동 선택은 비용 예측만 바꾸고 명시적 실행 버튼에서 다음 동작을 확인한다. 기본278px 패널, 조건부5번째 행동 시 풍경에서48px를 빌리는 초안. 실제 게임/저장에는 미적용. [출처·한계·검수](journey-unified.md).
+
+## 개발 버튼을 게임 밖으로 v1 · 2026-09-27
+
+`studio-play-controls.html` / `.css`: 기기 설정 다음, 폰 테두리 밖의 ‘플레이 테스트’ 도구줄 배치 제안. 코드 적용/재시작 확인의 동작 설명과 대기/최신 상태를 비교한다. 실제 게임은 개략도로만 표시하고 게임/Studio 코드·저장·초기화에는 연결하지 않았다. [계획·연결 범위](studio-play-controls.md).
+
+## 추적 위험 · 작은 신호 표시 v1 · 2026-09-27
+
+`pursuit-indicator.html` / `.css`: 민트색 덮개 대신 풍경 오른쪽 아래에 감시 아이콘·숫자·5칸을 둔 **미적용 시안**. 정차/주행,0~5단계,탭해서 설명 펼침을 네이티브 radio/details로 비교한다. 기존 차량/배경 자산의 정적 배치이며 현재 저장이나 실제 주행을 재현하지 않는다. [설계·출처·검수 범위](pursuit-indicator.md). Studio 초안 창320·360·480폭과7개회귀검사 통과. 실제 게임 소스·저장·적용 대기 상태는 변경하지 않았다.
+
 ## 상혁의 공책 v1 · 2026-09-26
 
 `quest-bound-notebook.html` / `quest-bound-notebook.css`는 기존 기록철형의 대체 **디자인 제안**이다. 실제 목표 화면에는 미적용. Codex가 형태를, Claude가 현재 메모·빈 페이지 문구를 맡았다. [문구와 추가 검토 후보](quest-bound-copy.md).

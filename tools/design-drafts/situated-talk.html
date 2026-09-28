@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>마주 앉은 대화 · 상황에서 시작하는 UI</title>
+  <link rel="stylesheet" href="situated-ui.css">
+</head>
+<body>
+<header class="su-review">
+  <nav class="su-links" aria-label="상황별 초안"><a href="situated-talk.html" aria-current="page">대화</a><a href="situated-record.html">영상의 끝</a><a href="situated-cabin.html">차 안의 사람</a></nav>
+  <h1>대화 · 사람의 반응으로 이어가기</h1>
+  <p>민지 첫 만남을 발췌한 별도 예시입니다. 부품 분기는 성공 결과 한 가지만 재현합니다. 게임·저장은 바뀌지 않습니다.</p>
+  <div class="su-settings"><label><input id="su-large" type="checkbox"> 큰 글씨</label><a href="#talk-start">처음부터 보기</a></div>
+</header>
+<main class="su-stage" aria-label="대화 화면 초안">
+  <section tabindex="-1" id="talk-start" class="su-screen su-default" aria-label="부품 천막에서 처음 만난 소녀">
+    <header class="su-bar"><p>밀양 장터 · 부품 천막</p></header>
+    <figure class="su-art"><img src="../../assets/scenes/recruit-minji-meet-action.webp" width="768" height="432" alt="달구지 옆에 쪼그려 앉아 차를 살피는 정비사"></figure>
+    <div class="su-body">
+      <span class="su-speaker">소녀</span>
+      <p class="su-speech">거기 생활차, 공회전 한 번만 더 해봐요. 연료관 쪽에서 새는 소리 나요.</p>
+      <p class="su-observation">처음 보는 차인데도, 소녀는 인사보다 고장부터 짚었다.</p>
+    </div>
+    <nav class="su-actions" aria-label="상혁의 대답">
+      <a class="su-choice" href="#talk-name">“…그걸 소리로 알아?”</a>
+      <a class="su-choice" href="#talk-parts">부품만 찾아본다</a>
+    </nav>
+  </section>
+
+  <section tabindex="-1" id="talk-name" class="su-screen" aria-label="민지의 자기소개">
+    <header class="su-bar"><p>밀양 장터 · 부품 천막</p><a href="#talk-start">앞 대화</a></header>
+    <figure class="su-art"><img src="../../assets/scenes/recruit-minji-meet-action.webp" width="768" height="432" alt="달구지 옆에서 고장을 살피는 민지"></figure>
+    <div class="su-body">
+      <p class="su-answer">상혁　“…그걸 소리로 알아?”</p>
+      <span class="su-speaker">민지</span>
+      <p class="su-speech">민지. 장날엔 여기 정비를 맡아요.</p>
+      <p class="su-observation">민지는 느슨한 클램프를 조였다. 엔진 소리가 조금 낮아졌다.</p>
+      <p class="su-speech">이쪽은 됐고… 부탁 하나만 해도 돼요?</p>
+    </div>
+    <nav class="su-actions" aria-label="대화 계속"><a class="su-primary" href="#talk-request">부탁을 듣는다</a></nav>
+  </section>
+
+  <section tabindex="-1" id="talk-parts" class="su-screen" aria-label="부품을 받은 분기 예시">
+    <header class="su-bar"><p>밀양 장터 · 부품 천막</p><a href="#talk-start">앞 대화</a></header>
+    <figure class="su-art"><img src="../../assets/scenes/recruit-minji-meet-action.webp" width="768" height="432" alt="달구지 곁의 정비사"></figure>
+    <div class="su-body">
+      <span class="su-speaker">정비사</span>
+      <p class="su-speech">이건 챙겨요. 여기 쌓아 둬 봐야 녹만 슬어요.</p>
+      <p class="su-observation">부품을 적재칸에 올린 뒤, 접힌 지도를 편다.</p>
+      <p class="su-gains">챙긴 것　부품 +1 · 고철 +4</p>
+      <p class="su-speech">저도 찾는 물건이 하나 있는데. 얘기만 좀 들어볼래요?</p>
+    </div>
+    <nav class="su-actions" aria-label="대화 계속"><a class="su-primary" href="#talk-request-parts">부탁을 듣는다</a></nav>
+  </section>
+
+  <section tabindex="-1" id="talk-request" class="su-screen" aria-label="울산까지 동행 부탁">
+    <header class="su-bar"><p>밀양 장터 · 부품 천막</p><a href="#talk-name">앞 대화</a></header>
+    <div class="su-body">
+      <div class="su-person"><div><span class="su-speaker">민지</span><p class="su-observation">지도 위의 붉은 원을 짚는다.</p></div><img src="../../assets/portraits/minji.png" width="128" height="128" alt="민지의 얼굴"></div>
+      <p class="su-speech">오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.</p>
+      <p class="su-observation">지도 끝이 말려 올라오자 공구함으로 눌러 둔다.</p>
+      <p class="su-speech">혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.</p>
+    </div>
+    <nav class="su-actions" aria-label="동행 결정">
+      <a class="su-choice" href="#talk-yes">울산까지 태워주고, 함께 꺼낸다</a>
+      <a class="su-choice" href="#talk-no">오늘은 함께 가기 어렵다고 말한다</a>
+    </nav>
+  </section>
+
+  <section tabindex="-1" id="talk-request-parts" class="su-screen" aria-label="부품 분기에서 이어지는 부탁">
+    <header class="su-bar"><p>밀양 장터 · 부품 천막</p><a href="#talk-parts">앞 대화</a></header>
+    <div class="su-body">
+      <div class="su-person"><div><span class="su-speaker">정비사</span><p class="su-observation">지도 위의 붉은 원을 짚는다.</p></div><img src="../../assets/portraits/minji.png" width="128" height="128" alt="정비사의 얼굴"></div>
+      <p class="su-speech">오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.</p>
+      <p class="su-observation">지도 끝이 말려 올라오자 공구함으로 눌러 둔다.</p>
+      <p class="su-speech">혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.</p>
+    </div>
+    <nav class="su-actions" aria-label="동행 결정">
+      <a class="su-choice" href="#talk-yes-parts">울산까지 태워주고, 함께 꺼낸다</a>
+      <a class="su-choice" href="#talk-no-parts">오늘은 함께 가기 어렵다고 말한다</a>
+    </nav>
+  </section>
+
+  <section tabindex="-1" id="talk-yes" class="su-screen" aria-label="동행을 수락한 뒤">
+    <header class="su-bar"><p>밀양 장터 · 달구지 곁</p></header>
+    <div class="su-body">
+      <span class="su-speaker">민지</span>
+      <p class="su-speech">그럼 울산까지. 공구함은 제가 들고 탈게요.</p>
+      <p>상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.</p>
+    </div>
+    <nav class="su-actions" aria-label="동행 뒤 이어지는 화면"><a class="su-primary" href="situated-cabin.html#cabin-guest">차 안으로</a><a class="su-secondary" href="#talk-request">초안 · 다른 선택 보기</a></nav>
+  </section>
+
+  <section tabindex="-1" id="talk-yes-parts" class="su-screen" aria-label="부품 분기의 동행 수락">
+    <header class="su-bar"><p>밀양 장터 · 달구지 곁</p></header>
+    <div class="su-body"><span class="su-speaker">정비사</span><p class="su-speech">그럼 울산까지. 공구함은 제가 들고 탈게요.</p><p>상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.</p></div>
+    <nav class="su-actions" aria-label="초안 분기 종료"><a class="su-primary" href="#talk-return">장터로 돌아가기</a><a class="su-secondary" href="#talk-request-parts">초안 · 다른 선택 보기</a></nav>
+  </section>
+
+  <section tabindex="-1" id="talk-no" class="su-screen" aria-label="동행을 거절한 뒤">
+    <header class="su-bar"><p>밀양 장터 · 부품 천막</p></header>
+    <div class="su-body"><span class="su-speaker">민지</span><p class="su-speech">알겠어요. 전 여기서 다른 방법을 찾아볼게요.</p><p>민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.</p></div>
+    <nav class="su-actions" aria-label="거절 뒤 이어가기"><a class="su-primary" href="#talk-return">장터로 돌아가기</a><a class="su-secondary" href="#talk-request">초안 · 다른 선택 보기</a></nav>
+  </section>
+
+  <section tabindex="-1" id="talk-no-parts" class="su-screen" aria-label="부품 분기의 동행 거절">
+    <header class="su-bar"><p>밀양 장터 · 부품 천막</p></header>
+    <div class="su-body"><span class="su-speaker">정비사</span><p class="su-speech">알겠어요. 전 여기서 다른 방법을 찾아볼게요.</p><p>지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.</p></div>
+    <nav class="su-actions" aria-label="거절 뒤 이어가기"><a class="su-primary" href="#talk-return">장터로 돌아가기</a><a class="su-secondary" href="#talk-request-parts">초안 · 다른 선택 보기</a></nav>
+  </section>
+
+  <section tabindex="-1" id="talk-return" class="su-screen su-handoff" aria-label="장터 복귀 동작 설명">
+    <h2>여기까지가 대화 초안이에요.</h2><p>게임에서는 대화가 닫히고 밀양 장터의 다음 행동을 고르게 됩니다. 실제 게임은 현재 부모님 영상 결과에 그대로 있습니다.</p><p class="su-observation">이 초안의 선택은 저장되지 않습니다. 위 ‘처음부터 보기’로 언제든 되돌릴 수 있어요.</p><a class="su-primary" href="#talk-start">대화 초안 다시 보기</a>
+  </section>
+</main>
+</body>
+</html>

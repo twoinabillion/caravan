@@ -26,7 +26,7 @@ const QuestJournal={
     eunsu:['녹음기를 끄고 나눈 얘기. 차 안에서 은수랑.','관제실에서 놓친 신호는 다시 열어 봤고.','은수가 남긴 접속 코드와 그 책임. 같이 얘기해 봤다.']
   },
   recruitNotes:{
-    minji:'민규의 진단기를 꺼내는 건 돕기로 했다. 폐차장에 가면 민지랑 같이 살펴봐야지.',
+    minji:'민지 오빠가 남긴 물건이 울산에 있다. 혼자 못 꺼내는 거라니 같이 가 봐야겠다.',
     parkss:'버스의 냉장 약품을 길가 진료소로 옮기는 일. 박 선생과 같이 가기로 했으니 잊지 말자.',
     leo:'보리가 들어간 침수 지하차도. 레오랑 같이 찾아보자고 약속했다.',
     jaeyi:'재이 가족의 상자가 무너진 창고에 남아 있단다. 같이 꺼내기로 했는데, 현장부터 봐야겠지.',
@@ -100,6 +100,13 @@ const QuestJournal={
           :rq.stage==='follow'&&Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay?'오늘은 같이 야영하며 쉬고, 계속 같이 갈지는 내일 물어볼까.'
           :`${this.withName(name)} 함께 일을 겪어 봤으니, 앞으로도 같이 갈 생각인지 물어봐야겠다.`;
         result.guide=rq.stage==='ready'?'머물기 · 합류 이야기':rq.stage==='road'?'다음 구간 주행':rq.stage==='follow'&&Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay?'야영 준비 · 다음 날 대화':`${this.place(rq.target)} · 머물기 · 동료의 부탁`;
+        if(rq.id==='minji'){
+          result.title=rq.stage==='task'?'오빠의 목소리가 남아 있을까':'아직 무릎 위에 있는 공구함';
+          if(rq.stage==='task'&&rq.target!=='ulsan') result.next=`민지 오빠가 남긴 물건이 ${this.place(rq.target)}에 있다. 혼자 못 꺼내는 거라니 같이 가 봐야겠다.`;
+          if(rq.stage==='road') result.next='진단기는 꺼냈다. 민지는 공구함을 무릎에 올리고 탔다. 다음 정차까지는 같이 가기로 했다.';
+          if(rq.stage!=='task') result.pencil={winch:'손가락 둘이면 멈춤. 다음에도 잊지 말자.',pulley:'급히 만든 도르래. 다음에도 쓸 수 있다고 챙겼다.',shield:'달구지 옆판에 길게 남은 흠집. 돌아가면 안쪽도 봐야겠다.'}[rq.choice]||'';
+          if(rq.choice==='shield'&&S.flags?.minji_approach_drive) result.pencil='밖의 흠집은 남았다. 안쪽은 민지가 잡아 줬다.';
+        }
       }else if(state.pending){result.next=`${name}도 손에 익은 일이 늘었네. 앞으로 뭘 맡을지 같이 정해 보자.`;result.guide=`동료 · Lv.${state.pending} 특기 선택`;}
       else {result.next=`${name}에 대해선 아직 모르는 게 많네. 쉴 때 이야기를 더 나눠 보면 어떨까.`;result.guide=row.next;}
     }else if(row.kind==='local'){

@@ -1,0 +1,1655 @@
+{
+  "schemaVersion": 1,
+  "scope": "File geometry only; not identity, style, matte-edge approval or Studio visual QA.",
+  "checks": [
+    {
+      "id": "me",
+      "file": "masters/me-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        259,
+        46,
+        764,
+        1502
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "minji",
+      "file": "masters/minji-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        295,
+        57,
+        792,
+        1488
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "parkss",
+      "file": "masters/parkss-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        228,
+        24,
+        746,
+        1498
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "kangwoo",
+      "file": "masters/kangwoo-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        273,
+        83,
+        755,
+        1477
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "leo",
+      "file": "masters/leo-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        174,
+        28,
+        780,
+        1499
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "jaeyi",
+      "file": "masters/jaeyi-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        302,
+        46,
+        777,
+        1496
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "eunsu",
+      "file": "masters/eunsu-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        264,
+        54,
+        756,
+        1494
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "father",
+      "file": "masters/father-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        284,
+        33,
+        772,
+        1512
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "mother",
+      "file": "masters/mother-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        295,
+        47,
+        771,
+        1497
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "grandfather",
+      "file": "masters/grandfather-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        259,
+        57,
+        778,
+        1490
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "mingyu",
+      "file": "masters/mingyu-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        251,
+        47,
+        758,
+        1500
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "hanbyeol",
+      "file": "masters/hanbyeol-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        250,
+        33,
+        799,
+        1503
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "seoyeon",
+      "file": "masters/seoyeon-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        253,
+        39,
+        748,
+        1501
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "postman",
+      "file": "masters/postman-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        240,
+        53,
+        782,
+        1487
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "mapmaker",
+      "file": "masters/mapmaker-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        258,
+        62,
+        750,
+        1489
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "geumja",
+      "file": "masters/geumja-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        272,
+        48,
+        817,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "sundeok",
+      "file": "masters/sundeok-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        262,
+        72,
+        755,
+        1488
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "taeho",
+      "file": "masters/taeho-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        241,
+        50,
+        923,
+        1491
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "jaepil",
+      "file": "masters/jaepil-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        258,
+        31,
+        789,
+        1483
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "miyoung",
+      "file": "masters/miyoung-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        253,
+        43,
+        813,
+        1506
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "drhan",
+      "file": "masters/drhan-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        269,
+        69,
+        740,
+        1494
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "deokgu",
+      "file": "masters/deokgu-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        240,
+        50,
+        842,
+        1503
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "suwan",
+      "file": "masters/suwan-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        271,
+        32,
+        780,
+        1497
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "byungchul",
+      "file": "masters/byungchul-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        265,
+        34,
+        777,
+        1507
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "yeongok",
+      "file": "masters/yeongok-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        277,
+        49,
+        769,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "sera",
+      "file": "masters/sera-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        286,
+        60,
+        742,
+        1486
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "mansu",
+      "file": "masters/mansu-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        199,
+        44,
+        783,
+        1490
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "jeomrye",
+      "file": "masters/jeomrye-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        273,
+        34,
+        744,
+        1499
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "dongsu",
+      "file": "masters/dongsu-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        278,
+        31,
+        756,
+        1509
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "noah",
+      "file": "masters/noah-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        252,
+        46,
+        775,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "hwasun",
+      "file": "masters/hwasun-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        258,
+        65,
+        755,
+        1477
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "gitae",
+      "file": "masters/gitae-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        293,
+        39,
+        763,
+        1493
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "kimcaptain",
+      "file": "masters/kimcaptain-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        240,
+        40,
+        765,
+        1493
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "hayeosa",
+      "file": "masters/hayeosa-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        290,
+        50,
+        752,
+        1490
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "sanjigi",
+      "file": "masters/sanjigi-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        271,
+        46,
+        736,
+        1482
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "seojin",
+      "file": "masters/seojin-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        295,
+        72,
+        736,
+        1476
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "taesik",
+      "file": "masters/taesik-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        292,
+        46,
+        774,
+        1489
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "intro_child",
+      "file": "masters/intro_child-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        274,
+        78,
+        759,
+        1478
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "player_child",
+      "file": "masters/player_child-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        293,
+        66,
+        767,
+        1491
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "hajin",
+      "file": "masters/hajin-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        273,
+        42,
+        752,
+        1497
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "sujin",
+      "file": "masters/sujin-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        255,
+        42,
+        768,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "sunja",
+      "file": "masters/sunja-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        221,
+        31,
+        829,
+        1515
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "roadcrew_doyun",
+      "file": "masters/roadcrew_doyun-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        255,
+        19,
+        766,
+        1504
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "village_child",
+      "file": "masters/village_child-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        199,
+        60,
+        810,
+        1482
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "cart_child",
+      "file": "masters/cart_child-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        328,
+        57,
+        737,
+        1492
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "market_child",
+      "file": "masters/market_child-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        294,
+        70,
+        780,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "queue_child",
+      "file": "masters/queue_child-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        307,
+        72,
+        768,
+        1493
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "street_barber",
+      "file": "masters/street_barber-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        318,
+        31,
+        776,
+        1493
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "florist",
+      "file": "masters/florist-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        288,
+        42,
+        758,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "roaming_barber",
+      "file": "masters/roaming_barber-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        259,
+        32,
+        802,
+        1491
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "office_elder",
+      "file": "masters/office_elder-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        313,
+        30,
+        725,
+        1511
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "market_grandmother",
+      "file": "masters/market_grandmother-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        173,
+        53,
+        853,
+        1499
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "cart_elder",
+      "file": "masters/cart_elder-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        305,
+        46,
+        800,
+        1485
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "fortune_teller",
+      "file": "masters/fortune_teller-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        240,
+        57,
+        859,
+        1492
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "medical_elder",
+      "file": "masters/medical_elder-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        295,
+        47,
+        748,
+        1500
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "white_straggler",
+      "file": "masters/white_straggler-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        277,
+        47,
+        749,
+        1494
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "toll_guard",
+      "file": "masters/toll_guard-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        289,
+        22,
+        771,
+        1498
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "checker",
+      "file": "masters/checker-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        304,
+        47,
+        760,
+        1488
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "recall_guard",
+      "file": "masters/recall_guard-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        233,
+        51,
+        819,
+        1486
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "speaker_robber",
+      "file": "masters/speaker_robber-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        251,
+        41,
+        767,
+        1497
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "gwangyang_neighbor",
+      "file": "masters/gwangyang_neighbor-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        214,
+        49,
+        833,
+        1485
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "salvage_claimant",
+      "file": "masters/salvage_claimant-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        299,
+        40,
+        787,
+        1499
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "dock_controller",
+      "file": "masters/dock_controller-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        238,
+        56,
+        804,
+        1481
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "dock_driver",
+      "file": "masters/dock_driver-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        275,
+        68,
+        807,
+        1483
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "hunter",
+      "file": "masters/hunter-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        266,
+        40,
+        755,
+        1508
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "map_reader",
+      "file": "masters/map_reader-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        228,
+        52,
+        797,
+        1487
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "well_young_man",
+      "file": "masters/well_young_man-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        271,
+        38,
+        793,
+        1502
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "levy_vest_man",
+      "file": "masters/levy_vest_man-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        279,
+        47,
+        813,
+        1498
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "patient_son",
+      "file": "masters/patient_son-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        311,
+        32,
+        720,
+        1502
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "recall_leader",
+      "file": "masters/recall_leader-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        161,
+        43,
+        805,
+        1498
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "clinic_worker",
+      "file": "masters/clinic_worker-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        311,
+        26,
+        770,
+        1497
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "fish_owner",
+      "file": "masters/fish_owner-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        213,
+        46,
+        852,
+        1505
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "cart_vendor",
+      "file": "masters/cart_vendor-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        210,
+        29,
+        850,
+        1509
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "bath_owner",
+      "file": "masters/bath_owner-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        201,
+        64,
+        838,
+        1505
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "muju_delegate",
+      "file": "masters/muju_delegate-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        293,
+        24,
+        784,
+        1513
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "water_vendor",
+      "file": "masters/water_vendor-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        251,
+        46,
+        765,
+        1499
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "smuggler",
+      "file": "masters/smuggler-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        315,
+        24,
+        787,
+        1507
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "market_vendor",
+      "file": "masters/market_vendor-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        149,
+        25,
+        838,
+        1491
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "coffee_owner",
+      "file": "masters/coffee_owner-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        273,
+        25,
+        803,
+        1500
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "parcel_witness",
+      "file": "masters/parcel_witness-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        264,
+        38,
+        778,
+        1496
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "white_believer",
+      "file": "masters/white_believer-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        310,
+        42,
+        774,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "alley_resident",
+      "file": "masters/alley_resident-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        302,
+        52,
+        763,
+        1503
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "held_woman",
+      "file": "masters/held_woman-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        306,
+        39,
+        769,
+        1498
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "ridge_woman",
+      "file": "masters/ridge_woman-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        193,
+        66,
+        878,
+        1486
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "hospital_worker",
+      "file": "masters/hospital_worker-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        273,
+        41,
+        857,
+        1495
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "dome_runner",
+      "file": "masters/dome_runner-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        282,
+        32,
+        771,
+        1504
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "generator_keeper",
+      "file": "masters/generator_keeper-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        259,
+        41,
+        799,
+        1504
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "foreman",
+      "file": "masters/foreman-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        209,
+        41,
+        774,
+        1499
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "beekeeper",
+      "file": "masters/beekeeper-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        243,
+        41,
+        825,
+        1504
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "convoy_handler",
+      "file": "masters/convoy_handler-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        305,
+        50,
+        766,
+        1492
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "leaflet_collector",
+      "file": "masters/leaflet_collector-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        189,
+        53,
+        788,
+        1489
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "young_sailor",
+      "file": "masters/young_sailor-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        153,
+        45,
+        904,
+        1501
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "scrap_brother_older",
+      "file": "masters/scrap_brother_older-v2.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        194,
+        47,
+        896,
+        1497
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "scrap_brother_younger",
+      "file": "masters/scrap_brother_younger-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        304,
+        36,
+        714,
+        1503
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "night_driver",
+      "file": "masters/night_driver-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        263,
+        50,
+        786,
+        1497
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "roadcrew_sunim",
+      "file": "masters/roadcrew_sunim-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 1,
+      "opaqueBounds": [
+        115,
+        53,
+        864,
+        1493
+      ],
+      "geometryPass": true
+    },
+    {
+      "id": "daeyang",
+      "file": "masters/daeyang-v1.png",
+      "width": 1024,
+      "height": 1536,
+      "hasAlpha": true,
+      "alphaMin": 0,
+      "alphaMax": 254,
+      "edgeMax": 0,
+      "opaqueBounds": [
+        151,
+        31,
+        826,
+        1505
+      ],
+      "geometryPass": true
+    }
+  ]
+}

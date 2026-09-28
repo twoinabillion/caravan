@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>한 사람부터 · 인물 원형 초안</title>
+  <link rel="stylesheet" href="road-person-identity.css">
+</head>
+<body>
+<main class="person-study">
+  <header class="study-heading">
+    <p class="eyebrow">인물 원형 / 01</p>
+    <h1>길에서 마주친 사람</h1>
+    <p>이름 없는 행인도, 자기 얼굴을 가진 한 사람.</p>
+  </header>
+
+  <section class="character" aria-labelledby="character-title">
+    <div class="character-heading"><h2 id="character-title">50대 여성 행인</h2><span>가상 인물 · 검토용</span></div>
+    <fieldset class="view-choice">
+      <legend>같은 원본의 보기 방식</legend>
+      <label><input type="radio" name="view" id="view-body" checked><span>전신</span></label>
+      <label><input type="radio" name="view" id="view-face"><span>얼굴 확대</span></label>
+    </fieldset>
+    <figure class="character-art">
+      <img class="body-view" src="road-person-identity/traveler-woman-01-master-v1.png" width="1024" height="1536" alt="짧은 새치 머리와 넓은 얼굴의 중년 여성. 한 손으로 멈추라는 손짓을 하고 다른 손으로 기운 천가방을 들고 있다.">
+      <svg class="face-view" viewBox="400 22 290 334" role="img" aria-label="전신 원본의 얼굴 부분 확대. 별도로 생성한 다른 얼굴이 아니다.">
+        <image href="road-person-identity/traveler-woman-01-master-v1.png" width="1024" height="1536"/>
+      </svg>
+      <figcaption>옷만 갈아입힌 공용 얼굴이 아니라.<br>넓은 턱 · 낮은 콧대 · 좁은 눈매 · 짧은 새치 머리.</figcaption>
+    </figure>
+    <p class="character-note">발을 딛는 무게, 가방 쪽으로 낮아진 어깨,<br>다가오는 차를 보는 시선까지 하나의 인물로.</p>
+  </section>
+
+  <section class="scale-study" aria-labelledby="scale-title">
+    <div class="section-heading"><h2 id="scale-title">도로에서는 이만큼</h2><span>360px 기준 · 정적 비교</span></div>
+    <svg class="scale-line" viewBox="0 0 360 120" role="img" aria-label="기존 달구지 155픽셀, 비교 차량 80픽셀과 새 인물 약 20픽셀 높이의 상대 크기. 게임 화면이 아닌 정적 크기 비교.">
+      <path d="M15 100H345" stroke="#687372" stroke-width=".7"/>
+      <image href="../../assets/ui/journey-dalguji-base-v1.webp" x="19" y="9" width="155" height="92.03125"/>
+      <image href="../../assets/road-cues/cue-broken-vehicle-v3.webp" x="228" y="64" width="80" height="37.1875"/>
+      <image href="road-person-identity/traveler-woman-01-master-v1.png" x="207" y="80" width="14" height="21"/>
+    </svg>
+    <p>이 크기에서 읽혀야 하는 건 <strong>손짓·체형·짐</strong>.<br>얼굴의 차이는 가까이 보는 사건 초상에서도 이어져야 해.</p>
+    <details>
+      <summary>실제 게임에 넣을 때는?</summary>
+      <p>위는 원형을 줄여 놓은 크기 비교일 뿐이야. 이 PNG를 그대로 움직이는 도로에 붙이지 않아. 확인받은 얼굴·머리·옷·체형을 기준으로 기존 달구지와 같은 캔버스/픽셀 렌더러에 옮기고, 손짓·몸·짐의 움직임을 나눠야 해.</p>
+      <p>달구지 크기는 고정. 발견 → 감속 → 정차 → 사건 화면의 흐름과 날씨·야간 대응도 별도로 확인할 거야.</p>
+    </details>
+  </section>
+
+  <section class="identities" aria-labelledby="identities-title">
+    <h2 id="identities-title">얼굴은 역할이 아니라 사람에게</h2>
+    <div class="identity-row">
+      <img src="../../assets/portraits/me.png" width="128" height="128" alt="기존 상혁 정본 초상">
+      <div><h3>주연 · 동료</h3><p>기존 정본을 지킨다. 초상, 사건 그림, 도로 모습이 같은 사람이어야 한다.</p></div>
+    </div>
+    <div class="identity-row">
+      <img src="../../assets/portraits/geumja.png" width="256" height="256" alt="기존 금자 정본 초상">
+      <div><h3>이름 있는 NPC</h3><p>각자 고유한 얼굴을 둔다. 다른 인물에게 빌려 쓰지 않고 재등장해도 유지한다.</p></div>
+    </div>
+    <div class="identity-row">
+      <svg viewBox="400 22 290 334" role="img" aria-label="이번 이름 없는 행인 초안의 얼굴">
+        <image href="road-person-identity/traveler-woman-01-master-v1.png" width="1024" height="1536"/>
+      </svg>
+      <div><h3>이름 없는 사람</h3><p>같은 직업이어도 다른 얼굴. 사건 속 인물 ID마다 얼굴을 정하고, 다시 만나도 바꾸지 않는다.</p></div>
+    </div>
+    <p class="scope-note">이번에는 한 명의 원형만 만들었어.<br>전체 인물의 중복 얼굴 정리와 ID 연결은 아직 미구현이야.</p>
+  </section>
+  <footer>
+    <p>기존 정본 4장 참조 · imagegen 생성 · Codex 검토</p>
+    <p>실제 게임과 저장에는 미적용.<br>원본 그림은 확인했지만 Studio 창 내 배치는 접근 제한으로 미검수.</p>
+  </footer>
+</main>
+</body>
+</html>

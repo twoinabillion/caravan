@@ -140,7 +140,6 @@
         <header class="journey-map-head"><div><h2>경로 보기</h2><p id="journey-map-context"></p></div><button type="button" id="journey-map-close" aria-label="경로 지도를 접고 풍경 보기">×</button></header>
         <div id="journey-map-surface"><canvas id="journey-map-canvas" aria-label="현재 위치와 선택한 목적지의 경로"></canvas><button type="button" id="journey-map-world">전체 여정</button></div>
       </section>
-      <div id="cheollian-tint"></div>
       <div id="bubbles" aria-live="polite" aria-atomic="true"></div>
       <div id="road-quest-tracker" class="road-quest-tracker" role="status" aria-live="polite" aria-label="현재 임무 안내" hidden></div>
       <div id="road-status" class="stage-readout stage-readout-vehicle" aria-live="polite" aria-label="달구지 상태">
@@ -150,13 +149,23 @@
       <div id="stage-time" class="stage-readout stage-readout-time" aria-live="polite" aria-label="날짜 시간 날씨">
         <span id="stage-day">DAY 1</span><b id="stage-clock">08:00</b><small id="stage-weather">맑음</small>
       </div>
-      <button id="intro-test-shortcut" class="live-test-shortcut" type="button" hidden>처음부터 테스트</button>
       <canvas id="minimap" title="지도 열기" role="button" tabindex="-1" aria-label="전체 지도 열기" aria-hidden="true"></canvas>
     </div>
 
+    <section id="pursuit-help" role="region" aria-label="천리안의 추적 위험 설명" hidden>
+      <div class="pursuit-help-head"><strong>추적 위험</strong><span class="pursuit-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><button id="pursuit-help-close" type="button" aria-label="추적 위험 설명 닫기">×</button></div>
+      <p id="pursuit-description"></p><small>천리안에 쌓인 관측 표식이에요. 지금 누가 쫓아온다는 뜻은 아니에요.</small>
+    </section>
+    <div id="pursuit-notice" role="status" aria-live="polite" aria-atomic="true" hidden><strong id="pursuit-change"></strong><span>추적 사건을 만날 가능성이 커졌어요.</span></div>
     <div id="mission-strip" class="mission-strip" role="status" aria-live="polite" aria-label="현재 의뢰와 여정 상태"></div>
 
-    <div id="journey-vehicle" aria-label="달구지 상태"></div>
+    <div id="journey-vehicle" aria-label="달구지 상태">
+      <div id="journey-resources"></div>
+      <button id="pursuit-indicator" type="button" aria-expanded="false" aria-controls="pursuit-help" aria-label="추적 위험 0/5 · 설명 열기" data-level="0">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 7V3h4m8 0h4v4M2 13v4h4m8 0h4v-4"/><circle cx="10" cy="10" r="3"/><path d="M10 8.5v3M8.5 10h3"/></svg>
+        <span class="pursuit-value"><span id="pursuit-value">0</span><small>/5</small></span><span class="pursuit-chevron" aria-hidden="true">⌄</span>
+      </button>
+    </div>
     <div id="main">
       <div id="panel"></div>
       <nav id="dock" aria-label="게임 주요 메뉴">

@@ -1,0 +1,75 @@
+/* Single owner: isolated, script-free first-journey review. No game selectors. */
+:root{color-scheme:dark;--road:#202c2e;--paper:#e7dfc9;--ink:#2f3936;--olive:#41503e;--line:#b4ad99;--amber:#e6c382;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--road);color:var(--ink)}
+.mj-draft{max-width:480px;height:100%;margin:auto;display:grid;grid-template-rows:auto minmax(0,1fr)}
+.mj-review{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;align-items:center;padding:12px 16px 10px;color:#ece6d6;border-bottom:1px solid #768277}
+.mj-review>label{font-size:13px}
+.mj-review select{min-width:0;width:100%;min-height:44px;padding:7px 9px;background:#34423c;color:#f5efdf;border:1px solid #86917c;border-radius:3px;font:inherit;font-size:14px}
+.mj-review p{grid-column:1/-1;margin:0;font-size:11px;line-height:1.5;color:#c1c7bc}
+.mj-scroll{overflow-y:auto;overscroll-behavior:contain;padding:22px 22px 30px;background:var(--paper);scrollbar-width:thin;font-size:16px;line-height:1.75;word-break:keep-all;overflow-wrap:anywhere}
+.mj-scroll p{margin:0 0 16px}
+.mj-scene-heading{margin-bottom:20px}
+.mj-scene-heading small{display:block;font-size:12px;color:#5e6357;margin-bottom:5px}
+.mj-scene-heading h1{margin:0;font-size:28px;font-weight:750;line-height:1.3;letter-spacing:-.9px}
+.mj-narration{color:#4c554c}
+.mj-dialogue{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;margin:20px 0}
+.mj-dialogue img{width:56px;height:64px;object-fit:cover;object-position:top;border-radius:2px}
+.mj-dialogue b{font-size:13px;color:#5d5a42}
+.mj-dialogue p{margin:2px 0 0}
+.mj-conversation{margin:10px 0}
+.mj-conversation>summary,.mj-execute>summary{position:relative;min-height:48px;padding:12px 38px 12px 14px;border:1px solid #566149;border-radius:3px;background:var(--olive);color:#fff4da;font-size:15px;line-height:1.55;cursor:pointer;list-style:none}
+.mj-conversation>summary::after,.mj-execute>summary::after{content:'＋';position:absolute;right:12px;top:12px}
+.mj-conversation[open]>summary::after,.mj-execute[open]>summary::after{content:'−'}
+.mj-conversation summary small{display:block;color:#e0dac7;font-size:12px}
+.mj-conversation>div{padding:16px 4px 8px}
+.mj-conversation>div small,.mj-signal>small{display:block;color:#636353;font-size:12px;line-height:1.65}
+.mj-request{padding-top:18px;margin-top:20px;border-top:1px solid var(--line)}
+.mj-consent,.mj-method{border:0;margin:16px 0;padding:0;min-width:0}
+.mj-consent legend,.mj-method legend{font-size:13px;color:#545d4e;margin-bottom:9px}
+.mj-consent label,.mj-method label{position:relative;display:flex;gap:10px;align-items:center;min-height:48px;padding:11px 12px;margin:8px 0;background:#d8d3bf;border:1px solid #979f86;border-radius:3px;cursor:pointer;line-height:1.55;font-size:15px}
+.mj-consent label:has(input:checked),.mj-method label:has(input:checked){border-color:#4d6045;background:#c4ceb6;box-shadow:inset 3px 0 #4d6045}
+.mj-consent input,.mj-method input{flex:none;margin:0;width:17px;height:17px;accent-color:#486043}
+.mj-method b{font-weight:600}
+.mj-method small{display:block;margin-top:2px;font-size:12px;color:#525b4d}
+.mj-consent-yes,.mj-consent-no{display:none;margin-top:18px}
+.mj-consent-yes strong{font-weight:600}
+.mj-consent-no small{font-size:13px;color:#586051}
+.mj-draft:has(#mj-accept:checked) .mj-consent-yes,.mj-draft:has(#mj-decline:checked) .mj-consent-no{display:block}
+.mj-meet-next,.mj-editor-note,.mj-footnote{font-size:12px;line-height:1.7;color:#636353}
+.mj-footnote{padding-top:20px;margin-top:26px;border-top:1px solid var(--line)}
+.mj-note{border-left:2px solid #859079;padding-left:15px;margin:26px 0;font-size:21px;line-height:1.75;letter-spacing:-.5px}
+.mj-directions{margin:22px 0;padding:12px 0;border-block:1px solid var(--line);font-size:14px}
+.mj-directions>div{display:grid;grid-template-columns:60px minmax(0,1fr);gap:8px;padding:4px 0}
+.mj-directions dt{color:#676b5c}.mj-directions dd{margin:0}
+.mj-record{margin-top:22px;font-size:14px}
+.mj-record summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;color:#52624d;text-decoration:underline;text-underline-offset:4px}
+.mj-record summary::before{content:'›';font-size:22px}.mj-record[open] summary::before{content:'⌄'}
+.mj-record p{margin:12px 0}
+blockquote{margin:24px 0;padding-left:15px;border-left:2px solid #7c8b71;font-size:19px;line-height:1.7}
+blockquote cite{display:block;font-size:12px;font-style:normal;color:#616552;margin-top:6px}
+.mj-outcome{padding:18px 4px 12px}.mj-outcome small{font-size:12px;color:#57614f}
+.mj-signal{border-top:1px solid var(--line);padding:20px 4px 4px}
+.mj-signal blockquote{font-size:21px}
+.mj-effect{font-size:13px;color:#4b6245;border-top:1px dashed #9ea78e;padding-top:12px}
+.mj-next{border-top:1px solid var(--line);padding-top:18px;margin-top:24px;font-size:14px}
+.mj-next b{font-weight:600}.mj-next p{margin-top:5px;color:#596351}
+.mj-memory{border-left:2px solid #78896b;padding-left:12px;color:#465d43}
+:focus-visible{outline:3px solid #ad7833;outline-offset:3px}
+.mj-scroll:focus-visible{outline-offset:-4px}
+.mj-scene,.mj-consent,.mj-meet-next,.mj-method,.mj-task-result,.mj-no-method,.mj-not-accepted,.mj-branch-winch,.mj-branch-pulley,.mj-branch-shield{display:none}
+.mj-draft:has(option[value="meet"]:checked) :is(.mj-meet,.mj-consent,.mj-meet-next),
+.mj-draft:has(option[value="purpose"]:checked) .mj-purpose,
+.mj-draft:has(option[value="task"]:checked) :is(.mj-task,.mj-method),
+.mj-draft:has(option[value="road"]:checked) .mj-road,
+.mj-draft:has(option[value="camp"]:checked) .mj-camp,
+.mj-draft:has(option[value="morning"]:checked) .mj-morning{display:block}
+.mj-draft:not(:has(#mj-accept:checked)) .mj-accepted-scenes{display:none}
+.mj-draft:not(:has(option[value="meet"]:checked)):not(:has(#mj-accept:checked)) .mj-not-accepted{display:block}
+.mj-draft:has(#mj-method-none:checked) .mj-after-task{display:none}
+.mj-draft:has(#mj-method-none:checked):has(:is(option[value="road"],option[value="camp"],option[value="morning"]):checked) .mj-no-method{display:block}
+.mj-draft:not(:has(#mj-method-none:checked)):has(option[value="task"]:checked) .mj-task-result{display:block}
+.mj-draft:has(#mj-winch:checked) .mj-branch-winch,.mj-draft:has(#mj-pulley:checked) .mj-branch-pulley,.mj-draft:has(#mj-shield:checked) .mj-branch-shield{display:block}
+@media(max-width:330px){.mj-scroll{padding:20px 16px 26px}.mj-review{padding-inline:12px;gap:6px 8px}.mj-scene-heading h1{font-size:26px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}

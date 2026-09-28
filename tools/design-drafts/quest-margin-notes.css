@@ -1,0 +1,35 @@
+/* Isolated draft owner. Reuse the approved notebook material and handwriting. */
+@import url('quest-bound-notebook.css');
+@import url('quest-font.css');
+.margin-draft{height:100%;max-width:480px;margin:auto;display:grid;grid-template-rows:auto 48px minmax(0,1fr) auto 54px;background:var(--desk)}
+.draft-controls{display:flex;align-items:end;gap:9px;padding:8px 12px;border-bottom:1px solid #596450;color:#ece7d5;font-size:11px;line-height:1.5}
+.example-picker{flex:1;min-width:0;display:grid;gap:3px}
+.example-picker select{width:100%;min-height:36px;background:#344032;border:1px solid #75816b;border-radius:3px;color:#f1ecdd;padding:5px 22px 5px 6px;font:12px/1.3 'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+.marks-toggle{display:flex;align-items:center;min-height:44px;gap:3px;white-space:nowrap;cursor:pointer}
+.marks-toggle input{accent-color:#a5b997;width:17px;height:17px}
+.draft-controls :focus-visible{outline:2px solid #e6bb68;outline-offset:2px}
+.margin-book{min-height:0;display:grid;grid-template-rows:40px minmax(0,1fr);margin:0 14px 0 10px}
+.margin-index{display:flex;gap:5px;align-items:end;padding:0 8px 0 32px;font:19px/1 var(--hand)}
+.margin-index span{flex:1;min-width:0;text-align:center;padding:10px 0;background:#adb5a1;color:#26382e;border-radius:3px 5px 0 0;white-space:nowrap}
+.margin-index .current-index{background:var(--paper);padding-top:12px;text-decoration:underline;text-underline-offset:4px}
+.entry-sample{display:none}
+.margin-draft:has(#entry-example option[value="key"]:checked) .entry-key,
+.margin-draft:has(#entry-example option[value="module"]:checked) .entry-module,
+.margin-draft:has(#entry-example option[value="split"]:checked) .entry-split,
+.margin-draft:has(#entry-example option[value="existing"]:checked) .entry-existing,
+.margin-draft:has(#entry-example option[value="quiet"]:checked) .entry-quiet{display:block}
+.margin-draft:not(:has(#show-marks:checked)) .new-mark{display:none}
+.entry-key .written-record{margin-top:22px}
+.dashboard-sketch{width:130px;margin:24px 3px 0 auto;transform:rotate(-2deg);color:var(--pencil)}
+.dashboard-sketch svg{display:block;width:130px;height:68px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linejoin:round;stroke-linecap:round}
+.dashboard-sketch figcaption{font:21px/27px var(--hand);text-align:center}
+.ink-underline{position:relative;white-space:nowrap}
+.margin-draft:has(#show-marks:checked) .ink-underline::after{content:'';position:absolute;left:-1px;right:0;bottom:-2px;height:3px;border-bottom:1.3px solid var(--ink);border-radius:50%;transform:rotate(-1deg);pointer-events:none}
+.margin-draft:has(#show-marks:checked) .ink-underline::before{content:'';position:absolute;left:3px;right:-1px;bottom:-5px;height:3px;border-bottom:1px solid var(--pencil);border-radius:50%;transform:rotate(.7deg);pointer-events:none}
+.remember-note{display:flex;align-items:center;gap:3px;width:fit-content;margin:15px 0 0 auto;color:var(--pencil);transform:rotate(1.5deg)}
+.remember-note p{font:22px/28px var(--hand);margin:0}
+.margin-footer{position:relative;padding:12px 19px 10px 23px;min-height:92px;color:#e7e6d6}
+.margin-footer .route-preview[open]{left:23px;right:19px;bottom:10px}
+.sample-context{font:12px/1.6 'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#c9cebf;margin:4px 0}
+@media(max-width:330px){.draft-controls{padding-right:8px;padding-left:8px;gap:5px}.margin-book{margin-right:10px;margin-left:7px}.margin-index{padding-left:27px;gap:4px;font-size:18px}}
+@media(max-height:620px){.margin-draft{grid-template-rows:auto 40px minmax(0,1fr) auto 44px}.margin-footer{min-height:84px;padding-top:8px;padding-bottom:8px}}

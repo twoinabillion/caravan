@@ -39,7 +39,7 @@ with sync_playwright() as playwright:
             after:{fuel:S.fuel,water:S.water,food:S.food,scrap:S.scrap,parts:S.items['부품']},
             requirements,mealOk:meal.ok,repaired,travelAllowed,kmAdvanced:S.stats.km>before.km,
             display:G.resourceDisplay('fuel',0,'L'),stageFuel:document.querySelector('#stage-fuel')?.textContent,
-            testButton:document.querySelector('#intro-test-shortcut')?.textContent,bagText};
+            liveControls:window.caravanLiveControls.infinite(),bagText};
         }"""
     )
     assert result["mode"], result
@@ -50,7 +50,7 @@ with sync_playwright() as playwright:
     assert result["kmAdvanced"], result
     assert result["display"] == "∞", result
     assert result["stageFuel"] == "∞", result
-    assert "자원 ∞" in result["testButton"], result
+    assert result["liveControls"], result
     assert all(label in result["bagText"] for label in ("물\n∞", "식량\n∞", "연료\n∞")), result
 
     normal = browser.new_page()

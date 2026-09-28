@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>같은 여정, 한 화면에 · 디자인 초안</title>
+  <link rel="stylesheet" href="journey-unified.css">
+</head>
+<body>
+<main class="prototype">
+  <fieldset class="demo-controls"><legend class="sr-only">배치 비교 · 실제 게임에 미적용</legend>
+    <small>배치 비교</small>
+    <label><input id="mode-stop" name="demo-mode" type="radio" checked><span>정차</span></label>
+    <label><input id="mode-drive" name="demo-mode" type="radio"><span>주행</span></label>
+    <label><input id="mode-extra" name="demo-mode" type="radio"><span>행동 5개</span></label>
+  </fieldset>
+  <section class="game-example" aria-label="독립 UI 초안 · 현재 플레이 화면 아님">
+    <div class="scenery">
+      <img class="environment" src="../../assets/ui/road-environment/sejong-v1.webp" width="1024" height="576" alt="기존 세종 원경 자산을 배치한 정적 예시">
+      <header class="scene-heading">
+        <strong><span class="stop-only">세종 신도시</span><span class="drive-only">세종 → 공주</span></strong>
+        <span class="scene-date">DAY 3 · 08:52</span>
+      </header>
+      <div class="vehicle-ground">
+        <img class="dalguji" src="../../assets/ui/journey-dalguji-base-v1.webp" width="1024" height="608" alt="기본 달구지 · 실제 개조와 움직임을 재현하지 않는 배치 예시">
+      </div>
+      <p class="scene-context stop-only">정차 중</p><p class="scene-context drive-only">공주 방향 · 주행 배치 예시</p>
+      <div class="risk" aria-label="추적 위험 3단계 예시">
+        <img src="../../assets/icons/journey/focus-2.svg" width="18" height="18" alt="">
+        <span>추적 위험 <b>3<small>/5</small></b></span>
+        <span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      </div>
+    </div>
+    <div class="vehicle-strip">
+      <span><img src="../../assets/icons/journey/gas-station.svg" width="18" height="18" alt="">연료 ∞</span>
+      <span><img src="../../assets/icons/journey/tool.svg" width="18" height="18" alt="">차체 61%</span>
+      <span>안개</span>
+    </div>
+    <div class="deck-area stop-only">
+      <section class="deck" aria-label="정차 행동 선택">
+        <fieldset class="journey-tabs"><legend class="sr-only">정차 모드</legend>
+          <label><input id="tab-route" name="journey-tab" type="radio"><span>목적지</span></label>
+          <label><input id="tab-stay" name="journey-tab" type="radio" checked><span>머물기</span></label>
+        </fieldset>
+        <div class="stay-panel">
+          <fieldset class="action-picker"><legend class="sr-only">행동 선택 · 선택만으로 실행되지 않음</legend>
+            <label class="extra-action"><input id="action-companion" name="stay-action" type="radio"><span><img src="../../assets/icons/journey/users.svg" width="26" height="26" alt=""><b>동료 미션 진행</b><small>가상 조건</small></span></label>
+            <label><input id="action-explore" name="stay-action" type="radio" checked><span><img src="../../assets/ui/stay-icon-explore-v1.webp" width="32" height="32" alt=""><b>주변 탐색</b><i aria-hidden="true">✓</i></span></label>
+            <label><input id="action-camp" name="stay-action" type="radio"><span><img src="../../assets/ui/stay-icon-camp-v1.webp" width="32" height="32" alt=""><b>야영 준비</b><i aria-hidden="true">✓</i></span></label>
+            <label><input id="action-repair" name="stay-action" type="radio"><span><img src="../../assets/ui/stay-icon-repair-v1.webp" width="32" height="32" alt=""><b>차체 정비</b><i aria-hidden="true">✓</i></span></label>
+            <label><input id="action-radio" name="stay-action" type="radio"><span><img src="../../assets/ui/stay-icon-radio-v1.webp" width="32" height="32" alt=""><b>라디오 수리</b><i aria-hidden="true">✓</i></span></label>
+          </fieldset>
+          <div class="action-detail detail-explore">
+            <div class="facts"><span><small>시간</small><b>+2시간</b></span><span><small>피로</small><b>약 +4</b></span><span><small>발견물</small><b class="quiet">미확인</b></span></div>
+            <details class="action-preview"><summary>주변을 탐색한다 <span aria-hidden="true">→</span></summary><div class="next-step"><b>탐색 사건으로 이어져요</b><p>실제 게임에서는 2시간이 지나고, 발견한 사건을 확인합니다. 여기서는 시간·저장이 바뀌지 않아요.</p><small>버튼을 다시 누르면 닫힙니다.</small></div></details>
+          </div>
+          <div class="action-detail detail-camp">
+            <div class="facts"><span><small>다음 날</small><b>06:30</b></span><span><small>피로</small><b>→ 0%</b></span><span><small>차체</small><b>+4</b></span></div>
+            <details class="action-preview"><summary>야영 준비로 <span aria-hidden="true">→</span></summary><div class="next-step"><b>바로 잠들지 않아요</b><p>기존 야영 화면에서 식사·정비·대화를 고른 뒤 쉬게 됩니다. 휴식 전에는 돌아올 수 있어요.</p><small>초안에서는 준비 화면을 열지 않습니다. 다시 눌러 닫기.</small></div></details>
+          </div>
+          <div class="action-detail detail-repair">
+            <div class="facts"><span><small>시간</small><b>+1:40</b></span><span><small>부품</small><b>∞</b></span><span><small>차체</small><b>+35</b></span></div>
+            <details class="action-preview"><summary>달구지를 정비한다 <span aria-hidden="true">→</span></summary><div class="next-step"><b>현장 정비로 이어져요</b><p>선택한 비용을 확인하고 차체를 복구합니다. 이 초안은 실제 자원이나 차체를 바꾸지 않습니다.</p><small>버튼을 다시 누르면 닫힙니다.</small></div></details>
+          </div>
+          <div class="action-detail detail-radio">
+            <div class="facts"><span><small>시간</small><b>+0:40</b></span><span><small>진공관</small><b>∞</b></span><span><small>수리 후</small><b>방송 수신</b></span></div>
+            <details class="action-preview"><summary>라디오를 고친다 <span aria-hidden="true">→</span></summary><div class="next-step"><b>라디오 수리로 이어져요</b><p>진공관을 교체해 주행 중 방송을 들을 수 있게 됩니다. 이미 수리했다면 이 선택지는 사라집니다.</p><small>초안은 실제 수리를 하지 않습니다. 다시 눌러 닫기.</small></div></details>
+          </div>
+          <div class="action-detail detail-companion">
+            <div class="extra-copy"><b>동행 중인 인물의 행동이 있을 때만</b><span>현재 저장에는 동료가 없습니다. 높이 비교용 예시입니다.</span></div>
+            <details class="action-preview"><summary>동료 미션 확인 <span aria-hidden="true">→</span></summary><div class="next-step"><b>해당 동료의 사건으로</b><p>실제 동행 여부와 미션 조건이 맞을 때만 이 줄을 보여 줍니다. 초안이 인물을 합류시키지는 않습니다.</p><small>버튼을 다시 누르면 닫힙니다.</small></div></details>
+          </div>
+          <div class="action-detail detail-pick-again"><p>지금 할 일을 위에서 골라 주세요.</p><button disabled>행동을 선택해 주세요</button></div>
+        </div>
+        <div class="route-panel">
+          <div class="destination"><img src="../../assets/icons/journey/map-pin.svg" width="26" height="28" alt=""><div><small>다음 목적지 예시</small><strong>공주 산성</strong></div><span>16 km</span></div>
+          <p class="route-note">목적지의 기존 구성은 유지합니다.<br>경로 확인 후 별도 버튼으로 출발하는 방식.</p>
+          <details class="action-preview"><summary>공주 산성으로 출발 <span aria-hidden="true">→</span></summary><div class="next-step"><b>이번에는 배치만 비교해요</b><p>공주는 세종과 연결된 실제 장소입니다. 예상 시간·연료는 게임의 계산값을 사용하며 초안에서 임의 계산하지 않습니다.</p><small>실제 이동하지 않습니다. 다시 눌러 닫기.</small></div></details>
+          <p class="route-objective"><img src="../../assets/icons/journey/file-text.svg" width="20" height="20" alt="">메인 스토리 바로가기 <span>›</span></p>
+        </div>
+      </section>
+    </div>
+    <div class="deck-area drive-only">
+      <section class="drive-panel" aria-label="주행 본문 개략 · 기존 기능 유지">
+        <small>다가오는 곳</small><div class="drive-destination"><strong>공주 산성</strong><span>16 km 남음</span></div>
+        <progress value="0" max="16" aria-label="주행 거리 배치 예시"></progress>
+        <div class="route-labels"><span>세종</span><span>공주</span></div>
+        <p>장소와 DAY·시간은 정차 때와 같은 자리.<br>차량 상태도 같은 줄에 남습니다.</p>
+        <small class="drive-scope">주행 본문은 개략도입니다.<br>기존 목적지 사진·사건·동료 기능은 유지하는 제안입니다.</small>
+      </section>
+    </div>
+    <nav class="bottom-nav" aria-label="기존 하단 메뉴 · 배치 예시">
+      <span class="selected"><img src="../../assets/icons/journey/road.svg" width="23" height="23" alt="">길</span>
+      <span><img src="../../assets/icons/journey/file-text.svg" width="23" height="23" alt="">목표</span>
+      <span><img src="../../assets/icons/journey/users.svg" width="23" height="23" alt="">동료</span>
+      <span><img src="../../assets/icons/journey/backpack.svg" width="23" height="23" alt="">가방</span>
+      <span><img src="../../assets/icons/journey/menu-2.svg" width="23" height="23" alt="">메뉴</span>
+    </nav>
+  </section>
+  <footer class="draft-note">UI 배치 초안 · 실제 게임과 저장은 바뀌지 않습니다.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,2489 @@
+{
+  "schemaVersion": 1,
+  "scope": "Human reference drafts only; runtime portrait inference and multi-person implicit narration need a separate casting pass.",
+  "canonical": [
+    {
+      "id": "byungchul",
+      "name": "병철",
+      "group": "named",
+      "portrait": "assets/portraits/byungchul.png",
+      "role": "밀양 대장간",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "deokgu",
+      "name": "덕구",
+      "group": "named",
+      "portrait": "assets/portraits/deokgu.png",
+      "role": "성곽 문지기",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "dongsu",
+      "name": "동수",
+      "group": "named",
+      "portrait": "assets/portraits/dongsu.png",
+      "role": "한지 지도 공방",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "drhan",
+      "name": "한 박사",
+      "group": "named",
+      "portrait": "assets/portraits/drhan.png",
+      "role": "연구단지 코뮌",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "eunsu",
+      "name": "은수",
+      "group": "lead",
+      "portrait": "assets/portraits/eunsu.png",
+      "role": "전 관제사 · 33",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "father",
+      "name": "아빠",
+      "group": "named",
+      "portrait": "assets/portraits/father.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "geumja",
+      "name": "금자",
+      "group": "named",
+      "portrait": "assets/portraits/geumja.png",
+      "role": "대인시장 국밥이모",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "gitae",
+      "name": "기태",
+      "group": "named",
+      "portrait": "assets/portraits/gitae.png",
+      "role": "성곽 대서방(편지 대필)",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "grandfather",
+      "name": "할아버지",
+      "group": "named",
+      "portrait": "assets/portraits/grandfather.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "hanbyeol",
+      "name": "한별",
+      "group": "named",
+      "portrait": "assets/portraits/hanbyeol.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "hayeosa",
+      "name": "하 여사",
+      "group": "named",
+      "portrait": "assets/portraits/hayeosa.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "hwasun",
+      "name": "화순",
+      "group": "named",
+      "portrait": "assets/portraits/hwasun.png",
+      "role": "성벽 야간 순찰대장",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "intro_child",
+      "name": "도윤 · 8살",
+      "group": "named",
+      "portrait": "assets/portraits/intro_child.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "jaepil",
+      "name": "재필",
+      "group": "named",
+      "portrait": "assets/portraits/jaepil.png",
+      "role": "터널 촌장",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "jaeyi",
+      "name": "재이",
+      "group": "lead",
+      "portrait": "assets/portraits/jaeyi.png",
+      "role": "수집꾼 · 22",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "jeomrye",
+      "name": "점례",
+      "group": "named",
+      "portrait": "assets/portraits/jeomrye.png",
+      "role": "터널 약초 할매",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "kangwoo",
+      "name": "강우",
+      "group": "lead",
+      "portrait": "assets/portraits/kangwoo.png",
+      "role": "파수꾼 · 34",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "kimcaptain",
+      "name": "김 선장",
+      "group": "named",
+      "portrait": "assets/portraits/kimcaptain.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "leo",
+      "name": "레오",
+      "group": "lead",
+      "portrait": "assets/portraits/leo.png",
+      "role": "음유시인 · 28",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "mansu",
+      "name": "만수",
+      "group": "named",
+      "portrait": "assets/portraits/mansu.png",
+      "role": "떠돌이 뽕짝 장사꾼",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "mapmaker",
+      "name": "지도장이",
+      "group": "named",
+      "portrait": "assets/portraits/mapmaker.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "me",
+      "name": "상혁",
+      "group": "lead",
+      "portrait": "assets/portraits/me.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "mingyu",
+      "name": "민규",
+      "group": "named",
+      "portrait": "assets/portraits/mingyu.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "minji",
+      "name": "민지",
+      "group": "lead",
+      "portrait": "assets/portraits/minji.png",
+      "role": "정비사 · 17",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "miyoung",
+      "name": "미영",
+      "group": "named",
+      "portrait": "assets/portraits/miyoung.png",
+      "role": "서문 상인연합장",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "mother",
+      "name": "엄마",
+      "group": "named",
+      "portrait": "assets/portraits/mother.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "noah",
+      "name": "노아",
+      "group": "named",
+      "portrait": "assets/portraits/noah.png",
+      "role": "연구단지 옥상 관측 담당(12세)",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "parkss",
+      "name": "박 선생",
+      "group": "lead",
+      "portrait": "assets/portraits/parkss.png",
+      "role": "의술사 · 63",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "player_child",
+      "name": "상혁 · 8살",
+      "group": "named",
+      "portrait": "assets/portraits/player_child.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "postman",
+      "name": "우편부",
+      "group": "named",
+      "portrait": "assets/portraits/postman.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "sanjigi",
+      "name": "산지기",
+      "group": "named",
+      "portrait": "assets/portraits/sanjigi.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "seojin",
+      "name": "서진",
+      "group": "named",
+      "portrait": "assets/portraits/seojin.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "seoyeon",
+      "name": "서연",
+      "group": "named",
+      "portrait": "assets/portraits/seoyeon.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "sera",
+      "name": "세라",
+      "group": "named",
+      "portrait": "assets/portraits/sera.png",
+      "role": "돔 아래 책 노점",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "sundeok",
+      "name": "순덕",
+      "group": "named",
+      "portrait": "assets/portraits/sundeok.png",
+      "role": "장터 상인",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "suwan",
+      "name": "수완",
+      "group": "named",
+      "portrait": "assets/portraits/suwan.png",
+      "role": "수리 골목 라디오상",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "taeho",
+      "name": "태호",
+      "group": "named",
+      "portrait": "assets/portraits/taeho.png",
+      "role": "돔 시장 관리인",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "taesik",
+      "name": "태식",
+      "group": "named",
+      "portrait": "assets/portraits/taesik.png",
+      "role": "",
+      "identityPolicy": "preserve-canonical"
+    },
+    {
+      "id": "yeongok",
+      "name": "영옥",
+      "group": "named",
+      "portrait": "assets/portraits/yeongok.png",
+      "role": "장터 닭죽집",
+      "identityPolicy": "preserve-canonical"
+    }
+  ],
+  "explicitGenericSpeakers": [
+    {
+      "portrait": "passer_guard",
+      "name": "무장한 남자",
+      "path": "event:meet_toll.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "무장한 남자",
+      "path": "event:meet_toll.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "형광 조끼 남자",
+      "path": "event:levy_office.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "형광 조끼 남자",
+      "path": "event:levy_office.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "형광 조끼 남자",
+      "path": "event:levy_office.choices.0.out.1.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "회수조 선두",
+      "path": "event:cleaners_recall.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "회수조 선두",
+      "path": "event:cleaners_recall.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "붙잡힌 여자",
+      "path": "event:cleaners_recall.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "회수조 선두",
+      "path": "event:cleaners_recall.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "남자",
+      "path": "event:salvage_claim.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "남자",
+      "path": "event:salvage_claim.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "남자",
+      "path": "event:salvage_claim.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "청년",
+      "path": "event:water_toll.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "청년",
+      "path": "event:water_toll.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "청년",
+      "path": "event:water_toll.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "정리자",
+      "path": "event:ai_checkers.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "정리자",
+      "path": "event:ai_checkers.choices.1.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "정리자",
+      "path": "event:ai_checkers.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "event:pss_daejeon.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "event:pss_daejeon.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "event:pss_daejeon.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "event:pss_daejeon.choices.0.out.0.turnSpeakers.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "event:pss_daejeon.choices.0.out.0.turnSpeakers.7",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "event:pss_forgive.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "event:pss_forgive.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "event:pss_forgive.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "event:pss_forgive.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "event:pss_forgive.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "목욕차 주인",
+      "path": "event:meet_bathtruck.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "목욕차 주인",
+      "path": "event:meet_bathtruck.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "목욕차 주인",
+      "path": "event:meet_bathtruck.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "event:meet_barber.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "event:meet_barber.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "event:meet_barber.choices.0.out.0.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "event:meet_barber.choices.0.out.0.turnSpeakers.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "event:meet_barber.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "event:meet_barber.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "마을 아이",
+      "path": "event:loc_gyeongju.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "마을 아이",
+      "path": "event:loc_gyeongju.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "event:lc_pohang_gwamegi.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "event:lc_pohang_gwamegi.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "event:lc_pohang_gwamegi.choices.0.out.0.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "event:lc_pohang_gwamegi.choices.0.out.1.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "event:lc_pohang_gwamegi.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "소포 소식을 아는 사람",
+      "path": "event:parcel_lead.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "소포 소식을 아는 사람",
+      "path": "event:parcel_lead.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "소포 소식을 아는 사람",
+      "path": "event:parcel_lead.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "강도",
+      "path": "event:mansu_revenge.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "event:deserter_check.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "event:deserter_check.choices.0.out.1.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "event:deserter_check.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "event:deserter_check.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "여자",
+      "path": "event:route_ridge_rescue.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "여자",
+      "path": "event:route_ridge_rescue.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "event:route_market_convoy.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "event:route_market_convoy.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "수레를 돕는 아이",
+      "path": "event:route_market_mask.choices.0.out.1.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "장터 수레꾼",
+      "path": "event:route_market_mask.choices.1.out.1.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "event:route_market_mask.choices.2.out.1.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "수레를 돕는 아이",
+      "path": "event:route_market_mask.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "수레를 돕는 아이",
+      "path": "event:route_market_mask.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "event:route_market_pass.choices.0.out.1.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "event:route_market_pass.choices.1.out.2.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "event:route_market_pass.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "event:route_market_pass.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "event:route_market_pass.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "폐차장 형",
+      "path": "event:meet_scrapbros.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "폐차장 동생",
+      "path": "event:meet_scrapbros.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "폐차장 형",
+      "path": "event:meet_scrapbros.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "event:meet_florist.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "event:meet_florist.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "event:meet_florist.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "event:meet_florist.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "event:bori_family.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "event:bori_family.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "event:bori_family.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "event:bori_family.choices.0.out.0.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "event:bori_family.choices.0.out.0.turnSpeakers.6",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "event:bori_family.choices.0.out.0.turnSpeakers.7",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "event:bori_family.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "event:whites_straggler.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "event:whites_straggler.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "event:whites_straggler.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "event:whites_straggler.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "event:whites_straggler.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "event:whites_straggler.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "event:night_convoy.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "event:night_convoy.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "event:night_convoy.choices.0.out.0.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "event:night_convoy.choices.0.out.0.turnSpeakers.6",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "event:gw_gangneung.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "event:gw_gangneung.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "event:gw_gangneung.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "event:gw_gangneung.choices.0.out.0.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "강릉 병원 일꾼",
+      "path": "event:gw_gangneung.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "강릉 병원 일꾼",
+      "path": "event:gw_gangneung.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "event:cell_sea_2.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "event:cell_sea_2.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "event:cell_sea_2.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "event:cell_sea_2.choices.0.out.0.turnSpeakers.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "event:cell_sea_2.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "대구 돔 심부름꾼",
+      "path": "event:cell_dome_2.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "대구 돔 심부름꾼",
+      "path": "event:cell_dome_2.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "흰옷의 신도",
+      "path": "event:cult_recruiter.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "흰옷의 신도",
+      "path": "event:cult_recruiter.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "흰옷의 신도",
+      "path": "event:cult_recruiter.choices.0.out.0.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "event:ev_barter_cart.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "event:ev_barter_cart.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "event:ev_barter_cart.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "event:ev_barter_cart.choices.1.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "event:ev_barter_cart.choices.1.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "event:ev_barter_cart.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "밀수꾼",
+      "path": "event:ev_smuggler_truck.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "밀수꾼",
+      "path": "event:ev_smuggler_truck.choices.2.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "밀수꾼",
+      "path": "event:ev_smuggler_truck.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "event:ev_truck_cafe.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "event:ev_truck_cafe.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "event:ev_truck_cafe.choices.1.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "event:ev_truck_cafe.choices.1.out.0.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "event:ev_truck_cafe.choices.1.out.0.turnSpeakers.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "event:ev_truck_cafe.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "사냥꾼",
+      "path": "event:ev_hunter_meat.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "사냥꾼",
+      "path": "event:ev_hunter_meat.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "사냥꾼",
+      "path": "event:ev_hunter_meat.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "event:ev_water_seller.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "event:ev_water_seller.choices.2.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "event:ev_water_seller.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "event:ev_water_seller.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "event:ev_barber.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "event:ev_barber.choices.1.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "event:ev_barber.choices.2.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "event:ev_barber.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "event:ev_fortune_teller.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "event:ev_fortune_teller.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "event:ev_fortune_teller.choices.0.out.1.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "event:ev_fortune_teller.choices.1.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "event:ev_fortune_teller.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "event:ev_beekeeper.choices.1.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "event:ev_beekeeper.choices.1.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "event:ev_beekeeper.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "event:ev_beekeeper.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "event:ev_beekeeper.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "도윤",
+      "path": "event:roadcrew_sign.choices.0.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "event:story_generation_form.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "event:story_generation_form.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "event:story_generation_form.choices.0.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "event:story_generation_form.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "event:story_generation_form.choices.1.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "event:story_generation_form.choices.1.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "event:story_generation_form.choices.1.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "event:story_generation_speech.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "event:story_generation_speech.choices.0.out.0.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "event:story_generation_speech.choices.1.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "event:story_generation_speech.choices.1.out.0.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "event:story_generation_speech.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "event:story_generation_speech.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "event:story_generation_speech.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "event:story_generation_speech.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "event:story_generation_speech.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "event:story_generation_speech.turnSpeakers.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "event:story_generation_speech.turnSpeakers.6",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "진료 기록을 든 노인",
+      "path": "event:story_generation_theories.choices.0.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "전단을 모은 여자",
+      "path": "event:story_generation_theories.choices.1.out.0.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "전단을 모은 여자",
+      "path": "event:story_generation_theories.choices.1.out.0.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "지도를 펼친 남자",
+      "path": "event:story_generation_theories.turnSpeakers.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "진료 기록을 든 노인",
+      "path": "event:story_generation_theories.turnSpeakers.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "전단을 모은 여자",
+      "path": "event:story_generation_theories.turnSpeakers.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "지도를 펼친 남자",
+      "path": "event:story_generation_theories.turnSpeakers.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "진료 기록을 든 노인",
+      "path": "event:story_generation_theories.turnSpeakers.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "event:opening_failed_appeal.turns.1",
+      "text": "열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요."
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "순자 아줌마",
+      "path": "intro.1.beats.1",
+      "text": "그건 정희네 거야. 애가 밤새 열이 나서 못 내려왔어."
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "순자 아줌마",
+      "path": "intro.1.beats.3",
+      "text": "그러니까 네 옆에 놨지. 빈손 좋은 사람이 너밖에 없어서."
+    },
+    {
+      "portrait": "passer_child",
+      "name": "줄을 지키던 아이",
+      "path": "intro.1.beats.5",
+      "text": "아저씨, 여기서도 물 나와요."
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "순자 아줌마",
+      "path": "intro.1.beats.8",
+      "text": "천천히 해. 지난번처럼 나사 머리 뭉개지 말고."
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "순자 아줌마",
+      "path": "intro.1.beats.10",
+      "text": "그래. 나사 혼자 그랬겠지."
+    },
+    {
+      "portrait": "passer_man",
+      "name": "부두 기사",
+      "path": "intro.2.beats.1",
+      "text": "오늘 안에는 되겠어요?"
+    },
+    {
+      "portrait": "passer_man",
+      "name": "부두 기사",
+      "path": "intro.2.beats.3",
+      "text": "지난번처럼 고철로 반 치러도 됩니까?"
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "장터 상인",
+      "path": "intro.3.beats.1",
+      "text": "한 시간만 더 이러면 오늘 장사는 접어야 해."
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "진료소 직원",
+      "path": "intro.3.beats.2",
+      "text": "약 상자부터 다른 데로 옮기면 안 될까요?"
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "장터 상인",
+      "path": "intro.3.beats.4",
+      "text": "안이 안 보이잖아."
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "장터 상인",
+      "path": "intro.3.beats.9",
+      "text": "앉아서 이거라도 먹고 가."
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "장터 상인",
+      "path": "intro.3.beats.11",
+      "text": "씹는 동안 냉동기 안 도망가."
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "발전기 당번",
+      "path": "intro.4.beats.1",
+      "text": "B골목 십 분 남았습니다. 더 쓸 집 있어요?"
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "골목 주민",
+      "path": "intro.4.beats.2",
+      "text": "우리 집은 됐어요. 그 십 분 약방 냉장고에 붙여 줘요."
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "발전기 당번",
+      "path": "intro.4.beats.3",
+      "text": "어제도 양보했잖아요."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "골목 주민",
+      "path": "intro.4.beats.4",
+      "text": "어제 말린 양말 오늘 다시 젖었어. 됐어."
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "순자 아줌마",
+      "path": "intro.4.beats.6",
+      "text": "수리집. 밥 먹고 가."
+    },
+    {
+      "portrait": "passer_child",
+      "name": "줄을 지키던 아이",
+      "path": "intro.4.beats.8",
+      "text": "거짓말. 아까 냄비 비어 있었는데."
+    },
+    {
+      "portrait": "passer_man",
+      "name": "부두 관제",
+      "path": "intro.5.beats.2",
+      "text": "감천 3부두. 이송 버스 네 대, 난방이 전부 멈췄습니다."
+    },
+    {
+      "portrait": "passer_man",
+      "name": "부두 관제",
+      "path": "intro.5.beats.5",
+      "text": "3부두 동쪽 끝입니다. 아이들이 타고 있어요."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "???",
+      "path": "intro.7.beats.2",
+      "text": "도윤아, 모르는 분 붙잡고 그러면 안 돼."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "???",
+      "path": "intro.7.beats.4",
+      "text": "새벽부터 꺼졌어요. 유나가 열이 있는데, 운행 가능한 차부터 본다네요."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.7.beats.8",
+      "text": "정말 고맙습니다. 저는 하진이고, 얘가 도윤이에요. 품에 있는 아이는 유나고요."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.7.beats.10",
+      "text": "이의 신청을 열세 번 했어요. 그때마다 접수 완료는 떴는데, 다음 날 들어가 보면 신청 내역이 없어졌어요."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.7.beats.12",
+      "text": "아마 또 막힐 거예요. …그래도 해 봐 주세요."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.16.beats.6",
+      "text": "서울에서 쫓아내 놓고, 다시 서울까지 와야 묻겠다는 거예요?"
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.16.beats.10",
+      "text": "가서 뭘 보여 줘야 하는지는요?"
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.16.beats.12",
+      "text": "네. 또 접수됐다는 말만 듣고 끝나진 않았으면 좋겠어요."
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.20.beats.3",
+      "text": "뭘 더 찾아야 하죠?"
+    },
+    {
+      "portrait": "passer_woman",
+      "name": "하진",
+      "path": "intro.20.beats.9",
+      "text": "돌아온다고 약속하지는 마세요. 먼저 떠난 사람들 이름만 잊지 말아 주세요."
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "eventTurnScripts.pss_forgive.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "eventTurnScripts.pss_forgive.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "eventTurnScripts.pss_forgive.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "eventTurnScripts.pss_forgive.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "환자의 아들",
+      "path": "eventTurnScripts.pss_forgive.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "eventTurnScripts.story_generation_form.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "eventTurnScripts.story_generation_form.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "eventTurnScripts.story_generation_form.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "eventTurnScripts.story_generation_form.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "eventTurnScripts.story_generation_form.choices.1.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "eventTurnScripts.story_generation_form.choices.1.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "면사무소의 노인",
+      "path": "eventTurnScripts.story_generation_form.choices.1.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "eventTurnScripts.story_generation_speech.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "eventTurnScripts.story_generation_speech.text.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "eventTurnScripts.story_generation_speech.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "eventTurnScripts.story_generation_speech.text.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "eventTurnScripts.story_generation_speech.text.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "eventTurnScripts.story_generation_speech.text.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "eventTurnScripts.story_generation_speech.text.6",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "아이의 할머니",
+      "path": "eventTurnScripts.story_generation_speech.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "eventTurnScripts.story_generation_speech.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "eventTurnScripts.story_generation_speech.choices.1.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "장터 아이",
+      "path": "eventTurnScripts.story_generation_speech.choices.1.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "지도를 펼친 남자",
+      "path": "eventTurnScripts.story_generation_theories.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "진료 기록을 든 노인",
+      "path": "eventTurnScripts.story_generation_theories.text.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "전단을 모은 여자",
+      "path": "eventTurnScripts.story_generation_theories.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "지도를 펼친 남자",
+      "path": "eventTurnScripts.story_generation_theories.text.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "진료 기록을 든 노인",
+      "path": "eventTurnScripts.story_generation_theories.text.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "진료 기록을 든 노인",
+      "path": "eventTurnScripts.story_generation_theories.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "전단을 모은 여자",
+      "path": "eventTurnScripts.story_generation_theories.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "전단을 모은 여자",
+      "path": "eventTurnScripts.story_generation_theories.choices.1.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "eventTurnScripts.lc_pohang_gwamegi.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "eventTurnScripts.lc_pohang_gwamegi.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "eventTurnScripts.lc_pohang_gwamegi.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "eventTurnScripts.lc_pohang_gwamegi.choices.0.0.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "덕장 주인",
+      "path": "eventTurnScripts.lc_pohang_gwamegi.choices.0.1.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "eventTurnScripts.route_market_convoy.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "eventTurnScripts.route_market_convoy.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "수레를 돕는 아이",
+      "path": "eventTurnScripts.route_market_mask.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "수레를 돕는 아이",
+      "path": "eventTurnScripts.route_market_mask.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_child",
+      "name": "수레를 돕는 아이",
+      "path": "eventTurnScripts.route_market_mask.choices.0.1.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "장터 수레꾼",
+      "path": "eventTurnScripts.route_market_mask.choices.1.1.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "eventTurnScripts.route_market_mask.choices.2.1.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "eventTurnScripts.route_market_pass.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "장터 운송 담당자",
+      "path": "eventTurnScripts.route_market_pass.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "eventTurnScripts.route_market_pass.text.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "eventTurnScripts.route_market_pass.choices.0.1.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "무주 장터 대표",
+      "path": "eventTurnScripts.route_market_pass.choices.1.2.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "정리자",
+      "path": "eventTurnScripts.ai_checkers.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "정리자",
+      "path": "eventTurnScripts.ai_checkers.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "정리자",
+      "path": "eventTurnScripts.ai_checkers.choices.1.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "eventTurnScripts.ev_truck_cafe.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "eventTurnScripts.ev_truck_cafe.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "eventTurnScripts.ev_truck_cafe.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "eventTurnScripts.ev_truck_cafe.choices.1.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "eventTurnScripts.ev_truck_cafe.choices.1.0.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "커피차 주인",
+      "path": "eventTurnScripts.ev_truck_cafe.choices.1.0.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "목욕차 주인",
+      "path": "eventTurnScripts.meet_bathtruck.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "목욕차 주인",
+      "path": "eventTurnScripts.meet_bathtruck.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "목욕차 주인",
+      "path": "eventTurnScripts.meet_bathtruck.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "eventTurnScripts.meet_barber.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "eventTurnScripts.meet_barber.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "eventTurnScripts.meet_barber.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "eventTurnScripts.meet_barber.choices.0.0.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "eventTurnScripts.meet_barber.choices.0.0.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "길거리 이발사",
+      "path": "eventTurnScripts.meet_barber.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "eventTurnScripts.ev_barber.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "eventTurnScripts.ev_barber.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "eventTurnScripts.ev_barber.choices.1.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "떠돌이 이발사",
+      "path": "eventTurnScripts.ev_barber.choices.2.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "eventTurnScripts.ev_fortune_teller.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "eventTurnScripts.ev_fortune_teller.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "eventTurnScripts.ev_fortune_teller.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "eventTurnScripts.ev_fortune_teller.choices.0.1.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "점쟁이",
+      "path": "eventTurnScripts.ev_fortune_teller.choices.1.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "eventTurnScripts.ev_barter_cart.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "eventTurnScripts.ev_barter_cart.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "eventTurnScripts.ev_barter_cart.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "eventTurnScripts.ev_barter_cart.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "eventTurnScripts.ev_barter_cart.choices.1.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "리어카 행상",
+      "path": "eventTurnScripts.ev_barter_cart.choices.1.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "eventTurnScripts.ev_water_seller.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "eventTurnScripts.ev_water_seller.text.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "eventTurnScripts.ev_water_seller.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "물장수",
+      "path": "eventTurnScripts.ev_water_seller.choices.2.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "eventTurnScripts.meet_florist.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "eventTurnScripts.meet_florist.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "eventTurnScripts.meet_florist.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "꽃장수",
+      "path": "eventTurnScripts.meet_florist.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "소포 소식을 아는 사람",
+      "path": "eventTurnScripts.parcel_lead.text.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "소포 소식을 아는 사람",
+      "path": "eventTurnScripts.parcel_lead.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "소포 소식을 아는 사람",
+      "path": "eventTurnScripts.parcel_lead.text.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "강도",
+      "path": "eventTurnScripts.mansu_revenge.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "폐차장 형",
+      "path": "eventTurnScripts.meet_scrapbros.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "폐차장 동생",
+      "path": "eventTurnScripts.meet_scrapbros.text.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "폐차장 형",
+      "path": "eventTurnScripts.meet_scrapbros.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "사냥꾼",
+      "path": "eventTurnScripts.ev_hunter_meat.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "사냥꾼",
+      "path": "eventTurnScripts.ev_hunter_meat.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "사냥꾼",
+      "path": "eventTurnScripts.ev_hunter_meat.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "eventTurnScripts.ev_beekeeper.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "eventTurnScripts.ev_beekeeper.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "eventTurnScripts.ev_beekeeper.text.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "eventTurnScripts.ev_beekeeper.choices.1.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "양봉가",
+      "path": "eventTurnScripts.ev_beekeeper.choices.1.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "도윤",
+      "path": "eventTurnScripts.roadcrew_sign.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "eventTurnScripts.deserter_check.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "eventTurnScripts.deserter_check.text.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "eventTurnScripts.deserter_check.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_guard",
+      "name": "회수반",
+      "path": "eventTurnScripts.deserter_check.choices.0.1.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "흰옷의 신도",
+      "path": "eventTurnScripts.cult_recruiter.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "흰옷의 신도",
+      "path": "eventTurnScripts.cult_recruiter.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_refugee",
+      "name": "흰옷의 신도",
+      "path": "eventTurnScripts.cult_recruiter.choices.0.0.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "eventTurnScripts.night_convoy.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "eventTurnScripts.night_convoy.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "eventTurnScripts.night_convoy.choices.0.0.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "호송대 운전사",
+      "path": "eventTurnScripts.night_convoy.choices.0.0.6",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "eventTurnScripts.bori_family.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "eventTurnScripts.bori_family.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "eventTurnScripts.bori_family.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "eventTurnScripts.bori_family.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "eventTurnScripts.bori_family.choices.0.0.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "eventTurnScripts.bori_family.choices.0.0.6",
+      "text": ""
+    },
+    {
+      "portrait": "passer_man",
+      "name": "광양 이웃",
+      "path": "eventTurnScripts.bori_family.choices.0.0.7",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "eventTurnScripts.whites_straggler.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "eventTurnScripts.whites_straggler.text.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "eventTurnScripts.whites_straggler.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "eventTurnScripts.whites_straggler.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "eventTurnScripts.whites_straggler.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_elder",
+      "name": "행렬에서 떨어진 노인",
+      "path": "eventTurnScripts.whites_straggler.choices.1.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "eventTurnScripts.cell_sea_2.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "eventTurnScripts.cell_sea_2.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "eventTurnScripts.cell_sea_2.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "eventTurnScripts.cell_sea_2.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "젊은 뱃사람",
+      "path": "eventTurnScripts.cell_sea_2.choices.0.0.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "대구 돔 심부름꾼",
+      "path": "eventTurnScripts.cell_dome_2.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "대구 돔 심부름꾼",
+      "path": "eventTurnScripts.cell_dome_2.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "밀수꾼",
+      "path": "eventTurnScripts.ev_smuggler_truck.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "밀수꾼",
+      "path": "eventTurnScripts.ev_smuggler_truck.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_merchant",
+      "name": "밀수꾼",
+      "path": "eventTurnScripts.ev_smuggler_truck.choices.2.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "강릉 병원 일꾼",
+      "path": "eventTurnScripts.gw_gangneung.text.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "강릉 병원 일꾼",
+      "path": "eventTurnScripts.gw_gangneung.text.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "eventTurnScripts.gw_gangneung.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "eventTurnScripts.gw_gangneung.choices.0.0.2",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "eventTurnScripts.gw_gangneung.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_worker",
+      "name": "십장",
+      "path": "eventTurnScripts.gw_gangneung.choices.0.0.4",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "eventTurnScripts.pss_daejeon.choices.0.0.0",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "eventTurnScripts.pss_daejeon.choices.0.0.1",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "eventTurnScripts.pss_daejeon.choices.0.0.3",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "eventTurnScripts.pss_daejeon.choices.0.0.5",
+      "text": ""
+    },
+    {
+      "portrait": "passer_medic",
+      "name": "수진",
+      "path": "eventTurnScripts.pss_daejeon.choices.0.0.7",
+      "text": ""
+    }
+  ],
+  "genericLabels": [
+    "passer_child:마을 아이",
+    "passer_child:수레를 돕는 아이",
+    "passer_child:장터 아이",
+    "passer_child:줄을 지키던 아이",
+    "passer_elder:길거리 이발사",
+    "passer_elder:꽃장수",
+    "passer_elder:떠돌이 이발사",
+    "passer_elder:면사무소의 노인",
+    "passer_elder:순자 아줌마",
+    "passer_elder:아이의 할머니",
+    "passer_elder:장터 수레꾼",
+    "passer_elder:점쟁이",
+    "passer_elder:진료 기록을 든 노인",
+    "passer_elder:행렬에서 떨어진 노인",
+    "passer_guard:무장한 남자",
+    "passer_guard:정리자",
+    "passer_guard:회수반",
+    "passer_man:강도",
+    "passer_man:광양 이웃",
+    "passer_man:남자",
+    "passer_man:부두 관제",
+    "passer_man:부두 기사",
+    "passer_man:사냥꾼",
+    "passer_man:지도를 펼친 남자",
+    "passer_man:청년",
+    "passer_man:형광 조끼 남자",
+    "passer_man:환자의 아들",
+    "passer_man:회수조 선두",
+    "passer_medic:수진",
+    "passer_medic:진료소 직원",
+    "passer_merchant:덕장 주인",
+    "passer_merchant:리어카 행상",
+    "passer_merchant:목욕차 주인",
+    "passer_merchant:무주 장터 대표",
+    "passer_merchant:물장수",
+    "passer_merchant:밀수꾼",
+    "passer_merchant:장터 상인",
+    "passer_merchant:커피차 주인",
+    "passer_refugee:소포 소식을 아는 사람",
+    "passer_refugee:흰옷의 신도",
+    "passer_woman:???",
+    "passer_woman:골목 주민",
+    "passer_woman:붙잡힌 여자",
+    "passer_woman:여자",
+    "passer_woman:하진",
+    "passer_worker:강릉 병원 일꾼",
+    "passer_worker:대구 돔 심부름꾼",
+    "passer_worker:도윤",
+    "passer_worker:발전기 당번",
+    "passer_worker:십장",
+    "passer_worker:양봉가",
+    "passer_worker:장터 운송 담당자",
+    "passer_worker:전단을 모은 여자",
+    "passer_worker:젊은 뱃사람",
+    "passer_worker:폐차장 동생",
+    "passer_worker:폐차장 형",
+    "passer_worker:호송대 운전사"
+  ],
+  "excluded": [
+    {
+      "id": "bori",
+      "reason": "개: 사람 원형 범위 밖"
+    },
+    {
+      "id": "postman-legacy",
+      "reason": "현 정본이 아닌 이전 초상"
+    }
+  ]
+}

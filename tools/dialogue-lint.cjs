@@ -135,9 +135,11 @@ requireIntroOrder('intro-envelope-signal', [
 ]);
 requireIntroOrder('intro-departure-choice', [
   ['불완전한 장치 인정', /아직은 몰라/],
-  ['추가 기록 필요', /같은 이송을 겪은 사람/],
-  ['동행은 본인 선택', /같은 곳까지 가겠다는 사람/],
-  ['행동 의지 선언', /멈출 방법을 찾을 때까지/],
+  ['장치 준비와 다른 이송 당사자', /장치 꺼내는 법.*이 표를 받은 다른 사람/],
+  ['이미 이송된 사람 확인 부탁', /이미 떠난 사람/],
+  ['부탁 수락', /먼저 떠난 사람들도 찾아보겠습니다/],
+  ['실제 출발', /400km.*엔진이 붙었다/],
+  ['마지막 작별', /할아버지, 다녀올게/],
 ]);
 const introDeadlineCopy=(D.intro||[]).flatMap(page=>page.beats||[]).map(turn=>turn.text||'').join('\n');
 if(/스물엿새|스물여섯\s*번째|26\s*일|D-\s*26/i.test(introDeadlineCopy)){
@@ -439,14 +441,17 @@ for (const [pattern, label] of stalePatterns) {
   if (pattern.test(source)) errors.push(label);
 }
 
+// Two solo scenes deliberately end on an action/prop instead of recap thoughts.
+const introMinimums = {'intro-dashboard-module':[7,4], 'intro-workshop-departure':[7,2]};
 for (const page of D.intro || []) {
-  if (!Array.isArray(page.beats) || page.beats.length < 8) {
+  const [minimumBeats,minimumSpoken]=introMinimums[page.scene]||[8,5];
+  if (!Array.isArray(page.beats) || page.beats.length < minimumBeats) {
     errors.push(`인트로 화자 턴 부족: ${page.scene || page.title}`);
     continue;
   }
-  const spoken=page.beats.filter(turn=>['dialogue','thought','letter','ai'].includes(turn.kind));
+  const spoken=page.beats.filter(turn=>['dialogue','thought','letter','ai','radio'].includes(turn.kind));
   const speakers=new Set(page.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who));
-  if(spoken.length<5) errors.push(`인트로 문답 부족: ${page.scene || page.title}`);
+  if(spoken.length<minimumSpoken) errors.push(`인트로 문답 부족: ${page.scene || page.title}`);
   /* 유품을 정리하거나 장치를 확인하는 장면은 혼자 있는 것이 서사적으로 맞다.
      solo 장면에 억지 대화 상대를 만들지 않고, 생각·편지 턴의 충분한 호흡만 검사한다. */
   if(!page.solo&&speakers.size<2) errors.push(`인트로 대화 상대 부족: ${page.scene || page.title}`);
@@ -454,7 +459,7 @@ for (const page of D.intro || []) {
     if (!turn.kind || typeof turn.text !== 'string' || !turn.text.trim()) {
       errors.push(`인트로 빈 턴: ${page.scene || page.title} #${index + 1}`);
     }
-    if (['dialogue','thought','letter'].includes(turn.kind) && (!turn.who || !turn.name)) {
+    if (['dialogue','thought','letter','radio'].includes(turn.kind) && (!turn.who || !turn.name)) {
       errors.push(`인트로 화자 누락: ${page.scene || page.title} #${index + 1}`);
     }
     if (turn.kind === 'ai' && turn.who !== 'cheollian') {

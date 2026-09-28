@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The live-only intro shortcut starts a genuinely new journey."""
+"""The live-shell restart API starts a genuinely new journey (isolated saves)."""
 
 from pathlib import Path
 
@@ -41,9 +41,9 @@ def test_live_intro_shortcut_resets_journey_before_intro():
         )
         assert started
         page.evaluate("S.day=9; S.scrap=3; G.save()")
-        button = page.locator("#intro-test-shortcut")
-        assert button.is_visible()
-        button.click()
+        assert page.locator("#intro-test-shortcut").count() == 0
+        assert page.evaluate("window.caravanLiveControls.ready()")
+        page.evaluate("window.caravanLiveControls.restart()")
         assert page.locator("#scr-intro").get_attribute("class") == "scr on"
         assert page.locator("#intro-skip").inner_text() == "프롤로그 핵심 요약"
         assert page.locator("#intro-title").inner_text().strip()
@@ -80,5 +80,6 @@ def test_intro_restart_button_is_hidden_outside_live_mode():
         browser = playwright.chromium.launch(channel="chrome")
         page = browser.new_page(viewport={"width": 390, "height": 844})
         page.goto(URL)
-        assert page.locator("#intro-test-shortcut").is_hidden()
+        assert page.locator("#intro-test-shortcut").count() == 0
+        assert page.evaluate("typeof window.caravanLiveControls") == "undefined"
         browser.close()
