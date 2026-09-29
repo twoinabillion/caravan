@@ -6,6 +6,10 @@ Studio's **디자인 초안** opens these prototypes in a sandboxed iframe witho
 
 Add an entry to `manifest.json` with version `1` and `drafts`: `id` (lowercase letters/digits/hyphens), `file` (flat lowercase `.html` filename here), `title`, `description`, `revision`, optional `recommended`. HTML may reference local CSS and reviewed assets; no executable scripts. Bump revision after revising a draft. Keep provenance in the description, distinguishing sample content from the actual save. New raster assets still require the image contract.
 
+## 인트로 · 그림과 이야기 한 덩어리 v3 · 2026-09-29
+
+`intro-recollection.html` / `intro-recollection.css`: 첫 설명 두 문장과 관련 문답을 합쳐 기본8화면으로 재구성했다. 큰 글씨·짧거나 좁은 화면에서는 긴 문답4개만 나눠12화면으로 읽는다. 그림은 높이40% 목표로 중앙 행동을 확대하며 원본 구도 비교도 제공한다. 제목·본문 스크롤 없음, 본문18/21px 유지. `intro-flow.html`은 이전 스크롤 안이다. **초안만 수정, 원문·게임·저장 미변경. 실제 시각/조작 검수는 Studio 접근 제한으로 미완료.** [방향·출처·검증 범위](intro-recollection.md).
+
 ## 상황별 UI · 사람 / 영상 / 차 안 v1 · 2026-09-28
 
 `situated-talk.html`, `situated-record.html`, `situated-cabin.html` / 공통 `situated-ui.css`: 같은 공책·카드 모음으로 모든 상황을 처리하지 않는 세 가지 연결 초안. 민지 자기소개와 수락/거절, 부모님 영상의 복원문 재독, 빈자리/손님/야영 후 생활 흔적을 native 링크·details로 확인한다. 큰 글씨 선택도 제공한다. 현재 장면 근거와 별도 가정을 각 파일 위에 구분했다. 기존 자산을 재사용하고 게임·저장은 변경하지 않는다. Studio 직접 시각 검수는 접근 제한으로 미완료. [방향·출처·적용 전 조건](situated-ui.md).

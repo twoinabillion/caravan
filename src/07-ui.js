@@ -5181,9 +5181,9 @@ function dialogueSide(turn,lanes,opt={}){
     const greet = (nid==='deokgu'&&tries>0)
       ? (tries===1? '…돌아왔냐. 남산이 "아직"이래? 흥, 그럴 줄 알았다. 성문은 안 좁아지니까 천천히 해라. 못 실은 게 뭔지는— 네 차가 제일 잘 알 거다.'
         : `…${tries}번째다, 이 미친놈들. 근데 이상하지. 올 때마다 차가 무거워 보여. 짐이 아니라 뭐가 다른 게 실리는 모양이야. …밥은 먹었냐. 국밥 시켜놨다.`)
-      : !st.met? (st.att>10? npc.greetGood : npc.greet0)
-      : st.att>10? npc.greetGood : st.att<-10? npc.greetBad : npc.greet0;
+      : D.npcGreeting(nid,st);
     st.met=true;
+    G.save(); // Keep first-meeting/fame state even on cancel.
     if(S.mode==='offroad'&&OFF.ready()){ return talkOff(nid, greet); }
     const body=$('#stl-body');
     const slot=body.querySelector('#stl-talk-slot');

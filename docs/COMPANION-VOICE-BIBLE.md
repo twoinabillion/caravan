@@ -17,7 +17,7 @@ not imported biographies or generated dialogue.
 
 | Companion | Vocabulary and rhythm | Humor | Avoidance and silence |
 |---|---|---|---|
-| Minji | Engines, wiring, sounds, and faults. Short polite sentences followed by quick corrections. | Corrects jokes as if diagnosing a machine. | Does not explain Mingyu on demand; touches tools or listens to the engine instead. |
+| Minji | Engines, wiring, sounds, and faults. Short sentences and quick corrections; polite as a guest, banmal toward the player after recruitment, polite toward older crew except Leo. | Corrects jokes as if diagnosing a machine. | Does not explain Mingyu on demand; touches tools or listens to the engine instead. |
 | Park | Symptoms, prescriptions, temperature, and meals. Slow banmal/`하게체`, followed by a concrete action. | Dry jokes about age and occupational habits. | Does not turn lost patients into lessons; heats water or checks a bandage again. |
 | Kangwoo | Distance, exits, rear watch, shifts, confirmation. Short subjectless statements. | Takes jokes literally, then returns them a beat late. | Does not give speeches defending old orders; changes position and takes watch. |
 | Leo | Rhythm, chorus, voices, food, and Bori. Longer thoughts settle into a short joke. | Makes himself, his songs, and his hunger the target first. | Does not call an unfunny day a failure; switches the music off and shares the quiet. |
@@ -70,7 +70,9 @@ pronoun entirely.
 
 ## Automated guardrails
 
-`npm run lint:dialogue` inventories 4,112 lines across banter, chats, NPC dialogue, radio,
-intro, and event quotations. It verifies all six sheets, persona models, relationship address
+`npm run lint:dialogue` inventories banter, base and expanded chats, all camp chapters,
+guest camp speech, NPC first/repeat/affinity greetings, radio, intro, and event quotations.
+It loads the runtime order from `tools/content-registry.cjs` and reports current counts.
+It verifies all six sheets, persona models, relationship address
 maps, registered speaker routes, recruitment proposal → response → seat order, discarded
 lore, forbidden generic phrasing in attributed event speech, and repeated openings.

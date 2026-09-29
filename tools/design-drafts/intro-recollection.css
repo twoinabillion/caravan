@@ -1,0 +1,89 @@
+/* Isolated intro prototypes. One owner; no gameplay CSS or script dependencies. */
+:root {
+  color-scheme: light;
+  --fog: #dfe4e1;
+  --ink: #24353e;
+  --quiet: #52666d;
+  --night: #283b45;
+  --light: #f2f4ed;
+  --edge: #a9b9b8;
+  --reading-size: 18px;
+  --scene-height: min(40dvh, 82vw, 320px);
+  --roomy-copy: block;
+  --roomy-action: flex;
+  --compact-copy: none;
+  --compact-action: none;
+  font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}
+* { box-sizing: border-box; }
+html { margin: 0; }
+body { margin: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; background: var(--night); color: var(--ink); }
+a { color: inherit; text-underline-offset: 4px; }
+input { accent-color: var(--night); }
+:focus-visible { outline: 3px solid #a95420; outline-offset: -3px; }
+.draft-tools { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0 10px; flex: none; min-height: 50px; padding: 2px 10px; background: #f4f5f1; color: var(--ink); font-size: 12px; }
+.draft-tools nav { display: flex; gap: 12px; }
+.draft-tools nav a { display: flex; align-items: center; min-height: 44px; text-decoration: none; }
+.draft-tools [aria-current] { font-weight: 750; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; }
+.draft-tools label { display: flex; gap: 4px; align-items: center; min-height: 44px; cursor: pointer; }
+.draft-tools input { width: 16px; height: 16px; margin: 0; }
+.draft-help > summary { display: flex; align-items: center; min-height: 44px; cursor: pointer; }
+.draft-help[open] { position: absolute; inset: 2px 8px auto; z-index: 3; padding: 0 14px 14px; max-height: calc(100dvh - 20px); overflow: auto; background: #f4f5f1; border: 1px solid var(--edge); box-shadow: 0 8px 24px #24353e40; }
+.draft-help p { margin: 8px 0; font-size: 14px; line-height: 1.7; }
+body:has(#large-text:checked) { --reading-size: 21px; --roomy-copy: none; --roomy-action: none; --compact-copy: block; --compact-action: flex; }
+.draft-stage { flex: 1; min-height: 0; width: min(100%, 480px); margin: 0 auto; }
+.reading-scene { display: none; height: 100%; flex-direction: column; background: var(--fog); word-break: keep-all; overflow-wrap: anywhere; }
+.reading-scene.is-default { display: flex; }
+.draft-stage:has(> .reading-scene:target) > .is-default { display: none; }
+.draft-stage:has(> .reading-scene:target) > .reading-scene:target { display: flex; }
+.scene-art { flex: 0 1 var(--scene-height); min-height: 0; margin: 0; height: var(--scene-height); background: #1c262b; }
+.scene-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.scene-art[data-art="places"] img { object-position: 47% 50%; }
+.scene-art[data-art="parents"] img { object-position: 42% 50%; }
+body:has(#full-art:checked) .scene-art img { object-fit: contain; }
+.reading-body { flex: 1 0 auto; padding: 16px 18px; font-size: var(--reading-size); line-height: 1.6; }
+.page-copy { margin: 0; }
+.page-copy[data-layout="roomy"] { display: var(--roomy-copy); }
+.page-copy[data-layout="compact"] { display: var(--compact-copy); }
+.reading-actions a[data-layout="roomy"] { display: var(--roomy-action); }
+.reading-actions a[data-layout="compact"] { display: var(--compact-action); }
+.flow-body h1 { margin: 3px 0 24px; font-family: 'AppleMyungjo', 'Batang', serif; font-weight: 600; font-size: 30px; line-height: 1.38; letter-spacing: -.8px; }
+.chapter-place { margin: 0 0 7px; font-size: 13px; color: var(--quiet); }
+.narration { margin: 0 0 16px; }
+.narration .em { font-weight: 650; }
+.exchange { margin: 0 0 16px; }
+.exchange:last-child, .narration:last-child { margin-bottom: 0; }
+.speaker { display: flex; align-items: center; gap: 9px; margin-bottom: 4px; color: var(--quiet); font-size: 13px; font-weight: 650; }
+.speaker img { display: block; width: 28px; height: 28px; object-fit: cover; border-radius: 50%; }
+.exchange p { margin: 0; }
+.reading-actions { flex: none; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 16px max(10px, env(safe-area-inset-bottom)); border-top: 1px solid var(--edge); background: var(--fog); }
+.back-action { display: flex; align-items: center; min-height: 48px; padding: 8px 4px; color: var(--quiet); font: 13px/1.5 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; border: 0; background: transparent; }
+.back-action:disabled { opacity: .45; }
+.next-action, .end-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 12px 16px; color: var(--light); background: var(--night); border-radius: 3px; text-decoration: none; font-size: 15px; line-height: 1.5; }
+.next-action > span, .end-action > span { font-size: 24px; line-height: 1; }
+.next-action:hover, .end-action:hover { background: #3b535e; }
+.next-action:active, .end-action:active { background: #1a303a; }
+.next-action:focus-visible, .end-action:focus-visible { outline-color: #f6ce8f; outline-offset: -4px; }
+.reading-scene.flow-scene { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+.flow-body { min-height: 0; padding: 0 0 26px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #899b9b transparent; }
+.flow-body > :not(figure) { margin-inline: 24px; }
+.flow-body > .chapter-place { margin-top: 24px; }
+.inline-scene { margin: 26px 0; }
+.inline-scene:first-child { margin-top: 0; }
+.inline-scene img { display: block; width: 100%; height: auto; }
+.end-action { margin-top: 30px; }
+.flow-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 12px; padding: 0 16px max(2px, env(safe-area-inset-bottom)); border-top: 1px solid var(--edge); font-size: 12px; color: var(--quiet); }
+.flow-footer a { display: flex; align-items: center; min-height: 46px; }
+@media (max-width: 349px) {
+  .draft-tools { gap: 0 8px; padding-inline: 6px; }
+  .draft-tools nav { gap: 8px; }
+  .flow-body h1 { font-size: 28px; }
+  .flow-body { padding-inline: 0; }
+  .flow-body > :not(figure) { margin-inline: 19px; }
+  .reading-actions { padding-inline: 12px; gap: 10px; }
+  .next-action { padding-inline: 12px; }
+}
+@media (max-width: 349px), (max-height: 650px) {
+  :root { --roomy-copy: none; --roomy-action: none; --compact-copy: block; --compact-action: flex; }
+}
+/* No automatic movement: reduced-motion and manual readers share the same flow. */

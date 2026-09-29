@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>인트로 · 그림과 이야기 한 덩어리 v3</title>
+  <link rel="stylesheet" href="intro-recollection.css?draft=3">
+</head>
+<body>
+<header class="draft-tools">
+  <nav aria-label="초안 버전"><a href="intro-recollection.html?draft=3" aria-current="page">한 화면</a><a href="intro-flow.html">이전 안</a></nav>
+  <label><input id="large-text" type="checkbox"> 큰 글씨</label>
+  <details class="draft-help"><summary>초안 안내</summary>
+    <p>게임에 미적용인 v3 초안입니다. 첫 설명 두 문장과 같은 내용의 문답을 한 덩어리로 묶었습니다. 제목과 본문 스크롤은 없습니다.</p>
+    <p>기본은8화면입니다. 폭350px 미만·높이650px 이하 또는 큰 글씨에서는 긴 문답4개만 나눠12화면으로 읽습니다. 첫 설명 두 문장은 이때도 함께입니다. 글씨가 커지면 그림보다 본문과 버튼 공간을 우선합니다.</p>
+    <p>그림은 화면 높이40%를 목표로 중앙 행동을 가까이 봅니다. 가장자리 풍경과 일부 주변 인물은 잘립니다. 원본과 비교하려면 아래를 켜세요.</p>
+    <label><input id="full-art" type="checkbox"> 원본 구도로 비교</label>
+    <p>실제 원문11개와 다음 장 첫 질문·답, 기존 그림만 사용했습니다. 자동 재생·음성·게임·저장과 연결되지 않습니다. Studio 접근 제한으로 직접 시각·조작 검수는 아직 못 했습니다. 도구줄과 이 안내는 게임 UI가 아닙니다.</p>
+  </details>
+</header>
+<main class="draft-stage" aria-label="인트로 그림과 이야기 초안">
+  <section class="reading-scene is-default" id="opening" tabindex="-1" aria-label="이야기 시작">
+    <figure class="scene-art" data-art="voices"><img src="../../assets/scenes/intro-resistance-first-voices-v1.jpg" width="768" height="432" alt="관제실 앞에서 반대의 뜻을 모은 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<p class="narration" data-beat="0">천리안에 반대하는 목소리는 첫 이송 전부터 있었다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들은 사람이 타는 노선과 사람이 떠나야 하는 명령에는 이름 있는 책임자가 필요하다고 말했다.</p>
+</article>
+    </div>
+    <footer class="reading-actions">
+<button class="back-action" type="button" disabled>이전</button>
+<a class="next-action" data-layout="shared" href="#question">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="question" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="voices"><img src="../../assets/scenes/intro-resistance-first-voices-v1.jpg" width="768" height="432" alt="관제실 앞에서 반대의 뜻을 모은 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="roomy">
+<div class="exchange" data-beat="1"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그 사람들은 천리안을 없애자고 한 거야?</p></div>
+<div class="exchange" data-beat="2"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>처음에는 아니었어. 길 찾는 계산도, 위험한 곳에 들어가는 봇도 계속 쓰자고 했지. 대신 사람이 마지막에 확인하고, 잘못되면 멈출 창구를 남기라고 했어.</p></div>
+</article>
+<article class="page-copy" data-layout="compact">
+<div class="exchange" data-beat="1"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그 사람들은 천리안을 없애자고 한 거야?</p></div>
+<div class="exchange" data-beat="2"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>처음에는 아니었어.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="shared" href="#opening">이전</a>
+<a class="next-action" data-layout="roomy" href="#dispersal">이어서 읽기<span aria-hidden="true">›</span></a>
+<a class="next-action" data-layout="compact" href="#answer">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="answer" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="voices"><img src="../../assets/scenes/intro-resistance-first-voices-v1.jpg" width="768" height="432" alt="관제실 앞에서 반대의 뜻을 모은 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<div class="exchange" data-beat="2"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>길 찾는 계산도, 위험한 곳에 들어가는 봇도 계속 쓰자고 했지. 대신 사람이 마지막에 확인하고, 잘못되면 멈출 창구를 남기라고 했어.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="shared" href="#question">이전</a>
+<a class="next-action" data-layout="shared" href="#dispersal">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="dispersal" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="voices"><img src="../../assets/scenes/intro-resistance-first-voices-v1.jpg" width="768" height="432" alt="관제실 앞에서 반대의 뜻을 모은 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<p class="narration" data-beat="3">첫 이송표가 나온 뒤 반대는 더 커졌다. 그러나 도시 운영을 방해한다는 이유로 집회가 해산됐고, 이송 기록을 모으던 사무실도 하나씩 닫혔다.</p>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="roomy" href="#question">이전</a>
+<a class="back-action" data-layout="compact" href="#answer">이전</a>
+<a class="next-action" data-layout="shared" href="#arrests">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="arrests" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="voices"><img src="../../assets/scenes/intro-resistance-first-voices-v1.jpg" width="768" height="432" alt="관제실 앞에서 반대의 뜻을 모은 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="roomy">
+<div class="exchange" data-beat="4"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그럼 다 잡혀갔어?</p></div>
+<div class="exchange" data-beat="5"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>잡혀간 사람도 있고, 남쪽으로 쫓겨난 사람도 있었지. 남은 사람들은 중앙 조직을 만들지 않았어. 한곳이 들키면 전부 끝나니까 지역마다 따로 버틴 거야.</p></div>
+</article>
+<article class="page-copy" data-layout="compact">
+<div class="exchange" data-beat="4"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그럼 다 잡혀갔어?</p></div>
+<div class="exchange" data-beat="5"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>잡혀간 사람도 있고, 남쪽으로 쫓겨난 사람도 있었지.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="shared" href="#dispersal">이전</a>
+<a class="next-action" data-layout="roomy" href="#places">이어서 읽기<span aria-hidden="true">›</span></a>
+<a class="next-action" data-layout="compact" href="#dispersal-answer">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="dispersal-answer" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="voices"><img src="../../assets/scenes/intro-resistance-first-voices-v1.jpg" width="768" height="432" alt="관제실 앞에서 반대의 뜻을 모은 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<div class="exchange" data-beat="5"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>남은 사람들은 중앙 조직을 만들지 않았어. 한곳이 들키면 전부 끝나니까 지역마다 따로 버틴 거야.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="shared" href="#arrests">이전</a>
+<a class="next-action" data-layout="shared" href="#places">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="places" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="places"><img src="../../assets/scenes/intro-resistance-underground-v1.jpg" width="768" height="432" alt="지역에 남아 지도와 기록을 맞춰 보는 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<p class="narration" data-beat="6">세대가 바뀌는 동안 여섯 거점이 남았다. 남쪽 연락을 잇는 <span class="em">이음망</span>, 바닷길의 <span class="em">해도</span>, 시장 사람들의 <span class="em">돔</span>과 <span class="em">솥</span>, 통신 기록을 숨긴 <span class="em">유령</span>, 동쪽 산길을 지킨 <span class="em">산지기</span>였다.</p>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="roomy" href="#arrests">이전</a>
+<a class="back-action" data-layout="compact" href="#dispersal-answer">이전</a>
+<a class="next-action" data-layout="shared" href="#disagreement">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="disagreement" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="places"><img src="../../assets/scenes/intro-resistance-underground-v1.jpg" width="768" height="432" alt="지역에 남아 지도와 기록을 맞춰 보는 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="roomy">
+<div class="exchange" data-beat="7"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그럼 다 같은 편이네?</p></div>
+<div class="exchange" data-beat="8"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>천리안을 전부 부수자는 사람도 있었고, 병원과 전기는 남겨야 한다는 사람도 있었어. 서로 많이 싸웠지. 그래도 자동으로 사람을 고르고 내쫓게 두지 말자는 데는 뜻이 같았어.</p></div>
+</article>
+<article class="page-copy" data-layout="compact">
+<div class="exchange" data-beat="7"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그럼 다 같은 편이네?</p></div>
+<div class="exchange" data-beat="8"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>천리안을 전부 부수자는 사람도 있었고, 병원과 전기는 남겨야 한다는 사람도 있었어.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="shared" href="#places">이전</a>
+<a class="next-action" data-layout="roomy" href="#seoul">이어서 읽기<span aria-hidden="true">›</span></a>
+<a class="next-action" data-layout="compact" href="#shared-purpose">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="shared-purpose" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="places"><img src="../../assets/scenes/intro-resistance-underground-v1.jpg" width="768" height="432" alt="지역에 남아 지도와 기록을 맞춰 보는 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<div class="exchange" data-beat="8"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>서로 많이 싸웠지. 그래도 자동으로 사람을 고르고 내쫓게 두지 말자는 데는 뜻이 같았어.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="shared" href="#disagreement">이전</a>
+<a class="next-action" data-layout="shared" href="#seoul">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="seoul" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="places"><img src="../../assets/scenes/intro-resistance-underground-v1.jpg" width="768" height="432" alt="지역에 남아 지도와 기록을 맞춰 보는 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="roomy">
+<div class="exchange" data-beat="9"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그 사람들이 서울로 들어갈 수 있어?</p></div>
+<div class="exchange" data-beat="10"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>각자 관문 조각 하나씩은 알아냈다고 했어. 길 여섯 조각을 맞추면 남산까지 닿을 수 있다고. 다만 아무한테나 건네지는 않았지.</p></div>
+</article>
+<article class="page-copy" data-layout="compact">
+<div class="exchange" data-beat="9"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>그 사람들이 서울로 들어갈 수 있어?</p></div>
+<div class="exchange" data-beat="10"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>각자 관문 조각 하나씩은 알아냈다고 했어.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="roomy" href="#disagreement">이전</a>
+<a class="back-action" data-layout="compact" href="#shared-purpose">이전</a>
+<a class="next-action" data-layout="roomy" href="#parents">이어서 읽기<span aria-hidden="true">›</span></a>
+<a class="next-action" data-layout="compact" href="#seoul-answer">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="seoul-answer" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="places"><img src="../../assets/scenes/intro-resistance-underground-v1.jpg" width="768" height="432" alt="지역에 남아 지도와 기록을 맞춰 보는 사람들"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<div class="exchange" data-beat="10"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>길 여섯 조각을 맞추면 남산까지 닿을 수 있다고. 다만 아무한테나 건네지는 않았지.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="shared" href="#seoul">이전</a>
+<a class="next-action" data-layout="shared" href="#parents">이어서 읽기<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+  <section class="reading-scene" id="parents" tabindex="-1" aria-label="이어지는 이야기">
+    <figure class="scene-art" data-art="parents"><img src="../../assets/intro/09-parents-discovery.webp" width="1024" height="576" alt="연구실에서 기록을 살피는 엄마와 아빠"></figure>
+    <div class="reading-body">
+<article class="page-copy" data-layout="shared">
+<div class="exchange" data-next-beat="0"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="28" height="28" alt=""><span>하상혁 · 8살</span></div><p>엄마랑 아빠도 그래서 서울에서 쫓겨난 거야?</p></div>
+<div class="exchange" data-next-beat="1"><div class="speaker"><img src="../../assets/portraits/grandfather.png" width="28" height="28" alt=""><span>할아버지</span></div><p>그때는 나도 확실히 몰랐어. 다만 두 사람이 이송 명령의 이상한 점을 찾은 직후였지.</p></div>
+</article>
+    </div>
+    <footer class="reading-actions">
+<a class="back-action" data-layout="roomy" href="#seoul">이전</a>
+<a class="back-action" data-layout="compact" href="#seoul-answer">이전</a>
+<a class="next-action" data-layout="shared" href="#opening">처음으로<span aria-hidden="true">›</span></a>
+    </footer>
+  </section>
+</main>
+</body>
+</html>

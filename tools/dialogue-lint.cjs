@@ -13,7 +13,8 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
-const source = ['03-data.js','03k-main-evidence.js','03l-main-recovery.js','03m-finale-reading.js'].map(file=>fs.readFileSync(path.join(root,'src',file),'utf8')).join('\n');
+const {STATIC_CONTENT_FILES} = require('./content-registry.cjs');
+const source = STATIC_CONTENT_FILES.map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');
 const D = new Function(source + '\nreturn D;')();
 const dump = process.argv.includes('--dump');
 
@@ -79,6 +80,28 @@ for (const item of D.banter || []) {
     add('banter', item.who, item.t);
   }
 }
+// Read every authored camp chapter and the first-meeting voice, not just events.
+for(const cid of Object.keys(D.campConversations||{})){
+  const seen=new Set();
+  for(const chapter of [1,2,3]){
+    for(const previousChoiceId of D.campConversations[cid].choices.map(c=>c.id)){
+      const data=D.campConversationData({cid,chapter,previousChoiceId});
+      if(!seen.has(data.line)){add('camp',cid,data.line);seen.add(data.line);}
+      for(const choice of data.choices){
+        const quotes=quotedParts(choice.text);
+        if(quotes.length!==(choice.speakers||[]).length)
+          errors.push(`야영 화자 수 불일치: ${cid}.${chapter}.${choice.id}`);
+        if(!seen.has(choice.text)){
+          addQuoted('camp',choice.text,choice.speakers||[]);seen.add(choice.text);
+        }
+        if(!seen.has(choice.road)){addQuoted('camp',choice.road,[cid]);seen.add(choice.road);}
+      }
+    }
+  }
+}
+const guestCamp=D.campConversationData({cid:'minji',voice:'minji-guest-v1'});
+add('camp-guest','minji',guestCamp.line);
+for(const choice of guestCamp.choices) addQuoted('camp-guest',choice.text,choice.speakers);
 const allEvents = [
   ...(D.events || []),
   ...(D.roadCheckInEvents || []),
@@ -154,6 +177,7 @@ if(/제7\s*구역.*20kg|검문소.*통행/s.test(childTransferSpeech)){
 }
 for (const [id, npc] of Object.entries(D.npcs || {})) {
   add('npc', id, npc.greet0);
+  add('npc', id, D.npcRepeatGreetings[id]);
   add('npc', id, npc.greetGood);
   add('npc', id, npc.greetBad);
   for(const text of npc.chats || []) add('npc', id, text.replace(/^["“]|["”]$/g,''));
@@ -609,10 +633,11 @@ if (dump) {
 
 const counts = samples.reduce((out, item) => {
   out[item.scope === 'chat' ? '티키타카' : item.scope === 'banter' ? '주행 대사' :
+      item.scope.startsWith('camp') ? '야영' :
       item.scope === 'npc' ? 'NPC' : item.scope === 'radio' ? '라디오' :
       item.scope === 'intro-turn' ? '인트로 턴' : '대화 이벤트']++;
   return out;
-}, {'티키타카':0, '주행 대사':0, 'NPC':0, '라디오':0, '인트로 턴':0, '대화 이벤트':0});
+}, {'티키타카':0, '주행 대사':0, '야영':0, 'NPC':0, '라디오':0, '인트로 턴':0, '대화 이벤트':0});
 const companionCoverage=Object.fromEntries(companionIds.map(id=>[
   id,samples.filter(sample=>sample.speaker===id).length
 ]));

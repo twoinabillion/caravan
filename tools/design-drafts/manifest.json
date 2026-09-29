@@ -2,6 +2,21 @@
   "version": 1,
   "drafts": [
     {
+      "id": "intro-recollection-v1",
+      "file": "intro-recollection.html",
+      "title": "인트로 · 그림과 이야기 한 덩어리",
+      "revision": "3",
+      "recommended": true,
+      "description": "v3 추천안. 첫 설명 두 문장을 합치고 짧은 문답을 함께 둬 기본8화면으로 정리했습니다. 그림은 높이40%를 목표로 중앙 행동을 가까이 봅니다. 큰 글씨·짧거나 좁은 화면에서만 긴 문답4개를 나눠12화면으로 읽습니다. 제목·본문 스크롤 없음. 원본 구도 비교 가능. 기존 그림·원문 재사용, Codex HTML/CSS 초안, 게임·저장 미변경. 직접 시각·조작 검수는 접근 제한으로 미완료입니다."
+    },
+    {
+      "id": "intro-flow-v1",
+      "file": "intro-flow.html",
+      "title": "인트로 · 이전 스크롤 안 (비교용)",
+      "revision": "2",
+      "description": "이전 제안 보관용. 같은 원문11개를 한 번에 두고 그림·제목·본문을 함께 스크롤합니다. 현재 요청인 제목 없는 한 화면형은 추천안에서 확인하세요. 중간의 실제 그림 전환을 포함하며 줄별 누적 연출은 없습니다. 게임·저장 미변경, Studio 직접 시각 검수는 접근 제한으로 미완료입니다."
+    },
+    {
       "id": "situated-talk-v1",
       "file": "situated-talk.html",
       "title": "상황별 UI ① · 마주 앉은 대화",
