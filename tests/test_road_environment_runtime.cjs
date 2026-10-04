@@ -30,7 +30,10 @@ for(let i=0;i<ids.length;i++)for(const wx of ['clear','rain','storm','fog','dust
 const drawn=new Set(canvases.flatMap(c=>c.calls.filter(a=>a[0]==='drawImage'&&a[1]?.src).map(a=>a[1].src)));
 for(const id of ids)assert(drawn.has('terrain:'+id),id+' did not render');
 assert(canvases.some(c=>c.calls.some(a=>a[0]==='drawImage'&&a[1]===sky)),'transition reuses the same already-rendered sky');
-assert(canvases.some(c=>c.calls.some(a=>a[0]==='gradient')),'transition has a spatial feather, not a full-screen alpha');
+assert(target.calls.some(a=>a[0]==='rect'&&a[1]===118&&a[3]===118),'destination owns the right half at midpoint');
+assert(target.calls.some(a=>a[0]==='clip'),'transition is an opaque spatial handoff');
+assert(!canvases.some(c=>c.calls.some(a=>a[0]==='gradient')),'no translucent terrain mask');
+assert(!src.includes("='destination-in'"),'no double exposure through transparent terrain');
 // Explicit decode/error delay: retain known good terrain rather than old shapes.
 draw('busan','busan',0);decoded=false;
 const key=ids.find(id=>!env.renderer.cache.has(id));draw(key,key,0);

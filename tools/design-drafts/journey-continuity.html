@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>달려도, 멈춰도 같은 자리 · 장소 예고 v2</title>
+  <link rel="stylesheet" href="journey-continuity.css">
+</head>
+<body>
+<main class="prototype">
+  <span class="target" id="closed"></span>
+  <span class="target sheet-target" id="destination"></span>
+  <span class="target sheet-target" id="map"></span>
+  <span class="target sheet-target" id="record"></span>
+  <span class="target sheet-target" id="next-action"></span>
+  <span class="target sheet-target" id="choose-action"></span>
+  <span class="target sheet-target" id="choose-destination"></span>
+  <span class="target sheet-target" id="objective"></span>
+
+  <aside class="draft-tools" aria-label="게임과 분리된 장면 비교 도구">
+    <fieldset class="stage-picker"><legend class="sr-only">배치 예시 전환 · 실제 이동하지 않습니다</legend>
+      <label><input id="stage-stop" type="radio" name="stage"><span>정차 예시</span></label>
+      <label><input id="stage-drive" type="radio" name="stage" checked><span>주행 예시</span></label>
+      <label><input id="stage-arrive" type="radio" name="stage"><span>도착 후</span></label>
+    </fieldset>
+    <label class="preview-toggle"><input id="show-preview" type="checkbox" checked aria-label="장소 예고 표시 · 초안 비교용"><span>예고</span></label>
+    <details class="draft-help"><summary aria-label="초안 안내">안내</summary><div>
+      <b>장소는 한 줄로 예고하기 · v2</b>
+      <p>위 세 장면을 바꿔 보세요. 정차에서는 목적지·머물기도 비교할 수 있습니다. 풍경·차량·상태줄·하단 패널의 높이는 변하지 않습니다.</p>
+      <p>‘예고’를 켜고 꺼 보세요. 출발 전·주행 중에는 목적지 이름 아래에 장소 성격과 가능한 활동이 한 줄로 보입니다. 예고 유무만 비교하며 이전 화면 전체를 복제하지는 않습니다.</p>
+      <p>주행은 앞선 STOP 기록인 밀양 → 양산, DAY 1 · 14:02를 사용한 예시입니다. 실제 게임은 현재 양산 DAY 1 · 14:50에 정차해 있습니다. ‘도착 후’는 현재 시간과 탐색 예상치를 옮긴 독립 배치이며 실제 화면 캡처가 아닙니다. 출발 전은 가상 비교입니다.</p>
+      <p>도착 후에는 예고 대신 할 일과 비용이 보입니다. 사진과 긴 설명은 ‘목적지 정보’에, 평범한 보급 기록은 한 줄에 모았습니다. 위험 경고까지 숨기자는 제안은 아닙니다.</p>
+      <p>기존 원경·기본 차량의 정적 배치입니다. 현재 플레이의 캔버스·날씨·감속을 재현하지 않습니다. 게임·저장·빌드는 미변경입니다.</p>
+      <p>스크립트 없는 독립 초안입니다. 상세창은 닫기 링크로 돌아옵니다. 실제 게임의 지도·행동 선택·실행은 연결하지 않았습니다.</p>
+      <p>Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다.</p>
+      <small>안내를 다시 누르면 닫힙니다.</small>
+    </div></details>
+  </aside>
+
+  <section class="game-example" aria-label="독립 배치 초안 · 실제 게임 아님">
+    <div class="scenery">
+      <img class="environment miryang" src="../../assets/ui/road-environment/miryang-v1.webp" width="1024" height="576" alt="기존 밀양 원경의 정적 배치 예시">
+      <img class="environment yangsan" src="../../assets/ui/road-environment/yangsan-v1.webp" width="1024" height="576" alt="기존 양산 원경의 정적 배치 예시">
+      <header class="scene-heading">
+        <strong><span class="when-stop">밀양 장터</span><span class="when-drive">밀양 → 양산</span><span class="when-arrive">양산 고가차도</span></strong>
+        <span><span class="when-stop">출발 전 배치 예시</span><span class="when-drive">DAY 1 · 14:02</span><span class="when-arrive">DAY 1 · 14:50</span></span>
+      </header>
+      <div class="ground" aria-hidden="true"></div>
+      <img class="dalguji" src="../../assets/ui/journey-dalguji-base-v1.webp" width="1024" height="608" alt="기본 달구지 · 세 장면에서 같은 위치와 크기">
+      <span class="scene-caption">정적 배치 초안 · 게임 미적용</span>
+    </div>
+
+    <div class="vehicle-strip" aria-label="현재 양산 차량 상태 · 다른 장면에서는 비교용">
+      <span><img src="../../assets/icons/journey/gas-station.svg" width="16" height="16" alt="">연료 ∞</span>
+      <span><img src="../../assets/icons/journey/tool.svg" width="16" height="16" alt="">차체 82%</span>
+      <span><img src="../../assets/icons/journey/sun.svg" width="16" height="16" alt="">맑음</span>
+      <span class="risk"><img src="../../assets/icons/journey/focus-2.svg" width="16" height="16" alt="추적 위험">0/5</span>
+    </div>
+
+    <div class="deck-area">
+      <section class="deck" aria-label="같은 크기의 여정 패널">
+        <div class="stage-panel stop-panel">
+          <fieldset class="journey-tabs"><legend class="sr-only">정차 모드</legend>
+            <label><input id="stop-route" type="radio" name="stop-mode" checked><span>목적지</span></label>
+            <label><input id="stop-stay" type="radio" name="stop-mode"><span>머물기</span></label>
+          </fieldset>
+          <div class="content stop-route-content">
+            <a class="choice destination-choice" href="#choose-destination"><span class="destination-heading"><b>양산 고가차도</b><small>변경 <i aria-hidden="true">›</i></small></span><span class="place-preview">무너진 고가 아래를 탐색할 수 있다.</span></a>
+            <div class="forecast"><span>34km · 연료 소모 없음</span><a href="#map">지도 보기</a></div>
+            <a class="execute" href="#next-action">양산 고가차도로 출발 <i aria-hidden="true">→</i></a>
+            <a class="quiet-link" href="#objective"><img src="../../assets/icons/journey/file-text.svg" width="17" height="17" alt="">부모님이 탄 다음 차 <i aria-hidden="true">›</i></a>
+          </div>
+          <div class="content stop-stay-content">
+            <a class="choice" href="#choose-action"><span><b>정착지 안으로</b><small>행동 변경</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast">거래 · 대화 · 지역 활동</p>
+            <a class="execute" href="#next-action">정착지 안으로 <i aria-hidden="true">→</i></a>
+            <a class="quiet-link" href="#choose-action">고르기와 실행은 따로 <i aria-hidden="true">?</i></a>
+          </div>
+        </div>
+
+        <div class="stage-panel drive-panel">
+          <div class="panel-heading"><b>이동 중</b></div>
+          <div class="content drive-content">
+            <div class="destination-row"><div class="destination-heading"><b>양산 고가차도</b><span class="remaining"><strong>11</strong>km 남음</span></div><p class="place-preview">무너진 고가 아래를 탐색할 수 있다.</p></div>
+            <div class="route-progress">
+              <div class="progress-track" role="progressbar" aria-label="밀양에서 양산으로 이동한 거리" aria-valuemin="0" aria-valuemax="34" aria-valuenow="23.727890333333146"><span></span></div>
+              <div class="route-ends"><span>밀양</span><span>양산</span></div>
+            </div>
+            <div class="travel-actions"><a href="#map">지도 보기 <i aria-hidden="true">↗</i></a><a href="#destination">목적지 정보 <i aria-hidden="true">›</i></a></div>
+            <a class="quiet-link supply-record" href="#record"><img src="../../assets/icons/journey/file-text.svg" width="17" height="17" alt="">점심 식사 · 식량 소모 없음 <i aria-hidden="true">›</i></a>
+          </div>
+        </div>
+
+        <div class="stage-panel arrive-panel">
+          <fieldset class="journey-tabs"><legend class="sr-only">양산 도착 후 배치 비교</legend>
+            <label><input id="arrive-route" type="radio" name="arrive-mode"><span>목적지</span></label>
+            <label><input id="arrive-stay" type="radio" name="arrive-mode" checked><span>머물기</span></label>
+          </fieldset>
+          <div class="content arrive-stay-content">
+            <a class="choice" href="#choose-action"><span><b>주변 탐색</b><small>행동 변경</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast"><span>+2시간 · 피로 약 +5</span><span>발견물 미확인</span></p>
+            <a class="execute" href="#next-action">주변 탐색 <i aria-hidden="true">→</i></a>
+            <a class="quiet-link" href="#destination">이곳은 어떤 곳일까 <i aria-hidden="true">›</i></a>
+          </div>
+          <div class="content arrive-route-content">
+            <a class="choice" href="#choose-destination"><span><b>다음 목적지 선택</b><small>갈 수 있는 경로 보기</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast">경로를 고르면 거리와 소모량이 보여요</p>
+            <a class="execute" href="#choose-destination">목적지 고르기 <i aria-hidden="true">→</i></a>
+            <a class="quiet-link" href="#objective"><img src="../../assets/icons/journey/file-text.svg" width="17" height="17" alt="">부모님이 탄 다음 차 <i aria-hidden="true">›</i></a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <nav class="bottom-nav" aria-label="기존 하단 메뉴 · 배치만 표시">
+      <span class="selected"><img src="../../assets/icons/journey/road.svg" width="22" height="22" alt="">길</span>
+      <span><img src="../../assets/icons/journey/file-text.svg" width="22" height="22" alt="">목표</span>
+      <span><img src="../../assets/icons/journey/users.svg" width="22" height="22" alt="">동료</span>
+      <span><img src="../../assets/icons/journey/backpack.svg" width="22" height="22" alt="">가방</span>
+      <span><img src="../../assets/icons/journey/menu-2.svg" width="22" height="22" alt="">메뉴</span>
+    </nav>
+
+    <!-- Independent hash sheets. No game calls, state advancement or scripted focus claims. -->
+    <section class="sheet destination-sheet" aria-labelledby="destination-heading">
+      <a class="scrim" href="#closed" tabindex="-1" aria-label="목적지 정보 닫기"></a>
+      <div class="sheet-body"><header><h1 id="destination-heading">양산 고가차도</h1><a class="close" href="#closed">닫기</a></header>
+        <div class="sheet-scroll">
+          <figure><img src="../../assets/scenes/destination-yangsan-v1.webp" width="1024" height="576" alt="무너진 고가 아래 남은 진입로의 기존 장소 삽화"><figcaption>장소 정보용 삽화 · 실제 주행 화면 아님</figcaption></figure>
+          <p>무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.</p>
+          <h2>도착하면</h2><p>주변을 직접 탐색할 수 있다. 차를 세운 뒤 남은 구조물과 쓸 만한 물자를 살펴본다.</p>
+          <p class="sheet-note">기본 화면에는 짧은 예고를, 여기에는 사진과 자세한 설명을 둡니다. 닫으면 보고 있던 여정 패널로 돌아갑니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet map-sheet" aria-labelledby="map-heading">
+      <a class="scrim" href="#closed" tabindex="-1" aria-label="지도 예시 닫기"></a>
+      <div class="sheet-body"><header><h1 id="map-heading">이동 구간</h1><a class="close" href="#closed">닫기</a></header>
+        <div class="sheet-scroll">
+          <p class="sheet-note">배치 설명용 개략도 · 실제 지형 지도 아님</p>
+          <div class="route-diagram" aria-label="밀양에서 양산으로 이어지는 구간">
+            <div class="diagram-origin"><span class="pin"></span><b>밀양 장터</b></div>
+            <div class="diagram-line"><span class="diagram-car when-drive">현재 구간</span></div>
+            <div class="diagram-destination"><span class="pin"></span><b>양산 고가차도</b></div>
+          </div>
+          <p>이동 경로를 확인하는 자리는 남겨 둡니다. 실제 연결 시에는 기존 전체 지도를 열고, 닫으면 원래 화면으로 돌아옵니다.</p>
+          <p class="sheet-note">이 초안에서는 목적지를 바꾸거나 시간을 진행하지 않습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet record-sheet" aria-labelledby="record-heading">
+      <a class="scrim" href="#closed" tabindex="-1" aria-label="보급 기록 닫기"></a>
+      <div class="sheet-body"><header><h1 id="record-heading">보급 기록</h1><a class="close" href="#closed">닫기</a></header><div class="sheet-scroll">
+        <h2>점심 식사</h2><p>식량 ∞ · 테스트 소모 없음</p><p class="sheet-note">현재 STOP 화면에 있던 기록입니다. 추가 식사를 실행하거나 자원을 바꾸지 않습니다. 일반 기록만 작게 정리하고, 연료 부족 같은 위험 안내는 별도로 눈에 띄게 표시해야 합니다.</p>
+      </div></div>
+    </section>
+
+    <section class="sheet next-action-sheet" aria-labelledby="action-heading">
+      <a class="scrim" href="#closed" tabindex="-1" aria-label="다음 행동 설명 닫기"></a>
+      <div class="sheet-body"><header><h1 id="action-heading">실제 연결 시 다음 행동</h1><a class="close" href="#closed">닫기</a></header><div class="sheet-scroll">
+        <div class="for-depart"><h2>출발 → 주행</h2><p>출발하면 탭 자리에 ‘이동 중’이 들어갑니다. 풍경과 패널의 경계는 움직이지 않고, 기존 캔버스에서 차량과 길이 움직입니다.</p></div>
+        <div class="for-settlement"><h2>정착지 안으로</h2><p>기존 밀양 장터 화면으로 들어갑니다. 나가면 원래 머물기 패널로 돌아옵니다.</p></div>
+        <div class="when-arrive"><h2>주변 탐색</h2><p>실제 탐색 횟수·상태로 비용과 이용 가능 여부를 확인한 뒤 기존 탐색 흐름으로 이어집니다. 발견물과 결과는 미리 보여 주지 않습니다.</p></div>
+        <p class="sheet-note">여기서는 실행하지 않습니다. 위 정차·주행·도착 도구로 전후 배치만 비교해 주세요. 도착 사건이 있다면 기존 사건 흐름이 먼저이며, 이 예시는 그 뒤 일반 화면입니다.</p>
+      </div></div>
+    </section>
+
+    <section class="sheet choose-action-sheet" aria-labelledby="choose-action-heading">
+      <a class="scrim" href="#closed" tabindex="-1" aria-label="행동 안내 닫기"></a>
+      <div class="sheet-body"><header><h1 id="choose-action-heading">기존 행동 선택창 유지</h1><a class="close" href="#closed">닫기</a></header><div class="sheet-scroll">
+        <p>할 일을 고르고, 시간과 비용을 확인한 뒤 실행합니다. 선택만으로 게임 행동이 시작되지는 않습니다.</p>
+        <ul><li class="when-stop">정착지 안으로</li><li>주변 탐색</li><li>야영 준비</li><li>차체 정비</li><li>라디오 수리</li></ul>
+        <p class="sheet-note">실제 목록은 장소와 보유품에 따라 달라집니다. 이번 초안은 세 상태의 높이 비교에 집중하며, 선택창 자체는 다시 설계하지 않습니다.</p>
+      </div></div>
+    </section>
+
+    <section class="sheet choose-destination-sheet" aria-labelledby="choose-destination-heading">
+      <a class="scrim" href="#closed" tabindex="-1" aria-label="목적지 선택 설명 닫기"></a>
+      <div class="sheet-body"><header><h1 id="choose-destination-heading">기존 목적지 선택창 유지</h1><a class="close" href="#closed">닫기</a></header><div class="sheet-scroll">
+        <p>갈 수 있는 경로와 예상 시간·소모량을 확인하고 고릅니다. 취소하면 이전 선택으로 돌아옵니다.</p>
+        <p class="sheet-note">출발 전 예시는 현재 주행 구간인 밀양 → 양산을 사용했습니다. 실제 과거 화면을 복원한 것은 아닙니다. 도착 후 목적지나 예상 시간은 이 초안에서 임의로 정하지 않았습니다.</p>
+      </div></div>
+    </section>
+
+    <section class="sheet objective-sheet" aria-labelledby="objective-heading">
+      <a class="scrim" href="#closed" tabindex="-1" aria-label="목표 연결 설명 닫기"></a>
+      <div class="sheet-body"><header><h1 id="objective-heading">메인 스토리 기록으로</h1><a class="close" href="#closed">닫기</a></header><div class="sheet-scroll">
+        <p>기존 ‘부모님이 탄 다음 차’ 기록을 여는 자리입니다. 목표나 이야기 진행을 변경하지 않습니다.</p>
+      </div></div>
+    </section>
+  </section>
+</main>
+</body>
+</html>

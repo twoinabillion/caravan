@@ -115,10 +115,14 @@ function validateStructuredTurns(turns, where) {
 function validateMissionBrief(mission, where) {
   need(isObject(mission), where, '메인 스토리 안내가 객체가 아님');
   if (!isObject(mission)) return false;
-  const fields = ['objective', 'why', 'now', 'promise', 'optional'];
+  const fields = ['objective', 'intent', 'optional'];
   for (const field of fields)
     need(typeof mission[field] === 'string' && mission[field].trim(), `${where}.${field}`, '본문 없음');
-  return fields.every(field => typeof mission[field] === 'string' && mission[field].trim());
+  const leads = Array.isArray(mission.leads) && mission.leads.length === 3 &&
+    mission.leads.every(lead => isObject(lead) && ['name','detail'].every(field =>
+      typeof lead[field] === 'string' && lead[field].trim()));
+  need(leads, `${where}.leads`, '이름과 의미가 있는 세 단서 필요');
+  return leads && fields.every(field => typeof mission[field] === 'string' && mission[field].trim());
 }
 function validateEventBody(event, where) {
   const textBody = typeof event.text === 'function' ||

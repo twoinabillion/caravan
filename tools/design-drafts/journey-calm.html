@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>풍경은 그대로, 할 일만 바뀌게 · 디자인 초안</title>
+  <link rel="stylesheet" href="journey-calm.css">
+</head>
+<body>
+<main class="prototype">
+  <!-- Hashes select only draft views. Paired picker targets preserve the selected action on cancel. -->
+  <span class="state-target" id="stl"></span><span class="state-target picker-target" id="pick-stl"></span>
+  <span class="state-target" id="explore"></span><span class="state-target picker-target" id="pick-explore"></span>
+  <span class="state-target" id="camp"></span><span class="state-target picker-target" id="pick-camp"></span>
+  <span class="state-target" id="repair"></span><span class="state-target picker-target" id="pick-repair"></span>
+  <span class="state-target" id="radio"></span><span class="state-target picker-target" id="pick-radio"></span>
+  <aside class="draft-tools" aria-label="게임과 분리된 초안 도구">
+    <label class="compare"><input id="before" type="checkbox"><span>현재 높이 비교</span></label>
+    <details class="draft-help"><summary>초안 안내</summary><div>
+      <b>풍경은 그대로, 할 일만 바뀌게</b>
+      <p>목적지 ↔ 머물기를 눌러 보세요. 제안에서는 패널 높이가 같고, 행동 변경을 누를 때만 목록이 뜹니다.</p>
+      <p>‘현재 높이 비교’는 기존 292/340px 높이만 재현합니다. 기존 화면 전체를 재현한 것은 아닙니다.</p>
+      <p>밀양 DAY 1 · 11:58, 대구행 52km · 240분은 요청 시점 정보입니다. 다른 행동의 예상치는 배치 예시이며 실제 보유품·개조·탐색 횟수와 연결되지 않습니다.</p>
+      <p>풍경 교체는 기존 원경·기본 차량의 정적 합성 예시입니다. 실제 주행·날씨·개조 렌더러나 현재 플레이 화면은 아닙니다.</p>
+      <p>실제 게임·저장·빌드 미변경. 스크립트 없이 동작합니다. Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다.</p>
+      <small>다시 누르면 닫힙니다.</small>
+    </div></details>
+    <span class="draft-tag">미적용 초안</span>
+  </aside>
+
+  <section class="game-example" aria-label="독립 배치 초안 · 실제 게임 아님">
+    <div class="scenery">
+      <img class="environment miryang" src="../../assets/ui/road-environment/miryang-v1.webp" width="1024" height="576" alt="기존 밀양 장터 원경의 배치 예시">
+      <img class="environment daegu" src="../../assets/ui/road-environment/daegu-v1.webp" width="1024" height="576" alt="기존 대구 돔 시장 원경의 교체 예시">
+      <header class="scene-heading"><strong><span class="at-miryang">밀양 장터</span><span class="at-daegu">대구 돔 시장</span></strong><span><span class="at-miryang">DAY 1 · 11:58</span><span class="at-daegu">가상 도착 예시</span></span></header>
+      <div class="ground" aria-hidden="true"></div>
+      <img class="dalguji" src="../../assets/ui/journey-dalguji-base-v1.webp" width="1024" height="608" alt="기본 달구지 · 탭과 풍경을 바꿔도 같은 위치와 크기">
+      <label class="scene-switch"><input id="scene-daegu" type="checkbox"><span><span class="at-miryang">대구 풍경 예시</span><span class="at-daegu">밀양으로 되돌리기</span><i aria-hidden="true">↔</i></span></label>
+      <span class="comparison-note">기존 높이만 비교 중</span>
+    </div>
+
+    <div class="vehicle-strip" aria-label="요청 시점 차량 상태 · 표시 예시">
+      <span><img src="../../assets/icons/journey/gas-station.svg" width="16" height="16" alt="">연료 ∞</span>
+      <span><img src="../../assets/icons/journey/tool.svg" width="16" height="16" alt="">차체 82%</span>
+      <span><img src="../../assets/icons/journey/sun.svg" width="16" height="16" alt="">맑음</span>
+      <span class="risk"><img src="../../assets/icons/journey/focus-2.svg" width="16" height="16" alt="추적 위험">0/5</span>
+    </div>
+
+    <div class="deck-area">
+      <section class="deck" aria-label="정차 행동 선택">
+        <fieldset class="journey-tabs"><legend class="sr-only">정차 모드</legend>
+          <label><input id="mode-route" name="journey-mode" type="radio" checked><span>목적지</span></label>
+          <label><input id="mode-stay" name="journey-mode" type="radio"><span>머물기</span></label>
+        </fieldset>
+        <div class="route-panel panel">
+          <details class="destination-choice"><summary><span><b>대구 돔 시장</b><small>목적지 변경</small></span><i aria-hidden="true">›</i></summary><div class="explanation"><b>기존 목적지 선택창으로</b><p>이 초안은 목적지 목록을 다시 설계하지 않습니다. 실제 이동 없이 선택 → 예상치 → 출발 구조를 유지합니다.</p><small>다시 눌러 닫기</small></div></details>
+          <div class="forecast"><span><b>52km · 240분</b><small>연료 소모 없음</small></span><details class="map-preview"><summary>지도 보기</summary><div class="explanation"><b>지도는 요청할 때만</b><p>실제 구현에서는 위 풍경 자리를 지도로 바꿉니다. 초안에는 경로를 임의로 그리지 않았습니다.</p><small>다시 눌러 닫기</small></div></details></div>
+          <details class="execute"><summary>대구 돔 시장으로 출발 <span aria-hidden="true">→</span></summary><div class="explanation"><b>주행으로 이어집니다</b><p>이 버튼이 실제 이동을 시작합니다. 초안에서는 이동하거나 시간을 소모하지 않습니다.</p><small>다시 눌러 닫기</small></div></details>
+          <details class="quiet-link"><summary><img src="../../assets/icons/journey/file-text.svg" width="17" height="17" alt="">부모님이 탄 다음 차 <span aria-hidden="true">›</span></summary><div class="explanation"><b>메인 스토리 기록으로</b><p>기존 목표 화면에 연결할 자리입니다. 초안에서는 기록을 열거나 진행하지 않습니다.</p><small>다시 눌러 닫기</small></div></details>
+        </div>
+        <div class="stay-panel panel">
+          <article class="action-state for-stl" aria-label="정착지 안으로 선택">
+            <a class="action-choice" href="#pick-stl"><span><b>정착지 안으로</b><small>행동 변경 · 5가지</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast simple">거래 · 대화 · 지역 활동</p>
+            <details class="execute"><summary>정착지 안으로 <span aria-hidden="true">→</span></summary><div class="explanation"><b>밀양 장터로 들어갑니다</b><p>기존 정착지에서 사람과 거래하고 부탁과 소문을 확인합니다. 실제 게임은 그대로입니다.</p><small>다시 눌러 닫기</small></div></details>
+          </article>
+          <article class="action-state for-explore" aria-label="주변 탐색 선택">
+            <a class="action-choice" href="#pick-explore"><span><b>주변 탐색</b><small>행동 변경 · 5가지</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast simple">시간·피로 소모 · 발견물 미확인</p>
+            <details class="execute"><summary>주변 탐색 <span aria-hidden="true">→</span></summary><div class="explanation"><b>탐색 사건으로 이어집니다</b><p>실제 구현에서는 현재 탐색 횟수와 상태로 계산한 시간·피로를 이 자리에 표시합니다. 초안에서는 탐색하지 않습니다.</p><small>다시 눌러 닫기</small></div></details>
+          </article>
+          <article class="action-state for-camp" aria-label="야영 준비 선택">
+            <a class="action-choice" href="#pick-camp"><span><b>야영 준비</b><small>행동 변경 · 5가지</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast simple">다음 날 06:30 · 피로 회복</p>
+            <details class="execute"><summary>야영 준비 <span aria-hidden="true">→</span></summary><div class="explanation"><b>바로 잠들지 않습니다</b><p>기존 야영 화면에서 식사·정비·대화를 고른 뒤 쉽니다. 준비 중에는 돌아올 수 있습니다.</p><small>실제 야영하지 않습니다. 다시 눌러 닫기.</small></div></details>
+          </article>
+          <article class="action-state for-repair" aria-label="차체 정비 선택">
+            <a class="action-choice" href="#pick-repair"><span><b>차체 정비</b><small>행동 변경 · 5가지</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast simple">1시간 40분 · 부품 필요</p>
+            <details class="execute"><summary>차체 정비 <span aria-hidden="true">→</span></summary><div class="explanation"><b>차체를 현장에서 복구합니다</b><p>구현할 때는 실제 부품 보유량과 개조에 따라 비용·이용 가능 여부를 표시합니다. 이 초안은 부품을 쓰지 않습니다.</p><small>다시 눌러 닫기</small></div></details>
+          </article>
+          <article class="action-state for-radio" aria-label="라디오 수리 선택">
+            <a class="action-choice" href="#pick-radio"><span><b>라디오 수리</b><small>행동 변경 · 5가지</small></span><i aria-hidden="true">›</i></a>
+            <p class="forecast simple">40분 · 라디오 진공관 필요</p>
+            <details class="execute"><summary>라디오 수리 <span aria-hidden="true">→</span></summary><div class="explanation"><b>주행 중 방송을 되살립니다</b><p>진공관이 있을 때만 실행할 수 있고, 수리하면 목록에서 빠집니다. 여기서는 선택과 배치만 비교합니다.</p><small>다시 눌러 닫기</small></div></details>
+          </article>
+          <details class="quiet-link"><summary>선택만으로 실행되지 않아요 <span aria-hidden="true">?</span></summary><div class="explanation"><b>고르기와 실행은 따로</b><p>‘행동 변경’에서 할 일을 고르면 여기로 돌아옵니다. 비용을 확인하고 큰 버튼을 눌러 시작합니다.</p><small>다시 눌러 닫기</small></div></details>
+        </div>
+      </section>
+    </div>
+    <nav class="bottom-nav" aria-label="기존 하단 메뉴 · 배치만 표시">
+      <span class="selected"><img src="../../assets/icons/journey/road.svg" width="22" height="22" alt="">길</span>
+      <span><img src="../../assets/icons/journey/file-text.svg" width="22" height="22" alt="">목표</span>
+      <span><img src="../../assets/icons/journey/users.svg" width="22" height="22" alt="">동료</span>
+      <span><img src="../../assets/icons/journey/backpack.svg" width="22" height="22" alt="">가방</span>
+      <span><img src="../../assets/icons/journey/menu-2.svg" width="22" height="22" alt="">메뉴</span>
+    </nav>
+
+    <section class="activity-picker" aria-labelledby="picker-heading">
+      <a class="picker-scrim for-stl" href="#stl" tabindex="-1" aria-label="선택 취소"></a><a class="picker-scrim for-explore" href="#explore" tabindex="-1" aria-label="선택 취소"></a><a class="picker-scrim for-camp" href="#camp" tabindex="-1" aria-label="선택 취소"></a><a class="picker-scrim for-repair" href="#repair" tabindex="-1" aria-label="선택 취소"></a><a class="picker-scrim for-radio" href="#radio" tabindex="-1" aria-label="선택 취소"></a>
+      <div class="picker-sheet">
+        <header><div><h1 id="picker-heading">여기서 할 일</h1><p>고른 뒤 비용을 확인하세요.</p></div><a class="cancel for-stl" href="#stl">취소</a><a class="cancel for-explore" href="#explore">취소</a><a class="cancel for-camp" href="#camp">취소</a><a class="cancel for-repair" href="#repair">취소</a><a class="cancel for-radio" href="#radio">취소</a></header>
+        <div class="activity-list">
+          <a href="#stl" data-choice="stl"><img src="../../assets/icons/journey/map-pin.svg" width="26" height="26" alt=""><span><b>정착지 안으로</b><small>거래 · 대화 · 지역 활동</small></span><i aria-hidden="true">›</i></a>
+          <a href="#explore" data-choice="explore"><img src="../../assets/ui/stay-icon-explore-v1.webp" width="30" height="30" alt=""><span><b>주변 탐색</b><small>시간과 피로를 쓰고 주변을 살핀다</small></span><i aria-hidden="true">›</i></a>
+          <a href="#camp" data-choice="camp"><img src="../../assets/ui/stay-icon-camp-v1.webp" width="30" height="30" alt=""><span><b>야영 준비</b><small>식사·정비·대화를 고른 뒤 휴식</small></span><i aria-hidden="true">›</i></a>
+          <a href="#repair" data-choice="repair"><img src="../../assets/ui/stay-icon-repair-v1.webp" width="30" height="30" alt=""><span><b>차체 정비</b><small>부품으로 차체를 복구한다</small></span><i aria-hidden="true">›</i></a>
+          <a href="#radio" data-choice="radio"><img src="../../assets/ui/stay-icon-radio-v1.webp" width="30" height="30" alt=""><span><b>라디오 수리</b><small>라디오 진공관이 필요하다</small></span><i aria-hidden="true">›</i></a>
+        </div>
+        <p class="picker-note">목록을 닫아도 풍경과 패널의 크기는 그대로.</p>
+      </div>
+    </section>
+  </section>
+</main>
+</body>
+</html>

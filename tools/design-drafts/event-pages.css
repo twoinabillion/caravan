@@ -1,0 +1,112 @@
+/* Isolated, script-free event prototype. No gameplay selectors or live state. */
+:root {
+  color-scheme: dark;
+  --outside: #202a2e;
+  --surface: #2c363a;
+  --ink: #f1eee5;
+  --muted: #c3cecf;
+  --lamp: #d8c29e;
+  --edge: #77868a;
+  --reading-size: 18px;
+  --roomy: block;
+  --roomy-action: flex;
+  --compact-action: none;
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+* { box-sizing: border-box; }
+html { margin: 0; }
+body { margin: 0; background: var(--outside); color: var(--ink); }
+a { color: inherit; text-underline-offset: 4px; }
+input { accent-color: var(--lamp); }
+:focus-visible { outline: 3px solid var(--lamp); outline-offset: -3px; }
+.draft-tools {
+  position: relative; z-index: 2; display: flex; align-items: center;
+  justify-content: space-between; gap: 10px; width: min(100%, 480px);
+  min-height: 44px; margin: 0 auto; padding: 0 18px;
+  background: var(--outside); color: var(--muted); font-size: 12px;
+}
+.draft-tools > a, .draft-tools label, .draft-help > summary {
+  display: flex; align-items: center; gap: 5px; min-height: 44px; cursor: pointer;
+}
+.draft-tools input { margin: 0; width: 16px; height: 16px; }
+.help-content {
+  position: absolute; inset: 44px 0 auto; max-height: calc(100dvh - 54px);
+  overflow-y: auto; padding: 10px 22px 20px; background: var(--surface);
+  border: 1px solid var(--edge); color: var(--ink); font-size: 15px; line-height: 1.6;
+}
+.help-content p { margin: 12px 0; }
+.draft-stage { width: min(100%, 480px); margin: 0 auto; }
+.event-page {
+  display: none; flex-direction: column; height: calc(100dvh - 44px);
+  position: relative; background: var(--surface); word-break: keep-all; overflow-wrap: anywhere;
+}
+.event-page.default-page { display: flex; }
+.draft-stage:has(> .event-page:target) > .default-page { display: none; }
+.draft-stage:has(> .event-page:target) > .event-page:target { display: flex; }
+.scene-art { flex: 1 1 0; min-height: 120px; margin: 0; background: var(--outside); }
+.scene-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 48% 52%; }
+.reading-copy { flex: none; padding: 22px 24px 10px; font-size: var(--reading-size); line-height: 1.55; }
+.reading-copy p { margin: 0 0 12px; }
+.reading-copy > :last-child, .page-copy > :last-child { margin-bottom: 0; }
+.page-copy + .page-copy { margin-top: 14px; }
+.page-copy[data-layout="roomy"] { display: var(--roomy); }
+.roomy-only { display: var(--roomy); }
+.narration { color: var(--muted); }
+.speaker {
+  display: flex; align-items: center; gap: 10px; min-height: 48px;
+  color: var(--lamp); font-size: 14px; font-weight: 650; line-height: 1.5;
+}
+.speaker img { display: block; flex: none; width: 48px; height: 48px; object-fit: contain; border-radius: 3px; }
+.reading-copy .speaker, .choice-context .speaker { margin-bottom: 8px; }
+.dialogue { font-weight: 500; }
+.page-actions { flex: none; display: flex; gap: 12px; padding: 12px 24px max(18px, env(safe-area-inset-bottom)); }
+.page-actions.paired { display: grid; grid-template-columns: 56px minmax(0, 1fr); }
+.advance, .back {
+  display: flex; align-items: center; justify-content: center; width: 100%;
+  min-height: 48px; padding: 10px 14px; font-size: 16px; line-height: 1.5; text-decoration: none;
+}
+.advance { color: var(--outside); background: var(--lamp); border-radius: 3px; font-weight: 700; }
+.back { color: var(--muted); }
+.advance:hover { background: #ead1aa; }
+.advance:focus-visible { outline-color: var(--outside); outline-offset: -5px; }
+.page-actions [data-layout="roomy"] { display: var(--roomy-action); }
+.page-actions [data-layout="compact"] { display: var(--compact-action); }
+.choice-page .scene-art { flex: 0 1 min(28dvh, 200px); min-height: 96px; }
+.choice-context {
+  flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center;
+  padding: 22px 24px; font-size: var(--reading-size); line-height: 1.55;
+}
+.choice-context p { margin: 0; }
+.choices { flex: none; display: grid; gap: 10px; padding: 0 24px; }
+.choices a {
+  display: flex; align-items: center; min-height: 58px; padding: 14px 16px;
+  border: 1px solid var(--edge); border-radius: 3px; color: var(--ink);
+  font-size: var(--reading-size); line-height: 1.4; text-decoration: none;
+}
+.choices a:hover { background: var(--outside); border-color: var(--lamp); }
+.receipt-copy { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; padding: 28px 24px; font-size: var(--reading-size); line-height: 1.55; }
+.receipt-copy h1 { margin: 0 0 14px; font-size: 25px; font-weight: 600; letter-spacing: -.5px; line-height: 1.35; }
+.receipt-copy p { margin: 0 0 16px; color: var(--muted); }
+.outcome-note { flex: none; padding: 6px 24px 0; color: var(--lamp); font-size: 15px; line-height: 1.5; }
+.outcome-note > p { margin: 10px 0 0; }
+.history { color: var(--muted); font-size: 15px; }
+.history > summary { display: flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 5px; cursor: pointer; }
+.history[open] { position: absolute; inset: 12px 12px 90px; margin: 0; padding: 0 18px; display: flex; flex-direction: column; background: var(--outside); border: 1px solid var(--edge); }
+.history[open] > summary { flex: none; }
+.history-copy { min-height: 0; overflow-y: auto; padding: 12px 0; font-size: var(--reading-size); line-height: 1.6; }
+.history-copy .chosen { color: var(--lamp); }
+body:has(#large-text:checked) { --reading-size: 21px; --roomy: none; --roomy-action: none; --compact-action: flex; }
+body:has(#full-art:checked) .scene-art img { object-fit: contain; }
+@media (max-width: 349px), (max-height: 650px) {
+  :root { --roomy: none; --roomy-action: none; --compact-action: flex; }
+  .reading-copy { padding: 16px 20px 8px; }
+  .choice-context { padding: 14px 20px; }
+  .choices { padding-inline: 20px; }
+  .choices a { padding-block: 10px; }
+  .page-actions { padding: 10px 20px max(12px, env(safe-area-inset-bottom)); }
+  .receipt-copy { padding: 20px; }
+  .outcome-note { padding-inline: 20px; }
+}
+/* No clipping or font shrinking. At extreme zoom, document overflow is a safety
+   fallback. Only the optional transcript and draft help own ordinary scrolling.
+   No automatic motion; reduced-motion users receive the same static pages. */

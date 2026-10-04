@@ -40,6 +40,7 @@ const context=vm.createContext({console,Math,JSON,Number,String,
 vm.runInContext([
   section('  function rememberJourneyView(){','  let questRouteFocus='),
   section('  function routeConsoleModel(','  function routeThumbnail('),
+  section('  function destinationPreview(','  function journeyDetailHtml('),
   section('  function tripDestinationPickerHtml(','  function syncRouteMap('),
   section('  function wireRouteConsole(','  function applyIcons(')
 ].join('\n'),context);
@@ -65,6 +66,12 @@ assert(html.includes('연료 부족'));
 assert(html.includes('영동 &lt;포도밭>'),'escape destination names');
 assert(html.includes('disabled aria-describedby="trip-depart-reason"'),'blocked preview must not enable departure');
 assert.equal((html.match(/data-trip-route=/g)||[]).length,3);
+context.navChoiceId='muju';context.S.van=20;context.S.fatigue=80;
+const warning=vm.runInContext('routeConsoleHtml(models)',context);
+assert.match(warning,/<summary>차체 수리 권장 /,'most urgent warning remains visible without opening details');
+assert.match(warning,/차체 수리 권장 · 휴식 필요/,'all warning details remain accessible');
+assert.match(warning,/목표 확인/,'compact objective retains its action beside the warning');
+context.navChoiceId='gumi';context.S.van=82;context.S.fatigue=50;
 choice.onclick();assert(picker.open);assert.equal(choice.attributes['aria-expanded'],'true');
 assert.equal(buttons[1].focuses,1,'initial keyboard focus follows the selected destination');
 let stopped=false;picker.onkeydown({key:'Escape',stopPropagation(){stopped=true;}});assert(stopped);

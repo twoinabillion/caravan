@@ -90,13 +90,11 @@ const ROAD_ENVIRONMENT = (()=>{
     nextCtx.clearRect(0,0,W,H);
     nextCtx.drawImage(skyCanvas,0,0,skyCanvas.width,skyCanvas.height,0,0,W,H);
     terrain(nextCtx,to,frame);terrain(target,from,frame);
-    // A narrow moving boundary, not a full-screen double-exposure dissolve.
-    const feather=W*.12,edge=W+feather-state.mix*(W+2*feather);
-    nextCtx.save();nextCtx.globalCompositeOperation='destination-in';
-    const mask=nextCtx.createLinearGradient(edge-feather,0,edge+feather,0);
-    mask.addColorStop(0,'rgba(0,0,0,0)');mask.addColorStop(1,'rgba(0,0,0,1)');
-    nextCtx.fillStyle=mask;nextCtx.fillRect(0,0,W,H);nextCtx.restore();
+    // The destination enters from the right at full opacity. Copy its shared
+    // sky too: transparent terrain must not expose the departing buildings.
+    const edge=W*(1-state.mix);
     target.save();target.imageSmoothingEnabled=true;
+    target.beginPath();target.rect(edge,0,W-edge,H);target.clip();
     target.drawImage(nextScene,0,0,nextScene.width,nextScene.height,0,0,W,H);target.restore();
   }
   return {draw};

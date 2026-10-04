@@ -12,16 +12,49 @@ function setup(){
 }
 const event=(D,id)=>permanentEvents(D).find(e=>e.id===id);
 test('1039 events retain branches, costs, effects and chains; only callsign recall gains a prerequisite',()=>{
- const {data:D}=setup(),omit=new Set(['text','body','title','label','turnSpeakers','turns','readingRecord','note']);
+ const {data:D}=setup(),omit=new Set(['text','body','title','label','turnSpeakers','turns','readingRecord','note','missionBrief']);
  const rows=permanentEvents(D).map(e=>{
   const row=JSON.parse(JSON.stringify(e,(k,v)=>omit.has(k)?undefined:v));
   if(e.id==='talkr_es_2')delete row.needFlag;return row;
  }).sort((a,b)=>a.id.localeCompare(b.id));
- // Baseline taken before the rewrite; excludes presentation, never numerical effects.
+ // Presentation-only missionBrief excluded against the pre-condensation baseline.
+ // Costs, effects, prerequisites and chains remain in the contract.
  assert.equal(rows.length,1039);
- assert.equal(hash(rows),'473da369110bce4650b8559b0c41093d31d4132b3515cbd193899ee9bef5fd7e');
+ assert.equal(hash(rows),'abf633951b873662bf81e42ac1fc75a1e47b0ec6450a11b98371970626543f38');
  assert.equal(event(D,'talkr_es_2').needFlag,'eunsu_callsign_held');
  assert.equal(event(D,'talk_es_02').choices[0].out[0].fx.flag,'eunsu_callsign_held');
+});
+test('onboarding keeps a compact objective, three leads, optional side missions and the same road exit',()=>{
+ const {data:D}=setup(),e=D.onboardingMission,b=e.missionBrief;
+ assert.equal(b.objective.replace(/\s+/g,' '),'남산의 강제 이송을 멈춘다');
+ assert(!b.why&&!b.promise,'intro exposition is not repeated as two extra sections');
+ assert.deepEqual(plain(b.leads).map(row=>row.name),['이송표','검증키','증언']);
+ assert(b.leads.every(row=>row.detail.length>3));
+ assert.match(b.intent,/사람의 확인 없이는/);
+ assert.match(b.optional,/사이드 미션.*내가 돕고 싶을 때/);
+ assert.equal(e.choices.length,1);
+ assert.equal(e.choices[0].label,'길로 나가기');
+ assert.equal(e.choices[0].continueToRoad,true);
+ assert.equal(e.choices[0].out[0].fx.flag,'main_mission_started');
+ assert.match(e.choices[0].out[0].fx.note.body,/북쪽으로.*남산/);
+});
+test('brief validation requires a goal, intent, three named leads and optional-mission guidance',()=>{
+ const source=fs.readFileSync('tools/validate-content.cjs','utf8');
+ const start=source.indexOf('function validateMissionBrief('),end=source.indexOf('\nfunction validateEventBody',start);
+ const errors=[];
+ const validate=new Function('need','isObject',source.slice(start,end)+';return validateMissionBrief;')(
+  (ok,where)=>{if(!ok)errors.push(where)},v=>v!==null&&typeof v==='object'&&!Array.isArray(v));
+ const brief=plain(setup().data.onboardingMission.missionBrief);
+ assert(validate(brief,'brief'));assert.equal(errors.length,0);
+ for(const field of ['objective','intent','optional','leads']){
+  const missing={...brief};delete missing[field];assert.equal(validate(missing,'brief'),false);
+ }
+ for(const field of ['objective','intent','optional'])for(const value of ['',42,null])
+  assert.equal(validate({...brief,[field]:value},'brief'),false);
+ for(const leads of [null,[],brief.leads.slice(0,2),[...brief.leads,brief.leads[0]],
+  [null,...brief.leads.slice(1)],[{name:'표',detail:42},...brief.leads.slice(1)]])
+  assert.equal(validate({...brief,leads},'brief'),false);
+ assert.equal(validate(null,'brief'),false);
 });
 test('all 17 NPCs distinguish a first encounter, neutral revisit and actual affinity',()=>{
  const {data:D}=setup();assert.equal(Object.keys(D.npcs).length,17);
@@ -39,28 +72,25 @@ test('all 17 NPCs distinguish a first encounter, neutral revisit and actual affi
 });
 function npcHarness(D,S,fame=false){
  const source=fs.readFileSync('src/07-ui.js','utf8');
- const start=source.indexOf('  function talk(nid){'),end=source.indexOf('  function talkOff(nid, greet){',start);
+ const start=source.indexOf('  function talk(nid){'),end=source.indexOf('  // Small-talk uses',start);
  let active=null,saved=null,offroad=null;
- const body={querySelector:s=>s==='.dlg.talk'?active:null,querySelectorAll:()=>[],prepend:d=>{active=d}};
- const el=(tag,cls,html)=>{
-  const say={},choices={},buttons=['rumor','chat','x'].map(r=>({dataset:{r}}));
-  return {html,querySelectorAll:()=>buttons,querySelector:s=>s==='.say'?say:choices,
-   remove(){active=null},buttons};
- };
- const G={hasPerk:()=>fame,save(){saved=plain(S)},addNote(){}};
- const talk=new Function('D','S','G','OFF','talkOff','$','el','npcFace','pick','renderHud',
-  'showStl','curStl',source.slice(start,end)+';return talk;')(
-   D,S,G,{ready:()=>true},(id,greet)=>{offroad=greet},()=>body,el,()=>'',a=>a[0],()=>{},()=>{},D.nodes[D.npcs.geumja.node].stl);
+ const G={hasPerk:()=>fame,save(){saved=plain(S)},addNote(){},applyFx(){G.save()}};
+ const showNpcDialogue=(id,turns,actions)=>{active={html:turns.map(t=>t.text).join(''),actions}};
+ const talk=new Function('D','S','G','OFF','talkOff','showNpcDialogue','pick','renderHud',
+  'showStl','curStl','curEv','curStory','closeEvent',source.slice(start,end)+';return talk;')(
+   D,S,G,{ready:()=>true},(id,greet)=>{offroad=greet},showNpcDialogue,a=>a[0],()=>{},()=>{},D.nodes[D.npcs.geumja.node].stl,null,null,()=>{active=null});
  return {talk,get active(){return active},get saved(){return saved},get offroad(){return offroad}};
 }
 test('actual NPC entry saves the greeting state, cancel is safe, fame applies only once after reload',()=>{
  const {data:D}=setup();let S={mode:'standard',npcs:{geumja:{met:false,att:0}},flags:{}};
  let h=npcHarness(D,S);h.talk('geumja');
  assert(h.active.html.includes(D.npcs.geumja.greet0));assert(h.saved.npcs.geumja.met);
- h.active.buttons.find(b=>b.dataset.r==='x').onclick();assert.equal(h.active,null);
+ h.active.actions.find(b=>b.label==='그만 일어난다').run();assert.equal(h.active,null);
  S=plain(h.saved);h=npcHarness(D,S);h.talk('geumja');
  assert(h.active.html.includes(D.npcRepeatGreetings.geumja));
- h.active.buttons.find(b=>b.dataset.r==='chat').onclick();assert.equal(h.saved.npcs.geumja.att,3);
+ h.active.actions.find(b=>b.label==='이런저런 얘기를 나눈다').run();assert.equal(h.saved.npcs.geumja.att,3);
+ h.active.actions.find(b=>b.label==='요즘 소문 들은 거 없어요?').run();assert.equal(h.saved.npcs.geumja.att,8);
+ assert(h.saved.flags.rumor_geumja);assert.equal(h.active.actions.length,1);
  S={mode:'offroad',npcs:{geumja:{met:false,att:0}},flags:{}};
  h=npcHarness(D,S,true);h.talk('geumja');
  assert.equal(h.offroad,D.npcs.geumja.greet0);assert.equal(h.saved.npcs.geumja.att,15);

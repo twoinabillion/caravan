@@ -76,7 +76,7 @@ for(const group of sceneGroups){
   const file=join(group.dir,name);
   const actual=dimensions(file);
   const isArrival=group.label==='scenes'&&/^arrival-.*\.webp$/i.test(name);
-  const isHub=group.label==='scenes'&&/^miryang-market-hub\.(?:jpe?g|webp)$/i.test(name);
+  const isHub=group.label==='scenes'&&/^miryang-market-hub(?:-v\d+)?\.(?:jpe?g|webp)$/i.test(name);
   const isUpgrade=group.label==='upgrades';
   const isUpgradeItem=isUpgrade&&/^upgrade-[a-z0-9]+-v\d+\.webp$/i.test(name);
   const ratio=actual.width/actual.height;

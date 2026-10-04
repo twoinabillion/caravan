@@ -112,18 +112,18 @@ def test_onboarding_finishes_with_one_direct_road_button():
         assert "남산으로 가는 첫 길을 고른다" not in page.locator("#ev-sheet").inner_text()
         assert "부두 출구 앞에서 차를 세우고 수첩을 폈다" not in page.locator("#ev-sheet").inner_text()
         assert "남산까지 가는 동안" not in page.locator("#ev-sheet").inner_text()
-        assert "남산의 강제 이송을 멈춘다" in page.locator("#ev-sheet .mission-brief h3").inner_text()
-        assert "먼저 찾아야 할 것" not in page.locator("#ev-sheet .mission-brief").inner_text()
-        assert "찾아야 할 것" in page.locator("#ev-sheet .mission-brief").inner_text()
-        objective_lines = page.locator("#ev-sheet .mission-brief h3").evaluate(
+        assert "남산의 강제 이송을 멈춘다" == " ".join(page.locator("#mission-purpose").inner_text().split())
+        assert page.locator("#ev-sheet .event-head, #ev-sheet .story-reader-tools").count() == 0
+        assert page.locator("#ev-sheet .departure-copy dl > div").count() == 3
+        objective_lines = page.locator("#mission-purpose").evaluate(
             "heading => Math.round(heading.getBoundingClientRect().height / parseFloat(getComputedStyle(heading).lineHeight))"
         )
-        assert objective_lines == 1
-        assert not page.locator("#ev-sheet .story-reader").is_visible()
+        assert objective_lines == 2
+        assert page.locator("#ev-sheet .story-reader").is_visible()
         scroll_state = page.locator("#ev-sheet .event-scroll").evaluate(
             "node => ({overflow:getComputedStyle(node).overflowY, client:node.clientHeight, scroll:node.scrollHeight})"
         )
-        assert scroll_state["overflow"] == "hidden"
+        assert scroll_state["overflow"] == "auto"
         assert scroll_state["scroll"] <= scroll_state["client"] + 1
         assert direct.evaluate(
             "button => { const dock=button.parentElement.getBoundingClientRect(); const box=button.getBoundingClientRect(); "

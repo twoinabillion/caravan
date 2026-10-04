@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
 import {inlineStyleAssets} from './inline-style-assets.mjs';
 import {compactStyleSource} from './compact-style-source.mjs';
+import {compactScriptSource} from './compact-script-source.mjs';
 
 /*
  * 이미지·오디오를 포함한 단일 HTML 빌더.
@@ -32,7 +33,7 @@ const after = [
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
   'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05-scene.js', 'src/06-mapgraph.js',
-  'src/07g-ui-home.js', 'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
+  'src/07g-ui-home.js', 'src/07h-story-pages.js', 'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
 const introScenes = {
@@ -254,6 +255,7 @@ const chunks = [
     :relative==='src/05a-road-environment.js'?roadEnvironment
     :relative==='src/05b-vehicle-kit.js'?vehicleKit
     :relative==='src/07f-ui-road-thoughts.js'?roadCues.result
+    :relative==='src/07-ui.js'?compactScriptSource(read(relative),relative)
     :relative==='src/03i-story-expansion.js'?inlineSceneAssetPaths(read(relative))
     :read(relative))
 ];

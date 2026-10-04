@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'"><title>시장 안으로 · 풍경은 옆으로</title><link rel="stylesheet" href="settlement-continuity.css"></head>
+<body><main class="draft">
+<span id="closed" class="target"></span><span id="enter" class="target"></span><span id="return" class="target"></span>
+<aside class="tools"><fieldset><legend class="sr">초안 장면</legend><label><input type="radio" name="view" id="town-view" checked><span>밀양 장터</span></label><label><input type="radio" name="view" id="road-view"><span>풍경 전환</span></label></fieldset><details><summary>초안 안내</summary><div><strong>게임·저장에 연결하지 않은 시안</strong><p>현재 밀양 DAY 1 · 17:51, 맑음과 네 장소를 기준으로 만들었습니다. 그림 안 표식이나 아래 장소명을 골라 보세요. ‘들어가기’와 ‘돌아가기’는 초안 설명만 엽니다.</p><p>주행은 양산 → 밀양의 전환 방식 비교용입니다. 기존 원경·기본 차량을 정적으로 재사용하며 실제 운전·개조·날씨·거리·현재 저장을 재현하지 않습니다. ‘재생’을 껐다 켜면 처음부터 다시 볼 수 있습니다.</p><p>정착지 그림은 정본 네 장을 첨부한 신규 생성 컨셉입니다. 군중은 이름 없는 주민이며 동료·보리는 없습니다. 표시한 시설 위치는 초안 배치이지 현재 게임 좌표가 아닙니다. 걷기·NPC 대화·가림 처리는 아직 구현하지 않았습니다.</p><p>원본 그림 관찰은 완료했습니다. Studio 직접 화면·터치 검수는 접근 제한으로 미완료입니다.</p></div></details></aside>
+<section class="phone town" aria-label="밀양 정착지 독립 초안">
+<header class="heading"><div><b>밀양 장터</b><small>DAY 1 · 17:51 · 맑음</small></div><a href="#return" aria-label="달구지로 돌아가기">↗</a></header>
+<div class="town-body">
+<input class="sr" id="market" type="radio" name="spot" checked><input class="sr" id="garage" type="radio" name="spot"><input class="sr" id="people" type="radio" name="spot"><input class="sr" id="alley" type="radio" name="spot">
+<div class="market-scene"><img src="settlement-continuity/miryang-hub.webp" width="960" height="1200" alt="맑은 늦은 오후의 밀양 시장 골목. 왼쪽 국수 솥과 김, 오른쪽 부품 천막, 안쪽 모닥불과 펌프가 길을 따라 이어진다.">
+<label class="pin market-pin" for="market"><i></i><span>국수 좌판</span></label><label class="pin garage-pin" for="garage"><i></i><span>부품 천막</span></label><label class="pin people-pin" for="people"><i></i><span>모닥불</span></label><label class="pin alley-pin" for="alley"><i></i><span>펌프 골목</span></label>
+<span class="scene-note">갈 곳을 골라 주세요</span></div>
+<div class="dock"><div class="supplies" aria-label="현재 저장의 보급량"><span>물 <b>16</b></span><span>식량 <b>14</b></span><span>고철 <b>24</b></span><span>차체 <b>82%</b></span></div>
+<nav class="places" aria-label="장소 선택"><label for="market">국수 좌판</label><label for="garage">부품 천막</label><label for="people">모닥불</label><label for="alley">펌프 골목</label></nav>
+<div class="description"><p class="for-market">김 오르는 솥 앞에 앉아<br>장꾼들 이야기를 듣는다.</p><p class="for-garage">경운기 부품과 정비</p><p class="for-people">영옥과 장꾼들</p><p class="for-alley">물통 줄과 천막 안쪽</p></div>
+<a class="primary" href="#enter"><span class="for-market">국수 좌판에 들어간다</span><span class="for-garage">부품 천막에 들어간다</span><span class="for-people">모닥불로 간다</span><span class="for-alley">펌프 골목으로 간다</span><i>→</i></a><a class="back" href="#return">달구지로 돌아간다</a></div>
+</div></section>
+<section class="phone road" aria-label="풍경 전환 방식 비교용 · 실제 주행 아님">
+<header class="heading"><div><b>양산 → 밀양</b><small>같은 원경 · 같은 차량 · 전환만 비교</small></div></header>
+<fieldset class="motion-tools"><legend class="sr">전환 비교</legend><label><input id="opaque" type="radio" name="motion" checked><span>옆으로 이어짐</span></label><label><input id="ghost" type="radio" name="motion"><span>겹쳐 보임 비교</span></label><label class="play"><input id="play" type="checkbox"><span>재생</span></label></fieldset>
+<div class="road-scene"><div class="sky"></div><div class="terrain old"><img src="../../assets/ui/road-environment/yangsan-v1.webp" width="1024" height="576" alt="기존 양산 원경"></div><div class="terrain next"><img src="../../assets/ui/road-environment/miryang-v1.webp" width="1024" height="576" alt="기존 밀양 원경"></div><div class="roadbed"></div><img class="vehicle" src="../../assets/ui/journey-dalguji-base-v1.webp" width="1024" height="608" alt="기존 기본 달구지, 위치·크기 고정"><span class="road-caption">CSS 전환 연출 예시 · 실제 캔버스 아님</span></div>
+<div class="road-strip"><span>연료 ∞</span><span>차체 82%</span><span>맑음</span><span>0/5</span></div>
+<div class="road-deck"><small>이동 중 · 배치 예시</small><h1>밀양 장터</h1><p>사람을 만나고 거래할 수 있다.</p><div class="track"><span></span></div><div class="ends"><span>양산</span><span>밀양</span></div><div class="road-links"><a href="#enter">지도 보기 ↗</a><a href="#enter">목적지 정보 ›</a></div><span class="record">주행 기록 ›</span></div>
+<div class="explanation"><b>풍경이 사라지지 않고 지나가게</b><p>하늘·도로·차량은 유지하고, 지형만 옆으로 이어집니다. 실제 연결 때는 원경·중경·근경을 서로 다른 속도로 움직입니다.</p><small>반투명 비교는 문제를 설명하는 예시이며 현재 렌더러의 정확한 복제는 아닙니다. 자동 왕복 없이 한 번 재생합니다.</small></div></section>
+<section class="sheet entry-sheet"><div><small>초안 동작 안내</small><h2>선택한 장소 안으로</h2><p>실제 연결 후에는 걷기 → 도착 → 해당 거래·대화 화면으로 이어집니다. 초안에서는 행동이나 자원 소모를 실행하지 않습니다.</p><a class="primary" href="#closed">초안으로 돌아가기 →</a></div></section>
+<section class="sheet return-sheet"><div><small>초안 동작 안내</small><h2>달구지로 돌아가기</h2><p>실제 연결 후에는 현재 밀양의 정차 화면으로 돌아옵니다. 이 초안은 열린 게임 화면과 저장을 바꾸지 않습니다.</p><a class="primary" href="#closed">초안으로 돌아가기 →</a></div></section>
+<footer class="provenance">밀양 장터·풍경 전환 v1 · 게임 미적용</footer>
+</main></body></html>

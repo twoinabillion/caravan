@@ -12,7 +12,7 @@ D.scenes = {
 
   'gwangju-market':'__SCENE_GWANGJU_MARKET__',
   'miryang-market':'__SCENE_MIRYANG_MARKET__',
-  'miryang-market-hub':'__SCENE_MIRYANG_MARKET_HUB__',
+  'miryang-market-hub':'__SCENE_MIRYANG_MARKET_HUB_V2__',
   'daegu-dome':'__SCENE_DAEGU_DOME__',
   'arrival-daegu-dome':'__SCENE_ARRIVAL_DAEGU_DOME__',
   'muju-tunnel':'__SCENE_MUJU_TUNNEL__',

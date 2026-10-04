@@ -6,6 +6,50 @@ Studio's **디자인 초안** opens these prototypes in a sandboxed iframe witho
 
 Add an entry to `manifest.json` with version `1` and `drafts`: `id` (lowercase letters/digits/hyphens), `file` (flat lowercase `.html` filename here), `title`, `description`, `revision`, optional `recommended`. HTML may reference local CSS and reviewed assets; no executable scripts. Bump revision after revising a draft. Keep provenance in the description, distinguishing sample content from the actual save. New raster assets still require the image contract.
 
+## 시장 안으로 · 풍경은 옆으로 v1 · 2026-10-04
+
+`settlement-continuity.html` / `.css`: 밀양 DAY1 17:51·맑음 기반 독립 초안. 네 장소는 native radio로 선택하며 들어가기·복귀는 해시 안내만 연다. 시장 그림은 정본 네 장을 참조한 신규 생성 컨셉이며 이름 있는 동료/보리를 넣지 않았다. 현재 게임 좌표·걷기·가림·NPC 대화는 구현하지 않았다. 주행 탭은 기존 원경·차량을 재사용한 CSS 연출 비교로 실제 캔버스의 복제가 아니다. 스크립트·스토리지·빌드 연결 없음. [출처와 검수 범위](settlement-continuity.md).
+
+## 달려도, 멈춰도 같은 자리 v2 · 2026-10-04
+
+`journey-continuity.html` / `.css`: 정차·주행·가상 도착의 풍경/상태줄/272px 패널 경계를 통일한 **미적용 초안**.
+출발 전·주행 중 목적지 아래에 장소 예고 한 줄을 남긴다. 상단 ‘예고’를 켜고 꺼 유무를 비교할 수 있다.
+기본 주행은 이전 STOP 기록의 밀양→양산 수치다. ‘도착 후’는 현재 양산14:50 및 탐색+2시간/피로약+5를 사용하는 독립 배치다.
+큰 사진과 긴 설명은 ‘목적지 정보’에, 평범한 식사 기록은 한 줄에 둔다. 지도·기록·다음 행동 안내는 초안 안에서만 열고 닫는다.
+출발 전은 가상 비교이며, 모든 장면이 실제 저장과 분리돼 있다. 기존 원경·차량 배치 유지, 게임 소스·빌드·저장 미변경.
+Studio 직접 시각·조작 검수는 접근 제한으로 미완료. [설계·출처·검증 범위](journey-continuity.md).
+
+## 풍경은 그대로, 할 일만 바뀌게 v1 · 2026-10-03
+
+`journey-calm.html` / `.css`: 목적지·머물기 바깥 높이를272px로 통일하고, 선택한 행동 한 줄 → 예상치 → 실행으로 맞춘 **미적용 초안**.
+목적지/머물기 전환, 다섯 행동 선택과 취소, 다음 행동 설명, 기존292/340px **높이만** 비교할 수 있다.
+풍경의 ‘대구 풍경 예시’는 기존 밀양/대구 원경만 교차해서 보여 주며 차량 위치와 크기는 유지한다.
+정적인 자산 배치이며 실제 주행·현재 저장·개조·날씨를 재현하지 않는다. 게임 소스·빌드·저장 미변경.
+Studio 직접 시각·조작 검수는 접근 제한으로 미완료. [설계·출처·확인 범위](journey-calm.md).
+
+## 이벤트 · 한 화면씩 읽기 v2 · 2026-10-02
+
+`event-pages.html` / `.css`: 스크롤 대신 읽기 → 선택 → 반응으로 진행하는 **미적용 초안**.
+실제 `rq_minji_request` 대사·두 선택·두 결과를 보존하고 큰 글씨·작은 화면만 읽기를 둘로 나눈다.
+짧은 결과 뒤에 별도 확인 페이지를 붙이지 않고 동행/다음 장소를 한 줄로 안내한다.
+기존 밀양 장소 삽화, script 없는 해시 이동과 선택적 앞 대사 기록을 사용한다.
+48px 공식 초상과 이름을 대사 위에 두고 본문 폭은 그대로 쓴다. 상단 ‘민지’ / ‘순덕·상혁’으로
+단독 대화와 실제 문답 발췌를 비교한다. 같은 화자의 얼굴은 반복하지 않고 서술에는 붙이지 않는다.
+현재 밀양 장터의 저장·이벤트·빌드에는 연결하지 않았다.
+**Studio 직접 시각·조작·무스크롤 확인은 접근 제한으로 미완료.**
+[방향·출처·검수 범위](event-pages.md).
+
+## 첫 임무 · 출발 전 v1 · 2026-09-29
+
+Sang 승인 후 게임 소스에 연결했으며 새 코드 적용·실제 시각 검수가 대기 중이다.
+이 초안 파일의 검토 동작과 저장 격리는 그대로 유지한다.
+
+`departure-brief.html` / `.css`: 기존 운전석 그림, 목표 한 문장, ‘무엇/알아낼 것’ 세 줄,
+길 복귀 버튼으로 재구성한 초안. 반복 제목·대화 도구줄·종이 카드 없이 그림의 청회색을
+이어간다. 큰 글씨·원본 구도 비교·복귀 동작 설명은 초안 안에서만 동작한다.
+게임 소스/빌드/저장 미변경. **실제 Studio 시각·조작·무스크롤 확인은 접근 제한으로 미완료.**
+[방향·출처·검수 범위](departure-brief.md).
+
 ## 인트로 · 그림과 이야기 한 덩어리 v3 · 2026-09-29
 
 `intro-recollection.html` / `intro-recollection.css`: 첫 설명 두 문장과 관련 문답을 합쳐 기본8화면으로 재구성했다. 큰 글씨·짧거나 좁은 화면에서는 긴 문답4개만 나눠12화면으로 읽는다. 그림은 높이40% 목표로 중앙 행동을 확대하며 원본 구도 비교도 제공한다. 제목·본문 스크롤 없음, 본문18/21px 유지. `intro-flow.html`은 이전 스크롤 안이다. **초안만 수정, 원문·게임·저장 미변경. 실제 시각/조작 검수는 Studio 접근 제한으로 미완료.** [방향·출처·검증 범위](intro-recollection.md).

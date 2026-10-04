@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>이벤트 · 한 화면씩 읽기</title>
+  <link rel="stylesheet" href="event-pages.css?draft=2">
+</head>
+<body>
+  <header class="draft-tools" aria-label="게임 밖 초안 검토 도구">
+    <a href="#reading">민지</a>
+    <a href="#exchange">순덕·상혁</a>
+    <label><input id="large-text" type="checkbox"> 큰 글씨</label>
+    <details class="draft-help">
+      <summary>안내</summary>
+      <div class="help-content">
+        <p>게임에 미적용인 조작 초안입니다. 현재 저장은 밀양 장터에 있고, 여기의 민지 대화는 별도 예시입니다.</p>
+        <p>실제 사건 ‘울산까지 함께 갈까’의 문장과 두 선택 결과를 그대로 사용했습니다. 기본 화면은 대화 전체를 한 번에, 큰 글씨·작은 화면은 두 덩어리로 읽습니다.</p>
+        <p>읽기 → 선택 → 반응 순서입니다. 선택 전에는 결과를 보여주지 않고, 다시 읽고 싶을 때만 앞 대사를 펼칩니다.</p>
+        <p>48px 초상과 이름은 말하는 사람이 바뀔 때 표시합니다. 같은 사람의 이어지는 말에는 반복하지 않고, 서술에는 붙이지 않습니다.</p>
+        <p>‘순덕·상혁’은 실제 사건 ‘순덕의 부탁’에서 아들의 안부를 부탁받은 뒤 나누는 마지막 문답 발췌입니다. 짧은 질문과 답을 한 화면에 둡니다. 지금 저장에서 이 사건이 발생했다는 뜻은 아닙니다.</p>
+        <p>그림은 기존 밀양 장터의 장소 삽화입니다. 민지의 지도 행동을 그린 새 그림이 아니며, 현재 날씨를 재현한 화면도 아닙니다.</p>
+        <p>누르는 동작은 이 초안 안에서만 바뀝니다. 동행·자원·시간·저장에는 영향이 없습니다.</p>
+        <label><input id="full-art" type="checkbox"> 그림 원본 구도</label>
+        <p>Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다. 극단적인 확대에서는 글을 자르지 않도록 문서 스크롤이 허용됩니다.</p>
+      </div>
+    </details>
+  </header>
+
+  <main class="draft-stage" data-event="rq_minji_request">
+    <section id="reading" class="event-page default-page" aria-label="민지의 제안 읽기" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="천막과 부품, 손수레가 늘어선 밀양 장터의 기존 장소 삽화"></figure>
+      <div class="reading-copy">
+        <article class="page-copy" data-layout="shared">
+          <p class="narration" data-source="text.0">민지가 지도 위의 붉은 원을 짚는다.</p>
+          <p class="speaker" data-speaker="minji"><img src="../../assets/portraits/minji.png" width="48" height="48" alt=""><span>민지</span></p>
+          <p class="dialogue" data-source="text.1">"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요."</p>
+        </article>
+        <article class="page-copy" data-layout="roomy">
+          <p class="narration" data-source="text.2">지도 끝이 말려 올라오자 공구함으로 눌러 둔다.</p>
+          <p class="dialogue" data-source="text.3">"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요."</p>
+        </article>
+      </div>
+      <footer class="page-actions">
+        <a class="advance" data-layout="roomy" href="#choice">선택하기</a>
+        <a class="advance" data-layout="compact" href="#reading-more">계속 읽기</a>
+      </footer>
+    </section>
+
+    <section id="reading-more" class="event-page" aria-label="민지의 제안 이어 읽기" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="밀양 장터의 기존 장소 삽화"></figure>
+      <div class="reading-copy">
+        <article class="page-copy" data-layout="shared">
+          <p class="narration" data-source="text.2">지도 끝이 말려 올라오자 공구함으로 눌러 둔다.</p>
+          <p class="speaker" data-speaker="minji"><img src="../../assets/portraits/minji.png" width="48" height="48" alt=""><span>민지</span></p>
+          <p class="dialogue" data-source="text.3">"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요."</p>
+        </article>
+      </div>
+      <footer class="page-actions paired">
+        <a class="back" href="#reading">이전</a>
+        <a class="advance" data-layout="shared" href="#choice">선택하기</a>
+      </footer>
+    </section>
+
+    <section id="choice" class="event-page choice-page" aria-label="민지의 제안에 답하기" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="밀양 장터의 기존 장소 삽화"></figure>
+      <div class="choice-context">
+        <p class="speaker" data-speaker="minji"><img src="../../assets/portraits/minji.png" width="48" height="48" alt=""><span>민지</span></p>
+        <p class="dialogue">"거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요."</p>
+      </div>
+      <nav class="choices" aria-label="답변 선택">
+        <a href="#accepted" data-choice="0">울산까지 태워주고, 함께 꺼낸다</a>
+        <a href="#declined" data-choice="1">오늘은 함께 가기 어렵다고 말한다</a>
+      </nav>
+      <footer class="page-actions">
+        <a class="back" data-layout="roomy" href="#reading">앞 대사 다시 읽기</a>
+        <a class="back" data-layout="compact" href="#reading-more">앞 대사 다시 읽기</a>
+      </footer>
+    </section>
+
+    <section id="accepted" class="event-page" aria-label="함께 가기로 한 뒤 민지의 반응" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="밀양 장터의 기존 장소 삽화"></figure>
+      <div class="reading-copy">
+        <article class="page-copy" data-layout="shared">
+        <p class="narration" data-source="choices.0.out.0.text.0">민지는 지도를 접고 공구함을 들었다.</p>
+        <p class="speaker" data-speaker="minji"><img src="../../assets/portraits/minji.png" width="48" height="48" alt=""><span>민지</span></p>
+        <p class="dialogue" data-source="choices.0.out.0.text.1">"그럼 울산까지. 공구함은 제가 들고 탈게요."</p>
+        </article>
+        <article class="page-copy" data-layout="roomy">
+        <p class="narration" data-source="choices.0.out.0.text.2">상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.</p>
+        </article>
+      </div>
+      <div class="outcome-note roomy-only">
+        <p>울산까지 동행 · 다음은 울산 공단</p>
+        <details class="history">
+          <summary>앞 대사 펼치기 / 접기</summary>
+          <div class="history-copy">
+            <p>민지가 지도 위의 붉은 원을 짚는다.</p>
+            <p>"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요."</p>
+            <p>지도 끝이 말려 올라오자 공구함으로 눌러 둔다.</p>
+            <p>"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요."</p>
+            <p class="chosen">내 선택 · 울산까지 태워주고, 함께 꺼낸다</p>
+            <p>민지는 지도를 접고 공구함을 들었다.</p>
+            <p>"그럼 울산까지. 공구함은 제가 들고 탈게요."</p>
+            <p>상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.</p>
+          </div>
+        </details>
+      </div>
+      <footer class="page-actions">
+        <a class="advance" data-layout="roomy" href="#demo-end">길 화면으로</a>
+        <a class="advance" data-layout="compact" href="#accepted-more">계속 읽기</a>
+      </footer>
+    </section>
+
+    <section id="accepted-more" class="event-page" aria-label="동행 반응 이어 읽기" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="밀양 장터의 기존 장소 삽화"></figure>
+      <div class="reading-copy">
+        <p class="narration" data-source="choices.0.out.0.text.2">상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.</p>
+      </div>
+      <div class="outcome-note">
+        <p>울산까지 동행 · 다음은 울산 공단</p>
+        <details class="history">
+          <summary>앞 대사 펼치기 / 접기</summary>
+          <div class="history-copy">
+            <p>민지가 지도 위의 붉은 원을 짚는다.</p>
+            <p>"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요."</p>
+            <p>지도 끝이 말려 올라오자 공구함으로 눌러 둔다.</p>
+            <p>"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요."</p>
+            <p class="chosen">내 선택 · 울산까지 태워주고, 함께 꺼낸다</p>
+            <p>민지는 지도를 접고 공구함을 들었다.</p>
+            <p>"그럼 울산까지. 공구함은 제가 들고 탈게요."</p>
+            <p>상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.</p>
+          </div>
+        </details>
+      </div>
+      <footer class="page-actions paired">
+        <a class="back" href="#accepted">이전</a>
+        <a class="advance" href="#demo-end">길 화면으로</a>
+      </footer>
+    </section>
+
+    <section id="declined" class="event-page" aria-label="함께 가지 않기로 한 뒤 민지의 반응" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="밀양 장터의 기존 장소 삽화"></figure>
+      <div class="reading-copy">
+        <p class="speaker" data-speaker="minji"><img src="../../assets/portraits/minji.png" width="48" height="48" alt=""><span>민지</span></p>
+        <p class="dialogue" data-source="choices.1.out.0.text.0">"알겠어요. 전 여기서 다른 방법을 찾아볼게요."</p>
+        <p class="narration" data-source="choices.1.out.0.text.1">민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.</p>
+      </div>
+      <footer class="page-actions"><a class="advance" href="#demo-end">길 화면으로</a></footer>
+    </section>
+
+    <section id="demo-end" class="event-page end-page" aria-label="초안 동작 종료" tabindex="-1">
+      <div class="receipt-copy">
+        <h1>여기까지가 초안이야.</h1>
+        <p>실제 게임에서는 사건을 닫고 다음 행동으로 이어져. 이 초안은 현재 플레이나 동행 상태를 바꾸지 않았어.</p>
+        <p>글과 선택지가 한 화면에 들어오는지, 넘기는 횟수가 번거롭지 않은지 봐줘. 위의 ‘순덕·상혁’에서는 화자가 바뀌는 모습을 비교할 수 있어.</p>
+      </div>
+      <footer class="page-actions"><a class="advance" href="#reading">다른 선택도 살펴보기</a></footer>
+    </section>
+
+    <section id="exchange" class="event-page" data-sample-event="npc_sundeok_2" aria-label="순덕의 부탁 중 마지막 문답 발췌" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="밀양 장터의 기존 장소 삽화"></figure>
+      <div class="reading-copy">
+        <article class="page-copy">
+          <p class="speaker" data-speaker="me"><img src="../../assets/portraits/me.png" width="48" height="48" alt=""><span>상혁</span></p>
+          <p class="dialogue" data-excerpt="0">"뭐라고 전할까요?"</p>
+        </article>
+        <article class="page-copy">
+          <p class="speaker" data-speaker="sundeok"><img src="../../assets/portraits/sundeok.png" width="48" height="48" alt=""><span>순덕</span></p>
+          <p class="dialogue" data-excerpt="1">"전하지 마. 지 걱정한다고 하면 내려온다고 난리 칠 놈이야."</p>
+        </article>
+        <article class="page-copy" data-layout="roomy">
+          <p class="narration" data-excerpt="2">국수 한 그릇 값을 안 받았다. 선불이라고 했다.</p>
+        </article>
+      </div>
+      <footer class="page-actions">
+        <a class="advance" data-layout="roomy" href="#reading">민지 대화와 비교</a>
+        <a class="advance" data-layout="compact" href="#exchange-after">계속 읽기</a>
+      </footer>
+    </section>
+
+    <section id="exchange-after" class="event-page" data-sample-event="npc_sundeok_2" aria-label="문답 뒤 행동 발췌" tabindex="-1">
+      <figure class="scene-art"><img src="../../assets/scenes/miryang-market.jpg" width="768" height="432" alt="밀양 장터의 기존 장소 삽화"></figure>
+      <div class="reading-copy">
+        <p class="narration" data-excerpt="2">국수 한 그릇 값을 안 받았다. 선불이라고 했다.</p>
+      </div>
+      <footer class="page-actions paired">
+        <a class="back" href="#exchange">이전</a>
+        <a class="advance" href="#reading">민지 대화와 비교</a>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

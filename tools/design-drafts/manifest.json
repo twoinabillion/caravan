@@ -2,6 +2,46 @@
   "version": 1,
   "drafts": [
     {
+      "id": "settlement-continuity-v1",
+      "file": "settlement-continuity.html",
+      "title": "시장 안으로 · 풍경은 옆으로",
+      "revision": "1",
+      "recommended": true,
+      "description": "현재 밀양 DAY1 17:51·맑음의 독립 초안입니다. 가까운 시장 골목에서 네 장소를 고르고, 아래에는 설명·들어가기·복귀만 남겼습니다. ‘풍경 전환’ 탭에서 기존 원경의 불투명 이동과 겹침 예시를 재생해 비교하세요. 정착지 신규 컨셉 그림은 정본 4장 참조, 동료·보리 없음. 실제 걷기·대화·현재 주행 복제가 아니며 게임·저장·빌드 미변경입니다. 그림 관찰 완료, Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다."
+    },
+    {
+      "id": "journey-continuity-v1",
+      "file": "journey-continuity.html",
+      "title": "달려도, 멈춰도 같은 자리",
+      "revision": "2",
+      "recommended": true,
+      "description": "v2 · 장소 예고 한 줄을 출발 전·주행 중에 남겼습니다. 상단 ‘예고’를 켜고 꺼 비교하세요. 도착 후에는 예고 대신 탐색 비용이 보이며 세 장면 모두 272px 패널입니다. 주행은 이전 STOP 기록, 도착 후는 현재 양산14:50 수치, 출발 전은 가상 비교입니다. 기존 원경·차량의 정적 배치이며 실제 화면 재현이 아닙니다. 게임·저장·빌드 미변경. Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다."
+    },
+    {
+      "id": "journey-calm-v1",
+      "file": "journey-calm.html",
+      "title": "풍경은 그대로, 할 일만 바뀌게",
+      "revision": "1",
+      "recommended": true,
+      "description": "목적지·머물기를 같은 높이에 두고 행동 변경에서만 5가지 목록을 엽니다. ‘현재 높이 비교’로 기존 높이 변화만 비교하고, 풍경 안 ‘대구 풍경 예시’로 차량은 고정한 채 원경만 바꿔 보세요. 밀양·대구 기존 원경과 기본 차량의 정적 배치이며 실제 주행 재현이 아닙니다. 요청 시점 장소·목적지 외의 비용은 배치 예시입니다. 게임·저장·빌드 미변경. Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다."
+    },
+    {
+      "id": "event-pages-v1",
+      "file": "event-pages.html",
+      "title": "이벤트 · 한 화면씩 읽기",
+      "description": "v2 · 48px 초상과 이름을 붙였습니다. 상단 ‘민지’와 ‘순덕·상혁’으로 단독 대화·문답을 비교하세요. 같은 화자의 얼굴은 반복하지 않고 대사는 전체 폭을 씁니다. 기존 초상·밀양 삽화·실제 원문 재사용. 읽기 → 선택 → 반응, 큰 글씨·작은 화면은 이어 읽기. 게임·저장 미변경, Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다.",
+      "revision": "2",
+      "recommended": true
+    },
+    {
+      "id": "departure-brief-v1",
+      "file": "departure-brief.html",
+      "title": "첫 임무 · 출발 전",
+      "revision": "1",
+      "recommended": true,
+      "description": "큰 운전석 그림 → 목표 한 문장 → 찾아야 할 세 줄 → 길로 나가기. 반복 제목·대화 도구줄·종이 카드를 덜고 그림의 청회색을 이어갑니다. 큰 글씨/원본 그림 구도 비교와 길 복귀 동작 설명을 볼 수 있습니다. 기존 삽화·이야기를 쓴 Codex HTML/CSS 초안입니다. 게임·저장 미변경. Studio 직접 시각·조작 검수는 접근 제한으로 미완료입니다."
+    },
+    {
       "id": "intro-recollection-v1",
       "file": "intro-recollection.html",
       "title": "인트로 · 그림과 이야기 한 덩어리",

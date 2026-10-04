@@ -1,0 +1,163 @@
+/* First-mission prototype only. No shared gameplay selectors or runtime access. */
+:root {
+  color-scheme: dark;
+  --outside: #20282d;
+  --cabin: #283138;
+  --ink: #f0ece1;
+  --muted: #bec6c8;
+  --brass: #d0b692;
+  --title-size: 26px;
+  --body-size: 17px;
+  --detail-size: 15px;
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+* { box-sizing: border-box; }
+html { margin: 0; }
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--outside);
+  color: var(--ink);
+}
+a { color: inherit; text-underline-offset: 4px; }
+input { accent-color: var(--brass); }
+:focus-visible { outline: 3px solid var(--brass); outline-offset: -3px; }
+.draft-tools {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 480px);
+  min-height: 44px;
+  margin: 0 auto;
+  padding: 0 16px;
+  color: var(--muted);
+  background: var(--outside);
+  font-size: 12px;
+}
+.draft-tools label, .draft-help > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.draft-tools input { width: 16px; height: 16px; margin: 0; }
+.draft-help > summary { text-decoration: underline; text-underline-offset: 4px; }
+.draft-help-body {
+  position: absolute;
+  inset: 44px 0 auto;
+  max-height: calc(100dvh - 54px);
+  overflow-y: auto;
+  padding: 12px 22px 22px;
+  border: 1px solid var(--muted);
+  background: var(--cabin);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.draft-help-body p { margin: 0 0 12px; }
+.draft-help-body p:last-child { margin-bottom: 0; }
+.draft-stage {
+  width: min(100%, 480px);
+  margin: 0 auto;
+}
+.mission-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 44px);
+  background: var(--cabin);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.mission-art {
+  flex: 1 1 0;
+  min-height: 96px;
+  margin: 0;
+  background: var(--outside);
+}
+.mission-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 44% 54%;
+}
+.mission-copy { flex: none; padding: 22px 24px 18px; }
+.mission-copy h1 {
+  margin: 0;
+  font-size: var(--title-size);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.6px;
+}
+.mission-intent {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: var(--detail-size);
+  line-height: 1.5;
+}
+.mission-leads {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0 0;
+  font-size: var(--body-size);
+  line-height: 1.45;
+}
+.mission-leads > div { display: grid; grid-template-columns: 3.5em minmax(0, 1fr); gap: 14px; }
+.mission-leads dt { margin: 0; font-weight: 650; }
+.mission-leads dd { margin: 0; color: var(--muted); }
+.mission-actions {
+  flex: none;
+  padding: 0 24px max(22px, env(safe-area-inset-bottom));
+}
+.mission-actions p { margin: 0 0 14px; color: var(--muted); font-size: var(--detail-size); line-height: 1.5; }
+.road-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 18px;
+  border-radius: 4px;
+  background: var(--brass);
+  color: var(--cabin);
+  font-size: var(--body-size);
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.road-action:hover { background: #e0c7a3; }
+.road-action:active { background: #c2a67f; }
+.road-action:focus-visible { outline-color: var(--cabin); outline-offset: -5px; }
+.return-page {
+  display: none;
+  align-items: center;
+  min-height: calc(100dvh - 44px);
+  padding: 28px;
+  background: var(--cabin);
+  font-size: var(--body-size);
+  line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.return-page h2 { margin: 0 0 18px; font-size: var(--title-size); line-height: 1.4; }
+.return-page p { color: var(--muted); }
+.return-page .road-action { margin-top: 28px; }
+.draft-stage:has(#road-return:target) > .mission-page { display: none; }
+.return-page:target { display: flex; }
+body:has(#large-text:checked) { --title-size: 28px; --body-size: 20px; --detail-size: 17px; }
+body:has(#full-art:checked) .mission-art img { object-fit: contain; }
+@media (max-width: 349px), (max-height: 650px) {
+  .mission-copy { padding: 16px 18px 14px; }
+  .mission-leads { margin-top: 16px; gap: 8px; }
+  .mission-leads > div { gap: 10px; }
+  .mission-actions { padding-inline: 18px; padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+  .mission-actions p { margin-bottom: 10px; }
+}
+/* No automatic animation; reduced-motion readers receive the same static page.
+   At extreme zoom, normal document overflow remains available rather than clipping text. */

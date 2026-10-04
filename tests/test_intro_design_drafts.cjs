@@ -45,9 +45,9 @@ function journey(mode) {
 test('v3 is recommended and earlier drafts are retained',()=>{
   const {drafts}=JSON.parse(read('manifest.json'));
   assert.equal(new Set(drafts.map(d=>d.id)).size,drafts.length);
-  assert.equal(drafts[0].file,files[0]);
-  assert.equal(drafts[0].revision,'3');
-  assert.equal(drafts[0].recommended,true);
+  const intro=drafts.find(d=>d.file===files[0]);
+  assert.equal(intro.revision,'3');
+  assert.equal(intro.recommended,true);
   for(const file of [...files,'situated-talk.html','situated-record.html','situated-cabin.html']) {
     assert(drafts.some(d=>d.file===file));
   }

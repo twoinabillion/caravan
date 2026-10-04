@@ -19,7 +19,7 @@
 - Dedicated base-vehicle and environment renderer assets (`journey-dalguji-base-v1`, `journey-road-backdrop-v1`) were introduced for the approved 2026-09-25 mock. They are transparent/live canvas parts, not event paintings or a screenshot backdrop. Preserve real upgrades, riders, weather, motion, braking and cue proportions; do not flatten them into one static game image.
 - Road-cue proportions are contractual: a vehicle near the stop point is roughly 45-55% of the caravan's visible width, an adult is roughly half the cue vehicle's body height, and roadside props remain subordinate to both. Keep the caravan scale fixed; express approach with position and no more than 18-20% cue growth.
 - Road events use a four-beat handoff: readable discovery, gradual deceleration, settled stop, then event view. Never switch the caravan bounce or world scroll with a boolean speed threshold; both must ease continuously to zero.
-- The approved 2026-09-25 stopped screen has one owner: `Journey scene/deck owner` in `src/01-style.html`. The scene header owns location/time; the slim strip owns fuel/hull/weather; one destination row and forecast lead to one departure button and a quiet objective shortcut. Open the regional map in place of scenery on demand; do not restore the always-visible map/photo/telemetry stack. Driving retains its separate destination preview.
+- The approved 2026-09-25 stopped screen has one owner: `Journey scene/deck owner` in `src/01-style.html`. The scene header owns location/time; the slim strip owns fuel/hull/weather; one destination row and forecast lead to one departure button and a quiet objective shortcut. Open the regional map in place of scenery on demand; do not restore the always-visible map/photo/telemetry stack. Approved 2026-10-04 continuity v2 shares the 272px shell with driving; short destination preview stays visible, photographs and full records open on demand. Gate new driving geometry until structural apply.
 - Player-facing game terms are `메인 스토리`, `사이드 미션`, and, only when the distinction matters, `동료 미션`. Do not expose `주 임무`, `선택 이야기`, `선택 임무`, `선택 의뢰`, or `업무` as navigation labels.
 - Every non-main objective, including parcel delivery, procurement, regional requests, recruitment, and companion stories, belongs to the top-level `사이드 미션` tab. Show `배달`, `조달`, `지역`, or `동료` only as a card subtype. Active cards show the next action but never reveal their outcome or reward; results appear only after completion.
 
@@ -35,7 +35,7 @@
 <claude-mem-context>
 # Memory Context
 
-# [caravan] recent context, 2026-09-29 2:12am GMT+9
+# [caravan] recent context, 2026-10-03 12:33pm GMT+9
 
 No previous sessions found.
 </claude-mem-context>

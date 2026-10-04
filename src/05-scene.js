@@ -133,7 +133,7 @@ const SCENE = (()=>{
     if(from.id===to.id) return {from,to,mix:0};
     const dist=Math.max(1,Number(S.driving.dist)||1);
     const progress=Math.max(0,Math.min(1,(Number(S.driving.gone)||0)/dist));
-    /* 짧은 구간은 최소 4km, 긴 구간은 최대 14km 동안 섞는다. 이동 시간이
+    /* 짧은 구간은 최소 4km, 긴 구간은 최대 14km 동안 옆으로 이어진다. 이동 시간이
        지나치게 짧거나 길어져도 풍경이 읽히면서 교체 자체가 연출처럼 보인다. */
     const span=Math.min(.4,Math.max(.08,Math.min(14,Math.max(4,dist*.24))/dist));
     const raw=Math.max(0,Math.min(1,(progress-(.5-span/2))/span));
@@ -149,9 +149,14 @@ const SCENE = (()=>{
 
   function poles(par,roadY,col){
     const profile=roadBackdropState();
-    const modern=lerp(profile.from.scenery==='overpass'?1:0,profile.to.scenery==='overpass'?1:0,profile.mix);
-    if(modern>0){
-      ctx.save();ctx.globalAlpha=modern;
+    const edge=W*(1-profile.mix);
+    if(profile.from.scenery===profile.to.scenery){poleProfile(profile.from.scenery,par,roadY,col,0,W);return;}
+    if(edge>0)poleProfile(profile.from.scenery,par,roadY,col,0,edge);
+    if(edge<W)poleProfile(profile.to.scenery,par,roadY,col,edge,W);
+  }
+  function poleProfile(scenery,par,roadY,col,left,right){
+    ctx.save();ctx.beginPath();ctx.rect(left,0,right-left,H);ctx.clip();
+    if(scenery==='overpass'){
       const offset=worldX*par,cell=210,first=Math.floor(offset/cell)-1;
       for(let i=first;i<first+3;i++){
         const x=P(i*cell-offset+18),top=P(Math.max(25,roadY-H*.53));
@@ -166,9 +171,8 @@ const SCENE = (()=>{
       for(let x=-(offset%14);x<W;x+=14){ctx.fillStyle='#344a46';ctx.fillRect(P(x),roadY-16,2,17);ctx.fillStyle='#a0a68e';ctx.fillRect(P(x),roadY,2,1);}
       ctx.fillStyle='#5c635f';ctx.fillRect(0,roadY+1,W,2);
       ctx.restore();
-      if(modern>=1)return;
+      return;
     }
-    ctx.save();ctx.globalAlpha=1-modern;
     const cell=118, offp=worldX*par, first=Math.floor(offp/cell)-1;
     ctx.strokeStyle=col; ctx.lineWidth=1;
     let prev=null;
@@ -187,7 +191,7 @@ const SCENE = (()=>{
         const cx2=x+tilt-8+hash(i*31)*16, cy2=roadY-ph+3+3;
         if(!crowFly.some(c=>c.cell===i)){
           const vanX=W*0.26+34;
-          if(S&&S.driving&&Math.abs(cx2-vanX)<26&&!crowCd[i]){
+          if(S&&S.driving&&cx2>=left&&cx2<right&&Math.abs(cx2-vanX)<26&&!crowCd[i]){
             crowCd[i]=true;
             crowFly.push({cell:i,x:cx2,y:cy2,vx:-14-Math.random()*8,vy:-16-Math.random()*6,life:1.4});
           } else {
@@ -1340,12 +1344,14 @@ const SCENE = (()=>{
     bctx.setTransform(TOWN_RENDER_SCALE,0,0,TOWN_RENDER_SCALE,0,0);
     bctx.imageSmoothingEnabled=false;
     const layout=options.layout||{},spots=options.spots||{},entry=townPoint(layout.entry||{x:50,y:90});
-    const plan=TOWN_PLANS[options.id]||{};
+    // Eye-level art uses authored place markers, not the top-down building plan.
+    const plan=options.cinematic?{market:[46,168],garage:[183,199],people:[95,128],alley:[179,143]}:TOWN_PLANS[options.id]||{};
     const facilities=Object.entries(spots).map(([id,spot])=>{
       const at=plan[id],p=at?{x:at[0],y:at[1]}:townPoint(spot);
-      const labelWidth=Math.min(92,Math.max(34,String(spot.label||'').length*5+8));
-      return {type:'facility',id,label:spot.label,sub:spot.sub,p,
-        labelBox:{x:p.x-labelWidth/2,y:p.y-39,w:labelWidth,h:10},
+      const label=options.cinematic?(spot.compact||spot.label):spot.label;
+      const labelWidth=Math.min(92,Math.max(34,String(label||'').length*(options.cinematic?7.5:5)+(options.cinematic?12:8)));
+      return {type:'facility',id,label,sub:spot.sub,p,
+        labelBox:{x:p.x-labelWidth/2,y:p.y-(options.cinematic?6:39),w:labelWidth,h:12},
         arrival:{x:p.x,y:tclamp(p.y+25,82,TOWN_H-14)}};
     });
     const fallback=[[20,58],[80,57],[51,65]];
@@ -1367,7 +1373,8 @@ const SCENE = (()=>{
     town={canvas,out:canvas.getContext('2d'),buffer,c:bctx,id:options.id,world,layout,spots,options,
       facilities,residents,recruit,crowd,player:{...entry},target:{...entry},focus:options.focus||'market',
       moving:false,pending:null,selected:{type:'facility',id:options.focus||'market'},lastSize:''};
-    canvas.style.imageRendering='pixelated';
+    if(options.cinematic){town.image=new Image();town.image.decoding='async';town.image.src=options.scene;}
+    canvas.style.imageRendering=options.cinematic?'auto':'pixelated';
     canvas.onpointerup=event=>townPointer(event);
     canvas.onkeydown=event=>townKey(event);
     walkSettlement(options.focus||'market',false);
@@ -1391,18 +1398,32 @@ const SCENE = (()=>{
       p:{x:tclamp(town.player.x-7-(index%3)*6,10,TOWN_W-10),y:tclamp(town.player.y+8+Math.floor(index/3)*7,72,TOWN_H-10)}}));
   }
   function townEntities(){ return town?[...town.residents,...(town.recruit?[town.recruit]:[]),...townCompanionEntities()]:[]; }
+  function approachSettlement(type,id){
+    if(!town)return false;
+    const person=townEntities().find(item=>item.type===type&&item.id===id);if(!person)return false;
+    town.target={x:person.p.x,y:tclamp(person.p.y+8,72,TOWN_H-12)};town.moving=true;
+    town.selected={type,id};town.pending=person;
+    if(town.options.onSelectPerson)town.options.onSelectPerson(person);
+    return true;
+  }
+  function townProjection(vw,vh){
+    const scale=Math.max(vw/TOWN_W,vh/TOWN_H);
+    return {scale,x:(vw-TOWN_W*scale)/2,y:(vh-TOWN_H*scale)/2};
+  }
   function townPointer(event){
     if(!town||event.currentTarget!==town.canvas) return;
     const rect=town.canvas.getBoundingClientRect();
-    const p={x:(event.clientX-rect.left)/rect.width*TOWN_W,y:(event.clientY-rect.top)/rect.height*TOWN_H};
+    const projection=townProjection(rect.width,rect.height);
+    const p=town.options.cinematic?{x:(event.clientX-rect.left-projection.x)/projection.scale,y:(event.clientY-rect.top-projection.y)/projection.scale}
+      :{x:(event.clientX-rect.left)/rect.width*TOWN_W,y:(event.clientY-rect.top)/rect.height*TOWN_H};
     let picked=null,best=19;
-    for(const entity of townEntities()){
+    // Named people are explicit accessible buttons below cinematic art. Never
+    // attach an identity to a generated anonymous bystander or invisible hitbox.
+    for(const entity of town.options.cinematic?[]:townEntities()){
       const d=Math.hypot(p.x-entity.p.x,p.y-entity.p.y); if(d<best){best=d;picked=entity;}
     }
     if(picked){
-      town.target={x:picked.p.x,y:tclamp(picked.p.y+8,72,TOWN_H-12)};town.moving=true;
-      town.selected={type:picked.type,id:picked.id};town.pending=picked;
-      if(town.options.onSelectPerson) town.options.onSelectPerson(picked);
+      approachSettlement(picked.type,picked.id);
       return;
     }
     let facility=null;best=31;
@@ -1848,10 +1869,38 @@ const SCENE = (()=>{
   function drawSettlement(dt){
     if(!town||!town.canvas.isConnected) return;
     townT+=dt;townMove(dt);
-    const c=town.c;c.save();c.clearRect(0,0,TOWN_W,TOWN_H);townPixelBackdrop(c);townPixelLightPools(c);townPixelLayered(c);townPixelWeather(c);c.restore();
+    // The painted lane is static. Do not repaint a high-resolution background
+    // at 60Hz while idle; movement, selection, decode and resize invalidate it.
+    if(town.options.cinematic){
+      const frame=[town.canvas.clientWidth,town.canvas.clientHeight,window.devicePixelRatio,town.image.complete,town.image.naturalWidth,
+        town.selected.type,town.selected.id,town.moving,town.player.x,town.player.y].join('/');
+      if(frame===town.lastFrame)return;town.lastFrame=frame;
+    }
+    const c=town.c;c.save();c.clearRect(0,0,TOWN_W,TOWN_H);
+    if(town.options.cinematic)townCinematic(c);
+    else{townPixelBackdrop(c);townPixelLightPools(c);townPixelLayered(c);townPixelWeather(c);}c.restore();
     const canvas=town.canvas,out=town.out,vw=Math.max(1,canvas.clientWidth||390),vh=Math.max(1,canvas.clientHeight||470),dpr=Math.min(2,window.devicePixelRatio||1),key=`${vw}/${vh}/${dpr}`;
     if(key!==town.lastSize){canvas.width=Math.round(vw*dpr);canvas.height=Math.round(vh*dpr);out.setTransform(dpr,0,0,dpr,0,0);out.imageSmoothingEnabled=false;town.lastSize=key;}
-    out.clearRect(0,0,vw,vh);out.imageSmoothingEnabled=false;out.drawImage(town.buffer,0,0,town.buffer.width,town.buffer.height,0,0,vw,vh);
+    out.clearRect(0,0,vw,vh);out.imageSmoothingEnabled=!!town.options.cinematic;
+    if(town.options.cinematic){const p=townProjection(vw,vh);out.drawImage(town.buffer,0,0,town.buffer.width,town.buffer.height,p.x,p.y,TOWN_W*p.scale,TOWN_H*p.scale);}
+    else out.drawImage(town.buffer,0,0,town.buffer.width,town.buffer.height,0,0,vw,vh);
+  }
+  function townCinematic(c){
+    const image=town.image;c.fillStyle='#25302b';c.fillRect(0,0,TOWN_W,TOWN_H);
+    if(image.complete&&image.naturalWidth>0){
+      const scale=Math.max(TOWN_W/image.naturalWidth,TOWN_H/image.naturalHeight);
+      c.imageSmoothingEnabled=true;
+      c.drawImage(image,(TOWN_W-image.naturalWidth*scale)/2,(TOWN_H-image.naturalHeight*scale)/2,image.naturalWidth*scale,image.naturalHeight*scale);
+    }
+    // Code-only wayfinding, not animated bodies laid over painted residents.
+    c.font='7.5px sans-serif';c.textAlign='center';c.textBaseline='middle';
+    for(const f of town.facilities){
+      const selected=town.selected.type==='facility'&&town.selected.id===f.id,box=f.labelBox;
+      c.fillStyle=selected?'#c5ad7a':'rgba(18,31,26,.9)';c.fillRect(box.x,box.y,box.w,box.h);
+      c.strokeStyle=selected?'#ebd6a9':'#88927d';c.lineWidth=.6;c.strokeRect(box.x,box.y,box.w,box.h);
+      c.fillStyle=selected?'#1d271e':'#ebe8db';c.fillText(f.label,f.p.x,box.y+box.h/2);
+      if(selected&&town.moving){c.strokeStyle='#ead4a1';c.lineWidth=.9;c.beginPath();c.arc(f.p.x,f.p.y+12,2.4,0,Math.PI*2);c.stroke();}
+    }
   }
   function settlementState(){return town?{id:town.id,focus:town.focus,moving:town.moving,impactStage:Number(town.options&&town.options.impact&&town.options.impact.stage)||0,player:{...town.player},target:{...town.target},
     facilities:town.facilities.map(item=>({id:item.id,label:item.label,p:{...item.p},arrival:{...item.arrival}})),residents:town.residents.map(item=>({id:item.id,p:{...item.p}})),
@@ -2004,7 +2053,7 @@ const SCENE = (()=>{
     tdctx.drawImage(toff,0,0,TW,TH,0,0,vw,vh);
   }
 
-  return {init,initTitle,draw,drawTitle,drawSettlementVan,initSettlement,drawSettlement,walkSettlement,closeSettlement,settlementState,
+  return {init,initTitle,draw,drawTitle,drawSettlementVan,initSettlement,drawSettlement,walkSettlement,approachSettlement,closeSettlement,settlementState,
     roadBackdropState,
     showMeal:(sec)=>{mealT=sec;}, talkPulse:(idx,sec)=>{talkIdx=idx; talkT=sec||3;}};
 })();

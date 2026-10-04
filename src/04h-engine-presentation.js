@@ -26,14 +26,23 @@ G.presentationView = view=>{
   const turns=view.turns.slice(0,250).filter(turn=>turn&&kinds.includes(turn.kind)&&typeof turn.text==='string')
     .map(turn=>{
       const row={kind:turn.kind,text:G.presentationText(turn.text)};
-      for(const key of ['who','name','voice','sfx','medium'])
+      for(const key of ['who','name','voice','sfx','medium','speakerKey'])
         if(typeof turn[key]==='string') row[key]=turn[key].slice(0,160);
+      if(turn.speakerUncertain)row.speakerUncertain=true;
       return row;
     });
   if(!turns.length) return null;
   return {turns,index:clamp(Math.floor(Number(view.index)||0),0,turns.length-1),
     knownSpeaker:view.knownSpeaker===true,readingRecord:G.presentationText(view.readingRecord),
     recordOpen:view.recordOpen===true,
+    ...(view.readingPage?{readingPage:{
+      cursor:StoryPages.cursor(turns,view.readingPage.cursor),
+      end:StoryPages.cursor(turns,view.readingPage.end),
+      mode:view.readingPage.mode==='actions'&&StoryPages.cursor(turns,view.readingPage.end).turn===turns.length?'actions':'read',
+      trail:(Array.isArray(view.readingPage.trail)?view.readingPage.trail:[]).slice(-250).map(at=>StoryPages.cursor(turns,at)),
+      choicePage:Math.max(0,Math.min(100,Math.floor(Number(view.readingPage.choicePage)||0))),
+      resultPage:Math.max(0,Math.min(200,Math.floor(Number(view.readingPage.resultPage)||0)))
+    }}:{}),
     resultRecordOpen:view.resultRecordOpen===true,restoredLineOpen:view.restoredLineOpen===true,
     readerMode:['review','inspection'].includes(view.readerMode)?view.readerMode:'current',
     inspectionId:typeof view.inspectionId==='string'?view.inspectionId.slice(0,160):'',
