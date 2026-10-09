@@ -107,7 +107,7 @@ test('reload between effect and close resumes the same receipt, without a second
 });
 test('fresh unfinished entry shows the brief, completed entry skips it, and Escape cannot discard it',()=>{
  const h=harness(),{ctx}=h;let seen=0;
- Object.assign(ctx,{show:noop,applyIcons:noop,renderAll:noop,showEvent:()=>seen++});
+ Object.assign(ctx,{clearPreparation:noop,show:noop,applyIcons:noop,renderAll:noop,showEvent:()=>seen++});
  Object.assign(ctx.G,{qualitySessionStart:noop,qualitySettlementEnter:noop,resumePresentation:()=>false});
  load(ctx,'enterGame')();assert.equal(seen,1);assert.equal(ctx.S.flags.onboarding_mission_seen,true);
  ctx.S.flags.main_mission_started=true;ctx.enterGame();assert.equal(seen,1);

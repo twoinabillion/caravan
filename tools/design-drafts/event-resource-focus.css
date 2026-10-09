@@ -1,0 +1,47 @@
+/* Standalone design draft: content below the existing event picture only. */
+:root { color-scheme: light; --paper:#f4efe3; --ink:#243a33; --muted:#4d6255; --line:#b6c0b3; --green:#315649; --loss:#853e2b; }
+* { box-sizing:border-box; }
+body { margin:0; background:#dde2d8; color:var(--ink); font:16px/1.6 "Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
+.draft { max-width:480px; margin:auto; padding:18px 12px 24px; }
+.review { font-size:13px; color:var(--muted); }
+.review h1 { margin:2px 0 8px; color:var(--ink); font-size:21px; line-height:1.4; }
+.review p { margin:0 0 12px; }
+.eyebrow { letter-spacing:.03em; }
+.review select { display:block; width:100%; min-height:44px; margin-top:5px; padding:8px; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:5px; font:inherit; }
+.size { display:flex; align-items:center; gap:8px; min-height:44px; width:fit-content; }
+.size input { width:18px; height:18px; margin:0; accent-color:var(--green); }
+.paper { --body:18px; --detail:15px; --amount:28px; padding:20px 18px; background:var(--paper); border:1px solid var(--line); border-radius:3px; font-size:var(--body); overflow-wrap:anywhere; word-break:keep-all; }
+.scene-label { margin:0 0 16px; color:var(--muted); font-size:var(--detail); }
+.story { margin:0; line-height:1.75; }
+.resources { margin:22px 0 8px; }
+.resources > div { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0; border-block:1px solid var(--line); }
+.resources > div + div { border-top:0; }
+.resources dt { display:flex; align-items:center; gap:10px; min-width:0; font-weight:650; }
+.resources dt img { flex:none; width:32px; height:32px; object-fit:contain; }
+.resources small { display:block; font-size:var(--detail); font-weight:400; color:var(--muted); }
+.resources dd { margin:0; font-size:var(--amount); line-height:1.3; font-weight:750; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.resources dd span { margin-left:5px; font-size:var(--detail); font-weight:400; }
+.loss dd { color:var(--loss); }
+.gain-row dd { color:var(--green); }
+.condition { margin:10px 0; font-size:var(--detail); color:var(--loss); }
+.record { margin-top:8px; font-size:var(--detail); }
+.record summary { min-height:44px; padding:10px 0; cursor:pointer; color:var(--muted); }
+.record p { margin:2px 0 16px; }
+.next { display:flex; justify-content:center; align-items:center; gap:12px; min-height:48px; margin-top:18px; padding:10px 14px; border-radius:7px; background:var(--green); color:#fff7e6; text-align:center; text-decoration:none; font-size:var(--body); font-weight:600; }
+.choice-cue { margin:18px 0 8px; font-size:var(--detail); color:var(--muted); }
+.choices { display:grid; gap:10px; }
+.choices a { display:block; min-height:48px; padding:12px 14px; border:1px solid #869884; border-radius:6px; background:#dce3d7; color:var(--ink); text-decoration:none; line-height:1.55; }
+.choices small { display:flex; align-items:center; gap:7px; margin-top:6px; color:var(--muted); font-size:var(--detail); }
+.choices small img { flex:none; width:24px; height:24px; object-fit:contain; }
+:is(a,summary,select,input):focus-visible { outline:3px solid var(--ink); outline-offset:3px; }
+.footnote { margin:14px 4px 0; }
+.example,.destination { display:none; }
+.draft:has(#example option[value="repair"]:checked) .repair,
+.draft:has(#example option[value="choice"]:checked) .choice,
+.draft:has(#example option[value="gain"]:checked) .gain,
+.draft:has(#example option[value="supplies"]:checked) .supplies,
+.draft:has(#example option[value="empty"]:checked) .empty { display:block; }
+.draft:has(#large:checked) .paper { --body:21px; --detail:19px; --amount:30px; }
+.draft .paper:has(.destination:target) .example { display:none; }
+.destination:target { display:block; }
+@media(max-width:340px) { .draft { padding-inline:8px; } .paper { padding:18px 14px; } }

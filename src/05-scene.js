@@ -989,7 +989,9 @@ const SCENE = (()=>{
   };
   const approachSpriteCache={};
   function approachSprite(key){
-    const src=(G.roadCueImages&&G.roadCueImages[key])||approachSpriteSources[key];
+    const ready=G.roadCueKit?.images[key]?.preloaded;
+    if(ready)return ready;
+    const src=G.roadCueKit?.images[key]?.src||(G.roadCueImages&&G.roadCueImages[key])||approachSpriteSources[key];
     if(!src) return null;
     const cached=approachSpriteCache[key];
     if(cached&&cached.src===src) return cached;
@@ -1229,23 +1231,46 @@ const SCENE = (()=>{
     const kind=ap.kind||'landmark',spec=ap.scene||{},motif=spec.motif||'';
     if(spec.selfVehicle)return;
     const spriteKey=approachSpriteKey(kind,motif),layout=approachCueLayout[spriteKey]||approachCueLayout.landmark;
+    const detailed=G.roadCueKit?.compose(ap,vanBuildStage(S.up||{}).bodyL+27);
     const inLane=spec.inLane===true||layout.lane===true;
     const size=layout.vehicleRatio?(vanBuildStage(S.up||{}).bodyL+27)*layout.vehicleRatio:P(W*layout.ratio);
     const targetX=P(W*layout.target);
     const x=P(lerp(W+size*.72,targetX,ease));
     const ground=P(roadY+(H-roadY)*(inLane?.43:.25)+(inLane?8:5));
     const sprite=approachSprite(spriteKey);
-    if(!layout.vehicleRatio&&(!sprite||!sprite.complete||!sprite.naturalWidth))return;
+    if(!detailed&&!layout.vehicleRatio&&(!sprite||!sprite.complete||!sprite.naturalWidth))return;
 
     /* 같은 자산을 같은 크기로 유지하고 위치만 움직인다. 크기 변화로 접근을
        흉내 내면 달구지와 조우 대상이 순간적으로 수축·팽창해 보인다. */
     ctx.save();
     ctx.globalAlpha=Math.min(1,.16+q*1.55);
     ctx.imageSmoothingEnabled=false;
-    if(layout.vehicleRatio)detailedCuePart(spriteKey,spec,sprite,x,ground,size,size/layout.aspect,dark);
+    if(detailed){
+      ctx.imageSmoothingEnabled=true;
+      ctx.filter=`brightness(${1-dark*.48})`;
+      for(const layer of detailed.layers){
+        const image=approachSprite(layer.key);
+        if(image?.complete&&image.naturalWidth){
+          ctx.save();
+          if(layer.flip){ctx.translate(x+layer.x+layer.width,ground+layer.y);ctx.scale(-1,1);ctx.drawImage(image,0,0,layer.width,layer.height);}
+          else ctx.drawImage(image,x+layer.x,ground+layer.y,layer.width,layer.height);
+          ctx.restore();
+        }else if(layer.person){
+          detailedCuePerson(x+layer.x+layer.width/2,ground+layer.y+layer.height,{height:layer.height,pose:spec.action},dark);
+        }
+      }
+      ctx.filter='none';
+      if(detailed.prop)approachProp(x-adultCuePropOffset(detailed),ground,detailed.prop,dark);
+      if(motif==='broken-vehicle'&&spec.smoke){
+        const rise=(t*5)%12;ctx.fillStyle=`rgba(163,168,168,${(1-rise/12)*.25})`;
+        ctx.beginPath();ctx.ellipse(x-size*.43,ground-size*.34-rise,1+rise*.1,2+rise*.1,0,0,Math.PI*2);ctx.fill();
+      }
+    }
+    else if(layout.vehicleRatio)detailedCuePart(spriteKey,spec,sprite,x,ground,size,size/layout.aspect,dark);
     else ctx.drawImage(sprite,P(x-size/2),P(ground-size*layout.anchor),size,size);
     ctx.restore();
   }
+  function adultCuePropOffset(cue){return cue.adultHeight*.75;}
 
   function roadApproachVehicleAlert(roadY){
     const ap=S&&S.driving&&S.driving.approach;
@@ -1938,6 +1963,17 @@ const SCENE = (()=>{
   /* ── 타이틀 (같은 픽셀 파이프라인) ── */
   let tcv,tdctx,toff,tctx2,tt=0,TW=236,TH=410;
   function initTitle(canvas){
+    if(document.getElementById('scr-title')?.dataset.titleLayout==='wharf'){
+      document.getElementById('title-harbor').src=D.scenes['opening-wharf-v1'];
+      return;
+    }
+    if(document.getElementById('scr-title')?.dataset.titleLayout==='departure'){
+      // Reuse the offline build's existing images; never duplicate the panorama
+      // or vehicle data URI, and leave the live road renderer untouched.
+      document.getElementById('title-harbor').src=ROAD_ENVIRONMENT.source('busan');
+      document.getElementById('title-dalguji').src=vanBodyArt.src;
+      return;
+    }
     tcv=canvas; tdctx=tcv.getContext('2d');
     toff=document.createElement('canvas'); tctx2=toff.getContext('2d');
     tctx2.imageSmoothingEnabled=false;

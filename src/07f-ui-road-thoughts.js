@@ -1,52 +1,52 @@
-/* Road narration belongs with the journey log, not over the moving vehicle. */
+/* Approved road-whisper v1: ephemeral authored observations, never a deck card.
+   No queue/replay or gameplay writes; guarded again while visible. */
 (()=>{
-  const bubbleRoot=document.getElementById('bubbles');
-  if(!bubbleRoot) return;
-
-  let dismissTimer=0;
-  const escapeText=value=>String(value||'').replace(/[&<>"']/g,char=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  })[char]);
-
-  const showRoadThought=bubble=>{
-    if(!bubble.classList.contains('narration')||typeof S==='undefined'||!S.driving) return;
-    const log=document.getElementById('road-notice-slot');
-    const copy=[...bubble.querySelectorAll('.bubble-copy > span')]
-      .find(node=>!node.classList.contains('who'));
-    const thought=copy&&copy.textContent.trim();
-    if(!log||!thought) return;
-
-    let card=document.getElementById('road-thought-card');
-    if(!card){
-      card=document.createElement('aside');
-      card.id='road-thought-card';
-      card.className='road-thought-card';
-      card.setAttribute('aria-live','polite');
-      log.insertAdjacentElement('afterend',card);
-    }
-
-    const art=typeof D!=='undefined'&&D.scenes&&D.scenes['event-crisis-exhaustion'];
-    card.innerHTML=`${art?`<img src="${art}" alt="" aria-hidden="true">`:''}
-      <div class="road-thought-copy"><span>운전 중 생각</span><p>${escapeText(thought)}</p></div>`;
-    card.classList.remove('is-leaving');
-    void card.offsetWidth;
-    card.classList.add('is-visible');
-    bubble.remove();
-
-    clearTimeout(dismissTimer);
-    dismissTimer=setTimeout(()=>{
-      card.classList.add('is-leaving');
-      card.classList.remove('is-visible');
-    },9000);
+  const root=document.documentElement;
+  const caption=document.getElementById('road-whisper');
+  const stage=document.getElementById('stage');
+  if(!caption||!stage) return;
+  root.dataset.roadThoughtUi='whisper';
+  let expires=0,guard=0,lastShown=-Infinity;
+  const hide=()=>{
+    clearTimeout(expires);clearInterval(guard);expires=guard=0;
+    caption.hidden=true;caption.textContent='';
   };
-
-  new MutationObserver(records=>{
-    records.forEach(record=>record.addedNodes.forEach(node=>{
-      if(!(node instanceof HTMLElement)) return;
-      if(node.matches('.bubble.narration')) showRoadThought(node);
-      node.querySelectorAll&&node.querySelectorAll('.bubble.narration').forEach(showRoadThought);
-    }));
-  }).observe(bubbleRoot,{childList:true,subtree:true});
+  const allowed=()=>root.dataset.uiRoadThought!=='off'&&!document.hidden
+    &&typeof S!=='undefined'&&S&&S.driving&&!S.ended&&!S.driving.approach
+    &&!UI.modalOpen()&&root.dataset.routeMap!=='open'&&!root.dataset.roadApproach
+    &&!document.getElementById('toasts')?.childElementCount
+    &&!document.getElementById('bubbles')?.childElementCount
+    &&document.getElementById('pursuit-help')?.hidden!==false
+    &&document.getElementById('pursuit-notice')?.hidden!==false
+    &&!document.getElementById('journey-driving-warning')?.textContent.trim();
+  const fits=()=>{
+    /* Renderer keeps wheels at ~.84H +13 logical pixels (236-wide canvas).
+       Use only the free road below, never move/scale the actual Dalguji.
+       Short/large-text views omit the optional caption rather than clipping it. */
+    const freeRoad=stage.clientHeight*.16-stage.clientWidth/236*13-7;
+    return caption.offsetHeight<=freeRoad;
+  };
+  const sync=()=>{if(!caption.hidden&&(!allowed()||!fits()))hide();};
+  const show=text=>{
+    const value=String(text||'').trim(),now=performance.now();
+    if(!value||!allowed()||now-lastShown<35000)return false;
+    caption.textContent=value;caption.hidden=false;
+    if(!fits()){hide();return false;}
+    lastShown=now;
+    expires=setTimeout(hide,8000);
+    guard=setInterval(sync,250);
+    return true;
+  };
+  UI.roadThought={show,hide,sync};
+  document.addEventListener('visibilitychange',sync);
+  window.addEventListener('resize',sync);
+  const observer=new MutationObserver(sync);
+  observer.observe(root,{attributes:true,attributeFilter:['data-ui-road-thought','data-route-map','data-road-approach','class']});
+  for(const id of ['ev-wrap','arrival-scene','ovl-stl','ovl-map','ovl-journal','ovl-status','ovl-menu','ovl-seoul','ovl-camp','ovl-local-actions','bubbles','toasts','panel','pursuit-help','pursuit-notice']){
+    const host=document.getElementById(id);
+    if(host)observer.observe(host,{attributes:true,attributeFilter:['class','open','hidden'],childList:true,subtree:true,characterData:true});
+  }
+  hide();
 })();
 
 /* ── 전방 발견 큐(road approach cue) ──

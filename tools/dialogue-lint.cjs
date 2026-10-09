@@ -21,6 +21,9 @@ const dump = process.argv.includes('--dump');
 /* 검사 결과 수집 — 아래 최상위 검사들이 곧바로 push하므로 반드시 먼저 선언한다 */
 const errors = [];
 const warnings = [];
+const {archaicHumanRegister,inspectAdultPlayerRegister} = require('./dialogue-register.cjs');
+for(const issue of inspectAdultPlayerRegister(D))
+  errors.push(`주인공→성인 동료 높임 회귀 ${issue.scope}: ${issue.text}`);
 
 const samples = [];
 const companionIds = Object.keys(D.comps || {});
@@ -496,7 +499,7 @@ for (const page of D.intro || []) {
    이전 과제의 감정선과 별개로, 화면 안에서도 제안→응답→자리 마련이 읽혀야 한다. */
 const recruitJoinRules = {
   rq_minji_join: [/서울까지\. 같이 가도 돼요/, /네 자리부터 만들자고/],
-  rq_parkss_join: [/같이 가실래요/, /좋소/],
+  rq_parkss_join: [/같이 가실래요/, /좋아\./],
   rq_leo_join: [/서울까지 같이 갈래요/, /저희 둘 다요/],
   rq_jaeyi_join: [/서울까지 쓸 자리를 만들죠/, /이 레일 한 칸 써도 돼요/],
   rq_eunsu_join: [/같이 갈래요/, /갈게요/],
@@ -551,6 +554,10 @@ const aiTells = [
   /(?:선택|판단|질문|답|이유)(?:은|이|가|을) [^.!?]{0,45}의 몫/,
 ];
 for (const sample of samples) {
+  // 기계의 의도적인 행정체는 유지한다. 사람은 -소/-오로 갑자기
+  // 노화시키지 않는다. 경상도 오이소/무으이소 등 지역 말투는 별개다.
+  if (sample.speaker !== 'cheollian' && archaicHumanRegister.test(sample.text))
+    errors.push(`사람 대사의 하오체 회귀 ${sample.scope}/${sample.speaker}: ${sample.text}`);
   const hit = aiTells.find(pattern => pattern.test(sample.text));
   if (hit) warnings.push(`${sample.scope}/${sample.speaker}: ${sample.text}`);
   if (sample.text.length > 135) warnings.push(`긴 한 호흡 ${sample.scope}/${sample.speaker} (${sample.text.length}자)`);

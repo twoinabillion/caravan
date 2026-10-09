@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>시간 안내 덜고, 물자 변화 또렷하게</title>
+  <link rel="stylesheet" href="event-resource-focus.css">
+</head>
+<body>
+<main class="draft">
+  <header class="review">
+    <p class="eyebrow">사건 화면 · 부분 초안</p>
+    <h1>물자 변화가 먼저 보이게</h1>
+    <p>물자 이름 옆에 배경 없는 작은 그림을 붙였습니다. 획득·소모 모두 같은 그림을 쓰고, 수량의 + / −로 구분합니다.</p>
+    <label for="example">확인할 화면</label>
+    <select id="example">
+      <option value="repair" selected>가족 버스 · 부품을 쓴 결과</option>
+      <option value="choice">가족 버스 · 선택 전</option>
+      <option value="gain">획득 표시 · 밀양 원문 예시</option>
+      <option value="supplies">다른 물자 · 그림과 수량 예시</option>
+      <option value="empty">가족 버스 · 물자 변화 없는 결과</option>
+    </select>
+    <label class="size"><input type="checkbox" id="large"> 큰 글씨</label>
+  </header>
+
+  <section class="paper" id="preview" aria-label="선택과 결과 영역 초안">
+    <section class="example repair">
+      <p class="scene-label">난방이 끊긴 가족 버스</p>
+      <p class="story">새 연결부를 조여 넣자 미지근한 바람이 돌아왔다. 유나의 굳었던 손이 조금 펴졌다.</p>
+      <dl class="resources" aria-label="소모한 물자">
+        <div class="loss"><dt><img src="../../assets/icons/parts.png" width="32" height="32" alt=""><span><small>소모</small>부품</span></dt><dd>−1<span>개</span></dd></div>
+      </dl>
+      <details class="record"><summary>남겨 둔 기록</summary><p>새 부품을 써서 유나가 탄 이송 버스의 난방을 빠르게 되살렸다. 도윤의 표에는 이송 사유가 없었다.</p></details>
+      <a class="next" href="#next">다음 장면 <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="example choice">
+      <p class="scene-label">난방이 끊긴 가족 버스</p>
+      <p class="story">새 부품으로 잇거나, 연결 고리를 깎거나, 남은 호스를 당겨 물려야 했다.</p>
+      <p class="choice-cue">어떻게 고칠까?</p>
+      <div class="choices" aria-label="수리 방법 예시">
+        <a href="#selected-part">새 연결 부품으로 바로 고친다<small><img src="../../assets/icons/parts.png" width="24" height="24" alt="">소모 · 부품 1개</small></a>
+        <a href="#selected-scrap">고철로 연결 고리를 새로 깎는다<small><img src="../../assets/icons/scrap.png" width="24" height="24" alt="">소모 · 고철 3</small></a>
+        <a href="#selected-hose">남은 호스를 잘라 우회한다</a>
+      </div>
+    </section>
+
+    <section class="example gain">
+      <p class="scene-label">밀양의 부품 천막 · 본문 일부</p>
+      <p class="story">나사산이 살아 있는 볼트, 금이 간 베어링, 아직 쓸 수 있는 호스가 차례로 갈린다. 일꾼은 가장 멀쩡한 체결 부품을 달구지 몫으로 밀어 놓는다.</p>
+      <dl class="resources" aria-label="얻은 물자">
+        <div class="gain-row"><dt><img src="../../assets/icons/parts.png" width="32" height="32" alt=""><span><small>획득</small>부품</span></dt><dd>+1<span>개</span></dd></div>
+      </dl>
+      <p class="condition">피로 +3</p>
+      <details class="record"><summary>남겨 둔 기록</summary><p>경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.</p></details>
+      <a class="next" href="#next">장터로 돌아가기 <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="example supplies">
+      <p class="scene-label">다른 물자 · 가상 수치로 보는 표시 예시</p>
+      <p class="story">그림은 가방에서 보던 물자와 같습니다. 현재 사건의 보상이나 소모를 뜻하지 않습니다.</p>
+      <dl class="resources" aria-label="물자 그림과 수량 표시 예시">
+        <div class="gain-row"><dt><img src="../../assets/icons/scrap.png" width="32" height="32" alt=""><span><small>획득</small>고철</span></dt><dd>+3</dd></div>
+        <div class="loss"><dt><img src="../../assets/icons/fuel.png" width="32" height="32" alt=""><span><small>소모</small>연료</span></dt><dd>−2<span>L</span></dd></div>
+        <div class="gain-row"><dt><img src="../../assets/icons/water.png" width="32" height="32" alt=""><span><small>획득</small>물</span></dt><dd>+2<span>L</span></dd></div>
+        <div class="gain-row"><dt><img src="../../assets/icons/food.png" width="32" height="32" alt=""><span><small>획득</small>식량</span></dt><dd>+1</dd></div>
+      </dl>
+      <a class="next" href="#next">다음 장면 <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="example empty">
+      <p class="scene-label">난방이 끊긴 가족 버스</p>
+      <p class="story">찢어진 구간을 잘라 내고 남은 호스를 당겨 물렸다. 몇 번이나 새는 곳을 다시 조였다. 도윤이 송풍구에 손을 대더니 하진을 돌아봤다. 따뜻한 바람이 나오고 있었다.</p>
+      <details class="record"><summary>남겨 둔 기록</summary><p>물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다. 도윤의 표에는 이송 사유가 없었다.</p></details>
+      <a class="next" href="#next">다음 장면 <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="destination" id="selected-part"><p class="story">새 연결부를 조여 넣자 미지근한 바람이 돌아왔다. 유나의 굳었던 손이 조금 펴졌다.</p><dl class="resources"><div class="loss"><dt><img src="../../assets/icons/parts.png" width="32" height="32" alt=""><span><small>소모</small>부품</span></dt><dd>−1<span>개</span></dd></div></dl><a class="next" href="#preview">선택 전으로 돌아가기</a></section>
+    <section class="destination" id="selected-scrap"><p class="story">철판을 말아 연결 고리를 조였다. 바람이 나오자 하진이 유나를 송풍구 쪽으로 고쳐 안았다. 다음 정차지에서 고리를 다시 봐 달라고 부탁했다.</p><dl class="resources"><div class="loss"><dt><img src="../../assets/icons/scrap.png" width="32" height="32" alt=""><span><small>소모</small>고철</span></dt><dd>−3</dd></div></dl><a class="next" href="#preview">선택 전으로 돌아가기</a></section>
+    <section class="destination" id="selected-hose"><p class="story">찢어진 구간을 잘라 내고 남은 호스를 당겨 물렸다. 몇 번이나 새는 곳을 다시 조였다. 도윤이 송풍구에 손을 대더니 하진을 돌아봤다. 따뜻한 바람이 나오고 있었다.</p><a class="next" href="#preview">선택 전으로 돌아가기</a></section>
+    <section class="destination" id="next"><p class="story">초안에서 다음 행동까지 확인했습니다.</p><p>게임에서는 원래 이어지던 사건이나 장소로 돌아갑니다.</p><a class="next" href="#preview">결과 초안으로 돌아가기</a></section>
+  </section>
+  <footer class="review footnote">기존 가방의 투명 물자 그림을 재사용했습니다. 수리는 가족 버스의 세 선택 원문, 부품 획득은 밀양의 실제 데이터, 다른 물자 수량은 표시용 가상 예시입니다. 현재 저장을 복제한 화면은 아닙니다. 시간 안내만 덜어낸 초안이며 게임·시간 계산·세이브는 그대로입니다.</footer>
+</main>
+</body>
+</html>

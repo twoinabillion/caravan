@@ -78,7 +78,7 @@ test('solo ambient scenes contain no phantom reply or fixed crew count',()=>{
   // Real scene NPCs and gated specialist actions must not disappear with the fix.
   assert.match(event(c,'meet_kids_toll').text,/아이 셋/);
   assert.match(event(c,'meet_kids_toll').choices[0].out[0].text,/방금 정했어요/);
-  assert.match(event(c,'wx_ghostlight').choices[0].out[1].text,/북쪽 조심하쇼/);
+  assert.match(event(c,'wx_ghostlight').choices[0].out[1].text,/북쪽 조심하세요/);
   assert.equal(event(c,'ai_drone').choices[2].req.comp,'kangwoo');
   assert.match(event(c,'ai_drone').choices[2].out[0].text,/강우가/);
 });
@@ -86,7 +86,8 @@ test('solo ambient scenes contain no phantom reply or fixed crew count',()=>{
 test('16 revised encounters preserve all gates, choices, effects, probabilities and chains',()=>{
   const c=setup(),rows=permanentEvents(c.data).filter(e=>ids.includes(e.id)).sort((a,b)=>a.id.localeCompare(b.id));
   assert.equal(rows.length,16);
-  const data=JSON.stringify(rows,(k,v)=>['text','body','turns','readingRecord','turnSpeakers','speakers'].includes(k)?undefined:v);
+  const projected=require('./story-review-contract.cjs')(JSON.parse(JSON.stringify(rows)));
+  const data=JSON.stringify(projected,(k,v)=>['text','body','turns','readingRecord','turnSpeakers','speakers'].includes(k)?undefined:v);
   assert.equal(crypto.createHash('sha256').update(data).digest('hex'),'672256f4d0db52e557883dcdae4276d651d245e24e1b1bfab521ff277dcdac4d');
 });
 

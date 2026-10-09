@@ -1,0 +1,25 @@
+{
+  "style": "caravan-grounded-cinematic-v1",
+  "use": "Independent Studio prototype, not gameplay",
+  "requiredReferences": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "additionalReference": "tools/design-drafts/opening-wharf/cargo-v1.webp",
+  "prompts": [
+    {
+      "id": "fuel",
+      "prompt": "undefined\nAsset type: isolated Studio departure-pack choice detail plate, landscape 16:9 master at least1536x864. Input images1–4: canonical style/vehicle/world references only; image5: approved draft cargo scene continuity, not an edit target. Scene: close detail on the SAME aged wooden loading sill at the open rear of the cream Dalguji in Busan wharf at dawn. Restrained blue-gray light, faint practical amber bounce, believable 50mm cinematic still. Subject: One weathered dark brick-red metal fuel jerrycan with a screwed cap and stout handle, entirely visible, sitting on the damp wooden loading sill. It is a supplementary fuel container, not a water container. No brand, no label, no numerals. Composition: one clear centered subject fills about65% frame width and75% height, all silhouette fits; subdued wood and dim cargo background, very little unrelated scenery. No people, hands, dog, skyline or companions. Match the fifth reference's worn material and painterly realism. Single scene, no collage, no UI, no border, no text. Keep this an in-world detail, never glossy catalog photography.\nAvoid: undefined"
+    },
+    {
+      "id": "repair",
+      "prompt": "undefined\nAsset type: isolated Studio departure-pack choice detail plate, landscape 16:9 master at least1536x864. Input images1–4: canonical style/vehicle/world references only; image5: approved draft cargo scene continuity, not an edit target. Scene: close detail on the SAME aged wooden loading sill at the open rear of the cream Dalguji in Busan wharf at dawn. Restrained blue-gray light, faint practical amber bounce, believable 50mm cinematic still. Subject: One open battered gray metal mechanic's box containing a modest spare fuse packet, a coiled belt, loose fasteners and a folded shop rag. All parts contained in the box, fully visible. This is a spare-parts bundle, not a vehicle upgrade or medical kit. No writing. Composition: one clear centered subject fills about65% frame width and75% height, all silhouette fits; subdued wood and dim cargo background, very little unrelated scenery. No people, hands, dog, skyline or companions. Match the fifth reference's worn material and painterly realism. Single scene, no collage, no UI, no border, no text. Keep this an in-world detail, never glossy catalog photography.\nAvoid: undefined"
+    },
+    {
+      "id": "provisions",
+      "prompt": "undefined\nAsset type: isolated Studio departure-pack choice detail plate, landscape 16:9 master at least1536x864. Input images1–4: canonical style/vehicle/world references only; image5: approved draft cargo scene continuity, not an edit target. Scene: close detail on the SAME aged wooden loading sill at the open rear of the cream Dalguji in Busan wharf at dawn. Restrained blue-gray light, faint practical amber bounce, believable 50mm cinematic still. Subject: One compact provisions bundle: a faded khaki cloth food bag tied with cord beside a pale unmarked water canister. The pair sits together as one selectable bundle, both fully visible. No fuel can, no fresh luxury food, no labels, no writing. Composition: one clear centered subject fills about65% frame width and75% height, all silhouette fits; subdued wood and dim cargo background, very little unrelated scenery. No people, hands, dog, skyline or companions. Match the fifth reference's worn material and painterly realism. Single scene, no collage, no UI, no border, no text. Keep this an in-world detail, never glossy catalog photography.\nAvoid: undefined"
+    }
+  ]
+}

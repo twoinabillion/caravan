@@ -1,0 +1,41 @@
+{
+  "mode": "built-in",
+  "assets": [
+    {
+      "id": "road-mapmaker",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road character component, large master 1024x1536. First four inputs are canonical style/world/people/vehicle references; fifth is subject identity, preserve it. Young Korean female mapmaker, exact same face, long dark hair, goggles on head, worn brown coat and map roll strap as image five. Standing, holding a small map and compass. Full body including shoes, relaxed three-quarter side pose facing left.\nNo landscape, no ground plane, no other people, no vehicle. Soft diffuse neutral daylight, grounded natural anatomy, clean silhouette. Genuine transparent alpha background. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/mapmaker.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-12a1f6bf-9ea1-49aa-a127-fad54e163927.png"
+    },
+    {
+      "id": "road-hanbyeol",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road character component, large master 1024x1536. First four inputs are canonical style/world/people/vehicle references; fifth is subject identity, preserve it. Hanbyeol, exact same young Korean woman face, short dark hair, worn brown coat and pack strap as image five. Standing holding a few weathered books; full body including shoes, three-quarter side pose facing left.\nNo landscape, no ground plane, no other people, no vehicle. Soft diffuse neutral daylight, grounded natural anatomy, clean silhouette. Genuine transparent alpha background. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/hanbyeol.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-97311743-742d-43ac-8520-0a2b64d3d2b4.png"
+    },
+    {
+      "id": "road-mingyu",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road character component, large master 1024x1536. First four inputs are canonical style/world/people/vehicle references; fifth is subject identity, preserve it. Mingyu, exact same Korean adult male face, swept messy dark hair, stubble, rugged gray collared jacket as image five. Standing with a small battered portable radio in one hand; full body including shoes, three-quarter side pose facing left.\nNo landscape, no ground plane, no other people, no vehicle. Soft diffuse neutral daylight, grounded natural anatomy, clean silhouette. Genuine transparent alpha background. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/mingyu.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-131bfae2-dd61-4045-ab0a-5cf83975af07.png"
+    }
+  ]
+}

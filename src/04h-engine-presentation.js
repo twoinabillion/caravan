@@ -187,7 +187,9 @@ G.presentTransition = ()=>{
   if(!event){ S.pendingPresentation=null; G.save(); return false; }
   // Count a new chained event once, before presentation. Resumed event/result
   // phases bypass this path; an unconsumed transition has not been opened yet.
-  G.openEvent(event); return true;
+  // A persisted explicit chain resumes at the same stop, never as a newly
+  // discovered roadside encounter. Keep the ordinary receipt/counting path.
+  G.openEvent(event,{continuation:true}); return true;
 };
 G.resolvedFinaleMethod = ()=>{
   const methods=['core_transfer','core_sleep','core_quarantine'].filter(key=>S?.flags[key]);
@@ -196,7 +198,13 @@ G.resolvedFinaleMethod = ()=>{
 G.unfinishedSeoulEvent = ()=>{
   if(!S||S.ended||S.at!=='seoul'||S.driving||S.flags.story_done) return null;
   const f=S.flags;
-  if(!f.seoul_open) return G.seoulReady()?D.seoulOpenEvent:null;
+  if(!f.seoul_open){
+    if(!G.seoulReady()) return null;
+    // These are the actual Seoul outskirts, never a total-mileage proxy.
+    if(f.bridge_crew_answer&&!f.bridge_invitation) return G.presentationEvent('story_bridge_invitation');
+    if(f.bridge_invitation&&!f.bridge_last_quiet) return G.presentationEvent('story_bridge_last_quiet');
+    return D.seoulOpenEvent;
+  }
   if(D.seoulMap.stops.slice(0,4).some(stop=>!f[`seoul_${stop.id}_done`])) return null;
   if(!f.seoul_core_reached) return null; // the map owns choosing each climb stop
   const id=!f.seoul_costs_seen?'seoul_costs':!G.resolvedFinaleMethod()?'seoul_decision':

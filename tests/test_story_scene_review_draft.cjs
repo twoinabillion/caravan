@@ -1,0 +1,68 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),read=file=>fs.readFileSync(path.join(root,file),'utf8');
+const html=read('tools/design-drafts/story-scene-review.html');
+const provenance=JSON.parse(read('tools/design-drafts/story-scene-review/provenance.json'));
+
+test('mounted-key draft is registered, static, and cannot mutate a save or apply gameplay',()=>{
+  const manifest=JSON.parse(read('tools/design-drafts/manifest.json'));
+  assert.equal(manifest.drafts.find(d=>d.id==='story-scene-review-v1').file,'story-scene-review.html');
+  assert.match(html,/default-src 'none'/);assert.match(html,/form-action 'none'/);
+  assert.doesNotMatch(html,/<script\b|<form\b|<iframe\b|\bon\w+\s*=|localStorage|sessionStorage|javascript:/i);
+  assert.match(html,/승인 대기/);assert.match(html,/게임 미적용/);
+  assert.match(html,/family-verification-key-mounted-v3.webp/);
+  assert.match(html,/family-verification-key.jpg/);
+  assert.equal(provenance.delivery.wiredIntoGameplay,false);
+  for(const file of fs.readdirSync(path.join(root,'src')))
+    if(/\.(js|html)$/.test(file))assert(!read('src/'+file).includes('family-verification-key-mounted-v3'));
+});
+
+test('mounted-key master and delivery meet the canonical scene contract with honest review limits',async()=>{
+  const contract=JSON.parse(read('assets/visual-contract.json'));
+  assert.equal(provenance.styleId,contract.styleId);
+  assert.deepEqual(provenance.requiredReferences,contract.requiredReferences);
+  for(const file of provenance.requiredReferences)assert(fs.existsSync(path.join(root,file)));
+  const sharp=require('sharp'),master=await sharp(path.join(root,provenance.delivery.master)).metadata();
+  assert(master.width>=1536&&master.height>=864);
+  const delivery=await sharp(path.join(root,provenance.delivery.asset)).metadata();
+  assert.deepEqual([delivery.width,delivery.height],contract.assets.cinematicScene.preferredDelivery);
+  assert.equal(delivery.format,'webp');assert.equal(delivery.space,'srgb');
+  assert(fs.statSync(path.join(root,provenance.delivery.asset)).size<=contract.assets.cinematicScene.maximumRecommendedBytes);
+  assert.equal(provenance.review.SangApproval,'pending');
+  assert.match(provenance.review.actualInGameCrop,/not-observed/);
+  assert.match(provenance.review.actualStudioDraftWindow,/not-observed/);
+  assert(fs.existsSync(path.join(root,provenance.preservedOriginal)));
+});
+
+test('finale image family remains a registered isolated draft, not a silent game replacement',()=>{
+  const page=read('tools/design-drafts/finale-scene-review.html');
+  const data=JSON.parse(read('tools/design-drafts/story-scene-review/finale-provenance.json'));
+  const manifest=JSON.parse(read('tools/design-drafts/manifest.json'));
+  assert.equal(manifest.drafts.find(d=>d.id==='finale-scene-review-v1').file,'finale-scene-review.html');
+  assert.match(page,/default-src 'none'/);assert.match(page,/승인 대기/);assert.match(page,/게임 미적용/);
+  assert.doesNotMatch(page,/<script\b|<form\b|<iframe\b|\bon\w+\s*=|localStorage|sessionStorage|javascript:/i);
+  assert.equal(data.review.wiredIntoGameplay,false);assert.equal(data.review.SangApproval,'pending');
+  for(const row of data.images){
+    assert(page.includes(row.asset));assert(page.includes(row.original));
+    for(const file of fs.readdirSync(path.join(root,'src')))
+      if(/\.(js|html)$/.test(file))assert(!read('src/'+file).includes(row.id));
+  }
+});
+
+test('night/dawn/terminal masters, prompts, references and delivery satisfy the scene contract',async()=>{
+  const data=JSON.parse(read('tools/design-drafts/story-scene-review/finale-provenance.json'));
+  const contract=JSON.parse(read('assets/visual-contract.json')),sharp=require('sharp');
+  assert.equal(data.styleId,contract.styleId);assert.deepEqual(data.requiredReferences,contract.requiredReferences);
+  assert.equal(data.images.length,3);assert.equal(data.review.sourceObserved,true);assert.equal(data.review.deliveryObserved,true);
+  assert.match(data.review.actualInGameCrop,/not-observed/);assert.match(data.review.actualStudioDraftWindow,/not-observed/);
+  assert.equal(data.images[1].editTarget,data.images[0].master,'dawn uses night as its edit reference');
+  for(const row of data.images){
+    assert.deepEqual(row.references,contract.requiredReferences);assert(row.prompt.length>400);
+    assert(fs.existsSync(path.join(root,row.original)));
+    const master=await sharp(path.join(root,row.master)).metadata();assert(master.width>=1536&&master.height>=864);
+    const asset=await sharp(path.join(root,row.asset)).metadata();
+    assert.deepEqual([asset.width,asset.height],contract.assets.cinematicScene.preferredDelivery);
+    assert.equal(asset.format,'webp');assert.equal(asset.space,'srgb');
+    assert(fs.statSync(path.join(root,row.asset)).size<=contract.assets.cinematicScene.maximumRecommendedBytes);
+  }
+});

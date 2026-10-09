@@ -35,7 +35,7 @@ for(const method of ['transfer','sleep','quarantine']){
       const text=choice.out[0].turns(S).map(t=>t.text).join('\n');
       assert(text.includes(method==='sleep'?'검색창도 함께 잠겼다':method==='transfer'?'거점들의 다툼':'매일 밤 감시조'));
       assert(choice.out[0].readingRecord(S).length>text.length);
-      if(method==='sleep') assert(text.includes('수신등은 켜지지 않았다')&&!text.includes('상행 전송'));
+      if(method==='sleep') assert(text.includes('콘솔의 꺼진 수신등')&&text.includes('코어는 잠들었다')&&!text.includes('상행 전송'));
       for(const t of choice.out[0].turns(S).filter(t=>t.kind==='dialogue')) assert(party.includes(t.who),'absent cast must not speak');
     }
     assert.equal(JSON.stringify(S),before,'presentation must not mutate state');

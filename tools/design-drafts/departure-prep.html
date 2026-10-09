@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>출발 준비 · 이름과 짐 초안</title>
+  <link rel="stylesheet" href="departure-prep.css">
+</head>
+<body>
+  <div class="draft-note">미적용 초안 · 출발 수치는 현재 코드 기준</div>
+  <main class="prep-screen" id="prep-example">
+    <nav class="prep-nav" aria-label="출발 준비 메뉴 예시"><a href="#back-example">타이틀로</a><a href="#sound-example">소리 켜기</a></nav>
+    <section class="prep-main">
+      <header><p class="place">부산 감천 부두</p><h1>첫 길을 열기 전에.</h1></header>
+      <div class="name-field">
+        <label for="driver-name">어떤 이름으로 기록할까요?</label>
+        <input id="driver-name" maxlength="8" placeholder="나" autocomplete="off" aria-describedby="name-note">
+        <p id="name-note">8자까지 · 비워 두면 ‘나’로 기록해요.</p>
+      </div>
+      <fieldset class="loadout-pick">
+        <legend>처음 실을 짐</legend>
+        <div class="loadout-options">
+          <input id="load-keeper" type="radio" name="loadout" value="keeper" checked>
+          <label for="load-keeper"><b>균형 출발</b><span>안정형</span></label>
+          <input id="load-runner" type="radio" name="loadout" value="runner">
+          <label for="load-runner"><b>빈 탱크</b><span>도전형</span></label>
+          <input id="load-hauler" type="radio" name="loadout" value="hauler">
+          <label for="load-hauler"><b>만재 출발</b><span>보급형</span></label>
+        </div>
+      </fieldset>
+      <section class="loadout-detail keeper" aria-label="균형 출발 구성">
+        <h2>골고루 싣고, 천천히 익히는 길.</h2><p>연료와 물자를 고르게 싣는다.<br>처음 떠나는 길에 알맞다.</p>
+        <dl><div><dt>연료</dt><dd>42<span>L</span></dd></div><div><dt>고철</dt><dd>24</dd></div><div><dt>물</dt><dd>16</dd></div><div><dt>식량</dt><dd>14</dd></div><div><dt>부품</dt><dd>1</dd></div><div><dt>차체</dt><dd>82<span>%</span></dd></div></dl>
+      </section>
+      <section class="loadout-detail runner" aria-label="빈 탱크 구성">
+        <h2>연료는 적게, 손볼 것은 넉넉히.</h2><p>연료는 16L뿐이다. 고철과 부품으로<br>첫 정착지까지 버틴다.</p>
+        <dl><div><dt>연료</dt><dd>16<span>L</span></dd></div><div><dt>고철</dt><dd>44</dd></div><div><dt>물</dt><dd>12</dd></div><div><dt>식량</dt><dd>10</dd></div><div><dt>부품</dt><dd>3</dd></div><div><dt>차체</dt><dd>82<span>%</span></dd></div></dl>
+      </section>
+      <section class="loadout-detail hauler" aria-label="만재 출발 구성">
+        <h2>물자는 넉넉히, 정비는 길 위에서.</h2><p>연료와 생존 물자는 넉넉하지만<br>부품 없이 길을 연다.</p>
+        <dl><div><dt>연료</dt><dd>52<span>L</span></dd></div><div><dt>고철</dt><dd>6</dd></div><div><dt>물</dt><dd>26</dd></div><div><dt>식량</dt><dd>24</dd></div><div><dt>부품</dt><dd>0</dd></div><div><dt>차체</dt><dd>74<span>%</span></dd></div></dl>
+      </section>
+    </section>
+    <footer class="prep-footer">
+      <a class="start" href="#start-example"><span>출발 준비를 시작한다<small class="keeper">균형 출발</small><small class="runner">빈 탱크</small><small class="hauler">만재 출발</small></span><span aria-hidden="true">→</span></a>
+      <a class="history" href="#history-example">먼저 전체 역사 프롤로그 읽기</a>
+    </footer>
+    <section class="example-dialog" id="back-example" aria-labelledby="back-title"><div><p>초안 동작 안내</p><h2 id="back-title">타이틀로 돌아가기</h2><p>적용한다면 이름과 출발 방식만 고르는 이 단계에서는 여정을 만들지 않고 타이틀로 돌아갑니다.</p><a href="#prep-example">초안으로 돌아가기</a></div></section>
+    <section class="example-dialog" id="start-example" aria-labelledby="start-title"><div><p>초안 동작 안내</p><h2 id="start-title">출발 준비로 이어집니다</h2><p>실제 적용 때는 입력한 이름과 선택한 구성으로 기존 출발 준비 흐름에 연결합니다. 이 초안에서는 게임을 시작하거나 저장하지 않습니다.</p><a href="#prep-example">초안으로 돌아가기</a></div></section>
+    <section class="example-dialog" id="history-example" aria-labelledby="history-title"><div><p>초안 동작 안내</p><h2 id="history-title">전체 역사 프롤로그</h2><p>기존 프롤로그 읽기를 유지합니다. 이 초안은 새로운 대사나 이야기를 만들지 않습니다.</p><a href="#prep-example">초안으로 돌아가기</a></div></section>
+    <section class="example-dialog" id="sound-example" aria-labelledby="sound-title"><div><p>초안 동작 안내</p><h2 id="sound-title">소리 켜기</h2><p>적용 때는 기존 게임 소리 설정에 연결합니다. 초안에서는 소리가 재생되지 않습니다.</p><a href="#prep-example">초안으로 돌아가기</a></div></section>
+  </main>
+</body>
+</html>

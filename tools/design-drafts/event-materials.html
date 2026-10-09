@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>달구지의 손때 · 대화와 선택 초안</title>
+  <link rel="stylesheet" href="event-materials.css">
+</head>
+<body>
+  <header class="draft-tools" aria-label="게임 밖 초안 검토 도구">
+    <label><input id="plain" type="checkbox">질감 빼기</label>
+    <label><input id="large" type="checkbox">큰 글씨</label>
+    <details class="draft-help"><summary>초안 안내</summary><div>
+      <p>현재 부산 ‘사유가 없는 이송표’의 원문·선택·결과를 사용한 독립 초안입니다. 현재 읽기 위치를 복제한 화면은 아닙니다.</p>
+      <p>‘계속 읽기’로 사람 대화 → 단말 응답 → 선택 → 반응을 비교하세요. 두 선택의 비용과 원문은 유지했습니다.</p>
+      <p>새로 생성한 것은 투명 금속 프레임과 빈 버튼 재질 두 장뿐입니다. 장면·초상은 게임 자산이며, 글자는 이미지에 그리지 않았습니다.</p>
+      <p>초안은 자동 읽기를 재생하지 않습니다. 게임·저장·자원·현재 읽기 진행에는 연결하지 않았습니다.</p>
+      <p>작은 높이와 큰 글씨에서는 본문만 스크롤합니다. 실제 게임 적용 시 기존 페이지 측정·읽기 저장을 유지해야 합니다.</p>
+      <p>Studio 직접 화면·터치 검수는 연결 시간 초과로 미완료입니다.</p>
+    </div></details>
+  </header>
+
+  <main class="event-shell" data-event="opening_failed_appeal" aria-label="게임과 분리된 이벤트 디자인 초안">
+    <header class="event-head"><p>부산 감천 부두</p><h1>사유가 없는 이송표</h1></header>
+    <figure class="scene-art">
+      <img src="../../assets/intro/15-appeal-denied.jpg" alt="현재 사건에 쓰이는 부두 민원 단말 장면" width="768" height="432">
+      <details class="art-zoom"><summary><span class="closed-label">그림 크게 보기</span><span class="open-label">그림 닫기</span></summary><img src="../../assets/intro/15-appeal-denied.jpg" alt="사유가 없는 이송표의 기존 장면 원본"></details>
+    </figure>
+
+    <div class="page-slot">
+      <section id="reading" class="event-page default-page" aria-label="하진의 말" tabindex="-1">
+        <div class="reading-surface"><div class="reading-scroll">
+          <p class="narration" data-turn="0">버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.</p>
+          <article class="spoken"><p class="speaker"><img src="../../assets/portraits/passer_woman.png" width="48" height="48" alt=""><span>하진</span></p><p class="dialogue" data-turn="1">열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.</p></article>
+        </div></div>
+        <footer class="page-actions"><span class="quiet">대화</span><a class="metal-button advance" href="#terminal">계속 읽기</a></footer>
+      </section>
+
+      <section id="terminal" class="event-page" aria-label="주인공과 부두 단말의 응답" tabindex="-1">
+        <div class="reading-surface"><div class="reading-scroll">
+          <article class="spoken"><p class="speaker"><img src="../../assets/portraits/me.png" width="48" height="48" alt=""><span>나</span></p><p class="dialogue" data-turn="2">부산 단말에서도 한번 볼게요. 사람이 받는 접수처가 있는지.</p></article>
+          <article class="terminal"><h2>부두 민원 단말</h2><p data-turn="3">원격 이의 제기 경로가 없습니다. 현장 확인 포트: 서울 남산 중앙 노드.</p></article>
+        </div></div>
+        <footer class="page-actions"><a class="quiet" href="#reading">이전</a><a class="metal-button advance" href="#decision">계속 읽기</a></footer>
+      </section>
+
+      <section id="decision" class="event-page decision-page" aria-label="이송표를 어떻게 남길지 선택" tabindex="-1">
+        <div class="reading-surface"><div class="reading-scroll">
+          <p class="narration" data-turn="4">화면 아래에 제7 잔류구역 등록 인원 6,412명이 떴다. 하진은 대답 대신 유나의 옷깃을 여몄다. 이 버스가 끝이 아니었다.</p>
+          <nav class="choices" aria-label="행동 선택"><h2>어떻게 할까?</h2>
+            <a class="metal-button choice" href="#copied" data-choice="copy_receipt"><span>거절 응답과 이송표를 함께 복사한다</span><small>시간 15분</small></a>
+            <a class="metal-button choice" href="#names" data-choice="record_names"><span>하진에게 허락을 구하고 가족 이름부터 적는다</span><small>시간 30분</small></a>
+          </nav>
+        </div></div>
+        <footer class="page-actions"><a class="quiet" href="#terminal">앞 대사</a><details class="history"><summary>기록</summary><div><p>열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.</p><p>부산 단말에서도 한번 볼게요. 사람이 받는 접수처가 있는지.</p><p>원격 이의 제기 경로가 없습니다. 현장 확인 포트: 서울 남산 중앙 노드.</p></div></details></footer>
+      </section>
+
+      <section id="copied" class="event-page" aria-label="사본을 남긴 뒤의 반응" tabindex="-1">
+        <div class="reading-surface"><div class="reading-scroll">
+          <p class="chosen">내 선택<span>거절 응답과 이송표를 함께 복사한다</span></p>
+          <p class="narration" data-result="copy_receipt">빈 사유 칸과 거절 응답을 한 장에 인쇄했다. 사본은 접어 넣고 원본은 도윤에게 돌려줬다. 아이가 종이 가장자리를 두 손으로 폈다.</p>
+          <aside class="result-note"><h2>여정 기록에 남겼다</h2><p>부산에서 막힌 이의 제기</p><span>시간 15분 경과</span></aside>
+        </div></div>
+        <footer class="page-actions"><a class="quiet" href="#decision">다른 선택 보기</a><a class="metal-button advance" href="#demo-end">다음 사건으로</a></footer>
+      </section>
+
+      <section id="names" class="event-page" aria-label="이름을 적은 뒤의 반응" tabindex="-1">
+        <div class="reading-surface"><div class="reading-scroll">
+          <p class="chosen">내 선택<span>하진에게 허락을 구하고 가족 이름부터 적는다</span></p>
+          <p class="narration" data-result="record_names">하진에게 허락을 구한 뒤 이름을 하나씩 받아 적었다. 하진, 도윤, 유나. 남산 주소 옆에 세 이름을 쓰고, 먼저 떠난 사람도 찾겠다고 말했다.</p>
+          <aside class="result-note"><h2>여정 기록에 남겼다</h2><p>남산 주소 옆의 세 이름</p><span>시간 30분 경과</span></aside>
+        </div></div>
+        <footer class="page-actions"><a class="quiet" href="#decision">다른 선택 보기</a><a class="metal-button advance" href="#demo-end">다음 사건으로</a></footer>
+      </section>
+
+      <section id="demo-end" class="event-page" aria-label="초안 검토 완료" tabindex="-1">
+        <div class="reading-surface"><div class="reading-scroll"><h2 class="end-heading">여기까지가 초안이야.</h2><p class="narration">실제 사건을 진행하거나 시간을 쓰지는 않았어. 테두리의 두께, 버튼 질감, 사람 대화와 단말 응답의 차이를 봐줘.</p><p class="narration">위의 ‘질감 빼기’로 같은 구성을 장식 없이 비교할 수 있어.</p></div></div>
+        <footer class="page-actions"><span class="quiet">미적용 초안</span><a class="metal-button advance" href="#reading">처음부터 보기</a></footer>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

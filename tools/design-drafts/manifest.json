@@ -2,6 +2,94 @@
   "version": 1,
   "drafts": [
     {
+      "id": "finale-scene-review-v1",
+      "file": "finale-scene-review.html",
+      "title": "남산 중턱, 밤부터 새벽까지",
+      "revision": "1",
+      "recommended": true,
+      "description": "7차 이야기·그림 검증: 본문의 남산 중턱과 맞는 같은 계단의 밤/새벽, 잠든 코어와 별도로 켜지는 정비 단말3장. 정본4장 참조 생성과 동일 구도 편집, 기존 그림 비교. 게임 미연결·승인 대기이며 실제 저장/읽기 진행과 분리됩니다. 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "story-scene-review-v1",
+      "file": "story-scene-review.html",
+      "title": "검증키 · 아직 배선 안에",
+      "revision": "1",
+      "recommended": true,
+      "description": "6차 검증: 동행 없는 경로에도 나오던 세 사람과 이미 꺼낸 모듈을 빼고, 분리 절차를 찾기 전 계기판에 연결된 검증키를 보여 줍니다. 정본4장 참조 생성·소품 보정, 현재 그림과 비교. 원본 관찰/배포 규격 확인, Studio 창 시각 검수는 미완료. 게임 연결·저장·대사 진행은 변경하지 않으며 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "event-resource-focus-v1",
+      "file": "event-resource-focus.html",
+      "title": "시간 안내 덜고, 물자 변화 또렷하게",
+      "revision": "2",
+      "recommended": true,
+      "description": "v2 · 부품·고철·연료·물·식량 이름 옆에 기존 가방의 투명 그림을 작게 붙였습니다. 획득/소모는 같은 그림과 +/− 수량으로 구분합니다. 시간 안내 없는 가족 버스 수리 3선택, 밀양 부품 획득 원문, 다른 물자의 가상 수치 예시를 비교하세요. 현재 저장 복제는 아닙니다. 게임·시간 계산·세이브·적용 대기는 그대로, 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "event-continuity-v1",
+      "file": "event-continuity.html",
+      "title": "사건 사이, 한 호흡",
+      "revision": "1",
+      "recommended": true,
+      "description": "현재 가족 버스 수리→실제 다음 이송표 사건을 기준으로 A 연결 문구와 본문 함께 읽기 / B 별도 막간을 비교합니다. 수리 결과는 새 부품 선택 예시이며 실제 선택은 미확인. 같은 장소에는 임의의5분을 추가하지 않습니다. 기존 그림·원문 재사용, 게임·저장 미변경. 초안 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "road-encounter-detail-v1",
+      "file": "road-encounter-detail.html",
+      "title": "길 위의 조우 · 달구지와 같은 결",
+      "revision": "6",
+      "recommended": true,
+      "description": "v6 · 공식 초상 참조 전용 인물 10종과 사진사·꽃장수·재봉사, 이동 도서관·사이드카·빈 피아노 추가. 정적 HTML/SVG 초안과 생성 부품 갤러리는 현재 저장과 분리됩니다. 도로 출현은 실제 대면 사건에만 연결하며 무전·회상 인물은 자동 배치하지 않습니다. 현재 장면 연결 오류로 실제 도로 시각 검수와 적용 확인은 미완료입니다."
+    },
+    {
+      "id": "road-whisper-v1",
+      "file": "road-whisper.html",
+      "title": "길은 넓게, 생각은 잠깐",
+      "revision": "1",
+      "recommended": true,
+      "description": "큰 운전 생각 카드·그림·제목을 없애고, 원문 한 문장을 풍경 아래에 최대8초만 둡니다. 가끔/끄기·문장 고정·이벤트 예시로 비교하세요. 목적지·기록·동행 버튼은 고정되어 밀리지 않습니다. 현재 부산→양산09:59·7km 기준 독립 배치, 기존 차량/원경의 정적 부품 배치이며 실제 주행 재현이 아닙니다. 게임 소스·저장 미변경, 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "event-materials-v1",
+      "file": "event-materials.html",
+      "title": "달구지의 손때 · 대화와 선택",
+      "revision": "1",
+      "recommended": true,
+      "description": "현재 부산 ‘사유가 없는 이송표’의 원문·선택·결과를 보존한 독립 초안. 정본4장 참조 생성 금속 프레임·빈 철판 버튼을 얇게 쓰고, 사람 대화와 단말 응답을 구별합니다. 계속 읽기→선택→두 반응을 눌러보고 ‘질감 빼기’·큰 글씨로 비교하세요. 그림은 기존 사건·초상이며 새 인물/장면은 없습니다. 게임·저장·자원·읽기 진행·빌드 미변경. Studio 직접 시각·조작 검수는 연결 시간 초과로 미완료."
+    },
+    {
+      "id": "opening-extra-pack-v1",
+      "file": "opening-extra-pack.html",
+      "title": "출발 전, 짐 하나 더 · 두 화면",
+      "revision": "2",
+      "recommended": true,
+      "description": "v2 · 첫 부두 타이틀은 그대로. ‘기본 짐은 실어뒀어요’ 문구와 작은 그림3장을 빼고, 큰 짐 그림 한 장을 연료통/부품/물·식량 탭으로 전환합니다. 선택과 추가량·최종 물자·출발 버튼이 함께 바뀝니다. 수치는 밸런스 검증 전 새 시작 규칙 제안이며 기존 정본 참조 컨셉을 재사용합니다. 게임·저장·빌드 미변경, 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "opening-wharf-v1",
+      "file": "opening-wharf.html",
+      "title": "부산에서 시동을 걸기 전 · 두 화면",
+      "revision": "1",
+      "recommended": true,
+      "description": "타이틀에서 부두의 달구지를 보고 ‘출발 준비’를 누르면 같은 차의 뒷문·출발 기록으로 이어집니다. 이름과3구성은 초안 안에서만 동작하고 실제 시작 수치는 유지합니다. 4개 정본 참조 신규 컨셉2장; 짐 그림은 수량 재현이 아닙니다. 게임·저장·빌드 미변경, 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "departure-prep-v1",
+      "file": "departure-prep.html",
+      "title": "출발 준비 · 이름과 짐",
+      "revision": "1",
+      "recommended": true,
+      "description": "타이틀의 청회색·크림색을 이어 이름 → 세 출발 구성 → 선택한 물자 → 시작 버튼으로 정리한 미적용 초안. 세 구성은 실제 startProfiles 수치를 사용하며 라디오 선택에 따라 설명과 물자만 바뀝니다. 이름 입력·안내창·복귀는 초안 안에서만 동작합니다. 타이틀 복귀는 새 제안이며 기능 승인은 별도입니다. 그림·게임·저장·빌드 변경 없음. 현재 게임의 직접 시각 검수는 Studio 창 접근 제한으로 미완료입니다."
+    },
+    {
+      "id": "title-departure-v1",
+      "file": "title-departure.html",
+      "title": "부산 출발 전 · 타이틀",
+      "revision": "2",
+      "recommended": true,
+      "description": "큰 제목 → 부산 항구의 달구지 → 출발 버튼. 기존 부산 원경·기본 차량의 정적 배치로 메뉴를 단순하게 정리한 미적용 초안입니다. 상단 ‘저장 기록 있음 예시’로 이어서 달리기 배치를 비교하세요. 버튼은 안내창만 열며 게임·저장·빌드는 바꾸지 않습니다. 새 그림·인물 없음. 원본 그림 관찰 완료, 실제 게임 화면의 직접 시각 검수는 Studio 접근 제한으로 미완료입니다."
+    },
+    {
       "id": "settlement-continuity-v1",
       "file": "settlement-continuity.html",
       "title": "시장 안으로 · 풍경은 옆으로",

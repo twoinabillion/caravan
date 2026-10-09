@@ -1,0 +1,288 @@
+{
+  "mode": "built-in",
+  "assets": [
+    {
+      "id": "road-photographer",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road character component, large portrait master. First four inputs canonical style. One elderly Korean male photographer, weathered gray coat, holds an old film camera next to a folded tripod, full body including shoes.\nThree-quarter side view facing left, natural anatomy, diffuse daylight. No landscape, ground plane, matte or glow. Genuine transparent alpha; avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-147fc06d-fa12-4f0c-9d85-e7212ce1aa33.png",
+      "delivery": {
+        "id": "road-photographer-v1",
+        "master": "assets/road-cues/masters/road-photographer-v1.png",
+        "output": "assets/road-cues/cue-road-photographer-v1.webp",
+        "crop": {
+          "left": 264,
+          "top": 19,
+          "width": 583,
+          "height": 1500
+        },
+        "width": 149,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-florist",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road character component, large portrait master. First four inputs canonical style. One elderly Korean woman florist, worn practical gray cardigan and faded apron, holds a small bunch of wild flowers. Full body including shoes. No flower stall or other people.\nThree-quarter side view facing left, natural anatomy, diffuse daylight. No landscape, ground plane, matte or glow. Genuine transparent alpha; avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-eae16964-9e75-440c-a45f-35df0840a9e7.png",
+      "delivery": {
+        "id": "road-florist-v1",
+        "master": "assets/road-cues/masters/road-florist-v1.png",
+        "output": "assets/road-cues/cue-road-florist-v1.webp",
+        "crop": {
+          "left": 260,
+          "top": 11,
+          "width": 508,
+          "height": 1504
+        },
+        "width": 130,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-tailor",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road character component, large portrait master. First four inputs canonical style. One elderly Korean woman seated using a worn mechanical foot treadle sewing machine, her feet rest naturally on its treadle, worn practical clothing. Entire seated body and sewing machine included as a single transparent character-with-tool asset. No electric motor, no other people.\nThree-quarter side view facing left, natural anatomy, diffuse daylight. No landscape, ground plane, matte or glow. Genuine transparent alpha; avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-0a673e48-450a-42b6-a412-da0f5de59108.png",
+      "delivery": {
+        "id": "road-tailor-v1",
+        "master": "assets/road-cues/masters/road-tailor-v1.png",
+        "output": "assets/road-cues/cue-road-tailor-v1.webp",
+        "crop": {
+          "left": 10,
+          "top": 26,
+          "width": 1120,
+          "height": 1326
+        },
+        "width": 324,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-seoyeon",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road full-body character master. Inputs 1–4 canonical style, input 5 exact named character identity, not another character. Korean female deserter Soyeon, preserve face and short untidy hair from fifth reference. Half-removed worn white institutional outer garment over her weathered everyday clothes. Standing breathless, no weapon.\nEntire body, both shoes visible, relaxed three-quarter side pose facing left. Neutral daylight, no background, landscape, other people, ground plane or glow; genuine alpha. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/seoyeon.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-74984830-dc20-482d-85d4-2e071d9e789a.png",
+      "delivery": {
+        "id": "road-seoyeon-v1",
+        "master": "assets/road-cues/masters/road-seoyeon-v1.png",
+        "output": "assets/road-cues/cue-road-seoyeon-v1.webp",
+        "crop": {
+          "left": 283,
+          "top": 11,
+          "width": 513,
+          "height": 1503
+        },
+        "width": 131,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-sanjigi",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road full-body character master. Inputs 1–4 canonical style, input 5 exact named character identity, not another character. Korean male mountain keeper, exact fifth reference identity, dark green work jacket and scarf, carries a small cloth pouch.\nEntire body, both shoes visible, relaxed three-quarter side pose facing left. Neutral daylight, no background, landscape, other people, ground plane or glow; genuine alpha. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/sanjigi.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-3b676fbb-a73d-4236-8f84-ca5c4c8b6d1e.png",
+      "delivery": {
+        "id": "road-sanjigi-v1",
+        "master": "assets/road-cues/masters/road-sanjigi-v1.png",
+        "output": "assets/road-cues/cue-road-sanjigi-v1.webp",
+        "crop": {
+          "left": 457,
+          "top": 3,
+          "width": 411,
+          "height": 1207
+        },
+        "width": 131,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-kimcaptain",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road full-body character master. Inputs 1–4 canonical style, input 5 exact named character identity, not another character. Korean elderly male fishing captain, exact fifth reference face, cap and weathered jacket, holding a small folded fishing net.\nEntire body, both shoes visible, relaxed three-quarter side pose facing left. Neutral daylight, no background, landscape, other people, ground plane or glow; genuine alpha. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/kimcaptain.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5791cc6b-f6a3-4664-ac12-17152c3c830c.png",
+      "delivery": {
+        "id": "road-kimcaptain-v1",
+        "master": "assets/road-cues/masters/road-kimcaptain-v1.png",
+        "output": "assets/road-cues/cue-road-kimcaptain-v1.webp",
+        "crop": {
+          "left": 586,
+          "top": 7,
+          "width": 403,
+          "height": 1016
+        },
+        "width": 152,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-hayeosa",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road full-body character master. Inputs 1–4 canonical style, input 5 exact named character identity, not another character. Korean mature woman Hayeosa, exact fifth reference curly gray hair and round glasses, worn patterned blouse and dark vest, holds a thick handwritten ledger and fountain pen.\nEntire body, both shoes visible, relaxed three-quarter side pose facing left. Neutral daylight, no background, landscape, other people, ground plane or glow; genuine alpha. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/hayeosa.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-aa4ccc58-e121-4dd0-943f-e8341c1142d8.png",
+      "delivery": {
+        "id": "road-hayeosa-v1",
+        "master": "assets/road-cues/masters/road-hayeosa-v1.png",
+        "output": "assets/road-cues/cue-road-hayeosa-v1.webp",
+        "crop": {
+          "left": 578,
+          "top": 3,
+          "width": 370,
+          "height": 1018
+        },
+        "width": 140,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-geumja",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road full-body character master. Inputs 1–4 canonical style, input 5 exact named character identity, not another character. Korean mature woman Geumja, exact fifth reference gray hair, warm face, patterned cooking apron, holds one metal soup ladle.\nEntire body, both shoes visible, relaxed three-quarter side pose facing left. Neutral daylight, no background, landscape, other people, ground plane or glow; genuine alpha. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/geumja.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-dcc24caa-318d-4073-acfd-b1523eff5933.png",
+      "delivery": {
+        "id": "road-geumja-v1",
+        "master": "assets/road-cues/masters/road-geumja-v1.png",
+        "output": "assets/road-cues/cue-road-geumja-v1.webp",
+        "crop": {
+          "left": 438,
+          "top": 7,
+          "width": 466,
+          "height": 1133
+        },
+        "width": 158,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-seojin",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road full-body character master. Inputs 1–4 canonical style, input 5 exact named character identity, not another character. Korean adult woman Seojin, exact fifth reference face, swept short hair, worn olive brown coat, holds a folded paper dispatch sheet.\nEntire body, both shoes visible, relaxed three-quarter side pose facing left. Neutral daylight, no background, landscape, other people, ground plane or glow; genuine alpha. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/seojin.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ddc8190b-cdd9-471a-b34f-6d582527e716.png",
+      "delivery": {
+        "id": "road-seojin-v1",
+        "master": "assets/road-cues/masters/road-seojin-v1.png",
+        "output": "assets/road-cues/cue-road-seojin-v1.webp",
+        "crop": {
+          "left": 557,
+          "top": 4,
+          "width": 375,
+          "height": 1017
+        },
+        "width": 142,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-taesik",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road full-body character master. Inputs 1–4 canonical style, input 5 exact named character identity, not another character. Korean adult male Taesik, exact fifth reference stern face and close buzzcut, worn dark jacket, holds cable cutting tool downwards safely.\nEntire body, both shoes visible, relaxed three-quarter side pose facing left. Neutral daylight, no background, landscape, other people, ground plane or glow; genuine alpha. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/taesik.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-d7940623-0134-4d9a-abe8-a708bbabd029.png",
+      "delivery": {
+        "id": "road-taesik-v1",
+        "master": "assets/road-cues/masters/road-taesik-v1.png",
+        "output": "assets/road-cues/cue-road-taesik-v1.webp",
+        "crop": {
+          "left": 549,
+          "top": 9,
+          "width": 403,
+          "height": 1008
+        },
+        "width": 154,
+        "height": 384,
+        "alpha": true
+      }
+    },
+    {
+      "id": "road-hanbyeol-v2",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: transparent live-road character component, large master 1024x1536. First four inputs are canonical style/world/people/vehicle references; fifth is subject identity, preserve it. Hanbyeol, exact same young Korean woman face, short dark hair, worn brown coat and pack strap as image five. Standing holding a few weathered books; full body including shoes, three-quarter side pose facing left.\nNo landscape, no ground plane, no other people, no vehicle. Soft diffuse neutral daylight, grounded natural anatomy, clean silhouette. Genuine transparent alpha background. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nRequired correction: Hanbyeol wears modest thin round reading glasses, explicitly in her actual event. Add them. Preserve identity, books, full body and transparent alpha; no new props.",
+      "refs": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/hanbyeol.png"
+      ],
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ec4baee7-2cc0-4e30-be05-4be741e72a54.png",
+      "delivery": {
+        "id": "road-hanbyeol-v2",
+        "master": "assets/road-cues/masters/road-hanbyeol-v2.png",
+        "output": "assets/road-cues/cue-road-hanbyeol-v2.webp",
+        "crop": {
+          "left": 263,
+          "top": 21,
+          "width": 546,
+          "height": 1496
+        },
+        "width": 140,
+        "height": 384,
+        "alpha": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-10-09",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "status": "draft-awaiting-Sang-review",
+  "events": ["story_family_key", "main_recovery_story_family_key"],
+  "requiredReferences": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "referenceMode": "referenced_image_paths",
+    "initialOutput": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-706d3461-3259-42e0-aaa7-c8f730fec6f5.png",
+    "selectedEditOutput": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-aee25b24-801b-4def-ad0c-85de26860a0e.png",
+    "briefSummaryNotVerbatimPrompt": "Four canonical references attached. One large 16:9 cinematic close-up inside the worn cream Dalguji cab: a palm-sized verification circuit module remains screwed in the open dashboard cavity, connectors and wires plugged in. Circuit notebook, cloth, practical amber service lamp, restrained cool daylight. No people, hands, dog, landmark, readable text, UI, montage or watermark. Keep the module central and readable at mobile size. The initial output's incidental vehicle photograph was rejected; edit only removes that photograph and fills its area with worn upholstery. The family photo remains outside the frame. All four references and the target image were attached for the edit.",
+    "basePromptSource": "assets/visual-contract.json#prompt.base",
+    "negativePromptSource": "assets/visual-contract.json#prompt.negative"
+  },
+  "delivery": {
+    "master": "tools/design-drafts/story-scene-review/masters/key-mounted-v1.png",
+    "asset": "assets/scenes/family-verification-key-mounted-v3.webp",
+    "exporter": "tools/design-drafts/export-story-scene-review.cjs",
+    "operation": "sRGB, centered cover resize to 1024x576, WebP quality86 effort6; no raster editing",
+    "wiredIntoGameplay": false
+  },
+  "review": {
+    "sourceAndDeliveryObserved": true,
+    "geometry": "passed",
+    "style": "reviewed against four canonical references; cinematic painterly realism, cool weathered cab and practical amber lamp",
+    "identity": "no faces or named people; vehicle-reference-guided interior, no extra companion",
+    "world": "no landmark or fixed city; module still mounted and wired, before extraction",
+    "actualStudioDraftWindow": "not-observed; browser/app control unavailable",
+    "actualInGameCrop": "not-observed; candidate deliberately not wired",
+    "SangApproval": "pending",
+    "readOnlyServingChecks": {
+      "studioDraft": "http://127.0.0.1:4327/game/tools/design-drafts/story-scene-review.html — HTTP200; not window observation",
+      "previewGallery": "http://127.0.0.1:4319/__live/assets — HTTP200, candidate listed; not visual gallery observation",
+      "previewAsset": "HTTP200 and SHA256 equal to local delivery; 100608bytes",
+      "currentScene": "HTTP400; Studio could not receive the current window"
+    },
+    "releaseRights": "generated with project-supplied references; separate release-rights review not performed"
+  },
+  "preservedOriginal": "assets/scenes/family-verification-key.jpg",
+  "unresolvedOtherScenes": ["seoul-night-quiet-v2", "seoul-home-dawn-v2", "seoul-uplink-empty-v2", "northern recovery box art"]
+}

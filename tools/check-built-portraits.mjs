@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {unpackBytes} from './encode-embedded-assets.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const builtPath = path.join(root, '서울까지400km.html');
@@ -21,6 +22,8 @@ for (const id of ids) {
   const matches = [...html.matchAll(pattern)]
     .map(match => Buffer.from(match[1], 'base64'))
     .filter(buffer => buffer.byteLength > 0);
+  const encodedPattern=new RegExp(`D\\.portraits\\.${id}\\s*=\\s*CARAVAN_URI\\("data:image/png;base64,","([^"]*)",(\\d+)\\)`,'g');
+  for(const match of html.matchAll(encodedPattern))matches.push(Buffer.from(unpackBytes(match[1],Number(match[2]))));
   if (matches.length !== 1) {
     throw new Error(`${id}: 실제 내장 초상 수가 1개가 아님 (${matches.length})`);
   }

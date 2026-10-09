@@ -4,7 +4,8 @@ function normalize(v){
  if(v.type==='ParenthesizedExpression')return normalize(v.expression);
  if(v.type==='TemplateLiteral'&&v.expressions.length===0)return {type:'Literal',value:v.quasis[0].value.cooked};
  if(Array.isArray(v))return v.map(normalize);
- return Object.fromEntries(Object.entries(v).filter(([k])=>!['start','end','raw','loc','range','parenthesized'].includes(k)).map(([k,x])=>[k,normalize(x)]));
+ // {name: name} and {name} have the same key/value nodes and runtime meaning.
+ return Object.fromEntries(Object.entries(v).filter(([k])=>!['start','end','raw','loc','range','parenthesized'].includes(k)&&!(v.type==='Property'&&k==='shorthand')).map(([k,x])=>[k,normalize(x)]));
 }
 function difference(a,b,path='root'){
  if(typeof a!==typeof b||a===null||b===null||typeof a!=='object')return a===b?null:path;
@@ -24,4 +25,13 @@ test('parser-based formatting retains ASI, regular expressions and literal white
  const source='function read(){return\n {x:1}};const result=[read(), /https?:\\/\\//.test("https://a"), ` a\\nb `, 8 / 2 / 2];';
  const run=code=>JSON.stringify(vm.runInNewContext(code+';result'));
  assert.equal(run(compactScriptSource(source,'fixture.js')),run(source));
+});
+test('delivery formatting preserves every other game script syntax tree',async()=>{
+ const {parseSync}=await import('vite'),{compactScriptSource}=await import('../tools/compact-script-source.mjs');
+ for(const filename of fs.readdirSync('src').filter(name=>name.endsWith('.js')&&name!=='07-ui.js')){
+  const source=fs.readFileSync('src/'+filename,'utf8'),built=compactScriptSource(source,filename);
+  const tree=code=>normalize(parseSync(filename,code,{sourceType:'script'}).program);
+  assert.equal(difference(tree(source),tree(built)),null,filename);
+  new vm.Script(built,{filename});assert(!/<\/script/i.test(built),filename);
+ }
 });

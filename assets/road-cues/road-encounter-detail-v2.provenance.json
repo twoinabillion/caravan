@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "status": "draft-review-only-not-runtime-wired",
+  "createdAt": "2026-10-05",
+  "tool": "image_gen.imagegen",
+  "style": "caravan-grounded-cinematic-v1",
+  "assetType": "transparent-renderer-components",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "assets/ui/journey-dalguji-base-v1.webp"
+  ],
+  "assets": [
+    {
+      "id": "coffee-vendor-v1",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: a SINGLE independently compositable full-body road-encounter person cutout, not a scene. Reference images 1–4 are style/world canon only, do NOT copy their named characters; image 5 is the deployed Dalguji renderer material and view target. Subject: ONE unnamed middle-aged Korean roadside coffee vendor, natural adult proportions, short graying hair, worn muted olive cotton work jacket over a faded gray shirt, charcoal trousers and practical scuffed shoes. Standing comfortably on both feet, three-quarter side view facing screen-left toward an approaching driver. One hand gives a small relaxed greeting at shoulder height, the other hangs naturally. Full body including shoes and every finger must be visible, with generous transparent margin, centered single figure, large master at least 1024px tall. Broad softly shaded cloth folds and believable skin, same restrained painterly realism and edge treatment as the actual truck, not flat vector, no heavy outline. Diffuse overcast daylight from upper-left, neutral ambient, no dramatic cast shadow; a tiny soft contact shadow only under shoes. No cups, no vehicle, no facility, no ground plane, no scenery, no other people, no named companion likeness. Actual transparent alpha background, NOT checkerboard artwork or white matte. This is a transparent renderer part, not a cinematic event illustration.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-dc3af770-52c6-4268-8ff5-213db2a4a17e.png",
+      "width": 176,
+      "height": 384,
+      "master": "assets/road-cues/masters/coffee-vendor-v1.png",
+      "delivery": "assets/road-cues/cue-coffee-vendor-v1.webp",
+      "alpha": true
+    },
+    {
+      "id": "checkpoint-worker-v1",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nDerive a matching transparent renderer component from the attached references: images 1-4 define world and style, image 5 defines deployed vehicle material and view. SINGLE unnamed middle-aged Korean checkpoint worker, full body including shoes and fingers, standing three-quarter facing screen-left, one palm raised calmly to ask a driver to stop, other hand resting at side. Worn gray-blue work jacket under faded khaki utility vest with subtle dirty reflective strips, dark trousers, scuffed boots, short dark hair, natural adult proportions. No weapon, hat, mask, badge lettering, cups, scenery, facility, ground plane, named character likeness or extra person. Diffuse neutral overcast upper-left light, tiny contact shadow only beneath feet, painterly realism with soft detailed cloth like deployed Dalguji, not vector, comic or 3D. Large master at least 1024px tall, generous transparent margins around entire single figure. Actual alpha transparent background, no checkerboard or white matte. This is an independent live renderer part, not an event painting.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-d07aa6b2-e722-4b3b-95c3-f9f695cf1ad2.png",
+      "width": 175,
+      "height": 384,
+      "master": "assets/road-cues/masters/checkpoint-worker-v1.png",
+      "delivery": "assets/road-cues/cue-checkpoint-worker-v1.webp",
+      "alpha": true
+    },
+    {
+      "id": "checkpoint-booth-v1",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nDerive a matching transparent renderer component from attached references: images 1-4 define canon, image5 defines deployed vehicle finish. SINGLE modest Korean roadside checkpoint booth, weathered faded blue-gray corrugated sheet metal, rust at seams, dented repaired shallow sloping tin roof, cloudy glass service window with battered metal frame, narrow side door, credible human-sized cabin. Near side view with slight three-quarter depth, broad service window facing camera and small right side visible; matches deployed Dalguji side-on perspective, not isometric 3D. Disused infrastructure still used by people, no fantasy. Diffuse neutral overcast upper-left light, softly modeled worn material, restrained painterly cinematic realism. Whole booth including roof and bottom visible, centered with generous transparent margins, large master at least1024px tall. Actual transparent alpha, no ground plane, scenery, poles, barrier arm, barrels, vehicles, people, lettering, signage, watermark, white matte or checkerboard artwork. Independent compositable renderer component, NOT full narrative painting.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e1fe6883-a3d2-4cb0-92b9-ba228b63d855.png",
+      "width": 853,
+      "height": 512,
+      "master": "assets/road-cues/masters/checkpoint-booth-v1.png",
+      "delivery": "assets/road-cues/cue-checkpoint-booth-v1.webp",
+      "alpha": true
+    }
+  ],
+  "export": "tools/design-drafts/export-road-encounter-parts.cjs; deterministic alpha-margin crop + resize + WebP quality94 alpha100",
+  "limitations": [
+    "Anonymous comparison people, not canonical named portraits",
+    "Static draft only: runtime approach, weather and night unverified"
+  ]
+}

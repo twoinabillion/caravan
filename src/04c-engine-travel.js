@@ -604,6 +604,8 @@ G.eventAvailable = (ev,context={})=>{
      fixed 체인과 플레이어가 직접 다시 말을 거는 영입 만남은 openEventById로
      이어지므로, 서사 진행을 막지 않으면서 우연한 재등장만 끊는다. */
   if(ev.id&&S.used.includes(ev.id)) return false;
+  if(['es_nightshift','es_backdoor'].includes(ev.id)
+    &&(D.eunsuBackdoorDone(S)||G.mainEvidenceEntryId(ev.id)!==ev.id)) return false;
   if(mode==='node'){
     if(!location||location.kind!=='node'||!location.nodes.includes(nodeId)) return false;
   } else if(mode==='waypoint'){
@@ -648,6 +650,8 @@ G.eventAvailable = (ev,context={})=>{
   }
   if(ev.needFlag&&!S.flags[ev.needFlag]) return false;
   if(ev.needFlag2&&!S.flags[ev.needFlag2]) return false;
+  // A pickup flag does not prove the carried object is still in the bag.
+  if(ev.needItem&&(S.items[ev.needItem]||0)<1) return false;
   if(Array.isArray(ev.needFlags)&&ev.needFlags.some(flag=>!S.flags[flag])) return false;
   if(ev.needKnowledge&&G.knowledgeLevel(ev.needKnowledge[0])<ev.needKnowledge[1]) return false;
   if(ev.noKnowledge&&G.knowledgeLevel(ev.noKnowledge[0])>=ev.noKnowledge[1]) return false;

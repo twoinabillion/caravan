@@ -20,6 +20,47 @@ function helper(env,name){
  const start=source.indexOf('  function '+name+'('),end=source.indexOf('\n  function ',start+4);
  assert(start>=0,name);vm.runInContext(source.slice(start,end),env);return env[name];
 }
+test('actual scene renderer follows night/dawn beats across rosters, back and restore',()=>{
+ const env=vm.createContext({console,requestAnimationFrame:fn=>fn(),speakerInfo:who=>({id:who})});
+ for(const file of STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),env);
+ const D=vm.runInContext('D',env),night=D.events.find(e=>e.id==='seoul_night');
+ const img={style:{},classList:{remove(){},add(){}},isConnected:true};
+ const frame={dataset:{cutToken:'initial'},style:{setProperty(){}},setAttribute(){},querySelector:()=>img};
+ env.$=()=>({querySelector:()=>frame});helper(env,'sceneFormat');helper(env,'storySceneShot');helper(env,'renderStoryScene');
+ for(const method of ['transfer','sleep','quarantine'])for(const party of [[],['eunsu'],Object.keys(D.comps)])for(let choice=0;choice<2;choice++){
+  const S={flags:{['core_'+method]:true},party,comps:{},stats:{km:430},notes:[],opening:{decisions:{}},campMemories:{}};
+  const turns=night.choices[choice].out[0].turns(S),dawn=turns.findIndex(t=>t.text.startsWith('새벽,'));
+  assert(dawn>0);
+  const state={eventId:night.id,phase:'outcome',turns,sceneKeys:D.eventChoiceScenes.seoul_night[choice]};
+  const before=JSON.stringify(state);
+  for(const capacity of [1,150,400,Infinity]){
+   const parts=paginate(turns,capacity);
+   assert.equal(parts.flatMap(p=>p.rows).map(r=>visible(r.text)).join(''),turns.map(t=>visible(t.text)).join(''));
+   assert(parts.every(p=>!p.rows.some(r=>r.sourceIndex<dawn)||!p.rows.some(r=>r.sourceIndex>=dawn)),
+     'one visible page must not span two authored time beats');
+  }
+  for(const index of [...turns.keys(),0,dawn-1,dawn,turns.length-1]){
+   const restored=plain(state);env.renderStoryScene(restored,restored.turns[index],index);
+   assert.equal(frame.dataset.sceneKey,index<dawn?'seoul-night-quiet-v2':'seoul-home-dawn-v2');
+  }
+  assert.equal(JSON.stringify(state),before,'rendering must not mutate the receipt');
+ }
+ const state={eventId:'e',phase:'event',turns:[{text:'a',scene:'not-wired'},{text:'b'}],sceneKeys:['seoul-core-view-v2']};
+ env.renderStoryScene(state,state.turns[0],0);assert.equal(frame.dataset.sceneKey,'seoul-core-view-v2');
+ assert(Object.values(D.eventChoiceScenes.seoul_decision).every(keys=>!keys.includes('seoul-home-dawn-v2')));
+});
+test('authored picture beats preserve split-row metadata and cannot move a question across the cut',()=>{
+ const turns=[{kind:'dialogue',who:'me',text:'들려요?',scene:'night'},
+  {kind:'dialogue',who:'mother',text:'새벽이네.',scene:'dawn'},
+  {kind:'narration',text:'아침 설명이 길게 이어진다.'}];
+ const parts=paginate(turns,3),rows=parts.flatMap(p=>p.rows);
+ assert(rows.filter(r=>r.sourceIndex===1).every(r=>r.scene==='dawn'));
+ assert(parts.every(p=>!p.rows.some(r=>r.sourceIndex===0)||!p.rows.some(r=>r.sourceIndex===1)));
+ assert.equal(rows.map(r=>r.text).join(''),turns.map(t=>t.text).join(''));
+ const unbounded=pages.take(turns,{turn:0,offset:0},()=>true);
+ assert.deepEqual(plain(unbounded.end),{turn:1,offset:0});
+ assert.equal(pages.take(turns,plain(unbounded.end),()=>true).rows[0].scene,'dawn');
+});
 test('every character, space, emoji, literal entity and approved span survives small pages',()=>{
  for(const text of ['긴 대사입니다. 다음 말도 그대로.\n\n끝.','가🙂나다 &amp; <script>x</script>','앞 <span class="em">강조 <span class="ai">안쪽</span> 뒤</span> 끝']){
   for(const size of [1,3,10,23,1000]){
@@ -52,6 +93,13 @@ test('oversized single glyph still advances; empty turns and invalid cursors ter
  assert.equal(pages.take(turns,{turn:-5,offset:-8},()=>false).done,true);
  assert.deepEqual(plain(pages.cursor(turns,{turn:500,offset:900})),{turn:2,offset:0});
  assert.equal(pages.take([],{},()=>false).done,true);
+});
+test('resource receipt rows stay atomic even when one row needs the explicit scroll fallback',()=>{
+ const resource={kind:'resource',text:'부품 -1',resource:{name:'부품',amount:'−1'},atomic:true};
+ const turns=[{kind:'narration',text:'완료.'},resource,{kind:'summary',text:'다음 행동'}],before=JSON.stringify(turns);
+ const result=paginate(turns,1),rows=result.flatMap(p=>p.rows).filter(r=>r.kind==='resource');
+ assert.equal(rows.length,1);assert.equal(rows[0].text,'부품 -1');assert.equal(rows[0].resource.amount,'−1');
+ assert.equal(JSON.stringify(turns),before);assert.equal(result.at(-1).done,true);
 });
 test('48px profile row follows the speaker, never narration or a repeated continuous speech',()=>{
  const env=vm.createContext({esc:s=>String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'),
@@ -137,13 +185,13 @@ function renderHarness(state,height=450){
  Object.defineProperty(reader,'clientHeight',{get:()=>Math.max(0,height-dock.getBoundingClientRect().height)});
  Object.defineProperty(reader,'scrollHeight',{get:()=>Math.max(reader.clientHeight,Math.ceil(strip(reader.innerHTML).length/24)*28+(reader.innerHTML.match(/page-speaker/g)||[]).length*56)});
  let captures=0;
- const env=vm.createContext({console,StoryPages:pages,window:{},document:{createElement:()=>new Node()},curStory:state,
+ const env=vm.createContext({console,StoryPages:pages,D:{icons:{}},window:{},document:{createElement:()=>new Node()},curStory:state,
   esc:String,fmt:String,stripTags:strip,speakerInfo:(who,name)=>({id:who,name:name||who,portrait:who+'.png'}),speakerLaneKey:t=>t.who,
   G:{capturePresentationView:()=>captures++},wireStoryTools(){},renderStoryScene(){},wireStoryReviewPause(){},scheduleStoryAuto(){},wireSceneZoom(){},
   placeStoryDock(){},normalizeRecruitDecisionDock(){},storyRecordHtml:()=>'',storyInspectionHtml:()=>'',storyCompletedRecordHtml:()=>'',storyOutcomeSummaryHtml:()=>'',
   clearStoryAuto(){},VO:{play(){}},AMBI:{play(){}},heldStoryAdvanceKeys:new Set(),$:()=>null,
   requestAnimationFrame:fn=>fn(),closeEvent(){},setStoryReaderMode:(s,mode)=>{s.readerMode=mode;env.renderStoryState();}});
- for(const name of ['pagedStoryHtml','storyResultPageTurns','renderPagedStory','advanceStory','storyDisplayTurns'])helper(env,name);
+ for(const name of ['storyElapsedChip','storyResourceChange','storyResourceIcon','storyResourceHtml','pagedStoryHtml','storyResultPageTurns','renderPagedStory','advanceStory','storyDisplayTurns'])helper(env,name);
  env.renderStoryState=()=>env.renderPagedStory(state,sheet);
  return {env,state,sheet,reader,dock,get captures(){return captures}};
 }

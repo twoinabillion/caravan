@@ -167,9 +167,11 @@ G.popBeat = ()=>{
 };
 G.popStory = ()=>{
   while(S&&S._storyQueue&&S._storyQueue.length){
-    const id=S._storyQueue.shift(), ev=D.events.find(e=>e.id===id);
+    const id=G.mainEvidenceEntryId(S._storyQueue.shift()), ev=D.events.find(e=>e.id===id);
     if(!G.mainEvidenceLocationReady(id)) continue;
-    if(ev && (!ev.once||!S.used.includes(id))&&!(G.mainEvidenceEventDone&&G.mainEvidenceEventDone(id))) return id;
+    const unansweredEunsu=['es_nightshift','es_backdoor'].includes(id)&&!D.eunsuBackdoorDone(S);
+    if(ev && (!ev.once||!S.used.includes(id)||unansweredEunsu)
+      &&!(G.mainEvidenceEventDone&&G.mainEvidenceEventDone(id))) return id;
   }
   return null;
 };
@@ -217,6 +219,7 @@ G.rememberChoice = (evd,choice,outcome)=>{
   const entry={id:def.id,eventId:evd.id,choiceIndex,day:S.day,km:Math.round(S.stats.km),
     eventTitle:evd.title,choiceLabel:String(choice.label||'').replace(/<[^>]*>/g,''),
     summary:def.summary,dueKm:S.stats.km+(def.afterKm||16),dueEvents:S.stats.events+(def.afterEvents||1),
+    ...(def.afterDays?{dueMinute:S.day*1440+S.min+def.afterDays*1440}:{}),
     echoed:false};
   S.memories.choices[def.id]=entry;
   S.memories.pending.push(def.id);
@@ -239,7 +242,8 @@ G.takeChoiceEcho = ()=>{
   G.ensureNarrativeState();
   const idx=S.memories.pending.findIndex(id=>{
     const m=S.memories.choices[id];
-    return m&&!m.echoed&&S.stats.km>=m.dueKm&&S.stats.events>=m.dueEvents;
+    return m&&!m.echoed&&S.stats.km>=m.dueKm&&S.stats.events>=m.dueEvents
+      &&(!Number.isFinite(m.dueMinute)||S.day*1440+S.min>=m.dueMinute);
   });
   if(idx>=0){
     const id=S.memories.pending[idx], memory=S.memories.choices[id];

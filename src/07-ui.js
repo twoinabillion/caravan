@@ -38,6 +38,16 @@ const UI = (()=>{
   const heldStoryAdvanceKeys=new Set();
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper', introRestart=false;
+  let pendingPack='fuel';
+  const preparationKey='caravan-departure-prep-v1';
+  function rememberPreparation(active=true){
+    pendingName=($('#inp-name').value||'').trim().slice(0,8);
+    try{sessionStorage.setItem(preparationKey,JSON.stringify({active,name:pendingName,pack:pendingPack,scroll:$('#scr-name .departure-scroll')?.scrollTop||0}));}catch(error){}
+  }
+  function readPreparation(){
+    try{const view=JSON.parse(sessionStorage.getItem(preparationKey)||'null');return view&&typeof view.name==='string'&&Object.hasOwn(D.departurePacks,view.pack)?view:null;}catch(error){return null;}
+  }
+  function clearPreparation(){try{sessionStorage.removeItem(preparationKey);}catch(error){}}
   let navChoiceAt=null, navChoiceId=null, navChoiceGuide='', journeyConsoleMode='route';
   let routeMapOpen=false, journeyRouteModels=[],journeyViewRestored=false;
   let stayActionAt=null,stayActionId=null;
@@ -82,24 +92,36 @@ const UI = (()=>{
   });
   function renderProfilePick(){
     const box=$('#profile-pick'); if(!box) return;
-    box.innerHTML=Object.entries(D.startProfiles||{}).map(([id,p])=>
-      `<button type="button" ${id==='keeper'?'id="mode-on" ':''}class="profile-card${id===pendingProfile?' on':''}" role="radio"
-         aria-checked="${id===pendingProfile}" data-profile="${id}" aria-label="${esc(p.nm)}. ${esc(p.preview||'')}">
-         <span class="profile-ic">${ICO(p.icon||'van')}</span>
-         <span class="profile-copy"><span class="profile-title"><b>${esc(p.nm)}</b><em>${esc(p.tag||'')}</em></span>
-         <small>${esc(p.d)}</small><span class="profile-stats">${esc(p.preview||'')}</span></span>
-         <span class="profile-check" aria-hidden="true">${id===pendingProfile?'선택됨':'선택'}</span>
-       </button>`).join('');
-    box.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{
-      pendingProfile=b.dataset.profile;
-      renderProfilePick();
+    if(!box.children.length){
+      box.innerHTML=Object.entries(D.departurePacks).map(([id,p])=>
+        `<button type="button" class="pack-tab" role="radio" data-pack="${id}">${esc(p.tab)}<span aria-hidden="true">✓</span></button>`).join('');
+      box.querySelectorAll('[data-pack]').forEach(button=>{
+        button.onclick=()=>{pendingPack=button.dataset.pack;renderProfilePick();rememberPreparation();};
+        button.onkeydown=event=>{
+          const ids=Object.keys(D.departurePacks),index=ids.indexOf(pendingPack);
+          const next=event.key==='Home'?0:event.key==='End'?ids.length-1:
+            ['ArrowRight','ArrowDown'].includes(event.key)?(index+1)%ids.length:
+            ['ArrowLeft','ArrowUp'].includes(event.key)?(index+ids.length-1)%ids.length:null;
+          if(next===null)return;
+          event.preventDefault();pendingPack=ids[next];renderProfilePick();rememberPreparation();
+          box.querySelector(`[data-pack="${pendingPack}"]`).focus({preventScroll:true});
+        };
+      });
+    }
+    box.querySelectorAll('[data-pack]').forEach(button=>{
+      const selected=button.dataset.pack===pendingPack;
+      button.setAttribute('aria-checked',String(selected));button.tabIndex=selected?0:-1;
     });
-    const selected=(D.startProfiles||{})[pendingProfile];
+    const selected=D.departurePacks[pendingPack],supplies=D.departureSupplies(pendingPack);
+    const picture=$('#departure-pack-img');
+    picture.src=D.scenes[selected.scene];picture.alt=selected.alt;
+    $('#departure-pack-name').textContent=selected.nm;
+    $('#departure-pack-addition').textContent=selected.addition;
     const detail=$('#profile-detail');
-    if(detail&&selected) detail.innerHTML=
-      `<span>선택한 출발</span><b>${esc(selected.nm)}</b><small>${esc(selected.preview||'')}</small>`;
+    const fields=[['fuel','연료','L'],['scrap','고철',''],['water','물',''],['food','식량',''],['parts','부품',''],['van','차체','%']];
+    detail.innerHTML=`<h3>출발 물자 <small>기본 짐 포함</small></h3><dl>${fields.map(([key,label,unit])=>`<div><dt>${label}</dt><dd${selected.delta[key]?' class="added"':''}>${supplies[key]}${unit}</dd></div>`).join('')}</dl>`;
     const cta=$('#bt-name-profile');
-    if(cta&&selected) cta.textContent=`${selected.nm} · ${selected.tag}`;
+    if(cta) cta.textContent=selected.nm;
   }
   let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
   let arrivalTimer=0;
@@ -110,6 +132,7 @@ const UI = (()=>{
   const savedBrightness=Number(localStorage.getItem('caravan_ui_brightness'));
   const uiPrefs={
     largeText:localStorage.getItem('caravan_ui_text')==='large',
+    roadThought:localStorage.getItem('caravan_ui_road_thought')!=='off',
     reduceMotion:savedMotion?savedMotion==='reduced':Boolean(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches),
     brightness:Number.isFinite(savedBrightness)&&savedBrightness>=60&&savedBrightness<=120?savedBrightness:100
   };
@@ -119,6 +142,7 @@ const UI = (()=>{
     root.classList.toggle('ui-reduce-motion',uiPrefs.reduceMotion);
     root.dataset.uiText=uiPrefs.largeText?'large':'normal';
     root.dataset.uiMotion=uiPrefs.reduceMotion?'reduced':'full';
+    root.dataset.uiRoadThought=uiPrefs.roadThought?'occasional':'off';
     root.style.setProperty('--ui-brightness',String(uiPrefs.brightness/100));
   }
   function toggleUiPref(kind){
@@ -128,15 +152,20 @@ const UI = (()=>{
     }else if(kind==='motion'){
       uiPrefs.reduceMotion=!uiPrefs.reduceMotion;
       localStorage.setItem('caravan_ui_motion',uiPrefs.reduceMotion?'reduced':'full');
+    }else if(kind==='road-thought'){
+      uiPrefs.roadThought=!uiPrefs.roadThought;
+      localStorage.setItem('caravan_ui_road_thought',uiPrefs.roadThought?'occasional':'off');
     }
     applyUiPrefs();
+    if(typeof UI!=='undefined'&&UI.roadThought)UI.roadThought.sync();
     if(curStory&&$('#ev-sheet')?.dataset.readerLayout==='pages')renderStoryState();
   }
   function renderSimpleMenu(){
     $('#ovl-menu').querySelectorAll('[data-ui-pref]').forEach(button=>{
-      const enabled=button.dataset.uiPref==='text'?uiPrefs.largeText:uiPrefs.reduceMotion;
+      const thought=button.dataset.uiPref==='road-thought';
+      const enabled=thought?uiPrefs.roadThought:button.dataset.uiPref==='text'?uiPrefs.largeText:uiPrefs.reduceMotion;
       button.setAttribute('aria-pressed',String(enabled));
-      button.querySelector('b').textContent=enabled?'켜짐':'꺼짐';
+      button.querySelector('b').textContent=thought?(enabled?'가끔':'끄기'):(enabled?'켜짐':'꺼짐');
     });
     const brightness=$('#menu-brightness'), brightnessValue=$('#menu-brightness-value');
     if(brightness) brightness.value=String(uiPrefs.brightness);
@@ -390,20 +419,32 @@ const UI = (()=>{
         showEvent(devEvent);
         finishStory();
       });
+    }else if(readPreparation()?.active){
+      startNew('onroad');
     }else if(bootParams.has('caravan-live')&&G.hasSave()){
       requestAnimationFrame(()=>{ if(screen==='title'&&G.load()) enterGame(); });
     }
     requestAnimationFrame(loop);
   }
   function refreshTitle(){
+    let canContinue=false;
     if(G.hasSave()){
       try{ const s=JSON.parse(localStorage.getItem(SAVE_KEY));
-        $('#bt-continue').style.display='flex';
-        $('#cont-info').textContent=`DAY ${s.day} · ${Math.round(s.stats.km)}km 주행 · ${s.mode==='offroad'?'오프로드':'온로드'}`;
+        if(s&&s.stats){
+          canContinue=true;
+          $('#cont-info').textContent=`DAY ${s.day} · ${Math.round(s.stats.km)}km 주행 · ${s.mode==='offroad'?'오프로드':'온로드'}`;
+        }
       }catch(e){}
-    } else $('#bt-continue').style.display='none';
+    }
+    $('#bt-continue').style.display=canContinue?'flex':'none';
+    if(['departure','wharf'].includes($('#scr-title').dataset.titleLayout)){
+      $('#scr-title').dataset.hasSave=String(canContinue);
+      $('#bt-new').classList.toggle('primary',!canContinue);
+    }
     const lastBox=$('#last-journey');
     const last=G.qualityArchive().slice(-1)[0];
+    const record=$('#title-last-record');
+    if(record){record.hidden=!last;if(!last)record.open=false;}
     if(lastBox){
       lastBox.hidden=!last;
       if(last) lastBox.innerHTML=previousJourneyHtml(last,true);
@@ -560,16 +601,21 @@ const UI = (()=>{
       pendingName=($('#inp-name').value||'').trim().slice(0,8);
       /* 이름 확인은 모바일 브라우저가 허용하는 명시적 사용자 제스처다. */
       SND.enable();
-      G.newGame(pendingMode,pendingName,'interactive',pendingProfile);
+      G.newGame(pendingMode,pendingName,'interactive',pendingProfile,pendingPack);
       enterGame();
     };
     $('#bt-name').onclick=nameGo;
+    $('#bt-name-back').onclick=()=>{rememberPreparation(false);refreshTitle();show('scr-title');$('#bt-new').focus({preventScroll:true});};
+    $('#bt-prep-sound').onclick=()=>SND.toggle();
+    $('#inp-name').addEventListener('input',()=>rememberPreparation());
+    $('#scr-name .departure-scroll').addEventListener('scroll',()=>{if(screen==='name')rememberPreparation();},{passive:true});
     $('#inp-name').addEventListener('keydown',e=>{
       if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); nameGo(); }
     });
     const openingHistory=$('#opening-history');
     if(openingHistory) openingHistory.onclick=()=>{
       pendingName=($('#inp-name').value||'').trim().slice(0,8);
+      rememberPreparation();
       introIdx=0; introTurnIdx=0;
       SND.enable();
       renderIntro(true);
@@ -653,6 +699,8 @@ const UI = (()=>{
       infinite:()=>G.isInfiniteResourceMode()
     };
     $('#early-sound').onclick=()=>SND.toggle();
+    const titleSound=$('#bt-title-sound');
+    if(titleSound) titleSound.onclick=()=>SND.toggle();
     $('#dk-status').onclick=()=>openStatusTab('now','dk-status');
     $('#st-x').onclick=()=>closeOvl('#ovl-status');
     $('#map-x').onclick=()=>closeOvl('#ovl-map');
@@ -706,18 +754,18 @@ const UI = (()=>{
     });
   }
   function startNew(mode){
-    introRestart=false; pendingMode='onroad'; pendingName=''; pendingProfile='keeper'; introIdx=0; introTurnIdx=0;
+    const view=readPreparation();
+    introRestart=false; pendingMode='onroad'; pendingName=view?.name||''; pendingProfile='keeper'; pendingPack=view?.pack||'fuel'; introIdx=0; introTurnIdx=0;
     const nameInput=$('#inp-name');
-    if(nameInput) nameInput.value='';
+    if(nameInput) nameInput.value=pendingName;
     show('scr-name'); renderProfilePick();
+    $('#scr-name .departure-scroll').scrollTop=Math.max(0,Number(view?.scroll)||0);
+    rememberPreparation();
     const skip=$('#intro-skip');
     if(skip){
       skip.hidden=false;
       skip.textContent=localStorage.getItem('caravan_intro_seen')?'이미 본 프롤로그 요약':'프롤로그 핵심 요약';
     }
-    const portrait=$('#name-child');
-    if(portrait) portrait.src=D.portraits.me||'';
-    setTimeout(()=>{ const i=$('#inp-name'); if(i) i.focus(); },80);
   }
   function introName(){ return pendingName||'나'; }
   function personalizedIntroBeat(raw){
@@ -816,7 +864,8 @@ const UI = (()=>{
     pendingMode='onroad';
     pendingName=G.myName();
     pendingProfile=S.profile||'keeper';
-    G.newGame(pendingMode,pendingName,'full',pendingProfile);
+    pendingPack=S.startPack||null;
+    G.newGame(pendingMode,pendingName,'full',pendingProfile,pendingPack);
     G.save();
     introRestart=true;
     introIdx=0;
@@ -847,7 +896,7 @@ const UI = (()=>{
         enterGame();
         return;
       }
-      G.newGame(pendingMode,pendingName,'full',pendingProfile); enterGame();
+      G.newGame(pendingMode,pendingName,'full',pendingProfile,pendingPack); enterGame();
     }
     else renderIntro(true);
   }
@@ -867,10 +916,11 @@ const UI = (()=>{
       enterGame();
       return;
     }
-    G.newGame(pendingMode,pendingName,entryMode,pendingProfile);
+    G.newGame(pendingMode,pendingName,entryMode,pendingProfile,pendingPack);
     enterGame();
   }
   function enterGame(){
+    clearPreparation();
     if(S.mode==='offroad') S.mode='onroad';
     G.qualitySessionStart();
     G.qualitySettlementEnter(S.at);
@@ -2780,6 +2830,10 @@ function dialogueSide(turn,lanes,opt={}){
     const b=speechQueue.shift();
     if(!b){ speechBusy=false; return; }
     if(b.drivingOnly&&(!S||!S.driving)){ showNextSpeech(); return; }
+    if(b.who==='sys'&&S&&S.driving&&UI.roadThought){
+      UI.roadThought.show(b.t);
+      showNextSpeech();return;
+    }
     speechBusy=true;
     const isAi = b.who==='cheollian';
     const isNarration = b.who==='sys';
@@ -2808,6 +2862,7 @@ function dialogueSide(turn,lanes,opt={}){
     },hold);
   }
   function clearSpeech(){
+    if(UI.roadThought)UI.roadThought.hide();
     clearTimeout(speechTimer);
     speechQueue.length=0;
     speechBusy=false;
@@ -2819,6 +2874,7 @@ function dialogueSide(turn,lanes,opt={}){
   function showNextToast(){
     const host=$('#toasts');
     if(!host||toastActive||!toastQueue.length) return;
+    if(UI.roadThought)UI.roadThought.hide();
     toastActive=true;
     const item=toastQueue.shift();
     const t=el('div','toast '+(item.cls||''),item.html);
@@ -2917,6 +2973,21 @@ function dialogueSide(turn,lanes,opt={}){
       .replace(/\s*\([^)]*\)\s*$/,'')
       .trim();
   }
+  function storyResourceIcon(name,size=32){
+    const key=({'부품':'parts','고철':'scrap','연료':'fuel','물':'water','식량':'food','의약품':'meds','탄약':'ammo'})[name];
+    const src=key&&D.icons&&D.icons[key];
+    return src?`<img class="story-resource-icon" src="${esc(src)}" width="${size}" height="${size}" alt="">`:'';
+  }
+  function storyExpenseText(text){
+    // Hide only authored duration fields, not deadlines or narrative consequences.
+    return String(text||'').split(/\s*·\s*/).filter(part=>!/^시간\s*\d+(?:\.\d+)?\s*(?:분|시간)$/.test(part.trim())).join(' · ');
+  }
+  function storyExpenseHtml(text){
+    return String(text||'').split(/\s*·\s*/).map(part=>{
+      const name=part.match(/^(부품|고철|연료|물|식량|의약품|탄약)(?=\s|$)/)?.[1];
+      return `<span class="story-cost-item">${storyResourceIcon(name,24)}<span>${esc(part)}</span></span>`;
+    }).join('<span aria-hidden="true"> · </span>');
+  }
   function eventChoiceData(evd){
     let html='', count=0;
     const combatChoices=[];
@@ -2930,8 +3001,9 @@ function dialogueSide(turn,lanes,opt={}){
       const rq=G.reqOk(req);
       const cost=G.reqCostText(req);
       const foreseeable=(G.choiceForeseeable?G.choiceForeseeable(c):[]).map(row=>({
-        ...row,label:evd.combat?row.label:row.kind==='expense'?'소모':row.kind==='lasting'?'흔적':row.label
-      }));
+        ...row,label:evd.combat?row.label:row.kind==='expense'?'소모':row.kind==='lasting'?'흔적':row.label,
+        text:!evd.combat&&row.kind==='expense'?storyExpenseText(row.text):row.text
+      })).filter(row=>row.text);
       const forecast=foreseeable.map(row=>`${row.label} · ${row.text}`).join(' / ');
       const listedCost=foreseeable.some(row=>row.kind==='expense')?'':cost;
       const actionLabel=choiceActionLabel(c);
@@ -2951,10 +3023,10 @@ function dialogueSide(turn,lanes,opt={}){
       html+=`<button class="choice${rq.ok?'':' choice-locked'}" data-i="${i}" ${rq.ok?'':'disabled aria-disabled="true"'} aria-label="${esc(liveBits.join(' · '))}">
           <div class="choice-head"><span class="choice-title">${title}</span></div>
           ${evd.campConversation&&c.hint?`<span class="req">${esc(c.hint)}</span>`:''}
-          ${!rq.ok?`<span class="req choice-lock-reason">${esc(rq.t||'요구 조건 미충족')}</span>`:listedCost?`<span class="req choice-requirement">필요 · ${esc(listedCost)}</span>`:''}
+          ${!rq.ok?`<span class="req choice-lock-reason">${esc(rq.t||'요구 조건 미충족')}</span>`:listedCost?`<span class="req choice-requirement">필요 · ${evd.combat?esc(listedCost):storyExpenseHtml(listedCost)}</span>`:''}
           ${evd.combat
             ?(forecast?`<span class="req choice-requirement choice-forecast">${esc(forecast)}</span>`:'')
-            :foreseeable.map(row=>`<span class="req choice-requirement choice-forecast"><span class="choice-forecast-label">${esc(row.label)}</span><span>${esc(row.text)}</span></span>`).join('')}
+            :foreseeable.map(row=>`<span class="req choice-requirement choice-forecast"><span class="choice-forecast-label">${esc(row.label)} · </span><span>${row.kind==='expense'?storyExpenseHtml(row.text):esc(row.text)}</span></span>`).join('')}
           ${routeBrief?`<span class="req choice-requirement choice-route-forecast">${esc(routeBrief)}</span>`:''}
         </button>`;
     });
@@ -3039,8 +3111,13 @@ function dialogueSide(turn,lanes,opt={}){
     const keys=state&&state.sceneKeys||[];
     if(!frame||!keys.length) return;
     const stages=D.eventTurnSceneStages&&D.eventTurnSceneStages[state.eventId];
-    let key;
-    if(Array.isArray(stages)&&stages.length){
+    // An authored time/action beat owns its picture until another marked beat.
+    // Turn counts vary with the roster and memories: proportional cycling can
+    // show dawn during the night or undo a sleeping core before the next beat.
+    const marked=(state.turns||[]).slice(0,index+1).reverse()
+      .find(item=>item.scene&&keys.includes(item.scene));
+    let key=marked&&marked.scene;
+    if(!key&&Array.isArray(stages)&&stages.length){
       const stage=[...stages].reverse().find(item=>index>=item.at);
       if(stage&&keys.includes(stage.key)) key=stage.key;
     }
@@ -3454,10 +3531,11 @@ function dialogueSide(turn,lanes,opt={}){
     let previous=null;
     return `<section class="page-transcript" aria-label="이야기">${turns.map(turn=>{
       if(turn.kind==='archive')return storyRecordHtml(turn.text,turn.open,true);
+      if(turn.kind==='resource')return `<article class="page-turn" data-kind="resource">${storyResourceHtml(turn.resource)}</article>`;
       const spoken=turn.kind==='dialogue',person=speakerInfo(turn.who,turn.name);
       const same=spoken&&previous&&!turn.speakerUncertain&&!previous.speakerUncertain
         &&speakerLaneKey(previous)===speakerLaneKey(turn)&&previous.name===turn.name;
-      const label=spoken?person.name:({thought:'생각',ai:'천리안 방송',radio:'라디오',letter:'편지',record:'기록',action:'내가 고른 행동'}[turn.kind]||'');
+      const label=spoken?person.name:(turn.kind==='ai'&&turn.name?turn.name:({thought:'생각',ai:'천리안 방송',radio:'라디오',letter:'편지',record:'기록',action:'내가 고른 행동'}[turn.kind]||''));
       const head=spoken&&!same?`<header class="page-speaker">${person.portrait?`<img src="${person.portrait}" width="48" height="48" alt="" decoding="async">`:''}<b>${esc(label)}</b></header>`
         :!spoken&&label?`<div class="page-source">${esc(label)}</div>`:'';
       if(spoken)previous=turn;
@@ -3468,8 +3546,14 @@ function dialogueSide(turn,lanes,opt={}){
     const at=state.readingPage.cursor;
     const rows=state.turns.slice(at.turn).map((row,i)=>({...row,text:i?row.text:StoryPages.slice(row.text,at.offset)}));
     const records=[],changes=[];
-    (state.resultChips||[]).forEach(chip=>(/^(?:새 기록|새 소문|본편 단서|기억됨|◈)/.test(stripTags(chip.t||'').trim())?records:changes).push(chip));
-    rows.push(...changes.map(chip=>({kind:'summary',text:chip.t})));
+    (state.resultChips||[]).filter(chip=>!storyElapsedChip(chip)).forEach(chip=>(/^(?:새 기록|새 소문|본편 단서|기억됨|◈)/.test(stripTags(chip.t||'').trim())?records:changes).push(chip));
+    const resources=[],other=[];
+    changes.forEach(chip=>{
+      const resource=storyResourceChange(chip);
+      if(resource)resources.push({kind:'resource',text:chip.t,resource,atomic:true});
+      else other.push({kind:'summary',text:chip.t});
+    });
+    rows.push(...resources,...other);
     const seen=new Set();(state.quietOutcome?[]:state.questUpdates||[]).forEach(row=>{
       const key=JSON.stringify([row.kind,row.title,row.next]);if(seen.has(key))return;seen.add(key);
       rows.push({kind:'summary',text:row.title+(row.next?'\n'+row.next:'')});
@@ -3769,6 +3853,7 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.dataset.storyOrigin=evd.storyOrigin&&evd.storyOrigin.kind||'';
     const missionOnly=evd.id==='onboarding_main_mission';
     sheet.dataset.readerLayout=!evd.combat&&!missionOnly?'pages':'';
+    sheet.dataset.readerSkin=!evd.combat&&!missionOnly?'materials':'';
     sheet.dataset.missionLayout=missionOnly?'departure':'';
     const text = pending?.phase==='event'?pending.text:typeof evd.text==='function'?evd.text(S):evd.text;
     const sceneAlt=stripTags(evd.title||'길 위의 사건');
@@ -3795,6 +3880,14 @@ function dialogueSide(turn,lanes,opt={}){
       : authoredTurns
         ? evd.readingRecord?authoredTurns:prepareEventAudio(authoredTurns,evd)
         : prepareEventAudio(buildStoryTurns(text,evd,{turnSpeakers:D.finaleSpeakers(evd.id,-1,S)||evd.turnSpeakers}),evd);
+    // Bridges belong to authored turns, not renderer-side event exceptions.
+    // Existing saved turns are restored below without retroactive edits.
+    const scenePlace=evd.id==='opening_parents_module'||evd.id==='opening_departure'
+      ?'감천 작업장':S.at&&D.nodes[S.at]?.name||'';
+    const sceneMinute=Math.floor(Number(S.min)||0);
+    const sceneClock=String(Math.floor(sceneMinute/60)%24).padStart(2,'0')+':'+String(sceneMinute%60).padStart(2,'0');
+    const sceneOrientation=!evd.combat&&!missionOnly
+      ?`<p class="event-orientation">${esc(scenePlace||'길 위')} · DAY ${esc(S.day)} · ${sceneClock}</p>`:'';
     const presentId=evd.needsComp||(Array.isArray(evd.needBond)?evd.needBond[0]:null);
     if(presentId&&G.hasComp(presentId)&&G.crewLocation){
       const companion=D.comps[presentId];
@@ -3816,7 +3909,7 @@ function dialogueSide(turn,lanes,opt={}){
     const choicePages=Math.ceil(choices.count/choicePageSize);
     const directRoadChoice=evd.choices.length===1&&evd.choices[0].continueToRoad===true?evd.choices[0]:null;
     const h=`<div class="event-scroll" tabindex="0" role="region" aria-label="${esc(sceneAlt)} 사건 내용">${scene}<section class="event-field-report">${missionOnly?'':`<div class="event-head"><div>
-      <span class="sr-only" data-event-progress>1 / ${turns.length}</span>${storyOrigin}<h2>${esc(storyHeading(evd))}</h2>${evd.roadCheckIn?'<button type="button" class="event-detail-toggle" data-road-later>다음에 이야기하기</button>':''}</div></div>`}${evd.combat?missionBrief+eventGuide+context:''}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
+      <span class="sr-only" data-event-progress>1 / ${turns.length}</span>${storyOrigin}${sceneOrientation}<h2>${esc(storyHeading(evd))}</h2>${evd.roadCheckIn?'<button type="button" class="event-detail-toggle" data-road-later>다음에 이야기하기</button>':''}</div></div>`}${evd.combat?missionBrief+eventGuide+context:''}${combatHudHtml(evd,{combatChoices:choices.combatChoices})}<div class="story-reader"></div></section></div>
       <div class="event-choice-dock"></div>`;
     sheet.innerHTML=h;
     const roadLater=sheet.querySelector('[data-road-later]');
@@ -4124,13 +4217,35 @@ function dialogueSide(turn,lanes,opt={}){
       ${place?`<b>${esc(place[3])}</b><p>${esc(place[1])} · ${esc(place[2])} · 준비 ${esc(place[4])}분</p>`
         :`<b>${esc(title)}</b>${next&&next!==title?`<p>${esc(next)}</p>`:''}`}</aside>`;
   }
+  function storyElapsedChip(chip){
+    return /^\d+(?:\.\d+)?\s*(?:분|시간) 경과$/.test(stripTags(chip.t||'').trim());
+  }
+  function storyResourceChange(chip){
+    // Read the saved receipt, including capacity/perk/test-mode results. Never
+    // infer a reward from the authored effect or run that effect a second time.
+    const match=String(chip.t||'').trim().match(/^(부품|고철|연료|물|식량|의약품|탄약)\s+([+−-]?\d+(?:\.\d+)?|∞)(L|개|발)?(?:\s*·\s*(.*))?$/);
+    if(!match)return null;
+    const [,name,raw,unit,note]=match;
+    const infinite=raw==='∞',value=Number(raw.replace('−','-'));
+    return {name,amount:infinite?'∞':value>0?'+'+value:value<0?'−'+Math.abs(value):'0',
+      unit:unit||(['부품','의약품'].includes(name)?'개':''),note:note||'',
+      label:infinite?'소모 없음':value>0?'획득':value<0?'소모':'변화 없음',
+      tone:infinite||value===0?'neutral':value<0?'loss':'gain'};
+  }
+  function storyResourceHtml(row){
+    return `<dl class="story-resources" aria-label="물자 변화"><div class="is-${row.tone}"><dt>${storyResourceIcon(row.name)}<span><small>${esc(row.label)}</small>${esc(row.name)}</span></dt><dd>${esc(row.amount)}${row.unit?`<span>${esc(row.unit)}</span>`:''}</dd>${row.note?`<dd class="story-resource-note">${esc(row.note)}</dd>`:''}</div></dl>`;
+  }
   function storyOutcomeSummaryHtml(chips,updates,state){
-    const records=[],changes=[];
-    chips.forEach(chip=>(/^(?:새 기록|새 소문|본편 단서|기억됨|◈)/.test(stripTags(chip.t||'').trim())?records:changes).push(chip));
+    const records=[],changes=[],resources=[];
+    chips.filter(chip=>!storyElapsedChip(chip)).forEach(chip=>{
+      const resource=storyResourceChange(chip);
+      if(resource)resources.push(resource);
+      else (/^(?:새 기록|새 소문|본편 단서|기억됨|◈)/.test(stripTags(chip.t||'').trim())?records:changes).push(chip);
+    });
     const seen=new Set(),next=updates.filter(row=>{
       const key=JSON.stringify([row.kind,row.title,row.next]);if(seen.has(key)) return false;seen.add(key);return true;
     }).map(storyNextStepHtml).join('');
-    return `${changes.length?`<ul class="story-changes" aria-label="이번 선택으로 달라진 것">${changes.map(chip=>`<li class="${chip.c==='minus'?'is-loss':'is-change'}">${esc(chip.t)}</li>`).join('')}</ul>`:''}
+    return `${resources.map(storyResourceHtml).join('')}${changes.length?`<ul class="story-changes" aria-label="이번 선택으로 달라진 것">${changes.map(chip=>`<li class="${chip.c==='minus'?'is-loss':'is-change'}">${esc(chip.t)}</li>`).join('')}</ul>`:''}
       ${next}${records.length?`<details class="story-result-record" data-result-disclosure="resultRecordOpen" ${state.resultRecordOpen?'open':''}>
         <summary>남겨 둔 기록</summary><ul>${records.map(chip=>`<li>${esc(chip.t)}</li>`).join('')}</ul></details>`:''}`;
   }
@@ -4264,6 +4379,7 @@ function dialogueSide(turn,lanes,opt={}){
     renderHud();
   }
   function closeEvent(){
+    if(!$('#ev-wrap').classList.contains('on')) return false;
     const localConversation=curEv?.localConversation;
     const campEvent=curEv&&curEv.campConversation;
     if(campEvent&&S.campConversation) S.campConversation.active=false;
@@ -4271,6 +4387,14 @@ function dialogueSide(turn,lanes,opt={}){
     if(openingStep&&(!curStory||curStory.phase!=='outcome')) return false;
     const nextOpening=openingStep&&G.continueOpening?G.continueOpening(openingStep):null;
     clearStoryAuto();
+    // Commit the next receipt while the shell stays modal. A continuation is
+    // still the same stop: no road frame, focus return or driving audio between
+    // its scenes. Invalid/finished chains fall through to the normal exit.
+    if(!localConversation&&!campEvent){
+      if(nextOpening){showEvent(nextOpening);renderHud();return;}
+      const chain=G.queuePresentation(S._chain);
+      if(chain&&G.presentTransition()){renderHud();return;}
+    }
     closeModal('#ev-wrap');
     curCombatChoices=[];
     $('#ev-sheet').classList.remove('event-mode','passenger-reader','story-compact','craft-workbench-mode','comp-perk-reveal-mode','companion-profile-mode');
@@ -4286,6 +4410,7 @@ function dialogueSide(turn,lanes,opt={}){
     delete $('#ev-sheet').dataset.storyOrigin;
     delete $('#ev-sheet').dataset.missionLayout;
     delete $('#ev-sheet').dataset.readerLayout;
+    delete $('#ev-sheet').dataset.readerSkin;
     if($('#ev-sheet').__pageObserver)$('#ev-sheet').__pageObserver.disconnect();
     delete $('#ev-sheet').__pageObserver;
     curEv=null;
@@ -4295,12 +4420,9 @@ function dialogueSide(turn,lanes,opt={}){
     // Settlement small-talk has no event receipt or queued road handoff. Its
     // original relationship/rumour effects are saved by the chosen action.
     if(localConversation){renderHud();G.save();return;}
-    const chain=S&&!campEvent&&!nextOpening?G.queuePresentation(S._chain):null;
-    if(S&&S.stopover&&!chain&&!S._chain) S.stopover=null;
+    if(S&&S.stopover&&!S._chain) S.stopover=null;
     renderAll(); G.save();
     if(campEvent){ showCampHub(); return; }
-    if(nextOpening){ setTimeout(()=>showEvent(nextOpening),300); return; }
-    if(chain){ const current=S; setTimeout(()=>{ if(S===current) G.presentTransition(); },450); return; }
     /* storyQueue는 다음 도로 사건 기회에 fireDriveEvent2가 소비한다.
        모달을 닫자마자 다음 모달을 여는 연쇄는 명시적 _chain만 허용한다. */
     /* 서울 진입 후엔 오르막 맵으로 복귀 */
@@ -5585,7 +5707,7 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneKeys=eventSceneKeys({...curEv,locEvent:S.at});
     sheet.classList.remove('companion-profile-mode','comp-perk-reveal-mode','craft-workbench-mode','combat-details-open','story-compact');
     sheet.classList.add('event-mode','passenger-reader');
-    Object.assign(sheet.dataset,{eventKind:'story',storySurface:'talk',eventId:curEv.id,storyOrigin:'',missionLayout:'',readerLayout:'pages'});
+    Object.assign(sheet.dataset,{eventKind:'story',storySurface:'talk',eventId:curEv.id,storyOrigin:'',missionLayout:'',readerLayout:'pages',readerSkin:'materials'});
     sheet.innerHTML=`<div class="event-scroll"><section class="event-field-report"><div class="event-head"><h2>${esc(npc.name)}</h2><button class="event-detail-toggle" type="button" data-local-close aria-label="대화를 마치고 정착지로 돌아가기">닫기</button></div><div class="story-reader"></div></section></div><div class="event-choice-dock"></div>`;
     sheet.querySelector('.event-scroll').insertAdjacentHTML('afterbegin',sceneFrameHtml(sceneKeys,npc.name+'와 대화'));
     const state=curStory={phase:'event',eventId:curEv.id,turns,index:0,readerMode:'current',localHistory:opt.history||[],
@@ -5843,6 +5965,7 @@ function dialogueSide(turn,lanes,opt={}){
       <div class="ui-comfort-grid">
         <button data-ui-pref="text" aria-pressed="${uiPrefs.largeText}"><span>글자 크기</span><b>${uiPrefs.largeText?'크게':'보통'}</b></button>
         <button data-ui-pref="motion" aria-pressed="${uiPrefs.reduceMotion}"><span>화면 움직임</span><b>${uiPrefs.reduceMotion?'줄임':'기본'}</b></button>
+        <button data-ui-pref="road-thought" aria-pressed="${uiPrefs.roadThought}"><span>운전 중 생각</span><b>${uiPrefs.roadThought?'가끔':'끄기'}</b></button>
       </div><div class="csub">움직임 줄임은 장면 전환과 달구지 애니메이션을 낮추고, 캔버스 갱신 부담도 줄인다.</div></div>
     <div class="st-sec audio-mixer"><h4>소리 믹서 <small>채널별 · 이 기기에 저장</small></h4>
       <div class="audio-mixer-list">${audioChannels.map(([key,label])=>{ const value=Math.round(SND.level(key)*100); return `
@@ -6049,6 +6172,7 @@ function dialogueSide(turn,lanes,opt={}){
         <div class="ui-comfort-grid">
           <button data-ui-pref="text" aria-pressed="${uiPrefs.largeText}"><span>글자 크기</span><b>${uiPrefs.largeText?'크게':'보통'}</b></button>
           <button data-ui-pref="motion" aria-pressed="${uiPrefs.reduceMotion}"><span>화면 움직임</span><b>${uiPrefs.reduceMotion?'줄임':'기본'}</b></button>
+          <button data-ui-pref="road-thought" aria-pressed="${uiPrefs.roadThought}"><span>운전 중 생각</span><b>${uiPrefs.roadThought?'가끔':'끄기'}</b></button>
         </div><div class="csub">움직임 줄임은 장면 전환과 달구지 애니메이션을 낮춘다.</div></div>
       <div class="st-sec audio-mixer"><h4>소리 믹서 <small>채널별 · 이 기기에 저장</small></h4>
         <div class="audio-mixer-list">${audioChannels.map(([key,label])=>{ const value=Math.round(SND.level(key)*100); return `

@@ -264,6 +264,7 @@ for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
     ids.add(memory.id);
     need(typeof memory.summary === 'string' && memory.summary.trim(), `${where}[${index}]`, '기억 요약 없음');
     need(Number.isFinite(memory.afterKm) && memory.afterKm > 0, `${where}[${index}]`, '후속 주행거리 없음');
+    need(memory.afterDays===undefined || (Number.isFinite(memory.afterDays)&&memory.afterDays>0), `${where}[${index}]`, '잘못된 후속 시간 간격');
     need(Array.isArray(memory.lines) && memory.lines.length, `${where}[${index}]`, '후속 대화 없음');
     for (const line of memory.lines || []) {
       need(Array.isArray(line) && line.length === 2 && typeof line[1] === 'string' && line[1].trim(), `${where}[${index}]`, '후속 대사 형식 오류');
@@ -271,7 +272,7 @@ for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
     }
   }
 }
-need(choiceMemoryCount===17, 'choiceMemory', `핵심 선택 기억은 정확히 17개여야 함 (현재 ${choiceMemoryCount})`);
+need(choiceMemoryCount===18, 'choiceMemory', `핵심 선택 기억은 정확히 18개여야 함 (현재 ${choiceMemoryCount})`);
 
 for (const [id, def] of Object.entries(D.knowledge || {})) {
   const where=`knowledge:${id}`;

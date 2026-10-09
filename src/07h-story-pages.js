@@ -36,7 +36,7 @@ const StoryPages=(()=>{
       const row={...original,text:slice(original.text,at.offset),sourceIndex:at.turn};
       // Never collapse a voiced beat into another beat: audio and authored cuts
       // must still have an explicit entry point.
-      if(rows.length&&(original.voice||original.sfx||rows.some(r=>r.voice||r.sfx)))break;
+      if(rows.length&&(original.scene||original.voice||original.sfx||rows.some(r=>r.voice||r.sfx)))break;
       if(fits([...rows,row])){rows.push(row);at={turn:at.turn+1,offset:0};continue;}
       if(rows.length){
         // Move a short question together with its reply when the pair fits a
@@ -47,6 +47,9 @@ const StoryPages=(()=>{
           &&fits([last,row])){rows.pop();at={turn:last.sourceIndex,offset:0};}
         break;
       }
+      // Keep a resource's object, name and signed amount together. Oversized
+      // individual rows use the reader's existing explicit scroll fallback.
+      if(original.atomic){rows.push(row);at={turn:at.turn+1,offset:0};break;}
       let lo=at.offset+1,hi=count,best=lo;
       while(lo<=hi){const mid=Math.floor((lo+hi)/2);
         if(fits([{...row,text:slice(original.text,at.offset,mid)}])){best=mid;lo=mid+1;}else hi=mid-1;

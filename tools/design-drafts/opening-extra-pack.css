@@ -1,0 +1,43 @@
+/* Title is inherited unchanged. All new preparation selectors are owned here. */
+@import "opening-wharf.css";
+.pack-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 15px 8px}
+.pack-record{padding:15px 16px 12px;border-top:3px solid #b9a887;background:var(--paper);color:var(--ink);line-height:1.4}
+.pack-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.pack-heading h2{font-size:21px;letter-spacing:-.035em;margin:0;font-weight:650}
+.pack-heading span{color:#5d6454;font-size:11px}
+.pack-name{display:grid;grid-template-columns:78px minmax(0,1fr);align-items:center}
+.pack-name label{display:block;font-size:12px}
+.pack-name input{width:100%;min-height:38px;border:0;border-bottom:1px solid #8d907d;background:transparent;color:var(--ink);border-radius:0;font-size:24px;padding:3px 2px}
+.pack-name input::placeholder{color:#777b69}
+.pack-name p{grid-column:1/-1;font-size:10px;color:#5a6253;line-height:1.4;margin:4px 0 0}
+.pack-choice{padding:0;border:0;margin:17px 0 0;min-width:0}
+.pack-choice legend{padding:0;margin:0 0 7px;font-size:13px;font-weight:700}
+.pack-choice legend span{font-size:10px;color:#5a6253;font-weight:400;margin-left:8px}
+.pack-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.pack-option{position:relative;min-width:0}
+.pack-option input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0}
+.pack-option label{display:flex;align-items:center;justify-content:center;gap:5px;border:1px solid #a2a68f;cursor:pointer;min-height:44px;background:#d5cfb5;font-size:13px;color:#485646;padding:6px 3px}
+.pack-picked{display:none;font-size:11px}
+.pack-option input:checked+label{border-color:#3f514a;background:#3f514a;color:#f0ead7}
+.pack-option input:checked+label .pack-picked{display:inline}
+.pack-option input:focus-visible+label{outline:3px solid #795512;outline-offset:2px}
+.pack-preview{display:none;margin:10px 0 0}
+.pack-preview img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#18242a}
+.pack-preview figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-top:10px;min-height:40px}
+.pack-preview strong{font-size:16px;font-weight:650;letter-spacing:-.02em}
+.pack-preview figcaption span{font-size:12px;color:#485646}
+.pack-total{display:none;margin-top:12px;line-height:1.4}
+.pack-total h3{font-size:12px;margin:0 0 7px;font-weight:650}
+.pack-total h3 small{font-size:10px;font-weight:400;color:#5a6253;margin-left:5px}
+.pack-total dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px 12px;padding-top:8px;margin:0;border-top:1px solid #b5b49a}
+.pack-total dl>div{display:flex;align-items:baseline;justify-content:space-between;gap:3px}
+.pack-total dt{font-size:11px;color:#596151}.pack-total dd{font-size:17px;line-height:1.2;font-weight:600;margin:0;font-variant-numeric:tabular-nums}
+.pack-total dd.added{color:#285943;font-weight:800}
+.pack-total p{font-size:11px;line-height:1.4;margin:7px 0 0;color:#485646;word-break:keep-all}
+.pack-note{font-size:9px;line-height:1.5;text-align:center;margin:7px 0 0;color:#aab5b5}
+.pack-actions{flex:none;background:var(--night);border-top:1px solid #35444b;padding:9px 22px 4px}
+.pack-ready{display:none;min-height:54px;padding:8px 12px;font-size:15px}
+.pack-ready small{display:block;font-size:10px;margin-top:3px;font-weight:400;color:#515b4b}
+.opening:has(#pack-fuel:checked) .fuel-total,.opening:has(#pack-repair:checked) .repair-total,.opening:has(#pack-provisions:checked) .provisions-total,.opening:has(#pack-fuel:checked) .fuel-preview,.opening:has(#pack-repair:checked) .repair-preview,.opening:has(#pack-provisions:checked) .provisions-preview{display:block}
+.opening:has(#pack-fuel:checked) .fuel-ready,.opening:has(#pack-repair:checked) .repair-ready,.opening:has(#pack-provisions:checked) .provisions-ready{display:flex}
+@media(max-width:340px){.pack-scroll{padding-inline:12px}.pack-record{padding-inline:12px}.pack-options{gap:5px}.pack-option label{font-size:12px}.pack-total dl{gap:7px 9px}.pack-preview strong{font-size:14px}.pack-preview figcaption span{font-size:11px}}

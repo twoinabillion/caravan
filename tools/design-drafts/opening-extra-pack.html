@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>출발 전, 짐 하나 더 · 두 화면 초안</title>
+  <link rel="stylesheet" href="opening-extra-pack.css">
+</head>
+<body>
+  <aside class="draft-tools"><span>미적용 초안 · 새 시작 규칙 제안</span><label><input type="checkbox" id="save-example">저장 있음 예시</label></aside>
+  <main class="opening" aria-label="게임과 분리된 출발 디자인 초안">
+    <section class="wharf-title" id="title">
+      <nav class="top-nav" aria-label="타이틀 메뉴"><span>부산 감천 부두</span><a href="#sound-note">소리 켜기</a></nav>
+      <header class="game-title"><p>멸망 이후, 부산에서 서울까지</p><h1>서울까지<br><span>400<small>km</small></span></h1></header>
+      <figure class="harbor-scene"><img src="opening-wharf/harbor-v1.webp" alt="새벽 부산 부두, 지붕에 짐을 묶은 회백색 달구지가 출발을 기다린다" width="1024" height="576"></figure>
+      <div class="title-menu">
+        <p class="game-line">낡은 달구지 한 대와<br>아직 끝나지 않은 사람들의 길.</p>
+        <div class="new-menu"><a class="primary" href="#prepare">출발 준비</a></div>
+        <div class="saved-menu"><a class="primary" href="#continue-note">이어서 달리기</a><a class="quiet" href="#prepare">새 여정 준비</a></div>
+        <a class="preview-link" href="#preview-note">여정 미리보기</a>
+        <p class="offline">기록은 자동으로 저장됩니다 · 오프라인 플레이</p>
+      </div>
+    </section>
+    <section class="wharf-prep" id="prepare" aria-label="이름과 추가 짐 선택 초안">
+      <nav class="top-nav" aria-label="출발 준비 메뉴"><a href="#title">타이틀로</a><a href="#prep-sound-note">소리 켜기</a></nav>
+      <div class="pack-scroll">
+        <section class="pack-record" aria-label="출발 기록">
+          <header class="pack-heading"><h2>출발 기록</h2><span>부산 → 서울</span></header>
+          <div class="pack-name"><label for="pack-name">운전수 이름</label><input id="pack-name" placeholder="나" maxlength="8" autocomplete="off" aria-describedby="pack-name-note"><p id="pack-name-note">8자까지. 비워 두면 ‘나’로 기록합니다.</p></div>
+          <fieldset class="pack-choice"><legend>추가 짐 하나<span>바꿔 보며 고르기</span></legend><div class="pack-options">
+            <div class="pack-option"><input id="pack-fuel" type="radio" name="extra-pack" value="fuel" checked><label for="pack-fuel">연료통<span class="pack-picked">✓</span></label></div>
+            <div class="pack-option"><input id="pack-repair" type="radio" name="extra-pack" value="repair"><label for="pack-repair">부품 상자<span class="pack-picked">✓</span></label></div>
+            <div class="pack-option"><input id="pack-provisions" type="radio" name="extra-pack" value="provisions"><label for="pack-provisions">물·식량<span class="pack-picked">✓</span></label></div>
+          </div></fieldset>
+          <figure class="pack-preview fuel-preview"><img src="opening-extra-pack/fuel-v1.webp" alt="부산 부두 달구지 뒷문 앞의 낡은 빨간 연료통" width="1024" height="576"><figcaption><strong>여분 연료통</strong><span>연료 +12L</span></figcaption></figure>
+          <figure class="pack-preview repair-preview"><img src="opening-extra-pack/repair-v1.webp" alt="같은 달구지 뒷문 앞, 벨트와 퓨즈가 든 예비 부품 상자" width="1024" height="576"><figcaption><strong>예비 부품 상자</strong><span>고철 +8 · 부품 +2</span></figcaption></figure>
+          <figure class="pack-preview provisions-preview"><img src="opening-extra-pack/provisions-v1.webp" alt="같은 달구지의 낡은 적재칸에 놓인 물통과 묶은 식량 꾸러미" width="1024" height="576"><figcaption><strong>물·식량 꾸러미</strong><span>물 +6 · 식량 +4</span></figcaption></figure>
+          <section class="pack-total fuel-total" aria-label="최종 출발 물자"><h3>출발 물자<small>기본 짐 포함</small></h3><dl><div><dt>연료</dt><dd class="added">42L</dd></div><div><dt>고철</dt><dd>16</dd></div><div><dt>물</dt><dd>10</dd></div><div><dt>식량</dt><dd>10</dd></div><div><dt>부품</dt><dd>1</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl><p>다른 짐보다 연료를 더 싣습니다.</p></section>
+          <section class="pack-total repair-total" aria-label="최종 출발 물자"><h3>출발 물자<small>기본 짐 포함</small></h3><dl><div><dt>연료</dt><dd>30L</dd></div><div><dt>고철</dt><dd class="added">24</dd></div><div><dt>물</dt><dd>10</dd></div><div><dt>식량</dt><dd>10</dd></div><div><dt>부품</dt><dd class="added">3</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl><p>연료 대신 수리 재료를 더 챙깁니다.</p></section>
+          <section class="pack-total provisions-total" aria-label="최종 출발 물자"><h3>출발 물자<small>기본 짐 포함</small></h3><dl><div><dt>연료</dt><dd>30L</dd></div><div><dt>고철</dt><dd>16</dd></div><div><dt>물</dt><dd class="added">16</dd></div><div><dt>식량</dt><dd class="added">14</dd></div><div><dt>부품</dt><dd>1</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl><p>연료 대신 물과 식량을 더 챙깁니다.</p></section>
+        </section>
+        <p class="pack-note">새 시작 규칙·수치는 제안입니다. 그림은 실제 보유량을 재현하지 않습니다.</p>
+      </div>
+      <footer class="pack-actions"><a class="primary pack-ready fuel-ready" href="#start-note"><span>출발 준비를 시작한다<small>여분 연료통</small></span></a><a class="primary pack-ready repair-ready" href="#start-note"><span>출발 준비를 시작한다<small>예비 부품 상자</small></span></a><a class="primary pack-ready provisions-ready" href="#start-note"><span>출발 준비를 시작한다<small>물·식량 꾸러미</small></span></a><a class="history-link" href="#history-note">먼저 전체 역사 프롤로그 읽기</a></footer>
+    </section>
+    <section class="draft-dialog title-dialog" id="sound-note" aria-labelledby="sound-heading"><div><h2 id="sound-heading">소리 켜기</h2><p>초안에서는 소리를 재생하지 않습니다. 적용 시 기존 게임 소리 설정을 유지합니다.</p><a class="primary" href="#title">타이틀 초안으로</a></div></section>
+    <section class="draft-dialog title-dialog" id="preview-note" aria-labelledby="preview-heading"><div><h2 id="preview-heading">여정 미리보기</h2><p>게임 적용 시 기존 미리보기로 이어집니다. 이 초안에서는 화면 구성을 검토합니다.</p><a class="primary" href="#title">타이틀 초안으로</a></div></section>
+    <section class="draft-dialog title-dialog" id="continue-note" aria-labelledby="continue-heading"><div><h2 id="continue-heading">이어서 달리기</h2><p>가상 저장 배치입니다. 실제 게임 저장을 읽거나 여정을 시작하지 않습니다.</p><a class="primary" href="#title">타이틀 초안으로</a></div></section>
+    <section class="draft-dialog prep-dialog" id="prep-sound-note" aria-labelledby="prep-sound-heading"><div><h2 id="prep-sound-heading">소리 켜기</h2><p>초안에서는 소리를 재생하지 않습니다. 적용 시 기존 게임 소리 설정을 유지합니다.</p><a class="primary" href="#prepare">짐 선택 초안으로</a></div></section>
+    <section class="draft-dialog prep-dialog" id="start-note" aria-labelledby="start-heading"><div><h2 id="start-heading">출발 준비로 이어집니다</h2><p>이름과 선택한 추가 짐을 확인했습니다. 게임 적용 전에는 새 시작 물자의 밸런스를 검증해야 합니다. 이 초안은 게임과 저장을 바꾸지 않습니다.</p><a class="primary" href="#prepare">짐 선택 초안으로</a></div></section>
+    <section class="draft-dialog prep-dialog" id="history-note" aria-labelledby="history-heading"><div><h2 id="history-heading">전체 역사 프롤로그</h2><p>기존 프롤로그 읽기를 유지합니다. 이 초안에는 새로운 사건이나 대사가 없습니다.</p><a class="primary" href="#prepare">짐 선택 초안으로</a></div></section>
+  </main>
+</body>
+</html>

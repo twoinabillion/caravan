@@ -346,9 +346,9 @@ G.openEventById = (id)=>{
      빌드 순서상 04d는 const UI 선언(07-ui.js)보다 먼저 실행되므로 여기서
      UI를 건드리면 TDZ 오류로 이후 전체 스크립트가 죽는다. */
 
-  G.openEvent = (evd)=>{
+  G.openEvent = (evd,options={})=>{
     const eventKey = evd && (evd.id || `${evd.title || 'road-event'}:${evd.type || ''}`);
-    const approach = S.driving ? G.roadApproachProfile(evd) : null;
+    const approach = S.driving&&!options.continuation ? G.roadApproachProfile(evd) : null;
     if(approach && S._roadApproachBypass !== eventKey && !S.driving.approach){
       S.driving.approach = {...approach, startedAt:Date.now()};
       UI.roadApproach(approach, ()=>{
@@ -640,7 +640,7 @@ G.reqOk = (req)=>{
      (2026-08-06까지는 셋 다 무조건 열려 있어 "무엇을 들고 왔든" 같은 결말이었다.) */
   if(req.cells){
     const linked=G.coreLinkedCells().length;
-    if(linked<req.cells) return {ok:false, t:`이은 거점 ${linked}/${req.cells} — 수원 외곽 중계소에서 거점의 응답을 확인한다`};
+    if(linked<req.cells) return {ok:false, t:`이은 거점 ${linked}/${req.cells} — 수원 외곽 무전 중계소에서 거점의 응답을 확인한다`};
   }
   if(req.nightWatch){
     /* 깨어 있는 것 곁에 밤을 설 사람. 사기가 낮으면 거절한다 — 근무표는 사람이 채운다 */
@@ -938,7 +938,7 @@ G.finishArrival = (to)=>{
     }
     if(G.seoulReady()){                                          // 조건 충족 → 남산이 열린다
       UI.renderAll();
-      setTimeout(()=>G.openEvent(D.seoulOpenEvent), 500);
+      setTimeout(()=>G.openEvent(G.unfinishedSeoulEvent()||D.seoulOpenEvent), 500);
       G.save(); return;
     }
     /* 아직 — 길이 접혀 되돌아온다 (제일 모자란 기둥 안내) */

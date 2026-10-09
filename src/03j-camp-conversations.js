@@ -21,11 +21,11 @@ D.campConversations={
       {id:'share',label:'내일의 준비를 나눠 맡고 선생의 몫을 줄인다',mins:30,
         text:'"기록은 제가 할게요. 물통은 같이 들고요. 선생님은 가방부터 닫으세요."\n\n박 선생이 연필을 챙기려다 내 손을 보고 멈췄다.\n\n"그래. 맡겼으면 놔야지. 글씨 안 읽히면 다시 물어보게."\n\n체온표 뒷면에 둘의 이름을 적었다. 선생은 물컵을 들더니 식었다며 얼굴을 찌푸렸다.',speakers:['me','parkss'],
         home:'체온표 뒤에 준비를 나눠 맡을 사람의 이름을 적었다. 선생 혼자 들 가방이 아니다.',
-        road:'박 선생이 가방을 열려다 기록지를 건넨다. "자네 몫이라 했지. 오늘은 내가 먼저 뺏지 않겠소."'},
+        road:'박 선생이 가방을 열려다 기록지를 건넨다. "자네 몫이라 했지. 오늘은 내가 먼저 뺏지 않을게."'},
       {id:'record',label:'이어받을 사람이 알 수 있도록 기록을 정리한다',mins:15,
         text:'"다시 못 지나가도 다음 사람이 이어 읽을 수 있게요."\n\n박 선생이 종이를 한 장 더 뜯는다. 이름 아래에 지켜볼 사람과 다음 진료소를 적을 칸을 만든다.\n\n"내 글씨부터 좀 고쳐야겠군."\n\n연필을 깡통 뚜껑에 끼워 두고 가방을 닫는다.',speakers:['me','parkss'],
         home:'진료 깡통에 인계용 종이를 넣었다. 환자 옆에 다음에 지켜볼 사람을 적는 칸이 있다.',
-        road:'박 선생이 길가 진료소 표지를 운행 일지에 옮긴다. "약이 다 떨어져도 다음 길은 적어 줄 수 있소."'}]},
+        road:'박 선생이 길가 진료소 표지를 운행 일지에 옮긴다. "약이 다 떨어져도 다음 길은 적어 줄 수 있지."'}]},
   leo:{title:'노래 없는 자리',
     first:'레오는 기타 잠금쇠를 열었다 닫는다. 보리는 케이스에 턱을 얹고 하품한다.',
     later:'창가의 여분 기타 줄이 작게 울린다. 레오는 손가락으로 줄을 멈추고 옆자리를 본다.',
@@ -47,7 +47,7 @@ D.campConversations={
       {id:'space',label:'둘 자리를 재이가 고르게 하고 함께 다시 묶는다',mins:30,
         text:'"부품 상자 세우면 들어가요. 자리는 재이 씨가 정해요."\n\n재이는 무거운 부품이 아래로 가게 상자를 돌려 묶었다. 자기 상자는 발밑에 놓았다.\n\n"다리는 못 펴도 오늘은 돼요. 다음 정차 때 레일 옮겨요. 볼트 네 개면 돼요."\n\n내가 끈을 당기는 동안 재이는 고리를 잡고 버텼다.',speakers:['me','jaeyi'],
         home:'발견물 상자에 재이가 고른 고정 끈이 생겼다. 옆에는 다음 정차 때 옮길 레일 표시가 남았다.',
-        road:'재이가 레일 표시를 손으로 짚는다. "다음에 멈추면 여기부터요. 내 상자 자리도 짐 계획에 넣었어요."'},
+        road:'재이가 레일 표시를 손으로 짚는다. "다음에 멈추면 여기부터요. 제 상자 자리도 짐 계획에 넣었어요."'},
       {id:'shelf',label:'고철 2로 상자가 들어갈 선반을 더 단다',mins:45,req:{scrap:2},fx:{scrap:-2},
         text:'남은 앵글로 상자 위에 선반을 걸었다. 재이가 높이를 묻기도 전에 답한다.\n\n"이십이 센티. 다음 것도 같은 규격으로 달아요."\n\n"다음 것도?"\n\n재이는 볼트를 받아 조인다. "아직 주울 게 많잖아요. 여기까지 왔는데."',speakers:['jaeyi','me','jaeyi'],
         home:'발견물 상자 위에 높이 22센티 선반을 달았다. 어느 쪽 짐도 내리지 않았다.',
@@ -80,19 +80,19 @@ D.campConversations={
         road:'강우가 오른쪽 뒤를 가리킨 뒤 등받이에 기댄다. "지도에 표시한 사각. 확인되면 알려 줘. 잠깐 눈 붙인다."'}]}
 };
 
-/* Followups answer the saved choice; settled chapters keep small routines.
-   Base choices own IDs/costs/gates; the saved chapter selects the prose. */
+/* Followups answer completed choices, not simply the number of camp visits.
+   Base choices own IDs/costs/gates; entry snapshots keep paid results stable. */
 const campNext={
   minji:{title:'덮개를 열기 전에',intro:'민지가 공구함을 발밑으로 밀고 옆자리를 두드린다.',
     lines:{listen:'대장님, 잠깐 들어 봐. 지난번이랑 같은 소리야? 난 오래 들으면 다 고장 같아서.',sort:'왼쪽 퓨즈, 안 보고 찾아 봐. …시험 아니야. 내가 밑에 들어가면 대장님이 꺼내 줘야 하니까.'},
     choices:{
-      listen:{label:'곁에 앉아 오늘 들은 소리를 비교한다',text:'"시동 꺼도 여기서 소리가 나네요. 덮개 말고 안쪽에서."\n\n민지가 귀를 기울인다.\n\n"응. 식으면서 나는 거야. 덮개는 좀 있다 열자."\n\n민지가 공구를 내려놓는다. 금속이 식는 동안 둘 다 잠깐 손을 쉬었다.',speakers:['me','minji'],home:'자석 접시의 빈칸을 그대로 두었다. 점검이 끝나도 나란히 앉아 소리를 듣는다.',road:'민지가 잠깐 귀를 기울이고 엄지를 든다. "지난번 들은 거랑 같아. 계속 가."'},
+      listen:{label:'곁에 앉아 오늘 들은 소리를 비교한다',text:'"시동 꺼도 여기서 소리가 나. 덮개 말고 안쪽에서."\n\n민지가 귀를 기울인다.\n\n"응. 식으면서 나는 거야. 덮개는 좀 있다 열자."\n\n민지가 공구를 내려놓는다. 금속이 식는 동안 둘 다 잠깐 손을 쉬었다.',speakers:['me','minji'],home:'자석 접시의 빈칸을 그대로 두었다. 점검이 끝나도 나란히 앉아 소리를 듣는다.',road:'민지가 잠깐 귀를 기울이고 엄지를 든다. "지난번 들은 거랑 같아. 계속 가."'},
       sort:{label:'부품 1로 예비 퓨즈를 보충하고 서로 꺼내 본다',text:'민지가 눈을 감고 손을 내민다. 왼쪽에서 퓨즈를 꺼내 쥐여 줬다.\n\n"맞아. 이제 반대로."\n\n이번에는 내가 손을 내민다. 민지는 퓨즈를 건네고 접시를 둘 사이로 옮겼다.',speakers:['minji'],home:'보충한 퓨즈 접시를 둘 사이에 놓았다. 민지도 내가 건네는 부품을 기다린다.',road:'민지가 먼저 묻는다. "다음 정비 때 밑에 들어갈래, 공구 건넬래? 대장님이 골라."'} }},
   parkss:{title:'선생의 빈손',intro:'박 선생이 왕진 가방을 닫고 내 쪽으로 물컵을 밀어 놓는다.',
-    lines:{share:'자네 몫은 손 안 댔소. 두 번이나 열어 보고 싶었는데. …어디부터 하면 되나?',record:'지난번 인계 종이 말이오. 다시 보니 내 글씨를 나도 못 읽겠더군. 이게 약 이름 같소, 밥 같소?'},
+    lines:{share:'자네 몫은 손 안 댔어. 두 번이나 열어 보고 싶었는데. …어디부터 하면 되나?',record:'지난번 인계 종이 말이야. 다시 보니 내 글씨를 나도 못 읽겠더군. 이게 약 이름 같나, 밥 같나?'},
     choices:{
-      share:{label:'내일 준비를 맡고 선생에게 쉬던 이야기를 묻는다',text:'"일 안 할 때는 뭘 하셨어요?"\n\n박 선생은 가방 손잡이에서 손을 뗀다.\n\n"바둑. 잘 두지는 못했소. 지면 상대가 차를 사 줬거든."\n\n내일 쓸 물통을 옮기는 동안, 그는 끝내 뒤집지 못한 한 판을 설명했다.',speakers:['me','parkss'],home:'준비 명단의 내 이름 옆에 표시가 늘었다. 선생은 가방을 닫고도 자리에 남아 이야기한다.',road:'박 선생이 가방 대신 접힌 종이를 내민다. "지난번 말한 판이오. 여기서 뒀어야 했는데."'},
-      record:{label:'알아보기 어려운 글씨를 선생과 함께 고친다',text:'인계 종이를 펴자 선생이 뭉개진 글자를 짚었다. 약 이름을 읽어 보라는데, 모양이 영 다르다.\n\n"밥 같은데요."\n\n"약이오. 그러니 고쳐야지."\n\n내가 읽고 선생이 다시 적었다. 못 읽는 곳마다 연필이 멎었지만, 가방을 다시 열지는 않았다.',speakers:['me','parkss'],home:'진료 깡통의 인계 종이에 두 사람이 읽고 고친 표시가 남았다.',road:'박 선생이 기록을 건네며 기다린다. "이 글씨는 어떤가. 못 읽겠으면 지금 말해 주게."'} }},
+      share:{label:'내일 준비를 맡고 선생에게 쉬던 이야기를 묻는다',text:'"일 안 할 때는 뭘 하셨어요?"\n\n박 선생은 가방 손잡이에서 손을 뗀다.\n\n"바둑. 잘 두지는 못했어. 지면 상대가 차를 사 줬거든."\n\n내일 쓸 물통을 옮기는 동안, 그는 끝내 뒤집지 못한 한 판을 설명했다.',speakers:['me','parkss'],home:'준비 명단의 내 이름 옆에 표시가 늘었다. 선생은 가방을 닫고도 자리에 남아 이야기한다.',road:'박 선생이 가방 대신 접힌 종이를 내민다. "지난번 말한 판이야. 여기서 뒀어야 했는데."'},
+      record:{label:'알아보기 어려운 글씨를 선생과 함께 고친다',text:'인계 종이를 펴자 선생이 뭉개진 글자를 짚었다. 약 이름을 읽어 보라는데, 모양이 영 다르다.\n\n"밥 같은데요."\n\n"약이야. 그러니 고쳐야지."\n\n내가 읽고 선생이 다시 적었다. 못 읽는 곳마다 연필이 멎었지만, 가방을 다시 열지는 않았다.',speakers:['me','parkss'],home:'진료 깡통의 인계 종이에 두 사람이 읽고 고친 표시가 남았다.',road:'박 선생이 기록을 건네며 기다린다. "이 글씨는 어떤가. 못 읽겠으면 지금 말해 주게."'} }},
   leo:{title:'먼저 비워 둔 자리',intro:'레오가 보리를 조금 옆으로 옮겨 앉힌다. 기타는 케이스 안에 있다.',
     lines:{quiet:'대장님 자리 남겨 뒀어요. 보리는 불만인데, 뭐… 얘도 차 한 대를 다 쓸 순 없죠.',line:'그 한 줄, 아직 못 이었어요. 대신 오늘 바퀴 소리는 외웠는데. 이건 가사로 쓰면 안 되겠죠?'},
     choices:{
@@ -117,21 +117,37 @@ const campNext={
 const campSettled={
   minji:{title:'나란히 놓인 공구',intro:'민지가 공구 하나를 내 쪽으로 밀어 놓는다. 무슨 일인지부터 설명하지는 않는다.',line:'대장님, 오늘은 어느 쪽 할래? 난 여기 앉을게.',
     choices:{listen:{label:'공구를 내려놓고 오늘 지나온 길을 이야기한다',text:'민지는 창밖을 보다가 내가 말한 길을 손가락으로 따라 그렸다.\n\n"거기 두 번 덜컹했지. 나도 기억해."\n\n공구는 둘 사이에 그대로 놓여 있었다.',speakers:['minji'],home:"공구를 둘 사이에 놓고 지나온 길을 이야기했다. 같은 덜컹임을 둘 다 기억하고 있었다.",road:"민지가 창밖을 가리킨다. \"저기, 같이 얘기한 길하고 닮았지?\""},sort:{label:'부품 1로 예비 퓨즈를 채우며 함께 정리한다',text:'나는 퓨즈를 채우고 민지는 접시를 붙잡았다.\n\n"왼쪽. …알지?"\n\n안다고 하자 민지가 손을 거두고 다리를 쭉 폈다.',speakers:['minji'],home:"예비 퓨즈를 함께 채웠다. 민지가 접시를 붙잡고 내가 왼쪽 칸을 정리했다.",road:"민지가 접시 왼쪽을 확인한다. \"퓨즈는 채워 뒀어. 이쪽은 됐어.\""}}},
-  parkss:{title:'가방을 닫은 뒤',intro:'박 선생이 가방을 닫은 채 내 옆으로 의자를 당긴다.',line:'오늘은 자네부터 말해 보게. 나는 앉아서 듣겠소.',
-    choices:{share:{label:'내일 준비를 나눠 하고 선생과 잠깐 앉는다',text:'준비할 것을 나누자 박 선생은 자기 몫만 챙겼다.\n\n"남의 몫까지 했는지 살피는 거요? 안 했소."\n\n그는 빈손을 한 번 보여 주고 다시 무릎에 올렸다.',speakers:['parkss'],home:"내일 준비를 나눴다. 선생은 자기 몫을 마치고 빈손으로 곁에 앉았다.",road:"박 선생이 자기 물통만 챙긴다. \"자네 것은 맡겼소. 빠뜨리면 말해 주게.\""},record:{label:'오늘의 기록을 함께 읽고 가방을 닫는다',text:'읽히지 않는 글자 하나를 짚었다. 박 선생이 고쳐 쓴 뒤 연필을 내게 건넸다.\n\n"자네 글씨도 보세."\n\n이번에는 그가 한 글자 앞에서 한참 멈췄다.',speakers:['parkss'],home:"서로의 기록을 읽고 알아보지 못한 글자를 고쳤다. 연필을 번갈아 썼다.",road:"박 선생이 내 글씨를 짚는다. \"이건 도착해서 다시 읽어 주게. 아직도 모르겠소.\""}}},
+  parkss:{title:'가방을 닫은 뒤',intro:'박 선생이 가방을 닫은 채 내 옆으로 의자를 당긴다.',line:'오늘은 자네부터 말해 보게. 나는 앉아서 들을게.',
+    choices:{share:{label:'내일 준비를 나눠 하고 선생과 잠깐 앉는다',text:'준비할 것을 나누자 박 선생은 자기 몫만 챙겼다.\n\n"남의 몫까지 했는지 살피는 건가? 안 했어."\n\n그는 빈손을 한 번 보여 주고 다시 무릎에 올렸다.',speakers:['parkss'],home:"내일 준비를 나눴다. 선생은 자기 몫을 마치고 빈손으로 곁에 앉았다.",road:"박 선생이 자기 물통만 챙긴다. \"자네 것은 맡겼네. 빠뜨리면 말해 주게.\""},record:{label:'오늘의 기록을 함께 읽고 가방을 닫는다',text:'읽히지 않는 글자 하나를 짚었다. 박 선생이 고쳐 쓴 뒤 연필을 내게 건넸다.\n\n"자네 글씨도 보세."\n\n이번에는 그가 한 글자 앞에서 한참 멈췄다.',speakers:['parkss'],home:"서로의 기록을 읽고 알아보지 못한 글자를 고쳤다. 연필을 번갈아 썼다.",road:"박 선생이 내 글씨를 짚는다. \"이건 도착해서 다시 읽어 주게. 아직도 모르겠네.\""}}},
   leo:{title:'기타 옆의 두 사람',intro:'레오가 발로 기타 케이스를 밀어 자리를 낸다. 보리는 꿈쩍하지 않는다.',line:'보리는 안 비킨대요. 우리 둘이 좀 좁게 앉죠.',
     choices:{quiet:{label:'물 1을 나누고 나란히 쉬어 간다',text:'컵이 기울지 않게 무릎을 맞댔다. 레오가 보리의 귀를 접었다 폈다.\n\n"얘만 넓게 쓰네요."\n\n그러면서도 케이스를 조금 더 밀어 줬다.',speakers:['leo'],home:"기타 케이스 옆에서 물을 나눠 마셨다. 보리가 넓게 차지해 둘이 좁게 앉았다.",road:"레오가 보리를 조금 당겨 앉힌다. \"대장님 자리도 좀 남겨. 지난번엔 다 썼잖아.\""},line:{label:'레오와 오늘 들은 소리로 박자를 맞춘다',text:'레오가 두 번 두드리면 내가 한 번 받았다. 몇 번 하다 서로 순서를 잊었다.\n\n"처음부터?"\n\n둘 다 손을 들었다가 그냥 웃었다.',speakers:['leo'],home:"레오와 번갈아 박자를 두드렸다. 순서를 잊자 다시 시작하는 대신 둘 다 웃었다.",road:"레오가 두 번 두드리고 내 쪽을 본다. \"이번엔 대장님 차례. 맞죠?\""}}},
   jaeyi:{title:'줄자의 이쪽 끝',intro:'재이가 줄자의 끝을 내 손에 쥐여 주고 반대편으로 간다.',line:'거기 잡아 주세요. …잡으셨네요. 제가 늦었네.',
     choices:{space:{label:'재이와 짐 사이 간격을 맞추고 끈을 조인다',text:'재이가 손바닥으로 간격을 재고 고개를 끄덕였다. 나는 끈을 당겼다.\n\n"됐어요. 오늘은 덜 걸렸네."\n\n그녀가 줄자를 접어 둘 사이에 놓았다.',speakers:['jaeyi'],home:"재이와 짐 간격을 맞추고 끈을 조였다. 줄자를 둘 사이에 내려놓았다.",road:"재이가 묶어 둔 끈을 살핀다. \"간격 그대로예요. 더 안 당겨도 돼요.\""},shelf:{label:'고철 2로 느슨해진 고정대를 함께 보강한다',text:'나는 앵글을 받치고 재이는 볼트를 조였다. 끝나자 둘이 번갈아 흔들어 봤다.\n\n"그만. 차가 먼저 흔들려요."\n\n재이가 내 손에서 공구를 받아 넣었다.',speakers:['jaeyi'],home:"고정대를 함께 보강한 뒤 번갈아 흔들어 봤다. 재이가 공구를 받아 넣었다.",road:"재이가 고정대를 한 번 두드린다. \"안 풀렸어요. 우리 둘이 확인한 거니까.\""}}},
   eunsu:{title:'헤드폰을 벗어 둔 시간',intro:'은수가 헤드폰을 옆에 내려놓는다. 수신기는 둘 다 들을 만큼만 켜 두었다.',line:'오늘 길 얘기부터 해요. 기록에 안 써도 되는 걸로요.',
     choices:{facts:{label:'오늘 기록을 짧게 확인하고 길 이야기를 나눈다',text:'기록을 접고 길가에서 본 나무 이야기를 했다. 은수가 한참 듣다가 손을 들었다.\n\n"그거 나무 아니고 전봇대였어요. 아마도."\n\n그녀는 확인하러 일어나지 않았다.',speakers:['eunsu'],home:"수신 기록을 접고 길가에서 본 것을 이야기했다. 나무였는지 전봇대였는지는 남겨 뒀다.",road:"은수가 길가를 가리킨다. \"이번 건 나무 맞죠? …기록할 건 아니고요.\""},wait:{label:'수신기를 켜 둔 채 은수와 잠깐 쉰다',text:'은수가 내 쪽 창문을 조금 닫았다.\n\n"이 정도면 괜찮아요?"\n\n고개를 끄덕이자 다시 기대앉았다. 수신기에는 여전히 낮은 잡음이 흘렀다.',speakers:['eunsu'],home:"은수가 창문을 조금 닫아 주고 곁에 기대앉았다. 수신기의 낮은 잡음을 함께 들었다.",road:"은수가 창문 틈을 살핀다. \"이 정도로 닫아 둘게요. 답답하면 말해 주세요.\""}}},
-  kangwoo:{title:'곁에서 보는 오른쪽',intro:'강우가 지도를 접고 오른쪽 뒤를 한 번 본다. 그다음은 나를 본다.',line:'대장 자리에서는 보이지. 오늘도 부탁한다.',
+  kangwoo:{title:'곁에서 보는 오른쪽',intro:'강우가 지도를 접고 오른쪽 뒤를 한 번 본다. 그다음은 나를 본다.',
+    lines:{trust:'무전기는 둘 다 들리지. 오늘도 같이 들어 줘.',rotate:'대장 자리에서는 보이지. 오늘도 부탁한다.'},
     choices:{trust:{label:'함께 앉아 무전기의 호출을 기다린다',text:'강우가 수신기를 둘 사이에 놓고 등받이에 기댔다.\n\n"아직 조용하네."\n\n대답하지 않아도 그는 다시 묻지 않았다.',speakers:['kangwoo'],home:"수신기를 둘 사이에 두고 조용한 호출을 함께 기다렸다. 강우는 등받이에 기댔다.",road:"강우가 수신기 위치를 고쳐 놓는다. \"둘 다 들리지. 그대로 두자.\""},rotate:{label:'정한 순서대로 경계를 맡고 강우를 쉬게 한다',text:'오른쪽 뒤를 확인했다는 손짓을 보냈다. 강우는 고개를 한 번 끄덕였다.\n\n"끝나면 깨워."\n\n지도에 적힌 자기 순번을 확인하고 눈을 감았다.',speakers:['kangwoo'],home:"내가 오른쪽 뒤를 맡자 강우는 자기 휴식 순번을 확인하고 눈을 감았다.",road:"강우가 오른쪽 뒤를 내게 맡긴다. \"끝나면 깨워. 내 차례에 바꾸자.\""}}}
 };
 for(const cid of Object.keys(D.campConversations)){
   D.campConversations[cid].followup=campNext[cid];
   D.campConversations[cid].settled=campSettled[cid];
 }
+D.campChoiceVisits=(cid,memory)=>{
+  const base=D.campConversations[cid],counts={};
+  if(!base||memory?.voice==='minji-guest-v1') return counts;
+  const saved=memory?.choiceVisits;
+  if(saved&&typeof saved==='object'&&!Array.isArray(saved)){
+    for(const choice of base.choices){
+      const value=saved[choice.id];
+      if(Number.isFinite(value)&&value>0) counts[choice.id]=Math.min(2,Math.floor(value));
+    }
+  }else if(base.choices.some(c=>c.id===memory?.choiceId)){
+    // A legacy visit count proves only its last choice, not either branch's repetition.
+    counts[memory.choiceId]=1;
+  }
+  return counts;
+};
 D.campConversationData=record=>{
   const base=D.campConversations[record.cid];
   // Use the saved voice, not current membership (including legacy saves).
@@ -141,14 +157,19 @@ D.campConversationData=record=>{
     later:'민지가 점검 덮개 옆에 앉는다. 이번에는 공구함을 열지 않는다.',
     line:'공구 좀… 아. 고쳐 달라는 건 아니었죠?',
     choices:[{id:'listen',label:'무슨 소린지만 궁금했다고 말한다',mins:15,speakers:['me','minji'],
-      text:'"무슨 소린지만 궁금했어요."\n\n민지가 덮개에 귀를 가까이 댄다. 공구함을 잡았던 손은 무릎에 놓는다.\n\n"급한 소리는 아니에요. 이 정도면… 얘 꽤 오래 가겠는데요."\n\n덮개를 닫고도 둘은 잠깐 그대로 앉아 있었다.',
+      text:'"무슨 소린지만 궁금했어."\n\n민지가 덮개에 귀를 가까이 댄다. 공구함을 잡았던 손은 무릎에 놓는다.\n\n"급한 소리는 아니에요. 이 정도면… 얘 꽤 오래 가겠는데요."\n\n덮개를 닫고도 둘은 잠깐 그대로 앉아 있었다.',
       home:'고쳐 달라는 부탁 없이, 한동안 같이 달구지의 소리를 들었다.',
       road:'민지가 점검 덮개 쪽으로 귀를 기울인다. "같이 들었던 그 소리예요. 급한 건 아니고요."'}]
   };
   const chapter=record.chapter===2?base.followup:record.chapter===3?base.settled:null;
-  if(!chapter) return base; // Legacy chapter.
-  return {...base,title:chapter.title,first:chapter.intro,later:chapter.intro,
+  const current=chapter?{...base,title:chapter.title,first:chapter.intro,later:chapter.intro,
     line:chapter.lines?.[record.previousChoiceId]||chapter.line||base.line,
     choices:base.choices.map(choice=>({...choice,
-      ...chapter.choices[choice.id]}))};
+      ...chapter.choices[choice.id]}))}:base;
+  if(!record.choiceVisits) return current; // Preserve already saved legacy receipts.
+  return {...current,choices:base.choices.map(choice=>{
+    const visits=record.choiceVisits[choice.id]||0;
+    const branch=visits>=2?base.settled:visits===1?base.followup:null;
+    return {...choice,...branch?.choices[choice.id]};
+  })};
 };

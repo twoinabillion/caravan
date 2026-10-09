@@ -97,5 +97,5 @@ const ROAD_ENVIRONMENT = (()=>{
     target.beginPath();target.rect(edge,0,W-edge,H);target.clip();
     target.drawImage(nextScene,0,0,nextScene.width,nextScene.height,0,0,W,H);target.restore();
   }
-  return {draw};
+  return {draw,source:id=>sources[id]||''};
 })();

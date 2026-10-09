@@ -13,7 +13,7 @@ function setup(){
     clamp:(n,a,b)=>Math.max(a,Math.min(b,n)),G:{},S:{party:[],flags:{}},setTimeout:()=>0});
   for(const file of STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),ctx);
   ctx.data=vm.runInContext('D',ctx);
-  for(const name of ['storySurface','storyHeading','storyCompletedRecordHtml','storyNextStepHtml','storyOutcomeSummaryHtml','storyDisplayTurns'])helper(ctx,name);
+  for(const name of ['storySurface','storyHeading','storyCompletedRecordHtml','storyNextStepHtml','storyResourceIcon','storyElapsedChip','storyResourceChange','storyResourceHtml','storyOutcomeSummaryHtml','storyDisplayTurns'])helper(ctx,name);
   return ctx;
 }
 const event=(c,id)=>c.data.events.find(e=>e.id===id);
@@ -40,14 +40,15 @@ test('restored sentence comes only from the completed, saved restoration branch'
   assert.match(c.storyCompletedRecordHtml({...state,restoredLineOpen:true}),/<details[^>]*\sopen/);
   assert.equal(JSON.stringify(state),before);
 });
-test('resource/time/loss changes stay visible; record notices are collapsed and no chips are discarded',()=>{
+test('resources and losses stay visible; elapsed time is hidden without discarding saved chips',()=>{
   const c=setup(),chips=[{t:'새 기록 · 예측은 명령이 아니다'},{t:'◈ 예측과 명령 사이 · 확인'},
     {t:'기억됨 · 부모님이 남긴 문장의 끝을 복원했다.'},{t:'부품 +1'},{t:'고철 +4'},
     {t:'15분 경과'},{t:'차체 -4',c:'minus'},{t:'알 수 없는 중요한 변화'}];
   const before=JSON.stringify(chips),html=c.storyOutcomeSummaryHtml(chips,[update,update],{});
   const visible=html.replace(/<details[\s\S]*?<\/details>/g,'');
-  for(const text of ['부품 +1','고철 +4','15분 경과','차체 -4','알 수 없는 중요한 변화'])assert(visible.includes(text));
-  for(const chip of chips)assert(html.includes(esc(chip.t)));
+  for(const text of ['부품','+1','고철','+4','차체 -4','알 수 없는 중요한 변화'])assert(visible.includes(text));
+  assert.doesNotMatch(html,/15분 경과/);
+  for(const chip of chips.slice(0,3))assert(html.includes(esc(chip.t)));
   assert.doesNotMatch(visible,/기억됨|새 기록|◈|메인 스토리 갱신|메인 스토리 진행/);
   assert.equal((html.match(/story-next-place/g)||[]).length,1);assert.match(html,/is-loss/);
   assert.equal(JSON.stringify(chips),before);

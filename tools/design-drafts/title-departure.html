@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>부산 출발 전 · 타이틀 초안</title>
+  <link rel="stylesheet" href="title-departure.css">
+</head>
+<body>
+  <div class="draft-controls" aria-label="게임과 분리된 초안 비교">
+    <span>미적용 초안</span>
+    <label><input id="saved-example" type="checkbox"> 저장 기록 있음 예시</label>
+  </div>
+  <main class="title-screen" id="title-example" aria-label="부산 출발 전 타이틀 배치 예시">
+    <header class="title-heading">
+      <p class="kicker">멸망 이후, 부산에서 서울까지</p>
+      <h1><span class="title-name">서울까지</span><span class="title-distance">400<span>km</span></span></h1>
+    </header>
+    <figure class="departure-scene" aria-label="기존 부산 원경과 기본 달구지의 정적 배치">
+      <img class="harbor" src="../../assets/ui/road-environment/busan-v1.webp" alt="" width="1024" height="576">
+      <div class="quay" aria-hidden="true"></div>
+      <div class="vehicle-shadow" aria-hidden="true"></div>
+      <img class="dalguji" src="../../assets/ui/journey-dalguji-base-v1.webp" alt="지붕에 짐을 묶고 창에 불을 밝힌 낡은 달구지" width="1024" height="608">
+      <figcaption>부산 감천 부두</figcaption>
+    </figure>
+    <section class="departure-menu" aria-label="여정 시작 메뉴 예시">
+      <p class="tag">낡은 달구지 한 대와<br>아직 끝나지 않은 사람들의 길.</p>
+      <div class="fresh-menu">
+        <a class="start-link" href="#new-example"><span>새 여정 시작</span><span aria-hidden="true">→</span></a>
+      </div>
+      <div class="saved-menu">
+        <a class="start-link" href="#continue-example"><span>이어서 달리기</span><span aria-hidden="true">→</span></a>
+        <a class="quiet-link" href="#new-example">새 여정 시작</a>
+      </div>
+      <a class="preview-link" href="#preview-example">여정 미리보기 <span aria-hidden="true">↗</span></a>
+      <footer class="menu-footer">
+        <a href="#sound-example" class="sound-link">소리 켜기</a>
+        <span>v1.8 · 오프라인 플레이</span>
+      </footer>
+    </section>
+    <section class="example-dialog" id="new-example" aria-labelledby="new-heading">
+      <div class="dialog-paper"><span class="example-note">초안 동작 안내</span><h2 id="new-heading">부산에서 출발</h2><p>실제 적용 때는 기존 새 여정 시작 흐름으로 이어집니다. 저장 기록이 있다면 기존 확인 절차를 유지합니다.</p><p>이 초안에서는 게임을 시작하거나 저장을 바꾸지 않습니다.</p><a class="start-link" href="#title-example">타이틀로 돌아가기 <span aria-hidden="true">←</span></a></div>
+    </section>
+    <section class="example-dialog" id="continue-example" aria-labelledby="continue-heading">
+      <div class="dialog-paper"><span class="example-note">저장 기록이 있을 때의 배치 예시</span><h2 id="continue-heading">하던 여정으로</h2><p>실제 저장 내용은 읽지 않았습니다. 적용 때는 기존 이어서 달리기와 저장 위치 안내를 연결합니다.</p><a class="start-link" href="#title-example">타이틀로 돌아가기 <span aria-hidden="true">←</span></a></div>
+    </section>
+    <section class="example-dialog" id="preview-example" aria-labelledby="preview-heading">
+      <div class="dialog-paper"><span class="example-note">초안 동작 안내</span><h2 id="preview-heading">길 위에는 이런 이야기가 있다</h2><p>낡은 달구지를 집으로 고치고, 낯선 사람의 일을 함께 해결하고, 폐허에 남은 흔적을 좇는다.</p><p>실제 적용 때는 기존 여정 미리보기로 이어집니다. 이 초안은 그 화면을 재현하지 않습니다.</p><a class="start-link" href="#title-example">타이틀로 돌아가기 <span aria-hidden="true">←</span></a></div>
+    </section>
+    <section class="example-dialog" id="sound-example" aria-labelledby="sound-heading">
+      <div class="dialog-paper"><span class="example-note">초안 동작 안내</span><h2 id="sound-heading">배경음</h2><p>부서진 고속도로</p><p>실제 적용 때는 기존 소리 켜기와 배경음 설정을 연결합니다. 초안에서는 소리가 재생되지 않습니다.</p><a class="start-link" href="#title-example">타이틀로 돌아가기 <span aria-hidden="true">←</span></a></div>
+    </section>
+  </main>
+</body>
+</html>

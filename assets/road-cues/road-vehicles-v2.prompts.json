@@ -1,0 +1,35 @@
+[
+  {
+    "id": "road-merchant-truck",
+    "refs": [
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "/Users/sang/caravan/assets/ui/journey-dalguji-base-v1.webp"
+    ],
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: separate transparent live canvas component. Subject: One weathered Korean compact cab-over box truck, faded muted red and blue painted patches, plain unlettered sides, open side panel forming a waist-height salvage goods counter, small roof loudspeaker. No people. NOT an RV, not a coffee truck. Pure side view at eye level, natural proportions, diffuse neutral daylight. Fifth image supplies only material quality and rendering style NOT subject design. Do not copy Dalguji body into this subject. Entire object visible. True transparent alpha, no scenery, no ground, no rectangle, no companions, no halo. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel"
+  },
+  {
+    "id": "road-clinic-bus",
+    "refs": [
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "/Users/sang/caravan/assets/ui/journey-dalguji-base-v1.webp"
+    ],
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: separate transparent live canvas component. Subject: A recognizable Korean 20-seat MIDIBUS, elongated passenger bus body with a continuous high roof, FIVE narrow passenger windows along the visible side, flat rounded bus nose facing left (NO TRUCK CAB, NO BOX TRUCK, NO separated cargo box), passenger entry door and fold-out plain medical canopy. Muted cream blue gray body, modest medical cross. Wheels on one baseline. No people. Pure side view at eye level, natural proportions, diffuse neutral daylight. Fifth image supplies only material quality and rendering style NOT subject design. Do not copy Dalguji body into this subject. Entire object visible. True transparent alpha, no scenery, no ground, no rectangle, no companions, no halo. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel"
+  },
+  {
+    "id": "road-cow",
+    "refs": [
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "/Users/sang/caravan/assets/ui/journey-dalguji-base-v1.webp"
+    ],
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: separate transparent live canvas component. Subject: One ordinary brown Korean cow with natural bovine proportions, full body side view facing left, no human, no hat, no accessories, loose simple rope halter. All four legs and hooves visible. Pure side view at eye level, natural proportions, diffuse neutral daylight. Fifth image supplies only material quality and rendering style NOT subject design. Do not copy Dalguji body into this subject. Entire object visible. True transparent alpha, no scenery, no ground, no rectangle, no companions, no halo. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel"
+  }
+]

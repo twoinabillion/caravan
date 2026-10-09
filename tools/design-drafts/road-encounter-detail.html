@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>길 위의 조우 · 달구지와 같은 결</title>
+  <link rel="stylesheet" href="road-encounter-detail.css">
+</head>
+<body>
+<main class="study">
+  <header class="intro"><p>도로 조우 · 생성 부품 비교</p><h1>달구지와 같은 결</h1><p>차도, 시설도, 옆에 선 사람도 같은 질감으로.</p></header>
+  <div class="controls">
+    <fieldset aria-label="조우 대상">
+      <label><input type="radio" name="subject" id="coffee" checked><span>커피차</span></label>
+      <label><input type="radio" name="subject" id="checkpoint"><span>검문 시설</span></label>
+      <label><input type="radio" name="subject" id="cart"><span>손수레</span></label>
+      <label><input type="radio" name="subject" id="fuel"><span>주유 설비</span></label>
+      <label><input type="radio" name="subject" id="bicycle"><span>배달 자전거</span></label>
+    </fieldset>
+    <fieldset aria-label="표현 비교">
+      <label><input type="radio" name="treatment" id="proposal" checked><span>생성 부품</span></label>
+      <label><input type="radio" name="treatment" id="current"><span>기존 표현</span></label>
+    </fieldset>
+  </div>
+
+  <!-- Independent, declarative study: no executable code or access to play/save state. -->
+  <svg class="definitions" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true">
+    <defs>
+      <linearGradient id="road" x2="0" y2="1"><stop stop-color="#515b5d"/><stop offset="1" stop-color="#2f3c40"/></linearGradient>
+      <!-- Existing 14-unit procedural figure: scale-normalized silhouette, not a live capture. -->
+      <g id="old-adult"><path d="M-1-5-1.5 0M1-5 1.5 0" stroke="#444b50" stroke-width="1.5"/><path d="M-2-10h4v6h-4Z" fill="#716352"/><ellipse cy="-12" rx="1.25" ry="1.65" fill="#b69e82"/><path d="M-1.3-13.7h2.5v1.2h-2.5Z" fill="#32312f"/><path d="M-1.6-9.5-2.3-6.5M1.5-9.5 3.8-12.3" stroke="#716352" stroke-width="1.4"/></g>
+      <g id="coffee-part">
+        <ellipse cx="41" cy="39" rx="40" ry="2" fill="#1b282c" opacity=".4"/>
+        <image href="../../assets/road-cues/cue-coffee-van-v3.webp" width="80" height="41.40625"/>
+        <g class="new-art"><image href="../../assets/road-cues/cue-coffee-vendor-v1.webp" x="66" y="9" width="14.666666667" height="32"/></g>
+        <g class="old-art"><use href="#old-adult" transform="translate(59 39) scale(1.21)"/></g>
+      </g>
+      <g id="checkpoint-part">
+        <ellipse cx="41" cy="42" rx="46" ry="2" fill="#1b282c" opacity=".4"/>
+        <g class="new-art">
+          <image href="../../assets/road-cues/cue-checkpoint-booth-v1.webp" x="-14" y="2.38452521" width="66" height="39.61547479"/>
+          <image href="../../assets/road-cues/cue-temporary-checkpoint-v1.webp" x="50" y="26.00390625" width="45" height="15.99609375"/>
+          <image href="../../assets/road-cues/cue-checkpoint-worker-v1.webp" x="40" y="10" width="14.583333333" height="32"/>
+        </g>
+        <g class="old-art"><image href="../../assets/road-cues/cue-checkpoint.png" x="10" y="-8" width="56" height="56"/></g>
+      </g>
+      <g id="cart-part"><image href="../../assets/road-cues/cue-market-cart-v1.webp" width="62.2916667" height="40"/><g class="new-art"><image href="../../assets/road-cues/cue-cart-trader-v1.webp" x="57" y="8" width="14.75" height="32"/></g></g>
+      <g id="fuel-part"><image href="../../assets/road-cues/cue-fuel-pump-v1.webp" width="23.90104167" height="26"/></g>
+      <g id="bicycle-part"><image href="../../assets/road-cues/cue-delivery-bicycle-v1.webp" width="33.80208333" height="22"/><image href="../../assets/road-cues/cue-postman-standing-v1.webp" x="33" y="-10" width="15.333333333" height="32"/></g>
+    </defs>
+  </svg>
+
+  <section class="scene-panel" aria-label="독립 도로 배치 초안 · 실제 현재 플레이가 아님">
+    <div class="scene-caption"><span>길에서 마주칠 때</span><label><input id="zoom" type="checkbox"> 조우 대상 확대</label></div>
+    <div class="scene-window">
+      <svg class="scene" viewBox="0 0 360 250" role="img" aria-label="고정된 달구지와 길가의 커피차 또는 검문 시설 비율 예시">
+        <rect width="360" height="250" fill="#899b9d"/>
+        <image href="../../assets/ui/road-environment/yangsan-v1.webp" width="360" height="201" preserveAspectRatio="xMidYMax slice"/>
+        <path d="M0 188 360 182V250H0Z" fill="url(#road)"/>
+        <path d="M0 184 360 178v9L0 193Z" fill="#6c7368"/><path d="m0 194 360-6" stroke="#b7b9a4" stroke-width="1" opacity=".6"/>
+        <path d="M3 238h50m67-2h50m67-2h50m53-2h20" stroke="#b7b9a4" stroke-width="2" opacity=".5"/>
+        <ellipse cx="121" cy="220" rx="68" ry="3" fill="#1a292e" opacity=".45"/>
+        <image href="../../assets/ui/journey-dalguji-base-v1.webp" x="48" y="135" width="145" height="84.9609375"/>
+        <g class="coffee-example"><use href="#coffee-part" transform="translate(248 148) scale(.9425)"/></g>
+        <g class="checkpoint-example"><use href="#checkpoint-part" transform="translate(246 154) scale(.85)"/></g>
+        <g class="cart-example"><use href="#cart-part" transform="translate(249 150)"/></g>
+        <g class="fuel-example"><use href="#fuel-part" transform="translate(283 164)"/></g>
+        <g class="bicycle-example"><use href="#bicycle-part" transform="translate(271 168)"/></g>
+      </svg>
+    </div>
+    <p class="scene-foot">정차 직전 비율 예시 · 달구지 크기는 고정<br>현재 양산 저장 화면이나 실제 접근 연출의 캡처는 아니에요.</p>
+  </section>
+
+  <section class="object-panel" aria-label="부품 확대 비교">
+    <header><h2 class="coffee-example">판매대가 사람의 허리 높이에</h2><h2 class="checkpoint-example">초소와 사람의 바닥을 맞추기</h2><h2 class="cart-example">낡은 천막 아래의 작은 상점</h2><h2 class="fuel-example">길가에 남은 주유 설비</h2><h2 class="bicycle-example">우편 가방을 실은 자전거</h2><span>재질 확대</span></header>
+    <svg class="object-study" viewBox="0 0 340 168" role="img" aria-label="커피차와 주인 또는 검문소와 인물의 확대도">
+      <path d="M15 149h310" stroke="#83948e" stroke-width=".6" opacity=".4"/>
+      <g class="coffee-example"><use href="#coffee-part" transform="translate(29 14) scale(3.35)"/></g>
+      <g class="checkpoint-example"><use href="#checkpoint-part" transform="translate(42 16) scale(3)"/></g>
+      <g class="cart-example"><use href="#cart-part" transform="translate(43 13) scale(3.35)"/></g>
+      <g class="fuel-example"><use href="#fuel-part" transform="translate(108 32) scale(4.4)"/></g>
+      <g class="bicycle-example"><use href="#bicycle-part" transform="translate(66 61) scale(4)"/></g>
+    </svg>
+    <p class="coffee-example">기존 생성 커피차 옆에 새로 생성한 주인을 놓았어. 옷 주름·손짓·신발까지 배경 없는 한 부품이고, 도형으로 만든 사람은 제안에서 뺐어.</p>
+    <p class="checkpoint-example">초소와 검문 인물도 정본을 참조해 각각 생성했어. 차단봉은 기존 생성 부품이야. 모든 사건에 초소나 사람이 추가되는 건 아니야.</p>
+    <p class="cart-example">손수레와 천막을 새로 생성했어. 옆 인물은 크기 비교용 익명 상인이며 실제 사건의 인물 확정은 아니야.</p>
+    <p class="fuel-example">주유기·호스·연료통을 한 투명 부품으로 생성했어. 사람이 없는 시설에는 억지로 인물을 추가하지 않아.</p>
+    <p class="bicycle-example">공식 초상의 얼굴과 조끼를 이어 전신 우편부를 생성했어. 자전거 바퀴와 발바닥을 같은 바닥에 맞췄고 실제 사건 연결은 검토 후 진행해.</p>
+  </section>
+  <details class="notes"><summary>실제 게임에는 어떻게 들어가?</summary><p>차량·시설·사람을 분리해 기존 캔버스에 그려. 발견 → 감속 → 정차 → 사건 화면의 흐름은 유지해. 움직이는 도로에 사건 삽화나 큰 사진을 덮지 않아.</p><p>조우 차량은 달구지 폭의 약 52%, 성인은 바퀴와 같은 바닥에 서고 판매대는 허리~가슴 높이에 맞춰. 이전의 차체 높이 절반 기준은 폐기했어. 새 인물은 이름 없는 비교용이며 실제 사건에 필요한 인원만 연결할 예정이야.</p><p>정본4장과 실제 달구지 부품을 참조한 생성 이미지야. 큰 원본과 투명 WebP를 따로 보존했어. SVG는 배치와 기존 표현 비교에만 써. 실제 캔버스 픽셀 렌더링·날씨·밤·움직임은 아직 검증하지 않았어.</p></details>
+  <section class="object-panel" aria-label="새 조우 인물 전신 비교">
+    <header><h2>길에서 만날 사람들</h2><span>전신 생성 부품</span></header>
+    <div class="actor-gallery">
+      <figure><img src="../../assets/road-cues/cue-postman-standing-v1.webp" alt="공식 초상을 이어간 자전거 우편부 전신"><figcaption>자전거 우편부</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-cart-trader-v1.webp" alt="청회색 작업복과 앞치마를 입은 익명 상인 전신"><figcaption>익명 상인 제안</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-beekeeper-standing-v1.webp" alt="방충망과 벌집 틀을 든 양봉가 전신"><figcaption>양봉가</figcaption></figure>
+    </div>
+    <p>우편부는 기존 공식 초상, 양봉가는 실제 사건의 방충망·벌집을 기준으로 만들었어. 여성 상인은 새 외형 제안이며 본문에 사내와 아이가 나오는 ‘리어카 행상’을 대신하지 않아. 모두 게임에는 아직 미적용이야.</p>
+  </section>
+  <footer>디자인 검토용 v4 · 게임 미적용 · 현재 저장 미변경</footer>
+  <section class="object-panel" aria-label="추가 생성 조우 부품">
+    <header><h2>추가 조우 인물과 차량</h2><span>v5 · 게임 연결 준비</span></header>
+    <div class="actor-gallery">
+      <figure><img src="../../assets/road-cues/cue-road-mansu-v1.webp" alt="road-mansu 투명 생성 부품"><figcaption>road-mansu</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-monk-v1.webp" alt="road-monk 투명 생성 부품"><figcaption>road-monk</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-barber-v1.webp" alt="road-barber 투명 생성 부품"><figcaption>road-barber</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-hunter-v1.webp" alt="road-hunter 투명 생성 부품"><figcaption>road-hunter</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-musician-v1.webp" alt="road-musician 투명 생성 부품"><figcaption>road-musician</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-medic-v1.webp" alt="road-medic 투명 생성 부품"><figcaption>road-medic</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-man-v1.webp" alt="road-man 투명 생성 부품"><figcaption>road-man</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-woman-v1.webp" alt="road-woman 투명 생성 부품"><figcaption>road-woman</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-child-v1.webp" alt="road-child 투명 생성 부품"><figcaption>road-child</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-elder-v1.webp" alt="road-elder 투명 생성 부품"><figcaption>road-elder</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-refugee-v1.webp" alt="road-refugee 투명 생성 부품"><figcaption>road-refugee</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-merchant-truck-v1.webp" alt="road-merchant-truck 투명 생성 부품"><figcaption>road-merchant-truck</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-food-truck-v1.webp" alt="road-food-truck 투명 생성 부품"><figcaption>road-food-truck</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-clinic-bus-v1.webp" alt="road-clinic-bus 투명 생성 부품"><figcaption>road-clinic-bus</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-cinema-truck-v1.webp" alt="road-cinema-truck 투명 생성 부품"><figcaption>road-cinema-truck</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-cow-v1.webp" alt="road-cow 투명 생성 부품"><figcaption>road-cow</figcaption></figure>
+    </div>
+    <p>만수는 공식 초상, 스님·이발사·사냥꾼은 사건의 복장과 소품을 참조했어. 연주자는 레오가 아닌 익명 인물이야. 차량에 사람을 굽지 않고 실제 사건 인원을 따로 배치해. 실제 접근 화면 검수와 적용은 대기 중이야.</p>
+  </section>
+  <section class="object-panel" aria-label="추가 전용 인물과 조우 사물">
+    <header><h2>전용 얼굴과 사건의 도구</h2><span>v6 · 적용 준비</span></header>
+    <div class="actor-gallery">
+      <figure><img src="../../assets/road-cues/cue-road-mapmaker-v1.webp" alt="지도장이 생성 부품"><figcaption>지도장이</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-hanbyeol-v2.webp" alt="한별 · 안경 보완 생성 부품"><figcaption>한별 · 안경 보완</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-mingyu-v1.webp" alt="민규 생성 부품"><figcaption>민규</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-photographer-v1.webp" alt="사진사 생성 부품"><figcaption>사진사</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-florist-v1.webp" alt="꽃장수 생성 부품"><figcaption>꽃장수</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-tailor-v1.webp" alt="재봉사 생성 부품"><figcaption>재봉사</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-seoyeon-v1.webp" alt="소연 생성 부품"><figcaption>소연</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-sanjigi-v1.webp" alt="산지기 생성 부품"><figcaption>산지기</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-kimcaptain-v1.webp" alt="김 선장 생성 부품"><figcaption>김 선장</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-hayeosa-v1.webp" alt="하 여사 · 준비 생성 부품"><figcaption>하 여사 · 준비</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-geumja-v1.webp" alt="금자 · 준비 생성 부품"><figcaption>금자 · 준비</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-seojin-v1.webp" alt="서진 · 준비 생성 부품"><figcaption>서진 · 준비</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-taesik-v1.webp" alt="태식 · 준비 생성 부품"><figcaption>태식 · 준비</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-library-bus-v1.webp" alt="이동 도서관 생성 부품"><figcaption>이동 도서관</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-mapmaker-sidecar-v1.webp" alt="사이드카 생성 부품"><figcaption>사이드카</figcaption></figure>
+      <figure><img src="../../assets/road-cues/cue-road-piano-v1.webp" alt="빈 피아노 생성 부품"><figcaption>빈 피아노</figcaption></figure>
+    </div>
+    <p>이름 있는 인물은 공식 초상을 참조했어. 무전 목소리나 회상 속 인물을 도로에 자동 배치하지 않아. 현재 Studio 장면 연결 오류로 실제 도로·밤·날씨 검수와 적용 확인은 미완료야.</p>
+  </section>
+</main>
+</body>
+</html>

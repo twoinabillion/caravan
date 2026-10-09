@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>길은 넓게, 생각은 잠깐 · v1</title>
+  <link rel="stylesheet" href="road-whisper.css">
+</head>
+<body>
+<main class="prototype">
+  <span id="closed" class="target"></span>
+  <aside class="draft-tools" aria-label="게임과 분리된 초안 비교">
+    <fieldset><legend class="sr-only">생각 표시 방식</legend>
+      <label><input type="radio" name="thought" value="occasional" checked><span>가끔</span></label>
+      <label><input type="radio" name="thought" value="off"><span>끄기</span></label>
+    </fieldset>
+    <label class="hold"><input id="hold-thought" type="checkbox"><span>문장 고정</span></label>
+    <a href="#event">이벤트 예시</a>
+    <a href="#help" aria-label="초안 안내">안내</a>
+  </aside>
+  <section class="game-example" aria-label="독립 주행 배치 예시 · 현재 플레이 화면 아님">
+    <div class="scenery">
+      <svg class="road-preview" viewBox="0 0 360 344" preserveAspectRatio="xMidYMax slice" role="img" aria-label="기존 양산 원경과 기본 달구지 부품의 정적 배치 · 실제 주행 재현 아님">
+        <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#354d6d"/><stop offset="1" stop-color="#a2abba"/></linearGradient></defs>
+        <path fill="url(#sky)" d="M0 0h360v344H0z"/>
+        <image href="../../assets/ui/road-environment/yangsan-v1.webp" x="-64" y="-16" width="488" height="274"/>
+        <path fill="#343e43" d="M0 258h360v86H0z"/><path stroke="#77827f" stroke-width="2" d="M0 266h360"/>
+        <path stroke="#aaa48b" stroke-width="2" stroke-dasharray="38 52" d="M0 313h360"/>
+        <image href="../../assets/ui/journey-dalguji-base-v1.webp" x="36" y="123" width="252" height="150"/>
+      </svg>
+      <header class="scene-heading"><strong>부산 → 양산</strong><span>DAY 1 · 09:59</span></header>
+      <p class="whisper" id="whisper">폐건물 옥상에서 빈 빨래건조대가 바람에 천천히 돈다</p>
+    </div>
+    <div class="vehicle-strip" aria-label="현재 요청의 상태 예시">
+      <span>연료 <b>∞</b></span><span>차체 <b>82%</b></span><span>맑음</span><a href="#risk" aria-label="추적 위험 0/5 · 초안 설명">0/5 ⌄</a>
+    </div>
+    <section class="deck" aria-label="주행 목적지">
+      <div class="destination"><span class="eyebrow">이동 중</span><div><h1>양산 고가차도</h1><span class="remaining"><b>7</b>km 남음</span></div><p>무너진 고가 아래를 탐색할 수 있다.</p></div>
+      <div class="route"><progress max="20" value="13" aria-label="예시 주행 거리 20km 중 13km"></progress><div><span>부산</span><span>양산</span></div></div>
+      <div class="travel-actions"><a href="#map">지도 보기 <span aria-hidden="true">↗</span></a><a href="#place">목적지 정보 <span aria-hidden="true">›</span></a></div>
+      <div class="quiet-actions"><a href="#record">주행 기록 <span aria-hidden="true">›</span></a><a href="#crew">동행 기록 <span aria-hidden="true">›</span></a></div>
+    </section>
+    <nav class="bottom-nav" aria-label="기존 메뉴의 배치 예시">
+      <a class="selected" href="#road"><span aria-hidden="true">━</span>길</a>
+      <a href="#objectives"><span aria-hidden="true">◇</span>목표</a>
+      <a href="#people"><span aria-hidden="true">♧</span>동료</a>
+      <a href="#bag"><span aria-hidden="true">▱</span>가방</a>
+      <a href="#menu"><span aria-hidden="true">≡</span>메뉴</a>
+    </nav>
+  </section>
+  <section class="sheet" id="help" aria-labelledby="help-title"><a class="scrim" href="#closed" aria-label="안내 닫기"></a><div class="sheet-body"><header><h2 id="help-title">길은 넓게, 생각은 잠깐</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>현재 부산 → 양산·09:59·7km 남은 요청을 바탕으로 한 독립 배치 초안입니다. 실제 게임에는 트럭 카페가 열려 있습니다.</p><p>큰 생각 카드와 그림·제목을 빼고, 기존 관찰 문장만 잠깐 둡니다. 나타나고 사라져도 차량·목적지·기록 버튼이 밀리지 않습니다.</p><p>초안은35초 주기 중 약8초만 보여 줍니다. ‘문장 고정’은 배치 검토용입니다. 이벤트나 상세창이 열리면 숨기고, 끄기를 선택하면 더 나타나지 않습니다. 실제 게임에서는 경고·접근 연출·창 비활성 상태도 숨김 조건으로 검증해야 합니다.</p><p>기존 양산 원경과 기본 달구지의 정적 배치입니다. 실제 속도·날씨·업그레이드·감속을 재현하지 않습니다. 새 인물/그림/대사 생성, 게임 저장 접근, 코드 적용은 없습니다.</p></div></div></section>
+  <section class="sheet" id="event" aria-labelledby="event-title"><a class="scrim" href="#closed" aria-label="이벤트 예시 닫기"></a><div class="sheet-body"><header><h2 id="event-title">이벤트가 열리면</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>트럭 카페를 읽는 동안에는 주행 생각이 보이지 않습니다.</p><p>이 창은 숨김 규칙의 배치 예시입니다. 실제 사건을 넘기거나 선택하지 않습니다. 닫으면 같은 목적지·기록 버튼 위치로 돌아옵니다.</p></div></div></section>
+  <section class="sheet" id="map" aria-labelledby="map-title"><a class="scrim" href="#closed" aria-label="지도 예시 닫기"></a><div class="sheet-body"><header><h2 id="map-title">부산에서 양산까지</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>요청 기준20km 구간에서 약13km를 지나7km가 남았습니다. 실제 지도는 기존 지역 지도 기능을 유지합니다.</p><div class="map-line">부산 — 현재 위치 — 양산</div><p class="detail-note">축척 없는 진행 예시입니다.</p></div></div></section>
+  <section class="sheet" id="place" aria-labelledby="place-title"><a class="scrim" href="#closed" aria-label="목적지 정보 닫기"></a><div class="sheet-body"><header><h2 id="place-title">양산 고가차도</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>무너진 고가 아래를 탐색할 수 있다.</p><p>사진·긴 장소 정보는 기존 상세창에서 확인합니다. 이 초안은 위치를 변경하지 않습니다.</p></div></div></section>
+  <section class="sheet" id="record" aria-labelledby="record-title"><a class="scrim" href="#closed" aria-label="주행 기록 닫기"></a><div class="sheet-body"><header><h2 id="record-title">주행 기록</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>평범한 기록은 이 버튼 안에서 다시 확인하고, 즉시 알아야 하는 위험 안내는 별도로 유지합니다.</p><p>생각 문장의 원문은 삭제하지 않는 제안입니다. 실제 기록 저장 여부는 구현 승인 때 기존 기록 경로와 함께 검토합니다.</p></div></div></section>
+  <section class="sheet" id="crew" aria-labelledby="crew-title"><a class="scrim" href="#closed" aria-label="동행 기록 닫기"></a><div class="sheet-body"><header><h2 id="crew-title">동행 기록</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>현재 동료는 없습니다. 기존 임시 동행·동료 대화가 있을 때만 그에 맞는 내용을 연결합니다. 초안에 없는 인물을 추가하지 않습니다.</p></div></div></section>
+  <section class="sheet" id="risk" aria-labelledby="risk-title"><a class="scrim" href="#closed" aria-label="위험 설명 닫기"></a><div class="sheet-body"><header><h2 id="risk-title">추적 위험</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>현재 요청은0/5입니다. 실제 위험 설명과 경고 동작은 기존 기능을 유지합니다. 이 초안에서는 수치를 바꾸지 않습니다.</p></div></div></section>
+  <section class="sheet" id="road"><a class="scrim" href="#closed" aria-label="길 안내 닫기"></a><div class="sheet-body"><header><h2>길 · 기존 기능 유지</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>현재 목적지와 진행 상태를 유지합니다. 초안에서 실제 주행은 실행하지 않습니다.</p></div></div></section>
+  <section class="sheet" id="objectives"><a class="scrim" href="#closed" aria-label="목표 안내 닫기"></a><div class="sheet-body"><header><h2>목표 · 기존 기능 유지</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>메인 스토리와 사이드 미션은 기존 목표 화면에서 확인합니다. 이번 초안은 주행 생각의 표현만 비교합니다.</p></div></div></section>
+  <section class="sheet" id="people"><a class="scrim" href="#closed" aria-label="동료 안내 닫기"></a><div class="sheet-body"><header><h2>동료 · 기존 기능 유지</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>기존 동료 화면으로 연결되는 위치입니다. 현재 저장에는 동료가 없습니다.</p></div></div></section>
+  <section class="sheet" id="bag"><a class="scrim" href="#closed" aria-label="가방 안내 닫기"></a><div class="sheet-body"><header><h2>가방 · 기존 기능 유지</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>기존 물자·개조·가방 기능은 그대로 유지합니다. 초안에서는 물자를 사용하지 않습니다.</p></div></div></section>
+  <section class="sheet" id="menu"><a class="scrim" href="#closed" aria-label="메뉴 안내 닫기"></a><div class="sheet-body"><header><h2>메뉴 · 기존 기능 유지</h2><a href="#closed">닫기</a></header><div class="sheet-copy"><p>저장·읽기 설정·소리 등의 기존 메뉴를 유지합니다. 실제 설정을 변경하지 않습니다.</p></div></div></section>
+</main>
+</body>
+</html>

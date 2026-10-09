@@ -6,6 +6,22 @@ Studio's **디자인 초안** opens these prototypes in a sandboxed iframe witho
 
 Add an entry to `manifest.json` with version `1` and `drafts`: `id` (lowercase letters/digits/hyphens), `file` (flat lowercase `.html` filename here), `title`, `description`, `revision`, optional `recommended`. HTML may reference local CSS and reviewed assets; no executable scripts. Bump revision after revising a draft. Keep provenance in the description, distinguishing sample content from the actual save. New raster assets still require the image contract.
 
+## 길은 넓게, 생각은 잠깐 v1 · 2026-10-05
+
+`road-whisper.html` / `.css`: 큰 생각 카드 대신 풍경 아래 잠깐 표시하는 기존 관찰 문장, 고정 목적지·기록 버튼의 미적용 초안. 가끔/끄기·문장 고정·이벤트 예시는 CSS/native 입력/hash로만 동작한다. 실제 Studio320/360폭과 표시/숨김을 직접 확인했다. 기존 원경·차량의 정적 부품 배치이며 실제 주행 재현이나 게임 구현은 아니다. [설계·검수 한계](road-whisper.md).
+
+## 달구지의 손때 · 대화와 선택 v1 · 2026-10-05
+
+`event-materials.html` / `.css`: 현재 부산 ‘사유가 없는 이송표’ 원문·선택·결과로 만든 독립 초안. 생성한 투명 금속 프레임과 빈 철판 버튼을 9-slice로 쓰고 사람 대화·단말 응답을 구별한다. ‘계속 읽기’·두 선택·결과·확대/닫기·기록·질감 제거·큰 글씨는 script 없는 hash/details/checkbox로 동작한다. 작은 화면은 본문 스크롤을 허용하고 선택 단계는 그림을 줄여 행동 공간을 확보하는 제안이다. 실제 현재 cursor를 복제하거나 게임을 진행하지 않으며 게임/저장/빌드 미변경. Studio 목록 등록 완료, 직접 창 표시·터치·320/360/480 시각 검수는 Chrome 연결 시간 초과로 미완료. [설계·출처·검수 한계](event-materials.md).
+
+## 출발 준비 · 이름과 짐 v1 · 2026-10-05
+
+`departure-prep.html` / `.css`: 타이틀 색감을 이어 이름·세 구성 선택·선택한 물자·시작 버튼으로 정리한 미적용 초안. 실제 시작 수치 유지, native radio/해시 안내로만 동작하며 게임·저장·빌드 미변경. 독립 초안360×728·320×568, 이름 입력·세 구성·방향키·안내/복귀·끝 스크롤 확인. Studio 목록 등록은 완료했으나 검토 iframe이 빈 화면으로 남아 내장 창 표시는 미해결이다. [출처·검수 범위](departure-prep.md).
+
+## 부산 출발 전 · 타이틀 v2 · 2026-10-05
+
+`title-departure.html` / `.css`: 큰 제목 → 부산 항구의 달구지 → 출발 버튼으로 정리한 미적용 초안. 기존 원경·기본 차량의 정적 합성이며 실제 캔버스/저장 재현은 아니다. ‘저장 기록 있음 예시’는 메뉴 배치만 비교한다. 각 버튼은 해시 안내창과 복귀로만 동작하며 게임·빌드·저장은 미변경. Studio 독립 디자인 검토 창에서320·360·480폭 관찰,480폭 지붕 크롭 수정, 안내·복귀 확인. 실제 게임 연결·짧은 높이·큰 글씨는 미검수. [방향·출처·검수 범위](title-departure.md).
+
 ## 시장 안으로 · 풍경은 옆으로 v1 · 2026-10-04
 
 `settlement-continuity.html` / `.css`: 밀양 DAY1 17:51·맑음 기반 독립 초안. 네 장소는 native radio로 선택하며 들어가기·복귀는 해시 안내만 연다. 시장 그림은 정본 네 장을 참조한 신규 생성 컨셉이며 이름 있는 동료/보리를 넣지 않았다. 현재 게임 좌표·걷기·가림·NPC 대화는 구현하지 않았다. 주행 탭은 기존 원경·차량을 재사용한 CSS 연출 비교로 실제 캔버스의 복제가 아니다. 스크립트·스토리지·빌드 연결 없음. [출처와 검수 범위](settlement-continuity.md).
@@ -128,3 +144,6 @@ Sang이 v1 기록철형을 승인하고 손글씨 느낌을 요청했다. v2는 
 - 검사: `node --test tests/test_quest_folder.cjs tests/test_quest_journal.cjs tests/test_inline_style_assets.mjs tests/test_trip_destination_picker.cjs` — 15개 통과. 오프라인 HTML 빌드79,996,415bytes, 상한 유지. 현재 폰트109,624bytes.
 - 시각 확인: **독립 검수판**에서 전체 빌드 CSS+실제 목표 렌더러 사용,360×728 및320×568 큰 글씨, 메인/사이드/완료·기록 펼침/끝·추적/해제·경로 요청·Escape 확인. 게임 진행/저장 없이 샘플만 사용했다. 앱 코드 오류는 없었고 브라우저 확장 content.js 오류1건은 별개였다.
 - 실제 현재 화면은 네이티브 Studio 접근 제한으로 새 문구/새로고침 시각 확인 불가.12:25UTC endpoint 확인으로 김천 DAY1 21:52·무주 선택·목표 메인 열림·360×728 보존, 로드1790423663961/대기1790425541899를 확인했다. 적용 배지는 누르지 않았다.
+# 부산에서 시동을 걸기 전 · 두 화면 v1 · 2026-10-05
+
+`opening-wharf.html` / `.css`: 타이틀에서 부산 부두의 달구지를 보고, 같은 차의 뒷문 가까이에서 이름·짐을 적는 연결 초안. 정본4장 참조 신규 컨셉2장, native radio/hash만 사용하며 실제 시작 수치를 보존한다. Studio 초안 창에 등록·직접 관찰. 게임/저장/빌드는 미변경. [설계·출처·검수 범위](opening-wharf.md).

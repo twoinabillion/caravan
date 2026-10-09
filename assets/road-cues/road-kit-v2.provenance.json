@@ -1,0 +1,52 @@
+{
+  "records": [
+    {
+      "id": "road-hunter",
+      "provider": "builtin imagegen",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-4e1de1d6-c02a-40ac-b685-71adb000d2c3.png",
+      "master": "assets/road-cues/masters/road-hunter-v1.png",
+      "delivery": "assets/road-cues/cue-road-hunter-v1.webp",
+      "promptFile": "assets/road-cues/road-characters-v2.prompts.json"
+    },
+    {
+      "id": "road-musician",
+      "provider": "builtin imagegen",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-9097d188-b8f0-4c81-963f-9318cf0156c6.png",
+      "master": "assets/road-cues/masters/road-musician-v1.png",
+      "delivery": "assets/road-cues/cue-road-musician-v1.webp",
+      "promptFile": "assets/road-cues/road-characters-v2.prompts.json"
+    },
+    {
+      "id": "road-refugee",
+      "provider": "builtin imagegen",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-8ecd0723-c1f0-4029-9d27-5a07fbd09e1c.png",
+      "master": "assets/road-cues/masters/road-refugee-v1.png",
+      "delivery": "assets/road-cues/cue-road-refugee-v1.webp",
+      "promptFile": "assets/road-cues/road-characters-v2.prompts.json"
+    },
+    {
+      "id": "road-merchant-truck",
+      "provider": "builtin imagegen",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-a59e168d-f049-48ee-9740-464228ac3e93.png",
+      "master": "assets/road-cues/masters/road-merchant-truck-v1.png",
+      "delivery": "assets/road-cues/cue-road-merchant-truck-v1.webp",
+      "promptFile": "assets/road-cues/road-vehicles-v2.prompts.json"
+    },
+    {
+      "id": "road-clinic-bus",
+      "provider": "builtin imagegen",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-66bcbd5e-53b6-49f1-a990-ddee3d024cb4.png",
+      "master": "assets/road-cues/masters/road-clinic-bus-v1.png",
+      "delivery": "assets/road-cues/cue-road-clinic-bus-v1.webp",
+      "promptFile": "assets/road-cues/road-vehicles-v2.prompts.json"
+    },
+    {
+      "id": "road-cow",
+      "provider": "builtin imagegen",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-00a5fbe0-8f27-4429-9bda-ce1d76cff945.png",
+      "master": "assets/road-cues/masters/road-cow-v1.png",
+      "delivery": "assets/road-cues/cue-road-cow-v1.webp",
+      "promptFile": "assets/road-cues/road-vehicles-v2.prompts.json"
+    }
+  ]
+}

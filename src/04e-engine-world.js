@@ -162,7 +162,9 @@ G.campConversationEvent = ()=>{
       {kind:'dialogue',who:cid,text:data.line}],
     choices:data.choices.map(choice=>({id:choice.id,label:choice.label,req:choice.req,
       hint:`${choice.mins}분 함께 보내기`,
-      out:[{p:1,text:choice.text,turnSpeakers:choice.speakers,fx:{time:choice.mins,...(choice.fx||{})}}]}))};
+      out:[{p:1,text:record.choiceId===choice.id&&typeof record.resultText==='string'?record.resultText:choice.text,
+        turnSpeakers:record.choiceId===choice.id&&Array.isArray(record.resultSpeakers)?record.resultSpeakers:choice.speakers,
+        fx:{time:choice.mins,...(choice.fx||{})}}]}))};
 };
 G.resolveCampChoice = (eventId,choiceId)=>{
   const record=G.currentCampConversation(), event=G.campConversationEvent();
@@ -182,11 +184,15 @@ G.resolveCampChoice = (eventId,choiceId)=>{
   const isGuest=!S.party.includes(record.cid);
   if(!isGuest) G.bond(record.cid,2);
   const visits=Number.isFinite(previous.visits)?Math.max(0,Math.floor(previous.visits)):previous.choiceId?1:0;
+  const choiceVisits={...(record.choiceVisits||D.campChoiceVisits(record.cid,previous))};
+  if(record.voice!=='minji-guest-v1') choiceVisits[choiceId]=Math.min(2,(choiceVisits[choiceId]||0)+1);
   S.campMemories[record.cid]={id:record.id,cid:record.cid,choiceId,day:S.day,visits:visits+1,
+    choiceVisits,voice:record.voice,
     home:data.home,road:data.road,pendingRoad:true,pendingBond:(previous.pendingBond||0)+(isGuest?2:0)};
   chips.push({t:isGuest?'함께 나눈 대화 · 합류하면 유대 +2':`${D.comps[record.cid].name} 유대 +2`,c:'item'});
   chips.push({t:record.voice==='minji-guest-v1'?'달구지의 소리를 함께 들었다':`${D.companionKeepsakes[record.cid].name} · 새 흔적`,c:'item'});
   record.choiceId=choiceId; record.chips=chips; record.resolvedDay=S.day; record.resolvedMin=S.min;
+  record.resultText=out.text;record.resultSpeakers=[...out.turnSpeakers];
   const plan=S._campPlan||(S._campPlan={}); plan.talk=record.cid; plan.last='talk';
   G.addNote({type:'인물',title:`${D.comps[record.cid].name} · ${event.title}`,
     body:`${choice.label}. ${data.home}`,links:[D.comps[record.cid].name,'달구지']});
@@ -249,10 +255,11 @@ G.prepareCamp = (kind,cid)=>{
     else{
       const memory=S.campMemories&&S.campMemories[cid];
       const experienced=memory&&D.campConversations[cid].choices.some(choice=>choice.id===memory.choiceId);
-      const visits=experienced?(Number.isFinite(memory.visits)?Math.max(1,Math.floor(memory.visits)):1):0;
+      const choiceVisits=D.campChoiceVisits(cid,memory);
+      const previousChoiceId=experienced&&choiceVisits[memory.choiceId]?memory.choiceId:null;
       S.campConversation={id:`camp_${S.campNight||0}_${cid}`,night:S.campNight||0,cid,
         day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!experienced,
-        chapter:Math.min(3,visits+1),previousChoiceId:experienced?memory.choiceId:null,
+        chapter:Math.min(3,(choiceVisits[previousChoiceId]||0)+1),previousChoiceId,choiceVisits,
         choiceId:null,chips:[],active:true};
       if(cid==='minji'&&!S.party.includes(cid)) S.campConversation.voice='minji-guest-v1';
     }
@@ -815,10 +822,10 @@ G.questLabel = (q)=> q.story ? `${q.story.title} ${q.story.stage}/${q.story.tota
 G.questDesc = (q)=>{
   const to=D.nodes[q.to].name;
   if(q.story) return `"${q.story.prompt}"`;
-  if(q.kind==='deliver') return `"${q.item}, ${to}까지 부탁해도 되겠소? 사례는 고철 ${q.reward}."`;
-  if(q.kind==='express') return `"급합니다. ${q.item} — ${to}까지 이틀 안에. 사례는 고철 ${q.reward}. 서둘러 주시오."`;
-  if(q.kind==='procure') return `"${q.need.name} ${q.need.qty}개를 구해다 주시오. 여기로 다시 오면 되오. 사례는 고철 ${q.reward}."`;
-  if(q.kind==='letter')  return `"${to}의 ${D.npcs[q.npc].name}에게 편지 한 통만. 사례는 약소하오만… 꼭 좀 전해주시오."`;
+  if(q.kind==='deliver') return `"${q.item}, ${to}까지 부탁드려도 될까요? 사례는 고철 ${q.reward}."`;
+  if(q.kind==='express') return `"급합니다. ${q.item} — ${to}까지 이틀 안에. 사례는 고철 ${q.reward}. 서둘러 주세요."`;
+  if(q.kind==='procure') return `"${q.need.name} ${q.need.qty}개를 구해다 주세요. 여기로 다시 오시면 돼요. 사례는 고철 ${q.reward}."`;
+  if(q.kind==='letter')  return `"${to}의 ${D.npcs[q.npc].name}에게 편지 한 통만. 사례는 적지만… 꼭 좀 전해 주세요."`;
   return '';
 };
 G.rollQuests = ()=>{

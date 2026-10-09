@@ -1,0 +1,13 @@
+{
+  "styleId": "caravan-grounded-cinematic-v1",
+  "purpose": "Separate transparent UI material primitives; never narrative art or live road scenery",
+  "approvedDraft": "tools/design-drafts/event-materials.html",
+  "sourceProvenance": "tools/design-drafts/event-materials/provenance.json",
+  "prompts": "tools/design-drafts/event-materials/prompts.json",
+  "exporter": "tools/export-event-materials-game.cjs",
+  "assets": {
+    "frame": {"path":"assets/ui/event-reading-frame-v2.webp","delivery":[320,400],"slice":[32,32,32,32],"maxBytes":8500,"alphaRequired":true},
+    "button": {"path":"assets/ui/event-material-button-v2.webp","delivery":[480,90],"maxBytes":6500,"alphaRequired":true}
+  },
+  "rendering": "Frame border-image without center fill. Button uses its whole transparent silhouette over a transparent control, never cream backing or a competing oval pseudo-element. Text stays HTML."
+}

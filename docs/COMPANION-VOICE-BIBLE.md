@@ -59,7 +59,7 @@ the earlier table omitted Daon entirely, which is why registers drifted between 
 | Speaker | Address | Register toward Daon | Note |
 |---|---|---|---|
 | Minji | `대장님` | 반말 | 17 years old and blunt with everyone; the honorific stays, the register does not. |
-| Park | `자네` | 하오체 | 63; the oldest crew member speaks down warmly, never in 해요체. |
+| Park | `자네` | 편한 반말·하게체 | 63; warmth comes from his rhythm, concrete care and occasional `-게/-나`, not `-소/-오/하시오`. |
 | Kangwoo | `대장` | 반말 | Ex-military. 합쇼체 belongs to his past orders, not to this crew. |
 | Leo | `대장님` | 해요체 | |
 | Jaeyi | `대장님` | 해요체 | |
@@ -67,6 +67,12 @@ the earlier table omitted Daon entirely, which is why registers drifted between 
 
 Do not write `당신` or `너` toward Daon for any speaker — use the address above or drop the
 pronoun entirely.
+
+The player uses modern polite speech toward Park, Kangwoo, Leo, Jaeyi and Eunsu,
+including quoted choices and outcome replies. Minji and the parents keep their existing
+informal relationship. Children, AI terminals, objects and self-talk are reviewed by
+their actual addressee, not by the companion standing nearby. Do not mechanically
+convert regional dialect, past military reports or intentionally quoted family voices.
 
 ## Automated guardrails
 

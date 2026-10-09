@@ -92,7 +92,7 @@ G.mainQuestEntry = ()=>{
     key:{act:'2장',chapterId:'verification-key',title:'부모님의 인간 확인 검증키를 꺼낸다',phase:'계기판의 장치를 꺼낼 방법을 찾는 중',why:'엄마가 절차를 설계하고 아빠가 만든 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.',next:'북쪽 기록 보관망에서 빠진 설명서 두 장을 찾아 원래 수첩과 맞춘다.',expected:'설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.'},
     witness:{act:'3장',chapterId:'witnesses',title:'같은 이송표를 받은 사람들의 이야기를 모은다',phase:'같은 이송표를 받은 사람을 찾는 중',why:'발신 기록만으로는 누가 피해를 입었는지 알 수 없다. 같은 이송표를 받은 사람들의 이야기도 필요하다.',next:'정착지에서 같은 이송표를 받은 사람을 찾아 이야기를 듣고, 들은 내용을 발신 기록과 맞춰 본다.',expected:'같은 명령으로 여러 지역의 가족이 이송됐다는 사실을 확인한다.'},
     father:{act:'4장',chapterId:'father-last-log',title:'아빠의 마지막 남산 기록을 확인한다',phase:'실패한 남산 진입의 유지실 기록',why:'강제 이송만 끄고 의료와 급수는 살려야 한다는 원칙을 아빠가 마지막 순간 어떻게 지켰는지 확인한다.',next:'실패한 남산 진입 기록에서 아빠의 정비 번호가 끝난 열일곱 분을 읽는다.',expected:'아빠의 행방과 남산에서 절대로 끄면 안 되는 회선을 확인한다.'},
-    mother:{act:'5장',chapterId:'mother-reunion',title:'엄마의 최근 무전 표식을 따라간다',phase:'서울 외곽 무전 중계소',why:'며칠 전까지 이어진 엄마의 증언 신호는 과거 기록이 아니다. 남산에 들어가기 전에 발신자를 직접 확인한다.',next:'북부 교환소가 표시한 서울 외곽 중계소로 간다.',expected:'엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.'}
+    mother:{act:'5장',chapterId:'mother-reunion',title:'엄마의 최근 무전 표식을 따라간다',phase:'수원 외곽 무전 중계소',why:'며칠 전까지 이어진 엄마의 증언 신호는 과거 기록이 아니다. 남산에 들어가기 전에 발신자를 직접 확인한다.',next:'북부 교환소가 표시한 수원 외곽 무전 중계소로 간다.',expected:'엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.'}
   };
   const departureDone=departure.filter(step=>step.id!=='seoul'&&step.done);
   const departureNeed=Math.max(1,departure.filter(step=>step.id!=='seoul').length);

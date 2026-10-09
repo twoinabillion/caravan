@@ -6,6 +6,8 @@ import {fileURLToPath} from 'node:url';
 import {inlineStyleAssets} from './inline-style-assets.mjs';
 import {compactStyleSource} from './compact-style-source.mjs';
 import {compactScriptSource} from './compact-script-source.mjs';
+import {poolEmbeddedAssets} from './pool-embedded-assets.mjs';
+import {encodeEmbeddedAssets} from './encode-embedded-assets.mjs';
 
 /*
  * 이미지·오디오를 포함한 단일 HTML 빌더.
@@ -32,7 +34,7 @@ const after = [
   'src/03i-story-expansion.js', 'src/03j-camp-conversations.js', 'src/03k-main-evidence.js', 'src/03l-main-recovery.js', 'src/03m-finale-reading.js',
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
-  'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05-scene.js', 'src/06-mapgraph.js',
+  'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05c-road-cue-kit.js', 'src/05-scene.js', 'src/06-mapgraph.js',
   'src/07g-ui-home.js', 'src/07h-story-pages.js', 'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
@@ -125,6 +127,8 @@ const uiAssetPaths = {
   HOME_PROPS_ATLAS:{path:'assets/ui/home-props-atlas-v2.webp',mime:'image/webp'},
   PASSENGER_READING_PANEL:{path:'assets/ui/passenger-reading-panel-v1.webp',mime:'image/webp'},
   PASSENGER_CHOICE:{path:'assets/ui/passenger-choice-v1.webp',mime:'image/webp'},
+  EVENT_READING_FRAME:{path:'assets/ui/event-reading-frame-v2.webp',mime:'image/webp'},
+  EVENT_MATERIAL_BUTTON:{path:'assets/ui/event-material-button-v2.webp',mime:'image/webp'},
   DISPLAY_FONT:{path:'assets/fonts/BlackHanSans-Regular.woff2', mime:'font/woff2'},
   JOURNAL_FONT:{path:'assets/fonts/CaravanJournalHand-Regular.woff2', mime:'font/woff2'},
   NAV_ARMORED_SHELL:{path:'assets/ui/nav-armored-shell-v2.webp', mime:'image/webp'},
@@ -241,6 +245,9 @@ const roadCueFiles = {
   TEMPORARYCHECKPOINT:'temporary-checkpoint-v1'
 };
 const roadCuePngFiles = {COWWALKER:'cow-walker',GASSTATION:'gas-station'};
+const cueKitManifest=JSON.parse(read('assets/road-cues/manifest-v2.json'));
+const cueKitImages=Object.fromEntries(Object.entries(cueKitManifest.images).map(([id,entry])=>[id,{...entry,src:dataUri(entry.file,'image/webp')}]));
+const cueKit=read('src/05c-road-cue-kit.js').replace('__ROAD_KIT_MANIFEST__',JSON.stringify({images:cueKitImages}));
 const roadCues = replace(read('src/07f-ui-road-thoughts.js'), /__ROAD_CUE_([A-Z]+)__/g, key =>
   roadCueFiles[key]
     ? dataUri(`assets/road-cues/cue-${roadCueFiles[key]}.webp`, 'image/webp')
@@ -249,17 +256,23 @@ const roadCues = replace(read('src/07f-ui-road-thoughts.js'), /__ROAD_CUE_([A-Z]
     : dataUri(`assets/road-cues/cue-${key.toLowerCase()}.png`, 'image/png'), '도로 접근 큐');
 
 const chunks = [
-  styles.result, read('src/01b-quest-style.html'), ...before.map(read), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
+  styles.result, read('src/01b-quest-style.html'), ...before.map(relative=>relative.endsWith('.js')?compactScriptSource(read(relative),relative):read(relative)), portraits.result, read('src/03c-icons.js'), read('src/03d-bgm.js'),
   title.result, audio.result, npc.result, upgrades.result,
-  ...after.map(relative => relative==='src/05-scene.js'?roadRenderer.result
+  ...after.map(relative => {
+    const source=relative==='src/05-scene.js'?roadRenderer.result
     :relative==='src/05a-road-environment.js'?roadEnvironment
     :relative==='src/05b-vehicle-kit.js'?vehicleKit
+    :relative==='src/05c-road-cue-kit.js'?cueKit
     :relative==='src/07f-ui-road-thoughts.js'?roadCues.result
-    :relative==='src/07-ui.js'?compactScriptSource(read(relative),relative)
     :relative==='src/03i-story-expansion.js'?inlineSceneAssetPaths(read(relative))
-    :read(relative))
+    :read(relative);
+    // Delivery formatting only: no mangle/compress, save keys and names intact.
+    return relative.endsWith('.js')?compactScriptSource(source,relative):source;
+  })
 ];
-const html = chunks.join('\n');
+const assetPool = poolEmbeddedAssets(chunks.join('\n'));
+const deliveryEncoding=encodeEmbeddedAssets(assetPool.html);
+const html = deliveryEncoding.html;
 const htmlBytes = Buffer.byteLength(html);
 const unresolved = [...new Set(html.match(/__(?:UI|TOWN_WORLD|PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO|ROAD_CUE)_[A-Z0-9_]+__/g) || [])];
 if (unresolved.length) throw new Error(`치환되지 않은 자산: ${unresolved.slice(0, 8).join(', ')}`);
@@ -277,6 +290,8 @@ const categories = assetEntries.reduce((out,item)=>{
   return out;
 },{});
 const report={generatedAt:new Date().toISOString(),html:{bytes:htmlBytes,warnBytes:WARN_BYTES,maxBytes:MAX_BYTES},
+  literalPool:{assets:assetPool.pooled,savedBytes:assetPool.savedBytes},
+  losslessDelivery:{assets:deliveryEncoding.assets,savedBytes:deliveryEncoding.savedBytes},
   embedded:{files:assetEntries.length,bytes:assetEntries.reduce((sum,item)=>sum+item.bytes,0),categories},
   largest:assetEntries.slice(0,20)};
 fs.mkdirSync(path.dirname(reportOutput),{recursive:true});

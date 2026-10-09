@@ -47,6 +47,7 @@
     "test:npcs": "python3 tests/test_npc_layer.py",
     "test:profiles": "python3 tests/test_start_profiles.py",
     "test:seoul": "python3 tests/test_seoul_sequence.py",
+    "test:story-flow": "node --test tools/test-main-story-flow.cjs tools/test-narrative-presence.cjs tools/test-dialogue-register.cjs tests/test_dialogue_relationships.cjs tests/test_event_handoff_runtime.cjs tests/test_narrative_context.cjs tests/test_opening_continuity.cjs tests/test_story_pages.cjs tests/test_finale_reading.cjs tests/test_cohesion_narrative.cjs tests/test_quest_journal.cjs",
     "test:finale": "npm run build:html --silent && python3 tests/test_finale.py",
     "fuzz": "python3 tools/fuzz-invariants.py --runs 10 --steps 400",
     "fuzz:selftest": "python3 tools/fuzz-invariants.py --runs 2 --steps 60 --selftest || true",

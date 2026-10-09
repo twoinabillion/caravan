@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 2,
+  "images": {
+    "coffee-vendor": {
+      "file": "assets/road-cues/cue-coffee-vendor-v1.webp",
+      "width": 176,
+      "height": 384
+    },
+    "checkpoint-worker": {
+      "file": "assets/road-cues/cue-checkpoint-worker-v1.webp",
+      "width": 175,
+      "height": 384
+    },
+    "checkpoint-booth": {
+      "file": "assets/road-cues/cue-checkpoint-booth-v1.webp",
+      "width": 853,
+      "height": 512
+    },
+    "market-cart": {
+      "file": "assets/road-cues/cue-market-cart-v1.webp",
+      "width": 598,
+      "height": 384
+    },
+    "fuel-pump": {
+      "file": "assets/road-cues/cue-fuel-pump-v1.webp",
+      "width": 353,
+      "height": 384
+    },
+    "delivery-bicycle": {
+      "file": "assets/road-cues/cue-delivery-bicycle-v1.webp",
+      "width": 590,
+      "height": 384
+    },
+    "postman-standing": {
+      "file": "assets/road-cues/cue-postman-standing-v1.webp",
+      "width": 184,
+      "height": 384
+    },
+    "cart-trader": {
+      "file": "assets/road-cues/cue-cart-trader-v1.webp",
+      "width": 177,
+      "height": 384
+    },
+    "beekeeper-standing": {
+      "file": "assets/road-cues/cue-beekeeper-standing-v1.webp",
+      "width": 147,
+      "height": 384
+    },
+    "road-man": {
+      "file": "assets/road-cues/cue-road-man-v1.webp",
+      "width": 165,
+      "height": 384
+    },
+    "road-child": {
+      "file": "assets/road-cues/cue-road-child-v1.webp",
+      "width": 139,
+      "height": 384
+    },
+    "road-medic": {
+      "file": "assets/road-cues/cue-road-medic-v1.webp",
+      "width": 150,
+      "height": 384
+    },
+    "road-woman": {
+      "file": "assets/road-cues/cue-road-woman-v1.webp",
+      "width": 131,
+      "height": 384
+    },
+    "road-elder": {
+      "file": "assets/road-cues/cue-road-elder-v1.webp",
+      "width": 140,
+      "height": 384
+    },
+    "road-worker": {
+      "file": "assets/road-cues/cue-road-worker-v1.webp",
+      "width": 123,
+      "height": 384
+    },
+    "road-mansu": {
+      "file": "assets/road-cues/cue-road-mansu-v1.webp",
+      "width": 138,
+      "height": 384
+    },
+    "road-monk": {
+      "file": "assets/road-cues/cue-road-monk-v1.webp",
+      "width": 146,
+      "height": 384
+    },
+    "road-barber": {
+      "file": "assets/road-cues/cue-road-barber-v1.webp",
+      "width": 134,
+      "height": 384
+    },
+    "road-hunter": {
+      "file": "assets/road-cues/cue-road-hunter-v1.webp",
+      "width": 132,
+      "height": 384
+    },
+    "road-musician": {
+      "file": "assets/road-cues/cue-road-musician-v1.webp",
+      "width": 210,
+      "height": 384
+    },
+    "road-refugee": {
+      "file": "assets/road-cues/cue-road-refugee-v1.webp",
+      "width": 147,
+      "height": 384
+    },
+    "road-food-truck": {
+      "file": "assets/road-cues/cue-road-food-truck-v1.webp",
+      "width": 682,
+      "height": 384
+    },
+    "road-cinema-truck": {
+      "file": "assets/road-cues/cue-road-cinema-truck-v1.webp",
+      "width": 715,
+      "height": 384
+    },
+    "road-merchant-truck": {
+      "file": "assets/road-cues/cue-road-merchant-truck-v1.webp",
+      "width": 747,
+      "height": 384
+    },
+    "road-clinic-bus": {
+      "file": "assets/road-cues/cue-road-clinic-bus-v1.webp",
+      "width": 875,
+      "height": 384
+    },
+    "road-cow": {
+      "file": "assets/road-cues/cue-road-cow-v1.webp",
+      "width": 619,
+      "height": 384
+    },
+    "coffee-van": {
+      "file": "assets/road-cues/cue-coffee-van-v3.webp",
+      "width": 512,
+      "height": 265
+    },
+    "broken-vehicle": {
+      "file": "assets/road-cues/cue-broken-vehicle-v3.webp",
+      "width": 512,
+      "height": 238
+    },
+    "temporary-checkpoint": {
+      "file": "assets/road-cues/cue-temporary-checkpoint-v1.webp",
+      "width": 512,
+      "height": 182
+    },
+    "road-photographer": {
+      "file": "assets/road-cues/cue-road-photographer-v1.webp",
+      "width": 149,
+      "height": 384
+    },
+    "road-florist": {
+      "file": "assets/road-cues/cue-road-florist-v1.webp",
+      "width": 130,
+      "height": 384
+    },
+    "road-tailor": {
+      "file": "assets/road-cues/cue-road-tailor-v1.webp",
+      "width": 324,
+      "height": 384
+    },
+    "road-seoyeon": {
+      "file": "assets/road-cues/cue-road-seoyeon-v1.webp",
+      "width": 131,
+      "height": 384
+    },
+    "road-sanjigi": {
+      "file": "assets/road-cues/cue-road-sanjigi-v1.webp",
+      "width": 131,
+      "height": 384
+    },
+    "road-kimcaptain": {
+      "file": "assets/road-cues/cue-road-kimcaptain-v1.webp",
+      "width": 152,
+      "height": 384
+    },
+    "road-hayeosa": {
+      "file": "assets/road-cues/cue-road-hayeosa-v1.webp",
+      "width": 140,
+      "height": 384
+    },
+    "road-geumja": {
+      "file": "assets/road-cues/cue-road-geumja-v1.webp",
+      "width": 158,
+      "height": 384
+    },
+    "road-seojin": {
+      "file": "assets/road-cues/cue-road-seojin-v1.webp",
+      "width": 142,
+      "height": 384
+    },
+    "road-taesik": {
+      "file": "assets/road-cues/cue-road-taesik-v1.webp",
+      "width": 154,
+      "height": 384
+    },
+    "road-hanbyeol": {
+      "file": "assets/road-cues/cue-road-hanbyeol-v2.webp",
+      "width": 140,
+      "height": 384
+    },
+    "road-library-bus": {
+      "file": "assets/road-cues/cue-road-library-bus-v1.webp",
+      "width": 639,
+      "height": 384
+    },
+    "road-mapmaker-sidecar": {
+      "file": "assets/road-cues/cue-road-mapmaker-sidecar-v1.webp",
+      "width": 582,
+      "height": 384
+    },
+    "road-piano": {
+      "file": "assets/road-cues/cue-road-piano-v1.webp",
+      "width": 496,
+      "height": 384
+    },
+    "road-mapmaker": {
+      "file": "assets/road-cues/cue-road-mapmaker-v1.webp",
+      "width": 134,
+      "height": 384
+    },
+    "road-mingyu": {
+      "file": "assets/road-cues/cue-road-mingyu-v1.webp",
+      "width": 138,
+      "height": 384
+    }
+  }
+}

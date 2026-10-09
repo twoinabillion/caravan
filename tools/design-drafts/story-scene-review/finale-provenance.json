@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-10-09",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "tool": "image_gen.imagegen",
+  "status": "draft-awaiting-Sang-review",
+  "requiredReferences": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "images": [
+    {
+      "id": "seoul-namsan-night-v3",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-c09b038e-1473-4246-8b0c-b01a9fe078f6.png",
+      "original": "assets/scenes/seoul-night-quiet-v2.webp",
+      "prompt": "Use case: stylized-concept. Asset type: narrative scene draft for Caravan, 16:9 landscape master at least1536x864. Input images1-4: mandatory STYLE/WORLD references only, not collage/edit targets. Scene: quiet NIGHT on the SOUTHERN midslope of Namsan hill in post-collapse Seoul. We are already ON Namsan, looking downhill through sparse Korean pines toward a low, worn Seoul skyline and the Han River FAR BELOW. Namsan tower is behind the camera and MUST NOT appear anywhere across the river or on a distant hill. Subject: worn stone stair landing and low handrail, with ONE dented tin cup and ONE closed weathered journal resting on a stone step. No hands or people, no companion possessions, no vehicle, no weapons, no radio, no visible fire. A small practical amber lantern off-frame gently warms the cup/step; night skyline has sparse restrained lights, NOT a glittering contemporary city. Believable Seoul paths/grounded infrastructure, human-scale material detail. Near-photographic cinematic painterly realism, subdued cool gray-blue night with small amber accent, weathered stone and faint damp sheen, subtle film grain. Eye-height35-50mm movie still, meaningful cup/journal and stairs central80% composition, clear at360px wide. Exclude readable text, signs, caption, border, watermark, UI, collage, split panel, anime, comic, pixel art, glossy advertising photo, 3D render, fantasy ruins or neon sci-fi. Single unpeopled landscape, quiet relief after a hard decision, not an arrival scene viewed toward Namsan.",
+      "master": "tools/design-drafts/story-scene-review/masters/seoul-namsan-night-v3.png",
+      "asset": "assets/scenes/seoul-namsan-night-v3.webp",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ]
+    },
+    {
+      "id": "seoul-namsan-dawn-v3",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-cfd46d4b-972a-45b2-b81d-5824ab92498b.png",
+      "original": "assets/scenes/seoul-home-dawn-v2.webp",
+      "prompt": "Use case: lighting-weather. Asset type: 16:9 dawn scene variant for Caravan. Image1 is the EDIT TARGET: keep the exact stair landing, camera, pine branches, railing, cup, closed journal, river/bridge/skyline positions unchanged. Images2-5 are canonical style/world references ONLY, do not copy their people/vehicle/panels. Change ONLY lighting and time of day from night to pre-sunrise DAWN. Cool gray-blue natural light now reveals the worn stone steps and still-damp path. Add a muted pale peach line low on the horizon, no strong sunrise beams. Dim the off-frame lantern's amber reflection and distant artificial lights because daylight is coming. Same Namsan south midslope location looking downhill toward the Han River, not a view toward Namsan: no tower appears. No new people, animals, vehicles or buildings. Keep one cup and closed journal in the identical places. Preserve near-photographic cinematic painterly realism, film grain, worn materials, no glossy photo or 3D render. Master at least1536x864. No text/UI/watermark/border/collage. This is the SAME place hours later, not a new location.",
+      "editTarget": "tools/design-drafts/story-scene-review/masters/seoul-namsan-night-v3.png",
+      "master": "tools/design-drafts/story-scene-review/masters/seoul-namsan-dawn-v3.png",
+      "asset": "assets/scenes/seoul-namsan-dawn-v3.webp",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ]
+    },
+    {
+      "id": "seoul-maintenance-terminal-v3",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-1767f827-4145-4a5c-92d2-a257a331e1b3.png",
+      "original": "assets/scenes/seoul-uplink-empty-v2.webp",
+      "prompt": "Use case: stylized-concept. Asset type: 16:9 narrative scene draft for Caravan / Seoul to 400km, master 1536x864 or larger. Reference images 1-4 are mandatory STYLE/WORLD references ONLY, not edit targets, not subjects to copy or collage. Near-photographic cinematic painterly realism, grounded post-collapse South Korean infrastructure, desaturated cool gray-blue, restrained practical amber light, worn industrial surfaces, subtle film grain. Subject: a SMALL independent maintenance terminal on a dusty steel workbench in a service alcove in Namsan's underground core room. One battered desktop CRT screen, a separate local power cable visibly entering a small wall outlet, a coiled disconnected data lead resting beside it. Main CRT has only a faint abstract amber glow and ONE small amber status light, no letters/numbers/symbols/words. No giant core or central machine in frame, no core glow, no ocean of red LEDs, no futuristic holograms; the alcove beyond the workbench remains dark and quiet. The distant regional core is entirely outside the frame, so this scene fits both awake and sleeping-core story branches. A believable maintenance workstation, not a new sci-fi structure. Composition: intimate eye-height 40mm film still, screen and separate cables clearly readable within central 80% safe area at 360px game width, no extreme contrast. No people, hands, companions, dog, weapons, vehicle, UI, borders, captions, collage, watermark or readable text. Match reference medium/material palette, avoid anime, manga, comic, pixel, glossy advertising photo, 3D render. Single landscape image.",
+      "master": "tools/design-drafts/story-scene-review/masters/seoul-maintenance-terminal-v3.png",
+      "asset": "assets/scenes/seoul-maintenance-terminal-v3.webp",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ]
+    }
+  ],
+  "exporter": "tools/design-drafts/export-finale-scene-review.cjs",
+  "operation": "sRGB, centered cover resize 1024x576; WebP quality86 effort6; no visual editing",
+  "review": {
+    "sourceObserved": true,
+    "deliveryObserved": true,
+    "wiredIntoGameplay": false,
+    "SangApproval": "pending",
+    "actualStudioDraftWindow": "not-observed; no connected window control",
+    "actualInGameCrop": "not-observed; deliberately unwired",
+    "world": "Night/dawn on Namsan south midslope looking downhill; tower outside frame. Terminal powered independently; core not depicted.",
+    "identity": "No people, companions, dog or vehicle; no fixed roster",
+    "releaseRights": "project references used; separate release-rights review not performed"
+  },
+  "readOnlyServingChecks": {
+    "studioDraft": "HTTP200; served HTML SHA256 equals local draft; not a window observation",
+    "studioManifest": "HTTP200; finale-scene-review-v1 listed",
+    "previewGallery": "http://127.0.0.1:4319/__live/assets HTTP200; all three candidates listed",
+    "previewAsset": "HTTP200 for all three /__live/asset/scenes%2F… files; SHA256 equals local delivery; 125306/172884/86614bytes",
+    "currentSceneBefore": "HTTP200; Busan day1 07:35 opening_bus_repair decision,360x728,loaded/style1791539252573,pendingnull; game-state only",
+    "currentSceneAfter": "HTTP400 twice; Studio could not receive current scene, so state preservation and apply badge/loaded revision remain unconfirmed"
+  }
+}

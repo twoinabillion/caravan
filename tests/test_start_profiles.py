@@ -46,18 +46,18 @@ with sync_playwright() as playwright:
       const modeOn=document.querySelector('#mode-on');   // 오프로드 설정이 있으면 모드 화면을 경유한다
       if(modeOn&&document.querySelector('#scr-mode').classList.contains('on')) modeOn.click();
       const box=document.querySelector('#profile-pick');
-      const cards=box?box.querySelectorAll('[data-profile]').length:0;
+      const cards=box?box.querySelectorAll('[data-pack]').length:0;
       let picked=null;
       if(cards){
-        const second=box.querySelectorAll('[data-profile]')[1];
+        const second=box.querySelectorAll('[data-pack]')[1];
         second.click();
         picked=box.querySelector('[aria-checked="true"]');
-        picked=picked&&picked.dataset.profile;
+        picked=picked&&picked.dataset.pack;
       }
       return {cards, picked};
     }""")
     check('선택 카드 3장 렌더', picker.get('cards') == 3, str(picker))
-    check('클릭으로 선택 전환', picker.get('picked') == 'runner', str(picker))
+    check('클릭으로 선택 전환', picker.get('picked') == 'repair', str(picker))
 
     print('― 세이브를 오가도 유지된다')
     kept = page.evaluate("""() => {

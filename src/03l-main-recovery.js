@@ -16,16 +16,16 @@ D.mainEvidenceCompletion = {
 (() => {
   const copies={
     onboarding_first_road:{title:'수원에 도착한 발신 기록',
-      text:'수원 북부 교환소의 보관 담당자가 남쪽 검문 단말에서 옮겨 온 종이띠 사본과 저장 모듈을 내놓았다. 나는 그 검문소에서 기록을 확보하지 못했다. 이곳에서 출처와 복사 시각을 먼저 확인한다.\n\n배급망이 바뀔 때마다 대상을 다시 고르는 규칙, 그리고 부모님의 이송표와 앞 여덟 자리가 같은 검증 번호가 남아 있었다. 종이 사본을 대조할지, 맡겨진 모듈을 열지, 북부 단말로 원격 원본을 조회할지 고를 수 있다.',
+      text:'수원 북부 교환소의 보관 담당자가 남쪽 검문 단말에서 옮겨 온 종이띠 사본과 저장 모듈을 내놓았다. 나는 그 검문소에서 기록을 확보하지 못했다. 이곳에서 출처와 복사 시각을 먼저 확인한다.\n\n부모님의 이송표와 앞 여덟 자리가 같은 발신 번호가 남아 있었다. 배급망이 바뀔 때마다 이송 대상을 다시 고른다는 규칙도 적혀 있었다. 종이 사본을 대조할지, 맡겨진 모듈을 열지, 북부 단말로 원격 원본을 조회할지 고를 수 있다.',
       labels:['종이띠 사본의 발신 번호를 대조한다','교환소가 보관한 저장 모듈을 연다','차량 번호로 원격 원본을 조회한다'],
       outcomes:[
-        '보관 담당자와 사본의 전송 인장을 확인하고 부모님의 표를 옆에 놓았다. 발신 번호가 같았다. 수원에서 받은 사본에 출처를 적었다. 남쪽 단말을 내가 직접 열었다고 기록하지 않았다.',
-        '작업대에서 교환소에 맡겨진 저장 모듈의 봉인을 풀었다. 보관 담당자가 인계 날짜를 읽었고, 나는 저장된 검증 번호와 재평가 규칙을 베꼈다. 이 모듈은 남쪽 단말에서 회수돼 여기까지 전달된 것이었다.',
-        '수원 단말에 달구지 번호를 넣고 원격 기록을 요청했다. 조회 흔적이 관측망에 남았지만, 검증 번호와 재평가 규칙을 원본과 대조할 수 있었다. 내가 남긴 흔적은 남쪽에서 받은 스캔이 아니라 이곳의 조회였다.'
+        '보관 담당자와 사본의 출처를 확인하고 부모님의 표를 옆에 놓았다. 발신 번호의 앞 여덟 자리가 같았다. 수원에서 받은 사본에 출처를 적었다. 남쪽 단말을 내가 직접 열었다고 기록하지 않았다.',
+        '작업대에서 교환소에 맡겨진 저장 모듈을 열었다. 담당자와 전달 날짜를 확인한 뒤 발신 번호와 반복 이송 규칙을 베꼈다. 이 모듈은 남쪽 단말에서 회수돼 여기까지 전달된 것이었다.',
+        '수원 단말에 달구지 번호를 넣고 원격 기록을 요청했다. 조회 흔적이 관측망에 남았지만, 발신 번호와 반복 이송 규칙을 원본과 대조할 수 있었다. 내가 남긴 흔적은 남쪽에서 받은 스캔이 아니라 이곳의 조회였다.'
       ],
-      notes:['수원 북부 교환소에서 남쪽 검문 단말의 종이띠 사본을 대조했다. 부모님의 표와 같은 발신 번호, 배급망 변화에 따른 반복 재평가 규칙을 확인했다.',
+      notes:['수원 북부 교환소에서 남쪽 검문 단말의 종이띠 사본을 대조했다. 부모님의 표와 앞 여덟 자리가 같은 발신 번호, 배급망 변화에 따른 반복 이송 규칙을 확인했다.',
         '수원 북부 교환소가 보관한 남쪽 단말의 저장 모듈을 열어 발신 번호와 재평가 규칙을 확인했다.',
-        '수원 단말에서 달구지 번호로 원격 원본을 조회했다. 관측 흔적을 남기는 대신 부모님의 표와 같은 발신 기록을 확인했다.']},
+        '수원 단말에서 달구지 번호로 원격 원본을 조회했다. 관측 흔적을 남기는 대신 부모님의 표와 앞 여덟 자리가 같은 발신 번호를 확인했다.']},
     parents_diversion_manifest:{title:'교환소의 환승 운행표 사본',
       prefix:'수원 북부 교환소에서 남쪽 환승소가 보낸 운행표와 분류 기록의 사본을 받았다.\n\n',
       text:'부모님의 다음 차는 실제로 있었지만 부산으로 출발하지 않았다. 탑승 직전 아빠는 남산 기술 유지선, 엄마는 중부 기록 정리소로 따로 분류됐다. 나는 두 사람이 갈라진 자리를 사본에서 짚었다.'},
@@ -38,9 +38,9 @@ D.mainEvidenceCompletion = {
         .replace('폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다.',
           '수원 북부 교환소의 단말에서 남쪽 보관망이 전달한 영상을 열었다.')},
     story_family_key:{title:'교환소 앞 달구지의 검증키',
-      text:'수원 북부 교환소에 보관된 첨부 목록에서 검증키 분리 절차 4·5쪽의 전송 번호를 찾았다. 아직 필요한 두 장을 손에 넣은 것은 아니다.\n\n교환소 앞에 세운 달구지로 돌아와 엄마의 회로도를 계기판 배선과 비교했다. 모듈 옆에는 정전기 방지 천과 가족사진, 아빠의 회로 수첩이 남아 있었다.\n\n수첩에는 강제 명령이 실행되기 전에 반드시 사람의 확인을 거치게 하는 검증키라고 적혀 있었다. 모듈을 억지로 떼지 않고, 사진과 수첩만 먼저 살펴볼 수 있다.'},
+      text:'수원 북부 교환소의 첨부 목록에 검증키 분리 절차 4·5쪽을 보냈다는 기록이 있었다. 필요한 두 장은 아직 손에 넣지 못했다.\n\n교환소 앞에 세운 달구지로 돌아와 엄마의 회로도를 계기판 배선과 비교했다. 모듈 옆에는 정전기 방지 천과 가족사진, 아빠의 회로 수첩이 남아 있었다.\n\n수첩에는 강제 명령이 실행되기 전에 반드시 사람의 확인을 거치게 하는 검증키라고 적혀 있었다. 모듈을 억지로 떼지 않고, 사진과 수첩만 먼저 살펴볼 수 있다.'},
     story_personal_cache:{title:'북부 교환소에 맡겨진 상자',
-      text:'수원 북부 교환소의 담당자가 부모님의 묶음 번호로 보관 중인 철제 상자를 가져왔다. 폐버스 배차실에서 회수돼 인편으로 옮겨진 물건이었다. 인계 장부와 봉인 번호가 일치했다.\n\n어린 시절 버스 열쇠고리, 타 버린 발신 릴, 마지막 두 장이 빠진 절차 수첩, 이송된 가족들의 증언 카드가 들어 있었다. 이 카드들은 부모님이 모은 기록이다. 내가 아직 만나지 않은 사람에게 직접 확인받은 증언은 아니다.',
+      text:'수원 북부 교환소의 담당자가 부모님의 묶음 번호로 보관 중인 철제 상자를 가져왔다. 폐버스 배차실에서 회수돼 인편으로 옮겨진 물건이었다. 담당자와 장부를 대조해 같은 상자인지 확인했다.\n\n어린 시절 버스 열쇠고리, 타 버린 발신 릴, 마지막 두 장이 빠진 절차 수첩, 이송된 가족들의 증언 카드가 들어 있었다. 이 카드들은 부모님이 모은 기록이다. 내가 아직 만나지 않은 사람에게 직접 확인받은 증언은 아니다.',
       outcomes:['수원 교환소의 전달자에게 상자 묶음 번호와 인계 장부를 함께 대조해 달라고 했다. 전달자는 보관망에 마지막 두 장의 원본을 요청했다. 이 자리에서 서로 출처를 확인하기로 했다.',
         '상자는 달구지에 보관하고 묶음 번호와 찢긴 쪽의 모양만 교환소 장부와 대조했다. 마지막 두 장의 봉투를 받으면 내가 먼저 맞춰 보기로 했다.'],
       notes:['수원 교환소에 옮겨진 부모님의 상자를 인계받고 전달자와 분리 절차 원본을 대조하기로 했다.',
@@ -63,7 +63,11 @@ D.mainEvidenceCompletion = {
     D.events.push({id:D.mainRecoveryEvents[id],recoveryOf:id,type:'스토리',once:true,noPool:1,
       scene:copy.scene||(id==='parents_diversion_manifest'?'parents-diversion-record-v2':'parents-linked-records-v2'),
       title:copy.title,storyOrigin:copy.storyOrigin||{kind:'record',label:'수원에서 확인',title:'북부 교환소 · 전달 기록과 보관물'},
-      text,turns:text.split('\n\n').map(text=>({kind:'narration',text})),
+      text,
+      // The restored video retains the original parents' quote routes. Treating
+      // every paragraph as narration erases the father/mother exchange.
+      turns:id==='story_family_principle'?undefined:text.split('\n\n').map(text=>({kind:'narration',text})),
+      ...(id==='story_family_principle'?{turnSpeakers:[...source.turnSpeakers]}:{}),
       choices:source.choices.map((choice,i)=>({...choice,
         label:(copy.labels?.[i]||choice.label)+((choice.out||[]).some(out=>out.fx?.time)?` · ${choice.out[0].fx.time}분`:''),
         out:choice.out.map((out,j)=>{
@@ -73,7 +77,13 @@ D.mainEvidenceCompletion = {
             const note=typeof fx.note==='string'?{type:'본편',title:copy.title,body:fx.note,links:[]}:fx.note;
             fx.note={...note,title:copy.title,body:copy.notes?.[i]||`수원 북부 교환소에서 전달 기록과 보관물을 확인했다. ${note.body}`};
           }
-          return {...out,text:copy.outcomes?.[i]||out.text,fx};
+          const text=copy.outcomes?.[i]||out.text;
+          // The original outcome may have its own reading beats. A new northern
+          // account must replace those too, or the reader invents a southern visit.
+          return {...out,text,...(copy.outcomes?.[i]?{
+            readingRecord:text,
+            turns:state=>(typeof text==='function'?text(state):text).split('\n\n').map(text=>({kind:'narration',text}))
+          }:{}),fx};
         })
       }))});
   }

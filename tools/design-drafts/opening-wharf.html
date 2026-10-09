@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>부산에서 시동을 걸기 전 · 두 화면 초안</title>
+  <link rel="stylesheet" href="opening-wharf.css">
+</head>
+<body>
+  <aside class="draft-tools"><span>미적용 초안 · 그림은 컨셉</span><label><input type="checkbox" id="save-example">저장 있음 예시</label></aside>
+  <main class="opening" aria-label="게임과 분리된 출발 디자인 초안">
+    <section class="wharf-title" id="title">
+      <nav class="top-nav" aria-label="타이틀 메뉴"><span>부산 감천 부두</span><a href="#sound-note">소리 켜기</a></nav>
+      <header class="game-title"><p>멸망 이후, 부산에서 서울까지</p><h1>서울까지<br><span>400<small>km</small></span></h1></header>
+      <figure class="harbor-scene"><img src="opening-wharf/harbor-v1.webp" alt="새벽 부산 부두, 지붕에 짐을 묶은 회백색 달구지가 출발을 기다린다" width="1024" height="576"></figure>
+      <div class="title-menu">
+        <p class="game-line">낡은 달구지 한 대와<br>아직 끝나지 않은 사람들의 길.</p>
+        <div class="new-menu"><a class="primary" href="#prepare">출발 준비</a></div>
+        <div class="saved-menu"><a class="primary" href="#continue-note">이어서 달리기</a><a class="quiet" href="#prepare">새 여정 준비</a></div>
+        <a class="preview-link" href="#preview-note">여정 미리보기</a>
+        <p class="offline">기록은 자동으로 저장됩니다 · 오프라인 플레이</p>
+      </div>
+    </section>
+    <section class="wharf-prep" id="prepare" aria-label="이름과 짐 선택 초안">
+      <nav class="top-nav" aria-label="출발 준비 메뉴"><a href="#title">타이틀로</a><a href="#prep-sound-note">소리 켜기</a></nav>
+      <figure class="cargo-scene"><img src="opening-wharf/cargo-v1.webp" alt="같은 달구지의 열린 뒷문, 물통과 식량 꾸러미, 부품 상자가 놓인 적재 공간" width="1024" height="576"><figcaption>부산 감천 부두 · 출발 전</figcaption></figure>
+      <div class="record-scroll">
+        <section class="departure-record" aria-label="출발 기록">
+          <header class="record-head"><h2>출발 기록</h2><span>부산 → 서울</span></header>
+          <div class="name-entry"><label for="wharf-name">운전수 이름</label><input id="wharf-name" placeholder="나" maxlength="8" autocomplete="off" aria-describedby="wharf-name-note"><p id="wharf-name-note">8자까지. 비워 두면 ‘나’로 기록합니다.</p></div>
+          <fieldset class="loadout"><legend>처음 실을 짐</legend><div class="options">
+            <input id="wharf-keeper" type="radio" name="loadout" value="keeper" checked><label for="wharf-keeper"><b>균형 출발</b><span>안정형</span></label>
+            <input id="wharf-runner" type="radio" name="loadout" value="runner"><label for="wharf-runner"><b>빈 탱크</b><span>도전형</span></label>
+            <input id="wharf-hauler" type="radio" name="loadout" value="hauler"><label for="wharf-hauler"><b>만재 출발</b><span>보급형</span></label>
+          </div></fieldset>
+          <section class="kit keeper" aria-label="균형 출발 물자"><p>연료와 물자를 고르게 싣는다.<br>처음 떠나는 길에 알맞다.</p><dl><div><dt>연료</dt><dd>42L</dd></div><div><dt>고철</dt><dd>24</dd></div><div><dt>물</dt><dd>16</dd></div><div><dt>식량</dt><dd>14</dd></div><div><dt>부품</dt><dd>1</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl></section>
+          <section class="kit runner" aria-label="빈 탱크 물자"><p>연료는 16L뿐이다.<br>고철과 부품으로 첫 정착지까지 버틴다.</p><dl><div><dt>연료</dt><dd>16L</dd></div><div><dt>고철</dt><dd>44</dd></div><div><dt>물</dt><dd>12</dd></div><div><dt>식량</dt><dd>10</dd></div><div><dt>부품</dt><dd>3</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl></section>
+          <section class="kit hauler" aria-label="만재 출발 물자"><p>연료와 생존 물자는 넉넉하지만<br>부품 없이 길을 연다.</p><dl><div><dt>연료</dt><dd>52L</dd></div><div><dt>고철</dt><dd>6</dd></div><div><dt>물</dt><dd>26</dd></div><div><dt>식량</dt><dd>24</dd></div><div><dt>부품</dt><dd>0</dd></div><div><dt>차체</dt><dd>74%</dd></div></dl></section>
+        </section>
+        <p class="art-note">그림 속 짐은 구도 예시입니다. 출발 물자는 위 수치 기준입니다.</p>
+      </div>
+      <footer class="prep-actions"><a class="primary" href="#start-note"><span>출발 준비를 시작한다<small class="keeper">균형 출발</small><small class="runner">빈 탱크</small><small class="hauler">만재 출발</small></span></a><a class="history-link" href="#history-note">먼저 전체 역사 프롤로그 읽기</a></footer>
+    </section>
+    <section class="draft-dialog title-dialog" id="sound-note" aria-labelledby="sound-heading"><div><h2 id="sound-heading">소리 켜기</h2><p>초안에서는 소리를 재생하지 않습니다. 적용 시 기존 게임 소리 설정을 유지합니다.</p><a class="primary" href="#title">타이틀 초안으로</a></div></section>
+    <section class="draft-dialog title-dialog" id="preview-note" aria-labelledby="preview-heading"><div><h2 id="preview-heading">여정 미리보기</h2><p>게임 적용 시 기존 미리보기로 이어집니다. 이 초안에서는 화면 구성을 검토합니다.</p><a class="primary" href="#title">타이틀 초안으로</a></div></section>
+    <section class="draft-dialog title-dialog" id="continue-note" aria-labelledby="continue-heading"><div><h2 id="continue-heading">이어서 달리기</h2><p>가상 저장 배치입니다. 실제 게임 저장을 읽거나 여정을 시작하지 않습니다.</p><a class="primary" href="#title">타이틀 초안으로</a></div></section>
+    <section class="draft-dialog prep-dialog" id="prep-sound-note" aria-labelledby="prep-sound-heading"><div><h2 id="prep-sound-heading">소리 켜기</h2><p>초안에서는 소리를 재생하지 않습니다. 적용 시 기존 게임 소리 설정을 유지합니다.</p><a class="primary" href="#prepare">짐 선택 초안으로</a></div></section>
+    <section class="draft-dialog prep-dialog" id="start-note" aria-labelledby="start-heading"><div><h2 id="start-heading">출발 준비로 이어집니다</h2><p>적용한다면 입력한 이름과 선택한 물자로 기존 출발 준비 흐름에 연결합니다. 이 초안은 게임과 저장을 바꾸지 않습니다.</p><a class="primary" href="#prepare">짐 선택 초안으로</a></div></section>
+    <section class="draft-dialog prep-dialog" id="history-note" aria-labelledby="history-heading"><div><h2 id="history-heading">전체 역사 프롤로그</h2><p>기존 프롤로그 읽기를 유지합니다. 이 초안에는 새로운 사건이나 대사가 없습니다.</p><a class="primary" href="#prepare">짐 선택 초안으로</a></div></section>
+  </main>
+</body>
+</html>

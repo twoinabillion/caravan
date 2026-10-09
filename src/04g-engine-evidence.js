@@ -3,10 +3,11 @@ G.coreLinkedCells = ()=>D.coreLinkedCells(S);
 G.pillars = ()=>{
   const done=G.deedsDone(),f=S.flags;
   const relation=done.filter(d=>d.cat==='동료').length;
-  const truth=['massacre_known','parent_key_found','es_truth','uplink_seen'].filter(k=>f[k]).length;
+  const truth=['massacre_known','parent_key_found','uplink_seen'].filter(k=>f[k]).length
+    +(D.familyOrderKnown(S)?1:0);
   return {
     관계:{have:Math.max(relation,f.main_testimony_record?3:0),need:D.seoulPillars.관계,hint:'기록 교환소에서 당사자 세 사람의 증언을 확인한다'},
-    세계:{have:G.coreLinkedCells().length,need:D.seoulPillars.세계,hint:'수원 외곽 중계소에서 세 거점의 응답을 받는다'},
+    세계:{have:G.coreLinkedCells().length,need:D.seoulPillars.세계,hint:'수원 외곽 무전 중계소에서 세 거점의 응답을 받는다'},
     진실:{have:Math.max(truth,f.main_command_record?3:0),need:D.seoulPillars.진실,hint:'북부 기록 보관함에서 증언과 명령 원본을 대조한다'},
     유산:{have:done.filter(d=>d.cat==='회수').length+(f.main_testimony_record?1:0),need:D.seoulPillars.유산,hint:'당사자가 맡긴 증언 사본과 부모님의 검증키를 보관한다'}
   };
@@ -21,7 +22,7 @@ G.mainEvidenceRows = ()=>{
     {id:'parents_work',done:!!f.parents_routes_traced,target:'cheongju',event:'parents_separated_work'},
     {id:'key',done:!!f.parent_key_found,target:'cheongju',event:f.parent_cache_shared?'story_parent_route_shared':f.parent_cache_guarded?'story_parent_route_guarded':f.parent_key_located?'story_personal_cache':!f.parent_principle_found?'story_family_principle':'story_family_key'},
     {id:'witness',done:p.관계.have>=p.관계.need,target:'cheongju',event:'main_transfer_testimony'},
-    {id:'command',done:!!(f.main_command_record||f.es_truth)&&p.진실.have>=p.진실.need,target:'cheonan',event:f.main_testimony_record?'main_command_ledger':'main_command_companion_ledger'},
+    {id:'command',done:D.familyOrderKnown(S)&&p.진실.have>=p.진실.need,target:'cheonan',event:f.main_testimony_record?'main_command_ledger':'main_command_companion_ledger'},
     {id:'father',done:!!f.father_fate_known,target:'pyeongtaek',event:f.failed_namsan_known?'parents_father_last_log':'history_failed_namsan'},
     {id:'mother',done:!!f.mother_reunited&&!!f.mother_broadcast_ready,target:'suwon',event:f.mother_reunited?'parents_mother_truth':f.parents_recent_signal?'parents_mother_reunion':'history_parents_network'},
     {id:'relay',done:p.세계.have>=p.세계.need,target:'suwon',event:f.main_testimony_record?'main_relay_conference':'main_relay_companion_conference'},
@@ -38,6 +39,8 @@ G.mainEvidenceChoiceTimes = (id,seen=[])=>{
 };
 G.mainEvidenceSourceId = id=>Object.keys(D.mainRecoveryEvents).find(source=>D.mainRecoveryEvents[source]===id)||id;
 G.mainEvidenceEntryId = id=>{
+  if(id==='es_nightshift'&&S.flags.es_v1194&&!D.eunsuBackdoorDone(S)) return 'es_backdoor';
+  if(id==='es_backdoor'&&!S.flags.es_v1194&&!D.eunsuBackdoorDone(S)) return 'es_nightshift';
   // Entry is not completion. Old unchosen key scenes must first play the video;
   // already located/extracted legacy keys retain their earned progress.
   if(G.mainEvidenceSourceId(id)==='story_family_key'&&!S.flags.parent_principle_found
@@ -47,14 +50,28 @@ G.mainEvidenceEntryId = id=>{
   return id;
 };
 G.mainEvidenceEventDone = id=>{
+  if(['es_nightshift','es_backdoor'].includes(id)) return !!D.eunsuBackdoorDone(S);
   const source=G.mainEvidenceSourceId(id);
   return source==='parents_diversion_manifest'?G.parentSplitKnown():
     source==='story_family_key'?!!(S.flags.parent_key_located||S.flags.parent_key_found):!!S.flags[D.mainEvidenceCompletion[source]];
 };
 // These are present encounters at the northern exchange, not portable records.
 // Total mileage includes southbound detours and cannot stand in for arrival.
-G.mainEvidenceLocationReady = id=>!['history_parents_network','parents_mother_reunion','parents_mother_truth'].includes(G.mainEvidenceSourceId(id))
-  ||(!S.driving&&S.at==='suwon');
+G.mainEvidenceLocationReady = id=>{
+  if(['es_nightshift','es_backdoor'].includes(id))
+    return !!S.flags.es_backdoor_ready&&G.hasComp('eunsu');
+  const source=G.mainEvidenceSourceId(id);
+  if(['story_bridge_invitation','story_bridge_last_quiet'].includes(source))
+    return !S.driving&&S.at==='seoul'&&!S.flags.seoul_open&&G.seoulReady()
+      &&!!S.flags[source==='story_bridge_invitation'?'bridge_crew_answer':'bridge_invitation'];
+  if(!['history_parents_network','parents_mother_reunion','parents_mother_truth'].includes(source)) return true;
+  // The present reunion refers to the father's last stand. Mileage or a stale
+  // queued chain must not reveal it before the player has read that evidence.
+  return !S.driving&&S.at==='suwon'&&!!S.flags.father_fate_known
+    &&(source!=='parents_mother_reunion'||!!S.flags.parents_recent_signal)
+    &&(source!=='parents_mother_truth'||!!S.flags.mother_reunited
+      ||!!S.flags.parents_recent_signal&&S.used.includes('parents_mother_reunion'));
+};
 G.resolveMainEvidenceChain = id=>{
   id=G.mainEvidenceEntryId(id);
   if(!G.mainEvidenceLocationReady(id)||G.mainEvidenceEventDone(id)) return null;
@@ -98,10 +115,10 @@ G.departureSteps = ()=>{
     {id:'parents_work',done:!!S.flags.parents_routes_traced,label:'두 곳에서 이어진 부모님의 작업을 확인한다',detail:S.flags.parents_routes_traced?'아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다':'서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다'},
     {id:'key',done:!!S.flags.parent_key_found,label:'부모님의 인간 확인 검증키를 꺼낸다',detail:S.flags.parent_key_found?'빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다':'계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다'},
     {id:'witness',done:witnessed>=D.seoulPillars.관계,label:'같은 이송표를 받은 사람들의 이야기를 모은다',detail:witnessed>=D.seoulPillars.관계?'이송을 겪은 사람들이 확인한 증언을 보관했다':`같은 이송표를 받은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
-    {id:'command',done:!!(S.flags.main_command_record||S.flags.es_truth)&&!G.pillarUnmet('진실'),label:'증언과 명령 원본을 대조한다',detail:'발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다'},
+    {id:'command',done:D.familyOrderKnown(S)&&!G.pillarUnmet('진실'),label:'증언과 명령 원본을 대조한다',detail:'발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다'},
     {id:'father',done:!!S.flags.father_fate_known,label:'아빠의 마지막 남산 기록을 확인한다',detail:S.flags.father_fate_known?'아빠는 의료와 급수 회선을 지키다 남산에서 사망했다':'실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다'},
-    {id:'mother',done:!!S.flags.mother_reunited&&!!S.flags.mother_broadcast_ready,label:'엄마의 최근 신호를 따라간다',detail:S.flags.mother_reunited?'서울 외곽 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다'},
-    {id:'relay',done:G.pillars().세계.have>=D.seoulPillars.세계,label:'남산 진입과 연락을 맡을 거점의 응답을 받는다',detail:'수원 외곽 중계소에서 진입로와 송신 순서를 확인한다'},
+    {id:'mother',done:!!S.flags.mother_reunited&&!!S.flags.mother_broadcast_ready,label:'엄마의 최근 신호를 따라간다',detail:S.flags.mother_reunited?'수원 외곽 무전 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다'},
+    {id:'relay',done:G.pillars().세계.have>=D.seoulPillars.세계,label:'남산 진입과 연락을 맡을 거점의 응답을 받는다',detail:'수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다'},
     {id:'records',done:!G.pillarUnmet('유산'),label:'남산에 가져갈 실물 기록을 보관한다',detail:'검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다'},
     {id:'seoul',done:!!S.flags.story_done,label:'남산 코어에서 강제 이송 명령을 끊는다',detail:S.flags.story_done?'제7 잔류구역을 향하던 강제 이송을 끝냈다':'필요한 기록과 사람을 모은 뒤 남산 코어에서 명령을 멈춘다. 날짜 제한은 없다'}
   ];

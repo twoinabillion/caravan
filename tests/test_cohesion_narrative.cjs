@@ -13,18 +13,20 @@ const D=context.data;
 const event=id=>D.events.find(item=>item.id===id)||D.seoulStops.find(item=>item.id===id);
 const json=value=>value===undefined?undefined:JSON.parse(JSON.stringify(value));
 const gameplayHash=value=>crypto.createHash('sha256').update(JSON.stringify(value,(key,row)=>
-  ['turns','readingRecord','turnSpeakers'].includes(key)?undefined:row)).digest('hex');
+  ['text','label','title','body','turns','readingRecord','turnSpeakers'].includes(key)?undefined:row)).digest('hex');
+// Mechanics-only baselines from HEAD, independently compared to the working
+// copy. Prose/register changes have separate speaker and reading assertions.
 const choiceContracts={
-  loc_mingyu:'030ee3399355592fc9a1e83fd8aed7456e52786575a47503ce7198db85ac30be',
-  pss_forgive:'fe4d1ff17b3a2079eb280b1502cf7595c9e96f66a8e74cb5ea25b083adf7e1de',
-  kw_base:'43749be9443ef8b36de40b02cdbb4950785e4cd582ef78885cac71d0c74700c9',
-  leo_broadcast:'58f7a4fe92b53e2ddf0a2a8200e0afc2a9667e112b6f4b6411a082b457afb712',
-  loc_jaeyi_cache:'cab4be92e4361c48be931e4bf60f63d5b9b256ce4c6df2fca8bbbb2733310d6f',
-  es_backdoor:'faf68caad64afc055b3595786ef1cc72c672229c0986044470bb6c0737aa4c8f',
-  parents_father_last_log:'d7230c807bcb6891c71b3418f81d46d31650ce5414934a0146a7c3713750c35f',
-  parents_mother_reunion:'4385d13fb9258cb2fd35f1c8b0467ceafc623868b878e92a2b41e23e41c4d268',
-  main_transfer_testimony:'159e840e74770168bc934802135be10ea5ff4a006e9d227fc13375aa05264d7d',
-  main_command_ledger:'a4755713eebc8d5238466e1ea90567e47917e4891afbe9d9ec9ef17216a87050'
+  loc_mingyu:'10f5a225f39319870a8b652a83ca4fd9238e98155b83dceb1f01ac89893a39a8',
+  pss_forgive:'4c0478bd21ef4d1d71cf6faa33585745d51dc76e0f5c2f2edb38ba11ae077de5',
+  kw_base:'0f38c528e49175a632729406f22719dbe60c6f66456599f3b125bfa62b5f7436',
+  leo_broadcast:'d2e9e7ef7d94a8dcb535a28002c8b4c7a4723a972d2e8f38919278a761b8536e',
+  loc_jaeyi_cache:'538c1e1a3b776fd7d2024e9770f3a32f53689ae2767ef47852b595d77ec54478',
+  es_backdoor:'e9ec44185c2ac32f4b10696164443c19bb3d271800a00442c3b2c3be269e5960',
+  parents_father_last_log:'dc2bd8b34b27beb9f527b26273979a608864518977014ffcf9860df3c73b968f',
+  parents_mother_reunion:'012ff6a3af21c83b8c6ae1b3ced5c50e8e5c57b06f2ec2a231b7acb072148bdb',
+  main_transfer_testimony:'5aa292b66a6ba5798fe02cc064c4d24cfe2e58bd73186a79a9eb8689f357595a',
+  main_command_ledger:'75cde25d80b4a52ca21f77e72e0f0abcec1a216c11bfc52cbbff8695c7db396c'
 };
 
 // A wrong authored role makes UI.storyTurns consume the quote as the wrong person.
@@ -37,7 +39,7 @@ const payoffRoutes={
   kw_base:{text:['kangwoo','me','kangwoo','kangwoo','kangwoo','kangwoo'],out:[[
     'kangwoo','kangwoo','kangwoo','kangwoo','me','kangwoo']]},
   leo_broadcast:{text:['leo','leo'],out:[[
-    'leo','me','leo',{who:'record',kind:'record',name:'벽의 낙서'}]]},
+    'leo','me','leo']]},
   loc_jaeyi_cache:{text:[{who:'record',kind:'record',name:'재이 아빠의 분필 글씨'}],out:[[
     'jaeyi','me','jaeyi','jaeyi',{who:'jaeyi',kind:'record',name:'재이의 분필 글씨'}]]},
   es_backdoor:{text:['eunsu'],out:[['me'],['me']]}
@@ -47,7 +49,9 @@ for(const [id,want] of Object.entries(payoffRoutes)){
   assert.deepEqual(json(actual.turnSpeakers),want.text,id+' opening quote roles');
   assert.deepEqual(json(actual.choices.map(choice=>choice.out.map(out=>out.turnSpeakers))),
     want.out.map(route=>[route]),id+' result quote roles');
-  assert.equal(gameplayHash(actual.choices),choiceContracts[id],id+' branches and effects');
+  const projected={id,choices:json(actual.choices)};
+  require('../tools/story-review-contract.cjs')([projected]);
+  assert.equal(gameplayHash(projected.choices),choiceContracts[id],id+' branches and effects');
 }
 
 const intro=D.intro.find(page=>page.scene==='intro-cheollian-2026');
@@ -107,7 +111,8 @@ const finaleState={flags:{core_transfer:true},party:['minji'],comps:{},stats:{km
 for(const id of ['seoul_uplink_reveal','seoul_session_reset']){
   const item=event(id),before=JSON.stringify(finaleState),contract=finaleContracts.get(id);
   assert(item.turns(finaleState).length>0&&item.turns(finaleState).length<=6,id+' compact turns');
-  assert.equal(item.readingRecord(finaleState),String(contract.text).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]*>/g,''),id+' original record');
+  const record=typeof contract.text==='function'?contract.text(finaleState):contract.text;
+  assert.equal(item.readingRecord(finaleState),String(record).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]*>/g,''),id+' original record');
   assert.strictEqual(item.text,contract.text,id+' gameplay text identity');
   assert.strictEqual(item.choices,contract.choices,id+' choice identity');
   assert.equal(JSON.stringify(item.choices),contract.contract,id+' effects unchanged');

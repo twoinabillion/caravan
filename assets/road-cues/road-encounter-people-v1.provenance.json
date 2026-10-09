@@ -1,0 +1,54 @@
+{
+  "created": "2026-10-06",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "parts": [
+    {
+      "id": "postman-standing-v1",
+      "master": "assets/road-cues/masters/postman-standing-v1.png",
+      "delivery": "assets/road-cues/cue-postman-standing-v1.webp",
+      "generator": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: independently compositable full-body transparent character component for a road-encounter design draft. Images1-4 are world/style references, image5 is canonical subject identity.\nSubject: Full body Korean male bicycle postman. Image5 is his canonical portrait: preserve graying swept-back hair, thin mustache, weathered mature face, olive delivery vest and gray shirt. No hat. Standing with both boots on a common baseline, facing left slightly three-quarter, one hand raised calmly to greet an approaching driver, other holds folded blank recipient list. Small weathered canvas mail satchel. No readable writing. No bicycle; separate component.\nFraming: single entire person from hair/hat to soles with generous transparent margin, portrait large master at least1024 long edge. Natural eye-level side/three-quarter view, diffuse daylight upper left. Adult 7-7.5-head anatomy; no tiny person or oversized props. True transparent background, no ground plane or baked scenery. No other characters or Dalguji. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/postman.png"
+      ],
+      "output": "Generated images are saved to /Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d as /Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-c4178a9e-0368-493d-b2b7-cc0aaaaf15e5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "status": "draft-only; runtime unverified"
+    },
+    {
+      "id": "cart-trader-v1",
+      "master": "assets/road-cues/masters/cart-trader-v1.png",
+      "delivery": "assets/road-cues/cue-cart-trader-v1.webp",
+      "generator": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: independently compositable full-body transparent character component for a road-encounter design draft. Images1-4 are world/style references, image5 is approved full-body generated character style, do not copy its identity.\nSubject: Anonymous Korean roadside handcart trader, middle aged woman, short practical dark hair with a few gray strands, faded blue-gray work jacket, muted brown canvas waist apron, dark trousers, worn walking shoes. Standing relaxed facing left three-quarter, one hand open at waist level inviting barter. Natural adult proportions, not military, not glamorous. No cart, no counter, no extra people.\nFraming: single entire person from hair/hat to soles with generous transparent margin, portrait large master at least1024 long edge. Natural eye-level side/three-quarter view, diffuse daylight upper left. Adult 7-7.5-head anatomy; no tiny person or oversized props. True transparent background, no ground plane or baked scenery. No other characters or Dalguji. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/road-cues/masters/coffee-vendor-v1.png"
+      ],
+      "output": "Generated images are saved to /Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d as /Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-1df757e5-9e2c-409b-91c1-40b65103ab68.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "status": "draft-only; runtime unverified"
+    },
+    {
+      "id": "beekeeper-standing-v1",
+      "master": "assets/road-cues/masters/beekeeper-standing-v1.png",
+      "delivery": "assets/road-cues/cue-beekeeper-standing-v1.webp",
+      "generator": "image_gen.imagegen",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: independently compositable full-body transparent character component for a road-encounter design draft. Images1-4 are world/style references, image5 is approved full-body generated character style, do not copy its identity.\nSubject: Korean male roadside beekeeper as authored in ev_beekeeper. One adult in worn off-white protective canvas jacket, brimmed protective hat with fine mesh veil over face, muted work trousers, gloves and dusty boots. Standing facing left three-quarter, carefully holds one small wooden honeycomb frame at waist level with both hands. No swarm, no hive or background, no text. Not astronaut or hazmat suit.\nFraming: single entire person from hair/hat to soles with generous transparent margin, portrait large master at least1024 long edge. Natural eye-level side/three-quarter view, diffuse daylight upper left. Adult 7-7.5-head anatomy; no tiny person or oversized props. True transparent background, no ground plane or baked scenery. No other characters or Dalguji. Avoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/road-cues/masters/coffee-vendor-v1.png"
+      ],
+      "output": "Generated images are saved to /Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d as /Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-b7a3da1d-3e8b-432a-aa8e-09989a1e5378.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "status": "draft-only; runtime unverified"
+    }
+  ]
+}

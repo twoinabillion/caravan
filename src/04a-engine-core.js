@@ -8,7 +8,7 @@ const QA_SNAPSHOT_KIND = 'seoul400_exact_state_qa';
 const QA_SNAPSHOT_VERSION = 1;
 /* 세이브 스키마 버전. 올릴 때는 G.saveMigrations[새 버전]에 단계 함수를 추가한다.
    G.load의 defaulting 블록은 v1(무버전) 보강 담당 — 멱등이라 매 로드 실행해도 안전. */
-const SAVE_VERSION = 8;
+const SAVE_VERSION = 9;
 const BASE_WATER_MAX = 28;
 const BASE_FOOD_MAX = 24;
 let S = null;               // game state
@@ -84,6 +84,16 @@ G.clampSupplies = ()=>{
 /* 세이브 마이그레이션 단계. 키 = 도달할 버전. 각 단계는 그 버전에서 새로 생긴
    필드만 책임진다(아래 G.load의 일반 보강 블록은 손상 세이브용 안전망으로 남는다). */
 G.saveMigrations = {
+  9:s=>{
+    // Preserve personal trust and paid receipts; revoke only a cached claim
+    // that came from comforting Eunsu rather than reading the command record.
+    const receipt=s.pendingPresentation;
+    const backdoor=receipt?.eventId==='es_backdoor'&&receipt.phase==='result'
+      ||(Array.isArray(s.notes)?s.notes:[]).some(n=>['가족의 빈칸에 있던 계산','직접 사유와 최초 목적'].includes(n?.title));
+    if(!s.knowledge||typeof s.knowledge!=='object'||Array.isArray(s.knowledge)) s.knowledge={};
+    if(backdoor||s.flags?.main_command_record) s.knowledge.family_order_source=2;
+    else if(!s.flags?.story_done) s.knowledge.family_order_source=0;
+  },
   8:s=>{ s.pendingPresentation=null; },
   7:(s)=>{   // 2026-08-30: 물통·식량 보관함에 실제 적재 한도 도입
     if(!Number.isFinite(s.waterMax)||s.waterMax<=0) s.waterMax=BASE_WATER_MAX;
@@ -136,7 +146,7 @@ const COMBAT_AUTO_ADJUST_MAX = 0.5;
 const COMBAT_AUTO_ADJUST_SCALE = 0.16;     // [-0.5~0.5] → 판정 보정 ±0.08 — 체감 가능한 크기
 
 /* ── new game / save ── */
-G.newGame = (mode, name, entryMode='full', profile)=>{
+G.newGame = (mode, name, entryMode='full', profile, startPack)=>{
   const interactiveOpening=entryMode==='interactive';
   S = {
     v:SAVE_VERSION, mode, entryMode, name:(name||'').trim().slice(0,8)||null, day:1, min:7*60+30, at:'busan', driving:null,
@@ -171,6 +181,12 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   const prof=D.startProfiles&&D.startProfiles[S.profile];
   if(prof&&prof.patch) for(const [k,v] of Object.entries(prof.patch))
     S[k]=(k==='items')?{...v}:v;
+  const supplies=D.departureSupplies&&D.departureSupplies(startPack);
+  if(supplies){
+    S.startPack=startPack;
+    for(const key of ['fuel','scrap','water','food','van']) S[key]=supplies[key];
+    S.items={'부품':supplies.parts,'의약품':supplies.medicine,'탄약':supplies.ammo};
+  }
   G.clampSupplies();
   rng = mulberry32(S.seed);
   /* 주행 쿨다운은 모듈 변수라 새 게임에서 남아 있으면 rng 소비 타이밍이 어긋난다.
@@ -199,7 +215,7 @@ G.newGame = (mode, name, entryMode='full', profile)=>{
   if(!interactiveOpening){
   G.addNote({type:'물건', title:'엄마의 철제 상자', body:'수첩 등판에서 현재 이송표와 같은 규격의 회로도가 나왔다. 남산 중앙 노드, 달구지 계기판 뒤 검증 모듈, 발신 기록과 당사자 증언을 함께 가져가라는 메모가 적혀 있었다.', links:['부모님','천리안','달구지']});
   G.addNote({type:'물건', title:'계기판 속 검증 모듈', body:'출발 전에 존재를 확인했지만 분리 절차 두 장이 없어 아직 달구지 전장에 연결해 두었다. 절차를 찾고 기록을 모아 남산에 적용해야 한다.', links:['엄마의 철제 상자','부모님','남산']});
-  G.addNote({type:'인물', title:'도윤의 가족', body:'부산 부두에서 난방이 끊긴 이송 버스를 고쳐 준 가족. 엄마 하진, 8살 도윤, 동생 유나는 제7 잔류구역 6,412명 가운데 먼저 남쪽으로 보내진 사람들이다.', links:['서울 추방','천리안']});
+  G.addNote({type:'인물', title:'도윤의 가족', body:'부산 부두에서 난방이 끊긴 이송 버스를 고쳐 준 가족. 엄마 하진, 8살 도윤, 누나 유나는 제7 잔류구역 6,412명 가운데 먼저 남쪽으로 보내진 사람들이다.', links:['서울 추방','천리안']});
   G.addNote({type:'본편', title:'남산 코어로 가서 강제 이송 명령을 멈춘다', body:'부산에서는 이 명령에 이의를 제기할 수 없었다. 북쪽으로 가며 발신 기록과 분리 절차, 당사자 증언을 모은 뒤 남산 중앙 노드에서 명령을 멈춰야 한다. 날짜 제한은 없고, 서울에 도착하는 것만으로는 끝나지 않는다.', links:['남산','도윤의 가족','계기판 속 검증 모듈']});
   }
   G.save();
@@ -371,6 +387,7 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     row.road=typeof row.road==='string'?row.road:'';
     row.pendingRoad=row.pendingRoad===true&&!!row.road;
     row.visits=Number.isFinite(row.visits)?Math.max(1,Math.floor(row.visits)):1;
+    if(row.choiceVisits!==undefined) row.choiceVisits=D.campChoiceVisits(cid,row);
   }
   const campRecord=S.campConversation, campData=campRecord&&D.campConversations[campRecord.cid];
   if(!campRecord||Array.isArray(campRecord)||!campData||!Number.isFinite(campRecord.night)
@@ -381,6 +398,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     campRecord.context=typeof campRecord.context==='string'?campRecord.context:'';
     campRecord.chips=Array.isArray(campRecord.chips)?campRecord.chips.filter(chip=>chip&&typeof chip.t==='string'):[];
     campRecord.active=campRecord.active===true;
+    if(campRecord.choiceVisits!==undefined)
+      campRecord.choiceVisits=D.campChoiceVisits(campRecord.cid,{choiceVisits:campRecord.choiceVisits||{}});
   }
   /* Old talk plans were an unplayed promise, never a completed conversation. */
   if(S._campPlan&&S._campPlan.talk&&!(S.campConversation&&S.campConversation.choiceId)){
@@ -441,9 +460,9 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
     S.flags.recruit_migration_v2=true;
   }
   /* 구버전 세이브에서도 은수의 결말 필수 단서가 랜덤 풀에 묻히지 않게 보정 */
-  if(S.flags.es_backdoor_ready && !S.flags.es_truth){
+  if(S.flags.es_backdoor_ready && !D.eunsuBackdoorDone(S)){
     const sid=S.flags.es_v1194?'es_backdoor':'es_nightshift';
-    if(!S.used.includes(sid) && !S._storyQueue.includes(sid)) S._storyQueue.push(sid);
+    if(!S._storyQueue.includes(sid)) S._storyQueue.push(sid);
   }
   /* 비히든 노드 전체 공개 (스파인 단절 버그 픽스 + 월드 확장 반영) */
   Object.keys(D.nodes).forEach(id=>{

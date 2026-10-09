@@ -41,12 +41,13 @@ const SND = (()=>{
       dock.setAttribute('aria-label',on?'소리 끄기':'소리 켜기');
       dock.setAttribute('aria-pressed',String(on));
     }
-    if(early){
-      early.classList.toggle('on',on);
-      early.setAttribute('aria-label',on?'소리 끄기':'소리 켜기');
-      early.setAttribute('aria-pressed',String(on));
-      early.querySelector('.sound-icon').textContent=on?'🔊':'🔇';
-      early.querySelector('.sound-label').textContent=on?'소리 끄기':'소리 켜기';
+    for(const button of [early,$('#bt-title-sound'),$('#bt-prep-sound')]){
+      if(!button) continue;
+      button.classList.toggle('on',on);
+      button.setAttribute('aria-label',on?'소리 끄기':'소리 켜기');
+      button.setAttribute('aria-pressed',String(on));
+      button.querySelector('.sound-icon').textContent=on?'🔊':'🔇';
+      button.querySelector('.sound-label').textContent=on?'소리 끄기':'소리 켜기';
     }
   }
   function setEnabled(value,remember=true){

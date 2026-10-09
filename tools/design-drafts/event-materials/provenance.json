@@ -1,0 +1,63 @@
+{
+  "styleId": "caravan-grounded-cinematic-v1",
+  "scope": "draft-only-ui-material-components-not-narrative-art",
+  "generator": "built-in image_gen, transparent_background=true",
+  "requiredReferences": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "prompts": "prompts.json",
+  "exporter": "../export-event-materials.cjs",
+  "contract": {
+    "alphaRequired": true,
+    "frame": {
+      "master": [
+        1122,
+        1402
+      ],
+      "delivery": [
+        800,
+        1000
+      ],
+      "slice": [
+        80,
+        80,
+        80,
+        80
+      ],
+      "maxBytes": 85000
+    },
+    "button": {
+      "master": [
+        2206,
+        713
+      ],
+      "delivery": [
+        960,
+        180
+      ],
+      "slice": [
+        32,
+        90,
+        32,
+        90
+      ],
+      "maxBytes": 60000
+    }
+  },
+  "reused": {
+    "scene": "assets/intro/15-appeal-denied.jpg",
+    "portraits": [
+      "assets/portraits/passer_woman.png",
+      "assets/portraits/me.png"
+    ]
+  },
+  "notes": [
+    "No generated text, people, scenery, watermark or game screenshot. Frame and button are separate transparent material primitives, never baked into narrative art.",
+    "Alpha trim, resize and WebP compression only; originals retained.",
+    "Generated/delivery assets inspected. In-UI mobile geometry/crop/touch review remains unverified because Chrome native connection times out.",
+    "User requested design draft, not gameplay implementation. This directory is not embedded in build."
+  ]
+}

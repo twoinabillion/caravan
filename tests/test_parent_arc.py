@@ -134,7 +134,7 @@ with sync_playwright() as playwright:
         fatherUsed:(core+night).includes('의료·급수') && (core+night).includes('강제 이송'),
         motherUsed:(core+night).includes('여섯') && (core+night).includes('주파수'),
         canonFather:bible.includes('아빠는 남산 유지선') && bible.includes('사망했다'),
-        canonMother:bible.includes('엄마는 중부 기록소') && bible.includes('현재 서울 외곽 중계소에 살아'),
+        canonMother:bible.includes('엄마는 중부 기록소') && bible.includes('현재 수원 외곽 무전 중계소에 살아'),
         canonSeparation:bible.includes('남산 안으로 동행하지'),
         canonKey:bible.includes('부모님의 인간 확인 검증키')
       };
