@@ -1,0 +1,46 @@
+/* Isolated v2 owner. Static world-space joins, never a screen-space wipe.
+   v1 remains available unchanged for comparison. */
+.city-route{margin:16px 0 24px;border-top:1px solid #58686f;padding-top:4px}
+.city-route>summary,.city-junction>summary,.city-controls,.city-positions,.caption,.cities>h2{margin-inline:16px}
+.city-route>summary,.city-junction>summary{font-size:14px;font-weight:620;min-height:48px}
+.city-controls,.city-positions{gap:5px;margin-block:8px}
+.city-controls label,.city-positions label{font-size:12px;padding-inline:8px}
+.caption{font-size:12px;color:var(--muted)}
+.city-world{position:absolute;inset:0 auto 0 0;width:400%;transform:translateX(0)}
+.city{position:absolute;bottom:28%;width:25%;height:auto;display:block}
+.from{left:0}.to{left:75%}
+.from-extension{left:25%;transform:scaleX(-1);mask-image:linear-gradient(to left,black 0%,transparent 8%,transparent 100%)}
+.to-extension{left:50%;transform:scaleX(-1);mask-image:linear-gradient(to right,black 0%,transparent 8%,transparent 100%)}
+/* mask coordinates are reflected with the image, staying attached to terrain */
+.connector{position:absolute;bottom:28%;width:25%;aspect-ratio:16/27;overflow:hidden}
+.connector.first{left:25%}
+.connector.second{left:50%}
+/* Opaque connector underneath the short city-material join. Ridge matching
+   avoids fading a higher mountain into transparent sky or thinning ground. */
+.connector.mirrored{transform:scaleX(-1)}
+.legacy-connector{display:none;position:absolute;bottom:28%;width:25%;aspect-ratio:16/27;overflow:hidden}
+.legacy-connector img{position:absolute;left:-100%;bottom:0;width:300%;height:auto}
+.legacy-connector.first{left:25%;mask-image:linear-gradient(to right,transparent,black 16%)}
+.legacy-connector.second{left:50%;mask-image:linear-gradient(to left,transparent,black 16%)}
+.legacy-connector.mirrored{transform:scaleX(-1)}
+.legacy-connector.first.mirrored{mask-image:linear-gradient(to left,transparent,black 16%)}
+.legacy-connector.second.mirrored{mask-image:linear-gradient(to right,transparent,black 16%)}
+.city-route:has(.legacy:checked) .connector{display:none}
+.city-route:has(.legacy:checked) .legacy-connector{display:block}
+.city-route:has(.legacy:checked) .from-extension{mask-image:linear-gradient(to left,black,transparent 16%)}
+.city-route:has(.legacy:checked) .to-extension{mask-image:linear-gradient(to right,black,transparent 16%)}
+.reverse-view{display:none}
+.city-route:has(.reverse:checked) .forward-view{display:none}
+.city-route:has(.reverse:checked) .reverse-view{display:block}
+.city-route:has(.join:checked) .city-world{transform:translateX(-18.75%)}
+.city-route:has(.middle:checked) .city-world{transform:translateX(-37.5%)}
+.city-route:has(.last-join:checked) .city-world{transform:translateX(-56.25%)}
+.city-route:has(.end:checked) .city-world{transform:translateX(-75%)}
+.city-route:has(.play:checked) .city-world{animation:city-travel var(--duration) linear both}
+.city-route:has(.play:checked) .road-marks{animation:road var(--duration) linear both}
+.city-route:has(.pause:checked) .city-world,.city-route:has(.pause:checked) .animated{animation-play-state:paused}
+.cities{padding-top:16px}.city-junction{border-top:1px solid #58686f;margin-block:8px}
+.anchor-view{position:relative;aspect-ratio:18/13;overflow:hidden}
+.anchor{position:absolute;bottom:28%;width:100%;height:auto}
+@keyframes city-travel{from{transform:translateX(0)}to{transform:translateX(-75%)}}
+@media(prefers-reduced-motion:reduce){.city-route:has(.play:checked) .city-world,.city-route:has(.play:checked) .animated{animation:none}}

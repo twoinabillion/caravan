@@ -1,0 +1,22 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_text_to_sound_v2",
+  "generated_at": "20261010T161706Z",
+  "subscription_before": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 1640,
+    "character_limit": 10000
+  },
+  "estimated_credits": 2160,
+  "commercial_release": false,
+  "licensing": "Generated on Free. Noncommercial audition only; public sharing requires attribution. Do not ship commercially. Regenerate while paid or obtain explicit rights.",
+  "license_source": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform",
+  "game_wired": false,
+  "listening_review": "pending",
+  "clips": [],
+  "stopped": {
+    "clip": "rain_cab_light_clear",
+    "http_status": 400
+  }
+}

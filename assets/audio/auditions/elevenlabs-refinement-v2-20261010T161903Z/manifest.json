@@ -1,0 +1,385 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_text_to_sound_v2",
+  "generated_at": "20261010T161903Z",
+  "subscription_before": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 1640,
+    "character_limit": 10000
+  },
+  "estimated_credits": 2160,
+  "commercial_release": false,
+  "licensing": "Generated on Free. Noncommercial audition only; public sharing requires attribution. Do not ship commercially. Regenerate while paid or obtain explicit rights.",
+  "license_source": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform",
+  "game_wired": false,
+  "listening_review": "pending",
+  "clips": [
+    {
+      "name": "rain_cab_light_clear",
+      "prompt": "Seamless light rain from the driver's seat of a parked old small truck. Crisp irregular droplets tick on the nearby windshield, short hollow taps on the thin metal roof. Clear mid and high frequency water details over a quiet soft distant rain bed. Sheltered intimate cabin, NOT muffled, muddy, boomy or low-pass filtered. No engine, wipers, thunder, voices, music, wind or artificial hiss. Stable seamless loop.",
+      "request": {
+        "text": "Seamless light rain from the driver's seat of a parked old small truck. Crisp irregular droplets tick on the nearby windshield, short hollow taps on the thin metal roof. Clear mid and high frequency water details over a quiet soft distant rain bed. Sheltered intimate cabin, NOT muffled, muddy, boomy or low-pass filtered. No engine, wipers, thunder, voices, music, wind or artificial hiss. Stable seamless loop.",
+        "duration_seconds": 12,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "120",
+      "master_sha256": "9ab7553150c8f160aa39b9ef95e5ed0d9e8a18b626ff5eb05db82dec2738bd35",
+      "file": "rain_cab_light_clear.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "12.042449",
+          "size": "144866"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "rain_cab_heavy_clear",
+      "prompt": "Seamless heavy rain inside a parked old small truck. Close detailed pattering on the windshield, separate light metallic roof taps, rivulets flowing across glass. Soft exterior wash behind readable droplets. Clear mid and high frequencies, restrained bass, enclosed but NOT muffled, boomy or low-pass filtered. No engine, wipers, thunder, voices, music, distortion or dramatic changes. Stable seamless loop.",
+      "request": {
+        "text": "Seamless heavy rain inside a parked old small truck. Close detailed pattering on the windshield, separate light metallic roof taps, rivulets flowing across glass. Soft exterior wash behind readable droplets. Clear mid and high frequencies, restrained bass, enclosed but NOT muffled, boomy or low-pass filtered. No engine, wipers, thunder, voices, music, distortion or dramatic changes. Stable seamless loop.",
+        "duration_seconds": 12,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "120",
+      "master_sha256": "f17f2628164e31acd8dad792dc249bd37592a1177b6894e79a720df5c38f4317",
+      "file": "rain_cab_heavy_clear.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "12.042449",
+          "size": "144866"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "steps_gravel_b",
+      "prompt": "Dry close Foley, three ordinary slow footsteps in worn boots on loose fine gravel, slight grit crunch and small stones shifting. Naturally varied weight, unhurried pauses, short tails. No wind, voice, music, reverb or background ambience.",
+      "request": {
+        "text": "Dry close Foley, three ordinary slow footsteps in worn boots on loose fine gravel, slight grit crunch and small stones shifting. Naturally varied weight, unhurried pauses, short tails. No wind, voice, music, reverb or background ambience.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "2f108408746491149d7ef166159f3d8aab756d00827a096008fe45979f54130b",
+      "file": "steps_gravel_b.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "steps_gravel_c",
+      "prompt": "Dry Foley of two cautious boot steps on a gritty gravel path, a gentle heel crunch and toe scuff, separate natural gestures. Quiet grounded detail rather than a loud stomp. No background, speech, wind, music or exaggerated impacts.",
+      "request": {
+        "text": "Dry Foley of two cautious boot steps on a gritty gravel path, a gentle heel crunch and toe scuff, separate natural gestures. Quiet grounded detail rather than a loud stomp. No background, speech, wind, music or exaggerated impacts.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "acfb6a80d56ac6afcdb20ee42b8e0e3ac1a53c3e5c79253990aca4f0402f9fe9",
+      "file": "steps_gravel_c.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "steps_wood_b",
+      "prompt": "Close dry Foley, three careful footfalls on an old wooden stair, small dull taps and a brief soft board creak. Ordinary walking, varied pauses and pressure. No huge echo, voices, music, wind or background ambience.",
+      "request": {
+        "text": "Close dry Foley, three careful footfalls on an old wooden stair, small dull taps and a brief soft board creak. Ordinary walking, varied pauses and pressure. No huge echo, voices, music, wind or background ambience.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "874b03fed9d4ab7de16834ca834dd9ba374f5b217aba9c84bfc5b9cc13f418ea",
+      "file": "steps_wood_b.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "steps_wood_c",
+      "prompt": "Close dry Foley, two slow shoe steps on a worn wood floor, short soft heel taps with a little sole scrape, uneven human timing. Restrained realistic detail. No rhythmic music, voice, background or long reverb.",
+      "request": {
+        "text": "Close dry Foley, two slow shoe steps on a worn wood floor, short soft heel taps with a little sole scrape, uneven human timing. Restrained realistic detail. No rhythmic music, voice, background or long reverb.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "c38942dbd1db4c79e0e75bb05d7d5c881eabff12cb1835db87a5a4d8da5c3d10",
+      "file": "steps_wood_c.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "paper_fold_b",
+      "prompt": "Close dry Foley, one worn paper letter gently opened and pressed flat, fine paper fibres rustling, then one light fold with a fingertip crease. Short human gesture with pauses. No wind, dramatic swish, voices, music or background.",
+      "request": {
+        "text": "Close dry Foley, one worn paper letter gently opened and pressed flat, fine paper fibres rustling, then one light fold with a fingertip crease. Short human gesture with pauses. No wind, dramatic swish, voices, music or background.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "a7c6ee9e6a88c95fd2d3061d00084401635815079636e7c52b9f723946d1653e",
+      "file": "paper_fold_b.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "paper_fold_c",
+      "prompt": "Close dry Foley, a hand carefully unfolds a small old document, adjusts its corner and folds it back once. Soft crisp textured paper crackle, quieter natural pauses. No page shower, voices, music, wind or ambience.",
+      "request": {
+        "text": "Close dry Foley, a hand carefully unfolds a small old document, adjusts its corner and folds it back once. Soft crisp textured paper crackle, quieter natural pauses. No page shower, voices, music, wind or ambience.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "65238dba7d38890aff9597f7fc04a8843bcd889d67c48d5ef50b673163080670",
+      "file": "paper_fold_c.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "repair_ratchet_b",
+      "prompt": "Close dry realistic Foley of a small worn steel ratchet tightening one bolt by hand, three short uneven ratcheting strokes and a light socket touch. Quiet hand repair, no power tool. No voice, music, background machinery or big impacts.",
+      "request": {
+        "text": "Close dry realistic Foley of a small worn steel ratchet tightening one bolt by hand, three short uneven ratcheting strokes and a light socket touch. Quiet hand repair, no power tool. No voice, music, background machinery or big impacts.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "30053aec161ebee16af06a718ffa88537b3ed81b8093c8a729eb12b166c9405a",
+      "file": "repair_ratchet_b.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "repair_ratchet_c",
+      "prompt": "Dry close Foley, two deliberate short clicks of a hand ratchet on a bolt, a tiny metallic socket clink and a restrained hand movement. Different human timing, intimate realistic small tool. No drill, engine, speech, music or ambience.",
+      "request": {
+        "text": "Dry close Foley, two deliberate short clicks of a hand ratchet on a bolt, a tiny metallic socket clink and a restrained hand movement. Different human timing, intimate realistic small tool. No drill, engine, speech, music or ambience.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "df2ce9e78f58b2ee2a608970d05085bac350578d8318ac6a37e80ba42a4e1fa7",
+      "file": "repair_ratchet_c.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "bag_packing_b",
+      "prompt": "Dry intimate Foley, a hand puts one folded cotton garment into a worn canvas travel bag, canvas flexes softly, a short zipper closes. Natural quiet movement with pauses. No coins, footsteps, voice, music or background.",
+      "request": {
+        "text": "Dry intimate Foley, a hand puts one folded cotton garment into a worn canvas travel bag, canvas flexes softly, a short zipper closes. Natural quiet movement with pauses. No coins, footsteps, voice, music or background.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "14fafedcfcf0d1aa5c24872b4dcb78ec043df47ac85b61e16e1217d0ebe12a96",
+      "file": "bag_packing_b.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "bag_packing_c",
+      "prompt": "Close dry Foley, a small canvas bag opened and gently adjusted by hand, soft fabric rubbing and one short zipper pull. Low-key realistic household gesture, varied timing. No leather squeak, speech, music, wind or background.",
+      "request": {
+        "text": "Close dry Foley, a small canvas bag opened and gently adjusted by hand, soft fabric rubbing and one short zipper pull. Low-key realistic household gesture, varied timing. No leather squeak, speech, music, wind or background.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "6eb26c2874a56002a41f8d2730164cc1386b6d01730feb90d1521afb57aeeead",
+      "file": "bag_packing_c.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    }
+  ],
+  "subscription_after": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 2000,
+    "character_limit": 10000
+  }
+}

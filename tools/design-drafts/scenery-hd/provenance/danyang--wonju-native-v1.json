@@ -1,0 +1,87 @@
+{
+  "route": "danyang--wonju",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-143d694d-62b2-40eb-8681-f94702245f94.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 단양 강변 -> 원주 치악산 아래, one real 30km rough corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 단양 강변; 석회암 절벽 아래 강이 휘돈다. 팔경 중 몇 경이 남았는지 세는 사람들.; biome lake, distinctive terrain limestone. RIGHT QUARTER: 원주 치악산 아래; 산으로 둘러싸인 분지. 여기서부터 강원도다. 사람들이 낮은 목소리로 말한다.; biome mount, distinctive terrain mountain-town. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: river or reservoir margins, low agricultural terraces and modest farm buildings connect the two actual endpoint silhouettes; water is not an ocean. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/danyang--wonju-v1.png",
+  "sourceSha256": "5ca9dee24bdabbfbf3193ce89ea315b441239bec9c8e05e241aacb2a8cb2c20d",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/danyang--wonju-native-v1.webp",
+  "sha256": "2fd1b25cc584ce92180117f9772f02a07bd2209b9374176c2314249900a35206",
+  "bytes": 114286,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "danyang",
+      "file": "assets/ui/road-environment/danyang-v1.webp",
+      "sha256": "b3a69cec4b266bd3f725f73c98fee47e1c7cdb8988aced12918e3e439448ff00"
+    },
+    {
+      "id": "wonju",
+      "file": "assets/ui/road-environment/wonju-v1.webp",
+      "sha256": "8f12d06e50610dcaa6e47845f0984b760ced5b8f49b44ed728c214a7c3ac9eb3"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 251,
+    "edgeRidge": {
+      "left": 316,
+      "right": 298
+    },
+    "edgeDelta": {
+      "left": 58,
+      "right": 18
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 79.53,
+        "ridgeMaxAbs": 87,
+        "meanChannelDifference": 39.53
+      },
+      "right": {
+        "ridgeRms": 21.26,
+        "ridgeMaxAbs": 27,
+        "meanChannelDifference": 26.26
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

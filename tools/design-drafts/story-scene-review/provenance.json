@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "createdOn": "2026-10-09",
   "styleId": "caravan-grounded-cinematic-v1",
-  "status": "draft-awaiting-Sang-review",
+  "status": "Sang-approved-source-wired-crop-pending",
   "events": ["story_family_key", "main_recovery_story_family_key"],
   "requiredReferences": [
     "assets/reference/visual-canon-2026-08-11.png",
@@ -24,7 +24,7 @@
     "asset": "assets/scenes/family-verification-key-mounted-v3.webp",
     "exporter": "tools/design-drafts/export-story-scene-review.cjs",
     "operation": "sRGB, centered cover resize to 1024x576, WebP quality86 effort6; no raster editing",
-    "wiredIntoGameplay": false
+    "wiredIntoGameplay": true
   },
   "review": {
     "sourceAndDeliveryObserved": true,
@@ -33,8 +33,8 @@
     "identity": "no faces or named people; vehicle-reference-guided interior, no extra companion",
     "world": "no landmark or fixed city; module still mounted and wired, before extraction",
     "actualStudioDraftWindow": "not-observed; browser/app control unavailable",
-    "actualInGameCrop": "not-observed; candidate deliberately not wired",
-    "SangApproval": "pending",
+    "actualInGameCrop": "not-observed; source wired, live structural apply pending",
+    "SangApproval": "approved-2026-10-10: 전부 해봐",
     "readOnlyServingChecks": {
       "studioDraft": "http://127.0.0.1:4327/game/tools/design-drafts/story-scene-review.html — HTTP200; not window observation",
       "previewGallery": "http://127.0.0.1:4319/__live/assets — HTTP200, candidate listed; not visual gallery observation",
@@ -44,5 +44,5 @@
     "releaseRights": "generated with project-supplied references; separate release-rights review not performed"
   },
   "preservedOriginal": "assets/scenes/family-verification-key.jpg",
-  "unresolvedOtherScenes": ["seoul-night-quiet-v2", "seoul-home-dawn-v2", "seoul-uplink-empty-v2", "northern recovery box art"]
+  "unresolvedOtherScenes": []
 }

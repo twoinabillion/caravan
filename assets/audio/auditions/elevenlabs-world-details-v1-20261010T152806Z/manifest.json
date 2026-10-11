@@ -1,0 +1,926 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_text_to_sound_v2",
+  "generated_at": "20261010T152806Z",
+  "subscription_before": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 220,
+    "character_limit": 10000
+  },
+  "estimated_credits": 5680,
+  "commercial_release": false,
+  "licensing": "Generated on Free. Noncommercial audition only; public sharing requires attribution. Do not ship commercially. Regenerate while paid or obtain explicit rights.",
+  "license_source": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform",
+  "game_wired": true,
+  "integration_scope": "Local Studio preview-only registry; staged behind live apply. Some cues are reserved, not triggered without a matching physical action. No Free audio bytes embedded in release.",
+  "listening_review": "pending",
+  "clips": [
+    {
+      "name": "rain_cab_light",
+      "prompt": "Seamless realistic sound loop from inside a parked small old truck with closed windows: light rain ticking softly on windshield and metal roof, intimate muffled exterior. No engine, wipers, thunder, speech or music. Even quiet texture without a beginning or ending.",
+      "request": {
+        "text": "Seamless realistic sound loop from inside a parked small old truck with closed windows: light rain ticking softly on windshield and metal roof, intimate muffled exterior. No engine, wipers, thunder, speech or music. Even quiet texture without a beginning or ending.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "01b2126f09270c53a0ec9464e8088309929c2a573596180042725d6f8f0c49e4",
+      "file": "rain_cab_light.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "rain_cab_heavy",
+      "prompt": "Seamless realistic loop inside a small closed old truck: heavy rain densely pattering on windshield and metal roof, dampened exterior wash. No engine, wipers, thunder, voices or music. Steady restrained dynamics, no dramatic swells.",
+      "request": {
+        "text": "Seamless realistic loop inside a small closed old truck: heavy rain densely pattering on windshield and metal roof, dampened exterior wash. No engine, wipers, thunder, voices or music. Steady restrained dynamics, no dramatic swells.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "ed268534f694bd8dd0b78ef22002a0726075a299b5e96c6ea1a9f9e152f8d5c7",
+      "file": "rain_cab_heavy.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "rain_outdoor_light",
+      "prompt": "Seamless light outdoor rain ambience, small drops falling on wet earth and occasional leaves beside a quiet roadside. Open air, gentle realistic detail. No shelter resonance, vehicles, thunder, people or music. Stable continuous texture.",
+      "request": {
+        "text": "Seamless light outdoor rain ambience, small drops falling on wet earth and occasional leaves beside a quiet roadside. Open air, gentle realistic detail. No shelter resonance, vehicles, thunder, people or music. Stable continuous texture.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "a997c98a439fdcca1c24f0d7a257c44ac39173c1956fc1ee86ab4df3ce3c52ef",
+      "file": "rain_outdoor_light.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "rain_outdoor_heavy",
+      "prompt": "Seamless heavy outdoor rain ambience beside an empty road: dense rain falling on soil, puddles and leaves, soft close splashing. Natural open-air sound, not inside a vehicle. No thunder, vehicles, voices or music. Stable texture.",
+      "request": {
+        "text": "Seamless heavy outdoor rain ambience beside an empty road: dense rain falling on soil, puddles and leaves, soft close splashing. Natural open-air sound, not inside a vehicle. No thunder, vehicles, voices or music. Stable texture.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "f9409572ebb48f470e143d609e27111c7b187d6dd06f1758aa448abf02f802e5",
+      "file": "rain_outdoor_heavy.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "rain_shelter",
+      "prompt": "Seamless rain heard from under a small corrugated metal awning, muffled outdoor rain and occasional soft roof drips, cosy quiet shelter. No voices, vehicles, wipers, thunder or music. Consistent low-key realistic ambience.",
+      "request": {
+        "text": "Seamless rain heard from under a small corrugated metal awning, muffled outdoor rain and occasional soft roof drips, cosy quiet shelter. No voices, vehicles, wipers, thunder or music. Consistent low-key realistic ambience.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "312e184c7ded7c3501130eac49a530aadd07c733d01f200e6e1e82c8837b63db",
+      "file": "rain_shelter.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "wipers",
+      "prompt": "Seamless loop of old truck windshield wipers at a slow regular pace, soft mechanical whirr and two rubber sweeps across wet glass with a faint squeak. Inside cab perspective. Wipers only, no engine, rain bed, music or speech.",
+      "request": {
+        "text": "Seamless loop of old truck windshield wipers at a slow regular pace, soft mechanical whirr and two rubber sweeps across wet glass with a faint squeak. Inside cab perspective. Wipers only, no engine, rain bed, music or speech.",
+        "duration_seconds": 6,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "60",
+      "master_sha256": "ca1e0e8c5167f6081ff761ce47b22bb7153bae0c8b3ed2e68647d9e496b79ca4",
+      "file": "wipers.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "6.034286",
+          "size": "72768"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "wind_gentle",
+      "prompt": "Seamless gentle wind across a quiet grassy roadside, soft leaf and dry grass rustle. Wide open natural space. No whistles, storms, birds, people, traffic or music. Subtle even realistic background.",
+      "request": {
+        "text": "Seamless gentle wind across a quiet grassy roadside, soft leaf and dry grass rustle. Wide open natural space. No whistles, storms, birds, people, traffic or music. Subtle even realistic background.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "24200ff037949b904c29b8608ae876d2cb5a611456b0bf3e08553c5a5d642f9f",
+      "file": "wind_gentle.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "wind_storm",
+      "prompt": "Seamless gusting wind outside a small truck on an exposed road, low airy buffeting and distant grass movement, restrained realistic storm conditions. No rain, thunder, vehicle engine, voices or musical tones.",
+      "request": {
+        "text": "Seamless gusting wind outside a small truck on an exposed road, low airy buffeting and distant grass movement, restrained realistic storm conditions. No rain, thunder, vehicle engine, voices or musical tones.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "2bf407d3ac301d8832da72436b980bc893ea0830957e3f4909aba7318bc4654d",
+      "file": "wind_storm.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "forest_day",
+      "prompt": "Seamless quiet temperate Korean woodland in daytime, sparse small bird chirps at varied distances and light leaves moving, spacious tranquil natural ambience. No people, traffic, tropical birds, dramatic animals or music.",
+      "request": {
+        "text": "Seamless quiet temperate Korean woodland in daytime, sparse small bird chirps at varied distances and light leaves moving, spacious tranquil natural ambience. No people, traffic, tropical birds, dramatic animals or music.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "0b6469392d40d3b179282cfb7683400060f4d68120efcfe347f62054c2fd406f",
+      "file": "forest_day.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "night_insects",
+      "prompt": "Seamless quiet temperate countryside after dark, soft irregular crickets and a few distant insects, spacious subdued sound. No owls, wolves, people, fire, vehicles or music. Low natural continuous texture.",
+      "request": {
+        "text": "Seamless quiet temperate countryside after dark, soft irregular crickets and a few distant insects, spacious subdued sound. No owls, wolves, people, fire, vehicles or music. Low natural continuous texture.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "62cd2a7ba89f4ac82734a2d2839b28f4b675fa5acca87286a8ae57db7aa73d8d",
+      "file": "night_insects.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "camp_fire",
+      "prompt": "Seamless small sheltered campfire, soft wood crackle and tiny irregular embers, close warm dry texture, restrained dynamics. Fire only. No large explosions, wind, rain, voices, instruments or music.",
+      "request": {
+        "text": "Seamless small sheltered campfire, soft wood crackle and tiny irregular embers, close warm dry texture, restrained dynamics. Fire only. No large explosions, wind, rain, voices, instruments or music.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "7eb8f97c6548534acede1a3c753cce5357f9853bce5e73b0860ee0c3b107119e",
+      "file": "camp_fire.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "river",
+      "prompt": "Seamless small shallow river beside a quiet countryside stop, gentle flowing water over stones and mild rippling, open spacious realistic sound. No waterfall roar, birds, wind, people, boats or music.",
+      "request": {
+        "text": "Seamless small shallow river beside a quiet countryside stop, gentle flowing water over stones and mild rippling, open spacious realistic sound. No waterfall roar, birds, wind, people, boats or music.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "32fb195d0dcc10d920e5f2ff2d38a76f7e0e074dbb071e0ab902d1ef3c757312",
+      "file": "river.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "tunnel",
+      "prompt": "Seamless quiet empty concrete road tunnel ambience, faint ventilation air, a few distant water drops and understated enclosed resonance. No passing traffic, footsteps, alarms, voices or musical drone. Natural restrained room tone.",
+      "request": {
+        "text": "Seamless quiet empty concrete road tunnel ambience, faint ventilation air, a few distant water drops and understated enclosed resonance. No passing traffic, footsteps, alarms, voices or musical drone. Natural restrained room tone.",
+        "duration_seconds": 8,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "80",
+      "master_sha256": "8cfba862bcb1c514a4c03de92b421c4884686a2c45ccc2cb41529e0292946f76",
+      "file": "tunnel.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "8.045714",
+          "size": "96906"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "thunder_distant",
+      "prompt": "One distant natural thunder rumble, soft low onset and rolling decay across an open valley, no sudden nearby crack. Isolated realistic weather sound. No rain, wind bed, voices, music or cinematic bass hit.",
+      "request": {
+        "text": "One distant natural thunder rumble, soft low onset and rolling decay across an open valley, no sudden nearby crack. Isolated realistic weather sound. No rain, wind bed, voices, music or cinematic bass hit.",
+        "duration_seconds": 4,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "40",
+      "master_sha256": "2e7a835688976ba2ef9baa13e6a0f54fddec7697282b51fb305230fac01883ae",
+      "file": "thunder_distant.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "4.048980",
+          "size": "48945"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "steps_gravel",
+      "prompt": "Close Foley of three ordinary adult footsteps slowly walking across loose roadside gravel, natural irregular crunch and brief pauses. No running, jingling equipment, other people, ambience or music.",
+      "request": {
+        "text": "Close Foley of three ordinary adult footsteps slowly walking across loose roadside gravel, natural irregular crunch and brief pauses. No running, jingling equipment, other people, ambience or music.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "d8829b78fcfad22aeab60abf2c20a1625e71629809fb942c0828dea2bf376f6f",
+      "file": "steps_gravel.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "steps_wood",
+      "prompt": "Close Foley of three soft ordinary adult footsteps on an old wooden workshop floor, modest creaks, slow natural rhythm. No other people, voices, music or background ambience.",
+      "request": {
+        "text": "Close Foley of three soft ordinary adult footsteps on an old wooden workshop floor, modest creaks, slow natural rhythm. No other people, voices, music or background ambience.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "1cb2de6384fdda0c81dbd68c8b10e6aab69f51288aab1675d8644c216824df37",
+      "file": "steps_wood.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "steps_metal",
+      "prompt": "Close Foley of two careful footsteps on an old truck metal step, dull hollow metal weight and short resonance. No other action, voices, music or background ambience.",
+      "request": {
+        "text": "Close Foley of two careful footsteps on an old truck metal step, dull hollow metal weight and short resonance. No other action, voices, music or background ambience.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "3b95cba15f0651f5e1c2b7471d919f9018ecee8c06998aed54eeb177462b259f",
+      "file": "steps_metal.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "door_latch",
+      "prompt": "Close Foley of an old truck door gently closed once, solid muted clunk and small latch click, not a slam. No engine, voices, music or background ambience.",
+      "request": {
+        "text": "Close Foley of an old truck door gently closed once, solid muted clunk and small latch click, not a slam. No engine, voices, music or background ambience.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "8183072173b087bf2d3a860366f9ae12e1c5d8d01dac944e238d73029fb4288e",
+      "file": "door_latch.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "cloth",
+      "prompt": "Close dry Foley of a soft cotton blanket lifted and folded once, delicate fabric rustling with a natural pause. No zipper, footsteps, voices or music.",
+      "request": {
+        "text": "Close dry Foley of a soft cotton blanket lifted and folded once, delicate fabric rustling with a natural pause. No zipper, footsteps, voices or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "ca5929e6098cb9ed90fc824fde735929593bd504f6cff2be16e7057962fd0244",
+      "file": "cloth.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "water_pour",
+      "prompt": "Close dry Foley of a modest amount of water poured from a small metal kettle into a ceramic cup, soft liquid trickle settling naturally. No boiling, people, voices or music.",
+      "request": {
+        "text": "Close dry Foley of a modest amount of water poured from a small metal kettle into a ceramic cup, soft liquid trickle settling naturally. No boiling, people, voices or music.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "58c6a32d22b70105aa07605c3a5599bb56879c504f8e8ef751bf7ca17d3e3217",
+      "file": "water_pour.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "bottle",
+      "prompt": "Close dry Foley: plastic water bottle cap unscrewed then a small brief glug of water, modest ordinary human movement. No voices, gulping mouth sound, ambience or music.",
+      "request": {
+        "text": "Close dry Foley: plastic water bottle cap unscrewed then a small brief glug of water, modest ordinary human movement. No voices, gulping mouth sound, ambience or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "2919b4820c582f9d1f230a2fe88997adf175d8cd922cece76963527fbe3c4348",
+      "file": "bottle.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "meal",
+      "prompt": "Close dry Foley of one ceramic bowl set on wood and a spoon gently touching its rim, a quiet shared meal preparation. No chewing, speech, other diners or music.",
+      "request": {
+        "text": "Close dry Foley of one ceramic bowl set on wood and a spoon gently touching its rim, a quiet shared meal preparation. No chewing, speech, other diners or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "e23fe40c572e951da1a479f80251cfbc499cb54239bb5c90028ecde501e7c97c",
+      "file": "meal.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "stove",
+      "prompt": "Close dry Foley: a small camping stove knob turned and igniter clicked twice, followed by a brief quiet gas flame catching. No explosion, large flame roar, voices or music.",
+      "request": {
+        "text": "Close dry Foley: a small camping stove knob turned and igniter clicked twice, followed by a brief quiet gas flame catching. No explosion, large flame roar, voices or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "2d8fbee808ffa87b67317cad6cb0be2d0c2d43d9e0d1ab8069a924c757a3f1f3",
+      "file": "stove.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "repair_ratchet",
+      "prompt": "Close dry Foley of a hand tightening one old truck bolt with a small ratchet, three restrained mechanical turns and clicks with natural pauses. No drill, hammer, voices, music or ambience.",
+      "request": {
+        "text": "Close dry Foley of a hand tightening one old truck bolt with a small ratchet, three restrained mechanical turns and clicks with natural pauses. No drill, hammer, voices, music or ambience.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "1ed138cc95035a1eae61ebcf47b3361fae95cddf9adeb334a6c7883358b73552",
+      "file": "repair_ratchet.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "repair_hammer",
+      "prompt": "Close dry Foley of two modest hammer taps on a small steel bracket on a wooden workbench, realistic restrained metallic ring and decay. No giant impacts, power tools, voices or music.",
+      "request": {
+        "text": "Close dry Foley of two modest hammer taps on a small steel bracket on a wooden workbench, realistic restrained metallic ring and decay. No giant impacts, power tools, voices or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "4f1d77edd74a517f0e5cfa4f81752cd5d0c5173982072412a41484831ac608e0",
+      "file": "repair_hammer.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "coins",
+      "prompt": "Close dry Foley: three small worn metal coins counted and slid across a wooden counter, soft separated clinks. No magical reward sound, voices, crowd or music.",
+      "request": {
+        "text": "Close dry Foley: three small worn metal coins counted and slid across a wooden counter, soft separated clinks. No magical reward sound, voices, crowd or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "a645555dc95e8e0b2d933156367ef5d175131dc7a2521d0eee4e25b5084d726f",
+      "file": "coins.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "notebook",
+      "prompt": "Close dry Foley of opening a small paper notebook and turning one page, soft tactile paper movement. No dramatic whoosh, writing, voices or music.",
+      "request": {
+        "text": "Close dry Foley of opening a small paper notebook and turning one page, soft tactile paper movement. No dramatic whoosh, writing, voices or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "41e4a61867c1c50473f4fa5b07e644e40ef7e8cc673dc4ef4c9fe47ce6e6b55e",
+      "file": "notebook.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "switch",
+      "prompt": "One small worn plastic mechanical toggle switch pressed, soft tactile click with a tiny spring return. Dry close realistic sound, not a digital beep. No voices, music or ambience.",
+      "request": {
+        "text": "One small worn plastic mechanical toggle switch pressed, soft tactile click with a tiny spring return. Dry close realistic sound, not a digital beep. No voices, music or ambience.",
+        "duration_seconds": 1,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "10",
+      "master_sha256": "a55b7c9a52a4d5eb691e0b0c600f69a7449b53aadd792f9292197dd5f7b55881",
+      "file": "switch.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "1.044898",
+          "size": "12896"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "cassette",
+      "prompt": "Close dry Foley of pressing play on an old portable cassette recorder, soft mechanical button clunk, brief motor whirr and faint tape hiss. No recorded voice, speech or music.",
+      "request": {
+        "text": "Close dry Foley of pressing play on an old portable cassette recorder, soft mechanical button clunk, brief motor whirr and faint tape hiss. No recorded voice, speech or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "d027c1d56b26a4b04c2be271d81e4dadcd82dd659848bceae743ab3cce2820f6",
+      "file": "cassette.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "dog_breath",
+      "prompt": "One quiet relaxed medium-sized dog breathing and giving a small soft snuffle nearby, calm natural animal sound. No barking, growling, human voices or music.",
+      "request": {
+        "text": "One quiet relaxed medium-sized dog breathing and giving a small soft snuffle nearby, calm natural animal sound. No barking, growling, human voices or music.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "841e7aaaf33004ad4be5e9b58d50cb85a6702a3a9f058e7f92f2980b25f601ea",
+      "file": "dog_breath.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending"
+    }
+  ],
+  "subscription_after": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 1620,
+    "character_limit": 10000
+  }
+}

@@ -3,7 +3,7 @@
   "createdOn": "2026-10-09",
   "styleId": "caravan-grounded-cinematic-v1",
   "tool": "image_gen.imagegen",
-  "status": "draft-awaiting-Sang-review",
+  "status": "Sang-approved-source-wired-crop-pending",
   "requiredReferences": [
     "assets/reference/visual-canon-2026-08-11.png",
     "assets/reference/world-canon-2026-08-11.png",
@@ -60,10 +60,10 @@
   "review": {
     "sourceObserved": true,
     "deliveryObserved": true,
-    "wiredIntoGameplay": false,
-    "SangApproval": "pending",
+    "wiredIntoGameplay": true,
+    "SangApproval": "approved-2026-10-10: 전부 해봐",
     "actualStudioDraftWindow": "not-observed; no connected window control",
-    "actualInGameCrop": "not-observed; deliberately unwired",
+    "actualInGameCrop": "not-observed; source wired, live structural apply pending",
     "world": "Night/dawn on Namsan south midslope looking downhill; tower outside frame. Terminal powered independently; core not depicted.",
     "identity": "No people, companions, dog or vehicle; no fixed roster",
     "releaseRights": "project references used; separate release-rights review not performed"

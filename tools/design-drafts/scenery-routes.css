@@ -1,0 +1,27 @@
+/* Script-free all-corridor review owner, isolated from gameplay/save state. */
+.route-review{border-top:1px solid #657176;padding:0 0 8px}
+.route-review>summary{display:flex;justify-content:space-between;margin:0 16px;gap:8px;font-size:13px;font-weight:600}
+.route-review>summary small{white-space:nowrap;font-weight:400;color:var(--muted)}
+.review-status,.pending,.review-description{font-size:12px;color:var(--muted);margin:8px 16px 12px}
+.review-controls,.review-positions{margin:8px 16px}
+.review-controls label,.review-positions label{flex:1;justify-content:center;padding:7px 4px;font-size:12px}
+.route-review .overview{margin-top:18px;margin-bottom:16px}
+.route-review:has(.review-middle:checked) .travel-strip{transform:translateX(-33.333333%)}
+.route-review:has(.review-end:checked) .travel-strip{transform:translateX(-66.666667%)}
+.route-review:has(.review-play:checked) .travel-strip{animation:travel var(--duration) linear both}
+.route-review:has(.review-play:checked) .road-marks{animation:road var(--duration) linear both}
+.route-review:has(.review-pause:checked) .animated{animation-play-state:paused}
+.route-review:has(.review-reverse:checked) .terrain,.route-review:has(.review-reverse:checked) .panorama img{transform:scaleX(-1)}
+.junctions{padding:20px 16px;border-top:1px solid #657176}
+.junctions>h2{font-size:16px;margin:0 0 12px}
+.junctions p,.junction-review figcaption{font-size:12px;color:var(--muted);line-height:1.6}
+.junction-review{border-top:1px solid #657176;padding:8px 0}
+.junction-review>summary{font-size:13px;min-height:44px;display:flex;align-items:center;cursor:pointer}
+.junction-grid{display:grid;gap:12px}
+.junction-review figure{margin:0}
+.junction-review figcaption{margin-bottom:6px}
+.junction-crop{position:relative;overflow:hidden;aspect-ratio:1.4;background:#7c94a5}
+.junction-crop img{position:absolute;bottom:0;left:0;width:300%;max-width:none;height:auto}
+.junction-crop.at-end img{left:-200%}
+@media(max-width:339px){.route-review>summary,.review-controls,.review-positions,.review-status,.pending,.review-description{margin-inline:12px}}
+@media(prefers-reduced-motion:reduce){.route-review:has(.review-play:checked) .animated{animation:none}}

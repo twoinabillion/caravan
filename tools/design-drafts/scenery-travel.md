@@ -1,0 +1,15 @@
+# 풍경도 같은 길을 달리게 v1
+
+2026-10-09. Sang reported a sliding/glitch-like scenery transition and approved a motion draft before game implementation. Script-free independent CSS demonstration, not the actual save or a faithful runtime renderer.
+
+Direction: preserve the sky/road/vehicle; move both opaque alpha terrain panoramas and their seam as one spatial strip. An opaque schematic low ridge hides the join. No dissolve, rescaling of the truck, screen-size transition or full-screen covering object. Reuses reviewed Miryang/Daegu road panoramas and the existing base Dalguji; no generated raster, narrative art or invented companion.
+
+Palette: road #39454a, sky #8093a6, horizon #b3bac1, ridge #40525d/#263b3d, existing cream Dalguji. System Korean type only for review controls. Motion, not new UI chrome, carries the proposal. Two equal-size scene windows with common play/pause/restart and start/seam/end stills. Each scene retains its own single geometry and does not change while playing. Narrow layouts scroll the independent draft, never the gameplay shell.
+
+Measured source hypothesis: in a 52km Miryang→Daegu leg, 13km/h ×7.4 game minutes per real second gives1.6033km/s. The current12.48km transition lasts7.78s. At360px its quintic midpoint boundary travels86.72px/s vs terrain11.72px/s (7.4×); it clips the skyline with a straight rect. These are code-derived, not an observed live glitch or device profile. The draft uses32s linear panorama travel and a sampled7.8s central old wipe for comparison. At480/320 widths the duration stays32s for synchronized comparison, not exact target-runtime pixel speed.
+
+The ridge is a schematic connection placeholder, not production art. Actual integration must choose a join away from landmark silhouettes, keep foreground poles/rails in the same world coordinate system, and respect pause/braking/arrival/save restoration/decode readiness. In particular, moving a seam with panorama coordinates may require beginning/finishing the transition earlier on short legs; no skipped world, free travel or teleported landmarks. Approval is pending; src and generated HTML remain unchanged.
+
+Verification evidence is recorded in docs/CURRENT.md. Sandbox compatibility is script-free; selection only prepares a request and never applies game code.
+
+Observed in the standalone Studio design-review window on actual4327 origin:320/360/480-width control/art layout, start/seam/end states, real-time travel advancing, pause preserving the same transform across observations, and scroll to both comparison and footer. Studio's sandboxed iframe loaded after a review-window reload; no game tab was refreshed. Five draft tests and diff check pass. This is draft UI/motion observation, not actual4319 renderer QA. Reduced-motion behavior was checked in source only. Initial current-scene200 confirms Miryang15:09,360×728, tenth code1791548654254 applied/pendingnull; final context could not receive the current scene. No same-state final claim. Game implementation awaits Sang's review of this direction.

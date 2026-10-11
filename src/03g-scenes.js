@@ -4,15 +4,15 @@ D.scenes = {
   'opening-pack-fuel-v1':'__SCENE_OPENING_PACK_FUEL_V1__',
   'opening-pack-repair-v1':'__SCENE_OPENING_PACK_REPAIR_V1__',
   'opening-pack-provisions-v1':'__SCENE_OPENING_PACK_PROVISIONS_V1__',
-  'seoul-uplink-empty-v2':'__SCENE_SEOUL_UPLINK_EMPTY_V2__',
-  'seoul-reset-empty-v2':'__SCENE_SEOUL_RESET_EMPTY_V2__',
+  'seoul-uplink-empty-v2':'assets/scenes/seoul-maintenance-terminal-v3.webp',
+  'seoul-reset-empty-v2':'assets/scenes/seoul-maintenance-terminal-v3.webp',
   'event-postman-solo-v2':'__SCENE_EVENT_POSTMAN_SOLO_V2__',
   'combat-walker-disabled-v2':'__SCENE_COMBAT_WALKER_DISABLED_V2__',
   'route-ridge-rigging-v2':'__SCENE_ROUTE_RIDGE_RIGGING_V2__',
   'route-ridge-safe-v2':'__SCENE_ROUTE_RIDGE_SAFE_V2__',
   'seoul-core-view-v2':'__SCENE_SEOUL_CORE_VIEW_V2__',
-  'seoul-night-quiet-v2':'__SCENE_SEOUL_NIGHT_QUIET_V2__',
-  'seoul-home-dawn-v2':'__SCENE_SEOUL_HOME_DAWN_V2__',
+  'seoul-night-quiet-v2':'assets/scenes/seoul-namsan-night-v3.webp',
+  'seoul-home-dawn-v2':'assets/scenes/seoul-namsan-dawn-v3.webp',
 
   'gwangju-market':'__SCENE_GWANGJU_MARKET__',
   'miryang-market':'__SCENE_MIRYANG_MARKET__',
@@ -173,8 +173,14 @@ D.scenes = {
   'intro-cheollian-2026':'__SCENE_INTRO_CHEOLLIAN_2026__',
 'intro-ai-chat-era-v1':'assets/scenes/intro-ai-chat-era-v2.webp',
 'intro-busan-room-morning-v1':'assets/scenes/intro-busan-room-morning-v1.webp',
-'intro-busan-workday-v1':'assets/scenes/intro-busan-workday-v1.webp',
-'intro-busan-evening-call-v1':'assets/scenes/intro-busan-evening-call-v1.webp',
+'intro-busan-workday-v1':'assets/scenes/intro-associative-search-v1.webp',
+'intro-busan-evening-call-v1':'assets/scenes/intro-associative-radio-v1.webp',
+'intro-cup-habit-v1':'assets/scenes/intro-associative-cup-v1.webp',
+'intro-socket-memory-v1':'assets/scenes/intro-associative-socket-v1.webp',
+'intro-family-packing-v1':'assets/scenes/intro-associative-packing-v1.webp',
+'intro-keepsakes-sorting-v1':'assets/scenes/intro-associative-sorting-v1.webp',
+'intro-last-winter-v1':'assets/scenes/intro-associative-winter-v1.webp',
+'intro-workday-repair-v1':'assets/scenes/intro-busan-workday-v1.webp',
   'intro-ai-sovereignty-race-v1':'__SCENE_INTRO_AI_SOVEREIGNTY_RACE_V1__',
   'intro-cheollian-launch-v1':'__SCENE_INTRO_CHEOLLIAN_LAUNCH_V1__',
   'history-transit-trust-v1':'__SCENE_HISTORY_TRANSIT_TRUST_V1__',
@@ -194,6 +200,8 @@ D.scenes = {
   'parents-failed-namsan-v1':'__SCENE_PARENTS_FAILED_NAMSAN_V1__',
   'parents-diversion-record-v2':'assets/scenes/parents-diversion-record-v2.webp',
   'parents-linked-records-v2':'assets/scenes/parents-linked-records-v2.webp',
+  'suwon-exchange-cache-v1':'assets/scenes/suwon-exchange-cache-v1.webp',
+  'pair-kangwoo-leo-replay-v1':'assets/scenes/pair-kangwoo-leo-replay-v1.webp',
   'main-relay-workbench-v1':'assets/scenes/main-relay-workbench-v1.webp',
   'parents-father-last-log-record-v2':'assets/scenes/parents-father-last-log-record-v2.webp',
   'history-parents-network-record-v2':'assets/scenes/history-parents-network-record-v2.webp',
@@ -238,7 +246,7 @@ D.scenes = {
   'intro-departure-start-v1':'__SCENE_INTRO_DEPARTURE_START_V1__',
   'onboarding-main-mission-v1':'__SCENE_ONBOARDING_MAIN_MISSION_V1__',
   'onboarding-first-road-scan-v1':'__SCENE_ONBOARDING_FIRST_ROAD_SCAN_V1__',
-  'family-verification-key':'__SCENE_FAMILY_VERIFICATION_KEY__',
+  'family-verification-key':'assets/scenes/family-verification-key-mounted-v3.webp',
   'recruit-minji':'__SCENE_RECRUIT_MINJI__',
   'recruit-parkss':'__SCENE_RECRUIT_PARKSS__',
   'recruit-leo':'__SCENE_RECRUIT_LEO__',
@@ -338,20 +346,43 @@ D.scenes = {
 
 // Same image, one embedded copy. Keep the legacy scene key and exact bytes.
 D.scenes['intro-resistance-begins']=D.scenes['intro-resistance-first-voices-v1'];
+D.scenes['intro-workday-return-v1']=D.scenes['intro-busan-workday-v1'];
+D.scenes['intro-terminal-wait-v1']=D.scenes['intro-appeal-denied'];
+D.scenes['intro-terminal-copy-v1']=D.scenes['intro-appeal-denied'];
+D.scenes['intro-mother-keepsakes']=D.scenes['intro-keepsakes-sorting-v1'];
+D.scenes['intro-keepsakes-return-v1']=D.scenes['intro-keepsakes-sorting-v1'];
+const associativeIntroDescriptions={
+ 'intro-cup-habit-v1':'어제 아침, 감천 작업장 위의 방. 컵 두 개를 꺼냈다가 하나를 선반에 돌려놓는다.',
+ 'intro-busan-workday-v1':'감천 작업대에서 비어 있는 복스 자리를 확인하며 작업복 주머니를 뒤진다. 지금은 혼자다.',
+ 'intro-workday-return-v1':'손님이 부르는 현재의 작업장. 복스는 내가 입고 있던 옷 주머니에 있다.',
+ 'intro-workday-repair-v1':'현재 감천 작업장. 부두 기사가 지켜보는 가운데 호스를 수리한다.',
+ 'intro-socket-memory-v1':'기억 속의 작업대. 할아버지와 공구를 찾으며 서로 마지막으로 쓴 사람이 누구인지 따진다.',
+ 'intro-family-packing-v1':'서울을 떠나던 밤의 기억. 엄마가 여덟 살 내 가방 맨 위에 로봇을 넣는다. 아빠는 문간에 있다.',
+ 'intro-keepsakes-sorting-v1':'현재 감천 작업대. 혼자 철제 상자의 사진과 종이를 나누고 수첩에서 회로도를 찾는다.',
+ 'intro-mother-keepsakes':'현재 감천 작업대에서 엄마의 철제 상자를 열어 사진과 종이를 정리한다.',
+ 'intro-keepsakes-return-v1':'회상에서 돌아온 현재의 작업대. 상자와 수첩, 이송표 사본을 다시 살핀다.',
+ 'intro-busan-evening-call-v1':'새벽 직전, 닦던 복스를 든 채 켜진 부두 무전기로 고개를 돌린다.',
+ 'intro-last-winter-v1':'마지막 겨울의 기억. 의자에 앉은 할아버지가 전압을 확인하라고 말한다.',
+ 'intro-terminal-wait-v1':'현재 부산 부두 민원 단말 앞에서 표의 복사가 끝나기를 기다린다.',
+ 'intro-terminal-copy-v1':'현재 부산 부두 민원 단말. 복사된 종이를 챙기고 원본을 하진에게 돌려준다.'
+};
 
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
   'leo-broadcast-room-v1':'청주 방송실의 믹싱 데스크 앞에서 기타와 마이크를 준비하는 레오',
-  'seoul-uplink-empty-v2':'사람 없는 서울 코어 뒤로 드러난 작은 상위망 상태등. 지역 코어의 옅은 흰빛은 남아 있다',
-  'seoul-reset-empty-v2':'꺼진 서울 코어와 별개로 오른쪽 정비 단말에 들어온 붉은 불. 사람이나 차량은 없다',
+  'seoul-uplink-empty-v2':'서울 코어와 분리된 정비 단말. 별도 전원선과 분리된 케이블, 작은 상태등만 보이며 코어는 화면 밖에 있다',
+  'seoul-reset-empty-v2':'독립 전원으로 켜진 정비 단말의 작은 상태등. 서울 코어는 화면 밖에 있고 사람이나 차량은 없다',
   'event-postman-solo-v2':'자전거와 배달 명단을 든 우편부 한 사람. 뒤에는 달구지가 서 있고 다른 여행자는 화면 밖에 있다',
   'combat-walker-disabled-v2':'폐차 행렬과 달구지 앞 도로에 주저앉은 초계 보행기. 렌즈 불빛은 꺼져 있다',
   'route-ridge-rigging-v2':'능선 가드레일과 비탈 아래 수레 사이에 걸린 견인줄. 구조 중인 사람들은 화면 밖에 있다',
   'route-ridge-safe-v2':'도로 위로 올라온 어른 셋과 아이 하나. 회수한 짐이나 약 상자는 보이지 않는다',
   'seoul-core-view-v2':'사람 없이 검증 포트와 일지를 바라보는 시점. 뒤편 남산 코어에 붉은 불빛이 켜져 있다',
-  'seoul-night-quiet-v2':'서울의 밤, 작은 모닥불과 컵, 닫힌 일지. 사람과 동료의 악기, 켜진 무전기는 없다',
-  'seoul-home-dawn-v2':'서울의 새벽, 따뜻한 문을 연 달구지와 컵 하나, 지도. 사람이나 코어 광선은 보이지 않는다',
+  'seoul-night-quiet-v2':'남산 중턱의 밤. 돌계단 위 컵과 닫힌 수첩, 아래로 보이는 한강. 사람이나 남산 타워는 없다',
+  'seoul-home-dawn-v2':'같은 남산 돌계단의 새벽. 컵과 수첩, 난간과 강의 위치는 밤 그대로이고 하늘만 밝아졌다',
+  'suwon-exchange-cache-v1':'수원 교환소 책상 위 열린 철제 상자. 버스 열쇠고리와 타 버린 발신 릴, 빠진 쪽이 있는 수첩과 증언 카드. 검증키와 마지막 두 장은 없다',
+  'family-verification-key':'달구지 계기판 안에 배선으로 연결된 검증키. 앞에는 회로 수첩이 있고 검증키는 아직 분리하지 않았다. 사람은 없다',
+  'pair-kangwoo-leo-replay-v1':'달구지 생활칸에서 녹음된 곡을 다시 듣는 강우와 레오. 레오는 재생 버튼에 손을 얹고 기타는 케이스에 둔다',
 
   'story-generation-theories-cast-v1':'폐교 기록실에서 지도를 펼친 남자, 진료 기록을 든 노인, 전단을 모은 여자가 서로 다른 자료를 대조하는 장면',
   'recruit-leo-rescue-choice-v1':'남원의 침수 지하차도 입구. 레오는 마른 계단에서 로프를 들고, 붉은 스카프를 맨 보리는 물 건너 부서진 난간 위에 고립돼 있다',
@@ -410,6 +441,8 @@ D.sceneDescriptions = {
   'recruit-kangwoo-pickpocket':'대구 돔 시장에서 강우의 시선에 지갑을 돌려놓는 소매치기'
 };
 
+Object.assign(D.sceneDescriptions,associativeIntroDescriptions);
+
 /* Cinematic asset registry. Every event scene has a production format; companion
    scenes additionally declare the canonical portrait reference that generation and
    review must use. Keep this data beside the scene keys, not only in prompt docs. */
@@ -467,6 +500,28 @@ D.sceneAssetMeta['leo-broadcast-room-v1']={
   description:'청주 방송실에서 낡은 기타와 마이크를 준비하는 레오. 다른 동료나 달구지는 등장하지 않는다.'
 };
 
+// New intro stills are source-reviewed, not yet approved in the active game crop.
+const associativePhotoSubjects={
+  'intro-cup-habit-v1':['me'], 'intro-busan-workday-v1':['me'],
+  'intro-workday-return-v1':['me'], 'intro-socket-memory-v1':['grandfather','me'],
+  'intro-family-packing-v1':['mother','father','player_child'],
+  'intro-keepsakes-sorting-v1':['me'], 'intro-mother-keepsakes':['me'],
+  'intro-keepsakes-return-v1':['me'], 'intro-busan-evening-call-v1':['me'],
+  'intro-last-winter-v1':['grandfather']
+};
+for(const [key,subjects] of Object.entries(associativePhotoSubjects)){
+  Object.assign(D.sceneAssetMeta[key],{
+    format:['intro-cup-habit-v1','intro-keepsakes-sorting-v1','intro-mother-keepsakes','intro-keepsakes-return-v1'].includes(key)?'detail':'character',
+    subjects,reference:`assets/portraits/${subjects[0]}.png`,
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp',
+      ...subjects.map(id=>`assets/portraits/${id}.png`)],
+    vehicleReference:[],size:'1024x576',styleId:'caravan-grounded-cinematic-v1',
+    status:'source-vision-reviewed; in-game-crop-pending',
+    provenance:'assets/intro/associative-v1/provenance.json',description:D.sceneDescriptions[key]
+  });
+}
+
 /* State-neutral composition prevents optional cast/cargo from becoming invented facts.
    Full generation prompts and masters: artifacts/director-pass-2026-09-11/scene-masters/. */
 const directorSceneFormats = {
@@ -476,7 +531,7 @@ const directorSceneFormats = {
   'seoul-uplink-empty-v2':'place', 'seoul-reset-empty-v2':'detail'
 };
 for(const [key,format] of Object.entries(directorSceneFormats)){
-  const vehicle=['event-postman-solo-v2','combat-walker-disabled-v2','route-ridge-rigging-v2','route-ridge-safe-v2','seoul-home-dawn-v2'].includes(key);
+  const vehicle=['event-postman-solo-v2','combat-walker-disabled-v2','route-ridge-rigging-v2','route-ridge-safe-v2'].includes(key);
   D.sceneAssetMeta[key]={
     format,companions:[],reference:key==='event-postman-solo-v2'?'assets/portraits/postman.png':'',
     references:[
@@ -487,6 +542,29 @@ for(const [key,format] of Object.entries(directorSceneFormats)){
     vehicleReference:vehicle?(D.dalgujiVisual.refs||[]):[],
     size:key.startsWith('seoul-')?'1280x720':'1024x576',status:'approved',
     provenance:`audits/director-art-2026-09-11/provenance/${key}.md`
+  };
+}
+
+/* Sang approved the six reviewed cuts on 2026-10-10. Preserve scene IDs used by
+   saved receipts, but record the actual replacement file and crop-review limit. */
+for(const [key,format,companions,provenance] of [
+  ['family-verification-key','detail',[],'provenance.json'],
+  ['suwon-exchange-cache-v1','detail',[],'northern-cache-provenance.json'],
+  ['seoul-night-quiet-v2','place',[],'finale-provenance.json'],
+  ['seoul-home-dawn-v2','place',[],'finale-provenance.json'],
+  ['seoul-uplink-empty-v2','detail',[],'finale-provenance.json'],
+  ['seoul-reset-empty-v2','detail',[],'finale-provenance.json'],
+  ['pair-kangwoo-leo-replay-v1','character',['kangwoo','leo'],'replay-provenance.json']
+]){
+  D.sceneAssetMeta[key]={format,companions,
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp',
+      ...companions.map(id=>`assets/portraits/${id}.png`)],
+    reference:companions.length?`assets/portraits/${companions[0]}.png`:'',
+    vehicleReference:['family-verification-key','pair-kangwoo-leo-replay-v1'].includes(key)?D.dalgujiVisual.refs:[],
+    size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'Sang-approved; source-vision-reviewed; in-game-crop-pending',
+    provenance:`tools/design-drafts/story-scene-review/${provenance}`,description:D.sceneDescriptions[key]
   };
 }
 

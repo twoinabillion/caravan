@@ -1,0 +1,35 @@
+/* Sole owner of the independent all-corridor HD draft. No game selector or strip warping. */
+.draft{max-width:360px;--line:#657176;--panel:#283638}
+.draft:has(#width-320:checked){max-width:320px}
+.draft:has(#width-480:checked){max-width:480px}
+.sizes label{flex:1;justify-content:center}
+.hd-route{border-top:1px solid var(--line);padding:14px 0}
+.hd-route summary{cursor:pointer;line-height:1.6;font-weight:600;padding-inline:16px}
+.hd-controls,.hd-positions{display:flex;flex-wrap:wrap;gap:6px;border:0;padding:8px 0;margin:0 16px}
+.hd-controls label,.hd-positions label{padding:7px 9px;display:flex;gap:5px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:7px}
+.hd-positions label{flex:1 0 27%;justify-content:center}
+.hd-world{position:absolute;inset:0 auto 0 0;width:287.5%;transform:translateX(0)}
+.hd-plate{position:absolute;bottom:28%;width:34.782608696%;height:auto;display:block}
+.hd-from{left:0;mask-image:linear-gradient(to right,black 0 93.75%,transparent 100%)}
+.hd-bridge{left:32.608695652%}
+.hd-to{left:65.217391304%;mask-image:linear-gradient(to right,transparent,black 6.25% 100%)}
+.hd-route:has(.first:checked) .hd-world{transform:translateX(-16.304347826%)}
+.hd-route:has(.middle:checked) .hd-world{transform:translateX(-32.608695652%)}
+.hd-route:has(.last:checked) .hd-world{transform:translateX(-48.913043478%)}
+.hd-route:has(.end:checked) .hd-world,.hd-route:has(.reverse:checked):has(.start:checked) .hd-world{transform:translateX(-65.217391304%)}
+.hd-route:has(.reverse:checked):has(.first:checked) .hd-world{transform:translateX(-48.913043478%)}
+.hd-route:has(.reverse:checked):has(.last:checked) .hd-world{transform:translateX(-16.304347826%)}
+.hd-route:has(.reverse:checked):has(.end:checked) .hd-world{transform:translateX(0)}
+.hd-route:has(.reverse:checked) .vehicle{transform:scaleX(-1)}
+.hd-route:has(.play:checked) .hd-world{animation:hd-travel var(--duration) linear both}
+.hd-route:has(.play:checked) .road-marks{animation:road var(--duration) linear both}
+.hd-route:has(.play:checked):has(.reverse:checked) .hd-world{animation-name:hd-return}
+.hd-route:has(.play:checked):has(.reverse:checked) .road-marks{animation-direction:reverse}
+.hd-route:has(.pause:checked) .hd-world,.hd-route:has(.pause:checked) .animated{animation-play-state:paused}
+.hd-route:not([open]) .hd-world,.hd-route:not([open]) .animated{animation-play-state:paused}
+.caption,.status{font-size:12px;color:var(--muted);line-height:1.7;margin-inline:16px}
+.status{padding:10px;border:1px solid var(--line);border-radius:8px;overflow-wrap:anywhere}
+.notes a,.status a{color:var(--ink);text-underline-offset:3px}
+@keyframes hd-travel{from{transform:translateX(0)}to{transform:translateX(-65.217391304%)}}
+@keyframes hd-return{from{transform:translateX(-65.217391304%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.hd-route:has(.play:checked) .hd-world,.hd-route:has(.play:checked) .animated{animation:none}}

@@ -85,6 +85,47 @@ function setup(entry='full'){
 }
 
 // Execute the same parser used by showEvent/showResult, not a second quote splitter.
+test('the live event pool waits for the noon window without consuming a missed radio scene',()=>{
+  const h=setup(),e=h.event('comp_minji_radio');h.S.at='daejeon';h.S.party=['minji'];
+  h.S.pendingPresentation=null;h.S.used=[];
+  for(const minute of [0,450,713.999,720,1039.824,1439]){
+    h.S.min=minute;assert(!h.G.eventAvailable(e,{mode:'local'}),String(minute));
+    assert(!h.G.eligible().some(row=>row.id===e.id));assert(!h.S.used.includes(e.id));
+  }
+  for(const minute of [714,716.5,719.999]){
+    h.S.min=minute;assert(h.G.eventAvailable(e,{mode:'local'}),String(minute));
+    h.S.driving={from:'daejeon',to:'cheongju',gone:1,dist:70};h.S.at=null;
+    assert(h.G.eventAvailable(e,{mode:'road'}),'same clock contract in travel');
+    h.S.driving=null;h.S.at='daejeon';
+  }
+  h.S.party=[];assert(!h.G.eventAvailable(e));
+  h.S.party=['minji'];h.S.used=[e.id];assert(!h.G.eventAvailable(e));
+});
+test('noon choices and legacy radio receipts survive Continue outside the entry window with once-only effects',()=>{
+  for(const outcome of [0,1]){
+    const h=setup(),e=h.event('comp_minji_radio');h.S.at='daejeon';h.S.party=['minji'];
+    h.S.min=715;h.S.pendingPresentation=null;h.S.used=[];
+    h.G.pickOutcome=(event,choice)=>choice.out[outcome];
+    const result=h.choose(e,0,true);
+    assert.equal(h.S.min,715+(outcome===0?15:20));
+    assert.equal(result.out.text.includes('12:04'),outcome===0);
+    const before=plain(h.S);h.reload();
+    const replay=h.G.resolvePresentedChoice(e,e.choices[0]);assert(replay.ok&&!replay.applied);
+    assert.equal(replay.out.text,result.out.text);assert.equal(h.S.min,before.min);
+    assert.equal(h.G.resolvePresentedChoice(e,e.choices[1]).ok,false);
+    assert.equal(h.G.queuePresentation(null),null);assert.equal(h.S.pendingPresentation,null);
+    assert(h.G.eventAvailable(h.event('talk_mj_03')),'next ordinary conversation remains reachable without assuming bond 5');
+  }
+  const h=setup(),e=h.event('comp_minji_radio');h.S.party=['minji'];h.S.at='daejeon';h.S.min=715;
+  h.S.pendingPresentation=null;h.S.used=[];const before=h.S.min;
+  const declined=h.choose(e,1,true);assert.equal(h.S.min,before);
+  assert.doesNotMatch(declined.out.text,/오후를 보냈다/);h.G.queuePresentation(null);
+  h.S.min=1039.824;h.G.beginPresentation(e);
+  h.S.pendingPresentation={version:1,eventId:e.id,phase:'result',choiceIndex:0,outcomeIndex:0,
+    text:'옛 저장: 12:04. 오빠 신호야.',chips:[]};h.reload();
+  const old=h.G.resolvePresentedChoice(e,e.choices[0]);assert(old.ok&&!old.applied);
+  assert.equal(old.out.text,'옛 저장: 12:04. 오빠 신호야.');assert.equal(h.S.min,1039.824);
+});
 function dialogue(h,event,owner=event){
   if(!h.ctx.buildStoryTurns){
     const ui=fs.readFileSync('src/07-ui.js','utf8');
@@ -94,6 +135,261 @@ function dialogue(h,event,owner=event){
   return h.ctx.buildStoryTurns(read(owner.text,h.S),event,{turnSpeakers:owner.turnSpeakers})
     .filter(t=>t.kind==='dialogue');
 }
+
+test('the default core conversation retains the cause, challenge and verification before the decision',()=>{
+  const h=setup();h.recover();h.S.at='seoul';
+  const e=h.event('seoul_core'),turns=read(e.turns,h.S);
+  const target=turns.findIndex(t=>t.text.includes('최종 정리 대상'));
+  assert.equal(turns[target-1].who,'me');assert.match(turns[target-1].text,/나라가 무너졌어/);
+  assert.equal(turns[target+1].who,'cheollian');assert.match(turns[target+1].text,/제가 추가한 항목/);
+  assert.equal(turns[target+2].who,'me');assert.match(turns[target+2].text,/왜 스스로 멈추지/);
+  assert.equal(turns[target+3].who,'cheollian');assert.match(turns[target+3].text,/자기 보존.*충돌.*외부 집행자/);
+  assert.match(read(e.readingRecord,h.S),/제가 추가한 항목/,'not a new last-minute premise');
+  h.G.openEvent(e,{continuation:true});h.G.capturePresentationView({eventId:e.id,phase:'event',turns,index:target+2});h.reload();
+  const restored={eventId:e.id,phase:'event'};h.G.restorePresentationView(restored);
+  assert.equal(restored.index,target+2);assert.equal(restored.turns[target+2].who,'me');
+  h.choose(e,4,true);assert.equal(h.G.queuePresentation(),'seoul_costs');
+  h.choose(h.event('seoul_costs'),0,true);assert.equal(h.G.queuePresentation(),'seoul_decision');
+  const decision=h.event('seoul_decision');
+  for(const text of [prose(decision,h.S),read(decision.readingRecord,h.S)])
+    assert.match(text,/검증키로 확인된 외부 집행자의 승인 없이는 강제 명령을 실행할 수 없습니다/);
+  assert(h.G.reqOk(decision.choices[0].req).ok);
+});
+
+test('all 20 three-contact coalitions keep their own council, without phantom residents or six channels',()=>{
+  for(let a=0;a<4;a++)for(let b=a+1;b<5;b++)for(let c=b+1;c<6;c++){
+    const h=setup(),cells=[a,b,c].map(i=>h.D.resistance[i]);h.S.at='seoul';
+    for(const cell of cells)h.S.flags[cell.flag]=true;
+    const cost=h.event('seoul_costs'),body=prose(cost,h.S);
+    assert.match(body,/연결된 3곳/);assert.doesNotMatch(body,/여섯 거점/);
+    for(const cell of cells)assert(body.includes(cell.name));
+    h.choose(cost,0,true);assert.equal(h.G.queuePresentation(),'seoul_decision');
+    const e=h.event('seoul_decision'),out=e.choices[0].out[0];assert(h.G.reqOk(e.choices[0].req).ok);
+    for(const text of [prose(out,h.S),read(out.readingRecord,h.S)]){
+      assert(text.includes(cells[0].name)&&text.includes(cells[1].name));
+      assert.doesNotMatch(text,/덕구|금자/);
+      for(const cell of h.D.resistance.filter(row=>!cells.includes(row)))assert(!text.includes(cell.name));
+    }
+    h.choose(e,0,true);assert(h.S.flags.core_transfer);assert.equal(h.G.queuePresentation(),'seoul_night');
+  }
+});
+
+test('northern relay and each companion cost scene retain actual presence and a concrete record cost',()=>{
+  for(const party of [[],['minji'],['parkss'],['leo'],['kangwoo'],['jaeyi'],['eunsu']]){
+    const h=setup();h.S.party=party;h.S.flags.main_relay_confirmed=true;
+    const e=h.event('seoul_costs');assert.match(prose(e,h.S),/연결된 3곳/);
+    assert.doesNotMatch(prose(e,h.S),/혼자 서 있는/);
+    const text=read(e.choices[1].out[0].text,h.S);
+    assert.doesNotMatch(text,/부산에서 우리 차를 고쳐|같은 성/);
+    assert.match(text,/내일.*조회|내일 오전/);
+    const transfer=h.event('seoul_decision').choices[0].out[0];
+    assert.match(prose(transfer,h.S),/이음망.*유령/);assert.doesNotMatch(prose(transfer,h.S),/금자|덕구/);
+  }
+});
+
+test('the watch outcome uses the same healthy willing crew as its gate and the player owns the request',()=>{
+  for(const eunsu of ['absent','injured','low','willing','recovered','kangwoo_injured']){
+    const h=setup();h.S.at='seoul';h.S.flags.main_relay_confirmed=true;
+    h.S.party=['minji','parkss','leo',...(eunsu==='absent'?[]:['eunsu'])];
+    if(eunsu==='kangwoo_injured')h.S.party.push('kangwoo');
+    for(const id of h.S.party)h.S.comps[id].mood=id==='eunsu'&&eunsu==='low'?40:60;
+    if(eunsu==='injured'||eunsu==='recovered')h.S.injuries.eunsu={days:eunsu==='injured'?2:0};
+    if(eunsu==='kangwoo_injured')h.S.injuries.kangwoo={days:2};
+    const e=h.event('seoul_decision'),out=e.choices[2].out[0];assert(h.G.reqOk(e.choices[2].req).ok);
+    const expected=h.S.party.filter(id=>!h.G.isInjured(id)&&h.S.comps[id].mood>=45);
+    assert.deepEqual(Array.from(h.D.coreWatchCrew(h.S)),expected);
+    for(const text of [prose(out,h.S),read(out.readingRecord,h.S)]){
+      assert.doesNotMatch(text,/유령 통신원/);
+      assert.equal(text.includes('은수'),['willing','recovered','kangwoo_injured'].includes(eunsu));
+    }
+    assert.deepEqual(Array.from(read(out.turns,h.S).filter(t=>t.kind==='dialogue'),t=>t.who),['me']);
+    assert.deepEqual(Array.from(dialogue(h,e,out),t=>t.who),['me','me']);
+    h.choose(e,2,true);assert(h.S.flags.core_quarantine);assert.equal(h.G.queuePresentation(),'seoul_night');
+    if(eunsu==='kangwoo_injured'){
+      const night=h.event('seoul_night').choices[0].out[0];
+      for(const text of [prose(night,h.S),read(night.readingRecord,h.S)]){
+        assert.doesNotMatch(text,/내가 먼저 선다/);assert.match(text,/첫 근무는 서명한 세 사람/);
+      }
+    }
+  }
+});
+
+test('paid old finale outcomes retain their text and reading voices after Continue',()=>{
+  for(const index of [0,1,2]){
+    const h=setup(),e=h.event('seoul_decision'),text='옛 저장의 덕구·금자·통신원 결과';
+    h.S.used.push(e.id);h.S.pendingPresentation={version:1,phase:'result',eventId:e.id,
+      choiceIndex:index,outcomeIndex:0,text,chips:[],view:{turns:[{kind:'dialogue',who:'eunsu',text}],index:0}};
+    const before=plain({flags:h.S.flags,food:h.S.food,min:h.S.min,items:h.S.items});
+    h.reload();assert(h.G.resumePresentation());
+    const result=h.G.resolvePresentedChoice(e,e.choices[index]);assert(result.ok&&!result.applied);
+    assert.equal(result.out.text,text);
+    const state={eventId:e.id,phase:'outcome'};h.G.restorePresentationView(state);
+    assert.equal(state.turns[0].who,'eunsu');assert.equal(state.turns[0].text,text);
+    assert.deepEqual(plain({flags:h.S.flags,food:h.S.food,min:h.S.min,items:h.S.items}),before);
+  }
+});
+
+test('found seed stock does not invent a library loan; planting requires the owned garden',()=>{
+  for(const outcome of [0,1]){
+    const h=setup(),e=h.event('ev_seed_warehouse');
+    h.G.applyFx(e.choices[0].out[outcome].fx);
+    assert(h.S.flags.seed_found);assert(!h.S.flags.seed_borrowed);
+    assert(!h.G.eventAvailable(h.event('seed_harvest'),{mode:'local'}));
+  }
+  for(const garden of [false,true]){
+    const h=setup(),e=h.event('seed_harvest');
+    h.choose(h.event('meet_seedlady'),0,true);h.S.up.garden=garden;
+    assert(h.G.eventAvailable(e,{mode:'local'}));
+    assert.equal(h.G.reqOk(e.choices[1].req).ok,garden);
+    assert(h.G.reqOk(e.choices[0].req).ok,'field planting remains an alternative');
+    h.choose(e,garden?1:0,true);
+    assert.doesNotMatch(h.S.pendingPresentation.text,/"|수확했다|키운 상추/);
+    assert.equal(dialogue(h,e).length,0,'no absent companion supplies a question');
+  }
+});
+
+test('both planting branches return seeds or supplies without claiming an immediate harvest',()=>{
+  for(const planted of [0,1])for(const returned of [0,1]){
+    const h=setup();h.S.up.garden=true;
+    h.choose(h.event('meet_seedlady'),0,true);h.choose(h.event('seed_harvest'),planted,true);
+    const e=h.event('seed_return');assert(h.G.eventAvailable(e,{mode:'local'}));
+    const food=h.S.food;h.choose(e,returned,true);
+    assert.equal(h.S.food,food-(returned===0?1:0));
+    assert.doesNotMatch(h.S.pendingPresentation.text,/지붕에서 키운|두 배로 세어|주인 없는 밭에 심고/);
+    assert.deepEqual(Array.from(dialogue(h,e),t=>t.who),['passer_woman','me','passer_woman']);
+    assert(dialogue(h,e,e.choices[returned].out[0]).every(t=>t.who==='passer_woman'));
+    assert(h.S.flags.seed_returned);assert.equal(h.G.queuePresentation(),undefined);
+  }
+  const h=setup(),e=h.event('seed_return');h.S.food=0;
+  assert(!h.G.reqOk(e.choices[0].req).ok);assert(h.G.reqOk(e.choices[1].req).ok);
+});
+
+test('a cafe drink does not create a carried coffee parcel or a remembered Daeyang debt',()=>{
+  const h=setup(),e=h.event('vanowner_coffee');
+  h.S.flags.coffee_found=true;
+  assert(!h.G.eventAvailable(e,{mode:'local'}));
+  h.S.flags.van_owner_done=true;assert(!h.G.eventAvailable(e,{mode:'local'}));
+  h.S.items['커피 원두']=1;assert(h.G.eventAvailable(e,{mode:'local'}));
+  h.G.openEvent(e,{continuation:true});delete h.S.items['커피 원두'];
+  const before=plain({food:h.S.food,min:h.S.min,flags:h.S.flags});
+  assert(!h.G.resolvePresentedChoice(e,e.choices[0]).ok);
+  assert.deepEqual(plain({food:h.S.food,min:h.S.min,flags:h.S.flags}),before);
+});
+
+test('coffee gifts and debt repayments keep distinct history, real speakers, and the same next promise',()=>{
+  for(const debt of [false,true])for(const letter of [false,true]){
+    const h=setup();h.S.flags.van_garage=true;
+    h.choose(h.event('van_owner'),debt?0:1,true);
+    if(letter)h.S.items['남산행 편지']=1;
+    const beans=h.event('exp_coffee');h.choose(beans,0,true);
+    assert.equal(/남산행 편지/.test(h.S.pendingPresentation.text),letter);
+    assert.equal(/외상/.test(h.S.pendingPresentation.text),debt);
+    const e=h.event('vanowner_coffee');assert(h.G.eventAvailable(e,{mode:'local'}));
+    h.choose(e,0,true);
+    assert.equal(/외상 장부/.test(h.S.pendingPresentation.text),debt);
+    assert.match(h.S.pendingPresentation.text,/남산 가서 마셔/);
+    assert(dialogue(h,e,e.choices[0].out[0]).every(t=>t.who==='passer_elder'&&t.name==='대양'));
+    assert(h.S.flags.coffee_paid);assert.equal(h.S.items['커피 원두'],1,'remaining half stays for Namsan');
+    assert.equal(h.G.queuePresentation(),undefined);
+    const base=h.event('seoul_base').choices.find(c=>c.req?.flag==='coffee_paid');
+    assert(base);assert.doesNotMatch(read(base.out[0].text,h.S),/외상 청산 조건/);
+  }
+});
+
+test('old paid seed and coffee receipts are not rewritten or charged again',()=>{
+  for(const id of ['seed_harvest','seed_return','exp_coffee','vanowner_coffee']){
+    const h=setup(),e=h.event(id),text='옛 저장의 수확·외상 문장';
+    h.S.used.push(id);h.S.pendingPresentation={version:1,phase:'result',eventId:id,
+      choiceIndex:0,outcomeIndex:0,text,chips:[]};
+    const before=plain({items:h.S.items,flags:h.S.flags,food:h.S.food,min:h.S.min});
+    h.reload();assert(h.G.resumePresentation());
+    const replay=h.G.resolvePresentedChoice(e,e.choices[0]);assert(replay.ok&&!replay.applied);
+    assert.equal(replay.out.text,text);
+    assert.deepEqual(plain({items:h.S.items,flags:h.S.flags,food:h.S.food,min:h.S.min}),before);
+  }
+});
+
+test('personal keepsakes remember completed revelations, not entry, and keep their actual voices',()=>{
+  for(const [id,comp,flag] of [['jaeyi_pricetag','jaeyi','jaeyi_cache_opened'],
+    ['kangwoo_dogtag','kangwoo','kw_absolved'],['parkss_bag','parkss','pss_met']]){
+    const choices=id==='parkss_bag'?[0,1]:[0];
+    for(const index of choices)for(const known of [false,true]){
+      const h=setup();h.S.party=[comp];h.S.at='suwon';h.S.min=1260;
+      const e=h.event(id),out=e.choices[index].out[0];
+      h.S.used.push({jaeyi_pricetag:'loc_jaeyi_cache',kangwoo_dogtag:'kw_base',parkss_bag:'pss_daejeon'}[id]);
+      if(known)h.S.flags[flag]=true;
+      assert(h.G.eventAvailable(e));
+      h.G.openEvent(e,{continuation:true});h.reload();
+      const text=read(out.text,h.S),spoken=dialogue(h,e,out);
+      if(id==='jaeyi_pricetag'){
+        assert.deepEqual(plain(spoken.map(t=>t.who)),['jaeyi','me','jaeyi','jaeyi','jaeyi']);
+        assert.equal(spoken.at(-1).who,'jaeyi');
+        assert.equal(/같이 문을 열었죠/.test(text),known);
+        assert.equal(/김천에서 확인/.test(text),!known);
+        assert.match(dialogue(h,e).at(-1).text,/그건요/);
+      }else if(id==='kangwoo_dogtag'){
+        assert.deepEqual(plain(spoken.map(t=>t.who)),
+          ['kangwoo','kangwoo','me','kangwoo','kangwoo','kangwoo','me','kangwoo','me']);
+        assert.equal(/그 얘긴 아직/.test(text),!known);
+      }else{
+        assert.equal(/수진을 만났을 때/.test(read(e.text,h.S)),known);
+        assert.equal(/언젠가 얘기해|될 애였/.test(text),!known);
+        assert.equal(e.choices[1].label,'가방 이름표 이야기를 꺼낸다');
+        assert(spoken.filter(t=>t.who==='me').every(t=>/요|겠어요/.test(t.text)));
+      }
+      h.choose(e,index,true);
+      const receiptText=JSON.stringify(h.S.pendingPresentation);
+      h.S.flags[flag]=!known;h.reload();
+      assert.equal(JSON.stringify(h.S.pendingPresentation),receiptText,'paid prose stays frozen after knowledge changes');
+      assert.equal(h.G.queuePresentation(),undefined,'optional keepsake scene returns to road');
+    }
+  }
+  const h=setup();h.S.notes.push({title:'고물상의 법',body:'창고는 이제 지나가는 모두의 것이다'});
+  assert.match(read(h.event('jaeyi_pricetag').choices[0].out[0].text,h.S),/같이 문을 열었죠/);
+  h.S.notes=[];h.S.flags.jy_law=true;
+  assert.match(read(h.event('jaeyi_pricetag').choices[0].out[0].text,h.S),/창고가 남았는지도/);
+});
+
+test('legacy paid keepsake results keep their text and already-paid resources',()=>{
+  for(const [id,comp,flag] of [['jaeyi_pricetag','jaeyi','jaeyi_cache_opened'],
+    ['kangwoo_dogtag','kangwoo','kw_absolved'],['parkss_bag','parkss','pss_met']]){
+    const h=setup(),e=h.event(id);h.S.party=[comp];h.S.flags[flag]=true;h.S.used.push(id);
+    const text='예전 저장의 '+id+' 결과';
+    h.S.pendingPresentation={version:1,phase:'result',eventId:id,choiceIndex:0,outcomeIndex:0,
+      text,chips:[]};
+    const before=plain({items:h.S.items,flags:h.S.flags,food:h.S.food,day:h.S.day,min:h.S.min});
+    h.reload();assert(h.G.resumePresentation());
+    const replay=h.G.resolvePresentedChoice(e,e.choices[0]);
+    assert(replay.ok&&!replay.applied);assert.equal(replay.out.text,text);
+    assert.deepEqual(plain({items:h.S.items,flags:h.S.flags,food:h.S.food,day:h.S.day,min:h.S.min}),before);
+  }
+});
+
+test('an unscheduled night remembers Eunsu’s shift without inventing an anniversary or player confession',()=>{
+  const h=setup(),e=h.event('eunsu_lastshift');h.S.party=['eunsu'];h.S.min=1260;
+  assert(h.G.eventAvailable(e));
+  assert.doesNotMatch(read(e.text,h.S),/오늘이에요|오늘 며칠/);
+  assert.deepEqual(plain(dialogue(h,e).map(t=>t.who)),['eunsu','eunsu']);
+  const out=e.choices[0].out[0];
+  assert.match(read(out.text,h.S),/야간 당직.*밤인데도/s);
+  assert.deepEqual(plain(dialogue(h,e,out).map(t=>t.who)),['eunsu','me','eunsu','eunsu','eunsu','eunsu']);
+  assert.equal(dialogue(h,e,out).find(t=>/역사책/.test(t.text)).who,'eunsu');
+  h.choose(e,0,true);assert.equal(h.G.queuePresentation(),undefined);
+});
+
+test('heritage scenes introduce the altar and preserve a generations-old record as reported history',()=>{
+  const h=setup(),photo=h.event('trace_fourcuts'),reply=h.event('trace_worldcup_reply');
+  h.S.party=[];h.S.at='gimcheon';
+  assert.match(read(photo.text,h.S),/사진 부스 잔해.*작은 제단/);
+  assert(!h.G.eventAvailable(reply));h.S.flags.worldcup_kept=true;
+  assert(h.G.eventAvailable(reply));
+  assert.match(read(reply.text,h.S),/족보.*전해 내려온 기록.*후손/s);
+  assert.doesNotMatch(read(reply.text,h.S),/우리 외삼촌/);
+  assert.equal(dialogue(h,reply)[0].name,'장터의 노인');
+  assert.equal(dialogue(h,reply,reply.choices[0].out[0])[0].who,'passer_elder');
+  h.choose(reply,0,true);assert(h.S.flags.worldcup_family_found);
+  assert.equal(h.G.queuePresentation(),undefined);
+});
 
 test('road-network contact uses earned meetings, not invented completed favours',()=>{
   const h=setup();h.S.at='gimcheon';h.S.party=[];

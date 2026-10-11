@@ -11,7 +11,8 @@ const ids=['seoul_core','seoul_decision','seoul_night','seoul_uplink_reveal'];
 const find=id=>D.events.find(e=>e.id===id)||D.seoulStops.find(e=>e.id===id);
 const original=new Map(ids.map(id=>[id,{text:find(id).text,choices:find(id).choices,contract:JSON.stringify(find(id).choices)}]));
 vm.runInContext(fs.readFileSync(path.join(root,'src/03m-finale-reading.js'),'utf8'),context);
-const state=(method,party=[])=>({flags:{['core_'+method]:true},party,comps:{},stats:{km:430},day:8,notes:[],log:[],at:'seoul'});
+const state=(method,party=[])=>({flags:{['core_'+method]:true},party,
+  comps:Object.fromEntries(party.map(id=>[id,{mood:60}])),stats:{km:430},day:8,notes:[],log:[],at:'seoul'});
 let count=0;
 for(const method of ['transfer','sleep','quarantine']){
   for(const party of [[],['minji','kangwoo','eunsu'],['minji','kangwoo','eunsu','parkss','jaeyi','leo']]){
@@ -19,7 +20,9 @@ for(const method of ['transfer','sleep','quarantine']){
     const before=JSON.stringify(S);
     for(const id of ids){
       const e=find(id),turns=e.turns(S);
-      assert(turns.length>0&&turns.length<=12,id+' compact turns');
+      // Keep the actual challenge and answer. Brevity must not erase the reason
+      // for the self-target or make verification look like a sudden surrender.
+      assert(turns.length>0&&turns.length<=16,id+' authored turns');
       assert(turns.every(t=>typeof t.text==='string'&&!/<[^>]*>/.test(t.text)),id+' plain turns');
       const expected=typeof original.get(id).text==='function'?original.get(id).text(S):original.get(id).text;
       assert.equal(e.readingRecord(S),expected.replace(/<[^>]*>/g,''),id+' full original retained');

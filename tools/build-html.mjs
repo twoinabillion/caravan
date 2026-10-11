@@ -2,12 +2,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {inlineStyleAssets} from './inline-style-assets.mjs';
 import {compactStyleSource} from './compact-style-source.mjs';
 import {compactScriptSource} from './compact-script-source.mjs';
 import {poolEmbeddedAssets} from './pool-embedded-assets.mjs';
 import {encodeEmbeddedAssets} from './encode-embedded-assets.mjs';
+import routeReadiness from './road-route-readiness.cjs';
 
 /*
  * 이미지·오디오를 포함한 단일 HTML 빌더.
@@ -34,7 +36,7 @@ const after = [
   'src/03i-story-expansion.js', 'src/03j-camp-conversations.js', 'src/03k-main-evidence.js', 'src/03l-main-recovery.js', 'src/03m-finale-reading.js',
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
-  'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05c-road-cue-kit.js', 'src/05-scene.js', 'src/06-mapgraph.js',
+  'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05c-road-cue-kit.js', 'src/05d-route-panorama.js', 'src/05e-road-continuity.js', 'src/05-scene.js', 'src/06-mapgraph.js',
   'src/07g-ui-home.js', 'src/07h-story-pages.js', 'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
@@ -171,9 +173,34 @@ const styles = inlineStyleAssets(compactStyleSource(read('src/01-style.html')), 
 });
 
 const environmentManifest=JSON.parse(read('assets/ui/road-environment/manifest.json'));
+const routeManifest=JSON.parse(read('assets/ui/road-routes/manifest.json'));
+const routeGraph=vm.runInNewContext(read('src/03-data.js')+';D.edges');
+// Sang explicitly requested actual game integration, not another draft. Raw
+// candidate approval flags are never changed to satisfy the legacy art gate.
+const hdManifest=JSON.parse(read('assets/ui/road-connectors/manifest-hd.json'));
+const assetHash=relative=>createHash('sha256').update(fs.readFileSync(path.join(root,relative))).digest('hex');
+const continuityRoutes=routeGraph.map(([from,to,km])=>{
+  const id=[from,to].sort().join('--'),r=hdManifest.routes.find(x=>x.id===id);
+  if(!r?.nativeCandidate||!fs.existsSync(path.join(root,r.nativeCandidate.file)))throw Error('HD route missing: '+id);
+  if(r.from!==from||r.to!==to||r.nativeCandidate.sourcePixelsPerViewport<1024)throw Error('HD route orientation/resolution mismatch: '+id);
+  if(assetHash(r.nativeCandidate.file)!==r.nativeCandidate.sha256||r.canonicalCities.some(c=>assetHash(c.file)!==c.sha256))throw Error('HD route provenance mismatch: '+id);
+  // dev:live serves assets only through this gallery endpoint, not /assets/.
+  return {id,from,to,km,source:'/__live/asset/'+encodeURIComponent(r.nativeCandidate.file.slice('assets/'.length))};
+});
+if(continuityRoutes.length!==78||new Set(continuityRoutes.map(r=>r.id)).size!==78)throw Error('Incomplete HD graph');
+const continuitySource=read('src/05e-road-continuity.js');
+const continuity=continuitySource.replace('/*__ROAD_CONTINUITY__*/{enabled:false,routes:[]}',JSON.stringify({enabled:true,routes:continuityRoutes}));
+if(continuity===continuitySource)throw Error('HD continuity registry placeholder missing');
+const approvedRoutes=routeReadiness.approvedRoutes(routeManifest,routeGraph);
+const routeSources=approvedRoutes.map(r=>({id:r.id,from:r.from,to:r.to,km:r.km,source:dataUri(`assets/ui/road-routes/${r.file}`,'image/webp')}));
+const routeSource=read('src/05d-route-panorama.js');
+if(!routeSource.includes('/*__ROAD_ROUTES__*/{enabled:false,routes:[]}'))throw new Error('연결 풍경 레지스트리 플레이스홀더 없음');
+const routePanorama=routeSource.replace('/*__ROAD_ROUTES__*/{enabled:false,routes:[]}',JSON.stringify({enabled:approvedRoutes.length>0,routes:routeSources}));
 const destinationIds=Object.keys(vm.runInNewContext(read('src/03-data.js')+';D.nodes'));
 if(destinationIds.some(id=>!environmentManifest.locations[id])||Object.keys(environmentManifest.locations).length!==destinationIds.length)
   throw new Error('도로 환경과 목적지 목록이 일치하지 않음');
+// Canonical cities are shared by every connector, arrival and stopped view.
+// Do not embed a second scenery catalogue or raise the80MB delivery limit.
 const environmentSources=Object.fromEntries(destinationIds.map(id=>{
   const entry=environmentManifest.locations[id];
   return [id,dataUri(`assets/ui/road-environment/${entry.file}`,'image/webp')];
@@ -263,6 +290,8 @@ const chunks = [
     :relative==='src/05a-road-environment.js'?roadEnvironment
     :relative==='src/05b-vehicle-kit.js'?vehicleKit
     :relative==='src/05c-road-cue-kit.js'?cueKit
+    :relative==='src/05d-route-panorama.js'?routePanorama
+    :relative==='src/05e-road-continuity.js'?continuity
     :relative==='src/07f-ui-road-thoughts.js'?roadCues.result
     :relative==='src/03i-story-expansion.js'?inlineSceneAssetPaths(read(relative))
     :read(relative);

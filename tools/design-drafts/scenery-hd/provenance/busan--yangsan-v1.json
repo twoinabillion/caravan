@@ -1,0 +1,81 @@
+{
+  "route": "busan--yangsan",
+  "version": 1,
+  "tool": "image_gen.imagegen",
+  "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-22ab7593-9a67-459b-9d62-f3c3ff14f8e2.png",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nUse case: compositing. Images1–4 are canonical STYLE/WORLD references only, never people or truck to copy. Image5 is the EDIT TARGET: a1024x576 terrain gap template. Its LEFT64px strip is the exact final64px of canonical 부산 감천 부두; its RIGHT64px strip the exact first64px of canonical 양산 고가차도. Fill ONLY missing center x64..959. Preserve both protected strips' contour height, geometry, color, texture scale and foreground density at proportional scale. Extend their actual contours smoothly through the center. Output only ONE continuous terrain component, never panels or the reference board.\nTechnical: transparent RGBA16:9 master at least1536x864. One screen of detailed terrain, NOT a3-screen panorama. Match natural detailed city textures without blurry resampling, vertical stretching, giant foreground mass or source blur. LEFT first ridge at233/576 from TOP (60% canvas from BOTTOM), RIGHT last ridge at316/576 from TOP (45% from BOTTOM). Do not lower the entire landscape or add a mountain step. Ground baseline and foreground density must remain fixed.\nMiddle corridor: dock warehouses thin into worn industrial yards and riverbank reeds, ending below the broken concrete overpass; no intact bridge. This is the terrain BETWEEN 부산 감천 부두 and 양산 고가차도, not permission to reproduce the complete cities, clone their principal landmarks or introduce an intermediate city. Constant distant side-view perspective, restrained desaturated blue-gray diffuse light.\nAlpha: only AIR ABOVE the connected organic silhouette is transparent. Terrain, water and every bottommost128row pixel must be solid alpha255. NO ground haze alpha, lower-edge fade, transparent water, border glow or colored matte fringe. Preserve genuine transparency above the ridge.\nExclude sky, sun, moon, clouds, foreground roads/lanes, vehicles, characters, weather, text, frame, panels, watermark, mirrored cities. anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "tools/design-drafts/scenery-hd/edge-guides/busan--yangsan.png"
+  ],
+  "master": "tools/design-drafts/scenery-hd/masters/busan--yangsan-v1.png",
+  "actualMaster": [
+    1672,
+    941
+  ],
+  "file": "assets/ui/road-connectors/busan--yangsan-v1.webp",
+  "sha256": "67edb232164121fdc4160dc60338c02595ec41cb5b72ab929b8506abd346e648",
+  "bytes": 154778,
+  "normalization": "Proportional resize1024px, sRGB WebPq94 alpha100; preserved alpha/no retouch/no upscale",
+  "canonicalCities": [
+    {
+      "id": "busan",
+      "file": "assets/ui/road-environment/busan-v1.webp",
+      "sha256": "47e8582fe192b02e52c9e994aabaae5b83ec92d368df9a1b87f4561dea2adb05"
+    },
+    {
+      "id": "yangsan",
+      "file": "assets/ui/road-environment/yangsan-v1.webp",
+      "sha256": "7070d04f25505d1bd9195ca7023d28bebb6211c9867b55410008e55db58aa9d2"
+    }
+  ],
+  "referenceInputs": [
+    {
+      "file": "assets/ui/road-environment/busan-v1.webp",
+      "sha256": "47e8582fe192b02e52c9e994aabaae5b83ec92d368df9a1b87f4561dea2adb05"
+    },
+    {
+      "file": "assets/ui/road-environment/yangsan-v1.webp",
+      "sha256": "7070d04f25505d1bd9195ca7023d28bebb6211c9867b55410008e55db58aa9d2"
+    },
+    {
+      "file": "tools/design-drafts/scenery-hd/edge-guides/busan--yangsan.png",
+      "sha256": "c7d086089c7f31ec0cb2a64e509caed477590100acc62f3d47ec66b200c30da7"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 233,
+    "edgeRidge": {
+      "left": 189,
+      "right": 253
+    },
+    "edgeDelta": {
+      "left": -44,
+      "right": -63
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 41.97,
+        "ridgeMaxAbs": 56,
+        "meanChannelDifference": 22.57
+      },
+      "right": {
+        "ridgeRms": 57.3,
+        "ridgeMaxAbs": 87,
+        "meanChannelDifference": 28.96
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false
+}

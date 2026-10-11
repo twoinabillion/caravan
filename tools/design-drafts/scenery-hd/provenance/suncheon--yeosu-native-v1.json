@@ -1,0 +1,87 @@
+{
+  "route": "suncheon--yeosu",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-4668d4f7-d382-4a7c-86f4-8c3e6f2684ad.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 여수 밤바다 -> 순천만 갈대밭, one real 24km normal corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 여수 밤바다; 등불 몇 개가 아직 바다에 뜬다. 노래 가사가 현실이 된 도시.; biome coast, distinctive terrain night-port. RIGHT QUARTER: 순천만 갈대밭; 갈대가 바람의 모양을 그대로 보여준다. 철새들은 여전히 온다.; biome coast, distinctive terrain reeds. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: southern harbour buildings thin into low coastal fields and broad reed beds; no high cliffs or east-coast beach. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/suncheon--yeosu-v1.png",
+  "sourceSha256": "33803796fc82539af9617d785f679486b4a73e5693e3ae2a00525d2381b3df3c",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/suncheon--yeosu-native-v1.webp",
+  "sha256": "0f682356d20ab62a8146a7835b09a0b138447e0d264d25677add1eb3004dd955",
+  "bytes": 117562,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "yeosu",
+      "file": "assets/ui/road-environment/yeosu-v1.webp",
+      "sha256": "c9700f0c1f409d66ebc54b95ed1cfacb2279610b997bc991d067d3975e696b4c"
+    },
+    {
+      "id": "suncheon",
+      "file": "assets/ui/road-environment/suncheon-v1.webp",
+      "sha256": "f9e91f7a63c5c03f4535a53031b4f458be32c931a35c08ceedb60e362f12a8e9"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 249,
+    "edgeRidge": {
+      "left": 331,
+      "right": 352
+    },
+    "edgeDelta": {
+      "left": 62,
+      "right": 20
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 42.89,
+        "ridgeMaxAbs": 62,
+        "meanChannelDifference": 23.77
+      },
+      "right": {
+        "ridgeRms": 12.39,
+        "ridgeMaxAbs": 21,
+        "meanChannelDifference": 30.43
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

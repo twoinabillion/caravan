@@ -17,7 +17,8 @@ const IMAGE_EXTENSIONS=new Set(['.png','.jpg','.jpeg','.webp','.gif','.avif']);
 const MIME={
   '.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp',
   '.gif':'image/gif','.avif':'image/avif','.html':'text/html; charset=utf-8',
-  '.json':'application/json; charset=utf-8'
+  '.json':'application/json; charset=utf-8',
+  '.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4'
 };
 
 const clients=new Set();

@@ -1,0 +1,85 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_text_to_sound_v2",
+  "generated_at": "20261010T162119Z",
+  "subscription_before": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 2180,
+    "character_limit": 10000
+  },
+  "estimated_credits": 960,
+  "commercial_release": false,
+  "licensing": "Generated on Free. Noncommercial audition only; public sharing requires attribution. Do not ship commercially. Regenerate while paid or obtain explicit rights.",
+  "license_source": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform",
+  "game_wired": false,
+  "listening_review": "pending",
+  "clips": [
+    {
+      "name": "rain_glass_light",
+      "prompt": "Seamless close-up sound of light rain striking the thin windshield and tin roof of a parked old truck. Bright fine ticks, delicate higher-pitched droplets, small clear hollow metallic taps and short splashes. Dry intimate acoustic perspective just behind the glass. Gentle evenly distributed patter with airy crisp detail, minimal bass and quiet background. No wind, engine, wipers, thunder, speech or music.",
+      "request": {
+        "text": "Seamless close-up sound of light rain striking the thin windshield and tin roof of a parked old truck. Bright fine ticks, delicate higher-pitched droplets, small clear hollow metallic taps and short splashes. Dry intimate acoustic perspective just behind the glass. Gentle evenly distributed patter with airy crisp detail, minimal bass and quiet background. No wind, engine, wipers, thunder, speech or music.",
+        "duration_seconds": 12,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "120",
+      "master_sha256": "042f11c07c1a8fb9f5dced12c81589aaf361b99ac09892d70d60a35551b214a7",
+      "file": "rain_glass_light.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "12.042449",
+          "size": "144866"
+        }
+      },
+      "listening_review": "pending"
+    },
+    {
+      "name": "rain_glass_heavy",
+      "prompt": "Seamless dense rain pattering on thin glass and a tin truck roof, recorded up close just inside the cabin. Many crisp bright droplets, rapid small metallic ticks and little splashes, clearly separated transient detail over an airy rain wash. Restrained low frequencies, steady natural intensity, textured rather than a deep roar. No engine, wipers, thunder, wind, speech or music.",
+      "request": {
+        "text": "Seamless dense rain pattering on thin glass and a tin truck roof, recorded up close just inside the cabin. Many crisp bright droplets, rapid small metallic ticks and little splashes, clearly separated transient detail over an airy rain wash. Restrained low frequencies, steady natural intensity, textured rather than a deep roar. No engine, wipers, thunder, wind, speech or music.",
+        "duration_seconds": 12,
+        "prompt_influence": 0.4,
+        "loop": true,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "120",
+      "master_sha256": "40032b33b6899ab6b6bca396cc3ac0b763d8365858a88dd9379cdf5bf4677a82",
+      "file": "rain_glass_heavy.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "12.042449",
+          "size": "144866"
+        }
+      },
+      "listening_review": "pending"
+    }
+  ],
+  "subscription_after": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 2180,
+    "character_limit": 10000
+  }
+}

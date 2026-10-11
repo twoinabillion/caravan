@@ -1,0 +1,489 @@
+{
+  "scope": "all78 native pixel joins; no live-game/crop/motion or style approval inferred",
+  "routes": 78,
+  "sourcePixelsPerViewport": 1024,
+  "worldWidth": 2944,
+  "geometryPass": true,
+  "sheets": [
+    "sheet-01.png",
+    "sheet-02.png",
+    "sheet-03.png",
+    "sheet-04.png",
+    "sheet-05.png",
+    "sheet-06.png",
+    "sheet-07.png",
+    "sheet-08.png",
+    "sheet-09.png",
+    "sheet-10.png"
+  ],
+  "rows": [
+    {
+      "id": "busan--yangsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "busan--gimhae",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "miryang--yangsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gimhae--jinju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daegu--miryang",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "hapcheon--miryang",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "geochang--hapcheon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "geochang--muju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "muju--yeongdong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "jinju--namwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "jeonju--namwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "jeonju--nonsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gongju--nonsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cheonan--gongju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daejeon--nonsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daegu--gumi",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gimcheon--gumi",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gimcheon--yeongdong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gimcheon--muju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daejeon--yeongdong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cheongju--daejeon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cheonan--cheongju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cheonan--pyeongtaek",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "pyeongtaek--suwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "seoul--suwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "geochang--namwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "jeonju--muju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "lake--miryang",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daegu--lake",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gumi--mall",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "geochang--tower",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "spring--yeongdong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "airfield--nonsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "pyeongtaek--solar",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gimcheon--reststop",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "muju--tunnelbook",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "mingyu_ridge--yeongdong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gimcheon--jaeyi_cache",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cablecar--mungyeong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "filmset--namwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "lighthouse--nonsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cheonan--drivein",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "hapcheon--sunflower",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "ulsan--yangsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gyeongju--ulsan",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daegu--gyeongju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gyeongju--pohang",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gimcheon--sangju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "sangju--yeongdong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gunsan--jeonju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gunsan--lighthouse",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cheongju--chungju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gongju--sejong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daejeon--sejong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "cheongju--sejong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "jinju--yeosu",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "suncheon--yeosu",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "namwon--suncheon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gwangju--suncheon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "damyang--gwangju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "damyang--namwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gwangju--mokpo",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gwangju--jeonju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "maehwa--suncheon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "andong--gumi",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "andong--danyang",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "mungyeong--sangju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "chungju--mungyeong",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "chungju--danyang",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "icheon--suwon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "chungju--icheon",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "chungju--wonju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "danyang--wonju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daegwallyeong--wonju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "daegwallyeong--gangneung",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gangneung--sokcho",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "gangneung--pohang",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    },
+    {
+      "id": "icheon--wonju",
+      "edgeRidgeMaxDelta": 0,
+      "minimumWorldGroundAlpha": 255,
+      "rawApprovalChanged": false
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "route": "daegu--miryang",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "assets/ui/road-environment/daegu-v1.webp"
+    ],
+    "prompt": "Edit and extend the attached transparent Daegu road terrain component into ONE uninterrupted horizontally continuous Miryang-to-Daegu landscape component for a scrolling motion design draft. The first four attachments are canonical STYLE/WORLD references only: do not reproduce their people, trucks, text or panels. The final attachment is the source Daegu terrain endpoint. Miryang's rural-market end follows the authored project brief given below; its modest low roofs are not a new named landmark. Preserve the restrained painterly materials, rural-market roof forms on the left and the low broad fictional Daegu market stadium dome on the right; the dome must remain low, not a futuristic tower.\n\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nOUTPUT: large master, aim 3072x1024 pixels, ultra-wide 3:1 landscape RGBA. One continuous terrain strip, NOT three panels, NOT a triptych or contact sheet. Transparent sky with real alpha; top approximately 60% empty transparent air above a gently continuous mountain/building silhouette. Terrain and opaque level ground occupy bottom approximately 40%. Full-width solid ground terminates at the same bottom baseline. This is a dedicated live-renderer environment part, NOT a narrative event painting or screenshot. No baked sky, sunlight disc, clouds, road, lane marks, vehicle, people, rain or HUD. Soft natural ambient late-afternoon daylight, cool blue-gray and muted olive, no dramatic golden sunset.\n\nCOMPOSITION: side-on roadside distant environment, horizontal camera/lens and ground baseline held constant across the entire width. At the leftmost quarter: Miryang's small old low market roofs, discreet subdued canvas awnings, orchard rows, modest worn farm shops, never an urban skyline. Gradually reduce buildings into abandoned farm sheds and paddies. Middle half: flat rice fields/orchards, rough grassy borders and gently receding rounded forested foothills. Do not put a huge hill or tree in front to hide the transition. Last quarter: fields naturally give way to sparse weathered Korean apartments and the low domed Daegu stadium-market further into the basin. Keep the dome entire and inside the final quarter with margin, understated no detailed readable signage. No ocean, Seoul tower, palace, bridges, characters, surreal war ruins. Ensure plausible soft continuity of ground texture, hue, perspective and wooded ridges; no straight seam, no stitched cuts, no opacity dissolve, no ghosted buildings. The join is the actual rural landscape, not a mask hiding a join. Do not make the middle area empty without terrain detail. It is illustrative game geography, not a surveyed literal road view.\n\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/daegu--miryang-v1.png",
+  "sourceSha256": "b9b5d863112ba238d4ca1e33b2ef15c33064fe99960d1c9a38c7750567b0d245",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/daegu--miryang-native-v1.webp",
+  "sha256": "102e09eab7a6b58944c194da87510319448944dd40935962f9fd5b3d2edd85f7",
+  "bytes": 112942,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "miryang",
+      "file": "assets/ui/road-environment/miryang-v1.webp",
+      "sha256": "a60f6140ad9b1751a1f03b5e698c602e03379ab3fd5d94811f251fe4ce862dc6"
+    },
+    {
+      "id": "daegu",
+      "file": "assets/ui/road-environment/daegu-v1.webp",
+      "sha256": "247f596861feff0559938a96cbd9d16e6f89c2b180079d4da4aeee1eaafe1f87"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 251,
+    "edgeRidge": {
+      "left": 302,
+      "right": 322
+    },
+    "edgeDelta": {
+      "left": 18,
+      "right": 4
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 11.81,
+        "ridgeMaxAbs": 18,
+        "meanChannelDifference": 25.2
+      },
+      "right": {
+        "ridgeRms": 9.54,
+        "ridgeMaxAbs": 13,
+        "meanChannelDifference": 27.69
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

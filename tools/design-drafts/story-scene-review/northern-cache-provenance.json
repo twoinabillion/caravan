@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-10-09",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "tool": "image_gen.imagegen",
+  "status": "Sang-approved-source-wired-crop-pending",
+  "requiredReferences": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "images": [
+    {
+      "id": "suwon-exchange-cache-v1",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-1878893a-a2e9-4246-ba4c-7a97e55a695d.png",
+      "original": "assets/scenes/parents-linked-records-v2.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nCreate one new 16:9 scene, large master at least 1536x864. The references are style/world references, not a collage or objects to copy into this scene. Narrative moment: an opened weathered iron storage box has just been brought to a wooden desk by the archivist of the northern exchange depot in Suwon, South Korea. These are the protagonist's parents' recovered belongings transferred from an old bus dispatch office. Focus on the box and contents: a small old bus-shaped keychain, a scorched transmission tape reel, a worn handwritten maintenance notebook with clearly torn last-page stubs (the missing final two pages have NOT been recovered), several modest testimony cards tucked together. Leave every card, ledger and notebook without readable text or numbers. A separate exchange ledger on the desk establishes custody without signage. Medium-close 50mm film still, inhabited practical archive with dusty shelves, a single restrained warm amber desk lamp, soft gray-blue window light. Box and four small contents readable within central 80% horizontal and 82% vertical safe zone. Subordinate background. No people, faces, companions, dog, vehicle, verification module, futuristic electronics, mountain or recognizable landmark. The verification module is still installed elsewhere in a caravan and MUST NOT be in this box. Avoid a treasure chest, flat lay product photo, or decorative still-life: a grounded recovered-family-records dramatic moment. No UI, frames or captions.\nNegative: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel.",
+      "master": "tools/design-drafts/story-scene-review/masters/suwon-exchange-cache-v1.png",
+      "asset": "assets/scenes/suwon-exchange-cache-v1.webp",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ]
+    }
+  ],
+  "exporter": "tools/design-drafts/export-finale-scene-review.cjs tools/design-drafts/story-scene-review/northern-cache-provenance.json",
+  "operation": "sRGB, centered cover resize1024x576; WebP quality86 effort6; no visual editing",
+  "readOnlyServingChecks": {
+    "studioDraft": "HTTP200; HTML equals disk; separate Chrome draft observed, not embedded Studio window",
+    "previewGallery": "http://127.0.0.1:4319/__live/assets HTTP200; candidate listed",
+    "previewAsset": "HTTP200;105444bytes; SHA256 equals local delivery",
+    "currentSceneBefore": "HTTP200: Busan day1 08:10 opening_failed_appeal outcome/beat360x728 loaded/style1791543535342 pendingnull",
+    "currentSceneAfter": "HTTP200 at11:38:15UTC: same game values, surfaces and viewport; loaded/style1791543535342 pending1791545820049 applyingfalse; game-state only"
+  },
+  "review": {
+    "sourceObserved": true,
+    "deliveryObserved": true,
+    "separateBrowserDraft": "observed via cua_repl:1920x1069 desktop draft; image, pending status and story constraints readable; not Studio embedded preview",
+    "wiredIntoGameplay": true,
+    "SangApproval": "approved-2026-10-10: 전부 해봐",
+    "actualStudioDraftWindow": "not-observed; current Studio window unavailable",
+    "actualInGameCrop": "not-observed; source wired, live structural apply pending",
+    "world": "Inhabited exchange archive, iron box and four contents; no specific landmark or unintroduced cast. Unreadable blank cards, no recovered last pages or verification key. Torn stubs are a subtle prop detail, not evidence of page count.",
+    "identity": "No people, named characters, companions, dog or vehicle",
+    "style": "Grounded cinematic worn-material realism, cool gray-blue window and practical amber lamp; no embedded text/UI.",
+    "releaseRights": "Project references used; separate release-rights review not performed"
+  }
+}

@@ -1,0 +1,1099 @@
+{
+  "schemaVersion": 1,
+  "purpose": "shared-road-city-endpoints",
+  "enabled": false,
+  "composition": "static-world-strip-v2",
+  "visualApproved": false,
+  "cities": [
+    {
+      "id": "busan",
+      "name": "부산 감천 부두",
+      "file": "assets/ui/road-environment/busan-v1.webp",
+      "sha256": "47e8582fe192b02e52c9e994aabaae5b83ec92d368df9a1b87f4561dea2adb05",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gimhae",
+      "name": "김해 들판",
+      "file": "assets/ui/road-environment/gimhae-v1.webp",
+      "sha256": "70302548d96ccf76e877ee9d9bdeace9f20435f97dace5d3cc476b95e7deffc4",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "yangsan",
+      "name": "양산 고가차도",
+      "file": "assets/ui/road-environment/yangsan-v1.webp",
+      "sha256": "7070d04f25505d1bd9195ca7023d28bebb6211c9867b55410008e55db58aa9d2",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "miryang",
+      "name": "밀양 장터",
+      "file": "assets/ui/road-environment/miryang-v1.webp",
+      "sha256": "a60f6140ad9b1751a1f03b5e698c602e03379ab3fd5d94811f251fe4ce862dc6",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "jinju",
+      "name": "진주 남강변",
+      "file": "assets/ui/road-environment/jinju-v1.webp",
+      "sha256": "11a5704c5b31a1d912bff29453fe4783d54863b9877945ecb2ed9b22431c0d99",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "hapcheon",
+      "name": "합천 과수원",
+      "file": "assets/ui/road-environment/hapcheon-v1.webp",
+      "sha256": "47e2043289cdc6635ce649263d88f3654114e26c9bac4a562695697a16de8a23",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "geochang",
+      "name": "거창 분지",
+      "file": "assets/ui/road-environment/geochang-v1.webp",
+      "sha256": "0e702837b70ba522f6bc22b8ac49d645a18cc95171e9c7a6f4176ac078513b32",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "daegu",
+      "name": "대구 돔 시장",
+      "file": "assets/ui/road-environment/daegu-v1.webp",
+      "sha256": "247f596861feff0559938a96cbd9d16e6f89c2b180079d4da4aeee1eaafe1f87",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gumi",
+      "name": "구미 공단 폐허",
+      "file": "assets/ui/road-environment/gumi-v1.webp",
+      "sha256": "9e42c4e6888a0fbbaebf35730607edb806a04ff185a7063097b084b653ccf1a8",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gimcheon",
+      "name": "김천 갈림길",
+      "file": "assets/ui/road-environment/gimcheon-v1.webp",
+      "sha256": "8b73d7542f434b8a0d8bf0992ada36b73791a1be47e450037d92d0bb2538f51b",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "muju",
+      "name": "무주 터널",
+      "file": "assets/ui/road-environment/muju-v1.webp",
+      "sha256": "347f68054f8d40b8efa289d2ebfb2a1b706dc771250f27f1b11d7625c7750f29",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "namwon",
+      "name": "남원 광한루",
+      "file": "assets/ui/road-environment/namwon-v1.webp",
+      "sha256": "b29665d6931f1fd0e9b2c181ec3b1afdefad54bcff671cd0997f300dbda4464b",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "jeonju",
+      "name": "전주 서문 시장",
+      "file": "assets/ui/road-environment/jeonju-v1.webp",
+      "sha256": "03ef864b77dd8aae32a570d5aaa566f68293d52b8768fc4e76b5b80132837438",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "yeongdong",
+      "name": "영동 포도밭",
+      "file": "assets/ui/road-environment/yeongdong-v1.webp",
+      "sha256": "63870758e9b7cd64525d470e30e1ac71bc88b0ef185f2ac41cfb0d628e7e3b46",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "daejeon",
+      "name": "대전 연구단지",
+      "file": "assets/ui/road-environment/daejeon-v1.webp",
+      "sha256": "e6c548d153aff539b1bc6650acd5e5fc30006ae1375e7acfb1c53c94764a2c89",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "nonsan",
+      "name": "논산 평야",
+      "file": "assets/ui/road-environment/nonsan-v1.webp",
+      "sha256": "09c6e183a77238e8bf184d1385260b20df2a76d3e615391df5c1f8da52de5022",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gongju",
+      "name": "공주 산성",
+      "file": "assets/ui/road-environment/gongju-v1.webp",
+      "sha256": "95816e42992058b65a89964cb2f2584ceeba7c348ad3befdf855d7909157c2e4",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "cheongju",
+      "name": "청주 방송국",
+      "file": "assets/ui/road-environment/cheongju-v1.webp",
+      "sha256": "25d989698bc6dd9bb84f30136424894656bd3b2639280c321e872418927beb83",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "cheonan",
+      "name": "천안 삼거리",
+      "file": "assets/ui/road-environment/cheonan-v1.webp",
+      "sha256": "f2f317adf1d6701f1fd01e0175d38c782e6aa155b16486b534160c25d3b7e68c",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "pyeongtaek",
+      "name": "평택 항구도로",
+      "file": "assets/ui/road-environment/pyeongtaek-v1.webp",
+      "sha256": "a056571d60d8bc5224d75fe9e61eb97a174f9d735b1e89d390a2e69a3f031cad",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "suwon",
+      "name": "수원 성곽 공동체",
+      "file": "assets/ui/road-environment/suwon-v1.webp",
+      "sha256": "4e8dea2aec72b292a48eedcbbc186d2c4e47d902153c26a4983d68626db7e270",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "seoul",
+      "name": "서울 — 남산",
+      "file": "assets/ui/road-environment/seoul-v1.webp",
+      "sha256": "1067b9ede212e34f99894b92bad28e0f4b449dded6da48144d14a118b6552e56",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "lake",
+      "name": "낚시꾼의 호수",
+      "file": "assets/ui/road-environment/lake-v1.webp",
+      "sha256": "7fa011ccd899896c654d23052dde9dec6d239f9c56393ddf4ffd793bcdcfb52a",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "mall",
+      "name": "유령 백화점",
+      "file": "assets/ui/road-environment/mall-v1.webp",
+      "sha256": "9bbdf866b802a4b100ed4f30601baf5ecd2f38160f844b4d5ddd3da1d7f2762d",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "tower",
+      "name": "송전 통신탑",
+      "file": "assets/ui/road-environment/tower-v1.webp",
+      "sha256": "040c1ffdd5b99031c15108e08f65e11df038540f0098f98abf1a4d6c3d31d79b",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "spring",
+      "name": "달빛 온천",
+      "file": "assets/ui/road-environment/spring-v1.webp",
+      "sha256": "8b141e11441ab03c50273212592bdb9fe25c57437847388143bbda80a75dba32",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "airfield",
+      "name": "폐 군 비행장",
+      "file": "assets/ui/road-environment/airfield-v1.webp",
+      "sha256": "bfd478af658ad93fbe30fec27d56bdcdca1004e6c1797e63697e59a600a3eab0",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "solar",
+      "name": "태양광 농장",
+      "file": "assets/ui/road-environment/solar-v1.webp",
+      "sha256": "d3b50b1de7cbb6855881d1df73d7121c00e093dcca517cc808b71bbefc99309b",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "reststop",
+      "name": "잠든 휴게소",
+      "file": "assets/ui/road-environment/reststop-v1.webp",
+      "sha256": "848bffdf30c030a7237947ea285d6a61d4633881b1450eacd528461901528555",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "tunnelbook",
+      "name": "책의 터널",
+      "file": "assets/ui/road-environment/tunnelbook-v1.webp",
+      "sha256": "b20d30671f565dc323c33344e95a23d596650defcc37b677aacef48d663d76ce",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "ulsan",
+      "name": "울산 공업탑",
+      "file": "assets/ui/road-environment/ulsan-v1.webp",
+      "sha256": "952ab813f2a8ba3ba10249ae2a0bdd75624148faa3fd3a9e065b1fa5e6079e6f",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "yeosu",
+      "name": "여수 밤바다",
+      "file": "assets/ui/road-environment/yeosu-v1.webp",
+      "sha256": "c9700f0c1f409d66ebc54b95ed1cfacb2279610b997bc991d067d3975e696b4c",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "suncheon",
+      "name": "순천만 갈대밭",
+      "file": "assets/ui/road-environment/suncheon-v1.webp",
+      "sha256": "f9e91f7a63c5c03f4535a53031b4f458be32c931a35c08ceedb60e362f12a8e9",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gwangju",
+      "name": "광주 대인시장",
+      "file": "assets/ui/road-environment/gwangju-v1.webp",
+      "sha256": "0e7374109443e7d2aa045711cf8ad46680e59d713592f44cabd4eb60e793c5b0",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "damyang",
+      "name": "담양 대숲",
+      "file": "assets/ui/road-environment/damyang-v1.webp",
+      "sha256": "9ce9ad26b53ab693c6500e997b7e7e6cdcd67ee62bc7a924c17f42c936a26c5a",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "mokpo",
+      "name": "목포 여객터미널",
+      "file": "assets/ui/road-environment/mokpo-v1.webp",
+      "sha256": "68d42ca297f914bee16fd7cb865d9902c98b5f89faef42efade18766ebd8b773",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "andong",
+      "name": "안동 하회마을",
+      "file": "assets/ui/road-environment/andong-v1.webp",
+      "sha256": "27cec9a7f6f3e3de4f65df015220e56e0880b426a36f0248f058aed27aaff4c3",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "mungyeong",
+      "name": "문경새재",
+      "file": "assets/ui/road-environment/mungyeong-v1.webp",
+      "sha256": "931d043a208bef36556d3d49b999598ec38e59cb6f4e85a3275a50f46d84bf6a",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "danyang",
+      "name": "단양 강변",
+      "file": "assets/ui/road-environment/danyang-v1.webp",
+      "sha256": "b3a69cec4b266bd3f725f73c98fee47e1c7cdb8988aced12918e3e439448ff00",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "wonju",
+      "name": "원주 치악산 아래",
+      "file": "assets/ui/road-environment/wonju-v1.webp",
+      "sha256": "8f12d06e50610dcaa6e47845f0984b760ced5b8f49b44ed728c214a7c3ac9eb3",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "daegwallyeong",
+      "name": "대관령 고갯마루",
+      "file": "assets/ui/road-environment/daegwallyeong-v1.webp",
+      "sha256": "a90047c92f5e54ce6237f5a2fc2e9ce5dbe10d026655fd76be1128b2ad6db7b5",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gangneung",
+      "name": "강릉 경포",
+      "file": "assets/ui/road-environment/gangneung-v1.webp",
+      "sha256": "f031e2d234482845521dcae1ca174bbb341d1804c5551f9cadf77c44a5116b0b",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "sokcho",
+      "name": "속초 항",
+      "file": "assets/ui/road-environment/sokcho-v1.webp",
+      "sha256": "ba9276d34a3e82a86479a4c56c77a336420f9abc3b2dfabc06c30edfe0363e34",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "icheon",
+      "name": "이천 가마터",
+      "file": "assets/ui/road-environment/icheon-v1.webp",
+      "sha256": "3fe1a1055a9a702ddb26bf440a032fd6430a3d9ce22215cce14c5e0d53df7c95",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gyeongju",
+      "name": "경주 왕릉",
+      "file": "assets/ui/road-environment/gyeongju-v1.webp",
+      "sha256": "5f0c5c8c1185ec37ec0a80b6bd109b72cb455a2308d30f04b77157252f987dc8",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "pohang",
+      "name": "포항 제철소",
+      "file": "assets/ui/road-environment/pohang-v1.webp",
+      "sha256": "d6682104f150d583817a3c40fdbd1c57fe62205a8209f7bf4d6524f874a46967",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "sangju",
+      "name": "상주 자전거길",
+      "file": "assets/ui/road-environment/sangju-v1.webp",
+      "sha256": "a682ccab83b08dbcbbc3625dc6b93f5d783e35969a48d4f36eb82f9b55c05838",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "gunsan",
+      "name": "군산 내항",
+      "file": "assets/ui/road-environment/gunsan-v1.webp",
+      "sha256": "ed608741782e261a46bfe73276266bb7b43c4c1e6f54281b08b50bc928d63c90",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "chungju",
+      "name": "충주호",
+      "file": "assets/ui/road-environment/chungju-v1.webp",
+      "sha256": "5f37b6b1a820124d2227318d4f6a2a4ed6a12b023acd39addd1fac7cad8c90d4",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "sejong",
+      "name": "세종 신도시",
+      "file": "assets/ui/road-environment/sejong-v1.webp",
+      "sha256": "4c2e4a7e9647bff8395f0e8b6d68f29fe8fdc77f32436d627b7787f564b98ab5",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "lighthouse",
+      "name": "서해 등대",
+      "file": "assets/ui/road-environment/lighthouse-v1.webp",
+      "sha256": "d2cecb494920e69e45d84772c60652d5108f4c798a7d5827f73d5e8acfd1df93",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "drivein",
+      "name": "달빛 자동차극장",
+      "file": "assets/ui/road-environment/drivein-v1.webp",
+      "sha256": "4ac130488f937b6956f802723775e7326f0b84854d8a3b1ea3f3602c0311c1ec",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "sunflower",
+      "name": "해바라기 밭",
+      "file": "assets/ui/road-environment/sunflower-v1.webp",
+      "sha256": "986dbfe18cd36de89bc41da7a7e1d913cea28b191ab89d0845b91ef9b1ba909b",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "maehwa",
+      "name": "섬진강 매화마을",
+      "file": "assets/ui/road-environment/maehwa-v1.webp",
+      "sha256": "2a8604c0556eed71bc3a17934bba2ba19d9bc528ed31a146accfeef5d1e52d76",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "mingyu_ridge",
+      "name": "민규의 능선",
+      "file": "assets/ui/road-environment/mingyu_ridge-v1.webp",
+      "sha256": "ac60d3af740644c311b715393346e27e603c04e24c9fc85ec20d1e792ec71d8e",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "jaeyi_cache",
+      "name": "재이의 창고",
+      "file": "assets/ui/road-environment/jaeyi_cache-v1.webp",
+      "sha256": "351cf18594cf3246aab94a0ea02a357239697032e3ea3cbec03c27277363a8c3",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "cablecar",
+      "name": "멈춘 케이블카",
+      "file": "assets/ui/road-environment/cablecar-v1.webp",
+      "sha256": "c9cd2e58e908c8583d55b109ccb1682787d57d81d4336827a3f904c7ad6b5a91",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    },
+    {
+      "id": "filmset",
+      "name": "시대극 세트장",
+      "file": "assets/ui/road-environment/filmset-v1.webp",
+      "sha256": "c7d59f0a07d82d6d39508243a526f35b089d39f5829be8e6290995da1af9e63e",
+      "orientation": "unmirrored",
+      "baseline": 0.72
+    }
+  ],
+  "routes": [
+    {
+      "id": "busan--yangsan",
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "fromCity": "busan",
+      "toCity": "yangsan"
+    },
+    {
+      "id": "busan--gimhae",
+      "from": "busan",
+      "to": "gimhae",
+      "km": 18,
+      "fromCity": "busan",
+      "toCity": "gimhae"
+    },
+    {
+      "id": "miryang--yangsan",
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "fromCity": "yangsan",
+      "toCity": "miryang"
+    },
+    {
+      "id": "gimhae--jinju",
+      "from": "gimhae",
+      "to": "jinju",
+      "km": 55,
+      "fromCity": "gimhae",
+      "toCity": "jinju"
+    },
+    {
+      "id": "daegu--miryang",
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "fromCity": "miryang",
+      "toCity": "daegu"
+    },
+    {
+      "id": "hapcheon--miryang",
+      "from": "miryang",
+      "to": "hapcheon",
+      "km": 40,
+      "fromCity": "miryang",
+      "toCity": "hapcheon"
+    },
+    {
+      "id": "geochang--hapcheon",
+      "from": "hapcheon",
+      "to": "geochang",
+      "km": 33,
+      "fromCity": "hapcheon",
+      "toCity": "geochang"
+    },
+    {
+      "id": "geochang--muju",
+      "from": "geochang",
+      "to": "muju",
+      "km": 42,
+      "fromCity": "geochang",
+      "toCity": "muju"
+    },
+    {
+      "id": "muju--yeongdong",
+      "from": "muju",
+      "to": "yeongdong",
+      "km": 32,
+      "fromCity": "muju",
+      "toCity": "yeongdong"
+    },
+    {
+      "id": "jinju--namwon",
+      "from": "jinju",
+      "to": "namwon",
+      "km": 62,
+      "fromCity": "jinju",
+      "toCity": "namwon"
+    },
+    {
+      "id": "jeonju--namwon",
+      "from": "namwon",
+      "to": "jeonju",
+      "km": 48,
+      "fromCity": "namwon",
+      "toCity": "jeonju"
+    },
+    {
+      "id": "jeonju--nonsan",
+      "from": "jeonju",
+      "to": "nonsan",
+      "km": 52,
+      "fromCity": "jeonju",
+      "toCity": "nonsan"
+    },
+    {
+      "id": "gongju--nonsan",
+      "from": "nonsan",
+      "to": "gongju",
+      "km": 34,
+      "fromCity": "nonsan",
+      "toCity": "gongju"
+    },
+    {
+      "id": "cheonan--gongju",
+      "from": "gongju",
+      "to": "cheonan",
+      "km": 44,
+      "fromCity": "gongju",
+      "toCity": "cheonan"
+    },
+    {
+      "id": "daejeon--nonsan",
+      "from": "nonsan",
+      "to": "daejeon",
+      "km": 40,
+      "fromCity": "nonsan",
+      "toCity": "daejeon"
+    },
+    {
+      "id": "daegu--gumi",
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "fromCity": "daegu",
+      "toCity": "gumi"
+    },
+    {
+      "id": "gimcheon--gumi",
+      "from": "gumi",
+      "to": "gimcheon",
+      "km": 26,
+      "fromCity": "gumi",
+      "toCity": "gimcheon"
+    },
+    {
+      "id": "gimcheon--yeongdong",
+      "from": "gimcheon",
+      "to": "yeongdong",
+      "km": 33,
+      "fromCity": "gimcheon",
+      "toCity": "yeongdong"
+    },
+    {
+      "id": "gimcheon--muju",
+      "from": "gimcheon",
+      "to": "muju",
+      "km": 38,
+      "fromCity": "gimcheon",
+      "toCity": "muju"
+    },
+    {
+      "id": "daejeon--yeongdong",
+      "from": "yeongdong",
+      "to": "daejeon",
+      "km": 44,
+      "fromCity": "yeongdong",
+      "toCity": "daejeon"
+    },
+    {
+      "id": "cheongju--daejeon",
+      "from": "daejeon",
+      "to": "cheongju",
+      "km": 34,
+      "fromCity": "daejeon",
+      "toCity": "cheongju"
+    },
+    {
+      "id": "cheonan--cheongju",
+      "from": "cheongju",
+      "to": "cheonan",
+      "km": 38,
+      "fromCity": "cheongju",
+      "toCity": "cheonan"
+    },
+    {
+      "id": "cheonan--pyeongtaek",
+      "from": "cheonan",
+      "to": "pyeongtaek",
+      "km": 28,
+      "fromCity": "cheonan",
+      "toCity": "pyeongtaek"
+    },
+    {
+      "id": "pyeongtaek--suwon",
+      "from": "pyeongtaek",
+      "to": "suwon",
+      "km": 30,
+      "fromCity": "pyeongtaek",
+      "toCity": "suwon"
+    },
+    {
+      "id": "seoul--suwon",
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "fromCity": "suwon",
+      "toCity": "seoul"
+    },
+    {
+      "id": "geochang--namwon",
+      "from": "namwon",
+      "to": "geochang",
+      "km": 44,
+      "fromCity": "namwon",
+      "toCity": "geochang"
+    },
+    {
+      "id": "jeonju--muju",
+      "from": "jeonju",
+      "to": "muju",
+      "km": 55,
+      "fromCity": "jeonju",
+      "toCity": "muju"
+    },
+    {
+      "id": "lake--miryang",
+      "from": "lake",
+      "to": "miryang",
+      "km": 14,
+      "fromCity": "lake",
+      "toCity": "miryang"
+    },
+    {
+      "id": "daegu--lake",
+      "from": "lake",
+      "to": "daegu",
+      "km": 20,
+      "fromCity": "lake",
+      "toCity": "daegu"
+    },
+    {
+      "id": "gumi--mall",
+      "from": "mall",
+      "to": "gumi",
+      "km": 8,
+      "fromCity": "mall",
+      "toCity": "gumi"
+    },
+    {
+      "id": "geochang--tower",
+      "from": "tower",
+      "to": "geochang",
+      "km": 11,
+      "fromCity": "tower",
+      "toCity": "geochang"
+    },
+    {
+      "id": "spring--yeongdong",
+      "from": "spring",
+      "to": "yeongdong",
+      "km": 9,
+      "fromCity": "spring",
+      "toCity": "yeongdong"
+    },
+    {
+      "id": "airfield--nonsan",
+      "from": "airfield",
+      "to": "nonsan",
+      "km": 12,
+      "fromCity": "airfield",
+      "toCity": "nonsan"
+    },
+    {
+      "id": "pyeongtaek--solar",
+      "from": "solar",
+      "to": "pyeongtaek",
+      "km": 10,
+      "fromCity": "solar",
+      "toCity": "pyeongtaek"
+    },
+    {
+      "id": "gimcheon--reststop",
+      "from": "reststop",
+      "to": "gimcheon",
+      "km": 7,
+      "fromCity": "reststop",
+      "toCity": "gimcheon"
+    },
+    {
+      "id": "muju--tunnelbook",
+      "from": "tunnelbook",
+      "to": "muju",
+      "km": 9,
+      "fromCity": "tunnelbook",
+      "toCity": "muju"
+    },
+    {
+      "id": "mingyu_ridge--yeongdong",
+      "from": "mingyu_ridge",
+      "to": "yeongdong",
+      "km": 13,
+      "fromCity": "mingyu_ridge",
+      "toCity": "yeongdong"
+    },
+    {
+      "id": "gimcheon--jaeyi_cache",
+      "from": "jaeyi_cache",
+      "to": "gimcheon",
+      "km": 8,
+      "fromCity": "jaeyi_cache",
+      "toCity": "gimcheon"
+    },
+    {
+      "id": "cablecar--mungyeong",
+      "from": "cablecar",
+      "to": "mungyeong",
+      "km": 16,
+      "fromCity": "cablecar",
+      "toCity": "mungyeong"
+    },
+    {
+      "id": "filmset--namwon",
+      "from": "filmset",
+      "to": "namwon",
+      "km": 14,
+      "fromCity": "filmset",
+      "toCity": "namwon"
+    },
+    {
+      "id": "lighthouse--nonsan",
+      "from": "lighthouse",
+      "to": "nonsan",
+      "km": 15,
+      "fromCity": "lighthouse",
+      "toCity": "nonsan"
+    },
+    {
+      "id": "cheonan--drivein",
+      "from": "drivein",
+      "to": "cheonan",
+      "km": 9,
+      "fromCity": "drivein",
+      "toCity": "cheonan"
+    },
+    {
+      "id": "hapcheon--sunflower",
+      "from": "sunflower",
+      "to": "hapcheon",
+      "km": 8,
+      "fromCity": "sunflower",
+      "toCity": "hapcheon"
+    },
+    {
+      "id": "ulsan--yangsan",
+      "from": "yangsan",
+      "to": "ulsan",
+      "km": 32,
+      "fromCity": "yangsan",
+      "toCity": "ulsan"
+    },
+    {
+      "id": "gyeongju--ulsan",
+      "from": "ulsan",
+      "to": "gyeongju",
+      "km": 34,
+      "fromCity": "ulsan",
+      "toCity": "gyeongju"
+    },
+    {
+      "id": "daegu--gyeongju",
+      "from": "gyeongju",
+      "to": "daegu",
+      "km": 52,
+      "fromCity": "gyeongju",
+      "toCity": "daegu"
+    },
+    {
+      "id": "gyeongju--pohang",
+      "from": "gyeongju",
+      "to": "pohang",
+      "km": 30,
+      "fromCity": "gyeongju",
+      "toCity": "pohang"
+    },
+    {
+      "id": "gimcheon--sangju",
+      "from": "gimcheon",
+      "to": "sangju",
+      "km": 26,
+      "fromCity": "gimcheon",
+      "toCity": "sangju"
+    },
+    {
+      "id": "sangju--yeongdong",
+      "from": "sangju",
+      "to": "yeongdong",
+      "km": 34,
+      "fromCity": "sangju",
+      "toCity": "yeongdong"
+    },
+    {
+      "id": "gunsan--jeonju",
+      "from": "jeonju",
+      "to": "gunsan",
+      "km": 32,
+      "fromCity": "jeonju",
+      "toCity": "gunsan"
+    },
+    {
+      "id": "gunsan--lighthouse",
+      "from": "gunsan",
+      "to": "lighthouse",
+      "km": 12,
+      "fromCity": "gunsan",
+      "toCity": "lighthouse"
+    },
+    {
+      "id": "cheongju--chungju",
+      "from": "cheongju",
+      "to": "chungju",
+      "km": 40,
+      "fromCity": "cheongju",
+      "toCity": "chungju"
+    },
+    {
+      "id": "gongju--sejong",
+      "from": "gongju",
+      "to": "sejong",
+      "km": 16,
+      "fromCity": "gongju",
+      "toCity": "sejong"
+    },
+    {
+      "id": "daejeon--sejong",
+      "from": "sejong",
+      "to": "daejeon",
+      "km": 20,
+      "fromCity": "sejong",
+      "toCity": "daejeon"
+    },
+    {
+      "id": "cheongju--sejong",
+      "from": "sejong",
+      "to": "cheongju",
+      "km": 24,
+      "fromCity": "sejong",
+      "toCity": "cheongju"
+    },
+    {
+      "id": "jinju--yeosu",
+      "from": "jinju",
+      "to": "yeosu",
+      "km": 48,
+      "fromCity": "jinju",
+      "toCity": "yeosu"
+    },
+    {
+      "id": "suncheon--yeosu",
+      "from": "yeosu",
+      "to": "suncheon",
+      "km": 24,
+      "fromCity": "yeosu",
+      "toCity": "suncheon"
+    },
+    {
+      "id": "namwon--suncheon",
+      "from": "suncheon",
+      "to": "namwon",
+      "km": 44,
+      "fromCity": "suncheon",
+      "toCity": "namwon"
+    },
+    {
+      "id": "gwangju--suncheon",
+      "from": "suncheon",
+      "to": "gwangju",
+      "km": 40,
+      "fromCity": "suncheon",
+      "toCity": "gwangju"
+    },
+    {
+      "id": "damyang--gwangju",
+      "from": "gwangju",
+      "to": "damyang",
+      "km": 14,
+      "fromCity": "gwangju",
+      "toCity": "damyang"
+    },
+    {
+      "id": "damyang--namwon",
+      "from": "damyang",
+      "to": "namwon",
+      "km": 24,
+      "fromCity": "damyang",
+      "toCity": "namwon"
+    },
+    {
+      "id": "gwangju--mokpo",
+      "from": "gwangju",
+      "to": "mokpo",
+      "km": 44,
+      "fromCity": "gwangju",
+      "toCity": "mokpo"
+    },
+    {
+      "id": "gwangju--jeonju",
+      "from": "gwangju",
+      "to": "jeonju",
+      "km": 48,
+      "fromCity": "gwangju",
+      "toCity": "jeonju"
+    },
+    {
+      "id": "maehwa--suncheon",
+      "from": "suncheon",
+      "to": "maehwa",
+      "km": 14,
+      "fromCity": "suncheon",
+      "toCity": "maehwa"
+    },
+    {
+      "id": "andong--gumi",
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "fromCity": "gumi",
+      "toCity": "andong"
+    },
+    {
+      "id": "andong--danyang",
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "fromCity": "andong",
+      "toCity": "danyang"
+    },
+    {
+      "id": "mungyeong--sangju",
+      "from": "sangju",
+      "to": "mungyeong",
+      "km": 26,
+      "fromCity": "sangju",
+      "toCity": "mungyeong"
+    },
+    {
+      "id": "chungju--mungyeong",
+      "from": "mungyeong",
+      "to": "chungju",
+      "km": 38,
+      "fromCity": "mungyeong",
+      "toCity": "chungju"
+    },
+    {
+      "id": "chungju--danyang",
+      "from": "danyang",
+      "to": "chungju",
+      "km": 30,
+      "fromCity": "danyang",
+      "toCity": "chungju"
+    },
+    {
+      "id": "icheon--suwon",
+      "from": "suwon",
+      "to": "icheon",
+      "km": 34,
+      "fromCity": "suwon",
+      "toCity": "icheon"
+    },
+    {
+      "id": "chungju--icheon",
+      "from": "icheon",
+      "to": "chungju",
+      "km": 46,
+      "fromCity": "icheon",
+      "toCity": "chungju"
+    },
+    {
+      "id": "chungju--wonju",
+      "from": "chungju",
+      "to": "wonju",
+      "km": 36,
+      "fromCity": "chungju",
+      "toCity": "wonju"
+    },
+    {
+      "id": "danyang--wonju",
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "fromCity": "danyang",
+      "toCity": "wonju"
+    },
+    {
+      "id": "daegwallyeong--wonju",
+      "from": "wonju",
+      "to": "daegwallyeong",
+      "km": 44,
+      "fromCity": "wonju",
+      "toCity": "daegwallyeong"
+    },
+    {
+      "id": "daegwallyeong--gangneung",
+      "from": "daegwallyeong",
+      "to": "gangneung",
+      "km": 22,
+      "fromCity": "daegwallyeong",
+      "toCity": "gangneung"
+    },
+    {
+      "id": "gangneung--sokcho",
+      "from": "gangneung",
+      "to": "sokcho",
+      "km": 40,
+      "fromCity": "gangneung",
+      "toCity": "sokcho"
+    },
+    {
+      "id": "gangneung--pohang",
+      "from": "gangneung",
+      "to": "pohang",
+      "km": 82,
+      "fromCity": "gangneung",
+      "toCity": "pohang"
+    },
+    {
+      "id": "icheon--wonju",
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "fromCity": "wonju",
+      "toCity": "icheon"
+    }
+  ]
+}

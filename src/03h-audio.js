@@ -55,3 +55,45 @@ D.vo.cheollian_core_12='__VO_CHEOLLIAN_CORE_12__';
 D.vo.cheollian_core_13='__VO_CHEOLLIAN_CORE_13__';
 D.vo.cheollian_core_14='__VO_CHEOLLIAN_CORE_14__';
 D.vo.cheollian_core_15='__VO_CHEOLLIAN_CORE_15__';
+
+/* Free-plan ElevenLabs auditions: local Studio only, NEVER embedded in release.
+   Licensing/listening provenance stays beside each batch's masters. */
+D.detailSfx={};
+for(const name of ['rain_cab_light','rain_cab_heavy','rain_outdoor_light','rain_outdoor_heavy',
+  'rain_shelter','wipers','wind_gentle','wind_storm','forest_day','night_insects','camp_fire',
+  'river','tunnel','thunder_distant','steps_gravel','steps_wood','steps_metal','door_latch',
+  'cloth','water_pour','bottle','meal','stove','repair_ratchet','repair_hammer','coins',
+  'notebook','switch','cassette','dog_breath']){
+  D.detailSfx['detail_'+name]='audio/auditions/elevenlabs-world-details-v1-20261010T152806Z/'+name+'.mp3';
+}
+for(const name of ['tool_sorting','paper_fold','cup_set_down','radio_tuning','generator_shutdown','bag_packing']){
+  D.detailSfx['detail_'+name]='audio/auditions/elevenlabs-intro-20261010T152018Z/'+name+'.mp3';
+}
+// Three distinct takes for repeated foley. The original stays in each pool;
+// an audio-only selector avoids immediate repeats and never advances game RNG.
+D.detailSfxVariants={};
+for(const weight of ['light','heavy']) D.detailSfx['detail_rain_cab_'+weight]=
+  'audio/auditions/rain-cab-v2/rain_cab_'+weight+'_v2.mp3';
+for(const name of ['steps_gravel','steps_wood','paper_fold','repair_ratchet','bag_packing']){
+  const key='detail_'+name;
+  for(const take of ['b','c']) D.detailSfx[key+'_'+take]=
+    'audio/auditions/elevenlabs-refinement-v2-20261010T161903Z/'+name+'_'+take+'.mp3';
+  D.detailSfxVariants[key]=[key,key+'_b',key+'_c'];
+}
+// Explicit action indexes. Never scan remembered dialogue for physical sounds.
+D.introSoundCues={
+  'intro-busan-room-morning-v1':{0:'detail_door_latch',1:'detail_cup_set_down',5:'detail_notebook',7:'detail_steps_wood'},
+  'intro-busan-workday-v1':{0:'detail_cloth',2:'detail_tool_sorting'},
+  'intro-workday-return-v1':{1:'detail_cloth',5:'detail_repair_ratchet',11:'detail_bag_packing'},
+  'intro-busan-evening-call-v1':{0:'detail_tool_sorting',1:'detail_radio_tuning',7:'detail_bag_packing'},
+  'intro-busan-water-line-v1':{4:'detail_water_pour',7:'detail_tool_sorting',11:'detail_water_pour'},
+  'intro-busan-cold-storage-v1':{6:'detail_door_latch',7:'detail_switch',12:'detail_paper_fold'},
+  'intro-busan-generator-night-v1':{5:'detail_notebook',10:'detail_cup_set_down'},
+  'intro-appeal-denied':{0:'detail_paper_fold'}
+};
+D.audioSceneContexts={
+  'event-explore-retail':'indoors','event-explore-civic':'indoors','event-explore-school':'indoors',
+  'event-explore-workshop':'indoors','event-explore-shelter':'shelter',
+  'event-find-broadcast-station-v1':'indoors','seoul-core':'indoors',
+  'event-companion-camp':'camp','event-companion-meal':'camp'
+};

@@ -1,0 +1,7 @@
+{
+  "id":"rain-detail-v2",
+  "clips":[
+    {"name":"rain_glass_light","seconds":12,"loop":true,"prompt":"Seamless close-up sound of light rain striking the thin windshield and tin roof of a parked old truck. Bright fine ticks, delicate higher-pitched droplets, small clear hollow metallic taps and short splashes. Dry intimate acoustic perspective just behind the glass. Gentle evenly distributed patter with airy crisp detail, minimal bass and quiet background. No wind, engine, wipers, thunder, speech or music."},
+    {"name":"rain_glass_heavy","seconds":12,"loop":true,"prompt":"Seamless dense rain pattering on thin glass and a tin truck roof, recorded up close just inside the cabin. Many crisp bright droplets, rapid small metallic ticks and little splashes, clearly separated transient detail over an airy rain wash. Restrained low frequencies, steady natural intensity, textured rather than a deep roar. No engine, wipers, thunder, wind, speech or music."}
+  ]
+}

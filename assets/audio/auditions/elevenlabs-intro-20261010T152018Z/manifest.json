@@ -1,0 +1,250 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_text_to_sound_v2",
+  "generated_at": "20261010T152018Z",
+  "subscription_before": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 0,
+    "character_limit": 10000
+  },
+  "estimated_credits": 880,
+  "commercial_release": false,
+  "licensing": "Generated on Free. Noncommercial audition only; public sharing requires attribution. Do not ship commercially. Regenerate while paid or obtain explicit rights.",
+  "license_source": "https://help.elevenlabs.io/hc/en-us/articles/13313564601361-Can-I-publish-the-content-I-generate-on-the-platform",
+  "game_wired": true,
+  "integration_scope": "Local Studio preview-only intro/action cues, staged behind live apply. Generator shutdown is reserved until an explicit shutdown beat. No Free audio bytes embedded in release.",
+  "listening_review": "pending",
+  "clips": [
+    {
+      "name": "tool_sorting",
+      "prompt": "Close dry Foley: a mechanic's hands quietly sort three worn steel sockets and a small ratchet onto a wooden workbench. Separate light clinks, cloth scraping wood, natural pauses. Intimate small repair shop, restrained realistic dynamics. No voices, music, alarms or cinematic impacts.",
+      "request": {
+        "text": "Close dry Foley: a mechanic's hands quietly sort three worn steel sockets and a small ratchet onto a wooden workbench. Separate light clinks, cloth scraping wood, natural pauses. Intimate small repair shop, restrained realistic dynamics. No voices, music, alarms or cinematic impacts.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "44072ef6d3f357ba62e5da3e8ec674bbc06337e594b4e17b67c0f42f8ff3efb7",
+      "file": "tool_sorting.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending",
+      "verification": {
+        "decoded": true,
+        "duration_seconds": 3.030204,
+        "peak_dbfs": -4.687176,
+        "rms_dbfs": -29.666178,
+        "listening_review": "pending"
+      }
+    },
+    {
+      "name": "paper_fold",
+      "prompt": "Close dry Foley: one old paper letter unfolded, gently flattened by a hand, then folded once. Soft textured paper rustle, deliberate human movement, quiet space between gestures. No voices, music, wind or exaggerated whooshes.",
+      "request": {
+        "text": "Close dry Foley: one old paper letter unfolded, gently flattened by a hand, then folded once. Soft textured paper rustle, deliberate human movement, quiet space between gestures. No voices, music, wind or exaggerated whooshes.",
+        "duration_seconds": 3,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "30",
+      "master_sha256": "67ebea9610798ae957167ae57885f424b5a9c3a48e1862c6677f4c168a97a718",
+      "file": "paper_fold.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.030204",
+          "size": "36719"
+        }
+      },
+      "listening_review": "pending",
+      "verification": {
+        "decoded": true,
+        "duration_seconds": 3.030204,
+        "peak_dbfs": -4.823363,
+        "rms_dbfs": -34.714864,
+        "listening_review": "pending"
+      }
+    },
+    {
+      "name": "cup_set_down",
+      "prompt": "Close dry Foley: a single ceramic mug gently set down on a worn wooden kitchen shelf, a small dull ceramic tap and very short natural room reflection. An ordinary quiet morning, not dramatic. No liquid pouring, voices, music or other objects.",
+      "request": {
+        "text": "Close dry Foley: a single ceramic mug gently set down on a worn wooden kitchen shelf, a small dull ceramic tap and very short natural room reflection. An ordinary quiet morning, not dramatic. No liquid pouring, voices, music or other objects.",
+        "duration_seconds": 2,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "20",
+      "master_sha256": "020eccd33006d2c97fe7bd3576347e51a98831aead6720e37ee86b1ebd74a9eb",
+      "file": "cup_set_down.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.037551",
+          "size": "24808"
+        }
+      },
+      "listening_review": "pending",
+      "verification": {
+        "decoded": true,
+        "duration_seconds": 2.037551,
+        "peak_dbfs": -4.940189,
+        "rms_dbfs": -32.362142,
+        "listening_review": "pending"
+      }
+    },
+    {
+      "name": "radio_tuning",
+      "prompt": "An old small shortwave radio knob slowly turned: soft switch click, narrow-band crackle and brief static rising then settling to a quiet hiss. Heard from nearby inside a modest workshop. No intelligible speech, broadcasts, music or loud squeals.",
+      "request": {
+        "text": "An old small shortwave radio knob slowly turned: soft switch click, narrow-band crackle and brief static rising then settling to a quiet hiss. Heard from nearby inside a modest workshop. No intelligible speech, broadcasts, music or loud squeals.",
+        "duration_seconds": 4,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "40",
+      "master_sha256": "549febc6b7e49b039a2c894a25114ebc3736b0c2b57052f639f4b7c75c8b441e",
+      "file": "radio_tuning.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "4.048980",
+          "size": "48945"
+        }
+      },
+      "listening_review": "pending",
+      "verification": {
+        "decoded": true,
+        "duration_seconds": 4.04898,
+        "peak_dbfs": -4.564424,
+        "rms_dbfs": -27.308691,
+        "listening_review": "pending"
+      }
+    },
+    {
+      "name": "generator_shutdown",
+      "prompt": "A small old diesel generator heard from several metres away across a quiet courtyard. Steady low mechanical rumble at first, then power is switched off; the motor winds down unevenly and stops, leaving quiet air. Realistic gradual deceleration, no explosion. No voices, music or other machines.",
+      "request": {
+        "text": "A small old diesel generator heard from several metres away across a quiet courtyard. Steady low mechanical rumble at first, then power is switched off; the motor winds down unevenly and stops, leaving quiet air. Realistic gradual deceleration, no explosion. No voices, music or other machines.",
+        "duration_seconds": 6,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "60",
+      "master_sha256": "c991024da32fffcd84ca25267eb9666da92bb87cb9a2f5564eefcbdadd8a3787",
+      "file": "generator_shutdown.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "6.034286",
+          "size": "72768"
+        }
+      },
+      "listening_review": "pending",
+      "verification": {
+        "decoded": true,
+        "duration_seconds": 6.034286,
+        "peak_dbfs": -4.739491,
+        "rms_dbfs": -17.616784,
+        "listening_review": "pending"
+      }
+    },
+    {
+      "name": "bag_packing",
+      "prompt": "Close dry Foley: soft cotton clothes pressed into a canvas travel bag, canvas creaks, then a short zipper pulled shut. Gentle unhurried household movement with pauses, intimate realistic texture. No voices, footsteps, music or cinematic whooshes.",
+      "request": {
+        "text": "Close dry Foley: soft cotton clothes pressed into a canvas travel bag, canvas creaks, then a short zipper pulled shut. Gentle unhurried household movement with pauses, intimate realistic texture. No voices, footsteps, music or cinematic whooshes.",
+        "duration_seconds": 4,
+        "prompt_influence": 0.4,
+        "loop": false,
+        "model_id": "eleven_text_to_sound_v2"
+      },
+      "reported_credit_cost": "40",
+      "master_sha256": "776e3e356acb8d0d35d40c518a304b4fb796bd3fcd44e8eee14042e0a0afed2d",
+      "file": "bag_packing.mp3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "4.048980",
+          "size": "48945"
+        }
+      },
+      "listening_review": "pending",
+      "verification": {
+        "decoded": true,
+        "duration_seconds": 4.04898,
+        "peak_dbfs": -4.884938,
+        "rms_dbfs": -26.633381,
+        "listening_review": "pending"
+      }
+    }
+  ],
+  "subscription_after": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 220,
+    "character_limit": 10000
+  },
+  "delivery_processing": "Mono before loudness normalization; -24 LUFS/-4 dBTP target, additional -0.5 dB gain; MP3 44.1kHz mono 96kbps. Original masters preserved. Auditory quality not yet reviewed.",
+  "measured_usage_credits": 220
+}

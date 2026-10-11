@@ -1,7 +1,9 @@
 // Delivery conversion only. All visual edits are made with imagegen.
 const fs=require('node:fs'),path=require('node:path'),sharp=require('sharp');
 const repo=path.resolve(__dirname,'../..');
-const manifest=require('./story-scene-review/finale-provenance.json');
+const manifest=process.argv[2]
+  ? JSON.parse(fs.readFileSync(path.resolve(process.argv[2]),'utf8'))
+  : require('./story-scene-review/finale-provenance.json');
 async function main(){
   for(const row of manifest.images){
     const master=path.join(repo,row.master),asset=path.join(repo,row.asset);

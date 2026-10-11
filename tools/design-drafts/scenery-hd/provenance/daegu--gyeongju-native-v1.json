@@ -1,0 +1,87 @@
+{
+  "route": "daegu--gyeongju",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-7b96e9ea-22b9-40c8-9c14-ff7ba888d8e9.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 경주 왕릉 -> 대구 돔 시장, one real 52km normal corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 경주 왕릉; 왕릉 사이에 텐트 몇 동. 천년을 버틴 언덕들은 멸망도 대수롭지 않아 한다.; biome rural, distinctive terrain tumuli. RIGHT QUARTER: 대구 돔 시장; 야구장 지붕 아래 남부 최대의 시장이 산다.; biome city, distinctive terrain dome. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: low field plots, orchard rows, modest farm sheds and gently wooded hills connect the two actual endpoint landscapes; dense buildings thin naturally before returning at the destination. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/daegu--gyeongju-v1.png",
+  "sourceSha256": "227e436d4a0e63fbb12183df32b8a7182650859637796f0d3525a539ae9b2465",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/daegu--gyeongju-native-v1.webp",
+  "sha256": "1aad2e3f688646285b73b9db0c001b9f6a9745a7d717d41c017c51b2fe0ed4c3",
+  "bytes": 107468,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "gyeongju",
+      "file": "assets/ui/road-environment/gyeongju-v1.webp",
+      "sha256": "5f0c5c8c1185ec37ec0a80b6bd109b72cb455a2308d30f04b77157252f987dc8"
+    },
+    {
+      "id": "daegu",
+      "file": "assets/ui/road-environment/daegu-v1.webp",
+      "sha256": "247f596861feff0559938a96cbd9d16e6f89c2b180079d4da4aeee1eaafe1f87"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 251,
+    "edgeRidge": {
+      "left": 369,
+      "right": 392
+    },
+    "edgeDelta": {
+      "left": 48,
+      "right": 74
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 37.32,
+        "ridgeMaxAbs": 48,
+        "meanChannelDifference": 29.73
+      },
+      "right": {
+        "ridgeRms": 60.8,
+        "ridgeMaxAbs": 75,
+        "meanChannelDifference": 26.49
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "route": "damyang--namwon",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-22aa3e0e-58ab-422b-b5fc-a5f126b6aca8.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 담양 대숲 -> 남원 광한루, one real 24km normal corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 담양 대숲; 대나무 숲이 바람마다 파도 소리를 낸다. 바다에서 멀수록 크게.; biome bamboo, distinctive terrain bamboo. RIGHT QUARTER: 남원 광한루; 무너진 누각 옆에서 누군가 판소리를 연습하고 있었다는 소문.; biome rural, distinctive terrain pavilion. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: bamboo margins thin into villages and open river-valley fields near the modest historic pavilion. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/damyang--namwon-v1.png",
+  "sourceSha256": "e0800e4600ce1ebe4c07727657ec37e7ce7f71d5e6366bf274c8fd945a8c67dc",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/damyang--namwon-native-v1.webp",
+  "sha256": "71c1f938a102d9c6a0b7b19406f448bc57a1f1bd71f939980e6f758de0390250",
+  "bytes": 122020,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "damyang",
+      "file": "assets/ui/road-environment/damyang-v1.webp",
+      "sha256": "9ce9ad26b53ab693c6500e997b7e7e6cdcd67ee62bc7a924c17f42c936a26c5a"
+    },
+    {
+      "id": "namwon",
+      "file": "assets/ui/road-environment/namwon-v1.webp",
+      "sha256": "b29665d6931f1fd0e9b2c181ec3b1afdefad54bcff671cd0997f300dbda4464b"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 251,
+    "edgeRidge": {
+      "left": 296,
+      "right": 309
+    },
+    "edgeDelta": {
+      "left": -29,
+      "right": 14
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 25.57,
+        "ridgeMaxAbs": 30,
+        "meanChannelDifference": 28.51
+      },
+      "right": {
+        "ridgeRms": 21.65,
+        "ridgeMaxAbs": 27,
+        "meanChannelDifference": 35.01
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

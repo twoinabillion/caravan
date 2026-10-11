@@ -629,6 +629,12 @@ G.eventAvailable = (ev,context={})=>{
   if(ev.needFlagMin&&(S.flags[ev.needFlagMin[0]]||0)<ev.needFlagMin[1]) return false;
   if(ev.needsNpc&&!(S.npcs&&S.npcs[ev.needsNpc]&&S.npcs[ev.needsNpc].met)) return false;
   if(ev.night&&!night) return false;
+  // Narrative clock windows apply to both local and road pools. Reading and
+  // already-paid receipts stay frozen; this is only a new-entry condition.
+  if(ev.minuteWindow){
+    const minute=((S.min%1440)+1440)%1440;
+    if(minute<ev.minuteWindow[0]||minute>=ev.minuteWindow[1]) return false;
+  }
   if(ev.needsComp&&!G.hasComp(ev.needsComp)) return false;
   if(ev.needBond&&((S.comps[ev.needBond[0]]||{}).bond||0)<ev.needBond[1]) return false;
   if(ev.needsComp2&&!G.hasComp(ev.needsComp2)) return false;

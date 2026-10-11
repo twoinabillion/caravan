@@ -1,0 +1,81 @@
+{
+  "route": "busan--gimhae",
+  "version": 1,
+  "tool": "image_gen.imagegen",
+  "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-006f3a7d-a641-49d1-926a-46242da43d2c.png",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nUse case: compositing. Images1–4 are canonical STYLE/WORLD references only, never people or truck to copy. Image5 is the EDIT TARGET: a1024x576 terrain gap template. Its LEFT64px strip is the exact final64px of canonical 부산 감천 부두; its RIGHT64px strip the exact first64px of canonical 김해 들판. Fill ONLY missing center x64..959. Preserve both protected strips' contour height, geometry, color, texture scale and foreground density at proportional scale. Extend their actual contours smoothly through the center. Output only ONE continuous terrain component, never panels or the reference board.\nTechnical: transparent RGBA16:9 master at least1536x864. One screen of detailed terrain, NOT a3-screen panorama. Match natural detailed city textures without blurry resampling, vertical stretching, giant foreground mass or source blur. LEFT first ridge at233/576 from TOP (60% canvas from BOTTOM), RIGHT last ridge at314/576 from TOP (45% from BOTTOM). Do not lower the entire landscape or add a mountain step. Ground baseline and foreground density must remain fixed.\nMiddle corridor: port storage yards gradually give way to a low river plain, field plots and abandoned airport fringe; cranes only at the dock end. This is the terrain BETWEEN 부산 감천 부두 and 김해 들판, not permission to reproduce the complete cities, clone their principal landmarks or introduce an intermediate city. Constant distant side-view perspective, restrained desaturated blue-gray diffuse light.\nAlpha: only AIR ABOVE the connected organic silhouette is transparent. Terrain, water and every bottommost128row pixel must be solid alpha255. NO ground haze alpha, lower-edge fade, transparent water, border glow or colored matte fringe. Preserve genuine transparency above the ridge.\nExclude sky, sun, moon, clouds, foreground roads/lanes, vehicles, characters, weather, text, frame, panels, watermark, mirrored cities. anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "tools/design-drafts/scenery-hd/edge-guides/busan--gimhae.png"
+  ],
+  "master": "tools/design-drafts/scenery-hd/masters/busan--gimhae-v1.png",
+  "actualMaster": [
+    1672,
+    941
+  ],
+  "file": "assets/ui/road-connectors/busan--gimhae-v1.webp",
+  "sha256": "f6a2fcca91dae814671fc6cc63e77daa1283b717ea26dfe0ff0e9ab7ddc26c47",
+  "bytes": 168016,
+  "normalization": "Proportional resize1024px, sRGB WebPq94 alpha100; preserved alpha/no retouch/no upscale",
+  "canonicalCities": [
+    {
+      "id": "busan",
+      "file": "assets/ui/road-environment/busan-v1.webp",
+      "sha256": "47e8582fe192b02e52c9e994aabaae5b83ec92d368df9a1b87f4561dea2adb05"
+    },
+    {
+      "id": "gimhae",
+      "file": "assets/ui/road-environment/gimhae-v1.webp",
+      "sha256": "70302548d96ccf76e877ee9d9bdeace9f20435f97dace5d3cc476b95e7deffc4"
+    }
+  ],
+  "referenceInputs": [
+    {
+      "file": "assets/ui/road-environment/busan-v1.webp",
+      "sha256": "47e8582fe192b02e52c9e994aabaae5b83ec92d368df9a1b87f4561dea2adb05"
+    },
+    {
+      "file": "assets/ui/road-environment/gimhae-v1.webp",
+      "sha256": "70302548d96ccf76e877ee9d9bdeace9f20435f97dace5d3cc476b95e7deffc4"
+    },
+    {
+      "file": "tools/design-drafts/scenery-hd/edge-guides/busan--gimhae.png",
+      "sha256": "487b5554e8257e8f265fdcc093d39ec4598d1b07c8c3bcfd5e01b73a4b004ffe"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 248,
+    "edgeRidge": {
+      "left": 175,
+      "right": 269
+    },
+    "edgeDelta": {
+      "left": -58,
+      "right": -45
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 51.23,
+        "ridgeMaxAbs": 71,
+        "meanChannelDifference": 25.21
+      },
+      "right": {
+        "ridgeRms": 44.46,
+        "ridgeMaxAbs": 48,
+        "meanChannelDifference": 26.31
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false
+}

@@ -1,0 +1,87 @@
+{
+  "route": "hapcheon--miryang",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-7b41a8a0-730c-4e80-bfac-251e8dd58917.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 밀양 장터 -> 합천 과수원, one real 40km normal corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 밀양 장터; 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.; biome rural, distinctive terrain orchard. RIGHT QUARTER: 합천 과수원; 주인 잃은 사과나무들이 제멋대로 열매를 맺는다.; biome rural, distinctive terrain modest local landscape. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: low field plots, orchard rows, modest farm sheds and gently wooded hills connect the two actual endpoint landscapes; dense buildings thin naturally before returning at the destination. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/hapcheon--miryang-v1.png",
+  "sourceSha256": "930e8f56298873a99d8421f7b9ff2a359a1f1c7da1c3ad550fb20bd49ab7703f",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/hapcheon--miryang-native-v1.webp",
+  "sha256": "08d32a97e24b12f5dc09feeb4fc7516e15d27b12f20af93e9b7fe2e84154e1af",
+  "bytes": 143620,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "miryang",
+      "file": "assets/ui/road-environment/miryang-v1.webp",
+      "sha256": "a60f6140ad9b1751a1f03b5e698c602e03379ab3fd5d94811f251fe4ce862dc6"
+    },
+    {
+      "id": "hapcheon",
+      "file": "assets/ui/road-environment/hapcheon-v1.webp",
+      "sha256": "47e2043289cdc6635ce649263d88f3654114e26c9bac4a562695697a16de8a23"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 248,
+    "edgeRidge": {
+      "left": 357,
+      "right": 363
+    },
+    "edgeDelta": {
+      "left": 73,
+      "right": 49
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 73.07,
+        "ridgeMaxAbs": 75,
+        "meanChannelDifference": 30.74
+      },
+      "right": {
+        "ridgeRms": 35.06,
+        "ridgeMaxAbs": 49,
+        "meanChannelDifference": 26.9
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

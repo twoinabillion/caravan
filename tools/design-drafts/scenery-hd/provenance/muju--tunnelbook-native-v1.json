@@ -1,0 +1,87 @@
+{
+  "route": "muju--tunnelbook",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-5136376b-d4a4-46fb-a33f-9633e32dcc48.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 책의 터널 -> 무주 터널, one real 9km rough corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 책의 터널; 폐터널을 가득 채운 책더미. 누군가 도서관을 통째로 옮겨놨다.; biome mount, distinctive terrain modest local landscape. RIGHT QUARTER: 무주 터널; 산속 터널에 숨어 사는 공동체. 낯선 이를 반기지 않는다.; biome mount, distinctive terrain tunnel. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: wooded Korean foothills, small valley fields and occasional low farm sheds connect the two places; low readable terrain, no huge ridge hiding a seam. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/muju--tunnelbook-v1.png",
+  "sourceSha256": "8a3787aaef6c05dee090d8afbeb6349fb7334b483c39f3ad23907f97de79c1a7",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/muju--tunnelbook-native-v1.webp",
+  "sha256": "7ddf6331c09190f287d651d066b20a953109847dcc7a0bfb21c13c5d7a3fc33b",
+  "bytes": 144784,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "tunnelbook",
+      "file": "assets/ui/road-environment/tunnelbook-v1.webp",
+      "sha256": "b20d30671f565dc323c33344e95a23d596650defcc37b677aacef48d663d76ce"
+    },
+    {
+      "id": "muju",
+      "file": "assets/ui/road-environment/muju-v1.webp",
+      "sha256": "347f68054f8d40b8efa289d2ebfb2a1b706dc771250f27f1b11d7625c7750f29"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 250,
+    "edgeRidge": {
+      "left": 253,
+      "right": 281
+    },
+    "edgeDelta": {
+      "left": 93,
+      "right": -43
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 88.25,
+        "ridgeMaxAbs": 105,
+        "meanChannelDifference": 26.24
+      },
+      "right": {
+        "ridgeRms": 44.99,
+        "ridgeMaxAbs": 58,
+        "meanChannelDifference": 28.07
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

@@ -1,0 +1,64 @@
+/* Standalone motion owner. No game selectors or imported gameplay styles. */
+:root{color-scheme:dark;--ink:#e2decf;--muted:#b9c4c6;--base:#1e272d;--accent:#b5c4a6;--duration:32s}
+*{box-sizing:border-box}
+body{margin:0;background:var(--base);color:var(--ink);font:14px/1.55 system-ui,-apple-system,sans-serif}
+.draft{width:100%;max-width:480px;margin:0 auto;padding:16px 0 24px}
+.intro,.controls,.positions,.help,.notes,footer{margin-inline:16px}
+h1{margin:0;font-size:23px;line-height:1.3;font-weight:650}
+.intro p{margin:5px 0 16px;color:var(--muted)}
+fieldset{border:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+legend{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+label{display:flex;align-items:center;gap:7px;min-height:44px;padding:7px 12px;border:1px solid #67747a;cursor:pointer;border-radius:3px}
+input{margin:0;accent-color:var(--accent);width:16px;height:16px}
+label:has(input:checked){border-color:var(--accent);background:#303d42}
+label:has(input:focus-visible),summary:focus-visible{outline:2px solid #e2decf;outline-offset:3px}
+.positions{margin-top:8px;gap:5px}
+.positions label{flex:1;justify-content:center;padding:7px 4px;font-size:12px}
+.help{font-size:12px;color:var(--muted);margin-top:9px;margin-bottom:17px}
+.example{margin:0 0 22px}
+.example header{padding:0 16px 9px}
+h2{font-size:16px;font-weight:620;margin:0}
+.example p{font-size:12px;color:var(--muted);margin:3px 0 0}
+.scene{position:relative;overflow:hidden;height:260px;isolation:isolate;background:#8093a6}
+.sky{position:absolute;inset:0;background:linear-gradient(#385672,#8093a6 62%,#b3bac1)}
+.sky:after{content:'';position:absolute;left:79%;top:15%;width:6px;height:6px;border-radius:50%;background:#fff2ce;box-shadow:0 0 18px 4px #ffe8bc38}
+.travel-strip{position:absolute;inset:0 auto 0 0;width:200%;transform:translateX(0)}
+.terrain{position:absolute;bottom:28%;width:50%;height:auto;display:block}
+.terrain.from{left:0}.terrain.to{left:50%}
+/* Opaque terrain bridge follows the panorama coordinates, not a screen wipe.
+   This is schematic geometry, not an approved final landscape component. */
+.ridge{position:absolute;left:37%;width:26%;bottom:28%;height:40%;overflow:hidden}
+.ridge-face{position:absolute;inset:0;background:linear-gradient(#40525d,#263b3d);clip-path:polygon(0 100%,5% 89%,13% 69%,22% 42%,32% 21%,42% 12%,52% 5%,63% 17%,72% 31%,81% 58%,92% 78%,100% 100%)}
+.ridge-near{position:absolute;inset:34% 0 0;background:linear-gradient(#304647,#243434);clip-path:polygon(0 100%,12% 77%,23% 46%,36% 25%,52% 13%,66% 31%,80% 49%,91% 74%,100% 100%)}
+.road{position:absolute;inset:72% 0 0;background:linear-gradient(#737a74 0 8%,#39454a 8% 83%,#283638 83%);border-top:2px solid #9ba89a}
+.road-marks{position:absolute;left:0;top:56%;height:2px;width:200%;background:repeating-linear-gradient(90deg,#b9bbaa 0 21px,transparent 21px 42px)}
+.vehicle{position:absolute;left:20%;bottom:8%;width:60%;height:auto;display:block}
+.old-terrain{position:absolute;left:0;bottom:28%;width:200%;display:flex;transform:translateX(0)}
+.old-terrain img{width:50%;height:auto;display:block}
+.old-terrain img+img{transform:scaleX(-1)}
+.wipe{position:absolute;inset:0;clip-path:inset(0 0 0 100%)}
+.draft:has(#middle:checked) .travel-strip{transform:translateX(-25%)}
+.draft:has(#middle:checked) .wipe{clip-path:inset(0 0 0 50%)}
+.draft:has(#end:checked) .travel-strip{transform:translateX(-50%)}
+.draft:has(#end:checked) .wipe{clip-path:inset(0)}
+.draft:has(#play:checked) .travel-strip{animation:travel var(--duration) linear both}
+.draft:has(#play:checked) .old-terrain{animation:travel var(--duration) linear both}
+.draft:has(#play:checked) .wipe{animation:wipe var(--duration) linear both}
+.draft:has(#play:checked) .road-marks{animation:road var(--duration) linear both}
+.draft:has(#pause:checked) .animated{animation-play-state:paused}
+@keyframes travel{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* Quintic-looking sampled curve: the old boundary accelerates independently
+   during the 7.8-second central band while both panoramas keep drifting. */
+@keyframes wipe{0%,37.84%{clip-path:inset(0 0 0 100%)}40.28%{clip-path:inset(0 0 0 99.144%)}42.71%{clip-path:inset(0 0 0 94.208%)}45.14%{clip-path:inset(0 0 0 83.692%)}47.57%{clip-path:inset(0 0 0 68.256%)}50%{clip-path:inset(0 0 0 50%)}52.43%{clip-path:inset(0 0 0 31.744%)}54.86%{clip-path:inset(0 0 0 16.308%)}57.29%{clip-path:inset(0 0 0 5.792%)}59.72%{clip-path:inset(0 0 0 .856%)}62.16%,100%{clip-path:inset(0)}}
+@keyframes road{from{background-position:0 0}to{background-position:-1575px 0}}
+.notes{padding-top:8px;border-top:1px solid #657176;color:var(--muted);font-size:12px}
+summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--ink)}
+.notes p{margin:6px 0 13px}
+footer{padding-top:16px;font-size:11px;color:var(--muted)}
+@media(max-width:339px){h1{font-size:21px}.scene{height:236px}.intro,.controls,.positions,.help,.notes,footer{margin-inline:12px}}
+@media(prefers-reduced-motion:reduce){
+  .draft:has(#play:checked) .animated{animation:none}
+  .draft:has(#play:checked) .travel-strip{transform:translateX(-50%)}
+  .draft:has(#play:checked) .wipe{clip-path:inset(0)}
+  .help:after{content:' 모션 감소 설정에서는 정지 비교만 표시합니다.'}
+}

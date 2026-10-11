@@ -1,0 +1,81 @@
+{
+  "route": "gimhae--jinju",
+  "version": 1,
+  "tool": "image_gen.imagegen",
+  "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-22277665-a630-4c8b-9827-6d96baebb3dd.png",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nUse case: compositing. Images1–4 are canonical STYLE/WORLD references only, never people or truck to copy. Image5 is the EDIT TARGET: a1024x576 terrain gap template. Its LEFT64px strip is the exact final64px of canonical 김해 들판; its RIGHT64px strip the exact first64px of canonical 진주 남강변. Fill ONLY missing center x64..959. Preserve both protected strips' contour height, geometry, color, texture scale and foreground density at proportional scale. Extend their actual contours smoothly through the center. Output only ONE continuous terrain component, never panels or the reference board.\nTechnical: transparent RGBA16:9 master at least1536x864. One screen of detailed terrain, NOT a3-screen panorama. Match natural detailed city textures without blurry resampling, vertical stretching, giant foreground mass or source blur. LEFT first ridge at283/576 from TOP (51% canvas from BOTTOM), RIGHT last ridge at325/576 from TOP (44% from BOTTOM). Do not lower the entire landscape or add a mountain step. Ground baseline and foreground density must remain fixed.\nMiddle corridor: wooded Korean foothills, small valley fields and occasional low farm sheds connect the two places; low readable terrain, no huge ridge hiding a seam. This is the terrain BETWEEN 김해 들판 and 진주 남강변, not permission to reproduce the complete cities, clone their principal landmarks or introduce an intermediate city. Constant distant side-view perspective, restrained desaturated blue-gray diffuse light.\nAlpha: only AIR ABOVE the connected organic silhouette is transparent. Terrain, water and every bottommost128row pixel must be solid alpha255. NO ground haze alpha, lower-edge fade, transparent water, border glow or colored matte fringe. Preserve genuine transparency above the ridge.\nExclude sky, sun, moon, clouds, foreground roads/lanes, vehicles, characters, weather, text, frame, panels, watermark, mirrored cities. anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "tools/design-drafts/scenery-hd/edge-guides/gimhae--jinju.png"
+  ],
+  "master": "tools/design-drafts/scenery-hd/masters/gimhae--jinju-v1.png",
+  "actualMaster": [
+    1672,
+    941
+  ],
+  "file": "assets/ui/road-connectors/gimhae--jinju-v1.webp",
+  "sha256": "ee053ca729c5ea75b0c6f54b32f0b28f7fd3fe86cc96b4eb94d81ca994354ae4",
+  "bytes": 164516,
+  "normalization": "Proportional resize1024px, sRGB WebPq94 alpha100; preserved alpha/no retouch/no upscale",
+  "canonicalCities": [
+    {
+      "id": "gimhae",
+      "file": "assets/ui/road-environment/gimhae-v1.webp",
+      "sha256": "70302548d96ccf76e877ee9d9bdeace9f20435f97dace5d3cc476b95e7deffc4"
+    },
+    {
+      "id": "jinju",
+      "file": "assets/ui/road-environment/jinju-v1.webp",
+      "sha256": "11a5704c5b31a1d912bff29453fe4783d54863b9877945ecb2ed9b22431c0d99"
+    }
+  ],
+  "referenceInputs": [
+    {
+      "file": "assets/ui/road-environment/gimhae-v1.webp",
+      "sha256": "70302548d96ccf76e877ee9d9bdeace9f20435f97dace5d3cc476b95e7deffc4"
+    },
+    {
+      "file": "assets/ui/road-environment/jinju-v1.webp",
+      "sha256": "11a5704c5b31a1d912bff29453fe4783d54863b9877945ecb2ed9b22431c0d99"
+    },
+    {
+      "file": "tools/design-drafts/scenery-hd/edge-guides/gimhae--jinju.png",
+      "sha256": "cce4c0be3ef942160aefa60387e9f9def621a8e7f7b3e1866a380bf8a3b622a8"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1021,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 250,
+    "edgeRidge": {
+      "left": 250,
+      "right": 286
+    },
+    "edgeDelta": {
+      "left": -33,
+      "right": -39
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 33.65,
+        "ridgeMaxAbs": 36,
+        "meanChannelDifference": 26.76
+      },
+      "right": {
+        "ridgeRms": 41.24,
+        "ridgeMaxAbs": 45,
+        "meanChannelDifference": 18.5
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false
+}

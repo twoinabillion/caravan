@@ -282,7 +282,11 @@ const UI = (()=>{
     closePursuitHelp();
     const node=typeof sel==='string'?$(sel):sel;
     if(!node) return;
-    if(!node.classList.contains('on')) node._returnFocus=document.activeElement;
+    if(!node.classList.contains('on')){
+      node._returnFocus=document.activeElement;
+      const cue={'ovl-status':'bag','ovl-journal':'journal','ovl-map':'map','ovl-menu':'menu'}[node.id];
+      if(cue) AMBI.action(cue);
+    }
     if(!node._focusTrap){
       node.addEventListener('keydown',event=>{
         if(event.key!=='Tab'||!node.classList.contains('on')) return;
@@ -490,7 +494,7 @@ const UI = (()=>{
     }
     const drawFrame=!uiPrefs.reduceMotion||ts-lastVisual>=80;
     if(drawFrame) lastVisual=ts;
-    bgmCd-=dt; if(bgmCd<=0){ bgmCd=0.4; BGM.tick(bgmKey()); }
+    bgmCd-=dt; if(bgmCd<=0){ bgmCd=0.4; BGM.tick(bgmKey()); AMBI.syncWorld(screen); }
     if(screen==='title'&&drawFrame) SCENE.drawTitle(dt);
     else if(screen==='game'||screen==='end'){
       if(screen==='game'&&!S?.ended) G.tick(dt);
@@ -838,6 +842,7 @@ const UI = (()=>{
       record.ontoggle=()=>{if(record.open)clearIntroAuto();};
     }
     const live=$('#story-live'), current=introBeats[Math.min(introTurnIdx,introBeats.length-1)];
+    AMBI.introTurn(page.scene,introTurnIdx,current,activeSceneKey);
     if(live&&current) live.textContent=`${current.kind==='dialogue'?(current.name||speakerInfo(current.who).name)+'의 말: ':'장면 설명: '}${stripTags(current.text)}`;
     $('#intro-hint').textContent='탭하면 다음 말풍선';
     const book=$('#intro-book');
@@ -925,6 +930,7 @@ const UI = (()=>{
     G.qualitySessionStart();
     G.qualitySettlementEnter(S.at);
     show('scr-game'); screen='game';
+    AMBI.restore();
     applyIcons();
     renderAll();
     const opening=G.openingPending&&G.openingPending();
@@ -2525,11 +2531,11 @@ function dialogueSide(turn,lanes,opt={}){
       action();
     };
     const wf=root.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>run(()=>G.openRescue('nofuel','crisis_nofuel'));
-    const rp=root.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>run(()=>G.fieldRepair());
-    const rd=root.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>run(()=>{ if(G.fixRadio()) renderAll(); });
+    const rp=root.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>run(()=>{ if(G.fieldRepair()) AMBI.action('repair'); });
+    const rd=root.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>run(()=>{ if(G.fixRadio()){ AMBI.action('radio'); renderAll(); } });
     const cf=root.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>run(()=>showCraft());
     const rq=root.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>run(()=>G.openRecruitStep());
-    const ex=root.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>run(()=>G.explore());
+    const ex=root.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>run(()=>{ if(G.explore()) AMBI.action('explore'); });
     const st=root.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>run(()=>showStl(node.stl));
     const camp=root.querySelector('[data-a="camp"]'); if(camp) camp.onclick=()=>run(()=>showCampHub());
   }
@@ -3832,6 +3838,7 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function showEvent(evd){
     clearStoryAuto();
+    if(typeof VO!=='undefined') VO.stop();
     curEv=evd;
     curStory=null;
     const pending=G.beginPresentation(evd);
@@ -3839,7 +3846,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(evd.id==='leo_broadcast') BGM.playSongOnce();   // 400km 송출 — 노래가 울려 퍼지는 그 장면
     const CVO={ai_vending:'cheollian_01', exp_glasshouse:'cheollian_02', ai_census:'cheollian_03',
       ai_gasstation:'cheollian_05', ai_manifest:'cheollian_09', seoul_gate:'cheollian_13'};
-    if(CVO[evd.id]) VO.play(CVO[evd.id]);
+    if(CVO[evd.id]&&pending?.phase!=='result') VO.play(CVO[evd.id]);
     SND.setDriving(false);
     AMBI.event(evd);
     const sheet=$('#ev-sheet');
@@ -4140,7 +4147,7 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.innerHTML=h;
     sheet.querySelectorAll('[data-craft-pick]').forEach(b=>b.onclick=()=>showCraft({selected:b.dataset.craftPick,phase:'preview'}));
     const make=sheet.querySelector('[data-cr]');
-    if(make) make.onclick=()=>{ if(G.craft(make.dataset.cr)) showCraft({selected:make.dataset.cr,phase:'making'}); };
+    if(make) make.onclick=()=>{ if(G.craft(make.dataset.cr)){ AMBI.action('craft'); showCraft({selected:make.dataset.cr,phase:'making'}); } };
     sheet.querySelector('[data-x]').onclick=()=>{ craftVisualState='preview'; closeEvent(); };
     openModal('#ev-wrap','[data-craft-pick].is-active, [data-cr], [data-x]');
   }
@@ -4396,6 +4403,7 @@ function dialogueSide(turn,lanes,opt={}){
       if(chain&&G.presentTransition()){renderHud();return;}
     }
     closeModal('#ev-wrap');
+    if(typeof VO!=='undefined') VO.stop();
     curCombatChoices=[];
     $('#ev-sheet').classList.remove('event-mode','passenger-reader','story-compact','craft-workbench-mode','comp-perk-reveal-mode','companion-profile-mode');
     $('#ev-sheet').classList.remove('combat-details-open');
@@ -4931,6 +4939,7 @@ function dialogueSide(turn,lanes,opt={}){
       else if(row.kind==='bundle') result=G.tradeBundle(curStl);
       else if(row.kind==='sell') result=G.sellToDemand(curStl);
       if(!result||!result.ok){ toast(result&&result.why||'지금은 할 수 없다'); return; }
+      AMBI.action('trade');
       if(row.kind==='bundle') toast(`📦 기본 보급을 실었다 · 물 +${result.water} · 식량 +${result.food}`);
       else if(row.kind==='sell') toast(`${ICO('scrap')} 고철 +${result.price} — 팔았다`);
       else toast(`${row.label} · 거래를 마쳤다`);
@@ -5030,6 +5039,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(action) action.onclick=()=>{
       const result=G.doStlFieldAction(curStl,stlFieldFocus);
       if(!result.ok){ toast(result.reason||'지금은 할 수 없다'); return; }
+      AMBI.fieldAction(result.action);
       stlFieldResult={stl:curStl,action:result.action,chips:result.chips,
         firstImpact:result.firstImpact,impactBefore:result.impactBefore,impactAfter:result.impactAfter};
       if(result.hiddenOpen) toast(`👣 ${field.revealToast||'도움을 마치자 전에는 보이지 않던 곳이 열렸다'}`,'discover');
@@ -5252,6 +5262,7 @@ function dialogueSide(turn,lanes,opt={}){
       body.querySelectorAll('[data-stlfield]').forEach(b=>b.onclick=()=>{
         const result=G.doStlFieldAction(curStl,b.dataset.stlfield);
         if(!result.ok){ toast(result.reason||'지금은 할 수 없다'); return; }
+        AMBI.fieldAction(result.action);
         stlFieldResult={stl:curStl,action:result.action,chips:result.chips,
           firstImpact:result.firstImpact,impactBefore:result.impactBefore,impactAfter:result.impactAfter};
         if(result.hiddenOpen) toast(`👣 ${D.stls[curStl].field.revealToast||'도움을 마치자 전에는 보이지 않던 곳이 열렸다'}`,'discover');
@@ -5331,6 +5342,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(sellBtn) sellBtn.onclick=()=>{
       const r=G.sellToDemand(curStl);
       if(!r.ok){ toast(r.why); return; }
+      AMBI.action('trade');
       $('#tr-scrap').textContent=S.scrap;
       toast(`${ICO('scrap')} 고철 +${r.price} — 팔았다`);
       renderTrade(); renderHud();
@@ -5339,6 +5351,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(bundle) bundle.onclick=()=>{
       const r=G.tradeBundle(curStl);
       if(!r.ok){ if(r.why) toast(r.why); return; }
+      AMBI.action('trade');
       $('#tr-scrap').textContent=S.scrap;
       toast(`📦 기본 보급을 실었다 · 물 +${r.water} · 식량 +${r.food}`);
       renderTrade(); renderHud();
@@ -5347,6 +5360,7 @@ function dialogueSide(turn,lanes,opt={}){
   function buy(i){
     const r=G.trade(curStl,i);
     if(!r.ok){ if(r.why) toast(r.why); return; }
+    AMBI.action('trade');
     $('#tr-scrap').textContent=S.scrap;
     renderTrade(); renderHud();
   }
@@ -5548,7 +5562,9 @@ function dialogueSide(turn,lanes,opt={}){
     });
     $('#camp-x').onclick=()=>closeOvl('#ovl-camp');
     body.querySelectorAll('[data-camp-prep]').forEach(b=>b.onclick=()=>{
-      const r=G.prepareCamp(b.dataset.campPrep); if(!r.ok) UI.toast(r.why); showCampHub();
+      const r=G.prepareCamp(b.dataset.campPrep);
+      if(!r.ok) UI.toast(r.why); else AMBI.action(b.dataset.campPrep);
+      showCampHub();
     });
     body.querySelectorAll('[data-camp-talk]').forEach(b=>b.onclick=()=>{
       const current=G.currentCampConversation();
@@ -5558,7 +5574,12 @@ function dialogueSide(turn,lanes,opt={}){
       S.campConversation.active=true; G.save();
       closeOvl('#ovl-camp'); showEvent(G.campConversationEvent());
     });
-    $('#camp-rest').onclick=()=>{ closeOvl('#ovl-camp'); G.camp(); };
+    $('#camp-rest').onclick=()=>{
+      closeOvl('#ovl-camp');
+      const before=S.campNight||0;
+      G.camp();
+      if((S.campNight||0)>before) AMBI.action('rest');
+    };
   }
   function renderGarage(){
     const body=$('#stl-body'); if(!body) return;
@@ -5625,6 +5646,7 @@ function dialogueSide(turn,lanes,opt={}){
       if(row.kind==='repair'){
         const result=G.settlementRepair();
         if(!result.ok){ if(result.why) UI.toast(result.why); return; }
+        AMBI.action('repair');
         UI.toast(`🔧 정비소 수리 완료 — 내구 +${result.amount}`); renderHud(); renderGarage(); return;
       }
       const u=G.upDef(row.id);

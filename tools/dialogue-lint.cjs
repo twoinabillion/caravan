@@ -468,8 +468,15 @@ for (const [pattern, label] of stalePatterns) {
   if (pattern.test(source)) errors.push(label);
 }
 
-// Two solo scenes deliberately end on an action/prop instead of recap thoughts.
-const introMinimums = {'intro-dashboard-module':[7,4], 'intro-workshop-departure':[7,2]};
+// Solo scenes can act on a prop instead of explaining each action aloud.
+// The morning opener interleaves three thoughts with five ordinary actions.
+const introMinimums = {
+  'intro-busan-room-morning-v1':[8,3], 'intro-dashboard-module':[7,4], 'intro-workshop-departure':[7,2],
+  // Short interrupted actions bridge the memories; do not pad them with exposition.
+  'intro-busan-workday-v1':[3,1], 'intro-socket-memory-v1':[6,4],
+  'intro-terminal-wait-v1':[3,1], 'intro-terminal-copy-v1':[4,2],
+  'intro-mother-keepsakes':[4,1], 'intro-silenced-presentation':[6,2]
+};
 for (const page of D.intro || []) {
   const [minimumBeats,minimumSpoken]=introMinimums[page.scene]||[8,5];
   if (!Array.isArray(page.beats) || page.beats.length < minimumBeats) {

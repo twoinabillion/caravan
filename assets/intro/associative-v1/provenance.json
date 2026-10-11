@@ -1,0 +1,161 @@
+{
+  "styleId": "caravan-grounded-cinematic-v1",
+  "direction": "Everyday actions cue memories; return to the interrupted present action.",
+  "referenceStrips": {
+    "assets/intro/associative-v1/references/grandfather-player.png": ["assets/portraits/grandfather.png", "assets/portraits/me.png"],
+    "assets/intro/associative-v1/references/family.png": ["assets/portraits/mother.png", "assets/portraits/father.png", "assets/portraits/player_child.png"]
+  },
+  "assets": [
+    {
+      "id": "cup",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-bb9f6899-91be-4083-8b0d-6402bf55a0c5.png",
+      "master": "assets/intro/associative-v1/masters/cup.png",
+      "delivery": "assets/scenes/intro-associative-cup-v1.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: detail cinematic intro scene, single 16:9 film still, large master at least 1536x864. Present morning in the cramped loft above a Busan Gamcheon repair workshop. Match the final attached adult protagonist portrait (not Daon from the ensemble). A young Korean male mechanic in his worn dark work shirt has taken two mismatched metal mugs from a shelf out of habit; he is putting one back while the other remains beside a dented steaming kettle. Only his side profile and hands; one clear action. Narrow folded cot, worn repair ledger and a hanging work jacket supply ordinary lived-in context; no grandpa present, no ghosts, no other people, no vehicle. Cool overcast morning window light and one muted amber practical lamp. Main face/hand/cups clearly visible in central 80% width and upper 65% height; 40mm eye-level intimate framing, not an object catalog. References establish style only; do not copy their boards, text, layout, or characters other than named subject.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/me.png"
+      ],
+      "status": "source-vision-reviewed; in-game-crop-pending",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    },
+    {
+      "id": "search",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-fae50dc3-b4fa-4227-ad92-a0dc1096ecda.png",
+      "master": "assets/intro/associative-v1/masters/search.png",
+      "delivery": "assets/scenes/intro-associative-search-v1.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: cinematic intro detail/action. Present rainy morning inside the same Gamcheon repair shop. The adult Korean protagonist (last attached portrait) alone checks the hanging work-jacket pocket with one hand while opening a worn socket tray on the workbench with the other. The conspicuous empty socket slot and wet tools establish his search for a missing 12 mm socket, no readable numbers. No grandfather, ghost, child, companions or vehicles. A dim amber bulb against cool daylight from the half-raised shutter; metal and wood worn, hands natural; head and hands inside central 80% and upper 65%. Medium eye-level 40mm film still, full 16:9 at least1536x864. His cap and dark shirt match portrait.\nReferences: canonical boards are style references only, never copy their text, panels, or ensemble characters. Subject portraits lock identity.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/me.png"
+      ],
+      "status": "source-vision-reviewed; in-game-crop-pending",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    },
+    {
+      "id": "socket",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-75f97adf-8ced-40b7-911c-f4d4874b1c07.png",
+      "master": "assets/intro/associative-v1/masters/socket.png",
+      "delivery": "assets/scenes/intro-associative-socket-v1.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: cinematic intro character/action. A remembered scene several years before the present in the same Busan Gamcheon repair workshop. The canonical Korean grandfather (second-last portrait) is alive beside a workbench, smiling sideways as he asks for a socket. The protagonist is a late-adolescent/young adult, recognizably the last adult portrait but younger, dark work clothes and cap, not an eight-year-old. He holds the wrong socket over an open tool tray, looking at grandfather with mild playful irritation. One shared practical work action, not sentimental portrait. Old engine parts, worn workbench, only these two people, no vehicle visible. Eye-level35-50mm; restrained cool grayblue daylight with one practical amber lamp. Clear faces and hands central80%, upper65%. Large16:9 master at least1536x864.\nReferences: canonical boards are style references only, never copy their text, panels, or ensemble characters. Subject portraits lock identity.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe final attached reference strip contains grandfather at left and adult player at right; render player a late adolescent in this memory. These are the actual two canonical portrait images presented together to fit the reference limit.",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/intro/associative-v1/references/grandfather-player.png"
+      ],
+      "status": "source-vision-reviewed; in-game-crop-pending",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    },
+    {
+      "id": "packing",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-b37f01ba-b01b-45af-9c5d-9b70290be174.png",
+      "master": "assets/intro/associative-v1/masters/packing.png",
+      "delivery": "assets/scenes/intro-associative-packing-v1.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: character/detail cinematic intro flashback. Rainy night before the eight-year-old child leaves Seoul for his grandfather's home in Busan. Inside a modest weathered Korean apartment, canonical mother kneels beside her eight-year-old son's open fabric backpack and places his small battered toy robot ON TOP of the clothes so he can retrieve it. Her son sits nearby watching, worried, father is just visible in the doorway with an unlabeled metal case. Final reference strip: mother left, father middle, child right; keep their face shapes and ages; mother dark shirt, no labcoat. One clear packing action, not a posed family portrait, no smiles-for-camera, no grandfather, no vehicle. Rain on window, one restrained amber ceiling lamp, desaturated gray-blue shadows. Important hands, mother and son's faces in central80%,upper65%; natural40mm eye-level, large16:9master at least1536x864. Robot is a humble physical child's toy, no futuristic companion, no words. Canonical boards style only, never their collage/text.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/intro/associative-v1/references/family.png"
+      ],
+      "status": "source-vision-reviewed; in-game-crop-pending",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    },
+    {
+      "id": "sorting",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-d4cbc879-c2a1-4a65-813f-1d1b8e9a3a7b.png",
+      "master": "assets/intro/associative-v1/masters/sorting.png",
+      "delivery": "assets/scenes/intro-associative-sorting-v1.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: cinematic intro character/detail. Present morning in the same Gamcheon repair workshop, the adult Korean protagonist (last attached portrait) alone at a worn workbench. He sorts a small old metal keepsake box into two piles, family photos face down and folded papers beside a thick worn notebook; he has just noticed a folded schematic slip tucked in the notebook binding. Do not render any text or recognizable faces on photos, keep them oblique/back-side. Metal mugs on shelf, old tools and a dim warm lamp. No other people, no ghosts, no grandfather, no vehicle, no scene from the past. Face and sorting hands inside central80% and upper65%; natural eye-level40mm medium shot, atmospheric cool rainy daylight, one amber lamp, single16:9 master at least1536x864.\nCanonical boards establish style only, not layout/text/ensemble. Subject reference is the adult mechanic identity, not Daon.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/me.png"
+      ],
+      "status": "source-vision-reviewed; in-game-crop-pending",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    },
+    {
+      "id": "radio",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-6d414c2a-cf1b-491b-9760-1af35017ea87.png",
+      "master": "assets/intro/associative-v1/masters/radio.png",
+      "delivery": "assets/scenes/intro-associative-radio-v1.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: detail/action cinematic intro. Late night before dawn in the same Busan Gamcheon repair workshop. The canonical adult Korean mechanic (final attached portrait) wipes a chrome socket with a worn rag at his workbench, then turns his head toward a small old radio whose amber dial has just lit up. ONE focal interrupted action, socket still in his hand, nobody else present. Socket box, coiled spare heater hose, dark damp workshop beyond; no bowl, no eating, no vehicle, no grandfather, no text on radio, no readable lettering. Eyes/radio/hand/socket within central80% and upper65%, head20-25%frameheight. Restrained cool night blue through shutter, single amber work lamp, believable40mm lens. Large single16:9 master at least1536x864. References establish style only, not board/layout/text.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/me.png"
+      ],
+      "status": "source-vision-reviewed; in-game-crop-pending",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    },
+    {
+      "id": "winter",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-35e9981e-bba9-4a67-8f38-158f02d92d4c.png",
+      "master": "assets/intro/associative-v1/masters/winter.png",
+      "delivery": "assets/scenes/intro-associative-winter-v1.webp",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: character cinematic intro remembered last winter, Busan Gamcheon repair shop. Canonical elderly grandfather (final attached portrait) alive, seated on a worn chair beside the workbench, wearing his dark patched work jacket and scarf, visibly tired but attentive. He watches a younger adult mechanic's hands checking a small battery voltmeter at the edge of the bench; the younger man's face is outside the frame, grandfather is the only pictured face. No child, no corpse, no mourning, no ghost, no vehicle visible. Rusted tools, cold soft grayblue winter daylight at shutter and one weak practical amber lamp. Quiet everyday maintenance, natural posture; eye-level40mm medium view, head22%height, face/hands inside central80% and upper65%. Single16:9 large master at least1536x864. Do not copy board text or panels.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/grandfather.png"
+      ],
+      "status": "source-vision-reviewed; in-game-crop-pending",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    },
+    {
+      "id": "paper_detail",
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-3a799fd2-f0a9-4e21-9f44-41f742e76855.png",
+      "master": "assets/intro/associative-v1/masters/paper_detail.png",
+      "delivery": null,
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: cinematic intro detail. Single cinematic 16:9 still, at least1536x864, rainy dawn at Busan Gamcheon pier. Close view of a wrinkled paper held firmly at its two corners by small coat-covered hands; no faces or bodies pictured. An adult mechanic's dark sleeve and hand are nearby but not taking it. The sheet is angled away, completely illegible neutral form strokes only; no readable words, numbers or flags. Cool wet concrete and an ordinary weathered Korean transit bus softly behind, one muted amber practical light. Paper and hands central80%,upper65%; 40mm film-still realism with lived-in rain and material texture, NOT a document scan or product photo. This is an ordinary fictional game paperwork detail, no violence or distress.\nCanonical boards establish style only, not layout/text/ensemble. Subject reference is the adult mechanic identity, not Daon.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "references": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/me.png"
+      ],
+      "status": "rejected; adult hands and incorrect bus/vehicle",
+      "reviewer": "Codex",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-10-10"
+    }
+  ],
+  "failedCandidates": [
+    {
+      "id": "paper",
+      "reason": "image_gen output moderation blocked; no image produced",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: character/detail cinematic intro present. Rainy cold predawn at Busan Gamcheon pier, a Korean eight-year-old boy in a weathered brown hooded coat (final attached intro_child portrait) grips BOTH corners of a wrinkled transfer paper, unwilling to surrender it. Paper shown obliquely to camera with no readable letters. A working adult's dark sleeve/hand at the left edge points without taking it; protagonist's face NOT shown, child is the focal identity. Several plain worn Korean transit buses are soft in the background, not caravan vehicles, one amber bus interior light and cool wet concrete. Boy's face and grip in central80% and upper65%, head22% imageheight, medium40mm eye-level, single16:9 master at least1536x864. No other children clearly pictured, no crew, no Shanghai/American dock, no UI or board text.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ function canvas(){
 const env=vm.createContext({console,Image:class{constructor(){this.complete=decoded;this.naturalWidth=1024;this.naturalHeight=576;images.push(this)}},document:{createElement:canvas}});
 const registry=Object.fromEntries(ids.map(id=>[id,'terrain:'+id]));
 const src=fs.readFileSync(require.resolve('../src/05a-road-environment.js'),'utf8').replace('/*__ROAD_ENVIRONMENTS__*/{}',JSON.stringify(registry));
-vm.runInContext(src.replace('return {draw};','return {draw,cache,prepare};')+';globalThis.renderer=ROAD_ENVIRONMENT;',env);
+vm.runInContext(src.replace("return {draw,source:id=>sources[id]||''};","return {draw,source:id=>sources[id]||'',cache,prepare};")+';globalThis.renderer=ROAD_ENVIRONMENT;',env);
 const target=canvas(),sky=canvas();
 function draw(from,to,mix,hour=12,wx='clear'){
   const state={from:{id:from},to:{id:to},mix};const before=JSON.stringify(state);

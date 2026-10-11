@@ -1,0 +1,88 @@
+{
+  "route": "busan--yangsan",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-c02d144f-6ca0-4a52-9aef-0b5b67a369cf.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": null,
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing.",
+    "promptRecord": "Original manual prompt was not retained verbatim. The catalogue brief is not its generation receipt; re-author before production acceptance."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/busan--yangsan-v1.png",
+  "sourceSha256": "16abc6df4668828181ff235e6976ec8e0fa0d9aada9f133841a45cf4a4c4662d",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/busan--yangsan-native-v1.webp",
+  "sha256": "4cb4370cf0985d1c6c461a02cdda2ee12d084b27c16add0c9e62d4f4e988c3df",
+  "bytes": 124734,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "busan",
+      "file": "assets/ui/road-environment/busan-v1.webp",
+      "sha256": "47e8582fe192b02e52c9e994aabaae5b83ec92d368df9a1b87f4561dea2adb05"
+    },
+    {
+      "id": "yangsan",
+      "file": "assets/ui/road-environment/yangsan-v1.webp",
+      "sha256": "7070d04f25505d1bd9195ca7023d28bebb6211c9867b55410008e55db58aa9d2"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 249,
+    "edgeRidge": {
+      "left": 272,
+      "right": 315
+    },
+    "edgeDelta": {
+      "left": 39,
+      "right": -1
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 52.78,
+        "ridgeMaxAbs": 66,
+        "meanChannelDifference": 37.64
+      },
+      "right": {
+        "ridgeRms": 4.63,
+        "ridgeMaxAbs": 7,
+        "meanChannelDifference": 30.99
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

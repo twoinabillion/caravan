@@ -1,0 +1,87 @@
+{
+  "route": "gangneung--sokcho",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-357b3bf6-467d-4067-a4ca-f1630795c0f9.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 강릉 경포 -> 속초 항, one real 40km normal corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 강릉 경포; 동해가 넓게 열린다. 병원을 세운다는 소문의 진원지. 파도만은 오래전과 같다.; biome coast, distinctive terrain east-sea. RIGHT QUARTER: 속초 항; 휴전선이 지척이다. 배들이 북쪽을 등지고 묶여 있다. 여기가 남쪽의 끝.; biome coast, distinctive terrain fishing-port. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: sandy east-coast bays and small villages gradually become a working fishing port; no west-coast mudflat. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/gangneung--sokcho-v1.png",
+  "sourceSha256": "0b7b8e1ad0fa16d457e62abc5afbbc8f75ff32bf22609a9af439fb000afaac45",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/gangneung--sokcho-native-v1.webp",
+  "sha256": "8e0e54d2edc5323222fdc95aa280246bb1be0e605125306d312e5fe3f74236ee",
+  "bytes": 111366,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "gangneung",
+      "file": "assets/ui/road-environment/gangneung-v1.webp",
+      "sha256": "f031e2d234482845521dcae1ca174bbb341d1804c5551f9cadf77c44a5116b0b"
+    },
+    {
+      "id": "sokcho",
+      "file": "assets/ui/road-environment/sokcho-v1.webp",
+      "sha256": "ba9276d34a3e82a86479a4c56c77a336420f9abc3b2dfabc06c30edfe0363e34"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 251,
+    "edgeRidge": {
+      "left": 322,
+      "right": 354
+    },
+    "edgeDelta": {
+      "left": -64,
+      "right": 6
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 59.43,
+        "ridgeMaxAbs": 64,
+        "meanChannelDifference": 37.3
+      },
+      "right": {
+        "ridgeRms": 4.67,
+        "ridgeMaxAbs": 8,
+        "meanChannelDifference": 28.02
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

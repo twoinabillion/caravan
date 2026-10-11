@@ -1,0 +1,47 @@
+{
+  "scope": "User approved all four proposed improvements; Codex direct implementation, no Claude or subagents",
+  "approval": "2026-10-10: 전부 해봐",
+  "sourceChanges": [
+    "Intro workday return, terminal errand and keepsake-to-parent memory transitions",
+    "Minji driving instruction and Eunsu noise collection: immediate concrete actions and explicit consecutive speakers",
+    "Kangwoo kw_absolved callback remembers the night story, not an unearned base visit",
+    "Six approved existing art deliveries wired into original/recovered key, recovered cache, night/dawn, independent terminal and recorded playback result",
+    "Legacy scene IDs and saved paid dialogue remain compatible; costs, probabilities, effects and chains unchanged"
+  ],
+  "art": {
+    "family-verification-key": "assets/scenes/family-verification-key-mounted-v3.webp",
+    "suwon-exchange-cache-v1": "assets/scenes/suwon-exchange-cache-v1.webp",
+    "seoul-night-quiet-v2": "assets/scenes/seoul-namsan-night-v3.webp",
+    "seoul-home-dawn-v2": "assets/scenes/seoul-namsan-dawn-v3.webp",
+    "seoul-uplink-empty-v2": "assets/scenes/seoul-maintenance-terminal-v3.webp",
+    "pair-kangwoo-leo-replay-v1": "assets/scenes/pair-kangwoo-leo-replay-v1.webp"
+  },
+  "verification": {
+    "storyFlow": {"passed": 155, "failed": 0},
+    "sceneReviewContract": {"passed": 5, "failed": 0},
+    "embeddedEncoding": {"passed": 3, "failed": 0},
+    "dialogueLint": {"samples": 5785, "errors": 0, "manualWarnings": ["jaeyi sentence start 그럼: 10"]},
+    "content": {"events": 1039, "nodes": 58, "scenes": 412},
+    "assetGeometry": {"sceneClassFiles": 604, "portraits": 73},
+    "canonicalBuiltPortraitsByteIdentical": 7,
+    "buildBytes": 79633508,
+    "hardBuildCapBytes": 80000000,
+    "recommendedBuildBytes": 32000000,
+    "diffCheck": "passed"
+  },
+  "liveEvidence": {
+    "endpoint": "http://127.0.0.1:4327/api/preview/context?runId=92fb1061-43b5-48da-a492-5c62038b9f82",
+    "before": {"capturedAt": "2026-10-10T14:44:18.637Z", "loadedRevision": "1791641082174", "pendingRevision": 1791642770993},
+    "after": {"capturedAt": "2026-10-10T14:58:11.378Z", "loadedRevision": "1791641082174", "styleRevision": "1791641082174", "pendingRevision": 1791644155582, "applying": false},
+    "unchanged": {"screen": "game", "eventId": null, "at": "busan", "day": 1, "min": 450, "viewport": [360,728,2], "resources": [42,10,10,16,82], "party": [], "dog": false},
+    "coverage": "game-state only, no screenshot",
+    "agentAppliedOrRefreshed": false
+  },
+  "limits": [
+    "All six source images directly observed and listed on actual preview asset gallery; not actual in-game crop QA",
+    "Actual Studio window control unavailable; no workaround, new server, fresh save or forced apply",
+    "Actual typography, touch, live reading tempo and refresh behavior still require user-applied code and supported UI access",
+    "Whole-corpus automated validation is not a manual review of all 1039 events or a perfection claim",
+    "No new raster generation, no UI layout or CSS changes; unrelated dirty road-renderer work preserved"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "provider": "ElevenLabs · Free / local sound edit",
+  "commercial_release": false,
+  "listening_review": "pending",
+  "kind": "processed",
+  "clips": [
+    {
+      "name": "rain_cab_light_v2",
+      "file": "rain_cab_light_v2.mp3",
+      "parent": "assets/audio/auditions/elevenlabs-rain-detail-v2-20261010T162119Z/rain_glass_light.mp3",
+      "parent_sha256": "22ee4572a638694d3bc615e55b9ae70de8d69367f20d07fa984c6201b6dab2a1",
+      "sha256": "6d4b483b53f12d1c871c8eae48c7a76406324fb7d201e7e5d73281c476095898",
+      "duration": 11.781224,
+      "loop": true,
+      "description": "선명한 유리·지붕 빗방울 테이크. 250ms 원형 equal-power 경계 겹침·MP3 가장자리 8ms taper, -24LUFS 목표·-4dBTP 상한·추가 -0.5dB. EQ 없음. 실제 반복 청취 승인 대기."
+    },
+    {
+      "name": "rain_cab_heavy_v2",
+      "file": "rain_cab_heavy_v2.mp3",
+      "parent": "assets/audio/auditions/elevenlabs-rain-detail-v2-20261010T162119Z/rain_glass_heavy.mp3",
+      "parent_sha256": "8da904d64e49483e5e1ecac614b07ce771910f6a4a9cef800baf8b65f166bbf3",
+      "sha256": "ca0dd4580f5eef19a31a9b33ff6800ed863eef251b1c7b4d126d8a222308bf32",
+      "duration": 11.781224,
+      "loop": true,
+      "description": "선명한 유리·지붕 빗방울 테이크. 250ms 원형 equal-power 경계 겹침·MP3 가장자리 8ms taper, -24LUFS 목표·-4dBTP 상한·추가 -0.5dB. EQ 없음. 실제 반복 청취 승인 대기."
+    }
+  ]
+}

@@ -48,15 +48,16 @@ transition. The runtime `addresses` maps preserve these stable relationships.
 | Jaeyi | 민지 `민지 씨`; Kangwoo `강우 씨/아저씨`; Leo `레오 오빠`; Eunsu `은수 언니` |
 | Eunsu | peers and younger crew by `이름+씨`; Park `선생님` |
 
-### Addressing Daon (the player character)
+### Addressing the player character (Sang-hyeok / player-entered name)
 
-The player names the protagonist, so no companion may use her given name. Each companion has
-a fixed form of address and a fixed speech register toward her; both live in the runtime
+The protagonist is an adult male mechanic; the player can enter his display name.
+Do not introduce a different identity or use the fixed name in companion address.
+Each companion has a fixed form of address and a fixed speech register toward him; both live in the runtime
 `addresses.daon` / `addresses.daonRegister`. These were derived from the dominant usage
-already in the scripts (Minji 반말 41:5, Kangwoo 반말 19:8, the rest 해요체), not invented —
-the earlier table omitted Daon entirely, which is why registers drifted between events.
+already in the scripts (Minji 반말 41:5, Kangwoo 반말 19:8, the rest 해요체), not invented.
+The legacy runtime key remains `daon` for compatibility; it does not name a second protagonist.
 
-| Speaker | Address | Register toward Daon | Note |
+| Speaker | Address | Register toward the player | Note |
 |---|---|---|---|
 | Minji | `대장님` | 반말 | 17 years old and blunt with everyone; the honorific stays, the register does not. |
 | Park | `자네` | 편한 반말·하게체 | 63; warmth comes from his rhythm, concrete care and occasional `-게/-나`, not `-소/-오/하시오`. |
@@ -65,7 +66,7 @@ the earlier table omitted Daon entirely, which is why registers drifted between 
 | Jaeyi | `대장님` | 해요체 | |
 | Eunsu | `대장님` | 해요체 | |
 
-Do not write `당신` or `너` toward Daon for any speaker — use the address above or drop the
+Do not write `당신` or `너` toward the player for any speaker — use the address above or drop the
 pronoun entirely.
 
 The player uses modern polite speech toward Park, Kangwoo, Leo, Jaeyi and Eunsu,

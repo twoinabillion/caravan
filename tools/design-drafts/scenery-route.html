@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>시장 밖으로, 도시 안으로</title>
+  <link rel="stylesheet" href="scenery-route.css">
+</head>
+<body>
+<main class="draft">
+  <header class="intro">
+    <p class="eyebrow">밀양 → 대구 · 연결 풍경 초안</p>
+    <h1>시장 밖으로, 도시 안으로</h1>
+    <p>장소를 바꾸는 효과 대신, 그 사이의 길을 지나갑니다.</p>
+  </header>
+  <fieldset class="controls">
+    <legend>움직임 확인</legend>
+    <label><input id="play" type="checkbox"><span>한 번 재생</span></label>
+    <label><input id="pause" type="checkbox"><span>잠깐 멈춤</span></label>
+  </fieldset>
+  <fieldset class="positions">
+    <legend>정지 위치</legend>
+    <label><input id="start" type="radio" name="position" checked><span>시장 쪽</span></label>
+    <label><input id="middle" type="radio" name="position"><span>외곽 들판</span></label>
+    <label><input id="end" type="radio" name="position"><span>대구 쪽</span></label>
+  </fieldset>
+  <p class="help">약 48초 동안 한 번 지나갑니다. 재생을 껐다 켜면 처음부터.</p>
+  <section aria-label="연결 지형을 지나는 움직임">
+    <div class="scene" role="img" aria-label="시장 건물이 점차 들판으로 이어지고, 낮은 산줄기 너머로 대구 외곽과 돔 시장이 들어온다. 하나의 지형이 왼쪽으로 지나가며 하늘, 도로, 달구지는 별개 레이어다. 실제 저장의 주행은 아니다.">
+      <div class="sky"></div>
+      <div class="travel-strip animated">
+        <img class="terrain" src="scenery-route/miryang-daegu-v1.webp" width="1024" height="576" alt="">
+      </div>
+      <div class="road"><div class="road-marks animated"></div></div>
+      <img class="vehicle" src="../../assets/ui/journey-dalguji-base-v1.webp" width="1024" height="608" alt="">
+    </div>
+    <p class="scene-note">건물을 녹여 겹치거나, 큰 가림막으로 경계를 숨기지 않습니다.</p>
+  </section>
+  <section class="overview" aria-labelledby="overview-title">
+    <h2 id="overview-title">지나가는 풍경 전체</h2>
+    <div class="panorama"><img src="scenery-route/miryang-daegu-v1.webp" width="1024" height="576" alt="왼쪽의 낮은 시장 지붕, 가운데 들판과 농가, 오른쪽의 도시 외곽과 낮은 돔이 연속된 지형. 실측 지리는 아닌 게임용 구도."></div>
+    <div class="route-labels"><span>시장</span><span>들판 · 농가</span><span>도시 외곽</span></div>
+  </section>
+  <details class="notes"><summary>초안 범위와 실제 적용 조건</summary>
+    <p>새 연결 지형과 기존 기본 달구지로 만든 독립 CSS 초안입니다. 게임과 저장에는 미적용이며, 현재 차량의 개조·탑승자·날씨나 실제 이동 시간을 복제하지 않습니다. 그림 속 지형은 구간의 연결감을 살펴보는 예시이지 실제 도로 위치를 재현한 지도가 아닙니다.</p>
+    <p>하늘·도로·차량은 지형 그림에 포함하지 않았습니다. 시장과 돔 사이의 농가·들판·산줄기는 한 지형 안에서 이어지고, 그림 경계는 화면을 쓸고 지나가지 않습니다. 앞 초안의 둔덕 가림 도형도 없습니다.</p>
+    <p>실제 게임에서는 이 지형의 이동을 이동 거리와 묶어야 합니다. 정지·감속·사건 중단·재개·도착·새로고침에서 같은 위치를 이어 받고, 준비되지 않은 그림으로 갑자기 바꾸지 않는지 별도로 확인해야 합니다. 이 초안을 모든 구간에 같은 산으로 붙이지 않습니다.</p>
+    <p>승인은 이 한 구간의 연결감부터 확인합니다. 초안 선택은 요청 작성만 하며 게임에 자동 적용하지 않습니다.</p>
+  </details>
+  <footer>연결 지형 1장 제작 · 게임과 저장 미변경</footer>
+</main>
+</body>
+</html>

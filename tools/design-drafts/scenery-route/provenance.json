@@ -1,0 +1,29 @@
+{
+  "id": "miryang-daegu-route-draft-v1",
+  "date": "2026-10-09",
+  "status": "generated-component-draft-only-game-unwired",
+  "tool": "image_gen.imagegen",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "assets/ui/road-environment/daegu-v1.webp"
+  ],
+  "prompt": "Edit and extend the attached transparent Daegu road terrain component into ONE uninterrupted horizontally continuous Miryang-to-Daegu landscape component for a scrolling motion design draft. The first four attachments are canonical STYLE/WORLD references only: do not reproduce their people, trucks, text or panels. The final attachment is the source Daegu terrain endpoint. Miryang's rural-market end follows the authored project brief given below; its modest low roofs are not a new named landmark. Preserve the restrained painterly materials, rural-market roof forms on the left and the low broad fictional Daegu market stadium dome on the right; the dome must remain low, not a futuristic tower.\n\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nOUTPUT: large master, aim 3072x1024 pixels, ultra-wide 3:1 landscape RGBA. One continuous terrain strip, NOT three panels, NOT a triptych or contact sheet. Transparent sky with real alpha; top approximately 60% empty transparent air above a gently continuous mountain/building silhouette. Terrain and opaque level ground occupy bottom approximately 40%. Full-width solid ground terminates at the same bottom baseline. This is a dedicated live-renderer environment part, NOT a narrative event painting or screenshot. No baked sky, sunlight disc, clouds, road, lane marks, vehicle, people, rain or HUD. Soft natural ambient late-afternoon daylight, cool blue-gray and muted olive, no dramatic golden sunset.\n\nCOMPOSITION: side-on roadside distant environment, horizontal camera/lens and ground baseline held constant across the entire width. At the leftmost quarter: Miryang's small old low market roofs, discreet subdued canvas awnings, orchard rows, modest worn farm shops, never an urban skyline. Gradually reduce buildings into abandoned farm sheds and paddies. Middle half: flat rice fields/orchards, rough grassy borders and gently receding rounded forested foothills. Do not put a huge hill or tree in front to hide the transition. Last quarter: fields naturally give way to sparse weathered Korean apartments and the low domed Daegu stadium-market further into the basin. Keep the dome entire and inside the final quarter with margin, understated no detailed readable signage. No ocean, Seoul tower, palace, bridges, characters, surreal war ruins. Ensure plausible soft continuity of ground texture, hue, perspective and wooded ridges; no straight seam, no stitched cuts, no opacity dissolve, no ghosted buildings. The join is the actual rural landscape, not a mask hiding a join. Do not make the middle area empty without terrain detail. It is illustrative game geography, not a surveyed literal road view.\n\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel.",
+  "role": "transparent scrolling terrain component, not event painting",
+  "requestedMaster": [
+    3072,
+    1024
+  ],
+  "master": "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png",
+  "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-8972dceb-833a-469e-b65b-7825d7788737.png",
+  "actualMaster": [2172, 724],
+  "delivery": "tools/design-drafts/scenery-route/miryang-daegu-v1.webp",
+  "deliveryGeometry": [1024, 576],
+  "deliveryBytes": 52152,
+  "normalization": "Proportional 1024x341 resize, 235px transparent top padding to canonical 1024x576. sRGB WebP q86. No stretching, scene editing or subject crop. Source/master retained. Excluded from gameplay and HTML build.",
+  "generationLimit": "Six-path request rejected before generation; successful request attached four required canon references plus Daegu. Miryang from inspected authored brief. Requested 3072x1024 not reached; actual wide master adequate for this 360px isolated draft at 2x but production acceptance is pending.",
+  "approval": "Motion draft only; not approved for gameplay."
+}

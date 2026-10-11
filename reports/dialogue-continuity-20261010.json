@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-10",
+  "scope": "automatic full corpus checks plus direct review of flagged events and their actual adjacent gates/outcomes; not all 1039 manually acted/read",
+  "editedEventIds": [
+    "comp_pss_night",
+    "comp_minji_radio",
+    "comp_sick",
+    "exp_reservoir",
+    "talk_pss_11",
+    "ev_fog_pass",
+    "ev_bridge_creak",
+    "ev_lost_child",
+    "ev_ice_road",
+    "ev_landslide_block",
+    "ev_flooded_road",
+    "ev_dust_storm",
+    "ev_snow_road",
+    "resist_bridge_consequence",
+    "comp_snore",
+    "talk_pss_05",
+    "pair_pss_leo_1",
+    "pair_kw_leo_1",
+    "talk_leo_12",
+    "talk_leo_15",
+    "talk_bori_06",
+    "ev_comp_birthday",
+    "up_armor_argument",
+    "exp_stationery",
+    "meet_popper",
+    "near_yeosu_camellia",
+    "duo_appraisal",
+    "ev_stealth_dog"
+  ],
+  "gameplayDelta": {
+    "comp_minji_radio": {
+      "minuteWindow": [
+        714,
+        720
+      ],
+      "reason": "15-minute/20-minute noon broadcast choices cannot begin at an arbitrary hour; missed entry does not mark it used; paid legacy results remain restorable"
+    }
+  },
+  "preserved": "all existing costs, probabilities, resources/effects and chains; deliberate gate delta individually asserted, baseline hashes unchanged",
+  "verification": {
+    "storyFlow": {
+      "passed": 152,
+      "failed": 0
+    },
+    "dialogue": {
+      "sampleLines": 5785,
+      "errors": 0,
+      "manualWarning": "Jaeyi starts with 그럼 10 times; not a blanket rewrite"
+    },
+    "content": {
+      "events": 1039,
+      "nodes": 58,
+      "scenes": 410
+    },
+    "sceneGeometry": {
+      "sceneClassAssets": 604,
+      "portraits": 73
+    },
+    "builtCanonicalPortraits": 7,
+    "htmlBytes": 79490917,
+    "diffCheck": "passed"
+  },
+  "live": {
+    "before": {
+      "capturedAt": "2026-10-10T14:06:03.088Z",
+      "loaded": "1791641082174",
+      "style": "1791641082174",
+      "pending": null
+    },
+    "after": {
+      "capturedAt": "2026-10-10T14:31:03.635Z",
+      "loaded": "1791641082174",
+      "style": "1791641082174",
+      "pending": 1791642618109,
+      "applying": false
+    },
+    "sameState": {
+      "at": "busan",
+      "day": 1,
+      "min": 450,
+      "screen": "game",
+      "eventId": null,
+      "party": [],
+      "dog": false,
+      "fuel": 42,
+      "water": 10,
+      "food": 10,
+      "scrap": 16,
+      "van": 82,
+      "viewport": [
+        360,
+        728,
+        2
+      ]
+    },
+    "coverage": "game-state only; no attached image, actual UI unavailable due app safety denial",
+    "saveOrApplyMutation": false
+  },
+  "art": {
+    "newGeneratedCandidates": 1,
+    "delivery": "assets/scenes/pair-kangwoo-leo-replay-v1.webp",
+    "draft": "tools/design-drafts/replay-scene-review.html",
+    "provenance": "tools/design-drafts/story-scene-review/replay-provenance.json",
+    "galleryListed": true,
+    "hostedHttpStatus": 200,
+    "hostedBytes": 83950,
+    "wired": false,
+    "approval": "pending",
+    "actualCrop": "not observed",
+    "previousFiveCandidates": "approval still pending; no duplicate generations"
+  },
+  "remaining": [
+    "Explicit latest-code apply and actual reading/crop/refresh QA",
+    "Six art candidates require Studio review/approval; do not call generated art integrated",
+    "1039 manual semantic and full-path experiential review not certified",
+    "HTML above 32MB advisory, below 80MB hard cap; physical-device load/memory not measured"
+  ]
+}

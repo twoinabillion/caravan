@@ -43,20 +43,22 @@ with sync_playwright() as playwright:
     page.goto(GAME)
 
     print('― 게인 경로가 실제로 만들어지는가')
-    routed = page.evaluate("""() => {
+    routed = page.evaluate("""async () => {
       SND.enable && SND.enable();
       const a = new Audio();
       a.src = 'data:audio/mpeg;base64,//uQx';   // 재생하지 않아도 라우팅은 가능해야 한다
       const h = SND.route(a);
       if (!h) return {routed:false};
       SND.setMediaVolume(a, 0.25);
+      await new Promise(resolve => setTimeout(resolve, 180));
       return {routed:true, gain:h.gain.gain.value, elementVolume:a.volume,
               reported:SND.mediaVolume(a)};
     }""")
     check('오디오 요소가 게인 노드에 연결된다', routed['routed'], str(routed))
     if routed['routed']:
         check('요소 볼륨은 1로 두고 게인이 값을 갖는다',
-              abs(routed['elementVolume'] - 1) < 0.001 and routed['reported'] == 0.25, str(routed))
+              abs(routed['elementVolume'] - 1) < 0.001 and routed['reported'] == 0.25
+              and abs(routed['gain'] - 0.25) < 0.01, str(routed))
 
     print('― 채널 슬라이더가 게인까지 도달하는가')
     mix = page.evaluate("""() => {
@@ -68,6 +70,28 @@ with sync_playwright() as playwright:
     }""")
     check('믹서 채널 값이 저장·복원된다',
           abs(mix['after'] - 0.3) < 0.001 and abs(mix['restored'] - mix['before']) < 0.001, str(mix))
+
+    print('― 목소리 더킹과 공통 헤드룸의 실제 자동화')
+    buses = page.evaluate("""async () => {
+      const music=SND.route(new Audio(),{bus:'music'});
+      const ambience=SND.route(new Audio(),{bus:'ambience'});
+      const voice=SND.route(new Audio(),{bus:'voice'});
+      SND.setSpeech(true);
+      await new Promise(resolve=>setTimeout(resolve,180));
+      const duck={music:music.busGain.gain.value,ambience:ambience.busGain.gain.value,
+        voice:voice.busGain.gain.value,master:music.master.gain.value};
+      SND.setSpeech(false);
+      await new Promise(resolve=>setTimeout(resolve,750));
+      return {duck,restored:{music:music.busGain.gain.value,ambience:ambience.busGain.gain.value}};
+    }""")
+    check('음악 -9dB·환경 -6dB, 목소리는 유지',
+          abs(buses['duck']['music']-10**(-9/20))<0.01
+          and abs(buses['duck']['ambience']-10**(-6/20))<0.01
+          and abs(buses['duck']['voice']-1)<0.001,str(buses))
+    check('공통 -3dB 헤드룸·더킹 종료 복구',
+          abs(buses['duck']['master']-10**(-3/20))<0.01
+          and abs(buses['restored']['music']-1)<0.01
+          and abs(buses['restored']['ambience']-1)<0.01,str(buses))
 
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()

@@ -1,0 +1,3457 @@
+{
+  "routes": 78,
+  "nativeCandidates": 78,
+  "newGenerations": 5,
+  "productionReady": 0,
+  "bytes": 9946792,
+  "unretainedHistoricalPrompts": 1,
+  "enabled": false,
+  "rows": [
+    {
+      "id": "busan--yangsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/busan--yangsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 272,
+            "right": 315
+          },
+          "edgeDelta": {
+            "left": 39,
+            "right": -1
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 52.78,
+              "ridgeMaxAbs": 66,
+              "meanChannelDifference": 37.64
+            },
+            "right": {
+              "ridgeRms": 4.63,
+              "ridgeMaxAbs": 7,
+              "meanChannelDifference": 30.99
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": {
+        "file": "assets/ui/road-connectors/busan--yangsan-v1.webp",
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 233,
+          "edgeRidge": {
+            "left": 189,
+            "right": 253
+          },
+          "edgeDelta": {
+            "left": -44,
+            "right": -63
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 41.97,
+              "ridgeMaxAbs": 56,
+              "meanChannelDifference": 22.57
+            },
+            "right": {
+              "ridgeRms": 57.3,
+              "ridgeMaxAbs": 87,
+              "meanChannelDifference": 28.96
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      }
+    },
+    {
+      "id": "busan--gimhae",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/busan--gimhae-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 252,
+          "edgeRidge": {
+            "left": 325,
+            "right": 341
+          },
+          "edgeDelta": {
+            "left": 92,
+            "right": 27
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 101.41,
+              "ridgeMaxAbs": 119,
+              "meanChannelDifference": 26.97
+            },
+            "right": {
+              "ridgeRms": 18.2,
+              "ridgeMaxAbs": 28,
+              "meanChannelDifference": 22.28
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": {
+        "file": "assets/ui/road-connectors/busan--gimhae-v1.webp",
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 175,
+            "right": 269
+          },
+          "edgeDelta": {
+            "left": -58,
+            "right": -45
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 51.23,
+              "ridgeMaxAbs": 71,
+              "meanChannelDifference": 25.21
+            },
+            "right": {
+              "ridgeRms": 44.46,
+              "ridgeMaxAbs": 48,
+              "meanChannelDifference": 26.31
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      }
+    },
+    {
+      "id": "miryang--yangsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/miryang--yangsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 286,
+            "right": 339
+          },
+          "edgeDelta": {
+            "left": 2,
+            "right": 43
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 2.27,
+              "ridgeMaxAbs": 5,
+              "meanChannelDifference": 28.55
+            },
+            "right": {
+              "ridgeRms": 50.68,
+              "ridgeMaxAbs": 56,
+              "meanChannelDifference": 22.97
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": {
+        "file": "assets/ui/road-connectors/miryang--yangsan-v1.webp",
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 246,
+          "edgeRidge": {
+            "left": 243,
+            "right": 305
+          },
+          "edgeDelta": {
+            "left": -41,
+            "right": 9
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 47.24,
+              "ridgeMaxAbs": 90,
+              "meanChannelDifference": 16.45
+            },
+            "right": {
+              "ridgeRms": 11.63,
+              "ridgeMaxAbs": 15,
+              "meanChannelDifference": 20.02
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      }
+    },
+    {
+      "id": "gimhae--jinju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gimhae--jinju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1022,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 312,
+            "right": 342
+          },
+          "edgeDelta": {
+            "left": 29,
+            "right": 17
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 35.06,
+              "ridgeMaxAbs": 40,
+              "meanChannelDifference": 32.76
+            },
+            "right": {
+              "ridgeRms": 35.27,
+              "ridgeMaxAbs": 47,
+              "meanChannelDifference": 53.92
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": {
+        "file": "assets/ui/road-connectors/gimhae--jinju-v1.webp",
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1021,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 250,
+            "right": 286
+          },
+          "edgeDelta": {
+            "left": -33,
+            "right": -39
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 33.65,
+              "ridgeMaxAbs": 36,
+              "meanChannelDifference": 26.76
+            },
+            "right": {
+              "ridgeRms": 41.24,
+              "ridgeMaxAbs": 45,
+              "meanChannelDifference": 18.5
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      }
+    },
+    {
+      "id": "daegu--miryang",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daegu--miryang-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 302,
+            "right": 322
+          },
+          "edgeDelta": {
+            "left": 18,
+            "right": 4
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 11.81,
+              "ridgeMaxAbs": 18,
+              "meanChannelDifference": 25.2
+            },
+            "right": {
+              "ridgeRms": 9.54,
+              "ridgeMaxAbs": 13,
+              "meanChannelDifference": 27.69
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": {
+        "file": "assets/ui/road-connectors/daegu--miryang-v1.webp",
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 362,
+            "right": 384
+          },
+          "edgeDelta": {
+            "left": 78,
+            "right": 66
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 73.53,
+              "ridgeMaxAbs": 79,
+              "meanChannelDifference": 23.54
+            },
+            "right": {
+              "ridgeRms": 67.5,
+              "ridgeMaxAbs": 70,
+              "meanChannelDifference": 22.36
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      }
+    },
+    {
+      "id": "hapcheon--miryang",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/hapcheon--miryang-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 357,
+            "right": 363
+          },
+          "edgeDelta": {
+            "left": 73,
+            "right": 49
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 73.07,
+              "ridgeMaxAbs": 75,
+              "meanChannelDifference": 30.74
+            },
+            "right": {
+              "ridgeRms": 35.06,
+              "ridgeMaxAbs": 49,
+              "meanChannelDifference": 26.9
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "geochang--hapcheon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/geochang--hapcheon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 277,
+            "right": 290
+          },
+          "edgeDelta": {
+            "left": -3,
+            "right": -25
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 2.56,
+              "ridgeMaxAbs": 5,
+              "meanChannelDifference": 22.32
+            },
+            "right": {
+              "ridgeRms": 34.58,
+              "ridgeMaxAbs": 40,
+              "meanChannelDifference": 23.62
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "geochang--muju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/geochang--muju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 294,
+            "right": 332
+          },
+          "edgeDelta": {
+            "left": 10,
+            "right": 8
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 11.79,
+              "ridgeMaxAbs": 20,
+              "meanChannelDifference": 26.21
+            },
+            "right": {
+              "ridgeRms": 26.5,
+              "ridgeMaxAbs": 38,
+              "meanChannelDifference": 33.62
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "muju--yeongdong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/muju--yeongdong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 245,
+            "right": 333
+          },
+          "edgeDelta": {
+            "left": 97,
+            "right": 30
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 108.41,
+              "ridgeMaxAbs": 131,
+              "meanChannelDifference": 26.07
+            },
+            "right": {
+              "ridgeRms": 29.58,
+              "ridgeMaxAbs": 37,
+              "meanChannelDifference": 29.29
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "jinju--namwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/jinju--namwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 340,
+            "right": 298
+          },
+          "edgeDelta": {
+            "left": 76,
+            "right": 3
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 69.07,
+              "ridgeMaxAbs": 78,
+              "meanChannelDifference": 28.92
+            },
+            "right": {
+              "ridgeRms": 7.24,
+              "ridgeMaxAbs": 11,
+              "meanChannelDifference": 21.67
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "jeonju--namwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/jeonju--namwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1085,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 369,
+            "right": 376
+          },
+          "edgeDelta": {
+            "left": 102,
+            "right": 53
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 87.36,
+              "ridgeMaxAbs": 107,
+              "meanChannelDifference": 26.07
+            },
+            "right": {
+              "ridgeRms": 44.89,
+              "ridgeMaxAbs": 54,
+              "meanChannelDifference": 28.76
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "jeonju--nonsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/jeonju--nonsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 319,
+            "right": 371
+          },
+          "edgeDelta": {
+            "left": 11,
+            "right": 26
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 18.63,
+              "ridgeMaxAbs": 38,
+              "meanChannelDifference": 27.25
+            },
+            "right": {
+              "ridgeRms": 25.1,
+              "ridgeMaxAbs": 27,
+              "meanChannelDifference": 38.49
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gongju--nonsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gongju--nonsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 313,
+            "right": 347
+          },
+          "edgeDelta": {
+            "left": -13,
+            "right": -2
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 13.04,
+              "ridgeMaxAbs": 15,
+              "meanChannelDifference": 23.12
+            },
+            "right": {
+              "ridgeRms": 11.78,
+              "ridgeMaxAbs": 15,
+              "meanChannelDifference": 34.34
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cheonan--gongju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cheonan--gongju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 322,
+            "right": 358
+          },
+          "edgeDelta": {
+            "left": 34,
+            "right": 53
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 25.79,
+              "ridgeMaxAbs": 35,
+              "meanChannelDifference": 24.61
+            },
+            "right": {
+              "ridgeRms": 40.17,
+              "ridgeMaxAbs": 53,
+              "meanChannelDifference": 36.92
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daejeon--nonsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daejeon--nonsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1022,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 329,
+            "right": 387
+          },
+          "edgeDelta": {
+            "left": 3,
+            "right": 72
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 18.15,
+              "ridgeMaxAbs": 26,
+              "meanChannelDifference": 28.52
+            },
+            "right": {
+              "ridgeRms": 57.53,
+              "ridgeMaxAbs": 72,
+              "meanChannelDifference": 30.65
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daegu--gumi",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daegu--gumi-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 236,
+          "edgeRidge": {
+            "left": 308,
+            "right": 320
+          },
+          "edgeDelta": {
+            "left": -6,
+            "right": 3
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 25.56,
+              "ridgeMaxAbs": 35,
+              "meanChannelDifference": 28.64
+            },
+            "right": {
+              "ridgeRms": 4.31,
+              "ridgeMaxAbs": 7,
+              "meanChannelDifference": 28.18
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gimcheon--gumi",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gimcheon--gumi-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 241,
+          "edgeRidge": {
+            "left": 369,
+            "right": 351
+          },
+          "edgeDelta": {
+            "left": 85,
+            "right": 81
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 78.81,
+              "ridgeMaxAbs": 85,
+              "meanChannelDifference": 28.65
+            },
+            "right": {
+              "ridgeRms": 92.91,
+              "ridgeMaxAbs": 110,
+              "meanChannelDifference": 31.95
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gimcheon--yeongdong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gimcheon--yeongdong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 314,
+            "right": 323
+          },
+          "edgeDelta": {
+            "left": 36,
+            "right": 20
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 59.42,
+              "ridgeMaxAbs": 71,
+              "meanChannelDifference": 27.27
+            },
+            "right": {
+              "ridgeRms": 23.3,
+              "ridgeMaxAbs": 27,
+              "meanChannelDifference": 26.48
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gimcheon--muju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gimcheon--muju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 312,
+            "right": 295
+          },
+          "edgeDelta": {
+            "left": 34,
+            "right": -29
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 53.43,
+              "ridgeMaxAbs": 69,
+              "meanChannelDifference": 28.04
+            },
+            "right": {
+              "ridgeRms": 29.25,
+              "ridgeMaxAbs": 40,
+              "meanChannelDifference": 37.93
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daejeon--yeongdong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daejeon--yeongdong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 318,
+            "right": 357
+          },
+          "edgeDelta": {
+            "left": 50,
+            "right": 42
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 58.65,
+              "ridgeMaxAbs": 66,
+              "meanChannelDifference": 30.89
+            },
+            "right": {
+              "ridgeRms": 41.92,
+              "ridgeMaxAbs": 51,
+              "meanChannelDifference": 28.22
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cheongju--daejeon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cheongju--daejeon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 329,
+            "right": 323
+          },
+          "edgeDelta": {
+            "left": 46,
+            "right": -7
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 36.74,
+              "ridgeMaxAbs": 46,
+              "meanChannelDifference": 27.01
+            },
+            "right": {
+              "ridgeRms": 4.05,
+              "ridgeMaxAbs": 8,
+              "meanChannelDifference": 24.32
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cheonan--cheongju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cheonan--cheongju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 247,
+          "edgeRidge": {
+            "left": 331,
+            "right": 344
+          },
+          "edgeDelta": {
+            "left": 15,
+            "right": 39
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 18.73,
+              "ridgeMaxAbs": 25,
+              "meanChannelDifference": 27.49
+            },
+            "right": {
+              "ridgeRms": 25.7,
+              "ridgeMaxAbs": 39,
+              "meanChannelDifference": 27.49
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cheonan--pyeongtaek",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cheonan--pyeongtaek-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 343,
+            "right": 365
+          },
+          "edgeDelta": {
+            "left": 60,
+            "right": 54
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 51.49,
+              "ridgeMaxAbs": 60,
+              "meanChannelDifference": 31.36
+            },
+            "right": {
+              "ridgeRms": 45.13,
+              "ridgeMaxAbs": 62,
+              "meanChannelDifference": 37.54
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "pyeongtaek--suwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/pyeongtaek--suwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1023,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 246,
+          "edgeRidge": {
+            "left": 397,
+            "right": 367
+          },
+          "edgeDelta": {
+            "left": 22,
+            "right": 34
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 33.29,
+              "ridgeMaxAbs": 52,
+              "meanChannelDifference": 39.83
+            },
+            "right": {
+              "ridgeRms": 23.61,
+              "ridgeMaxAbs": 34,
+              "meanChannelDifference": 21.75
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "seoul--suwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/seoul--suwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 322,
+            "right": 375
+          },
+          "edgeDelta": {
+            "left": 33,
+            "right": 45
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 23.95,
+              "ridgeMaxAbs": 33,
+              "meanChannelDifference": 22.47
+            },
+            "right": {
+              "ridgeRms": 42.7,
+              "ridgeMaxAbs": 55,
+              "meanChannelDifference": 31.35
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "geochang--namwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/geochang--namwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 326,
+            "right": 358
+          },
+          "edgeDelta": {
+            "left": 59,
+            "right": 43
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 62.03,
+              "ridgeMaxAbs": 72,
+              "meanChannelDifference": 25.37
+            },
+            "right": {
+              "ridgeRms": 37.17,
+              "ridgeMaxAbs": 43,
+              "meanChannelDifference": 47.66
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "jeonju--muju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/jeonju--muju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 322,
+            "right": 327
+          },
+          "edgeDelta": {
+            "left": 14,
+            "right": 3
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 6.45,
+              "ridgeMaxAbs": 15,
+              "meanChannelDifference": 24.47
+            },
+            "right": {
+              "ridgeRms": 13.45,
+              "ridgeMaxAbs": 18,
+              "meanChannelDifference": 29.37
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "lake--miryang",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/lake--miryang-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 280,
+            "right": 310
+          },
+          "edgeDelta": {
+            "left": 5,
+            "right": 14
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 23.95,
+              "ridgeMaxAbs": 41,
+              "meanChannelDifference": 19.65
+            },
+            "right": {
+              "ridgeRms": 9.13,
+              "ridgeMaxAbs": 14,
+              "meanChannelDifference": 23.85
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daegu--lake",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daegu--lake-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 353,
+            "right": 371
+          },
+          "edgeDelta": {
+            "left": 78,
+            "right": 53
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 93.1,
+              "ridgeMaxAbs": 106,
+              "meanChannelDifference": 32.45
+            },
+            "right": {
+              "ridgeRms": 47.36,
+              "ridgeMaxAbs": 53,
+              "meanChannelDifference": 31.7
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gumi--mall",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gumi--mall-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 326,
+            "right": 307
+          },
+          "edgeDelta": {
+            "left": 48,
+            "right": -10
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 40.65,
+              "ridgeMaxAbs": 50,
+              "meanChannelDifference": 37.22
+            },
+            "right": {
+              "ridgeRms": 10.85,
+              "ridgeMaxAbs": 20,
+              "meanChannelDifference": 27.87
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "geochang--tower",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/geochang--tower-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 252,
+          "edgeRidge": {
+            "left": 304,
+            "right": 334
+          },
+          "edgeDelta": {
+            "left": -2,
+            "right": 19
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 24.37,
+              "ridgeMaxAbs": 37,
+              "meanChannelDifference": 26.56
+            },
+            "right": {
+              "ridgeRms": 12.91,
+              "ridgeMaxAbs": 19,
+              "meanChannelDifference": 37.42
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "spring--yeongdong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/spring--yeongdong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 315,
+            "right": 282
+          },
+          "edgeDelta": {
+            "left": 52,
+            "right": -21
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 52.73,
+              "ridgeMaxAbs": 56,
+              "meanChannelDifference": 29.25
+            },
+            "right": {
+              "ridgeRms": 27.73,
+              "ridgeMaxAbs": 33,
+              "meanChannelDifference": 24.81
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "airfield--nonsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/airfield--nonsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 315,
+            "right": 378
+          },
+          "edgeDelta": {
+            "left": 7,
+            "right": 33
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 10.66,
+              "ridgeMaxAbs": 19,
+              "meanChannelDifference": 24.47
+            },
+            "right": {
+              "ridgeRms": 29.54,
+              "ridgeMaxAbs": 33,
+              "meanChannelDifference": 40
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "pyeongtaek--solar",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/pyeongtaek--solar-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 304,
+            "right": 431
+          },
+          "edgeDelta": {
+            "left": -35,
+            "right": 120
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 30.33,
+              "ridgeMaxAbs": 39,
+              "meanChannelDifference": 28.94
+            },
+            "right": {
+              "ridgeRms": 87.27,
+              "ridgeMaxAbs": 120,
+              "meanChannelDifference": 53.01
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gimcheon--reststop",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gimcheon--reststop-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 297,
+            "right": 384
+          },
+          "edgeDelta": {
+            "left": 29,
+            "right": 114
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 20.26,
+              "ridgeMaxAbs": 34,
+              "meanChannelDifference": 25.32
+            },
+            "right": {
+              "ridgeRms": 106.21,
+              "ridgeMaxAbs": 114,
+              "meanChannelDifference": 27.91
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "muju--tunnelbook",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/muju--tunnelbook-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 253,
+            "right": 281
+          },
+          "edgeDelta": {
+            "left": 93,
+            "right": -43
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 88.25,
+              "ridgeMaxAbs": 105,
+              "meanChannelDifference": 26.24
+            },
+            "right": {
+              "ridgeRms": 44.99,
+              "ridgeMaxAbs": 58,
+              "meanChannelDifference": 28.07
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "mingyu_ridge--yeongdong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/mingyu_ridge--yeongdong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 244,
+          "edgeRidge": {
+            "left": 228,
+            "right": 322
+          },
+          "edgeDelta": {
+            "left": -55,
+            "right": 19
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 65.87,
+              "ridgeMaxAbs": 73,
+              "meanChannelDifference": 29.37
+            },
+            "right": {
+              "ridgeRms": 15.61,
+              "ridgeMaxAbs": 21,
+              "meanChannelDifference": 30.7
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gimcheon--jaeyi_cache",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gimcheon--jaeyi_cache-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 307,
+            "right": 324
+          },
+          "edgeDelta": {
+            "left": 45,
+            "right": 54
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 49.3,
+              "ridgeMaxAbs": 55,
+              "meanChannelDifference": 33.86
+            },
+            "right": {
+              "ridgeRms": 61.9,
+              "ridgeMaxAbs": 75,
+              "meanChannelDifference": 36.26
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cablecar--mungyeong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cablecar--mungyeong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 270,
+            "right": 278
+          },
+          "edgeDelta": {
+            "left": -42,
+            "right": 87
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 48.56,
+              "ridgeMaxAbs": 52,
+              "meanChannelDifference": 27.17
+            },
+            "right": {
+              "ridgeRms": 100.05,
+              "ridgeMaxAbs": 115,
+              "meanChannelDifference": 36.08
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "filmset--namwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/filmset--namwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 236,
+          "edgeRidge": {
+            "left": 255,
+            "right": 315
+          },
+          "edgeDelta": {
+            "left": -33,
+            "right": 20
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 41.25,
+              "ridgeMaxAbs": 49,
+              "meanChannelDifference": 23.89
+            },
+            "right": {
+              "ridgeRms": 11.58,
+              "ridgeMaxAbs": 22,
+              "meanChannelDifference": 26.42
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "lighthouse--nonsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/lighthouse--nonsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1022,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 353,
+            "right": 355
+          },
+          "edgeDelta": {
+            "left": 47,
+            "right": 10
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 46.27,
+              "ridgeMaxAbs": 52,
+              "meanChannelDifference": 25.37
+            },
+            "right": {
+              "ridgeRms": 8.85,
+              "ridgeMaxAbs": 15,
+              "meanChannelDifference": 26.75
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cheonan--drivein",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cheonan--drivein-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 357,
+            "right": 404
+          },
+          "edgeDelta": {
+            "left": 91,
+            "right": 99
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 68.24,
+              "ridgeMaxAbs": 91,
+              "meanChannelDifference": 32.07
+            },
+            "right": {
+              "ridgeRms": 89.61,
+              "ridgeMaxAbs": 99,
+              "meanChannelDifference": 41.61
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "hapcheon--sunflower",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/hapcheon--sunflower-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 319,
+            "right": 321
+          },
+          "edgeDelta": {
+            "left": 9,
+            "right": 7
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 6.4,
+              "ridgeMaxAbs": 9,
+              "meanChannelDifference": 23.36
+            },
+            "right": {
+              "ridgeRms": 9.53,
+              "ridgeMaxAbs": 20,
+              "meanChannelDifference": 23.44
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "ulsan--yangsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/ulsan--yangsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1023,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 244,
+          "edgeRidge": {
+            "left": 297,
+            "right": 382
+          },
+          "edgeDelta": {
+            "left": 13,
+            "right": 31
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 18.83,
+              "ridgeMaxAbs": 23,
+              "meanChannelDifference": 29.71
+            },
+            "right": {
+              "ridgeRms": 31.79,
+              "ridgeMaxAbs": 60,
+              "meanChannelDifference": 35.24
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gyeongju--ulsan",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gyeongju--ulsan-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 373,
+            "right": 336
+          },
+          "edgeDelta": {
+            "left": 46,
+            "right": 23
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 35.73,
+              "ridgeMaxAbs": 47,
+              "meanChannelDifference": 27.72
+            },
+            "right": {
+              "ridgeRms": 19.47,
+              "ridgeMaxAbs": 25,
+              "meanChannelDifference": 31.76
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daegu--gyeongju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daegu--gyeongju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 369,
+            "right": 392
+          },
+          "edgeDelta": {
+            "left": 48,
+            "right": 74
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 37.32,
+              "ridgeMaxAbs": 48,
+              "meanChannelDifference": 29.73
+            },
+            "right": {
+              "ridgeRms": 60.8,
+              "ridgeMaxAbs": 75,
+              "meanChannelDifference": 26.49
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gyeongju--pohang",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gyeongju--pohang-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 323,
+            "right": 354
+          },
+          "edgeDelta": {
+            "left": 2,
+            "right": 27
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 3.9,
+              "ridgeMaxAbs": 6,
+              "meanChannelDifference": 23.58
+            },
+            "right": {
+              "ridgeRms": 20.61,
+              "ridgeMaxAbs": 27,
+              "meanChannelDifference": 34.47
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gimcheon--sangju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gimcheon--sangju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 322,
+            "right": 350
+          },
+          "edgeDelta": {
+            "left": 44,
+            "right": 29
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 59.64,
+              "ridgeMaxAbs": 70,
+              "meanChannelDifference": 25.38
+            },
+            "right": {
+              "ridgeRms": 33.21,
+              "ridgeMaxAbs": 37,
+              "meanChannelDifference": 34.92
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "sangju--yeongdong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/sangju--yeongdong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 337,
+            "right": 329
+          },
+          "edgeDelta": {
+            "left": 29,
+            "right": 26
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 26.12,
+              "ridgeMaxAbs": 30,
+              "meanChannelDifference": 36.64
+            },
+            "right": {
+              "ridgeRms": 16.77,
+              "ridgeMaxAbs": 26,
+              "meanChannelDifference": 32.15
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gunsan--jeonju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gunsan--jeonju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1022,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 358,
+            "right": 386
+          },
+          "edgeDelta": {
+            "left": 50,
+            "right": 49
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 42.66,
+              "ridgeMaxAbs": 51,
+              "meanChannelDifference": 26.11
+            },
+            "right": {
+              "ridgeRms": 33.47,
+              "ridgeMaxAbs": 69,
+              "meanChannelDifference": 26.44
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gunsan--lighthouse",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gunsan--lighthouse-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 334,
+            "right": 394
+          },
+          "edgeDelta": {
+            "left": 73,
+            "right": 55
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 29.33,
+              "ridgeMaxAbs": 74,
+              "meanChannelDifference": 30.97
+            },
+            "right": {
+              "ridgeRms": 48.74,
+              "ridgeMaxAbs": 56,
+              "meanChannelDifference": 41.82
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cheongju--chungju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cheongju--chungju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 318,
+            "right": 328
+          },
+          "edgeDelta": {
+            "left": 2,
+            "right": 42
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 4.36,
+              "ridgeMaxAbs": 7,
+              "meanChannelDifference": 30.85
+            },
+            "right": {
+              "ridgeRms": 54.88,
+              "ridgeMaxAbs": 70,
+              "meanChannelDifference": 36.34
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gongju--sejong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gongju--sejong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1023,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 317,
+            "right": 363
+          },
+          "edgeDelta": {
+            "left": 29,
+            "right": 32
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 37.83,
+              "ridgeMaxAbs": 47,
+              "meanChannelDifference": 25.7
+            },
+            "right": {
+              "ridgeRms": 36.5,
+              "ridgeMaxAbs": 44,
+              "meanChannelDifference": 35.48
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daejeon--sejong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daejeon--sejong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 307,
+            "right": 318
+          },
+          "edgeDelta": {
+            "left": -12,
+            "right": 3
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 11.05,
+              "ridgeMaxAbs": 17,
+              "meanChannelDifference": 31.07
+            },
+            "right": {
+              "ridgeRms": 10.87,
+              "ridgeMaxAbs": 21,
+              "meanChannelDifference": 22.16
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "cheongju--sejong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/cheongju--sejong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 305,
+            "right": 370
+          },
+          "edgeDelta": {
+            "left": -14,
+            "right": 40
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 17.26,
+              "ridgeMaxAbs": 21,
+              "meanChannelDifference": 34.19
+            },
+            "right": {
+              "ridgeRms": 24.43,
+              "ridgeMaxAbs": 40,
+              "meanChannelDifference": 30.46
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "jinju--yeosu",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/jinju--yeosu-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 351,
+            "right": 347
+          },
+          "edgeDelta": {
+            "left": 87,
+            "right": 19
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 76.54,
+              "ridgeMaxAbs": 89,
+              "meanChannelDifference": 33.94
+            },
+            "right": {
+              "ridgeRms": 7.17,
+              "ridgeMaxAbs": 19,
+              "meanChannelDifference": 27.75
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "suncheon--yeosu",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/suncheon--yeosu-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 331,
+            "right": 352
+          },
+          "edgeDelta": {
+            "left": 62,
+            "right": 20
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 42.89,
+              "ridgeMaxAbs": 62,
+              "meanChannelDifference": 23.77
+            },
+            "right": {
+              "ridgeRms": 12.39,
+              "ridgeMaxAbs": 21,
+              "meanChannelDifference": 30.43
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "namwon--suncheon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/namwon--suncheon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 424,
+            "right": 330
+          },
+          "edgeDelta": {
+            "left": 130,
+            "right": 35
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 122.15,
+              "ridgeMaxAbs": 130,
+              "meanChannelDifference": 37.41
+            },
+            "right": {
+              "ridgeRms": 21.85,
+              "ridgeMaxAbs": 35,
+              "meanChannelDifference": 30.2
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gwangju--suncheon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gwangju--suncheon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 346,
+            "right": 312
+          },
+          "edgeDelta": {
+            "left": 52,
+            "right": 34
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 48.56,
+              "ridgeMaxAbs": 54,
+              "meanChannelDifference": 26.69
+            },
+            "right": {
+              "ridgeRms": 28.77,
+              "ridgeMaxAbs": 37,
+              "meanChannelDifference": 32.58
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "damyang--gwangju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/damyang--gwangju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1085,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 308,
+            "right": 295
+          },
+          "edgeDelta": {
+            "left": 60,
+            "right": -32
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 55.98,
+              "ridgeMaxAbs": 60,
+              "meanChannelDifference": 29.96
+            },
+            "right": {
+              "ridgeRms": 36.47,
+              "ridgeMaxAbs": 42,
+              "meanChannelDifference": 33.69
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "damyang--namwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/damyang--namwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 296,
+            "right": 309
+          },
+          "edgeDelta": {
+            "left": -29,
+            "right": 14
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 25.57,
+              "ridgeMaxAbs": 30,
+              "meanChannelDifference": 28.51
+            },
+            "right": {
+              "ridgeRms": 21.65,
+              "ridgeMaxAbs": 27,
+              "meanChannelDifference": 35.01
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gwangju--mokpo",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gwangju--mokpo-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 245,
+          "edgeRidge": {
+            "left": 321,
+            "right": 377
+          },
+          "edgeDelta": {
+            "left": 73,
+            "right": 42
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 69.89,
+              "ridgeMaxAbs": 73,
+              "meanChannelDifference": 37.53
+            },
+            "right": {
+              "ridgeRms": 34.69,
+              "ridgeMaxAbs": 43,
+              "meanChannelDifference": 35.57
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gwangju--jeonju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gwangju--jeonju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 340,
+            "right": 340
+          },
+          "edgeDelta": {
+            "left": 92,
+            "right": 17
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 74.3,
+              "ridgeMaxAbs": 92,
+              "meanChannelDifference": 32.61
+            },
+            "right": {
+              "ridgeRms": 23.95,
+              "ridgeMaxAbs": 30,
+              "meanChannelDifference": 31.26
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "maehwa--suncheon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/maehwa--suncheon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 354,
+            "right": 322
+          },
+          "edgeDelta": {
+            "left": 60,
+            "right": 16
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 63.18,
+              "ridgeMaxAbs": 68,
+              "meanChannelDifference": 28.35
+            },
+            "right": {
+              "ridgeRms": 8.64,
+              "ridgeMaxAbs": 16,
+              "meanChannelDifference": 38.26
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "andong--gumi",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/andong--gumi-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 329,
+            "right": 337
+          },
+          "edgeDelta": {
+            "left": 45,
+            "right": 90
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 31.34,
+              "ridgeMaxAbs": 45,
+              "meanChannelDifference": 30.71
+            },
+            "right": {
+              "ridgeRms": 104.19,
+              "ridgeMaxAbs": 113,
+              "meanChannelDifference": 46.16
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "andong--danyang",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/andong--danyang-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 243,
+          "edgeRidge": {
+            "left": 308,
+            "right": 305
+          },
+          "edgeDelta": {
+            "left": -4,
+            "right": 4
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 9.76,
+              "ridgeMaxAbs": 17,
+              "meanChannelDifference": 27.84
+            },
+            "right": {
+              "ridgeRms": 9.36,
+              "ridgeMaxAbs": 21,
+              "meanChannelDifference": 41.32
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "mungyeong--sangju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/mungyeong--sangju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 297,
+            "right": 275
+          },
+          "edgeDelta": {
+            "left": -11,
+            "right": 84
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 23.73,
+              "ridgeMaxAbs": 33,
+              "meanChannelDifference": 31.3
+            },
+            "right": {
+              "ridgeRms": 85.17,
+              "ridgeMaxAbs": 95,
+              "meanChannelDifference": 41.34
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "chungju--mungyeong",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/chungju--mungyeong-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 281,
+            "right": 359
+          },
+          "edgeDelta": {
+            "left": 133,
+            "right": 73
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 148.58,
+              "ridgeMaxAbs": 164,
+              "meanChannelDifference": 37.61
+            },
+            "right": {
+              "ridgeRms": 65.33,
+              "ridgeMaxAbs": 78,
+              "meanChannelDifference": 26.98
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "chungju--danyang",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/chungju--danyang-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 249,
+          "edgeRidge": {
+            "left": 317,
+            "right": 331
+          },
+          "edgeDelta": {
+            "left": 59,
+            "right": 45
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 57.76,
+              "ridgeMaxAbs": 69,
+              "meanChannelDifference": 25.16
+            },
+            "right": {
+              "ridgeRms": 62.72,
+              "ridgeMaxAbs": 85,
+              "meanChannelDifference": 64.69
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "icheon--suwon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/icheon--suwon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1022,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 245,
+          "edgeRidge": {
+            "left": 355,
+            "right": 360
+          },
+          "edgeDelta": {
+            "left": 66,
+            "right": 46
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 43.76,
+              "ridgeMaxAbs": 66,
+              "meanChannelDifference": 26.36
+            },
+            "right": {
+              "ridgeRms": 60.19,
+              "ridgeMaxAbs": 70,
+              "meanChannelDifference": 27.67
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "chungju--icheon",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/chungju--icheon-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1023,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 313,
+            "right": 352
+          },
+          "edgeDelta": {
+            "left": 18,
+            "right": 66
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 12.6,
+              "ridgeMaxAbs": 20,
+              "meanChannelDifference": 24.59
+            },
+            "right": {
+              "ridgeRms": 71.8,
+              "ridgeMaxAbs": 91,
+              "meanChannelDifference": 62.93
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "chungju--wonju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/chungju--wonju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 368,
+            "right": 309
+          },
+          "edgeDelta": {
+            "left": 87,
+            "right": 29
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 81.8,
+              "ridgeMaxAbs": 88,
+              "meanChannelDifference": 34.34
+            },
+            "right": {
+              "ridgeRms": 33.08,
+              "ridgeMaxAbs": 36,
+              "meanChannelDifference": 43.38
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "danyang--wonju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/danyang--wonju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 316,
+            "right": 298
+          },
+          "edgeDelta": {
+            "left": 58,
+            "right": 18
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 79.53,
+              "ridgeMaxAbs": 87,
+              "meanChannelDifference": 39.53
+            },
+            "right": {
+              "ridgeRms": 21.26,
+              "ridgeMaxAbs": 27,
+              "meanChannelDifference": 26.26
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daegwallyeong--wonju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daegwallyeong--wonju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 250,
+          "edgeRidge": {
+            "left": 312,
+            "right": 340
+          },
+          "edgeDelta": {
+            "left": 72,
+            "right": 16
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 72.19,
+              "ridgeMaxAbs": 74,
+              "meanChannelDifference": 24.55
+            },
+            "right": {
+              "ridgeRms": 18.68,
+              "ridgeMaxAbs": 23,
+              "meanChannelDifference": 34.11
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "daegwallyeong--gangneung",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/daegwallyeong--gangneung-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 248,
+          "edgeRidge": {
+            "left": 332,
+            "right": 388
+          },
+          "edgeDelta": {
+            "left": 31,
+            "right": 154
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 32.67,
+              "ridgeMaxAbs": 56,
+              "meanChannelDifference": 27.54
+            },
+            "right": {
+              "ridgeRms": 158.29,
+              "ridgeMaxAbs": 163,
+              "meanChannelDifference": 47.5
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gangneung--sokcho",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gangneung--sokcho-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 322,
+            "right": 354
+          },
+          "edgeDelta": {
+            "left": -64,
+            "right": 6
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 59.43,
+              "ridgeMaxAbs": 64,
+              "meanChannelDifference": 37.3
+            },
+            "right": {
+              "ridgeRms": 4.67,
+              "ridgeMaxAbs": 8,
+              "meanChannelDifference": 28.02
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "gangneung--pohang",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/gangneung--pohang-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 251,
+          "edgeRidge": {
+            "left": 339,
+            "right": 433
+          },
+          "edgeDelta": {
+            "left": -47,
+            "right": 106
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 35.62,
+              "ridgeMaxAbs": 48,
+              "meanChannelDifference": 50.59
+            },
+            "right": {
+              "ridgeRms": 89.31,
+              "ridgeMaxAbs": 106,
+              "meanChannelDifference": 58.33
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    },
+    {
+      "id": "icheon--wonju",
+      "cityHashesIntact": true,
+      "native": {
+        "file": "assets/ui/road-connectors/icheon--wonju-native-v1.webp",
+        "hashIntact": true,
+        "sourcePixelsPerViewport": 1086,
+        "geometry": {
+          "delivery": [
+            1024,
+            576
+          ],
+          "topClear": 1024,
+          "bottomSolid": 0,
+          "minimumGroundAlpha": 247,
+          "edgeRidge": {
+            "left": 309,
+            "right": 340
+          },
+          "edgeDelta": {
+            "left": 69,
+            "right": 26
+          },
+          "edgeProfiles": {
+            "left": {
+              "ridgeRms": 61.02,
+              "ridgeMaxAbs": 72,
+              "meanChannelDifference": 26.07
+            },
+            "right": {
+              "ridgeRms": 45.53,
+              "ridgeMaxAbs": 57,
+              "meanChannelDifference": 35.73
+            }
+          },
+          "strictSolidGround": false
+        },
+        "productionGeometry": false,
+        "visualApproval": false
+      },
+      "generated": null
+    }
+  ]
+}

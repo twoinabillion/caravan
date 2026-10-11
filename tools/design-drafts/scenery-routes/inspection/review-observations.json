@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-10",
+  "productionApproved": false,
+  "scope": "Initial 76 candidate master/contact-sheet overview and thirds; five repaired v2 masters; standalone Studio draft. Not actual player-screen crops or continuous multi-leg driving.",
+  "observations": [
+    "Single-strip candidate construction avoids the legacy moving vertical wipe inside each corridor.",
+    "Same-city endpoint identity varies across corridors, including Muju tunnel geometry. Arrival to next departure remains unresolved.",
+    "Blue/color alpha-edge fringe remains in some candidates, notably Busan to Yangsan. Geometry checks do not certify edge colour or style.",
+    "Mingyu ridge repair replaces the unsupported large tower with a modest hut and antenna.",
+    "Busan to Yangsan v1 exact manual generation prompt was not retained. Provenance prompt is null and production gating rejects it."
+  ],
+  "repairedMastersObserved": [
+    {"id":"geochang--tower","deliverySha256":"c33a437c6e5e736351673c2c0920f19989dedabb71c9d7a6dfbf875728485c4c"},
+    {"id":"mingyu_ridge--yeongdong","deliverySha256":"83319037fb4e777a0fffb7988d10b4bc43dbf4c9766732c13daa44847e13e349"},
+    {"id":"gunsan--lighthouse","deliverySha256":"8a31dfc348a016b4f1a7e7ac09843944e8b1c3f2524929c9b05eff10a99cf8c2"},
+    {"id":"mungyeong--sangju","deliverySha256":"050fadad36c94bfd591b2155018c6e4f2050cd4d20318e581d3a6f5e47fa48ea"},
+    {"id":"icheon--wonju","deliverySha256":"ce48d842375e56d65026c75b12967e40183a22557a66af8eae6a97de871d3845"}
+  ],
+  "nextRequired": ["Shared canonical city endpoint design review", "Repair colour fringe and missing generation receipt", "Actual game crop and departure/arrival/event-resume/reload visual QA"]
+}

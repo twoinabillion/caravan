@@ -1,0 +1,87 @@
+{
+  "route": "cheonan--gongju",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-7bd77839-3105-4559-be28-e9b3ec70c3ef.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 공주 산성 -> 천안 삼거리, one real 44km normal corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 공주 산성; 옛 성곽에 기대어 사는 몇 가구. 강 건너를 오래 바라보는 사람들.; biome rural, distinctive terrain fortress. RIGHT QUARTER: 천안 삼거리; 북쪽으로 갈수록 길이 깨끗해진다. 그게 더 불안하다.; biome city, distinctive terrain modest local landscape. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: low field plots, orchard rows, modest farm sheds and gently wooded hills connect the two actual endpoint landscapes; dense buildings thin naturally before returning at the destination. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/cheonan--gongju-v1.png",
+  "sourceSha256": "d1422e0e0c52ca6be1e97d10f1f5589600f7ea2358efb7d1bff5c529d31a2e9d",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/cheonan--gongju-native-v1.webp",
+  "sha256": "5a75d7e47515e8e956e3b77b8add065545ca5ee9d1ebae891a938bb5b9788a89",
+  "bytes": 126800,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "gongju",
+      "file": "assets/ui/road-environment/gongju-v1.webp",
+      "sha256": "95816e42992058b65a89964cb2f2584ceeba7c348ad3befdf855d7909157c2e4"
+    },
+    {
+      "id": "cheonan",
+      "file": "assets/ui/road-environment/cheonan-v1.webp",
+      "sha256": "f2f317adf1d6701f1fd01e0175d38c782e6aa155b16486b534160c25d3b7e68c"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 251,
+    "edgeRidge": {
+      "left": 322,
+      "right": 358
+    },
+    "edgeDelta": {
+      "left": 34,
+      "right": 53
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 25.79,
+        "ridgeMaxAbs": 35,
+        "meanChannelDifference": 24.61
+      },
+      "right": {
+        "ridgeRms": 40.17,
+        "ridgeMaxAbs": 53,
+        "meanChannelDifference": 36.92
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

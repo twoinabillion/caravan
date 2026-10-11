@@ -1,0 +1,130 @@
+{
+  "provider": "Project WebAudio SND.combat",
+  "source_sha256": "1c4dba54269928833f895c594117bea9d08cb86aa928df127ceacb74e4fe2a40",
+  "sample_rate": 48000,
+  "listening_review": "pending",
+  "game_wired": false,
+  "note": "Offline rendering of the actual runtime graph including -3dB master. Listening references only; not additional game samples.",
+  "clips": [
+    {
+      "name": "warning",
+      "file": "warning.mp3",
+      "duration": 1.044898,
+      "sha256": "7e647a9960b049c98c40bef10277c3ddc73514feeda99330595d927dba5c1a19"
+    },
+    {
+      "name": "scan",
+      "file": "scan.mp3",
+      "duration": 1.044898,
+      "sha256": "1814d7c4cb3df4c50cba93acd3bc1d2f2915aa38e333ecbf57215a4f4d88180d"
+    },
+    {
+      "name": "drone",
+      "file": "drone.mp3",
+      "duration": 1.044898,
+      "sha256": "43a2b4bd3f4109b9d9af54ad4a4c6b980666a7b480149593746491c1e4e410ff"
+    },
+    {
+      "name": "walker",
+      "file": "walker.mp3",
+      "duration": 1.044898,
+      "sha256": "922e881493dd473ff56be35c0bdee92baf6c84748c553bb3797761def9d9e239"
+    },
+    {
+      "name": "heartbeat",
+      "file": "heartbeat.mp3",
+      "duration": 1.044898,
+      "sha256": "4a150c3492110564ac07fb09b8e6e80a3012e6cc7735bf9cbce67b1a951e7038"
+    },
+    {
+      "name": "rifle",
+      "file": "rifle.mp3",
+      "duration": 1.044898,
+      "sha256": "b22d81f15d36745509abec385d616e17dc552bc90dd2901bf75f701063db4892"
+    },
+    {
+      "name": "crossbow",
+      "file": "crossbow.mp3",
+      "duration": 1.044898,
+      "sha256": "bc73cdf0ce4ce87fc9b14742431880461678392c65f4325f304beb6097c5e8aa"
+    },
+    {
+      "name": "metal",
+      "file": "metal.mp3",
+      "duration": 1.044898,
+      "sha256": "92b124d033c4fca05a7d6514ea5029ab3c949f2c178e36a4057703fda1c5ec5e"
+    },
+    {
+      "name": "fire",
+      "file": "fire.mp3",
+      "duration": 1.044898,
+      "sha256": "24779c429817d6701dd0788f936c2c43b9995b9e6830772fe5dc09491489c458"
+    },
+    {
+      "name": "hit",
+      "file": "hit.mp3",
+      "duration": 1.044898,
+      "sha256": "c0af379e8073f44068c1370eedcdf2dd06e03429732bd5d8172799ac8d2d4d71"
+    },
+    {
+      "name": "alarm",
+      "file": "alarm.mp3",
+      "duration": 1.044898,
+      "sha256": "ec899b8880eefb4d566e286263c327ad77a35d464a863b85326d56c3ee2704df"
+    },
+    {
+      "name": "hack",
+      "file": "hack.mp3",
+      "duration": 1.044898,
+      "sha256": "f98166d0c981d4eef3632e7869d6349bad0ed877f8ea48221b5619d18674e43c"
+    },
+    {
+      "name": "engine",
+      "file": "engine.mp3",
+      "duration": 1.044898,
+      "sha256": "3c0b3901477cb2630cd3d7096938e93bdddad6e51e10d8f548269aa1848d3343"
+    },
+    {
+      "name": "cover",
+      "file": "cover.mp3",
+      "duration": 1.044898,
+      "sha256": "ff804599816c52b46b073ddb8be7e36053a8701f09ed7b3c3d75363c0c586399"
+    },
+    {
+      "name": "confirm",
+      "file": "confirm.mp3",
+      "duration": 1.044898,
+      "sha256": "1e10996fc4b548322b6ca7cbd45587111c6d8ddb22474ecb7cb37c01213d701e"
+    },
+    {
+      "name": "success",
+      "file": "success.mp3",
+      "duration": 1.044898,
+      "sha256": "b7a9fa23b3c441cf730580db61dffd9237de6d464642fe5078a222f112c91915"
+    },
+    {
+      "name": "partial",
+      "file": "partial.mp3",
+      "duration": 1.044898,
+      "sha256": "ef3b77b84c10fbcaac80ad0cbd2d2ae6a45c321b0fe2a3c4cd387fa4f56e0c70"
+    },
+    {
+      "name": "failure",
+      "file": "failure.mp3",
+      "duration": 1.044898,
+      "sha256": "28bb572653e742673df871f42e8b0fdacb6cca74798774178bde551227f40e4c"
+    },
+    {
+      "name": "exit",
+      "file": "exit.mp3",
+      "duration": 1.044898,
+      "sha256": "0a758fcd535ac00c4880d6e1d6e3533ca5d52643b603a744e6ba50e0f5e9846d"
+    },
+    {
+      "name": "select",
+      "file": "select.mp3",
+      "duration": 1.044898,
+      "sha256": "c8108634ef28c248e10773a111d613a6dac7e0733da55c33d4916bf8ef557077"
+    }
+  ]
+}

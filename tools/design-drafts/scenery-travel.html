@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>풍경도 같은 길을 달리게</title>
+  <link rel="stylesheet" href="scenery-travel.css">
+</head>
+<body>
+<main class="draft">
+  <header class="intro">
+    <h1>풍경도 같은 길을 달리게</h1>
+    <p>밀양 → 대구 · 전환 움직임 비교 초안</p>
+  </header>
+  <fieldset class="controls">
+    <legend>움직임 확인</legend>
+    <label><input id="play" type="checkbox"><span>한 번 재생</span></label>
+    <label><input id="pause" type="checkbox"><span>잠깐 멈춤</span></label>
+  </fieldset>
+  <fieldset class="positions">
+    <legend>정지해서 비교</legend>
+    <label><input id="start" type="radio" name="position" checked><span>출발 쪽</span></label>
+    <label><input id="middle" type="radio" name="position"><span>접합부</span></label>
+    <label><input id="end" type="radio" name="position"><span>도착 쪽</span></label>
+  </fieldset>
+  <p class="help">재생을 껐다 켜면 처음부터. 두 장면이 함께 움직이며, 약 32초 뒤 멈춥니다.</p>
+  <section aria-labelledby="proposal-title" class="example proposal">
+    <header><h2 id="proposal-title">제안 · 풍경 자체가 지나감</h2><p>같은 속도, 불투명한 지형 연결</p></header>
+    <div class="scene" role="img" aria-label="제안 전환. 밀양과 대구 원경이 하나의 띠로 왼쪽 이동하고 접합부는 낮은 둔덕으로 가린다. 달구지와 하늘은 고정된다.">
+      <div class="sky"></div>
+      <div class="travel-strip animated">
+        <img class="terrain from" src="../../assets/ui/road-environment/miryang-v1.webp" width="1024" height="576" alt="">
+        <img class="terrain to" src="../../assets/ui/road-environment/daegu-v1.webp" width="1024" height="576" alt="">
+        <div class="ridge"><div class="ridge-face"></div><div class="ridge-near"></div></div>
+      </div>
+      <div class="road"><div class="road-marks animated"></div></div>
+      <img class="vehicle" src="../../assets/ui/journey-dalguji-base-v1.webp" width="1024" height="608" alt="">
+    </div>
+  </section>
+  <section aria-labelledby="current-title" class="example current">
+    <header><h2 id="current-title">비교 · 경계가 화면을 쓸어감</h2><p>현재 코드의 방식·속도 차이를 설명하는 예시</p></header>
+    <div class="scene" role="img" aria-label="기존 방식 비교. 배경은 느리게 흘러가지만 빠른 세로 경계가 밀양 풍경을 대구 풍경으로 교체한다. 실제 플레이 녹화는 아니다.">
+      <div class="sky"></div>
+      <div class="old-terrain animated"><img src="../../assets/ui/road-environment/miryang-v1.webp" width="1024" height="576" alt=""><img src="../../assets/ui/road-environment/miryang-v1.webp" width="1024" height="576" alt=""></div>
+      <div class="wipe animated"><div class="sky"></div><div class="old-terrain animated"><img src="../../assets/ui/road-environment/daegu-v1.webp" width="1024" height="576" alt=""><img src="../../assets/ui/road-environment/daegu-v1.webp" width="1024" height="576" alt=""></div></div>
+      <div class="road"><div class="road-marks animated"></div></div>
+      <img class="vehicle" src="../../assets/ui/journey-dalguji-base-v1.webp" width="1024" height="608" alt="">
+    </div>
+  </section>
+  <details class="notes"><summary>초안 범위와 적용할 때 확인할 것</summary>
+    <p>기존 밀양·대구 원경과 기본 달구지를 재사용한 CSS 움직임 시안입니다. 실제 캔버스, 현재 저장의 주행, 개조·동료·날씨를 복제하지 않습니다. 둔덕은 연결 방식을 보여 주는 코드 도형이며 신규 장소나 사건이 아닙니다.</p>
+    <p>제안에서는 같은 지형 띠의 이동으로 접합부도 함께 지나갑니다. 건물은 녹아 겹치지 않습니다. 현재 방식 비교는 52km 구간의 중간 전환 약 7.8초와 원경 이동을 단순화한 것으로 실제 녹화가 아닙니다.</p>
+    <p>승인 뒤 실제 렌더러에서는 이동 거리·감속·일시정지·도착·저장 복원·이미지 로딩을 함께 확인해야 합니다. 각 원경의 건물과 능선이 연결부에서 잘리지 않도록 경계 위치와 지형을 따로 검수합니다.</p>
+    <p>게임과 저장에는 미적용입니다. 초안 선택은 요청 작성만 하며 자동 적용하지 않습니다.</p>
+  </details>
+  <footer>새 그림 생성 없음 · 게임과 저장 미변경</footer>
+</main>
+</body>
+</html>

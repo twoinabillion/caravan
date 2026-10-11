@@ -1,0 +1,87 @@
+{
+  "route": "mungyeong--sangju",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-933cbf4b-fc3c-452a-bffe-02ddc49cebc3.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-b7b9804d-f005-4c27-946f-e1b3ea9d2483.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 상주 자전거길 -> 문경새재, one real 26km rough corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the local rejected terrain candidate to repair; references1-4 retain the canonical style and world. Preserve its continuous one-strip construction.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 상주 자전거길; 자전거의 도시. 기름 없는 세상에서 뒤늦게 전성기를 맞았다.; biome rural, distinctive terrain bikes. RIGHT QUARTER: 문경새재; 과거 보러 넘던 옛 고개. 지금도 넘는 자에게 뭔가를 시험한다.; biome mount, distinctive terrain gate. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: wooded Korean foothills, small valley fields and occasional low farm sheds connect the two places; low readable terrain, no huge ridge hiding a seam. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\n\nEDIT REQUEST: Repair only the master geometry to EXACT3:1, large3072x1024 RGBA requested. Preserve the existing left valley and right historic mountain gate, scale, identity, continuous terrain and side-on level ground. Do not stretch mountains, split into panels, or crop the principal gate. Entire bottom baseline alpha255, air above silhouettes alpha0; no chroma matte fringe.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/mungyeong--sangju-v2.png",
+  "sourceSha256": "062b08285f3788f717ad97ff38d801558fb76cc61a9a56bce414e91a2aafa5c2",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/mungyeong--sangju-native-v1.webp",
+  "sha256": "3a0c3a50dae970c7fb9bbeac498d50e426be7019e87677f33ccc6535114ca1e9",
+  "bytes": 151540,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "sangju",
+      "file": "assets/ui/road-environment/sangju-v1.webp",
+      "sha256": "a682ccab83b08dbcbbc3625dc6b93f5d783e35969a48d4f36eb82f9b55c05838"
+    },
+    {
+      "id": "mungyeong",
+      "file": "assets/ui/road-environment/mungyeong-v1.webp",
+      "sha256": "931d043a208bef36556d3d49b999598ec38e59cb6f4e85a3275a50f46d84bf6a"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 251,
+    "edgeRidge": {
+      "left": 297,
+      "right": 275
+    },
+    "edgeDelta": {
+      "left": -11,
+      "right": 84
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 23.73,
+        "ridgeMaxAbs": 33,
+        "meanChannelDifference": 31.3
+      },
+      "right": {
+        "ridgeRms": 85.17,
+        "ridgeMaxAbs": 95,
+        "meanChannelDifference": 41.34
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

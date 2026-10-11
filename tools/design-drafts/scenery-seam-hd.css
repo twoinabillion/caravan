@@ -1,0 +1,29 @@
+/* Independent HD draft owner. Uniform projection, no per-column raster warp.
+   Endpoints overlap by 1/16 viewport; total world length is 2.875 viewports. */
+.draft{max-width:360px}
+.draft:has(#width-320:checked){max-width:320px}
+.draft:has(#width-480:checked){max-width:480px}
+.sizes label{flex:1;justify-content:center}
+.positions{flex-wrap:wrap}.positions label{flex:1 0 27%;padding-inline:6px}
+.hd-world{position:absolute;inset:0 auto 0 0;width:287.5%;transform:translateX(0)}
+.hd-plate{position:absolute;bottom:28%;width:34.782608696%;height:auto;display:block}
+.hd-from{left:0;mask-image:linear-gradient(to right,black 0 93.75%,transparent 100%)}
+.hd-bridge{left:32.608695652%}
+.hd-to{left:65.217391304%;mask-image:linear-gradient(to right,transparent,black 6.25% 100%)}
+.draft:has(#hd-first:checked) .hd-world{transform:translateX(-16.304347826%)}
+.draft:has(#hd-middle:checked) .hd-world{transform:translateX(-32.608695652%)}
+.draft:has(#hd-last:checked) .hd-world{transform:translateX(-48.913043478%)}
+.draft:has(#hd-end:checked) .hd-world,.draft:has(#hd-reverse:checked):has(#hd-start:checked) .hd-world{transform:translateX(-65.217391304%)}
+.draft:has(#hd-reverse:checked):has(#hd-first:checked) .hd-world{transform:translateX(-48.913043478%)}
+.draft:has(#hd-reverse:checked):has(#hd-last:checked) .hd-world{transform:translateX(-16.304347826%)}
+.draft:has(#hd-reverse:checked):has(#hd-end:checked) .hd-world{transform:translateX(0)}
+.draft:has(#hd-reverse:checked) .vehicle{transform:scaleX(-1)}
+.draft:has(#hd-play:checked) .hd-world{animation:hd-travel var(--duration) linear both}
+.draft:has(#hd-play:checked) .road-marks{animation:road var(--duration) linear both}
+.draft:has(#hd-play:checked):has(#hd-reverse:checked) .hd-world{animation-name:hd-return}
+.draft:has(#hd-play:checked):has(#hd-reverse:checked) .road-marks{animation-direction:reverse}
+.draft:has(#hd-pause:checked) .hd-world,.draft:has(#hd-pause:checked) .animated{animation-play-state:paused}
+.notes a{color:var(--ink);text-underline-offset:3px}
+@keyframes hd-travel{from{transform:translateX(0)}to{transform:translateX(-65.217391304%)}}
+@keyframes hd-return{from{transform:translateX(-65.217391304%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.draft:has(#hd-play:checked) .hd-world,.draft:has(#hd-play:checked) .animated{animation:none}}

@@ -1,0 +1,87 @@
+{
+  "route": "cablecar--mungyeong",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-56f36d18-a82a-40e2-907f-875b0b2dff95.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 멈춘 케이블카 -> 문경새재, one real 16km rough corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 멈춘 케이블카; 능선 중턱에 매달린 채 오랫동안 정지한 관광 곤돌라.; biome mount, distinctive terrain modest local landscape. RIGHT QUARTER: 문경새재; 과거 보러 넘던 옛 고개. 지금도 넘는 자에게 뭔가를 시험한다.; biome mount, distinctive terrain gate. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: historic pass foothills and wooded slopes lead toward a stopped small gondola suspended on cables in the distance; no moving cabin. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/cablecar--mungyeong-v1.png",
+  "sourceSha256": "e7b6b36c22267f5687fc6b6aa647eaca6f4456a5afae7cc20bd3719f4b5a16a5",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/cablecar--mungyeong-native-v1.webp",
+  "sha256": "44cf77af08a435f7f6a059c49e91b0b3b3f6e40a928891d94dfee8719a811955",
+  "bytes": 141300,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "cablecar",
+      "file": "assets/ui/road-environment/cablecar-v1.webp",
+      "sha256": "c9cd2e58e908c8583d55b109ccb1682787d57d81d4336827a3f904c7ad6b5a91"
+    },
+    {
+      "id": "mungyeong",
+      "file": "assets/ui/road-environment/mungyeong-v1.webp",
+      "sha256": "931d043a208bef36556d3d49b999598ec38e59cb6f4e85a3275a50f46d84bf6a"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 249,
+    "edgeRidge": {
+      "left": 270,
+      "right": 278
+    },
+    "edgeDelta": {
+      "left": -42,
+      "right": 87
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 48.56,
+        "ridgeMaxAbs": 52,
+        "meanChannelDifference": 27.17
+      },
+      "right": {
+        "ridgeRms": 100.05,
+        "ridgeMaxAbs": 115,
+        "meanChannelDifference": 36.08
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

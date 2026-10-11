@@ -73,6 +73,8 @@ const ROAD_ENVIRONMENT = (()=>{
     target.drawImage(layer,0,0,layer.width,layer.height,0,0,W,H);target.restore();
   }
   function draw(target,skyCanvas,frame){
+    if(typeof ROAD_CONTINUITY!=='undefined'&&ROAD_CONTINUITY.draw(target,frame))return;
+    if(typeof ROUTE_PANORAMA!=='undefined'&&ROUTE_PANORAMA.draw(target,frame))return;
     const {state,W,H,scale}=frame;
     const pair=prepare(state,frame.edges);
     buffers(W,H,scale);

@@ -1,0 +1,87 @@
+{
+  "route": "spring--yeongdong",
+  "kind": "mechanical-native-master-crop",
+  "generation": {
+    "tool": "image_gen.imagegen",
+    "generatedSource": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-e0e4808f-ff33-4a51-92b3-060c66db7673.png",
+    "references": [
+      "assets/reference/visual-canon-2026-08-11.png",
+      "assets/reference/world-canon-2026-08-11.png",
+      "assets/reference/people-canon-2026-08-11.png",
+      "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "tools/design-drafts/scenery-route/masters/miryang-daegu-v1.png"
+    ],
+    "prompt": "Create ONE continuous transparent terrain panorama for 달빛 온천 -> 영동 포도밭, one real 9km rough corridor in Seoul to 400km. References1-4 are mandatory canonical STYLE/WORLD references only: reproduce NO people, vehicles, captions or panels. Reference5 is the approved ultra-wide TERRAIN construction target, not geography to copy.\nUse case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nTECHNICAL: large master aim3072x1024 ultra-wide3:1 RGBA. Genuine transparent sky above silhouettes, roughly60% empty air. One uninterrupted side-view distant terrain, bottom40% continuous solid level ground at the same baseline. No baked sky, sun, clouds, foreground road, lanes, vehicles, people, weather or HUD. It is a live environment component, NOT an event painting, screenshot or collage. NO blue/green/white matte fringe along alpha edges.\nLEFT QUARTER: 달빛 온천; 김이 오르는 노천탕. 멸망 이후 최고의 사치.; biome mount, distinctive terrain modest local landscape. RIGHT QUARTER: 영동 포도밭; 야생화된 포도넝쿨이 도로까지 점령했다.; biome rural, distinctive terrain modest local landscape. These are authored fictional project silhouettes, not invitations to invent new landmarks. Keep complete principal landmark within its own quarter with margin. Day-neutral soft ambient light even if the place name mentions night. No named inhabitants.\nMIDDLE HALF: wooded Korean foothills, small valley fields and occasional low farm sheds connect the two places; low readable terrain, no huge ridge hiding a seam. Preserve constant lens, eye level, terrain scale, ground baseline, continuous texture and ridge lines. No vertical seam, ghost buildings, stitched panels, huge foreground hill/tunnel covering the join. The geography connects gradually within ONE strip. It is illustrative geography, not a surveyed road. No Miryang market or Daegu dome unless one is actually an endpoint.\nEXCLUDE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel\nThe entire bottommost strip of solid terrain MUST be fully opaque alpha255 across the whole width, even where water is shown; only air above the terrain silhouette is transparent.",
+    "normalization": "Proportional resize, transparent top padding, sRGB WebP q86. No scene editing."
+  },
+  "sourceMaster": "tools/design-drafts/scenery-routes/masters/spring--yeongdong-v1.png",
+  "sourceSha256": "88ad505b5d38244f4d8a31fb43255a590c5d4039a272eebe2debe126661fdafc",
+  "actualMaster": [
+    2172,
+    724
+  ],
+  "crop": {
+    "left": 543,
+    "top": 113,
+    "width": 1086,
+    "height": 611
+  },
+  "sourcePixelsPerViewport": 1086,
+  "delivery": [
+    1024,
+    576
+  ],
+  "file": "assets/ui/road-connectors/spring--yeongdong-native-v1.webp",
+  "sha256": "27614ddf290fa731c0a2fef56030832f3ff363e9c9a5d82904887bccd85f0358",
+  "bytes": 134734,
+  "normalization": "Middle half at native resolution; bottom-aligned16:9crop; proportional downscale; sRGB WebPq94 alpha100. No retouch/alpha painting/sharpening/upscale/strip warp.",
+  "canonicalCities": [
+    {
+      "id": "spring",
+      "file": "assets/ui/road-environment/spring-v1.webp",
+      "sha256": "8b141e11441ab03c50273212592bdb9fe25c57437847388143bbda80a75dba32"
+    },
+    {
+      "id": "yeongdong",
+      "file": "assets/ui/road-environment/yeongdong-v1.webp",
+      "sha256": "63870758e9b7cd64525d470e30e1ac71bc88b0ef185f2ac41cfb0d628e7e3b46"
+    }
+  ],
+  "geometry": {
+    "delivery": [
+      1024,
+      576
+    ],
+    "topClear": 1024,
+    "bottomSolid": 0,
+    "minimumGroundAlpha": 249,
+    "edgeRidge": {
+      "left": 315,
+      "right": 282
+    },
+    "edgeDelta": {
+      "left": 52,
+      "right": -21
+    },
+    "edgeProfiles": {
+      "left": {
+        "ridgeRms": 52.73,
+        "ridgeMaxAbs": 56,
+        "meanChannelDifference": 29.25
+      },
+      "right": {
+        "ridgeRms": 27.73,
+        "ridgeMaxAbs": 33,
+        "meanChannelDifference": 24.81
+      }
+    },
+    "strictSolidGround": false
+  },
+  "gameEnabled": false,
+  "visualApproval": false,
+  "limitations": [
+    "Existing high-resolution source is not a new generation.",
+    "Unretained historical prompts remain unretained; current planned prompt is not a historical receipt.",
+    "Crop may include a landmark and may mismatch canonical city ridges; requires per-file visual and edge review."
+  ]
+}

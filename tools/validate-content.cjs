@@ -214,6 +214,12 @@ for (const event of events) {
   const where = `event:${event.id}`;
   need(typeof event.title === 'string' && event.title.trim(), where, '제목 없음');
   validateEventBody(event, where);
+  if(event.minuteWindow!==undefined){
+    const window=event.minuteWindow;
+    need(Array.isArray(window)&&window.length===2&&window.every(Number.isFinite)
+      &&window[0]>=0&&window[0]<window[1]&&window[1]<=1440,
+      where,'minuteWindow는 자정을 넘지 않는 [시작 분, 종료 분)이어야 함');
+  }
   need(Array.isArray(event.choices) && event.choices.length, where, '선택지 없음');
   if (event.nearNode) for (const id of event.nearNode)
     need(!!D.nodes[id], where, `nearNode가 없는 장소 ${id}`);

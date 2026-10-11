@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "styleId": "caravan-grounded-cinematic-v1",
+  "eventId": "pair_kw_leo_1",
+  "assetId": "pair-kangwoo-leo-replay-v1",
+  "generator": "builtin image_gen",
+  "master": "tools/design-drafts/story-scene-review/masters/pair-kangwoo-leo-replay-v1.png",
+  "delivery": "assets/scenes/pair-kangwoo-leo-replay-v1.webp",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "tools/design-drafts/story-scene-review/kangwoo-leo-identity-reference.png"
+  ],
+  "referenceStripSources": [
+    "assets/portraits/kangwoo.png",
+    "assets/portraits/leo.png"
+  ],
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\nAsset type: 2048x1152 landscape cinematic narrative scene, one single frame, character format. Inputs 1-4 are canonical style/world/people/Dalguji references, input 5 is an unaltered portrait reference strip: left Kangwoo, right Leo.\nScene: inside the modest worn living compartment of the stopped Korean cream cab-over Dalguji truck, seen at eye level across its small table. Windows and outside are out of frame so no conflicting time/weather. Only two men: Kangwoo (left portrait of input 5), close-cropped dark hair, familiar angular face and small cheek scar, worn olive jacket; Leo (right portrait of input 5), shoulder-length dark hair, faded patterned brown headscarf, worn patched blue vest. Kangwoo quietly listens, shoulders eased but expression reserved. Leo leans over the table and presses the large physical replay button of a battered small portable audio recorder with one index finger. This is playback of a previously recorded quiet song, not a live performance. A guitar remains untouched, in a cloth case leaning against the wall in the background, subordinate. One small practical amber lamp at upper side, restrained cool gray fabric and weathered wood. Candid human moment, no smiles toward camera. Medium shot, both recognizable faces and replaying hand/recorder readable in central 80% and upper 65%; heads about 23% frame height. The recorder has no readable letters, screen text or logos. Simple anatomically correct hands. Not a radio communications scene, no microphone held, no one playing guitar. No additional person, pet or companion. Match the actual small truck interior rather than an American RV.\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "status": "Sang-approved-source-wired-crop-pending",
+  "wiredIntoGameplay": true,
+  "review": {
+    "masterAndDelivery": "observed: two canonical men, replay button, untouched guitar case, natural hands; restrained practical amber interior",
+    "geometry": "1024x576 sRGB WebP delivery; large landscape master",
+    "actualStudioDraftWindow": "not observed: app access unavailable",
+    "actualInGameCrop": "not observed; source wired into choice result only, live structural apply pending",
+    "SangApproval": "approved-2026-10-10: 전부 해봐",
+    "unintroducedCompanions": "none: only Kangwoo and Leo, both required by event gate"
+  },
+  "preservedExistingScenes": [
+    "pair-kangwoo-leo-watch-v1",
+    "pair-kangwoo-leo-quiet-song-v2"
+  ]
+}

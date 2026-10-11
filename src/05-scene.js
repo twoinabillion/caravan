@@ -144,10 +144,16 @@ const SCENE = (()=>{
     const state=roadBackdropState();
     drawSky(hour,dark,wx,true);
     ROAD_ENVIRONMENT.draw(ctx,off,{state,W,H,scale:ROAD_RENDER_SCALE,
-      worldX,hour,dark,wx,edges:D.edges});
+      worldX,hour,dark,wx,edges:D.edges,at:S&&S.at,driving:S&&S.driving,recap:S&&S.lastJourneyRecap});
   }
 
   function poles(par,roadY,col){
+    if(typeof ROAD_CONTINUITY!=='undefined'&&ROAD_CONTINUITY.active()){
+      poleProfile('',par,roadY,col,0,W);return;
+    }
+    if(typeof ROUTE_PANORAMA!=='undefined'&&ROUTE_PANORAMA.active()){
+      poleProfile('',par,roadY,col,0,W);return;
+    }
     const profile=roadBackdropState();
     const edge=W*(1-profile.mix);
     if(profile.from.scenery===profile.to.scenery){poleProfile(profile.from.scenery,par,roadY,col,0,W);return;}

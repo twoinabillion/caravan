@@ -3,6 +3,9 @@
 /* ═══════════════════ SOUND (미니멀 신스) ═══════════════════ */
 const SND = (()=>{
   let ac=null, on=false, userChoice=false, suspended=false, engineGain=null, noiseSrc=null, sfxBuf=null, pulseTimer=null;
+  const buses={};
+  let master=null, speechActive=false;
+  const dbGain=db=>Math.pow(10,db/20);
   const mixKeys=['music','ambience','effects','voice'];
   const mix=Object.fromEntries(mixKeys.map(key=>{
     const raw=localStorage.getItem(`caravan_audio_${key}`);
@@ -21,6 +24,10 @@ const SND = (()=>{
   }
   function build(){
     ac=new (window.AudioContext||window.webkitAudioContext)();
+    master=ac.createGain(); master.gain.value=dbGain(-3); master.connect(ac.destination);
+    for(const key of mixKeys){
+      buses[key]=ac.createGain(); buses[key].gain.value=1; buses[key].connect(master);
+    }
     const buf=ac.createBuffer(1, ac.sampleRate*2, ac.sampleRate);
     const d=buf.getChannelData(0);
     let last=0;
@@ -28,7 +35,7 @@ const SND = (()=>{
     noiseSrc=ac.createBufferSource(); noiseSrc.buffer=buf; noiseSrc.loop=true;
     const lp=ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=120;
     engineGain=ac.createGain(); engineGain.gain.value=0;
-    noiseSrc.connect(lp); lp.connect(engineGain); engineGain.connect(ac.destination);
+    noiseSrc.connect(lp); lp.connect(engineGain); engineGain.connect(buses.ambience);
     noiseSrc.start();
     sfxBuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);
     const white=sfxBuf.getChannelData(0);
@@ -73,7 +80,10 @@ const SND = (()=>{
   function setDriving(driving){
     if(!ac||!engineGain) return;
     const hasRecorded=!!(D.sfx&&D.sfx.sfx_drive_asphalt_loop);
-    const target= on&&!suspended? (driving?(hasRecorded?0.055:0.16):(hasRecorded?0.018:0.05))*level('ambience'):0;
+    // The recorded road already contains its motor. Do not add a low rumble
+    // underneath a parked cab, indoor conversation or clear rain droplets.
+    const target= on&&!suspended&&!hasRecorded? (driving?.16:.05)*level('ambience'):0;
+    engineGain.gain.cancelScheduledValues(ac.currentTime);
     engineGain.gain.linearRampToValueAtTime(target, ac.currentTime+0.8);
   }
   function suspend(){
@@ -106,7 +116,8 @@ const SND = (()=>{
     o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+dur);
     g.gain.setValueAtTime(Math.max(.0001,vol),t);
     g.gain.exponentialRampToValueAtTime(.0001,t+dur);
-    o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+dur+.02);
+    o.connect(g); g.connect(buses.effects); o.start(t); o.stop(t+dur+.02);
+    o.onended=()=>{o.disconnect();g.disconnect();};
   }
   function burst(freq,dur,vol,delay=0,q=.7){
     vol*=level('effects');
@@ -114,7 +125,8 @@ const SND = (()=>{
     const t=ac.currentTime+delay, s=ac.createBufferSource(), f=ac.createBiquadFilter(), g=ac.createGain();
     s.buffer=sfxBuf; f.type='bandpass'; f.frequency.value=freq; f.Q.value=q;
     g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
-    s.connect(f); f.connect(g); g.connect(ac.destination); s.start(t); s.stop(t+dur+.02);
+    s.connect(f); f.connect(g); g.connect(buses.effects); s.start(t); s.stop(t+dur+.02);
+    s.onended=()=>{s.disconnect();f.disconnect();g.disconnect();};
   }
   /* 외부 음원 없이 만드는 짧은 전투 효과음. 사운드 토글과 함께 완전히 꺼진다. */
   function combat(kind='select'){
@@ -178,9 +190,10 @@ const SND = (()=>{
     catch(e){ return null; }          // 이미 물렸거나 지원 안 되면 원래 경로로
     const gain=ac.createGain();
     gain.gain.value=1;
-    node.connect(gain); gain.connect(ac.destination);
+    const bus=mixKeys.includes(opt?.bus)?opt.bus:'effects';
+    node.connect(gain); gain.connect(buses[bus]);
     audioEl.volume=1;                  // 조절은 게인이 한다
-    const handle={gain, ctx:ac};
+    const handle={gain, ctx:ac, bus, busGain:buses[bus], master};
     routed.set(audioEl, handle);
     return handle;
   }
@@ -200,8 +213,19 @@ const SND = (()=>{
     }
   }
   const mediaVolume=(audioEl)=> audioEl ? (audioEl._mixLevel!==undefined?audioEl._mixLevel:audioEl.volume) : 0;
+  function setSpeech(active){
+    speechActive=!!active;
+    if(!ac) return;
+    const t=ac.currentTime;
+    for(const key of ['music','ambience']){
+      const gain=buses[key].gain;
+      gain.cancelScheduledValues(t); gain.setValueAtTime(gain.value,t);
+      // Gain automation is bus-owned: fade tails and scene changes also duck.
+      gain.linearRampToValueAtTime(dbGain(speechActive?(key==='music'?-9:-6):0),t+(speechActive?.12:.65));
+    }
+  }
   return {toggle, enable, isEnabled, setDriving, combat, suspend, resume, level, setLevel,
-    route, setMediaVolume, mediaVolume};
+    route, setMediaVolume, mediaVolume, setSpeech};
 })();
 /* ═══════════════════ BGM (외부 생성 트랙 — D.bgm 슬롯) ═══════════════════
    D.bgm[key]에 data URI를 넣으면 상황에 맞춰 자동 재생·크로스페이드.
@@ -215,7 +239,7 @@ const BGM = (()=>{
     if(players[key]!==undefined) return players[key];
     if(!D.bgm||!D.bgm[key]){ players[key]=null; return null; }
     const a=new Audio(D.bgm[key]); a.loop=D.bgm[`${key}Loop`]!==false; a.preload='auto';
-    SND.setMediaVolume(a,0);
+    SND.setMediaVolume(a,0,{bus:'music'});
     players[key]=a; return a;
   }
   function fadeTo(a, target, then){
@@ -245,8 +269,11 @@ const BGM = (()=>{
   function setOn(v){
     on=v;
     if(!on){
+      resumeSong=false;
       if(song&&!song.paused){ song.pause(); song.currentTime=0; songUi(false); }
-      for(const k in players){ const a=players[k]; if(a){ fadeTo(a,0,()=>a.pause()); } }
+      for(const a of Object.values(players)) if(a){
+        clearInterval(a._fi); a._fi=null; SND.setMediaVolume(a,0); a.pause();
+      }
     }
     else if(!suspended){ manualPauseKey=null; const k=cur; cur=null; set(k||'title'); }
   }
@@ -263,7 +290,7 @@ const BGM = (()=>{
   function ensureSong(){
     if(song!==undefined&&song) return song;
     if(!D.bgm||!D.bgm.song) return null;
-    song=new Audio(D.bgm.song); SND.setMediaVolume(song, 0.6*SND.level('music'));
+    song=new Audio(D.bgm.song); SND.setMediaVolume(song, 0.6*SND.level('music'),{bus:'music'});
     song.onended=()=>{ songUi(false); const k=cur; cur=null; if(on) set(k); };
     return song;
   }
@@ -324,21 +351,41 @@ const BGM = (()=>{
 })();
 /* ═══════════════════ AMBIENCE / RECORDED SFX ═══════════════════
    생성한 네 테이크를 전부 싣지 않고 대표 한 개만 사용한다.
-   긴 환경음은 한 겹만 유지하고, 짧은 동작음만 그 위에 포개 모바일에서도
-   소리가 뭉개지거나 앱 용량이 폭증하지 않게 한다. */
+   장소 + 날씨 + 와이퍼 + 자연음은 각 한 소유자. 짧은 동작음은 제한된 풀.
+   Free 생성물은 로컬 Studio에서만 스트리밍하며 배포 HTML에는 넣지 않는다. */
 const AMBI = (()=>{
-  const cache={}, shots=new Set();
+  const cache={}, shots=new Set(), shotPool={}, lastShot={}, lastVariant={}, layers={};
   let on=false, suspended=false, current=null, currentKey=null, departTimer=null;
+  let worldContext='outdoor', worldSignature='', introToken='', introScene='', nextThunder=0;
   const FADE=480;
-  function source(key){ return D.sfx&&D.sfx[key]; }
+  function source(key){
+    if(D.sfx&&D.sfx[key]) return D.sfx[key];
+    const relative=D.detailSfx&&D.detailSfx[key];
+    if(relative&&['127.0.0.1','localhost'].includes(location.hostname)&&
+      new URLSearchParams(location.search).has('caravan-live'))
+      return '/__live/asset/'+encodeURIComponent(relative);
+    return null;
+  }
   function make(key,loop=false){
     if(!source(key)) return null;
     if(loop&&cache[key]) return cache[key];
     const audio=new Audio(source(key));
     audio.loop=loop;
     audio.preload='auto';
+    SND.setMediaVolume(audio,0,{bus:loop?'ambience':'effects'});
     if(loop) cache[key]=audio;
     return audio;
+  }
+  function stop(audio,reset=false){
+    if(!audio) return;
+    clearInterval(audio._fade); audio._fade=null;
+    audio.pause(); if(reset) audio.currentTime=0;
+    shots.delete(audio);
+  }
+  function pauseAll(){
+    clearTimeout(departTimer); departTimer=null;
+    for(const audio of Object.values(cache)) stop(audio);
+    for(const audio of shots) stop(audio,true);
   }
   function fade(audio,target,done){
     if(!audio) return;
@@ -358,6 +405,7 @@ const AMBI = (()=>{
   function setLoop(key,volume=.18){
     clearTimeout(departTimer);
     if(currentKey===key&&current){
+      if(current._baseTarget===volume&&!current.paused) return;
       current._baseTarget=volume;
       if(on&&!suspended&&current.paused) current.play().catch(()=>{});
       if(on&&!suspended) fade(current,volume*SND.level('ambience'));
@@ -366,7 +414,9 @@ const AMBI = (()=>{
     const prev=current;
     currentKey=key||null;
     current=key?make(key,true):null;
-    if(prev&&prev!==current) fade(prev,0,()=>{ prev.pause(); prev.currentTime=0; });
+    if(prev&&prev!==current){
+      if(on&&!suspended) fade(prev,0,()=>stop(prev,true)); else stop(prev,true);
+    }
     if(current) current._baseTarget=volume;
     if(!current||!on||suspended) return;
     SND.setMediaVolume(current,0);
@@ -374,11 +424,28 @@ const AMBI = (()=>{
     fade(current,volume*SND.level('ambience'));
   }
   function play(key,volume=.34){
-    if(!on||suspended||!source(key)) return null;
-    const audio=make(key,false);
+    if(!on||suspended) return null;
+    const now=performance.now();
+    if(lastShot[key]!=null&&now-lastShot[key]<180) return null;
+    const family=key;
+    const variants=(D.detailSfxVariants?.[key]||[key]).filter(id=>source(id));
+    if(!variants.length) return null;
+    lastShot[key]=now;
+    const choices=variants.length>1?variants.filter(id=>id!==lastVariant[family]):variants;
+    key=choices[Math.floor(Math.random()*choices.length)]; lastVariant[family]=key;
+    const pool=shotPool[key]||(shotPool[key]=[]);
+    let audio=pool.find(a=>!shots.has(a));
+    if(!audio&&pool.length<2){ audio=make(key,false); if(audio) pool.push(audio); }
+    if(!audio){ audio=pool[0]; stop(audio,true); }
     if(!audio) return null;
-    audio._baseVolume=volume;
-    SND.setMediaVolume(audio, volume*SND.level('effects'), {oneShot:true});
+    if(shots.size>=6) stop(shots.values().next().value,true);
+    audio.currentTime=0;
+    const varied=variants.length>1;
+    audio.playbackRate=varied?.97+Math.random()*.06:1;
+    audio.preservesPitch=!varied;
+    audio._baseVolume=volume*(varied?Math.pow(10,(Math.random()*1.6-.8)/20):1);
+    /* Bounded reusable media nodes allow true WebAudio gain on iOS too. */
+    SND.setMediaVolume(audio, audio._baseVolume*SND.level('effects'));
     shots.add(audio);
     const clear=()=>shots.delete(audio);
     audio.onended=clear;
@@ -386,12 +453,91 @@ const AMBI = (()=>{
     audio.play().catch(clear);
     return audio;
   }
+  function layer(slot,key,volume){
+    const old=layers[slot];
+    if(old&&old.key===key&&old.baseGain===volume){
+      if(on&&!suspended&&old.audio&&old.audio.paused){
+        old.audio.play().catch(()=>{}); fade(old.audio,volume*SND.level('ambience'));
+      }
+      return;
+    }
+    const audio=key?make(key,true):null;
+    layers[slot]={key,baseGain:volume,audio};
+    if(old&&old.audio&&old.audio!==audio){
+      if(on&&!suspended) fade(old.audio,0,()=>stop(old.audio,true)); else stop(old.audio,true);
+    }
+    if(!audio||!on||suspended) return;
+    audio._baseTarget=volume; SND.setMediaVolume(audio,0);
+    audio.play().catch(()=>{}); fade(audio,volume*SND.level('ambience'));
+  }
+  function clearLayers(){
+    for(const slot of ['weather','wipers','nature']) layer(slot,null,0);
+    nextThunder=0;
+  }
+  const terrain={
+    river:new Set(['jinju','maehwa','gongju','lake','spring']),
+    forest:new Set(['hapcheon','yeongdong','damyang','sunflower']),
+    tunnel:new Set(['muju','tunnelbook'])
+  };
+  function visible(id){ return !!document.getElementById(id)?.classList.contains('on'); }
+  function syncWorld(screen){
+    if(screen!=='game'||typeof S==='undefined'||!S||S.ended){
+      clearLayers(); worldSignature='';
+      if(screen!=='intro'){
+        setLoop(null);
+        for(const audio of shots) stop(audio,true);
+      }
+      return;
+    }
+    const eventOpen=visible('ev-wrap');
+    const camp=visible('ovl-camp'), town=visible('ovl-stl');
+    const context=eventOpen?worldContext:S.driving?'cab':camp?'camp':town?worldContext:'cab';
+    const wet=S.wx==='rain'||S.wx==='storm', storm=S.wx==='storm';
+    const outside=context==='outdoor'||context==='camp';
+    const rainKey=wet&&context!=='indoors'
+      ?'detail_rain_'+(context==='cab'?'cab_'+(storm?'heavy':'light'):context==='shelter'?'shelter':'outdoor_'+(storm?'heavy':'light')):null;
+    // Clear/dust/fog are not rain. Wipers require actual wet driving, not forecast.
+    layer('weather',rainKey||(outside?'detail_'+(storm||S.wx==='dust'?'wind_storm':'wind_gentle'):null),wet?.16:.07);
+    layer('wipers',wet&&S.driving&&!eventOpen&&!town&&!camp?'detail_wipers':null,.09);
+    let nature=null;
+    if((outside||context==='cab'&&!S.driving)&&!wet){
+      if(G.isNight()) nature='detail_night_insects';
+      else if(terrain.river.has(S.at)) nature='detail_river';
+      else if(terrain.forest.has(S.at)) nature='detail_forest_day';
+    }
+    if(context==='indoors'&&terrain.tunnel.has(S.at)) nature='detail_tunnel';
+    layer('nature',nature,.07);
+    const signature=[context,S.wx,S.at,!!S.driving,eventOpen].join('|');
+    if(signature!==worldSignature){
+      worldSignature=signature; nextThunder=performance.now()+30000+Math.random()*30000;
+    }
+    if(on&&!suspended&&storm&&context!=='indoors'&&performance.now()>=nextThunder){
+      play('detail_thunder_distant',context==='cab'?.10:.17);
+      nextThunder=performance.now()+30000+Math.random()*30000;
+    }
+  }
+  function action(kind){
+    const cues={repair:'detail_repair_ratchet',craft:'detail_tool_sorting',trade:'detail_bag_packing',
+      meal:'detail_meal',rest:'detail_cloth',explore:'detail_steps_gravel',radio:'detail_radio_tuning',
+      bag:'detail_bag_packing',journal:'detail_notebook',map:'detail_paper_fold',menu:'detail_switch'};
+    if(cues[kind]) play(cues[kind],['map','menu','journal'].includes(kind)?.14:.24);
+  }
+  function fieldAction(action){
+    const cue={water:'detail_water_pour',order:'detail_tool_sorting',record:'detail_paper_fold',
+      light:'detail_switch',gate:'detail_door_latch',shelter:'detail_cloth'}[action?.change?.visual];
+    if(cue) play(cue,.24);
+  }
+  function introTurn(scene,index,beat,activeScene=scene){
+    if(activeScene!==introScene) intro(activeScene);
+    const token=scene+'|'+index;
+    if(token===introToken) return; introToken=token;
+    const cue=beat&&beat.sfx||D.introSoundCues?.[scene]?.[index];
+    if(cue) play(cue,.24);
+  }
   function setOn(value){
     on=!!value;
     if(!on){
-      if(current){ current.pause(); current.currentTime=0; }
-      for(const audio of shots) audio.pause();
-      shots.clear();
+      pauseAll();
       return;
     }
     if(!suspended&&current){
@@ -399,9 +545,24 @@ const AMBI = (()=>{
       current.play().catch(()=>{});
       fade(current,(current._baseTarget||.18)*SND.level('ambience'));
     }
+    applyMix();
   }
   function intro(scene){
+    introScene=scene;
+    for(const audio of shots) stop(audio,true);
+    clearLayers(); worldSignature=''; introToken='';
     switch(scene){
+      case 'intro-busan-room-morning-v1':
+      case 'intro-cup-habit-v1':
+      case 'intro-busan-workday-v1':
+      case 'intro-workday-return-v1':
+      case 'intro-workday-repair-v1':
+      case 'intro-busan-water-line-v1':
+        setLoop(source('detail_rain_shelter')?'detail_rain_shelter':null,.10); break;
+      case 'intro-busan-cold-storage-v1':
+        setLoop('sfx_lab_room_loop',.07); break;
+      case 'intro-busan-generator-night-v1':
+        setLoop('sfx_camp_loop',.08); break;
       case 'intro-passenger-seat':
         setLoop('sfx_rain_wiper_loop',.20); break;
       case 'intro-first-expulsion':
@@ -425,9 +586,10 @@ const AMBI = (()=>{
     }
   }
   function depart(road){
+    worldContext='cab'; clearTimeout(departTimer);
     play('sfx_van_start',.38);
     const key=road==='rough'?'sfx_drive_gravel_loop':'sfx_drive_asphalt_loop';
-    departTimer=setTimeout(()=>setLoop(key,.17),1100);
+    departTimer=setTimeout(()=>{ departTimer=null; setLoop(key,.17); },1100);
   }
   const placeProfiles={
     busan:['sfx_port_arrival_loop',.16],gwangju:['sfx_market_loop',.13],miryang:['sfx_market_loop',.15],
@@ -447,11 +609,16 @@ const AMBI = (()=>{
     if(profile) departTimer=setTimeout(()=>setLoop(profile[0],profile[1]),650);
   }
   function settlement(mode,placeId){
+    worldContext=mode==='garage'||['daejeon','suwon','muju','seoul'].includes(placeId)?'indoors':mode==='market'?'shelter':'outdoor';
     const profile=placeLoop(placeId,mode);
     setLoop(profile[0],profile[1]);
   }
   function event(evd){
+    // Authored location only: remembered rain in dialogue is not current weather.
+    worldContext=evd&&evd.audioContext||D.audioSceneContexts?.[evd&&evd.scene]
+      ||(evd?.campConversation||evd?.needsComp?'cab':'outdoor');
     const id=String(evd&&evd.id||''), cue=String(evd&&evd.sfx||'');
+    if(id==='seoul_core') worldContext='indoors';
     if(id==='seoul_core') setLoop('sfx_core_loop',.17);
     else if(/drone|swarm/.test(id)||cue==='drone') setLoop('sfx_drone_real',.14);
     else setLoop(null);
@@ -461,6 +628,7 @@ const AMBI = (()=>{
     if(/^(?:freq_|radio_|dj_)/.test(id)) play('sfx_radio_static',.26);
   }
   function restore(){
+    worldContext='cab';
     if(typeof S==='undefined'||!S){ setLoop(null); return; }
     if($('#ovl-stl')&&$('#ovl-stl').classList.contains('on')){
       settlement(G.isNight()?'people':'hub',S.at&&D.nodes[S.at]&&D.nodes[S.at].stl);
@@ -470,8 +638,7 @@ const AMBI = (()=>{
       setLoop(S.driving.road==='rough'?'sfx_drive_gravel_loop':'sfx_drive_asphalt_loop',.17);
       return;
     }
-    if(G.isNight()) setLoop('sfx_camp_loop',.12);
-    else {
+    {
       const placeId=S.at&&D.nodes[S.at]&&D.nodes[S.at].stl||S.at;
       const profile=placeProfiles[placeId];
       if(profile) setLoop(profile[0],profile[1]); else setLoop(null);
@@ -479,37 +646,52 @@ const AMBI = (()=>{
   }
   function suspend(){
     suspended=true;
-    clearTimeout(departTimer);
-    if(current) current.pause();
-    for(const audio of shots) audio.pause();
-    shots.clear();
+    pauseAll();
   }
   function resume(){
     suspended=false;
-    if(!on||!current) return;
-    current.play().catch(()=>{});
-    fade(current,(current._baseTarget||.18)*SND.level('ambience'));
+    if(!on) return;
+    if(typeof S!=='undefined'&&S?.driving&&!visible('ev-wrap'))
+      setLoop(S.driving.road==='rough'?'sfx_drive_gravel_loop':'sfx_drive_asphalt_loop',.17);
+    if(current){ current.play().catch(()=>{}); fade(current,(current._baseTarget||.18)*SND.level('ambience')); }
+    applyMix();
   }
   function applyMix(){
     if(current&&on&&!suspended) fade(current,(current._baseTarget||.18)*SND.level('ambience'));
-    for(const audio of shots) SND.setMediaVolume(audio, (audio._baseVolume||.34)*SND.level('effects'), {oneShot:true});
+    for(const row of Object.values(layers)) if(row.audio&&on&&!suspended){
+      if(row.audio.paused) row.audio.play().catch(()=>{});
+      fade(row.audio,row.baseGain*SND.level('ambience'));
+    }
+    for(const audio of shots) SND.setMediaVolume(audio, (audio._baseVolume||.34)*SND.level('effects'));
   }
-  return {setOn,setLoop,play,intro,depart,arrive,settlement,event,restore,suspend,resume,applyMix};
+  return {setOn,setLoop,play,intro,introTurn,action,fieldAction,syncWorld,depart,arrive,settlement,event,restore,suspend,resume,applyMix};
 })();
 /* ═══════════════════ VO (보이스 — D.vo 슬롯) ═══════════════════
    슬롯이 비어 있으면 조용히 무시 (자막만). 파일 오면 드롭인. */
 const VO = (()=>{
-  let cur=null, on=false;
+  const players={};
+  let cur=null, on=false, suspended=false, generation=0;
   function play(key){
-    if(!on||!D.vo||!D.vo[key]) return;
+    if(!on||suspended||!D.vo||!D.vo[key]) return;
     stop();
-    cur=new Audio(D.vo[key]); SND.setMediaVolume(cur, 0.8*SND.level('voice'));
-    cur.play().catch(()=>{});
+    const token=++generation;
+    const audio=players[key]||(players[key]=new Audio(D.vo[key]));
+    cur=audio; audio.currentTime=0;
+    SND.setMediaVolume(audio, 0.8*SND.level('voice'),{bus:'voice'});
+    const clear=()=>{if(cur===audio&&generation===token){cur=null;SND.setSpeech(false);}};
+    audio.onended=clear; audio.onerror=clear;
+    audio.onplaying=()=>{if(cur===audio&&generation===token)SND.setSpeech(SND.level('voice')>0);};
+    audio.play().catch(clear);
   }
-  function stop(){ if(cur){ cur.pause(); cur=null; } }
+  function stop(){ generation++; if(cur){cur.pause();cur.currentTime=0;cur=null;} SND.setSpeech(false); }
   function setOn(value){ on=!!value; if(!on) stop(); }
-  function applyMix(){ if(cur) SND.setMediaVolume(cur, 0.8*SND.level('voice')); }
-  return {play, stop, setOn, applyMix};
+  function suspend(){suspended=true;stop();}
+  function resume(){suspended=false;} // A finished/hidden utterance is never replayed.
+  function applyMix(){ if(cur){
+    SND.setMediaVolume(cur, 0.8*SND.level('voice'));
+    SND.setSpeech(!cur.paused&&SND.level('voice')>0);
+  } }
+  return {play, stop, setOn, applyMix, suspend, resume};
 })();
 
 /* 토스 WebView가 백그라운드로 내려갈 때 소리와 진행을 명시적으로 멈춘다.
@@ -528,7 +710,7 @@ function suspendForLifecycle(){
   SND.suspend();
   BGM.suspend();
   AMBI.suspend();
-  VO.stop();
+  VO.suspend();
 }
 function resumeForLifecycle(){
   if(!lifecycleHidden||document.hidden) return;
@@ -537,6 +719,7 @@ function resumeForLifecycle(){
   SND.resume();
   BGM.resume();
   AMBI.resume();
+  VO.resume();
 }
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden) suspendForLifecycle();
