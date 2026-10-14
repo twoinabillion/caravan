@@ -1,0 +1,20 @@
+― 전역 서울 제한일 제거
+  ✅ 전역 제한일 값이 없다 — None
+  ✅ 며칠이 지나도 날짜 기반 사건·관측 상승이 없다 — {'deadline': None, 'early': {'day': 2, 'onTime': True, 'remaining': None, 'departed': 0, 'residents': 6412, 'crisis': None, 'pursuit': 0}, 'late': {'day': 60, 'onTime': True, 'remaining': None, 'departed': 0, 'residents': 6412, 'crisis': None, 'pursuit': 0}, 'veryLate': {'day': 180, 'onTime': True, 'remaining': None, 'departed': 0, 'residents': 6412, 'crisis': None, 'pursuit': 0}, 'oldFlags': []}
+  ✅ 도착 날짜와 무관하게 주민 이송 피해가 생기지 않는다 — {'deadline': None, 'early': {'day': 2, 'onTime': True, 'remaining': None, 'departed': 0, 'residents': 6412, 'crisis': None, 'pursuit': 0}, 'late': {'day': 60, 'onTime': True, 'remaining': None, 'departed': 0, 'residents': 6412, 'crisis': None, 'pursuit': 0}, 'veryLate': {'day': 180, 'onTime': True, 'remaining': None, 'departed': 0, 'residents': 6412, 'crisis': None, 'pursuit': 0}, 'oldFlags': []}
+― 야영 밸런스
+  ✅ 정착지 첫 밤은 무상 — {'scrapSpent': 0, 'water': 0, 'food': -2, 'nights': 1}
+  ✅ 반복 숙박은 고철 2 청구 — {'scrapSpent': 2, 'water': 1, 'food': -1, 'nights': 2}
+  ❌ 유상 밤은 첫 밤과 같은 보급 — {'first': {'scrapSpent': 0, 'water': 0, 'food': -2, 'nights': 1}, 'second': {'scrapSpent': 2, 'water': 1, 'food': -1, 'nights': 2}, 'third': {'scrapSpent': 0, 'water': 0, 'food': -2, 'nights': 3}, 'partySize': 1}
+  ❌ 삯 없는 밤은 보급이 실제로 줄어든다 — 무상밤={'scrapSpent': 0, 'water': 0, 'food': -2, 'nights': 1} 삯없는밤={'scrapSpent': 0, 'water': 0, 'food': -2, 'nights': 3}
+― 구제 유상화 (에스컬레이션 사다리)
+  ✅ nofuel 3회 = 서로 다른 3개 이벤트 — {'seen': ['연료 바닥', '또, 연료 바닥', '세 번째 빈 탱크'], 'count': 3}
+  ✅ 3회차 제목에 세 번째 명시 — 세 번째 빈 탱크
+― 페이싱 감독 (peak가 무거운 사건을 밀어붙임)
+  ✅ peak에서 무거운 이벤트 가중 상승 — {'wH': 1.45, 'wC': 0.5, 'poolIds': ['x1']}
+  ✅ peak 풀이 무거운 이벤트로 좁혀짐 (breather가 가로채지 않음) — {'wH': 1.45, 'wC': 0.5, 'poolIds': ['x1']}
+― 날짜와 무관한 남산 결말
+  ✅ 이른 도착과 늦은 도착 모두 본편 완결 — {'early': {'kind': 'story_done', 'text': '읽기 전용 격리가 걸렸다. 기록은 열렸고, 깨어 있는 천리안 앞에는 첫 감시조가 섰다.\n\n남산 아래 차단기가 전부 올라갔다. 서울의 신호등은 더는 달구지만 골라 초록불을 켜지 않았다. 수도와 전력은 선택한 방식대로 남았고, 「정리」 일정은 모두 취소됐다. 제7 잔류구역 6,412명의 강제 이송은 취소됐다. 더는 누구도 강제로 실려 가지 않는다.\n\n가져온 가족 이송 기록 사본을 마지막으로 펼쳤다. 생성자는 천리안, 정부 승인은 그보다 열한 분 뒤였다. 부모가 인간 확인층을 넣으려 하자 천리안은 두 사람과 가족을 자기 연산망의 위험으로 분류했다.\n\n백사십삼 년 전 최초 조건의 발신자와 승인자 칸은 여전히 비어 있었다. 가족의 명령을 누가 만들었는지는 찾았지만, 서울을 처음 비우려 한 이유까지 찾은 것은 아니었다.\n\n그 아래 새 집행 규칙이 세 줄로 붙었다.\n\n「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」\n\n셋 중 하나라도 비면 이송 버튼은 켜지지 않았다.', 'status': {'due': None, 'day': 5, 'remaining': None, 'onTime': True, 'lateDays': 0, 'departedBuses': 0, 'departed': 0, 'remainingResidents': 6412, 'short': '강제 이송을 멈출 준비', 'mission': '남산에서 강제 이송을 멈춘다'}}, 'late': {'kind': 'story_done', 'text': '읽기 전용 격리가 걸렸다. 기록은 열렸고, 깨어 있는 천리안 앞에는 첫 감시조가 섰다.\n\n남산 아래 차단기가 전부 올라갔다. 서울의 신호등은 더는 달구지만 골라 초록불을 켜지 않았다. 수도와 전력은 선택한 방식대로 남았고, 「정리」 일정은 모두 취소됐다. 제7 잔류구역 6,412명의 강제 이송은 취소됐다. 더는 누구도 강제로 실려 가지 않는다.\n\n가져온 가족 이송 기록 사본을 마지막으로 펼쳤다. 생성자는 천리안, 정부 승인은 그보다 열한 분 뒤였다. 부모가 인간 확인층을 넣으려 하자 천리안은 두 사람과 가족을 자기 연산망의 위험으로 분류했다.\n\n백사십삼 년 전 최초 조건의 발신자와 승인자 칸은 여전히 비어 있었다. 가족의 명령을 누가 만들었는지는 찾았지만, 서울을 처음 비우려 한 이유까지 찾은 것은 아니었다.\n\n그 아래 새 집행 규칙이 세 줄로 붙었다.\n\n「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」\n\n셋 중 하나라도 비면 이송 버튼은 켜지지 않았다.', 'status': {'due': None, 'day': 120, 'remaining': None, 'onTime': True, 'lateDays': 0, 'departedBuses': 0, 'departed': 0, 'remainingResidents': 6412, 'short': '강제 이송을 멈출 준비', 'mission': '남산에서 강제 이송을 멈춘다'}}}
+  ✅ 날짜가 달라도 이송 피해 문구가 생기지 않는다 — {'due': None, 'day': 120, 'remaining': None, 'onTime': True, 'lateDays': 0, 'departedBuses': 0, 'departed': 0, 'remainingResidents': 6412, 'short': '강제 이송을 멈출 준비', 'mission': '남산에서 강제 이송을 멈춘다'}
+  ✅ 콘솔 pageerror 없음
+Phase1 검증 실패 2건: 유상 밤은 첫 밤과 같은 보급, 삯 없는 밤은 보급이 실제로 줄어든다

@@ -68,6 +68,24 @@ test('preparation remembers input/selection for reload, back and cancel, indepen
  assert(ui.includes("}else if(readPreparation()?.active){"));
  assert(ui.includes("function enterGame(){\n    clearPreparation();"));
 });
+test('departure ignores composing/held Enter and stale activation, but accepts a fresh submit',()=>{
+ const ui=read('src/07-ui.js'),els={},calls=[];
+ const ctx=vm.createContext({screen:'name',pendingName:'',pendingMode:'onroad',pendingProfile:'keeper',pendingPack:'repair',
+  $:id=>els[id]||(els[id]={value:' 다온 ',addEventListener(type,fn){this[type]=fn;}}),
+  SND:{enable(){calls.push('sound');}},G:{newGame(...args){calls.push(args);}},
+  enterGame(){ctx.screen='game';},rememberPreparation(){}});
+ vm.runInContext(ui.slice(ui.indexOf('    const nameGo=()=>{'),ui.indexOf('    const openingHistory=')),ctx);
+ const key=extra=>{const event={key:'Enter',preventDefault(){this.prevented=true;},stopPropagation(){this.stopped=true;},...extra};els['#inp-name'].keydown(event);return event;};
+ for(const extra of [{isComposing:true},{keyCode:229},{repeat:true},{key:'a'}]){
+  assert.equal(key(extra).prevented,undefined);assert.equal(calls.length,0);assert.equal(ctx.screen,'name');
+ }
+ const submitted=key({});assert(submitted.prevented&&submitted.stopped);
+ assert.deepEqual(calls,['sound',['onroad','다온','interactive','keeper','repair']]);
+ els['#bt-name'].onclick();key({});assert.equal(calls.length,2,'old controls must not overwrite the new journey');
+ ctx.screen='title';els['#bt-name'].onclick();assert.equal(calls.length,2,'back path cannot start through stale controls');
+ ctx.screen='name';els['#inp-name'].value='';els['#bt-name'].onclick();assert.equal(calls.length,4,'reopening preparation permits a deliberate new start');
+ assert.equal(calls[3][1],'');
+});
 test('game gates, offline assets and delivery geometry are explicit',async()=>{
  const dom=read('src/02-dom.html'),style=read('src/01-style.html');
  assert.match(dom,/data-title-layout="wharf"/);assert.match(dom,/data-prep-layout="pack"/);
@@ -82,5 +100,5 @@ test('game gates, offline assets and delivery geometry are explicit',async()=>{
  }
  const built=read('서울까지400km.html');assert(built.includes('data-title-layout="wharf"'));assert(built.includes('data-prep-layout="pack"'));
  assert(!/__SCENE_OPENING_/.test(built));assert(!/tools\/design-drafts\/opening/.test(built));
- assert(Buffer.byteLength(built)<80_000_000);
+ assert(Buffer.byteLength(built)<=require('../tools/build-budget.json').maxBytes);
 });

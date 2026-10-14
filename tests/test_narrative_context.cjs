@@ -15,6 +15,15 @@ const ids=["crisis_drowsy","crisis_collapse","crisis_collapse2","crisis_breakdow
 const event=(ctx,id)=>permanentEvents(ctx.data).find(e=>e.id===id);
 const copy=(ctx,id,c=0,o=0)=>event(ctx,id).choices[c].out[o].text;
 const plain=value=>JSON.parse(JSON.stringify(value));
+test('Jaeyi trapped-box entry does not replace shared salvage or completed rescue art',()=>{
+ const {data}=setup();
+ assert.equal(data.eventScenes.rq_jaeyi_task,'recruit-jaeyi-trapped-box-v1');
+ assert.equal(data.eventScenes.initiative_jaeyi_salvage,'recruit-jaeyi-task');
+ assert.deepEqual(plain(data.eventChoiceScenes.rq_jaeyi_task),{
+  0:['recruit-jaeyi-task-lift'],1:['recruit-jaeyi-task'],2:['recruit-jaeyi-task']
+ });
+ assert.match(source('03g-scenes.js'),/'recruit-jaeyi-trapped-box-v1':'__SCENE_RECRUIT_JAEYI_TRAPPED_BOX_V1__'/);
+});
 test('41 edited encounters retain gates, branches, probabilities, effects and chains',()=>{
  const ctx=setup(),rows=permanentEvents(ctx.data).filter(e=>ids.includes(e.id)).sort((a,b)=>a.id.localeCompare(b.id));
  assert.equal(rows.length,ids.length);
@@ -77,8 +86,8 @@ test('result time and resource descriptions match the unchanged effects',()=>{
   ['crisis_nofuel',1,1,600,'열 시간'],['crisis_nofuel2',0,0,540,'아홉 시간'],
   ['crisis_collapse',0,0,240,'네 시간'],['crisis_collapse2',0,0,360,'여섯 시간'],
   ['ev_quarry_hideout',0,0,60,'한 시간'],['ev_typhoon',0,0,90,'한 시간 반'],
-  ['ev_river_flood',0,0,100,'한 시간 사십 분'],['ev_river_flood',1,0,50,'오십 분'],
-  ['ev_night_dogs',0,0,40,'사십 분']]){
+  ['ev_river_flood',0,0,100,'1시간 40분'],['ev_river_flood',1,0,50,'50분'],
+  ['ev_night_dogs',0,0,40,'40분']]){
   const out=event(ctx,id).choices[c].out[o];assert.equal(out.fx.time,minutes,id);assert(out.text.includes(words),id);
  }
  for(const id of ['exp_kimchi','ev_used_bookstore','exp_blanket','exp_underground'])

@@ -1,0 +1,28 @@
+  ❌ 360×700 normal text keeps the primary route path usable — {'documentOverflow': False, 'panelOverflow': False, 'shortControls': 1, 'escaped': 0, 'escapedControls': [], 'routeCount': 0, 'primaryCount': 1, 'dashVisible': False, 'compactHud': True, 'stageHeight': 316, 'dockGap': 8, 'guide': ''}
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_quality_9_accessibility.py", line 151, in <module>
+    route_geometry = journey_geometry(page, '.route-console-screen')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/caravan/tests/test_quality_9_accessibility.py", line 106, in journey_geometry
+    return page.evaluate("""selector => {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/sync_api/_generated.py", line 8531, in evaluate
+    self._sync(
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_page.py", line 467, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_frame.py", line 320, in evaluate
+    await self._channel.send(
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')
+    at box (eval at evaluate (:290:30), <anonymous>:3:25)
+    at eval (eval at evaluate (:290:30), <anonymous>:8:17)
+    at UtilityScript.evaluate (<anonymous>:297:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)

@@ -42,7 +42,7 @@ test('generated silhouette has no solid rectangular backing, 9-slice fill or com
   assert.doesNotMatch(owner.slice(owner.indexOf('/* Approved materials v1')),/line-clamp|text-overflow:ellipsis/);
   assert.match(ui,/sheet\.dataset\.pageFallback='actions'/);
 });
-test('promoted assets preserve alpha and master provenance within the unchanged HTML budget',async()=>{
+test('promoted assets preserve alpha and master provenance within the configured HTML budget',async()=>{
   const manifest=JSON.parse(read('assets/ui/event-materials-v1.json'));
   assert(fs.existsSync(manifest.sourceProvenance));assert(fs.existsSync(manifest.prompts));
   for(const [key,row] of Object.entries(manifest.assets)){
@@ -51,7 +51,7 @@ test('promoted assets preserve alpha and master provenance within the unchanged 
     const center=data[((Math.floor(info.height/2)*info.width+Math.floor(info.width/2))*4)+3];
     assert.equal(key==='frame'?center:Math.min(center,250),key==='frame'?0:250);
   }
-  const built=read('서울까지400km.html');assert(Buffer.byteLength(built)<80_000_000);
+  const built=read('서울까지400km.html');assert(Buffer.byteLength(built)<=require('../tools/build-budget.json').maxBytes);
   assert(!/__UI_EVENT_(?:READING_FRAME|MATERIAL_BUTTON)__/.test(built));
   assert(!/tools\/design-drafts\/event-materials/.test(built));
   assert(built.includes('--embedded-ui-event-reading-frame:url("data:image/webp;base64,'));

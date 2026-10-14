@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-10T16:38:22.359Z",
+  "generatedAt": "2026-10-14T05:42:54.373Z",
   "html": {
-    "bytes": 79644442,
+    "bytes": 79549936,
     "warnBytes": 32000000,
-    "maxBytes": 80000000
+    "maxBytes": 120000000
   },
   "literalPool": {
     "assets": 4,
@@ -11,11 +11,11 @@
   },
   "losslessDelivery": {
     "assets": 599,
-    "savedBytes": 4000766
+    "savedBytes": 3992829
   },
   "embedded": {
     "files": 763,
-    "bytes": 56456906,
+    "bytes": 56361632,
     "categories": {
       "audio": {
         "files": 45,
@@ -29,8 +29,8 @@
       },
       "scene": {
         "files": 491,
-        "bytes": 34399938,
-        "encodedBytes": 45867276
+        "bytes": 34304664,
+        "encodedBytes": 45740244
       },
       "other": {
         "files": 78,

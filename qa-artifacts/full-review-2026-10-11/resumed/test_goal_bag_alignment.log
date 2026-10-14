@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_goal_bag_alignment.py", line 317, in <module>
+    check_viewport(playwright, 320, 578)
+  File "/Users/sang/caravan/tests/test_goal_bag_alignment.py", line 103, in check_viewport
+    assert tabs.first.get_attribute("aria-selected") == "true"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

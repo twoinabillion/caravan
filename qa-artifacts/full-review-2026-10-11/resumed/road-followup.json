@@ -1,0 +1,11 @@
+{
+  "kind": "isolated-current-road-checkin",
+  "naturalCampaign": false,
+  "entry": true,
+  "cancelNoCost": true,
+  "result": true,
+  "continue": true,
+  "return": true,
+  "onceOnly": true,
+  "pageErrors": []
+}

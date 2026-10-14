@@ -292,9 +292,10 @@ G.save = ()=>{ if(!S||S.ended||G.presentationApplying) return; try{
     console.warn('save failed', e);
   }
 } };
-G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return false;
+G.load = (raw, {deferDriveReset=false}={})=>{ try{ const j = raw===undefined?localStorage.getItem(SAVE_KEY):raw; if(!j) return false;
   const parsed=JSON.parse(j);
   if(!parsed||typeof parsed!=='object'||Array.isArray(parsed)) throw new Error('invalid save root');
+  if(Number.isFinite(parsed.v)&&parsed.v>SAVE_VERSION) throw new Error('newer save version');
   S=parsed;
   if(S.at===undefined&&(!S.driving||typeof S.driving!=='object')) throw new Error('save has no location');
   if(S.at!==null&&(!S.at||!D.nodes[S.at])) throw new Error('save has invalid location');
@@ -307,8 +308,6 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(!Number.isFinite(S.seed)) S.seed=1;
   if(typeof S.vanName!=='string'||!S.vanName.trim()) S.vanName='달구지';
   else S.vanName=S.vanName.trim().slice(0,12);
-  /* 이어서 가기도 새 게임과 같은 출발선에서 시작한다 (세션 잔여 상태 제거) */
-  G.resetDriveTimers();
   /* 버전 마이그레이션: 이전 버전 세이브는 단계 함수를 순서대로 통과하고,
      실제로 통과한 만큼만 버전이 올라간다. 실행 안 된 단계를 완료로 찍으면
      나중에 진짜 마이그레이션을 붙여도 옛 세이브에는 영영 적용되지 않는다. */
@@ -358,6 +357,10 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   if(S._lunchDay===undefined) S._lunchDay=0;
   S.hunger=clamp(Math.round(Number(S.hunger)||0),0,3);
   if(!Array.isArray(S._storyQueue)) S._storyQueue=[];
+  S.timedStories=(Array.isArray(S.timedStories)?S.timedStories:[])
+    .filter(row=>row&&D.timedStoryFollowups?.[row.id]&&Number.isFinite(row.due))
+    .filter((row,index,rows)=>rows.findIndex(other=>other.id===row.id)===index)
+    .map(row=>({id:row.id,due:Math.max(0,row.due)}));
   if(!Array.isArray(S._beatQueue)) S._beatQueue=[];
   if(S.entryMode==='interactive'&&S.opening&&typeof S.opening==='object'&&!Array.isArray(S.opening)){
     S.opening.version=1;
@@ -476,6 +479,8 @@ G.load = ()=>{ try{ const j = localStorage.getItem(SAVE_KEY); if(!j) return fals
   }
   G.syncKnowledgeFromFlags();
   S.pendingPresentation=G.validatePresentation(S.pendingPresentation);
+  /* Reset only after validation; an import defers this until storage commits. */
+  if(!deferDriveReset) G.resetDriveTimers();
   return true; }catch(e){ S=null; return false } };
 G.hasSave = ()=>{ try{
   const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
@@ -484,21 +489,21 @@ G.hasSave = ()=>{ try{
     &&(save.at!==undefined||save.driving)&&Number.isFinite(save.day));
 }catch(e){ return false } };
 G.exportSave = ()=> S?JSON.stringify(S):'';
-/* 가져오기는 현재 세이브를 먼저 보관한 뒤 기존 load/migration 경로로 검증한다.
-   파일이 망가졌거나 다른 데이터라면 진행 중인 여정을 그대로 되돌린다. */
+/* Validate/migrate in memory before the single atomic localStorage write.
+   Failure retains live references, unsaved progress, RNG and drive timing. */
 G.importSave = raw=>{
-  const previous=localStorage.getItem(SAVE_KEY);
+  const previous=S, previousRng=rng;
+  let validated=false;
   try{
-    const candidate=JSON.parse(raw);
-    if(!candidate||typeof candidate!=='object'||Array.isArray(candidate)) throw new Error('invalid backup');
-    localStorage.setItem(SAVE_KEY,raw);
-    if(!G.load()) throw new Error('unloadable backup');
-    G.save();
+    if(typeof raw!=='string'||!G.load(raw,{deferDriveReset:true})) throw new Error('unloadable backup');
+    validated=true;
+    localStorage.setItem(SAVE_KEY,JSON.stringify(S));
+    G.resetDriveTimers();
+    saveWarned=false;
     return {ok:true};
   }catch(e){
-    if(previous===null) localStorage.removeItem(SAVE_KEY); else localStorage.setItem(SAVE_KEY,previous);
-    G.load();
-    return {ok:false,why:'이 게임의 유효한 백업 파일이 아니다'};
+    S=previous; rng=previousRng;
+    return {ok:false,why:validated?'백업을 저장하지 못했다. 브라우저 저장 공간을 확인해 주세요':'이 게임 버전에서 불러올 수 있는 유효한 백업 파일이 아니다'};
   }
 };
 /* 실제 플레이 화면과 자동 QA가 서로 다른 저장·뷰포트·브라우저 상태를 쓰지

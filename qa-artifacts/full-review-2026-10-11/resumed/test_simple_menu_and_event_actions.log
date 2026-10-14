@@ -1,0 +1,132 @@
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+______________ test_menu_contains_only_brightness_sound_and_save _______________
+
+    def test_menu_contains_only_brightness_sound_and_save():
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(channel="chrome")
+            page = browser.new_page(viewport={"width": 390, "height": 844})
+            page.add_init_script(
+                "localStorage.clear(); localStorage.setItem('caravan_intro_auto','0'); "
+                "localStorage.setItem('caravan_story_auto','0')"
+            )
+            enter_game(page)
+            page.evaluate("UI.renderAll()")
+            route_console = page.locator(".route-console-v3")
+>           assert route_console.is_visible()
+E           AssertionError: assert False
+E            +  where False = is_visible()
+E            +    where is_visible = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html?caravan-live=1'> selector='.route-console-v3'>.is_visible
+
+tests/test_simple_menu_and_event_actions.py:38: AssertionError
+___________ test_next_and_return_buttons_share_the_same_visual_style ___________
+
+    def test_next_and_return_buttons_share_the_same_visual_style():
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(channel="chrome")
+            page = browser.new_page(viewport={"width": 390, "height": 844})
+            page.add_init_script(
+                "localStorage.clear(); localStorage.setItem('caravan_intro_auto','0'); "
+                "localStorage.setItem('caravan_story_auto','0')"
+            )
+            enter_game(page)
+            page.evaluate("UI.showEvent(D.events.find(event => event.id==='lc_busan_dried'))")
+            page.wait_for_timeout(80)
+            next_style = page.locator(".story-next").evaluate(
+                "button => { const s=getComputedStyle(button); return {height:s.height, background:s.backgroundColor, "
+                "border:s.border, radius:s.borderRadius, color:s.color, font:s.font, shadow:s.boxShadow}; }"
+            )
+            return_style = page.evaluate(
+                """() => {
+                  const sheet=document.querySelector('#ev-sheet');
+                  sheet.dataset.storyPhase='outcome';
+                  sheet.dataset.storyStep='result';
+                  const dock=sheet.querySelector('.event-choice-dock');
+                  dock.className='event-choice-dock';
+                  dock.innerHTML='<div class="choices"><button class="choice primary-exit-btn" data-r="ok"><span>길로 돌아가기</span></button></div>';
+                  const s=getComputedStyle(dock.querySelector('.primary-exit-btn'));
+                  return {height:s.height, background:s.backgroundColor, border:s.border,
+                    radius:s.borderRadius, color:s.color, font:s.font, shadow:s.boxShadow};
+                }"""
+            )
+>           assert return_style == next_style
+E           assert {'background'...s-serif', ...} == {'background'...s-serif', ...}
+E             
+E             Omitting 5 identical items, use -vv to show
+E             Differing items:
+E             {'font': '600 18px / 25.2px "Apple SD Gothic Neo", Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif'} != {'font': '600 16px / 24px "Apple SD Gothic Neo", Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif'}
+E             {'height': '72px'} != {'height': '58px'}
+E             Use -v to get more diff
+
+tests/test_simple_menu_and_event_actions.py:94: AssertionError
+_ test_story_choices_use_centered_orange_actions_without_labels_or_inline_results _
+
+    def test_story_choices_use_centered_orange_actions_without_labels_or_inline_results():
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(channel="chrome")
+            page = browser.new_page(viewport={"width": 390, "height": 844})
+            page.add_init_script(
+                "localStorage.clear(); localStorage.setItem('caravan_intro_auto','0'); "
+                "localStorage.setItem('caravan_story_auto','0')"
+            )
+            enter_game(page)
+            page.evaluate(
+                "S.scrap=99; S.food=10; "
+                "UI.showEvent(D.events.find(event => event.id==='lc_busan_dried')); UI.finishStory()"
+            )
+    
+            choices = page.locator("#ev-sheet .event-choice-dock button.choice")
+            assert choices.count() == 2
+            assert page.locator("#ev-sheet .choice-index").count() == 0
+            assert page.locator("#ev-sheet .choice-cost-tag").count() == 0
+            assert "(고철 4)" not in page.locator("#ev-sheet .event-choice-dock").inner_text()
+            assert page.locator("#ev-sheet .choice-intent, #ev-sheet .combat-tactic").count() == 0
+>           assert choices.first.evaluate("button => getComputedStyle(button).backgroundColor") == "rgb(184, 117, 40)"
+E           AssertionError: assert 'rgba(0, 0, 0, 0)' == 'rgb(184, 117, 40)'
+E             
+E             - rgb(184, 117, 40)
+E             + rgba(0, 0, 0, 0)
+
+tests/test_simple_menu_and_event_actions.py:162: AssertionError
+_ test_first_road_actions_are_plain_centered_text_and_report_the_record_afterward _
+
+    def test_first_road_actions_are_plain_centered_text_and_report_the_record_afterward():
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(channel="chrome")
+            page = browser.new_page(viewport={"width": 390, "height": 844})
+            page.add_init_script(
+                "localStorage.clear(); localStorage.setItem('caravan_intro_auto','0'); "
+                "localStorage.setItem('caravan_story_auto','0')"
+            )
+            enter_game(page)
+            page.evaluate(
+                "UI.showEvent(D.events.find(event => event.id==='onboarding_first_road')); UI.finishStory()"
+            )
+    
+            choices = page.locator("#ev-sheet .event-choice-dock button.choice")
+            assert choices.all_inner_texts() == [
+                "차를 세우고 명령띠를 뽑는다",
+                "전원을 끊고 단말을 통째로 연다",
+                "스캔을 끝까지 받아 기록을 복사한다",
+            ]
+            assert page.locator("#ev-sheet .choice-intent, #ev-sheet .combat-tactic").count() == 0
+            assert choices.evaluate_all(
+                "buttons => buttons.every(button => { const text=button.querySelector('.choice-title>span').getBoundingClientRect(); "
+                "const box=button.getBoundingClientRect(); return Math.abs((text.left+text.right)/2-(box.left+box.right)/2)<1; })"
+            )
+    
+            choices.first.click()
+            page.evaluate("UI.finishStory()")
+            result = page.locator("#ev-sheet .reward-section")
+>           assert result.is_visible()
+E           AssertionError: assert False
+E            +  where False = is_visible()
+E            +    where is_visible = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html?caravan-live=1'> selector='#ev-sheet .reward-section'>.is_visible
+
+tests/test_simple_menu_and_event_actions.py:206: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_simple_menu_and_event_actions.py::test_menu_contains_only_brightness_sound_and_save
+FAILED tests/test_simple_menu_and_event_actions.py::test_next_and_return_buttons_share_the_same_visual_style
+FAILED tests/test_simple_menu_and_event_actions.py::test_story_choices_use_centered_orange_actions_without_labels_or_inline_results
+FAILED tests/test_simple_menu_and_event_actions.py::test_first_road_actions_are_plain_centered_text_and_report_the_record_afterward
+4 failed, 1 passed in 15.58s

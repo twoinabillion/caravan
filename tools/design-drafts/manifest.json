@@ -2,6 +2,30 @@
   "version": 1,
   "drafts": [
     {
+      "id": "busan-yangsan-landscape-v1",
+      "file": "busan-yangsan-landscape.html",
+      "title": "부산→양산 · 한 풍경 안에서",
+      "revision": "2",
+      "recommended": true,
+      "description": "낙동강·산지 사이 시가지의 지리적 흐름을 참고한 연속 풍경과 원경/도로 속도 비교. 60초 CSS 재생·정지·구간 선택. 실측 도로 복제가 아닌 독립 초안이며 기존 도시 정본·게임 코드·저장과 미연결입니다. 정차/도착 정본 연결은 적용 전 별도 검수. 선택은 요청만 준비합니다."
+    },
+    {
+      "id": "opening-bus-heater-v1",
+      "file": "opening-bus-heater.html",
+      "title": "부산 버스 · 난방 고장 디테일",
+      "revision": "1",
+      "recommended": true,
+      "description": "수리 선택 전의 찢어진 호스와 점검판. 정본 4장 참조 생성. 인물 나이 오류를 피하는 디테일 구도 후보이며 원본 가족 그림은 보존합니다. 게임 미연결·승인 및 실제 크롭 검수 대기. 선택은 요청만 준비합니다."
+    },
+    {
+      "id": "jaeyi-trapped-box-v1",
+      "file": "jaeyi-trapped-box.html",
+      "title": "재이 창고 · 구출 전 상자",
+      "revision": "1",
+      "recommended": true,
+      "description": "상자 구출 결과를 미리 보여 주던 그림의 교체 후보. 잔해 아래 양철 상자와 재이만 표시하며 윈치·받침·손 작업은 아직 선택하지 않았습니다. 정본4장·재이 초상 참조. 게임 미연결·실제 크롭 검수 대기. 선택은 자동 적용하지 않습니다."
+    },
+    {
       "id": "replay-scene-review-v1",
       "file": "replay-scene-review.html",
       "title": "강우와 레오 · 한 번 더",

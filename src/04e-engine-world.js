@@ -269,6 +269,9 @@ G.prepareCamp = (kind,cid)=>{
 };
 G.camp = (msg)=>{
   if(S.driving||UI.modalOpen()) return;
+  // A pending fireside scene happens before sleep, not after the 06:30 jump.
+  const evening=G.popTimedStory('camp');
+  if(evening){ G.openEventById(evening);G.save();return; }
   const inTown = !!(S.at && D.nodes[S.at] && D.nodes[S.at].stl);
   /* 정착지 숙박: 첫 밤은 손님 대접, 그 뒤로는 품앗이 삯이 든다.
      공짜 안전+보급이 노숙을 절대 열위로 만드는 걸 막는 밸런스 축 —
@@ -367,6 +370,8 @@ G.camp = (msg)=>{
       UI.renderAll(); G.save(); return;
     }
   }
+  const morning=G.popTimedStory();
+  if(morning){ G.openEventById(morning);UI.renderAll();G.save();return; }
   if(!G.maybeCrisis() && S.party.length && rng()<0.25){
     const pool = G.eligible('동행'), campState=S;
     if(pool.length) setTimeout(()=>{if(S===campState&&!UI.modalOpen()) G.fireDriveEvent2(pool);}, 500);

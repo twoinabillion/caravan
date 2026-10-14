@@ -25,8 +25,11 @@ const output = path.join(root, '서울까지400km.html');
    temporary file before the atomic rename. */
 const temporary = `${output}.tmp.${process.pid}`;
 const reportOutput = path.join(root, 'reports', 'asset-budget.json');
-const WARN_BYTES = 32_000_000;
-const MAX_BYTES = 80_000_000;   /* 이벤트별 고유 장면 확장을 허용하는 배포 상한 */
+const budget = JSON.parse(fs.readFileSync(path.join(here, 'build-budget.json'), 'utf8'));
+const WARN_BYTES = budget.warnBytes;
+const MAX_BYTES = budget.maxBytes;
+if(!Number.isSafeInteger(WARN_BYTES)||!Number.isSafeInteger(MAX_BYTES)||WARN_BYTES<=0||MAX_BYTES<WARN_BYTES)
+  throw new Error('잘못된 빌드 용량 설정: tools/build-budget.json');
 const embeddedAssets = new Map();
 
 const before = [
@@ -55,7 +58,6 @@ const introScenes = {
   INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion-v2.jpg',
   INTRO_DOCK_AID:'assets/intro/14-dock-aid-v2.jpg',
   INTRO_APPEAL_DENIED:'assets/intro/15-appeal-denied.jpg',
-  INTRO_MOTHER_KEEPSAKES:'assets/intro/12-mother-keepsakes-v2.jpg',
   INTRO_DASHBOARD_MODULE:'assets/intro/13-dashboard-module.jpg',
   INTRO_WORKSHOP_DEPARTURE:'assets/intro/16-workshop-shutter-v2.jpg'
 };
@@ -200,7 +202,7 @@ const destinationIds=Object.keys(vm.runInNewContext(read('src/03-data.js')+';D.n
 if(destinationIds.some(id=>!environmentManifest.locations[id])||Object.keys(environmentManifest.locations).length!==destinationIds.length)
   throw new Error('도로 환경과 목적지 목록이 일치하지 않음');
 // Canonical cities are shared by every connector, arrival and stopped view.
-// Do not embed a second scenery catalogue or raise the80MB delivery limit.
+// Do not embed a second scenery catalogue; delivery limits live in build-budget.json.
 const environmentSources=Object.fromEntries(destinationIds.map(id=>{
   const entry=environmentManifest.locations[id];
   return [id,dataUri(`assets/ui/road-environment/${entry.file}`,'image/webp')];

@@ -92,8 +92,14 @@ function watchDirectory(directory,label){
 
 function watchFile(filename){
   const absolute=path.join(ROOT,filename);
-  if(!fs.existsSync(absolute)) return;
-  const watcher=fs.watch(absolute,()=>scheduleBuild(filename,300));
+  // Watch the parent, not the inode: editor atomic saves replace the file.
+  // Also detect creation after a missing/deleted config is restored.
+  const directory=path.dirname(absolute),basename=path.basename(absolute);
+  if(!fs.existsSync(directory)) return;
+  const watcher=fs.watch(directory,(event,changed)=>{
+    if(changed&&String(changed)!==basename) return;
+    scheduleBuild(filename,300);
+  });
   watcher.on('error',error=>process.stderr.write(`[dev:live] ${filename} 감시 오류: ${error.message}\n`));
   watchers.push(watcher);
 }
@@ -445,10 +451,14 @@ server.listen(PORT,HOST,()=>{
   watchDirectory(ASSETS,'assets');
   watchFile('build.sh');
   watchFile('tools/build-html.mjs');
+  watchFile('tools/build-budget.json');
+  for(const helper of ['inline-style-assets.mjs','compact-style-source.mjs','compact-script-source.mjs',
+    'pool-embedded-assets.mjs','encode-embedded-assets.mjs','road-route-readiness.cjs'])
+    watchFile('tools/'+helper);
   process.stdout.write(`\n서울까지 400km LIVE\n`);
   process.stdout.write(`게임       http://localhost:${PORT}/\n`);
   process.stdout.write(`AI 이미지  http://localhost:${PORT}/__live/assets\n`);
-  process.stdout.write(`감시       src/ · assets/ · build.sh · tools/build-html.mjs\n`);
+  process.stdout.write(`감시       src/ · assets/ · build.sh · tools/build-html.mjs · tools/build-budget.json\n`);
   process.stdout.write(`종료       Ctrl+C\n\n`);
   scheduleBuild('개발 서버 시작',100);
 });

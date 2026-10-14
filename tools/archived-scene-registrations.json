@@ -1,0 +1,12 @@
+{
+  "description": "Inactive registration history only; not imported by the game or builder. Original art remains in assets for recovery and review.",
+  "entries": [
+    {
+      "key": "intro-mother-keepsakes",
+      "placeholder": "__SCENE_INTRO_MOTHER_KEEPSAKES__",
+      "asset": "assets/intro/12-mother-keepsakes-v2.jpg",
+      "reason": "The initial payload was unconditionally overwritten by the intro-keepsakes-sorting-v1 alias before runtime consumers. Preserve that alias and every final scene key/value; archive only the overwritten payload.",
+      "activeAlias": "intro-keepsakes-sorting-v1"
+    }
+  ]
+}

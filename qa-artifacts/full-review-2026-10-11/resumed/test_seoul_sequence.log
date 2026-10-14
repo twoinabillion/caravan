@@ -1,0 +1,11 @@
+― 날짜 제한 없는 서울 도착
+  ❌ 이른 도착에서 관문이 열린다 — {'err': '기둥 미충족', 'missing': {'pillar': '메인 스토리', 'have': 0, 'need': 1, 'id': 'command', 'done': False, 'target': 'cheonan', 'event': 'main_command_companion_le
+  ❌ 늦은 도착에서도 관문이 열린다 — {'err': '기둥 미충족', 'missing': {'pillar': '메인 스토리', 'have': 0, 'need': 1, 'id': 'command', 'done': False, 'target': 'cheonan', 'event': 'main_command_companion_le
+  ❌ 두 경우 모두 정거장 5개를 완료한다 — [None, None]
+  ❌ 두 경우 모두 날짜와 무관하게 본편이 완결된다 — [None, None]
+  ❌ 늦게 도착해도 주민 이송 피해가 생기지 않는다 — None
+  ❌ 코어 처분 1이 에필로그까지 완결된다 — {'err': '기둥 미충족', 'missing': {'pillar': '메인 스토리', 'have': 0, 'need': 1, 'id': 'command', 'done': False, 'target': 'cheonan', 'event': 'main_command_companion_ledger', 'sourceEvent'
+  ❌ 코어 처분 2이 에필로그까지 완결된다 — {'err': '기둥 미충족', 'missing': {'pillar': '메인 스토리', 'have': 0, 'need': 1, 'id': 'command', 'done': False, 'target': 'cheonan', 'event': 'main_command_companion_ledger', 'sourceEvent'
+  ❌ 코어 처분 3이 에필로그까지 완결된다 — {'err': '기둥 미충족', 'missing': {'pillar': '메인 스토리', 'have': 0, 'need': 1, 'id': 'command', 'done': False, 'target': 'cheonan', 'event': 'main_command_companion_ledger', 'sourceEvent'
+  ✅ 콘솔 pageerror 없음
+서울 시퀀스 검증 실패 8건: 이른 도착에서 관문이 열린다, 늦은 도착에서도 관문이 열린다, 두 경우 모두 정거장 5개를 완료한다, 두 경우 모두 날짜와 무관하게 본편이 완결된다, 늦게 도착해도 주민 이송 피해가 생기지 않는다, 코어 처분 1이 에필로그까지 완결된다

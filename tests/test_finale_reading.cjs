@@ -31,12 +31,13 @@ for(const method of ['transfer','sleep','quarantine']){
       assert.equal(JSON.stringify(e.choices),original.get(id).contract,id+' choice contracts untouched');
     }
     const core=find('seoul_core').turns(S).map(t=>t.text).join('\n');
-    assert(core.includes('정부 승인은 뒤')&&core.includes('제 지역 기록에 없습니다'));
+    assert(core.includes('정부 승인은 나중에')&&core.includes('제 지역 기록에 없습니다'));
     const night=find('seoul_night');
     assert(night.turns(S).some(t=>t.text.includes('6,412')));
     for(const choice of night.choices){
       const text=choice.out[0].turns(S).map(t=>t.text).join('\n');
-      assert(text.includes(method==='sleep'?'검색창도 함께 잠겼다':method==='transfer'?'거점들의 다툼':'매일 밤 감시조'));
+      // Costs belong to the paid decision result, not a repeated night lecture.
+      assert(!text.includes(method==='sleep'?'검색창도 함께 잠겼다':method==='transfer'?'거점들의 다툼':'매일 밤 감시조'));
       assert(choice.out[0].readingRecord(S).length>text.length);
       if(method==='sleep') assert(text.includes('콘솔의 꺼진 수신등')&&text.includes('코어는 잠들었다')&&!text.includes('상행 전송'));
       for(const t of choice.out[0].turns(S).filter(t=>t.kind==='dialogue')) assert(party.includes(t.who),'absent cast must not speak');
@@ -46,11 +47,47 @@ for(const method of ['transfer','sleep','quarantine']){
   }
 }
 const parents=state('sleep',['eunsu']);
+// All night choices share the same payoff, without inventing a prior promise.
+for(const promised of [false,true])for(const broadcast of [false,true]){
+  const S=state('transfer',['leo']);
+  S.flags.song_400km=broadcast;
+  S.used=['talk_leo_10']; // Entering the scene is not completion evidence.
+  if(promised) S.notes.push({title:'3절 첫 줄 계약'});
+  const before=JSON.stringify(S);
+  for(const choice of find('seoul_night').choices){
+    const turns=choice.out[0].turns(S),record=choice.out[0].readingRecord(S);
+    const song=D.leoFinalVerseTurns(S);
+    assert.equal(song.filter(t=>t.kind==='dialogue').length,2);
+    assert.equal(song[1].text.includes('약속한'),promised);
+    assert(song.every(t=>record.includes(t.text)),'optional record retains the same song');
+    assert(turns.findIndex(t=>t.name==='400km · 3절 첫 줄')<turns.findIndex(t=>t.scene==='seoul-home-dawn-v2'));
+    assert.equal(turns.filter(t=>t.name==='400km · 3절 첫 줄').length,1);
+  }
+  assert.equal(JSON.stringify(S),before);
+  S.party=[];
+  assert.equal(D.leoFinalVerseTurns(S).length,0,'no absent Leo, even with his promise note');
+}
+assert.equal(find('talk_leo_10').noFlag,'seoul_open');
+for(const proof of ['none','used','flag','legacy-note']){
+  const S=state('sleep',['jaeyi']);
+  if(proof==='used')S.used=['talk_jy_21'];
+  if(proof==='flag')S.flags.jaeyi_scale_entrusted=true;
+  if(proof==='legacy-note')S.notes.push({title:'손저울의 상속',body:'재이가 아빠의 손저울을 서울까지 맡겼다.'});
+  const expected=['flag','legacy-note'].includes(proof),before=JSON.stringify(S);
+  for(const choice of find('seoul_night').choices){
+    const turns=choice.out[0].turns(S),record=choice.out[0].readingRecord(S);
+    assert.equal(turns.some(t=>t.text.includes('거래 완료')),expected);
+    for(const turn of D.jaeyiScaleReturnTurns(S))assert(record.includes(turn.text));
+    if(expected)assert.deepEqual(Array.from(D.jaeyiScaleReturnTurns(S).filter(t=>t.kind==='dialogue'),t=>t.who),['me','jaeyi']);
+  }
+  assert.equal(JSON.stringify(S),before);
+  S.party=[];assert.equal(D.jaeyiScaleReturnTurns(S).length,0);
+}
 parents.flags.mother_broadcast_ready=true;
 parents.flags.father_fate_known=true;
 assert(find('seoul_night').turns(parents).some(t=>t.who==='mother'));
 assert(find('seoul_core').turns(parents).some(t=>t.text.includes('아빠가 지킨 회선')));
-assert(find('seoul_night').readingRecord(parents).includes('열일곱 분'));
+assert(find('seoul_night').readingRecord(parents).includes('17분'));
 find('seoul_decision').choices.forEach((choice,i)=>{
   const S=state('transfer',['eunsu']);
   const text=choice.out[0].turns(S).map(t=>t.text).join('\n');

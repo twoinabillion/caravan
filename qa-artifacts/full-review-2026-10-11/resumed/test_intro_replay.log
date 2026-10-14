@@ -1,0 +1,49 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_live_intro_shortcut_resets_journey_before_intro _____________
+
+    def test_live_intro_shortcut_resets_journey_before_intro():
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(channel="chrome")
+            page = browser.new_page(viewport={"width": 390, "height": 844})
+            page.add_init_script(
+                "localStorage.clear(); localStorage.setItem('caravan_intro_auto','0'); "
+                "localStorage.setItem('caravan_story_auto','0')"
+            )
+            enter_game(page)
+            started = page.evaluate(
+                """() => {
+                  const next=G.neighbors(S.at).find(node=>G.canTravelTo(node.id).ok);
+                  return next&&G.startTravel(next.id);
+                }"""
+            )
+            assert started
+            page.evaluate("S.day=9; S.scrap=3; G.save()")
+            assert page.locator("#intro-test-shortcut").count() == 0
+            assert page.evaluate("window.caravanLiveControls.ready()")
+            page.evaluate("window.caravanLiveControls.restart()")
+            assert page.locator("#scr-intro").get_attribute("class") == "scr on"
+            assert page.locator("#intro-skip").inner_text() == "프롤로그 핵심 요약"
+            assert page.locator("#intro-title").inner_text().strip()
+            reset = page.evaluate(
+                "() => ({day:S.day,name:S.name,at:S.at,driving:S.driving,scrap:S.scrap,hasSave:G.hasSave()})"
+            )
+>           assert reset == {
+                "day": 1,
+                "name": "인트로 점검",
+                "at": "busan",
+                "driving": None,
+                "scrap": 24,
+                "hasSave": True,
+            }
+E           AssertionError: assert {'at': 'busan...e': True, ...} == {'at': 'busan...e': True, ...}
+E             
+E             Omitting 5 identical items, use -vv to show
+E             Differing items:
+E             {'scrap': 16} != {'scrap': 24}
+E             Use -v to get more diff
+
+tests/test_intro_replay.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_intro_replay.py::test_live_intro_shortcut_resets_journey_before_intro
+1 failed, 1 passed in 5.41s

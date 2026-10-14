@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_supply_capacity.py", line 45, in <module>
+    assert migrated == {"ok": True, "v": 7, "water": 28, "waterMax": 28, "food": 24, "foodMax": 24}, migrated
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'ok': True, 'v': 9, 'water': 28, 'waterMax': 28, 'food': 24, 'foodMax': 24}

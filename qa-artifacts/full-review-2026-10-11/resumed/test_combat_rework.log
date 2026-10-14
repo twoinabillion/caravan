@@ -1,0 +1,38 @@
+― phase 2 자동 성공 제거
+  ✅ counter 선택 성공률 < 100% — {'odds': 0.6180000000000001, 'hasGuaranteeField': False}
+  ✅ 보장 필드 제거됨 — {'odds': 0.6180000000000001, 'hasGuaranteeField': False}
+  ✅ 첫 조우·무준비는 실패 분기에 실제 도달 — [0, 1]
+― 준비는 굴림을 대체한다 (2026-08-07 규칙)
+  ✅ 요구를 채운 counter는 확실히 관철된다 — {'reqCertain': True, 'expCertain': True, 'fleeBypass': False}
+  ✅ 읽어낸 위협의 counter는 확실히 관철된다 — {'reqCertain': True, 'expCertain': True, 'fleeBypass': False}
+  ✅ counters 밖 전술은 우회 불가 — {'reqCertain': True, 'expCertain': True, 'fleeBypass': False}
+  ✅ 중간 단계는 위협 도장을 찍지 않는다 — {'afterMid': False, 'afterEnd': True}
+  ✅ 조우 종료가 위협 도장을 찍는다 — {'afterMid': False, 'afterEnd': True}
+  ✅ 바뀐 counter는 확정이 깨진다 — {'sawFail': True, 'othersCertain': True, 'freshNull': True, 'adapted': '사격'}
+  ✅ 다른 counter는 여전히 확정 — {'sawFail': True, 'othersCertain': True, 'freshNull': True, 'adapted': '사격'}
+  ✅ 안 읽힌 위협은 적응하지 않는다 — {'sawFail': True, 'othersCertain': True, 'freshNull': True, 'adapted': '사격'}
+  ✅ 적응 tactic이 조우에 고정된다 — {'sawFail': True, 'othersCertain': True, 'freshNull': True, 'adapted': '사격'}
+  ✅ 모든 굴림 전투에 준비 우회로가 있다 — []
+― 구조·호송 3분기 (성공/부분/실패)
+  ✅ route_ridge_extract: 실패 포함 3결과 도달 — ['failure', 'partial', 'success']
+  ✅ route_market_pass: 실패 포함 3결과 도달 — ['failure', 'partial', 'success']
+― kw_sniper 조우당 1회 캡
+  ✅ 첫 발 확정 + 캡 기록 — {'firstGuaranteed': True, 'sawFail': True}
+  ✅ 두 발째부터는 실패 가능 — {'firstGuaranteed': True, 'sawFail': True}
+― 선택 전 미래 정보 비노출
+  ✅ 선택 카드는 행동만 보이고 성공률·실패 비용을 노출하지 않는다 — {'count': 5, 'forecastNodes': 0, 'predictionLeak': False}
+― W3: 판정 없는 확정 선택 비율
+  ✅ 판정 없는 확정 선택 ≤ 15% — 0% (0개) 예: []
+  ✅ 전투의 모든 선택에서 전망 노드가 사라졌다 — 0개 카드가 선택 전 전망 표시
+― W3: 이탈에 실질 비용이 붙는가
+  ✅ 이탈 선택에 관측·신뢰·서사 대가가 붙는다 — 0/5개가 자원만 소모: []
+― W3: 관측(pursuit)에 임계 효과가 있는가
+  ✅ 관측 3에서 강제 검문 임계가 존재 — {'low': {'checkpoint': None, 'refused': {'refused': False, 'why': ''}}, 'mid': {'checkpoint': {'level': 'watch', 'chance': 0.28, 'label': '초계가 늘었다 — 긴 구간에서 검문 위험'}, 'refused': {'refused': False, 'why': ''}}, 'high': {'checkpoint': {'level': 'high', 'chance': 0.5, 'label': '검문망이 좁혀졌다 — 주행마다 검문 위험'}, 'refused': {'refused': True, 'why': '표시된 차량은 마을에 재우지 않는다'}}}
+  ✅ 관측 5에서 정착지 반응이 달라진다 — {'low': {'checkpoint': None, 'refused': {'refused': False, 'why': ''}}, 'mid': {'checkpoint': {'level': 'watch', 'chance': 0.28, 'label': '초계가 늘었다 — 긴 구간에서 검문 위험'}, 'refused': {'refused': False, 'why': ''}}, 'high': {'checkpoint': {'level': 'high', 'chance': 0.5, 'label': '검문망이 좁혀졌다 — 주행마다 검문 위험'}, 'refused': {'refused': True, 'why': '표시된 차량은 마을에 재우지 않는다'}}}
+― 결과 버튼 단일 표면
+  ✅ 다음 단계 버튼 바깥의 투명 사각형이 남지 않는다 — {'phase': 'outcome', 'dockWidth': 370, 'choicesWidth': 370, 'buttonWidth': 370, 'dockBackground': 'rgb(184, 117, 40)', 'buttonBackground': 'rgb(184, 117, 40)', 'dockPaddingLeft': '0px', 'buttonRadius': '0px', 'choicesBackground': 'rgb(184, 117, 40)', 'choicesBorder': '0px 0px', 'choicesPadding': '0px 0px'}
+― 능선 구조 진행·선택 하단 레이아웃
+  ✅ 950×908 · DPR 2에서 다음 버튼이 단일 행 안에 온전히 보인다 — {'dpr': 2, 'step': 'beat', 'gridRows': '48px', 'dock': {'top': 838, 'bottom': 908, 'height': 70}, 'button': {'top': 849, 'bottom': 897, 'height': 48}, 'latestBottom': 669.8125, 'viewportBottom': 908}
+  ✅ 견인줄 선택지는 내용 높이만 쓰고 추가 빈 공간을 만들지 않는다 — {'step': 'decision', 'label': '달구지를 바위 뒤에 걸고 견인줄을 내린다', 'choiceCount': 2, 'dockHeight': 203, 'listSlack': 0, 'trailingSpace': 0, 'listToggleGap': 5, 'overlap': False}
+  ✅ 콘솔 pageerror 없음
+✅ 전투 개편 전부 통과

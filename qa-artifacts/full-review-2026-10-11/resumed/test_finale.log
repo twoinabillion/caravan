@@ -1,0 +1,21 @@
+― 세 처분에 요구 조건이 있는가
+  ✅ 세 처분 모두 요구 조건을 갖는다 — 조건 없음: []
+― 준비 못 한 처분은 실제로 잠기는가
+  ✅ 빈손이면 셋 다 잠긴다 — [False, False, False]
+  ✅ 준비하면 전부 열린다 — [True, True, True]
+― 대가 확인이 실제 선택인가
+  ✅ seoul_costs가 선택지 2개 이상 — 3개
+― 엔딩이 갈리는가
+  ✅ 생존 실패 3종과 본편 완결이 모두 존재 — {'kinds': ['thirst', 'stranded', 'shunned', 'story_done']}
+  ✅ 모든 엔딩이 전용 화면을 갖는다 — 일반 문구로 떨어짐: []
+  ✅ 에필로그가 상위 연산망 공개와 새 세션으로 이어진다 — {'continues': True, 'stranded': True, 'shunned': True}
+  ✅ 좌초가 상태에서 발화한다 — {'continues': True, 'stranded': True, 'shunned': True}
+  ✅ 기피가 상태에서 발화한다 — {'continues': True, 'stranded': True, 'shunned': True}
+― 오래 머문 뒤에도 본편 완결이 유지되는가
+  ✅ 날짜가 지나도 주민 피해 없이 본편 완결을 반환 — {'remaining': 6412, 'kind': 'story_done'}
+― 동료의 반대를 누르면 값을 치르는가
+  ✅ 반대 무시가 유대를 깎는다 — {'applied': {'who': 'eunsu', 'name': '은수'}, 'before': 20, 'after': 14}
+  ✅ 처분 선택이 실제로 반대 비용을 부른다 — {'before': 20, 'after': 14, 'chip': True, 'flag': True, 'allHaveDissent': True}
+  ✅ 세 처분 모두 반대 대상을 갖는다 — {'before': 20, 'after': 14, 'chip': True, 'flag': True, 'allHaveDissent': True}
+  ✅ 콘솔 pageerror 없음
+✅ 최종막이 결정이다

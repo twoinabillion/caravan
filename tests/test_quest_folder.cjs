@@ -64,6 +64,8 @@ test('one bound paper-scroll owner, handwritten records and separate operational
  const css=fs.readFileSync('src/01b-quest-style.html','utf8');
  const all=fs.readFileSync('src/01-style.html','utf8');
  assert.match(css,/\.quest-notebook-cover\{grid-row:4;min-height:0/);
+ assert.match(css,/\.quest-notebook-sheet\{position:absolute;inset:5px 7px 10px 15px;/);
+ assert.doesNotMatch(css,/\.quest-notebook-sheet\{[^}]*height:100%/,'paper cannot grow beyond its bounded grid track');
  assert.match(css,/\.quest-ledger-list\{height:100%;min-height:0;overflow:auto/);
  assert.doesNotMatch(all,/\.quest-ledger-list\s*[{>]/);
  assert.match(css,/\.quest-next,[^{]*\{[^}]*var\(--ql-hand\)/);
@@ -73,7 +75,7 @@ test('one bound paper-scroll owner, handwritten records and separate operational
  assert.match(all,/__UI_JOURNAL_FONT__/);
  const build=fs.readFileSync('tools/build-html.mjs','utf8');
  assert.match(build,/CaravanJournalHand-Regular\.woff2/);
- assert.match(build,/const MAX_BYTES = 80_000_000/);
+ assert.match(build,/const MAX_BYTES = budget\.maxBytes/);
  assert.equal(fs.readFileSync('assets/fonts/CaravanJournalHand-Regular.woff2').subarray(0,4).toString(),'wOF2');
 });
 test('main action is reachable outside the paper, without duplicate buttons',()=>{

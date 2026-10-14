@@ -87,7 +87,9 @@ G.mainEvidenceOpportunity = ()=>{
   if(!S||S.flags.story_done||G.openingPending()) return null;
   const row=G.mainEvidenceRows().find(row=>!row.done);
   if(!row) return null;
-  const target=S.at==='seoul'||S.at==='suwon'||S.stats.km>=370?'suwon':row.target;
+  // Mileage includes detours: it must not pull still-local chapters north.
+  // Recovery is offered at the exchange, or when returning from Seoul.
+  const target=S.at==='seoul'||S.at==='suwon'?'suwon':row.target;
   const eventId=target==='suwon'?(D.mainRecoveryEvents[row.event]||row.event):row.event;
   const event=D.events.find(ev=>ev.id===eventId);
   const times=G.mainEvidenceChoiceTimes(eventId);
@@ -117,7 +119,7 @@ G.departureSteps = ()=>{
     {id:'witness',done:witnessed>=D.seoulPillars.관계,label:'같은 이송표를 받은 사람들의 이야기를 모은다',detail:witnessed>=D.seoulPillars.관계?'이송을 겪은 사람들이 확인한 증언을 보관했다':`같은 이송표를 받은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
     {id:'command',done:D.familyOrderKnown(S)&&!G.pillarUnmet('진실'),label:'증언과 명령 원본을 대조한다',detail:'발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다'},
     {id:'father',done:!!S.flags.father_fate_known,label:'아빠의 마지막 남산 기록을 확인한다',detail:S.flags.father_fate_known?'아빠는 의료와 급수 회선을 지키다 남산에서 사망했다':'실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다'},
-    {id:'mother',done:!!S.flags.mother_reunited&&!!S.flags.mother_broadcast_ready,label:'엄마의 최근 신호를 따라간다',detail:S.flags.mother_reunited?'수원 외곽 무전 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다'},
+    {id:'mother',done:!!S.flags.mother_reunited&&!!S.flags.mother_broadcast_ready,label:'엄마의 최근 신호를 따라간다',detail:S.flags.mother_reunited?(S.flags.mother_broadcast_ready?'수원 외곽 무전 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'수원 외곽 무전 중계소에서 엄마와 재회했다. 아직 이야기를 더 들어야 한다'):'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다'},
     {id:'relay',done:G.pillars().세계.have>=D.seoulPillars.세계,label:'남산 진입과 연락을 맡을 거점의 응답을 받는다',detail:'수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다'},
     {id:'records',done:!G.pillarUnmet('유산'),label:'남산에 가져갈 실물 기록을 보관한다',detail:'검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다'},
     {id:'seoul',done:!!S.flags.story_done,label:'남산 코어에서 강제 이송 명령을 끊는다',detail:S.flags.story_done?'제7 잔류구역을 향하던 강제 이송을 끝냈다':'필요한 기록과 사람을 모은 뒤 남산 코어에서 명령을 멈춘다. 날짜 제한은 없다'}

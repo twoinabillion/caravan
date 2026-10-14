@@ -1,0 +1,31 @@
+{
+  "id": "busan-yangsan-continuity-v1",
+  "createdAt": "2026-10-14",
+  "status": "independent-design-study-not-approved-for-game",
+  "generator": "builtin image_gen.imagegen",
+  "prompt": "prompt.txt",
+  "master": "master.png",
+  "masterSize": [2172, 724],
+  "requestedMasterSize": [3072, 1024],
+  "delivery": "assets/ui/road-studies/busan-yangsan-continuous-v1.webp",
+  "deliverySize": [2160, 720],
+  "operations": ["Preserve original PNG master", "Uniform resize to 2160x720; WebP quality 90, alpha retained"],
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "geographySources": [
+    {"publisher":"부산광역시 사상구청", "title":"위치/지형지세", "url":"https://www.sasang.go.kr/index.sasang?cpath=&menuCd=DOM_000000104001001000", "supports":"낙동강과 동쪽 산지 사이의 평지·시가지 구조", "accessed":"2026-10-14"},
+    {"publisher":"부산광역시", "title":"부산생활권계획 강동권", "url":"https://www.busan.go.kr/living_space/gangdong", "supports":"낙동강·남북 산림축 및 구포·화명·금곡 생활권", "accessed":"2026-10-14"}
+  ],
+  "limitations": [
+    "Generated alpha is near-transparent/near-opaque rather than binary: bottom 4 rows minimum about 0.973 and mean about 0.992. This study preserves original alpha; production solid-ground acceptance remains pending.",
+    "This is a compressed art-direction inference, not a surveyed Gamcheon-Yangsan road, GIS trace, landmark replica or verified camera direction.",
+    "The generated panorama does not preserve the existing endpoint pixels. Original city owners remain unchanged; departure/arrival, reverse travel and reload continuity are implementation approval gates.",
+    "Far terrain and buildings share one plate in this first study. Foreground road/posts scroll independently. Full multi-depth city/mountain layering is not implemented.",
+    "CSS one-shot motion and the existing base sprite illustrate pacing; actual driving, upgrades, events, weather, braking and save code are not connected.",
+    "Native generation was 2172x724, not the requested 3072x1024. At 200% strip width the 2160px delivery provides 1080 source pixels per visible viewport, without upscaling or column warping."
+  ]
+}

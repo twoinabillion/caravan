@@ -599,7 +599,7 @@ G.applyFx = (fx,context={})=>{
     if(paid) chips.push({t:`✦ ${paid.name}의 반대를 눌렀다 — 유대 -6`, c:'minus'});
   }
   if(fx.roadGarage){ S.roadGarage=true; setTimeout(()=>UI.showStl(G.nearestStl(),'garage'), 400); }
-  if(fx.endJourney) G.endGame(G.arrivalEndingKind());
+  if(fx.endJourney&&!context.deferJourneyEnd) G.endGame(G.arrivalEndingKind());
   if(fx.gameover) G.endGame(fx.gameover);
   G.qualityResourceCheck();
   G.save();

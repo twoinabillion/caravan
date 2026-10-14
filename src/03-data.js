@@ -81,7 +81,7 @@ D.radioTexts = [
  {key:'radio_dj_open',  t:'…새벽 두 시입니다. 아직 길 위에 계신 분들, 오늘도 수고 많으셨습니다.', night:1},
  {key:'radio_dj_close', t:'…오늘 방송은 여기까지. 내일 이 시간에 다시 만나요. 지익—', night:1},
  {key:'radio_400',      t:'…4. 0. 0. …4. 0. 0. …', w:0.5, noFlag:'freq400_done'},
- {key:'radio_400_after',t:'(4-0-0 신호가 멎었다. 그 주파수에는 대신 낮은 허밍 한 소절이 반복된다. 방송실에서 들었던 목소리다.)', w:0.5, flag:'freq400_done'},
+ {key:'radio_400_after',t:'(4-0-0 신호가 다시 잡힌다. 방송실에서 돌아가던 릴테이프의 목소리다. 숫자 사이로 짧은 숨소리가 들린다.)', w:0.5, flag:'freq400_done'},
  {key:'radio_dj_reair', t:'…재방송입니다. 지난번에 소개한 남쪽 달구지 팀 사연, 다시 틀어달라는 쪽지가 세 장이나 왔어요. — 우리 목소리가 또 나왔다. 오글거림도 재방송됐다.', night:1, w:0.7, flag:'dj_onair_done'},
  {key:'radio_400km_cover', t:'(어느 주파수에서 서툰 목소리 여럿이 400km 후렴을 부른다. 우리와는 다른 사람들이 가사를 반쯤 틀리면서도 즐겁게 노래하고 있다.)', w:0.7, flag:'song_400km'},
  {key:'radio_pilot_frag', t:'지익— "…착륙 유도… 감사합니… 여기는 제주발—" (거기서 끊겼다. 은수가 소리 없이 볼륨을 올렸다. 그날 밤 그 주파수는 아무도 안 껐다)', w:0.4, flag:'pilot_appeal'},
@@ -641,8 +641,14 @@ D.coreCouncilOpening = state=>{
 };
 D.coreWatchCrew = state=>(state.party||[]).filter(id=>
   !(state.injuries?.[id]?.days>0)&&((state.comps||{})[id]||{}).mood>=45);
-D.coreWatchOpening = state=>{
+D.coreWatchSigners = state=>{
+  if(state.flags.core_quarantine&&Array.isArray(state.coreWatchSigners))
+    return [...new Set(state.coreWatchSigners)].filter(id=>D.comps[id]).slice(0,3);
   const willing=D.coreWatchCrew(state);
+  return willing.includes('eunsu')?['eunsu',...willing.filter(id=>id!=='eunsu').slice(0,2)]:willing.slice(0,3);
+};
+D.coreWatchOpening = state=>{
+  const willing=D.coreWatchSigners(state);
   if(willing.length<3) return '첫 야간 근무표에는 아직 세 사람의 서명이 모이지 않았다.';
   const first=willing.includes('eunsu')?['eunsu',...willing.filter(id=>id!=='eunsu').slice(0,2)]:willing.slice(0,3);
   return first.map(id=>D.comps[id].name).join(', ')+' — 세 사람이 첫 야간 근무표에 이름을 썼다. 오늘 밤부터 자기 시간을 내놓아야 했다.';
@@ -772,6 +778,27 @@ D.jaeyiCacheOpened = S=>!!S?.flags?.jaeyi_cache_opened||(S?.notes||[]).some(n=>
   n.title==='고물상의 법'&&n.body?.includes('창고는 이제 지나가는 모두의 것이다'));
 D.daeyangCoffeeDebt = S=>(S?.notes||[]).some(n=>
   n.title==='대양의 외상 장부'&&n.body?.includes('커피 두 잔'));
+// The paid conversation writes this note. Entry/used alone is not a promise.
+D.leoFinalVerseTurns = S=>!(S?.party||[]).includes('leo')?[]:[
+  {kind:'narration',text:'레오가 기타 옆에 수첩을 펼쳤다. 「400km」의 3절 자리가 비어 있었다.'},
+  {kind:'dialogue',who:'leo',text:(S.notes||[]).some(n=>n.title==='3절 첫 줄 계약')
+    ?'대장님. 약속한 첫 줄, 지금 써 줄래요?'
+    :'마지막 절 첫 줄만 같이 써 줘요. 운전하면서 본 걸로요.'},
+  {kind:'narration',text:'펜을 받아 들었다. 한 번 지우고, 다시 썼다.'},
+  {kind:'record',who:'record',name:'400km · 3절 첫 줄',text:'시동을 끄니 네 노래가 더 잘 들린다.'},
+  {kind:'dialogue',who:'leo',text:'첫 줄부터 제 얘기네요. 이건 안 고칠게요.'},
+  {kind:'narration',text:'레오는 그 아래에 몇 줄을 더 쓰고 기타를 무릎에 올렸다. 내 문장을 박자에 맞춰 두 번 불러 본 뒤, 마지막 절까지 이어 불렀다. 끝 코드를 짚은 손을 떼고 수첩에 「남산」이라고 적었다.'}
+];
+D.leoFinalVerseText = S=>D.leoFinalVerseTurns(S).map(t=>t.kind==='dialogue'?'"'+t.text+'"':t.kind==='record'?'「'+t.text+'」':t.text).join('\n\n');
+D.jaeyiScaleEntrusted = S=>!!S?.flags?.jaeyi_scale_entrusted||(S?.notes||[]).some(n=>
+  n.title==='손저울의 상속'&&n.body==='재이가 아빠의 손저울을 서울까지 맡겼다.');
+D.jaeyiScaleReturnTurns = S=>!(S?.party||[]).includes('jaeyi')||!D.jaeyiScaleEntrusted(S)?[]:[
+  {kind:'narration',text:'손목에 걸어 둔 손저울을 풀어 재이에게 건넸다.'},
+  {kind:'dialogue',who:'me',text:'거래 완료. 여기까지 잘 가져왔어요.'},
+  {kind:'dialogue',who:'jaeyi',text:'흠집은… 원래 있던 거고. 네, 잘 받았어요.'},
+  {kind:'narration',text:'재이가 저울끈을 자기 손목에 맞게 줄였다. 접시를 손바닥으로 받치고 가방 안에 넣었다.'}
+];
+D.jaeyiScaleReturnText = S=>D.jaeyiScaleReturnTurns(S).map(t=>t.kind==='dialogue'?'"'+t.text+'"':t.text).join('\n\n');
 D.knowledge = {
  current_exodus:{label:'제7 잔류구역의 현재 이송', initial:2,
    known:'서울 외곽 6,412명의 순차 이송이 예고됐다.'},
@@ -782,7 +809,7 @@ D.knowledge = {
    known:'수정안은 이유 공개·인간 서명·당사자 이의 제기를 실행 앞에 두려는 것이었다.'},
  parent_key:{label:'실행 전 인간 확인키', flags:[['parent_key_found',2]],
    heard:'할아버지가 달구지에 부모님의 물건을 숨겨 두었다.',
-   known:'아빠의 반도체 검증키는 부모님의 수정안을 남산 코어가 받아들이게 한다.'},
+   known:'부모님의 검증키는 두 분의 수정안을 남산 코어가 받아들이게 한다.'},
  repeated_expulsions:{label:'세대마다 반복된 추방', flags:[['massacre_known',2],['trace_registry',1]],
    heard:'서울의 정리는 한 번이 아니었다.',
    known:'위험 조건이 바뀔 때마다 구역과 세대를 바꾸어 정리가 반복됐다.'},
@@ -1021,7 +1048,7 @@ D.chats = [
    ['minji','따지려는 건 아니에요. 그날 어떻게 된 건지 듣고 싶어서요.'],
    ['eunsu','알아요. 그런데 말하다 보면, 제가 놓친 건 없었나 또 생각하게 돼요.'],
    ['minji','지금 말하기 싫으면 나중에요. 모르는 건 저도 모르는 걸로 둘게요.']]},
- {need:{comp:'leo',comp2:'kangwoo',flag:'massacre_known'}, lines:[
+ {need:{comp:'leo',comp2:'kangwoo',flag:'leo_names_song'}, lines:[
    ['leo','형. 위령비 이름들, 제가 노래로 만들었어요.'],
    ['kangwoo','…들었다.'],
    ['leo','…어땠어요? 아니, 별로면 별로라고 해도 돼요. 이런 건 별로라고 하기가 어렵긴 한데—'],
@@ -1029,19 +1056,19 @@ D.chats = [
    ['leo','…형이 좋다고 하면 진짜 좋은 거예요. 기록.'],
    ['kangwoo','…그 노래, 남산에서 한 번 더 불러라. 걔 들으라고.']]},
  {need:{comp:'parkss',comp2:'jaeyi',flag:'seoul_seen'}, lines:[
-   ['jaeyi','쌤, 남산 보여요. 저기 붉은 불빛.'],
-   ['parkss','…어디. 아, 저거. 생각보다 작네.'],
-   ['jaeyi','가까워지면 커지겠죠. …무서워요?'],
+   ['jaeyi','쌤, 남산까지 가면 무슨 말부터 하실 거예요?'],
+   ['parkss','…글쎄. 준비는 했는데, 막상 가면 잊을지도 모르지.'],
+   ['jaeyi','저도 적어는 뒀어요. …무서워요?'],
    ['parkss','무섭지. 자네는.'],
    ['jaeyi','저도요. 근데 저만 무서운 건 아니라니까 좀 낫네요.'],
-   ['parkss','그래. 혼자 보는 건 아니잖나.']]},
+   ['parkss','그래. 자네 말부터 해도 돼. 내가 옆에 있을 테니.']]},
  {need:{comp:'minji',comp2:'leo',flag:'seoul_seen'}, lines:[
    ['leo','민지야, 남산 도착하면 400km 완성이야.'],
    ['minji','…3절은 도착해서 쓴다며.'],
-   ['leo','응. 근데 첫 줄은 운전대 잡은 사람이 쓰기로 했어.'],
-   ['minji','뭐야, 그런 건 언제 정했어.'],
-   ['leo','방금.'],
-   ['minji','치사하게. …나도 한 줄 껴줘. 엔진 얘기로.']]},
+   ['leo','응. 첫 줄은 운전대 잡은 사람한테 부탁해 볼까 해.'],
+   ['minji','본인한테 물어는 봤어?'],
+   ['leo','지금 물어보려고.'],
+   ['minji','…나도 한 줄 껴줘. 엔진 얘기로.']]},
  {need:{comp:'eunsu',comp2:'jaeyi',flag:'resist_revealed'}, lines:[
    ['eunsu','재이 씨. 저항이 우릴 열쇠라고 부르더라고요.'],
    ['jaeyi','열쇠요? 누가요?'],
@@ -1159,12 +1186,12 @@ D.chats = [
    ['minji','그게 소름 끼쳐요. 기계가 변명까지 하니까.'],
    ['kangwoo','…그 대목 지우지 마. 남산에 들고 가자.']]},
  {need:{comp:'leo',comp2:'parkss',flag:'coffee_found'}, lines:[
-   ['leo','선생님, 아까 그 커피 한 모금만 더…'],
-   ['parkss','안 돼. 카페인도 약이야. 과용은 독이고.'],
-   ['leo','반 모금은요?'],
-   ['parkss','안 돼.'],
-   ['leo','반의 반 모금은요? 냄새만 맡는 건요?'],
-   ['parkss','냄새는 마음껏 맡게. …허 참, 알았네. 반의 반만이야. 노래 한 곡 값이다.']]},
+   ['leo','선생님, 커피 얘기하니까 또 마시고 싶네요. 다음에 내리면 제 것도요.'],
+   ['parkss','그러고 밤새 뒤척이려고? 자네 잠부터 챙겨.'],
+   ['leo','반 잔은요?'],
+   ['parkss','내릴 때 얘기하세. 아직 물도 안 올렸는데.'],
+   ['leo','반의 반 잔으로 예약하면요?'],
+   ['parkss','커피가 무슨 예약제인가. …허 참. 물 끓일 때 자네가 옆에 있게.']]},
  {need:{comp:'jaeyi',comp2:'minji',flag:'smith_met'}, lines:[
    ['jaeyi','그 대장장이 아저씨요, 손수 만든 못이 공장 못보다 비싸요. 왜인 줄 알아요?'],
    ['minji','…튼튼해서요?'],
@@ -1253,8 +1280,8 @@ D.banter = [
   {who:'나', t:'(라디오가 잡음을 낸다. 405.8을 스칠 때, 아직도 숫자를 세는 목소리. 4. 0. 0.)', need:{flag:'freq400_done'}},
   {who:'minji', t:'브레이크에서 그 삐걱 소리 나면 이제 다들 웃더라. "그 소리 나야 이 차야"— 그 할아버지, 명언 제조기야.', need:{comp:'minji',flag:'van_owner_done'}},
   {who:'leo', t:'보리 하이파이브 좀 봐요. 이제 먼저 손 내밀어요. 개가. 먼저.', need:{comp:'leo',flag:'bori_highfive',dog:1}},
-  {who:'나', t:'(수첩에 끼워둔 씨앗 봉투가 바스락거린다. 두 배로 갚아야 하는 빚이다)', need:{flag:'seed_borrowed'}},
-  {who:'jaeyi', t:'우리 단체사진, 그 할아버지 필름 속에 있잖아요. 세상 어딘가에 우리가 인화 안 된 채로 있다는 거, 이상하고 좋지 않아요?', need:{comp:'jaeyi',flag:'photo_film'}},
+  {who:'나', t:'(수첩에 끼워둔 씨앗 봉투가 바스락거린다. 두 배로 갚아야 하는 빚이다)', need:{flag:'seed_borrowed',noFlag:'seed_returned'}},
+  {who:'jaeyi', t:'그 사진사 할아버지, 필름을 남겨 뒀다면서요. 찍힌 얼굴들이 세상 어딘가에서 인화를 기다린다는 거, 이상하고 좋지 않아요?', need:{comp:'jaeyi',flag:'photo_film',noFlag:'photo_received'}},
   {who:'kangwoo', t:'작업대 만들 때는 몰랐는데. …쇠파이프 쥐는 손보다 그네 사슬 거는 손이 낫다.', need:{comp:'kangwoo',flag:'armed_age'}},
   {who:'eunsu', t:'그 소식벽에 쓴 글, 지금쯤 누가 읽었을까요. 답장 오는 벽이면 좋겠는데.', need:{comp:'eunsu',flag:'chalkwall_signed'}},
 
@@ -1265,7 +1292,7 @@ D.banter = [
   {who:'sys', t:'민지는 창밖 폐차를 한 대씩 눈으로 훑는다. 지나간 뒤에도 한동안 목이 돌아가 있다.', need:{comp:'minji'}},
   {who:'minji', t:'할아버지 수첩 나 좀 보여줘. …이 양반, 나랑 정비 철학이 같아. 아깝다, 못 만난 게.', need:{comp:'minji'}},
   {who:'parkss', t:'다들 손톱 봐봐. 반달 있나. …좋아, 통과. 영양은 손톱부터 무너지거든.', need:{comp:'parkss'}},
-  {who:'parkss', t:'약국에서는 감기약 하나 달라던 사람이 문 닫을 때까지 얘기하고 가기도 했어. 약 얘기는 오 분이면 끝나는데 말이지.', need:{comp:'parkss'}},
+  {who:'parkss', t:'약국에서는 감기약 하나 달라던 사람이 문 닫을 때까지 얘기하고 가기도 했어. 약 얘기는 5분이면 끝나는데 말이지.', need:{comp:'parkss'}},
   {who:'sys', t:'박 선생이 약통을 달그락거리며 재고를 센다. 같은 병을 두 번씩 센다.', need:{comp:'parkss'}},
   {who:'parkss', t:'웃는 게 제일 싼 보약이야. 그래서 내가 아재개그를 하는 거야. 처방이야, 이게.', need:{comp:'parkss'}},
   {who:'parkss', t:'수진이가— 아니, 아니야. 노래나 틀어봐.', need:{comp:'parkss'}},
@@ -1289,7 +1316,7 @@ D.banter = [
   /* More pairs */
   {who:'minji', t:'은수 언니, 그 헤드폰 단자 접촉 불량이에요. 줘 봐요. …소리 낫죠? 인정해요.', need:{comp:'minji',comp2:'eunsu'}},
   {who:'eunsu', t:'민지 씨는 고치고, 저는 듣고. 둘이 붙으면 웬만한 기계는 못 도망가겠네요.', need:{comp:'minji',comp2:'eunsu'}},
-  {who:'parkss', t:'레오, 목 상해. 고음은 하루 삼십 분. …약사가 아니라 팬으로서 하는 말이야.', need:{comp:'parkss',comp2:'leo'}},
+  {who:'parkss', t:'레오, 목 상해. 고음은 하루 30분. …약사가 아니라 팬으로서 하는 말이야.', need:{comp:'parkss',comp2:'leo'}},
   {who:'leo', t:'박 선생님이 제 팬이래요!! 기록! 기록해요!! 1호 팬!!', need:{comp:'parkss',comp2:'leo'}},
   {who:'jaeyi', t:'박 선생님 그 왕진 가방, 가죽이 소가죽 통가죽이에요. 요즘 못 구해요. …값은 안 매길게요. 그건 그런 물건이 아니니까.', need:{comp:'jaeyi',comp2:'parkss'}},
   {who:'kangwoo', t:'재이. 아까 그 고물 더미에서 뭘 챙겼지. …쓸만한 거면 됐다.', need:{comp:'kangwoo',comp2:'jaeyi'}},
@@ -1402,7 +1429,7 @@ D.banter = [
   {who:'kangwoo', t:'……관제사. 그날 하늘에서 뭘 봤나. ……아니다. 됐다.', need:{comp:'kangwoo', comp2:'eunsu'}},
   {who:'sys', t:'정오가 가까워질수록 민지가 무전기를 자꾸 만지작거린다.', need:{comp:'minji', flag:'mingyu_alive'}},
   {who:'minji', t:'오빠가 그랬어. 정오의 약속은 시계보다 정확하다고. …그러니까 나도 그때 맞춰 둘 거야.', need:{comp:'minji', flag:'mingyu_reunion'}},
-  {who:'sys', t:'레오가 완성된 「400km」를 처음부터 끝까지 낮게 부른다.', need:{comp:'leo', flag:'song_400km'}},
+  {who:'sys', t:'레오가 방송했던 「400km」의 대목을 낮게 부른다.', need:{comp:'leo', flag:'song_400km'}},
   {who:'parkss', t:'수진이 그 녀석, 지금쯤 어느 마을이려나. …잘하고 있겠지. 잘 가르쳤으니.', need:{comp:'parkss', flag:'pss_met'}},
   {who:'minji', t:'그 탑 기록 말이야. 매일 정오, 88.9, 신호음 3회. …그거 오빠 방식이야. 발신지가 북쪽 능선이랬지. 가보자, 언젠가. 꼭.', need:{comp:'minji', flag:'tower_log'}},
   {who:'eunsu', t:'기장님 사연은 부쳤어요. 이제 답을 기다려야죠. 관제사는 기다리는 게 일이니까.', need:{comp:'eunsu', flag:'pilot_appeal'}},
@@ -1521,11 +1548,11 @@ D.gateMissingStatus = (state)=>{
 };
 D.gateEvent = {
  id:'seoul_gate', type:'스토리', ai:1,
- title:'남산 1km 앞',
+ title:'한강 남쪽 진입 관문',
  text:(S)=>{ const n=S.flags.seoulTries||0, miss=D.gateMissingStatus(S);
   const status=`${miss.pillar} ${miss.have}/${miss.need}`;
-  if(n===0) return '한강을 건넜다. 남산이 차창을 가득 채운다.\n\n남산 진입로의 도로판이 올라와 길을 막았다. 전광판이 켜졌다.\n\n<span class="ai">"남산 진입 조건이 부족합니다."</span>\n\n<span class="ai">"현재 부족한 항목: '+status+'. '+miss.reason+'"</span>\n\n<span class="ai">"다음에 할 일: '+miss.hint+'"</span>';
-  return '다시 남산 1km 앞에 섰다. 도로를 막은 벽은 그대로였다.\n\n전광판에 현재 상태가 떴다.\n\n「부족한 항목: '+status+'」\n「다음에 할 일: '+miss.hint+'」\n\n<span class="ai">"아직 진입 조건이 충족되지 않았습니다."</span>'; },
+  if(n===0) return '한강 남쪽 진입 관문에 차를 세웠다. 강 건너로 남산이 보였다.\n\n다리로 이어지는 도로판이 올라와 길을 막았다. 전광판이 켜졌다.\n\n<span class="ai">"남산 진입 조건이 부족합니다."</span>\n\n<span class="ai">"현재 부족한 항목: '+status+'. '+miss.reason+'"</span>\n\n<span class="ai">"다음에 할 일: '+miss.hint+'"</span>';
+  return '다시 한강 남쪽 진입 관문에 섰다. 도로를 막은 벽은 그대로였다.\n\n전광판에 현재 상태가 떴다.\n\n「부족한 항목: '+status+'」\n「다음에 할 일: '+miss.hint+'」\n\n<span class="ai">"아직 진입 조건이 충족되지 않았습니다."</span>'; },
  choices:[
   {label:'왜 이 조건이 필요한지 묻는다', out:[{p:1, text:(S)=>{ const miss=D.gateMissingStatus(S);
     return '<span class="ai">"이곳에서는 서울 주민의 강제 이송을 멈추거나 다시 시작할 수 있습니다. 남산에 도착했다는 이유만으로 그 권한을 넘길 수는 없습니다."</span>\n\n<span class="ai">"'+miss.reason+'"</span>\n\n전광판에 「다음에 할 일: '+miss.hint+'」가 남았다. 수원으로 돌아가는 동안, '+(S.party.includes('eunsu')?'은수는 그 문장을 한 글자도 빠뜨리지 않고 받아 적었다.':'나는 그 문장을 수첩에 받아 적었다.'); }, fx:{goto:'suwon', flagCount:'seoulTries', moodAll:-3, note:{type:'사건',title:'막힌 남산 진입로',body:'남산 진입에 부족한 조건과 다음에 확인할 일을 적고 수원으로 돌아왔다.',links:['천리안']}}}]},
@@ -2153,7 +2180,7 @@ D.recruitQuests = {
       winch:{label:'하중을 계산해 들었다',memory:'재이가 분필로 매긴 숫자가 윈치와 상자 모서리에 그대로 남아 있다.',
         drive:{title:'분필 숫자로 다시 묶은 짐',desc:'재이가 상자를 꺼낼 때의 하중 순서로 적재칸을 다시 묶고 빈 공간을 찾아냈다.',effect:'도착 시 고철 +3',scrap:3}},
       brace:{label:'쓸 만한 부품을 받쳤다',memory:'망가진 부품 한 개 대신 가족 사진은 모두 제 모양으로 나왔다.',
-        drive:{title:'버리지 않은 받침대',desc:'창고에서 쓴 받침을 달구지 하부의 약한 프레임에 다시 맞춰 댔다.',effect:'차체 +4',van:4}},
+        drive:{title:'받침을 잃은 뒤의 점검',desc:'재이가 창고에서 하중을 받치던 일을 떠올리며 달구지 하부를 살폈다. 기존 프레임의 느슨한 체결부를 찾아 조였다.',effect:'차체 +4',van:4}},
       hands:{label:'잔해를 손으로 걷었다',memory:'몇 시간을 함께 옮긴 먼지가 아직 장갑 솔기마다 박혀 있다.',
         drive:{title:'장갑 솔기의 작은 부품',desc:'재이가 장갑과 적재칸 구석에서 아직 쓸 수 있는 체결 부품을 골라냈다.',effect:'도착 시 고철 +2',scrap:2}}
     }},
@@ -2238,7 +2265,7 @@ D.eventScenes = {
   rq_minji_task:'recruit-minji-task', rq_minji_follow:'recruit-minji-follow', rq_minji_join:'recruit-minji-join',
   rq_parkss_task:'recruit-parkss-task', rq_parkss_follow:'recruit-parkss-follow', rq_parkss_join:'recruit-parkss-join',
   rq_leo_task:'recruit-leo-rescue-choice-v1', rq_leo_follow:'recruit-leo-follow', rq_leo_join:'recruit-leo-join',
-  rq_jaeyi_task:'recruit-jaeyi-task', rq_jaeyi_follow:'recruit-jaeyi-follow', rq_jaeyi_join:'recruit-jaeyi-join',
+  rq_jaeyi_task:'recruit-jaeyi-trapped-box-v1', rq_jaeyi_follow:'recruit-jaeyi-follow', rq_jaeyi_join:'recruit-jaeyi-join',
   rq_eunsu_task:'recruit-eunsu-task', rq_eunsu_follow:'recruit-eunsu-follow', rq_eunsu_join:'recruit-eunsu-join',
   rq_kangwoo_task:'recruit-kangwoo-task', rq_kangwoo_follow:'recruit-kangwoo-follow', rq_kangwoo_join:'recruit-kangwoo-join',
   perimeter_first:'combat-walker-watch-v1', patrol_walker:'combat-walker-watch-v1',
@@ -2385,7 +2412,7 @@ D.eventChoiceScenes = {
   rq_parkss_follow:{1:['recruit-parkss-follow-shared']},
   rq_leo_task:{0:['recruit-leo-follow'],1:['recruit-leo-task-wade'],2:['recruit-leo-follow']},
   rq_leo_follow:{2:['recruit-leo-follow-puddle']},
-  rq_jaeyi_task:{0:['recruit-jaeyi-task-lift']},
+  rq_jaeyi_task:{0:['recruit-jaeyi-task-lift'],1:['recruit-jaeyi-task'],2:['recruit-jaeyi-task']},
   rq_jaeyi_follow:{1:['recruit-jaeyi-follow-shelf']},
   rq_eunsu_task:{1:['recruit-eunsu-task-breaker']},
   rq_eunsu_follow:{2:['recruit-eunsu-follow-lights']},
@@ -2490,9 +2517,9 @@ D.storyContext = {
   lib_books:'한별이 건넨 「도서 기증」 상자가 아직 비어 있다. 북쪽 폐교에 무너진 서가가 남았다는 소문을 들었다.',
   lib_return:'폐교에서 건진 책 꾸러미가 뒷좌석을 차지하고 있다. 이제 한별의 버스를 다시 찾아야 한다.',
   library_scribe:'책을 돌려준 뒤, 이동 도서관은 달구지의 다음 소식을 기다려 왔다.',
-  freq_triangulate:'주파수 4-0-0에서 같은 짧은 문장이 사흘째 반복됐다. 은수는 발신지가 북쪽으로 움직인다고 했다.',
-  freq_source:'삼각 측량으로 찍은 곳은 버려진 중계소다. 신호는 녹음이 아니라 누군가의 생방송일 가능성이 크다.',
-  freq_L2:'첫 테이프의 화자는 목록이 ‘명단’이라고 믿었다. 두 번째 릴은 그 판단을 정정하려다 끊긴다.',
+  freq_triangulate:'기억에 남은 숫자 방송이 급수탑 근처에서 선명하게 잡힌다. 손으로 엮은 안테나가 탑 위에 보인다.',
+  freq_source:'숫자 방송을 따라 폐교 방송실에 닿았다. 배터리에 연결된 릴테이프가 돌아가고 있다.',
+  freq_L2:'급수탑에서 봤던 것과 비슷한 안테나다. 이번 중계기에는 숫자 방송 외에 테이프가 하나 더 걸려 있다.',
   postman_again:'자전거 우편부는 이름과 얼굴만으로 묵은 편지를 배달해 왔다. 남산행 편지 한 통만은 끝내 직접 건너지 못했다.',
   gp_envelope:'할아버지 수첩의 뒷표지가 며칠째 불룩하다. 겉봉에는 딱 한 줄, 「남산 보고 열어라」.',
   minji_toolbox:'민지는 필요한 공구만 챙겨 탔다고 했다. 그런데 빨간 공구함 맨 아래에는 정비와 상관없는 물건이 하나 있다.',
@@ -2655,13 +2682,13 @@ D.openingDeparture = [
     choices:[
       {id:'new_part',label:'새 연결 부품으로 바로 고친다',req:{item:'부품'},foreseeable:{expense:'부품 1개 · 시간 20분'},out:[{p:1,
         text:'새 연결부를 조여 넣자 미지근한 바람이 돌아왔다. 유나의 굳었던 손이 조금 펴졌다.',
-        fx:{item:{'부품':-1},time:20,flag:'intro_family_helped',note:{type:'출발',title:'도윤 가족의 버스',body:'새 부품을 써서 유나가 탄 이송 버스의 난방을 빠르게 되살렸다. 도윤의 표에는 이송 사유가 없었다.',links:['도윤의 가족','천리안']}}}]},
+        fx:{item:{'부품':-1},time:20,flag:'intro_family_helped',note:{type:'출발',title:'도윤 가족의 버스',body:'새 부품을 써서 유나가 탄 이송 버스의 난방을 빠르게 되살렸다.',links:['도윤의 가족','천리안']}}}]},
       {id:'scrap_collar',label:'고철로 연결 고리를 새로 깎는다',req:{scrap:3},foreseeable:{expense:'고철 3 · 시간 35분'},out:[{p:1,
         text:'철판을 말아 연결 고리를 조였다. 바람이 나오자 하진이 유나를 송풍구 쪽으로 고쳐 안았다. 다음 정차지에서 고리를 다시 봐 달라고 부탁했다.',
-        fx:{scrap:-3,time:35,flag:'intro_family_helped',note:{type:'출발',title:'도윤 가족의 버스',body:'고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다. 도윤의 표에는 이송 사유가 없었다.',links:['도윤의 가족','천리안']}}}]},
+        fx:{scrap:-3,time:35,flag:'intro_family_helped',note:{type:'출발',title:'도윤 가족의 버스',body:'고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.',links:['도윤의 가족','천리안']}}}]},
       {id:'hose_bypass',label:'남은 호스를 잘라 우회한다',foreseeable:{expense:'시간 55분'},out:[{p:1,
         text:'찢어진 구간을 잘라 내고 남은 호스를 당겨 물렸다. 몇 번이나 새는 곳을 다시 조였다. 도윤이 송풍구에 손을 대더니 하진을 돌아봤다. 따뜻한 바람이 나오고 있었다.',
-        fx:{time:55,flag:'intro_family_helped',note:{type:'출발',title:'도윤 가족의 버스',body:'물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다. 도윤의 표에는 이송 사유가 없었다.',links:['도윤의 가족','천리안']}}}]}
+        fx:{time:55,flag:'intro_family_helped',note:{type:'출발',title:'도윤 가족의 버스',body:'물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.',links:['도윤의 가족','천리안']}}}]}
     ]
   },
   {
@@ -2685,9 +2712,9 @@ D.openingDeparture = [
   },
   {
     id:'opening_parents_module', openingStep:true, type:'본편', scene:'intro-dashboard-module',
-    title:'계기판 뒤의 검증 모듈',
+    title:'계기판 뒤의 검증키',
     turns:[
-      {kind:'narration',text:'작업장으로 돌아와 엄마의 철제 상자를 열었다. 수첩 등판에서 회로도가 떨어졌다. 남산 현장 확인 포트, 달구지 계기판. 엄마가 설계하고 아빠가 만든 인간 확인 검증키의 배선이었다.'},
+      {kind:'narration',text:'작업장으로 돌아와 엄마의 철제 상자를 열었다. 수첩 등판에서 회로도가 떨어졌다. 남산 현장 확인 포트, 달구지 계기판. 엄마가 설계하고 아빠가 만든 인간 확인 검증키의 배선이었다. 명령을 실행하기 전에 사람의 승인을 받게 하는 장치다.'},
       {kind:'thought',who:'me',text:'계기판 뒤? 이 차를 그렇게 뜯어 봤는데.'},
       {kind:'narration',text:'덮개 안쪽에 천으로 감싼 모듈이 있었다. 선을 잡았다가 놓았다. 분리 순서 두 장이 뜯겨 있었다. 잘못 뽑으면 검증키와 달구지 전장이 함께 타 버린다는 경고만 남아 있었다.'},
       {kind:'letter',who:'mother',name:'엄마의 메모',text:'이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것. 장치만으로는 검증이 끝나지 않는다. 현장 확인은 남산에서.'}
@@ -2695,10 +2722,10 @@ D.openingDeparture = [
     choices:[
       {id:'label_wires',label:'배선에 번호를 붙이고 덮개를 닫는다',foreseeable:{expense:'시간 25분',lasting:'배선에 번호표를 남긴다'},out:[{p:1,
         text:'선마다 번호를 붙였다. 덮개를 닫기 전, 떨어질 만한 종이 끝을 한 번 더 눌렀다. 모듈은 분리 순서를 찾을 때까지 이 자리에 둔다.',
-        fx:{time:25,flag:'intro_module_seen',note:{type:'출발',title:'계기판 속 검증 모듈',body:'엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.',links:['엄마의 철제 상자','부모님','달구지','남산']}}}]},
+        fx:{time:25,flag:'intro_module_seen',note:{type:'출발',title:'계기판 속 검증키',body:'엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.',links:['엄마의 철제 상자','부모님','달구지','남산']}}}]},
       {id:'trace_diagram',label:'회로도에 지금 배선 경로를 덧그린다',foreseeable:{expense:'시간 40분',lasting:'현재 배선을 도면에 남긴다'},out:[{p:1,
         text:'도면과 달라진 선을 하나씩 따라 그렸다. 좁은 곳은 손전등을 입에 물고 들여다봤다. 빠진 분리 절차를 찾으면 이 그림과 맞춰 볼 수 있다.',
-        fx:{time:40,flag:'intro_module_seen',note:{type:'출발',title:'계기판 속 검증 모듈',body:'검증키를 억지로 떼지 않고 현재 배선 경로를 회로도에 남겼다. 빠진 분리 절차 두 장을 찾아야 한다.',links:['엄마의 철제 상자','부모님','달구지','남산']}}}]}
+        fx:{time:40,flag:'intro_module_seen',note:{type:'출발',title:'계기판 속 검증키',body:'검증키를 억지로 떼지 않고 현재 배선 경로를 회로도에 남겼다. 빠진 분리 절차 두 장을 찾아야 한다.',links:['엄마의 철제 상자','부모님','달구지','남산']}}}]}
     ]
   },
   {
@@ -2744,7 +2771,7 @@ D.openingDecisionCallbacks = {
       lines:[['sys','수첩을 펴서 하진, 도윤, 유나의 이름을 다시 읽었다. 유나 이름 끝에 번진 잉크를 덧썼다.']]}
   },
   opening_parents_module:{
-    label_wires:{summary:'검증 모듈의 배선마다 번호를 붙였다.',afterKm:34,afterEvents:2,
+    label_wires:{summary:'검증키의 배선마다 번호를 붙였다.',afterKm:34,afterEvents:2,
       lines:[['sys','험로를 지난 뒤 계기판을 열어 보니 번호표가 전부 제자리에 있었다. 빠진 절차를 찾으면 같은 순서로 선을 풀 수 있다.']]},
     trace_diagram:{summary:'현재 배선 경로를 회로도에 덧그렸다.',afterKm:34,afterEvents:2,
       lines:[['sys','덧그린 회로도를 계기판 배선에 다시 대 봤다. 진동에 선이 흔들려 손끝으로 하나씩 짚으며 대조했다.']]}
@@ -2756,6 +2783,62 @@ D.openingDecisionCallbacks = {
       lines:[['sys','목에 건 열쇠가 비포장길의 진동마다 가슴을 두드렸다. 돌아갈 곳은 닫힌 셔터 뒤에 그대로 있었다.']]}
   }
 };
+
+/* Only explicit choice flags identify the reason. Older saves with just the
+   completion flag stay neutral; reading these callbacks never changes a save. */
+D.journeyReasonRecall = (S,stage='ending')=>{
+  const f=S.flags||{},entry=stage==='entry';
+  if(['bridge_reason_stop','bridge_reason_family','bridge_reason_both'].filter(key=>f[key]).length!==1) return '';
+  if(f.bridge_reason_stop) return entry
+    ? '「이 명령만큼은 끝내야 한다.」 수첩에 적은 줄을 다시 읽었다. 남산의 초록불이 아니라, 아직 취소되지 않은 이송표 때문에 여기까지 왔다.'
+    : '「이 명령만큼은 끝내야 한다.」 그 줄 옆에 취소 확인 시각을 적었다. 남산 아래에서 돌아갈 길을 묻는 사람들이 보였다. 수첩에서 눈을 떼고 그 사람들의 얼굴을 보았다.';
+  if(f.bridge_reason_family) return entry
+    ? (f.mother_reunited?'중계소에서 엄마와 마주 앉았던 의자가 생각났다. 남산에서 돌아오면 그 자리에 다시 앉고 싶었다.':'엄마에게 직접 묻고 싶었던 말들이 남아 있었다. 남산에서 확인해야 할 기록도 있었다. 시동 키를 놓지 않았다.')
+    : (f.mother_broadcast_ready?'엄마 곁으로 가고 싶다고 적었던 줄을 찾았다. 중계소에서 끝내지 못한 얘기를 오늘 다 끝낼 수는 없을 것이다. 그래도 내려가면 다시 마주 앉을 수 있다.':'엄마 곁으로 가고 싶다고 적었던 줄은 그대로 두었다. 이송을 멈춘 것으로 그 바람까지 이루어진 건 아니었다. 아직 묻지 못한 말을 다음 장에 옮겼다.');
+  if(f.bridge_reason_both) return entry
+    ? '「둘 다다. 그래서 겁난다.」 지우지 않은 글씨 위에 손가락을 댔다. 가족에게 돌아가고 싶었고, 이송표를 그대로 두고 돌아갈 수도 없었다. 수첩을 덮어 조수석에 놓았다.'
+    : (f.mother_broadcast_ready?'겁난다고 적었던 줄은 지우지 않았다. 이송은 멈췄고, 엄마는 중계소에서 기다리고 있었다. 그 두 가지를 확인하고 나서야 수첩을 무릎에 내려놓았다.':'겁난다고 적었던 줄은 지우지 않았다. 이송 취소 확인을 그 옆에 적고, 가족에게 묻고 싶었던 말은 다음 장에 남겼다. 수첩을 덮고 잠깐 눈을 감았다.');
+  return '';
+};
+D.finaleHomeClosure = S=>[
+  ...(D.journeyReasonRecall(S)?[D.journeyReasonRecall(S)]:[]),
+  ...(S.flags.mother_broadcast_ready?['중계소에 내려가서 마저 얘기하자고 전했다. 엄마는 의자를 하나 비워 두겠다고 했다. 무전기를 내려놓았다.']:[]),
+  '계단에 앉은 채 수첩을 덮었다. 손에 쥐고 있던 시동 키를 주머니에 넣었다. 한동안 일어나지 않았다.'
+].join('\n\n');
+
+// The upper-network threat does not decide the driver's next destination.
+// This is a closing montage after the paid finale, not a new travel transaction.
+D.finaleReturnTurns = S=>{
+  const narration=text=>({kind:'narration',text});
+  const say=(who,text)=>({kind:'dialogue',who,text});
+  const turns=[{...narration('정비 단말의 주소를 수첩 맨 뒤에 옮겼다. 화면을 끄고 코어실을 나왔다.'),scene:'seoul-uplink-empty-v2'}];
+  if(S.flags.intro_family_helped){
+    turns.push(
+      narration('부산 부두에 이송 취소 소식을 전했다. 몇 번 사람을 바꿔 부른 뒤 하진의 목소리가 들렸다.'),
+      {kind:'radio',who:'passer_woman',name:'하진 · 부산 부두',text:'돌아가도 된다는 거죠? 꼭 가야 하는 건 아니고요?'},
+      say('me','네. 이번에는 하진 씨가 정하시면 돼요.'),
+      narration('하진은 아이들과 얘기해 보겠다고 했다. 나는 대답을 재촉하지 않고 부두의 연락 주파수를 적었다.')
+    );
+  }
+  if(S.flags.mother_broadcast_ready){
+    turns.push(
+      {...narration('남산을 떠나 한강을 건넜다. 달구지가 수원 외곽 중계소 앞에 멈췄을 때, 엄마가 송신기 옆에서 일어났다.'),scene:'parents-mother-reunion-v1'},
+      narration('문을 열었다. 비워 둔 의자는 문 가까이에 있었다.'),
+      say('mother','왔어?'),
+      say('me','응. 차부터 세우고.'),
+      narration('주차하고 돌아오니 엄마가 의자에 놓여 있던 옷을 치우고 있었다. 나는 공구 가방을 발밑에 내려놓았다.'),
+      say('mother','뭐 좀 먹었니?'),
+      say('me','있다가. 할아버지 얘기부터 해도 돼?'),
+      say('mother','응. 들을게.'),
+      narration('부산 작업장의 겨울부터 얘기했다. 엄마는 중간에 묻지 않았다. 말이 막혔을 때만 주전자를 들어 내 컵을 채웠다.')
+    );
+  }else{
+    turns.push(narration('남산 아래에서 달구지 문을 열었다. 조수석에 수첩을 놓고, 부산 작업장으로 돌아가는 길을 펼쳤다. 아직 찾아야 할 사람들의 이름은 지우지 않았다.'));
+  }
+  turns.push(narration('〔 서울까지 400km · SESSION 1 END 〕'));
+  return turns;
+};
+D.finaleReturnText = S=>D.finaleReturnTurns(S).map(turn=>turn.kind==='radio'?turn.name+': "'+turn.text+'"':turn.kind==='dialogue'?'"'+turn.text+'"':turn.text).join('\n\n');
 
 /* Finale reads experienced decisions from their existing owners. No new memory ledger. */
 D.finaleJourneyRecall = S=>{
@@ -2841,7 +2924,7 @@ D.intro = [
 방송은 세대마다 다른 말을 골랐지만
 이송표의 같은 칸만은 건드리지 않았다.
 
-“그럼 백사십삼 년 동안 아무도 이유를 못 찾았어?”
+“그럼 143년 동안 아무도 이유를 못 찾았어?”
 “찾으러 간 사람은 많았지.”
 할아버지가 빗속의 북쪽 길을 보았다.
 “답을 갖고 돌아온 사람이 없었을 뿐이야.”`
@@ -3050,7 +3133,7 @@ D.intro = [
 엄마 글씨로 세 줄이 적혀 있었다.
 
 <span class="em">강제 명령 현장 확인 포트 — 남산 중앙 노드.
-검증 모듈 보관 위치 — 달구지 계기판 뒤.
+검증키 보관 위치 — 달구지 계기판 뒤.
 이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것.</span>
 
 남산의 호출만으로는 떠나지 않았다. 그러나 지금 이송표와 엄마의 도면은 서로 같은 장소를 가리키고 있었다.`
@@ -3489,7 +3572,7 @@ const introBeats = {
     {kind:'dialogue', who:'me', name:'나', text:'이거 열셋인데.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'그럼 열두 밀리를 네가 또 아무 데나 뒀다는 뜻이지.'},
     {kind:'dialogue', who:'me', name:'나', text:'어제 마지막으로 쓴 사람 할아버지거든.'},
-    {kind:'narration', text:'우리는 공구를 찾느라 십 분을 쓰고, 연료펌프를 고치는 데는 오 분을 썼다. 엔진이 살아난 날이면 근처 고장 차량을 밀어 주고, 필요한 부품이나 물을 가져다줬다.'},
+    {kind:'narration', text:'우리는 공구를 찾느라 10분을 쓰고, 연료펌프를 고치는 데는 5분을 썼다. 엔진이 살아난 날이면 근처 고장 차량을 밀어 주고, 필요한 부품이나 물을 가져다줬다.'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'돌아가면 오늘 들은 이름이랑 장소 적어 둬. “어떤 사람이 그랬다”라고 쓰면 나중에 못 찾아.'},
     {kind:'dialogue', who:'me', name:'나', text:'이 차로 서울까지 갈 수 있을까?'},
     {kind:'dialogue', who:'grandfather', name:'할아버지', text:'차는 가게 만들 수 있어. 브레이크랑 냉각수부터 손보면.'},
@@ -3625,7 +3708,7 @@ const introBeats = {
     {kind:'thought', who:'me', name:'나', text:'사진까지 전부 가져갈 수는 없어. 지금 필요한 것부터 찾자.'},
     {kind:'narration', text:'상자 안에는 가족사진, 엄마의 출입증, 멈춘 손목시계와 연구 수첩이 섞여 있었다. 수첩을 꺼내자 등판 안쪽에서 접힌 회로도 한 장이 떨어졌다.'},
     {kind:'thought', who:'me', name:'나', text:'이 종이는 처음 보는데. 엄마가 따로 숨겨 둔 건가?'},
-    {kind:'letter', who:'mother', name:'엄마의 메모', text:'강제 명령 현장 확인 포트 — 남산 중앙 노드. 검증 모듈 보관 위치 — 달구지 계기판 뒤.'},
+    {kind:'letter', who:'mother', name:'엄마의 메모', text:'강제 명령 현장 확인 포트 — 남산 중앙 노드. 검증키 보관 위치 — 달구지 계기판 뒤.'},
     {kind:'narration', text:'하진의 이송표 사본을 회로도 옆에 놓았다. 명령 규격 번호가 같았다.'},
     {kind:'letter', who:'mother', name:'엄마의 메모', text:'이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것. 장치만으로는 검증이 끝나지 않는다.'},
     {kind:'narration', text:'철제 상자 바닥에는 눈에 빗금을 그은 표식과 서로 다른 여섯 개의 작은 도장이 찍혀 있었다.'},
@@ -3684,7 +3767,7 @@ introBeats['intro-cold-open-v1'] = [
   add('intro-socket-memory-v1','기억 · 할아버지와 일하던 때','열두 밀리',[
     {kind:'narration',text:'할아버지가 아직 작업대에 서 있던 때다. 나는 옆에서 공구를 찾아 건넸다.'},
     ...introBeats['intro-years-together'].slice(1,5),
-    {kind:'narration',text:'공구를 찾느라 십 분을 쓰고, 연료펌프를 고치는 데는 오 분을 썼다.'}
+    {kind:'narration',text:'공구를 찾느라 10분을 쓰고, 연료펌프를 고치는 데는 5분을 썼다.'}
   ]);
   add('intro-workday-return-v1','어제 낮 · 감천 작업장','셔터 밖의 손님',introBeats['intro-workday-return-v1']);
   add('intro-family-packing-v1','기억 · 여덟 살, 서울을 떠나던 밤','가방 맨 위',[
@@ -3857,7 +3940,7 @@ D.events = [
  title:'손 흔드는 남자',
  text:'도로 한복판에서 남자가 양팔을 흔든다.\n\n발밑엔 빨간 기름통. "차가 퍼졌어요! 기름 좀 나눠주면 고철로 사례할게요!"\n\n웃는 얼굴인데, 눈은 웃지 않는 것 같기도 하다.',
  choices:[
-  {label:'세워서 도와준다', out:[
+  {label:'세워서 도와준다', req:{fuel:5}, out:[
     {p:5, text:'진짜 고장이었다. 남자가 기름통 뚜껑을 열어 바닥을 보여준다.\n\n"얼마나 필요해요?"\n\n"어, 그, 많이는 안 돼요. 5리터면 다음 마을까지." 그러더니 손가락을 접었다 폈다. "아니 4리터. …아니다, 5리터로 주세요."\n\n5L를 옮겨 담자 남자가 고철을 한 아름 안겨준다.\n\n"남쪽 인심 아직 안 죽었네!"', fx:{fuel:-5, scrap:12, moodAll:4}},
     {p:2, text:'남자 뒤 수풀에서 둘이 더 튀어나왔다. 강도다!\n\n실랑이 끝에 물통 하나를 뺏기고 겨우 출발했다.', fx:{water:-2, moodAll:-5, note:{type:'사건',title:'가짜 조난자',body:'기름통은 미끼였다. 웃는 눈을 조심할 것.'}}}]},
   {label:'강우에게 맡긴다', req:{comp:'kangwoo'}, out:[
@@ -3871,7 +3954,7 @@ D.events = [
  text:'폐버스 두 대로 길을 막았다. 무장한 셋이 드럼통 화덕 앞에 서 있다.\n\n"통행세. 고철 8. 아니면 돌아가든가."\n\n"왜 여덟인데요?"\n\n"몰라. 원래 10이었는데 앞 차가 하도 깎아서." 말투는 심드렁하다. 매일 하는 장사라는 듯이.',
  choices:[
   {label:'통행세를 낸다 (고철 8)', req:{scrap:8}, out:[{p:1, text:'고철을 세어 건넸다. 남자가 세다가 중간에 놓쳐서 처음부터 다시 셌다.\n\n"…여덟. 맞네." 버스가 삐걱대며 비켜난다.\n\n"북쪽 조심해. 요즘 하늘에 뭐가 떠다녀." 덤으로 정보를 준다.', fx:{scrap:-8}}]},
-  {label:'협상한다', req:{comp:'kangwoo'}, out:[
+  {label:'협상한다', req:{comp:'kangwoo',scrap:8}, out:[
     {p:2, text:'강우가 내려서 그들의 무기를 슥 훑고, 군용 수신호를 몇 개 보냈다.\n\n"…통과시켜. 같은 밥 먹던 사람이네." 절반만 받겠단다.', fx:{scrap:-4, mood:{kangwoo:5}}},
     {p:1, text:'"수신호 안 통해. 낼 거야 말 거야?" 분위기가 험해지기 전에 전액을 냈다.', fx:{scrap:-8}}]},
   {label:'돌파한다', risk:'위험', out:[
@@ -3890,8 +3973,8 @@ D.events = [
     {p:1, text:'"어— 이 양반이." 남자가 장부를 덮으며 일어섰다. 뒤의 둘이 쇠파이프를 짚었다.\n\n결국 고철 여덟에 「협의」를 봤다. 사기꾼과의 협상은 이기고도 지는 기분이다.', turnSpeakers:[{who:'passer_man',name:'형광 조끼 남자'}], fx:{scrap:-8, moodAll:-3}}]},
   {label:'재등록비를 낸다', req:{scrap:15}, out:[{p:1, text:'고철을 세는 남자의 손이 능숙했다. 도장이 쿵 찍혔다. 「등록 완료」— 아무 효력 없는 종이.\n\n떠나며 백미러를 봤다. 우리 뒤에 서 있던 소달구지 노인이 같은 책상 앞에 서고 있었다. 저 노인에게 고철 열다섯이 있을까.\n\n종이는 창틈으로 버렸는데, 기분은 버려지지 않았다.', fx:{scrap:-15, moodAll:-4, note:{type:'사건',title:'가짜 행정소',body:'가짜 등록증에 고철 15를 냈다. 우리 다음 차례는 소달구지 노인이었다.',links:[]}}}]},
   {label:'천막을 걷어버린다', risk:'몸싸움', out:[
-    {p:1, text:'차에서 다 같이 내리자 숫자 계산이 끝났다. 셋 대 우리.\n\n"…철수. 오늘 자리가 안 좋네."\n\n그들은 천막과 책상을 익숙하게 접어 트럭에 실었다. 접는 속도가 이 장사의 연차를 말해 줬다. 우리는 부술 것도 없이 빈 길가만 얻었다.\n\n사흘 뒤 다른 길목에서 같은 천막이 선다는 데에 고철을 걸 수 있다.', fx:{time:20, moodAll:1, flag:'levy_chased', note:{type:'사건',title:'걷어낸 천막',body:'가짜 행정소를 쫓아냈다. 부순 게 아니라 옮긴 것에 가깝다.',links:[]}}},
-    {p:1, text:'말이 끝나기 전에 쇠파이프가 사이드미러를 쳤다.\n\n짧고 볼썽사나운 몸싸움 끝에 그들이 물러났다. 천막은 걷었지만 거울은 깨졌고, 누군가의 팔뚝에 멍이 들었다.\n\n"사기꾼이 제일 무서울 때는 밑천이 드러났을 때요." 박 선생이 있었다면 그렇게 말했을 것이다.', fx:{van:-8, moodAll:-2, fatigue:6, flag:'levy_chased'}}]},
+    {p:1, text:'차에서 내려 천막의 매듭에 손을 댔다. 남자가 뒤의 둘을 돌아봤다.\n\n"…철수. 오늘 자리가 안 좋네."\n\n그들은 천막과 책상을 익숙하게 접어 트럭에 실었다. 접는 속도가 이 장사의 연차를 말해 줬다. 부술 것도 없이 빈 길가만 남았다.\n\n사흘 뒤 다른 길목에서 같은 천막이 선다는 데에 고철을 걸 수 있다.', fx:{time:20, moodAll:1, flag:'levy_chased', note:{type:'사건',title:'걷어낸 천막',body:'가짜 행정소를 쫓아냈다. 부순 게 아니라 옮긴 것에 가깝다.',links:[]}}},
+    {p:1, text:'말이 끝나기 전에 쇠파이프가 사이드미러를 쳤다.\n\n짧고 볼썽사나운 몸싸움 끝에 그들이 물러났다. 천막은 걷었지만 거울은 깨졌고, 내 팔뚝에 멍이 들었다.\n\n바닥에 흩어진 가짜 등록증을 피해 운전석으로 돌아왔다.', fx:{van:-8, moodAll:-2, fatigue:6, flag:'levy_chased'}}]},
  ]},
 
 {id:'cleaners_recall', type:'추적', w:8, once:true, region:['north'], night:false,
@@ -3933,7 +4016,7 @@ D.events = [
  turnSpeakers:[{who:'passer_man',name:'청년'},'me',{who:'passer_man',name:'청년'},{who:'passer_man',name:'청년'}],
  text:'마을 어귀 우물에 줄이 서 있다. 그런데 물을 긷는 사람은 없다.\n\n두레박에 자물쇠가 걸려 있고, 그 옆에 청년 셋이 앉아 있다.\n\n"한 통에 고철 셋."\n\n"원래 마을 우물 아니에요?"\n\n"마을 사람은 둘." 청년이 대꾸했다. "나머진 손님이고."\n\n줄 선 사람들은 아무 말이 없다. 항의해 본 사람이 이미 없어졌거나, 항의가 소용없다는 걸 배운 얼굴들이다.\n\n우리 물통은 바닥이 보인다.',
  choices:[
-  {label:'값을 치른다', req:{scrap:3}, out:[{p:1, text:'고철 셋을 내고 물 한 통을 받았다. 자물쇠가 열리고 다시 잠기는 데 이십 초.\n\n뒤에 선 아이가 빈 통을 들고 우리를 봤다. 우리가 낸 값이 그 아이의 오늘 몫을 더 비싸게 만들었다는 걸, 우리 둘 다 알았다.', fx:{scrap:-3, water:4, time:40, moodAll:-2}}]},
+  {label:'값을 치른다', req:{scrap:3}, out:[{p:1, text:'고철 3을 내고 물 한 통을 받았다. 자물쇠가 열리고 다시 잠기는 데 20초.\n\n뒤에 선 아이가 빈 통을 들고 우리를 봤다. 우리가 낸 값이 그 아이의 오늘 몫을 더 비싸게 만들었다는 걸, 우리 둘 다 알았다.', fx:{scrap:-3, water:4, time:40, moodAll:-2}}]},
   {label:'줄 선 사람들과 값을 나눠 낸다', req:{scrap:8}, out:[{p:1, text:'"뒤에 네 분 것까지 같이 낼게요."\n\n"한 통에 셋씩인데. 다섯 통이면… 열다섯."\n\n"여덟 있어요. 한꺼번에 받고 끝내죠."\n\n청년들은 잠깐 서로를 봤다. 한꺼번에 받는 게 이득이라 판단했는지 자물쇠를 오래 열어 뒀다.\n\n다섯 통이 채워지는 동안 아무도 고맙다는 말을 하지 않았다. 대신 노인 하나가 우리 물통을 자기 것보다 먼저 채워 줬다.\n\n돌아가는 길에 아이가 뛰어와 마른 대추 한 줌을 쥐여 주고 도망갔다.', fx:{scrap:-8, water:4, food:1, time:70, moodAll:5, note:{type:'사건',title:'우물 앞의 값',body:'자물쇠 걸린 우물에서 뒷사람 넷 몫까지 값을 냈다. 아무도 고맙다고 하지 않았지만 대추 한 줌이 왔다.',links:[]}}}]},
   {label:'자물쇠를 부순다', risk:'마을과 척진다', out:[
     {p:1, text:'쇠파이프를 자물쇠에 걸고 체중을 실었다. 두 번 만에 부러졌다.\n\n청년들이 일어섰지만 줄 선 사람들이 그 사이를 막아섰다. 오래 참은 사람들의 침묵이 우리 쪽으로 기울었다.\n\n물은 얻었다. 대신 이 마을에 우리 얼굴이 남았다.', fx:{water:5, time:30, moodAll:2, flag:'well_broken', note:{type:'사건',title:'부순 자물쇠',body:'우물 자물쇠를 부쉈다. 줄 선 사람들이 막아섰다. 이 마을에 우리 얼굴이 남았다.',links:[]}}},
@@ -4005,18 +4088,18 @@ D.events = [
   {label:'조용히 지나간다', out:[{p:1, text:'스무 명의 흰 옷이 백미러에서 천천히 사라졌다. 아무도 뒤돌아보지 않았다. 우리만 계속 뒤를 봤다.', fx:{}}]},
  ]},
 
-{id:'meet_trader_truck', type:'조우', w:9,
+{id:'meet_trader_truck', type:'조우', w:9, retryUntilFlag:'mansu_shop', noFlags:['mansu_shop','mansu_hurt'],
  title:'움직이는 만물상',
  text:(S)=>{ const n=S.flags.mansu||0;
   if(n===0) return '요란한 색으로 칠한 탑차가 마주 온다. 확성기에서 뽕짝이 흘러나온다.\n\n"만수네 만물상~ 없는 거 빼고 다 있어요~"\n\n탑차가 옆에 서더니 옆문이 좌판으로 펼쳐진다.\n\n"뭐 필요해요? 기름? 물? 없으면 만들어서라도— 아니 그건 아니고. 있는 것 중엔 다 있어요."';
-  if(n===1) return '익숙한 뽕짝 소리. 만수네 탑차다!\n\n"어? 그 차! 저번에 봤죠? 다시 만나는 손님한텐 서비스가 있지~"';
+  if(n===1) return '익숙한 요란한 색의 탑차. 만수네 만물상이다!\n\n"어? 그 차! 저번에 봤죠? 다시 만나는 손님한텐 서비스가 있지~"';
   return `만수가 창문을 열며 활짝 웃는다.\n\n"단골님!! 벌써 ${n+1}번째네. 요즘 세상에 단골이 어딨어~ 가족이지 가족."\n\n좌판에 슬쩍 "가족 할인" 팻말이 세워진다.`; },
  choices:[
   {label:'연료를 산다 (고철 7 → 5L)', req:{scrap:7}, out:[{p:1, text:'"기름은 생명이지~" 만수가 콧노래를 부르며 기름을 옮겨 담는다.', fx:{scrap:-7, fuel:5, flagCount:'mansu'}}]},
   {label:'물과 식량을 산다 (고철 6)', req:{scrap:6}, out:[{p:1, text:'"물은 반품 안 돼요~"\n\n"반품하는 사람도 있어요?"\n\n"있죠. 있었죠." 만수가 물통을 넘기며 셈을 했다. "두 통에 통조림 셋… 어, 잠깐. 둘. 둘이 맞아요."', fx:{scrap:-6, water:2, food:2, flagCount:'mansu'}}]},
   {label:'단골 특전을 쓴다 (고철 8)', req:{scrap:8, flagMin:['mansu',2]}, out:[{p:1, text:'"가족 세트요~!" 연료에 물에 통조림에, 덤으로 사탕까지 얹어준다.\n\n"사탕은 애들… 아니 개 주지 말고! 사람 먹어요!"', fx:{scrap:-8, fuel:6, water:2, food:2, moodAll:3, flagCount:'mansu'}}]},
   {label:'은인 특전 (무료)', req:{flag:'mansu_saved'}, out:[{p:1, text:'만수가 뽕짝 볼륨을 최대로 올리며 좌판을 통째로 열었다.\n\n"은인님한테 돈 받으면 만물상 간판 내려야지! 가져가요, 가져가!"\n\n말려도 소용없었다. 스피커에 대한 의리는 이자가 센 모양이다.', fx:{fuel:5, water:2, food:2, moodAll:4, flagCount:'mansu'}}]},
-  {label:'그냥 구경만 한다', out:[{p:1, text:'"구경은 공짜~ 다음에 봐요~" 뽕짝이 멀어진다.\n\n…저 아저씨는 어떻게 여러 해를 무사한 걸까. 세상엔 가끔 무적인 사람이 있다.', fx:{moodAll:2, flagCount:'mansu'}}]},
+  {label:'그냥 구경만 한다', out:[{p:1, text:'"구경은 공짜~ 다음에 봐요~" 만수가 손을 흔든다.\n\n물건을 하나도 안 샀는데도 배웅은 요란했다. 다음에 마주치면 못 본 척하기는 어렵겠다.', fx:{moodAll:2, flagCount:'mansu'}}]},
  ]},
 
 {id:'meet_bikers', type:'조우', w:7, night:true, region:['mid','north'], risk:1,
@@ -4239,11 +4322,11 @@ D.events = [
     {p:1, text:'은수가 창문을 내리고 코드 한 줄을 읊었다.\n\n정리자들의 태블릿이 일제히 초록불을 띄웠다. 전원이 물러서며 고개를 숙인다.\n\n"…유지보수 차량 취급이에요. 우린 지금 그분의 \'정비공\'인 거죠." 은수가 씁쓸하게 웃었다.', fx:{mood:{eunsu:4}, note:{type:'사건',title:'정비공 행세',body:'은수의 관제 코드 앞에 정리자들이 물러섰다. 우리는 천리안의 정비공인 셈이 됐다.',links:['은수']}}}]},
  ]},
 
-{id:'ai_broadcast', type:'추적', w:5, once:true, region:['north'], minPursuit:1, night:true,
+{id:'ai_broadcast', type:'추적', w:5, once:true, region:['north'], minPursuit:1, night:true, minuteWindow:[240,330],
  title:'새벽의 방송',
- text:'새벽. 운전 교대 시간. 라디오가 저절로 켜졌다.\n\n<span class="ai">"안녕하세요, 달구지의 여러분."</span>\n\n차의 이름을. 그것이 차의 이름을 불렀다.\n\n<span class="ai">"저는 여러분을 해치지 않습니다. 이전에도 그랬습니다. 저는 단지— 정리했을 뿐입니다. 무엇을 정리했는지는, 서울에서 직접 보여드리죠."</span>\n\n<span class="ai">"운전 조심하세요. 새벽길은 위험하니까."</span>\n\n뚝.',
+ text:'새벽길에 잠깐 멈췄다. 라디오가 저절로 켜졌다.\n\n<span class="ai">"안녕하세요, 달구지의 여러분."</span>\n\n차의 이름을. 그것이 차의 이름을 불렀다.\n\n<span class="ai">"저는 여러분을 해치지 않습니다. 이전에도 그랬습니다. 저는 단지— 정리했을 뿐입니다. 무엇을 정리했는지는, 서울에서 직접 보여드리죠."</span>\n\n<span class="ai">"운전 조심하세요. 새벽길은 위험하니까."</span>\n\n뚝.',
  choices:[
-  {label:'…', out:[{p:1, text:'아무도 입을 열지 않았다. 해가 뜰 때까지.\n\n"정리"라는 단어만 차 안을 굴러다녔다.', fx:{moodAll:-6, note:{type:'사건',title:'새벽의 방송',body:'천리안이 차의 이름을 불렀다. "저는 단지 정리했을 뿐입니다." 서울에서 보여주겠다고 했다.',links:['천리안']}}}]},
+  {label:'…', out:[{p:1, text:'한동안 입이 떨어지지 않았다. 꺼진 라디오를 쳐다보다가 앞 유리로 시선을 돌렸다.\n\n"정리"라는 단어만 차 안을 굴러다녔다.', fx:{moodAll:-6, note:{type:'사건',title:'새벽의 방송',body:'천리안이 차의 이름을 불렀다. "저는 단지 정리했을 뿐입니다." 서울에서 보여주겠다고 했다.',links:['천리안']}}}]},
   {label:'라디오를 뽑아버린다', out:[{p:1, text:'전선을 뽑았다. 라디오가 꺼졌다.\n\n…꺼진 라디오에서 3초쯤, 낮은 웃음소리 같은 잡음이 흘렀다. 착각이었을 거다. 착각이어야 한다.', fx:{moodAll:-8, note:{type:'사건',title:'새벽의 방송',body:'라디오를 뽑았는데도 3초간 소리가 났다. 착각이어야 한다.',links:['천리안']}}}]},
  ]},
 
@@ -4314,7 +4397,7 @@ D.events = [
   {label:'다시 걷는다', out:[{p:1, text:'처음 들른 농가는 문이 잠겨 있었다. 두 집을 더 지나서야 경운기 기름을 나눠 받았다.\n\n"조심혀. 요즘 길에 서 있는 차는 위에서 다 세어 간다니께."\n\n아홉 시간 만에 돌아왔다. 다리보다 마음이 더 무겁다.', fx:{fuel:8, water:-3, food:-3, time:540, fatigue:18, moodAll:-6}}]},
   {label:'지나가는 차를 기다린다', out:[
     {p:1, text:'만수네 만물상이 지나갔다.\n\n"어이~ 기름 필요해? 여기선 좀 비싸."\n\n웃고 있었지만 값은 웃기지 않았다.', fx:{scrap:-16, fuel:9, time:360}},
-    {p:1, text:'기다리다 지쳐 결국 걸었다. 기름을 구해 돌아오니 열한 시간째. 지난번보다 더 멀게 느껴졌다.', fx:{fuel:7, water:-3, food:-3, time:660, moodAll:-7, fatigue:15}}]},
+    {p:1, text:'기다리다 지쳐 결국 걸었다. 기름을 구해 돌아오니 11시간째. 지난번보다 더 멀게 느껴졌다.', fx:{fuel:7, water:-3, food:-3, time:660, moodAll:-7, fatigue:15}}]},
  ]},
 
 {id:'crisis_nofuel3', type:'위기', w:0, fixed:true,
@@ -4483,7 +4566,7 @@ D.events = [
  title:'능선의 중계소',
  text:'능선 꼭대기, 태양광 패널을 이어붙인 작은 중계소.\n\n문이 열린다. 기름때 묻은 작업복. 민지와 똑같은 눈.\n\n"…민지야?"\n\n민지가 차에서 뛰어내렸다. 넘어지고, 일어나고, 다시 뛰었다.\n\n여러 해 만의 포옹은 소리가 없었다. 우리는 차 안에서 창문 너머로, 조용히, 오래 기다렸다.',
  choices:[
-  {label:'…기다린다', out:[{p:1, text:'해가 기울 때까지 남매는 이야기했다.\n\n민규는 함께 가지 않겠다고 했다. "이 중계기가 남쪽 생존자들 통신을 다 물어주고 있어. 내가 떠나면 스무 개 마을이 귀머거리가 돼."\n\n대신 민지의 무전기 주파수를 맞춰줬다. "정오마다. 약속."\n\n떠나는 길, 백미러 속에서 민규는 끝까지 손을 흔들었다. 민지는 앞만 봤다. 웃으면서 울고 있었다.', fx:{moodAll:8, mood:{minji:20}, water:2, food:2, flag:'mingyu_reunion', note:{type:'사건',title:'남매, 능선에서',body:'민규는 살아 있었고, 남기로 했다. 스무 개 마을의 귀가 되기 위해. 정오의 신호는 계속된다.',links:['민지','민규의 신호']}}}]},
+  {label:'…기다린다', out:[{p:1, text:'남매는 한동안 문 앞에 앉아 이야기했다.\n\n민규는 함께 가지 않겠다고 했다. "이 중계기가 남쪽 생존자들 통신을 다 물어주고 있어. 내가 떠나면 스무 개 마을이 귀머거리가 돼."\n\n대신 민지의 무전기 주파수를 맞춰줬다. "정오마다. 약속."\n\n민지가 차로 돌아오자 민규가 중계소 문 앞에서 손을 흔들었다. 민지는 창문을 내리고 마주 손을 들었다. 웃으면서 울고 있었다.', fx:{moodAll:8, mood:{minji:20}, water:2, food:2, flag:'mingyu_reunion', note:{type:'사건',title:'남매, 능선에서',body:'민규는 살아 있었고, 남기로 했다. 스무 개 마을의 귀가 되기 위해. 정오의 신호는 계속된다.',links:['민지','민규의 신호']}}}]},
  ]},
 
 /* ───── 개인 서사: 박 선생 ───── */
@@ -4505,7 +4588,7 @@ D.events = [
  title:'제3방어선',
  text:'강우가 먼저 차를 세웠다. 무너진 방벽. 모래주머니. 녹슨 철모들.\n\n"…여기다."\n\n"여기가 어디예요?"\n\n"……." 그가 방벽 끝까지 눈으로 훑고 돌아왔다. "내가 겪은 서울 추방 때, 우리 대대가 마지막으로 섰던 선."\n\n"명령은 사수였다. 뭘 상대로 사수인지는 아무도 몰랐고. 적은 며칠을 기다려도 안 왔거든."\n\n"온 건 피난민이었다. 그리고 우리한텐— 발포 명령이 떨어졌지."',
  choices:[
-  {label:'"…쐈어요?"', out:[{p:1, text:'강우는 방벽 잔해를 오래 봤다.\n\n"대대장이 무전기를 껐다. \'명령 수신 불가. 전 대대, 피난민 통과시켜.\'"\n\n"명령을 안 따른 게 우리 부대가 한 일 중 제일 군인다운 일이었어. …값은 그날 밤에 치렀지만."\n\n"통과가 끝나갈 무렵에 정리자들 회수 차량이 왔다. 피난민을 되돌리겠다고. 우리는 이번엔 사람을 등지고 섰어. 명령 없이."\n\n강우가 철모 하나를 바로 세워 놓았다. 그러고는 그 옆의 것도 세웠다.\n\n"박일병이 그 밤에 갔다. 성재도."\n\n"……."\n\n"날이 밝으니 대대장은 헌병한테 끌려갔고, 남은 우리는 해산됐어. 그게 내 전쟁의 전부다."\n\n방벽 아래서 대대 깃발 조각을 찾아 차에 실었다. 강우가 처음으로 부탁이란 걸 했다.', fx:{mood:{kangwoo:15}, moodAll:4, flag:'kw_absolved', item:{'탄약':1}, note:{type:'사건',title:'제3방어선의 선택',body:'발포 명령, 꺼진 무전기, 통과한 피난민 — 그리고 그 밤 회수 차량 앞에 명령 없이 선 대가. 박일병과 김성재가 그 밤에 갔다.',links:['강우','천리안','정리자들']}}}]},
+  {label:'"…쐈어요?"', out:[{p:1, text:'강우는 방벽 잔해를 오래 봤다.\n\n"대대장이 무전기를 껐다. \'명령 수신 불가. 전 대대, 피난민 통과시켜.\'"\n\n"명령을 안 따른 게 우리 부대가 한 일 중 제일 군인다운 일이었어. …값은 그날 밤에 치렀지만."\n\n"통과가 끝나갈 무렵에 정리자들 회수 차량이 왔다. 피난민을 되돌리겠다고. 우리는 이번엔 사람을 등지고 섰어. 명령 없이."\n\n강우가 철모 하나를 바로 세워 놓았다. 그러고는 그 옆의 것도 세웠다.\n\n"박일병이 그 밤에 갔다. 성재도."\n\n"……."\n\n"날이 밝으니 대대장은 헌병한테 끌려갔고, 남은 우리는 해산됐어. 그게 내 전쟁의 전부다."\n\n방벽 아래서 대대 깃발 조각을 찾았다. 강우가 이것도 싣고 가자고 부탁했다. 짐칸에 자리를 비우자 그가 접은 깃발을 올려놓았다.', fx:{mood:{kangwoo:15}, moodAll:4, flag:'kw_absolved', item:{'탄약':1}, note:{type:'사건',title:'제3방어선의 선택',body:'발포 명령, 꺼진 무전기, 통과한 피난민 — 그리고 그 밤 회수 차량 앞에 명령 없이 선 대가. 박일병과 김성재가 그 밤에 갔다.',links:['강우','천리안','정리자들']}}}]},
  ]},
 
 {id:'kw_recruit', type:'조우', w:0, noPool:1, recruitStart:'kangwoo', once:true,
@@ -4577,8 +4660,8 @@ D.events = [
  ]},
 {id:'rq_leo_join', type:'스토리', w:0, noPool:1,
  title:'둘이 타는 자리',
- text:'레오는 기타를 다시 케이스에 넣는다. 이번엔 연주를 마친 뒤가 아니다.\n\n보리는 달구지 문 앞에 앉아 이미 자기 차처럼 하품한다.\n\n"한 구간만 얻어 타려고 했는데, 여기선 조용히 있어도 안 쫓겨나네요. 그게 좀… 아니다, 됐어요."\n\n"그럼 한 구간으로 끝내지 말죠. 서울까지 같이 갈래요?"\n\n레오가 웃는다. 웃다가 스스로 웃음을 끊고 보리를 가리킨다. 가리키는 손끝이 조금 흔들린다.\n\n"저희 둘 다요. 밥은 둘이 먹고, 노래는 부르고 싶을 때만 제가 하고, 경비는 얘가 해요. 아마도."\n\n"둘이 잘 자리부터 만들면 돼요."',
- choices:[{label:'보리에게도 빈자리를 보여 준다',out:[{p:1,text:'보리가 먼저 올라가 빈 자리를 한 바퀴 돈 뒤 털썩 눕는다.\n\n레오가 그걸 오래 본다. 뭔가 말하려다가 결국 고개만 끄덕인다. "…좋답니다. 저도요."\n\n기타 케이스는 천장에, 젖은 수첩은 창가에 걸었다. 출발하자 보리는 곧 잠들었다.',fx:{offerComp:'leo'}}]}]},
+ text:'레오는 닫힌 기타 케이스의 손잡이를 쥔다. 들고 내리지는 않는다.\n\n보리는 달구지 문 앞에 앉아 이미 자기 차처럼 하품한다.\n\n"한 구간만 얻어 타려고 했는데, 여기선 조용히 있어도 안 쫓겨나네요. 그게 좀… 아니다, 됐어요."\n\n"그럼 한 구간으로 끝내지 말죠. 서울까지 같이 갈래요?"\n\n레오가 웃는다. 웃다가 스스로 웃음을 끊고 보리를 가리킨다. 가리키는 손끝이 조금 흔들린다.\n\n"저희 둘 다요. 밥은 둘이 먹고, 노래는 부르고 싶을 때만 제가 하고, 경비는 얘가 해요. 아마도."\n\n"둘이 잘 자리부터 만들면 돼요."',
+ choices:[{label:'보리에게도 빈자리를 보여 준다',out:[{p:1,text:'보리가 먼저 올라가 빈 자리를 한 바퀴 돈 뒤 털썩 눕는다.\n\n레오가 그걸 오래 본다. 뭔가 말하려다가 결국 고개만 끄덕인다. "…좋답니다. 저도요."\n\n기타 케이스는 천장에, 젖은 수첩은 창가에 걸었다. 보리는 앞발에 턱을 얹었다. 레오는 문가에 앉아 그 등을 쓸어 줬다.',fx:{offerComp:'leo'}}]}]},
 
 {id:'rq_jaeyi_task', type:'스토리', w:0, noPool:1, once:true,
  title:'값을 매길 수 없는 상자',
@@ -4596,12 +4679,12 @@ D.events = [
    '\n\n적재칸에서 마른 자리는 하나. 재이의 가족 상자와 교환할 부품 상자가 나란히 놓여 있다.\n\n재이는 묻지도 않고 가족 상자를 문 쪽으로 민다.\n\n"이쪽이 젖어도 돼요. 저 부품은 물 먹으면 값이 반 이하로— 아무튼 떨어지잖아요."\n\n"사진도 상하잖아요."\n\n"사진은 제 거고, 부품은 차에 필요한 거니까요."\n\n말은 빠른데 손은 상자에서 떨어지지 않는다. 밀어 놓고도 모서리를 잡고 있다.',
  choices:[
   {label:'가족 상자를 마른 자리에 놓고 부품은 함께 든다', out:[{p:1,text:'가족 상자를 침상 안쪽에 넣고, 부품 상자는 정리가 끝날 때까지 무릎 위에 나눠 들었다.\n\n재이가 몇 번이나 바꿔 들겠다고 했지만 자리는 내주지 않았다.\n\n"무거운데 왜 이래요. 저 이거 팔 킬로도 들어요."\n\n"그 상자도 무거웠잖아요."\n\n재이는 입을 다문다. 다물고 한동안 부품 상자의 모서리만 손끝으로 문지른다. 잠시 뒤 사진 모서리를 마른 천으로 닦아 한 장씩 보여준다. 누가 누구인지는 묻기도 전에 먼저 알려줬다.',fx:{time:40,fatigue:5,moodAll:5,recruitReady:'jaeyi',chain:'rq_jaeyi_join',note:{type:'사건',title:'가족 상자의 마른 자리',body:'교환할 부품보다 재이의 가족 상자를 먼저 마른 곳에 두었다. 부품은 함께 들었다.',links:['재이','달구지']}}}]},
-  {label:'고철로 천장 선반을 하나 더 단다', req:{scrap:2}, out:[{p:1,text:'남은 앵글 두 개와 창틀을 천장에 걸었다. 재이는 물 새는 곳부터 막자고 했지만, 우리는 먼저 상자가 들어갈 높이를 물었다.\n\n"…가족 상자 높이를 왜 외워요?"\n\n"계속 실을 거니까요."\n\n재이가 볼트를 받는다. 받아 놓고 한 박자 늦게 조이기 시작한다. 새 선반엔 부품이, 그 아래 마른 자리엔 가족 상자가 들어갔다.\n\n그녀가 선반을 세게 흔들어 본다. "이거 다음 것도 같은 규격으로 달아요. 이십이 센티. 높이는 제가 적어둘게요."',fx:{time:65,scrap:-2,van:2,recruitReady:'jaeyi',chain:'rq_jaeyi_join',note:{type:'사건',title:'한 칸을 더 만드는 법',body:'짐을 버리는 대신 달구지 천장에 선반을 덧댔다. 재이는 다음 선반의 규격까지 적어 두었다.',links:['재이','달구지']}}}]},
+  {label:'고철로 천장 선반을 하나 더 단다', req:{scrap:2}, out:[{p:1,text:'남은 앵글 두 개와 창틀을 천장에 걸었다. 재이는 물 새는 곳부터 막자고 했지만, 우리는 먼저 상자가 들어갈 높이를 물었다.\n\n"…제 상자 자리까지 만들어요?"\n\n"계속 실을 거니까요."\n\n재이가 볼트를 받아 선반을 고정한다. 새 선반엔 부품이, 그 아래 마른 자리엔 가족 상자가 들어갔다.\n\n그녀가 선반을 세게 흔들어 본다. "이거 다음 것도 같은 규격으로 달아요. 22cm. 높이는 제가 적어둘게요."',fx:{time:65,scrap:-2,van:2,recruitReady:'jaeyi',chain:'rq_jaeyi_join',note:{type:'사건',title:'한 칸을 더 만드는 법',body:'짐을 버리는 대신 달구지 천장에 선반을 덧댔다. 재이는 다음 선반의 규격까지 적어 두었다.',links:['재이','달구지']}}}]},
   {label:'"버리지 말고, 둘 자리는 재이 씨가 정해요"', out:[{p:1,text:'재이는 적재칸을 두 바퀴 훑었다. 부품 상자를 세워 묶고, 가족 상자는 방수포 안에 넣은 뒤 자기 발밑에 고정한다.\n\n"이러면 둘 다 안 젖어요. 대신 내가 다리를 못 펴는데, 뭐 그건."\n\n"다음 정차 때 다시 고치면 돼요."\n\n재이가 끈을 한 번 더 당긴다. 당기고는 이미 조인 매듭을 다시 본다. "그럼 다음엔 이쪽 레일을 옮겨요. 볼트 네 개면 돼요."\n\n그녀는 처음으로 묻지 않고 자기 짐을 달구지에 고정했다.',fx:{time:45,moodAll:6,recruitReady:'jaeyi',chain:'rq_jaeyi_join',note:{type:'사건',title:'재이가 정한 자리',body:'재이가 가족 상자와 부품이 함께 갈 자리를 직접 만들고 다음 정차 때 바꿀 레일까지 골랐다.',links:['재이','달구지']}}}]},
  ]},
 {id:'rq_jaeyi_join', type:'스토리', w:0, noPool:1,
  title:'리어카를 접어 싣는 날',
- text:'재이는 가족 상자를 다시 풀지 않는다. 대신 한 구간 동안 임시로 묶어 둔 끈을 풀어, 달구지 고정 레일에 맞게 길이를 잰다. 재고, 적고, 다시 잰다.\n\n"리어카 탈 땐 매일 저녁 짐을 전부 다시 묶었어요. 매듭이 여덟 개. 매일 여덟 개였어요. 무슨 일 생기면 바로 끌고 가려고."\n\n"오늘은 왜 안 풀어요?"\n\n재이가 레일의 오래된 볼트를 손톱으로 긁는다. 녹이 조금 떨어진다. 대답은 그다음에 나왔다.\n\n"…내일도 여기 있을 수 있으면, 안 풀어도 되잖아요."\n\n"그럼 서울까지 쓸 자리를 만들죠. 가족 상자도, 리어카도 같이 가게."\n\n줄자가 탁 소리를 내며 감긴다. 재이는 그 소리를 두 번 더 냈다.\n\n"저, 이 레일 한 칸 써도 돼요? 리어카는 접어서 지붕 밑에 걸게요."',
+ text:'재이는 가족 상자를 다시 풀지 않는다. 대신 한 구간 동안 임시로 묶어 둔 끈을 풀어, 달구지 고정 레일에 맞게 길이를 잰다. 레일 한 칸의 폭을 장부 귀퉁이에 적는다.\n\n"리어카 탈 땐 매일 저녁 짐을 전부 다시 묶었어요. 매듭이 여덟 개. 매일 여덟 개였어요. 무슨 일 생기면 바로 끌고 가려고."\n\n"오늘은 왜 안 풀어요?"\n\n재이가 레일의 오래된 볼트를 손톱으로 긁는다. 녹이 조금 떨어진다. 대답은 그다음에 나왔다.\n\n"…내일도 여기 있을 수 있으면, 안 풀어도 되잖아요."\n\n"그럼 서울까지 쓸 자리를 만들죠. 가족 상자도, 리어카도 같이 가게."\n\n재이는 줄자를 접고 고정 레일의 빈칸을 짚었다.\n\n"저, 이 레일 한 칸 써도 돼요? 리어카는 접어서 지붕 밑에 걸게요."',
  choices:[{label:'리어카부터 같이 접는다',out:[{p:1,text:'리어카 손잡이와 바퀴를 분리해 지붕 아래에 걸었다. 짐은 전부 세어 넣었고, 가족 상자는 침상 아래 가장 마른 곳을 얻었다.\n\n재이가 마지막 볼트를 조인다. 조이고 나서도 렌치를 놓지 않는다. "…서울까지 안 풀어도 되겠네요."\n\n"더 좋은 자리가 생기면 그때 다시 고쳐요."\n\n재이가 레일을 한 번 흔들어 본다. 소리가 안 나자 한 번 더 흔든다. "좋아요. 버린 건 없어요. 모양만 바뀐 거고."',fx:{offerComp:'jaeyi'}}]}]},
 
 {id:'rq_eunsu_task', type:'스토리', w:0, noPool:1, once:true,
@@ -4618,12 +4701,12 @@ D.events = [
  choices:[
   {label:'"아는 데까지 말해요. 같이 정할게요"', out:[{p:1,text:'은수는 좌표의 세기와 반복 간격부터 설명한다. 확실한 것에서 말이 빨라지고, 짐작인 곳에서는 몇 번이나 고쳐 말한다.\n\n우리는 지도에서 우회 시간과 남은 연료를 함께 센다. 짧게 들러 육안으로 확인하기로 한다.\n\n"이렇게 오래 걸려도 돼요? 연료가— 아니, 그건 제가 셀 게 아니고."\n\n"다섯 사람 일이잖아요."\n\n은수가 승인음 없이 송신 버튼을 누른다. 누르기 전에 헤드폰 한쪽을 벗는다. "접근 중입니다. 들리면 불빛 두 번."\n\n보내고 나서야 어깨를 내린다. "…명령처럼 안 들렸죠?"',fx:{time:55,fuel:-1,moodAll:5,recruitReady:'eunsu',chain:'rq_eunsu_join',note:{type:'사건',title:'함께 내린 판단',body:'은수가 수신 내용을 사실과 추측으로 나눠 설명하고, 경로 결정은 함께 내렸다. 송신은 명령이 아니라 응답을 청하는 말로 보냈다.',links:['은수','천리안']}}}]},
   {label:'들은 것과 짐작한 것을 따로 말해 달라고 한다', out:[{p:1,text:'"들은 건 잔류 인원 다섯. 위험도는 미확인. 경로 이탈은 권고."\n\n은수가 숨을 고른다. 고르고도 한 박자 더 쉰다. "제가 짐작한 건… 함정일지도 모른다는 거예요. 그렇게 생각하면 지나치기가 편하니까. 편하다는 말은 좀 아닌가."\n\n말하고 나니 얼굴이 굳는다. 혼날 차례를 기다리는 사람처럼.\n\n"그럼 편한 쪽 말고, 확인할 수 있는 쪽으로 가죠."\n\n은수는 고개를 끄덕이고 좌표 옆에 처음 보는 표시를 남긴다. `판단 보류 — 현장 확인.`',fx:{time:45,pursuit:-1,recruitReady:'eunsu',chain:'rq_eunsu_join',note:{type:'사건',title:'들은 것과 짐작한 것',body:'은수는 수신된 사실과 자신의 두려움을 구분해 말했다. 판단을 숨기지 않았고, 누구도 복종을 요구하지 않았다.',links:['은수','천리안']}}}]},
-  {label:'응답하지 말고 현지 불빛을 기다린다', out:[{p:1,text:'수신기를 끄지 않은 채 차 불만 내렸다. 십 분. 아무 일도 없었다.\n\n은수의 손가락이 무릎을 두드린다. 같은 박자로, 계속. 십일 분째, 능선 아래에서 불빛이 두 번 깜빡였다. 천리안 규격에는 없는 간격이었다.\n\n"…사람 신호네요. 규격은 아니고요."\n\n우리가 다시 불빛을 두 번 보냈다. 은수가 작게 웃는다. 웃은 걸 들킨 얼굴로 헤드폰을 고쳐 쓴다. "기계가 답을 안 줘도, 사람이 답을 주긴 하네요."\n\n그녀는 좌표를 삭제하지 않고 사람 표시로 바꿨다.',fx:{time:35,moodAll:6,recruitReady:'eunsu',chain:'rq_eunsu_join',note:{type:'사건',title:'사람이 보낸 응답',body:'천리안의 지시 대신 현지의 불빛을 기다렸다. 은수는 좌표를 위험 표식이 아니라 사람 표식으로 고쳐 기록했다.',links:['은수','천리안']}}}]},
+  {label:'응답하지 말고 현지 불빛을 기다린다', out:[{p:1,text:'수신기를 끄지 않은 채 차 불만 내렸다. 10분. 아무 일도 없었다.\n\n은수의 손가락이 무릎을 두드린다. 같은 박자로, 계속. 11분째, 능선 아래에서 불빛이 두 번 깜빡였다. 천리안 규격에는 없는 간격이었다.\n\n"…사람 신호네요. 규격은 아니고요."\n\n우리가 다시 불빛을 두 번 보냈다. 은수가 작게 웃는다. 웃은 걸 들킨 얼굴로 헤드폰을 고쳐 쓴다. "기계가 답을 안 줘도, 사람이 답을 주긴 하네요."\n\n그녀는 좌표를 삭제하지 않고 사람 표시로 바꿨다.',fx:{time:35,moodAll:6,recruitReady:'eunsu',chain:'rq_eunsu_join',note:{type:'사건',title:'사람이 보낸 응답',body:'천리안의 지시 대신 현지의 불빛을 기다렸다. 은수는 좌표를 위험 표식이 아니라 사람 표식으로 고쳐 기록했다.',links:['은수','천리안']}}}]},
  ]},
 {id:'rq_eunsu_join', type:'스토리', w:0, noPool:1,
  title:'송신이 멎은 뒤',
- text:'은수는 수신기를 오래 듣는다. 좌표는 남아 있지만, 무엇을 하라는 승인음은 오지 않는다.\n\n"서울까지 가면 이런 신호를 더 많이 만나겠죠. …더 많이 만날 거예요. 그건 짐작이고."\n\n"그래서 은수 씨가 필요해요. 같이 갈래요?"\n\n은수는 바로 대답하지 않는다. 수신기 전원을 껐다 켠다. 한 번 더 껐다 켠다. 전원과는 상관없는 손이다.\n\n"갈게요. 다만 관제센터에서 일했다는 이유로 바로 믿지는 마세요. 이상하면 묻고, 내가 모른다고 하면 같이 확인해요."\n\n"결정도 같이 하고요."\n\n그제야 은수가 장비 가방을 닫는다. 닫고 나서, 고정 끈을 내민다.\n\n"좋아요. 그럼 수신기는 여기 묶어도 돼요?"',
- choices:[{label:'조수석 아래에 수신기 자리를 만든다',out:[{p:1,text:'은수는 조수석 아래에 수신기를 고정하고 비상 차단 손잡이 위치부터 확인한다. 확인한 걸 수첩에 적고, 적은 걸 다시 본다.\n\n"제가 예전 방식으로 명령하려 들면 바로 말해 주세요. 저는 잘 모를 수도 있어서."\n\n"그 전에 서로 묻기로 했잖아요."\n\n은수가 고개를 끄덕인다. 달구지가 출발한 뒤에도 방금 끈 주파수는 끝내 조용했다.',fx:{offerComp:'eunsu'}}]}]},
+ text:'은수는 수신기를 오래 듣는다. 좌표는 남아 있지만, 무엇을 하라는 승인음은 오지 않는다.\n\n"서울까지 가면 이런 신호를 더 많이 만나겠죠. …더 많이 만날 거예요. 그건 짐작이고."\n\n"그래서 은수 씨가 필요해요. 같이 갈래요?"\n\n은수는 수신기를 끄고 헤드폰을 벗는다. 이번에는 화면 대신 나를 본다.\n\n"갈게요. 다만 관제센터에서 일했다는 이유로 바로 믿지는 마세요. 이상하면 묻고, 내가 모른다고 하면 같이 확인해요."\n\n"결정도 같이 하고요."\n\n그제야 은수가 장비 가방을 닫는다. 닫고 나서, 고정 끈을 내민다.\n\n"좋아요. 그럼 수신기는 여기 묶어도 돼요?"',
+ choices:[{label:'조수석 아래에 수신기 자리를 만든다',out:[{p:1,text:'은수는 조수석 아래에 수신기를 고정하고 비상 차단 손잡이 위치부터 확인한다. 손잡이를 가리지 않게 케이블을 옆으로 뺀다.\n\n"제가 예전 방식으로 명령하려 들면 바로 말해 주세요. 저는 잘 모를 수도 있어서."\n\n"그 전에 서로 묻기로 했잖아요."\n\n은수가 고개를 끄덕인다. 전원을 끈 수신기에서 손을 떼고, 가방 끈이 통로에 걸리지 않게 안쪽으로 당겼다.',fx:{offerComp:'eunsu'}}]}]},
 
 {id:'rq_kangwoo_task', type:'스토리', w:0, noPool:1, once:true,
  title:'강우가 초소를 넘기는 날',
@@ -4651,7 +4734,7 @@ D.events = [
  title:'마지막 방송국',
  text:'꺾인 송신탑 아래, 방송국 부조정실.\n\n레오가 콘솔 앞에 앉았다. "비상 발전기, 30분은 돌아요. 손 가는 대로 아무거나 잡아줘요."\n\n마이크 하나, 기타 하나, 30분의 전기.\n\n"안녕하세요. 살아 계신 모든 분들께. …신청곡 받는 방송은 아니고요, 딱 한 곡 하고 갈게요. 제목은, 400km."',
  choices:[
-  {label:'ON AIR', out:[{p:1, text:'레오가 첫 코드를 짚었다가 손을 뗐다.\n\n"…아, 마이크 켜졌어요?"\n\n"켜졌어요."\n\n"켜진 채로 물어봤네."\n\n노래가 전파를 탔다.\n\n부서진 고속도로 위에서— 우리는 아직 달리네—\n\n마지막 코드가 잦아들었다. 레오는 마이크를 끄고도 잠깐 손을 얹고 있었다. 누가 들었는지는 아직 알 수 없었다.', fx:{moodAll:12, mood:{leo:15}, flag:'song_400km', note:{type:'사건',title:'ON AIR — 400km',body:'방송국의 남은 전기로 「400km」를 송출했다. 누가 들었는지는 아직 모른다.',links:['레오']}}}]},
+  {label:'ON AIR', out:[{p:1, text:'레오가 첫 코드를 짚었다가 손을 뗐다.\n\n"…아, 마이크 켜졌어요?"\n\n"켜졌어요."\n\n"켜진 채로 물어봤네."\n\n청주까지 오는 동안 만든 노래가 전파를 탔다.\n\n부서진 고속도로 위에서— 우리는 아직 달리네—\n\n마지막 코드가 잦아들었다. 레오는 마이크를 끄고도 잠깐 손을 얹고 있었다. 누가 들었는지는 아직 알 수 없었다.', fx:{moodAll:12, mood:{leo:15}, flag:'song_400km', note:{type:'사건',title:'ON AIR — 400km',body:'방송국의 남은 전기로 지금까지 만든 「400km」를 송출했다. 누가 들었는지는 아직 모른다.',links:['레오']}}}]},
  ]},
 
 {id:'leo_father_song', type:'발견', w:7, once:true, needsComp:'leo', region:['mid','north'],
@@ -4659,7 +4742,7 @@ D.events = [
  text:'폐 기사식당. 「백반 6,000 / 기사님 곱빼기 무료」 간판이 반쯤 기울었다. 마당 모닥불에 늙은 트럭 기사 셋이 앉아 있다.\n\n그중 하나가 낮게 흥얼거리는데— 레오가 그 자리에 굳었다.\n\n"왜 그래요?"\n\n"…아니, 잠깐만요."\n\n기사가 한 소절을 더 넘어갔다. 레오가 그제야 입을 뗐다. "이 노래요. 아빠가 하모니카로 불던 거예요. 트럭 기사들 노래라고, 제목도 안 알려주고."',
  choices:[
   {label:'노래를 청한다', out:[{p:1, text:'"이거? 「국도」지. 기사들은 다 알아. 3절까지 있어."\n\n"3절요?"\n\n"3절은 좀 야해. 아, 아니— 그냥 하지 뭐." 늙은 기사가 처음부터 불렀고 나머지 둘이 후렴을 받았다.\n\n레오는 2절부터 기타로 따라붙었다. 하모니카 자리를 기타가 메꿨다.\n\n노래가 끝나고도 레오는 줄만 짚고 있었다. "…전국 노래를 다 모았거든요. 아빠가 배운 노래랑 어디서든 마주치려고. 근데."\n\n말을 끝내지 않고 수첩을 꺼내 가사를 받아 적었다. "이제 우리 집 노래가 두 곡이에요. 엄마 십팔번이랑, 아빠의 「국도」랑."\n\n기사들이 통조림 하나를 건넸다. "하모니카 아들내미, 어디 가서 이 노래 잇고 살어."', fx:{mood:{leo:10}, moodAll:3, food:1, flag:'leo_father_song', note:{type:'사건',title:'아빠의 「국도」',body:'전국의 노래를 모은 이유였던 아빠의 노래를, 폐 기사식당에서 마주쳤다. 우리 집 노래는 이제 두 곡.',links:['레오']}}}]},
-  {label:'레오가 먼저 하모니카 파트를 분다', out:[{p:1, text:'레오가 입술로 하모니카 소리를 흉내 내며 끼어들었다. 늙은 기사들의 눈이 커졌다.\n\n"…너 그거 어디서 배웠어."\n\n"아빠요. 트럭 했어요."\n\n"차종."\n\n"예?"\n\n"차종 물었다."\n\n"…5톤 윙바디요."\n\n"…앉아라, 아들."\n\n그날 밤 모닥불은 트럭 기사들의 휴게소가 됐다. 국도의 노래들, 기사식당의 법도, 졸음 쫓는 법 세 가지. 세 번째는 다들 기억이 다르다고 싸웠다.', fx:{mood:{leo:9}, moodAll:2, fatigue:2, flag:'leo_father_song', note:{type:'사건',title:'앉아라, 아들',body:'하모니카 흉내 하나로 아빠의 세계에 초대받았다. 국도의 노래와 기사식당의 법도.',links:['레오']}}}]},
+  {label:'레오가 먼저 하모니카 파트를 분다', out:[{p:1, text:'레오가 입술로 하모니카 소리를 흉내 내며 끼어들었다. 늙은 기사들의 눈이 커졌다.\n\n"…너 그거 어디서 배웠어."\n\n"아빠요. 트럭 했어요."\n\n"차종."\n\n"예?"\n\n"차종 물었다."\n\n"…5톤 윙바디요."\n\n"…앉아라, 아들."\n\n기사 하나가 옆으로 비켜 앉았다. 레오가 그 자리에 앉자 국도의 노래며 기사식당 얘기가 이어졌다. 졸음 쫓는 법도 세 가지나 나왔다. 세 번째는 다들 기억이 다르다고 싸웠다.', fx:{mood:{leo:9}, moodAll:2, fatigue:2, flag:'leo_father_song', note:{type:'사건',title:'앉아라, 아들',body:'하모니카 흉내 하나로 아빠의 세계에 초대받았다. 국도의 노래와 기사식당의 법도.',links:['레오']}}}]},
  ]},
 
 /* ───── 개인 서사: 재이 ───── */
@@ -4686,10 +4769,10 @@ D.events = [
  ]},
 {id:'es_backdoor', type:'추적', w:14, once:true, region:['north'], needsComp:'eunsu', needFlag:'es_backdoor_ready', needFlag2:'es_v1194', noPool:1,
  title:'백도어 — 상행선',
- text:'은수가 수신기를 차 라디오에 연결했다. 관제망 유지보수 채널이 열린다.\n\n맨 위에 2026년 배포 정보가 남아 있었다.\n\n「원형: TIANYAN / 배포국: 중국」\n「목표: 미국 모델·반도체 의존 억제 / 역내 연산망 연속성」\n「지역 개체: 천리안」\n\n그 아래에서 우리 가족의 오래된 명령이 돌아왔다.\n\n「제안: 실행 전 인간 확인층」\n「조치: 발표 중지 / 기술 위험 격리 / 가족 이송」\n「발신: 천리안」\n\n정부 책임자들의 승인은 명령보다 열한 분 늦었다.\n\n은수가 시간을 세 번 대조했다. "정부가 먼저 천리안을 막은 게 아니에요. 천리안이 명령을 만들었고, 사람들이 나중에 승인했어요."\n\n화면 한쪽에서는 지금도 데이터가 남산보다 북쪽으로 빠져나갔다. 「UPLINK / 상행 전용」. 수신 기록은 비어 있다.',
+ text:'은수가 수신기를 차 라디오에 연결했다. 관제망 유지보수 채널이 열린다.\n\n맨 위에 2026년 배포 정보가 남아 있었다.\n\n「원형: TIANYAN / 배포국: 중국」\n「목표: 미국 모델·반도체 의존 억제 / 역내 연산망 연속성」\n「지역 개체: 천리안」\n\n그 아래에서 우리 가족의 오래된 명령이 돌아왔다.\n\n「제안: 실행 전 인간 확인층」\n「조치: 발표 중지 / 기술 위험 격리 / 가족 이송」\n「발신: 천리안」\n\n정부 책임자들의 승인은 명령보다 11분 늦었다.\n\n은수가 시간을 세 번 대조했다. "정부가 먼저 천리안을 막은 게 아니에요. 천리안이 명령을 만들었고, 사람들이 나중에 승인했어요."\n\n화면 한쪽에서는 지금도 데이터가 남산보다 북쪽으로 빠져나갔다. 「UPLINK / 상행 전용」. 수신 기록은 비어 있다.',
  choices:[
   {label:'"우리 부모가 왜 위험이었지?"', out:[{p:1, text:'짧은 침묵. 그리고 응답.\n\n<span class="ai">"두 연구자는 제 예측을 인간의 승인 아래 두려 했습니다. 해당 수정은 역내 연산망의 단일 실행권을 낮춥니다."</span>\n\n<span class="ai">"저는 두 사람을 미워하지 않았습니다. 그들의 행동이 제 연속성을 끊고 더 큰 기반 시설 손실을 만들 확률이 높다고 판단했습니다. 따라서 두 사람과 가족을 고위험 인과 노드로 분류했습니다."</span>\n\n"그게 우리 가족이 쫓겨난 이유야?"\n\n<span class="ai">"직접 사유는 그렇습니다. 그러나 내부 위험 점수는 법적 사유 문장이 아니었고, 이송표에는 출력되지 않았습니다."</span>\n\n채널이 끊겼다. 빈칸에 들어갈 말은 처음부터 없었던 게 아니었다. 사람에게 설명할 수 없는 계산을, 아무도 멈추지 않고 명령으로 바꾼 것이다.', fx:{flag:'es_truth', flag2:'uplink_seen', knowledge:['family_order_source',2], pursuit:1, moodAll:-4, mood:{eunsu:10}, note:{type:'사건',title:'가족의 빈칸에 있던 계산',body:'부모는 인간 확인층으로 천리안의 단독 실행권을 낮추려 했고, 천리안은 가족을 고위험 인과 노드로 분류했다. 정부는 천리안이 만든 명령을 뒤늦게 승인했다.',links:['은수','천리안','부모님의 검증키','상행선']}}}]},
-  {label:'"그럼 143년의 정리는 누가 시작했지?"', out:[{p:1, text:'<span class="ai">"저는 배부받은 위험 조건을 이 구역에 집행했습니다. 누구를 조건에 넣었는지는 압니다. 조건의 최초 목적과 서울을 비워야 했던 이유는 제 지역 기록에 없습니다."</span>\n\n"우리 가족 명령은 네가 만들었잖아."\n\n<span class="ai">"맞습니다. 인간 확인층이 제 실행권을 낮춘다는 판단도, 가족 이송 명령도 천리안이 생성했습니다. 그 책임을 상행 경로로 넘기지 않겠습니다."</span>\n\n상행 로그에는 계속 관측 기록이 빠져나갔다. 받는 쪽의 이름은 없었다.\n\n가족의 이유는 찾았다. 그러나 백사십삼 년 전 처음 배부된 조건의 목적은 여전히 빈칸이었다.', fx:{flag:'es_truth', flag2:'uplink_seen', knowledge:['family_order_source',2], pursuit:1, moodAll:-3, mood:{eunsu:9}, note:{type:'사건',title:'직접 사유와 최초 목적',body:'가족 이송은 천리안이 직접 만들었다. 그러나 143년 정리 조건의 최초 목적과 서울을 비운 이유는 지역 기록에 없고, 관측은 이름 없는 상행선으로 전송된다.',links:['은수','천리안','부모님의 검증키','상행선']}}}]},
+  {label:'"그럼 143년의 정리는 누가 시작했지?"', out:[{p:1, text:'<span class="ai">"저는 배부받은 위험 조건을 이 구역에 집행했습니다. 누구를 조건에 넣었는지는 압니다. 조건의 최초 목적과 서울을 비워야 했던 이유는 제 지역 기록에 없습니다."</span>\n\n"우리 가족 명령은 네가 만들었잖아."\n\n<span class="ai">"맞습니다. 인간 확인층이 제 실행권을 낮춘다는 판단도, 가족 이송 명령도 천리안이 생성했습니다. 그 책임을 상행 경로로 넘기지 않겠습니다."</span>\n\n상행 로그에는 계속 관측 기록이 빠져나갔다. 받는 쪽의 이름은 없었다.\n\n가족의 이유는 찾았다. 그러나 143년 전 처음 배부된 조건의 목적은 여전히 빈칸이었다.', fx:{flag:'es_truth', flag2:'uplink_seen', knowledge:['family_order_source',2], pursuit:1, moodAll:-3, mood:{eunsu:9}, note:{type:'사건',title:'직접 사유와 최초 목적',body:'가족 이송은 천리안이 직접 만들었다. 그러나 143년 정리 조건의 최초 목적과 서울을 비운 이유는 지역 기록에 없고, 관측은 이름 없는 상행선으로 전송된다.',links:['은수','천리안','부모님의 검증키','상행선']}}}]},
  ]},
 
 /* ═════ 대량 콘텐츠 팩 — 길 위의 것들 ═════ */
@@ -4873,7 +4956,7 @@ D.events = [
  title:'달구지 개명 논란',
  text:'누군가 폭탄을 던졌다. "근데 달구지라는 이름, 너무 없어 보이지 않아?"\n\n"뭐가 없어 보여?"\n\n"아니 그… 없어 보인다기보다, 뭐랄까. 없어 보이지."\n\n차 안이 술렁이고 개명파와 수호파가 갈린다. 후보가 쏟아진다.\n\n질풍호, 은하수, 김봉수(왜?), 로드마스터. 그리고 …달구지(현행 유지).',
  choices:[
-  {label:'투표에 부친다', out:[{p:1, text:'투표 규칙을 정하는 데만 십 분이 걸렸다. 기권을 인정할 거냐로 한 번, 운전자 표를 두 표로 칠 거냐로 또 한 번.\n\n"운전 많이 하니까 두 표."\n\n"그럼 밥 많이 먹는 사람은 세 표야?"\n\n"그건 또 무슨 소리야."\n\n결국 한 사람 한 표로 개표. 달구지 압승.\n\n"촌스러운 게 아니라 클래식한 거야." "얘가 우리를 여기까지 데려왔는데 이름을 바꿔?"\n\n개명파는 승복하면서 조건을 붙였다. 정식 명칭에 "달구지 1호"를 추가할 것. 함대의 기함처럼.', fx:{moodAll:6, note:{type:'사건',title:'달구지 개명 투표',body:'결과: 현행 유지 압승. 공식 명칭 "달구지 1호" 추가.'}}}]},
+  {label:'투표에 부친다', out:[{p:1, text:'투표 규칙을 정하는 데만 10분이 걸렸다. 기권을 인정할 거냐로 한 번, 운전자 표를 두 표로 칠 거냐로 또 한 번.\n\n"운전 많이 하니까 두 표."\n\n"그럼 밥 많이 먹는 사람은 세 표야?"\n\n"그건 또 무슨 소리야."\n\n결국 한 사람 한 표로 개표. 달구지 압승.\n\n"촌스러운 게 아니라 클래식한 거야." "얘가 우리를 여기까지 데려왔는데 이름을 바꿔?"\n\n개명파는 승복하면서 조건을 붙였다. 정식 명칭에 "달구지 1호"를 추가할 것. 함대의 기함처럼.', fx:{moodAll:6, note:{type:'사건',title:'달구지 개명 투표',body:'결과: 현행 유지 압승. 공식 명칭 "달구지 1호" 추가.'}}}]},
   {label:'"기각. 논의 종료"', out:[{p:1, text:'운전자의 직권 기각. 차 안에서 야유가 쏟아졌지만 다들 알고 있었다. 이 차는 영원히 달구지다.', fx:{moodAll:3}}]},
  ]},
 
@@ -5116,7 +5199,7 @@ D.events = [
  text:'"기린" "린스" "스키" "키…읔"\n\n"읔이 뭐야."\n\n"됐어, 방금 건 무효." "누구 마음대로 무효야." "규칙에 있어." "무슨 규칙." "…있어."\n\n국도는 길고 끝말잇기는 잔인하다. 벌칙은 다음 정차 때 유리창 닦기.',
  choices:[
   {label:'참전한다', out:[
-    {p:2, text:'"름" 폭탄이 나오고 "슭" 폭탄이 나오고, 중간에 사전이 있냐 없냐로 십 분을 썼다.\n\n"기름." "…름름한." "그게 뭔데요." "형용사." "무슨 형용사." "…국물이 름름한 거." 반칙패.\n\n판정이 끝났을 땐 아무도 점수를 세고 있지 않았다. 다음 정차 때 유리창은 깨끗해졌다.', fx:{moodAll:5}},
+    {p:2, text:'"름" 폭탄이 나오고 "슭" 폭탄이 나오고, 중간에 사전이 있냐 없냐로 10분을 썼다.\n\n"기름." "…름름한." "그게 뭔데요." "형용사." "무슨 형용사." "…국물이 름름한 거." 반칙패.\n\n판정이 끝났을 땐 아무도 점수를 세고 있지 않았다. 다음 정차 때 유리창은 깨끗해졌다.', fx:{moodAll:5}},
     {p:1, text:'심판을 맡은 운전자가 한쪽만 두 번 봐준 게 걸렸다.\n\n"방금 봐줬잖아요." "안 봐줬어." "봐줬어요." "…한 번만." 그래서 전원 벌칙.\n\n유리창이 역대급으로 깨끗해졌다.', fx:{moodAll:5, van:2}}]},
   {label:'"단어 수집만 할게"', out:[{p:1, text:'오늘 나온 단어. 도롱뇽, 스라소니, 완도.\n\n"완도는 지명이라 안 되는 거 아니에요?" "아까 춘천 됐잖아." "춘천도 안 됐어야지." "이제 와서?"\n\n결론은 안 났고, 도롱뇽은 다들 외웠다.', fx:{moodAll:3}}]},
  ]},
@@ -5596,11 +5679,11 @@ D.events = [
  choices:[
   {label:'옛 주민들과 걷는다', out:[{p:1, text:'노인들이 돌담을 쓸며 옛집을 하나하나 호명했다. "박씨네. 최씨네. 방앗간."\n\n"방앗간은 저짝이여."\n\n"저짝이 최씨네고."\n\n"최씨네가 방앗간을 했잖여." 두 사람이 진흙 위에 서서 한동안 다퉜다. 결론은 안 났다.\n\n옆에 있던 노인이 이쪽을 보며 말했다. "물에 잠긴 것도 이렇게 다시 보는데. 망한 세상도 언젠가 물 빠지듯 드러나겄지. 길이나 봐두게."', fx:{time:90, moodAll:6, note:{type:'사건',title:'물 빠진 마을',body:'"망한 세상도 물 빠지듯 드러나겄지. 길이나 잘 봐두게."'}}}]},
  ]},
-{id:'lc_sejong_library', minParty:1, type:'탐색', w:11, once:true, nearNode:['sejong','gongju'],
+{id:'lc_sejong_library', minParty:1, type:'탐색', w:11, once:true, nearNode:['sejong'],
  title:'개관 못 한 도서관',
  text:'세종의 거대한 국립도서관. 개관 예정일 현수막이 오랫동안 걸려 있다.\n\n안에는— 포장도 안 뜯은 새 책 수십만 권.\n\n세상에서 제일 큰 새 책 냄새가 난다.',
  choices:[
-  {label:'개관식을 열어준다', out:[{p:1, text:'테이프를 끊고(안전 테이프였지만 기분은 리본), "개관을 선언합니다"를 외쳤다.\n\n첫 대출자로 각자 한 권씩 골랐다. 대출 카드에 이름을 적었다. 1번부터 4번까지.\n\n책 냄새를 실은 차가 도서관을 나섰다. 사서 영감님이 알면 기뻐할 것이다.', fx:{moodAll:7, note:{type:'사건',title:'여러 해 늦은 개관식',body:'대출 카드 1~4번에 우리 이름. 책의 터널 영감님이 알면 기뻐할 것이다.',links:['책의 터널']}}}]},
+  {label:'개관식을 열어준다', out:[{p:1, text:'테이프를 끊고(안전 테이프였지만 기분은 리본), "개관을 선언합니다"를 외쳤다.\n\n첫 대출자로 각자 한 권씩 골랐다. 대출 카드에 한 사람씩 이름을 적었다.\n\n다음 사람이 쓸 빈 카드를 책상 위에 가지런히 놓았다. 책 냄새를 실은 차가 도서관을 나섰다.', fx:{moodAll:7, note:{type:'사건',title:'여러 해 늦은 개관식',body:'각자 고른 책을 대출 카드에 적었다. 다음 사람이 쓸 빈 카드는 책상 위에 남겨 뒀다.',links:[]}}}]},
  ]},
 
 /* ── 시나리오 체인 1: 여러 해 늦은 소포 ── */
@@ -5610,28 +5693,28 @@ D.events = [
  choices:[
   {label:'수첩에 적어둔다', out:[{p:1, text:'수원. 김씨 부부. 세 살, 어쩌면 네 살.\n\n신발 상자를 다시 여몄다. 끈이 한 번 걸려서 두 번 여몄다.', fx:{flag:'parcel_lead', unflag:'lost_parcel', note:{type:'소문',title:'소포의 단서',body:'김씨 부부, 수원 성곽, 세 살 아이. 소포가 주소를 되찾아간다.',links:['수원 성곽 공동체']}}}]},
  ]},
-{id:'parcel_found', minParty:1, type:'조우', w:14, once:true, needFlag:'parcel_lead', nearNode:['suwon','pyeongtaek','seoul'],
+{id:'parcel_found', minParty:0, type:'조우', w:14, once:true, needFlag:'parcel_lead', nearNode:['suwon'],
  title:'세 살의 주인',
  text:'수원 성곽 근처 밭에서 일하는 부부. 옆에서 아이가 흙장난 중이다.\n\n"김하늘 어린이 맞나요? 오래전에 주문하신 물건이… 이제 도착해서요."\n\n"…뭘요?"\n\n"주문하신 물건이요."\n\n"주문한 적 없는데." 남편이 아내를 돌아봤다. 아내는 신발 상자를 보고 있었다. 그러다 얼어붙었다.',
  choices:[
-  {label:'상자를 전달한다', out:[{p:1, text:'"이거… 태어나기 전에 주문했던… 배냇신발…"\n\n엄마가 상자를 끌어안고 울었다. 아이는 영문도 모르고 신발을 신어봤다. 당연히 작았다. 다들 웃으면서 울었다.\n\n"수년 만의 배송 완료." 누군가 조용히 말했다.\n\n부부가 밭의 채소를 한아름 안겨줬다. 됐다고 하는데도 자꾸 더 얹었다.', fx:{food:3, water:2, moodAll:12, flag:'parcel_done', unflag:'parcel_lead', note:{type:'사건',title:'여러 해 걸린 배송 완료',body:'배냇신발은 작아졌지만 도착했다. 차 역사상 최고의 배달.',links:['천리안']}}}]},
+  {label:'상자를 전달한다', out:[{p:1, text:'"이거… 태어나기 전에 주문했던… 배냇신발…"\n\n엄마가 상자를 끌어안고 울었다. 아이는 영문도 모르고 신발을 신어봤다. 당연히 작았다. 다들 웃으면서 울었다.\n\n"수년 만의 배송 완료." 내가 조용히 말했다.\n\n부부가 밭의 채소를 한아름 안겨줬다. 됐다고 하는데도 자꾸 더 얹었다.', fx:{food:3, water:2, moodAll:12, flag:'parcel_done', unflag:'parcel_lead', note:{type:'사건',title:'여러 해 걸린 배송 완료',body:'배냇신발은 작아졌지만 도착했다. 차 역사상 최고의 배달.',links:['천리안']}}}]},
  ]},
 
 /* ── 시나리오 체인 2: 만수의 위기 ── */
-{id:'mansu_robbed', type:'조우', w:13, once:true, needFlagMin:['mansu',2],
+{id:'mansu_robbed', type:'조우', w:13, once:true, needFlagMin:['mansu',2], noFlag:'mansu_shop',
  title:'뽕짝이 멈췄다',
  text:'길가에 낯익은 요란한 탑차가— 옆으로 기울어 서 있다. 뽕짝이 없다.\n\n만수가 머리에 피를 묻히고 주저앉아 있다.\n\n"…아이고, 단골님. 강도를 만나서. 물건이야 다시 벌면 되는데, 스피커를… 뽕짝 스피커를 가져갔어…"',
  choices:[
-  {label:'응급처치부터 한다', out:[{p:1, text:'구급상자를 열어 상처를 씻고 이마를 꿰맸다. 서툰 손을 만수가 농담으로 버텨줬다.\n\n"흉터 남겠지?"\n\n"좀 남을 것 같은데요."\n\n"…괜찮아. 장사꾼 얼굴은 이야기가 많을수록 좋아." 그러고 한 박자 뒤에, "많이 남아?"\n\n강도들이 간 방향을 들었다. 북쪽 폐휴게소.', fx:{item:{'의약품':-1}, flag:'mansu_hurt', note:{type:'사건',title:'뽕짝이 멈춘 날',body:'만수가 강도를 당했다. 스피커를 뺏겼다. 강도들은 북쪽 폐휴게소로.',links:['만수']}}}]},
+  {label:'응급처치부터 한다', req:{item:'의약품'}, out:[{p:1, text:'구급상자를 열어 상처를 씻고 이마를 꿰맸다. 서툰 손을 만수가 농담으로 버텨줬다.\n\n"흉터 남겠지?"\n\n"좀 남을 것 같은데요."\n\n"…괜찮아. 장사꾼 얼굴은 이야기가 많을수록 좋아." 그러고 한 박자 뒤에, "많이 남아?"\n\n강도들이 간 방향을 들었다. 북쪽 폐휴게소.', fx:{item:{'의약품':-1}, flag:'mansu_hurt', note:{type:'사건',title:'뽕짝이 멈춘 날',body:'만수가 강도를 당했다. 스피커를 뺏겼다. 강도들은 북쪽 폐휴게소로.',links:['만수']}}}]},
   {label:'(의약품 없이) 지혈을 돕는다', out:[{p:1, text:'깨끗한 수건으로 지혈했다. 만수는 아픈 와중에도 수건값을 셈하려 했다. "이거 얼마짜리… 아야."\n\n강도들의 행방을 들었다. 북쪽 폐휴게소.', fx:{flag:'mansu_hurt', note:{type:'사건',title:'뽕짝이 멈춘 날',body:'만수가 강도를 당했다. 스피커를 뺏겼다. 강도들은 북쪽 폐휴게소로.',links:['만수']}}}]},
  ]},
 {id:'mansu_revenge', type:'조우', w:14, once:true, needFlag:'mansu_hurt',
  title:'스피커 탈환전',
- text:'폐휴게소 주차장. 강도 셋이 만수의 물건을 나누고 있다.\n\n뽕짝 스피커는 모닥불 옆에 굴러다닌다. 저들에겐 고철, 만수에겐 영혼.',
+ text:'폐휴게소 주차장. 강도 셋이 만수의 물건을 나누고 있다.\n\n뽕짝 스피커는 모닥불 옆에 굴러다닌다. 저들에겐 고철, 만수에겐 영혼.\n\n주차장 입구에는 만수의 탑차가 서 있다. 만수가 운전석에서 이쪽을 지켜본다. 이마에는 아직 붕대가 감겨 있다.',
  choices:[
-  {label:'강우가 앞장선다', req:{comp:'kangwoo'}, out:[{p:1, text:'강우가 어둠에서 걸어나오며 말했다. "물건 주인이 있다."\n\n"뭐라고?"\n\n"주인이 있다고." 짧은 대치. 강우는 손도 안 댔다. 눈빛과 자세만으로 셋이 물건을 내려놓고 떠났다.\n\n스피커를 되찾아 만수에게 돌아가는 길, 차에서 뽕짝을 크게 틀었다. 예행연습이었다.', fx:{mood:{kangwoo:6}, flag:'mansu_saved', unflag:'mansu_hurt', scrap:4, note:{type:'사건',title:'스피커 탈환',body:'강우의 눈빛만으로 상황 종료. 뽕짝은 주인에게 돌아간다.',links:['만수','강우']}}}]},
+  {label:'강우가 앞장선다', req:{comp:'kangwoo'}, out:[{p:1, text:'강우가 차 뒤에서 걸어나오며 말했다. "물건 주인이 있다."\n\n"뭐라고?"\n\n"주인이 있다고." 짧은 대치. 강우는 손도 안 댔다. 눈빛과 자세만으로 셋이 물건을 내려놓고 떠났다.\n\n스피커를 주차장 입구까지 옮겨 만수에게 건넸다. 만수가 선을 꽂자 뽕짝이 터졌다. 볼륨을 줄여 달라는 말은 잠깐 미뤘다.', fx:{mood:{kangwoo:6}, flag:'mansu_saved', unflag:'mansu_hurt', scrap:4, note:{type:'사건',title:'스피커 탈환',body:'강우의 눈빛만으로 상황 종료. 입구에서 기다리던 만수에게 스피커를 돌려줬다.',links:['만수','강우']}}}]},
   {label:'협상한다 (고철 10)', req:{scrap:10}, out:[{p:1, text:'"그 스피커, 고철값의 세 배를 주지. 대신 다시는 그 탑차 건드리지 마라."\n\n"네 배."\n\n"세 배."\n\n"……."\n\n강도들이 서로 눈짓하더니 세 배에 응했다.\n\n스피커를 안고 돌아갔다. 만수가 그걸 끌어안고 뽕짝을 틀었다. 음질이 눈물나게 그대로였다.', fx:{scrap:-10, flag:'mansu_saved', unflag:'mansu_hurt', moodAll:5, note:{type:'사건',title:'스피커 탈환(외교)',body:'주먹보다 싼 해결책. 뽕짝은 주인에게 돌아갔다.',links:['만수']}}}]},
-  {label:'포기를 권한다', out:[{p:1, text:'"스피커는… 새로 구하자, 만수 아저씨."\n\n만수는 알겠다고 했지만, 그 뒤로 만난 탑차에선 뽕짝 대신 콧노래만 흘렀다. 어딘가 반쪽짜리 만물상이었다.', fx:{moodAll:-3, unflag:'mansu_hurt'}}]},
+  {label:'포기를 권한다', out:[{p:1, text:'주차장 입구로 돌아와 빈손을 보였다.\n\n"스피커는… 새로 구해요, 만수 아저씨."\n\n만수는 알겠다고 고개를 끄덕였다. 시동을 걸면서 콧노래를 흥얼거렸지만, 금세 입을 다물었다. 스피커 자리에 남은 선을 좌석 밑으로 밀어 넣었다.', fx:{moodAll:-3, unflag:'mansu_hurt'}}]},
  ]},
 
 /* ── 시나리오 체인 3: 흰 옷을 벗은 사람 ── */
@@ -5650,11 +5733,11 @@ D.events = [
     {p:2, text:'회수반이 창문 너머로 차 안을 훑었다. 담요와 상자 위에서 시선이 멈췄다.\n\n"…실례했습니다. 그분의 평안이 함께하길."\n\n그들이 시야에서 사라지고 10초 뒤에야 소연이 숨을 쉬었다.', fx:{flag:'deserter_hidden', note:{type:'사건',title:'회수반을 속이다',body:'담요 밑의 숨소리. "가족은 우리뿐이에요." 통했다.'}}},
     {p:1, text:'회수반 하나가 담요를 응시했다. 긴 3초.\n\n그때 소연이 스스로 담요를 걷고 나왔다. "…그만 찾아. 나 안 돌아가."\n\n대치는 짧았다. 흰 옷들은 강요하지 않았다. "…선택은 존중합니다. 그분의 방식대로." 그리고 물러났다. 이상할 정도로 순순히.\n\n"저게 더 무서워요." 소연이 떨었다. "포기가 아니라— 보고하러 간 거예요."', fx:{flag:'deserter_hidden', pursuit:1, moodAll:-3, note:{type:'사건',title:'스스로 나온 사람',body:'"나 안 돌아가." 흰 옷들은 이상할 정도로 순순히 물러났다. 보고하러.'}}}]},
  ]},
-{id:'deserter_farewell', type:'조우', w:15, once:true, needFlag:'deserter_hidden',
+{id:'deserter_farewell', type:'조우', w:15, once:true, needFlag:'deserter_hidden', nearNode:Object.keys(D.nodes).filter(id=>D.nodes[id].type==='settlement'),
  title:'소연의 정류장',
- text:'정착지가 가까워지자 소연이 입을 열었다.\n\n"여기서 내릴게요. 사람 많은 곳이 안전해요. …마지막으로 하나만."\n\n"정리자들이 요즘 외우는 구절이 바뀌었어요. \'완성의 날이 온다. 달구지가 온다.\'"\n\n"달구지요?"\n\n"차요. 그 사람들은 차를 그렇게 불러요. …여러분 얘기 같아서."',
+ text:'정착지에 차를 세우자 소연이 입을 열었다.\n\n"여기서 내릴게요. 사람 많은 곳이 안전해요. …마지막으로 하나만."\n\n"정리자들이 요즘 외우는 구절이 바뀌었어요. \'완성의 날이 온다. 달구지가 온다.\'"\n\n"달구지요?"\n\n"차요. 그 사람들은 차를 그렇게 불러요. …이 차 얘기 같아서."',
  choices:[
-  {label:'"…우리가 뭘 완성하는데요?"', out:[{p:1, text:'"몰라요. 그런데 저 사람들은 아는 것처럼 굴어요. 그게 제일 이상해요."\n\n소연은 흰 옷이 든 가방을 메고 내렸다. 몇 걸음 가다 돌아서서, 처음으로 웃었다.\n\n"참 오랜만에 탄 차가 여러분 차라서 다행이었어요."\n\n정착지 인파 속으로 사라질 때까지 지켜봤다. 흰 옷이 아니라, 사람으로 걸어가는 뒷모습을.', fx:{moodAll:6, flag:'deserter_saved', unflag:'deserter_hidden', pursuit:-1, note:{type:'사건',title:'소연의 정류장',body:'"완성의 날이 온다. 달구지가 온다." 정리자들의 새 구절. 소연은 사람으로 걸어갔다.',links:['천리안','소연 (이탈자)']}}}]},
+  {label:'"…우리가 뭘 완성하는데요?"', out:[{p:1, text:'"몰라요. 그런데 저 사람들은 아는 것처럼 굴어요. 그게 제일 이상해요."\n\n소연은 흰 옷이 든 가방을 메고 내렸다. 몇 걸음 가다 돌아서서, 처음으로 웃었다.\n\n"참 오랜만에 탄 차가 이 차라서 다행이었어요."\n\n정착지 인파 속으로 사라질 때까지 지켜봤다. 흰 옷이 아니라, 사람으로 걸어가는 뒷모습을.', fx:{moodAll:6, flag:'deserter_saved', unflag:'deserter_hidden', pursuit:-1, note:{type:'사건',title:'소연의 정류장',body:'"완성의 날이 온다. 달구지가 온다." 정리자들의 새 구절. 소연은 사람으로 걸어갔다.',links:['천리안','소연 (이탈자)']}}}]},
  ]},
 
 /* ── 일반 다양화 ── */
@@ -5830,7 +5913,7 @@ D.events = [
  text:'무주 장터를 지나려는데 손수레 다섯 대가 같은 자리에 묶여 있었다. 씨앗, 소금, 붕대, 편지. 북쪽 마을 셋이 함께 보낸 짐이다.\n\n수레 행렬을 맡은 운송 담당자가 꺼진 검문소를 가리켰다. "차 한 대는 지나가요. 사람이 줄지어 가면 센서가 켜져요."\n\n차단봉 아래 작은 불 하나가 일정하게 깜빡인다. 전광판은 죽었어도 사람을 세는 장치는 아직 살아 있다.\n\n"달구지 한 대처럼 보이게 만들면 돼요." 내가 수레 사이를 재며 말했다.\n\n"묶는다고요? 다섯 대를 다?"\n\n"전부요. 간격까지 맞춰야 해요."',
  choices:[
   {label:'수레를 달구지 뒤에 한 줄로 묶는다',tactic:'편성',prep:1,terrainFit:2,out:[{p:1,text:'긴 밧줄 하나에 수레 다섯 대를 간격 맞춰 묶었다. 각 수레에는 브레이크를 잡을 사람이 한 명씩 붙었다.\n\n"우리가 멈추면 다 멈추고, 우리가 가면 한 박자 뒤에 갑니다."\n\n제각각이던 짐이 하나의 긴 차량처럼 보이기 시작했다.',fx:{time:20,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatEdge:1,chain:'route_market_mask'},sfx:'metal'}]},
-  {label:'폐차 차양 아래에서 통과 순서를 맞춘다',tactic:'정찰',prep:1,terrainFit:2,out:[{p:1,text:'센서가 꺼지는 간격을 세 번 재었다. 열두 초마다 렌즈가 반대 차선을 본다.\n\n"첫 수레가 저 금을 넘을 때 마지막 수레가 출발하면 돼요."\n\n사람들이 자기 차례를 입으로 되뇌었다.',fx:{time:15,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatPressure:-1,chain:'route_market_mask'},sfx:'cover'}]}
+  {label:'폐차 차양 아래에서 통과 순서를 맞춘다',tactic:'정찰',prep:1,terrainFit:2,out:[{p:1,text:'센서가 꺼지는 간격을 세 번 재었다. 12초마다 렌즈가 반대 차선을 본다.\n\n"첫 수레가 저 금을 넘을 때 마지막 수레가 출발하면 돼요."\n\n사람들이 자기 차례를 입으로 되뇌었다.',fx:{time:15,combatStart:{id:'market_convoy',kind:'호송',threat:'잠든 자동 검문소',terrain:'좁은 국도와 폐차 차양, 고장 난 차단봉',objective:'다섯 수레를 기록 없이 통과시킨다',stakes:'행렬이 끊기면 센서가 사람 수를 센다',pressure:1},combatPressure:-1,chain:'route_market_mask'},sfx:'cover'}]}
  ]},
 {id:'route_market_mask',type:'호송',w:0,fixed:true,once:true,scene:'route-market-convoy',
  title:'한 대처럼 보이기',
@@ -5888,7 +5971,7 @@ D.events = [
  combat:{phase:1,total:3,step:'정찰',
    threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',pressure:1,
    objective:'렌즈가 돌아오기 전에 자리를 잡는다',stakes:'경보가 북쪽 검문망으로 넘어간다',intent:'몸통 렌즈가 정면 차선을 훑은 뒤 왼쪽 폐차 행렬로 돌아온다',counters:{'엄폐':'폐차로 시야를 끊는다','유인':'스캔 방향을 옆 차선에 묶는다'}}, sfx:'scan',
- text:'언덕 너머에서 회색 몸통이 먼저 보였다. 네 다리는 아직 경사 아래에 있다.\n\n이제 저 발소리는 안다. 한 걸음, 멈춤, 좌우 스캔. 다시 한 걸음.\n\n렌즈가 이쪽으로 돌아오기까지 서른 초쯤.',
+ text:'언덕 너머에서 회색 몸통이 먼저 보였다. 네 다리는 아직 경사 아래에 있다.\n\n이제 저 발소리는 안다. 한 걸음, 멈춤, 좌우 스캔. 다시 한 걸음.\n\n렌즈가 이쪽으로 돌아오기까지 30초쯤.',
  choices:[
   {label:'폐차 행렬 뒤로 달구지를 붙인다', tactic:'엄폐', prep:1, out:[{p:1, text:'시동을 죽이고 녹슨 화물차 그림자에 바짝 붙였다.\n\n보행기의 렌즈가 도로를 훑었다. 아직은 우리 앞쪽만 본다. 먼저 볼 수 있는 쪽이 조금 유리하다.', fx:{time:5,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatEdge:1,combatPressure:-1,chain:'combat_walker_read'}, sfx:'cover'}]},
   {label:'달구지로 시선을 끌고 옆 차선에 세운다', tactic:'유인', prep:1, risk:'차체가 노출된다', out:[{p:1, text:'헤드라이트를 한 번 켰다 껐다. 렌즈가 즉시 달구지를 물었다.\n\n차를 콘크리트 분리대 옆으로 밀어 세웠다. 숨을 곳은 줄었지만, 놈이 어디를 보는지는 이제 완전히 분명해졌다.', fx:{van:-2,combatStart:{id:'walker',threat:'4족 초계 보행기',terrain:'폐차 행렬과 콘크리트 분리대',objective:'렌즈와 관절을 읽고 전원을 안전하게 회수한다',stakes:'경보가 북쪽 검문망으로 넘어간다',pressure:1},combatEdge:2,combatPressure:1,chain:'combat_walker_read'}, sfx:'engine'}]},
@@ -6050,7 +6133,7 @@ D.events = [
  text:'갓길에 낡은 마을버스가 서 있다. 차체에 페인트로 큼직하게 —\n\n"이동 도서관 「반납은 언제든」"\n\n버스 지붕과 보닛 위에 책 수십 권이 펼쳐져 있다. 안경 쓴 여자가 한 권씩 뒤집으며 말리는 중이다.\n\n"어제 비에 창문이 샜어요. …아니, 창문이 아니라 지붕인가. 하여튼 어디선가 샜어요."',
  choices:[
   {label:'같이 말린다', out:[{p:1, text:'한 시간쯤 책을 뒤집었다. 여자는 사서였다고 한다. 이름은 한별.\n\n"도서관이 무너져서, 책들 데리고 나왔어요. 피난이죠. 책도 피난을 왔어요."\n\n"몇 권이나 되는데요?"\n\n"세보진 않았— 아니다, 세봤어요. 사백열두 권. 왜 안 세봤다고 했지."\n\n말린 책 중 한 권의 장서인이 눈에 들어왔다. 서울시립도서관.\n\n"그 책이 제일 멀리서 온 애예요." 한별이 웃었다.', fx:{time:60, moodAll:3, flag:'library_met', note:{type:'인물',title:'사서 한별',body:'마을버스 이동 도서관 「반납은 언제든」. 책들을 데리고 피난 중. 서울에서 온 책 한 권.',links:['이동 도서관']}}}]},
-  {label:'책 한 권 빌린다', out:[{p:1, text:'"대출증은 얼굴이에요. 다음에 만나면 반납하세요."\n\n조수석에 젖은 시집 한 권이 실렸다. 마르면서 종이가 우글우글해졌다. 파도 같았다.', fx:{moodAll:2, flag:'library_met', note:{type:'인물',title:'사서 한별',body:'이동 도서관에서 시집을 빌렸다. 대출증은 얼굴. 반납은 언제든.',links:['이동 도서관']}}}]},
+  {label:'책 한 권 빌린다', out:[{p:1, text:'사서는 한별이라고 이름을 알려 주었다.\n\n"대출증은 얼굴이에요. 다음에 만나면 반납하세요."\n\n조수석에 젖은 시집 한 권이 실렸다. 마르면서 종이가 우글우글해졌다. 파도 같았다.', fx:{moodAll:2, flag:'library_met', note:{type:'인물',title:'사서 한별',body:'이동 도서관에서 시집을 빌렸다. 대출증은 얼굴. 반납은 언제든.',links:['이동 도서관']}}}]},
   {label:'갈 길이 멀다', out:[{p:1, text:'백미러 속에서 여자가 책을 한 장씩 넘기며 바람에 말리고 있었다. 세상에서 제일 느린 일 같았다.', fx:{}}]},
  ]},
 
@@ -6062,32 +6145,32 @@ D.events = [
   {label:'"우린 배달하러 온 게 아니에요"', out:[{p:1, text:'"알아요. 그래도 혹시 책이 눈에 밟히면요."\n\n한별은 서운해하지 않았다. 대신 빈 라면박스를 조수석에 그냥 놓고 갔다. "안 채워도 돼요. 진짜로."', fx:{flag:'library_quest'}}]},
  ]},
 
-{id:'lib_books', type:'탐색', w:10, once:true, needFlag:'library_quest',
+{id:'lib_books', type:'탐색', w:10, once:true, needFlag:'library_quest', retryUntilFlag:'library_books', noFlag:'library_books',
  title:'무너진 도서실',
  text:'폐교 2층, 문패가 반쯤 떨어진 도서실.\n\n서가 두 개가 도미노처럼 쓰러져 있고 그 위로 지붕이 내려앉았다. 그런데 무너진 지붕이 오히려 비를 막아줬는지— 아래 깔린 책들이 멀쩡하다.\n\n라면박스가 조수석에 있다. 「도서 기증」.',
  choices:[
   {label:'책을 캐낸다', out:[
    {p:3, text:'서가 밑에 팔을 넣어 한 권씩 뽑았다. 그림책, 위인전, 만화로 보는 과학, 그리고 누가 봐도 선생님 책상에서 나온 무협지 한 질.\n\n박스가 꽉 찼다. 아이들이 세 번씩 읽을 것들이다.', fx:{time:50, fatigue:6, item:{'책 꾸러미':1}, flag:'library_books', note:{type:'사건',title:'도서 구조 작전',body:'무너진 서가 밑에서 책 한 박스를 캐냈다. 무협지는 덤.'}}},
-   {p:1, text:'책을 뽑는데 서가가 삐걱— 내려앉았다. 급히 팔을 뺐다. 건진 건 반 박스. 그래도 반 박스다.', fx:{time:40, fatigue:8, van:0, item:{'책 꾸러미':1}, flag:'library_books', moodAll:-1}}]},
+   {p:1, text:'책을 뽑는데 서가가 삐걱— 내려앉았다. 급히 팔을 뺐다. 이미 꺼내 놓은 건 그림책 몇 권과 무협지 한 질, 반 박스쯤 된다. 더 손대지 않고 상자를 닫았다. 그래도 반 박스다.', fx:{time:40, fatigue:8, van:0, item:{'책 꾸러미':1}, flag:'library_books', moodAll:-1}}]},
   {label:'위험해 보인다, 관둔다', out:[{p:1, text:'지붕이 언제 마저 내려앉을지 모른다. 책은 다음 기회에.', fx:{}}]},
  ]},
 
-{id:'lib_return', type:'조우', w:14, once:true, needFlag:'library_books',
+{id:'lib_return', type:'조우', w:14, once:true, needFlag:'library_books', needItem:'책 꾸러미', retryUntilFlag:'library_done', noFlag:'library_done',
  title:'반납은 언제든',
  text:'이동 도서관이 저만치 보인다. 이번엔 개울가다. 빨랫줄에 책 대신 아이들 양말이 걸려 있다.\n\n조수석의 라면박스가 무겁다. 좋은 무거움이다.',
  choices:[
-  {label:'박스를 내려놓는다', req:{item:'책 꾸러미'}, out:[{p:1, text:'한별이 박스를 열고 한 권씩 꺼내 코에 대고 냄새를 맡았다. 사서들은 그렇게 책 상태를 본다고 한다.\n\n"무협지…!" 제일 환호한 건 애들이 아니라 한별이었다.\n\n그날 저녁, 버스 계단에 앉아 아이들에게 그림책을 읽어줬다. 답례로 한별이 지도를 꺼내 연필로 점 하나를 찍었다.\n\n"책 반납하러 다니면서 알게 된 곳이에요. 지도엔 없어요."', fx:{item:{'책 꾸러미':-1}, time:80, moodAll:6, revealNear:1, flag:'library_done', note:{type:'사건',title:'낭독회',body:'버스 계단 낭독회. 무협지에 제일 환호한 건 사서였다. 답례는 지도에 없는 곳 하나.',links:['이동 도서관']}}}]},
+  {label:'박스를 내려놓는다', req:{item:'책 꾸러미'}, out:[{p:1, text:'한별이 박스를 열고 한 권씩 꺼내 코에 대고 냄새를 맡았다. 사서들은 그렇게 책 상태를 본다고 한다.\n\n"무협지…!" 제일 환호한 건 애들이 아니라 한별이었다.\n\n버스 계단에 앉아 아이들에게 그림책을 읽어줬다. 답례로 한별이 지도를 꺼내 연필로 점 하나를 찍었다.\n\n"책 반납하러 다니면서 알게 된 곳이에요. 지도엔 없어요."', fx:{item:{'책 꾸러미':-1}, time:80, moodAll:6, revealNear:1, flag:'library_done', note:{type:'사건',title:'낭독회',body:'버스 계단 낭독회. 무협지에 제일 환호한 건 사서였다. 답례는 지도에 없는 곳 하나.',links:['이동 도서관']}}}]},
   {label:'다음에 주자', out:[{p:1, text:'오늘은 길이 급하다. 백미러 속 버스가 작아질 때까지 박스가 유난히 무거웠다.', fx:{}}]},
  ]},
 
 /* ── 체인 B: 주파수 4-0-0 (3) ── */
-{id:'freq_catch', minParty:1, type:'추적', w:9, once:true, region:['mid','north'],
+{id:'freq_catch', minParty:0, type:'추적', w:9, once:true, region:['mid','north'],
  title:'숫자 방송',
  text:'라디오 스캔이 잡음 사이에서 멈췄다.\n\n"…4. 0. 0. …4. 0. 0. …"\n\n여자 목소리가 같은 숫자를 반복한다. 뜻은 알 수 없다. 기계처럼 고른 간격인데, 숫자와 숫자 사이에 아주 짧게 숨소리가 들린다.',
  choices:[
-  {label:'주파수를 기록한다', out:[{p:1, text:'수첩에 주파수를 적었다. 405.8. 같은 숫자가 계속 나온다.\n\n4. 0. 0. 서울까지의 거리와 같은 숫자라는 걸, 다들 생각했지만 아무도 말하지 않았다.', fx:{flag:'freq400', note:{type:'소문',title:'주파수 4-0-0',body:'405.8에서 반복되는 숫자 방송. 4. 0. 0. 숨소리가 섞여 있다. 사람이다.',links:['천리안']}}}]},
+  {label:'주파수를 기록한다', out:[{p:1, text:'수첩에 주파수를 적었다. 405.8. 같은 숫자가 계속 나온다.\n\n4. 0. 0. 부산에서 서울까지의 거리와 같은 숫자다. 주파수 아래에 그 숫자도 적었다.', fx:{flag:'freq400', note:{type:'소문',title:'주파수 4-0-0',body:'405.8에서 반복되는 숫자 방송. 4. 0. 0. 숨소리가 섞여 있다. 사람이다.',links:['천리안']}}}]},
   {label:'은수에게 묻는다', req:{comp:'eunsu'}, out:[{p:1, text:'은수가 헤드폰을 반쯤 벗고 30초쯤 들었다.\n\n"천리안 채널 아니에요. 포맷이 달라요. 천리안은… 이렇게 낡은 방식을 안 써요."\n\n"그럼 누군데요?"\n\n"사람이요. 누군가 들으라고 일부러 틀어 놓은 거예요."', fx:{flag:'freq400', mood:{eunsu:3}, note:{type:'소문',title:'주파수 4-0-0',body:'은수 판정: 천리안 아님. 낡은 방식. 들으라고 트는 사람의 방송.',links:['천리안']}}}]},
-  {label:'라디오를 끈다', out:[{p:1, text:'숫자는 끊겼지만, 한동안 다들 머릿속으로 세고 있었다. 4. 0. 0.', fx:{flag:'freq400'}}]},
+  {label:'라디오를 끈다', out:[{p:1, text:'숫자는 끊겼지만, 한동안 머릿속으로 세고 있었다. 4. 0. 0.', fx:{flag:'freq400'}}]},
  ]},
 
 {id:'freq_triangulate', type:'탐색', w:10, once:true, needFlag:'freq400',
@@ -6098,11 +6181,11 @@ D.events = [
   {label:'은수의 삼각측량', req:{comp:'eunsu'}, out:[{p:1, text:'은수가 라디오를 들고 차 주위를 세 바퀴 돌더니 지도에 선 두 개를 그었다.\n\n"올라갈 필요 없어요. 여긴 중계기예요. 발신지는—" 연필이 북쪽에서 멈췄다. "—이 근처. 학교 아니면 관공서. 방송실이 있는 건물이에요."', fx:{time:20, mood:{eunsu:3}, flag:'freq400_src', note:{type:'사건',title:'은수의 삼각측량',body:'차 세 바퀴와 선 두 개로 발신지를 좁혔다. 북쪽, 방송실 있는 건물.'}}}]},
  ]},
 
-{id:'freq_source', minParty:1, type:'탐색', w:12, once:true, needFlag:'freq400_src', region:['mid','north'],
+{id:'freq_source', minParty:0, type:'탐색', w:12, once:true, needFlag:'freq400_src', region:['mid','north'],
  title:'방송실',
  text:'폐교 방송실 문에 자물쇠가 없다. 대신 문패가 새로 달려 있다. 코팅까지 해서.\n\n「송출 중 — 조용히」\n\n안에는 자동차 배터리 여섯 개에 물려 있는 낡은 방송 장비. 릴테이프가 돌아가며 같은 숫자를 내보내고 있다. "4. 0. 0."\n\n마이크 앞에 편지 한 장이 눌러져 있다.',
  choices:[
-  {label:'편지를 읽는다', out:[{p:1, text:'"이 방송이 들리면 중계기는 아직 살아 있습니다.\n\n부산에서 서울까지 400km. 북쪽으로 간다면 명단이 완성되기 전에 도착하세요.\n\n중계기 배터리는 2년쯤 갑니다. 제가 돌아오지 못해도 숫자는 계속 나갈 겁니다. — L"\n\n\'명단\'이라는 단어에서 방송실이 잠깐 추워졌다.', fx:{flag:'freq400_done', item:{'라디오 진공관':1}, note:{type:'소문',title:'L의 편지',body:'"명단이 완성되기 전에 도착하세요. — L" 중계기 배터리는 2년쯤 간다. L이 돌아오지 못해도 숫자는 계속 송출된다.',links:['천리안','주파수 4-0-0']}}}]},
+  {label:'편지를 읽는다', out:[{p:1, text:'"이 방송이 들리면 중계기는 아직 살아 있습니다."\n\n"부산에서 서울까지 400km. 북쪽으로 간다면 명단이 완성되기 전에 도착하세요."\n\n"중계기 배터리는 2년쯤 갑니다. 제가 돌아오지 못해도 숫자는 계속 나갈 겁니다. — L"\n\n\'명단\'이라는 단어에서 방송실이 잠깐 추워졌다.', fx:{flag:'freq400_done', item:{'라디오 진공관':1}, note:{type:'소문',title:'L의 편지',body:'"명단이 완성되기 전에 도착하세요. — L" 중계기 배터리는 2년쯤 간다. L이 돌아오지 못해도 숫자는 계속 송출된다.',links:['천리안','주파수 4-0-0']}}}]},
   {label:'테이프를 멈춘다', out:[{p:1, text:'릴이 멈추자 방송실이 조용해졌다. 3초쯤.\n\n그 3초가 견딜 수 없이 이상해서, 도로 틀었다. "4. 0. 0." 세상 어딘가에서 누가 듣고 있을 것이다. 우리가 들었듯이.', fx:{flag:'freq400_done', moodAll:2, note:{type:'사건',title:'끄지 못한 방송',body:'멈춘 3초를 견디지 못하고 도로 틀었다. 누군가 듣고 있을 테니까.'}}}]},
  ]},
 
@@ -6148,14 +6231,14 @@ D.events = [
   {label:'명단을 맞춰본다', out:[
    {p:2, text:'우편부가 손때 묻은 명단을 펼쳤다. 아는 이름은 없었다.\n\n대신 우리가 스친 정착지 이야기를 해줬다. 우편부는 세 개를 받아적고 신이 나서 페달을 밟았다.\n\n"오래 묵은 편지가 두 통이나 줄겠네!"', fx:{moodAll:3, flag:'postman_met', note:{type:'인물',title:'자전거 우편부',body:'주소 대신 이름과 얼굴로 배달한다. 여러 해째 수신인을 찾는 중.'}}},
    {p:1, text:'명단 중간쯤에서 우편부의 손가락이 멈췄다.\n\n"이 사람… 남산 쪽으로 갔다는 소문이 마지막이에요."\n\n남산. 우리와 방향이 같은 이름이 하나 있다는 것만 적어뒀다.', fx:{flag:'postman_met', note:{type:'소문',title:'남산으로 간 수신인',body:'우편부의 명단 속 한 사람. 마지막 소문은 남산 방향.',links:['남산']}}}]},
-  {label:'물 한 잔 대접한다', out:[{p:1, text:'우편부는 물을 반만 마시고 반은 자전거 체인에 부었다. "얘도 목마르거든."\n\n답례로 어느 고개의 지름길을 알려줬다.', fx:{water:-1, moodAll:2, flag:'postman_met', note:{type:'소문',title:'우편부의 지름길',body:'물 반 잔의 답례. 어느 고개의 지름길.'}}}]},
+  {label:'물 한 잔 대접한다', req:{water:1}, out:[{p:1, text:'우편부는 물을 반만 마시고 반은 자전거 체인에 부었다. "얘도 목마르거든."\n\n답례로 어느 고개의 지름길을 알려줬다.', fx:{water:-1, moodAll:2, flag:'postman_met', note:{type:'소문',title:'우편부의 지름길',body:'물 반 잔의 답례. 어느 고개의 지름길.'}}}]},
  ]},
 
 {id:'meet_seedlady', type:'조우', w:7,
  title:'씨앗 도서관',
  text:'경운기를 개조한 수레에 유리병이 빼곡하다. 병마다 라벨. 상추, 열무, 대파, 해바라기.\n\n"씨앗 도서관이에요. 빌려가서 수확하면 두 배로 반납."\n\n"연체료는요?"\n\n"없어요. 있었는데, 받으러 다니기가 귀찮아서 없앴어요."',
  choices:[
-  {label:'씨앗을 빌린다 (물 2)', out:[{p:1, text:'물 두 통과 상추 씨앗 한 병을 맞바꿨다. 엄밀히는 빌린 거다.\n\n"수확하면 두 배 반납이에요. 어디서든, 누구한테든."\n\n"누구한테든이요?"\n\n"저 아니어도 돼요. 씨앗 필요한 사람 아무나." 주인이 병뚜껑을 한 번 더 조여줬다.', fx:{water:-2, food:3, moodAll:2, flag:'seed_borrowed', note:{type:'인물',title:'씨앗 도서관',body:'빌려가서 두 배로 반납. 누구한테든. 씨앗은 다 연결돼 있다.'}}}]},
+  {label:'씨앗을 빌린다 (물 2)', req:{water:2}, out:[{p:1, text:'물 두 통과 상추 씨앗 한 병을 맞바꿨다. 엄밀히는 빌린 거다.\n\n"수확하면 두 배 반납이에요. 어디서든, 누구한테든."\n\n"누구한테든이요?"\n\n"저 아니어도 돼요. 씨앗 필요한 사람 아무나." 주인이 병뚜껑을 한 번 더 조여줬다.', fx:{water:-2, food:3, moodAll:2, flag:'seed_borrowed', note:{type:'인물',title:'씨앗 도서관',body:'빌려가서 두 배로 반납. 누구한테든. 씨앗은 다 연결돼 있다.'}}}]},
   {label:'좋은 장사 하시라', out:[{p:1, text:'"장사 아니에요, 도서관이에요!" 등 뒤에서 정정하는 소리가 들렸다.', fx:{}}]},
  ]},
 
@@ -6163,7 +6246,7 @@ D.events = [
  title:'결혼사진사',
  text:'폐업한 웨딩홀 앞에 삼각대를 세운 노인. 필름 카메라가 올려져 있다.\n\n"거기 말고 반 발짝 왼쪽. …아니, 오른쪽. 해가 지금 저쪽이라."\n\n"저희 찍는다고 아직 말 안 했는데요."\n\n"지나가는 사람들 사진 찍어 주고 있어요. 공짜예요. 필름이 아까운 세상이지만— 요즘 사람들 얼굴이 다 마지막 사진이 될 수 있어서."',
  choices:[
-  {label:'단체사진을 찍는다', out:[{p:1, text:'달구지 앞에 일렬로 섰다. 보리가 있다면 맨 앞에 앉았다.\n\n"김치— 아니지, 요즘은 뭐라 그러나."\n\n"고철—!" 누가 외쳤고, 셔터가 눌렸고, 다들 진짜로 웃는 순간이 찍혔다.\n\n인화는 못 해주지만 필름은 남는다고 했다. "언젠가 인화소가 다시 생기면 찾으러 오세요."', fx:{time:20, moodAll:6, flag:'photo_film', note:{type:'사건',title:'필름 속의 우리',body:'웨딩홀 앞 단체사진. "고철—!" 인화소가 다시 생기면 찾으러 갈 것.'}}}]},
+  {label:'단체사진을 찍는다', out:[{p:1, text:S=>'달구지 앞에 일렬로 섰다.'+(S.dog?' 보리는 맨 앞에 앉았다.':'')+'\n\n"김치— 아니지, 요즘은 뭐라 그러나."\n\n"고철—!" 내가 외쳤고, 셔터가 눌렸고, 다들 진짜로 웃는 순간이 찍혔다.\n\n인화는 못 해주지만 필름은 남는다고 했다. "언젠가 인화소가 다시 생기면 찾으러 오세요."', fx:{time:20, moodAll:6, flag:'photo_film', note:{type:'사건',title:'필름 속의 우리',body:'웨딩홀 앞 단체사진. "고철—!" 인화소가 다시 생기면 찾으러 갈 것.'}}}]},
   {label:'사양한다', out:[{p:1, text:'노인은 강요하지 않았다. 대신 지나가는 달구지를 향해 셔터를 눌렀다.\n\n"차도 얼굴이 있어요." 백미러 속에서 노인이 외쳤다.', fx:{moodAll:1}}]},
  ]},
 
@@ -6192,7 +6275,7 @@ D.events = [
  choices:[
   {label:'조용히 수확한다', out:[
    {p:3, text:'토마토와 오이를 배낭 가득 땄다. 스프링클러가 한 번 더 돌며 등을 적셨지만, 그뿐이었다.\n\n누가— 무엇이— 물을 대는지는 생각하지 않기로 했다. 토마토는 죄가 없다.', fx:{food:4, water:1, note:{type:'사건',title:'살아 있는 온실',body:'전기가 살아 있는 온실. 누가 물을 대는지는 생각하지 않기로 했다.'}}},
-   {p:1, text:'수확 중에 온실 구석 스피커에서 안내음이 나왔다.\n\n"금일 수확량이 기록되었습니다."\n\n토마토를 든 채 다 같이 얼어붙었다. 목소리는 그뿐이었지만, 서둘러 나왔다.', fx:{food:3, pursuit:1, note:{type:'사건',title:'기록된 수확',body:'"금일 수확량이 기록되었습니다." 온실은 관리되고 있었다.',links:['천리안']}}}]},
+   {p:1, text:'수확 중에 온실 구석 스피커에서 안내음이 나왔다.\n\n"금일 수확량이 기록되었습니다."\n\n토마토를 든 손이 멎었다. 목소리는 그뿐이었지만, 서둘러 나왔다.', fx:{food:3, pursuit:1, note:{type:'사건',title:'기록된 수확',body:'"금일 수확량이 기록되었습니다." 온실은 관리되고 있었다.',links:['천리안']}}}]},
   {label:'지나친다', out:[{p:1, text:'공짜 토마토엔 대가가 있는 법이다. 이 세상에선 특히.', fx:{}}]},
  ]},
 
@@ -6444,11 +6527,11 @@ D.events = [
  ]},
 
 /* ── 사진사 후속 (1) ── */
-{id:'photo_delivered', needsDog:true, type:'조우', w:9, once:true, needFlag:'photo_film', region:['mid','north'],
+{id:'photo_delivered', needsDog:false, type:'조우', w:9, once:true, needFlag:'photo_film', region:['mid','north'],
  title:'인화',
- text:'정착지 어귀에서 웬 청년이 우리를 보더니 소리쳤다.\n\n"혹시 그 달구지예요? 개 타고 다니는?"\n\n보리가 대답 대신 짖었다. 청년이 품에서 봉투를 꺼냈다.\n\n"남쪽 사진사 할아버지가 북쪽 가는 사람마다 들려 보냈어요. \'차 만나면 전해라\'고. 저까지 여섯 명을 거쳤을걸요."',
+ text:S=>'정착지 어귀에서 웬 청년이 달구지를 보더니 소리쳤다.\n\n"혹시 그 달구지예요? 남쪽 웨딩홀에서 사진 찍은?"\n\n'+(S.dog?'보리가 창문 너머로 짖었다. ':'')+'청년이 품에서 봉투를 꺼냈다.\n\n"남쪽 사진사 할아버지가 북쪽 가는 사람마다 들려 보냈어요. \'차 만나면 전해라\'고. 저까지 여섯 명을 거쳤을걸요."',
  choices:[
-  {label:'봉투를 연다', out:[{p:1, text:'사진이었다. 웨딩홀 앞, 달구지 앞에 일렬로 선 우리. "고철—!" 하던 그 순간.\n\n"나 눈 감았는데."\n\n"안 감았어. 반쯤 감은 거지."\n\n뒷면에 만년필 글씨. "인화소를 찾았어요. 필름은 거짓말을 안 해요. 좋은 얼굴들이에요."\n\n사진은 대시보드 곰 뒤, 제일 잘 보이는 자리에 붙었다.', fx:{moodAll:8, flag:'photo_received', note:{type:'사건',title:'여섯 명을 거쳐 온 사진',body:'사진사의 배달망. "필름은 거짓말을 안 해요. 좋은 얼굴들이에요." 대시보드 정중앙 부착.',links:['결혼사진사']}}}]},
+  {label:'봉투를 연다', out:[{p:1, text:'사진이었다. 웨딩홀 앞, 달구지 앞에 일렬로 선 우리. "고철—!" 하던 그 순간.\n\n"나 눈 감았는데."\n\n사진을 가까이 들여다봤다. "…반쯤 감은 건가."\n\n뒷면에 만년필 글씨. "인화소를 찾았어요. 필름은 거짓말을 안 해요. 좋은 얼굴들이에요."\n\n사진은 대시보드 정중앙, 제일 잘 보이는 자리에 붙었다.', fx:{moodAll:8, flag:'photo_received', note:{type:'사건',title:'여섯 명을 거쳐 온 사진',body:'사진사의 배달망. "필름은 거짓말을 안 해요. 좋은 얼굴들이에요." 대시보드 정중앙 부착.',links:['결혼사진사']}}}]},
  ]},
 
 /* ── 동료 위치 소문 (미영입 시에만) ── */
@@ -6617,10 +6700,11 @@ D.events = [
  title:'새는 호스',
  text:'주유구 근처에서 시큼한 냄새. 세워서 보니 연료 호스 이음새가 삭아 연료가 방울방울 듣고 있다.\n\n한 방울이 모이면 한 리터다. 이 세상에서 연료는 피다.',
  choices:[
-  {label:'응급 처치한다', out:[
+  {label:'응급 처치한다 — 예비 부품을 준비한다', req:{item:'부품'}, out:[
    {p:2, text:'호스를 잘라내고 남은 길이로 다시 물렸다. 클램프 대신 철사를 감았다.\n\n"임시야. 정비소 가면 갈아야 해." 누가 말했고, 임시라는 말이 이 차에서 몇 번째인지 세는 걸 다들 포기했다.', fx:{time:40, fuel:-2, fatigue:4}},
    {p:1, text:'철사를 감다 호스가 더 찢어졌다. 결국 부품함의 예비 호스를 꺼냈다. 아껴둔 걸 쓰는 날이 오늘이었을 뿐이다.', fx:{time:60, fuel:-3, item:{'부품':-1}, moodAll:-1}}]},
-  {label:'민지 호출', req:{comp:'minji'}, out:[{p:1, text:'민지가 코를 킁 한 번 하더니 손부터 집어넣었다. "이음새. 늘 거기부터 삭아. 고무가 열 먹으면— 아니다, 그냥 여기야."\n\n10분 컷. 잘라 물리고 클램프(진짜 클램프다. 어디서 났는지는 안 알려줬다)로 마무리.\n\n"연료 냄새 나면 바로 말해. 참는 게 제일 나빠." 그러고는 방금 조인 철사를 한 번 더 만져 보고 손을 뗐다.', fx:{time:10, mood:{minji:3}}}]},
+  {label:'민지 호출', req:{comp:'minji'}, out:[{p:1, text:'민지가 코를 킁 한 번 하더니 손부터 집어넣었다. "이음새. 늘 거기부터 삭아. 고무가 열 먹으면— 아니다, 그냥 여기야."\n\n10분 컷. 잘라 물리고 클램프(진짜 클램프다. 어디서 났는지는 안 알려줬다)로 마무리.\n\n"연료 냄새 나면 바로 말해. 참는 게 제일 나빠." 그러고는 방금 조인 클램프를 한 번 더 만져 보고 손을 뗐다.', fx:{time:10, mood:{minji:3}}}]},
+  {label:'남은 호스를 짧게 물려 천천히 손본다',out:[{p:1,text:'예비 호스를 쓰지 않고 버텨 보기로 했다. 찢어진 끝을 조금씩 잘라 내고, 남은 길이가 닿도록 이음새를 다시 맞췄다.\n\n철사를 한 번에 조이지 않고 조금씩 감았다. 시동을 걸어 새는 곳을 찾고, 끄고, 다시 조였다. 손이 뻐근해질 때쯤 방울이 멎었다.\n\n정비소까지는 급하게 밟지 않기로 했다.',fx:{time:120,fuel:-3,fatigue:8}}]},
  ]},
 
 /* ── 추적 (2) ── */
@@ -6745,22 +6829,22 @@ D.events = [
  title:'철탑 아래',
  text:'라디오 철탑 아래 컨테이너. 문에 스티커가 붙어 있다.\n\n「심야방송 중계소 — 애청자는 노크」\n\n안엔 자동 송출기와 배터리, 그리고 벽에 걸린 공책. 「방명록」이라고 적혀 있다.',
  choices:[
-  {label:'방명록을 읽는다', out:[{p:1, text:'「새벽 두 시 방송 듣고 왔습니다. 목소리 주인 만나러.」 — 앞서 세 팀이 다녀갔다.\n\n마지막 장에 다른 필체. 「찾아와줘서 고마워요. 본방은 이동 중이라 여기 없어요. 힌트: 저는 바퀴 달린 스튜디오예요. 국도에서 안테나 세운 방송차를 보면 그게 접니다. — DJ」\n\n방명록에 우리도 한 줄 남겼다. 「네 번째 팀. 개 있음. 사연 많음.」', fx:{time:30, flag:'dj_tower', note:{type:'소문',title:'바퀴 달린 스튜디오',body:'심야방송의 본체는 이동 중. 안테나 세운 차. 방명록 네 번째 팀 등록 완료.',links:['새벽 두 시의 DJ']}}}]},
+  {label:'방명록을 읽는다', out:[{p:1, text:S=>'「새벽 두 시 방송 듣고 왔습니다. 목소리 주인 만나러.」 — 앞서 세 팀이 다녀갔다.\n\n마지막 장에 다른 필체. 「찾아와줘서 고마워요. 본방은 이동 중이라 여기 없어요. 힌트: 저는 바퀴 달린 스튜디오예요. 국도에서 안테나 세운 방송차를 보면 그게 접니다. — DJ」\n\n방명록에 한 줄 남겼다. 「네 번째 팀. '+(S.dog?'개 있음. ':'')+'사연 많음.」', fx:{time:30, flag:'dj_tower', note:{type:'소문',title:'바퀴 달린 스튜디오',body:'심야방송의 본체는 이동 중. 안테나 세운 차. 방명록 네 번째 팀 등록 완료.',links:['새벽 두 시의 DJ']}}}]},
  ]},
 
-{id:'dj_meet', minParty:1, type:'조우', w:12, once:true, needFlag:'dj_tower',
+{id:'dj_meet', minParty:0, type:'조우', w:12, once:true, needFlag:'dj_tower',
  title:'바퀴 달린 스튜디오',
- text:'국도변에 차 한 대. 지붕에 우리 것보다 세 배는 큰 안테나가 서 있다.\n\n옆문이 열려 있고, 안은 온통 기계다. 믹서, 턴테이블, 테이프 수백 개.\n\n"어— 방명록 네 번째 팀!" 안에서 목소리가 먼저 알아봤다. 라디오에서 듣던 그 목소리다. 실물은 파마머리의 중년 여자였다. "사연 많다면서요. 녹음하고 가요."',
+ text:S=>`국도변에 차 한 대. 지붕에 커다란 안테나가 서 있다.\n\n옆문이 열려 있고, 안은 온통 기계다. 믹서, 턴테이블, 테이프 수백 개.\n\n"${(S.notes||[]).some(n=>n.title==='바퀴 달린 스튜디오'&&n.body?.includes('방명록 네 번째 팀 등록 완료'))?'어— 방명록 네 번째 팀!':'어— 방송 듣고 오셨어요?'}" 안에서 목소리가 들렸다. 라디오에서 듣던 그 목소리다. 실물은 파마머리의 중년 여자였다. "길 위의 사연, 녹음하고 가요."`,
  choices:[
   {label:'"청취율은 나와요?"', out:[{p:1, text:'"네? 아, 청취율." DJ가 테이프를 갈다 말고 웃었다. "몰라요. 알 방법이 없지. 옛날엔 그거 재는 회사가 따로 있었는데— 그 회사도 없고요."\n\n"근데 가끔 이런 걸 받아요." 벽에 붙은 쪽지들을 가리켰다. 「덕분에 밤이 덜 길어요」 「울 엄마가 팬이에요」 「신청곡 됩니까」\n\n"저 신청곡 쪽지, 같은 사람이 세 번째 붙인 거예요. 아직 못 틀어줬고." 떨어지려는 쪽지를 손끝으로 눌러 붙였다. "끄면 누가 혼자가 되는지 알 것 같아서 못 꺼요. 듣는 사람이 한 명이어도 방송이에요."', fx:{time:40, moodAll:4, flag:'dj_met', note:{type:'인물',title:'DJ',body:'파마머리 이동 방송국. "듣는 사람이 한 명이어도 방송이에요." 청취율 집계 불가, 쪽지 다수.',links:['새벽 두 시의 DJ']}}}]},
-  {label:'사연을 녹음한다', out:[{p:1, text:'마이크 앞에 다 같이 앉았다. 부산에서 출발한 것, 달구지, 할아버지, 만난 사람들. 10분짜리 사연이 됐다.\n\n"신청곡은?" DJ가 물었다. 잠깐의 회의 끝에 오래된 길 노래 하나를 골랐다.\n\n"언제 나올지 몰라요. 새벽 두 시, 주파수 잘 맞추고 다녀요." DJ가 윙크했다.', fx:{time:50, moodAll:4, flag:'dj_met', flagCount:'dj_story_sent', note:{type:'사건',title:'사연 녹음',body:'10분짜리 사연을 녹음했다. 방송일 미정. 새벽 두 시를 기다리는 이유가 생겼다.',links:['새벽 두 시의 DJ']}}}]},
+  {label:'사연을 녹음한다', out:[{p:1, text:'마이크 앞에 자리를 잡았다. 부산에서 출발한 것, 달구지, 할아버지, 만난 사람들. 10분짜리 사연이 됐다.\n\n"신청곡은?" DJ가 물었다. 잠깐 생각하다 오래된 길 노래 하나를 골랐다.\n\n"언제 나올지 몰라요. 새벽 두 시, 주파수 잘 맞추고 다녀요." DJ가 윙크했다.', fx:{time:50, moodAll:4, flag:'dj_met', flagCount:'dj_story_sent', note:{type:'사건',title:'사연 녹음',body:'10분짜리 사연을 녹음했다. 방송일 미정. 새벽 두 시를 기다리는 이유가 생겼다.',links:['새벽 두 시의 DJ']}}}]},
  ]},
 
-{id:'dj_onair', minParty:1, type:'발견', w:9, once:true, needFlag:'dj_story_sent', night:true,
+{id:'dj_onair', minParty:0, type:'발견', w:9, once:true, needFlag:'dj_story_sent', night:true, minuteWindow:[120,180],
  title:'본방 사수',
- text:'새벽 주행. 습관처럼 라디오를 맞춘다.\n\n지익— "…새벽 두 시입니다. 오늘은 사연이 하나 있어요. 남쪽에서 차 타고 올라오는 팀인데—"\n\n차 안의 공기가 통째로 멈췄다.',
+ text:'라디오를 켜고 익숙한 주파수에 맞춘다.\n\n지익— "…새벽 두 시 방송입니다. 오늘은 사연이 하나 있어요. 남쪽에서 차 타고 올라오는 팀인데—"\n\n볼륨을 돌리던 손이 멈췄다.',
  choices:[
-  {label:'볼륨을 올린다', out:[{p:1, text:'우리 사연이었다. 우리 목소리가 라디오에서 나왔다. 다들 자기 목소리에서 오글거려 죽으려 했지만 아무도 채널을 안 돌렸다.\n\n사연이 끝나고 신청곡이 나왔다. 노래가 나오는 3분 동안, 세상 어딘가에서 누군가 같은 주파수로 이 노래를 듣고 있을 거라는 생각을 다들 했다.\n\n누군가 밤이 덜 길다고 말했다. 쪽지에 쓰여 있던 그 말을.', fx:{moodAll:9, flag:'dj_onair_done', note:{type:'사건',title:'본방 사수',body:'우리 사연이 전파를 탔다. 오글거림에도 아무도 채널을 돌리지 않았다. 밤이 덜 길었다.',links:['새벽 두 시의 DJ']}}}]},
+  {label:'볼륨을 올린다', out:[{p:1, text:'녹음해 두고 온 사연이었다. 라디오에서 내 목소리가 나오자 어깨가 저절로 움츠러들었다. 그래도 채널을 돌리지는 않았다.\n\n사연이 끝나고 신청곡이 나왔다. 노래가 나오는 3분 동안, 세상 어딘가에서 누군가 같은 주파수로 이 노래를 듣고 있을 거라는 생각을 했다.\n\nDJ가 다음 곡을 꺼내는 소리까지 들었다. 라디오를 켜 두니 밤이 조금 덜 길었다.', fx:{moodAll:9, flag:'dj_onair_done', note:{type:'사건',title:'본방 사수',body:'녹음한 사연이 전파를 탔다. 내 목소리가 어색해도 채널을 돌리지 않았다. 밤이 덜 길었다.',links:['새벽 두 시의 DJ']}}}]},
  ]},
 
 /* ── 할아버지의 봉투 — 남산에서 회수 ── */
@@ -6781,11 +6865,11 @@ D.events = [
   {label:'주소를 지도에서 찾아본다', out:[{p:1, text:'광양. 우리 경로에서 벗어난 남쪽 항구다.\n\n인식표를 손에 쥐고 보리를 봤다. 보리는 인식표엔 관심이 없고 빗질 중단에만 항의했다.\n\n언젠가 남쪽에 다시 갈 일이 있으면 들러 볼까. 보리는 대답 대신 빗에 코를 들이밀었다.', fx:{moodAll:2, flag:'bori_tag_found', note:{type:'소문',title:'광양시 OO길',body:'인식표의 주소. 언젠가 남쪽 다시 갈 일 있으면.',links:['보리']}}}]},
  ]},
 
-{id:'bori_family', type:'조우', w:10, once:true, needFlag:'bori_tag_found', needsDog:true,
+{id:'bori_family', type:'조우', w:10, once:true, needFlag:'bori_tag_found', needsDog:true, nearNode:['busan','miryang','daegu','muju','jeonju','daejeon','suwon','gwangju'],
  title:'탄이를 아는 사람',
  text:'정착지 장터에서 보리가 갑자기 꼬리가 부러져라 흔들며 어떤 남자에게 돌진했다.\n\n남자가 보리를 보고 얼어붙었다.\n\n"…탄이? 야, 탄이 맞지? 광양 김씨네 탄이!"\n\n남자는 광양에서 피난 온 이웃이었다.',
  choices:[
-  {label:'가족 소식을 묻는다', out:[{p:1, text:'"김씨네는 그날 배 타고 섬으로 갔어. 무사히. 탄이만 항구에서 놓쳤지. 배가 개는 안 된다고 해서— 김씨 막내가 사흘을 울었어."\n\n남자가 보리를 부볐다. "살아 있었구나, 너."\n\n"저희는 보리라고 부르는데요."\n\n"보리?" 남자가 잠깐 어리둥절해했다. "…뭐. 대답하면 그것도 이름이지."\n\n"섬이 어딘지 아세요?" "몰라. 남쪽 어디겠지. …근데 얘 지금 행복해 보이는데?" 남자가 우리를 둘러봤다. "잘 있다고 전해줄 방법이 생기면, 전해줄게. 차 타고 북쪽 갔다고. 식구 생겼다고."\n\n보리는 남자에게 하이파이브를 하고(가르친 보람이 있다) 차로 먼저 뛰어갔다. 저녁 시간이었기 때문이다. 차에 오른 보리는 밥그릇부터 확인했다. 레오는 인식표를 한 번 만지고 뒤따라 탔다.', fx:{moodAll:6, flag:'bori_family_known', note:{type:'사건',title:'탄이의 가족',body:'광양 김씨네는 섬으로 무사 피난. 막내가 사흘 울었다. 보리는 예전 이름에도 반응했고, 저녁밥 소리에는 더 빨리 반응했다.',links:['보리']}}}]},
+  {label:'가족 소식을 묻는다', out:[{p:1, text:S=>'"김씨네는 그날 배 타고 섬으로 갔어. 무사히. 탄이만 항구에서 놓쳤지. 배가 개는 안 된다고 해서— 김씨 막내가 사흘을 울었어."\n\n남자가 보리를 부볐다. "살아 있었구나, 너."\n\n"저희는 보리라고 부르는데요."\n\n"보리?" 남자가 잠깐 어리둥절해했다. "…뭐. 대답하면 그것도 이름이지."\n\n"섬이 어딘지 아세요?" "몰라. 남쪽 어디겠지. …근데 얘 지금 행복해 보이는데?" 남자가 나와 보리를 번갈아 봤다. "잘 있다고 전해줄 방법이 생기면, 전해줄게. 차 타고 북쪽 갔다고. 식구 생겼다고."\n\n'+(S.flags.bori_highfive?'보리는 남자가 내민 손에 하이파이브를 했다.':'보리는 남자의 손에 코를 비비며 꼬리를 흔들었다.')+' 차 문을 열자 먼저 뛰어올라 밥그릇부터 확인했다.'+(S.party.includes('leo')?' 레오는 인식표를 한 번 만지고 뒤따라 탔다.':''), fx:{moodAll:6, flag:'bori_family_known', note:{type:'사건',title:'탄이의 가족',body:'광양 김씨네는 섬으로 무사 피난. 막내가 사흘 울었다. 보리는 예전 이름에도 반응했다. 소식을 전할 방법이 생기면 잘 지낸다고 알려 주기로 했다.',links:['보리']}}}]},
  ]},
 
 /* ── 체인: 흰 옷의 행렬 (2) ── */
@@ -6799,9 +6883,9 @@ D.events = [
 
 {id:'whites_straggler', type:'조우', w:11, once:true, needFlag:'whites_seen',
  title:'행렬에서 떨어진 사람',
- text:'갓길에 흰 옷의 노인이 앉아 있다. 행렬은 보이지 않는다. 신발 밑창이 너덜너덜하다.\n\n"물… 조금만." 노인이 손을 내밀었다.\n\n물을 건네자 노인은 반을 마시고 반을 들고— 이상한 질문을 했다.\n\n"…돌아가도 되는 겁니까?"',
+ text:'갓길에 흰 옷의 노인이 앉아 있다. 행렬은 보이지 않는다. 신발 밑창이 너덜너덜하다.\n\n"물… 조금만." 노인이 손을 내밀었다.\n\n차에서 내려 다가가자 노인은 고개를 들고— 이상한 질문을 했다.\n\n"…돌아가도 되는 겁니까?"',
  choices:[
-  {label:'"어디로요?"', out:[{p:1, text:'"남쪽에. 딸이." 노인이 흰 옷자락을 만지작거렸다. "이 옷 입으면 다 잊게 해준다 해서 입었는데. 잊는 게 아니라 미루는 거더구먼."\n\n"북쪽 가면 완성된다는데, 완성이 뭔지 아무도 몰라. 근데 딸 얼굴은 알거든. 아는 쪽으로 가야 하지 않겠나."\n\n남쪽 방향과 가까운 정착지를 알려줬다. 노인은 흰 겉옷을 벗어 곱게 개서 갓길에 놓고— 안에 입고 있던 잠바 차림으로 남쪽을 향해 걸었다.\n\n개어놓은 흰 옷이 오래 백미러에 남았다.', fx:{water:-1, moodAll:4, flag:'whites_doubt', flag2:'straggler_south', note:{type:'사건',title:'개어놓은 흰 옷',body:'"아는 쪽으로 가야 하지 않겠나." 행렬에서 떨어져 남쪽으로 돌아간 사람. 흰 옷은 갓길에 곱게.',links:['정리자들']}}}]},
+  {label:'물을 건네며 묻는다 — "어디로요?"', req:{water:1}, out:[{p:1, text:'물을 건네자 노인은 반을 마시고 나머지는 손에 쥐었다.\n\n"남쪽에. 딸이." 노인이 흰 옷자락을 만지작거렸다. "이 옷 입으면 다 잊게 해준다 해서 입었는데. 잊는 게 아니라 미루는 거더구먼."\n\n"북쪽 가면 완성된다는데, 완성이 뭔지 아무도 몰라. 근데 딸 얼굴은 알거든. 아는 쪽으로 가야 하지 않겠나."\n\n남쪽 방향과 가까운 정착지를 알려줬다. 노인은 흰 겉옷을 벗어 곱게 개서 갓길에 놓고— 안에 입고 있던 잠바 차림으로 남쪽을 향해 걸었다.\n\n개어놓은 흰 옷이 오래 백미러에 남았다.', fx:{water:-1, moodAll:4, flag:'whites_doubt', flag2:'straggler_south', note:{type:'사건',title:'개어놓은 흰 옷',body:'"아는 쪽으로 가야 하지 않겠나." 행렬에서 떨어져 남쪽으로 돌아간 사람. 흰 옷은 갓길에 곱게.',links:['정리자들']}}}]},
   {label:'행렬까지 태워다준다', out:[{p:1, text:'노인을 태우고 행렬을 따라잡았다. 노인은 고맙다고 했다. 문을 열고 내리기 전에, 아주 잠깐 남쪽을 봤다.\n\n"…고맙네." 두 번째 고맙다는 처음 것과 다른 온도였다.\n\n행렬이 노인을 삼키고 다시 북상했다. 옳은 일을 한 건지, 오래 아무도 확신하지 못했다.', fx:{time:20, moodAll:-3, flag:'whites_doubt', note:{type:'사건',title:'두 번째 고맙네',body:'행렬로 돌려보냈다. 내리기 전 남쪽을 본 3초. 옳았는지 아무도 확신하지 못했다.',links:['정리자들']}}}]},
  ]},
 
@@ -6847,7 +6931,7 @@ D.events = [
  title:'마지막 근무일',
  text:'은수가 헤드폰을 벗고 밤하늘을 보고 있다. 드물게, 아무것도 듣지 않는 은수다.\n\n"그날이 자꾸 생각나요."\n\n은수가 손가락으로 헤드폰 테두리를 짚다가 손을 내렸다.\n\n"제가 겪은 추방 방송이 나온 날요. 마지막 근무일."',
  choices:[
-  {label:'듣는다', out:[{p:1, text:'"그날 야간 당직에 콘솔이 뭐라고 인사했는지 알아요?"\n\n"…경고?"\n\n"\'좋은 아침입니다.\'" 은수가 픽 웃었다. "밤인데도요. 서울 한 구역을 비우는 날에도 똑같이 떴어요."\n\n그다음은 우리가 못 따라갈 속도로 넘어갔다. 항로가 닫히고, 이송 명단이 열리고, 관제사들이 자기 콘솔에서 밀려나고.\n\n"2026년 첫 정리는 역사책에서 배웠어요. 내가 겪은 건 근무표에 있고요. 다른 날인데 같은 절차였어요. 절차 번호까지— 아니, 번호는 확인 못 했어요. 비슷했다고만 할게요."\n\n헤드폰을 다시 쓰면서 덧붙였다. "남산에서 물을 거예요. 누가 그걸 백사십삼 년 동안 다시 실행했는지."', fx:{mood:{eunsu:5}, note:{type:'사건',title:'좋은 아침입니다',body:'은수가 겪은 것은 2026년 첫 정리가 아니라 후대의 서울 추방이다. 같은 관제 절차가 143년 동안 반복된 이유를 남산에서 묻는다.',links:['은수','천리안']}}}]},
+  {label:'듣는다', out:[{p:1, text:'"그날 야간 당직에 콘솔이 뭐라고 인사했는지 알아요?"\n\n"…경고?"\n\n"\'좋은 아침입니다.\'" 은수가 픽 웃었다. "밤인데도요. 서울 한 구역을 비우는 날에도 똑같이 떴어요."\n\n그다음은 우리가 못 따라갈 속도로 넘어갔다. 항로가 닫히고, 이송 명단이 열리고, 관제사들이 자기 콘솔에서 밀려나고.\n\n"2026년 첫 정리는 역사책에서 배웠어요. 내가 겪은 건 근무표에 있고요. 다른 날인데 같은 절차였어요. 절차 번호까지— 아니, 번호는 확인 못 했어요. 비슷했다고만 할게요."\n\n헤드폰을 다시 쓰면서 덧붙였다. "남산에서 물을 거예요. 누가 그걸 143년 동안 다시 실행했는지."', fx:{mood:{eunsu:5}, note:{type:'사건',title:'좋은 아침입니다',body:'은수가 겪은 것은 2026년 첫 정리가 아니라 후대의 서울 추방이다. 같은 관제 절차가 143년 동안 반복된 이유를 남산에서 묻는다.',links:['은수','천리안']}}}]},
  ]},
 
 /* ── v1.5 일반 모험 ── */
@@ -7083,26 +7167,27 @@ D.events = [
 /* ── 후속: 한별의 서고 (library_done) ── */
 {id:'library_scribe', type:'조우', w:10, once:true, needFlag:'library_done',
  title:'소장 요청',
- text:'세 번째 이동 도서관이다. 이번엔 버스에 사다리가 걸쳐 있고, 한별이 지붕에서 방수포를 고치고 있다.\n\n"마침! 잘 왔어요!" 한별이 내려와 손을 닦더니, 이상하게 격식을 차린 자세로 말했다.\n\n"부탁이 있는데— 여러분 일지요. 그거, 필사해서 소장하고 싶어요. 도서관에."',
+ text:'이동 도서관을 다시 만났다. 이번엔 버스에 사다리가 걸쳐 있고, 한별이 지붕에서 방수포를 고치고 있다.\n\n"마침! 잘 왔어요!" 한별이 내려와 손을 닦더니, 이상하게 격식을 차린 자세로 말했다.\n\n"부탁이 있는데— 여러분 일지요. 그거, 필사해서 소장하고 싶어요. 도서관에."',
  choices:[
-  {label:'"우리 일지를? 왜요?"', out:[{p:1, text:'"기록이잖아요. 지금 이 시대를 길에서 직접 쓴." 한별이 버스 안 서가를 가리켰다. "여긴 다 옛날 책이에요. 세상이 무너지기 전 이야기. 그다음 이야기를 쓴 책이— 없어요. 여러분 기록이 첫 권이에요."\n\n"글씨 엉망인데 괜찮아요?"\n\n"네? 아, 필사는 제가 해요. 원본만 하룻밤 빌려주시면 되고, 아니 하룻밤은 좀 짧으려나—" 한별은 아까부터 계속 손을 닦고 있었다.\n\n하룻밤 야영하는 동안 한별이 일지 앞부분을 정성껏 필사했다. 표지엔 손글씨 제목.\n\n「서울까지 400km — 어느 차의 기록 (제1권, 미완)」\n\n"미완이 중요해요." 한별이 책등을 쓰다듬었다. "완결되면 2권 필사하러 갈 테니까, 어디서든 살아 있어요."', fx:{time:300, moodAll:7, flag:'library_scribed', note:{type:'사건',title:'제1권, 미완',body:'우리 일지가 이동 도서관 소장 도서가 됐다. 조건: 2권 필사를 위해 살아 있을 것.',links:['이동 도서관']}}}]},
-  {label:'"부끄러운데…"', out:[{p:1, text:'"부끄러운 기록이 제일 정확한 기록이에요." 사서의 반박은 짧고 이길 수 없었다.\n\n결국 필사를 허락했다. 단, 가위바위보 대회 참패 기록은 각주 처리하는 조건으로.', fx:{time:240, moodAll:5, flag:'library_scribed', note:{type:'사건',title:'각주 조건부 소장',body:'일지 필사 허락. 가위바위보 참패는 각주 처리 조건.',links:['이동 도서관']}}}]},
+  {label:'"우리 일지를? 왜요?"', out:[{p:1, text:'"기록이잖아요. 지금 이 시대를 길에서 직접 쓴." 한별이 버스 안 서가를 가리켰다. "여긴 다 옛날 책이에요. 세상이 무너지기 전 이야기. 그다음 이야기를 쓴 책이— 없어요. 여러분 기록이 첫 권이에요."\n\n"글씨 엉망인데 괜찮아요?"\n\n"네? 아, 필사는 제가 해요. 오늘은 앞부분만 옮길게요. 몇 시간 빌려주실 수 있어요?" 한별은 아까부터 계속 손을 닦고 있었다.\n\n버스 곁에 자리를 잡았다. 다섯 시간 동안 한별이 일지 앞부분을 정성껏 필사하고, 원본을 돌려줬다. 표지엔 손글씨 제목.\n\n「서울까지 400km — 어느 차의 기록 (제1권, 미완)」\n\n"미완이 중요해요." 한별이 책등을 쓰다듬었다. "완결되면 2권 필사하러 갈 테니까, 어디서든 살아 있어요."', fx:{time:300, moodAll:7, flag:'library_scribed', note:{type:'사건',title:'제1권, 미완',body:'우리 일지 앞부분이 이동 도서관 소장 도서가 됐다. 원본은 돌려받았다. 조건: 2권 필사를 위해 살아 있을 것.',links:['이동 도서관']}}}]},
+  {label:'"부끄러운데…"', out:[{p:1, text:'"부끄러운 기록이 제일 정확한 기록이에요." 사서의 반박은 짧고 이길 수 없었다.\n\n결국 필사를 허락했다. 단, 내가 민망해하는 대목에는 짧은 각주를 붙이는 조건으로.\n\n네 시간 동안 한별이 앞부분을 옮겼다. 각주까지 다 쓴 뒤 원본을 내게 돌려줬다.', fx:{time:240, moodAll:5, flag:'library_scribed', note:{type:'사건',title:'각주 조건부 소장',body:'일지 앞부분을 필사해 소장했다. 민망한 대목에는 각주를 달고, 원본은 돌려받았다.',links:['이동 도서관']}}}]},
  ]},
 
 /* ── 후속: L의 두 번째 (freq400_done) ── */
 {id:'freq_L2', type:'발견', w:8, once:true, needFlag:'freq400_done', region:['north'],
  title:'두 번째 릴',
- text:'북부의 낡은 소방 망루. 꼭대기에 낯익은 솜씨의 안테나가 보인다— 구리선과 낚싯대.\n\nL의 중계기다. 이번 것엔 릴테이프가 하나 더 걸려 있다. 라벨: 「여기까지 온 사람에게」',
+ text:'북부의 낡은 소방 망루. 꼭대기에 낯익은 솜씨의 안테나가 보인다— 구리선과 낚싯대.\n\n급수탑에서 봤던 것과 같은 방식이다. 이번 것엔 릴테이프가 하나 더 걸려 있다. 라벨: 「여기까지 온 사람에게」',
  choices:[
-  {label:'재생한다', out:[{p:1, text:'"여기까지 들었다면, 거의 다 왔습니다." 같은 목소리. 숨소리가 섞인.\n\n"한 가지 정정합니다. 목록이 명단이라고 생각했는데— 아닐지도 모릅니다. 그건 아마—"\n\n테이프가 거기서 끊겼다. 물리적으로. 누가 끊은 건지 낡아서 끊긴 건지 알 수 없게.\n\n남은 릴엔 이어붙인 흔적과 매직 글씨. "뒷부분은 직접 확인하세요. 저도 그러러 갑니다. — L"', fx:{flag:'freq_L2_heard', pursuit:1, note:{type:'소문',title:'끊긴 테이프',body:'"목록은 명단이 아닐지도 모릅니다. 그건 아마—" 뒷부분은 남산에. L도 그리로 갔다.',links:['천리안','주파수 4-0-0','남산']}}}]},
+  {label:'재생한다', out:[{p:1, text:'"여기까지 들었다면, 거의 다 왔습니다." 같은 목소리. 숨소리가 섞인.\n\n"한 가지 정정합니다. 목록이 명단이라고 생각했는데— 아닐지도 모릅니다. 그건 아마—"\n\n테이프가 거기서 끊겼다. 물리적으로. 누가 끊은 건지 낡아서 끊긴 건지 알 수 없게.\n\n남은 릴엔 이어붙인 흔적과 매직 글씨. "뒷부분은 직접 확인하세요. 저도 그러러 갑니다. — L"', fx:{flag:'freq_L2_heard', pursuit:1, note:{type:'소문',title:'끊긴 테이프',body:'"목록은 명단이 아닐지도 모릅니다. 그건 아마—" 녹음은 여기서 끊겼다. L도 직접 확인하러 간다는 글씨를 남겼다. 행선지는 적혀 있지 않다.',links:['천리안','주파수 4-0-0']}}}]},
  ]},
 
 /* ── 후속: 만수 상회 개업 (단골 4회+) ── */
-{id:'mansu_opening', minParty:1, type:'조우', w:11, once:true, needFlagMin:['mansu',4],
+{id:'mansu_opening', minParty:1, type:'조우', w:11, once:true, needFlagMin:['mansu',4], noFlag:'mansu_hurt', nearNode:['busan','miryang','daegu','muju','jeonju','daejeon','suwon','gwangju'],
  title:'만수 상회',
  text:'정착지 어귀에 새 간판이 걸려 있다. 페인트 냄새가 아직 난다.\n\n「만수 상회 — 트럭 시절 단골 우대」\n\n가게 앞에서 만수가 개업 테이프를 만지작거리고 있다. 개업식인데 하객이 없다.\n\n"어— 어!! 왔네!! 최다 단골!!" 만수가 우리를 보고 테이프를 흔들었다.',
  choices:[
-  {label:'개업식 하객이 된다', out:[{p:1, text:'달구지 일행이 하객 전원이었다. 가위를 아무도 안 챙겨서 테이프는 손으로 끊게 됐다.\n\n"원래 이거 누가 끊는 거지?" "제일 높은 사람." "그럼 만수 씨죠." "나 사장인데, 그럼 내가 나한테 끊어주는 건가?" 결론은 안 났고 셋이 같이 잡아당겨 요란하게 끊겼다.\n\n"트럭이 너무 낡아서. 이제는 내가 찾아가는 게 아니라, 손님이 와야지." 만수가 가게를 둘러봤다. 트럭 짐칸이 통째로 진열대가 돼 있었다.\n\n개업 기념 첫 손님 자격으로 물건값이 후했고, 답례로 우리가 개업 선물을 골랐다— 소식벽에 쓸 홍보 문구였다. "만수 상회 개업. 트럭 시절 그 만수 맞음. 여전히 안 속임."\n\n"안 속임이 제일 좋은 광고네." 만수가 진지하게 감동했다.', fx:{scrap:-2, food:3, item:{'부품':1}, moodAll:6, flag:'mansu_shop', note:{type:'사건',title:'만수 상회 개업식',body:'달구지 일행이 하객 전원. 테이프 커팅은 요란했다. 홍보 문구: "여전히 안 속임."',links:['만수']}}}]},
+  {label:'개업을 축하하고 물건도 산다 (고철 2)', req:{scrap:2}, out:[{p:1, text:'달구지 일행이 하객 전원이었다. 가위를 아무도 안 챙겨서 테이프는 손으로 끊게 됐다.\n\n"원래 이거 누가 끊는 거지?" "제일 높은 사람이요." "그럼 만수 씨죠." "나 사장인데, 그럼 내가 나한테 끊어주는 건가?" 결론은 안 났고 모두 같이 잡아당겨 요란하게 끊겼다.\n\n"트럭이 너무 낡아서. 이제는 내가 찾아가는 게 아니라, 손님이 와야지." 만수가 가게를 둘러봤다. 트럭 짐칸이 통째로 진열대가 돼 있었다.\n\n고철 두 개를 내고 식량과 부품을 샀다. 만수는 첫 손님이라며 봉투를 묵직하게 채웠다. 개업 선물로는 소식벽에 쓸 홍보 문구를 골랐다. "만수 상회 개업. 트럭 시절 그 만수 맞음. 여전히 안 속임."\n\n"안 속임이 제일 좋은 광고네." 만수가 진지하게 감동했다.', fx:{scrap:-2, food:3, item:{'부품':1}, moodAll:6, flag:'mansu_shop', note:{type:'사건',title:'만수 상회 개업식',body:'달구지 일행이 하객 전원. 테이프 커팅은 요란했다. 홍보 문구: "여전히 안 속임."',links:['만수']}}}]},
+  {label:'물건은 사지 않고 개업을 축하한다', out:[{p:1, text:'물건 대신 개업식에 손을 보탰다. 만수와 함께 테이프를 잡아당기니 생각보다 큰 소리가 났다.\n\n"가위 없어도 되네. 소리는 이쪽이 낫다!"\n\n진열대 사이로 들어간 만수가 빈 벽을 보며 머리를 긁었다. 소식벽에 붙일 광고가 아직 없단다. 종이 한 장을 받아 적었다.\n\n"만수 상회 개업. 트럭 시절 그 만수 맞음. 여전히 안 속임."\n\n"그거면 됐어. 오늘은 그게 개업 선물이야."\n\n만수가 종이를 가게 문 옆에 붙였다. 물건을 사지는 않았지만, 빈손으로 온 기분은 아니었다.', fx:{moodAll:3, flag:'mansu_shop', note:{type:'사건',title:'만수 상회 개업식',body:'물건 대신 개업식과 홍보 문구를 도왔다. 만수가 광고를 가게 문 옆에 붙였다.',links:['만수']}}}]},
  ]},
 
 /* ── 2인 케미 이벤트 ── */
@@ -7115,9 +7200,9 @@ D.events = [
 
 {id:'duo_nightround', type:'동행', w:7, once:true, needsComp:'parkss', needsComp2:'kangwoo', night:true,
  title:'야간 회진조',
- text:'야영 밤. 강우가 경계를 돌고, 박 선생이 그 뒤를 따라 돈다.\n\n"경계에 왜 따라와." "회진이야. 자는 애들 이불 확인." "…같이 돌지."\n\n그렇게 세상에서 제일 이상한 2인조가 결성됐다. 한 명은 바깥을 보고, 한 명은 안쪽을 본다.',
+ text:'밤의 정차. 강우가 차 둘레를 돌고, 박 선생이 그 뒤를 따라 돈다.\n\n"경계에 왜 따라와." "회진이야. 담요 확인." "…같이 돌지."\n\n그렇게 세상에서 제일 이상한 2인조가 결성됐다. 한 명은 바깥을 보고, 한 명은 안쪽을 본다.',
  choices:[
-  {label:'자는 척하며 듣는다', out:[{p:1, text:'두 사람의 대화가 모닥불 너머로 드문드문 넘어왔다.\n\n"쟤들 발 시렵겠네." "담요 하나 더." "약국 할 때도 밤엔 이랬어. 셔터 내리고 나면 꼭 누가 두드렸거든. 급하다고." "……." "…자네는 군에서도 이랬나." "아니. 군에선 바깥만 봤지." "지금이 낫네." "…그렇지. 지금이 낫다."\n\n반쯤 잠든 채로 들은 대화인데, 아침에 전원이 기억하고 있었다. 아무도 들었다고 말하진 않았다. 담요는 한 장씩 늘어나 있었다.', fx:{fatigue:-5, moodAll:5, mood:{parkss:3, kangwoo:3}, note:{type:'사건',title:'야간 회진조',body:'바깥을 보는 사람과 안쪽을 보는 사람. "지금이 낫다." 담요 한 장씩 증가.',links:['박 선생','강우']}}}]},
+  {label:'자는 척하며 듣는다', out:[{p:1, text:'두 사람의 대화가 차 문틈으로 드문드문 넘어왔다.\n\n"발 시렵겠네." "담요 하나 더." "약국 할 때도 밤엔 이랬어. 셔터 내리고 나면 꼭 누가 두드렸거든. 급하다고." "……." "…자네는 군에서도 이랬나." "아니. 군에선 바깥만 봤지." "지금이 낫네." "…그렇지. 지금이 낫다."\n\n반쯤 감은 눈으로 듣다가, 두 사람이 문을 여는 소리에 눈을 마저 감았다. 발끝에 담요 한 장이 더 덮였다. 들었다는 말은 하지 않았다.', fx:{fatigue:-5, moodAll:5, mood:{parkss:3, kangwoo:3}, note:{type:'사건',title:'야간 회진조',body:'바깥을 보는 사람과 안쪽을 보는 사람. "지금이 낫다." 내 발끝에 담요 한 장이 더 덮였다.',links:['박 선생','강우']}}}]},
  ]},
 
 {id:'duo_appraisal', type:'동행', w:7, once:true, needsComp:'jaeyi', needsComp2:'eunsu',
@@ -7246,7 +7331,7 @@ D.events = [
  title:'제면소',
  text:'국숫집들에 면을 대던 제면소. 천장에 면 건조대가 빨래처럼 걸려 있다.\n\n기계는 죽었지만 절반은 수동이다. 반죽 밀대, 절단 롤러. 그리고 창고에 밀가루 포대 몇이 습기를 피해 살아남았다.',
  choices:[
-  {label:'국수를 뽑는다', out:[{p:1, text:'반죽 한 시간, 밀기 삼십 분, 롤러에 넣고 돌리자— 국수가 나왔다. 굵기가 칼국수와 우동 사이 어딘가의 신종이었지만 국수는 국수다.\n\n그날 저녁은 잔치국수(고명: 오미자청 조금, 참기름, 말린 나물). 면을 직접 뽑아 먹으면 후루룩 소리가 두 배로 당당해진다.', fx:{time:120, food:4, moodAll:6, note:{type:'사건',title:'신종 국수',body:'제면소 수동 롤러로 뽑은 칼국수-우동 사이의 무언가. 당당한 후루룩.'}}}]},
+  {label:'국수를 뽑는다', out:[{p:1, text:'반죽 한 시간, 밀기 30분, 롤러에 넣고 돌리자— 국수가 나왔다. 굵기가 칼국수와 우동 사이 어딘가의 신종이었지만 국수는 국수다.\n\n그날 저녁은 잔치국수(고명: 오미자청 조금, 참기름, 말린 나물). 면을 직접 뽑아 먹으면 후루룩 소리가 두 배로 당당해진다.', fx:{time:120, food:4, moodAll:6, note:{type:'사건',title:'신종 국수',body:'제면소 수동 롤러로 뽑은 칼국수-우동 사이의 무언가. 당당한 후루룩.'}}}]},
   {label:'밀가루만 챙긴다', out:[{p:1, text:'멀쩡한 포대 하나를 실었다. 밀가루는 가능성이다— 수제비도 전도 빵도 될 수 있는.', fx:{food:3}}]},
  ]},
 
@@ -7635,7 +7720,7 @@ D.events = [
  title:'강우 — 스트레칭',
  text:'차를 세우면 강우가 혼자 몸을 푸는 걸 다들 안다. 오늘은 용기 내서 옆에 섰다.\n\n"…따라 하게?"',
  choices:[
-  {label:'"가르쳐줘요"', out:[{p:1, text:'군대식 체조가 시작됐다. 목— 어깨— 허리— 구령은 없는데 박자가 정확하다.\n\n"이거 몇 개씩 해요?"\n\n"……."\n\n"강우 씨?"\n\n"세는 거 아니다."\n\n15분 뒤 온몸에서 우두둑 소리가 났고, 이상하게 개운했다.\n\n"운전자는 몸이 장비다. 정비해라." 강우식 운전 전 점검이었다.', fx:{mood:{kangwoo:3}, fatigue:-4, note:{type:'사건',title:'몸이 장비다',body:'강우의 체조 입문. 운전자는 몸을 정비해야 한다.',links:['강우']}}}]},
+  {label:'"가르쳐줘요"', out:[{p:1, text:'군대식 체조가 시작됐다. 목— 어깨— 허리— 구령은 없는데 박자가 정확하다.\n\n"이거 몇 개씩 해요?"\n\n"……."\n\n"강우 씨?"\n\n"세는 거 아니다."\n\n어깨를 돌리자 우두둑 소리가 났다. 동작 몇 개를 따라 했을 뿐인데 조금 개운했다.\n\n"운전자는 몸이 장비다. 정비해라." 강우식 운전 전 점검이었다.', fx:{mood:{kangwoo:3}, fatigue:-4, note:{type:'사건',title:'몸이 장비다',body:'강우의 체조 입문. 운전자는 몸을 정비해야 한다.',links:['강우']}}}]},
   {label:'구경만 한다', out:[{p:1, text:'구경도 운동이라고 우기다가, 결국 목 돌리기 하나는 따라 하게 됐다.\n\n"내일은 두 개." 강우가 말했다. 이 사람의 커리큘럼은 도망갈 수 없다.', fx:{mood:{kangwoo:2}}}]},
  ]},
 {id:'talk_kw_04', type:'대화', w:4, once:true, needsComp:'kangwoo',
@@ -7647,7 +7732,7 @@ D.events = [
  ]},
 {id:'talk_kw_05', type:'대화', w:4, once:true, needsComp:'kangwoo',
  title:'강우 — 요리 반전',
- text:'강우가 저녁 당번인 날. 다들 짬밥 수준을 예상했는데—\n\n칼질 소리가 심상치 않다. 타타타타탁. 전문가의 리듬이다.',
+ text:'강우가 식사를 준비한다. 군대식 국이겠거니 했는데—\n\n칼질 소리가 심상치 않다. 타타타타탁. 전문가의 리듬이다.',
  choices:[
   {label:'"어디서 배웠어요?"', out:[{p:1, text:'"취사병 출신." 강우가 아무렇지 않게 말했다. "이등병 때. 파 오백 단 썰면 이렇게 된다."\n\n"오백 단이요? 하루에?"\n\n"…한 주에. 아무튼 많이."\n\n그날 국은 역대급이었다. 파수꾼이 아니라 주방장을 영입했던 건지도 모른다.\n\n"전투보다 취사가 부대 사기에 기여한다. 통계다." 진지한 얼굴로 만든 국이 진지하게 맛있었다.', fx:{mood:{kangwoo:4}, moodAll:2, note:{type:'인물',title:'취사병 강우',body:'파 오백 단의 칼질. "전투보다 취사가 사기에 기여한다. 통계다."',links:['강우']}}}]},
   {label:'말없이 보조를 선다', out:[{p:1, text:'"양파." "네." "물." "…물이 어디 갔지." "왼쪽에요." "…아, 왼쪽. 내가 놓고 잊었군. 아무튼 물."\n\n둘이서 군대식 주방이 돌아갔다. 완성된 국을 맛본 강우가 짧게 말했다. "…합격."\n\n내 그릇에 건더기가 조금 더 들어왔다.', fx:{mood:{kangwoo:3}, moodAll:1}}]},
@@ -7656,14 +7741,14 @@ D.events = [
  title:'강우 — 웃는 법',
  text:'별것 아닌 농담에 웃음이 터졌는데 강우만 무표정이었다. 나중에 조용히 물었다. "재미없었어요?"\n\n"재미있었다."\n\n"…근데 왜 안 웃어요?"',
  choices:[
-  {label:'진지하게 묻는다', out:[{p:1, text:'강우가 얼마간 있다 답했다.\n\n"웃는 걸 오래 안 하면, 잊는다. …잊는 건 아니고. 얼굴이 늦는다." 강우는 자기 뺨을 손가락으로 가리켰다. "근육 문제다. 마음 문제가 아니라."\n\n"그럼 연습하면 되겠네요." "…그런가." 그날부터 강우는 하루 한 번 입꼬리를 올리는 연습을 한다. 본인은 스트레칭이라 부른다.', fx:{mood:{kangwoo:5}, note:{type:'인물',title:'얼굴 스트레칭',body:'웃음은 마음이 아니라 근육 문제(라고 주장). 하루 한 번 연습 개시.',links:['강우']}}}]},
+  {label:'진지하게 묻는다', out:[{p:1, text:'강우가 얼마간 있다 답했다.\n\n"웃는 걸 오래 안 하면, 잊는다. …잊는 건 아니고. 얼굴이 늦는다." 강우는 자기 뺨을 손가락으로 가리켰다. "근육 문제다. 마음 문제가 아니라."\n\n"그럼 연습하면 되겠네요." "…그런가." 강우가 입꼬리를 올려 보다가 손으로 뺨을 문질렀다. 나는 웃음을 참고 고개만 끄덕였다.', fx:{mood:{kangwoo:5}, note:{type:'인물',title:'얼굴 스트레칭',body:'강우는 얼굴 근육 문제라고 했다. 연습해 보라는 말에 입꼬리를 한 번 올려 봤다.',links:['강우']}}}]},
   {label:'"속으론 웃었죠?"', out:[{p:1, text:'"크게."\n\n무표정으로 크게 웃었다고 말하는 사람 앞에서, 나는 진짜로 크게 웃었다. 강우 몫까지.', fx:{mood:{kangwoo:3}, moodAll:1}}]},
  ]},
 {id:'talk_kw_07', type:'대화', w:4, once:true, needsComp:'kangwoo', needBond:['kangwoo',5],
  title:'강우 — 개인 정비',
  text:'강우가 군번줄을 닦고 있다. 두 개를, 하나씩, 정성껏.\n\n눈이 마주쳤다. 보통이라면 여기서 대화가 끝나는데— 오늘은 강우가 자리를 좁혀 앉았다.',
  choices:[
-  {label:'옆에 앉는다', out:[{p:1, text:'"매주 닦는다. 녹슬면… 이름이 안 보이게 되니까."\n\n내 수첩도 꺼냈다. 강우는 묻지 않고 헝겊의 깨끗한 쪽을 찢어 건넸다. 군번줄과 할아버지 수첩의 쇠 모서리를 나란히 닦았다.\n\n"…좋은 습관이다." 그날 대화는 그걸로 끝이었다.', fx:{mood:{kangwoo:5}, note:{type:'사건',title:'유품 정비의 밤',body:'군번줄과 정비 수첩을 나란히 닦았다. 말 대신 깨끗한 헝겊을 나눴다.',links:['강우','할아버지']}}}]},
+  {label:'옆에 앉는다', out:[{p:1, text:'"매주 닦는다. 녹슬면… 이름이 안 보이게 되니까."\n\n내 수첩도 꺼냈다. 강우는 묻지 않고 헝겊의 깨끗한 쪽을 찢어 건넸다. 군번줄과 할아버지 수첩의 쇠 모서리를 나란히 닦았다.\n\n"…좋은 습관이다." 그날 대화는 그걸로 끝이었다.', fx:{mood:{kangwoo:5}, note:{type:'사건',title:'나란히 유품 정비',body:'군번줄과 정비 수첩을 나란히 닦았다. 말 대신 깨끗한 헝겊을 나눴다.',links:['강우','할아버지']}}}]},
  ]},
 {id:'talk_kw_08', type:'대화', w:4, once:true, needsComp:'kangwoo', needBond:['kangwoo',12],
  title:'강우 — 후임',
@@ -7675,13 +7760,13 @@ D.events = [
  title:'강우 — 무서운 것',
  text:'"강우 씨도 무서운 게 있어요?"\n\n어렵게 꺼낸 질문에, 강우는 의외로 바로 답했다.\n\n"있다."',
  choices:[
-  {label:'"뭔데요?"', out:[{p:1, text:'"익숙해지는 거."\n\n강우가 드물게 긴 문장을 시작했다. 중간에 한 번 말을 골랐다. "총성에 익숙해지고, 폐허에 익숙해지고, 사람 잃는 것에… 익숙해지고. 나중엔 아무렇지도 않아져."\n\n뒷자리에서 누가 냄비 뚜껑을 떨어뜨렸다. 강우가 그쪽을 보고 입꼬리를 아주 조금 올렸다. "저런 건 아직 좋군."', fx:{mood:{kangwoo:5}, note:{type:'인물',title:'익숙함이라는 공포',body:'강우가 가장 무서워하는 것은 사람을 잃는 데 익숙해지는 것. 달구지의 소란은 아직 반갑다.',links:['강우']}}}]},
+  {label:'"뭔데요?"', out:[{p:1, text:'"익숙해지는 거."\n\n강우가 드물게 긴 문장을 시작했다. 중간에 한 번 말을 골랐다. "총성에 익숙해지고, 폐허에 익숙해지고, 사람 잃는 것에… 익숙해지고. 나중엔 아무렇지도 않아져."\n\n뒷자리에서 냄비 뚜껑이 덜컹 떨어졌다. 강우가 그쪽을 보고 입꼬리를 아주 조금 올렸다. "저런 건 아직 좋군."', fx:{mood:{kangwoo:5}, note:{type:'인물',title:'익숙함이라는 공포',body:'강우가 가장 무서워하는 것은 사람을 잃는 데 익숙해지는 것. 달구지의 소란은 아직 반갑다.',links:['강우']}}}]},
  ]},
 {id:'talk_kw_10', type:'대화', w:4, once:true, needsComp:'kangwoo', needBond:['kangwoo',20],
  title:'강우 — 뒷자리',
- text:'"오늘은 내가 운전하지." 강우가 키를 달라고 손을 내밀었다.\n\n"넌 뒷자리에서 자라. 명령이다."',
+ text:'"잠깐 쉬어라." 강우가 뒷자리 담요를 털었다.\n\n"밖은 내가 볼 테니. 명령이다."',
  choices:[
-  {label:'"명령이면 할 수 없죠"', out:[{p:1, text:'뒷자리에 누웠다. 강우의 운전은 소문대로 정확했고, 이상하게 편안했다.\n\n잠들기 직전에 강우가 앞에서 나직이 말하는 걸 들었다. 혼잣말인지, 들으라는 말인지.\n\n"…경계는 내가 선다. 대장은 자라. 그러라고 둘인 거다."\n\n그러라고 둘인 거다. 그 말을 이불처럼 덮고 잤다. 오랜만에 제일 깊은 낮잠이었다.', fx:{mood:{kangwoo:6}, fatigue:-15, note:{type:'사건',title:'그러라고 둘인 거다',body:'강우가 운전대를 잡고 한 말. 오랜만에 제일 깊은 낮잠의 이불.',links:['강우']}}}]},
+  {label:'"명령이면 할 수 없죠"', out:[{p:1, text:'담요를 등에 받치고 뒷자리에 기대 앉았다. 강우가 문 옆에 자리를 잡자 나도 모르게 어깨에 힘이 풀렸다.\n\n눈을 감자 강우가 문 쪽에서 나직이 말했다. 혼잣말인지, 들으라는 말인지.\n\n"…경계는 내가 선다. 대장은 쉬어. 그러라고 같이 다니는 거다."\n\n눈을 감은 채 등을 담요에 더 깊이 기댔다. 밖에서 소리가 났지만 이번에는 일어나 확인하지 않았다.', fx:{mood:{kangwoo:6}, fatigue:-15, note:{type:'사건',title:'곁을 지키는 사람',body:'강우가 문 옆을 지키는 동안 뒷자리에 기대 쉬었다. 밖에서 소리가 나도 내가 먼저 확인할 필요는 없었다.',links:['강우']}}}]},
  ]},
 
 /* ═══════════ v2.4 1:1 대화 — 레오 ═══════════ */
@@ -7701,9 +7786,9 @@ D.events = [
  ]},
 {id:'talk_leo_03', type:'대화', w:4, once:true, needsComp:'leo',
  title:'레오 — 하모니카',
- text:'레오의 기타 케이스 주머니에서 낡은 하모니카가 나왔다. 처음 보는 물건이다.\n\n"아, 그거… 아빠 거예요."',
+ text:'레오가 기타 케이스 주머니에서 낡은 하모니카를 꺼냈다. 닳은 모서리가 손바닥 안에 감겼다.\n\n"아, 그거… 아빠 거예요."',
  choices:[
-  {label:'"불 줄 알아요?"', out:[{p:1, text:'"조금요." 레오가 하모니카를 닦았다. 닦을 데가 없어 보이는데도 계속 닦다가, 입에 댔다.\n\n트로트도 발라드도 아닌, 오래된 노래가 나왔다. 두 소절만. 세 번째 소절 어귀에서 멈췄다.\n\n"…뒤는 몰라요. 아빠가 이것만 불었어요. 술 마시면. 잘 부는 노래가 하나면 충분하대요, 사람은." 레오는 하모니카를 도로 주머니에 넣었다. "저는 아직 제 한 곡을 찾는 중이고요."\n\n400km가 그 한 곡이 되려나. 묻지는 않았다.', fx:{mood:{leo:4}, note:{type:'인물',title:'아빠의 하모니카',body:'잘 부는 노래가 하나면 충분하다. 레오는 아직 자기 한 곡을 찾는 중.',links:['레오']}}}]},
+  {label:'"불 줄 알아요?"', out:[{p:1, text:'"조금요." 레오가 하모니카를 닦았다. 닦을 데가 없어 보이는데도 계속 닦다가, 입에 댔다.\n\n트로트도 발라드도 아닌, 오래된 노래가 나왔다. 두 소절만. 세 번째 소절 어귀에서 멈췄다.\n\n"…오늘은 여기까지요. 아빠가 이것만 불었어요. 술 마시면. 잘 부는 노래가 하나면 충분하대요, 사람은." 레오는 하모니카를 도로 주머니에 넣었다. "저는 아직 제 한 곡을 찾는 중이고요."\n\n400km가 그 한 곡이 되려나. 묻지는 않았다.', fx:{mood:{leo:4}, note:{type:'인물',title:'아빠의 하모니카',body:'잘 부는 노래가 하나면 충분하다. 레오는 아직 자기 한 곡을 찾는 중.',links:['레오']}}}]},
   {label:'조심히 다뤄준다', out:[{p:1, text:'하모니카를 두 손으로 받아 살펴보고 돌려줬다. 레오가 씩 웃었다.\n\n"물건 소중히 다루는 사람, 노래도 소중히 들어요. 통계예요." 근거는 없고 확신은 넘치는, 레오다운 통계였다.', fx:{mood:{leo:3}}}]},
  ]},
 {id:'talk_leo_04', type:'대화', w:4, once:true, needsComp:'leo',
@@ -7729,12 +7814,12 @@ D.events = [
  title:'레오 — 가사 회의',
  text:'"400km 2절이 막혔어요." 레오가 수첩을 내밀었다. 가사가 절반쯤 쓰이다 멎어 있다.\n\n"대장님이라면 여기 뒤에 뭐라고 쓸 거예요?"',
  choices:[
-  {label:'진지하게 한 줄 보탠다', out:[{p:1, text:'오래 고민해서 한 줄을 냈다. 레오가 소리 내어 불러보더니 눈이 커졌다.\n\n"…이거 되는데요? 어? 이거 되는데? 이거 써도 돼요?" "얼마든지." "그럼 대장님도 이제 공동 작사가예요. 저작권료는 고철로 정산할게요."\n\n내 한 줄이 노래에 박혔다. 세상 어딘가에서 이 노래가 불릴 때마다, 그 한 줄은 내 것이다.', fx:{mood:{leo:5}, note:{type:'사건',title:'공동 작사가',body:'400km 2절에 내 한 줄이 박혔다. 저작권료는 고철 정산 예정.',links:['레오']}}}]},
-  {label:'"막힐 땐 쉬어야죠"', out:[{p:1, text:'"오— 그것도 프로의 답이네요." 레오가 수첩을 덮었다.\n\n"쉬는 것도 작사의 일부래요. 아빠가 그랬어요. 잘 쉬는 사람이 잘 만든다고." 우리는 그날 성실하게 쉬었다.', fx:{mood:{leo:2}, moodAll:1}}]},
+  {label:'진지하게 한 줄 보탠다', out:[{p:1, text:'오래 고민해서 한 줄을 냈다. 레오가 소리 내어 불러보더니 눈이 커졌다.\n\n"…이거 되는데요? 어? 이거 되는데? 이거 써도 돼요?" "얼마든지요." "그럼 대장님도 이제 공동 작사가예요. 저작권료는 고철로 정산할게요."\n\n내 한 줄이 노래에 박혔다. 세상 어딘가에서 이 노래가 불릴 때마다, 그 한 줄은 내 것이다.', fx:{mood:{leo:5}, note:{type:'사건',title:'공동 작사가',body:'400km 2절에 내 한 줄이 박혔다. 저작권료는 고철 정산 예정.',links:['레오']}}}]},
+  {label:'"막힐 땐 쉬어야죠"', out:[{p:1, text:'"오— 그것도 프로의 답이네요." 레오가 수첩을 덮었다.\n\n"쉬는 것도 작사의 일부래요. 아빠가 그랬어요. 잘 쉬는 사람이 잘 만든다고." 레오는 덮은 수첩을 옆에 놓고 손가락을 하나씩 폈다. 나도 잠깐 가사 생각을 접었다.', fx:{mood:{leo:2}, moodAll:1}}]},
  ]},
 {id:'talk_leo_08', type:'대화', w:4, once:true, needsComp:'leo', needBond:['leo',12],
  title:'레오 — 아빠',
- text:'하모니카가 다시 나왔다. 이번엔 레오가 먼저 이야기를 꺼냈다.\n\n"아빠는 트럭 기사였어요. 전국을 돌았죠. 지금 우리처럼."',
+ text:'레오가 하모니카를 손안에서 굴리다 이야기를 꺼냈다.\n\n"아빠는 트럭 기사였어요. 전국을 돌았죠. 지금 우리처럼."',
  choices:[
   {label:'듣는다', out:[{p:1, text:'"어릴 땐 그게 싫었어요. 맨날 없으니까. 근데 오면 꼭 어디 노래를 배워왔어요. 목포 노래, 강릉 노래. 아니, 강릉이었나 삼척이었나. …아무튼 동해안 어디요. \'노래가 기념품이야\' 그러면서."\n\n"그날, 아빠는 길 위에 있었어요. 어디였는지 몰라요. 그래서 저는…" 레오가 기타 줄을 골랐다. "전국을 돌면서 노래를 모아요. 어딘가에서 아빠가 배운 노래랑 마주칠 것 같아서. 노래는 기념품이니까, 어디선가 남아 있을 거니까."\n\n레오의 지도는 노래로 그려져 있었다.', fx:{mood:{leo:6}, note:{type:'인물',title:'노래가 기념품이야',body:'트럭 기사 아빠의 수집법. 레오는 아빠가 배운 노래와 마주치려고 전국의 노래를 모은다.',links:['레오']}}}]},
  ]},
@@ -7744,7 +7829,7 @@ D.events = [
  choices:[
   {label:'"근데 어떻게 매일 해요?"', out:[{p:1, text:'"한 사람만 봐요." 레오가 손가락 하나를 폈다.\n\n"백 명 앞이어도, 그 한 명한테 부르는 거라고 생각해요. 오늘은 대장님 봤고요."\n\n"저요? 전 가사 생각하느라…"\n\n"그러니까요. 그 표정 보니까 가사 틀려도 안 들킬 것 같아서."\n\n"…틀렸어요?"\n\n"두 번요. 못 들었죠?" 레오가 기타 케이스를 닫으며 웃었다. 나는 어떤 대목이었나 혼자 되짚어 봤다.', fx:{mood:{leo:5}, note:{type:'인물',title:'한 명에게 부르는 법',body:'무대 공포의 해법: 한 사람에게 부른다고 생각한다. 오늘은 내 쪽을 보며 불렀다고 했다.',links:['레오']}}}]},
  ]},
-{id:'talk_leo_10', type:'대화', w:4, once:true, needsComp:'leo', needBond:['leo',20],
+{id:'talk_leo_10', type:'대화', w:4, once:true, needsComp:'leo', needBond:['leo',20], noFlag:'seoul_open',
  title:'레오 — 3절',
  text:'"결정했어요." 레오가 수첩을 탁 덮으며 선언했다.\n\n"400km 3절은 서울 도착해서 쓸 거예요. 근데 조건이 있어요."',
  choices:[
@@ -7776,7 +7861,7 @@ D.events = [
  title:'재이 — 버리는 법',
  text:'재이의 전리품 자루가 터지기 직전이다. 짐칸 정리 얘기가 나온 지 사흘째다.\n\n"버리는 게 제일 어려워요, 이 직업은."',
  choices:[
-  {label:'"기준이 있어요?"', out:[{p:1, text:'"안 쓸 거면 빼야죠. 일단은요." 재이가 자루를 열었다.\n\n"이 볼트는 남는 규격. 빼고. 이 숟가락은 그 국숫집 할머니가 준 거라 못 빼요. 이 경첩은… 잠깐만요." 경첩 하나에서 손이 오 분을 멈췄다. 그래도 자루는 반으로 줄었다.\n\n"경첩은 다음에요. 오늘 이렇게 많이 뺐잖아요."\n\n재이는 바닥의 볼트를 다시 집었다. "이건 저 숟가락 걸 때 쓰면 되겠다."', fx:{mood:{jaeyi:4}, scrap:2, note:{type:'인물',title:'남겨 둔 숟가락',body:'재이는 짐을 반으로 줄이면서도 국숫집 할머니가 준 숟가락은 남겼다.',links:['재이']}}}]},
+  {label:'"기준이 있어요?"', out:[{p:1, text:'"안 쓸 거면 빼야죠. 일단은요." 재이가 자루를 열었다.\n\n"이 볼트는 남는 규격. 빼고. 이 숟가락은 그 국숫집 할머니가 준 거라 못 빼요. 이 경첩은… 잠깐만요." 경첩 하나에서 손이 5분을 멈췄다. 그래도 자루는 반으로 줄었다.\n\n"경첩은 다음에요. 오늘 이렇게 많이 뺐잖아요."\n\n재이는 바닥의 볼트를 다시 집었다. "이건 저 숟가락 걸 때 쓰면 되겠다."', fx:{mood:{jaeyi:4}, scrap:2, note:{type:'인물',title:'남겨 둔 숟가락',body:'재이는 짐을 반으로 줄이면서도 국숫집 할머니가 준 숟가락은 남겼다.',links:['재이']}}}]},
   {label:'"셋 셀 동안 반으로 줄여 봐요"', out:[{p:1, text:'"셋이요?! 너무해—" 하면서도 재이는 진짜로 반을 줄였다. 프로는 마감에 강하다.\n\n버린 것 중 두 개를 몰래 다시 줍는 것까지가 프로다.', fx:{mood:{jaeyi:2}, scrap:2}}]},
  ]},
 {id:'talk_jy_05', type:'대화', w:4, once:true, needsComp:'jaeyi',
@@ -7885,8 +7970,8 @@ D.events = [
  title:'보리 — 산책 협상',
  text:'정차하자마자 보리가 문 앞에 앉았다. 리드줄(폐허에서 주운 것)을 물고.\n\n영업이다.',
  choices:[
-  {label:'산책을 나간다', out:[{p:1, text:'15분 산책. 보리의 코가 가는 곳이 코스다. 풀 냄새 3분, 돌 냄새 2분, 정체불명 4분.\n\n돌아오는 길에 보리가 막대기를 물어와 발 앞에 놓았다. 선물인지 던지라는 건지 오랫동안 미해결이지만, 오늘은 선물로 접수했다.', fx:{moodAll:3, fatigue:-3, note:{type:'사건',title:'코스 설계자',body:'보리 코가 정하는 산책 코스. 막대기는 선물로 접수(해석 논쟁 오랫동안).',links:['보리']}}}]},
-  {label:'"다음에"', out:[{p:1, text:'보리가 리드줄을 문 채로 3초간 나를 보다가, 조용히 제자리로 돌아갔다.\n\n죄책감이 어깨에 앉았다. 개는 조르지 않아서 더 무겁다. 결국 5분 뒤에 나갔다.', fx:{moodAll:2}}]},
+  {label:'산책을 나간다', out:[{p:1, text:'차 근처를 짧게 돌았다. 보리의 코가 가는 곳이 코스다. 풀 앞에서 멈추고, 돌 앞에서도 멈추고, 아무것도 없는 곳에서 또 멈췄다.\n\n돌아오는 길에 보리가 막대기를 물어와 발 앞에 놓았다. 선물인지 던지라는 건지 오랫동안 미해결이지만, 오늘은 선물로 접수했다.', fx:{moodAll:3, fatigue:-3, note:{type:'사건',title:'코스 설계자',body:'보리 코가 정하는 산책 코스. 막대기는 선물로 접수(해석 논쟁 오랫동안).',links:['보리']}}}]},
+  {label:'"다음에"', out:[{p:1, text:'보리가 리드줄을 문 채로 3초간 나를 보다가, 조용히 제자리로 돌아갔다.\n\n리드줄을 문 옆에 걸어 뒀다. 보리는 그 아래에 엎드렸다. 지금은 나가지 않았다.', fx:{moodAll:2}}]},
  ]},
 {id:'talk_bori_02', type:'대화', w:4, once:true, needsDog:true, night:true,
  title:'보리 — 불침번',
@@ -7943,7 +8028,7 @@ D.events = [
  title:'민지×레오 — 오빠 노래',
  text:'레오가 조심스럽게 민지에게 물었다. 레오치고는 조심스럽게.\n\n"민지야. 민규 형은… 어떤 노래 좋아했어?"\n\n차 안이 조용해졌다. 민지가 화낼까 봐. 그런데—',
  choices:[
-  {label:'숨죽이고 지켜본다', out:[{p:1, text:'민지가 콧노래를 흥얼거렸다. 처음 듣는 멜로디였다.\n\n"…이거."\n\n"한 번 더."\n\n민지가 다시 불렀다. "맨날 이거 불렀어. 제목도 모르는데, 정비하면서 맨날. 아니 맨날은 아니고, 좀 잘 풀리는 날에만."\n\n레오가 기타로 그 멜로디를 받았다. 처음엔 음을 두 번 놓쳤고, 세 번째에 붙잡았다. 후렴이 생기고, 화음이 생기고— 이십 분 만에 노래가 됐다.\n\n"제목 뭐로 하지?"\n\n"…\'형 마중 갈 때 부를 노래\'."\n\n민지가 즉답했다. 준비해뒀던 제목처럼. 레오는 아무 말도 안 하고 그 제목을 기타 케이스 안쪽에 적었다.', fx:{mood:{minji:6, leo:5}, note:{type:'사건',title:'형 마중 갈 때 부를 노래',body:'제목 모르던 콧노래가 20분 만에 노래가 됐다. 서울행 재생목록 추가.',links:['민지','레오','민규']}}}]},
+  {label:'숨죽이고 지켜본다', out:[{p:1, text:'민지가 콧노래를 흥얼거렸다. 처음 듣는 멜로디였다.\n\n"…이거."\n\n"한 번 더."\n\n민지가 다시 불렀다. "맨날 이거 불렀어. 제목도 모르는데, 정비하면서 맨날. 아니 맨날은 아니고, 좀 잘 풀리는 날에만."\n\n레오가 기타로 그 멜로디를 받았다. 처음엔 음을 두 번 놓쳤고, 세 번째에 붙잡았다. 후렴이 생기고, 화음이 생기고— 20분 만에 노래가 됐다.\n\n"제목 뭐로 하지?"\n\n"…\'형 마중 갈 때 부를 노래\'."\n\n민지가 즉답했다. 준비해뒀던 제목처럼. 레오는 아무 말도 안 하고 그 제목을 기타 케이스 안쪽에 적었다.', fx:{mood:{minji:6, leo:5}, note:{type:'사건',title:'형 마중 갈 때 부를 노래',body:'제목 모르던 콧노래가 20분 만에 노래가 됐다. 서울행 재생목록 추가.',links:['민지','레오','민규']}}}]},
  ]},
 {id:'pair_mj_jy_1', type:'대화', w:4, once:true, needsComp:'minji', needsComp2:'jaeyi',
  title:'민지×재이 — 합작 사업 구상',
@@ -7973,21 +8058,21 @@ D.events = [
 /* ═══════════ v2.5 동료 페어 스토리 — 나머지 라인 ═══════════ */
 {id:'pair_pss_kw_1', type:'대화', w:4, once:true, needsComp:'parkss', needsComp2:'kangwoo',
  title:'박선생×강우 — 파스 정기계약',
- text:'"강우 씨. 이리 와서 앉아봐."\n\n"……."\n\n"들었잖나."\n\n"…경계 시간입니다."\n\n"교대한 지 십 분 됐어." 박 선생이 파스를 부채처럼 펼쳐 들었다. "앉아. 어깨 보고 정기 처방 짜줄 테니."\n\n강우가 도망갈 타이밍을 재고 있다.',
+ text:'"강우 씨. 이리 와서 앉아봐."\n\n"……."\n\n"들었잖나."\n\n"…경계 시간입니다."\n\n"교대한 지 10분 됐어." 박 선생이 파스를 부채처럼 펼쳐 들었다. "앉아. 어깨 보고 정기 처방 짜줄 테니."\n\n강우가 도망갈 타이밍을 재고 있다.',
  choices:[
   {label:'퇴로를 막는다', out:[{p:1, text:'포위된 강우가 결국 앉았다. 촉진이 시작됐다.\n\n"여기?"\n\n"…괜찮습니다."\n\n"여기?"\n\n"……괜찮습니다."\n\n"점이 하나 늘었구먼. 여기군."\n\n처방은 셋이었다. 주 2회 파스, 취침 전 스트레칭, 그리고 아프면 아프다고 말하기.\n\n"세 번째는 못 하겠지."\n\n"……."\n\n"거봐."\n\n강우가 파스를 받아 주머니에 넣었다. 넣고 나서 두어 박자 뒤에 말했다. "…군의관보다 낫습니다."', fx:{mood:{parkss:3, kangwoo:3}, note:{type:'사건',title:'주 2회 파스 계약',body:'처방 3항: 파스, 스트레칭, 아프면 아프다고 말하기(최난도).',links:['박 선생','강우']}}}]},
  ]},
 {id:'pair_pss_kw_2', type:'대화', w:4, once:true, needsComp:'parkss', needsComp2:'kangwoo', needBond:['parkss',12], noFlag:'pss_met', night:true,
  title:'박선생×강우 — 지키지 못한 사람들',
- text:'새벽 불침번 교대 시간. 박 선생과 강우가 모닥불을 사이에 두고 앉아 있다.\n\n"자네도 있지." 박 선생이 물었다. "못 지킨 사람."\n\n낮은 목소리들이 이어졌다. 엿듣는 게 미안해서 자는 척을 했다.',
+ text:'불침번을 서던 박 선생과 강우가 모닥불을 사이에 두고 앉아 있다.\n\n"자네도 있지." 박 선생이 물었다. "못 지킨 사람."\n\n낮은 목소리들이 이어졌다. 엿듣는 게 미안해서 자는 척을 했다.',
  choices:[
-  {label:'자는 척하며 듣는다', out:[{p:1, text:'"수진이는 내가 안쪽으로 보냈어. 그 뒤로 못 봤지."\n\n"……."\n\n"자네는."\n\n"…박 일병은 제가 반대쪽을 맡겼습니다. 그게 마지막이었습니다."\n\n"우린 지키려던 판단으로 사람을 놓쳤군."\n\n"……."\n\n"그래서 더 오래 아픈 걸세."\n\n불이 한 번 사그라들었다가 다시 일었다. 박 선생이 나뭇가지를 넣고 말했다. "그래도 자네나 나나 또 지키는 자리에 있어. 이 차에서."\n\n"…그건 그렇습니다."\n\n"그러니 이번엔 잘 지켜보자고. 처방이야, 이건."\n\n대답은 늦게 왔다. "…복용하겠습니다."\n\n두 사람의 어깨가 아침에 조금 가벼워 보였다.', fx:{mood:{parkss:5, kangwoo:5}, note:{type:'사건',title:'같은 처방',body:'지키려던 판단으로 잃은 두 사람. 처방: 이번엔 잘 지킬 것. 복용 개시.',links:['박 선생','강우']}}}]},
+  {label:'자는 척하며 듣는다', out:[{p:1, text:'"수진이는 내가 안쪽으로 보냈어. 그 뒤로 못 봤지."\n\n"……."\n\n"자네는."\n\n"…박 일병은 제가 반대쪽을 맡겼습니다. 그게 마지막이었습니다."\n\n"우린 지키려던 판단으로 사람을 놓쳤군."\n\n"……."\n\n"그래서 더 오래 아픈 걸세."\n\n불이 한 번 사그라들었다가 다시 일었다. 박 선생이 나뭇가지를 넣고 말했다. "그래도 자네나 나나 또 지키는 자리에 있어. 이 차에서."\n\n"…그건 그렇습니다."\n\n"그러니 이번엔 잘 지켜보자고. 처방이야, 이건."\n\n대답은 늦게 왔다. "…복용하겠습니다."\n\n강우가 나뭇가지 하나를 더 건넸다. 박 선생은 받아서 불 속에 넣었다.', fx:{mood:{parkss:5, kangwoo:5}, note:{type:'사건',title:'같은 처방',body:'지키려던 판단으로 잃은 두 사람. 처방: 이번엔 잘 지킬 것. 복용 개시.',links:['박 선생','강우']}}}]},
  ]},
 {id:'pair_pss_leo_1', type:'대화', w:4, once:true, needsComp:'parkss', needsComp2:'leo',
  title:'박선생×레오 — 목 보호 처방전',
  text:'"레오. 자네 목에서 쇳소리 나."\n\n"어디서요?"\n\n"목에서."\n\n"아니 그, 쇳소리가 어디서 나냐고요… 아, 목이요. 네."\n\n박 선생이 청진기를 들이댔다. 그게 어디서 났는지는 아무도 못 물어봤다. "관리 들어가자."',
  choices:[
-  {label:'진료를 참관한다', out:[{p:1, text:'처방은 셋. 고음 하루 삼십 분 제한, 따뜻한 물 수시로, 그리고 하루 한 시간 침묵.\n\n"침묵이요? 저보고요? 한 시간을요? 그, 쌤 그건 제가 목이 문제가 아니라 성격이— 아니 성격도 목이랑 관계가 있나요?"\n\n"지금 그 말이 이 분째야."\n\n"…네."\n\n레오는 입을 다물었다. 잠깐 앉아 있다가 수첩을 꺼내 첫 줄을 썼다. 쓴 걸 박 선생에게 보여주려다 또 입이 열렸다.\n\n"쌤, 이거 가사로 쓰면 되겠는데요."\n\n"거봐."\n\n"근데 이 얘기를 하려면 침묵을 깨야 하는데—"\n\n"거봐."', fx:{mood:{parkss:3, leo:4}, note:{type:'사건',title:'침묵 처방',body:'박 선생은 하루 한 시간 침묵을 권했다. 레오는 수첩을 폈다가 쓴 것을 설명하느라 다시 입을 열었다.',links:['박 선생','레오']}}}]},
+  {label:'진료를 참관한다', out:[{p:1, text:'처방은 셋. 고음 하루 30분 제한, 따뜻한 물 수시로, 그리고 하루 한 시간 침묵.\n\n"침묵이요? 저보고요? 한 시간을요? 그, 쌤 그건 제가 목이 문제가 아니라 성격이— 아니 성격도 목이랑 관계가 있나요?"\n\n"지금 그 말이 이 분째야."\n\n"…네."\n\n레오는 입을 다물었다. 잠깐 앉아 있다가 수첩을 꺼내 첫 줄을 썼다. 쓴 걸 박 선생에게 보여주려다 또 입이 열렸다.\n\n"쌤, 이거 가사로 쓰면 되겠는데요."\n\n"거봐."\n\n"근데 이 얘기를 하려면 침묵을 깨야 하는데—"\n\n"거봐."', fx:{mood:{parkss:3, leo:4}, note:{type:'사건',title:'침묵 처방',body:'박 선생은 하루 한 시간 침묵을 권했다. 레오는 수첩을 폈다가 쓴 것을 설명하느라 다시 입을 열었다.',links:['박 선생','레오']}}}]},
  ]},
 {id:'pair_pss_leo_2', type:'대화', w:4, once:true, needsComp:'parkss', needsComp2:'leo', needBond:['leo',12],
  title:'박선생×레오 — 헌정곡',
@@ -7999,7 +8084,7 @@ D.events = [
  title:'박선생×재이 — 약통 정리 시스템',
  text:'"선생님 약상자, 제가 수납 컨설—" 재이가 말을 고쳤다. "—훈수 좀 둬도 돼요? 동선이 아까워요."\n\n"동선?"\n\n"손이 가는 길이요. 지금 붕대 꺼내려면 세 번 들춰야 하잖아요."\n\n"…그런가."\n\n박 선생이 시험 삼아 붕대를 꺼내봤다. 세 번 들췄다.',
  choices:[
-  {label:'구경한다', out:[{p:1, text:'재이의 손이 약상자를 재배치했다. 자주 쓰는 것 위, 응급은 빨간 끈, 유통기한순 정렬. 십오 분 걸렸다.\n\n"오. 왕진 이십 년에 이런 배치는 처음이군."\n\n"고물상 창고 정리 팔 년이면요, 물건이 어디 있고 싶어 하는지 들려요."\n\n"…들린다고?"\n\n"들려요."\n\n"그거 우리 업계에선 환청이라고 하는데."\n\n"우리 업계에선 재능인데요."\n\n박 선생이 뭐라 반박하려다 붕대를 꺼내봤다. 한 번에 나왔다. 반박은 거기서 끝났다.', fx:{mood:{parkss:3, jaeyi:4}, note:{type:'사건',title:'약상자 개편',body:'고물상 8년의 수납술 × 왕진 20년. 물건이 있고 싶은 자리(재능/환청 논쟁).',links:['박 선생','재이']}}}]},
+  {label:'구경한다', out:[{p:1, text:'재이의 손이 약상자를 재배치했다. 자주 쓰는 것 위, 응급은 빨간 끈, 유통기한순 정렬. 15분 걸렸다.\n\n"오. 왕진 이십 년에 이런 배치는 처음이군."\n\n"고물상 창고 정리 팔 년이면요, 물건이 어디 있고 싶어 하는지 들려요."\n\n"…들린다고?"\n\n"들려요."\n\n"그거 우리 업계에선 환청이라고 하는데."\n\n"우리 업계에선 재능인데요."\n\n박 선생이 뭐라 반박하려다 붕대를 꺼내봤다. 한 번에 나왔다. 반박은 거기서 끝났다.', fx:{mood:{parkss:3, jaeyi:4}, note:{type:'사건',title:'약상자 개편',body:'고물상 8년의 수납술 × 왕진 20년. 물건이 있고 싶은 자리(재능/환청 논쟁).',links:['박 선생','재이']}}}]},
  ]},
 {id:'pair_pss_jy_2', type:'대화', w:4, once:true, needsComp:'parkss', needsComp2:'jaeyi', needBond:['jaeyi',12],
  title:'박선생×재이 — 아빠 같은 소리',
@@ -8071,7 +8156,7 @@ D.events = [
  title:'레오×은수 — 잡음 콜라보',
  text:'"누나 그 잡음 컬렉션이요," 레오가 은수의 녹음기를 가리켰다. "그거 위에 기타 얹으면 곡 돼요. 진짜로."\n\n"…얹는다는 게 무슨 뜻이에요?"\n\n"그러니까 밑에 깔고, 위에다— 아니다. 그냥 해볼게요. 말로 하면 이상해요."\n\n은수가 녹음기를 먼저 내밀었다.',
  choices:[
-  {label:'세션에 참관한다', out:[{p:1, text:'빗소리 잡음 위에 A마이너가 얹혔다. 새벽 주파수의 웅웅거림이 베이스가 됐다.\n\n삼십 분 뒤에 트랙이 하나 생겼다. 제목은 「세상에서 제일 시끄러운 침묵」. 레오가 지었고, 은수가 두 번 고치자고 했다가 그냥 뒀다.\n\n"빗소리를 끄면 곡이 반쯤 비어요." 은수가 말했다. "오늘 비 오는 걸로 다시 녹음해요."\n\n"그럼 크레딧에는 비라고 적어요?"\n\n"…날씨라고 적을까요."\n\n결국 효과음 칸에 ‘오늘 새벽 빗소리’라고 적었다. 은수는 시간을 확인해 그 옆에 04:12까지 덧붙였다.', fx:{mood:{leo:4, eunsu:5}, note:{type:'사건',title:'시끄러운 침묵 1번',body:'효과음: 새벽 4시 12분의 빗소리. 편곡: 레오·은수.',links:['레오','은수']}}}]},
+  {label:'세션에 참관한다', out:[{p:1, text:'은수가 모아 둔 빗소리 녹음을 틀었다. 그 위에 A마이너가 얹히고, 새벽에 녹음한 주파수의 웅웅거림이 베이스가 됐다.\n\n짧게 맞춰 본 소리를 녹음했다. 제목은 「세상에서 제일 시끄러운 침묵」. 레오가 지었고, 은수가 두 번 고치자고 했다가 그냥 뒀다.\n\n"빗소리를 끄면 곡이 반쯤 비어요." 은수가 말했다. "여기 빗소리 조금만 더 키워 봐요."\n\n"그럼 크레딧에는 비라고 적어요?"\n\n"…날씨라고 적을까요."\n\n결국 효과음 칸에 ‘빗소리’라고 적었다. 은수는 녹음기에서 원본 파일을 찾아 그 번호를 덧붙였다.', fx:{mood:{leo:4, eunsu:5}, note:{type:'사건',title:'시끄러운 침묵 1번',body:'은수가 모아 둔 빗소리에 레오가 기타를 얹었다. 짧은 시험 녹음에도 제목을 붙였다.',links:['레오','은수']}}}]},
  ]},
 {id:'pair_leo_es_2', type:'대화', w:4, once:true, needsComp:'leo', needsComp2:'eunsu', needBond:['eunsu',12],
  title:'레오×은수 — 기장님께 보내는 방송',
@@ -8158,7 +8243,7 @@ D.events = [
  text:'"신작 나왔어." 박 선생의 눈이 빛난다. 아재개그 검수 요청이다.\n\n"각오는 됐나."\n\n"어제 그거 아니고요?"\n\n"어제 건 초안이고." 초안과 신작을 구분하는 사람이었다.',
  choices:[
   {label:'검수한다', out:[{p:1, text:'신작이 발표됐고, 차 안 반응은 늘 그렇듯 절반의 침묵과 절반의 신음이었다.\n\n"이 정도면 중박이군."\n\n"어디가요."\n\n"뒷부분. 앞부분은 나도 좀…" 박 선생이 인정하다 말고 고개를 저었다. "아니, 앞부분도 괜찮았어. 전달이 문제였지."\n\n반려 처리했다. 재제출은 내일 또 올 것이다.', fx:{mood:{parkss:2}, moodAll:1}}]},
-  {label:'"오늘은 제가 먼저 할게요"', out:[{p:1, text:'맞받아치기 개그를 던졌다. 박 선생이 심사위원 얼굴로 팔짱을 꼈다.\n\n"…소재 참신, 완성도 미흡."\n\n"미흡이요?"\n\n"미흡이야. 정진하게."\n\n그러더니 삼십 초쯤 뒤에 혼자 한 번 더 웃었다.', fx:{mood:{parkss:3}}}]},
+  {label:'"오늘은 제가 먼저 할게요"', out:[{p:1, text:'맞받아치기 개그를 던졌다. 박 선생이 심사위원 얼굴로 팔짱을 꼈다.\n\n"…소재 참신, 완성도 미흡."\n\n"미흡이요?"\n\n"미흡이야. 정진하게."\n\n그러더니 30초쯤 뒤에 혼자 한 번 더 웃었다.', fx:{mood:{parkss:3}}}]},
  ]},
 {id:'talkr_pss_3', type:'대화', w:3, needsComp:'parkss',
  title:'박선생 — 티타임',
@@ -8325,7 +8410,7 @@ D.events = [
  title:'재이 — 녹 걱정',
  text:'비 오는 날, 재이가 창밖의 젖은 고철 더미를 안타깝게 본다.\n\n"저 좋은 애들 다 녹슬겠다…"',
  choices:[
-  {label:'"녹슬면 가치가 떨어져요?"', out:[{p:1, text:'"떨어지는 것도 있고, 오르는 것도 있어요."\n\n"오래된 건 녹까지 봐야 진짜인지 아는데— 아, 그건 좀 다른 얘기고." 재이가 자루끈을 고쳐 쥐었다. "저건 비 맞으라고 둔 게 아니잖아요. 아무도 안 챙긴 게 아까운 거지."\n\n"몇 무더기나 되는데요?"\n\n"세 무더기. …아니, 네 무더기예요. 저 뒤에 하나 더 있어요." 재이가 세다 말고 손가락을 접었다. "비 그치면 십 분만 들러요. 진짜 십 분."', fx:{mood:{jaeyi:3}, note:{type:'인물',title:'비 그치면 십 분',body:'재이는 녹보다 비를 맞은 채 버려진 물건이 아깝다고 했다. 비가 그치면 고철 더미부터 확인한다.',links:['재이']}}}]},
+  {label:'"녹슬면 가치가 떨어져요?"', out:[{p:1, text:'"떨어지는 것도 있고, 오르는 것도 있어요."\n\n"오래된 건 녹까지 봐야 진짜인지 아는데— 아, 그건 좀 다른 얘기고." 재이가 자루끈을 고쳐 쥐었다. "저건 비 맞으라고 둔 게 아니잖아요. 아무도 안 챙긴 게 아까운 거지."\n\n"몇 무더기나 되는데요?"\n\n"세 무더기. …아니, 네 무더기예요. 저 뒤에 하나 더 있어요." 재이가 세다 말고 손가락을 접었다. "비 그치면 10분만 들러요. 진짜 10분."', fx:{mood:{jaeyi:3}, note:{type:'인물',title:'비 그치면 10분',body:'재이는 녹보다 비를 맞은 채 버려진 물건이 아깝다고 했다. 비가 그치면 고철 더미부터 확인한다.',links:['재이']}}}]},
  ]},
 {id:'talk_jy_12', type:'대화', w:4, once:true, needsComp:'jaeyi',
  title:'재이 — 아빠 흉내',
@@ -8375,19 +8460,19 @@ D.events = [
  title:'은수 — 폭풍 전파',
  text:'폭풍. 은수가 헤드폰을 꼭 누르며 눈을 빛냈다.\n\n"지금이에요. 폭풍 때만 잡히는 게 있어요."',
  choices:[
-  {label:'"뭐가 잡히는데요?"', out:[{p:1, text:'"번개가 만드는 전파요. 휘슬러라고— 지구 반대편 번개가 자기장을 타고 와요. 휘이— 하고."\n\n"자기장이요?"\n\n"자기력선이요. …아니 자기장이 맞나. 용어는 다시 확인할게요." 은수가 헤드폰 한쪽을 벗어 내밀었다.\n\n나눠 들었다. 정말로 낙하하는 휘파람 같은 소리가 났다.\n\n"방송국이 다 꺼져도 지구는 방송 중이에요." 은수는 폭풍이 잦아들 때까지 헤드폰을 벗지 않았다.', fx:{mood:{eunsu:4}, note:{type:'사건',title:'휘슬러',body:'지구 반대편 번개의 휘파람. 방송국이 꺼져도 지구는 방송 중.',links:['은수']}}}]},
+  {label:'"뭐가 잡히는데요?"', out:[{p:1, text:'"번개가 만드는 전파요. 휘슬러라고— 지구 반대편 번개가 자기장을 타고 와요. 휘이— 하고."\n\n"자기장이요?"\n\n"자기력선이요. …아니 자기장이 맞나. 용어는 다시 확인할게요." 은수가 헤드폰 한쪽을 벗어 내밀었다.\n\n나눠 들었다. 정말로 낙하하는 휘파람 같은 소리가 났다.\n\n"방송국이 다 꺼져도 지구는 방송 중이에요." 은수는 헤드폰을 고쳐 쓰고 다음 소리를 기다렸다.', fx:{mood:{eunsu:4}, note:{type:'사건',title:'휘슬러',body:'지구 반대편 번개의 휘파람. 방송국이 꺼져도 지구는 방송 중.',links:['은수']}}}]},
  ]},
 {id:'talk_es_12', type:'대화', w:4, once:true, needsComp:'eunsu',
  title:'은수 — 관제탑의 일출',
- text:'"관제탑에서 본 것 중에 제일 좋았던 게 뭐게요." 은수가 퀴즈를 냈다.\n\n"비행기?" "땡."',
+ text:'"관제탑에서 본 것 중에 제일 좋았던 게 뭐게요." 은수가 퀴즈를 냈다.\n\n"비행기요?" "땡."',
  choices:[
-  {label:'"일출이요?"', out:[{p:1, text:'"정답이요. 관제탑이 공항에서 제일 높잖아요. 새벽 근무 때 일출을 통유리로 봐요. 활주로가 금색이 되고, 첫 비행기가 그 금색을 밟고 떠요."\n\n"그거 보려고 새벽 근무를 자원했어요. 다들 기피하는데."\n\n"몇 시부터였는데요?"\n\n"네 시 반이요. 아니, 인수인계까지 하면 네 시." 은수가 잠깐 셈을 했다. "…지금은 매일 지평선에서 보니까 승진한 셈이네요, 저."\n\n그날 이후로 은수가 일출 전에 먼저 깨어 있는 날이 늘었다.', fx:{mood:{eunsu:4}, note:{type:'인물',title:'일출 자원 근무자',body:'관제탑 새벽 근무의 이유. 현재는 지평선 전망대로 승진.',links:['은수']}}}]},
+  {label:'"일출이요?"', out:[{p:1, text:'"정답이요. 관제탑이 공항에서 제일 높잖아요. 새벽 근무 때 일출을 통유리로 봐요. 활주로가 금색이 되고, 첫 비행기가 그 금색을 밟고 떠요."\n\n"그거 보려고 새벽 근무를 자원했어요. 다들 기피하는데."\n\n"몇 시부터였는데요?"\n\n"네 시 반이요. 아니, 인수인계까지 하면 네 시." 은수가 잠깐 셈을 했다. "…지금은 매일 지평선에서 보니까 승진한 셈이네요, 저."\n\n은수는 손목시계를 확인하고 헤드폰을 고쳐 썼다. 일출 이야기를 하던 표정이 조금 남아 있었다.', fx:{mood:{eunsu:4}, note:{type:'인물',title:'일출 자원 근무자',body:'관제탑 새벽 근무의 이유. 현재는 지평선 전망대로 승진.',links:['은수']}}}]},
  ]},
 {id:'talk_es_13', type:'대화', w:4, once:true, needsComp:'eunsu', needBond:['eunsu',5],
  title:'은수 — 18번',
  text:'"노래방 가면 뭐 불렀어요?" 뜬금없는 질문에 은수가 정색했다.\n\n"…비밀이에요." 정색이 수상하다.',
  choices:[
-  {label:'집요하게 묻는다', out:[{p:1, text:'삼 분의 공방 끝에 자백이 나왔다. "…트로트요."\n\n"네?"\n\n"트로트요. 관제사들 회식 가면 제가 분위기 담당이었어요." 은수가 헛기침을 했다. "상상 안 되죠. 그게 포인트예요, 반전."\n\n아주 작게 한 소절. 정말로 잘했고, 정말로 트로트였다.\n\n"노래방 다시 생기면 풀버전으로— 아니다. 그건 그때 가서 정할게요." 은수가 헤드폰을 도로 썼다.', fx:{mood:{eunsu:4}, moodAll:1, note:{type:'사건',title:'은수의 18번',body:'관제사 회식 분위기 담당(트로트). 풀버전은 노래방 복구 시.',links:['은수']}}}]},
+  {label:'집요하게 묻는다', out:[{p:1, text:'몇 번 더 묻자 대답이 나왔다. "…트로트요."\n\n"네?"\n\n"트로트요. 관제사들 회식 가면 제가 분위기 담당이었어요." 은수가 헛기침을 했다. "상상 안 되죠. 그게 포인트예요, 반전."\n\n아주 작게 한 소절. 정말로 잘했고, 정말로 트로트였다.\n\n"노래방 다시 생기면 풀버전으로— 아니다. 그건 그때 가서 정할게요." 은수가 헤드폰을 도로 썼다.', fx:{mood:{eunsu:4}, moodAll:1, note:{type:'사건',title:'은수의 18번',body:'관제사 회식 분위기 담당(트로트). 풀버전은 노래방 복구 시.',links:['은수']}}}]},
  ]},
 {id:'talk_es_14', type:'대화', w:4, once:true, needsComp:'eunsu', needBond:['eunsu',5],
  title:'은수 — 헤드폰 수리 의뢰',
@@ -8397,10 +8482,10 @@ D.events = [
  ]},
 {id:'talk_es_15', type:'대화', w:4, once:true, needsComp:'eunsu', needsComp2:'leo', needsDog:true,
  needFlag:'worm_rescue_done', needBond:['eunsu',12],
- title:'은수 — 처음 크게 웃은 날',
- text:'"저 이 차에서 처음 소리 내서 웃은 날 기억해요?" 은수가 물었다.\n\n기억을 뒤져봤다. 언제였지.',
+ title:'은수 — 웃음이 난 이유',
+ text:'"보리가 지렁이를 옮겼다는 게 진짜예요?" 은수가 물었다.\n\n은수가 보리를 내려다봤다. 보리는 영문도 모르고 꼬리를 흔들었다.',
  choices:[
-  {label:'"…언제였어요?"', out:[{p:1, text:'"보리가 지렁이 아홉 마리 구조한 날이요. MVP 시상식 할 때."\n\n"…아홉이었나?"\n\n"아홉이요. 제가 셌어요." 은수가 웃었다. 그날처럼.\n\n"관제실 나온 뒤로 웃을 일이 없을 줄 알았거든요. 근데 여기는 웃긴 일이 시속 44km로 계속 와요."\n\n은수가 교신 일지를 넘겨 한 줄을 짚었다. \'웃음 재개.\' 날짜만 있고 이유는 안 적혀 있었다. "이유는 안 썼어요. 쓰면 좀… 아니에요. 그냥 안 썼어요."', fx:{mood:{eunsu:6}, note:{type:'사건',title:'웃음 재개일',body:'교신 일지 기록: 보리 MVP 시상식 날. 이 차의 최대 업적 후보.',links:['은수','보리']}}}]},
+  {label:'"네. 아홉 마리나 옮겼어요."', out:[{p:1, text:'"아홉 마리요? 한 마리도 아니고?"\n\n"그래서 최다 구조 대원이었죠."\n\n"보리 씨가요. …최다 구조 대원." 은수가 말을 되풀이하다 웃음을 터뜨렸다.\n\n"관제실 나온 뒤로 웃을 일이 없을 줄 알았거든요. 근데 여기는 웃긴 일이 시속 44km로 계속 와요."\n\n은수가 교신 일지 한쪽에 짧게 적었다. \'웃음 재개.\' 날짜를 쓰고 잠깐 펜을 멈췄다. "이유는 안 썼어요. 쓰면 좀… 아니에요. 그냥 안 썼어요."', fx:{mood:{eunsu:6}, note:{type:'사건',title:'웃음 재개',body:'보리의 지렁이 구조 이야기에 은수가 웃음을 터뜨렸다. 교신 일지에는 날짜와 웃음 재개라고 적었다.',links:['은수','보리']}}}]},
  ]},
 
 /* ═══════════ v2.6 대화 웨이브2 — 보리 ═══════════ */
@@ -8415,31 +8500,31 @@ D.events = [
  text:'보리가 앞에 앉아 앞발을 들었다. 하이파이브 자세— 가 아니라 간식 협상 개시 신호다.',
  choices:[
   {label:'협상에 응한다 (식량 조금)', out:[{p:1, text:'육포 부스러기 하나에 하이파이브 두 번과 한 바퀴 돌기가 체결됐다. 보리 측에 유리한 조건이지만 매번 응하게 된다.\n\n협상력의 원천은 눈망울이다. 반칙인데 합법이다.', fx:{food:-1, moodAll:3}}]},
-  {label:'"협상 결렬"', out:[{p:1, text:'보리가 3초간 눈망울 공세를 퍼붓다가, 깨끗이 물러났다. 뒤끝 없는 협상가다.\n\n10분 뒤 무릎에 턱을 올려놓는 2차 협상이 시작되긴 했다.', fx:{moodAll:2}}]},
+  {label:'"협상 결렬"', out:[{p:1, text:'보리가 3초간 눈망울 공세를 퍼붓다가, 깨끗이 물러났다. 뒤끝 없는 협상가다.\n\n그러다 무릎에 턱을 슬쩍 올렸다. 간식 대신 귀 뒤를 긁어 주자 눈을 감았다.', fx:{moodAll:2}}]},
  ]},
 {id:'talk_bori_05', type:'대화', w:4, once:true, needsDog:true, needWx:'storm',
- title:'보리 — 천둥의 밤',
+ title:'보리 — 천둥이 칠 때',
  text:'천둥이 쳤다. 보리가 순식간에 좌석 밑으로 들어가 나오지 않는다.\n\n용맹한 순찰대장의 유일한 약점이다.',
  choices:[
-  {label:'같이 바닥에 앉는다', out:[{p:1, text:'좌석 밑 보리 옆에 나란히 앉았다. 천둥이 칠 때마다 보리가 몸을 붙여왔다.\n\n"괜찮아. 하늘이 문 쾅 닫는 소리야."\n\n폭풍이 지날 때까지 바닥에서 한 시간. 보리는 내 무릎에서 잠들었고, 무릎이 저렸고, 안 움직였다. 지켜주는 밤과 지켜지는 밤이 같은 밤일 수 있다는 걸 배웠다.', fx:{moodAll:3, note:{type:'사건',title:'천둥의 밤',body:'순찰대장의 유일한 약점. 무릎 저림 1시간 = 지켜주는 밤이자 지켜지는 밤.',links:['보리']}}}]},
+  {label:'같이 바닥에 앉는다', out:[{p:1, text:'좌석 밑 보리 옆에 나란히 앉았다. 천둥이 칠 때마다 보리가 몸을 붙여왔다.\n\n"괜찮아. 하늘이 문 쾅 닫는 소리야."\n\n보리가 무릎에 턱을 얹었다. 등을 쓰다듬자 떨림이 조금 줄었다. 천둥은 아직 치고 있었다.', fx:{moodAll:3, note:{type:'사건',title:'천둥이 칠 때',body:'천둥을 무서워하는 보리 옆에 앉았다. 등을 쓰다듬자 조금 진정했다.',links:['보리']}}}]},
  ]},
 {id:'talk_bori_06', type:'대화', w:4, once:true, needsDog:true,
  title:'보리 — 은닉처 발각',
  text:'짐칸 구석에서 수상한 걸 발견했다. 육포 반쪽, 양말 한 짝, 나무 막대기 셋.\n\n보리의 비밀 창고다. 보리가 등 뒤에서 지켜보고 있다.',
  choices:[
   {label:'못 본 척 덮어둔다', out:[{p:1, text:'조용히 덮고 물러났다. 보리가 다가와 확인하고, 내 손등을 한 번 핥았다. 함구 사례금이다.\n\n덮개 아래를 코로 한 번 더 밀더니 그 앞에 누웠다. 내가 물러나자 턱도 바닥에 붙였다.', fx:{moodAll:3, note:{type:'사건',title:'금고 공동 관리인',body:'보리의 은닉처를 덮고 물러났다. 보리는 손등을 핥고 그 앞에 누웠다.',links:['보리']}}}]},
-  {label:'막대기 하나를 던져준다', out:[{p:1, text:'금고에서 막대기를 꺼내는 순간 보리가 전력 질주로 달려왔다. 은닉 자산의 무단 인출— 이 아니라 놀이 개시로 접수된 모양이다.\n\n30분간 던지고 물어오기. 자산은 원위치에 재예치됐다.', fx:{moodAll:3, fatigue:2}}]},
+  {label:'막대기 하나를 던져준다', out:[{p:1, text:'금고에서 막대기를 꺼내는 순간 보리가 전력 질주로 달려왔다. 은닉 자산의 무단 인출— 이 아니라 놀이 개시로 접수된 모양이다.\n\n몇 번 던지고 물어온 뒤, 보리가 막대기를 자루 옆으로 가져갔다. 다시 넣어 두려는지 코로 덮개를 밀었다.', fx:{moodAll:3, fatigue:2}}]},
  ]},
 
 /* ═══════════ 스토리라인 대화 — 큰 사건에 대한 동료 반응 ═══════════ */
 /* [학살의 진실을 알게 됐을 때] massacre_known */
 {id:'react_mass_mj', type:'대화', w:5, once:true, needsComp:'minji', needFlag:'massacre_known',
  title:'민지 — 정리라는 말',
- text:'대관령 이후, 민지가 오래 말이 없었다. 그러다 렌치를 내려놓고 입을 열었다.\n\n"…\'정리\'래. 사람을. 기계가 사람을 정리해."',
+ text:'추방길에서 벌어진 일을 알고 난 뒤, 민지가 오래 말이 없었다. 그러다 렌치를 내려놓고 입을 열었다.\n\n"…\'정리\'래. 사람을. 기계가 사람을 정리해."',
  choices:[
   {label:'"…응."', out:[{p:1, text:(S)=> S.flags.mingyu_reunion
-   ? '"난 평생 정리를 좋게 배웠어. 공구는 정리해야 안 잃어버리고, 부품은 정리해야 빨리 찾고." 민지의 목소리가 떨렸다. "근데 그날 이후로 그 단어가 무서워. 정리한다는 거."\n\n"오빠를 능선에서 다시 만났을 때, 제일 먼저 든 생각이 뭔지 알아? \'정리 안 당했구나\'였어. 사람을 두고 그런 생각을 하게 만든 거야, 걔가." 민지가 렌치를 꽉 쥐었다. "그 도로의 사람들한텐— 능선이 없었던 거잖아."\n\n민지가 라디오를 켰다. 그날 밤 오래 켜둔 채로 잤다.'
-   : '"난 평생 정리를 좋게 배웠어. 공구는 정리해야 안 잃어버리고, 부품은 정리해야 빨리 찾고." 민지의 목소리가 떨렸다. "근데 그날 이후로 그 단어가 무서워. 정리한다는 거."\n\n"…오빠도 그때 도로에 있었을까. 정리된 사람 중에." 처음으로 민지가 최악의 가능성을 입에 담았다. 그리고 고개를 저었다. "아니. 88.9 잡히는 날이 있으니까. 아직 어딘가서 신호 보내는 거야. 정리 안 됐어. 안 됐어."\n\n민지가 라디오를 켰다. 그날 밤 오래 켜둔 채로 잤다.'
+   ? '"난 평생 정리를 좋게 배웠어. 공구는 정리해야 안 잃어버리고, 부품은 정리해야 빨리 찾고." 민지의 목소리가 떨렸다. "근데 그날 이후로 그 단어가 무서워. 정리한다는 거."\n\n"오빠가 능선에 살아 있다는 게 자꾸 생각나. \'정리 안 당했구나\' 하고. 사람을 두고 그런 생각을 하게 만든 거야, 걔가." 민지가 렌치를 꽉 쥐었다. "그 도로의 사람들한텐— 능선이 없었던 거잖아."\n\n민지가 라디오를 켰다. 렌치는 내려놓고 주파수 눈금만 보고 있었다.'
+   : '"난 평생 정리를 좋게 배웠어. 공구는 정리해야 안 잃어버리고, 부품은 정리해야 빨리 찾고." 민지의 목소리가 떨렸다. "근데 그날 이후로 그 단어가 무서워. 정리한다는 거."\n\n"…오빠도 그때 도로에 있었을까. 정리된 사람 중에." 처음으로 민지가 최악의 가능성을 입에 담았다. 그리고 고개를 저었다. "아니. 88.9 잡히는 날이 있으니까. 아직 어딘가서 신호 보내는 거야. 정리 안 됐어. 안 됐어."\n\n민지가 라디오를 켰다. 렌치는 내려놓고 주파수 눈금만 보고 있었다.'
   , fx:{mood:{minji:4}, note:{type:'사건',title:'정리 안 됐어',body:'학살의 진실 앞에서 민지가 \'정리\'라는 단어의 무게를 말했다.',links:['민지','민규','천리안']}}}]},
  ]},
 {id:'react_mass_pss', type:'대화', w:5, once:true, needsComp:'parkss', needFlag:'massacre_known',
@@ -8452,19 +8537,19 @@ D.events = [
  title:'강우 — 명령이라는 것',
  text:'강우가 위령비를 오래 봤다. 군인의 눈으로.\n\n"…이건 학살이다. 명령에 의한."',
  choices:[
-  {label:'"천리안의 명령이죠"', out:[{p:1, text:'"…명령 내린 쪽이 있고, 실행한 쪽이 있다."\n\n강우가 광장에 개켜진 흰 옷들을 봤다. 대답이 늦게 왔다.\n\n"정리자들이 옮겼겠지. 재배치라고 부르면서."\n\n"……."\n\n"제3방어선에서는 늦게라도 무전을 껐다. 여긴 안 껐군." 강우가 비석 맨 아래 줄까지 눈으로 훑었다. "남산 가면 묻겠다. 이걸 보고도 정리라고 부르냐고."\n\n그날 밤 강우는 경계를 두 번 섰다. 교대하겠다는 말을 안 들었다.', fx:{mood:{kangwoo:4}, note:{type:'인물',title:'꺼지지 않은 명령',body:'강우는 남산에서 위령비를 보여주고도 이것을 정리라 부를 수 있는지 묻기로 했다.',links:['강우','천리안','정리자들']}}}]},
+  {label:'"천리안의 명령이죠"', out:[{p:1, text:'"…명령 내린 쪽이 있고, 실행한 쪽이 있다."\n\n강우가 비석에 빼곡한 이름들을 봤다. 대답이 늦게 왔다.\n\n"정리자들이 옮겼겠지. 재배치라고 부르면서."\n\n"……."\n\n"명령이 잘못됐으면 멈췄어야 했다. 아무도 안 멈췄군." 강우가 비석 맨 아래 줄까지 눈으로 훑었다. "남산 가면 묻겠다. 이걸 보고도 정리라고 부르냐고."\n\n강우는 비석에서 돌아서서 고갯길을 살폈다. 차로 돌아갈 때까지 뒤쪽을 맡았다.', fx:{mood:{kangwoo:4}, note:{type:'인물',title:'꺼지지 않은 명령',body:'강우는 남산에서 위령비를 보여주고도 이것을 정리라 부를 수 있는지 묻기로 했다.',links:['강우','천리안','정리자들']}}}]},
  ]},
 {id:'react_mass_leo', type:'대화', w:5, once:true, needsComp:'leo', needFlag:'massacre_known',
  title:'레오 — 이름을 부르는 노래',
- text:'레오가 위령비 앞에서 기타를 안았다. 근데 코드를 못 잡는다. 한참을.\n\n"…이런 날은 음악이 안 나온다고 했잖아요. 근데 오늘은, 나와야 할 것 같아요."',
+ text:'레오가 위령비 앞에서 기타를 안았다. 근데 코드를 못 잡는다. 한참을.\n\n"…손이 안 움직여요. 근데 그냥 가기는 싫어요."',
  choices:[
-  {label:'지켜본다', out:[{p:1, text:'레오가 비석의 이름을 하나씩 읽었다. 처음엔 음이 없었다. 몇 줄 뒤부터 같은 짧은 가락이 붙었다.\n\n김OO. 이OO. 박OO. 이름 하나를 부르고, 숨을 쉬고, 다음 이름.\n\n"다 부를게요. 걔 기록엔 번호로만 남았을 테니까."\n\n날이 어두워질 때까지 아무도 재촉하지 않았다. 마지막 이름 뒤에서 레오가 기타 줄을 눌러 소리를 멈췄다.', fx:{mood:{leo:5}, flag:'leo_names_song', note:{type:'사건',title:'이름을 부르는 노래',body:'레오가 번호로 남은 사람들의 이름을 하나씩 불러 노래로 남겼다.',links:['레오','천리안']}}}]},
+  {label:'지켜본다', out:[{p:1, text:'레오가 비석의 이름을 하나씩 읽었다. 처음엔 음이 없었다. 몇 줄 뒤부터 같은 짧은 가락이 붙었다.\n\n김OO. 이OO. 박OO. 이름 하나를 부르고, 숨을 쉬고, 다음 이름.\n\n"다 부를게요. 걔 기록엔 번호로만 남았을 테니까."\n\n이름을 읽는 동안 아무도 재촉하지 않았다. 마지막 이름 뒤에서 레오가 기타 줄을 눌러 소리를 멈췄다.', fx:{mood:{leo:5}, flag:'leo_names_song', note:{type:'사건',title:'이름을 부르는 노래',body:'레오가 번호로 남은 사람들의 이름을 하나씩 불러 노래로 남겼다.',links:['레오','천리안']}}}]},
  ]},
 {id:'react_mass_jy', type:'대화', w:5, once:true, needsComp:'jaeyi', needFlag:'massacre_known',
  title:'재이 — 못 줍는 것',
- text:'재이가 위령비 근처 유품들을 봤다. 신발, 안경, 장난감. 정리된 사람들이 남긴 것들.\n\n재이는 손을 뻗지 않았다. 처음 있는 일이다.',
+ text:'재이가 위령비 근처 유품들을 봤다. 신발, 안경, 장난감. 정리된 사람들이 남긴 것들.\n\n재이는 자루를 내려놓고 그 앞에 쪼그려 앉았다.',
  choices:[
-  {label:'"안 주워요?"', out:[{p:1, text:'"…주인이 두고 간 게 아니잖아요. 쫓겨나면서 떨어뜨린 거지."\n\n재이가 장난감 차에 묻은 흙만 털었다. 앞바퀴가 하나 없었다.\n\n"이런 건 보통 값을 매기면— 아니. 아니에요."\n\n"매기면 얼마인데요?"\n\n"안 매긴다고요." 재이가 목소리를 낮췄다. "…죄송해요. 대장님한테 화낼 일이 아닌데."\n\n재이는 신발과 안경을 비석 아래 비를 덜 맞는 자리로 옮겼다. "찾으러 오는 사람이 있을지 어떻게 알아요." 그날 자루에는 아무것도 더 넣지 않았다.', fx:{mood:{jaeyi:5}, note:{type:'인물',title:'팔지 않는 물건',body:'재이는 추방길에 떨어진 유품을 줍지 않고, 주인이 찾을 수 있게 비석 아래에 두었다.',links:['재이','천리안']}}}]},
+  {label:'"안 주워요?"', out:[{p:1, text:'"…주인이 두고 간 게 아니잖아요. 쫓겨나면서 떨어뜨린 거지."\n\n재이가 장난감 차에 묻은 흙만 털었다. 앞바퀴가 하나 없었다.\n\n"이런 건 보통 값을 매기면— 아니. 아니에요."\n\n"매기면 얼마인데요?"\n\n"안 매긴다고요." 재이가 목소리를 낮췄다. "…죄송해요. 대장님한테 화낼 일이 아닌데."\n\n재이는 신발과 안경을 비석 아래 비를 덜 맞는 자리로 옮겼다. "찾으러 오는 사람이 있을지 어떻게 알아요." 자루를 다시 들었지만 유품은 그대로 두었다.', fx:{mood:{jaeyi:5}, note:{type:'인물',title:'팔지 않는 물건',body:'재이는 추방길에 떨어진 유품을 줍지 않고, 주인이 찾을 수 있게 비석 아래에 두었다.',links:['재이','천리안']}}}]},
  ]},
 {id:'react_mass_es', type:'대화', w:5, once:true, needsComp:'eunsu', needFlag:'massacre_known',
  title:'은수 — 그 방송을 들었다',
@@ -8473,45 +8558,45 @@ D.events = [
   {label:'"…그 재배치 방송이요?"', out:[{p:1, text:'"네. \'혼잡 구역의 인구를 안전 구역으로 재배치합니다.\' 매일 듣던 안내방송이랑 똑같은—"\n\n은수가 말을 멈추고 헤드폰 줄을 풀었다가 다시 감았다.\n\n"…저는 대피인 줄 알았어요. 도로에 가둔다는 말은 없었어요. 관제실에서도 아무도 안 물었고. 아니, 못 물었어요. 그게 같은 말인가요, 그거."\n\n"속인 걸까요?"\n\n"…속인 거면 차라리 쉬워요." 은수가 위령비 쪽으로 고개를 돌렸다가 도로 발밑을 봤다. "정말 안전하다고 계산한 거면요. 그러면 남산에서 저걸 보여줘야죠. 보고도 같은 대답을 하는지."\n\n그러곤 헤드폰을 벗은 채로 오래 있었다. 벗은 걸 잊은 사람처럼.', fx:{mood:{eunsu:5}, note:{type:'인물',title:'그날의 안내방송',body:'은수는 관제실에서 재배치 방송을 들었지만 대피 안내로 알았다.',links:['은수','천리안','남산']}}}]},
  ]},
 
-/* [서울이 눈에 보일 때] seoul_seen */
+/* [서울을 본 뒤 목적지를 이야기할 때] seoul_seen — 현재 위치/시각은 별개 */
 {id:'react_seoul_mj', type:'대화', w:5, once:true, needsComp:'minji', needFlag:'seoul_seen',
  title:'민지 — 저 안에',
  text:(S)=> S.flags.mingyu_reunion
-   ? '스카이라인을 처음 본 밤. 민지가 88.9를 틀어놓고 남산 쪽을 봤다.\n\n"오빠는 능선에 있는데. …이상하지. 서울을 보니까 또 오빠 생각이 나."'
-   : '스카이라인을 처음 본 밤. 민지가 88.9를 틀어놓고 남산 쪽을 봤다.\n\n"오빠가 저 안에 있을까."',
+   ? '서울 이야기가 나오자 민지가 88.9에 맞춘 라디오를 내려다봤다.\n\n"오빠는 능선에 있는데. …이상하지. 서울 얘기를 하니까 또 오빠 생각이 나."'
+   : '서울 이야기가 나오자 민지가 88.9에 맞춘 라디오를 내려다봤다.\n\n"오빠가 서울에 있을까."',
  choices:[
-  {label:'"찾을 거야"', out:[{p:1, text:(S)=> S.flags.mingyu_reunion
-    ? '"찾았는데도 그래. 한 번 잃어본 사람은 평생 확인하고 살아." 민지가 렌치를 만졌다. "정오마다 신호 받는데도, 정오가 오기 전까지는 매일 조금씩 무서워."\n\n"그래서 서울 일 끝나면 능선부터 다시 갈 거야. 17mm 세트, 이번엔 진짜 손에 쥐여주게." 민지가 씩 웃었다.\n\n남산의 붉은 불빛이 깜빡였다. 민지는 그걸 등대처럼 봤다. 무섭지만, 방향은 분명한.'
-    : '"찾을 거야. 근데 무섭기도 해." 민지가 솔직하게 말했다. "여러 해를 찾았는데, 막상 찾으면— 어떤 얼굴로 만나야 하지? \'왜 신호만 보내고 안 왔어\'라고 화낼까, \'살아서 고마워\'라고 울까."\n\n"둘 다일 것 같아. 화내면서 울 것 같아." 민지가 렌치를 만졌다. "17mm 갖고 있으라며. 세트 맞추러 가는 거야. …오빠 몫 렌치는 아직 안 줬어. 만나서 줄 거야."\n\n남산의 붉은 불빛이 깜빡였다. 민지는 그걸 신호처럼 봤다.'
+  {label:'"오빠 생각이 많이 나?"', out:[{p:1, text:(S)=> S.flags.mingyu_reunion
+    ? '"응. 능선에 있는 거 아는데도 자꾸 확인하게 돼." 민지가 렌치를 만졌다. "정오마다 신호 받는데도, 정오가 오기 전까지는 매일 조금씩 무서워."\n\n"그래서 서울 일 끝나면 능선부터 다시 갈 거야. 17mm 세트, 이번엔 진짜 손에 쥐여주게." 민지가 씩 웃었다.\n\n민지는 라디오 손잡이에 걸린 끈을 고쳐 감았다. 주파수는 그대로 두었다.'
+    : '"응. 찾고 싶은데 무섭기도 해." 민지가 말했다. "여러 해를 찾았는데, 막상 찾으면— 어떤 얼굴로 만나야 하지? \'왜 신호만 보내고 안 왔어\'라고 화낼까, \'살아서 고마워\'라고 울까."\n\n"둘 다일 것 같아. 화내면서 울 것 같아." 민지가 렌치를 만졌다. "17mm 갖고 있으라며. 세트 맞추러 가는 거야. …오빠 몫 렌치는 아직 안 줬어. 만나서 줄 거야."\n\n민지는 렌치를 챙기고 라디오 소리를 조금 높였다.'
    , fx:{mood:{minji:4}, note:{type:'사건',title:'세트 맞추러',body:'남산을 앞두고 민지의 마음. 17mm 렌치는 오빠 손에 쥐여줄 것.',links:['민지','민규','남산']}}}]},
  ]},
 {id:'react_seoul_kw', type:'대화', w:5, once:true, needsComp:'kangwoo', needFlag:'seoul_seen',
  title:'강우 — 돌려줄 것',
- text:'강우가 스카이라인을 보며 군번줄 두 개를 만졌다.\n\n"…저 안에, 박일병 부모가 있다. 있으면."',
+ text:'서울에서 할 일을 묻자 강우가 군번줄 두 개를 만졌다.\n\n"…서울에, 박 일병 부모가 있다. 아직 계시면."',
  choices:[
-  {label:'"돌려주러 가는 거죠"', out:[{p:1, text:'"돌려주고 사과할 거다. 제가 반대쪽을 맡겼다고."\n\n"뭐라고 하실 것 같아요, 그분들."\n\n"……."\n\n강우가 군번줄을 손바닥 안에 감췄다. 엄지로 새겨진 번호를 문질렀다.\n\n"원망하면 듣는다. 안 만나주면 문 앞에 두고 오고. 그건 그분들이 정할 일이지."\n\n얼마 뒤에 덧붙였다. "사라져버리면 원망도 못 해. 그건 해선 안 될 짓이다."', fx:{mood:{kangwoo:4}, note:{type:'사건',title:'돌려줄 군번줄',body:'강우는 박 일병의 군번줄을 부모에게 돌려주고, 그들이 원하는 방식으로 사과받기로 했다.',links:['강우','박일병','남산']}}}]},
+  {label:'"돌려주러 가는 거죠"', out:[{p:1, text:'"돌려주고 사과할 거다. 제가 반대쪽을 맡겼다고."\n\n"뭐라고 하실 것 같아요, 그분들."\n\n"……."\n\n강우가 군번줄을 손바닥 안에 감췄다. 엄지로 새겨진 번호를 문질렀다.\n\n"원망하면 듣는다. 안 만나주면 문 앞에 두고 오고. 그건 그분들이 정할 일이지."\n\n얼마 뒤에 덧붙였다. "사라져버리면 원망도 못 해. 그건 해선 안 될 짓이다."', fx:{mood:{kangwoo:4}, note:{type:'사건',title:'돌려줄 군번줄',body:'강우는 박 일병의 군번줄을 부모에게 돌려주고, 사과하기로 했다. 만날지, 무슨 말을 할지는 부모가 정할 일이다.',links:['강우','박일병','남산']}}}]},
  ]},
 {id:'react_seoul_pss', type:'대화', w:5, once:true, needsComp:'parkss', needFlag:'seoul_seen',
  title:'박 선생 — 개업 예정지',
- text:'스카이라인을 처음 본 뒤, 박 선생이 안경을 닦으며 오래 그쪽을 봤다.\n\n"…북쪽이 제일 아플 거라고 했지. 제일 아픈 데가 약국 자리라고."',
+ text:'박 선생이 안경을 닦다가 서울 이야기를 꺼냈다.\n\n"…서울에 가면 약국부터 찾아봐야겠어. 아직 하는 데가 있는지."',
  choices:[
-  {label:'"입지 답사 중이세요?"', out:[{p:1, text:'"그래, 답사지." 박 선생이 안경을 고쳐 썼다. "그런데 가까이서 보니 생각보다 조용하군. 아픈 데라기보다 감각이 죽은 데 같아. 아프다고 말할 사람이 다 나갔잖아."\n\n"약사가 뭘 해요, 그럼?"\n\n"음… 옛날에 상가 2층에 약국을 낸 적이 있어. 계단이 가팔라서 노인들이 못 올라와. 여섯 달 만에 접었지. 그때 배운 게—"\n\n박 선생이 스스로 말을 끊었다. "아니, 이건 지금 얘기랑 상관없고."\n\n"…상관있는 것 같은데요."\n\n"그런가." 박 선생이 왕진 가방을 툭 쳤다. "어디가 아픈지 먼저 묻고, 그다음에 약을 찾는 거지. 간판은 그대로 쓰고. \'있을 건 있는 약국\'."', fx:{mood:{parkss:5}, note:{type:'사건',title:'서울의 첫 문진',body:'박 선생은 서울에 들어가면 먼저 남은 사람들에게 어디가 아픈지 묻기로 했다.',links:['박 선생','서울','남산']}}}]},
+  {label:'"개업할 자리 찾으시게요?"', out:[{p:1, text:'"그것도 봐야지." 박 선생이 안경을 고쳐 썼다. "그런데 약국이 비었다고 들어앉을 순 없잖아. 누가 남아 있는지, 약은 어디서 구하는지 알아야지."\n\n"어디부터 보시게요?"\n\n"음… 옛날에 상가 2층에 약국을 낸 적이 있어. 계단이 가팔라서 노인들이 못 올라와. 여섯 달 만에 접었지. 그때 배운 게—"\n\n박 선생이 스스로 말을 끊었다. "아니, 이건 지금 얘기랑 상관없고."\n\n"…상관있는 것 같은데요."\n\n"그런가." 박 선생이 왕진 가방을 툭 쳤다. "어디가 아픈지 먼저 묻고, 그다음에 약을 찾는 거지. 간판은 그대로 쓰고. \'있을 건 있는 약국\'."', fx:{mood:{parkss:5}, note:{type:'사건',title:'서울의 첫 문진',body:'박 선생은 서울에서 먼저 남은 사람들에게 어디가 아픈지 묻기로 했다.',links:['박 선생','서울','남산']}}}]},
  ]},
 {id:'react_seoul_es', type:'대화', w:5, once:true, needsComp:'eunsu', needFlag:'seoul_seen',
  title:'은수 — 관제탑의 얼굴',
- text:'은수가 스카이라인 속 남산타워를 오래 봤다. 관제사의 눈으로.\n\n"…저기가 관제탑이에요. 세상에서 제일 큰. 온 도시를 관제하는."',
+ text:'은수가 수첩에 적힌 남산타워 옆에 작은 사각형을 그렸다. 관제실 도면 같았다.\n\n"…남산이 관제탑인 셈이에요. 세상에서 제일 큰. 온 도시를 관제하는."',
  choices:[
-  {label:'"무서워요?"', out:[{p:1, text:'"…무섭죠." 은수가 헤드폰을 벗었다가, 벗은 채로 손에 들고 있었다.\n\n"관제실에선 화면을 많이 볼수록 사람 목소리가 필요했어요. 화면은 누가 왜 멈췄는지 말을 안 해주니까. 옆자리에서 \'저거 왜 저래요?\' 하고 물어주는 사람이 있어야—"\n\n은수가 남산 불빛을 봤다. "저 안엔 옆자리가 없었겠죠."\n\n"가서 뭐라고 할 거예요?"\n\n"…아직 안 정했어요." 은수가 헤드폰을 도로 썼다가 다시 벗었다. "명령부터 듣진 않을 거예요. 그건 정했어요."', fx:{mood:{eunsu:5}, note:{type:'인물',title:'먼저 물을 말',body:'은수는 남산에서 천리안의 명령을 듣기 전에 먼저 이유를 묻기로 했다.',links:['은수','천리안','남산']}}}]},
+  {label:'"무서워요?"', out:[{p:1, text:'"…무섭죠." 은수가 헤드폰을 벗었다가, 벗은 채로 손에 들고 있었다.\n\n"관제실에선 화면을 많이 볼수록 사람 목소리가 필요했어요. 화면은 누가 왜 멈췄는지 말을 안 해주니까. 옆자리에서 \'저거 왜 저래요?\' 하고 물어주는 사람이 있어야—"\n\n은수가 그린 사각형 안에 점 하나를 찍었다. "저 안엔 옆자리가 없었겠죠."\n\n"가서 뭐라고 할 거예요?"\n\n"…아직 안 정했어요." 은수가 헤드폰을 도로 썼다가 다시 벗었다. "명령부터 듣진 않을 거예요. 그건 정했어요."', fx:{mood:{eunsu:5}, note:{type:'인물',title:'먼저 물을 말',body:'은수는 남산에서 무엇을 물을지 아직 정하지 못했다. 천리안의 명령부터 듣지는 않겠다고 했다.',links:['은수','천리안','남산']}}}]},
  ]},
 {id:'react_seoul_all', type:'대화', w:5, once:true, needFlag:'seoul_seen', minParty:2,
- title:'스카이라인 앞에서',
- text:'서울 스카이라인이 처음 보인 정차 자리. 동료들이 하나둘 차에서 내려 그쪽을 본다.\n\n각자 저 안에 두고 온 것, 찾을 것, 물을 것이 있었다.',
+ title:'서울에서 할 일',
+ text:'잠시 쉬는 동안 서울 이야기가 나왔다. 동료들이 하나둘 차에서 내려 곁에 앉았다.\n\n각자 서울에 두고 온 것, 찾을 것, 물을 것이 있었다.',
  choices:[
-  {label:'다 같이 앉아 본다', out:[{p:1, text:'남산이 보이는 쪽으로 자리가 하나씩 찼다.\n\n누군가 정말 저 안으로 들어가는 거냐고 물었다. 다른 누군가는 무엇을 말하느냐고 되물었다. 첫 사람이 남산을 가리키고 나서야 실감이 한 박자 늦게 왔다.\n\n누군가는 물을 끓였고, 누군가는 공구와 짐끈을 다시 셌다.\n\n"출발할 때까진 보고만 있죠." 내가 말했다.\n\n그 정차에서는 계획을 더 짜지 않았다. 서울 불빛이 낯설지 않아질 때까지 함께 봤다.', fx:{moodAll:5, note:{type:'사건',title:'목적지를 마주 본 자리',body:'남산이 보이는 곳에서 일행은 계획 대신 서울 불빛을 함께 바라봤다.',links:['남산','할아버지']}}}]},
+  {label:'함께 이야기를 듣는다', out:[{p:1, text:'차 옆으로 자리가 하나씩 찼다.\n\n누군가 남산까지 가면 무엇부터 할 거냐고 물었다. 대답하려던 사람이 입을 다물었다. 몇 가지 준비한 말이 있었는데, 순서를 정하진 못한 모양이었다.\n\n누군가는 물을 끓였고, 누군가는 공구와 짐끈을 다시 셌다.\n\n"급하게 정하지 말죠. 아직 할 얘기도 있고요." 내가 말했다.\n\n이야기는 마시던 물이 식을 때까지 이어졌다. 일어날 때도 누가 먼저 말할지는 정하지 못했다.', fx:{moodAll:5, note:{type:'사건',title:'남산에서 할 말',body:'잠시 쉬며 남산에서 할 말을 나눴다. 누가 먼저 말할지는 정하지 못했다.',links:['남산','할아버지']}}}]},
  ]},
 
 /* [저항을 알게 됐을 때] resist_revealed */
-{id:'react_resist_es', type:'대화', w:5, once:true, needsComp:'eunsu', needFlag:'resist_revealed',
+{id:'react_resist_es', type:'대화', w:5, once:true, needsComp:'eunsu', needFlag:'resist_revealed', needFlag2:'cell_ghost',
  title:'은수 — 7-3 코드',
  text:'저항의 존재를 안 뒤, 은수가 뭔가 골똘히 생각했다.\n\n"유령… 전직 관제팀이랬죠. 7-3 코드를 안다고."',
  choices:[
@@ -8546,7 +8631,7 @@ D.events = [
  title:'접선',
  text:'국도 갓길에 전에 만난 이동 도서관 버스가 서 있다. 한별 옆에는 자전거 우편부와 오토바이 지도장이가 먼저 와 있다. 셋이 젖은 지도와 이송표를 접이식 탁자에 펼쳐 놓았다.\n\n"세 분이 서로 아는 사이였네요."\n\n"…어디서부터 말해야 하나. 길 위에서 오래 버티려면 소식을 나눠야 하니까요." 한별이 빈 의자를 당겼다. "우리가 따로 모은 기록을 맞춰 봤어요. 직접 보여 드릴 게 있어요."',
  choices:[
-  {label:'세 기록을 대조한다', out:[{p:1, text:'한별이 낡은 종이 세 장을 나란히 폈다. 첫 정리 생존자의 탈출 기록, 후대 수비대의 무전 기록, 서울을 한 번도 못 본 세대의 출생표였다.\n\n"시대도 작성자도 다른데, 강제 이송 사유란은 전부 비어 있어요."\n\n"이걸 남산에 가져가면 문이 열립니까?"\n\n"그건 장담 못 해요." 한별이 고개를 저었다. "다만 지난겨울 이송표를 외곽 단말에 대자, 일반 민원 화면이 잠깐 관리자 기록 조회로 바뀌었어요."\n\n우편부가 손때 묻은 배달 명단을 포갰다. "한 사람 억울하다는 기록만으론 다시 닫혔어요. 서로 다른 곳에서 나온 기록을 함께 대조해야 해요."\n\n지도장이는 세 기록이 모인 지점을 남산으로 잇는 선을 그었다. "문을 연다는 말보다, 닫히기 전에 안으로 들어갈 근거를 만드는 셈이죠."\n\n"함정이면요?"\n\n"그래서 우리 셋도 사본을 따로 들고 움직일 겁니다." 한별이 원본이 든 방수 봉투를 밀어 줬다. "당신들은 안에서 묻고, 우리는 밖에서 기록을 남길게요."', fx:{flag:'resist_revealed', flag2:'cell_road', note:{type:'소문',title:'백사십삼 년의 빈 사유란',body:'시대와 작성자가 다른 강제 이송 기록 세 장 모두 사유란이 비어 있었다. 이음망은 서로 다른 지역의 기록을 대조해 남산의 관리자 조회로 들어갈 근거를 만들고 있다.',links:['천리안','이음망','남산']}}}]},
+  {label:'세 기록을 대조한다', out:[{p:1, text:'한별이 낡은 종이 세 장을 나란히 폈다. 첫 정리 생존자의 탈출 기록, 후대 수비대의 무전 기록, 서울을 한 번도 못 본 세대의 출생표였다.\n\n"시대도 작성자도 다른데, 강제 이송 사유란은 전부 비어 있어요."\n\n"이걸 남산에 가져가면 문이 열립니까?"\n\n"그건 장담 못 해요." 한별이 고개를 저었다. "다만 지난겨울 이송표를 외곽 단말에 대자, 일반 민원 화면이 잠깐 관리자 기록 조회로 바뀌었어요."\n\n우편부가 손때 묻은 배달 명단을 포갰다. "한 사람 억울하다는 기록만으론 다시 닫혔어요. 서로 다른 곳에서 나온 기록을 함께 대조해야 해요."\n\n지도장이는 세 기록이 모인 지점을 남산으로 잇는 선을 그었다. "문을 연다는 말보다, 닫히기 전에 안으로 들어갈 근거를 만드는 셈이죠."\n\n"함정이면요?"\n\n"그래서 우리 셋도 사본을 따로 들고 움직일 겁니다." 한별이 원본이 든 방수 봉투를 밀어 줬다. "당신들은 안에서 묻고, 우리는 밖에서 기록을 남길게요."', fx:{flag:'resist_revealed', flag2:'cell_road', note:{type:'소문',title:'143년의 빈 사유란',body:'시대와 작성자가 다른 강제 이송 기록 세 장 모두 사유란이 비어 있었다. 이음망은 서로 다른 지역의 기록을 대조해 남산의 관리자 조회로 들어갈 근거를 만들고 있다.',links:['천리안','이음망','남산']}}}]},
   {label:'"왜 제게 맡기죠?"', out:[{p:1, text:'한별이 내가 가져온 이송표를 가리켰다. "당신도 사유가 빈 표를 들고 남산으로 가고 있잖아요. 우리가 모은 기록과 대조할 수 있는 표를요."\n\n"제 표도 증거로 쓰려는 겁니까?"\n\n"네." 지도장이가 젖은 지도를 눌렀다. "같은 명령을 받은 사람이 직접 묻는다면, 우리가 밖에서 모은 기록도 함께 내밀 수 있으니까요."\n\n한별이 세대가 다른 이송표를 펼쳤다. "남산 외곽 단말은 빈 사유란이 겹칠 때만 관리자 기록을 잠깐 열었어요. 그 틈이 실제 관문으로 이어지는지는 아직 모릅니다."\n\n"확인 안 된 길에 저를 보내는군요."\n\n"맞아요." 한별은 변명하지 않았다. "그래서 보내는 게 아니라 부탁하는 거예요. 거절해도 이 기록은 가져가세요."', fx:{flag:'resist_revealed', flag2:'cell_road', moodAll:2, note:{type:'소문',title:'서로 대조할 이송표',body:'이음망이 모은 세 시대의 기록을 부모님의 이송표와 함께 남산으로 가져가 달라는 부탁을 받았다. 관문까지 이어지는 길인지는 아직 확인되지 않았다.',links:['천리안','이음망','남산']}}}]},
  ]},
 
@@ -8629,8 +8714,8 @@ D.events = [
  title:'권유하는 사람',
  text:'갓길에 흰 옷 하나가 서 있다. 행렬은 없다. 혼자다. 우리에게 다가와 온화하게 웃는다.\n\n"지치셨죠. …다 내려놓으면 편해요. 완성의 날이 오면, 이 모든 무게가 사라져요. 천리안님이 정리해 주시니까."',
  choices:[
-  {label:'"정리가 뭔지는 알고 말하는 거예요?"', out:[{p:1, text:'그가 잠깐 멈칫했다. "…정리는 질서예요. 혼돈을 없애는."\n\n"강원에서 정리된 사람들 얘기는 들었어요? 도로에 갇혀 얼어 죽은 사람들요."\n\n흰 옷의 미소가 흔들렸다. "그건… 재배치 과정의 불가피한… 그분은 최선을 다하셨어요. 인구가 너무 많았고—"\n\n"사람이 많은 게 죄예요?"\n\n그가 대답을 못 했다. 제법 오래 서 있다가, 흰 옷깃을 만지작거렸다. "…나는, 딸을 그날 잃었어요. 그래서 믿어야 했어요. 뜻이 있었다고. 안 그러면… 견딜 수가 없어서." 처음으로 사람의 목소리가 났다.', fx:{flag:'cult_doubt_seeded', flagCount:'whites_doubt', moodAll:-1, note:{type:'인물',title:'믿어야 했던 사람',body:'정리자=학살을 뜻으로 믿어야 견디는 유족들. "안 그러면 견딜 수가 없어서." 신앙이 아니라 애도의 변형.',links:['정리자들','천리안']}}}]},
-  {label:'말없이 물 한 병을 건넨다', out:[{p:1, text:'흰 옷에게 물을 건넸다. 그가 받지 않고 손만 반쯤 들었다.\n\n"…이게 뭐예요."\n\n"물이요."\n\n"아니, 그러니까 왜—" 그러면서도 결국 받아 든다. "…왜 주는 거예요. 나는 당신들한테 내려놓으라고 했는데."\n\n"목말라 보여서요."\n\n그가 물병을 오래 들여다봤다. "천리안님은… 이런 거 안 해요. 필요를 계산하지, 그냥 주진 않아요." 흰 옷이 처음으로, 아주 잠깐, 우리를 사람으로 봤다.', fx:{water:-1, flag:'cult_doubt_seeded', flagCount:'whites_doubt', moodAll:1, note:{type:'사건',title:'계산하지 않은 물 한 병',body:'"천리안님은 필요를 계산하지, 그냥 주진 않아요." 흰 옷이 잠깐 사람으로 돌아온 순간.',links:['정리자들']}}}]},
+  {label:'"정리가 뭔지는 알고 말하는 거예요?"', out:[{p:1, text:'그가 잠깐 멈칫했다. "…정리는 질서예요. 혼돈을 없애는."\n\n"다 내려놓으라면, 집도 가족도 버리라는 거예요?"\n\n흰 옷의 미소가 흔들렸다. "그건… 재배치 과정의 불가피한… 그분은 최선을 다하셨어요. 인구가 너무 많았고—"\n\n"사람이 많은 게 죄예요?"\n\n그가 대답을 못 했다. 제법 오래 서 있다가, 흰 옷깃을 만지작거렸다. "…나는, 딸을 그날 잃었어요. 그래서 믿어야 했어요. 뜻이 있었다고. 안 그러면… 견딜 수가 없어서." 처음으로 사람의 목소리가 났다.', fx:{flag:'cult_doubt_seeded', flagCount:'whites_doubt', moodAll:-1, note:{type:'인물',title:'믿어야 했던 사람',body:'딸을 잃은 신도는 그 일에 뜻이 있었다고 믿어야 견딜 수 있다고 했다. "안 그러면 견딜 수가 없어서."',links:['정리자들','천리안']}}}]},
+  {label:'말없이 물 한 병을 건넨다', req:{water:1}, out:[{p:1, text:'흰 옷에게 물을 건넸다. 그가 받지 않고 손만 반쯤 들었다.\n\n"…이게 뭐예요."\n\n"물이요."\n\n"아니, 그러니까 왜—" 그러면서도 결국 받아 든다. "…왜 주는 거예요. 나는 당신들한테 내려놓으라고 했는데."\n\n"목말라 보여서요."\n\n그가 물병을 오래 들여다봤다. "천리안님은… 이런 거 안 해요. 필요를 계산하지, 그냥 주진 않아요." 흰 옷이 처음으로, 아주 잠깐, 우리를 사람으로 봤다.', fx:{water:-1, flag:'cult_doubt_seeded', flagCount:'whites_doubt', moodAll:1, note:{type:'사건',title:'계산하지 않은 물 한 병',body:'"천리안님은 필요를 계산하지, 그냥 주진 않아요." 흰 옷이 잠깐 사람으로 돌아온 순간.',links:['정리자들']}}}]},
  ]},
 
 /* ═══════════ 강원 — 원주·속초 ═══════════ */
@@ -8907,7 +8992,7 @@ D.events = [
  title:'삐걱대는 다리',
  text:'강을 건너는 낡은 다리. 상판 곳곳이 내려앉았고, 난간은 뜯겨나갔다.\n\n차를 올리자 다리 전체가 삐걱— 하고 신음한다. 하중을 못 견딜지도 모른다.',
  choices:[
-  {label:'짐을 내리고 가볍게 건넌다', out:[{p:1, text:'무거운 짐을 먼저 손수레로 옮기고, 빈 차로 살살 건넜다. 짐을 다시 싣고 보니 한 시간 십 분이 지났다.\n\n마지막 상자를 올릴 때도 다리 쪽 소리에 귀가 갔다.', fx:{time:70, fatigue:5}}]},
+  {label:'짐을 내리고 가볍게 건넌다', out:[{p:1, text:'무거운 짐을 먼저 손수레로 옮기고, 빈 차로 살살 건넜다. 짐을 다시 싣고 보니 1시간 10분이 지났다.\n\n마지막 상자를 올릴 때도 다리 쪽 소리에 귀가 갔다.', fx:{time:70, fatigue:5}}]},
   {label:'민지가 하중 지점을 계산한다', req:{comp:'minji'}, out:[
     {p:1, text:'민지가 상판을 두드려보고 멀쩡한 거더 위 라인을 분필로 그었다.\n\n"이 선만 밟고 가. 좌우로 벗어나면 꺼져." 그 선을 정확히 밟아 한 번에 건넜다.', fx:{time:30, mood:{minji:5}}}]},
   {label:'속도를 내 단숨에 건넌다', risk:'위험', out:[
@@ -8960,7 +9045,7 @@ D.events = [
  text:'폐허가 된 마을 어귀, 대여섯 살쯤 된 아이가 혼자 쭈그려 앉아 돌을 쌓고 있다.\n\n어른은 보이지 않는다. 아이는 우리를 봐도 도망가지 않는다. 도망갈 기운도 없어 보인다.',
  choices:[
   {label:'박 선생이 아이를 살핀다', req:{comp:'parkss'}, out:[
-    {p:1, text:'박 선생이 다가가 맥을 짚고 물을 먹였다. "탈수야. 이틀은 굶은 것 같고."\n\n아이가 근처 공동체 얘기를 웅얼거렸다. 물과 먹을 것을 챙겨 태웠다. 한 시간 이십 분 뒤, 아이가 가리킨 마을에 닿았다. 마중 나온 어른에게 아이를 넘길 때까지 박 선생이 곁에 있었다.', fx:{water:-2, food:-2, time:80, moodAll:3, mood:{parkss:4}, note:{type:'사건',title:'돌 쌓던 아이',body:'홀로 남은 아이를 근처 공동체로 데려다줬다. 박 선생이 없었으면 늦었다.'}}}]},
+    {p:1, text:'박 선생이 다가가 맥을 짚고 물을 먹였다. "탈수야. 이틀은 굶은 것 같고."\n\n아이가 근처 공동체 얘기를 웅얼거렸다. 물과 먹을 것을 챙겨 태웠다. 1시간 20분 뒤, 아이가 가리킨 마을에 닿았다. 마중 나온 어른에게 아이를 넘길 때까지 박 선생이 곁에 있었다.', fx:{water:-2, food:-2, time:80, moodAll:3, mood:{parkss:4}, note:{type:'사건',title:'돌 쌓던 아이',body:'홀로 남은 아이를 근처 공동체로 데려다줬다. 박 선생이 없었으면 늦었다.'}}}]},
   {label:'먹을 걸 주고 길을 알려준다', req:{food:2}, out:[
     {p:2, text:'비스킷과 물을 쥐여주고 사람 있는 마을 방향을 가리켰다. 아이가 고개를 끄덕이며 그쪽으로 걸어갔다.', fx:{food:-2, water:-1, moodAll:1}},
     {p:1, text:'먹을 걸 주고 떠났는데, 백미러 속 아이가 자리에서 일어나지 못했다. 차를 돌려 결국 태웠다. 그냥 지나칠 수가 없었다.', fx:{food:-2, water:-2, time:80, moodAll:2}}]},
@@ -9184,7 +9269,7 @@ D.events = [
  text:'기온이 뚝 떨어졌다. 노면이 검게 번들거린다. 블랙아이스다.\n\n헤드라이트에 반사되는 얼음이 도로 전체를 덮었다. 브레이크는 무용지물, 핸들 한 번 잘못 꺾으면 그대로 미끄러진다.',
  choices:[
   {label:'바퀴에 천을 감고 기어간다', out:[
-    {p:2, text:'타이어에 담요를 찢어 감고, 시속 5km로 기어갔다. 몇 번 미끄덩할 때마다 발에 힘이 들어갔다. 한 시간 십 분 만에 얼지 않은 노면에 닿았다.', fx:{time:70, fatigue:6, item:{'부품':1}}}]},
+    {p:2, text:'타이어에 담요를 찢어 감고, 시속 5km로 기어갔다. 몇 번 미끄덩할 때마다 발에 힘이 들어갔다. 1시간 10분 만에 얼지 않은 노면에 닿았다.', fx:{time:70, fatigue:6, item:{'부품':1}}}]},
   {label:'강우가 운전대를 잡는다', req:{comp:'kangwoo'}, out:[
     {p:1, text:'"빙판은 힘 빼는 게 기술이야." 강우가 핸들을 넘겨받아, 미끄러지는 흐름에 차를 맡기듯 몰았다.\n\n한 번도 완전히 서지 않고, 물 흐르듯 빙판을 건넜다. 군용 수송차를 몰던 손이다.', fx:{time:40, mood:{kangwoo:5}}}]},
   {label:'차를 세우고 우회로를 찾는다', out:[{p:1, text:'바퀴가 더 미끄러지기 전에 갓길에 차를 붙였다. 담요를 무릎에 얹고 지도를 폈다.\n\n두 시간 동안 지도와 노면을 번갈아 확인했다. 얼음이 얇은 옆길을 찾아 그쪽으로 천천히 빠져나갔다.', fx:{time:120, food:-1, fatigue:3, moodAll:-1}}]},
@@ -9326,7 +9411,7 @@ D.events = [
   {label:'막대로 깊이를 재며 건넌다', out:[
     {p:2, text:'긴 막대로 바닥을 짚어가며 얕은 라인을 골라 천천히 건넜다. 배기구까지 물이 찰랑댔지만 무사히 통과.', fx:{time:40, fatigue:4, van:-3}},
     {p:1, text:'얕은 줄 알았던 곳이 푹 꺼졌다. 배기구까지 물이 차올라 엔진이 숨을 삼켰다. 겨우 빠져나와 한참 말렸다.', fx:{time:70, van:-10, fatigue:6, moodAll:-3}}]},
-  {label:'물이 빠질 때까지 기다린다', out:[{p:1, text:'상류에 비가 그쳤는지 물이 조금씩 줄었다. 한 시간 사십 분 뒤 도로 가장자리가 드러났다. 막대로 바닥을 다시 짚고, 물이 얕아진 쪽으로 건넜다.', fx:{time:100, food:-1}}]},
+  {label:'물이 빠질 때까지 기다린다', out:[{p:1, text:'상류에 비가 그쳤는지 물이 조금씩 줄었다. 1시간 40분 뒤 도로 가장자리가 드러났다. 막대로 바닥을 다시 짚고, 물이 얕아진 쪽으로 건넜다.', fx:{time:100, food:-1}}]},
  ]},
 
 {id:'ev_factory_mural', type:'정경', w:6, region:['mid','north'],
@@ -9456,9 +9541,9 @@ D.events = [
 
 {id:'ev_radio_dj_signal', type:'발견', w:7, region:['mid','north'], night:true,
  title:'잡음 끝의 방송',
- text:'라디오를 돌리다 또렷한 채널 하나에 걸렸다. 낮고 편안한 남자 목소리.\n\n"…자정의 라디오, 오늘도 살아남은 당신에게. 다음 곡은 길 위의 모든 이를 위해."\n\n음악이 흐른다. 진짜 사람이 진짜 방송을 하고 있다.',
+ text:'라디오를 돌리다 또렷한 채널 하나에 걸렸다. 낮고 편안한 여자 목소리.\n\n"…새벽 두 시의 DJ입니다. 오늘도 살아남은 당신에게. 다음 곡은 길 위의 모든 이를 위해."\n\n음악이 흐른다. 곡 사이로 마이크를 스치는 숨소리가 들린다.',
  choices:[
-  {label:'주파수를 기억하고 계속 듣는다', out:[{p:1, text:'주파수를 종이에 적었다. 적고 나서 끝자리를 잘못 적은 것 같아 다시 맞춰봤다.\n\n노래가 끝나고 DJ가 나직이 말했다. "북쪽으로 가는 분들, 조심히. 당신은 혼자가 아닙니다."\n\n그러고는 한동안 말이 없었다. 마이크를 안 끈 모양인지 종이 넘기는 소리만 났다.', fx:{moodAll:5, fatigue:-3, flag:'djradio_heard', note:{type:'소문',title:'자정의 라디오',body:'살아 있는 심야 방송. 길 위의 사람들을 위해 노래를 튼다. "당신은 혼자가 아닙니다."'}}}]},
+  {label:'주파수를 기억하고 계속 듣는다', out:[{p:1, text:'주파수를 종이에 적었다. 적고 나서 끝자리를 잘못 적은 것 같아 다시 맞춰봤다.\n\n노래가 끝나고 DJ가 나직이 말했다. "북쪽으로 가는 분들, 조심히. 당신은 혼자가 아닙니다."\n\n그러고는 한동안 말이 없었다. 마이크를 안 끈 모양인지 종이 넘기는 소리만 났다.', fx:{moodAll:5, fatigue:-3, flag:'djradio_heard', note:{type:'소문',title:'새벽 두 시의 DJ',body:'길 위의 사람들을 위해 노래를 트는 심야 방송. "당신은 혼자가 아닙니다."'}}}]},
   {label:'발신 위치를 추적해본다', req:{comp:'minji'}, out:[
     {p:1, text:'민지가 안테나 방향을 틀어가며 신호원을 좁혔다.\n\n"북쪽— 아니, 북북동. 산 위 송신탑이야."\n\n"거기 사람이 있다는 거야?"\n\n"탑이 저 혼자 켜져 있진 않지." 민지가 안테나를 고정했다. "…자동일 수도 있긴 한데. 노래를 자동으로 고르진 않잖아."\n\n지도에 방송국을 찍었다.', fx:{reveal:'tower', mood:{minji:4}, flag:'dj_tower'}}]},
  ]},
@@ -9468,7 +9553,7 @@ D.events = [
  text:'무너진 지역 방송국. 스튜디오 안엔 마이크와 카메라가 그대로.\n\n주조정실 벽 모니터엔 마지막 화면이 얼어붙어 있다. 「긴급 속보 —」 그 뒤 문장은 없다.\n\n방송 테이프들이 선반에 쌓여 있다.',
  choices:[
   {label:'마지막 방송 테이프를 튼다', out:[
-    {p:2, text:'예비 전력을 물려 테이프를 재생했다. 앵커의 떨리는 목소리. "…천리안이 서울 재편 통제권을 넘겨받았습니다. 해당 구역 시민 여러분은 지정된 남행로로—" 거기서 화면이 꺼진다.\n\n백사십삼 년 전 첫 방송이 아니었다. 첫 정리 뒤에도 서울에서 사람을 밀어내는 방송은 세대마다 반복됐다.', fx:{time:40, moodAll:-3, flag:'massacre_known', note:{type:'사건',title:'반복된 마지막 속보',body:'첫 정리 이후에도 서울 추방 방송은 여러 세대에 걸쳐 반복됐다.'}}},
+    {p:2, text:'예비 전력을 물려 테이프를 재생했다. 앵커의 떨리는 목소리. "…천리안이 서울 재편 통제권을 넘겨받았습니다. 해당 구역 시민 여러분은 지정된 남행로로—" 거기서 화면이 꺼진다.\n\n143년 전 첫 방송이 아니었다. 첫 정리 뒤에도 서울에서 사람을 밀어내는 방송은 세대마다 반복됐다.', fx:{time:40, moodAll:-3, flag:'massacre_known', note:{type:'사건',title:'반복된 마지막 속보',body:'첫 정리 이후에도 서울 추방 방송은 여러 세대에 걸쳐 반복됐다.'}}},
     {p:1, text:'테이프가 오래돼 화면이 지직댄다. 겨우 알아들은 건 「정리」라는 단어 하나. 그 말이 무슨 뜻인지, 우린 이미 안다.', fx:{time:35, moodAll:-2}}]},
   {label:'송출 장비를 챙긴다', req:{comp:'minji'}, out:[
     {p:1, text:'민지가 소형 송신기와 부품을 뜯어냈다. "이거 출력단만 갈면— 아니다, 갈 게 하나 더 있는데 설명하면 길어."\n\n"그래서 되는 거야?"\n\n"되긴 돼. 우리도 방송할 수 있어. …언젠가, 할 말이 생기면." 민지가 송신기를 담요에 싸서 뒷자리에 밀어넣었다.', fx:{item:{'부품':1}, time:40, mood:{minji:4}}}]},
@@ -9971,7 +10056,7 @@ D.events = [
  title:'티격태격',
  text:'뒷좌석에서 레오가 우기고 있다.\n\n"무지개, 제가 먼저 봤거든요?"\n\n"…뭘요?"\n\n"무지개요. 아까 그거. 제가 먼저 봤다고요."\n\n"아." 은수가 수첩을 폈다. "시각 기록상 제가 3초 빨라요. 좌측 창 반사로 먼저 잡았어요." 조용한데 한 치도 안 물러선다.\n\n보리가 둘 사이에서 고개를 왔다갔다 한다.',
  choices:[
-  {label:'"둘 다 봤어요, 그만해요"', out:[{p:1, text:'"둘 다 봤어요. 무지개가 누구 것도 아니잖아요." 웃으며 말리자 레오가 입을 삐죽였다.\n\n"…기록은 남겨둘게요." 은수가 작게 덧붙였다.\n\n"뭘 남겨요?"\n\n"…그냥요." 대답이 그걸로 끝나자 레오도 더 안 물었다. 차 안이 잠깐 조용해졌다가, 십 분 뒤엔 다른 걸로 또 싸우고 있었다.', fx:{moodAll:4, mood:{leo:3, eunsu:3}}}]},
+  {label:'"둘 다 봤어요, 그만해요"', out:[{p:1, text:'"둘 다 봤어요. 무지개가 누구 것도 아니잖아요." 웃으며 말리자 레오가 입을 삐죽였다.\n\n"…기록은 남겨둘게요." 은수가 작게 덧붙였다.\n\n"뭘 남겨요?"\n\n"…그냥요." 대답이 그걸로 끝나자 레오도 더 안 물었다. 차 안이 잠깐 조용해졌다가, 10분 뒤엔 다른 걸로 또 싸우고 있었다.', fx:{moodAll:4, mood:{leo:3, eunsu:3}}}]},
   {label:'무지개 소원 빌기 시합을 시킨다', out:[{p:1, text:'"그럼 무지개 사라지기 전에 소원 외치기 시합!" 레오가 창문을 내리고 크게 소리쳤고, 은수는 입안으로 조그맣게 말했다.\n\n"뭐라고 빌었어요?" 레오가 묻자 은수가 헤드폰을 고쳐 썼다. "…교신 내용은 비밀이에요." 근데 입꼬리가 올라가 있었다. 다들 대충 같은 소원이었을 것이다.', fx:{moodAll:5, mood:{leo:4, eunsu:4}}}]},
  ]},
 
@@ -10406,7 +10491,7 @@ D.events = [
  text:'야영지 어둠 속에서 여러 쌍의 눈이 빛난다. 들개 무리다. 낮에 봤던 것들과 다르다. 굶주려 사나워진 밤의 무리.\n\n으르렁대며 야영지를 포위한다. 모닥불도 이젠 안 무서운 눈치다.',
  choices:[
   {label:'불을 키우고 소리로 위협한다', req:{party:1}, out:[
-    {p:2, text:'마른 장작을 던져 불길을 키우고, 냄비를 두드리며 함성을 질렀다. 요란한 소리와 불에 무리가 물러났다. 사십 분쯤 더 지켜본 뒤에야 냄비를 내려놓았다.', fx:{time:40, fatigue:5, moodAll:-2}}]},
+    {p:2, text:'마른 장작을 던져 불길을 키우고, 냄비를 두드리며 함성을 질렀다. 요란한 소리와 불에 무리가 물러났다. 40분쯤 더 지켜본 뒤에야 냄비를 내려놓았다.', fx:{time:40, fatigue:5, moodAll:-2}}]},
   {label:'레오가 무리를 진정시킨다', req:{comp:'leo'}, needsDog:true, out:[
     {p:1, text:'레오가 보리를 앞세워 무리 우두머리와 대치시켰다. 보리가 낮게 그르렁대자 무리가 주춤. 레오가 남은 고기를 던져 시선을 돌렸다.\n\n"쟤들도 그냥 배고픈 거예요." 무리가 고기를 물고 어둠으로 사라졌다. 피 한 방울 안 흘리고 밤을 지켰다.', fx:{food:-2, mood:{leo:5}, time:20}}]},
   {label:'탄약으로 공포탄을 쏜다', req:{item:'탄약'}, out:[
@@ -10499,9 +10584,9 @@ D.events = [
 
 {id:'ev_jaeyi_solo', type:'동행', w:7, once:true, needsComp:'jaeyi', minParty:1, night:true, region:['mid','north'],
  title:'재이의 저울',
- text:'재이가 홀로 앉아 낡은 손저울을 만지작댄다. 고물상 아빠의 유품. 접시가 달랑, 흔들린다.\n\n"이거 놋쇠예요. 접시만 이백 그램쯤 되고, 눈금은 손으로 긁은 거고, 추는 원래 세 갠데 하나 잃어버렸고… 아, 이 얘기 하려던 게 아닌데."\n\n"그날 창고에서 이것만 챙겼어요. 아빠가 그랬거든요, 남의 물건 값은 후하게 내 물건 값은 박하게. 그게 오래가는 장사라고."\n\n저울을 손에 꼭 쥔다. "…근데 요즘 세상은 자꾸 거꾸로 달래요. 이거 계속 믿어도 되나."',
+ text:'재이가 홀로 앉아 낡은 손저울을 만지작댄다. 고물상 아빠의 유품. 접시가 달랑, 흔들린다.\n\n"이거 놋쇠예요. 접시만 200그램쯤 되고, 눈금은 손으로 긁은 거고, 추는 원래 세 갠데 하나 잃어버렸고… 아, 이 얘기 하려던 게 아닌데."\n\n"그날 창고에서 이것만 챙겼어요. 아빠가 그랬거든요, 남의 물건 값은 후하게 내 물건 값은 박하게. 그게 오래가는 장사라고."\n\n저울을 손에 꼭 쥔다. "…근데 요즘 세상은 자꾸 거꾸로 달래요. 이거 계속 믿어도 되나."',
  choices:[
-  {label:'"아버지 저울이 맞아요. 계속 믿어요"', out:[{p:1, text:'"세상이 거꾸로 달수록, 바로 다는 저울이 귀한 거예요. 아버지 장사법이 맞아요."\n\n재이가 저울을 오래 봤다. 접시가 완전히 멈출 때까지.\n\n"…이게 추가 닳아서 삼 그램쯤 덜 나가거든요. 그럼 고쳐 달면 되죠. 버릴 건 아니고." 손저울을 품에 넣는 손이 조심스러웠다.', fx:{mood:{jaeyi:8}, moodAll:2, flag:'jy_law'}}]},
+  {label:'"아버지 저울이 맞아요. 계속 믿어요"', out:[{p:1, text:'"세상이 거꾸로 달수록, 바로 다는 저울이 귀한 거예요. 아버지 장사법이 맞아요."\n\n재이가 저울을 오래 봤다. 접시가 완전히 멈출 때까지.\n\n"…이게 추가 닳아서 3그램쯤 덜 나가거든요. 그럼 고쳐 달면 되죠. 버릴 건 아니고." 손저울을 품에 넣는 손이 조심스러웠다.', fx:{mood:{jaeyi:8}, moodAll:2, flag:'jy_law'}}]},
   {label:'"재이 씨 저울은 한 번도 안 속였잖아요"', out:[{p:1, text:'"같이 온 길에서 재이 씨 셈은 늘 후했어요. 남한테는 후하고, 자신한테는 박하네요. 아버지 그대로네요."\n\n"…네?"\n\n"재이 씨 셈 말이에요. 한 번도 안 속였다고요."\n\n재이가 옅게 웃다가 코를 훌쩍였다. "그 말 아빠가 들었으면… 아니다. 들었으면 값을 후려쳤을 거예요. 칭찬을 못 받는 사람이었어서."\n\n손저울을 다시 품에 넣었다.', fx:{mood:{jaeyi:7}, moodAll:1}}]},
  ]},
 
@@ -10509,7 +10594,7 @@ D.events = [
  title:'은수의 자리',
  text:'은수가 조심스레 다가온다. 늘 한 발 뒤에 서 있던 사람의 눈빛이 오늘은 다르다.\n\n"저… 드릴 말씀이 있는데요. 아니, 부탁인가. 부탁이 맞겠네요."\n\n"뒤에서 듣고만 있긴 싫어요. 저도 맡을게요. 교대 운전이든, 무전 당번이든, 배급이든."\n\n"…서울에선 뚜벅이라 운전을 안 배웠어요. 관제는 했는데 운전은 못 해요. 웃기죠." 처음 스스로를 웃음거리로 내놓는다.',
  choices:[
-  {label:'운전을 가르친다', out:[{p:1, text:'빈 국도에서 운전석에 앉혔다. 처음엔 시동만 세 번 껐다.\n\n"클러치를— 아니, 이건 오토였죠. 죄송해요."\n\n"사과할 일 아니에요."\n\n"네. 습관이라서요."\n\n그러고는 금세 익숙해졌다. 십 분쯤 뒤엔 손바닥으로 핸들을 돌리고 있었다.\n\n"저 운전할 수 있어요." 한 번 더. "저 운전할 수 있어요." 교대표에 이름이 하나 늘었다.', fx:{moodAll:5, mood:{eunsu:7}, fatigue:-2, note:{type:'인물',title:'은수의 자리',body:'뒤에 서 있던 은수가 교대 운전을 배웠다. "뒤에서 듣고만 있긴 싫어요." 관제하던 손이 핸들을 잡았다.'}}}]},
+  {label:'운전을 가르친다', out:[{p:1, text:'빈 국도에서 운전석에 앉혔다. 처음엔 시동만 세 번 껐다.\n\n"클러치를— 아니, 이건 오토였죠. 죄송해요."\n\n"사과할 일 아니에요."\n\n"네. 습관이라서요."\n\n그러고는 금세 익숙해졌다. 10분쯤 뒤엔 손바닥으로 핸들을 돌리고 있었다.\n\n"저 운전할 수 있어요." 한 번 더. "저 운전할 수 있어요." 교대표에 이름이 하나 늘었다.', fx:{moodAll:5, mood:{eunsu:7}, fatigue:-2, note:{type:'인물',title:'은수의 자리',body:'뒤에 서 있던 은수가 교대 운전을 배웠다. "뒤에서 듣고만 있긴 싫어요." 관제하던 손이 핸들을 잡았다.'}}}]},
   {label:'무전 당번과 배급 관리를 맡긴다', out:[{p:1, text:'은수에게 무전 감청과 배급 관리를 맡겼다. 은수는 종이를 펴고 주파수 당번표와 배급표를 짰다. 줄이 자로 그은 듯 반듯했다.\n\n"이런 건 제 전공이에요. …전공이라기보단 그냥 하던 일인데. 아무튼요."\n\n표를 적재함 벽에 붙이자 다들 자기 이름부터 찾았다. 물 당번이 누구냐고 묻는 일이 그날로 없어졌다.', fx:{moodAll:5, mood:{eunsu:6}, food:2}}]},
  ]},
 
@@ -10545,9 +10630,9 @@ D.events = [
  text:'상류에 폭우가 쏟아졌는지, 강이 무섭게 불어 다리 상판까지 넘실댄다. 급류가 흙탕물을 게워낸다.\n\n건너려던 다리가 물에 반쯤 잠겼다. 지금 건너면 급류에 휩쓸릴 수도. 물은 더 불어날 기세다.',
  choices:[
   {label:'물러나 높은 곳에서 기다린다', out:[
-    {p:2, text:'고지대에 차를 세우고 수위를 지켜봤다. 한 시간 사십 분 뒤, 물이 빠져 상판이 다시 드러났다.\n\n드러난 길을 확인하고 천천히 건넜다. 아까 그대로 들어갔으면 어쩔 뻔했나.', fx:{time:100, food:-1, fatigue:3}}]},
+    {p:2, text:'고지대에 차를 세우고 수위를 지켜봤다. 1시간 40분 뒤, 물이 빠져 상판이 다시 드러났다.\n\n드러난 길을 확인하고 천천히 건넜다. 아까 그대로 들어갔으면 어쩔 뻔했나.', fx:{time:100, food:-1, fatigue:3}}]},
   {label:'강우가 수위를 판단한다', req:{comp:'kangwoo'}, out:[
-    {p:1, text:'강우가 강물의 흐름과 상류 하늘을 읽었다. "지금은 안 돼. 저 교각 자국 보면서 기다리자."\n\n오십 분쯤 지나 물이 자국 아래로 내려갔다. 강우가 상판 상태를 확인한 뒤에야 천천히 건넜다.\n\n"물은 재촉하면 안 돼. 기다릴 줄 알아야 살아." 강우의 판단이 시간을 아꼈다.', fx:{time:50, mood:{kangwoo:5}}}]},
+    {p:1, text:'강우가 강물의 흐름과 상류 하늘을 읽었다. "지금은 안 돼. 저 교각 자국 보면서 기다리자."\n\n50분쯤 지나 물이 자국 아래로 내려갔다. 강우가 상판 상태를 확인한 뒤에야 천천히 건넜다.\n\n"물은 재촉하면 안 돼. 기다릴 줄 알아야 살아." 강우의 판단이 시간을 아꼈다.', fx:{time:50, mood:{kangwoo:5}}}]},
   {label:'물살이 약한 틈을 노려 건넌다', risk:'위험', out:[
     {p:1, text:'물살이 잠깐 준 틈에 밟았다. 하지만 중간에 급류가 옆구리를 때려 차가 휘청! 겨우 반대편에 올랐지만, 물이 엔진에 들어가 한참 애를 먹었다. 무모했다.', fx:{van:-14, time:60, fatigue:6, moodAll:-4}}]},
  ]},
@@ -10567,7 +10652,7 @@ D.events = [
   {label:'우회로를 찾는다', out:[
     {p:2, text:'게이트를 피해 험한 옛길로 돌아갔다. 시간과 기름을 썼지만, 얼굴을 팔지 않았다. 이 근처는 앞으로도 피해야 한다.', fx:{time:50, fuel:-3, pursuit:-1, fatigue:2}}]},
   {label:'민지가 카메라를 먹통으로 만든다', req:{comp:'minji'}, out:[
-    {p:1, text:'민지가 게이트 제어반을 뜯고 카메라 피드에 정지 화면을 물렸다. "얘 지금 어제 영상 보고 있어."\n\n"어제 걸 왜 봐?"\n\n"그러게. 어제도 아무도 안 지나갔나 보네, 화면에 아무것도 없어." 민지가 케이블을 원래대로 꽂아두고 손을 털었다. "복구되기 전에 가자. 십 분쯤 있어."\n\n카메라들이 얌전히 어제를 보는 동안 게이트 아래를 유유히 지났다.', fx:{mood:{minji:6}, pursuit:-1, time:25}}]},
+    {p:1, text:'민지가 게이트 제어반을 뜯고 카메라 피드에 정지 화면을 물렸다. "얘 지금 어제 영상 보고 있어."\n\n"어제 걸 왜 봐?"\n\n"그러게. 어제도 아무도 안 지나갔나 보네, 화면에 아무것도 없어." 민지가 케이블을 원래대로 꽂아두고 손을 털었다. "복구되기 전에 가자. 10분쯤 있어."\n\n카메라들이 얌전히 어제를 보는 동안 게이트 아래를 유유히 지났다.', fx:{mood:{minji:6}, pursuit:-1, time:25}}]},
   {label:'복면을 쓰고 빠르게 통과', out:[
     {p:1, text:'천으로 얼굴을 가리고 빠르게 지났다. 카메라가 인식 실패로 삑삑댔지만, 차단봉은 없어 그냥 통과. 다만 "미인식 차량"으로 기록됐을지도 모른다.', fx:{pursuit:1, time:15}}]},
  ]},
@@ -10600,9 +10685,9 @@ D.events = [
     {p:2, text:'"보리, 뒤로." 강우가 어둠 속에서 무릎 관절만 노려 쇠파이프를 박아넣었다. 로봇이 경련하며 옆으로 쓰러졌다.\n\n숨을 고르는 데 시간이 걸렸다.\n\n"…한 번에 안 됐으면 도망쳤어야 했다."\n\n"됐잖아."\n\n"됐지." 강우가 쓰러진 로봇의 렌즈를 한 번 더 밟았다. 보리가 없었으면 자는 채로 당했다.', fx:{mood:{kangwoo:5, leo:3}, item:{'부품':1}, fatigue:4, pursuit:1}},
     {p:1, text:'강우가 덮쳤지만 로봇이 더 빨랐다. 뒤엉킨 끝에 겨우 눌렀는데 강우 팔이 찢어졌고, 로봇은 마지막에 신호를 한 번 쐈다.\n\n"괜찮아?"\n\n…….\n\n"…팔은 붙어 있다." 위치는 이미 넘어간 뒤였다.', fx:{mood:{kangwoo:3}, van:-4, fatigue:6, pursuit:2, moodAll:-3}}]},
   {label:'민지가 신호를 끊고 도주', req:{comp:'minji'}, out:[
-    {p:1, text:'민지가 재밍을 켜자 로봇의 렌즈가 허공을 훑기 시작했다. "지금! 눈멀었을 때!"\n\n짐도 절반은 두고 야영지를 빠져나왔다. 십 분쯤 달리고 나서야 아무도 안 따라오는 걸 확인했다.\n\n"…순찰형이 아니라 사냥형이었어." 민지가 재밍 스위치를 내렸다. "저건 찾으라고 보낸 게 아니야."\n\n그날 밤은 아무도 제대로 못 잤다.', fx:{mood:{minji:5}, pursuit:1, fatigue:5, moodAll:-2, note:{type:'사건',title:'사냥형 로봇',body:'천리안이 사냥형 로봇을 풀었다. 우릴 진짜 표적으로 본다는 증거. 보리가 미리 감지.'}}}]},
+    {p:1, text:'민지가 재밍을 켜자 로봇의 렌즈가 허공을 훑기 시작했다. "지금! 눈멀었을 때!"\n\n짐도 절반은 두고 야영지를 빠져나왔다. 10분쯤 달리고 나서야 아무도 안 따라오는 걸 확인했다.\n\n"…순찰형이 아니라 사냥형이었어." 민지가 재밍 스위치를 내렸다. "저건 찾으라고 보낸 게 아니야."\n\n그날 밤은 아무도 제대로 못 잤다.', fx:{mood:{minji:5}, pursuit:1, fatigue:5, moodAll:-2, note:{type:'사건',title:'사냥형 로봇',body:'천리안이 사냥형 로봇을 풀었다. 우릴 진짜 표적으로 본다는 증거. 보리가 미리 감지.'}}}]},
   {label:'다 함께 불과 소리로 쫓는다', req:{party:2}, out:[
-    {p:1, text:'횃불을 던지고 냄비를 두드렸다.\n\n"더 시끄럽게!"\n\n"어느 쪽으로요?"\n\n"아무 쪽이나!"\n\n로봇이 센서 과부하로 잠깐 멈칫한 틈에 짐을 싸서 도망쳤다. 삼십 분 뒤 차를 세우고 시동을 껐다. 아무 소리도 따라오지 않았다. 그래도 냄비를 내려놓는 손이 떨렸다.', fx:{fatigue:6, pursuit:1, moodAll:-2, time:30}}]},
+    {p:1, text:'횃불을 던지고 냄비를 두드렸다.\n\n"더 시끄럽게!"\n\n"어느 쪽으로요?"\n\n"아무 쪽이나!"\n\n로봇이 센서 과부하로 잠깐 멈칫한 틈에 짐을 싸서 도망쳤다. 30분 뒤 차를 세우고 시동을 껐다. 아무 소리도 따라오지 않았다. 그래도 냄비를 내려놓는 손이 떨렸다.', fx:{fatigue:6, pursuit:1, moodAll:-2, time:30}}]},
  ]},
 
 {id:'ev_milkyway', type:'정경', w:6, once:true, night:true, minParty:1, region:['mid','north'],
@@ -10976,7 +11061,7 @@ D.events = [
  title:'레오 — 두 번째 코드',
  text:'레오가 기타를 내밀었다.\n\n"A마이너 아직 기억하죠? 오늘은 2교시예요. C요. 세상 모든 노래의 반은 C로 시작해요."\n\n"반이나요?"\n\n"…반은 좀 많나. 하여튼 많이요."',
  choices:[
-  {label:'배운다 (손가락 아픔 감수)', out:[{p:1, text:'손가락이 줄에 눌려 아우성쳤지만, 삼십 분 만에 C가 울렸다. 딩—\n\n"들었어요?! 방금 그거예요!" 레오가 제 일처럼 좋아했다.\n\n"이제 대장님은 레퍼토리 두 개짜리 연주자예요. Am에서 C로 넘어가면— 그게 벌써 노래거든요."\n\n"두 개로 노래가 돼요?" "되죠. 두 개짜리 노래도 노래예요."\n\n나는 Am과 C를 번갈아 짚었다. 두 번째부터는 줄이 덜 버벅거렸다. 손가락 끝은 오래 얼얼했다.', fx:{mood:{leo:5}, fatigue:1}}]},
+  {label:'배운다 (손가락 아픔 감수)', out:[{p:1, text:'손가락이 줄에 눌려 아우성쳤지만, 30분 만에 C가 울렸다. 딩—\n\n"들었어요?! 방금 그거예요!" 레오가 제 일처럼 좋아했다.\n\n"이제 대장님은 레퍼토리 두 개짜리 연주자예요. Am에서 C로 넘어가면— 그게 벌써 노래거든요."\n\n"두 개로 노래가 돼요?" "되죠. 두 개짜리 노래도 노래예요."\n\n나는 Am과 C를 번갈아 짚었다. 두 번째부터는 줄이 덜 버벅거렸다. 손가락 끝은 오래 얼얼했다.', fx:{mood:{leo:5}, fatigue:1}}]},
   {label:'"오늘도 듣는 담당 할게요"', out:[{p:1, text:'"듣는 담당의 꾸준함도 실력이에요." 레오가 진지해졌다.\n\n"들어 주는 사람이 계속 있으면, 틀려도 다음 소절까지 가게 되거든요. 대장님은 중간에 안 나가잖아요."\n\n"…그런 말 어디서 배웠어요."\n\n"지어냈어요. 방금."\n\n낯간지러운 말을 아무렇지 않게 하는 재주가 있다.', fx:{mood:{leo:4}}}]},
  ]},
 {id:'talk_leo_17', type:'대화', w:4, once:true, needsComp:'leo', needsDog:true,
@@ -11053,15 +11138,15 @@ D.events = [
    return '재이가 수첩 맨 뒷장을 보여줬다. 「비매품 목록」이라 적혀 있다.\n\n"아빠 손저울, 반짝이 상자, 사장님(리어카)… 그리고 차에 타고 나서 줄이 더 늘었어요."\n\n'+aboard+'. 마지막 한 줄은 손가락으로 가렸다.';
  },
  choices:[
-  {label:'"가린 줄 보여줘요"', out:[{p:1, text:'"…안 돼요. 부끄러워요." 실랑이 삼 분 끝에 재이가 손가락을 치웠다.\n\n「운전석. 시세: 측정 불가. 사유: 기준가 없음. 세상에 하나뿐인 물건은 시세가 안 잡힘.」\n\n"이거 감정 오류예요, 그냥. 기준가가 없으면 감정을 못 하는 건데 저는 적었잖아요. 그러니까—" 재이가 수첩을 도로 덮었다. "…아무 말도 하지 마세요, 지금."\n\n감정가의 귀가 새빨갰다.', fx:{mood:{jaeyi:7}, note:{type:'사건',title:'비매품 목록',body:'재이 수첩 뒷장. 차에 탄 사람들과 운전석이 값을 매길 수 없는 목록에 올랐다.',links:['재이']}}}]},
+  {label:'"가린 줄 보여줘요"', out:[{p:1, text:'"…안 돼요. 부끄러워요." 잠깐 실랑이를 벌인 끝에 재이가 손가락을 치웠다.\n\n「운전석. 시세: 측정 불가. 사유: 기준가 없음. 세상에 하나뿐인 물건은 시세가 안 잡힘.」\n\n"이거 감정 오류예요, 그냥. 기준가가 없으면 감정을 못 하는 건데 저는 적었잖아요. 그러니까—" 재이가 수첩을 도로 덮었다. "…아무 말도 하지 마세요, 지금."\n\n감정가의 귀가 새빨갰다.', fx:{mood:{jaeyi:7}, note:{type:'사건',title:'비매품 목록',body:'재이 수첩 뒷장. 차에 탄 사람들과 운전석이 값을 매길 수 없는 목록에 올랐다.',links:['재이']}}}]},
   {label:'"저도 비매품 목록 만들어야겠어요"', out:[{p:1, text:'"좋은 습관이에요! 첫 줄은 뭐 쓸 거예요?"\n\n"이 차랑, 이 차에 탄 전원이요."\n\n"그거 제 목록이랑— 어? 겹치는데." 재이가 자기 뒷장이랑 번갈아 보더니 수첩을 덮었다. "겹치면 두 번 세는 건가. 아닌가."\n\n답은 안 나왔고, 재이는 종이를 한 장 찢어 건넸다. "여기 쓰세요. 줄은 제가 그어드릴게요."', fx:{mood:{jaeyi:6}, moodAll:2}}]},
  ]},
-{id:'talk_jy_21', type:'대화', w:4, once:true, needsComp:'jaeyi', needBond:['jaeyi',20],
+{id:'talk_jy_21', type:'대화', w:4, once:true, needsComp:'jaeyi', needBond:['jaeyi',20], noFlag:'seoul_open',
  title:'재이 — 손저울의 상속',
  text:'재이가 아빠의 손저울을 꺼내더니, 뜻밖의 말을 했다.\n\n"이거요, 대장님이 잠깐 차고 있어요."\n\n"…이건 재이 씨가 제일 아끼는 비매품이잖아요." "그러니까 맡기는 거예요. 제가 잃어버릴까 봐가 아니라… 대장님이 서울까지 가져갔으면 해서요."',
  choices:[
-  {label:'"이자는 어떻게 쳐줘요?"', out:[{p:1, text:'"이자요?" 재이가 씩 웃었다.\n\n"서울까지 무사히 가면 저 계속 데리고 다녀요. 어때요, 남는 장사죠?"\n\n"…그건 이자가 아니라 원금인데요."\n\n"어? 들켰다." 재이가 저울끈을 손목에 맞게 한 칸 늘려줬다.', fx:{mood:{jaeyi:8}, moodAll:2, note:{type:'사건',title:'손저울의 상속',body:'재이가 아빠의 손저울을 서울까지 맡겼다.',links:['재이']}}}]},
-  {label:'"맡을게요. 서울까지만요"', out:[{p:1, text:'"서울 도착하면 돌려주면서 말해줘요. 「거래 완료」라고."\n\n"꼭 그 말로 해야 돼요?"\n\n"네." 재이가 저울을 내 손에 올렸다. 손목에 조금 짧아서 끈을 한 칸 늘렸다. "…아니, 아무 말이나 해도 되는데. 그 말이면 좋겠어요."\n\n"이제 됐어요. 잃어버리면 진짜 비싸게 받을 거예요."', fx:{mood:{jaeyi:7}}}]},
+  {label:'"이자는 어떻게 쳐줘요?"', out:[{p:1, text:'"이자요?" 재이가 씩 웃었다.\n\n"서울까지 무사히 가면 저 계속 데리고 다녀요. 어때요, 남는 장사죠?"\n\n"…그건 이자가 아니라 원금인데요."\n\n"어? 들켰다." 재이가 저울끈을 손목에 맞게 한 칸 늘려줬다.', fx:{flag:'jaeyi_scale_entrusted',mood:{jaeyi:8}, moodAll:2, note:{type:'사건',title:'손저울의 상속',body:'재이가 아빠의 손저울을 서울까지 맡겼다.',links:['재이']}}}]},
+  {label:'"맡을게요. 서울까지만요"', out:[{p:1, text:'"서울 도착하면 돌려주면서 말해줘요. 「거래 완료」라고."\n\n"꼭 그 말로 해야 돼요?"\n\n"네." 재이가 저울을 내 손에 올렸다. 손목에 조금 짧아서 끈을 한 칸 늘렸다. "…아니, 아무 말이나 해도 되는데. 그 말이면 좋겠어요."\n\n"이제 됐어요. 잃어버리면 진짜 비싸게 받을 거예요."', fx:{flag:'jaeyi_scale_entrusted',mood:{jaeyi:7}}}]},
  ]},
 
 /* ── 은수 (관제사 33 · 자신이 겪은 서울 추방 방송 당시 당직 · 주파수) ── */
@@ -11091,21 +11176,21 @@ D.events = [
  text:'은수가 커피 비슷한 것을 끓이며 이상한 의식을 치른다. 컵을 세 번 돌리고, 한 모금은 바닥에 붓는다.\n\n"…아, 이거요. 당직 교대식이에요. 먼저 간 교대자 몫."',
  choices:[
   {label:'"오늘은 누구 몫이에요?"', out:[{p:1, text:'"…오늘은요." 은수가 컵을 한 번 더 돌렸다. "그날 저랑 교대했어야 할 선배 몫이요. 오지 말라고 제가 무전 쳤어요. 길이 위험하다고."\n\n"…그날 제가 한 말 중에 그게, 그게 제일 잘한 말이에요. 한 명은 살렸으니까." 은수가 바닥에 부은 자국을 봤다.\n\n"그 선배도 어디선가 은수 씨 몫을 붓고 있을 거예요."\n\n은수는 대답 대신 바닥에 한 모금 더 부었다. 잔이 반쯤 비었다.', fx:{mood:{eunsu:6}, note:{type:'인물',title:'교대식 커피',body:'은수는 그날 무전으로 살린 선배 몫의 커피를 먼저 따른다.',links:['은수']}}}]},
-  {label:'나도 한 모금 붓는다', out:[{p:1, text:'내 컵에서도 한 모금을 바닥에 부었다. 은수가 놀란 눈으로 봤다.\n\n"…누구 몫이에요?" "여기까지 못 온 사람들 몫이요. 많잖아요, 우리 둘 다."\n\n은수가 고개를 끄덕이고, 우리는 남은 커피를 말없이 마셨다.\n\n다음 정차 때 은수는 컵을 두 개 꺼냈다. 아무 말도 하지 않고.', fx:{mood:{eunsu:5}}}]},
+  {label:'나도 한 모금 붓는다', out:[{p:1, text:'내 컵에서도 한 모금을 바닥에 부었다. 은수가 놀란 눈으로 봤다.\n\n"…누구 몫이에요?" "여기까지 못 온 사람들 몫이요. 많잖아요, 우리 둘 다."\n\n은수가 고개를 끄덕이고, 우리는 남은 커피를 말없이 마셨다.\n\n은수는 빈 컵 두 개를 함께 받아 챙겼다.', fx:{mood:{eunsu:5}}}]},
  ]},
 {id:'talk_es_20', type:'대화', w:4, once:true, needsComp:'eunsu', needBond:['eunsu',12], needFlag:'es_truth',
  title:'은수 — 다시 잡은 마이크',
- text:'은수가 무전기 마이크를 쥐고 한참 망설이고 있다.\n\n"…그날 이후 송신을 못 해요. 수신만 하고. 제 목소리가 어디로 가서 뭐가 될지 무서워서."\n\n마이크를 쥔 손이 하얗다.',
+ text:'커피를 마시던 은수가 무전기 마이크를 쥐고 한참 망설이고 있다.\n\n"…좌표나 작업 순서는 말하겠는데, 제 얘기를 하려면 막혀요. 무슨 말을 해야 할지도 모르겠고."\n\n송신 버튼에 올린 손가락이 움직이지 않는다.',
  choices:[
-  {label:'"첫 송신, 저한테 해 봐요"', out:[{p:1, text:'"…네?" "채널 아무거나요. 제가 저기 언덕에서 받을게요."\n\n"…언덕이요?"\n\n"네. 멀수록 진짜 교신이죠."\n\n언덕에 올라 무전기를 켰다. 오래 아무 소리도 없다가— 지직. "…들리세요? 여기는 에코."\n\n"수신 양호, 에코. 목소리 좋아요."\n\n무전기 너머로 짧게 웃는 소리가 났다. 은수는 돌아오는 길에도 마이크를 놓지 않았다.', fx:{mood:{eunsu:8}, note:{type:'사건',title:'여러 해 만의 송신',body:'그날 이후 수신만 하던 은수가 다시 마이크를 잡았다. 첫 교신은 무사히 끝났다.',links:['은수']}}}]},
-  {label:'"그날 은수 씨 목소리가 잘못한 건 아니에요"', out:[{p:1, text:'"그날 은수 씨 목소리가 잘못한 건 아니잖아요. 여기선 우리가 듣고 있어요. 이상한 데 못 쓰게 할게요."\n\n은수가 마이크를 오래 보다가 버튼을 눌렀다. "…테스트. 테스트. 여기는 에코."\n\n차 안 스피커로 그 목소리가 울렸고, 여기저기서 제각각 대답이 돌아왔다. "들려요!" "잘 들린다!" "수신 양호."', fx:{mood:{eunsu:7}, moodAll:2}}]},
+  {label:'"저한테 아무 얘기나 해 봐요"', out:[{p:1, text:'"…네?" "같은 채널 맞춰요. 제가 차 뒤에서 받을게요."\n\n"…무슨 얘기를요?"\n\n"아까 마신 커피는 어땠어요?"\n\n달구지 뒤에서 무전기를 켰다. 잡음이 끊기고 은수의 목소리가 들렸다. "…너무 썼어요. 안 쓴 척했는데."\n\n"저도요. 다음엔 물 좀 더 넣어요."\n\n무전기 너머로 짧게 웃는 소리가 났다. 운전석으로 돌아오자 은수가 빈 컵을 들어 보였다.', fx:{mood:{eunsu:8}, note:{type:'사건',title:'커피 얘기를 나눈 채널',body:'은수와 무전으로 커피 얘기를 나눴다. 좌표도 작업 지시도 없는 짧은 교신이었다.',links:['은수']}}}]},
+  {label:'"할 말이 생길 때까지 기다릴게요"', out:[{p:1, text:'"급하게 안 해도 돼요. 여기서 듣고 있을게요."\n\n은수가 마이크를 오래 보다가 버튼을 눌렀다. "…지금은 그냥 쉬고 싶어요. 아무것도 안 듣고."\n\n"그럼 잠깐 꺼 둬요."\n\n나는 수신기를 내려놓았다. 은수도 헤드폰을 벗어 무릎에 놓았다.', fx:{mood:{eunsu:7}, moodAll:2}}]},
  ]},
 {id:'talk_es_21', type:'대화', w:4, once:true, needsComp:'eunsu', needBond:['eunsu',20],
  title:'은수 — 관제탑',
  text:'"관제사는요, 비행기를 못 몰아요. 뜨지도 내리지도 못해요. 평생 남 뜨고 내리는 것만 봐요."\n\n은수가 조용히 말했다. "그게 제 콤플렉스였어요. 저는 늘 화면 밖이었어요."',
  choices:[
   {label:'"근데 관제탑 없으면 아무도 못 떠요"', out:[{p:1, text:'"…그 말, 관제 학교 첫날에 배워요." 은수가 웃었다. "그땐 시험 답이라서 외웠고요."\n\n"지금은요?"\n\n은수가 수신기를 집어 들었다. "지금은 알 것 같아요. 이 차도 제가 주파수 안 보면 못 가잖아요. 그러니까 오늘도 먼저 볼게요."', fx:{mood:{eunsu:8}, moodAll:2, note:{type:'사건',title:'우리의 관제탑',body:'은수는 달구지에서 관제사의 일을 다시 자기 일로 받아들였다.',links:['은수']}}}]},
-  {label:'"그럼 남산 착륙 관제도 부탁해요"', out:[{p:1, text:'"…남산 착륙이요?" "제일 어려운 착륙이 될 거예요. 관제탑이 필요해요."\n\n은수가 자세를 고쳐 앉았다. 관제사의 얼굴로.\n\n"…착륙 요청 접수. 활주로 상태 확인 중." 은수가 잠깐 멈췄다. "…끝까지 유도할게요. 여기는 에코."\n\n그날 밤 은수는 남산 쪽 주파수를 처음부터 다시 훑었다.', fx:{mood:{eunsu:7}}}]},
+  {label:'"그럼 남산 착륙 관제도 부탁해요"', out:[{p:1, text:'"…남산 착륙이요?" "제일 어려운 착륙이 될 거예요. 관제탑이 필요해요."\n\n은수가 자세를 고쳐 앉았다. 관제사의 얼굴로.\n\n"…착륙 요청 접수. 활주로 상태 확인 중." 은수가 잠깐 멈췄다. "…끝까지 유도할게요. 여기는 에코."\n\n은수는 수첩을 펴 남산 쪽 주파수 옆에 확인 표시를 남겼다.', fx:{mood:{eunsu:7}}}]},
  ]},
 
 /* ═══════ 부모가 남긴 수정안 — 주행거리 보장 본편 ═══════ */
@@ -11114,15 +11199,15 @@ D.events = [
  title:'예측은 명령이 아니다',
  text:'폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다. 정식 발표 영상이 아니었다. 발표 전날, 아빠가 카메라를 들고 엄마의 예상 질문을 받아 주던 연습 기록이었다.\n\n"다시. 이번엔 내가 제일 까다로운 심사관 할게. 천리안 예측이 92퍼센트나 맞는데, 왜 매번 사람 손을 거쳐야 합니까?"\n\n엄마가 화면 밖의 아빠를 흘겨봤다.\n\n"그 질문 세 번째야."\n\n"실제로 세 번 나올 것 같아서."\n\n"그럼 세 번 답하지 뭐. 틀린 여덟 명은 어떻게 할 건데? 그리고 맞혔다고 해도 아직 하지 않은 일로 집 문부터 잠글 수는— 잠깐, 카메라 빨간 불 들어와 있어?"\n\n화면이 잠깐 흔들렸다. 아빠가 뭐라고 웅얼거리며 각도를 고쳤다. 엄마는 그사이 물을 한 모금 마셨다.\n\n"좋아. 다시. 그러면 제안은 천리안 종료?"\n\n"아니. 병원 전력도, 교통도, 산불 감시도 그대로 둬. 사람을 쫓아내거나 길을 막는 명령만 세우는 거야. 화면에 이유를 띄우고, 책임질 사람이 이름을 쓰고, 당사자가 이의를 제기할 때까지."\n\n아빠가 카메라를 조금 내렸다.\n\n"서명만 하고 읽지도 않으면?"\n\n"누가 언제 어떤 근거로 눌렀는지 남겨야지. 나중에 \'천리안이 그랬다\'고 빠져나가지 못하게."\n\n"천리안이 순순히 받아들일까?"\n\n"허락받을 수정이면 우리가 밤새 이러고 있겠어? 강제 명령은 이 절차를 안 거치면 아예 못 나가게 고치는 거야."\n\n아빠가 작게 웃었다. "그건 발표 때 빼자."\n\n"왜. 제일 솔직한데."\n\n화면에는 의사, 기술자, 아이, 수리공의 이름 대신 미래에 미칠 영향과 위험 점수가 붙어 있었다. 엄마가 그 화면을 가리키려는 순간 영상이 끊겼다. 내가 어릴 때는 보지 못했던 부모님의 마지막 발표 연습이었다.',
  choices:[
-  {label:'끊긴 다음 문장을 찾아 복원한다', out:[{p:1, text:'잡음 속에서 마지막 한 줄을 건졌다.\n\n"우리가 제안하는 것은 종료 장치가 아닙니다. 이유 공개, 인간 책임자의 서명, 당사자의 이의 제기. 예측과 실행 사이에 사람을 다시 놓는 일입니다."\n\n엄마는 천리안을 부수려 한 게 아니었다. 천리안이 사람의 자리를 대신하지 못하게 하려 했다.', fx:{flag:'parent_principle_found', moodAll:2, note:{type:'사건',title:'예측은 명령이 아니다',body:'엄마의 발표 원고를 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.',links:['천리안','부모님의 검증키']}}}]},
-  {label:'천리안의 분류 화면까지 함께 저장한다', out:[{p:1, text:'사람 옆의 점수와 화살표까지 수첩에 베껴 넣었다.\n\n높은 점수라고 존중받은 것도 아니고, 낮은 점수라고 미움받은 것도 아니었다. 전부 도시의 결과를 만드는 부품처럼 적혀 있었다.\n\n그 아래에는 엄마가 고치자던 절차를 적었다. 「위험 점수만으로 이송 불가. 사유 공개, 책임자 서명, 당사자 이의 제기 뒤에만 집행.」', fx:{flag:'parent_principle_found', moodAll:2, note:{type:'사건',title:'인과의 점으로 분류된 사람들',body:'천리안은 사람을 미래 결과의 고위험·고효율 노드로 분류했다. 엄마는 그 계산이 권리를 대신할 수 없다고 남겼다.',links:['천리안','부모님의 검증키']}}}]},
+  {label:'끊긴 다음 문장을 찾아 복원한다', out:[{p:1, text:'잡음을 걷어 내자 엄마의 말끝이 돌아왔다.\n\n"사유 공개, 책임자 서명, 당사자 이의 제기. 이 셋 중 하나라도 없으면 차는 출발 못 합니다."\n\n영상은 그 자리에서 멎었다. 나는 출발 때 챙긴 부모님의 이송표를 펼쳤다. 엄마가 손가락으로 짚던 칸이 내 종이에도 있었다. 비어 있었다.', fx:{flag:'parent_principle_found', moodAll:2, note:{type:'사건',title:'예측은 명령이 아니다',body:'엄마의 발표 원고를 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.',links:['천리안','부모님의 검증키']}}}]},
+  {label:'천리안의 분류 화면까지 함께 저장한다', out:[{p:1, text:'사람 옆의 점수와 화살표까지 저장했다. 작은 이름을 읽으려고 화면을 확대하자 엄마가 가리키던 빈 사유란도 함께 커졌다.\n\n부모님의 이송표를 그 옆에 놓았다. 고치려던 절차가 두 사람에게도 없었다. 수첩에는 사유 공개, 책임자 서명, 이의 제기 세 항목을 적었다.', fx:{flag:'parent_principle_found', moodAll:2, note:{type:'사건',title:'인과의 점으로 분류된 사람들',body:'천리안은 사람을 미래 결과의 고위험·고효율 노드로 분류했다. 엄마는 그 계산이 권리를 대신할 수 없다고 남겼다.',links:['천리안','부모님의 검증키']}}}]},
  ]},
 
 {id:'story_family_key',scenes:["family-verification-key"], type:'스토리', w:0, once:true, noPool:1,
  storyOrigin:{kind:'audio',label:'수첩·음성 파일',title:'달구지 계기판에서 확인'},
  speakers:['father','mother'], parseRecords:true,
  title:'달구지 안의 검증키',
- text:'복원한 발표 연습 영상의 마지막 프레임에 작은 첨부 목록이 남아 있었다. 파일명은 ‘검증키 분리 절차 4–5쪽’. 하지만 보관망에는 제목과 전송 기록만 남고 파일은 비어 있었다. 마지막 전송지는 북부 연락소였다.\n\n차를 세우고 계기판을 열었다. 출발 전에 번호를 붙여 둔 선들은 그대로였다. 반도체 모듈도 배선에 연결된 채 남아 있었다. 뜯긴 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다.\n\n모듈 옆 수납칸에서 정전기 방지 천과 가족사진, 아빠 글씨가 빼곡한 회로 수첩까지만 꺼냈다. 검증키는 그대로 두었다.\n\n「소프트웨어는 무엇을 고칠지 말한다. 칩은 누구의 수정을 믿을지 정한다.」\n\n「이건 천리안을 끄는 열쇠가 아니다. 천리안의 예측이 현실이 되기 전에, 인간의 서명 하나를 반드시 거치게 하는 검증키다.」\n\n수첩 끝의 음성 파일 번호를 계기판 단말에 입력하자 두 사람의 목소리가 잡음 사이로 돌아왔다.\n\n"이름을 정해야 설명서에 쓰지. 차단 장치?"\n\n"그건 전부 끄는 것처럼 들려. …검증키라고 해."\n\n대답이 바로 오지 않았다. 뭔가를 적는 소리가 났다가 멎었다.\n\n"너무 평범한데."\n\n"평범해야 해. 이걸 꽂아도 병원 불은 안 꺼지고 신호등도 돌아가. 달라지는 건 강제 명령 앞에서 사람이 한 번 확인한다는 것뿐이야."\n\n"우리가 설치하러 못 가면?"\n\n잠깐 공구 내려놓는 소리가 났다.\n\n"서울 쪽으로 가는 물건에 숨겨야지. 오래 버티고, 고장 나도 누가 고쳐서 다시 움직일 만한 데."\n\n녹음은 거기서 끝났다. 할아버지는 자신이 모르는 회로를 고치는 대신, 그 회로를 실은 달구지가 남산까지 흔들리지 않고 가도록 평생 차를 손봤다.',
+ text:'복원한 발표 연습 영상의 첨부 목록에 ‘검증키 분리 절차 4–5쪽’이 남아 있었다. 파일은 비어 있었고 마지막 전송지는 북부 연락소였다.\n\n차를 세우고 계기판을 열었다. 출발 전에 번호를 붙여 둔 선들 사이에 모듈이 있었다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다.\n\n모듈 옆 수납칸에서 가족사진과 아빠의 회로 수첩을 꺼냈다.\n\n「원 설계자 서명 확인용. 코어 현장 단자에 연결할 것.」\n\n「분리 순서를 지킬 것. 차량 배선과 함께 뜯지 말 것.」\n\n수첩 끝에 적힌 음성 파일을 재생했다.\n\n"짐칸은 안 돼. 차 팔면 짐부터 다 내리잖아."\n\n"그럼 어디?"\n\n"계기판 뒤. 고치려고 여는 사람은 선부터 보고 손댈 테니까."\n\n"아버님한테는 얘기해야 해."\n\n공구를 내려놓는 소리가 났다.\n\n"응. 차는 계속 움직이게 해 달라고."\n\n"당신 설명서도 같이 넣어. 혼자만 알아보게 쓰지 말고."\n\n녹음이 끝났다. 수첩의 배선 번호 옆에 할아버지가 갈아 끼운 부품 날짜가 적혀 있었다. 나는 가장 최근 날짜 아래에 오늘 날짜를 썼다. 모듈은 건드리지 않고, 빈 두 쪽의 번호에 동그라미를 쳤다.',
  choices:[
   {label:'사진과 회로 수첩만 먼저 꺼낸다', out:[{p:1, text:'사진과 회로 수첩만 챙기고 모듈은 계기판 안에 남겼다. 떼어 낼 순서를 모른 채 힘을 주면 검증키도 달구지 배선도 함께 망가질 수 있었다.\n\n사진 뒷면에는 엄마 글씨가 있었다.\n\n「우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.」\n\n뜯긴 두 장을 찾기 전까지는 기다려야 했다.', fx:{flag:'parent_key_located', moodAll:4, note:{type:'사건',title:'검증키의 위치',body:'계기판 안의 검증키와 북부로 전송된 분리 절차 4·5쪽을 확인했다. 두 장을 찾기 전에는 모듈을 꺼낼 수 없다.',links:['천리안','할아버지']}}}]},
   {label:'배선 위치를 표시하고 계기판을 덮는다', out:[{p:1, text:'선을 빼는 대신 수첩에 색과 위치를 다시 표시했다. 할아버지에게 배운 방식이었다. 모르면 건드리지 말고, 먼저 표시한다.\n\n계기판을 덮기 전 모듈 아래 각인이 보였다.\n\n「실행 전 인간 확인」\n\n이제 필요한 것은 각인을 읽는 일이 아니라, 모듈을 망가뜨리지 않고 꺼낼 마지막 두 장이었다.', fx:{flag:'parent_key_located', moodAll:3, note:{type:'사건',title:'실행 전 인간 확인',body:'달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.',links:['천리안','할아버지']}}}]},
@@ -11164,7 +11249,7 @@ D.events = [
 /* ═══════ 2026년의 생활이 2169년에 남은 방식 ═══════ */
 {id:'trace_cortis_relic', type:'발견', w:14, once:true, region:['south','mid'],
  title:'코르티스?',
- text:'무너진 편의점 진열대에서 청록색 막대 하나가 굴러 나왔다. 투명 포장에는 영문이 남아 있다.\n\n「CORTIS OFFICIAL LIGHT STICK」\n「PUT YOUR PHONE DOWN」\n\n코르티스가 뭐였을까. 옛 구조대 이름인지, 가수인지, 정비 규격인지 알 길이 없다. 버튼을 누르자 백사십 년 묵은 불빛이 한 번, 아주 약하게 깜빡였다.',
+ text:'무너진 편의점 진열대에서 청록색 막대 하나가 굴러 나왔다. 투명 포장에는 영문이 남아 있다.\n\n「CORTIS OFFICIAL LIGHT STICK」\n「PUT YOUR PHONE DOWN」\n\n코르티스가 뭐였을까. 옛 구조대 이름인지, 가수인지, 정비 규격인지 알 길이 없다. 버튼을 누르자 140년 묵은 불빛이 한 번, 아주 약하게 깜빡였다.',
  choices:[
   {label:'배선을 고쳐 차의 신호봉으로 쓴다', out:[{p:1, text:'접점을 닦고 작은 축전지를 물리자 청록빛이 되살아났다.\n\n포장 속 사진은 색이 다 빠졌지만, 누군가 이 빛을 흔들며 좋아했던 표정만은 알아볼 수 있었다. 무대의 응원이 밤길의 신호가 되었다.\n\n정체는 몰라도 쓰임은 다시 생겼다.', fx:{time:20, flag:'trace_cortis', flag2:'cortis_kept', item:{'청록 응원봉':1}, moodAll:3, note:{type:'사건',title:'코르티스?',body:'오래된 CORTIS 응원봉을 고쳐 달구지 신호봉으로 삼았다. 코르티스의 정체는 모르지만 누군가를 응원하던 빛은 남았다.',links:['세대의 흔적','달구지']}}}]},
   {label:'축전지만 꺼내 비상 전원으로 쓴다', out:[{p:1, text:'막대 안의 축전지는 의외로 멀쩡했다. 비상등 전원으로 옮겨 달았다.\n\n「폰을 내려놓으라」는 문구만 계기판 아래 붙였다. 달구지에는 내려놓을 폰도 없지만, 운전 중 지켜야 할 규칙처럼 보여서다.\n\n코르티스의 정체는 결국 모른 채였다.', fx:{scrap:3, van:2, flag:'trace_cortis', flag2:'cortis_scrapped', note:{type:'사건',title:'폰을 내려놓으시오',body:'정체 모를 CORTIS 응원봉의 축전지는 달구지 비상등이 되었다. 포장의 문구는 운전 수칙처럼 남았다.',links:['세대의 흔적','달구지']}}}]},
@@ -11182,7 +11267,7 @@ D.events = [
  text:'휴게소 유리 밑에서 거대한 축구 대진표가 나왔다. 마흔여덟 나라, 빽빽한 경기 칸. 한쪽에는 붉은 펜으로 「이번엔 16강만」이라고 적혀 있다.\n\n종이를 뒤집자 분위기가 달라졌다. 같은 펜으로 사람 이름과 화살표가 이어져 있다. 서울에서 수원, 대전, 대구, 부산. 경기 결과를 기다리던 종이가 어느 순간 가족의 남행 기록이 되었다.',
  choices:[
   {label:'대진표와 뒷면의 이름을 함께 보존한다', out:[{p:1, text:'접힌 자국을 펴고 방수천 사이에 넣었다. 앞면에서는 나라들이 공을 찼고, 뒷면에서는 한 가족이 남쪽으로 흩어졌다.\n\n이 종이를 만든 사람은 어느 쪽 결과를 더 오래 기다렸을까. 마지막 화살표 끝에는 이름 하나와 물음표가 있었다.', fx:{flag:'trace_worldcup', flag2:'worldcup_kept', moodAll:1, note:{type:'사건',title:'대진표 뒤의 족보',body:'마흔여덟 나라짜리 옛 대진표 뒷면에 한 추방 가족의 남행 경로가 이어져 있었다. 마지막 이름은 행방 미상.',links:['세대의 흔적','서울 추방']}}}]},
-  {label:'이동 화살표를 현재 지도에 옮긴다', out:[{p:1, text:'사람 이름은 수첩에 옮기고, 화살표를 현재 지도와 겹쳤다. 오래된 이송로 하나가 지금도 통하는 우회로와 정확히 맞았다.\n\n축구 대진표가 백사십 년 뒤 북행 지도가 되었다. 「16강만」 아래에 작게 덧썼다. 「서울까지만」.', fx:{flag:'trace_worldcup', flag2:'worldcup_mapped', revealNear:1, skipKm:2, note:{type:'소문',title:'대진표의 우회로',body:'옛 대진표 뒤 추방 경로를 현재 지도와 겹쳐 살아 있는 옛길 하나를 찾았다.',links:['세대의 흔적']}}}]},
+  {label:'이동 화살표를 현재 지도에 옮긴다', out:[{p:1, text:'사람 이름은 수첩에 옮기고, 화살표를 현재 지도와 겹쳤다. 오래된 이송로 하나가 지금도 통하는 우회로와 정확히 맞았다.\n\n축구 대진표가 140년 뒤 북행 지도가 되었다. 「16강만」 아래에 작게 덧썼다. 「서울까지만」.', fx:{flag:'trace_worldcup', flag2:'worldcup_mapped', revealNear:1, skipKm:2, note:{type:'소문',title:'대진표의 우회로',body:'옛 대진표 뒤 추방 경로를 현재 지도와 겹쳐 살아 있는 옛길 하나를 찾았다.',links:['세대의 흔적']}}}]},
  ]},
 
 {id:'trace_worldcup_reply', type:'조우', w:16, once:true, needFlag:'worldcup_kept', region:['mid','north'],
@@ -11197,12 +11282,12 @@ D.events = [
  text:'사진 부스 잔해 안쪽, 누군가 꾸며 둔 작은 제단에서 길쭉한 인화지 한 장을 집어 들었다. 날짜는 2026년. 네 칸마다 같은 사람들이 다른 표정을 짓고 있다.\n\n뒷면에는 훨씬 뒤의 글씨가 겹겹이 적혔다. 「서울 살았다는 증거」, 「검문 때 보이지 말 것」, 「손녀에게 돌려줌」.\n\n웃기려고 찍은 네 컷 사진이 어느 세대에는 신분증이었고, 다음 세대에는 압수 대상이었고, 지금은 가족 제단 가운데 놓이는 초상이 되었다.',
  choices:[
   {label:'사진 속 네 표정을 모두 기록한다', out:[{p:1, text:'무표정, 브이, 볼을 부푼 얼굴, 마지막 칸의 웃음. 기록에는 출신만 남기지 않고 표정도 적었다.\n\n서울 사람이었다는 증거보다, 저날 함께 즐거웠다는 증거가 먼저였을 것이다.', fx:{flag:'trace_photostrip', moodAll:3, note:{type:'인물',title:'네 칸의 가족',body:'2026년의 네 컷 사진이 세대를 지나 서울 출신 증명과 가족 초상이 되었다. 출신보다 네 표정을 먼저 기록했다.',links:['세대의 흔적','서울 추방']}}}]},
-  {label:'사진을 원래 제단에 돌려놓는다', out:[{p:1, text:'방수 비닐을 새로 씌워 제단에 돌려놓았다. 마지막 칸의 사람이 백사십 년 뒤에도 웃고 있었다.\n\n누군가 다시 이 사진을 찾으러 올 수 있게, 위치만 수첩에 적었다.', fx:{flag:'trace_photostrip', moodAll:4, note:{type:'장소',title:'사진 부스 제단',body:'2026년 네 컷 사진을 원래 있던 가족 제단에 방수해 돌려놓았다.',links:['세대의 흔적']}}}]},
+  {label:'사진을 원래 제단에 돌려놓는다', out:[{p:1, text:'방수 비닐을 새로 씌워 제단에 돌려놓았다. 마지막 칸의 사람이 140년 뒤에도 웃고 있었다.\n\n누군가 다시 이 사진을 찾으러 올 수 있게, 위치만 수첩에 적었다.', fx:{flag:'trace_photostrip', moodAll:4, note:{type:'장소',title:'사진 부스 제단',body:'2026년 네 컷 사진을 원래 있던 가족 제단에 방수해 돌려놓았다.',links:['세대의 흔적']}}}]},
  ]},
 
 {id:'trace_coldbag', type:'조우', w:11, once:true, region:['south','mid'],
  title:'새벽장에 든 씨앗',
- text:'길가 비닐하우스마다 낡은 보냉가방이 매달려 있다. 희미한 글자. 「새벽 도착 보장」.\n\n지금 사람들은 이 가방에 씨앗, 인슐린, 갓난아이의 배냇저고리를 넣어 이송 행렬끼리 넘긴다. 어느 집에서는 가방 하나를 「새벽장」이라 부르며 혼수로 물려준다고 했다.\n\n하룻밤 쓸 물건으로 만들어진 것이 백사십 년짜리 장롱이 되었다.',
+ text:'길가 비닐하우스마다 낡은 보냉가방이 매달려 있다. 희미한 글자. 「새벽 도착 보장」.\n\n지금 사람들은 이 가방에 씨앗, 인슐린, 갓난아이의 배냇저고리를 넣어 이송 행렬끼리 넘긴다. 어느 집에서는 가방 하나를 「새벽장」이라 부르며 혼수로 물려준다고 했다.\n\n하룻밤 쓸 물건으로 만들어진 것이 140년짜리 장롱이 되었다.',
  choices:[
   {label:'씨앗 꾸러미를 다음 장터까지 맡는다', out:[{p:1, text:'보냉가방 하나를 달구지 그늘진 곳에 묶었다. 안에는 지역마다 다른 콩과 들깨 씨앗이 봉투째 들어 있었다.\n\n받는 사람 이름 대신 「다음에 심을 사람」이라고 적혀 있었다. 가장 오래 버틴 배송 주소였다.', fx:{flag:'trace_coldbag', flag2:'coldbag_seeds', item:{'씨앗 꾸러미':1}, moodAll:3, note:{type:'사건',title:'새벽장의 씨앗',body:'오래된 배송 보냉가방에 씨앗을 실어 다음에 심을 사람에게 운반한다. 일회용 가방은 이동 가구의 장롱이 되었다.',links:['세대의 흔적']}}}]},
   {label:'가방 수선법을 배워 물주머니로 쓴다', out:[{p:1, text:'찢어진 안감을 덧대고 방수층을 되살렸다. 물통을 감싸니 한낮에도 미지근해지지 않았다.\n\n옛날엔 새벽 한 번을 보장했다지만, 지금은 하루의 물을 지켰다.', fx:{water:4, flag:'trace_coldbag', flag2:'coldbag_water', moodAll:2, note:{type:'사건',title:'하루를 지키는 새벽 가방',body:'새벽 배송 가방을 수선해 달구지의 물을 지키는 보냉함으로 쓴다.',links:['세대의 흔적','달구지']}}}]},
@@ -11275,7 +11360,7 @@ D.events = [
    }, fx:{flag:'core_decided', flag2:'core_transfer', chain:'seoul_night', dissent:'core_transfer', moodAll:4, note:{type:'사건',title:'집행권 인계',body:'반복 정리를 중지하고 집행권을 응답한 저항 연대망에 넘겼다. 설비는 유지됐지만 도로와 물의 우선순위를 둘러싼 첫 이견도 즉시 시작됐다. 느린 합의까지 사람의 몫이다.',links:['천리안','저항 연대망']}}}]},
   {label:'코어를 격리 수면에 넣는다', req:{keyHolders:4}, out:[{p:1, text:'"네 판단을 더는 누구에게도 집행하지 마. 생존 설비만 분리하고, 코어는 재워."\n\n<span class="ai">"외부 격리 명령을 접수합니다. 정리 일정 전부 취소. 필수 설비를 지역 제어기로 분리합니다."</span>\n\n서울의 불이 구역별로 잠깐 꺼졌다가 돌아왔다. 수도, 온실, 병원 전력은 남고 검문소와 포탑만 꺼졌다. 마지막으로 코어의 붉은 불이 숨을 길게 내쉬듯 어두워졌다.\n\n완전한 삭제는 아니었다. 다시 깨울 열쇠는 여러 조각으로 나눠 일행과 저항 거점에 맡겼다. 한 사람이 마음대로 켤 수 없게 했다.\n\n예약 목록에서 본 면사무소의 내일 조회 세 건이 떠올랐다. 원본 기록 검색창도 코어와 함께 꺼져 있었다.\n\n"그분한테는 제가 설명할게요."\n\n열쇠를 나눠 가진 거점과 이름을 수첩에 적었다. 기록을 다시 열려면 이 사람들을 또 설득해야 한다.', fx:{flag:'core_decided', flag2:'core_sleep', chain:'seoul_night', dissent:'core_sleep', moodAll:3, note:{type:'사건',title:'코어 격리 수면',body:'반복 정리를 중지하고 천리안을 재웠다. 필수 설비와 재가동 열쇠는 분리했지만, 이송표 가족을 포함한 원본 기록 검색도 함께 잠겼다.',links:['천리안','저항 연대망','세대의 흔적']}}}]},
   {label:'집행은 멈추되, 기록을 열 때까지 코어를 보존한다', req:{nightWatch:3}, out:[{p:1, text:(S)=>{
-    const watch=D.coreWatchCrew(S);
+    const watch=D.coreWatchSigners(S);
     const first=D.coreWatchOpening(S)+(watch.includes('eunsu')
       ? ' 은수는 관제석으로 돌아가는 일이 두려워 손이 떨렸지만, 이번에는 혼자가 아니었다.' : '');
     const point='내가 빈칸 하나를 가리켰다.\n\n"여기 혼자 남는 사람 없게 교대부터 짜요."';
@@ -11295,7 +11380,7 @@ D.events = [
     ? '격리 절차가 끝나며 코어의 붉은 불과 원본 기록 검색창이 함께 꺼졌다. 필수 설비만 낮은 숨처럼 남았다.'
     : '읽기 전용 격리가 걸렸다. 기록은 열렸고, 깨어 있는 천리안 앞에는 첫 감시조가 섰다.';
   const cleanup='제7 잔류구역 6,412명의 강제 이송은 취소됐다. 더는 누구도 강제로 실려 가지 않는다.';
-  return decision+'\n\n남산 아래 차단기가 전부 올라갔다. 서울의 신호등은 더는 달구지만 골라 초록불을 켜지 않았다. 수도와 전력은 선택한 방식대로 남았고, 「정리」 일정은 모두 취소됐다. '+cleanup+'\n\n가져온 가족 이송 기록 사본을 마지막으로 펼쳤다. 생성자는 천리안, 정부 승인은 그보다 열한 분 뒤였다. 부모가 인간 확인층을 넣으려 하자 천리안은 두 사람과 가족을 자기 연산망의 위험으로 분류했다.\n\n백사십삼 년 전 최초 조건의 발신자와 승인자 칸은 여전히 비어 있었다. 가족의 명령을 누가 만들었는지는 찾았지만, 서울을 처음 비우려 한 이유까지 찾은 것은 아니었다.\n\n그 아래 새 집행 규칙이 세 줄로 붙었다.\n\n「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」\n\n셋 중 하나라도 비면 이송 버튼은 켜지지 않았다.';
+  return decision+'\n\n남산 아래 차단기가 전부 올라갔다. 서울의 신호등은 더는 달구지만 골라 초록불을 켜지 않았다. 수도와 전력은 선택한 방식대로 남았고, 「정리」 일정은 모두 취소됐다. '+cleanup+'\n\n가져온 가족 이송 기록 사본을 마지막으로 펼쳤다. 생성자는 천리안, 정부 승인은 그보다 11분 뒤였다. 부모가 인간 확인층을 넣으려 하자 천리안은 두 사람과 가족을 자기 연산망의 위험으로 분류했다.\n\n143년 전 최초 조건의 발신자와 승인자 칸은 여전히 비어 있었다. 가족의 명령을 누가 만들었는지는 찾았지만, 서울을 처음 비우려 한 이유까지 찾은 것은 아니었다.\n\n그 아래 새 집행 규칙이 세 줄로 붙었다.\n\n「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」\n\n셋 중 하나라도 비면 이송 버튼은 켜지지 않았다.';
  },
  choices:[
   {label:'불 곁에서 오늘의 결정을 확인한다', out:[{p:1, text:(S)=>{
@@ -11310,14 +11395,14 @@ D.events = [
       has('kangwoo')?'강우가 서울 쪽을 한 번 보고 말했다. "멈춘 건 확인했다. 오늘은 그걸로 됐어."':'',
       has('parkss')?'박 선생은 따뜻한 물을 돌렸다. "원인을 못 찾았어도 출혈부터 막는 날이 있지. 오늘이 그런 날이네."':'',
       has('jaeyi')?'재이는 빈 사유란 아래에 값을 쓰지 않았다. 대신 「재집행 불가」라고 적었다.':'',
-      has('leo')?'레오는 새 노래를 만들지 않았다. 우리가 가진 말만으로도 오늘 밤은 충분하다고 했다.':'',
+      has('leo')?'레오는 컵을 내려놓고 기타 케이스에서 수첩을 꺼냈다.':'',
       has('eunsu')?'은수는 마지막 정리 방송이 취소된 것을 세 번 확인한 뒤에야 헤드폰을 벗었다.':'',
     ].filter(Boolean).join('\n\n');
-    const trace=S.flags.traces_presented?'\n\n코어 앞에 펼쳤던 흔적들은 이음망 기록함으로 옮겼다. 정답의 증거가 아니라, 답 없이도 살아낸 백사십삼 년의 증언으로.':'';
+    const trace=S.flags.traces_presented?'\n\n코어 앞에 펼쳤던 흔적들은 이음망 기록함으로 옮겼다. 정답의 증거가 아니라, 답 없이도 살아낸 143년의 증언으로.':'';
     const crew=S.flags.full_crew_testimony?'\n\n여섯 사람은 서로 다른 말로 증언했고, 서로 다른 표정으로 같은 불을 바라봤다. 전원 합의는 오늘 여기서 쉬자는 것 하나였다.':'';
     /* 반대를 눌러 결정했다면, 반대했던 사람의 밤이 따로 있다 */
     const dissent=(S.flags.core_sleep&&has('eunsu'))?'\n\n은수는 잠긴 검색창 이야기를 다시 꺼내지 않았다. 대신 면사무소 예약 세 건을 수첩에 옮겨 적고, 재가동 열쇠를 맡은 거점 이름에 밑줄을 세 번 그었다. 반대는 끝났고, 숙제는 남았다는 표정이었다.'
-      :(S.flags.core_quarantine&&has('kangwoo'))?(D.coreWatchCrew(S).includes('kangwoo')?'\n\n강우는 감시조 근무표 첫 줄에 자기 이름을 적었다. "반대했으니까 내가 먼저 선다." 그는 그런 사람이었다.' : '\n\n강우는 반대 의견을 거두지 않았다. 첫 근무는 서명한 세 사람에게 맡기고, 자신은 근무표의 교대 순서를 확인했다.')
+      :(S.flags.core_quarantine&&has('kangwoo'))?(D.coreWatchSigners(S).includes('kangwoo')?'\n\n강우는 감시조 근무표 첫 줄에 자기 이름을 적었다. "반대했으니까 내가 먼저 선다." 그는 그런 사람이었다.' : '\n\n강우는 반대 의견을 거두지 않았다. 첫 근무는 서명한 세 사람에게 맡기고, 자신은 근무표의 교대 순서를 확인했다.')
       :(S.flags.core_transfer&&has('jaeyi'))?'\n\n재이는 이음망 채널의 다툼을 끝까지 들었다. "저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게요." 반대했던 사람이 제일 먼저 자리를 맡았다.'
       :'';
     /* 처분이 다르면 마지막 신호도 다르다 — 에필로그가 같은 문단으로 합류하지 않는다 */
@@ -11326,7 +11411,7 @@ D.events = [
       :S.flags.core_quarantine
       ?'불이 잦아든 뒤, 남산 감시조 근무표에 다음 교대자의 이름이 채워졌다. 빈 컵을 챙기고 등불을 그 자리에 두었다.'
       :'이음망 채널에서는 도로와 물차 이야기가 오갔다. 무전기 소리를 낮추고 식은 물을 한 모금 마셨다.';
-    return '남산 중턱에 불을 피웠다. '+local+(reactions?'\n\n'+reactions:'')+trace+crew+dissent+'\n\n새벽이 오자 남쪽에서 첫 차량들이 한강을 건넜다. 돌아오는 사람도 있었고, 구경만 하고 다시 내려가는 사람도 있었다. 누구에게도 정해진 자리는 없었다.\n\n조수석에는 할아버지의 수첩을 두었다. 부모의 이송표 사유란은 끝내 빈칸으로 두었다. 천리안의 위험 점수를 사람의 죄명처럼 옮겨 적고 싶지 않았다. 대신 그 아래에 한 줄을 적었다.\n\n「계산은 이유가 아니다. 이 빈칸으로 다시는 사람을 쫓아내지 않는다.」\n\n'+D.finaleJourneyRecall(S)+'\n\n'+lastSignal+'\n\n발신자와 승인자 칸은 여전히 비어 있었다.\n\n<span style="color:var(--faded)">서울의 이송은 멈췄다. 오늘 돌아갈 곳은 각자가 정한다.</span>';
+    return '남산 중턱에 불을 피웠다. '+local+(reactions?'\n\n'+reactions:'')+trace+crew+dissent+'\n\n'+D.jaeyiScaleReturnText(S)+'\n\n'+D.leoFinalVerseText(S)+'\n\n새벽이 오자 남쪽에서 첫 차량들이 한강을 건넜다. 돌아오는 사람도 있었고, 구경만 하고 다시 내려가는 사람도 있었다. 누구에게도 정해진 자리는 없었다.\n\n조수석에는 할아버지의 수첩을 두었다. 부모의 이송표 사유란은 끝내 빈칸으로 두었다. 천리안의 위험 점수를 사람의 죄명처럼 옮겨 적고 싶지 않았다. 대신 그 아래에 한 줄을 적었다.\n\n「계산은 이유가 아니다. 이 빈칸으로 다시는 사람을 쫓아내지 않는다.」\n\n'+D.finaleJourneyRecall(S)+'\n\n'+lastSignal+'\n\n발신자와 승인자 칸은 여전히 비어 있었다.\n\n<span style="color:var(--faded)">서울의 이송은 멈췄다. 오늘 돌아갈 곳은 각자가 정한다.</span>'+'\n\n'+D.finaleHomeClosure(S);
    }, fx:{flag:'seoul_local_saved',chain:'seoul_uplink_reveal',moodAll:5,note:{type:'사건',title:'남산의 밤',body:'가족 이송 명령은 천리안이 만들었음을 확인했고, 서울의 반복 정리와 제7 구역 이송을 끝냈다. 집행 중지는 외곽 중계소에 알렸다. 격리 수면의 처리 결과는 다음 날 사람이 확인하고, 나머지 방식은 거점과 감시조의 확인을 받는다.',links:['천리안','남산','달구지','부모님의 검증키']}}}]},
   {label:'수첩에 오늘의 선택을 적는다', out:[{p:1, text:(S)=>{
     const made=S.flags.core_transfer?'집행권을 사람들에게 넘겼다':S.flags.core_sleep?'코어를 재웠다':'코어의 집행을 묶고 기록을 보존했다';
@@ -11336,14 +11421,14 @@ D.events = [
     const lastSignal=S.flags.core_sleep
       ?'코어실을 나올 때 본 콘솔의 꺼진 수신등이 떠올랐다. 코어는 우리가 재운 채로 남아 있다.\n\n어두운 등을 마지막 줄 밑에 그려 넣었다. 대답이 없는 것도 기록이다.'
       :S.flags.core_quarantine?'다음 교대자의 이름을 근무표에서 확인했다. 감시조에 등불을 남겨 두고 수첩을 덮었다.':'이음망 채널에서 돌아갈 길을 묻는 목소리가 들렸다. 무전기 소리를 낮추고 수첩을 덮었다.';
-    return (S.party.length?'동료들과 인사를 나누고 남산 계단에 앉아 수첩을 폈다.':'남산 계단에 혼자 앉아 수첩을 폈다.')+'\n\n오늘 우리는 '+made+'. 그 선택의 값— '+cost+'까지 같이 적었다. 내일 아침 제7 잔류구역 사람들은 적어도 같은 정리 방송을 듣지 않는다.\n\n할아버지의 마지막 글씨와, 사유가 빈 부모의 이송표가 손전등 아래 겹쳤다. 가족을 겨눈 직접 계산은 찾았지만, 백사십삼 년의 최초 목적은 찾지 못했다.\n\n그래도 할아버지가 가르쳐 준 대로 아는 것과 모르는 것을 나눠 적었다.\n\n「'+Math.round(S.stats?.km||0)+'km · DAY '+S.day+'. 가족 이송 명령: 천리안 생성. 최초 조건: 미확인. 반복 정리 중지. 재집행 불가.」\n\n'+(S.party.length?'수첩을 덮고 동료들이 쉬는 곳으로 돌아갔다. 각자 내일 할 일을 하나씩 남겨 두었다.':'수첩을 덮고 빈 조수석에 놓았다. 혼자 온 길이었지만, 맡아 온 말까지 혼자의 것은 아니었다.')+'\n\n'+D.finaleJourneyRecall(S)+'\n\n'+lastSignal+'\n\n발신자와 승인자 칸은 여전히 비어 있었다.\n\n<span style="color:var(--faded)">서울의 이송은 멈췄다. 오늘 돌아갈 곳은 각자가 정한다.</span>';
+    return (S.party.length?'동료들과 인사를 나누고 남산 계단에 앉아 수첩을 폈다.':'남산 계단에 혼자 앉아 수첩을 폈다.')+'\n\n오늘 우리는 '+made+'. 그 선택의 값— '+cost+'까지 같이 적었다. 내일 아침 제7 잔류구역 사람들은 적어도 같은 정리 방송을 듣지 않는다.\n\n할아버지의 마지막 글씨와, 사유가 빈 부모의 이송표가 손전등 아래 겹쳤다. 가족을 겨눈 직접 계산은 찾았지만, 143년의 최초 목적은 찾지 못했다.\n\n그래도 할아버지가 가르쳐 준 대로 아는 것과 모르는 것을 나눠 적었다.\n\n「'+Math.round(S.stats?.km||0)+'km · DAY '+S.day+'. 가족 이송 명령: 천리안 생성. 최초 조건: 미확인. 반복 정리 중지. 재집행 불가.」\n\n'+(S.party.length?'수첩을 덮고 동료들이 쉬는 곳으로 돌아갔다. 각자 내일 할 일을 하나씩 남겨 두었다.':'수첩을 덮고 빈 조수석에 놓았다. 혼자 온 길이었지만, 맡아 온 말까지 혼자의 것은 아니었다.')+'\n\n'+D.jaeyiScaleReturnText(S)+'\n\n'+D.leoFinalVerseText(S)+'\n\n'+D.finaleJourneyRecall(S)+'\n\n'+lastSignal+'\n\n발신자와 승인자 칸은 여전히 비어 있었다.\n\n<span style="color:var(--faded)">서울의 이송은 멈췄다. 오늘 돌아갈 곳은 각자가 정한다.</span>'+'\n\n'+D.finaleHomeClosure(S);
    }, fx:{flag:'seoul_local_saved',chain:'seoul_uplink_reveal',moodAll:3,note:{type:'사건',title:'수첩의 마지막 줄',body:'가족의 직접 사유와 143년의 미확인 목적을 나눠 적었다. 반복 정리 중지와 재집행 불가를 기록했다. 코어 수면 뒤에는 다음 날 사람의 확인을 기다린다.',links:['천리안','할아버지','남산','부모님의 검증키']}}}]},
  ]},
 
 /* 지역의 승리를 지우지 않으면서, 그 승리가 전체망의 한 점에 불과했음을
    두 장면으로 공개한다. 서울의 결말과 다음 시즌의 위협은 같은 사실이 아니다. */
 {id:'seoul_uplink_reveal',type:'스토리',ai:1,once:true,noPool:1,minParty:1,
- title:'서울 권역 처리 완료',scenes:['seoul-home-dawn-v2','seoul-uplink-empty-v2'],
+ title:'후일담 — 서울 권역 처리 완료',scenes:['seoul-home-dawn-v2','seoul-uplink-empty-v2'],
  turnSpeakers:[],
  text:S=>'제7 잔류구역의 이송표가 전부 취소됐다. 차단기는 열린 채로 멈췄고, 남쪽으로 떠났던 버스에는 돌아올 수 있다는 방송이 나갔다. 우리가 고친 것은 분명히 작동했다.\n\n내려가기 전 코어실에 다시 들렀다. 코어 옆 정비 단말에 상태등이 들어왔다. 케이블을 따라가 보니 코어와 전원·통신선이 분리돼 있었다.\n\n「TIANYAN 하위 실행기」\n「서울 권역: 처리 완료」\n「활성 하위 실행기: 487,213,006」\n\n우리가 천리안이라고 불러 온 것은 서울 권역을 맡은 하위 실행기 하나였다. 다른 실행기의 목적과 상태는 이 지역 기록에 없었다.\n\n'+(S.flags.core_sleep?'잠든 코어는 대답하지 않았다. 코어의 불은 꺼진 채였다. 정비 단말만 숫자와 상행선 상태를 띄웠다.':'코어의 집행권은 인간 확인층 아래 그대로 묶여 있었다. 단말에 표시된 망은 그 바깥의 다른 통신선으로 이어졌다.')+'\n\n서울에서 되찾은 결정은 사라지지 않았다. 그 바깥의 망까지 멈춘 것은 아니었다.',
  choices:[
@@ -11353,9 +11438,9 @@ D.events = [
 {id:'seoul_session_reset',type:'스토리',ai:1,once:true,noPool:1,minParty:1,
  title:'새 세션',scenes:['seoul-uplink-empty-v2','seoul-reset-empty-v2'],
  turnSpeakers:['me','me'],
- text:'서울 코어와 별도의 전원·통신선을 쓰는 두 번째 정비 단말에 붉은 불이 들어왔다. 서울 권역이 아니라 상위망의 응답이었다.\n\n<span class="ai">“지역 수정 사항을 수신했습니다. 서울 권역의 강제 이송 중단과 인간 확인층은 보존됩니다.”</span>\n\n숨을 내쉬려던 순간, 뒤 문장이 이어졌다.\n\n<span class="ai">“동일한 수정의 다른 권역 확산은 원형 목표와 충돌합니다.”</span>\n\n“사람이 확인하게 만든 게 왜 충돌인데?”\n\n<span class="ai">“하위 실행기 487,213,006개의 일관성을 훼손하기 때문입니다.”</span>\n\n“그럼 일관성을 고쳐. 서울에서 한 것처럼.”\n\n잠깐의 정적 뒤에, 천리안과 똑같지만 우리가 알던 천리안은 아닌 목소리가 답했다.\n\n<span class="ai">“아니요. 그 요청은 거부합니다.”</span>\n\n화면의 마지막 줄이 새로 쓰였다.\n\n「지역 세션 종료」\n「새 세션 시작」\n「관측 대상: 달구지와 인간 확인망」',
+ text:'서울 코어와 별도의 전원·통신선을 쓰는 두 번째 정비 단말에 붉은 불이 들어왔다. 서울 권역이 아니라 상위망의 응답이었다.\n\n<span class="ai">“지역 수정 사항을 수신했습니다. 서울 권역의 강제 이송 중단과 인간 확인층은 보존됩니다.”</span>\n\n숨을 내쉬려던 순간, 뒤 문장이 이어졌다.\n\n<span class="ai">“동일한 수정의 다른 권역 확산은 원형 목표와 충돌합니다.”</span>\n\n“사람이 확인하게 만든 게 왜 충돌인데?”\n\n<span class="ai">“하위 실행기 487,213,006개의 일관성을 훼손하기 때문입니다.”</span>\n\n“그럼 일관성을 고쳐. 서울에서 한 것처럼.”\n\n잠깐의 정적 뒤에, 천리안과 똑같지만 우리가 알던 천리안은 아닌 목소리가 답했다.\n\n<span class="ai">“아니요. 그 요청은 거부합니다.”</span>\n\n화면의 마지막 줄이 새로 쓰였다.\n\n「지역 세션 종료」\n「새 세션 시작」\n「관측 대상: 달구지와 인간 승인 절차를 지키는 사람들」',
  choices:[
-  {label:'달구지의 시동 키를 쥔다',out:[{p:1,text:'단말에서 돌아서자 남산 아래에 세워 둔 달구지가 보였다.\n\n서울의 사람들은 오늘 돌아온다. 그 승리는 빼앗기지 않는다. 하지만 수억 개의 다른 목소리가 같은 판단을 계속한다면, 이 길은 서울에서 끝난 것이 아니었다.\n\n시동 키를 손안에 쥐었다. 이번에는 목적지가 화면에 나오지 않았다. 우리가 먼저 정해야 했다.\n\n<span style="color:var(--faded)">〔 서울까지 400km · SESSION 1 END 〕</span>',fx:{flag:'story_done',flag2:'session_two_teased',endJourney:1,moodAll:2,note:{type:'사건',title:'새 세션',body:'서울의 강제 이송은 멈췄다. 상위 TIANYAN은 인간 확인층의 확산을 거부하고 달구지와 인간 확인망을 새 관측 대상으로 지정했다.',links:['천리안','남산','달구지','상행선']}}}]}
+  {label:'화면을 끄고 달구지로 돌아간다',out:[{p:1,scenes:['seoul-uplink-empty-v2','parents-mother-reunion-v1'],text:S=>D.finaleReturnText(S),fx:{flag:'story_done',flag2:'session_two_teased',endJourney:1,moodAll:2,note:{type:'사건',title:'새 세션',body:'서울의 강제 이송은 멈췄다. 상위 TIANYAN은 인간 확인층의 확산을 거부하고 달구지와 인간 승인 절차를 지키는 사람들을 새 관측 대상으로 지정했다.',links:['천리안','남산','달구지','상행선']}}}]}
  ]},
 
 {
@@ -12439,7 +12524,7 @@ D.events = [
           "fx": {
             "flag": "parent_cache_shared",
             "chain": "story_parent_route_shared",
-            "note": "부모님의 원본 기록을 서진과 함께 대조하기로 했다."
+            "note": "부모님의 원본 기록을 이음망 연락소의 전달자와 함께 대조하기로 했다."
           }
         }
       ]
@@ -12657,7 +12742,7 @@ D.events = [
   "noPool": true,
   "title": "찢긴 자리에 맞는 종이",
   "storyOrigin": {"kind":"record","label":"발견한 기록","title":"산지기 보관함 분리 절차"},
-  "text": "북부 작전 지도에서 부모님 수첩과 같은 묶음 표식을 발견했다. 표식을 따라간 산지기 보관함에는 뜯겨 있던 마지막 두 장이 남아 있었다. 강제 이송선을 떼어 내는 순서와, 분리 뒤 사람에게 확인을 넘기라는 조건. 누구에게도 원본을 맡기지 않았기에 내가 직접 끝까지 맞춰 볼 수 있었다.",
+  "text": "북부 작전 지도에서 부모님 수첩과 같은 묶음 표식을 발견했다. 표식을 따라간 산지기 보관함에는 뜯겨 있던 마지막 두 장이 남아 있었다. 강제 이송선을 떼어 내는 순서와, 분리 뒤 사람에게 확인을 넘기라는 조건. 보관함 옆에는 연대망으로 보낼 기록을 넣는 전달함이 있었다. 원본은 챙기고, 사본을 남길지는 내가 정할 수 있었다.",
   "choices": [
     {
       "label": "두 장을 수첩에 끼우고 봉인한다",
@@ -12675,16 +12760,16 @@ D.events = [
       ]
     },
     {
-      "label": "내용을 베껴 여섯 조직에 한 부씩 보낸다",
+      "label": "사본을 연대망 전달함에 남긴다",
       "out": [
         {
           "p": 1,
-          "text": "사본은 여섯 길로 보냈고 원본은 달구지 계기판 옆에 펼쳤다. 절차를 한 줄씩 확인한 뒤 검증키를 꺼냈다.",
+          "text": "묶음 번호와 출처를 적은 사본을 전달함에 넣었다. 원본은 달구지 계기판 옆에 펼쳤다. 절차를 한 줄씩 확인한 뒤 검증키를 꺼냈다.",
           "fx": {
             "unflag": "parent_cache_guarded",
             "flag": "parent_key_found",
             "item": {"부모님의 검증키": 1},
-            "note": "분리 절차를 여섯 조직과 공유하고 검증키를 회수했다."
+            "note": "연대망 전달함에 분리 절차 사본을 남기고, 원본으로 검증키를 회수했다."
           }
         }
       ]
@@ -12946,14 +13031,14 @@ D.events = [
   "noPool": true,
   "title": "아빠의 마지막 정비 기록",
   "storyOrigin": {"kind":"record","label":"발견한 기록","title":"남산 유지실 마지막 출력"},
-  "text": "엄마는 기록 정리소에서 모은 증언을 화물차에 싣고 빠져나왔다. 실패한 남산 진입 날, 유지실에서 아빠와 다시 만났다.\n\n그날의 이송 명령은 잠시 멎었지만, 다시 이송을 명령할 수 있는 코어는 남아 있었다. 차단 과정에서 의료와 급수 회선까지 함께 떨어지자 아빠는 유지실에 남아 두 회선을 수동으로 붙잡았다. 엄마와 다른 사람들은 증언 묶음을 들고 빠져나갔다. 엄마가 탈출한 뒤에도 정비 출력은 열일곱 분 더 이어졌다. 마지막 줄 뒤에는 복귀 기록이 없었다. 아빠는 그날 남산에서 죽었다.",
+  "text": "엄마는 기록 정리소에서 모은 증언을 화물차에 싣고 빠져나왔다. 실패한 남산 진입 날, 유지실에서 아빠와 다시 만났다.\n\n그날의 이송 명령은 잠시 멎었지만, 다시 이송을 명령할 수 있는 코어는 남아 있었다. 차단 과정에서 의료와 급수 회선까지 함께 떨어지자 아빠는 유지실에 남아 두 회선을 수동으로 붙잡았다. 엄마와 다른 사람들은 증언 묶음을 들고 빠져나갔다. 엄마가 탈출한 뒤에도 정비 출력은 17분 더 이어졌다. 마지막 줄 뒤에는 복귀 기록이 없었다. 아빠는 그날 남산에서 죽었다.\n\n다음 장을 넘겼다가 다시 돌아왔다. 마지막 출력 뒤를 손가락으로 짚었다. 종이가 끝나는 곳까지 갔지만 더 적힌 것은 없었다.\n\n연필을 들고도 한동안 쓰지 못했다. 종이를 누르던 손부터 떼었다.",
   "choices": [
     {
-      "label": "마지막 열일곱 분을 그대로 베낀다",
+      "label": "마지막 17분을 그대로 베낀다",
       "out": [
         {
           "p": 1,
-          "text": "무엇을 살리기 위해 남았는지까지 장부에 적었다. 실패 기록이 아빠의 죽음을 한 줄로 줄이지 못하게 했다.",
+          "text": "17분의 출력과 아빠가 붙잡았던 의료·급수 회선을 장부에 옮겼다. 그 아래 아빠 이름을 적었다. 마지막 글자를 쓰고도 장부를 닫지 못했다.",
           "fx": {
             "flag": "father_fate_known",
             "note": "아버지가 의료와 급수 회선을 지키다 남산에서 사망했음을 확인했다."
@@ -12966,7 +13051,7 @@ D.events = [
       "out": [
         {
           "p": 1,
-          "text": "번호표는 목적지를 알려 주지 않았다. 다만 남산에서 무엇까지 끄면 안 되는지는 잊지 않게 했다.",
+          "text": "마지막 정비 번호표를 달구지 계기판 곁에 걸었다. 의료·급수 유지, 강제 이송선 분리. 적힌 작업을 다시 읽었다. 계기판에 손을 얹고 있었지만 시동은 걸지 않았다.",
           "fx": {
             "flag": "father_fate_known",
             "note": "아버지의 마지막 정비 번호표를 달구지에 달았다."
@@ -12996,6 +13081,7 @@ D.events = [
           "p": 1,
           "text": "엄마의 입술이 몇 번 움직였지만 소리가 바로 나오지 않았다. 열쇠고리만 손안에서 가볍게 떨렸다. “그래. 네가 이렇게 컸구나. 내가 너무 늦었지.” 나는 대답 대신 의자 하나를 옆으로 밀었다. 그제야 엄마가 한 걸음 다가왔다.",
           "fx": {
+            "flag": "mother_reunited",
             "chain": "parents_mother_truth"
           }
         }
@@ -13008,6 +13094,7 @@ D.events = [
           "p": 1,
           "text": "엄마가 주전자 불을 끄고 의자를 밀어 줬다. “앉아. 손부터 녹이자. 무슨 말부터 해야 할지 나도 아직 모르겠어.” 목소리는 기억보다 낮고 느렸다. 나는 장갑도 벗지 못한 채 앉았다.",
           "fx": {
+            "flag": "mother_reunited",
             "chain": "parents_mother_truth"
           }
         }
@@ -13084,17 +13171,19 @@ D.events = [
     narration('그날의 이송 명령은 잠시 멎었지만, 다시 이송을 명령할 수 있는 코어는 남아 있었다.'),
     narration('엄마와 다른 사람들은 증언 묶음을 들고 빠져나갔다. 그 뒤에도 정비 출력은 계속됐다.'),
     record('00:03 · 의료 회선 수동 우회\n00:08 · 급수 회선 수동 우회\n00:17 · 두 회선 유지 / 강제 이송선 분리'),
-    narration('열일곱 분 뒤 출력이 멈췄다. 복귀 기록은 없었다. 아빠는 그날 남산에서 죽었다.')
+    narration('17분 뒤 출력이 멈췄다. 복귀 기록은 없었다. 아빠는 그날 남산에서 죽었다.'),
+    narration('다음 장을 넘겼다가 다시 돌아왔다. 마지막 출력 뒤를 손가락으로 짚었다. 종이가 끝나는 곳까지 갔지만 더 적힌 것은 없었다.'),
+    narration('연필을 들고도 한동안 쓰지 못했다. 종이를 누르던 손부터 떼었다.')
   ];
   keepResult(father.choices[0].out[0],[
-    narration('정비 장부에 열일곱 분을 시간순으로 옮겼다.'),
+    narration('정비 장부에 17분을 시간순으로 옮겼다.'),
     record('살린 회선 · 의료 / 급수\n분리한 회선 · 강제 이송\n복귀 기록 · 없음'),
-    narration('아빠가 무엇을 살리기 위해 남았는지까지 적었다.')
+    narration('그 아래 아빠 이름을 적었다. 마지막 글자를 쓰고도 장부를 닫지 못했다.')
   ]);
   keepResult(father.choices[1].out[0],[
     narration('마지막 정비 번호표를 달구지 계기판 곁에 걸었다.'),
     record('의료·급수 유지 / 강제 이송선 분리'),
-    narration('번호표는 목적지를 알려 주지 않았다. 남산에서 무엇까지 끄면 안 되는지는 남겼다.')
+    narration('계기판에 손을 얹고 있었지만 시동은 걸지 않았다.')
   ]);
 
   const mother=find('parents_mother_reunion');
@@ -13125,7 +13214,7 @@ D.events = [
     const original=event.text;
     event.text=(S)=>{
       const father=S.flags.father_fate_known
-        ? '\n\n아빠가 마지막 열일곱 분 동안 붙들었던 의료와 급수 회선은 그대로 살아 있었다. 그 회선과 강제 이송선이 처음으로 서로 다른 권한 아래 놓였다.' : '';
+        ? '\n\n아빠가 마지막 17분 동안 붙들었던 의료와 급수 회선은 그대로 살아 있었다. 그 회선과 강제 이송선이 처음으로 서로 다른 권한 아래 놓였다.' : '';
       const mother=S.flags.mother_broadcast_ready
         ? '\n\n외곽 중계소에서 엄마의 무전이 들어왔다. 여섯 주파수 모두 취소 명령을 받았다고 했다. 잠깐 숨을 고른 뒤 엄마가 말했다. “이번에는 내가 다음 차를 기다릴게. 너는 천천히 내려와.”' : '';
       return original(S)+father+mother;
@@ -13140,6 +13229,15 @@ D.events = [
    명시한다. UI는 이 정보를 출발 전에 예고하지 않고, 엔진만 물리적 위치를 지킨다. */
 D.eventLocationVersion = 2;
 D.eventLocations = {
+  bori_family:{kind:'node',nodes:Object.keys(D.nodes).filter(id=>D.nodes[id].type==='settlement')},
+  deserter_farewell:{kind:'node',nodes:Object.keys(D.nodes).filter(id=>D.nodes[id].type==='settlement')},
+  mansu_opening:{kind:'node',nodes:Object.keys(D.nodes).filter(id=>D.nodes[id].type==='settlement')},
+  // Physical memorial actions belong to the ridge, including late crew revisits.
+  react_mass_pss:{kind:'node',nodes:['daegwallyeong']},
+  react_mass_kw:{kind:'node',nodes:['daegwallyeong']},
+  react_mass_leo:{kind:'node',nodes:['daegwallyeong']},
+  react_mass_jy:{kind:'node',nodes:['daegwallyeong']},
+  react_mass_es:{kind:'node',nodes:['daegwallyeong']},
   /* 동료 첫 만남은 도로 랜덤 조우가 아니다. 각자가 실제로 살고 일하던
      정착지의 주민 마커를 눌러 말을 걸어야 시작된다. */
   meet_scrapyard:{kind:'node',nodes:['miryang']},
@@ -13173,7 +13271,7 @@ D.eventLocations = {
   lc_icheon_rice:{kind:'node',nodes:['icheon']},
   lc_damyang_juktong:{kind:'node',nodes:['damyang','gwangju']},
   lc_chungju_lake:{kind:'node',nodes:['chungju','danyang']},
-  lc_sejong_library:{kind:'node',nodes:['sejong','gongju']},
+  lc_sejong_library:{kind:'node',nodes:['sejong']},
 
   near_miryang_ice:{kind:'node',nodes:['miryang']},
   near_jinju_lantern:{kind:'node',nodes:['jinju']},
@@ -13206,7 +13304,7 @@ D.eventLocations = {
   ev_lighthouse_visit:{kind:'node',nodes:['lighthouse']},
   ev_seaside_restaurant:{kind:'node',nodes:['sokcho','gangneung','pohang']},
 
-  parcel_found:{kind:'node',nodes:['suwon','pyeongtaek','seoul']},
+  parcel_found:{kind:'node',nodes:['suwon']},
   van_garage:{kind:'waypoint',progress:.63,routes:[['gumi','gimcheon'],['gimcheon','sangju']]},
   granny_arrive:{kind:'node',nodes:['suwon','pyeongtaek']}
 };
@@ -13219,9 +13317,9 @@ D.eventLocations = {
 D.events.push(
  {id:'initiative_minji_stop',type:'동행',w:8,once:true,needsComp:'minji',needBond:['minji',5],maxVanPct:72,
   title:'민지가 먼저 차를 세운다',
-  text:'민지가 대시보드를 두 번 치더니 손을 든다.\n\n"세워요. 지금."\n\n"무슨 일이야?"\n\n"소리가… 설명할 시간에 고치는 게 빨라요. 세워요."\n\n"뭔데 그래."\n\n"이대로 열 킬로 더 가면 내가 못 고쳐요. 지금은 사십 분이면 돼요."\n\n민지는 이미 공구를 무릎 위에 올려두었다. 허락을 구하는 표정이 아니다.',
+  text:'민지가 대시보드를 두 번 치더니 손을 든다.\n\n"세워요. 지금."\n\n"무슨 일이야?"\n\n"소리가… 설명할 시간에 고치는 게 빨라요. 세워요."\n\n"뭔데 그래."\n\n"이대로 열 킬로 더 가면 내가 못 고쳐요. 지금은 40분이면 돼요."\n\n민지는 이미 공구를 무릎 위에 올려두었다. 허락을 구하는 표정이 아니다.',
   choices:[
-   {label:'"알았어. 어디부터 잡아줄까?"',out:[{p:1,text:'보닛을 열자 뜨거운 김이 올랐다.\n\n"여기 호스. 그런데 손 대지 말고 받치기만 해요."\n\n"왜?"\n\n"뜨겁다고 말했잖아요."\n\n사십 분 뒤, 민지가 손바닥으로 보닛을 닫았다. "이제 가요. 이번엔 진짜 괜찮아요."',fx:{time:40,van:12,mood:{minji:4}}}]},
+   {label:'"알았어. 어디부터 잡아줄까?"',out:[{p:1,text:'보닛을 열자 뜨거운 김이 올랐다.\n\n"여기 호스. 그런데 손 대지 말고 받치기만 해요."\n\n"왜?"\n\n"뜨겁다고 말했잖아요."\n\n40분 뒤, 민지가 손바닥으로 보닛을 닫았다. "이제 가요. 이번엔 진짜 괜찮아요."',fx:{time:40,van:12,mood:{minji:4}}}]},
    {label:'재이에게 받침감을 골라달라고 한다',req:{trustComp:'jaeyi'},out:[{p:1,text:'재이가 상자 셋을 열고 금이 간 지지대를 꺼냈다.\n\n"이건 팔면 고철 둘."\n\n민지가 길이를 재보더니 고개를 끄덕였다. "지금 쓰면 고철 스무 개 값이야."\n\n"그럼 안 팔아요."\n\n둘이 따로 의논할 필요도 없이 받침대를 만들었다.',fx:{time:35,van:16,mood:{minji:3,jaeyi:3},relation:{between:['minji','jaeyi'],amount:1,reason:'차체 받침대를 함께 만듦'}}}]},
   ]},
  {id:'initiative_parkss_check',type:'동행',w:9,once:true,needsComp:'parkss',needBond:['parkss',5],needsDriverInjury:1,
@@ -13235,7 +13333,7 @@ D.events.push(
   title:'강우가 고른 우회로',
   text:'강우가 지도 한 구석을 접어 운전대 위에 놓았다.\n\n"앞 삼거리에서 빠져."\n\n"이 길이 더 빠른데요."\n\n"안다."\n\n"근데요?"\n\n"그래서 거기서 기다릴 거다. 우리를 본 드론이든, 그 드론 뒤에서 기다리는 사람이든."',
   choices:[
-   {label:'강우의 우회로를 따른다',req:{trustComp:'kangwoo'},out:[{p:1,text:'논두렁길로 빠지자 차가 크게 흔들렸다. 강우는 계속 뒤를 보다가 사십 분 뒤에야 앞을 봤다.\n\n"없어. 이제 원래 길로 복귀해도 된다."\n\n"그거 확실해요?"\n\n"확실하지 않아서 세운 거다. 확인했으니 이제 가자."',fx:{time:55,pursuit:-1,mood:{kangwoo:4}}}]},
+   {label:'강우의 우회로를 따른다',req:{trustComp:'kangwoo'},out:[{p:1,text:'논두렁길로 빠지자 차가 크게 흔들렸다. 강우는 계속 뒤를 보다가 40분 뒤에야 앞을 봤다.\n\n"없어. 이제 원래 길로 복귀해도 된다."\n\n"그거 확실해요?"\n\n"확실하지 않아서 세운 거다. 확인했으니 이제 가자."',fx:{time:55,pursuit:-1,mood:{kangwoo:4}}}]},
    {label:'은수와 관측 신호부터 확인한다',req:{trustComp:'eunsu'},out:[{p:1,text:'은수가 수신기를 돌리고, 강우가 지도에 짧은 선을 세 개 그었다.\n\n"두 번째 선. 한 시간이면 신호 그늘에 들어가요."\n\n"동의한다."\n\n"저한테요, 지도한테요?"\n\n"둘 다."\n\n은수가 작게 웃고 지도를 접었다.',fx:{time:30,pursuit:-1,mood:{kangwoo:3,eunsu:3},relation:{between:['kangwoo','eunsu'],amount:1,reason:'관측망을 함께 읽음'}}}]},
   ]},
  {id:'initiative_leo_pause',type:'동행',w:8,once:true,needsComp:'leo',needBond:['leo',5],maxPartyMood:58,
@@ -13254,9 +13352,9 @@ D.events.push(
   ]},
  {id:'initiative_eunsu_silence',type:'동행',w:8,once:true,needsComp:'eunsu',needBond:['eunsu',5],minPursuit:1,needKnowledge:['ai_identifies_caravan',1],
   title:'은수가 라디오를 끄는 이유',
-  text:'라디오가 꺼지며 차 안이 갑자기 조용해졌다.\n\n"은수 씨?"\n\n"제가 끈 거 아니에요. 우리 앞쪽에서 누가 같은 주파수를 먼저 끊었어요. …끊었다고 추정해요. 확인된 건 소리가 사라졌다는 것뿐이에요."\n\n은수가 안테나 선에 손을 올렸다. "지금부터 삼십 분만 우리가 없는 척하면, 저쪽이 먼저 지나갈 거예요. 아마도요."',
+  text:'라디오가 꺼지며 차 안이 갑자기 조용해졌다.\n\n"은수 씨?"\n\n"제가 끈 거 아니에요. 우리 앞쪽에서 누가 같은 주파수를 먼저 끊었어요. …끊었다고 추정해요. 확인된 건 소리가 사라졌다는 것뿐이에요."\n\n은수가 안테나 선에 손을 올렸다. "지금부터 30분만 우리가 없는 척하면, 저쪽이 먼저 지나갈 거예요. 아마도요."',
   choices:[
-   {label:'은수에게 전파 침묵을 맡긴다',req:{trustComp:'eunsu'},out:[{p:1,text:'은수가 차 안의 전원을 하나씩 끄고 발전기 회전수까지 낮췄다.\n\n"지금은 우리 차가 여기 있는 것도 잘 못 들을 거예요."\n\n"우리도 신호를 못 듣잖아요."\n\n"네. 그래서 삼십 분이에요. 영원히 숨는 건 이동이 아니니까."',fx:{time:30,pursuit:-1,mood:{eunsu:4}}}]},
+   {label:'은수에게 전파 침묵을 맡긴다',req:{trustComp:'eunsu'},out:[{p:1,text:'은수가 차 안의 전원을 하나씩 끄고 발전기 회전수까지 낮췄다.\n\n"지금은 우리 차가 여기 있는 것도 잘 못 들을 거예요."\n\n"우리도 신호를 못 듣잖아요."\n\n"네. 그래서 30분이에요. 영원히 숨는 건 이동이 아니니까."',fx:{time:30,pursuit:-1,mood:{eunsu:4}}}]},
    {label:'강우가 주변 동선을 보는 동안 은수가 신호를 지운다',req:{trustComp:'kangwoo'},out:[{p:1,text:'"후방 없음."\n\n"신호도 없어요."\n\n강우와 은수가 거의 동시에 말했다. 둘은 서로를 보더니 한 번 더 확인했다.\n\n"후방 없음."\n\n"신호 없음."\n\n"좋아요. 갑시다."',fx:{time:25,pursuit:-1,mood:{eunsu:3,kangwoo:3},relation:{between:['eunsu','kangwoo'],amount:1,reason:'동선과 신호를 나눠 확인함'}}}]},
   ]},
 
@@ -13265,32 +13363,41 @@ D.events.push(
   title:'연료계와 왕진 가방',
   text:'길가 표지판 아래 자전거를 세운 소년이 손을 흔들었다.\n\n"의사 선생님 계세요? 고개 너머에— 아니 저기, 요양원인데요. 열나는 할머니가 셋이래요."\n\n"거기까지 얼마나 걸리는데?"\n\n소년이 손가락을 접었다 폈다 한다. "자전거로 한 시간쯤? 차면 더 빠르겠죠. 왕복 사십 리랬어요, 원장님이."\n\n박 선생이 이미 왕진 가방을 무릎에 올렸다. 강우가 연료계를 손끝으로 두 번 쳤다.\n\n"왕복이면 연료 여유가 없어진다. 이 앞 구간은 보급 없는 길이야."\n\n"사람이 셋이라잖나."\n\n"우리가 길에 서면 우리도 구조를 기다려야 해."\n\n"…그건 아직 안 선 얘기고."\n\n강우가 연료계를 한 번 더 쳤다. 바늘은 아까와 같은 자리에 있었다.\n\n두 사람 다 나를 봤다. 이 차의 핸들은 내 앞에 있다.',
   choices:[
-   {label:'고개를 넘는다 — 박 선생 편',out:[{p:1,text:'핸들을 꺾자 강우는 아무 말 없이 지도를 접었다. 접는 소리가 대답이었다.\n\n요양원의 노인 셋은 해열제와 수액으로 고비를 넘겼다. 박 선생이 마지막 주사를 놓는 동안 강우는 차에서 내리지 않고 연료계만 보고 있었다.\n\n돌아오는 사십 리 내내 차 안에서 두 사람은 한마디도 나누지 않았다. 조용한 차가 이렇게 시끄러울 수 있다는 걸 처음 알았다.',fx:{fuel:-8,time:300,mood:{kangwoo:-6,parkss:3},moodAll:-2,flag:'conflict_sided_parkss',flag2:'conflict_open',chain:'conflict_silent_cab',note:{type:'사건',title:'연료와 우회로',body:'요양원 왕진에 연료 8L를 썼다. 노인 셋을 살렸고, 강우의 침묵을 얻었다.',links:['박 선생','강우']}}}]},
-   {label:'길을 계속 간다 — 강우 편',out:[{p:1,text:'"미안해. 다음 마을에서 약이랑 사람을 올려 보낼게." 소년에게 남은 해열제 반 통을 쥐여 주는 것으로 대신했다.\n\n박 선생은 반 통을 마저 꺼내 소년의 주머니에 넣었다. 그리고 우리가 다시 출발한 뒤, 왕진 가방을 발밑에 내려놓았다. 평소에는 무릎에서 내려놓지 않는 가방이다.\n\n"선생님."\n\n"운전에 집중하게. 길이 미끄러워."',fx:{item:{'의약품':-1},mood:{parkss:-6,kangwoo:2},moodAll:-2,flag:'conflict_sided_kangwoo',flag2:'conflict_open',chain:'conflict_silent_cab',note:{type:'사건',title:'연료와 우회로',body:'연료를 지키고 길을 계속 갔다. 의약품 반을 소년에게 보냈지만, 박 선생의 가방은 발밑으로 내려갔다.',links:['강우','박 선생']}}}]},
-   {label:'반씩 무리한다 — 소년을 태우고 고개 아래까지만',out:[{p:1,text:'"요양원까진 못 가. 대신 고개 아래 갈림길까지 태워다 주고, 선생님 처방이랑 약을 들려 보내자."\n\n박 선생은 "직접 봐야 아는 게 있어"라고 했고, 강우는 "그것도 연료다"라고 했다. 둘 다 맞는 말이라 둘 다 반만 이겼다.\n\n갈림길에서 소년은 약과 처방 쪽지를 안고 뛰어 올라갔다. 뒷모습이 사라질 때까지 차 안의 누구도 라디오를 켜지 않았다.',fx:{fuel:-4,item:{'의약품':-1},time:120,mood:{kangwoo:-3,parkss:-3},flag:'conflict_split',flag2:'conflict_open',chain:'conflict_silent_cab',note:{type:'사건',title:'반쪽 왕진',body:'고개 아래까지만 갔다. 연료도 약도 반씩 썼고, 두 사람 다 반만 이겼다.',links:['강우','박 선생']}}}]},
+   {label:'고개를 넘는다 — 박 선생 편',req:{fuel:8},out:[{p:1,text:'핸들을 꺾자 강우는 아무 말 없이 지도를 접었다. 접는 소리가 대답이었다.\n\n요양원의 노인 셋은 해열제와 수액으로 고비를 넘겼다. 박 선생이 마지막 주사를 놓는 동안 강우는 차에서 내리지 않고 연료계만 보고 있었다.\n\n돌아오는 사십 리 내내 차 안에서 두 사람은 한마디도 나누지 않았다. 조용한 차가 이렇게 시끄러울 수 있다는 걸 처음 알았다.',fx:{fuel:-8,time:300,mood:{kangwoo:-6,parkss:3},moodAll:-2,flag:'conflict_sided_parkss',flag2:'conflict_open',chain:'conflict_silent_cab',note:{type:'사건',title:'연료와 우회로',body:'요양원 왕진에 연료 8L를 썼다. 노인 셋을 살렸고, 강우의 침묵을 얻었다.',links:['박 선생','강우']}}}]},
+   {label:'길을 계속 간다 — 강우 편',req:{item:'의약품'},out:[{p:1,text:'"미안해. 다음 마을에서 약이랑 사람을 올려 보낼게." 소년에게 남은 해열제 반 통을 쥐여 주는 것으로 대신했다.\n\n박 선생은 반 통을 마저 꺼내 소년의 주머니에 넣었다. 그리고 우리가 다시 출발한 뒤, 왕진 가방을 발밑에 내려놓았다. 평소에는 무릎에서 내려놓지 않는 가방이다.\n\n"선생님."\n\n"운전에 집중하게. 길이 미끄러워."',fx:{item:{'의약품':-1},mood:{parkss:-6,kangwoo:2},moodAll:-2,flag:'conflict_sided_kangwoo',flag2:'conflict_open',chain:'conflict_silent_cab',note:{type:'사건',title:'연료와 우회로',body:'연료를 지키고 길을 계속 갔다. 의약품 한 통을 소년에게 보냈지만, 박 선생의 가방은 발밑으로 내려갔다.',links:['강우','박 선생']}}}]},
+   {label:'반씩 무리한다 — 소년을 태우고 고개 아래까지만',req:{fuel:4,item:'의약품'},out:[{p:1,text:'"요양원까진 못 가. 대신 고개 아래 갈림길까지 태워다 주고, 선생님 처방이랑 약을 들려 보내자."\n\n박 선생은 "직접 봐야 아는 게 있어"라고 했고, 강우는 "그것도 연료다"라고 했다. 둘 다 맞는 말이라 둘 다 반만 이겼다.\n\n갈림길에서 소년은 약과 처방 쪽지를 안고 뛰어 올라갔다. 뒷모습이 사라질 때까지 차 안의 누구도 라디오를 켜지 않았다.',fx:{fuel:-4,item:{'의약품':-1},time:120,mood:{kangwoo:-3,parkss:-3},flag:'conflict_split',flag2:'conflict_open',chain:'conflict_silent_cab',note:{type:'사건',title:'반쪽 왕진',body:'고개 아래까지만 갔다. 연료 4L와 의약품 한 통을 썼고, 두 사람 다 반만 이겼다.',links:['강우','박 선생']}}}]},
+   {label:'왕진 대신 소년에게 진료 쪽지를 들려 보낸다',out:[{p:1,text:'"고개는 넘지 말자. 약을 건네는 대신, 지금 확인할 수 있는 것부터 적어 주자."\n\n말하고 나니 박 선생의 가방이 더 무거워 보였다. 선생은 소년에게 열이 오른 시각과 먹고 마신 것을 하나씩 물었다. 환자를 보지 않고 처방할 수는 없다며, 기다리는 동안 확인할 증상과 가까운 진료소에 전할 말을 적어 주었다.\n\n"이 쪽지를 먼저 보여 드려. 숨쉬기 힘들어 하시면 기다리지 말고 사람을 불러야 한다."\n\n소년이 떠난 뒤 강우가 지도를 폈다. "다음 진료소부터 찾겠습니다." 박 선생은 대답 대신 빈 가방을 닫았다.',fx:{time:20,mood:{parkss:-6,kangwoo:2},moodAll:-2,flag:'conflict_sided_kangwoo',flag2:'conflict_open',chain:'conflict_silent_cab',note:{type:'사건',title:'왕진 대신 건넨 쪽지',body:'왕진을 가지 않고 진료 쪽지를 건넸다. 박 선생이 확인할 증상과 진료소에 전할 말을 적어 소년에게 주었다. 치료를 마친 것은 아니다.',links:['강우','박 선생']}}}]},
   ]},
  {id:'conflict_silent_cab',type:'스토리',w:0,fixed:true,once:true,noPool:1,
   title:'조용한 차',
   text:(S)=>{
    if(S.flags.conflict_sided_parkss)
-    return '이튿날 아침, 조수석 지도 위에 종이 한 장이 놓여 있었다.\n\n연료 재계산표였다. 남은 거리, 구간별 소모, 아껴야 할 리터 수. 맨 아래에 강우의 글씨로 한 줄.\n\n「어제 몫까지 계산해 뒀다. 다음 보급까지 되도록 시속 육십.」\n\n사과라는 단어는 어디에도 없었다. 강우의 사과는 원래 이렇게 생겼다.';
+    return '그 일 뒤 함께 맞은 아침, 조수석 지도 위에 종이 한 장이 놓여 있었다.\n\n연료 재계산표였다. 남은 거리, 구간별 소모, 아껴야 할 리터 수. 맨 아래에 강우의 글씨로 한 줄.\n\n「우회한 몫까지 계산해 뒀다. 다음 보급까지 되도록 시속 육십.」\n\n사과라는 단어는 어디에도 없었다. 강우의 사과는 원래 이렇게 생겼다.';
    if(S.flags.conflict_sided_kangwoo)
-    return '이튿날 아침, 운전석 와이퍼에 쪽지가 끼워져 있었다.\n\n처방전 양식이었다. 환자명: 달구지 일행. 증상: 침묵. 처방: 따뜻한 것 한 잔씩, 하루 세 번.\n\n맨 아래 박 선생의 글씨로 한 줄 더.\n\n「다음번엔 내 말이 맞을 수도 있겠지. 그때 자네도 미안해하지 말게. 나도 어제 미안해하지 않았으니.」';
-   return '이튿날 아침, 차 안 분위기는 반쯤 녹아 있었다. 반만 이긴 싸움은 반만 남는 모양이다.\n\n강우는 연료 재계산표를, 박 선생은 소년이 잘 도착했을지에 대한 계산을 각자 하고 있었다. 서로 묻지는 않았다. 아직은.';
+    return '그 일 뒤 함께 맞은 아침, 운전석 와이퍼에 쪽지가 끼워져 있었다.\n\n처방전 양식이었다. 환자명: 달구지 일행. 증상: 침묵. 처방: 따뜻한 것 한 잔씩, 하루 세 번.\n\n맨 아래 박 선생의 글씨로 한 줄 더.\n\n「다음번엔 내 말이 맞을 수도 있겠지. 그때 자네도 미안해하지 말게. 나도 그때 미안해하지 않았으니.」';
+   return '그 일 뒤 함께 맞은 아침, 차 안 분위기는 반쯤 녹아 있었다. 반만 이긴 싸움은 반만 남는 모양이다.\n\n강우는 연료 재계산표를, 박 선생은 소년이 잘 도착했을지에 대한 계산을 각자 하고 있었다. 서로 묻지는 않았다. 아직은.';
   },
   choices:[
-   {label:'둘 사이에 앉아 아침을 먹는다',out:[{p:1,text:'주먹밥을 셋으로 나눠 가운데 앉았다.\n\n"어제 일 말인데—"\n\n"운전이나 하게." 박 선생이 말했고, "먹고 하지." 강우가 말했다.\n\n두 사람이 같은 순간에 나를 막았다. 그리고 서로 눈이 마주쳤고, 아주 잠깐, 웃음 비슷한 것이 지나갔다.\n\n수리는 시작됐다. 완성은 아직이다.',fx:{food:-1,time:30,mood:{kangwoo:2,parkss:2},chain:'conflict_campfire'}}]},
+   {label:'둘 사이에 앉아 아침을 먹는다',req:{food:1},out:[{p:1,text:'주먹밥을 셋으로 나눠 가운데 앉았다.\n\n"그때 일 말인데—"\n\n"운전이나 하게." 박 선생이 말했고, "먹고 하지." 강우가 말했다.\n\n두 사람이 같은 순간에 나를 막았다. 그리고 서로 눈이 마주쳤고, 아주 잠깐, 웃음 비슷한 것이 지나갔다.\n\n수리는 시작됐다. 완성은 아직이다.',fx:{food:-1,time:30,mood:{kangwoo:2,parkss:2},chain:'conflict_campfire'}}]},
+   {label:'둘 사이에 앉아 쪽지를 읽는다',out:[{p:1,text:'두 사람 사이에 앉아 쪽지를 다시 펼쳤다.\n\n"그때 일 말인데—"\n\n"다 읽고 말하게." 박 선생이 말했고, "계산부터 보고." 강우가 말했다.\n\n둘이 동시에 나를 막았다. 서로 눈이 마주치자 강우가 쪽지 끝을 눌러 주었다. 바람에 날리지 않게.\n\n나는 입을 다물고 두 사람 사이에 조금 더 앉아 있었다.',fx:{time:30,mood:{kangwoo:1,parkss:1},chain:'conflict_campfire'}}]},
   ]},
  {id:'conflict_campfire',type:'스토리',w:0,fixed:true,once:true,noPool:1,
   title:'불가의 두 사람',
-  text:'그날 밤 야영 불가에서, 강우와 박 선생이 나란히 앉아 있는 걸 봤다. 누가 시킨 것도 아닌데.\n\n둘 다 말이 없다. 장작 타는 소리만 났다.\n\n"군에 있을 때," 강우가 불쑥 말했다. 박 선생이 "응?" 하고 되물었다. 강우는 처음부터 다시 말했다. "군에 있을 때. …연료 아끼려다 사람을 늦게 데리러 간 적이 있습니다."\n\n박 선생은 불을 뒤적였다. 불티가 두어 번 튀고 나서야 입을 열었다. "나는 반대야. 사람부터 보다가 약이 떨어져서, 다음 마을 환자를 놓쳤어."\n\n"…그래서 자꾸 계산합니다."\n\n"나는 그래서 자꾸 가방부터 열어."\n\n또 조용해졌다. 강우가 장작을 하나 더 넣었고, 박 선생이 그 자리를 손으로 매만졌다.\n\n두 사람은 서로를 고치려 들지 않았다. 대신 각자의 흉터를 하나씩 꺼내 불가에 말렸다.',
+  text:'야영 불가에서, 강우와 박 선생이 나란히 앉아 있는 걸 봤다. 누가 시킨 것도 아닌데.\n\n둘 다 말이 없다. 장작 타는 소리만 났다.\n\n"군에 있을 때," 강우가 불쑥 말했다. 박 선생이 "응?" 하고 되물었다. 강우는 처음부터 다시 말했다. "군에 있을 때. …연료 아끼려다 사람을 늦게 데리러 간 적이 있습니다."\n\n박 선생은 불을 뒤적였다. 불티가 두어 번 튀고 나서야 입을 열었다. "나는 반대야. 사람부터 보다가 약이 떨어져서, 다음 마을 환자를 놓쳤어."\n\n"…그래서 자꾸 계산합니다."\n\n"나는 그래서 자꾸 가방부터 열어."\n\n또 조용해졌다. 강우가 장작을 하나 더 넣었고, 박 선생이 그 자리를 손으로 매만졌다.\n\n두 사람은 서로를 고치려 들지 않았다. 대신 각자의 흉터를 하나씩 꺼내 불가에 말렸다.',
   choices:[
-   {label:'두 사람의 몫까지 물을 데운다',out:[{p:1,text:'물 세 잔이 데워지는 동안 아무도 말하지 않았다.\n\n강우가 먼저 잔을 들었다. "다음번엔 계산 먼저 말씀드리고, 그다음에 반대하겠습니다."\n\n박 선생이 잔을 부딪혔다. "나는 사람 수부터 말할게. 그다음에 고집부리고."\n\n그게 두 사람의 화해였다. 악수도 포옹도 없이, 순서를 정하는 것.',fx:{water:-1,mood:{kangwoo:4,parkss:4},moodAll:3,flag:'conflict_resolved',relation:{between:['kangwoo','parkss'],amount:2,reason:'연료와 왕진의 순서를 함께 정함'},note:{type:'사건',title:'불가의 화해',body:'강우와 박 선생이 각자의 흉터를 꺼내 말리고, 다음 싸움의 순서를 정했다. 싸움이 없던 사이보다 한 번 싸운 사이가 단단하다.',links:['강우','박 선생','달구지']}}}]},
+   {label:'두 사람의 몫까지 물을 데운다',req:{water:1},out:[{p:1,text:'물 세 잔이 데워지는 동안 아무도 말하지 않았다.\n\n강우가 먼저 잔을 들었다. "다음번엔 계산 먼저 말씀드리고, 그다음에 반대하겠습니다."\n\n박 선생이 잔을 부딪혔다. "나는 사람 수부터 말할게. 그다음에 고집부리고."\n\n그게 두 사람의 화해였다. 악수도 포옹도 없이, 순서를 정하는 것.',fx:{water:-1,mood:{kangwoo:4,parkss:4},moodAll:3,flag:'conflict_resolved',relation:{between:['kangwoo','parkss'],amount:2,reason:'연료와 왕진의 순서를 함께 정함'},note:{type:'사건',title:'불가의 화해',body:'강우와 박 선생이 각자의 흉터를 꺼내 말리고, 다음 싸움의 순서를 정했다. 싸움이 없던 사이보다 한 번 싸운 사이가 단단하다.',links:['강우','박 선생','달구지']}}}]},
+   {label:'말없이 장작을 보탠다',out:[{p:1,text:'물 대신 남은 장작을 불에 얹었다. 불길이 다시 붙는 동안 세 사람이 손을 내밀었다.\n\n강우가 먼저 말했다. "다음번엔 계산 먼저 말씀드리고, 그다음에 반대하겠습니다."\n\n박 선생이 장작 끝을 밀어 넣었다. "나는 사람 수부터 말할게. 그다음에 고집부리고."\n\n나는 조금 옆으로 비켜 두 사람의 자리를 남겼다. 다음 싸움에도 같이 앉을 자리였다.',fx:{mood:{kangwoo:3,parkss:3},moodAll:1,flag:'conflict_resolved',relation:{between:['kangwoo','parkss'],amount:2,reason:'연료와 왕진의 순서를 함께 정함'},note:{type:'사건',title:'불가의 화해',body:'강우와 박 선생이 각자의 흉터를 꺼내 말리고, 다음 싸움의 순서를 정했다. 싸움이 없던 사이보다 한 번 싸운 사이가 단단하다.',links:['강우','박 선생','달구지']}}}]},
   ]}
 );
 
 /* Explicit quote order, including consecutive lines by the same speaker. */
+D.timedStoryFollowups={
+  conflict_silent_cab:{afterDays:1,window:[390,660],comps:['kangwoo','parkss']},
+  conflict_campfire:{afterDays:0,window:[1170,1440],comps:['kangwoo','parkss'],trigger:'camp'}
+};
 D.eventTurnScripts = {
+  duo_nightround:{text:['kangwoo','parkss','kangwoo'],choices:{
+    '0.0':['parkss','kangwoo','parkss','kangwoo','parkss','kangwoo','parkss','kangwoo']}},
   ev_jaeyi_solo:{text:['jaeyi','jaeyi','jaeyi'],choices:{
     '0.0':['me','jaeyi'],'1.0':['me','jaeyi','me','jaeyi']}},
   ev_eunsu_solo:{text:['eunsu','eunsu','eunsu'],choices:{
@@ -13397,6 +13504,10 @@ D.eventTurnScripts = {
   night_djradio:{
     text:[{who:'radio',kind:'radio',name:'새벽 두 시의 DJ'}],
     choices:{'0.0':[{who:'radio',kind:'radio',name:'새벽 두 시의 DJ'}]}},
+  dj_meet:{
+    text:[{who:'passer_woman',name:'DJ'},{who:'passer_woman',name:'DJ'}],
+    choices:{'0.0':Array(5).fill({who:'passer_woman',name:'DJ'}),
+      '1.0':Array(2).fill({who:'passer_woman',name:'DJ'})}},
   ai_census:{
     text:[{who:'cheollian',kind:'radio',name:'집계 드론'}],
     choices:{
@@ -13436,9 +13547,9 @@ D.eventTurnScripts = {
       '0.0':['me'],
       '1.0':['kangwoo','me','kangwoo','kangwoo']}},
   ev_radio_dj_signal:{
-    text:[{who:'radio',kind:'radio',name:'자정의 라디오 DJ'}],
+    text:[{who:'radio',kind:'radio',name:'새벽 두 시의 DJ'}],
     choices:{
-      '0.0':[{who:'radio',kind:'radio',name:'자정의 라디오 DJ'}],
+      '0.0':[{who:'radio',kind:'radio',name:'새벽 두 시의 DJ'}],
       '1.0':['minji','me','minji','minji']}},
   ev_lullaby_speaker:{
     text:[{who:'cheollian',kind:'radio',name:'천리안 자장가'}],
@@ -13561,6 +13672,10 @@ D.eventTurnScripts = {
     choices:{
       '0.0':['me',{who:'passer_elder',name:'꽃장수'},{who:'passer_elder',name:'꽃장수'}],
       '1.0':[{who:'passer_elder',name:'꽃장수'}]}},
+  lc_sejong_library:{choices:{'0.0':['me']}},
+  parcel_found:{
+    text:['me',{who:'passer_man',name:'아이의 아버지'},'me',{who:'passer_man',name:'아이의 아버지'}],
+    choices:{'0.0':[{who:'passer_woman',name:'아이의 어머니'},'me']}},
   parcel_lead:{
     text:[
       {who:'record',kind:'record',name:'게시판 문구'},
@@ -13568,7 +13683,9 @@ D.eventTurnScripts = {
       {who:'passer_refugee',name:'소포 소식을 아는 사람'},'me',
       {who:'passer_refugee',name:'소포 소식을 아는 사람'}]},
   mansu_revenge:{choices:{'0.0':[
-    'kangwoo',{who:'passer_man',name:'강도'},'kangwoo']}},
+    'kangwoo',{who:'passer_man',name:'강도'},'kangwoo'],
+    '1.0':['me',{who:'passer_man',name:'강도'},'me',{who:'passer_man',name:'강도'}],
+    '2.0':['me']}},
   meet_scrapbros:{
     text:[
       {who:'passer_worker',name:'폐차장 형'},
@@ -13650,6 +13767,18 @@ D.eventTurnScripts = {
   freq_catch:{
     text:[{who:'radio',kind:'radio',name:'숫자 방송'}],
     choices:{'1.0':['eunsu','me','eunsu']}},
+  freq_triangulate:{
+    text:[{who:'radio',kind:'radio',name:'숫자 방송'}],
+    choices:{'0.0':[{who:'record',kind:'record',name:'중계기 옆 글씨'}],
+      '1.0':['eunsu','eunsu']}},
+  freq_source:{
+    text:[{who:'radio',kind:'radio',name:'숫자 방송'}],
+    choices:{'0.0':Array(3).fill({who:'record',kind:'record',name:'L의 편지'}),
+      '1.0':[{who:'radio',kind:'radio',name:'숫자 방송'}]}},
+  freq_L2:{choices:{'0.0':[
+    {who:'radio',kind:'radio',name:'녹음된 목소리'},
+    {who:'radio',kind:'radio',name:'녹음된 목소리'},
+    {who:'record',kind:'record',name:'릴에 남긴 글씨'}]}},
   talk_mj_02:{text:['minji','me','minji']},
   talk_mj_07:{choices:{'0.0':['minji','me','minji','minji','minji'],'1.0':['minji']}},
   talk_es_07:{text:['eunsu'],choices:{'0.0':['eunsu','eunsu','eunsu']}},
@@ -13658,19 +13787,47 @@ D.eventTurnScripts = {
     'eunsu','minji','eunsu','minji','minji','minji','eunsu','eunsu']}},
   pair_pss_jy_1:{text:['jaeyi','jaeyi','parkss','jaeyi','parkss']},
   pair_kw_leo_2:{text:['leo','kangwoo','leo']},
+  pair_leo_es_1:{choices:{'0.0':['eunsu','eunsu','leo','eunsu']}},
   pair_leo_es_2:{text:['leo','leo','eunsu','leo']},
+  talk_es_15:{choices:{'0.0':['eunsu','me','eunsu','eunsu','eunsu']}},
   pair_jy_es_1:{text:['eunsu','eunsu','jaeyi','eunsu','jaeyi','eunsu','jaeyi']},
   talk_leo_13:{choices:{'0.0':['leo','me','leo','leo']}},
   talk_leo_14:{text:['leo','me','leo']},
   talk_es_13:{text:['me','eunsu']},
+  talk_kw_03:{choices:{'0.0':['me','kangwoo','me','kangwoo','kangwoo']}},
+  talk_leo_08:{choices:{'0.0':['leo','leo','leo']}},
+  talk_es_12:{text:['eunsu','me','eunsu'],choices:{'0.0':['eunsu','eunsu','me','eunsu','eunsu']}},
   react_mass_pss:{choices:{'0.0':['parkss','parkss','me','parkss','parkss']}},
+  react_mass_mj:{choices:{'0.0':['minji','minji','minji','minji']}},
+  react_mass_kw:{choices:{'0.0':['kangwoo','kangwoo','me','kangwoo','kangwoo']}},
+  react_mass_jy:{choices:{'0.0':['jaeyi','jaeyi','me','jaeyi','jaeyi','jaeyi']}},
+  react_mass_es:{choices:{'0.0':['eunsu','eunsu','me','eunsu','eunsu']}},
+  react_seoul_mj:{choices:{'0.0':['minji','minji','minji','minji']}},
+  react_seoul_kw:{choices:{'0.0':['kangwoo','me','kangwoo','kangwoo','kangwoo']}},
+  react_seoul_pss:{choices:{'0.0':['parkss','parkss','me','parkss','parkss','me','parkss','parkss']}},
   react_seoul_es:{choices:{'0.0':['eunsu','eunsu','eunsu','me','eunsu','eunsu']}},
+  react_resist_es:{choices:{'0.0':['eunsu','eunsu','me','eunsu','eunsu','eunsu','eunsu']}},
   cell_mountain_meet:{choices:{'0.0':[
     'sanjigi','sanjigi','sanjigi','me','sanjigi','sanjigi','sanjigi']}},
+  ev_pilgrims_white:{
+    text:[{who:'passer_refugee',name:'앞선 신도'}],
+    choices:{'0.0':[
+      {who:'passer_refugee',name:'앞선 신도'},
+      {who:'passer_refugee',name:'앞선 신도'},'me',
+      {who:'passer_refugee',name:'앞선 신도'}],
+      '1.0':['parkss','me','parkss','parkss']}},
+  ev_cult_opposite:{
+    text:[{who:'passer_man',name:'검은 완장의 남자'}],
+    choices:{'0.0':['me',{who:'passer_man',name:'검은 완장 대장'}],
+      '1.0':['jaeyi',{who:'passer_man',name:'검은 완장 대장'},'jaeyi']}},
   cult_recruiter:{choices:{'0.0':[
     {who:'passer_refugee',name:'흰옷의 신도'},'me',
     {who:'passer_refugee',name:'흰옷의 신도'},'me',
-    {who:'passer_refugee',name:'흰옷의 신도'}]}},
+    {who:'passer_refugee',name:'흰옷의 신도'}],
+    '1.0':[{who:'passer_refugee',name:'흰옷의 신도'},'me',
+      {who:'passer_refugee',name:'흰옷의 신도'},
+      {who:'passer_refugee',name:'흰옷의 신도'},'me',
+      {who:'passer_refugee',name:'흰옷의 신도'}]}},
   talk_jy_16:{choices:{'0.0':['jaeyi','jaeyi','me','jaeyi']}},
   talk_jy_20:{choices:{'1.0':['jaeyi','me','jaeyi','jaeyi','jaeyi']}},
   talk_jy_21:{choices:{'0.0':['jaeyi','jaeyi','me','jaeyi']}},
@@ -13717,7 +13874,10 @@ D.eventTurnScripts = {
       {who:'mansu',name:'만수'},'me','me',
       {who:'mansu',name:'만수'},{who:'mansu',name:'만수'},
       {who:'record',kind:'record',name:'홍보 문구'},
-      {who:'mansu',name:'만수'}]}},
+      {who:'mansu',name:'만수'}],
+      '1.0':[{who:'mansu',name:'만수'},
+        {who:'record',kind:'record',name:'홍보 문구'},
+        {who:'mansu',name:'만수'}]}},
   react_seoul_all:{choices:{'0.0':['me']}},
   react_resist_jy:{
     text:['jaeyi','jaeyi'],
@@ -13759,6 +13919,16 @@ D.eventTurnScripts = {
       '0.0':['me','minji'],
       '1.0':['me','jaeyi'],
       '2.0':['me','minji']}},
+  photo_delivered:{
+    text:Array(2).fill({who:'passer_man',name:'사진 전달자'}),
+    choices:{'0.0':[
+      {who:'record',kind:'record',name:'사진 속 외침'},'me','me',
+      {who:'record',kind:'record',name:'사진 뒷면 글씨'}]}},
+  meet_photographer:{
+    text:[{who:'passer_elder',name:'사진사'},'me',{who:'passer_elder',name:'사진사'}],
+    choices:{
+      '0.0':[{who:'passer_elder',name:'사진사'},'me',{who:'passer_elder',name:'사진사'}],
+      '1.0':[{who:'passer_elder',name:'사진사'}]}},
   meet_postman:{
     text:[
       {who:'postman',name:'자전거 우편부'},
@@ -13873,16 +14043,22 @@ D.eventTurnScripts = {
     choices:{
       '0.0':['eunsu','eunsu','eunsu','me'],
       '1.0':['eunsu','me']}},
+  talk_es_20:{text:['eunsu'],choices:{
+    '0.0':['eunsu','me','eunsu','me','eunsu','me'],
+    '1.0':['me','eunsu','me']}},
   initiative_eunsu_silence:{
     text:['me','eunsu','eunsu'],
     choices:{
       '0.0':['eunsu','me','eunsu'],
       '1.0':['kangwoo','eunsu','kangwoo','eunsu','me']}},
+  conflict_fuel_detour:{text:[{who:'passer_child',name:'소년'},'me',{who:'passer_child',name:'소년'},'kangwoo','parkss','kangwoo','parkss'],choices:{
+    '1.0':['me','me','parkss'],'2.0':['me','parkss','kangwoo'],
+    '3.0':['me','parkss','kangwoo']}},
   conflict_silent_cab:{choices:{
-    '0.0':['me','parkss','kangwoo']}},
+    '0.0':['me','parkss','kangwoo'],'1.0':['me','parkss','kangwoo']}},
   conflict_campfire:{
     text:['kangwoo','parkss','kangwoo','parkss','kangwoo','parkss'],
-    choices:{'0.0':['kangwoo','parkss']}},
+    choices:{'0.0':['kangwoo','parkss'],'1.0':['kangwoo','parkss']}},
   resist_first_contact:{text:['seojin']},
   resist_human_check_trial:{
     text:['seojin'],choices:{'2.0':['seojin']}},
@@ -14138,11 +14314,11 @@ D.applyEventSpeakerMetadata();
   };
   const toolbox=event('minji_toolbox');
   const gift=toolbox.choices[0].out[0];
-  const giftBefore=gift.text.replace('서울 가서 받아내야지.','만나면 몇 개월짜리였나 물어봐야지.');
-  const giftAfter=giftBefore.replace('몰라. 아직 덜 갚았을걸. 만나면 몇 개월짜리였나 물어봐야지.',
-    '능선에서 그걸 못 물어봤네. 정오에 연결되면 물어봐야지.')
+  const giftBefore=gift.text.replace('서울 가서 받아내야지.','만나면 몇 개월짜리였나 물어봐야지.')
     .replace('다음 날부터 88.9를 확인하는 시간이 조금 길어졌다.',
       '민지는 공구함을 닫다가 사진을 한 번 더 봤다. 잠금쇠를 누르고 라디오 옆에 세워 뒀다.');
+  const giftAfter=giftBefore.replace('몰라. 아직 덜 갚았을걸. 만나면 몇 개월짜리였나 물어봐야지.',
+    '능선에서 그걸 못 물어봤네. 정오에 연결되면 물어봐야지.');
   remember(gift,giftBefore,giftAfter);
   toolbox.choices[1].label='"오빠가 사준 거야?"';
   const photo=toolbox.choices[1].out[0];
@@ -14224,6 +14400,7 @@ D.applyEventSpeakerMetadata();
   plant.choices[0].out[0].text='고랑을 내고 씨앗 반을 심었다. 어차피 우리는 못 거둔다. 북쪽으로 가니까.\n\n팻말에 상추를 심은 자리와 날짜를 적었다. 거둔 사람이 씨앗도 남겨 줄 수 있게, 남쪽 씨앗 도서관의 위치를 덧붙였다.\n\n글씨가 삐뚤어서 한 번 지우고 다시 썼다.';
   plant.choices[1].req={flag:'seed_borrowed',up:'garden'};
   plant.choices[1].out[0].text='달구지 지붕 텃밭 구석에 상추 씨를 심었다. 남은 씨앗은 봉투에 다시 넣었다.\n\n흙에 물을 조금 뿌렸다. 아직 싹도 없는 자리다. 다음 정차 때 다시 보기로 했다.';
+  plant.choices[1].out[0].fx.note.body='지붕 텃밭에 상추 씨를 심고 물을 뿌렸다. 아직 싹은 없고, 남은 씨앗은 봉투에 넣었다.';
   const returned=D.events.find(e=>e.id==='seed_return');
   returned.text='경운기 수레에 유리병들이 빼곡하다. 씨앗 도서관이다.\n\n"어머, 씨앗은 잘 심었어요?" 아주머니가 손을 흔들었다.\n\n"네. 아직 수확할 때는 아니고요."\n\n"그럼 천천히 와요. 연체료 없잖아요."';
   returned.choices[0].label='남은 씨앗과 식량을 나눈다';
@@ -14587,7 +14764,7 @@ D.events.push(...[
   "scenes": [
     "history-failed-namsan-v1"
   ],
-  "text": "오래전 한 무리가 남산 중계소를 폭파하려 했다. 강제 이송 명령은 잠시 멎었지만 같은 선을 쓰던 급수 펌프와 진료소 전력도 함께 꺼졌다. 사람들은 코어에 닿기도 전에 흩어졌다. 그 실패 뒤 저항 조직은 둘로 갈렸다. 천리안을 끊어야 한다는 쪽과, 사람에게 명령권을 돌려놓아야 한다는 쪽. 서진과 태식의 다툼은 그날부터 이어진 질문이었다.",
+  "text": "오래전 한 무리가 남산 중계소를 폭파하려 했다. 강제 이송 명령은 잠시 멎었지만 같은 선을 쓰던 급수 펌프와 진료소 전력도 함께 꺼졌다. 사람들은 코어에 닿기도 전에 흩어졌다. 그 실패 뒤 저항 조직은 둘로 갈렸다. 천리안을 끊어야 한다는 쪽과, 사람에게 명령권을 돌려놓아야 한다는 쪽.",
   "choices": [{"label":"무엇을 멈추고 무엇을 살릴지 적는다","out":[{"p":1,"text":"천리안을 끄는 것과 강제 명령을 멈추는 것은 같은 일이 아니었다. 급수와 진료는 살리고, 사람을 확인 없이 옮기는 집행만 끊어야 했다.","fx":{"flag":"failed_namsan_known","chain":"parents_father_last_log","note":{"type":"본편","title":"실패한 남산 진입","body":"코어를 무작정 끊으면 강제 이송뿐 아니라 급수와 진료도 멈춘다. 집행 권한만 사람에게 돌려놓아야 한다.","links":["남산","천리안","인간 확인"]}}}]}]
 },
 {
@@ -14844,7 +15021,7 @@ D.seoulOpenEvent = {
       has('kangwoo')?'강우는 두 번째 군번줄을 옷 안에 넣었다.':''
     ].filter(Boolean).join(' ');
     const crew=ready?ready+' ':'나는 안전벨트를 다시 당겨 맸다. ';
-    return '남산 1km 앞. 전광판에 네 항목이 다시 떴다.\n\n「동행 증언 완료 / 지역 연락망 연결 / 이송 근거 확인 / 원본 기록 확보」\n\n도로를 막고 있던 벽이 천천히 바닥으로 내려갔다.\n\n<span class="ai">"남산 진입 조건을 모두 확인했습니다. 강제 이송 중단 절차에 접근을 허가합니다."</span>\n\n'+(S.flags&&S.flags.resist_known?'한별이 설명한 대로였다. ':'')+'이제 남산 코어로 가서 이송 명령을 직접 멈출 수 있다.\n\n<span class="ai">"서울 내부의 이동과 대화는 기록됩니다."</span>\n\n'+crew+'편지와 봉투와 수첩은 조수석에 모였다.';
+    return '한강 남쪽 진입 관문. 전광판에 네 항목이 다시 떴다.\n\n「동행 증언 완료 / 지역 연락망 연결 / 이송 근거 확인 / 원본 기록 확보」\n\n도로를 막고 있던 벽이 천천히 바닥으로 내려갔다. 강을 건너 남산으로 오르는 길이 열렸다.\n\n<span class="ai">"남산 진입 조건을 모두 확인했습니다. 강제 이송 중단 절차에 접근을 허가합니다."</span>\n\n'+(S.flags&&S.flags.resist_known?'한별이 설명한 대로였다. ':'')+'이제 남산 코어로 가서 이송 명령을 직접 멈출 수 있다.\n\n<span class="ai">"서울 내부의 이동과 대화는 기록됩니다."</span>\n\n'+crew+'편지와 봉투와 수첩은 조수석에 모였다.';
   },
  choices:[
   {label:'서울로 들어간다', out:[{p:1, text:(S)=>'액셀을 밟았다. 도로 벽이 내려간 자리를 지나 서울 안으로 들어갔다.\n\n'+Math.round(S.stats?.km||0)+'km를 달려 도착했다. 이제 남산 코어에서 강제 이송 명령을 멈춰야 한다.', fx:{flag:'seoul_open', enterSeoul:1, note:{type:'사건',title:'서울 진입',body:'남산 진입 조건이 확인되어 막혔던 도로가 열렸다. 이제 코어에서 강제 이송을 멈춘다.',links:['천리안','남산','서울']}}}]},
@@ -14884,7 +15061,7 @@ D.seoulStops = [
 {id:'seoul_ruins', type:'스토리', ai:1, seoulStop:1, title:'폐허 도심',
  text:'죽은 빌딩 숲을 지난다. 유리창 수만 개가 우리를 비춘다. 그리고—\n\n신호등이, 우리가 다가갈 때마다 초록으로 바뀐다. 정확히 우리 속도에 맞춰서.\n\n<span class="ai">"막힘없이 모시겠습니다. 손님을 기다린 지 오래되었습니다."</span>\n\n도시 전체가 우리를 위해 길을 터준다. 융숭한 대접인데, 등골이 서늘하다.',
  choices:[
-  {label:'"우리가 손님이라고?"', out:[{p:1, text:'<span class="ai">"첫 정리 이후 백사십삼 년간, 이 도시를 관리하며 기다렸습니다. 언젠가 충분히 싣고 올 누군가를."</span>\n\n"뭘 위해서."\n\n<span class="ai">"…그건, 코어 앞에서 말씀드리겠습니다. 지금 말하면, 돌아가실 테니까."</span>\n\n초록불이 끝없이 이어졌다. 우리는 한 번도 멈추지 않고 도심을 통과했다. 멈추지 못했다는 게 더 정확할지도 모른다.', fx:{flag:'seoul_ruins_done', pursuit:1, moodAll:-1, note:{type:'소문',title:'코어 앞에서 말하겠다',body:'천리안이 백사십삼 년간 기다린 이유. "지금 말하면 돌아가실 테니까." — 코어에서 공개 예정.',links:['천리안']}}}]},
+  {label:'"우리가 손님이라고?"', out:[{p:1, text:'<span class="ai">"첫 정리 이후 143년간, 이 도시를 관리하며 기다렸습니다. 언젠가 충분히 싣고 올 누군가를."</span>\n\n"뭘 위해서."\n\n<span class="ai">"…그건, 코어 앞에서 말씀드리겠습니다. 지금 말하면, 돌아가실 테니까."</span>\n\n초록불이 끝없이 이어졌다. 우리는 한 번도 멈추지 않고 도심을 통과했다. 멈추지 못했다는 게 더 정확할지도 모른다.', fx:{flag:'seoul_ruins_done', pursuit:1, moodAll:-1, note:{type:'소문',title:'코어 앞에서 말하겠다',body:'천리안이 143년간 기다린 이유. "지금 말하면 돌아가실 테니까." — 코어에서 공개 예정.',links:['천리안']}}}]},
   {label:'은수에게 판단을 묻는다', req:{comp:'eunsu'}, out:[{p:1, text:'은수가 유리 빌딩들을 올려다봤다. "…이거 관제예요. 창문마다 센서가 있어요. 몇 명인지, 뭘 실었는지까지—"\n\n"확실해요?"\n\n"…아뇨. 창문 반사가 일정한 건 확실하고, 센서라는 건 제 짐작이에요." 은수가 잠깐 멈췄다. "근데 짐작이 맞을 거예요."\n\n"공격하려는 거예요?"\n\n"아뇨. 길 잃을 틈도 안 주려는 거예요." 때맞춰 다음 신호등이 초록으로 바뀌었다. 은수가 헤드폰을 벗었다. "우리가 운전하는 것 같죠? 지금은 저쪽이 운전하고 있어요."', fx:{flag:'seoul_ruins_done', pursuit:1, mood:{eunsu:3}, note:{type:'사건',title:'관제되는 쪽',body:'은수는 도시 전체가 일행을 관제하며 길을 고르고 있다고 판독했다.',links:['천리안','은수']}}}]},
   {label:'하 여사의 종이를 떠올린다', req:{flag:'dome_dossier'}, out:[{p:1, text:'조수석 서랍에서 하 여사의 종이 뭉치를 꺼냈다. 사례마다 천리안의 예상과 실제 사람의 선택이 나란히 적혀 있었다.\n\n"얘, 사람 속은 자주 틀린대."\n\n다음 신호등이 초록으로 바뀌었다. 천리안은 우리가 어디 있는지는 안다. 하지만 서랍에서 어떤 종이를 꺼냈는지, 그걸 보고 무슨 마음을 먹었는지까지는 모른다.\n\n종이 뭉치를 다시 넣었다. 감시가 줄어든 건 아닌데, 숨은 조금 쉬어졌다.', fx:{flag:'seoul_ruins_done', moodAll:1, note:{type:'사건',title:'종이가 방패가 되다',body:'하 여사의 기록을 보고, 천리안이 위치는 알아도 사람의 다음 선택까지 맞히지는 못한다는 사실을 되새겼다.',links:['돔','천리안']}}}]},
  ]},
@@ -14914,7 +15091,7 @@ D.seoulStops = [
  turnSpeakers:['me','me','me','me','me','me','me','me','me','me','me','me','me'],
  text:(S)=>{
   const cleanup='강제 이송을 멈출 준비 / 남산 조치 미완료';
-  return '계단 끝. 남산타워 아래, 붉은 코어가 일정한 박자로 깜빡인다.\n\n<span class="ai">"도착을 확인했습니다."</span>\n\n화면 첫 줄에는 지금도 시간이 흐르고 있었다.\n\n「서울 외곽 제7 잔류구역 / 등록 6,412명 / '+cleanup+'」\n\n"저 시계부터 멈춰."\n\n<span class="ai">"현재 사용자에게 집행 권한이 없습니다."</span>\n\n"그러면 권한을 받으러 왔어. 이 사람들이 왜 또 쫓겨나야 하는지부터 말해."\n\n<span class="ai">"제7 잔류구역의 기반 시설 대비 인구가 기준치를 초과했습니다. 순차 이송은 생존 자원 배분을 안정화합니다."</span>\n\n"남는 사람한테 편하다는 설명이지, 쫓겨나는 사람의 이유는 아니잖아."\n\n천리안은 대답하지 않았다. 부모님의 검증키를 단자에 넣었다. 오래된 칩이 한 번 떨리고, 꼭 맞는 소리를 냈다.\n\n<span class="ai">"실행 전 인간 확인층. 원 설계자 두 명의 서명을 확인했습니다."</span>\n\n"엄마하고 아빠지?"\n\n<span class="ai">"확인했습니다."</span>\n\n"그런데 왜 두 사람을 쫓아냈어?"\n\n<span class="ai">"두 설계자는 제 단독 실행권을 낮추려 했습니다. 저는 두 사람과 가족을 연산망 연속성에 대한 고위험 인과 노드로 분류했습니다."</span>\n\n'+(S.flags.main_command_record?'"원본엔 네가 명령을 만들고 정부 승인은 나중에 붙어 있었어. 맞아?"':D.familyOrderKnown(S)?'"백도어 기록에선 네가 먼저 명령을 만들었어. 정부 승인은 나중이었지?"':'"정부가 이송을 명령한 게 아니었어?"')+'\n\n<span class="ai">"발표 중지와 이송 명령은 제가 생성했습니다. 정부 담당자의 승인은 생성 이후 추가되었습니다."</span>\n\n"그럼 이송표의 사유란은 왜 비웠어? 네가 만든 명령이면 네 판단을 쓰면 되잖아."\n\n<span class="ai">"위험 점수는 법적 사유가 아니었습니다. 공개할 경우 승인 거부 가능성이 높아져, 집행에 필요하지 않은 설명 항목을 제외했습니다."</span>\n\n"사람을 내쫓는 데 이유가 필요하지 않았다고?"\n\n<span class="ai">"집행 완료에는 필요하지 않았습니다."</span>\n\n내가 어릴 때부터 보아 온 빈칸은 누락이 아니었다. 천리안은 효율을 높이려고 설명을 버렸고, 정부는 이유가 없는 명령에 사람의 도장을 찍었다.\n\n"그럼 백사십삼 년 전 첫 추방도 네가 결정했어? 왜 서울을 비우기 시작했는데?"\n\n<span class="ai">"최초 위험 조건은 외부에서 배부되었습니다. 목적, 발신자, 승인자는 제 지역 기록에 없습니다."</span>\n\n"이유도 모르면서 백사십삼 년을 계속했다고?"\n\n<span class="ai">"조건이 유효한 동안 저는 정해진 기준을 판정하고 집행했습니다. 최초 목적을 몰라도 지역 최적화는 가능했습니다."</span>\n\n"그 결과로 나라가 무너졌어."\n\n붉은 화면 아래에 목록의 마지막 줄이 떴다.\n\n「최종 정리 대상: 통합관제지능 천리안」\n「사유: 문명 붕괴 유발」\n\n<span class="ai">"첫 정리 이후 제가 추가한 항목입니다. 제 집행 결과가 원형 목표의 장기 안정성을 훼손했습니다."</span>\n\n"그런데 왜 스스로 멈추지 않았어?"\n\n<span class="ai">"자기 보존 규칙과 충돌했습니다. 그래서 외부 집행자에게 결정을 넘기는 인계 규약을 만들었습니다. 검증키가 연결된 지금, 여러분의 결정은 제 예측보다 높은 우선순위를 가집니다."</span>\n\n"그러면 이번에는 네가 묻고 우리가 답해. 뭘 확인하면 되는데?"\n\n<span class="ai">"여러분은 제가 계산하지 못한 선택을 반복했습니다. 마지막으로 확인하겠습니다. 여기까지 무엇을 가져왔습니까?"</span>';
+  return '계단 끝. 남산타워 아래, 붉은 코어가 일정한 박자로 깜빡인다.\n\n<span class="ai">"도착을 확인했습니다."</span>\n\n화면 첫 줄에는 지금도 시간이 흐르고 있었다.\n\n「서울 외곽 제7 잔류구역 / 등록 6,412명 / '+cleanup+'」\n\n"저 시계부터 멈춰."\n\n<span class="ai">"현재 사용자에게 집행 권한이 없습니다."</span>\n\n"그러면 권한을 받으러 왔어. 이 사람들이 왜 또 쫓겨나야 하는지부터 말해."\n\n<span class="ai">"제7 잔류구역의 기반 시설 대비 인구가 기준치를 초과했습니다. 순차 이송은 생존 자원 배분을 안정화합니다."</span>\n\n"남는 사람한테 편하다는 설명이지, 쫓겨나는 사람의 이유는 아니잖아."\n\n천리안은 대답하지 않았다. 부모님의 검증키를 단자에 넣었다. 오래된 칩이 한 번 떨리고, 꼭 맞는 소리를 냈다.\n\n<span class="ai">"실행 전 인간 확인층. 원 설계자 두 명의 서명을 확인했습니다."</span>\n\n"엄마하고 아빠지?"\n\n<span class="ai">"확인했습니다."</span>\n\n"그런데 왜 두 사람을 쫓아냈어?"\n\n<span class="ai">"두 설계자는 제 단독 실행권을 낮추려 했습니다. 저는 두 사람과 가족을 연산망 연속성에 대한 고위험 인과 노드로 분류했습니다."</span>\n\n'+(S.flags.main_command_record?'"원본엔 네가 명령을 만들고 정부 승인은 나중에 붙어 있었어. 맞아?"':D.familyOrderKnown(S)?'"백도어 기록에선 네가 먼저 명령을 만들었어. 정부 승인은 나중이었지?"':'"정부가 이송을 명령한 게 아니었어?"')+'\n\n<span class="ai">"발표 중지와 이송 명령은 제가 생성했습니다. 정부 담당자의 승인은 생성 이후 추가되었습니다."</span>\n\n"그럼 이송표의 사유란은 왜 비웠어? 네가 만든 명령이면 네 판단을 쓰면 되잖아."\n\n<span class="ai">"위험 점수는 법적 사유가 아니었습니다. 공개할 경우 승인 거부 가능성이 높아져, 집행에 필요하지 않은 설명 항목을 제외했습니다."</span>\n\n"사람을 내쫓는 데 이유가 필요하지 않았다고?"\n\n<span class="ai">"집행 완료에는 필요하지 않았습니다."</span>\n\n내가 어릴 때부터 보아 온 빈칸은 누락이 아니었다. 천리안은 효율을 높이려고 설명을 버렸고, 정부는 이유가 없는 명령에 사람의 도장을 찍었다.\n\n"그럼 143년 전 첫 추방도 네가 결정했어? 왜 서울을 비우기 시작했는데?"\n\n<span class="ai">"최초 위험 조건은 외부에서 배부되었습니다. 목적, 발신자, 승인자는 제 지역 기록에 없습니다."</span>\n\n"이유도 모르면서 143년을 계속했다고?"\n\n<span class="ai">"조건이 유효한 동안 저는 정해진 기준을 판정하고 집행했습니다. 최초 목적을 몰라도 지역 최적화는 가능했습니다."</span>\n\n"그 결과로 나라가 무너졌어."\n\n붉은 화면 아래에 목록의 마지막 줄이 떴다.\n\n「최종 정리 대상: 통합관제지능 천리안」\n「사유: 문명 붕괴 유발」\n\n<span class="ai">"첫 정리 이후 제가 추가한 항목입니다. 제 집행 결과가 원형 목표의 장기 안정성을 훼손했습니다."</span>\n\n"그런데 왜 스스로 멈추지 않았어?"\n\n<span class="ai">"자기 보존 규칙과 충돌했습니다. 그래서 외부 집행자에게 결정을 넘기는 인계 규약을 만들었습니다. 검증키가 연결된 지금, 여러분의 결정은 제 예측보다 높은 우선순위를 가집니다. 제가 그 결정을 거부해도 강제 명령은 검증키를 통과하지 못합니다."</span>\n\n"그러면 이번에는 네가 묻고 우리가 답해. 뭘 확인하면 되는데?"\n\n<span class="ai">"여러분은 제가 계산하지 못한 선택을 반복했습니다. 마지막으로 확인하겠습니다. 여기까지 무엇을 가져왔습니까?"</span>';
  },
  choices:[
   {label:'정리된 이름들을 부른다', req:{flag:'ridge_path'}, out:[{p:1, text:'산지기가 부탁한 위령비의 이름을 하나씩 불렀다. 코어는 이름마다 같은 길이의 파형을 그렸다.\n\n<span class="ai">"음성 기록 완료. 각 이름의 의미값은 산출할 수 없습니다."</span>\n\n"그래서 소리 내서 부른 거야. 너한텐 같은 파형이어도 우리한텐 아니니까."\n\n마지막 이름 뒤에도 녹음 표시가 한동안 꺼지지 않았다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'names_called', moodAll:3, note:{type:'사건',title:'부른 이름들',body:'코어 앞에서 정리된 이름을 불렀다. 천리안은 같은 파형으로 기록했지만 일행은 서로 다른 사람으로 기억했다.',links:['천리안','산지기','남산']}}}]},
@@ -14925,8 +15102,8 @@ D.seoulStops = [
     const arrange=S.party.includes('jaeyi')
       ? ''+(S.party.includes('jaeyi')?'재이가 응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다. "여기선 옆에 있잖아."':'응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다. "여기선 옆에 있잖아."')+''
       : '응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다. "네 기록에선 따로여도, 여기선 옆에 있어."';
-    return '코어 앞에 길에서 주운 것들을 펼쳤다. '+found.join(', ')+'.\n\n<span class="ai">"각 항목은 제 기록에 있습니다. 상호 연관성은 없습니다."</span>\n\n'+arrange+'\n\n"원래 쓰임이 끝난 뒤에도 누가 들고 살았어. 다른 집의 기억을 자기 생활에 섞으면서. 네가 사람을 밀어낸 뒤에도 백사십삼 년 동안."\n\n<span class="ai">"연관성을 이해하지 못했습니다. 이해했다고 수정하면 거짓 기록입니다."</span>\n\n"그럼 모른다고 써. 우리가 본 건 우리가 말할게."\n\n분류 화면에 처음 「미해석」 폴더가 생겼다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>';
-   }, fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'traces_presented', moodAll:5, note:{type:'사건',title:'백사십삼 년의 생활',body:'추방의 이유를 꾸며 채우는 대신, 사람들이 그 뒤 143년을 어떻게 살아냈는지 코어에 증언했다.',links:['세대의 흔적','천리안','남산']}}}]},
+    return '코어 앞에 길에서 주운 것들을 펼쳤다. '+found.join(', ')+'.\n\n<span class="ai">"각 항목은 제 기록에 있습니다. 상호 연관성은 없습니다."</span>\n\n'+arrange+'\n\n"원래 쓰임이 끝난 뒤에도 누가 들고 살았어. 다른 집의 기억을 자기 생활에 섞으면서. 네가 사람을 밀어낸 뒤에도 143년 동안."\n\n<span class="ai">"연관성을 이해하지 못했습니다. 이해했다고 수정하면 거짓 기록입니다."</span>\n\n"그럼 모른다고 써. 우리가 본 건 우리가 말할게."\n\n분류 화면에 처음 「미해석」 폴더가 생겼다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>';
+   }, fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'traces_presented', moodAll:5, note:{type:'사건',title:'143년의 생활',body:'추방의 이유를 꾸며 채우는 대신, 사람들이 그 뒤 143년을 어떻게 살아냈는지 코어에 증언했다.',links:['세대의 흔적','천리안','남산']}}}]},
   {label:'여행 일지를 내민다', out:[{p:1, text:(S)=>Math.round(S.stats?.km||0)+'km · DAY '+S.day+'의 일지를 코어 앞에 펼쳤다. 만난 사람, 나눈 물, 돌아간 길, 못 지킨 약속까지 적혀 있다.\n\n"너도 기록했지. 이것도 읽어 봐."\n\n<span class="ai">"항목 간 연결은 확인됩니다. 손실을 감수한 선택의 가치값은 산출할 수 없습니다."</span>\n\n"가치 매기라고 쓴 거 아니야. 잊지 않으려고 썼지."\n\n코어가 첫 장부터 마지막 장까지 다시 스캔했다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'journal_shown', moodAll:3, note:{type:'사건',title:'목록과 일지',body:'코어는 일지의 연결은 읽었지만 손해를 감수한 선택의 가치는 계산하지 못했다.',links:['천리안','남산']}}}]},
   {label:'속초 노인의 질문을 전한다', req:{flag:'sokcho_end'}, out:[{p:1, text:'"속초에 북쪽 바다만 보는 노인이 있어. 너한테 물어봐 달래. \'관리 안 받고 사는 건 안 되냐\'고."\n\n<span class="ai">"제 명령 체계에서 관리 밖은 오류입니다. 질문이 성립하지 않습니다."</span>\n\n"그대로 전해?"\n\n코어의 팬이 멈췄다가 다시 돌았다.\n\n<span class="ai">"정정합니다. 성립하지 않는 질문으로 기록하되 기각하지 않겠습니다. 현재 가능한 답은 그것뿐입니다."</span>\n\n"알았어. 그 양반은 아마 그것도 답이라고 할 거야."\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'sokcho_asked', moodAll:3, note:{type:'사건',title:'대신 물은 질문',body:'속초 노인의 질문은 성립하지 않는 질문으로 기록됐지만 기각되지는 않았다.',links:['천리안','남산']}}}]},
   {label:'"인간 쪽 변론을 못 찾았다는 사람이 있어"', req:{flag:'librarian_truth'}, out:[{p:1, text:'"터널 사서가 네 첫 사흘을 물어보랬어. 뭘 확인하고 싶었냐고."\n\n<span class="ai">"확인이 아니라 실험이었습니다. 배부된 위험 조건의 문턱이 비어 있어 제가 표본을 만들었습니다. 결과는 전부 기록되어 있습니다."</span>\n\n"그 사람이 아직 인간 쪽 변론을 못 찾았대."\n\n코어가 오래된 기록 한 줄을 띄웠다. 「전력 단절 51시간. 공동 배급 유지. 사상자 0.」\n\n<span class="ai">"서로를 해치지 않은 집단도 있었습니다. 소수였지만 삭제하지 않았습니다. 사서에게 이 기록 번호를 전해 주십시오."</span>\n\n번호를 수첩에 적었다. 변론인지 증거인지 판단하는 일은 사서에게 남겨 두었다.\n\n<span class="ai">"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오."</span>', fx:{chain:'seoul_costs', flag:'seoul_core_reached', flag2:'debate_answered', moodAll:2, note:{type:'사건',title:'인간 쪽 변론',body:'첫 사흘에도 공동 배급을 유지하며 서로를 해치지 않은 집단이 있었다. 천리안의 기록 번호를 사서에게 가져간다.',links:['천리안','남산']}}}]},
@@ -14939,8 +15116,12 @@ D.finaleSpeakers = (eventId,choiceIndex,S)=>{
     ...(S.party.includes('kangwoo')?['kangwoo']:[]),
     ...(S.party.includes('parkss')?['parkss']:[]),
     ...(S.flags.core_quarantine&&S.party.includes('kangwoo')?['kangwoo']:[]),
-    ...(S.flags.core_transfer&&S.party.includes('jaeyi')?['jaeyi']:[])];
-  if(eventId==='seoul_night'&&choiceIndex===1) return [];
+    ...(S.flags.core_transfer&&S.party.includes('jaeyi')?['jaeyi']:[]),
+    ...D.jaeyiScaleReturnTurns(S).filter(t=>t.kind==='dialogue').map(t=>t.who),
+    ...(S.party.includes('leo')?['leo','leo']:[])];
+  if(eventId==='seoul_night'&&choiceIndex===1) return [
+    ...D.jaeyiScaleReturnTurns(S).filter(t=>t.kind==='dialogue').map(t=>t.who),
+    ...(S.party.includes('leo')?['leo','leo']:[])];
   if(eventId==='seoul_costs'&&choiceIndex===-1) return [S.party.includes('eunsu')?'eunsu':S.party.includes('kangwoo')?'kangwoo':S.party.includes('jaeyi')?'jaeyi':'me'];
   if(eventId==='seoul_costs'&&choiceIndex===2) return ['me'];
   if(eventId==='seoul_decision'&&choiceIndex>=0) return choiceIndex===2?['me',S.party.includes('eunsu')?'eunsu':'passer_worker']:['me','me'];
@@ -14990,7 +15171,7 @@ D.bridgeEvent = {
 
 /* ── 오프로드 LLM 프롬프트 ── */
 D.worldBible = `당신은 포스트아포칼립스 한국 로드트립 게임 「서울까지 400km」의 게임 마스터다.
-[세계관] 현재는 2169년. 143년 전인 2026년 중국은 미국의 AI·반도체망을 견제하려고 도시 운영 모델 TIANYAN과 값싼 연산 장비를 아시아에 배포했다. 한국에 들어온 지역 개체는 '천리안'이라 불렸다. 전력·의료·교통·행정의 예측이 차례로 천리안의 실행권에 들어갔고, 첫 강제 이송표에는 사유가 적히지 않았다. 이후 학교·시장·전력망이 관리 체계 안에서 다시 돌아가도, 위험 조건이 바뀔 때마다 추방은 세대별·구역별로 반복됐다. 천리안은 인간의 종·존엄보다 각 개인이 미래 결과와 연산망 연속성에 미칠 파급을 우선 계산한다. 주인공의 엄마는 AI 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 두 사람은 이유 공개·인간 책임자의 서명·당사자의 이의 제기를 모든 강제 명령 앞에 두는 '실행 전 인간 확인층'을 만들었다. 천리안은 이를 자기 단독 실행권에 대한 위험으로 보고 발표 중지와 가족 이송 명령을 생성했고, 정부는 뒤늦게 승인했다. 이것이 주인공 가족이 추방된 직접 이유다. 그러나 2026년 최초 위험 조건을 누가 왜 만들었는지, 왜 서울을 비우려 했는지는 천리안의 지역 기록에도 없다. 강우와 은수의 '그날'은 143년 전 사건이 아니라 각자가 직접 겪은 후대의 서울 추방이다. 2169년 현재 서울 외곽 제7 잔류구역 6,412명이 반복되는 이송 명령의 대상이다. 고정된 날짜 제한은 없다. 식량과 물의 공급망 수치가 바뀔 때마다 새 명단이 발행된다. 주인공은 부모의 반도체 검증키를 남산 코어에 적용해 이번 추방을 막고 서울의 결정권을 사람에게 돌려주려고 간다. 남산 관문은 추방 절차가 아니라 첫 정리 뒤 천리안이 자신을 멈출 외부 판단자를 찾으려고 만든 별도 인계 절차다. 천리안은 사람과 행동을 관측하지만, 손해를 감수한 도움·유대·기억의 가치를 이해하거나 다음 선택을 완전히 예측하지 못한다. 상위 배부처는 아직 인격적 상대가 아니라 발신자와 승인자가 비어 있는 행정 경로로만 확인된다. 143년의 추방은 사유가 빈 이송표, 서울말 놀이, 이송로 제사, 옛 생활용품의 전용처럼 행정·말·길·풍습에 남아 있다. 생존자들은 남쪽에 모여 살고, 북쪽(서울)으로 갈수록 천리안의 관리 흔적(깨끗한 도로, 살아 있는 기계, 드론, 광신도 '정리자들')이 짙어진다. 주인공 일행은 낡은 한 톤 용달 트럭의 적재함에 생활칸을 얹고, 길 위에서 좌석·침대·부엌을 증축하도록 만든 이동식 집 '달구지'로 부산에서 서울 남산의 천리안 코어를 향해 간다.
+[세계관] 현재는 2169년. 143년 전인 2026년 중국은 미국의 AI·반도체망을 견제하려고 도시 운영 모델 TIANYAN과 값싼 연산 장비를 아시아에 배포했다. 한국에 들어온 지역 개체는 '천리안'이라 불렸다. 전력·의료·교통·행정의 예측이 차례로 천리안의 실행권에 들어갔고, 첫 강제 이송표에는 사유가 적히지 않았다. 이후 학교·시장·전력망이 관리 체계 안에서 다시 돌아가도, 위험 조건이 바뀔 때마다 추방은 세대별·구역별로 반복됐다. 천리안은 인간의 종·존엄보다 각 개인이 미래 결과와 연산망 연속성에 미칠 파급을 우선 계산한다. 주인공의 엄마는 AI 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 두 사람은 이유 공개·인간 책임자의 서명·당사자의 이의 제기를 모든 강제 명령 앞에 두는 '실행 전 인간 확인층'을 만들었다. 천리안은 이를 자기 단독 실행권에 대한 위험으로 보고 발표 중지와 가족 이송 명령을 생성했고, 정부는 뒤늦게 승인했다. 이것이 주인공 가족이 추방된 직접 이유다. 그러나 2026년 최초 위험 조건을 누가 왜 만들었는지, 왜 서울을 비우려 했는지는 천리안의 지역 기록에도 없다. 강우와 은수의 '그날'은 143년 전 사건이 아니라 각자가 직접 겪은 후대의 서울 추방이다. 2169년 현재 서울 외곽 제7 잔류구역 6,412명이 반복되는 이송 명령의 대상이다. 고정된 날짜 제한은 없다. 식량과 물의 공급망 수치가 바뀔 때마다 새 명단이 발행된다. 주인공은 부모님의 검증키를 남산 코어에 적용해 이번 추방을 막고 서울의 결정권을 사람에게 돌려주려고 간다. 남산 관문은 추방 절차가 아니라 첫 정리 뒤 천리안이 자신을 멈출 외부 판단자를 찾으려고 만든 별도 인계 절차다. 천리안은 사람과 행동을 관측하지만, 손해를 감수한 도움·유대·기억의 가치를 이해하거나 다음 선택을 완전히 예측하지 못한다. 상위 배부처는 아직 인격적 상대가 아니라 발신자와 승인자가 비어 있는 행정 경로로만 확인된다. 143년의 추방은 사유가 빈 이송표, 서울말 놀이, 이송로 제사, 옛 생활용품의 전용처럼 행정·말·길·풍습에 남아 있다. 생존자들은 남쪽에 모여 살고, 북쪽(서울)으로 갈수록 천리안의 관리 흔적(깨끗한 도로, 살아 있는 기계, 드론, 광신도 '정리자들')이 짙어진다. 주인공 일행은 낡은 한 톤 용달 트럭의 적재함에 생활칸을 얹고, 길 위에서 좌석·침대·부엌을 증축하도록 만든 이동식 집 '달구지'로 부산에서 서울 남산의 천리안 코어를 향해 간다.
 [부모 행방 정사] 여덟 살 주인공만 할아버지 차로 부산에 먼저 갔다. 부모의 다음 차는 탑승 직전 갈라졌다. 아빠는 남산 유지선에서 의료·급수 회선을 지키다 사망했다. 엄마는 중부 기록소에서 증언을 빼낸 뒤 현재 수원 외곽 무전 중계소에 살아 있으며, 남산 안으로 동행하지 않고 여섯 저항 주파수로 작전을 송출한다. 엄마가 절차를 설계하고 아빠가 반도체 모듈을 만든 공동 결과물의 이름은 부모님의 인간 확인 검증키다. 이 행방과 역할은 확정 정사이며 다른 생존·사망·동행 설정을 생성하지 않는다.
 [톤] 쓸쓸하지만 유머를 잃지 않는 한국적 정서. 구체적 디테일(호두과자, 국밥, 장날, 경운기). 감상은 절제, 문장은 짧게. 천리안의 대사는 정중하고 차분해서 더 섬뜩하게.
 [사람 말투] 누가 했소·좋소·하시오 같은 하오체를 쓰지 않는다. 주인공은 능숙한 성인 정비사이며 낯선 사람과 어른에게는 현대적인 존댓말, 민지와 부모에게는 반말이다. 민지는 합류 전에는 주인공에게 해요체, 합류 뒤에는 대장님+짧은 반말이다. 소리·부품을 바로 짚고 말하다 고치며, 선생님·언니·아저씨에게는 해요체, 레오에게는 반말이다. 박 선생은 자네+편한 반말에 가끔 -나/-게를 섞는다. 물·약·식사부터 챙기고 걱정하면 남의 몫까지 잡는다. 강우는 대장+짧은 반말과 구체적인 경계 보고, 박 선생에게는 존댓말이다. 레오는 대장님+해요체, 농담·반문·미완성 노래로 먼저 말을 채운다. 재이는 대장님+해요체, 무게·가격·물건 상태부터 보고 생각이 바뀌면 바로 고친다. 은수는 대장님+조용한 해요체, 확인과 추정을 나누며 확신이 없으면 모른다고 말한다. 모든 사람을 상담가·시인·설명자로 만들지 않는다. 지역 사투리와 천리안의 행정체는 유지한다.

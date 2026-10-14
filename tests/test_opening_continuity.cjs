@@ -23,3 +23,12 @@ test('departure still preserves its two actual choices and original costs',()=>{
     assert.equal(c.out[0].scene,'intro-departure-start-v1');
   }
 });
+test('repair notes do not reveal the transfer slip before Doyun presents it',()=>{
+  const repair=step('opening_bus_repair');
+  for(const choice of repair.choices){
+    assert.match(choice.out[0].fx.note.body,/난방/);
+    assert.doesNotMatch(choice.out[0].fx.note.body,/이송 사유|최종 승인자|남산|이송표/);
+  }
+  assert.match(step('opening_failed_appeal').turns[0].text,/도윤이 이송표를 내밀었다/);
+  assert.deepEqual(Array.from(repair.choices,c=>c.out[0].fx.time),[20,35,55]);
+});

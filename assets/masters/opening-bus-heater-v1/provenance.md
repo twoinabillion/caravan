@@ -1,0 +1,18 @@
+# Bus heater detail — candidate, not wired
+
+- Built-in imagegen, 2026-10-12. No CLI/API fallback.
+- Generated source: `/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ab9a8e05-5392-4c6f-a827-bee50ea77423.png`.
+- Original copied to `master.png`. Delivery: `assets/scenes/opening-bus-heater-v1.webp`, 1024×576, WebP quality86, 120746 bytes; sharp cover resize only.
+- Four references: `visual-canon-2026-08-11.png`, `world-canon-2026-08-11.png`, `people-canon-2026-08-11.png`, `dalguji-technical-canon-2026-08-11.webp` under `assets/reference/`.
+- No named characters or Dalguji appear. Thus no portrait references were omitted for an on-screen subject.
+- Intended use: `opening_bus_repair` entry/choice only. Not the repaired result; not a global replacement for shared family art.
+- Source vision review: single damaged hose, open panel and toolbox; no people, text or invented companion. Cool morning dock and restrained amber lamp. The machinery is large and needs small-screen scrutiny.
+- Actual active origin `http://127.0.0.1:4319/__live/assets` lists both master and delivery. Studio manifest has a separate comparison draft. Approval and exact in-game crop remain pending. Original family image is unchanged.
+
+## Prompt
+
+Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.
+
+Create a NEW single 16:9 landscape narrative detail scene, large master 1536x864 or higher. Reference images 1-4 are style/world/people/vehicle canon only, NOT panels to copy. This image depicts no people, no faces, no hands, and no Dalguji vehicle; the people and truck references establish the same grounded world only. Scene: early clear morning at Busan Gamcheon dock, inside a worn Korean passenger evacuation bus which has stopped. Camera near aisle seat height aimed into the open low heater inspection panel beside a passenger seat. Main readable focus in central safe area: a thick black rubber heater hose with a clearly visible short longitudinal tear near its metal coupling, aging clamp and heat-exchanger housing. This is the unrepaired condition before player selects a repair; no repair already installed. Open metal toolbox and ordinary spanner on dusty rubber aisle floor, removed inspection cover leaning nearby. Context at edges: faded cloth Korean bus seats, a small portion of window showing pale cool morning dock light, one restrained amber maintenance lamp illuminating the tear. Believable modest machinery, not industrial fantasy; no smoke/fire/gushing fluids. Human absence is intentional: all characters remain off-camera, do not add a baby or companion. One centered damaged hose is readable even at mobile 360px width. Natural material detail without glossy photo texture. Frame not a collage; NO visible writing/numbers/logos/captions/UI/borders.
+
+Negative: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel

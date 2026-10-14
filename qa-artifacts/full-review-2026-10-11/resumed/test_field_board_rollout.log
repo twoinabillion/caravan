@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_field_board_rollout.py", line 80, in <module>
+    assert page.locator('#stl-talk-slot .dlg.talk').count()==1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

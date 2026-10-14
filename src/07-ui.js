@@ -351,6 +351,7 @@ const UI = (()=>{
     const earlySound=$('#early-sound');
     if(earlySound) earlySound.hidden=!['title','preview','mode','name'].includes(screen);
     $('#'+id).classList.add('on');
+    window.dispatchEvent(new Event('caravanscreenchange'));
   }
 
   /* ── boot ── */
@@ -547,9 +548,11 @@ const UI = (()=>{
       const choiceModal=eventModal||modal;
       if(choiceModal&&/^[1-9]$/.test(e.key)&&!(e.target&&e.target.closest&&e.target.closest('input, textarea, select'))){
         if(e.repeat){e.preventDefault();return;}
-        const cards=[...choiceModal.querySelectorAll('button.choice:not([disabled])')].filter(x=>x.offsetParent!==null);
+        // Disabled visible choices still own their position; never redirect a
+        // blocked choice's number to a different (potentially costly) action.
+        const cards=[...choiceModal.querySelectorAll('button.choice')].filter(x=>x.offsetParent!==null);
         const card=cards[Number(e.key)-1];
-        if(card){ e.preventDefault(); heldStoryAdvanceKeys.add(e.code); card.click(); return; }
+        if(card){ e.preventDefault(); if(!card.disabled){heldStoryAdvanceKeys.add(e.code);card.click();} return; }
         /* 사건 본문을 읽는 동안에는 아직 선택 카드가 없다. 숫자 1을 첫 선택의
            단축키로만 두면 같은 키로 읽기를 이어 갈 수 없으므로, 결정 단계 전에는
            다음 문장 키로 사용하고 카드가 나타난 뒤부터 선택 번호로 전환한다. */
@@ -578,6 +581,8 @@ const UI = (()=>{
       }
       if(screen==='intro'&&!modal&&!e.target.closest('button, input, select, textarea, [role="dialog"]')&&(e.key==='Enter'||e.key===' ')){
         e.preventDefault();
+        if(e.repeat) return;
+        heldStoryAdvanceKeys.add(e.code);
         nextIntro();
         return;
       }
@@ -602,6 +607,7 @@ const UI = (()=>{
     $('#bt-previewback').onclick=()=>show('scr-title');
     $('#bt-previewnew').onclick=()=>startNew('onroad');
     const nameGo=()=>{
+      if(screen!=='name') return;
       pendingName=($('#inp-name').value||'').trim().slice(0,8);
       /* 이름 확인은 모바일 브라우저가 허용하는 명시적 사용자 제스처다. */
       SND.enable();
@@ -614,6 +620,8 @@ const UI = (()=>{
     $('#inp-name').addEventListener('input',()=>rememberPreparation());
     $('#scr-name .departure-scroll').addEventListener('scroll',()=>{if(screen==='name')rememberPreparation();},{passive:true});
     $('#inp-name').addEventListener('keydown',e=>{
+      // IME confirmation (including WebKit's 229) is not a departure gesture.
+      if(e.isComposing||e.keyCode===229||e.repeat) return;
       if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); nameGo(); }
     });
     const openingHistory=$('#opening-history');
@@ -882,6 +890,7 @@ const UI = (()=>{
     renderIntro(true);
   }
   function nextIntro(){
+    if(screen!=='intro'||introIdx>=D.intro.length) return;
     clearIntroAuto();
     const page=D.intro[introIdx];
     const beats=page&&page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page?.text||''}];
@@ -906,6 +915,7 @@ const UI = (()=>{
     else renderIntro(true);
   }
   function skipIntro(){
+    if(screen!=='intro'||introIdx>=D.intro.length) return;
     clearIntroAuto();
     const entryMode=$('#intro-summary').classList.contains('on')?'summary':'skip';
     closeModal('#intro-summary',false);
@@ -2255,7 +2265,11 @@ function dialogueSide(turn,lanes,opt={}){
     const toggle=panel.querySelector('[data-route-map-toggle]');
     if(toggle) toggle.onclick=()=>{routeMapOpen=!routeMapOpen;syncRouteMap(routeModels);if(routeMapOpen)$('#journey-map-close').focus({preventScroll:true});};
     const objective=panel.querySelector('[data-trip-objective]');
-    if(objective) objective.onclick=()=>$('#dk-objectives').click();
+    if(objective) objective.onclick=()=>{
+      // This button names the main objective, unlike the general dock shortcut.
+      if(typeof QuestLedgerUI!=='undefined') QuestLedgerUI.open(objective,'main');
+      else $('#dk-objectives').click();
+    };
     const depart=panel.querySelector('[data-nav-depart]');
     if(depart) depart.onclick=event=>{
       event.preventDefault();event.stopPropagation();
@@ -2820,7 +2834,7 @@ function dialogueSide(turn,lanes,opt={}){
   function playRadio(){
     const r=G.pickRadio(); if(!r) return;
     speak({who:r.narration?'sys':'radio', t:r.t});
-    AMBI.play(r.key==='radio_400_after'?'sfx_radio_400_after':'sfx_radio_static',.28);
+    AMBI.play('sfx_radio_static',.28);
     VO.play(r.key);
   }
   function speak(b){
@@ -4206,10 +4220,11 @@ function dialogueSide(turn,lanes,opt={}){
     return event.storyOrigin?.kind==='video'&&event.storyOrigin.title||event.title;
   }
   function storyCompletedRecordHtml(state){
-    if(state.phase!=='outcome'||state.eventId!=='story_family_principle'||state.choiceIndex!==0
+    if(state.phase!=='outcome'||!['story_family_principle','main_recovery_story_family_principle'].includes(state.eventId)||state.choiceIndex!==0
       ||state.index<state.turns.length-1) return '';
-    const restored=stripTags(state.resultText||'').match(/"(우리가 제안하는 것은 종료 장치가 아닙니다\.[\s\S]*?)"/);
-    // Old receipts with different prose remain readable as originally saved.
+    // Extract only from this paid receipt, never from today's event definition.
+    // Both authored revisions and the northern recovery share this disclosure.
+    const restored=stripTags(state.resultText||'').match(/"((?:사유 공개, 책임자 서명, 당사자 이의 제기\.|우리가 제안하는 것은 종료 장치가 아닙니다\.)[^"\n]*)"/);
     if(!restored) return '';
     return `<section class="story-chat story-transcript" role="group" aria-label="복원한 영상">
       <div class="story-record-finished"><p>마지막 문장까지 복원했다.</p>
@@ -4337,7 +4352,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(out.fx&&out.fx.offerComp){
       actions+=recruitDecisionHtml(out.fx.offerComp);
     } else {
-      const actionLabel=curEv&&curEv.campConversation?'야영지로 돌아가기':curEv&&curEv.openingFinal
+      const actionLabel=out.fx?.endJourney?'여정 마무리':curEv&&curEv.campConversation?'야영지로 돌아가기':curEv&&curEv.openingFinal
         ?'길로 나가기'
         :curEv&&curEv.openingStep
         ?'다음 장면'
@@ -4400,6 +4415,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(!localConversation&&!campEvent){
       if(nextOpening){showEvent(nextOpening);renderHud();return;}
       const chain=G.queuePresentation(S._chain);
+      if(S.ended) return true;
       if(chain&&G.presentTransition()){renderHud();return;}
     }
     closeModal('#ev-wrap');
@@ -6397,8 +6413,8 @@ function dialogueSide(turn,lanes,opt={}){
       title='이송 명령이 멈춘 밤';
       body='제7 잔류구역 6,412명. 명부의 숫자가 그대로 남은 채 강제 이송이 멈췄다. 사람의 확인 없이는 같은 명령을 다시 내릴 수 없다.';
       if(S.flags.father_fate_known)body+='\n\n아빠의 마지막 기록을 들고 여기까지 왔다.';
-      if(S.flags.mother_broadcast_ready)body+=' 엄마의 목소리도 방송으로 닿았다.';
-      body+='\n\n서울에서 되찾은 결정은 우리 손에 남았다. 천리안 너머의 응답, TIANYAN은 아직 끝나지 않은 길로 남는다.';
+      if(S.flags.mother_broadcast_ready)body+=' 엄마와 다시 이야기를 나눌 수 있게 됐다.';
+      body+='\n\n서울에서 되찾은 결정은 우리 손에 남았다. 오늘 돌아갈 곳도 우리가 정한다.';
     } else {
       kicker='길에 남긴 기록';
       title='여행이 끝났다'; body='달구지는 더 이상 달리지 못한다.';

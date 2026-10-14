@@ -13,6 +13,7 @@ function fixture(){
   const ctx=vm.createContext({console,Math,JSON,Number,String,S:{at:'sejong',day:3,min:532.352,driving:null},D:{nodes:{sejong:{name:'세종'},gongju:{name:'공주'}}},
     stayActionAt:null,stayActionId:null,journeyViewKey:'test',journeyViewRestored:false,journeyConsoleMode:'local',navChoiceId:'gongju',navChoiceGuide:'',routeMapOpen:false,
     sessionStorage:{setItem:(k,v)=>memory.set(k,v),getItem:k=>memory.get(k)},
+    AMBI:{action:()=>{}},
     esc:s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
     G:{explore:()=>calls.push('explore'),fieldRepair:()=>calls.push('repair'),fixRadio:()=>{calls.push('radio');return true;},openRescue:()=>calls.push('walkfuel'),openRecruitStep:()=>calls.push('recruitstep')},
     showCampHub:()=>calls.push('camp'),showStl:()=>calls.push('stl'),showCraft:()=>calls.push('craft'),renderAll:()=>{},closeModal:()=>{},wireJourneyDetails:()=>{},models});

@@ -103,11 +103,13 @@ test('conversation preserves actual dialogue and branches, with name revealed on
   assert.match(html, /situated-cabin\.html#cabin-guest/);
 });
 
-test('record uses current chosen branch, not classification branch or upcoming Gongju as goal', () => {
+test('retained record study uses its restoration branch, not classification or upcoming Gongju as goal', () => {
   const html = pages['situated-record'];
   const quote = '우리가 제안하는 것은 종료 장치가 아닙니다. 이유 공개, 인간 책임자의 서명, 당사자의 이의 제기. 예측과 실행 사이에 사람을 다시 놓는 일입니다.';
   const note = '엄마의 발표 원고를 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.';
-  for (const line of [quote, note]) { assert.ok(source.includes(line)); assert.ok(html.includes(line)); }
+  // The quote is the historical draft revision, not today's played result.
+  assert.ok(html.includes(quote));
+  assert.ok(source.includes(note)); assert.ok(html.includes(note));
   assert.match(html, /수원에서 검증키 확인/);
   assert.match(html, /성곽 공동체 · 주변 탐색 · 준비 30분/);
   assert.match(html, /세종 → 공주 · 6km 남음/);

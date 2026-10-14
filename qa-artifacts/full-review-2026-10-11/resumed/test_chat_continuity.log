@@ -1,0 +1,391 @@
+FF.F.F.FFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+____ test_choice_keeps_prior_dialogue_and_receipt_on_reload[ev_truck_cafe] _____
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+event_id = 'ev_truck_cafe'
+
+    @pytest.mark.parametrize('event_id', ['ev_truck_cafe', 'onboarding_first_road', 'combat_walker_read'])
+    def test_choice_keeps_prior_dialogue_and_receipt_on_reload(page, event_id):
+        page.evaluate('(id)=>G.openEventById(id)', event_id)
+        finish(page)
+        before = transcript(page)
+        page.locator('#ev-sheet .choice[data-i]:enabled').first.click()
+        # The original conversation survives even while only the first result turn is visible.
+        assert before in transcript(page)
+>       assert page.locator('#ev-sheet .story-selected-action').count() == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = count()
+E        +    where count = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .story-selected-action'>.count
+E        +      where <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .story-selected-action'> = locator('#ev-sheet .story-selected-action')
+E        +        where locator = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>.locator
+
+tests/test_chat_continuity.py:59: AssertionError
+_ test_choice_keeps_prior_dialogue_and_receipt_on_reload[onboarding_first_road] _
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+event_id = 'onboarding_first_road'
+
+    @pytest.mark.parametrize('event_id', ['ev_truck_cafe', 'onboarding_first_road', 'combat_walker_read'])
+    def test_choice_keeps_prior_dialogue_and_receipt_on_reload(page, event_id):
+        page.evaluate('(id)=>G.openEventById(id)', event_id)
+        finish(page)
+        before = transcript(page)
+        page.locator('#ev-sheet .choice[data-i]:enabled').first.click()
+        # The original conversation survives even while only the first result turn is visible.
+        assert before in transcript(page)
+>       assert page.locator('#ev-sheet .story-selected-action').count() == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = count()
+E        +    where count = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .story-selected-action'>.count
+E        +      where <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .story-selected-action'> = locator('#ev-sheet .story-selected-action')
+E        +        where locator = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>.locator
+
+tests/test_chat_continuity.py:59: AssertionError
+___________ test_goal_change_is_read_in_chat_without_a_second_ribbon ___________
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+
+    def test_goal_change_is_read_in_chat_without_a_second_ribbon(page):
+        page.evaluate("G.openEventById('onboarding_first_road')")
+        finish(page)
+        page.locator('#ev-sheet .choice[data-i]:enabled').first.click()
+        finish(page)
+>       assert page.locator('.story-transcript .story-quest-update').count() >= 1
+E       AssertionError: assert 0 >= 1
+E        +  where 0 = count()
+E        +    where count = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='.story-transcript .story-quest-update'>.count
+E        +      where <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='.story-transcript .story-quest-update'> = locator('.story-transcript .story-quest-update')
+E        +        where locator = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>.locator
+
+tests/test_chat_continuity.py:82: AssertionError
+_______ test_unread_goal_update_waiting_during_dialogue_is_not_discarded _______
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+
+    def test_unread_goal_update_waiting_during_dialogue_is_not_discarded(page):
+        page.evaluate("G.openEventById('ev_truck_cafe')")
+        page.evaluate("G.ensureQuestLedger().updates.push({id:'pending_delivery',kind:'side',title:'수원 배달 준비',next:'수원에서 물자를 전달한다'})")
+        finish(page)
+        page.locator('#ev-sheet .choice[data-i]:enabled').first.click()
+        finish(page)
+>       assert '수원 배달 준비' in page.locator('.story-result').inner_text()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_chat_continuity.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../Library/Python/3.12/lib/python/site-packages/playwright/sync_api/_generated.py:17018: in inner_text
+    self._sync(self._impl_obj.inner_text(timeout=timeout))
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_locator.py:458: in inner_text
+    return await self._frame.inner_text(
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_frame.py:695: in inner_text
+    return await self._channel.send(
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x10278b050>
+cb = <function Channel.send.<locals>.<lambda> at 0x102fcfec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        st: List[inspect.FrameInfo] = getattr(
+            task, "__pw_stack__", None
+        ) or inspect.stack(0)
+    
+        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.inner_text: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator(".story-result")
+
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:559: TimeoutError
+_ test_finale_record_toggle_does_not_advance_and_survives_choice_reload[click] _
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+activation = 'click'
+
+    @pytest.mark.parametrize('activation', ['click', 'keyboard'])
+    def test_finale_record_toggle_does_not_advance_and_survives_choice_reload(page, activation):
+        page.evaluate("""() => {
+          S.at='seoul'; S.flags.seoul_open=true; S.flags.seoul_core_reached=true; S.flags.seoul_costs_seen=true;
+          S.party=['minji','kangwoo','eunsu']; S.injuries={};
+          S.party.forEach(id=>S.comps[id]={mood:65,bond:5,lvl:0,perks:[],pending:1});
+          G.openEventById('seoul_decision');
+        }""")
+        finish(page)
+        record = page.locator('.story-reading-record').last
+>       record.locator('summary').click()
+
+tests/test_chat_continuity.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../Library/Python/3.12/lib/python/site-packages/playwright/sync_api/_generated.py:15573: in click
+    self._sync(
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_locator.py:160: in click
+    return await self._frame.click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_frame.py:549: in click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x102efee10>
+cb = <function Channel.send.<locals>.<lambda> at 0x102f658a0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        st: List[inspect.FrameInfo] = getattr(
+            task, "__pw_stack__", None
+        ) or inspect.stack(0)
+    
+        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator(".story-reading-record").last.locator("summary")
+
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:559: TimeoutError
+_ test_finale_record_toggle_does_not_advance_and_survives_choice_reload[keyboard] _
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+activation = 'keyboard'
+
+    @pytest.mark.parametrize('activation', ['click', 'keyboard'])
+    def test_finale_record_toggle_does_not_advance_and_survives_choice_reload(page, activation):
+        page.evaluate("""() => {
+          S.at='seoul'; S.flags.seoul_open=true; S.flags.seoul_core_reached=true; S.flags.seoul_costs_seen=true;
+          S.party=['minji','kangwoo','eunsu']; S.injuries={};
+          S.party.forEach(id=>S.comps[id]={mood:65,bond:5,lvl:0,perks:[],pending:1});
+          G.openEventById('seoul_decision');
+        }""")
+        finish(page)
+        record = page.locator('.story-reading-record').last
+>       record.locator('summary').click()
+
+tests/test_chat_continuity.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../Library/Python/3.12/lib/python/site-packages/playwright/sync_api/_generated.py:15573: in click
+    self._sync(
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_locator.py:160: in click
+    return await self._frame.click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_frame.py:549: in click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x102efea80>
+cb = <function Channel.send.<locals>.<lambda> at 0x102f64fe0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        st: List[inspect.FrameInfo] = getattr(
+            task, "__pw_stack__", None
+        ) or inspect.stack(0)
+    
+        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator(".story-reading-record").last.locator("summary")
+
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:559: TimeoutError
+______ test_story_actions_and_result_are_reachable_in_one_scroll[320-578] ______
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+width = 320, height = 578
+
+    @pytest.mark.parametrize('width,height', [(320,578),(390,844),(475,948),(1440,900)])
+    def test_story_actions_and_result_are_reachable_in_one_scroll(page, width, height):
+        page.set_viewport_size({'width':width,'height':height})
+        page.evaluate("G.openEventById('onboarding_first_road')")
+        finish(page)
+        assert page.locator('.event-field-report').evaluate("n=>n.getBoundingClientRect().bottom>=n.querySelector('.event-choice-dock').getBoundingClientRect().bottom"), 'manuscript background must contain the full conversation and choices'
+        last = page.locator('#ev-sheet .choice[data-i]:enabled').last
+>       last.scroll_into_view_if_needed()
+
+tests/test_chat_continuity.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../Library/Python/3.12/lib/python/site-packages/playwright/sync_api/_generated.py:17481: in scroll_into_view_if_needed
+    self._sync(self._impl_obj.scroll_into_view_if_needed(timeout=timeout))
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_locator.py:563: in scroll_into_view_if_needed
+    return await self._with_element(
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_locator.py:116: in _with_element
+    return await task(
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_element_handle.py:113: in scroll_into_view_if_needed
+    await self._channel.send(
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x102810da0>
+cb = <function Channel.send.<locals>.<lambda> at 0x102f20e00>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        st: List[inspect.FrameInfo] = getattr(
+            task, "__pw_stack__", None
+        ) or inspect.stack(0)
+    
+        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.scroll_into_view_if_needed: Timeout 29996ms exceeded.
+E           Call log:
+E             - attempting scroll into view action
+E               2 × waiting for element to be stable
+E                 - element is not visible
+E               - retrying scroll into view action
+E               - waiting 20ms
+E               2 × waiting for element to be stable
+E                 - element is not visible
+E               - retrying scroll into view action
+E                 - waiting 100ms
+E               55 × waiting for element to be stable
+E                  - element is not visible
+E                - retrying scroll into view action
+E                  - waiting 500ms
+
+../Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py:559: TimeoutError
+______ test_story_actions_and_result_are_reachable_in_one_scroll[390-844] ______
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+width = 390, height = 844
+
+    @pytest.mark.parametrize('width,height', [(320,578),(390,844),(475,948),(1440,900)])
+    def test_story_actions_and_result_are_reachable_in_one_scroll(page, width, height):
+        page.set_viewport_size({'width':width,'height':height})
+        page.evaluate("G.openEventById('onboarding_first_road')")
+        finish(page)
+        assert page.locator('.event-field-report').evaluate("n=>n.getBoundingClientRect().bottom>=n.querySelector('.event-choice-dock').getBoundingClientRect().bottom"), 'manuscript background must contain the full conversation and choices'
+        last = page.locator('#ev-sheet .choice[data-i]:enabled').last
+        last.scroll_into_view_if_needed()
+        last.click()
+        finish(page)
+        done = page.locator('#ev-sheet [data-r=ok]')
+        done.scroll_into_view_if_needed()
+        rect = done.bounding_box()
+        assert rect and rect['y'] >= 0 and rect['y']+rect['height'] <= height+1
+        assert rect['height'] >= 44
+        assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+        # History can be read backwards without a second nested scroll container.
+        assert page.locator('#ev-sheet .story-reader').evaluate("n=>n.scrollHeight<=n.clientHeight+1")
+>       assert page.locator('#ev-sheet .event-choice-dock').evaluate("n=>n.closest('.story-transcript')!==null")
+E       assert False
+E        +  where False = evaluate("n=>n.closest('.story-transcript')!==null")
+E        +    where evaluate = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .event-choice-dock'>.evaluate
+E        +      where <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .event-choice-dock'> = locator('#ev-sheet .event-choice-dock')
+E        +        where locator = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>.locator
+
+tests/test_chat_continuity.py:186: AssertionError
+______ test_story_actions_and_result_are_reachable_in_one_scroll[475-948] ______
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+width = 475, height = 948
+
+    @pytest.mark.parametrize('width,height', [(320,578),(390,844),(475,948),(1440,900)])
+    def test_story_actions_and_result_are_reachable_in_one_scroll(page, width, height):
+        page.set_viewport_size({'width':width,'height':height})
+        page.evaluate("G.openEventById('onboarding_first_road')")
+        finish(page)
+        assert page.locator('.event-field-report').evaluate("n=>n.getBoundingClientRect().bottom>=n.querySelector('.event-choice-dock').getBoundingClientRect().bottom"), 'manuscript background must contain the full conversation and choices'
+        last = page.locator('#ev-sheet .choice[data-i]:enabled').last
+        last.scroll_into_view_if_needed()
+        last.click()
+        finish(page)
+        done = page.locator('#ev-sheet [data-r=ok]')
+        done.scroll_into_view_if_needed()
+        rect = done.bounding_box()
+        assert rect and rect['y'] >= 0 and rect['y']+rect['height'] <= height+1
+        assert rect['height'] >= 44
+        assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+        # History can be read backwards without a second nested scroll container.
+        assert page.locator('#ev-sheet .story-reader').evaluate("n=>n.scrollHeight<=n.clientHeight+1")
+>       assert page.locator('#ev-sheet .event-choice-dock').evaluate("n=>n.closest('.story-transcript')!==null")
+E       assert False
+E        +  where False = evaluate("n=>n.closest('.story-transcript')!==null")
+E        +    where evaluate = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .event-choice-dock'>.evaluate
+E        +      where <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .event-choice-dock'> = locator('#ev-sheet .event-choice-dock')
+E        +        where locator = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>.locator
+
+tests/test_chat_continuity.py:186: AssertionError
+_____ test_story_actions_and_result_are_reachable_in_one_scroll[1440-900] ______
+
+page = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>
+width = 1440, height = 900
+
+    @pytest.mark.parametrize('width,height', [(320,578),(390,844),(475,948),(1440,900)])
+    def test_story_actions_and_result_are_reachable_in_one_scroll(page, width, height):
+        page.set_viewport_size({'width':width,'height':height})
+        page.evaluate("G.openEventById('onboarding_first_road')")
+        finish(page)
+        assert page.locator('.event-field-report').evaluate("n=>n.getBoundingClientRect().bottom>=n.querySelector('.event-choice-dock').getBoundingClientRect().bottom"), 'manuscript background must contain the full conversation and choices'
+        last = page.locator('#ev-sheet .choice[data-i]:enabled').last
+        last.scroll_into_view_if_needed()
+        last.click()
+        finish(page)
+        done = page.locator('#ev-sheet [data-r=ok]')
+        done.scroll_into_view_if_needed()
+        rect = done.bounding_box()
+        assert rect and rect['y'] >= 0 and rect['y']+rect['height'] <= height+1
+        assert rect['height'] >= 44
+        assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+        # History can be read backwards without a second nested scroll container.
+        assert page.locator('#ev-sheet .story-reader').evaluate("n=>n.scrollHeight<=n.clientHeight+1")
+>       assert page.locator('#ev-sheet .event-choice-dock').evaluate("n=>n.closest('.story-transcript')!==null")
+E       assert False
+E        +  where False = evaluate("n=>n.closest('.story-transcript')!==null")
+E        +    where evaluate = <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .event-choice-dock'>.evaluate
+E        +      where <Locator frame=<Frame name= url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'> selector='#ev-sheet .event-choice-dock'> = locator('#ev-sheet .event-choice-dock')
+E        +        where locator = <Page url='file:///Users/sang/caravan/%EC%84%9C%EC%9A%B8%EA%B9%8C%EC%A7%80400km.html'>.locator
+
+tests/test_chat_continuity.py:186: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_chat_continuity.py::test_choice_keeps_prior_dialogue_and_receipt_on_reload[ev_truck_cafe]
+FAILED tests/test_chat_continuity.py::test_choice_keeps_prior_dialogue_and_receipt_on_reload[onboarding_first_road]
+FAILED tests/test_chat_continuity.py::test_goal_change_is_read_in_chat_without_a_second_ribbon
+FAILED tests/test_chat_continuity.py::test_unread_goal_update_waiting_during_dialogue_is_not_discarded
+FAILED tests/test_chat_continuity.py::test_finale_record_toggle_does_not_advance_and_survives_choice_reload[click]
+FAILED tests/test_chat_continuity.py::test_finale_record_toggle_does_not_advance_and_survives_choice_reload[keyboard]
+FAILED tests/test_chat_continuity.py::test_story_actions_and_result_are_reachable_in_one_scroll[320-578]
+FAILED tests/test_chat_continuity.py::test_story_actions_and_result_are_reachable_in_one_scroll[390-844]
+FAILED tests/test_chat_continuity.py::test_story_actions_and_result_are_reachable_in_one_scroll[475-948]
+FAILED tests/test_chat_continuity.py::test_story_actions_and_result_are_reachable_in_one_scroll[1440-900]
+10 failed, 3 passed in 165.30s (0:02:45)

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_event_typography_layout.py", line 171, in <module>
+    check_viewport(playwright, *viewport)
+  File "/Users/sang/caravan/tests/test_event_typography_layout.py", line 141, in check_viewport
+    assert not result["small"], (width, height, event_id, result)
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: (320, 578, 'story_family_key', {'clipped': [], 'outsideSurface': [], 'escaped': [], 'small': ['기록', '이전'], 'geometry': {'viewport': {'width': 320, 'height': 578}, 'root': {'top': 8, 'bottom': 578, 'height': 570}, 'dock': {'top': 476, 'bottom': 552, 'height': 76}, 'controls': [{'label': '자동 읽기', 'top': 12, 'bottom': 56, 'height': 44}, {'label': '기록', 'top': 12, 'bottom': 56, 'height': 44}, {'label': '그림을 눌러 다음 대사', 'top': 61, 'bottom': 204.5, 'height': 143.5}, {'label': '↗', 'top': 69, 'bottom': 113, 'height': 44}, {'label': '이전', 'top': 501, 'bottom': 545, 'height': 44}, {'label': '계속 읽기', 'top': 494, 'bottom': 552, 'height': 58}]}, 'documentOverflow': False, 'avatarProseOverlap': False, 'avatarSpeakerOverlap': False, 'titleProseDelta': 0, 'titlePaperRatio': 0.019736842105263157, 'avatarPaperRatio': 0, 'avatarSide': 'left', 'titleBeforeProse': False, 'hasPortrait': False, 'visibleChoices': 0, 'narration': '', 'narrationColor': '', 'narrationContrast': 1.098976967793965})

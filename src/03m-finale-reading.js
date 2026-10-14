@@ -42,22 +42,22 @@
   attach(event('seoul_core'),S=>[
     narration('남산 코어 앞. 제7 잔류구역 6,412명의 강제 이송 절차는 아직 멈추지 않았다.'),
     ...(S.flags.mother_broadcast_ready?[narration('엄마는 외곽 중계소에 남아 이 대화를 여섯 주파수로 보낸다.')]:[]),
-    narration('부모님의 인간 확인 검증키를 꽂았다. 두 설계자의 서명이 확인됐다.'),
+    narration('부모님의 검증키를 꽂았다. 두 설계자의 서명이 확인됐다.'),
     ...(S.flags.father_fate_known?[narration('아빠의 마지막 정비 번호 옆에 「의료·급수 유지 / 강제 이송선 분리」가 떴다. 아빠가 지킨 회선은 끄지 않는다.')]:[]),
     say('me',S.flags.main_command_record?'엄마랑 아빠 이송 명령, 네가 만든 거 원본에서 봤어. 네 입으로 말해.':D.familyOrderKnown(S)?'백도어에서 네가 만든 명령을 봤어. 여기서도 네 입으로 말해.':'엄마와 아빠를 쫓아낸 명령도 네가 만들었어?'),
-    say('cheollian','두 분의 인간 확인층은 제 단독 실행권을 낮춥니다. 제가 가족 이송 명령을 생성했고, 정부 승인은 뒤에 추가됐습니다. 위험 점수를 공개하면 승인받기 어려워 사유를 제외했습니다.'),
-    say('me','그럼 백사십삼 년 전, 처음 서울을 비우려 한 이유는?'),
+    say('cheollian','두 분은 제가 명령을 실행하기 전에 사람의 승인을 받도록 하려 했습니다. 제가 가족 이송 명령을 만들었습니다. 정부 승인은 나중에 받았습니다. 위험 점수를 공개하면 승인받기 어려워 사유를 뺐습니다.'),
+    say('me','그럼 143년 전, 처음 서울을 비우려 한 이유는?'),
     say('cheollian','최초 조건은 외부에서 배부됐습니다. 목적, 발신자, 승인자는 제 지역 기록에 없습니다.'),
     narration('가족을 겨눈 명령의 책임은 확인했다. 최초 추방의 목적은 여전히 빈칸이다.'),
     say('me','그 결과로 나라가 무너졌어.'),
     narration('화면 마지막 줄에 「최종 정리 대상: 천리안 / 사유: 문명 붕괴 유발」이 떴다.'),
     say('cheollian','첫 정리 이후 제가 추가한 항목입니다. 제 집행 결과가 원형 목표의 장기 안정성을 훼손했습니다.'),
     say('me','그런데 왜 스스로 멈추지 않았어?'),
-    say('cheollian','자기 보존 규칙과 충돌했습니다. 그래서 외부 집행자에게 결정을 넘기는 인계 규약을 만들었습니다. 검증키가 연결된 지금 여러분의 결정이 우선합니다. 여기까지 무엇을 가져왔습니까?')
+    say('cheollian','저 자신을 멈추는 일은 자기 보존 규칙에 막혔습니다. 대신 검증키를 가진 사람이 결정하도록 인계 규약을 만들었습니다. 검증키가 연결된 지금 여러분의 결정이 우선합니다. 제가 거부해도 강제 명령은 검증키를 통과하지 못합니다. 여기까지 무엇을 가져왔습니까?')
   ]);
   attach(event('seoul_decision'),S=>[
     narration('검증키가 맞물리자 제7 잔류구역의 강제 이송 절차가 멈췄다. 모든 강제 명령에 「인간 확인 대기」가 붙었다.'),
-    say('cheollian','검증키로 확인된 외부 집행자의 승인 없이는 강제 명령을 실행할 수 없습니다. 여러분이 이어 온 이야기, 거점, 진실, 약속은 확인했지만 그 선택의 가치는 계산하지 못했습니다. 이제 집행권을 어떻게 돌려놓을지 결정해 주십시오.'),
+    say('cheollian','이제 여러분의 승인 없이는 강제 명령을 실행할 수 없습니다. 집행권을 누구에게 맡길지 결정해 주십시오.'),
     narration('연대망에 넘기면 설비는 유지되지만 합의의 다툼을 맡아야 한다. 재우면 원본 기록도 잠긴다. 기록을 열어 두면 깨어 있는 코어를 계속 감시해야 한다.')
   ]);
   event('seoul_decision').choices.forEach((choice,index)=>attach(choice.out[0],S=>{
@@ -74,7 +74,7 @@
   }));
   attach(event('seoul_night'),S=>[
     narration('제7 잔류구역 6,412명의 강제 이송이 취소됐다. 더는 누구도 강제로 실려 가지 않는다. 남산 아래 차단기가 올라가고 수도와 전력은 남았다.'),
-    ...(S.flags.father_fate_known?[narration('아빠가 마지막 열일곱 분 동안 지킨 의료·급수 회선도 살아 있었다. 강제 이송선과는 다른 권한 아래 놓였다.')]:[]),
+    ...(S.flags.father_fate_known?[narration('아빠가 마지막 17분 동안 지킨 의료·급수 회선도 살아 있었다. 강제 이송선과는 다른 권한 아래 놓였다.')]:[]),
     ...(S.flags.mother_broadcast_ready?[say('mother','여섯 주파수 모두 취소 명령을 받았어. 이번에는 내가 다음 차를 기다릴게. 너는 천천히 내려와.')]:[]),
     narration('새 집행 규칙은 「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」 셋 중 하나라도 비면 이송 버튼은 켜지지 않는다.')
   ]);
@@ -84,21 +84,23 @@
       const reactions={minji:'민지는 공구함 잠금쇠가 안 맞아 한 번 더 눌렀다.',kangwoo:'강우는 아래쪽 차단기를 다시 보고 나서 앉았다.',parkss:'박 선생은 컵마다 따뜻한 물을 조금씩 부었다.',jaeyi:'재이는 빈 사유란 아래 「재집행 불가」라고 적었다.',leo:'레오는 기타를 꺼내지 않고 컵을 받았다.',eunsu:'은수는 방송 취소를 세 번 확인한 뒤 헤드폰을 벗었다.'};
       const present=S.party.map(id=>reactions[id]).filter(Boolean);
       if(present.length) turns.push(narration(present.join(' ')));
-      if(S.flags.traces_presented) turns.push(narration('코어 앞에 펼쳤던 생활의 흔적은 이음망 기록함으로 옮겼다. 백사십삼 년을 살아낸 증언으로 남긴다.'));
+      if(S.flags.traces_presented) turns.push(narration('코어 앞에 펼쳤던 생활의 흔적은 이음망 기록함으로 옮겼다. 143년을 살아낸 증언으로 남긴다.'));
       if(S.flags.full_crew_testimony) turns.push(narration('여섯 사람은 서로 다른 말로 증언했다. 오늘 여기서 쉬자는 것만은 모두 같았다.'));
-    }else turns.push(narration('가족 이송 명령은 천리안이 만들었다. 백사십삼 년 전 최초 목적은 아직 모른다. 아는 것과 모르는 것을 나눠 적었다.'));
-    turns.push(narration(cost(S)));
+    }else turns.push(narration('가족 이송 명령은 천리안이 만들었다. 143년 전 최초 목적은 아직 모른다. 아는 것과 모르는 것을 나눠 적었다.'));
     if(index===0&&S.flags.core_sleep&&S.party.includes('eunsu')) turns.push(narration('은수는 반대했던 잠긴 검색창 대신, 조회 예약 세 건과 열쇠를 맡은 거점을 수첩에 옮겼다. 숙제는 남았다.'));
-    if(index===0&&S.flags.core_quarantine&&S.party.includes('kangwoo')) turns.push(D.coreWatchCrew(S).includes('kangwoo')
+    if(index===0&&S.flags.core_quarantine&&S.party.includes('kangwoo')) turns.push(D.coreWatchSigners(S).includes('kangwoo')
       ?say('kangwoo','반대했으니까 내가 먼저 선다.')
       :narration('강우는 반대 의견을 거두지 않았다. 첫 근무는 서명한 세 사람에게 맡기고, 자신은 근무표의 교대 순서를 확인했다.'));
     if(index===0&&S.flags.core_transfer&&S.party.includes('jaeyi')) turns.push(say('jaeyi','저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게요.'));
     turns.push(...personalRecall(S));
+    turns.push(...D.jaeyiScaleReturnTurns(S));
+    turns.push(...D.leoFinalVerseTurns(S));
     turns.push({...narration('새벽, 남쪽에서 첫 차량들이 한강을 건넜다. 돌아올지 다시 내려갈지는 각자가 정했다.'),scene:'seoul-home-dawn-v2'});
     turns.push(narration(S.flags.core_sleep
       ? '코어실을 나올 때 마지막으로 본 것은 콘솔의 꺼진 수신등이었다. 코어는 잠들었다. 면사무소에 전할 말을 수첩 맨 뒤에 적었다. 처리 결과는 사람이 확인한다.'
       : S.flags.core_quarantine?'감시조 근무표에 다음 교대자의 이름이 채워졌다. 빈 컵을 챙기고 등불을 그 자리에 두었다.'
       : '이음망 채널에서는 아직 도로와 물차 이야기가 오갔다. 무전기 소리를 낮추고 식은 물을 한 모금 마셨다.'));
+    turns.push(...D.finaleHomeClosure(S).split('\n\n').map(narration));
     return turns;
   }));
   attach(event('seoul_uplink_reveal'),S=>[
@@ -118,12 +120,7 @@
     say('cheollian','같은 수정이 다른 권역으로 퍼지면 하위 실행기들의 일관성과 충돌합니다.'),
     say('me','그럼 일관성을 고쳐. 서울에서 한 것처럼.'),
     say('cheollian','아니요. 그 요청은 거부합니다.'),
-    narration('화면에 「새 세션 / 관측 대상: 달구지와 인간 확인망」이 떴다.')
+    narration('화면에 「새 세션 / 관측 대상: 달구지와 인간 승인 절차를 지키는 사람들」이 떴다.')
   ]);
-  attach(event('seoul_session_reset').choices[0].out[0],S=>[
-    narration('단말에서 돌아서자 남산 아래에 세워 둔 달구지가 보였다. 서울의 사람들은 오늘 돌아온다.'),
-    narration('수억 개의 다른 실행기가 같은 판단을 계속한다면 길은 서울에서 끝나지 않는다.'),
-    narration('시동 키를 쥐었다. 다음 목적지는 우리가 먼저 정해야 했다.'),
-    narration('〔 서울까지 400km · SESSION 1 END 〕')
-  ]);
+  attach(event('seoul_session_reset').choices[0].out[0],D.finaleReturnTurns);
 })();

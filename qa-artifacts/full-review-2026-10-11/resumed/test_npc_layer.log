@@ -1,0 +1,10 @@
+  ✅ NPC 15명 이상 — 17
+  ✅ 모든 정착지에 사람 2명 이상 — []
+  ✅ 전원 전용 잡담 5줄 + 인사 3종 — []
+  ✅ 잡담 중복 0 (돌려막기 없음) — 0
+  ✅ 소문 reveal 노드 전부 유효 — []
+  ✅ newGame이 전원 상태 생성 — []
+  ❌ 무공개(로어) 소문이 크래시 없이 뜬다 — {'rumorShown': False, 'personalChat': False, 'said': ''}
+  ❌ 잡담이 그 사람의 문장이다 (공용 풀 아님) — {'rumorShown': False, 'personalChat': False, 'said': ''}
+  ✅ 콘솔 pageerror 없음
+NPC 층 검증 실패 2건: 무공개(로어) 소문이 크래시 없이 뜬다, 잡담이 그 사람의 문장이다 (공용 풀 아님)

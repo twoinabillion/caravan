@@ -145,6 +145,32 @@ const QuestJournal={
 /* ═══ QUEST LEDGER UI ═══ */
 const QuestLedgerUI={
   tab:'main', root:null, rendering:false,
+  liveViewKey:'caravan-live-quest-view-v1', liveViewRestored:false,
+  liveViewContext(){return S?JSON.stringify([S.seed,S._quality?.createdAt,S.at,S.day,S.min]):null;},
+  captureLiveView(){
+    if(!new URLSearchParams(location.search).has('caravan-live')) return;
+    try{
+      const list=this.root?.querySelector('.quest-ledger-list');
+      sessionStorage.setItem(this.liveViewKey,JSON.stringify({context:this.liveViewContext(),
+        open:this.isAvailable()&&!!this.isOpen(),tab:this.tab,scroll:list?.scrollTop||0,
+        trigger:this.returnFocus?.hasAttribute?.('data-trip-objective')?'objective':'dock'}));
+    }catch(error){}
+  },
+  restoreLiveView(){
+    if(this.liveViewRestored||!S||!document.querySelector('#scr-game.on')) return;
+    this.liveViewRestored=true;
+    if(!new URLSearchParams(location.search).has('caravan-live')) return;
+    try{
+      const saved=JSON.parse(sessionStorage.getItem(this.liveViewKey)||'null');
+      sessionStorage.removeItem(this.liveViewKey);
+      if(!saved?.open||saved.context!==this.liveViewContext()||S.pendingPresentation||S.ended||
+        document.querySelector('#ev-wrap.on,.sheet-wrap.on,#arrival-scene.on')) return;
+      const trigger=document.querySelector(saved.trigger==='objective'?'[data-trip-objective]':'#dk-objectives');
+      this.open(trigger,['main','side','completed'].includes(saved.tab)?saved.tab:'main');
+      const list=this.root.querySelector('.quest-ledger-list');
+      if(list) list.scrollTop=Math.max(0,Number(saved.scroll)||0);
+    }catch(error){}
+  },
   esc(value){ return String(value==null?'':value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); },
   init(){
     if(this.root||!document.body) return;
@@ -178,6 +204,7 @@ const QuestLedgerUI={
       this.tab=button.dataset.questTab; this.render();
     });
     root.addEventListener('click',event=>{
+      if(!this.isAvailable()){this.syncAvailability();return;}
       if(event.target.closest('.quest-return-road')){this.close();return;}
       const actionButton=event.target.closest('[data-quest-action]');
       if(actionButton){
@@ -205,16 +232,19 @@ const QuestLedgerUI={
     },true);
     document.addEventListener('keydown',event=>{ if(event.key==='Escape'&&this.isOpen()) this.close(); });
     window.addEventListener('questledgerchange',()=>{ this.render(); this.showUpdate(); });
+    window.addEventListener('beforeunload',()=>this.captureLiveView());
+    window.addEventListener('caravanscreenchange',()=>this.syncAvailability(true));
     const observer=new MutationObserver(records=>{
       if(records.every(record=>this.root.contains(record.target))) return;
       this.scheduleRender();
     });
     observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','hidden','aria-hidden']});
     this.render();
+    this.restoreLiveView();
   },
   scheduleRender(){
     if(this.rendering) return; this.rendering=true;
-    requestAnimationFrame(()=>{ this.rendering=false; this.render(); });
+    requestAnimationFrame(()=>{ this.rendering=false; this.render(); this.restoreLiveView(); });
   },
   isOpen(){ return this.root&&this.root.querySelector('#quest-ledger').getAttribute('aria-hidden')==='false'; },
   setDock(id){
@@ -225,10 +255,11 @@ const QuestLedgerUI={
       else button.removeAttribute('aria-current');
     });
   },
-  open(trigger){
-    if(!S) return;
+  open(trigger,tab){
+    if(!this.isAvailable()) return;
     this.returnFocus=trigger||document.activeElement;
-    if(this.pendingUpdateKind) this.tab=this.pendingUpdateKind==='main'?'main':'side';
+    if(['main','side','completed'].includes(tab)) this.tab=tab;
+    else if(this.pendingUpdateKind) this.tab=this.pendingUpdateKind==='main'?'main':'side';
     this.clearUpdateNotice();
     G.clearQuestLedgerUpdates();
     G.save();
@@ -241,7 +272,7 @@ const QuestLedgerUI={
     this.root.querySelector('#quest-ledger').setAttribute('aria-hidden','false');
     document.body.classList.add('quest-ledger-open');
     this.setDock('dk-objectives');
-    requestAnimationFrame(()=>this.root.querySelector('.quest-ledger-back').focus());
+    requestAnimationFrame(()=>{if(this.isAvailable()&&this.isOpen()) this.root.querySelector('.quest-ledger-back').focus();});
   },
   close(restore=true,dock='dk-road'){
     if(!this.root) return;
@@ -265,16 +296,25 @@ const QuestLedgerUI={
     const style=getComputedStyle(sheet);
     return style.display!=='none'&&style.visibility!=='hidden'&&sheet.getAttribute('aria-hidden')!=='true';
   },
-  syncAvailability(){
+  isAvailable(){
+    return !!S&&!!document.querySelector('#scr-game.on')&&!this.eventIsOpen();
+  },
+  syncAvailability(screenChanged=false){
     if(!this.root) return false;
-    const eventOpen=this.eventIsOpen();
-    if(eventOpen&&this.isOpen()) this.close(false);
-    if(eventOpen){
+    const outsideGame=!S||!document.querySelector('#scr-game.on');
+    const unavailable=outsideGame||this.eventIsOpen(), wasOpen=this.isOpen();
+    if(unavailable&&wasOpen) this.close(false);
+    if(unavailable){
       this.clearUpdateNotice();
     }
-    this.root.hidden=eventOpen;
-    this.root.inert=eventOpen;
-    return eventOpen;
+    if(outsideGame){
+      this.returnFocus=null;
+      // Boot may briefly show title before live Continue; preserve its saved view.
+      if(screenChanged||wasOpen) try{sessionStorage.removeItem(this.liveViewKey);}catch(error){}
+    }
+    this.root.hidden=unavailable;
+    this.root.inert=unavailable;
+    return unavailable;
   },
   marks(row){
     const aside=row.aside;

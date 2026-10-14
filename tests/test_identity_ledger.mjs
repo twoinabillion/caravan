@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const source=fs.readFileSync(new URL('../src/07d-ui-quests.js',import.meta.url),'utf8');
-const context=vm.createContext({document:{readyState:'loading',addEventListener(){}},G:{questActionPlan:id=>({label:'경로 보기',id})}});
+const context=vm.createContext({document:{readyState:'loading',addEventListener(){}},
+ S:{at:'busan',day:1,min:535,flags:{}},D:{nodes:{busan:{name:'부산 감천 부두'}}},
+ G:{questActionPlan:id=>({label:'경로 보기',id})}});
 vm.runInContext(source,context);
 const card=row=>vm.runInContext('QuestLedgerUI.card',context).call(vm.runInContext('QuestLedgerUI',context),row);
 const main={id:'main_namsan',kind:'main',title:'다음 단서',eyebrow:'메인 스토리',phase:'길 위',next:'지도에서 다음 장소를 고른다',why:'부모님의 흔적을 찾는다',expected:'아직 모르는 결과',status:'active',steps:[{label:'읽은 편지',detail:'확인한 발신 번호',state:'done'},{label:'다음 행방',state:'current'},{label:'미공개 재회',detail:'미래의 반전',state:'upcoming'}]};

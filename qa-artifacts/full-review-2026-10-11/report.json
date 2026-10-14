@@ -1,0 +1,492 @@
+{
+  "kind": "broad-existing-test-audit",
+  "complete": false,
+  "results": [
+    {
+      "name": "node-contracts",
+      "kind": "node-contracts",
+      "command": [
+        "node",
+        "--test",
+        "tests/test_camp_action_ownership.cjs",
+        "tests/test_camp_recollection.cjs",
+        "tests/test_cohesion_graph.cjs",
+        "tests/test_cohesion_narrative.cjs",
+        "tests/test_cohesion_places.cjs",
+        "tests/test_cohesion_reader.cjs",
+        "tests/test_compact_style_source.mjs",
+        "tests/test_departure_brief_draft.cjs",
+        "tests/test_departure_brief_runtime.cjs",
+        "tests/test_detailed_road_cues.cjs",
+        "tests/test_dialogue_human_flow.cjs",
+        "tests/test_dialogue_relationships.cjs",
+        "tests/test_embedded_asset_encoding.cjs",
+        "tests/test_embedded_asset_pool.cjs",
+        "tests/test_event_handoff_runtime.cjs",
+        "tests/test_event_materials_draft.cjs",
+        "tests/test_event_materials_game.cjs",
+        "tests/test_event_pages_draft.cjs",
+        "tests/test_finale_reading.cjs",
+        "tests/test_identity_ledger.mjs",
+        "tests/test_image_fit_art.cjs",
+        "tests/test_inline_style_assets.mjs",
+        "tests/test_intro_design_drafts.cjs",
+        "tests/test_journey_calm_runtime.cjs",
+        "tests/test_journey_continuity_runtime.cjs",
+        "tests/test_journey_renderer.cjs",
+        "tests/test_lived_in_home.cjs",
+        "tests/test_mobile_dialogue.cjs",
+        "tests/test_mobile_home.cjs",
+        "tests/test_narrative_context.cjs",
+        "tests/test_notebook_draft.cjs",
+        "tests/test_opening_continuity.cjs",
+        "tests/test_opening_extra_pack_draft.cjs",
+        "tests/test_opening_pack_integration.cjs",
+        "tests/test_opening_wharf_draft.cjs",
+        "tests/test_quest_folder.cjs",
+        "tests/test_quest_journal.cjs",
+        "tests/test_road_city_contract.cjs",
+        "tests/test_road_continuity_runtime.cjs",
+        "tests/test_road_cue_kit.cjs",
+        "tests/test_road_encounter_detail_draft.cjs",
+        "tests/test_road_environment.cjs",
+        "tests/test_road_environment_runtime.cjs",
+        "tests/test_road_seam_plan.cjs",
+        "tests/test_road_whisper_draft.cjs",
+        "tests/test_road_whisper_runtime.cjs",
+        "tests/test_route_panorama.cjs",
+        "tests/test_route_panorama_gate.cjs",
+        "tests/test_route_panorama_runtime.cjs",
+        "tests/test_scenery_hd_all.cjs",
+        "tests/test_scenery_seam_hd.cjs",
+        "tests/test_script_compaction.cjs",
+        "tests/test_settlement_cinematic.cjs",
+        "tests/test_story_pages.cjs",
+        "tests/test_story_resource_focus.cjs",
+        "tests/test_story_scene_review_draft.cjs",
+        "tests/test_studio_context.cjs",
+        "tests/test_trip_destination_picker.cjs",
+        "tests/test_vehicle_upgrades.cjs",
+        "tools/test-audio-lifecycle.cjs",
+        "tools/test-audio-world.cjs",
+        "tools/test-dialogue-register.cjs",
+        "tools/test-first-hour-runner.cjs",
+        "tools/test-intro-prose.cjs",
+        "tools/test-journey-calm-draft.cjs",
+        "tools/test-journey-continuity-draft.cjs",
+        "tools/test-journey-unified-draft.cjs",
+        "tools/test-journey-unified.cjs",
+        "tools/test-live-play-controls.mjs",
+        "tools/test-main-story-flow.cjs",
+        "tools/test-minji-first-journey.cjs",
+        "tools/test-minji-implementation.cjs",
+        "tools/test-narrative-presence.cjs",
+        "tools/test-people-catalog.cjs",
+        "tools/test-pursuit-draft.cjs",
+        "tools/test-pursuit-indicator.cjs",
+        "tools/test-pursuit-status-draft.cjs",
+        "tools/test-quest-margin-draft.cjs",
+        "tools/test-result-quiet-draft.cjs",
+        "tools/test-road-cue-study.cjs",
+        "tools/test-road-person-identity.cjs",
+        "tools/test-scenery-route-draft.cjs",
+        "tools/test-scenery-routes-draft.cjs",
+        "tools/test-scenery-travel-draft.cjs",
+        "tools/test-situated-ui-drafts.cjs",
+        "tools/test-situated-ui-implementation.cjs",
+        "tools/test-studio-play-controls-draft.cjs",
+        "tools/test-title-departure.cjs"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 21.75,
+      "log": "node-contracts.log",
+      "counts": {
+        "tests": 501,
+        "pass": 486,
+        "fail": 15,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "test_arrival_presentation",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_arrival_presentation.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 10.45,
+      "log": "test_arrival_presentation.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_audio_mix",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_audio_mix.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 4.46,
+      "log": "test_audio_mix.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_chat_continuity",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_chat_continuity.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 0.69,
+      "log": "test_chat_continuity.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_city_action_layout",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_city_action_layout.py"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 8.25,
+      "log": "test_city_action_layout.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_combat_rework",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_combat_rework.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 6.24,
+      "log": "test_combat_rework.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_companions_e2e",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_companions_e2e.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 3.18,
+      "log": "test_companions_e2e.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_deadline_pressure",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_deadline_pressure.py"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 3.53,
+      "log": "test_deadline_pressure.log",
+      "counts": {
+        "checkFailureLines": 2
+      }
+    },
+    {
+      "name": "test_determinism",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_determinism.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 3.15,
+      "log": "test_determinism.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_art",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_art.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 0.19,
+      "log": "test_director_art.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_camp",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_camp.py"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 84.01,
+      "log": "test_director_camp.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_campaign_contract",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_campaign_contract.py"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 0.08,
+      "log": "test_director_campaign_contract.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_choice_consequences",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_choice_consequences.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 0.18,
+      "log": "test_director_choice_consequences.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_cities_routes",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_cities_routes.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 0.19,
+      "log": "test_director_cities_routes.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_evidence_review",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_evidence_review.py"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 48.36,
+      "log": "test_director_evidence_review.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_pending",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_pending.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 12.32,
+      "log": "test_director_pending.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_progression",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_progression.py"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 12.56,
+      "log": "test_director_progression.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_director_story_coherence",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_director_story_coherence.py"
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 2.83,
+      "log": "test_director_story_coherence.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    },
+    {
+      "name": "test_eta_consistency",
+      "kind": "isolated-browser-or-source-fixture",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+        "tests/test_eta_consistency.py"
+      ],
+      "status": "failed",
+      "exitCode": 1,
+      "seconds": 0.35,
+      "log": "test_eta_consistency.log",
+      "counts": {
+        "checkFailureLines": 0
+      }
+    }
+  ],
+  "excluded": [
+    {
+      "file": "tests/test_arrival_combat_review.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_bag_discovery.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_choice_discovery.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_choice_visibility.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_companion_profile_moments.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_content_registry.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_director_actions.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_director_camp_ui.py",
+      "reason": "network/preview-specific test; requires explicit origin adaptation"
+    },
+    {
+      "file": "tests/test_director_cohesion.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_director_narrative.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_director_opening.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_director_ui_polish.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_event_presence_and_pacing.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_launch_latest_game.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_primary_nav_supply.py",
+      "reason": "network/preview-specific test; requires explicit origin adaptation"
+    },
+    {
+      "file": "tests/test_pwa_runtime.py",
+      "reason": "network/preview-specific test; requires explicit origin adaptation"
+    },
+    {
+      "file": "tests/test_quality_8_upgrade.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_quest_actions.py",
+      "reason": "network/preview-specific test; requires explicit origin adaptation"
+    },
+    {
+      "file": "tests/test_recruit_decision_ui.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_recruitment_flow_qa.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_route_choice_forecast.py",
+      "reason": "network/preview-specific test; requires explicit origin adaptation"
+    },
+    {
+      "file": "tests/test_seoul_gate_copy.py",
+      "reason": "network/preview-specific test; requires explicit origin adaptation"
+    },
+    {
+      "file": "tests/test_smoke.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_source_health.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_stopped_stage_fit.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_story_source_contract.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    },
+    {
+      "file": "tests/test_travel_destination_card.py",
+      "reason": "capture/file-writing/process test; requires separate output ownership review"
+    }
+  ]
+}

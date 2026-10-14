@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>부산에서 양산까지 · 한 풍경 안에서 v1</title>
+  <link rel="stylesheet" href="busan-yangsan-landscape.css">
+</head>
+<body>
+<main class="landscape-study">
+  <header class="intro">
+    <p class="status">움직임 초안 · 게임 미적용</p>
+    <h1>같은 길을 따라, 양산까지.</h1>
+    <p>풍경을 교체하지 않고, 한 풍경 안을 이동합니다.</p>
+  </header>
+  <fieldset class="positions">
+    <legend>구간 선택</legend>
+    <label><input type="radio" name="position" value="auto" checked><span>자동 60초</span></label>
+    <label><input type="radio" name="position" value="start"><span>출발</span></label>
+    <label><input type="radio" name="position" value="middle"><span>중간</span></label>
+    <label><input type="radio" name="position" value="end"><span>도착 쪽</span></label>
+  </fieldset>
+  <div class="motion-tools"><label class="pause"><input type="checkbox" id="pause"><span>잠시 멈추기</span></label><a href="busan-yangsan-landscape.html">처음부터 재생</a></div>
+  <figure class="journey">
+    <div class="scenery" role="img" aria-label="동일한 청회색 능선 아래 항만 창고, 강변과 외곽 주거지가 한 풍경으로 이어지는 독립 주행 초안. 달구지와 도로는 별도 레이어.">
+      <div class="sky"></div>
+      <img class="terrain animated" src="../../assets/ui/road-studies/busan-yangsan-continuous-v1.webp" alt="">
+      <div class="road"></div>
+      <div class="posts animated"></div>
+      <div class="edge-line"></div>
+      <div class="road-marks animated"></div>
+      <img class="dalguji" src="../../assets/ui/journey-dalguji-base-v1.webp" alt="">
+      <div class="scene-label"><span>부산 → 양산</span><span>풍경·속도 검토용</span></div>
+    </div>
+    <div class="progress" aria-hidden="true"><span class="animated"></span></div>
+    <figcaption>원경은 천천히, 가까운 도로는 빠르게.<br>60초 뒤 정지합니다. 실제 이동 시간·저장과 무관합니다.</figcaption>
+  </figure>
+  <section class="explanation">
+    <h2>바뀌는 건, 동네의 밀도.</h2>
+    <p>창고 사이로 강변이 보이고, 건물과 풀밭이 섞이다 주거지가 늘어납니다. 산의 크기와 빛은 갑자기 바뀌지 않습니다.</p>
+    <p class="reduced-note">기기의 동작 줄이기 설정으로 자동 이동을 멈췄습니다. 위 구간 선택으로 풍경을 비교할 수 있습니다.</p>
+    <details>
+      <summary>기존 세 원본과 비교</summary>
+      <p>현재 코드가 연결하는 원본들입니다. 아래는 원본 비교이며 실제 캔버스의 이음새·속도 재현은 아닙니다.</p>
+      <figure><img src="../../assets/ui/road-environment/busan-v1.webp" alt="기존 부산 항구 원경"><figcaption>부산 정본</figcaption></figure>
+      <figure><img src="../../assets/ui/road-connectors/busan--yangsan-native-v1.webp" alt="기존 독립 강변 연결 풍경"><figcaption>별도 연결 그림</figcaption></figure>
+      <figure><img src="../../assets/ui/road-environment/yangsan-v1.webp" alt="기존 양산 산지와 아파트 원경"><figcaption>양산 정본</figcaption></figure>
+    </details>
+    <details>
+      <summary>현실 지형을 어디까지 반영했나</summary>
+      <p>낙동강과 산지 사이로 시가지가 이어지는 사상·북구의 지형을 참고했습니다. 이 초안은 그 흐름을 압축한 공간·속도 제안입니다. 감천에서 양산까지의 특정 도로, 조망 방향, 개별 건물이나 실제 거리를 그대로 복제하지는 않았습니다.</p>
+      <p><a href="https://www.sasang.go.kr/index.sasang?cpath=&amp;menuCd=DOM_000000104001001000" target="_blank" rel="noreferrer">사상구청 · 위치/지형지세</a><br><a href="https://www.busan.go.kr/living_space/gangdong" target="_blank" rel="noreferrer">부산시 · 강동 생활권 계획</a></p>
+      <p>연속 풍경은 새 생성 후보이며 기존 부산·양산 정본은 보존했습니다. 적용 전에는 정차→출발·도착→정차의 동일 장소 연결, 역방향, 재접속, 실제 날씨·개조 차량과의 합성을 별도로 검수해야 합니다.</p>
+      <p>정본 4장 참조 · builtin imagegen · 2172×724 원본에서 2160×720 배포. 한 화면에 원본 약1080px을 사용하며 수직 늘리기·강제 선명화는 없습니다. 차량은 기존 자산의 크기 고정 예시이며 실제 개조·조우·제동 재현은 아닙니다.</p>
+    </details>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________ test_scene_cast_and_outcome_contract _____________________
+
+    def test_scene_cast_and_outcome_contract():
+        with sync_playwright() as p:
+            browser=p.chromium.launch()
+            page=browser.new_page()
+            page.goto((ROOT/'서울까지400km.html').as_uri())
+            rows=page.evaluate('''() => {
+              G.newGame('onroad','검증','full'); S.party=[]; S.dog=false;
+              const scene=id=>{UI.showEvent([...D.events,...D.seoulStops].find(e=>e.id===id));return document.querySelector('.event-scene-frame').dataset.sceneKey};
+              return {postman:scene('meet_postman'),core:scene('seoul_core'),night:scene('seoul_night'),
+                ridge:['route_ridge_rescue','route_ridge_anchor','route_ridge_extract'].map(scene),
+                ridgeOut:D.events.find(e=>e.id==='route_ridge_extract').choices.flatMap(c=>c.out.map(o=>o.scene)),
+                walker:D.events.find(e=>e.id==='combat_walker_strike').choices.map(c=>c.out.map(o=>o.scene||'combat-walker-watch-v1')),
+                recovery:Object.values(D.mainRecoveryEvents).map(scene)};
+            }''')
+            assert rows['postman']=='event-postman-solo-v2'
+            assert rows['core']=='seoul-core-view-v2'
+            assert rows['night']=='seoul-night-quiet-v2'
+            assert rows['ridge']==['route-ridge-rigging-v2']*3
+            assert rows['ridgeOut']==['route-ridge-safe-v2']*6
+            assert rows['walker']==[
+                ['combat-walker-disabled-v2','combat-walker-watch-v1'],
+                ['combat-walker-disabled-v2','combat-walker-watch-v1'],
+                ['combat-walker-watch-v1','combat-walker-watch-v1'],
+                ['combat-walker-disabled-v2','combat-walker-watch-v1'],
+                ['combat-walker-watch-v1']]
+>           assert all(key in ['parents-diversion-record-v2','parents-linked-records-v2'] for key in rows['recovery'])
+E           assert False
+E            +  where False = all(<generator object test_scene_cast_and_outcome_contract.<locals>.<genexpr> at 0x106c1df20>)
+
+tests/test_director_art.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_director_art.py::test_scene_cast_and_outcome_contract - ass...
+1 failed in 3.05s

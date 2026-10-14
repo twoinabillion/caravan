@@ -19,10 +19,8 @@ test('every control has a local reachable destination; results are hidden before
  assert.doesNotMatch(css,/line-clamp|text-overflow|!important/);
  require('postcss').parse(css);
 });
-test('current event text, choices, outcomes, time and receipt titles are unchanged',()=>{
- const ctx=vm.createContext({console});
- for(const file of require('../tools/content-registry.cjs').STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),ctx,{filename:file});
- const event=JSON.parse(JSON.stringify(vm.runInContext("D.openingDeparture.find(e=>e.id==='opening_failed_appeal')",ctx)));
+test('retained draft text, choices, outcomes, time and receipt titles match its creation snapshot',()=>{
+ const event=require('./fixtures/design-draft-copy.json').opening;
  const text=s=>s.replaceAll('&amp;','&');
  for(const [index,turn]of event.turns.entries())assert.equal(text(html.match(new RegExp('data-turn="'+index+'">([^<]*)</p>'))[1]),turn.text);
  for(const choice of event.choices){

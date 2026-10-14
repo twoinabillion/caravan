@@ -1,0 +1,9 @@
+  ✅ 같은 식량이 마을마다 다른 값 — 전주 1 vs 수원 4
+  ✅ 매입이 실제로 고철을 준다 — {'jeonjuFood': 1, 'suwonFood': 4, 'sold': True, 'gain': 13, 'partsLeft': 2, 'foodGuard': True, 'marketCount': 7, 'badDemand': []}
+  ✅ 식량 매입엔 이틀치 보호선
+  ✅ 정착지 7곳 전부 시세 등록 — 7
+  ✅ 시장 화면에 시세 표식 — {'dear': True, 'demand': True, 'rumor': True}
+  ✅ 시장 화면에 매입 줄 — {'dear': True, 'demand': True, 'rumor': True}
+  ✅ 이웃 시세 소문 노출 — {'dear': True, 'demand': True, 'rumor': True}
+  ✅ 콘솔 pageerror 없음
+✅ 값의 차이가 동선이 된다

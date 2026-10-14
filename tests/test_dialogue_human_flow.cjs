@@ -15,10 +15,123 @@ function setup(){
 }
 const page=(ctx,id)=>ctx.data.intro.find(p=>p.scene===id);
 const text=p=>p.beats.map(t=>t.text).join('\n');
+test('recruitment offers remain stopped and keep their real reader speakers',()=>{
+  const ctx=setup();
+  for(const [id,speakers] of [['rq_leo_join',['leo']],['rq_eunsu_join',['eunsu','me']]]){
+    const e=ctx.data.events.find(e=>e.id===id),out=e.choices[0].out[0];
+    assert.equal(out.fx.offerComp,id==='rq_leo_join'?'leo':'eunsu');
+    assert.deepEqual(Object.keys(out.fx),['offerComp']);
+    assert.doesNotMatch(out.text,/출발하자|출발한 뒤|주파수는 끝내 조용/);
+    const turns=ctx.buildStoryTurns(out.text,e,{turnSpeakers:out.turnSpeakers});
+    assert.deepEqual(Array.from(turns.filter(t=>t.kind==='dialogue'),t=>t.who),speakers);
+  }
+  const leo=ctx.data.events.find(e=>e.id==='rq_leo_join');
+  assert.doesNotMatch(leo.text,/기타를 다시 케이스에 넣/);
+});
 function helper(ctx,name){
   const start=ui.indexOf('  function '+name+'('),end=ui.indexOf('\n  function ',start+4);
   assert(start>=0&&end>start,name);vm.runInContext(ui.slice(start,end),ctx);return ctx[name];
 }
+test('Seoul reactions answer the same question before and after reunion and keep records faithful',()=>{
+  const ctx=setup(),event=id=>ctx.data.events.find(e=>e.id===id),mj=event('react_seoul_mj');
+  assert.equal(mj.choices[0].label,'"오빠 생각이 많이 나?"');
+  for(const reunited of [false,true]){
+    const state={flags:{mingyu_reunion:reunited}},out=mj.choices[0].out[0];
+    const prose=out.text(state);
+    assert.match(prose,/^"응\./);
+    if(reunited)assert.doesNotMatch(prose,/찾고 싶은데/);
+    const turns=ctx.buildStoryTurns(prose,mj,{turnSpeakers:out.turnSpeakers});
+    assert(turns.filter(t=>t.kind==='dialogue').every(t=>t.who==='minji'));
+  }
+  assert.match(event('react_seoul_kw').choices[0].out[0].fx.note.body,/사과하기로/);
+  assert.doesNotMatch(event('react_seoul_kw').choices[0].out[0].fx.note.body,/사과받/);
+  assert.match(event('react_seoul_es').choices[0].out[0].fx.note.body,/아직 정하지 못/);
+  for(const [id,roles] of [['react_seoul_kw',['kangwoo','me','kangwoo','kangwoo','kangwoo']],['react_resist_es',['eunsu','eunsu','me','eunsu','eunsu','eunsu','eunsu']]]){
+    const e=event(id),out=e.choices[0].out[0];
+    assert.deepEqual(Array.from(ctx.buildStoryTurns(out.text,e,{turnSpeakers:out.turnSpeakers}).filter(t=>t.kind==='dialogue'),t=>t.who),roles);
+  }
+});
+test('personal payoffs stay at the current stop and preserve consecutive speakers',()=>{
+  const ctx=setup();
+  for(const [id,roles] of [['loc_mingyu',['mingyu','mingyu']],['kw_base',['kangwoo','kangwoo','kangwoo','kangwoo','me','kangwoo']]]){
+    const e=ctx.data.events.find(e=>e.id===id),out=e.choices[0].out[0];
+    const turns=ctx.buildStoryTurns(out.text,e,{turnSpeakers:out.turnSpeakers});
+    assert.deepEqual(Array.from(turns.filter(t=>t.kind==='dialogue'),t=>t.who),roles);
+    assert.equal(out.fx.time,undefined);
+    assert.doesNotMatch(out.text,/해가 기울 때까지|떠나는 길, 백미러|처음으로 부탁/);
+  }
+});
+test('Kangwoo rest and Leo keepsakes preserve their actual speaking roles',()=>{
+  const ctx=setup();
+  const lyrics=ctx.data.events.find(e=>e.id==='talk_leo_07');
+  assert.match(lyrics.choices[0].out[0].text,/얼마든지요/);
+  assert.doesNotMatch(lyrics.choices[1].out[0].text,/그날 성실하게 쉬었다/);
+  for(const [id,expected] of [
+    ['talk_kw_10',['kangwoo']],['talk_leo_03',['leo','leo','leo']],
+    ['talk_leo_08',['leo','leo','leo']],['talk_leo_07',['leo','me','leo']]]){
+    const e=ctx.data.events.find(e=>e.id===id),out=e.choices[0].out[0];
+    assert.deepEqual(Array.from(ctx.buildStoryTurns(out.text,e,{turnSpeakers:out.turnSpeakers})
+      .filter(t=>t.kind==='dialogue'),t=>t.who),expected,id);
+  }
+});
+test('rain recording and worm retelling preserve consecutive Eunsu lines',()=>{
+  const ctx=setup();
+  for(const [id,expected] of [
+    ['pair_leo_es_1',['eunsu','eunsu','leo','eunsu']],
+    ['talk_es_15',['eunsu','me','eunsu','eunsu','eunsu']]]){
+    const e=ctx.data.events.find(e=>e.id===id),out=e.choices[0].out[0];
+    assert.deepEqual(Array.from(ctx.buildStoryTurns(out.text,e,{turnSpeakers:out.turnSpeakers})
+      .filter(t=>t.kind==='dialogue'),t=>t.who),expected,id);
+  }
+});
+test('exercise and sunrise anecdotes retain the real question and answer speakers',()=>{
+  const ctx=setup();
+  const sunrise=ctx.data.events.find(e=>e.id==='talk_es_12');
+  assert.match(sunrise.text,/비행기요\?/);
+  assert.deepEqual(Array.from(ctx.buildStoryTurns(sunrise.text,sunrise,{turnSpeakers:sunrise.turnSpeakers})
+    .filter(t=>t.kind==='dialogue'),t=>t.who),['eunsu','me','eunsu']);
+  for(const [id,roles] of [
+    ['talk_kw_03',['me','kangwoo','me','kangwoo','kangwoo']],
+    ['talk_es_12',['eunsu','eunsu','me','eunsu','eunsu']]]){
+    const e=ctx.data.events.find(e=>e.id===id),out=e.choices[0].out[0];
+    assert.deepEqual(Array.from(ctx.buildStoryTurns(out.text,e,{turnSpeakers:out.turnSpeakers})
+      .filter(t=>t.kind==='dialogue'),t=>t.who),roles,id);
+  }
+});
+test('Seoul recollections do not relocate the crew or assume a first night',()=>{
+  const ctx=setup();
+  const roles={mj:['minji','minji','minji','minji'],kw:['kangwoo','me','kangwoo','kangwoo','kangwoo'],
+    pss:['parkss','parkss','me','parkss','parkss','me','parkss','parkss'],
+    es:['eunsu','eunsu','eunsu','me','eunsu','eunsu'],all:['me']};
+  for(const [suffix,expected] of Object.entries(roles))for(const reunion of [false,true]){
+    const e=ctx.data.events.find(e=>e.id==='react_seoul_'+suffix),out=e.choices[0].out[0];
+    const state={at:'busan',min:720,flags:{seoul_seen:true,mingyu_reunion:reunion}};
+    const read=t=>typeof t==='function'?t(state):t;
+    const text=read(out.text);
+    assert.doesNotMatch(read(e.text)+text+out.fx.note.body,
+      /처음 본 밤|남산 쪽을 봤다|스카이라인을 보며|그쪽을 봤다|가까이서 보니|불빛이 깜빡|남산 불빛을 봤다|남산이 보이는|서울 불빛/);
+    const turns=ctx.buildStoryTurns(text,e,{turnSpeakers:out.turnSpeakers});
+    const actual=Array.from(turns.filter(t=>t.kind==='dialogue'),t=>t.who);
+    assert.deepEqual(actual,suffix==='mj'&&reunion?expected.slice(0,3):expected);
+  }
+  const chat=ctx.data.chats.find(c=>c.need?.comp==='parkss'&&c.need?.comp2==='jaeyi'&&c.need?.flag==='seoul_seen');
+  assert(chat);assert.doesNotMatch(chat.lines.map(l=>l[1]).join(' '),/남산 보여요|저기 붉은 불빛|혼자 보는/);
+});
+test('memorial reactions preserve consecutive speech without narrating a future night',()=>{
+  const ctx=setup();
+  const routes={react_mass_mj:['minji','minji','minji','minji'],
+    react_mass_pss:['parkss','parkss','me','parkss','parkss'],
+    react_mass_kw:['kangwoo','kangwoo','me','kangwoo','kangwoo'],
+    react_mass_leo:['leo'],react_mass_jy:['jaeyi','jaeyi','me','jaeyi','jaeyi','jaeyi'],
+    react_mass_es:['eunsu','eunsu','me','eunsu','eunsu']};
+  for(const [id,roles] of Object.entries(routes))for(const reunion of [false,true]){
+    const e=ctx.data.events.find(e=>e.id===id),out=e.choices[0].out[0];
+    const value=typeof out.text==='function'?out.text({flags:{mingyu_reunion:reunion}}):out.text;
+    assert.doesNotMatch(value,/그날 밤|날이 어두워질 때까지|그날 자루/);
+    assert.deepEqual(Array.from(ctx.buildStoryTurns(value,e,{turnSpeakers:out.turnSpeakers})
+      .filter(t=>t.kind==='dialogue'),t=>t.who),roles,id);
+  }
+});
 test('ordinary life and associative memories reach the present decision through 27 authored chapters',()=>{
   const ctx=setup();
   assert.deepEqual(Array.from(ctx.data.intro,p=>p.scene),[
@@ -48,7 +161,7 @@ test('the solitary morning acts between thoughts instead of speaking a self-intr
   assert.equal(p.beats.filter(t=>t.kind==='thought').length,3);
   assert.match(text(p),/컵 두 개.*하나는 다시.*돌아가신 뒤.*물통.*장부/s);
   assert.match(text(page(ctx,'intro-busan-workday-v1')),/열두 밀리.*작업복 주머니.*할아버지/s);
-  assert.match(text(page(ctx,'intro-socket-memory-v1')),/공구를 찾아 건넸다.*열셋.*마지막으로.*십 분.*오 분/s);
+  assert.match(text(page(ctx,'intro-socket-memory-v1')),/공구를 찾아 건넸다.*열셋.*마지막으로.*10분.*5분/s);
   assert.match(text(page(ctx,'intro-workday-return-v1')),/안에 있어요.*부르는 소리.*입고 있는 옷 주머니.*오늘 안에는/s);
 });
 test('a frightened child keeps hold of the paper; administrative penalties belong to narration',()=>{
@@ -144,7 +257,7 @@ test('seven delivered cinematic stills retain masters, canonical references and 
 });
 test('real intro advance reaches the next scene and existing game entry exactly once without intermediate gameplay writes',()=>{
   const ctx=setup(),original=JSON.stringify(ctx.S),entries=[],seen=[];
-  Object.assign(ctx,{introIdx:0,introTurnIdx:0,introRestart:false,pendingMode:'onroad',
+  Object.assign(ctx,{screen:'intro',introIdx:0,introTurnIdx:0,introRestart:false,pendingMode:'onroad',
     pendingName:'검수 이름',pendingProfile:'keeper',pendingPack:'fuel',clearIntroAuto(){},
     renderIntro(newPage){seen.push([ctx.introIdx,ctx.introTurnIdx,newPage]);},
     AMBI:{setLoop(){}},localStorage:{setItem(){}},enterGame(){entries.push('game')}});
@@ -157,6 +270,7 @@ test('real intro advance reaches the next scene and existing game entry exactly 
   }
   assert.equal(ctx.introIdx,ctx.data.intro.length);assert.equal(ctx.introTurnIdx,0);
   assert.equal(entries.length,2);assert.equal(entries[1],'game');
+  advance();advance();assert.equal(entries.length,2,'late advances cannot restart the journey');
   assert.deepEqual(entries[0],['onroad','검수 이름','full','keeper','fuel']);
   assert.equal(seen.filter(row=>row[2]).length,ctx.data.intro.length-1);
 });
@@ -260,9 +374,9 @@ test('clock-specific prose matches actual elapsed costs, without a forced dawn o
   const ctx=setup(),events=permanentEvents(ctx.data),event=id=>events.find(e=>e.id===id);
   for(const [id,c,o,minutes,words] of [
     ['comp_sick',1,0,120,'두 시간'],['ev_fog_pass',2,0,120,'두 시간'],
-    ['ev_bridge_creak',0,0,70,'한 시간 십 분'],['ev_lost_child',0,0,80,'한 시간 이십 분'],
-    ['ev_ice_road',0,0,70,'한 시간 십 분'],['ev_ice_road',2,0,120,'두 시간'],
-    ['ev_landslide_block',1,0,120,'두 시간'],['ev_flooded_road',1,0,100,'한 시간 사십 분'],
+    ['ev_bridge_creak',0,0,70,'1시간 10분'],['ev_lost_child',0,0,80,'1시간 20분'],
+    ['ev_ice_road',0,0,70,'1시간 10분'],['ev_ice_road',2,0,120,'두 시간'],
+    ['ev_landslide_block',1,0,120,'두 시간'],['ev_flooded_road',1,0,100,'1시간 40분'],
     ['ev_dust_storm',0,1,90,'한 시간 반'],['ev_snow_road',2,0,120,'두 시간'],
     ['resist_bridge_consequence',0,0,3,'삼 분']]){
     const out=event(id).choices[c].out[o];assert.equal(out.fx.time,minutes,id);
@@ -308,7 +422,7 @@ test('salvage and small conversations do not pre-empt an unseen day; insomnia st
   assert.doesNotMatch(insomnia.text,/약을 쓰면 안 되는|불면엔 약이 없어|한 시간쯤/);
   assert.match(insomnia.text,/나도 그땐.*몰랐어.*컵도 기울었다/s);
   const chase=event('ev_stealth_dog').choices[2].out[0];
-  assert.equal(chase.fx.time,30);assert.match(chase.text,/삼십 분 뒤/);
+  assert.equal(chase.fx.time,30);assert.match(chase.text,/30분 뒤/);
   assert.doesNotMatch(chase.text,/밤새.*꿈/);
 });
 test('driving instruction and noise collection use actual people, consecutive speakers, and completed actions',()=>{
@@ -321,7 +435,7 @@ test('driving instruction and noise collection use actual people, consecutive sp
     const turns=ctx.buildStoryTurns(out.text,e,{turnSpeakers:out.turnSpeakers});
     assert.deepEqual(Array.from(turns.filter(t=>t.kind==='dialogue'),t=>t.who),voices);
     assert(turns.every(t=>!t.speakerUncertain));
-    assert.doesNotMatch(out.text,/삼십 분|한 시간|세상에서 제일 시끄러운 침묵/);
+    assert.doesNotMatch(out.text,/30분|한 시간|세상에서 제일 시끄러운 침묵/);
     assert.deepEqual(plain(turns),plain(JSON.parse(JSON.stringify(turns))));
   }
 });

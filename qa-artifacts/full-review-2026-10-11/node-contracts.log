@@ -1,0 +1,2925 @@
+TAP version 13
+# PASS camp navigation ownership and existing road action treatment
+# Subtest: tests/test_camp_action_ownership.cjs
+ok 1 - tests/test_camp_action_ownership.cjs
+  ---
+  duration_ms: 68.139458
+  ...
+# PASS camp recollections: short, grounded, four outcomes, recent facts, first/revisit, legacy history intact.
+# Subtest: tests/test_camp_recollection.cjs
+ok 2 - tests/test_camp_recollection.cjs
+  ---
+  duration_ms: 122.020917
+  ...
+# Graph PASS: old linked hub, drawn edges, recent record, bounded size, actual click target, no mutation.
+# Subtest: tests/test_cohesion_graph.cjs
+ok 3 - tests/test_cohesion_graph.cjs
+  ---
+  duration_ms: 67.820958
+  ...
+# Cohesion narrative PASS: payoff speakers, family beats, evidence inspections, camp context, compact finale, and untouched gameplay contracts.
+# Subtest: tests/test_cohesion_narrative.cjs
+ok 4 - tests/test_cohesion_narrative.cjs
+  ---
+  duration_ms: 132.361708
+  ...
+# PASS seven settlements have different spatial arrangements, not the old four corner booths
+# PASS all 28 visible facilities are selectable and deliver a single arrival at a valid doorstep
+# PASS drawn facility labels follow the same coordinates as hit targets
+# PASS actual residents, recruits and companions remain reachable at their drawn positions
+# PASS completed local work still leaves physical changes in each town
+# PASS a pending conversation cannot reopen after the player leaves the town
+# PASS switching towns releases the previous canvas handlers
+# PASS empty home has the vehicle space and no phantom objects
+# PASS owned props and departed memories stay distinct, escaped and stable across party order
+# PASS object activation reveals only its actual state without mutation; wiring is idempotent and disposable
+# 10 passed, 0 failed
+# Subtest: tests/test_cohesion_places.cjs
+ok 5 - tests/test_cohesion_places.cjs
+  ---
+  duration_ms: 5306.107792
+  ...
+# PASS current slice stays one unit; review excludes unread; chosen action/outcome occur once
+# PASS view restore retains index/review/inspection in receipt; legacy defaults are safe
+# PASS saved outcome resume never applies gameplay twice
+# PASS scene framing stays canonical through dialogue and result
+# PASS key story notices remain unread through save; ordinary outcomes still acknowledge; replay is inert
+# PASS record and inspection mode switches preserve current index and reject stale controls
+# PASS optional authored record is separate, escaping evidence does not consume it
+# PASS ending uses only present cast, earned memory and an unambiguous actual decision
+# PASS journal wikilinks are escaped labels or navigation to existing notes
+# PASS real document choice keydown consumes held digits across multi-turn and single-turn results
+# PASS fresh story reading is manual and reachable auto control persists opt-in, pauses, and resumes
+# PASS HOME activation brings actual detail into view and returns to the same object without mutation
+# PASS two fresh manual advances work immediately without a time-based rejection
+# PASS restored result review refreshes result metadata and closes to the same result unit
+# 14 passed / 0 failed
+# Subtest: tests/test_cohesion_reader.cjs
+ok 6 - tests/test_cohesion_reader.cjs
+  ---
+  duration_ms: 126.674958
+  ...
+# Subtest: only CSS comments and indentation change; quoted content and separators survive
+ok 7 - only CSS comments and indentation change; quoted content and separators survive
+  ---
+  duration_ms: 2.722333
+  ...
+# Subtest: inline comments cannot turn compound selectors into descendants or merge tokens
+ok 8 - inline comments cannot turn compound selectors into descendants or merge tokens
+  ---
+  duration_ms: 0.072084
+  ...
+# Subtest: escaped quote and multiline literal are preserved
+ok 9 - escaped quote and multiline literal are preserved
+  ---
+  duration_ms: 0.057542
+  ...
+# Subtest: legacy scene alias resolves to the exact original placeholder
+ok 10 - legacy scene alias resolves to the exact original placeholder
+  ---
+  duration_ms: 4.013708
+  ...
+# Subtest: departure draft is registered without removing existing prototypes
+ok 11 - departure draft is registered without removing existing prototypes
+  ---
+  duration_ms: 1.316583
+  ...
+# Subtest: prototype cannot execute scripts, navigate the game or read/write saves
+ok 12 - prototype cannot execute scripts, navigate the game or read/write saves
+  ---
+  duration_ms: 2.471333
+  ...
+# Subtest: resources and both navigation endpoints resolve; only the existing illustration is used
+ok 13 - resources and both navigation endpoints resolve; only the existing illustration is used
+  ---
+  duration_ms: 1.5495
+  ...
+# Subtest: one objective and three distinct leads preserve the mission without implying ownership or sequence
+ok 14 - one objective and three distinct leads preserve the mission without implying ownership or sequence
+  ---
+  duration_ms: 3.790334
+  ...
+# Subtest: CSS has one isolated owner, readable large type and no clipping or automatic motion
+ok 15 - CSS has one isolated owner, readable large type and no clipping or automatic motion
+  ---
+  duration_ms: 69.730875
+  ...
+# Subtest: specified text/button colors meet 4.5:1 (static palette check, not visual QA)
+ok 16 - specified text/button colors meet 4.5:1 (static palette check, not visual QA)
+  ---
+  duration_ms: 0.261459
+  ...
+# Subtest: approved copy renders as one goal and three escaped, meaningful leads
+ok 17 - approved copy renders as one goal and three escaped, meaningful leads
+  ---
+  duration_ms: 90.526667
+  ...
+# Subtest: actual event shell omits dialogue controls and scene actions; next story resets the layout gate
+ok 18 - actual event shell omits dialogue controls and scene actions; next story resets the layout gate
+  ---
+  duration_ms: 50.249
+  ...
+# Subtest: real reader dispatcher normalizes old review/inspection saves without auto-reading or selecting
+ok 19 - real reader dispatcher normalizes old review/inspection saves without auto-reading or selecting
+  ---
+  duration_ms: 87.714417
+  ...
+# Subtest: actual road action saves once, closes, restores road controls and never starts travel
+ok 20 - actual road action saves once, closes, restores road controls and never starts travel
+  ---
+  duration_ms: 39.639208
+  ...
+# Subtest: reload between effect and close resumes the same receipt, without a second note or effect
+ok 21 - reload between effect and close resumes the same receipt, without a second note or effect
+  ---
+  duration_ms: 27.876542
+  ...
+# Subtest: fresh unfinished entry shows the brief, completed entry skips it, and Escape cannot discard it
+ok 22 - fresh unfinished entry shows the brief, completed entry skips it, and Escape cannot discard it
+  ---
+  duration_ms: 43.559208
+  ...
+# Subtest: the CSS owner is gated, content-sized and single-scroll with preference-aware type
+ok 23 - the CSS owner is gated, content-sized and single-scroll with preference-aware type
+  ---
+  duration_ms: 354.721583
+  ...
+# PASS 3 authored encounters; 36 approach frames; normal/expanded caravan; aspect, scale, actors, day/night, decode fallback, save round-trip and cleanup
+# Subtest: tests/test_detailed_road_cues.cjs
+ok 10 - tests/test_detailed_road_cues.cjs
+  ---
+  duration_ms: 169.596417
+  ...
+# Subtest: ordinary life and associative memories reach the present decision through 27 authored chapters
+ok 25 - ordinary life and associative memories reach the present decision through 27 authored chapters
+  ---
+  duration_ms: 72.237708
+  ...
+# Subtest: the solitary morning acts between thoughts instead of speaking a self-introduction aloud
+ok 26 - the solitary morning acts between thoughts instead of speaking a self-introduction aloud
+  ---
+  duration_ms: 35.258125
+  ...
+# Subtest: a frightened child keeps hold of the paper; administrative penalties belong to narration
+ok 27 - a frightened child keeps hold of the paper; administrative penalties belong to narration
+  ---
+  duration_ms: 33.334791
+  ...
+# Subtest: parent jobs, human verification, missing pages and the reason for departure survive the new rhythm
+ok 28 - parent jobs, human verification, missing pages and the reason for departure survive the new rhythm
+  ---
+  duration_ms: 26.8625
+  ...
+# Subtest: all rewritten one-to-one lines retain confirmed voices through the actual reader and receipt serialization
+ok 29 - all rewritten one-to-one lines retain confirmed voices through the actual reader and receipt serialization
+  ---
+  duration_ms: 29.186333
+  ...
+# Subtest: the actual intro renderer cuts at authored beats and restores the right still on re-render
+ok 30 - the actual intro renderer cuts at authored beats and restores the right still on re-render
+  ---
+  duration_ms: 35.649166
+  ...
+# Subtest: seven delivered cinematic stills retain masters, canonical references and truthful review status
+ok 31 - seven delivered cinematic stills retain masters, canonical references and truthful review status
+  ---
+  duration_ms: 409.317458
+  ...
+# Subtest: real intro advance reaches the next scene and existing game entry exactly once without intermediate gameplay writes
+ok 32 - real intro advance reaches the next scene and existing game entry exactly once without intermediate gameplay writes
+  ---
+  duration_ms: 36.836541
+  ...
+# Subtest: present-day errands close after the memory, without moving facts onto the transfer paper
+ok 33 - present-day errands close after the memory, without moving facts onto the transfer paper
+  ---
+  duration_ms: 49.909459
+  ...
+# Subtest: the watched passage never moves the verification key onto the roof or extracts it through either exit
+ok 34 - the watched passage never moves the verification key onto the roof or extracts it through either exit
+  ---
+  duration_ms: 36.341833
+  ...
+# Subtest: new reunion and ordinary lines resolve confirmed voices in every supported state without mutation
+ok 35 - new reunion and ordinary lines resolve confirmed voices in every supported state without mutation
+  ---
+  duration_ms: 61.98325
+  ...
+# Subtest: paid dialogue and reader position remain frozen after reunion, refresh, and an attempted different choice
+ok 36 - paid dialogue and reader position remain frozen after reunion, refresh, and an attempted different choice
+  ---
+  duration_ms: 38.479416
+  ...
+# Subtest: the collective reply works at the minimum party size, not a fixed fourth passenger
+ok 37 - the collective reply works at the minimum party size, not a fixed fourth passenger
+  ---
+  duration_ms: 31.767416
+  ...
+# Subtest: clock-specific prose matches actual elapsed costs, without a forced dawn or cured passenger
+ok 38 - clock-specific prose matches actual elapsed costs, without a forced dawn or cured passenger
+  ---
+  duration_ms: 43.58625
+  ...
+# Subtest: ordinary reactions finish in the present, and the real parser retains consecutive people and written speech
+ok 39 - ordinary reactions finish in the present, and the real parser retains consecutive people and written speech
+  ---
+  duration_ms: 46.639709
+  ...
+# Subtest: salvage and small conversations do not pre-empt an unseen day; insomnia stays a personal memory
+ok 40 - salvage and small conversations do not pre-empt an unseen day; insomnia stays a personal memory
+  ---
+  duration_ms: 24.497625
+  ...
+# Subtest: driving instruction and noise collection use actual people, consecutive speakers, and completed actions
+ok 41 - driving instruction and noise collection use actual people, consecutive speakers, and completed actions
+  ---
+  duration_ms: 33.389125
+  ...
+# Subtest: comforting Kangwoo remembers his story without inventing a base visit
+ok 42 - comforting Kangwoo remembers his story without inventing a base visit
+  ---
+  duration_ms: 25.756334
+  ...
+# Subtest: approved key and cache art have separate consumers; terminal art starts on entry, not at dawn
+ok 43 - approved key and cache art have separate consumers; terminal art starts on entry, not at dawn
+  ---
+  duration_ms: 34.602333
+  ...
+# Subtest: the approved replay still is connected only after the choice, and its review page cannot apply a save
+ok 44 - the approved replay still is connected only after the choice, and its review page cannot apply a save
+  ---
+  duration_ms: 61.464584
+  ...
+# Subtest: 1039 events retain branches, costs, effects and chains; only callsign recall gains a prerequisite
+ok 45 - 1039 events retain branches, costs, effects and chains; only callsign recall gains a prerequisite
+  ---
+  duration_ms: 181.531
+  ...
+# Subtest: onboarding keeps a compact objective, three leads, optional side missions and the same road exit
+ok 46 - onboarding keeps a compact objective, three leads, optional side missions and the same road exit
+  ---
+  duration_ms: 36.891208
+  ...
+# Subtest: brief validation requires a goal, intent, three named leads and optional-mission guidance
+ok 47 - brief validation requires a goal, intent, three named leads and optional-mission guidance
+  ---
+  duration_ms: 36.272334
+  ...
+# Subtest: all 17 NPCs distinguish a first encounter, neutral revisit and actual affinity
+ok 48 - all 17 NPCs distinguish a first encounter, neutral revisit and actual affinity
+  ---
+  duration_ms: 34.108291
+  ...
+# Subtest: actual NPC entry saves the greeting state, cancel is safe, fame applies only once after reload
+ok 49 - actual NPC entry saves the greeting state, cancel is safe, fame applies only once after reload
+  ---
+  duration_ms: 55.223334
+  ...
+# Subtest: expanded chats retain distinct professions, age relationships and repair rather than lecture
+ok 50 - expanded chats retain distinct professions, age relationships and repair rather than lecture
+  ---
+  duration_ms: 72.1465
+  ...
+# Subtest: ungated conversations do not invent earlier job offers, clubs, nicknames or expert incompetence
+ok 51 - ungated conversations do not invent earlier job offers, clubs, nicknames or expert incompetence
+  ---
+  duration_ms: 43.220375
+  ...
+# Subtest: new exchange roles match every quote, including consecutive replies by the same speaker
+ok 52 - new exchange roles match every quote, including consecutive replies by the same speaker
+  ---
+  duration_ms: 96.683208
+  ...
+# Subtest: all camp chapters/branches preserve choice costs and roles; guest Minji keeps her initial register
+ok 53 - all camp chapters/branches preserve choice costs and roles; guest Minji keeps her initial register
+  ---
+  duration_ms: 37.587417
+  ...
+# Subtest: rewritten camp entry, cancel/reopen, one-time effects, reload and next road echo stay intact
+ok 54 - rewritten camp entry, cancel/reopen, one-time effects, reload and next road echo stay intact
+  ---
+  duration_ms: 82.323583
+  ...
+# Subtest: delivery encoding is byte-identical for all tail lengths and native browser decoder
+ok 55 - delivery encoding is byte-identical for all tail lengths and native browser decoder
+  ---
+  duration_ms: 347.497875
+  ...
+# Subtest: identical assets share encoded bytes without changing script values or HTML/CSS
+ok 56 - identical assets share encoded bytes without changing script values or HTML/CSS
+  ---
+  duration_ms: 236.325833
+  ...
+# Subtest: single-use or small literals stay untouched
+ok 57 - single-use or small literals stay untouched
+  ---
+  duration_ms: 0.363167
+  ...
+# Subtest: explicit combat chain swaps in the modal with no timer, road, audio restart or second approach
+ok 58 - explicit combat chain swaps in the modal with no timer, road, audio restart or second approach
+  ---
+  duration_ms: 109.612
+  ...
+# Subtest: persisted transition resumes directly once; an independent encounter still uses approach
+ok 59 - persisted transition resumes directly once; an independent encounter still uses approach
+  ---
+  duration_ms: 41.878042
+  ...
+# Subtest: recruitment continuation preserves effects, consent and queued unrelated stories
+ok 60 - recruitment continuation preserves effects, consent and queued unrelated stories
+  ---
+  duration_ms: 40.295667
+  ...
+# Subtest: opening cannot exit unread, then advances in place and saves its next step
+ok 61 - opening cannot exit unread, then advances in place and saves its next step
+  ---
+  duration_ms: 52.761667
+  ...
+# Subtest: bus repair still spends authored time and parts once, then restores the same receipt and next scene
+ok 62 - bus repair still spends authored time and parts once, then restores the same receipt and next scene
+  ---
+  duration_ms: 56.60775
+  ...
+# Subtest: final/unknown chains exit once and restore the road only after the last scene
+ok 63 - final/unknown chains exit once and restore the road only after the last scene
+  ---
+  duration_ms: 184.652583
+  ...
+# Subtest: shared craft/companion sheets still close with no curEv; camp/local owners keep their exit paths
+ok 64 - shared craft/companion sheets still close with no curEv; camp/local owners keep their exit paths
+  ---
+  duration_ms: 138.723708
+  ...
+# Subtest: isolated material draft is registered and cannot execute gameplay or write saves
+ok 65 - isolated material draft is registered and cannot execute gameplay or write saves
+  ---
+  duration_ms: 2.832334
+  ...
+# Subtest: every control has a local reachable destination; results are hidden before choice
+ok 66 - every control has a local reachable destination; results are hidden before choice
+  ---
+  duration_ms: 29.4355
+  ...
+# Subtest: current event text, choices, outcomes, time and receipt titles are unchanged
+not ok 67 - current event text, choices, outcomes, time and receipt titles are unchanged
+  ---
+  duration_ms: 165.726125
+  location: '/Users/sang/caravan/tests/test_event_materials_draft.cjs:22:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.'
+    - '공구를 하나씩 공구함에 넣는 동안, 버스 안 공기가 조금씩 데워졌다.\n' +
+    -   '\n' +
+    -   '버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    공구를 하나씩 공구함에 넣는 동안, 버스 안 공기가 조금씩 데워졌다.
+    
+    버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.
+  actual: '버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tests/test_event_materials_draft.cjs:27:56)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: transparent generated components have separate UI geometry and canonical provenance
+ok 68 - transparent generated components have separate UI geometry and canonical provenance
+  ---
+  duration_ms: 33.818292
+  ...
+# Subtest: one reader owner stages the entire materials skin, excluding combat and the departure brief
+ok 69 - one reader owner stages the entire materials skin, excluding combat and the departure brief
+  ---
+  duration_ms: 15.905417
+  ...
+# Subtest: AI source keeps its authored terminal name, with the legacy broadcast fallback
+ok 70 - AI source keeps its authored terminal name, with the legacy broadcast fallback
+  ---
+  duration_ms: 3.223333
+  ...
+# Subtest: generated silhouette has no solid rectangular backing, 9-slice fill or competing oval; text and accessibility survive
+ok 71 - generated silhouette has no solid rectangular backing, 9-slice fill or competing oval; text and accessibility survive
+  ---
+  duration_ms: 21.857375
+  ...
+# Subtest: promoted assets preserve alpha and master provenance within the unchanged HTML budget
+ok 72 - promoted assets preserve alpha and master provenance within the unchanged HTML budget
+  ---
+  duration_ms: 303.74975
+  ...
+# Subtest: registered in Studio and isolated from scripts, saves and gameplay build
+ok 73 - registered in Studio and isolated from scripts, saves and gameplay build
+  ---
+  duration_ms: 1.945125
+  ...
+# Subtest: all resources and navigation targets resolve; existing place art and canonical portraits only
+ok 74 - all resources and navigation targets resolve; existing place art and canonical portraits only
+  ---
+  duration_ms: 1.523333
+  ...
+# Subtest: 48px portraits identify speakers without repeated faces or narrowed dialogue
+ok 75 - 48px portraits identify speakers without repeated faces or narrowed dialogue
+  ---
+  duration_ms: 7.08075
+  ...
+# Subtest: two-person sample preserves the real short exchange and following action
+ok 76 - two-person sample preserves the real short exchange and following action
+  ---
+  duration_ms: 0.775042
+  ...
+# Subtest: both size modes and both choices preserve every authored paragraph in sequence
+ok 77 - both size modes and both choices preserve every authored paragraph in sequence
+  ---
+  duration_ms: 1.145083
+  ...
+# Subtest: choice wording is unchanged and outcomes stay out of the decision page
+ok 78 - choice wording is unchanged and outcomes stay out of the decision page
+  ---
+  duration_ms: 0.68675
+  ...
+# Subtest: CSS leaves text intact, makes optional history scrollable and preserves focusable endpoints
+ok 79 - CSS leaves text intact, makes optional history scrollable and preserves focusable endpoints
+  ---
+  duration_ms: 30.896375
+  ...
+# Subtest: specified text/button contrast meets 4.5:1 (palette check, not visual QA)
+ok 80 - specified text/button contrast meets 4.5:1 (palette check, not visual QA)
+  ---
+  duration_ms: 0.281625
+  ...
+# Subtest: conservative text budget leaves art and actions at target sizes (not browser QA)
+ok 81 - conservative text budget leaves art and actions at target sizes (not browser QA)
+  ---
+  duration_ms: 0.986584
+  ...
+# Finale reading PASS: 9 method/cast combinations, parent payoff, untouched choices/effects, original optional records, no state mutation.
+# Subtest: tests/test_finale_reading.cjs
+ok 19 - tests/test_finale_reading.cjs
+  ---
+  duration_ms: 104.864625
+  ...
+# Subtest: main ledger retains completed evidence and its action without revealing future steps or outcomes
+not ok 83 - main ledger retains completed evidence and its action without revealing future steps or outcomes
+  ---
+  duration_ms: 2.352334
+  location: '/Users/sang/caravan/tests/test_identity_ledger.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: 'S is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.card (evalmachine.<anonymous>:309:28)
+    card (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:8:63)
+    TestContext.<anonymous> (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:11:41)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.start (node:internal/test_runner/test:877:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: completed missions show results and have no action or tracking mutation
+not ok 84 - completed missions show results and have no action or tracking mutation
+  ---
+  duration_ms: 0.367875
+  location: '/Users/sang/caravan/tests/test_identity_ledger.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: 'S is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.card (evalmachine.<anonymous>:309:28)
+    card (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:8:63)
+    TestContext.<anonymous> (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:17:13)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: active side missions retain progress and tracking and keep outcomes hidden
+not ok 85 - active side missions retain progress and tracking and keep outcomes hidden
+  ---
+  duration_ms: 0.252334
+  location: '/Users/sang/caravan/tests/test_identity_ledger.mjs:20:1'
+  failureType: 'testCodeFailure'
+  error: 'S is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.entry (evalmachine.<anonymous>:113:15)
+    Object.card (evalmachine.<anonymous>:300:22)
+    card (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:8:63)
+    TestContext.<anonymous> (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:21:13)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: player-facing evidence and custom text are escaped
+not ok 86 - player-facing evidence and custom text are escaped
+  ---
+  duration_ms: 0.394291
+  location: '/Users/sang/caravan/tests/test_identity_ledger.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: 'S is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.card (evalmachine.<anonymous>:309:28)
+    card (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:8:63)
+    TestContext.<anonymous> (file:///Users/sang/caravan/tests/test_identity_ledger.mjs:25:13)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: every registered installation renders its own image instead of a shared group scene
+ok 87 - every registered installation renders its own image instead of a shared group scene
+  ---
+  duration_ms: 91.1515
+  ...
+# Subtest: small fuel tank, large tank, and snorkel show three different physical upgrades
+ok 88 - small fuel tank, large tank, and snorkel show three different physical upgrades
+  ---
+  duration_ms: 25.076916
+  ...
+# Subtest: only an unknown legacy upgrade can fall back to group art
+ok 89 - only an unknown legacy upgrade can fall back to group art
+  ---
+  duration_ms: 55.381834
+  ...
+# Subtest: all portrait destinations have distinct horizontal previews without replacing arrival scene keys
+ok 90 - all portrait destinations have distinct horizontal previews without replacing arrival scene keys
+  ---
+  duration_ms: 23.000542
+  ...
+# Subtest: route thumbnails prefer dedicated preview, then retain node, scenery, and generic fallbacks
+ok 91 - route thumbnails prefer dedicated preview, then retain node, scenery, and generic fallbacks
+  ---
+  duration_ms: 0.397541
+  ...
+# Subtest: builder embeds item WebP, legacy JPEG, and direct destination paths with correct MIME
+ok 92 - builder embeds item WebP, legacy JPEG, and direct destination paths with correct MIME
+  ---
+  duration_ms: 85.445125
+  ...
+# PASS unchanged CSS shorthand, deduplicated image bytes and literal font-face URL
+# Subtest: tests/test_inline_style_assets.mjs
+ok 22 - tests/test_inline_style_assets.mjs
+  ---
+  duration_ms: 53.545
+  ...
+# Subtest: v3 is recommended and earlier drafts are retained
+ok 94 - v3 is recommended and earlier drafts are retained
+  ---
+  duration_ms: 3.007167
+  ...
+# Subtest: both responsive reading paths reconstruct authored text without loss or duplication
+not ok 95 - both responsive reading paths reconstruct authored text without loss or duplication
+  ---
+  duration_ms: 4.305209
+  location: '/Users/sang/caravan/tests/test_intro_design_drafts.cjs:56:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '천리안에 반대하는 목소리는 첫 이송 전부터 있었다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들은 사람이 타는 노선과 사람이 떠나야 하는 명령에는 이름 있는 책임자가 필요하다고 말했다.'
+    - '할아버지는 이송표 밑에서 오래된 기사 한 장을 꺼냈다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들이 천리안에 반대하던 때의 기사였다. 첫 이송이 시작되기도 전이었다. 사람이 타는 노선과 사람을 내보내는 명령을 누가 책임질지, 이름을 밝히라는 요구였다.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '할아버지는 이송표 밑에서 오래된 기사 한 장을 꺼냈다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들이 천리안에 반대하던 때의 기사였다. 첫 이송이 시작되기도 전이었다. 사람이 타는 노선과 사람을 내보내는 명령을 누가 책임질지, 이름을 밝히라는 요구였다.'
+  actual: '천리안에 반대하는 목소리는 첫 이송 전부터 있었다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들은 사람이 타는 노선과 사람이 떠나야 하는 명령에는 이름 있는 책임자가 필요하다고 말했다.'
+  operator: 'strictEqual'
+  stack: |-
+    /Users/sang/caravan/tests/test_intro_design_drafts.cjs:63:36
+    Array.forEach (<anonymous>)
+    TestContext.<anonymous> (/Users/sang/caravan/tests/test_intro_design_drafts.cjs:63:14)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: eight story units expand to twelve only when space or large type needs it
+not ok 96 - eight story units expand to twelve only when space or large type needs it
+  ---
+  duration_ms: 1.554917
+  location: '/Users/sang/caravan/tests/test_intro_design_drafts.cjs:68:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '천리안에 반대하는 목소리는 첫 이송 전부터 있었다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들은 사람이 타는 노선과 사람이 떠나야 하는 명령에는 이름 있는 책임자가 필요하다고 말했다.'
+    - '할아버지는 이송표 밑에서 오래된 기사 한 장을 꺼냈다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들이 천리안에 반대하던 때의 기사였다. 첫 이송이 시작되기도 전이었다. 사람이 타는 노선과 사람을 내보내는 명령을 누가 책임질지, 이름을 밝히라는 요구였다.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '할아버지는 이송표 밑에서 오래된 기사 한 장을 꺼냈다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들이 천리안에 반대하던 때의 기사였다. 첫 이송이 시작되기도 전이었다. 사람이 타는 노선과 사람을 내보내는 명령을 누가 책임질지, 이름을 밝히라는 요구였다.'
+  actual: '천리안에 반대하는 목소리는 첫 이송 전부터 있었다. 버스 기사와 관제사, 장애인 이동권 단체, 연구원들은 사람이 타는 노선과 사람이 떠나야 하는 명령에는 이름 있는 책임자가 필요하다고 말했다.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tests/test_intro_design_drafts.cjs:80:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: every image, stylesheet and navigation target resolves locally
+ok 97 - every image, stylesheet and navigation target resolves locally
+  ---
+  duration_ms: 11.821458
+  ...
+# Subtest: prototypes cannot execute scripts, touch saves, or run gameplay
+ok 98 - prototypes cannot execute scripts, touch saves, or run gameplay
+  ---
+  duration_ms: 0.474833
+  ...
+# Subtest: the text never shrinks or clips; the artwork yields space to content and controls
+ok 99 - the text never shrinks or clips; the artwork yields space to content and controls
+  ---
+  duration_ms: 28.755875
+  ...
+# Subtest: conservative height estimate leaves visible art and all text (not browser or visual QA)
+ok 100 - conservative height estimate leaves visible art and all text (not browser or visual QA)
+  ---
+  duration_ms: 13.299375
+  ...
+# Subtest: new geometry is gated until apply; both modes and map share one 272px owner
+ok 101 - new geometry is gated until apply; both modes and map share one 272px owner
+  ---
+  duration_ms: 13.045042
+  ...
+# Subtest: shared fixed rows exactly fit the shell without shrinking text; legacy loaded layout is separate
+ok 102 - shared fixed rows exactly fit the shell without shrinking text; legacy loaded layout is separate
+  ---
+  duration_ms: 51.039291
+  ...
+# Subtest: tab click and keyboard preserve game state and selected action; reduced motion skips animation
+ok 103 - tab click and keyboard preserve game state and selected action; reduced motion skips animation
+  ---
+  duration_ms: 9.116375
+  ...
+# Subtest: rerender closes native pickers before removing their hosts, without focus theft
+ok 104 - rerender closes native pickers before removing their hosts, without focus theft
+  ---
+  duration_ms: 0.768292
+  ...
+# Subtest: selected destination never changes scenery until real travel; landscape blend remains continuous
+ok 105 - selected destination never changes scenery until real travel; landscape blend remains continuous
+  ---
+  duration_ms: 10.167167
+  ...
+# Subtest: driving uses the shared deck: one distance, short preview, photo only behind a dialog
+ok 106 - driving uses the shared deck: one distance, short preview, photo only behind a dialog
+  ---
+  duration_ms: 1.808042
+  ...
+# Subtest: opening information has no gameplay effects; close, Escape and backdrop restore the trigger
+ok 107 - opening information has no gameplay effects; close, Escape and backdrop restore the trigger
+  ---
+  duration_ms: 2.501875
+  ...
+# Subtest: same-leg refresh restores disclosure and scroll, never reopens at another place or over a pending story
+ok 108 - same-leg refresh restores disclosure and scroll, never reopens at another place or over a pending story
+  ---
+  duration_ms: 1.572041
+  ...
+# Subtest: notice is saved only for its leg and its full text is available without scrolling the deck
+ok 109 - notice is saved only for its leg and its full text is available without scrolling the deck
+  ---
+  duration_ms: 3.401791
+  ...
+# Subtest: urgent conditions remain visible and progress clamps without changing fractional save state
+ok 110 - urgent conditions remain visible and progress clamps without changing fractional save state
+  ---
+  duration_ms: 1.367833
+  ...
+# Subtest: conversation dismisses its dialog synchronously before the existing engine action
+ok 111 - conversation dismisses its dialog synchronously before the existing engine action
+  ---
+  duration_ms: 1.418875
+  ...
+# Subtest: late native close event from a removed dialog cannot erase a new disclosure
+ok 112 - late native close event from a removed dialog cannot erase a new disclosure
+  ---
+  duration_ms: 1.140458
+  ...
+# Subtest: every place gets a short non-reward preview; full landscape is never cover-cropped in detail
+ok 113 - every place gets a short non-reward preview; full landscape is never cover-cropped in detail
+  ---
+  duration_ms: 102.395167
+  ...
+# PASS 20 weather/upgrade/travel combinations; 28 parts × 5 vehicle stages with riders/dog; 58 locations × 4 times; 78 routes × 5 transition points; previews, partial/full decode fallback, finite geometry and state preservation
+# Subtest: tests/test_journey_renderer.cjs
+ok 26 - tests/test_journey_renderer.cjs
+  ---
+  duration_ms: 1572.13825
+  ...
+# PASS earned HOME artwork: empty, six companions, departed memory, furnishing tiers, independent ownership, no mutation.
+# Subtest: tests/test_lived_in_home.cjs
+ok 27 - tests/test_lived_in_home.cjs
+  ---
+  duration_ms: 96.915583
+  ...
+# PASS scene click advances one current speech and never enters zoom
+# PASS holding the scene pauses automatic reading until pointer release or cancellation
+# PASS scene retains pointer ownership outside its bounds and releases on lost capture
+# PASS picture swipe/cancel do not consume a speech; the next fresh tap works
+# PASS held keyboard input cannot skip into the next decision
+# PASS zoom is an explicit control; closing it does not advance
+# PASS review, evidence, and detached event controls cannot advance
+# PASS long speech reveals its lower text before advancing or saving a new index
+# PASS body tap and Enter reveal unread text too; a scroll gesture never advances
+# PASS combat retains its existing tap-to-zoom frame and scrolling behavior
+# PASS reading earlier combat transcript by scrolling never advances on tap or Enter
+# PASS repeated scene setup has one advance control and one zoom control
+# 12 interaction checks passed
+# Subtest: tests/test_mobile_dialogue.cjs
+ok 28 - tests/test_mobile_dialogue.cjs
+  ---
+  duration_ms: 62.860708
+  ...
+# PASS mobile HOME zone changes, stale detail clearing, same-item return, empty zone, no mutation, cleanup
+# Subtest: tests/test_mobile_home.cjs
+ok 29 - tests/test_mobile_home.cjs
+  ---
+  duration_ms: 56.471917
+  ...
+# Subtest: 41 edited encounters retain gates, branches, probabilities, effects and chains
+ok 118 - 41 edited encounters retain gates, branches, probabilities, effects and chains
+  ---
+  duration_ms: 61.7455
+  ...
+# Subtest: mandatory fatigue crises remain solo-safe without gating away the crisis
+ok 119 - mandatory fatigue crises remain solo-safe without gating away the crisis
+  ---
+  duration_ms: 31.890166
+  ...
+# Subtest: ungated scenes no longer invent passengers, shared dialogue or previous choices
+ok 120 - ungated scenes no longer invent passengers, shared dialogue or previous choices
+  ---
+  duration_ms: 30.51825
+  ...
+# Subtest: real NPCs and properly gated companions keep their presence
+ok 121 - real NPCs and properly gated companions keep their presence
+  ---
+  duration_ms: 29.473666
+  ...
+# Subtest: result time and resource descriptions match the unchanged effects
+ok 122 - result time and resource descriptions match the unchanged effects
+  ---
+  duration_ms: 40.0345
+  ...
+# Subtest: new drowsy receipt resumes without replaying time/effects; exit releases the next action
+ok 123 - new drowsy receipt resumes without replaying time/effects; exit releases the next action
+  ---
+  duration_ms: 41.698916
+  ...
+# Subtest: bound notebook is a registered, isolated prototype with preserved alternatives
+ok 124 - bound notebook is a registered, isolated prototype with preserved alternatives
+  ---
+  duration_ms: 1.8335
+  ...
+# Subtest: prototype keeps canonical index labels, factual limits, and accessible native controls
+ok 125 - prototype keeps canonical index labels, factual limits, and accessible native controls
+  ---
+  duration_ms: 0.39425
+  ...
+# Subtest: prototype uses a separate embedded font without enlarging the game font
+ok 126 - prototype uses a separate embedded font without enlarging the game font
+  ---
+  duration_ms: 19.336
+  ...
+# Subtest: scribbles are authored on one page, do not erase guidance, and have readable semantics
+ok 127 - scribbles are authored on one page, do not erase guidance, and have readable semantics
+  ---
+  duration_ms: 0.171125
+  ...
+# Subtest: opening bridges live once in authored narration, never in UI injection
+ok 128 - opening bridges live once in authored narration, never in UI injection
+  ---
+  duration_ms: 2.453791
+  ...
+# Subtest: departure still preserves its two actual choices and original costs
+ok 129 - departure still preserves its two actual choices and original costs
+  ---
+  duration_ms: 0.748
+  ...
+# Subtest: registered isolated draft leaves the liked title unchanged
+ok 130 - registered isolated draft leaves the liked title unchanged
+  ---
+  duration_ms: 13.726959
+  ...
+# Subtest: one large bundle preview switches with the selected pack and ready CTA
+ok 131 - one large bundle preview switches with the selected pack and ready CTA
+  ---
+  duration_ms: 31.891084
+  ...
+# Subtest: proposed totals are base plus exactly one bundle, not existing startProfiles
+ok 132 - proposed totals are base plus exactly one bundle, not existing startProfiles
+  ---
+  duration_ms: 1.19875
+  ...
+# Subtest: three generated bundle plates use canonical refs and scene delivery geometry
+ok 133 - three generated bundle plates use canonical refs and scene delivery geometry
+  ---
+  duration_ms: 70.449334
+  ...
+# Subtest: new bundles use approved base plus exactly one pack for every entry mode
+ok 134 - new bundles use approved base plus exactly one pack for every entry mode
+  ---
+  duration_ms: 72.277791
+  ...
+# Subtest: legacy starts and modified saved supplies survive load without regranting the bundle
+ok 135 - legacy starts and modified saved supplies survive load without regranting the bundle
+  ---
+  duration_ms: 43.379875
+  ...
+# Subtest: radio switching replaces one image and total, keeps focus, and never writes a game save
+ok 136 - radio switching replaces one image and total, keeps focus, and never writes a game save
+  ---
+  duration_ms: 42.496041
+  ...
+# Subtest: preparation remembers input/selection for reload, back and cancel, independently of saves
+ok 137 - preparation remembers input/selection for reload, back and cancel, independently of saves
+  ---
+  duration_ms: 42.693
+  ...
+# Subtest: game gates, offline assets and delivery geometry are explicit
+ok 138 - game gates, offline assets and delivery geometry are explicit
+  ---
+  duration_ms: 444.781084
+  ...
+# Subtest: two-screen draft is registered and isolated from saves and gameplay
+ok 139 - two-screen draft is registered and isolated from saves and gameplay
+  ---
+  duration_ms: 1.24125
+  ...
+# Subtest: all three loadouts match real startProfiles without changing costs
+ok 140 - all three loadouts match real startProfiles without changing costs
+  ---
+  duration_ms: 8.785042
+  ...
+# Subtest: CSS parses, keeps the footer reachable and includes keyboard focus
+ok 141 - CSS parses, keeps the footer reachable and includes keyboard focus
+  ---
+  duration_ms: 36.180208
+  ...
+# Subtest: two canonical-reference concept deliveries satisfy scene geometry and byte budget
+ok 142 - two canonical-reference concept deliveries satisfy scene geometry and byte budget
+  ---
+  duration_ms: 57.835417
+  ...
+# Subtest: main card keeps real action and only known records; no future/reward leak
+ok 143 - main card keeps real action and only known records; no future/reward leak
+  ---
+  duration_ms: 2.631459
+  ...
+# Subtest: side tracking and completed results retain distinct contracts
+ok 144 - side tracking and completed results retain distinct contracts
+  ---
+  duration_ms: 1.875
+  ...
+# Subtest: text/attributes are escaped; duplicate recovery stays omitted
+ok 145 - text/attributes are escaped; duplicate recovery stays omitted
+  ---
+  duration_ms: 1.146084
+  ...
+# Subtest: unchanged HUD renders preserve cards, disclosure nodes and focus targets
+ok 146 - unchanged HUD renders preserve cards, disclosure nodes and focus targets
+  ---
+  duration_ms: 1.413625
+  ...
+# Subtest: tracked missions still sort first; only main history appears in main tab
+ok 147 - tracked missions still sort first; only main history appears in main tab
+  ---
+  duration_ms: 1.800875
+  ...
+# Subtest: presentation-only changes retain action, save, cancel and unread handlers
+ok 148 - presentation-only changes retain action, save, cancel and unread handlers
+  ---
+  duration_ms: 0.147333
+  ...
+# Subtest: one bound paper-scroll owner, handwritten records and separate operational type
+ok 149 - one bound paper-scroll owner, handwritten records and separate operational type
+  ---
+  duration_ms: 11.54425
+  ...
+# Subtest: main action is reachable outside the paper, without duplicate buttons
+ok 150 - main action is reachable outside the paper, without duplicate buttons
+  ---
+  duration_ms: 1.02525
+  ...
+# Subtest: current parents-work prose, separate real cost/target and spoiler exclusion
+ok 151 - current parents-work prose, separate real cost/target and spoiler exclusion
+  ---
+  duration_ms: 3.821375
+  ...
+# Subtest: all main stages use authored notes, known records only and partial reunion
+ok 152 - all main stages use authored notes, known records only and partial reunion
+  ---
+  duration_ms: 1.169583
+  ...
+# Subtest: legacy history never promotes old expected outcomes into facts
+ok 153 - legacy history never promotes old expected outcomes into facts
+  ---
+  duration_ms: 1.616792
+  ...
+# Subtest: six companion task/road/night/ready/perk/completed states keep real next action
+ok 154 - six companion task/road/night/ready/perk/completed states keep real next action
+  ---
+  duration_ms: 2.652791
+  ...
+# Subtest: scribbles are authored and state-aware, not repeated on every record
+ok 155 - scribbles are authored and state-aware, not repeated on every record
+  ---
+  duration_ms: 1.973292
+  ...
+# Subtest: sparse companion milestones do not disclose the wrong witnessed record
+ok 156 - sparse companion milestones do not disclose the wrong witnessed record
+  ---
+  duration_ms: 1.3125
+  ...
+# Subtest: delivery, express, letter, procurement, overdue and follow-up retain quantities and destinations
+ok 157 - delivery, express, letter, procurement, overdue and follow-up retain quantities and destinations
+  ---
+  duration_ms: 1.165833
+  ...
+# Subtest: every main retrospective needs its own confirmed evidence, including legacy histories
+ok 158 - every main retrospective needs its own confirmed evidence, including legacy histories
+  ---
+  duration_ms: 2.855875
+  ...
+# Subtest: six completed companion summaries use the right witnessed story without mutating it
+ok 159 - six completed companion summaries use the right witnessed story without mutating it
+  ---
+  duration_ms: 1.202459
+  ...
+# Subtest: local completion wording uses saved type, never guesses from titles or adds punctuality
+ok 160 - local completion wording uses saved type, never guesses from titles or adds punctuality
+  ---
+  duration_ms: 1.992875
+  ...
+# Subtest: quantity, arrival and overdue notes follow actual state rather than arbitrary voice variants
+ok 161 - quantity, arrival and overdue notes follow actual state rather than arbitrary voice variants
+  ---
+  duration_ms: 1.371875
+  ...
+# Subtest: journal rendering leaves canonical snapshots and save/notification comparison intact
+ok 162 - journal rendering leaves canonical snapshots and save/notification comparison intact
+  ---
+  duration_ms: 3.798917
+  ...
+# Subtest: all58 place owners and all78 route endpoints match the saved source/hash contract
+ok 163 - all58 place owners and all78 route endpoints match the saved source/hash contract
+  ---
+  duration_ms: 23.258333
+  ...
+# Subtest: every incoming arrival equals every outgoing departure at every place, including reverse and reload
+ok 164 - every incoming arrival equals every outgoing departure at every place, including reverse and reload
+  ---
+  duration_ms: 477.756875
+  ...
+# Subtest: all routes and all places appear in an isolated script-free registered Studio draft
+ok 165 - all routes and all places appear in an isolated script-free registered Studio draft
+  ---
+  duration_ms: 228.318
+  ...
+# Subtest: all 78 graph edges / 156 directions share immutable canonical endpoints and distance
+ok 166 - all 78 graph edges / 156 directions share immutable canonical endpoints and distance
+  ---
+  duration_ms: 8.775334
+  ...
+# Subtest: protected 64px banks preserve source RGBA; native center retains original texture y
+ok 167 - protected 64px banks preserve source RGBA; native center retains original texture y
+  ---
+  duration_ms: 605.923167
+  ...
+# Subtest: offline/error join has no midpoint palette switch, no transparent ground or vertical texture warp
+ok 168 - offline/error join has no midpoint palette switch, no transparent ground or vertical texture warp
+  ---
+  duration_ms: 442.619541
+  ...
+# Subtest: HTTP connector decode is awaited; error/timeout fallback is latched without a later terrain pop
+ok 169 - HTTP connector decode is awaited; error/timeout fallback is latched without a later terrain pop
+  ---
+  duration_ms: 1416.220459
+  ...
+# Subtest: worker performs pixel composition off the draw path; ready source is installed exactly once
+ok 170 - worker performs pixel composition off the draw path; ready source is installed exactly once
+  ---
+  duration_ms: 530.05975
+  ...
+# Subtest: cache is bounded across all routes/stops; missing cities are not drawn from an unrelated prior route
+ok 171 - cache is bounded across all routes/stops; missing cities are not drawn from an unrelated prior route
+  ---
+  duration_ms: 17515.2165
+  ...
+# Subtest: game builder wires all graph routes, preserves raw acceptance and the 80MB limit
+ok 172 - game builder wires all graph routes, preserves raw acceptance and the 80MB limit
+  ---
+  duration_ms: 6.938209
+  ...
+# Subtest: new named encounters use authored identities, empty piano never gains a performer
+ok 173 - new named encounters use authored identities, empty piano never gains a performer
+  ---
+  duration_ms: 0.776375
+  ...
+# Subtest: coffee and other trucks share fixed width, adult feet on wheel baseline
+ok 174 - coffee and other trucks share fixed width, adult feet on wheel baseline
+  ---
+  duration_ms: 0.116125
+  ...
+# Subtest: authored named encounters retain distinct identities even when classifier picks animal
+ok 175 - authored named encounters retain distinct identities even when classifier picks animal
+  ---
+  duration_ms: 0.066833
+  ...
+# Subtest: empty facilities have no invented staff; family children remain behind the truck
+ok 176 - empty facilities have no invented staff; family children remain behind the truck
+  ---
+  duration_ms: 0.075042
+  ...
+# Subtest: draft is registered, sandbox-compatible and isolated from save state
+ok 177 - draft is registered, sandbox-compatible and isolated from save state
+  ---
+  duration_ms: 0.969792
+  ...
+# Subtest: all image, stylesheet and SVG references resolve with unique IDs
+ok 178 - all image, stylesheet and SVG references resolve with unique IDs
+  ---
+  duration_ms: 0.43
+  ...
+# Subtest: native radio controls switch both full scene and detail together
+ok 179 - native radio controls switch both full scene and detail together
+  ---
+  duration_ms: 0.656125
+  ...
+# Subtest: vehicle stays fixed while independent cue and anonymous adult keep their proportions
+ok 180 - vehicle stays fixed while independent cue and anonymous adult keep their proportions
+  ---
+  duration_ms: 0.248791
+  ...
+# Subtest: generated proposal parts retain masters and genuine transparent delivery assets
+ok 181 - generated proposal parts retain masters and genuine transparent delivery assets
+  ---
+  duration_ms: 417.243917
+  ...
+# PASS environment coverage and renderer ownership regressions
+# Subtest: tests/test_road_environment.cjs
+ok 42 - tests/test_road_environment.cjs
+  ---
+  duration_ms: 129.690834
+  ...
+# PASS 3480 location/time/weather/transition draws; full coverage, bounded cache, decode failure, finite geometry and state preservation
+# Subtest: tests/test_road_environment_runtime.cjs
+ok 43 - tests/test_road_environment_runtime.cjs
+  ---
+  duration_ms: 141.392083
+  ...
+# Subtest: all 312 endpoint joins match city ridges, stay grounded and return to unchanged route terrain
+ok 184 - all 312 endpoint joins match city ridges, stay grounded and return to unchanged route terrain
+  ---
+  duration_ms: 2609.011542
+  ...
+# Subtest: spatial easing has fixed endpoints, finite monotone values and zero endpoint slope
+ok 185 - spatial easing has fixed endpoints, finite monotone values and zero endpoint slope
+  ---
+  duration_ms: 0.208458
+  ...
+# Subtest: native Studio draft is registered and isolated from game execution and saves
+ok 186 - native Studio draft is registered and isolated from game execution and saves
+  ---
+  duration_ms: 2.291834
+  ...
+# Subtest: all local controls and reusable parts resolve, with unique destinations
+ok 187 - all local controls and reusable parts resolve, with unique destinations
+  ---
+  duration_ms: 2.72725
+  ...
+# Subtest: thought uses authored observation without a card title or picture
+ok 188 - thought uses authored observation without a card title or picture
+  ---
+  duration_ms: 8.8805
+  ...
+# Subtest: thought never consumes deck space and fixed controls retain 272px shell
+ok 189 - thought never consumes deck space and fixed controls retain 272px shell
+  ---
+  duration_ms: 0.70475
+  ...
+# Subtest: native occasional, hold, off and event gates work without scripts
+ok 190 - native occasional, hold, off and event gates work without scripts
+  ---
+  duration_ms: 0.914167
+  ...
+# Subtest: plain caption never inserts a card/image, consumes resources, or persists narration
+ok 191 - plain caption never inserts a card/image, consumes resources, or persists narration
+  ---
+  duration_ms: 1.269709
+  ...
+# Subtest: 35s cooldown drops intermediate observations without queueing or extending hold
+ok 192 - 35s cooldown drops intermediate observations without queueing or extending hold
+  ---
+  duration_ms: 0.368125
+  ...
+# Subtest: event, approach, hidden window, preference, urgent warning, speech and tools suppress immediately
+ok 193 - event, approach, hidden window, preference, urgent warning, speech and tools suppress immediately
+  ---
+  duration_ms: 6.923166
+  ...
+# Subtest: insufficient free road / resizing / large text omit caption without changing stage or deck
+ok 194 - insufficient free road / resizing / large text omit caption without changing stage or deck
+  ---
+  duration_ms: 0.288917
+  ...
+# Subtest: menu occasional/off uses device preference, survives reload and leaves game save untouched
+ok 195 - menu occasional/off uses device preference, survives reload and leaves game save untouched
+  ---
+  duration_ms: 1.215292
+  ...
+# Subtest: speech interception only targets driving sys narration, leaving dialogue and road cue unchanged
+ok 196 - speech interception only targets driving sys narration, leaving dialogue and road cue unchanged
+  ---
+  duration_ms: 155.088958
+  ...
+# PASS 78 corridors /156 directions: continuous distance camera, reverse, pause/reload equivalence, arrival hold, responsive geometry. Not visual QA or cross-route handoff approval.
+# Subtest: tests/test_route_panorama.cjs
+ok 47 - tests/test_route_panorama.cjs
+  ---
+  duration_ms: 393.862084
+  ...
+# PASS all-route production gate: no auto-activation, incomplete art/graph and unverified departure rejected
+# Subtest: tests/test_route_panorama_gate.cjs
+ok 48 - tests/test_route_panorama_gate.cjs
+  ---
+  duration_ms: 121.818667
+  ...
+# PASS 9441 continuous-terrain runtime draws: all routes, reverse, clock/weather, bounded decoding, failure retention, finite geometry, save-state immutability. Actual visual QA remains separate.
+# Subtest: tests/test_route_panorama_runtime.cjs
+ok 49 - tests/test_route_panorama_runtime.cjs
+  ---
+  duration_ms: 360.512709
+  ...
+# Subtest: All78actual corridors have native1024px candidates, untouched shared cities and no automatic approvals
+ok 200 - All78actual corridors have native1024px candidates, untouched shared cities and no automatic approvals
+  ---
+  duration_ms: 1656.597458
+  ...
+# Subtest: Uniform native projection covers all travel positions in both directions without strip warping
+ok 201 - Uniform native projection covers all travel positions in both directions without strip warping
+  ---
+  duration_ms: 56.979333
+  ...
+# Subtest: Studio draft is script-free and all78entries have explicit stop/return/join controls
+ok 202 - Studio draft is script-free and all78entries have explicit stop/return/join controls
+  ---
+  duration_ms: 5.535833
+  ...
+# Subtest: Generation receipts are exact and rejected outputs remain separate from acceptance
+ok 203 - Generation receipts are exact and rejected outputs remain separate from acceptance
+  ---
+  duration_ms: 6.742708
+  ...
+# Subtest: HD candidate is registered, isolated and explicitly not an all-route/game approval
+ok 204 - HD candidate is registered, isolated and explicitly not an all-route/game approval
+  ---
+  duration_ms: 1.198167
+  ...
+# Subtest: canonical cities and provenance hashes remain intact; required references were attached
+ok 205 - canonical cities and provenance hashes remain intact; required references were attached
+  ---
+  duration_ms: 5.78875
+  ...
+# Subtest: delivery is high-resolution proportional sRGB alpha, with unfinished ground opacity disclosed
+ok 206 - delivery is high-resolution proportional sRGB alpha, with unfinished ground opacity disclosed
+  ---
+  duration_ms: 23.597542
+  ...
+# Subtest: one-screen terrain projection has no column warping, blur, time dissolve or mirrored city
+ok 207 - one-screen terrain projection has no column warping, blur, time dissolve or mirrored city
+  ---
+  duration_ms: 0.289916
+  ...
+# Subtest: overlap covers every camera position at320/360/480 in both directions, preserving endpoints
+ok 208 - overlap covers every camera position at320/360/480 in both directions, preserving endpoints
+  ---
+  duration_ms: 1.171125
+  ...
+# Subtest: delivery compaction preserves the complete UI syntax tree, names and string values
+ok 209 - delivery compaction preserves the complete UI syntax tree, names and string values
+  ---
+  duration_ms: 532.116042
+  ...
+# Subtest: parser-based formatting retains ASI, regular expressions and literal whitespace
+ok 210 - parser-based formatting retains ASI, regular expressions and literal whitespace
+  ---
+  duration_ms: 1.10825
+  ...
+# Subtest: delivery formatting preserves every other game script syntax tree
+ok 211 - delivery formatting preserves every other game script syntax tree
+  ---
+  duration_ms: 1523.31325
+  ...
+# Subtest: four drawn place labels and hits share one uniform projection at mobile and short sizes
+ok 212 - four drawn place labels and hits share one uniform projection at mobile and short sizes
+  ---
+  duration_ms: 55.181083
+  ...
+# Subtest: actual people approach once, can be cancelled by a place, and cannot reopen after exit
+ok 213 - actual people approach once, can be cancelled by a place, and cannot reopen after exit
+  ---
+  duration_ms: 19.674084
+  ...
+# Subtest: missing art keeps real facility navigation and no fake bodies or town van
+ok 214 - missing art keeps real facility navigation and no fake bodies or town van
+  ---
+  duration_ms: 16.837084
+  ...
+# Subtest: idle painted hub does not redraw at frame rate and resize invalidates it
+ok 215 - idle painted hub does not redraw at frame rate and resize invalidates it
+  ---
+  duration_ms: 21.738458
+  ...
+# Subtest: approved hub gates styling, preserves actual roster/resources and never executes on selection
+ok 216 - approved hub gates styling, preserves actual roster/resources and never executes on selection
+  ---
+  duration_ms: 50.025209
+  ...
+# Subtest: night, other weather/time and other towns retain authored world and eligibility
+ok 217 - night, other weather/time and other towns retain authored world and eligibility
+  ---
+  duration_ms: 19.115
+  ...
+# Subtest: same-place focus survives reopen/reload; cross-place or invalid focus never restores
+ok 218 - same-place focus survives reopen/reload; cross-place or invalid focus never restores
+  ---
+  duration_ms: 25.248
+  ...
+# Subtest: new CSS has a structural gate and no emergency important or pixel border competing with old owner
+ok 219 - new CSS has a structural gate and no emergency important or pixel border competing with old owner
+  ---
+  duration_ms: 1.2955
+  ...
+# Subtest: actual scene renderer follows night/dawn beats across rosters, back and restore
+ok 220 - actual scene renderer follows night/dawn beats across rosters, back and restore
+  ---
+  duration_ms: 428.05825
+  ...
+# Subtest: authored picture beats preserve split-row metadata and cannot move a question across the cut
+ok 221 - authored picture beats preserve split-row metadata and cannot move a question across the cut
+  ---
+  duration_ms: 0.568917
+  ...
+# Subtest: every character, space, emoji, literal entity and approved span survives small pages
+ok 222 - every character, space, emoji, literal entity and approved span survives small pages
+  ---
+  duration_ms: 2.246333
+  ...
+# Subtest: all authored static event/result texts conserve their full content through the paginator
+ok 223 - all authored static event/result texts conserve their full content through the paginator
+  ---
+  duration_ms: 358.762333
+  ...
+# Subtest: short question/reply moves together; narrated beats and voiced cuts keep their identities
+ok 224 - short question/reply moves together; narrated beats and voiced cuts keep their identities
+  ---
+  duration_ms: 0.253458
+  ...
+# Subtest: oversized single glyph still advances; empty turns and invalid cursors terminate
+ok 225 - oversized single glyph still advances; empty turns and invalid cursors terminate
+  ---
+  duration_ms: 0.0925
+  ...
+# Subtest: resource receipt rows stay atomic even when one row needs the explicit scroll fallback
+ok 226 - resource receipt rows stay atomic even when one row needs the explicit scroll fallback
+  ---
+  duration_ms: 0.219417
+  ...
+# Subtest: 48px profile row follows the speaker, never narration or a repeated continuous speech
+ok 227 - 48px profile row follows the speaker, never narration or a repeated continuous speech
+  ---
+  duration_ms: 0.791833
+  ...
+# Subtest: partial-turn cursor, history high water and choice/result pages survive receipt save/reload
+ok 228 - partial-turn cursor, history high water and choice/result pages survive receipt save/reload
+  ---
+  duration_ms: 3.818791
+  ...
+# Subtest: real advance handler moves by measured page, pauses in review, and stops at decisions
+ok 229 - real advance handler moves by measured page, pauses in review, and stops at decisions
+  ---
+  duration_ms: 9.150333
+  ...
+# Subtest: style owner is gated from old live shells, choices keep full text, and builder includes pagination first
+ok 230 - style owner is gated from old live shells, choices keep full text, and builder includes pagination first
+  ---
+  duration_ms: 143.657209
+  ...
+# Subtest: real page renderer reaches every choice group, can read back, and returns from records
+ok 231 - real page renderer reaches every choice group, can read back, and returns from records
+  ---
+  duration_ms: 10.157208
+  ...
+# Subtest: real result renderer pages long saved summaries without applying effects or losing the exit
+ok 232 - real result renderer pages long saved summaries without applying effects or losing the exit
+  ---
+  duration_ms: 4.178041
+  ...
+# Subtest: a short reaction keeps its exit on the same page, and back remains usable
+ok 233 - a short reaction keeps its exit on the same page, and back remains usable
+  ---
+  duration_ms: 1.653834
+  ...
+# Subtest: offroad reply uses the same reader; a closed conversation never reopens on a late response
+ok 234 - offroad reply uses the same reader; a closed conversation never reopens on a late response
+  ---
+  duration_ms: 1.347209
+  ...
+# Subtest: all seven resource names reuse their own icon, while unknown resources keep text only
+ok 235 - all seven resource names reuse their own icon, while unknown resources keep text only
+  ---
+  duration_ms: 2.998958
+  ...
+# Subtest: signed actual deltas, units, zero capacity notes and unlimited-mode receipts retain their meaning
+ok 236 - signed actual deltas, units, zero capacity notes and unlimited-mode receipts retain their meaning
+  ---
+  duration_ms: 1.975875
+  ...
+# Subtest: only duration-only metadata is hidden, never deadlines, narrative text or saved receipts
+ok 237 - only duration-only metadata is hidden, never deadlines, narrative text or saved receipts
+  ---
+  duration_ms: 1.904875
+  ...
+# Subtest: choice costs use 24px icons, preserve locks and routes, and leave combat metadata unchanged
+ok 238 - choice costs use 24px icons, preserve locks and routes, and leave combat metadata unchanged
+  ---
+  duration_ms: 2.08625
+  ...
+# Subtest: result and record views agree on resources without losing authored result text or next action
+ok 239 - result and record views agree on resources without losing authored result text or next action
+  ---
+  duration_ms: 1.798459
+  ...
+# Subtest: approved Suwon cache is source-wired while the canonical review draft stays isolated
+ok 240 - approved Suwon cache is source-wired while the canonical review draft stays isolated
+  ---
+  duration_ms: 66.754708
+  ...
+# Subtest: mounted-key draft is registered, static, and cannot mutate a save or apply gameplay
+ok 241 - mounted-key draft is registered, static, and cannot mutate a save or apply gameplay
+  ---
+  duration_ms: 2.952541
+  ...
+# Subtest: mounted-key master and delivery meet the canonical scene contract with honest review limits
+ok 242 - mounted-key master and delivery meet the canonical scene contract with honest review limits
+  ---
+  duration_ms: 24.18675
+  ...
+# Subtest: approved finale images are source-wired, with a registered non-mutating review draft
+ok 243 - approved finale images are source-wired, with a registered non-mutating review draft
+  ---
+  duration_ms: 10.678584
+  ...
+# Subtest: night/dawn/terminal masters, prompts, references and delivery satisfy the scene contract
+ok 244 - night/dawn/terminal masters, prompts, references and delivery satisfy the scene contract
+  ---
+  duration_ms: 27.761541
+  ...
+# Subtest: a screen with absent optional panels still reports the scene and applied revisions
+ok 245 - a screen with absent optional panels still reports the scene and applied revisions
+  ---
+  duration_ms: 23.326
+  ...
+# Subtest: Studio can read the current scene without pausing, resuming or changing gameplay
+ok 246 - Studio can read the current scene without pausing, resuming or changing gameplay
+  ---
+  duration_ms: 0.751708
+  ...
+# PASS destination content/status, open/select/cancel/outside click, Escape isolation, focus restoration, preview-only selection, persistence and explicit departure. Native dialog layout/focus containment still require browser QA.
+# Subtest: tests/test_trip_destination_picker.cjs
+ok 58 - tests/test_trip_destination_picker.cjs
+  ---
+  duration_ms: 65.257083
+  ...
+# PASS 6747 assertions; 28 upgrade chains, blocked/duplicate transactions, roof/rear combinations, real save/load and 640 layouts including legacy excess.
+# Subtest: tests/test_vehicle_upgrades.cjs
+ok 59 - tests/test_vehicle_upgrades.cjs
+  ---
+  duration_ms: 812.871542
+  ...
+# Subtest: voice ducks both buses only after playback, and restores on end/error/stop
+ok 249 - voice ducks both buses only after playback, and restores on end/error/stop
+  ---
+  duration_ms: 9.327583
+  ...
+# Subtest: voice channel mute releases duck and unmute restores it without restarting
+ok 250 - voice channel mute releases duck and unmute restores it without restarting
+  ---
+  duration_ms: 2.380959
+  ...
+# Subtest: late rejection from an interrupted utterance cannot clear the new voice duck
+ok 251 - late rejection from an interrupted utterance cannot clear the new voice duck
+  ---
+  duration_ms: 2.792458
+  ...
+# Subtest: voice media nodes are reused, and hidden-page timers cannot start utterances
+ok 252 - voice media nodes are reused, and hidden-page timers cannot start utterances
+  ---
+  duration_ms: 1.925166
+  ...
+# Subtest: mute stops fading BGM immediately and leaves no timer to revive it
+ok 253 - mute stops fading BGM immediately and leaves no timer to revive it
+  ---
+  duration_ms: 1.01325
+  ...
+# Subtest: all groups share the master headroom; recorded road excludes synthetic motor rumble
+ok 254 - all groups share the master headroom; recorded road excludes synthetic motor rumble
+  ---
+  duration_ms: 1.019875
+  ...
+# Subtest: wet driving uses cab rain plus wipers; forecast alone does not
+ok 255 - wet driving uses cab rain plus wipers; forecast alone does not
+  ---
+  duration_ms: 6.532125
+  ...
+# Subtest: clear/fog/dust retire all wet loops
+ok 256 - clear/fog/dust retire all wet loops
+  ---
+  duration_ms: 3.105042
+  ...
+# Subtest: stop keeps cab rain but not wipers
+ok 257 - stop keeps cab rain but not wipers
+  ---
+  duration_ms: 0.862958
+  ...
+# Subtest: market shelter and garage indoor routes do not leak exterior rain
+ok 258 - market shelter and garage indoor routes do not leak exterior rain
+  ---
+  duration_ms: 0.653042
+  ...
+# Subtest: event context and cancel restore weather without replaying actions
+ok 259 - event context and cancel restore weather without replaying actions
+  ---
+  duration_ms: 0.745417
+  ...
+# Subtest: mute stops old fading layers and shots immediately; unmute restores only current loops
+ok 260 - mute stops old fading layers and shots immediately; unmute restores only current loops
+  ---
+  duration_ms: 0.783833
+  ...
+# Subtest: background suspend and startup interruption resume driving from saved state
+ok 261 - background suspend and startup interruption resume driving from saved state
+  ---
+  duration_ms: 0.718666
+  ...
+# Subtest: one-shot players are pooled, throttled and capped at six
+ok 262 - one-shot players are pooled, throttled and capped at six
+  ---
+  duration_ms: 2.635917
+  ...
+# Subtest: intro rerenders do not repeat foley; present weather never leaks into memory
+ok 263 - intro rerenders do not repeat foley; present weather never leaks into memory
+  ---
+  duration_ms: 1.335459
+  ...
+# Subtest: Free-plan files never load in release/file or remote origins
+ok 264 - Free-plan files never load in release/file or remote origins
+  ---
+  duration_ms: 1.014667
+  ...
+# Subtest: authored cues and all asset files resolve without altering gameplay state
+ok 265 - authored cues and all asset files resolve without altering gameplay state
+  ---
+  duration_ms: 1.417833
+  ...
+# Subtest: ending clears all ambience; thunder is not immediate and obeys mute
+ok 266 - ending clears all ambience; thunder is not immediate and obeys mute
+  ---
+  duration_ms: 0.704583
+  ...
+# Subtest: field result foley follows the completed action, not predicted rewards
+ok 267 - field result foley follows the completed action, not predicted rewards
+  ---
+  duration_ms: 0.587917
+  ...
+# Subtest: within-page memory cuts retire the previous scene and its foley
+ok 268 - within-page memory cuts retire the previous scene and its foley
+  ---
+  duration_ms: 1.016959
+  ...
+# Subtest: sample pools do not immediately repeat; small rate/gain variation stays bounded
+ok 269 - sample pools do not immediately repeat; small rate/gain variation stays bounded
+  ---
+  duration_ms: 1.427958
+  ...
+# Subtest: family throttle does not get bypassed by selecting a different take
+ok 270 - family throttle does not get bypassed by selecting a different take
+  ---
+  duration_ms: 0.99625
+  ...
+# Subtest: title/ending stop foley; leaving and returning never replay a paid action
+ok 271 - title/ending stop foley; leaving and returning never replay a paid action
+  ---
+  duration_ms: 0.93375
+  ...
+# Subtest: modernization preserves all 1039 event gates, costs, effects and chains
+ok 272 - modernization preserves all 1039 event gates, costs, effects and chains
+  ---
+  duration_ms: 22.020792
+  ...
+# Subtest: quote roles retain the pre-edit corpus except the explicitly reviewed continuity fixes
+ok 273 - quote roles retain the pre-edit corpus except the explicitly reviewed continuity fixes
+  ---
+  duration_ms: 10.691584
+  ...
+# Subtest: the register guard catches archaic humans, not dialects, nouns or formal reports
+ok 274 - the register guard catches archaic humans, not dialects, nouns or formal reports
+  ---
+  duration_ms: 0.233041
+  ...
+# Subtest: age does not flatten personality or change companion address contracts
+ok 275 - age does not flatten personality or change companion address contracts
+  ---
+  duration_ms: 0.224292
+  ...
+# Subtest: confirmed-pair banter respects its actual addressee
+ok 276 - confirmed-pair banter respects its actual addressee
+  ---
+  duration_ms: 0.273084
+  ...
+# Subtest: salvage decision ends on the guard’s actual words, not a detached attribution
+ok 277 - salvage decision ends on the guard’s actual words, not a detached attribution
+  ---
+  duration_ms: 0.081584
+  ...
+# Subtest: short road moments obey the same addressee register as the full conversations
+ok 278 - short road moments obey the same addressee register as the full conversations
+  ---
+  duration_ms: 0.205541
+  ...
+# Subtest: ordinary conversation keeps the agreed register without flattening purposeful formal speech
+ok 279 - ordinary conversation keeps the agreed register without flattening purposeful formal speech
+  ---
+  duration_ms: 0.095542
+  ...
+# Subtest: generated request text is modern without losing the concrete offer
+ok 280 - generated request text is modern without losing the concrete offer
+  ---
+  duration_ms: 1.090667
+  ...
+# Subtest: adult companion choices, confirmed player results and daily lines obey the same register
+ok 281 - adult companion choices, confirmed player results and daily lines obey the same register
+  ---
+  duration_ms: 3.408666
+  ...
+# Subtest: the adult gate detects regressions in quoted options, body, results and daily speech
+ok 282 - the adult gate detects regressions in quoted options, body, results and daily speech
+  ---
+  duration_ms: 0.177375
+  ...
+# Subtest: the gate does not turn fragments, reporting, Minji or AI questions into polite rewrites
+ok 283 - the gate does not turn fragments, reporting, Minji or AI questions into polite rewrites
+  ---
+  duration_ms: 0.12275
+  ...
+# Subtest: paired Minji dialogue keeps elder honorifics and joined-player informality
+ok 284 - paired Minji dialogue keeps elder honorifics and joined-player informality
+  ---
+  duration_ms: 0.124042
+  ...
+# Subtest: wrench and unfinished-song replies still respond to the revised preceding line
+ok 285 - wrench and unfinished-song replies still respond to the revised preceding line
+  ---
+  duration_ms: 0.149
+  ...
+# Subtest: the mechanic checks a dangerous cell was removed instead of forgetting what swelling means
+ok 286 - the mechanic checks a dangerous cell was removed instead of forgetting what swelling means
+  ---
+  duration_ms: 0.056
+  ...
+# Subtest: a conditional adult dialogue is checked even when the event can occur without companions
+ok 287 - a conditional adult dialogue is checked even when the event can occur without companions
+  ---
+  duration_ms: 0.0655
+  ...
+# Subtest: adult-directed questions outside confirmed speaker arrays keep their established register
+ok 288 - adult-directed questions outside confirmed speaker arrays keep their established register
+  ---
+  duration_ms: 0.110458
+  ...
+# Subtest: first-hour runner requires explicit isolated finite-resource URL and output
+ok 289 - first-hour runner requires explicit isolated finite-resource URL and output
+  ---
+  duration_ms: 0.516417
+  ...
+# Subtest: camp checks payment persistence, cancellation, exact morning, and next departure
+ok 290 - camp checks payment persistence, cancellation, exact morning, and next departure
+  ---
+  duration_ms: 0.121833
+  ...
+# Subtest: playthrough neither grants progress nor accelerates or skips reading
+ok 291 - playthrough neither grants progress nor accelerates or skips reading
+  ---
+  duration_ms: 0.215292
+  ...
+# Subtest: checks actual next controls, cancel costs, reload, and movement with fuel use
+ok 292 - checks actual next controls, cancel costs, reload, and movement with fuel use
+  ---
+  duration_ms: 0.090625
+  ...
+# Subtest: 21-page prologue retains the approved sequence and real scene/speaker references
+not ok 293 - 21-page prologue retains the approved sequence and real scene/speaker references
+  ---
+  duration_ms: 2.382792
+  location: '/Users/sang/caravan/tools/test-intro-prose.cjs:18:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'intro-busan-room-morning-v1',
+        'intro-busan-water-line-v1',
+        'intro-busan-workday-v1',
+    +   'intro-socket-memory-v1',
+    +   'intro-workday-return-v1',
+        'intro-busan-cold-storage-v1',
+        'intro-busan-generator-night-v1',
+        'intro-busan-evening-call-v1',
+        'intro-current-expulsion',
+    +   'intro-family-packing-v1',
+    +   'intro-passenger-seat',
+        'intro-dock-aid',
+    +   'intro-appeal-denied',
+    -   'intro-passenger-seat',
+        'intro-cheollian-2026',
+    +   'intro-terminal-wait-v1',
+        'intro-first-expulsion',
+    +   'intro-terminal-copy-v1',
+        'intro-resistance-begins',
+    +   'intro-mother-keepsakes',
+        'intro-parents-discovery',
+        'intro-silenced-presentation',
+        'intro-blank-reason',
+    +   'intro-keepsakes-return-v1',
+        'intro-envelope-signal',
+    -   'intro-appeal-denied',
+    -   'intro-mother-keepsakes',
+        'intro-dashboard-module',
+        'intro-workshop-departure',
+        'intro-departure-choice'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'intro-busan-room-morning-v1'
+    1: 'intro-busan-water-line-v1'
+    2: 'intro-busan-workday-v1'
+    3: 'intro-busan-cold-storage-v1'
+    4: 'intro-busan-generator-night-v1'
+    5: 'intro-busan-evening-call-v1'
+    6: 'intro-current-expulsion'
+    7: 'intro-dock-aid'
+    8: 'intro-passenger-seat'
+    9: 'intro-cheollian-2026'
+    10: 'intro-first-expulsion'
+    11: 'intro-resistance-begins'
+    12: 'intro-parents-discovery'
+    13: 'intro-silenced-presentation'
+    14: 'intro-blank-reason'
+    15: 'intro-envelope-signal'
+    16: 'intro-appeal-denied'
+    17: 'intro-mother-keepsakes'
+    18: 'intro-dashboard-module'
+    19: 'intro-workshop-departure'
+    20: 'intro-departure-choice'
+  actual:
+    0: 'intro-busan-room-morning-v1'
+    1: 'intro-busan-water-line-v1'
+    2: 'intro-busan-workday-v1'
+    3: 'intro-socket-memory-v1'
+    4: 'intro-workday-return-v1'
+    5: 'intro-busan-cold-storage-v1'
+    6: 'intro-busan-generator-night-v1'
+    7: 'intro-busan-evening-call-v1'
+    8: 'intro-current-expulsion'
+    9: 'intro-family-packing-v1'
+    10: 'intro-passenger-seat'
+    11: 'intro-dock-aid'
+    12: 'intro-appeal-denied'
+    13: 'intro-cheollian-2026'
+    14: 'intro-terminal-wait-v1'
+    15: 'intro-first-expulsion'
+    16: 'intro-terminal-copy-v1'
+    17: 'intro-resistance-begins'
+    18: 'intro-mother-keepsakes'
+    19: 'intro-parents-discovery'
+    20: 'intro-silenced-presentation'
+    21: 'intro-blank-reason'
+    22: 'intro-keepsakes-return-v1'
+    23: 'intro-envelope-signal'
+    24: 'intro-dashboard-module'
+    25: 'intro-workshop-departure'
+    26: 'intro-departure-choice'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-intro-prose.cjs:28:10)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.start (node:internal/test_runner/test:877:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: lived-in humour and careful family uncertainty survive the prose cut
+not ok 294 - lived-in humour and careful family uncertainty survive the prose cut
+  ---
+  duration_ms: 0.138583
+  location: '/Users/sang/caravan/tools/test-intro-prose.cjs:40:1'
+  failureType: 'testCodeFailure'
+  error: '내 로봇도 넣었어?'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-intro-prose.cjs:46:6)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: family farewell stops on the missing next car; institutional evidence follows separately
+not ok 295 - family farewell stops on the missing next car; institutional evidence follows separately
+  ---
+  duration_ms: 0.249875
+  location: '/Users/sang/caravan/tools/test-intro-prose.cjs:52:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '이 발표가 막혔다는 얘기는 부산에서 들었다. 내가 직접 기억하는 건 그날 밤 엄마가 싸 준 가방이다.'
+    - '엄마는 나를 할아버지 차에 태웠다. 다음 차는 오지 않았다.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '엄마는 나를 할아버지 차에 태웠다. 다음 차는 오지 않았다.'
+  actual: '이 발표가 막혔다는 얘기는 부산에서 들었다. 내가 직접 기억하는 건 그날 밤 엄마가 싸 준 가방이다.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-intro-prose.cjs:53:10)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: the trip still needs evidence, safe module removal and help from six distinct groups
+not ok 296 - the trip still needs evidence, safe module removal and help from six distinct groups
+  ---
+  duration_ms: 0.09675
+  location: '/Users/sang/caravan/tools/test-intro-prose.cjs:59:1'
+  failureType: 'testCodeFailure'
+  error: '집 문도 밥표도'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-intro-prose.cjs:61:73)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: child questions stay concrete and the optional industrial history remains available
+not ok 297 - child questions stay concrete and the optional industrial history remains available
+  ---
+  duration_ms: 0.147416
+  location: '/Users/sang/caravan/tools/test-intro-prose.cjs:72:1'
+  failureType: 'testCodeFailure'
+  error: '당사자도 볼 수'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-intro-prose.cjs:81:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: action-led solo scenes do not require five recap lines to pass
+not ok 298 - action-led solo scenes do not require five recap lines to pass
+  ---
+  duration_ms: 0.079667
+  location: '/Users/sang/caravan/tools/test-intro-prose.cjs:84:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    8 !== 7
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 7
+  actual: 8
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-intro-prose.cjs:86:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: departure ends on goodbye, with the existing engine-start scene and no postscript
+ok 299 - departure ends on goodbye, with the existing engine-start scene and no postscript
+  ---
+  duration_ms: 0.111708
+  ...
+# Subtest: removed interpretive endings do not return to the played beats
+ok 300 - removed interpretive endings do not return to the played beats
+  ---
+  duration_ms: 0.133584
+  ...
+# Subtest: registered draft, no scripts, saves, game imports or automatic apply
+ok 301 - registered draft, no scripts, saves, game imports or automatic apply
+  ---
+  duration_ms: 1.00575
+  ...
+# Subtest: every local asset and fragment resolves, no duplicate targets
+ok 302 - every local asset and fragment resolves, no duplicate targets
+  ---
+  duration_ms: 0.425833
+  ...
+# Subtest: five activities share selection, explicit execution, reopening and preserved cancel routes
+ok 303 - five activities share selection, explicit execution, reopening and preserved cancel routes
+  ---
+  duration_ms: 0.877333
+  ...
+# Subtest: scenery is a single stable assembly; only an explicit scenario checkbox switches backgrounds
+ok 304 - scenery is a single stable assembly; only an explicit scenario checkbox switches backgrounds
+  ---
+  duration_ms: 2.119
+  ...
+# Subtest: conservative fixed-row allocation fits the proposed shell (not browser layout QA)
+ok 305 - conservative fixed-row allocation fits the proposed shell (not browser layout QA)
+  ---
+  duration_ms: 0.608042
+  ...
+# Subtest: primary copy and selected palette meet 4.5:1 contrast (not visual QA)
+ok 306 - primary copy and selected palette meet 4.5:1 contrast (not visual QA)
+  ---
+  duration_ms: 0.469083
+  ...
+# Subtest: registered independent draft, no executable or game/save integration
+not ok 307 - registered independent draft, no executable or game/save integration
+  ---
+  duration_ms: 2.668125
+  location: '/Users/sang/caravan/tools/test-journey-continuity-draft.cjs:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'replay-scene-review-v1'
+    - 'journey-continuity-v1'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'journey-continuity-v1'
+  actual: 'replay-scene-review-v1'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-journey-continuity-draft.cjs:19:10)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.start (node:internal/test_runner/test:877:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: local assets, fragments, accessible references and CSS URLs all resolve
+ok 308 - local assets, fragments, accessible references and CSS URLs all resolve
+  ---
+  duration_ms: 1.626084
+  ...
+# Subtest: default is historical driving; current arrival data and hypothetical departure are distinguished
+ok 309 - default is historical driving; current arrival data and hypothetical departure are distinguished
+  ---
+  duration_ms: 0.983083
+  ...
+# Subtest: preview is on by default, present before departure and during travel, absent after arrival
+ok 310 - preview is on by default, present before departure and during travel, absent after arrival
+  ---
+  duration_ms: 1.549375
+  ...
+# Subtest: a single scenery/vehicle/deck/strip/nav preserves geometry across stages and tabs
+ok 311 - a single scenery/vehicle/deck/strip/nav preserves geometry across stages and tabs
+  ---
+  duration_ms: 2.181167
+  ...
+# Subtest: conservative row budget fits all five panels (static arithmetic, not browser QA)
+ok 312 - conservative row budget fits all five panels (static arithmetic, not browser QA)
+  ---
+  duration_ms: 1.77725
+  ...
+# Subtest: distance has one visible owner and photo is only in an on-demand sheet
+ok 313 - distance has one visible owner and photo is only in an on-demand sheet
+  ---
+  duration_ms: 0.749167
+  ...
+# Subtest: every detail target has a matching sheet, explicit close and backdrop return
+ok 314 - every detail target has a matching sheet, explicit close and backdrop return
+  ---
+  duration_ms: 0.412792
+  ...
+# Subtest: primary text palette meets 4.5:1 contrast (not visual QA)
+ok 315 - primary text palette meets 4.5:1 contrast (not visual QA)
+  ---
+  duration_ms: 8.348958
+  ...
+# Subtest: journey draft remains isolated and registered
+ok 316 - journey draft remains isolated and registered
+  ---
+  duration_ms: 2.262625
+  ...
+# Subtest: native selectors have labels, unique IDs and a single default per group
+ok 317 - native selectors have labels, unique IDs and a single default per group
+  ---
+  duration_ms: 0.213958
+  ...
+# Subtest: same heading and clock used in both scene modes; no second driving time
+ok 318 - same heading and clock used in both scene modes; no second driving time
+  ---
+  duration_ms: 0.142292
+  ...
+# Subtest: each selected action has a reversible disclosure, costs and an explicit next step
+ok 319 - each selected action has a reversible disclosure, costs and an explicit next step
+  ---
+  duration_ms: 0.102625
+  ...
+# Subtest: all referenced assets exist locally and use original delivery files
+ok 320 - all referenced assets exist locally and use original delivery files
+  ---
+  duration_ms: 2.643917
+  ...
+# Subtest: selection previews only; explicit execution uses existing engine actions
+not ok 321 - selection previews only; explicit execution uses existing engine actions
+  ---
+  duration_ms: 2.095625
+  location: '/Users/sang/caravan/tools/test-journey-unified.cjs:28:1'
+  failureType: 'testCodeFailure'
+  error: 'AMBI is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    evalmachine.<anonymous>:88:104
+    run (evalmachine.<anonymous>:81:7)
+    ex.onclick (evalmachine.<anonymous>:88:78)
+    TestContext.<anonymous> (/Users/sang/caravan/tools/test-journey-unified.cjs:33:21)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.start (node:internal/test_runner/test:877:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: camp hull forecast formats fractional capacity without changing recovery or save
+ok 322 - camp hull forecast formats fractional capacity without changing recovery or save
+  ---
+  duration_ms: 4.346541
+  ...
+# Subtest: keyboard browses without selection; explicit choice persists through reload and invalidation
+ok 323 - keyboard browses without selection; explicit choice persists through reload and invalidation
+  ---
+  duration_ms: 0.791625
+  ...
+# Subtest: picker cancel, native Escape isolation and backdrop dismiss without effects
+ok 324 - picker cancel, native Escape isolation and backdrop dismiss without effects
+  ---
+  duration_ms: 0.583875
+  ...
+# Subtest: temporary companion status survives every selection without adding a console row
+ok 325 - temporary companion status survives every selection without adding a console row
+  ---
+  duration_ms: 0.383084
+  ...
+# Subtest: empty actions have no active trigger and remain a readable terminal local state
+ok 326 - empty actions have no active trigger and remain a readable terminal local state
+  ---
+  duration_ms: 0.446166
+  ...
+# Subtest: blocked actions stay inspectable, reasons and next-step information survive
+ok 327 - blocked actions stay inspectable, reasons and next-step information survive
+  ---
+  duration_ms: 0.547708
+  ...
+# Subtest: Escape closes only current disclosure and returns focus; no action on cancellation
+ok 328 - Escape closes only current disclosure and returns focus; no action on cancellation
+  ---
+  duration_ms: 0.327042
+  ...
+# Subtest: all eligible actions remain reachable and roster-only actions stay gated
+ok 329 - all eligible actions remain reachable and roster-only actions stay gated
+  ---
+  duration_ms: 0.926125
+  ...
+# Subtest: unified header owns stopped and driving; normalizer and old card layout excluded
+ok 330 - unified header owns stopped and driving; normalizer and old card layout excluded
+  ---
+  duration_ms: 0.914958
+  ...
+# Subtest: toolbar moves out only after an authenticated parent handshake
+ok 331 - toolbar moves out only after an authenticated parent handshake
+  ---
+  duration_ms: 1.633791
+  ...
+# Subtest: commands require a session; apply rejects duplicate, stale and overlapping commands
+ok 332 - commands require a session; apply rejects duplicate, stale and overlapping commands
+  ---
+  duration_ms: 7.064667
+  ...
+# Subtest: frozen/building state and absent game disable restart and reject commands
+ok 333 - frozen/building state and absent game disable restart and reject commands
+  ---
+  duration_ms: 0.651667
+  ...
+# Subtest: standalone fallback is outside the game, cancellation is safe and restart requires confirmation
+ok 334 - standalone fallback is outside the game, cancellation is safe and restart requires confirmation
+  ---
+  duration_ms: 0.238708
+  ...
+# Subtest: latest-code apply saves/captures once and blocks an overlapping request
+ok 335 - latest-code apply saves/captures once and blocks an overlapping request
+  ---
+  duration_ms: 1.173958
+  ...
+# Subtest: failed status fetch leaves game intact; a frozen scene cannot apply
+ok 336 - failed status fetch leaves game intact; a frozen scene cannot apply
+  ---
+  duration_ms: 0.508375
+  ...
+# Subtest: generated shell JavaScript parses, and fallback controls are siblings before the only game iframe
+ok 337 - generated shell JavaScript parses, and fallback controls are siblings before the only game iframe
+  ---
+  duration_ms: 2.899917
+  ...
+# Subtest: refresh saves the current journey, captures a supported panel, and restores without restarting
+ok 338 - refresh saves the current journey, captures a supported panel, and restores without restarting
+  ---
+  duration_ms: 1.117708
+  ...
+# Subtest: the live event pool waits for the noon window without consuming a missed radio scene
+ok 339 - the live event pool waits for the noon window without consuming a missed radio scene
+  ---
+  duration_ms: 268.025625
+  ...
+# Subtest: noon choices and legacy radio receipts survive Continue outside the entry window with once-only effects
+ok 340 - noon choices and legacy radio receipts survive Continue outside the entry window with once-only effects
+  ---
+  duration_ms: 138.867458
+  ...
+# Subtest: the default core conversation retains the cause, challenge and verification before the decision
+ok 341 - the default core conversation retains the cause, challenge and verification before the decision
+  ---
+  duration_ms: 79.467
+  ...
+# Subtest: all 20 three-contact coalitions keep their own council, without phantom residents or six channels
+ok 342 - all 20 three-contact coalitions keep their own council, without phantom residents or six channels
+  ---
+  duration_ms: 860.28125
+  ...
+# Subtest: northern relay and each companion cost scene retain actual presence and a concrete record cost
+ok 343 - northern relay and each companion cost scene retain actual presence and a concrete record cost
+  ---
+  duration_ms: 151.811333
+  ...
+# Subtest: the watch outcome uses the same healthy willing crew as its gate and the player owns the request
+ok 344 - the watch outcome uses the same healthy willing crew as its gate and the player owns the request
+  ---
+  duration_ms: 165.718583
+  ...
+# Subtest: paid old finale outcomes retain their text and reading voices after Continue
+ok 345 - paid old finale outcomes retain their text and reading voices after Continue
+  ---
+  duration_ms: 66.877791
+  ...
+# Subtest: found seed stock does not invent a library loan; planting requires the owned garden
+ok 346 - found seed stock does not invent a library loan; planting requires the owned garden
+  ---
+  duration_ms: 113.112166
+  ...
+# Subtest: both planting branches return seeds or supplies without claiming an immediate harvest
+ok 347 - both planting branches return seeds or supplies without claiming an immediate harvest
+  ---
+  duration_ms: 120.284542
+  ...
+# Subtest: a cafe drink does not create a carried coffee parcel or a remembered Daeyang debt
+ok 348 - a cafe drink does not create a carried coffee parcel or a remembered Daeyang debt
+  ---
+  duration_ms: 25.603292
+  ...
+# Subtest: coffee gifts and debt repayments keep distinct history, real speakers, and the same next promise
+ok 349 - coffee gifts and debt repayments keep distinct history, real speakers, and the same next promise
+  ---
+  duration_ms: 102.649916
+  ...
+# Subtest: old paid seed and coffee receipts are not rewritten or charged again
+ok 350 - old paid seed and coffee receipts are not rewritten or charged again
+  ---
+  duration_ms: 85.376875
+  ...
+# Subtest: personal keepsakes remember completed revelations, not entry, and keep their actual voices
+ok 351 - personal keepsakes remember completed revelations, not entry, and keep their actual voices
+  ---
+  duration_ms: 235.826375
+  ...
+# Subtest: legacy paid keepsake results keep their text and already-paid resources
+ok 352 - legacy paid keepsake results keep their text and already-paid resources
+  ---
+  duration_ms: 63.953
+  ...
+# Subtest: an unscheduled night remembers Eunsu’s shift without inventing an anniversary or player confession
+ok 353 - an unscheduled night remembers Eunsu’s shift without inventing an anniversary or player confession
+  ---
+  duration_ms: 26.999958
+  ...
+# Subtest: heritage scenes introduce the altar and preserve a generations-old record as reported history
+ok 354 - heritage scenes introduce the altar and preserve a generations-old record as reported history
+  ---
+  duration_ms: 22.927375
+  ...
+# Subtest: road-network contact uses earned meetings, not invented completed favours
+ok 355 - road-network contact uses earned meetings, not invented completed favours
+  ---
+  duration_ms: 26.634541
+  ...
+# Subtest: human check trial connects the station, pump, map and two independent approvals
+ok 356 - human check trial connects the station, pump, map and two independent approvals
+  ---
+  duration_ms: 76.20675
+  ...
+# Subtest: world objections address scene contacts, not unintroduced allies or player debts
+ok 357 - world objections address scene contacts, not unintroduced allies or player debts
+  ---
+  duration_ms: 25.718125
+  ...
+# Subtest: resistance reactions keep consecutive companion voices through the real reader and reload
+ok 358 - resistance reactions keep consecutive companion voices through the real reader and reload
+  ---
+  duration_ms: 310.538708
+  ...
+# Subtest: testimony compares the parents’ actual document, not an invented Busan terminal visit
+ok 359 - testimony compares the parents’ actual document, not an invented Busan terminal visit
+  ---
+  duration_ms: 19.830958
+  ...
+# Subtest: resistance memories preserve Kangwoo’s unit and Jaeyi’s identity
+ok 360 - resistance memories preserve Kangwoo’s unit and Jaeyi’s identity
+  ---
+  duration_ms: 19.587292
+  ...
+# Subtest: seed handoff requires the actual carried bundle and spends it once after the decision
+ok 361 - seed handoff requires the actual carried bundle and spends it once after the decision
+  ---
+  duration_ms: 50.781208
+  ...
+# Subtest: missing or lost seed bundles cannot open an unusable handoff or grant food
+ok 362 - missing or lost seed bundles cannot open an unusable handoff or grant food
+  ---
+  duration_ms: 116.225833
+  ...
+# Subtest: legacy paid seed receipts preserve their prose and never retroactively consume an item
+ok 363 - legacy paid seed receipts preserve their prose and never retroactively consume an item
+  ---
+  duration_ms: 21.088834
+  ...
+# Subtest: artifact notes do not invent unread dates and the protagonist remembers being expelled
+ok 364 - artifact notes do not invent unread dates and the protagonist remembers being expelled
+  ---
+  duration_ms: 22.331791
+  ...
+# Subtest: northern restored video retains the parents’ actual reply roles and receipt cursor
+ok 365 - northern restored video retains the parents’ actual reply roles and receipt cursor
+  ---
+  duration_ms: 26.865417
+  ...
+# Subtest: father’s escape, reunion and final maintenance remain ordered in both routes
+ok 366 - father’s escape, reunion and final maintenance remain ordered in both routes
+  ---
+  duration_ms: 20.462208
+  ...
+# Subtest: northern first-record notes preserve the same eight-digit clue as the text
+ok 367 - northern first-record notes preserve the same eight-digit clue as the text
+  ---
+  duration_ms: 23.287875
+  ...
+# Subtest: shared manifest close-up does not claim a southern visit in northern recovery
+ok 368 - shared manifest close-up does not claim a southern visit in northern recovery
+  ---
+  duration_ms: 20.613917
+  ...
+# Subtest: actual reader assigns family memories and consecutive replies to their authors
+ok 369 - actual reader assigns family memories and consecutive replies to their authors
+  ---
+  duration_ms: 26.753708
+  ...
+# Subtest: backdoor entry follows nightshift across pool, queue, transition and Continue
+ok 370 - backdoor entry follows nightshift across pool, queue, transition and Continue
+  ---
+  duration_ms: 91.142208
+  ...
+# Subtest: an unanswered legacy backdoor redirects, but a paid legacy receipt is preserved
+ok 371 - an unanswered legacy backdoor redirects, but a paid legacy receipt is preserved
+  ---
+  duration_ms: 24.688416
+  ...
+# Subtest: legacy entry without a paid Eunsu result remains recoverable without replaying completed work
+ok 372 - legacy entry without a paid Eunsu result remains recoverable without replaying completed work
+  ---
+  duration_ms: 25.21675
+  ...
+# Subtest: Jaeyi remembers the completed warehouse, not entry or the unrelated law flag
+ok 373 - Jaeyi remembers the completed warehouse, not entry or the unrelated law flag
+  ---
+  duration_ms: 29.385333
+  ...
+# Subtest: camp branch history follows chosen work, survives back/reload and never pays twice
+ok 374 - camp branch history follows chosen work, survives back/reload and never pays twice
+  ---
+  duration_ms: 172.700958
+  ...
+# Subtest: a paid camp result never regenerates its prose from later edits or memory
+ok 375 - a paid camp result never regenerates its prose from later edits or memory
+  ---
+  duration_ms: 24.832708
+  ...
+# Subtest: legacy camp prose remains unchanged and guest practice is not crew branch history
+ok 376 - legacy camp prose remains unchanged and guest practice is not crew branch history
+  ---
+  duration_ms: 21.875041
+  ...
+# Subtest: high exposure crew advice and Park recruitment follow the stable address contract
+ok 377 - high exposure crew advice and Park recruitment follow the stable address contract
+  ---
+  duration_ms: 23.200916
+  ...
+# Subtest: comfort plus an antenna sighting cannot substitute for the family command evidence
+ok 378 - comfort plus an antenna sighting cannot substitute for the family command evidence
+  ---
+  duration_ms: 44.235166
+  ...
+# Subtest: either backdoor answer establishes proof and the core acknowledges it after reload
+ok 379 - either backdoor answer establishes proof and the core acknowledges it after reload
+  ---
+  duration_ms: 179.217292
+  ...
+# Subtest: v8 migration separates unproved cached knowledge from paid backdoor results
+ok 380 - v8 migration separates unproved cached knowledge from paid backdoor results
+  ---
+  duration_ms: 68.627875
+  ...
+# Subtest: Seoul preludes reject mileage-only locations and resume into the actual city opening
+ok 381 - Seoul preludes reject mileage-only locations and resume into the actual city opening
+  ---
+  duration_ms: 105.836833
+  ...
+# Subtest: broadcast wall reply waits three actual days, travel, and Leo, and never repeats
+ok 382 - broadcast wall reply waits three actual days, travel, and Leo, and never repeats
+  ---
+  duration_ms: 46.112167
+  ...
+# Subtest: clear Yangsan and companion addressees retain their real context
+ok 383 - clear Yangsan and companion addressees retain their real context
+  ---
+  duration_ms: 20.395708
+  ...
+# Subtest: all 48 opening choices preserve sequence, once-only costs and the first road action
+ok 384 - all 48 opening choices preserve sequence, once-only costs and the first road action
+  ---
+  duration_ms: 1236.054833
+  ...
+# Subtest: late parent bridges preserve known routes and reunion in all three motives
+ok 385 - late parent bridges preserve known routes and reunion in all three motives
+  ---
+  duration_ms: 130.043834
+  ...
+# Subtest: chosen journey reason survives entry, cancel, payment, reload and an attempted different answer
+ok 386 - chosen journey reason survives entry, cancel, payment, reload and an attempted different answer
+  ---
+  duration_ms: 70.022375
+  ...
+# Subtest: old paid motive receipts stay unchanged and an unknown reason is never inferred
+ok 387 - old paid motive receipts stay unchanged and an unknown reason is never inferred
+  ---
+  duration_ms: 20.150667
+  ...
+# Subtest: both father routes pause after the death and preserve records, provenance and one-time payment
+ok 388 - both father routes pause after the death and preserve records, provenance and one-time payment
+  ---
+  duration_ms: 89.350166
+  ...
+# Subtest: paid parent and local-ending prose and reader cursor remain frozen after the rewrite
+ok 389 - paid parent and local-ending prose and reader cursor remain frozen after the rewrite
+  ---
+  duration_ms: 131.670667
+  ...
+# Subtest: mother contact never precedes father evidence, including queued and saved transitions
+ok 390 - mother contact never precedes father evidence, including queued and saved transitions
+  ---
+  duration_ms: 20.671375
+  ...
+# Subtest: normal regional evidence reaches the same readiness, including both key extraction routes
+ok 391 - normal regional evidence reaches the same readiness, including both key extraction routes
+  ---
+  duration_ms: 124.863416
+  ...
+# Subtest: full/summary departure notes keep Yuna the older sister
+ok 392 - full/summary departure notes keep Yuna the older sister
+  ---
+  duration_ms: 42.485
+  ...
+# Subtest: preparation return preserves completed Seoul work and resumes the unpaid decision
+ok 393 - preparation return preserves completed Seoul work and resumes the unpaid decision
+  ---
+  duration_ms: 42.83325
+  ...
+# Subtest: recovered outcomes use the northern copy, not inherited original-site reading turns
+ok 394 - recovered outcomes use the northern copy, not inherited original-site reading turns
+  ---
+  duration_ms: 23.243458
+  ...
+# Subtest: sleep stays asleep through the uplink reveal, in turns and the optional record
+ok 395 - sleep stays asleep through the uplink reveal, in turns and the optional record
+  ---
+  duration_ms: 19.419208
+  ...
+# Subtest: core confrontation acknowledges the original record; epilogue ends on the local result
+ok 396 - core confrontation acknowledges the original record; epilogue ends on the local result
+  ---
+  duration_ms: 19.554333
+  ...
+# Subtest: reunion/conference share a place; dawn returns explicitly to the core without erasing prior deportations
+ok 397 - reunion/conference share a place; dawn returns explicitly to the core without erasing prior deportations
+  ---
+  duration_ms: 24.295625
+  ...
+# Subtest: solo civilian-evidence route ends on either epilogue choice without inventing a party requirement
+ok 398 - solo civilian-evidence route ends on either epilogue choice without inventing a party requirement
+  ---
+  duration_ms: 109.394333
+  ...
+# Subtest: companion testimony keeps its own provenance through the command ledger, relay and ending
+ok 399 - companion testimony keeps its own provenance through the command ledger, relay and ending
+  ---
+  duration_ms: 64.242
+  ...
+# Subtest: three evidence choice patterns reach all three finales with reloads and earned requirements
+ok 400 - three evidence choice patterns reach all three finales with reloads and earned requirements
+  ---
+  duration_ms: 1205.501125
+  ...
+# Subtest: first journey is a registered, script-free draft separate from gameplay
+ok 401 - first journey is a registered, script-free draft separate from gameplay
+  ---
+  duration_ms: 3.49425
+  ...
+# Subtest: six scenes require explicit consent and a method before showing its consequences
+ok 402 - six scenes require explicit consent and a method before showing its consequences
+  ---
+  duration_ms: 0.7455
+  ...
+# Subtest: draft preserves the three existing task costs and requirements
+ok 403 - draft preserves the three existing task costs and requirements
+  ---
+  duration_ms: 65.258084
+  ...
+# Subtest: family callback remembers the corrected 80km promise without changing its gate or effects
+ok 404 - family callback remembers the corrected 80km promise without changing its gate or effects
+  ---
+  duration_ms: 40.72
+  ...
+# Subtest: corrected callback survives serialization, waits for driving and Minji, and plays only once
+ok 405 - corrected callback survives serialization, waits for driving and Minji, and plays only once
+  ---
+  duration_ms: 32.018583
+  ...
+# Subtest: listening and salvage never imply consent; decline/revisit cannot farm first-meeting loot
+ok 406 - listening and salvage never imply consent; decline/revisit cannot farm first-meeting loot
+  ---
+  duration_ms: 183.792833
+  ...
+# Subtest: three task gates remain real, and guest road consequences apply once across save/join
+ok 407 - three task gates remain real, and guest road consequences apply once across save/join
+  ---
+  duration_ms: 153.450541
+  ...
+# Subtest: mid-leg/legacy guests can get their unused echo on the next departure, never before work
+ok 408 - mid-leg/legacy guests can get their unused echo on the next departure, never before work
+  ---
+  duration_ms: 45.4065
+  ...
+# Subtest: guest camp voice is saved, resolves once, and does not reveal a keepsake or confession
+ok 409 - guest camp voice is saved, resolves once, and does not reveal a keepsake or confession
+  ---
+  duration_ms: 34.389834
+  ...
+# Subtest: skipping conversation and full-seat postponement preserve the next reachable action
+ok 410 - skipping conversation and full-seat postponement preserve the next reachable action
+  ---
+  duration_ms: 36.142708
+  ...
+# Subtest: old pending camp/choice records and quest descriptions stay historical
+ok 411 - old pending camp/choice records and quest descriptions stay historical
+  ---
+  duration_ms: 42.201916
+  ...
+# Subtest: actual presentation receipts keep consent, task effects and frozen prose through reload
+ok 412 - actual presentation receipts keep consent, task effects and frozen prose through reload
+  ---
+  duration_ms: 48.829
+  ...
+# Subtest: real departure owns the guest echo and stops before a second departure can repeat it
+ok 413 - real departure owns the guest echo and stops before a second departure can repeat it
+  ---
+  duration_ms: 42.546791
+  ...
+# Subtest: all 64 rosters × dog present/absent respect authored ambient actors
+ok 414 - all 64 rosters × dog present/absent respect authored ambient actors
+  ---
+  duration_ms: 95.182292
+  ...
+# Subtest: both real meal entry points suppress absent Bori and retain him when present
+ok 415 - both real meal entry points suppress absent Bori and retain him when present
+  ---
+  duration_ms: 24.933625
+  ...
+# Subtest: Bori-only, solo and accompanied scenes resolve to actors actually present
+ok 416 - Bori-only, solo and accompanied scenes resolve to actors actually present
+  ---
+  duration_ms: 36.749916
+  ...
+# Subtest: solo ambient scenes contain no phantom reply or fixed crew count
+ok 417 - solo ambient scenes contain no phantom reply or fixed crew count
+  ---
+  duration_ms: 38.482542
+  ...
+# Subtest: 16 revised encounters preserve all gates, choices, effects, probabilities and chains
+ok 418 - 16 revised encounters preserve all gates, choices, effects, probabilities and chains
+  ---
+  duration_ms: 61.98225
+  ...
+# Subtest: conditional scene text freezes in its receipt through reload, then exits without new effects
+ok 419 - conditional scene text freezes in its receipt through reload, then exits without new effects
+  ---
+  duration_ms: 34.461833
+  ...
+# Subtest: planned references have unique persistent IDs and explicit non-runtime status
+ok 420 - planned references have unique persistent IDs and explicit non-runtime status
+  ---
+  duration_ms: 0.612708
+  ...
+# Subtest: every existing human canonical portrait is included without overwriting it
+ok 421 - every existing human canonical portrait is included without overwriting it
+  ---
+  duration_ms: 83.772542
+  ...
+# Subtest: each visible draft has a unique master, preview, prompt and complete reference provenance
+ok 422 - each visible draft has a unique master, preview, prompt and complete reference provenance
+  ---
+  duration_ms: 651.194875
+  ...
+# Subtest: catalog reports only successful files and preserves incomplete slots
+ok 423 - catalog reports only successful files and preserves incomplete slots
+  ---
+  duration_ms: 0.270708
+  ...
+# Subtest: all local presentation links exist and no script, save, game apply or network action exists
+ok 424 - all local presentation links exist and no script, save, game apply or network action exists
+  ---
+  duration_ms: 4.244958
+  ...
+# Subtest: Studio manifest points at the isolated draft only
+ok 425 - Studio manifest points at the isolated draft only
+  ---
+  duration_ms: 0.705291
+  ...
+# Subtest: risk proposal is registered without replacing other drafts or joining the build
+ok 426 - risk proposal is registered without replacing other drafts or joining the build
+  ---
+  duration_ms: 3.840333
+  ...
+# Subtest: all six risk levels and both modes are native accessible controls
+ok 427 - all six risk levels and both modes are native accessible controls
+  ---
+  duration_ms: 0.313875
+  ...
+# Subtest: reviewed assets resolve, scene is not tinted by danger, and indicator has bounded space
+ok 428 - reviewed assets resolve, scene is not tinted by danger, and indicator has bounded space
+  ---
+  duration_ms: 0.545167
+  ...
+# Subtest: all six levels and invalid inputs use the real pursuit only; no game mutations
+ok 429 - all six levels and invalid inputs use the real pursuit only; no game mutations
+  ---
+  duration_ms: 1.504916
+  ...
+# Subtest: unchanged HUD refreshes preserve focus/disclosure and do not rewrite DOM
+ok 430 - unchanged HUD refreshes preserve focus/disclosure and do not rewrite DOM
+  ---
+  duration_ms: 0.675667
+  ...
+# Subtest: open, toggle, close, outside click and Escape preserve gameplay and next action
+ok 431 - open, toggle, close, outside click and Escape preserve gameplay and next action
+  ---
+  duration_ms: 0.623084
+  ...
+# Subtest: short-stage positioning, resize and overlay/map/screen dismissal
+ok 432 - short-stage positioning, resize and overlay/map/screen dismissal
+  ---
+  duration_ms: 0.475084
+  ...
+# Subtest: one owned CSS block, help outside clipped scenery, no surveillance painting or gameplay rules changed
+ok 433 - one owned CSS block, help outside clipped scenery, no surveillance painting or gameplay rules changed
+  ---
+  duration_ms: 2.339709
+  ...
+# Subtest: risk rise appears once, expires, and does not replay on unchanged HUD, load or decrease
+ok 434 - risk rise appears once, expires, and does not replay on unchanged HUD, load or decrease
+  ---
+  duration_ms: 0.783208
+  ...
+# Subtest: rise cannot obscure open help or interrupt modal/map/hidden state; next action cancels it
+ok 435 - rise cannot obscure open help or interrupt modal/map/hidden state; next action cancels it
+  ---
+  duration_ms: 0.422916
+  ...
+# Subtest: pursuit placement draft is registered, isolated, and preserves prior draft
+ok 436 - pursuit placement draft is registered, isolated, and preserves prior draft
+  ---
+  duration_ms: 1.004583
+  ...
+# Subtest: comparison and all risk levels have native labeled controls
+ok 437 - comparison and all risk levels have native labeled controls
+  ---
+  duration_ms: 0.210625
+  ...
+# Subtest: explanation is reversible, current risk is not an immediate enemy, change notice is one-shot
+ok 438 - explanation is reversible, current risk is not an immediate enemy, change notice is one-shot
+  ---
+  duration_ms: 0.1115
+  ...
+# Subtest: all referenced assets are existing local delivery files
+ok 439 - all referenced assets are existing local delivery files
+  ---
+  duration_ms: 0.231625
+  ...
+# Subtest: new journal marks are registered and isolated from game code and storage
+ok 440 - new journal marks are registered and isolated from game code and storage
+  ---
+  duration_ms: 4.363792
+  ...
+# Subtest: all examples have native selectors and only three receive new marks
+ok 441 - all examples have native selectors and only three receive new marks
+  ---
+  duration_ms: 0.345208
+  ...
+# Subtest: marks do not erase facts or action guidance or add absent companions
+ok 442 - marks do not erase facts or action guidance or add absent companions
+  ---
+  duration_ms: 0.160625
+  ...
+# Subtest: reuses approved handwritten surface with accessible semantic sketches
+ok 443 - reuses approved handwritten surface with accessible semantic sketches
+  ---
+  duration_ms: 0.92425
+  ...
+# Subtest: draft is registered once and every manifest file exists
+ok 444 - draft is registered once and every manifest file exists
+  ---
+  duration_ms: 0.636625
+  ...
+# Subtest: prototype has no executable content, external requests, forms or gameplay wiring
+ok 445 - prototype has no executable content, external requests, forms or gameplay wiring
+  ---
+  duration_ms: 5.518917
+  ...
+# Subtest: native controls have labels and every return link has a unique local destination
+ok 446 - native controls have labels and every return link has a unique local destination
+  ---
+  duration_ms: 0.51875
+  ...
+# Subtest: current record preserves source wording while the next action does not promise key extraction
+ok 447 - current record preserves source wording while the next action does not promise key extraction
+  ---
+  duration_ms: 0.855125
+  ...
+# Subtest: fictional fixtures are labelled; gains and losses remain outside disclosures
+ok 448 - fictional fixtures are labelled; gains and losses remain outside disclosures
+  ---
+  duration_ms: 0.274708
+  ...
+# Subtest: CSS parses and keeps result content in flow without clipping, fixed heights or override stacking
+ok 449 - CSS parses and keeps result content in flow without clipping, fixed heights or override stacking
+  ---
+  duration_ms: 1.587417
+  ...
+# Subtest: main text, secondary text, loss text and action labels meet 4.5:1 contrast
+ok 450 - main text, secondary text, loss text and action labels meet 4.5:1 contrast
+  ---
+  duration_ms: 0.504
+  ...
+# Subtest: draft is registered once and remains isolated from game/save
+ok 451 - draft is registered once and remains isolated from game/save
+  ---
+  duration_ms: 1.469
+  ...
+# Subtest: native comparison/zoom controls have clear labels, defaults and reversible rules
+ok 452 - native comparison/zoom controls have clear labels, defaults and reversible rules
+  ---
+  duration_ms: 0.482708
+  ...
+# Subtest: all assets and SVG references resolve without executable or remote content
+ok 453 - all assets and SVG references resolve without executable or remote content
+  ---
+  duration_ms: 0.827708
+  ...
+# Subtest: same Dalguji/cue parts preserve aspect and reference scale
+ok 454 - same Dalguji/cue parts preserve aspect and reference scale
+  ---
+  duration_ms: 0.738583
+  ...
+# Subtest: one registered draft; no script, storage, game runtime or auto-apply
+ok 455 - one registered draft; no script, storage, game runtime or auto-apply
+  ---
+  duration_ms: 2.359292
+  ...
+# Subtest: face, full body and scale reuse the exact same master; no new face is substituted
+ok 456 - face, full body and scale reuse the exact same master; no new face is substituted
+  ---
+  duration_ms: 13.48625
+  ...
+# Subtest: all references resolve locally; face switch has native controls and clear reversible CSS
+ok 457 - all references resolve locally; face switch has native controls and clear reversible CSS
+  ---
+  duration_ms: 0.643417
+  ...
+# Subtest: ratio study keeps existing vehicle proportions and explicitly separates canvas implementation
+ok 458 - ratio study keeps existing vehicle proportions and explicitly separates canvas implementation
+  ---
+  duration_ms: 0.103542
+  ...
+# Subtest: generation provenance preserves contract prompts and all required reference filenames
+ok 459 - generation provenance preserves contract prompts and all required reference filenames
+  ---
+  duration_ms: 2.144792
+  ...
+# Subtest: connected route draft is registered and gameplay/save isolated
+ok 460 - connected route draft is registered and gameplay/save isolated
+  ---
+  duration_ms: 1.425375
+  ...
+# Subtest: all references and labelled controls resolve
+ok 461 - all references and labelled controls resolve
+  ---
+  duration_ms: 1.011584
+  ...
+# Subtest: terrain is one strip without crossfade/wipe/cover; truck geometry stays fixed
+ok 462 - terrain is one strip without crossfade/wipe/cover; truck geometry stays fixed
+  ---
+  duration_ms: 1.701167
+  ...
+# Subtest: delivery preserves opaque ground, transparent sky and canonical geometry
+ok 463 - delivery preserves opaque ground, transparent sky and canonical geometry
+  ---
+  duration_ms: 69.244417
+  ...
+# Subtest: all actual corridors are covered in a script-free, save-isolated Studio review
+ok 464 - all actual corridors are covered in a script-free, save-isolated Studio review
+  ---
+  duration_ms: 55.571916
+  ...
+# Subtest: candidate assets resolve and progress controls are labelled
+ok 465 - candidate assets resolve and progress controls are labelled
+  ---
+  duration_ms: 2.85775
+  ...
+# Subtest: travel, pause, reverse and reduced motion do not invent a seam-cover effect
+ok 466 - travel, pause, reverse and reduced motion do not invent a seam-cover effect
+  ---
+  duration_ms: 0.103125
+  ...
+# Subtest: draft is registered and sandbox/save/build isolated
+ok 467 - draft is registered and sandbox/save/build isolated
+  ---
+  duration_ms: 2.160458
+  ...
+# Subtest: all existing art/style and label references resolve
+ok 468 - all existing art/style and label references resolve
+  ---
+  duration_ms: 0.695875
+  ...
+# Subtest: play is opt-in, pause and three native still positions are reachable
+ok 469 - play is opt-in, pause and three native still positions are reachable
+  ---
+  duration_ms: 0.320125
+  ...
+# Subtest: proposal seam moves with its terrain; sky/road/vehicle are outside the moving strip
+ok 470 - proposal seam moves with its terrain; sky/road/vehicle are outside the moving strip
+  ---
+  duration_ms: 3.439167
+  ...
+# Subtest: motion keeps two equal scenery windows and discloses schematic vs actual evidence
+ok 471 - motion keeps two equal scenery windows and discloses schematic vs actual evidence
+  ---
+  duration_ms: 0.835708
+  ...
+# Subtest: all three separate drafts are registered; existing entries still resolve
+ok 472 - all three separate drafts are registered; existing entries still resolve
+  ---
+  duration_ms: 0.990042
+  ...
+# Subtest: no script, form, network, gameplay, storage or generated HTML coupling
+ok 473 - no script, form, network, gameplay, storage or generated HTML coupling
+  ---
+  duration_ms: 0.549958
+  ...
+# Subtest: every link resolves locally and every route has a reversible next action
+ok 474 - every link resolves locally and every route has a reversible next action
+  ---
+  duration_ms: 26.64125
+  ...
+# Subtest: markup has balanced semantic containers rather than silently nested screens
+ok 475 - markup has balanced semantic containers rather than silently nested screens
+  ---
+  duration_ms: 0.88275
+  ...
+# Subtest: conversation preserves actual dialogue and branches, with name revealed on self-introduction
+ok 476 - conversation preserves actual dialogue and branches, with name revealed on self-introduction
+  ---
+  duration_ms: 0.545417
+  ...
+# Subtest: record uses current chosen branch, not classification branch or upcoming Gongju as goal
+ok 477 - record uses current chosen branch, not classification branch or upcoming Gongju as goal
+  ---
+  duration_ms: 1.335208
+  ...
+# Subtest: crew separates current empty party from hypothetical guest; camp effects only follow explicit action
+ok 478 - crew separates current empty party from hypothetical guest; camp effects only follow explicit action
+  ---
+  duration_ms: 0.540792
+  ...
+# Subtest: original reviewed artwork is used at its real ratio; portraits are not cropped
+ok 479 - original reviewed artwork is used at its real ratio; portraits are not cropped
+  ---
+  duration_ms: 0.476083
+  ...
+# Subtest: CSS parses, all authored selectors are isolated, and long text stays in document flow
+ok 480 - CSS parses, all authored selectors are isolated, and long text stays in document flow
+  ---
+  duration_ms: 3.091291
+  ...
+# Subtest: body, secondary, named speaker and primary action colors meet AA contrast
+ok 481 - body, secondary, named speaker and primary action colors meet AA contrast
+  ---
+  duration_ms: 1.099916
+  ...
+# Subtest: surface selection distinguishes real video/talk/camp without changing combat or intro
+ok 482 - surface selection distinguishes real video/talk/camp without changing combat or intro
+  ---
+  duration_ms: 108.790583
+  ...
+# Subtest: restored sentence comes only from the completed, saved restoration branch
+ok 483 - restored sentence comes only from the completed, saved restoration branch
+  ---
+  duration_ms: 52.668542
+  ...
+# Subtest: resources and losses stay visible; elapsed time is hidden without discarding saved chips
+ok 484 - resources and losses stay visible; elapsed time is hidden without discarding saved chips
+  ---
+  duration_ms: 42.774625
+  ...
+# Subtest: next action keeps the saved Suwon target, actual control, reading time and record identity
+ok 485 - next action keeps the saved Suwon target, actual control, reading time and record identity
+  ---
+  duration_ms: 39.689709
+  ...
+# Subtest: review retains original event, choice and outcome; condensed display never mutates them
+ok 486 - review retains original event, choice and outcome; condensed display never mutates them
+  ---
+  duration_ms: 33.075
+  ...
+# Subtest: new disclosure states save synchronously, reload, and reject detached or stale controls
+ok 487 - new disclosure states save synchronously, reload, and reject detached or stale controls
+  ---
+  duration_ms: 33.792625
+  ...
+# Subtest: name presentation follows the authored identity state and leaves other speakers unchanged
+ok 488 - name presentation follows the authored identity state and leaves other speakers unchanged
+  ---
+  duration_ms: 32.3
+  ...
+# Subtest: cabin returns to its underlying surface and keeps real camp memory and ability access
+ok 489 - cabin returns to its underlying surface and keeps real camp memory and ability access
+  ---
+  duration_ms: 31.503667
+  ...
+# Subtest: existing CSS owner parses; new themes keep readable controls and unclipped result text
+ok 490 - existing CSS owner parses; new themes keep readable controls and unclipped result text
+  ---
+  duration_ms: 130.0115
+  ...
+# Subtest: Studio controls proposal is registered separately from gameplay
+ok 491 - Studio controls proposal is registered separately from gameplay
+  ---
+  duration_ms: 2.372375
+  ...
+# Subtest: both controls are outside the game outline with native reversible disclosure
+ok 492 - both controls are outside the game outline with native reversible disclosure
+  ---
+  duration_ms: 0.192292
+  ...
+# Subtest: fresh title has one primary action and does not expose sample save data
+ok 493 - fresh title has one primary action and does not expose sample save data
+  ---
+  duration_ms: 1.758125
+  ...
+# Subtest: real continuation gets priority, round-trip refresh restores it without changing storage
+ok 494 - real continuation gets priority, round-trip refresh restores it without changing storage
+  ---
+  duration_ms: 2.074584
+  ...
+# Subtest: invalid/absent save cannot leave a stale continue action
+ok 495 - invalid/absent save cannot leave a stale continue action
+  ---
+  duration_ms: 3.241333
+  ...
+# Subtest: archive disclosure contains real history only and closes when history disappears
+ok 496 - archive disclosure contains real history only and closes when history disappears
+  ---
+  duration_ms: 0.997375
+  ...
+# Subtest: legacy title presentation is not switched by refresh or gated stylesheet
+ok 497 - legacy title presentation is not switched by refresh or gated stylesheet
+  ---
+  duration_ms: 1.232416
+  ...
+# Subtest: title hero reuses existing offline asset sources and never initializes old animation
+ok 498 - title hero reuses existing offline asset sources and never initializes old animation
+  ---
+  duration_ms: 3.944958
+  ...
+# Subtest: existing entry and return actions are preserved; title sound toggles actual SND
+ok 499 - existing entry and return actions are preserved; title sound toggles actual SND
+  ---
+  duration_ms: 3.458125
+  ...
+# Subtest: both sound controls reflect persisted audio choice and meaningful pressed state
+ok 500 - both sound controls reflect persisted audio choice and meaningful pressed state
+  ---
+  duration_ms: 1.780459
+  ...
+# Subtest: build contains the approved title without duplicate asset embedding or placeholders
+ok 501 - build contains the approved title without duplicate asset embedding or placeholders
+  ---
+  duration_ms: 245.86475
+  ...
+1..501
+# tests 501
+# suites 0
+# pass 486
+# fail 15
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21632.512958

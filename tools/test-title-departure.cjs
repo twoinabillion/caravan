@@ -105,7 +105,7 @@ test('build contains the approved title without duplicate asset embedding or pla
   assert.match(built,/id="scr-title" data-title-layout="wharf"/);
   assert(/ROAD_ENVIRONMENT\.source\(['"`]busan['"`]\)/.test(built));
   assert.doesNotMatch(built,/__UI_JOURNEY_DALGUJI_BASE__|\/\*__ROAD_ENVIRONMENTS__\*\//);
-  assert(fs.statSync('서울까지400km.html').size<80_000_000);
+  assert(fs.statSync('서울까지400km.html').size<=require('./build-budget.json').maxBytes);
   for(const id of ['title-harbor','bt-new','bt-continue','bt-preview','bt-title-sound','bt-song','bt-install'])
     assert.equal((dom.match(new RegExp(`id="${id}"`,'g'))||[]).length,1,id);
 });

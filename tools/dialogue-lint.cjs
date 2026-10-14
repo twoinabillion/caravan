@@ -365,6 +365,11 @@ for(const event of allEvents){
       for(const [outcomeIndex,outcome] of (choice.out||[]).entries()){
         const delta=outcome.fx&&outcome.fx[resource];
         if(typeof delta==='number'&&delta<0&&Math.abs(delta)!==required){
+          // Negotiation reserves the full toll; success pays half. Keep this
+          // exception exact rather than treating every requirement as a ceiling.
+          if(event.id==='meet_toll'&&choiceIndex===1&&resource==='scrap'&&
+             required===8&&outcomeIndex===0&&delta===-4&&
+             choice.out.length===2&&choice.out[1].fx?.scrap===-8) continue;
           errors.push(`선택 비용과 실제 차감 불일치: ${event.id}.${choiceIndex}.${outcomeIndex} / ${resource} ${required} → ${delta}`);
         }
       }

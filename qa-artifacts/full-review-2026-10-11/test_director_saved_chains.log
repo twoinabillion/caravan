@@ -1,0 +1,12 @@
+PASS shared suwon completed=False recovery-ID=False
+PASS shared suwon completed=True recovery-ID=False
+PASS shared suwon completed=True recovery-ID=True
+PASS shared cheonan completed=False recovery-ID=False
+PASS shared cheonan completed=False recovery-ID=True
+PASS shared cheongju completed=False recovery-ID=False
+PASS guarded suwon completed=False recovery-ID=False
+PASS guarded suwon completed=True recovery-ID=False
+PASS guarded suwon completed=True recovery-ID=True
+PASS guarded cheonan completed=False recovery-ID=False
+PASS guarded cheonan completed=False recovery-ID=True
+PASS guarded cheongju completed=False recovery-ID=False

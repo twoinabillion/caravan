@@ -1,0 +1,27 @@
+― 비트 정의 위생
+  ✅ 모든 비트가 실재하는 이벤트를 가리킨다 — []
+  ✅ 비트가 거리 순으로 정렬돼 있다
+  ✅ 중복 비트 없음 — []
+  ✅ 승격이 원래 출현 조건을 잃지 않았다
+― 동료 조건 비트 (갈등 아크)
+  ✅ 갈등 아크가 비트로 등록돼 있다
+  ✅ 동료가 없으면 열리지 않는다
+  ✅ 두 동료가 타면 열린다
+  ✅ 조건 충족 시 실제로 예약된다
+  ✅ 동료가 다치면 다시 닫힌다
+― 예약 뒤 조건이 깨지면 내보내지 않는다
+  ✅ 조건 충족 시 둘 다 예약됐다 — {'queuedConflict': True, 'queuedWater': True, 'popped': ['levy_office', 'salvage_claim', 'memory_busan_terminal', 'story
+  ✅ 동료가 내리면 갈등 아크가 나오지 않는다 — ['levy_office', 'salvage_claim', 'memory_busan_terminal', 'story_bridge_departure_echo', 'story_generation_form', 'parents_diversion_manifest', 'story_family_principle', 'story_generation_speech', 'story_generation_theories', 'story_generation_route', 'history_failed_namsan', 'history_transit_day']
+  ✅ 물통을 채우면 우물 장면이 나오지 않는다 — ['levy_office', 'salvage_claim', 'memory_busan_terminal', 'story_bridge_departure_echo', 'story_generation_form', 'parents_diversion_manifest', 'story_family_principle', 'story_generation_speech', 'story_generation_theories', 'story_generation_route', 'history_failed_namsan', 'history_transit_day']
+  ✅ 조건이 깨진 비트는 버리지 않고 보관한다 — ['history_seventy_two_hours', 'conflict_fuel_detour', 'history_three_day_silence', 'water_toll', 'history_first_recorders', 'history_six_roads']
+― 조건 종류별 실제 차단 (정의 대조가 아니라 동작)
+  ✅ 남부에서는 북부 전용 조우가 열리지 않는다 — {'southBlocksNorth': True, 'fullWaterBlocks': True, 'noFlagBlocks': True}
+  ✅ 물통이 가득하면 우물 장면이 열리지 않는다 — {'southBlocksNorth': True, 'fullWaterBlocks': True, 'noFlagBlocks': True}
+  ✅ 라디오 없이 신호 미끼가 열리지 않는다 — {'southBlocksNorth': True, 'fullWaterBlocks': True, 'noFlagBlocks': True}
+― 예약은 도착마다 채워지고 하나씩 나온다
+  ✅ 조건을 넘긴 비트가 한꺼번에 대기열에 들어간다 — {'queuedAll': 16, 'first': 'levy_office', 'afterPop': 15}
+  ✅ 꺼내는 것은 한 번에 하나 — {'queuedAll': 16, 'first': 'levy_office', 'afterPop': 15}
+― 미충족 기둥 접선은 출발 슬롯으로 보장된다
+  ✅ 미충족 기둥이 있으면 다음 길에 접선 슬롯이 생긴다 — {'unmet': True, 'started': True, 'hasPillar': True, 'slots': [{'at': 13, 'pillarPick': True}]}
+  ✅ 콘솔 pageerror 없음
+✅ 쓴 것이 실제로 전달된다

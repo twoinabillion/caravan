@@ -16,13 +16,14 @@ const declarations = (selector, property) => {
 
 test('registered independent draft, no executable or game/save integration', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
-  assert.equal(manifest.drafts[0].id, 'journey-continuity-v1');
-  assert.equal(manifest.drafts[0].file, 'journey-continuity.html');
-  assert.equal(manifest.drafts[0].revision, '2');
-  assert.equal(manifest.drafts[0].recommended, true);
+  const draft=manifest.drafts.find(d=>d.id==='journey-continuity-v1');
+  assert(draft);
+  assert.equal(draft.file, 'journey-continuity.html');
+  assert.equal(draft.revision, '2');
+  assert.equal(draft.recommended, true);
   assert.equal(new Set(manifest.drafts.map(d => d.id)).size, manifest.drafts.length);
-  assert.match(manifest.drafts[0].description, /가상/);
-  assert.match(manifest.drafts[0].description, /미완료/);
+  assert.match(draft.description, /가상/);
+  assert.match(draft.description, /미완료/);
   assert.match(html, /default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'/);
   assert.doesNotMatch(html, /<script\b|\bon\w+\s*=|localStorage|sessionStorage|<iframe\b|<form\b|javascript:|\/src\//i);
   assert.doesNotMatch(fs.readFileSync(path.join(__dirname, 'build-html.mjs'), 'utf8'), /journey-continuity/);

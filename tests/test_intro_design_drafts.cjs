@@ -7,10 +7,8 @@ const draftDir=path.join(root,'tools/design-drafts');
 const files=['intro-recollection.html','intro-flow.html'];
 const read=name=>fs.readFileSync(path.join(draftDir,name),'utf8');
 const scene=read(files[0]), flow=read(files[1]);
-const source=fs.readFileSync(path.join(root,'src/03-data.js'),'utf8');
-const authored=id=>JSON.parse(JSON.stringify(require('node:vm').runInNewContext(
-  '('+source.match(new RegExp("'"+id+"': (\\[[\\s\\S]*?\\n  \\]),"))[1]+')',Object.create(null),{timeout:1000}
-)));
+// Retained layout studies have frozen prose; current gameplay has its own tests.
+const authored=id=>require('./fixtures/design-draft-copy.json').intro[id];
 const beats=authored('intro-resistance-begins');
 const nextBeats=authored('intro-parents-discovery').slice(0,2);
 const strip=s=>s.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();

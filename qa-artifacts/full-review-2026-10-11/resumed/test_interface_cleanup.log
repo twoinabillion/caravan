@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_interface_cleanup.py", line 15, in <module>
+    assert "choice-dock-head" not in ui, "사건 선택지 위 중복 헤더가 되살아났다"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 사건 선택지 위 중복 헤더가 되살아났다

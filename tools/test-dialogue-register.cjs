@@ -28,10 +28,158 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
     choices:(e.choices||[]).map(c=>({q:quotes(c.label),out:(c.out||[]).map(o=>({
       q:quotes(o.text),speakers:o.turnSpeakers,turns:turns(o.turns)}))}))}))
     .sort((a,b)=>a.id.localeCompare(b.id));
+  const home=rows.find(row=>row.id==='seoul_session_reset').choices[0].out[0];
+  const recruiterGift=rows.find(row=>row.id==='cult_recruiter').choices[1].out[0];
+  const believer={who:'passer_refugee',name:'흰옷의 신도'};
+  assert.equal(recruiterGift.q,6);
+  assert.deepEqual(JSON.parse(JSON.stringify(recruiterGift.speakers)),[believer,'me',believer,believer,'me',believer]);
+  recruiterGift.speakers=undefined;
+  const pilgrim={who:'passer_refugee',name:'앞선 신도'};
+  const leader={who:'passer_man',name:'검은 완장 대장'};
+  for(const [id,entry,routes] of [
+    ['ev_pilgrims_white',[pilgrim],[[pilgrim,pilgrim,'me',pilgrim],['parkss','me','parkss','parkss']]],
+    ['ev_cult_opposite',[{who:'passer_man',name:'검은 완장의 남자'}],[['me',leader],['jaeyi',leader,'jaeyi']]],
+  ]){
+    const row=rows.find(r=>r.id===id);
+    assert.equal(row.q,entry.length);
+    assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),entry);
+    row.speakers=undefined;
+    routes.forEach((route,i)=>{
+      const out=row.choices[i].out[0];
+      assert.equal(out.q,route.length);
+      assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),route);
+      out.speakers=undefined;
+    });
+  }
+  const shop=rows.find(row=>row.id==='mansu_opening');
+  const dj={who:'passer_woman',name:'DJ'},djRadio={who:'radio',kind:'radio',name:'새벽 두 시의 DJ'};
+  for(const [id,entry,routes] of [
+    ['dj_meet',[dj,dj],[Array(5).fill(dj),Array(2).fill(dj)]],
+    ['ev_radio_dj_signal',[djRadio],[[djRadio],['minji','me','minji','minji']]],
+  ]){
+    const row=rows.find(r=>r.id===id);
+    assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),entry);
+    row.speakers=id==='ev_radio_dj_signal'?[{...djRadio,name:'자정의 라디오 DJ'}]:undefined;
+    routes.forEach((route,i)=>{
+      assert.deepEqual(JSON.parse(JSON.stringify(row.choices[i].out[0].speakers)),route);
+      row.choices[i].out[0].speakers=id==='ev_radio_dj_signal'?
+        (i===0?[{...djRadio,name:'자정의 라디오 DJ'}]:route):undefined;
+    });
+  }
+  assert.equal(shop.choices.length,2);
+  const greeting=shop.choices.pop().out[0];assert.equal(greeting.q,3);
+  assert.deepEqual(JSON.parse(JSON.stringify(greeting.speakers)),[
+    {who:'mansu',name:'만수'},{who:'record',kind:'record',name:'홍보 문구'},{who:'mansu',name:'만수'}]);
+  const radio={who:'radio',kind:'radio',name:'숫자 방송'};
+  for(const [id,entry,routes] of [
+    ['freq_triangulate',[radio],[[{who:'record',kind:'record',name:'중계기 옆 글씨'}],['eunsu','eunsu']]],
+    ['freq_source',[radio],[Array(3).fill({who:'record',kind:'record',name:'L의 편지'}),[radio]]],
+    ['freq_L2',null,[[{who:'radio',kind:'radio',name:'녹음된 목소리'},
+      {who:'radio',kind:'radio',name:'녹음된 목소리'},
+      {who:'record',kind:'record',name:'릴에 남긴 글씨'}]]],
+  ]){
+    const row=rows.find(r=>r.id===id);
+    if(entry){assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),entry);row.speakers=undefined;}
+    routes.forEach((route,index)=>{
+      const out=row.choices[index].out[0];
+      assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),route);out.speakers=undefined;
+    });
+    if(id==='freq_source'){assert.equal(row.choices[0].out[0].q,3);row.choices[0].out[0].q=0;}
+  }
+  const rounds=rows.find(row=>row.id==='duo_nightround');
+  assert.equal(rounds.q,3);assert.deepEqual(Array.from(rounds.speakers),['kangwoo','parkss','kangwoo']);
+  assert.equal(rounds.choices[0].out[0].q,8);
+  assert.deepEqual(Array.from(rounds.choices[0].out[0].speakers),['parkss','kangwoo','parkss','kangwoo','parkss','kangwoo','parkss','kangwoo']);
+  rounds.speakers=undefined;rounds.choices[0].out[0].speakers=undefined;
+  const speakerReturn=rows.find(row=>row.id==='mansu_revenge');
+  for(const [index,route] of [[1,['me',{who:'passer_man',name:'강도'},'me',{who:'passer_man',name:'강도'}]],[2,['me']]]){
+    const out=speakerReturn.choices[index].out[0];
+    assert.equal(out.q,route.length);
+    assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),route);
+    out.speakers=undefined;
+  }
+  const detour=rows.find(row=>row.id==='conflict_fuel_detour');
+  assert.equal(detour.q,7);
+  assert.deepEqual(JSON.parse(JSON.stringify(detour.speakers)),[
+    {who:'passer_child',name:'소년'},'me',{who:'passer_child',name:'소년'},'kangwoo','parkss','kangwoo','parkss']);
+  detour.speakers=undefined;
+  for(const [index,route] of [[1,['me','me','parkss']],[2,['me','parkss','kangwoo']],[3,['me','parkss','kangwoo']]]){
+    const out=detour.choices[index].out[0];assert.equal(out.q,3);
+    assert.deepEqual(Array.from(out.speakers),route);out.speakers=undefined;
+  }
+  assert.equal(detour.choices.length,4);detour.choices.pop();
+  const hose=rows.find(row=>row.id==='crisis_hose');
+  assert.equal(hose.choices.length,3);assert.equal(hose.choices[2].out[0].q,0);hose.choices.pop();
+  for(const [id,route] of [['conflict_silent_cab',['me','parkss','kangwoo']],['conflict_campfire',['kangwoo','parkss']]]){
+    const row=rows.find(row=>row.id===id);assert.equal(row.choices.length,2);
+    assert.equal(row.choices[1].out[0].q,route.length);
+    assert.deepEqual(Array.from(row.choices[1].out[0].speakers),route);row.choices.pop();
+  }
+  const photographer=rows.find(row=>row.id==='meet_photographer');
+  const photographerRoute=[{who:'passer_elder',name:'사진사'},'me',{who:'passer_elder',name:'사진사'}];
+  assert.equal(photographer.q,3);assert.equal(photographer.choices[0].out[0].q,3);
+  assert.deepEqual(JSON.parse(JSON.stringify(photographer.speakers)),photographerRoute);
+  assert.deepEqual(JSON.parse(JSON.stringify(photographer.choices[0].out[0].speakers)),photographerRoute);
+  assert.deepEqual(JSON.parse(JSON.stringify(photographer.choices[1].out[0].speakers)),[{who:'passer_elder',name:'사진사'}]);
+  photographer.speakers=undefined;photographer.choices[0].out[0].speakers=undefined;
+  photographer.choices[1].out[0].speakers=undefined;
+  const deliveredPhoto=rows.find(row=>row.id==='photo_delivered');
+  assert.equal(deliveredPhoto.q,2);assert.equal(deliveredPhoto.choices[0].out[0].q,4);
+  assert.deepEqual(JSON.parse(JSON.stringify(deliveredPhoto.speakers)),Array(2).fill({who:'passer_man',name:'사진 전달자'}));
+  assert.deepEqual(JSON.parse(JSON.stringify(deliveredPhoto.choices[0].out[0].speakers)),[
+    {who:'record',kind:'record',name:'사진 속 외침'},'me','me',{who:'record',kind:'record',name:'사진 뒷면 글씨'}]);
+  deliveredPhoto.speakers=undefined;deliveredPhoto.choices[0].out[0].speakers=undefined;
+  const library=rows.find(row=>row.id==='lc_sejong_library').choices[0].out[0];
+  assert.equal(library.q,1);assert.deepEqual(Array.from(library.speakers),['me']);
+  library.speakers=undefined;
+  const parcel=rows.find(row=>row.id==='parcel_found');
+  assert.equal(parcel.q,4);
+  assert.deepEqual(JSON.parse(JSON.stringify(parcel.speakers)),['me',{who:'passer_man',name:'아이의 아버지'},'me',{who:'passer_man',name:'아이의 아버지'}]);
+  assert.equal(parcel.choices[0].out[0].q,2);
+  assert.deepEqual(JSON.parse(JSON.stringify(parcel.choices[0].out[0].speakers)),[{who:'passer_woman',name:'아이의 어머니'},'me']);
+  parcel.speakers=undefined;parcel.choices[0].out[0].speakers=undefined;
+  const levy=rows.find(row=>row.id==='levy_office').choices[2].out[1];
+  assert.equal(levy.q,0); // No imagined speech by a possibly unmet Park.
+  levy.q=1; // Project only this reviewed removal onto the original corpus.
+  const microphone=rows.find(row=>row.id==='talk_es_20');
+  assert.deepEqual(Array.from(microphone.speakers),['eunsu']);microphone.speakers=undefined;
+  for(const [i,route] of [['0',['eunsu','me','eunsu','me','eunsu','me']],['1',['me','eunsu','me']]]){
+    const out=microphone.choices[i].out[0];
+    assert.equal(out.q,route.length);assert.deepEqual(Array.from(out.speakers),route);
+    out.speakers=undefined;
+  }
+  microphone.choices[1].out[0].q=5; // Formerly three absent companions answered.
+  assert.equal(home.q,0);assert.equal(home.turns,'dynamic');
+  assert.deepEqual(Array.from(D.finaleReturnTurns({flags:{mother_broadcast_ready:true}})
+    .filter(t=>t.kind==='dialogue'),t=>t.who),['mother','me','mother','me','mother']);
+  home.q=1; // Old inline style="color:..." was counted as a quote, not dialogue.
   // The upper-network reveal uses terminal records, not a sleeping core's
   // speech. Northern replacement prose owns its turns; untouched quotations
   // retain the original parser/role mapping. Check every exception before
   // projecting it onto the legacy hash, keeping all other events protected.
+  for(const [id,count,speakers] of [
+    ['talk_leo_08',3,['leo','leo','leo']],
+    ['pair_leo_es_1',4,['eunsu','eunsu','leo','eunsu']],
+    ['talk_es_15',5,['eunsu','me','eunsu','eunsu','eunsu']],
+    ['talk_kw_03',5,['me','kangwoo','me','kangwoo','kangwoo']],
+    ['talk_es_12',5,['eunsu','eunsu','me','eunsu','eunsu']],
+    ['react_mass_mj',8,['minji','minji','minji','minji']],
+    ['react_mass_kw',5,['kangwoo','kangwoo','me','kangwoo','kangwoo']],
+    ['react_mass_jy',6,['jaeyi','jaeyi','me','jaeyi','jaeyi','jaeyi']],
+    ['react_mass_es',5,['eunsu','eunsu','me','eunsu','eunsu']],
+    ['react_seoul_mj',7,['minji','minji','minji','minji']],
+    ['react_seoul_kw',5,['kangwoo','me','kangwoo','kangwoo','kangwoo']],
+    ['react_seoul_pss',8,['parkss','parkss','me','parkss','parkss','me','parkss','parkss']],
+    ['react_resist_es',7,['eunsu','eunsu','me','eunsu','eunsu','eunsu','eunsu']]]){
+    const out=rows.find(row=>row.id===id).choices[0].out[0];
+    assert.equal(out.q,count);
+    assert.deepEqual(Array.from(out.speakers),speakers);
+    out.speakers=undefined; // Newly explicit routes; real-reader tests cover both Minji branches.
+  }
+  const sunrise=rows.find(row=>row.id==='talk_es_12');
+  assert.equal(sunrise.q,3);
+  assert.deepEqual(Array.from(sunrise.speakers),['eunsu','me','eunsu']);
+  sunrise.speakers=undefined;
   for(const [id,beforeQ,beforeOut] of [
     ['seed_harvest',1,[3,1]],['seed_return',4,[2,2]],
     ['exp_coffee',1,[0]],['vanowner_coffee',2,[3]]]){
@@ -113,22 +261,45 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
       assert.equal(out.turns,'dynamic');assert.equal(out.q,0);out.turns=[];
     }
   }
+  const guardedCopy=rows.find(row=>row.id==='main_recovery_story_parent_route_guarded').choices[1].out[0];
+  assert.equal(guardedCopy.q,0);assert.equal(guardedCopy.turns,'dynamic');
+  guardedCopy.turns=[];
   const video=rows.find(row=>row.id==='main_recovery_story_family_principle');
+  const recoveredKey=rows.find(row=>row.id==='main_recovery_story_family_key');
+  assert.equal(recoveredKey.q,6);
+  assert.deepEqual(Array.from(recoveredKey.speakers),Array.from(event('story_family_key').turnSpeakers));
+  assert.deepEqual(recoveredKey.turns,[]);
+  recoveredKey.q=0;recoveredKey.speakers=undefined;
+  recoveredKey.turns=Array.from({length:3},()=>({kind:'narration',who:undefined}));
   assert.equal(video.q,12);assert.deepEqual(Array.from(video.speakers),
     ['father','mother','father','mother','father','mother','father','mother','father','mother','father','mother']);
   assert.deepEqual(video.turns,[]);
   video.speakers=undefined;
   video.turns=event(video.id).text.split('\n\n').map(()=>({kind:'narration',who:undefined}));
+  const cache=rows.find(row=>row.id==='main_recovery_story_personal_cache');
+  assert.equal(cache.turns.length,3);
+  assert.deepEqual(JSON.parse(JSON.stringify(cache.turns[2])),{kind:'narration'});
+  assert.match(event(cache.id).turns[2].text,/열쇠고리.*손바닥/);
+  cache.turns.pop(); // reviewed physical pause, no new quotation
   const father=rows.find(row=>row.id==='parents_father_last_log');
-  assert.equal(father.turns.length,7);
+  assert.equal(father.turns.length,9);
+  assert(father.turns.slice(-2).every(turn=>turn.kind==='narration'&&turn.who===undefined));
+  assert.match(event(father.id).turns[7].text,/다음 장.*다시 돌아왔다/);
+  assert.match(event(father.id).turns[8].text,/연필.*쓰지 못했다/);
+  father.turns.splice(-2); // two reviewed silent grief beats, not new quote roles
   assert.match(event(father.id).turns[0].text,/엄마.*화물차.*빠져나왔다/);
   father.turns.shift(); // reviewed extra escape beat; all other roles stay fixed
   assert.match(event(father.id).turns[3].text,/잠시 멎었지만.*코어는 남아 있었다/);
   father.turns.splice(2,1); // temporary line interruption is not control of the core
   const fatherCopy=rows.find(row=>row.id==='main_recovery_parents_father_last_log');
-  assert.equal(fatherCopy.turns.length,3);
+  assert.equal(fatherCopy.turns.length,10);
+  assert.deepEqual(Array.from(fatherCopy.turns,turn=>turn.kind),
+    ['narration','narration','narration','record','narration','narration','record','narration','narration','narration']);
+  assert(event(fatherCopy.id).turns.filter(turn=>turn.kind==='record')
+    .every(turn=>turn.who==='father'&&turn.name==='남산 유지실 출력 사본'));
   assert.match(event(fatherCopy.id).turns[1].text,/화물차.*빠져나왔다/);
-  fatherCopy.turns.splice(1,1); // the old single paragraph is now two causal beats
+  fatherCopy.turns=[{kind:'narration',who:undefined},{kind:'narration',who:undefined}];
+  // Only this reviewed recovery now retains the source's record roles and grief.
   const watch=rows.find(row=>row.id==='seoul_decision').choices[2].out[0];
   // The old function had two alternative second quotes (Eunsu / an unearned
   // Ghost contact). The supported outcome now consistently gives it to me.

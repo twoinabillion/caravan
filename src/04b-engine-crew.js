@@ -166,8 +166,11 @@ G.popBeat = ()=>{
   return out;
 };
 G.popStory = ()=>{
+  const timed=G.popTimedStory();
+  if(timed) return timed;
   while(S&&S._storyQueue&&S._storyQueue.length){
     const id=G.mainEvidenceEntryId(S._storyQueue.shift()), ev=D.events.find(e=>e.id===id);
+    if(G.deferTimedStory(id)) continue;
     if(!G.mainEvidenceLocationReady(id)) continue;
     const unansweredEunsu=['es_nightshift','es_backdoor'].includes(id)&&!D.eunsuBackdoorDone(S);
     if(ev && (!ev.once||!S.used.includes(id)||unansweredEunsu)
@@ -242,8 +245,13 @@ G.takeChoiceEcho = ()=>{
   G.ensureNarrativeState();
   const idx=S.memories.pending.findIndex(id=>{
     const m=S.memories.choices[id];
-    return m&&!m.echoed&&S.stats.km>=m.dueKm&&S.stats.events>=m.dueEvents
+    const due=m&&!m.echoed&&S.stats.km>=m.dueKm&&S.stats.events>=m.dueEvents
       &&(!Number.isFinite(m.dueMinute)||S.day*1440+S.min>=m.dueMinute);
+    if(!due) return false;
+    const def=G.choiceMemoryDef(m.eventId,m.choiceIndex);
+    // Keep absent speakers' memories pending without blocking later memories.
+    // Missing definitions still reach the cleanup below.
+    return !Array.isArray(def?.lines)||!def.lines.some(line=>D.comps[line[0]]&&!G.hasComp(line[0]));
   });
   if(idx>=0){
     const id=S.memories.pending[idx], memory=S.memories.choices[id];
@@ -252,9 +260,6 @@ G.takeChoiceEcho = ()=>{
       S.memories.pending.splice(idx,1);
       return null;
     }
-    /* 동료가 화자로 지정된 기억은 그 사람이 실제 탑승 중일 때만 재생한다. */
-    const unavailable=def.lines.some(line=>D.comps[line[0]]&&!G.hasComp(line[0]));
-    if(unavailable) return null;
     memory.echoed=true;
     memory.echoDay=S.day;
     memory.echoKm=Math.round(S.stats.km);

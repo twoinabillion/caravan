@@ -603,7 +603,9 @@ G.eventAvailable = (ev,context={})=>{
   /* 일반 풀에서 한 번 본 장면은 속성에 관계없이 다시 추첨하지 않는다.
      fixed 체인과 플레이어가 직접 다시 말을 거는 영입 만남은 openEventById로
      이어지므로, 서사 진행을 막지 않으면서 우연한 재등장만 끊는다. */
-  if(ev.id&&S.used.includes(ev.id)) return false;
+  // Only explicitly retryable tasks/encounter arcs may return before completion.
+  // Keep used/history intact; completed tasks and ordinary encounters stay once-only.
+  if(ev.id&&S.used.includes(ev.id)&&(!ev.retryUntilFlag||S.flags[ev.retryUntilFlag])) return false;
   if(['es_nightshift','es_backdoor'].includes(ev.id)
     &&(D.eunsuBackdoorDone(S)||G.mainEvidenceEntryId(ev.id)!==ev.id)) return false;
   if(mode==='node'){
@@ -640,6 +642,7 @@ G.eventAvailable = (ev,context={})=>{
   if(ev.needsComp2&&!G.hasComp(ev.needsComp2)) return false;
   if(ev.noComp&&G.hasComp(ev.noComp)) return false;
   if(ev.noFlag&&S.flags[ev.noFlag]) return false;
+  if(Array.isArray(ev.noFlags)&&ev.noFlags.some(flag=>S.flags[flag])) return false;
   if(ev.noPool) return false;
   if(ev.needUp&&!(S.up&&S.up[ev.needUp])) return false;
   if(ev.scrapMin!==undefined&&!G.hasResource('scrap',ev.scrapMin)) return false;

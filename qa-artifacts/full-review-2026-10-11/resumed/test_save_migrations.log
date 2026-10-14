@@ -1,0 +1,13 @@
+― historical save fixture
+  ✅ pre-quality save migrates without losing its location
+  ✅ narrative, companion, and settlement state is backfilled
+― quality v2 fixture
+  ✅ quality v2 evidence upgrades to the current schema
+― partial save fixture
+  ✅ a structurally valid partial save receives safe defaults
+― corrupt save fixtures
+  ✅ malformed JSON is hidden and fails without a poisoned runtime state
+  ✅ an invalid location is rejected safely
+  ✅ console/runtime errors remain zero
+
+✅ save migration and corruption fixtures passed

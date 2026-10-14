@@ -114,10 +114,10 @@ test('cache is bounded across all routes/stops; missing cities are not drawn fro
  assert.equal(rt.draw({from:other.from,to:other.to,dist:10,gone:5}),false);
  for(const call of rt.targetCalls.filter(x=>x[0]==='drawImage'))assert.equal(call.length,10,'explicit 2x canvas source/destination geometry');
 });
-test('game builder wires all graph routes, preserves raw acceptance and the 80MB limit',()=>{
+test('game builder wires all graph routes, preserves raw acceptance and the configured limit',()=>{
  const build=fs.readFileSync(require.resolve('../tools/build-html.mjs'),'utf8');
  assert(build.includes("'src/05e-road-continuity.js'"));assert(build.includes('enabled:true,routes:continuityRoutes'));
- assert(build.includes('const MAX_BYTES = 80_000_000'));
+ assert(build.includes('const MAX_BYTES = budget.maxBytes'));
  const hd=require('../assets/ui/road-connectors/manifest-hd.json');assert.equal(hd.enabled,false);
  for(const r of routes){const candidate=hd.routes.find(c=>c.id===r.id);assert(candidate?.nativeCandidate);assert.equal(candidate.nativeCandidate.acceptance.geometry,false);}
  assert(fs.readFileSync(require.resolve('../src/05a-road-environment.js'),'utf8').includes('ROAD_CONTINUITY.draw(target,frame)'));

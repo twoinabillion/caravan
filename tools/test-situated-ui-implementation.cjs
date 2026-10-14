@@ -33,12 +33,26 @@ test('restored sentence comes only from the completed, saved restoration branch'
   const state={eventId:e.id,phase:'outcome',choiceIndex:0,resultText:e.choices[0].out[0].text,
     turns:[{kind:'narration',text:'read'},{kind:'narration',text:'end'}],index:1};
   const before=JSON.stringify(state),html=c.storyCompletedRecordHtml(state);
-  assert.match(html,/마지막 문장까지 복원했다/);assert.match(html,/인간 책임자의 서명/);
+  assert.match(html,/마지막 문장까지 복원했다/);assert.match(html,/책임자 서명/);
   assert.match(html,/<details[^>]*restoredLineOpen/);assert.doesNotMatch(html,/<details[^>]*\sopen/);
   for(const patch of [{choiceIndex:1},{index:0},{phase:'event'},{eventId:'other'},{resultText:'예전에 저장한 다른 결과'}])
     assert.equal(c.storyCompletedRecordHtml({...state,...patch}),'');
   assert.match(c.storyCompletedRecordHtml({...state,restoredLineOpen:true}),/<details[^>]*\sopen/);
   assert.equal(JSON.stringify(state),before);
+});
+test('restoration disclosure keeps legacy quotes and northern recovery receipts across reload',()=>{
+  const c=setup(),e=event(c,'story_family_principle');
+  const legacy='우리가 제안하는 것은 종료 장치가 아닙니다. 이유 공개, 인간 책임자의 서명, 당사자의 이의 제기. 예측과 실행 사이에 사람을 다시 놓는 일입니다.';
+  for(const eventId of [e.id,'main_recovery_story_family_principle']){
+    for(const resultText of [e.choices[0].out[0].text,`복원한 기록.\n\n"${legacy}"`]){
+      const receipt={eventId,phase:'outcome',choiceIndex:0,resultText,turns:[{text:resultText}],index:0,restoredLineOpen:true};
+      const saved=JSON.stringify(receipt),restored=JSON.parse(saved),html=c.storyCompletedRecordHtml(restored);
+      assert.match(html,/<details[^>]*\sopen/);
+      assert(html.includes(esc(resultText.match(/"([^"\n]+)"/)[1])));
+      assert.equal(JSON.stringify(restored),saved);
+      assert.equal(c.storyCompletedRecordHtml({...restored,choiceIndex:1}),'');
+    }
+  }
 });
 test('resources and losses stay visible; elapsed time is hidden without discarding saved chips',()=>{
   const c=setup(),chips=[{t:'새 기록 · 예측은 명령이 아니다'},{t:'◈ 예측과 명령 사이 · 확인'},

@@ -15,20 +15,21 @@ const page = id => D.intro.find(p=>p.scene===id);
 const text = id => page(id).beats.map(t=>t.text).join('\n');
 const played = D.intro.flatMap(p=>p.beats).map(t=>t.text).join('\n');
 
-test('21-page prologue retains the approved sequence and real scene/speaker references',()=>{
+test('27-page prologue retains the current continuity sequence and real scene/speaker references',()=>{
   const scenes = [
     'intro-busan-room-morning-v1','intro-busan-water-line-v1','intro-busan-workday-v1',
+    'intro-socket-memory-v1','intro-workday-return-v1',
     'intro-busan-cold-storage-v1','intro-busan-generator-night-v1','intro-busan-evening-call-v1',
-    'intro-current-expulsion','intro-dock-aid','intro-passenger-seat','intro-cheollian-2026',
-    'intro-first-expulsion','intro-resistance-begins','intro-parents-discovery',
-    'intro-silenced-presentation','intro-blank-reason','intro-envelope-signal',
-    'intro-appeal-denied','intro-mother-keepsakes','intro-dashboard-module',
+    'intro-current-expulsion','intro-family-packing-v1','intro-passenger-seat','intro-dock-aid',
+    'intro-appeal-denied','intro-cheollian-2026','intro-terminal-wait-v1',
+    'intro-first-expulsion','intro-terminal-copy-v1','intro-resistance-begins','intro-mother-keepsakes','intro-parents-discovery',
+    'intro-silenced-presentation','intro-blank-reason','intro-keepsakes-return-v1','intro-envelope-signal','intro-dashboard-module',
     'intro-workshop-departure','intro-departure-choice'
   ];
   assert.deepEqual(Array.from(D.intro,p=>p.scene),scenes);
   for (const p of D.intro) {
     assert(D.scenes[p.scene],p.scene);
-    assert(p.beats.length>=7,p.scene);
+    assert(p.beats.length>=3,p.scene);
     for (const turn of p.beats) {
       assert(turn.kind&&turn.text.trim(),p.scene);
       if(turn.scene) assert(D.scenes[turn.scene],turn.scene);
@@ -41,32 +42,33 @@ test('lived-in humour and careful family uncertainty survive the prose cut',()=>
   for(const line of [
     '그건 나오면 안 되는 물인데.','그래. 나사 혼자 그랬겠지.',
     '씹는 동안 냉동기 안 도망가.','너는 그런 걸 왜 보고 다녀.',
-    '내 로봇도 넣었어?','…넣었어. 맨 위에. 꺼내기 좋게.',
+    '내 로봇도 넣어 줘.','응. 맨 위에. 꺼내기 좋게.',
     '그땐 못 찾았다고 적는 거야. 없는 이름을 우리가 만들어 넣을 수는 없잖아.'
   ]) assert(played.includes(line),line);
   assert(text('intro-current-expulsion').includes('유나 누나'));
   assert(text('intro-parents-discovery').includes('확실히 몰랐어'));
-  assert(text('intro-blank-reason').includes('둘이 이어졌는지는 남산 기록을 봐야'));
+  assert(text('intro-blank-reason').includes('그쪽에서 이 표까지 보낸 건지는 아직 모르고. 남산에 있는 기록을 봐야 해.'));
 });
 
-test('family farewell stops on the missing next car; institutional evidence follows separately',()=>{
+test('family packing stays in childhood while institutional evidence is reported later',()=>{
   assert.equal(page('intro-silenced-presentation').beats.at(-1).text,
-    '엄마는 나를 할아버지 차에 태웠다. 다음 차는 오지 않았다.');
-  assert.match(text('intro-blank-reason'),/발표를 막은 기록에는 정부 기관 이름/);
-  assert.match(text('intro-blank-reason'),/이 이송표에는 보낸 사람도, 이유도 안 적혀/);
+    '이 발표가 막혔다는 얘기는 부산에서 들었다. 내가 직접 기억하는 건 그날 밤 엄마가 싸 준 가방이다.');
+  assert.match(text('intro-family-packing-v1'),/엄마랑 아빠가 탈 차를 찾으려고/);
+  assert.match(text('intro-blank-reason'),/발표를 막은 데는 이름이 남았어. 정부 기관/);
+  assert.match(text('intro-blank-reason'),/누가 보냈는지, 왜 보냈는지 둘 다 없/);
 });
 
 test('the trip still needs evidence, safe module removal and help from six distinct groups',()=>{
   const current=text('intro-current-expulsion'),module=text('intro-dashboard-module');
-  for(const fact of ['6,412명','20kg','제7 구역','집 문도 밥표도','통행 권한','사유란']) assert(current.includes(fact),fact);
+  for(const fact of ['6,412명','20kg','제7 구역','집 문과 배급 계정','통행 권한','사유란']) assert(current.includes(fact),fact);
   assert.match(text('intro-appeal-denied'),/원격 이의 제기 경로가 없습니다/);
   assert.match(text('intro-appeal-denied'),/서울 남산 중앙 노드/);
   for(const fact of ['4–5쪽','함께 태울 수 있음','계기판을 다시 닫았다','발신 기록','당사자 증언',
     '이송을 겪은 사람','명령망을 본 사람','길을 지킨 사람'])
-    assert((text('intro-mother-keepsakes')+module).includes(fact),fact);
+    assert((text('intro-keepsakes-return-v1')+module).includes(fact),fact);
   for(const name of ['이음망','해도','돔','솥','유령','산지기']) assert(text('intro-resistance-begins').includes(name),name);
-  assert.match(text('intro-mother-keepsakes'),/여섯 개의 작은 도장/);
-  assert.match(text('intro-mother-keepsakes'),/여섯 거점의 도움이 필요/);
+  assert.match(text('intro-keepsakes-return-v1'),/여섯 개의 작은 도장/);
+  assert.match(text('intro-keepsakes-return-v1'),/여섯 거점은 연락·보급·통신·길 안내를 나눠 맡는다/);
 });
 
 test('child questions stay concrete and the optional industrial history remains available',()=>{
@@ -77,13 +79,13 @@ test('child questions stay concrete and the optional industrial history remains 
   for(const term of ['72시간','현장 봇','2026년','TIANYAN'])
     assert((history.readingRecord+text(history.scene)).includes(term),term);
   const discovery=text('intro-parents-discovery');
-  for(const rule of ['당사자도 볼 수','책임자가 서명','이의를 제기할 길','하나라도 빠지면','병원이나 전력 복구는 그대로'])
+  for(const rule of ['내보내질 사람이 이유를 볼 수','책임자의 서명','이의를 제기할 길','빠져도 명령은 멈춰야','병원이랑 전기는 건드리지 말자'])
     assert(discovery.includes(rule),rule);
 });
 
 test('action-led solo scenes do not require five recap lines to pass',()=>{
   for(const id of ['intro-dashboard-module','intro-workshop-departure']){
-    assert.equal(page(id).beats.length,7);
+    assert.equal(page(id).beats.length,id==='intro-dashboard-module'?8:7);
     assert(page(id).solo,id);
   }
   assert.match(text('intro-workshop-departure'),/내일 고치기로 한 차/);

@@ -1,0 +1,399 @@
+{
+  "kind": "isolated-audit-followup",
+  "naturalCampaign": false,
+  "visualReview": false,
+  "recovery": [
+    {
+      "viewport": [
+        320,
+        578
+      ],
+      "choice": 0,
+      "costMinutes": 50,
+      "pageAdvances": 0,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        320,
+        578
+      ],
+      "choice": 1,
+      "costMinutes": 65,
+      "pageAdvances": 1,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        320,
+        578
+      ],
+      "choice": 2,
+      "costMinutes": 40,
+      "pageAdvances": 2,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        360,
+        728
+      ],
+      "choice": 0,
+      "costMinutes": 50,
+      "pageAdvances": 0,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        360,
+        728
+      ],
+      "choice": 1,
+      "costMinutes": 65,
+      "pageAdvances": 0,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        360,
+        728
+      ],
+      "choice": 2,
+      "costMinutes": 40,
+      "pageAdvances": 1,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "choice": 0,
+      "costMinutes": 50,
+      "pageAdvances": 0,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "choice": 1,
+      "costMinutes": 65,
+      "pageAdvances": 0,
+      "continuePreserved": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "choice": 2,
+      "costMinutes": 40,
+      "pageAdvances": 0,
+      "continuePreserved": true
+    }
+  ],
+  "camp": [
+    {
+      "cid": "minji",
+      "guest": true,
+      "choice": "listen",
+      "count": 1,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "minji",
+      "guest": false,
+      "choice": "listen",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "minji",
+      "guest": false,
+      "choice": "sort",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "parkss",
+      "guest": true,
+      "choice": "share",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "parkss",
+      "guest": true,
+      "choice": "record",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "parkss",
+      "guest": false,
+      "choice": "share",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "parkss",
+      "guest": false,
+      "choice": "record",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "leo",
+      "guest": true,
+      "choice": "quiet",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "leo",
+      "guest": true,
+      "choice": "line",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "leo",
+      "guest": false,
+      "choice": "quiet",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "leo",
+      "guest": false,
+      "choice": "line",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "jaeyi",
+      "guest": true,
+      "choice": "space",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "jaeyi",
+      "guest": true,
+      "choice": "shelf",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "jaeyi",
+      "guest": false,
+      "choice": "space",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "jaeyi",
+      "guest": false,
+      "choice": "shelf",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "eunsu",
+      "guest": true,
+      "choice": "facts",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "eunsu",
+      "guest": true,
+      "choice": "wait",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "eunsu",
+      "guest": false,
+      "choice": "facts",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "eunsu",
+      "guest": false,
+      "choice": "wait",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "kangwoo",
+      "guest": true,
+      "choice": "trust",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "kangwoo",
+      "guest": true,
+      "choice": "rotate",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "kangwoo",
+      "guest": false,
+      "choice": "trust",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    },
+    {
+      "cid": "kangwoo",
+      "guest": false,
+      "choice": "rotate",
+      "count": 2,
+      "sameId": true,
+      "applied": true,
+      "replayed": true,
+      "otherRejected": true,
+      "locked": true,
+      "same": true,
+      "roster": true
+    }
+  ],
+  "pageErrors": []
+}

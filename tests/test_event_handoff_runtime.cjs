@@ -38,6 +38,17 @@ function harness(entry='story'){
 }
 const drive=()=>({from:'busan',to:'yangsan',dist:20,gone:13,road:'high',wx:'clear',slots:[],si:0,eventCount:0,snapshot:{}});
 const resources=state=>copy({min:state.min,fuel:state.fuel,water:state.water,food:state.food,scrap:state.scrap,van:state.van,items:state.items});
+test('final result closes directly into the ending without a road frame or replayed payment',()=>{
+  const h=harness(),{ctx,calls}=h,e=h.event('seoul_session_reset');
+  ctx.s.at='seoul';ctx.s.flags.core_transfer=true;ctx.s.flags.mother_broadcast_ready=true;
+  ctx.UI.showEnding=()=>calls.push('ending');
+  h.show(e);choose(h,e);assert(!ctx.s.ended);
+  h.reload();assert(ctx.g.resumePresentation());assert(!ctx.s.ended);
+  assert.equal(ctx.g.resolvePresentedChoice(e,e.choices[0]).applied,false);
+  const before=resources(ctx.s);calls.length=0;
+  ctx.closeEvent();assert(ctx.s.ended);assert.deepEqual(resources(ctx.s),before);
+  assert.deepEqual(calls,['auto:clear','ending']);
+});
 function choose(h,event,index=0){
   const result=h.ctx.g.resolvePresentedChoice(event,event.choices[index]);
   assert(result.ok);h.ctx.curStory.phase='outcome';return result;

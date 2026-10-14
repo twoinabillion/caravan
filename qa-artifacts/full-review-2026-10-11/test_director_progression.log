@@ -1,0 +1,22 @@
+PASS authored
+PASS main
+PASS ready
+PASS uniqueContacts
+PASS noComp
+PASS aligned
+PASS actionableDecision
+PASS honestMissing
+PASS recoverAtSeoul
+PASS preserved
+FAIL legacy
+PASS broadcastRequired
+PASS noDistanceGrant
+PASS lateRecovery
+PASS noPrematureNotes
+PASS noPrematureSteps
+PASS deterministic
+PASS readCost
+PASS unresolved
+PASS player testimony question has a named speaker
+PASS resolved testimony keeps attribution and evidence
+Failed: legacy

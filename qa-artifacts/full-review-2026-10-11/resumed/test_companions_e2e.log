@@ -1,0 +1,22 @@
+― 6명 전원: 시작→임무→동행→합류
+  ✅ minji: 합류·개인서사 가드·Lv3·시그니처 — {'started': True, 'joined': True, 'approach': 'pulley', 'driveEcho': True, 'storyGuard': True, 'personalEvent': 'talk_mj_08', 'lvl': 3, 'signature': True, 'endingEcho': True}
+  ✅ parkss: 합류·개인서사 가드·Lv3·시그니처 — {'started': True, 'joined': True, 'approach': 'medicine', 'driveEcho': True, 'storyGuard': True, 'personalEvent': 'talk_pss_08', 'lvl': 3, 'signature': True, 'endingEcho': True}
+  ✅ kangwoo: 합류·개인서사 가드·Lv3·시그니처 — {'started': True, 'joined': True, 'approach': 'rebuild', 'driveEcho': True, 'storyGuard': True, 'personalEvent': 'talk_kw_08', 'lvl': 3, 'signature': True, 'endingEcho': True}
+  ✅ leo: 합류·개인서사 가드·Lv3·시그니처 — {'started': True, 'joined': True, 'approach': 'wade', 'driveEcho': True, 'storyGuard': True, 'personalEvent': 'talk_leo_08', 'lvl': 3, 'signature': True, 'endingEcho': True}
+  ✅ jaeyi: 합류·개인서사 가드·Lv3·시그니처 — {'started': True, 'joined': True, 'approach': 'brace', 'driveEcho': True, 'storyGuard': True, 'personalEvent': 'talk_jy_08', 'lvl': 3, 'signature': True, 'endingEcho': True}
+  ✅ eunsu: 합류·개인서사 가드·Lv3·시그니처 — {'started': True, 'joined': True, 'approach': 'timing', 'driveEcho': True, 'storyGuard': True, 'personalEvent': 'talk_es_08', 'lvl': 3, 'signature': True, 'endingEcho': True}
+― 접근 방식이 문구로 남지 않는다
+  ✅ minji: 첫 주행 메아리 — True
+  ✅ minji: 엔딩 콜백 데이터
+  ✅ parkss: 첫 주행 메아리 — True
+  ✅ parkss: 엔딩 콜백 데이터
+  ✅ kangwoo: 첫 주행 메아리 — True
+  ✅ kangwoo: 엔딩 콜백 데이터
+  ✅ leo: 첫 주행 메아리 — True
+  ✅ leo: 엔딩 콜백 데이터
+  ✅ jaeyi: 첫 주행 메아리 — True
+  ✅ jaeyi: 엔딩 콜백 데이터
+  ✅ eunsu: 첫 주행 메아리 — True
+  ✅ eunsu: 엔딩 콜백 데이터
+  ✅ 콘솔 pageerror 없음
+✅ 동료 6명 진단 fixture가 개인 서사 가드를 거쳐 합류-성장-메아리까지 돈다

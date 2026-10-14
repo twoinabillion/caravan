@@ -1,0 +1,18 @@
+― 프로필 3종이 서로 다른 시작을 만든다
+  ✅ 프로필 3종 존재 — ['keeper', 'runner', 'hauler']
+  ✅ 세 시작 상태가 전부 다르다
+― 이름 화면에서 고를 수 있다
+  ✅ 선택 카드 3장 렌더 — {'cards': 3, 'picked': 'repair'}
+  ✅ 클릭으로 선택 전환 — {'cards': 3, 'picked': 'repair'}
+― 세이브를 오가도 유지된다
+  ✅ 로드 후 profile 유지 — {'profile': 'hauler', 'scrap': 6}
+― 이전 순환의 흔적 (지난 결말이 다음 런에 남는다)
+  ✅ story_done 결말 → 다음 런에 흔적
+  ✅ too_late 결말 → 다음 런에 흔적
+  ✅ thirst 결말 → 다음 런에 흔적
+  ✅ stranded 결말 → 다음 런에 흔적
+  ✅ shunned 결말 → 다음 런에 흔적
+  ✅ empty_district 결말 → 다음 런에 흔적
+  ✅ 첫 런에는 흔적이 없다 — {'story_done': True, 'too_late': True, 'thirst': True, 'stranded': True, 'shunned': True, 'empty_district': True, 'firstRunClean': True}
+  ✅ 콘솔 pageerror 없음
+✅ 출발 구성 3종이 실제로 다른 시작을 만든다

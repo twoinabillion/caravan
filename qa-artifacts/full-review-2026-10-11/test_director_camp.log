@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_director_camp.py", line 170, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "/Users/sang/caravan/tests/test_director_camp.py", line 18, in main
+    result=page.evaluate('''({cid,stage})=>{
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/sync_api/_generated.py", line 8531, in evaluate
+    self._sync(
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_page.py", line 467, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_frame.py", line 320, in evaluate
+    await self._channel.send(
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/Library/Python/3.12/lib/python/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'id')
+    at eval (eval at evaluate (:290:30), <anonymous>:19:83)
+    at UtilityScript.evaluate (<anonymous>:297:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)

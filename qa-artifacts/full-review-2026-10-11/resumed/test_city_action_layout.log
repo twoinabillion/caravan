@@ -1,0 +1,33 @@
+PASS miryang 320 day 
+PASS miryang 320 night 
+PASS daegu 320 day 
+PASS daegu 320 night 
+PASS muju 320 day 
+PASS muju 320 night 
+PASS jeonju 320 day 
+PASS jeonju 320 night 
+PASS daejeon 320 day 
+FAIL daejeon 320 night {'bounds': [{'id': 'stl-enter', 'x': 111, 'y': 517.4375, 'right': 207, 'bottom': 580.4375, 'h': 63, 'w': 96, 'disabled': False}, {'id': 'stl-out', 'x': 214, 'y': 517.4375, 'right': 312, 'bottom': 580.4375, 'h': 63, 'w': 98, 'disabled': False}], 'nightButtons': [{'id': 'market', 'disabled': True}, {'id': 'garage', 'disabled': True}, {'id': 'people', 'disabled': False}, {'id': 'alley', 'disabled': True}], 'overflow': False, 'dockScroll': 6}
+PASS suwon 320 day 
+PASS suwon 320 night 
+PASS gwangju 320 day 
+PASS gwangju 320 night 
+PASS miryang 390 day 
+PASS miryang 390 night 
+PASS daegu 390 day 
+PASS daegu 390 night 
+PASS muju 390 day 
+PASS muju 390 night 
+PASS jeonju 390 day 
+PASS jeonju 390 night 
+PASS daejeon 390 day 
+PASS daejeon 390 night 
+PASS suwon 390 day 
+PASS suwon 390 night 
+PASS gwangju 390 day 
+PASS gwangju 390 night 
+Traceback (most recent call last):
+  File "/Users/sang/caravan/tests/test_city_action_layout.py", line 28, in <module>
+    assert not failures, f'{len(failures)} city action states are clipped or unreachable'
+           ^^^^^^^^^^^^
+AssertionError: 1 city action states are clipped or unreachable

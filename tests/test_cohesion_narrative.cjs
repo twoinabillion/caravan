@@ -74,7 +74,9 @@ for(const id of ['parents_father_last_log','parents_mother_reunion']){
     assert.equal(out.readingRecord,out.text,id+' result keeps the original prose');
     assert(turns.length>=2,id+' result has explicit beats');
   }
-  assert.equal(gameplayHash(item.choices),choiceContracts[id],id+' branches and effects');
+  const projected={id,choices:json(item.choices)};
+  require('../tools/story-review-contract.cjs')([projected]);
+  assert.equal(gameplayHash(projected.choices),choiceContracts[id],id+' branches and effects');
 }
 assert(event('parents_father_last_log').turns.some(turn=>turn.kind==='record'&&turn.name==='남산 유지실 정비 기록'));
 for(const choice of event('parents_mother_reunion').choices)

@@ -52,6 +52,21 @@ test('both real meal entry points suppress absent Bori and retain him when prese
   assert.equal(c.G.pickMealBanter(),null);
 });
 
+test('completed seed returns and photo deliveries retire their unfinished road reminders',()=>{
+  const c=setup();c.S.party=['jaeyi'];
+  for(const [source,done,needle] of [
+    ['seed_borrowed','seed_returned','두 배로 갚아야 하는 빚'],
+    ['photo_film','photo_received','인화를 기다린다는 거'],
+  ]){
+    c.S.flags={};c.pool=[];vm.runInContext('lastBanter=[];G.pickBanter()',c);
+    assert(!c.pool.some(b=>b.t.includes(needle)));
+    c.S.flags[source]=true;c.pool=[];vm.runInContext('lastBanter=[];G.pickBanter()',c);
+    assert(c.pool.some(b=>b.t.includes(needle)));
+    c.S.flags[done]=true;c.pool=[];vm.runInContext('lastBanter=[];G.pickBanter()',c);
+    assert(!c.pool.some(b=>b.t.includes(needle)));
+  }
+});
+
 test('Bori-only, solo and accompanied scenes resolve to actors actually present',()=>{
   const c=setup(),bori=event(c,'find_bori_nose'),quiet=event(c,'story_bridge_last_quiet');
   c.S.dog=true;
