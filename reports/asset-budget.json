@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-14T05:42:54.373Z",
+  "generatedAt": "2026-10-18T07:00:35.088Z",
   "html": {
-    "bytes": 79549936,
+    "bytes": 106293067,
     "warnBytes": 32000000,
     "maxBytes": 120000000
   },
@@ -10,12 +10,12 @@
     "savedBytes": 229729
   },
   "losslessDelivery": {
-    "assets": 599,
-    "savedBytes": 3992829
+    "assets": 601,
+    "savedBytes": 4012146
   },
   "embedded": {
-    "files": 763,
-    "bytes": 56361632,
+    "files": 844,
+    "bytes": 76384969,
     "categories": {
       "audio": {
         "files": 45,
@@ -23,14 +23,14 @@
         "encodedBytes": 12947612
       },
       "ui": {
-        "files": 100,
-        "bytes": 8111320,
-        "encodedBytes": 10815220
+        "files": 179,
+        "bytes": 27902332,
+        "encodedBytes": 37203340
       },
       "scene": {
-        "files": 491,
-        "bytes": 34304664,
-        "encodedBytes": 45740244
+        "files": 493,
+        "bytes": 34536989,
+        "encodedBytes": 46050012
       },
       "other": {
         "files": 78,
@@ -94,6 +94,12 @@
       "encodedBytes": 992448
     },
     {
+      "path": "assets/ui/road-studies/atlas-v1/daegwallyeong--wonju.webp",
+      "mime": "image/webp",
+      "bytes": 345926,
+      "encodedBytes": 461236
+    },
+    {
       "path": "assets/ui/home-props-atlas-v2.webp",
       "mime": "image/webp",
       "bytes": 343728,
@@ -112,10 +118,28 @@
       "encodedBytes": 437436
     },
     {
+      "path": "assets/ui/road-studies/atlas-v1/gangneung--sokcho.webp",
+      "mime": "image/webp",
+      "bytes": 321190,
+      "encodedBytes": 428256
+    },
+    {
+      "path": "assets/ui/road-studies/atlas-v1/mingyu_ridge--yeongdong.webp",
+      "mime": "image/webp",
+      "bytes": 320574,
+      "encodedBytes": 427432
+    },
+    {
       "path": "assets/scenes/intro-departure-conversation-v4.jpg",
       "mime": "image/jpeg",
       "bytes": 316589,
       "encodedBytes": 422120
+    },
+    {
+      "path": "assets/ui/road-studies/atlas-v1/filmset--namwon.webp",
+      "mime": "image/webp",
+      "bytes": 311306,
+      "encodedBytes": 415076
     },
     {
       "path": "assets/fonts/CaravanJournalHand-Regular.woff2",
@@ -130,40 +154,16 @@
       "encodedBytes": 412280
     },
     {
-      "path": "assets/scenes/onboarding-main-mission-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 290294,
-      "encodedBytes": 387060
-    },
-    {
-      "path": "assets/scenes/seoul-uplink-reveal-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 289082,
-      "encodedBytes": 385444
-    },
-    {
-      "path": "assets/scenes/intro-family-farewell-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 278434,
-      "encodedBytes": 371248
-    },
-    {
-      "path": "assets/scenes/intro-cold-open-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 262691,
-      "encodedBytes": 350256
-    },
-    {
-      "path": "assets/scenes/intro-family-order-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 234945,
-      "encodedBytes": 313260
-    },
-    {
-      "path": "assets/ui/event-result-ticket-v1.webp",
+      "path": "assets/ui/road-studies/atlas-v1/gimcheon--muju.webp",
       "mime": "image/webp",
-      "bytes": 232332,
-      "encodedBytes": 309776
+      "bytes": 303244,
+      "encodedBytes": 404328
+    },
+    {
+      "path": "assets/ui/road-studies/atlas-v1/muju--yeongdong.webp",
+      "mime": "image/webp",
+      "bytes": 298220,
+      "encodedBytes": 397628
     }
   ]
 }

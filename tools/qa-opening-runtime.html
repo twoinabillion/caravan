@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>준비 → 첫 주행 · 실제 번들 격리 검수</title>
+<style>body{margin:18px;background:#202a30;color:#e4dcc5;font:14px/1.5 system-ui}main{max-width:1000px;margin:auto}h1{font-size:20px}p{max-width:850px}nav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}button{min-height:44px;padding:8px 12px;border:1px solid #718278;background:#32453f;color:inherit}iframe{display:block;width:360px;height:728px;max-width:100%;border:1px solid #718278}output{display:block;max-width:850px;white-space:pre-wrap;margin:12px 0}</style>
+<main><h1>준비 → 첫 주행 · 실제 번들 격리 검수</h1>
+<p>생성된 최신 HTML의 실제 엔진·화면·그림을 실행합니다. 저장은 opaque sandbox 안의 임시 메모리에만 기록하며 실제 게임 저장·Studio 플레이는 읽거나 바꾸지 않습니다. 재접속은 이 임시 저장으로 번들 전체를 다시 엽니다. 실제 휴대폰·현재 사용자 플레이의 검수가 아닙니다.</p>
+<nav aria-label="검수 도구"><button data-width="320" data-height="568">320×568</button><button data-width="360" data-height="728">360×728</button><button data-width="480" data-height="800">480×800</button><button id="qa-reload">현재 임시 저장으로 재접속</button><button id="qa-new">새 격리 검수</button><button id="qa-fail-write">다음 임시 저장 1회 실패</button></nav><output id="qa-fault">저장 실패 흉내 꺼짐 · 실제 저장과 무관</output>
+<iframe title="실제 게임 번들 · 격리된 검수" sandbox="allow-scripts allow-modals allow-downloads"></iframe><output id="qa-receipt" aria-live="polite">번들을 불러오는 중</output></main>
+<script type="module">
+const root=new URL('../',import.meta.url),frame=document.querySelector('iframe'),receipt=document.querySelector('#qa-receipt');
+let memory={local:{},session:{}};
+const response=await fetch(new URL('서울까지400km.html',root));if(!response.ok)throw Error('Bundle HTTP '+response.status);
+const bundle=await response.text();
+function mount(){
+ const isolated=`const qaMaps=${JSON.stringify(memory)};let qaFailNextWrite=false;
+ window.addEventListener('message',event=>{if(event.source===parent&&event.data?.kind==='opening-runtime-fail-next-write'){qaFailNextWrite=true;parent.postMessage({kind:'opening-runtime-fault-armed'},'*')}});
+ function qaMemory(scope){const map=new Map(Object.entries(qaMaps[scope]));return {get length(){return map.size},key:i=>[...map.keys()][i]??null,getItem:k=>map.get(String(k))??null,setItem(k,v){if(scope==='local'&&qaFailNextWrite){qaFailNextWrite=false;parent.postMessage({kind:'opening-runtime-write-failed'},'*');throw new DOMException('QA private storage quota','QuotaExceededError')}map.set(String(k),String(v));publish()},removeItem(k){map.delete(String(k));publish()},clear(){map.clear();publish()}};
+ function publish(){parent.postMessage({kind:'opening-runtime-memory',scope,entries:[...map]},'*')}}
+ const localStorage=qaMemory('local'),sessionStorage=qaMemory('session');`;
+ // Only the fixture's private storage adapters and document base differ from the delivery bundle.
+ // No engine, resource, scene, UI or save cursor is patched or invoked by this harness.
+ const prefix='<base href="'+root.href+'"><script>'+isolated.replaceAll('</script','<\\/script')+'<\/script>';
+ const previous=frame.src;
+ frame.src=URL.createObjectURL(new Blob([prefix,bundle],{type:'text/html'}));
+ if(previous.startsWith('blob:'))frame.addEventListener('load',()=>URL.revokeObjectURL(previous),{once:true});
+ receipt.textContent='실제 번들 실행 · 격리된 임시 저장';
+}
+window.addEventListener('message',event=>{
+ if(event.source!==frame.contentWindow)return;
+ if(event.data?.kind==='opening-runtime-fault-armed'){document.querySelector('#qa-fault').textContent='다음 임시 로컬 저장 1회 실패 예약됨';return;}
+ if(event.data?.kind==='opening-runtime-write-failed'){document.querySelector('#qa-fault').textContent='임시 저장 1회 실패 발생 · 실제 저장과 무관';return;}
+ if(event.data?.kind!=='opening-runtime-memory')return;
+ const {scope,entries}=event.data;if(!['local','session'].includes(scope)||!Array.isArray(entries))return;
+ memory[scope]=Object.fromEntries(entries);
+ try{
+  const save=JSON.parse(memory.local.seoul400_save_v1||'null');
+  const prep=JSON.parse(memory.session['caravan-departure-prep-v1']||'null');
+  receipt.textContent=JSON.stringify({fixtureOnly:true,preparation:prep,save:save?{name:save.name,startPack:save.startPack,day:save.day,min:save.min,at:save.at,driving:save.driving?{from:save.driving.from,to:save.driving.to,gone:save.driving.gone}:null,opening:save.opening?{step:save.opening.step,completed:save.opening.completed,pendingResult:save.opening.pendingResult,reading:save.opening.reading?{eventId:save.opening.reading.eventId,phase:save.opening.reading.phase,index:save.opening.reading.view?.index}:null}:null,presentation:save.pendingPresentation?{eventId:save.pendingPresentation.eventId,phase:save.pendingPresentation.phase}:null,fuel:save.fuel,water:save.water,food:save.food,scrap:save.scrap,parts:save.items?.['부품']}:null},null,2);
+ }catch{receipt.textContent='임시 저장 기록 수신';}
+});
+document.querySelectorAll('[data-width]').forEach(button=>button.onclick=()=>{frame.style.width=button.dataset.width+'px';frame.style.height=button.dataset.height+'px'});
+document.querySelector('#qa-reload').onclick=mount;
+document.querySelector('#qa-fail-write').onclick=()=>frame.contentWindow.postMessage({kind:'opening-runtime-fail-next-write'},'*');
+document.querySelector('#qa-new').onclick=()=>{memory={local:{},session:{}};mount()};
+mount();
+</script></html>

@@ -12,10 +12,11 @@ function element(){
     attrs:{},setAttribute(k,v){this.attrs[k]=v;},children:{},querySelector(k){return this.children[k];}};
 }
 function title(save,archive=[],layout='departure'){
-  const elements=Object.fromEntries(['scr-title','bt-new','bt-continue','cont-info','last-journey','title-last-record'].map(k=>[k,element()]));
+  const elements=Object.fromEntries(['scr-title','bt-new','bt-continue','bt-title-restore','cont-info','last-journey','title-last-record'].map(k=>[k,element()]));
   elements['scr-title'].dataset.titleLayout=layout;
   elements['bt-new'].classList.toggle('primary',true);
-  const c={SAVE_KEY:'test',G:{hasSave:()=>save!==null,qualityArchive:()=>archive},
+  const c={SAVE_KEY:'test',G:{hasSave:()=>save!==null,qualityArchive:()=>archive,
+    inspectSave:raw=>{const s=JSON.parse(raw);return {ok:!!s?.stats,summary:s?{day:s.day,km:s.stats?.km,mode:s.mode}:null};}},
     localStorage:{getItem:()=>save,setItem(){throw Error('title must not write saves');}},
     $:s=>elements[s.slice(1)],previousJourneyHtml:last=>`record:${last.id}`};
   vm.runInNewContext(between(ui,'  function refreshTitle(){','  function previousJourneyHtml(')+';refreshTitle();',c);
@@ -26,6 +27,7 @@ test('fresh title has one primary action and does not expose sample save data',(
   assert.equal(e['bt-continue'].style.display,'none');
   assert(e['bt-new'].classList.contains('primary'));
   assert.equal(e['scr-title'].dataset.hasSave,'false');
+  assert.equal(e['bt-title-restore'].hidden,false);
   assert(e['title-last-record'].hidden);
   assert.doesNotMatch(dom,/saved-example|draft-controls/);
 });
@@ -34,6 +36,7 @@ test('real continuation gets priority, round-trip refresh restores it without ch
   for(let i=0;i<2;i++){
     const {elements:e}=title(save);
     assert.equal(e['bt-continue'].style.display,'flex');
+    assert.equal(e['bt-title-restore'].hidden,true);
     assert.equal(e['cont-info'].textContent,'DAY 4 · 43km 주행 · 온로드');
     assert(!e['bt-new'].classList.contains('primary'));
   }
@@ -82,9 +85,9 @@ test('existing entry and return actions are preserved; title sound toggles actua
   const actions=[];const els=Object.fromEntries(['bt-new','bt-continue','bt-preview','bt-previewback','early-sound','bt-title-sound'].map(k=>[k,{}]));
   const c={$:s=>els[s.slice(1)],startNew:mode=>actions.push('name:'+mode),show:s=>actions.push(s),
     renderPreview:()=>actions.push('preview'),SND:{enable:()=>actions.push('enable'),toggle:()=>actions.push('toggle')},
-    G:{load:()=>true},enterGame:()=>actions.push('game')};
+    G:{load:()=>true},screen:'title',S:{ended:false},refreshTitle(){},enterGame:()=>actions.push('game')};
   const lines=ui.split('\n').filter(l=>/^\s*\$\('#bt-(new|continue|previewback)'\)\.onclick=/.test(l));
-  vm.runInNewContext(lines.join('\n')+"\nconst titleSound=$('#bt-title-sound');if(titleSound)titleSound.onclick=()=>SND.toggle();",c);
+  vm.runInNewContext(between(ui,'  function continueSavedJourney(','  function previousJourneyHtml(')+lines.join('\n')+"\nconst titleSound=$('#bt-title-sound');if(titleSound)titleSound.onclick=()=>SND.toggle();",c);
   els['bt-new'].onclick();els['bt-continue'].onclick();els['bt-previewback'].onclick();els['bt-title-sound'].onclick();
   assert.deepEqual(actions,['name:onroad','enable','game','scr-title','toggle']);
   assert.match(ui,/\$\('#bt-preview'\)\.onclick=\(\)=>\{ renderPreview\(\); show\('scr-preview'\)/);

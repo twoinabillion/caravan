@@ -2357,6 +2357,7 @@ Object.entries(D.companionTalkScenes).forEach(function(entry){
 });
 
 D.eventTurnScenes = {
+  opening_bus_repair:['intro-dock-aid','opening-bus-heater-v1'],
   meet_scrapyard:['recruit-minji-welding','recruit-minji','recruit-minji-meet-action'],
   meet_bus:['recruit-parkss-clinic-market-v2','recruit-parkss-meet-action'],
   meet_hitchhiker:['recruit-leo-daein-market-v2','recruit-leo-meet-action'],
@@ -2370,6 +2371,7 @@ D.eventTurnScenes = {
 };
 /* 긴 피날레는 장면을 단순 순환하지 않고 이야기의 실제 단계에서 바꾼다. */
 D.eventTurnSceneStages = {
+  opening_bus_repair:[{at:0,key:'intro-dock-aid'},{at:3,key:'opening-bus-heater-v1'}],
   meet_scrapyard:[
     {at:0,key:'recruit-minji-welding'},
     {at:2,key:'recruit-minji'},
@@ -2404,6 +2406,7 @@ D.eventTurnSceneStages = {
   ]
 };
 D.eventChoiceScenes = {
+  opening_bus_repair:{0:['intro-dock-aid'],1:['intro-dock-aid'],2:['intro-dock-aid']},
   rq_minji_task:{
     0:['recruit-minji-task-collapse'], 1:['recruit-minji-task-collapse'], 2:['recruit-minji-task-collapse']
   },
@@ -2412,7 +2415,7 @@ D.eventChoiceScenes = {
   rq_parkss_follow:{1:['recruit-parkss-follow-shared']},
   rq_leo_task:{0:['recruit-leo-follow'],1:['recruit-leo-task-wade'],2:['recruit-leo-follow']},
   rq_leo_follow:{2:['recruit-leo-follow-puddle']},
-  rq_jaeyi_task:{0:['recruit-jaeyi-task-lift'],1:['recruit-jaeyi-task'],2:['recruit-jaeyi-task']},
+  rq_jaeyi_task:{0:['recruit-jaeyi-task-lift'],1:['recruit-jaeyi-box-recovered-v2'],2:['recruit-jaeyi-box-recovered-v2']},
   rq_jaeyi_follow:{1:['recruit-jaeyi-follow-shelf']},
   rq_eunsu_task:{1:['recruit-eunsu-task-breaker']},
   rq_eunsu_follow:{2:['recruit-eunsu-follow-lights']},
@@ -2652,6 +2655,27 @@ D.onboardingMission = {
 
 /* 새 여정의 짧은 출발. 긴 역사 프롤로그를 대신해 현재의 사람과 물건을
    먼저 만지고 고르게 한다. id와 choice id는 이후 대사 콜백의 정본 키다. */
+/* This optional interlude does not shift the five saved opening step indices. */
+D.openingNameReply = name=>{
+  const text=String(name||'');
+  const code=text.charCodeAt(text.length-1)-0xAC00;
+  return code>=0&&code<=11171?text+(code%28?'이야.':'야.'):'내 이름은 '+text+'.';
+};
+D.openingNameIntroduction = {
+  id:'opening_name_introduction',openingStep:true,nameInput:true,type:'본편',scene:'intro-dock-aid',title:'도윤과 첫 인사',
+  turns:[
+    {kind:'narration',text:'공구를 챙기는 내 옆으로 도윤이 다가왔다.'},
+    {kind:'dialogue',who:'intro_child',name:'도윤',text:'아저씨, 이름이 뭐예요?'}
+  ],
+  choices:[{id:'say_name',label:'이름을 말한다',out:[{p:1,fx:{},
+    text:s=>D.openingNameReply(s.opening.pendingResult.name)+'\n\n도윤이 하진 쪽으로 고개를 돌렸다.\n\n엄마, '+s.opening.pendingResult.name+' 아저씨래.',
+    turns:s=>[
+      {kind:'dialogue',who:'me',text:D.openingNameReply(s.opening.pendingResult.name)},
+      {kind:'narration',text:'도윤이 하진 쪽으로 고개를 돌렸다.'},
+      {kind:'dialogue',who:'intro_child',name:'도윤',text:'엄마, '+s.opening.pendingResult.name+' 아저씨래.'}
+    ]
+  }]}]
+};
 D.openingDeparture = [
   {
     id:'opening_workshop', openingStep:true, type:'본편', scene:'intro-busan-workday-v1',
@@ -2698,7 +2722,7 @@ D.openingDeparture = [
       {kind:'narration',text:'공구를 하나씩 공구함에 넣는 동안, 버스 안 공기가 조금씩 데워졌다.\n\n버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.'},
       {kind:'dialogue',who:'passer_woman',name:'하진',text:'열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.'},
       {kind:'dialogue',who:'me',text:'부산 단말에서도 한번 볼게요. 사람이 받는 접수처가 있는지.'},
-      {kind:'ai',who:'cheollian',name:'부두 민원 단말',text:'원격 이의 제기 경로가 없습니다. 현장 확인 포트: 서울 남산 중앙 노드.'},
+      {kind:'ai',who:'cheollian',name:'부두 민원 단말',text:'이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다. 명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.'},
       {kind:'narration',text:'화면 아래에 제7 잔류구역 등록 인원 6,412명이 떴다. 하진은 대답 대신 유나의 옷깃을 여몄다. 이 버스가 끝이 아니었다.'}
     ],
     choices:[
@@ -3112,9 +3136,8 @@ D.intro = [
     scene:'intro-appeal-denied', era:'오늘 아침 · 감천 부두 민원 단말', title:'부산에서 할 수 있는 마지막 확인',
     text:`하진의 허락을 받아 이송표를 부두 단말에 다시 읽혔다.
 
-<span class="ai">“원격 이의 제기 경로가 없습니다.
-현장 확인 필요.
-지정 포트: 서울 남산 중앙 노드.”</span>
+<span class="ai">“이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다.
+명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.”</span>
 
 “서울에서 쫓아내 놓고, 다시 서울에 가야 이유를 물을 수 있다는 거예요?”
 
@@ -3678,9 +3701,9 @@ const introBeats = {
     {kind:'dialogue', who:'passer_woman', name:'???', text:'도윤아, 모르는 분 붙잡고 그러면 안 돼.'},
     {kind:'dialogue', who:'me', name:'나', text:'괜찮습니다. 버스 안에 난방이 안 들어오죠?'},
     {kind:'dialogue', who:'passer_woman', name:'???', text:'새벽부터 꺼졌어요. 유나가 열이 있는데, 운행 가능한 차부터 본다네요.'},
-    {kind:'narration', text:'버스 옆 점검판을 열자 난방 호스 한쪽이 갈라져 있었다. 젖은 부분을 잘라 내고 남은 호스를 다시 조였다.'},
-    {kind:'dialogue', who:'me', name:'나', text:'시동 한 번만 걸어 보세요.'},
-    {kind:'narration', text:'송풍구에서 미지근한 바람이 나왔다. 아이는 금속 컵을 두 손으로 감싸 쥐었다.'},
+    {kind:'narration', scene:'opening-bus-heater-v1', text:'버스 옆 점검판을 열자 난방 호스 한쪽이 갈라져 있었다. 젖은 부분을 잘라 내고 남은 호스를 다시 조였다.'},
+    {kind:'dialogue', who:'me', name:'나', scene:'intro-dock-aid', text:'시동 한 번만 걸어 보세요.'},
+    {kind:'narration', scene:'intro-dock-aid', text:'송풍구에서 미지근한 바람이 나왔다. 아이는 금속 컵을 두 손으로 감싸 쥐었다.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'고맙습니다. 저는 하진이에요. 얘가 도윤이고, 이 애는 누나예요. 유나.'},
     {kind:'dialogue', who:'me', name:'나', text:'이송표에 이유가 없던데요. 어디 물어보셨어요?'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'이의 신청을 열세 번 했어요. 그때마다 접수 완료는 떴는데, 다음 날 들어가 보면 신청 내역이 없어졌어요.'},
@@ -3692,11 +3715,11 @@ const introBeats = {
     {kind:'narration', text:'부두의 버스가 경적을 울렸다. 공구 가방을 들고 민원 단말로 갔다. 하진이 내 옆에 서서 표를 폈다. 젖은 종이가 유리판에 붙었다.'},
     {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'신청 항목을 말씀하십시오.'},
     {kind:'dialogue', who:'me', name:'나', text:'이송 사유 공개. …아니, 집행 보류가 먼저인가. 둘 다. 둘 다 해 줘.'},
-    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'원격 이의 제기 경로가 없습니다.'},
+    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다.'},
     {kind:'dialogue', who:'me', name:'나', text:'그럼 사람이 받는 접수처를 보여 줘.'},
-    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'현장 확인이 필요한 명령입니다. 지정 포트: 서울 남산 중앙 노드.'},
+    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'서울에서 쫓아내 놓고, 다시 서울까지 와야 묻겠다는 거예요?'},
-    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'안내 가능한 원격 절차가 없습니다.'},
+    {kind:'ai', who:'cheollian', name:'부두 민원 단말', text:'이 단말에서 안내할 수 있는 다른 절차는 없습니다.'},
     {kind:'dialogue', who:'intro_child', name:'도윤', text:'그럼 우리는 아무것도 못 해요?'},
     {kind:'dialogue', who:'me', name:'나', text:'여기서는 안 된대. 남산에 있는 기록을 봐야 한대.'},
     {kind:'dialogue', who:'passer_woman', name:'하진', text:'가서 뭘 보여 줘야 하는지는요?'},
@@ -3856,6 +3879,60 @@ D.intro.forEach(page=>{
   // Fallback/record consumers must tell the same story as the turn reader.
   page.text = page.beats.map(beat=>beat.text).join('\n\n');
 });
+
+/* Approved quiet opening. Only new interactive journeys opt in; the five
+   legacy steps and their paid receipts remain untouched. Reuse canonical
+   beats rather than maintaining a second, gradually diverging script. */
+{
+  const page=id=>D.intro.find(item=>item.scene===id);
+  const memory=page('intro-family-packing-v1').beats;
+  const departure=page('intro-departure-choice').beats;
+  D.openingPresence=D.openingDeparture.map(event=>({...event,
+    turns:event.turns.map(turn=>({...turn})),
+    choices:event.choices.map(choice=>({...choice,out:choice.out.map(out=>({...out}))}))}));
+  const appeal=D.openingPresence.find(event=>event.id==='opening_failed_appeal');
+  appeal.scenes=['intro-dock-aid','intro-family-packing-v1','intro-appeal-denied'];
+  appeal.turns=[
+    {...appeal.turns[0],scene:'intro-dock-aid',timeKind:'current'},
+    {...memory[0],scene:'intro-family-packing-v1',timeKind:'memory',timeLabel:'내 기억 · 여덟 살, 서울을 떠나던 밤'},
+    {...memory[3]}, {...memory[4]},
+    {...appeal.turns[1],scene:'intro-appeal-denied',timeKind:'current'},
+    ...appeal.turns.slice(2)
+  ];
+  appeal.readingRecord='내가 본 일이 아니다. 부산에서 할아버지에게 들었던 이야기다.\n\n'+
+    [5,7,8].map(index=>page('intro-cheollian-2026').beats[index]).map(turn=>
+      (turn.name?`${turn.name}: `:'')+turn.text).join('\n\n');
+  appeal.readingRecordLabel='할아버지에게 들은 이야기 · 천리안의 처음';
+  const keys=D.openingPresence.find(event=>event.id==='opening_departure');
+  keys.openingFinal=false;
+  keys.choices.forEach(choice=>{
+    choice.out.forEach(out=>{out.scene='intro-workshop-departure';});
+  });
+  keys.choices.find(choice=>choice.id==='keep_key').out[0].text=
+    '돌아올 날짜는 비운 채 쪽지를 붙이고 열쇠를 목에 걸었다.';
+  D.openingFarewell={
+    id:'opening_farewell',type:'본편',openingStep:true,openingFinal:true,
+    presentationOnly:true,chapterBoundary:true,title:'이제, 내가 가는 길',
+    scenes:['intro-departure-conversation-v4','intro-departure-start-v1'],
+    turns:[
+      {...departure[1],scene:'intro-departure-conversation-v4',timeKind:'current',timeLabel:'지금 · 부두 입구'},
+      ...[2,5,6,7].map(index=>({...departure[index]})),
+      {...departure[8],timeKind:'current',timeLabel:'지금 · 달구지 운전석'},
+      {...departure[9]}
+    ],
+    choices:[{id:'begin_road',label:'길로 나간다',out:[{p:1,
+      scene:'intro-departure-start-v1',text:'양산 쪽으로 가며 이송표의 발신 기록을 찾는다.'}]}]
+  };
+  // Preparation's optional preview contains only past scenes, never a second
+  // playthrough of today's repair, appeal, key choice and departure.
+  D.introHistoryPages=[
+    ['intro-family-packing-v1','memory'],['intro-passenger-seat','memory'],
+    ['intro-cheollian-2026','reported'],['intro-first-expulsion','reported'],
+    ['intro-resistance-begins','reported'],['intro-parents-discovery','reported'],
+    ['intro-silenced-presentation','reported'],['intro-blank-reason','memory'],
+    ['intro-socket-memory-v1','memory'],['intro-envelope-signal','memory']
+  ].map(([id,timeKind])=>({...page(id),timeKind}));
+}
 
 /* ═══════════════════ 이벤트 풀 ═══════════════════
    type: 발견|조우|탐색|동행|추적|위기  /  region 배열 없으면 전역

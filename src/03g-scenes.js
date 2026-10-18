@@ -237,6 +237,7 @@ D.scenes = {
   'intro-family-farewell-v1':'__SCENE_INTRO_FAMILY_FAREWELL_V1__',
   'intro-current-expulsion':'__SCENE_INTRO_CURRENT_EXPULSION__',
   'intro-dock-aid':'__SCENE_INTRO_DOCK_AID__',
+  'opening-bus-heater-v1':'__SCENE_OPENING_BUS_HEATER_V1__',
   'intro-appeal-denied':'__SCENE_INTRO_APPEAL_DENIED__',
   'intro-dashboard-module':'__SCENE_INTRO_DASHBOARD_MODULE__',
   'intro-workshop-departure':'__SCENE_INTRO_WORKSHOP_DEPARTURE__',
@@ -291,6 +292,7 @@ D.scenes = {
   'recruit-leo-task':'__SCENE_RECRUIT_LEO_TASK__',
   'recruit-jaeyi-task':'__SCENE_RECRUIT_JAEYI_TASK__',
   'recruit-jaeyi-trapped-box-v1':'__SCENE_RECRUIT_JAEYI_TRAPPED_BOX_V1__',
+  'recruit-jaeyi-box-recovered-v2':'__SCENE_RECRUIT_JAEYI_BOX_RECOVERED_V2__',
   'recruit-eunsu-task':'__SCENE_RECRUIT_EUNSU_TASK__',
   'recruit-kangwoo-task':'__SCENE_RECRUIT_KANGWOO_TASK__',
   'recruit-minji-follow':'__SCENE_RECRUIT_MINJI_FOLLOW__',
@@ -370,6 +372,9 @@ const associativeIntroDescriptions={
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
+  'intro-dock-aid':'감천 부두의 멈춘 이송 버스. 하진 곁에 누나 유나가 담요를 덮고 기대고, 여덟 살 도윤이 금속 컵을 들고 있다.',
+  'opening-bus-heater-v1':'낡은 이송 버스의 열린 점검판과 찢어진 난방 호스. 선택할 수리 방법은 아직 정해지지 않았다.',
+  'recruit-jaeyi-box-recovered-v2':'꺼낸 양철 상자 곁에서 낡은 시계를 살펴보는 재이. 구출 도구나 도자기 새의 상태는 보이지 않는다.',
   'leo-broadcast-room-v1':'청주 방송실의 믹싱 데스크 앞에서 기타와 마이크를 준비하는 레오',
   'seoul-uplink-empty-v2':'서울 코어와 분리된 정비 단말. 별도 전원선과 분리된 케이블, 작은 상태등만 보이며 코어는 화면 밖에 있다',
   'seoul-reset-empty-v2':'독립 전원으로 켜진 정비 단말의 작은 상태등. 서울 코어는 화면 밖에 있고 사람이나 차량은 없다',

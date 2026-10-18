@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-16",
+  "request": "Continue globally after approval of the 78-route draft; working app first, size optimization later.",
+  "supersedes": "reports/app-first-20261016.json (terrain/art completion status only; earlier QA remains historical)",
+  "implementation": {
+    "routes": 78,
+    "directions": 156,
+    "places": 58,
+    "manifest": "assets/ui/road-environment/atlas-v2.json",
+    "renderer": "Existing ROAD_CONTINUITY owns immutable city crops; full 2160x720 panoramas embedded in hosted/offline app. Native 1024px viewport, 2048px central span, exact64px endpoint banks. Uniform scale/top-sky crop, no vertical warp or mirrored terrain.",
+    "artAccounting": "Five previously generated landform-corrected masters plus73 existing reviewed full panoramas; not78 new paintings or surveyed road views. Approved shared Busan–Yangsan–Miryang strip retains ownership of its three city crops.",
+    "narrativeArt": [
+      "Final opening-bus-family-v3 uses both official Hajin/passer_woman and Doyun/intro_child portraits in an unaltered reference strip alongside all four canonical references. School-age Yuna replaces the baby-like composition. v2 with omitted Hajin reference/tied hair is superseded and retained, not embedded. Damaged hose detail appears only during inspection, then family returns before engine test/result.",
+      "Jaeyi entry was already approved/wired before this turn. New recovered-box/watch scene replaces brace/hands results only; winch result and shared salvage art unchanged."
+    ],
+    "preserved": [
+      "User save and current title/no-save state",
+      "Rules/costs/effects/paid receipts",
+      "Live caravan/upgrades/weather/cues/braking owner",
+      "All source/master images and canonical identity references"
+    ]
+  },
+  "verification": {
+    "sourceTests": {
+      "passed": 661,
+      "failed": 0,
+      "log": "/tmp/caravan-atlas-source-final.log"
+    },
+    "targeted": {
+      "passed": 11,
+      "failed": 0,
+      "log": "/tmp/caravan-atlas-target.log"
+    },
+    "quick": {
+      "status": "passed",
+      "events": 1039,
+      "nodes": 58,
+      "scenes": 415,
+      "sceneAssets": 608,
+      "portraits": 73,
+      "canonicalPortraitByteMatches": 7,
+      "dialogueErrors": 0,
+      "manualRepetitionWarnings": 2,
+      "log": "/tmp/caravan-global-quick-final.log"
+    },
+    "visual": {
+      "fixture": "tools/qa-connected-road.html",
+      "forwardRoutes": 78,
+      "samplesPerRoute": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ],
+      "capturedFrames": 390,
+      "contactSheets": 6,
+      "observed": true,
+      "additional": "Reverse Seoul→Suwon arrival/stop/JSON copy/resume/next valid departure; reverse coast320px night/rain/upgrade/brake cue and480px dusk/fog.",
+      "art": "Actual passenger-reader/pages/materials CSS in separate360x728 read-only component frames; full faces/hands/box/tear visible. No event/save code executed.",
+      "directory": "qa-artifacts/global-landscape-2026-10-16",
+      "limitations": "Synthetic renderer/component QA, not user's current road/event UI or natural full campaign or physical-device performance."
+    },
+    "gallery": "Actual4319/__live/assets HTTP200 contained both new deliveries before wiring.",
+    "build": {
+      "command": "CARAVAN_HTML_READY=1 npm run build:toss",
+      "htmlBytes": 106249472,
+      "htmlSha256": "8ff920b744712a09a8e63b637f182b908f9db757ffaf9765db96c23417a0cb89",
+      "artifact": "caravan.ait",
+      "bytes": 88121077,
+      "sha256": "ea46c9fe9af078f528efc3033cd6d3b9eb0a415f89ea9453e5fa672000bb3cee",
+      "aliases": [
+        "caravanproject.ait",
+        "seoul400km.ait"
+      ],
+      "aliasHashesIdentical": true,
+      "releaseGate": "passed",
+      "logs": [
+        "/tmp/caravan-global-build-final.log",
+        "/tmp/caravan-global-toss-final.log",
+        "/tmp/caravan-global-release-final.log"
+      ],
+      "platform": "Existing Apps-in-Toss; no standalone APK/IPA or external deployment",
+      "quality": "No lossy quality reduction beyond contract delivery exports. 32MB advisory exceeded;120MB hard budget passed."
+    },
+    "diskRecovery": "ENOSPC during atomic HTML write and alias copy recovered by removing only two verified identical generated compatibility copies and regenerating them. Canonical AIT/master images/user files retained; final aliases recreated/hash-matched. Vite shared node_modules temporary-write permission required escalation."
+  },
+  "live": {
+    "before": {
+      "capturedAt": "2026-10-16T14:07:58.912Z",
+      "screen": "title",
+      "hasSave": false,
+      "viewport": [
+        360,
+        728
+      ],
+      "loadedRevision": "1792156619562",
+      "pendingRevision": null
+    },
+    "after": {
+      "capturedAt": "2026-10-16T14:45:32.272Z",
+      "screen": "title",
+      "game": null,
+      "viewport": {
+        "width": 360,
+        "height": 728,
+        "dpr": 2
+      },
+      "live": {
+        "previewUrl": "http://127.0.0.1:4319/?__studio=1792155493316",
+        "loadedRevision": "1792156619562",
+        "styleRevision": "1792156619562",
+        "pendingRevision": 1792161922435,
+        "applying": false
+      },
+      "hasSave": "false"
+    },
+    "action": "No live apply, new game, save advance/reset, refresh, server restart, commit, push or deploy. Safari whole-app read was denied by safety review; requested scoped Studio-only approval asynchronously, no answer yet. Actual in-game crop/apply not certified."
+  },
+  "remaining": [
+    "Click latest-code apply in actual Studio and verify actual saved road/event handoffs/refresh when accessible.",
+    "Finite-resource natural full campaign, companion combinations/endings and subjective listening remain separate playtest work; prepared-state source tests are not a substitute.",
+    "Physical-phone packaged startup/suspend/resume/memory/frame pacing; standalone platform not selected.",
+    "Geographic precision beyond regional terrain interpretation and original-art judgment, not a literal surveyed-road recreation.",
+    "Size optimization explicitly deferred."
+  ]
+}

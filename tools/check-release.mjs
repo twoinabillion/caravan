@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {readFileSync, statSync} from 'node:fs';
 import {resolve} from 'node:path';
+import {readGameBuild,appShellDir} from './prepare-app-shell.mjs';
 
 const root=resolve(import.meta.dirname,'..');
 const fail=message=>{ throw new Error(`release gate: ${message}`); };
@@ -20,10 +21,11 @@ const html=readFileSync(htmlPath,'utf8');
 /* 빌드 문자열의 단일 소스는 엔진 소스 — 게이트는 그 값을 읽어 대조만 한다 */
 const engineSource=['04a-engine-core.js','04b-engine-crew.js','04c-engine-travel.js','04d-engine-director.js','04e-engine-world.js']
   .map(n=>readFileSync(resolve(root,'src',n),'utf8')).join('\n');
-const buildMatch=engineSource.match(/const GAME_BUILD = '([^']+)'/);
-if(!buildMatch) fail('엔진 소스가 GAME_BUILD를 선언하지 않는다');
-const gameBuild=buildMatch[1];
-if(!html.includes(`const GAME_BUILD = '${gameBuild}'`)) fail('generated HTML does not contain the current build string');
+const gameBuild=readGameBuild(engineSource);
+if(!gameBuild) fail('엔진 소스가 GAME_BUILD를 선언하지 않는다');
+if(readGameBuild(html)!==gameBuild) fail('generated HTML does not contain the current build string');
+if(readGameBuild(readFileSync(resolve(appShellDir(resolve(root,'dist')),'index.html'),'utf8'))!==gameBuild)
+  fail('packaged game build is stale');
 
 /* 확대 금지 회귀 방지: 어떤 배포 셸도 user-scalable=no를 다시 들여올 수 없다 */
 for(const shell of ['서울까지400km.html','index.html']){

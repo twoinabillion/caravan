@@ -140,11 +140,11 @@ const SCENE = (()=>{
     const eased=raw*raw*raw*(raw*(raw*6-15)+10);
     return {from,to,mix:eased};
   }
-  function drawRoadBackdrop(hour,dark,wx){
+  function drawRoadBackdrop(hour,dark,wx,dt){
     const state=roadBackdropState();
     drawSky(hour,dark,wx,true);
     ROAD_ENVIRONMENT.draw(ctx,off,{state,W,H,scale:ROAD_RENDER_SCALE,
-      worldX,hour,dark,wx,edges:D.edges,at:S&&S.at,driving:S&&S.driving,recap:S&&S.lastJourneyRecap});
+      worldX,hour,dark,wx,dt,edges:D.edges,at:S&&S.at,driving:S&&S.driving,recap:S&&S.lastJourneyRecap});
   }
 
   function poles(par,roadY,col){
@@ -1320,7 +1320,13 @@ const SCENE = (()=>{
     const speed=S&&S.driving&&!UI.modalOpen()?approachSpeed:0;
     if(speed>0) worldX+=64*dt*speed;
 
-    drawRoadBackdrop(hour,dark,wx);
+    drawRoadBackdrop(hour,dark,wx,dt);
+    // Only travel-space actors turn. The canonical terrain, sky, weather and
+    // HUD keep their orientation. Positive worldX remains the distance clock
+    // for road markings, cues and smoke in either direction.
+    const facing=typeof ROAD_CONTINUITY!=='undefined'?ROAD_CONTINUITY.direction(S):1;
+    ctx.save();
+    if(facing<0){ctx.translate(W,0);ctx.scale(-1,1);}
     const roadY=road(dark,wx);
     deadCars(0.85,roadY+P((H-roadY)*0.32), mix('#181d2c','#0b0e18',dark*0.5));
     poles(0.85,roadY+2, mix('#20263a','#111420',dark*0.4));
@@ -1330,6 +1336,7 @@ const SCENE = (()=>{
     van(roadY,speed,dark,wx,undefined,1);
     roadApproachVehicleAlert(roadY);
     drawPuffs(dt);
+    ctx.restore();
     drawCrows(dt); weather(wx,dark,speed,dt);
     /* 비네트 */
     const vg=ctx.createRadialGradient(W/2,H*0.45,H*0.3,W/2,H*0.5,H*0.95);

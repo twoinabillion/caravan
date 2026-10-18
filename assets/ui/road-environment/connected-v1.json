@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "busan-yangsan-miryang",
+  "enabled": true,
+  "file": "assets/ui/road-studies/busan-yangsan-miryang-v2.webp",
+  "sha256": "49377883feea53ada39903fae873a14ae9ee2fc515c67d3b521bbe5165e923e2",
+  "width": 2160,
+  "height": 720,
+  "viewport": 1080,
+  "nodes": {"busan": 0, "yangsan": 540, "miryang": 1080},
+  "routes": [["busan", "yangsan", 20], ["yangsan", "miryang", 34]],
+  "authorization": "2026-10-15 Sang: 해봐, following connected draft and two-leg integration proposal",
+  "provenance": "assets/masters/connected-journey-v1/provenance.json",
+  "alpha": {"sourceOpaque": false, "runtimeSolidThreshold": 192, "note": "Preserve the source. Normalize solid terrain once after decode; retain transparent sky and fractional silhouette edges."},
+  "scope": "Two connected corridors and the same three city crops at every incoming/outgoing endpoint. Other city artwork remains unchanged. Illustrative geography, not a surveyed road."
+}

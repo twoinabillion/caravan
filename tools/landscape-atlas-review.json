@@ -1,0 +1,59 @@
+{
+  "reviewedAt": "2026-10-15",
+  "status": "independent-design-draft-awaiting-review",
+  "productionApplied": false,
+  "coverage": {
+    "placesWithTerrainBrief": 58,
+    "routesWithContinuityBriefAndPreview": 78,
+    "newLandscapeMasters": 5,
+    "existingBusanSeed": 1,
+    "existingMastersReexportedForComparison": 72,
+    "deliveries": "2160x720 WebP, preserved alpha, proportional downscale/crop; no upscaling"
+  },
+  "automaticChecks": {
+    "sourceTests": { "passed": 634, "failed": 0, "log": "/private/tmp/caravan-atlas-tests.log" },
+    "atlasTestsAfterWidthControls": { "passed": 4, "failed": 0 },
+    "diffCheck": "passed",
+    "checksAreNotVisualOrGeographicApproval": true
+  },
+  "visualReview": {
+    "newFullMasters": "All five inspected; muted palette, continuous terrain, no embedded people/vehicle/UI. Some silhouette fringe and ground opacity still need production acceptance.",
+    "existingMasters": "Original full panoramas inspected in contact sheets; not all individually approved against newly authored terrain briefs.",
+    "browser": "Chrome, independent draft served by the actual Studio origin 4327; not the user's live game or save",
+    "sceneWidths": [320, 360],
+    "widthCaveat": "These are measured scene component widths, not a claim of an exact 320/360 browser viewport. Browser minimum sizing/zoom affected the viewport override.",
+    "observedRoutes": [
+      { "id": "jeonju--nonsan", "checks": ["360px crop", "automatic movement", "pause", "middle", "reverse direction", "reverse endpoint", "back to catalogue"] },
+      { "id": "daegwallyeong--wonju", "checks": ["360px departure crop", "next route"] },
+      { "id": "daegwallyeong--gangneung", "checks": ["360px arrival crop", "next route"] },
+      { "id": "gangneung--sokcho", "checks": ["320px middle crop", "no horizontal overflow", "controls fit", "back to catalogue"] },
+      { "id": "seoul--suwon", "checks": ["360px arrival crop", "back to catalogue"] },
+      { "id": "pyeongtaek--suwon", "checks": ["360px existing-master crop", "regional catalogue entry", "back restores expanded region"] }
+    ],
+    "studioEmbeddedPanel": "Manifest entry selected, but native Safari Studio draft iframe remained blank/about:blank. Direct independent draft opens and functions. Embedded Studio visual QA is NOT passed.",
+    "all78RoutesIndividuallyPlayed": false
+  },
+  "liveState": {
+    "contextCheckedAt": "2026-10-15T08:30:47.177Z",
+    "screen": "title",
+    "game": null,
+    "hasSave": false,
+    "viewport": { "width": 360, "height": 728, "dpr": 2 },
+    "loadedRevision": "1792046541118",
+    "styleRevision": "1792046541118",
+    "pendingRevision": 1792052677434,
+    "appliedByAgent": false,
+    "comparison": "Same title/no-save state and loaded/style revision as pre-work. Watcher produced a pending revision; apply/refresh/restart not used."
+  },
+  "remainingBeforeProduction": [
+    "Sang's review of the global draft and five new geography families",
+    "Compare each of the 72 reused masters to its terrain brief; replace mismatches rather than labeling them corrected",
+    "Canonical endpoint continuity across arrival, stopped city and next departure",
+    "Silhouette fringe, opaque ground, weather and lighting composition",
+    "Renderer integration preserving real vehicle upgrades, riders, cue proportions and continuous braking",
+    "Forward/reverse driving, event stop/resume, refresh persistence and next action in the actual live game",
+    "Exact roads/view directions are not surveyed replicas; broad official geography and fictional game locations remain distinguished"
+  ],
+  "localPipelineCorrection": "Initial preview export flattened alpha because ImageMagick extent used its default background. Set -background none and regenerated all previews; alpha regression tests pass. Never wired into production.",
+  "records": ["tools/landscape-atlas-prompts.json", "tools/landscape-atlas-generation.json", "tools/design-drafts/landscape-atlas/manifest.json"]
+}

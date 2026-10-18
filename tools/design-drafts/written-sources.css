@@ -1,0 +1,38 @@
+/* Sole owner for the isolated written-source study. Never loaded by gameplay. */
+:root{color-scheme:dark;--copy:16px;--harbor:#142027;--paper:#e4dcc6;--ink:#302c24;--source:#735121;--muted:#514b3f;--sans:"Apple SD Gothic Neo",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;font-family:var(--sans);font-synthesis:none}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--harbor);color:var(--paper);overflow:hidden}
+p,h1,h2,fieldset{margin:0}
+.source-draft{width:min(100%,480px);height:100svh;margin:auto;display:grid;grid-template-rows:auto 44px minmax(0,1fr) auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.review-tools{position:relative;z-index:2;display:flex;align-items:center;gap:9px;min-height:44px;padding:0 10px;background:#0d1a21;font-size:12px;border-bottom:1px solid #43545b}
+.review-tools>span{margin-right:auto;color:#b2c0bf;font-size:11px;white-space:nowrap}
+.review-tools label,.draft-info summary{display:flex;align-items:center;gap:5px;min-height:44px;cursor:pointer;white-space:nowrap}
+input{accent-color:#d5b77c}
+.review-tools input{width:16px;height:16px;margin:0}
+.draft-info summary{text-decoration:underline;text-underline-offset:3px}
+.draft-info>div{position:absolute;top:44px;left:6px;right:6px;max-height:70svh;overflow-y:auto;padding:16px;border:1px solid #697974;background:#1c3038;font-size:14px;line-height:1.65}
+.draft-info p+p{margin-top:12px}
+.examples{position:relative;display:flex;align-items:stretch;justify-content:center;gap:24px;min-width:0;border:0;padding:0;background:#142027}
+.examples legend,.examples input,.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;clip-path:inset(50%);overflow:hidden}
+.examples label{display:flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;border-bottom:2px solid transparent;cursor:pointer;font-size:13px;color:#c4cdc6}
+.examples input:checked+label{border-bottom-color:#d5b77c;color:#f0dfb8}
+.examples input:focus-visible+label{outline:3px solid #e8b764;outline-offset:-3px}
+.study-scroll{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scroll-padding:16px;padding:6px;background:#070910;word-break:keep-all;overflow-wrap:anywhere}
+.paper{padding:20px 28px 24px;background:var(--paper);color:var(--ink)}
+.paper.event-example{--paper:#293239;--ink:#f0eadb;--source:#d6b47b;--muted:#c2c8c6}
+.provenance{margin:0 0 24px;color:var(--source);font:500 12px/1.5 var(--sans)}
+.document{margin:0;min-width:0;font:400 var(--copy)/1.55 var(--sans)}
+.document-head{margin-bottom:8px}
+.document-head h2{color:var(--source);font:600 13px/1.5 var(--sans);overflow-wrap:anywhere}
+.old-kind{display:none;color:var(--muted);font:400 12px/1.5 var(--sans)}
+.document-head h2,.old-kind{white-space:normal}
+.narration{padding:5px 0;margin:16px 0;color:var(--ink);font:400 var(--copy)/1.55 var(--sans)}
+.review-note{margin-top:28px;padding-top:12px;border-top:1px solid currentColor;color:var(--muted);font:400 12px/1.6 var(--sans)}
+.scope-note{padding:9px 14px;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center;color:#b2c0bf;font:400 11px/1.5 var(--sans)}
+.event-example{display:none}
+body:has(#event-example:checked) .intro-example{display:none}
+body:has(#event-example:checked) .event-example{display:block}
+body:has(#old-source:checked) .old-kind{display:block}
+body:has(#large-source:checked){--copy:21px}
+:is(summary,input,.study-scroll):focus-visible{outline:3px solid #e8b764;outline-offset:-3px}
+@media(max-width:340px){.review-tools{gap:7px;padding-inline:8px}.review-tools>span{font-size:10px}.paper{padding-inline:24px}}

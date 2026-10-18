@@ -67,7 +67,10 @@ G.explore = ()=>{
     UI.toast(`🔦 ${spent} 큰 수확은 없었다${freshHaul}`);
     UI.renderAll(); G.save(); return true;
   }
-  G.fireDriveEvent2(pool);
+  if(!G.fireDriveEvent2(pool)){
+    UI.toast(`🔦 주변 수색을 마쳤다${freshHaul}`);
+    UI.renderAll();
+  }
   G.save();
   return true;
 };
@@ -82,20 +85,20 @@ G.fireDriveEvent2 = (pool)=>{
   const dailyCap=earlyJourney?1:3;
   const minGapKm=earlyJourney?26:14;
   const km=Number(S.stats&&S.stats.km)||0;
-  if((Number(S._roadEventCount)||0)>=dailyCap||km-(Number(S._lastRoadEventKm)||-999)<minGapKm) return;
+  if((Number(S._roadEventCount)||0)>=dailyCap||km-(Number(S._lastRoadEventKm)||-999)<minGapKm) return false;
   /* 큐에 든 이야기는 직전 모달을 닫자마자 재생하지 않고, 다음 정상적인
      도로 사건 기회에 대신 사용한다. 플레이어가 그 사이 실제로 운전한다. */
-  pool=G.directEventPool(pool); if(!pool.length) return;
+  pool=G.directEventPool(pool); if(!pool.length) return false;
   const queued=G.popStory();
   const markRoadEvent=()=>{
     S._roadEventCount=(Number(S._roadEventCount)||0)+1;
     S._lastRoadEventKm=km;
   };
-  if(queued){ markRoadEvent(); G.openEventById(queued); return; }
+  if(queued){ markRoadEvent(); G.openEventById(queued); return true; }
   const weight=e=>e.w*(G.eventIsContextual(e)?2.1:1)*G.directorWeight(e);
   const total=pool.reduce((s,e)=>s+weight(e),0); let r=rng()*total;
   let evd=pool[0]; for(const e of pool){ r-=weight(e); if(r<=0){evd=e;break} }
-  markRoadEvent(); G.openEvent(evd);
+  markRoadEvent(); G.openEvent(evd); return true;
 };
 /* 야영은 즉시 시간 넘김이 아니라, 차를 "집"처럼 쓰는 짧은 준비 단계도 가진다.
    _campPlan은 기존 저장 파일에도 자연스럽게 붙고, 다음 취침 후 반드시 비운다. */

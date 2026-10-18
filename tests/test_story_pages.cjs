@@ -146,7 +146,7 @@ test('style owner is gated from old live shells, choices keep full text, and bui
  for(const [,body] of css.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g))postcss.parse(body);
  const owner=css.match(/<style id="passenger-story-reader">([\s\S]*?)<\/style>/)[1];
  const active=owner.slice(owner.indexOf('/* Approved event-pages v2.'));
- assert.match(active,/width:48px;height:48px;object-fit:contain/);assert.match(active,/reading-body-size,15px\) \+ 3px/);
+ assert.match(active,/width:var\(--reader-portrait-size,48px\);height:var\(--reader-portrait-size,48px\);object-fit:contain/);assert.match(active,/reading-body-size,15px\) \+ 3px/);
  assert.doesNotMatch(active,/line-clamp|text-overflow:ellipsis/);
  assert.match(active,/\[data-reader-mode="review"\]/);assert.match(active,/\[hidden\]\{display:none!important\}/);
  const build=fs.readFileSync('tools/build-html.mjs','utf8');assert(build.indexOf("'src/07h-story-pages.js'")<build.indexOf("'src/07-ui.js'"));
@@ -191,10 +191,23 @@ function renderHarness(state,height=450){
   placeStoryDock(){},normalizeRecruitDecisionDock(){},storyRecordHtml:()=>'',storyInspectionHtml:()=>'',storyCompletedRecordHtml:()=>'',storyOutcomeSummaryHtml:()=>'',
   clearStoryAuto(){},VO:{play(){}},AMBI:{play(){}},heldStoryAdvanceKeys:new Set(),$:()=>null,
   requestAnimationFrame:fn=>fn(),closeEvent(){},setStoryReaderMode:(s,mode)=>{s.readerMode=mode;env.renderStoryState();}});
- for(const name of ['storyElapsedChip','storyResourceChange','storyResourceIcon','storyResourceHtml','pagedStoryHtml','storyResultPageTurns','renderPagedStory','advanceStory','storyDisplayTurns'])helper(env,name);
+ for(const name of ['storyElapsedChip','storyResourceChange','storyResourceIcon','storyResourceHtml','storyDocumentTitle','pagedStoryHtml','storyResultPageTurns','renderPagedStory','advanceStory','storyDisplayTurns'])helper(env,name);
  env.renderStoryState=()=>env.renderPagedStory(state,sheet);
  return {env,state,sheet,reader,dock,get captures(){return captures}};
 }
+test('document pages reach choices and return from back/review without losing the titled source or cursor',()=>{
+ const state={phase:'event',eventId:'written-fixture',index:0,turns:[{kind:'letter',who:'mother',name:'엄마의 메모',text:'원문 그대로 '.repeat(100)}],
+  finalDock:'<div class="choices"><button class="choice">계속</button></div>',wireFinal(){}};
+ const h=renderHarness(state);h.env.renderStoryState();
+ assert.match(h.reader.innerHTML,/document-source">엄마의 메모</);assert.doesNotMatch(h.reader.innerHTML,/<img\b/);
+ let count=0;while(state.readingPage.mode==='read'){h.env.advanceStory(state);assert(++count<30);}
+ assert.match(h.dock.innerHTML,/계속/);
+ h.dock.children[0].querySelector('[data-page-back]').onclick();assert.equal(state.readingPage.mode,'read');
+ const cursor=plain(state.readingPage.cursor);state.readerMode='review';h.env.renderStoryState();
+ assert.match(h.reader.innerHTML,/document-source">엄마의 메모</);
+ h.dock.querySelector('[data-reader-close]').onclick({stopPropagation(){}});assert.equal(state.readerMode,'current');
+ assert.deepEqual(plain(state.readingPage.cursor),cursor);assert.match(h.reader.innerHTML,/document-source">엄마의 메모</);
+});
 test('real page renderer reaches every choice group, can read back, and returns from records',()=>{
  const state={phase:'event',eventId:'fixture',index:0,turns:[{kind:'dialogue',who:'minji',text:'가나다라 '.repeat(180)}],
   finalDock:'<div class="choices">'+Array.from({length:9},(_,i)=>`<button class="choice" data-i="${i}">선택 ${i} · 긴 설명을 그대로 읽는다</button>`).join('')+'</div>',wireFinal(){}};

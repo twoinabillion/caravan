@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>서사 그림 · 읽기 전용 크롭 검수</title>
+<style>body{margin:20px;background:#111923;color:#e5e8e9;font:15px/1.6 system-ui}main{max-width:1100px;margin:auto}h1{font-size:20px}section{display:inline-block;vertical-align:top;margin:12px 8px 12px 0}iframe{display:block;width:360px;height:728px;border:1px solid #53606b}p{max-width:900px}h2{font-size:15px}</style>
+<main><h1>서사 그림 · 읽기 전용 크롭 검수</h1><p>현행 CSS의 passenger-reader/pages 장면 컴포넌트와 360px 프레임에서 그림의 잘림만 확인합니다. 게임·저장·사건 진행 코드는 실행하지 않습니다. 실제 플레이나 전체 사건 UI 검수가 아닙니다.</p>
+<section><h2>버스 가족 · 선택 전과 수리 후</h2><iframe title="버스 가족 크롭" sandbox="allow-same-origin"></iframe></section>
+<section><h2>난방 호스 · 점검 시점</h2><iframe title="난방 호스 크롭" sandbox="allow-same-origin"></iframe></section>
+<section><h2>재이 · 상자 회수 후</h2><iframe title="재이 결과 크롭" sandbox="allow-same-origin"></iframe></section>
+</main><script type="module">
+const root=new URL('../',import.meta.url),style=await(await fetch(new URL('src/01-style.html',root))).text();
+const scenes=[['opening-bus-family-v3.webp','하진과 누나 유나, 여덟 살 도윤'],['opening-bus-heater-v1.webp','찢어진 버스 난방 호스'],['recruit-jaeyi-box-recovered-v2.webp','회수한 상자 곁에서 시계를 살펴보는 재이']];
+document.querySelectorAll('iframe').forEach((frame,i)=>{const [file,alt]=scenes[i];
+ frame.srcdoc=`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="${root.href}">${style}<body><div id="app"><div id="frame"><div id="ev-wrap" class="sheet-wrap on" aria-hidden="false"><div id="ev-sheet" class="event-mode passenger-reader" data-reader-layout="pages" data-reader-skin="materials" data-event-kind="story" data-story-step="beat"><div class="event-head"></div><div class="event-scroll"><div class="event-scene-frame"><img class="event-scene" src="assets/scenes/${file}" alt="${alt}"></div></div></div></div></div></div></body></html>`;
+});
+</script></html>

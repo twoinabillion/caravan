@@ -1,5 +1,9 @@
 # ElevenLabs 복붙 시트 — 서울까지 400km
 
+> **2026-10-18:** 아래 대사 목록은 옛 기획 참고용이다. 현재 천리안 제작 목록은
+> `node tools/elevenlabs-voice-plan.cjs`가 실제 reader에서 추린12개 발화를 기준으로 한다.
+> [숨김 인증·샘플 제작 안내](../tools/elevenlabs-voice-setup.md). 아직 생성·청음·게임 연결 전이다.
+
 > **사용법 (3단계)**
 > 1. **Voices → Voice Design**: 아래 [보이스 프롬프트]를 복붙 + [프리뷰 텍스트]를 Text to preview에 복붙 → 셋 중 제일 좋은 걸 저장
 > 2. **Text to Speech**: 저장한 보이스로 [대사 목록]을 한 줄씩 생성 → **파일명을 키이름.mp3로** 저장

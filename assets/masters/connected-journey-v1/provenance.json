@@ -1,0 +1,44 @@
+{
+  "id": "busan-yangsan-miryang-connected-v1",
+  "createdAt": "2026-10-15",
+  "generator": "builtin image_gen.imagegen",
+  "modelVersion": "not exposed by tool",
+  "promptRecord": "tools/design-drafts/connected-journey-prompt.json",
+  "selectedVersion": 2,
+  "requestedSize": [3072, 1024],
+  "actualMasterSize": [2172, 724],
+  "deliverySize": [2160, 720],
+  "normalization": "Uniform proportional downscale to2160x720; sRGB WebP quality94, method6, alpha-quality100. No skyline/ground repaint, strip warping, sharpening or compositing.",
+  "versions": [
+    {
+      "version": 1,
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-fe771574-0945-4840-b506-1fb39518fb7a.png",
+      "master": "assets/masters/connected-journey-v1/master.png",
+      "masterSha256": "ae7908d96b8d05b2895537a5a4ce231e477fb05f2f45ca86b2154e5179daa04d",
+      "delivery": "assets/ui/road-studies/busan-yangsan-miryang-v1.webp",
+      "deliverySha256": "0f94a01c267bdcae77c576a1d0a2831042a36de8b151a222b63c8e6b54f03abb",
+      "status": "superseded draft; central overpass intact, contrary to Yangsan story"
+    },
+    {
+      "version": 2,
+      "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ea53bf28-465c-4adc-8828-e0f583ceac78.png",
+      "master": "assets/masters/connected-journey-v1/master-v2.png",
+      "masterSha256": "79c14ea250f8eb765326be3581a3ac5274b69e708071eaa40d24ee28a1672841",
+      "delivery": "assets/ui/road-studies/busan-yangsan-miryang-v2.webp",
+      "deliverySha256": "49377883feea53ada39903fae873a14ae9ee2fc515c67d3b521bbe5165e923e2",
+      "deliveryBytes": 239790,
+      "status": "independent connected draft; visible missing central overpass span",
+      "bottom64RowsAlpha": {"minimum": 249, "maximum": 254, "fullyOpaqueContractPassed": false},
+      "alphaCorrectionRequestedButNotAchieved": true
+    }
+  ],
+  "review": {
+    "reviewer": "Codex visual inspection of both generated masters and final browser crops",
+    "medium": "Restrained cinematic painted realism consistent with seed; terrain only, no people, vehicle, text, UI or new named landmark baked in.",
+    "geography": "Official terrain sources are in prompt record. Compressed artistic corridor, not a surveyed viewpoint or exact real road.",
+    "continuityScope": "One new panorama owns all three node coordinates inside this independent study. Existing production city originals remain unchanged; other graph entries are not connected.",
+    "remaining": ["Sang visual approval", "fine skyline alpha fringe and fully opaque lower ground", "production renderer, old city joins, weather, upgrades, event braking/resume, save/load and physical mobile performance"],
+    "productionApproved": false
+  },
+  "rights": {"source": "Generated using project-provided canonical references and prior project terrain", "externalStock": false, "licenseVerification": "Not a release rights review; no new third-party stock downloaded"}
+}

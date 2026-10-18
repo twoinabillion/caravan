@@ -1,0 +1,57 @@
+{
+  "jeonju--nonsan": {
+    "generator": "builtin image_gen.imagegen",
+    "createdAt": "2026-10-15",
+    "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-dbed6853-4914-4603-abb0-bbee4c9a104e.png",
+    "requestedSize": [
+      3072,
+      1024
+    ],
+    "visualReview": "Full output inspected for coherent terrain, muted canonical medium, no people/vehicle/UI; silhouette color fringe and endpoint/solid-ground acceptance remain open.",
+    "productionApproved": false
+  },
+  "daegwallyeong--wonju": {
+    "generator": "builtin image_gen.imagegen",
+    "createdAt": "2026-10-15",
+    "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-094524f5-4fa8-4d97-9890-1793efbbc953.png",
+    "requestedSize": [
+      3072,
+      1024
+    ],
+    "visualReview": "Full output inspected for coherent terrain, muted canonical medium, no people/vehicle/UI; silhouette color fringe and endpoint/solid-ground acceptance remain open.",
+    "productionApproved": false
+  },
+  "daegwallyeong--gangneung": {
+    "generator": "builtin image_gen.imagegen",
+    "createdAt": "2026-10-15",
+    "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-0e1aa383-36dc-4172-b369-fd8e0e976978.png",
+    "requestedSize": [
+      3072,
+      1024
+    ],
+    "visualReview": "Full output inspected for coherent terrain, muted canonical medium, no people/vehicle/UI; silhouette color fringe and endpoint/solid-ground acceptance remain open.",
+    "productionApproved": false
+  },
+  "gangneung--sokcho": {
+    "generator": "builtin image_gen.imagegen",
+    "createdAt": "2026-10-15",
+    "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-06b93313-7754-447a-afc0-4572a15581e2.png",
+    "requestedSize": [
+      3072,
+      1024
+    ],
+    "visualReview": "Full output inspected for coherent terrain, muted canonical medium, no people/vehicle/UI; silhouette color fringe and endpoint/solid-ground acceptance remain open.",
+    "productionApproved": false
+  },
+  "seoul--suwon": {
+    "generator": "builtin image_gen.imagegen",
+    "createdAt": "2026-10-15",
+    "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ad606600-a832-4044-bd43-5d10793e995b.png",
+    "requestedSize": [
+      3072,
+      1024
+    ],
+    "visualReview": "Full output inspected for coherent terrain, muted canonical medium, no people/vehicle/UI; silhouette color fringe and endpoint/solid-ground acceptance remain open.",
+    "productionApproved": false
+  }
+}

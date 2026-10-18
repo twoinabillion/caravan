@@ -97,3 +97,24 @@ D.audioSceneContexts={
   'event-find-broadcast-station-v1':'indoors','seoul-core':'indoors',
   'event-companion-camp':'camp','event-companion-meal':'camp'
 };
+
+/* The interactive opening uses the event reader, not the historical intro's
+   turn indices. Result cues follow explicit, successfully committed choices;
+   reopening a receipt never re-enacts the action. No dialogue-text inference. */
+D.eventAudio={
+  opening_workshop:{music:'story',context:'indoors',loop:'sfx_garage_loop',gain:.09,
+    results:{answer_call:'detail_tool_sorting',pack_workshop:'detail_bag_packing'}},
+  opening_bus_repair:{music:'story',context:'cab',
+    results:{new_part:'detail_repair_ratchet',scrap_collar:'detail_repair_ratchet',hose_bypass:'detail_repair_ratchet'}},
+  opening_name_introduction:{music:'story',context:'cab'},
+  opening_failed_appeal:{music:'story',context:'shelter',
+    results:{copy_receipt:'sfx_door_printer',record_names:'detail_notebook'}},
+  opening_parents_module:{music:'story',context:'indoors',loop:'sfx_garage_loop',gain:.09,
+    results:{label_wires:'detail_paper_fold',trace_diagram:'detail_notebook'}},
+  opening_departure:{music:'story',context:'indoors',loop:'sfx_garage_loop',gain:.09,
+    results:{keep_key:'detail_paper_fold'}},
+  opening_farewell:{music:'story',context:'shelter',loop:'sfx_port_arrival_loop',gain:.08},
+  // Only the card-approved automatic pump uses this recording. A manual pump
+  // has no matching take; neither branch plays pumping at event entry.
+  ai_gasstation:{results:{0:'sfx_fuel_pump'}}
+};

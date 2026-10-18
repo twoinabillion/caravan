@@ -2049,7 +2049,7 @@ test('all 48 opening choices preserve sequence, once-only costs and the first ro
       const e=h.G.openingPending(),index=value%e.choices.length;value=Math.floor(value/e.choices.length);
       ids.push(e.id);h.choose(e,index,true);assert.notEqual(h.G.continueOpening(e.id),false);
     }
-    assert.deepEqual(ids,['opening_workshop','opening_bus_repair','opening_failed_appeal','opening_parents_module','opening_departure']);
+    assert.deepEqual(ids,['opening_workshop','opening_bus_repair','opening_failed_appeal','opening_parents_module','opening_departure','opening_farewell']);
     assert(h.G.canTravelTo('yangsan').ok);assert(h.S._storyQueue.includes('onboarding_first_road'));
   }
 });

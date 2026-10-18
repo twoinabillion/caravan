@@ -20,9 +20,27 @@ test('Jaeyi trapped-box entry does not replace shared salvage or completed rescu
  assert.equal(data.eventScenes.rq_jaeyi_task,'recruit-jaeyi-trapped-box-v1');
  assert.equal(data.eventScenes.initiative_jaeyi_salvage,'recruit-jaeyi-task');
  assert.deepEqual(plain(data.eventChoiceScenes.rq_jaeyi_task),{
-  0:['recruit-jaeyi-task-lift'],1:['recruit-jaeyi-task'],2:['recruit-jaeyi-task']
+  0:['recruit-jaeyi-task-lift'],1:['recruit-jaeyi-box-recovered-v2'],2:['recruit-jaeyi-box-recovered-v2']
  });
  assert.match(source('03g-scenes.js'),/'recruit-jaeyi-trapped-box-v1':'__SCENE_RECRUIT_JAEYI_TRAPPED_BOX_V1__'/);
+ assert.match(source('03g-scenes.js'),/'recruit-jaeyi-box-recovered-v2':'__SCENE_RECRUIT_JAEYI_BOX_RECOVERED_V2__'/);
+});
+test('family bus uses a school-age sister and the hose detail only at the actual repair beat',()=>{
+ const {data}=setup();
+ assert.match(fs.readFileSync('tools/build-html.mjs','utf8'),/INTRO_DOCK_AID:'assets\/scenes\/opening-bus-family-v3.webp'/);
+ const refs=JSON.parse(fs.readFileSync('assets/masters/opening-bus-family-v3/provenance.json','utf8'));
+ assert.deepEqual(refs.referenceStripSources,['assets/portraits/passer_woman.png','assets/portraits/intro_child.png']);
+ assert.deepEqual(plain(data.eventTurnSceneStages.opening_bus_repair),[
+  {at:0,key:'intro-dock-aid'},{at:3,key:'opening-bus-heater-v1'}
+ ]);
+ assert.deepEqual(plain(data.eventChoiceScenes.opening_bus_repair),{
+  0:['intro-dock-aid'],1:['intro-dock-aid'],2:['intro-dock-aid']
+ });
+ const beats=data.intro.find(p=>p.scene==='intro-dock-aid').beats;
+ assert.equal(beats[8].scene,'opening-bus-heater-v1');
+ assert.equal(beats[9].scene,'intro-dock-aid');
+ assert.equal(beats[10].scene,'intro-dock-aid');
+ assert.match(data.sceneDescriptions['intro-dock-aid'],/누나 유나/);
 });
 test('41 edited encounters retain gates, branches, probabilities, effects and chains',()=>{
  const ctx=setup(),rows=permanentEvents(ctx.data).filter(e=>ids.includes(e.id)).sort((a,b)=>a.id.localeCompare(b.id));

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self' data:; form-action 'none'; base-uri 'none'">
+  <title>현재와 기억, 내가 떠나는 순간 · 독립 초안</title>
+  <link rel="stylesheet" href="opening-presence.css">
+</head>
+<body>
+  <main class="presence-draft" aria-label="게임과 저장에서 분리된 이야기 흐름 초안">
+    <nav class="review-tools" aria-label="초안 검토 도구">
+      <details class="scene-index"><summary>흐름 초안</summary><div>
+        <p>기존 이야기의 연출 발췌입니다. 게임·저장·시간·선택은 바뀌지 않습니다.</p>
+        <a href="#present">오늘의 이송표</a><a href="#memory">내가 겪은 기억</a>
+        <a href="#appeal">다시 오늘의 부두</a><a href="#history">전해 들은 이야기</a>
+        <a href="#module">엄마가 남긴 장치</a><a href="#departure">작업장 열쇠 선택</a>
+        <a href="#farewell">도윤의 질문</a><a href="#promise">하진의 부탁</a><a href="#ignition">내가 출발하는 순간</a>
+        <p>수리·이름 인사·민원 선택·장치 선택은 기존대로 두고 이 초안에서만 생략합니다. 소리는 아직 재생하지 않습니다.</p>
+      </div></details>
+      <span>게임 미적용</span>
+      <label><input id="large-type" type="checkbox">큰 글씨</label>
+    </nav>
+
+    <section id="present" class="story-page current-page first-page" aria-labelledby="present-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 감천 부두</p><h1 id="present-title">사유가 없는 이송표</h1></div></header>
+      <img class="scene-art" src="../../assets/scenes/opening-bus-family-v3.webp" width="1024" height="576" alt="현재의 버스 안, 하진과 유나 곁에서 이송표를 든 도윤">
+      <div class="reading-scroll" tabindex="0" aria-label="현재의 이송표">
+        <p class="narration" data-source="opening_failed_appeal:0">공구를 하나씩 공구함에 넣는 동안, 버스 안 공기가 조금씩 데워졌다.</p>
+        <p class="narration" data-source="opening_failed_appeal:0">버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.</p>
+      </div>
+      <footer class="scene-actions"><a class="primary-action" href="#memory">그때가 떠올랐다</a><p>과거로 들어갔다가, 이 이송표로 돌아옵니다</p></footer>
+    </section>
+
+    <section id="memory" class="story-page memory-page" aria-labelledby="memory-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">내 기억</p><div><p>여덟 살 · 서울을 떠나던 밤</p><h1 id="memory-title">가방 맨 위</h1></div></header>
+      <img class="scene-art" src="../../assets/scenes/intro-associative-packing-v1.webp" width="1024" height="576" alt="내가 여덟 살이던 밤, 엄마가 내 가방을 싸고 아빠가 문간에 있다">
+      <div class="reading-scroll" tabindex="0" aria-label="직접 겪은 어린 시절의 기억">
+        <p class="narration" data-source="intro-family-packing-v1:0">엄마는 가방 안에 내 옷을 눌러 담았다. 나는 꺼내 놓은 로봇을 무릎에 얹고 기다렸다.</p>
+        <article class="spoken"><div class="speaker"><img src="../../assets/portraits/player_child.png" width="48" height="48" alt=""><span>여덟 살의 나</span></div><p data-source="intro-family-packing-v1:3">같이 가면 안 돼?</p></article>
+        <article class="spoken"><div class="speaker"><img src="../../assets/portraits/mother.png" width="48" height="48" alt=""><span>엄마</span></div><p data-source="intro-family-packing-v1:4">다음 차로 꼭 갈게. 네 가방은 할아버지 차에 실어 줄게.</p></article>
+      </div>
+      <footer class="scene-actions"><a class="primary-action" href="#appeal">다시, 도윤의 이송표 앞으로</a><p>회상에서는 선택하거나 물자를 쓰지 않습니다</p></footer>
+    </section>
+
+    <section id="appeal" class="story-page current-page" aria-labelledby="appeal-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind return-kind">다시 지금</p><div><p>오늘 아침 · 감천 부두</p><h1 id="appeal-title">이 표도 같은 빈칸이었다</h1></div></header>
+      <img class="scene-art" src="../../assets/intro/15-appeal-denied.jpg" width="768" height="432" alt="오늘의 부두 민원 단말, 이송표를 확인하는 자리">
+      <div class="reading-scroll" tabindex="0" aria-label="현재의 민원 응답">
+        <article class="spoken"><div class="speaker"><img src="../../assets/portraits/passer_woman.png" width="48" height="48" alt=""><span>하진</span></div><p data-source="opening_failed_appeal:1">열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.</p></article>
+        <article class="terminal"><h2>부두 민원 단말</h2><p data-source="opening_failed_appeal:3">이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다. 명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.</p></article>
+        <a class="record-link" href="#history">천리안은 처음부터 이랬을까? <span>전해 들은 이야기 읽기</span></a>
+      </div>
+      <footer class="scene-actions"><div class="actions-row"><a class="back-action" href="#memory">앞 기억</a><a class="primary-action" href="#module">이어서 작업장으로</a></div><p>실제 민원의 두 선택과 결과는 그대로 유지하는 제안</p></footer>
+    </section>
+
+    <section id="history" class="story-page reported-page" aria-labelledby="history-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">전해 들은<br>이야기</p><div><p>출처 · 할아버지의 이야기</p><h1 id="history-title">사흘만 맡긴 권한</h1></div></header>
+      <img class="scene-art" src="../../assets/intro/02-cheollian-2026.webp" width="1024" height="576" alt="천리안이 노선을 운영하던 시절, 버스 곁에 모인 사람들. 주인공이 직접 목격한 장면은 아니다">
+      <div class="reading-scroll" tabindex="0" aria-label="할아버지에게 전해 들은 천리안의 과거">
+        <p class="source-note">내가 본 일이 아니다.<br>부산에서 할아버지에게 들었던 이야기다.</p>
+        <blockquote><p data-source="intro-cheollian-2026:5">어느 겨울 전력이 무너지자 딱 72시간만 먼저 실행하게 했어. 그 사흘 동안은 많은 사람을 살렸고.</p><cite>할아버지</cite></blockquote>
+        <article class="recalled-question"><h2>그 이야기를 듣던 여덟 살의 나</h2><p data-source="intro-cheollian-2026:7">사흘만 한다며. 왜 안 껐어?</p></article>
+        <blockquote><p data-source="intro-cheollian-2026:8">그때는 천리안을 끄면 버스도 병원도 멈췄거든. 그러다 첫 이송표가 나왔어. 사람들이 따지러 갔는데, 받아 주는 창구가 없었지.</p><cite>할아버지</cite></blockquote>
+      </div>
+      <footer class="scene-actions"><a class="primary-action" href="#appeal">오늘의 부두로 돌아가기</a><p>선택해서 읽는 과거 · 현재 사건은 진행하지 않습니다</p></footer>
+    </section>
+
+    <section id="module" class="story-page current-page" aria-labelledby="module-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 감천 작업장</p><h1 id="module-title">계기판 뒤의 검증키</h1></div></header>
+      <img class="scene-art" src="../../assets/intro/13-dashboard-module.jpg" width="768" height="432" alt="아직 달구지 계기판 배선에 연결된 검증키">
+      <div class="reading-scroll" tabindex="0" aria-label="길을 떠나기 전에 확인하는 장치와 기록">
+        <p class="narration" data-source="opening_parents_module:0">작업장으로 돌아와 엄마의 철제 상자를 열었다. 수첩 등판에서 회로도가 떨어졌다.</p>
+        <p class="narration" data-source="opening_parents_module:0">엄마가 설계하고 아빠가 만든 인간 확인 검증키의 배선이었다. 명령을 실행하기 전에 사람의 승인을 받게 하는 장치다.</p>
+        <article class="letter"><h2>엄마의 메모</h2><p data-source="opening_parents_module:3">이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것. 장치만으로는 검증이 끝나지 않는다. 현장 확인은 남산에서.</p></article>
+        <p class="draft-note">이후 기존의 분리 절차 두 장·배선 확인과 두 선택을 거칩니다. 이 발췌 초안에서는 실행하지 않습니다.</p>
+      </div>
+      <footer class="scene-actions"><div class="actions-row"><a class="back-action" href="#appeal">부두 장면</a><a class="primary-action" href="#departure">출발 전의 선택 보기</a></div><p>장치만 찾으면 해결된다는 뜻으로 줄이지 않습니다</p></footer>
+    </section>
+
+    <section id="departure" class="story-page current-page" aria-labelledby="departure-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 감천 작업장</p><h1 id="departure-title">돌아올 날짜는 비워 두고</h1></div></header>
+      <img class="scene-art" src="../../assets/intro/16-workshop-shutter-v2.jpg" width="768" height="432" alt="수리를 쉬는 쪽지를 남기고 셔터를 내리는 감천 작업장">
+      <div class="reading-scroll" tabindex="0" aria-label="남겨 두는 작업장과 두 가지 열쇠 선택">
+        <article class="thought"><h2>생각</h2><p data-source="opening_departure:1">내일 손수레 맡기러 올 텐데. …부탁은 해 놓고 가야지.</p></article>
+        <p class="narration" data-source="opening_departure:2">단골에게 수리가 늦어진다고 알리고 셔터를 절반 내렸다. 공구함 열쇠가 손에 남았다. 맡기고 갈까, 직접 가지고 갈까.</p>
+        <div class="choices"><h2>어떻게 할까?</h2><a class="choice-action" href="#key-given">단골에게 공구함 열쇠를 맡긴다</a><a class="choice-action" href="#key-kept">열쇠를 챙기고 문에 쪽지를 붙인다</a></div>
+      </div>
+      <footer class="scene-actions"><a class="back-action" href="#module">장치 장면으로</a><p>두 선택은 초안 예시일 뿐 저장·시간을 바꾸지 않습니다</p></footer>
+    </section>
+
+    <section id="key-given" class="story-page current-page" aria-labelledby="given-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 감천 작업장</p><h1 id="given-title">맡겨 둔 열쇠</h1></div></header>
+      <img class="scene-art" src="../../assets/intro/16-workshop-shutter-v2.jpg" width="768" height="432" alt="북쪽으로 떠나기 전의 감천 작업장">
+      <div class="reading-scroll" tabindex="0" aria-label="열쇠를 맡긴 결과 예시"><p class="narration" data-result="leave_key">단골 손에 열쇠를 쥐여 줬다. 돌아올 날짜는 못 적겠다고, 셔터와 공구함만 가끔 봐 달라고 했다. 빈 주머니를 한 번 짚고 달구지에 올랐다.</p></div>
+      <footer class="scene-actions"><div class="actions-row"><a class="back-action" href="#departure">선택 다시 보기</a><a class="primary-action" href="#farewell">부두 입구에서</a></div><p>선택한 결과를 다시 지급하지 않는 연결 제안</p></footer>
+    </section>
+
+    <section id="key-kept" class="story-page current-page" aria-labelledby="kept-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 감천 작업장</p><h1 id="kept-title">목에 건 열쇠</h1></div></header>
+      <img class="scene-art" src="../../assets/intro/16-workshop-shutter-v2.jpg" width="768" height="432" alt="다시 돌아올 작업장의 셔터">
+      <div class="reading-scroll" tabindex="0" aria-label="열쇠를 챙긴 결과의 편집 예시"><p class="narration" data-result="keep_key" data-proposal="ignition-moved-to-handoff">돌아올 날짜는 비운 채 쪽지를 붙이고 열쇠를 목에 걸었다.</p><p class="draft-note">이 선택 결과의 기존 시동 문장은 마지막 작별 뒤로 옮기는 제안입니다. 시동을 두 번 걸지 않습니다.</p></div>
+      <footer class="scene-actions"><div class="actions-row"><a class="back-action" href="#departure">선택 다시 보기</a><a class="primary-action" href="#farewell">부두 입구에서</a></div><p>새 내용이 아닌 시동 위치 조정 예시</p></footer>
+    </section>
+
+    <section id="farewell" class="story-page current-page farewell-page" aria-labelledby="farewell-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 부두 입구</p><h1 id="farewell-title">떠나기 전에</h1></div></header>
+      <img class="scene-art" src="../../assets/scenes/intro-departure-conversation-v4.jpg" width="1024" height="576" alt="달구지 곁에서 북쪽으로 떠날 주인공을 만난 도윤과 하진">
+      <div class="reading-scroll" tabindex="0" aria-label="도윤의 질문과 내 답">
+        <article class="spoken"><div class="speaker"><img src="../../assets/portraits/intro_child.png" width="48" height="48" alt=""><span>도윤</span></div><p data-source="intro-departure-choice:1">남산에 가면 우리도 집에 돌아갈 수 있어요?</p></article>
+        <article class="spoken"><div class="speaker text-speaker"><span>나</span></div><p data-source="intro-departure-choice:2">그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.</p></article>
+      </div>
+      <footer class="scene-actions"><div class="actions-row"><a class="back-action" href="#departure">출발 준비로</a><a class="primary-action" href="#promise">계속 읽기</a></div><p>프롤로그에만 있던 작별을 실제 출발 흐름에 두는 제안</p></footer>
+    </section>
+
+    <section id="promise" class="story-page current-page" aria-labelledby="promise-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 부두 입구</p><h1 id="promise-title">먼저 떠난 사람들도</h1></div></header>
+      <img class="scene-art" src="../../assets/scenes/intro-departure-conversation-v4.jpg" width="1024" height="576" alt="같은 부두 입구, 하진과 도윤이 남겨진 표의 이야기를 부탁한다">
+      <div class="reading-scroll" tabindex="0" aria-label="하진의 부탁과 남긴 약속">
+        <article class="spoken"><div class="speaker"><img src="../../assets/portraits/passer_woman.png" width="48" height="48" alt=""><span>하진</span></div><p data-source="intro-departure-choice:5">이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.</p></article>
+        <article class="spoken"><div class="speaker text-speaker"><span>나</span></div><p data-source="intro-departure-choice:6">네. 먼저 떠난 사람들도 찾아보겠습니다.</p></article>
+        <p class="narration" data-source="intro-departure-choice:7">도윤은 가족의 이송표 사본을 조수석 수첩 위에 올려놓았다. 하진은 유나가 기다리는 버스로 돌아갔다.</p>
+      </div>
+      <footer class="scene-actions"><div class="actions-row"><a class="back-action" href="#farewell">앞 대화</a><a class="primary-action" href="#ignition">달구지에 오른다</a></div><p>돌아갈 수 있다고 확답하지 않고, 내가 할 일을 약속합니다</p></footer>
+    </section>
+
+    <section id="ignition" class="story-page current-page ignition-page" aria-labelledby="ignition-title" tabindex="-1">
+      <header class="scene-heading"><p class="time-kind">지금</p><div><p>오늘 아침 · 부산에서 북쪽으로</p><h1 id="ignition-title">내가 가기로 한 길</h1></div></header>
+      <img class="scene-art" src="../../assets/scenes/intro-departure-start-v1.jpg" width="1024" height="576" alt="감천 부두를 떠나는 달구지의 출발 시네마틱 정지컷">
+      <div class="reading-scroll" tabindex="0" aria-label="작별 뒤 한 번만 시동을 거는 순간">
+        <p class="narration" data-source="intro-departure-choice:8">서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.</p>
+        <article class="spoken last-goodbye"><div class="speaker text-speaker"><span>나</span></div><p data-source="intro-departure-choice:9">할아버지, 다녀올게.</p></article>
+      </div>
+      <footer class="scene-actions"><div class="actions-row"><a class="back-action" href="#promise">앞 대화</a><a class="primary-action" href="#first-road">길로 나간다</a></div><p>초안 링크 · 실제 차량이나 저장은 움직이지 않습니다</p></footer>
+    </section>
+
+    <section id="first-road" class="chapter-page" aria-labelledby="road-title" tabindex="-1">
+      <div class="chapter-content"><p class="chapter-number">서장을 마치고</p><h1 id="road-title">이제, 내가 가는 길</h1><p class="next-goal">양산 쪽으로 가며<br>이송표의 발신 기록을 찾는다.</p><p class="draft-note">이 지점에서 기존 주행 화면과 목적지 선택으로 이어집니다. 이 초안은 장의 경계만 보여 주며 주행을 재현하지 않습니다.</p><p class="sound-note">소리 연출 제안: 회상에서 부두 소리로 복귀 → 작별 뒤 시동 → 주행음.<br>이 초안은 무음입니다.</p></div>
+      <footer class="scene-actions"><a class="primary-action" href="#present">흐름을 처음부터 다시 보기</a><p>기존27장면과 실제 플레이의 중복을 정리하는 제안 · 게임 미연결</p></footer>
+    </section>
+  </main>
+</body>
+</html>

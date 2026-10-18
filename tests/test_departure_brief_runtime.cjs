@@ -19,7 +19,7 @@ function harness(){
  const ctx=vm.createContext({console,setTimeout:()=>0,clearTimeout:noop,requestAnimationFrame:fn=>fn(),
   clamp:(n,a,b)=>Math.max(a,Math.min(b,n)),curStory:null,curEv:null,curCombatChoices:[],
   S:{at:'busan',day:1,min:450,driving:null,flags:{},party:[],notes:[],food:14,water:16,fuel:42},
-  G:{},UI:{},SND:{setDriving:noop,combat:noop},AMBI:{event:noop,restore:noop},
+  G:{},UI:{},SND:{setDriving:noop,combat:noop},AMBI:{event:noop,result:noop,restore:noop},
   $:s=>s==='#story-live'?live:sheet,
   esc:t=>String(t??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),stripTags:String,
   clearStoryAuto:noop,storySurface:()=>'',eventSceneKeys:e=>[e.scene],storyOriginHtml:()=>'',

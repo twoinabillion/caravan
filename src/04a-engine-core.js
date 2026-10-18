@@ -146,6 +146,14 @@ const COMBAT_AUTO_ADJUST_MAX = 0.5;
 const COMBAT_AUTO_ADJUST_SCALE = 0.16;     // [-0.5~0.5] → 판정 보정 ±0.08 — 체감 가능한 크기
 
 /* ── new game / save ── */
+G.validatePlayerName = value=>{
+  const name=typeof value==='string'?value.normalize('NFC').trim():'';
+  if(!name)return {ok:false,why:'부를 이름을 적어 주세요.'};
+  if(Array.from(name).length>8)return {ok:false,why:'이름은 8자까지 적을 수 있어요.'};
+  if(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e\u2066-\u2069]/.test(name)||/[\uD800-\uDFFF]/u.test(name))
+    return {ok:false,why:'보이는 글자로 이름을 적어 주세요.'};
+  return {ok:true,name};
+};
 G.newGame = (mode, name, entryMode='full', profile, startPack)=>{
   const interactiveOpening=entryMode==='interactive';
   S = {
@@ -175,7 +183,8 @@ G.newGame = (mode, name, entryMode='full', profile, startPack)=>{
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
     _rescues:{}, _stlNights:{}, stopover:null, locationContractVersion:D.eventLocationVersion||1,
     campNight:0, campConversation:null, campMemories:{},
-    opening:interactiveOpening?{version:1,step:0,pendingResult:null,decisions:{},completed:false}:null,
+    opening:interactiveOpening?{version:2,narrativeVersion:1,step:0,pendingResult:null,decisions:{},completed:false,
+      nameIntroduction:(name||'').trim()?'done':'pending',nameDraft:''}:null,
   };
   /* 출발 구성 — 자원 패치는 얕은 병합, items만 통째 교체 */
   const prof=D.startProfiles&&D.startProfiles[S.profile];
@@ -223,7 +232,17 @@ G.newGame = (mode, name, entryMode='full', profile, startPack)=>{
 G.openingPending = ()=>{
   if(!S||S.entryMode!=='interactive'||!S.opening||S.opening.completed) return null;
   const step=Math.max(0,Math.floor(Number(S.opening.step)||0));
-  return Array.isArray(D.openingDeparture)?D.openingDeparture[step]||null:null;
+  if(S.opening.version===2&&step===2&&S.opening.nameIntroduction==='active'&&S.opening.decisions?.opening_bus_repair)
+    return D.openingNameIntroduction;
+  const presence=S.opening.narrativeVersion===1;
+  if(presence&&step===5)return D.openingFarewell;
+  const steps=presence?D.openingPresence:D.openingDeparture;
+  return Array.isArray(steps)?steps[step]||null:null;
+};
+G.setOpeningNameDraft = value=>{
+  if(!G.openingPending()?.nameInput||S.opening.pendingResult||typeof value!=='string')return false;
+  S.opening.nameDraft=value.slice(0,64);
+  G.save();return true;
 };
 G.openingDecision = stepId=>{
   const decisions=S&&S.opening&&S.opening.decisions;
@@ -242,13 +261,16 @@ G.resolveOpeningChoice = (stepId,choiceId)=>{
   }
   const choice=(event.choices||[]).find(item=>item.id===choiceId);
   if(!choice) return {ok:false,applied:false,why:'선택지를 찾을 수 없다'};
+  const nameEntry=event.nameInput?G.validatePlayerName(S.opening.nameDraft):null;
+  if(nameEntry&&!nameEntry.ok)return {ok:false,applied:false,why:nameEntry.why};
   const requirement=G.reqOk(G.choiceReq(choice));
   if(!requirement.ok) return {ok:false,applied:false,why:requirement.t};
-  const out=G.pickOutcome(event,choice);
+  const cosmetic=event.nameInput||event.presentationOnly;
+  const out=cosmetic?choice.out[0]:G.pickOutcome(event,choice);
   if(!out) return {ok:false,applied:false,why:'결과를 찾을 수 없다'};
   const outcomeIndex=Math.max(0,choice.out.indexOf(out));
-  const chips=G.applyFx(out.fx,{noteTitle:event.title});
-  chips.push(...G.afterChoice(event,choice,out));
+  const chips=cosmetic?[]:G.applyFx(out.fx,{noteTitle:event.title});
+  if(!cosmetic)chips.push(...G.afterChoice(event,choice,out));
   S.opening.decisions=S.opening.decisions&&typeof S.opening.decisions==='object'
     ?S.opening.decisions:{};
   S.opening.decisions[stepId]={
@@ -256,6 +278,7 @@ G.resolveOpeningChoice = (stepId,choiceId)=>{
     outcomeIndex
   };
   S.opening.pendingResult={stepId,choiceId,outcomeIndex,chips:[...chips]};
+  if(nameEntry){S.name=nameEntry.name;S.opening.pendingResult.name=nameEntry.name;S.opening.nameDraft='';}
   G.save();
   return {ok:true,applied:true,event,choice,out,chips};
 };
@@ -263,7 +286,10 @@ G.continueOpening = stepId=>{
   const event=G.openingPending(), pending=S&&S.opening&&S.opening.pendingResult;
   if(!event||event.id!==stepId||!pending||pending.stepId!==stepId) return false;
   S.opening.pendingResult=null;
-  S.opening.step=Math.max(0,Math.floor(Number(S.opening.step)||0))+1;
+  if(event.nameInput)S.opening.nameIntroduction='done';
+  else S.opening.step=Math.max(0,Math.floor(Number(S.opening.step)||0))+1;
+  if(stepId==='opening_bus_repair'&&S.opening.version===2&&S.opening.nameIntroduction==='pending')
+    S.opening.nameIntroduction=S.name?'done':'active';
   const next=G.openingPending();
   if(!next){
     S.opening.completed=true;
@@ -281,21 +307,23 @@ G.continueOpening = stepId=>{
 G.myName = ()=> (S && S.name) || '나';
 G.vanName = ()=> (S && S.vanName) || '달구지';
 let saveWarned=false;
-G.save = ()=>{ if(!S||S.ended||G.presentationApplying) return; try{
+G.save = ()=>{ if(!S||S.ended||G.presentationApplying) return false; try{
   if(S._quality&&S._quality.activeSession) S._quality.lastSeenAt=Date.now();
   localStorage.setItem(SAVE_KEY, JSON.stringify(S));
   saveWarned=false;
+  return true;
 }catch(e){
   /* 무음 유실 금지 — 진행이 쌓이는 게임에서 저장 실패는 반드시 사용자에게 보인다 */
   if(!saveWarned){ saveWarned=true;
     try{ UI.toast('💾 저장에 실패했어요 — 브라우저 저장 공간을 확인해 주세요','warn'); }catch(_e){}
     console.warn('save failed', e);
   }
+  return false;
 } };
-G.load = (raw, {deferDriveReset=false}={})=>{ try{ const j = raw===undefined?localStorage.getItem(SAVE_KEY):raw; if(!j) return false;
+G.load = (raw, {deferDriveReset=false}={})=>{ const previous=S,previousRng=rng; try{ const j = raw===undefined?localStorage.getItem(SAVE_KEY):raw; if(!j) return false;
   const parsed=JSON.parse(j);
   if(!parsed||typeof parsed!=='object'||Array.isArray(parsed)) throw new Error('invalid save root');
-  if(Number.isFinite(parsed.v)&&parsed.v>SAVE_VERSION) throw new Error('newer save version');
+  if(parsed.v!==undefined&&(!Number.isInteger(parsed.v)||parsed.v<1||parsed.v>SAVE_VERSION)) throw new Error('unsupported save version');
   S=parsed;
   if(S.at===undefined&&(!S.driving||typeof S.driving!=='object')) throw new Error('save has no location');
   if(S.at!==null&&(!S.at||!D.nodes[S.at])) throw new Error('save has invalid location');
@@ -363,13 +391,27 @@ G.load = (raw, {deferDriveReset=false}={})=>{ try{ const j = raw===undefined?loc
     .map(row=>({id:row.id,due:Math.max(0,row.due)}));
   if(!Array.isArray(S._beatQueue)) S._beatQueue=[];
   if(S.entryMode==='interactive'&&S.opening&&typeof S.opening==='object'&&!Array.isArray(S.opening)){
-    S.opening.version=1;
+    const naming=S.opening.version===2;
+    S.opening.version=naming?2:1;
+    if(S.opening.narrativeVersion!==1)delete S.opening.narrativeVersion;
     S.opening.step=Math.max(0,Math.floor(Number(S.opening.step)||0));
     if(!S.opening.decisions||typeof S.opening.decisions!=='object'||Array.isArray(S.opening.decisions))
       S.opening.decisions={};
     if(!S.opening.pendingResult||typeof S.opening.pendingResult!=='object'||Array.isArray(S.opening.pendingResult))
       S.opening.pendingResult=null;
     S.opening.completed=Boolean(S.opening.completed);
+    if(naming){
+      if(!['pending','active','done'].includes(S.opening.nameIntroduction))S.opening.nameIntroduction='done';
+      S.opening.nameDraft=typeof S.opening.nameDraft==='string'?S.opening.nameDraft.slice(0,64):'';
+      const receipt=S.opening.pendingResult;
+      if(receipt?.stepId==='opening_name_introduction'){
+        const checked=G.validatePlayerName(receipt.name);
+        if(S.opening.nameIntroduction==='active'&&S.opening.step===2&&S.opening.decisions.opening_bus_repair&&
+          receipt.choiceId==='say_name'&&receipt.outcomeIndex===0&&checked.ok){
+          receipt.name=checked.name;S.name=checked.name;
+        }else S.opening.pendingResult=null;
+      }
+    }
   }
   if(!Array.isArray(S._recentEvents)) S._recentEvents=[];
   if(!Array.isArray(S._recentEventTypes)) S._recentEventTypes=[];
@@ -481,7 +523,7 @@ G.load = (raw, {deferDriveReset=false}={})=>{ try{ const j = raw===undefined?loc
   S.pendingPresentation=G.validatePresentation(S.pendingPresentation);
   /* Reset only after validation; an import defers this until storage commits. */
   if(!deferDriveReset) G.resetDriveTimers();
-  return true; }catch(e){ S=null; return false } };
+  return true; }catch(e){ S=previous;rng=previousRng;return false } };
 G.hasSave = ()=>{ try{
   const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
   const save=JSON.parse(raw);
@@ -489,6 +531,20 @@ G.hasSave = ()=>{ try{
     &&(save.at!==undefined||save.driving)&&Number.isFinite(save.day));
 }catch(e){ return false } };
 G.exportSave = ()=> S?JSON.stringify(S):'';
+/* Inspect through the real migration/validation path without committing or
+   replacing live references, RNG or drive timers. UI keeps only this summary. */
+G.inspectSave = raw=>{
+  const previous=S,previousRng=rng;
+  try{
+    const parsed=JSON.parse(raw);
+    if(Number.isFinite(parsed?.v)&&parsed.v>SAVE_VERSION)
+      return {ok:false,why:'더 새로운 버전의 백업입니다. 게임을 업데이트한 뒤 다시 시도해 주세요.'};
+    if(typeof raw!=='string'||!G.load(raw,{deferDriveReset:true})) throw new Error('invalid backup');
+    return {ok:true,summary:{name:typeof S.name==='string'?S.name:'나',day:S.day,min:S.min,km:S.stats.km,mode:S.mode,
+      at:S.at,from:S.driving?.from||null,to:S.driving?.to||null,ended:!!S.ended}};
+  }catch(e){return {ok:false,why:'유효한 백업 파일이 아닙니다. 다른 JSON 백업을 골라 주세요.'};}
+  finally{S=previous;rng=previousRng;}
+};
 /* Validate/migrate in memory before the single atomic localStorage write.
    Failure retains live references, unsaved progress, RNG and drive timing. */
 G.importSave = raw=>{

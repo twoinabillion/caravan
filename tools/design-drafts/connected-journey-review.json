@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-15",
+  "draft": "connected-journey-v1",
+  "purpose": "Approval candidate for two connected legs before production integration",
+  "productionApplied": false,
+  "sourceTests": {"all": 639, "passed": 639, "targetedAfterFinalCss": 5, "cssParses": true, "diffCheck": true},
+  "actualStudio": {
+    "url": "http://127.0.0.1:4327/",
+    "previewOrigin": "http://127.0.0.1:4319/",
+    "designFrame": "http://127.0.0.1:4327/game/tools/design-drafts/connected-journey.html?draft=1",
+    "browser": "existing user Safari Studio",
+    "width": 360,
+    "observed": ["Refresh draft list recovered previously blank iframe", "New connected draft selected and visibly rendered", "Native overall playback advances into second leg", "Arrival / next departure / stopped radio controls respond", "Final draft left at Yangsan stop; actual game remains title"],
+    "capture": "qa-artifacts/connected-journey-v1/studio-final.jpeg",
+    "limits": "Visual snapshots, not all-frame video or physical-device performance measurement"
+  },
+  "independentBrowser": {
+    "browser": "Chrome, Studio-served independent draft; not the live game save",
+    "testedMeasuredCssWidths": [320, 360, 400, 480],
+    "viewportCaveat": "Browser was at90% zoom. Requested viewport360 measured400 CSSpx; subsequent requests288/324/432 measured320/360/480. No false viewport-size claim. Temporary viewport override reset after tests.",
+    "overflow": false,
+    "yangsan360": {
+      "arrivalStopDepartureEqual": true,
+      "terrainTransform": "matrix(1, 0, 0, 1, -180, 0)",
+      "postsX": "-1440px",
+      "markingsX": "-2880px"
+    },
+    "observed": ["Forward travel arrives at camera0.5, ride0; later second leg camera0.751954, ride1", "Pause stable across separate observations at camera0.753516, posts-2170.13px", "Reverse stops at same Yangsan camera0.5, transform-180px, ride0", "Reverse restarts and reaches Busan camera1, transform0, ride0", "320/360/480 controls and landscape inspected without horizontal overflow", "Terrain remains unmirrored; vehicle direction reverses for reverse playback"],
+    "capture": "qa-artifacts/connected-journey-v1/preview-360.png",
+    "reducedMotion": "Source rule verified only, OS preference not toggled"
+  },
+  "liveStateComparison": {
+    "beforeCapturedAt": "2026-10-15T10:29:15.326Z",
+    "afterCapturedAt": "2026-10-15T12:07:45.393Z",
+    "same": {"screen": "title", "game": null, "hasSave": false, "viewport": [360, 728], "loadedRevision": "1792052677434", "styleRevision": "1792052677434"},
+    "afterPendingRevision": 1792065519604,
+    "applying": false,
+    "note": "Watcher stages changes. No live apply, game refresh, new game, production src edit or city replacement performed. Pending is not proof of scenery integration."
+  },
+  "remaining": ["Sang review of connected draft", "Terrain alpha refinement before production acceptance", "Actual runtime rendering and event/arrival/redeparture/save/weather/upgrades/mobile verification", "Remaining76 corridors and all other shared-city combinations"]
+}

@@ -1,0 +1,28 @@
+{
+  "fixtureOnly": true,
+  "preparation": null,
+  "save": {
+    "name": "저장실패검수",
+    "startPack": "fuel",
+    "day": 1,
+    "min": 525,
+    "at": "busan",
+    "driving": null,
+    "opening": {
+      "step": 5,
+      "completed": true,
+      "pendingResult": null,
+      "reading": {
+        "eventId": "opening_departure",
+        "phase": "outcome",
+        "index": 0
+      }
+    },
+    "presentation": null,
+    "fuel": 42,
+    "water": 10,
+    "food": 10,
+    "scrap": 16,
+    "parts": 0
+  }
+}

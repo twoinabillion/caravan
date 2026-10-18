@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>준비 화면 · 실제 컴포넌트 격리 검수</title>
+<style>body{margin:18px;background:#202a30;color:#e4dcc5;font:14px/1.6 system-ui}main{max-width:900px;margin:auto}h1{font-size:20px}p{max-width:750px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}button{min-height:44px;padding:8px 16px;color:inherit;border:1px solid #6e807b;background:#32453f}iframe{display:block;width:360px;height:728px;border:1px solid #6e807b;max-width:100%}output{display:block;margin-top:10px}</style>
+<main><h1>준비 화면 · 실제 컴포넌트 격리 검수</h1><p>현행 CSS·DOM·준비 화면 함수로 검사합니다. 이름·선택·글씨 크기는 임시 메모리만 사용합니다. 게임 엔진이나 실제 저장을 열지 않으며, 실제 Studio 플레이의 시각 검수를 대신하지 않습니다. 시작·역사·타이틀 버튼은 이 검수판 안의 동작 확인으로 끝납니다.</p>
+<nav aria-label="검수 크기"><button data-width="320" data-height="568">320×568</button><button data-width="360" data-height="728">360×728</button><button data-width="480" data-height="800">480×800</button><button id="qa-restore">준비 상태 재구성</button></nav>
+<iframe title="준비 화면 실제 컴포넌트 · 격리된 예시" sandbox="allow-scripts"></iframe><output id="qa-status" aria-live="polite">불러오는 중</output></main>
+<script type="module">
+const root=new URL('../',import.meta.url),frame=document.querySelector('iframe'),status=document.querySelector('#qa-status');
+const load=async file=>{const r=await fetch(new URL(file,root));if(!r.ok)throw Error(file+': '+r.status);return r.text();};
+let sample={active:true,name:'',pack:'provisions',scroll:0,inventoryOpen:false};
+const [rawStyle,dom,data,ui,fontBytes]=await Promise.all([load('src/01-style.html'),load('src/02-dom.html'),load('src/03-data.js'),load('src/07-ui.js'),fetch(new URL('assets/fonts/CaravanJournalHand-Regular.woff2',root)).then(r=>r.arrayBuffer())]);
+// Encode in bounded chunks; this is the existing font, not generated scene art.
+let encoded='';const bytes=new Uint8Array(fontBytes);for(let i=0;i<bytes.length;i+=16384)encoded+=String.fromCharCode(...bytes.subarray(i,i+16384));
+const style=[...rawStyle.matchAll(/<style[^>]*>[\s\S]*?<\/style>/g)].map(m=>m[0]).join('\n').replaceAll('__UI_JOURNAL_FONT__','data:font/woff2;base64,'+btoa(encoded));
+const markup=dom.slice(dom.indexOf('  <div class="scr" id="scr-name"'),dom.indexOf('  <div class="scr" id="scr-intro"')).replace('class="scr"','class="scr on"');
+const functions=ui.slice(ui.indexOf('  function rememberPreparation('),ui.indexOf('  let navChoiceAt'))+ui.slice(ui.indexOf('  function renderProfilePick(){'),ui.indexOf('  let introAuto='))+ui.slice(ui.indexOf('  function applyUiPrefs(){'),ui.indexOf('  function renderSimpleMenu(){'))+ui.slice(ui.indexOf('  function startNew(mode){'),ui.indexOf('  function introName()'));
+const wiring=ui.slice(ui.indexOf('    const nameGo=()=>{'),ui.indexOf('    let introPointer=null;'));
+function mount(){
+ const script=`const $=s=>document.querySelector(s),esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
+ ${data.slice(0,data.indexOf('D.transferDeadlineDay'))}
+ D.scenes={};for(const [id,p]of Object.entries(D.departurePacks))D.scenes[p.scene]=${JSON.stringify(root.href)}+'assets/scenes/opening-pack-'+id+'-v1.webp';
+ let screen='name',pendingName='',pendingPack='fuel',introRestart=false,pendingMode='onroad',pendingProfile='keeper',introIdx=0,introTurnIdx=0,curStory=null;
+ const preparationKey='isolated-preparation';const stored=new Map([[preparationKey,JSON.stringify(${JSON.stringify(sample)})]]);
+ const sessionStorage={getItem:k=>stored.get(k)||null,setItem(k,v){stored.set(k,v);if(k===preparationKey)parent.postMessage({kind:'packing-fixture',view:JSON.parse(v)},'*')},removeItem:k=>stored.delete(k)};
+ const localStorage={getItem:()=>null,setItem(){}};const uiPrefs={largeText:false,reduceMotion:false,roadThought:true,brightness:100};
+ const SND={enable(){},toggle(){parent.postMessage({kind:'packing-fixture-action',action:'소리 토글 호출 확인 · 실제 소리 없음'},'*')}};
+ const G={newGame(...args){parent.postMessage({kind:'packing-fixture-action',action:'시작 호출 확인: '+JSON.stringify(args)},'*')}};
+ function enterGame(){screen='game';clearPreparation();$('#scr-name').classList.remove('on');$('#scr-title').hidden=false;$('#qa-next').textContent='시작 호출 확인. 실제 엔진 진입·저장은 실행하지 않았습니다.';}
+ function refreshTitle(){}function renderIntro(){parent.postMessage({kind:'packing-fixture-action',action:'전체 역사 읽기 호출 확인'},'*')}
+ function show(id){screen=id==='scr-name'?'name':'title';$('#scr-name').classList.toggle('on',screen==='name');$('#scr-title').hidden=screen==='name';}
+ ${functions}
+ ${wiring}
+ $('#bt-new').onclick=()=>startNew('onroad');applyUiPrefs();startNew('onroad');`;
+ frame.srcdoc=`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="${root.href}">${style}<body><div id="app" data-screen="name"><div id="frame">${markup}<section id="scr-title" hidden><p id="qa-next">검수용 타이틀 복귀. 실제 게임이 아닙니다.</p><button id="bt-new">준비로 돌아가기</button></section></div></div><script>${script.replaceAll('</script','<\\/script')}<\/script></body></html>`;
+ status.textContent='실제 컴포넌트 · 임시 메모리 예시';
+}
+window.addEventListener('message',event=>{if(event.source!==frame.contentWindow)return;if(event.data?.kind==='packing-fixture')sample=event.data.view;if(event.data?.kind==='packing-fixture-action')status.textContent=event.data.action;});
+document.querySelectorAll('[data-width]').forEach(button=>button.onclick=()=>{frame.style.width=button.dataset.width+'px';frame.style.height=button.dataset.height+'px';});
+document.querySelector('#qa-restore').onclick=mount;mount();
+</script></html>

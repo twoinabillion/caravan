@@ -6,7 +6,7 @@ const {STATIC_CONTENT_FILES,permanentEvents}=require('../tools/content-registry.
 const plain=x=>JSON.parse(JSON.stringify(x));
 const ui=fs.readFileSync('src/07-ui.js','utf8');
 function setup(){
-  const ctx=vm.createContext({console,S:{party:[],flags:{},comps:{}},G:{myName:()=> '검수 이름'}});
+  const ctx=vm.createContext({console,introPreview:false,S:{party:[],flags:{},comps:{}},G:{myName:()=> '검수 이름'}});
   for(const file of STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),ctx);
   ctx.data=vm.runInContext('D',ctx);
   vm.runInContext(ui.match(/  const stripTags=.*;/)[0]+ui.match(/  const playerSpeaker=.*;/)[0]+
@@ -204,7 +204,7 @@ test('all rewritten one-to-one lines retain confirmed voices through the actual 
 });
 test('the actual intro renderer cuts at authored beats and restores the right still on re-render',()=>{
   const ctx=setup(),before=JSON.stringify(ctx.S),nodes=new Map();
-  const node=()=>({dataset:{},style:{},classList:{add(){},remove(){}},
+  const node=()=>({dataset:{},style:{},removeAttribute(){},classList:{add(){},remove(){}},
     querySelector(){return null;},insertAdjacentHTML(){},scrollTo(){}});
   Object.assign(ctx,{$:selector=>{
     if(!nodes.has(selector))nodes.set(selector,node());return nodes.get(selector);
@@ -213,7 +213,7 @@ test('the actual intro renderer cuts at authored beats and restores the right st
     storyRecordHtml:()=>'',requestAnimationFrame:fn=>fn(),scheduleIntroAuto(){}});
   // A record node exists only to exercise the existing last-turn branch.
   const record=node();nodes.set('#intro-txt',{...node(),querySelector:s=>s==='.story-reading-record'?record:null});
-  const render=helper(ctx,'renderIntro');
+  helper(ctx,'introPages');const render=helper(ctx,'renderIntro');
   const check=(id,at,scene)=>{
     ctx.introIdx=ctx.data.intro.findIndex(p=>p.scene===id);ctx.introTurnIdx=at;
     render(true);
@@ -257,12 +257,12 @@ test('seven delivered cinematic stills retain masters, canonical references and 
 });
 test('real intro advance reaches the next scene and existing game entry exactly once without intermediate gameplay writes',()=>{
   const ctx=setup(),original=JSON.stringify(ctx.S),entries=[],seen=[];
-  Object.assign(ctx,{screen:'intro',introIdx:0,introTurnIdx:0,introRestart:false,pendingMode:'onroad',
+  Object.assign(ctx,{screen:'intro',introIdx:0,introTurnIdx:0,introRestart:false,introPreview:false,pendingMode:'onroad',
     pendingName:'검수 이름',pendingProfile:'keeper',pendingPack:'fuel',clearIntroAuto(){},
     renderIntro(newPage){seen.push([ctx.introIdx,ctx.introTurnIdx,newPage]);},
     AMBI:{setLoop(){}},localStorage:{setItem(){}},enterGame(){entries.push('game')}});
   ctx.G.newGame=(...args)=>entries.push(args);
-  const advance=helper(ctx,'nextIntro');
+  helper(ctx,'introPages');const advance=helper(ctx,'nextIntro');
   for(const [index,p] of ctx.data.intro.entries())for(let b=0;b<p.beats.length;b++){
     assert.equal(ctx.introIdx,index);assert.equal(ctx.introTurnIdx,b);
     assert.equal(JSON.stringify(ctx.S),original);

@@ -1,4 +1,6 @@
-# Bus heater detail — candidate, not wired
+# Bus heater detail — approved inspection-stage integration
+
+2026-10-16 follow-up: Sang approved completing the whole pending set. Wired only to opening_bus_repair's hose-inspection turn and the full intro inspection beat, never as the repaired result. Gallery presence verified on actual4319 before wiring; source viewed at delivery size and actual passenger-reader/pages/materials CSS observed in a separate360px component fixture. Actual saved-event play/crop is not certified. Historical candidate notes below preserve the creation record.
 
 - Built-in imagegen, 2026-10-12. No CLI/API fallback.
 - Generated source: `/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-ab9a8e05-5392-4c6f-a827-bee50ea77423.png`.

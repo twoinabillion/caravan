@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src data:; form-action 'none'; base-uri 'none'">
+  <title>무엇을 더 챙길까 · 짐 선택 초안</title>
+  <link rel="stylesheet" href="packing-table.css">
+</head>
+<body>
+  <main class="packing-shell" id="packing" aria-label="게임과 분리된 짐 선택 디자인 초안">
+    <nav class="packing-nav" aria-label="초안 메뉴">
+      <a href="#back-note">타이틀로</a>
+      <span>게임 미적용 초안</span>
+      <label><input id="large-type" type="checkbox">큰 글씨</label>
+    </nav>
+    <div class="packing-scroll" tabindex="0" aria-label="짐 선택과 이름 · 아래로 스크롤">
+      <header class="packing-heading">
+        <p>부산 감천 부두</p>
+        <h1>무엇을 더 챙길까?</h1>
+        <p class="packing-rule">기본 짐에 더해, 셋 중 하나만.</p>
+      </header>
+      <fieldset class="cargo-choices">
+        <legend class="sr-only">추가로 챙길 짐 하나</legend>
+        <div class="cargo-choice">
+          <input id="cargo-fuel" type="radio" name="cargo" value="fuel" aria-labelledby="fuel-name" aria-describedby="fuel-use fuel-delta">
+          <label for="cargo-fuel">
+            <img src="../../assets/scenes/opening-pack-fuel-v1.webp" alt="" width="1024" height="576">
+            <span class="cargo-copy"><strong id="fuel-name">여분 연료통</strong><span class="cargo-use" id="fuel-use">연료를 넉넉하게.</span><span class="cargo-delta" id="fuel-delta">연료 +12L</span></span>
+          </label>
+        </div>
+        <div class="cargo-choice">
+          <input id="cargo-repair" type="radio" name="cargo" value="repair" aria-labelledby="repair-name" aria-describedby="repair-use repair-delta">
+          <label for="cargo-repair">
+            <img src="../../assets/scenes/opening-pack-repair-v1.webp" alt="" width="1024" height="576">
+            <span class="cargo-copy"><strong id="repair-name">예비 부품 상자</strong><span class="cargo-use" id="repair-use">고장에 대비해서.</span><span class="cargo-delta" id="repair-delta">고철 +8 · 부품 +2</span></span>
+          </label>
+        </div>
+        <div class="cargo-choice">
+          <input id="cargo-provisions" type="radio" name="cargo" value="provisions" checked aria-labelledby="provisions-name" aria-describedby="provisions-use provisions-delta">
+          <label for="cargo-provisions">
+            <img src="../../assets/scenes/opening-pack-provisions-v1.webp" alt="" width="1024" height="576">
+            <span class="cargo-copy"><strong id="provisions-name">물·식량 꾸러미</strong><span class="cargo-use" id="provisions-use">마실 것과 끼니부터.</span><span class="cargo-delta" id="provisions-delta">물 +6 · 식량 +4</span></span>
+          </label>
+        </div>
+      </fieldset>
+      <div class="packing-signature">
+        <label for="packing-name">기록할 이름</label>
+        <input id="packing-name" type="text" maxlength="8" placeholder="나" autocomplete="off" aria-describedby="packing-name-help">
+        <p id="packing-name-help">8자까지. 비워 두면 ‘나’로 남긴다.</p>
+      </div>
+      <details class="packing-inventory">
+        <summary>전체 짐 확인<span>기본 짐 포함</span></summary>
+        <dl class="inventory-fuel" aria-label="연료통 선택 시 전체 물자"><div><dt>연료</dt><dd class="changed">42L</dd></div><div><dt>고철</dt><dd>16</dd></div><div><dt>물</dt><dd>10</dd></div><div><dt>식량</dt><dd>10</dd></div><div><dt>부품</dt><dd>1</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl>
+        <dl class="inventory-repair" aria-label="부품 상자 선택 시 전체 물자"><div><dt>연료</dt><dd>30L</dd></div><div><dt>고철</dt><dd class="changed">24</dd></div><div><dt>물</dt><dd>10</dd></div><div><dt>식량</dt><dd>10</dd></div><div><dt>부품</dt><dd class="changed">3</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl>
+        <dl class="inventory-provisions" aria-label="물·식량 선택 시 전체 물자"><div><dt>연료</dt><dd>30L</dd></div><div><dt>고철</dt><dd>16</dd></div><div><dt>물</dt><dd class="changed">16</dd></div><div><dt>식량</dt><dd class="changed">14</dd></div><div><dt>부품</dt><dd>1</dd></div><div><dt>차체</dt><dd>82%</dd></div></dl>
+        <p>의약품 1개도 기본 짐에 들어 있다.</p>
+      </details>
+    </div>
+    <footer class="packing-actions">
+      <a class="packing-primary" href="#ready-note">이 짐으로 준비를 마친다</a>
+      <div class="packing-secondary"><a href="#history-note">역사 프롤로그 읽기</a><a href="#sound-note">소리 켜기</a></div>
+    </footer>
+    <section class="packing-note" id="ready-note" role="dialog" aria-modal="true" aria-labelledby="ready-title" tabindex="-1">
+      <div><p class="note-label">초안 동작 안내</p><h2 id="ready-title">다음은 감천 작업장</h2><p>실제 게임에서는 이름과 선택한 짐을 저장한 뒤, 작업장의 첫 사건을 시작한다. 바로 서울로 주행하는 버튼은 아니다.</p><p>이 초안은 게임을 시작하거나 저장을 바꾸지 않는다.</p><a class="packing-primary" href="#packing">짐 선택으로 돌아가기</a></div>
+    </section>
+    <section class="packing-note" id="back-note" role="dialog" aria-modal="true" aria-labelledby="back-title" tabindex="-1">
+      <div><h2 id="back-title">타이틀로 돌아가기</h2><p>실제 구현에서는 이름과 짐 선택을 기억한 채 타이틀로 돌아간다. 지금은 짐 선택만 검토하는 독립 초안이다.</p><a class="packing-primary" href="#packing">초안으로 돌아가기</a></div>
+    </section>
+    <section class="packing-note" id="history-note" role="dialog" aria-modal="true" aria-labelledby="history-title" tabindex="-1">
+      <div><h2 id="history-title">역사 프롤로그 읽기</h2><p>기존 전체 역사 프롤로그로 이어지는 보조 동작이다. 초안에는 프롤로그를 복제하지 않았다.</p><a class="packing-primary" href="#packing">짐 선택으로 돌아가기</a></div>
+    </section>
+    <section class="packing-note" id="sound-note" role="dialog" aria-modal="true" aria-labelledby="sound-title" tabindex="-1">
+      <div><h2 id="sound-title">소리 켜기</h2><p>실제 게임의 소리 켜기·끄기를 유지한다. 초안에서는 소리를 재생하거나 설정을 바꾸지 않는다.</p><a class="packing-primary" href="#packing">짐 선택으로 돌아가기</a></div>
+    </section>
+  </main>
+</body>
+</html>

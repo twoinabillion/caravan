@@ -32,3 +32,29 @@ test('repair notes do not reveal the transfer slip before Doyun presents it',()=
   assert.match(step('opening_failed_appeal').turns[0].text,/도윤이 이송표를 내밀었다/);
   assert.deepEqual(Array.from(repair.choices,c=>c.out[0].fx.time),[20,35,55]);
 });
+test('appeal refusal says what is unavailable here and where to go without promising approval',()=>{
+  const appeal=step('opening_failed_appeal');
+  const terminal=appeal.turns.find(t=>t.kind==='ai');
+  const refusal='이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다.';
+  const destination='명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.';
+  assert.equal(terminal.name,'부두 민원 단말');
+  assert.equal(terminal.who,'cheollian');
+  assert.equal(terminal.text,refusal+' '+destination);
+  assert.equal(appeal.turns.length,5);
+  const intro=D.intro.find(p=>p.scene==='intro-appeal-denied');
+  const replies=Array.from(intro.beats).filter(t=>t.kind==='ai');
+  assert.deepEqual(replies.map(t=>t.text),[
+    '신청 항목을 말씀하십시오.',refusal,destination,
+    '이 단말에서 안내할 수 있는 다른 절차는 없습니다.'
+  ]);
+  assert(intro.text.includes(refusal));
+  assert(intro.text.includes(destination));
+  for(const line of [terminal.text,...replies.map(t=>t.text)]){
+    assert.doesNotMatch(line,/원격|포트|중앙 노드|담당자|접수됩니다|취소됩니다/);
+  }
+  assert.deepEqual(Array.from(appeal.choices,c=>c.id),['copy_receipt','record_names']);
+  assert.deepEqual(Array.from(appeal.choices,c=>c.out[0].fx.time),[15,30]);
+  for(const c of appeal.choices)assert.equal(c.out[0].fx.flag,'intro_appeal_failed');
+  const appealIndex=D.openingDeparture.findIndex(e=>e.id===appeal.id);
+  assert.equal(D.openingDeparture[appealIndex+1].id,'opening_parents_module');
+});

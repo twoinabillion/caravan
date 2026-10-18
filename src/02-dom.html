@@ -21,6 +21,7 @@
         <div class="acts">
           <button type="button" class="act primary" id="bt-continue" style="display:none"><span><b>이어가기</b><small id="cont-info"></small></span><strong aria-hidden="true">→</strong></button>
           <button type="button" class="act primary" id="bt-new"><span><b>출발 준비</b></span></button>
+          <button type="button" class="act title-restore" id="bt-title-restore" aria-haspopup="dialog" aria-controls="save-transfer-dialog"><span><b>백업으로 이어가기</b></span></button>
           <button type="button" class="act title-preview" id="bt-preview"><span><b>여정 미리보기</b></span><strong aria-hidden="true">↗</strong></button>
         </div>
         <details id="title-last-record" hidden><summary>지난 여정 기록</summary><div id="last-journey" hidden></div></details>
@@ -79,18 +80,16 @@
   <div class="scr" id="scr-mode" hidden aria-hidden="true"></div>
 
   <!-- ══ INTRO ══ -->
-  <div class="scr" id="scr-name" data-prep-layout="pack">
-    <nav class="wharf-nav" aria-label="출발 준비 메뉴"><button id="bt-name-back" type="button">타이틀로</button><button id="bt-prep-sound" type="button" aria-label="소리 켜기" aria-pressed="false"><span class="sound-icon" aria-hidden="true">🔇</span> <span class="sound-label">소리 켜기</span></button></nav>
+  <div class="scr" id="scr-name" data-prep-layout="packing">
+    <nav class="wharf-nav" aria-label="출발 준비 메뉴"><button id="bt-name-back" type="button">타이틀로</button><button id="bt-prep-text" type="button" aria-pressed="false">큰 글씨</button></nav>
     <div class="departure-scroll">
-      <section id="name-card" aria-label="출발 기록">
-        <header class="pack-heading"><h2>출발 기록</h2><span>부산 → 서울</span></header>
-        <div class="pack-name"><label for="inp-name">운전수 이름</label><input id="inp-name" maxlength="8" placeholder="나" autocomplete="off" aria-describedby="name-help"><p id="name-help">8자까지. 비워 두면 ‘나’로 기록합니다.</p></div>
-        <fieldset class="departure-loadout"><legend>추가 짐 하나 <small>바꿔 보며 고르기</small></legend><div id="profile-pick" role="radiogroup" aria-label="추가 짐 하나"></div></fieldset>
-        <figure class="departure-pack-art"><img id="departure-pack-img" width="1024" height="576" alt=""><figcaption><strong id="departure-pack-name"></strong><span id="departure-pack-addition"></span></figcaption></figure>
-        <section id="profile-detail" aria-label="최종 출발 물자" aria-live="polite"></section>
+      <section id="name-card" aria-labelledby="packing-title">
+        <header class="pack-heading"><p>부산 감천 부두</p><h2 id="packing-title">무엇을 더 챙길까?</h2><p class="pack-rule">기본 짐에 더해, 셋 중 하나만.</p></header>
+        <fieldset class="departure-loadout"><legend class="sr-only">추가로 챙길 짐 하나</legend><div id="profile-pick" role="radiogroup" aria-label="추가로 챙길 짐 하나"></div></fieldset>
+        <details id="departure-inventory"><summary>전체 짐 확인<span>기본 짐 포함</span></summary><section id="profile-detail" aria-label="최종 출발 물자" aria-live="polite"></section></details>
       </section>
     </div>
-    <footer class="departure-actions"><button id="bt-name" class="mbtn" type="button"><span>출발 준비를 시작한다</span><small id="bt-name-profile">여분 연료통</small></button><button id="opening-history" type="button">먼저 전체 역사 프롤로그 읽기</button></footer>
+    <footer class="departure-actions"><button id="bt-name" class="mbtn" type="button">이 짐으로 준비를 마친다</button><div class="departure-secondary"><button id="opening-history" type="button">과거 이야기 미리 읽기</button><button id="bt-prep-sound" type="button" aria-label="소리 켜기" aria-pressed="false"><span class="sound-icon" aria-hidden="true">🔇</span> <span class="sound-label">소리 켜기</span></button></div></footer>
   </div>
   <div class="scr" id="scr-intro" role="region" tabindex="0" aria-label="프롤로그. Enter 또는 Space 키를 눌러 다음 문장으로 진행합니다.">
     <button id="intro-auto" type="button" aria-pressed="true">자동 ON</button>
@@ -249,11 +248,21 @@
         <section class="menu-control-card" aria-labelledby="menu-save-title">
           <header><span><small>JOURNEY</small><b id="menu-save-title">저장</b></span><output id="menu-save-state">자동 저장 중</output></header>
           <p>현재 여정은 이 기기에 자동으로 저장된다.</p>
-          <div class="menu-save-actions"><button id="menu-save-now" class="menu-control-action" type="button">지금 저장</button><button id="menu-save-export" type="button">백업 파일</button></div>
+          <div class="menu-save-actions"><button id="menu-save-now" class="menu-control-action" type="button">지금 저장</button><button id="menu-save-transfer" type="button" aria-haspopup="dialog" aria-controls="save-transfer-dialog">백업·복원</button></div>
         </section>
       </div>
     </div>
   </div>
+
+  <!-- Approved save-transfer-v1: UI-only staging until explicit restore. -->
+  <dialog id="save-transfer-dialog" aria-modal="true" aria-labelledby="save-transfer-title" aria-hidden="true">
+    <div class="save-transfer-shell">
+      <header><button id="save-transfer-back" type="button" aria-label="이전 화면으로">‹</button><h2 id="save-transfer-title">여정 백업</h2></header>
+      <div id="save-transfer-body" tabindex="-1"></div>
+      <footer id="save-transfer-actions"></footer>
+      <input id="save-transfer-file" type="file" accept=".json,application/json" hidden>
+    </div>
+  </dialog>
 
   <!-- ══ CAMP / VAN HOME ══ -->
   <div class="ovl" id="ovl-camp" role="dialog" aria-modal="true" aria-labelledby="camp-title" aria-hidden="true">

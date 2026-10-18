@@ -112,6 +112,17 @@ test('bus repair still spends authored time and parts once, then restores the sa
   assert.deepEqual(resources(ctx.s),after);ctx.closeEvent();
   assert.equal(ctx.g.openingPending().id,'opening_failed_appeal');assert.deepEqual(resources(ctx.s),after);
 });
+test('repair to name and name to appeal keep the modal, paid stock and next receipt in place',()=>{
+  const h=harness('interactive'),{ctx,calls}=h;ctx.s.name=null;ctx.s.opening.nameIntroduction='pending';
+  h.show(ctx.g.openingPending());choose(h,ctx.g.openingPending());ctx.closeEvent();
+  choose(h,ctx.g.openingPending());const paid=resources(ctx.s);h.reload();calls.length=0;ctx.closeEvent();
+  assert.deepEqual(calls,['auto:clear','show:opening_name_introduction','hud']);
+  assert.deepEqual(resources(ctx.s),paid);assert(h.classes.has('on'));
+  calls.length=0;assert.equal(ctx.closeEvent(),false);assert.deepEqual(calls,[]);
+  ctx.g.setOpeningNameDraft('민우');choose(h,ctx.g.openingPending());h.reload();calls.length=0;ctx.closeEvent();
+  assert.deepEqual(calls,['auto:clear','show:opening_failed_appeal','hud']);assert.equal(ctx.s.name,'민우');
+  assert.deepEqual(resources(ctx.s),paid);assert(h.classes.has('on'));
+});
 test('final/unknown chains exit once and restore the road only after the last scene',()=>{
   for(const chain of [null,'not-an-event']){
     const h=harness(),{ctx,calls}=h;ctx.s.driving=drive();ctx.s.at=null;ctx.s._chain=chain;
@@ -131,4 +142,57 @@ test('shared craft/companion sheets still close with no curEv; camp/local owners
     if(kind==='camp'){assert.equal(ctx.s.campConversation.active,false);assert.equal(calls.at(-1),'camp')}
     if(kind==='local')assert(!calls.includes('road:render'));
   }
+});
+
+// Prepared crisis inputs, not a claim that a human completed a balanced run.
+// Exercise the real tick -> rescue -> persisted receipt -> closeEvent corridor.
+test('finite-resource fuel, hull and exhaustion crises keep a free recovery and resume the same road after reload',()=>{
+  for(const [kind,tier,id,choice] of [
+    ['nofuel',0,'crisis_nofuel',0],['nofuel',1,'crisis_nofuel2',0],['nofuel',2,'crisis_nofuel3',0],
+    ['breakdown',0,'crisis_breakdown',2],['breakdown',1,'crisis_breakdown2',2],
+    ['collapse',0,'crisis_collapse',0],['collapse',1,'crisis_collapse2',0],
+  ]){
+    const h=harness(),{ctx,classes}=h;classes.clear();
+    assert(!ctx.g.isInfiniteResourceMode());assert(ctx.g.startTravel('yangsan'));
+    ctx.s.driving.slots=[];ctx.s._rescues={[kind]:tier};
+    ctx.s.scrap=0;ctx.s.items={};ctx.s.water=0;ctx.s.food=0;
+    if(kind==='nofuel')ctx.s.fuel=0;
+    if(kind==='breakdown')ctx.s.van=0;
+    if(kind==='collapse')ctx.s.fatigue=99;
+    ctx.UI.roadApproach=(profile,done)=>{if(done)done();};
+    ctx.UI.showEvent=event=>{classes.add('on');ctx.showEvent(event);};
+    ctx.g.tick(.1);assert.equal(ctx.s.pendingPresentation.eventId,id);
+    const distance=ctx.s.driving.gone,count=ctx.s.stats.events,event=h.event(id);
+    h.reload();assert(ctx.g.resumePresentation());
+    assert.equal(ctx.s._rescues[kind],tier+1);assert.equal(ctx.s.stats.events,count);
+    assert(ctx.g.reqOk(ctx.g.choiceReq(event.choices[choice])).ok,'free recovery is reachable: '+id);
+    if(id==='crisis_nofuel3')assert(!ctx.g.reqOk(ctx.g.choiceReq(event.choices[1])).ok,'tow is not free');
+    choose(h,event,choice);const after=resources(ctx.s);h.reload();assert(ctx.g.resumePresentation());
+    assert.equal(ctx.g.resolvePresentedChoice(event,event.choices[choice]).applied,false);
+    assert.deepEqual(resources(ctx.s),after,'recovery spends/pays only once: '+id);
+    ctx.curStory.phase='outcome';ctx.closeEvent();h.reload();
+    assert(!ctx.s.ended);assert.equal(ctx.s.pendingPresentation,null);
+    assert.equal(ctx.s.driving.from,'busan');assert.equal(ctx.s.driving.to,'yangsan');
+    assert.equal(ctx.s.driving.gone,distance);assert(!classes.has('on'));
+    ctx.g.tick(.1);assert(ctx.s.driving.gone>distance,'next road action is reachable: '+id);
+    assert.equal(ctx.s._rescues[kind],tier+1,'no immediate repeat of recovered crisis');
+  }
+});
+
+test('empty food queues a reachable search and a recovered meal clears deprivation without replaying rewards',()=>{
+  const h=harness(),{ctx,classes}=h;ctx.s.food=0;ctx.s.water=0;ctx.s.scrap=0;ctx.s.items={};
+  ctx.g.consumeMeal('breakfast');ctx.g.consumeMeal('lunch');
+  assert.equal(ctx.s.hunger,2);assert.equal(ctx.s._crisis,'crisis_hungry');
+  assert(ctx.g.maybeCrisis());const event=h.event('crisis_hungry');
+  assert.equal(ctx.s.pendingPresentation.eventId,event.id);
+  ctx.g.pickOutcome=()=>event.choices[0].out[0];
+  choose(h,event,0);h.reload();const after=resources(ctx.s);
+  assert.equal(ctx.g.resolvePresentedChoice(event,event.choices[0]).applied,false);
+  assert.deepEqual(resources(ctx.s),after);ctx.curStory.phase='outcome';ctx.closeEvent();
+  assert(!classes.has('on'));assert(ctx.s.food>0);
+  assert(ctx.g.consumeMeal('lunch').ok);assert.equal(ctx.s.hunger,0);
+  ctx.s.thirst=2;ctx.g.addSupply('water',ctx.g.mealNeed('breakfast'));
+  ctx.g.addSupply('food',ctx.g.mealNeed('breakfast'));ctx.g.breakfast();
+  assert.equal(ctx.s.thirst,0);h.reload();assert.equal(ctx.s.thirst,0);
+  assert(ctx.g.canTravelTo('yangsan').ok);assert(!ctx.s.ended);
 });

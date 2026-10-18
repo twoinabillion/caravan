@@ -1,0 +1,37 @@
+/* Sole owner of this isolated density study; never loaded by the game. */
+:root{color-scheme:dark;--copy:16px;--leading:1.55;--turn-gap:10px;--narration-inset:5px 0;--portrait:36px;--harbor:#142027;--paper:#e4dcc6;--ink:#302c24;--sans:"Apple SD Gothic Neo",Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif;font-family:var(--sans);font-synthesis:none}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--harbor);color:var(--paper);overflow:hidden}
+p,h1,figure{margin:0}
+.density-draft{height:100svh;width:min(100%,480px);margin:auto;display:grid;grid-template-rows:44px minmax(0,1fr);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.review-tools{position:relative;z-index:2;display:flex;align-items:center;gap:10px;padding:0 10px;background:#0d1a21;border-bottom:1px solid #43545b;font-size:12px}
+.draft-status{margin-right:auto;color:#b2c0bf;font-size:11px;white-space:nowrap}
+.review-tools label,.draft-info summary{display:flex;align-items:center;gap:5px;min-height:44px;cursor:pointer;white-space:nowrap}
+.review-tools input{accent-color:#d5b77c;width:16px;height:16px;margin:0}
+.draft-info summary{text-decoration:underline;text-underline-offset:3px}
+.draft-info>div{position:absolute;top:44px;left:6px;right:6px;max-height:70svh;overflow-y:auto;padding:16px;border:1px solid #697974;background:#1c3038;box-shadow:0 12px 28px #0009;font-size:14px;line-height:1.65}
+.draft-info p+p{margin-top:12px}
+.intro-study{min-height:0;display:flex;flex-direction:column;padding:6px;gap:0;background:#070910}
+.scene-visual{flex:none;width:100%;border:1px solid #454e49;background:#142027}
+.scene-visual img{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:40svh;object-fit:contain}
+.paper{display:flex;flex:1 1 0;min-height:0;flex-direction:column;padding:20px 28px 16px;background:var(--paper) url("../../assets/ui/event-manuscript-panel-tall-v1-lossless.webp") center/100% 100% no-repeat;color:var(--ink)}
+.scene-era{flex:none;margin-bottom:12px;color:#8a5415;font:500 12px/1.5 var(--sans);word-break:keep-all;overflow-wrap:anywhere}
+.paper h1{position:absolute;width:1px;height:1px;margin:-1px;padding:0;clip-path:inset(50%);overflow:hidden}
+.reading-scroll{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7d8270 transparent;scroll-padding-block:8px 16px;padding-bottom:8px;font:400 var(--copy)/var(--leading) var(--sans);word-break:keep-all;overflow-wrap:anywhere}
+.transcript{display:flex;flex-direction:column;gap:var(--turn-gap);width:100%;min-width:0}
+.narration{flex:none;padding:var(--narration-inset);color:#29251f}
+.utterance{display:grid;grid-template-columns:var(--portrait) minmax(0,1fr);column-gap:8px;row-gap:3px;min-width:0;flex:none}
+.speaker-photo{display:block;width:var(--portrait);height:var(--portrait);object-fit:contain;grid-column:1;grid-row:1/span 2;border-radius:7px}
+.utterance b{grid-column:2;color:#28746f;font:850 12px/1.25 var(--sans);letter-spacing:.035em}
+.utterance.mine b{color:#8a5415}
+.utterance p{grid-column:2;min-width:0;color:#342f28}
+.utterance p::before{content:"“";color:#8a5415;font-weight:800}
+.utterance p::after{content:"”";color:#8a5415;font-weight:800}
+.reading-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none;min-height:44px;padding-inline:10px;background:#142027;color:#c4cdc6;font-size:12px}
+.reading-actions a{display:flex;align-items:center;min-height:44px;color:inherit;text-decoration:underline;text-underline-offset:3px}
+.reading-actions span{font-size:11px;color:#a8b9b4}
+:is(a,summary,input,.reading-scroll):focus-visible{outline:3px solid #e8b764;outline-offset:-3px}
+/* Native checks compare presentation only, without scripts or game preferences. */
+body:has(#current-type:checked){--copy:17px;--leading:1.6;--turn-gap:12px;--narration-inset:7px 0 8px}
+body:has(#large-type:checked){--copy:21px;--portrait:44px}
+@media(max-width:340px){.review-tools{gap:7px;padding-inline:8px}.draft-status{font-size:10px}.paper{padding-inline:28px}}

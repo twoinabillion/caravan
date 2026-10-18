@@ -61,8 +61,8 @@ test('family packing stays in childhood while institutional evidence is reported
 test('the trip still needs evidence, safe module removal and help from six distinct groups',()=>{
   const current=text('intro-current-expulsion'),module=text('intro-dashboard-module');
   for(const fact of ['6,412명','20kg','제7 구역','집 문과 배급 계정','통행 권한','사유란']) assert(current.includes(fact),fact);
-  assert.match(text('intro-appeal-denied'),/원격 이의 제기 경로가 없습니다/);
-  assert.match(text('intro-appeal-denied'),/서울 남산 중앙 노드/);
+  assert.match(text('intro-appeal-denied'),/이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다/);
+  assert.match(text('intro-appeal-denied'),/명령을 확인하려면 서울 남산으로 직접 가셔야 합니다/);
   for(const fact of ['4–5쪽','함께 태울 수 있음','계기판을 다시 닫았다','발신 기록','당사자 증언',
     '이송을 겪은 사람','명령망을 본 사람','길을 지킨 사람'])
     assert((text('intro-keepsakes-return-v1')+module).includes(fact),fact);

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "purpose": "Independent Busan–Yangsan–Miryang continuity draft; not production city ownership",
+  "generator": "builtin image_gen.imagegen",
+  "requestedMaster": [3072, 1024],
+  "references": [
+    "assets/ui/road-studies/busan-yangsan-continuous-v1.webp",
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nEDIT TARGET image 1: the existing transparent Busan–Yangsan terrain panorama. Create a sibling expanded-route composition in the same beautiful restrained medium. References 2–5 are style/world/technical references only, never reproduce their collage, labels, people or vehicles. Preserve the lateral, distant side-on view, the terrain baseline, detail scale and subtle color balance of image 1. Recompose into ONE seamless wide panorama covering a compressed Busan–Yangsan–Miryang corridor, not three pictures or scenes. 3:1 aspect ratio, request 3072x1024 or the highest native 3:1 output.\n\nSPATIAL LAYOUT: at far left x0–22%, modest weathered port cranes and long low industrial sheds; this gives way organically to low workshops and riverside reeds. Across x25–65%, the SAME low forested ridge and a thin river channel persist, with sparse Korean apartments and an aging elevated concrete road in the central Yangsan area, not a giant landmark or foreground bridge. The exact center x50% is a quiet riverside stop outlook with low structures, a short distant viaduct and the same ridge. Towards x65–100%, buildings thin into agricultural plots and modest low-roof village/market outskirts of southern Miryang, with a wider river plain and softly overlapping hills. These locations are compressed game geography, not a literal verified viewpoint. River and hills must connect continuously across the entire width; no straight joins, seams, panels, narrow stripe distortions, dark dividers, sudden biome/color/perspective changes, mountainous alpine cliffs, beach, ocean in the inland sections, or landmark tower. Keep every building human-scale and subordinate to the whole landscape. Do not make each third a separate composition.\n\nTRANSPARENCY: cut out ALL sky above the natural terrain/building silhouette to true transparent alpha, including the entire upper ~30% canvas. Ground and buildings below the silhouette are opaque; bottom 12% must be solid continuous earth/reeds with no holes or fade. Terrain is a separate live-renderer component, not a complete gameplay screenshot. No foreground driving lane, sky, vehicle, caravan, character, animal, UI, border, text, logos or watermarks. The game will draw its own road/sky/moving vehicle separately. Preserve fine skyline edges with no colored fringe.\n\nNEGATIVE: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "revision2": {
+    "editTarget": "assets/masters/connected-journey-v1/master.png",
+    "change": "Keep the entire image, composition, lighting, dimensions, alpha skyline, terrain, buildings, hills and river unchanged. Make only TWO precise corrections: 1. The central distant concrete viaduct at Yangsan is a collapsed overpass in this game's established story. Remove one small deck span near the exact middle of the picture, leaving the two existing piers exposed with jagged broken ends, so it visibly cannot be driven across. Do not add a second bridge, rubble wall, huge collapse, sign, vehicle or person. 2. The lower terrain must be fully opaque alpha255, particularly the bottom12%; preserve RGB colors/textures exactly, preserve all transparent sky above the skyline, do not paint a sky. Do not reduce output dimensions. All other details and pixel positions must remain fixed. This is a targeted sibling revision, not a new landscape composition."
+  },
+  "geography": {
+    "claim": "Artistic compression informed by river plains, slopes and settlement patterns, not a surveyed road or literal panorama.",
+    "sources": [
+      {"url": "https://www.busan.go.kr/living_space/gangdong", "supports": "Nakdong riverside settlement and mountain axis; prior study reference"},
+      {"url": "https://yangsan.go.kr/tour/main.do", "supports": "Yangsan city, Nakdong river and surrounding mountains"},
+      {"url": "https://miryang.go.kr/agr/index.do?mnNo=30501000000", "supports": "Southern Sangnam/Hanam plains in Nakdong and Miryang river basins; northern/eastern mountains"}
+    ]
+  }
+}

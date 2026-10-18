@@ -1,12 +1,12 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync('src/07-ui.js','utf8');
 function harness(restart=false){
- const calls=[],ctx=vm.createContext({screen:'intro',introIdx:0,introTurnIdx:0,introRestart:restart,
+ const calls=[],ctx=vm.createContext({screen:'intro',introIdx:0,introTurnIdx:0,introRestart:restart,introPreview:false,
   D:{intro:[{beats:[{text:'끝'}]}]},S:{},pendingMode:'onroad',pendingName:'다온',pendingProfile:'keeper',pendingPack:'repair',
   $:()=>({classList:{contains:()=>true}}),clearIntroAuto(){},closeModal(){},renderIntro(){},
   localStorage:{setItem(){}},AMBI:{setLoop(){}},
   G:{newGame(...args){calls.push(args);},save(){calls.push('save');}},enterGame(){calls.push('enter');ctx.screen='game';}});
- vm.runInContext(source.slice(source.indexOf('  function nextIntro(){'),source.indexOf('  function enterGame(){')),ctx);
+ vm.runInContext(source.slice(source.indexOf('  function introPages(){'),source.indexOf('  function renderIntro('))+source.slice(source.indexOf('  function nextIntro(){'),source.indexOf('  function enterGame(){')),ctx);
  return {ctx,calls,run:code=>vm.runInContext(code,ctx)};
 }
 test('summary completion is once-only for a new journey and a restart',()=>{

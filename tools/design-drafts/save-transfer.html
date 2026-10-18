@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; base-uri 'none'; form-action 'none'">
+<title>여정 백업·복원 · 독립 초안</title><link rel="stylesheet" href="save-transfer.css"></head>
+<body><main class="draft-shell">
+<aside class="draft-note">초안 · 게임·저장·파일 미변경<label><input id="large" type="checkbox">큰 글씨</label></aside>
+<nav class="draft-entry" aria-label="검토할 진입점"><a href="#menu">게임 메뉴에서</a><a href="#title">저장 없는 첫 실행</a></nav>
+<section id="menu" class="view">
+ <header class="view-head"><h1 tabindex="-1">메뉴</h1><span>화면 · 소리 · 저장</span></header>
+ <div class="view-body">
+  <section class="control-card"><header><h2>화면 밝기</h2><span>100%</span></header><input type="range" min="60" max="120" value="100" aria-label="예시 화면 밝기"><p>밝기 조절은 초안 안에서만 움직입니다.</p><div class="quiet-row"><span>큰 글씨</span><span>상단에서 검토</span></div><div class="quiet-row"><span>움직임 줄이기</span><span>꺼짐</span></div></section>
+  <section class="control-card"><header><h2>소리</h2><span>꺼짐</span></header><p>실제 소리와 설정은 건드리지 않습니다.</p></section>
+  <section class="control-card"><header><h2>저장</h2><span>저장됨 · 예시</span></header><p>현재 여정은 이 기기에 자동으로 저장된다.</p><div class="actions"><a href="#save-note" class="primary">지금 저장</a><a href="#backup">백업·복원</a></div></section>
+ </div>
+</section>
+<section id="title" class="view" tabindex="-1">
+ <header class="view-head"><h1 tabindex="-1">첫 실행의 복원 진입</h1></header>
+ <div class="view-body"><p>타이틀의 기존 그림·제목·출발 버튼은 유지합니다. 아래는 새 보조 동작의 위치만 보는 구성 예시입니다.</p><div class="title-entry"><p>서울까지 400km</p><a href="#new-note" class="primary">출발 준비</a><a href="#backup-empty">백업으로 이어가기</a><small>새 기기에서도 출발 전에 이전 백업을 불러올 수 있게 합니다.</small></div></div>
+</section>
+<section id="backup" class="view" tabindex="-1">
+ <header class="view-head"><a href="#menu" aria-label="이전 화면으로">‹</a><h1 tabindex="-1">여정 백업</h1></header>
+ <div class="view-body">
+  <section class="journey-record" aria-label="현재 기기의 예시 여정"><small>현재 기기</small><h2 id="current-name">다온의 여정</h2><p id="current-place">2일째 · 밀양 장터 · 06:55</p></section>
+  <p>파일로 보관해 두면 다른 기기에서도 이어갈 수 있다.</p>
+  <a href="#export-note" class="wide">현재 여정 파일로 내보내기</a>
+  <hr><h2>이전 여정 불러오기</h2><p>파일을 골라도 바로 바뀌지 않는다. 확인한 뒤 복원한다.</p>
+  <a href="#chooser" class="wide primary">백업 파일 불러오기</a>
+  <p class="helper">기기에 내려받은 JSON 백업 파일을 사용합니다.</p>
+ </div>
+ <footer><a href="#menu" class="wide">돌아가기</a></footer>
+</section>
+<section id="backup-empty" class="view" tabindex="-1">
+ <header class="view-head"><a href="#title" aria-label="첫 실행으로">‹</a><h1>여정 백업</h1></header>
+ <div class="view-body"><section class="journey-record"><small>현재 기기</small><h2>아직 여정이 없다</h2><p>기존 백업을 가져와 이어간다.</p></section><p>파일을 골라도 바로 바뀌지 않는다. 확인한 뒤 복원한다.</p><a href="#chooser-empty" class="wide primary">백업 파일 불러오기</a><p class="helper">기기에 내려받은 JSON 백업 파일을 사용합니다.</p></div>
+ <footer><a href="#title" class="wide">돌아가기</a></footer>
+</section>
+<section id="chooser" class="view" tabindex="-1">
+ <header class="view-head"><a href="#backup" aria-label="백업 화면으로">‹</a><h1 tabindex="-1">예시 파일 골라보기</h1></header>
+ <div class="view-body"><p>실제 파일 선택창을 대신하는 검토용 예시입니다. 기기의 파일을 읽지 않습니다.</p><a href="#confirm" class="wide">정상 백업 · 다온 / 2일째 / 밀양</a><a href="#invalid" class="wide">손상된 파일 예시</a><a href="#future" class="wide">다른 버전의 파일 예시</a></div>
+ <footer><a href="#backup" class="wide">파일 선택 취소</a></footer>
+</section>
+<section id="chooser-empty" class="view" tabindex="-1">
+ <header class="view-head"><a href="#backup-empty" aria-label="백업 화면으로">‹</a><h1>예시 파일 골라보기</h1></header>
+ <div class="view-body"><p>실제 파일을 읽지 않는 예시입니다.</p><a href="#confirm-empty" class="wide">정상 백업 · 다온 / 2일째 / 밀양</a></div><footer><a href="#backup-empty" class="wide">파일 선택 취소</a></footer>
+</section>
+<section id="confirm" class="view" tabindex="-1">
+ <header class="view-head"><h1 tabindex="-1">이 여정으로 돌아갈까?</h1></header>
+ <div class="view-body"><p class="filename">seoul-400km-day-2-backup.json · 예시</p><section class="journey-record"><small>선택한 백업</small><h2>다온의 여정</h2><p>2일째 · 밀양 장터 · 06:55</p><p>부모님이 탄 다음 차를 찾는 중</p></section><p id="replace-warning" class="warning">현재 기기의 여정을 이 백업으로 바꿉니다. 지금 진행으로 돌아오려면 먼저 현재 여정도 파일로 보관해 두세요.</p><p>기록과 이미 받은 물자는 유지하고, 읽던 장면부터 이어갑니다.</p></div>
+ <footer><a href="#restored" class="wide primary">이 백업으로 복원</a><a href="#backup" class="wide">취소하고 돌아가기</a></footer>
+</section>
+<section id="confirm-empty" class="view" tabindex="-1">
+ <header class="view-head"><h1>이 여정으로 돌아갈까?</h1></header>
+ <div class="view-body"><p class="filename">seoul-400km-day-2-backup.json · 예시</p><section class="journey-record"><small>선택한 백업</small><h2>다온의 여정</h2><p>2일째 · 밀양 장터 · 06:55</p></section><p>선택한 백업을 이 기기로 가져와 이어갑니다.</p></div><footer><a href="#restored" class="wide primary">이 백업으로 복원</a><a href="#backup-empty" class="wide">취소하고 돌아가기</a></footer>
+</section>
+<section id="invalid" class="view" tabindex="-1"><header class="view-head"><h1>백업을 불러오지 못했다</h1></header><div class="view-body"><p class="warning">유효한 백업이 아닙니다. 현재 여정은 그대로입니다. 다른 파일을 골라 주세요.</p></div><footer><a href="#chooser" class="wide">다른 파일 고르기</a><a href="#backup" class="wide">돌아가기</a></footer></section>
+<section id="future" class="view" tabindex="-1"><header class="view-head"><h1>더 새로운 버전의 백업</h1></header><div class="view-body"><p>현재 여정은 그대로입니다. 게임을 업데이트한 뒤 다시 시도해 주세요.</p></div><footer><a href="#chooser" class="wide">다른 파일 고르기</a><a href="#backup" class="wide">돌아가기</a></footer></section>
+<section id="restored" class="view" tabindex="-1">
+ <header class="view-head"><h1 tabindex="-1">복원 완료 · 초안 예시</h1></header>
+ <div class="view-body"><section class="journey-record"><h2>다온의 여정</h2><p>2일째 · 밀양 장터 · 06:55</p></section><p>실제 게임에서는 읽던 사건이나 도착 기록이 있으면 먼저 이어집니다.</p><p>이 초안은 복원 결과만 흉내 냈습니다. 게임 저장은 바꾸지 않았습니다.</p></div>
+ <footer><a href="#menu" class="wide primary">검토 시작으로</a></footer>
+</section>
+<section id="save-note" class="view" tabindex="-1"><header class="view-head"><h1>저장 안내 예시</h1></header><div class="view-body"><p>실제 구현은 저장 성공 때만 완료를 표시합니다. 이 초안은 저장하지 않습니다.</p></div><footer><a href="#menu" class="wide">돌아가기</a></footer></section>
+<section id="export-note" class="view" tabindex="-1"><header class="view-head"><h1>내보내기 안내 예시</h1></header><div class="view-body"><p>초안에서는 파일을 만들지 않습니다. 실제 구현은 다운로드·공유 요청과 완료 여부를 구분합니다.</p></div><footer><a href="#backup" class="wide">돌아가기</a></footer></section>
+<section id="new-note" class="view" tabindex="-1"><header class="view-head"><h1>기존 출발 준비로</h1></header><div class="view-body"><p>기존 이름·짐 선택으로 이어집니다. 초안은 게임을 시작하지 않습니다.</p></div><footer><a href="#title" class="wide">돌아가기</a></footer></section>
+</main></body></html>

@@ -70,7 +70,7 @@ function runtime(workerSupport=false){
   };
  }
  const exposed=source.replace('/*__ROAD_CONTINUITY__*/{enabled:false,routes:[]}',JSON.stringify(registry))
-  .replace('return {active,draw,key,position,connector,ridges};','return {active,draw,key,position,connector,ridges,images,worlds};');
+  .replace('return {active,draw,key,position,connector,ridges,connectedPosition,direction};','return {active,draw,key,position,connector,ridges,connectedPosition,direction,images,worlds};');
  const r=vm.runInNewContext(exposed+';ROAD_CONTINUITY',ctx);
  const target=new Proxy({}, {get:(o,k)=>(...a)=>targetCalls.push([k,...a])});
  return {r,seen,worldCanvases,targetCalls,workers,

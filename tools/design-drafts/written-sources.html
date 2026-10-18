@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>편지·메모·기록 · 제목 한 줄</title>
+  <link rel="stylesheet" href="written-sources.css">
+</head>
+<body>
+  <main class="source-draft" aria-label="게임과 분리된 문서 표제 비교">
+    <header class="review-tools">
+      <details class="draft-info"><summary>초안 안내</summary><div>
+        <p>인트로와 사건의 실제 메모를 각각 발췌한 문서 표제 시안입니다. 같은 시간에 일어나는 연속 장면이나 현재 플레이 화면의 재현이 아닙니다.</p>
+        <p>문서는 구체적인 제목 한 줄만 남기고 초상을 붙이지 않습니다. 실제 대사의 이름·초상, 생각·방송의 구분과 본문 16px·줄간격 1.55는 유지하는 제안입니다.</p>
+        <p>제목 없는 문서는 기존 ‘편지’ 또는 ‘기록’을 한 번만 씁니다. 녹음·영상의 재생 표시는 문서와 구분해 유지합니다. 종이 그림·장면 사진을 비교하는 초안은 아니며, 본게임·저장·설정·소리와 연결하지 않았습니다.</p>
+      </div></details>
+      <span>게임 미적용</span>
+      <label><input id="old-source" type="checkbox">이전 두 줄</label>
+      <label><input id="large-source" type="checkbox">큰 글씨</label>
+    </header>
+    <fieldset class="examples"><legend>문서가 나타나는 화면</legend>
+      <input id="intro-example" type="radio" name="example" checked><label for="intro-example">인트로</label>
+      <input id="event-example" type="radio" name="example"><label for="event-example">사건</label>
+    </fieldset>
+    <div class="study-scroll" tabindex="0" role="region" aria-label="문서 표제와 본문 비교 · 아래로 스크롤">
+      <section class="paper intro-example" aria-labelledby="intro-heading">
+        <h1 id="intro-heading" class="sr-only">인트로의 엄마 메모 발췌</h1>
+        <p class="provenance">인트로 · 철제 상자에서 찾은 메모</p>
+        <article class="document" aria-labelledby="intro-source">
+          <header class="document-head"><span class="old-kind" aria-hidden="true">편지</span><h2 id="intro-source">엄마의 메모</h2></header>
+          <p data-source="intro-keepsakes-return-v1:3">강제 명령 현장 확인 포트 — 남산 중앙 노드. 검증키 보관 위치 — 달구지 계기판 뒤.</p>
+        </article>
+        <p class="narration" data-source="intro-keepsakes-return-v1:4">두 종이의 명령 규격 번호가 같았다.</p>
+        <article class="document" aria-labelledby="intro-source-next">
+          <header class="document-head"><span class="old-kind" aria-hidden="true">편지</span><h2 id="intro-source-next">엄마의 메모</h2></header>
+          <p data-source="intro-keepsakes-return-v1:5">이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것. 장치만으로는 검증이 끝나지 않는다.</p>
+        </article>
+        <aside class="review-note">‘엄마의 메모’가 문서의 출처를 알려 줍니다. ‘편지’ 분류와 인물 초상은 덧붙이지 않습니다.</aside>
+      </section>
+      <section class="paper event-example" aria-labelledby="event-heading">
+        <h1 id="event-heading" class="sr-only">사건의 엄마 메모 발췌</h1>
+        <p class="provenance">사건 · 계기판 뒤의 검증키</p>
+        <article class="document" aria-labelledby="event-source">
+          <header class="document-head"><span class="old-kind" aria-hidden="true">편지</span><h2 id="event-source">엄마의 메모</h2></header>
+          <p data-source="opening_parents_module:3">이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것. 장치만으로는 검증이 끝나지 않는다. 현장 확인은 남산에서.</p>
+        </article>
+        <aside class="review-note">사건에서도 ‘편지’만 표시하지 않고 실제 문서 이름을 보여 줍니다. 원문과 사건 진행은 바꾸지 않습니다.</aside>
+      </section>
+    </div>
+    <footer class="scope-note">문서 표제만 비교 · 대사·생각·방송은 기존 구분 유지</footer>
+  </main>
+</body>
+</html>

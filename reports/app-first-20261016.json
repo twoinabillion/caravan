@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-16",
+  "followup": "reports/global-landscape-20261016.json supersedes the pending terrain/art counts below; this report preserves the earlier build/apply evidence.",
+  "request": "Fix audited issues; prioritize a working app before size reduction.",
+  "platform": {"existingBuild": "Apps-in-Toss", "standaloneAndroidIos": "not selected; optional question unanswered", "deployed": false},
+  "fixed": [
+    "Travel foreground, caravan, cues and smoke now follow the canonical route camera direction; terrain, sky and weather are not mirrored.",
+    "Arrival/JSON reload retains direction through existing lastJourneyRecap; destination selection alone does not turn the vehicle.",
+    "Vite app output ships a root manifest, icons and service worker with valid index/module precache paths; AIT owns its own update lifecycle.",
+    "Release build-marker parsing accepts minified whitespace/quotes and AIT's relocated dist/web entry.",
+    "Missing packaged detail audio sources use original procedural WAV fallbacks through the existing audio owner; restricted local audition bytes remain excluded."
+  ],
+  "verification": {
+    "sourceTests": {"passed": 657, "failed": 0, "log": "/tmp/caravan-app-first-tests-final.log"},
+    "audioTests": 24,
+    "directionCases": 156,
+    "recovery": "Real-engine isolated VM: 7 prepared fuel/hull/exhaustion tier cases with no money/parts, entry, free recovery, save/load, receipt idempotency, closeEvent and next driving tick. Empty-food search/meal and water restoration also checked. Not a natural full playthrough.",
+    "quickValidation": "passed; 1039 events, 58 nodes, 413 scenes; dialogue errors 0, manual repetition warnings 2; 606 scene-class assets/73 portraits geometry and 7 canonical built-portrait byte matches",
+    "build": {"command": "npm run build:toss", "artifact": "caravan.ait", "bytes": 67878918, "sha256": "c25aab9bb7850ae83a3ce0f4fa68c37da292e23fe23f1f1cedac49d9aecd9381", "htmlBytes": 79877487, "releaseGate": "passed; not the entire release-check.sh browser/device suite"},
+    "visual": "Actual Safari Studio title before/after apply observed. Separate real-renderer synthetic fixture observed at 320/360/480 with reverse travel, night/rain/upgrades, brake input, stopped arrival and JSON resume. Fixture is not actual gameplay/event UI or device QA.",
+    "fixtureCorrection": "Fixed fixture-only cyclist asset URL; early reverse-braking-480 and reverse-settled-480 captures show direction/environment but do not prove visible approach cue. Later reverse-cyclist capture is the cue check."
+  },
+  "live": {
+    "studio": "http://127.0.0.1:4327/",
+    "preview": "http://127.0.0.1:4319/",
+    "before": {"capturedAt": "2026-10-16T13:08:57.348Z", "loadedRevision": "1792155485565", "screen": "title", "hasSave": false, "viewport": [360,728]},
+    "afterApply": {"capturedAt": "2026-10-16T13:23:18.612Z", "loadedRevision": "1792156619562", "styleRevision": "1792156619562", "pendingRevision": null, "applying": false, "screen": "title", "hasSave": false, "viewport": [360,728]},
+    "agentActions": "Clicked latest-code apply; selected existing landscape-atlas-v1 in Studio design window. No new game/save, forced progress, service restart, commit, push or deploy."
+  },
+  "remaining": [
+    {"item": "New geographically grounded connected terrain on remaining routes", "state": "art review/integration pending", "detail": "Connected production terrain covers 2 of 78 legs. Atlas has 78 comparisons, including 72 reused masters not newly geographically corrected. Existing route renderer/fallback coverage is not equivalent to new art approval."},
+    {"item": "Family bus age/composition and Jaeyi trapped-box before/after art", "state": "Studio draft direction approval and complete result set/crop QA pending"},
+    {"item": "Actual connected-route roundtrip, event return and refresh", "state": "not completed in user's current title/no-save screen"},
+    {"item": "Finite-resource natural full run, all companion combinations/endings", "state": "not certified by prepared-state automated tests"},
+    {"item": "Audio listening and physical-device packaged launch/suspend/resume/performance", "state": "pending; no APK/IPA built and no mobile hardware session"},
+    {"item": "Size optimization", "state": "explicitly deferred by user; quality not reduced"}
+  ]
+}

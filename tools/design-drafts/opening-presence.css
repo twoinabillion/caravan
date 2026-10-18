@@ -1,0 +1,83 @@
+/* Sole owner for this independent draft. Never loaded by the game. */
+:root{color-scheme:dark;--harbor:#142027;--metal:#24343e;--paper:#e4dcc6;--ink:#29312e;--muted:#b2c0bf;--memory:#d5b77c;--reported:#a8c2ca;--copy:18px;--art:min(31svh,56.25vw,240px);--sans:"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-family:var(--sans);font-synthesis:none}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--harbor);color:var(--paper)}
+a{color:inherit;text-decoration:none;touch-action:manipulation}
+p,h1,h2,blockquote{margin:0}
+.presence-draft{display:grid;grid-template-rows:44px minmax(0,1fr);height:100svh;min-height:300px;width:min(100%,480px);margin:auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.review-tools{position:relative;z-index:3;display:flex;align-items:center;gap:14px;padding:0 14px;background:#0d1a21;border-bottom:1px solid #43545b;color:var(--muted);font-size:12px}
+.review-tools>label{display:flex;align-items:center;gap:6px;min-height:44px;margin-left:auto;cursor:pointer;white-space:nowrap}
+.review-tools input{accent-color:var(--memory);margin:0;width:16px;height:16px}
+.scene-index summary{display:flex;align-items:center;min-height:44px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.scene-index>div{position:absolute;top:44px;left:8px;right:8px;max-height:75svh;overflow-y:auto;padding:18px;border:1px solid #697974;background:#1c3038;box-shadow:0 12px 28px #0009;color:var(--paper);line-height:1.65}
+.scene-index a{display:flex;align-items:center;min-height:44px;border-bottom:1px solid #496069;font-size:15px}
+.scene-index p{margin-bottom:12px}
+.scene-index a+p{margin-top:16px}
+.story-page,.chapter-page{display:none;min-height:0;min-width:0}
+.story-page{grid-template-rows:64px var(--art) minmax(0,1fr) auto;background:var(--metal)}
+.first-page{display:grid}
+.presence-draft:has(>section:target)>.first-page:not(:target){display:none}
+.presence-draft>section:target{display:grid}
+.scene-heading{display:flex;align-items:center;gap:12px;padding:7px 16px;border-left:4px solid #8daba4;background:#1c3038}
+.scene-heading>div{min-width:0}
+.scene-heading>div>p{font-size:12px;line-height:1.5;color:#c0cdca}
+.scene-heading h1{font:650 17px/1.5 var(--sans);color:#f0e9d6;word-break:keep-all;overflow-wrap:anywhere}
+.time-kind{display:flex;align-items:center;align-self:stretch;min-width:44px;flex:none;padding-right:10px;border-right:1px solid #627771;color:#c3d9d2;font-size:13px;line-height:1.5;font-weight:650;white-space:nowrap}
+.scene-art{display:block;width:100%;height:var(--art);object-fit:contain;background:#111b20;border-bottom:1px solid #738078}
+.reading-scroll{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#87958e transparent;padding:19px 21px 22px;font-size:var(--copy);line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;background:#293a41}
+.reading-scroll>.narration+.narration{margin-top:18px}
+.narration{color:#d3dcda}
+.thought h2{font-size:13px;line-height:1.5;color:#d5c393;font-weight:600;margin-bottom:8px}
+.thought{margin-bottom:20px;color:#e1d8bc}
+.spoken+.spoken,.narration+.spoken,.spoken+.narration{margin-top:22px}
+.speaker{display:flex;align-items:center;gap:12px;margin-bottom:9px;color:#dfc58c;font-size:15px;line-height:1.4;font-weight:650;min-height:48px}
+.speaker img{display:block;width:48px;height:48px;object-fit:contain;border:1px solid #77847d;background:#17262b}
+.text-speaker{min-height:24px}
+.terminal{margin-top:22px;padding:14px;background:#152d33;border:1px solid #72938e;color:#d2e2db}
+.terminal h2,.letter h2{font-size:13px;line-height:1.5;margin-bottom:10px;font-weight:650;color:#bed3c9}
+.record-link{display:block;margin-top:22px;padding-block:12px;border-top:1px solid #658088;font-size:15px;color:#d2dfd8;text-decoration:underline;text-underline-offset:4px}
+.record-link span{display:block;margin-top:5px;color:#afc1c5;font-size:12px;text-decoration:none}
+.scene-actions{padding:10px 16px 8px;background:#192b33;border-top:1px solid #63756d}
+.scene-actions>p{font-size:11px;line-height:1.5;color:#b8c7c2;text-align:center;margin-top:8px;word-break:keep-all;overflow-wrap:anywhere}
+.actions-row{display:flex;align-items:center;gap:12px}
+.primary-action{display:flex;align-items:center;justify-content:center;min-height:50px;padding:10px 14px;border:1px solid #b6bcaa;border-radius:2px;background:var(--paper);color:var(--ink);font:650 16px/1.5 var(--sans);text-align:center;word-break:keep-all;overflow-wrap:anywhere;flex:1}
+.back-action{display:flex;align-items:center;min-height:44px;flex:none;max-width:40%;color:#c3ceca;font-size:13px;line-height:1.5;text-decoration:underline;text-underline-offset:4px;word-break:keep-all}
+.memory-page{background:#342f28;border-inline:5px solid #75634d}
+.memory-page .scene-heading{padding-inline:11px;border-left:0;background:#40382d}
+.memory-page .scene-heading>div>p{color:#e0cba6}
+.memory-page .time-kind{color:#f0d4a1;border-right-color:#948162}
+.memory-page .reading-scroll{padding-inline:16px;background:var(--paper);color:var(--ink);box-shadow:inset 5px 0 #c2b292}
+.memory-page .narration,.memory-page .spoken{color:var(--ink)}
+.memory-page .speaker{color:#755a33}
+.memory-page .speaker img{border-color:#96866c;background:#c2b9a0}
+.memory-page .scene-actions{padding-inline:11px;background:#40382d;border-top-color:#8f7a59}
+.memory-page .scene-actions>p{color:#d0c3a7}
+.reported-page{border-inline:3px solid #78939d;background:#203740}
+.reported-page .scene-heading{border-left:0;padding-inline:13px;background:#213b46}
+.reported-page .time-kind{color:#c1dce3;border-right-color:#768f98}
+.reported-page .reading-scroll{padding-inline:18px;background:#d5dcd6;color:#263b41}
+.source-note{font-size:14px;line-height:1.6;padding-bottom:15px;border-bottom:1px solid #81949a;margin-bottom:20px;color:#3f5960}
+blockquote{border-left:2px solid #64838e;padding-left:14px;margin-top:20px}
+blockquote cite{display:block;font-size:12px;font-style:normal;margin-top:9px;color:#4b666e}
+.recalled-question{margin-top:20px;font-size:var(--copy);color:#314f59}
+.recalled-question h2{font-size:12px;line-height:1.5;margin-bottom:9px;color:#4b666e;font-weight:600}
+.reported-page .scene-actions{background:#213b46;border-top-color:#879b9e}
+.letter{margin-top:20px;padding:15px 16px;background:var(--paper);color:var(--ink);border-left:3px solid #ac9267}
+.letter h2{color:#725a36}
+.draft-note{font-size:13px;line-height:1.65;color:#b9c7c5;margin-top:20px;padding-top:14px;border-top:1px solid #678087}
+.choices{display:grid;gap:12px;margin-top:24px}
+.choices h2{font-size:14px;color:#d8c698;font-weight:600}
+.choice-action{display:flex;align-items:center;min-height:62px;padding:12px 15px;background:var(--paper);border:1px solid #b2b8a3;color:var(--ink);font-size:17px;line-height:1.5}
+.last-goodbye{padding-top:24px;margin-top:24px;border-top:1px solid #77877c}
+.last-goodbye p{font-family:"AppleMyungjo","Noto Serif KR",serif;font-size:calc(var(--copy) + 2px)}
+.chapter-page{grid-template-rows:minmax(0,1fr) auto;background:#17242b;border-top:2px solid #b0b49e}
+.chapter-content{min-height:0;overflow-y:auto;padding:clamp(28px,8svh,65px) 27px 28px}
+.chapter-number{font-size:14px;color:#c3b487;margin-bottom:14px}
+.chapter-content h1{font:600 30px/1.5 "AppleMyungjo","Noto Serif KR",serif;word-break:keep-all;overflow-wrap:anywhere;max-width:10em}
+.next-goal{font-size:var(--copy);line-height:1.8;margin-top:26px;color:#d5dfd7}
+.chapter-content .draft-note{margin-top:32px}
+.sound-note{font-size:13px;line-height:1.7;color:#b9c7c5;margin-top:20px}
+:is(a,summary,input,.reading-scroll,.chapter-content):focus-visible{outline:3px solid #e8b764;outline-offset:-3px}
+body:has(#large-type:checked){--copy:21px}
+@media(max-width:340px){.scene-heading{padding-inline:12px;gap:9px}.scene-heading h1{font-size:16px}.time-kind{font-size:12px}.reading-scroll{padding-inline:17px}.scene-actions{padding-inline:12px}.review-tools{gap:10px;padding-inline:12px}.primary-action{font-size:15px}.back-action{font-size:12px}}
+@media(max-height:540px){.presence-draft{grid-template-rows:40px minmax(0,1fr)}.review-tools,.review-tools>label,.scene-index summary{min-height:40px}.scene-index>div{top:40px}.story-page{grid-template-rows:60px var(--art) minmax(0,1fr) auto}.reading-scroll{padding-block:14px}.scene-actions{padding-top:7px}}

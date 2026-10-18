@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>본문 16px · 급수대 읽기 비교</title>
+  <link rel="stylesheet" href="reading-density.css">
+</head>
+<body>
+  <main class="density-draft" aria-label="게임과 분리된 글자 크기 비교">
+    <nav class="review-tools" aria-label="비교 도구">
+      <details class="draft-info"><summary>초안</summary><div>
+        <p>급수대의 같은 12턴과 그림으로 비교합니다. 실제로 열린 인트로를 되감거나 저장을 읽지 않습니다.</p>
+        <p>기본 16px·줄간격 1.55, 화자 사이 10px입니다. ‘현재 17px’를 켜면 17px·1.6·12px로 비교합니다. 이름 12px·초상 36px·사진 크기는 같습니다.</p>
+        <p>큰 글씨는 두 안 모두 21px이며 초상은 44px입니다. 여기의 체크는 게임 설정이 아닙니다. 게임에 적용하지 않은 독립 시안입니다.</p>
+      </div></details>
+      <span class="draft-status">게임 미적용</span>
+      <label><input id="current-type" type="checkbox">현재 17px</label>
+      <label><input id="large-type" type="checkbox">큰 글씨</label>
+    </nav>
+    <section class="intro-study" aria-labelledby="scene-title">
+      <figure class="scene-visual"><img src="../../assets/scenes/intro-busan-water-line-v1.jpg" width="1024" height="576" alt="비 오는 감천 부두의 공동 급수대. 주민들이 통을 세워 차례를 기다리고, 나는 새는 밸브를 조인다."></figure>
+      <section class="paper">
+        <p class="scene-era">어제 아침 · 부산 감천 공동 급수대</p>
+        <h1 id="scene-title">물이 나오는 40분</h1>
+        <div class="reading-scroll" tabindex="0" role="region" aria-label="급수대 대화 전체 · 아래로 스크롤">
+          <div class="transcript">
+            <p id="reading-start" class="narration" data-source="intro-busan-water-line-v1:0">급수대가 열리기 전인데도 계단 아래까지 빈 통이 늘어서 있었다. 내 통 옆에는 처음 보는 통이 하나 더 놓여 있었다.</p>
+            <article class="utterance"><img class="speaker-photo" src="../../assets/portraits/passer_elder.png" width="36" height="36" alt=""><b>순자 아줌마</b><p data-source="intro-busan-water-line-v1:1">그건 정희네 거야. 애가 밤새 열이 나서 못 내려왔어.</p></article>
+            <article class="utterance mine"><img class="speaker-photo" src="../../assets/portraits/me.png" width="36" height="36" alt=""><b>하상혁</b><p data-source="intro-busan-water-line-v1:2">제 것 하나 들기도 빠듯한데요.</p></article>
+            <article class="utterance"><img class="speaker-photo" src="../../assets/portraits/passer_elder.png" width="36" height="36" alt=""><b>순자 아줌마</b><p data-source="intro-busan-water-line-v1:3">알아. 말은 그래도 들어다 줄 거잖아.</p></article>
+            <p class="narration" data-source="intro-busan-water-line-v1:4">물이 나오자 밸브 아래로 가느다란 줄기가 새었다. 맨 앞의 아이가 신발을 적시며 손가락으로 가리켰다.</p>
+            <article class="utterance"><img class="speaker-photo" src="../../assets/portraits/passer_child.png" width="36" height="36" alt=""><b>줄을 지키던 아이</b><p data-source="intro-busan-water-line-v1:5">아저씨, 여기서도 물 나와요.</p></article>
+            <article class="utterance mine"><img class="speaker-photo" src="../../assets/portraits/me.png" width="36" height="36" alt=""><b>하상혁</b><p data-source="intro-busan-water-line-v1:6">그건 나오면 안 되는 물인데.</p></article>
+            <p class="narration" data-source="intro-busan-water-line-v1:7">나는 통을 내려놓고 몽키스패너를 꺼냈다. 뒤에서 한숨이 들렸지만 누구도 먼저 통을 들이밀지는 않았다.</p>
+            <article class="utterance"><img class="speaker-photo" src="../../assets/portraits/passer_elder.png" width="36" height="36" alt=""><b>순자 아줌마</b><p data-source="intro-busan-water-line-v1:8">천천히 해. 지난번처럼 나사 머리 뭉개지 말고.</p></article>
+            <article class="utterance mine"><img class="speaker-photo" src="../../assets/portraits/me.png" width="36" height="36" alt=""><b>하상혁</b><p data-source="intro-busan-water-line-v1:9">지난번은 제가 한 게 아니에요.</p></article>
+            <article class="utterance"><img class="speaker-photo" src="../../assets/portraits/passer_elder.png" width="36" height="36" alt=""><b>순자 아줌마</b><p data-source="intro-busan-water-line-v1:10">그래. 나사 혼자 그랬겠지.</p></article>
+            <p id="reading-end" class="narration" data-source="intro-busan-water-line-v1:11">물이 멎자 누군가 내 통부터 채워 주었다. 나는 두 통을 들고 정희네 집이 있는 언덕으로 올라갔다.</p>
+          </div>
+        </div>
+      </section>
+      <nav class="reading-actions" aria-label="초안 읽기 위치"><a href="#reading-start">처음 문장</a><span>본문을 내려 읽기</span><a href="#reading-end">마지막 문장</a></nav>
+    </section>
+  </main>
+</body>
+</html>

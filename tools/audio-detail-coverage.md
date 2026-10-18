@@ -1,5 +1,57 @@
 # Detail sound pass — 2026-10-10
 
+## Interactive opening / committed action routing — 2026-10-17
+
+Sang approved correcting the audit's missing/mistimed wiring. `D.eventAudio` in
+`src/03h-audio.js` is an explicit event/choice profile table consumed by the
+existing UI/BGM/AMBI owners, not another audio engine. No scene art, layout,
+dialogue, effects/costs, save schema, gameplay RNG or audition rights changed.
+
+- All six interactive opening scenes, including the name interlude, use `story`
+  music. Workshops use indoor garage ambience, the bus/name conversation uses
+  cab weather, and the port terminal uses sheltered weather. Historical intro
+  cue indices remain separate.
+- Successful workshop packing/tools, three heater repair methods, printed
+  appeal copy, written names, wiring labels/diagram and departure note play
+  their matching existing clip through `AMBI.result` only when the actual
+  receipt resolver reports `applied:true`. A restored result or blocked choice
+  is silent; mute/background drops the cue instead of queuing it.
+- Automatic fuel pumping starts after the card choice commits, never on event
+  entry. The manual pump branch has no matching recording and stays quiet.
+  New event handoffs retire the preceding action tail.
+- Removed six dead event-level voice references. Corresponding recordings do
+  not exist; those lines remain subtitles, not substituted core dialogue.
+  The existing15 core voice registrations and explicit turn playback remain.
+- Local generated auditions versus app/offline original procedural fallback
+  remain intentionally different. No restricted recording was embedded and no
+  new API generation, subscription, upload or deployment occurred.
+
+Audio routing/lifecycle tests **31/31** pass, including the real UI result hook
+with the actual engine, nine pack/repair combinations, paid receipt reload,
+name handoff and failed requirements. Timers/media are isolated test doubles,
+not actual listening or proof of mobile playback. Full-suite/build/live status
+is recorded in `tools/audio-routing-review-20261017.md` after verification.
+Headphone/speaker balance, loop seams, physical WebView and in-game audible
+synchronization remain unverified. Prior preview/download browser blocks are
+not retried or bypassed for this pass.
+
+## App/offline functional fallback — 2026-10-16
+
+`src/03n-offline-foley.js` supplies original procedural PCM/WAV for the 46
+registered detail keys/takes when a packaged source is absent. The existing AMBI
+owner still controls routing, gain, variation, mute, suspension and resume. No
+audition recording bytes or third-party generation service is used by this bank.
+Local live previews retain their existing audition sources; production/offline
+uses the fallback. Reserved/unintroduced actions remain unintroduced.
+
+24 audio tests pass, including all 46 valid WAV headers/finite bounded samples,
+restart tapers, caching and mute/background lifecycle. This closes missing
+production sources, **not** subjective foley quality, seamless media loops or
+speaker/headphone listening approval. Local Toss AIT build succeeds; physical
+device decoding/playback and listening remain to be tested. The historical
+audition rights restrictions below are unchanged; those recordings are still
+excluded from distribution. See `reports/app-first-20261016.json`.
+
 Implemented in the existing AMBI owner, not a parallel playback engine. No story,
 resource, RNG, save, visual or music decisions are changed. Existing recorded
 vehicle/settlement/radio/threat effects and synthesized combat effects remain.

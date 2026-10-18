@@ -1,6 +1,7 @@
 import { existsSync, renameSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
+import { prepareAppShell } from './tools/prepare-app-shell.mjs';
 
 export default defineConfig({
   base: './',
@@ -11,6 +12,7 @@ export default defineConfig({
         const builtGame = resolve(import.meta.dirname, 'dist', '서울까지400km.html');
         const builtIndex = resolve(import.meta.dirname, 'dist', 'index.html');
         if (existsSync(builtGame)) renameSync(builtGame, builtIndex);
+        prepareAppShell(import.meta.dirname, resolve(import.meta.dirname, 'dist'));
       },
     },
   ],

@@ -1,0 +1,28 @@
+{
+  "fixtureOnly": true,
+  "preparation": null,
+  "save": {
+    "name": "다온",
+    "startPack": "fuel",
+    "day": 2,
+    "min": 415,
+    "at": "miryang",
+    "driving": null,
+    "opening": {
+      "step": 5,
+      "completed": true,
+      "pendingResult": null,
+      "reading": {
+        "eventId": "opening_departure",
+        "phase": "outcome",
+        "index": 0
+      }
+    },
+    "presentation": null,
+    "fuel": 42.683999999999074,
+    "water": 10,
+    "food": 9,
+    "scrap": 22,
+    "parts": 0
+  }
+}

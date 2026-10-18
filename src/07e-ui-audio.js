@@ -364,7 +364,7 @@ const AMBI = (()=>{
     if(relative&&['127.0.0.1','localhost'].includes(location.hostname)&&
       new URLSearchParams(location.search).has('caravan-live'))
       return '/__live/asset/'+encodeURIComponent(relative);
-    return null;
+    return relative&&D.offlineFoley?D.offlineFoley.source(key):null;
   }
   function make(key,loop=false){
     if(!source(key)) return null;
@@ -614,18 +614,28 @@ const AMBI = (()=>{
     setLoop(profile[0],profile[1]);
   }
   function event(evd){
+    // A new scene owns its own ambience; action tails must not cross a chained
+    // handoff into a different conversation or restart when a receipt is read.
+    for(const audio of shots) stop(audio,true);
+    const profile=D.eventAudio?.[evd?.id];
     // Authored location only: remembered rain in dialogue is not current weather.
-    worldContext=evd&&evd.audioContext||D.audioSceneContexts?.[evd&&evd.scene]
+    worldContext=evd&&evd.audioContext||profile?.context||D.audioSceneContexts?.[evd&&evd.scene]
       ||(evd?.campConversation||evd?.needsComp?'cab':'outdoor');
     const id=String(evd&&evd.id||''), cue=String(evd&&evd.sfx||'');
     if(id==='seoul_core') worldContext='indoors';
     if(id==='seoul_core') setLoop('sfx_core_loop',.17);
     else if(/drone|swarm/.test(id)||cue==='drone') setLoop('sfx_drone_real',.14);
-    else setLoop(null);
-    if(id==='ai_gasstation') play('sfx_fuel_pump',.38);
+    else setLoop(profile?.loop||null,profile?.gain??.14);
     if(/checkpoint|toll/.test(id)||cue==='scan') play('sfx_checkpoint',.28);
     if(/walker/.test(id)||cue==='walker') play('sfx_walker_real',.36);
     if(/^(?:freq_|radio_|dj_)/.test(id)) play('sfx_radio_static',.26);
+  }
+  function result(evd,choice,applied){
+    if(!applied||!evd||!choice) return;
+    const index=evd.choices?.indexOf(choice);
+    if(!Number.isInteger(index)||index<0) return;
+    const key=D.eventAudio?.[evd.id]?.results?.[choice.id??index];
+    if(key) play(key,.24);
   }
   function restore(){
     worldContext='cab';
@@ -664,7 +674,7 @@ const AMBI = (()=>{
     }
     for(const audio of shots) SND.setMediaVolume(audio, (audio._baseVolume||.34)*SND.level('effects'));
   }
-  return {setOn,setLoop,play,intro,introTurn,action,fieldAction,syncWorld,depart,arrive,settlement,event,restore,suspend,resume,applyMix};
+  return {setOn,setLoop,play,intro,introTurn,action,fieldAction,syncWorld,depart,arrive,settlement,event,result,restore,suspend,resume,applyMix};
 })();
 /* ═══════════════════ VO (보이스 — D.vo 슬롯) ═══════════════════
    슬롯이 비어 있으면 조용히 무시 (자막만). 파일 오면 드롭인. */
@@ -696,14 +706,15 @@ const VO = (()=>{
 
 /* 토스 WebView가 백그라운드로 내려갈 때 소리와 진행을 명시적으로 멈춘다.
    사용자가 고른 음소거 상태는 바꾸지 않고, 다시 보일 때만 정상 재개한다. */
-let lifecycleHidden=false;
+let lifecycleHidden=document.hidden===true;
 function saveForLifecycle(){
   try{ if(typeof S!=='undefined'&&S) G.save(); }catch(e){}
 }
 function suspendForLifecycle(){
   lifecycleHidden=true;
+  if(typeof UI!=='undefined') UI.setLifecyclePaused?.(true);
   try{
-    const visibleScreen=document.querySelector('.screen.on');
+    const visibleScreen=document.querySelector('.scr.on');
     if(typeof S!=='undefined'&&S) G.qualitySessionEnd(visibleScreen?visibleScreen.id:'game');
   }catch(e){}
   saveForLifecycle();
@@ -715,6 +726,7 @@ function suspendForLifecycle(){
 function resumeForLifecycle(){
   if(!lifecycleHidden||document.hidden) return;
   lifecycleHidden=false;
+  if(typeof UI!=='undefined') UI.setLifecyclePaused?.(false);
   try{ if(typeof S!=='undefined'&&S&&!S.ended) G.qualitySessionStart(); }catch(e){}
   SND.resume();
   BGM.resume();

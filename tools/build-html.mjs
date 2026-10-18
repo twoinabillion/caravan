@@ -36,6 +36,7 @@ const before = [
   'src/02-dom.html', 'src/03-data.js'
 ];
 const after = [
+  'src/03n-offline-foley.js',
   'src/03i-story-expansion.js', 'src/03j-camp-conversations.js', 'src/03k-main-evidence.js', 'src/03l-main-recovery.js', 'src/03m-finale-reading.js',
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
@@ -56,7 +57,7 @@ const introScenes = {
   INTRO_PARENTS_DISCOVERY:'assets/intro/09-parents-discovery.webp',
   INTRO_SILENCED_PRESENTATION:'assets/intro/10-silenced-presentation.webp',
   INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion-v2.jpg',
-  INTRO_DOCK_AID:'assets/intro/14-dock-aid-v2.jpg',
+  INTRO_DOCK_AID:'assets/scenes/opening-bus-family-v3.webp',
   INTRO_APPEAL_DENIED:'assets/intro/15-appeal-denied.jpg',
   INTRO_DASHBOARD_MODULE:'assets/intro/13-dashboard-module.jpg',
   INTRO_WORKSHOP_DEPARTURE:'assets/intro/16-workshop-shutter-v2.jpg'
@@ -174,6 +175,8 @@ const styles = inlineStyleAssets(compactStyleSource(read('src/01-style.html')), 
   return dataUri(asset.path,asset.mime);
 });
 
+const {runtimeAtlas}=await import('./runtime-landscape-atlas.mjs');
+const landscapeAtlas=runtimeAtlas(root);
 const environmentManifest=JSON.parse(read('assets/ui/road-environment/manifest.json'));
 const routeManifest=JSON.parse(read('assets/ui/road-routes/manifest.json'));
 const routeGraph=vm.runInNewContext(read('src/03-data.js')+';D.edges');
@@ -191,7 +194,17 @@ const continuityRoutes=routeGraph.map(([from,to,km])=>{
 });
 if(continuityRoutes.length!==78||new Set(continuityRoutes.map(r=>r.id)).size!==78)throw Error('Incomplete HD graph');
 const continuitySource=read('src/05e-road-continuity.js');
-const continuity=continuitySource.replace('/*__ROAD_CONTINUITY__*/{enabled:false,routes:[]}',JSON.stringify({enabled:true,routes:continuityRoutes}));
+const connected=JSON.parse(read('assets/ui/road-environment/connected-v1.json'));
+if(connected.width!==2160||connected.height!==720||connected.viewport!==1080||assetHash(connected.file)!==connected.sha256)
+  throw Error('Connected landscape geometry/provenance mismatch');
+for(const [from,to,km] of connected.routes){
+  if(!routeGraph.some(([a,b,d])=>((a===from&&b===to)||(a===to&&b===from))&&d===km))throw Error('Connected landscape graph mismatch');
+  for(const id of [from,to])if(!Number.isFinite(connected.nodes[id])||connected.nodes[id]<0||connected.nodes[id]+connected.viewport>connected.width)throw Error('Connected landscape crop outside source');
+}
+const continuity=continuitySource.replace('/*__ROAD_CONTINUITY__*/{enabled:false,routes:[]}',JSON.stringify({enabled:true,routes:continuityRoutes,
+  connected:connected.enabled?{...connected,source:dataUri(connected.file,'image/webp')}:null,
+  atlas:{cities:landscapeAtlas.cities,routes:landscapeAtlas.routes.map(r=>({id:r.id,from:r.from,to:r.to,km:r.km,
+   source:dataUri(r.file,'image/webp')}))}}));
 if(continuity===continuitySource)throw Error('HD continuity registry placeholder missing');
 const approvedRoutes=routeReadiness.approvedRoutes(routeManifest,routeGraph);
 const routeSources=approvedRoutes.map(r=>({id:r.id,from:r.from,to:r.to,km:r.km,source:dataUri(`assets/ui/road-routes/${r.file}`,'image/webp')}));

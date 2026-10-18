@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-15",
+  "status": "implemented-built-staged; actual Studio apply and play QA pending",
+  "scope": ["busan-yangsan", "yangsan-miryang", "same three city crops on adjoining route endpoints"],
+  "sourceManifest": "assets/ui/road-environment/connected-v1.json",
+  "implementation": {
+    "owner": "src/05e-road-continuity.js",
+    "progress": "Actual leg gone/dist. Same source pixels on reverse; no mirroring or save writes.",
+    "presentation": "Short distance-following camera settles into the frozen event position; lag disappears before arrival. Cold reload starts at saved physical distance, not an unsaved visual lag.",
+    "art": "Existing approved-for-integration study reused unchanged. Solid alpha normalized once on canvas, not in the source file. Other city art and existing vehicle/weather/cue renderers retained.",
+    "offline": "Shared terrain embedded once by builder; decode failure falls back to existing city owner."
+  },
+  "automated": {
+    "sourceTests": {"passed": 647, "failed": 0},
+    "newConnectedTests": 8,
+    "realEngineIsolated": "Actual G.startTravel/tick/save/load/arrive with mock storage and prepared end-of-leg fixture. Modal freeze and next reachable route checked; not full event traversal.",
+    "quickValidation": "dialogue, content, visual geometry and built canonical portrait bytes passed",
+    "diffCheck": "passed",
+    "htmlBytes": 79873262,
+    "htmlAdvisoryBytes": 32000000,
+    "htmlHardLimitBytes": 120000000
+  },
+  "visual": {
+    "url": "http://127.0.0.1:4327/game/tools/qa-connected-road.html",
+    "type": "Separate synthetic-state fixture using actual SCENE, ROAD_CONTINUITY and VEHICLE_KIT. No user save access.",
+    "observed": ["360px Busan and Yangsan stop, Yangsan departure", "320px night/rain/upgraded vehicle", "480px dusk/reverse travel", "braking input and resume", "JSON position equality"],
+    "screenshot": "qa-artifacts/connected-road-runtime-2026-10-15/yangsan-renderer-fixture.png",
+    "console": "No page-origin errors observed; three unrelated chrome-extension content.js TypeErrors were reported separately.",
+    "limits": ["Fixture runs at illustrative speed, not actual gameplay pacing.", "Component widths, not physical devices or full mobile HUD.", "No real event handoff UI or complete journey played.", "Original raster final style/edge approval remains separate; not a surveyed-road reproduction."]
+  },
+  "actualStudio": {
+    "capturedAt": "2026-10-15T12:58:45.292Z",
+    "screen": "title",
+    "game": null,
+    "viewport": {"width": 360, "height": 728, "dpr": 2},
+    "loadedRevision": "1792066226745",
+    "styleRevision": "1792066226745",
+    "pendingRevision": 1792069038091,
+    "applying": false,
+    "unchanged": "Title/no-save/viewport/loaded code unchanged from entry. New code staged by existing watcher.",
+    "visualAccess": "Actual Safari Studio window unavailable: noWindowsAvailable, then timeoutReached. Current-scene GET is not visual QA.",
+    "agentActions": "No apply, refresh, new game, save change, server restart, commit or push."
+  },
+  "next": "Apply the existing new-code badge in the actual Studio, then verify live two-leg travel, event return and refresh in that same save before expanding the new terrain to more routes."
+}

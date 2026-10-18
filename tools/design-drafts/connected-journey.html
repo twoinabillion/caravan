@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; form-action 'none'; base-uri 'none'">
+  <title>부산–양산–밀양 · 멈춰도 이어지는 풍경</title>
+  <link rel="stylesheet" href="connected-journey.css">
+</head>
+<body>
+<main class="connected-study">
+  <header class="intro">
+    <p class="status">연결 초안 01 · 게임 미적용</p>
+    <h1>멈춰도, 같은 풍경</h1>
+    <p>부산에서 양산을 지나 밀양까지.<br>양산에 도착한 자리에서 다음 길이 시작됩니다.</p>
+  </header>
+  <figure class="journey">
+    <div class="world" role="img" aria-label="강과 능선을 따라 항만 창고가 시가지와 들판으로 이어지는 연결 풍경. 양산 도착·정차·밀양행 출발은 같은 장소를 보여 줍니다.">
+      <div class="sky"></div>
+      <img class="terrain" src="../../assets/ui/road-studies/busan-yangsan-miryang-v2.webp" width="2160" height="720" alt="">
+      <div class="road"></div><div class="posts"></div><div class="edge"></div><div class="markings"></div>
+      <div class="vehicle"><div class="suspension"><img class="dalguji" src="../../assets/ui/journey-dalguji-base-v1.webp" alt=""></div></div>
+      <div class="scene-label" aria-hidden="true"><span class="outbound">부산 → 양산 → 밀양</span><span class="inbound">밀양 → 양산 → 부산</span><small>독립 재생 예시</small></div>
+      <div class="phase" aria-hidden="true"><span class="still-state">양산 · 정차</span><span class="animated-state"><i class="phase-first">첫 번째 길</i><i class="phase-stop">양산 · 잠시 머무는 중</i><i class="phase-next">두 번째 길</i><i class="phase-end">도착</i></span></div>
+      <div class="track"><span></span></div>
+    </div>
+    <figcaption><span>부산</span><span>양산</span><span>밀양</span></figcaption>
+  </figure>
+  <fieldset class="positions">
+    <legend>연결 확인 — 양산 세 버튼은 같은 자리를 보여 줍니다</legend>
+    <label><input type="radio" name="position" value="auto"><span>전체 재생 · 100초</span></label>
+    <label><input type="radio" name="position" value="busan"><span>부산 출발</span></label>
+    <label><input type="radio" name="position" value="arrival"><span>양산 도착</span></label>
+    <label><input type="radio" name="position" value="stop" checked><span>양산 정차</span></label>
+    <label><input type="radio" name="position" value="departure"><span>밀양행 출발</span></label>
+    <label><input type="radio" name="position" value="miryang"><span>밀양 도착</span></label>
+  </fieldset>
+  <div class="motion-tools">
+    <label><input id="pause" type="checkbox">재생 잠시 멈춤</label>
+    <label><input id="reverse" type="checkbox">돌아오는 길 재생</label>
+  </div>
+  <p class="hint">40초 주행 → 양산에서 10초 정차 → 40초 주행 → 도착.<br>다른 위치를 고른 뒤 ‘전체 재생’을 누르면 처음부터 시작합니다.</p>
+  <p class="reduced-note">기기의 모션 감소 설정을 따라 자동 이동을 끕니다. 위치 버튼으로 연결을 확인하세요.</p>
+  <details>
+    <summary>무엇이 달라졌나요?</summary>
+    <p>양산을 구간마다 다시 그리지 않습니다. 하나의 풍경에서 동일한 좌표를 공유하므로 도착·정차·다음 출발 사이에 산, 건물, 도로가 바뀌지 않습니다. 돌아오는 길에도 지형은 좌우 반전하지 않습니다.</p>
+    <p>원경은 천천히, 도로는 더 빠르게 움직입니다. 정차할 때 둘 다 점차 멈추고, 출발할 때 다시 속도가 붙습니다. 이 초안은 실제 게임 시간·이동 거리와 분리된 100초 예시입니다.</p>
+    <p>새 지형 후보 한 장에 두 길을 함께 담았습니다. 기존 도시 정본을 교체한 것은 아닙니다. 현재 기본 차량만 표시하며 동료·개조·사건 정차·저장 복원은 실제 게임 연결 때 별도로 검증합니다.</p>
+  </details>
+  <details>
+    <summary>지형 근거와 남은 확인</summary>
+    <p><a href="https://www.busan.go.kr/living_space/gangdong" target="_blank" rel="noopener noreferrer">부산 강동 생활권</a>의 강변·산림축, <a href="https://yangsan.go.kr/tour/main.do" target="_blank" rel="noopener noreferrer">양산 문화관광</a>의 강과 산지, <a href="https://miryang.go.kr/agr/index.do?mnNo=30501000000" target="_blank" rel="noopener noreferrer">밀양시 지형 소개</a>의 남부 하천 평야를 참고했습니다. 구체적인 시설 배치는 미술적 추론이며 실제 도로의 실측 복제가 아닙니다.</p>
+    <p>한 화면에 원본 1080px을 사용하고 그림을 세로로 늘이지 않습니다. 정본 참조로 생성한 투명 지형 부품이며 사건 그림이나 게임 스크린샷이 아닙니다. 가장자리 알파 정밀도와 게임 안 최종 크롭은 승인 전 확인이 남아 있습니다.</p>
+  </details>
+  <footer><a href="landscape-atlas.html">전체 길 후보로 돌아가기</a><span>선택은 검토 요청만 준비합니다.</span></footer>
+</main>
+</body>
+</html>

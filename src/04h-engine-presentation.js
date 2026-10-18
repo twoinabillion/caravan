@@ -30,12 +30,14 @@ G.presentationView = view=>{
         if(typeof turn[key]==='string') row[key]=turn[key].slice(0,160);
       if(turn.speakerUncertain)row.speakerUncertain=true;
       if(typeof turn.scene==='string'&&D.scenes?.[turn.scene])row.scene=turn.scene;
+      if(['current','memory','reported'].includes(turn.timeKind))row.timeKind=turn.timeKind;
+      if(typeof turn.timeLabel==='string')row.timeLabel=turn.timeLabel.slice(0,160);
       return row;
     });
   if(!turns.length) return null;
   return {turns,index:clamp(Math.floor(Number(view.index)||0),0,turns.length-1),
     knownSpeaker:view.knownSpeaker===true,readingRecord:G.presentationText(view.readingRecord),
-    recordOpen:view.recordOpen===true,
+    recordOpen:view.recordOpen===true,readingRecordLabel:G.presentationText(view.readingRecordLabel),
     ...(view.readingPage?{readingPage:{
       cursor:StoryPages.cursor(turns,view.readingPage.cursor),
       end:StoryPages.cursor(turns,view.readingPage.end),

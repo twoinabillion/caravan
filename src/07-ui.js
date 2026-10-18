@@ -38,16 +38,27 @@ const UI = (()=>{
   const heldStoryAdvanceKeys=new Set();
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper', introRestart=false;
+  let introPreview=false;
   let pendingPack='fuel';
   const preparationKey='caravan-departure-prep-v1';
   function rememberPreparation(active=true){
-    pendingName=($('#inp-name').value||'').trim().slice(0,8);
-    try{sessionStorage.setItem(preparationKey,JSON.stringify({active,name:pendingName,pack:pendingPack,scroll:$('#scr-name .departure-scroll')?.scrollTop||0}));}catch(error){}
+    // Keep a name entered in an older mounted preparation, but new UI has no
+    // name field. It is introduced in the opening instead of setup.
+    const legacyInput=$('#inp-name');
+    if(legacyInput)pendingName=(legacyInput.value||'').trim().slice(0,8);
+    try{sessionStorage.setItem(preparationKey,JSON.stringify({active,name:pendingName,pack:pendingPack,scroll:$('#scr-name .departure-scroll')?.scrollTop||0,inventoryOpen:$('#departure-inventory')?.open===true}));}catch(error){}
   }
   function readPreparation(){
     try{const view=JSON.parse(sessionStorage.getItem(preparationKey)||'null');return view&&typeof view.name==='string'&&Object.hasOwn(D.departurePacks,view.pack)?view:null;}catch(error){return null;}
   }
   function clearPreparation(){try{sessionStorage.removeItem(preparationKey);}catch(error){}}
+  function togglePreparationInventory(event){
+    event.preventDefault();
+    if(screen!=='name')return;
+    const inventory=$('#departure-inventory');if(!inventory)return;
+    // Commit synchronously: native toggle is queued and can race live apply/reload.
+    inventory.open=!inventory.open;rememberPreparation();
+  }
   let navChoiceAt=null, navChoiceId=null, navChoiceGuide='', journeyConsoleMode='route';
   let routeMapOpen=false, journeyRouteModels=[],journeyViewRestored=false;
   let stayActionAt=null,stayActionId=null;
@@ -93,8 +104,9 @@ const UI = (()=>{
   function renderProfilePick(){
     const box=$('#profile-pick'); if(!box) return;
     if(!box.children.length){
+      const purpose={fuel:'주유 없이 더 먼 길을.',repair:'차체 수리에 쓸 여분.',provisions:'다음 보급까지 먹고 마실 것.'};
       box.innerHTML=Object.entries(D.departurePacks).map(([id,p])=>
-        `<button type="button" class="pack-tab" role="radio" data-pack="${id}">${esc(p.tab)}<span aria-hidden="true">✓</span></button>`).join('');
+        `<button type="button" class="pack-tab" role="radio" data-pack="${id}" aria-labelledby="pack-${id}-name" aria-describedby="pack-${id}-use pack-${id}-addition"><img src="${D.scenes[p.scene]}" alt="" width="1024" height="576"><span class="pack-copy"><strong id="pack-${id}-name">${esc(p.nm)}</strong><span class="pack-use" id="pack-${id}-use">${purpose[id]}</span><span class="pack-addition" id="pack-${id}-addition">${esc(p.addition)}</span></span><span class="pack-check" aria-hidden="true"></span></button>`).join('');
       box.querySelectorAll('[data-pack]').forEach(button=>{
         button.onclick=()=>{pendingPack=button.dataset.pack;renderProfilePick();rememberPreparation();};
         button.onkeydown=event=>{
@@ -104,7 +116,9 @@ const UI = (()=>{
             ['ArrowLeft','ArrowUp'].includes(event.key)?(index+ids.length-1)%ids.length:null;
           if(next===null)return;
           event.preventDefault();pendingPack=ids[next];renderProfilePick();rememberPreparation();
-          box.querySelector(`[data-pack="${pendingPack}"]`).focus({preventScroll:true});
+          const focused=box.querySelector(`[data-pack="${pendingPack}"]`);
+          focused.focus({preventScroll:true});
+          focused.scrollIntoView({block:'nearest',inline:'nearest'});
         };
       });
     }
@@ -113,18 +127,11 @@ const UI = (()=>{
       button.setAttribute('aria-checked',String(selected));button.tabIndex=selected?0:-1;
     });
     const selected=D.departurePacks[pendingPack],supplies=D.departureSupplies(pendingPack);
-    const picture=$('#departure-pack-img');
-    picture.src=D.scenes[selected.scene];picture.alt=selected.alt;
-    $('#departure-pack-name').textContent=selected.nm;
-    $('#departure-pack-addition').textContent=selected.addition;
     const detail=$('#profile-detail');
     const fields=[['fuel','연료','L'],['scrap','고철',''],['water','물',''],['food','식량',''],['parts','부품',''],['van','차체','%']];
-    detail.innerHTML=`<h3>출발 물자 <small>기본 짐 포함</small></h3><dl>${fields.map(([key,label,unit])=>`<div><dt>${label}</dt><dd${selected.delta[key]?' class="added"':''}>${supplies[key]}${unit}</dd></div>`).join('')}</dl>`;
-    const cta=$('#bt-name-profile');
-    if(cta) cta.textContent=selected.nm;
+    detail.innerHTML=`<dl>${fields.map(([key,label,unit])=>`<div><dt>${label}</dt><dd${selected.delta[key]?' class="added"':''}>${supplies[key]}${unit}</dd></div>`).join('')}</dl><p>의약품 ${supplies.medicine}개도 기본 짐에 들어 있다.</p>`;
   }
   let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
-  let arrivalTimer=0;
   const toastQueue=[];
   let toastActive=false, toastTimer=0;
   let roadNotice=null;
@@ -144,6 +151,8 @@ const UI = (()=>{
     root.dataset.uiMotion=uiPrefs.reduceMotion?'reduced':'full';
     root.dataset.uiRoadThought=uiPrefs.roadThought?'occasional':'off';
     root.style.setProperty('--ui-brightness',String(uiPrefs.brightness/100));
+    const prepText=$('#bt-prep-text');
+    if(prepText)prepText.setAttribute('aria-pressed',String(uiPrefs.largeText));
   }
   function toggleUiPref(kind){
     if(kind==='text'){
@@ -185,14 +194,153 @@ const UI = (()=>{
     const saveState=$('#menu-save-state');
     if(saveState) saveState.textContent=G.hasSave()?'저장됨':'저장 전';
   }
+  function saveCurrentJourney(){
+    const saved=G.save()===true;
+    const state=$('#menu-save-state');
+    if(state) state.textContent=saved?'방금 저장됨':'저장 안 됨';
+    if(saved) toast('현재 여정을 저장했다');
+    return saved;
+  }
   function exportCurrentSave(){
-    if(!S) return;
+    if(!S) return false;
+    // A full browser store must not prevent rescuing the unsaved live journey.
     G.save();
-    const blob=new Blob([G.exportSave()],{type:'application/json'});
-    const url=URL.createObjectURL(blob), a=document.createElement('a');
-    a.href=url; a.download=`seoul-400km-day-${S.day}-backup.json`; a.click();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
-    toast('현재 여정을 백업 파일로 만들었다');
+    let url,anchor;
+    try{
+      const blob=new Blob([G.exportSave()],{type:'application/json'});
+      url=URL.createObjectURL(blob); anchor=document.createElement('a');
+      anchor.href=url; anchor.download=`seoul-400km-day-${S.day}-backup.json`;
+      anchor.hidden=true; document.body.appendChild(anchor); anchor.click();
+      // A click requests a download; it cannot certify that the OS saved a file.
+      toast('백업 파일 다운로드를 요청했다');
+      return true;
+    }catch(e){
+      toast('백업 파일을 내보내지 못했다. 다시 시도해 주세요','warn');
+      return false;
+    }finally{
+      anchor?.remove();
+      if(url) setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+  }
+  function wireSaveImport(input){
+    if(!input) return;
+    let request=0;
+    input.onchange=async()=>{
+      const current=++request,file=input.files&&input.files[0];
+      if(!file) return;
+      const previous=S,owner=input.closest('.ovl');
+      const active=()=>request===current&&input.isConnected&&S===previous&&screen==='game'
+        &&(!owner||owner.classList.contains('on'));
+      try{
+        if(!window.confirm('이 백업으로 현재 여정을 교체할까요? 현재 저장은 사라집니다.')) return;
+        const raw=await file.text();
+        // A closed/rebuilt panel or a newer request cannot replace another run.
+        if(!active()) return;
+        const result=G.importSave(raw);
+        if(!result.ok){ toast(`⚠ ${result.why}`); return; }
+        closeModal('#ovl-status',false); closeModal('#ovl-menu',false);
+        setDockTab('dk-road');
+        if(S.ended) showEnding(S.endKind||'stranded');
+        else enterGame(); // Continue owns opening/result/arrival restoration.
+        toast('백업을 복원했다');
+      }catch(e){ if(active()) toast('백업 파일을 읽지 못했다'); }
+      finally{ if(request===current) input.value=''; }
+    };
+  }
+  // Approved save-transfer-v1. Pending file bytes stay transient until confirmation.
+  let saveTransfer=null;
+  function saveTransferActive(session){
+    return saveTransfer===session&&$('#save-transfer-dialog')?.open&&S===session.state&&screen===session.screen;
+  }
+  function saveTransferRecord(summary,label){
+    const place=summary.to?`${D.nodes[summary.from]?.name||'길'} → ${D.nodes[summary.to]?.name||'길'} 이동 중`:
+      D.nodes[summary.at]?.name||'길 위';
+    const time=`${String(Math.floor(summary.min/60)).padStart(2,'0')}:${String(Math.floor(summary.min%60)).padStart(2,'0')}`;
+    return `<section class="save-transfer-record"><small>${esc(label)}</small><h3>${esc(summary.name||'나')}의 여정</h3><p>${summary.day}일째 · ${esc(place)} · ${time}${summary.ended?' · 종료된 여정':''}</p></section>`;
+  }
+  function renderSaveTransfer(){
+    const session=saveTransfer;if(!session)return;
+    const pending=session.pending,body=$('#save-transfer-body'),actions=$('#save-transfer-actions');
+    $('#save-transfer-title').textContent=pending?'이 여정으로 돌아갈까?':'여정 백업';
+    if(pending){
+      body.innerHTML=`<p class="save-transfer-filename">${esc(pending.filename)}</p>${saveTransferRecord(pending.summary,'선택한 백업')}
+        <p class="save-transfer-warning">${session.state||G.hasSave()?'현재 기기의 여정을 이 백업으로 바꿉니다. 지금 진행으로 돌아오려면 먼저 현재 여정도 파일로 보관해 두세요.':'선택한 백업을 이 기기로 가져와 이어갑니다.'}</p>
+        <p>기록과 이미 받은 물자는 유지하고, 읽던 장면부터 이어갑니다.</p>${session.error?`<p role="alert" class="save-transfer-warning">${esc(session.error)}</p>`:''}`;
+      actions.innerHTML='<button type="button" id="save-transfer-confirm" class="save-transfer-primary">이 백업으로 복원</button><button type="button" id="save-transfer-cancel">취소하고 돌아가기</button>';
+      $('#save-transfer-confirm').onclick=confirmSaveTransfer;
+      $('#save-transfer-cancel').onclick=backSaveTransfer;
+    }else{
+      const current=session.screen==='game'&&S?G.inspectSave(G.exportSave()):null;
+      body.innerHTML=`${current?.ok?saveTransferRecord(current.summary,'현재 기기'):'<section class="save-transfer-record"><small>현재 기기</small><h3>아직 여정이 없다</h3><p>기존 백업을 가져와 이어간다.</p></section>'}
+        ${current?.ok?'<p>파일로 보관해 두면 다른 기기에서도 이어갈 수 있다.</p><button type="button" id="save-transfer-export" class="save-transfer-wide">현재 여정 파일로 내보내기</button><hr>':''}
+        <h3>이전 여정 불러오기</h3><p>파일을 골라도 바로 바뀌지 않는다. 확인한 뒤 복원한다.</p>
+        <button type="button" id="save-transfer-choose" class="save-transfer-wide save-transfer-primary">${session.error?'다른 파일 고르기':'백업 파일 불러오기'}</button>
+        <p class="save-transfer-filename">기기에 내려받은 JSON 백업 파일을 사용합니다.</p><p id="save-transfer-feedback" role="${session.error?'alert':'status'}">${esc(session.error||session.message||'')}</p>`;
+      actions.innerHTML='<button type="button" id="save-transfer-close">돌아가기</button>';
+      const exportButton=$('#save-transfer-export');if(exportButton)exportButton.onclick=()=>{if(saveTransferActive(session))exportCurrentSave();};
+      $('#save-transfer-choose').onclick=()=>{if(saveTransferActive(session))$('#save-transfer-file').click();};
+      $('#save-transfer-close').onclick=()=>closeSaveTransfer();
+    }
+    body.scrollTop=0;
+  }
+  function openSaveTransfer(trigger){
+    const dialog=$('#save-transfer-dialog');
+    if(!dialog||dialog.open||!['game','title'].includes(screen))return;
+    saveTransfer={state:S,screen,trigger,request:0,pending:null,error:'',message:''};
+    renderSaveTransfer();dialog.showModal();dialog.setAttribute('aria-hidden','false');
+    $('#save-transfer-choose').focus({preventScroll:true});
+  }
+  function closeSaveTransfer(restore=true){
+    const session=saveTransfer;saveTransfer=null;
+    const dialog=$('#save-transfer-dialog');if(!dialog)return;
+    $('#save-transfer-file').value='';
+    if(dialog.open)dialog.close();dialog.setAttribute('aria-hidden','true');
+    // Drop file bytes as well as the summary when leaving or applying new code.
+    $('#save-transfer-body').replaceChildren();$('#save-transfer-actions').replaceChildren();
+    if(restore&&session?.trigger?.isConnected&&screen===session.screen)session.trigger.focus({preventScroll:true});
+  }
+  function backSaveTransfer(){
+    const session=saveTransfer;if(!session)return;
+    if(!saveTransferActive(session)){closeSaveTransfer(false);return;}
+    if(session.pending||session.message||session.error){
+      session.request++;session.pending=null;session.message='';session.error='';renderSaveTransfer();
+      $('#save-transfer-choose').focus({preventScroll:true});
+    }else closeSaveTransfer();
+  }
+  async function readSaveTransfer(file){
+    const session=saveTransfer;if(!file||!session||!saveTransferActive(session))return;
+    const request=++session.request;session.pending=null;session.error='';session.message='파일을 확인하는 중…';renderSaveTransfer();
+    try{
+      const raw=await file.text();
+      if(!saveTransferActive(session)||session.request!==request)return;
+      const result=G.inspectSave(raw);session.message='';
+      if(result.ok)session.pending={raw,summary:result.summary,filename:file.name};
+      else session.error=result.why;
+    }catch(error){
+      if(!saveTransferActive(session)||session.request!==request)return;
+      session.message='';session.error='백업 파일을 읽지 못했습니다. 파일 접근 권한을 확인하고 다시 골라 주세요.';
+    }
+    renderSaveTransfer();
+    $(session.pending?'#save-transfer-cancel':'#save-transfer-choose').focus({preventScroll:true});
+  }
+  function confirmSaveTransfer(){
+    const session=saveTransfer;if(!session?.pending||!saveTransferActive(session))return;
+    const result=G.importSave(session.pending.raw);
+    if(!result.ok){session.error=`${result.why}. 현재 여정은 그대로입니다.`;renderSaveTransfer();$('#save-transfer-cancel').focus({preventScroll:true});return;}
+    closeSaveTransfer(false);closeModal('#ovl-status',false);closeModal('#ovl-menu',false);
+    setDockTab('dk-road');
+    if(S.ended)showEnding(S.endKind||'stranded');else enterGame();
+    toast('백업을 복원했다');
+  }
+  function wireSaveTransfer(){
+    const dialog=$('#save-transfer-dialog');if(!dialog)return;
+    $('#save-transfer-back').onclick=backSaveTransfer;
+    $('#save-transfer-file').onchange=event=>{const file=event.target.files?.[0];event.target.value='';return readSaveTransfer(file);};
+    dialog.oncancel=event=>{event.preventDefault();backSaveTransfer();};
+    dialog.onkeydown=event=>{event.stopPropagation();if(event.repeat&&['Enter',' '].includes(event.key))event.preventDefault();};
+    dialog.onclick=event=>{if(event.target!==dialog)return;const r=dialog.getBoundingClientRect();
+      if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)backSaveTransfer();};
+    dialog.onclose=()=>{if(!dialog.open&&saveTransfer)closeSaveTransfer(false);};
   }
   const tossRuntime=Boolean(window.ReactNativeWebView||/\.tossmini\.com$/i.test(location.hostname)||/Toss/i.test(navigator.userAgent));
   let deferredInstallPrompt=null, appShellRegistration=null;
@@ -334,11 +482,12 @@ const UI = (()=>{
     || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on') || $('#ovl-menu').classList.contains('on')
     || $('#ovl-seoul').classList.contains('on') || $('#ovl-camp').classList.contains('on')
     || $('#ovl-local-actions').classList.contains('on') || !!$('#trip-destination-dialog')?.open
-    || !!$('#journey-detail-dialog')?.open;
+    || !!$('#journey-detail-dialog')?.open || !!$('#save-transfer-dialog')?.open;
 
   /* ── screens ── */
   function show(id){
     closePursuitHelp();
+    if(saveTransfer)closeSaveTransfer(false);
     if(pursuitUi) pursuitUi.level=null; // Loading/restarting a run is not a risk increase.
     document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
     $('#scr-game').classList.remove('on');
@@ -358,25 +507,29 @@ const UI = (()=>{
   function boot(){
     /* 설치형 웹앱에서도 첫 화면과 저장된 여정을 끊김 없이 연다. file:// 미리보기는
        서비스 워커를 지원하지 않으므로 등록을 건너뛴다. */
-    if('serviceWorker' in navigator && location.protocol!=='file:'){
+    if('serviceWorker' in navigator && location.protocol!=='file:'&&!tossRuntime){
       window.addEventListener('load',async()=>{
-        const localPreview=location.hostname==='127.0.0.1'||location.hostname==='localhost';
-        const testLocalPwa=new URLSearchParams(location.search).has('pwa');
-        if(localPreview&&!testLocalPwa){
-          navigator.serviceWorker.getRegistrations().then(registrations=>
-            Promise.all(registrations.map(registration=>registration.unregister()))).catch(()=>{});
-          if('caches' in window) caches.keys().then(keys=>Promise.all(keys
-            .filter(key=>key.startsWith('seoul-400km-')).map(key=>caches.delete(key)))).catch(()=>{});
-          return;
-        }
-        const hadController=Boolean(navigator.serviceWorker.controller);
+        // Presence alone does not guarantee access (sandboxed or restricted WebViews).
+        // Offline setup is optional and must never reject the load handler.
         try{
-          appShellRegistration=await navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'});
+          const serviceWorker=navigator.serviceWorker;
+          if(!serviceWorker) return;
+          const localPreview=location.hostname==='127.0.0.1'||location.hostname==='localhost';
+          const testLocalPwa=new URLSearchParams(location.search).has('pwa');
+          if(localPreview&&!testLocalPwa){
+            serviceWorker.getRegistrations().then(registrations=>
+              Promise.all(registrations.map(registration=>registration.unregister()))).catch(()=>{});
+            if('caches' in window) caches.keys().then(keys=>Promise.all(keys
+              .filter(key=>key.startsWith('seoul-400km-')).map(key=>caches.delete(key)))).catch(()=>{});
+            return;
+          }
+          const hadController=Boolean(serviceWorker.controller);
+          appShellRegistration=await serviceWorker.register('./service-worker.js',{updateViaCache:'none'});
           await appShellRegistration.update();
           const refresh=()=>appShellRegistration&&appShellRegistration.update().catch(()=>{});
           window.addEventListener('online',refresh);
           document.addEventListener('visibilitychange',()=>{ if(!document.hidden) refresh(); });
-          navigator.serviceWorker.addEventListener('controllerchange',()=>{
+          serviceWorker.addEventListener('controllerchange',()=>{
             if(!hadController) return;
             if(screen==='title'&&!sessionStorage.getItem('caravan_app_reloaded')){
               sessionStorage.setItem('caravan_app_reloaded','1');
@@ -427,21 +580,23 @@ const UI = (()=>{
     }else if(readPreparation()?.active){
       startNew('onroad');
     }else if(bootParams.has('caravan-live')&&G.hasSave()){
-      requestAnimationFrame(()=>{ if(screen==='title'&&G.load()) enterGame(); });
+      requestAnimationFrame(()=>continueSavedJourney(false));
     }
     requestAnimationFrame(loop);
   }
   function refreshTitle(){
     let canContinue=false;
     if(G.hasSave()){
-      try{ const s=JSON.parse(localStorage.getItem(SAVE_KEY));
-        if(s&&s.stats){
+      try{ const inspected=G.inspectSave(localStorage.getItem(SAVE_KEY));
+        if(inspected.ok){
+          const s=inspected.summary;
           canContinue=true;
-          $('#cont-info').textContent=`DAY ${s.day} · ${Math.round(s.stats.km)}km 주행 · ${s.mode==='offroad'?'오프로드':'온로드'}`;
+          $('#cont-info').textContent=`DAY ${s.day} · ${Math.round(s.km)}km 주행 · ${s.mode==='offroad'?'오프로드':'온로드'}`;
         }
       }catch(e){}
     }
     $('#bt-continue').style.display=canContinue?'flex':'none';
+    const restore=$('#bt-title-restore');if(restore)restore.hidden=canContinue;
     if(['departure','wharf'].includes($('#scr-title').dataset.titleLayout)){
       $('#scr-title').dataset.hasSave=String(canContinue);
       $('#bt-new').classList.toggle('primary',!canContinue);
@@ -454,6 +609,16 @@ const UI = (()=>{
       lastBox.hidden=!last;
       if(last) lastBox.innerHTML=previousJourneyHtml(last,true);
     }
+  }
+  function continueSavedJourney(enableSound=true){
+    if(screen!=='title')return false;
+    if(!G.load()){
+      refreshTitle();toast('저장된 여정을 불러오지 못했습니다. 백업 파일로 복원할 수 있습니다.','warn');
+      return false;
+    }
+    if(enableSound)SND.enable();
+    if(S.ended)showEnding(S.endKind||'stranded');else enterGame();
+    return true;
   }
   function previousJourneyHtml(last,compact=false){
     const route=D.routePlans&&D.routePlans[last.route];
@@ -476,7 +641,44 @@ const UI = (()=>{
   }
 
   /* ── main loop ── */
-  let last=0, lastVisual=0, hudCd=0, bgmCd=0;
+  let last=null, lastVisual=0, hudCd=0, bgmCd=0;
+  let lifecyclePaused=document.hidden===true;
+  let arrivalTimer=0, arrivalCountdown=null, arrivalGeneration=0;
+  function clearArrivalCountdown(){
+    clearTimeout(arrivalTimer); arrivalTimer=0; arrivalCountdown=null;
+  }
+  function pauseArrivalCountdown(){
+    clearTimeout(arrivalTimer); arrivalTimer=0;
+    if(arrivalCountdown&&arrivalCountdown.startedAt!==null){
+      arrivalCountdown.remaining=Math.max(0,arrivalCountdown.remaining-(performance.now()-arrivalCountdown.startedAt));
+      arrivalCountdown.startedAt=null;
+    }
+  }
+  function resumeArrivalCountdown(){
+    const countdown=arrivalCountdown;
+    if(!countdown||arrivalTimer||lifecyclePaused||document.hidden) return;
+    countdown.startedAt=performance.now();
+    arrivalTimer=setTimeout(()=>{
+      if(arrivalCountdown!==countdown) return;
+      arrivalTimer=0;
+      if(lifecyclePaused||document.hidden){
+        // A late hidden callback cannot count an unobserved interval as reading time.
+        countdown.startedAt=null; pauseArrivalCountdown(); return;
+      }
+      clearArrivalCountdown(); countdown.next();
+    },countdown.remaining);
+  }
+  function startArrivalCountdown(next,remaining){
+    clearArrivalCountdown();
+    arrivalCountdown={next,remaining,startedAt:null};
+    resumeArrivalCountdown();
+  }
+  function setLifecyclePaused(paused){
+    lifecyclePaused=paused;
+    // No catch-up frame after a hidden WebView, including when RAF stopped entirely.
+    last=null; lastVisual=0;
+    if(paused) pauseArrivalCountdown(); else resumeArrivalCountdown();
+  }
   function bgmKey(){
     if(screen==='title'||screen==='mode'||screen==='intro') return 'title';
     if(screen==='end') return 'story';
@@ -488,7 +690,12 @@ const UI = (()=>{
     return night? 'drive_night':'drive_day';
   }
   function loop(ts){
-    const dt=Math.min(0.05,(ts-last)/1000||0.016); last=ts;
+    if(lifecyclePaused||document.hidden){
+      last=null; lastVisual=0;
+      requestAnimationFrame(loop);
+      return;
+    }
+    const dt=last===null?0:Math.max(0,Math.min(0.05,(ts-last)/1000)); last=ts;
     if(document.documentElement.classList.contains('qa-exact-replay')){
       requestAnimationFrame(loop);
       return;
@@ -602,14 +809,16 @@ const UI = (()=>{
       if(!(D.bgm&&D.bgm.song)) bs.style.display='none';
       else bs.onclick=()=>{ SND.enable(true); BGM.toggleSong(); };
     }
-    $('#bt-continue').onclick=()=>{ SND.enable(); if(G.load()){ enterGame(); } };
+    $('#bt-continue').onclick=()=>continueSavedJourney();
+    const titleRestore=$('#bt-title-restore');if(titleRestore)titleRestore.onclick=()=>openSaveTransfer(titleRestore);
+    wireSaveTransfer();
     $('#bt-preview').onclick=()=>{ renderPreview(); show('scr-preview'); $('#preview-scroll').scrollTop=0; };
     $('#bt-previewback').onclick=()=>show('scr-title');
     $('#bt-previewnew').onclick=()=>startNew('onroad');
     const nameGo=()=>{
       if(screen!=='name') return;
-      pendingName=($('#inp-name').value||'').trim().slice(0,8);
-      /* 이름 확인은 모바일 브라우저가 허용하는 명시적 사용자 제스처다. */
+      rememberPreparation();
+      /* 짐 확정은 모바일 브라우저가 허용하는 명시적 사용자 제스처다. */
       SND.enable();
       G.newGame(pendingMode,pendingName,'interactive',pendingProfile,pendingPack);
       enterGame();
@@ -617,17 +826,18 @@ const UI = (()=>{
     $('#bt-name').onclick=nameGo;
     $('#bt-name-back').onclick=()=>{rememberPreparation(false);refreshTitle();show('scr-title');$('#bt-new').focus({preventScroll:true});};
     $('#bt-prep-sound').onclick=()=>SND.toggle();
-    $('#inp-name').addEventListener('input',()=>rememberPreparation());
     $('#scr-name .departure-scroll').addEventListener('scroll',()=>{if(screen==='name')rememberPreparation();},{passive:true});
-    $('#inp-name').addEventListener('keydown',e=>{
+    $('#departure-inventory summary').addEventListener('click',togglePreparationInventory);
+    $('#bt-prep-text').onclick=()=>toggleUiPref('text');
+    $('#inp-name')?.addEventListener('keydown',e=>{
       // IME confirmation (including WebKit's 229) is not a departure gesture.
       if(e.isComposing||e.keyCode===229||e.repeat) return;
       if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); nameGo(); }
     });
     const openingHistory=$('#opening-history');
     if(openingHistory) openingHistory.onclick=()=>{
-      pendingName=($('#inp-name').value||'').trim().slice(0,8);
       rememberPreparation();
+      introPreview=true;
       introIdx=0; introTurnIdx=0;
       SND.enable();
       renderIntro(true);
@@ -696,14 +906,9 @@ const UI = (()=>{
       ['music','ambience','effects','voice'].forEach(key=>SND.setLevel(key,value));
     };
     const saveNow=$('#menu-save-now');
-    if(saveNow) saveNow.onclick=()=>{
-      G.save();
-      const state=$('#menu-save-state');
-      if(state) state.textContent='방금 저장됨';
-      toast('현재 여정을 저장했다');
-    };
-    const saveExport=$('#menu-save-export');
-    if(saveExport) saveExport.onclick=exportCurrentSave;
+    if(saveNow) saveNow.onclick=saveCurrentJourney;
+    const saveTransferButton=$('#menu-save-transfer');
+    if(saveTransferButton)saveTransferButton.onclick=()=>openSaveTransfer(saveTransferButton);
     if(new URLSearchParams(location.search).has('caravan-live')) window.caravanLiveControls={
       ready:()=>!!S,
       restart:()=>startIntroRestart(),
@@ -767,10 +972,11 @@ const UI = (()=>{
   }
   function startNew(mode){
     const view=readPreparation();
-    introRestart=false; pendingMode='onroad'; pendingName=view?.name||''; pendingProfile='keeper'; pendingPack=view?.pack||'fuel'; introIdx=0; introTurnIdx=0;
+    introRestart=false; introPreview=false; pendingMode='onroad'; pendingName=view?.name||''; pendingProfile='keeper'; pendingPack=view?.pack||'fuel'; introIdx=0; introTurnIdx=0;
     const nameInput=$('#inp-name');
     if(nameInput) nameInput.value=pendingName;
     show('scr-name'); renderProfilePick();
+    $('#departure-inventory').open=view?.inventoryOpen===true;
     $('#scr-name .departure-scroll').scrollTop=Math.max(0,Number(view?.scroll)||0);
     rememberPreparation();
     const skip=$('#intro-skip');
@@ -797,15 +1003,23 @@ const UI = (()=>{
   }
   function scheduleIntroAuto(){
     clearIntroAuto(); updateIntroAuto();
-    if(!introAuto||introIdx>=D.intro.length) return;
-    const page=D.intro[introIdx], beats=page&&page.beats||[];
+    if(!introAuto||introIdx>=introPages().length) return;
+    const page=introPages()[introIdx], beats=page&&page.beats||[];
     const beat=beats[Math.min(introTurnIdx,Math.max(0,beats.length-1))];
     const chars=stripTags(beat&&beat.text||'').length;
     const delay=Math.max(1900,Math.min(5200,800+chars*55));
     introAutoTimer=setTimeout(()=>{ introAutoTimer=0; if(screen==='intro'&&!document.hidden) nextIntro(); },delay);
   }
+  function introPages(){return introPreview?D.introHistoryPages:D.intro;}
   function renderIntro(newPage){
-    const page=D.intro[introIdx];
+    const pages=introPages(),page=pages[introIdx];
+    if(!page)return;
+    const book=$('#intro-book');
+    book.dataset.readerDensity='quiet';
+    const timeKind=page.timeKind||D.introHistoryPages.find(item=>item.scene===page.scene)?.timeKind||'current';
+    book.dataset.narrativeTime=timeKind;
+    $('#intro-meta').hidden=false;
+    $('#intro-meta').removeAttribute('aria-hidden');
     if(newPage){
       VO.stop();
       AMBI.intro(page.scene);
@@ -827,8 +1041,8 @@ const UI = (()=>{
       introImage.classList.add('intro-scene-cut');
     }
     introImage.alt=D.sceneDescriptions&&D.sceneDescriptions[activeSceneKey]||`${page.title} 장면`;
-    $('#intro-era').textContent=page.era||'';
-    $('#intro-count').textContent=`${introIdx+1} / ${D.intro.length} · ${introTurnIdx+1} / ${beats.length}`;
+    $('#intro-era').textContent=(introPreview?(timeKind==='reported'?'할아버지에게 들은 이야기 · ':'내 기억 · '):'')+(introPreview?String(page.era||'').replace(/^기억 · /,''):page.era||'');
+    $('#intro-count').textContent=`${introIdx+1} / ${pages.length} · ${introTurnIdx+1} / ${beats.length}`;
     $('#intro-title').textContent=page.title||'';
     const introText=$('#intro-txt');
     const transcript=!newPage&&introText&&introText.querySelector('.story-transcript');
@@ -852,8 +1066,12 @@ const UI = (()=>{
     const live=$('#story-live'), current=introBeats[Math.min(introTurnIdx,introBeats.length-1)];
     AMBI.introTurn(page.scene,introTurnIdx,current,activeSceneKey);
     if(live&&current) live.textContent=`${current.kind==='dialogue'?(current.name||speakerInfo(current.who).name)+'의 말: ':'장면 설명: '}${stripTags(current.text)}`;
-    $('#intro-hint').textContent='탭하면 다음 말풍선';
-    const book=$('#intro-book');
+    $('#intro-hint').textContent=introPreview?'미리 읽기 · 마치면 짐 선택으로 돌아간다':'탭하면 다음 말풍선';
+    const summaryLead=$('#intro-summary .intro-summary-lead'),summaryStart=$('#intro-summary-start');
+    if(summaryLead)summaryLead.textContent=introPreview?'어린 시절의 기억과 할아버지에게 들은 이야기입니다. 오늘의 일은 짐을 고른 뒤 직접 겪습니다. 현재 여정과 저장은 바뀌지 않습니다.':'긴 프롤로그를 계속 읽거나, 출발에 필요한 사실만 일지에 남길 수 있습니다.';
+    const summaryList=$('#intro-summary ol');if(summaryList)summaryList.hidden=introPreview;
+    $('#intro-summary-title').textContent=introPreview?'과거 이야기 미리 읽기':'왜 서울로 가는가';
+    if(summaryStart)summaryStart.textContent=introPreview?'짐 선택으로 돌아가기':'핵심을 기록하고 출발';
     if(newPage){
       book.style.opacity=0;
       $('#intro-page').scrollTop=0;
@@ -873,6 +1091,7 @@ const UI = (()=>{
   }
   function startIntroRestart(){
     if(!S) return;
+    introPreview=false;
     closeModal('#ovl-menu',false);
     pendingMode='onroad';
     pendingName=G.myName();
@@ -890,9 +1109,9 @@ const UI = (()=>{
     renderIntro(true);
   }
   function nextIntro(){
-    if(screen!=='intro'||introIdx>=D.intro.length) return;
+    if(screen!=='intro'||introIdx>=introPages().length) return;
     clearIntroAuto();
-    const page=D.intro[introIdx];
+    const page=introPages()[introIdx];
     const beats=page&&page.beats&&page.beats.length?page.beats:[{kind:'narration',text:page?.text||''}];
     if(introTurnIdx<beats.length-1){
       introTurnIdx++;
@@ -901,9 +1120,10 @@ const UI = (()=>{
     }
     introIdx++;
     introTurnIdx=0;
-    if(introIdx>=D.intro.length){
+    if(introIdx>=introPages().length){
       localStorage.setItem('caravan_intro_seen','1');
       AMBI.setLoop(null);
+      if(introPreview){introPreview=false;startNew(pendingMode);$('#bt-name')?.focus({preventScroll:true});return;}
       if(introRestart){
         introRestart=false;
         G.save();
@@ -915,15 +1135,15 @@ const UI = (()=>{
     else renderIntro(true);
   }
   function skipIntro(){
-    if(screen!=='intro'||introIdx>=D.intro.length) return;
+    if(screen!=='intro'||introIdx>=introPages().length) return;
     clearIntroAuto();
     const entryMode=$('#intro-summary').classList.contains('on')?'summary':'skip';
     closeModal('#intro-summary',false);
-    introIdx=D.intro.length;
+    introIdx=introPages().length;
     introTurnIdx=0;
-    if(screen==='name') pendingName=($('#inp-name').value||'').trim().slice(0,8);
     localStorage.setItem('caravan_intro_seen','1');
     AMBI.setLoop(null);
+    if(introPreview){introPreview=false;startNew(pendingMode);$('#bt-name')?.focus({preventScroll:true});return;}
     if(introRestart){
       introRestart=false;
       S.entryMode=entryMode;
@@ -1369,11 +1589,23 @@ const UI = (()=>{
       portrait:D.portraits&&D.portraits[key]||null
     };
   }
+  function storyDocumentTitle(turn){
+    if(!['letter','record'].includes(turn.kind))return '';
+    const name=typeof turn.name==='string'?turn.name.trim():'';
+    const medium=typeof turn.medium==='string'?turn.medium.trim():'';
+    // Frozen receipts may identify playback separately from their legacy kind.
+    // Unknown media stay in their original presentation; never turn a voice/video into paper.
+    if(medium&&!/^(?:text|written|document|paper|letter|note|글|문서|종이|편지|메모)$/i.test(medium))return '';
+    if(turn.kind==='record'&&/(?:녹음|음성|영상|비디오|방송|재생)/.test(name))return '';
+    // Only an authored source name is a title. An inferred actor name is not one.
+    return name||(turn.kind==='letter'?'편지':'기록');
+  }
   function storyTurnHtml(turn, opt={}){
     const kind=turn.kind||'narration';
+    const documentTitle=['letter','record'].includes(kind)?storyDocumentTitle(turn):'';
     const person=speakerInfo(turn.who,turn.name);
     const isPlayerThought=kind==='thought'&&playerSpeaker(person.id);
-    const hasPortrait=!!person.portrait&&!['narration','ai','radio'].includes(kind)&&!isPlayerThought;
+    const hasPortrait=!documentTitle&&!!person.portrait&&!['narration','ai','radio'].includes(kind)&&!isPlayerThought;
     const source={
       narration:'장면', dialogue:'대화', thought:'생각', ai:'AI 방송',
       radio:'라디오', letter:'편지', record:'기록'
@@ -1382,13 +1614,15 @@ const UI = (()=>{
     const face=hasPortrait
       ? `<img class="turn-avatar" src="${person.portrait}" alt="${esc(faceAlt)} 초상" decoding="async">`
       : '';
-    const speaker=isPlayerThought
+    const speaker=documentTitle
+      ? `<div class="document-source">${esc(documentTitle)}</div>`
+      : isPlayerThought
       ? `<div class="turn-source thought-source">생각</div>`
       : ['dialogue','thought','letter'].includes(kind)||(kind==='record'&&hasPortrait)
       ? `<div class="turn-speaker">${face}<span><small>${source}</small><b>${esc(person.name)}</b></span></div>`
       : `<div class="turn-source">${source}${turn.name?` · ${esc(turn.name)}`:''}</div>`;
     return `<article class="story-turn story-entry ${kind}${isPlayerThought?' player-thought':''}${person.name==='???'?' identity-hidden':''}${opt.intro?' intro-turn':''}"
-      data-kind="${kind}" data-story-entry>
+      data-kind="${kind}"${documentTitle?' data-source-layout="document"':''} data-story-entry>
       ${speaker}<div class="turn-text">${fmt(turn.text||'')}</div></article>`;
   }
   const playerSpeaker=(id)=>['me','player_child','나'].includes(id);
@@ -1490,8 +1724,8 @@ function dialogueSide(turn,lanes,opt={}){
     return `<section class="story-chat story-transcript${renderOpt.intro?' intro-chat':''}" role="group" aria-label="대화 기록">
       ${shown.map((turn,i)=>storyEntryHtml(turn,i===shown.length-1,lanes,renderOpt,shown[i-1])).join('')}</section>`;
   }
-  function storyRecordHtml(text,open=false,history=false){
-    return text?`<details class="story-reading-record" data-record-history="${history}" ${open?'open':''}><summary>기록 더 읽기</summary><div>${fmt(text)}</div></details>`:'';
+  function storyRecordHtml(text,open=false,history=false,label=''){
+    return text?`<details class="story-reading-record" data-record-history="${history}" ${label?'data-narrative-time="reported"':''} ${open?'open':''}><summary>${esc(label||'기록 더 읽기')}</summary><div>${fmt(text)}</div></details>`:'';
   }
   function storyDisplayTurns(state){
     const read=view=>view?.readingPage?StoryPages.readThrough(view.turns,view.readingPage.end):(view?.turns||[]).slice(0,Math.max(0,(view?.index||0)+1));
@@ -1532,8 +1766,8 @@ function dialogueSide(turn,lanes,opt={}){
     $('#ev-sheet [data-story-auto]')?.focus({preventScroll:true});
   }
   function wireStoryTools(sheet,state){
-    // The title stays above the picture; the reading panel owns only the current
-    // speech and actions. Keep this outside the scrolling transcript on restore.
+    // Place/time/source stays above the picture; scene titles remain accessible.
+    // Keep this outside the scrolling transcript on restore.
     if(sheet.classList.contains('passenger-reader')){
       const heading=sheet.querySelector('.event-head');
       if(heading&&heading.parentElement!==sheet) sheet.prepend(heading);
@@ -2764,6 +2998,7 @@ function dialogueSide(turn,lanes,opt={}){
     SND.setDriving(true);
     AMBI.depart(S.driving&&S.driving.road); }
   function onArrive(){
+    const generation=++arrivalGeneration;
     questRouteFocus=null;
     journeyConsoleMode='local';
     roadNotice=null;
@@ -2805,11 +3040,11 @@ function dialogueSide(turn,lanes,opt={}){
         <p>${esc(recap.build)}으로 달렸다${recap.routeCompleted&&recap.routeName?` · ${esc(recap.routeName)} 완주`:''}</p>
         </details>
       </div>`:''}</div><div class="arrival-actions"><button type="button" data-arrival-continue>${settlement?'도시로 들어가기':id==='seoul'?'서울 진입 확인':'정차 지점 살펴보기'}</button>${major?'<small>준비되면 계속하세요</small>':''}</div></div>`;
-    clearTimeout(arrivalTimer);
+    clearArrivalCountdown();
     let dismissed=false;
     const continueArrival=()=>{
-      if(dismissed) return;
-      dismissed=true; clearTimeout(arrivalTimer);
+      if(dismissed||generation!==arrivalGeneration||screen!=='game'||S?.at!==id) return;
+      dismissed=true; clearArrivalCountdown();
       closeModal(a,false);
       if(S&&S.pendingArrival===id) G.finishArrival(id);
       requestAnimationFrame(()=>{
@@ -2821,7 +3056,7 @@ function dialogueSide(turn,lanes,opt={}){
     a.onkeydown=event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();continueArrival();}};
     openModal(a,'[data-arrival-continue]');
     const hold=uiPrefs.reduceMotion?3200:4300;
-    if(!major) arrivalTimer=setTimeout(continueArrival,hold);
+    if(!major) startArrivalCountdown(continueArrival,hold);
     return hold+200;
   }
 
@@ -3128,6 +3363,14 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function renderStoryScene(state,turn,index){
     const sheet=$('#ev-sheet'), frame=sheet&&sheet.querySelector('.event-scene-frame');
+    if(sheet?.dataset?.readerDensity==='quiet'){
+      const time=(state.turns||[]).slice(0,index+1).reverse().find(item=>item.timeKind);
+      const kind=time?.timeKind||(state.originKind==='memory'?'memory':'current');
+      sheet.dataset.narrativeTime=kind;
+      sheet.dataset.chapterBoundary=String(state.eventId==='opening_farewell'&&state.phase==='outcome');
+      const orientation=sheet.querySelector('.event-orientation');
+      if(orientation)orientation.textContent=sheet.dataset.chapterBoundary==='true'?'서장을 마치고':time?.timeLabel||(kind==='memory'?'내 기억':kind==='reported'?'전해 들은 이야기':orientation.dataset.currentOrientation||'지금');
+    }
     const keys=state&&state.sceneKeys||[];
     if(!frame||!keys.length) return;
     const stages=D.eventTurnSceneStages&&D.eventTurnSceneStages[state.eventId];
@@ -3547,19 +3790,21 @@ function dialogueSide(turn,lanes,opt={}){
     state.wireFinal(dock);
     const live=$('#story-live');if(live)live.textContent='';
   }
-  function pagedStoryHtml(turns){
+  function pagedStoryHtml(turns,review=false){
     let previous=null;
     return `<section class="page-transcript" aria-label="이야기">${turns.map(turn=>{
       if(turn.kind==='archive')return storyRecordHtml(turn.text,turn.open,true);
       if(turn.kind==='resource')return `<article class="page-turn" data-kind="resource">${storyResourceHtml(turn.resource)}</article>`;
       const spoken=turn.kind==='dialogue',person=speakerInfo(turn.who,turn.name);
+      const documentTitle=['letter','record'].includes(turn.kind)?storyDocumentTitle(turn):'';
       const same=spoken&&previous&&!turn.speakerUncertain&&!previous.speakerUncertain
         &&speakerLaneKey(previous)===speakerLaneKey(turn)&&previous.name===turn.name;
-      const label=spoken?person.name:(turn.kind==='ai'&&turn.name?turn.name:({thought:'생각',ai:'천리안 방송',radio:'라디오',letter:'편지',record:'기록',action:'내가 고른 행동'}[turn.kind]||''));
+      const label=documentTitle||(spoken?person.name:(turn.kind==='ai'&&turn.name?turn.name:({thought:'생각',ai:'천리안 방송',radio:'라디오',letter:'편지',record:'기록',action:'내가 고른 행동'}[turn.kind]||'')));
       const head=spoken&&!same?`<header class="page-speaker">${person.portrait?`<img src="${person.portrait}" width="48" height="48" alt="" decoding="async">`:''}<b>${esc(label)}</b></header>`
-        :!spoken&&label?`<div class="page-source">${esc(label)}</div>`:'';
+        :!spoken&&label?`<div class="page-source${documentTitle?' document-source':''}">${esc(label)}</div>`:'';
       if(spoken)previous=turn;
-      return `<article class="page-turn" data-story-entry data-kind="${esc(turn.kind)}"${spoken?` data-speaker="${esc(person.id)}"`:''}>${head}<div class="page-text">${fmt(turn.text||'')}</div></article>`;
+      const source=review&&turn.timeKind?`<p class="page-time-source">${esc(turn.timeLabel||(turn.timeKind==='memory'?'내 기억':turn.timeKind==='reported'?'전해 들은 이야기':'지금'))}</p>`:'';
+      return `<article class="page-turn" data-story-entry data-kind="${esc(turn.kind)}"${documentTitle?' data-source-layout="document"':''}${spoken?` data-speaker="${esc(person.id)}"`:''}>${source}${head}<div class="page-text">${fmt(turn.text||'')}</div></article>`;
     }).join('')}</section>`;
   }
   function storyResultPageTurns(state){
@@ -3584,6 +3829,13 @@ function dialogueSide(turn,lanes,opt={}){
   function renderPagedStory(state,sheet){
     const reader=sheet.querySelector('.story-reader'),dock=sheet.querySelector('.event-choice-dock');
     const page=state.readingPage||(state.readingPage={cursor:{turn:state.index||0,offset:0},end:{turn:0,offset:0},trail:[],mode:'read',choicePage:0,resultPage:0});
+    // The mobile keyboard can resize the reader while a name is being composed.
+    // Keep its live input/caret/IME node; CSS handles the reduced viewport.
+    if(state.nameEntry&&page.mode==='actions'&&state.readerMode==='current'&&
+      dock.querySelector('.opening-name-answer input')===document.activeElement){
+      if(dock.getBoundingClientRect().height>sheet.querySelector('.event-field-report').clientHeight-44)sheet.dataset.pageFallback='actions';
+      G.capturePresentationView(state);return;
+    }
     page.cursor=StoryPages.cursor(state.turns,page.cursor);
     state.index=Math.max(0,Math.min(page.cursor.turn,state.turns.length-1));
     const reviewing=['review','inspection'].includes(state.readerMode);
@@ -3610,8 +3862,8 @@ function dialogueSide(turn,lanes,opt={}){
     };
     if(reviewing){
       reader.innerHTML=state.readerMode==='inspection'?storyInspectionHtml(state):
-        (state.brief||'')+pagedStoryHtml(storyDisplayTurns(state))+
-        (page.end.turn>=state.turns.length?storyRecordHtml(state.readingRecord,state.recordOpen):'')+
+        (state.brief||'')+pagedStoryHtml(storyDisplayTurns(state),true)+
+        (page.end.turn>=state.turns.length?storyRecordHtml(state.readingRecord,state.recordOpen,false,state.readingRecordLabel):'')+
         (state.phase==='outcome'&&page.mode==='actions'?storyCompletedRecordHtml({...state,index:state.turns.length-1})+`<div class="story-result">${storyOutcomeSummaryHtml(state.resultChips||[],state.questUpdates||[],state)}</div>`:'');
       dock.innerHTML='<button class="story-next" type="button" data-reader-close>이야기로 돌아가기</button>';
       dock.querySelector('[data-reader-close]').onclick=e=>{e.stopPropagation();setStoryReaderMode(state,'current');};
@@ -3633,7 +3885,7 @@ function dialogueSide(turn,lanes,opt={}){
         dock.querySelector('[data-page-back]')?.addEventListener('click',back);
       }
       const next=dock.querySelector('.story-next');
-      next.textContent=state._page.done?(state.phase==='outcome'?'결과 확인':'선택하기'):'계속 읽기';
+      next.textContent=state._page.done?(state.phase==='outcome'?'결과 확인':state.nameEntry?'이름 답하기':'선택하기'):'계속 읽기';
       next.onclick=e=>{e.stopPropagation();advanceStory(state);};
       next.onkeydown=e=>{
         if(e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();e.stopPropagation();
@@ -3771,7 +4023,7 @@ function dialogueSide(turn,lanes,opt={}){
     }
     if(reviewing){
       if(state.readerMode==='review'&&state.readingRecord&&state.index>=state.turns.length-1)
-        reader.querySelector('.story-transcript').insertAdjacentHTML('beforeend',storyRecordHtml(state.readingRecord,state.recordOpen));
+        reader.querySelector('.story-transcript').insertAdjacentHTML('beforeend',storyRecordHtml(state.readingRecord,state.recordOpen,false,state.readingRecordLabel));
       dock.innerHTML='<button class="story-next" type="button" data-reader-close><strong>이야기로 돌아가기</strong></button>';
       dock.querySelector('[data-reader-close]').onclick=event=>{event.stopPropagation();setStoryReaderMode(state,'current');};
       placeStoryDock(sheet,state);
@@ -3850,17 +4102,53 @@ function dialogueSide(turn,lanes,opt={}){
     renderStoryState();
     return true;
   }
+  function openingNameAnswerHtml(){
+    return `<form class="page-composer opening-name-answer" novalidate aria-label="도윤에게 이름 알려주기">
+      <label for="opening-name">나는</label><input id="opening-name" aria-label="도윤에게 알려줄 이름" value="${esc(S.opening.nameDraft||'')}" maxlength="64" autocomplete="off" autocapitalize="off" enterkeyhint="done" aria-describedby="opening-name-help opening-name-error">
+      <p id="opening-name-help">8자까지. 이 이름으로 여정에 남는다.</p><p id="opening-name-error" role="alert" hidden></p>
+      <div class="choices"><button type="button" class="choice" data-i="0" data-name-confirm>이름을 말한다</button></div></form>`;
+  }
+  function wireOpeningNameAnswer(dock,state,event){
+    const form=dock.querySelector('.opening-name-answer'),input=form?.querySelector('input');
+    if(!input)return;
+    const journey=S,confirm=form.querySelector('[data-name-confirm]'),error=form.querySelector('[role="alert"]');
+    input.value=S.opening.nameDraft||'';
+    let composing=false;
+    const current=()=>curStory===state&&curEv===event&&S===journey&&form.isConnected&&G.openingPending()?.id===event.id&&!S.opening.pendingResult;
+    const submit=()=>{
+      if(!current()||composing)return;
+      if(state.consumeStoryPointerClick){state.consumeStoryPointerClick=false;return;}
+      G.setOpeningNameDraft(input.value);
+      const checked=G.validatePlayerName(input.value);
+      if(!checked.ok){error.textContent=checked.why;error.hidden=false;input.setAttribute('aria-invalid','true');input.focus({preventScroll:true});return;}
+      input.blur();resolveChoice(event.choices[0]);
+    };
+    form.onsubmit=e=>{e.preventDefault();e.stopPropagation();};
+    input.oncompositionstart=()=>{composing=true;};
+    input.oncompositionend=()=>{composing=false;if(current())G.setOpeningNameDraft(input.value);};
+    input.oninput=()=>{if(!current())return;G.setOpeningNameDraft(input.value);input.removeAttribute('aria-invalid');error.hidden=true;error.textContent='';};
+    const key=e=>{
+      if(e.key!=='Enter'&&(e.target===input||e.key!==' '))return;
+      e.stopPropagation();
+      if(composing||e.isComposing||e.keyCode===229)return;
+      e.preventDefault();
+      if(e.repeat||heldStoryAdvanceKeys.has(e.code))return;
+      heldStoryAdvanceKeys.add(e.code);submit();
+    };
+    input.onkeydown=key;confirm.onkeydown=key;
+    confirm.onpointerdown=()=>{if(current())state.consumeStoryPointerClick=false;};
+    confirm.onclick=e=>{e.preventDefault();e.stopPropagation();submit();};
+  }
   function showEvent(evd){
     clearStoryAuto();
     if(typeof VO!=='undefined') VO.stop();
     curEv=evd;
     curStory=null;
     const pending=G.beginPresentation(evd);
-    bgmEvKey = (evd.type==='추적'||evd.type==='위기'||evd.ai)?'tension': evd.type==='스토리'?'story':null;
+    bgmEvKey = D.eventAudio?.[evd.id]?.music||((evd.type==='추적'||evd.type==='위기'||evd.ai)?'tension': evd.type==='스토리'?'story':null);
     if(evd.id==='leo_broadcast') BGM.playSongOnce();   // 400km 송출 — 노래가 울려 퍼지는 그 장면
-    const CVO={ai_vending:'cheollian_01', exp_glasshouse:'cheollian_02', ai_census:'cheollian_03',
-      ai_gasstation:'cheollian_05', ai_manifest:'cheollian_09', seoul_gate:'cheollian_13'};
-    if(CVO[evd.id]&&pending?.phase!=='result') VO.play(CVO[evd.id]);
+    // Voices belong to explicitly voiced turns. The retired event-level CVO
+    // keys had no recordings; core dialogue must not stand in for other lines.
     SND.setDriving(false);
     AMBI.event(evd);
     const sheet=$('#ev-sheet');
@@ -3875,6 +4163,7 @@ function dialogueSide(turn,lanes,opt={}){
     const missionOnly=evd.id==='onboarding_main_mission';
     sheet.dataset.readerLayout=!evd.combat&&!missionOnly?'pages':'';
     sheet.dataset.readerSkin=!evd.combat&&!missionOnly?'materials':'';
+    sheet.dataset.readerDensity=!evd.combat&&!missionOnly?'quiet':'';
     sheet.dataset.missionLayout=missionOnly?'departure':'';
     const text = pending?.phase==='event'?pending.text:typeof evd.text==='function'?evd.text(S):evd.text;
     const sceneAlt=stripTags(evd.title||'길 위의 사건');
@@ -3908,7 +4197,7 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneMinute=Math.floor(Number(S.min)||0);
     const sceneClock=String(Math.floor(sceneMinute/60)%24).padStart(2,'0')+':'+String(sceneMinute%60).padStart(2,'0');
     const sceneOrientation=!evd.combat&&!missionOnly
-      ?`<p class="event-orientation">${esc(scenePlace||'길 위')} · DAY ${esc(S.day)} · ${sceneClock}</p>`:'';
+      ?`<p class="event-orientation" data-current-orientation="지금 · ${esc(scenePlace||'길 위')} · ${sceneClock}">지금 · ${esc(scenePlace||'길 위')} · ${sceneClock}</p>`:'';
     const presentId=evd.needsComp||(Array.isArray(evd.needBond)?evd.needBond[0]:null);
     if(presentId&&G.hasComp(presentId)&&G.crewLocation){
       const companion=D.comps[presentId];
@@ -3941,11 +4230,13 @@ function dialogueSide(turn,lanes,opt={}){
       brief:evd.combat?'':missionBrief+(context?`<details class="story-context-fold"><summary>앞 이야기</summary>${context}</details>`:''),
       phase:'event',eventId:evd.id,label:evd.type==='대화'?'대화':'이야기',turns,index:0,
       readingRecord:typeof evd.readingRecord==='function'?evd.readingRecord(S):evd.readingRecord,
+      readingRecordLabel:evd.readingRecordLabel||'',
       lastAdvanceAt:0,
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
       sceneKeys,sceneAlt,sceneStart:0,originKind:evd.storyOrigin&&evd.storyOrigin.kind||'',
-      finalDock:directRoadChoice
+      nameEntry:evd.nameInput===true,
+      finalDock:evd.nameInput?openingNameAnswerHtml():directRoadChoice
         ?`${missionOnly?`<p class="mission-optional">${esc(mission.optional)}</p>`:''}<button class="story-next onboarding-route-start" type="button"><strong>길로 나가기</strong></button>`
         :`<div class="choice-dock-head">어떻게 할까</div>
         <div class="story-choice-more" hidden aria-live="polite">아래로 더 보기 · 선택지가 이어집니다</div>
@@ -3955,6 +4246,7 @@ function dialogueSide(turn,lanes,opt={}){
         ${choices.count>2?`<div class="event-choice-pages" data-choice-pages role="group" aria-label="선택지 1 / ${choicePages} 페이지"><button type="button" data-choice-prev>이전</button><span><b data-choice-page>1</b> / <b data-choice-total>${choicePages}</b></span><button type="button" data-choice-next>다음</button></div>`:''}
         ${evd.combat?`<button class="event-detail-toggle" type="button" data-event-detail aria-expanded="false">상세 정보</button>`:''}`,
       wireFinal:(dock)=>{
+        if(evd.nameInput){wireOpeningNameAnswer(dock,curStory,evd);return;}
         const prepare=dock.querySelector('[data-finale-prepare]');
         if(prepare) prepare.onclick=()=>{ if(G.prepareFinale()) closeEvent(); };
         const later=dock.querySelector('[data-camp-later]');
@@ -4281,6 +4573,7 @@ function dialogueSide(turn,lanes,opt={}){
       return;
     }
     const out=savedResolution.out, chips=storyOutcomeChips(savedResolution.chips,quiet);
+    AMBI.result(curEv,choice,savedResolution.applied);
     const combatHud=curEv.combat?combatHudHtml(curEv,{state:savedResolution.combatState,
       result:true,ended:!!out.fx?.combatEnd,combatChoices:curCombatChoices}):'';
     if(savedResolution.applied&&curEv.combat) SND.combat('confirm');
@@ -4354,6 +4647,7 @@ function dialogueSide(turn,lanes,opt={}){
     } else {
       const actionLabel=out.fx?.endJourney?'여정 마무리':curEv&&curEv.campConversation?'야영지로 돌아가기':curEv&&curEv.openingFinal
         ?'길로 나가기'
+        :curEv&&curEv.nameInput?'이어서'
         :curEv&&curEv.openingStep
         ?'다음 장면'
         :chained
@@ -4365,6 +4659,12 @@ function dialogueSide(turn,lanes,opt={}){
     // Keep the event shell, scene and conversation mounted across the choice.
     // Only the outcome scene/briefing and subsequent entries change.
     const head=sheet.querySelector('.event-head h2');
+    const orientation=sheet.querySelector('.event-orientation');
+    if(orientation?.dataset.currentOrientation){
+      const minute=Math.floor(Number(S.min)||0);
+      const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
+      orientation.dataset.currentOrientation=orientation.dataset.currentOrientation.replace(/\d{2}:\d{2}$/,clock);
+    }
     sheet.querySelector('[data-road-later]')?.remove();
     if(head) head.textContent=visibleReportTitle;
     if(priorFrame&&outcomeSceneKeys[0]!==priorScene) priorFrame.outerHTML=scene;
@@ -4435,6 +4735,9 @@ function dialogueSide(turn,lanes,opt={}){
     delete $('#ev-sheet').dataset.missionLayout;
     delete $('#ev-sheet').dataset.readerLayout;
     delete $('#ev-sheet').dataset.readerSkin;
+    delete $('#ev-sheet').dataset.readerDensity;
+    delete $('#ev-sheet').dataset.narrativeTime;
+    delete $('#ev-sheet').dataset.chapterBoundary;
     if($('#ev-sheet').__pageObserver)$('#ev-sheet').__pageObserver.disconnect();
     delete $('#ev-sheet').__pageObserver;
     curEv=null;
@@ -5745,8 +6048,8 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneKeys=eventSceneKeys({...curEv,locEvent:S.at});
     sheet.classList.remove('companion-profile-mode','comp-perk-reveal-mode','craft-workbench-mode','combat-details-open','story-compact');
     sheet.classList.add('event-mode','passenger-reader');
-    Object.assign(sheet.dataset,{eventKind:'story',storySurface:'talk',eventId:curEv.id,storyOrigin:'',missionLayout:'',readerLayout:'pages',readerSkin:'materials'});
-    sheet.innerHTML=`<div class="event-scroll"><section class="event-field-report"><div class="event-head"><h2>${esc(npc.name)}</h2><button class="event-detail-toggle" type="button" data-local-close aria-label="대화를 마치고 정착지로 돌아가기">닫기</button></div><div class="story-reader"></div></section></div><div class="event-choice-dock"></div>`;
+    Object.assign(sheet.dataset,{eventKind:'story',storySurface:'talk',eventId:curEv.id,storyOrigin:'',missionLayout:'',readerLayout:'pages',readerSkin:'materials',readerDensity:'quiet'});
+    sheet.innerHTML=`<div class="event-scroll"><section class="event-field-report"><div class="event-head"><div><p class="event-orientation" data-current-orientation="지금 · ${esc(npc.name)}">지금 · ${esc(npc.name)}</p><h2>${esc(npc.name)}</h2></div><button class="event-detail-toggle" type="button" data-local-close aria-label="대화를 마치고 정착지로 돌아가기">닫기</button></div><div class="story-reader"></div></section></div><div class="event-choice-dock"></div>`;
     sheet.querySelector('.event-scroll').insertAdjacentHTML('afterbegin',sceneFrameHtml(sceneKeys,npc.name+'와 대화'));
     const state=curStory={phase:'event',eventId:curEv.id,turns,index:0,readerMode:'current',localHistory:opt.history||[],
       sceneKeys,sceneAlt:npc.name+'와 대화',sceneStart:0,knownSpeaker:true,offroad:opt.offroad,draft:'',
@@ -6248,23 +6551,8 @@ function dialogueSide(turn,lanes,opt={}){
       S.vanName=next; G.save(); UI.toast(`🚐 차 이름을 ${next}(으)로 바꿨다`); renderStatus();
     };
     const saveExport=b.querySelector('[data-save-export]');
-    if(saveExport) saveExport.onclick=()=>{
-      const blob=new Blob([G.exportSave()],{type:'application/json'});
-      const url=URL.createObjectURL(blob), a=document.createElement('a');
-      a.href=url; a.download=`seoul-400km-day-${S.day}-backup.json`; a.click();
-      setTimeout(()=>URL.revokeObjectURL(url),1000);
-      UI.toast('💾 현재 여정을 백업 파일로 만들었다');
-    };
-    const saveImport=b.querySelector('[data-save-import]');
-    if(saveImport) saveImport.onchange=()=>{
-      const file=saveImport.files&&saveImport.files[0]; if(!file) return;
-      if(!window.confirm('이 백업으로 현재 여정을 교체할까요? 현재 저장은 사라집니다.')){ saveImport.value=''; return; }
-      file.text().then(raw=>{
-        const result=G.importSave(raw);
-        if(!result.ok){ UI.toast(`⚠ ${result.why}`); return; }
-        UI.toast('💾 백업을 복원했다'); renderAll(); renderStatus();
-      }).catch(()=>UI.toast('⚠ 백업 파일을 읽지 못했다'));
-    };
+    if(saveExport) saveExport.onclick=exportCurrentSave;
+    wireSaveImport(b.querySelector('[data-save-import]'));
     const qaExport=b.querySelector('[data-qa-export]');
     if(qaExport) qaExport.onclick=async()=>{
       G.save();
@@ -6555,7 +6843,7 @@ function dialogueSide(turn,lanes,opt={}){
     return {ok:true,screen:view.screen,eventId:view.eventId||null,story:view.story||null};
   }
 
-  return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding,
+  return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding, setLifecyclePaused,
     showNodeCard, showGraphNote, onDepart, onArrive, showStl, showCraft, playRadio, playChat, showSeoul,
     storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech, clearToasts,
     qaViewState,restoreQaView,openQuestAction};

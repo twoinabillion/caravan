@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-10-18T01:15:46.683357+00:00",
+  "status": "stopped",
+  "account": {
+    "tier": "free",
+    "status": "free",
+    "character_count": 2420,
+    "character_limit": 10000,
+    "max_credit_limit_extension": 0,
+    "remaining_credits": 7580
+  },
+  "voice_candidates": [],
+  "saved_voices": [
+    {
+      "voice_id": "TKUGUd5JWceSqSPVPjha",
+      "name": "DaeBuHo - Calm & Friendly"
+    },
+    {
+      "voice_id": "aIyfYczcAioGTbdEA7R1",
+      "name": "Xunzi"
+    },
+    {
+      "voice_id": "Ctl3Pjfp5c2p3ThSA8Hn",
+      "name": "Borungza Hwang"
+    },
+    {
+      "voice_id": "G5YHweKa57Ovyfx6HX4u",
+      "name": "DJ radio"
+    },
+    {
+      "voice_id": "zkLGxciwcstl7XnjBedI",
+      "name": "아빠"
+    },
+    {
+      "voice_id": "v32bGEVPmz0if4lqtelL",
+      "name": "엄마"
+    }
+  ],
+  "source_sha256": "1a72f7c2f90f23a219f86c3a4cffb14a338489ccc5b5e4945a15159b744aec8e",
+  "planned_clips": 12,
+  "game_wired": false,
+  "key_saved": false,
+  "reason": "No unambiguous existing 천리안 voice. Select its saved voice ID; no replacement voice created."
+}

@@ -1,0 +1,25 @@
+{
+  "createdAt": "2026-10-16",
+  "generator": "builtin image_gen.imagegen",
+  "source": "/Users/sang/.codex/generated_images/01a04658-25c4-7233-a788-566416fa086d/exec-02dcf81d-4ba6-4e93-9564-61774f7ae7c4.png",
+  "master": "master.png",
+  "delivery": "assets/scenes/opening-bus-family-v2.webp",
+  "deliverySize": [
+    1024,
+    576
+  ],
+  "normalization": "Proportional resize/center16:9crop, sRGB WebP90; master retained",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "assets/portraits/intro_child.png"
+  ],
+  "use": "intro-dock-aid family context and all opening_bus_repair outcomes. Neutral to selected repair method. Hose inspection uses the separate approved heater detail.",
+  "visionReview": "Master and1024x576 delivery inspected: exactly three family members, older sister school-age/taller than eight-year-old Doyun, Hajin beside her in worn Korean bus. Separate360x728 passenger-reader/pages/materials CSS component crop inspected with full faces/hands visible. Actual saved-event play/crop unverified.",
+  "activePreviewGallery": "4319/__live/assets HTTP200 contains filename before source wiring",
+  "status": "superseded-not-wired",
+  "supersededBy": "assets/masters/opening-bus-family-v3/provenance.json",
+  "reason": "Late canonical review caught omitted Hajin portrait and tied hair; finalv3 references both unaltered official portraits. Original master/delivery retained for provenance, not embedded."
+}
