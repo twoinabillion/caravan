@@ -1,0 +1,85 @@
+{
+  "event": {
+    "id": "story_bridge_departure_echo",
+    "scene": "story-bridge-departure-echo-v1",
+    "type": "사건",
+    "w": 1,
+    "once": true,
+    "noPool": true,
+    "title": "부산 뒤에 남은 방송",
+    "text": "꺼 둔 줄 알았던 수신기가 혼자 켜졌다. 잡음 사이로 부산 항만 방송이 들렸다. 내일 새벽 동부 노선 이송자 명단. 도윤 가족 아래로 처음 보는 이름이 열일곱 줄 더 내려갔다. 부산을 빠져나오면 끝날 거라고 믿은 사람은 없었다. 그래도 다음 종이가 벌써 나올 줄은 몰랐다.",
+    "choices": [
+      {
+        "label": "발신 시각과 주파수를 적어 둔다",
+        "out": [
+          {
+            "p": 1,
+            "text": "명단보다 먼저 눈에 들어온 건 시각이었다. 새벽 3시 12분. 발신 시각은 정확했지만 승인자의 이름은 끝내 나오지 않았다. 주파수 옆에 시각을 옮겨 적었다.",
+            "fx": {
+              "time": 15,
+              "flag": "bridge_departure_echo"
+            }
+          }
+        ]
+      },
+      {
+        "label": "방송이 끝날 때까지 이름을 받아 적는다",
+        "out": [
+          {
+            "p": 1,
+            "text": "마지막 이름 뒤에 승인 안내가 붙었다. 누구의 승인인지는 말하지 않았다. 연필 끝이 몇 번이나 종이를 뚫었다.",
+            "fx": {
+              "fatigue": 1,
+              "flag": "bridge_departure_echo"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "legacy": [
+    {
+      "i": 0,
+      "file": "choice0-old-paid.json",
+      "elapsed": 15,
+      "fatigueDelta": 0.6749999999999972,
+      "text": "명단보다 먼저 눈에 들어온 건 시각이었다. 새벽 3시 12분. 발신 시각은 정확했지만 승인자의 이름은 끝내 나오지 않았다. 주파수 옆에 시각을 옮겨 적었다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "명단보다 먼저 눈에 들어온 건 시각이었다. 새벽 3시 12분. 발신 시각은 정확했지만 승인자의 이름은 끝내 나오지 않았다. 주파수 옆에 시각을 옮겨 적었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "명단보다 먼저 눈에 들어온 건 시각이었다. 새벽 3시 12분. 발신 시각은 정확했지만 승인자의 이름은 끝내 나오지 않았다. 주파수 옆에 시각을 옮겨 적었다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "i": 1,
+      "file": "choice1-old-paid.json",
+      "elapsed": 0,
+      "fatigueDelta": 1,
+      "text": "마지막 이름 뒤에 승인 안내가 붙었다. 누구의 승인인지는 말하지 않았다. 연필 끝이 몇 번이나 종이를 뚫었다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "마지막 이름 뒤에 승인 안내가 붙었다. 누구의 승인인지는 말하지 않았다. 연필 끝이 몇 번이나 종이를 뚫었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "마지막 이름 뒤에 승인 안내가 붙었다. 누구의 승인인지는 말하지 않았다. 연필 끝이 몇 번이나 종이를 뚫었다.",
+          "displayName": null
+        }
+      ]
+    }
+  ],
+  "fixtureOnly": true
+}

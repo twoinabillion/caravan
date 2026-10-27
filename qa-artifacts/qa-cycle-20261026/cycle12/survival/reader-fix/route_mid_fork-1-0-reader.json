@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "narration",
+    "text": "무주 쪽 선에 동그라미를 쳤다. 전주와 논산, 대전을 거쳐 청주까지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "조금 늦더라도 사람 있는 길로 간다. 남산에 가져갈 건 부품만이 아니니까."
+  },
+  {
+    "kind": "narration",
+    "text": "빈 물통과 묶음끈을 짐 맨 위로 옮겼다. 장터길에서는 빈자리도 쓸모가 있다."
+  }
+]

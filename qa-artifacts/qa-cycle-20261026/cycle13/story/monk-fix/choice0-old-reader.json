@@ -1,0 +1,66 @@
+[
+  {
+    "kind": "narration",
+    "text": "고개 하나를 같이 넘었다. 상자 속 목판은 생각보다 무겁고, 생각보다 향이 좋았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "이게 몇 년 됐다고요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "팔백입니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "…팔백."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "예. 세는 사람마다 조금씩 다르게 말하긴 합니다만."
+  },
+  {
+    "kind": "narration",
+    "text": "스님은 수레 손잡이를 고쳐 잡았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "팔백 년 전에도 난리 통에 새긴 겁니다."
+  },
+  {
+    "kind": "narration",
+    "text": "스님이 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "난리 통에도 이걸 옮긴 사람이 있었답니다. 오늘은 저와 여러분 차례고요."
+  },
+  {
+    "kind": "narration",
+    "text": "스님은 차 옆의 일지 주머니를 보고 웃었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "오늘 일도 적어 두세요. 수레가 생각보다 훨씬 무거웠다고."
+  }
+]

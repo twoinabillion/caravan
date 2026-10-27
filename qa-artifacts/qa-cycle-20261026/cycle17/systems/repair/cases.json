@@ -1,0 +1,8 @@
+[
+ {"id":"comp_cloudgame","entry":["party_first","me","party_first","party_second","party_first","me"],"out":[[],["party_first","me","party_first"]],"natural":true},
+ {"id":"comp_whatif","entry":["party_first","me","party_first"],"out":[["party_first","party_second","party_first"],["party_first","me","party_first"]],"natural":false},
+ {"id":"comp_brake","entry":[],"out":[["me","party_first"],[]],"natural":false},
+ {"id":"van_receipt","entry":[],"out":[["me"]],"natural":false},
+ {"id":"comp_cookoff","entry":["party_first"],"out":[[],["me"]],"natural":false},
+ {"id":"comp_shadow","entry":["party_first"],"out":[[]],"natural":false}
+]

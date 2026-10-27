@@ -1,0 +1,182 @@
+{
+  "cycle": 18,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 278002,
+  "evidenceClass": "Fresh finite public-action engine journey and extracted production UI reader; isolated storage. Not browser/audio QA.",
+  "engineSourceHash": "dcd096880f7d50fa359ee2e7b17e92a3745877e6b9582ba250648d7495d46c87",
+  "sourceUnchangedAcrossJourney": true,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "policyStops": 0,
+  "productionChangesDuringJourney": false,
+  "cohortExcluded": false,
+  "status": "ended",
+  "error": null,
+  "result": {
+    "ending": "story_done",
+    "method": "core_transfer",
+    "storyDone": true,
+    "session1End": true,
+    "day": 13,
+    "km": 913,
+    "actualCompanions": [
+      "kangwoo",
+      "eunsu",
+      "leo"
+    ],
+    "bori": true
+  },
+  "totals": {
+    "choices": 89,
+    "trace": 517,
+    "otherPublicActionsExcludingChoicesReloadInitPerk": 244,
+    "earnedPerkSelections": 5,
+    "otherExecutedPublicActionsIncludingPerk": 249,
+    "actionKinds": {
+      "new-game": 1,
+      "unpaid-entry-reload": 89,
+      "choice": 89,
+      "paid-result-reload": 89,
+      "explore": 30,
+      "travel": 24,
+      "drive": 49,
+      "camp-meal": 11,
+      "camp": 12,
+      "trade-bundle": 5,
+      "trade": 56,
+      "work": 10,
+      "meet-recruit": 3,
+      "recruit-step": 6,
+      "board-open": 5,
+      "npc-rumor": 11,
+      "accept-companion": 3,
+      "earned-perk": 5,
+      "accept-quest": 2,
+      "sell-demand": 1,
+      "buy-upgrade": 5,
+      "turnin-quest": 1,
+      "craft": 5,
+      "seoul-enter": 5
+    },
+    "reload": {
+      "entry": 89,
+      "paid": 89,
+      "failed": 0,
+      "reapplied": 0,
+      "readerEqual": 89,
+      "skippedBeforeFirstRadio": 0,
+      "terminalSeparateExcluded": 1
+    },
+    "rejectedApiCalls": 0,
+    "disabledChoicesExecuted": 0,
+    "novelPairs": 1,
+    "noveltyBaseline": "systems1–17 exact event+selected label; excluded branches omitted",
+    "novelChoicePairs": [
+      {
+        "trace": 81,
+        "event": "rq_kangwoo_task",
+        "label": "한동안 후임의 지시만 따른다"
+      }
+    ]
+  },
+  "features": {
+    "upgrades": [
+      "bench",
+      "awning",
+      "stove",
+      "sidebox",
+      "armory"
+    ],
+    "crafts": [
+      "pipe",
+      "xbow",
+      "bolt",
+      "molotov",
+      "ammo"
+    ],
+    "craftCount": 5,
+    "radioFixed": false,
+    "radioBroadcasts": 0,
+    "actualRecruitments": [
+      "kangwoo",
+      "eunsu",
+      "leo"
+    ],
+    "sideQuestAccept": 2,
+    "sideQuestTurnin": 1,
+    "sideQuestExpired": 1,
+    "boardViews": 5,
+    "npcCalls": 11,
+    "publicWork": 10,
+    "campMeals": 11,
+    "campRepair": 0,
+    "trades": 56,
+    "tradeBundles": 5,
+    "actualSale": 1,
+    "medicalTreatment": 0
+  },
+  "review": {
+    "completed": true,
+    "choiceEntries": 89,
+    "exactPriorContexts": 79,
+    "newContexts": 10,
+    "newParagraphs": 14,
+    "actualReaderTurns": 715,
+    "exactPriorTurns": 611,
+    "newTurnsRead": 104,
+    "changedReaderEntries": 19,
+    "roadSpeechOccurrences": 55,
+    "roadSpeechUnique": 38,
+    "chatGroups": 11,
+    "chatLines": 41,
+    "sameDayChatDuplicates": 0,
+    "npcShownGroups": 22,
+    "work": 10,
+    "notes": 117,
+    "scenes": 89,
+    "browserCropVerified": false,
+    "naturalConfirmedFindings": 0,
+    "derivedBoundaryConfirmed": 0,
+    "unresolvedCandidates": 0
+  },
+  "normalUnpaidUiExports": [
+    "player02/attempt01/entry-143-gp_note2-export.json",
+    "player02/attempt01/entry-375-up_bench_first-export.json"
+  ],
+  "separateExcludedEvidence": {
+    "visualEntryReplay": {
+      "cohortExcluded": true,
+      "evidence": "Normal finite source18 fresh partial, exact17 policy/seed, no event/state/saved-view modification",
+      "originalPolicy": "cycle17/systems/policy.cjs",
+      "seed": 277002,
+      "status": "partial-targets-reached",
+      "choices": 72,
+      "trace": 413,
+      "sourceHash": "dcd096880f7d50fa359ee2e7b17e92a3745877e6b9582ba250648d7495d46c87",
+      "source40EndUnchanged": true,
+      "entries": [
+        {
+          "id": "comp_cloudgame",
+          "file": "player02/attempt01/entry-413-comp_cloudgame-export.json",
+          "sceneKeys": [
+            "companion-window-clouds-v1"
+          ]
+        }
+      ]
+    },
+    "visualReplayReview": "browser-visual-entry-replay/review-differences.json;72 contexts/reader identical to prior17 or primary18, new cloud entry6speaker lines read",
+    "terminalReload": "terminal-reload.json"
+  },
+  "gaps": [
+    "차량 라디오수리/진공관/자연방송 없음",
+    "직접치료/윈치구매는미발생; 레오구조는두번째로프선택",
+    "지도이벤트자연미발생; 구름은별도excludedpartial에서만새entry확보",
+    "전체그림/crop/음성실제UI는root검수"
+  ],
+  "findingsFile": "findings.json"
+}

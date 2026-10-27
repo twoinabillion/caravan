@@ -1,0 +1,40 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "매일 와. 약은 일주일치를 사놓고. 왜 오냐면— 얘기할 데가 없어서 와. 나는 그걸 알면서 혈압약 얘기를 30분씩 해줬고."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…혈압약 얘기가 30분이나 나와요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "나오지. 짜게 먹지 마라부터 시작하면."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 웃었다가 접었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "그날 이후로 못 봤어. 피난 갔는지, 어떻게 됐는지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "북쪽 가다 보면 만날지도 모르지. 세상이 좁아졌으니까."
+  },
+  {
+    "kind": "narration",
+    "text": "창밖을 오래 보다가 덧붙였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…그런 계산으로 따라나선 것도 있어, 사실."
+  }
+]

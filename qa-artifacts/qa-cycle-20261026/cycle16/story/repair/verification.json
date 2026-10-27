@@ -1,0 +1,14 @@
+{
+  "productionStoryEditsComplete": true,
+  "contractIntegrationComplete": true,
+  "integrationPassed": 109,
+  "integrationFailed": 0,
+  "lintErrors": 0,
+  "sourceFilesAndTests": {
+    "src/03-data.js": "06d6cc5ab9d2a2e2a11271f4ab5cead9d0ec82de8633bdad9552e106e872fd74",
+    "tools/test-dialogue-register.cjs": "57342258dfaa1da8fa8b207f966fd8e6c04c96fa3365319089025d95d4697a5e",
+    "tools/story-review-contract.cjs": "b3a1773effd309363c57f28bef71650b5197f5dfdc8ba958004030296d44c9f5",
+    "tests/test_qa_cycle16_story_readers.cjs": "dd4040aad1c6fa51c69c9f954adc7f9c675ca07343e318c579f20b11284b747e"
+  },
+  "note": "Shared source hash is a checkpoint, not cycle17 freeze; root image mapping may still be pending."
+}

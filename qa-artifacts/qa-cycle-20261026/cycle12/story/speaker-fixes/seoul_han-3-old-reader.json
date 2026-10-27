@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "narration",
+    "text": "강우가 차에서 내려, 표식들이 매달린 난간으로 걸어갔다. 군번줄 두 개를 꺼내 한참 쥐고 있었다."
+  },
+  {
+    "kind": "narration",
+    "text": "그러다 도로 목에 걸었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…여기가 아니다. 부모님 손에 쥐여드릴 때까진 내가 든다."
+  },
+  {
+    "kind": "narration",
+    "text": "대신 리본 하나를 난간에 묶고, 부동자세로 이름을 불렀다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_refugee",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "박일병. 김성재. …다리 건넌다. 같이 간다."
+  },
+  {
+    "kind": "narration",
+    "text": "바람이 표식들을 한꺼번에 흔들었다. 강우는 그걸 대답으로 들은 얼굴이었다."
+  }
+]

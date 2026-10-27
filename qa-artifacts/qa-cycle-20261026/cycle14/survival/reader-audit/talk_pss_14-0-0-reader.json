@@ -1,0 +1,40 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "신참 때, 용량을 잘못 짚을 뻔했어. 선배가 잡아줬고. 환자는 몰라. 아무 일도 없었으니까."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…아무 일도 없었으면 실수가 아니잖아요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "그렇게 넘기면 다음번엔 진짜가 되지."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 약상자를 톡톡 쳤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "그날 밤 안 자고 정한 게 두 번 세는 버릇이야. 30년째 두 번 세."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "안 지겨우세요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "지겹지. 지겨운 게 좋은 거야."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 또 세기 시작했다. 하나, 둘, 셋… 나는 그 손만 봤다."
+  }
+]

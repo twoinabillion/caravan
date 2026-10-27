@@ -1,0 +1,13 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "아이고 무뚝뚝한 거 보소. 서울 가서 고생 좀 해봐라!"
+  },
+  {
+    "kind": "narration",
+    "text": "덕담인지 저주인지 모를 배웅을 받았다."
+  }
+]

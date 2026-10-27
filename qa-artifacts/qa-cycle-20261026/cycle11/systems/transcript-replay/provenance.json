@@ -1,0 +1,9 @@
+{
+  "purpose": "Capture omitted short UI.speak prose only",
+  "originalTraceRecords": 461,
+  "replayTraceRecords": 461,
+  "allNonAmbientTraceFieldsIdentical": true,
+  "extraRoadSpeechRecords": 45,
+  "uniqueRoadSpeech": 26,
+  "excludedFromJourneyCounts": true
+}

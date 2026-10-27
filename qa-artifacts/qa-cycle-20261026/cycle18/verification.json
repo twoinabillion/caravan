@@ -1,0 +1,73 @@
+{
+  "recordedAt": "2026-10-26T07:27:11.698051+00:00",
+  "sourceFreeze": "cycle18/frozen-source.json",
+  "engineHash": "dcd096880f7d50fa359ee2e7b17e92a3745877e6b9582ba250648d7495d46c87",
+  "sourceAtRecordTime": {
+    "equal": true,
+    "changedSinceFreeze": []
+  },
+  "tests": {
+    "command": "npm run test:source",
+    "pass": 2115,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "test-source-after-contract.log",
+    "initial": {
+      "pass": 2114,
+      "fail": 1,
+      "log": "test-source.log",
+      "reason": "Historical wx_bigwash contract expected no speaker metadata. Exact new entry/outcome assertions and only those fields projected for historical mechanical comparison. No production source changed."
+    }
+  },
+  "build": {
+    "exitCode": 0,
+    "log": "build-after-scene-contract.log",
+    "htmlBytes": 108866528,
+    "htmlSha256": "45f7027fb6f0f3a88e5a50f5f076f41b895c0b1f431ee8e1f1f7361194392aed",
+    "initial": {
+      "exitCode": 1,
+      "log": "build.log",
+      "reason": "Family key validator only admitted event- names; registered companion-cabin-detail-v1 final companion fallback is now narrowly validated. Added known companion/flag validation; no game source changed."
+    }
+  },
+  "quick": {
+    "exitCode": 0,
+    "log": "verify-quick.log",
+    "sceneClassAssets": 626,
+    "portraits": 74,
+    "mainCanonicalPortraits": 7
+  },
+  "journeys": {
+    "freshStarts": 3,
+    "mainEndings": 3,
+    "methods": [
+      "core_sleep",
+      "core_transfer",
+      "core_transfer"
+    ],
+    "choices": 337,
+    "traceRecords": 1832,
+    "entryReloads": 337,
+    "paidReloads": 337,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "browser": {
+    "source": "18 frozen",
+    "origin": "http://127.0.0.1:4319/",
+    "gameFrameWidthCssPx": 480,
+    "resourceMode": "infinite preview; separate finite engine journeys",
+    "flow": "all4newassets entry-choice-result-return; actualcabinresultreloadpassed",
+    "provenance": "cycle17/visual/provenance.json",
+    "originalQaBackupRestored": true,
+    "responsive360": "Unverified; priorviewporttimeout/filebrowsersecurityblock preserved",
+    "finding": "Parked companion next-talk hint unnecessarily says stop first; queued19clarity repair"
+  },
+  "status": "18technicalchecks and all3journey end/reviews complete; further driving copy, letter particle and parked hint findings queued19. Not clean completion.",
+  "review": {
+    "survival": "All136entry/result+136choicecost/hints+122notes+182speech+10NPC; end40match",
+    "story": "All112entry/result+120notes+109speech+30NPC; end40match",
+    "systems": "All89choice/readers+117notes+55road/11chatgroups+22NPCgroups/10jobs; end40match",
+    "allThreeRuntimeAndReviewEnd40Match": true
+  }
+}

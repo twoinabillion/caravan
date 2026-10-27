@@ -1,0 +1,92 @@
+[
+  {
+    "id": "talk_jy_18",
+    "entry": [
+      "jaeyi",
+      "jaeyi",
+      "jaeyi"
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          "jaeyi",
+          "jaeyi",
+          "me",
+          "jaeyi",
+          "jaeyi",
+          "jaeyi"
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          "jaeyi",
+          "me",
+          "jaeyi"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_jy_03",
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          "jaeyi",
+          "jaeyi",
+          "jaeyi"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_es_1",
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          "eunsu",
+          "me",
+          "eunsu",
+          "eunsu"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "seoul_ruins",
+    "choices": [
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          "eunsu",
+          "me",
+          "eunsu",
+          "eunsu",
+          "me",
+          "eunsu",
+          "eunsu"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_leo_3",
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          "leo"
+        ]
+      }
+    ]
+  }
+]

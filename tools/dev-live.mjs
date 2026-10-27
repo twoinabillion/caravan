@@ -154,11 +154,11 @@ function gameShell(){
       if(!saved)return;
       const view=JSON.parse(saved),doc=game.contentDocument;
       if(!doc)return;
-      let label='';
-      if(view.open?.includes('ovl-status'))label=view.surface==='goal'?'목표':'가방';
-      else if(view.open?.includes('ovl-map'))label='지도';
-      else if(view.open?.includes('ovl-menu'))label='메뉴';
-      const button=label?[...doc.querySelectorAll('button')].find(node=>node.textContent.replace(/\s+/g,'').includes(label)):null;
+      let controlId='';
+      if(view.open?.includes('ovl-status'))controlId=view.surface==='goal'?'dk-objectives':'dk-status';
+      else if(view.open?.includes('ovl-map'))controlId='minimap';
+      else if(view.open?.includes('ovl-menu'))controlId='dk-menu';
+      const button=controlId?doc.getElementById(controlId):null;
       if(button)button.click();
       setTimeout(()=>{
         const status=doc.querySelector('#st-body'),bag=doc.querySelector('.bag-live-content');

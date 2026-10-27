@@ -12,7 +12,7 @@ function setup(){
    routeForecast:()=>({km:20,minutes:35,fuel:3,readiness:'출발 가능'}),durationLabel:n=>n+'분'}});
  vm.runInContext(fs.readFileSync('src/07h-story-pages.js','utf8'),ctx);
  for(const name of ['safeHtml','fmt','choiceActionLabel','storyResourceIcon','storyExpenseText','storyExpenseHtml','eventChoiceData',
-  'storyElapsedChip','storyResourceChange','storyResourceHtml','storyNextStepHtml','storyOutcomeSummaryHtml','storyResultPageTurns','pagedStoryHtml']){
+  'storyElapsedChip','storyFeedbackNumber','storyFeedbackChip','storyResourceChange','storyResourceHtml','storyNextStepHtml','storyOutcomeSummaryHtml','storyResultPageTurns','pagedStoryHtml']){
   const start=source.indexOf('  function '+name+'('),end=source.indexOf('\n  function ',start+4);
   assert(start>=0&&end>start,name);vm.runInContext(source.slice(start,end),ctx);
  }
@@ -79,6 +79,6 @@ test('result and record views agree on resources without losing authored result 
  const before=JSON.stringify(state),rows=c.storyResultPageTurns(state),html=c.pagedStoryHtml(rows);
  assert.equal(rows.filter(r=>r.kind==='resource').length,2);
  assert(rows.filter(r=>r.kind==='resource').every(r=>r.atomic));
- for(const text of ['수리를 마쳤다.','부품','−1','물','+2','차체 -4','이송표를 확인한다.','남겨 둔 기록'])assert(html.includes(text));
+ for(const text of ['수리를 마쳤다.','부품','−1','물','+2','차체 −4','이송표를 확인한다.','남겨 둔 기록'])assert(html.includes(text));
  assert.doesNotMatch(html,/20분 경과/);assert.equal(JSON.stringify(state),before);
 });

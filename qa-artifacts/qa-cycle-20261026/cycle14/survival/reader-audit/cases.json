@@ -1,0 +1,2469 @@
+[
+  {
+    "id": "talk_pss_01",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_02",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_03",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_04",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_05",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_06",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_07",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_08",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_09",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_10",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "record",
+            "who": "record",
+            "name": "박 선생의 처방전",
+            "medium": "paper"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_01",
+    "entry": [],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_02",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "me"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_03",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_04",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_05",
+    "entry": [],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_06",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "me"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_07",
+    "entry": [],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_08",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "me"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_09",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "me"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_10",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_pss_1",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_pss_2",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_pss_3",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_11",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_12",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_13",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "me"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_14",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_15",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_kw_1",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_kw_2",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talkr_kw_3",
+    "entry": [],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_11",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_12",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_13",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_14",
+    "entry": [],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_15",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "me"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_16",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_17",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_18",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_19",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_20",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_21",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_16",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_17",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_18",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": []
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_19",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_20",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talk_kw_21",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "exp_woodshop",
+    "entry": [],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": []
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "thought",
+            "who": "me"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "exp_bowling",
+    "entry": [],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": []
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "thought",
+            "who": "me"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "comp_birthday",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": []
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pair_pss_kw_1",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pair_kw_leo_2",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "leo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "leo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "leo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "han_bridge",
+    "entry": [
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송"
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo"
+      }
+    ],
+    "choices": [
+      {
+        "i": 0,
+        "o": 0,
+        "speakers": []
+      },
+      {
+        "i": 1,
+        "o": 0,
+        "speakers": [
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "who": "kangwoo"
+          }
+        ]
+      }
+    ]
+  }
+]

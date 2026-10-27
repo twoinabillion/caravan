@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-26T11:58:24.702391+00:00",
+  "scope": "Root-authorized26 five time variants only. Old assets preserved; new staged files may be copied; production mapping remains root-owned.",
+  "rows": [
+    {
+      "event": "talk_kw_16",
+      "key": "comp-talk-kangwoo-camp-day-v1",
+      "format": "character",
+      "timeVariant": "day",
+      "references": 5
+    },
+    {
+      "event": "talk_pss_18",
+      "key": "comp-talk-parkss-camp-day-v1",
+      "format": "character",
+      "timeVariant": "day",
+      "references": 5
+    },
+    {
+      "event": "perimeter_first",
+      "key": "combat-walker-watch-night-v1",
+      "format": "action",
+      "timeVariant": "night",
+      "references": 5
+    },
+    {
+      "event": "crisis_drowsy",
+      "key": "event-crisis-exhaustion-night-v1",
+      "format": "detail",
+      "timeVariant": "night",
+      "references": 5
+    },
+    {
+      "event": "settlement_road_echo",
+      "key": "settlement-road-echo-night-v1",
+      "format": "place",
+      "timeVariant": "night",
+      "references": 5
+    }
+  ],
+  "limits": [
+    "day portraits use canonical4+own portrait5 refs, no vehicle exterior",
+    "night edits use original target+canonical4=5 refs",
+    "actual gallery and in-game crop remain pending",
+    "no tests/build/new journey"
+  ]
+}

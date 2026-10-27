@@ -1,0 +1,176 @@
+{
+  "cycle": 1,
+  "agent": "systems",
+  "at": "2026-10-25T17:32:14.715Z",
+  "method": "Informed QA using current source, former audit scripts/policies and finite-resource actual engine VM. No blind-play claim. UI handlers have DOM sinks. Browser runs: 0.",
+  "freshJourney": {
+    "seed": 261002,
+    "attempt": 1,
+    "status": "ended",
+    "ending": "story_done",
+    "method": "core_sleep",
+    "session1End": true,
+    "choices": 68,
+    "traceRecords": 307,
+    "day": 6,
+    "km": 430,
+    "party": [
+      "kangwoo"
+    ],
+    "sourceHash": "54419fafaea6eeff91ba98168ea51990d3856eff8b5c4043e295f307a8d94cdb",
+    "actions": {
+      "new-game": 1,
+      "unpaid-entry-reload": 68,
+      "choice": 68,
+      "paid-result-reload": 68,
+      "explore": 17,
+      "travel": 13,
+      "drive": 26,
+      "trade": 10,
+      "work": 6,
+      "board-open": 3,
+      "buy-upgrade": 1,
+      "camp": 5,
+      "meet-recruit": 1,
+      "recruit-step": 2,
+      "camp-talk": 4,
+      "accept-companion": 1,
+      "earned-perk": 2,
+      "craft": 5,
+      "walkfuel": 1,
+      "seoul-enter": 5
+    },
+    "features": {
+      "crafts": [
+        {
+          "id": "pipe",
+          "result": true
+        },
+        {
+          "id": "xbow",
+          "result": true
+        },
+        {
+          "id": "bolt",
+          "result": true
+        },
+        {
+          "id": "molotov",
+          "result": true
+        },
+        {
+          "id": "ammo",
+          "result": true
+        }
+      ],
+      "upgrades": [
+        "bench"
+      ],
+      "normalRecruitment": [
+        "kangwoo"
+      ],
+      "sideMission": "3 public boards read; none accepted/completed",
+      "radio": "tube not acquired, radio not repaired in this fresh journey",
+      "treatment": "driver/doctor joint injury not naturally encountered",
+      "campConversations": {
+        "attempts": 4,
+        "succeeded": 4,
+        "rejected": 0
+      }
+    },
+    "failureAttempts": 0,
+    "actualCompanions": [
+      "kangwoo"
+    ],
+    "reload": {
+      "entry": 68,
+      "paidResult": 68,
+      "allLoaded": true,
+      "paidReapplied": 0
+    }
+  },
+  "transcriptReview": {
+    "file": "transcript01.json",
+    "entries": 68,
+    "scope": "All 68 encountered opening/event/choice/result texts read, with roster, pre/post time and order. No additional confirmed prose fault in this route.",
+    "notes": [
+      "Kangwoo guest conversation occurs during the active recruitment quest before crew join; valid guest presence.",
+      "Seoul night/final return uses authored ending time rather than a playable follow-on clock; not misreported as a time bug.",
+      "A pre-existing inactive-radio reception ambiguity remains a low-priority narrative-design issue, not proof of duplicate physical radio."
+    ]
+  },
+  "fixes": [
+    {
+      "id": "SYS01",
+      "severity": "P1",
+      "problem": "Lethal crafting reopened modal and allowed further spending/item creation after ending",
+      "rootCause": "G.craft returned true after fatal advance; UI reopened on any true; canCraft lacked ended gate",
+      "files": [
+        "src/04e-engine-world.js",
+        "src/07-ui.js"
+      ],
+      "fix": "Reject ended craft / showCraft, suppress completion UI and sound after fatal advance",
+      "evidence": "preliminary-repros.json terminal-crafting",
+      "verified": "actual engine, production showCraft handler, ending/modal sinks; no browser"
+    },
+    {
+      "id": "SYS02",
+      "severity": "P2",
+      "problem": "Armory payment was discounted but eligibility and visible recipe cost used list price",
+      "rootCause": "Three independent c.need consumers",
+      "files": [
+        "src/04e-engine-world.js",
+        "src/07-ui.js"
+      ],
+      "fix": "G.craftQuote owns cost and time for eligibility, payment and UI; all five recipes exact threshold/shortage/reload checked"
+    },
+    {
+      "id": "SYS03",
+      "severity": "P2",
+      "problem": "Driver treatment healed Kangwoo with a longer injury",
+      "rootCause": "Event specified healInjury latest, which chooses longest injury",
+      "files": [
+        "src/03-data.js"
+      ],
+      "fix": "Explicit driver target; existing paid receipts unchanged",
+      "contractOwner": "root integrated exact driver-to-legacy-latest projection"
+    },
+    {
+      "id": "SYS04",
+      "severity": "P2",
+      "problem": "Two-o-clock live radio announcement selected at 19:30 and midnight",
+      "rootCause": "Only broad night gate",
+      "files": [
+        "src/03-data.js",
+        "src/04e-engine-world.js"
+      ],
+      "fix": "Keep recorded voice/text, restrict new selection to minuteWindow [120,180)"
+    }
+  ],
+  "verification": {
+    "before": "tests-before.tap: 4 expected regressions fail, 2 controls pass",
+    "afterInitial": "tests-after01.tap preserved: 4 pass, 2 harness expectation mismatches (loader fills zero inventory keys; patient chip names player, not generic 운전자)",
+    "after": "tests-after02.tap: 17/17 including 6 systems + 11 existing event-handoff tests",
+    "radio": "radio-resume-after.json: 12 checks, 20 records; prior normal tube-acquisition save resumed, real repair and travel radio dispatcher; time/knowledge boundary fixtures separately labelled",
+    "sideQuests": "sidequest-resume-after.json:21 checks,46 records; prior normal Daegu save 2 parts handed in for24 scrap with reload and next purchase; remaining cases explicit fixtures",
+    "fullSuite": "root responsible; not claimed here"
+  },
+  "remaining": [
+    "Natural Jaeyi/Minji acquisition and 3-person preservation ending reserved for cycle2 seed262002.",
+    "Radio fresh acquisition and long travel/return side-mission completion not demonstrated in cycle1.",
+    "Actual browser/device layout, input, voice and save-refresh UI not tested by this agent.",
+    "No source changes to unconfirmed stale-overdue quest defense or fuel-reserve explanatory copy."
+  ],
+  "sourceChanges": [
+    "src/04e-engine-world.js: craftQuote/canCraft/craft/pickRadio only",
+    "src/07-ui.js: showCraft only",
+    "src/03-data.js: radio_dj_open and initiative_parkss_check only",
+    "tests/test_qa_cycle_systems.cjs new"
+  ],
+  "priorSaveReuse": [
+    "qa-artifacts/expedition-thirty-20261021/player30/attempt01/player30-save.json for crafting boundary harness; not counted as fresh acquisition",
+    "qa-artifacts/ten-persona-round4-20261020/player09/attempt02/player09-save.json for normal radio resume",
+    "qa-artifacts/expedition-thirty-20261021/player06/attempt02/player06-save.json for normal procurement resume"
+  ],
+  "followup": "Cycle2 completed normal Minji/Kangwoo/Jaeyi preservation ending and added sleep + terminal tool guard regression bundles. See ../../cycle2/systems/report.json; cycle1 source/route counts remain historical."
+}

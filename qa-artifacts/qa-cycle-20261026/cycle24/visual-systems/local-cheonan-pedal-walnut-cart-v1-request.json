@@ -1,0 +1,86 @@
+{
+  "key": "local-cheonan-pedal-walnut-cart-v1",
+  "event": "lc_cheonan_walnut",
+  "format": "character",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nOne new cohesive 16:9 narrative scene, native PNG master at least1536x864. The four canonical references are style/world references only: do not copy their collage panels, title, characters, Dalguji, skyline, Namsan tower or signs into this scene. Weathered ordinary Korean materials, restrained contrast and subtle grain. No dreamy softness, beauty filter, glowy haze, glossy retouching or painterly pastel drift. Important subject inside central80% width/82%height, readable at mobile480 and360px. Avoid strong directional sunlight, sunrise/sunset colors or an explicit starry sky; close framing and diffuse local illumination keep the picture usable across the event time window. No captions, legible lettering or logos.\n\nA single Korean young adult man operates a homemade pedal-driven walnut-cake street-food cart at a national-road shoulder near Cheonan. Use the fifth attached passer_refugee role portrait as the actual anonymous speaker appearance reference: dark unstyled hair, tired East Asian face, worn charcoal jacket; not any named Caravan companion. One person only, no player, customers, helpers, crowds, dog or vehicles. Show the man seated or braced beside the cart, his sturdy legs visibly driving bicycle-style pedals and a believable chain linkage to a small cast-iron walnut-shaped baking mold machine on the cart. Hands steady the apparatus naturally. The cart has two large pushcart wheels, a compact stove below the molds with a little restrained warm heat and a thin wisp of smoke/steam. Emphasize the readable pedal-to-machine relationship, not a generic merchandise stall. No bag exchange, offered reward, coins, opened caches, canned-goods trade blanket or cooking results handed to anyone. Close eye-level35–50mm film still: person and machine in central safe area, face large enough to read, all legs/pedals not cropped. Weathered guardrail and dark roadside vegetation softly behind; crop the sky out, no sun beam or time-of-day landmark.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "/Users/sang/caravan/assets/portraits/passer_refugee.png"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    },
+    {
+      "path": "assets/portraits/passer_refugee.png",
+      "sha256": "0643713f53879819c440439597d3e163282ec7ecc789e2ade139c0d64dac36f5"
+    }
+  ],
+  "promptSha256": "945475708da5b5db756e7b28f86fd3a8359a29b52572a32c06d34db8119d9628",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../systems/candidate-evidence.json",
+  "entry": "국도변에 연기 오르는 리어카. 호두과자 기계가 돌아간다. 수동 개조판이다.\n\n\"천안이니까요. 여기서 호두과자 없으면 그게 멸망이죠.\"\n\n\"…네? 뭐가 멸망이라고요?\"\n\n\"호두과자가요. 아니, 그— 말이 그렇다는 거고.\" 페달을 밟는 청년의 다리가 우람하다.",
+  "sourceEvent": {
+    "id": "lc_cheonan_walnut",
+    "type": "조우",
+    "w": 12,
+    "once": true,
+    "nearNode": [
+      "cheonan"
+    ],
+    "title": "호두과자의 원조",
+    "text": "국도변에 연기 오르는 리어카. 호두과자 기계가 돌아간다. 수동 개조판이다.\n\n\"천안이니까요. 여기서 호두과자 없으면 그게 멸망이죠.\"\n\n\"…네? 뭐가 멸망이라고요?\"\n\n\"호두과자가요. 아니, 그— 말이 그렇다는 거고.\" 페달을 밟는 청년의 다리가 우람하다.",
+    "choices": [
+      {
+        "label": "한 봉지 산다 (고철 3)",
+        "req": {
+          "scrap": 3
+        },
+        "out": [
+          {
+            "p": 1,
+            "text": "따끈한 호두과자 한 봉지. 팥 대신 고구마 앙금이다. \"팥이 귀해서요. 고구마도 귀한데 팥보단 덜 귀해서.\"\n\n\"천안 지나가는 차엔 무조건 있어야죠. 전통이니까.\"\n\n청년이 다시 페달을 밟기 시작했다. 뒤에 차가 한 대 더 서 있었다. 봉지가 뜨거워서 한동안 무릎에 못 올려놨다.",
+            "fx": {
+              "scrap": -3,
+              "food": 2,
+              "moodAll": 5,
+              "note": {
+                "type": "사건",
+                "title": "페달식 호두과자",
+                "body": "\"천안이니까요.\" 전통은 페달로도 돌아간다."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "label": "인사만 하고 길을 나선다",
+        "out": [
+          {
+            "p": 1,
+            "text": "인사를 하고 달구지로 돌아왔다.",
+            "fx": {}
+          }
+        ]
+      }
+    ]
+  }
+}

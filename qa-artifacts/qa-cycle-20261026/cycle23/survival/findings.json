@@ -1,0 +1,62 @@
+[
+  {
+    "id": "S23-01",
+    "classification": "natural-confirmed-narrative-time",
+    "status": "fixed-for-cycle24-copy-only",
+    "eventId": "ev_eunsu_solo",
+    "choice": 1,
+    "trace": 485,
+    "checkpoint": "qa-artifacts/qa-cycle-20261026/cycle23/survival/attempt01/entry-483-ev_eunsu_solo-export.json",
+    "before": {
+      "day": 11,
+      "min": 390,
+      "at": "jeonju",
+      "party": [
+        "minji",
+        "parkss",
+        "eunsu"
+      ]
+    },
+    "after": {
+      "day": 11,
+      "min": 390
+    },
+    "actual": "물 당번이 누구냐고 묻는 일이 그날로 없어졌다.",
+    "expected": "An immediate result can show current roster reading or assignment, without certifying that repeated questions ceased for the remainder of the day.",
+    "proposed": "물 당번이 누구냐던 질문에 은수가 표의 한 칸을 짚었다.",
+    "effectsPreserved": true,
+    "repair": "repair24/copy-delta.json"
+  },
+  {
+    "id": "S23-02",
+    "classification": "natural-image-identity-mismatch",
+    "status": "root-confirmed-art-staged-not-wired",
+    "eventId": "postman_again",
+    "choice": 0,
+    "trace": 250,
+    "earlierEvent": {
+      "id": "meet_postman",
+      "trace": 191,
+      "day": 5
+    },
+    "currentDay": 6,
+    "actual": "First meeting and canonical portrait show black-haired middle-aged man with goggles; next-day explicitly same postman is shown as a white-haired/balding old man.",
+    "expected": "Keep same recurring postman identity; a different person is not introduced by this chain.",
+    "files": [
+      {
+        "path": "assets/scenes/event-postman-solo-v2.webp",
+        "sha256": "4e832f403d7d478978b45ae3710c39a02322729d8c685aca7b09c489655f3ea2"
+      },
+      {
+        "path": "assets/scenes/postman-letter.webp",
+        "sha256": "35355c654e769c8efb3f070cb2fcaebf881144300a456a9ea08cefe93daffc44"
+      },
+      {
+        "path": "assets/portraits/postman.png",
+        "sha256": "1a85301da967fe2cf28f52c3399d0667b7d60aa603f8a5956c862f8351d22257"
+      }
+    ],
+    "scope": "Actual full local raster review; root independently confirmed identity and premature handoff. New staged artwork is separate from unchanged cycle23 source and actual browser crop remains pending.",
+    "repair": "../visual-survival/provenance.json"
+  }
+]

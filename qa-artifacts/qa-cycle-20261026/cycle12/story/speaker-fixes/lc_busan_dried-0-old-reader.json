@@ -1,0 +1,43 @@
+[
+  {
+    "kind": "narration",
+    "text": "쥐포, 오징어, 멸치 한 봉지씩."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "마이 무라, 마이!"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "이거 얼마나 가요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "뭐가?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "상하기까지요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "마른 기 우예 상하노. …아니, 상하기는 하는데 니가 먼저 다 뭇는다."
+  },
+  {
+    "kind": "narration",
+    "text": "차에서 쥐포 굽는 냄새가 나기 시작하면 그게 부산을 떠났다는 신호다."
+  }
+]

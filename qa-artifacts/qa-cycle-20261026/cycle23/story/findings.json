@@ -1,0 +1,154 @@
+{
+  "newNarrativeOrReaderConfirmed": 0,
+  "newImageContextConfirmed": 2,
+  "visualTimeCandidates": 2,
+  "issues": [
+    {
+      "id": "V23-S01",
+      "status": "confirmed image-context mismatch; dedicated art approved by root",
+      "eventId": "exp_bowling",
+      "n": 102,
+      "sceneKeys": [
+        "event-explore-leisure"
+      ],
+      "asset": "assets/scenes/event-explore-leisure.webp",
+      "observed": "레인과 핀을 보여야 하는 2층 볼링장 대신 포스터·긴 창구·벤치가 있는 영화관 계열 로비 공용컷이다.",
+      "source": "src/03-data.js:5934",
+      "backup": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/normal-unpaid-100-exp_bowling.json",
+      "entry": "2층 볼링장. 레인 위에 핀들이 오랫동안 스트라이크를 기다린다.\n\n전광판은 죽었지만 공과 레인은 멀쩡하다. 수동으로 하면— 된다.",
+      "chosen": {
+        "index": 0,
+        "label": "수동 볼링 대회 개최",
+        "hint": "",
+        "visible": true,
+        "enabled": true,
+        "requirement": ""
+      },
+      "result": "핀 세우기 당번을 돌아가며 3게임. 점수 계산은 암산, 판정 시비 2회, 스트라이크 세리머니 무제한.\n\n대회 우승자는 오늘 저녁 설거지 면제라는 어마어마한 부상을 받았다.",
+      "actualReader": {
+        "entry": [
+          {
+            "kind": "narration",
+            "text": "2층 볼링장. 레인 위에 핀들이 오랫동안 스트라이크를 기다린다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "전광판은 죽었지만 공과 레인은 멀쩡하다. 수동으로 하면— 된다.",
+            "displayName": null
+          }
+        ],
+        "result": [
+          {
+            "kind": "narration",
+            "text": "핀 세우기 당번을 돌아가며 3게임. 점수 계산은 암산, 판정 시비 2회, 스트라이크 세리머니 무제한.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "대회 우승자는 오늘 저녁 설거지 면제라는 어마어마한 부상을 받았다.",
+            "displayName": null
+          }
+        ]
+      },
+      "scope": "natural new event-context observations, same asset/root cause as pending cycle22 exp_arcade; no browser crop inspected"
+    },
+    {
+      "id": "V23-S02",
+      "status": "confirmed image-context mismatch; dedicated art approved by root",
+      "eventId": "ev_wedding_hall_storage",
+      "n": 282,
+      "sceneKeys": [
+        "event-explore-leisure"
+      ],
+      "asset": "assets/scenes/event-explore-leisure.webp",
+      "observed": "시든 조화와 뒤집힌 의자가 있는 예식장, 주방 창고/방명록의 선택 앞인데 같은 영화관 계열 로비 공용컷이다.",
+      "source": "src/03-data.js:9670",
+      "backup": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/normal-unpaid-280-ev_wedding_hall_storage.json",
+      "entry": "화려했을 예식장. 홀엔 시든 조화와 뒤집힌 의자들.\n\n주방 창고엔 연회용 식자재가 남았을지도. 대량으로 쟁여둔 곳이라 손을 덜 탔을 수 있다.",
+      "chosen": {
+        "index": 1,
+        "label": "방명록을 넘겨본다",
+        "hint": "",
+        "visible": true,
+        "enabled": true,
+        "requirement": ""
+      },
+      "result": "먼지 쌓인 방명록. 마지막 날짜의 하객 이름들이 빼곡하다. 축하 한마디씩 곁들여서.\n\n「영원히 행복하세요.」 그 부부는 어떻게 됐을까. 방명록을 조용히 덮었다.",
+      "actualReader": {
+        "entry": [
+          {
+            "kind": "narration",
+            "text": "화려했을 예식장. 홀엔 시든 조화와 뒤집힌 의자들.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "주방 창고엔 연회용 식자재가 남았을지도. 대량으로 쟁여둔 곳이라 손을 덜 탔을 수 있다.",
+            "displayName": null
+          }
+        ],
+        "result": [
+          {
+            "kind": "narration",
+            "text": "먼지 쌓인 방명록. 마지막 날짜의 하객 이름들이 빼곡하다. 축하 한마디씩 곁들여서.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "「영원히 행복하세요.」 그 부부는 어떻게 됐을까. 방명록을 조용히 덮었다.",
+            "displayName": null
+          }
+        ]
+      },
+      "scope": "natural new event-context observations, same asset/root cause as pending cycle22 exp_arcade; no browser crop inspected"
+    },
+    {
+      "id": "V23-T01",
+      "status": "visual-time candidate; root adjudication pending; no generation yet",
+      "eventId": "story_generation_speech",
+      "n": 261,
+      "clock": {
+        "day": 6,
+        "min": 1367,
+        "isNight": true,
+        "weather": "storm"
+      },
+      "sceneKeys": [
+        "story-generation-speech",
+        "story-generation-speech-stations-v1"
+      ],
+      "asset": "assets/scenes/story-generation-speech.webp",
+      "observed": "22:47 폭풍 시각에 밝은 하늘과 주광이 들어오는 장터컷. 두 번째 stations 컷도 contact sheet에서 밝은 주광으로 보였다.",
+      "source": "src/03-data.js:11454; explicit scenes; no time gate",
+      "nightRule": "src/04a-engine-core.js:1137 G.isNight >=19.5 || <5.5",
+      "backup": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/normal-unpaid-259-story_generation_speech.json",
+      "entry": "장터에서 아이 하나가 국밥 줄의 노인 소매를 잡는다.\n\n\"할머니, 서울말 해봐.\"\n\n\"뭘 해.\"\n\n\"서울말요. 저번에 했잖아요.\"\n\n\"저번에 뭘 했다고 그래.\" 그러면서도 노인은 헛기침을 하고, 오래전 역 이름을 몇 개 또박또박 읽었다. 아이들이 까르르 웃는다. 그중 서울을 본 아이는 없다.\n\n\"우리 엄마는 밖에서 쓰지 말랬어.\" 노인이 말했다. \"나는 집에서만 했고. 쟤들은 장날마다 돈 내라네.\"\n\n아이 하나가 국밥 그릇을 내밀었다. \"한 번 더 하면 공짜.\"",
+      "result": "몇 마디 하자 노인이 고개를 갸웃했다. \"서울말 끝에 부산이 붙었네.\"\n\n옆 아이가 바로 흉내 냈다. 반쯤은 할아버지 억양, 반쯤은 부두 말투, 나머지는 방금 지어낸 소리였다.\n\n\"이건 무슨 말이야?\"\n\n\"달구지 말.\" 아이가 차 옆면을 두드렸다.",
+      "scope": "time-neutral prose is valid; raster time differs. No global day/night audit or new availability gate proposed."
+    },
+    {
+      "id": "V23-T02",
+      "status": "visual-time candidate; root adjudication pending; no generation yet",
+      "eventId": "talk_es_07",
+      "n": 415,
+      "clock": {
+        "day": 9,
+        "min": 1190,
+        "isNight": true,
+        "weather": "rain"
+      },
+      "sceneKeys": [
+        "comp-talk-eunsu-road-v1"
+      ],
+      "asset": "assets/scenes/comp-talk-eunsu-road-v1.jpg",
+      "observed": "19:50 비 시각에 창밖의 들판과 하늘이 밝은 낮. 장면 설명도 낮길로 명시한다.",
+      "source": "src/03-data.js:8148; needsComp:eunsu/needBond:5, no time gate; odd/even fixed map src/03-data.js:2401",
+      "nightRule": "src/04a-engine-core.js:1137 G.isNight >=19.5 || <5.5",
+      "backup": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/normal-unpaid-413-talk_es_07.json",
+      "entry": "은수가 녹음기(어디서 구했는지)에 뭔가를 모으고 있다.\n\n\"잡음이요. 좋은 잡음만.\"",
+      "result": "\"있죠. 잠깐만요. 이 앞인데… 지나갔다.\" 은수가 되감기를 두 번 놓치고 세 번째에 맞췄다. 빗소리 뒤로 희미한 음악이 잡혔다.\n\n\"여기요. 사람 목소리 들리죠? 앞에서 말하는 사람 말고, 뒤에서 따라 부르는 사람.\"\n\n볼륨을 올리자 잡음만 커졌다. 은수는 조금 낮추고 같은 부분을 다시 틀었다. 그제야 한 음 늦게 따라오는 목소리가 들렸다.\n\n\"관제실에선 이런 건 다 지웠어요. 지금은 따로 남겨요. 나중에 이것만 이어서 들어 보려고요.\"\n\n은수는 녹음기 옆에 재생 위치를 적었다. 나는 한 번 더 듣고 나서 헤드폰을 돌려줬다.",
+      "scope": "time-neutral prose is valid; raster time differs. No global day/night audit or new availability gate proposed."
+    }
+  ]
+}

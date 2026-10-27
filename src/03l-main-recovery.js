@@ -39,7 +39,7 @@ D.mainEvidenceCompletion = {
           '수원 북부 교환소의 단말에서 남쪽 보관망이 전달한 영상을 열었다. 글자 창이 닫히고 첫 화면이 뜰 때까지 기다렸다.')},
     story_family_key:{title:'교환소 앞 달구지의 검증키',
       scene:'family-verification-key',
-      text:'수원 북부 교환소의 첨부 목록에 검증키 분리 절차 4·5쪽을 보냈다는 기록이 있었다. 필요한 두 장은 아직 손에 넣지 못했다.\n\n교환소 앞 달구지의 계기판을 열었다. 출발 전에 번호를 붙여 둔 선들 사이에 모듈이 있었다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다.\n\n'
+      text:'수원 북부 교환소의 첨부 목록에 검증키 분리 절차 4·5쪽을 보냈다는 기록이 있었다. 필요한 두 장은 아직 손에 넣지 못했다.\n\n교환소 앞 달구지의 계기판을 열었다. 회로도와 배선을 대조해 안쪽의 모듈을 찾았다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다.\n\n'
         +D.events.find(event=>event.id==='story_family_key').text.split('\n\n').slice(2).join('\n\n')},
     story_personal_cache:{title:'북부 교환소에 맡겨진 상자',
       scene:'suwon-exchange-cache-v1',

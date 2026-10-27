@@ -1,0 +1,258 @@
+[
+  {
+    "id": "route_ridge_anchor",
+    "entry": [
+      {
+        "who": "passer_man",
+        "name": "아래의 남자"
+      },
+      "me",
+      {
+        "who": "passer_man",
+        "name": "아래의 남자"
+      }
+    ],
+    "choices": {
+      "0.0": [],
+      "0.1": [],
+      "1.0": [
+        "me"
+      ],
+      "1.1": [
+        "me"
+      ],
+      "2.0": [],
+      "2.1": []
+    }
+  },
+  {
+    "id": "route_ridge_extract",
+    "entry": [
+      {
+        "who": "passer_woman",
+        "name": "발목을 다친 여자"
+      },
+      "me",
+      "me",
+      {
+        "who": "passer_woman",
+        "name": "발목을 다친 여자"
+      },
+      "me"
+    ],
+    "choices": {
+      "0.0": [
+        {
+          "who": "passer_child",
+          "name": "구조된 아이"
+        }
+      ],
+      "0.1": [
+        {
+          "who": "passer_woman",
+          "name": "발목을 다친 여자"
+        }
+      ],
+      "0.2": [
+        {
+          "who": "passer_woman",
+          "name": "발목을 다친 여자"
+        }
+      ],
+      "1.0": [],
+      "1.1": [
+        {
+          "who": "passer_woman",
+          "name": "발목을 다친 여자"
+        }
+      ],
+      "1.2": [
+        {
+          "who": "passer_woman",
+          "name": "발목을 다친 여자"
+        }
+      ]
+    }
+  },
+  {
+    "id": "loc_mungyeong",
+    "entry": [
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "새재의 나무판"
+      },
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "새재의 나무판"
+      },
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "새재의 나무판"
+      },
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "새재의 나무판"
+      },
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "새재의 나무판"
+      },
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "새재의 나무판"
+      }
+    ],
+    "choices": {
+      "0.0": []
+    },
+    "authoredEntry": true
+  },
+  {
+    "id": "talk_es_13",
+    "choices": {
+      "0.0": [
+        "eunsu",
+        "me",
+        "eunsu",
+        "eunsu",
+        "eunsu"
+      ]
+    }
+  },
+  {
+    "id": "pair_mj_es_1",
+    "entry": [
+      "eunsu",
+      "minji",
+      "eunsu",
+      "eunsu"
+    ],
+    "choices": {
+      "0.0": [
+        {
+          "kind": "narration",
+          "who": "sys"
+        },
+        {
+          "kind": "narration",
+          "who": "sys"
+        },
+        {
+          "kind": "narration",
+          "who": "sys"
+        },
+        "eunsu",
+        "minji",
+        "eunsu",
+        "minji",
+        "eunsu"
+      ]
+    }
+  },
+  {
+    "id": "talkr_es_3",
+    "choices": {
+      "0.0": [
+        "eunsu",
+        "eunsu",
+        "me",
+        "eunsu",
+        "eunsu"
+      ]
+    }
+  },
+  {
+    "id": "comp_tire_class",
+    "choices": {
+      "0.0": [
+        "minji",
+        "me",
+        "minji",
+        "me",
+        "minji"
+      ]
+    }
+  },
+  {
+    "id": "ev_comp_birthday",
+    "choices": {
+      "0.0": [
+        "me",
+        "minji",
+        "me",
+        "minji",
+        "minji",
+        "minji"
+      ]
+    }
+  },
+  {
+    "id": "talk_mj_02",
+    "choices": {
+      "0.0": [
+        "minji",
+        "minji",
+        "minji"
+      ],
+      "1.0": [
+        "minji",
+        "minji"
+      ]
+    }
+  },
+  {
+    "id": "talk_mj_18",
+    "choices": {
+      "1.0": [
+        "minji",
+        "minji",
+        "me",
+        "minji",
+        "me",
+        "minji",
+        "minji"
+      ]
+    }
+  },
+  {
+    "id": "talk_es_10",
+    "choices": {
+      "0.0": [
+        "eunsu",
+        "eunsu",
+        "me",
+        "eunsu",
+        "eunsu"
+      ]
+    }
+  },
+  {
+    "id": "talk_es_16",
+    "choices": {
+      "1.0": [
+        "eunsu",
+        "eunsu",
+        "eunsu",
+        "eunsu",
+        "me",
+        "eunsu"
+      ]
+    }
+  },
+  {
+    "id": "talk_es_17",
+    "choices": {
+      "0.0": [
+        "eunsu",
+        "eunsu",
+        "eunsu"
+      ]
+    }
+  }
+]

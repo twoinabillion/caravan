@@ -1,0 +1,28 @@
+[
+  {
+    "id": "story_bridge_child_voice",
+    "choice": 0,
+    "file": "story_bridge_child_voice-0-paid.json",
+    "text": "소리는 끊겼지만 수신 표시등은 꺼지지 않았다. 천리안은 오래된 기록에서 내 목소리를 꺼냈고, 내가 듣고 있다는 것도 알고 있었다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "소리는 끊겼지만 수신 표시등은 꺼지지 않았다. 천리안은 오래된 기록에서 내 목소리를 꺼냈고, 내가 듣고 있다는 것도 알고 있었다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "story_bridge_child_voice",
+    "choice": 1,
+    "file": "story_bridge_child_voice-1-paid.json",
+    "text": "마지막에는 길 안내가 붙었다. 가장 빠른 길도, 가장 안전한 길도 아니었다. 남산 정비 차량만 쓰던 길이었다. 초대인지 회수 명령인지 구별되지 않았다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "마지막에는 길 안내가 붙었다. 가장 빠른 길도, 가장 안전한 길도 아니었다. 남산 정비 차량만 쓰던 길이었다. 초대인지 회수 명령인지 구별되지 않았다.",
+        "displayName": null
+      }
+    ]
+  }
+]

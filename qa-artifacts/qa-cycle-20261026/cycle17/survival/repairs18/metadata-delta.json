@@ -1,0 +1,148 @@
+{
+  "exp_arcade": {
+    "choices": {
+      "0.0": [
+        {
+          "who": "passer_elder",
+          "name": "에어하키 고수"
+        }
+      ]
+    }
+  },
+  "wx_bigwash": {
+    "entry": [
+      "party_first"
+    ],
+    "choices": {
+      "0.0": []
+    }
+  },
+  "comp_food_debate": {
+    "entry": [
+      "party_first"
+    ],
+    "choices": {
+      "0.0": [
+        "party_first",
+        "party_second",
+        "party_first",
+        "party_second",
+        "me"
+      ],
+      "1.0": [
+        "party_first"
+      ]
+    }
+  },
+  "comp_hometown": {
+    "entry": [
+      "party_first",
+      "party_second",
+      "party_first",
+      "party_second"
+    ],
+    "choices": {
+      "0.0": [
+        "party_first",
+        "me",
+        "party_second",
+        "party_first"
+      ]
+    }
+  },
+  "comp_water_fight": {
+    "choices": {
+      "0.0": [
+        "party_first",
+        "me",
+        "party_first",
+        "me",
+        "party_second"
+      ],
+      "1.0": [
+        "party_first",
+        "party_second"
+      ],
+      "2.0": []
+    }
+  },
+  "comp_ghost_story": {
+    "entry": [
+      "party_first"
+    ],
+    "choices": {
+      "0.0": [],
+      "0.1": [],
+      "1.0": []
+    }
+  },
+  "comp_van_name": {
+    "entry": [
+      "party_first",
+      "me",
+      "party_first"
+    ],
+    "choices": {
+      "1.0": []
+    }
+  },
+  "comp_radio_war": {
+    "choices": {
+      "0.0": [
+        {
+          "kind": "record",
+          "who": "radio",
+          "name": "정착지 뉴스",
+          "medium": "radio"
+        }
+      ],
+      "1.0": [
+        "party_first"
+      ]
+    }
+  },
+  "comp_storm_count": {
+    "entry": [
+      "party_first"
+    ],
+    "choices": {
+      "0.0": [
+        "party_first",
+        "party_first",
+        "me",
+        "party_first",
+        "me",
+        "party_first"
+      ],
+      "1.0": []
+    }
+  },
+  "comp_snore": {
+    "choices": {
+      "0.0": [
+        "party_first",
+        "me"
+      ],
+      "1.0": []
+    }
+  },
+  "comp_dj_night": {
+    "entry": [
+      "party_first",
+      "party_second",
+      "party_first",
+      "party_second",
+      "party_first"
+    ],
+    "choices": {
+      "0.0": [],
+      "1.0": [
+        "party_first",
+        "party_second",
+        "me",
+        "party_second",
+        "me"
+      ]
+    }
+  }
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "pair_leo_jy_1",
+    "classification": "static-pair",
+    "reason": "Jaeyi collects the marble fee; her first2 consecutive lines stay together.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "jaeyi",
+          "jaeyi",
+          "leo",
+          "jaeyi",
+          "leo",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "pair_leo_jy_2",
+    "classification": "static-pair",
+    "reason": "The song saying is Leo father, the collecting saying is Jaeyi father; future donation is a plan.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "leo",
+          "jaeyi",
+          "jaeyi",
+          "leo",
+          "leo",
+          "jaeyi",
+          "jaeyi",
+          "leo"
+        ]
+      }
+    },
+    "textReplacements": [
+      [
+        "소장품은 두 점이 됐다.",
+        "전시할 물건 두 점을 정했다."
+      ]
+    ],
+    "noteReplacements": [
+      [
+        "소장 확정: 하모니카(체험형)+창고 열쇠.",
+        "기증 예정: 하모니카(체험형)+창고 열쇠."
+      ]
+    ]
+  },
+  {
+    "id": "pair_leo_es_1",
+    "classification": "static-pair",
+    "reason": "Leo proposes musical layering; Eunsu asks what it means, Leo offers to demonstrate.",
+    "script": {
+      "text": [
+        "leo",
+        "leo",
+        "eunsu",
+        "leo"
+      ],
+      "choices": {
+        "0.0": [
+          "eunsu",
+          "eunsu",
+          "leo",
+          "eunsu"
+        ]
+      }
+    }
+  },
+  {
+    "id": "pair_jy_es_1",
+    "classification": "static-pair",
+    "reason": "The engine-sound title is an inline list item, not Eunsu spoken dialogue.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "eunsu",
+          "jaeyi",
+          "eunsu",
+          "jaeyi"
+        ]
+      }
+    },
+    "textReplacements": [
+      [
+        "\"달구지 엔진 소리(2번 실린더 포함)\".",
+        "「달구지 엔진 소리(2번 실린더 포함)」."
+      ]
+    ]
+  },
+  {
+    "id": "pair_jy_es_2",
+    "classification": "static-pair",
+    "reason": "Eunsu reacts to Jaeyi self-question; Jaeyi owns her realization. Independent event cannot certify numbered prior phrases.",
+    "script": {
+      "text": [
+        "jaeyi",
+        "jaeyi",
+        "eunsu",
+        "jaeyi",
+        "eunsu"
+      ],
+      "choices": {
+        "0.0": [
+          "eunsu",
+          "eunsu",
+          "jaeyi",
+          "jaeyi",
+          "eunsu",
+          "jaeyi"
+        ]
+      }
+    },
+    "noteReplacements": [
+      [
+        "교본 외 문장 2호.",
+        "교본 밖의 문장."
+      ]
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle18/source",
+  "seed": 278003,
+  "derivedPaidFrom": "normal-unpaid-229-meet_bus.json",
+  "cohortExcluded": true,
+  "naturalCounts": {
+    "storyConfirmed": 2,
+    "sharedRecordNamesConfirmed": 0,
+    "answerCallConfirmed": false
+  },
+  "answerCallCorrection": "Survival trace32 reached Gimhae, trace34 event and trace36 exploration preceded trace38. Completed stop recollection is possible; original report retained and classification corrected to clarity.",
+  "recordNamesRuling": "Survival final review retains recollection ambiguity; fix approved for clarity, not counted as an additional confirmed natural defect."
+}

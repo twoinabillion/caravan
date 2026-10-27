@@ -1,0 +1,289 @@
+{
+  "cycle": 10,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 270002,
+  "evidenceClass": "Production engine VM, finite resources and public actions; no browser/input/audio claim",
+  "engineSourceHash": "732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b",
+  "sourceUnchangedAcrossJourney": true,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "terminalJourneys": 1,
+  "policyStops": 0,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "fixtureJourneys": 0,
+  "productionChanges": [],
+  "result": {
+    "ending": "story_done",
+    "method": "core_sleep",
+    "ended": true,
+    "storyDone": true,
+    "session1End": true,
+    "day": 7,
+    "km": 723,
+    "actualCompanions": [
+      "minji",
+      "kangwoo"
+    ],
+    "bori": false,
+    "finalState": {
+      "at": "seoul",
+      "location": "서울 — 남산",
+      "day": 7,
+      "min": 624,
+      "km": 723,
+      "driving": null,
+      "fuel": 18.355760000000505,
+      "water": 16,
+      "food": 14,
+      "scrap": 6,
+      "van": 100,
+      "vanMax": 100,
+      "fuelMax": 70,
+      "foodMax": 24,
+      "waterMax": 28,
+      "fatigue": 12.84286,
+      "dog": false,
+      "hunger": 0,
+      "thirst": 0,
+      "injuries": {},
+      "party": [
+        "minji",
+        "kangwoo"
+      ],
+      "items": {
+        "부품": 5,
+        "의약품": 1,
+        "탄약": 0,
+        "남산행 편지": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "dust",
+      "campNight": 6,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 100,
+          "bond": 18,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 100,
+          "bond": 10,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": true,
+      "endKind": "story_done",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "completed",
+        "tracked": true,
+        "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+        "act": "종장",
+        "chapterId": "ending",
+        "eyebrow": "메인 스토리 · 종장",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "phase": "남산 코어 · 여정 기록",
+        "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+        "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+        "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+        "steps": [
+          {
+            "id": "ending",
+            "label": "남산 코어에서 최종 결정을 내렸다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      "navigation": {
+        "key": "main_ending",
+        "kind": "main",
+        "target": "seoul",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+      }
+    }
+  },
+  "totals": {
+    "choices": 64,
+    "traceRecords": 336,
+    "publicActionsExcludingChoicesReloadInitialization": 143,
+    "knownUiDisabledRejectedRecruitApiCalls": 0,
+    "actionCounts": {
+      "new-game": 1,
+      "unpaid-entry-reload": 64,
+      "choice": 64,
+      "paid-result-reload": 64,
+      "travel": 19,
+      "drive": 39,
+      "meet-recruit": 2,
+      "trade": 38,
+      "work": 10,
+      "recruit-step": 6,
+      "camp-meal": 6,
+      "camp": 6,
+      "accept-companion": 2,
+      "earned-perk": 3,
+      "explore": 6,
+      "buy-upgrade": 1,
+      "seoul-enter": 5
+    },
+    "entryReload": 64,
+    "paidResultReload": 64,
+    "reloadLoaded": 128,
+    "reloadFailed": 0,
+    "paidReapplied": 0
+  },
+  "features": {
+    "successfulRecruitments": [
+      {
+        "n": 106,
+        "id": "minji",
+        "at": "gyeongju",
+        "day": 3,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "n": 150,
+        "id": "kangwoo",
+        "at": "gumi",
+        "day": 4,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      }
+    ],
+    "upgrades": [
+      {
+        "n": 270,
+        "id": "bench",
+        "at": "suwon",
+        "day": 6,
+        "elapsedMinutes": 225,
+        "scrapDelta": -12,
+        "partDelta": -1,
+        "ok": true
+      }
+    ],
+    "crafts": [],
+    "cashSupplyTrades": 38,
+    "barterTrades": 0,
+    "localWork": 10,
+    "uniqueLocalWorkResults": 10,
+    "camps": 6,
+    "warmMeals": 6,
+    "route": [
+      "yangsan",
+      "miryang",
+      "yangsan",
+      "ulsan",
+      "gyeongju",
+      "daegu",
+      "gyeongju",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "nonsan",
+      "daejeon",
+      "cheongju",
+      "cheonan",
+      "pyeongtaek",
+      "suwon",
+      "seoul"
+    ],
+    "guardedFinalChoice": {
+      "selected": "core_sleep",
+      "transferAvailable": true,
+      "preservationAvailable": false,
+      "preservationRequirement": "2/3 actual eligible companions; one more companion required",
+      "preservationObjector": "kangwoo"
+    },
+    "naturalRegressionCoverage": [
+      {
+        "event": "loc_gyeongju",
+        "n": 84,
+        "choice": "왕릉 아래서 쉬어간다 (5시간)",
+        "elapsedMinutes": 300
+      }
+    ],
+    "notes": [
+      "Minji and Kangwoo were actually recruited; Eunsu was not met/recruited. Bench was bought later at Suwon with actual 225-minute Minji duration.",
+      "No repeat/disabled recruitment calls in this completed fresh journey.",
+      "Kangwoo left his own tag at the dome; Han bridge correctly handles the remaining one."
+    ]
+  },
+  "dialogueReview": {
+    "encounters": 64,
+    "newOrChangedEntries": 8,
+    "newParagraphsRead": 13,
+    "exactPriorParagraphOccurrencesWithinChangedEntries": 42,
+    "priorCyclesExact": 56,
+    "withinCycleExact": 0,
+    "newOrChanged": 8,
+    "localWorkResultsRead": 10,
+    "method": "Exact [event,text,choices,choice,result] matches against cycles1–9; all new/changed contexts, choices and new paragraphs read, repeated paragraphs SHA256 matched. Full encountered transcript retained through SESSION1END.",
+    "files": [
+      "transcript01.json",
+      "changed-transcript.json",
+      "review-collapsed.json",
+      "review-match-counts.json",
+      "work-transcript.json"
+    ]
+  },
+  "findings": [],
+  "candidateRulings": [
+    {
+      "candidate": "Han bridge invokes Park private and Kim Seongjae while carrying one remaining tag",
+      "ruling": "refuted: two different comrades; source identifies Park as the junior whose tag is carried and Kim as the peer whose lighter is carried. The two-name roll call does not claim two carried tags.",
+      "sources": [
+        "src/03-data.js:4727",
+        "src/03-data.js:7065",
+        "src/03-data.js:11199",
+        "src/03-data.js:15236"
+      ]
+    },
+    {
+      "candidate": "Ending has dawn prose while final engine clock remains morning10:24",
+      "ruling": "terminal aftermath narrative, not a new time-consuming interactive road action; no new inconsistency claimed"
+    }
+  ],
+  "separateTerminalVerification": "terminal-reload.json",
+  "separateVerificationExcludedFromJourneyCounts": true,
+  "scopedVerdict": "No newly confirmed production defect in this completed frozen finite journey. Actual two-companion sleep ending; omitted goals and branches remain gaps.",
+  "coverageLimits": [
+    "Eunsu, radio repair/tube, driver clinic, hidden location, quest handoff, armory discount, crafts, upgrade disassembly/reinstallation did not occur.",
+    "Only sleep ending executed; transfer/preservation were availability observations.",
+    "No new fishfarm or 40-ri repair encounter in this route.",
+    "Browser/mobile/audio evidence remains root-owned."
+  ]
+}

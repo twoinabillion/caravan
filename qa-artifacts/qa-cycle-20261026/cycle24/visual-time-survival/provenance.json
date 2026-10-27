@@ -1,0 +1,287 @@
+{
+  "cohortExcluded": true,
+  "classification": "staged-time-variant-art-only",
+  "generator": "image_gen.imagegen",
+  "editor": "image_gen.imagegen",
+  "rasterExport": "sharp only; no manual scene editing",
+  "generatedSuccessfulOutputs": 4,
+  "failedGenerationAttempts": 0,
+  "contract": "assets/visual-contract.json",
+  "rows": [
+    {
+      "key": "seoul-ruins-green-day-v1",
+      "event": "seoul_ruins",
+      "width": 1280,
+      "height": 720,
+      "output": "exec-2175ca85-6cfc-4393-8674-c2c5b0410353.png",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-2175ca85-6cfc-4393-8674-c2c5b0410353.png",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-day-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "1fcc6b1be2e016b3e77ae32d6da29e54d2771249c5ee1d732a3d55367e815696"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-day-v1.webp",
+        "width": 1280,
+        "height": 720,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 184044,
+        "sha256": "e6a96f440658c24a4ecaae8698de3b7d14aa774eb651a2f77b2c151b92cf63ae"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "colourspace": "srgb",
+        "quality": 86,
+        "effort": 6
+      },
+      "pass": true,
+      "mode": "edit",
+      "requestFile": "requests.json",
+      "promptFile": "prompts/seoul-ruins-green-day-v1.txt",
+      "promptSha256": "683285420c6ca43c79b1429d482a9d35d52de09d93d9c88843b1e9bf4b687376",
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "/Users/sang/caravan/assets/scenes/seoul-ruins.webp",
+          "sha256": "868d134ed182fcfa88fd91532f0e720ac88c2f7d8fe5cb263f293e0e74bfce29",
+          "role": "edit-target"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "role": "canonical-reference"
+        }
+      ],
+      "generationAttempts": 1,
+      "outputPreserved": true,
+      "wired": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "key": "seoul-ruins-green-night-v1",
+      "event": "seoul_ruins",
+      "width": 1280,
+      "height": 720,
+      "output": "exec-42e8033e-ced0-4116-9b3a-820d76b2cb5a.png",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-42e8033e-ced0-4116-9b3a-820d76b2cb5a.png",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-night-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "764a2f4ab74bbee86ba7717056007826f7717473388e64cdd74b7541f5262de9"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-night-v1.webp",
+        "width": 1280,
+        "height": 720,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 174562,
+        "sha256": "016ca691b7eaf8eb9cfff3cc40b242666802d92fe4b2be1431db7d788031ab0e"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "colourspace": "srgb",
+        "quality": 86,
+        "effort": 6
+      },
+      "pass": true,
+      "mode": "edit",
+      "requestFile": "ruins-night-request.json",
+      "promptFile": "prompts/seoul-ruins-green-night-v1.txt",
+      "promptSha256": "90100fe8bac951fa52afdf57e150717b63751853ffb63f3916510ad32cd1dfab",
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-day-v1.png",
+          "sha256": "1fcc6b1be2e016b3e77ae32d6da29e54d2771249c5ee1d732a3d55367e815696",
+          "role": "edit-target"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "role": "canonical-reference"
+        }
+      ],
+      "generationAttempts": 1,
+      "outputPreserved": true,
+      "wired": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "key": "seoul-han-night-v1",
+      "event": "seoul_han",
+      "width": 1280,
+      "height": 720,
+      "output": "exec-bbf947b5-f79c-428e-bb5b-816c18a4edd3.png",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-bbf947b5-f79c-428e-bb5b-816c18a4edd3.png",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-han-night-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "bcc03364a16ae35594ce4f0f753c505ef4f7f17ec665cf37456fe68a063edaf3"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-han-night-v1.webp",
+        "width": 1280,
+        "height": 720,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 148500,
+        "sha256": "dfd1a3765a3b7321aa65a786836406fa571f62393ad98d47e821846096c398c2"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "colourspace": "srgb",
+        "quality": 86,
+        "effort": 6
+      },
+      "pass": true,
+      "mode": "edit",
+      "requestFile": "requests.json",
+      "promptFile": "prompts/seoul-han-night-v1.txt",
+      "promptSha256": "5a7dcc065086deab7df6c7e554adceb7eb8e6ac9662940c6c970a78b3f3d6625",
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "/Users/sang/caravan/assets/scenes/seoul-han.jpg",
+          "sha256": "a1d741fe24cfdf24620e312ff80cdc3d56c8f4c81adedade1cd716b5528b032f",
+          "role": "edit-target"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "role": "canonical-reference"
+        }
+      ],
+      "generationAttempts": 1,
+      "outputPreserved": true,
+      "wired": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "key": "event-vista-road-night-v1",
+      "event": "story_bridge_last_quiet",
+      "width": 1024,
+      "height": 576,
+      "output": "exec-9c79e190-8c0f-445f-9427-c99f96ee463e.png",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-9c79e190-8c0f-445f-9427-c99f96ee463e.png",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/event-vista-road-night-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "2ac09c81a81164c4a3ffdd85a3922307661a2e46ec4f010a87bc45deeb6ad613"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/event-vista-road-night-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 126240,
+        "sha256": "29eda797b0528805d88f2c5a538d4f64072a04ff912dc446396aedcfa89d6d5f"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "colourspace": "srgb",
+        "quality": 86,
+        "effort": 6
+      },
+      "pass": true,
+      "mode": "generate",
+      "requestFile": "requests.json",
+      "promptFile": "prompts/event-vista-road-night-v1.txt",
+      "promptSha256": "ac8c06195f82c90bf7244ecb73da0c0149d79ae54f5b38e46df43ad9553691b3",
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "role": "canonical-reference"
+        }
+      ],
+      "generationAttempts": 1,
+      "outputPreserved": true,
+      "wired": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    }
+  ]
+}

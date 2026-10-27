@@ -1,0 +1,326 @@
+{
+  "cycle": 7,
+  "agent": "systems",
+  "seed": 267002,
+  "evidenceClass": "Production engine in isolated VM, finite resources and public actions; no browser/input/audio claim",
+  "engineSourceHash": "7d7cf3b9bc7beda800db44b4c286f2126971a069ddb6c4351d8f17eef2e34a0d",
+  "sourceUnchangedFromStart": true,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "completedJourneys": 0,
+  "terminalJourneys": 1,
+  "policyStops": 0,
+  "engineFailures": 0,
+  "engineDeaths": 1,
+  "fixtureJourneys": 0,
+  "productionChanges": [],
+  "result": {
+    "ending": "thirst",
+    "method": null,
+    "ended": true,
+    "storyDone": false,
+    "session1End": false,
+    "day": 8,
+    "km": 391.9,
+    "actualCompanions": [
+      "kangwoo"
+    ],
+    "bori": false,
+    "finalState": {
+      "at": null,
+      "day": 8,
+      "min": 0,
+      "km": 391.9,
+      "driving": {
+        "from": "chungju",
+        "to": "mungyeong",
+        "gone": 27.938083333333317,
+        "dist": 38
+      },
+      "fuel": 7.884159166666667,
+      "water": 0,
+      "food": 0,
+      "scrap": 16,
+      "van": 92.66000000000021,
+      "vanMax": 100,
+      "fuelMax": 70,
+      "foodMax": 24,
+      "waterMax": 28,
+      "fatigue": 100,
+      "dog": false,
+      "hunger": 3,
+      "thirst": 3,
+      "injuries": {},
+      "party": [
+        "kangwoo"
+      ],
+      "items": {
+        "부품": 2,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 6,
+      "campPlan": {},
+      "campParticipants": [
+        "kangwoo"
+      ],
+      "campConversation": null,
+      "crew": {
+        "kangwoo": {
+          "name": "강우",
+          "mood": 0,
+          "bond": 10,
+          "injury": null
+        }
+      },
+      "up": {},
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": true,
+      "endKind": "thirst",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "act": "2장",
+        "chapterId": "verification-key",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "phase": "계기판의 장치를 꺼낼 방법을 찾는 중",
+        "why": "엄마가 절차를 설계하고 아빠가 만든 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.",
+        "next": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.",
+        "eyebrow": "메인 스토리 · 2장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 6,
+          "need": 13,
+          "label": "6/13"
+        }
+      },
+      "navigation": {
+        "key": "main_verification-key",
+        "kind": "main",
+        "target": "cheongju",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "action": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)"
+      }
+    }
+  },
+  "totals": {
+    "choices": 46,
+    "traceRecords": 198,
+    "publicActionsExcludingChoicesReloadInitialization": 60,
+    "actionCounts": {
+      "new-game": 1,
+      "unpaid-entry-reload": 46,
+      "choice": 46,
+      "paid-result-reload": 45,
+      "travel": 13,
+      "drive": 29,
+      "meet-recruit": 1,
+      "recruit-step": 2,
+      "camp-meal": 1,
+      "camp": 6,
+      "accept-companion": 1,
+      "earned-perk": 2,
+      "explore": 1,
+      "walkfuel": 4
+    },
+    "entryReload": 46,
+    "paidResultReload": 45,
+    "reloadLoaded": 91,
+    "reloadFailed": 0,
+    "paidReapplied": 0,
+    "fatalChoicesWithoutResultReload": 1
+  },
+  "features": {
+    "actualRecruitment": [
+      {
+        "n": 64,
+        "id": "kangwoo",
+        "at": "gumi",
+        "day": 2,
+        "ok": true
+      }
+    ],
+    "route": [
+      "yangsan",
+      "miryang",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "sangju",
+      "gimcheon",
+      "sangju",
+      "gimcheon",
+      "sangju",
+      "mungyeong",
+      "chungju",
+      "mungyeong"
+    ],
+    "easternRescue": {
+      "events": [
+        "route_ridge_rescue",
+        "route_ridge_anchor",
+        "route_ridge_extract"
+      ],
+      "choiceTraces": [
+        94,
+        97,
+        100
+      ],
+      "newChoice": "아래 남자를 업고 짧게 치고 오른다"
+    },
+    "warmMeals": 1,
+    "camps": 6,
+    "emergencyFuelRequests": 4,
+    "encounteredEmergencyFuelChoices": 6,
+    "waterToll": {
+      "trace": 122,
+      "choice": "값을 치른다",
+      "scrapCost": 3,
+      "waterGained": 4
+    },
+    "withdrawalFromCheckpoint": {
+      "traces": [
+        163,
+        190
+      ],
+      "actualNoPipeOrMolotov": true
+    },
+    "cashTrades": 0,
+    "barterTrades": 0,
+    "localWork": 0,
+    "crafts": 0,
+    "upgrades": 0,
+    "radio": 0,
+    "sideQuestAcceptance": 0
+  },
+  "dialogueReview": {
+    "encounters": 46,
+    "newOrChangedEntries": 15,
+    "exactPreviouslyReviewedEntries": 31,
+    "newParagraphsRead": 41,
+    "exactPriorParagraphOccurrencesWithinChangedEntries": 48,
+    "method": "Exact [event,text,choices,choice,result] matches against cycles1–6; all changed choice contexts and new paragraphs read, repeated paragraphs SHA256 matched. Fatal raw result read only as diagnostic, not claimed visible.",
+    "scope": "All 46 encountered selections up to thirst ending, not the unseen remainder of the main story or an actual SESSION1END.",
+    "files": [
+      "transcript01.json",
+      "changed-transcript.json",
+      "review-collapsed.json"
+    ],
+    "notes": [
+      "Ridge rescue alternatives retain the remaining injured woman after first carrying the man.",
+      "No pipe/molotov/Eunsu leaves the disclosed 40-minute field retreat available.",
+      "Fuel waiting can fail and require longer walking; remaining food/water costs were disclosed.",
+      "Four-hour first collapse reaches day7 01:37; second partial sleep stops at fatal midnight before recovery or future result rendering."
+    ]
+  },
+  "findings": [],
+  "failureAnalysis": "failure-analysis.json",
+  "separateTerminalCheckpointVerification": {
+    "evidenceClass": "Separate normal terminal checkpoint load; not another journey or choice",
+    "loaded": true,
+    "ended": true,
+    "endKind": "thirst",
+    "day": 8,
+    "min": 0,
+    "party": [
+      "kangwoo"
+    ],
+    "resumePresentation": false,
+    "stateUnchanged": true,
+    "sourceHash": "7d7cf3b9bc7beda800db44b4c286f2126971a069ddb6c4351d8f17eef2e34a0d"
+  },
+  "scopedVerdict": "No newly confirmed production defect in this limited failed journey. Actual thirst death; not a successful main-story completion. Policy underprepared the multi-node eastern corridor and selected backward legal roads when forward fuel was short.",
+  "coverageLimits": [
+    "No Seoul ending, skyline, noodles or 143-year finale scene encountered in this run; do not count natural post-fix coverage for them.",
+    "No Eunsu recruitment, radio repair, hidden location, quest handoff, new craft/upgrade/clinic/disassembly in this attempt.",
+    "One real death retained; no additional fresh run or same-save continuation.",
+    "Actual browser remains root responsibility."
+  ]
+}

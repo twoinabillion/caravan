@@ -1,0 +1,31 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "잭은 여기! 아니 거기 아니고 여기!!"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "여기?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "거기 말고요. 거기 대면 밑판 찌그러져요. …아니, 찌그러지는 게 아니라 아예 뚫려요."
+  },
+  {
+    "kind": "narration",
+    "text": "두 시간의 스파르타 끝에 전원 실기 합격. 민지가 손수 만든 수료증(박스 조각)을 발급했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "이거 유효기간 있어?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…생각 안 해봤는데. 있는 걸로 해요."
+  }
+]

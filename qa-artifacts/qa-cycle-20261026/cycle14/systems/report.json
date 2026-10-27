@@ -1,0 +1,288 @@
+{
+  "cycle": 14,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 274002,
+  "evidenceClass": "Actual production engine VM + actual07 reader/NPC/radio/speech/scene extraction. Finite public actions; not browser/audio playback.",
+  "engineSourceHash": "52a1873eab1c96a321c39513d5c6ceff4d8b7df69eb13677b87bd2049ffd007b",
+  "sourceUnchangedAcrossJourney": true,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "terminalJourneys": 1,
+  "policyStops": 0,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "fixtureJourneys": 0,
+  "productionChangesDuringJourney": [],
+  "result": {
+    "ending": "story_done",
+    "method": "core_sleep",
+    "ended": true,
+    "storyDone": true,
+    "session1End": true,
+    "day": 10,
+    "km": 556,
+    "actualCompanions": [
+      "jaeyi",
+      "eunsu"
+    ],
+    "bori": false
+  },
+  "totals": {
+    "choices": 75,
+    "traceRecords": 412,
+    "publicActionsExcludingChoicesReloadInitialization": 186,
+    "actionCounts": {
+      "new-game": 1,
+      "unpaid-entry-reload": 75,
+      "choice": 75,
+      "paid-result-reload": 75,
+      "explore": 27,
+      "travel": 15,
+      "drive": 30,
+      "camp-meal": 9,
+      "camp": 9,
+      "trade": 40,
+      "work": 11,
+      "board-open": 5,
+      "accept-quest": 1,
+      "turnin-quest": 1,
+      "npc-rumor": 12,
+      "meet-recruit": 2,
+      "buy-upgrade": 4,
+      "recruit-step": 5,
+      "accept-companion": 2,
+      "earned-perk": 3,
+      "craft": 5,
+      "seoul-enter": 5
+    },
+    "entryReload": 75,
+    "paidResultReload": 75,
+    "reloadLoaded": 150,
+    "reloadFailed": 0,
+    "paidReapplied": 0,
+    "paidReaderEqual": 75,
+    "knownUiDisabledRejectedRecruitApiCalls": 0,
+    "radioFirstBroadcastReloadSkipped": 0,
+    "novelChoicePairs": 5,
+    "novelChoicePairsBaseline": "All systems cycles1-13 actual event+selected label"
+  },
+  "features": {
+    "successfulRecruitments": [
+      {
+        "trace": 167,
+        "id": "jaeyi",
+        "result": true
+      },
+      {
+        "trace": 294,
+        "id": "eunsu",
+        "result": true
+      }
+    ],
+    "upgrades": [
+      {
+        "trace": 118,
+        "id": "antenna",
+        "result": true
+      },
+      {
+        "trace": 119,
+        "id": "lightbar",
+        "result": true
+      },
+      {
+        "trace": 120,
+        "id": "sidebox",
+        "result": true
+      },
+      {
+        "trace": 244,
+        "id": "armory",
+        "result": true
+      }
+    ],
+    "crafts": [
+      {
+        "trace": 247,
+        "id": "pipe",
+        "result": true
+      },
+      {
+        "trace": 248,
+        "id": "xbow",
+        "result": true
+      },
+      {
+        "trace": 249,
+        "id": "bolt",
+        "result": true
+      },
+      {
+        "trace": 250,
+        "id": "molotov",
+        "result": true
+      },
+      {
+        "trace": 251,
+        "id": "ammo",
+        "result": true
+      }
+    ],
+    "craftDiscount": "All5 after armory:20minutes each; scrap5/10/3/2/7, molotov fuel2",
+    "procurementAcceptances": [
+      {
+        "trace": 69,
+        "id": null,
+        "result": true
+      }
+    ],
+    "procurementHandoffs": [
+      {
+        "trace": 70,
+        "id": null,
+        "result": true
+      }
+    ],
+    "procurementEvidence": "Miryang parts7->5,scrap35->59 only explicit turnin,includes speedbonus4",
+    "cashSupplyTrades": 40,
+    "localWork": 11,
+    "publicExplorations": 27,
+    "camps": 9,
+    "warmMeals": 9,
+    "publicNpcRumors": 12,
+    "boardOffersRead": 5,
+    "sideQuestExplicitDecline": 0,
+    "naturalTubeAcquisition": false,
+    "naturalRadioRepair": false,
+    "naturalRadioBroadcasts": 0,
+    "actualPickRadioCalls": 0,
+    "route": [
+      "yangsan",
+      "miryang",
+      "hapcheon",
+      "geochang",
+      "muju",
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "nonsan",
+      "daejeon",
+      "cheongju",
+      "cheonan",
+      "pyeongtaek",
+      "suwon",
+      "seoul"
+    ],
+    "novelChoicePairs": [
+      {
+        "event": "ev_convenience_store",
+        "choice": 0,
+        "trace": 42,
+        "label": "구석구석 뒤진다"
+      },
+      {
+        "event": "near_hapcheon_sutra",
+        "choice": 0,
+        "trace": 89,
+        "label": "수레를 밀어드린다"
+      },
+      {
+        "event": "exp_school",
+        "choice": 0,
+        "trace": 222,
+        "label": "교실에 들어가본다"
+      },
+      {
+        "event": "hist_bot_stop_manual",
+        "choice": 0,
+        "trace": 306,
+        "label": "배선을 기록한다"
+      },
+      {
+        "event": "ev_jaeyi_law",
+        "choice": 0,
+        "trace": 340,
+        "label": "\"가격 말고 거래 방식도 적는 거네요\""
+      }
+    ]
+  },
+  "dialogueReview": {
+    "encounters": 75,
+    "priorCyclesExact": 65,
+    "newOrChangedEntries": 10,
+    "newParagraphsRead": 31,
+    "actualReaderTurns": 647,
+    "actualReaderExactPriorTurns": 583,
+    "actualReaderNewTurnsRead": 64,
+    "actualReaderChangedEntries": 13,
+    "readerComparisonBaseline": "cycle12/systems/reader-diagnostic-after.json and cycle13/systems/reader-transcript.json exact complete turn objects",
+    "npcGreetingAndRumorPairsRead": 12,
+    "npcShownGroups": 24,
+    "roadSpeechOccurrencesRead": 31,
+    "uniqueRoadSpeechesRead": 23,
+    "crewChatGroupsRead": 9,
+    "chatSpeechRows": 32,
+    "localWorkResultsRead": 11,
+    "radioBroadcastsRead": 0,
+    "fullEncounteredReviewComplete": true,
+    "terminalRevealAndSessionEndRead": true
+  },
+  "findings": [
+    {
+      "id": "C14-SYS-01",
+      "event": "ev_jaeyi_law",
+      "trace": 340,
+      "entry": "player02/attempt01/entry-339-ev_jaeyi_law-export.json",
+      "title": "재이의 장부 설명과 플레이어 질문 화자가 뒤집힘",
+      "observed": "entry [jaeyi,me,jaeyi], outcome0 [jaeyi,me]",
+      "expected": "entry [me,jaeyi,jaeyi], outcome0 [jaeyi,jaeyi]; every alternate outcome reviewed separately"
+    },
+    {
+      "id": "C14-SYS-02",
+      "event": "lc_suwon_galbi",
+      "trace": 367,
+      "entry": "player02/attempt01/entry-366-lc_suwon_galbi-export.json",
+      "title": "명시 문지기 발화가 익명 피난민으로 표시됨",
+      "observed": "entry guard3 lines and result consecutive guard question use passer_refugee/???",
+      "expected": "Existing passer_guard role/portrait, consecutive guard question retains role"
+    },
+    {
+      "id": "C14-SYS-03",
+      "event": "gp_note2",
+      "trace": 182,
+      "entry": "player02/attempt01/entry-181-gp_note2-export.json",
+      "title": "정비 수첩 글이 할아버지 현장 대화로 표시됨",
+      "observed": "First written passage dialogue/grandfather; child graffiti record/grandfather, rendered as generic 기록",
+      "expected": "Separate written source labels; do not claim a wrong grandfather name is visibly printed on the graffiti"
+    }
+  ],
+  "confirmedIssues": 3,
+  "terminalReload": {
+    "evidence": "terminal-reload.json",
+    "excludedFromJourneyCounts": true,
+    "unchanged": true
+  },
+  "sceneEvidence": {
+    "actualUniqueEventIds": 75,
+    "files": [
+      "scene-evidence.json",
+      "scene-review-list.json",
+      "scene-review-list.md"
+    ],
+    "scope": "Actual scene keys/subjects; image and crop root-owned"
+  },
+  "coverageLimits": [
+    "No natural tube/repairman/duo_appraisal/freq chain/radio broadcast; no forced fixture claimed as natural.",
+    "No explicit side mission decline, driver clinic, barter, upgrade removal/reinstall,Bori or third companion.",
+    "Only core_sleep executed.",
+    "No actual screenshot/mobile input/audible queue claims."
+  ],
+  "postJourneyRepairs": {
+    "status": "Root approved3event repairs and separate Jaeyi/Leo family static audit after immutable source-end40",
+    "projectionOwner": "story"
+  },
+  "scopedVerdict": "Fresh finite journey reached SESSION1END and all encountered new prose/reader reviewed.3 actual reader/source defects; no effects or reload failure."
+}

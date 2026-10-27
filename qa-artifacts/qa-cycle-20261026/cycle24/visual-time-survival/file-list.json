@@ -1,0 +1,350 @@
+{
+  "scope": "Own two staged-art directories only; includes completed README/checkpoint; excludes this manifest itself",
+  "files": [
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/README.md",
+      "bytes": 3570,
+      "sha256": "ada6fa02eaa1c479dedddc6afaefad1b8e6b8d2d792d40226518f1e01eb2241e"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/explore-ev-charging-parking-v1.webp",
+      "bytes": 145466,
+      "sha256": "6d437b63b66ecfb879fa863ae8f39d07474e6176c8828577cb6353f5e27a85ed"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/local-daegu-makchang-alley-v1.webp",
+      "bytes": 129670,
+      "sha256": "e5a069a991df48abfeae37b9d7847cfa16220cca5265cc0ae6a4a006b6ba1ef8"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/story-grandfather-envelope-detail-v1.webp",
+      "bytes": 122330,
+      "sha256": "3d8dc1fe332540cf6036f791ec5d4e721f553dc4f3365173d20c40c46ce278d0"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/edit-requests.json",
+      "bytes": 5056,
+      "sha256": "b9e551a6acc9c2908e8e389259195c96e5fdf12b62ed8e33636db50ade09c0ed"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/edit01-input-limit.json",
+      "bytes": 316,
+      "sha256": "9d91d2bb480b8bcd3f2d7a7ec194ee1ce884224be4869e48a0ad4169dc585c5b"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/ev-edit03-request.json",
+      "bytes": 2224,
+      "sha256": "f037ac0008b6603f2ebd0c35425caec0b0c534bca8da7ecffaa3c549c572de20"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/event-reader-review.json",
+      "bytes": 19129,
+      "sha256": "3d935c52ac7552d6c9ec0b8ae369865809af252d320e1da426a537a765fb2335"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/generation-attempt01.json",
+      "bytes": 974,
+      "sha256": "9cd087bac23c3d14f8ce171353d4ef953504d8fe1a705aa8d20106b8e5e64db1"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/geometry-verification.json",
+      "bytes": 5836,
+      "sha256": "06f9eb48d113d0c640c30eb3fa2741a8a6baff5d4df778d43440f7ae6825b29f"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft01.png",
+      "bytes": 3140564,
+      "sha256": "7bf32d66561f34b7ce64d1dc1eb52c0d57b86e92e8dfb6945eb6ce00c739fde3"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft02.png",
+      "bytes": 2921078,
+      "sha256": "b27d69490d1b12fed40136d2b04d32ea945c22e3b620c4b0d0b05c8e56aacb4c"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft03.png",
+      "bytes": 2738329,
+      "sha256": "07fa7e0f4da24ded7e16a548f3ea9397874e2b805ed4ff11415f500a31836192"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1.png",
+      "bytes": 2663350,
+      "sha256": "cbf59f0c93ed33a55fbb7859d03d93dda1de0a3a83f6484ff9d0cf8f13d6920f"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1-draft01.png",
+      "bytes": 2396956,
+      "sha256": "ac4f17faeafb581445b071d20f849a2b75d827c56ea3ae69449d1f54b1bd6c14"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1.png",
+      "bytes": 2576915,
+      "sha256": "7d1e427f790bd67135af06a03df746701384601517ebba00dcc2e79a95d67dae"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/story-grandfather-envelope-detail-v1.png",
+      "bytes": 2541977,
+      "sha256": "242c68fab53f4e92661d324dfd257f9a1c3d1d53a793e7942b19e868e3cc2525"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/production-before.json",
+      "bytes": 5468,
+      "sha256": "76d68ca0cf4f503a836784dfc9bc32f815e149b609f05266cc8aaba2eb9cbca5"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1-edit01.txt",
+      "bytes": 1929,
+      "sha256": "86ebe68007372cca55f985a64cad8b26babcf255c86e6fea62653be5ac2825df"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1-edit02.txt",
+      "bytes": 1607,
+      "sha256": "0cd34be5eeca57d76580092c47c751f1cda6224f2355129a8d2f8e404a450d5e"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1-edit03.txt",
+      "bytes": 1700,
+      "sha256": "311a8aa7fd891096b795aee7c455bee12b11c3e6c8e6d8587ffb787501613c73"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1.txt",
+      "bytes": 2620,
+      "sha256": "0e02058289468fd3fac83fe7f1aeab8883db26c2e730af8984fdca76a10d991e"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/local-daegu-makchang-alley-v1-edit01.txt",
+      "bytes": 1875,
+      "sha256": "4b93593fd5df3436ad93b76b3f90344573bdeb5a3da94fe768083355d800e51b"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/local-daegu-makchang-alley-v1-generate02.txt",
+      "bytes": 3391,
+      "sha256": "a2bc4319f406b2c304e2513f641965665c7ca090825a4f181a83da06902f9975"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/local-daegu-makchang-alley-v1.txt",
+      "bytes": 2769,
+      "sha256": "283de3b799b284e8113e2396d41be7201f4e7c083f8d1e41939b45b177d20380"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/story-grandfather-envelope-detail-v1.txt",
+      "bytes": 2513,
+      "sha256": "303693843c8426885b518f88147bebf241032d2ccd0598920836b211719274c0"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/provenance.json",
+      "bytes": 11116,
+      "sha256": "ff23b9dc654fd998cfe2e7ed64dc5e3fb659680ac7bcdb8829b7df24af35dab7"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/requests.json",
+      "bytes": 17075,
+      "sha256": "8f431385f9b07b01c7903d33bd6a9e61716fb97676e1ed19ed292eef8425ba96"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/retry-requests.json",
+      "bytes": 6117,
+      "sha256": "a31d8989fa13a692d57ca6c55a68b1547633ef9eef5870b45a8f0addd69c6b0c"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review.json",
+      "bytes": 3720,
+      "sha256": "6de4d12bf316029c7e4cf77ca505a85ba6b934a81fca39c4f0c3e1db75c997e0"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/explore-ev-charging-parking-v1-360.png",
+      "bytes": 175750,
+      "sha256": "8936fffee4a2be7a9619462bde61761b11ecef908f60a9acc40d5a9e33ca5141"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/explore-ev-charging-parking-v1-480.png",
+      "bytes": 287012,
+      "sha256": "cf6bd623e7af9bc4fd844396e5f5078adb1e40f406fb0b0cb6ccab72a31e0402"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/local-daegu-makchang-alley-v1-360.png",
+      "bytes": 178874,
+      "sha256": "aabcb57f4f4dc4d950b8727a792c5f75f705c1ca8e21d9e0ad47012af3978363"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/local-daegu-makchang-alley-v1-480.png",
+      "bytes": 299212,
+      "sha256": "c9a2579c5e3cbcde432aa23adf22264746d66e79ebbb2dd9a82fffb0376fbe07"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/story-grandfather-envelope-detail-v1-360.png",
+      "bytes": 175219,
+      "sha256": "dccc8262181c439990b9c42434915a6b502ba9efd94fdbf9201c9eb7fdbf33e9"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/story-grandfather-envelope-detail-v1-480.png",
+      "bytes": 288885,
+      "sha256": "0fc9d273d5870c5fc2aad2e382ddd9d467fabd0f0b3c457b15bdc669ede46432"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/source-context-verification.json",
+      "bytes": 6001,
+      "sha256": "c3466831dd4e9502561e715c3f1ad78f645393197a4095b2122688efa7e0335a"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/tool-validation-failures.json",
+      "bytes": 528,
+      "sha256": "4fecb0700e2230339dd2e96dae9be0949332d334f62c6e0b1b468c33cebd79d8"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/README.md",
+      "bytes": 5287,
+      "sha256": "971e629759e0d2d15abeb3684ec4a37337b4de33b49096b67851ddf9886f8d75"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/before.json",
+      "bytes": 5923,
+      "sha256": "0e39237e87d99385988d67867112e98e15f6dd4db70a7d92d7aed14a00c1d619"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/event-vista-road-night-v1.webp",
+      "bytes": 126240,
+      "sha256": "29eda797b0528805d88f2c5a538d4f64072a04ff912dc446396aedcfa89d6d5f"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-han-night-v1.webp",
+      "bytes": 148500,
+      "sha256": "dfd1a3765a3b7321aa65a786836406fa571f62393ad98d47e821846096c398c2"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-day-v1.webp",
+      "bytes": 184044,
+      "sha256": "e6a96f440658c24a4ecaae8698de3b7d14aa774eb651a2f77b2c151b92cf63ae"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-night-v1.webp",
+      "bytes": 174562,
+      "sha256": "016ca691b7eaf8eb9cfff3cc40b242666802d92fe4b2be1431db7d788031ab0e"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/event-reader-review.json",
+      "bytes": 30992,
+      "sha256": "d9f2c750b0c48ae6bec3fc378362662122c935d49bfcc44f12889c6024614af8"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/export.cjs",
+      "bytes": 2593,
+      "sha256": "c1bd6e90a55c78a20909ccdf1f5570f12ee64b469248bae3e6e0922e7df666b9"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/export.log",
+      "bytes": 728,
+      "sha256": "318ddea5054b290f08fae38f1df6ed9107781d7c028f4c54f878f2d0735606b1"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/geometry-verification.json",
+      "bytes": 4813,
+      "sha256": "85233c13356605470935bde382e923cf0a0b9d0c670f7e9522cb0e2ddc8395fc"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/event-vista-road-night-v1.png",
+      "bytes": 2730995,
+      "sha256": "2ac09c81a81164c4a3ffdd85a3922307661a2e46ec4f010a87bc45deeb6ad613"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-han-night-v1.png",
+      "bytes": 2462048,
+      "sha256": "bcc03364a16ae35594ce4f0f753c505ef4f7f17ec665cf37456fe68a063edaf3"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-day-v1.png",
+      "bytes": 2752835,
+      "sha256": "1fcc6b1be2e016b3e77ae32d6da29e54d2771249c5ee1d732a3d55367e815696"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-night-v1.png",
+      "bytes": 2618928,
+      "sha256": "764a2f4ab74bbee86ba7717056007826f7717473388e64cdd74b7541f5262de9"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/event-vista-road-night-v1.txt",
+      "bytes": 2624,
+      "sha256": "7dc12c501aa7f0abd553900714c453cfef98c4e6e68b1ca5b3e8061ec6081708"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/seoul-han-night-v1.txt",
+      "bytes": 2723,
+      "sha256": "9373e68177cdd748fbd9a5605d3a1e91f8edbcc6c9968d90cd3d8b7ee7c34dba"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/seoul-ruins-green-day-v1.txt",
+      "bytes": 2749,
+      "sha256": "1dd5b8fa464022d530417535131cbfb9a5313fe47b2199afb3ce13dc82f64a18"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/seoul-ruins-green-night-v1.txt",
+      "bytes": 2180,
+      "sha256": "9f322e2ebaa775ea3729e7b4ac31d1581da483c63b213a9c09ce1a7f22655fe1"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/provenance.json",
+      "bytes": 11313,
+      "sha256": "8eba520dc4720711ff3d1267872732cc16a92dc4cf2246b21aa072c50991ec23"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/requests.json",
+      "bytes": 17710,
+      "sha256": "35779ea070bd1a8bbe9cbf0620b988cfa9a93bd79db73ee5401eae9ff442c855"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review.json",
+      "bytes": 5322,
+      "sha256": "f6d97da1beb2e6cd19021ef5a63a8f35b982cf886ac28c546d1d81cd15c6d6c5"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/event-vista-road-night-v1-360.png",
+      "bytes": 143296,
+      "sha256": "d5bad8c2474bdf24d7fd0828084596e2aa87991d80afd1fc6db1d3348dd5d0be"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/event-vista-road-night-v1-480.png",
+      "bytes": 230623,
+      "sha256": "1e9b6f6753928b2951c805e14038b17c4f0f64016f929cadb5121c0f66ffac77"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-han-night-v1-360.png",
+      "bytes": 123898,
+      "sha256": "b45c6810d48d5ee3cd1e57e4f260931019135132159901936c9cd8f5d19edaea"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-han-night-v1-480.png",
+      "bytes": 189851,
+      "sha256": "b3e59bbb5b794da00757ff6229f2a02d2212c10ff3cbb93a8b743a7fe63fbede"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-day-v1-360.png",
+      "bytes": 172672,
+      "sha256": "34a82583d33412d64a97321b3d8c38e70c6ad5da0e481e406de56f4946c2c7c8"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-day-v1-480.png",
+      "bytes": 264747,
+      "sha256": "3d5448ee4603580d304e64773ea160aa480941bec68b15ecd239193bac5323c8"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-night-v1-360.png",
+      "bytes": 145923,
+      "sha256": "4ceda95f3da5e364e0b67288ba862e6848ac60265db4b17ec7428a1e5019af94"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-night-v1-480.png",
+      "bytes": 231186,
+      "sha256": "804d30427c9609e652cadfceed90086fe4c80ae297f1d679e5d469f359d47acd"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/ruins-night-request.json",
+      "bytes": 2820,
+      "sha256": "7dac2e12944a6dac50708b9b086864f7e0ddb31cadce8f160bd79e0fb4787fd2"
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/stop-checkpoint.json",
+      "bytes": 17005,
+      "sha256": "35ce14cf8b1093a4b54361c604e783fc35fcad512cca8d0d42fdb0ee08557c8d"
+    }
+  ]
+}

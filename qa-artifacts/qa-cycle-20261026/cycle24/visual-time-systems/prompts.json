@@ -1,0 +1,582 @@
+[
+  {
+    "key": "comp-talk-kangwoo-camp-day-v1",
+    "event": "talk_kw_16",
+    "format": "character",
+    "timeVariant": "day",
+    "oldAsset": "assets/scenes/comp-talk-kangwoo-camp-v1.jpg",
+    "oldAssetSha256": "701c91f5f6fb4b10d1f589507d8909ec76443528c582ab1438deecebcde5e003",
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nA new DAYTIME variant for a present-tense conversation with Kangwoo. Reference5 is his exact canonical portrait: Korean man with a square weathered face, short buzz cut, muted olive field jacket, sober guarded expression. One human only. Tight waist-up, eye-level portrait in an ordinary roadside camp pause. His hand quietly offers a small unlabelled opened paper packet of plain hardtack crackers with exactly TWO small white star-shaped sugar candies visible near the top. The packet is still in his possession, before the player chooses whether to return one candy or ask why he offered it. He is not eating and no second hand/person reaches in. Soft cool diffuse daylight, no lit flashlight, lantern or nighttime setting. Background is only a shallow worn tarpaulin edge and subdued roadside vegetation, no visible Dalguji body or vehicle at all. No other companions/player/dog, no badges or new weapons. Natural face, rough hands and restrained warmth; face and offered packet both clearly readable. Keep his actual portrait identity/age/clothes.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+    "referenced_image_paths": [
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "/Users/sang/caravan/assets/portraits/kangwoo.png"
+    ],
+    "transparent_background": false,
+    "references": [
+      {
+        "path": "assets/reference/visual-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+      },
+      {
+        "path": "assets/reference/world-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+      },
+      {
+        "path": "assets/reference/people-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+      },
+      {
+        "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "role": "canonical-style",
+        "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+      },
+      {
+        "path": "assets/portraits/kangwoo.png",
+        "role": "character-portrait",
+        "sha256": "d0f5658d87b6d386f8a77f0c78e7e2a5d4e734e1ab016e6903f4c1abe43dc409"
+      }
+    ],
+    "promptSha256": "065ab1f5758077af64d1433a4dfd8a78b09e8875242bc38082a52f03fa3ac68a",
+    "baseExact": true,
+    "negativeExact": true,
+    "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+    "sourceEvent": {
+      "id": "talk_kw_16",
+      "trace": 584,
+      "day": 13,
+      "min": 495,
+      "sceneKeys": [
+        "comp-talk-kangwoo-camp-v1"
+      ],
+      "asset": "assets/scenes/comp-talk-kangwoo-camp-v1.jpg",
+      "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-582-talk_kw_16.json",
+      "observation": "08:15 개인대화에 야간 경계 원본. registry도 야간 명시.",
+      "definition": {
+        "id": "talk_kw_16",
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "kangwoo",
+        "title": "강우 — 전투식량 교환",
+        "text": "강우가 자기 몫의 건빵을 말없이 내밀었다.\n\n\"…별사탕이 두 개 들었습니다. 오늘은 운이 좋은 봉지입니다.\"",
+        "choices": [
+          {
+            "label": "별사탕 하나를 돌려준다",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"하나면 됩니다.\" \"저도 하나면 돼요. 그러니까 하나씩.\"\n\n\"…하나면 된다니까.\" \"네. 그래서 하나 드리는 거예요.\"\n\n강우가 셈이 안 맞는다는 얼굴로 3초쯤 별사탕을 보다가, 입에 넣었다.\n\n\"……답니다.\" 그 한마디가 강우식 만찬 소감이었다.",
+                "fx": {
+                  "mood": {
+                    "kangwoo": 4
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "\"운 좋은 봉지는 왜 저 줘요?\"",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"…운은 나눠야 커집니다. 부대 미신입니다.\"\n\n강우도 별사탕 하나를 꺼내 입에 넣었다. 둘 다 녹을 때까지 씹지 않았다.",
+                "fx": {
+                  "mood": {
+                    "kangwoo": 3
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "sceneMetadata": {
+        "eventScene": "comp-talk-kangwoo-camp-v1",
+        "turnScenes": null,
+        "stages": null,
+        "choiceScenes": null
+      }
+    }
+  },
+  {
+    "key": "comp-talk-parkss-camp-day-v1",
+    "event": "talk_pss_18",
+    "format": "character",
+    "timeVariant": "day",
+    "oldAsset": "assets/scenes/comp-talk-parkss-camp-v1.jpg",
+    "oldAssetSha256": "6dac78422f40e72a17fe3f517be4f2e2d02b1294e917ecb656606d6a23d0ae5c",
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nA new DAYTIME variant for a present-tense roadside conversation with Park Seungsu / Parkss. Reference5 is his exact canonical portrait: older Korean doctor, swept gray hair, thin round glasses, lined calm face, gray-blue sweater vest over a worn gray patterned shirt. One human only. Tight seated waist-up eye-level view during a roadside camp pause. He holds up a small old prescription memo with only undecipherable pen marks, no legible Korean or Latin writing; a worn brown medical bag rests next to his elbow, partly visible. A pen can be held loosely but he has not yet written the player name or handed over a completed choice reward. Subtle amused self-conscious expression. Soft cool diffuse daylight, no night sky, glowing lantern or theatrical light. Simple weathered tarp/wood and muted distant greenery behind him; Dalguji exterior is entirely out of frame. No patient, player, companion, dog or second human. Preserve portrait face, age, glasses and clothes; ordinary lived-in realism, no studio portrait finish.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+    "referenced_image_paths": [
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "/Users/sang/caravan/assets/portraits/parkss.png"
+    ],
+    "transparent_background": false,
+    "references": [
+      {
+        "path": "assets/reference/visual-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+      },
+      {
+        "path": "assets/reference/world-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+      },
+      {
+        "path": "assets/reference/people-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+      },
+      {
+        "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "role": "canonical-style",
+        "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+      },
+      {
+        "path": "assets/portraits/parkss.png",
+        "role": "character-portrait",
+        "sha256": "ca672c6cf0638f457e88f4db0f063d44e2f567fe7573e12c44ddef40d3c4faed"
+      }
+    ],
+    "promptSha256": "4589ca583ef56145e5eae38264d1de915d84b168ded0b8209af968bb4e60b23e",
+    "baseExact": true,
+    "negativeExact": true,
+    "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+    "sourceEvent": {
+      "id": "talk_pss_18",
+      "trace": 484,
+      "day": 11,
+      "min": 425,
+      "sceneKeys": [
+        "comp-talk-parkss-camp-v1"
+      ],
+      "asset": "assets/scenes/comp-talk-parkss-camp-v1.jpg",
+      "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-482-talk_pss_18.json",
+      "observation": "07:05 개인대화에 깊은 밤 왕진 가방/등불 원본. registry도 깊은 밤 명시.",
+      "definition": {
+        "id": "talk_pss_18",
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "parkss",
+        "needBond": [
+          "parkss",
+          5
+        ],
+        "turnSpeakers": [
+          "parkss"
+        ],
+        "title": "박 선생 — 악필의 이유",
+        "text": "박 선생의 처방 메모는 심각한 악필이다. 해독 불가 수준.\n\n\"…허, 들켰나. 이거 일부러 이래.\"",
+        "choices": [
+          {
+            "label": "\"일부러요?\"",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"약 이름을 애들이 읽고 함부로 사 먹을까 봐. 약사만 읽게 쓰는 버릇이 들었어.\"\n\n\"…그럼 다른 약사는 읽어요?\"\n\n\"못 읽지. 그건 나도 나중에 알았고.\" 박 선생이 메모를 들어 보였다. \"이건 「푹 잘 것」이라고 쓴 거야. 자네 처방.\"\n\n어느 획이 「푹」인지는 끝내 못 찾았다. 종이는 접어 두고, 어깨에 들어간 힘부터 풀었다.",
+                "turnSpeakers": [
+                  "parkss",
+                  "me",
+                  "parkss",
+                  "parkss"
+                ],
+                "fx": {
+                  "mood": {
+                    "parkss": 4
+                  },
+                  "fatigue": -2
+                }
+              }
+            ]
+          },
+          {
+            "label": "\"제 이름 써주세요. 해독해볼게요\"",
+            "out": [
+              {
+                "p": 1,
+                "text": "박 선생이 슥슥 갈겨썼다. 오래 들여다봐도 모르겠다.\n\n\"…항복이에요.\"\n\n\"잘 봐. 여기가 자네 이름이고.\"\n\n\"여기요?\"\n\n\"거기 말고 그 옆에. …아니 거기.\" 결국 손가락으로 짚어줬다. \"뒤에 붙은 건 「튼튼함」이야. 내 처방전엔 다 그렇게 붙어.\"\n\n차에 탄 사람들 이름 뒤에 전부 「튼튼함」이 붙어 있었다.",
+                "turnSpeakers": [
+                  "me",
+                  "parkss",
+                  "me",
+                  "parkss",
+                  "parkss"
+                ],
+                "fx": {
+                  "mood": {
+                    "parkss": 5
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "sceneMetadata": {
+        "eventScene": "comp-talk-parkss-camp-v1",
+        "turnScenes": null,
+        "stages": null,
+        "choiceScenes": null
+      }
+    }
+  },
+  {
+    "key": "combat-walker-watch-night-v1",
+    "event": "perimeter_first",
+    "format": "action",
+    "timeVariant": "night",
+    "oldAsset": "assets/scenes/combat-walker-watch-v1.webp",
+    "oldAssetSha256": "3a71631a9986888378e1467984bee5dee47b087a6c79ddf20960ee7f9b54dbbb",
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nEDIT the FIRST image into the same scene at true NIGHT. Keep the exact four-legged administrative-gray patrol walker design, its red lens, cow-scale human-sized presence, center-right placement, worn industrial road, wrecks, barriers and elevated roadway, and the partly seen canonical Dalguji behind the left barrier. Keep all objects and composition; add no people, other machines, extra weapons, explosions, wreck damage or new narrative action. Remove daylight/bright sky/sunrise from the original and replace with a genuinely dark overcast night sky and dark distant ridges. Show the robot and road through restrained existing vehicle/headlamp spill and dim practical industrial light, cool night ambient with a little existing amber from Dalguji windows; the image must remain legible without turning into bright twilight. No bright moon/stars needed, no neon cyberpunk. The event is the current first perimeter encounter, not a future battle victory or destroyed robot. References2–5 maintain canonical style/vehicle only. This is a lighting/time variant, not a redesigned scene.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+    "referenced_image_paths": [
+      "/Users/sang/caravan/assets/scenes/combat-walker-watch-v1.webp",
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+    ],
+    "transparent_background": false,
+    "references": [
+      {
+        "path": "assets/scenes/combat-walker-watch-v1.webp",
+        "role": "edit-target",
+        "sha256": "3a71631a9986888378e1467984bee5dee47b087a6c79ddf20960ee7f9b54dbbb"
+      },
+      {
+        "path": "assets/reference/visual-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+      },
+      {
+        "path": "assets/reference/world-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+      },
+      {
+        "path": "assets/reference/people-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+      },
+      {
+        "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "role": "canonical-style",
+        "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+      }
+    ],
+    "promptSha256": "aba641ed406ca8ff936e67f64b605aaf41455f1cb90b60ca746adf137381efc5",
+    "baseExact": true,
+    "negativeExact": true,
+    "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+    "sourceEvent": {
+      "id": "perimeter_first",
+      "trace": 152,
+      "day": 3,
+      "min": 1384,
+      "sceneKeys": [
+        "combat-walker-watch-v1"
+      ],
+      "asset": "assets/scenes/combat-walker-watch-v1.webp",
+      "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-150-perimeter_first.json",
+      "observation": "23:04 위수 구역에 구름과 땅이 주광으로 밝은 낮 원본.",
+      "definition": {
+        "id": "perimeter_first",
+        "type": "스토리",
+        "w": 0,
+        "fixed": true,
+        "ai": 1,
+        "title": "위수 구역",
+        "scene": "combat-walker-watch-v1",
+        "sfx": "warning",
+        "text": "도로 한복판에— 그것이 서 있다.\n\n4족 보행기. 소만 한 크기. 도색은 관공서 회색. 몸통의 렌즈가 차를 향해 조리개를 조인다.\n\n<span class=\"ai\">\"정지. 위수 구역입니다.\"</span>\n\n차를 훑는 초록 스캔선. 그리고—\n\n탕. 경고사격이 차 옆 아스팔트를 때렸다. 기계가 처음으로, 우리에게 무기를 겨눴다.\n\n<span class=\"ai\">\"등록되지 않은 차량. 다음 확인 시 회차를 강제합니다. 좋은 하루 되세요.\"</span>\n\n보행기는 유유히 갓길로 물러나 도로를 열어줬다.",
+        "choices": [
+          {
+            "label": "…지나간다",
+            "out": [
+              {
+                "p": 1,
+                "text": "보행기가 물러난 뒤에도 한동안 핸들을 놓지 못했다. 그제야 생각이 문장으로 굳었다.\n\n남쪽은 그것의 '바깥'이었다. 여긴 '안'이다.\n\n차에서 내려 옆판을 살폈다. 경고탄에 튄 아스팔트 파편이 외판을 찍고 지나갔다. 패인 자국을 장갑 낀 손으로 쓸어 봤다.\n\n뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다. 맨손으로 다닐 땅이 아니었다.",
+                "fx": {
+                  "van": -6,
+                  "flag": "armed_age",
+                  "pursuit": 1,
+                  "note": {
+                    "type": "사건",
+                    "title": "첫 경고사격",
+                    "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+                    "links": [
+                      "천리안"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "sceneMetadata": {
+        "eventScene": "combat-walker-watch-v1",
+        "turnScenes": null,
+        "stages": null,
+        "choiceScenes": null
+      }
+    }
+  },
+  {
+    "key": "event-crisis-exhaustion-night-v1",
+    "event": "crisis_drowsy",
+    "format": "detail",
+    "timeVariant": "night",
+    "oldAsset": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+    "oldAssetSha256": "84880aa6a20695c1e81499c9495cdecf25a13f2dacd3183b202f854e8036d70e",
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nEDIT the FIRST image into the same driver-seat view at true NIGHT. Preserve windshield framing, worn steering wheel, exactly two gloved driver hands, old analog dashboard/amber instrument glow, empty winding Korean road, lane markings, roadside guardrails and poles. No face, passengers or vehicle exterior appears. Remove the bright sunrise/daylit sky and distant daylight; a genuinely dark night road ahead is illuminated only by the vehicle headlights with a limited plausible beam, surrounding hills are dark silhouettes and the dashboard remains dimly readable. No moon/star spectacle, glowing city, working radio broadcast display, oncoming cars, crash, scratches being made, parked sleep, water washing or singing action. This is the tired-driving entry before three choices; no outcome is predetermined. Keep the realistic35–50mm perspective, no artificial motion-blur or double-road special effect. References2–5 are continuity/style guides only; do not insert their people or van.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+    "referenced_image_paths": [
+      "/Users/sang/caravan/assets/scenes/event-crisis-exhaustion-v2.jpg",
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+    ],
+    "transparent_background": false,
+    "references": [
+      {
+        "path": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+        "role": "edit-target",
+        "sha256": "84880aa6a20695c1e81499c9495cdecf25a13f2dacd3183b202f854e8036d70e"
+      },
+      {
+        "path": "assets/reference/visual-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+      },
+      {
+        "path": "assets/reference/world-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+      },
+      {
+        "path": "assets/reference/people-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+      },
+      {
+        "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "role": "canonical-style",
+        "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+      }
+    ],
+    "promptSha256": "ad58c9348084bc5a8dc0bec597f0f66ce98a4c360c2f0669bf7ecb635003f27d",
+    "baseExact": true,
+    "negativeExact": true,
+    "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+    "sourceEvent": {
+      "id": "crisis_drowsy",
+      "trace": 395,
+      "day": 9,
+      "min": 147,
+      "sceneKeys": [
+        "event-crisis-exhaustion"
+      ],
+      "asset": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+      "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-393-crisis_drowsy.json",
+      "observation": "02:27 졸음 사건에 밝은 일출/낮 하늘과 도로 원본.",
+      "definition": {
+        "id": "crisis_drowsy",
+        "type": "위기",
+        "w": 0,
+        "fixed": true,
+        "title": "졸음",
+        "text": "눈꺼풀이 천근이다.\n\n차선이 잠깐 두 개로 보였다. 백미러 속 내 눈이 반쯤 감겨 있다.\n\n졸음은 폭풍보다 많은 운전자를 데려갔다. 오래전에도, 지금도.",
+        "choices": [
+          {
+            "label": "갓길에서 눈을 붙인다 (2시간)",
+            "out": [
+              {
+                "p": 1,
+                "text": "갓길에 차를 세우고 시트를 젖혔다.\n\n눈을 뜨니 두 시간이 지나 있었다. 뻐근한 목을 돌리고 앞유리를 봤다. 아까는 겹쳐 보이던 차선이 하나로 보인다.",
+                "fx": {
+                  "time": 120,
+                  "sleeping": true,
+                  "fatigue": -45,
+                  "moodAll": 2
+                }
+              }
+            ]
+          },
+          {
+            "label": "물로 세수하고 버틴다",
+            "req": {
+              "water": 1
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "찬물이 정신을 끌어올렸다. 한동안은 갈 수 있다. 한동안은.",
+                "fx": {
+                  "water": -1,
+                  "fatigue": -22
+                }
+              }
+            ]
+          },
+          {
+            "label": "목청껏 노래를 부르며 강행한다",
+            "risk": "사고 위험",
+            "out": [
+              {
+                "p": 1,
+                "text": "목청껏 노래를 불러 버텼다. 목은 쉬었지만 눈은 떠졌다.",
+                "fx": {
+                  "fatigue": -12,
+                  "moodAll": 2
+                }
+              },
+              {
+                "p": 1,
+                "text": "깜빡— 하는 순간 가드레일을 길게 긁었다.\n\n심장이 벌떡 뛰는 바람에 잠은 확실히 달아났다. 최악의 각성법이었다.",
+                "fx": {
+                  "van": -9,
+                  "fatigue": -28,
+                  "moodAll": -4,
+                  "note": {
+                    "type": "사건",
+                    "title": "졸음운전",
+                    "body": "가드레일에 길게 긁힌 자국. 최악의 각성법."
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "sceneMetadata": {
+        "eventScene": null,
+        "turnScenes": null,
+        "stages": null,
+        "choiceScenes": null
+      }
+    }
+  },
+  {
+    "key": "settlement-road-echo-night-v1",
+    "event": "settlement_road_echo",
+    "format": "place",
+    "timeVariant": "night",
+    "oldAsset": "assets/scenes/settlement-road-echo.webp",
+    "oldAssetSha256": "d0828ffa1397a07f561ea0d674dfbe1e56307105dc6091820e239b3047d7d116",
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nEDIT the FIRST image into the same roadside reunion at true NIGHT. Preserve the mountain-road location, road alignment, canonical Dalguji proportions and cargo, anonymous local settlers and their loaded handcarts. They are ordinary settlement residents, NOT any named Caravan companions: keep faces small/anonymous, do not transform anyone into Minji, Kangwoo, Jaeyi, Leo, Eunsu or Parkss. Keep composition and carts; do not add people, money, food exchange, new rewards, completed road construction, fire, fighting or departure action. Replace every bright sunrise/day sky/ridge wash with dark night sky and shadowed ridges. Use restrained headlamp spill and existing warm vehicle-window light, allowing faces to remain silhouettes and cargo/carts to read on the dark roadside. No new lantern-bearing people, moon/stars, artificial neon or excessive bloom. This is a present reunion recalling earlier settlement work, and must fit assist, relay or pass choices without promising which is selected. References2–5 guide canonical vehicle/style only; no imported cast.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+    "referenced_image_paths": [
+      "/Users/sang/caravan/assets/scenes/settlement-road-echo.webp",
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+    ],
+    "transparent_background": false,
+    "references": [
+      {
+        "path": "assets/scenes/settlement-road-echo.webp",
+        "role": "edit-target",
+        "sha256": "d0828ffa1397a07f561ea0d674dfbe1e56307105dc6091820e239b3047d7d116"
+      },
+      {
+        "path": "assets/reference/visual-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+      },
+      {
+        "path": "assets/reference/world-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+      },
+      {
+        "path": "assets/reference/people-canon-2026-08-11.png",
+        "role": "canonical-style",
+        "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+      },
+      {
+        "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "role": "canonical-style",
+        "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+      }
+    ],
+    "promptSha256": "085be89554694ac3a4e231fc7217047f58e177714b315df918b66b09a9054013",
+    "baseExact": true,
+    "negativeExact": true,
+    "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+    "sourceEvent": {
+      "id": "settlement_road_echo",
+      "trace": 444,
+      "day": 10,
+      "min": 15,
+      "sceneKeys": [
+        "settlement-road-echo"
+      ],
+      "asset": "assets/scenes/settlement-road-echo.webp",
+      "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-442-settlement_road_echo.json",
+      "observation": "00:15 여파에 밝은 태양과 산등성이 원본.",
+      "definition": {
+        "id": "settlement_road_echo",
+        "type": "여파",
+        "w": 0,
+        "fixed": true,
+        "scene": "settlement-road-echo",
+        "title": "먼저 지나간 달구지의 흔적",
+        "text": "()=>D.roadEchoCopy(S,'text')",
+        "choices": [
+          {
+            "label": "차를 세우고 마지막 구간을 함께 정리한다",
+            "out": [
+              {
+                "p": 1,
+                "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다.'",
+                "fx": {
+                  "impactEcho": "assist"
+                }
+              }
+            ]
+          },
+          {
+            "label": "무전과 지도로 다음 구간만 이어 준다",
+            "out": [
+              {
+                "p": 1,
+                "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다.'",
+                "fx": {
+                  "impactEcho": "relay"
+                }
+              }
+            ]
+          },
+          {
+            "label": "멈추지 않고 북쪽으로 계속 간다",
+            "out": [
+              {
+                "p": 1,
+                "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다.'",
+                "fx": {
+                  "impactEcho": "pass"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "sceneMetadata": {
+        "eventScene": "settlement-road-echo",
+        "turnScenes": null,
+        "stages": null,
+        "choiceScenes": null
+      }
+    }
+  }
+]

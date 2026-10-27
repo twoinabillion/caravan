@@ -1,0 +1,13 @@
+{
+  "key": "explore-villagehall-cassette-v1",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nEDIT ONLY the window area in the first attached image: cover the entire bright window glass with a closed, old, opaque faded gray-brown curtain, so no outside trees, bright sky, daylit panes or directional sunlight can be seen. Preserve the dusty cassette player with cassette inside, unpressed transport keys, old PA amplifier, microphone, papers, desk, all object positions, and the empty room. Preserve the understated dark realistic film-still finish. The foreground remains legible in low, diffuse room ambient light, but no new lamp, light bulb, power source or person is added. This is a time-neutral detail view BEFORE choosing playback or searching storage. Do not alter anything else. References2\u20135 are style references only, no characters/vehicle/collage import. Same16:9 large PNG master.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-64b14717-abca-4b46-a211-bf48eff01d57.png",
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "promptSha256": "68cb859ce6c5061e65cad0a27ee2928bb5a9eeaaed8a862de051e050ca8a736f"
+}

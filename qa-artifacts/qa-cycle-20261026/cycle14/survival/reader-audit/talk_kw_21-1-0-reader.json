@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…당연한 일입니다."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 일어나 손을 내밀었다. 차 밑에서 나오는 나를 끌어올리는 손."
+  },
+  {
+    "kind": "narration",
+    "text": "악력이 어마어마했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…아파요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…미안합니다. 반가워서."
+  },
+  {
+    "kind": "narration",
+    "text": "반가움을 악력으로 표현하는 남자와, 나는 오늘도 함께 달린다."
+  }
+]

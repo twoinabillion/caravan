@@ -1,0 +1,216 @@
+{
+  "cycle": 17,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 277002,
+  "evidenceClass": "Fresh finite public-action engine journey, production actual reader; isolated QA storage. Not browser/audio test.",
+  "engineSourceHash": "f5d3cb35f0d4ae365ad70ba532e6ef8f21e0ee26172fc78b0ebd52958f1ad0b9",
+  "sourceUnchangedAcrossJourney": true,
+  "postReviewHash": {
+    "allMatch": false,
+    "engineHash": "c313288ceb9c2b5d7c7d04e580bea1fd95adb0c37e3b77c16a96a0b9644d71b5",
+    "changedFiles": [
+      "src/03i-story-expansion.js"
+    ],
+    "reason": "Another owner began approved18 repairs after all runtimes finished; runtime end40/40 remains immutable"
+  },
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "policyStops": 0,
+  "productionChangesDuringJourney": false,
+  "cohortExcluded": false,
+  "status": "ended",
+  "error": null,
+  "result": {
+    "ending": "story_done",
+    "method": "core_quarantine",
+    "storyDone": true,
+    "session1End": true,
+    "day": 11,
+    "km": 933,
+    "actualCompanions": [
+      "minji",
+      "eunsu",
+      "jaeyi"
+    ],
+    "bori": false
+  },
+  "totals": {
+    "choices": 92,
+    "trace": 505,
+    "otherPublicActionsExcludingChoicesReloadInitPerk": 224,
+    "earnedPerkSelections": 4,
+    "otherExecutedPublicActionsIncludingPerk": 228,
+    "actionKinds": {
+      "new-game": 1,
+      "unpaid-entry-reload": 92,
+      "choice": 92,
+      "paid-result-reload": 92,
+      "explore": 23,
+      "travel": 27,
+      "drive": 53,
+      "camp": 10,
+      "trade-bundle": 4,
+      "trade": 57,
+      "work": 7,
+      "meet-recruit": 3,
+      "board-open": 4,
+      "npc-rumor": 10,
+      "recruit-step": 6,
+      "camp-repair": 1,
+      "camp-meal": 9,
+      "accept-companion": 3,
+      "earned-perk": 4,
+      "buy-upgrade": 2,
+      "seoul-enter": 5
+    },
+    "reload": {
+      "entry": 92,
+      "paid": 92,
+      "failed": 0,
+      "reapplied": 0,
+      "readerEqual": 92,
+      "skippedBeforeFirstRadio": 0,
+      "terminalSeparateExcluded": 1
+    },
+    "rejectedApiCalls": 0,
+    "disabledChoicesExecuted": 0,
+    "novelPairs": 8,
+    "noveltyBaseline": "systems1–16 event+selected label; excluded branches not included",
+    "novelChoicePairs": [
+      {
+        "trace": 95,
+        "event": "rq_minji_task",
+        "label": "차를 방패로 붙이고 짧게 당긴다"
+      },
+      {
+        "trace": 109,
+        "event": "ev_kids_cafe",
+        "label": "물자를 챙긴다"
+      },
+      {
+        "trace": 253,
+        "event": "exp_outdoor",
+        "label": "실속을 챙긴다 (고철 2)"
+      },
+      {
+        "trace": 279,
+        "event": "npc_drhan_2",
+        "label": "\"서울서 답 찾으면 전해드릴게요\""
+      },
+      {
+        "trace": 289,
+        "event": "rq_eunsu_task",
+        "label": "선을 끊고 좌표가 새기 전에 이동한다"
+      },
+      {
+        "trace": 296,
+        "event": "story_bridge_child_voice",
+        "label": "스피커 전원을 끈다"
+      },
+      {
+        "trace": 366,
+        "event": "rq_jaeyi_task",
+        "label": "잔해를 손으로 한 조각씩 걷어낸다"
+      },
+      {
+        "trace": 414,
+        "event": "comp_cloudgame",
+        "label": "판정단을 자처한다"
+      }
+    ]
+  },
+  "features": {
+    "upgrades": [
+      "bench",
+      "horn"
+    ],
+    "crafts": 0,
+    "radioFixed": false,
+    "radioBroadcasts": 0,
+    "actualRecruitments": [
+      "minji",
+      "eunsu",
+      "jaeyi"
+    ],
+    "sideQuestAccept": 0,
+    "sideQuestTurnin": 0,
+    "boardViews": 4,
+    "npcCalls": 10,
+    "publicWork": 7,
+    "campMeals": 9,
+    "campRepair": 1,
+    "trades": 57,
+    "tradeBundles": 4,
+    "medicalTreatment": 0
+  },
+  "review": {
+    "completed": true,
+    "choiceEntries": 92,
+    "exactPriorContexts": 74,
+    "newContexts": 18,
+    "newParagraphs": 35,
+    "actualReaderTurns": 747,
+    "exactPriorTurns": 599,
+    "newTurnsRead": 148,
+    "changedReaderEntries": 30,
+    "roadSpeechOccurrences": 43,
+    "roadSpeechUnique": 33,
+    "chatGroups": 17,
+    "chatLines": 77,
+    "sameDayChatDuplicates": 0,
+    "npcShownGroups": 20,
+    "work": 7,
+    "notes": 111,
+    "scenes": 92,
+    "imageAssetDirectlyViewed": [
+      "event-companion-van"
+    ],
+    "browserCropVerified": false,
+    "naturalConfirmedFindings": 2,
+    "derivedBoundaryConfirmed": 1,
+    "unresolvedCandidates": 0
+  },
+  "separateExcludedEvidence": {
+    "visualEntryReplay": {
+      "cohortExcluded": true,
+      "evidence": "New normal finite gameplay from beginning on frozen17, not edited old presentation or state injection",
+      "originalPolicy": "cycle16/systems/policy.cjs",
+      "seed": 276002,
+      "status": "partial-targets-reached",
+      "choices": 66,
+      "trace": 395,
+      "sourceHash": "f5d3cb35f0d4ae365ad70ba532e6ef8f21e0ee26172fc78b0ebd52958f1ad0b9",
+      "entries": [
+        {
+          "id": "ev_salt_farmer",
+          "file": "player02/attempt01/entry-67-ev_salt_farmer-export.json"
+        },
+        {
+          "id": "ev_leo_solo",
+          "file": "player02/attempt01/entry-329-ev_leo_solo-export.json"
+        },
+        {
+          "id": "story_bridge_child_voice",
+          "file": "player02/attempt01/entry-395-story_bridge_child_voice-export.json"
+        }
+      ]
+    },
+    "boundary": "cloudgame-evidence.json; no effects executed",
+    "terminalReload": "terminal-reload.json"
+  },
+  "gaps": [
+    "차량 라디오 수리/자연방송/진공관/제작/무기선반 자연사용 없음",
+    "조달 수락/인계 및 직접 치료 없음",
+    "모든 그림/crop/audio 실제화면 검증은 root 담당"
+  ],
+  "findingsFile": "findings.json",
+  "notes": [
+    "earned-perk는 G.choosePerk가 실행된 별도 선택4회. 과거 보고의 nonActionPerkNotifications라는 명칭을 이번에는 재사용하지 않음. choice는 사건 선택92만.",
+    "partial 시각재생66선택395trace는 raw summary와 trace.summary 모두 cohortExcluded=true; 주요 원정 집계에 합산하지 않음."
+  ]
+}

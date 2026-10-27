@@ -1,0 +1,48 @@
+{
+  "tool": "image_gen.imagegen",
+  "initialRejected": "Eyes too high (~27%); retained as initial-eye-position-rejected.png.",
+  "revision": "Same identity/robe/background; enlarged face1.4x, crown10%, eyes41%, chin77%, reduce excessive skin pore detail.",
+  "source": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-29cd8df9-9f7e-465e-94fe-80282b2e2a63.png",
+  "master": "qa-artifacts/qa-cycle-20261026/cycle13/monk-portrait/masters/passer_monk.png",
+  "delivery": "assets/portraits/passer_monk.webp",
+  "sha256": "2520c0db6f13534fe7f50c60ad81b208dea6fac2401f6d860a623be0b11827d0",
+  "metadata": {
+    "format": "webp",
+    "width": 256,
+    "height": 256,
+    "space": "srgb",
+    "channels": 3,
+    "depth": "uchar",
+    "isProgressive": false,
+    "isPalette": false,
+    "hasProfile": false,
+    "hasAlpha": false,
+    "autoOrient": {
+      "width": 256,
+      "height": 256
+    }
+  },
+  "review": {
+    "eyesFromTopApprox": 0.39,
+    "faceHeightApprox": 0.66,
+    "identity": "New anonymous Korean monk, shaved head and plain worn gray robe, no companion resemblance.",
+    "style": "Muted gray/amber grounded painterly portrait; inspected master and delivery.",
+    "galleryBeforeWiring": "Confirmed at http://127.0.0.1:4319/__live/assets; gallery-before-wiring.png before src03f registration.",
+    "actualInGameCrop": {
+      "source": "cycle14/story/browser-entry-replay/agent03/attempt01/normal-near_hapcheon_sutra-entry.json",
+      "cohortExcluded": true,
+      "viewport": [
+        1333,
+        884
+      ],
+      "eventWidthCssPx": 480,
+      "images": [
+        "entry-after.png",
+        "result-after.png",
+        "result-restored.png"
+      ],
+      "flow": "Normal entry -> help push cart -> correct player/monk dialogue -> reload preserving DAY2 09:50 and same paid text/portrait -> final page -> road. No state injection."
+    },
+    "responsive360": "blocked by earlier browser viewport failure; not claimed"
+  }
+}

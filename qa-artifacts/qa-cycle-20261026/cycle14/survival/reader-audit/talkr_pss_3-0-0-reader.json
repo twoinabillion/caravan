@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "narration",
+    "text": "맛은 예고대로였다. 몸에 좋은 맛."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "이거 대체 뭐예요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "음… 이름이 있었는데. 약국 앞에 좌판 놓던 할멈이 두 봉지씩 놓고 갔거든. 이름은 그때도 안 알려주고."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…그럼 뭔지 모르고 드시는 거예요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "삼십 년 마셨는데 아직 안 죽었어."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 보온병을 흔들었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "쓴맛도 자꾸 마시면 정이 들어. 사람이랑 같지."
+  },
+  {
+    "kind": "narration",
+    "text": "결국 이름은 못 들었다."
+  }
+]

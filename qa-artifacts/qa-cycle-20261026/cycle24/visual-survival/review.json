@@ -1,0 +1,77 @@
+{
+  "cohortExcluded": true,
+  "classification": "vision-review-of-staged-raster-assets",
+  "at": "2026-10-26T11:49:39.364195+00:00",
+  "actualViews": {
+    "requiredCanonicalFiles": 4,
+    "portrait": "assets/portraits/passer_woman.png",
+    "generatedMasters": 7,
+    "finalWebP": 3,
+    "scaledWidths": [
+      360,
+      480
+    ],
+    "scaledFiles": 6,
+    "browserGameScreens": 0
+  },
+  "scope": "Read all 3 authored entry texts, all 7 outcomes/notes and actual reader turns before generation. Final stills show before-choice moments; no new outcome or reward is invented. Image file review is not live UI/crop proof.",
+  "assets": [
+    {
+      "event": "gp_envelope",
+      "key": "story-grandfather-envelope-detail-v1",
+      "decision": "ready-for-root-independent-gallery-review",
+      "people": 0,
+      "observations": [
+        "Closed worn notebook with sealed cream envelope tucked behind it on a wooden desk.",
+        "No grandfather, child, portrait, hands, window or clock.",
+        "No opened note or inner envelope; handwritten instructions are intentionally offscreen/blank reverse so no generated narrative text.",
+        "Warm interior still fits canonical Dalguji materials. At 360 and 480 the notebook/envelope distinction stays clear."
+      ],
+      "limitations": [
+        "Generic cropped radio/tools/mug are background dressing, not claimed quest acquisitions.",
+        "This pre-choice still does not visualize either later open-letter or retain-letter action."
+      ]
+    },
+    {
+      "event": "ev_parking_evs",
+      "key": "explore-ev-charging-parking-v1",
+      "decision": "ready-for-root-independent-gallery-review",
+      "people": 0,
+      "observations": [
+        "Multiple ordinary weathered electric cars in parking bays; visible individual plugged ports, pedestals and slack heavy cables.",
+        "No train, rails, platform, gas pump, battery disassembly, mechanic or reward.",
+        "Namsan tower from initial attempt removed; final ridge has no recognizable landmark.",
+        "Foreground brand outline removed after three imagegen edits; final WebP has no readable brand/text.",
+        "Key charger/plug relationships remain legible at 360 and 480."
+      ],
+      "limitations": [
+        "Generic city buildings and overcast ambience are illustrative; no exact town, weather reading or time is asserted.",
+        "Dashboards are not readable; does not certify remaining battery charge."
+      ]
+    },
+    {
+      "event": "lc_daegu_makchang",
+      "key": "local-daegu-makchang-alley-v1",
+      "decision": "ready-for-root-independent-gallery-review",
+      "people": 1,
+      "subjectReference": "assets/portraits/passer_woman.png",
+      "observations": [
+        "Single short-haired Korean woman matching the source speaker portrait, in worn work clothing/apron behind charcoal grill.",
+        "Narrow alley, canvas awning, glowing charcoal and rising smoke clearly replace the unrelated mountain-road trader context.",
+        "All background passages empty in selected new render; no named companion or customer.",
+        "No payment, handoff, diner plate or completed meal shown. Existing unserved grill food establishes the operating stall before choice.",
+        "Face, natural hands/tongs and smoky grill remain legible at 360 and 480."
+      ],
+      "limitations": [
+        "No literal regional accent is depicted; identity comes from portrait, dialogue remains unchanged."
+      ]
+    }
+  ],
+  "nonGoals": [
+    "No scene mapping/asset copy to production",
+    "No actual gallery action by this agent",
+    "No new natural journey",
+    "No future action, item reward or branch performance asserted"
+  ],
+  "rootApprovalPending": true
+}

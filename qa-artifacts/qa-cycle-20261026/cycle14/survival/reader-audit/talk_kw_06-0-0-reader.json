@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "narration",
+    "text": "강우가 얼마간 있다 답했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "웃는 걸 오래 안 하면, 잊는다. …잊는 건 아니고. 얼굴이 늦는다."
+  },
+  {
+    "kind": "narration",
+    "text": "강우는 자기 뺨을 손가락으로 가리켰다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "근육 문제다. 마음 문제가 아니라."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "그럼 연습하면 되겠네요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…그런가."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 입꼬리를 올려 보다가 손으로 뺨을 문질렀다. 나는 웃음을 참고 고개만 끄덕였다."
+  }
+]

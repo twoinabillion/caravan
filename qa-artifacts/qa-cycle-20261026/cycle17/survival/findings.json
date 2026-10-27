@@ -1,0 +1,53 @@
+[
+  {
+    "id": "S17-01",
+    "classification": "natural-confirmed-reader-role-metadata",
+    "title": "승자 노인의 역할을 잃는 표시",
+    "trace": 66,
+    "eventId": "exp_arcade",
+    "choice": 0,
+    "phase": "result",
+    "actual": "승자 노인이 손목·허리 기술을 설명하지만 passer_refugee / ??? / speakerUncertain:true로 나온다.",
+    "expected": "명시된 노인 역할을 보존한다.",
+    "proposedMinimalFix": "결과0에 명시적 passer_elder와 역할 이름을 부여하고 기존 텍스트·효과를 보존한다.",
+    "productionFile": "src/03-data.js",
+    "entryExport": "qa-artifacts/qa-cycle-20261026/cycle17/survival/attempt01/entry-64-exp_arcade-export.json",
+    "reproduction": "Load this untouched normal unpaid export on frozen17, resolve the recorded enabled choice; read actual buildStoryTurns through shared reader helper. No event/state injection required.",
+    "scope": "Actual engine/reader output in normal fresh journey. Browser paint/crop is root-owned.",
+    "status": "reported-awaiting-root-repair-approval"
+  },
+  {
+    "id": "S17-02",
+    "classification": "natural-confirmed-reader-role-metadata",
+    "title": "차 안 동료의 선언이 익명 외부인으로 표시됨",
+    "trace": 458,
+    "eventId": "wx_bigwash",
+    "choice": 0,
+    "phase": "entry",
+    "actual": "동행/minParty2 사건의 빨래 선언이 passer_worker / ???로 나온다. 실제 동료는 민지·레오다.",
+    "expected": "차 안 동료라는 범주를 보존한다.",
+    "proposedMinimalFix": "현재 roster 역할을 사용한다. 등장 인물 이름을 원문에서 단정할 수 없으므로 특정 고정 캐릭터를 만들지 않는다.",
+    "productionFile": "src/03-data.js",
+    "entryExport": "qa-artifacts/qa-cycle-20261026/cycle17/survival/attempt01/entry-456-wx_bigwash-export.json",
+    "reproduction": "Load this untouched normal unpaid export on frozen17, resolve the recorded enabled choice; read actual buildStoryTurns through shared reader helper. No event/state injection required.",
+    "scope": "Actual engine/reader output in normal fresh journey. Browser paint/crop is root-owned.",
+    "status": "reported-awaiting-root-repair-approval"
+  },
+  {
+    "id": "S17-03",
+    "classification": "natural-confirmed-reader-role-metadata",
+    "title": "동료의 음식 논쟁이 같은 익명 외부인에게 합쳐짐",
+    "trace": 565,
+    "eventId": "comp_food_debate",
+    "choice": 0,
+    "phase": "entry+result",
+    "actual": "동행/minParty2 사건 entry1·결과5발화 모두 passer_refugee / ???. 질문·정정·반론의 대화 구분도 사라진다.",
+    "expected": "현재 동료들의 서로 다른 역할을 나타낸다.",
+    "proposedMinimalFix": "실제 동료 두 역할로 질문·정정 왕복을 명시한다. 마지막 공동 합의 발화는 원문 근거에 맞춰 역할만 정하고 본문·FX·조건을 유지한다.",
+    "productionFile": "src/03-data.js",
+    "entryExport": "qa-artifacts/qa-cycle-20261026/cycle17/survival/attempt01/entry-563-comp_food_debate-export.json",
+    "reproduction": "Load this untouched normal unpaid export on frozen17, resolve the recorded enabled choice; read actual buildStoryTurns through shared reader helper. No event/state injection required.",
+    "scope": "Actual engine/reader output in normal fresh journey. Browser paint/crop is root-owned.",
+    "status": "reported-awaiting-root-repair-approval"
+  }
+]

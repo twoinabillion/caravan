@@ -45,10 +45,17 @@ G.hasResource = (key,amount=1)=> G.isInfiniteResourceMode()&&G.isInfiniteResourc
 G.resourceDisplay = (key,value,unit='')=> G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(key)
   ?'∞':`${value}${unit}`;
 
-/* 물과 식량은 달구지 안의 전용 통·건식 보관함만큼만 싣는다. 고철과
+/* 연료·물·식량은 달구지 안의 탱크·전용 통·건식 보관함만큼만 싣는다. 고철과
    아이템은 별도 적재 규칙이 없으므로 여기서 가짜 한도를 만들지 않는다. */
 G.supplyMax = key=> key==='water'?Number(S&&S.waterMax)||BASE_WATER_MAX
-  :key==='food'?Number(S&&S.foodMax)||BASE_FOOD_MAX:Infinity;
+  :key==='food'?Number(S&&S.foodMax)||BASE_FOOD_MAX
+  :key==='fuel'?Number(S&&S.fuelMax)||70:Infinity;
+// Stock labels never round the state used by capacity checks or payment.
+G.supplyAmountLabel = value=>{
+  const amount=Number(value);
+  if(!Number.isFinite(amount)) return String(value);
+  return amount>0&&amount<.1?'0.1 미만':String(Number(amount.toFixed(1)));
+};
 G.supplyRoom = key=> Math.max(0,G.supplyMax(key)-Math.max(0,Number(S&&S[key])||0));
 G.canStoreSupply = (key,amount)=> G.isInfiniteResourceMode()
   ||G.supplyRoom(key)+1e-6>=Math.max(0,Number(amount)||0);
@@ -1222,7 +1229,7 @@ G.openRecruitStep = ()=>{
   const def=D.recruitQuests[q.id];
   if(!def) return false;
   if(q.stage==='task'){
-    if(S.at!==q.target){ UI.toast(`🚚 ${def.name}와 함께 ${D.nodes[q.target].name}(으)로 가야 한다`); return false; }
+    if(S.at!==q.target){ UI.toast(`🚚 ${D.withParticle(def.name,'과','와')} 함께 ${D.nodes[q.target].name}(으)로 가야 한다`); return false; }
     G.openEventById(def.task); return true;
   }
   if(q.stage==='road'){
@@ -1230,9 +1237,9 @@ G.openRecruitStep = ()=>{
     return false;
   }
   if(q.stage==='follow'){
-    if(S.at!==q.target){ UI.toast(`🚚 ${def.name}와 함께 ${D.nodes[q.target].name}(으)로 이동 중이다`); return false; }
+    if(S.at!==q.target){ UI.toast(`🚚 ${D.withParticle(def.name,'과','와')} 함께 ${D.nodes[q.target].name}(으)로 이동 중이다`); return false; }
     if(Number.isFinite(q.roadDay)&&S.day<=q.roadDay){
-      UI.toast(`🔥 ${def.name}와 하룻밤을 보낸 뒤 다시 이야기해 보자`);
+      UI.toast(`🔥 ${D.withParticle(def.name,'과','와')} 하룻밤을 보낸 뒤 다시 이야기해 보자`);
       return false;
     }
     /* 별도 후일담과 합류 확인을 연속 모달로 열지 않는다. 길 위에서 함께

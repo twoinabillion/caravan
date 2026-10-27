@@ -1,5 +1,12 @@
 /* ═══════════════════ CINEMATIC SCENES — build.sh가 JPEG를 주입 ═══════════════════ */
 D.scenes = {
+  "explore-sesame-mill-interior-v1":"assets/scenes/explore-sesame-mill-interior-v1.webp",
+  "postman-again-bicycle-v1":"assets/scenes/postman-again-bicycle-v1.webp",
+  "explore-bowling-lanes-v1":"assets/scenes/explore-bowling-lanes-v1.webp",
+  "explore-wedding-hall-storage-v1":"assets/scenes/explore-wedding-hall-storage-v1.webp",
+  "story-generation-covered-market-v1":"assets/scenes/story-generation-covered-market-v1.webp",
+  "companion-noise-recorder-detail-v1":"assets/scenes/companion-noise-recorder-detail-v1.webp",
+
   'opening-wharf-v1':'__SCENE_OPENING_WHARF_V1__',
   'opening-pack-fuel-v1':'__SCENE_OPENING_PACK_FUEL_V1__',
   'opening-pack-repair-v1':'__SCENE_OPENING_PACK_REPAIR_V1__',
@@ -288,7 +295,49 @@ D.scenes = {
   'recruit-eunsu-sky-point':'__SCENE_RECRUIT_EUNSU_SKY_POINT__',
   'recruit-kangwoo-pickpocket':'__SCENE_RECRUIT_KANGWOO_PICKPOCKET__',
   'recruit-minji-task':'__SCENE_RECRUIT_MINJI_TASK__',
-  'recruit-parkss-task':'__SCENE_RECRUIT_PARKSS_TASK__',
+  'recruit-parkss-task':'assets/scenes/recruit-parkss-clinic-table-v3.webp',
+  'lighthouse-lamp-room-v1':'assets/scenes/lighthouse-lamp-room-v1.webp',
+  'explore-fishfarm-tanks-v1':'assets/scenes/explore-fishfarm-tanks-v1.webp',
+  'explore-glasshouse-tomatoes-v1':'assets/scenes/explore-glasshouse-tomatoes-v1.webp',
+  'explore-kimchi-coldstore-v1':'assets/scenes/explore-kimchi-coldstore-v1.webp',
+  'camp-roof-thief-v1':'assets/scenes/camp-roof-thief-v1.webp',
+  'local-ulsan-gray-whale-v1':'assets/scenes/local-ulsan-gray-whale-v1.webp',
+  'local-yeongdong-wine-cellar-v1':'assets/scenes/local-yeongdong-wine-cellar-v1.webp',
+  'local-miryang-ice-crevice-v1':'assets/scenes/local-miryang-ice-crevice-v1.webp',
+  'explore-rainwater-cistern-v1':'assets/scenes/explore-rainwater-cistern-v1.webp',
+  'explore-seed-warehouse-v1':'assets/scenes/explore-seed-warehouse-v1.webp',
+  'local-salt-farmer-v1':'assets/scenes/local-salt-farmer-v1.webp',
+  'story-child-voice-terminal-v1':'assets/scenes/story-child-voice-terminal-v1.webp',
+  'companion-road-atlas-v1':'assets/scenes/companion-road-atlas-v1.webp',
+  'companion-window-clouds-v1':'assets/scenes/companion-window-clouds-v1.webp',
+  'companion-cabin-detail-v1':'assets/scenes/companion-cabin-detail-v1.webp',
+  'story-roadside-terminal-detail-v2':'assets/scenes/story-roadside-terminal-detail-v2.webp',
+  'explore-letterpress-detail-v1':'assets/scenes/explore-letterpress-detail-v1.webp',
+  'camp-stray-dogs-night-v1':'assets/scenes/camp-stray-dogs-night-v1.webp',
+  'explore-postoffice-parcels-v1':'assets/scenes/explore-postoffice-parcels-v1.webp',
+  'explore-radioshop-shelves-v1':'assets/scenes/explore-radioshop-shelves-v1.webp',
+  'local-geochang-theatre-actor-v1':'assets/scenes/local-geochang-theatre-actor-v1.webp',
+  'explore-overturned-cargo-v1':'assets/scenes/explore-overturned-cargo-v1.webp',
+  'explore-gasstation-tank-v1':'assets/scenes/explore-gasstation-tank-v1.webp',
+  'local-nonsan-training-gate-v1':'assets/scenes/local-nonsan-training-gate-v1.webp',
+  "story-chunrian-lab-archive-v1":"assets/scenes/story-chunrian-lab-archive-v1.webp",
+  "explore-towtruck-depot-v1":"assets/scenes/explore-towtruck-depot-v1.webp",
+  "local-busan-dried-fish-cart-v1":"assets/scenes/local-busan-dried-fish-cart-v1.webp",
+  "explore-comicbook-room-v1":"assets/scenes/explore-comicbook-room-v1.webp",
+  "local-daejeon-bakery-shutter-v1":"assets/scenes/local-daejeon-bakery-shutter-v1.webp",
+  "story-ridge-uplink-dishes-v1":"assets/scenes/story-ridge-uplink-dishes-v1.webp",
+  "camp-field-searchlight-v1":"assets/scenes/camp-field-searchlight-v1.webp",
+  "seoul-cablecar-stairs-v1":"assets/scenes/seoul-cablecar-stairs-v1.webp",
+  "explore-abandoned-military-checkpoint-v1":"assets/scenes/explore-abandoned-military-checkpoint-v1.webp",
+  "event-human-retrieval-team-v1":"assets/scenes/event-human-retrieval-team-v1.webp",
+  "local-sejong-unopened-library-v1":"assets/scenes/local-sejong-unopened-library-v1.webp",
+  "vista-cliff-waterfall-v1":"assets/scenes/vista-cliff-waterfall-v1.webp",
+  "event-abandoned-atm-cash-v1":"assets/scenes/event-abandoned-atm-cash-v1.webp",
+  "explore-arcade-airhockey-v1":"assets/scenes/explore-arcade-airhockey-v1.webp",
+  "local-bamboo-rice-fire-v1":"assets/scenes/local-bamboo-rice-fire-v1.webp",
+  "explore-school-cafeteria-v1":"assets/scenes/explore-school-cafeteria-v1.webp",
+  "local-chungju-receded-village-v1":"assets/scenes/local-chungju-receded-village-v1.webp",
+  "seoul-empty-clothes-square-v1":"assets/scenes/seoul-empty-clothes-square-v1.webp",
   'recruit-leo-task':'__SCENE_RECRUIT_LEO_TASK__',
   'recruit-jaeyi-task':'__SCENE_RECRUIT_JAEYI_TASK__',
   'recruit-jaeyi-trapped-box-v1':'__SCENE_RECRUIT_JAEYI_TRAPPED_BOX_V1__',
@@ -372,6 +421,56 @@ const associativeIntroDescriptions={
 /* 확대·스크린리더에서도 컷이 바뀐 이유를 알 수 있도록 사건 제목이 아니라
    실제 화면 행동을 설명한다. */
 D.sceneDescriptions = {
+  "explore-sesame-mill-interior-v1":"돌확과 절구공이, 손바퀴 착유기가 남은 빈 방앗간. 선반에는 깨 자루 세 개가 놓여 있다.",
+  "postman-again-bicycle-v1":"검은 머리에 고글을 올린 중년 우편부가 자전거를 멈추고 고개를 돌린다. 작은 방수 꾸러미와 가방은 아직 우편부에게 있다.",
+  "explore-bowling-lanes-v1":"빈 볼링장에 레인과 핀, 볼링공이 남아 있다. 천장의 점수판은 꺼져 있다.",
+  "explore-wedding-hall-storage-v1":"시든 조화와 넘어진 의자가 남은 빈 예식홀. 입구 탁자에는 닫힌 방명록이 놓여 있고 창고 문도 닫혀 있다.",
+  "story-generation-covered-market-v1":"불투명한 천막이 덮인 장터의 국밥솥 곁에서 아이가 노인의 소매를 잡는다. 아이들이 노인의 말을 기다린다.",
+  "companion-noise-recorder-detail-v1":"작은 녹음기와 헤드폰, 연필과 노트가 달구지 안 선반에 놓여 있다. 닫힌 커튼이 바깥 풍경을 가린다.",
+
+  'explore-fishfarm-tanks-v1':'폐 양어장의 마른 콘크리트 수조들. 빗물이 남은 앞쪽 수조에 물고기와 물결이 보인다. 사람과 차량은 없다.',
+  'explore-glasshouse-tomatoes-v1':'유리 온실 안 웃자란 토마토와 돌아가는 스프링클러. 수확 전이며 사람과 차량은 없다.',
+  'explore-kimchi-coldstore-v1':'폐 김치공장의 굳게 닫힌 저온창고 문과 포장동의 항아리, 소금 포대. 전등과 표시기는 꺼져 있고 사람은 없다.',
+  'camp-roof-thief-v1':'새벽 달구지 지붕의 짐끈을 푸는 낯선 사람 한 명. 묶인 짐은 아직 지붕 위에 있고 동료는 보이지 않는다.',
+  'local-ulsan-gray-whale-v1':'장생포 앞바다에 떠오른 귀신고래의 등과 숨결. 부두의 낚시하던 노인이 바다를 가리킨다. 동료와 차량은 보이지 않는다.',
+  'local-yeongdong-wine-cellar-v1':'낡은 철도 터널 안의 와인 통과 병들. 입구 탁자에 사연을 남기는 공책 세 권이 놓여 있다. 사람은 없다.',
+  'local-miryang-ice-crevice-v1':'초록 잎이 둘러싼 밀양 계곡의 그늘진 바위틈. 안쪽에는 녹지 않은 작은 얼음이 남아 있다. 사람과 차량은 없다.',
+  'explore-rainwater-cistern-v1':'농가 옆 낡은 콘크리트 저수조에 고인 빗물. 수면에 나뭇잎이 떠 있고 주변에는 아무도 없다.',
+  'explore-seed-warehouse-v1':'농협 자재창고 안의 닫힌 셔터와 열린 옆문, 비료 포대와 농기구. 선반에는 밀봉된 씨앗 봉지가 정리돼 있다. 사람은 없다.',
+  'local-salt-farmer-v1':'바닷가 염전에서 소금을 긁어모으는 사내. 하얗게 소금이 앉은 손 옆으로 자루와 소금 더미가 놓여 있다. 동료와 차량은 보이지 않는다.',
+  'story-child-voice-terminal-v1':'도로변 기둥에 달린 낡은 안내 단말. 스피커와 전원 조절부, 별도로 빛나는 수신 표시등이 보인다. 주위에는 아무도 없다.',
+  'companion-road-atlas-v1':'달구지의 낡은 조수석에 펼친 전국 도로 지도. 접힌 종이와 시트, 수납함을 가까이 비춘다. 사람은 화면 밖에 있다.',
+  'companion-window-clouds-v1':'달구지 창틀 너머로 산 능선과 흩어지는 흰 구름이 보인다. 하늘을 가까이 비추며 사람은 화면 밖에 있다.',
+  'companion-cabin-detail-v1':'달구지 안의 작은 선반과 법랑 컵, 접힌 담요, 낡은 가방. 창가의 생활 물품을 가까이 비추며 사람은 화면 밖에 있다.',
+  'story-roadside-terminal-detail-v2':'기둥에 달린 안내 단말의 근접 모습. 낡은 스피커 그릴 아래로 전원 조절부와 독립된 주황색 수신 표시등이 보인다.',
+  'explore-letterpress-detail-v1':'빈 인쇄소의 수동 활판 인쇄기와 납활자 서랍, 잉크 롤러, 아직 인쇄하지 않은 종이. 사람은 보이지 않는다.',
+  'camp-stray-dogs-night-v1':'밤의 야영지에서 달구지 주위를 맴도는 들개 여섯 마리. 생활칸 창문은 커튼으로 가려져 있고 사람은 보이지 않는다.',
+  'explore-postoffice-parcels-v1':'폐우체국의 낡은 소포 보관대와 분류 작업대. 먼지 쌓인 상자와 묶인 편지들이 배달되지 않은 채 남아 있다.',
+  'explore-radioshop-shelves-v1':'폐전파사 선반에 먼지 쌓인 라디오, 휴대용 카세트 플레이어와 브라운관 TV가 놓여 있다. 사람은 보이지 않는다.',
+  'local-geochang-theatre-actor-v1':'낡은 극장 무대 위에서 정장 차림의 남자가 홀로 독백을 연습한다. 앞쪽 객석은 비어 있다.',
+  'explore-overturned-cargo-v1':'굽은 도로에 옆으로 누운 오래된 화물차. 해진 방수포 틈으로 닫힌 상자들이 보인다.',
+  'explore-gasstation-tank-v1':'유리가 깨진 폐주유소의 낡은 펌프와 바닥에 닫혀 있는 지하 저장탱크 뚜껑. 사람은 보이지 않는다.',
+  'local-nonsan-training-gate-v1':'낡은 훈련소 정문과 비어 있는 초소. 정문 너머 연병장에는 잡초가 자라고 있다.',
+  "story-chunrian-lab-archive-v1":"지하 연구소 기록실의 문서 더미와 서랍, 어둡게 꺼진 서버 랙. 사람은 보이지 않는다.",
+  "explore-towtruck-depot-v1":"차고 안에 견인차 여섯 대가 나란히 서 있다. 벽에는 지도와 무전기 충전대가 남아 있다.",
+  "local-busan-dried-fish-cart-v1":"부산 부둣가에서 건어물을 가득 실은 손수레 뒤의 아지매가 손을 흔든다.",
+  "explore-comicbook-room-v1":"만화책으로 채워진 선반과 낡은 소파, 작은 라면 조리대가 있는 빈 만화방.",
+  "local-daejeon-bakery-shutter-v1":"대전역 근처 폐빵집의 닫힌 셔터에 희미한 분필 자국이 남아 있다. 옆 창 너머로 빈 빵 진열대와 오븐이 보인다.",
+  "story-ridge-uplink-dishes-v1":"국도에서 산으로 꺾여 올라가는 통신 케이블. 능선 위 수십 기의 접시 안테나가 같은 방향의 하늘을 향한다.",
+  "camp-field-searchlight-v1":"밤의 들판에 세운 달구지 앞 땅을 공중 드론 한 기의 탐조등이 훑는다. 사람은 화면 밖에 있다.",
+  "seoul-cablecar-stairs-v1":"남산 초입의 케이블카 승강장에 곤돌라가 멈춰 있다. 옆 계단이 안개 낀 숲속으로 이어진다.",
+  "explore-abandoned-military-checkpoint-v1":"모래주머니와 녹슨 바리케이드가 남은 폐 군 검문소. 비어 있는 초소 곁에 경고판이 쓰러져 있다.",
+  "event-human-retrieval-team-v1":"갓길의 낡은 승합차 곁에 흰옷을 입은 정리자 네 사람이 서 있다. 차 안에 남은 여자 앞에서 선두가 손바닥을 들어 보인다.",
+  "local-sejong-unopened-library-v1":"개관하지 못한 넓은 도서관에 포장된 새 책들과 상자, 비어 있는 대출대가 남아 있다.",
+  "vista-cliff-waterfall-v1":"산길 옆 바위 절벽에서 폭포가 맑은 물웅덩이로 떨어진다. 물보라 사이로 작은 무지개가 보인다.",
+  "event-abandoned-atm-cash-v1":"편의점의 부서진 ATM 아래 열린 금고에서 눅눅한 지폐들이 바닥으로 흩어져 있다. 사람은 보이지 않는다.",
+  "explore-arcade-airhockey-v1":"전원이 꺼진 오락실에서 두 노인이 에어하키 테이블을 마주하고 있다. 옆 인형뽑기 기계는 닫혀 있다.",
+  "local-bamboo-rice-fire-v1":"대숲 어귀의 작은 불에서 대나무 통들이 익어 간다. 사람은 화면 밖에 있다.",
+  "explore-school-cafeteria-v1":"폐교 급식실에 커다란 솥 세 개와 식판을 꽂은 건조대가 남아 있다. 사람은 보이지 않는다.",
+  "local-chungju-receded-village-v1":"물이 빠진 충주호 연안에 옛 돌담과 우물, 마을 터가 드러났다. 나이 든 주민들이 진흙 위를 조심스럽게 걷는다.",
+  "seoul-empty-clothes-square-v1":"남산이 보이는 빈 광장에 흰 옷 수백 벌이 가지런히 개켜져 있다. 사람과 차는 화면 밖에 있다.",
+  'recruit-parkss-task':'박 선생의 약가방과 냉장 상자, 체온계, 붕대와 물컵 세 개가 놓인 정류소 진료대. 뒤쪽 벤치는 비어 있고 사람이나 차량은 보이지 않는다.',
+  'lighthouse-lamp-room-v1':'등대 점검실의 꺼진 비상등과 닫힌 기름통, 펼친 항해일지. 뒤쪽에는 주등의 렌즈와 점검용 조명이 보인다. 사람이나 창밖 풍경은 없다.',
   'intro-dock-aid':'감천 부두의 멈춘 이송 버스. 하진 곁에 누나 유나가 담요를 덮고 기대고, 여덟 살 도윤이 금속 컵을 들고 있다.',
   'opening-bus-heater-v1':'낡은 이송 버스의 열린 점검판과 찢어진 난방 호스. 선택할 수리 방법은 아직 정해지지 않았다.',
   'recruit-jaeyi-box-recovered-v2':'꺼낸 양철 상자 곁에서 낡은 시계를 살펴보는 재이. 구출 도구나 도자기 새의 상태는 보이지 않는다.',
@@ -400,7 +499,7 @@ D.sceneDescriptions = {
   'intro-cold-open-v1':'비 내리는 감천 부두에서 도윤 가족의 버스 문이 닫히고, 기름 묻은 손의 주인공과 달구지가 그 모습을 바라보는 새벽',
   'intro-family-order-v1':'비 내리는 밤 집 현관 단말에서 가족 이송표가 나오고, 엄마와 아빠가 여덟 살 아이의 짐을 급히 챙기는 순간',
   'intro-family-farewell-v1':'서울의 젖은 골목에서 엄마가 여덟 살 아이를 할아버지 차에 태우며 마지막 인사를 건네는 밤',
-  'intro-departure-conversation-v4':'감천 부두의 이송 버스와 달구지 사이에서 하진과 도윤, 주인공이 북쪽에서 모을 기록을 확인하는 새벽',
+  'intro-departure-conversation-v4':'감천 부두의 이송 버스와 달구지 사이에서 하진과 도윤, 주인공이 북쪽에서 모을 기록을 확인하는 장면',
   'intro-departure-start-v1':'하진과 도윤이 지켜보는 가운데 젖은 감천 부두를 빠져나가는 달구지',
   'onboarding-main-mission-v1':'부두 밖 북행 길목에 세운 달구지 운전석에서 이송표와 검증키, 지도를 펼쳐 첫 임무를 적는 주인공',
   'onboarding-first-road-scan-v1':'부산 밖 북행 검문소의 붉은 스캐너 아래 세운 달구지와 녹슨 단말에서 첫 발신 기록을 꺼내는 주인공',
@@ -504,6 +603,369 @@ D.sceneAssetMeta['leo-broadcast-room-v1']={
   vehicleReference:[],size:'1024x576',status:'approved',
   description:'청주 방송실에서 낡은 기타와 마이크를 준비하는 레오. 다른 동료나 달구지는 등장하지 않는다.'
 };
+D.sceneAssetMeta['recruit-parkss-task']={
+  format:'detail',companions:[],reference:'',
+  references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+    'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+  vehicleReference:[],size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+  status:'source-vision-reviewed; in-game-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle1/story/image-provenance.json',
+  description:D.sceneDescriptions['recruit-parkss-task']
+};
+D.sceneAssetMeta['lighthouse-lamp-room-v1']={
+  format:'detail',companions:[],reference:'',
+  references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+    'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp',
+    'assets/scenes/destination-lighthouse-v1.webp'],
+  vehicleReference:[],size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+  status:'source-vision-reviewed; in-game-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle2/story/image-provenance.json',
+  description:D.sceneDescriptions['lighthouse-lamp-room-v1']
+};
+
+// Dedicated entry stills avoid showing absent companions or another kind of location.
+Object.assign(D.eventScenes,{
+  "exp_ricemill":"explore-sesame-mill-interior-v1",
+  "postman_again":"postman-again-bicycle-v1",
+  "exp_bowling":"explore-bowling-lanes-v1",
+  "ev_wedding_hall_storage":"explore-wedding-hall-storage-v1",
+  "talk_es_07":"companion-noise-recorder-detail-v1",
+
+  npc_jaepil_2:'muju-tunnel',
+  exp_fishfarm:'explore-fishfarm-tanks-v1',
+  exp_glasshouse:'explore-glasshouse-tomatoes-v1',
+  exp_kimchi:'explore-kimchi-coldstore-v1',
+  camp_thief:'camp-roof-thief-v1',
+  lc_ulsan_whale:'local-ulsan-gray-whale-v1',
+  lc_yeongdong_wine:'local-yeongdong-wine-cellar-v1',
+  near_miryang_ice:'local-miryang-ice-crevice-v1',
+  exp_reservoir:'explore-rainwater-cistern-v1',
+  ev_seed_warehouse:'explore-seed-warehouse-v1',
+  ev_salt_farmer:'local-salt-farmer-v1',
+  story_bridge_child_voice:'story-roadside-terminal-detail-v2',
+  ev_leo_solo:'recruit-leo-follow',
+  comp_hometown:'companion-road-atlas-v1',
+  comp_cloudgame:'companion-window-clouds-v1',
+  exp_printshop:'explore-letterpress-detail-v1',
+  camp_dogs:'camp-stray-dogs-night-v1',
+  exp_postoffice:'explore-postoffice-parcels-v1',
+  exp_radioshop:'explore-radioshop-shelves-v1',
+  near_geochang_actor:'local-geochang-theatre-actor-v1',
+  exp_overturned:'explore-overturned-cargo-v1',
+  ev_gasstation_tank:'explore-gasstation-tank-v1',
+  story_bridge_crew_question:'companion-cabin-detail-v1',
+  lc_nonsan_camp:'local-nonsan-training-gate-v1',
+  ev_chunrian_lab:"story-chunrian-lab-archive-v1",
+  exp_towyard:"explore-towtruck-depot-v1",
+  lc_busan_dried:"local-busan-dried-fish-cart-v1",
+  exp_comicroom:"explore-comicbook-room-v1",
+  lc_daejeon_bakery:"local-daejeon-bakery-shutter-v1",
+  ev_uplink:"story-ridge-uplink-dishes-v1",
+  camp_scan:"camp-field-searchlight-v1",
+  seoul_base:"seoul-cablecar-stairs-v1",
+  exp_checkpoint:"explore-abandoned-military-checkpoint-v1",
+  cleaners_recall:"event-human-retrieval-team-v1",
+  lc_sejong_library:"local-sejong-unopened-library-v1",
+  ev_waterfall:"vista-cliff-waterfall-v1",
+  ev_atm_cash:"event-abandoned-atm-cash-v1",
+  exp_arcade:"explore-arcade-airhockey-v1",
+  lc_damyang_juktong:"local-bamboo-rice-fire-v1",
+  exp_cafeteria:"explore-school-cafeteria-v1",
+  lc_chungju_lake:"local-chungju-receded-village-v1",
+  seoul_square:"seoul-empty-clothes-square-v1"
+});
+// Keep old saved Leo scene keys/stages; new market entries cannot advance to Namwon.
+D.eventTurnScenes.meet_hitchhiker=['recruit-leo-daein-market-v2'];
+// New readings use the covered market; historical sceneKeys and stage definitions survive.
+D.eventTurnScenes.story_generation_speech=['story-generation-covered-market-v1'];
+for(const scene of [
+  {
+    "key": "story-chunrian-lab-archive-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "explore-towtruck-depot-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "local-busan-dried-fish-cart-v1",
+    "format": "character",
+    "reference": "assets/portraits/passer_woman.png",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "explore-comicbook-room-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "local-daejeon-bakery-shutter-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "story-ridge-uplink-dishes-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "camp-field-searchlight-v1",
+    "format": "action",
+    "reference": "",
+    "vehicle": true,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "seoul-cablecar-stairs-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "explore-abandoned-military-checkpoint-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "event-human-retrieval-team-v1",
+    "format": "action",
+    "reference": "assets/portraits/passer_woman.png",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "local-sejong-unopened-library-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "vista-cliff-waterfall-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "event-abandoned-atm-cash-v1",
+    "format": "detail",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "explore-arcade-airhockey-v1",
+    "format": "action",
+    "reference": "assets/portraits/passer_elder.png",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "local-bamboo-rice-fire-v1",
+    "format": "detail",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "explore-school-cafeteria-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "local-chungju-receded-village-v1",
+    "format": "place",
+    "reference": "assets/portraits/passer_elder.png",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "seoul-empty-clothes-square-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1280x720",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle22/visual-review.json"
+  },
+  {
+    "key": "explore-sesame-mill-interior-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle23/visual-review.json"
+  },
+  {
+    "key": "postman-again-bicycle-v1",
+    "format": "character",
+    "reference": "assets/portraits/postman.png",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle23/visual-review.json"
+  },
+  {
+    "key": "explore-bowling-lanes-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle23/visual-review.json"
+  },
+  {
+    "key": "explore-wedding-hall-storage-v1",
+    "format": "place",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle23/visual-review.json"
+  },
+  {
+    "key": "story-generation-covered-market-v1",
+    "format": "character",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle23/visual-review.json"
+  },
+  {
+    "key": "companion-noise-recorder-detail-v1",
+    "format": "detail",
+    "reference": "",
+    "vehicle": false,
+    "size": "1024x576",
+    "provenance": "qa-artifacts/qa-cycle-20261026/cycle23/visual-review.json"
+  }
+]){
+  const {key,format,reference,vehicle,size,provenance}=scene;
+  D.sceneAssetMeta[key]={
+    format,companions:[],reference,
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp',
+      ...(reference?[reference]:[])],
+    vehicleReference:vehicle?['assets/reference/dalguji-technical-canon-2026-08-11.webp']:[],
+    size,styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'source-vision-reviewed; live-gallery-and-runtime-pending',
+    provenance,
+    description:D.sceneDescriptions[key]
+  };
+}
+for(const key of ['explore-radioshop-shelves-v1','local-geochang-theatre-actor-v1','explore-overturned-cargo-v1',
+  'explore-gasstation-tank-v1','local-nonsan-training-gate-v1']){
+  const actorScene=key==='local-geochang-theatre-actor-v1';
+  D.sceneAssetMeta[key]={
+    format:actorScene?'character':'place',companions:[],reference:actorScene?'assets/portraits/passer_man.png':'',
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp',
+      ...(actorScene?['assets/portraits/passer_man.png']:[])],
+    vehicleReference:[],size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'source-and-live-gallery-reviewed; runtime-review-in-provenance',
+    provenance:'qa-artifacts/qa-cycle-20261026/cycle21/visual-review.json',
+    description:D.sceneDescriptions[key]
+  };
+}
+D.sceneAssetMeta['explore-postoffice-parcels-v1']={
+  format:'place',companions:[],reference:'',
+  references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+    'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+  vehicleReference:[],size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+  status:'source-and-live-gallery-reviewed; runtime-review-in-provenance',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle20/visual/provenance.json',
+  description:D.sceneDescriptions['explore-postoffice-parcels-v1']
+};
+for(const key of ['explore-letterpress-detail-v1','camp-stray-dogs-night-v1']){
+  D.sceneAssetMeta[key]={
+    format:key==='camp-stray-dogs-night-v1'?'place':'detail',companions:[],reference:'',
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+    vehicleReference:key==='camp-stray-dogs-night-v1'?['assets/reference/dalguji-technical-canon-2026-08-11.webp']:[],
+    size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'source-and-live-gallery-reviewed; runtime-review-in-provenance',
+    provenance:'qa-artifacts/qa-cycle-20261026/cycle19/visual/provenance.json',
+    description:D.sceneDescriptions[key]
+  };
+}
+for(const key of ['companion-road-atlas-v1','companion-window-clouds-v1','companion-cabin-detail-v1','story-roadside-terminal-detail-v2']){
+  D.sceneAssetMeta[key]={
+    format:key==='companion-window-clouds-v1'?'place':'detail',companions:[],reference:'',
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+    vehicleReference:key==='story-roadside-terminal-detail-v2'?[]:['assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+    size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'source-and-live-gallery-reviewed; runtime-review-in-provenance',
+    provenance:'qa-artifacts/qa-cycle-20261026/cycle17/visual/provenance.json',
+    description:D.sceneDescriptions[key]
+  };
+}
+for(const key of ['explore-seed-warehouse-v1','local-salt-farmer-v1','story-child-voice-terminal-v1']){
+  D.sceneAssetMeta[key]={
+    format:key==='story-child-voice-terminal-v1'?'detail':'place',companions:[],reference:'',
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+    vehicleReference:[],size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'source-and-live-gallery-reviewed; runtime-review-in-provenance',
+    provenance:'qa-artifacts/qa-cycle-20261026/cycle16/visual/provenance.json',
+    description:D.sceneDescriptions[key]
+  };
+}
+for(const key of ['local-ulsan-gray-whale-v1','local-yeongdong-wine-cellar-v1','local-miryang-ice-crevice-v1','explore-rainwater-cistern-v1']){
+  D.sceneAssetMeta[key]={
+    format:'place',companions:[],reference:'',
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+    vehicleReference:[],size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'source-and-live-gallery-reviewed; runtime-review-in-provenance',
+    provenance:'qa-artifacts/qa-cycle-20261026/cycle15/visual/provenance.json',
+    description:D.sceneDescriptions[key]
+  };
+}
+for(const key of ['explore-fishfarm-tanks-v1','explore-glasshouse-tomatoes-v1','explore-kimchi-coldstore-v1','camp-roof-thief-v1']){
+  D.sceneAssetMeta[key]={
+    format:key==='camp-roof-thief-v1'?'action':'place',companions:[],reference:'',
+    references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+      'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+    vehicleReference:key==='camp-roof-thief-v1'?['assets/reference/dalguji-technical-canon-2026-08-11.webp']:[],
+    size:'1024x576',styleId:'caravan-grounded-cinematic-v1',objectPosition:'50% 50%',
+    status:'in-game-crop-480-reviewed; responsive-360-pending',
+    provenance:'qa-artifacts/qa-cycle-20261026/cycle11/visual/provenance.json',
+    description:D.sceneDescriptions[key]
+  };
+}
 
 // New intro stills are source-reviewed, not yet approved in the active game crop.
 const associativePhotoSubjects={

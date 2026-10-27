@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "narration",
+    "text": "박 선생이 나를 오래 봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…그러네. 늙은이가 젊은 사람들 우산 신세를 지네."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "우산 아니고 차인데요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "그게 그거지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "신세도 아니고요."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 뭐라 대꾸하려다 말았다. 창문에서 눈을 떼고, 모처럼 우리 쪽을 오래 봤다."
+  }
+]

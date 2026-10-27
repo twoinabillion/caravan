@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-26T10:58:01.118998+00:00",
+  "production40MatchesFreeze24": true,
+  "engineHash": "cdfeba9d024198a5d0eba3b0a017a9a8ed5bf41c264c01b52f777497eeee00d6",
+  "fileCount": 40,
+  "fieldsAsserted": 4,
+  "fragmentsCovered": 5,
+  "corpusHashChanged": false,
+  "mechanicsProjectionAdded": false,
+  "reason": "All five edits preserve quote counts/routes and mechanics; exact current copy asserts are added without projecting or replacing corpus baseline.",
+  "beforeFocused": {
+    "pass": 36,
+    "fail": 0
+  },
+  "guardFrozen23": {
+    "pass": 16,
+    "fail": 1,
+    "failure": "ev_eunsu_solo exact cycle23 copy"
+  },
+  "currentFocused": {
+    "pass": 36,
+    "fail": 0
+  },
+  "changedFiles": [
+    "tools/test-dialogue-register.cjs"
+  ],
+  "testOnly": true
+}

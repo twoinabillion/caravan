@@ -1,0 +1,9 @@
+{
+  "classification": "isolated-repair-regression",
+  "cohortExcluded": true,
+  "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/source",
+  "naturalEntry": "../attempt01/entry-483-ev_eunsu_solo-export.json",
+  "rawJourneyPreserved": true,
+  "oldPaidCount": 5,
+  "scope": "No fresh journey; each outcome paid with frozen23 engine. Eunsu uses retained normal entry; water uses explicit two-companion water1 fixture."
+}

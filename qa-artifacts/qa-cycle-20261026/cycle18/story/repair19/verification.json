@@ -1,0 +1,35 @@
+{
+  "productionEditingComplete": true,
+  "copyFields": 15,
+  "ownedFiles": [
+    {
+      "path": "src/03-data.js",
+      "copyFields": 9,
+      "onlyExactCopyChanged": true,
+      "sha256": "6b8b76fed495c7b86f2b60374eb02597215a8050756767dec810eea565ab86eb"
+    },
+    {
+      "path": "src/03i-story-expansion.js",
+      "copyFields": 6,
+      "onlyExactCopyChanged": true,
+      "sha256": "2be01aa4bed4298d88e7d8aa932205da8021847fda3ec2ead2166d1454eac0be"
+    }
+  ],
+  "engineLfHash": "7168ef4d79391c676d30d45782d469ed7a9fb09efc67c2c85859c6d18464f49e",
+  "red": {
+    "pass": 4,
+    "fail": 6
+  },
+  "green": {
+    "pass": 10,
+    "fail": 0
+  },
+  "related": {
+    "pass": 50,
+    "fail": 0
+  },
+  "lintErrors": 0,
+  "historicalContractProjectionRequired": false,
+  "originalJourneyChanged": false,
+  "scope": "Focused copy/picker/echo/receipt tests only; root owns full tests/build"
+}

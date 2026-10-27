@@ -1,0 +1,61 @@
+{
+  "recordedAt": "2026-10-26T08:42:57.041531+00:00",
+  "sourceFreeze": "cycle20/frozen-source.json",
+  "engineHash": "a9e246136f3100132bf83625f4b032bd4b315782538f31364b38b0e32df93e0b",
+  "source40MatchesAtRecordTime": true,
+  "tests": {
+    "pass": 2175,
+    "fail": 0,
+    "log": "test-source.log"
+  },
+  "build": {
+    "recordedAt": "2026-10-26T08:27:23.420393+00:00",
+    "sourceFreeze": "cycle20/frozen-source.json",
+    "engineHash": "a9e246136f3100132bf83625f4b032bd4b315782538f31364b38b0e32df93e0b",
+    "source40Matches": true,
+    "buildExitCode": 0,
+    "htmlBytes": 109118009,
+    "htmlSha256": "37c629a9c699c4c711336d028accc1e8a834fa141e4158288c8cbaba34e479ed",
+    "log": "build.log"
+  },
+  "quick": {
+    "exitCode": 0,
+    "log": "verify-quick.log",
+    "sceneClassAssets": 628,
+    "portraits": 74,
+    "mainCanonicalPortraits": 7
+  },
+  "journeys": {
+    "freshStarts": 3,
+    "mainEndings": 3,
+    "methods": [
+      "core_transfer",
+      "core_transfer",
+      "core_sleep"
+    ],
+    "choices": 307,
+    "traceRecords": 1613,
+    "entryReloads": 307,
+    "paidReloads": 307,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "review": {
+    "allThreeFullTextReviewed": true,
+    "allThreeRuntimeAndReviewEndSource40MatchesFreeze": true,
+    "furtherFindings": "One natural postoffice image mismatch S20-V01; no new confirmed narrative/reader defects in these3 journeys."
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4319/",
+    "eventFrameWidthCssPx": 480,
+    "newAssets": [
+      "letterpress entry/choice0/record result/actualreload/road",
+      "camp dogs unmodified19pre-readerbackup/choice2/result/road"
+    ],
+    "evidence": "../cycle19/visual/",
+    "originalQaBackupRestored": true,
+    "restoration": "ActualUI backup restore: original 가온 DAY1 부산09:45, before21 apply",
+    "responsive360": "Unverified; prior viewport/file URL limitation retained"
+  },
+  "status": "20 checks and3wholejourneys complete; image defect requires21. Not clean completion."
+}

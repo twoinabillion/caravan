@@ -1,0 +1,111 @@
+{
+  "generatedAt": "2026-10-26T06:03:47.556Z",
+  "generator": "image_gen.imagegen",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "prompts": [
+    "prompts.json"
+  ],
+  "export": "sharp centre cover1024x576 sRGB WebP quality86 effort6; unchanged masters retained",
+  "assets": [
+    {
+      "event": "ev_seed_warehouse",
+      "key": "explore-seed-warehouse-v1",
+      "oldKey": "event-explore-farm",
+      "delivery": "assets/scenes/explore-seed-warehouse-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle16/visual/masters/explore-seed-warehouse-v1.png",
+      "originalGeneratedPath": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-fcc3dff4-b04d-48d2-9716-fef6214f363c.png",
+      "sha256": "92d57793adffa4002b57f9f60b2edd5962891d1738babc2ecdc0ab0443e61987",
+      "bytes": 124028,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "visionReview": "Initial place and introduced subjects match; no unintroduced companions, player or vehicle; canonical treatment reviewed.",
+      "runtimeCrop": "Passed actual480px game panel on17 source; correct subjects/location, readable, no clipping",
+      "screenshots": [
+        "seed-entry.png",
+        "seed-result.png",
+        "seed-restored.png"
+      ],
+      "flow": "entry/choice/result/return to road",
+      "reload": "actual reload preserves result/time/scene"
+    },
+    {
+      "event": "ev_salt_farmer",
+      "key": "local-salt-farmer-v1",
+      "oldKey": "event-vista-field",
+      "delivery": "assets/scenes/local-salt-farmer-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle16/visual/masters/local-salt-farmer-v1.png",
+      "originalGeneratedPath": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-0b67aff8-6acd-4657-afad-8a338e7bec22.png",
+      "sha256": "fd00be9007c7101a0f817ca554ef3709fe3fa58a5e42e0b8ba5d46e9a407e12b",
+      "bytes": 129542,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "visionReview": "Initial place and introduced subjects match; no unintroduced companions, player or vehicle; canonical treatment reviewed.",
+      "runtimeCrop": "Passed actual480px game panel on17 source; correct subjects/location, readable, no clipping",
+      "screenshots": [
+        "salt-entry.png",
+        "salt-result.png"
+      ],
+      "flow": "entry/choice/result/return to road"
+    },
+    {
+      "event": "story_bridge_child_voice",
+      "key": "story-child-voice-terminal-v1",
+      "oldKey": "event-meet-family",
+      "delivery": "assets/scenes/story-child-voice-terminal-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle16/visual/masters/story-child-voice-terminal-v1.png",
+      "originalGeneratedPath": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-b8f0f5fc-e70f-4c44-abb8-e8e282568758.png",
+      "sha256": "93978521bc9dec4239a7cbc461051d49b3b6a38af403f4665eb4fd639b301859",
+      "bytes": 86124,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "visionReview": "Initial place and introduced subjects match; no unintroduced companions, player or vehicle; canonical treatment reviewed.",
+      "runtimeCrop": "Passed actual480px game panel on17 source; correct subjects/location, readable, no clipping",
+      "screenshots": [
+        "terminal-entry.png",
+        "terminal-result.png",
+        "terminal-restored.png"
+      ],
+      "flow": "entry/choice/result/return to road",
+      "reload": "actual reload preserves result/time/scene"
+    }
+  ],
+  "reusedAsset": {
+    "event": "ev_leo_solo",
+    "oldKey": "event-companion-radio",
+    "key": "recruit-leo-follow",
+    "reason": "Existing scene shows only Leo and Bori resting in Dalguji doorway; former scene included absent companions and a radio.",
+    "runtimeCrop": "Passed actual480px game panel on17 source; only Leo/Bori, no absent crew",
+    "screenshots": [
+      "leo-entry.png",
+      "leo-result.png"
+    ],
+    "flow": "entry/choice/result/return to road"
+  },
+  "responsive360": "Not verified; existing viewport/file URL limitation retained.",
+  "galleryBeforeWiring": {
+    "url": "http://127.0.0.1:4319/__live/assets",
+    "evidence": [
+      "gallery-before-wiring.png"
+    ],
+    "review": "Three exported WebPs rendered in gallery before scene mapping was edited."
+  },
+  "browser": {
+    "sourceFreeze": "cycle17/frozen-source.json",
+    "eventFrameWidthCssPx": 480,
+    "qaStartRestored": true,
+    "source": "Two normal public-action partial replays; cohortExcluded, no manual scene/state edits",
+    "responsive360": "not verified"
+  }
+}

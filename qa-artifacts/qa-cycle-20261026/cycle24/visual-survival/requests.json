@@ -1,0 +1,134 @@
+{
+  "cohortExcluded": true,
+  "classification": "approved-staged-art-only",
+  "sourceMappingOwner": "root",
+  "tool": "image_gen.imagegen built-in",
+  "assets": [
+    {
+      "id": "gp_envelope",
+      "key": "story-grandfather-envelope-detail-v1",
+      "format": "detail",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "scene": "A quiet physical-object detail in the lived-in wooden interior of the Dalguji, framed tightly on a worn wooden desktop. A closed, unlabelled, weathered repair notebook lies on the desk; one thick, sealed cream paper envelope protrudes subtly from behind its back cover, its blank reverse side facing the camera. The notebook cover is gently raised at that corner by the thickness of the tucked envelope. Single envelope visible, closed flap, no loose sheet or inner envelope visible. The emotional cue is a carefully kept family object, not an active memory or encounter. Natural close film-still perspective with tactile aged paper, cloth notebook binding and scuffed wood. Soft indirect neutral interior fill, a restrained warm practical reflection, no visible lamp necessary. No window, outside landscape, clock, season, sky or time-of-day cue. Absolutely no people, grandfather, child, hands, faces, portraits or photographs. No written characters, seal, label or torn-open envelope. Do not reveal the note, double packaging or letter contents. The object is simply present before deciding whether to open it.",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nGenerate one single landscape 16:9 frame, large master at least 1536 by 864. This is new artwork, the input images are canonical style/world/person/vehicle references only, not edit targets and not a collage. Do not copy any words or panel layouts from the reference sheets. Center the important subject within the central 80% width and 82% height. No frame, text, logo, watermark or UI. Preserve the neutral before-choice moment; do not show a choice result.\n\nAsset type: Caravan narrative detail still.\nScene: A quiet physical-object detail in the lived-in wooden interior of the Dalguji, framed tightly on a worn wooden desktop. A closed, unlabelled, weathered repair notebook lies on the desk; one thick, sealed cream paper envelope protrudes subtly from behind its back cover, its blank reverse side facing the camera. The notebook cover is gently raised at that corner by the thickness of the tucked envelope. Single envelope visible, closed flap, no loose sheet or inner envelope visible. The emotional cue is a carefully kept family object, not an active memory or encounter. Natural close film-still perspective with tactile aged paper, cloth notebook binding and scuffed wood. Soft indirect neutral interior fill, a restrained warm practical reflection, no visible lamp necessary. No window, outside landscape, clock, season, sky or time-of-day cue. Absolutely no people, grandfather, child, hands, faces, portraits or photographs. No written characters, seal, label or torn-open envelope. Do not reveal the note, double packaging or letter contents. The object is simply present before deciding whether to open it.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "promptSha256": "e4bf279a35ed17ce02080a45ce7d6c8f313b2671140a98eaf3e3095a4deb485f",
+      "referenceSha256": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "referenced_image_paths": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ]
+    },
+    {
+      "id": "ev_parking_evs",
+      "key": "explore-ev-charging-parking-v1",
+      "format": "place",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "scene": "A large abandoned Korean electric-car parking area at human eye height, with weathered parking bay lines and several ordinary compact Korean electric cars parked in receding parallel rows. Each visible front-row car is still connected through its actual charging port to a nearby ordinary waist-high or shoulder-high charging pedestal by a thick black cable. Clearly show cable continuity, sagging heavy loops and slack cable on dusty cracked asphalt. The cars are old, dusty and worn, all doors and hoods closed. The repeated cars, individual chargers and draped cables are the main subject, with enough surrounding pavement to read as a parking lot, not a street. Restrained diffuse gray-blue ambient light, no dramatic sun, no rain streaks or clock-specific sky. Windshield reflections obscure dashboards so no readable display text or numbers are rendered. Screens face away or are too small to read; do not assert whether any battery is alive. No people, companions, hands, dog, Dalguji, train, rail tracks, platform, gas pumps, solar panels, new future technology, dismantled battery cells, open toolboxes, salvaged parts, repair work or reward. No vehicle moves or charges visibly; this is the untouched discovery.",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nGenerate one single landscape 16:9 frame, large master at least 1536 by 864. This is new artwork, the input images are canonical style/world/person/vehicle references only, not edit targets and not a collage. Do not copy any words or panel layouts from the reference sheets. Center the important subject within the central 80% width and 82% height. No frame, text, logo, watermark or UI. Preserve the neutral before-choice moment; do not show a choice result.\n\nAsset type: Caravan narrative place still.\nScene: A large abandoned Korean electric-car parking area at human eye height, with weathered parking bay lines and several ordinary compact Korean electric cars parked in receding parallel rows. Each visible front-row car is still connected through its actual charging port to a nearby ordinary waist-high or shoulder-high charging pedestal by a thick black cable. Clearly show cable continuity, sagging heavy loops and slack cable on dusty cracked asphalt. The cars are old, dusty and worn, all doors and hoods closed. The repeated cars, individual chargers and draped cables are the main subject, with enough surrounding pavement to read as a parking lot, not a street. Restrained diffuse gray-blue ambient light, no dramatic sun, no rain streaks or clock-specific sky. Windshield reflections obscure dashboards so no readable display text or numbers are rendered. Screens face away or are too small to read; do not assert whether any battery is alive. No people, companions, hands, dog, Dalguji, train, rail tracks, platform, gas pumps, solar panels, new future technology, dismantled battery cells, open toolboxes, salvaged parts, repair work or reward. No vehicle moves or charges visibly; this is the untouched discovery.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "promptSha256": "2e95d5d6442356c0ffd6e67da03b434c1066cd403d38657c4b147ba7a44e1a43",
+      "referenceSha256": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "referenced_image_paths": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ]
+    },
+    {
+      "id": "lc_daegu_makchang",
+      "key": "local-daegu-makchang-alley-v1",
+      "format": "character",
+      "references": [
+        "assets/reference/visual-canon-2026-08-11.png",
+        "assets/reference/world-canon-2026-08-11.png",
+        "assets/reference/people-canon-2026-08-11.png",
+        "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "assets/portraits/passer_woman.png"
+      ],
+      "scene": "A narrow weathered alley on the outskirts of Daegu, Korea, with one modest working pojangmacha food cart beneath a patched, unmarked canvas awning. The charcoal brazier and well-used metal grill dominate the near midground, with a few unserved pieces of Korean makchang offal sizzling over glowing charcoal and a clearly visible slender plume of cooking smoke rising. Behind the grill stands exactly one adult Korean female proprietor, the same identity as the fifth reference portrait passer_woman: short tousled black hair, that face and skin tone, gray scarf, worn brown work jacket, with a simple faded practical apron over it. Use a medium view at eye level, her face and hands readable but the alley/cart/grill remain clear. She is simply attending her existing grill and looking toward an off-frame approaching passerby, not handing anything out. Keep hands anatomically natural and near her own work surface. Cool gray-blue alley and soot-stained walls, charcoal warmth as the single amber source, awning blocks distinct sky/time cues. No guests or crew, player hands, dogs, vehicle, seated diners, meal served to the player, empty finished plates, bowls handed over, sauce being gifted, money/scrap exchange, success outcome, celebratory gathering, mountain guardrail or countryside road. Do not copy words from any references; no signs or readable writing.",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nGenerate one single landscape 16:9 frame, large master at least 1536 by 864. This is new artwork, the input images are canonical style/world/person/vehicle references only, not edit targets and not a collage. Do not copy any words or panel layouts from the reference sheets. Center the important subject within the central 80% width and 82% height. No frame, text, logo, watermark or UI. Preserve the neutral before-choice moment; do not show a choice result.\n\nAsset type: Caravan narrative character still.\nScene: A narrow weathered alley on the outskirts of Daegu, Korea, with one modest working pojangmacha food cart beneath a patched, unmarked canvas awning. The charcoal brazier and well-used metal grill dominate the near midground, with a few unserved pieces of Korean makchang offal sizzling over glowing charcoal and a clearly visible slender plume of cooking smoke rising. Behind the grill stands exactly one adult Korean female proprietor, the same identity as the fifth reference portrait passer_woman: short tousled black hair, that face and skin tone, gray scarf, worn brown work jacket, with a simple faded practical apron over it. Use a medium view at eye level, her face and hands readable but the alley/cart/grill remain clear. She is simply attending her existing grill and looking toward an off-frame approaching passerby, not handing anything out. Keep hands anatomically natural and near her own work surface. Cool gray-blue alley and soot-stained walls, charcoal warmth as the single amber source, awning blocks distinct sky/time cues. No guests or crew, player hands, dogs, vehicle, seated diners, meal served to the player, empty finished plates, bowls handed over, sauce being gifted, money/scrap exchange, success outcome, celebratory gathering, mountain guardrail or countryside road. Do not copy words from any references; no signs or readable writing.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "promptSha256": "d8c9834b956680d6fe1f00600a192e9f85f9696b001b028ef256467e3ad8a84f",
+      "referenceSha256": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        },
+        {
+          "path": "assets/portraits/passer_woman.png",
+          "sha256": "56d945e3f5c7b58d66e403556104310cc869ccda4507078746c95d09380532f8"
+        }
+      ],
+      "referenced_image_paths": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+        "/Users/sang/caravan/assets/portraits/passer_woman.png"
+      ]
+    }
+  ]
+}

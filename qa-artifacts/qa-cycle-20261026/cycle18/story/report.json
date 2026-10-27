@@ -1,0 +1,420 @@
+{
+  "seed": 278003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "ulsan",
+    "yangsan",
+    "miryang",
+    "lake",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "daejeon",
+    "yeongdong",
+    "gimcheon",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "nonsan",
+    "jeonju",
+    "nonsan",
+    "airfield",
+    "nonsan",
+    "gongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 112,
+  "sourceHash": "dcd096880f7d50fa359ee2e7b17e92a3745877e6b9582ba250648d7495d46c87",
+  "freshStarts": 1,
+  "attempts": 1,
+  "traceRecords": 577,
+  "gameplayRecordsExcludingReloads": 353,
+  "actionCounts": {
+    "new-game": 1,
+    "unpaid-entry-reload": 112,
+    "choice": 112,
+    "paid-result-reload": 112,
+    "explore": 20,
+    "travel": 32,
+    "drive": 62,
+    "trade": 47,
+    "work": 5,
+    "meet-recruit": 2,
+    "camp": 10,
+    "recruit-step": 6,
+    "camp-talk": 9,
+    "accept-companion": 2,
+    "talk": 13,
+    "earned-perk": 4,
+    "board-open": 5,
+    "npc-rumor": 15,
+    "accept-quest": 1,
+    "buy-upgrade": 1,
+    "quest-turnin": 1,
+    "seoul-enter": 5
+  },
+  "all40FilesUnchanged": true,
+  "runtimeErrors": [],
+  "productionChangesDuringNaturalRun": 0,
+  "party": [
+    "minji",
+    "parkss"
+  ],
+  "dog": false,
+  "finalState": {
+    "at": "seoul",
+    "location": "서울 — 남산",
+    "day": 11,
+    "min": 1218,
+    "km": 1109,
+    "driving": null,
+    "fuel": 47.344682600001036,
+    "water": 22,
+    "food": 18,
+    "scrap": 63,
+    "van": 100,
+    "fatigue": 42.4580999999999,
+    "party": [
+      "minji",
+      "parkss"
+    ],
+    "items": {
+      "부품": 8,
+      "의약품": 0,
+      "탄약": 0,
+      "부모님의 검증키": 1,
+      "할아버지의 봉투": 1
+    },
+    "weather": "fog",
+    "campNight": 10,
+    "campPlan": {},
+    "campParticipants": [
+      "minji",
+      "parkss"
+    ],
+    "campConversation": null,
+    "crew": {
+      "minji": {
+        "name": "민지",
+        "mood": 100,
+        "bond": 59,
+        "injury": null
+      },
+      "parkss": {
+        "name": "박 선생",
+        "mood": 100,
+        "bond": 17,
+        "injury": null
+      }
+    },
+    "up": {
+      "bench": true
+    },
+    "sideQuest": null,
+    "boardOffers": [
+      {
+        "index": 0,
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "suwon",
+        "to": "daejeon",
+        "due": 110,
+        "noExpiry": true,
+        "kind": "deliver",
+        "need": null,
+        "reward": 16
+      },
+      {
+        "index": 1,
+        "label": "책 꾸러미",
+        "description": "\"책 꾸러미, 광주 대인시장까지 부탁드려도 될까요? 사례는 고철 17.\"",
+        "from": "suwon",
+        "to": "gwangju",
+        "due": 15,
+        "kind": "deliver",
+        "need": null,
+        "reward": 17
+      }
+    ],
+    "boardAt": "suwon",
+    "boardDay": 11,
+    "ended": true,
+    "endKind": "story_done",
+    "main": {
+      "id": "main_namsan",
+      "kind": "main",
+      "status": "completed",
+      "tracked": true,
+      "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+      "act": "종장",
+      "chapterId": "ending",
+      "eyebrow": "메인 스토리 · 종장",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "phase": "남산 코어 · 여정 기록",
+      "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+      "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+      "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+      "steps": [
+        {
+          "id": "ending",
+          "label": "남산 코어에서 최종 결정을 내렸다",
+          "state": "done"
+        }
+      ],
+      "progress": {
+        "have": 1,
+        "need": 1,
+        "label": "완료"
+      }
+    },
+    "navigation": {
+      "key": "main_ending",
+      "kind": "main",
+      "target": "seoul",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+    }
+  },
+  "statistics": {
+    "choiceCount": 112,
+    "rawEntryResultCharacters": 36335,
+    "speechCalls": 109,
+    "npcMenus": 30,
+    "notes": 120,
+    "fullTuplesSame": 97,
+    "fullTuplesDifferent": 15,
+    "resultStringsSame": 102,
+    "resultStringsDifferent": 10,
+    "newPairsAgainstRetainedCycles1to17": [
+      "comp_van_name:1",
+      "duo_minji_parkss_space:0",
+      "exp_pcroom:1",
+      "hist_bot_stop_manual:1"
+    ],
+    "newPairCount": 4
+  },
+  "entryReloads": 112,
+  "paidReloads": 112,
+  "paidDeepReaderEquality": 112,
+  "repayments": 0,
+  "chatAudit": {
+    "observedChatSequences": 7,
+    "sameDayDuplicateSequences": 0,
+    "matches": [
+      {
+        "n": 149,
+        "id": "daily-me-minji-hands",
+        "day": 4,
+        "min": 794.4,
+        "lines": 7,
+        "once": false
+      },
+      {
+        "n": 227,
+        "id": "daily-me-minji-hands",
+        "day": 5,
+        "min": 1132,
+        "lines": 7,
+        "once": false
+      },
+      {
+        "n": 273,
+        "id": "daily-me-minji-hands",
+        "day": 6,
+        "min": 1059.7,
+        "lines": 7,
+        "once": false
+      },
+      {
+        "n": 354,
+        "id": "thread-parent-key-minji",
+        "day": 8,
+        "min": 434.4,
+        "lines": 7,
+        "once": true
+      },
+      {
+        "n": 384,
+        "id": "chat:34",
+        "day": 8,
+        "min": 1339.4,
+        "lines": 6,
+        "once": false
+      },
+      {
+        "n": 461,
+        "id": "daily-me-parkss-patch",
+        "day": 10,
+        "min": 680.4,
+        "lines": 8,
+        "once": false
+      },
+      {
+        "n": 471,
+        "id": "daily-me-minji-hands",
+        "day": 10,
+        "min": 1048.9,
+        "lines": 7,
+        "once": false
+      }
+    ],
+    "savedStamps": {
+      "daily:daily-me-minji-hands": {
+        "day": 10,
+        "km": 981
+      },
+      "daily:thread-parent-key-minji": {
+        "day": 8,
+        "km": 676
+      },
+      "thread-parent-key-minji": {
+        "day": 8,
+        "km": 676
+      },
+      "daily:chat:34": {
+        "day": 8,
+        "km": 795
+      },
+      "daily:daily-me-parkss-patch": {
+        "day": 10,
+        "km": 943
+      }
+    },
+    "note": "Actual UI.playChat sequences matched source D.chats.lines; independent ambient/banter are not grouped as crew chats. Same chat on a later day is intentionally permitted. No forced pickChat call during natural run."
+  },
+  "targetEnding": "core_quarantine",
+  "actualEndingReason": "감시 근무를 설 사람 2/3 — 근무 가능한 동료 1명 더 필요 · 동료 1명 추가 합류 필요",
+  "targetPartyGap": "Eunsu settlement visited while Park recruitment was active; after Park join, route followed quest destination and main objective. Bench acquired D9, but no later Daejeon visit. No forced recruitment or rerun.",
+  "findings": [
+    {
+      "id": "S18-01",
+      "classification": "confirmed natural driving-context mismatch",
+      "source": "src/03-data.js D.banter[255]",
+      "trace": [
+        465,
+        493
+      ],
+      "text": "운전석 레일 다시 맞췄어. 대장님이 자꾸 오른쪽 어깨 주무르잖아. 앉아 봐. 너무 뒤로 갔으면 말하고.",
+      "reason": "The player is currently driving; the line asks that seated driver to sit down now.",
+      "proposal": "Refer to the adjustment at the previous stop and ask whether the current seat feels right; keep actor/need/effects unchanged."
+    },
+    {
+      "id": "S18-02",
+      "classification": "confirmed natural driving-context mismatch",
+      "source": "src/03i-story-expansion.js thread-parent-key-minji",
+      "trace": [
+        354
+      ],
+      "text": "나는 장치를 내려놓고 수첩을 폈다. 민지가 옆으로 와 계기판 분해도가 있는 장을 짚었다.",
+      "reason": "Both record endpoints remain in the same active road segment. Present driver handling the device and notebook is authored without any stop.",
+      "proposal": "Make handling a previous-stop recollection, promise joint notebook review at next stop, leave present narration at the wheel."
+    }
+  ],
+  "clarityCandidates": [
+    "S18-C01"
+  ],
+  "naturalRechecksThisFix": [
+    "External terminal new entry text/scene and child voice same closeup; original source still frozen18.",
+    "comp_van_name entry resolves current Minji/me roles; choice1 unchanged result protected.",
+    "Generic companion-cabin detail naturally used by comp_van_name and duo_minji_parkss_space."
+  ],
+  "features": [
+    "Minji guest→pulley failure recovery→join; Park medicine delivery guest→join; Minji+Park pair scene",
+    "One paid bench upgrade,5field work actions,47finite trades,10camps,9Minji camp conversations,4earned perks",
+    "15NPC greeting+rumour pairs(30menus),20explores,5boards,one accepted/completed ordinary jar delivery",
+    "Lake8-hour fishing,airfieldsearch,postmanwater/sea-contact,grandfatherdoubleenvelope→Seoul envelope opening",
+    "Main evidence complete; four linked cells; night-watch request exposes2/3; actual core_transfer ending and mother closure"
+  ],
+  "gaps": [
+    "No Eunsu/Leo/Kangwoo/Jaeyi/Bori; no claim target quarantine achieved",
+    "No map/cloud natural entry in seed278003; map separate excluded replay only",
+    "Most main/companion text overlaps earlier runs; only retained-union new pairs separately counted",
+    "No radio repair/crafting/Jeju/father exhibit/Mingyu rescue; no exhaustive content or image claim"
+  ],
+  "manualReview": "Read every112actual entry/result (36335rawchars),109speechlines,120notes,15NPCgreeting/rumourpairs,all5fieldworks/5boards/4perks/upgrade/quest/campmessages. One truncated tool segment (story_family_principle result) explicitly reread.",
+  "partialReplay": {
+    "cohortExcluded": true,
+    "partialReplay": true,
+    "seed": 277003,
+    "sourceHash": "dcd096880f7d50fa359ee2e7b17e92a3745877e6b9582ba250648d7495d46c87",
+    "source40Unchanged": true,
+    "comparedRecords": 402,
+    "comparedChoices": 79,
+    "gameplayMismatches": [],
+    "presentationDifferences": [
+      {
+        "n": 59,
+        "event": "story_bridge_departure_echo",
+        "phase": "entry",
+        "kind": "text"
+      },
+      {
+        "n": 59,
+        "event": "story_bridge_departure_echo",
+        "phase": "entry",
+        "kind": "readerTurns"
+      },
+      {
+        "n": 59,
+        "event": "story_bridge_departure_echo",
+        "phase": "entry",
+        "kind": "sceneKeys"
+      },
+      {
+        "n": 59,
+        "event": "story_bridge_departure_echo",
+        "phase": "result",
+        "kind": "resultSceneKeys"
+      },
+      {
+        "n": 244,
+        "event": "comp_engine_sound",
+        "phase": "entry",
+        "kind": "sceneKeys"
+      },
+      {
+        "n": 244,
+        "event": "comp_engine_sound",
+        "phase": "result",
+        "kind": "resultSceneKeys"
+      },
+      {
+        "n": 375,
+        "event": "story_bridge_child_voice",
+        "phase": "entry",
+        "kind": "sceneKeys"
+      },
+      {
+        "n": 375,
+        "event": "story_bridge_child_voice",
+        "phase": "result",
+        "kind": "resultSceneKeys"
+      }
+    ],
+    "newEntryPath": "agent03/attempt01/normal-unpaid-401-comp_hometown.json",
+    "viewNullish": true,
+    "targetStateMatchesOriginal": true,
+    "intentionalStop": true
+  },
+  "limits": [
+    "Node VM engine simulation, not browser or human playtest",
+    "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+    "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+    "No edits to source or actual user save; no infinite resources"
+  ]
+}

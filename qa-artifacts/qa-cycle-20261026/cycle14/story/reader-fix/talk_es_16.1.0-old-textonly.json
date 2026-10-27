@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "「에코」요. 무전 용어로 E."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 잠깐 멈췄다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "…근데 뜻이 좋아서 아꼈어요. 메아리요. 보낸 신호가 돌아오는 거."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "관제사한텐 그게 제일 반가운 소리예요. 응답이 있다는 뜻이라."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 헤드폰 줄을 손가락에 감았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "그, 설명하면 길어지는데— 아무튼요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "요즘은 어느 쪽으로 불러요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "…받을 자신이 있을 때는 에코요. 아직은, 노스 스타가 더 많고요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수는 그 말을 하고도 헤드폰 줄을 한 번 더 감았다."
+  }
+]

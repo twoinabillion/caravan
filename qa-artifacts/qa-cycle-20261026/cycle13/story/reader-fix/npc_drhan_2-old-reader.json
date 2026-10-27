@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "동료들이요. 북쪽으로 떠나면서. 천리안을 연구하다— 답이 안에 있다고 확신한 친구들이."
+  },
+  {
+    "kind": "narration",
+    "text": "한 박사가 남은 절반을 가리켰다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "drhan",
+    "text": "이건 걔들이 남긴 몫입니다. '뒷부분은 네가 채워라'라고. 근데 오랫동안 못 채웠어요. 여기 데이터로는 안 풀립니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "북쪽 간 분들은요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "…소식 없죠. 그래서 더 못 지워요. 이 반쪽이 걔들이 살아 있다는 마지막 증거 같아서."
+  },
+  {
+    "kind": "narration",
+    "text": "한 박사는 보리차를 내오겠다며 일어났다가, 컵을 하나만 들고 돌아왔다. 자기 것은 잊은 모양이었다. 그 차가 식을 때까지, 그는 보드 앞을 떠나지 않았다."
+  }
+]

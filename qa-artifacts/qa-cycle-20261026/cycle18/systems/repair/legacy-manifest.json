@@ -1,0 +1,215 @@
+[
+  {
+    "id": "comp_cloudgame",
+    "source": "systems/browser-visual-entry-replay/player02/attempt01/entry-413-comp_cloudgame-export.json",
+    "file": "comp_cloudgame-paid-frozen18.json",
+    "cohortExcluded": true,
+    "kind": "frozen18 public-choice branch fixture, no new journey",
+    "reading": {
+      "eventId": "comp_cloudgame",
+      "phase": "outcome",
+      "view": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "다음 구름, 그다음 구름으로 연장전이 이어졌다. 드래곤은 이견이 없었고, 세탁기는 표가 갈렸다."
+          },
+          {
+            "kind": "narration",
+            "text": "그다음 것에서 누가 \"할아버지 옆모습\"이라고 했다. 반박이 안 나왔다."
+          },
+          {
+            "kind": "narration",
+            "text": "그 뒤로 꽤 오래 아무도 다음 구름을 고르지 않았다."
+          }
+        ],
+        "index": 0,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": []
+      },
+      "history": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "조수석에서 하늘을 보다 누군가 선언한다."
+          },
+          {
+            "kind": "dialogue",
+            "text": "저 구름 완전 고래인데?",
+            "who": "minji"
+          },
+          {
+            "kind": "dialogue",
+            "text": "어디요?",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "text": "저기.",
+            "who": "minji"
+          },
+          {
+            "kind": "dialogue",
+            "text": "저기 어디.",
+            "who": "eunsu"
+          },
+          {
+            "kind": "dialogue",
+            "text": "저기!",
+            "who": "minji"
+          },
+          {
+            "kind": "dialogue",
+            "text": "손가락 말고 방향을 말해줘요.",
+            "who": "me"
+          },
+          {
+            "kind": "narration",
+            "text": "결국 다 같이 같은 데를 보게 됐을 땐 이미 반은 감자로 흩어진 뒤였다. 그런데도 차가 두 파로 갈렸다."
+          }
+        ],
+        "index": 0,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": [
+          "companion-window-clouds-v1"
+        ]
+      },
+      "selection": "판정단을 자처한다",
+      "updates": [
+        {
+          "title": "민지",
+          "next": "정차한 뒤 민지에게 말을 걸어 다음 이야기를 듣는다.",
+          "kind": "side"
+        },
+        {
+          "title": "은수",
+          "next": "야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 1 더 올린다.",
+          "kind": "side"
+        },
+        {
+          "title": "재이",
+          "next": "야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 3 더 올린다.",
+          "kind": "side"
+        }
+      ]
+    },
+    "text": "다음 구름, 그다음 구름으로 연장전이 이어졌다. 드래곤은 이견이 없었고, 세탁기는 표가 갈렸다.\n\n그다음 것에서 누가 \"할아버지 옆모습\"이라고 했다. 반박이 안 나왔다.\n\n그 뒤로 꽤 오래 아무도 다음 구름을 고르지 않았다.",
+    "chips": [
+      {
+        "t": "민지 사기 0",
+        "c": "item"
+      },
+      {
+        "t": "은수 사기 0",
+        "c": "item"
+      },
+      {
+        "t": "재이 사기 +5",
+        "c": "plus"
+      },
+      {
+        "t": "새 기록 · 구름 감정",
+        "c": "item"
+      }
+    ]
+  },
+  {
+    "id": "comp_hometown",
+    "source": "story/browser-visual-entry-replay/agent03/attempt01/normal-unpaid-401-comp_hometown.json",
+    "file": "comp_hometown-paid-frozen18.json",
+    "cohortExcluded": true,
+    "kind": "frozen18 public-choice branch fixture, no new journey",
+    "reading": {
+      "eventId": "comp_hometown",
+      "phase": "outcome",
+      "view": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "지도 위 손가락들이 각자의 옛날을 짚었다. 이모네 동네, 군대, 첫 출장, 수학여행."
+          },
+          {
+            "kind": "dialogue",
+            "text": "서울 가본 사람?",
+            "who": "minji"
+          },
+          {
+            "kind": "narration",
+            "text": "손이 반만 올라갔다."
+          },
+          {
+            "kind": "dialogue",
+            "text": "반은 뭐예요, 반은.",
+            "who": "me"
+          },
+          {
+            "kind": "dialogue",
+            "text": "들었다가 말았어.",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "text": "곧 다 가보겠네.",
+            "who": "minji"
+          },
+          {
+            "kind": "narration",
+            "text": "누가 말했고, 지도가 조용히 접혔다."
+          }
+        ],
+        "index": 0,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": []
+      },
+      "history": null,
+      "selection": "계속 듣는다",
+      "updates": [
+        {
+          "title": "민지",
+          "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+          "kind": "side"
+        },
+        {
+          "title": "강우",
+          "next": "정차한 뒤 강우에게 말을 걸어 다음 이야기를 듣는다.",
+          "kind": "side"
+        }
+      ]
+    },
+    "text": "지도 위 손가락들이 각자의 옛날을 짚었다. 이모네 동네, 군대, 첫 출장, 수학여행.\n\n\"서울 가본 사람?\" 손이 반만 올라갔다.\n\n\"반은 뭐예요, 반은.\"\n\n\"들었다가 말았어.\"\n\n\"곧 다 가보겠네.\" 누가 말했고, 지도가 조용히 접혔다.",
+    "chips": [
+      {
+        "t": "사기 0",
+        "c": "item"
+      },
+      {
+        "t": "새 기록 · 지명 퀴즈",
+        "c": "item"
+      }
+    ]
+  }
+]

@@ -1,0 +1,468 @@
+[
+  {
+    "id": "signal_bait",
+    "choice": 0,
+    "outcome": 0,
+    "file": "legacy-signal_bait-0-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "좌표에는 정말 차가 있었다. 그리고 아이도 둘 있었다.\n\n다만 차는 고장 나지 않았고, 아이들은 우리 차 문이 열리기를 기다리고 있었다. 뒤편 수풀에서 어른 셋이 일어섰다.\n\n액셀을 밟았다. 뒷유리에 돌이 맞았다.\n\n아이들 때문에 차를 세운 건데. 저쪽도 그걸 알았겠지. 뒷유리의 금이 자꾸 눈에 들어왔다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "좌표에는 정말 차가 있었다. 그리고 아이도 둘 있었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "다만 차는 고장 나지 않았고, 아이들은 우리 차 문이 열리기를 기다리고 있었다. 뒤편 수풀에서 어른 셋이 일어섰다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "액셀을 밟았다. 뒷유리에 돌이 맞았다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "아이들 때문에 차를 세운 건데. 저쪽도 그걸 알았겠지. 뒷유리의 금이 자꾸 눈에 들어왔다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "좌표에는 정말 차가 있었다. 그리고 아이도 둘 있었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "다만 차는 고장 나지 않았고, 아이들은 우리 차 문이 열리기를 기다리고 있었다. 뒤편 수풀에서 어른 셋이 일어섰다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "액셀을 밟았다. 뒷유리에 돌이 맞았다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "아이들 때문에 차를 세운 건데. 저쪽도 그걸 알았겠지. 뒷유리의 금이 자꾸 눈에 들어왔다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "signal_bait",
+    "choice": 0,
+    "outcome": 1,
+    "file": "legacy-signal_bait-0-1.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "좌표 근처에서 차를 세우고 먼저 걸어서 살폈다.\n\n수풀에 사람이 셋. 차는 멀쩡했고 아이 둘은 어른들 뒤에 앉아 있었다. 시키는 대로 기다리는 얼굴이었다.\n\n돌아 나오며 물 한 통을 길가에 두었다. 아이들 몫이라고 혼잣말했다. 어른들이 가져갈 것도 알고 있었다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "좌표 근처에서 차를 세우고 먼저 걸어서 살폈다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "수풀에 사람이 셋. 차는 멀쩡했고 아이 둘은 어른들 뒤에 앉아 있었다. 시키는 대로 기다리는 얼굴이었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "돌아 나오며 물 한 통을 길가에 두었다. 아이들 몫이라고 혼잣말했다. 어른들이 가져갈 것도 알고 있었다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "좌표 근처에서 차를 세우고 먼저 걸어서 살폈다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "수풀에 사람이 셋. 차는 멀쩡했고 아이 둘은 어른들 뒤에 앉아 있었다. 시키는 대로 기다리는 얼굴이었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "돌아 나오며 물 한 통을 길가에 두었다. 아이들 몫이라고 혼잣말했다. 어른들이 가져갈 것도 알고 있었다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "signal_bait",
+    "choice": 1,
+    "outcome": 0,
+    "file": "legacy-signal_bait-1-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "은수가 헤드폰을 눌러 썼다.\n\n\"…송신 위치가 좌표랑 달라요. 이건 저 자리에서 사람이 부르는 게 아니라, 다른 데서 틀어 놓은 거예요.\"\n\n\"녹음이에요?\"\n\n\"녹음이에요. 그런데—\" 은수가 잠깐 멈췄다. \"원본은 진짜였을 거예요. 억양이 이래요. 처음 녹음할 땐 진짜로 급했던 사람.\"\n\n아무도 그 말에 대꾸하지 못했다.\n\n우회로를 잡고 좌표를 크게 돌았다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "은수가 헤드폰을 눌러 썼다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "…송신 위치가 좌표랑 달라요. 이건 저 자리에서 사람이 부르는 게 아니라, 다른 데서 틀어 놓은 거예요.",
+        "displayName": "은수"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "녹음이에요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "녹음이에요. 그런데—",
+        "displayName": "은수"
+      },
+      {
+        "kind": "narration",
+        "text": "은수가 잠깐 멈췄다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "원본은 진짜였을 거예요. 억양이 이래요. 처음 녹음할 땐 진짜로 급했던 사람.",
+        "displayName": "은수"
+      },
+      {
+        "kind": "narration",
+        "text": "아무도 그 말에 대꾸하지 못했다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "우회로를 잡고 좌표를 크게 돌았다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "은수가 헤드폰을 눌러 썼다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "…송신 위치가 좌표랑 달라요. 이건 저 자리에서 사람이 부르는 게 아니라, 다른 데서 틀어 놓은 거예요.",
+        "displayName": "은수"
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "녹음이에요?",
+        "displayName": "은수"
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "녹음이에요. 그런데—",
+        "displayName": "은수"
+      },
+      {
+        "kind": "narration",
+        "text": "은수가 잠깐 멈췄다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "원본은 진짜였을 거예요. 억양이 이래요. 처음 녹음할 땐 진짜로 급했던 사람.",
+        "displayName": "은수"
+      },
+      {
+        "kind": "narration",
+        "text": "아무도 그 말에 대꾸하지 못했다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "우회로를 잡고 좌표를 크게 돌았다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "signal_bait",
+    "choice": 2,
+    "outcome": 0,
+    "file": "legacy-signal_bait-2-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "라디오를 껐다.\n\n껐는데도 그 문장의 간격이 머릿속에서 계속 세어졌다. 여덟 번. 아홉 번.\n\n진짜였으면 어쩌지. 라디오를 다시 켜려다 손을 거뒀다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "라디오를 껐다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "껐는데도 그 문장의 간격이 머릿속에서 계속 세어졌다. 여덟 번. 아홉 번.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "진짜였으면 어쩌지. 라디오를 다시 켜려다 손을 거뒀다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "라디오를 껐다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "껐는데도 그 문장의 간격이 머릿속에서 계속 세어졌다. 여덟 번. 아홉 번.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "진짜였으면 어쩌지. 라디오를 다시 켜려다 손을 거뒀다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "crisis_nofuel",
+    "choice": 0,
+    "outcome": 0,
+    "file": "legacy-crisis_nofuel-0-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "빈 기름통 두 개를 메고 걸었다. 한나절 만에 농가 창고에서 경운기 기름을 구해 돌아왔다.\n\n다리가 후들거리지만, 차가 다시 살아났다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "빈 기름통 두 개를 메고 걸었다. 한나절 만에 농가 창고에서 경운기 기름을 구해 돌아왔다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "다리가 후들거리지만, 차가 다시 살아났다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "빈 기름통 두 개를 메고 걸었다. 한나절 만에 농가 창고에서 경운기 기름을 구해 돌아왔다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "다리가 후들거리지만, 차가 다시 살아났다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "crisis_nofuel",
+    "choice": 1,
+    "outcome": 0,
+    "file": "legacy-crisis_nofuel-1-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "반나절 만에 만수네 만물상이 지나갔다!\n\n\"어이~ 이럴 줄 알고 기름 챙겨왔지~\" 바가지를 썼지만 목숨값이다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "반나절 만에 만수네 만물상이 지나갔다!",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어이~ 이럴 줄 알고 기름 챙겨왔지~",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "바가지를 썼지만 목숨값이다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "반나절 만에 만수네 만물상이 지나갔다!",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어이~ 이럴 줄 알고 기름 챙겨왔지~",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "바가지를 썼지만 목숨값이다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "crisis_nofuel",
+    "choice": 1,
+    "outcome": 1,
+    "file": "legacy-crisis_nofuel-1-1.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "몇 시간을 기다려도 차가 오지 않아 결국 걸었다. 연료를 구해 돌아오기까지 열 시간이 걸렸다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "몇 시간을 기다려도 차가 오지 않아 결국 걸었다. 연료를 구해 돌아오기까지 열 시간이 걸렸다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "몇 시간을 기다려도 차가 오지 않아 결국 걸었다. 연료를 구해 돌아오기까지 열 시간이 걸렸다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "crisis_nofuel2",
+    "choice": 0,
+    "outcome": 0,
+    "file": "legacy-crisis_nofuel2-0-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "처음 들른 농가는 문이 잠겨 있었다. 두 집을 더 지나서야 경운기 기름을 나눠 받았다.\n\n\"조심혀. 요즘 길에 서 있는 차는 위에서 다 세어 간다니께.\"\n\n아홉 시간 만에 돌아왔다. 다리보다 마음이 더 무겁다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "처음 들른 농가는 문이 잠겨 있었다. 두 집을 더 지나서야 경운기 기름을 나눠 받았다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "조심혀. 요즘 길에 서 있는 차는 위에서 다 세어 간다니께.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "아홉 시간 만에 돌아왔다. 다리보다 마음이 더 무겁다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "처음 들른 농가는 문이 잠겨 있었다. 두 집을 더 지나서야 경운기 기름을 나눠 받았다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "조심혀. 요즘 길에 서 있는 차는 위에서 다 세어 간다니께.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "아홉 시간 만에 돌아왔다. 다리보다 마음이 더 무겁다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "crisis_nofuel2",
+    "choice": 1,
+    "outcome": 0,
+    "file": "legacy-crisis_nofuel2-1-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "만수네 만물상이 지나갔다.\n\n\"어이~ 기름 필요해? 여기선 좀 비싸.\"\n\n웃고 있었지만 값은 웃기지 않았다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "만수네 만물상이 지나갔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어이~ 기름 필요해? 여기선 좀 비싸.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "웃고 있었지만 값은 웃기지 않았다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "만수네 만물상이 지나갔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어이~ 기름 필요해? 여기선 좀 비싸.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "웃고 있었지만 값은 웃기지 않았다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "crisis_nofuel2",
+    "choice": 1,
+    "outcome": 1,
+    "file": "legacy-crisis_nofuel2-1-1.json",
+    "cohortExcluded": true,
+    "kind": "Frozen19 isolated branch fixture; explicit resources/crew and outcome stub, not natural play",
+    "text": "기다리다 지쳐 결국 걸었다. 기름을 구해 돌아오니 11시간째. 지난번보다 더 멀게 느껴졌다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "기다리다 지쳐 결국 걸었다. 기름을 구해 돌아오니 11시간째. 지난번보다 더 멀게 느껴졌다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "기다리다 지쳐 결국 걸었다. 기름을 구해 돌아오니 11시간째. 지난번보다 더 멀게 느껴졌다.",
+        "displayName": null
+      }
+    ]
+  }
+]

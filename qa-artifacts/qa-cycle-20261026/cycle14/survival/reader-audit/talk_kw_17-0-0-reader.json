@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "narration",
+    "text": "정지, 전방, 후진, 산개, 집결. 중간에 후진과 산개를 두 번 헷갈렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "방금 그건 산개입니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "후진 아니었어요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "후진은 손바닥이 아래. …다시."
+  },
+  {
+    "kind": "narration",
+    "text": "다섯 개를 외울 때까지 강우는 몇 번이고 반복했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…합격입니다."
+  },
+  {
+    "kind": "narration",
+    "text": "이번에는 말 없이 강우의 손을 보고 신호를 따라 했다. 후진과 산개를 구별하자 강우가 고개를 끄덕였다."
+  }
+]

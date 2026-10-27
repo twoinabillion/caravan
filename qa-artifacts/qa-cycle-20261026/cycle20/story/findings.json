@@ -1,0 +1,29 @@
+[
+  {
+    "id": "S20-V01",
+    "kind": "natural-source-art-mismatch",
+    "event": "exp_postoffice",
+    "n": 497,
+    "state": {
+      "day": 10,
+      "min": 976,
+      "at": "airfield",
+      "party": [
+        "kangwoo",
+        "parkss",
+        "leo"
+      ]
+    },
+    "sceneKey": "event-explore-water",
+    "token": "__SCENE_EVENT_EXPLORE_WATER__",
+    "asset": "assets/scenes/event-explore-water.webp",
+    "sha256": "dab0885857a81bbf50063ec2577f1800f5a328d3a90aadc20742c6982f68c614",
+    "authored": "Undelivered parcel shelves and a bundle of letters; choice1 reads the letters.",
+    "actualRaster": "Two people lower a net at an outdoor reservoir sluice; caravan on the road above. No parcel counter or mail shelves.",
+    "method": "Actual reader scene keys plus D.scenes token and tools/build-html.mjs webp resolver; local raster inspected through view_image. Parent independently agreed after viewing actual raster.",
+    "unpaidExport": "agent03/attempt01/normal-unpaid-495-exp_postoffice.json",
+    "unpaidHasNoReaderKeys": true,
+    "status": "confirmed; root owns dedicated art; production untouched during cycle20",
+    "screenCropVerifiedByThisAgent": false
+  }
+]

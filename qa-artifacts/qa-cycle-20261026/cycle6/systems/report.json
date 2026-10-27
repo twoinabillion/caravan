@@ -1,0 +1,741 @@
+{
+  "cycle": 6,
+  "agent": "systems",
+  "seed": 266002,
+  "evidenceClass": "Actual production engine in isolated VM with finite resources and public actions; not browser visual/input/audio QA.",
+  "engineSourceHash": "d0dbca2f0983ad8dc38fd18c1f2103bbadae260fa34fd1e0ce8cb1671d050882",
+  "sourceUnchangedAcrossJourney": true,
+  "hashScope": "runner engine/content files",
+  "freshStarts": 1,
+  "normalSaveResumptions": 2,
+  "completedJourneys": 1,
+  "policyStops": 2,
+  "engineFailures": 0,
+  "engineDeaths": 0,
+  "fixtureJourneys": 0,
+  "productionChangesDuringJourney": [],
+  "result": {
+    "method": "core_sleep",
+    "ending": "story_done",
+    "ended": true,
+    "storyDone": true,
+    "session1End": true,
+    "day": 63,
+    "km": 4680,
+    "actualCompanions": [
+      "leo",
+      "parkss"
+    ],
+    "bori": true,
+    "finalState": {
+      "at": "seoul",
+      "location": "서울 — 남산",
+      "day": 63,
+      "min": 1030,
+      "km": 4680,
+      "driving": null,
+      "fuel": 3.3365896666692065,
+      "water": 13,
+      "food": 6,
+      "scrap": 7,
+      "van": 100,
+      "vanMax": 100,
+      "fuelMax": 70,
+      "foodMax": 24,
+      "waterMax": 28,
+      "fatigue": 54.98861999999983,
+      "dog": true,
+      "hunger": 2,
+      "thirst": 0,
+      "injuries": {},
+      "party": [
+        "leo",
+        "parkss"
+      ],
+      "items": {
+        "부품": 10,
+        "의약품": 0,
+        "탄약": 4,
+        "할아버지의 봉투": 1,
+        "교란 장치": 1,
+        "부모님의 검증키": 1,
+        "쇠파이프": 2,
+        "석궁": 2,
+        "볼트": 6,
+        "화염병": 4
+      },
+      "weather": "rain",
+      "campNight": 61,
+      "campPlan": {},
+      "campParticipants": [
+        "leo",
+        "parkss"
+      ],
+      "campConversation": null,
+      "crew": {
+        "leo": {
+          "name": "레오",
+          "mood": 33,
+          "bond": 131,
+          "injury": null
+        },
+        "parkss": {
+          "name": "박 선생",
+          "mood": 33,
+          "bond": 75,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true,
+        "collector": true,
+        "antenna": true,
+        "stove": true
+      },
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": "daejeon",
+      "boardDay": 20,
+      "ended": true,
+      "endKind": "story_done",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "completed",
+        "tracked": true,
+        "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+        "act": "종장",
+        "chapterId": "ending",
+        "eyebrow": "메인 스토리 · 종장",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "phase": "남산 코어 · 여정 기록",
+        "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+        "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+        "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+        "steps": [
+          {
+            "id": "ending",
+            "label": "남산 코어에서 최종 결정을 내렸다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      "navigation": {
+        "key": "main_ending",
+        "kind": "main",
+        "target": "seoul",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+      }
+    }
+  },
+  "segments": [
+    {
+      "attempt": "01",
+      "kind": "fresh start",
+      "status": "error",
+      "gameEnded": false,
+      "day": 19,
+      "km": 1042,
+      "choices": 94,
+      "traceRecords": 532,
+      "sourceHash": "d0dbca2f0983ad8dc38fd18c1f2103bbadae260fa34fd1e0ce8cb1671d050882",
+      "reason": "QA policy refused legal low-supply travel",
+      "originalsPreserved": true
+    },
+    {
+      "attempt": "02",
+      "kind": "normal save continuation",
+      "status": "day-limit",
+      "gameEnded": false,
+      "day": 61,
+      "km": 4528,
+      "choices": 82,
+      "traceRecords": 650,
+      "sourceHash": "d0dbca2f0983ad8dc38fd18c1f2103bbadae260fa34fd1e0ce8cb1671d050882",
+      "reason": "QA supply detour loop hit policy day limit",
+      "originalsPreserved": true
+    },
+    {
+      "attempt": "03",
+      "kind": "normal save continuation",
+      "status": "ended",
+      "gameEnded": true,
+      "day": 63,
+      "km": 4680,
+      "choices": 21,
+      "traceRecords": 98,
+      "sourceHash": "d0dbca2f0983ad8dc38fd18c1f2103bbadae260fa34fd1e0ce8cb1671d050882",
+      "reason": "Actual SESSION1END reached",
+      "originalsPreserved": true
+    }
+  ],
+  "totals": {
+    "choices": 197,
+    "traceRecords": 1280,
+    "publicActionsExcludingChoicesReloadInitialization": 684,
+    "actionCounts": {
+      "new-game": 1,
+      "unpaid-entry-reload": 197,
+      "choice": 197,
+      "paid-result-reload": 197,
+      "explore": 35,
+      "travel": 142,
+      "drive": 200,
+      "camp-meal": 14,
+      "camp": 61,
+      "walkfuel": 15,
+      "trade": 95,
+      "settlement-repair": 4,
+      "sell-demand": 3,
+      "trade-bundle": 2,
+      "meet-recruit": 2,
+      "work": 48,
+      "board-open": 5,
+      "buy-upgrade": 4,
+      "recruit-step": 4,
+      "camp-talk": 27,
+      "accept-companion": 2,
+      "earned-perk": 4,
+      "accept-quest": 1,
+      "turnin-quest": 1,
+      "craft": 10,
+      "resume-saved-journey": 2,
+      "resumed-state": 2,
+      "seoul-enter": 5
+    },
+    "entryReload": 197,
+    "paidResultReload": 197,
+    "reloadLoaded": 394,
+    "reloadFailed": 0,
+    "paidReapplied": 0
+  },
+  "features": {
+    "recruitment": [
+      {
+        "attempt": "01",
+        "n": 157,
+        "id": "leo",
+        "at": "geochang",
+        "day": 6,
+        "ok": true,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0
+      },
+      {
+        "attempt": "01",
+        "n": 429,
+        "id": "parkss",
+        "at": "gimcheon",
+        "day": 14,
+        "ok": true,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0
+      }
+    ],
+    "boriRescue": {
+      "attempt": "01",
+      "rescueTrace": 139,
+      "rescueEvent": "rq_leo_task",
+      "rescueChoice": "트럭을 물가까지 붙여 불빛을 만든다",
+      "joinChoiceTrace": 155,
+      "dogStateEnabledAtAcceptance": 157
+    },
+    "upgrades": [
+      {
+        "attempt": "01",
+        "n": 119,
+        "id": "bench",
+        "at": "gwangju",
+        "day": 5,
+        "ok": true,
+        "elapsedMinutes": 300,
+        "scrapDelta": -12
+      },
+      {
+        "attempt": "01",
+        "n": 120,
+        "id": "collector",
+        "at": "gwangju",
+        "day": 5,
+        "ok": true,
+        "elapsedMinutes": 200,
+        "scrapDelta": -15
+      },
+      {
+        "attempt": "01",
+        "n": 195,
+        "id": "antenna",
+        "at": "jeonju",
+        "day": 7,
+        "ok": true,
+        "elapsedMinutes": 200,
+        "scrapDelta": -17
+      },
+      {
+        "attempt": "01",
+        "n": 216,
+        "id": "stove",
+        "at": "jeonju",
+        "day": 8,
+        "ok": true,
+        "elapsedMinutes": 200,
+        "scrapDelta": -20
+      }
+    ],
+    "crafts": [
+      {
+        "attempt": "01",
+        "n": 386,
+        "id": "pipe",
+        "at": "yeongdong",
+        "day": 13,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -6
+      },
+      {
+        "attempt": "01",
+        "n": 387,
+        "id": "xbow",
+        "at": "yeongdong",
+        "day": 13,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -12
+      },
+      {
+        "attempt": "01",
+        "n": 388,
+        "id": "bolt",
+        "at": "yeongdong",
+        "day": 13,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -3
+      },
+      {
+        "attempt": "01",
+        "n": 389,
+        "id": "molotov",
+        "at": "yeongdong",
+        "day": 13,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -2
+      },
+      {
+        "attempt": "01",
+        "n": 390,
+        "id": "ammo",
+        "at": "yeongdong",
+        "day": 13,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -8
+      },
+      {
+        "attempt": "02",
+        "n": 3,
+        "id": "pipe",
+        "at": "yeongdong",
+        "day": 19,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -6
+      },
+      {
+        "attempt": "02",
+        "n": 4,
+        "id": "xbow",
+        "at": "yeongdong",
+        "day": 19,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -12
+      },
+      {
+        "attempt": "02",
+        "n": 5,
+        "id": "bolt",
+        "at": "yeongdong",
+        "day": 19,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -3
+      },
+      {
+        "attempt": "02",
+        "n": 6,
+        "id": "molotov",
+        "at": "yeongdong",
+        "day": 19,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -2
+      },
+      {
+        "attempt": "02",
+        "n": 7,
+        "id": "ammo",
+        "at": "yeongdong",
+        "day": 19,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -8
+      }
+    ],
+    "craftDiscount": false,
+    "settlementRepairs": [
+      {
+        "attempt": "01",
+        "n": 102,
+        "at": "gwangju",
+        "day": 4,
+        "ok": true,
+        "elapsedMinutes": 180,
+        "scrapDelta": -8
+      },
+      {
+        "attempt": "01",
+        "n": 189,
+        "at": "jeonju",
+        "day": 7,
+        "ok": true,
+        "elapsedMinutes": 180,
+        "scrapDelta": -8
+      },
+      {
+        "attempt": "01",
+        "n": 299,
+        "at": "jeonju",
+        "day": 10,
+        "ok": true,
+        "elapsedMinutes": 180,
+        "scrapDelta": -8
+      },
+      {
+        "attempt": "01",
+        "n": 505,
+        "at": "muju",
+        "day": 17,
+        "ok": true,
+        "elapsedMinutes": 180,
+        "scrapDelta": -8
+      }
+    ],
+    "cashSupplyTrades": 88,
+    "barterTrades": [
+      {
+        "attempt": "01",
+        "n": 232,
+        "at": "muju",
+        "day": 8,
+        "ok": true,
+        "elapsedMinutes": 25,
+        "scrapDelta": 0,
+        "key": "barter_fp"
+      },
+      {
+        "attempt": "01",
+        "n": 233,
+        "at": "muju",
+        "day": 8,
+        "ok": true,
+        "elapsedMinutes": 25,
+        "scrapDelta": 0,
+        "key": "barter_wf"
+      },
+      {
+        "attempt": "01",
+        "n": 437,
+        "at": "muju",
+        "day": 14,
+        "ok": true,
+        "elapsedMinutes": 25,
+        "scrapDelta": 0,
+        "key": "barter_wf"
+      },
+      {
+        "attempt": "01",
+        "n": 438,
+        "at": "muju",
+        "day": 14,
+        "ok": true,
+        "elapsedMinutes": 25,
+        "scrapDelta": 0,
+        "key": "barter_wf"
+      },
+      {
+        "attempt": "01",
+        "n": 439,
+        "at": "muju",
+        "day": 14,
+        "ok": true,
+        "elapsedMinutes": 25,
+        "scrapDelta": 0,
+        "key": "barter_wf"
+      },
+      {
+        "attempt": "01",
+        "n": 440,
+        "at": "muju",
+        "day": 14,
+        "ok": true,
+        "elapsedMinutes": 25,
+        "scrapDelta": 0,
+        "key": "barter_wf"
+      },
+      {
+        "attempt": "01",
+        "n": 504,
+        "at": "muju",
+        "day": 17,
+        "ok": true,
+        "elapsedMinutes": 25,
+        "scrapDelta": 0,
+        "key": "barter_mf"
+      }
+    ],
+    "tradeOfferKinds": [
+      "fuel",
+      "food",
+      "barter_fp",
+      "barter_wf",
+      "barter_mf",
+      "water"
+    ],
+    "bundles": [
+      {
+        "attempt": "01",
+        "n": 104,
+        "at": "gwangju",
+        "day": 4,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -3
+      },
+      {
+        "attempt": "01",
+        "n": 191,
+        "at": "jeonju",
+        "day": 7,
+        "ok": true,
+        "elapsedMinutes": 40,
+        "scrapDelta": -2
+      }
+    ],
+    "demandSales": [
+      {
+        "attempt": "01",
+        "n": 103,
+        "at": "gwangju",
+        "day": 4,
+        "ok": true,
+        "elapsedMinutes": 20,
+        "scrapDelta": 10
+      },
+      {
+        "attempt": "01",
+        "n": 231,
+        "at": "muju",
+        "day": 8,
+        "ok": true,
+        "elapsedMinutes": 20,
+        "scrapDelta": 12
+      },
+      {
+        "attempt": "01",
+        "n": 327,
+        "at": "daejeon",
+        "day": 11,
+        "ok": true,
+        "elapsedMinutes": 20,
+        "scrapDelta": 4
+      }
+    ],
+    "localWork": 48,
+    "uniqueLocalWork": 14,
+    "camp": 61,
+    "warmMeals": 14,
+    "campTalk": {
+      "attempts": 27,
+      "succeeded": 17,
+      "rejected": [
+        {
+          "attempt": "01",
+          "n": 417,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "01",
+          "n": 468,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "01",
+          "n": 528,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "02",
+          "n": 46,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "02",
+          "n": 72,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "02",
+          "n": 92,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "02",
+          "n": 116,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "02",
+          "n": 185,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "02",
+          "n": 363,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "attempt": "02",
+          "n": 483,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        }
+      ]
+    },
+    "questAcceptance": [
+      {
+        "attempt": "01",
+        "n": 329,
+        "at": "daejeon",
+        "day": 11,
+        "ok": true,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0
+      }
+    ],
+    "questExplicitTurnin": [
+      {
+        "attempt": "01",
+        "n": 330,
+        "at": "daejeon",
+        "day": 11,
+        "ok": true,
+        "elapsedMinutes": 0,
+        "scrapDelta": 18
+      }
+    ],
+    "hiddenLocation": {
+      "unique": [
+        "tower"
+      ],
+      "visits": 3,
+      "note": "Three visits are one unique hidden location; excess revisits are QA policy failure."
+    },
+    "radioRepair": 0,
+    "radioBroadcast": 0
+  },
+  "dialogueReview": {
+    "encounters": 197,
+    "newOrChangedEntries": 87,
+    "exactPreviouslyReviewedEntries": 110,
+    "newOrChangedParagraphsRead": 311,
+    "exactPreviouslyReviewedParagraphOccurrencesWithinChangedEntries": 140,
+    "uniqueLocalWorkResultsRead": 14,
+    "method": "All encountered entries retained. Exact [event,text,choices,choice,result] matches compared with cycles1–5. For changed entries every choice and every new paragraph read; exact prior paragraphs SHA256 matched and contextual time/party reviewed. No claim of rereading identical prose or unseen branches.",
+    "files": [
+      "transcript01.json",
+      "transcript02.json",
+      "transcript03.json",
+      "changed-transcript.json",
+      "review-collapsed.json",
+      "work-transcript.json"
+    ]
+  },
+  "findings": [
+    {
+      "id": "SYS-C6-STORY01",
+      "event": "exp_noodleworks",
+      "attempt": "01",
+      "trace": 72,
+      "source": "src/03-data.js",
+      "title": "아침 2시간 작업이 그날 저녁 식사까지 완료한 것으로 서술",
+      "evidence": "남원 day3 08:30→10:30. 결과: 그날 저녁은 잔치국수.",
+      "cause": "120분 효과와 무관한 고정 저녁 완료 표현",
+      "entrySave": "player02/attempt01/entry-71-exp_noodleworks-export.json",
+      "assigned": "survival",
+      "status": "confirmed on frozen journey; fix tracked separately",
+      "reportedToRoot": true
+    },
+    {
+      "id": "SYS-C6-STORY02",
+      "event": "vg_seoulline",
+      "attempt": "02",
+      "trace": 579,
+      "source": "src/03-data.js",
+      "title": "대전→세종 길에서 서울·남산타워가 보였다고 기록",
+      "evidence": "day54 13:51, 대전→세종 13.628/20km 운행 중. 결과 seoul_seen과 처음 본 스카이라인 기록 지급.",
+      "cause": "north 광역 태그만 있고 실제 서울 인근 거리 gate 없음",
+      "entrySave": "player02/attempt02/entry-578-vg_seoulline-export.json",
+      "assigned": "systems",
+      "status": "confirmed on frozen journey; fix tracked separately",
+      "reportedToRoot": true
+    },
+    {
+      "id": "SYS-C6-STORY03",
+      "event": "seoul_core",
+      "attempt": "03",
+      "trace": 82,
+      "source": "src/03-data.js",
+      "title": "143년 흔적 선택이 미획득 응원봉·네 컷 사진을 실물로 배치",
+      "evidence": "실제 trace flags registry,dialect,theories,route,consent만. found 목록 뒤 arrange 문장은 응원봉·이송표·물병·네 컷 사진 고정.",
+      "cause": "앞 목록만 현재 기록에 맞추고 후속 배치 문장은 고정",
+      "entrySave": "player02/attempt03/entry-81-seoul_core-export.json",
+      "assigned": "story",
+      "status": "confirmed on frozen journey; fix tracked separately",
+      "reportedToRoot": true
+    }
+  ],
+  "candidates": [
+    {
+      "event": "ai_bus",
+      "attempt": "02",
+      "trace": 196,
+      "title": "20분 따라갔다는 결과와 즉시 처리 시각",
+      "evidence": "청주→대전 15.232/34km, day28 min839→839; fuel38.531→36.531",
+      "entrySave": "player02/attempt02/entry-195-ai_bus-export.json",
+      "status": "Root owns cause separation; not added to this agent confirmed-three count"
+    }
+  ],
+  "scopedVerdict": "Completed finite journey and reload review; not clean: three newly confirmed narrative time/location/provenance defects. No newly confirmed engine crash or duplicate charge.",
+  "coverageLimits": [
+    "No fresh radio tube/repair/broadcast, Eunsu recruitment, driver clinic, armory discount, or disassembly/reinstallation.",
+    "Hidden-place goal reached one unique site; three visits must not count as three places.",
+    "Two policy stops and long detour loop are QA policy defects, not game endings. All progress resumed without restart, rollback or injection.",
+    "Boundary fixtures and subsequent UI replays/fixes are separate from this 197-choice journey.",
+    "Root owns actual browser layout, speaker, audio and mobile QA."
+  ],
+  "postJourneyFixes": [
+    {
+      "id": "SYS-C6-STORY02",
+      "file": "post-journey-fixes.json",
+      "note": "Original frozen journey findings remain as observed; repair tests do not add journey choices or acquisitions."
+    }
+  ]
+}

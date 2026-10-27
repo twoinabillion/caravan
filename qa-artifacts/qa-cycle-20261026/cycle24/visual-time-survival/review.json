@@ -1,0 +1,93 @@
+{
+  "cohortExcluded": true,
+  "classification": "staged-file-visual-review-not-browser",
+  "status": "self-reviewed; root and actual UI pending; user stopped QA",
+  "scope": {
+    "originalSceneFilesViewed": 3,
+    "generatedMastersViewed": 4,
+    "finalDeliveryFilesViewed": 4,
+    "smallFileViews": 8,
+    "widths": [
+      360,
+      480
+    ],
+    "browserGalleryViews": 0,
+    "actualGameCropViews": 0,
+    "newJourneys": 0
+  },
+  "rows": [
+    {
+      "key": "seoul-ruins-green-day-v1",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-day-v1.png",
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-day-v1.webp",
+      "smallFiles": [
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-day-v1-360.png",
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-day-v1-480.png"
+      ],
+      "finding": "All visible road signal indications are green. Empty Seoul avenue, distant Namsan, ordered objects and existing wheeled cleaning robot retained. No people or travelling vehicle.",
+      "small": "Green lamps, robot and rows of objects remain readable at 360 and 480 pixels.",
+      "caveat": "Overcast daylight and damp pavement retained from source; no active rain is depicted.",
+      "selfReview": "acceptable staged candidate",
+      "rootReview": "pending",
+      "actualUiReview": "pending"
+    },
+    {
+      "key": "seoul-ruins-green-night-v1",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-night-v1.png",
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-night-v1.webp",
+      "smallFiles": [
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-night-v1-360.png",
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-night-v1-480.png"
+      ],
+      "finding": "Dark-night version of the day composition; the road signals remain green. No people or travelling vehicle.",
+      "small": "Signals, robot, roadway and major building silhouettes remain readable at both widths.",
+      "caveat": "Small red aviation beacons on buildings/tower are not road signals. Same gross composition, not a pixel-identical day/night pair.",
+      "selfReview": "acceptable staged candidate",
+      "rootReview": "pending",
+      "actualUiReview": "pending"
+    },
+    {
+      "key": "seoul-han-night-v1",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-han-night-v1.png",
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-han-night-v1.webp",
+      "smallFiles": [
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-han-night-v1-360.png",
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-han-night-v1-480.png"
+      ],
+      "finding": "Intact empty Han bridge towards Namsan/Seoul. Portable radio hangs on left railing beside ribbons, one shoe and blank-backed cards. No living postman, letter handoff or companion.",
+      "small": "Radio silhouette, rail markers, bridge direction and skyline readable at both widths; markings on cards intentionally unreadable.",
+      "caveat": "Image does not establish which recording/static is playing; no browser/UI crop inspected.",
+      "selfReview": "acceptable staged candidate",
+      "rootReview": "pending",
+      "actualUiReview": "pending"
+    },
+    {
+      "key": "event-vista-road-night-v1",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/event-vista-road-night-v1.png",
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/event-vista-road-night-v1.webp",
+      "smallFiles": [
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/event-vista-road-night-v1-360.png",
+        "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/event-vista-road-night-v1-480.png"
+      ],
+      "finding": "Empty final hill road with guardrail descends toward Seoul and river at night. No car, companion, toll plaza, handoff or selected outcome.",
+      "small": "Road direction, guardrail, Seoul skyline and distant tower readable at both widths.",
+      "caveat": "Distant city lights are environmental, not proof of a particular engine state.",
+      "selfReview": "acceptable staged candidate",
+      "rootReview": "pending",
+      "actualUiReview": "pending"
+    }
+  ],
+  "readerCandidate": {
+    "event": "seoul_ruins",
+    "choice": 2,
+    "quote": "얘, 사람 속은 자주 틀린대.",
+    "observed": "passer_man / ???",
+    "classification": "static context candidate only; current speech versus remembered Ha Yeosa speech ambiguous; not naturally confirmed; no source change"
+  },
+  "limits": [
+    "No production mapping or asset copy.",
+    "No gameplay or runtime selector validation for these four images.",
+    "360/480 images are local raster previews, not device screenshots.",
+    "All eight previews were reopened in four small two-image calls after a previous eight-image response was context-truncated."
+  ]
+}

@@ -1431,7 +1431,7 @@ const UI = (()=>{
         const target=D.nodes[rq.target];
         const needsNight=Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay;
         state=needsNight
-          ? `${def.name}와 임시 동행 · 서로를 지켜볼 하룻밤`
+          ? `${D.withParticle(def.name,'과','와')} 임시 동행 · 서로를 지켜볼 하룻밤`
           : `두 번째 과제 · ${target.name}`;
         meta=needsNight?'야영 필요':S.at===rq.target&&!S.driving?'마주할 일 있음':'이동 필요';
         pct=needsNight?70:S.at===rq.target?86:76;
@@ -2051,10 +2051,12 @@ function dialogueSide(turn,lanes,opt={}){
         let speaker;
         if(scripted!==undefined){
           const partySpeaker=(typeof S!=='undefined'&&S&&S.party&&S.party[0])||'me';
+          const partySecond=(typeof S!=='undefined'&&S&&S.party&&S.party[1])||partySpeaker;
+          const resolveParty=who=>who==='party_first'?partySpeaker:who==='party_second'?partySecond:who;
           speaker=typeof scripted==='string'
-            ? {kind:isRecord?'record':'dialogue',who:scripted==='party_first'?partySpeaker:scripted}
+            ? {kind:isRecord?'record':'dialogue',who:resolveParty(scripted)}
             : {kind:isRecord?'record':'dialogue',...scripted,
-              who:scripted.who==='party_first'?partySpeaker:scripted.who};
+              who:resolveParty(scripted.who)};
           state.last=speaker.who;
           state.unresolvedQuote=null;
         }else{
@@ -2072,6 +2074,10 @@ function dialogueSide(turn,lanes,opt={}){
       pushNarration(paragraph.slice(cursor));
     }
     const result=turns.length?turns:[{kind:'narration',text:restore(source)}];
+    // Authored past-only incidents reuse the approved provenance/receipt path.
+    // Text-only historical results must not borrow today's source marker.
+    if(!opt.frozenTextOnly&&evd.storyOrigin?.kind==='memory'&&evd.storyOrigin.timeLabel)
+      Object.assign(result[0],{timeKind:'memory',timeLabel:evd.storyOrigin.timeLabel});
     result.knownSpeaker=state.knownSpeaker;
     return result;
   }
@@ -2389,7 +2395,7 @@ function dialogueSide(turn,lanes,opt={}){
     const node=D.nodes[selected.nb.id], forecast=selected.forecast;
     const canDepart=forecast.ok&&!forecast.shortage;
     const infinite=G.isInfiniteResourceMode();
-    const urgent=canDepart?[S.van<30?'차체 수리 권장':'',S.fatigue>=75?'휴식 필요':'',S.wx==='storm'?'폭풍 · 주행 주의':'',(forecast.supplyMargin??0)<0?'식량·물 보급 필요':''].filter(Boolean).join(' · '):'';
+    const urgent=canDepart?[forecast.survivalWarning||'',S.van<30?'차체 수리 권장':'',S.fatigue>=75?'휴식 필요':'',S.wx==='storm'?'폭풍 · 주행 주의':'',(forecast.supplyMargin??0)<0?'식량·물 보급 필요':''].filter(Boolean).join(' · '):'';
     const main=typeof G.mainQuestEntry==='function'?G.mainQuestEntry():null;
     return `<div class="journey-route" data-route-console="${esc(selected.nb.id)}">
       <div class="trip-destination-row">
@@ -2775,15 +2781,16 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function wireStopActionButtons(root,node,overlay=''){
     const run=action=>{
+      if(!S||S.ended) return;
       if(overlay) closeModal(overlay,false);
       action();
     };
-    const wf=root.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>run(()=>G.openRescue('nofuel','crisis_nofuel'));
-    const rp=root.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>run(()=>{ if(G.fieldRepair()) AMBI.action('repair'); });
-    const rd=root.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>run(()=>{ if(G.fixRadio()){ AMBI.action('radio'); renderAll(); } });
+    const wf=root.querySelector('[data-a="walkfuel"]'); if(wf) wf.onclick=()=>run(()=>G.seekFuel());
+    const rp=root.querySelector('[data-a="repair"]'); if(rp) rp.onclick=()=>run(()=>{ if(G.fieldRepair()&&!S.ended) AMBI.action('repair'); });
+    const rd=root.querySelector('[data-a="radio"]'); if(rd) rd.onclick=()=>run(()=>{ if(G.fixRadio()&&!S.ended){ AMBI.action('radio'); renderAll(); } });
     const cf=root.querySelector('[data-a="craft"]'); if(cf) cf.onclick=()=>run(()=>showCraft());
     const rq=root.querySelector('[data-a="recruitstep"]'); if(rq) rq.onclick=()=>run(()=>G.openRecruitStep());
-    const ex=root.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>run(()=>{ if(G.explore()) AMBI.action('explore'); });
+    const ex=root.querySelector('[data-a="explore"]'); if(ex) ex.onclick=()=>run(()=>{ if(G.explore()&&!S.ended) AMBI.action('explore'); });
     const st=root.querySelector('[data-a="stl"]'); if(st) st.onclick=()=>run(()=>showStl(node.stl));
     const camp=root.querySelector('[data-a="camp"]'); if(camp) camp.onclick=()=>run(()=>showCampHub());
   }
@@ -2935,7 +2942,7 @@ function dialogueSide(turn,lanes,opt={}){
     const routeModels=nbs.map(nb=>({nb,forecast:G.travelForecast(nb.id),fuel:G.fuelFor(nb.km,nb.road)}));
     const preferred=typeof G.questPreferredNeighbor==='function'?G.questPreferredNeighbor(routeModels,questRouteFocus):null;
     if(preferred) routeModels.sort((a,b)=>Number(b.nb.id===preferred.nb.id)-Number(a.nb.id===preferred.nb.id));
-    if(!G.isInfiniteResourceMode()&&S.fuel<5) localActions.push(stayActionModel({
+    if(G.canSeekFuel()) localActions.push(stayActionModel({
       action:'walkfuel',kicker:'연료 비상',title:'걸어서 연료를 구해온다',
       description:'시간과 체력을 크게 소모한다.',chips:[{label:'연료',value:'부족',tone:'danger',icon:'fuel'}],cta:'연료 구하기'
     }));
@@ -3021,7 +3028,7 @@ function dialogueSide(turn,lanes,opt={}){
       <strong>계약: ${esc(recap.routeContract.promise)}</strong>
       <span>${recap.routeContract.complete?'계약 구간 완료':'계약 진행 중'}</span>
     </div>`:'';
-    const people=recap&&recap.checkIn?`<div class="arrival-people"><small>이 길에서 함께한 시간</small><strong>${esc(recap.checkIn.moment&&recap.checkIn.moment.title||`${recap.checkIn.name}와 나눈 짧은 이야기`)}</strong>${recap.checkIn.moment?`<span>${esc(recap.checkIn.moment.text)}</span>`:''}</div>`:'';
+    const people=recap&&recap.checkIn?`<div class="arrival-people"><small>이 길에서 함께한 시간</small><strong>${esc(recap.checkIn.moment&&recap.checkIn.moment.title||`${D.withParticle(recap.checkIn.name,'과','와')} 나눈 짧은 이야기`)}</strong>${recap.checkIn.moment?`<span>${esc(recap.checkIn.moment.text)}</span>`:''}</div>`:'';
     const chapter=recap&&recap.chapter?`<div class="arrival-chapter"><small>여정의 한 장을 마쳤다</small><strong>${esc(recap.chapter.title)}</strong><span>${esc(recap.chapter.text)}</span></div>`:'';
     a.classList.toggle('arrival-major',major);
     a.classList.toggle('arrival-portrait',!!(src&&portraitKey));
@@ -3259,7 +3266,7 @@ function dialogueSide(turn,lanes,opt={}){
         ...row,label:evd.combat?row.label:row.kind==='expense'?'소모':row.kind==='lasting'?'흔적':row.label,
         text:!evd.combat&&row.kind==='expense'?storyExpenseText(row.text):row.text
       })).filter(row=>row.text);
-      const forecast=foreseeable.map(row=>`${row.label} · ${row.text}`).join(' / ');
+      const forecast=foreseeable.map(row=>row.label===row.text?row.text:`${row.label} · ${row.text}`).join(' / ');
       const listedCost=foreseeable.some(row=>row.kind==='expense')?'':cost;
       const actionLabel=choiceActionLabel(c);
       const routeId=evd.id==='route_mid_fork'
@@ -3281,7 +3288,7 @@ function dialogueSide(turn,lanes,opt={}){
           ${!rq.ok?`<span class="req choice-lock-reason">${esc(rq.t||'요구 조건 미충족')}</span>`:listedCost?`<span class="req choice-requirement">필요 · ${evd.combat?esc(listedCost):storyExpenseHtml(listedCost)}</span>`:''}
           ${evd.combat
             ?(forecast?`<span class="req choice-requirement choice-forecast">${esc(forecast)}</span>`:'')
-            :foreseeable.map(row=>`<span class="req choice-requirement choice-forecast"><span class="choice-forecast-label">${esc(row.label)} · </span><span>${row.kind==='expense'?storyExpenseHtml(row.text):esc(row.text)}</span></span>`).join('')}
+            :foreseeable.map(row=>`<span class="req choice-requirement choice-forecast">${row.label===row.text?'':`<span class="choice-forecast-label">${esc(row.label)} · </span>`}<span>${row.kind==='expense'?storyExpenseHtml(row.text):esc(row.text)}</span></span>`).join('')}
           ${routeBrief?`<span class="req choice-requirement choice-route-forecast">${esc(routeBrief)}</span>`:''}
         </button>`;
     });
@@ -3309,7 +3316,9 @@ function dialogueSide(turn,lanes,opt={}){
     const fallbackType=evd&&((evd.ai||evd.type==='추적')?'추적':evd.type);
     const familyText=`${evd&&evd.id||''} ${stripTags(evd&&evd.title||'')} ${fallbackType||''}`;
     const familyRule=(D.eventSceneFamilyRules||[]).find(rule=>
-      (!rule.types||rule.types.includes(fallbackType))&&(!rule.match||rule.match.test(familyText)));
+      (!rule.types||rule.types.includes(fallbackType))&&(!rule.match||rule.match.test(familyText))&&
+      (!rule.companions||rule.companions.every(id=>typeof S!=='undefined'&&S?.party?.includes(id)))&&
+      (!rule.flag||(typeof S!=='undefined'&&S?.flags?.[rule.flag])));
     add(familyRule&&familyRule.scene);
     if(keys.length) return keys;
     /* 인물이 명시된 스토리에 최종 동료 단체사진을 임의로 붙이지 않는다.
@@ -3369,7 +3378,7 @@ function dialogueSide(turn,lanes,opt={}){
       sheet.dataset.narrativeTime=kind;
       sheet.dataset.chapterBoundary=String(state.eventId==='opening_farewell'&&state.phase==='outcome');
       const orientation=sheet.querySelector('.event-orientation');
-      if(orientation)orientation.textContent=sheet.dataset.chapterBoundary==='true'?'서장을 마치고':time?.timeLabel||(kind==='memory'?'내 기억':kind==='reported'?'전해 들은 이야기':orientation.dataset.currentOrientation||'지금');
+      if(orientation)orientation.textContent=sheet.dataset.chapterBoundary==='true'?'서장을 마치고':time?.timeLabel||(kind==='memory'?'내 기억':kind==='reported'?'전해 들은 이야기':kind==='epilogue'?'후일담':orientation.dataset.currentOrientation||'지금');
     }
     const keys=state&&state.sceneKeys||[];
     if(!frame||!keys.length) return;
@@ -3803,7 +3812,8 @@ function dialogueSide(turn,lanes,opt={}){
       const head=spoken&&!same?`<header class="page-speaker">${person.portrait?`<img src="${person.portrait}" width="48" height="48" alt="" decoding="async">`:''}<b>${esc(label)}</b></header>`
         :!spoken&&label?`<div class="page-source${documentTitle?' document-source':''}">${esc(label)}</div>`:'';
       if(spoken)previous=turn;
-      const source=review&&turn.timeKind?`<p class="page-time-source">${esc(turn.timeLabel||(turn.timeKind==='memory'?'내 기억':turn.timeKind==='reported'?'전해 들은 이야기':'지금'))}</p>`:'';
+      else if(label)previous=null; // A written/broadcast source ends the prior speaker's group.
+      const source=review&&turn.timeKind?`<p class="page-time-source">${esc(turn.timeLabel||(turn.timeKind==='memory'?'내 기억':turn.timeKind==='reported'?'전해 들은 이야기':turn.timeKind==='epilogue'?'후일담':'지금'))}</p>`:'';
       return `<article class="page-turn" data-story-entry data-kind="${esc(turn.kind)}"${documentTitle?' data-source-layout="document"':''}${spoken?` data-speaker="${esc(person.id)}"`:''}>${source}${head}<div class="page-text">${fmt(turn.text||'')}</div></article>`;
     }).join('')}</section>`;
   }
@@ -3816,7 +3826,7 @@ function dialogueSide(turn,lanes,opt={}){
     changes.forEach(chip=>{
       const resource=storyResourceChange(chip);
       if(resource)resources.push({kind:'resource',text:chip.t,resource,atomic:true});
-      else other.push({kind:'summary',text:chip.t});
+      else other.push({kind:'summary',text:storyFeedbackChip(chip).t});
     });
     rows.push(...resources,...other);
     const seen=new Set();(state.quietOutcome?[]:state.questUpdates||[]).forEach(row=>{
@@ -4312,7 +4322,7 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneKey=D.companionGrowthScenes&&D.companionGrowthScenes[id];
     const scene=sceneKey&&D.scenes&&D.scenes[sceneKey]||'';
     const sceneAlt=sceneKey&&D.sceneDescriptions&&D.sceneDescriptions[sceneKey]
-      ||`${c.name}가 ${perk.nm} 능력을 익히는 장면`;
+      ||`${D.withParticle(c.name,'이','가')} ${perk.nm} 능력을 익히는 장면`;
     const next=st.pending
       ?`Lv.${st.pending} 능력을 바로 선택할 수 있다.`
       :st.lvl<3
@@ -4328,7 +4338,7 @@ function dialogueSide(turn,lanes,opt={}){
       <div class="comp-perk-result">
 
         <div class="comp-perk-result-title"><i aria-hidden="true">${perk.ic||'✦'}</i><div><small>새 능력</small><h2 id="comp-perk-reveal-title">${esc(perk.nm)}</h2></div></div>
-        <p>${esc(perk.learn||`${c.name}가 새로운 능력을 익혔다.`)}</p>
+        <p>${esc(perk.learn||`${D.withParticle(c.name,'이','가')} 새로운 능력을 익혔다.`)}</p>
         <section class="comp-perk-effect"><small>여정에 적용되는 효과</small><b>${esc(perk.d)}</b></section>
         <div class="comp-perk-next"><small>다음 성장</small><span>${esc(next)}</span></div>
         <div class="comp-perk-result-actions"><button type="button" class="comp-perk-return" data-perk-return="${id}">동료 성장으로 돌아가기</button><button type="button" class="comp-perk-finish" data-x="1">닫기</button></div>
@@ -4410,6 +4420,7 @@ function dialogueSide(turn,lanes,opt={}){
   let craftSelectedId='pipe';
   let craftVisualState='preview';
   function showCraft(options={}){
+    if(!S||S.ended) return false;
     SND.setDriving(false);
     const sheet=$('#ev-sheet');
     sheet.classList.remove('event-mode','passenger-reader','story-compact','comp-perk-reveal-mode','companion-profile-mode');
@@ -4423,11 +4434,11 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneKey=c.art&&(making?c.art.making:c.art.preview);
     const scene=sceneKey&&D.scenes&&D.scenes[sceneKey]||'';
     const own=Object.keys(c.out).map(nm=>`${nm} ${S.items[nm]||0}`).join(' · ');
-    const mins=S.up&&S.up.armory?20:40;
+    const quote=G.craftQuote(c.id),mins=quote.minutes;
     const costs=[
-      c.need.scrap&&{icon:'▦',label:'고철',amount:c.need.scrap,have:S.scrap},
-      c.need.parts&&{icon:'⌁',label:'부품',amount:c.need.parts,have:S.items['부품']||0},
-      c.need.fuel&&{icon:'◒',label:'연료',amount:`${c.need.fuel}L`,have:`${Math.floor(S.fuel)}L`}
+      quote.need.scrap&&{icon:'▦',label:'고철',amount:quote.need.scrap,have:S.scrap},
+      quote.need.parts&&{icon:'⌁',label:'부품',amount:quote.need.parts,have:S.items['부품']||0},
+      quote.need.fuel&&{icon:'◒',label:'연료',amount:`${quote.need.fuel}L`,have:`${Math.floor(S.fuel)}L`}
     ].filter(Boolean);
     const tabs=D.crafts.map(row=>{
       const rowOwn=Object.keys(row.out).reduce((sum,nm)=>sum+(S.items[nm]||0),0);
@@ -4445,7 +4456,7 @@ function dialogueSide(turn,lanes,opt={}){
         ${making?'<i class="craft-done-mark" aria-hidden="true">✓</i>':''}</figure>
       <nav class="craft-recipes" role="tablist" aria-label="제작품 선택">${tabs}</nav>
       <section class="craft-detail"><header><div><small>${making?'방금 만든 물건':'선택한 제작품'}</small><h3>${c.ic} ${esc(c.nm)}</h3></div><b>${esc(own)}</b></header>
-        <p>${esc(c.d)}</p><div class="craft-costs" aria-label="필요 재료">${costHtml}</div>
+        <p>${esc(c.d)}${quote.need.fuel?`<br>연료 ${quote.need.fuel+3}L 이상 필요 · ${quote.need.fuel}L 소모 · 3L 여유`:''}</p><div class="craft-costs" aria-label="필요 재료">${costHtml}</div>
         <button type="button" class="craft-primary" data-cr="${c.id}" ${chk.ok?'':'disabled'}>
           <span><small>${chk.ok?(making?'같은 물건을 다시':'작업 준비 완료'):'지금은 제작할 수 없음'}</small><b>${chk.ok?`${esc(c.nm)} 제작`:esc(chk.why||'재료 부족')}</b></span><em>${mins}분</em></button></section>
       <button type="button" class="craft-close" data-x="1">작업대 접기</button>
@@ -4453,7 +4464,7 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.innerHTML=h;
     sheet.querySelectorAll('[data-craft-pick]').forEach(b=>b.onclick=()=>showCraft({selected:b.dataset.craftPick,phase:'preview'}));
     const make=sheet.querySelector('[data-cr]');
-    if(make) make.onclick=()=>{ if(G.craft(make.dataset.cr)){ AMBI.action('craft'); showCraft({selected:make.dataset.cr,phase:'making'}); } };
+    if(make) make.onclick=()=>{ if(G.craft(make.dataset.cr)&&!S.ended){ AMBI.action('craft'); showCraft({selected:make.dataset.cr,phase:'making'}); } };
     sheet.querySelector('[data-x]').onclick=()=>{ craftVisualState='preview'; closeEvent(); };
     openModal('#ev-wrap','[data-craft-pick].is-active, [data-cr], [data-x]');
   }
@@ -4534,14 +4545,24 @@ function dialogueSide(turn,lanes,opt={}){
   function storyElapsedChip(chip){
     return /^\d+(?:\.\d+)?\s*(?:분|시간) 경과$/.test(stripTags(chip.t||'').trim());
   }
+  function storyFeedbackNumber(value){
+    if(!Number.isFinite(value))return String(value);
+    if(value===0)return '0';
+    const sign=value>0?'+':'−',amount=Math.abs(value);
+    return sign+(amount<.1?'0.1 미만':String(Number(amount.toFixed(1))));
+  }
+  function storyFeedbackChip(chip){
+    const match=String(chip.t||'').match(/^(피로|차체|(?:.*? )?사기|부품|고철|연료|물|식량|의약품|탄약)\s+([+−-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)(%|L|개|발)?( · .*)?$/i);
+    return match?{...chip,t:match[1]+' '+storyFeedbackNumber(Number(match[2].replace('−','-')))+(match[3]||'')+(match[4]||'')}:chip;
+  }
   function storyResourceChange(chip){
     // Read the saved receipt, including capacity/perk/test-mode results. Never
     // infer a reward from the authored effect or run that effect a second time.
-    const match=String(chip.t||'').trim().match(/^(부품|고철|연료|물|식량|의약품|탄약)\s+([+−-]?\d+(?:\.\d+)?|∞)(L|개|발)?(?:\s*·\s*(.*))?$/);
+    const match=String(chip.t||'').trim().match(/^(부품|고철|연료|물|식량|의약품|탄약)\s+([+−-]?\d+(?:\.\d+)?(?:e[+-]?\d+)?|∞)(L|개|발)?(?:\s*·\s*(.*))?$/i);
     if(!match)return null;
     const [,name,raw,unit,note]=match;
     const infinite=raw==='∞',value=Number(raw.replace('−','-'));
-    return {name,amount:infinite?'∞':value>0?'+'+value:value<0?'−'+Math.abs(value):'0',
+    return {name,amount:infinite?'∞':storyFeedbackNumber(value),
       unit:unit||(['부품','의약품'].includes(name)?'개':''),note:note||'',
       label:infinite?'소모 없음':value>0?'획득':value<0?'소모':'변화 없음',
       tone:infinite||value===0?'neutral':value<0?'loss':'gain'};
@@ -4554,7 +4575,8 @@ function dialogueSide(turn,lanes,opt={}){
     chips.filter(chip=>!storyElapsedChip(chip)).forEach(chip=>{
       const resource=storyResourceChange(chip);
       if(resource)resources.push(resource);
-      else (/^(?:새 기록|새 소문|본편 단서|기억됨|◈)/.test(stripTags(chip.t||'').trim())?records:changes).push(chip);
+      else if(/^(?:새 기록|새 소문|본편 단서|기억됨|◈)/.test(stripTags(chip.t||'').trim()))records.push(chip);
+      else changes.push(storyFeedbackChip(chip));
     });
     const seen=new Set(),next=updates.filter(row=>{
       const key=JSON.stringify([row.kind,row.title,row.next]);if(seen.has(key)) return false;seen.add(key);return true;
@@ -4572,6 +4594,7 @@ function dialogueSide(turn,lanes,opt={}){
       if(savedResolution.why) toast(savedResolution.why,'warn');
       return;
     }
+    if(S.ended) return; // The ending screen already owns the fatal transaction.
     const out=savedResolution.out, chips=storyOutcomeChips(savedResolution.chips,quiet);
     AMBI.result(curEv,choice,savedResolution.applied);
     const combatHud=curEv.combat?combatHudHtml(curEv,{state:savedResolution.combatState,
@@ -4583,7 +4606,6 @@ function dialogueSide(turn,lanes,opt={}){
         ?out.fx.combatResult:'failure';
       setTimeout(()=>SND.combat(resultCue),140);
     }
-    if(S.ended) return;
     if(choice.continueToRoad===true){ closeEvent(); return; }
     const sheet=$('#ev-sheet');
     sheet.classList.remove('companion-profile-mode','comp-perk-reveal-mode','craft-workbench-mode');
@@ -4591,11 +4613,12 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.classList.remove('combat-details-open');
     const outcomeText=typeof out.text==='function'?out.text(S):out.text;
     const knownSpeaker=!!(curStory&&curStory.knownSpeaker);
-    const authored=typeof out.turns==='function'?out.turns(S):out.turns;
+    const authored=out.frozenTextOnly?null:typeof out.turns==='function'?out.turns(S):out.turns;
     const turns=Array.isArray(authored)&&authored.length?authored:buildStoryTurns(outcomeText,curEv,{
       knownSpeaker,
       speakers:out.speakers,
-      turnSpeakers:D.finaleSpeakers(curEv.id,curEv.choices.indexOf(choice),S)||out.turnSpeakers
+      frozenTextOnly:!!out.frozenTextOnly,
+      turnSpeakers:out.frozenTextOnly?[]:D.finaleSpeakers(curEv.id,curEv.choices.indexOf(choice),S)||out.turnSpeakers
     });
     const sceneAlt=stripTags(curEv.title||'선택의 결과');
     const choiceIndex=Math.max(0,curEv.choices.indexOf(choice));
@@ -4634,7 +4657,7 @@ function dialogueSide(turn,lanes,opt={}){
       return {kind:chip.c==='minus'?'loss':'gain',icon:chip.c==='minus'?'−':'+'};
     };
     const fxHtml=chips.length
-      ? `<section class="reward-section" aria-label="이번 선택의 결과"><span class="event-result-kicker">결과</span><div class="fx-line">${chips.map(c=>{const meta=rewardMeta(c);return `<span class="fx reward-pill ${c.c} reward-${meta.kind}"><i aria-hidden="true">${meta.icon}</i><b>${esc(c.t)}</b></span>`}).join('')}</div></section>`
+      ? `<section class="reward-section" aria-label="이번 선택의 결과"><span class="event-result-kicker">결과</span><div class="fx-line">${chips.map(storyFeedbackChip).map(c=>{const meta=rewardMeta(c);return `<span class="fx reward-pill ${c.c} reward-${meta.kind}"><i aria-hidden="true">${meta.icon}</i><b>${esc(c.t)}</b></span>`}).join('')}</div></section>`
       : '';
     const selectedTitle=stripTags(choice.label||curEv.title||'선택의 결과').trim()||'선택의 결과';
     const reportTitle=stripTags(storyHeading(curEv)||'선택의 결과').trim()||'선택의 결과';
@@ -4851,7 +4874,7 @@ function dialogueSide(turn,lanes,opt={}){
     const line=comp&&D.settlementCompanionLines&&D.settlementCompanionLines[comp.id]
       ?D.settlementCompanionLines[comp.id][focus]:local;
     return {
-      title:comp?`${comp.name}와 ${spot.label}${spot.label==='사람들'?'을':'로'} 걷는 중`:`${spot.label}${spot.label==='사람들'?'을':'로'} 걷는 중`,
+      title:comp?`${D.withParticle(comp.name,'과','와')} ${spot.label}${spot.label==='사람들'?'을':'로'} 걷는 중`:`${spot.label}${spot.label==='사람들'?'을':'로'} 걷는 중`,
       line:line||local,
       local
     };
@@ -5127,7 +5150,7 @@ function dialogueSide(turn,lanes,opt={}){
         : `${G.questLabel(q)} · ${D.nodes[q.to].name}까지`;
       questRows.push({key:'quest-active',kind:ready?'quest-turnin':'quest-active',label:`${K.nm} · ${G.questLabel(q)}`,
         sub:ready?'요청한 물건과 기록을 넘길 준비가 됐다':detail,
-        meta:`${q.noExpiry?'기한 없음':`D-${Math.max(0,q.due-S.day)}`} · 고철 ${q.reward}`,action:ready?'전달한다':'진행 중',enabled:ready});
+        meta:`${q.noExpiry?'기한 없음':`D-${Math.max(0,q.due-S.day)}`}`,action:ready?'전달한다':'진행 중',enabled:ready});
     } else {
       stlQuests=G.rollQuests();
       stlQuests.forEach((q,index)=>{const K=G.QKIND[q.kind],dd=q.due-S.day;
@@ -5141,7 +5164,7 @@ function dialogueSide(turn,lanes,opt={}){
       const price=Math.max(1,Math.round((waterRow[3]*G.marketMul(curStl,'water')+foodRow[3]*2*G.marketMul(curStl,'food'))*disc));
       const fits=G.canStoreSupply('water',waterRow[2])&&G.canStoreSupply('food',foodRow[2]*2);
       supplyRows.push({key:'bundle',kind:'bundle',label:'길 위 기본 보급',
-        sub:`물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}일치 · 물 ${S.water}/${S.waterMax} · 식량 ${S.food}/${S.foodMax}`,
+        sub:`물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}묶음 · 물 ${G.supplyAmountLabel(S.water)}/${G.supplyAmountLabel(S.waterMax)} · 식량 ${G.supplyAmountLabel(S.food)}/${G.supplyAmountLabel(S.foodMax)}`,
         meta:fits?`고철 ${price} · 40분`:'보관 공간 부족',cost:price,reason:fits?'':'보관 공간 부족',
         duration:'40분',action:'한 번에 싣기',enabled:G.hasResource('scrap',price)&&fits,icon:'parts'});
     }
@@ -5157,14 +5180,14 @@ function dialogueSide(turn,lanes,opt={}){
         const barterKey=key==='barter_wf'?'water':key==='barter_fp'?'food':'의약품';
         const fits=!foodGain||G.canStoreSupply('food',foodGain), enough=G.hasResource(barterKey,barterCost.amount);
         supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label:shown,
-          sub:`물자를 맞바꾼다${foodGain?` · 식량 ${S.food}/${S.foodMax}`:''}`,meta:fits?'교환 · 25분':'식량 보관 공간 부족',
+          sub:`물자를 맞바꾼다${foodGain?` · 식량 ${G.supplyAmountLabel(S.food)}/${G.supplyAmountLabel(S.foodMax)}`:''}`,meta:fits?'교환 · 25분':'식량 보관 공간 부족',
           reason:fits?'':'식량 보관 공간 부족',duration:'25분',barterCost,action:'교환한다',enabled:enough&&fits,icon:key==='barter_wf'?'water':key==='barter_fp'?'food':'med'});
       } else {
         const price=Math.max(1,Math.round(price0*G.marketMul(curStl,key)*disc)),mul=G.marketMul(curStl,key);
         const priceNote=mul<=.9?' · 이 동네가 싸다':mul>=1.2?' · 여긴 귀하다':'';
-        const finite=key==='water'||key==='food',fits=!finite||G.canStoreSupply(key,qty);
+        const finite=['fuel','water','food'].includes(key),fits=!finite||G.canStoreSupply(key,qty);
         supplyRows.push({key:`trade-${index}`,kind:'trade',index,group,label,
-          sub:`${qty}${key==='fuel'?'L를':key==='water'?'통을':key==='food'?'일치를':'개를'} 싣는다${priceNote}${finite?` · ${S[key]}/${G.supplyMax(key)} 보관`:''}`,
+          sub:`${qty}${key==='fuel'?'L를':key==='water'?'통을':key==='food'?'묶음을':'개를'} 싣는다${priceNote}${finite?` · ${G.supplyAmountLabel(S[key])}/${G.supplyAmountLabel(G.supplyMax(key))} 보관`:''}`,
           meta:fits?`고철 ${price} · 25분`:'보관 공간 부족',cost:price,reason:fits?'':'보관 공간 부족',duration:'25분',action:'산다',enabled:G.hasResource('scrap',price)&&fits,
           icon:key==='fuel'?'fuel':key==='water'?'water':key==='food'?'food':ITEM_ICO[key.slice(4)]||'parts'});
       }
@@ -5173,7 +5196,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(demand){
       const have=demand.item==='식량'?S.food:(S.items[demand.item]||0),need=demand.item==='식량'?2:1;
       const demandKey=demand.item==='식량'?'food':demand.item;
-      supplyRows.push({key:'sell',kind:'sell',group:'매입',label:`${demand.item} 1${demand.item==='식량'?'일치':''}`,
+      supplyRows.push({key:'sell',kind:'sell',group:'매입',label:`${demand.item} 1${demand.item==='식량'?'묶음':''}`,
         sub:demand.why,meta:`고철 +${demand.price} · 20분`,gain:demand.price,duration:'20분',action:'판다',enabled:G.hasResource(demandKey,need),icon:ITEM_ICO[demand.item]||'food'});
     }
     const neighbor=(G.neighbors(S.at)||[]).map(n=>D.nodes[n.id]&&D.nodes[n.id].stl).filter(Boolean)
@@ -5181,7 +5204,7 @@ function dialogueSide(turn,lanes,opt={}){
     let rumor='';
     if(neighbor){
       const market=D.market[neighbor], dear=Object.entries(market.mul||{}).find(([,value])=>value>=1.2), next=market.demand;
-      if(dear||next) rumor=`장사꾼들 말로는 ${D.stls[neighbor].name}은 ${dear?dear[0]+'이 귀하고 ':''}${next?next.item+'을 웃돈 주고 산다':''}`;
+      if(dear||next) rumor=`장사꾼들 말로는 ${D.stls[neighbor].name}에서는 ${dear?dear[0]+'이 귀하고 ':''}${next?next.item+'을 웃돈 주고 산다':''}`;
     }
     return {questRows,supplyRows,rumor,localImpact};
   }
@@ -5250,6 +5273,7 @@ function dialogueSide(turn,lanes,opt={}){
     });
     const action=$('#market-action');
     if(action) action.onclick=()=>{
+      if(!S||S.ended) return;
       const row=rows.find(item=>marketSelection&&item.key===marketSelection.key); if(!row||!row.enabled) return;
       if(row.kind==='quest'){ G.acceptQuest(stlQuests[row.index]); marketSelection=null; showStl(curStl,'market'); return; }
       if(row.kind==='quest-turnin'){ G.checkQuest(); marketSelection=null; showStl(curStl,'market'); return; }
@@ -5257,6 +5281,7 @@ function dialogueSide(turn,lanes,opt={}){
       if(row.kind==='trade') result=G.trade(curStl,row.index);
       else if(row.kind==='bundle') result=G.tradeBundle(curStl);
       else if(row.kind==='sell') result=G.sellToDemand(curStl);
+      if(S.ended) return;
       if(!result||!result.ok){ toast(result&&result.why||'지금은 할 수 없다'); return; }
       AMBI.action('trade');
       if(row.kind==='bundle') toast(`📦 기본 보급을 실었다 · 물 +${result.water} · 식량 +${result.food}`);
@@ -5328,7 +5353,7 @@ function dialogueSide(turn,lanes,opt={}){
     const resultHtml=result?(()=>{const person=speakerInfo(result.action.npc);
       return `<section class="field-board-result" data-field-result><header><span>방금 확인한 것</span><b>${esc(person.name)} · ${esc(result.action.label)}</b></header>
         <div>${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}<span><p>${esc(result.action.result)}</p>
-        ${result.chips&&result.chips.length?`<span class="stl-field-chips">${result.chips.map(chip=>`<i class="${chip.c||''}">${esc(chip.t)}</i>`).join('')}</span>`:''}</span></div>
+        ${result.chips&&result.chips.length?`<span class="stl-field-chips">${result.chips.map(storyFeedbackChip).map(chip=>`<i class="${chip.c||''}">${esc(chip.t)}</i>`).join('')}</span>`:''}</span></div>
         ${result.firstImpact&&result.action.change?`<p class="field-board-before-after"><span>작업 전 · ${esc(result.action.desc)}</span><b>→</b><span>지금 · ${esc(result.action.change.after)}</span></p>`:''}</section>`;
     })():'';
     const actionRows=actions.map(action=>{const status=G.stlFieldStatus(curStl,action),person=speakerInfo(action.npc),cost=G.reqCostText(action.req),cadence=action.once?'여행 중 1회':'하루 1회';
@@ -5424,7 +5449,7 @@ function dialogueSide(turn,lanes,opt={}){
       h+=`<div class="stl-field-result" data-field-result>
         ${settlementPortrait(person.id,'stl-field-face',`${person.name} 초상`)}
         <span><small>${esc(person.name)} · ${esc(result.action.label)}</small><p>${esc(result.action.result)}</p>
-        ${result.chips&&result.chips.length?`<span class="stl-field-chips">${result.chips.map(c=>`<i class="${c.c||''}">${esc(c.t)}</i>`).join('')}</span>`:''}</span>
+        ${result.chips&&result.chips.length?`<span class="stl-field-chips">${result.chips.map(storyFeedbackChip).map(c=>`<i class="${c.c||''}">${esc(c.t)}</i>`).join('')}</span>`:''}</span>
       </div>`;
       if(result.firstImpact&&result.action.change){
         h+=`<div class="stl-change-reveal" aria-live="polite">
@@ -5475,6 +5500,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(scroll&&card) card.scrollIntoView({behavior:document.documentElement.classList.contains('ui-reduce-motion')?'auto':'smooth',block:'nearest'});
   }
   function showStl(stlId,mode='hub',options={}){
+    if(!S||S.ended) return;
     if(S&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl) S.roadGarage=false;   // 진짜 정착지는 제값
     if(curStl!==stlId){ marketSelection=null; garageSelection=''; peopleSelection=''; stlFieldFocus=''; restoreSettlementFocus(stlId); }
     if(options.previewOnly&&options.questId){
@@ -5488,7 +5514,6 @@ function dialogueSide(turn,lanes,opt={}){
     const stl=D.stls[stlId];
     if(!options.previewOnly) G.qualityMilestone('first_settlement_visit',{settlementId:stlId,mode:stlMode});
     AMBI.settlement(stlMode,stlId);
-    if(!options.previewOnly&&!G.isNight()) G.checkQuest();   // 목표에서는 게시판의 전달 버튼으로 결정한다.
     $('#ovl-stl').classList.toggle('field-board-mode',fieldBoardMode);
     if(stlMode==='hub'){ renderSettlementHub(); return; }
     if(G.isNight()&&stlMode!=='people'){ stlFocus='people'; renderSettlementHub(); return; }
@@ -5572,7 +5597,7 @@ function dialogueSide(turn,lanes,opt={}){
         renderTrade();
         body.querySelectorAll('[data-quest]').forEach(b=>b.onclick=()=>{ G.acceptQuest(stlQuests[+b.dataset.quest]); showStl(curStl,'market'); });
         const qt=body.querySelector('#q-turnin');
-        if(qt) qt.onclick=()=>{ G.checkQuest(); showStl(curStl,'market'); };
+        if(qt) qt.onclick=()=>{ if(!S||S.ended) return; G.checkQuest(); showStl(curStl,'market'); };
       }
     } else if(stlMode==='garage'){
       renderGarage();
@@ -5613,7 +5638,7 @@ function dialogueSide(turn,lanes,opt={}){
     const foodRow=stl.trade.find(row=>row[1]==='food');
     if(waterRow&&foodRow){
       const bundlePrice=Math.max(1,Math.round((waterRow[3]*G.marketMul(curStl,'water')+foodRow[3]*2*G.marketMul(curStl,'food'))*disc));
-      h+=`<div class="trade-bundle"><span><b>길 위 기본 보급</b><small>물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}일치</small></span>
+      h+=`<div class="trade-bundle"><span><b>길 위 기본 보급</b><small>물 ${waterRow[2]}통 + 식량 ${foodRow[2]*2}묶음</small></span>
         <span class="tp">${ICO('scrap')}고철 ${bundlePrice} · 40분</span>
         <button class="tbtn" data-bundle="1" ${!G.hasResource('scrap',bundlePrice)?'disabled':''}>한 번에 싣기</button></div>`;
     }
@@ -5642,7 +5667,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(dm){
       const have=dm.item==='식량'?S.food:(S.items[dm.item]||0);
       h+=`<div class="trade-group-label">매입</div>
-        <div class="trade-row trade-demand"><span class="tn">${ICO(ITEM_ICO[dm.item]||'food')}${dm.item} 1 ${dm.item==='식량'?'(일치)':''}<em>${esc(dm.why)}</em></span>
+        <div class="trade-row trade-demand"><span class="tn">${ICO(ITEM_ICO[dm.item]||'food')}${dm.item} 1 ${dm.item==='식량'?'(묶음)':''}<em>${esc(dm.why)}</em></span>
         <span class="tp">${ICO('scrap')}고철 +${dm.price}</span>
         <button class="tbtn" data-sell="1" ${!G.hasResource(dm.item==='식량'?'food':dm.item,dm.item==='식량'?2:1)?'disabled':''}>판다</button></div>`;
     }
@@ -5653,13 +5678,15 @@ function dialogueSide(turn,lanes,opt={}){
       const nm=D.market[nbStl], picks=[];
       for(const [k,v] of Object.entries(nm.mul||{})) if(v>=1.2) picks.push(k+'이 귀하고');
       const dm2=nm.demand;
-      if(picks.length||dm2) h+=`<div class="trade-rumor">🧾 장사꾼들 말로는, ${D.stls[nbStl].name}은 ${picks[0]||''} ${dm2?dm2.item+'을 웃돈 주고 산다더라':''}</div>`;
+      if(picks.length||dm2) h+=`<div class="trade-rumor">🧾 장사꾼들 말로는, ${D.stls[nbStl].name}에서는 ${picks[0]||''} ${dm2?dm2.item+'을 웃돈 주고 산다더라':''}</div>`;
     }
     tr.innerHTML=h;
     tr.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>buy(+b.dataset.t));
     const sellBtn=tr.querySelector('[data-sell]');
     if(sellBtn) sellBtn.onclick=()=>{
+      if(!S||S.ended) return;
       const r=G.sellToDemand(curStl);
+      if(S.ended) return;
       if(!r.ok){ toast(r.why); return; }
       AMBI.action('trade');
       $('#tr-scrap').textContent=S.scrap;
@@ -5668,7 +5695,9 @@ function dialogueSide(turn,lanes,opt={}){
     };
     const bundle=tr.querySelector('[data-bundle]');
     if(bundle) bundle.onclick=()=>{
+      if(!S||S.ended) return;
       const r=G.tradeBundle(curStl);
+      if(S.ended) return;
       if(!r.ok){ if(r.why) toast(r.why); return; }
       AMBI.action('trade');
       $('#tr-scrap').textContent=S.scrap;
@@ -5677,7 +5706,9 @@ function dialogueSide(turn,lanes,opt={}){
     };
   }
   function buy(i){
+    if(!S||S.ended) return;
     const r=G.trade(curStl,i);
+    if(S.ended) return;
     if(!r.ok){ if(r.why) toast(r.why); return; }
     AMBI.action('trade');
     $('#tr-scrap').textContent=S.scrap;
@@ -5806,7 +5837,7 @@ function dialogueSide(turn,lanes,opt={}){
       {key:'camp-life-organize-v1',label:'짐 정리',detail:'침구, 지도, 물통과 공구를 놓을 공간을 살핀다.'},
       crewSceneId
         ?{key:crewSceneKey,
-          label:lastPlan==='repair'&&crewSceneId==='minji'?'민지와 차량 점검':lastPlan==='talk'?`${D.comps[crewSceneId].name}와 이야기`:`${D.comps[crewSceneId].name}의 야영 작업`,
+          label:lastPlan==='repair'&&crewSceneId==='minji'?'민지와 차량 점검':lastPlan==='talk'?`${D.withParticle(D.comps[crewSceneId].name,'과','와')} 이야기`:`${D.comps[crewSceneId].name}의 야영 작업`,
           detail:lastPlan==='repair'&&crewSceneId==='minji'?'민지가 엔진과 구동부를 확인하고, 나는 작업등과 공구를 준비했다.'
             :lastPlan==='talk'?(S.campMemories&&S.campMemories[crewSceneId]?S.campMemories[crewSceneId].home:'아직 나눈 대화가 없다.')
               :activity[crewSceneId]||'동료가 맡은 야영 작업을 진행하고 있다.'}
@@ -5961,9 +5992,11 @@ function dialogueSide(turn,lanes,opt={}){
     });
     const action=$('#garage-action');
     if(action) action.onclick=()=>{
+      if(!S||S.ended) return;
       const row=rows.find(item=>item.key===garageSelection); if(!row||!row.enabled) return;
       if(row.kind==='repair'){
         const result=G.settlementRepair();
+        if(S.ended) return;
         if(!result.ok){ if(result.why) UI.toast(result.why); return; }
         AMBI.action('repair');
         UI.toast(`🔧 정비소 수리 완료 — 내구 +${result.amount}`); renderHud(); renderGarage(); return;
@@ -5971,7 +6004,7 @@ function dialogueSide(turn,lanes,opt={}){
       const u=G.upDef(row.id);
       const before={up:{...S.up},stage:{...G.vanStage()},capacity:G.seatCapacity(),
         fuelMax:S.fuelMax,vanMax:S.vanMax};
-      if(G.buyUpgrade(row.id)){ renderGarage(); renderHud();
+      if(G.buyUpgrade(row.id)&&!S.ended){ renderGarage(); renderHud();
         playUpgradeInstall(u,before);
         const ts=$('#tr-scrap'); if(ts) ts.textContent=S.scrap; }
     };

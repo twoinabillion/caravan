@@ -1,0 +1,25 @@
+[
+  {
+    "id": "S18-01",
+    "classification": "confirmed natural driving-context mismatch",
+    "source": "src/03-data.js D.banter[255]",
+    "trace": [
+      465,
+      493
+    ],
+    "text": "운전석 레일 다시 맞췄어. 대장님이 자꾸 오른쪽 어깨 주무르잖아. 앉아 봐. 너무 뒤로 갔으면 말하고.",
+    "reason": "The player is currently driving; the line asks that seated driver to sit down now.",
+    "proposal": "Refer to the adjustment at the previous stop and ask whether the current seat feels right; keep actor/need/effects unchanged."
+  },
+  {
+    "id": "S18-02",
+    "classification": "confirmed natural driving-context mismatch",
+    "source": "src/03i-story-expansion.js thread-parent-key-minji",
+    "trace": [
+      354
+    ],
+    "text": "나는 장치를 내려놓고 수첩을 폈다. 민지가 옆으로 와 계기판 분해도가 있는 장을 짚었다.",
+    "reason": "Both record endpoints remain in the same active road segment. Present driver handling the device and notebook is authored without any stop.",
+    "proposal": "Make handling a previous-stop recollection, promise joint notebook review at next stop, leave present narration at the wheel."
+  }
+]

@@ -1,0 +1,173 @@
+{
+  "newConfirmed": [
+    {
+      "issueId": "C24-SYS-V01",
+      "event": "exp_mushroom",
+      "trace": 110,
+      "classification": "confirmed-visual-mismatch",
+      "reason": "실내 버섯 재배사 대신 무너진 비닐하우스 밖 노지 채소밭에서 두 사람이 수확하는 그림. 자연 진입은 독행이었다.",
+      "expectedImage": "컴컴한 버섯 재배사, 재배 버섯과 침입종을 구분할 상황. 선택 전 채집/식사 결과를 예고하지 않는 구도.",
+      "normalUnpaidExport": "player02/attempt01/entry-109-exp_mushroom-export.json"
+    },
+    {
+      "issueId": "C24-SYS-V02",
+      "event": "exp_orchard",
+      "trace": 205,
+      "classification": "confirmed-visual-mismatch",
+      "reason": "열매가 휘도록 달린 과수원 대신 노지 채소밭/상자에서 작물을 캐는 그림. 과수원/사과 채집의 장소와 대상이 바뀐다.",
+      "expectedImage": "주인 잃은 과수원, 열매 무거운 가지와 새들. 선택 전.",
+      "normalUnpaidExport": "player02/attempt01/entry-204-exp_orchard-export.json"
+    },
+    {
+      "issueId": "C24-SYS-V03",
+      "event": "ev_parking_evs",
+      "trace": 352,
+      "classification": "confirmed-visual-mismatch",
+      "reason": "충전기에 연결된 전기차 주차장 대신 여객열차와 철길/승강장 그림.",
+      "expectedImage": "방치된 전기차와 충전기가 늘어선 주차장, 회수 전.",
+      "normalUnpaidExport": "player02/attempt01/entry-351-ev_parking_evs-export.json"
+    },
+    {
+      "issueId": "C24-SYS-V04",
+      "event": "ev_container_port",
+      "trace": 535,
+      "classification": "confirmed-visual-mismatch",
+      "reason": "봉인 컨테이너가 쌓인 평택 항구 대신 여객열차/철길 그림. 거절한 자연 결과에도 맞지 않는다.",
+      "expectedImage": "평택 항구의 봉인 컨테이너 더미, 약간 뜯긴 봉인. 내용물/선택 결과 미노출.",
+      "normalUnpaidExport": "player02/attempt01/entry-534-ev_container_port-export.json"
+    },
+    {
+      "issueId": "C24-SYS-V05",
+      "event": "exp_villagehall",
+      "trace": 451,
+      "classification": "confirmed-visual-mismatch",
+      "reason": "마을회관 방송실/스피커 대신 도심 고가 아래 임시 야영처·침상 그림.",
+      "expectedImage": "마을회관의 오래된 방송실 책상과 카세트, 또는 회관 지붕 스피커. 재생/창고 모두 가능한 선택 전.",
+      "normalUnpaidExport": "player02/attempt01/entry-450-exp_villagehall-export.json"
+    },
+    {
+      "issueId": "C24-SYS-V06",
+      "event": "lc_cheonan_walnut",
+      "trace": 327,
+      "classification": "confirmed-visual-mismatch",
+      "reason": "페달을 밟는 청년의 호두과자 리어카 대신 항구에서 노인이 물건을 펼쳐 파는 좌판 그림. 장소·물건·행동 불일치.",
+      "expectedImage": "국도변 수동 개조 호두과자 기계 리어카, 페달을 밟는 청년.",
+      "normalUnpaidExport": "player02/attempt01/entry-326-lc_cheonan_walnut-export.json"
+    }
+  ],
+  "clarityCandidates": [
+    {
+      "issueId": "C24-SYS-C01",
+      "event": "exp_underground",
+      "trace": 251,
+      "classification": "clarity-candidate-not-confirmed",
+      "reason": "기존 그림이 어두운 상점 내부라 반 열린 지하상가 입구/계단이라는 방향은 안 보인다. 같은 상가 건물 안쪽의 부분 묘사일 가능성을 배제하지 못해 확정 결함으로 합산하지 않음."
+    }
+  ],
+  "knownDeferredArt": [
+    {
+      "event": "lc_busan_dried",
+      "trace": 29,
+      "actualKeys": [
+        "event-meet-trader"
+      ],
+      "deferredKey": "local-busan-dried-fish-cart-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "seoul_base",
+      "trace": 593,
+      "actualKeys": [
+        "seoul-base"
+      ],
+      "deferredKey": "seoul-cablecar-stairs-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "cleaners_recall",
+      "trace": 312,
+      "actualKeys": [
+        "event-ai-surveillance"
+      ],
+      "deferredKey": "event-human-retrieval-team-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "exp_arcade",
+      "trace": 183,
+      "actualKeys": [
+        "event-explore-leisure"
+      ],
+      "deferredKey": "explore-arcade-airhockey-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "lc_damyang_juktong",
+      "trace": 437,
+      "actualKeys": [
+        "event-meet-trader"
+      ],
+      "deferredKey": "local-bamboo-rice-fire-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "seoul_square",
+      "trace": 589,
+      "actualKeys": [
+        "seoul-square"
+      ],
+      "deferredKey": "seoul-empty-clothes-square-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "story_generation_speech",
+      "trace": 277,
+      "actualKeys": [
+        "story-generation-speech",
+        "story-generation-speech-stations-v1"
+      ],
+      "deferredKey": "story-generation-covered-market-v1",
+      "knownFromCycle": 23,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "talk_es_07",
+      "trace": 527,
+      "actualKeys": [
+        "comp-talk-eunsu-road-v1"
+      ],
+      "deferredKey": "companion-noise-recorder-detail-v1",
+      "knownFromCycle": 23,
+      "status": "Unwired known proposal; excluded from new findings"
+    }
+  ],
+  "nonDefects": [
+    {
+      "id": "C24-SYS-N01",
+      "topic": "Risk hint duplication only in legacy observer",
+      "reason": "Trace summary exp_underground hint 위험 · 위험 is assembled by qa-artifacts/persona-playtest-20261018/runner.cjs. Actual07 eventChoiceData suppresses identical label/text. No new UI regression claimed."
+    },
+    {
+      "id": "C24-SYS-N02",
+      "topic": "Anonymous fish/walnut/damyang speakers",
+      "reason": "Their identity is intentionally unnamed. No explicit different actor or reversed reply proven; no automatic ??? fix."
+    },
+    {
+      "id": "C24-SYS-N03",
+      "topic": "Fog/night stars and ambient sights",
+      "reason": "Weather enum alone cannot prove every visible star/view impossible; no ungrounded weather gate proposed."
+    },
+    {
+      "id": "C24-SYS-N04",
+      "topic": "Independent cassette playback",
+      "reason": "Broadcast-station tape, villagehall cassette, Eunsu recorder and Han railing radio are separately introduced devices; not counted as fixed vehicle radio or ambient playRadio."
+    }
+  ],
+  "scope": "Natural24 findings only; static all-outcome art comparison is supporting evidence, not extra journey."
+}

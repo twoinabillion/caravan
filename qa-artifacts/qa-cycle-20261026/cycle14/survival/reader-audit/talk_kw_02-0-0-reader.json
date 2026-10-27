@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…자판기 커피."
+  },
+  {
+    "kind": "narration",
+    "text": "마침내 답이 나왔다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "부대 앞에 있었다. …300원. 아니, 350이었나. 300원이다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "설탕 프림 다 들어간 거요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "전부 다."
+  },
+  {
+    "kind": "narration",
+    "text": "강우의 입가가 아주 미세하게 풀렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "세상 돌아오면, 그거 한 잔 뽑고 싶군."
+  },
+  {
+    "kind": "narration",
+    "text": "강우의 소원 목록 1호를 알아냈다. 300원짜리. 350원일 수도 있고."
+  }
+]

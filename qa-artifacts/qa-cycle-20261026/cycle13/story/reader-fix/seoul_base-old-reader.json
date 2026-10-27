@@ -1,0 +1,36 @@
+[
+  {
+    "kind": "narration",
+    "text": "「남산 보고 열어라.」"
+  },
+  {
+    "kind": "narration",
+    "text": "남산이 보인다. 봉투를 열었다."
+  },
+  {
+    "kind": "narration",
+    "text": "속지와 함께, 접힌 종이표 하나가 나왔다. 빛바랜 글씨. 「서울 외곽 이송 / 사유: —」. 할아버지가 자기 부모에게서 받은 표였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "이건 네 증조모 때부터 우리 집에 있던 거다. 나도 이유는 못 찾았다. 천리안이 뭐라고 답하든 발신 기록하고 승인 시간부터 맞춰 봐라. 안 맞으면 빈칸은 그대로 둬."
+  },
+  {
+    "kind": "narration",
+    "text": "그 아래에는 짧게 덧붙여져 있었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "차는 남산 아래 평지에 세워라. 주차 브레이크 두 번 확인하고, 열쇠는 갖고 올라가."
+  },
+  {
+    "kind": "narration",
+    "text": "말대로 브레이크를 두 번 당겨 보고 열쇠를 주머니에 넣었다. 표와 수첩은 품 안에 넣었다."
+  }
+]

@@ -1,0 +1,176 @@
+{
+  "classification": "staged-art-only",
+  "cohortExcluded": true,
+  "rows": [
+    {
+      "event": "gp_envelope",
+      "key": "story-grandfather-envelope-detail-v1",
+      "format": "detail",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/story-grandfather-envelope-detail-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "242c68fab53f4e92661d324dfd257f9a1c3d1d53a793e7942b19e868e3cc2525"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/story-grandfather-envelope-detail-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 122330,
+        "sha256": "3d8dc1fe332540cf6036f791ec5d4e721f553dc4f3365173d20c40c46ce278d0"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "size": [
+          1024,
+          576
+        ],
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "geometryPass": true,
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ]
+    },
+    {
+      "event": "ev_parking_evs",
+      "key": "explore-ev-charging-parking-v1",
+      "format": "place",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "cbf59f0c93ed33a55fbb7859d03d93dda1de0a3a83f6484ff9d0cf8f13d6920f"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/explore-ev-charging-parking-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 145466,
+        "sha256": "6d437b63b66ecfb879fa863ae8f39d07474e6176c8828577cb6353f5e27a85ed"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "size": [
+          1024,
+          576
+        ],
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "geometryPass": true,
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ]
+    },
+    {
+      "event": "lc_daegu_makchang",
+      "key": "local-daegu-makchang-alley-v1",
+      "format": "character",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "7d1e427f790bd67135af06a03df746701384601517ebba00dcc2e79a95d67dae"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/local-daegu-makchang-alley-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 129670,
+        "sha256": "e5a069a991df48abfeae37b9d7847cfa16220cca5265cc0ae6a4a006b6ba1ef8"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "size": [
+          1024,
+          576
+        ],
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "geometryPass": true,
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        },
+        {
+          "path": "assets/portraits/passer_woman.png",
+          "sha256": "56d945e3f5c7b58d66e403556104310cc869ccda4507078746c95d09380532f8"
+        }
+      ]
+    }
+  ],
+  "allPass": true
+}

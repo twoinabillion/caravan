@@ -1,0 +1,69 @@
+{
+  "recordedAt": "2026-10-26T06:20:12.290885+00:00",
+  "sourceFreeze": "cycle17/frozen-source.json",
+  "engineHash": "f5d3cb35f0d4ae365ad70ba532e6ef8f21e0ee26172fc78b0ebd52958f1ad0b9",
+  "sourceAtRecordTime": {
+    "equal": true,
+    "changedSinceFreeze": []
+  },
+  "tests": {
+    "command": "npm run test:source",
+    "pass": 1819,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "test-source-after-contract.log",
+    "initial": {
+      "pass": 1817,
+      "fail": 2,
+      "log": "test-source.log",
+      "reason": "Two historical tests expected prior salt farmer metadata/envelope prose. Added exact new-field assertions and narrow projection only; all40production source unchanged."
+    },
+    "focusedLog": "historical-contract.log"
+  },
+  "build": {
+    "exitCode": 0,
+    "log": "build.log",
+    "htmlBytes": 108421479,
+    "htmlSha256": "25ae65cc9c48ff05fe1e617efcf8ca2422e3273a8f52b1177944956740ca026d",
+    "srcUnchanged": true
+  },
+  "quick": {
+    "exitCode": 0,
+    "log": "verify-quick.log",
+    "sceneClassAssets": 622,
+    "portraits": 74,
+    "mainCanonicalPortraits": 7
+  },
+  "journeys": {
+    "freshStarts": 3,
+    "mainEndings": 3,
+    "methods": [
+      "core_transfer",
+      "core_quarantine",
+      "core_sleep"
+    ],
+    "choices": 323,
+    "traceRecords": 1692,
+    "entryReloads": 323,
+    "paidReloads": 323,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "review": {
+    "survival": "full complete",
+    "story": "full complete",
+    "systems": "full complete; late review hash39/40 due18 story copy repair already begun; runtime end40/40 remains preserved",
+    "allThreeRuntimeEndSource40MatchesFreeze": true,
+    "allThreeFullTextReviewed": true
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4319/",
+    "eventFrameWidthCssPx": 480,
+    "provenance": "cycle16/visual/provenance.json",
+    "newSceneFlow": "seed,salt,terminal and reused Leo: entry/choice/result/return to road; seed and terminal actual reload passed",
+    "originalQaBackupRestored": true,
+    "responsive360": "Unverified; prior viewport failure/file security block retained",
+    "infiniteMode": "Actual UI infinite preview; engine journeys finite"
+  },
+  "status": "Technical checks and all three main endings passed; further companion reader/art findings require18 repairs. Not clean completion."
+}

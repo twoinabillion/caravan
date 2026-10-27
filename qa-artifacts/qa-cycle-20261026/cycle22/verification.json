@@ -1,0 +1,54 @@
+{
+  "cycle": 22,
+  "status": "completed-with-new-findings-repair23-active",
+  "engineSha256": "0e52ebe9c32e0a3ce96a54c9c9cfe66a78c8ef92bdca331d3bf0b7b832dea694",
+  "sourceFileCount": 40,
+  "sourceProof": "All journey and final full-review end manifests matched frozen22; production edits permitted only after story/source-review-close-verification.json closed last review.",
+  "freshStarts": 4,
+  "mainEndings": 3,
+  "thirstEndings": 1,
+  "mainMethods": [
+    "core_sleep",
+    "core_quarantine",
+    "core_transfer"
+  ],
+  "choices": 424,
+  "traceRows": 2337,
+  "reports": [
+    "survival/report-final-v2.json",
+    "systems/report.json",
+    "story/report.json"
+  ],
+  "fullSourceVisionFilesByAgent": [
+    94,
+    82,
+    102
+  ],
+  "checks": {
+    "fullSourceTests": {
+      "pass": 2175,
+      "log": "test-source.log"
+    },
+    "build": {
+      "exit": 0,
+      "log": "build.log"
+    },
+    "quick": {
+      "exit": 0,
+      "sceneAssets": 634,
+      "log": "verify-quick.log"
+    },
+    "originalBuildHash": "build-verification.json"
+  },
+  "actualBrowser": [
+    "../cycle21/visual-review.json",
+    "original-qa-restored-ui.png"
+  ],
+  "additionalReplay": "survival/browser-entry-replay excluded; same21 seed partial,4saved entries,0trace deltas, source22.",
+  "limitations": [
+    "Engine journeys finite resources; real preview uses infinite resources and muted audio.",
+    "Actual game frame480px; 360px remains unavailable via existing viewport/fileURL limitation.",
+    "One story policy death+same-seed fresh successful retry both retained; routing policy detours are not counted as game bugs."
+  ],
+  "recordedAt": "2026-10-26T09:48:09.959101+00:00"
+}

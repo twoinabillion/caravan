@@ -1,0 +1,53 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "여기서부터 걸어야 해. 같이 갈 사람?"
+  },
+  {
+    "kind": "narration",
+    "text": "대답 대신 문 여닫는 소리가 여기저기서 났다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "…뭐 하는 거야?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "짐 싸는데요."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 렌치를 챙기며 코웃음 쳤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "그걸 여기까지 와서 물어요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "아니, 물어는 봐야—"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "물었잖아요. 답 나왔고요."
+  },
+  {
+    "kind": "narration",
+    "text": "다들 차에 두고 갈 짐과 가져갈 물건을 나눴다. 누가 뭘 챙기는지 서로 참견하느라 출발이 조금 늦어졌다. 문을 잠그고 열쇠를 챙긴 뒤, 함께 계단을 올랐다."
+  }
+]

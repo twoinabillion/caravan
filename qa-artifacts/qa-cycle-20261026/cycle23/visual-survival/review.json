@@ -1,0 +1,58 @@
+{
+  "classification": "staged-art-direct-file-review",
+  "eventId": "postman_again",
+  "sceneKey": "postman-again-bicycle-v1",
+  "directlyViewed": [
+    "masters/postman-again-bicycle-v1.png",
+    "delivery/postman-again-bicycle-v1.webp",
+    "review/postman-360.png",
+    "review/postman-480.png",
+    "/assets/portraits/postman.png"
+  ],
+  "entry": "Same returning middle-aged black-haired postman stops his bicycle; thin bundle stays on rear carrier, two letters remain his.",
+  "allOutcomes": [
+    {
+      "choice": 0,
+      "result": "After acceptance he wraps and hands over Namsan letter; image must not prepay transfer.",
+      "observed": "Both hands hold handlebars. No letter reaches player; no player visible."
+    },
+    {
+      "choice": 1,
+      "result": "He retains delivery principle and pedals north; image must not preselect refusal or departure.",
+      "observed": "Paused recognition stance and closed cargo support unresolved choice; no departure/reunion scene."
+    }
+  ],
+  "notes": [
+    "남산행 편지: no Namsan landmark, named receiver or transferred player-held letter drawn.",
+    "끝까지 가는 우편부: no already completed delivery."
+  ],
+  "identity": {
+    "verdict": "pass",
+    "details": "Black tousled hair, forehead goggles, middle-aged narrow face, moustache/stubble, dark workjacket/scarf and shoulder bag align with canonical portrait."
+  },
+  "composition": {
+    "people": 1,
+    "bicycles": 1,
+    "player": false,
+    "companions": false,
+    "dog": false,
+    "dalguji": false,
+    "text": false,
+    "handOff": false,
+    "observations": [
+      "Thin rear carrier bundle is visible. Front basket additionally contains a closed generic wrapped load; its contents cannot be identified as letters.",
+      "Lower legs/feet are outside frame; stopped stance is supported by both hands on bars and turned recognition pose, but planted foot is not visibly demonstrated."
+    ]
+  },
+  "style": "Grounded cool-gray Korean roadside, weathered materials, restrained painterly film-still rendering; no comic or studio style.",
+  "smallPreviews": "At 360px and 480px hair/goggles/face, bicycle and both hands remain distinguishable; no actual game UI crop claimed.",
+  "baseAndNegativeVerbatim": true,
+  "refs": 5,
+  "oldAssetPreserved": true,
+  "result": "ready-for-root-independent-gallery-review",
+  "pending": [
+    "Actual gallery display",
+    "In-game crop/zoom and old-save/new-entry mapping validation",
+    "Production copy/wiring by root only"
+  ]
+}

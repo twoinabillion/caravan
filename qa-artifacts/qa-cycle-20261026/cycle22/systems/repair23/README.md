@@ -1,0 +1,25 @@
+# Cycle23 Deokgu reader repair
+
+Production ownership was released by root after story's five-event source edits. The only production changes by systems are `npc_deokgu_2.choices[0/1].out[0].turnSpeakers` in `src/03-data.js`. `deokgu.patch` records the exact local patch; no full-file replacement, global parser, text, gate, probability, index, FX or note change occurred.
+
+Natural C22-SYS-01: trace444, branch0. The normal unpaid `entry-443-npc_deokgu_2-export.json` is preserved. The first quote is Deokgu but the next two autobiographical lines become anonymous `???`. All three now route to Deokgu.
+
+Derived complete-outcome audit: branch1 was locked in the actual journey and is not counted as a natural finding. The player's question was assigned to an anonymous man, and the young man's reply to the player. The explicit route is player / Miryang young man / young man / player / young man. This uses the existing generic man portrait with an already established role, without inventing a personal identity.
+
+`prepare.cjs` derives immutable baseline/legacy data from frozen22 source. Branch0 is a separate replay of the unchanged natural entry; branch1 alone adds its prerequisite flag in an explicitly excluded boundary fixture. No resource injection or replay is counted as fresh gameplay. `baseline.json`, `reader-before.json` and `legacy-*.json` remain unchanged after source repair.
+
+Validation: `tests/test_qa_cycle22_deokgu.cjs` ran against the original source and failed the two actual-reader routes and exact delta test (4 pass / 3 fail; red02.tap). It then passed all7 tests with the production metadata (green.tap). The first red log is retained; before red02 the gate assertion was corrected to read the real `.ok` API property, which was not reached behind the expected metadata failure in red01. The initial generated apply_patch hunk used a unified-diff numbered header that this tool did not accept; its verification failed without a source mutation, then the header-only patch format was corrected.
+
+The7 tests cover the exact natural entry and saved entry view, full prose/narration and roles for both outcomes across natural/solo/reversed crews, both paid outcome resource/time/flags/notes effects against frozen22, new reader save/load and no repayment, plus both historical paid views and text-only legacy receipts. Whole-event deep equality permits exactly the two metadata arrays. Old paid wrong labels are intentionally preserved as frozen historical views. The normal unavailable alternate choice remains gated.
+
+`reader-after.json` holds actual parser output; `metadata-delta.json` requests narrow historical metadata projection from story's single contract owner. New authored entry is unchanged; there is no entry-route inheritance change. Root owns full test/build and actual browser crop; these7 checks are isolated engine/reader evidence, not browser UI evidence.
+
+## Additional approved static-derived oilmill copy
+
+Root forwarded a visual-comparison finding in `exp_oilmill[0]`: regardless of clock, an outcome with no time effect declared that evening's meal already completed. This is a static-derived finding, **not a natural cycle22 discovery**. Full entry, both choices/outcomes, party/region gate and actual reader were inspected. The only production edit is the second paragraph of choice0's sole result: the completed evening becomes anticipation of the next meal. `oilmill-copy-delta.json` has exact old/new full strings; existing food1/scrap6/moodAll6, note and all other fields remain byte-for-byte equivalent as parsed data. The note describes the group's expression and does not independently assert a completed dinner.
+
+`tests/test_qa_cycle22_oilmill.cjs`: original source red2pass/4fail (`oilmill-red.tap`); final6/6, combined with Deokgu13/13 (`final-all13-v2.tap`). It proves the same event is available at06:00,15:00,23:50; no time/day advance; current expectation prose through the actual reader; exact numeric effects against frozen22; both results' paid reader reload/no repayment; unpaid reading.view persistence; solo/northern rejection; and both old paid views/text-only receipts unchanged. `oilmill-before.json` and two legacy exports derive only from immutable frozen22, in explicitly excluded isolated fixtures.
+
+Two fixture issues are preserved separately rather than attributed to gameplay: `oilmill-green.tap` initially failed3 reload comparisons because the manually initialized test state first acquired existing `recruit_migration_v2` on G.load. Normalizing both before comparison via the real G.save/G.load produced6/6 (`oilmill-green02.tap`), with no production change. When expanding unpaid-view coverage, `final-all13.tap` failed because the test read owner.view instead of the real owner.reading.view written by G.capturePresentationView. Correcting that accessor yielded13/13. Original files were retained. No production persistence or migration code changed.
+
+Historical exact-copy projection was sent to story's single contract owner. No broader content or parser edits were made.

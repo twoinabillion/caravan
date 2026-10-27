@@ -1,0 +1,200 @@
+{
+  "cycle": 19,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 279002,
+  "evidenceClass": "Fresh finite public-action engine run and extracted actual production reader; isolated storage, no browser claim",
+  "cohortExcluded": false,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "policyStops": 0,
+  "productionChangesDuringJourney": false,
+  "status": "ended",
+  "error": null,
+  "engineSourceHash": "7168ef4d79391c676d30d45782d469ed7a9fb09efc67c2c85859c6d18464f49e",
+  "result": {
+    "ending": "story_done",
+    "method": "core_sleep",
+    "storyDone": true,
+    "session1End": true,
+    "day": 13,
+    "km": 1027,
+    "actualCompanions": [
+      "parkss",
+      "kangwoo"
+    ],
+    "bori": false
+  },
+  "totals": {
+    "choices": 87,
+    "trace": 496,
+    "otherExecutedPublicActionsIncludingPerks": 236,
+    "otherPublicActionsExcludingPerks": 233,
+    "earnedPerkSelections": 3,
+    "actionKinds": {
+      "new-game": 1,
+      "unpaid-entry-reload": 86,
+      "choice": 87,
+      "paid-result-reload": 86,
+      "explore": 23,
+      "travel": 27,
+      "drive": 54,
+      "camp-meal": 9,
+      "camp": 12,
+      "walkfuel": 1,
+      "trade-bundle": 4,
+      "trade": 52,
+      "work": 15,
+      "meet-recruit": 2,
+      "board-open": 4,
+      "npc-rumor": 9,
+      "sell-demand": 1,
+      "buy-upgrade": 4,
+      "camp-repair": 1,
+      "radio": 1,
+      "craft": 3,
+      "recruit-step": 4,
+      "accept-companion": 2,
+      "earned-perk": 3,
+      "seoul-enter": 5
+    },
+    "novelPairs": 5,
+    "noveltyBaseline": "systems1–18 primary transcripts exact event+selected label",
+    "novelChoicePairs": [
+      {
+        "trace": 161,
+        "event": "ev_school_classroom",
+        "choice": "쓸 만한 물자를 찾는다"
+      },
+      {
+        "trace": 220,
+        "event": "exp_radiostation",
+        "choice": "스튜디오를 뒤진다"
+      },
+      {
+        "trace": 240,
+        "event": "signal_bait",
+        "choice": "좌표로 간다"
+      },
+      {
+        "trace": 292,
+        "event": "rq_parkss_task",
+        "choice": "달구지 배터리로 냉장기를 살린다"
+      },
+      {
+        "trace": 376,
+        "event": "van_garage",
+        "choice": "사진 벽을 살핀다"
+      }
+    ],
+    "reload": {
+      "entry": 86,
+      "paid": 86,
+      "skippedBeforeFirstRadio": [
+        {
+          "phase": "entry",
+          "eventId": "story_generation_form",
+          "reload": false,
+          "day": 8,
+          "min": 686.9,
+          "radioFixed": true,
+          "radioCount": 0
+        },
+        {
+          "phase": "paid",
+          "eventId": "story_generation_form",
+          "reload": false,
+          "day": 8,
+          "min": 686.9,
+          "radioFixed": true,
+          "radioCount": 0
+        }
+      ],
+      "failed": 0,
+      "reapplied": 0,
+      "readerEqual": 86,
+      "terminalSeparateExcluded": 1
+    },
+    "disabledChoicesExecuted": 0,
+    "rejectedApiCalls": 0
+  },
+  "features": {
+    "upgrades": [
+      "bench",
+      "bullbar",
+      "curtain",
+      "winch"
+    ],
+    "crafts": [
+      "pipe",
+      "xbow",
+      "bolt"
+    ],
+    "actualPerks": [
+      "pss_night",
+      "pss_iron",
+      "kw_ration"
+    ],
+    "radioFixed": true,
+    "radioRepairs": 1,
+    "radioBroadcasts": 4,
+    "tubeSource": "exp_radiostation[0], natural one tube consumed by repair",
+    "campRepair": 1,
+    "campMeals": 9,
+    "trades": 52,
+    "tradeBundles": 4,
+    "actualSale": 1,
+    "publicWork": 15,
+    "boardViews": 4,
+    "sideQuestAccept": 0,
+    "sideQuestTurnin": 0,
+    "letterCompletion": 0,
+    "medicalTreatment": 0
+  },
+  "review": {
+    "completed": true,
+    "choiceEntries": 87,
+    "exactPriorContexts": 77,
+    "newContexts": 10,
+    "newParagraphs": 30,
+    "actualReaderTurns": 658,
+    "exactPriorTurns": 608,
+    "newTurnsRead": 50,
+    "changedReaderEntries": 13,
+    "roadSpeechOccurrences": 40,
+    "roadSpeechUnique": 27,
+    "chatGroups": 12,
+    "chatLines": 38,
+    "sameDayChatDuplicates": 0,
+    "npcCalls": 9,
+    "npcShownGroups": 18,
+    "work": 15,
+    "notes": 104,
+    "scenes": 87,
+    "browserCropVerified": false,
+    "naturalConfirmedFindings": 1,
+    "clarityCandidates": 1,
+    "derivedBoundaryConfirmed": 0,
+    "unresolvedCandidates": 1,
+    "confirmedScope": "Natural signal_bait media attribution; merchant role remains clarity candidate"
+  },
+  "gaps": [
+    "재이는 무주 방문 때 박선생 임시승객 퀘스트 진행중이어서 모집 불가였다. 박선생 영입 후 이미 방문한 무주를 재방문 목표로 잡지 않은 정책 때문에 미영입. 구입좌석3명/실제동료2명이며 슬롯 부족이나 게임오류가 아님.",
+    "게시판4회에서 편지는 보았으나 당시 예정 경로의 목적지가 아니어서 수락하지 않았다. 신규 편지 완료 조사 자연검증0; 기존 별도 회귀와 혼합하지 않음.",
+    "직접치료·무기선반할인 미사용. 제작3개는 일반가격/40분.",
+    "전체 그림/crop/음성 실제 UI는 root 담당."
+  ],
+  "findingsFile": "findings.json",
+  "sourceStart": "source-start-full.json",
+  "sourceEnd": "source-end-full.json",
+  "sourceReviewEnd": "source-review-end-full.json",
+  "separateExcludedEvidence": {
+    "terminalReload": "terminal-reload.json"
+  },
+  "sourceUnchangedAcrossJourney": true,
+  "sourceFullCount": 40
+}

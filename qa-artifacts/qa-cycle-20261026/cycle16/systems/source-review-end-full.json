@@ -1,0 +1,249 @@
+{
+  "phase": "Full encountered prose/reader/choice/NPC/chat/work/notes and ending review complete",
+  "engineHash": "1911ad89b75afe51e44e8c8856bd7d6b7a16f070c0d717214e5230be996df9ab",
+  "engineMatch": true,
+  "count": 40,
+  "allMatch": true,
+  "files": [
+    {
+      "path": "src/01-style.html",
+      "sha256": "4eda85d39b614253f95df7b08c7b54d6b018b994c52a400b69aba69168e82dd8",
+      "actual": "4eda85d39b614253f95df7b08c7b54d6b018b994c52a400b69aba69168e82dd8",
+      "match": true
+    },
+    {
+      "path": "src/01b-quest-style.html",
+      "sha256": "9d03f07188652cb026214f5a544c37a57040c46e5f509d13b6775ff481cdcff5",
+      "actual": "9d03f07188652cb026214f5a544c37a57040c46e5f509d13b6775ff481cdcff5",
+      "match": true
+    },
+    {
+      "path": "src/02-dom.html",
+      "sha256": "5c9e9c5b1c6a38cfb3b39c7918f81c0133fb5cec3abf0f47a7d5694aa10e4504",
+      "actual": "5c9e9c5b1c6a38cfb3b39c7918f81c0133fb5cec3abf0f47a7d5694aa10e4504",
+      "match": true
+    },
+    {
+      "path": "src/03-data.js",
+      "sha256": "4df24da1e9e6484cfe6cf81f0c2abd78bbcc4090646686d33e9178842560e6a2",
+      "actual": "4df24da1e9e6484cfe6cf81f0c2abd78bbcc4090646686d33e9178842560e6a2",
+      "match": true
+    },
+    {
+      "path": "src/03b-portraits.js",
+      "sha256": "1be24a24f8a55c05c241a31ac8d629a7b95346f8b020b401a2587d08a28ac450",
+      "actual": "1be24a24f8a55c05c241a31ac8d629a7b95346f8b020b401a2587d08a28ac450",
+      "match": true
+    },
+    {
+      "path": "src/03c-icons.js",
+      "sha256": "43c35b0eae246755a8703ac12ba117d9e3805c2af65991ae396391066a05e370",
+      "actual": "43c35b0eae246755a8703ac12ba117d9e3805c2af65991ae396391066a05e370",
+      "match": true
+    },
+    {
+      "path": "src/03d-bgm.js",
+      "sha256": "21040addf53954219257ec72dac46679d609929dcc185e5a7bee7fe74880245e",
+      "actual": "21040addf53954219257ec72dac46679d609929dcc185e5a7bee7fe74880245e",
+      "match": true
+    },
+    {
+      "path": "src/03e-bgm-title.js",
+      "sha256": "f615bed831348a698ceb9b8715f86c969337c229ca4e89f66a9a21534bf1aebf",
+      "actual": "f615bed831348a698ceb9b8715f86c969337c229ca4e89f66a9a21534bf1aebf",
+      "match": true
+    },
+    {
+      "path": "src/03f-npc-portraits.js",
+      "sha256": "83d6d84750f1180139a91edc03128a7d1002d5a4af4970d08d6d06b930296555",
+      "actual": "83d6d84750f1180139a91edc03128a7d1002d5a4af4970d08d6d06b930296555",
+      "match": true
+    },
+    {
+      "path": "src/03g-scenes.js",
+      "sha256": "e4927444e722aebfe2d4f14dccad2ceacc099c4e964e2317374202a9f578484c",
+      "actual": "e4927444e722aebfe2d4f14dccad2ceacc099c4e964e2317374202a9f578484c",
+      "match": true
+    },
+    {
+      "path": "src/03h-audio.js",
+      "sha256": "957e6637474c0777b03b6fc7e834541dedb94df3c98004651972884be5ee1b01",
+      "actual": "957e6637474c0777b03b6fc7e834541dedb94df3c98004651972884be5ee1b01",
+      "match": true
+    },
+    {
+      "path": "src/03i-story-expansion.js",
+      "sha256": "d51d9ddf34e24439e2d0831594875aaca616b29a98443c8d7a0b66bfb3ca5322",
+      "actual": "d51d9ddf34e24439e2d0831594875aaca616b29a98443c8d7a0b66bfb3ca5322",
+      "match": true
+    },
+    {
+      "path": "src/03j-camp-conversations.js",
+      "sha256": "2ae7d5f0bda0c6ff5c3022a6a9b7b528301dc89ed947734a67a0600edd035363",
+      "actual": "2ae7d5f0bda0c6ff5c3022a6a9b7b528301dc89ed947734a67a0600edd035363",
+      "match": true
+    },
+    {
+      "path": "src/03k-main-evidence.js",
+      "sha256": "a5db76a1c3382e95c05801efd7d64f5fc48d62fe39917252d432ce242d8d0bd0",
+      "actual": "a5db76a1c3382e95c05801efd7d64f5fc48d62fe39917252d432ce242d8d0bd0",
+      "match": true
+    },
+    {
+      "path": "src/03l-main-recovery.js",
+      "sha256": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377",
+      "actual": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377",
+      "match": true
+    },
+    {
+      "path": "src/03m-finale-reading.js",
+      "sha256": "727303d88553012a8a626a062fd3075830de980df2ed9f7f3d0eaee197a4f4db",
+      "actual": "727303d88553012a8a626a062fd3075830de980df2ed9f7f3d0eaee197a4f4db",
+      "match": true
+    },
+    {
+      "path": "src/03n-offline-foley.js",
+      "sha256": "325e4ec7781b000e5c97d5a9884858d182d9c04f8deb2494cc4004deee9df40b",
+      "actual": "325e4ec7781b000e5c97d5a9884858d182d9c04f8deb2494cc4004deee9df40b",
+      "match": true
+    },
+    {
+      "path": "src/04a-engine-core.js",
+      "sha256": "91259dfca14fa77649dc2fd6b3fca6fa85d09d1e8857da8231f01384aa56c458",
+      "actual": "91259dfca14fa77649dc2fd6b3fca6fa85d09d1e8857da8231f01384aa56c458",
+      "match": true
+    },
+    {
+      "path": "src/04b-engine-crew.js",
+      "sha256": "b8882e3dfb872eac16f13114dfdb9f86e3efe5f9efd71aa591ff2e4c440351ed",
+      "actual": "b8882e3dfb872eac16f13114dfdb9f86e3efe5f9efd71aa591ff2e4c440351ed",
+      "match": true
+    },
+    {
+      "path": "src/04c-engine-travel.js",
+      "sha256": "d316356cd0f6fc5ee201f19edeabd435e442695403022ea95ca88e138b7a1234",
+      "actual": "d316356cd0f6fc5ee201f19edeabd435e442695403022ea95ca88e138b7a1234",
+      "match": true
+    },
+    {
+      "path": "src/04d-engine-director.js",
+      "sha256": "6b44c5dc2de0aa27b9318aaa266851a9e0ac5d5dd7cbffe69142550e72aae67f",
+      "actual": "6b44c5dc2de0aa27b9318aaa266851a9e0ac5d5dd7cbffe69142550e72aae67f",
+      "match": true
+    },
+    {
+      "path": "src/04e-engine-world.js",
+      "sha256": "facaf696d3713e8a34e53c9c30bf541633f040617ce83c6f6b9ee8c2fccdbf4e",
+      "actual": "facaf696d3713e8a34e53c9c30bf541633f040617ce83c6f6b9ee8c2fccdbf4e",
+      "match": true
+    },
+    {
+      "path": "src/04f-engine-quests.js",
+      "sha256": "125314c62c18f26abfab04a9f434b8fddc08c56a591b66850b6b178bbdfc313b",
+      "actual": "125314c62c18f26abfab04a9f434b8fddc08c56a591b66850b6b178bbdfc313b",
+      "match": true
+    },
+    {
+      "path": "src/04g-engine-evidence.js",
+      "sha256": "82591b69185615a7e03db7386600923348a314755760d682a5d6ca63fdceff34",
+      "actual": "82591b69185615a7e03db7386600923348a314755760d682a5d6ca63fdceff34",
+      "match": true
+    },
+    {
+      "path": "src/04h-engine-presentation.js",
+      "sha256": "51a6926b04e400bc1f01b5b24150cf1e69a6d72c89779a6f8294d50658898441",
+      "actual": "51a6926b04e400bc1f01b5b24150cf1e69a6d72c89779a6f8294d50658898441",
+      "match": true
+    },
+    {
+      "path": "src/05-scene.js",
+      "sha256": "5fefbb4d5d34e51396a1bd66ce22df43eb7cea77da6ab142de5338c3562023dd",
+      "actual": "5fefbb4d5d34e51396a1bd66ce22df43eb7cea77da6ab142de5338c3562023dd",
+      "match": true
+    },
+    {
+      "path": "src/05a-road-environment.js",
+      "sha256": "90a6c2cae7f255f206b4aafbb5579c11c51b135d87673ca0174bb30714b8711f",
+      "actual": "90a6c2cae7f255f206b4aafbb5579c11c51b135d87673ca0174bb30714b8711f",
+      "match": true
+    },
+    {
+      "path": "src/05b-vehicle-kit.js",
+      "sha256": "3354ea777e00f1a8eabbd3e3795b4d2ea2e00d2aca7ba04a9b19c5e81d37a1ff",
+      "actual": "3354ea777e00f1a8eabbd3e3795b4d2ea2e00d2aca7ba04a9b19c5e81d37a1ff",
+      "match": true
+    },
+    {
+      "path": "src/05c-road-cue-kit.js",
+      "sha256": "f87aa05dea8b962c2f6cb3a16e8dc3287491828be32fc315d27563d96a2b3311",
+      "actual": "f87aa05dea8b962c2f6cb3a16e8dc3287491828be32fc315d27563d96a2b3311",
+      "match": true
+    },
+    {
+      "path": "src/05d-route-panorama.js",
+      "sha256": "72fed40558aa9db85cc0fd2f0c69ffedabf574472dfe47cd3dfa88131f759e84",
+      "actual": "72fed40558aa9db85cc0fd2f0c69ffedabf574472dfe47cd3dfa88131f759e84",
+      "match": true
+    },
+    {
+      "path": "src/05e-road-continuity.js",
+      "sha256": "9705ec95712411f5fcc5ab222e8b5a38deb1473a21d3a1c7a986dcf2f3697f1e",
+      "actual": "9705ec95712411f5fcc5ab222e8b5a38deb1473a21d3a1c7a986dcf2f3697f1e",
+      "match": true
+    },
+    {
+      "path": "src/06-mapgraph.js",
+      "sha256": "8c87a68afebd1379a6154a30b9db4be05fb2f66931a92c2beaa50081dd66c2a6",
+      "actual": "8c87a68afebd1379a6154a30b9db4be05fb2f66931a92c2beaa50081dd66c2a6",
+      "match": true
+    },
+    {
+      "path": "src/07-ui.js",
+      "sha256": "17694470145ea4ed0d3b76f3ae8032bc43ecabdc363e451c338d8d22b0a6cb9f",
+      "actual": "17694470145ea4ed0d3b76f3ae8032bc43ecabdc363e451c338d8d22b0a6cb9f",
+      "match": true
+    },
+    {
+      "path": "src/07d-ui-quests.js",
+      "sha256": "d4320969bb4487a8e6e5cc0f0ca7a857c81c92675b364b8a91bcc3f89ec64ded",
+      "actual": "d4320969bb4487a8e6e5cc0f0ca7a857c81c92675b364b8a91bcc3f89ec64ded",
+      "match": true
+    },
+    {
+      "path": "src/07e-ui-audio.js",
+      "sha256": "f752354d046b966a6195f77c76d22e7eaa46adfac24d50fc244867994ad68880",
+      "actual": "f752354d046b966a6195f77c76d22e7eaa46adfac24d50fc244867994ad68880",
+      "match": true
+    },
+    {
+      "path": "src/07f-ui-road-thoughts.js",
+      "sha256": "5c23662801c710c34789f2f84c23894cc81983958fbba7c145b7f13d97dd9503",
+      "actual": "5c23662801c710c34789f2f84c23894cc81983958fbba7c145b7f13d97dd9503",
+      "match": true
+    },
+    {
+      "path": "src/07g-ui-home.js",
+      "sha256": "db4b7c78349135e37a0de85a71e817e0e2b2377e6a39128e80304e25aa7f270c",
+      "actual": "db4b7c78349135e37a0de85a71e817e0e2b2377e6a39128e80304e25aa7f270c",
+      "match": true
+    },
+    {
+      "path": "src/07h-story-pages.js",
+      "sha256": "b60b537b29aee726fe67924666eba6693b090837f079f52893d009f9a7c0b1e7",
+      "actual": "b60b537b29aee726fe67924666eba6693b090837f079f52893d009f9a7c0b1e7",
+      "match": true
+    },
+    {
+      "path": "src/08-offroad.js",
+      "sha256": "26097b4830734a01bab583f4b8ce6e84c3990a3a8a55f5cfd0ccd5656942b9d0",
+      "actual": "26097b4830734a01bab583f4b8ce6e84c3990a3a8a55f5cfd0ccd5656942b9d0",
+      "match": true
+    },
+    {
+      "path": "src/09-close.html",
+      "sha256": "81f092938c9cdd0d3892ae5a2c17203a446918aa81ce6829500391be8a8d8ef7",
+      "actual": "81f092938c9cdd0d3892ae5a2c17203a446918aa81ce6829500391be8a8d8ef7",
+      "match": true
+    }
+  ]
+}

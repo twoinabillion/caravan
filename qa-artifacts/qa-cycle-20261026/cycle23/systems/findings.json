@@ -1,0 +1,126 @@
+{
+  "naturalConfirmed": 1,
+  "naturalClarityImprovements": 1,
+  "derivedBoundaryConfirmed": 0,
+  "scopedClean": false,
+  "findings": [
+    {
+      "id": "C23-SYS-V01",
+      "event": "exp_ricemill",
+      "trace": 113,
+      "classification": "confirmed-visual-location-mismatch",
+      "evidence": "candidate-evidence.json",
+      "rootIndependentlyConfirmed": true,
+      "summary": "Stone mortar, hand oil press and three sesame sacks are illustrated with an auto engine repair workshop. Both outcomes remain sesame-mill activity.",
+      "sourceChanged": false
+    },
+    {
+      "id": "C23-SYS-C01",
+      "event": "seoul_han",
+      "trace": 547,
+      "classification": "confirmed-source-location-clarity; not a mechanical-radio bug claim",
+      "evidence": "candidate-evidence.json",
+      "summary": "Met-postman branch emits full recorded voice with vehicle radio unrepaired; recorded-message transfer or a separate player is not established. Root agrees to clarify the radio as an external bridge device; production permission remains pending.",
+      "historicalNonDefect": "cycle20 no-postman branch contains static only and remains nondefect.",
+      "sourceChanged": false
+    }
+  ],
+  "knownDeferredArtOccurrences": [
+    {
+      "event": "lc_busan_dried",
+      "trace": 29,
+      "actualKeys": [
+        "event-meet-trader"
+      ],
+      "deferredKey": "local-busan-dried-fish-cart-v1",
+      "classification": "confirmed-place-or-action-mismatch",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    },
+    {
+      "event": "lc_daejeon_bakery",
+      "trace": 286,
+      "actualKeys": [
+        "event-explore-retail"
+      ],
+      "deferredKey": "local-daejeon-bakery-shutter-v1",
+      "classification": "clarity-improvement",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    },
+    {
+      "event": "camp_scan",
+      "trace": 265,
+      "actualKeys": [
+        "event-ai-checkpoint"
+      ],
+      "deferredKey": "camp-field-searchlight-v1",
+      "classification": "confirmed-place-or-action-mismatch",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    },
+    {
+      "event": "camp_scan",
+      "trace": 456,
+      "actualKeys": [
+        "event-ai-checkpoint"
+      ],
+      "deferredKey": "camp-field-searchlight-v1",
+      "classification": "confirmed-place-or-action-mismatch",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    },
+    {
+      "event": "seoul_base",
+      "trace": 559,
+      "actualKeys": [
+        "seoul-base"
+      ],
+      "deferredKey": "seoul-cablecar-stairs-v1",
+      "classification": "confirmed-place-or-action-mismatch",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    },
+    {
+      "event": "cleaners_recall",
+      "trace": 315,
+      "actualKeys": [
+        "event-ai-surveillance"
+      ],
+      "deferredKey": "event-human-retrieval-team-v1",
+      "classification": "confirmed-place-or-action-mismatch",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    },
+    {
+      "event": "lc_damyang_juktong",
+      "trace": 397,
+      "actualKeys": [
+        "event-meet-trader"
+      ],
+      "deferredKey": "local-bamboo-rice-fire-v1",
+      "classification": "clarity-improvement",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    },
+    {
+      "event": "seoul_square",
+      "trace": 555,
+      "actualKeys": [
+        "seoul-square"
+      ],
+      "deferredKey": "seoul-empty-clothes-square-v1",
+      "classification": "clarity-improvement",
+      "status": "Known cycle22 proposal remains unwired in dialogue-only cycle23; not a new issue."
+    }
+  ],
+  "nonDefects": [
+    {
+      "event": "lc_damyang_juktong",
+      "trace": 397,
+      "reason": "Unintroduced vendor is intentionally anonymous; no known crew loss or explicit speaker reversal. Its image is already in staged18, corrected from initial mistaken new-candidate message."
+    },
+    {
+      "kind": "weather",
+      "reason": "Fog enum alone does not prove stars or faint daylight moon impossible."
+    },
+    {
+      "kind": "ambient",
+      "reason": "Jaeyi button line has no unique completed-event callback proof; no speculative prerequisite added."
+    }
+  ],
+  "unobservedScope": "All unchosen outcomes/other events and actual browser crop/audio remain outside this natural journey."
+}

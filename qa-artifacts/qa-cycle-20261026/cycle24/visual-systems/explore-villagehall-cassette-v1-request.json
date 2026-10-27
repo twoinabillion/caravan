@@ -1,0 +1,93 @@
+{
+  "key": "explore-villagehall-cassette-v1",
+  "event": "exp_villagehall",
+  "format": "detail",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nOne new cohesive 16:9 narrative scene, native PNG master at least1536x864. The four canonical references are style/world references only: do not copy their collage panels, title, characters, Dalguji, skyline, Namsan tower or signs into this scene. Weathered ordinary Korean materials, restrained contrast and subtle grain. No dreamy softness, beauty filter, glowy haze, glossy retouching or painterly pastel drift. Important subject inside central80% width/82%height, readable at mobile480 and360px. Avoid strong directional sunlight, sunrise/sunset colors or an explicit starry sky; close framing and diffuse local illumination keep the picture usable across the event time window. No captions, legible lettering or logos.\n\nA quiet empty broadcasting room in an old Korean village community hall. Center a dusty worn desk holding an ordinary portable cassette player with a visible cassette already inside behind its clear window, all transport buttons at rest: no finger or hand pressing play, no lit display or playback light. A faded small handwritten paper label is attached but its marks are completely illegible. Nearby old village PA amplifier and microphone are connected by practical worn cables, suggesting the hall rooftop loudspeaker system without adding another scene. Plain peeling room wall and cropped wooden furniture, no open view to sky or sun. Weak diffuse ambient illumination reveals weathered plastic and dust without an invented glowing power source. ZERO people, companions, vehicle, rice sacks, fuel cans, cookware, open storeroom or discovered supplies. Before both choices: listening or searching.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "promptSha256": "c3d0ec56fd73ea3169c8787b8accb7319dccad4e8e4f5dd5655be0f4179caf38",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../systems/candidate-evidence.json",
+  "entry": "마을회관 지붕의 스피커가 아직 마을을 내려다보고 있다.\n\n방송실 책상에 카세트가 한 대. 테이프가 들어 있다. 라벨: 「아침 방송용 — 만지지 말 것 (이장)」",
+  "sourceEvent": {
+    "id": "exp_villagehall",
+    "type": "탐색",
+    "w": 6,
+    "region": [
+      "south",
+      "mid"
+    ],
+    "title": "마을회관",
+    "text": "마을회관 지붕의 스피커가 아직 마을을 내려다보고 있다.\n\n방송실 책상에 카세트가 한 대. 테이프가 들어 있다. 라벨: 「아침 방송용 — 만지지 말 것 (이장)」",
+    "choices": [
+      {
+        "label": "재생한다",
+        "out": [
+          {
+            "p": 1,
+            "text": "\"아아, 마을 주민 여러분, 좋은 아침입니다. 오늘은…\" 이장의 목소리가 먼지 낀 방송실에 울렸다.\n\n경로당 점심 메뉴(육개장), 예방접종 안내, 그리고 마지막 멘트.\n\n\"요즘 세상이 뒤숭숭한데, 우리 마을은 서로 얼굴 보고 삽시다. 이상 이장이었습니다.\"\n\n세상이 무너지기 며칠 전의 아침이었다. 서로 얼굴 보고 살자는 말은, 유언이 되기엔 너무 좋은 말이었다.",
+            "fx": {
+              "time": 15,
+              "moodAll": 2,
+              "note": {
+                "type": "사건",
+                "title": "이장의 마지막 방송",
+                "body": "\"서로 얼굴 보고 삽시다.\" 유언이 되기엔 너무 좋은 말."
+              }
+            },
+            "turnSpeakers": [
+              {
+                "who": "radio",
+                "kind": "radio",
+                "name": "녹음된 이장 방송"
+              },
+              {
+                "who": "radio",
+                "kind": "radio",
+                "name": "녹음된 이장 방송"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "회관 창고를 살핀다",
+        "out": [
+          {
+            "p": 1,
+            "text": "새마을 창고에서 쌀 반 가마(밀봉 덕에 무사)와 예초기용 혼합유를 찾았다.\n\n마을 잔치용 솥과 천막은 그대로 뒀다. 잔치는 언젠가 다시 열릴 것이고, 그때 솥이 없으면 곤란하니까.",
+            "fx": {
+              "food": 3,
+              "fuel": 2,
+              "moodAll": 2
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

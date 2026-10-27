@@ -20,11 +20,12 @@ G.exploreStatus = ()=>{
   return {ok:true,tries,repeat,fresh,mins,fatigue,miss:repeat?0.45:0.15};
 };
 G.explore = ()=>{
-  if(S.driving||UI.modalOpen()) return false;
+  if(!S||S.ended||S.driving||UI.modalOpen()) return false;
   const status=G.exploreStatus();
   if(!status.ok){ UI.toast(`🔦 ${status.reason}`); UI.renderAll(); return false; }
   if(status.mainEvidence){
     G.advance(status.mins);
+    if(S.ended) return true;
     G.openEventById(status.mainEvidence.event); G.save(); return true;
   }
   if(S._exploreDay!==S.day){ S._exploreDay=S.day; S._exploreNodes={}; }
@@ -46,6 +47,7 @@ G.explore = ()=>{
     }
   }
   G.advance(status.mins);
+  if(S.ended) return true;
   S.fatigue=clamp(S.fatigue+status.fatigue,0,100);
   const localPool=G.nodeEvents?G.nodeEvents(S.at):[];
   const pool = G.eligible('탐색');
@@ -75,6 +77,7 @@ G.explore = ()=>{
   return true;
 };
 G.fireDriveEvent2 = (pool)=>{
+  if(!S||S.ended) return false;
   /* 도로는 사건 목록이 아니라 실제 이동 공간이다. 초반에는 시스템을 익힐
      여백을 더 주고, 이후에도 하루 두 번을 넘는 강제 사건은 보류한다. */
   if(S._roadEventDay!==S.day){
@@ -120,7 +123,8 @@ G.campReportMemory = (report={})=>{
   const subject=String(report.threat||'')+' '+String(report.objective||'');
   const opening=/비탈|우편 수레|네 사람을 도로/.test(subject)?'비탈에 걸려 있던 수레가 떠오른다.'
     :/보행기|렌즈와 관절/.test(subject)?'보행기와 맞닥뜨렸던 때가 떠오른다.'
-    :/다섯 수레|자동 검문소/.test(subject)?'검문소 앞에 늘어서 있던 수레들이 떠오른다.'
+    :/다섯 수레/.test(subject)?'검문소 앞에 늘어서 있던 수레들이 떠오른다.'
+    :/자동 검문소/.test(subject)?'자동 검문소와 맞닥뜨렸던 때가 떠오른다.'
     :/쿼드|편대/.test(subject)?'초계 편대와 맞닥뜨렸던 때가 떠오른다.'
     :/중계기/.test(subject)?'중계기 앞에서 겪은 일이 떠오른다.'
     :'마지막으로 맞닥뜨린 일을 떠올린다.';
@@ -170,6 +174,7 @@ G.campConversationEvent = ()=>{
         fx:{time:choice.mins,...(choice.fx||{})}}]}))};
 };
 G.resolveCampChoice = (eventId,choiceId)=>{
+  if(!S||S.ended) return {ok:false,applied:false,why:'이미 끝난 여정이다'};
   const record=G.currentCampConversation(), event=G.campConversationEvent();
   if(!record||!event||event.id!==eventId) return {ok:false,applied:false,why:'지금 이어갈 야영 대화가 아니다'};
   const choice=event.choices.find(row=>row.id===choiceId);
@@ -182,6 +187,9 @@ G.resolveCampChoice = (eventId,choiceId)=>{
   if(!req.ok) return {ok:false,applied:false,why:req.t};
   const data=D.campConversationData(record).choices.find(row=>row.id===choiceId);
   const chips=G.applyFx(out.fx,{noteTitle:event.title});
+  // The time cost can cross a fatal midnight. It must not complete this talk,
+  // add a keepsake/bond or mutate the archived terminal state afterwards.
+  if(S.ended) return {ok:true,applied:true,ended:true,out,chips};
   S.campMemories=S.campMemories||{};
   const previous=S.campMemories[record.cid]||{};
   const isGuest=!S.party.includes(record.cid);
@@ -225,11 +233,12 @@ G.prepareCampTravel = drive=>{
 /* A player may open a camp conversation during the morning handoff. Keep a
    delayed incident for the next road opportunity instead of replacing it. */
 G.presentCampEvent = (id,state)=>{
-  if(S!==state) return;
+  if(S!==state||!S||S.ended) return;
   if(UI.modalOpen()){ G.queueStory(id); G.save(); return; }
   G.openEventById(id);
 };
 G.prepareCamp = (kind,cid)=>{
+  if(!S||S.ended) return {ok:false,why:'이미 끝난 여정이다'};
   const plan=S._campPlan||(S._campPlan={});
   if(kind==='meal'){
     if(plan.meal) return {ok:false,why:'오늘의 한 끼는 이미 준비했다'};
@@ -271,7 +280,7 @@ G.prepareCamp = (kind,cid)=>{
   return {ok:true};
 };
 G.camp = (msg)=>{
-  if(S.driving||UI.modalOpen()) return;
+  if(!S||S.ended||S.driving||UI.modalOpen()) return;
   // A pending fireside scene happens before sleep, not after the 06:30 jump.
   const evening=G.popTimedStory('camp');
   if(evening){ G.openEventById(evening);G.save();return; }
@@ -312,6 +321,7 @@ G.camp = (msg)=>{
      생긴 결식 피로만 기상 상태에 남긴다. */
   S.fatigue=0;
   G.advance(mins,{sleeping:true});
+  if(S.ended) return;
   S.min = Math.round(S.min);   // 기상 시각은 정확히 06:30이어야 한다
   let mood=6, vanFix=4;
   if(G.hasPerk('pss_night')) mood+=3;
@@ -384,13 +394,12 @@ G.camp = (msg)=>{
 
 /* ── banter ── */
 let lastBanter = [];
-let lastChat=-1;
 G.pickChat = ()=>{
   if(!D.chats) return null;
   S._crewChatSeen=S._crewChatSeen||{};
   const night=G.isNight(), region=G.regionOf();
   const pool=D.chats.filter((c,i)=>{
-    if(i===lastChat) return false;
+    if(S._crewChatSeen['daily:'+(c.id||'chat:'+i)]?.day===S.day) return false;
     if(c.once&&c.id&&S._crewChatSeen[c.id]) return false;
     const nd=c.need||{};
     if(nd.comp && !G.hasComp(nd.comp)) return false;
@@ -416,9 +425,10 @@ G.pickChat = ()=>{
   const storyPool=pool.filter(c=>c.arc&&c.once);
   const source=storyPool.length?storyPool:pool;
   const c=source[Math.floor(rng()*source.length)];
-  lastChat=D.chats.indexOf(c);
+  S._crewChatSeen['daily:'+(c.id||'chat:'+D.chats.indexOf(c))]={day:S.day,km:Math.round(S.stats.km)};
   if(c.once&&c.id) S._crewChatSeen[c.id]={day:S.day,km:Math.round(S.stats.km)};
   G.rememberCrewChat(c);
+  G.save();
   return c;
 };
 G.pickBanter = ()=>{
@@ -430,6 +440,10 @@ G.pickBanter = ()=>{
     if(nd.comp && !G.hasComp(nd.comp)) return false;
     if(nd.comp2 && !G.hasComp(nd.comp2)) return false;
     if(nd.night===1 && !night) return false; if(nd.night===0 && night) return false;
+    if(nd.minuteWindow){
+      const minute=((S.min%1440)+1440)%1440;
+      if(minute<nd.minuteWindow[0]||minute>=nd.minuteWindow[1]) return false;
+    }
     if(nd.rain===1 && !rain) return false;
     if(nd.wx && S.wx!==nd.wx) return false;
     if(nd.up && !(S.up&&S.up[nd.up])) return false;
@@ -440,6 +454,7 @@ G.pickBanter = ()=>{
     if(nd.flag && !S.flags[nd.flag]) return false;
     /* 진행이 끝난 뒤에는 "아직 못 했다"는 줄이 다시 뜨면 안 된다 */
     if(nd.noFlag && S.flags[nd.noFlag]) return false;
+    if(nd.noteTitle && !(Array.isArray(S.notes)&&S.notes.some(note=>note?.title===nd.noteTitle))) return false;
     if(nd.knowledge && G.knowledgeLevel(nd.knowledge[0])<nd.knowledge[1]) return false;
     if(lastBanter.includes(b.t)) return false;
     return true;
@@ -469,12 +484,14 @@ G.checkDriverLv = ()=>{
 
 /* ── 현장 수리 ── */
 G.fieldRepair = ()=>{
+  if(!S||S.ended) return false;
   if(!G.hasResource('부품',1) || S.van>=S.vanMax-2) return false;
   const box=S.up&&S.up.sidebox;
   const saved = box && rng()<0.5;
   if(!saved) G.spendResource('부품',1);
   S.van=clamp(S.van+(box?45:35),0,S.vanMax);
   G.advance(100);
+  if(S.ended) return true;
   UI.toast('🔧 부품으로 정비 완료 — 내구 +'+(box?45:35)+(saved?' · 🧰 부품 아낌':''));
   UI.renderAll(); G.save(); return true;
 };
@@ -516,6 +533,7 @@ G.slotUsage = slot=> (D.upgrades||[]).filter(u=>u.slot===slot&&S&&S.up&&S.up[u.i
 G.ROAD_GARAGE_MUL = 1.5;
 G.upScrapCost = (u)=> Math.ceil(u.cost.scrap * (S&&S.roadGarage ? G.ROAD_GARAGE_MUL : 1));
 G.canBuyUp = (id)=>{
+  if(!S||S.ended) return {ok:false,why:'끝난 여정이다'};
   const u=G.upDef(id); if(!u||S.up[id]) return {ok:false, why:'장착됨'};
   const missing=G.upRequirements(u).filter(key=>!S.up[key]);
   if(missing.length) return {ok:false, why:missing.map(key=>G.upDef(key).nm).join(' + ')+' 필요',missing};
@@ -547,7 +565,7 @@ G.buyUpgrade = (id)=>{
   if(adviser&&G.hasComp(adviser.id)&&!G.isInjured(adviser.id)) G.bond(adviser.id,1);
   UI.toast(`${u.ic} ${u.nm} 장착 완료${u.seat?` — ${stage.nm} · 동료 자리 ${G.maxParty()}명`:''}`);
   G.addNote({type:'사건', title:'달구지 개조: '+u.nm,
-    body:(stage?stage.build:u.d)+` — 달구지가 조금 더 우리 집이 됐다.${adviser&&G.hasComp(adviser.id)?` ${D.comps[adviser.id].name}가 자기 전문으로 작업을 거들었다.`:''}`, links:[]});
+    body:(stage?stage.build:u.d)+` — 달구지가 조금 더 우리 집이 됐다.${adviser&&G.hasComp(adviser.id)?` ${D.withParticle(D.comps[adviser.id].name,'이','가')} 자기 전문으로 작업을 거들었다.`:''}`, links:[]});
   G.save(); return true;
 };
 
@@ -562,9 +580,10 @@ G.marketMul = (stlId,key)=>{
 /* 이 마을이 웃돈 주고 사는 것 — 싣고 온 물건을 판다 */
 G.stlDemand = (stlId)=> (D.market&&D.market[stlId]&&D.market[stlId].demand)||null;
 G.sellToDemand = (stlId)=>{
+  if(!S||S.ended) return {ok:false,why:'끝난 여정이다'};
   const d=G.stlDemand(stlId); if(!d) return {ok:false, why:'매입 없음'};
   if(d.item==='식량'){
-    if(!G.hasResource('food',2)) return {ok:false, why:'팔 식량이 없다 (이틀치는 남겨야)'};
+    if(!G.hasResource('food',2)) return {ok:false, why:'식량을 2묶음 이상 가지고 있어야 1묶음을 팔 수 있다'};
     G.addSupply('food',-1); S.scrap+=d.price;
   } else {
     if(!G.hasResource(d.item,1)) return {ok:false, why:'팔 '+d.item+'이 없다'};
@@ -580,6 +599,7 @@ G.tradeDiscount = (stlId)=>{
   return Math.max(.65, crewDisc*G.stlImpact(stlId).discount);
 };
 G.trade = (stlId, i)=>{
+  if(!S||S.ended) return {ok:false,why:'끝난 여정이다'};
   const stl=D.stls[stlId]; if(!stl||!stl.trade||!stl.trade[i]) return {ok:false, why:'거래 없음'};
   const [,key,qty,price0]=stl.trade[i];
   const localTrusted=G.stlImpact(stlId).discount<1;
@@ -598,8 +618,8 @@ G.trade = (stlId, i)=>{
   else {
     const price=Math.max(1,Math.round(price0*G.marketMul(stlId,key)*G.tradeDiscount(stlId)));
     if(!G.hasResource('scrap',price)) return {ok:false, why:'고철 부족'};
-    if((key==='water'||key==='food')&&!G.canStoreSupply(key,qty))
-      return {ok:false, why:`${key==='water'?'물통':'식량 보관함'} 공간이 부족하다 (${S[key]}/${G.supplyMax(key)})`};
+    if(['fuel','water','food'].includes(key)&&!G.canStoreSupply(key,qty))
+      return {ok:false, why:`${key==='fuel'?'연료 탱크':key==='water'?'물통':'식량 보관함'} 공간이 부족하다 (${G.supplyAmountLabel(S[key])}/${G.supplyAmountLabel(G.supplyMax(key))})`};
     G.spendResource('scrap',price);
     if(key==='fuel') S.fuel=clamp(S.fuel+qty,0,S.fuelMax);
     else if(key==='water'||key==='food') G.addSupply(key,qty);
@@ -610,6 +630,7 @@ G.trade = (stlId, i)=>{
   G.save(); return {ok:true};
 };
 G.tradeBundle = (stlId)=>{
+  if(!S||S.ended) return {ok:false,why:'끝난 여정이다'};
   const stl=D.stls[stlId]; if(!stl||!stl.trade) return {ok:false, why:'거래 없음'};
   const w=stl.trade.find(row=>row[1]==='water');
   const f=stl.trade.find(row=>row[1]==='food');
@@ -627,6 +648,7 @@ G.tradeBundle = (stlId)=>{
    시간이 값이 되어야 "지금 고칠까, 다음 마을까지 버틸까"가 선택이 된다. */
 G.settlementRepairQuote = ()=>({cost:G.hasComp('minji')?6:8, amount:30, mins:G.hasComp('minji')?120:180});
 G.settlementRepair = ()=>{
+  if(!S||S.ended) return {ok:false,why:'끝난 여정이다'};
   const quote=G.settlementRepairQuote();
   if(S.van>=S.vanMax-5) return {ok:false, why:'수리할 곳이 없다'};
   if(!G.hasResource('scrap',quote.cost)) return {ok:false, why:'고철 부족'};
@@ -637,22 +659,29 @@ G.settlementRepair = ()=>{
 };
 
 /* ── 제작 (작업대) ── */
+G.craftQuote = (id)=>{
+  const c=D.crafts.find(x=>x.id===id); if(!c) return null;
+  const armory=!!(S.up&&S.up.armory);
+  return {need:{...c.need,scrap:armory?Math.ceil((c.need.scrap||0)*0.8):(c.need.scrap||0)},minutes:armory?20:40};
+};
 G.canCraft = (id)=>{
-  const c=D.crafts.find(x=>x.id===id); if(!c) return {ok:false};
-  if(c.need.scrap && !G.hasResource('scrap',c.need.scrap)) return {ok:false, why:'고철 부족'};
-  if(c.need.parts && !G.hasResource('부품',c.need.parts)) return {ok:false, why:'부품 부족'};
-  if(c.need.fuel && !G.hasResource('fuel',c.need.fuel+3)) return {ok:false, why:'연료 여유 없음'};
+  if(!S||S.ended) return {ok:false,why:'끝난 여정이다'};
+  const quote=G.craftQuote(id); if(!quote) return {ok:false};
+  if(quote.need.scrap && !G.hasResource('scrap',quote.need.scrap)) return {ok:false, why:'고철 부족'};
+  if(quote.need.parts && !G.hasResource('부품',quote.need.parts)) return {ok:false, why:'부품 부족'};
+  if(quote.need.fuel && !G.hasResource('fuel',quote.need.fuel+3)) return {ok:false, why:'연료 여유 없음'};
   return {ok:true};
 };
 G.craft = (id)=>{
   const c=D.crafts.find(x=>x.id===id);
   const chk=G.canCraft(id); if(!chk.ok) return false;
-  const ar=S.up&&S.up.armory;
-  if(c.need.scrap) G.spendResource('scrap',ar?Math.ceil(c.need.scrap*0.8):c.need.scrap);
-  if(c.need.parts) G.spendResource('부품',c.need.parts);
-  if(c.need.fuel) G.spendResource('fuel',c.need.fuel);
+  const quote=G.craftQuote(id);
+  if(quote.need.scrap) G.spendResource('scrap',quote.need.scrap);
+  if(quote.need.parts) G.spendResource('부품',quote.need.parts);
+  if(quote.need.fuel) G.spendResource('fuel',quote.need.fuel);
   for(const nm in c.out) S.items[nm]=(S.items[nm]||0)+c.out[nm];
-  G.advance(ar?20:40);
+  G.advance(quote.minutes);
+  if(S.ended) return true;
   UI.toast(`${c.ic} ${c.nm} 제작 완료`);
   G.save(); return true;
 };
@@ -661,7 +690,7 @@ G.craft = (id)=>{
 G.talkTo = (id)=>{
   if(S.driving || !G.hasComp(id)) return false;
   S._talked = S._talked||{};
-  if(S._talked[id]===S.day){ UI.toast(`${D.comps[id].name}와는 오늘 충분히 이야기했다`); return false; }
+  if(S._talked[id]===S.day){ UI.toast(`${D.withParticle(D.comps[id].name,'과','와')}는 오늘 충분히 이야기했다`); return false; }
   const pool = G.eligible('대화').filter(ev=>ev.needsComp===id);
   if(!pool.length){ UI.toast(`${D.comps[id].name}는 지금 자기 일에 빠져 있다`); return false; }
   S._talked[id]=S.day;
@@ -731,10 +760,12 @@ G.fullCrewStories = ()=> !S?false:Object.keys(D.comps).every(id=>
   G.hasComp(id)&&(S.comps[id]||{}).lvl>=3);
 /* ── 라디오 수리 (진공관 1 소모, 1회) ── */
 G.fixRadio = ()=>{
+  if(!S||S.ended) return false;
   if(S.flags.radio_fixed || !G.hasResource('라디오 진공관',1)) return false;
   G.spendResource('라디오 진공관',1);
   S.flags.radio_fixed=true;
   G.advance(40);
+  if(S.ended) return true;
   G.addNote({type:'사건', title:'라디오 소생',
     body:'진공관을 갈아 끼우자 죽어 있던 라디오가 지직— 하고 숨을 쉬었다. 그날 밤 남산의 신호 이후 처음이다. 이제 길 위의 목소리들이 들린다.', links:['달구지']});
   UI.toast('📻 라디오가 살아났다 — 주행 중 방송이 잡힌다');
@@ -744,6 +775,10 @@ G.pickRadio = ()=>{
   const night=G.isNight(), region=G.regionOf();
   const pool=D.radioTexts.filter(r=>{
     if(r.night===1&&!night) return false;
+    if(r.minuteWindow){
+      const minute=((S.min%1440)+1440)%1440;
+      if(minute<r.minuteWindow[0]||minute>=r.minuteWindow[1]) return false;
+    }
     if(r.flag&&!S.flags[r.flag]) return false;
     if(r.noFlag&&S.flags[r.noFlag]) return false;
     if(r.region&&r.region!==region) return false;
@@ -882,6 +917,7 @@ G.questReady = ()=>{ /* 완료 조건 충족? (조달은 물량 체크) */
   return true;
 };
 G.checkQuest = ()=>{
+  if(!S||S.ended) return false;
   if(!G.questReady()) return false;
   const q=S.quest; S.quest=null;
   const K=G.QKIND[q.kind]||G.QKIND.deliver;
@@ -895,15 +931,15 @@ G.checkQuest = ()=>{
   if(q.kind==='letter'){ S.npcs[q.npc].att+=12; S.npcs[q.npc].met=true; }
   G.addNote({type:'사건', title:K.nm+' 완료: '+G.questLabel(q),
     body: q.kind==='letter'
-      ? `${D.npcs[q.npc].name}이(가) 편지를 두 번 읽었다. 답장은 없었다. 눈가가 대신 답했다.`
-      : `${D.nodes[q.from].name} → ${D.nodes[q.to].name}. 사례 고철 ${q.reward}. 받은 이의 얼굴이 밝아졌다.`, links:[]});
+      ? `${D.withParticle(D.npcs[q.npc].name,'이','가')} 편지를 두 번 읽었다. 답장은 없었다. 눈가가 대신 답했다. 사례 고철 ${q.reward+bonus}.`
+      : `${D.nodes[q.from].name} → ${D.nodes[q.to].name}. 사례 고철 ${q.reward+bonus}. 받은 이의 얼굴이 밝아졌다.`, links:[]});
   const storyResult=G.completeStoryQuestStage(q);
   if(storyResult&&storyResult.finished){
     G.addNote({type:'사건',title:`연속 의뢰 완료: ${storyResult.title}`,body:storyResult.completion||'여러 정착지를 오간 부탁을 끝까지 마쳤다.',links:[]});
     UI.toast(`✦ ${storyResult.title} 완료 — ${storyResult.completion||'이야기가 마무리됐다'}`,'discover');
   }else if(storyResult){
     UI.toast(`↳ ${storyResult.title} ${storyResult.stage}/${storyResult.total} — ${D.nodes[storyResult.from].name}에서 후속 의뢰를 확인할 수 있다`);
-  }else UI.toast(`${K.ic} ${G.questLabel(q)} 완료 — 고철 +${q.reward}`);
+  }else UI.toast(`${K.ic} ${G.questLabel(q)} 완료 — 고철 +${q.reward+bonus}`);
   G.save(); return true;
 };
 
@@ -944,8 +980,7 @@ G.arrivalEndingKind = ()=>S?'story_done':null;
 /* 동료의 반대를 누르고 결정하면 값을 치른다 — 반대가 문단 하나로 끝나지 않게. */
 G.overrideDissent = (disposition)=>{
   if(!S) return null;
-  const map={core_sleep:'eunsu', core_quarantine:'kangwoo', core_transfer:'jaeyi'};
-  const who=map[disposition];
+  const who=D.coreDissentIds[disposition];
   if(!who||!G.hasComp(who)) return null;
   G.bond(who,-6);
   S.flags[`dissent_overridden_${who}`]=1;

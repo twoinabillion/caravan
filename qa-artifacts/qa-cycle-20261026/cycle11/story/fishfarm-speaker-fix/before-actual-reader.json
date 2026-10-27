@@ -1,0 +1,21 @@
+[
+  {
+    "kind": "narration",
+    "text": "그물에 걸린 건 초대형 잉어 한 마리. 힘이 장사라 그물을 놓치지 않으려 버텼다."
+  },
+  {
+    "kind": "narration",
+    "text": "잡고 보니 너무 커서— 고민 끝에 방생했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "쟤는 이 수조의 주인이다."
+  },
+  {
+    "kind": "narration",
+    "text": "대신 주인님 수조 옆 작은 수조에서 붕어를 얻었다."
+  }
+]

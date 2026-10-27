@@ -1,0 +1,41 @@
+{
+  "scope": "After the frozen cycle13 natural journey; not additional natural choices or browser proof",
+  "ownReaderEvents": 8,
+  "ownReaderMetadata": 8,
+  "roofDescriptionOnly": 1,
+  "ownTextAndMechanicsUnchangedExceptRoofDesc": true,
+  "oldFrozenAndTextOnlyPaidPreserved": true,
+  "red": {
+    "tests": 20,
+    "failed": 17,
+    "passed": 3
+  },
+  "green": {
+    "tests": 21,
+    "failed": 0
+  },
+  "entryInheritanceMatrix": {
+    "events": 4,
+    "outcomes": 9,
+    "newDefects": 0
+  },
+  "integratedCurrentDeliveredChanges": {
+    "tests": 117,
+    "failed": 0
+  },
+  "otherOwnerPending": null,
+  "projection": "Exact new routes asserted, existing Minji routes restored exactly, only inline bracket quote-count deltas projected. No corpus hash replaced.",
+  "monk": {
+    "parentDirectPortraitMismatchConfirmed": true,
+    "newEntryRoute": 2,
+    "outcomeRoutes": [
+      7,
+      1,
+      0
+    ],
+    "fixtureTests": 10,
+    "passed": 10,
+    "oldPaidAndTextOnlyPreserved": true,
+    "sourceAndGalleryAuthority": "parent registered dedicated portrait after actual inspection; this agent only changed role metadata and exact quote projection"
+  }
+}

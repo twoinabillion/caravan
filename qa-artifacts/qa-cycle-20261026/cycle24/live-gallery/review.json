@@ -1,0 +1,125 @@
+{
+  "at": "2026-10-26T11:27:01.755164+00:00",
+  "origin": "http://127.0.0.1:4319/__live/assets",
+  "browser": "1",
+  "tab": "673498044",
+  "status": "remaining19 actual gallery screenshots viewed before wiring",
+  "priorFive": "../cycle22/visual-root/{lab,towyard,dried-fish,comicroom,bakery}-gallery-before-wiring.png",
+  "totalPreparedGalleryChecked": 24,
+  "rows": [
+    {
+      "key": "camp-field-searchlight-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/camp-field-searchlight-v1.jpg",
+      "assetSha256": "fdaf3fd14e3bc6810dcd44ca561e50f758b14146249a72fcb3062492d444a48e",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "companion-noise-recorder-detail-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/companion-noise-recorder-detail-v1.jpg",
+      "assetSha256": "5445b1aea32c44e6003507315bf1fdc27b9074fac12dc084c0b75ad8f45cb793",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "event-abandoned-atm-cash-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/event-abandoned-atm-cash-v1.jpg",
+      "assetSha256": "bc252292d78dc5a0aceb59fdbe1ace59fca3f0de73cd60586cadda72df25a30d",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "event-human-retrieval-team-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/event-human-retrieval-team-v1.jpg",
+      "assetSha256": "98ea29699f85fc6fc3d02dc90cbb5b5de24b909c109f108821bb2df50e3c691f",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "explore-abandoned-military-checkpoint-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/explore-abandoned-military-checkpoint-v1.jpg",
+      "assetSha256": "2bd80fc37548ac2aa12d0d288892ec31e4f47de932589f7d423c1a2eeda3c5ad",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "explore-arcade-airhockey-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/explore-arcade-airhockey-v1.jpg",
+      "assetSha256": "bad03441b1d30d85db6d0c5380c1033e3b1dc5f8576fc26f4c5ac81c8dfb4fde",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "explore-bowling-lanes-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/explore-bowling-lanes-v1.jpg",
+      "assetSha256": "9d5d65297e3f36fe1dd5ac1c6819be22ecb1e0822386880c78fc9950113c4615",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "explore-school-cafeteria-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/explore-school-cafeteria-v1.jpg",
+      "assetSha256": "c1bb7a607e44629fecaaa472ac574fb7981832ac6aeda723df1ec5e5ca674c50",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "explore-sesame-mill-interior-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/explore-sesame-mill-interior-v1.jpg",
+      "assetSha256": "f0433c8759aee5bbf2e1e68c298b15417d6a54805aebf6fb552e25791e97d6ab",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "explore-wedding-hall-storage-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/explore-wedding-hall-storage-v1.jpg",
+      "assetSha256": "f7e7b581a1f6dbd9f42f168be6e6fb6c8f5cd4e038c60812e6e4206fee24dfa6",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "local-bamboo-rice-fire-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/local-bamboo-rice-fire-v1.jpg",
+      "assetSha256": "bccc8dce00bfb89bf588708195ce25dd55b5e75459b2884f9fc9720a83fb78e0",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "local-chungju-receded-village-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/local-chungju-receded-village-v1.jpg",
+      "assetSha256": "e616fb04bb1b18507ccd3c861a7fd96e8b6634a2e143c2564d079d92b918a2ba",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "local-sejong-unopened-library-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/local-sejong-unopened-library-v1.jpg",
+      "assetSha256": "790550cabfc35a01c16c0b174b20028bbefb32a8cb93710a50eb4a9f6152b529",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "postman-again-bicycle-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/postman-again-bicycle-v1.jpg",
+      "assetSha256": "b6472798b208efb8ea6acdda28ed6fa2c3bf922572997e387f67ee530545bc5c",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "seoul-cablecar-stairs-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/seoul-cablecar-stairs-v1.jpg",
+      "assetSha256": "a177945b02178894fc8b2295121bd6f8e0775a225fd88a5d46fc8e4750c7cbca",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "seoul-empty-clothes-square-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/seoul-empty-clothes-square-v1.jpg",
+      "assetSha256": "b0eca2d903fe73fa48b8f3620a2a5da6e0d83df63ca4fc5f40a7ba0c8f9cfe54",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "story-generation-covered-market-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/story-generation-covered-market-v1.jpg",
+      "assetSha256": "4a9a3fcd8dafdf9902d95ef9a0d2f22f6969f9d835fe732f8e0096c0474839e7",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "story-ridge-uplink-dishes-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/story-ridge-uplink-dishes-v1.jpg",
+      "assetSha256": "c4d8133dce644bf1735e980276692ded704d278afd0faa9d2d155f8bec533bc3",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    },
+    {
+      "key": "vista-cliff-waterfall-v1",
+      "screenshot": "qa-artifacts/qa-cycle-20261026/cycle24/live-gallery/vista-cliff-waterfall-v1.jpg",
+      "assetSha256": "e821f51e30324d3dbfd929ddd317ea00ec6b2f69c6dce497725c07a63a93436d",
+      "vision": "root saw actual gallery screenshot; matches previously reviewed source master/delivery; exact game crop pending"
+    }
+  ]
+}

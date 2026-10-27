@@ -1,0 +1,88 @@
+{
+  "tool": "image_gen.imagegen built-in",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "sourceFreeze22": "0e52ebe9c32e0a3ce96a54c9c9cfe66a78c8ef92bdca331d3bf0b7b832dea694",
+  "references": [
+    {
+      "file": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "role": "canonical reference only",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "file": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "role": "canonical reference only",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "file": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "role": "canonical reference only",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "file": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "role": "canonical reference only",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "exactBaseAndNegative": true,
+  "assets": [
+    {
+      "key": "story-chunrian-lab-archive-v1",
+      "eventId": "ev_chunrian_lab",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-d1bf866c-0ed5-40f2-a8e0-55683423c306.png",
+      "master": {
+        "width": 1672,
+        "height": 941,
+        "format": "png",
+        "space": "srgb",
+        "bytes": 2421253
+      },
+      "file": "qa-artifacts/qa-cycle-20261026/cycle22/visual-survival/story-chunrian-lab-archive-v1.webp",
+      "masterSha256": "2e170ac87d97c3985a553416aae3b23cf15272941d6b88ecf54d5157a462848f",
+      "fileSha256": "41147dd3e19f17db053d92ee620e6ba72ff9206deaca58577486dbafe620bef6",
+      "deployment": {
+        "width": 1024,
+        "height": 576,
+        "format": "webp",
+        "space": "srgb",
+        "bytes": 93658,
+        "quality": 86,
+        "effort": 6
+      },
+      "generation": "built-in image_gen.imagegen; one call for this distinct asset, canonical4 referenced",
+      "transform": "sharp resize cover centre 1024x576 -> toColourspace(srgb) -> webp(q86,effort6)",
+      "visualReview": "No people, basement stairwell and paper archive central, dark server racks, no powered indicators/choice outcome",
+      "browserCropReview": "Root owns 360/480 and gallery-before-wiring; not performed by this agent"
+    },
+    {
+      "key": "explore-towtruck-depot-v1",
+      "eventId": "exp_towyard",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-a2a6baee-1fd4-476e-a909-b6889eabd0d6.png",
+      "master": {
+        "width": 1672,
+        "height": 941,
+        "format": "png",
+        "space": "srgb",
+        "bytes": 2930535
+      },
+      "file": "qa-artifacts/qa-cycle-20261026/cycle22/visual-survival/explore-towtruck-depot-v1.webp",
+      "masterSha256": "18cb5e70c3de328927e3a13ac83ffc0b402ffe82457c7493e2f531b43d8d6b65",
+      "fileSha256": "4667b57f2e88feac1a0293b9b2c0a3523587b92f90e130336229d722777e95a5",
+      "deployment": {
+        "width": 1024,
+        "height": 576,
+        "format": "webp",
+        "space": "srgb",
+        "bytes": 149874,
+        "quality": 86,
+        "effort": 6
+      },
+      "generation": "built-in image_gen.imagegen; one call for this distinct asset, canonical4 referenced",
+      "transform": "sharp resize cover centre 1024x576 -> toColourspace(srgb) -> webp(q86,effort6)",
+      "visualReview": "Six distinct main tow trucks countable, map and radio cradles, no humans/Dalguji/removed parts, no active radio screen",
+      "browserCropReview": "Root owns 360/480 and gallery-before-wiring; not performed by this agent"
+    }
+  ],
+  "productionEdits": [],
+  "galleryWiring": "Not performed; root owns source/production/gallery"
+}

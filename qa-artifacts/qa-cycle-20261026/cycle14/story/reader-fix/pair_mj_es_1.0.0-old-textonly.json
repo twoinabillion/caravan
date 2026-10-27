@@ -1,0 +1,61 @@
+[
+  {
+    "kind": "narration",
+    "text": "은수가 회로를 그리고 민지가 납땜을 했다. 오간 말은 대부분"
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "여기요"
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "거기 말고"
+  },
+  {
+    "kind": "narration",
+    "text": "\"잠깐\" 이 셋이었다."
+  },
+  {
+    "kind": "narration",
+    "text": "완성 후 첫 시험. 88.9. …여전히 잡음."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "안 됐네요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 먼저 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "잡음이 커졌잖아요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…그건 그래요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "수신 범위가 넓어졌다는 거잖아요. 오빠 신호가 오면, 더 먼 데서도 잡힌다는 거잖아요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 잠깐 계산하는 얼굴을 하더니 끄덕였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "훨씬 먼 데서도요."
+  },
+  {
+    "kind": "narration",
+    "text": "두 사람은 다음에 쉴 때 다시 들어 보기로 하고 주파수를 88.9에 맞춰 뒀다."
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "narration",
+    "text": "조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_refugee",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "끝까지 갈게요."
+  },
+  {
+    "kind": "narration",
+    "text": "아무도 없는 다리에 대고 말했다. 라디오가 지직, 하고 꺼졌다. 대답처럼."
+  }
+]

@@ -1,0 +1,338 @@
+{
+  "seed": 272003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "ulsan",
+    "gyeongju",
+    "daegu",
+    "gyeongju",
+    "pohang",
+    "gangneung",
+    "daegwallyeong",
+    "wonju",
+    "chungju",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 84,
+  "actions": 387,
+  "sourceHash": "3439973021f1ddd282edf54a7c2505df545d368bd338741d4d913b91674a002a",
+  "freshStarts": 1,
+  "playedAttempts": 1,
+  "actualAttemptPath": "agent03/attempt02",
+  "excludedPreparationFailure": {
+    "path": "agent03/attempt01",
+    "freshStarts": 0,
+    "choices": 0,
+    "cause": "Observer replacement-string expansion corrupted code before VM execution; callback assembly fixed without source/game change."
+  },
+  "party": [
+    "minji",
+    "kangwoo"
+  ],
+  "dog": false,
+  "day": 7,
+  "min": 1417,
+  "km": 642,
+  "sourceUnchangedDuringRun": true,
+  "all40FilesUnchanged": true,
+  "reviewStatistics": {
+    "comparisonScope": "Own retained cycles1–11 authored strings; not equivalent meaning or primary cohort totals",
+    "previousFiles": [
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle1/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle2/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt02/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle4/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt02/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle6/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle7/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle8/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle9/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle10/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle11/story/agent03/attempt01/agent03-trace.json"
+    ],
+    "exactEntryChoiceResultDuplicateOccurrences": 62,
+    "newOrDifferentEntryChoiceResultOccurrences": 22,
+    "exactResultDuplicateOccurrences": 67,
+    "newOrDifferentResultOccurrences": 17,
+    "novelPairsVsAllRetainedCoverageCycles1to11": [
+      "ev_fog_pass:2",
+      "exp_noodleworks:1",
+      "gw_daegwallyeong:1",
+      "talk_kw_11:0",
+      "talk_mj_19:1"
+    ],
+    "baselineCaveat": "All retained coverage including repeated/resumed/repair attempts; explicitly excludes browser partial replays. Raw recovery IDs do not establish new authored stories.",
+    "differentOccurrences": [
+      {
+        "n": 38,
+        "event": "exp_outdoor",
+        "choice": 1
+      },
+      {
+        "n": 90,
+        "event": "camp_1_minji",
+        "choice": 0
+      },
+      {
+        "n": 106,
+        "event": "exp_noodleworks",
+        "choice": 1
+      },
+      {
+        "n": 130,
+        "event": "camp_2_minji",
+        "choice": 1
+      },
+      {
+        "n": 186,
+        "event": "crisis_drowsy",
+        "choice": 2
+      },
+      {
+        "n": 198,
+        "event": "camp_3_minji",
+        "choice": 0
+      },
+      {
+        "n": 203,
+        "event": "talk_mj_19",
+        "choice": 1
+      },
+      {
+        "n": 207,
+        "event": "talkr_kw_3",
+        "choice": 0
+      },
+      {
+        "n": 217,
+        "event": "ev_fog_pass",
+        "choice": 2
+      },
+      {
+        "n": 221,
+        "event": "gw_daegwallyeong",
+        "choice": 1
+      },
+      {
+        "n": 238,
+        "event": "crisis_nofuel",
+        "choice": 0
+      },
+      {
+        "n": 242,
+        "event": "camp_4_minji",
+        "choice": 1
+      },
+      {
+        "n": 251,
+        "event": "talk_kw_11",
+        "choice": 0
+      },
+      {
+        "n": 290,
+        "event": "crisis_nofuel2",
+        "choice": 0
+      },
+      {
+        "n": 294,
+        "event": "camp_5_minji",
+        "choice": 0
+      },
+      {
+        "n": 322,
+        "event": "crisis_nofuel3",
+        "choice": 1
+      },
+      {
+        "n": 351,
+        "event": "seoul_open",
+        "choice": 0
+      },
+      {
+        "n": 367,
+        "event": "seoul_base",
+        "choice": 3
+      },
+      {
+        "n": 371,
+        "event": "seoul_core",
+        "choice": 4
+      },
+      {
+        "n": 374,
+        "event": "seoul_costs",
+        "choice": 2
+      },
+      {
+        "n": 377,
+        "event": "seoul_decision",
+        "choice": 0
+      },
+      {
+        "n": 380,
+        "event": "seoul_night",
+        "choice": 0
+      }
+    ],
+    "countByAction": {
+      "new-game": 1,
+      "unpaid-entry-reload": 84,
+      "choice": 84,
+      "paid-result-reload": 84,
+      "explore": 16,
+      "travel": 17,
+      "drive": 36,
+      "trade": 17,
+      "work": 5,
+      "meet-recruit": 2,
+      "camp": 6,
+      "recruit-step": 5,
+      "camp-talk": 5,
+      "accept-companion": 2,
+      "talk": 7,
+      "earned-perk": 4,
+      "board-open": 1,
+      "npc-rumor": 3,
+      "walkfuel": 3,
+      "seoul-enter": 5
+    },
+    "reviewedChoices": 84,
+    "chars": 30549,
+    "entryReloads": 84,
+    "paidReloads": 84,
+    "reapplied": 0,
+    "readerDeepEqualReloads": 84,
+    "rawReaderEqualFalse": 38,
+    "rawReaderEqualFalseCause": "JSON property insertion order only. Original raw logs are preserved; deep comparison passes every pair.",
+    "speechRowsRead": 90,
+    "manualReview": "All 84 entry/selected-label/result occurrences read in full, including duplicates; every captured reader turn/displayName, 90 speech calls, 3 rumor replies, 5 work results and 1 board opening read."
+  },
+  "readerFindings": [
+    {
+      "id": "S12-01",
+      "event": "lc_busan_dried",
+      "n": 25,
+      "choice": 1,
+      "issue": "Introduced female vendor rendered as anonymous male at entry and decline.",
+      "fix": "Explicit named female entry and purchase/decline routes.",
+      "natural": true
+    },
+    {
+      "id": "S12-02",
+      "event": "npc_taeho_2",
+      "n": 155,
+      "choice": 0,
+      "issue": "Known Taeho narration and player question rendered as anonymous male lines.",
+      "fix": "Exact Taeho/player consecutive route.",
+      "natural": true
+    },
+    {
+      "id": "S12-03",
+      "event": "gw_daegwallyeong",
+      "n": 221,
+      "choice": 1,
+      "issue": "Carved memorial sentence rendered as live guide speech; guide lacked introduced label.",
+      "fix": "Record entry plus named guide routes. Player attribution of 천리안도 듣겠네요 is a context-clarity improvement.",
+      "natural": true
+    },
+    {
+      "id": "S12-04",
+      "event": "seoul_han",
+      "n": 355,
+      "choice": 3,
+      "issue": "Explicit postman recording rendered as anonymous refugee; second Kangwoo line also anonymous.",
+      "fix": "Entry-only radio route and consecutive Kangwoo result route. Chart reading choice2 additionally confirmed by systems; choice0 covered as sibling fixture.",
+      "natural": true
+    },
+    {
+      "id": "S12-05",
+      "event": "seoul_base",
+      "n": 367,
+      "choice": 3,
+      "issue": "Player address to grandfather rendered as anonymous male.",
+      "fix": "Explicit me route.",
+      "natural": true
+    }
+  ],
+  "newConfirmedNonReaderPlotOrActionErrors": [],
+  "sharedBanterEvidence": {
+    "owner": "systems",
+    "traceN": [
+      258,
+      302,
+      349
+    ],
+    "issue": "Sunny moonlight / visible night stars chatter occurred during rain.",
+    "deduplicate": "Included in systems cycle12 time/weather corrections, not an additional story fix."
+  },
+  "validation": {
+    "unpaidReload": 84,
+    "paidReload": 84,
+    "readerDeepEqual": 84,
+    "reapplied": 0,
+    "runtimeError": null
+  },
+  "postJourneyFixValidation": {
+    "ownTests": 21,
+    "integratedTests": 107,
+    "failures": 0,
+    "textAndMechanicsUnchanged": true,
+    "paidLegacyReaderPreserved": true,
+    "scope": "Fixtures and actual parser/receipt integration, not new natural journeys or browser visual confirmation."
+  },
+  "legalRecovery": [
+    {
+      "n": 238,
+      "at": "wonju",
+      "action": "walking fuel rescue"
+    },
+    {
+      "n": 290,
+      "at": "cheongju",
+      "action": "walking fuel rescue"
+    },
+    {
+      "n": 322,
+      "at": "pyeongtaek",
+      "action": "tractor help, 5h and20scrap for6L"
+    }
+  ],
+  "policyRisk": "The82km Pohang–Gangneung leg continued into the night and triggered drowsiness; legal singing response selected. No policy loop or infinite supply.",
+  "naturalRechecks": [
+    "exp_noodleworks leave choice1",
+    "seoul_core current physical record list",
+    "seoul_costs reservation provenance",
+    "Minji/Kangwoo recruitment and earlier dialogue fixes actually encountered"
+  ],
+  "gaps": [
+    "No gp_envelope acquired; seoul_base envelope opening unavailable",
+    "No Jeju pilot or father exhibit route (different companion prerequisites)",
+    "No Bori or its tracking/tag/family/bath features",
+    "No hidden mountain location revealed; public Gangneung/Daegwallyeong/Wonju reached",
+    "Gangneung hospital arrival event not selected by normal arrival competition",
+    "No crafting/upgrades/board acceptance; board only inspected",
+    "No installed radio, so no actual radio broadcast row",
+    "Three initial NPC greeting menus overwritten by observer; only rumor replies retained",
+    "Cycle12 result helper omitted entry knownSpeaker context. Shared cycle13 helper adds it; original records retained",
+    "Speech capture proves calls, not every queued bubble visibly displayed",
+    "Actual images, crop, clicks, audio and all unvisited branches are outside this isolated VM review"
+  ],
+  "limitations": [
+    "Node VM engine simulation, not browser or human playtest",
+    "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+    "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+    "No edits to source or actual user save; no infinite resources"
+  ]
+}

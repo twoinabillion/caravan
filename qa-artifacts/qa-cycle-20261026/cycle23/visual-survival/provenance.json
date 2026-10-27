@@ -1,0 +1,61 @@
+{
+  "tool": "image_gen.imagegen built-in",
+  "eventId": "postman_again",
+  "sceneKey": "postman-again-bicycle-v1",
+  "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-24b9ea57-bb9a-40c9-9696-4928cafb28cf.png",
+  "master": "qa-artifacts/qa-cycle-20261026/cycle23/visual-survival/masters/postman-again-bicycle-v1.png",
+  "delivery": "qa-artifacts/qa-cycle-20261026/cycle23/visual-survival/delivery/postman-again-bicycle-v1.webp",
+  "masterSha256": "95bd797c8c3b8142174b5f9ba04a5dc7b1897524051a76104cb35a89cd38ab12",
+  "deliverySha256": "b6472798b208efb8ea6acdda28ed6fa2c3bf922572997e387f67ee530545bc5c",
+  "masterGeometry": [
+    1672,
+    941
+  ],
+  "deliveryGeometry": [
+    1024,
+    576
+  ],
+  "space": "srgb",
+  "bytes": 99282,
+  "sharp": {
+    "width": 1024,
+    "height": 576,
+    "fit": "cover",
+    "position": "centre",
+    "colourspace": "srgb",
+    "format": "webp",
+    "quality": 86,
+    "effort": 6
+  },
+  "prompt": "prompt.txt",
+  "promptSha256": "05cc08ecc7ff57363f8f6a27129bc187ee6a8a6024f28f1cc331451ac4b27753",
+  "refs": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    },
+    {
+      "path": "assets/portraits/postman.png",
+      "sha256": "1a85301da967fe2cf28f52c3399d0667b7d60aa603f8a5956c862f8351d22257"
+    }
+  ],
+  "originalOldAsset": {
+    "path": "assets/scenes/postman-letter.webp",
+    "sha256": "35355c654e769c8efb3f070cb2fcaebf881144300a456a9ea08cefe93daffc44",
+    "preserved": true
+  },
+  "status": "staged-ready-for-root-independent-gallery-and-game-crop; not-wired",
+  "selfReview": "review.json"
+}

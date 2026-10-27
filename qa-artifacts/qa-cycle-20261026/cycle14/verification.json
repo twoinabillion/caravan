@@ -1,0 +1,69 @@
+{
+  "recordedAt": "2026-10-26T04:47:21.679458+00:00",
+  "sourceFreeze": "cycle14/frozen-source.json",
+  "engineHash": "52a1873eab1c96a321c39513d5c6ceff4d8b7df69eb13677b87bd2049ffd007b",
+  "tests": {
+    "command": "npm run test:source",
+    "pass": 1417,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "cycle14/test-source-after-validator.log",
+    "previousFullRun": {
+      "pass": 1414,
+      "fail": 0,
+      "log": "cycle14/test-source.log"
+    }
+  },
+  "build": {
+    "exitCode": 0,
+    "at": "2026-10-26T04:35:34.780951+00:00",
+    "buildLog": "build-after-validator.log",
+    "htmlBytes": 107305269,
+    "htmlSha256": "758649e6e2d4c214874d61610dc80ffc71fff5869e10aee5fb714a748f20647e",
+    "srcUnchanged": true,
+    "engineHash": "52a1873eab1c96a321c39513d5c6ceff4d8b7df69eb13677b87bd2049ffd007b",
+    "initialFailure": "cycle14/build.log: new party_second token missing only from content validator registry. Fixed in tools; source40 unchanged."
+  },
+  "quick": {
+    "command": "npm run verify:quick",
+    "exitCode": 0,
+    "log": "cycle14/verify-quick.log",
+    "sceneClassAssets": 615,
+    "portraits": 74,
+    "builtMainPortraits": 7
+  },
+  "journeys": {
+    "segments": 4,
+    "freshStarts": 4,
+    "normalSaveContinuations": 0,
+    "mainEndings": 3,
+    "otherEndings": 1,
+    "stoppedSegments": 0,
+    "choices": 470,
+    "traceRecords": 2407,
+    "entryReloads": 470,
+    "paidReloads": 470,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "sourceAtRecordTime": {
+    "equal": true,
+    "changedSinceFreeze": [],
+    "note": "Cycle15 repairs may begin after all cycle14 journeys ended; see individual full source-end manifests, not a claim that later working tree stays frozen."
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4319/",
+    "eventFrameWidth": 480,
+    "newMonkPortrait": "cycle13/monk-portrait/provenance.json",
+    "jaepilNewScene": "entry/result/reload/final page/road verified",
+    "screenshots": [
+      "cycle14/jaepil-scene-entry.png",
+      "cycle14/jaepil-scene-result.png",
+      "cycle14/jaepil-scene-restored.png"
+    ],
+    "restoredQaSave": "가온 DAY1 부산09:45",
+    "finiteCosts": "Separate engine; live UI has infinite resources",
+    "responsive360": "Still unverified due prior viewport failure/file URL security block"
+  },
+  "status": "Tests passed; fresh journey review found further speaker/media/time/note defects. Cycle15 repairs underway; not a no-defect completion."
+}

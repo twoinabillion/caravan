@@ -1,0 +1,13 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "괜찮아, 요즘 생일이 대수야?"
+  },
+  {
+    "kind": "narration",
+    "text": "웃으면서 말했지만, 다들 조금 조용해졌다."
+  }
+]

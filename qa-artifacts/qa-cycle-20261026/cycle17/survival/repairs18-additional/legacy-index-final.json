@@ -1,0 +1,1598 @@
+[
+  {
+    "id": "ev_road_piano",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-0.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "서툰 손으로 아는 멜로디를 더듬었다. 음정 나간 피아노가 이상하게 서글프고 아름다웠다."
+      },
+      {
+        "kind": "narration",
+        "text": "텅 빈 도로에 울리는 피아노 소리. 관객은 우리뿐인 세상에서 가장 쓸쓸한 연주회였다. 그래도 다들 박수쳤다."
+      }
+    ]
+  },
+  {
+    "id": "ev_road_piano",
+    "i": 0,
+    "j": 1,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-1.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "건반을 누르자 퉁— 하고 줄 하나가 끊어졌다. 다들 웃음이 터졌다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "역시 아무나 치는 게 아니야."
+      },
+      {
+        "kind": "narration",
+        "text": "어설픈 연주회는 그렇게 막을 내렸다."
+      }
+    ]
+  },
+  {
+    "id": "ev_road_piano",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-2.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "레오가 건반 앞에 앉더니, 뜻밖에 유려한 연주를 시작했다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "어릴 때 좀 배웠어요."
+      },
+      {
+        "kind": "narration",
+        "text": "음 나간 피아노가 레오의 손끝에서 노래가 됐다."
+      },
+      {
+        "kind": "narration",
+        "text": "보리가 하울링으로 반주를 넣고, 다들 도로에 주저앉아 들었다. 잊지 못할 길 위의 콘서트였다."
+      }
+    ]
+  },
+  {
+    "id": "ev_fireflies",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-3.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "차 불빛을 모두 껐다. 어둠 속에 반딧불이만 남았다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "손 뻗어봐요."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "뭐?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "손이요."
+      },
+      {
+        "kind": "narration",
+        "text": "뻗으니 하나가 손등에 앉았다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "사람이 사라지니까 얘들이 돌아왔네."
+      },
+      {
+        "kind": "narration",
+        "text": "씁쓸하면서도 아름다운 밤이었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_fireflies",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-4.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "반딧불이 한 마리를 조심히 은수 손바닥에 옮겼다. 은수가 숨도 못 쉬고 봤다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "eunsu",
+        "text": "…살면서 처음 봐요."
+      },
+      {
+        "kind": "narration",
+        "text": "불빛이 은수 얼굴을 초록으로 물들였다. 그 순간만큼은, 세상이 망한 걸 아무도 몰랐다."
+      }
+    ]
+  },
+  {
+    "id": "ev_cosmos_road",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-5.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "서행하며 코스모스 길을 지났다. 창밖으로 손을 내밀어 꽃잎을 스쳤다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "올해도 코스모스는 폈네."
+      },
+      {
+        "kind": "narration",
+        "text": "시간이 이렇게 흘렀구나. 슬프기도, 대견하기도 했다. 우린 또 한 번의 가을을 살아남았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_cosmos_road",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-6.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "코스모스를 한 아름 꺾어 차 안 곳곳에 꽂았다. 삭막한 달구지에 잠깐 꽃집 냄새가 났다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "우리 차가 이렇게 예뻤나."
+      },
+      {
+        "kind": "narration",
+        "text": "며칠은 이 향으로 버티겠다."
+      }
+    ]
+  },
+  {
+    "id": "ev_observatory",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-7.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "수동으로 망원경을 돌려 밤하늘을 봤다. 달 표면의 크레이터, 목성의 줄무늬, 토성의 고리까지."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "우와…"
+      },
+      {
+        "kind": "narration",
+        "text": "다들 번갈아 눈을 댔다. 세상은 망했어도 우주는 그대로다. 저 별들 앞에선 우리 고통도 잠깐 작아졌다."
+      }
+    ]
+  },
+  {
+    "id": "ev_observatory",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-8.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "민지가 망원경 경통 밑으로 기어들어갔다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "minji",
+        "text": "손전등. …아니 그거 말고 작은 거."
+      },
+      {
+        "kind": "narration",
+        "text": "정밀 렌즈와 모터를 차례로 떼어냈다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "minji",
+        "text": "이런 광학부품은 어디서도 못 구해. 감시망 역이용에도 쓸 수 있고."
+      },
+      {
+        "kind": "dialogue",
+        "who": "minji",
+        "text": "별 보던 걸로, 별 보는 것들을 감시하는 거지."
+      },
+      {
+        "kind": "narration",
+        "text": "민지가 씩 웃으며 렌즈를 옷자락에 문질러 닦았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_arcade",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-9.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "즉석 토너먼트가 벌어졌다. 우연히 누른 기술 하나가 판을 뒤집을 때마다 고함이 터졌다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "방금 그거 뭐 눌렀어?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "몰라. 다 눌렀어."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그건 반칙이지."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "반칙 규정이 어디 있는데."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "우승자한테 뭐 줘?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…오늘 저녁 반찬 하나 더."
+      },
+      {
+        "kind": "narration",
+        "text": "별거 아닌 내기에 진심이 됐다. 오랜만에 마음껏 웃었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_arcade",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-10.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "무한 크레딧으로 인형 뽑기에 매달렸다. 열 번, 스무 번… 마침내 낡은 곰인형 하나를 뽑았다!"
+      },
+      {
+        "kind": "narration",
+        "text": "대시보드 한쪽에 앉히자 달구지에 새 승객이 생겼다. 작은 곰인형 하나가 생각보다 큰 웃음을 만들었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_arcade",
+    "i": 1,
+    "j": 1,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-11.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "무한 크레딧에도 인형은 안 뽑혔다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이건 조작이야!"
+      },
+      {
+        "kind": "narration",
+        "text": "애먼 기계를 탓하며 다 같이 깔깔댔다. 뽑기는 실패해도 기분은 성공."
+      }
+    ]
+  },
+  {
+    "id": "ev_autumn_valley",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-12.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "단풍나무 아래 차를 세우고 물을 끓여 차를 마셨다. 붉은 잎이 어깨에 내려앉는다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이런 데서 커피 한 잔이면 소원이 없겠다."
+      },
+      {
+        "kind": "narration",
+        "text": "소박한 바람에 다들 웃었다. 자연이 주는 위로는 값이 없다."
+      }
+    ]
+  },
+  {
+    "id": "ev_autumn_valley",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-13.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "가장 고운 단풍잎을 골라 여행 수첩 사이에 끼웠다. 글만 가득한 기록에 계절 한 장이 들어갔다."
+      },
+      {
+        "kind": "narration",
+        "text": "나중에 이 잎을 보면 오늘의 물소리까지 기억날 것 같았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_reed_sunset",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-14.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "갈대밭 앞에 나란히 서서 해가 지평선에 잠기는 걸 끝까지 봤다. 아무도 말이 없었다."
+      },
+      {
+        "kind": "narration",
+        "text": "내일도 저 해는 뜬다. 해가 뜨고 지는 한 우리는 계속 간다. 말로 하지 않은 다짐이 노을과 함께 남았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_reed_sunset",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-15.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "붉은 노을을 등지고 북으로 달렸다. 백미러 가득 번지는 노을이, 우리가 지나온 길을 물들였다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "뒤가 저렇게 예쁘면, 앞은 더 예쁘겠지."
+      },
+      {
+        "kind": "narration",
+        "text": "낙관 하나를 연료 삼아 액셀을 밟았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_dawn_mist",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-16.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "차를 세우고 안개가 걷히길 기다렸다. 빛이 오르며 물안개가 금빛으로 물들었다 서서히 사라졌다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오래 달린 보람이 있네."
+      },
+      {
+        "kind": "narration",
+        "text": "물안개를 함께 본 일행이 조용히 미소지었다. 잠시 멈춰야 볼 수 있는 것도 있었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_dawn_mist",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-17.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "안개를 헤치며 서행했다. 몽환적인 풍경 속을 미끄러지듯 나아갔다. 시야는 나빠도, 마음은 이상하게 맑았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_barley_field",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-18.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "속도를 늦추고 초록 물결 속을 미끄러졌다. 창문을 열자 풋풋한 풀냄새가 밀려들었다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…좋다."
+      },
+      {
+        "kind": "narration",
+        "text": "누가 먼저랄 것 없이 내뱉은 한마디에 다 담겼다. 이런 순간을 위해 사는 거다. 잠깐, 세상 걱정을 다 잊었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_barley_field",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-19.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "아직 여물지 않았지만, 청보리도 죽을 쑤면 먹는다. 이삭을 조금 훑어 담았다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "보리죽이라도 끓여 먹으면 되지."
+      },
+      {
+        "kind": "narration",
+        "text": "넉넉한 마음에 배도 든든해지는 기분이었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_ferris_wheel",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-20.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "움직이지 않는 관람차, 그 맨 아래 칸에 함께 올라탔다. 흔들리는 곤돌라에 앉아 창밖 폐허를 봤다."
+      },
+      {
+        "kind": "narration",
+        "text": "높이 올라가진 못해도 누군가와 같은 칸에 앉아 있으니 충분했다. 잠깐의 소풍 같은 시간이었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_ferris_wheel",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-21.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "올라가진 않고, 멈춘 관람차를 한참 올려다봤다. 저 위에서 웃었을 사람들을 생각했다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "우리도 언젠가, 돌아가는 관람차 타자."
+      },
+      {
+        "kind": "narration",
+        "text": "지키지 못할지 모를 약속을 하나 더했다. 그런 약속이라도 있어야, 계속 간다."
+      }
+    ]
+  },
+  {
+    "id": "ev_meteor_shower",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-22.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "별똥별이 그을 때마다 눈을 감고 소원을 빌었다. 무슨 소원인지는 서로 묻지 않았다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…근데 다 빌기도 전에 지나가는데요."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "미리 정해뒀다가 빨리 말해."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "그럼 소원이 아니라 구호 아니에요?"
+      },
+      {
+        "kind": "narration",
+        "text": "누군가 결국 소리 내어 말했다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "다 도착하게 해주세요."
+      },
+      {
+        "kind": "narration",
+        "text": "차 안에서 웃음이 터졌다."
+      }
+    ]
+  },
+  {
+    "id": "ev_meteor_shower",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-23.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "소원 대신, 이 순간 자체를 눈에 담았다. 함께 유성우를 보는 이 밤을, 무슨 일이 있어도 안 잊기로."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "살면서 이런 밤 몇 번이나 있겠어."
+      },
+      {
+        "kind": "narration",
+        "text": "맞는 말이다. 별이 다 떨어질 때까지, 아무도 잠들지 않았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_pc_cafe",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-24.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "컵라면 한 박스, 탄산음료, 과자를 쓸어담았다. PC방 매점은 최후의 보루답게 먹을 게 많았다. 오늘 저녁은 컵라면 잔치다."
+      }
+    ]
+  },
+  {
+    "id": "ev_pc_cafe",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-25.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "민지가 켜진 PC들을 살폈다. 한 화면엔 누군가 마지막으로 친 채팅이 남아 있었다. 「다들 무사히 대피해. 여기서 만나자. 접속 유지할게.」"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "…아직 접속돼 있는 거야?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "minji",
+        "text": "아니. 화면만 안 꺼진 거지. 서버가 없으면 접속이란 게 아예— 됐어. 길어."
+      },
+      {
+        "kind": "narration",
+        "text": "민지가 조용히 화면을 껐다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "minji",
+        "text": "…게임 속에서라도 다시 만났으면."
+      }
+    ]
+  },
+  {
+    "id": "ev_pc_cafe",
+    "i": 2,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-26.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "의자에 앉아 멈춘 게임 화면을 봤다. 친구들과 밤새 게임하던 시절이 아득하다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…그때가 좋았지."
+      },
+      {
+        "kind": "narration",
+        "text": "말해놓고 정말 그랬나 싶었다. 그때도 별로였던 날이 더 많았던 것 같은데. 의자에서 일어섰다."
+      }
+    ]
+  },
+  {
+    "id": "ev_temple_bell",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-27.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "당목을 힘껏 밀었다. 뎅— 하는 장중한 소리가 산과 골짜기를 타고 끝없이 울려 퍼졌다. 온몸이 그 진동에 떨렸다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…이거 소리 얼마나 가?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "몰라. 골짜기는 넘어가겠는데."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…그럼 치기 전에 물어봤어야지."
+      },
+      {
+        "kind": "narration",
+        "text": "소리가 잦아들 때까지 다들 숨죽였다. 어딘가 살아 있는 사람이 들었다면, 혼자가 아니란 걸 알겠지."
+      }
+    ]
+  },
+  {
+    "id": "ev_temple_bell",
+    "i": 0,
+    "j": 1,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-28.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "종소리가 너무 멀리 퍼졌다. 며칠 뒤, 그 소리를 듣고 찾아온 생존자 가족을 만났다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "종소리 나는 쪽에 사람 있을 줄 알았어요."
+      },
+      {
+        "kind": "narration",
+        "text": "뜻밖의 인연이 됐다."
+      }
+    ]
+  },
+  {
+    "id": "ev_temple_bell",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-29.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "치지는 않고, 차가운 종의 표면을 손으로 쓸었다. 새겨진 옛 글자들. 수백 년을 버틴 종이, 이 시대도 버티고 있다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "우리도 저렇게 버티자."
+      },
+      {
+        "kind": "narration",
+        "text": "종에게 다짐하듯 말하고 산을 내려왔다."
+      }
+    ]
+  },
+  {
+    "id": "ev_waterfall",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-30.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "폭포 아래서 물통을 채우고, 번갈아 몸을 씻었다. 차가운 물이 온몸의 때와 피로를 쓸어냈다."
+      },
+      {
+        "kind": "narration",
+        "text": "물보라 무지개 아래서 물장구를 치며 애처럼 웃었다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이게 천국이지."
+      },
+      {
+        "kind": "narration",
+        "text": "여러 해 묵은 고단함이 폭포에 씻겨 내려갔다."
+      }
+    ]
+  },
+  {
+    "id": "ev_waterfall",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-31.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "맑은 폭포수를 넉넉히 긷고 길을 재촉했다. 멱은 못 감아도, 얼굴에 찬물을 끼얹으니 정신이 번쩍 들었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_laundromat",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-32.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "여러 해 묵은 우리 옷을 빨았다. 뜨거운 물에 때가 쭉쭉 빠졌다. 뽀송하게 마른 옷을 입으니 새 사람이 된 기분."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "빨래가 이렇게 행복한 거였나."
+      },
+      {
+        "kind": "narration",
+        "text": "사소한 일상이 이렇게 그리웠구나. 남의 빨래도 곱게 개켜, 주인이 오면 찾게 두었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_laundromat",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-33.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "세제와 동전을 챙겼다. 동전은 이제 화폐가 아니라 그냥 쇠붙이— 고철이다. 세제는 요긴하다."
+      },
+      {
+        "kind": "narration",
+        "text": "돌아가는 세탁기는 그대로 뒀다. 저 빨래의 주인이 언젠가 올지도 모르니까."
+      }
+    ]
+  },
+  {
+    "id": "ev_train_depot",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-34.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "봉인된 화물칸에서 생필품 컨테이너를 발견했다. 통조림, 생수, 담요, 공구까지. 운송 중이던 물자가 고스란히. 배불리 챙겼다."
+      }
+    ]
+  },
+  {
+    "id": "ev_train_depot",
+    "i": 0,
+    "j": 1,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-35.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "대부분 산업 자재라 당장 쓸 건 적었지만, 정비고에서 값진 공구와 부품을 잔뜩 챙겼다. 차 수리에 두고두고 쓴다."
+      }
+    ]
+  },
+  {
+    "id": "ev_train_depot",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-36.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "튼튼한 화물칸 하나를 골라 한 시간 은신처로 썼다. 철벽에 둘러싸이니 마음이 놓였다. 문을 안에서 걸어 잠그고 깊이 잤다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이동식 벙커네."
+      },
+      {
+        "kind": "narration",
+        "text": "다들 잠깐이나마 경계 없이 눈을 붙였다. 안전한 잠이 최고의 보약이다."
+      }
+    ]
+  },
+  {
+    "id": "ev_frost_morning",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-37.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "차창의 성에꽃을 손가락으로 만지작대며, 다 같이 붙어 앉아 온기를 나눴다. 뜨거운 물 한 잔을 돌려 마셨다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "겨울 오기 전에 서울 가야 할 텐데."
+      },
+      {
+        "kind": "narration",
+        "text": "하얀 입김 속 다짐이 오갔다. 추위가 우릴 재촉했지만, 서리 낀 풍경은 잠깐 아름다웠다."
+      }
+    ]
+  },
+  {
+    "id": "ev_frost_morning",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-38.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "추위에 지체할 수 없어 서둘렀다. 언 손을 비비며 성에를 긁어내고 시동을 걸었다. 엔진도 추운지 한참 뜸을 들였다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "겨울이 진짜 오네."
+      },
+      {
+        "kind": "narration",
+        "text": "계절이 바뀌는 걸 피부로 느끼며, 북으로 향했다."
+      }
+    ]
+  },
+  {
+    "id": "ev_rainbow",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-39.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "무지개 끝에 보물이 있다는 옛말을 핑계로 그쪽 길을 탔다. 물론 닿을 리 없지만, 쫓는 것만으로 즐거웠다."
+      },
+      {
+        "kind": "narration",
+        "text": "손에 잡히지 않아도 방향을 알려주는 것이 있다. 우리에겐 서울이 그랬다."
+      }
+    ]
+  },
+  {
+    "id": "ev_rainbow",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-40.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "쌍무지개가 사라지기 전에 눈에 꾹꾹 담았다. 이런 건 사진으로도 다 못 담는다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…예쁜 건 금방 사라지네."
+      },
+      {
+        "kind": "narration",
+        "text": "무지개가 옅어지며 하늘로 스몄다. 짧아서 더 소중한 것들이, 우릴 계속 살게 한다."
+      }
+    ]
+  },
+  {
+    "id": "ev_dolmen",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-41.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "수천 년을 버틴 돌 앞에 섰다. 누가 먼저랄 것 없이 목을 꺾어 위를 봤다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이걸 그 옛날에 어떻게 올렸을까요."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "사람이 밀었겠지. 여럿이서."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "몇 명이요?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…모르지."
+      },
+      {
+        "kind": "narration",
+        "text": "돌 그림자 안이 서늘했다. 천리안도 이 폐허도 저 돌이 본 것들 중 하나로 지나갈 거라는 생각을, 각자 조용히 했던 모양이다. 차로 돌아가는 걸음이 조금씩 빨라졌다."
+      }
+    ]
+  },
+  {
+    "id": "ev_dolmen",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-42.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "돌 표면에 누군가 최근 새긴 글씨가 있었다. 「우리는 여기 있었다. 잊지 마라.」"
+      },
+      {
+        "kind": "narration",
+        "text": "못을 하나 찾아와 그 아래 한 줄 새기기로 했다. 뭘 쓸지 정하는 데 새기는 것보다 오래 걸렸다. 날짜를 쓰자는 말도 나왔지만, 정확한 날짜를 아는 사람이 없었다."
+      },
+      {
+        "kind": "narration",
+        "text": "결국 「우리도 여기 있었다. 서울로 간다」만 남기고 왔다. 획이 삐뚤었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_milkyway",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-43.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "차 지붕에 담요를 깔고 함께 누워 은하수를 봤다. 별이 쏟아질 듯했다."
+      },
+      {
+        "kind": "narration",
+        "text": "우리도 저 별을 만든 먼지에서 왔다는 오래된 이야기를 떠올렸다. 이 거대한 우주에서 고통은 티끌 같고, 그래서 오히려 견딜 만했다. 별빛 아래 마음이 넓어졌다."
+      }
+    ]
+  },
+  {
+    "id": "ev_milkyway",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-44.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "은하수 속에서 북극성을 찾아 방향을 가늠했다. 나침반이 없어도, 별은 늘 북을 알려준다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "옛날 사람들도 저 별 보고 길 찾았겠지."
+      },
+      {
+        "kind": "narration",
+        "text": "우리가 가는 북쪽, 그 끝에 서울이 있다. 별이 길잡이가 되어준 밤. 마음이 든든해졌다."
+      }
+    ]
+  },
+  {
+    "id": "ev_newsstand",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-45.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "그날의 소식지를 한 부 접어 넣었다. 학살이 \"재편성\"이라는 이름으로 안내된 증거다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…이거 우리 집에도 왔었어요. 냉장고에 붙여놨었는데."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "우리도."
+      },
+      {
+        "kind": "narration",
+        "text": "1면에서 웃는 가족은 아무도 모르는 얼굴이었다. 그 얼굴에 접힌 자국이 안 가게 조심해서 반으로 접었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_newsstand",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-46.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "감상에 젖을 여유가 없다. 몇 장 뜯어 불쏘시개로 챙겼다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그거 좀 남겨요."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "왜?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…아니에요. 그냥."
+      },
+      {
+        "kind": "narration",
+        "text": "결국 두 장은 안 뜯고 두고 왔다. \"더 안전한 내일\"이라는 글자가 가판대 위에 그대로 남았다."
+      }
+    ]
+  },
+  {
+    "id": "ev_snow_pines",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-47.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "차를 세우고 눈 쌓인 솔숲을 봤다. 입김만 하얗게 서리는 완벽한 정적. 아름답고, 또 쓸쓸했다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…겨울이 깊네."
+      },
+      {
+        "kind": "narration",
+        "text": "서울 도착 전에 겨울을 다 나야 할지도 모른다. 하지만 이 설경만은, 잠깐 마음을 씻어줬다. 다시 하얀 길로 나섰다."
+      }
+    ]
+  },
+  {
+    "id": "ev_snow_pines",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-48.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "눈을 털고 마른 솔가지를 모았다. 송진이 많아 불이 잘 붙는다. 추운 밤을 날 땔감을 넉넉히 확보했다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "겨울엔 불이 곧 생명이지."
+      },
+      {
+        "kind": "narration",
+        "text": "솔향 밴 장작을 실으니, 오늘 밤은 따뜻하겠다."
+      }
+    ]
+  },
+  {
+    "id": "ev_near_seoul_sign",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-49.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "차를 세우고 부산에서 여기까지 함께 넘어온 얼굴들을 봤다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…여기까지 왔네."
+      },
+      {
+        "kind": "narration",
+        "text": "누군가 말했다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "뭐라고?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "여기까지 왔다고."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…어."
+      },
+      {
+        "kind": "narration",
+        "text": "손이 하나씩 포개졌다. 출발 때 있던 손이 몇 개 빠졌고, 그때 없던 손이 몇 개 얹혔다. 두려움은 그대로 둔 채 다시 시동을 걸었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_near_seoul_sign",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-50.json",
+    "turns": [
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "서울 도착하면 제일 먼저 뭐 할래?"
+      },
+      {
+        "kind": "narration",
+        "text": "무거운 공기를 풀려고 물었다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "밥."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "샤워."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "주차부터."
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "주차?"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "차 세울 데는 있어야 될 거 아녜요."
+      },
+      {
+        "kind": "narration",
+        "text": "대답이 겹치면서 웃음이 났다. 누가 마지막에 덧붙였다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그 전에 천리안부터."
+      },
+      {
+        "kind": "narration",
+        "text": "웃음이 조금 늦게 잦아들었다. 그러고 다시 출발했다."
+      }
+    ]
+  },
+  {
+    "id": "ev_roadside_shrine",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-51.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "돌 하나를 주워 무더기에 얹고, 각자 소원을 빌었다. 미신인 걸 알지만, 빌 데가 있다는 것만으로 마음이 놓였다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…무사히 도착하게 해주세요."
+      },
+      {
+        "kind": "narration",
+        "text": "오래된 나무가 바람에 천을 흔들며 답하는 듯했다. 앞서간 이들의 소원 곁에, 우리 것도 나란히 걸었다."
+      }
+    ]
+  },
+  {
+    "id": "ev_roadside_shrine",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "file": "legacy03/paid-52.json",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "가진 천 조각에 마음을 담아 나뭇가지에 묶었다. 바람에 나부끼는 천들 사이에 우리 것이 더해졌다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이 길 지나는 다음 사람도 무사하길."
+      },
+      {
+        "kind": "narration",
+        "text": "우리만이 아니라, 뒤에 올 이들까지 빌었다. 그런 마음들이 모여, 길을 지킨다."
+      }
+    ]
+  }
+]

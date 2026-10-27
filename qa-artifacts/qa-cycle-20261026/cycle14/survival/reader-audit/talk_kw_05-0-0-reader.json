@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "취사병 출신."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 아무렇지 않게 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "이등병 때. 파 오백 단 썰면 이렇게 된다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "오백 단이요? 하루에?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…한 주에. 아무튼 많이."
+  },
+  {
+    "kind": "narration",
+    "text": "그날 국은 역대급이었다. 파수꾼이 아니라 주방장을 영입했던 건지도 모른다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "전투보다 취사가 부대 사기에 기여한다. 통계다."
+  },
+  {
+    "kind": "narration",
+    "text": "진지한 얼굴로 만든 국이 진지하게 맛있었다."
+  }
+]

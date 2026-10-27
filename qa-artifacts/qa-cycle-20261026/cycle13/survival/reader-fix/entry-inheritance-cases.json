@@ -1,0 +1,7 @@
+[
+ {"id":"camp_visitor","choices":[{"i":0,"o":0,"speakers":[{"who":"passer_elder","name":"걷는 노인"},"me",{"who":"passer_elder","name":"걷는 노인"},{"who":"passer_elder","name":"걷는 노인"}]},{"i":0,"o":1,"speakers":[]},{"i":1,"o":0,"speakers":[{"who":"passer_elder","name":"걷는 노인"}]}]},
+ {"id":"near_geochang_actor","choices":[{"i":0,"o":0,"speakers":[{"who":"passer_man","name":"연습 중인 배우"}]},{"i":1,"o":0,"speakers":[]}]},
+ {"id":"talk_bori_03","choices":[{"i":0,"o":0,"speakers":["leo","me","leo","me","leo"]}]},
+ {"id":"talk_mj_21","choices":[{"i":0,"o":0,"speakers":["minji","minji"]},{"i":1,"o":0,"speakers":["minji"]}]},
+ {"id":"talk_jy_18","choices":[{"i":0,"o":0,"speakers":["jaeyi","jaeyi","me","jaeyi","jaeyi","jaeyi"]},{"i":1,"o":0,"speakers":["jaeyi","me","jaeyi"]}]}
+]

@@ -1,0 +1,1329 @@
+{
+  "cycle": 5,
+  "agent": "systems",
+  "seed": 265002,
+  "evidenceClass": "Actual engine in isolated VM, public actions, finite resources. No browser input/visual/audio claim.",
+  "engineSourceHash": "cafcabdafed0a2c4f6ccb8e9b24cc899aee50d7e000596cf44575aa71b1684be",
+  "sourceUnchangedFromStart": true,
+  "hashScope": "runner engine/content files",
+  "freshStarts": 1,
+  "completedJourneys": 1,
+  "policyStops": 0,
+  "engineFailures": 0,
+  "engineDeaths": 0,
+  "fixtureJourneys": 0,
+  "normalSaveResumptions": 0,
+  "productionChanges": [],
+  "result": {
+    "method": "core_transfer",
+    "ending": "story_done",
+    "ended": true,
+    "storyDone": true,
+    "session1End": true,
+    "day": 9,
+    "km": 805,
+    "actualCompanions": [
+      "minji",
+      "jaeyi"
+    ],
+    "finalState": {
+      "at": "seoul",
+      "location": "서울 — 남산",
+      "day": 9,
+      "min": 1416,
+      "km": 805,
+      "driving": null,
+      "fuel": 24.82698480000005,
+      "water": 28,
+      "food": 14,
+      "scrap": 66,
+      "van": 100,
+      "vanMax": 100,
+      "fuelMax": 70,
+      "foodMax": 24,
+      "waterMax": 28,
+      "fatigue": 65.29013999999984,
+      "dog": false,
+      "hunger": 0,
+      "thirst": 0,
+      "injuries": {},
+      "party": [
+        "minji",
+        "jaeyi"
+      ],
+      "items": {
+        "부품": 4,
+        "의약품": 1,
+        "탄약": 2,
+        "남산행 편지": 1,
+        "할아버지의 봉투": 1,
+        "쇠파이프": 1,
+        "석궁": 1,
+        "볼트": 3,
+        "화염병": 2,
+        "교란 장치": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 8,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "jaeyi"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 100,
+          "bond": 31,
+          "injury": null
+        },
+        "jaeyi": {
+          "name": "재이",
+          "mood": 100,
+          "bond": 5,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true,
+        "collector": true,
+        "sidebox": true,
+        "armory": true
+      },
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+          "from": "daejeon",
+          "to": "daegu",
+          "due": 108,
+          "noExpiry": true,
+          "kind": "deliver",
+          "need": null,
+          "reward": 16
+        },
+        {
+          "index": 1,
+          "label": "약 꾸러미",
+          "description": "\"약 꾸러미, 전주 서문 시장까지 부탁드려도 될까요? 사례는 고철 18.\"",
+          "from": "daejeon",
+          "to": "jeonju",
+          "due": 13,
+          "kind": "deliver",
+          "need": null,
+          "reward": 18
+        }
+      ],
+      "boardAt": "daejeon",
+      "boardDay": 9,
+      "ended": true,
+      "endKind": "story_done",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "completed",
+        "tracked": true,
+        "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+        "act": "종장",
+        "chapterId": "ending",
+        "eyebrow": "메인 스토리 · 종장",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "phase": "남산 코어 · 여정 기록",
+        "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+        "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+        "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+        "steps": [
+          {
+            "id": "ending",
+            "label": "남산 코어에서 최종 결정을 내렸다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      "navigation": {
+        "key": "main_ending",
+        "kind": "main",
+        "target": "seoul",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+      }
+    }
+  },
+  "totals": {
+    "choices": 82,
+    "traceRecords": 443,
+    "publicActionsExcludingChoicesReloadInitialization": 196,
+    "actionCounts": {
+      "new-game": 1,
+      "unpaid-entry-reload": 82,
+      "choice": 82,
+      "paid-result-reload": 82,
+      "explore": 17,
+      "travel": 21,
+      "drive": 45,
+      "trade": 36,
+      "trade-bundle": 2,
+      "work": 13,
+      "meet-recruit": 2,
+      "camp-meal": 8,
+      "camp": 8,
+      "recruit-step": 6,
+      "camp-talk": 8,
+      "accept-companion": 2,
+      "earned-perk": 4,
+      "settlement-repair": 2,
+      "buy-upgrade": 4,
+      "board-open": 4,
+      "accept-quest": 1,
+      "turnin-quest": 1,
+      "sell-demand": 2,
+      "craft": 5,
+      "seoul-enter": 5
+    },
+    "entryReload": 82,
+    "paidResultReload": 82,
+    "reloadLoaded": 164,
+    "reloadFailed": 0,
+    "paidReapplied": 0
+  },
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "ulsan",
+    "gyeongju",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "muju",
+    "jeonju",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "features": {
+    "recruitment": [
+      {
+        "n": 100,
+        "action": "accept-companion",
+        "id": "minji",
+        "result": true,
+        "at": "gyeongju",
+        "day": 3,
+        "party": [],
+        "elapsedMinutes": 0,
+        "before": {
+          "scrap": 19,
+          "items": {
+            "부품": 5,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 8,
+          "water": 17,
+          "fuel": 33.221399999999775,
+          "van": 85.02000000000052
+        },
+        "after": {
+          "scrap": 19,
+          "items": {
+            "부품": 5,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 8,
+          "water": 17,
+          "fuel": 33.221399999999775,
+          "van": 85.02000000000052
+        }
+      },
+      {
+        "n": 285,
+        "action": "accept-companion",
+        "id": "jaeyi",
+        "result": true,
+        "at": "muju",
+        "day": 7,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 0,
+        "before": {
+          "scrap": 52,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "food": 18,
+          "water": 28,
+          "fuel": 32.13897146666642,
+          "van": 96.70000000000017
+        },
+        "after": {
+          "scrap": 52,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "food": 18,
+          "water": 28,
+          "fuel": 32.13897146666642,
+          "van": 96.70000000000017
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "n": 123,
+        "action": "buy-upgrade",
+        "id": "bench",
+        "result": true,
+        "at": "daegu",
+        "day": 3,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 225,
+        "before": {
+          "scrap": 29,
+          "items": {
+            "부품": 7,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 14,
+          "water": 22,
+          "fuel": 45.44843999999979,
+          "van": 100
+        },
+        "after": {
+          "scrap": 17,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 14,
+          "water": 22,
+          "fuel": 45.44843999999979,
+          "van": 100
+        }
+      },
+      {
+        "n": 134,
+        "action": "buy-upgrade",
+        "id": "collector",
+        "result": true,
+        "at": "daegu",
+        "day": 4,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 150,
+        "before": {
+          "scrap": 45,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 12,
+          "water": 24,
+          "fuel": 45.44843999999979,
+          "van": 100
+        },
+        "after": {
+          "scrap": 30,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 12,
+          "water": 24,
+          "fuel": 45.44843999999979,
+          "van": 100
+        }
+      },
+      {
+        "n": 139,
+        "action": "buy-upgrade",
+        "id": "sidebox",
+        "result": true,
+        "at": "daegu",
+        "day": 4,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 150,
+        "before": {
+          "scrap": 34,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 13,
+          "water": 24,
+          "fuel": 45.44843999999979,
+          "van": 100
+        },
+        "after": {
+          "scrap": 16,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 12,
+          "water": 24,
+          "fuel": 45.44843999999979,
+          "van": 100
+        }
+      },
+      {
+        "n": 195,
+        "action": "buy-upgrade",
+        "id": "armory",
+        "result": true,
+        "at": "muju",
+        "day": 5,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 150,
+        "before": {
+          "scrap": 50,
+          "items": {
+            "부품": 5,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 9,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        },
+        "after": {
+          "scrap": 26,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 9,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        }
+      }
+    ],
+    "discountedCrafts": [
+      {
+        "n": 315,
+        "action": "craft",
+        "id": "pipe",
+        "result": true,
+        "at": "nonsan",
+        "day": 8,
+        "party": [
+          "minji",
+          "jaeyi"
+        ],
+        "elapsedMinutes": 20,
+        "before": {
+          "scrap": 41,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 43.95407146666648,
+          "van": 94
+        },
+        "after": {
+          "scrap": 36,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 43.95407146666648,
+          "van": 94
+        }
+      },
+      {
+        "n": 316,
+        "action": "craft",
+        "id": "xbow",
+        "result": true,
+        "at": "nonsan",
+        "day": 8,
+        "party": [
+          "minji",
+          "jaeyi"
+        ],
+        "elapsedMinutes": 20,
+        "before": {
+          "scrap": 36,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 43.95407146666648,
+          "van": 94
+        },
+        "after": {
+          "scrap": 26,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 43.95407146666648,
+          "van": 94
+        }
+      },
+      {
+        "n": 317,
+        "action": "craft",
+        "id": "bolt",
+        "result": true,
+        "at": "nonsan",
+        "day": 8,
+        "party": [
+          "minji",
+          "jaeyi"
+        ],
+        "elapsedMinutes": 20,
+        "before": {
+          "scrap": 26,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 43.95407146666648,
+          "van": 94
+        },
+        "after": {
+          "scrap": 23,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1,
+            "볼트": 3
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 43.95407146666648,
+          "van": 94
+        }
+      },
+      {
+        "n": 318,
+        "action": "craft",
+        "id": "molotov",
+        "result": true,
+        "at": "nonsan",
+        "day": 8,
+        "party": [
+          "minji",
+          "jaeyi"
+        ],
+        "elapsedMinutes": 20,
+        "before": {
+          "scrap": 23,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1,
+            "볼트": 3
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 43.95407146666648,
+          "van": 94
+        },
+        "after": {
+          "scrap": 21,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1,
+            "볼트": 3,
+            "화염병": 2
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 41.95407146666648,
+          "van": 94
+        }
+      },
+      {
+        "n": 319,
+        "action": "craft",
+        "id": "ammo",
+        "result": true,
+        "at": "nonsan",
+        "day": 8,
+        "party": [
+          "minji",
+          "jaeyi"
+        ],
+        "elapsedMinutes": 20,
+        "before": {
+          "scrap": 21,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1,
+            "볼트": 3,
+            "화염병": 2
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 41.95407146666648,
+          "van": 94
+        },
+        "after": {
+          "scrap": 14,
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 2,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1,
+            "볼트": 3,
+            "화염병": 2
+          },
+          "food": 16,
+          "water": 28,
+          "fuel": 41.95407146666648,
+          "van": 94
+        }
+      }
+    ],
+    "minjiDiscountRepairs": [
+      {
+        "n": 119,
+        "action": "settlement-repair",
+        "result": {
+          "ok": true,
+          "cost": 6,
+          "amount": 30,
+          "mins": 120
+        },
+        "at": "daegu",
+        "day": 3,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 120,
+        "before": {
+          "scrap": 26,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 12,
+          "water": 17,
+          "fuel": 45.44843999999979,
+          "van": 85.02000000000052
+        },
+        "after": {
+          "scrap": 20,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 12,
+          "water": 17,
+          "fuel": 45.44843999999979,
+          "van": 100
+        }
+      },
+      {
+        "n": 187,
+        "action": "settlement-repair",
+        "result": {
+          "ok": true,
+          "cost": 6,
+          "amount": 30,
+          "mins": 120
+        },
+        "at": "muju",
+        "day": 5,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 120,
+        "before": {
+          "scrap": 17,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 11,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 94.58000000000031
+        },
+        "after": {
+          "scrap": 11,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 10,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        }
+      }
+    ],
+    "barter": [
+      {
+        "n": 189,
+        "action": "trade",
+        "offer": {
+          "index": 1,
+          "label": "식량 2 ⇄ 부품 1",
+          "key": "barter_fp",
+          "qty": 0,
+          "price": 1
+        },
+        "result": {
+          "ok": true
+        },
+        "at": "muju",
+        "day": 5,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 25,
+        "before": {
+          "scrap": 23,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 10,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        },
+        "after": {
+          "scrap": 23,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 8,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        }
+      },
+      {
+        "n": 190,
+        "action": "trade",
+        "offer": {
+          "index": 0,
+          "label": "물 2통 ⇄ 식량 1",
+          "key": "barter_wf",
+          "qty": 0,
+          "price": 1
+        },
+        "result": {
+          "ok": true
+        },
+        "at": "muju",
+        "day": 5,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 25,
+        "before": {
+          "scrap": 23,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 8,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        },
+        "after": {
+          "scrap": 23,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 9,
+          "water": 25,
+          "fuel": 28.19179333333316,
+          "van": 100
+        }
+      },
+      {
+        "n": 210,
+        "action": "trade",
+        "offer": {
+          "index": 0,
+          "label": "물 2통 ⇄ 식량 1",
+          "key": "barter_wf",
+          "qty": 0,
+          "price": 1
+        },
+        "result": {
+          "ok": true
+        },
+        "at": "muju",
+        "day": 6,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 25,
+        "before": {
+          "scrap": 35,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 7,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        },
+        "after": {
+          "scrap": 35,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 8,
+          "water": 26,
+          "fuel": 28.19179333333316,
+          "van": 100
+        }
+      },
+      {
+        "n": 211,
+        "action": "trade",
+        "offer": {
+          "index": 0,
+          "label": "물 2통 ⇄ 식량 1",
+          "key": "barter_wf",
+          "qty": 0,
+          "price": 1
+        },
+        "result": {
+          "ok": true
+        },
+        "at": "muju",
+        "day": 6,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 25,
+        "before": {
+          "scrap": 35,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 8,
+          "water": 26,
+          "fuel": 28.19179333333316,
+          "van": 100
+        },
+        "after": {
+          "scrap": 35,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 9,
+          "water": 25,
+          "fuel": 28.19179333333316,
+          "van": 100
+        }
+      },
+      {
+        "n": 230,
+        "action": "trade",
+        "offer": {
+          "index": 0,
+          "label": "물 2통 ⇄ 식량 1",
+          "key": "barter_wf",
+          "qty": 0,
+          "price": 1
+        },
+        "result": {
+          "ok": true
+        },
+        "at": "muju",
+        "day": 6,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 25,
+        "before": {
+          "scrap": 36,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 8,
+          "water": 27,
+          "fuel": 13.371793333333194,
+          "van": 96.12399999999975
+        },
+        "after": {
+          "scrap": 36,
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 9,
+          "water": 26,
+          "fuel": 13.371793333333194,
+          "van": 96.12399999999975
+        }
+      }
+    ],
+    "cashSupplyTrades": 31,
+    "bundles": [
+      {
+        "n": 49,
+        "action": "trade-bundle",
+        "result": {
+          "ok": true,
+          "water": 5,
+          "food": 2,
+          "price": 4
+        },
+        "at": "miryang",
+        "day": 1,
+        "party": [],
+        "elapsedMinutes": 40,
+        "before": {
+          "scrap": 15,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 9,
+          "water": 14,
+          "fuel": 49.68400000000005,
+          "van": 82
+        },
+        "after": {
+          "scrap": 11,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 11,
+          "water": 19,
+          "fuel": 49.68400000000005,
+          "van": 82
+        }
+      },
+      {
+        "n": 120,
+        "action": "trade-bundle",
+        "result": {
+          "ok": true,
+          "water": 5,
+          "food": 2,
+          "price": 5
+        },
+        "at": "daegu",
+        "day": 3,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 40,
+        "before": {
+          "scrap": 20,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 12,
+          "water": 17,
+          "fuel": 45.44843999999979,
+          "van": 100
+        },
+        "after": {
+          "scrap": 15,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 14,
+          "water": 22,
+          "fuel": 45.44843999999979,
+          "van": 100
+        }
+      }
+    ],
+    "demandSales": [
+      {
+        "n": 188,
+        "action": "sell-demand",
+        "result": {
+          "ok": true,
+          "price": 12
+        },
+        "at": "muju",
+        "day": 5,
+        "party": [
+          "minji"
+        ],
+        "elapsedMinutes": 20,
+        "before": {
+          "scrap": 11,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 10,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        },
+        "after": {
+          "scrap": 23,
+          "items": {
+            "부품": 3,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "food": 10,
+          "water": 27,
+          "fuel": 28.19179333333316,
+          "van": 100
+        }
+      },
+      {
+        "n": 343,
+        "action": "sell-demand",
+        "result": {
+          "ok": true,
+          "price": 4
+        },
+        "at": "daejeon",
+        "day": 9,
+        "party": [
+          "minji",
+          "jaeyi"
+        ],
+        "elapsedMinutes": 20,
+        "before": {
+          "scrap": 34,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 2,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1,
+            "볼트": 3,
+            "화염병": 2,
+            "교란 장치": 1
+          },
+          "food": 15,
+          "water": 26,
+          "fuel": 46.2740714666666,
+          "van": 100
+        },
+        "after": {
+          "scrap": 38,
+          "items": {
+            "부품": 4,
+            "의약품": 1,
+            "탄약": 2,
+            "남산행 편지": 1,
+            "할아버지의 봉투": 1,
+            "쇠파이프": 1,
+            "석궁": 1,
+            "볼트": 3,
+            "화염병": 2,
+            "교란 장치": 1
+          },
+          "food": 14,
+          "water": 26,
+          "fuel": 46.2740714666666,
+          "van": 100
+        }
+      }
+    ],
+    "localWork": 13,
+    "camp": 8,
+    "warmMeals": 8,
+    "campTalk": {
+      "attempts": 8,
+      "succeeded": 6,
+      "rejected": [
+        {
+          "n": 250,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        },
+        {
+          "n": 339,
+          "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+        }
+      ]
+    },
+    "procurement": {
+      "acceptedAt": 132,
+      "handedInAt": 133,
+      "at": "daegu",
+      "materialDelta": {
+        "item": "부품",
+        "before": 5,
+        "after": 3
+      },
+      "scrap": {
+        "before": 22,
+        "after": 45,
+        "base": 19,
+        "earlyBonus": 4
+      },
+      "activeNormalCheckpoint": "player02/attempt01/active-quest-132-save.json",
+      "note": "Public acceptance then explicit public turnin; no material injection, no distant delivery-return claim."
+    }
+  },
+  "dialogueReview": {
+    "encounters": 82,
+    "newOrChangedReadInFull": 25,
+    "exactPreviouslyReviewed": 57,
+    "uniqueNewEventChoicePairs": 16,
+    "files": [
+      "transcript01.json",
+      "changed-transcript.json"
+    ],
+    "notes": [
+      "Minji fuse/sound actions now follow the selected activity and prior bonding choices.",
+      "Jaeyi guest presence precedes explicit recruitment; repeated box arrangement and final echo follow the chosen shared action.",
+      "Western route cart convoy supplies the actual camp-memory source.",
+      "Postman meeting and voluntarily carried Namsan letter remain separate from completed local procurement; the finale explicitly preserves the unfulfilled letter delivery.",
+      "Jaeyi objects to transfer; displayed bond cost and the finale preserve that disagreement.",
+      "Actual connected channels and living facilities remain consistent across transfer decision/uplink/session ending."
+    ]
+  },
+  "findings": [],
+  "minorCopyNotes": [
+    {
+      "id": "SYS-C5-COPY01",
+      "event": "exp_underground",
+      "choice": 0,
+      "trace": 322,
+      "text": "위험 · 위험",
+      "classification": "Nonblocking repetition; no gameplay, gate, cost or story-causality failure",
+      "cause": "Authored risk text is 위험; shared foreseeable row label is also 위험, and UI prints both.",
+      "files": [
+        "src/03-data.js exp_underground",
+        "src/04b-engine-crew.js G.choiceForeseeable",
+        "src/07-ui.js choice forecast"
+      ],
+      "productionChange": false,
+      "reportedToRoot": true,
+      "status": "fixed after journey"
+    }
+  ],
+  "scopedVerdict": "No newly confirmed gameplay, persistence or story-causality bug in this frozen finite journey. One cosmetic repeated risk phrase is separately recorded; no production edit.",
+  "coverageLimits": [
+    "No new radio vacuum tube/repair, driver clinic, Bori rescue or upgrade disassembly/reinstallation.",
+    "All journey evidence is engine-level. Root owns real browser UI/reader/speaker/audio validation.",
+    "One seed and one completed journey; not exhaustive branch coverage.",
+    "Camp conversations include guests before formal acceptance. Formal roster is established only by recorded accept-companion actions."
+  ],
+  "files": {
+    "summary": "player02/attempt01/player02-summary.json",
+    "trace": "player02/attempt01/player02-trace.json",
+    "save": "player02/attempt01/player02-save.json",
+    "activeQuest": "player02/attempt01/active-quest-132-save.json",
+    "decision": "player02/attempt01/decision-432-save.json"
+  },
+  "separateCheckpointVerification": {
+    "evidenceClass": "Separate replay of this fresh journey normal checkpoint; not an extra journey/choice/feature acquisition",
+    "source": "qa-artifacts/qa-cycle-20261026/cycle5/systems/player02/attempt01/active-quest-132-save.json",
+    "active": {
+      "day": 4,
+      "min": 430,
+      "quest": {
+        "kind": "procure",
+        "need": {
+          "name": "부품",
+          "qty": 2
+        },
+        "from": "daegu",
+        "to": "daegu",
+        "reward": 19,
+        "due": 10,
+        "ledgerId": "local_procure_daegu_daegu_10"
+      },
+      "scrap": 22,
+      "parts": 5
+    },
+    "hubMarketLeaveReloadPreserved": true,
+    "explicitTurnin": {
+      "scrapDelta": 23,
+      "partsSpent": 2,
+      "completed": {
+        "id": "completed_local_procure_daegu_daegu_10",
+        "eyebrow": "완료 기록",
+        "title": "부품 2개 조달",
+        "phase": "대구 돔 시장 → 대구 돔 시장 · 4일차",
+        "next": "완료한 지역 의뢰다.",
+        "expected": "고철 23개를 받았다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      }
+    },
+    "paidReloadAndRepeatedClickPreserved": true
+  },
+  "postJourneyFixes": [
+    {
+      "id": "SYS-C5-COPY01",
+      "status": "fixed after frozen journey under root approval",
+      "origin": {
+        "event": "exp_underground",
+        "choice": 0,
+        "trace": 322,
+        "before": "위험 · 위험"
+      },
+      "cause": "The authored risk text and the shared forecast category label are both 위험; eventChoiceData rendered the same words twice.",
+      "change": {
+        "file": "src/07-ui.js",
+        "owner": "eventChoiceData",
+        "lines": "Two formatting expressions only",
+        "rule": "When the category label exactly equals its text, show the text once in visible noncombat rows, combined combat forecast and aria-label. Preserve distinct category/detail text."
+      },
+      "unchanged": [
+        "Authored choices, costs, requirements, effects and risk values",
+        "Engine and saves",
+        "CSS and layout"
+      ],
+      "tests": {
+        "file": "tests/test_qa_cycle_choice_hint.cjs",
+        "red": {
+          "pass": 2,
+          "fail": 1,
+          "log": "choice-hint-before.tap"
+        },
+        "green": {
+          "newPass": 3,
+          "relatedPass": 5,
+          "totalPass": 8,
+          "fail": 0,
+          "log": "choice-hint-after.tap"
+        },
+        "coverage": [
+          "Actual exp_underground generic risk rendered once in visible and accessible story/combat choice forecasts",
+          "Actual exp_reservoir detailed risk remains; fuel2 enabled/fuel1 disabled without mutation",
+          "Actual Jaeyi transfer dissent and bond -6 remain visible and accessible",
+          "Existing resource icons, duration filtering, costs, locks/routes, combat metadata and paid-result presentation checks"
+        ]
+      },
+      "evidenceClass": "Actual production renderer executed with real engine/authored data, returned HTML inspected; not browser visual QA."
+    }
+  ],
+  "productionChangesAfterJourney": [
+    "src/07-ui.js eventChoiceData two formatting expressions"
+  ]
+}

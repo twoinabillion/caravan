@@ -1,0 +1,207 @@
+{
+  "classification": "fresh-finite-public-action-journey",
+  "cohortExcluded": false,
+  "seed": 283001,
+  "player": "player51",
+  "freshJourneys": 1,
+  "retries": 0,
+  "resumes": 0,
+  "partialReplays": 0,
+  "ending": "core_quarantine",
+  "storyDone": true,
+  "finalState": {
+    "day": 13,
+    "min": 724.1,
+    "km": 1337,
+    "party": [
+      "minji",
+      "parkss",
+      "eunsu"
+    ],
+    "dog": false,
+    "food": 22,
+    "water": 24,
+    "fuel": 52.41407159999959,
+    "scrap": 30,
+    "van": 120,
+    "fatigue": 17.26286
+  },
+  "choices": 126,
+  "traceRows": 642,
+  "reloads": {
+    "entry": 126,
+    "paid": 126,
+    "failed": 0,
+    "reapplied": 0,
+    "readerMismatch": 0,
+    "skippedEntry": 0,
+    "skippedPaid": 0,
+    "scope": "Same-source actual G.load continuity, not cross-version legacy test"
+  },
+  "review": {
+    "entryResultPairs": 126,
+    "choiceMenus": 126,
+    "readerLines": 992,
+    "notes": 121,
+    "shortSpeech": 130,
+    "npcPresentations": 10,
+    "messages": "all emitted nonempty message arrays reviewed",
+    "sceneKeys": 100,
+    "uniqueFiles": 99,
+    "contactSheets": 9,
+    "fullFiles": 9,
+    "canonicalPortraits": 1,
+    "actualBrowserPending": true
+  },
+  "comparison": {
+    "priorSegments": 79,
+    "exactTextSeen": 116,
+    "newOrChangedText": 10,
+    "exactReaderSeen": 101,
+    "newPairs": [
+      {
+        "trace": 485,
+        "eventId": "ev_eunsu_solo",
+        "choice": 1,
+        "seenPair": false,
+        "exactTextSeen": false,
+        "exactReaderSeen": false
+      }
+    ]
+  },
+  "features": {
+    "new-game": 1,
+    "unpaid-entry-reload": 126,
+    "choice": 126,
+    "paid-result-reload": 126,
+    "explore": 21,
+    "travel": 37,
+    "drive": 68,
+    "trade": 53,
+    "buy-upgrade": 1,
+    "camp": 12,
+    "meet-recruit": 3,
+    "board-open": 1,
+    "accept-quest": 1,
+    "npc-local": 5,
+    "work": 9,
+    "recruit-step": 6,
+    "camp-talk": 11,
+    "accept-companion": 3,
+    "talk": 19,
+    "earned-perk": 6,
+    "camp-meal": 1,
+    "craft": 1,
+    "seoul-enter": 5
+  },
+  "falseApiActions": 0,
+  "tradeRejections": 0,
+  "policyFailures": [
+    {
+      "kind": "expired-side-quest",
+      "quest": "부품 궤짝",
+      "source": "n67 / trace281",
+      "reason": "Delivery due DAY6; reached Daejeon late DAY6, camped before available daytime handoff; preserved failure, not credited as quest completion."
+    }
+  ],
+  "naturalConfirmedCount": 2,
+  "naturalImageCandidateCount": 0,
+  "staticClarityCount": 1,
+  "findings": [
+    {
+      "id": "S23-01",
+      "classification": "natural-confirmed-narrative-time",
+      "status": "fixed-for-cycle24-copy-only",
+      "eventId": "ev_eunsu_solo",
+      "choice": 1,
+      "trace": 485,
+      "checkpoint": "qa-artifacts/qa-cycle-20261026/cycle23/survival/attempt01/entry-483-ev_eunsu_solo-export.json",
+      "before": {
+        "day": 11,
+        "min": 390,
+        "at": "jeonju",
+        "party": [
+          "minji",
+          "parkss",
+          "eunsu"
+        ]
+      },
+      "after": {
+        "day": 11,
+        "min": 390
+      },
+      "actual": "물 당번이 누구냐고 묻는 일이 그날로 없어졌다.",
+      "expected": "An immediate result can show current roster reading or assignment, without certifying that repeated questions ceased for the remainder of the day.",
+      "proposed": "물 당번이 누구냐던 질문에 은수가 표의 한 칸을 짚었다.",
+      "effectsPreserved": true,
+      "repair": "repair24/copy-delta.json"
+    },
+    {
+      "id": "S23-02",
+      "classification": "natural-image-identity-mismatch",
+      "status": "root-confirmed-art-staged-not-wired",
+      "eventId": "postman_again",
+      "choice": 0,
+      "trace": 250,
+      "earlierEvent": {
+        "id": "meet_postman",
+        "trace": 191,
+        "day": 5
+      },
+      "currentDay": 6,
+      "actual": "First meeting and canonical portrait show black-haired middle-aged man with goggles; next-day explicitly same postman is shown as a white-haired/balding old man.",
+      "expected": "Keep same recurring postman identity; a different person is not introduced by this chain.",
+      "files": [
+        {
+          "path": "assets/scenes/event-postman-solo-v2.webp",
+          "sha256": "4e832f403d7d478978b45ae3710c39a02322729d8c685aca7b09c489655f3ea2"
+        },
+        {
+          "path": "assets/scenes/postman-letter.webp",
+          "sha256": "35355c654e769c8efb3f070cb2fcaebf881144300a456a9ea08cefe93daffc44"
+        },
+        {
+          "path": "assets/portraits/postman.png",
+          "sha256": "1a85301da967fe2cf28f52c3399d0667b7d60aa603f8a5956c862f8351d22257"
+        }
+      ],
+      "scope": "Actual full local raster review; root independently confirmed identity and premature handoff. New staged artwork is separate from unchanged cycle23 source and actual browser crop remains pending.",
+      "repair": "../visual-survival/provenance.json"
+    }
+  ],
+  "knownDeferredImages": {
+    "lc_busan_dried": "event-meet-trader lacks fish cart; staged fish art deferred",
+    "lc_daejeon_bakery": "generic retail lacks famous bakery shutter; staged bakery art deferred",
+    "cleaners_recall": "empty surveillance village instead of four collectors and woman; staged retrieval art deferred",
+    "ev_uplink": "rest stop instead of ridge dishes; staged revised fenceless art deferred",
+    "ev_chunrian_lab": "outdoor Sejong arrival instead of underground archive; staged archive art deferred",
+    "seoul_square": "five people and car in stated empty square; staged empty square art deferred",
+    "seoul_base": "underpass vehicle repair instead of lower cable-car station/stairs; staged cablecar art deferred"
+  },
+  "source": {
+    "engineHash": "8cb29d99d11f89115ad974f7021b59d8373f85f8a7cf37fdbca18102fb9730f3",
+    "files": 40,
+    "start": "runtime-start-attempt01.json",
+    "end": "runtime-end-attempt01.json",
+    "reviewEnd": "review-end-hashes.json",
+    "differences": 0
+  },
+  "limitations": [
+    "Known coverage guided policy, not blind play. Prior-choice-counts copied from C22 unchanged; separate comparison includes all79 primary prior segments.",
+    "Engine and actual reader/NPC handlers in isolated VM with timer/presentation stubs, not browser actions.",
+    "No Bori/Leo recruited: nose/tag/family unavailable in this roster; historical observations elsewhere unchanged.",
+    "One ammo crafting and six earned perks used, but no repaired radio, manual equipped crew gear, standalone combat, Bori followup or completed side quest.",
+    "Three convoy choices are actual tactical story sequence, not standalone combat.",
+    "No new-art wiring in cycle23; gallery/browser crop still pending."
+  ],
+  "naturalConfirmedBreakdown": {
+    "copy": 1,
+    "image": 1
+  },
+  "postReviewRepair": {
+    "cycle": 24,
+    "copy": "repair24/copy-delta.json",
+    "art": "../visual-survival/provenance.json",
+    "doesNotAlterFrozenJourney": true
+  }
+}

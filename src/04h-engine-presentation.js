@@ -2,6 +2,34 @@
    Authored definitions own actions. Saves contain no executable effects or HTML. */
 G.presentationEvent = id=>[...D.events,...D.roadCheckInEvents,...D.seoulStops,D.seoulOpenEvent,D.gateEvent,
   D.bridgeEvent,D.onboardingMission].find(event=>event&&event.id===id)||null;
+// Only route openings opt in here. Main evidence has its own recovery owner;
+// paid results and ongoing rescue steps must keep their original receipt.
+G.deferRouteOpening = id=>{
+  if(!S||!Object.values(D.routePlans||{}).some(route=>route.opening===id)) return false;
+  const location=G.eventLocation(G.presentationEvent(id));
+  if(!location||location.kind!=='node'||!S.driving&&location.nodes.includes(S.at)) return false;
+  S._storyQueue=S._storyQueue||[];
+  if(!S._storyQueue.includes(id)) S._storyQueue.push(id);
+  return true;
+};
+// An unanswered old skyline/sign entry is not proof that Seoul was near.
+// Return it to the ordinary pool in range; keep paid history and arrival apart.
+G.deferSkylineOpening = id=>{
+  if(!S||!['vg_seoulline','ev_near_seoul_sign'].includes(id)) return false;
+  const saved=S.pendingPresentation;
+  if(saved?.eventId===id&&saved.phase==='result') return false;
+  if(G.remainKm()<=G.presentationEvent(id).maxRemain) return false;
+  // The sign has no completion flag: only its matching unpaid receipt proves
+  // that the used marker came from an interrupted entry, not a paid old choice.
+  const unpaidSign=id==='ev_near_seoul_sign'&&saved?.eventId===id
+    &&['event','transition'].includes(saved.phase);
+  if(id==='vg_seoulline'&&!S.flags.seoul_seen||unpaidSign)
+    S.used=S.used.filter(used=>used!==id);
+  if(saved?.eventId===id) S.pendingPresentation=null;
+  if(S._chain===id) S._chain=null;
+  G.save();
+  return true;
+};
 G.presentationCopy = value=>JSON.parse(JSON.stringify(value));
 G.presentationText = value=>typeof value==='string'?value.slice(0,40000):'';
 // Reading state belongs to the existing gameplay receipt, including the two
@@ -30,7 +58,7 @@ G.presentationView = view=>{
         if(typeof turn[key]==='string') row[key]=turn[key].slice(0,160);
       if(turn.speakerUncertain)row.speakerUncertain=true;
       if(typeof turn.scene==='string'&&D.scenes?.[turn.scene])row.scene=turn.scene;
-      if(['current','memory','reported'].includes(turn.timeKind))row.timeKind=turn.timeKind;
+      if(['current','memory','reported','epilogue'].includes(turn.timeKind))row.timeKind=turn.timeKind;
       if(typeof turn.timeLabel==='string')row.timeLabel=turn.timeLabel.slice(0,160);
       return row;
     });
@@ -66,6 +94,10 @@ G.validatePresentation = value=>{
     const ci=value.choiceIndex,oi=value.outcomeIndex;
     if(typeof value.text!=='string'||!Number.isInteger(ci)||!Number.isInteger(oi)||!event.choices[ci]?.out?.[oi]) return null;
     Object.assign(row,{choiceIndex:ci,outcomeIndex:oi});
+    // Authored beats are committed with payment, before the UI's first frame.
+    // Keep this separate from view: it must not restore empty layout/sceneKeys.
+    const authoredView=G.presentationView(value.authoredView);
+    if(authoredView)row.authoredView=authoredView;
     row.chips=(Array.isArray(value.chips)?value.chips:[]).slice(0,80)
       .filter(chip=>chip&&typeof chip.t==='string').map(chip=>({t:chip.t.slice(0,1000),
         c:['item','plus','minus'].includes(chip.c)?chip.c:'item'}));
@@ -119,7 +151,11 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
   if(saved?.eventId===event.id&&saved.phase==='result'){
     if(saved.choiceIndex!==ci) return {ok:false,why:'이미 다른 선택의 결과가 저장됐다'};
     const authored=choice.out[saved.outcomeIndex];
-    return {ok:true,applied:false,out:{...authored,text:saved.text},chips:saved.chips,
+    const frozen=(saved.reading?.phase==='outcome'&&G.presentationView(saved.reading.view))
+      ||G.presentationView(saved.view)||G.presentationView(saved.authoredView);
+    return {ok:true,applied:false,out:{...authored,text:saved.text,
+      turns:frozen?.turns||null,frozenTextOnly:!frozen,
+      readingRecord:frozen?frozen.readingRecord:authored.readingRecord?saved.text:undefined},chips:saved.chips,
       combatState:saved.combatState};
   }
   if(event.roadCheckIn&&(!S.driving||S.driving.checkIn||!S.party.includes(event.roadCheckIn)||saved?.eventId!==event.id))
@@ -136,6 +172,7 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
     const own=event.campConversation?G.resolveCampChoice(event.id,choice.id)
       :event.openingStep?G.resolveOpeningChoice(event.id,choice.id):null;
     if(own&&!own.ok) return own;
+    if(S.ended) return own;
     if(!own||own.applied){
       const visible=event.choices.filter(c=>G.reqVisible(G.choiceReq(c))).length;
       const available=event.choices.filter(c=>G.reqVisible(G.choiceReq(c))&&G.reqOk(G.choiceReq(c)).ok).length;
@@ -159,6 +196,9 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
       // happen once now; only the terminal screen waits for its Continue.
       deferJourneyEnd:event.id==='seoul_session_reset'&&!!out.fx?.endJourney
     });
+    // A fatal time boundary already owns the ending. No result callback, level
+    // reward, memory or chain may modify that archived state afterwards.
+    if(S.ended) return {ok:true,applied:true,out:{...out,text:G.presentationText(typeof out.text==='function'?out.text(S):out.text)},chips};
     if(!own&&event.needsComp) G.checkLevel(event.needsComp,{story:true});
     if(!own&&!entry) entry=G.rememberCombatChoice(event,choice,meta);
     if(!own) chips.push(...G.afterChoice(event,choice,out));
@@ -168,9 +208,19 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
       combatState.history=[...(before.history||[]),...(entry?[entry]:[])];
     }
     const text=G.presentationText(typeof out.text==='function'?out.text(S):out.text);
+    let authoredView=null,authoredFailed=false;
+    if(!own&&out.turns)try{
+      const authoredTurns=typeof out.turns==='function'?out.turns(S):out.turns;
+      authoredView=G.presentationView({turns:authoredTurns,
+        readingRecord:typeof out.readingRecord==='function'?out.readingRecord(S):out.readingRecord,
+        readingRecordLabel:out.readingRecordLabel});
+    }catch(error){
+      // Cosmetic authoring failures cannot leave already-paid effects unlocked.
+      authoredFailed=true;console.warn('Result reading fallback:',event.id);
+    }
     if(!own&&!S.ended){
       S.pendingPresentation=G.validatePresentation({version:1,phase:'result',eventId:event.id,
-        choiceIndex:ci,outcomeIndex:out.presentationOutcomeIndex??choice.out.indexOf(out),text,chips,combatState});
+        choiceIndex:ci,outcomeIndex:out.presentationOutcomeIndex??choice.out.indexOf(out),text,chips,combatState,authoredView});
     }
     if(!S.ended&&(!own||own.applied)){
       G.questLedgerSync();
@@ -180,7 +230,9 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
         updates:[...new Map(G.questLedgerUpdates().map(row=>[row.id,row])).values()]});
       if(!options.deferQuestRead) G.clearQuestLedgerUpdates();
     }
-    return {ok:true,applied:!own||own.applied,out:{...out,text},chips,combatState};
+    return {ok:true,applied:!own||own.applied,out:{...out,text,...(authoredView?{
+      turns:authoredView.turns,readingRecord:authoredView.readingRecord}
+      :authoredFailed?{turns:null,readingRecord:undefined,frozenTextOnly:true}: {})},chips,combatState};
   }finally{ G.presentationApplying=false; G.save(); }
 };
 /* Follow-ups with an authored morning/night need real time between scenes.
@@ -215,7 +267,8 @@ G.queuePresentation = id=>{
     G.endGame(G.arrivalEndingKind());
     return null;
   }
-  const next=G.resolveMainEvidenceChain(outcome?.fx?.chain||id);
+  const requested=outcome?.fx?.chain||id;
+  const next=G.deferRouteOpening(requested)||G.deferSkylineOpening(requested)?null:G.resolveMainEvidenceChain(requested);
   S._chain=null;
   if(G.deferTimedStory(next)){
     S.pendingPresentation=null;G.save();return null;
@@ -226,6 +279,9 @@ G.queuePresentation = id=>{
 G.presentTransition = ()=>{
   const row=S&&S.pendingPresentation;
   if(!row||row.phase!=='transition'||S.ended) return false;
+  if(G.deferRouteOpening(row.eventId)||G.deferSkylineOpening(row.eventId)){
+    S.pendingPresentation=null;G.save();return false;
+  }
   const next=G.resolveMainEvidenceChain(row.eventId);
   if(!next){ S.pendingPresentation=null; G.save(); return false; }
   if(G.deferTimedStory(next)){
@@ -261,7 +317,15 @@ G.unfinishedSeoulEvent = ()=>{
 };
 G.resumePresentation = ()=>{
   if(!S||S.ended) return false;
-  const row=S.pendingPresentation=G.validatePresentation(S.pendingPresentation);
+  let row=S.pendingPresentation=G.validatePresentation(S.pendingPresentation);
+  // Old code could save the stale hunger crisis's unanswered entry as well as
+  // its queue. Only discard that unpaid entry/transition after real recovery.
+  // A paid result remains the player's historical receipt, including its cursor.
+  if(row?.eventId==='crisis_hungry'&&row.phase!=='result'&&!G.crisisStillNeeded(row.eventId)){
+    row=S.pendingPresentation=null;
+    if(S._crisis==='crisis_hungry') S._crisis=null;
+    G.save();
+  }
   const finalResult=row?.eventId==='seoul_session_reset'&&row.phase==='result';
   if(S.flags.story_done&&!finalResult){ G.endGame('story_done'); return true; }
   if(row){
@@ -273,7 +337,7 @@ G.resumePresentation = ()=>{
     }
     // Completed results may be shown away from their original site, but an
     // unanswered geographical encounter cannot move with a corrupt old save.
-    if(row.phase==='event'&&!G.mainEvidenceLocationReady(row.eventId)){
+    if(row.phase==='event'&&(G.deferRouteOpening(row.eventId)||G.deferSkylineOpening(row.eventId)||!G.mainEvidenceLocationReady(row.eventId))){
       S.pendingPresentation=null; G.save();
     }else{ UI.showEvent(G.presentationEvent(row.eventId)); return true; }
   }

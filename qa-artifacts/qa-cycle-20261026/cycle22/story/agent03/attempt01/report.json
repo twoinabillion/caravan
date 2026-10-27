@@ -1,0 +1,293 @@
+{
+  "attempt": "attempt01",
+  "fresh": true,
+  "sameSeedRetry": false,
+  "seed": 282003,
+  "status": "ended",
+  "ending": "thirst",
+  "method": null,
+  "storyDone": false,
+  "records": 634,
+  "choices": 110,
+  "uniqueEvents": 87,
+  "uniquePairs": 88,
+  "pairsNewAgainstAll1to21": [
+    "camp_8_parkss:0",
+    "ev_flooded_road:0",
+    "ev_parkss_past:1",
+    "ev_reservoir_find:0",
+    "ev_waterfall:0",
+    "roadbeat_300_plate:1",
+    "trace_worldcup_chart:0"
+  ],
+  "finalState": {
+    "at": null,
+    "day": 20,
+    "min": 0,
+    "km": 1227.7,
+    "driving": {
+      "from": "tunnelbook",
+      "to": "muju",
+      "gone": 0.6814166666666667,
+      "dist": 9
+    },
+    "fuel": 9.613189600000002,
+    "water": 0,
+    "food": 0,
+    "scrap": 1,
+    "van": 76.57736900000178,
+    "fatigue": 100,
+    "party": [
+      "parkss"
+    ],
+    "items": {
+      "부품": 9,
+      "의약품": 0,
+      "탄약": 0,
+      "남산행 편지": 1,
+      "부모님의 검증키": 1
+    },
+    "weather": "storm",
+    "campNight": 15,
+    "campPlan": {},
+    "campParticipants": [
+      "parkss"
+    ],
+    "campConversation": null,
+    "crew": {
+      "parkss": {
+        "name": "박 선생",
+        "mood": 0,
+        "bond": 41,
+        "injury": null
+      }
+    },
+    "up": {},
+    "sideQuest": {
+      "kind": "deliver",
+      "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+      "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+      "from": "muju",
+      "to": "gwangju",
+      "due": 102,
+      "noExpiry": true,
+      "need": null,
+      "ready": false,
+      "navigation": {
+        "key": "story_relay_1",
+        "kind": "local",
+        "target": "gwangju",
+        "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "action": "광주 대인시장까지 이동한다"
+      }
+    },
+    "boardOffers": [],
+    "boardAt": null,
+    "boardDay": null,
+    "ended": true,
+    "endKind": "thirst",
+    "main": {
+      "id": "main_namsan",
+      "kind": "main",
+      "status": "active",
+      "tracked": true,
+      "recovery": "천안 삼거리에서 ‘주변 탐색’을 눌러 「명령과 확인 사이의 빈 줄」 기록을 확인한다 (열람 준비 30분)",
+      "act": "4장",
+      "chapterId": "command",
+      "title": "증언과 명령 원본을 대조한다",
+      "phase": "남산 진입 준비",
+      "why": "확인한 기록과 실제 응답을 모아 사람의 판단을 되돌린다.",
+      "next": "천안 삼거리에서 ‘주변 탐색’을 눌러 「명령과 확인 사이의 빈 줄」 기록을 확인한다 (열람 준비 30분)",
+      "eyebrow": "메인 스토리 · 4장",
+      "steps": [
+        {
+          "id": "family",
+          "label": "도윤 가족의 이송표를 확인한다",
+          "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+          "state": "done"
+        },
+        {
+          "id": "appeal",
+          "label": "부산에서 이송 명령에 이의를 제기한다",
+          "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+          "state": "done"
+        },
+        {
+          "id": "module",
+          "label": "엄마가 남긴 장치를 확인한다",
+          "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+          "state": "done"
+        },
+        {
+          "id": "trace",
+          "label": "이송 명령의 첫 발신 기록을 찾는다",
+          "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+          "state": "done"
+        },
+        {
+          "id": "parents_split",
+          "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+          "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+          "state": "done"
+        },
+        {
+          "id": "parents_work",
+          "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+          "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+          "state": "done"
+        },
+        {
+          "id": "key",
+          "label": "부모님의 인간 확인 검증키를 꺼낸다",
+          "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+          "state": "done"
+        },
+        {
+          "id": "witness",
+          "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+          "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+          "state": "done"
+        },
+        {
+          "id": "command",
+          "label": "증언과 명령 원본을 대조한다",
+          "detail": "천안 삼거리에서 ‘주변 탐색’을 눌러 「명령과 확인 사이의 빈 줄」 기록을 확인한다 (열람 준비 30분)",
+          "state": "current"
+        },
+        {
+          "id": "father",
+          "label": "아빠의 마지막 남산 기록을 확인한다",
+          "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+          "state": "upcoming"
+        },
+        {
+          "id": "mother",
+          "label": "엄마의 행방을 찾는다",
+          "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+          "state": "upcoming"
+        },
+        {
+          "id": "relay",
+          "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+          "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+          "state": "upcoming"
+        },
+        {
+          "id": "records",
+          "label": "남산에 가져갈 실물 기록을 보관한다",
+          "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+          "state": "done"
+        }
+      ],
+      "progress": {
+        "have": 9,
+        "need": 13,
+        "label": "9/13"
+      }
+    },
+    "navigation": {
+      "key": "main_command",
+      "kind": "main",
+      "target": "cheonan",
+      "title": "증언과 명령 원본을 대조한다",
+      "action": "천안 삼거리에서 ‘주변 탐색’을 눌러 「명령과 확인 사이의 빈 줄」 기록을 확인한다 (열람 준비 30분)"
+    }
+  },
+  "review": {
+    "choiceCount": 110,
+    "rawEntryResultCharacters": 30062,
+    "speechCalls": 107,
+    "npcMenus": 12,
+    "notes": 87,
+    "fullTuplesSame": 90,
+    "fullTuplesDifferent": 20,
+    "resultStringsSame": 94,
+    "resultStringsDifferent": 16
+  },
+  "reload": {
+    "entries": 110,
+    "paid": 109,
+    "allStatesEqual": true,
+    "allReadersEqual": true,
+    "reapplied": 0
+  },
+  "chat": {
+    "observedChatSequences": 5,
+    "sameDayDuplicateSequences": 0,
+    "matches": [
+      {
+        "n": 276,
+        "id": "daily-me-parkss-patch",
+        "day": 7,
+        "min": 434.4,
+        "lines": 8,
+        "once": false
+      },
+      {
+        "n": 411,
+        "id": "daily-me-parkss-patch",
+        "day": 10,
+        "min": 941.9,
+        "lines": 8,
+        "once": false
+      },
+      {
+        "n": 434,
+        "id": "daily-me-parkss-patch",
+        "day": 11,
+        "min": 438.1,
+        "lines": 8,
+        "once": false
+      },
+      {
+        "n": 484,
+        "id": "daily-me-parkss-patch",
+        "day": 12,
+        "min": 1290.5,
+        "lines": 8,
+        "once": false
+      },
+      {
+        "n": 529,
+        "id": "daily-me-parkss-patch",
+        "day": 15,
+        "min": 558.1,
+        "lines": 8,
+        "once": false
+      }
+    ],
+    "savedStamps": {
+      "daily:daily-me-parkss-patch": {
+        "day": 15,
+        "km": 1102
+      }
+    },
+    "note": "Actual UI.playChat sequences matched source D.chats.lines; independent ambient/banter are not grouped as crew chats. Same chat on a later day is intentionally permitted. No forced pickChat call during natural run."
+  },
+  "publicActionsByType": {
+    "new-game": 1,
+    "unpaid-entry-reload": 110,
+    "choice": 110,
+    "paid-result-reload": 109,
+    "explore": 16,
+    "travel": 75,
+    "drive": 120,
+    "trade": 30,
+    "work": 5,
+    "camp": 15,
+    "meet-recruit": 1,
+    "board-open": 2,
+    "npc-rumor": 6,
+    "accept-quest": 1,
+    "recruit-step": 3,
+    "camp-talk": 5,
+    "accept-companion": 1,
+    "talk": 7,
+    "earned-perk": 2,
+    "walkfuel": 14,
+    "field-repair": 1
+  },
+  "fullTextReviewComplete": true,
+  "reviewIncludesSameText": true,
+  "sourceReviewEnd": "2026-10-26T09:46:01.161328+00:00"
+}

@@ -1,0 +1,483 @@
+{
+  "at": "2026-10-26T12:06:47.563Z",
+  "scope": "26 time-variant image preparation,5newfiles only. No source mapping or new journey. Old files preserved.",
+  "contract": "assets/visual-contract.json",
+  "contractSha256": "5aec3e1cee8432c884f1d35dbdddc411a312262b71a840a6ebd59edb83cbcc22",
+  "assets": [
+    {
+      "key": "comp-talk-kangwoo-camp-day-v1",
+      "event": "talk_kw_16",
+      "format": "character",
+      "timeVariant": "day",
+      "generationTool": "built-in image_gen.imagegen",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-35f1daf9-56b1-4f45-924d-5a0981ac9c39.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/comp-talk-kangwoo-camp-day-v1-master.png",
+      "masterSha256": "30eaf880453eef97b4b41fb9080e3a51db989185e8f2253e398efb97947a69b4",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/comp-talk-kangwoo-camp-day-v1.webp",
+      "deliverySha256": "af9dbe1fc28a7ceee9e9dd19fa1f23334229431e970eba2acb57ed98de74aed4",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 85744,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/comp-talk-kangwoo-camp-day-v1-draft01.png",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-35f1daf9-56b1-4f45-924d-5a0981ac9c39.png",
+      "initialMasterSha256": "30eaf880453eef97b4b41fb9080e3a51db989185e8f2253e398efb97947a69b4",
+      "regenerated": false,
+      "regenerationReason": null,
+      "oldAsset": "assets/scenes/comp-talk-kangwoo-camp-v1.jpg",
+      "oldAssetSha256": "701c91f5f6fb4b10d1f589507d8909ec76443528c582ab1438deecebcde5e003",
+      "oldAssetUnchanged": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "role": "canonical-style",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        },
+        {
+          "path": "assets/portraits/kangwoo.png",
+          "role": "character-portrait",
+          "sha256": "d0f5658d87b6d386f8a77f0c78e7e2a5d4e734e1ab016e6903f4c1abe43dc409"
+        }
+      ],
+      "requestFiles": [
+        "comp-talk-kangwoo-camp-day-v1-request.json"
+      ],
+      "promptHashes": [
+        "065ab1f5758077af64d1433a4dfd8a78b09e8875242bc38082a52f03fa3ac68a"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/story/time-scene-design26/source-evidence.json",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "강우 한 명, 올리브색 겉옷, 내민 건빵 봉지와 흰 별사탕 두 개. 부드러운 낮빛, 차량 외관과 다른 동료 없음. 먹거나 돌려주는 결과를 선행하지 않음.",
+        "local360And480Viewed": true,
+        "localSizeReviewLimit": null,
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false,
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "comp-talk-parkss-camp-day-v1",
+      "event": "talk_pss_18",
+      "format": "character",
+      "timeVariant": "day",
+      "generationTool": "built-in image_gen.imagegen",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-0d11e7ba-1f2e-468d-a974-a01984c23d1f.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/comp-talk-parkss-camp-day-v1-master.png",
+      "masterSha256": "6ba9713f6930d044205e677ef34d00420b29257ba46449bafec00c871fa2a615",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/comp-talk-parkss-camp-day-v1.webp",
+      "deliverySha256": "9b9dfd3a1cb4d6b53cedb65e71fde42a7e340fc9cd477e1687e0a703e76f693c",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 101942,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/comp-talk-parkss-camp-day-v1-draft01.png",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-bafd3c0c-72dd-454c-9045-8462f3e2757f.png",
+      "initialMasterSha256": "acccb48aeccd4f0f8d256fc70bef5c2268c5b9254af013af0d2b2e5af063f8cc",
+      "regenerated": true,
+      "regenerationReason": "Initial day portrait imported river/bridge/city background. Regenerated with same mandatory canonical4+own portrait5 references and opaque tarp background.",
+      "oldAsset": "assets/scenes/comp-talk-parkss-camp-v1.jpg",
+      "oldAssetSha256": "6dac78422f40e72a17fe3f517be4f2e2d02b1294e917ecb656606d6a23d0ae5c",
+      "oldAssetUnchanged": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "role": "canonical-style",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        },
+        {
+          "path": "assets/portraits/parkss.png",
+          "role": "character-portrait",
+          "sha256": "ca672c6cf0638f457e88f4db0f063d44e2f567fe7573e12c44ddef40d3c4faed"
+        }
+      ],
+      "requestFiles": [
+        "comp-talk-parkss-camp-day-v1-request.json",
+        "comp-talk-parkss-camp-day-v1-regenerate02-request.json"
+      ],
+      "promptHashes": [
+        "4589ca583ef56145e5eae38264d1de915d84b168ded0b8209af968bb4e60b23e",
+        "d89f0523d705c577959515eecab77e387b25878d361640bb81d424cc6d6160aa"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/story/time-scene-design26/source-evidence.json",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "박 선생 한 명, 안경과 회색 머리, 읽을 수 없는 메모와 펜·왕진가방. 최종본은 불투명 천막 배경. 이름을 적는 결과나 메모의 답을 미리 보여주지 않음.",
+        "local360And480Viewed": true,
+        "localSizeReviewLimit": null,
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false,
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "combat-walker-watch-night-v1",
+      "event": "perimeter_first",
+      "format": "action",
+      "timeVariant": "night",
+      "generationTool": "built-in image_gen.imagegen",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-1d87dc8d-3356-44c5-90b0-1e5eebc8c729.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/combat-walker-watch-night-v1-master.png",
+      "masterSha256": "29d7085320d70c6d3d9111b49246382146825e9ec64b56299fa191396d40c75f",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/combat-walker-watch-night-v1.webp",
+      "deliverySha256": "27c9c946aa974ed76a908b17d871be5884a36bb3622b85882143eb31ad07b9e0",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 97732,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/combat-walker-watch-night-v1-draft01.png",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-1d87dc8d-3356-44c5-90b0-1e5eebc8c729.png",
+      "initialMasterSha256": "29d7085320d70c6d3d9111b49246382146825e9ec64b56299fa191396d40c75f",
+      "regenerated": false,
+      "regenerationReason": null,
+      "oldAsset": "assets/scenes/combat-walker-watch-v1.webp",
+      "oldAssetSha256": "3a71631a9986888378e1467984bee5dee47b087a6c79ddf20960ee7f9b54dbbb",
+      "oldAssetUnchanged": true,
+      "references": [
+        {
+          "path": "assets/scenes/combat-walker-watch-v1.webp",
+          "role": "edit-target",
+          "sha256": "3a71631a9986888378e1467984bee5dee47b087a6c79ddf20960ee7f9b54dbbb"
+        },
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "role": "canonical-style",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "requestFiles": [
+        "combat-walker-watch-night-v1-request.json"
+      ],
+      "promptHashes": [
+        "aba641ed406ca8ff936e67f64b605aaf41455f1cb90b60ca746adf137381efc5"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/story/time-scene-design26/source-evidence.json",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "기존 네 다리 회색 로봇과 산업 도로 구도 유지. 흐린 밤 하늘과 제한된 인공광. 공격·폭발·승리 결과를 추가하지 않음.",
+        "local360And480Viewed": false,
+        "localSizeReviewLimit": "Preview files exist; batch image output was truncated. These three size reviews are not counted as completed.",
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false,
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "event-crisis-exhaustion-night-v1",
+      "event": "crisis_drowsy",
+      "format": "detail",
+      "timeVariant": "night",
+      "generationTool": "built-in image_gen.imagegen",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-f3f908d1-8c12-4569-9e8c-d8812a108372.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/event-crisis-exhaustion-night-v1-master.png",
+      "masterSha256": "1d9350d054ed63c1d6ef2a90a27ba2510def7d6255f27b94b685c2565ec33d1d",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/event-crisis-exhaustion-night-v1.webp",
+      "deliverySha256": "7728d9794817c7eabd92e1a2ae10e4cd7c3f8a5f570ba732347f2bb1fefa9117",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 65058,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/event-crisis-exhaustion-night-v1-draft01.png",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-f3f908d1-8c12-4569-9e8c-d8812a108372.png",
+      "initialMasterSha256": "1d9350d054ed63c1d6ef2a90a27ba2510def7d6255f27b94b685c2565ec33d1d",
+      "regenerated": false,
+      "regenerationReason": null,
+      "oldAsset": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+      "oldAssetSha256": "84880aa6a20695c1e81499c9495cdecf25a13f2dacd3183b202f854e8036d70e",
+      "oldAssetUnchanged": true,
+      "references": [
+        {
+          "path": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+          "role": "edit-target",
+          "sha256": "84880aa6a20695c1e81499c9495cdecf25a13f2dacd3183b202f854e8036d70e"
+        },
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "role": "canonical-style",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "requestFiles": [
+        "event-crisis-exhaustion-night-v1-request.json"
+      ],
+      "promptHashes": [
+        "ad58c9348084bc5a8dc0bec597f0f66ce98a4c360c2f0669bf7ecb635003f27d"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/story/time-scene-design26/source-evidence.json",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "운전석의 핸들·장갑 낀 손·계기판·어두운 전방 도로와 전조등. 얼굴과 수면·세수·사고 결과 없음.",
+        "local360And480Viewed": false,
+        "localSizeReviewLimit": "Preview files exist; batch image output was truncated. These three size reviews are not counted as completed.",
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false,
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "settlement-road-echo-night-v1",
+      "event": "settlement_road_echo",
+      "format": "place",
+      "timeVariant": "night",
+      "generationTool": "built-in image_gen.imagegen",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-48c517cf-a50d-4fac-aeed-e7fa47e07551.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/settlement-road-echo-night-v1-master.png",
+      "masterSha256": "2005f06f3e9082d58a985752b3448cdf5551376d50fdb763896dc04eab8522ff",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/settlement-road-echo-night-v1.webp",
+      "deliverySha256": "095f1b8ca1d95fcc6d1966b08acd4c361e34bc49d2a58424e91b5fa003b6111c",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 113244,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/masters/settlement-road-echo-night-v1-draft01.png",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-48c517cf-a50d-4fac-aeed-e7fa47e07551.png",
+      "initialMasterSha256": "2005f06f3e9082d58a985752b3448cdf5551376d50fdb763896dc04eab8522ff",
+      "regenerated": false,
+      "regenerationReason": null,
+      "oldAsset": "assets/scenes/settlement-road-echo.webp",
+      "oldAssetSha256": "d0828ffa1397a07f561ea0d674dfbe1e56307105dc6091820e239b3047d7d116",
+      "oldAssetUnchanged": true,
+      "references": [
+        {
+          "path": "assets/scenes/settlement-road-echo.webp",
+          "role": "edit-target",
+          "sha256": "d0828ffa1397a07f561ea0d674dfbe1e56307105dc6091820e239b3047d7d116"
+        },
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "role": "canonical-style",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "role": "canonical-style",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "requestFiles": [
+        "settlement-road-echo-night-v1-request.json"
+      ],
+      "promptHashes": [
+        "085be89554694ac3a4e231fc7217047f58e177714b315df918b66b09a9054013"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/story/time-scene-design26/source-evidence.json",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "기존 갓길·차량·짐수레·익명 주민의 위치를 유지한 야간 변형. 미영입 동료나 새로운 완료 보상 없음.",
+        "local360And480Viewed": false,
+        "localSizeReviewLimit": "Preview files exist; batch image output was truncated. These three size reviews are not counted as completed.",
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false,
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    }
+  ],
+  "checkpointAt": "2026-10-26T12:12:56.341321+00:00",
+  "status": "user_requested_stop; generated_and_exported_only",
+  "additionalGenerationAfterStop": 0
+}

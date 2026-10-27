@@ -1,0 +1,55 @@
+[
+  {
+    "kind": "narration",
+    "text": "은수가 유리 빌딩들을 올려다봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "…이거 관제예요. 창문마다 센서가 있어요. 몇 명인지, 뭘 실었는지까지—"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "확실해요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "…아뇨. 창문 반사가 일정한 건 확실하고, 센서라는 건 제 짐작이에요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 잠깐 멈췄다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "근데 짐작이 맞을 거예요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "공격하려는 거예요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "아뇨. 길 잃을 틈도 안 주려는 거예요."
+  },
+  {
+    "kind": "narration",
+    "text": "때맞춰 다음 신호등이 초록으로 바뀌었다. 은수가 헤드폰을 벗었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "우리가 운전하는 것 같죠? 지금은 저쪽이 운전하고 있어요."
+  }
+]

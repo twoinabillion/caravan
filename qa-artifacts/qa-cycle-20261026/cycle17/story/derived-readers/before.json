@@ -1,0 +1,701 @@
+{
+  "events": {
+    "comp_diary_read": {
+      "id": "comp_diary_read",
+      "type": "동행",
+      "w": 5,
+      "minParty": 2,
+      "night": true,
+      "title": "일지 낭독의 밤",
+      "text": "모닥불 앞. 누가 여행 일지를 꺼내 들었다.\n\n\"DAY 1부터 읽어볼까.\"\n\n우리가 쓴 우리 이야기를, 우리가 듣는 밤.",
+      "choices": [
+        {
+          "label": "낭독회를 연다",
+          "out": [
+            {
+              "p": 1,
+              "text": "초반 기록에서 다들 웃었다. \"이땐 물 10통이 많은 줄 알았지.\"\n\n\"거기 내 얘기 잘못 적혔는데.\" \"어디?\" \"DAY 3. 나 그날 안 졸았어.\" \"졸았잖아.\" \"…적을 정도는 아니었지.\"\n\n중반 기록에서 조용해졌고, 어떤 이름들에서 오래 멈췄다. 낭독하던 사람이 한 줄을 건너뛰었는데 아무도 다시 읽어달라고 하지 않았다.\n\n낭독이 끝나고 누가 말했다. \"우리 꽤 멀리 왔네.\"\n\n킬로미터 얘기가 아니라는 걸 다들 알았다.",
+              "fx": {
+                "time": 40,
+                "moodAll": 5,
+                "note": {
+                  "type": "사건",
+                  "title": "낭독의 밤",
+                  "body": "우리가 쓴 우리 이야기. \"우리 꽤 멀리 왔네\" — 킬로미터 얘기가 아니었다."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "up_beehive_swarm": {
+      "id": "up_beehive_swarm",
+      "type": "동행",
+      "w": 8,
+      "once": true,
+      "needUp": "beehive",
+      "title": "분봉 소동",
+      "text": "주행 중 지붕에서 웅웅 소리가 커졌다. 정차하고 올려다보니— 벌통 옆에 벌 수백 마리가 공처럼 뭉쳐 있다.\n\n분봉이다. 여왕벌이 새 살림을 나려는 것이다. 달구지 지붕에서.",
+      "choices": [
+        {
+          "label": "조심스럽게 새 통을 만들어준다",
+          "out": [
+            {
+              "p": 2,
+              "text": "박스와 판자로 급조한 제2벌통에 벌 뭉치를 조심조심 옮겼다. 쏘인 사람 1명(운 나쁜 사람), 성공.\n\n달구지는 이제 2가구 벌 아파트다. 꿀 생산량 증가가 기대된다. 옆 마을 양봉가가 알면 기절할 성장세다.",
+              "fx": {
+                "time": 60,
+                "fatigue": 5,
+                "food": 2,
+                "moodAll": 4,
+                "note": {
+                  "type": "사건",
+                  "title": "2가구 벌 아파트",
+                  "body": "지붕 분봉 성공. 쏘임 1건. 달구지 부동산 가치 상승."
+                }
+              }
+            },
+            {
+              "p": 1,
+              "text": "옮기다가 여왕벌이 마음을 바꿨는지, 벌 뭉치가 통째로 날아올라 가로수로 이사 갔다.\n\n\"…전세 뺐네.\" 남은 벌통이라도 잘 달래기로 했다. 꿀은 원래 벌 마음이다.",
+              "fx": {
+                "time": 40,
+                "moodAll": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "comp_van_pride": {
+      "id": "comp_van_pride",
+      "type": "동행",
+      "w": 6,
+      "needFlag": "van_parts_named",
+      "minParty": 2,
+      "title": "달구지 자랑 대회",
+      "text": "정비를 마친 기념으로 누가 물었다. \"달구지에서 제일 좋은 부분이 어디게?\"\n\n전원이 동시에 다른 답을 말했다. 대회가 필요해졌다.",
+      "choices": [
+        {
+          "label": "개최한다",
+          "out": [
+            {
+              "p": 1,
+              "text": "후보: 조수석(수첩 자리라서), 지붕(하늘이 있어서), 백미러(지나온 게 보여서), 경적(고함씨라서), 엔진(할아버지라서).\n\n투표 결과는 무효 처리됐다. 전원이 자기 후보에 투표했기 때문이다.\n\n\"결론: 다 좋다.\" 싱거운 결론에 다들 만족했다. 자랑 대회는 원래 결론이 싱거워야 한다.",
+              "fx": {
+                "time": 15,
+                "moodAll": 5,
+                "note": {
+                  "type": "사건",
+                  "title": "제1회 달구지 자랑 대회",
+                  "body": "전원 자기 후보 투표로 무효. 결론: 다 좋다.",
+                  "links": [
+                    "달구지"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ev_group_feast": {
+      "id": "ev_group_feast",
+      "type": "동행",
+      "w": 7,
+      "once": true,
+      "minParty": 6,
+      "region": [
+        "mid",
+        "north"
+      ],
+      "night": true,
+      "title": "오랜만의 만찬",
+      "text": "모처럼 물자가 넉넉한 밤. 그동안 아껴둔 것을 다 꺼냈다. 오늘은 배불리 먹기로 했다.\n\n박 선생이 국을 끓이고, 은수가 상을 차리고, 재이가 남은 양을 달고, 레오가 노래를 흥얼거린다. 민지는 못 이기는 척 웃고, 강우는 말없이 장작을 팬다.\n\n모닥불 앞에 여섯 동료와 운전자가 둘러앉았다. 이 순간이, 우리가 지키려는 그것이다.",
+      "choices": [
+        {
+          "label": "다 같이 배불리 먹고 웃는다",
+          "out": [
+            {
+              "p": 1,
+              "text": "오랜만에 배가 터지게 먹었다. 서로의 접시에 반찬을 얹어주고, 농담을 주고받고, 배꼽 잡고 웃었다.\n\n국이 짜다는 쪽과 딱 맞다는 쪽이 갈려서 결국 물을 더 부었다. 그러고도 짜다고 했다.\n\n\"…이런 밤이 계속되면 좋겠는데. 계속되진 않겠죠.\" 은수 말에 잠깐 조용해졌다.\n\n강우가 한 박자 늦게 잔을 들었다. \"그러려고 가는 거잖아. 서울로.\" 다들 잔을 부딪쳤다.",
+              "fx": {
+                "food": -4,
+                "moodAll": 10,
+                "fatigue": -6,
+                "mood": {
+                  "leo": 3
+                },
+                "time": 60,
+                "note": {
+                  "type": "사건",
+                  "title": "여섯의 만찬",
+                  "body": "물자 넉넉한 밤, 아껴둔 걸 다 꺼내 배불리 먹었다. \"이런 밤을 지키려 서울로 간다.\""
+                }
+              },
+              "turnSpeakers": [
+                "eunsu",
+                "kangwoo"
+              ]
+            }
+          ]
+        },
+        {
+          "label": "먼저 간 사람들을 위해 한 술 뜬다",
+          "out": [
+            {
+              "p": 1,
+              "text": "먹기 전에, 각자 먼저 떠난 이들을 위해 밥 한 술을 덜어 불가에 놓았다.\n\n누가 먼저 놓을지 서로 눈치를 보다가, 결국 다 같이 놓았다.\n\n\"…같이 먹어요.\" 잠깐의 묵념 뒤, 남은 이들이 그들 몫까지 든든히 먹었다.\n\n밥이 식기 전에 다들 다시 숟가락을 들었다.",
+              "fx": {
+                "food": -3,
+                "moodAll": 7,
+                "fatigue": -5,
+                "time": 50
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "up_armor_argument": {
+      "id": "up_armor_argument",
+      "type": "동행",
+      "w": 20,
+      "once": true,
+      "needUp": "armor",
+      "minParty": 2,
+      "title": "두꺼워진 문",
+      "text": "장갑판을 단 뒤 문 닫는 소리가 달라졌다. 묵직하고 안전했다. 동시에 바깥 소리도 덜 들렸다.\n\n\"우리가 안전해진 건지, 세상에서 멀어진 건지 모르겠네.\"",
+      "choices": [
+        {
+          "label": "창문만은 가리지 않는다",
+          "out": [
+            {
+              "p": 1,
+              "text": "사격구 자리에 창을 달았다. 안에 들어가 앉아 보니 문을 열지 않고도 바깥을 볼 수 있었다. 손바닥 자국을 닦고 창을 조금 열었다.",
+              "fx": {
+                "moodAll": 3,
+                "flag": "armor_window"
+              }
+            }
+          ]
+        },
+        {
+          "label": "필요할 때 열 수 있게 만든다",
+          "out": [
+            {
+              "p": 1,
+              "text": "장갑판마다 안쪽 손잡이를 달았다. 닫는 것보다 여는 장치가 더 복잡했다.",
+              "fx": {
+                "moodAll": 2,
+                "flag": "armor_window"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "legacy": [
+    {
+      "id": "comp_diary_read",
+      "i": 0,
+      "o": 0,
+      "seed": 1,
+      "file": "comp_diary_read.0.0-paid.json",
+      "text": "초반 기록에서 다들 웃었다. \"이땐 물 10통이 많은 줄 알았지.\"\n\n\"거기 내 얘기 잘못 적혔는데.\" \"어디?\" \"DAY 3. 나 그날 안 졸았어.\" \"졸았잖아.\" \"…적을 정도는 아니었지.\"\n\n중반 기록에서 조용해졌고, 어떤 이름들에서 오래 멈췄다. 낭독하던 사람이 한 줄을 건너뛰었는데 아무도 다시 읽어달라고 하지 않았다.\n\n낭독이 끝나고 누가 말했다. \"우리 꽤 멀리 왔네.\"\n\n킬로미터 얘기가 아니라는 걸 다들 알았다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "초반 기록에서 다들 웃었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "이땐 물 10통이 많은 줄 알았지.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "거기 내 얘기 잘못 적혔는데.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "speakerUncertain": true,
+          "text": "어디?",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "DAY 3. 나 그날 안 졸았어.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "졸았잖아.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…적을 정도는 아니었지.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "중반 기록에서 조용해졌고, 어떤 이름들에서 오래 멈췄다. 낭독하던 사람이 한 줄을 건너뛰었는데 아무도 다시 읽어달라고 하지 않았다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "낭독이 끝나고 누가 말했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "우리 꽤 멀리 왔네.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "킬로미터 얘기가 아니라는 걸 다들 알았다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "초반 기록에서 다들 웃었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "이땐 물 10통이 많은 줄 알았지.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "거기 내 얘기 잘못 적혔는데.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "speakerUncertain": true,
+          "text": "어디?",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "DAY 3. 나 그날 안 졸았어.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "졸았잖아.",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…적을 정도는 아니었지.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "중반 기록에서 조용해졌고, 어떤 이름들에서 오래 멈췄다. 낭독하던 사람이 한 줄을 건너뛰었는데 아무도 다시 읽어달라고 하지 않았다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "낭독이 끝나고 누가 말했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "우리 꽤 멀리 왔네.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "킬로미터 얘기가 아니라는 걸 다들 알았다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "id": "up_beehive_swarm",
+      "i": 0,
+      "o": 0,
+      "seed": 1,
+      "file": "up_beehive_swarm.0.0-paid.json",
+      "text": "박스와 판자로 급조한 제2벌통에 벌 뭉치를 조심조심 옮겼다. 쏘인 사람 1명(운 나쁜 사람), 성공.\n\n달구지는 이제 2가구 벌 아파트다. 꿀 생산량 증가가 기대된다. 옆 마을 양봉가가 알면 기절할 성장세다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "박스와 판자로 급조한 제2벌통에 벌 뭉치를 조심조심 옮겼다. 쏘인 사람 1명(운 나쁜 사람), 성공.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "달구지는 이제 2가구 벌 아파트다. 꿀 생산량 증가가 기대된다. 옆 마을 양봉가가 알면 기절할 성장세다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "박스와 판자로 급조한 제2벌통에 벌 뭉치를 조심조심 옮겼다. 쏘인 사람 1명(운 나쁜 사람), 성공.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "달구지는 이제 2가구 벌 아파트다. 꿀 생산량 증가가 기대된다. 옆 마을 양봉가가 알면 기절할 성장세다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "id": "up_beehive_swarm",
+      "i": 0,
+      "o": 1,
+      "seed": 5,
+      "file": "up_beehive_swarm.0.1-paid.json",
+      "text": "옮기다가 여왕벌이 마음을 바꿨는지, 벌 뭉치가 통째로 날아올라 가로수로 이사 갔다.\n\n\"…전세 뺐네.\" 남은 벌통이라도 잘 달래기로 했다. 꿀은 원래 벌 마음이다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "옮기다가 여왕벌이 마음을 바꿨는지, 벌 뭉치가 통째로 날아올라 가로수로 이사 갔다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_woman",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…전세 뺐네.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "남은 벌통이라도 잘 달래기로 했다. 꿀은 원래 벌 마음이다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "옮기다가 여왕벌이 마음을 바꿨는지, 벌 뭉치가 통째로 날아올라 가로수로 이사 갔다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_woman",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…전세 뺐네.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "남은 벌통이라도 잘 달래기로 했다. 꿀은 원래 벌 마음이다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "id": "comp_van_pride",
+      "i": 0,
+      "o": 0,
+      "seed": 1,
+      "file": "comp_van_pride.0.0-paid.json",
+      "text": "후보: 조수석(수첩 자리라서), 지붕(하늘이 있어서), 백미러(지나온 게 보여서), 경적(고함씨라서), 엔진(할아버지라서).\n\n투표 결과는 무효 처리됐다. 전원이 자기 후보에 투표했기 때문이다.\n\n\"결론: 다 좋다.\" 싱거운 결론에 다들 만족했다. 자랑 대회는 원래 결론이 싱거워야 한다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "후보: 조수석(수첩 자리라서), 지붕(하늘이 있어서), 백미러(지나온 게 보여서), 경적(고함씨라서), 엔진(할아버지라서).",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "투표 결과는 무효 처리됐다. 전원이 자기 후보에 투표했기 때문이다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "결론: 다 좋다.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "싱거운 결론에 다들 만족했다. 자랑 대회는 원래 결론이 싱거워야 한다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "후보: 조수석(수첩 자리라서), 지붕(하늘이 있어서), 백미러(지나온 게 보여서), 경적(고함씨라서), 엔진(할아버지라서).",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "투표 결과는 무효 처리됐다. 전원이 자기 후보에 투표했기 때문이다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "결론: 다 좋다.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "싱거운 결론에 다들 만족했다. 자랑 대회는 원래 결론이 싱거워야 한다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "id": "ev_group_feast",
+      "i": 0,
+      "o": 0,
+      "seed": 1,
+      "file": "ev_group_feast.0.0-paid.json",
+      "text": "오랜만에 배가 터지게 먹었다. 서로의 접시에 반찬을 얹어주고, 농담을 주고받고, 배꼽 잡고 웃었다.\n\n국이 짜다는 쪽과 딱 맞다는 쪽이 갈려서 결국 물을 더 부었다. 그러고도 짜다고 했다.\n\n\"…이런 밤이 계속되면 좋겠는데. 계속되진 않겠죠.\" 은수 말에 잠깐 조용해졌다.\n\n강우가 한 박자 늦게 잔을 들었다. \"그러려고 가는 거잖아. 서울로.\" 다들 잔을 부딪쳤다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "오랜만에 배가 터지게 먹었다. 서로의 접시에 반찬을 얹어주고, 농담을 주고받고, 배꼽 잡고 웃었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "국이 짜다는 쪽과 딱 맞다는 쪽이 갈려서 결국 물을 더 부었다. 그러고도 짜다고 했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "…이런 밤이 계속되면 좋겠는데. 계속되진 않겠죠.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "narration",
+          "text": "은수 말에 잠깐 조용해졌다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 한 박자 늦게 잔을 들었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "그러려고 가는 거잖아. 서울로.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "다들 잔을 부딪쳤다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "오랜만에 배가 터지게 먹었다. 서로의 접시에 반찬을 얹어주고, 농담을 주고받고, 배꼽 잡고 웃었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "국이 짜다는 쪽과 딱 맞다는 쪽이 갈려서 결국 물을 더 부었다. 그러고도 짜다고 했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "…이런 밤이 계속되면 좋겠는데. 계속되진 않겠죠.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "narration",
+          "text": "은수 말에 잠깐 조용해졌다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 한 박자 늦게 잔을 들었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "그러려고 가는 거잖아. 서울로.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "다들 잔을 부딪쳤다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "id": "ev_group_feast",
+      "i": 1,
+      "o": 0,
+      "seed": 1,
+      "file": "ev_group_feast.1.0-paid.json",
+      "text": "먹기 전에, 각자 먼저 떠난 이들을 위해 밥 한 술을 덜어 불가에 놓았다.\n\n누가 먼저 놓을지 서로 눈치를 보다가, 결국 다 같이 놓았다.\n\n\"…같이 먹어요.\" 잠깐의 묵념 뒤, 남은 이들이 그들 몫까지 든든히 먹었다.\n\n밥이 식기 전에 다들 다시 숟가락을 들었다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "먹기 전에, 각자 먼저 떠난 이들을 위해 밥 한 술을 덜어 불가에 놓았다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "누가 먼저 놓을지 서로 눈치를 보다가, 결국 다 같이 놓았다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_woman",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…같이 먹어요.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "잠깐의 묵념 뒤, 남은 이들이 그들 몫까지 든든히 먹었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "밥이 식기 전에 다들 다시 숟가락을 들었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "먹기 전에, 각자 먼저 떠난 이들을 위해 밥 한 술을 덜어 불가에 놓았다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "누가 먼저 놓을지 서로 눈치를 보다가, 결국 다 같이 놓았다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_woman",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…같이 먹어요.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "잠깐의 묵념 뒤, 남은 이들이 그들 몫까지 든든히 먹었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "밥이 식기 전에 다들 다시 숟가락을 들었다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "id": "up_armor_argument",
+      "i": 0,
+      "o": 0,
+      "seed": 1,
+      "file": "up_armor_argument.0.0-paid.json",
+      "text": "사격구 자리에 창을 달았다. 안에 들어가 앉아 보니 문을 열지 않고도 바깥을 볼 수 있었다. 손바닥 자국을 닦고 창을 조금 열었다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "사격구 자리에 창을 달았다. 안에 들어가 앉아 보니 문을 열지 않고도 바깥을 볼 수 있었다. 손바닥 자국을 닦고 창을 조금 열었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "사격구 자리에 창을 달았다. 안에 들어가 앉아 보니 문을 열지 않고도 바깥을 볼 수 있었다. 손바닥 자국을 닦고 창을 조금 열었다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "id": "up_armor_argument",
+      "i": 1,
+      "o": 0,
+      "seed": 1,
+      "file": "up_armor_argument.1.0-paid.json",
+      "text": "장갑판마다 안쪽 손잡이를 달았다. 닫는 것보다 여는 장치가 더 복잡했다.",
+      "reader": [
+        {
+          "kind": "narration",
+          "text": "장갑판마다 안쪽 손잡이를 달았다. 닫는 것보다 여는 장치가 더 복잡했다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "장갑판마다 안쪽 손잡이를 달았다. 닫는 것보다 여는 장치가 더 복잡했다.",
+          "displayName": null
+        }
+      ]
+    }
+  ],
+  "fixtureOnly": true
+}

@@ -1,0 +1,91 @@
+{
+  "chat": {
+    "id": "daily-minji-parkss-meal",
+    "need": {
+      "comp": "minji",
+      "comp2": "parkss"
+    },
+    "lines": [
+      [
+        "parkss",
+        "민지 양, 점심 안 먹었지."
+      ],
+      [
+        "minji",
+        "먹었어요. 국물."
+      ],
+      [
+        "parkss",
+        "밥은 그대로던데."
+      ],
+      [
+        "minji",
+        "선생님은 왜 남의 그릇까지 봐요?"
+      ],
+      [
+        "parkss",
+        "렌치 든 손이 떨리니 그렇지."
+      ],
+      [
+        "minji",
+        "반만 먹을게요. 다 먹으라고 하면 안 먹습니다."
+      ],
+      [
+        "parkss",
+        "그래. 국 식기 전에 먹게."
+      ],
+      [
+        "sys",
+        "민지는 투덜거리면서도 숟가락을 들었다. 박 선생은 더 말하지 않았다."
+      ]
+    ]
+  },
+  "echoFunction": "(state,phase)=>{\n  const echo=state&&state._impactEcho;\n  if(!echo) return phase==='title'?'길에 남은 일':'정착지에서 했던 일이 다음 길까지 이어졌다.';\n  const from=(D.stls&&D.stls[echo.stlId]&&D.stls[echo.stlId].name)\n    ||(D.nodes[echo.from]&&D.nodes[echo.from].name)||'앞선 정착지';\n  const to=(D.nodes[echo.to]&&D.nodes[echo.to].name)||'다음 마을';\n  const wx=D.wx&&D.wx[echo.wx]&&D.wx[echo.wx].nm;\n  // A renderer category (e.g. order) cannot invent a different completed job.\n  const action=D.stls?.[echo.stlId]?.field?.actions?.find(row=>row.id===echo.actionId);\n  const label=echo.label||action?.label;\n  const subject=`${from}에서 온 사람들`;\n  const work=label?`「${label}」 일을 함께했던 사람들이었다.`:'앞선 정착지에서 만났던 사람들이었다.';\n  if(phase==='title') return `${from}에서 이어진 길`;\n  if(phase==='outcome') return `${from}에서 한 일은 그곳에만 남지 않았다. ${D.withParticle(subject,'이','가')} ${to} 쪽으로 계속 갔다.`;\n  return `${wx?wx+' 뒤 ':''}갓길에서 ${D.withParticle(subject,'과','와')} 다시 만났다. ${work} 바퀴에 진흙이 묻고 사람들 얼굴은 지쳤지만, 짐에는 ${from}의 표식이 매달려 있다.\\n\\n\"거기서 일손 보태 주셨던 차 맞죠? 덕분에 여기까지 왔어요.\"\\n\\n정착지에서 끝난 줄 알았던 일이 우리보다 먼저 다음 마을로 가고 있었다.`;\n}",
+  "event": {
+    "id": "settlement_road_echo",
+    "type": "여파",
+    "w": 0,
+    "fixed": true,
+    "scene": "settlement-road-echo",
+    "title": "먼저 지나간 달구지의 흔적",
+    "text": "()=>D.roadEchoCopy(S,'text')",
+    "choices": [
+      {
+        "label": "차를 세우고 마지막 구간을 함께 정리한다",
+        "out": [
+          {
+            "p": 1,
+            "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다.'",
+            "fx": {
+              "impactEcho": "assist"
+            }
+          }
+        ]
+      },
+      {
+        "label": "무전과 지도로 다음 구간만 이어 준다",
+        "out": [
+          {
+            "p": 1,
+            "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다.'",
+            "fx": {
+              "impactEcho": "relay"
+            }
+          }
+        ]
+      },
+      {
+        "label": "멈추지 않고 북쪽으로 계속 간다",
+        "out": [
+          {
+            "p": 1,
+            "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다.'",
+            "fx": {
+              "impactEcho": "pass"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

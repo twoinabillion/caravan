@@ -1,0 +1,24 @@
+[
+  {
+    "kind": "narration",
+    "text": "작업을 마치고 나와 물었다. 강우가 침묵했다. 못 들었나 싶어 다시 물으려는데 손가락 하나가 올라왔다. 기다려라, 는 뜻이다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…원래는 아무한테도. 지금은—"
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 차와 우리를 번갈아 봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "이 차에 탄 전원입니다."
+  },
+  {
+    "kind": "narration",
+    "text": "파수꾼이 등을 맡겼다. 그보다 큰 신뢰의 말을 나는 모른다."
+  }
+]

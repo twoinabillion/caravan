@@ -1,0 +1,92 @@
+{
+  "key": "explore-mushroom-growhouse-v1",
+  "event": "exp_mushroom",
+  "format": "place",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nOne new cohesive 16:9 narrative scene, native PNG master at least1536x864. The four canonical references are style/world references only: do not copy their collage panels, title, characters, Dalguji, skyline, Namsan tower or signs into this scene. Weathered ordinary Korean materials, restrained contrast and subtle grain. No dreamy softness, beauty filter, glowy haze, glossy retouching or painterly pastel drift. Important subject inside central80% width/82%height, readable at mobile480 and360px. Avoid strong directional sunlight, sunrise/sunset colors or an explicit starry sky; close framing and diffuse local illumination keep the picture usable across the event time window. No captions, legible lettering or logos.\n\nA dim, abandoned Korean mushroom growing shed, seen just inside its open doorway. Rough damp timber racks and decaying cultivation logs support mixed clusters of ordinary shiitake-like brown mushrooms and pale oyster mushrooms, with a few different unidentified wild fungi intruding at the edges. A visibly enclosed humid growing room with rough dark walls and earth floor; not an outdoor vegetable plot or greenhouse. Enough indirect cool ambient light from the unseen doorway to read the mushrooms, no powered lamps or electricity. Nothing has been picked, sorted, cooked or put in baskets yet. ZERO people, hands, companions, animals, vehicle, tools in use, reward piles or captions. No giant fantasy fungi or glowing mushrooms.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "promptSha256": "e0204303746c24c808bf2e031d8e6126e96115b1fc0aed27e4b05ed772201dd4",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../systems/candidate-evidence.json",
+  "entry": "컴컴한 재배사. 문을 열자 축축한 흙냄새.\n\n전기 없이도 버섯들은 알아서 잘 살았다. 문제는— 어떤 게 원래 키우던 거고 어떤 게 야생 침입자인지다.",
+  "sourceEvent": {
+    "id": "exp_mushroom",
+    "type": "탐색",
+    "w": 5,
+    "region": [
+      "mid",
+      "north"
+    ],
+    "title": "버섯 재배사",
+    "text": "컴컴한 재배사. 문을 열자 축축한 흙냄새.\n\n전기 없이도 버섯들은 알아서 잘 살았다. 문제는— 어떤 게 원래 키우던 거고 어떤 게 야생 침입자인지다.",
+    "choices": [
+      {
+        "label": "박 선생이 감별한다",
+        "req": {
+          "comp": "parkss"
+        },
+        "out": [
+          {
+            "p": 1,
+            "text": "\"이건 느타리. 이건 표고. 이건… 손대지 말게. 이름부터 험한 놈이야.\"\n\n\"이름이 뭔데요?\"\n\n\"…생각이 안 나는군. 아무튼 험해.\"\n\n박 선생은 그놈만 나뭇가지로 멀찍이 밀어 놓고 나머지를 골랐다. 안전한 것만 두 바구니.",
+            "fx": {
+              "food": 3,
+              "mood": {
+                "parkss": 4
+              }
+            },
+            "speakers": [
+              "parkss"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "아는 것만 조심히 딴다",
+        "risk": "중독 위험",
+        "out": [
+          {
+            "p": 2,
+            "text": "표고로 알아본 것만 골라 바구니에 담았다. 나머지는 손대지 않았다.",
+            "fx": {
+              "food": 2
+            }
+          },
+          {
+            "p": 1,
+            "text": "표고겠거니 하고 구워 먹었다가 배를 움켜쥐었다.\n\n달구지로 곧장 돌아가지 못하고 수풀부터 찾았다. 아는 것만 딴다더니.",
+            "fx": {
+              "food": 1,
+              "moodAll": -4,
+              "flag": "food_poison"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

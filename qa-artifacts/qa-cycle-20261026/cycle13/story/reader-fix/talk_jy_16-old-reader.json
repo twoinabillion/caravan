@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "narration",
+    "text": "길에서 주운 운모 조각을 내밀자 재이 눈이 커졌다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "오— 이거 운모죠? 얇게 벗겨지는 거. 합격이에요."
+  },
+  {
+    "kind": "narration",
+    "text": "깡통에 소중히 들어갔다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "이제 이 상자에 대장님 지분 있어요. 1구슬만큼."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "지분이면 배당도 나와요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…생각 안 해봤는데."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 깡통을 흔들어 소리를 들어보더니 그냥 덮었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "일단 보류요."
+  }
+]

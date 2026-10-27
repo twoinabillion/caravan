@@ -1,0 +1,91 @@
+{
+  "cohortExcluded": true,
+  "replays": [
+    {
+      "cohortExcluded": true,
+      "sourceEngineHash": "1cb272700312c21de8afa5e0daa58dcb5af9e851e04581858eb1fd383fec0e42",
+      "all40SourceUnchangedDuringReplay": true,
+      "originalReplayFolder": "qa-artifacts/qa-cycle-20261026/cycle11/story/browser-entry-replay",
+      "publicReplayTraceEqualExceptSceneFields": true,
+      "replayedPriorChoices": 23,
+      "stop": "INTENTIONAL_ENTRY_CAPTURE_STOP",
+      "checks": [
+        {
+          "event": "exp_fishfarm",
+          "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/new-visual-entry-replays/fishfarm/agent03/attempt01/normal-exp_fishfarm-entry.json",
+          "observationEqualExceptSceneFields": true,
+          "stateEqual": true,
+          "choicesEqual": true,
+          "oldSceneKeys": [
+            "event-explore-farm"
+          ],
+          "newSceneKeys": [
+            "explore-fishfarm-tanks-v1"
+          ],
+          "sceneKeysChanged": true,
+          "pendingView": null,
+          "note": "New unpaid export has view:null, so current UI resolves new mapping at first render. No frozen old sceneKeys were injected or edited."
+        }
+      ]
+    },
+    {
+      "cohortExcluded": true,
+      "sourceEngineHash": "1cb272700312c21de8afa5e0daa58dcb5af9e851e04581858eb1fd383fec0e42",
+      "all40SourceUnchangedDuringReplay": true,
+      "originalReplayFolder": "qa-artifacts/qa-cycle-20261026/cycle11/story/browser-scene-replay",
+      "publicReplayTraceEqualExceptSceneFields": true,
+      "replayedPriorChoices": 19,
+      "stop": "INTENTIONAL_ENTRY_CAPTURE_STOP",
+      "checks": [
+        {
+          "event": "exp_kimchi",
+          "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/new-visual-entry-replays/coastal/agent03/attempt01/normal-exp_kimchi-entry-86.json",
+          "observationEqualExceptSceneFields": true,
+          "stateEqual": true,
+          "choicesEqual": true,
+          "oldSceneKeys": [
+            "event-explore-workshop"
+          ],
+          "newSceneKeys": [
+            "explore-kimchi-coldstore-v1"
+          ],
+          "sceneKeysChanged": true,
+          "pendingView": null,
+          "note": "New unpaid export has view:null, so current UI resolves new mapping at first render. No frozen old sceneKeys were injected or edited."
+        },
+        {
+          "event": "camp_thief",
+          "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/new-visual-entry-replays/coastal/agent03/attempt01/normal-camp_thief-entry-56.json",
+          "observationEqualExceptSceneFields": true,
+          "stateEqual": true,
+          "choicesEqual": true,
+          "oldSceneKeys": [
+            "event-crisis-exhaustion"
+          ],
+          "newSceneKeys": [
+            "camp-roof-thief-v1"
+          ],
+          "sceneKeysChanged": true,
+          "pendingView": null,
+          "note": "New unpaid export has view:null, so current UI resolves new mapping at first render. No frozen old sceneKeys were injected or edited."
+        },
+        {
+          "event": "exp_glasshouse",
+          "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/new-visual-entry-replays/coastal/agent03/attempt01/normal-exp_glasshouse-entry-37.json",
+          "observationEqualExceptSceneFields": true,
+          "stateEqual": true,
+          "choicesEqual": true,
+          "oldSceneKeys": [
+            "event-explore-farm"
+          ],
+          "newSceneKeys": [
+            "explore-glasshouse-tomatoes-v1"
+          ],
+          "sceneKeysChanged": true,
+          "pendingView": null,
+          "note": "New unpaid export has view:null, so current UI resolves new mapping at first render. No frozen old sceneKeys were injected or edited."
+        }
+      ]
+    }
+  ]
+}

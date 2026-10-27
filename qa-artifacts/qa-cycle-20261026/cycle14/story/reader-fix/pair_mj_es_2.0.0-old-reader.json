@@ -1,0 +1,58 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "기다리다 지치면 어떻게 해요?"
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 물었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "정비해요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "뭘요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "기다리는 대상 말고, 기다리는 나를."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 자기 손을 폈다 쥐었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "몸 챙기고, 연장 닦고. 신호 오는 날 컨디션 좋게."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 헤드폰 한쪽을 벗었다. 그러고는 수첩을 꺼내 그 말을 받아 적었다. 진짜 수첩에, 진짜로."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…적으려고요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "관제 교본에 없는 문장이라서요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 적다 말고 한 줄을 지웠다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "'최상'이라고 적었는데, 그렇게까지는 안 말씀하셨죠."
+  }
+]

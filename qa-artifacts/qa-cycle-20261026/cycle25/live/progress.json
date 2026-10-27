@@ -1,0 +1,99 @@
+[
+  {
+    "id": "exp_ricemill",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true,
+    "method": "manual UI before shared audit helper; six screenshots retained"
+  },
+  {
+    "id": "exp_towyard",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "exp_bowling",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "ev_wedding_hall_storage",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "exp_comicroom",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "exp_cafeteria",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "lc_busan_dried",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "lc_daejeon_bakery",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "lc_sejong_library",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "ev_chunrian_lab",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "ev_uplink",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "camp_scan",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "seoul_base",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "exp_checkpoint",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "cleaners_recall",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  },
+  {
+    "id": "ev_waterfall",
+    "selected": 0,
+    "reloaded": true,
+    "roadReached": true
+  }
+]

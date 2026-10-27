@@ -1,0 +1,55 @@
+{
+  "id": "S7-01",
+  "cause": "Independent once conversations with bond12/20 allow signed item10 before the list3–9 conversation; static total and all-item provenance were invalid.",
+  "files": [
+    "src/03-data.js talk_jy_09 entry/outcome/note.body",
+    "tools/story-review-contract.cjs exact note.body assert+historical projection",
+    "tests/test_qa_cycle7_survival_list.cjs"
+  ],
+  "changed": "Entry and outcome read the current3–9 cells; note body refers only to those cells.",
+  "preserved": [
+    "ID, choice0 label and index, once, needsComp, needBond12",
+    "outcome probability1 and zero time/resource cost",
+    "moodJaeyi6+moodAll2, note type/title/links",
+    "both Bori/noBori existing conditional prose and4 actual dialogue roles",
+    "paid historical prose+old note body"
+  ],
+  "tests": {
+    "red01": {
+      "pass": 1,
+      "fail": 5
+    },
+    "green01": {
+      "pass": 31,
+      "fail": 0
+    },
+    "newRegression": 6
+  },
+  "naturalEvidence": "../S7-01-natural-evidence.json: n399 day14 ten signed then n543 day16 nine total",
+  "wholeEngineHash": "4aa512d311b53bdf1a7294df0c9bf7230ea3c7702f07c8af75dd0e3ec839bc0c",
+  "rawByteConcatHash": "7b261fdda35ac0fd4594828b6e1067c43b56cabed15e64fb2afd3844e0c8ce1f",
+  "hashFileOrder": [
+    "src/03-data.js",
+    "src/03f-npc-portraits.js",
+    "src/03g-scenes.js",
+    "src/03i-story-expansion.js",
+    "src/03j-camp-conversations.js",
+    "src/03k-main-evidence.js",
+    "src/03l-main-recovery.js",
+    "src/03m-finale-reading.js",
+    "src/04a-engine-core.js",
+    "src/04b-engine-crew.js",
+    "src/04c-engine-travel.js",
+    "src/04d-engine-director.js",
+    "src/04e-engine-world.js",
+    "src/04f-engine-quests.js",
+    "src/04g-engine-evidence.js",
+    "src/04h-engine-presentation.js"
+  ],
+  "additionalProductionChangesPlanned": false,
+  "candidateDisposition": {
+    "id": "S7-C01",
+    "status": "not confirmed, no hold",
+    "reason": "No authored prerequisite identifies a particular spoken 정품 인정 event; plausible incidental offscreen praise. Root agreed to keep existing wording."
+  }
+}

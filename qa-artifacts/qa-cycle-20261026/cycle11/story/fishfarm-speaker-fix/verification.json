@@ -1,0 +1,26 @@
+{
+  "finding": "V11-05",
+  "scope": "Parent actual UI of normal replay; explicit regression fixtures are not new natural journeys",
+  "oldReader": "passer_man / ???",
+  "newOutcomeRoute": [
+    "me"
+  ],
+  "eventEqualExceptOutcomeSpeaker": true,
+  "newPartyCases": [
+    [],
+    [
+      "leo"
+    ],
+    [
+      "minji",
+      "parkss"
+    ]
+  ],
+  "legacyPaidViewPreserved": true,
+  "legacyTextOnlyPreserved": true,
+  "relatedTests": {
+    "pass": 31,
+    "fail": 0
+  },
+  "engineHash": "3406fea24cbc619f7d51757885943891f6a46060e6fe3edcfa1e6ccead3f9282"
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "key": "explore-ev-charging-parking-v1",
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nEdit target: image 1. All remaining attached images are canonical references, not targets. Keep a single 16:9 large frame. Preserve all composition and details except the corrections explicitly requested.\n\nPrecise correction to the first attached image only: remove the recognizable Namsan / Seoul communications tower in the distant left background, replacing it with an ordinary low tree-covered ridge with no tower or landmark. Keep generic non-identifiable Korean buildings. Remove all visible vehicle badges, emblems, logos and lettering, particularly the front hood emblem on the nearest car and the emblems on the other cars; replace with continuous plain weathered body panels. Preserve the exact parking-lot perspective, rows of electric cars, all correctly plugged charging connectors, cable loops, pedestals, asphalt, decay and lighting. Do not add people, trains, signs, battery work or new objects. No famous landmark anywhere. The canonical reference sheets guide style only and must NOT reintroduce their Namsan tower or text.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+    "referenced_image_paths": [
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft01.png",
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+    ],
+    "transparent_background": false
+  },
+  {
+    "key": "local-daegu-makchang-alley-v1",
+    "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nEdit target: image 1. All remaining attached images are canonical references, not targets. Keep a single 16:9 large frame. Preserve all composition and details except the corrections explicitly requested.\n\nPrecise correction to the first attached image only: remove the blurry human figure far down the alley on the right, leaving a completely empty passage beyond the one female food-cart proprietor. Remove the little printed paper label on the metal box just behind her at left, leaving a plain weathered metal surface. Preserve the foreground proprietor exactly—same reference-matching face, short hair, scarf, jacket and apron, position, natural hands and tongs—as well as the grill, unserved makchang, charcoal glow, cooking smoke, cart, alley, awning, lens and light. There must be exactly ONE human in the whole frame. Do not add a customer, meal exchange, plate being handed out or words. Additional reference sheets are style/identity references only, not people to insert.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+    "referenced_image_paths": [
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1-draft01.png",
+      "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "/Users/sang/caravan/assets/portraits/passer_woman.png"
+    ],
+    "transparent_background": false
+  }
+]

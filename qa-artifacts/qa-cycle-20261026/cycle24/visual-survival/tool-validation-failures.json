@@ -1,0 +1,14 @@
+[
+  {
+    "request": "edit-requests.json, local-daegu-makchang-alley-v1",
+    "error": "referenced_image_paths must contain at most 5 paths",
+    "imageProduced": false,
+    "followup": "new generation with canonical4+portrait only; target excluded, original kept"
+  },
+  {
+    "request": "retry-requests.json, explore-ev-charging-parking-v1",
+    "error": "unknown field key",
+    "imageProduced": false,
+    "followup": "resubmitted prompt,referenced_image_paths,transparent_background only; internal metadata excluded"
+  }
+]

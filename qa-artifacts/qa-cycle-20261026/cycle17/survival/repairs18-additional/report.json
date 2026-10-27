@@ -1,0 +1,28 @@
+{
+  "classification": "post-cycle17-repairs-for-cycle18",
+  "cohortExcluded": true,
+  "naturalOriginalOwn": 3,
+  "naturalOtherAgent": 1,
+  "derivedEvents": 31,
+  "totalChangedEvents": 35,
+  "metadataFields": 68,
+  "copyFields": 1,
+  "tests": {
+    "initialGroup": 17,
+    "additionalGroup": 29,
+    "total": 46
+  },
+  "oldPaidFixtures": {
+    "initial": 44,
+    "additional": 53,
+    "total": 97
+  },
+  "legacyFinalIndex": "repairs18-additional/legacy-index-final.json",
+  "sourceEdits": "metadata plus one approved time phrase in src/03-data.js; no effects/gates/indices changed",
+  "deltaFiles": [
+    "repairs18/field-delta-final.json",
+    "repairs18-additional/field-delta.json",
+    "repairs18-additional/copy-delta.json"
+  ],
+  "productionEditingComplete": true
+}

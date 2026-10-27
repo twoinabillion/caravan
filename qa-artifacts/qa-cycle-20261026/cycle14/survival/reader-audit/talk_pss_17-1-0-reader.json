@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "기억나지. 감기약 사러 온 신혼부부. 마지막 손님도 기억나."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 잠깐 말을 멈췄다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…마지막 손님 얘긴 다음에 하지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "네."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "오늘은 첫 손님 날씨였어. 맑았거든."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 창문을 조금 내렸다. 그 얘기는 거기서 더 안 나갔다."
+  }
+]

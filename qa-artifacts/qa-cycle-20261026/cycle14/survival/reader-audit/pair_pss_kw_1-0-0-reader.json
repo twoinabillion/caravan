@@ -1,0 +1,59 @@
+[
+  {
+    "kind": "narration",
+    "text": "포위된 강우가 결국 앉았다. 촉진이 시작됐다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "여기?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…괜찮습니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "여기?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "……괜찮습니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "점이 하나 늘었구먼. 여기군."
+  },
+  {
+    "kind": "narration",
+    "text": "처방은 셋이었다. 주 2회 파스, 취침 전 스트레칭, 그리고 아프면 아프다고 말하기."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "세 번째는 못 하겠지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "……."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "거봐."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 파스를 받아 주머니에 넣었다. 넣고 나서 두어 박자 뒤에 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…군의관보다 낫습니다."
+  }
+]

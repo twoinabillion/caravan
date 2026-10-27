@@ -1,0 +1,105 @@
+{
+  "key": "comp-talk-kangwoo-camp-day-v1",
+  "event": "talk_kw_16",
+  "format": "character",
+  "timeVariant": "day",
+  "oldAsset": "assets/scenes/comp-talk-kangwoo-camp-v1.jpg",
+  "oldAssetSha256": "701c91f5f6fb4b10d1f589507d8909ec76443528c582ab1438deecebcde5e003",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nA new DAYTIME variant for a present-tense conversation with Kangwoo. Reference5 is his exact canonical portrait: Korean man with a square weathered face, short buzz cut, muted olive field jacket, sober guarded expression. One human only. Tight waist-up, eye-level portrait in an ordinary roadside camp pause. His hand quietly offers a small unlabelled opened paper packet of plain hardtack crackers with exactly TWO small white star-shaped sugar candies visible near the top. The packet is still in his possession, before the player chooses whether to return one candy or ask why he offered it. He is not eating and no second hand/person reaches in. Soft cool diffuse daylight, no lit flashlight, lantern or nighttime setting. Background is only a shallow worn tarpaulin edge and subdued roadside vegetation, no visible Dalguji body or vehicle at all. No other companions/player/dog, no badges or new weapons. Natural face, rough hands and restrained warmth; face and offered packet both clearly readable. Keep his actual portrait identity/age/clothes.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "/Users/sang/caravan/assets/portraits/kangwoo.png"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "role": "canonical-style",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    },
+    {
+      "path": "assets/portraits/kangwoo.png",
+      "role": "character-portrait",
+      "sha256": "d0f5658d87b6d386f8a77f0c78e7e2a5d4e734e1ab016e6903f4c1abe43dc409"
+    }
+  ],
+  "promptSha256": "065ab1f5758077af64d1433a4dfd8a78b09e8875242bc38082a52f03fa3ac68a",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+  "sourceEvent": {
+    "id": "talk_kw_16",
+    "trace": 584,
+    "day": 13,
+    "min": 495,
+    "sceneKeys": [
+      "comp-talk-kangwoo-camp-v1"
+    ],
+    "asset": "assets/scenes/comp-talk-kangwoo-camp-v1.jpg",
+    "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-582-talk_kw_16.json",
+    "observation": "08:15 개인대화에 야간 경계 원본. registry도 야간 명시.",
+    "definition": {
+      "id": "talk_kw_16",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "kangwoo",
+      "title": "강우 — 전투식량 교환",
+      "text": "강우가 자기 몫의 건빵을 말없이 내밀었다.\n\n\"…별사탕이 두 개 들었습니다. 오늘은 운이 좋은 봉지입니다.\"",
+      "choices": [
+        {
+          "label": "별사탕 하나를 돌려준다",
+          "out": [
+            {
+              "p": 1,
+              "text": "\"하나면 됩니다.\" \"저도 하나면 돼요. 그러니까 하나씩.\"\n\n\"…하나면 된다니까.\" \"네. 그래서 하나 드리는 거예요.\"\n\n강우가 셈이 안 맞는다는 얼굴로 3초쯤 별사탕을 보다가, 입에 넣었다.\n\n\"……답니다.\" 그 한마디가 강우식 만찬 소감이었다.",
+              "fx": {
+                "mood": {
+                  "kangwoo": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "\"운 좋은 봉지는 왜 저 줘요?\"",
+          "out": [
+            {
+              "p": 1,
+              "text": "\"…운은 나눠야 커집니다. 부대 미신입니다.\"\n\n강우도 별사탕 하나를 꺼내 입에 넣었다. 둘 다 녹을 때까지 씹지 않았다.",
+              "fx": {
+                "mood": {
+                  "kangwoo": 3
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sceneMetadata": {
+      "eventScene": "comp-talk-kangwoo-camp-v1",
+      "turnScenes": null,
+      "stages": null,
+      "choiceScenes": null
+    }
+  }
+}

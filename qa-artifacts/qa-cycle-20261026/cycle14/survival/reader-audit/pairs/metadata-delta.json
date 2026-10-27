@@ -1,0 +1,93 @@
+{
+  "pair_pss_kw_2": {
+    "0.0": [
+      "parkss",
+      "kangwoo",
+      "parkss",
+      "kangwoo",
+      "parkss",
+      "kangwoo",
+      "parkss",
+      "parkss",
+      "kangwoo",
+      "parkss",
+      "kangwoo"
+    ]
+  },
+  "pair_pss_jy_1": {
+    "0.0": [
+      "parkss",
+      "jaeyi",
+      "parkss",
+      "jaeyi",
+      "parkss",
+      "jaeyi"
+    ]
+  },
+  "pair_pss_jy_2": {
+    "entry": [
+      "jaeyi"
+    ],
+    "0.0": [
+      "parkss",
+      "parkss",
+      "jaeyi"
+    ]
+  },
+  "pair_kw_jy_1": {
+    "0.0": [
+      "kangwoo",
+      "jaeyi",
+      "jaeyi",
+      "kangwoo",
+      "kangwoo"
+    ]
+  },
+  "pair_kw_jy_2": {
+    "entry": [
+      "jaeyi",
+      "jaeyi",
+      "kangwoo",
+      "jaeyi",
+      "kangwoo",
+      "jaeyi"
+    ],
+    "0.0": [
+      "jaeyi",
+      "jaeyi",
+      "kangwoo",
+      "jaeyi",
+      "kangwoo",
+      "jaeyi"
+    ]
+  },
+  "pair_kw_es_1": {
+    "0.0": [
+      "eunsu",
+      "kangwoo",
+      "eunsu",
+      "kangwoo",
+      "eunsu",
+      "kangwoo",
+      "kangwoo",
+      "eunsu"
+    ]
+  },
+  "pair_kw_es_2": {
+    "entry": [
+      "eunsu",
+      "kangwoo",
+      "eunsu",
+      "kangwoo",
+      "kangwoo",
+      "kangwoo"
+    ],
+    "0.0": [
+      "eunsu",
+      "eunsu",
+      "kangwoo",
+      "eunsu",
+      "kangwoo"
+    ]
+  }
+}

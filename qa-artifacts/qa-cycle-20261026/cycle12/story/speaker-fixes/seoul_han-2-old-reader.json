@@ -1,0 +1,28 @@
+[
+  {
+    "kind": "narration",
+    "text": "김 선장의 해도를 무릎에 펼쳤다. 손가락으로 강줄기를 짚어 내려갔다. 이 물은 서해로 이어지고, 하구까지는 해도의 배가 온다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_refugee",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "뭍에서 안 되면 물로 와라."
+  },
+  {
+    "kind": "narration",
+    "text": "그 문장을 다리 위에서 다시 읽으니 뜻이 분명해졌다. 천리안의 입 안으로 들어가는 우리에게, 바다 사람들이 미리 뚫어놓은 숨구멍이었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_refugee",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "…퇴로가 있는 채로 건너는 다리는 덜 무섭네."
+  },
+  {
+    "kind": "narration",
+    "text": "해도를 접어 품에 넣었다. 강물이 서쪽으로, 묵묵히 흐르고 있었다."
+  }
+]

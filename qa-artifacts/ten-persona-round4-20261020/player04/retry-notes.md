@@ -1,0 +1,5 @@
+# Same-seed policy corrections
+
+attempt01 is preserved unchanged: 69 choices, 264 trace actions; thirst at Cheonan day18, storyDone=false. At Cheongju trace144 the selected Cheonan leg publicly forecast fuelMargin=0 and supplyScore=38, while the alternative Daejeon leg forecast fuelMargin=1 and supplyScore=82. The policy considered only the immediate legal leg, arrived with0.92844L, and repeatedly explored/camped without any market or usable full-fuel onward route. Water eventually reached0. This is an automation planning failure, not proof of an unavoidable game softlock.
+
+Before attempt02, the same personality and seed remain. Operational correction uses only displayed route forecasts: at a low-margin leg or low current rations, prefer an affordable advertised supply direction (high public supplyScore). Buy ordinary market fuel stock up to45L when possible. If no supply alternative exists, enough fuel for the actual leg still permits travel; no extra reserve permanently bans a route. No story option, hidden place, effect, probability or ending was inspected to tune the choices.

@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…그럼 그때까지 자네가 맡아줘."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 가운을 개어 내게 맡겼다. 두 번 개고, 한 번 다시 폈다가, 또 개었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "의사가 가운을 맡기는 건 말이야— 아니지, 나는 약사지. 자꾸 헷갈리는군."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "맡기는 건요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…맡기는 거야. 그냥."
+  },
+  {
+    "kind": "narration",
+    "text": "대답이 거기서 멈췄다. 짐칸에 가운 한 벌이 늘었다."
+  }
+]

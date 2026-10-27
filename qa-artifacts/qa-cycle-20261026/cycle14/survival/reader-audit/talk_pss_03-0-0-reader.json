@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "당연하지. 제일 싸고, 제일 안 먹는 약이야."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…그게 약이에요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "약국 할 때 알았어. 사람들이 약보다 잔소리가 필요해서 오더라고. 약은 핑계고. 서 씨라고, 파스만 사러 오던 양반이 있었는데 그 양반이—"
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 창밖을 보다 말을 접었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "됐고. 물 마셔라."
+  },
+  {
+    "kind": "narration",
+    "text": "오늘의 잔소리가 4종 세트가 됐다."
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "cohortExcluded": true,
+  "purpose": "Normal public partial replay for actual browser image comparison; intentional stop before exp_kimchi choice",
+  "seed": 271003,
+  "engineHash": "732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b",
+  "all40SourceUnchanged": true,
+  "checks": [
+    {
+      "event": "exp_kimchi",
+      "originalTraceN": 87,
+      "completeObservationEqual": true,
+      "choicesEqual": true,
+      "stateEqual": true,
+      "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/browser-scene-replay/agent03/attempt01/normal-exp_kimchi-entry-86.json"
+    },
+    {
+      "event": "camp_thief",
+      "originalTraceN": 57,
+      "completeObservationEqual": true,
+      "choicesEqual": true,
+      "stateEqual": true,
+      "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/browser-scene-replay/agent03/attempt01/normal-camp_thief-entry-56.json"
+    },
+    {
+      "event": "exp_glasshouse",
+      "originalTraceN": 38,
+      "completeObservationEqual": true,
+      "choicesEqual": true,
+      "stateEqual": true,
+      "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/browser-scene-replay/agent03/attempt01/normal-exp_glasshouse-entry-37.json"
+    }
+  ]
+}

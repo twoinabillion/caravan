@@ -1,0 +1,13 @@
+[
+{"id":"camp_visitor","entry":["me",{"who":"passer_elder","name":"걷는 노인"},{"who":"passer_elder","name":"걷는 노인"}],"choices":[{"i":1,"o":0,"speakers":[{"who":"passer_elder","name":"걷는 노인"}]},{"i":0,"o":0,"speakers":[{"who":"passer_elder","name":"걷는 노인"},"me",{"who":"passer_elder","name":"걷는 노인"},{"who":"passer_elder","name":"걷는 노인"}]}]},
+{"id":"route_mid_fork","choices":[{"i":1,"o":0,"speakers":["me"]},{"i":0,"o":0,"speakers":["me"]}]},
+{"id":"talk_mj_16","choices":[{"i":0,"o":0,"speakers":["me","minji"]}]},
+{"id":"talk_mj_21","entry":["minji","minji"],"choices":[]},
+{"id":"talk_mj_18","choices":[{"i":0,"o":0,"speakers":["minji","me","minji","minji","minji","me","minji"]}]},
+{"id":"talk_bori_03","entry":["leo","leo","me","leo"],"choices":[{"i":0,"o":0,"speakers":["leo","me","leo","me","leo"]}]},
+{"id":"talk_pss_12","choices":[{"i":1,"o":0,"speakers":["me","parkss","me","parkss"]}]},
+{"id":"seoul_base","choices":[{"i":2,"o":0,"speakers":["me","me","minji","minji","me","minji"]}]},
+{"id":"lc_daejeon_bakery","choices":[{"i":0,"o":1,"speakers":[{"kind":"record","who":"record","name":"내가 남긴 분필 답글","medium":"paper"}]}]},
+{"id":"gp_envelope","choices":[{"i":0,"o":0,"speakers":[{"kind":"record","who":"record","name":"할아버지의 쪽지","medium":"paper"}]}]},
+{"id":"near_geochang_actor","entry":[{"who":"passer_man","name":"연습 중인 배우"}],"choices":[]}
+]

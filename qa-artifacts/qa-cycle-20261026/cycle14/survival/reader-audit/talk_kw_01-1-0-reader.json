@@ -1,0 +1,26 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "경계."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…뭘요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "전부."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "전부가… 어디부터 어디까진데요?"
+  },
+  {
+    "kind": "narration",
+    "text": "대답은 없었다. 대신 강우가 내 쪽 창문의 잠금을 슬쩍 확인해주고 갔다. 저 사람의 대답은 행동으로 온다."
+  }
+]

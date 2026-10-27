@@ -1,0 +1,43 @@
+{
+  "naturalConfirmed": 0,
+  "clarityCandidates": 0,
+  "derivedBoundaryConfirmed": 0,
+  "scopedClean": true,
+  "scope": "All observed natural cycle21 prose/actual reader/notes/choices/feature effects and source/reload continuity. No whole-game or browser/crop/audio claim.",
+  "findings": [],
+  "nonDefects": [
+    {
+      "event": "exp_checkpoint",
+      "trace": 421,
+      "kind": "observer-only duplicated raw hint",
+      "reason": "Raw QA joins risk label+text. Loading normal entry420 and running actual eventChoiceData proves visible and aria each contain only one 위험, with no state mutation.",
+      "evidence": "checkpoint-hint-disproof.json"
+    },
+    {
+      "event": "camp_10_jaeyi",
+      "trace": 388,
+      "reason": "지난번 표시한 자리 is supported by previous normal camp result note n84 explicitly retaining the next rail position marking. No imagined prior branch."
+    },
+    {
+      "event": "road speech and minji/kangwoo banter",
+      "traces": [
+        223,
+        516
+      ],
+      "reason": "Gear/speed-bump remarks can imply a driving handoff. No same-time authored assertion proves the protagonist remained the driver; engine S.driving stores the route, not the driver identity. Ambiguity alone is not counted as a defect. Story peer has no prior prohibition of shared driving."
+    },
+    {
+      "event": "roof_tiles",
+      "trace": 338,
+      "reason": "Task ended19:25 before the game night boundary19:30; phrasing 해가 기울기 전에 is broad sunset language, not sufficient proof of a night-completion contradiction in this natural sample."
+    },
+    {
+      "event": "unknown reader labels",
+      "reason": "Remaining ??? lines are first Minji introduction, anonymous Gyeongju villager and unnamed walnut vendor; adjacent protagonist question and explicit guards remain correctly routed."
+    },
+    {
+      "event": "seoul_night",
+      "reason": "The ending explicitly bridges night and dawn while simulation clock is frozen for finale presentation. It is not ordinary timed gameplay claiming a new morning with unpaid survival costs."
+    }
+  ]
+}

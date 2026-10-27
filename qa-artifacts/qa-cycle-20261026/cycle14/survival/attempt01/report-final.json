@@ -1,0 +1,633 @@
+{
+  "summary": {
+    "id": "player37",
+    "persona": "cycle14 Kangwoo Leo Parkss priority; normal Bori opportunities; actual reader/speech/NPC from fresh start; known coverage guided, not blind",
+    "seed": 274001,
+    "pack": "fuel",
+    "status": "ended",
+    "error": null,
+    "ending": "thirst",
+    "state": {
+      "at": "pyeongtaek",
+      "location": "평택 항구도로",
+      "day": 17,
+      "min": 0,
+      "km": 1210,
+      "driving": null,
+      "fuel": 11.659569666666663,
+      "water": 0,
+      "food": 0,
+      "scrap": 132,
+      "van": 100,
+      "fatigue": 0,
+      "party": [
+        "kangwoo",
+        "parkss",
+        "leo"
+      ],
+      "items": {
+        "부품": 13,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "쇠파이프": 1,
+        "부모님의 검증키": 1,
+        "교란 장치": 1
+      },
+      "weather": "storm",
+      "campNight": 15,
+      "campPlan": {
+        "talk": "leo",
+        "last": "talk"
+      },
+      "campParticipants": [
+        "kangwoo",
+        "parkss",
+        "leo"
+      ],
+      "campConversation": {
+        "id": "camp_15_leo",
+        "night": 15,
+        "cid": "leo",
+        "day": 16,
+        "timeLabel": "저녁",
+        "context": "천안 삼거리에서 평택 항구도로까지 온 길을 떠올린다.",
+        "revisit": true,
+        "chapter": 2,
+        "previousChoiceId": "line",
+        "choiceVisits": {
+          "quiet": 1,
+          "line": 1
+        },
+        "choiceId": "line",
+        "chips": [
+          {
+            "t": "30분 경과",
+            "c": ""
+          },
+          {
+            "t": "레오 유대 +2",
+            "c": "item"
+          },
+          {
+            "t": "레오의 여분 기타 줄 · 새 흔적",
+            "c": "item"
+          }
+        ],
+        "active": true,
+        "reading": {
+          "eventId": "camp_15_leo",
+          "phase": "outcome",
+          "view": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "내가 차체를 두드리자 레오가 바로 손을 얹었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "그건 바퀴가 아니라 대장님 박자인데요.",
+                "who": "leo"
+              },
+              {
+                "kind": "narration",
+                "text": "다시 해 봤다. 이번에는 레오가 내 박자를 따라 두드렸다. 노래가 되지는 않았지만 한참 걸렸다."
+              }
+            ],
+            "index": 0,
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "comp-talk-leo-camp-v1"
+            ]
+          },
+          "history": null,
+          "selection": "",
+          "updates": []
+        },
+        "resolvedDay": 16,
+        "resolvedMin": 1209.5,
+        "resultText": "내가 차체를 두드리자 레오가 바로 손을 얹었다.\n\n\"그건 바퀴가 아니라 대장님 박자인데요.\"\n\n다시 해 봤다. 이번에는 레오가 내 박자를 따라 두드렸다. 노래가 되지는 않았지만 한참 걸렸다.",
+        "resultSpeakers": [
+          "leo"
+        ]
+      },
+      "crew": {
+        "kangwoo": {
+          "name": "강우",
+          "mood": 28,
+          "bond": 69,
+          "injury": null
+        },
+        "parkss": {
+          "name": "박 선생",
+          "mood": 22,
+          "bond": 42,
+          "injury": null
+        },
+        "leo": {
+          "name": "레오",
+          "mood": 26,
+          "bond": 35,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": true,
+      "endKind": "thirst",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "길에서 직접 접촉한 돔·유령(Ghost)·산지기와 연락망을 이었다",
+            "state": "done"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 12,
+          "need": 13,
+          "label": "12/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "method": null,
+    "storyDone": false,
+    "route": [
+      "yangsan",
+      "miryang",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "nonsan",
+      "daejeon",
+      "cheongju",
+      "sejong",
+      "daejeon",
+      "yeongdong",
+      "gimcheon",
+      "gumi",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "gwangju",
+      "damyang",
+      "namwon",
+      "geochang",
+      "muju",
+      "yeongdong",
+      "gimcheon",
+      "sangju",
+      "mungyeong",
+      "chungju",
+      "cheongju",
+      "sejong",
+      "gongju",
+      "cheonan",
+      "pyeongtaek"
+    ],
+    "actions": 696,
+    "choices": 146,
+    "events": [
+      "opening_workshop",
+      "opening_bus_repair",
+      "opening_name_introduction",
+      "opening_failed_appeal",
+      "opening_parents_module",
+      "opening_departure",
+      "opening_farewell",
+      "lc_busan_dried",
+      "ev_truck_cafe",
+      "onboarding_first_road",
+      "exp_woodshop",
+      "memory_busan_terminal",
+      "exp_noodleworks",
+      "story_bridge_departure_echo",
+      "kw_recruit",
+      "rq_kangwoo_task",
+      "cell_dome_meet",
+      "camp_1_kangwoo",
+      "story_bridge_trace_gap",
+      "rq_kangwoo_join",
+      "talk_kw_13",
+      "ev_broadcast_station",
+      "levy_office",
+      "route_mid_fork",
+      "parents_diversion_manifest",
+      "salvage_claim",
+      "route_market_convoy",
+      "route_market_mask",
+      "route_market_pass",
+      "near_muju_firefly",
+      "camp_2_kangwoo",
+      "up_bench_first",
+      "talk_kw_06",
+      "story_bridge_watched",
+      "meet_postman",
+      "meet_bus",
+      "lc_jeonju_bibim",
+      "parents_separated_work",
+      "perimeter_first",
+      "lc_nonsan_camp",
+      "camp_3_kangwoo",
+      "gp_envelope",
+      "talk_kw_03",
+      "cleaners_recall",
+      "lc_daejeon_bakery",
+      "story_generation_form",
+      "story_family_principle",
+      "story_family_key",
+      "story_personal_cache",
+      "story_parent_route_shared",
+      "main_transfer_testimony",
+      "story_generation_speech",
+      "loc_sejong",
+      "camp_4_kangwoo",
+      "talk_kw_21",
+      "cell_ghost_meet",
+      "story_bridge_parent_route",
+      "story_bridge_child_voice",
+      "lc_yeongdong_wine",
+      "story_bridge_crew_question",
+      "story_generation_theories",
+      "rq_parkss_task",
+      "camp_5_kangwoo",
+      "camp_visitor",
+      "talk_kw_02",
+      "story_generation_route",
+      "rq_parkss_join",
+      "talk_pss_03",
+      "history_failed_namsan",
+      "conflict_fuel_detour",
+      "camp_6_kangwoo",
+      "conflict_silent_cab",
+      "talkr_kw_2",
+      "talk_pss_13",
+      "history_transit_day",
+      "history_seventy_two_hours",
+      "history_three_day_silence",
+      "camp_7_kangwoo",
+      "conflict_campfire",
+      "meet_hitchhiker",
+      "talk_kw_16",
+      "talk_pss_12",
+      "lc_damyang_juktong",
+      "history_first_recorders",
+      "exp_bowling",
+      "history_six_roads",
+      "rq_leo_task",
+      "exp_firestation",
+      "camp_8_kangwoo",
+      "rq_leo_join",
+      "talk_kw_10",
+      "talk_pss_04",
+      "talk_leo_03",
+      "near_geochang_actor",
+      "ev_uplink",
+      "crisis_nofuel",
+      "camp_9_parkss",
+      "comp_window_draw",
+      "talk_kw_05",
+      "talkr_pss_1",
+      "talkr_leo_2",
+      "exp_fishfarm",
+      "loc_mungyeong",
+      "cell_mountain_meet",
+      "crisis_nofuel2",
+      "camp_10_parkss",
+      "camp_dogs",
+      "talk_kw_11",
+      "talk_pss_08",
+      "talk_leo_07",
+      "ev_chunrian_lab",
+      "crisis_hungry",
+      "lc_chungju_lake",
+      "crisis_nofuel3",
+      "camp_11_leo",
+      "talkr_kw_1",
+      "talk_pss_19",
+      "talk_leo_19",
+      "leo_broadcast",
+      "water_toll",
+      "camp_12_parkss",
+      "camp_scan",
+      "talk_kw_09",
+      "talk_pss_16",
+      "talk_leo_10",
+      "patrol_toll",
+      "exp_reservoir",
+      "camp_13_parkss",
+      "talk_kw_17",
+      "talk_pss_17",
+      "talk_leo_02",
+      "crisis_collapse",
+      "camp_14_leo",
+      "talk_kw_08",
+      "talk_pss_09",
+      "talk_leo_09",
+      "main_command_ledger",
+      "parents_father_last_log",
+      "camp_15_leo"
+    ],
+    "runnerHash": "44a29dd545557cd8a6429ad06866763f04734bb12427b724a35c4afd0046907b",
+    "sourceHash": "52a1873eab1c96a321c39513d5c6ceff4d8b7df69eb13677b87bd2049ffd007b",
+    "limits": [
+      "Node VM engine simulation, not browser or human playtest",
+      "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+      "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+      "No edits to source or actual user save; no infinite resources"
+    ],
+    "errors": []
+  },
+  "methodology": "Finite fresh actual engine, source-informed policy. Actual NPC talk closure invoked under presentation stub. UI.speak and director pools observed read-only. Not browser.",
+  "priorNaturalTraceFiles": 52,
+  "priorFiles": [
+    "qa-artifacts/qa-cycle-20261026/cycle8/systems/player02/attempt02/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle8/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle8/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle8/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle6/systems/player02/attempt02/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle6/systems/player02/attempt03/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle6/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle6/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle6/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle1/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle1/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle1/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle7/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle7/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle7/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle9/systems/player02/attempt02/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle9/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle9/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle9/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle10/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle10/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle10/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle11/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle11/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle11/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle2/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle2/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle2/survival/attempt02/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle2/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle5/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt02/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle5/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle4/systems/player02/attempt02/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle4/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle4/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle4/survival/attempt02/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle4/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle3/systems/player02/attempt02/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle3/systems/player02/attempt03/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle3/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt02/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle3/survival/attempt02/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle3/survival/attempt01/player31-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle13/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle13/story/agent03/attempt01/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle13/survival/attempt01/player34-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle13/survival/bori-save-branch/attempt01/player35-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle12/systems/player02/attempt01/player02-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle12/story/agent03/attempt02/agent03-trace.json",
+    "qa-artifacts/qa-cycle-20261026/cycle12/survival/attempt01/player31-trace.json"
+  ],
+  "exactPriorTextRows": 117,
+  "newTextRows": 29,
+  "newNormalizedPairs": [
+    [
+      "camp_dogs",
+      0
+    ],
+    [
+      "exp_bowling",
+      1
+    ],
+    [
+      "exp_fishfarm",
+      1
+    ],
+    [
+      "exp_woodshop",
+      1
+    ],
+    [
+      "talk_kw_03",
+      1
+    ],
+    [
+      "talk_kw_06",
+      1
+    ],
+    [
+      "talk_kw_21",
+      1
+    ],
+    [
+      "talk_pss_19",
+      0
+    ],
+    [
+      "talkr_kw_1",
+      1
+    ]
+  ],
+  "reloads": {
+    "entry": 146,
+    "paid": 146,
+    "loadedFalse": 0,
+    "replayedFalse": 0,
+    "reapplied": 0,
+    "snapshotChanges": 0
+  },
+  "shortSpeech": 131,
+  "npcPresentations": 12,
+  "boriPools": {
+    "find_bori_nose": {
+      "poolOccurrences": 0,
+      "poolDriving": 0,
+      "poolStopped": 0,
+      "selected": 0
+    },
+    "bori_tag": {
+      "poolOccurrences": 1,
+      "poolDriving": 0,
+      "poolStopped": 1,
+      "selected": 0
+    },
+    "bori_family": {
+      "poolOccurrences": 0,
+      "poolDriving": 0,
+      "poolStopped": 0,
+      "selected": 0
+    }
+  },
+  "directorPoolsTotal": 17,
+  "poolLimitation": "These are real directEventPool outputs after cooldown gate, before possible queued-story substitution. Candidate inclusion is not guaranteed weighted selection. Family is a separate node exploration pool and does not appear here.",
+  "counts": {
+    "new-game": 1,
+    "unpaid-entry-reload": 146,
+    "choice": 146,
+    "paid-result-reload": 146,
+    "explore": 26,
+    "travel": 35,
+    "drive": 66,
+    "buy-upgrade": 1,
+    "camp": 17,
+    "npc-local": 6,
+    "work": 5,
+    "trade": 27,
+    "meet-recruit": 3,
+    "recruit-step": 7,
+    "camp-talk": 15,
+    "accept-companion": 3,
+    "talk": 31,
+    "earned-perk": 6,
+    "camp-meal": 1,
+    "camp-repair": 1,
+    "craft": 1,
+    "walkfuel": 6
+  },
+  "resourceMin": {
+    "food": 0,
+    "water": 0,
+    "fuel": 0,
+    "scrap": 14,
+    "van": 82
+  },
+  "readStatus": "complete: all271 choices across both attempts; full actual dialogue/record routes, distinct188 narrative copies, all265 short speech calls, all26 NPC greetings/replies, field work and messages read; repeated copy compared",
+  "classification": "fresh-finite-journey",
+  "cohortExcluded": false,
+  "attempt": "attempt01",
+  "freshStart": true,
+  "resume": false,
+  "readerReloads": {
+    "entry": 146,
+    "paid": 146,
+    "unequal": 0
+  },
+  "failedPublicAttempts": [
+    {
+      "trace": 436,
+      "action": "recruit-step",
+      "result": false
+    }
+  ],
+  "newConfirmedEventsInAttempt": 11,
+  "runtimeAndEndSourceFrozen": true,
+  "radioRepairSuccessful": 0,
+  "radioEnabledObservations": 0,
+  "sceneCandidateKeyCount": 93
+}

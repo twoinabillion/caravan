@@ -1,0 +1,48 @@
+[
+  {
+    "kind": "narration",
+    "text": "즉석 사업계획이 발표됐다. 상호 「고쳐드림」(재이 작명), 본점 위치 미정, 초기 자본 고철 30(투자자: 나)."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "지분은요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "셋이 똑같이요."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 먼저 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "눈이 손보다 좀 더 받아야 되는데요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "손이 없으면 눈이 뭘 봐요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…그건 그러네요."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 이 초 만에 접었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "서울 끝나면 1호점이에요."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 손을 내밀었고 민지가 잡았다. 재이가 「고쳐드림사」로 고쳐 부르자 민지는 벌써 상호를 바꾸냐고 물었다. 이름은 다시 「고쳐드림」이 됐다."
+  }
+]

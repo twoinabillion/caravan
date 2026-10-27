@@ -1,0 +1,136 @@
+[
+  {
+    "id": "ev_salt_farmer",
+    "choice": 0,
+    "file": "ev_salt_farmer-0-paid.json",
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "고철 넷?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "넷. 대신 자루는 큰 걸로 줄게. 어차피 무게 잴 저울도 없어.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "사내가 소금 자루를 안겼다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이거면 겨우내 고기 안 상해. 상처엔 물에 타서— 아니, 그건 좀 묽게 해야 되고.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "쓰는 법 설명이 자꾸 길어졌다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"고철 넷?\"\n\n\"넷. 대신 자루는 큰 걸로 줄게. 어차피 무게 잴 저울도 없어.\" 사내가 소금 자루를 안겼다.\n\n\"이거면 겨우내 고기 안 상해. 상처엔 물에 타서— 아니, 그건 좀 묽게 해야 되고.\" 쓰는 법 설명이 자꾸 길어졌다."
+  },
+  {
+    "id": "ev_salt_farmer",
+    "choice": 1,
+    "file": "ev_salt_farmer-1-paid.json",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "한 시간 소금 긁는 걸 도왔다. 허리가 끊어질 듯했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "소금밭은 물 대는 게 팔 할이야. 긁는 건— 아니다, 해봤으니 알겠네.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "사내가 말을 접고 자루를 넉넉히 채워줬다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "땀 흘린 값이야.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "손등에 소금이 하얗게 앉았다.",
+        "displayName": null
+      }
+    ],
+    "text": "한 시간 소금 긁는 걸 도왔다. 허리가 끊어질 듯했다.\n\n\"소금밭은 물 대는 게 팔 할이야. 긁는 건— 아니다, 해봤으니 알겠네.\" 사내가 말을 접고 자루를 넉넉히 채워줬다.\n\n\"땀 흘린 값이야.\" 손등에 소금이 하얗게 앉았다."
+  },
+  {
+    "id": "gp_envelope",
+    "choice": 0,
+    "file": "gp_envelope-0-paid.json",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "봉투를 열었다. 안에는 쪽지 한 장.",
+        "displayName": null
+      },
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "할아버지의 쪽지",
+        "medium": "paper",
+        "text": "아직 남산 아니지 않냐.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "…그리고 그 뒤에 진짜 봉투가 한 겹 더 있었다. 「이번엔 진짜다. 남산 보고 열어라」",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "다들 한참 웃었고, 웃음 끝이 조금 젖었다. 손주가 어떤 인간인지 정확히 아는 사람의 이중 포장이었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "속봉투는 도로 수첩 뒤에 꽂았다. 남산까지 갖고 간다.",
+        "displayName": null
+      }
+    ],
+    "text": "봉투를 열었다. 안에는 쪽지 한 장.\n\n\"아직 남산 아니지 않냐.\"\n\n…그리고 그 뒤에 진짜 봉투가 한 겹 더 있었다. 「이번엔 진짜다. 남산 보고 열어라」\n\n다들 한참 웃었고, 웃음 끝이 조금 젖었다. 손주가 어떤 인간인지 정확히 아는 사람의 이중 포장이었다.\n\n속봉투는 도로 수첩 뒤에 꽂았다. 남산까지 갖고 간다."
+  },
+  {
+    "id": "gp_envelope",
+    "choice": 1,
+    "file": "gp_envelope-1-paid.json",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "봉투를 수첩 뒤에 도로 꽂았다. 남산 보고 열라면, 남산 보고 연다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "그날 이후 수첩이 전보다 자주 눈에 들어왔다. 뒷표지가 살짝 불룩한 것도.",
+        "displayName": null
+      }
+    ],
+    "text": "봉투를 수첩 뒤에 도로 꽂았다. 남산 보고 열라면, 남산 보고 연다.\n\n그날 이후 수첩이 전보다 자주 눈에 들어왔다. 뒷표지가 살짝 불룩한 것도."
+  }
+]

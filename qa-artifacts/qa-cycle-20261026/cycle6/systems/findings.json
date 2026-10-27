@@ -1,0 +1,44 @@
+[
+  {
+    "id": "SYS-C6-STORY01",
+    "event": "exp_noodleworks",
+    "attempt": "01",
+    "trace": 72,
+    "source": "src/03-data.js",
+    "title": "아침 2시간 작업이 그날 저녁 식사까지 완료한 것으로 서술",
+    "evidence": "남원 day3 08:30→10:30. 결과: 그날 저녁은 잔치국수.",
+    "cause": "120분 효과와 무관한 고정 저녁 완료 표현",
+    "entrySave": "player02/attempt01/entry-71-exp_noodleworks-export.json",
+    "assigned": "survival",
+    "status": "confirmed on frozen journey; fix tracked separately",
+    "reportedToRoot": true
+  },
+  {
+    "id": "SYS-C6-STORY02",
+    "event": "vg_seoulline",
+    "attempt": "02",
+    "trace": 579,
+    "source": "src/03-data.js",
+    "title": "대전→세종 길에서 서울·남산타워가 보였다고 기록",
+    "evidence": "day54 13:51, 대전→세종 13.628/20km 운행 중. 결과 seoul_seen과 처음 본 스카이라인 기록 지급.",
+    "cause": "north 광역 태그만 있고 실제 서울 인근 거리 gate 없음",
+    "entrySave": "player02/attempt02/entry-578-vg_seoulline-export.json",
+    "assigned": "systems",
+    "status": "confirmed on frozen journey; fix tracked separately",
+    "reportedToRoot": true
+  },
+  {
+    "id": "SYS-C6-STORY03",
+    "event": "seoul_core",
+    "attempt": "03",
+    "trace": 82,
+    "source": "src/03-data.js",
+    "title": "143년 흔적 선택이 미획득 응원봉·네 컷 사진을 실물로 배치",
+    "evidence": "실제 trace flags registry,dialect,theories,route,consent만. found 목록 뒤 arrange 문장은 응원봉·이송표·물병·네 컷 사진 고정.",
+    "cause": "앞 목록만 현재 기록에 맞추고 후속 배치 문장은 고정",
+    "entrySave": "player02/attempt03/entry-81-seoul_core-export.json",
+    "assigned": "story",
+    "status": "confirmed on frozen journey; fix tracked separately",
+    "reportedToRoot": true
+  }
+]

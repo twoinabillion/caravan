@@ -1,0 +1,143 @@
+{
+  "at": "2026-10-26T12:12:56.341321+00:00",
+  "cohortExcluded": true,
+  "status": "stopped_on_parent_request_after_user_stop",
+  "generationComplete": 5,
+  "parkssRegenerationComplete": true,
+  "finalDeliveryViewed": 5,
+  "confirmed360And480Viewed": 2,
+  "unconfirmedSizeReviews": 3,
+  "rootIndependentReview": 0,
+  "actualGallery": 0,
+  "actualGameCrop": 0,
+  "assetFilesCopied": 0,
+  "sourceMappingChanges": 0,
+  "newJourneys": 0,
+  "productionSourceEdits": 0,
+  "deliveryBytes": 463720,
+  "sourceContext": "source-context.json",
+  "rows": [
+    {
+      "key": "comp-talk-kangwoo-camp-day-v1",
+      "event": "talk_kw_16",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "강우 한 명, 올리브색 겉옷, 내민 건빵 봉지와 흰 별사탕 두 개. 부드러운 낮빛, 차량 외관과 다른 동료 없음. 먹거나 돌려주는 결과를 선행하지 않음.",
+        "local360And480Viewed": true,
+        "localSizeReviewLimit": null,
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "comp-talk-parkss-camp-day-v1",
+      "event": "talk_pss_18",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "박 선생 한 명, 안경과 회색 머리, 읽을 수 없는 메모와 펜·왕진가방. 최종본은 불투명 천막 배경. 이름을 적는 결과나 메모의 답을 미리 보여주지 않음.",
+        "local360And480Viewed": true,
+        "localSizeReviewLimit": null,
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "combat-walker-watch-night-v1",
+      "event": "perimeter_first",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "기존 네 다리 회색 로봇과 산업 도로 구도 유지. 흐린 밤 하늘과 제한된 인공광. 공격·폭발·승리 결과를 추가하지 않음.",
+        "local360And480Viewed": false,
+        "localSizeReviewLimit": "Preview files exist; batch image output was truncated. These three size reviews are not counted as completed.",
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "event-crisis-exhaustion-night-v1",
+      "event": "crisis_drowsy",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "운전석의 핸들·장갑 낀 손·계기판·어두운 전방 도로와 전조등. 얼굴과 수면·세수·사고 결과 없음.",
+        "local360And480Viewed": false,
+        "localSizeReviewLimit": "Preview files exist; batch image output was truncated. These three size reviews are not counted as completed.",
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    },
+    {
+      "key": "settlement-road-echo-night-v1",
+      "event": "settlement_road_echo",
+      "review": {
+        "status": "producer_delivery_review_complete; partial_local_size_review; stopped_by_user",
+        "finalDeliveryViewed": true,
+        "entryAndAllOutcomesRead": true,
+        "observation": "기존 갓길·차량·짐수레·익명 주민의 위치를 유지한 야간 변형. 미영입 동료나 새로운 완료 보상 없음.",
+        "local360And480Viewed": false,
+        "localSizeReviewLimit": "Preview files exist; batch image output was truncated. These three size reviews are not counted as completed.",
+        "rootIndependentReview": false,
+        "actualGallery": false,
+        "actualGameCrop": false
+      },
+      "preservedAtStop": {
+        "masterHashMatches": true,
+        "deliveryHashMatches": true,
+        "oldAssetHashMatches": true,
+        "assetDestinationExists": false
+      }
+    }
+  ],
+  "relatedGeneralFive": {
+    "directory": "../visual-systems",
+    "generatedAndExported": 5,
+    "assetFilesCopied": 5,
+    "sourceMappingChanges": 0,
+    "rootIndependentReview": 0,
+    "actualGallery": 0,
+    "actualGameCrop": 0,
+    "note": "General five completed before stop; producer source/master/delivery/360/480 review recorded separately. No root/UI approval claimed."
+  },
+  "remaining": [
+    "Root independent image/context review for general five and time five",
+    "Three night assets local 360/480 visual review",
+    "Copy time five to assets only after renewed instruction",
+    "Gallery/game crop verification and production mapping remain unstarted by systems"
+  ],
+  "stopInstruction": "No new generation, journeys, source changes or further QA. Checkpoint existing results only. Global docs/commit/push are root-owned."
+}

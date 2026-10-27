@@ -1,0 +1,50 @@
+[
+  {
+    "id": "S15-01",
+    "classification": "natural-confirmed-temporal",
+    "eventId": "ev_comp_argument",
+    "choice": 2,
+    "trace": 255,
+    "actual": "DAY6 390→430 (40 min); result says 강우가 며칠 말이 없었다.",
+    "expected": "Immediate outcome must not certify several future days; keep present silence or a future possibility.",
+    "source": "src/03-data.js ev_comp_argument choices[2].out[0]",
+    "reproduction": "Retained seed275001 fresh policy reaches trace255; result has fx.time40 and no multi-day follow-up.",
+    "minimumFix": "Replace only the completed several-day silence with an immediate reaction; preserve time/FX/paid text."
+  },
+  {
+    "id": "S15-02",
+    "classification": "natural-confirmed-reader-role",
+    "eventId": "ev_comp_argument",
+    "choice": 2,
+    "trace": 255,
+    "actual": "First decision quote 안전이 먼저야. 돌아가자. is Kangwoo; following quote 대장이 그렇다면 is also Kangwoo.",
+    "expected": "Player chooses Minji's position; first quote is me and second Kangwoo.",
+    "source": "src/03-data.js ev_comp_argument; actual buildStoryTurns output",
+    "reproduction": "readerEvidence.result in raw trace255; no source fixes applied.",
+    "minimumFix": "Explicit result route [me,kangwoo], audit sibling outcomes independently."
+  },
+  {
+    "id": "S15-03",
+    "classification": "natural-confirmed-reader-role",
+    "eventId": "comp_dialect",
+    "choice": 0,
+    "trace": 208,
+    "actual": "Internal crew word game uses external passer_refugee / ??? five times.",
+    "expected": "Use actual present crew and player; no unnamed newcomer is introduced. Specific allocation requires authored clarification; do not invent a new external person.",
+    "source": "src/03-data.js comp_dialect, minParty2; actual named reader",
+    "reproduction": "trace208, party Minji/Kangwoo. Entry mentions nationwide travelling car and an excited questioner; result calls it this car's vocabulary.",
+    "minimumFix": "Explicit actual-crew questioner/respondent metadata, protect all results and alternate rosters."
+  },
+  {
+    "id": "S15-04",
+    "classification": "natural-confirmed-reader-role",
+    "eventId": "ev_cinema_film",
+    "choice": 2,
+    "trace": 350,
+    "actual": "Protagonist keeps film reel and promises 언젠가 어디서 틀어보자, rendered passer_man / ???.",
+    "expected": "The remark belongs to the party/protagonist; no outsider is introduced in the empty cinema.",
+    "source": "src/03-data.js ev_cinema_film choices[2].out[0]",
+    "reproduction": "trace350, Minji/Kangwoo, actual reader result.",
+    "minimumFix": "Explicit player route, preserve prose/FX/paid reader."
+  }
+]

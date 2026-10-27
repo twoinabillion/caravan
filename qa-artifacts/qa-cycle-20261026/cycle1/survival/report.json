@@ -1,0 +1,270 @@
+{
+  "cycle": 1,
+  "seed": 261001,
+  "fullEnding": true,
+  "method": "core_transfer",
+  "summary": {
+    "id": "player31",
+    "persona": "sleep and companion caretaker; targeted familiar policy, not blind",
+    "seed": 261001,
+    "pack": "fuel",
+    "status": "ended",
+    "error": null,
+    "ending": "story_done",
+    "state": {
+      "at": "seoul",
+      "location": "서울 — 남산",
+      "day": 6,
+      "min": 1210,
+      "km": 430,
+      "driving": null,
+      "fuel": 31.925614999999834,
+      "water": 12,
+      "food": 8,
+      "scrap": 28,
+      "van": 94.43999999999984,
+      "fatigue": 58.1389900000001,
+      "party": [
+        "kangwoo"
+      ],
+      "items": {
+        "부품": 8,
+        "의약품": 2,
+        "탄약": 0,
+        "부모님의 검증키": 1,
+        "할아버지의 봉투": 1
+      },
+      "weather": "clear",
+      "campNight": 5,
+      "campPlan": {},
+      "campParticipants": [
+        "kangwoo"
+      ],
+      "campConversation": null,
+      "crew": {
+        "kangwoo": {
+          "name": "강우",
+          "mood": 100,
+          "bond": 18,
+          "injury": null
+        }
+      },
+      "up": {},
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": true,
+      "endKind": "story_done",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "completed",
+        "tracked": true,
+        "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+        "act": "종장",
+        "chapterId": "ending",
+        "eyebrow": "메인 스토리 · 종장",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "phase": "남산 코어 · 여정 기록",
+        "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+        "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+        "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+        "steps": [
+          {
+            "id": "ending",
+            "label": "남산 코어에서 최종 결정을 내렸다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      "navigation": {
+        "key": "main_ending",
+        "kind": "main",
+        "target": "seoul",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+      }
+    },
+    "method": "core_transfer",
+    "storyDone": true,
+    "route": [
+      "yangsan",
+      "miryang",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "sangju",
+      "mungyeong",
+      "chungju",
+      "cheongju",
+      "cheonan",
+      "pyeongtaek",
+      "suwon",
+      "seoul"
+    ],
+    "actions": 316,
+    "choices": 71,
+    "events": [
+      "opening_workshop",
+      "opening_bus_repair",
+      "opening_name_introduction",
+      "opening_failed_appeal",
+      "opening_parents_module",
+      "opening_departure",
+      "opening_farewell",
+      "lc_busan_dried",
+      "meet_postman",
+      "onboarding_first_road",
+      "memory_busan_terminal",
+      "meet_scrapyard",
+      "rq_minji_request",
+      "exp_outdoor",
+      "story_bridge_departure_echo",
+      "kw_recruit",
+      "rq_kangwoo_task",
+      "cell_dome_meet",
+      "story_bridge_trace_gap",
+      "camp_thief",
+      "rq_kangwoo_join",
+      "talk_kw_16",
+      "ev_broadcast_station",
+      "levy_office",
+      "route_mid_fork",
+      "parents_diversion_manifest",
+      "salvage_claim",
+      "route_ridge_rescue",
+      "route_ridge_anchor",
+      "route_ridge_extract",
+      "exp_photostudio",
+      "story_bridge_watched",
+      "loc_mungyeong",
+      "near_mungyeong_omija",
+      "parents_separated_work",
+      "perimeter_first",
+      "talk_kw_07",
+      "lc_chungju_lake",
+      "story_generation_form",
+      "story_family_principle",
+      "story_family_key",
+      "story_personal_cache",
+      "story_parent_route_shared",
+      "main_transfer_testimony",
+      "crisis_nofuel",
+      "cleaners_recall",
+      "talkr_kw_2",
+      "main_command_ledger",
+      "story_bridge_parent_route",
+      "history_failed_namsan",
+      "parents_father_last_log",
+      "crisis_nofuel2",
+      "gp_envelope",
+      "story_bridge_child_voice",
+      "talk_kw_02",
+      "history_parents_network",
+      "parents_mother_reunion",
+      "parents_mother_truth",
+      "main_relay_conference",
+      "han_bridge",
+      "seoul_open",
+      "seoul_han",
+      "seoul_ruins",
+      "seoul_square",
+      "seoul_base",
+      "seoul_core",
+      "seoul_costs",
+      "seoul_decision",
+      "seoul_night",
+      "seoul_uplink_reveal",
+      "seoul_session_reset"
+    ],
+    "runnerHash": "44a29dd545557cd8a6429ad06866763f04734bb12427b724a35c4afd0046907b",
+    "sourceHash": "54419fafaea6eeff91ba98168ea51990d3856eff8b5c4043e295f307a8d94cdb",
+    "limits": [
+      "Node VM engine simulation, not browser or human playtest",
+      "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+      "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+      "No edits to source or actual user save; no infinite resources"
+    ],
+    "errors": []
+  },
+  "readThrough": {
+    "allChoiceTextRead": true,
+    "choices": 71,
+    "file": "attempt01/read-through.md"
+  },
+  "findings": [
+    {
+      "id": "S-A02",
+      "prior": "expedition A02",
+      "severity": "P1",
+      "evidence": "prior normal save replay + source + fixture, not fresh natural occurrence",
+      "actual": "0 enabled choices at food0 without Minji",
+      "expected": "a legal response",
+      "fix": "append free decline index2 with fx{}",
+      "status": "engine regression passed"
+    },
+    {
+      "id": "S-A01",
+      "prior": "expedition A01",
+      "severity": "P2",
+      "evidence": "artificial finite fixtures",
+      "actual": {
+        "drowsy": [
+          90,
+          50.4
+        ],
+        "sofa": [
+          40,
+          36.7
+        ],
+        "drivein": [
+          40,
+          61.6
+        ],
+        "filmset": [
+          40,
+          37
+        ]
+      },
+      "expected": "authored sleep does not accrue awake fatigue",
+      "fix": "partial sleeping true retains existing recovery; drive-in full sleep true resets before boundaries",
+      "after": {
+        "drowsy": 45,
+        "sofa": 34,
+        "drivein": 0,
+        "filmset": 10
+      },
+      "status": "engine regression passed"
+    },
+    {
+      "id": "S-A03",
+      "prior": "expedition A03",
+      "severity": "P2",
+      "evidence": "food0/3 artificial finite fixtures",
+      "actual": "food0 result claims food and last packet",
+      "expected": "stock-consistent prose with legal free wait",
+      "fix": "neutral waiting description; retain time120 and clamped food-1",
+      "status": "engine regression passed"
+    }
+  ],
+  "open": [
+    {
+      "id": "S-review-01",
+      "event": "exp_jjimjil",
+      "severity": "design review",
+      "text": "8h awake sauna relaxation increases fatigue; no explicit sleep in prose, left unchanged"
+    }
+  ],
+  "limits": [
+    "VM engine with presentation/timer/audio stubs; no browser or user save interaction",
+    "prior report/policy/source knowledge disclosed",
+    "cycle1 failed intended companion coverage due policy; handled in cycle2",
+    "full suite/build delegated to root"
+  ]
+}

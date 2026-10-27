@@ -1,0 +1,35 @@
+{
+  "classification": "post-cycle17-repairs-for-cycle18",
+  "cohortExcluded": true,
+  "naturalOriginalOwn": 3,
+  "naturalOtherAgent": 1,
+  "derivedEvents": 31,
+  "totalChangedEvents": 35,
+  "metadataFields": 68,
+  "copyFields": 2,
+  "tests": {
+    "initialGroup": 17,
+    "additionalGroup": 30,
+    "total": 47
+  },
+  "oldPaidFixtures": {
+    "initial": 44,
+    "additional": 53,
+    "total": 97
+  },
+  "legacyFinalIndex": "repairs18-additional/legacy-index-final.json",
+  "sourceEdits": "metadata plus two approved phrases in src/03-data.js; no effects/gates/indices changed",
+  "deltaFiles": [
+    "repairs18/field-delta-final.json",
+    "repairs18-additional/field-delta.json",
+    "repairs18-additional/copy-delta.json",
+    "repairs18-additional/copy-delta-departure.json"
+  ],
+  "productionEditingComplete": true,
+  "additionalCopyResolution": {
+    "event": "ev_near_seoul_sign",
+    "classification": "static-derived; not natural",
+    "change": "current joined hands instead of certified past departures",
+    "distanceGate": "No minRemain/maxRemain in frozen17 definition. Read-only confirmation only; no distance fix in this change."
+  }
+}

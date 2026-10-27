@@ -1,0 +1,102 @@
+{
+  "cycle": 2,
+  "seed": 262001,
+  "fullEnding": true,
+  "method": "core_transfer",
+  "day": 7,
+  "km": 599,
+  "rows": 378,
+  "choices": 80,
+  "party": [
+    "leo",
+    "eunsu"
+  ],
+  "allChoiceTextRead": true,
+  "findings": [
+    {
+      "id": "S2-01",
+      "severity": "P2",
+      "method": "natural n287 talk_leo_21 choice0; no Minji encounter in complete history",
+      "expected": "no unsupported named tool lender",
+      "actual": "Minji lent awl twice despite never met",
+      "fix": "remove named lender; existing awl and repeated engraving only",
+      "status": "fixed; same-seed attempt02 full ending and regression"
+    },
+    {
+      "id": "S2-02",
+      "severity": "P2",
+      "method": "real buildStoryTurns engine/reader fixture after natural prose review",
+      "expected": {
+        "talk_leo_21_out0": [
+          "leo",
+          "leo",
+          "me",
+          "leo"
+        ],
+        "talk_leo_14_out0": [
+          "me",
+          "leo",
+          "me",
+          "leo",
+          "leo"
+        ]
+      },
+      "actual": "fallback alternating first lines misattributes questions and consecutive Leo replies",
+      "fix": "explicit speaker routes on these two outcomes only",
+      "status": "fixed; regression17/17; next fresh journey after source freeze"
+    },
+    {
+      "id": "S2-03",
+      "severity": "P3",
+      "method": "natural n241,n245,n291 + no-entry-prerequisite fixture",
+      "events": [
+        "talk_leo_14",
+        "talk_es_02",
+        "talk_es_03"
+      ],
+      "actual": "unheard earlier statement and future repeated behavior paid as present result",
+      "fix": "current first explanation and single performance/trial call; preserve old notes/receipts",
+      "status": "fixed; regression17/17"
+    },
+    {
+      "id": "S2-04",
+      "severity": "P2",
+      "method": "independent real radio action callback and engine artificial terminal fixtures",
+      "actual": "post-fatal radio completion audio/render; stale terminal call consumes tube and flips radio flag",
+      "expected": "no completion callback or terminal mutations",
+      "owner": "systems",
+      "evidence": "crosscheck-systems01.json",
+      "status": "reported; awaiting owner fix/revalidation"
+    }
+  ],
+  "counts": {
+    "new-game": 1,
+    "unpaid-entry-reload": 80,
+    "choice": 80,
+    "paid-result-reload": 80,
+    "explore": 17,
+    "travel": 19,
+    "drive": 39,
+    "camp": 6,
+    "trade": 14,
+    "buy-upgrade": 1,
+    "meet-recruit": 2,
+    "recruit-step": 4,
+    "camp-talk": 6,
+    "accept-companion": 2,
+    "talk": 16,
+    "earned-perk": 4,
+    "work": 2,
+    "seoul-enter": 5
+  },
+  "limitations": [
+    "isolated actual engine with presentation/timer/audio stubs; no browser claim",
+    "source/policy/report exposure; not blind",
+    "same-seed attempt02 only lender fix revalidation, not independent player",
+    "Minji not met in cycle2; target cycle3 after freeze"
+  ],
+  "tests": [
+    "tests-green02.txt: survival11/11 with corrected real driver injury",
+    "dialogue-green01.txt: survival11 + companion dialogue6 =17/17"
+  ]
+}

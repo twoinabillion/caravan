@@ -1,0 +1,110 @@
+{
+  "fresh": [
+    {
+      "id": "C15-SYS-01",
+      "evidenceClass": "fresh-natural",
+      "status": "confirmed",
+      "trace": 330,
+      "event": "ev_container_port",
+      "phase": "entry",
+      "problem": "The government seal’s written warning is spoken by an unknown woman instead of displayed as a document.",
+      "observed": {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "text": "정리 대상 — 개봉 금지."
+      },
+      "sourceProof": "The surrounding text identifies government seal stickers, an old date and Tianyan handwriting. No woman is present.",
+      "entrySave": "player02/attempt01/entry-329-ev_container_port-export.json",
+      "allOutcomeEvidence": "container-reader-evidence.json",
+      "allOutcomeRuling": "Both opening outcomes and the leave outcome are already correct. Any entry repair must protect all3 outcomes.",
+      "ownerFiles": [
+        "src/03-data.js"
+      ],
+      "productionEdited": false
+    }
+  ],
+  "historicalBranch": [
+    {
+      "id": "C15-SYS-OLD-01",
+      "evidenceClass": "historical-normal-continuation",
+      "cohortExcluded": true,
+      "status": "confirmed",
+      "trace": 21,
+      "event": "daily-minji-kangwoo-check",
+      "problem": "Present-tense outside wheel inspection occurs during actual road motion.",
+      "observed": "민지는 세 걸음 갔다가 돌아보지 않았다. 강우는 그제야 바퀴 옆에 쪼그려 앉았다.",
+      "runtime": {
+        "day": 181,
+        "min": 713,
+        "driving": {
+          "from": "daejeon",
+          "to": "cheongju",
+          "gone": 28.85999999999998,
+          "dist": 34
+        }
+      },
+      "sourceProof": "G.tick→G.pickChat→UI.playChat; need only requires Minji and Kangwoo. The final line explicitly stages companions outside the moving vehicle.",
+      "ownerFiles": [
+        "src/03i-story-expansion.js"
+      ],
+      "productionEdited": false
+    }
+  ],
+  "candidates": [
+    {
+      "id": "C15-SYS-C01",
+      "status": "clarity-candidate",
+      "event": "exp_radioshop",
+      "trace": 220,
+      "problem": "Harvest text lists 진공관, 배선, 콘덴서 but grants only generic 부품1 and scrap4. The radio repair item stays0.",
+      "ruling": "A mismatched or generic tube is plausible, so this is not asserted as a missing-item mechanical defect. The distinction between useful generic components and the repair tube is unclear.",
+      "productionEdited": false
+    },
+    {
+      "id": "C15-SYS-N01",
+      "status": "no-defect",
+      "events": [
+        "lc_damyang_juktong",
+        "lc_cheonan_walnut"
+      ],
+      "ruling": "The anonymous vendors have no explicit name or stronger role source; ??? alone does not establish an attribution error."
+    },
+    {
+      "id": "C15-SYS-N02",
+      "status": "no-new-defect",
+      "events": [
+        "comp_rps"
+      ],
+      "cohortExcluded": true,
+      "ruling": "06:30 lunch prose was already an unpaid frozen entry in the historical source save. The continuation preserves the existing source text; it is not a new cycle15 midday event."
+    },
+    {
+      "id": "C15-SYS-N03",
+      "status": "no-defect",
+      "events": [
+        "daily-kangwoo-jaeyi-gear"
+      ],
+      "cohortExcluded": true,
+      "ruling": "Cleaning a carried vest can occur inside the passenger space; no explicit outside or driver action conflicts."
+    },
+    {
+      "id": "C15-SYS-N04",
+      "status": "unconfirmed-not-expanded",
+      "events": [
+        "ambient-day-moon"
+      ],
+      "cohortExcluded": true,
+      "ruling": "Storm weather alone does not prove the sky cannot briefly show the moon. No extra visibility gate inferred."
+    },
+    {
+      "id": "C15-SYS-N05",
+      "status": "no-defect",
+      "events": [
+        "rq_eunsu_join"
+      ],
+      "cohortExcluded": true,
+      "ruling": "Existing ready recruitment offers a receiver location, then explicitly waits outside. Final accept/decline is separate. This run declined; Eunsu is not counted as actually recruited."
+    }
+  ]
+}

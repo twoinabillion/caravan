@@ -1,0 +1,292 @@
+{
+  "cycle": 2,
+  "agent": "systems",
+  "at": "2026-10-25T17:44:57.566Z",
+  "method": "Informed QA using finite resources and public engine actions in an isolated VM; previous policies informed planning. No blind-play or browser claim. Actual production handlers use DOM/audio/ending sinks.",
+  "freshJourney": {
+    "seed": 262002,
+    "attempt": 1,
+    "failureAttempts": 0,
+    "status": "ended",
+    "ending": "story_done",
+    "method": "core_quarantine",
+    "session1End": true,
+    "choices": 81,
+    "traceRecords": 433,
+    "day": 9,
+    "km": 805,
+    "actualCompanions": [
+      "minji",
+      "kangwoo",
+      "jaeyi"
+    ],
+    "sourceHash": "335dcd7af996ffb94c3e02d6f197fd5968ef27b035aeea2e9111d96aa36431ec",
+    "sourceTiming": "Fresh journey preceded this cycle sleep/terminal-tool fixes; source freeze journey belongs to cycle3.",
+    "route": [
+      "yangsan",
+      "miryang",
+      "yangsan",
+      "ulsan",
+      "gyeongju",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "muju",
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "muju",
+      "jeonju",
+      "nonsan",
+      "daejeon",
+      "cheongju",
+      "cheonan",
+      "pyeongtaek",
+      "suwon",
+      "seoul"
+    ],
+    "actions": {
+      "new-game": 1,
+      "unpaid-entry-reload": 81,
+      "choice": 81,
+      "paid-result-reload": 81,
+      "explore": 17,
+      "travel": 21,
+      "drive": 42,
+      "trade": 42,
+      "work": 8,
+      "meet-recruit": 3,
+      "camp": 8,
+      "recruit-step": 8,
+      "camp-talk": 14,
+      "accept-companion": 3,
+      "earned-perk": 5,
+      "board-open": 5,
+      "buy-upgrade": 1,
+      "craft": 5,
+      "accept-quest": 1,
+      "turnin-quest": 1,
+      "seoul-enter": 5
+    },
+    "reload": {
+      "entry": 81,
+      "paidResult": 81,
+      "allLoaded": true,
+      "paidReapplied": 0
+    },
+    "features": {
+      "normalRecruitment": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "crafts": [
+        {
+          "id": "pipe",
+          "result": true
+        },
+        {
+          "id": "xbow",
+          "result": true
+        },
+        {
+          "id": "bolt",
+          "result": true
+        },
+        {
+          "id": "molotov",
+          "result": true
+        },
+        {
+          "id": "ammo",
+          "result": true
+        }
+      ],
+      "upgrades": [
+        "bench"
+      ],
+      "campConversations": {
+        "attempts": 14,
+        "succeeded": 6,
+        "correctlyRejectedSameNight": 8
+      },
+      "sideMission": {
+        "natural": true,
+        "type": "procurement",
+        "at": "daejeon",
+        "traceAccept": 309,
+        "traceHandIn": 310,
+        "parts": [
+          6,
+          4
+        ],
+        "scrap": [
+          41,
+          62
+        ],
+        "baseReward": 17,
+        "earlyBonus": 4,
+        "limit": "Existing carried goods handed in at the same location; not a distant fetch-and-return route."
+      },
+      "radio": "No tube naturally acquired or repaired in this fresh run.",
+      "treatment": "Joint driver/doctor injury remained a separately seeded regression fixture."
+    },
+    "errors": []
+  },
+  "transcriptReview": {
+    "file": "transcript01.json",
+    "entries": 81,
+    "newOrChangedRead": 40,
+    "exactIdenticalPreviouslyRead": 41,
+    "changedFile": "changed-transcript.json",
+    "scope": "All encountered event, choice and paid result text reviewed with actual roster, time and flow. Cycle1-identical passages compared exactly; forty changed entries read in full.",
+    "findings": [
+      {
+        "id": "SYS05",
+        "event": "loc_gyeongju",
+        "trace": 86,
+        "description": "Five-hour authored sleep accumulated awake fatigue: 45.54817 to 38.23817 instead of 25.54817, because the time effect lacked sleeping:true."
+      }
+    ],
+    "notes": [
+      "The three-person preservation branch uses actual Minji/Kangwoo/Jaeyi; Kangwoo bond -6 is the authored cost, leaving bond6.",
+      "No extra confirmed story fault in final preservation outcome.",
+      "Camp-talk rejected attempts were correctly blocked and are not counted as conversations."
+    ]
+  },
+  "fixes": [
+    {
+      "id": "SYS05",
+      "severity": "P2",
+      "problem": "Literal sleep outcomes accumulated awake fatigue; several short-rest labels promised a night or fixed dawn despite minute costs.",
+      "files": [
+        "src/03-data.js"
+      ],
+      "fix": "Added sleeping:true to eleven outcomes while preserving each existing time, fatigue, resource and other effect. No full fatigue reset added. Neutralized fixed time/overnight claims in exp_station, tent village, limestone cave, train depot and both road_night_circle options.",
+      "mechanicsPairs": [
+        [
+          "loc_gyeongju",
+          0,
+          0
+        ],
+        [
+          "crisis_collapse",
+          0,
+          0
+        ],
+        [
+          "crisis_collapse2",
+          0,
+          0
+        ],
+        [
+          "exp_station",
+          0,
+          0
+        ],
+        [
+          "comp_rps",
+          0,
+          1
+        ],
+        [
+          "exp_icehouse",
+          0,
+          1
+        ],
+        [
+          "ev_tent_village",
+          0,
+          0
+        ],
+        [
+          "ev_quarry_hideout",
+          0,
+          0
+        ],
+        [
+          "ev_limestone_cave",
+          1,
+          0
+        ],
+        [
+          "ev_train_depot",
+          1,
+          0
+        ],
+        [
+          "road_night_circle",
+          0,
+          0
+        ]
+      ],
+      "contract": "Root integrated exact eleven mechanics projections; original effects preserved in sleep-before-mechanics.json.",
+      "evidence": [
+        "player02/attempt01/player02-trace.json n86",
+        "sleep-candidates-final.json",
+        "sleep-before-mechanics.json",
+        "sleep-tests-before02.tap",
+        "sleep-tests-after01.tap"
+      ]
+    },
+    {
+      "id": "SYS06",
+      "severity": "P2",
+      "problem": "A fatal radio/repair/upgrade action could run completion effects after ending; stale radio/garage actions mutated the terminal state after archive creation.",
+      "files": [
+        "src/04e-engine-world.js",
+        "src/07-ui.js"
+      ],
+      "origin": "Survival agent independently reproduced radio first; this agent reproduced and found garage upgrade/repair and field-repair sound siblings.",
+      "fix": "Ended guards at radio/garage engine entry and road/garage handler entry; post-advance guards suppress UI, sound and install animation. Legitimate work costs/effects paid before fatal advance retain original ordering.",
+      "boundaries": [
+        "radio fatal/stale",
+        "field repair fatal/stale",
+        "garage upgrade fatal/stale",
+        "settlement repair fatal/stale"
+      ],
+      "evidence": [
+        "terminal-tools-before.json",
+        "terminal-tools-after.json",
+        "terminal-tests-before02.tap",
+        "terminal-tests-after.tap"
+      ]
+    }
+  ],
+  "crossReview": {
+    "survival": [
+      "Read applyFx sleeping/full-sleep distinction, drowsy/golf/filmset/drivein and Leo/fog changes.",
+      "Found a test injury represented as array, which would silently exercise no actual driver injury; survival agent fixed to G.addInjury plus active assertion and awake-fatigue control.",
+      "Actual buildStoryTurns verification resolves new free Leo line to speaker leo; leo-reader-crosscheck.json.",
+      "Full-sleep drivein resets fatigue through existing sleep:true; partial sleeping:true outcomes preserve their authored recovery. Fatal time, meals and injury progression checked."
+    ],
+    "radio": "Survival independent crosscheck of minute boundary/legacy load passed and exposed SYS06; their crosscheck-systems01.json remains separate evidence."
+  },
+  "verification": {
+    "sleepBefore": "sleep-tests-before02.tap:13 expected failures,2 controls pass",
+    "sleepAfter": "sleep-tests-after01.tap:15/15",
+    "terminalBefore": "terminal-tests-before02.tap:4 expected failures,7 pass",
+    "terminalAfter": "terminal-tests-after.tap:11/11",
+    "combined": "combined-tests-after02.tap:48/48 = systems11 + sleep15 + survival11 + handoff11",
+    "savedEarlierAttempts": [
+      "sleep-tests-before.tap retained: cave/train party gate fixture absent in2 cases; fixed harness before second red run.",
+      "terminal-tests-before.tap retained: normal control expected unnormalized loader flags; fixed test setup before second red run.",
+      "terminal audit first post-fix invocation supplied repository-relative output to dirname-relative script and failed ENOENT before writing; rerun with basename produced terminal-tools-after.json."
+    ],
+    "fullSuite": "Root owns full build/test; not claimed here.",
+    "browserRuns": 0
+  },
+  "sourceChanges": [
+    "src/03-data.js: eleven sleeping flags; local sleep-duration/time wording; root owns common mechanics contract.",
+    "src/04e-engine-world.js: canBuyUp, settlementRepair, fixRadio ended entry guards.",
+    "src/07-ui.js: wireStopActionButtons and renderGarage action terminal guards.",
+    "tests/test_qa_cycle_sleep_sweep.cjs new15 cases.",
+    "tests/test_qa_cycle_systems.cjs expanded6 to11 cases."
+  ],
+  "remaining": [
+    "Fresh radio acquisition still not demonstrated in cycles1/2. Prior normal-save repair was separately demonstrated in cycle1.",
+    "No distant fetch-and-return delivery completed in this fresh route.",
+    "No browser/device visuals, real pointer/keyboard interaction, audio playback or user-save refresh checked by this agent.",
+    "Cycle3 seed263002 waits for parent source freeze; planned alternate companions/features and finale."
+  ]
+}

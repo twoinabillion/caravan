@@ -1,0 +1,141 @@
+{
+  "classification": "fresh-finite-public-action-journey",
+  "cohortExcluded": false,
+  "seed": 282001,
+  "player": "player50",
+  "freshJourneys": 1,
+  "retries": 0,
+  "resumes": 0,
+  "partialReplaysInFresh": 0,
+  "ending": "core_sleep",
+  "storyDone": true,
+  "finalState": {
+    "day": 13,
+    "min": 709.1,
+    "km": 1128,
+    "party": [
+      "jaeyi",
+      "parkss",
+      "leo"
+    ],
+    "dog": true,
+    "food": 24,
+    "water": 24,
+    "fuel": 53.42491840000087,
+    "scrap": 48,
+    "van": 100,
+    "fatigue": 13.74986
+  },
+  "traceRows": 623,
+  "choices": 120,
+  "reloads": {
+    "entry": 120,
+    "paid": 120,
+    "loadedFalse": 0,
+    "replayedFalse": 0,
+    "reapplied": 0,
+    "snapshotChanges": 0,
+    "readerEqualFalse": 0,
+    "skippedEntry": 0,
+    "skippedPaid": 0,
+    "scope": "same-version actual G.load unpaid and paid; not a cross-version legacy migration test"
+  },
+  "review": {
+    "readerEntryResultPairs": 120,
+    "choiceMenus": 120,
+    "finalNotes": 121,
+    "shortSpeech": 100,
+    "npcPresentations": 12,
+    "sceneKeys": 95,
+    "actualImageFiles": 10,
+    "method": "Actual engine/reader and NPC closures under presentation/timer stubs; all collected text read, not browser"
+  },
+  "novelty": {
+    "baselinePrimarySegments": 75,
+    "exactPriorTextRows": 108,
+    "newOrChangedTextRows": 12,
+    "newNormalizedChoicePairs": 0,
+    "warning": "Policy local exposure is incomplete; do not use harness novelPairs as cumulative novelty"
+  },
+  "featureActions": {
+    "new-game": 1,
+    "unpaid-entry-reload": 120,
+    "choice": 120,
+    "paid-result-reload": 120,
+    "explore": 24,
+    "travel": 32,
+    "drive": 59,
+    "trade": 61,
+    "buy-upgrade": 1,
+    "camp": 12,
+    "board-open": 1,
+    "accept-quest": 1,
+    "npc-local": 6,
+    "work": 6,
+    "meet-recruit": 3,
+    "recruit-step": 8,
+    "camp-talk": 10,
+    "accept-companion": 3,
+    "earned-perk": 6,
+    "talk": 20,
+    "camp-meal": 1,
+    "camp-repair": 1,
+    "craft": 1,
+    "turnin-quest": 1,
+    "seoul-enter": 5
+  },
+  "successfulTrades": 61,
+  "failedTrades": 0,
+  "policyRejectedReadinessProbes": 2,
+  "resourcesMin": {
+    "food": 7,
+    "water": 16,
+    "fuel": 3.0551299999998895,
+    "scrap": 15,
+    "van": 81.60399999999989
+  },
+  "findings": {
+    "naturalTextMechanicsConfirmed": 0,
+    "naturalVisualMismatchCandidates": 1,
+    "naturalVisualClarityCandidates": 2,
+    "pendingRootTriage": true
+  },
+  "bori": {
+    "dog": true,
+    "tag": false,
+    "family": false,
+    "pools": {
+      "find_bori_nose": {
+        "poolOccurrences": 0,
+        "poolDriving": 0,
+        "poolStopped": 0,
+        "selected": 0
+      },
+      "bori_tag": {
+        "poolOccurrences": 0,
+        "poolDriving": 0,
+        "poolStopped": 0,
+        "selected": 0
+      },
+      "bori_family": {
+        "poolOccurrences": 0,
+        "poolDriving": 0,
+        "poolStopped": 0,
+        "selected": 0
+      }
+    },
+    "postDog": {
+      "camp": 3,
+      "explore": 5,
+      "drive": 11
+    },
+    "scope": "No nose/tag/family this journey; separate family node pool not inferred from director absence; historical C6 tag and C13 branch preserved"
+  },
+  "limitations": [
+    "No broad static sweep",
+    "No standalone combat or repaired-radio interaction in this route; route convoy and broadcast tape are separate",
+    "Pixel review 10 files only; scene key semantics reviewed for all 95 keys, no claim all assets/crops viewed",
+    "Jaeyi/Parkss/Leo + Bori goals achieved; no forced Bori followup",
+    "Policies source/coverage-informed, not blind"
+  ]
+}

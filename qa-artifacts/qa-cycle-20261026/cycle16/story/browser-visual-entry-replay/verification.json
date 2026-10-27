@@ -1,0 +1,26 @@
+{
+  "cohortExcluded": true,
+  "partialReplay": true,
+  "seed": 275003,
+  "sourceHash": "1911ad89b75afe51e44e8c8856bd7d6b7a16f070c0d717214e5230be996df9ab",
+  "sourceUnchanged": true,
+  "comparedTraceActions": 127,
+  "choicesBeforeIntentionalStop": 24,
+  "originalGameplayStatesChoicesAndWordsEqual": true,
+  "expectedDifferences": "exp_reservoir new explore-rainwater-cistern-v1 scene mapping, near_miryang_ice new local-miryang-ice-crevice-v1 scene on fresh UI entry; image keys may differ while gameplay stays equal. No frozen view removal or save mutation.",
+  "exports": [
+    {
+      "event": "exp_reservoir",
+      "path": "agent03/attempt01/normal-unpaid-36-exp_reservoir.json",
+      "viewNullish": true,
+      "publicStateMatchesOriginal": true
+    },
+    {
+      "event": "near_miryang_ice",
+      "path": "agent03/attempt01/normal-unpaid-126-near_miryang_ice.json",
+      "viewNullish": true,
+      "publicStateMatchesOriginal": true
+    }
+  ],
+  "termination": "INTENTIONAL_NEW_VISUAL_ENTRY_CAPTURE_STOP; not journey failure/completion"
+}

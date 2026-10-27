@@ -1,0 +1,221 @@
+{
+  "cohortExcluded": true,
+  "status": "frozen23 paid fixtures; not fresh-play evidence",
+  "legacy": [
+    {
+      "choice": 0,
+      "file": "legacy-0.json",
+      "text": "조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다.\n\n\"끝까지 갈게요.\" 아무도 없는 다리에 대고 말했다. 라디오가 지직, 하고 꺼졌다. 대답처럼.",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "끝까지 갈게요.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "아무도 없는 다리에 대고 말했다. 라디오가 지직, 하고 꺼졌다. 대답처럼.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "끝까지 갈게요.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "아무도 없는 다리에 대고 말했다. 라디오가 지직, 하고 꺼졌다. 대답처럼.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "choice": 1,
+      "file": "legacy-1.json",
+      "text": "난간의 표식 하나하나에 눈을 맞추며 천천히 건넜다. 먼저 건넌 사람들에게, 그리고 못 건넌 사람들에게.\n\n다리 끝에서 룸미러를 봤다. 우리 뒤로 다리가 접히지 않았다. 돌아갈 길은 열어두겠다는 뜻으로 읽었다.",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "난간의 표식 하나하나에 눈을 맞추며 천천히 건넜다. 먼저 건넌 사람들에게, 그리고 못 건넌 사람들에게.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "다리 끝에서 룸미러를 봤다. 우리 뒤로 다리가 접히지 않았다. 돌아갈 길은 열어두겠다는 뜻으로 읽었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "난간의 표식 하나하나에 눈을 맞추며 천천히 건넜다. 먼저 건넌 사람들에게, 그리고 못 건넌 사람들에게.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "다리 끝에서 룸미러를 봤다. 우리 뒤로 다리가 접히지 않았다. 돌아갈 길은 열어두겠다는 뜻으로 읽었다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "choice": 2,
+      "file": "legacy-2.json",
+      "text": "김 선장의 해도를 무릎에 펼쳤다. 손가락으로 강줄기를 짚어 내려갔다. 이 물은 서해로 이어지고, 하구까지는 해도의 배가 온다.\n\n\"뭍에서 안 되면 물로 와라.\" 그 문장을 다리 위에서 다시 읽으니 뜻이 분명해졌다. 천리안의 입 안으로 들어가는 우리에게, 바다 사람들이 미리 뚫어놓은 숨구멍이었다.\n\n\"…퇴로가 있는 채로 건너는 다리는 덜 무섭네.\" 해도를 접어 품에 넣었다. 강물이 서쪽으로, 묵묵히 흐르고 있었다.",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "김 선장의 해도를 무릎에 펼쳤다. 손가락으로 강줄기를 짚어 내려갔다. 이 물은 서해로 이어지고, 하구까지는 해도의 배가 온다.",
+          "displayName": null
+        },
+        {
+          "kind": "record",
+          "who": "record",
+          "name": "김 선장의 해도",
+          "text": "뭍에서 안 되면 물로 와라.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "그 문장을 다리 위에서 다시 읽으니 뜻이 분명해졌다. 천리안의 입 안으로 들어가는 우리에게, 바다 사람들이 미리 뚫어놓은 숨구멍이었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "…퇴로가 있는 채로 건너는 다리는 덜 무섭네.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "해도를 접어 품에 넣었다. 강물이 서쪽으로, 묵묵히 흐르고 있었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "김 선장의 해도를 무릎에 펼쳤다. 손가락으로 강줄기를 짚어 내려갔다. 이 물은 서해로 이어지고, 하구까지는 해도의 배가 온다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "뭍에서 안 되면 물로 와라.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "그 문장을 다리 위에서 다시 읽으니 뜻이 분명해졌다. 천리안의 입 안으로 들어가는 우리에게, 바다 사람들이 미리 뚫어놓은 숨구멍이었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…퇴로가 있는 채로 건너는 다리는 덜 무섭네.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "해도를 접어 품에 넣었다. 강물이 서쪽으로, 묵묵히 흐르고 있었다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "choice": 3,
+      "file": "legacy-3.json",
+      "text": "강우가 차에서 내려, 표식들이 매달린 난간으로 걸어갔다. 군번줄 두 개를 꺼내 한참 쥐고 있었다.\n\n그러다 도로 목에 걸었다. \"…여기가 아니다. 부모님 손에 쥐여드릴 때까진 내가 든다.\"\n\n대신 리본 하나를 난간에 묶고, 부동자세로 이름을 불렀다. \"박일병. 김성재. …다리 건넌다. 같이 간다.\"\n\n바람이 표식들을 한꺼번에 흔들었다. 강우는 그걸 대답으로 들은 얼굴이었다.",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "강우가 차에서 내려, 표식들이 매달린 난간으로 걸어갔다. 군번줄 두 개를 꺼내 한참 쥐고 있었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "그러다 도로 목에 걸었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…여기가 아니다. 부모님 손에 쥐여드릴 때까진 내가 든다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "대신 리본 하나를 난간에 묶고, 부동자세로 이름을 불렀다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "박일병. 김성재. …다리 건넌다. 같이 간다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "바람이 표식들을 한꺼번에 흔들었다. 강우는 그걸 대답으로 들은 얼굴이었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "강우가 차에서 내려, 표식들이 매달린 난간으로 걸어갔다. 군번줄 두 개를 꺼내 한참 쥐고 있었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "그러다 도로 목에 걸었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…여기가 아니다. 부모님 손에 쥐여드릴 때까진 내가 든다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "대신 리본 하나를 난간에 묶고, 부동자세로 이름을 불렀다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "박일병. 김성재. …다리 건넌다. 같이 간다.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "바람이 표식들을 한꺼번에 흔들었다. 강우는 그걸 대답으로 들은 얼굴이었다.",
+          "displayName": null
+        }
+      ]
+    }
+  ]
+}

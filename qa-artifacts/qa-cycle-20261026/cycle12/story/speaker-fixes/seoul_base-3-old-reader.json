@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "narration",
+    "text": "차를 평지에 세우고 주차 브레이크를 두 번 확인했다. 수첩과 열쇠를 주머니에 넣은 뒤 계단을 올려다봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "할아버지, 차는 제대로 세웠어요. 이제 올라갑니다."
+  },
+  {
+    "kind": "narration",
+    "text": "대답 대신 식어 가는 엔진 소리만 들렸다. 안개 속으로 첫 계단을 올랐다."
+  }
+]

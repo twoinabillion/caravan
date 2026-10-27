@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-26T11:51:32.735453+00:00",
+  "method": "producer direct vision of native final PNG output,1024x576 WebP and480/360 local size previews; not real UI",
+  "scope": "Static source entry/all-outcomes + generated masters/deliveries. Not fresh cohort or actual UI.",
+  "rows": [
+    {
+      "event": "exp_mushroom",
+      "key": "explore-mushroom-growhouse-v1",
+      "format": "place",
+      "delivery": "assets/scenes/explore-mushroom-growhouse-v1.webp",
+      "bytes": 129306,
+      "sha256": "272aae2092214517da9757121085cb4c7b41846288871bdd681bd54a66e5bc96",
+      "sourceVision": {
+        "entryFit": "어두운 밀폐 재배사와 선반/재배목의 혼재 버섯이 명료하다. 사람·차량·채집바구니·감별 완료·조리/중독 결과 없음. 전원 켜진 기기 없음.",
+        "allOutcomesFit": "장소 진입 전경. 선택0 전문가 감별,선택1 안전/중독 두 결과 모두 사전 결정하지 않는다.",
+        "namedCompanionCount": 0,
+        "humanCount": 0,
+        "actualGallery": false,
+        "actualGameCrop": false,
+        "rootApprovalPending": true
+      }
+    },
+    {
+      "event": "exp_orchard",
+      "key": "explore-abandoned-orchard-v1",
+      "format": "place",
+      "delivery": "assets/scenes/explore-abandoned-orchard-v1.webp",
+      "bytes": 143224,
+      "sha256": "f3b19bdd34a73a409a816cfa3ad02d708a5de4a2417f4c42e46926a6bba35622",
+      "sourceVision": {
+        "entryFit": "사과가 달린 무거운 가지·정상/상처 열매·새2마리. 채소밭이 아니며 수확상자/사람/차량 없음. 전면의 정상 열매가 추가되어 모든 과일 부패처럼 보이던 초안을 보정했다.",
+        "allOutcomesFit": "두 선택 모두 수확 전. 큰 수확 또는 몇 개만 따는 결과를 고정하지 않는다.",
+        "namedCompanionCount": 0,
+        "humanCount": 0,
+        "actualGallery": false,
+        "actualGameCrop": false,
+        "rootApprovalPending": true
+      }
+    },
+    {
+      "event": "ev_container_port",
+      "key": "local-pyeongtaek-sealed-containers-v1",
+      "format": "place",
+      "delivery": "assets/scenes/local-pyeongtaek-sealed-containers-v1.webp",
+      "bytes": 126922,
+      "sha256": "93e784a14483f2a7e68780a76820ff54638c7c932894cf3656f086cbe20905c7",
+      "sourceVision": {
+        "entryFit": "폐항구 컨테이너 적층과 닫힌 문·살짝 뜯긴 봉인. 사람/달구지/개방문/내부물품 모두 없음. 기각 초안의 미영입4인과차량은 제거됐다.",
+        "allOutcomesFit": "열었을 때 구호물자/명단 두 확률결과와 비개봉 선택 모두 미예고. 봉인 인장처럼 보이는 추상흔적만 있고 본문을 대신하는 읽을 문구 없음.",
+        "namedCompanionCount": 0,
+        "humanCount": 0,
+        "actualGallery": false,
+        "actualGameCrop": false,
+        "rootApprovalPending": true
+      }
+    },
+    {
+      "event": "exp_villagehall",
+      "key": "explore-villagehall-cassette-v1",
+      "format": "detail",
+      "delivery": "assets/scenes/explore-villagehall-cassette-v1.webp",
+      "bytes": 73642,
+      "sha256": "55eca62cf8bc912944e923285bd39108ce85c559ad94a48e1bbeda02c3edd974",
+      "sourceVision": {
+        "entryFit": "빈 방송실 책상의 카세트·내장테이프·마이크·PA장비. 재생키 누르기/사람/창고보상 없음. 밝은 창은 닫힌 불투명 커튼으로 보완해 특정 주간감 단서를 줄였다.",
+        "allOutcomesFit": "재생과 창고탐색 모두 가능한 선택 전. 녹음의 과거 아침을 현재 시각으로 그리지 않는다.",
+        "namedCompanionCount": 0,
+        "humanCount": 0,
+        "actualGallery": false,
+        "actualGameCrop": false,
+        "rootApprovalPending": true
+      }
+    },
+    {
+      "event": "lc_cheonan_walnut",
+      "key": "local-cheonan-pedal-walnut-cart-v1",
+      "format": "character",
+      "delivery": "assets/scenes/local-cheonan-pedal-walnut-cart-v1.webp",
+      "bytes": 159642,
+      "sha256": "5d2598eb55941a8a9c7ac175b8da01ff753a5077191c5c700cfe38b1375f7ac7",
+      "sourceVision": {
+        "entryFit": "실제 reader의 passer_refugee 참조를 따른 익명 청년1명, 발 페달/체인/호두모양 주형기와 리어카가 함께 보인다. 달구지/동료/다른 손님 없음. 국도변 가드레일·수동 조리 열/연기.",
+        "allOutcomesFit": "한 봉지 구매 또는 인사 후 출발 둘 다 선택 전. 봉지 전달/고철교환/플레이어 소유보상 없음. 기계 위 판매용 과자 존재는 진입 영업행동과 맞고 구매 지급을 뜻하지 않는다.",
+        "namedCompanionCount": 0,
+        "humanCount": 1,
+        "actualGallery": false,
+        "actualGameCrop": false,
+        "rootApprovalPending": true
+      }
+    }
+  ],
+  "limits": [
+    "Still images minimize but do not certify every clock/weather combination.",
+    "480/360 size previews are local raster inspections, not actual browser/mobile screenshots.",
+    "No production scene mapping, gallery registration, source test, build or journey was performed."
+  ]
+}

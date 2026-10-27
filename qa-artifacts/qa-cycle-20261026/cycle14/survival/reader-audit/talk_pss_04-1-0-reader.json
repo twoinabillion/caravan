@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "갔었어. 잘."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 국자를 내려놓았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "아내가 해준 걸 하도 얻어먹었거든. 어깨너머로… 배웠다기보단 훔쳤지. 지금 내 손맛의 8할은 그 사람 거야. 아니, 9할인가."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "몇 할인데요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "세어본 적 없어."
+  },
+  {
+    "kind": "narration",
+    "text": "그때 눌어붙는 냄새가 났고, 박 선생이 화들짝 냄비를 저었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "아이고, 얘기하다 다 태우겠네."
+  }
+]

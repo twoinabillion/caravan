@@ -1,0 +1,142 @@
+{
+  "at": "2026-10-26T09:05:15.577Z",
+  "entries": [
+    {
+      "id": "explore-radioshop-shelves-v1",
+      "tool": "builtin image_gen.imagegen",
+      "intent": "Canonical-reference scene generation",
+      "generated": "/Users/sang/.codex/generated_images/01a17418-9e4a-7693-ac94-338b8fa8ec1b/exec-95abde70-1b88-4ede-808e-c47c43d3a87a.png",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/masters/explore-radioshop-shelves-v1-master.png",
+      "masterSha256": "f390095c8924122fb3a35b159a8d2c48d901b54d92d9c9ee88d478fe9b59ea20",
+      "masterDimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "requestedMasterDimensions": {
+        "width": 1536,
+        "height": 864
+      },
+      "masterPreservedUnmodified": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/explore-radioshop-shelves-v1.webp",
+      "deliverySha256": "9ff259d3c7129b3bc368962951ec80541aa27621204ae446400e4b882995831e",
+      "deliveryDimensions": {
+        "width": 1024,
+        "height": 576
+      },
+      "deliveryBytes": 114880,
+      "deliverySpace": "srgb",
+      "encoding": {
+        "library": "sharp",
+        "resize": [
+          1024,
+          576
+        ],
+        "fit": "cover",
+        "position": "centre",
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "prompt": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/explore-radioshop-shelves-v1-prompt.txt",
+      "request": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/explore-radioshop-shelves-v1-request.json",
+      "references": [
+        {
+          "path": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "viewedBeforeGeneration": true
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "viewedBeforeGeneration": true
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "viewedBeforeGeneration": true
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "viewedBeforeGeneration": true
+        }
+      ],
+      "productionWired": false,
+      "galleryChecked": false,
+      "inGameCropChecked": false
+    },
+    {
+      "id": "local-geochang-theatre-actor-v1",
+      "tool": "builtin image_gen.imagegen",
+      "intent": "Canonical-reference scene generation",
+      "generated": "/Users/sang/.codex/generated_images/01a17418-9e4a-7693-ac94-338b8fa8ec1b/exec-8d9ada00-0b33-4954-90bb-f3e0cd3c609c.png",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/masters/local-geochang-theatre-actor-v1-master.png",
+      "masterSha256": "10a7f668db22f99bf5075c57e0a917c01a42ca67468c7bea9e5ca634f49ff9f5",
+      "masterDimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "requestedMasterDimensions": {
+        "width": 1536,
+        "height": 864
+      },
+      "masterPreservedUnmodified": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/local-geochang-theatre-actor-v1.webp",
+      "deliverySha256": "566d5380ef7b593ae397beeb3b1540d1823ffd8e50c577ddeb7d3b555492561a",
+      "deliveryDimensions": {
+        "width": 1024,
+        "height": 576
+      },
+      "deliveryBytes": 53796,
+      "deliverySpace": "srgb",
+      "encoding": {
+        "library": "sharp",
+        "resize": [
+          1024,
+          576
+        ],
+        "fit": "cover",
+        "position": "centre",
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "prompt": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/local-geochang-theatre-actor-v1-prompt.txt",
+      "request": "qa-artifacts/qa-cycle-20261026/cycle21/visual-story/local-geochang-theatre-actor-v1-request.json",
+      "references": [
+        {
+          "path": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "viewedBeforeGeneration": true
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "viewedBeforeGeneration": true
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "viewedBeforeGeneration": true
+        },
+        {
+          "path": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "viewedBeforeGeneration": true
+        },
+        {
+          "path": "/Users/sang/caravan/assets/portraits/passer_man.png",
+          "sha256": "6443e11c4bac8cf25b6e1cd2915f055334f1e35a0ac5f49df1b03adafd873557",
+          "viewedBeforeGeneration": true
+        }
+      ],
+      "productionWired": false,
+      "galleryChecked": false,
+      "inGameCropChecked": false
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "kind": "narration",
+    "text": "말없이 옆에 서서 같은 방향을 봤다. 얼마 뒤 강우가 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…혼자 볼 땐 벌 서는 기분이었는데, 둘이 보니 보초 서는 기분입니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "벌과 보초의 차이가 뭔데요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…돌아갈 자리가 있는 겁니다."
+  },
+  {
+    "kind": "narration",
+    "text": "우리는 자리로 돌아갔다. 같이."
+  }
+]

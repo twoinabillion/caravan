@@ -1,0 +1,29 @@
+[
+  {
+    "id": "S19-01",
+    "category": "natural-reader-confirmed",
+    "n": 38,
+    "event": "exp_printshop",
+    "choice": 0,
+    "party": [],
+    "text": "서울까지 400km",
+    "actual": {
+      "kind": "dialogue",
+      "who": "passer_woman",
+      "displayName": "???"
+    },
+    "expected": "printed paper record, not an NPC utterance",
+    "source": "src/03-data.js:6824",
+    "recommendation": "Explicit record metadata for the one printed quote; preserve other outcome and frozen paid readers."
+  },
+  {
+    "id": "S19-V01",
+    "category": "natural-source-art-mismatch",
+    "n": 38,
+    "event": "exp_printshop",
+    "scene": "event-find-document",
+    "asset": "assets/scenes/event-find-document.webp",
+    "observed": "Two people examine papers with a flashlight in a derelict office. Natural party is empty and the unoccupied printshop scene describes a hand-operated type press.",
+    "scope": "Actual D.scenes token and build resolver followed; raster opened with view_image. No actual viewport/crop claim."
+  }
+]

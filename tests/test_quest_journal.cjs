@@ -19,7 +19,10 @@ test('all main stages use authored notes, known records only and partial reunion
  for(const [key,copy] of Object.entries(c.J.main)){
    const chapter=Object.keys(c.J.chapters).find(k=>c.J.chapters[k]===key)||key;
    const input={...row,chapterId:chapter,steps:[{id:key,state:'upcoming',label:'미래 단서'}]};
-   const j=c.J.entry(input);assert.equal(j.title,copy[0]);assert.equal(j.next,copy[1]);assert.equal(j.steps.length,0);
+   const j=c.J.entry(input);
+   if(key==='mother'){assert.equal(j.title,'엄마의 행방');assert.match(j.next,/북부 기록망/);}
+   else {assert.equal(j.title,copy[0]);assert.equal(j.next,copy[1]);}
+   assert.equal(j.steps.length,0);
    const known=c.J.entry({...input,steps:[{id:key,state:'done'}]});assert.equal(known.steps[0].detail,copy[2]);
  }
  c.S.flags.mother_reunited=true;assert.match(c.J.entry({...row,chapterId:'mother-reunion'}).next,/다시 만났다/);
@@ -130,7 +133,8 @@ test('quantity, arrival and overdue notes follow actual state rather than arbitr
   c.S.day=1;c.S.at='gimcheon';assert.doesNotMatch(c.J.entry(r).next,/도착했으니/);
   c.S.at='muju';assert.match(c.J.entry(r).next,/도착했으니/);assert.doesNotMatch(c.J.entry(r).next,/도착하면|에 가면/);
   c.S.driving={from:'gimcheon',to:'muju'};assert.doesNotMatch(c.J.entry(r).next,/도착했으니/);c.S.driving=null;
-  c.S.day=4;const late=c.J.entry(r);assert.match(late.next,/약속한 날을 넘겨.*전달은 마저/);assert.doesNotMatch(late.next,/너무 늦지는/);
+  c.S.day=4;const late=c.J.entry(r);assert.match(late.next,/약속한 날을 넘겨.*처리 상태/);assert.doesNotMatch(late.next,/너무 늦지는|전달은 마저|받을 사람을 찾아/);
+  assert.match(late.guide,/게시판.*처리 상태/);
   c.S.quest.noExpiry=true;assert.doesNotMatch(c.J.entry(r).next,/약속한 날을 넘겨/);
  }
 });

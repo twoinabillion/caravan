@@ -1,0 +1,64 @@
+{
+  "recordedAt": "2026-10-26T09:04:13.619865+00:00",
+  "sourceFreeze": "cycle21/frozen-source.json",
+  "engineHash": "43b982b514b86d2227f8b15b5cd2551c170c715b4173617123e9f4fb98fe6f3c",
+  "source40MatchesAtRecordTime": true,
+  "tests": {
+    "pass": 2175,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "test-source.log"
+  },
+  "build": {
+    "recordedAt": "2026-10-26T08:45:10.715197+00:00",
+    "sourceFreeze": "cycle21/frozen-source.json",
+    "engineHash": "43b982b514b86d2227f8b15b5cd2551c170c715b4173617123e9f4fb98fe6f3c",
+    "source40Matches": true,
+    "buildExitCode": 0,
+    "htmlBytes": 109231962,
+    "htmlSha256": "00fa8a8a1d6737b52f801b64e40cc6236de6facaf471055a6c75e7614699bf96",
+    "log": "build.log"
+  },
+  "quick": {
+    "exitCode": 0,
+    "log": "verify-quick.log",
+    "sceneClassAssets": 629,
+    "portraits": 74,
+    "mainCanonicalPortraits": 7
+  },
+  "journeys": {
+    "segments": 3,
+    "freshStarts": 3,
+    "normalSaveContinuations": 0,
+    "mainEndings": 3,
+    "otherEndings": 0,
+    "stoppedSegments": 0,
+    "choices": 311,
+    "traceRecords": 1645,
+    "entryReloads": 311,
+    "paidReloads": 311,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "methods": [
+    "core_sleep",
+    "core_quarantine",
+    "core_transfer"
+  ],
+  "review": {
+    "allThreeFullTextReviewed": true,
+    "allThreeRuntimeAndReviewEndSource40MatchesFreeze": true,
+    "findings": "New narrative/reader0. Five confirmed natural image/location mismatches plus a training-gate specificity improvement accepted for22; one ambient banter repeat132.5game-min later recorded separately without source change."
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4319/",
+    "eventFrameWidthCssPx": 480,
+    "postoffice": "Normal20pre-reader→letters→actualreload→road; fresh21entry→food→dialogue/result→road",
+    "provenance": "../cycle20/visual/provenance.json",
+    "originalQaBackupRestored": true,
+    "restoredAt": "DAY1 부산09:45 가온,21code",
+    "screen": "original-qa-restored-ui.png",
+    "responsive360": "Unverified; priorlimitationsretained"
+  },
+  "status": "Technical and3wholejourney review completed; newimagefindings require22. Not clean completion."
+}

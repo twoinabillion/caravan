@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…정직이 늘 미덕은 아니야."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 창유리에 비친 제 얼굴을 봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "몇으로 보이냐고 물어놓고 이러는 것도 웃기지만."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…죄송해요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "됐어. 이 나이에 이 고생이면 젊게 사는 거지 뭐."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 물병을 건넸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "자네나 마셔라. 얼굴이 말랐어."
+  }
+]

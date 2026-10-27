@@ -1,0 +1,23 @@
+{
+  "cohortExcluded": true,
+  "classification": "normal-public-action-partial-replay",
+  "freshCohortJourneys": 0,
+  "seed": 275001,
+  "player": "player44",
+  "status": "partial-target-entries-collected",
+  "choices": 37,
+  "traceRows": 183,
+  "entryExports": 38,
+  "targetEntries": [
+    "attempt01/entry-82-lc_ulsan_whale-export.json",
+    "attempt01/entry-183-lc_yeongdong_wine-export.json"
+  ],
+  "sourceHash": "1911ad89b75afe51e44e8c8856bd7d6b7a16f070c0d717214e5230be996df9ab",
+  "all40StartEndEqualFrozen": true,
+  "samePrefixChoicesBody": true,
+  "prefixLength": 37,
+  "actualSource": "cycle16 only; no frozen15 execution or manual scene/state changes",
+  "scope": "Read both target entries; preceding 37 chosen body/choice rows compared with the completely reviewed original15 lineage, matching text reused as comparison evidence, not new independent journey. Second target stopped before choice/reload.",
+  "rawSummaryExcluded": true,
+  "rawFileExcluded": true
+}

@@ -1,0 +1,90 @@
+{
+  "cohortExcluded": true,
+  "seed": 273003,
+  "originalHash": "5c8940162113635cc9ddb0baf6a51501a6f320c87f7ddef7eaddb2fe8ca2e402",
+  "replayHash": "52a1873eab1c96a321c39513d5c6ceff4d8b7df69eb13677b87bd2049ffd007b",
+  "intendedStop": true,
+  "originalTargetN": 86,
+  "choicesBeforeEntry": 18,
+  "unpaidWithoutFrozenView": true,
+  "serializedViewField": "omitted by normal export",
+  "stateEqual": true,
+  "observationEqualExceptScenes": true,
+  "priorTraceEqualExceptScenes": false,
+  "priorTraceDifferences": [
+    {
+      "index": 58,
+      "action": "choice",
+      "originalAction": "choice"
+    }
+  ],
+  "priorGameplayTraceEqual": true,
+  "originalSceneKeys": [
+    "event-meet-community"
+  ],
+  "newSceneKeys": [
+    "muju-tunnel"
+  ],
+  "note": "New normal unpaid export from original public policy. The scene-key change is intentional. No save-state mutation or additional primary-cohort journey.",
+  "monk": {
+    "originalTargetN": 58,
+    "unpaidWithoutFrozenView": true,
+    "stateEqual": true,
+    "gameplayObservationEqual": true,
+    "oldTurns": [
+      {
+        "kind": "narration",
+        "text": "가야산 방향 갈림길에서 승복 차림의 남자가 손수레를 밀고 있다. 수레엔 나무 상자들이 실렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "목판입니다.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "스님이 담담히 말했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "산문이 무너져서, 옮길 수 있는 것부터 옮기는 중입니다. 팔백 년을 버틴 나무라, 저희가 못 지키면 면목이 없지요.",
+        "displayName": "???"
+      }
+    ],
+    "newTurns": [
+      {
+        "kind": "narration",
+        "text": "가야산 방향 갈림길에서 승복 차림의 남자가 손수레를 밀고 있다. 수레엔 나무 상자들이 실렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_monk",
+        "name": "목판 옮기는 스님",
+        "text": "목판입니다.",
+        "displayName": "목판 옮기는 스님"
+      },
+      {
+        "kind": "narration",
+        "text": "스님이 담담히 말했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_monk",
+        "name": "목판 옮기는 스님",
+        "text": "산문이 무너져서, 옮길 수 있는 것부터 옮기는 중입니다. 팔백 년을 버틴 나무라, 저희가 못 지키면 면목이 없지요.",
+        "displayName": "목판 옮기는 스님"
+      }
+    ],
+    "note": "Expected presentation delta: anonymous worker fallback replaced with introduced monk identity; same original entry words and public action context."
+  }
+}

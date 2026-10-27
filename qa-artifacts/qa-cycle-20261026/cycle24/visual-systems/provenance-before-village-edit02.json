@@ -1,0 +1,353 @@
+{
+  "at": "2026-10-26T11:46:59.648Z",
+  "scope": "26 art preparation approved by root.5 source masters and delivery candidates only; no mapping, source, gallery or new journey.",
+  "contract": "assets/visual-contract.json",
+  "contractSha256": "5aec3e1cee8432c884f1d35dbdddc411a312262b71a840a6ebd59edb83cbcc22",
+  "generatedAssets": [
+    {
+      "key": "explore-mushroom-growhouse-v1",
+      "event": "exp_mushroom",
+      "format": "place",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-87bf777e-cdb7-40a9-ba89-38cc6be99486.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/explore-mushroom-growhouse-v1-master.png",
+      "masterSha256": "c923296e502a2882bd0bdf0993aba0194a4f5f32cca22b717430db3bf31d6064",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/explore-mushroom-growhouse-v1.webp",
+      "deliverySha256": "272aae2092214517da9757121085cb4c7b41846288871bdd681bd54a66e5bc96",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 129306,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "generationTool": "built-in image_gen.imagegen",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-87bf777e-cdb7-40a9-ba89-38cc6be99486.png",
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/explore-mushroom-growhouse-v1-draft01.png",
+      "initialMasterSha256": "c923296e502a2882bd0bdf0993aba0194a4f5f32cca22b717430db3bf31d6064",
+      "editReason": null,
+      "promptFiles": [
+        "explore-mushroom-growhouse-v1-prompt.txt"
+      ],
+      "requestFiles": [
+        "explore-mushroom-growhouse-v1-request.json"
+      ],
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "promptHashes": [
+        "e0204303746c24c808bf2e031d8e6126e96115b1fc0aed27e4b05ed772201dd4"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/systems/candidate-evidence.json",
+      "sourceVision": "pending delivery-size verification",
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false
+    },
+    {
+      "key": "explore-abandoned-orchard-v1",
+      "event": "exp_orchard",
+      "format": "place",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-9082613d-6513-4d82-a1d6-6edd5fd98ab3.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/explore-abandoned-orchard-v1-master.png",
+      "masterSha256": "0d4dd7a4f86da83e767eba306348e5998ac2afce368b5b86d123b1b63f94797d",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/explore-abandoned-orchard-v1.webp",
+      "deliverySha256": "f3b19bdd34a73a409a816cfa3ad02d708a5de4a2417f4c42e46926a6bba35622",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 143224,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "generationTool": "built-in image_gen.imagegen",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-9395fc8a-ae6a-4179-9a92-010a51e8afbe.png",
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/explore-abandoned-orchard-v1-draft01.png",
+      "initialMasterSha256": "dd74c0aab0529d567b5f4e048bba5707178d640f0c69f9398482beee46393a8b",
+      "editReason": "Initial foreground apples mostly damaged; restored mixed sound and insect-damaged fruit consistent with entry.",
+      "promptFiles": [
+        "explore-abandoned-orchard-v1-prompt.txt",
+        "explore-abandoned-orchard-v1-edit02-prompt.txt"
+      ],
+      "requestFiles": [
+        "explore-abandoned-orchard-v1-request.json",
+        "explore-abandoned-orchard-v1-edit02-request.json"
+      ],
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "promptHashes": [
+        "272303d2c03e9600cbcf03f2a54327c8dccccb5c67c11a937072a3c4db56c33e",
+        "b0836090cb5f96da4a508d29490da0ab6a66b2370bb8628a72fb3ff468c6f0ed"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/systems/candidate-evidence.json",
+      "sourceVision": "pending delivery-size verification",
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false
+    },
+    {
+      "key": "local-pyeongtaek-sealed-containers-v1",
+      "event": "ev_container_port",
+      "format": "place",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-6837dd31-2fc4-491e-b4e4-2e7837778b21.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/local-pyeongtaek-sealed-containers-v1-master.png",
+      "masterSha256": "cc1aa8f79e50853b06dffa0fac8a7235f1a5e36ae6767145a063e5e08e5e04bb",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/local-pyeongtaek-sealed-containers-v1.webp",
+      "deliverySha256": "93e784a14483f2a7e68780a76820ff54638c7c932894cf3656f086cbe20905c7",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 126922,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "generationTool": "built-in image_gen.imagegen",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-cd5e1269-d81b-4fa5-a73b-25b24602c82f.png",
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/local-pyeongtaek-sealed-containers-v1-draft01.png",
+      "initialMasterSha256": "f13c3262fd85c675b2a4c0a3d539802084272e2ef9012c790c2d847cc7dec206",
+      "editReason": "Initial generation imported unacquired named crew and Dalguji contrary to request; removed all people and vehicle.",
+      "promptFiles": [
+        "local-pyeongtaek-sealed-containers-v1-prompt.txt",
+        "local-pyeongtaek-sealed-containers-v1-edit02-prompt.txt"
+      ],
+      "requestFiles": [
+        "local-pyeongtaek-sealed-containers-v1-request.json",
+        "local-pyeongtaek-sealed-containers-v1-edit02-request.json"
+      ],
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "promptHashes": [
+        "ff9357209775636a7885481498067e3a94ce95f2e448aedf4cf5deb8751b2276",
+        "8759d2b7691d3d9c7d3abf40e52d6f723ee29be8ff6b354ed2a8d48dc4010e63"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/systems/candidate-evidence.json",
+      "sourceVision": "pending delivery-size verification",
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false
+    },
+    {
+      "key": "explore-villagehall-cassette-v1",
+      "event": "exp_villagehall",
+      "format": "detail",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-64b14717-abca-4b46-a211-bf48eff01d57.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/explore-villagehall-cassette-v1-master.png",
+      "masterSha256": "881098f77496eff6da69b527cbc4f58e25c82789f1e2e7550eed176997f08c1e",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/explore-villagehall-cassette-v1.webp",
+      "deliverySha256": "9e073c60ff8304474d79e048abf087ed7ba24c85962950a1845a7682c41fd90e",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 74258,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "generationTool": "built-in image_gen.imagegen",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-64b14717-abca-4b46-a211-bf48eff01d57.png",
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/explore-villagehall-cassette-v1-draft01.png",
+      "initialMasterSha256": "881098f77496eff6da69b527cbc4f58e25c82789f1e2e7550eed176997f08c1e",
+      "editReason": null,
+      "promptFiles": [
+        "explore-villagehall-cassette-v1-prompt.txt"
+      ],
+      "requestFiles": [
+        "explore-villagehall-cassette-v1-request.json"
+      ],
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ],
+      "promptHashes": [
+        "c3d0ec56fd73ea3169c8787b8accb7319dccad4e8e4f5dd5655be0f4179caf38"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/systems/candidate-evidence.json",
+      "sourceVision": "pending delivery-size verification",
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false
+    },
+    {
+      "key": "local-cheonan-pedal-walnut-cart-v1",
+      "event": "lc_cheonan_walnut",
+      "format": "character",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-21cf068c-6357-4c6b-825a-83f2c2896e9c.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/local-cheonan-pedal-walnut-cart-v1-master.png",
+      "masterSha256": "14fef1ad0025cf582cca85fc9f97b9777ef47eb32718e085c24a8270937d246e",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/local-cheonan-pedal-walnut-cart-v1.webp",
+      "deliverySha256": "5d2598eb55941a8a9c7ac175b8da01ff753a5077191c5c700cfe38b1375f7ac7",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 159642,
+      "colorSpace": "srgb",
+      "iccSha256": "c56e1685d888f5edb92fe07f2750f387f8fe8e91b32ff8fb0b56bfbbb9458353",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "fit": "center16:9",
+        "resampler": "Lanczos3"
+      },
+      "generationTool": "built-in image_gen.imagegen",
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-21cf068c-6357-4c6b-825a-83f2c2896e9c.png",
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-systems/masters/local-cheonan-pedal-walnut-cart-v1-draft01.png",
+      "initialMasterSha256": "14fef1ad0025cf582cca85fc9f97b9777ef47eb32718e085c24a8270937d246e",
+      "editReason": null,
+      "promptFiles": [
+        "local-cheonan-pedal-walnut-cart-v1-prompt.txt"
+      ],
+      "requestFiles": [
+        "local-cheonan-pedal-walnut-cart-v1-request.json"
+      ],
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        },
+        {
+          "path": "assets/portraits/passer_refugee.png",
+          "sha256": "0643713f53879819c440439597d3e163282ec7ecc789e2ade139c0d64dac36f5"
+        }
+      ],
+      "promptHashes": [
+        "945475708da5b5db756e7b28f86fd3a8359a29b52572a32c06d34db8119d9628"
+      ],
+      "sourceEvidence": "qa-artifacts/qa-cycle-20261026/cycle24/systems/candidate-evidence.json",
+      "sourceVision": "pending delivery-size verification",
+      "deployed": false,
+      "sourceMappingChanged": false,
+      "actualGallery": false,
+      "actualGameCrop": false
+    }
+  ]
+}

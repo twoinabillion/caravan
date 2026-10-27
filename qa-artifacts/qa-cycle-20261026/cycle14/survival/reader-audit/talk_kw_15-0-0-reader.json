@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…목수."
+  },
+  {
+    "kind": "narration",
+    "text": "예상 밖의 답이 왔다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "전역하면 의자를 만들 생각이었다. 사람을 앉히는… 물건. 지키는 일 말고, 쉬게 하는 일."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "지금도 늦지 않았잖아요."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 자기 손을 내려다봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…서울 끝나면. 첫 의자는 이 차 조수석 옆에 놓지. 정차했을 때 앉는 용도로."
+  },
+  {
+    "kind": "narration",
+    "text": "파수꾼의 전직 계획에 달구지가 1호 납품처로 잡혔다."
+  }
+]

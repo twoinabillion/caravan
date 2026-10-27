@@ -1,0 +1,72 @@
+{
+  "recordedAt": "2026-10-26T05:12:33.417370+00:00",
+  "sourceFreeze": "cycle15/frozen-source.json",
+  "engineHash": "c55c4d288c554cc872971334c8ceb590154f952e952dc6f399b68dfae01e82ad",
+  "tests": {
+    "command": "npm run test:source",
+    "pass": 1721,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "cycle15/test-source.log"
+  },
+  "build": {
+    "at": "2026-10-26T05:11:46.064065+00:00",
+    "buildLog": "build.log",
+    "exitCode": 0,
+    "htmlBytes": 107313003,
+    "htmlSha256": "ece6aab071a4f0846bf9bf6d894b67daf3b27b811e040d7fcf2b2d3461b78c6b",
+    "srcUnchanged": true,
+    "changedSinceFreeze": [],
+    "engineHash": "c55c4d288c554cc872971334c8ceb590154f952e952dc6f399b68dfae01e82ad"
+  },
+  "quick": {
+    "command": "npm run verify:quick",
+    "exitCode": 0,
+    "log": "cycle15/verify-quick.log",
+    "sceneClassAssets": 615,
+    "portraits": 74,
+    "builtMainPortraits": 7
+  },
+  "diffCheck": {
+    "command": "git diff --check",
+    "exitCode": 0
+  },
+  "journeys": {
+    "segments": 3,
+    "freshStarts": 3,
+    "normalSaveContinuations": 0,
+    "mainEndings": 3,
+    "otherEndings": 0,
+    "stoppedSegments": 0,
+    "choices": 277,
+    "traceRecords": 1420,
+    "entryReloads": 277,
+    "paidReloads": 277,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4319/",
+    "applied15": true,
+    "preservedState": "가온 DAY1 부산09:45",
+    "radioReview": "cycle15/radio-ui-review.json",
+    "responsive360": "Unverified; previous viewport timeout/file URL security block, no workaround"
+  },
+  "status": "Full technical verification and three fresh journeys completed; further narrative, reader, repeat-dialogue and image defects found. Repairs for16 done/pending integration. This is not a clean completion; subsequent source changes are intentional.",
+  "journeyReview": {
+    "allThreeFullTextReviewed": true,
+    "allThreeEndSource40MatchesFreeze": true,
+    "mainMethods": [
+      "core_transfer",
+      "core_transfer",
+      "core_transfer"
+    ],
+    "separateOldRadio": {
+      "cohortExcluded": true,
+      "choices": 23,
+      "traceRecords": 124,
+      "method": "core_quarantine",
+      "report": "cycle15/systems/old-radio/report.json"
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "createdAt": "2026-10-26T09:36:55.172099+00:00",
+  "scope": "QA-only generated image masters and export candidates. No production src/assets or live gallery edits. Root owns acceptance, gallery, deployment and mapping.",
+  "contract": "assets/visual-contract.json",
+  "contractSha256": "5aec3e1cee8432c884f1d35dbdddc411a312262b71a840a6ebd59edb83cbcc22",
+  "prompts": "prompts.json",
+  "edits": "individual edit02 request JSON files are exact executed requests; edits02.json retains originally proposed requests",
+  "generatedAssets": [
+    {
+      "key": "local-busan-dried-fish-cart-v1",
+      "event": "lc_busan_dried",
+      "format": "character",
+      "generationTool": "built-in image_gen.imagegen",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-f0ce1663-ad2f-42b9-93c8-a13656584336.png",
+      "generatedOriginalSha256": "dce26b30c42317538acfdb9285d22679cc48c2ba7a8b8ec1a3c9e9e11e12e675",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle22/visual-systems/masters/local-busan-dried-fish-cart-v1-master.png",
+      "masterSha256": "dce26b30c42317538acfdb9285d22679cc48c2ba7a8b8ec1a3c9e9e11e12e675",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle22/visual-systems/local-busan-dried-fish-cart-v1.webp",
+      "deliverySha256": "a69d4934882d3e86941a6bcc2d6bb8bca9faa43cfa12279cd6a7163acf2085eb",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 125400,
+      "colorSpace": "sRGB",
+      "iccSha256": "96643077fa9e721a0744a76afd0c141e6468ec994afae1cc8a27feb0a4405fe9",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "resampler": "Lanczos",
+        "fit": "center16:9",
+        "originalProfilePresent": false
+      },
+      "promptFiles": [
+        "local-busan-dried-fish-cart-v1-prompt.txt",
+        "local-busan-dried-fish-cart-v1-edit02-prompt.txt"
+      ],
+      "requestFiles": [
+        "local-busan-dried-fish-cart-v1-request.json",
+        "local-busan-dried-fish-cart-v1-edit02-request.json"
+      ],
+      "promptHashes": [
+        "b216ef2af84c3e1c76fac17046f39f6e13b38d20e5aaaf4820a1bdc29f5511b7",
+        "4eb408024c6e360590ee4b2dda10cf445adc6c2e0826b2ae373e8134aa6aec5d"
+      ],
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-4642632a-0e8f-49c3-8a08-699e38e3a3de.png",
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle22/visual-systems/masters/local-busan-dried-fish-cart-v1-draft01.png",
+      "initialMasterSha256": "773245a585a023185bc24f5b46e410ad590e2eed249a56bc7913cce9ebb374cd",
+      "draftRejection": "Unintended recognizable tower from canonical skyline; background-only edit removed it",
+      "deployed": false,
+      "srcChanged": false,
+      "galleryChanged": false
+    },
+    {
+      "key": "explore-comicbook-room-v1",
+      "event": "exp_comicroom",
+      "format": "place",
+      "generationTool": "built-in image_gen.imagegen",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-b174bd3d-d318-498e-ad75-ad87a178e5c0.png",
+      "generatedOriginalSha256": "4d9a6852eed44ca8ecc03c751c98819d6a5d524f6336b063f68f552818548c9b",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle22/visual-systems/masters/explore-comicbook-room-v1-master.png",
+      "masterSha256": "4d9a6852eed44ca8ecc03c751c98819d6a5d524f6336b063f68f552818548c9b",
+      "masterSize": [
+        1672,
+        941
+      ],
+      "masterCopyExact": true,
+      "delivery": "qa-artifacts/qa-cycle-20261026/cycle22/visual-systems/explore-comicbook-room-v1.webp",
+      "deliverySha256": "219f05872a09f912052163ada2dc8f7ae0534a7669e6c816ddaa2996595ced3b",
+      "deliverySize": [
+        1024,
+        576
+      ],
+      "deliveryBytes": 131170,
+      "colorSpace": "sRGB",
+      "iccSha256": "96643077fa9e721a0744a76afd0c141e6468ec994afae1cc8a27feb0a4405fe9",
+      "export": {
+        "format": "WebP",
+        "quality": 86,
+        "effort": 6,
+        "resampler": "Lanczos",
+        "fit": "center16:9",
+        "originalProfilePresent": false
+      },
+      "promptFiles": [
+        "explore-comicbook-room-v1-prompt.txt",
+        "explore-comicbook-room-v1-edit02-prompt.txt"
+      ],
+      "requestFiles": [
+        "explore-comicbook-room-v1-request.json",
+        "explore-comicbook-room-v1-edit02-request.json"
+      ],
+      "promptHashes": [
+        "62b07b3e52179fea7965f4abc330113b7e90025d13f5d24951290fb3e4e00953",
+        "ffbb47ebac5ea046fcab7633d0bd4c99fc380ce9fc6c1eabd4e89b9745338f24"
+      ],
+      "initialGeneratedOriginal": "/Users/sang/.codex/generated_images/01a17418-624c-7101-9758-206063dcf6ae/exec-ed44165e-67f5-483d-9200-4e3a74269497.png",
+      "initialMaster": "qa-artifacts/qa-cycle-20261026/cycle22/visual-systems/masters/explore-comicbook-room-v1-draft01.png",
+      "initialMasterSha256": "96af0b3f0f04bfe5791c943be26aa9daf6e024716adb46422ec78e02ccafd2c0",
+      "draftRejection": "Unintended recognizable tower from canonical skyline; background-only edit removed it",
+      "deployed": false,
+      "srcChanged": false,
+      "galleryChanged": false
+    }
+  ]
+}

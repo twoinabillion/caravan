@@ -1,0 +1,14 @@
+{
+  "cohortExcluded": true,
+  "partialReplay": true,
+  "seed": 276003,
+  "sourceHash": "f5d3cb35f0d4ae365ad70ba532e6ef8f21e0ee26172fc78b0ebd52958f1ad0b9",
+  "source40Unchanged": true,
+  "comparedActions": 37,
+  "comparedChoices": 10,
+  "gameplayStatesChoicesTextEqual": true,
+  "viewNullish": true,
+  "newEntryPath": "agent03/attempt01/normal-unpaid-36-ev_seed_warehouse.json",
+  "intentionalStop": true,
+  "difference": "Fresh17 scene mapping can differ; source metadata also repaired. No save edits or frozen scene removal."
+}

@@ -1,0 +1,145 @@
+{
+  "cycle": 3,
+  "agent": "survival",
+  "runs": [
+    {
+      "attempt": "attempt01",
+      "seed": 263001,
+      "fullEnding": true,
+      "method": "core_sleep",
+      "day": 8,
+      "min": 1277,
+      "km": 777,
+      "rows": 447,
+      "choices": 89,
+      "party": [
+        "minji",
+        "leo"
+      ],
+      "sourceHash": "688aafa55a5e6a36d36843455a6cc047b1f7f818bc4f5b31b677f70b6019c0bc",
+      "counts": {
+        "new-game": 1,
+        "unpaid-entry-reload": 89,
+        "choice": 89,
+        "paid-result-reload": 89,
+        "explore": 17,
+        "travel": 27,
+        "drive": 54,
+        "buy-upgrade": 1,
+        "camp": 7,
+        "meet-recruit": 2,
+        "work": 3,
+        "recruit-step": 6,
+        "camp-talk": 9,
+        "accept-companion": 2,
+        "talk": 23,
+        "earned-perk": 4,
+        "trade": 19,
+        "seoul-enter": 5
+      },
+      "unsuccessfulActions": {
+        "recruit-step": 2,
+        "talk": 14,
+        "camp-talk": 3
+      },
+      "sameSeedRetry": false
+    },
+    {
+      "attempt": "attempt02",
+      "seed": 263001,
+      "fullEnding": true,
+      "method": "core_quarantine",
+      "day": 9,
+      "min": 1105,
+      "km": 823,
+      "rows": 524,
+      "choices": 104,
+      "party": [
+        "minji",
+        "leo",
+        "eunsu"
+      ],
+      "sourceHash": "688aafa55a5e6a36d36843455a6cc047b1f7f818bc4f5b31b677f70b6019c0bc",
+      "counts": {
+        "new-game": 1,
+        "unpaid-entry-reload": 104,
+        "choice": 104,
+        "paid-result-reload": 104,
+        "explore": 19,
+        "travel": 29,
+        "drive": 57,
+        "buy-upgrade": 1,
+        "camp": 8,
+        "meet-recruit": 3,
+        "work": 3,
+        "recruit-step": 9,
+        "camp-talk": 13,
+        "accept-companion": 3,
+        "talk": 32,
+        "earned-perk": 6,
+        "trade": 23,
+        "seoul-enter": 5
+      },
+      "unsuccessfulActions": {
+        "recruit-step": 3,
+        "talk": 19,
+        "camp-talk": 6
+      },
+      "sameSeedRetry": true
+    }
+  ],
+  "uniqueSeeds": 1,
+  "newConfirmedFindings": 1,
+  "findings": [
+    {
+      "id": "S3-01",
+      "severity": "P3",
+      "event": "pair_mj_leo_1",
+      "choiceIndex": 0,
+      "naturalEvidence": "attempt01 n367",
+      "beforeClock": {
+        "day": 8,
+        "min": 580
+      },
+      "afterClock": {
+        "day": 8,
+        "min": 580
+      },
+      "actual": "레오는 그날 저녁 내내 보닛에 귀를 대고 있었다.",
+      "expected": "immediate result can describe present listening, not completed future evening with no elapsed time",
+      "fix": "레오는 보닛 가까이 몸을 숙이고 엔진 소리를 들었다.",
+      "preserved": [
+        "choice ID/index",
+        "effects",
+        "journal note",
+        "explicit speaker routing",
+        "legacy paid text"
+      ],
+      "validation": "pair-red01 2fail/1pass → regression-green01 total24/24"
+    }
+  ],
+  "readCoverage": {
+    "attempt01": 89,
+    "attempt02": 104,
+    "attempt02IdenticalEventIndexEntryResult": 77,
+    "attempt02DistinctRead": 27,
+    "allSelectedEntryAndResultTextRead": true
+  },
+  "legacy": {
+    "newJourneyUnpaidReloads": 193,
+    "newJourneyPaidReloads": 193,
+    "reapplied": 0,
+    "actualRetainedPriorSaveReplay": "legacy-replay01.json",
+    "artificialLegacyFixtures": "regression-green01.txt, explicitly not historical user/browser saves"
+  },
+  "baselineHash": "688aafa55a5e6a36d36843455a6cc047b1f7f818bc4f5b31b677f70b6019c0bc",
+  "postFixHash": "a311d4fc9aea30908c2eefce7c1a23cd57a28b4034f04a25107b1f88b5496d64",
+  "limits": [
+    "Targeted QA informed by previous findings/source/policies, not blind",
+    "Same-seed policy retry is not a second independent player",
+    "Actual engine in isolated VM; presentation/timer/audio sinks are stubs",
+    "No browser/pixel/mobile/audio-input QA by this agent",
+    "Historical replay and artificial fixtures excluded from fresh journey counts",
+    "All cycle3 natural traces precede new S3-01 fix; next new-hash journey belongs to cycle4 after root signal"
+  ]
+}

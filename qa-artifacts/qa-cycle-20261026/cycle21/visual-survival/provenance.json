@@ -1,0 +1,74 @@
+{
+  "tool": "built-in image_gen",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "sourceFreeze21": "43b982b514b86d2227f8b15b5cd2551c170c715b4173617123e9f4fb98fe6f3c",
+  "references": [
+    {
+      "file": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "file": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "file": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "file": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "exactBaseAndNegative": true,
+  "assets": [
+    {
+      "key": "explore-overturned-cargo-v1",
+      "generatedSource": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-3a1e53a2-e7fc-41df-8734-4454e96f6486.png",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle21/visual-survival/masters/explore-overturned-cargo-v1.png",
+        "width": 1672,
+        "height": 941,
+        "format": "png",
+        "space": "srgb",
+        "bytes": 3218745
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle21/visual-survival/explore-overturned-cargo-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "format": "webp",
+        "space": "srgb",
+        "bytes": 160800
+      },
+      "masterSha256": "0a01e2f5379a8c9735f4abf5a35f7e8e7982197993cce481ccdb6144b5a11868",
+      "deliverySha256": "69bccfdcaf391357db4f3ae80f53a2bbd0ff545fdc4f59574214b147004ae079",
+      "conversion": "sharp resize1024x576 fit cover centre, toColourspace srgb, webp quality86 effort6; generated master bytes preserved"
+    },
+    {
+      "key": "explore-gasstation-tank-v1",
+      "generatedSource": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-adc14826-d5ce-4a51-bc41-76ff999c5386.png",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle21/visual-survival/masters/explore-gasstation-tank-v1.png",
+        "width": 1672,
+        "height": 941,
+        "format": "png",
+        "space": "srgb",
+        "bytes": 3242965
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle21/visual-survival/explore-gasstation-tank-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "format": "webp",
+        "space": "srgb",
+        "bytes": 177684
+      },
+      "masterSha256": "24d9d619e7c78b242770efbc1f987314f343f866e75c62263601c169f6c6d6ec",
+      "deliverySha256": "784d6915b7eb165cddeae43cc9c5cbb5ab7af9a6d1da7673e584b5290ec097cf",
+      "conversion": "sharp resize1024x576 fit cover centre, toColourspace srgb, webp quality86 effort6; generated master bytes preserved"
+    }
+  ],
+  "productionEdits": 0,
+  "galleryWiring": "root owns pre-wire gallery and in-game crop review; not done by survival"
+}

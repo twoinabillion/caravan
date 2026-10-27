@@ -52,6 +52,10 @@ const quotedParts = (text, parseRecords=false) => {
     : /["“]([^"”\n]{2,})["”]/g;
   return [...humanText.matchAll(pattern)].map(match=>match[1]||match[2]);
 };
+// Runtime parses each blank-line paragraph separately but permits line breaks
+// inside one quoted source. Keep the prose sample inventory unchanged.
+const scriptedQuoteParts = (text, parseRecords=false) => typeof text!=='string'?[]
+  :text.split(/\n\s*\n/).flatMap(paragraph=>quotedParts(paragraph.replace(/\n/g,' '),parseRecords));
 const addQuoted = (scope, text, speakers=[]) => {
   const quotes=quotedParts(text);
   for (const [index,quote] of quotes.entries()) add(scope, speakerKey(speakers[index]) || 'event', quote);
@@ -233,14 +237,15 @@ const speakerIds = new Set([
   'player_child','intro_child','unknown','passer_man','passer_woman','passer_elder',
   'passer_child','passer_merchant','passer_guard','passer_refugee','passer_worker',
   'passer_medic','seoyeon','mingyu',
-  /* 실행 시 현재 첫 동행인의 실제 id로 바뀌는 화자 토큰. */
-  'party_first'
+  /* 실행 시 현재 동행인의 실제 id로 바뀌는 화자 토큰. */
+  'party_first','party_second'
 ]);
 const validateSpeaker = (value, scope) => {
   const who=typeof value==='string'?value:value&&value.who;
   if(!who) errors.push(`화자 스크립트 빈 값: ${scope}`);
   else if(!speakerIds.has(who)) errors.push(`등록되지 않은 화자: ${scope} / ${who}`);
-  if(value&&typeof value==='object'&&value.kind==='dialogue'&&!value.name)
+  const namedActor=who==='me'||who==='나'||!!D.comps?.[who]||!!D.npcs?.[who];
+  if(value&&typeof value==='object'&&value.kind==='dialogue'&&!value.name&&!namedActor)
     errors.push(`익명 대화 화자 이름 누락: ${scope} / ${who}`);
 };
 for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
@@ -248,8 +253,8 @@ for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
   if(!event){ errors.push(`화자 스크립트의 사건 누락: ${eventId}`); continue; }
   if(script.text&&JSON.stringify(event.turnSpeakers)!==JSON.stringify(script.text))
     errors.push(`본문 화자 스크립트 미적용: ${eventId}`);
-  if(script.text&&typeof event.text==='string'&&script.text.length!==quotedParts(event.text,event.parseRecords).length)
-    errors.push(`본문 화자 수와 발화 수 불일치: ${eventId} / 화자 ${script.text.length} · 발화 ${quotedParts(event.text,event.parseRecords).length}`);
+  if(script.text&&typeof event.text==='string'&&script.text.length!==scriptedQuoteParts(event.text,event.parseRecords).length)
+    errors.push(`본문 화자 수와 발화 수 불일치: ${eventId} / 화자 ${script.text.length} · 발화 ${scriptedQuoteParts(event.text,event.parseRecords).length}`);
   for(const [index,value] of (script.text||[]).entries()) validateSpeaker(value,`${eventId}.text.${index}`);
   for(const [path, speakers] of Object.entries(script.choices||{})){
     const [choiceIndex,outcomeIndex]=path.split('.').map(Number);
@@ -258,8 +263,8 @@ for (const [eventId, script] of Object.entries(D.eventTurnScripts || {})) {
     if(!outcome) errors.push(`화자 스크립트 결과 경로 누락: ${eventId} / ${path}`);
     if(outcome&&JSON.stringify(outcome.turnSpeakers)!==JSON.stringify(speakers))
       errors.push(`결과 화자 스크립트 미적용: ${eventId}.${path}`);
-    if(outcome&&typeof outcome.text==='string'&&speakers.length!==quotedParts(outcome.text,event.parseRecords).length)
-      errors.push(`결과 화자 수와 발화 수 불일치: ${eventId}.${path} / 화자 ${speakers.length} · 발화 ${quotedParts(outcome.text,event.parseRecords).length}`);
+    if(outcome&&typeof outcome.text==='string'&&speakers.length!==scriptedQuoteParts(outcome.text,event.parseRecords).length)
+      errors.push(`결과 화자 수와 발화 수 불일치: ${eventId}.${path} / 화자 ${speakers.length} · 발화 ${scriptedQuoteParts(outcome.text,event.parseRecords).length}`);
     for(const [index,value] of (speakers||[]).entries()) validateSpeaker(value,`${eventId}.${path}.${index}`);
   }
 }
@@ -287,7 +292,7 @@ const criticalSpeakerSequences = [
   ['pair_kw_leo_2','text',['leo','kangwoo','leo']],
   ['pair_leo_es_2','text',['leo','leo','eunsu','leo']],
   ['pair_jy_es_1','text',['eunsu','eunsu','jaeyi','eunsu','jaeyi','eunsu','jaeyi']],
-  ['talk_leo_13','0.0',['leo','me','leo','leo']],
+  ['talk_leo_13','0.0',['me','leo','leo','leo']],
   ['talk_leo_14','text',['leo','me','leo']],
   ['talk_es_13','text',['me','eunsu']],
   ['react_mass_pss','0.0',['parkss','parkss','me','parkss','parkss']],
@@ -370,6 +375,16 @@ for(const event of allEvents){
           if(event.id==='meet_toll'&&choiceIndex===1&&resource==='scrap'&&
              required===8&&outcomeIndex===0&&delta===-4&&
              choice.out.length===2&&choice.out[1].fx?.scrap===-8) continue;
+          // R5/R6: disguise reserves both pieces, but successful reuse spends
+          // only one. The exact two-outcome/disclosed-price contract is guarded.
+          if(((event.id==='route_market_mask'&&choiceIndex===0)||(event.id==='route_ridge_anchor'&&choiceIndex===1))&&resource==='scrap'&&
+             required===2&&outcomeIndex===0&&delta===-1&&
+             choice.out.length===2&&choice.out[1].fx?.scrap===-2&&
+             choice.foreseeable?.expense==='고철 1~2 · 실패에 대비해 2 필요') continue;
+          // The tasting reserves the posted full price; the refused serving is half price.
+          if(event.id==='lc_pohang_gwamegi'&&choiceIndex===0&&resource==='scrap'&&
+             required===2&&outcomeIndex===1&&delta===-1&&choice.out.length===2&&choice.out[0].fx?.scrap===-2&&
+             choice.label==='도전한다 (고철 최대 2)'&&choice.foreseeable?.expense==='고철 1~2 · 맛보기 전에 2 필요') continue;
           errors.push(`선택 비용과 실제 차감 불일치: ${event.id}.${choiceIndex}.${outcomeIndex} / ${resource} ${required} → ${delta}`);
         }
       }

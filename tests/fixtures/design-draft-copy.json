@@ -3,8 +3,10 @@
     "intro": "59fc583:src/03-data.js",
     "opening": "a68010f:src/03-data.js",
     "purpose": "Frozen authored text at draft creation; not current gameplay expectations",
-    "openingNote": "The static material draft omits the preceding heater-repair paragraph."
+    "openingNote": "The static material draft omits the preceding heater-repair paragraph.",
+    "recordNote": "Authored note retained in result-quiet.html and situated-record.html at draft creation; not today's canonical note."
   },
+  "recordNote": "엄마의 발표 원고를 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.",
   "intro": {
     "intro-resistance-begins": [
       {

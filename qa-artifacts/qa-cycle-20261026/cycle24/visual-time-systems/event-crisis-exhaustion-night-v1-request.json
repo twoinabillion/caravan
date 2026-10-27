@@ -1,0 +1,135 @@
+{
+  "key": "event-crisis-exhaustion-night-v1",
+  "event": "crisis_drowsy",
+  "format": "detail",
+  "timeVariant": "night",
+  "oldAsset": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+  "oldAssetSha256": "84880aa6a20695c1e81499c9495cdecf25a13f2dacd3183b202f854e8036d70e",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nEDIT the FIRST image into the same driver-seat view at true NIGHT. Preserve windshield framing, worn steering wheel, exactly two gloved driver hands, old analog dashboard/amber instrument glow, empty winding Korean road, lane markings, roadside guardrails and poles. No face, passengers or vehicle exterior appears. Remove the bright sunrise/daylit sky and distant daylight; a genuinely dark night road ahead is illuminated only by the vehicle headlights with a limited plausible beam, surrounding hills are dark silhouettes and the dashboard remains dimly readable. No moon/star spectacle, glowing city, working radio broadcast display, oncoming cars, crash, scratches being made, parked sleep, water washing or singing action. This is the tired-driving entry before three choices; no outcome is predetermined. Keep the realistic35–50mm perspective, no artificial motion-blur or double-road special effect. References2–5 are continuity/style guides only; do not insert their people or van.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/scenes/event-crisis-exhaustion-v2.jpg",
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+      "role": "edit-target",
+      "sha256": "84880aa6a20695c1e81499c9495cdecf25a13f2dacd3183b202f854e8036d70e"
+    },
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "role": "canonical-style",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "promptSha256": "ad58c9348084bc5a8dc0bec597f0f66ce98a4c360c2f0669bf7ecb635003f27d",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+  "sourceEvent": {
+    "id": "crisis_drowsy",
+    "trace": 395,
+    "day": 9,
+    "min": 147,
+    "sceneKeys": [
+      "event-crisis-exhaustion"
+    ],
+    "asset": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+    "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-393-crisis_drowsy.json",
+    "observation": "02:27 졸음 사건에 밝은 일출/낮 하늘과 도로 원본.",
+    "definition": {
+      "id": "crisis_drowsy",
+      "type": "위기",
+      "w": 0,
+      "fixed": true,
+      "title": "졸음",
+      "text": "눈꺼풀이 천근이다.\n\n차선이 잠깐 두 개로 보였다. 백미러 속 내 눈이 반쯤 감겨 있다.\n\n졸음은 폭풍보다 많은 운전자를 데려갔다. 오래전에도, 지금도.",
+      "choices": [
+        {
+          "label": "갓길에서 눈을 붙인다 (2시간)",
+          "out": [
+            {
+              "p": 1,
+              "text": "갓길에 차를 세우고 시트를 젖혔다.\n\n눈을 뜨니 두 시간이 지나 있었다. 뻐근한 목을 돌리고 앞유리를 봤다. 아까는 겹쳐 보이던 차선이 하나로 보인다.",
+              "fx": {
+                "time": 120,
+                "sleeping": true,
+                "fatigue": -45,
+                "moodAll": 2
+              }
+            }
+          ]
+        },
+        {
+          "label": "물로 세수하고 버틴다",
+          "req": {
+            "water": 1
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "찬물이 정신을 끌어올렸다. 한동안은 갈 수 있다. 한동안은.",
+              "fx": {
+                "water": -1,
+                "fatigue": -22
+              }
+            }
+          ]
+        },
+        {
+          "label": "목청껏 노래를 부르며 강행한다",
+          "risk": "사고 위험",
+          "out": [
+            {
+              "p": 1,
+              "text": "목청껏 노래를 불러 버텼다. 목은 쉬었지만 눈은 떠졌다.",
+              "fx": {
+                "fatigue": -12,
+                "moodAll": 2
+              }
+            },
+            {
+              "p": 1,
+              "text": "깜빡— 하는 순간 가드레일을 길게 긁었다.\n\n심장이 벌떡 뛰는 바람에 잠은 확실히 달아났다. 최악의 각성법이었다.",
+              "fx": {
+                "van": -9,
+                "fatigue": -28,
+                "moodAll": -4,
+                "note": {
+                  "type": "사건",
+                  "title": "졸음운전",
+                  "body": "가드레일에 길게 긁힌 자국. 최악의 각성법."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sceneMetadata": {
+      "eventScene": null,
+      "turnScenes": null,
+      "stages": null,
+      "choiceScenes": null
+    }
+  }
+}

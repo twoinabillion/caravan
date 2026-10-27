@@ -1,0 +1,358 @@
+{
+  "cycle": 8,
+  "agent": "systems",
+  "seed": 268002,
+  "evidenceClass": "Actual production engine VM, finite resources and public actions. No browser/input/audio claim.",
+  "engineSourceHash": "4aa512d311b53bdf1a7294df0c9bf7230ea3c7702f07c8af75dd0e3ec839bc0c",
+  "sourceUnchangedAcrossJourney": true,
+  "freshStarts": 1,
+  "normalSaveResumptions": 1,
+  "completedJourneys": 1,
+  "policyStops": 1,
+  "engineFailures": 0,
+  "engineDeaths": 0,
+  "fixtureJourneys": 0,
+  "productionChanges": [],
+  "result": {
+    "ending": "story_done",
+    "method": "core_transfer",
+    "ended": true,
+    "storyDone": true,
+    "session1End": true,
+    "day": 83,
+    "km": 723,
+    "actualCompanions": [
+      "minji"
+    ],
+    "bori": false,
+    "finalState": {
+      "at": "seoul",
+      "location": "서울 — 남산",
+      "day": 83,
+      "min": 1354,
+      "km": 723,
+      "driving": null,
+      "fuel": 19.333013333334126,
+      "water": 15,
+      "food": 10,
+      "scrap": 29,
+      "van": 100,
+      "vanMax": 100,
+      "fuelMax": 70,
+      "foodMax": 24,
+      "waterMax": 28,
+      "fatigue": 58.25538000000003,
+      "dog": false,
+      "hunger": 0,
+      "thirst": 0,
+      "injuries": {},
+      "party": [
+        "minji"
+      ],
+      "items": {
+        "부품": 4,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1,
+        "쇠파이프": 1,
+        "석궁": 1
+      },
+      "weather": "rain",
+      "campNight": 82,
+      "campPlan": {},
+      "campParticipants": [
+        "minji"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 80,
+          "bond": 99,
+          "injury": null
+        }
+      },
+      "up": {
+        "collector": true,
+        "stove": true
+      },
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": true,
+      "endKind": "story_done",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "completed",
+        "tracked": true,
+        "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+        "act": "종장",
+        "chapterId": "ending",
+        "eyebrow": "메인 스토리 · 종장",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "phase": "남산 코어 · 여정 기록",
+        "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+        "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+        "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+        "steps": [
+          {
+            "id": "ending",
+            "label": "남산 코어에서 최종 결정을 내렸다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      "navigation": {
+        "key": "main_ending",
+        "kind": "main",
+        "target": "seoul",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+      }
+    }
+  },
+  "segments": [
+    {
+      "attempt": "01",
+      "kind": "fresh start",
+      "status": "day-limit",
+      "choices": 42,
+      "traceRecords": 373,
+      "day": 81,
+      "km": 412,
+      "sourceHash": "4aa512d311b53bdf1a7294df0c9bf7230ea3c7702f07c8af75dd0e3ec839bc0c",
+      "gameEnded": false
+    },
+    {
+      "attempt": "02",
+      "kind": "normal saved journey continuation",
+      "status": "ended",
+      "choices": 30,
+      "traceRecords": 165,
+      "day": 83,
+      "km": 723,
+      "sourceHash": "4aa512d311b53bdf1a7294df0c9bf7230ea3c7702f07c8af75dd0e3ec839bc0c",
+      "gameEnded": true
+    }
+  ],
+  "totals": {
+    "choices": 72,
+    "traceRecords": 538,
+    "publicActionsExcludingChoicesReloadInitialization": 319,
+    "actionCounts": {
+      "new-game": 1,
+      "unpaid-entry-reload": 72,
+      "choice": 72,
+      "paid-result-reload": 72,
+      "travel": 19,
+      "drive": 39,
+      "meet-recruit": 1,
+      "trade": 131,
+      "work": 15,
+      "recruit-step": 3,
+      "camp-meal": 5,
+      "camp": 82,
+      "accept-companion": 1,
+      "earned-perk": 2,
+      "explore": 8,
+      "buy-upgrade": 2,
+      "sell-demand": 4,
+      "resume-saved-journey": 1,
+      "resumed-state": 1,
+      "craft": 2,
+      "seoul-enter": 5
+    },
+    "entryReload": 72,
+    "paidResultReload": 72,
+    "reloadLoaded": 144,
+    "reloadFailed": 0,
+    "paidReapplied": 0
+  },
+  "features": {
+    "recruitment": [
+      {
+        "attempt": "01",
+        "n": 103,
+        "id": "minji",
+        "at": "gyeongju",
+        "day": 3,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      }
+    ],
+    "upgrades": [
+      {
+        "attempt": "01",
+        "n": 162,
+        "id": "collector",
+        "at": "muju",
+        "day": 4,
+        "elapsedMinutes": 150,
+        "scrapDelta": -15,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 105,
+        "id": "stove",
+        "at": "suwon",
+        "day": 83,
+        "elapsedMinutes": 150,
+        "scrapDelta": -20,
+        "partDelta": 0,
+        "ok": true
+      }
+    ],
+    "crafts": [
+      {
+        "attempt": "02",
+        "n": 106,
+        "id": "pipe",
+        "at": "suwon",
+        "day": 83,
+        "elapsedMinutes": 40,
+        "scrapDelta": -6,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 107,
+        "id": "xbow",
+        "at": "suwon",
+        "day": 83,
+        "elapsedMinutes": 40,
+        "scrapDelta": -12,
+        "partDelta": -1,
+        "ok": true
+      }
+    ],
+    "craftDiscount": false,
+    "localWork": 15,
+    "uniqueLocalWorkResults": 15,
+    "cashSupplyTrades": 38,
+    "waterFoodBarters": 93,
+    "demandSales": [
+      {
+        "attempt": "01",
+        "n": 223,
+        "at": "muju",
+        "day": 26,
+        "elapsedMinutes": 20,
+        "scrapDelta": 12,
+        "partDelta": -1,
+        "ok": true
+      },
+      {
+        "attempt": "01",
+        "n": 238,
+        "at": "muju",
+        "day": 32,
+        "elapsedMinutes": 20,
+        "scrapDelta": 12,
+        "partDelta": -1,
+        "ok": true
+      },
+      {
+        "attempt": "01",
+        "n": 252,
+        "at": "muju",
+        "day": 38,
+        "elapsedMinutes": 20,
+        "scrapDelta": 12,
+        "partDelta": -1,
+        "ok": true
+      },
+      {
+        "attempt": "01",
+        "n": 268,
+        "at": "muju",
+        "day": 44,
+        "elapsedMinutes": 20,
+        "scrapDelta": 12,
+        "partDelta": -1,
+        "ok": true
+      }
+    ],
+    "camps": 82,
+    "warmMeals": 5,
+    "route": [
+      "yangsan",
+      "miryang",
+      "yangsan",
+      "ulsan",
+      "gyeongju",
+      "daegu",
+      "gyeongju",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "nonsan",
+      "daejeon",
+      "cheongju",
+      "cheonan",
+      "pyeongtaek",
+      "suwon",
+      "seoul"
+    ],
+    "guardedFinalChoice": {
+      "choice": "집행권을 저항 연대망에 넘긴다",
+      "actualConnectedCells": [
+        "이음망",
+        "유령(Ghost)",
+        "산지기"
+      ],
+      "watchOption": "blocked correctly: one eligible companion; two additional required"
+    },
+    "notes": [
+      "Trade93 means repeated water-for-food transactions during the policy delay, not93 distinct features.",
+      "Minji reduces both upgrade durations to150min. Pipe6 and crossbow12 use base prices and40min, not armory discounts.",
+      "Park recruitment, camp repairs, radio and other optional goals were not achieved."
+    ]
+  },
+  "dialogueReview": {
+    "encounters": 72,
+    "newOrChangedEntries": 10,
+    "exactPreviouslyReviewedEntries": 62,
+    "newParagraphsRead": 20,
+    "exactPriorParagraphOccurrencesWithinChangedEntries": 46,
+    "localWorkResultsRead": 15,
+    "method": "Exact [event,text,choices,choice,result] against cycles1–7; new/changed choices and contextual time/party read; exact known paragraphs SHA256 matched. Full encountered transcript retained through SESSION1END.",
+    "files": [
+      "transcript01.json",
+      "transcript02.json",
+      "changed-transcript.json",
+      "review-collapsed.json",
+      "work-transcript.json"
+    ],
+    "notes": [
+      "Camp dogs is the saved night encounter recalled after camping, not an unscheduled new daytime night.",
+      "Market camouflage failure continues with its changed pressure, not the success prose.",
+      "Minji tire lesson matches120 elapsed minutes.",
+      "One-person core testimony names Minji only, and the finale uses the three actually connected cells.",
+      "Six-person testimony and143-year traces stay locked when unavailable; preservation is visible but correctly blocked at1/3 watch roster."
+    ]
+  },
+  "findings": [],
+  "scopedVerdict": "No newly confirmed production defect in this completed frozen finite journey. One policy-only stop preserved and resumed; its artificial elapsed days and repeated barter/camp counts are explicitly retained.",
+  "policyStopAnalysis": "policy-stop-analysis.json",
+  "coverageLimits": [
+    "Actual party was Minji only; Park goal was not achieved.",
+    "No radio tube/repair/broadcast, driver clinic, hidden location, armory discount, new quest handoff, or upgrade removal/reinstallation.",
+    "Skyline/noodle/143-year showcase fixes were not naturally encountered in this route; do not claim fresh post-fix coverage for them.",
+    "No game source changes or separate branch fixture added to journey counts. Actual browser evidence remains root-owned."
+  ]
+}

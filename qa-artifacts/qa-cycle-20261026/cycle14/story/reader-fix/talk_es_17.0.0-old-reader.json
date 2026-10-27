@@ -1,0 +1,25 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "…네?"
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 다이얼에서 손을 뗐다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "아, 왜 좋냐고요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "아무 말도 안 들리는데, 완전히 끊긴 건 아니잖아요. 관제실에선 신호가 아예 사라지는 게 더 무서웠어요."
+  },
+  {
+    "kind": "narration",
+    "text": "지지지— 소리가 계속 났다. 은수는 그걸 껐다가 다시 켰다."
+  }
+]

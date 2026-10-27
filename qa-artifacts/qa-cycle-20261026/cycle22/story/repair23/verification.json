@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-26T09:57:48.653391+00:00",
+  "sourceBaseline": "cycle22/source",
+  "source03DataCurrentSha256": "59f9434f90ac6a0bd3c6559bec9b2c194405ce458f10a317c0762f53a31c31e3",
+  "ownedEvents": [
+    "comp_snore",
+    "ev_atm_cash",
+    "ev_parkss_past",
+    "loc_tunnelbook",
+    "talk_es_01"
+  ],
+  "fields": 12,
+  "metadataFields": 8,
+  "copyFields": 4,
+  "red": {
+    "tests": 18,
+    "pass": 7,
+    "fail": 11
+  },
+  "green": {
+    "tests": 18,
+    "pass": 18,
+    "fail": 0
+  },
+  "relatedBeforeFinalSingularWording": {
+    "tests": 102,
+    "pass": 102,
+    "fail": 0
+  },
+  "legacyPaid": 17,
+  "readerAndTextOnlyPreserved": true,
+  "sourceEditingFinished": true,
+  "numericMechanicsPreserved": true,
+  "exceptNewNoteBodyOnly": "talk_es_01 choices0.out0.fx.note.body",
+  "wholeSuite": "root owner; not executed by story agent",
+  "allNaturalJourneysUnchanged": true,
+  "integratedWithDeokgu": {
+    "tests": 42,
+    "pass": 42,
+    "fail": 0,
+    "log": "integrated.tap",
+    "delta": "../../systems/repair23/metadata-delta.json"
+  },
+  "finalSingularWordingCheck": {
+    "tests": 35,
+    "pass": 35,
+    "fail": 0
+  },
+  "finalIntegratedWithOilmill": {
+    "tests": 48,
+    "pass": 48,
+    "fail": 0,
+    "log": "integrated-with-oilmill.tap"
+  },
+  "oilmillHistoricalProjection": "exact current whole text assert then old text only; frozen22 complete event matches after projection",
+  "contractEditingFinished": true
+}

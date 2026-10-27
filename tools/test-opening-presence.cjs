@@ -48,6 +48,16 @@ test('present, first-hand memory and reported history have explicit non-colour t
   for(const id of ['memory','history'])assert.doesNotMatch(sections[id],/DAY|07:55|08:45|부품 [−+]\d|시간 \d+분/);
 });
 
+test('departure key excerpt stays synchronized in both Studio drafts',()=>{
+  const source=D.openingDeparture.find(e=>e.id==='opening_departure').turns[2].text;
+  for(const file of ['opening-presence.html','opening-presence-quiet.html']){
+    const draft=fs.readFileSync(path.join(folder,file),'utf8');
+    const excerpt=draft.match(/<p[^>]*data-source="opening_departure:2"[^>]*>([\s\S]*?)<\/p>/);
+    assert(excerpt,file);
+    assert.equal(plain(excerpt[1]),plain(source),file);
+  }
+});
+
 test('dialogue excerpts come from actual authored turns and retain named farewell speakers',()=>{
   const snippets=[...html.matchAll(/<p[^>]*data-source="([^":]+):(\d+)"[^>]*>([\s\S]*?)<\/p>/g)];
   assert(snippets.length>=20);

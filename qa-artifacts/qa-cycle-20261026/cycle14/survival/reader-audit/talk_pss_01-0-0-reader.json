@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "차 마시자는 말이야. 차에서."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…네?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "차. 마시는 차하고 타는 차하고."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 손가락으로 두 번 짚었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "설명하면 안 되는 건데. 벌써 설명했네."
+  },
+  {
+    "kind": "narration",
+    "text": "달구지 안에 잠깐 아무 소리도 안 났다. 박 선생은 보온병 뚜껑을 돌려 땄다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "됐고, 자네 컵 어딨나. 차 식겠다."
+  },
+  {
+    "kind": "narration",
+    "text": "진짜 차를 주려던 거였다."
+  }
+]

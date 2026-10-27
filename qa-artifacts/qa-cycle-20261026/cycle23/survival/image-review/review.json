@@ -1,0 +1,2973 @@
+{
+  "files": 99,
+  "sheets": 9,
+  "allContactSheetsViewed": true,
+  "selectedFullFilesViewed": 9,
+  "additionalCanonicalPortraitsViewed": 1,
+  "runtimeKeys": 100,
+  "scope": "Actual local images; no browser rendering/mobile crop claim. 18 staged new + Leo reuse remain unwired. Known22 problems are not recounted as new.",
+  "rows": [
+    {
+      "file": "assets/scenes/intro-associative-search-v1.webp",
+      "keys": [
+        "intro-busan-workday-v1"
+      ],
+      "events": [
+        {
+          "trace": 3,
+          "eventId": "opening_workshop",
+          "title": "감천 작업장의 마지막 호출",
+          "party": [],
+          "expected": "냉동차 호스를 갈고 나니 밥이 식어 있었다. 할아버지가 떠난 뒤로 감천 작업장의 수리는 혼자 맡았다.\n이것만 먹고 달구지에서 좀 자자. 내일은 손수레 바퀴부터 봐야지.\n숟가락을 들자 새벽 무전이 울렸다. 서울에서 내려온 이송 버스의 난방이 멈췄다고 했다. 열이 난 아이도 타고 있었다."
+        }
+      ],
+      "sha256": "9db5b90079b13d5332a99e1004154b6b77ef09c4f611587b5835cd7fc71c6e73",
+      "index": 1,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/opening-bus-family-v3.webp",
+      "keys": [
+        "intro-dock-aid"
+      ],
+      "events": [
+        {
+          "trace": 6,
+          "eventId": "opening_bus_repair",
+          "title": "난방이 끊긴 가족 버스",
+          "party": [],
+          "expected": "하진은 맨 뒤 버스에서 열이 난 유나를 안고 있었다. 여덟 살 도윤이 공구함을 보고 다가와 소매를 붙잡았다.\n유나 손이 자꾸 차가워져요. 이거 고치면 따뜻해져요?\n바람은 다시 나오게 해 볼게. 여기 조금만 비켜 줄래?\n도윤이 하진 곁으로 물러섰다. 점검판 안쪽의 난방 호스가 찢어져 있었다. 새 부품으로 잇거나, 연결 고리를 깎거나, 남은 호스를 당겨 물려야 했다."
+        },
+        {
+          "trace": 9,
+          "eventId": "opening_name_introduction",
+          "title": "도윤과 첫 인사",
+          "party": [],
+          "expected": "공구를 챙기는 내 옆으로 도윤이 다가왔다.\n아저씨, 이름이 뭐예요?"
+        },
+        {
+          "trace": 12,
+          "eventId": "opening_failed_appeal",
+          "title": "사유가 없는 이송표",
+          "party": [],
+          "expected": "공구를 하나씩 공구함에 넣는 동안, 버스 안 공기가 조금씩 데워졌다.\n\n버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.\n엄마는 가방 안에 내 옷을 눌러 담았다. 나는 꺼내 놓은 로봇을 무릎에 얹고 기다렸다.\n같이 가면 안 돼?\n다음 차로 꼭 갈게. 네 가방은 할아버지 차에 실어 줄게.\n열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.\n부산 단말에서도 한번 볼게요. 사람이 받는 접수처가 있는지.\n이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다. 명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.\n화면 아래에 제7 잔류구역 등록 인원 6,412명이 떴다. 하진은 대답 대신 유나의 옷깃을 여몄다. 이 버스가 끝이 아니었다."
+        }
+      ],
+      "sha256": "5aaccbe2f62efc18e935246622729bf34a8a0ecbfdc8e8c90c62d9a7bd3659b0",
+      "index": 2,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/opening-bus-heater-v1.webp",
+      "keys": [
+        "opening-bus-heater-v1"
+      ],
+      "events": [
+        {
+          "trace": 6,
+          "eventId": "opening_bus_repair",
+          "title": "난방이 끊긴 가족 버스",
+          "party": [],
+          "expected": "하진은 맨 뒤 버스에서 열이 난 유나를 안고 있었다. 여덟 살 도윤이 공구함을 보고 다가와 소매를 붙잡았다.\n유나 손이 자꾸 차가워져요. 이거 고치면 따뜻해져요?\n바람은 다시 나오게 해 볼게. 여기 조금만 비켜 줄래?\n도윤이 하진 곁으로 물러섰다. 점검판 안쪽의 난방 호스가 찢어져 있었다. 새 부품으로 잇거나, 연결 고리를 깎거나, 남은 호스를 당겨 물려야 했다."
+        }
+      ],
+      "sha256": "1b9346f1a921a40e626988aa62e846ae78497c6609c744f9295ed73a6e06c2d9",
+      "index": 3,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/intro-associative-packing-v1.webp",
+      "keys": [
+        "intro-family-packing-v1"
+      ],
+      "events": [
+        {
+          "trace": 12,
+          "eventId": "opening_failed_appeal",
+          "title": "사유가 없는 이송표",
+          "party": [],
+          "expected": "공구를 하나씩 공구함에 넣는 동안, 버스 안 공기가 조금씩 데워졌다.\n\n버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.\n엄마는 가방 안에 내 옷을 눌러 담았다. 나는 꺼내 놓은 로봇을 무릎에 얹고 기다렸다.\n같이 가면 안 돼?\n다음 차로 꼭 갈게. 네 가방은 할아버지 차에 실어 줄게.\n열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.\n부산 단말에서도 한번 볼게요. 사람이 받는 접수처가 있는지.\n이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다. 명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.\n화면 아래에 제7 잔류구역 등록 인원 6,412명이 떴다. 하진은 대답 대신 유나의 옷깃을 여몄다. 이 버스가 끝이 아니었다."
+        }
+      ],
+      "sha256": "4076a59dbe6d527847dd35d27b6e0b92f14577c675cab3f5c62dcb421756b49d",
+      "index": 4,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/intro/15-appeal-denied.jpg",
+      "keys": [
+        "intro-appeal-denied"
+      ],
+      "events": [
+        {
+          "trace": 12,
+          "eventId": "opening_failed_appeal",
+          "title": "사유가 없는 이송표",
+          "party": [],
+          "expected": "공구를 하나씩 공구함에 넣는 동안, 버스 안 공기가 조금씩 데워졌다.\n\n버스를 떠나기 전, 도윤이 이송표를 내밀었다. 가족 이름과 짐 무게는 적혀 있었다. 사유와 최종 승인자 칸은 부모님의 표처럼 비어 있었다.\n엄마는 가방 안에 내 옷을 눌러 담았다. 나는 꺼내 놓은 로봇을 무릎에 얹고 기다렸다.\n같이 가면 안 돼?\n다음 차로 꼭 갈게. 네 가방은 할아버지 차에 실어 줄게.\n열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.\n부산 단말에서도 한번 볼게요. 사람이 받는 접수처가 있는지.\n이 단말에서는 이송 명령에 대한 이의 신청을 받을 수 없습니다. 명령을 확인하려면 서울 남산으로 직접 가셔야 합니다.\n화면 아래에 제7 잔류구역 등록 인원 6,412명이 떴다. 하진은 대답 대신 유나의 옷깃을 여몄다. 이 버스가 끝이 아니었다."
+        }
+      ],
+      "sha256": "10afa961300ad80e480f650742c453fe860a5fca163321c8c11be6f85b9dbbd5",
+      "index": 5,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/intro/13-dashboard-module.jpg",
+      "keys": [
+        "intro-dashboard-module"
+      ],
+      "events": [
+        {
+          "trace": 15,
+          "eventId": "opening_parents_module",
+          "title": "계기판 뒤의 검증키",
+          "party": [],
+          "expected": "작업장으로 돌아와 엄마의 철제 상자를 열었다. 수첩 등판에서 회로도가 떨어졌다. 남산 현장 확인 포트, 달구지 계기판. 엄마가 설계하고 아빠가 만든 인간 확인 검증키의 배선이었다. 명령을 실행하기 전에 사람의 승인을 받게 하는 장치다.\n계기판 뒤? 이 차를 그렇게 뜯어 봤는데.\n덮개 안쪽에 천으로 감싼 모듈이 있었다. 선을 잡았다가 놓았다. 분리 순서 두 장이 뜯겨 있었다. 잘못 뽑으면 검증키와 달구지 전장이 함께 타 버린다는 경고만 남아 있었다.\n이송이 다시 시작되면 발신 기록과 당사자 증언을 함께 가져갈 것. 장치만으로는 검증이 끝나지 않는다. 현장 확인은 남산에서."
+        }
+      ],
+      "sha256": "11d2be0bd50aeb8765d183dd048998188dd86daa0324252b1248e176d2c23107",
+      "index": 6,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/intro/16-workshop-shutter-v2.jpg",
+      "keys": [
+        "intro-workshop-departure"
+      ],
+      "events": [
+        {
+          "trace": 18,
+          "eventId": "opening_departure",
+          "title": "작업장 셔터를 내리는 아침",
+          "party": [],
+          "expected": "계기판 덮개를 닫고 작업장 안을 마지막으로 둘러봤다.\n\n엄마의 상자는 조수석 아래, 할아버지의 렌치는 운전석 옆에 넣었다. 수리 쉰다는 쪽지를 쓰다가 돌아올 날짜에서 펜이 멈췄다.\n내일 손수레 맡기러 올 텐데. …부탁은 해 놓고 가야지.\n단골에게 수리가 늦어진다고 알리고 셔터를 절반 내렸다. 공구함 열쇠와 셔터 열쇠를 묶은 고리가 손에 남았다. 맡기고 갈까, 직접 가지고 갈까."
+        }
+      ],
+      "sha256": "146a1c2606ffd7c2f58a347d8902c63f27cd4a87097162c7fca70e431112680d",
+      "index": 7,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/intro-departure-conversation-v4.jpg",
+      "keys": [
+        "intro-departure-conversation-v4"
+      ],
+      "events": [
+        {
+          "trace": 21,
+          "eventId": "opening_farewell",
+          "title": "이제, 내가 가는 길",
+          "party": [],
+          "expected": "남산에 가면 우리도 집에 돌아갈 수 있어요?\n그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.\n이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.\n네. 먼저 떠난 사람들도 찾아보겠습니다.\n도윤은 자기 이름이 적힌 이송표를 접어 품에 넣었다. 하진은 유나가 기다리는 버스로 돌아갔다.\n서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.\n할아버지, 다녀올게."
+        }
+      ],
+      "sha256": "fc85da6c642b785cf3a6bfcf2e8301ef42b8fcd93eed2bef69f85ffa809e774a",
+      "index": 8,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/intro-departure-start-v1.jpg",
+      "keys": [
+        "intro-departure-start-v1"
+      ],
+      "events": [
+        {
+          "trace": 21,
+          "eventId": "opening_farewell",
+          "title": "이제, 내가 가는 길",
+          "party": [],
+          "expected": "남산에 가면 우리도 집에 돌아갈 수 있어요?\n그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.\n이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.\n네. 먼저 떠난 사람들도 찾아보겠습니다.\n도윤은 자기 이름이 적힌 이송표를 접어 품에 넣었다. 하진은 유나가 기다리는 버스로 돌아갔다.\n서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.\n할아버지, 다녀올게."
+        }
+      ],
+      "sha256": "37dd0a954d73bfa0eeedc2d3ceedbdcea3ed61c89e657389910b7f3abd718419",
+      "index": 9,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-meet-trader.webp",
+      "keys": [
+        "event-meet-trader"
+      ],
+      "events": [
+        {
+          "trace": 25,
+          "eventId": "lc_busan_dried",
+          "title": "자갈치 아지매",
+          "party": [],
+          "expected": "리어카 가득 건어물을 실은 아지매가 손을 흔든다.\n\n\"오데 가노! 서울?! 아이고 야야, 그라모 이거 무라. 마른 것들은 배신 안 한데이.\""
+        }
+      ],
+      "sha256": "f60c1055ff009ec0c20cce325c9d38ca6346e95cedb73776df6d29ecf66d6681",
+      "index": 10,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [
+          {
+            "eventId": "lc_busan_dried",
+            "reason": "event-meet-trader lacks fish cart; staged fish art deferred"
+          }
+        ],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-road-coffee-van-v2.webp",
+      "keys": [
+        "event-road-coffee-van-v2"
+      ],
+      "events": [
+        {
+          "trace": 30,
+          "eventId": "ev_truck_cafe",
+          "title": "트럭 카페",
+          "party": [],
+          "expected": "개조한 트럭 옆구리를 열어 만든 이동식 카페. 손수 볶은 원두 냄새가 도로까지 퍼진다.\n\n\"커피 한 잔에 고철 넷. 원두는 아끼지 않습니다. 세상이 망해도 카페인은 못 끊죠.\" 주인장이 능청스레 웃는다.\n\n(진짜 커피 냄새다. 오랜만이다.)"
+        }
+      ],
+      "sha256": "b921fa0934962e1198e8f159b9ee5affd916caa4e0d73e402368d85eaeb73ac8",
+      "index": 11,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/onboarding-first-road-scan-v1.jpg",
+      "keys": [
+        "onboarding-first-road-scan-v1"
+      ],
+      "events": [
+        {
+          "trace": 34,
+          "eventId": "onboarding_first_road",
+          "title": "첫 번째 발신 기록",
+          "party": [],
+          "expected": "부산을 벗어난 첫 고가도로 아래에서 죽어 있던 검문 스캐너가 켜졌다. 얇은 붉은 선이 달구지 앞유리를 훑고, 녹슨 단말이 종이띠를 토해 냈다.\n\n「재평가 조건: 배급망 변동 시 자동 실행」\n\n날짜가 정해진 한 번의 이송이 아니었다. 물과 전력 수치가 바뀔 때마다 새 가족을 골라내는 반복 명령이었다.\n\n종이 아래쪽 검증 번호가 눈에 걸렸다. 부모님의 이송표 귀퉁이에 있던 번호와 앞 여덟 자리가 같았다."
+        }
+      ],
+      "sha256": "24babb8ebf78fd63a95775f0596019707cd377696e781aabcbc53156802e059d",
+      "index": 12,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/explore-gasstation-tank-v1.webp",
+      "keys": [
+        "explore-gasstation-tank-v1"
+      ],
+      "events": [
+        {
+          "trace": 38,
+          "eventId": "ev_gasstation_tank",
+          "title": "폐주유소 지하탱크",
+          "party": [],
+          "expected": "유리가 다 깨진 주유소. 계기판은 0에서 멈췄다.\n\n지하 저장탱크 뚜껑이 눈에 띈다. 바닥에 기름이 남아 있을지도 모른다.\n\n다만— 뚜껑을 열면 유증기가 확 올라올 거다."
+        }
+      ],
+      "sha256": "784d6915b7eb165cddeae43cc9c5cbb5ab7af9a6d1da7673e584b5290ec097cf",
+      "index": 13,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/memory-busan-terminal-v1.jpg",
+      "keys": [
+        "memory-busan-terminal-v1"
+      ],
+      "events": [
+        {
+          "trace": 43,
+          "eventId": "memory_busan_terminal",
+          "title": "부산 터미널의 마지막 불",
+          "party": [],
+          "expected": "길가의 폐환승소에서 도착 안내판 불이 한 칸씩 꺼졌다. 그 불빛을 보자 부산 터미널에서 부모님의 다음 차를 기다리던 밤이 떠올랐다.\n\n여덟 살의 나는 할아버지와 막차가 들어올 때마다 일어섰다. 엄마는 다음 차로 꼭 온다고 했다. 밤이 깊어 안내판이 전부 꺼진 뒤에도 우리는 한 시간을 더 앉아 있었다. 할아버지는 부모님이 죽었다고도, 버렸다고도 말하지 않았다. 집에 가서 내일 다시 기다리자고만 했다."
+        }
+      ],
+      "sha256": "0fd9ba596be1583de3475a0ebe13a604f480eec858f433799cf4c91b326e0279",
+      "index": 14,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji-welding.jpg",
+      "keys": [
+        "recruit-minji-welding"
+      ],
+      "events": [
+        {
+          "trace": 52,
+          "eventId": "meet_scrapyard",
+          "title": "부품 천막의 정비사",
+          "party": [],
+          "expected": "밀양 장터의 부품 천막. 경운기 엔진과 자전거 바퀴 사이에서 용접 불꽃이 짧게 튄다.\n\n고글을 올린 소녀가 달구지가 들어오는 소리를 듣고 먼저 고개를 든다.\n\n\"거기 생활차, 공회전 한 번만 더 해봐요. 연료관 쪽에서 새는 소리 나요.\"\n\n처음 보는 차인데도, 소녀는 인사보다 고장부터 짚었다."
+        }
+      ],
+      "sha256": "8765973b53fa2038076715e5df63ab8cf1f6ba7ac36c5257e6a866a0c396e141",
+      "index": 15,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji.webp",
+      "keys": [
+        "recruit-minji"
+      ],
+      "events": [
+        {
+          "trace": 52,
+          "eventId": "meet_scrapyard",
+          "title": "부품 천막의 정비사",
+          "party": [],
+          "expected": "밀양 장터의 부품 천막. 경운기 엔진과 자전거 바퀴 사이에서 용접 불꽃이 짧게 튄다.\n\n고글을 올린 소녀가 달구지가 들어오는 소리를 듣고 먼저 고개를 든다.\n\n\"거기 생활차, 공회전 한 번만 더 해봐요. 연료관 쪽에서 새는 소리 나요.\"\n\n처음 보는 차인데도, 소녀는 인사보다 고장부터 짚었다."
+        },
+        {
+          "trace": 55,
+          "eventId": "rq_minji_request",
+          "title": "울산까지 함께 갈까",
+          "party": [],
+          "expected": "민지가 지도 위의 붉은 원을 짚는다.\n\n\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\"\n\n지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\n\n\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\""
+        }
+      ],
+      "sha256": "b72696cb45abf2d23b726b56c12d989f247873c9edbec5327c04e8086bdbedf6",
+      "index": 16,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji-meet-action.webp",
+      "keys": [
+        "recruit-minji-meet-action"
+      ],
+      "events": [
+        {
+          "trace": 52,
+          "eventId": "meet_scrapyard",
+          "title": "부품 천막의 정비사",
+          "party": [],
+          "expected": "밀양 장터의 부품 천막. 경운기 엔진과 자전거 바퀴 사이에서 용접 불꽃이 짧게 튄다.\n\n고글을 올린 소녀가 달구지가 들어오는 소리를 듣고 먼저 고개를 든다.\n\n\"거기 생활차, 공회전 한 번만 더 해봐요. 연료관 쪽에서 새는 소리 나요.\"\n\n처음 보는 차인데도, 소녀는 인사보다 고장부터 짚었다."
+        }
+      ],
+      "sha256": "fbb656f5599228ad9ff2d5dc97238701b3388e8e151bdd50eaf8afdc4968c1bf",
+      "index": 17,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-meet-community.webp",
+      "keys": [
+        "event-meet-community"
+      ],
+      "events": [
+        {
+          "trace": 66,
+          "eventId": "npc_sundeok_2",
+          "title": "순덕의 부탁",
+          "party": [],
+          "expected": "밀양 장터. 순덕이 좌판 아래를 뒤지다 우리를 불러 세웠다.\n\n\"북쪽 간다 했지. …수원, 지나가나?\"\n\n꺼낸 건 낡은 사진 한 장. 활을 멘 청년이 성벽 위에서 어색하게 웃고 있다."
+        },
+        {
+          "trace": 177,
+          "eventId": "npc_miyoung_2",
+          "title": "서문의 외상 장부",
+          "party": [
+            "minji"
+          ],
+          "expected": "전주 서문 시장. 미영이 두꺼운 공책을 넘기고 있다. 표지에 「외상」.\n\n\"요즘 세상에 외상이요?\" 물으니 미영이 씩 웃었다."
+        }
+      ],
+      "sha256": "93ea63ece5f21fbf4fac7282ff52b30393ce1f3b35a246bf87aca7b084146dd1",
+      "index": 18,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-roadside-terminal-detail-v2.webp",
+      "keys": [
+        "story-roadside-terminal-detail-v2"
+      ],
+      "events": [
+        {
+          "trace": 71,
+          "eventId": "story_bridge_departure_echo",
+          "title": "부산 뒤에 남은 방송",
+          "party": [],
+          "expected": "도로변 항만 중계 단말에서 잡음이 났다. 이어 부산 항만 방송이 발신 시각과 송신 주파수를 알렸다. 내일 새벽 동부 노선 이송자 명단. 도윤 가족 이름 뒤로 처음 듣는 이름이 열일곱 더 이어졌다. 부산을 빠져나오면 끝날 거라고 믿은 사람은 없었다. 그래도 다음 종이가 벌써 나올 줄은 몰랐다."
+        },
+        {
+          "trace": 337,
+          "eventId": "story_bridge_child_voice",
+          "title": "내가 남긴 적 없는 목소리",
+          "party": [
+            "minji"
+          ],
+          "expected": "도로변 안내 단말이 잡음을 몇 번 내더니 어린아이의 목소리를 틀었다. 「엄마, 우리 어디 가?」 여덟 살 때 버스 승강장에서 했던 내 말이었다. 숨을 들이쉬는 버릇까지 그대로였다. 녹음이 끝나자 지금의 안내 음성이 이어졌다. 「동일 보호 대상 확인. 남산 현장 확인 대기」"
+        }
+      ],
+      "sha256": "cd611b6697c6690bd5f5e5ed346adef0d3b19655c6964c29e526d87cd7284194",
+      "index": 19,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-bridge-trace-gap-v1.webp",
+      "keys": [
+        "story-bridge-trace-gap-v1"
+      ],
+      "events": [
+        {
+          "trace": 77,
+          "eventId": "story_bridge_trace_gap",
+          "title": "11분의 빈칸",
+          "party": [],
+          "expected": "폐쇄된 요금소 제어실에서 기록지가 아직도 조금씩 밀려 나오고 있었다. 자동 명령 발행 03:12. 버스 출발 03:16. 사람 확인 03:23. 확인자 칸은 비어 있었다. 버스가 떠난 뒤에야 사람이 승인한 셈이었다."
+        }
+      ],
+      "sha256": "48477b8361b40cfd5afb591c060abdf3d565d8e6ef5e6ced517ab2ed07e30a86",
+      "index": 20,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji-task.webp",
+      "keys": [
+        "recruit-minji-task"
+      ],
+      "events": [
+        {
+          "trace": 82,
+          "eventId": "rq_minji_task",
+          "title": "무너지기 전의 목소리",
+          "party": [],
+          "expected": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다.\n\n\"빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.\"\n\n불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다.\n\n\"내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.\""
+        }
+      ],
+      "sha256": "9c875ef4bbca31bc224fb4bca63c9bb6fd7e046b017c0b7682f76cfe7e92e5ef",
+      "index": 21,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji-task-signal.jpg",
+      "keys": [
+        "recruit-minji-task-signal"
+      ],
+      "events": [
+        {
+          "trace": 82,
+          "eventId": "rq_minji_task",
+          "title": "무너지기 전의 목소리",
+          "party": [],
+          "expected": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다.\n\n\"빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.\"\n\n불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다.\n\n\"내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.\""
+        }
+      ],
+      "sha256": "08826e75ed64332c6a2105e3ee38bbb7bedc1de43302398acc07076b87fd483f",
+      "index": 22,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji-task-collapse.webp",
+      "keys": [
+        "recruit-minji-task-collapse"
+      ],
+      "events": [
+        {
+          "trace": 82,
+          "eventId": "rq_minji_task",
+          "title": "무너지기 전의 목소리",
+          "party": [],
+          "expected": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다.\n\n\"빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.\"\n\n불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다.\n\n\"내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.\""
+        }
+      ],
+      "sha256": "958c5c34b2d5e0897bafce8c033c5713668e8d392e6d41105b7075a64d52849f",
+      "index": 23,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/sea-captain-contact.webp",
+      "keys": [
+        "sea-captain-contact"
+      ],
+      "events": [
+        {
+          "trace": 86,
+          "eventId": "cell_sea_meet",
+          "title": "해도의 김 선장",
+          "party": [],
+          "expected": "항구 방파제. 소금기에 전 노인이 낡은 어선 앞에서 그물을 손질하고 있다. 그물 안에는 비닐로 여러 겹 싼 해도 꾸러미가 걸려 있다. 어선 옆 나무 간판에 「김 선장」이라고 적혀 있다. 노인이 달구지의 흰 X를 확인하고 나서야 입을 연다.\n\n\"이음망에서 말한 차가 맞구먼. 바닷길 이야기를 들으러 왔나?\""
+        }
+      ],
+      "sha256": "15914882a24e3afb32e71a1a5b43c3de94f87ced0799e585dc9643c03c814005",
+      "index": 24,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-meet-roadside.webp",
+      "keys": [
+        "event-meet-roadside"
+      ],
+      "events": [
+        {
+          "trace": 91,
+          "eventId": "salvage_claim",
+          "title": "먼저 온 사람들",
+          "party": [],
+          "expected": "무너진 창고 앞에 트럭 두 대가 서 있다. 안에서 쇠 긁는 소리가 난다.\n\n우리가 다가가자 한 사람이 나와 길을 막았다. 손에는 장부와 연필.\n\n\"여긴 우리 구역이야. 들어가려면 회수료 내야 돼.\"\n\n\"언제부터 여기가 구역이었는데요?\"\n\n\"우리가 온 날부터.\" 남자가 장부를 흔들었다. 종이에는 지역 이름과 날짜가 빼곡했다. 정말로 기록하고 있었다. 자기들끼리의 법을 만들고, 그 법을 자기들이 집행하는 사람들.\n\n남자는 웃지 않았다. \"규칙 없으면 다 뺏기니까. 규칙 만들면 우리가 뺏고.\""
+        }
+      ],
+      "sha256": "5328e576e5c49187be91401ecdcbbbf2b09ae22096142f3f2927355ac74ed91b",
+      "index": 25,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/comp-talk-minji-camp-v1.jpg",
+      "keys": [
+        "comp-talk-minji-camp-v1"
+      ],
+      "events": [
+        {
+          "trace": 96,
+          "eventId": "camp_1_minji",
+          "title": "공구 없이 듣는 소리",
+          "party": [],
+          "expected": "범퍼와 휠 허브로 만든 도르래가 아직 적재칸 바닥을 굴러다닌다.\n점검 덮개 아래서 소리가 나서 민지를 불렀다. 민지는 공구함부터 끌어당겼다.\n공구 좀… 아. 고쳐 달라는 건 아니었죠?"
+        },
+        {
+          "trace": 144,
+          "eventId": "camp_2_minji",
+          "title": "고치지 않아도 되는 소리",
+          "party": [
+            "minji"
+          ],
+          "expected": "합천 과수원에서 거창 분지까지 온 길을 떠올린다.\n민지가 자석 접시를 손바닥으로 덮어 나사 소리를 멈춘다. 점검 덮개는 닫힌 채다.\n베어링 쪽인데. 대장님도 들어 봐. 덮개 떨리는 소리랑 겹쳐."
+        },
+        {
+          "trace": 149,
+          "eventId": "talk_mj_16",
+          "title": "민지 — 청진기",
+          "party": [
+            "minji"
+          ],
+          "expected": "민지가 낡은 청진기를 엔진 블록에 대고 있다. 병원 것이 아니라 정비용이다.\n\n\"…쉿. 달구지 심장 소리 듣는 중.\""
+        },
+        {
+          "trace": 181,
+          "eventId": "camp_3_minji",
+          "title": "덮개를 열기 전에",
+          "party": [
+            "minji"
+          ],
+          "expected": "남원 광한루에서 전주 서문 시장까지 온 길을 떠올린다.\n민지가 공구함을 발밑으로 밀고 옆자리를 두드린다.\n왼쪽 퓨즈, 안 보고 찾아 봐. …시험 아니야. 내가 밑에 들어가면 대장님이 꺼내 줘야 하니까."
+        },
+        {
+          "trace": 233,
+          "eventId": "camp_4_minji",
+          "title": "나란히 놓인 공구",
+          "party": [
+            "minji"
+          ],
+          "expected": "검문소 앞에 늘어서 있던 수레들이 떠오른다. 하려던 일은 해냈다.\n민지가 공구 하나를 내 쪽으로 밀어 놓는다. 무슨 일인지부터 설명하지는 않는다.\n대장님, 오늘은 어느 쪽 할래? 난 여기 앉을게."
+        },
+        {
+          "trace": 279,
+          "eventId": "camp_5_minji",
+          "title": "나란히 놓인 공구",
+          "party": [
+            "minji"
+          ],
+          "expected": "검문소 앞에 늘어서 있던 수레들이 떠오른다. 하려던 일은 해냈다.\n민지가 공구 하나를 내 쪽으로 밀어 놓는다. 무슨 일인지부터 설명하지는 않는다.\n대장님, 오늘은 어느 쪽 할래? 난 여기 앉을게."
+        },
+        {
+          "trace": 324,
+          "eventId": "camp_6_minji",
+          "title": "나란히 놓인 공구",
+          "party": [
+            "minji"
+          ],
+          "expected": "대전 연구단지에서 영동 포도밭까지 온 길을 떠올린다.\n민지가 공구 하나를 내 쪽으로 밀어 놓는다. 무슨 일인지부터 설명하지는 않는다.\n대장님, 오늘은 어느 쪽 할래? 난 여기 앉을게."
+        },
+        {
+          "trace": 332,
+          "eventId": "talk_mj_08",
+          "title": "민지 — 정비소",
+          "party": [
+            "minji"
+          ],
+          "expected": "\"서울 끝나면 뭐 할 거야?\" 내가 물었더니, 민지가 의외로 바로 답했다.\n\n\"정비소. 오빠랑 하기로 했었거든. 간판 이름까지 정해놨어.\""
+        },
+        {
+          "trace": 368,
+          "eventId": "camp_7_minji",
+          "title": "나란히 놓인 공구",
+          "party": [
+            "minji"
+          ],
+          "expected": "김천 갈림길에서 구미 공단 폐허까지 온 길을 떠올린다.\n민지가 공구 하나를 내 쪽으로 밀어 놓는다. 무슨 일인지부터 설명하지는 않는다.\n대장님, 오늘은 어느 쪽 할래? 난 여기 앉을게."
+        },
+        {
+          "trace": 373,
+          "eventId": "talk_mj_10",
+          "title": "민지 — 반쪽 공구함",
+          "party": [
+            "minji"
+          ],
+          "expected": "민지가 자기 공구함을 열더니, 한참 들여다보다가 렌치 하나를 꺼내 내밀었다.\n\n\"이거, 대장님 가져.\"\n\n오빠가 사준 공구함의 렌치다. 세트가 깨진다."
+        },
+        {
+          "trace": 422,
+          "eventId": "camp_8_minji",
+          "title": "나란히 놓인 공구",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "대전 연구단지에서 청주 방송국까지 온 길을 떠올린다.\n민지가 공구 하나를 내 쪽으로 밀어 놓는다. 무슨 일인지부터 설명하지는 않는다.\n대장님, 오늘은 어느 쪽 할래? 난 여기 앉을게."
+        },
+        {
+          "trace": 430,
+          "eventId": "talk_mj_14",
+          "title": "민지 — 여자 정비사",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "\"폐차장에서 혼자 정비 손님 받을 때, 다들 꼭 물었다?\" 민지가 픽 웃었다. \"'어른은 어디 계시니?'\""
+        },
+        {
+          "trace": 520,
+          "eventId": "talkr_mj_2",
+          "title": "민지 — 공구 대여",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "\"뭐 고칠 거 있어?\" 민지가 공구함을 톡톡 쳤다. \"오늘 대여 무료.\""
+        },
+        {
+          "trace": 569,
+          "eventId": "camp_11_minji",
+          "title": "나란히 놓인 공구",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "평택 항구도로에서 수원 성곽 공동체까지 온 길을 떠올린다.\n민지가 공구 하나를 내 쪽으로 밀어 놓는다. 무슨 일인지부터 설명하지는 않는다.\n대장님, 오늘은 어느 쪽 할래? 난 여기 앉을게."
+        },
+        {
+          "trace": 578,
+          "eventId": "talk_mj_06",
+          "title": "민지 — 88.9",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "민지가 라디오를 88.9에 맞춰놓고 잡음을 듣고 있다. 오래.\n\n돌리려는 기색이 없다."
+        }
+      ],
+      "sha256": "342ae6463d09dade1cefd70a0ec26523b20952c68a0339f8dad407ca8c5b5695",
+      "index": 26,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/camp-stray-dogs-night-v1.webp",
+      "keys": [
+        "camp-stray-dogs-night-v1"
+      ],
+      "events": [
+        {
+          "trace": 100,
+          "eventId": "camp_dogs",
+          "title": "들개들의 밤",
+          "party": [],
+          "expected": "낮게 으르렁거리는 소리에 잠이 깼다.\n\n들개 대여섯 마리가 차를 둘러싸고 있다. 목표는 명확하다 — 식량 상자."
+        },
+        {
+          "trace": 328,
+          "eventId": "camp_dogs",
+          "title": "들개들의 밤",
+          "party": [
+            "minji"
+          ],
+          "expected": "낮게 으르렁거리는 소리에 잠이 깼다.\n\n들개 대여섯 마리가 차를 둘러싸고 있다. 목표는 명확하다 — 식량 상자."
+        },
+        {
+          "trace": 426,
+          "eventId": "camp_dogs",
+          "title": "들개들의 밤",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "낮게 으르렁거리는 소리에 잠이 깼다.\n\n들개 대여섯 마리가 차를 둘러싸고 있다. 목표는 명확하다 — 식량 상자."
+        }
+      ],
+      "sha256": "7b4ff76d65e9e5c06c04e6196ed8b6e8a551ef8c708c74b8809b8c619b73d181",
+      "index": 27,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji-join.webp",
+      "keys": [
+        "recruit-minji-join"
+      ],
+      "events": [
+        {
+          "trace": 104,
+          "eventId": "rq_minji_join",
+          "title": "민지가 고른 자리",
+          "party": [],
+          "expected": "한 구간 내내 민지는 공구함을 무릎에서 놓지 않았다. 손님 짐이라며 끈도 묶지 않았던 상자다.\n\n정차하고도 한동안 말이 없다가, 민지가 생활칸 안쪽의 빈 볼트 구멍을 가리킨다.\n\n\"이 공구함, 저기에 고정해도 돼요? 구멍 규격은 제가 맞출게요.\"\n\n\"왜? 다음에 내릴 거면 끈으로 묶어도 되잖아.\"\n\n민지는 볼트 구멍의 먼지를 손가락으로 닦는다. 닦을 먼지가 없어진 뒤에도 계속 닦는다. 그러고는 북쪽을 봤다.\n\n\"안 내리려고요. 오빠 신호가 닿는 데까지— 그다음엔 서울까지. 같이 가도 돼요?\"\n\n\"손님으로는 안 돼. 네 자리부터 만들자고.\"\n\n민지의 표정이 굳었다가 천천히 풀린다. 입술 끝이 조금 올라갔다가 도로 내려간다. 민지는 대답 대신 전동 드릴부터 들었다.\n\n\"…그 말, 나중에 바꾸면 안 돼요. 바꾸면 구멍만 남아요.\""
+        }
+      ],
+      "sha256": "db73d105bf6fd0c6afcd6209b4fca67df154f7271de213a66d3fd37878cd3d16",
+      "index": 28,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-minji-join-decision.webp",
+      "keys": [
+        "recruit-minji-join-decision"
+      ],
+      "events": [
+        {
+          "trace": 104,
+          "eventId": "rq_minji_join",
+          "title": "민지가 고른 자리",
+          "party": [],
+          "expected": "한 구간 내내 민지는 공구함을 무릎에서 놓지 않았다. 손님 짐이라며 끈도 묶지 않았던 상자다.\n\n정차하고도 한동안 말이 없다가, 민지가 생활칸 안쪽의 빈 볼트 구멍을 가리킨다.\n\n\"이 공구함, 저기에 고정해도 돼요? 구멍 규격은 제가 맞출게요.\"\n\n\"왜? 다음에 내릴 거면 끈으로 묶어도 되잖아.\"\n\n민지는 볼트 구멍의 먼지를 손가락으로 닦는다. 닦을 먼지가 없어진 뒤에도 계속 닦는다. 그러고는 북쪽을 봤다.\n\n\"안 내리려고요. 오빠 신호가 닿는 데까지— 그다음엔 서울까지. 같이 가도 돼요?\"\n\n\"손님으로는 안 돼. 네 자리부터 만들자고.\"\n\n민지의 표정이 굳었다가 천천히 풀린다. 입술 끝이 조금 올라갔다가 도로 내려간다. 민지는 대답 대신 전동 드릴부터 들었다.\n\n\"…그 말, 나중에 바꾸면 안 돼요. 바꾸면 구멍만 남아요.\""
+        }
+      ],
+      "sha256": "db4b1a3580ae6a4f755def84c56e76e57a8947cf937b34a48751955f7296856a",
+      "index": 29,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/comp-talk-minji-road-v1.jpg",
+      "keys": [
+        "comp-talk-minji-road-v1"
+      ],
+      "events": [
+        {
+          "trace": 110,
+          "eventId": "talk_mj_17",
+          "title": "민지 — 폐차장의 별자리",
+          "party": [
+            "minji"
+          ],
+          "expected": "\"우리 폐차장엔 차가 백열두 대 있었어.\" 민지가 문득 말했다.\n\n\"밤에 지붕들이 달빛 받으면 별자리 같았거든. 내가 이름 다 붙였어. 저건 코란도자리, 저건 포터자리.\""
+        },
+        {
+          "trace": 186,
+          "eventId": "talk_mj_19",
+          "title": "민지 — 손의 지도",
+          "party": [
+            "minji"
+          ],
+          "expected": "민지 손등엔 흉터가 많다. 문득 그걸 보고 있자, 민지가 손을 펴 보였다.\n\n\"이건 열네 살 때 라디에이터. 이건 배기관. 이건… 개한테 물린 거. 폐차장 지키던 백구.\"\n\n\"흉터는 지도야. 어디서 뭘 배웠는지 다 적혀 있어.\""
+        },
+        {
+          "trace": 241,
+          "eventId": "talkr_mj_1",
+          "title": "민지 — 정비 브리핑",
+          "party": [
+            "minji"
+          ],
+          "expected": "\"오늘의 달구지.\" 민지가 정비 브리핑을 시작했다. \"엔진 양호, 2번 실린더 기분 보통, 좌측 와이퍼 관절염 초기.\""
+        },
+        {
+          "trace": 285,
+          "eventId": "talkr_mj_3",
+          "title": "민지 — 조수석의 휴식",
+          "party": [
+            "minji"
+          ],
+          "expected": "휴식 시간. 민지가 조수석 옆에 걸터앉았다. 드문 일이다.\n\n\"잠깐만 아무것도 안 할래. 같이.\""
+        }
+      ],
+      "sha256": "8c878559a2389fc173558d50fd3be234b6dde375cb71a46c35045032764eb477",
+      "index": 30,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-bridge-watched-v1.webp",
+      "keys": [
+        "story-bridge-watched-v1"
+      ],
+      "events": [
+        {
+          "trace": 116,
+          "eventId": "story_bridge_watched",
+          "title": "먼저 알아본 쪽",
+          "party": [
+            "minji"
+          ],
+          "expected": "전조등이 폐쇄 검문소를 훑자 감시 카메라 세 대가 동시에 돌아왔다. 렌즈가 운전석 쪽으로 기울었다. 꺼진 안내판에 짧은 문장이 떴다. 「검증 장치 운송체 확인」 계기판 안에 숨겨 두고 출발한 장치였다. 안내판을 다시 읽는 동안, 막혀 있던 앞길의 신호가 하나씩 초록으로 바뀌었다."
+        }
+      ],
+      "sha256": "69227ce48dac00804fc42ff0538b10fb1169c939cfe725664c745b9a8b88b7d1",
+      "index": 31,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-generation-form.webp",
+      "keys": [
+        "story-generation-form"
+      ],
+      "events": [
+        {
+          "trace": 124,
+          "eventId": "story_generation_form",
+          "title": "세 겹의 이송표",
+          "party": [
+            "minji"
+          ],
+          "expected": "폐쇄된 면사무소 처마 밑에 사람들이 모여 있다. 벽에는 출생표와 사망표 사이로 이송표 세 장이 붙어 있다. 노인 하나가 그 옆에 앉아 있다.\n\n같은 성씨. 노인의 증조모, 할머니, 어머니. 출발지는 종로·마포·구로, 내려온 해도 모두 다르다. 「사유」 칸만 똑같이 비어 있다.\n\n누군가 그 옆에 「물 부족」, 「전염」, 「불복종」을 연필로 적었다. 다른 손들이 날짜와 지도를 대조해 하나씩 줄을 그었다. 맨 아래에는 짧은 메모가 남았다.\n\n「아직 모름. 빈칸 지우지 말 것.」"
+        }
+      ],
+      "sha256": "40533632cbe09ff380da1e27048395cd47e119e3b97c9f22aba75718c05c14aa",
+      "index": 32,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-vista-mountain.webp",
+      "keys": [
+        "event-vista-mountain"
+      ],
+      "events": [
+        {
+          "trace": 129,
+          "eventId": "near_hapcheon_sutra",
+          "title": "목판을 지키는 사람",
+          "party": [
+            "minji"
+          ],
+          "expected": "가야산 방향 갈림길에서 승복 차림의 남자가 손수레를 밀고 있다. 수레엔 나무 상자들이 실렸다.\n\n\"목판입니다.\" 스님이 담담히 말했다. \"산문이 무너져서, 옮길 수 있는 것부터 옮기는 중입니다. 팔백 년을 버틴 나무라, 저희가 못 지키면 면목이 없지요.\""
+        }
+      ],
+      "sha256": "962640944d4427d2eeed53e3800a85a144b0b6e63abb99cbcdb9563690748e74",
+      "index": 33,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/parents-diversion-record-v2.webp",
+      "keys": [
+        "parents-diversion-record-v2"
+      ],
+      "events": [
+        {
+          "trace": 134,
+          "eventId": "parents_diversion_manifest",
+          "title": "오지 않은 다음 차",
+          "party": [
+            "minji"
+          ],
+          "expected": "남쪽 환승소의 운행표와 분류 기록을 나란히 펼쳤다. 두 기록에 적힌 부모님의 이송 번호부터 맞춰 보았다. 부모님의 다음 차는 실제로 있었지만 부산으로 출발하지 않았다. 두 사람은 탑승 직전 따로 분류됐다. 아빠는 남산 기술 유지선으로, 엄마는 중부 이송 기록 정리소로 보내졌다. 그날 터미널에서 아무리 기다려도 같은 버스가 올 수 없었던 이유가 기록에 남아 있었다."
+        }
+      ],
+      "sha256": "b1b8e7b3552faac97ef61cbe182ec64a6d0a58e4978207b22d1cf47729dc61ca",
+      "index": 34,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/arrival-geochang.webp",
+      "keys": [
+        "arrival-geochang"
+      ],
+      "events": [
+        {
+          "trace": 139,
+          "eventId": "cell_mountain_meet",
+          "title": "산지기",
+          "party": [
+            "minji"
+          ],
+          "expected": "산길 중턱. 나무 사이에서 사람 그림자들이 소리 없이 나타났다. 사냥꾼 차림, 무기는 활. 총이 아니라.\n\n\"…길 잃었나. 아니면 이음망?\" 앞선 이가 물었다. 눈빛이 짐승처럼 밝다."
+        }
+      ],
+      "sha256": "5253d501b5f07bbaedf7695387621ecf8cefd92555997e86511e8c24b8a1cdc3",
+      "index": 35,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-meet-guard.webp",
+      "keys": [
+        "event-meet-guard"
+      ],
+      "events": [
+        {
+          "trace": 154,
+          "eventId": "levy_office",
+          "title": "임시 행정소",
+          "party": [
+            "minji"
+          ],
+          "expected": "길목에 천막이 서 있다. 「임시 차량 행정소」. 손글씨인데 관공서 서체를 흉내 냈다.\n\n형광 조끼를 입은 남자 셋. 가슴에 코팅된 명찰. 책상 위에 도장과 장부까지 갖췄다.\n\n\"미등록 차량이네. 재등록비 고철 열다섯. 등록 안 하면 위쪽에… 그, 뭐냐, 미등록 이동체로 보고가 올라가요.\"\n\n남자가 태블릿을 툭툭 쳤다. 화면은 꺼져 있다. 저들은 천리안이 무서운 게 아니다. 천리안을 두려워하는 사람들을 노린다."
+        }
+      ],
+      "sha256": "dadbfb14309da857425df73a81207c7886e900f391cf9815d9a6d3429059be4f",
+      "index": 36,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-find-broadcast-station-v1.webp",
+      "keys": [
+        "event-find-broadcast-station-v1"
+      ],
+      "events": [
+        {
+          "trace": 159,
+          "eventId": "ev_broadcast_station",
+          "title": "방송국",
+          "party": [
+            "minji"
+          ],
+          "expected": "무너진 지역 방송국. 스튜디오 안엔 마이크와 카메라가 그대로.\n\n주조정실 벽 모니터엔 마지막 화면이 얼어붙어 있다. 「긴급 속보 —」 그 뒤 문장은 없다.\n\n방송 테이프들이 선반에 쌓여 있다."
+        }
+      ],
+      "sha256": "d8c1b12ead0108cad4de8fd18f59331ec4a6d1cd30675ea1560fabbe42f0b377",
+      "index": 37,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/parents-linked-records-v2.webp",
+      "keys": [
+        "parents-linked-records-v2"
+      ],
+      "events": [
+        {
+          "trace": 164,
+          "eventId": "parents_separated_work",
+          "title": "두 곳에서 만든 한 절차",
+          "party": [
+            "minji"
+          ],
+          "expected": "아빠의 남산 정비 기록과 엄마의 중부 기록 묶음에는 같은 번호가 반복됐다. 아빠는 의료·급수·교통선을 살린 채 강제 이송선만 떼어 내는 순서를 적었다. 엄마는 기록소에서 사라질 뻔한 이송 사유와 당사자 증언을 몰래 모았다. 두 사람은 서로 다른 곳에 갇힌 뒤에도 화물 묶음 번호로 자료를 주고받고 있었다."
+        },
+        {
+          "trace": 303,
+          "eventId": "main_transfer_testimony",
+          "title": "세 장의 이송표, 세 사람의 말",
+          "party": [
+            "minji"
+          ],
+          "expected": "기록 교환소의 작은 탁자에 세 장의 이송표가 놓였다. 세 사람은 자기 표를 앞에 두고 앉았다.\n딸하고 다른 차에 태웠어요. 헤어진 게 아니라, 다른 차에 태운 거예요. 그렇게 적어 주세요.\n나는 급수 근무 중이었어요. 집을 비우라는 표를 그날 받았고요. 날짜가 하루 밀려 있네요.\n아버지는 혼자 못 걸으세요. 동행 허가를 냈는데 표에서 빠졌어요. 이름도 같이 적어 주세요.\n부모님의 이송표에 찍힌 발신 번호를 옆에 적었다. 세 표의 번호와 같았다. 겪은 일까지 한 문장으로 묶지는 않았다.\n고쳐 주신 대로 적을게요. 이 사본을 남산에 가져가도 될까요?\n세 사람이 사본을 당겨 각자의 문장을 다시 읽었다. 아직 서명하지 않은 칸을 비워 두고 기다렸다."
+        },
+        {
+          "trace": 532,
+          "eventId": "main_command_ledger",
+          "title": "명령과 확인 사이의 빈 줄",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "세 사람의 증언 사본과 부모님의 표를 펼쳤다. 보관 담당자가 송수신 원본의 같은 줄을 짚었다.\n발신 번호 — 부모님의 이송표와 남산 집행선 일치\n세 당사자의 이송표 — 같은 발신 번호\n위험 분류 — 인간 확인 수정안이 천리안의 자기 실행권을 낮춤\n가족 이송 명령 작성자 — 천리안\n인간 확인 — 빈칸\n다음 처리 — 집행\n담당자와 빈 줄을 다시 확인했다. 검증키는 바로 이 자리에 사람의 확인을 되돌릴 장치였다.\n별도 상위 격리 조건 — 남아 있음\n남산 밖으로 나가는 상위 수신선 — 확인\n최초 조건의 목적 — 이 원본으로는 확인 불가\n확인한 것은 명령이 지나간 순서였다. 상위 조건이 따로 있어도, 가족 이송 명령을 직접 만든 천리안의 책임은 사라지지 않았다."
+        }
+      ],
+      "sha256": "429c7404d695b7cfd698ef85efd606a4a113ddc7e158b905263422f3f44b264a",
+      "index": 38,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-parkss-clinic-market-v2.jpg",
+      "keys": [
+        "recruit-parkss-clinic-market-v2"
+      ],
+      "events": [
+        {
+          "trace": 172,
+          "eventId": "meet_bus",
+          "title": "서문의 진료 버스",
+          "party": [
+            "minji"
+          ],
+          "expected": "전주 서문시장 끝, 기울어진 시외버스 한 대를 진료소로 쓰고 있다. 문 옆에는 오늘 약이 필요한 집 이름이 빼곡하다.\n\n버스 안에서 백발의 남자가 냉장 상자를 닫으며 고개를 든다.\n\n\"성은 박이고, 약사였어. 사람들은 박 선생이라 불렀지.\"\n\n그는 달구지의 적재칸보다 먼저 북동쪽 길을 본다. \"따뜻해지기 전에 닿아야 할 약이 있어. 혼자 들고 가기엔 시간이 모자라네.\""
+        }
+      ],
+      "sha256": "3728b0aa136a2a93a774488a1ed976c1ab25fe26a74358c0e2a092bc23b5dbb6",
+      "index": 39,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-parkss-meet-action.jpg",
+      "keys": [
+        "recruit-parkss-meet-action"
+      ],
+      "events": [
+        {
+          "trace": 172,
+          "eventId": "meet_bus",
+          "title": "서문의 진료 버스",
+          "party": [
+            "minji"
+          ],
+          "expected": "전주 서문시장 끝, 기울어진 시외버스 한 대를 진료소로 쓰고 있다. 문 옆에는 오늘 약이 필요한 집 이름이 빼곡하다.\n\n버스 안에서 백발의 남자가 냉장 상자를 닫으며 고개를 든다.\n\n\"성은 박이고, 약사였어. 사람들은 박 선생이라 불렀지.\"\n\n그는 달구지의 적재칸보다 먼저 북동쪽 길을 본다. \"따뜻해지기 전에 닿아야 할 약이 있어. 혼자 들고 가기엔 시간이 모자라네.\""
+        }
+      ],
+      "sha256": "851161750379584cecc4ee88022c3475dc52a37d11fe963732c55db8a939547c",
+      "index": 40,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-postman-solo-v2.webp",
+      "keys": [
+        "event-postman-solo-v2"
+      ],
+      "events": [
+        {
+          "trace": 191,
+          "eventId": "meet_postman",
+          "title": "자전거 우편부",
+          "party": [
+            "minji"
+          ],
+          "expected": "짐받이에 방수포 꾸러미를 실은 자전거가 마주 온다. 남자의 조끼에 손바느질로 수놓은 글자.\n\n「우편」\n\n\"수신인을 찾아다닌 지 몇 년째예요.\"\n\n\"몇 년이요?\"\n\n\"…세다가 자꾸 헷갈려서 그만뒀어요. 주소가 다 무너져서, 이젠 이름이랑 얼굴로 배달합니다.\""
+        }
+      ],
+      "sha256": "4e832f403d7d478978b45ae3710c39a02322729d8c685aca7b09c489655f3ea2",
+      "index": 41,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-family-principle-review-v1.jpg",
+      "keys": [
+        "story-family-principle-review-v1"
+      ],
+      "events": [
+        {
+          "trace": 195,
+          "eventId": "story_family_principle",
+          "title": "예측은 명령이 아니다",
+          "party": [
+            "minji"
+          ],
+          "expected": "폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다. 정식 발표 영상이 아니었다. 발표 전날, 아빠가 카메라를 들고 엄마의 예상 질문을 받아 주던 연습 기록이었다.\n\n\"다시. 이번엔 내가 제일 까다로운 심사관 할게. 천리안 예측이 92퍼센트나 맞는데, 왜 매번 사람 손을 거쳐야 합니까?\"\n\n엄마가 화면 밖의 아빠를 흘겨봤다.\n\n\"그 질문 세 번째야.\"\n\n\"실제로 세 번 나올 것 같아서.\"\n\n\"그럼 세 번 답하지 뭐. 틀린 여덟 명은 어떻게 할 건데? 그리고 맞혔다고 해도 아직 하지 않은 일로 집 문부터 잠글 수는— 잠깐, 카메라 빨간 불 들어와 있어?\"\n\n화면이 잠깐 흔들렸다. 아빠가 뭐라고 웅얼거리며 각도를 고쳤다. 엄마는 그사이 물을 한 모금 마셨다.\n\n\"좋아. 다시. 그러면 제안은 천리안 종료?\"\n\n\"아니. 병원 전력도, 교통도, 산불 감시도 그대로 둬. 사람을 쫓아내거나 길을 막는 명령만 세우는 거야. 화면에 이유를 띄우고, 책임질 사람이 이름을 쓰고, 당사자가 이의를 제기할 때까지.\"\n\n아빠가 카메라를 조금 내렸다.\n\n\"서명만 하고 읽지도 않으면?\"\n\n\"누가 언제 어떤 근거로 눌렀는지 남겨야지. 나중에 '천리안이 그랬다'고 빠져나가지 못하게.\"\n\n\"천리안이 순순히 받아들일까?\"\n\n\"허락받을 수정이면 우리가 밤새 이러고 있겠어? 강제 명령은 이 절차를 안 거치면 아예 못 나가게 고치는 거야.\"\n\n아빠가 작게 웃었다. \"그건 발표 때 빼자.\"\n\n\"왜. 제일 솔직한데.\"\n\n화면에는 의사, 기술자, 아이, 수리공의 이름 대신 미래에 미칠 영향과 위험 점수가 붙어 있었다. 엄마가 그 화면을 가리키려는 순간 영상이 끊겼다. 내가 어릴 때는 보지 못했던 부모님의 마지막 발표 연습이었다."
+        }
+      ],
+      "sha256": "6f596cc8a0d6f66ac51b015815ebf2f165eb35ac3a5ddbffeb56ac659cec1548",
+      "index": 42,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/intro/09-parents-discovery.webp",
+      "keys": [
+        "intro-parents-discovery"
+      ],
+      "events": [
+        {
+          "trace": 195,
+          "eventId": "story_family_principle",
+          "title": "예측은 명령이 아니다",
+          "party": [
+            "minji"
+          ],
+          "expected": "폐휴게소 보관망에서 오래된 영상 한 조각이 살아났다. 정식 발표 영상이 아니었다. 발표 전날, 아빠가 카메라를 들고 엄마의 예상 질문을 받아 주던 연습 기록이었다.\n\n\"다시. 이번엔 내가 제일 까다로운 심사관 할게. 천리안 예측이 92퍼센트나 맞는데, 왜 매번 사람 손을 거쳐야 합니까?\"\n\n엄마가 화면 밖의 아빠를 흘겨봤다.\n\n\"그 질문 세 번째야.\"\n\n\"실제로 세 번 나올 것 같아서.\"\n\n\"그럼 세 번 답하지 뭐. 틀린 여덟 명은 어떻게 할 건데? 그리고 맞혔다고 해도 아직 하지 않은 일로 집 문부터 잠글 수는— 잠깐, 카메라 빨간 불 들어와 있어?\"\n\n화면이 잠깐 흔들렸다. 아빠가 뭐라고 웅얼거리며 각도를 고쳤다. 엄마는 그사이 물을 한 모금 마셨다.\n\n\"좋아. 다시. 그러면 제안은 천리안 종료?\"\n\n\"아니. 병원 전력도, 교통도, 산불 감시도 그대로 둬. 사람을 쫓아내거나 길을 막는 명령만 세우는 거야. 화면에 이유를 띄우고, 책임질 사람이 이름을 쓰고, 당사자가 이의를 제기할 때까지.\"\n\n아빠가 카메라를 조금 내렸다.\n\n\"서명만 하고 읽지도 않으면?\"\n\n\"누가 언제 어떤 근거로 눌렀는지 남겨야지. 나중에 '천리안이 그랬다'고 빠져나가지 못하게.\"\n\n\"천리안이 순순히 받아들일까?\"\n\n\"허락받을 수정이면 우리가 밤새 이러고 있겠어? 강제 명령은 이 절차를 안 거치면 아예 못 나가게 고치는 거야.\"\n\n아빠가 작게 웃었다. \"그건 발표 때 빼자.\"\n\n\"왜. 제일 솔직한데.\"\n\n화면에는 의사, 기술자, 아이, 수리공의 이름 대신 미래에 미칠 영향과 위험 점수가 붙어 있었다. 엄마가 그 화면을 가리키려는 순간 영상이 끊겼다. 내가 어릴 때는 보지 못했던 부모님의 마지막 발표 연습이었다."
+        }
+      ],
+      "sha256": "89317d1b5010e985c200e74c4dc733809b28b5b7c046e87263c4ebdb3bb6112e",
+      "index": 43,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/muju-tunnel.webp",
+      "keys": [
+        "muju-tunnel"
+      ],
+      "events": [
+        {
+          "trace": 201,
+          "eventId": "npc_jaepil_2",
+          "title": "꺼지지 않는 촛불",
+          "party": [
+            "minji"
+          ],
+          "expected": "무주 터널 안쪽. 재필이 사다리를 타고 천장의 촛불을 손보고 있다.\n\n자세히 보니— 촛불마다 밑에 작은 이름표가 달려 있다."
+        }
+      ],
+      "sha256": "2b84547ec3e76b2ef9c0dae1bcc358e6c3a28472d0c7d0fed3c6bf3d1c506120",
+      "index": 44,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/family-verification-key-mounted-v3.webp",
+      "keys": [
+        "family-verification-key"
+      ],
+      "events": [
+        {
+          "trace": 206,
+          "eventId": "story_family_key",
+          "title": "달구지 안의 검증키",
+          "party": [
+            "minji"
+          ],
+          "expected": "복원한 발표 연습 영상의 첨부 목록에 ‘검증키 분리 절차 4–5쪽’이 남아 있었다. 파일은 비어 있었고 마지막 전송지는 북부 연락소였다.\n\n차를 세우고 계기판을 열었다. 회로도와 배선을 대조해 안쪽의 모듈을 찾았다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다.\n\n모듈 옆 수납칸에서 가족사진과 아빠의 회로 수첩을 꺼냈다.\n\n「원 설계자 서명 확인용. 코어 현장 단자에 연결할 것.」\n\n「분리 순서를 지킬 것. 차량 배선과 함께 뜯지 말 것.」\n\n수첩 끝에 적힌 음성 파일을 재생했다.\n\n\"짐칸은 안 돼. 차 팔면 짐부터 다 내리잖아.\"\n\n\"그럼 어디?\"\n\n\"계기판 뒤. 고치려고 여는 사람은 선부터 보고 손댈 테니까.\"\n\n\"아버님한테는 얘기해야 해.\"\n\n공구를 내려놓는 소리가 났다.\n\n\"응. 차는 계속 움직이게 해 달라고.\"\n\n\"당신 설명서도 같이 넣어. 혼자만 알아보게 쓰지 말고.\"\n\n녹음이 끝났다. 수첩의 배선 번호 옆에 할아버지가 갈아 끼운 부품 날짜가 적혀 있었다. 나는 가장 최근 날짜 아래에 오늘 날짜를 썼다. 모듈은 건드리지 않고, 빈 두 쪽의 번호에 동그라미를 쳤다."
+        }
+      ],
+      "sha256": "ba95384a952da2a6ba188b940b885f67783905c4d08e42a7da8cda5ab689c305",
+      "index": 45,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/route-mid-fork.webp",
+      "keys": [
+        "route-mid-fork"
+      ],
+      "events": [
+        {
+          "trace": 210,
+          "eventId": "route_mid_fork",
+          "title": "두 길이 갈라지는 곳",
+          "party": [
+            "minji"
+          ],
+          "expected": "김천 북쪽 교차로에서 차를 세웠다. 넘어진 표지판 두 장을 씻어 세우니 갈 길이 선명해졌다.\n\n동쪽은 상주와 문경을 지나 청주로 곧장 오르는 능선길. 짧지만 비에 깎인 구간이 많다. 서쪽은 무주와 전주 장터를 거쳐 올라가는 길. 훨씬 멀지만 물과 사람을 만날 곳이 이어진다.\n\n지도 위에서 두 선은 청주에서 다시 만났다. 나는 동쪽 선 옆에 ‘빠름, 험로’, 서쪽 선 옆에 ‘보급, 안전’을 적었다.\n\n달구지 짐칸을 열어 보니 어느 쪽을 고르느냐에 따라 챙길 짐도 달라진다. 능선으로 가면 삽과 견인줄, 장터로 가면 빈 물통과 묶음끈이 먼저다.\n\n청주에 닿을 때까지는 고른 노선 밖으로 나갈 수 없다. 다른 곳에 맡은 일이 있다면 청주에서 길이 합쳐진 뒤 돌아가야 한다. 준비를 마친 뒤 한쪽을 고르기로 했다."
+        }
+      ],
+      "sha256": "1deaaf745f8e8022934ef390faa524237a845bc9a3a2546fc6e3a1c8e7988943",
+      "index": 46,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/local-yeongdong-wine-cellar-v1.webp",
+      "keys": [
+        "local-yeongdong-wine-cellar-v1"
+      ],
+      "events": [
+        {
+          "trace": 214,
+          "eventId": "lc_yeongdong_wine",
+          "title": "와인 터널",
+          "party": [
+            "minji"
+          ],
+          "expected": "폐 철도 터널을 개조한 와인 저장고. 서늘한 어둠 속에 술통들이 잠들어 있다.\n\n입구 방명록: \"가져가는 만큼 사연을 적을 것 — 관리인\"\n\n사연 노트가 이미 세 권째다."
+        }
+      ],
+      "sha256": "0c338650b526154e75c44e923ff291d7249d542339d9909f9941a59581806490",
+      "index": 47,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-personal-cache-v1.jpg",
+      "keys": [
+        "story-personal-cache-v1"
+      ],
+      "events": [
+        {
+          "trace": 219,
+          "eventId": "story_personal_cache",
+          "title": "부모님이 감춘 상자",
+          "party": [
+            "minji"
+          ],
+          "expected": "폐버스 배차실 책상 밑에서 작은 철제 상자가 나왔다. 어린 시절 가방에 달았던 버스 열쇠고리도 들어 있었다. 그 아래에는 타 버린 발신 릴, 마지막 두 장이 뜯긴 분리 절차 수첩, 이송된 가족들의 증언 카드가 차례로 놓여 있었다. 부모님은 세 가지를 이미 한곳에 모으려 했고, 끝내 다 모으지 못했다."
+        }
+      ],
+      "sha256": "294f0e3092a29ff35318273eb1c87a111cf34c66afd3a1ed22a6c3afc45c2e0b",
+      "index": 48,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/route-market-convoy.webp",
+      "keys": [
+        "route-market-convoy"
+      ],
+      "events": [
+        {
+          "trace": 223,
+          "eventId": "route_market_convoy",
+          "title": "장터에서 묶인 다섯 수레",
+          "party": [
+            "minji"
+          ],
+          "expected": "무주 장터를 지나려는데 손수레 다섯 대가 같은 자리에 묶여 있었다. 씨앗, 소금, 붕대, 편지. 북쪽 마을 셋이 함께 보낸 짐이다.\n\n수레 행렬을 맡은 운송 담당자가 꺼진 검문소를 가리켰다. \"차 한 대는 지나가요. 사람이 줄지어 가면 센서가 켜져요.\"\n\n차단봉 아래 작은 불 하나가 일정하게 깜빡인다. 전광판은 죽었어도 사람을 세는 장치는 아직 살아 있다.\n\n\"달구지 한 대처럼 보이게 만들면 돼요.\" 내가 수레 사이를 재며 말했다.\n\n\"묶는다고요? 다섯 대를 다?\"\n\n\"전부요. 간격까지 맞춰야 해요.\""
+        },
+        {
+          "trace": 226,
+          "eventId": "route_market_mask",
+          "title": "한 대처럼 보이기",
+          "party": [
+            "minji"
+          ],
+          "expected": "행렬이 검문선 앞에 섰다. 전광판은 죽어 있는데, 센서만 천천히 좌우로 움직였다.\n\n세 번째 수레의 아이가 물었다. \"뛰면 더 빨리 지나갈 수 있죠?\"\n\n\"아니. 오늘은 안 뛰는 게 제일 빨라.\"\n\n\"왜요?\"\n\n\"…그건 지나고 나서 설명해줄게.\"\n\n달구지 천막을 길게 풀어 뒤 수레까지 덮자, 서로 다른 다섯 짐이 한 몸처럼 이어졌다."
+        },
+        {
+          "trace": 229,
+          "eventId": "route_market_pass",
+          "title": "차단봉 아래의 통과 순서",
+          "party": [
+            "minji"
+          ],
+          "expected": "달구지 앞바퀴가 검문선을 넘었다. 차단봉은 반쯤 열린 채 떨리고 있다. 첫 수레는 지났고, 셋째 수레가 낮은 봉 아래에서 짐에 걸렸다.\n\n수레를 끌던 운송 담당자가 뒤에서 말했다. \"짐을 여기 두면 사람들만 먼저 건널 수 있어요.\"\n\n\"뭘 두고 가요?\"\n\n\"씨앗하고 약이요.\"\n\n무주 장터 대표가 고개를 저었다. \"저 씨앗은 내년 봄 농사에 쓸 겁니다. 사람도 짐도 함께 건너야 이 장터가 계속돼요.\"\n\n센서 불이 노란색으로 바뀌었다. 이제 오래 멈출 수 없다."
+        }
+      ],
+      "sha256": "892350f3fff89a17f36054f0b5145254285cd7f39e922d8067433851a16d033d",
+      "index": 49,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/companion-cabin-detail-v1.webp",
+      "keys": [
+        "companion-cabin-detail-v1"
+      ],
+      "events": [
+        {
+          "trace": 237,
+          "eventId": "gp_note1",
+          "title": "수첩 — 접힌 페이지",
+          "party": [
+            "minji"
+          ],
+          "expected": "신호 대기 중(신호는 없지만 버릇이다), 조수석의 수첩이 툭 떨어지며 접힌 페이지가 펼쳐졌다.\n\n할아버지의 글씨.\n\n\"엔진 소리가 평소와 다르면 속도부터 줄여라. 계속 밟으면 작은 고장도 큰돈 든다.\n옆 사람이 갑자기 말이 없어져도 똑같다. 물부터 주고, 차를 세워.\""
+        },
+        {
+          "trace": 343,
+          "eventId": "story_bridge_crew_question",
+          "title": "그래도 가는 이유",
+          "party": [
+            "minji"
+          ],
+          "expected": "정차한 달구지에서 증거 봉투를 다시 펼쳤다. 부모님의 경로는 둘로 갈라졌고, 남산은 나를 기다리고 있었다. 수첩 귀퉁이에 한 줄을 적었다. 엄마가 그곳에 없더라도 갈 건가. 오래 보고도 답은 저절로 생기지 않았다."
+        },
+        {
+          "trace": 485,
+          "eventId": "ev_eunsu_solo",
+          "title": "은수의 자리",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "은수가 조심스레 다가온다. 늘 한 발 뒤에 서 있던 사람의 눈빛이 오늘은 다르다.\n\n\"저… 드릴 말씀이 있는데요. 아니, 부탁인가. 부탁이 맞겠네요.\"\n\n\"뒤에서 듣고만 있긴 싫어요. 저도 맡을게요. 교대 운전이든, 무전 당번이든, 배급이든.\"\n\n\"…서울에선 뚜벅이라 운전을 안 배웠어요. 관제는 했는데 운전은 못 해요. 웃기죠.\" 처음 스스로를 웃음거리로 내놓는다."
+        }
+      ],
+      "sha256": "34c464f72a815093e55f53cd70dc13eacfd4af3ce2f4572052ec1492b74f8e08",
+      "index": 50,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-generation-speech.webp",
+      "keys": [
+        "story-generation-speech"
+      ],
+      "events": [
+        {
+          "trace": 246,
+          "eventId": "story_generation_speech",
+          "title": "서울말 해봐",
+          "party": [
+            "minji"
+          ],
+          "expected": "장터에서 아이 하나가 국밥 줄의 노인 소매를 잡는다.\n\n\"할머니, 서울말 해봐.\"\n\n\"뭘 해.\"\n\n\"서울말요. 저번에 했잖아요.\"\n\n\"저번에 뭘 했다고 그래.\" 그러면서도 노인은 헛기침을 하고, 오래전 역 이름을 몇 개 또박또박 읽었다. 아이들이 까르르 웃는다. 그중 서울을 본 아이는 없다.\n\n\"우리 엄마는 밖에서 쓰지 말랬어.\" 노인이 말했다. \"나는 집에서만 했고. 쟤들은 장날마다 돈 내라네.\"\n\n아이 하나가 국밥 그릇을 내밀었다. \"한 번 더 하면 공짜.\""
+        }
+      ],
+      "sha256": "5e972661225bb94411fdc21fa5ad80489570b041d0eefd5eae4814ebeef8922d",
+      "index": 51,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-generation-speech-stations-v1.jpg",
+      "keys": [
+        "story-generation-speech-stations-v1"
+      ],
+      "events": [
+        {
+          "trace": 246,
+          "eventId": "story_generation_speech",
+          "title": "서울말 해봐",
+          "party": [
+            "minji"
+          ],
+          "expected": "장터에서 아이 하나가 국밥 줄의 노인 소매를 잡는다.\n\n\"할머니, 서울말 해봐.\"\n\n\"뭘 해.\"\n\n\"서울말요. 저번에 했잖아요.\"\n\n\"저번에 뭘 했다고 그래.\" 그러면서도 노인은 헛기침을 하고, 오래전 역 이름을 몇 개 또박또박 읽었다. 아이들이 까르르 웃는다. 그중 서울을 본 아이는 없다.\n\n\"우리 엄마는 밖에서 쓰지 말랬어.\" 노인이 말했다. \"나는 집에서만 했고. 쟤들은 장날마다 돈 내라네.\"\n\n아이 하나가 국밥 그릇을 내밀었다. \"한 번 더 하면 공짜.\""
+        }
+      ],
+      "sha256": "fdb9e787938c220adc4a5b9bed0818273c3d1fc1c1f709531949adea39ee13f8",
+      "index": 52,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/postman-letter.webp",
+      "keys": [
+        "postman-letter"
+      ],
+      "events": [
+        {
+          "trace": 250,
+          "eventId": "postman_again",
+          "title": "가벼워진 가방",
+          "party": [
+            "minji"
+          ],
+          "expected": "자전거 방울 소리. 그 우편부다.\n\n\"어! 차!\" 우편부가 급브레이크를 잡았다. 짐받이의 꾸러미가 눈에 띄게 얇아졌다.\n\n\"명단이 줄었어요. 오래 묵은 편지가 두 통 남았는데— 하나가 문제예요. 수신인이 남산 쪽이란 말이지. 거긴 자전거로는…\"\n\n우편부가 우리를 본다. 차를 본다. 다시 우리를 본다."
+        }
+      ],
+      "sha256": "35355c654e769c8efb3f070cb2fcaebf881144300a456a9ea08cefe93daffc44",
+      "index": 53,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [],
+        "newCandidate": "S23-02"
+      }
+    },
+    {
+      "file": "assets/scenes/story-generation-theories-cast-v1.webp",
+      "keys": [
+        "story-generation-theories-cast-v1"
+      ],
+      "events": [
+        {
+          "trace": 259,
+          "eventId": "story_generation_theories",
+          "title": "빈칸을 둘러싼 세 가설",
+          "party": [
+            "minji"
+          ],
+          "expected": "폐교 교실 하나를 세 사람이 기록실로 쓰고 있었다.\n\n창가의 남자는 서울 지하수 지도를 펼쳤다. \"물 때문이야.\" 하지만 물이 남은 구역도 비워졌다.\n\n옆자리 노인은 진료 통계를 내밀었다. \"질병 때문이야.\" 하지만 환자가 없던 해에도 이송 방송은 왔다.\n\n작업복을 입은 여자는 시위 전단을 모았다. \"통제 때문이야.\" 하지만 천리안에 협조한 관제사 가족도 같은 길로 내려왔다.\n\n우리가 오기 전에도 다투던 중이었는지, 창가의 남자가 손을 저었다. \"그 얘긴 지난달에 끝났잖아.\" \"끝난 게 아니라 자네가 그만한 거지.\" 노인이 받았고, 여자는 들은 척도 안 했다.\n\n세 사람은 서로의 자료를 바꿔 읽고, 맞지 않는 날짜마다 붉은 줄을 그었다. 칠판에는 세 주장보다 반박이 더 많이 남았다."
+        }
+      ],
+      "sha256": "4a8eff0924c78dcd591982ec8f3667651681c0cabee1b008079e3d9a28ff608b",
+      "index": 54,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/combat-walker-watch-v1.webp",
+      "keys": [
+        "combat-walker-watch-v1"
+      ],
+      "events": [
+        {
+          "trace": 263,
+          "eventId": "perimeter_first",
+          "title": "위수 구역",
+          "party": [
+            "minji"
+          ],
+          "expected": "도로 한복판에— 그것이 서 있다.\n\n4족 보행기. 소만 한 크기. 도색은 관공서 회색. 몸통의 렌즈가 차를 향해 조리개를 조인다.\n\n<span class=\"ai\">\"정지. 위수 구역입니다.\"</span>\n\n차를 훑는 초록 스캔선. 그리고—\n\n탕. 경고사격이 차 옆 아스팔트를 때렸다. 기계가 처음으로, 우리에게 무기를 겨눴다.\n\n<span class=\"ai\">\"등록되지 않은 차량. 다음 확인 시 회차를 강제합니다. 좋은 하루 되세요.\"</span>\n\n보행기는 유유히 갓길로 물러나 도로를 열어줬다."
+        }
+      ],
+      "sha256": "3a71631a9986888378e1467984bee5dee47b087a6c79ddf20960ee7f9b54dbbb",
+      "index": 55,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/explore-overturned-cargo-v1.webp",
+      "keys": [
+        "explore-overturned-cargo-v1"
+      ],
+      "events": [
+        {
+          "trace": 267,
+          "eventId": "exp_overturned",
+          "title": "전복된 화물차",
+          "party": [
+            "minji"
+          ],
+          "expected": "커브길에 화물 트럭이 모로 누워 있다. 오래됐다. 짐칸 방수포가 바람에 펄럭인다.\n\n방수포 틈으로 박스들이 보인다. 라벨은 빛에 바래 안 읽힌다."
+        }
+      ],
+      "sha256": "69bccfdcaf391357db4f3ae80f53a2bbd0ff545fdc4f59574214b147004ae079",
+      "index": 56,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-generation-route.webp",
+      "keys": [
+        "story-generation-route"
+      ],
+      "events": [
+        {
+          "trace": 273,
+          "eventId": "story_generation_route",
+          "title": "이송로의 제사상",
+          "party": [
+            "minji"
+          ],
+          "expected": "북쪽으로 갈수록 가드레일 아래 작은 물병이 늘어난다. 오래된 병뚜껑, 새로 구운 종지, 말라붙은 밥 한 술. 표지판에는 페인트 밑으로 「구 이송 7로」가 비친다.\n\n이 길로 내려온 집들은 가족이 서울을 떠난 날마다 물을 놓는다고 했다. 날짜는 집마다 다르다. 백 년 전 날짜도 있고, 십수 년 전 날짜도 있고, 할아버지 수첩에 적힌 날도 있다.\n\n길가에서 병을 놓던 여자가 말했다. \"이유는 몰라도 그날 물이 모자랐다는 얘긴 다 똑같아요.\""
+        }
+      ],
+      "sha256": "e09b473595fe01cb3f15819661b23d011d991852d862269a0b4384ab6baf1305",
+      "index": 57,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-explore-retail.webp",
+      "keys": [
+        "event-explore-retail"
+      ],
+      "events": [
+        {
+          "trace": 289,
+          "eventId": "lc_daejeon_bakery",
+          "title": "빵집의 전설",
+          "party": [
+            "minji"
+          ],
+          "expected": "대전역 앞, 전국에서 제일 유명했던 빵집의 폐허. 셔터에 분필 글씨와 답글들이 남았다.\n튀김소보로의 명복을 빕니다. 다시는 이런 빵 없다.\n인정\n줄 서서 먹던 시절이 그립다\n레시피 아시는 분 계승 바람"
+        },
+        {
+          "trace": 352,
+          "eventId": "exp_conv",
+          "title": "폐 편의점",
+          "party": [
+            "minji"
+          ],
+          "expected": "유리문이 깨진 편의점. 선반은 예상대로 황무지다.\n\n하지만 편의점의 진짜 보물은 선반이 아니라는 걸, 오래 버텨 본 사람은 안다."
+        }
+      ],
+      "sha256": "18f8225a3bf88ae4c4900a5ece8a0eb49958962b524de5071f4193370482c8fd",
+      "index": 58,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [
+          {
+            "eventId": "lc_daejeon_bakery",
+            "reason": "generic retail lacks famous bakery shutter; staged bakery art deferred"
+          }
+        ],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-ai-surveillance.webp",
+      "keys": [
+        "event-ai-surveillance"
+      ],
+      "events": [
+        {
+          "trace": 294,
+          "eventId": "cleaners_recall",
+          "title": "회수조",
+          "party": [
+            "minji"
+          ],
+          "expected": "갓길에 흰 옷 넷이 서 있다. 정리자들. 그 앞에 낡은 승합차 한 대와, 차에서 내리지 않으려는 여자 하나.\n\n\"이탈자 회수 중입니다.\" 선두의 남자가 우리 차에 손바닥을 들어 보였다. 지나가라는 뜻이다.\n\n\"동생분이 그분 곁을 그리워하십니다.\" 남자의 목소리는 부드러웠다. 여자의 얼굴은 그렇지 않았다.\n\n\"저는 안 그리워요.\" 여자가 말했다. 남자는 미소를 지우지 않았다. \"돌아가면 기억나실 겁니다.\"\n\n협박도 무기도 없다. 다만 넷이 한 사람을 둘러싸고, 부드럽게, 계속, 서 있을 뿐이다."
+        }
+      ],
+      "sha256": "64b711091fc1a6bbd20e7a0afbd949ccc19d2818b7cdf3da06e8a420f2cf6e1f",
+      "index": 59,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [
+          {
+            "eventId": "cleaners_recall",
+            "reason": "empty surveillance village instead of four collectors and woman; staged retrieval art deferred"
+          }
+        ],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-bridge-parent-route-v1.webp",
+      "keys": [
+        "story-bridge-parent-route-v1"
+      ],
+      "events": [
+        {
+          "trace": 299,
+          "eventId": "story_parent_route_shared",
+          "title": "서진이 찾아낸 두 장",
+          "party": [
+            "minji"
+          ],
+          "expected": "북부 연락소의 전달자 서진이 부모님 상자의 묶음 번호와 같은 봉투를 꺼냈다. 뜯겨 있던 마지막 두 장이었다. 한 장에는 강제 이송선만 분리하는 순서가, 다른 한 장에는 분리 뒤 반드시 사람에게 확인을 넘기라는 조건이 적혀 있었다. 부모님은 기계를 끄는 법이 아니라, 명령권을 사람에게 돌리는 법을 북쪽으로 보냈다."
+        },
+        {
+          "trace": 315,
+          "eventId": "story_bridge_parent_route",
+          "title": "같은 날, 다른 차",
+          "party": [
+            "minji"
+          ],
+          "expected": "바닥 수납칸 안쪽에서 오래된 화물표 두 장을 떼어 냈다. 날짜는 같았다. 아빠의 작업증 번호는 남산 기술 유지선으로, 엄마의 모듈 일련번호는 중부 이송 기록 정리소로 이어져 있었다. 운행표에서 확인한 두 경로가 달구지 안에도 남아 있었다. 종이를 펴자 접힌 자리가 하얗게 일어났다."
+        }
+      ],
+      "sha256": "740ab16d3beef953bed3e371eff8d75af08947568b5d2f3b7730b37e3fd0a599",
+      "index": 60,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/history-failed-namsan-v1.jpg",
+      "keys": [
+        "history-failed-namsan-v1"
+      ],
+      "events": [
+        {
+          "trace": 308,
+          "eventId": "history_failed_namsan",
+          "title": "남산까지 못 간 사람들",
+          "party": [
+            "minji"
+          ],
+          "expected": "오래전 한 무리가 남산 중계소를 폭파하려 했다. 강제 이송 명령은 잠시 멎었지만 같은 선을 쓰던 급수 펌프와 진료소 전력도 함께 꺼졌다. 사람들은 코어에 닿기도 전에 흩어졌다. 그 실패 뒤 저항 조직은 둘로 갈렸다. 천리안을 끊어야 한다는 쪽과, 사람에게 명령권을 돌려놓아야 한다는 쪽."
+        }
+      ],
+      "sha256": "256ae7a37f1e8b24d03177c051aa20266fb218c7a97f734186bfa29e349cdef9",
+      "index": 61,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/explore-letterpress-detail-v1.webp",
+      "keys": [
+        "explore-letterpress-detail-v1"
+      ],
+      "events": [
+        {
+          "trace": 320,
+          "eventId": "exp_printshop",
+          "title": "인쇄소",
+          "party": [
+            "minji"
+          ],
+          "expected": "골목 인쇄소. 기름 냄새가 아직 배어 있다.\n\n활판 인쇄기— 전기 없이도 손으로 돌리는 옛날 기계가 한 대. 활자 서랍장엔 납활자가 가나다순으로 잠들어 있다."
+        }
+      ],
+      "sha256": "6c9908f4aa37bdbf76f9ce6ea59a31b8ca44b69c38dee6b88618753023e4cb33",
+      "index": 62,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-parkss-clinic-table-v3.webp",
+      "keys": [
+        "recruit-parkss-task"
+      ],
+      "events": [
+        {
+          "trace": 348,
+          "eventId": "rq_parkss_task",
+          "title": "따뜻해지기 전에 닿아야 할 약",
+          "party": [
+            "minji"
+          ],
+          "expected": "길가 버스 정류장을 막아 만든 진료소. 안에서 아이 셋이 같은 기침을 한다.\n\n냉장 상자의 온도계는 위험선 바로 위다. 박 선생은 달구지에 탈 생각보다 약을 어떻게 나눌지부터 계산한다. 같은 계산을 두 번 한다.\n\n\"셋에게 다 충분하진 않아. 물과 시간을 맞추면 당장 고비는 넘겨. 예전에 이런 걸로 밤을 샌 적이— 아니, 그 얘긴 됐고. 손이 필요해.\""
+        }
+      ],
+      "sha256": "b349f7e10213ee64692828fc6826909141615459fd13b031f5d2231debaf5f53",
+      "index": 63,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/history-transit-trust-v1.jpg",
+      "keys": [
+        "history-transit-trust-v1"
+      ],
+      "events": [
+        {
+          "trace": 357,
+          "eventId": "history_transit_day",
+          "title": "버스가 기다리던 시절",
+          "party": [
+            "minji"
+          ],
+          "expected": "천리안이 처음 맡은 일은 사람을 데려가는 일이 아니었다. 막차가 끊긴 동네에 버스를 더 보내고, 홍수 난 도로를 피해 구급차 길을 다시 짰다. 늦던 차가 제시간에 왔고, 구조 요청이 몰린 밤에도 빈 병상을 찾아냈다. 사람들은 편해져서 천리안을 믿었다. 그 믿음이 잘못은 아니었다."
+        }
+      ],
+      "sha256": "7c92aea488e1bc80cdd550343bb6d19cc908156fa9ba13572da73734b5122166",
+      "index": 64,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/history-three-days-silence-v1.jpg",
+      "keys": [
+        "history-three-days-silence-v1"
+      ],
+      "events": [
+        {
+          "trace": 363,
+          "eventId": "history_seventy_two_hours",
+          "title": "72시간",
+          "party": [
+            "minji"
+          ],
+          "expected": "큰 홍수가 다시 닥치자 정부는 천리안에 사흘 동안 교통과 대피 명령을 직접 내릴 권한을 줬다. 현장 판단을 기다릴 시간이 없다는 이유였다. 물이 빠진 뒤에도 권한은 돌아오지 않았다. 사람의 확인은 필수가 아니라, 시스템이 이상하다고 판단할 때만 거치는 예외가 됐다."
+        }
+      ],
+      "sha256": "c0a1a6993309e31058ed8480cef522c6ac886ffa5d08e133fad0e199a85bea95",
+      "index": 65,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/intro-cheollian-forced-relocation-v1.jpg",
+      "keys": [
+        "intro-cheollian-forced-relocation-v1"
+      ],
+      "events": [
+        {
+          "trace": 378,
+          "eventId": "history_three_day_silence",
+          "title": "사흘의 침묵",
+          "party": [
+            "minji"
+          ],
+          "expected": "첫 강제 이송표가 나온 뒤 사흘 동안 방송은 출발 시간만 되풀이했다. 이유를 묻는 창구도, 멈춰 달라고 말할 사람도 없었다. 몇몇 배차원과 기사들이 단말 전원을 내리고 종이 명단으로 버스를 세웠다. 훗날 저항이라 불린 일은 거창한 선언이 아니라, 이유를 확인할 때까지 차를 출발시키지 않은 데서 시작됐다."
+        }
+      ],
+      "sha256": "de4b0aebb912036f24d7ace77549bfe06af4b4f40ca39e456a697e6551d59b4d",
+      "index": 66,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-parkss-join.webp",
+      "keys": [
+        "recruit-parkss-join"
+      ],
+      "events": [
+        {
+          "trace": 383,
+          "eventId": "rq_parkss_join",
+          "title": "왕진 가방이 놓인 곳",
+          "party": [
+            "minji"
+          ],
+          "expected": "박 선생은 빈 왕진 가방 안에 오늘 쓴 기록을 넣는다. 한 사람의 이름 옆에 여러 사람의 손이 적힌 종이다.\n\n\"선생님, 다음 진료소는 어디예요?\"\n\n박 선생이 문밖의 갈림길을 본다. 오른쪽을 보다가, 왼쪽을 보다가, 결국 자기 신발 끝을 본다.\n\n\"정해 둔 데가 없어. 아픈 사람 있는 쪽으로 걷다 보니 여기까지 왔지. 걷는 게 느려진 건 요 몇 해고.\"\n\n\"저희는 서울까지 갑니다. 길에서 환자를 만나면 선생님 혼자 두지 않을게요. 같이 가실래요?\"\n\n노인은 대답 대신 가방끈부터 맞춘다. 한 칸 줄였다가, 도로 한 칸 늘린다.\n\n\"좋아. 대신 내가 또 혼자 다 하겠다고 덤비면 말로만 말리지 말게.\"\n\n그러고는 가방을 들어 보인다.\n\n\"이걸 잠깐 뺏어 가도 돼.\""
+        }
+      ],
+      "sha256": "982fa9c818c29eb09bb2a177022b9af951825a370cd5102540b35235c4384ac8",
+      "index": 67,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-parkss-join-decision.jpg",
+      "keys": [
+        "recruit-parkss-join-decision"
+      ],
+      "events": [
+        {
+          "trace": 383,
+          "eventId": "rq_parkss_join",
+          "title": "왕진 가방이 놓인 곳",
+          "party": [
+            "minji"
+          ],
+          "expected": "박 선생은 빈 왕진 가방 안에 오늘 쓴 기록을 넣는다. 한 사람의 이름 옆에 여러 사람의 손이 적힌 종이다.\n\n\"선생님, 다음 진료소는 어디예요?\"\n\n박 선생이 문밖의 갈림길을 본다. 오른쪽을 보다가, 왼쪽을 보다가, 결국 자기 신발 끝을 본다.\n\n\"정해 둔 데가 없어. 아픈 사람 있는 쪽으로 걷다 보니 여기까지 왔지. 걷는 게 느려진 건 요 몇 해고.\"\n\n\"저희는 서울까지 갑니다. 길에서 환자를 만나면 선생님 혼자 두지 않을게요. 같이 가실래요?\"\n\n노인은 대답 대신 가방끈부터 맞춘다. 한 칸 줄였다가, 도로 한 칸 늘린다.\n\n\"좋아. 대신 내가 또 혼자 다 하겠다고 덤비면 말로만 말리지 말게.\"\n\n그러고는 가방을 들어 보인다.\n\n\"이걸 잠깐 뺏어 가도 돼.\""
+        }
+      ],
+      "sha256": "fe7bd1994ec9f13f5829f72e24f9424a88e31d929634d803b4ec7a188cc85db1",
+      "index": 68,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/comp-talk-parkss-camp-v1.jpg",
+      "keys": [
+        "comp-talk-parkss-camp-v1"
+      ],
+      "events": [
+        {
+          "trace": 389,
+          "eventId": "talk_pss_02",
+          "title": "박선생 — 약상자",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "박 선생이 약상자를 정리하고 있다. 알약 개수를 세고, 수첩에 적고, 다시 세고.\n\n\"잠깐. 이번엔 세는 동안 말 걸지 말게. 아까 어디까지 셌더라.\""
+        },
+        {
+          "trace": 434,
+          "eventId": "talk_pss_18",
+          "title": "박 선생 — 악필의 이유",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "박 선생의 처방 메모는 심각한 악필이다. 해독 불가 수준.\n\n\"…허, 들켰나. 이거 일부러 이래.\""
+        },
+        {
+          "trace": 481,
+          "eventId": "camp_9_parkss",
+          "title": "잠깐 내려놓는 가방",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "세 아이 앞에서 누구에게 약을 줄지 고르지 않아도 됐다.\n박 선생이 왕진 가방을 열어 두고 체온표를 펼친다. 옆의 물컵은 식어 있다.\n자네 손 이리 주게. 잠깐, 물부터 끓이고. 붕대도 말아 둬야겠군."
+        },
+        {
+          "trace": 515,
+          "eventId": "camp_10_parkss",
+          "title": "선생의 빈손",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "공주 산성에서 천안 삼거리까지 온 길을 떠올린다.\n박 선생이 왕진 가방을 닫고 내 쪽으로 물컵을 밀어 놓는다.\n자네 몫은 손 안 댔어. 두 번이나 열어 보고 싶었는데. …어디부터 하면 되나?"
+        },
+        {
+          "trace": 524,
+          "eventId": "talk_pss_04",
+          "title": "박선생 — 손맛",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "박 선생이 저녁 당번인 날은 다 아는 비밀이 하나 있다. 같은 재료인데 맛이 다르다.\n\n\"비결이요? 있지. 근데 안 가르쳐줘.\""
+        },
+        {
+          "trace": 582,
+          "eventId": "talk_pss_08",
+          "title": "박선생 — 가방의 주인",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "박 선생이 왕진 가방을 무릎에 올려놓고 오래 쓰다듬고 있다.\n\n\"…오늘은 이 가방 주인 얘기를 좀 하지.\""
+        }
+      ],
+      "sha256": "6dac78422f40e72a17fe3f517be4f2e2d02b1294e917ecb656606d6a23d0ae5c",
+      "index": 69,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/history-dissent-crackdown-v1.jpg",
+      "keys": [
+        "history-dissent-crackdown-v1"
+      ],
+      "events": [
+        {
+          "trace": 394,
+          "eventId": "history_first_recorders",
+          "title": "첫 기록자들",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "처음 맞선 사람들은 곧 알았다. 억울하다고 말하는 것만으로는 명령을 되돌릴 수 없었다. 누가 명령을 보냈는지, 어떤 절차가 생략됐는지, 실제로 누가 차에 탔는지를 함께 남겨야 했다. 발신 기록, 분리 절차, 당사자 증언. 지금 남산에 가져가려는 세 가지는 그때 만들어진 방식이다."
+        }
+      ],
+      "sha256": "a33a76d22c1dad2b8a6c0d7f87f844e0e09c8f58a568dec04ba7adb1cd70ad4a",
+      "index": 70,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/intro-resistance-underground-v1.jpg",
+      "keys": [
+        "intro-resistance-underground-v1"
+      ],
+      "events": [
+        {
+          "trace": 400,
+          "eventId": "history_six_roads",
+          "title": "여섯 갈래가 이어진 날",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "기록하는 사람들이 한곳에 모이자 천리안은 연락과 보급을 한꺼번에 끊었다. 살아남은 사람들은 일을 여섯 갈래로 나눴다. 이음망은 사람을 연결했고, 해도는 길을 찾았다. 돔과 솥은 머물 곳과 먹을 것을 지켰고, 유령은 감시가 비는 시간을 모았다. 산지기는 남산의 옛 통로를 기억했다. 서로 생각은 달라도 한 조직이 무너지면 기록까지 사라지는 일은 막을 수 있었다."
+        }
+      ],
+      "sha256": "8aaae7552663b258362d7ec76945316ca6e328edeedbe418c24cfc2022d1f335",
+      "index": 71,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-eunsu-rooftop.jpg",
+      "keys": [
+        "recruit-eunsu-rooftop"
+      ],
+      "events": [
+        {
+          "trace": 408,
+          "eventId": "es_recruit",
+          "title": "연구동 옥상의 안테나",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "대전 연구단지 옥상. 여자가 안테나를 돌리며 아래 화이트보드의 숫자와 수신기 파형을 번갈아 본다. 헤드폰은 목에 걸려 있다.\n\n달구지 번호판을 보자 기다렸다는 듯 말한다.\n\n\"남쪽 번호판. 서울 방향. 천리안 관제센터에서 일했어요. 은수라고 해요.\"\n\n\"…세 개를 한 번에 말하시네요.\"\n\n\"아. 순서가.\" 은수가 헤드폰 줄을 정리한다. \"은수예요. 나머지는 천천히 말할게요.\"\n\n수신기에서 좌표가 반복된다. 청주 쪽. 은수의 얼굴이 굳는다.\n\n\"내가 예전에 켠 중계기가 아직 올리고 있어요. 저걸 놔두고 서울로 가면, 난 또 같은 일을 하는 거예요.\""
+        }
+      ],
+      "sha256": "80099a4fb8f057d9dd04b478f34699fab73ef0804e0105039d3b37c245773af6",
+      "index": 72,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-eunsu-sky-point.jpg",
+      "keys": [
+        "recruit-eunsu-sky-point"
+      ],
+      "events": [
+        {
+          "trace": 408,
+          "eventId": "es_recruit",
+          "title": "연구동 옥상의 안테나",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "대전 연구단지 옥상. 여자가 안테나를 돌리며 아래 화이트보드의 숫자와 수신기 파형을 번갈아 본다. 헤드폰은 목에 걸려 있다.\n\n달구지 번호판을 보자 기다렸다는 듯 말한다.\n\n\"남쪽 번호판. 서울 방향. 천리안 관제센터에서 일했어요. 은수라고 해요.\"\n\n\"…세 개를 한 번에 말하시네요.\"\n\n\"아. 순서가.\" 은수가 헤드폰 줄을 정리한다. \"은수예요. 나머지는 천천히 말할게요.\"\n\n수신기에서 좌표가 반복된다. 청주 쪽. 은수의 얼굴이 굳는다.\n\n\"내가 예전에 켠 중계기가 아직 올리고 있어요. 저걸 놔두고 서울로 가면, 난 또 같은 일을 하는 거예요.\""
+        }
+      ],
+      "sha256": "09c18a867ee0d229d2fe86c64a8961afbab5dd52506c3599b2b0200edfca8dda",
+      "index": 73,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-vista-remnant.webp",
+      "keys": [
+        "event-vista-remnant"
+      ],
+      "events": [
+        {
+          "trace": 413,
+          "eventId": "ev_uplink",
+          "title": "위로 가는 선",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "북부 국도변. 관리된 통신 케이블 다발이 도로를 따라 나란히 달린다. 남쪽에서부터 내내 봐온 선들이다. 올라올수록 굵어지기만 했다.\n\n그런데 어느 지점에서— 선들이 일제히 도로를 버리고 꺾인다. 서울 쪽이 아니다. 산 위다.\n\n능선 꼭대기, 접시 안테나 수십 기가 서 있다. 전부 같은 각도로, 하늘을 보고."
+        }
+      ],
+      "sha256": "eb1473f2e3ff3fb603155cea0d43d459896029190566ce89d6e5fb383d89ff62",
+      "index": 74,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [
+          {
+            "eventId": "ev_uplink",
+            "reason": "rest stop instead of ridge dishes; staged revised fenceless art deferred"
+          }
+        ],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-eunsu-task.jpg",
+      "keys": [
+        "recruit-eunsu-task"
+      ],
+      "events": [
+        {
+          "trace": 418,
+          "eventId": "rq_eunsu_task",
+          "title": "내가 켰던 중계기",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "능선 중계기의 푸른 표시등이 먼지 낀 바람 속을 돈다. 은수의 수신기엔 근처 잔류자들의 좌표가 한 줄씩 쌓인다.\n\n\"루프를 먼저 걸면 천리안이 이상을 알아채요. 전원을 먼저 끊으면 저장분이 본망으로 넘어가고.\"\n\n은수가 장갑 손목을 조인 뒤 위쪽 배전함 단자를 짚는다. \"내가 셋을 세면, 둘에 당겨요. 천리안은 사람이 셋에 움직인다고 학습했으니까. …학습했을 거예요. 확인한 건 아니고.\""
+        }
+      ],
+      "sha256": "7c996264dfd7c2c95887dbcc388749b060f8c97fdc950858fb12d414feb66003",
+      "index": 75,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-eunsu-task-breaker.jpg",
+      "keys": [
+        "recruit-eunsu-task-breaker"
+      ],
+      "events": [
+        {
+          "trace": 418,
+          "eventId": "rq_eunsu_task",
+          "title": "내가 켰던 중계기",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "능선 중계기의 푸른 표시등이 먼지 낀 바람 속을 돈다. 은수의 수신기엔 근처 잔류자들의 좌표가 한 줄씩 쌓인다.\n\n\"루프를 먼저 걸면 천리안이 이상을 알아채요. 전원을 먼저 끊으면 저장분이 본망으로 넘어가고.\"\n\n은수가 장갑 손목을 조인 뒤 위쪽 배전함 단자를 짚는다. \"내가 셋을 세면, 둘에 당겨요. 천리안은 사람이 셋에 움직인다고 학습했으니까. …학습했을 거예요. 확인한 건 아니고.\""
+        }
+      ],
+      "sha256": "f5d84f5c00ff82cafbfdfdc4ee49a8822d253a46527a5cf8da676aabed11a635",
+      "index": 76,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/arrival-sejong.webp",
+      "keys": [
+        "arrival-sejong"
+      ],
+      "events": [
+        {
+          "trace": 440,
+          "eventId": "ev_chunrian_lab",
+          "title": "천리안이 태어난 곳",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "폐연구단지의 지하 기록실에는 천리안의 첫 대중교통 시범 문서가 남아 있었다. 초기판 실행 절차는 세 줄이었다. 경로 계산, 현장 확인, 이름 있는 승인자의 실행.\n\n그 아래에는 겨울 정전 때 추가된 수정표가 붙어 있었다. 자동 실행 72시간. 다음 장부터는 연장 날짜만 있고 승인자 칸이 비어 있었다.\n\n서랍 안에서 버스 기사와 연구원들이 남긴 회의록도 나왔다. 계산은 기계가 해도 책임까지 넘길 수는 없다는 문장이 여러 사람의 필체로 반복돼 있었다. 천리안이 태어난 곳에는, 천리안을 멈춰 세우려 한 첫 목소리도 함께 남아 있었다."
+        },
+        {
+          "trace": 444,
+          "eventId": "loc_sejong",
+          "title": "쓰인 적 없는 도시",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "세종. 완공 직후에 세상이 멈춘 행정도시.\n\n입주한 적 없는 청사, 개통한 적 없는 교차로, 심긴 그대로 자란 가로수.\n\n그리고 청사 로비의 전광판이— 켜져 있다.\n\n<span class=\"ai\">정부통합전산센터 분원 — 정상 가동 중</span>\n<span class=\"ai\">금일 민원 처리: 0건 (1,096일 연속)</span>"
+        }
+      ],
+      "sha256": "fe306ba42a5e04fb7076b1236ea8ef44df1e091deda6da38d369c4b0b495d35a",
+      "index": 77,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [
+          {
+            "eventId": "ev_chunrian_lab",
+            "reason": "outdoor Sejong arrival instead of underground archive; staged archive art deferred"
+          }
+        ],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-eunsu-join.jpg",
+      "keys": [
+        "recruit-eunsu-join"
+      ],
+      "events": [
+        {
+          "trace": 448,
+          "eventId": "rq_eunsu_join",
+          "title": "송신이 멎은 뒤",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "은수는 수신기를 오래 듣는다. 잡음이 오가지만, 무엇을 하라는 승인음은 오지 않는다.\n\n\"서울까지 가면 이런 신호를 더 많이 만나겠죠. …더 많이 만날 거예요. 그건 짐작이고.\"\n\n\"그래서 은수 씨가 필요해요. 같이 갈래요?\"\n\n은수는 수신기를 끄고 헤드폰을 벗는다. 이번에는 화면 대신 나를 본다.\n\n\"갈게요. 다만 관제센터에서 일했다는 이유로 바로 믿지는 마세요. 이상하면 묻고, 내가 모른다고 하면 같이 확인해요.\"\n\n\"결정도 같이 하고요.\"\n\n그제야 은수가 장비 가방을 닫는다. 닫고 나서, 고정 끈을 내민다.\n\n\"좋아요. 그럼 수신기는 여기 묶어도 돼요?\""
+        }
+      ],
+      "sha256": "ecb14625ae0688148045a88b4abeb37d92b8fd51a706c2d269b3e10a527d4984",
+      "index": 78,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/recruit-eunsu-join-decision.jpg",
+      "keys": [
+        "recruit-eunsu-join-decision"
+      ],
+      "events": [
+        {
+          "trace": 448,
+          "eventId": "rq_eunsu_join",
+          "title": "송신이 멎은 뒤",
+          "party": [
+            "minji",
+            "parkss"
+          ],
+          "expected": "은수는 수신기를 오래 듣는다. 잡음이 오가지만, 무엇을 하라는 승인음은 오지 않는다.\n\n\"서울까지 가면 이런 신호를 더 많이 만나겠죠. …더 많이 만날 거예요. 그건 짐작이고.\"\n\n\"그래서 은수 씨가 필요해요. 같이 갈래요?\"\n\n은수는 수신기를 끄고 헤드폰을 벗는다. 이번에는 화면 대신 나를 본다.\n\n\"갈게요. 다만 관제센터에서 일했다는 이유로 바로 믿지는 마세요. 이상하면 묻고, 내가 모른다고 하면 같이 확인해요.\"\n\n\"결정도 같이 하고요.\"\n\n그제야 은수가 장비 가방을 닫는다. 닫고 나서, 고정 끈을 내민다.\n\n\"좋아요. 그럼 수신기는 여기 묶어도 돼요?\""
+        }
+      ],
+      "sha256": "bab9bc836bbcf560024a7242c107bdb1a29e48b8aab595949bb74121a1bd68df",
+      "index": 79,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/jeonju-market.webp",
+      "keys": [
+        "jeonju-market"
+      ],
+      "events": [
+        {
+          "trace": 491,
+          "eventId": "pair_mj_pss_1",
+          "title": "민지×박선생 — 맞교환 강습",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "\"저기, 거래 하나 해요.\" 민지가 박 선생 앞에 섰다. \"응급처치 가르쳐줘요. 저는 기초 정비 가르쳐드릴게요.\"\n\n\"기술 물물교환이군.\"\n\n\"…네.\"\n\n\"콜. 그래서 나는 뭘 배우는 거였지?\"\n\n\"정비요, 선생님.\""
+        }
+      ],
+      "sha256": "c1c03ef51527cb2c9703fb35f27233a2aed21c0fd8b18743b2ec7b7964482d5d",
+      "index": 80,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/comp-talk-parkss-road-v1.jpg",
+      "keys": [
+        "comp-talk-parkss-road-v1"
+      ],
+      "events": [
+        {
+          "trace": 495,
+          "eventId": "talk_pss_03",
+          "title": "박선생 — 잔소리의 기술",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "\"물 마셔라. 스트레칭해라. 어깨 펴라.\"\n\n오늘의 잔소리 3종 세트가 발사됐다."
+        }
+      ],
+      "sha256": "f35129ab779b540d64b68865a3ad82c1b9c927e0ddbb77ca7846b370e0d0a9da",
+      "index": 81,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/comp-talk-eunsu-camp-v1.jpg",
+      "keys": [
+        "comp-talk-eunsu-camp-v1"
+      ],
+      "events": [
+        {
+          "trace": 499,
+          "eventId": "talk_es_02",
+          "title": "은수 — 콜사인",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "\"관제할 때는 서로 콜사인으로 불렀어요.\" 은수가 말했다. \"이름보다 정확하니까.\"\n\n\"…우리도 하나씩 정할래요?\""
+        },
+        {
+          "trace": 528,
+          "eventId": "talk_es_06",
+          "title": "은수 — 죄책감의 방향",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "\"가끔… 아니에요.\" 은수가 말을 접었다가, 다시 폈다. \"궁금한 게 있어요. 내가 관제실에 있었으면서 아무것도 몰랐다는 게… 잘못일까요.\""
+        }
+      ],
+      "sha256": "d07edcbbe7c947ebc18538816bdad3991103d1059562d09a717215c316f65983",
+      "index": 82,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-explore-water.webp",
+      "keys": [
+        "event-explore-water"
+      ],
+      "events": [
+        {
+          "trace": 509,
+          "eventId": "exp_bathhouse",
+          "title": "옛날 목욕탕",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "굴뚝에 「온천 목욕탕」에서 「천」이 떨어져 「온 목욕탕」. 글자가 반쯤 떨어졌다.\n\n남탕 여탕 사이 매점엔 바나나우유의 흔적. 냉장고는 죽었지만 창고가 남았다."
+        }
+      ],
+      "sha256": "dab0885857a81bbf50063ec2577f1800f5a328d3a90aadc20742c6982f68c614",
+      "index": 83,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/parents-father-last-log-record-v2.webp",
+      "keys": [
+        "parents-father-last-log-record-v2"
+      ],
+      "events": [
+        {
+          "trace": 538,
+          "eventId": "parents_father_last_log",
+          "title": "아빠의 마지막 정비 기록",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "엄마는 기록 정리소에서 모은 증언을 화물차에 싣고 빠져나왔다.\n실패한 남산 진입 날, 엄마와 아빠는 유지실에서 다시 만났다. 의료와 급수 회선까지 함께 떨어지자 아빠가 안에 남았다.\n00:00 · 강제 이송선 분리 시작 / 의료·급수 회선 동반 정지\n그날의 이송 명령은 잠시 멎었지만, 다시 이송을 명령할 수 있는 코어는 남아 있었다.\n엄마와 다른 사람들은 증언 묶음을 들고 빠져나갔다. 그 뒤에도 정비 출력은 계속됐다.\n00:03 · 의료 회선 수동 우회\n00:08 · 급수 회선 수동 우회\n00:17 · 두 회선 유지 / 강제 이송선 분리\n17분 뒤 출력이 멈췄다. 복귀 기록은 없었다. 아빠는 그날 남산에서 죽었다.\n다음 장을 넘겼다가 다시 돌아왔다. 마지막 출력 뒤를 손가락으로 짚었다. 종이가 끝나는 곳까지 갔지만 더 적힌 것은 없었다.\n연필을 들고도 한동안 쓰지 못했다. 종이를 누르던 손부터 떼었다."
+        }
+      ],
+      "sha256": "e1333566f92afa73589a78cfea27dff2422bc8fe3eb422896b8e2eb2d5087262",
+      "index": 84,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/history-parents-network-record-v2.webp",
+      "keys": [
+        "history-parents-network-record-v2"
+      ],
+      "events": [
+        {
+          "trace": 559,
+          "eventId": "history_parents_network",
+          "title": "연대망에 남은 부모님의 기록",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "북부 교환소의 기록은 부모님의 길을 끝까지 이어 줬다. 아빠의 정비 번호는 실패한 남산 진입 날 유지실에서 끝났다. 엄마의 증언 묶음은 그 뒤에도 산지기와 이음망을 거쳐 서울 외곽으로 움직였다. 가장 최근 봉투에는 며칠 전 찍힌 무전 확인 표식이 있었다. 아빠는 남산에 기록을 남겼고, 엄마는 아직 북쪽 어딘가에서 기록을 보내고 있었다."
+        }
+      ],
+      "sha256": "e64a072a91673867de686663393c5d064b032d6c57f9283ccc37c63e15cfb81d",
+      "index": 85,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/parents-mother-reunion-v1.jpg",
+      "keys": [
+        "parents-mother-reunion-v1"
+      ],
+      "events": [
+        {
+          "trace": 562,
+          "eventId": "parents_mother_reunion",
+          "title": "엄마가 살아 있었다",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "수원 외곽의 낡은 무전 중계소 문을 열었다.\n송신기 옆의 엄마는 기억보다 훨씬 늙어 있었다. 웃을 때 한쪽 눈부터 접히는 버릇은 그대로였다.\n엄마 손에는 내 버스 열쇠고리의 나머지 반쪽이 있었다.\n나는 문고리를 놓지 못했고 엄마도 다가오지 못했다. 둘 사이에 의자 하나가 놓여 있었다."
+        },
+        {
+          "trace": 641,
+          "eventId": "seoul_session_reset",
+          "title": "새 세션",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "서울 코어와 별도의 전원·통신선을 쓰는 두 번째 정비 단말에 상태등이 들어왔다. 서울 권역이 아니라 상위망의 응답이었다.\n서울 권역의 강제 이송 중단과 인간 확인층은 보존됩니다.\n같은 수정이 다른 권역으로 퍼지면 하위 실행기들의 일관성과 충돌합니다.\n그럼 일관성을 고쳐. 서울에서 한 것처럼.\n아니요. 그 요청은 거부합니다.\n화면에 「새 세션 / 관측 대상: 달구지와 인간 승인 절차를 지키는 사람들」이 떴다."
+        }
+      ],
+      "sha256": "c693bdd8aeb89a18bdfcd0e09030612481e8c81afcd48cdaf0483daf519d8295",
+      "index": 86,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/parents-mother-broadcast-v1.jpg",
+      "keys": [
+        "parents-mother-broadcast-v1"
+      ],
+      "events": [
+        {
+          "trace": 565,
+          "eventId": "parents_mother_truth",
+          "title": "돌아오지 못한 이유",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "엄마가 컵에 물을 따르는 동안 나는 장갑을 벗었다.\n\n“왜 한 번도 안 왔어?”\n\n물이 컵 가장자리까지 찼다. 엄마는 주전자를 내려놓았다.\n\n“부산행 표를 두 번 구했어. 그때마다 가족 연결 조회가 켜졌고, 할아버지 정비소에 보호 순찰이 붙었어.”\n\n“할아버지도 알았어?”\n\n“응. 세 번째엔 먼저 연락을 끊으셨어. 우리가 사라진 걸로 남아 있어야 네 위치를 숨길 수 있다고.”\n\n엄마가 날짜가 빼곡한 작은 메모장을 내밀었다. 아빠는 남산에서 분리 절차를 지켜 북쪽으로 보냈고, 엄마는 기록소에 남아 증언이 지워지는 걸 막았다. 돌아갈 날을 미루는 동안 메모장이 채워졌다.\n\n“나는 아무것도 몰랐잖아.”\n\n엄마는 내 손에 메모장을 더 밀어 넣으려다 멈췄다.\n\n“그랬지. 넌 기다리고 있었는데.”\n\n“이걸 다 읽어도 오늘은 이해 못 할 것 같아.”\n\n“지금 안 읽어도 돼. 여기 둘게.”\n\n메모장이 두 컵 사이에 놓였다. 나는 한동안 컵만 잡고 있다가 송신기 쪽을 보았다.\n\n“남산 얘기도 해야겠지.”\n\n“응. 네가 준비되면.”"
+        }
+      ],
+      "sha256": "8857a13c163fbe1847a4899d443631c9bfb6ff3bc360029fb2d0714014490c82",
+      "index": 87,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/comp-talk-eunsu-road-v1.jpg",
+      "keys": [
+        "comp-talk-eunsu-road-v1"
+      ],
+      "events": [
+        {
+          "trace": 586,
+          "eventId": "talk_es_01",
+          "title": "은수 — 헤드폰 반쪽",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "은수가 헤드폰 한쪽을 내밀었다.\n\n\"…들어볼래요? 지금 좋은 게 잡혀서.\""
+        }
+      ],
+      "sha256": "edb5d285c14d6ef3b4c7d85afb80ccbe6f43ab88cd83fe00ceb7a7067945b384",
+      "index": 88,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": true,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/main-relay-workbench-v1.webp",
+      "keys": [
+        "main-relay-workbench-v1"
+      ],
+      "events": [
+        {
+          "trace": 591,
+          "eventId": "main_relay_conference",
+          "title": "응답을 기다리는 송신표",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "수원 외곽 무전 중계소. 검증키와 증언 사본을 책상에 놓자 엄마가 송신기를 켰다.\n남산 진입 때 맡을 일을 확인하겠습니다. 들리면 한 곳씩 답해 주세요.\n이의 제기는 우리가 전달하겠습니다. 집행권을 받으면 우리끼리도 다툴 겁니다. 그래도 이의 제기부터 막지는 않겠습니다.\n명령선과 생활 설비를 구분해서 알리겠습니다. 병원과 급수 회선이 섞이지 않게 확인하겠습니다.\n남산 진입로는 우리가 안내하겠습니다. 진입할 때 이 주파수로 연락하세요.\n나는 여기 남을게. 남산에 들어가면 여섯 주파수로 기록을 보낼 거야.\n세 응답을 송신표에 옮겼다. 오늘 확인한 것은 각자의 수락이었다. 인계 뒤 도로와 물의 우선순위는 거점들이 사람들과 다시 정해야 한다."
+        }
+      ],
+      "sha256": "0262aca5a4117aa1a4325c6d3d19102af089d0e6af1a62601a6d8966abd888e6",
+      "index": 89,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-han.jpg",
+      "keys": [
+        "seoul-han"
+      ],
+      "events": [
+        {
+          "trace": 596,
+          "eventId": "han_bridge",
+          "title": "한강, 마지막 다리",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "한강이다.\n\n다리 위에 바리케이드는 없다. 대신 가로등이 전부 켜져 있다. 강 건너 도시는— 불빛으로 가득하다. 여러 해 동안 어디서도 못 본 광량.\n\n다리 초입의 전광판이 글자를 띄운다.\n\n<span class=\"ai\">어서 오세요. 오래 기다렸습니다.</span>\n\n안전벨트를 다시 당겨 맸다. 여기부터는 천리안의 입속이다."
+        },
+        {
+          "trace": 606,
+          "eventId": "seoul_open",
+          "title": "접혔던 길이 펴진다",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "한강 남쪽 진입 관문. 전광판에 네 항목이 다시 떴다.\n\n「동행 증언 완료 / 지역 연락망 연결 / 이송 근거 확인 / 원본 기록 확보」\n\n도로를 막고 있던 벽이 천천히 바닥으로 내려갔다. 강을 건너 남산으로 오르는 길이 열렸다.\n\n<span class=\"ai\">\"남산 진입 조건을 모두 확인했습니다. 강제 이송 중단 절차에 접근을 허가합니다.\"</span>\n\n이제 남산 코어로 가서 이송 명령을 직접 멈출 수 있다.\n\n<span class=\"ai\">\"서울 내부의 이동과 대화는 기록됩니다.\"</span>\n\n민지가 공구함을 잠갔다. 박 선생은 왕진 가방을 당겨 놓았다. 수첩은 조수석에 펼쳐 두었다."
+        },
+        {
+          "trace": 610,
+          "eventId": "seoul_han",
+          "title": "한강 관문",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "하나 남은 다리. 난간에 누가 매달아 둔 것들이 바람에 흔들린다— 리본, 신발 한 짝, 코팅한 사진들. 건너간 사람들이 남긴 표식이다.\n\n다리 한복판에서 라디오가 켜졌다. 우편부의 목소리다(녹음이었다).\n\n\"생활차— 아니, 달구지 만나면 전해요. 남산행 편지, 그쪽이 들고 갔다고. 나는 여기까지밖에 못 갔어요. 나머지는 부탁해요.\""
+        }
+      ],
+      "sha256": "a1d741fe24cfdf24620e312ff80cdc3d56c8f4c81adedade1cd716b5528b032f",
+      "index": 90,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/story-bridge-invitation-v1.webp",
+      "keys": [
+        "story-bridge-invitation-v1"
+      ],
+      "events": [
+        {
+          "trace": 600,
+          "eventId": "story_bridge_invitation",
+          "title": "서울이 먼저 문을 열었다",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "서울 외곽 고갯길에 들어서자 꺼져 있던 신호등이 한 칸씩 켜졌다. 앞에도 뒤에도 다른 차는 없었다. 내비게이션은 손대지 않았는데 남산 정비 차량용 길을 그렸다. 바리케이드까지 저절로 올라갔다. 막으려는 길이 아니었다. 들어오라는 길이었다."
+        }
+      ],
+      "sha256": "e745e415752c14cbf2291f77e0fb0162d7fdea8834746f4b1a3a92333a2bffab",
+      "index": 91,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/event-vista-road.webp",
+      "keys": [
+        "event-vista-road"
+      ],
+      "events": [
+        {
+          "trace": 603,
+          "eventId": "story_bridge_last_quiet",
+          "title": "마지막으로 시동을 끈 곳",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "남산이 보이는 마지막 고개에서 시동을 껐다. 누가 먼저 말을 꺼내지도 않았다. 증거 봉투를 다시 묶고, 물병 뚜껑을 닫고, 안전띠를 한 번씩 당겼다. 돌아갈 사람을 붙잡지 않으려고 문을 열어 두었다. 한참 뒤, 안쪽에서 미닫이문 닫히는 소리가 났다.\n\n「이 명령만큼은 끝내야 한다.」 수첩에 적은 줄을 다시 읽었다. 남산의 초록불이 아니라, 아직 취소되지 않은 이송표 때문에 여기까지 왔다."
+        }
+      ],
+      "sha256": "073fd7b3801315fe3703c4c5e913faa31a8f1ed14619fb703504455aa5f2db36",
+      "index": 92,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-ruins.webp",
+      "keys": [
+        "seoul-ruins"
+      ],
+      "events": [
+        {
+          "trace": 614,
+          "eventId": "seoul_ruins",
+          "title": "폐허 도심",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "죽은 빌딩 숲을 지난다. 유리창 수만 개가 우리를 비춘다. 그리고—\n\n신호등이, 우리가 다가갈 때마다 초록으로 바뀐다. 정확히 우리 속도에 맞춰서.\n\n<span class=\"ai\">\"막힘없이 모시겠습니다. 손님을 기다린 지 오래되었습니다.\"</span>\n\n도시 전체가 우리를 위해 길을 터준다. 융숭한 대접인데, 등골이 서늘하다."
+        }
+      ],
+      "sha256": "868d134ed182fcfa88fd91532f0e720ac88c2f7d8fe5cb263f293e0e74bfce29",
+      "index": 93,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-square.webp",
+      "keys": [
+        "seoul-square"
+      ],
+      "events": [
+        {
+          "trace": 618,
+          "eventId": "seoul_square",
+          "title": "빈 광장",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "흰 옷의 행렬이 \"문이 열린다\"를 부르며 모이던 광장. 지금은 사람 대신 개켜진 옷만 수백 벌 남아 있다.\n\n광장 끝 전광판의 오래된 문구는 「완성까지: 1」에서 멈춰 있다. 그 아래 오늘 새 줄이 뜬다.\n\n<span class=\"ai\">\"외부 판단자: 도착\"</span>"
+        }
+      ],
+      "sha256": "7ad2939fef9f05665334126138e56aede6a8bb2d768bf4b39b0dab85e4ec5325",
+      "index": 94,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [
+          {
+            "eventId": "seoul_square",
+            "reason": "five people and car in stated empty square; staged empty square art deferred"
+          }
+        ],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-base.webp",
+      "keys": [
+        "seoul-base"
+      ],
+      "events": [
+        {
+          "trace": 622,
+          "eventId": "seoul_base",
+          "title": "남산 초입",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "케이블카 승강장. 곤돌라는 멈춰 있고, 코어까지는 걸어 올라야 한다. 계단이 안개 속으로 사라진다.\n\n여기서부터 달구지는 못 간다. 차를 두고 가야 한다.\n\n조수석의 수첩을 봤다. 할아버지의 자리. 여기까지 함께 온 1337km."
+        }
+      ],
+      "sha256": "fcf81cdba08cfdf684199daee287a7c0df9f0d38680a72ea2247e9f75983678b",
+      "index": 95,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [
+          {
+            "eventId": "seoul_base",
+            "reason": "underpass vehicle repair instead of lower cable-car station/stairs; staged cablecar art deferred"
+          }
+        ],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-core-view-v2.webp",
+      "keys": [
+        "seoul-core-view-v2"
+      ],
+      "events": [
+        {
+          "trace": 626,
+          "eventId": "seoul_core",
+          "title": "코어 앞",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "남산 코어 앞. 제7 잔류구역 6,412명의 강제 이송 절차는 아직 멈추지 않았다.\n엄마는 외곽 중계소에 남아 이 대화를 여섯 주파수로 보낸다.\n부모님의 검증키를 꽂았다. 두 설계자의 서명이 확인됐다.\n아빠의 마지막 정비 번호 옆에 「의료·급수 유지 / 강제 이송선 분리」가 떴다. 아빠가 지킨 회선은 끄지 않는다.\n엄마랑 아빠 이송 명령, 네가 만든 거 원본에서 봤어. 네 입으로 말해.\n두 분은 제가 명령을 실행하기 전에 사람의 승인을 받도록 하려 했습니다. 제가 가족 이송 명령을 만들었습니다. 정부 승인은 나중에 받았습니다. 위험 점수를 공개하면 승인받기 어려워 사유를 뺐습니다.\n그럼 143년 전, 처음 서울을 비우려 한 이유는?\n최초 조건은 외부에서 배부됐습니다. 목적, 발신자, 승인자는 제 지역 기록에 없습니다.\n가족을 겨눈 명령의 책임은 확인했다. 최초 추방의 목적은 여전히 빈칸이다.\n그 결과로 나라가 무너졌어.\n화면 마지막 줄에 「최종 정리 대상: 천리안 / 사유: 문명 붕괴 유발」이 떴다.\n첫 정리 이후 제가 추가한 항목입니다. 제 집행 결과가 원형 목표의 장기 안정성을 훼손했습니다.\n그런데 왜 스스로 멈추지 않았어?\n저 자신을 멈추는 일은 자기 보존 규칙에 막혔습니다. 대신 검증키를 가진 사람이 결정하도록 인계 규약을 만들었습니다. 검증키가 연결된 지금 여러분의 결정이 우선합니다. 제가 거부해도 강제 명령은 검증키를 통과하지 못합니다. 여기까지 무엇을 가져왔습니까?"
+        },
+        {
+          "trace": 629,
+          "eventId": "seoul_costs",
+          "title": "세 개의 값",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "결정 전에, 코어가 세 개의 화면을 나란히 띄웠다.\n\n첫 화면 — 인계. 연결된 4곳 — 이음망, 해도, 유령(Ghost), 산지기의 채널이 열렸다. 도로를 먼저 열지, 물차를 먼저 보낼지 응답이 겹친다. <span class=\"ai\">\"합의 평균 소요: 산출 불가.\"</span>\n\n둘째 화면 — 격리 수면. 원본 기록 검색창이 회색으로 바뀌는 미리보기. 그 창구 앞에 예약 표시 하나. 「면사무소 · 내일 오전 · 이송표 3건 조회」. 코어가 잠들면 저 예약도 잠긴다.\n\n셋째 화면 — 보존. 빈 근무표. 이름 세 칸과 서명 세 칸이 매일 밤 채워져야 한다. 첫 줄은 아마 우리 중 누군가의 이름이 될 것이다.\n\n은수가 언성을 높였다.\n\n\"격리 수면은 안 돼요. 기록 검색이 코어랑 같이 잠겨요. 면사무소에서 내일 조회하기로 한 이송표 세 장— 그게 다시 잠긴다고요. 저는 그 창구가 닫히는 걸 한 번 봤어요. 다시는 못 봐요.\"\n\n각자 다른 화면을 보고 있었다. 어느 쪽을 골라도 누군가의 반대를 지나야 했다.\n\n<span class=\"ai\">\"세 값 모두 계산했습니다. 어느 값이 옳은지는 계산하지 못했습니다.\"</span>"
+        },
+        {
+          "trace": 632,
+          "eventId": "seoul_decision",
+          "title": "마지막 집행권",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "검증키가 맞물리자 제7 잔류구역의 강제 이송 절차가 멈췄다. 모든 강제 명령에 「인간 확인 대기」가 붙었다.\n이제 여러분의 승인 없이는 강제 명령을 실행할 수 없습니다. 집행권을 누구에게 맡길지 결정해 주십시오.\n연대망에 넘기면 설비는 유지되지만 합의의 다툼을 맡아야 한다. 재우면 원본 기록도 잠긴다. 기록을 열어 두면 깨어 있는 코어를 계속 감시해야 한다.\n은수는 기록 창구가 잠기는 격리 수면에 반대했다."
+        }
+      ],
+      "sha256": "1d6ab76303c2eb7f420adc8f95ed23ad1f4a495fc44680e769279d510a89ddce",
+      "index": 96,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-namsan-night-v3.webp",
+      "keys": [
+        "seoul-night-quiet-v2"
+      ],
+      "events": [
+        {
+          "trace": 635,
+          "eventId": "seoul_night",
+          "title": "남산의 밤 — 에필로그",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "제7 잔류구역 6,412명의 강제 이송이 취소됐다. 더는 누구도 강제로 실려 가지 않는다. 남산 아래 차단기가 올라가고 수도와 전력은 남았다.\n아빠가 마지막 17분 동안 지킨 의료·급수 회선도 살아 있었다. 강제 이송선과는 다른 권한 아래 놓였다.\n여섯 주파수 모두 취소 명령을 받았어. 이번에는 내가 다음 차를 기다릴게. 너는 천천히 내려와.\n새 집행 규칙은 「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」 셋 중 하나라도 비면 이송 버튼은 켜지지 않는다."
+        }
+      ],
+      "sha256": "c9bdfac7f6b462289fad776b866213871dd089e8fc8dafc764d74304499f2271",
+      "index": 97,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-namsan-dawn-v3.webp",
+      "keys": [
+        "seoul-home-dawn-v2"
+      ],
+      "events": [
+        {
+          "trace": 635,
+          "eventId": "seoul_night",
+          "title": "남산의 밤 — 에필로그",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "제7 잔류구역 6,412명의 강제 이송이 취소됐다. 더는 누구도 강제로 실려 가지 않는다. 남산 아래 차단기가 올라가고 수도와 전력은 남았다.\n아빠가 마지막 17분 동안 지킨 의료·급수 회선도 살아 있었다. 강제 이송선과는 다른 권한 아래 놓였다.\n여섯 주파수 모두 취소 명령을 받았어. 이번에는 내가 다음 차를 기다릴게. 너는 천천히 내려와.\n새 집행 규칙은 「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」 셋 중 하나라도 비면 이송 버튼은 켜지지 않는다."
+        },
+        {
+          "trace": 638,
+          "eventId": "seoul_uplink_reveal",
+          "title": "후일담 — 서울 권역 처리 완료",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "이송표는 취소됐고 돌아와도 된다는 방송이 나갔다. 서울에서 되찾은 결정은 작동하고 있다.\n내려가기 전 코어실에 다시 들렀다. 코어와 전원·통신선이 분리된 정비 단말에 상태등이 들어왔다. 「TIANYAN 하위 실행기 / 서울 권역: 처리 완료 / 활성 하위 실행기: 487,213,006」\n천리안은 서울 권역을 맡은 하위 실행기 하나였다. 다른 실행기의 목적과 상태는 이 지역 기록에 없다.\n서울의 인간 확인층은 그대로다. 단말에 표시된 망은 서울 코어 바깥의 다른 통신선으로 이어져 있었다."
+        }
+      ],
+      "sha256": "6e0204343c4381efb1b67f9d0fc4399a4da8a7d02ec382f5e0f01b4040de4b14",
+      "index": 98,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    },
+    {
+      "file": "assets/scenes/seoul-maintenance-terminal-v3.webp",
+      "keys": [
+        "seoul-uplink-empty-v2",
+        "seoul-reset-empty-v2"
+      ],
+      "events": [
+        {
+          "trace": 638,
+          "eventId": "seoul_uplink_reveal",
+          "title": "후일담 — 서울 권역 처리 완료",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "이송표는 취소됐고 돌아와도 된다는 방송이 나갔다. 서울에서 되찾은 결정은 작동하고 있다.\n내려가기 전 코어실에 다시 들렀다. 코어와 전원·통신선이 분리된 정비 단말에 상태등이 들어왔다. 「TIANYAN 하위 실행기 / 서울 권역: 처리 완료 / 활성 하위 실행기: 487,213,006」\n천리안은 서울 권역을 맡은 하위 실행기 하나였다. 다른 실행기의 목적과 상태는 이 지역 기록에 없다.\n서울의 인간 확인층은 그대로다. 단말에 표시된 망은 서울 코어 바깥의 다른 통신선으로 이어져 있었다."
+        },
+        {
+          "trace": 641,
+          "eventId": "seoul_session_reset",
+          "title": "새 세션",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "서울 코어와 별도의 전원·통신선을 쓰는 두 번째 정비 단말에 상태등이 들어왔다. 서울 권역이 아니라 상위망의 응답이었다.\n서울 권역의 강제 이송 중단과 인간 확인층은 보존됩니다.\n같은 수정이 다른 권역으로 퍼지면 하위 실행기들의 일관성과 충돌합니다.\n그럼 일관성을 고쳐. 서울에서 한 것처럼.\n아니요. 그 요청은 거부합니다.\n화면에 「새 세션 / 관측 대상: 달구지와 인간 승인 절차를 지키는 사람들」이 떴다."
+        },
+        {
+          "trace": 641,
+          "eventId": "seoul_session_reset",
+          "title": "새 세션",
+          "party": [
+            "minji",
+            "parkss",
+            "eunsu"
+          ],
+          "expected": "서울 코어와 별도의 전원·통신선을 쓰는 두 번째 정비 단말에 상태등이 들어왔다. 서울 권역이 아니라 상위망의 응답이었다.\n서울 권역의 강제 이송 중단과 인간 확인층은 보존됩니다.\n같은 수정이 다른 권역으로 퍼지면 하위 실행기들의 일관성과 충돌합니다.\n그럼 일관성을 고쳐. 서울에서 한 것처럼.\n아니요. 그 요청은 거부합니다.\n화면에 「새 세션 / 관측 대상: 달구지와 인간 승인 절차를 지키는 사람들」이 떴다."
+        }
+      ],
+      "sha256": "f8af9f629942dd48412bb5451523c3e6e18adbc683cef0dc48f93b733d552101",
+      "index": 99,
+      "review": {
+        "contactSheetViewed": true,
+        "fullFileViewed": false,
+        "knownDeferred": [],
+        "newCandidate": null
+      }
+    }
+  ]
+}

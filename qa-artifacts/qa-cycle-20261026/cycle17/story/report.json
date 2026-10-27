@@ -1,0 +1,226 @@
+{
+  "seed": 277003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_sleep",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "ulsan",
+    "gyeongju",
+    "daegu",
+    "gumi",
+    "mall",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "cheonan",
+    "drivein",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 100,
+  "sourceHash": "f5d3cb35f0d4ae365ad70ba532e6ef8f21e0ee26172fc78b0ebd52958f1ad0b9",
+  "freshStarts": 1,
+  "attempts": 1,
+  "party": [
+    "minji",
+    "kangwoo"
+  ],
+  "dog": false,
+  "day": 9,
+  "min": 859,
+  "km": 653,
+  "finalResources": {
+    "food": 16,
+    "water": 25,
+    "fuel": 44.19105793333356,
+    "scrap": 72,
+    "van": 100,
+    "fatigue": 18.87986
+  },
+  "upgrades": {
+    "bench": true
+  },
+  "all40FilesUnchanged": true,
+  "runtimeErrors": [],
+  "productionChangesDuringNaturalRun": 0,
+  "statistics": {
+    "choiceCount": 100,
+    "rawEntryResultCharacters": 34028,
+    "speechCalls": 76,
+    "npcMenus": 24,
+    "notes": 111,
+    "fullTuplesSame": 80,
+    "fullTuplesDifferent": 20,
+    "resultStringsSame": 89,
+    "resultStringsDifferent": 11,
+    "newPairsAgainstRetainedCycles1to16": [
+      "comp_engine_sound:1"
+    ],
+    "newPairCount": 1
+  },
+  "confirmedReaderEvents": 1,
+  "confirmedReaderTurns": 6,
+  "confirmedSourceArt": 1,
+  "candidates": [
+    "S17-C01"
+  ],
+  "entryReloads": 100,
+  "paidReloads": 100,
+  "paidDeepReaderEquality": 100,
+  "repayments": 0,
+  "chatAudit": {
+    "observedChatSequences": 5,
+    "sameDayDuplicateSequences": 0,
+    "matches": [
+      {
+        "n": 211,
+        "id": "chat:14",
+        "day": 5,
+        "min": 837.3,
+        "lines": 7,
+        "once": false
+      },
+      {
+        "n": 267,
+        "id": "chat:25",
+        "day": 6,
+        "min": 879.3,
+        "lines": 6,
+        "once": false
+      },
+      {
+        "n": 312,
+        "id": "chat:25",
+        "day": 7,
+        "min": 554.4,
+        "lines": 6,
+        "once": false
+      },
+      {
+        "n": 316,
+        "id": "daily-minji-kangwoo-check",
+        "day": 7,
+        "min": 676.5,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 442,
+        "id": "thread-parent-key-minji",
+        "day": 9,
+        "min": 744.4,
+        "lines": 7,
+        "once": true
+      }
+    ],
+    "savedStamps": {
+      "daily:chat:14": {
+        "day": 5,
+        "km": 267
+      },
+      "daily:chat:25": {
+        "day": 7,
+        "km": 441
+      },
+      "daily:daily-minji-kangwoo-check": {
+        "day": 7,
+        "km": 467
+      },
+      "daily:thread-parent-key-minji": {
+        "day": 9,
+        "km": 629
+      },
+      "thread-parent-key-minji": {
+        "day": 9,
+        "km": 629
+      }
+    },
+    "note": "Actual UI.playChat sequences matched source D.chats.lines; independent ambient/banter are not grouped as crew chats. Same chat on a later day is intentionally permitted. No forced pickChat call during natural run."
+  },
+  "actionCounts": {
+    "new-game": 1,
+    "unpaid-entry-reload": 100,
+    "choice": 100,
+    "paid-result-reload": 100,
+    "explore": 19,
+    "travel": 21,
+    "drive": 43,
+    "trade": 36,
+    "work": 5,
+    "meet-recruit": 2,
+    "camp": 8,
+    "recruit-step": 6,
+    "camp-talk": 7,
+    "accept-companion": 2,
+    "talk": 12,
+    "earned-perk": 4,
+    "board-open": 4,
+    "accept-quest": 1,
+    "npc-rumor": 12,
+    "buy-upgrade": 1,
+    "quest-turnin": 1,
+    "seoul-enter": 5
+  },
+  "naturalRechecksThisFix": [
+    "Scarecrow ambient now current mirror impression at n57/n67, no yesterday-place premise.",
+    "Child-voice road terminal at n375: speaker power off, separate receiver light; no unrepaired car radio claim.",
+    "Current lower-bound family principle echo at n263: 외워 두기만 했던.",
+    "Five actual crew-chat sequences keep daily stamps through normal reloads; same-day duplicates0."
+  ],
+  "otherNaturalRechecks": [
+    "New Yeongdong wine cellars scene naturally used; notebooks and original reviewed.",
+    "Minji pulley recruitment choice, recovered voice recording, guest camp and later recruited continuity.",
+    "Kangwoo successor command followed, prior market raid handed off; Seoul Han two names and retained dog tags.",
+    "Jaepil tunnel actualscene and introduced actors; Daejeon recipe note is record.",
+    "Generic civic record applicant with no Eunsu; core_sleep ownership and separate upper-network terminal preserved."
+  ],
+  "features": [
+    "5 field-work actions (4 distinct), 4 earned companion perks, one bench upgrade",
+    "Minji guest→Ulsan pulley→guest camp→join; Kangwoo guest→successor→join",
+    "One accepted/completed stage of three-village radio chain, 4 boards read; expedited reward16+4 matches20note",
+    "Visited publicly rumoured mall and drive-in; 19 public explores and12 NPC greeting/rumour pairs",
+    "Eight camps, seven Minji camp talks, 36finite trades; no emergency fuel, death, policy stop, failed retry",
+    "Main evidence complete, note argument in core, closed record search examined, sleep ending selected."
+  ],
+  "gaps": [
+    "Route still uses west fork; largely known main spine. No claim all-new route or blind policy.",
+    "No Park/Leo/Eunsu/Jaeyi/Bori; no Bori personal features/Jeju/father exhibit.",
+    "No grandfather envelope, seoul_base opening disabled.",
+    "Radio chain completed only1/3; optional continuation not accepted. No music radio repair/crafting.",
+    "Minji recovered recorder but Mingyu rescue not completed; no claim all companion arcs.",
+    "No all-scene visual or real mobile/keyboard/audio QA by this agent."
+  ],
+  "manualReview": "Read all100 complete actual entry/result turns (34028 raw entry+result characters), all76 UI.speak/chat/ambient lines,12 NPC greeting+rumour pairs (24menus),5field works,4boards,1quest accept/turnin,4perks,1upgrade,111notes. Own prior story1–16 exact full tuples80same/20different; result89same/11different.",
+  "comparisonCaveat": "Harnes novelPairs16 is an older internal baseline. Retained primary cycles1–16 union new pairs are separately computed; neither is authored-content addition.",
+  "imageScope": "4scene rasters +2comparison portraits inspected; actual scene-key usage saved. No live crop.",
+  "partialReplay": {
+    "path": "browser-visual-entry-replay/",
+    "cohortExcluded": true,
+    "freshJourney": false,
+    "seed": 276003,
+    "choices": 10,
+    "checkpoint": "browser-visual-entry-replay/agent03/attempt01/normal-unpaid-36-ev_seed_warehouse.json",
+    "preservation": "Original16 37actions/10choices state/text observations match; natural new17 unpaid view before reader capture, source40before/after preserved; no manual pending mutation.",
+    "verification": "browser-visual-entry-replay/verification.json",
+    "traceRecords": 37
+  },
+  "limits": [
+    "Node VM engine simulation, not browser or human playtest",
+    "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+    "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+    "No edits to source or actual user save; no infinite resources"
+  ],
+  "traceRecords": 490,
+  "gameplayRecordsExcludingReloads": 290,
+  "recordCountCaveat": "Raw trace counts include entry and paid reload observations; no claim 490 independent public gameplay actions."
+}

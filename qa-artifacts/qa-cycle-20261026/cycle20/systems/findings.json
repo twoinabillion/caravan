@@ -1,0 +1,44 @@
+{
+  "naturalConfirmed": 0,
+  "clarityCandidates": 0,
+  "derivedBoundaryConfirmed": 0,
+  "scopedClean": true,
+  "scope": "All naturally observed cycle20 text/choices/actual production reader, state continuity and reload; not a claim about unobserved branches, images/crops, browser controls or audio listening",
+  "findings": [],
+  "nonDefects": [
+    {
+      "event": "meet_scrapyard",
+      "trace": 65,
+      "reason": "Minji first speaks before giving her name in the chosen result; ??? is intentional first introduction."
+    },
+    {
+      "event": "loc_gyeongju",
+      "trace": 120,
+      "reason": "Unidentified villager remains anonymous; no lost named companion or explicit speaker reversal."
+    },
+    {
+      "event": "lc_chungju_lake",
+      "trace": 254,
+      "reason": "Anonymous former residents exchange place names, then the nearby elder speaks. No invented fixed identity is justified. Original text already disambiguates the exchange."
+    },
+    {
+      "event": "lc_cheonan_walnut",
+      "trace": 288,
+      "reason": "Unintroduced young vendor remains anonymous; actual me question is separately routed correctly."
+    },
+    {
+      "event": "seoul_han",
+      "trace": 340,
+      "reason": "Unrepaired radio emits only static, not music or a newly invented functioning broadcast. Existing broken-radio world convention allows this."
+    },
+    {
+      "event": "road-speech",
+      "traces": [
+        194,
+        258
+      ],
+      "reason": "Storm cloud shadows and a faint daytime moon in fog are not impossible solely from the weather enum; no deterministic scene-weather contradiction proved."
+    }
+  ],
+  "policyGaps": "policy-goal-gap.json"
+}

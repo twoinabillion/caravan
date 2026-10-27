@@ -1,0 +1,147 @@
+{
+  "cycle": 20,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 280002,
+  "evidenceClass": "Fresh finite public-action engine run and extracted actual production reader; isolated storage, no browser claim",
+  "cohortExcluded": false,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "policyStops": 0,
+  "productionChangesDuringJourney": false,
+  "status": "ended",
+  "error": null,
+  "engineSourceHash": "a9e246136f3100132bf83625f4b032bd4b315782538f31364b38b0e32df93e0b",
+  "result": {
+    "ending": "story_done",
+    "method": "core_transfer",
+    "storyDone": true,
+    "session1End": true,
+    "day": 9,
+    "km": 530,
+    "actualCompanions": [
+      "minji",
+      "kangwoo"
+    ],
+    "bori": false
+  },
+  "totals": {
+    "choices": 74,
+    "trace": 372,
+    "otherExecutedPublicActionsIncludingPerks": 149,
+    "otherPublicActionsExcludingPerks": 146,
+    "earnedPerkSelections": 3,
+    "actionKinds": {
+      "new-game": 1,
+      "unpaid-entry-reload": 74,
+      "choice": 74,
+      "paid-result-reload": 74,
+      "explore": 26,
+      "travel": 16,
+      "drive": 32,
+      "camp": 8,
+      "trade-bundle": 4,
+      "trade": 25,
+      "work": 6,
+      "meet-recruit": 2,
+      "board-open": 2,
+      "npc-rumor": 6,
+      "camp-meal": 7,
+      "recruit-step": 4,
+      "accept-companion": 2,
+      "earned-perk": 3,
+      "buy-upgrade": 1,
+      "seoul-enter": 5
+    },
+    "novelPairs": 1,
+    "noveltyBaseline": "systems1–19 primary transcripts exact event+selected label; raw broader counter uses another corpus",
+    "novelChoicePairs": [
+      {
+        "trace": 280,
+        "event": "ev_chunrian_lab",
+        "choice": "민지가 서버를 살핀다"
+      }
+    ],
+    "reload": {
+      "entry": 74,
+      "paid": 74,
+      "skippedBeforeFirstRadio": [],
+      "failed": 0,
+      "reapplied": 0,
+      "readerEqual": 74,
+      "terminalSeparateExcluded": 1
+    },
+    "disabledChoicesExecuted": 0,
+    "rejectedApiCalls": 0
+  },
+  "features": {
+    "upgrades": [
+      "tank1"
+    ],
+    "crafts": [],
+    "actualPerks": [
+      "mj_fuel",
+      "mj_tune",
+      "kw_ration"
+    ],
+    "radioFixed": false,
+    "radioRepairs": 0,
+    "radioBroadcasts": 0,
+    "tubeSource": null,
+    "campRepair": 0,
+    "campMeals": 7,
+    "trades": 25,
+    "tradeBundles": 4,
+    "actualSale": 0,
+    "publicWork": 6,
+    "boardViews": 2,
+    "sideQuestAccept": 0,
+    "sideQuestTurnin": 0,
+    "letterCompletion": 0,
+    "medicalTreatment": 0
+  },
+  "review": {
+    "completed": true,
+    "choiceEntries": 74,
+    "exactPriorContexts": 65,
+    "newContexts": 9,
+    "newParagraphs": 10,
+    "actualReaderTurns": 626,
+    "exactPriorTurns": 591,
+    "newTurnsRead": 35,
+    "changedReaderEntries": 12,
+    "roadSpeechOccurrences": 31,
+    "roadSpeechUnique": 26,
+    "chatGroups": 8,
+    "chatLines": 20,
+    "sameDayChatDuplicates": 0,
+    "npcCalls": 6,
+    "npcShownGroups": 12,
+    "work": 6,
+    "notes": 91,
+    "scenes": 74,
+    "browserCropVerified": false,
+    "naturalConfirmedFindings": 0,
+    "clarityCandidates": 0,
+    "derivedBoundaryConfirmed": 0
+  },
+  "gaps": [
+    "재이/세번째좌석/core_quarantine 미달은 policy-goal-gap.json에 실제 공개 상태와 시각을 기록했다. 끝난 원정을 다시 시작하거나 자원을 주입하지 않았다.",
+    "라디오 진공관/수리/자연방송, 제작·철거·직접치료·편지완료·퀘스트인계 미발생. 이번 자연검증으로 계산하지 않는다.",
+    "이번 승인된 signal_bait/crisis_nofuel/clone 수정 사건은 미발생; 별도 회귀가 이미 보호하며 자연재발현 검증으로 주장하지 않는다.",
+    "전체 그림/crop/음성 실제 UI는 root 담당."
+  ],
+  "findingsFile": "findings.json",
+  "sourceStart": "source-start-full.json",
+  "sourceEnd": "source-end-full.json",
+  "sourceReviewEnd": "source-review-end-full.json",
+  "separateExcludedEvidence": {
+    "terminalReload": "terminal-reload.json"
+  },
+  "sourceUnchanged": true,
+  "sourceFileCount": 40
+}

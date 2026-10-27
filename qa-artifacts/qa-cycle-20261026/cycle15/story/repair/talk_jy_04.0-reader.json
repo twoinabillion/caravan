@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "안 쓸 거면 빼야죠. 일단은요."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 자루를 열었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "이 볼트는 남는 규격. 빼고. 이 숟가락은 그 국숫집 할머니가 준 거라 못 빼요. 이 경첩은… 잠깐만요."
+  },
+  {
+    "kind": "narration",
+    "text": "경첩 하나에서 손이 멈췄다. 그래도 자루는 반으로 줄었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "경첩은 다음에요. 오늘 이렇게 많이 뺐잖아요."
+  },
+  {
+    "kind": "narration",
+    "text": "재이는 바닥의 볼트를 다시 집었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "이건 저 숟가락 걸 때 쓰면 되겠다."
+  }
+]

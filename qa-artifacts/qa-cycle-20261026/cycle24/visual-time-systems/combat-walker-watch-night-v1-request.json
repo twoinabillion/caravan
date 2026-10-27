@@ -1,0 +1,101 @@
+{
+  "key": "combat-walker-watch-night-v1",
+  "event": "perimeter_first",
+  "format": "action",
+  "timeVariant": "night",
+  "oldAsset": "assets/scenes/combat-walker-watch-v1.webp",
+  "oldAssetSha256": "3a71631a9986888378e1467984bee5dee47b087a6c79ddf20960ee7f9b54dbbb",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nEDIT the FIRST image into the same scene at true NIGHT. Keep the exact four-legged administrative-gray patrol walker design, its red lens, cow-scale human-sized presence, center-right placement, worn industrial road, wrecks, barriers and elevated roadway, and the partly seen canonical Dalguji behind the left barrier. Keep all objects and composition; add no people, other machines, extra weapons, explosions, wreck damage or new narrative action. Remove daylight/bright sky/sunrise from the original and replace with a genuinely dark overcast night sky and dark distant ridges. Show the robot and road through restrained existing vehicle/headlamp spill and dim practical industrial light, cool night ambient with a little existing amber from Dalguji windows; the image must remain legible without turning into bright twilight. No bright moon/stars needed, no neon cyberpunk. The event is the current first perimeter encounter, not a future battle victory or destroyed robot. References2–5 maintain canonical style/vehicle only. This is a lighting/time variant, not a redesigned scene.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/scenes/combat-walker-watch-v1.webp",
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/scenes/combat-walker-watch-v1.webp",
+      "role": "edit-target",
+      "sha256": "3a71631a9986888378e1467984bee5dee47b087a6c79ddf20960ee7f9b54dbbb"
+    },
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "role": "canonical-style",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "promptSha256": "aba641ed406ca8ff936e67f64b605aaf41455f1cb90b60ca746adf137381efc5",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+  "sourceEvent": {
+    "id": "perimeter_first",
+    "trace": 152,
+    "day": 3,
+    "min": 1384,
+    "sceneKeys": [
+      "combat-walker-watch-v1"
+    ],
+    "asset": "assets/scenes/combat-walker-watch-v1.webp",
+    "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-150-perimeter_first.json",
+    "observation": "23:04 위수 구역에 구름과 땅이 주광으로 밝은 낮 원본.",
+    "definition": {
+      "id": "perimeter_first",
+      "type": "스토리",
+      "w": 0,
+      "fixed": true,
+      "ai": 1,
+      "title": "위수 구역",
+      "scene": "combat-walker-watch-v1",
+      "sfx": "warning",
+      "text": "도로 한복판에— 그것이 서 있다.\n\n4족 보행기. 소만 한 크기. 도색은 관공서 회색. 몸통의 렌즈가 차를 향해 조리개를 조인다.\n\n<span class=\"ai\">\"정지. 위수 구역입니다.\"</span>\n\n차를 훑는 초록 스캔선. 그리고—\n\n탕. 경고사격이 차 옆 아스팔트를 때렸다. 기계가 처음으로, 우리에게 무기를 겨눴다.\n\n<span class=\"ai\">\"등록되지 않은 차량. 다음 확인 시 회차를 강제합니다. 좋은 하루 되세요.\"</span>\n\n보행기는 유유히 갓길로 물러나 도로를 열어줬다.",
+      "choices": [
+        {
+          "label": "…지나간다",
+          "out": [
+            {
+              "p": 1,
+              "text": "보행기가 물러난 뒤에도 한동안 핸들을 놓지 못했다. 그제야 생각이 문장으로 굳었다.\n\n남쪽은 그것의 '바깥'이었다. 여긴 '안'이다.\n\n차에서 내려 옆판을 살폈다. 경고탄에 튄 아스팔트 파편이 외판을 찍고 지나갔다. 패인 자국을 장갑 낀 손으로 쓸어 봤다.\n\n뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다. 맨손으로 다닐 땅이 아니었다.",
+              "fx": {
+                "van": -6,
+                "flag": "armed_age",
+                "pursuit": 1,
+                "note": {
+                  "type": "사건",
+                  "title": "첫 경고사격",
+                  "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+                  "links": [
+                    "천리안"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sceneMetadata": {
+      "eventScene": "combat-walker-watch-v1",
+      "turnScenes": null,
+      "stages": null,
+      "choiceScenes": null
+    }
+  }
+}

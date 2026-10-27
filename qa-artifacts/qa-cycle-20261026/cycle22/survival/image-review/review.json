@@ -1,0 +1,484 @@
+{
+  "cohortExcluded": true,
+  "classification": "inspection-of-natural-runtime-scene-assets",
+  "sheetsOpened": 8,
+  "uniqueActualFilesRead": 94,
+  "runtimeKeys": 95,
+  "originalFilesEnlarged": 14,
+  "oldUnselectedReferenceFilesRead": 1,
+  "allSceneSheetsReviewed": true,
+  "candidateFile": "../provisional-image-triage.json",
+  "scope": "All recorded resolver entry/result cut images, not a browser DOM crop/replay. No automatic key existence claim used as pixel review.",
+  "rows": [
+    {
+      "index": 1,
+      "file": "assets/scenes/intro-associative-search-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 2,
+      "file": "assets/scenes/opening-bus-family-v3.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 3,
+      "file": "assets/scenes/opening-bus-heater-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 4,
+      "file": "assets/scenes/intro-associative-packing-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 5,
+      "file": "assets/intro/15-appeal-denied.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 6,
+      "file": "assets/intro/13-dashboard-module.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 7,
+      "file": "assets/intro/16-workshop-shutter-v2.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 8,
+      "file": "assets/scenes/intro-departure-conversation-v4.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 9,
+      "file": "assets/scenes/intro-departure-start-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 10,
+      "file": "assets/scenes/sea-captain-contact.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 11,
+      "file": "assets/scenes/event-road-coffee-van-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 12,
+      "file": "assets/scenes/onboarding-first-road-scan-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 13,
+      "file": "assets/scenes/event-explore-retail.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 14,
+      "file": "assets/scenes/memory-busan-terminal-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 15,
+      "file": "assets/scenes/event-meet-community.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 16,
+      "file": "assets/scenes/story-roadside-terminal-detail-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 17,
+      "file": "assets/scenes/event-vista-mountain.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 18,
+      "file": "assets/scenes/story-bridge-trace-gap-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 19,
+      "file": "assets/scenes/local-geochang-theatre-actor-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 20,
+      "file": "assets/scenes/event-meet-guard.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 21,
+      "file": "assets/scenes/recruit-jaeyi-tunnel-exchange-v2.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 22,
+      "file": "assets/scenes/recruit-jaeyi-suspension-check.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 23,
+      "file": "assets/scenes/recruit-jaeyi-meet-action.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 24,
+      "file": "assets/scenes/muju-tunnel.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 25,
+      "file": "assets/scenes/event-meet-roadside.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 26,
+      "file": "assets/scenes/route-mid-fork.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 27,
+      "file": "assets/scenes/recruit-jaeyi-trapped-box-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 28,
+      "file": "assets/scenes/recruit-jaeyi-box-recovered-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 29,
+      "file": "assets/scenes/parents-diversion-record-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 30,
+      "file": "assets/scenes/story-bridge-watched-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 31,
+      "file": "assets/scenes/route-market-convoy.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 32,
+      "file": "assets/scenes/comp-talk-jaeyi-camp-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 33,
+      "file": "assets/scenes/recruit-jaeyi-join.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 34,
+      "file": "assets/scenes/recruit-jaeyi-join-decision.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 35,
+      "file": "assets/scenes/parents-linked-records-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 36,
+      "file": "assets/scenes/event-find-broadcast-station-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 37,
+      "file": "assets/scenes/recruit-parkss-clinic-market-v2.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 38,
+      "file": "assets/scenes/recruit-parkss-meet-action.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 39,
+      "file": "assets/scenes/comp-talk-jaeyi-road-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 40,
+      "file": "assets/scenes/event-road-food-truck-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 41,
+      "file": "assets/scenes/story-generation-form.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 42,
+      "file": "assets/scenes/combat-walker-watch-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 43,
+      "file": "assets/scenes/event-ai-surveillance.webp",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 44,
+      "file": "assets/scenes/companion-cabin-detail-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 45,
+      "file": "assets/scenes/story-family-principle-review-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 46,
+      "file": "assets/intro/09-parents-discovery.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 47,
+      "file": "assets/scenes/family-verification-key-mounted-v3.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 48,
+      "file": "assets/scenes/story-personal-cache-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 49,
+      "file": "assets/scenes/story-bridge-parent-route-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 50,
+      "file": "assets/scenes/story-generation-speech.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 51,
+      "file": "assets/scenes/story-generation-speech-stations-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 52,
+      "file": "assets/scenes/local-yeongdong-wine-cellar-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 53,
+      "file": "assets/scenes/camp-stray-dogs-night-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 54,
+      "file": "assets/scenes/recruit-parkss-clinic-table-v3.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 55,
+      "file": "assets/scenes/event-explore-shelter.webp",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 56,
+      "file": "assets/scenes/story-generation-theories-cast-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 57,
+      "file": "assets/scenes/story-generation-route.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 58,
+      "file": "assets/scenes/comp-talk-parkss-camp-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 59,
+      "file": "assets/scenes/history-failed-namsan-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 60,
+      "file": "assets/scenes/recruit-parkss-join.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 61,
+      "file": "assets/scenes/recruit-parkss-join-decision.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 62,
+      "file": "assets/scenes/history-transit-trust-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 63,
+      "file": "assets/scenes/history-three-days-silence-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 64,
+      "file": "assets/scenes/intro-cheollian-forced-relocation-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 65,
+      "file": "assets/scenes/recruit-leo-daein-market-v2.jpg",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 66,
+      "file": "assets/scenes/recruit-leo-meet-action.jpg",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 67,
+      "file": "assets/scenes/event-meet-trader.webp",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 68,
+      "file": "assets/scenes/history-dissent-crackdown-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 69,
+      "file": "assets/scenes/explore-rainwater-cistern-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 70,
+      "file": "assets/scenes/intro-resistance-underground-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 71,
+      "file": "assets/scenes/recruit-leo-rescue-choice-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 72,
+      "file": "assets/scenes/recruit-leo-task-wade.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 73,
+      "file": "assets/scenes/recruit-leo-join.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 74,
+      "file": "assets/scenes/recruit-leo-join-decision.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 75,
+      "file": "assets/scenes/comp-talk-leo-camp-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 76,
+      "file": "assets/scenes/event-vista-remnant.webp",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 77,
+      "file": "assets/scenes/arrival-gongju.webp",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 78,
+      "file": "assets/scenes/event-ai-checkpoint.webp",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 79,
+      "file": "assets/scenes/comp-talk-parkss-road-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 80,
+      "file": "assets/scenes/parents-father-last-log-record-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 81,
+      "file": "assets/scenes/history-parents-network-record-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 82,
+      "file": "assets/scenes/parents-mother-reunion-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 83,
+      "file": "assets/scenes/parents-mother-broadcast-v1.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 84,
+      "file": "assets/scenes/main-relay-workbench-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 85,
+      "file": "assets/scenes/seoul-han.jpg",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 86,
+      "file": "assets/scenes/story-bridge-invitation-v1.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 87,
+      "file": "assets/scenes/event-vista-road.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 88,
+      "file": "assets/scenes/seoul-ruins.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 89,
+      "file": "assets/scenes/seoul-square.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 90,
+      "file": "assets/scenes/seoul-base.webp",
+      "status": "reviewed-with-provisional-or-confirmed-candidate"
+    },
+    {
+      "index": 91,
+      "file": "assets/scenes/seoul-core-view-v2.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 92,
+      "file": "assets/scenes/seoul-namsan-night-v3.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 93,
+      "file": "assets/scenes/seoul-namsan-dawn-v3.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    },
+    {
+      "index": 94,
+      "file": "assets/scenes/seoul-maintenance-terminal-v3.webp",
+      "status": "reviewed-no-new-confirmed-context-conflict"
+    }
+  ]
+}

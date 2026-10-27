@@ -1,0 +1,105 @@
+{
+  "key": "local-pyeongtaek-sealed-containers-v1",
+  "event": "ev_container_port",
+  "format": "place",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nOne new cohesive 16:9 narrative scene, native PNG master at least1536x864. The four canonical references are style/world references only: do not copy their collage panels, title, characters, Dalguji, skyline, Namsan tower or signs into this scene. Weathered ordinary Korean materials, restrained contrast and subtle grain. No dreamy softness, beauty filter, glowy haze, glossy retouching or painterly pastel drift. Important subject inside central80% width/82%height, readable at mobile480 and360px. Avoid strong directional sunlight, sunrise/sunset colors or an explicit starry sky; close framing and diffuse local illumination keep the picture usable across the event time window. No captions, legible lettering or logos.\n\nAn abandoned freight-container yard beside the port road at Pyeongtaek, South Korea. Weathered stacked shipping containers form close high walls like a canyon. Center one CLOSED corrugated steel container door with locking bars; an old pale government-style security seal spans the latch with ONE loose, slightly peeled corner. The seal contains only faded illegible marks, absolutely no readable words. All container doors remain closed, no visible contents, no aid supplies, documents, people, hands or looting. Other container stacks recede behind this door with a small hint of a silent port crane high in the shaded background. No railway, passenger train or station. Frame tight enough to exclude horizon and bright open sky; restrained diffuse cool reflected light on rusty scratched metal.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "promptSha256": "ff9357209775636a7885481498067e3a94ce95f2e448aedf4cf5deb8751b2276",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../systems/candidate-evidence.json",
+  "entry": "평택 항구도로. 컨테이너가 산맥처럼 쌓였다. 전부 정부 봉인 스티커가 붙은 채로.\n\n\"정리 대상 — 개봉 금지.\" 오래전 날짜. 천리안의 글씨체다.\n\n봉인 하나가 살짝 뜯겨 있다.",
+  "sourceEvent": {
+    "id": "ev_container_port",
+    "type": "탐색",
+    "w": 8,
+    "once": true,
+    "nearNode": [
+      "pyeongtaek"
+    ],
+    "region": [
+      "north"
+    ],
+    "title": "봉인된 컨테이너",
+    "turnSpeakers": [
+      {
+        "who": "record",
+        "kind": "record",
+        "name": "정부 봉인 스티커",
+        "medium": "paper"
+      }
+    ],
+    "text": "평택 항구도로. 컨테이너가 산맥처럼 쌓였다. 전부 정부 봉인 스티커가 붙은 채로.\n\n\"정리 대상 — 개봉 금지.\" 오래전 날짜. 천리안의 글씨체다.\n\n봉인 하나가 살짝 뜯겨 있다.",
+    "choices": [
+      {
+        "label": "뜯긴 컨테이너를 연다",
+        "out": [
+          {
+            "p": 3,
+            "turnSpeakers": [],
+            "text": "안엔 구호물자— 담요, 통조림, 정수 알약이 가득했다. 배급되지 못하고 봉인된 채 여러 해.\n\n필요한 만큼만 챙겼다.",
+            "fx": {
+              "food": 6,
+              "water": 4,
+              "item": {
+                "의약품": 1
+              },
+              "time": 50
+            }
+          },
+          {
+            "p": 1,
+            "turnSpeakers": [],
+            "text": "문을 열자 안에서 서류 뭉치만 쏟아졌다. \"정리 명단\"이라 적힌 이름의 바다.\n\n…아무것도 챙기지 못하고 문을 닫았다.",
+            "fx": {
+              "time": 40,
+              "moodAll": -5,
+              "note": {
+                "type": "사건",
+                "title": "정리 명단",
+                "body": "컨테이너 가득 든 서류. 천리안이 정리한 사람들의 이름. 끝이 없었다."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "label": "봉인을 건드리지 않는다",
+        "out": [
+          {
+            "p": 1,
+            "turnSpeakers": [],
+            "text": "\"개봉 금지.\" 글씨가 천리안 것이다. 손잡이까지 갔던 손을 도로 뺐다.\n\n함정인지 미끼인지 가릴 방법이 없었다. 컨테이너 산맥을 그대로 지나쳤다.",
+            "fx": {
+              "pursuit": -1
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

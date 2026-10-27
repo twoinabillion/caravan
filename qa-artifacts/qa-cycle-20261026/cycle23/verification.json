@@ -1,0 +1,55 @@
+{
+  "cycle": 23,
+  "status": "engine-and-full-review-complete-new-findings-repair24-starting-actual-ui-pending",
+  "at": "2026-10-26T10:46:16.763780+00:00",
+  "engineSha256": "8cb29d99d11f89115ad974f7021b59d8373f85f8a7cf37fdbca18102fb9730f3",
+  "sourceFileCount": 40,
+  "sourceStillMatchesBeforeRepair": true,
+  "freshStarts": 3,
+  "mainEndings": 3,
+  "methods": [
+    "core_quarantine",
+    "core_sleep",
+    "core_transfer"
+  ],
+  "choices": 318,
+  "traceRows": 1695,
+  "entryReloads": 318,
+  "paidReloads": 318,
+  "reloadFailures": 0,
+  "reapplied": 0,
+  "reports": [
+    "survival/report-final.json",
+    "systems/report.json",
+    "story/report.json"
+  ],
+  "reviewProofs": [
+    "survival/review-end-hashes.json",
+    "systems/source-review-end-full.json",
+    "story/source-review-close-verification.json"
+  ],
+  "fullSourceVisionFilesByAgent": [
+    99,
+    85,
+    86
+  ],
+  "technical": "technical-verification.json",
+  "build": "build-verification.json",
+  "newFindings": {
+    "naturalCopy": "ev_eunsu_solo immediate outcome prematurely certifies future habit",
+    "sourceClarity": "seoul_han recording apparatus provenance with unrepaired vehicle radio",
+    "derivedClarity": "comp_water_fight exact half-bottle claim vs no inventory change; not a numerical gameplay defect",
+    "sceneMismatch": [
+      "exp_ricemill workshop",
+      "postman_again identity",
+      "exp_bowling leisure lobby",
+      "ev_wedding_hall_storage leisure lobby"
+    ],
+    "clockCandidates": [
+      "story_generation_speech",
+      "talk_es_07"
+    ]
+  },
+  "priorVisualRepairs": "18new+Leo reuse from22 remain proposed and unwired. Known reappearances are not new findings.",
+  "actualBrowser": "browser-blocker.json. No23 current screen/crop claim; existing QA save last restored22."
+}

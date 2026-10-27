@@ -1,0 +1,43 @@
+[
+  {
+    "kind": "narration",
+    "text": "답에 따라 처방이 나왔다. 물 한 잔이거나, 스트레칭이거나,"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "오늘은 일찍 자"
+  },
+  {
+    "kind": "narration",
+    "text": "한마디거나."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "약국 할 때도 이렇게 물었어. 소화제 사러 온 사람한테 잠은 잤냐고 물으면 다들 이상하게 봐. 그러다 진짜 이유가 나오지. 한번은 위장약 찾던 양반이 사실은—"
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 스스로 말을 잘랐다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…길어지는군. 아무튼."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "아무튼요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "물 한 잔."
+  },
+  {
+    "kind": "narration",
+    "text": "그게 오늘 처방이었다."
+  }
+]

@@ -69,8 +69,8 @@ test('speech, thought, terminal, radio and consecutive speaker grouping are not 
     {kind:'thought',who:'me',text:'생각한다.'},{kind:'ai',name:'부두 민원 단말',text:'신청 항목을 말씀하십시오.'},
     {kind:'radio',name:'녹음 방송',text:'지금 방송입니다.'}];
   const html=ctx.pagedStoryHtml(rows);
-  assert.equal((html.match(/page-speaker/g)||[]).length,1,'existing consecutive-speaker grouping stays intact');
-  assert.equal((html.match(/<img\b/g)||[]).length,1);assert.equal((html.match(/document-source/g)||[]).length,1);
+  assert.equal((html.match(/page-speaker/g)||[]).length,2,'a letter interrupts the preceding speaker group');
+  assert.equal((html.match(/<img\b/g)||[]).length,2);assert.equal((html.match(/document-source/g)||[]).length,1);
   assert.match(html,/page-source">생각</);assert.match(html,/page-source">부두 민원 단말</);assert.match(html,/page-source">라디오</);
   for(const row of rows.filter(row=>row.kind!=='letter'))assert.doesNotMatch(ctx.storyTurnHtml(row),/document-source|data-source-layout/);
   assert.doesNotMatch(ctx.storyTurnHtml(rows[3]),/turn-avatar/);

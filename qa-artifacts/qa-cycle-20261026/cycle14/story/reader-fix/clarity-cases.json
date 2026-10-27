@@ -1,0 +1,11 @@
+[
+  {
+    "id": "talk_mj_19",
+    "classification": "clarity-improvement-not-confirmed-natural-bug",
+    "entry": ["minji", "minji"],
+    "choices": {
+      "0.0": ["minji", "minji", "me", "minji"],
+      "1.0": ["minji", "me", "minji"]
+    }
+  }
+]

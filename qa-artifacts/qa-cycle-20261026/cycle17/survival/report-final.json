@@ -1,0 +1,311 @@
+{
+  "classification": "fresh-finite-normal-public-engine-journey",
+  "cohortExcluded": false,
+  "seed": 277001,
+  "player": "player45",
+  "freshJourneys": 1,
+  "resumeJourneys": 0,
+  "retries": 0,
+  "partialReplays": 0,
+  "status": "ended",
+  "ending": "core_transfer",
+  "storyDone": true,
+  "finalDay": 14,
+  "finalMin": 1239.2,
+  "km": 1383.0000000000143,
+  "party": [
+    "minji",
+    "leo",
+    "parkss"
+  ],
+  "dog": true,
+  "choices": 131,
+  "traceRows": 697,
+  "entryExports": 131,
+  "reloads": {
+    "entry": 131,
+    "paid": 131,
+    "loadedFalse": 0,
+    "replayedFalse": 0,
+    "reapplied": 0,
+    "snapshotChanges": 0
+  },
+  "readerEqualFalse": 0,
+  "shortSpeechCalls": 156,
+  "npcPresentations": 12,
+  "finalNotesReviewed": 132,
+  "priorComparison": {
+    "priorNaturalTraceFiles": 64,
+    "exactPriorTextRows": 113,
+    "newTextRows": 18,
+    "newNormalizedPairs": [
+      [
+        "exp_overturned",
+        1
+      ],
+      [
+        "exp_police",
+        1
+      ],
+      [
+        "talk_mj_08",
+        1
+      ],
+      [
+        "talk_mj_10",
+        1
+      ],
+      [
+        "wx_bigwash",
+        0
+      ]
+    ]
+  },
+  "resourceMin": {
+    "food": 2,
+    "water": 10,
+    "fuel": 18.91674819999967,
+    "scrap": 8,
+    "van": 82
+  },
+  "successfulActions": {
+    "new-game": 1,
+    "unpaid-entry-reload": 131,
+    "choice": 131,
+    "paid-result-reload": 131,
+    "explore": 23,
+    "travel": 40,
+    "drive": 71,
+    "trade": 78,
+    "buy-upgrade": 1,
+    "camp": 13,
+    "meet-recruit": 3,
+    "board-open": 1,
+    "accept-quest": 1,
+    "npc-local": 6,
+    "work": 7,
+    "recruit-step": 6,
+    "camp-talk": 12,
+    "accept-companion": 3,
+    "talk": 22,
+    "earned-perk": 6,
+    "camp-meal": 1,
+    "turnin-quest": 1,
+    "craft": 1,
+    "seoul-enter": 5
+  },
+  "failedActionsNotCountedAsSuccess": [
+    {
+      "trace": 233,
+      "action": "recruit-step",
+      "result": false
+    },
+    {
+      "trace": 481,
+      "action": "recruit-step",
+      "result": false
+    }
+  ],
+  "boriPools": {
+    "find_bori_nose": {
+      "poolOccurrences": 0,
+      "poolDriving": 0,
+      "poolStopped": 0,
+      "selected": 0
+    },
+    "bori_tag": {
+      "poolOccurrences": 2,
+      "poolDriving": 0,
+      "poolStopped": 2,
+      "selected": 0
+    },
+    "bori_family": {
+      "poolOccurrences": 0,
+      "poolDriving": 0,
+      "poolStopped": 0,
+      "selected": 0
+    }
+  },
+  "radio": {
+    "controlObservations": 106,
+    "enabledObservations": 0,
+    "success": 0
+  },
+  "skills": [
+    {
+      "id": "mj_fuel",
+      "ic": "◒",
+      "nm": "연료 마법사",
+      "d": "연비 추가 개선 (-5%)",
+      "learn": "민지가 엔진 소리와 연료 흐름을 맞춰 불필요한 소모를 줄였다."
+    },
+    {
+      "id": "mj_tune",
+      "ic": "⬡",
+      "nm": "개조 전문가",
+      "d": "달구지 최대 내구 +20 (즉시 적용)",
+      "learn": "민지가 달구지의 약한 연결부를 보강해 더 큰 충격을 버틸 수 있게 만들었다."
+    },
+    {
+      "id": "leo_fire",
+      "ic": "♪",
+      "nm": "모닥불 콘서트",
+      "d": "야영 시 전원 사기 +4 추가",
+      "learn": "레오가 모두가 쉴 수 있는 시간에 맞춰 짧은 야영 공연 순서를 만들었다."
+    },
+    {
+      "id": "leo_fame",
+      "ic": "✦",
+      "nm": "길 위의 명성",
+      "d": "처음 만나는 NPC의 호감이 우호적으로 시작",
+      "learn": "레오의 노래와 달구지 이야기가 먼저 퍼져 낯선 곳에서도 대화를 시작하기 쉬워졌다."
+    },
+    {
+      "id": "pss_night",
+      "ic": "☾",
+      "nm": "밤의 상담가",
+      "d": "야영 시 전원 사기 +3 추가",
+      "learn": "박 선생이 잠들기 전 한 사람씩 상태를 살피는 야영 순서를 만들었다."
+    },
+    {
+      "id": "pss_iron",
+      "ic": "◇",
+      "nm": "강철 위장",
+      "d": "파티 전체 식중독 면역",
+      "learn": "박 선생이 물과 식량을 검사하고 안전하게 익히는 규칙을 모두에게 가르쳤다."
+    }
+  ],
+  "review": {
+    "readStatus": "complete",
+    "all131EntriesResultsChoicesAndActualReader": true,
+    "all132FinalNotes": true,
+    "all156QueuedSpeechAnd12NpcPresentations": true,
+    "all7WorkBodiesAndMessages": true,
+    "newNaturalIssues": 3,
+    "clarityCandidates": 1,
+    "tasteNotes": 1,
+    "unresolvedCandidateVerdicts": 0,
+    "sceneKeys": [
+      "arrival-geochang",
+      "arrival-gumi",
+      "arrival-yeongdong",
+      "combat-walker-watch-v1",
+      "comp-talk-leo-camp-v1",
+      "comp-talk-leo-road-v1",
+      "comp-talk-minji-camp-v1",
+      "comp-talk-minji-road-v1",
+      "comp-talk-parkss-camp-v1",
+      "comp-talk-parkss-road-v1",
+      "event-ai-checkpoint",
+      "event-ai-surveillance",
+      "event-companion-meal",
+      "event-companion-van",
+      "event-explore-civic",
+      "event-explore-leisure",
+      "event-explore-retail",
+      "event-explore-transit",
+      "event-find-broadcast-station-v1",
+      "event-meet-guard",
+      "event-meet-roadside",
+      "event-meet-trader",
+      "event-postman-solo-v2",
+      "event-road-coffee-van-v2",
+      "event-road-food-truck-v2",
+      "event-vista-mountain",
+      "event-vista-remnant",
+      "event-vista-road",
+      "explore-fishfarm-tanks-v1",
+      "family-verification-key",
+      "grandfather-envelope",
+      "gwangju-market",
+      "history-dissent-crackdown-v1",
+      "history-failed-namsan-v1",
+      "history-parents-network-record-v2",
+      "history-three-days-silence-v1",
+      "history-transit-trust-v1",
+      "intro-appeal-denied",
+      "intro-busan-workday-v1",
+      "intro-cheollian-forced-relocation-v1",
+      "intro-dashboard-module",
+      "intro-departure-conversation-v4",
+      "intro-departure-start-v1",
+      "intro-dock-aid",
+      "intro-family-packing-v1",
+      "intro-parents-discovery",
+      "intro-resistance-underground-v1",
+      "intro-workshop-departure",
+      "leo-broadcast-room-v1",
+      "local-ulsan-gray-whale-v1",
+      "local-yeongdong-wine-cellar-v1",
+      "main-relay-workbench-v1",
+      "memory-busan-terminal-v1",
+      "onboarding-first-road-scan-v1",
+      "opening-bus-heater-v1",
+      "parents-diversion-record-v2",
+      "parents-father-last-log-record-v2",
+      "parents-linked-records-v2",
+      "parents-mother-broadcast-v1",
+      "parents-mother-reunion-v1",
+      "postman-letter",
+      "recruit-leo-daein-market-v2",
+      "recruit-leo-join",
+      "recruit-leo-join-decision",
+      "recruit-leo-meet-action",
+      "recruit-leo-rescue-choice-v1",
+      "recruit-leo-task-wade",
+      "recruit-minji",
+      "recruit-minji-join",
+      "recruit-minji-join-decision",
+      "recruit-minji-meet-action",
+      "recruit-minji-task",
+      "recruit-minji-task-collapse",
+      "recruit-minji-task-signal",
+      "recruit-minji-welding",
+      "recruit-parkss-clinic-market-v2",
+      "recruit-parkss-join",
+      "recruit-parkss-join-decision",
+      "recruit-parkss-meet-action",
+      "recruit-parkss-task",
+      "route-market-convoy",
+      "route-mid-fork",
+      "seoul-base",
+      "seoul-core-view-v2",
+      "seoul-han",
+      "seoul-home-dawn-v2",
+      "seoul-night-quiet-v2",
+      "seoul-reset-empty-v2",
+      "seoul-ruins",
+      "seoul-square",
+      "seoul-uplink-empty-v2",
+      "story-bridge-departure-echo-v1",
+      "story-bridge-invitation-v1",
+      "story-bridge-parent-route-v1",
+      "story-bridge-trace-gap-v1",
+      "story-bridge-watched-v1",
+      "story-child-voice-terminal-v1",
+      "story-family-principle-review-v1",
+      "story-generation-form",
+      "story-generation-route",
+      "story-generation-speech",
+      "story-generation-speech-stations-v1",
+      "story-generation-theories-cast-v1",
+      "story-personal-cache-v1"
+    ],
+    "sceneKeyCount": 104,
+    "imageScope": "All actual scene keys paired to story text; root owns browser asset/crop QA. No visual verification claim by survival."
+  },
+  "source": {
+    "engineHash": "f5d3cb35f0d4ae365ad70ba532e6ef8f21e0ee26172fc78b0ebd52958f1ad0b9",
+    "all40StartEndEqualFrozen": true
+  },
+  "gaps": [
+    "Bori nose/tag/family not selected. Tag present in eligible director output twice; no forced selection.",
+    "No available radio repair/tube: 106 observed controls all inactive. Leo broadcast mission did complete; it is distinct from radio repair.",
+    "One earned pipe craft; no independent equipment-slot mechanics used. Six earned skills plus Minji/Leo story unlocks; perks act through existing engine.",
+    "Three convoy decisions with success; no separate tactical combat.",
+    "Mingyu ridge discovered, not visited. Chained delivery1/3 completed, 2/3 not accepted.",
+    "Ambient capture observes queued calls, not actual browser visibility."
+  ],
+  "productionEdited": false,
+  "futureStaticAudit": "Requested separately after this natural report; excluded from natural finding counts."
+}

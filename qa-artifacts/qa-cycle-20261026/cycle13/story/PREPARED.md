@@ -1,0 +1,5 @@
+# Cycle13 story policy — seed273003
+
+Fresh finite public-action journey on frozen engine5c8940162113635cc9ddb0baf6a51501a6f320c87f7ddef7eaddb2fe8ca2e402. No source or personal save mutation. Target central towns/rivers via Miryang–Hapcheon–Geochang–Muju–Jeonju–Daejeon–Sejong–Gongju, then main destination. Nearby revealed hidden nodes may be visited once with reserves. Recruit Park, Jaeyi or Eunsu only through encountered public requests and actual seat capacity. Prefer unseen available choices and on-corridor side missions. Core transfer; if the grandfather envelope has actually been acquired, open it at seoul_base.
+
+Use the shared cycle12 reader-runtime helper from the fresh start, including entry knownSpeaker, authored/frozen turns precedence, real display names and scene keys. Capture NPC greeting and response menus in shown[], UI.speak/chat/radio calls and compare paid reader objects deeply. This is source-informed VM QA; it does not establish visible speech queue, audio or image crop behavior. Initial/end all40 source hashes are retained. Normal death or policy halt is preserved; no forced event/resource/state injection.

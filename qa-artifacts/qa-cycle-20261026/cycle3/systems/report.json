@@ -1,0 +1,596 @@
+{
+  "cycle": 3,
+  "agent": "systems",
+  "method": "Informed finite-resource actual engine VM, public action policy and isolated storage. Source read while auditing candidates, so not blind human play. Zero browser runs; user saves untouched.",
+  "attempts": [
+    {
+      "id": "01",
+      "mode": "fresh new game",
+      "seed": 263002,
+      "status": "ended",
+      "ending": "story_done",
+      "method": "core_transfer",
+      "session1End": true,
+      "choices": 66,
+      "traceRecords": 327,
+      "day": 7,
+      "km": 663,
+      "actualCompanions": [],
+      "actualDog": false,
+      "sourceHash": "688aafa55a5e6a36d36843455a6cc047b1f7f818bc4f5b31b677f70b6019c0bc",
+      "route": [
+        "gimhae",
+        "jinju",
+        "namwon",
+        "damyang",
+        "gwangju",
+        "jeonju",
+        "muju",
+        "gimcheon",
+        "muju",
+        "jeonju",
+        "nonsan",
+        "daejeon",
+        "cheongju",
+        "cheonan",
+        "pyeongtaek",
+        "suwon",
+        "seoul"
+      ],
+      "actions": {
+        "new-game": 1,
+        "unpaid-entry-reload": 66,
+        "choice": 66,
+        "paid-result-reload": 66,
+        "explore": 16,
+        "travel": 17,
+        "drive": 36,
+        "camp-meal": 6,
+        "camp-repair": 5,
+        "camp": 6,
+        "walkfuel": 1,
+        "trade": 13,
+        "work": 9,
+        "board-open": 5,
+        "buy-upgrade": 2,
+        "meet-recruit": 2,
+        "craft": 5,
+        "seoul-enter": 5
+      },
+      "reload": {
+        "entry": 66,
+        "paid": 66,
+        "allLoaded": true,
+        "reapplied": 0
+      },
+      "campTalk": {
+        "attempts": 0,
+        "success": 0
+      },
+      "upgrades": [
+        {
+          "id": "bench",
+          "result": true
+        },
+        {
+          "id": "stove",
+          "result": true
+        }
+      ],
+      "crafts": [
+        {
+          "id": "pipe",
+          "result": true
+        },
+        {
+          "id": "xbow",
+          "result": true
+        },
+        {
+          "id": "bolt",
+          "result": true
+        },
+        {
+          "id": "molotov",
+          "result": true
+        },
+        {
+          "id": "ammo",
+          "result": true
+        }
+      ],
+      "policyError": null
+    },
+    {
+      "id": "02",
+      "mode": "fresh new game",
+      "seed": 263002,
+      "status": "error",
+      "ending": null,
+      "method": null,
+      "session1End": false,
+      "choices": 96,
+      "traceRecords": 545,
+      "day": 15,
+      "km": 1178,
+      "actualCompanions": [
+        "leo",
+        "parkss"
+      ],
+      "actualDog": true,
+      "sourceHash": "688aafa55a5e6a36d36843455a6cc047b1f7f818bc4f5b31b677f70b6019c0bc",
+      "route": [
+        "gimhae",
+        "jinju",
+        "namwon",
+        "damyang",
+        "gwangju",
+        "damyang",
+        "namwon",
+        "geochang",
+        "muju",
+        "geochang",
+        "hapcheon",
+        "geochang",
+        "muju",
+        "jeonju",
+        "muju",
+        "gimcheon",
+        "muju",
+        "jeonju",
+        "nonsan",
+        "daejeon",
+        "cheongju",
+        "daejeon",
+        "yeongdong",
+        "gimcheon",
+        "gumi",
+        "gimcheon",
+        "yeongdong",
+        "gimcheon",
+        "yeongdong",
+        "daejeon",
+        "cheongju",
+        "sejong"
+      ],
+      "actions": {
+        "new-game": 1,
+        "unpaid-entry-reload": 96,
+        "choice": 96,
+        "paid-result-reload": 96,
+        "explore": 17,
+        "travel": 32,
+        "drive": 63,
+        "camp-meal": 13,
+        "camp-repair": 6,
+        "camp": 13,
+        "walkfuel": 9,
+        "trade": 41,
+        "work": 17,
+        "board-open": 4,
+        "buy-upgrade": 2,
+        "meet-recruit": 2,
+        "recruit-step": 6,
+        "camp-talk": 10,
+        "accept-companion": 2,
+        "talk": 10,
+        "earned-perk": 4,
+        "craft": 5
+      },
+      "reload": {
+        "entry": 96,
+        "paid": 96,
+        "allLoaded": true,
+        "reapplied": 0
+      },
+      "campTalk": {
+        "attempts": 10,
+        "success": 8
+      },
+      "upgrades": [
+        {
+          "id": "bench",
+          "result": true
+        },
+        {
+          "id": "stove",
+          "result": true
+        }
+      ],
+      "crafts": [
+        {
+          "id": "pipe",
+          "result": true
+        },
+        {
+          "id": "xbow",
+          "result": true
+        },
+        {
+          "id": "bolt",
+          "result": true
+        },
+        {
+          "id": "molotov",
+          "result": true
+        },
+        {
+          "id": "ammo",
+          "result": true
+        }
+      ],
+      "policyError": {
+        "message": "Error: No safe public action {\"at\":\"sejong\",\"day\":15,\"min\":229,\"food\":0,\"water\":18,\"route\":[{\"id\":\"gongju\",\"name\":\"공주 산성\",\"type\":\"town\",\"km\":16,\"distanceToKnownPlaces\":{\"busan\":265",
+        "interpretation": "Observer policy refuses all actions at food0 despite legal routes; no game exception, character death or state edit."
+      }
+    },
+    {
+      "id": "03",
+      "mode": "continuation of attempt02 normal save",
+      "seed": 263002,
+      "status": "ended",
+      "ending": "story_done",
+      "method": "core_transfer",
+      "session1End": true,
+      "choices": 30,
+      "traceRecords": 157,
+      "day": 19,
+      "km": 1330,
+      "actualCompanions": [
+        "leo",
+        "parkss"
+      ],
+      "actualDog": true,
+      "sourceHash": "688aafa55a5e6a36d36843455a6cc047b1f7f818bc4f5b31b677f70b6019c0bc",
+      "route": [
+        "gongju",
+        "cheonan",
+        "pyeongtaek",
+        "suwon",
+        "seoul"
+      ],
+      "actions": {
+        "resume-saved-journey": 1,
+        "resumed-state": 1,
+        "camp": 5,
+        "explore": 6,
+        "unpaid-entry-reload": 30,
+        "choice": 30,
+        "paid-result-reload": 30,
+        "travel": 5,
+        "drive": 6,
+        "camp-talk": 2,
+        "craft": 2,
+        "walkfuel": 2,
+        "trade": 22,
+        "work": 5,
+        "camp-meal": 2,
+        "board-open": 1,
+        "talk": 2,
+        "seoul-enter": 5
+      },
+      "reload": {
+        "entry": 30,
+        "paid": 30,
+        "allLoaded": true,
+        "reapplied": 0
+      },
+      "campTalk": {
+        "attempts": 2,
+        "success": 1
+      },
+      "upgrades": [],
+      "crafts": [
+        {
+          "id": "pipe",
+          "result": true
+        },
+        {
+          "id": "xbow",
+          "result": true
+        }
+      ],
+      "policyError": null
+    }
+  ],
+  "aggregate": {
+    "freshStarts": 2,
+    "completedJourneys": 2,
+    "engineDeaths": 0,
+    "policyStops": 1,
+    "normalSaveContinuations": 1,
+    "choices": 192,
+    "traceRecords": 1029,
+    "actions": {
+      "new-game": 2,
+      "unpaid-entry-reload": 192,
+      "choice": 192,
+      "paid-result-reload": 192,
+      "explore": 39,
+      "travel": 54,
+      "drive": 105,
+      "camp-meal": 21,
+      "camp-repair": 11,
+      "camp": 24,
+      "walkfuel": 12,
+      "trade": 76,
+      "work": 31,
+      "board-open": 10,
+      "buy-upgrade": 4,
+      "meet-recruit": 4,
+      "craft": 12,
+      "seoul-enter": 10,
+      "recruit-step": 6,
+      "camp-talk": 12,
+      "accept-companion": 2,
+      "talk": 12,
+      "earned-perk": 4,
+      "resume-saved-journey": 1,
+      "resumed-state": 1
+    },
+    "uniqueEventChoices": 124,
+    "newEventChoicesComparedWithCycles1and2": 105,
+    "novelPairs": [
+      "opening_workshop|난로를 끄고 예비 공구까지 챙긴다",
+      "opening_bus_repair|남은 호스를 잘라 우회한다",
+      "opening_failed_appeal|하진에게 허락을 구하고 가족 이름부터 적는다",
+      "opening_parents_module|회로도에 지금 배선 경로를 덧그린다",
+      "opening_departure|열쇠를 챙기고 문에 쪽지를 붙인다",
+      "lc_busan_dried|\"마 됐심더\" 정중히 사양",
+      "meet_postman|물 한 잔 대접한다",
+      "onboarding_first_road|전원을 끊고 단말을 통째로 연다",
+      "ev_market_ruins|골목골목 뒤진다",
+      "ev_truck_cafe|냄새만 맡고 지난다",
+      "memory_busan_terminal|엄마는 약속을 지킨다고 말한다",
+      "postman_again|\"원칙대로 하세요\"",
+      "crisis_drowsy|목청껏 노래를 부르며 강행한다",
+      "crisis_nofuel|걸어서 연료를 구해온다",
+      "salvage_claim|그냥 지나간다",
+      "lc_damyang_juktong|죽통밥을 얻는다 (물물교환)",
+      "story_bridge_departure_echo|방송이 끝날 때까지 이름을 받아 적는다",
+      "meet_hitchhiker|오늘은 자리가 없다",
+      "cell_sotgot_meet|국밥을 받는다",
+      "levy_office|천막을 걷어버린다",
+      "meet_bus|오늘은 짐을 더 못 싣는다",
+      "lc_jeonju_bibim|인사만 하고 길을 나선다",
+      "story_bridge_trace_gap|세 장의 시각을 나란히 적는다",
+      "exp_pharmacy|셔터 밑으로 기어들어간다",
+      "story_bridge_watched|카메라를 지나 열린 길로 빠져나간다",
+      "parents_diversion_manifest|왜 탑승을 거부하지 못했는지 확인한다",
+      "story_generation_form|세 사람의 이름부터 읽는다",
+      "route_market_convoy|폐차 차양 아래에서 통과 순서를 맞춘다",
+      "route_market_mask|달구지 발전기로 센서 주기를 흐트러뜨린다",
+      "route_market_pass|짐 높이를 낮추고 전원이 손으로 넘긴다",
+      "parents_separated_work|엄마가 만든 증언 전달망을 표시한다",
+      "story_family_principle|끊긴 다음 문장을 찾아 복원한다",
+      "exp_ricemill|냄새만 맡고 간다",
+      "story_family_key|배선 위치를 표시하고 계기판을 덮는다",
+      "cell_ghost_meet|\"어떻게 안 보여요?\"",
+      "story_personal_cache|원본은 숨기고 필요한 부분만 베낀다",
+      "camp_scan|불을 끄고 숨죽인다",
+      "story_parent_route_guarded|사본을 연대망 전달함에 남긴다",
+      "cleaners_recall|지나간다",
+      "story_bridge_parent_route|두 경로가 갈라진 지점을 지도에 표시한다",
+      "parents_father_last_log|정비 번호표를 달구지 계기판에 단다",
+      "story_bridge_child_voice|전원을 끈다",
+      "parents_mother_reunion|아무 말도 못 하고 서 있는다",
+      "parents_mother_truth|이제 같이 남산으로 가자고 한다",
+      "seoul_base|교란 장치를 꺼내 본다",
+      "seoul_core|여행 일지를 내민다",
+      "seoul_costs|잠길 기록 창구를 먼저 확인한다",
+      "seoul_decision|집행권을 저항 연대망에 넘긴다",
+      "seoul_night|수첩에 오늘의 선택을 적는다",
+      "meet_hitchhiker|\"남원까지 같이 갑시다\"",
+      "rq_leo_task|트럭을 물가까지 붙여 불빛을 만든다",
+      "near_geochang_actor|방해하지 않는다",
+      "camp_3_leo|완성된 노래 대신 쓰다 만 한 줄을 듣는다",
+      "exp_outdoor|물건을 그대로 두고 나온다",
+      "rq_leo_join|보리에게도 빈자리를 보여 준다",
+      "talkr_leo_1|\"오늘은 신청곡 받아줘요\"",
+      "near_hapcheon_sutra|합장으로 인사하고 길을 나선다",
+      "crisis_nofuel2|지나가는 차를 기다린다",
+      "camp_4_leo|가사 대신 오늘 들은 바퀴 소리를 흉내 낸다",
+      "gp_envelope|참는다",
+      "crisis_nofuel3|지나가는 차에 연료 지원을 부탁한다",
+      "crisis_nofuel3|걷는 수밖에 없다",
+      "camp_6_leo|레오와 오늘 들은 소리로 박자를 맞춘다",
+      "meet_bus|\"어디까지 가면 됩니까?\"",
+      "talkr_leo_3|하나 말해준다",
+      "story_generation_speech|아이에게 어디가 서울인지 묻는다",
+      "camp_7_leo|레오와 오늘 들은 소리로 박자를 맞춘다",
+      "story_generation_theories|세 가설을 모두 수첩에 남긴다",
+      "lc_yeongdong_wine|한 병 얻고 사연을 적는다",
+      "talk_leo_02|\"다른 별명은요?\"",
+      "story_generation_route|물 한 병을 보탠다",
+      "talk_leo_06|\"근데 왜 맨날 웃어요?\"",
+      "exp_comicroom|몇 권만 빌려간다(?)",
+      "camp_9_leo|레오와 오늘 들은 소리로 박자를 맞춘다",
+      "talk_leo_07|\"막힐 땐 쉬어야죠\"",
+      "history_seventy_two_hours|돌아오지 않은 권한의 날짜를 적는다",
+      "history_three_day_silence|버스를 세운 사람들의 기록을 찾는다",
+      "camp_10_leo|레오와 오늘 들은 소리로 박자를 맞춘다",
+      "story_bridge_crew_question|둘 다다. 그래서 겁난다",
+      "rq_parkss_task|의약품을 보태 처방을 완성한다",
+      "talk_leo_12|필담으로 대꾸한다",
+      "exp_radioshop|부품을 수확한다",
+      "history_first_recorders|남산에서 필요한 근거를 다시 확인한다",
+      "history_six_roads|여섯 갈래의 표식을 지도에 옮긴다",
+      "camp_11_parkss|이어받을 사람이 알 수 있도록 기록을 정리한다",
+      "camp_dogs|경적과 헤드라이트로 쫓는다",
+      "rq_parkss_join|왕진 가방이 흔들리지 않을 자리를 비운다",
+      "ev_chunrian_lab|오래 있을 곳이 아니다, 뜬다",
+      "talk_leo_17|\"보리 깨겠어요\"",
+      "talk_pss_06|\"단골 많으셨겠어요\"",
+      "camp_12_parkss|알아보기 어려운 글씨를 선생과 함께 고친다",
+      "ev_uplink|그냥 지나친다",
+      "talk_leo_14|\"어떤 곡인데요?\"",
+      "talk_pss_01|선수 친다 — \"차 마시자는 말이죠\"",
+      "loc_sejong|도시를 조용히 통과한다",
+      "lc_sejong_library|개관식을 열어준다",
+      "exp_jjimjil|불가마에 불을 넣고 8시간 쉰다",
+      "crisis_hungry|버틴다",
+      "camp_14_parkss|오늘의 기록을 함께 읽고 가방을 닫는다",
+      "camp_visitor|경계하며 거절한다",
+      "comp_leo_song|\"운전에 집중해야 해요\"",
+      "talk_leo_15|옆에 그냥 앉아 있는다",
+      "talk_pss_14|듣는다",
+      "story_bridge_invitation|평행 도로로 돌아간다",
+      "story_bridge_last_quiet|시동을 건다"
+    ],
+    "companionJourney": {
+      "segments": [
+        "attempt02",
+        "attempt03"
+      ],
+      "choices": 126,
+      "traceRecords": 702,
+      "ending": "core_transfer",
+      "day": 19,
+      "km": 1330,
+      "party": [
+        "leo",
+        "parkss"
+      ],
+      "dog": true
+    }
+  },
+  "features": {
+    "rescue": "attempt02 n126 rq_leo_task choice2: drove truck to waterside, rescued Bori with headlights; standard recruitment after guest/camp arc.",
+    "normalAcquisition": [
+      "Leo",
+      "Bori",
+      "Parkss",
+      "bench",
+      "stove"
+    ],
+    "living": {
+      "warmMeal": 21,
+      "campRepair": 11,
+      "camp": 24,
+      "daytimeTalk": 12
+    },
+    "medicine": "attempt02 n443 rq_parkss_task donated one actual medicine to treat three children; driver injury treatment was not naturally selected.",
+    "supplyRecovery": "attempt02 stopped at Sejong day15 03:49 with food0/water18/hunger0. attempt03 loaded that unmodified save, camped/travelled/worked/traded and finished day19. No injected resource or fixture rescue.",
+    "radio": "No named radio vacuum tube acquired; exp_radioshop yielded generic parts, not the radio repair item.",
+    "sideMission": "Public boards read; no distant delivery completed."
+  },
+  "transcriptReview": {
+    "entries": 192,
+    "files": [
+      "transcript01.json",
+      "transcript02.json",
+      "transcript03.json"
+    ],
+    "newOrChangedRead": 123,
+    "exactDuplicateCompared": 69,
+    "changedFile": "changed-transcript.json",
+    "scope": "All visible choice labels, gates, encountered prose, actual result and roster/time reviewed. All123 new/changed entries read in full; identical69 compared against earlier read entries. One truncated output batch was re-read for missing rows19-23."
+  },
+  "findings": [
+    {
+      "id": "SYS07",
+      "severity": "P2",
+      "status": "fixed with root authorization",
+      "event": "exp_comicroom",
+      "choice": 1,
+      "naturalEvidence": {
+        "attempt": "02",
+        "trace": 360,
+        "scrapBefore": 16,
+        "scrapAfter": 14,
+        "limit": "Actual play had enough scrap; shortage bug established only by labelled boundary fixture."
+      },
+      "problem": "Borrowing books promises scrap payment and costs2, but has no requirement and is selectable with0/1 scrap. Both gain5 morale while paying0/1.",
+      "rootCause": "src/03-data.js choice lacks req:{scrap:2}; applyFx clamps insufficient scrap.",
+      "evidence": "comicroom-boundary-repro.json (0,1,2)",
+      "minimalFix": "Explicit scrap2 gate and matching cost label; preserve existing paid snapshots. Root notified before source edit.",
+      "fix": "Choice label now states scrap2 and req:{scrap:2} enforces payment; existing effects/outcome unchanged. Exact hiddenCost mechanics projection added with authorization."
+    },
+    {
+      "id": "SYS08",
+      "severity": "P2 (market stale state) / P3 (late explore audio)",
+      "status": "fixed with root authorization during read-only cross-review",
+      "scope": "Boundary fixtures with actual production callbacks; not new natural journey failures.",
+      "problem": "Fatal exploration produced audio after ending. Captured market trade/bundle/sell callbacks spent or gained resources and reopened market after another action ended journey.",
+      "evidence": [
+        "crossreview-terminal.json",
+        "crossreview-terminal02.json",
+        "crossreview-terminal-after.json"
+      ],
+      "fix": "Three market engine entry guards; current/legacy market callback entry and postadvance guards; explore completion audio requires !S.ended.",
+      "files": [
+        "src/04e-engine-world.js",
+        "src/07-ui.js"
+      ],
+      "limits": "Normal market UI closes at night; stale handler fixture establishes defensive lifecycle gap, not a natural midnight market purchase."
+    }
+  ],
+  "rejectedCandidates": [
+    {
+      "events": [
+        "camp_scan",
+        "camp_dogs",
+        "camp_visitor"
+      ],
+      "reason": "06:30 engine clock initially looked inconsistent with night text; each actual source event has storyOrigin memory / 지난밤 · 야영지. These are explicit retrospective camp scenes, not a confirmed time error.",
+      "evidence": "src/03-data.js camp risk definitions and natural traces01n227/02n474/03n26"
+    },
+    {
+      "event": "comp_leo_song",
+      "reason": "At stopped06:30, choice 운전에 집중해야 해요 is slightly context-light but can state upcoming driving intent; insufficient to classify as a gameplay defect."
+    },
+    {
+      "event": "exp_radioshop",
+      "reason": "진공관 appears among generic harvested parts in prose; no promise of the specific radio repair item. Not treated as a reward loss."
+    }
+  ],
+  "verification": {
+    "boundaryFixtures": 3,
+    "productionEdits": 4,
+    "browserRuns": 0,
+    "fullSuite": "Root owns source tests/build; not repeated because this cycle changed no production source.",
+    "newTests": {
+      "file": "tests/test_qa_cycle_systems.cjs",
+      "before": "comicroom-tests-before02.tap:12pass/1gamefailure",
+      "after": "comicroom-tests-after.tap:13/13",
+      "initial": "comicroom-tests-before.tap retained; second failure was fixture empty chip class normalized by existing loader, not game behavior."
+    },
+    "productionFiles": [
+      "src/03-data.js",
+      "src/04e-engine-world.js",
+      "src/07-ui.js",
+      "tools/story-review-contract.cjs"
+    ],
+    "latestTests": "molotov-copy-after.tap:18/18 systems; root owns full build/test",
+    "terminalTests": {
+      "before": "terminal-market-tests-before02.tap:14pass/4gamefail",
+      "after": "terminal-market-tests-after.tap:18/18",
+      "initial": "terminal-market-tests-before.tap also had one expected-price fixture mistake (Miryang demand medicine pays9, not7); retained and corrected before second red."
+    }
+  },
+  "limits": [
+    "No new radio acquisition/repair.",
+    "No fresh doctor treatment of driver injury.",
+    "No UI teardown/rebuild or native audio checks.",
+    "Attempt03 is a retained-save continuation of attempt02, not a third fresh game."
+  ],
+  "closedExistingCandidates": [
+    {
+      "id": "D01",
+      "decision": "Design preference, not all-choices-blocked bug. Scrap0/water0/thirst3 still permits authored lock-breaking; both outcomes resolve/reload/continue.",
+      "evidence": "d01-review.json",
+      "productionEdits": 0
+    },
+    {
+      "id": "molotov-fuel-reserve-clarity",
+      "decision": "Clarified current showCraft paragraph: 연료 5L 이상 필요 · 2L 소모 · 3L 여유, generated from quote fuel. Existing 5L gate and2L cost unchanged.",
+      "files": [
+        "src/07-ui.js"
+      ],
+      "evidence": [
+        "molotov-copy-before.tap",
+        "molotov-copy-after.tap"
+      ]
+    }
+  ]
+}

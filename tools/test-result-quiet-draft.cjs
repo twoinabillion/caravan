@@ -46,11 +46,10 @@ test('native controls have labels and every return link has a unique local desti
   assert.match(css, /\.rq-return:target \{ display: block; \}/);
 });
 
-test('current record preserves source wording while the next action does not promise key extraction', () => {
-  const event = source.slice(source.indexOf("id:'story_family_principle'"));
-  const note = event.match(/note:\{type:'사건',title:'예측은 명령이 아니다',body:'([^']+)'/);
-  assert.ok(note, 'source note');
-  assert.ok(html.includes(note[1]), 'original note body preserved');
+test('retained record preserves creation wording while the next action does not promise key extraction', () => {
+  const fixture=JSON.parse(fs.readFileSync(path.join(root,'tests/fixtures/design-draft-copy.json'),'utf8'));
+  assert.match(fixture.provenance.recordNote,/draft creation/);
+  assert.ok(html.includes(fixture.recordNote), 'original draft note body preserved');
   const proposed = html.match(/<section class="rq-current rq-proposed"[\s\S]*?<\/section>/)[0];
   const firstView = proposed.split('<details')[0];
   assert.match(firstView, /부모님 영상의 끊긴 말을 복원했다/);

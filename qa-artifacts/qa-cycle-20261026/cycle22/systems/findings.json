@@ -1,0 +1,60 @@
+{
+  "naturalReaderConfirmed": 1,
+  "naturalVisualMismatchCandidates": 3,
+  "naturalVisualClarityCandidates": 1,
+  "derivedBoundaryConfirmed": 0,
+  "scopedClean": false,
+  "findings": [
+    {
+      "id": "C22-SYS-01",
+      "event": "npc_deokgu_2",
+      "trace": 444,
+      "choice": 0,
+      "type": "known speaker lost",
+      "confirmed": true,
+      "evidence": "candidate-deokgu-reader.json",
+      "entryExport": "player02/attempt01/entry-443-npc_deokgu_2-export.json",
+      "observed": "First answer is Deokgu; second and third same-man answer become passer_man/??? after intervening narration. No new character enters.",
+      "minimalProposal": "Explicit outcome0 turnSpeakers [deokgu,deokgu,deokgu], preserve entry/all other outcomes and paid/text-only legacy.",
+      "productionChanged": false
+    }
+  ],
+  "visualCandidatesFile": "visual-candidates.json",
+  "nonDefects": [
+    {
+      "event": "meet_scrapyard/loc_gyeongju/lc_cheonan_walnut",
+      "reason": "Other unknown labels are first Minji introduction or unnamed villager/vendor, not loss of an already identified speaker."
+    },
+    {
+      "event": "comp_engine_sound",
+      "trace": 361,
+      "reason": "Unfixed radio can emit static, explicitly seen naturally at trace103. This scene says radio obscured the belt sound, not that music or a repaired broadcast played; no extra gate proposed."
+    },
+    {
+      "event": "camp_5_minji/camp_6_kangwoo",
+      "traces": [
+        221,
+        252
+      ],
+      "reason": "다 끝내지는 못했다 recalls route_market_pass partial completion. People/medicine/seeds pass but cart axle breaks; note54 explicitly records 부분 달성. Not an invented failure."
+    },
+    {
+      "event": "camp_4_kangwoo",
+      "trace": 175,
+      "reason": "Kangwoo is an actual temporary guest during the recruitment road phase although not yet in S.party. His prior patrol repair is observed at155 and permanent invitation completes181/183."
+    },
+    {
+      "event": "driving minji/kangwoo banter",
+      "trace": 286,
+      "reason": "This can indicate a driving handoff. No simultaneous explicit protagonist-driver assertion contradicts it; route state alone does not identify the current driver."
+    },
+    {
+      "event": "weather ambience",
+      "reason": "Dragonfly during storm is not a logical impossibility; uncertain weather interpretation alone is not escalated."
+    },
+    {
+      "event": "seoul_night",
+      "reason": "Finale explicitly bridges night and dawn under its frozen ending presentation clock; ordinary travel survival time is not assumed to continue."
+    }
+  ]
+}

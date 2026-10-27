@@ -1,0 +1,244 @@
+{
+  "attempt": "attempt02",
+  "fresh": true,
+  "sameSeedRetry": true,
+  "seed": 282003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "records": 591,
+  "choices": 104,
+  "uniqueEvents": 99,
+  "uniquePairs": 99,
+  "pairsNewAgainstAll1to21": [
+    "comp_snore:0",
+    "ev_atm_cash:0",
+    "ev_eunsu_solo:0",
+    "road_mechanic:1"
+  ],
+  "finalState": {
+    "at": "seoul",
+    "location": "서울 — 남산",
+    "day": 14,
+    "min": 1294,
+    "km": 1796,
+    "driving": null,
+    "fuel": 23.137002099999137,
+    "water": 22,
+    "food": 18,
+    "scrap": 0,
+    "van": 100,
+    "fatigue": 51.00471999999998,
+    "party": [
+      "parkss",
+      "eunsu"
+    ],
+    "items": {
+      "부품": 14,
+      "의약품": 2,
+      "탄약": 0,
+      "남산행 편지": 1,
+      "부모님의 검증키": 1,
+      "교란 장치": 1
+    },
+    "weather": "clear",
+    "campNight": 11,
+    "campPlan": {},
+    "campParticipants": [
+      "parkss",
+      "eunsu"
+    ],
+    "campConversation": null,
+    "crew": {
+      "parkss": {
+        "name": "박 선생",
+        "mood": 100,
+        "bond": 25,
+        "injury": null
+      },
+      "eunsu": {
+        "name": "은수",
+        "mood": 100,
+        "bond": 17,
+        "injury": null
+      }
+    },
+    "up": {},
+    "sideQuest": null,
+    "boardOffers": [
+      {
+        "index": 0,
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "suwon",
+        "to": "gwangju",
+        "due": 113,
+        "noExpiry": true,
+        "kind": "deliver",
+        "need": null,
+        "reward": 16
+      },
+      {
+        "index": 1,
+        "label": "미영에게 편지",
+        "description": "\"전주 서문 시장의 미영에게 편지 한 통만. 사례는 적지만… 꼭 좀 전해 주세요.\"",
+        "from": "suwon",
+        "to": "jeonju",
+        "due": 19,
+        "kind": "letter",
+        "need": null,
+        "reward": 8
+      }
+    ],
+    "boardAt": "suwon",
+    "boardDay": 14,
+    "ended": true,
+    "endKind": "story_done",
+    "main": {
+      "id": "main_namsan",
+      "kind": "main",
+      "status": "completed",
+      "tracked": true,
+      "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+      "act": "종장",
+      "chapterId": "ending",
+      "eyebrow": "메인 스토리 · 종장",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "phase": "남산 코어 · 여정 기록",
+      "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+      "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+      "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+      "steps": [
+        {
+          "id": "ending",
+          "label": "남산 코어에서 최종 결정을 내렸다",
+          "state": "done"
+        }
+      ],
+      "progress": {
+        "have": 1,
+        "need": 1,
+        "label": "완료"
+      }
+    },
+    "navigation": {
+      "key": "main_ending",
+      "kind": "main",
+      "target": "seoul",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+    }
+  },
+  "review": {
+    "choiceCount": 104,
+    "rawEntryResultCharacters": 35375,
+    "speechCalls": 134,
+    "npcMenus": 18,
+    "notes": 115,
+    "fullTuplesSame": 92,
+    "fullTuplesDifferent": 12,
+    "resultStringsSame": 94,
+    "resultStringsDifferent": 10
+  },
+  "reload": {
+    "entries": 104,
+    "paid": 104,
+    "allStatesEqual": true,
+    "allReadersEqual": true,
+    "reapplied": 0
+  },
+  "chat": {
+    "observedChatSequences": 6,
+    "sameDayDuplicateSequences": 0,
+    "matches": [
+      {
+        "n": 274,
+        "id": "daily-me-parkss-patch",
+        "day": 7,
+        "min": 434.4,
+        "lines": 8,
+        "once": false
+      },
+      {
+        "n": 350,
+        "id": "daily-parkss-eunsu-names",
+        "day": 8,
+        "min": 827.4,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 360,
+        "id": "daily-me-parkss-patch",
+        "day": 8,
+        "min": 1182.6,
+        "lines": 8,
+        "once": false
+      },
+      {
+        "n": 400,
+        "id": "daily-me-eunsu-offrecord",
+        "day": 10,
+        "min": 215.8,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 481,
+        "id": "daily-parkss-eunsu-names",
+        "day": 13,
+        "min": 996.2,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 547,
+        "id": "daily-parkss-eunsu-names",
+        "day": 14,
+        "min": 1260.8,
+        "lines": 9,
+        "once": false
+      }
+    ],
+    "savedStamps": {
+      "daily:daily-me-parkss-patch": {
+        "day": 8,
+        "km": 912
+      },
+      "daily:daily-parkss-eunsu-names": {
+        "day": 14,
+        "km": 1789
+      },
+      "daily:daily-me-eunsu-offrecord": {
+        "day": 10,
+        "km": 1143
+      }
+    },
+    "note": "Actual UI.playChat sequences matched source D.chats.lines; independent ambient/banter are not grouped as crew chats. Same chat on a later day is intentionally permitted. No forced pickChat call during natural run."
+  },
+  "publicActionsByType": {
+    "new-game": 1,
+    "unpaid-entry-reload": 104,
+    "choice": 104,
+    "paid-result-reload": 104,
+    "explore": 21,
+    "travel": 53,
+    "drive": 87,
+    "trade": 57,
+    "work": 11,
+    "camp": 11,
+    "meet-recruit": 2,
+    "board-open": 4,
+    "npc-rumor": 9,
+    "recruit-step": 6,
+    "camp-talk": 3,
+    "accept-companion": 2,
+    "talk": 3,
+    "earned-perk": 4,
+    "seoul-enter": 5
+  },
+  "fullTextReviewComplete": true,
+  "reviewIncludesSameText": true,
+  "sourceReviewEnd": "2026-10-26T09:46:01.161328+00:00"
+}

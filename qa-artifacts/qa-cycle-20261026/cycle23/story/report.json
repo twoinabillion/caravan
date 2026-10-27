@@ -1,0 +1,259 @@
+{
+  "cycle": 23,
+  "seed": 283003,
+  "attempt": "attempt01",
+  "cohortExcluded": false,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "engineHash": "8cb29d99d11f89115ad974f7021b59d8373f85f8a7cf37fdbca18102fb9730f3",
+  "state": {
+    "at": "seoul",
+    "location": "서울 — 남산",
+    "day": 9,
+    "min": 1409,
+    "km": 695,
+    "driving": null,
+    "fuel": 48.23255166666653,
+    "water": 26,
+    "food": 20,
+    "scrap": 38,
+    "van": 100,
+    "fatigue": 56.13638000000003,
+    "party": [
+      "minji",
+      "jaeyi",
+      "eunsu"
+    ],
+    "items": {
+      "부품": 8,
+      "의약품": 1,
+      "탄약": 0,
+      "남산행 편지": 1,
+      "교란 장치": 1,
+      "부모님의 검증키": 1
+    },
+    "weather": "rain",
+    "campNight": 8,
+    "campPlan": {},
+    "campParticipants": [
+      "minji",
+      "jaeyi",
+      "eunsu"
+    ],
+    "campConversation": null,
+    "crew": {
+      "minji": {
+        "name": "민지",
+        "mood": 100,
+        "bond": 42,
+        "injury": null
+      },
+      "jaeyi": {
+        "name": "재이",
+        "mood": 100,
+        "bond": 14,
+        "injury": null
+      },
+      "eunsu": {
+        "name": "은수",
+        "mood": 98,
+        "bond": 13,
+        "injury": null
+      }
+    },
+    "up": {
+      "bench": true
+    },
+    "sideQuest": null,
+    "boardOffers": [
+      {
+        "index": 0,
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "daejeon",
+        "to": "muju",
+        "due": 106,
+        "noExpiry": true,
+        "kind": "deliver",
+        "need": null,
+        "reward": 16
+      },
+      {
+        "index": 1,
+        "label": "장 담근 항아리",
+        "description": "\"장 담근 항아리, 광주 대인시장까지 부탁드려도 될까요? 사례는 고철 16.\"",
+        "from": "daejeon",
+        "to": "gwangju",
+        "due": 11,
+        "kind": "deliver",
+        "need": null,
+        "reward": 16
+      }
+    ],
+    "boardAt": "daejeon",
+    "boardDay": 7,
+    "ended": true,
+    "endKind": "story_done",
+    "main": {
+      "id": "main_namsan",
+      "kind": "main",
+      "status": "completed",
+      "tracked": true,
+      "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+      "act": "종장",
+      "chapterId": "ending",
+      "eyebrow": "메인 스토리 · 종장",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "phase": "남산 코어 · 여정 기록",
+      "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+      "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+      "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+      "steps": [
+        {
+          "id": "ending",
+          "label": "남산 코어에서 최종 결정을 내렸다",
+          "state": "done"
+        }
+      ],
+      "progress": {
+        "have": 1,
+        "need": 1,
+        "label": "완료"
+      }
+    },
+    "navigation": {
+      "key": "main_ending",
+      "kind": "main",
+      "target": "seoul",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+    }
+  },
+  "traceRecords": 474,
+  "choices": 95,
+  "textReview": {
+    "choiceCount": 95,
+    "rawEntryResultCharacters": 34566,
+    "speechCalls": 83,
+    "npcMenus": 8,
+    "notes": 100,
+    "fullTuplesSame": 83,
+    "fullTuplesDifferent": 12,
+    "resultStringsSame": 87,
+    "resultStringsDifferent": 8
+  },
+  "extrasReviewed": 35,
+  "npcMenusRead": 8,
+  "reload": {
+    "entries": 95,
+    "paid": 95,
+    "allStatesEqual": true,
+    "allReadersEqual": true,
+    "reapplied": 0
+  },
+  "images": {
+    "actualSceneKeys": 87,
+    "uniqueFilesViewed": 86,
+    "sheetsViewed": 6,
+    "fullOriginalsViewed": 3,
+    "browserCropInspected": false
+  },
+  "chat": {
+    "observedChatSequences": 5,
+    "sameDayDuplicateSequences": 0,
+    "matches": [
+      {
+        "n": 155,
+        "id": "daily-me-minji-hands",
+        "day": 4,
+        "min": 746.5,
+        "lines": 7,
+        "once": false
+      },
+      {
+        "n": 309,
+        "id": "chat:27",
+        "day": 7,
+        "min": 1294.4,
+        "lines": 6,
+        "once": false
+      },
+      {
+        "n": 343,
+        "id": "thread-parent-key-minji",
+        "day": 8,
+        "min": 494.4,
+        "lines": 7,
+        "once": true
+      },
+      {
+        "n": 347,
+        "id": "daily-me-minji-hands",
+        "day": 8,
+        "min": 616.5,
+        "lines": 7,
+        "once": false
+      },
+      {
+        "n": 369,
+        "id": "chat:6",
+        "day": 9,
+        "min": 464.4,
+        "lines": 6,
+        "once": false
+      }
+    ],
+    "savedStamps": {
+      "daily:daily-me-minji-hands": {
+        "day": 8,
+        "km": 601
+      },
+      "daily:chat:27": {
+        "day": 7,
+        "km": 541
+      },
+      "daily:thread-parent-key-minji": {
+        "day": 8,
+        "km": 575
+      },
+      "thread-parent-key-minji": {
+        "day": 8,
+        "km": 575
+      },
+      "daily:chat:6": {
+        "day": 9,
+        "km": 613
+      }
+    },
+    "note": "Actual UI.playChat sequences matched source D.chats.lines; independent ambient/banter are not grouped as crew chats. Same chat on a later day is intentionally permitted. No forced pickChat call during natural run."
+  },
+  "newNarrativeOrReaderConfirmed": 0,
+  "newImageContextConfirmed": 2,
+  "visualTimeCandidates": 2,
+  "newChoicePairs": [
+    "exp_bowling:0"
+  ],
+  "notEncountered": [
+    "loc_tunnelbook",
+    "ev_parkss_past",
+    "ev_atm_cash",
+    "comp_snore",
+    "talk_es_01",
+    "npc_deokgu_2",
+    "exp_oilmill",
+    "Bori adoption/life features",
+    "polaroid",
+    "core_sleep",
+    "core_quarantine"
+  ],
+  "naturalCurrentCycleRepairReexposure": 0,
+  "limits": [
+    "VM public finite-resource engine journey, not browser input/audio/layout test",
+    "No forced event, state, item or resource injection in fresh journey",
+    "NPC talk menus and actual reader parser captured; arbitrary unseen branches not validated",
+    "Pending cycle22 visual proposals remain unwired, and their draft-only 224 checks are excluded from production claims",
+    "Supply persistence guard was not exercised naturally",
+    "Corrected prior driving copy naturally reappeared, but latest seven cycle23 narrative repairs did not occur"
+  ]
+}

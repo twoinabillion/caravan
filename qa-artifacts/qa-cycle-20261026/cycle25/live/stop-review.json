@@ -1,0 +1,132 @@
+{
+  "status": "paused-by-user-for-checkpoint-and-push",
+  "actualOrigin": "http://127.0.0.1:4319/",
+  "testedCssWidth": 480,
+  "actual360Verified": false,
+  "classification": "presentation-fixture UI checks; excluded from natural journey totals",
+  "completed": [
+    {
+      "id": "exp_ricemill",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true,
+      "method": "manual UI before shared audit helper; six screenshots retained"
+    },
+    {
+      "id": "exp_towyard",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "exp_bowling",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "ev_wedding_hall_storage",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "exp_comicroom",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "exp_cafeteria",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "lc_busan_dried",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "lc_daejeon_bakery",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "lc_sejong_library",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "ev_chunrian_lab",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "ev_uplink",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "camp_scan",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "seoul_base",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "exp_checkpoint",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "cleaners_recall",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    },
+    {
+      "id": "ev_waterfall",
+      "selected": 0,
+      "reloaded": true,
+      "roadReached": true
+    }
+  ],
+  "remaining": [
+    "ev_atm_cash",
+    "exp_arcade",
+    "lc_damyang_juktong",
+    "lc_chungju_lake",
+    "seoul_square",
+    "postman_again",
+    "story_generation_speech",
+    "talk_es_07",
+    "meet_hitchhiker"
+  ],
+  "originalQaRestored": {
+    "name": "가온",
+    "day": 1,
+    "node": "busan",
+    "time": "09:45",
+    "hull": 82
+  },
+  "findings": [
+    "lc_sejong_library outcome0 isolated narration fragment 를 외쳤다.",
+    "seoul_base outcome0 unexplained ??? speaker; source audit candidate"
+  ],
+  "toolingOnly": [
+    "ev_chunrian_lab visible-dialog wait timed out; visible state inspected, resumed normally",
+    "cropped screenshot coordinates cut off left edge; retained full screenshots inspected instead"
+  ]
+}

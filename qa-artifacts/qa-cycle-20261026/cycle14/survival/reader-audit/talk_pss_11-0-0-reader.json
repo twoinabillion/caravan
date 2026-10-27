@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "기상청보다 반나절 빨라. 대신 해설이 아프지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…기상청이 아직 있어요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "없지. 없으니까 내 무릎이 하는 거고."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 무릎을 주물렀다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "왼쪽이 비, 오른쪽이— 오른쪽은 그냥 아픈 거야."
+  },
+  {
+    "kind": "narration",
+    "text": "방수포를 손 닿는 쪽으로 옮겼다. 박 선생은 오른쪽 무릎을 한 번 더 문지르고 다리를 폈다."
+  }
+]

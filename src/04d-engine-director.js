@@ -347,6 +347,8 @@ G.openEventById = (id)=>{
      UI를 건드리면 TDZ 오류로 이후 전체 스크립트가 죽는다. */
 
   G.openEvent = (evd,options={})=>{
+    if(!S||S.ended) return;
+    if(G.deferSkylineOpening(evd?.id)) return;
     const eventKey = evd && (evd.id || `${evd.title || 'road-event'}:${evd.type || ''}`);
     const approach = S.driving&&!options.continuation ? G.roadApproachProfile(evd) : null;
     if(approach && S._roadApproachBypass !== eventKey && !S.driving.approach){
@@ -377,7 +379,7 @@ G.openEventById = (id)=>{
 /* fx 적용 → 표시용 칩 목록 반환 */
 G.applyFx = (fx,context={})=>{
   const chips = [];
-  if(!fx) return chips;
+  if(!fx||!S||S.ended) return chips;
   if(fx.routeChoice){
     if(G.chooseRoute(fx.routeChoice)) chips.push({t:`노선 선택 · ${D.routePlans[fx.routeChoice].name}`,c:'item'});
   }
@@ -421,13 +423,13 @@ G.applyFx = (fx,context={})=>{
   }
   if(fx.combatEdge&&S.combat){
     S.combat.edge=clamp((S.combat.edge||0)+fx.combatEdge,-2,3);
-    chips.push({t:`전세 ${fx.combatEdge>0?'우세 +':'불리 '}${fx.combatEdge}`,c:fx.combatEdge>0?'plus':'minus'});
+    chips.push({t:`${S.combat.kind==='구조'?'구조 여건':'전세'} ${fx.combatEdge>0?'우세 +':'불리 '}${fx.combatEdge}`,c:fx.combatEdge>0?'plus':'minus'});
   }
   if(fx.combatPressure&&S.combat){
     const before=S.combat.pressure||0;
     S.combat.pressure=clamp(before+fx.combatPressure,0,3);
     const delta=S.combat.pressure-before;
-    if(delta) chips.push({t:delta>0?'교전 압박 상승':'숨 돌릴 틈 확보',c:delta>0?'minus':'plus'});
+    if(delta) chips.push({t:delta>0?(S.combat.kind==='구조'?'구조 위험 상승':'교전 압박 상승'):'숨 돌릴 틈 확보',c:delta>0?'minus':'plus'});
   }
   if(fx.combatRead&&S.combat){
     S.combat.read={label:String(fx.combatRead.label||'틈을 읽었다'),
@@ -438,26 +440,46 @@ G.applyFx = (fx,context={})=>{
     if(v<0&&G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(k)){
       chips.push({t:`${label} ∞ · 테스트 소모 없음`,c:'plus'}); return;
     }
-    if(k==='fuel') S.fuel=clamp(S.fuel+v,0,S.fuelMax);
+    if(k==='fuel'){ const before=S.fuel;S.fuel=clamp(S.fuel+v,0,S.fuelMax);applied=S.fuel-before; }
     else if(k==='water'||k==='food'){
       const result=G.addSupply(k,v); applied=result.delta; capped=result.overflow>0;
     }
-    else if(k==='scrap') S.scrap=Math.max(0,S.scrap+v);
-    else if(k==='van') S.van=clamp(S.van+v,0,S.vanMax);
-    chips.push({t:`${label} ${applied>0?'+':''}${applied}${unit||''}${capped?' · 적재 한도':''}`, c:applied>0?'plus':applied<0?'minus':''}); } };
+    else if(k==='scrap'){ const before=S.scrap;S.scrap=Math.max(0,S.scrap+v);applied=S.scrap-before; }
+    else if(k==='van'){ const before=S.van;S.van=clamp(S.van+v,0,S.vanMax);applied=S.van-before; }
+    // Receipts report the committed delta, not a nominal request beyond a cap.
+    const shown=Math.round(applied*1e6)/1e6||applied;
+    chips.push({t:`${label} ${shown>0?'+':''}${shown}${unit||''}${capped?' · 적재 한도':''}`, c:shown>0?'plus':shown<0?'minus':''}); } };
   num('fuel','연료','L'); num('water','물'); num('food','식량'); num('scrap','고철'); num('van','차체','%');
-  if(fx.time){ G.advance(fx.time); chips.push({t:`${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'} 경과`, c:''}); }
-  if(fx.fatigue){ S.fatigue=clamp(S.fatigue+fx.fatigue,0,100);
-    chips.push({t:`피로 ${fx.fatigue>0?'+':''}${fx.fatigue}`, c:fx.fatigue<0?'plus':'minus'}); }
+  if(fx.time){
+    // Full sleep resets fatigue; partial sleep keeps its authored recovery amount.
+    // Both exclude awake accumulation but still settle meals and fatal boundaries.
+    if(fx.sleep) S.fatigue=0;
+    G.advance(fx.time,fx.sleep||fx.sleeping?{sleeping:true}:undefined); if(S.ended) return chips;
+    chips.push({t:`${fx.time>=60?Math.round(fx.time/60*10)/10+'시간':fx.time+'분'} 경과`, c:''}); }
+  if(fx.fatigue){ const before=S.fatigue; S.fatigue=clamp(S.fatigue+fx.fatigue,0,100);
+    const actual=S.fatigue-before,delta=Math.round(actual*1e6)/1e6||actual;
+    chips.push({t:`피로 ${delta>0?'+':''}${delta}`, c:delta<0?'plus':delta>0?'minus':''}); }
   if(fx.hunger){ const before=clamp(Number(S.hunger)||0,0,3);
     S.hunger=clamp(before+fx.hunger,0,3);
     const delta=S.hunger-before;
     if(delta) chips.push({t:delta<0?(S.hunger===0?'허기 해소':`허기 ${before}→${S.hunger}`):`${G.hungerLabel(S.hunger)} ${S.hunger}/3`,c:delta<0?'plus':'minus'}); }
   if(fx.skipKm && S.driving){ S.driving.gone=Math.min(S.driving.dist, S.driving.gone+fx.skipKm);
     chips.push({t:`🛣 지름길 ${fx.skipKm}km`, c:'plus'}); }
-  if(fx.moodAll){ G.moodAll(fx.moodAll); if(S.party.length) chips.push({t:`사기 ${fx.moodAll>0?'+':''}${fx.moodAll}`, c:fx.moodAll>0?'plus':'minus'}); }
-  if(fx.mood){ for(const id in fx.mood){ if(S.comps[id]!==undefined&&G.hasComp(id)){ S.comps[id].mood=clamp(S.comps[id].mood+fx.mood[id],0,100);
-    chips.push({t:`${D.comps[id].name} 사기 ${fx.mood[id]>0?'+':''}${fx.mood[id]}`, c:fx.mood[id]>0?'plus':'minus'}); } } }
+  if(fx.moodAll){
+    const before=S.party.map(id=>({id,mood:S.comps[id].mood}));
+    G.moodAll(fx.moodAll);
+    const changes=before.map(row=>({id:row.id,delta:S.comps[row.id].mood-row.mood}));
+    if(changes.length&&changes.every(row=>row.delta===changes[0].delta)){
+      const delta=changes[0].delta;
+      chips.push({t:`사기 ${delta>0?'+':''}${delta}`,c:delta>0?'plus':delta<0?'minus':''});
+    }else for(const {id,delta} of changes)
+      chips.push({t:`${D.comps[id].name} 사기 ${delta>0?'+':''}${delta}`,c:delta>0?'plus':delta<0?'minus':''});
+  }
+  if(fx.mood){ for(const id in fx.mood){ if(S.comps[id]!==undefined&&G.hasComp(id)){
+    const before=S.comps[id].mood;
+    S.comps[id].mood=clamp(before+fx.mood[id],0,100);
+    const delta=S.comps[id].mood-before;
+    chips.push({t:`${D.comps[id].name} 사기 ${delta>0?'+':''}${delta}`, c:delta>0?'plus':delta<0?'minus':''}); } } }
   if(fx.item){ for(const nm in fx.item){ const v=fx.item[nm];
     if(v<0&&G.isInfiniteResourceMode()&&G.isInfiniteResourceKey(nm)){
       chips.push({t:`${nm} ∞ · 테스트 소모 없음`,c:'plus'}); continue;
@@ -560,7 +582,7 @@ G.applyFx = (fx,context={})=>{
         body:`${context}${context?'\n':''}${history.map(x=>`${x.step} — ${x.tactic}: ${x.label}`).join('\n')||'행동 기록 없음'}\n결과: ${result}. 차체 ${Math.round(S.van)}/${S.vanMax}, 관측 ${S.pursuit}/5.`,
         links:['달구지','천리안']});
       if(kind!=='교전'&&['success','partial'].includes(fx.combatResult)) S.stats.nonlethal++;
-      if(tactics.length>=2&&S.party.length){ G.moodAll(1); chips.push({t:'전술 연계 · 사기 +1',c:'plus'}); }
+      if(tactics.length>=2&&S.party.length){ G.moodAll(1); chips.push({t:kind==='구조'?'구조 협력 · 사기 +1':'전술 연계 · 사기 +1',c:'plus'}); }
       chips.push({t:`${kind} ${result} · 행동 기록 저장`,c:'plus'});
       S._eventBreather=Math.max(Number(S._eventBreather)||0,2);
       G.ensureNarrativeState();
@@ -627,8 +649,8 @@ G.reqOk = (req)=>{
   if(req.comp && !G.hasComp(req.comp)) return {ok:false, t:`${D.comps[req.comp].name} 필요`};
   if(req.trustComp){
     if(!G.hasComp(req.trustComp)) return {ok:false,t:`${D.comps[req.trustComp].name} 필요`};
-    if(G.isInjured(req.trustComp)) return {ok:false,t:`${D.comps[req.trustComp].name}가 다쳐 맡을 수 없다`};
-    if((S.comps[req.trustComp].mood||0)<25) return {ok:false,t:`${D.comps[req.trustComp].name}가 지금은 맡지 않겠다고 한다`};
+    if(G.isInjured(req.trustComp)) return {ok:false,t:`${D.withParticle(D.comps[req.trustComp].name,'이','가')} 다쳐 맡을 수 없다`};
+    if((S.comps[req.trustComp].mood||0)<25) return {ok:false,t:`${D.withParticle(D.comps[req.trustComp].name,'이','가')} 지금은 맡지 않겠다고 한다`};
   }
   if(req.healthyComp){
     if(!G.hasComp(req.healthyComp)) return {ok:false, t:`${D.comps[req.healthyComp].name} 필요`};
@@ -645,8 +667,13 @@ G.reqOk = (req)=>{
   if(req.nightWatch){
     /* 깨어 있는 것 곁에 밤을 설 사람. 사기가 낮으면 거절한다 — 근무표는 사람이 채운다 */
     const willing=S.party.filter(id=>!G.isInjured(id)&&(S.comps[id]||{}).mood>=45).length;
-    if(willing<req.nightWatch)
-      return {ok:false, t:`감시 근무를 설 사람 ${willing}/${req.nightWatch} — 동료 3명의 부상을 치료하고 야영으로 사기 45 이상을 준비한다`};
+    if(willing<req.nightWatch){
+      const missing=Math.max(0,req.nightWatch-S.party.length);
+      const injured=S.party.filter(id=>G.isInjured(id)).length;
+      const tired=S.party.filter(id=>!G.isInjured(id)&&!((S.comps[id]||{}).mood>=45)).length;
+      const next=[missing?`동료 ${missing}명 추가 합류 필요`:'',injured?`부상 동료 ${injured}명은 치료로 근무 가능`:'',tired?`사기 낮은 동료 ${tired}명은 야영으로 사기 45 이상 회복`:''].filter(Boolean);
+      return {ok:false, t:`감시 근무를 설 사람 ${willing}/${req.nightWatch} — 근무 가능한 동료 ${req.nightWatch-willing}명 더 필요 · ${next.join(' · ')}`};
+    }
   }
   if(req.keyHolders){
     /* 재가동 열쇠를 나눠 맡을 상대 — 동료와 이은 거점을 합쳐 센다 */
@@ -955,11 +982,14 @@ G.finishArrival = (to)=>{
     G.deferEvent('perimeter_first');
     G.openEventById('perimeter_first');
     G.save(); return; }
-  if(!G.isInfiniteResourceMode()&&S.fuel<=0){
+  // Settlement supply services remain reachable with an empty tank.
+  // Only an isolated stop needs the existing roadside rescue corridor.
+  if(!n.stl&&!G.isInfiniteResourceMode()&&S.fuel<=0){
     G.deferEvent('crisis_nofuel'); G.openRescue('nofuel','crisis_nofuel');
     G.save(); return;
   }
   const loc = D.events.find(e=>e.locEvent===to && !S.used.includes(e.id)
+    && (!e.night||G.isNight())
     && (!e.needsComp||G.hasComp(e.needsComp)) && (!e.needFlag||S.flags[e.needFlag]));
   if(S.recruitQ&&S.recruitQ.stage==='task'&&S.recruitQ.target===to){
     const recruitName=D.recruitQuests[S.recruitQ.id].name;

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "S18-02",
+    "classification": "natural-confirmed-low-impact-copy",
+    "trace": 286,
+    "source": "src/04e-engine-world.js G.turnInQuest letter note body",
+    "actual": "노아에게 편지 정상 완료 후 노트 n60에 노아이(가) 편지를 두 번 읽었다. 라고 노출됨.",
+    "expected": "받침에 맞는 자연스러운 조사 또는 조사가 불필요한 이름 표기.",
+    "minimalSuggestion": "기존 조사 헬퍼가 있으면 사용하며 과거 저장 노트 본문은 유지.",
+    "evidence": "candidate-evidence.json / attempt01/notes-compact.txt n60",
+    "owner": "systems (parent assigned cycle19); no source change by survival"
+  }
+]

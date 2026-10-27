@@ -1,0 +1,1544 @@
+[
+  {
+    "id": "S14-01",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 38,
+    "eventId": "exp_woodshop",
+    "choiceIndex": 1,
+    "phase": "result",
+    "actual": "가정 속 미래 목공소 주인의 말을 현장 외부인으로 발화",
+    "expected": "thought 또는 원문 전체 narration",
+    "owner": "survival",
+    "entry": "대패밥 냄새가 남은 목공소. 작업대 위에 만들다 만 것들이 시간표처럼 놓여 있다.\n\n의자 다리 셋 달린 의자, 문짝 없는 장, 그리고 구석에— 다 만들어진 목마 하나. 리본까지 묶여 있다.\n\n리본에 카드. 「우리 서윤이 다섯 살 축하해」",
+    "result": "다리 셋 의자에 넷째 다리를 깎아 붙였다. 목공소 주인의 미완성 목록을 하나 줄여준 셈이다.\n\n완성된 의자는 작업대에 올려놨다. 누가 와서 앉든, 주인이 와서 \"누가 내 일 끝냈어?\" 하든. 둘 다 나쁘지 않은 결말이다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "대패밥 냄새가 남은 목공소. 작업대 위에 만들다 만 것들이 시간표처럼 놓여 있다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "의자 다리 셋 달린 의자, 문짝 없는 장, 그리고 구석에— 다 만들어진 목마 하나. 리본까지 묶여 있다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "리본에 카드. 「우리 서윤이 다섯 살 축하해」",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "다리 셋 의자에 넷째 다리를 깎아 붙였다. 목공소 주인의 미완성 목록을 하나 줄여준 셈이다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "완성된 의자는 작업대에 올려놨다. 누가 와서 앉든, 주인이 와서",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_worker",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "누가 내 일 끝냈어?",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "하든. 둘 다 나쁘지 않은 결말이다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-02",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 94,
+    "eventId": "talk_kw_13",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "강우가 자기 겁을 설명하는 네 번째 줄을 me로 배정",
+    "expected": "kangwoo/me/kangwoo/kangwoo/kangwoo",
+    "owner": "survival",
+    "entry": "\"의외라고 생각하겠지만,\" 강우가 운을 뗐다. \"나는 겁이 많은 신병이었다.\"\n\n의외였다. 매우.",
+    "result": "\"사격 첫날 총소리에 귀를 막았지. 조교가 그랬다. '겁 많은 놈이 오래 산다. 겁을 버리지 말고 다뤄라.'\"\n\n\"잠깐만요. 귀를 막았다고요? 강우 씨가?\"\n\n\"…두 손으로.\"\n\n\"그래서 지금도 겁이 많다. 다룰 뿐이지.\" 강우가 창밖 능선을 훑었다. \"무서워서 미리 보고, 무서워서 대비한다. 용감한 게 아니라 겁이 성실한 거다.\"\n\n겁이 성실하다는 말을, 이 차에서 제일 용감해 보이는 사람이 했다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "의외라고 생각하겠지만,",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 운을 뗐다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "나는 겁이 많은 신병이었다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "의외였다. 매우.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "사격 첫날 총소리에 귀를 막았지. 조교가 그랬다. '겁 많은 놈이 오래 산다. 겁을 버리지 말고 다뤄라.'",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "잠깐만요. 귀를 막았다고요? 강우 씨가?",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…두 손으로.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "그래서 지금도 겁이 많다. 다룰 뿐이지.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 창밖 능선을 훑었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "무서워서 미리 보고, 무서워서 대비한다. 용감한 게 아니라 겁이 성실한 거다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "겁이 성실하다는 말을, 이 차에서 제일 용감해 보이는 사람이 했다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-03",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 250,
+    "eventId": "talk_kw_21",
+    "choiceIndex": 1,
+    "phase": "result",
+    "actual": "아파요/미안합니다 화자 역전",
+    "expected": "kangwoo/me/kangwoo",
+    "owner": "survival",
+    "entry": "정비 중 차 밑에 들어가야 했다. 좁고, 어둡고, 밖이 안 보이는 자리.\n\n강우가 말없이 차 옆에 앉았다. \"…들어가십시오. 등은 제가 봅니다.\"\n\n작업 내내 강우는 같은 자리에 있었다.",
+    "result": "\"…당연한 일입니다.\" 강우가 일어나 손을 내밀었다. 차 밑에서 나오는 나를 끌어올리는 손.\n\n악력이 어마어마했다. \"…아파요.\" \"…미안합니다. 반가워서.\"\n\n반가움을 악력으로 표현하는 남자와, 나는 오늘도 함께 달린다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "정비 중 차 밑에 들어가야 했다. 좁고, 어둡고, 밖이 안 보이는 자리.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 말없이 차 옆에 앉았다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…들어가십시오. 등은 제가 봅니다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "작업 내내 강우는 같은 자리에 있었다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…당연한 일입니다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 일어나 손을 내밀었다. 차 밑에서 나오는 나를 끌어올리는 손.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "악력이 어마어마했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…아파요.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "…미안합니다. 반가워서.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "반가움을 악력으로 표현하는 남자와, 나는 오늘도 함께 달린다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-04",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 324,
+    "eventId": "talk_pss_03",
+    "choiceIndex": 1,
+    "phase": "result",
+    "actual": "모범 환자에게 사탕을 주는 박 선생의 말을 me로 배정",
+    "expected": "parkss 3줄",
+    "owner": "survival",
+    "entry": "\"물 마셔라. 스트레칭해라. 어깨 펴라.\"\n\n오늘의 잔소리 3종 세트가 발사됐다.",
+    "result": "\"오.\" 박 선생이 진심으로 놀랐다. \"처방 순응도 100%인 환자는 자네가 처음이야. …아니, 둘째군. 우리 딸이 있었지.\"\n\n그러고는 사탕을 하나 꺼내 놨다. \"모범 환자한테 주는 거야.\"\n\n딸 얘기는 그걸로 끝이었다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "물 마셔라. 스트레칭해라. 어깨 펴라.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "오늘의 잔소리 3종 세트가 발사됐다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "오.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 진심으로 놀랐다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "처방 순응도 100%인 환자는 자네가 처음이야. …아니, 둘째군. 우리 딸이 있었지.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "그러고는 사탕을 하나 꺼내 놨다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "모범 환자한테 주는 거야.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "딸 얘기는 그걸로 끝이었다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-05",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 418,
+    "eventId": "exp_bowling",
+    "choiceIndex": 1,
+    "phase": "result",
+    "actual": "명시적 스스로 질문을 passer_refugee로 배정",
+    "expected": "me thought 또는 dialogue",
+    "owner": "survival",
+    "entry": "2층 볼링장. 레인 위에 핀들이 오랫동안 스트라이크를 기다린다.\n\n전광판은 죽었지만 공과 레인은 멀쩡하다. 수동으로 하면— 된다.",
+    "result": "\"이게 왜 필요하지?\" 스스로 물어봤지만 답은 없었다.\n\n그래도 제일 반짝이는 공 하나를 실었다. 언젠가 쓸 것 같다는 예감은, 대개 짐칸만 무겁게 한다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "2층 볼링장. 레인 위에 핀들이 오랫동안 스트라이크를 기다린다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "전광판은 죽었지만 공과 레인은 멀쩡하다. 수동으로 하면— 된다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "passer_refugee",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "이게 왜 필요하지?",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "스스로 물어봤지만 답은 없었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "그래도 제일 반짝이는 공 하나를 실었다. 언젠가 쓸 것 같다는 예감은, 대개 짐칸만 무겁게 한다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-06",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 511,
+    "eventId": "loc_mungyeong",
+    "choiceIndex": 0,
+    "phase": "entry",
+    "actual": "나무판 안내와 여행자 답변을 현장 passer_man으로 배정",
+    "expected": "기록 6줄",
+    "owner": "story-duplicate",
+    "entry": "문경새재. 과거 보러 한양 가던 옛길.\n\n고갯마루 주막 터에 누군가 나무판을 세워놨다.\n\n\"옛날엔 이 고개를 넘으면 과거를 보러 갔다. 지금 넘는 당신은 무엇을 보러 가는가. 한 줄 적고 가세요.\"\n\n판자엔 앞선 여행자들의 답이 빼곡하다. \"가족\" \"바다\" \"끝\" \"시작\" \"그냥\"",
+    "result": "연필을 들고 한참 고민했다.\n\n결국 적은 건 한 단어였다. 설명을 덧붙이려다가 연필을 내려놓았다. 돌아오는 길에 보면 무슨 뜻으로 썼는지 알겠지.\n\n적고 나니 고개 너머가 조금 달라 보였다.\n\n판자 맨 아래 오래된 글씨 하나가 눈에 밟혔다. 「돌아오는 길에 답을 고치러 오겠음.」",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "문경새재. 과거 보러 한양 가던 옛길.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "고갯마루 주막 터에 누군가 나무판을 세워놨다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "옛날엔 이 고개를 넘으면 과거를 보러 갔다. 지금 넘는 당신은 무엇을 보러 가는가. 한 줄 적고 가세요.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "판자엔 앞선 여행자들의 답이 빼곡하다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "가족",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "바다",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "끝",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "시작",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "그냥",
+          "displayName": "???"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "연필을 들고 한참 고민했다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "결국 적은 건 한 단어였다. 설명을 덧붙이려다가 연필을 내려놓았다. 돌아오는 길에 보면 무슨 뜻으로 썼는지 알겠지.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "적고 나니 고개 너머가 조금 달라 보였다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "판자 맨 아래 오래된 글씨 하나가 눈에 밟혔다. 「돌아오는 길에 답을 고치러 오겠음.」",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-07",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 535,
+    "eventId": "talk_pss_08",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "실습생에게 창고 정리를 시킨 과거와 가방 소유 설명2줄을 me로 배정",
+    "expected": "parkss/parkss/parkss/me/parkss/parkss/parkss",
+    "owner": "survival",
+    "entry": "박 선생이 왕진 가방을 무릎에 올려놓고 오래 쓰다듬고 있다.\n\n\"…오늘은 이 가방 주인 얘기를 좀 하지.\"",
+    "result": "\"수진이. 실습생. 나보다 나은 약사가 될 애였어.\"\n\n\"그날, 내가 창고 정리를 시켰어. 안쪽에 있으라고. 안전하라고.\" 박 선생이 가방 손잡이를 쓸었다. \"…정신 차려보니 약국 앞이 온통 사람이었고, 다시 들어가 보니 창고엔 이 가방만 있었어.\"\n\n\"…수진 씨는요.\"\n\n\"몰라. 살았는지, 어디서 제 몫의 약을 짓고 있는지. 오래 몰라.\" 말이 거기서 한 번 끊겼다. \"그래서 들어. 매일. 주인 찾아 돌려줄 때까진 내 어깨가 얘 자리야.\"\n\n박 선생이 가방을 고쳐 멨다. \"…오늘 몫 시작하지. 자네 어깨 좀 보자. 자세가 나빠.\"\n\n어깨를 내주는 동안, 그가 가방끈을 두 번 더 고쳐 쥐는 걸 봤다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "박 선생이 왕진 가방을 무릎에 올려놓고 오래 쓰다듬고 있다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…오늘은 이 가방 주인 얘기를 좀 하지.",
+          "displayName": "박 선생"
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "수진이. 실습생. 나보다 나은 약사가 될 애였어.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "그날, 내가 창고 정리를 시켰어. 안쪽에 있으라고. 안전하라고.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 가방 손잡이를 쓸었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…정신 차려보니 약국 앞이 온통 사람이었고, 다시 들어가 보니 창고엔 이 가방만 있었어.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "…수진 씨는요.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "몰라. 살았는지, 어디서 제 몫의 약을 짓고 있는지. 오래 몰라.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "말이 거기서 한 번 끊겼다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "그래서 들어. 매일. 주인 찾아 돌려줄 때까진 내 어깨가 얘 자리야.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 가방을 고쳐 멨다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…오늘 몫 시작하지. 자네 어깨 좀 보자. 자세가 나빠.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "어깨를 내주는 동안, 그가 가방끈을 두 번 더 고쳐 쥐는 걸 봤다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-08",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 568,
+    "eventId": "talkr_kw_1",
+    "choiceIndex": 1,
+    "phase": "result",
+    "actual": "강우가 접수한 보고를 me가 접수하는 것으로 표시",
+    "expected": "kangwoo 2줄",
+    "owner": "survival",
+    "entry": "\"보고.\" 강우가 손가락 두 개를 들었다. \"특이사항 둘. 들을 건가.\"",
+    "result": "\"…해봐라.\" 오늘 본 것 두 개를 보고했다. 코스모스 군락과 구름 모양.\n\n\"…접수.\" 강우가 진지하게 접수했다. 위협 없는 보고도 보고로 쳐주는 상관이다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "보고.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 손가락 두 개를 들었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "특이사항 둘. 들을 건가.",
+          "displayName": "강우"
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…해봐라.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "오늘 본 것 두 개를 보고했다. 코스모스 군락과 구름 모양.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "…접수.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 진지하게 접수했다. 위협 없는 보고도 보고로 쳐주는 상관이다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-09",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 572,
+    "eventId": "talk_pss_19",
+    "choiceIndex": 0,
+    "phase": "entry",
+    "actual": "자신의 약국 회상 둘째 줄을 me로 배정",
+    "expected": "parkss 3줄",
+    "owner": "survival",
+    "entry": "비 오는 날이면 박 선생은 꼭 창밖을 오래 본다.\n\n\"…우리 딸이 약국 앞으로 마중을 왔었어. 우산 두 개 들고. 지 것 하나, 내 것 하나.\"\n\n\"비 오는 날은 파스가 잘 나갔거든. 어깨 아픈 양반들이 몰려서. …아니, 그 얘기가 아니고.\" 박 선생이 손을 저었다.\n\n\"나는 늘 「먼저 가라」고 했어. 손님 있다고. …한 번을 같이 안 걸어줬어.\"",
+    "result": "박 선생이 나를 오래 봤다.\n\n\"…그러네. 늙은이가 젊은 사람들 우산 신세를 지네.\"\n\n\"우산 아니고 차인데요.\"\n\n\"그게 그거지.\"\n\n\"신세도 아니고요.\"\n\n박 선생이 뭐라 대꾸하려다 말았다. 창문에서 눈을 떼고, 모처럼 우리 쪽을 오래 봤다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "비 오는 날이면 박 선생은 꼭 창밖을 오래 본다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…우리 딸이 약국 앞으로 마중을 왔었어. 우산 두 개 들고. 지 것 하나, 내 것 하나.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "비 오는 날은 파스가 잘 나갔거든. 어깨 아픈 양반들이 몰려서. …아니, 그 얘기가 아니고.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 손을 저었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "나는 늘 「먼저 가라」고 했어. 손님 있다고. …한 번을 같이 안 걸어줬어.",
+          "displayName": "박 선생"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "박 선생이 나를 오래 봤다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…그러네. 늙은이가 젊은 사람들 우산 신세를 지네.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "우산 아니고 차인데요.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "그게 그거지.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "신세도 아니고요.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 뭐라 대꾸하려다 말았다. 창문에서 눈을 떼고, 모처럼 우리 쪽을 오래 봤다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-10",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 607,
+    "eventId": "talk_pss_16",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "오늘은 예방 접종이야를 me로 배정",
+    "expected": "parkss/parkss/me/parkss/parkss",
+    "owner": "survival",
+    "entry": "박 선생이 사탕을 제 입에 넣는 걸 처음 봤다. 남한테만 주는 줄 알았는데.\n\n\"…봤나. 못 본 걸로 해.\"",
+    "result": "\"약사도 사람이야. 약사의 약이 이거고.\" 박 선생이 사탕을 입 안에서 굴렸다.\n\n\"약국 30년을 남 처방만 하다 보면 자기 처방을 잊어. 그래서 정해뒀지. 힘든 날은 사탕 하나.\"\n\n\"오늘이 힘든 날이에요?\"\n\n\"…아니.\" 잠깐 뜸을 들였다. \"오늘은 예방 접종이야.\"\n\n그 말을 하는 동안 빈 사탕 봉지를 손에서 접었다 폈다 했다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "박 선생이 사탕을 제 입에 넣는 걸 처음 봤다. 남한테만 주는 줄 알았는데.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…봤나. 못 본 걸로 해.",
+          "displayName": "박 선생"
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "약사도 사람이야. 약사의 약이 이거고.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 사탕을 입 안에서 굴렸다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "약국 30년을 남 처방만 하다 보면 자기 처방을 잊어. 그래서 정해뒀지. 힘든 날은 사탕 하나.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "오늘이 힘든 날이에요?",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…아니.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "잠깐 뜸을 들였다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "오늘은 예방 접종이야.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "그 말을 하는 동안 빈 사탕 봉지를 손에서 접었다 폈다 했다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-11",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt01",
+    "trace": 637,
+    "eventId": "talk_kw_17",
+    "choiceIndex": 0,
+    "phase": "entry",
+    "actual": "수신호 강습 이유를 me로 배정",
+    "expected": "kangwoo 2줄",
+    "owner": "survival",
+    "entry": "강우가 손가락 두 개를 굽혔다 폈다.\n\n\"…이건 「정지」. 이건 「전방 주시」. 이건 「후진」.\" 갑자기 수신호 강습이 시작됐다.\n\n\"소리를 못 낼 때가 옵니다. 그때를 위해.\"",
+    "result": "정지, 전방, 후진, 산개, 집결. 중간에 후진과 산개를 두 번 헷갈렸다.\n\n\"방금 그건 산개입니다.\" \"후진 아니었어요?\" \"후진은 손바닥이 아래. …다시.\"\n\n다섯 개를 외울 때까지 강우는 몇 번이고 반복했다. \"…합격입니다.\"\n\n이번에는 말 없이 강우의 손을 보고 신호를 따라 했다. 후진과 산개를 구별하자 강우가 고개를 끄덕였다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "강우가 손가락 두 개를 굽혔다 폈다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…이건 「정지」. 이건 「전방 주시」. 이건 「후진」.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "갑자기 수신호 강습이 시작됐다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "소리를 못 낼 때가 옵니다. 그때를 위해.",
+          "displayName": "상혁"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "정지, 전방, 후진, 산개, 집결. 중간에 후진과 산개를 두 번 헷갈렸다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "방금 그건 산개입니다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "후진 아니었어요?",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "후진은 손바닥이 아래. …다시.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "다섯 개를 외울 때까지 강우는 몇 번이고 반복했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…합격입니다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "이번에는 말 없이 강우의 손을 보고 신호를 따라 했다. 후진과 산개를 구별하자 강우가 고개를 끄덕였다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-12",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 283,
+    "eventId": "gp_note1",
+    "choiceIndex": 0,
+    "phase": "entry",
+    "actual": "수첩에 적힌 글을 현재 할아버지 dialogue로 표시",
+    "expected": "할아버지 수첩 record",
+    "owner": "systems",
+    "entry": "신호 대기 중(신호는 없지만 버릇이다), 조수석의 수첩이 툭 떨어지며 접힌 페이지가 펼쳐졌다.\n\n할아버지의 글씨.\n\n\"엔진 소리가 평소와 다르면 속도부터 줄여라. 계속 밟으면 작은 고장도 큰돈 든다.\n옆 사람이 갑자기 말이 없어져도 똑같다. 물부터 주고, 차를 세워.\"",
+    "result": "시동을 켜고 소리에 귀를 기울였다. 할아버지가 가르쳐준 순서대로.\n\n벨트 장력이 어긋난 걸 찾아 시동을 끄고 조였다.\n\n작은 소리부터 들으라는 말. 엔진 얘기만은 아니었겠지.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "신호 대기 중(신호는 없지만 버릇이다), 조수석의 수첩이 툭 떨어지며 접힌 페이지가 펼쳐졌다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "할아버지의 글씨.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "grandfather",
+          "text": "엔진 소리가 평소와 다르면 속도부터 줄여라. 계속 밟으면 작은 고장도 큰돈 든다.\n옆 사람이 갑자기 말이 없어져도 똑같다. 물부터 주고, 차를 세워.",
+          "displayName": "할아버지"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "시동을 켜고 소리에 귀를 기울였다. 할아버지가 가르쳐준 순서대로.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "벨트 장력이 어긋난 걸 찾아 시동을 끄고 조였다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "작은 소리부터 들으라는 말. 엔진 얘기만은 아니었겠지.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-13",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 339,
+    "eventId": "talkr_pss_3",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "차 이름 질문과 약국 경험 답의 역할4줄 역전",
+    "expected": "me/parkss/me/parkss/parkss",
+    "owner": "survival",
+    "entry": "\"차 한잔하지.\" 박 선생이 보온병을 흔들었다. 오늘은 뭔지 모를 약초차다.\n\n\"몸에 좋아. 맛은… 몸에 좋아.\"",
+    "result": "맛은 예고대로였다. 몸에 좋은 맛.\n\n\"이거 대체 뭐예요?\"\n\n\"음… 이름이 있었는데. 약국 앞에 좌판 놓던 할멈이 두 봉지씩 놓고 갔거든. 이름은 그때도 안 알려주고.\"\n\n\"…그럼 뭔지 모르고 드시는 거예요?\"\n\n\"삼십 년 마셨는데 아직 안 죽었어.\" 박 선생이 보온병을 흔들었다. \"쓴맛도 자꾸 마시면 정이 들어. 사람이랑 같지.\"\n\n결국 이름은 못 들었다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "차 한잔하지.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 보온병을 흔들었다. 오늘은 뭔지 모를 약초차다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "몸에 좋아. 맛은… 몸에 좋아.",
+          "displayName": "박 선생"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "맛은 예고대로였다. 몸에 좋은 맛.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "이거 대체 뭐예요?",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "음… 이름이 있었는데. 약국 앞에 좌판 놓던 할멈이 두 봉지씩 놓고 갔거든. 이름은 그때도 안 알려주고.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…그럼 뭔지 모르고 드시는 거예요?",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "삼십 년 마셨는데 아직 안 죽었어.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 보온병을 흔들었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "쓴맛도 자꾸 마시면 정이 들어. 사람이랑 같지.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "결국 이름은 못 들었다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-14",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 429,
+    "eventId": "comp_birthday",
+    "choiceIndex": 0,
+    "phase": "entry",
+    "actual": "남성 동료2명이 있는 차 내부의 누군가를 외부여성 passer_woman으로 표시",
+    "expected": "현재 일행 역할을 명시, 정확 CID는 metadata에서 선택",
+    "owner": "survival",
+    "entry": "달력을 보던 누군가 중얼거린다. \"…어? 오늘 나 생일이네.\"\n\n차 안이 잠깐 조용해진다.",
+    "result": "통조림 복숭아에 비상용 초콜릿을 꽂았다. 케이크 완성.\n\n반주가 없어도 생일 축하 노래는 나왔다. 음정은 각자 달랐다.\n\n소원은 다들 같은 걸 빌었을 거다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "달력을 보던 누군가 중얼거린다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_woman",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "…어? 오늘 나 생일이네.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "차 안이 잠깐 조용해진다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "통조림 복숭아에 비상용 초콜릿을 꽂았다. 케이크 완성.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "반주가 없어도 생일 축하 노래는 나왔다. 음정은 각자 달랐다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "소원은 다들 같은 걸 빌었을 거다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-15",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 499,
+    "eventId": "talk_leo_13",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "주인공 아저씨요 질문과 레오 대답 역전",
+    "expected": "me/leo/leo/leo",
+    "owner": "systems",
+    "entry": "\"저 팬레터 받아본 적 있어요. 한 번.\" 레오가 기타 케이스 안쪽 주머니에서 접힌 종이를 꺼냈다.\n\n꼬깃꼬깃한 초등학생 글씨다.",
+    "result": "「아저씨 노래 조아요. 우리 엄마가 아저씨 노래 듣고 우러써요. 슬퍼서 운 거 아니래요.」\n\n\"아저씨요?\"\n\n\"거기 걸리셨어요? 저도 처음엔 거기서 좀…\" 레오가 편지를 접다 말았다. \"아무튼 지하철역에서 받았어요. 제 데뷔 성적표예요.\"\n\n\"슬퍼서 운 거 아니래요— 이 문장 때문에 계속하는 거예요, 음악. 뒤에 설명을 좀 붙이려다 관뒀어요. 붙이면 이상해져서.\"\n\n관객 세 명 시절의 훈장은 사탕 두 개와 이 편지였다. 레오가 편지를 케이스 안쪽 주머니에 도로 넣고, 지퍼를 두 번 확인했다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "저 팬레터 받아본 적 있어요. 한 번.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 기타 케이스 안쪽 주머니에서 접힌 종이를 꺼냈다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "꼬깃꼬깃한 초등학생 글씨다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "「아저씨 노래 조아요. 우리 엄마가 아저씨 노래 듣고 우러써요. 슬퍼서 운 거 아니래요.」",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "아저씨요?",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "거기 걸리셨어요? 저도 처음엔 거기서 좀…",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 편지를 접다 말았다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "아무튼 지하철역에서 받았어요. 제 데뷔 성적표예요.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "슬퍼서 운 거 아니래요— 이 문장 때문에 계속하는 거예요, 음악. 뒤에 설명을 좀 붙이려다 관뒀어요. 붙이면 이상해져서.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "관객 세 명 시절의 훈장은 사탕 두 개와 이 편지였다. 레오가 편지를 케이스 안쪽 주머니에 도로 넣고, 지퍼를 두 번 확인했다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-16",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 520,
+    "eventId": "pair_pss_kw_1",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "진찰 질문과 강우 답변 앞5줄 역전",
+    "expected": "parkss/kangwoo/parkss/kangwoo/parkss/parkss/kangwoo/parkss/kangwoo",
+    "owner": "survival",
+    "entry": "\"강우 씨. 이리 와서 앉아봐.\"\n\n\"…….\"\n\n\"들었잖나.\"\n\n\"…경계 시간입니다.\"\n\n\"교대한 지 10분 됐어.\" 박 선생이 파스를 부채처럼 펼쳐 들었다. \"앉아. 어깨 보고 정기 처방 짜줄 테니.\"\n\n강우가 도망갈 타이밍을 재고 있다.",
+    "result": "포위된 강우가 결국 앉았다. 촉진이 시작됐다.\n\n\"여기?\"\n\n\"…괜찮습니다.\"\n\n\"여기?\"\n\n\"……괜찮습니다.\"\n\n\"점이 하나 늘었구먼. 여기군.\"\n\n처방은 셋이었다. 주 2회 파스, 취침 전 스트레칭, 그리고 아프면 아프다고 말하기.\n\n\"세 번째는 못 하겠지.\"\n\n\"…….\"\n\n\"거봐.\"\n\n강우가 파스를 받아 주머니에 넣었다. 넣고 나서 두어 박자 뒤에 말했다. \"…군의관보다 낫습니다.\"",
+    "reader": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "강우 씨. 이리 와서 앉아봐.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…….",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "들었잖나.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…경계 시간입니다.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "교대한 지 10분 됐어.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생이 파스를 부채처럼 펼쳐 들었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "앉아. 어깨 보고 정기 처방 짜줄 테니.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 도망갈 타이밍을 재고 있다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "포위된 강우가 결국 앉았다. 촉진이 시작됐다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "여기?",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "…괜찮습니다.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "여기?",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "……괜찮습니다.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "점이 하나 늘었구먼. 여기군.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "처방은 셋이었다. 주 2회 파스, 취침 전 스트레칭, 그리고 아프면 아프다고 말하기.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "세 번째는 못 하겠지.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…….",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "거봐.",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 파스를 받아 주머니에 넣었다. 넣고 나서 두어 박자 뒤에 말했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…군의관보다 낫습니다.",
+          "displayName": "강우"
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-17",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 552,
+    "eventId": "pair_kw_leo_2",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "강우의 동생 고백과 뒤의 신청곡 대화 역할 역전",
+    "expected": "kangwoo/kangwoo/kangwoo/leo/kangwoo/leo/kangwoo",
+    "owner": "survival",
+    "entry": "레오는 강우를 형이라고 부른다. 강우는 한 번도 대답으로 인정한 적이 없다.\n\n오늘 레오가 정색하고 물었다. \"형이라고 불러도 돼요? 진짜로.\"\n\n\"…뭐가.\"\n\n\"형이요. 그 호칭이요.\"",
+    "result": "강우가 오래 침묵했다. 차 안 전원이 귀만 열어놓고 딴청을 부렸다.\n\n\"…동생이 있었으면,\" 강우가 마침내 말했다. \"…아니, 후임 중에 하나가. 그건 다른 얘기고.\"\n\n말이 거기서 한 번 끊겼다. \"…너 같았겠지.\"\n\n레오는 더 묻지 않고 강우 옆에 앉았다. 레오가 씩 웃고 기타를 잡았다. \"형, 신청곡 받아요.\"\n\"…조용한 걸로.\" \"곡은 제가 골라도 돼요?\" \"그래. 그건 맡기지.\"\n\n레오가 줄을 고르는 동안 강우는 창밖을 봤다. 이번에는 연주를 말리지 않았다.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "레오는 강우를 형이라고 부른다. 강우는 한 번도 대답으로 인정한 적이 없다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "오늘 레오가 정색하고 물었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "형이라고 불러도 돼요? 진짜로.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…뭐가.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "형이요. 그 호칭이요.",
+          "displayName": "레오"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "강우가 오래 침묵했다. 차 안 전원이 귀만 열어놓고 딴청을 부렸다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "…동생이 있었으면,",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 마침내 말했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "…아니, 후임 중에 하나가. 그건 다른 얘기고.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "narration",
+          "text": "말이 거기서 한 번 끊겼다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "…너 같았겠지.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오는 더 묻지 않고 강우 옆에 앉았다. 레오가 씩 웃고 기타를 잡았다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "형, 신청곡 받아요.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "…조용한 걸로.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "곡은 제가 골라도 돼요?",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "그래. 그건 맡기지.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 줄을 고르는 동안 강우는 창밖을 봤다. 이번에는 연주를 말리지 않았다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-18",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 556,
+    "eventId": "talk_pss_10",
+    "choiceIndex": 0,
+    "phase": "result",
+    "actual": "명시 처방전 글을 live 박 선생으로, 실제 박 선생 말은 me로 표시",
+    "expected": "record then parkss",
+    "owner": "survival",
+    "entry": "박 선생이 종이 한 장을 접어 내밀었다. 진짜 처방전 양식이다. 어디서 났는지.\n\n\"자네 처방전이야. 잃어버리지 말고.\"",
+    "result": "처방전엔 약 이름이 없었다. 대신 박 선생의 글씨.\n\n\"진단: 어깨에 이것저것 너무 많이 얹고 다님.\n처방: 밥 거르지 말고, 하루에 한 번은 남한테 맡길 것. 복용 기간: 내가 그만 쓰라고 할 때까지.\n— 담당 약사 박OO\"\n\n\"약효 끝내주는 거야, 그거. 내가 30년 걸려 조제한 거니까.\" 박 선생은 창밖을 보며 헛기침을 했다. 쑥스러움을 들키는 게 제일 싫은 양반이라.\n\n처방전은 수첩 사이에 끼웠다. 남산행 편지 옆에.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "박 선생이 종이 한 장을 접어 내밀었다. 진짜 처방전 양식이다. 어디서 났는지.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "자네 처방전이야. 잃어버리지 말고.",
+          "displayName": "박 선생"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "처방전엔 약 이름이 없었다. 대신 박 선생의 글씨.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "진단: 어깨에 이것저것 너무 많이 얹고 다님.\n처방: 밥 거르지 말고, 하루에 한 번은 남한테 맡길 것. 복용 기간: 내가 그만 쓰라고 할 때까지.\n— 담당 약사 박OO",
+          "displayName": "박 선생"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "약효 끝내주는 거야, 그거. 내가 30년 걸려 조제한 거니까.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "박 선생은 창밖을 보며 헛기침을 했다. 쑥스러움을 들키는 게 제일 싫은 양반이라.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "처방전은 수첩 사이에 끼웠다. 남산행 편지 옆에.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  },
+  {
+    "id": "S14-19",
+    "status": "confirmed",
+    "classification": "natural-fresh-journey",
+    "attempt": "attempt02",
+    "trace": 627,
+    "eventId": "han_bridge",
+    "choiceIndex": 1,
+    "phase": "result",
+    "actual": "강우의 연속 대대 경험을 passer_worker에게 배정",
+    "expected": "kangwoo 2줄",
+    "owner": "survival",
+    "entry": "한강이다.\n\n다리 위에 바리케이드는 없다. 대신 가로등이 전부 켜져 있다. 강 건너 도시는— 불빛으로 가득하다. 여러 해 동안 어디서도 못 본 광량.\n\n다리 초입의 전광판이 글자를 띄운다.\n\n<span class=\"ai\">어서 오세요. 오래 기다렸습니다.</span>\n\n강우가 안전벨트를 다시 조인다. \"……여기부터는 그놈 입속이다.\"",
+    "result": "강우가 안테나에 대대 깃발 조각을 묶었다.\n\n\"내가 겪은 추방 때 이 다리로 피난민이 건넜다. 우리 대대가 통과시킨 사람들이.\"\n\n\"그 길로 되돌아가는 거다. 이번엔 우리가.\"\n\n달구지가 다리 앞 관문 쪽으로 들어섰다. 가로등이 꺼지는 대신— 일제히 한 단계 밝아졌다. 경례처럼.",
+    "reader": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "한강이다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "다리 위에 바리케이드는 없다. 대신 가로등이 전부 켜져 있다. 강 건너 도시는— 불빛으로 가득하다. 여러 해 동안 어디서도 못 본 광량.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "다리 초입의 전광판이 글자를 띄운다.",
+          "displayName": null
+        },
+        {
+          "kind": "ai",
+          "who": "cheollian",
+          "name": "천리안 방송",
+          "text": "어서 오세요. 오래 기다렸습니다.",
+          "displayName": "천리안 방송"
+        },
+        {
+          "kind": "narration",
+          "text": "강우가 안전벨트를 다시 조인다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "……여기부터는 그놈 입속이다.",
+          "displayName": "강우"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "강우가 안테나에 대대 깃발 조각을 묶었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "kangwoo",
+          "text": "내가 겪은 추방 때 이 다리로 피난민이 건넜다. 우리 대대가 통과시킨 사람들이.",
+          "displayName": "강우"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_worker",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "그 길로 되돌아가는 거다. 이번엔 우리가.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "달구지가 다리 앞 관문 쪽으로 들어섰다. 가로등이 꺼지는 대신— 일제히 한 단계 밝아졌다. 경례처럼.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Only explicit reader metadata; keep prose, choice order, effects and old paid receipts",
+    "source": "src/03-data.js"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "처음부터 짐칸까지 관리하려면 바빴겠네."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 대시보드를 툭툭 쳤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "할아버지가 쓰던 차랬지. 대장님 손에 맞게 바꾼 데도 많겠다."
+  }
+]

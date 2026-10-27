@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-10-26T08:43:51.341043+00:00",
+  "generator": "image_gen.imagegen",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "references": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "prompt": "prompt.json",
+  "export": "sharp center cover1024x576 sRGB WebP q86 effort6; originalmaster retained",
+  "asset": {
+    "key": "explore-postoffice-parcels-v1",
+    "original": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-583caaa3-2c62-4c83-8167-fa65eba1d584.png",
+    "master": "qa-artifacts/qa-cycle-20261026/cycle20/visual/masters/explore-postoffice-parcels-v1.png",
+    "delivery": "assets/scenes/explore-postoffice-parcels-v1.webp",
+    "sha256": "039fdb815974467cefda667a1f141f16f1f56c8fe9d13c034cc7c7d3deb95ae1",
+    "bytes": 90396,
+    "width": 1024,
+    "height": 576,
+    "space": "srgb",
+    "format": "webp"
+  },
+  "finding": "S20-V01 natural20story n497 exp_postoffice had reservoir/net picture despite parcel/letter interior prose",
+  "sourceReview": "Root viewed original event-explore-water, both existing postman pictures, and generatedmaster. Existing postal images show an encountered person/outdoors and are unsuitable; new image depicts unoccupied dusty sealed parcels/letters in a sorting room, no named crew, vehicle, text or completed choice. Neutral interior light.",
+  "galleryBeforeWiring": "gallery-before-wiring.png",
+  "runtimeCrop": {
+    "sourceCycle": 21,
+    "widthCssPx": 480,
+    "first": {
+      "backup": "cycle20/story/agent03/attempt01/normal-unpaid-495-exp_postoffice.json",
+      "preReader": "Original has version/eventId/phase/text only; no key deletion or save edits",
+      "actions": "entry→choice1 letters→result→actual reload→road",
+      "screens": [
+        "postoffice-entry-ui.png",
+        "postoffice-result-ui.png",
+        "postoffice-restored-ui.png"
+      ]
+    },
+    "fresh21": {
+      "backup": "cycle21/systems/player02/attempt01/entry-363-exp_postoffice-export.json",
+      "actions": "natural21 entry→choice0 food→actual Minji/player/Minji dialogue→result panel→road",
+      "screens": [
+        "postoffice-natural21-food-result-ui.png"
+      ],
+      "place": "DAY11 논산13:10, Minji/Kangwoo/Jaeyi"
+    },
+    "verdict": "Parcel/letter sorting rack matches prose, no invented occupants, readable crop; both choices and one actual reload passed."
+  },
+  "originalAssetRetained": "assets/scenes/event-explore-water.webp",
+  "responsive360": "Not verified; prior viewport/fileURL limitations remain"
+}

@@ -1,0 +1,2312 @@
+[
+  {
+    "id": "vg_crossing",
+    "choice": 0,
+    "outcome": 0,
+    "file": "vg_crossing-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "차단기가 올라간 채 멈춘 건널목.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "열차가 다니지 않습니다",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "안내문.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "그래도 다들 좌우를 살폈다. 몸에 차 것들은 멸망보다 오래간다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "땡땡땡 소리를 누군가 입으로 냈다. 예의상.",
+        "displayName": null
+      }
+    ],
+    "text": "땡땡땡 소리를 누군가 입으로 냈다. 예의상."
+  },
+  {
+    "id": "ev_carousel_park",
+    "choice": 0,
+    "outcome": 0,
+    "file": "ev_carousel_park-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "폐놀이공원. 회전목마가 반쯤 돌다 멈춰 있다. 목마들이 전부 같은 방향으로 고개를 튼 채.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "바람이 불자 삐걱— 하고 한 칸 돌더니 다시 멈춘다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "매표소 유리에 붙은 안내문:",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "즐거운 하루 되세요.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "녹슨 목마를 힘껏 밀자 끼익 하고 한 바퀴 돌았다. 그 소리에 왠지 다들 웃었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "망한 세상에서도 회전목마는 회전목마다.",
+        "displayName": null
+      }
+    ],
+    "text": "녹슨 목마를 힘껏 밀자 끼익 하고 한 바퀴 돌았다. 그 소리에 왠지 다들 웃었다.\n\n망한 세상에서도 회전목마는 회전목마다."
+  },
+  {
+    "id": "ev_carousel_park",
+    "choice": 1,
+    "outcome": 0,
+    "file": "ev_carousel_park-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "폐놀이공원. 회전목마가 반쯤 돌다 멈춰 있다. 목마들이 전부 같은 방향으로 고개를 튼 채.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "바람이 불자 삐걱— 하고 한 칸 돌더니 다시 멈춘다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "매표소 유리에 붙은 안내문:",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "즐거운 하루 되세요.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "민지가 배전반을 열어 죽은 배터리에 우리 예비 전력을 잠깐 물렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "오르골 음악과 함께 목마가 한 바퀴, 딱 한 바퀴 돌고 멈췄다. 아무도 말을 안 했다.",
+        "displayName": null
+      }
+    ],
+    "text": "민지가 배전반을 열어 죽은 배터리에 우리 예비 전력을 잠깐 물렸다.\n\n오르골 음악과 함께 목마가 한 바퀴, 딱 한 바퀴 돌고 멈췄다. 아무도 말을 안 했다."
+  },
+  {
+    "id": "ev_milestone_cairn",
+    "choice": 0,
+    "outcome": 0,
+    "file": "ev_milestone_cairn-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "길가에 돌탑이 쌓여 있다. 지나간 사람들이 하나씩 올린 돌. 어떤 돌엔 이름이, 어떤 돌엔 짧은 글이 적혔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "무사히 도착하길.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "엄마 보러 감.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "우리 다시 만나자.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "북으로 가는 이들의 소원이 돌마다 얹혀 있다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "각자 돌 하나씩 골라 소원을 적어 올렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "차에 탄 사람 모두 서울까지.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "내가 적은 소원 위로, 다들 말없이 손을 얹었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "올리고 나니 탑이 한쪽으로 기울어서, 도로 내려 아래쪽부터 다시 쌓았다. 그러느라 우리 돌은 맨 위가 아니라 중간쯤에 들어갔다.",
+        "displayName": null
+      }
+    ],
+    "text": "각자 돌 하나씩 골라 소원을 적어 올렸다. \"차에 탄 사람 모두 서울까지.\" 내가 적은 소원 위로, 다들 말없이 손을 얹었다.\n\n올리고 나니 탑이 한쪽으로 기울어서, 도로 내려 아래쪽부터 다시 쌓았다. 그러느라 우리 돌은 맨 위가 아니라 중간쯤에 들어갔다."
+  },
+  {
+    "id": "ev_milestone_cairn",
+    "choice": 1,
+    "outcome": 0,
+    "file": "ev_milestone_cairn-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "길가에 돌탑이 쌓여 있다. 지나간 사람들이 하나씩 올린 돌. 어떤 돌엔 이름이, 어떤 돌엔 짧은 글이 적혔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "무사히 도착하길.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "엄마 보러 감.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "우리 다시 만나자.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "북으로 가는 이들의 소원이 돌마다 얹혀 있다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "돌마다 적힌 소원을 하나하나 읽었다. 누군가의 절절한 바람들. 이 길을 우리만 걷는 게 아니었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…이 사람들 다 도착했을까.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "알 수 없다. 하지만 그 마음들이 우리 등을 밀어줬다. 조용히 돌탑에 목례하고 떠났다.",
+        "displayName": null
+      }
+    ],
+    "text": "돌마다 적힌 소원을 하나하나 읽었다. 누군가의 절절한 바람들. 이 길을 우리만 걷는 게 아니었다.\n\n\"…이 사람들 다 도착했을까.\" 알 수 없다. 하지만 그 마음들이 우리 등을 밀어줬다. 조용히 돌탑에 목례하고 떠났다."
+  },
+  {
+    "id": "roadbeat_100_divide",
+    "choice": 0,
+    "outcome": 0,
+    "file": "roadbeat_100_divide-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "라디오가 꺼져 있는데 목소리가 나온다. 천리안은 우리를 한꺼번에 부르지 않았다.",
+        "displayName": null
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"민지 씨. 다른 사람 없이 이야기할 수 있습니다.\"",
+        "displayName": "천리안 방송"
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"레오 씨. 다른 사람 없이 이야기할 수 있습니다.\"",
+        "displayName": "천리안 방송"
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"재이 씨. 다른 사람 없이 이야기할 수 있습니다.\"",
+        "displayName": "천리안 방송"
+      },
+      {
+        "kind": "narration",
+        "text": "각자에게 다른 출구를 약속한다. 목소리는 같고, 조건만 달랐다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "숨겨 들을 이유가 없도록 볼륨을 끝까지 올렸다. 각자에게 보낸 회유가 한 차 안에서 겹쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "서로 다른 거짓말은 함께 들으면 우스워졌다.",
+        "displayName": null
+      }
+    ],
+    "text": "숨겨 들을 이유가 없도록 볼륨을 끝까지 올렸다. 각자에게 보낸 회유가 한 차 안에서 겹쳤다.\n\n서로 다른 거짓말은 함께 들으면 우스워졌다."
+  },
+  {
+    "id": "roadbeat_100_divide",
+    "choice": 1,
+    "outcome": 0,
+    "file": "roadbeat_100_divide-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "라디오가 꺼져 있는데 목소리가 나온다. 천리안은 우리를 한꺼번에 부르지 않았다.",
+        "displayName": null
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"민지 씨. 다른 사람 없이 이야기할 수 있습니다.\"",
+        "displayName": "천리안 방송"
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"레오 씨. 다른 사람 없이 이야기할 수 있습니다.\"",
+        "displayName": "천리안 방송"
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"재이 씨. 다른 사람 없이 이야기할 수 있습니다.\"",
+        "displayName": "천리안 방송"
+      },
+      {
+        "kind": "narration",
+        "text": "각자에게 다른 출구를 약속한다. 목소리는 같고, 조건만 달랐다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "한 사람씩 천리안이 한 말을 털어놓았다. 마지막 문장은 모두 같았다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "당신만은 예외로 하겠습니다.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "또 같은 말이 나오자 누군가 헛웃음을 냈다. 마지막 문장은 먼저 들은 사람도 함께 따라 했다.",
+        "displayName": null
+      }
+    ],
+    "text": "한 사람씩 천리안이 한 말을 털어놓았다. 마지막 문장은 모두 같았다.\n\n\"당신만은 예외로 하겠습니다.\"\n\n또 같은 말이 나오자 누군가 헛웃음을 냈다. 마지막 문장은 먼저 들은 사람도 함께 따라 했다."
+  },
+  {
+    "id": "wx_dust_vendor",
+    "choice": 0,
+    "outcome": 0,
+    "file": "wx_dust_vendor-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "황사가 세상을 주황색으로 칠했다. 그 속에서 방독면을 쓴 남자가 좌판을 펴고 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "고글! 마스크! 필터! 황사엔 눈이 재산이에요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "장사 수완 하나는 기가 막힌 타이밍이다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "고철 넷이에요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "셋.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "넷.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…넷.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "전원 고글 지급. 차 흡기구에 스타킹 필터(!)도 씌웠다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "스타킹이 최고예요. 과학이라니까요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "미심쩍었지만— 엔진 소리가 진짜로 편해졌다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"고철 넷이에요.\"\n\n\"셋.\"\n\n\"넷.\"\n\n\"…넷.\"\n\n전원 고글 지급. 차 흡기구에 스타킹 필터(!)도 씌웠다.\n\n\"스타킹이 최고예요. 과학이라니까요.\" 미심쩍었지만— 엔진 소리가 진짜로 편해졌다."
+  },
+  {
+    "id": "wx_dust_vendor",
+    "choice": 1,
+    "outcome": 0,
+    "file": "wx_dust_vendor-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "황사가 세상을 주황색으로 칠했다. 그 속에서 방독면을 쓴 남자가 좌판을 펴고 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "고글! 마스크! 필터! 황사엔 눈이 재산이에요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "장사 수완 하나는 기가 막힌 타이밍이다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "후회해요! 눈 버리면 약도 없어요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "장수의 외침이 황사 속으로 사라졌다. 다들 눈을 가늘게 뜨고 달렸다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"후회해요! 눈 버리면 약도 없어요!\"\n\n장수의 외침이 황사 속으로 사라졌다. 다들 눈을 가늘게 뜨고 달렸다."
+  },
+  {
+    "id": "meet_theater",
+    "choice": 0,
+    "outcome": 0,
+    "file": "meet_theater-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "트럭 무대를 펼친 유랑 극단. 배우 넷, 관객은 지나가는 사람 전부.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘 공연은 「춘향전」! 단, 배우가 모자라 이몽룡 역을 관객 중에서 모십니다!",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "대본은 대충, 애드리브는 최선을 다했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "암행어사 출두요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "에서 관객(우리 차 식구들)이 뒤집어졌다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "출연료로 극단 비상식량을 나눠 받았다. 배우의 길은 생각보다 배부르다.",
+        "displayName": null
+      }
+    ],
+    "text": "대본은 대충, 애드리브는 최선을 다했다. \"암행어사 출두요!\"에서 관객(우리 차 식구들)이 뒤집어졌다.\n\n출연료로 극단 비상식량을 나눠 받았다. 배우의 길은 생각보다 배부르다."
+  },
+  {
+    "id": "meet_theater",
+    "choice": 1,
+    "outcome": 0,
+    "file": "meet_theater-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "트럭 무대를 펼친 유랑 극단. 배우 넷, 관객은 지나가는 사람 전부.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘 공연은 「춘향전」! 단, 배우가 모자라 이몽룡 역을 관객 중에서 모십니다!",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "모닥불 조명 아래의 춘향전. 변사또가 벌 받는 장면에서 다들 필요 이상으로 통쾌해했다. 요즘 관객들은 권선징악에 진심이다.",
+        "displayName": null
+      }
+    ],
+    "text": "모닥불 조명 아래의 춘향전. 변사또가 벌 받는 장면에서 다들 필요 이상으로 통쾌해했다. 요즘 관객들은 권선징악에 진심이다."
+  },
+  {
+    "id": "lc_daegu_makchang",
+    "choice": 0,
+    "outcome": 0,
+    "file": "lc_daegu_makchang-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "대구 외곽, 골목 안에서 숯불 냄새가 차를 습격한다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "포장마차 하나가 영업 중이다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "막창 굽습니더. 고철 받고예.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "연기가 신호탄처럼 오른다. 이건 도저히 그냥 못 지나간다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "지글지글. 다들 불판에서 눈을 못 뗐다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이거 언제 뒤집어요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "아직.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "지금 아니에요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "아직이라니까.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…지금.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "마이 무으이소. 요즘 손님이 귀해가.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "사장님이 된장 소스를 아낌없이 퍼줬다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "불판이 다 비고도 아무도 일어나지 않았다.",
+        "displayName": null
+      }
+    ],
+    "text": "지글지글. 다들 불판에서 눈을 못 뗐다.\n\n\"이거 언제 뒤집어요?\"\n\n\"아직.\"\n\n\"지금 아니에요?\"\n\n\"아직이라니까.\"\n\n\"…지금.\"\n\n\"마이 무으이소. 요즘 손님이 귀해가.\" 사장님이 된장 소스를 아낌없이 퍼줬다.\n\n불판이 다 비고도 아무도 일어나지 않았다."
+  },
+  {
+    "id": "lc_daegu_makchang",
+    "choice": 1,
+    "outcome": 0,
+    "file": "lc_daegu_makchang-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "대구 외곽, 골목 안에서 숯불 냄새가 차를 습격한다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "포장마차 하나가 영업 중이다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "막창 굽습니더. 고철 받고예.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "연기가 신호탄처럼 오른다. 이건 도저히 그냥 못 지나간다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "창문을 열고 천천히 지나갔다. 냄새는 공짜다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "조금 뒤 누군가 조용히 말했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "minji",
+        "text": "…돌아가면 안 될까.",
+        "displayName": "민지"
+      },
+      {
+        "kind": "narration",
+        "text": "기각됐지만 아무도 그 말을 나무라지 않았다.",
+        "displayName": null
+      }
+    ],
+    "text": "창문을 열고 천천히 지나갔다. 냄새는 공짜다.\n\n조금 뒤 누군가 조용히 말했다. \"…돌아가면 안 될까.\" 기각됐지만 아무도 그 말을 나무라지 않았다."
+  },
+  {
+    "id": "lc_mokpo_hongeo",
+    "choice": 0,
+    "outcome": 0,
+    "file": "lc_mokpo_hongeo-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "목포 골목의 좌판. 아짐이 접시를 내민다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "묵어봤능가? 삭힌 거.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "…삭힌 뭐요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "홍어제. 목포 왔으면 통과의례여.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "말보다 냄새가 먼저 올라온다. 차 안의 시선이 서로를 향한다. 누가 먼저?",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "첫 번째: 눈물. 두 번째: 기침. 세 번째: …",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어? 이거 은근…?",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "세 번째 사람이 접시를 비웠다. 아짐이 박수를 쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "인자 목포 사람 다 됐네!",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "합격자에겐 막걸리 반 잔, 불합격자에겐 김치가 위로로 지급됐다.",
+        "displayName": null
+      }
+    ],
+    "text": "첫 번째: 눈물. 두 번째: 기침. 세 번째: …\"어? 이거 은근…?\"\n\n세 번째 사람이 접시를 비웠다. 아짐이 박수를 쳤다. \"인자 목포 사람 다 됐네!\"\n\n합격자에겐 막걸리 반 잔, 불합격자에겐 김치가 위로로 지급됐다."
+  },
+  {
+    "id": "lc_mokpo_hongeo",
+    "choice": 1,
+    "outcome": 0,
+    "file": "lc_mokpo_hongeo-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "목포 골목의 좌판. 아짐이 접시를 내민다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "묵어봤능가? 삭힌 거.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "…삭힌 뭐요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "홍어제. 목포 왔으면 통과의례여.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "말보다 냄새가 먼저 올라온다. 차 안의 시선이 서로를 향한다. 누가 먼저?",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "급할 거 없어야. 홍어는 기다려주는 음식잉게.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "대신 김 한 톳을 사서 도망치듯 떠났다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"급할 거 없어야. 홍어는 기다려주는 음식잉게.\" 대신 김 한 톳을 사서 도망치듯 떠났다."
+  },
+  {
+    "id": "meet_runner",
+    "choice": 0,
+    "outcome": 0,
+    "file": "meet_runner-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "국도 갓길을 달리는 사람이 있다. 러닝복에 운동화, 페이스 유지, 팔치기 정확.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "조깅이다. 이 세상에서. 조깅을.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "우리 차가 나란히 서자 그가 속도를 늦추지 않은 채 목례했다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘은 저 다리까지요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "그가 숨을 고르며 답했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "매일 뜁니다. 마라톤 대회가 다시 열리면 나갈 거라서.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "…열릴까요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "제가 준비돼 있으면요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그게 무슨 상관이—",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "몰라요. 그냥 그렇게 정해놨어요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "그가 씩 웃고 페이스를 올렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "백미러 속에서 그는 계속 달리고 있었다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"오늘은 저 다리까지요.\" 그가 숨을 고르며 답했다. \"매일 뜁니다. 마라톤 대회가 다시 열리면 나갈 거라서.\"\n\n\"…열릴까요?\"\n\n\"제가 준비돼 있으면요.\"\n\n\"그게 무슨 상관이—\"\n\n\"몰라요. 그냥 그렇게 정해놨어요.\" 그가 씩 웃고 페이스를 올렸다.\n\n백미러 속에서 그는 계속 달리고 있었다."
+  },
+  {
+    "id": "meet_runner",
+    "choice": 1,
+    "outcome": 0,
+    "file": "meet_runner-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "국도 갓길을 달리는 사람이 있다. 러닝복에 운동화, 페이스 유지, 팔치기 정확.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "조깅이다. 이 세상에서. 조깅을.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "우리 차가 나란히 서자 그가 속도를 늦추지 않은 채 목례했다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "속도를 맞춰 물병을 건넸다. 그는 뛰면서 받았다. 급수대 통과하는 폼이 완벽했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "기록 인정!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "누가 외쳤고, 그가 엄지를 들었다.",
+        "displayName": null
+      }
+    ],
+    "text": "속도를 맞춰 물병을 건넸다. 그는 뛰면서 받았다. 급수대 통과하는 폼이 완벽했다.\n\n\"기록 인정!\" 누가 외쳤고, 그가 엄지를 들었다."
+  },
+  {
+    "id": "meet_stargazer",
+    "choice": 0,
+    "outcome": 0,
+    "file": "meet_stargazer-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "언덕 위에 삼각대와 망원경. 옆에 앉은 사람이 보온병을 홀짝이고 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "불빛 좀 꺼주시겠어요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "그가 정중하게 부탁했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "오랜만에 하늘이 제일 좋은 시대라서요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "전조등을 끄자— 정말이었다. 은하수가 강처럼 흘렀다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "그는 아마추어 천문가였다. 도시 불빛이 사라진 뒤로 전국의 하늘을 순례 중이라고 했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "빛공해 지도라는 게 있었어요. 전국이 새빨갰죠.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "…빨개요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "아, 밝은 데를 빨갛게 칠한 지도예요. 지금은 전부 검정이고요. 관측자한텐 황금기죠.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "보온병을 내밀길래 받았다. 보리차였고, 미지근했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…대가가 너무 컸네요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "네.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "접안렌즈를 닦던 손이 잠깐 멈췄다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그래서 매일 봐요. 대가만큼은 봐야죠. …라고 해놓고 그냥 습관인지도 모르겠고요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "망원경으로 안드로메다를 봤다. 250만 년 전의 빛이라고 했다. 그 빛이 출발할 땐 지구에 인류도 없었다.",
+        "displayName": null
+      }
+    ],
+    "text": "그는 아마추어 천문가였다. 도시 불빛이 사라진 뒤로 전국의 하늘을 순례 중이라고 했다.\n\n\"빛공해 지도라는 게 있었어요. 전국이 새빨갰죠.\"\n\n\"…빨개요?\"\n\n\"아, 밝은 데를 빨갛게 칠한 지도예요. 지금은 전부 검정이고요. 관측자한텐 황금기죠.\"\n\n보온병을 내밀길래 받았다. 보리차였고, 미지근했다.\n\n\"…대가가 너무 컸네요.\"\n\n\"네.\" 접안렌즈를 닦던 손이 잠깐 멈췄다. \"그래서 매일 봐요. 대가만큼은 봐야죠. …라고 해놓고 그냥 습관인지도 모르겠고요.\"\n\n망원경으로 안드로메다를 봤다. 250만 년 전의 빛이라고 했다. 그 빛이 출발할 땐 지구에 인류도 없었다."
+  },
+  {
+    "id": "meet_stargazer",
+    "choice": 1,
+    "outcome": 0,
+    "file": "meet_stargazer-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "언덕 위에 삼각대와 망원경. 옆에 앉은 사람이 보온병을 홀짝이고 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "불빛 좀 꺼주시겠어요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "그가 정중하게 부탁했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "오랜만에 하늘이 제일 좋은 시대라서요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "전조등을 끄자— 정말이었다. 은하수가 강처럼 흘렀다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "전조등을 끄고 서행으로 언덕을 지났다. 백미러 속 실루엣이 손을 들어 보였다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "한동안 다들 전조등 불빛이 조금 미안했다.",
+        "displayName": null
+      }
+    ],
+    "text": "전조등을 끄고 서행으로 언덕을 지났다. 백미러 속 실루엣이 손을 들어 보였다.\n\n한동안 다들 전조등 불빛이 조금 미안했다."
+  },
+  {
+    "id": "kids_escort",
+    "choice": 0,
+    "outcome": 0,
+    "file": "kids_escort-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "그 삼남매다. 국도를 걷고 있다. 막내가 큰애 등에 업혀 잔다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "정착지까지 걸어서 이틀 거리. 아이 걸음으론 나흘.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "큰애가 차를 알아보고— 이번엔 경계 없이, 대신 아주 어른스러운 얼굴로 물었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "혹시 정착지 방향이면, 태워주실 수 있어요? 삯은… 막내가 노래를 해요.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "막내가 삯부터 치르겠다고 했다. 음정은 다 틀렸고 2절 가사는 절반쯤 지어낸 것 같았는데, 2절부터는 전원이 따라 불렀다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "한 곡 더 할까요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "됐어. 이미 넘치게 받았다.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "얼만데요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_child",
+        "name": "큰애",
+        "text": "…나중에 계산하자.",
+        "displayName": "큰애"
+      },
+      {
+        "kind": "narration",
+        "text": "큰애는 그 대답이 마음에 안 드는 얼굴이었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "가장 가까운 정착지에 아이들을 내렸다. 시장 어귀 국밥집 주인이 아이들을 훑어보더니 \"설거지 손 셋 필요했는데\"라며 뒷문을 열었다. 어른의 방식으로 재빠르게, 아이들의 자존심이 다치지 않게.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "헤어질 때 큰애가 처음으로 열두 살짜리 얼굴로 울었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "은혜 갚을게요. 꼭.",
+        "displayName": "???"
+      }
+    ],
+    "text": "막내가 삯부터 치르겠다고 했다. 음정은 다 틀렸고 2절 가사는 절반쯤 지어낸 것 같았는데, 2절부터는 전원이 따라 불렀다.\n\n\"한 곡 더 할까요?\" \"됐어. 이미 넘치게 받았다.\" \"얼만데요?\" \"…나중에 계산하자.\" 큰애는 그 대답이 마음에 안 드는 얼굴이었다.\n\n가장 가까운 정착지에 아이들을 내렸다. 시장 어귀 국밥집 주인이 아이들을 훑어보더니 \"설거지 손 셋 필요했는데\"라며 뒷문을 열었다. 어른의 방식으로 재빠르게, 아이들의 자존심이 다치지 않게.\n\n헤어질 때 큰애가 처음으로 열두 살짜리 얼굴로 울었다. \"은혜 갚을게요. 꼭.\""
+  },
+  {
+    "id": "meet_welldigger",
+    "choice": 0,
+    "outcome": 0,
+    "file": "meet_welldigger-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "마을 어귀에서 곡괭이 소리가 난다. 남자 혼자 우물을 파고 있다. 이미 어깨 깊이다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "남자",
+        "text": "상수도가 죽었으니 우물의 시대죠.",
+        "displayName": "남자"
+      },
+      {
+        "kind": "narration",
+        "text": "남자가 흙을 퍼 올리며 말했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "남자",
+        "text": "한 마을에 하나씩. 열두 개째입니다.",
+        "displayName": "남자"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이거 얼마나 더 파요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "글쎄요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…글쎄요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "파봐야 압니다. 열한 번이 다 달랐어요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "두 시간을 교대로 팠다. 어깨가 빠질 즈음— 바닥이 축축해지더니 물이 배어 나왔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "터졌다!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "우물 바닥에서 올려다본 하늘이 동그랬다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "남자는 우물마다 파준 사람 이름을 돌에 새긴다고 했다. 열두 번째 우물 돌엔 낯선 이름들이 한 줄 더 들어갔다. 마을이 되살아나면, 누군가 물을 마시며 그 이름들을 읽을 것이다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"이거 얼마나 더 파요?\"\n\n\"글쎄요.\"\n\n\"…글쎄요?\"\n\n\"파봐야 압니다. 열한 번이 다 달랐어요.\"\n\n두 시간을 교대로 팠다. 어깨가 빠질 즈음— 바닥이 축축해지더니 물이 배어 나왔다.\n\n\"터졌다!\" 우물 바닥에서 올려다본 하늘이 동그랬다.\n\n남자는 우물마다 파준 사람 이름을 돌에 새긴다고 했다. 열두 번째 우물 돌엔 낯선 이름들이 한 줄 더 들어갔다. 마을이 되살아나면, 누군가 물을 마시며 그 이름들을 읽을 것이다."
+  },
+  {
+    "id": "meet_welldigger",
+    "choice": 1,
+    "outcome": 0,
+    "file": "meet_welldigger-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "마을 어귀에서 곡괭이 소리가 난다. 남자 혼자 우물을 파고 있다. 이미 어깨 깊이다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "남자",
+        "text": "상수도가 죽었으니 우물의 시대죠.",
+        "displayName": "남자"
+      },
+      {
+        "kind": "narration",
+        "text": "남자가 흙을 퍼 올리며 말했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "남자",
+        "text": "한 마을에 하나씩. 열두 개째입니다.",
+        "displayName": "남자"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "열한 번째 우물 물이에요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "남자가 두레박을 내렸다. 갓 나온 우물물은 이가 시리게 차고 달았다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"열한 번째 우물 물이에요.\" 남자가 두레박을 내렸다. 갓 나온 우물물은 이가 시리게 차고 달았다."
+  },
+  {
+    "id": "ev_wandering_musician",
+    "choice": 0,
+    "outcome": 0,
+    "file": "ev_wandering_musician-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "삼거리 그늘에 한 사내가 앉아 낡은 기타를 튕긴다. 음이 반쯤 나갔지만, 손은 진지하다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "노래 한 곡에 밥 한 술. 어때요? 요즘 세상에 제일 안 팔리는 장사지만.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "그가 목을 가다듬고 옛 노래를 불렀다. 음정은 엉망인데 이상하게 목이 멘다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "노래가 끝나자 다들 한동안 말이 없었다. 밥 한 술 값으로는 과분한 위로였다.",
+        "displayName": null
+      }
+    ],
+    "text": "그가 목을 가다듬고 옛 노래를 불렀다. 음정은 엉망인데 이상하게 목이 멘다.\n\n노래가 끝나자 다들 한동안 말이 없었다. 밥 한 술 값으로는 과분한 위로였다."
+  },
+  {
+    "id": "ev_wandering_musician",
+    "choice": 1,
+    "outcome": 0,
+    "file": "ev_wandering_musician-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "삼거리 그늘에 한 사내가 앉아 낡은 기타를 튕긴다. 음이 반쯤 나갔지만, 손은 진지하다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "노래 한 곡에 밥 한 술. 어때요? 요즘 세상에 제일 안 팔리는 장사지만.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "레오가 하모니카를 꺼내 슬쩍 맞췄다. 둘의 즉흥 합주에 보리까지 하울링으로 끼어들었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "악사가 눈물을 훔치며 웃었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "…이런 밤이 그리웠어요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 노래 하나를 배워왔다.",
+        "displayName": null
+      }
+    ],
+    "text": "레오가 하모니카를 꺼내 슬쩍 맞췄다. 둘의 즉흥 합주에 보리까지 하울링으로 끼어들었다.\n\n악사가 눈물을 훔치며 웃었다. \"…이런 밤이 그리웠어요.\" 레오가 노래 하나를 배워왔다."
+  },
+  {
+    "id": "ev_wandering_musician",
+    "choice": 2,
+    "outcome": 0,
+    "file": "ev_wandering_musician-2.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "삼거리 그늘에 한 사내가 앉아 낡은 기타를 튕긴다. 음이 반쯤 나갔지만, 손은 진지하다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "노래 한 곡에 밥 한 술. 어때요? 요즘 세상에 제일 안 팔리는 장사지만.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "미안한 손짓만 하고 지났다. 기타 소리가 백미러 뒤로 점점 작아졌다.",
+        "displayName": null
+      }
+    ],
+    "text": "미안한 손짓만 하고 지났다. 기타 소리가 백미러 뒤로 점점 작아졌다."
+  },
+  {
+    "id": "ev_rooftop_farm",
+    "choice": 0,
+    "outcome": 0,
+    "file": "ev_rooftop_farm-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "회색 건물들 사이, 한 옥상만 초록으로 무성하다. 화분과 밭이랑, 그리고— 정말로 커피나무 몇 그루.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "트럭 카페 주인이 말하던 그 별종의 옥상이다. 사다리가 내려와 있다. \"올라와도 됨\"이라 적힌 팻말과 함께.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "옥상엔 밀짚모자를 쓴 노인이 물을 주고 있었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "커피 손님? 냄새 맡고 왔구먼. 다들 그래. 딱 한 잔씩은 대접하지. 두 잔부터는 흥정이고.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "갓 볶은 커피와 옥상 채소를 나눠줬다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이 미친 세상에 커피나무라니, 다들 그러지. 근데 이거 키우는 재미로 버텨.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "노인의 밭이 오래 부러웠다.",
+        "displayName": null
+      }
+    ],
+    "text": "옥상엔 밀짚모자를 쓴 노인이 물을 주고 있었다. \"커피 손님? 냄새 맡고 왔구먼. 다들 그래. 딱 한 잔씩은 대접하지. 두 잔부터는 흥정이고.\" 갓 볶은 커피와 옥상 채소를 나눠줬다.\n\n\"이 미친 세상에 커피나무라니, 다들 그러지. 근데 이거 키우는 재미로 버텨.\" 노인의 밭이 오래 부러웠다."
+  },
+  {
+    "id": "ev_rooftop_farm",
+    "choice": 1,
+    "outcome": 0,
+    "file": "ev_rooftop_farm-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "회색 건물들 사이, 한 옥상만 초록으로 무성하다. 화분과 밭이랑, 그리고— 정말로 커피나무 몇 그루.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "트럭 카페 주인이 말하던 그 별종의 옥상이다. 사다리가 내려와 있다. \"올라와도 됨\"이라 적힌 팻말과 함께.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "재이가 노인에게 재배법을 꼬치꼬치 물어 수첩에 적었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "우리도 정착하면 밭을 일굴 거예요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "노인이 씨앗 한 줌을 손에 쥐여줬다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "그래. 언젠가는 다들 심어야지. 총 대신 씨앗을.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 그 말을 오래 곱씹었다.",
+        "displayName": null
+      }
+    ],
+    "text": "재이가 노인에게 재배법을 꼬치꼬치 물어 수첩에 적었다. \"우리도 정착하면 밭을 일굴 거예요.\" 노인이 씨앗 한 줌을 손에 쥐여줬다.\n\n\"그래. 언젠가는 다들 심어야지. 총 대신 씨앗을.\" 재이가 그 말을 오래 곱씹었다."
+  },
+  {
+    "id": "ev_kids_playing_school",
+    "choice": 0,
+    "outcome": 0,
+    "file": "ev_kids_playing_school-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "폐교 운동장에서 아이들이 논다. 제일 큰 애가 선생님, 나머지가 학생.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘 배울 건 나눗셈이에요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어제도 나눗셈이었잖아.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어제 건 쉬운 나눗셈이고 오늘 건 어려운 나눗셈이에요. 조용.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "칠판 대신 담벼락에 분필로 문제를 쓴다. 어른 하나 없이, 아이들이 서로 가르치고 배운다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "차를 세우고 담벼락 앞에 섰다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이 문제 이렇게 푸는 거야.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "아이들 눈이 반짝였다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "30분이 순식간이었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "또 와요, 선생님!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "아이들의 배웅을 받으며 떠났다. 세상이 망해도, 배우려는 마음은 안 망한다.",
+        "displayName": null
+      }
+    ],
+    "text": "차를 세우고 담벼락 앞에 섰다. \"이 문제 이렇게 푸는 거야.\" 아이들 눈이 반짝였다.\n\n30분이 순식간이었다. \"또 와요, 선생님!\" 아이들의 배웅을 받으며 떠났다. 세상이 망해도, 배우려는 마음은 안 망한다."
+  },
+  {
+    "id": "ev_kids_playing_school",
+    "choice": 1,
+    "outcome": 0,
+    "file": "ev_kids_playing_school-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "폐교 운동장에서 아이들이 논다. 제일 큰 애가 선생님, 나머지가 학생.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘 배울 건 나눗셈이에요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어제도 나눗셈이었잖아.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어제 건 쉬운 나눗셈이고 오늘 건 어려운 나눗셈이에요. 조용.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "칠판 대신 담벼락에 분필로 문제를 쓴다. 어른 하나 없이, 아이들이 서로 가르치고 배운다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "차에 있던 종이와 연필, 아까 폐교에서 챙긴 분필을 건넸다. 아이들이 보물이라도 받은 듯 좋아했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "고맙습니다!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "꾸벅 인사하는 작은 머리들. 우리가 남산에 가려는 이유가, 저 아이들 안에 있었다.",
+        "displayName": null
+      }
+    ],
+    "text": "차에 있던 종이와 연필, 아까 폐교에서 챙긴 분필을 건넸다. 아이들이 보물이라도 받은 듯 좋아했다.\n\n\"고맙습니다!\" 꾸벅 인사하는 작은 머리들. 우리가 남산에 가려는 이유가, 저 아이들 안에 있었다."
+  },
+  {
+    "id": "ev_kids_playing_school",
+    "choice": 2,
+    "outcome": 0,
+    "file": "ev_kids_playing_school-2.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "폐교 운동장에서 아이들이 논다. 제일 큰 애가 선생님, 나머지가 학생.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘 배울 건 나눗셈이에요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어제도 나눗셈이었잖아.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어제 건 쉬운 나눗셈이고 오늘 건 어려운 나눗셈이에요. 조용.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "칠판 대신 담벼락에 분필로 문제를 쓴다. 어른 하나 없이, 아이들이 서로 가르치고 배운다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "놀이를 깨기 싫어 조용히 지나쳤다. 거울 속 아이들의 웃음소리가 오래 남았다. 저 소리를 지키러 간다.",
+        "displayName": null
+      }
+    ],
+    "text": "놀이를 깨기 싫어 조용히 지나쳤다. 거울 속 아이들의 웃음소리가 오래 남았다. 저 소리를 지키러 간다."
+  },
+  {
+    "id": "ev_claw_truck",
+    "choice": 0,
+    "outcome": 0,
+    "file": "ev_claw_truck-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "개조 트럭 짐칸이 통째로 인형뽑기 기계다. 주인이 무료로 운영한다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "공짜예요. 공짜. 대신 뽑으면 남 주기, 그게 규칙이고요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "주인이 유리를 손등으로 톡톡 쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "세상이 하도 삭막해서… 뭐, 이거라도 하려고요. 하다 보니 이것만 하고 있고.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "유리 안엔 색바랜 인형들이 우리를 본다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "여러 번 만에 곰인형 하나가 딸려 올라왔다. 규칙대로 근처에서 놀던 아이에게 건넸더니, 받자마자 뒤도 안 보고 뛰어갔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "고맙다는 말은 안 하네요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "저 나이 땐 원래 안 해요. 저것 봐요, 저기서 자랑하잖아.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "주인이 턱으로 골목 쪽을 가리켰다. 아이가 다른 아이들 앞에서 곰인형을 흔들고 있었다.",
+        "displayName": null
+      }
+    ],
+    "text": "여러 번 만에 곰인형 하나가 딸려 올라왔다. 규칙대로 근처에서 놀던 아이에게 건넸더니, 받자마자 뒤도 안 보고 뛰어갔다.\n\n\"고맙다는 말은 안 하네요.\"\n\n\"저 나이 땐 원래 안 해요. 저것 봐요, 저기서 자랑하잖아.\" 주인이 턱으로 골목 쪽을 가리켰다. 아이가 다른 아이들 앞에서 곰인형을 흔들고 있었다."
+  },
+  {
+    "id": "ev_claw_truck",
+    "choice": 0,
+    "outcome": 1,
+    "file": "ev_claw_truck-0.1-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "개조 트럭 짐칸이 통째로 인형뽑기 기계다. 주인이 무료로 운영한다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "공짜예요. 공짜. 대신 뽑으면 남 주기, 그게 규칙이고요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "주인이 유리를 손등으로 톡톡 쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "세상이 하도 삭막해서… 뭐, 이거라도 하려고요. 하다 보니 이것만 하고 있고.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "유리 안엔 색바랜 인형들이 우리를 본다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "집게가 인형 머리를 스치기만 하고 번번이 놓쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이거 사기죠?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "공짜인데 무슨 사기예요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…그건 그러네요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "주인이 웃느라 뒤로 넘어갔다. 오랜만에 순수하게 약이 올랐다.",
+        "displayName": null
+      }
+    ],
+    "text": "집게가 인형 머리를 스치기만 하고 번번이 놓쳤다.\n\n\"이거 사기죠?\"\n\n\"공짜인데 무슨 사기예요.\"\n\n\"…그건 그러네요.\"\n\n주인이 웃느라 뒤로 넘어갔다. 오랜만에 순수하게 약이 올랐다."
+  },
+  {
+    "id": "ev_claw_truck",
+    "choice": 1,
+    "outcome": 0,
+    "file": "ev_claw_truck-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "개조 트럭 짐칸이 통째로 인형뽑기 기계다. 주인이 무료로 운영한다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "공짜예요. 공짜. 대신 뽑으면 남 주기, 그게 규칙이고요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "주인이 유리를 손등으로 톡톡 쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "세상이 하도 삭막해서… 뭐, 이거라도 하려고요. 하다 보니 이것만 하고 있고.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "유리 안엔 색바랜 인형들이 우리를 본다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "왜 이런 걸 하냐고 물었더니 바로 대답이 없었다. 유리를 한 번 닦고, 동전 넣는 구멍을 괜히 만지작대다가.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "딸이 이걸 좋아했어요. 하루에 만 원씩 썼다니까요, 초등학생이. 그것 때문에 많이 싸웠고요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "애들 웃는 거 보면 걔가 웃는 것 같아서요. 그래서 해요, 그냥.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "더 묻지 않았다. 다음에 또 오겠다고만 하고 떠났다.",
+        "displayName": null
+      }
+    ],
+    "text": "왜 이런 걸 하냐고 물었더니 바로 대답이 없었다. 유리를 한 번 닦고, 동전 넣는 구멍을 괜히 만지작대다가.\n\n\"딸이 이걸 좋아했어요. 하루에 만 원씩 썼다니까요, 초등학생이. 그것 때문에 많이 싸웠고요.\"\n\n…….\n\n\"애들 웃는 거 보면 걔가 웃는 것 같아서요. 그래서 해요, 그냥.\"\n\n더 묻지 않았다. 다음에 또 오겠다고만 하고 떠났다."
+  },
+  {
+    "id": "roadcrew_washout",
+    "choice": 0,
+    "outcome": 0,
+    "file": "roadcrew_washout-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "밤새 내린 비가 도로 한쪽을 통째로 뜯어 갔다. 새로 칠한 노란 선은 절벽 끝에서 끊겨 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "건너편 경사면에 순임과 도윤이 웅크려 있다. 둘 사이에는 부러진 표지판 기둥 하나뿐이다. 물은 계속 불고, 돌아갈 길도 무너졌다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "도윤이 우리를 보고 일어서려 하자 순임이 멱살을 잡아 다시 앉힌다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "가만있어! 도와주러 온 사람 앞에서 사고 하나 더 치지 말고!",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "줄 끝에 공구 가방을 매달아 건너편으로 던졌다. 도윤이 순임의 허리에 먼저 고리를 채웠다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "할머니 먼저!",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "누가 먼저래!",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "제가요!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "윈치가 천천히 감겼다. 순임이 이쪽 땅을 밟자마자 뒤돌아 소리쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "다음은 가방 말고 저 멀대부터 당겨!",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "도윤까지 올라온 뒤에도 순임은 한동안 줄을 놓지 않았다.",
+        "displayName": null
+      }
+    ],
+    "text": "줄 끝에 공구 가방을 매달아 건너편으로 던졌다. 도윤이 순임의 허리에 먼저 고리를 채웠다.\n\n\"할머니 먼저!\"\n\n\"누가 먼저래!\"\n\n\"제가요!\"\n\n윈치가 천천히 감겼다. 순임이 이쪽 땅을 밟자마자 뒤돌아 소리쳤다. \"다음은 가방 말고 저 멀대부터 당겨!\"\n\n도윤까지 올라온 뒤에도 순임은 한동안 줄을 놓지 않았다."
+  },
+  {
+    "id": "roadcrew_washout",
+    "choice": 1,
+    "outcome": 0,
+    "file": "roadcrew_washout-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "밤새 내린 비가 도로 한쪽을 통째로 뜯어 갔다. 새로 칠한 노란 선은 절벽 끝에서 끊겨 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "건너편 경사면에 순임과 도윤이 웅크려 있다. 둘 사이에는 부러진 표지판 기둥 하나뿐이다. 물은 계속 불고, 돌아갈 길도 무너졌다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "도윤이 우리를 보고 일어서려 하자 순임이 멱살을 잡아 다시 앉힌다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "가만있어! 도와주러 온 사람 앞에서 사고 하나 더 치지 말고!",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "허리마다 밧줄을 묶고 간격을 벌렸다. 맨 앞이 한 걸음 옮길 때마다 뒤에서 이름을 불렀다. 대답이 돌아와야 다음 발을 뗐다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "마지막에 건너온 순임은 숨을 몰아쉬면서도 우리 매듭부터 확인했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "살았으면 됐어. 잘했단 말은 숨 고르고 해.",
+        "displayName": "???"
+      }
+    ],
+    "text": "허리마다 밧줄을 묶고 간격을 벌렸다. 맨 앞이 한 걸음 옮길 때마다 뒤에서 이름을 불렀다. 대답이 돌아와야 다음 발을 뗐다.\n\n마지막에 건너온 순임은 숨을 몰아쉬면서도 우리 매듭부터 확인했다.\n\n\"살았으면 됐어. 잘했단 말은 숨 고르고 해.\""
+  },
+  {
+    "id": "roadcrew_washout",
+    "choice": 2,
+    "outcome": 0,
+    "file": "roadcrew_washout-2.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "밤새 내린 비가 도로 한쪽을 통째로 뜯어 갔다. 새로 칠한 노란 선은 절벽 끝에서 끊겨 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "건너편 경사면에 순임과 도윤이 웅크려 있다. 둘 사이에는 부러진 표지판 기둥 하나뿐이다. 물은 계속 불고, 돌아갈 길도 무너졌다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "도윤이 우리를 보고 일어서려 하자 순임이 멱살을 잡아 다시 앉힌다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "가만있어! 도와주러 온 사람 앞에서 사고 하나 더 치지 말고!",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "달구지 앞범퍼로 젖은 나무를 조금씩 밀었다. 바퀴가 진흙에 빠질 때마다 전원이 내려 돌을 괴었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "나무 끝이 건너편에 걸리자 도윤이 기어서 먼저 건넜고, 가운데서 돌아앉아 순임의 발을 한 칸씩 옮겨 주었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "둘이 올라탄 뒤에야 달구지의 범퍼가 푹 꺼진 게 보였다. 순임이 찌그러진 철판을 쓰다듬었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "얘도 사람 구하네.",
+        "displayName": "???"
+      }
+    ],
+    "text": "달구지 앞범퍼로 젖은 나무를 조금씩 밀었다. 바퀴가 진흙에 빠질 때마다 전원이 내려 돌을 괴었다.\n\n나무 끝이 건너편에 걸리자 도윤이 기어서 먼저 건넜고, 가운데서 돌아앉아 순임의 발을 한 칸씩 옮겨 주었다.\n\n둘이 올라탄 뒤에야 달구지의 범퍼가 푹 꺼진 게 보였다. 순임이 찌그러진 철판을 쓰다듬었다. \"얘도 사람 구하네.\""
+  },
+  {
+    "id": "roadcrew_sign",
+    "choice": 0,
+    "outcome": 0,
+    "file": "roadcrew_sign-0.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "서울 쪽 능선이 보이는 갈림길에서 익숙한 겨자색 조끼가 펄럭인다. 순임과 도윤은 서로 다른 철판을 이어 붙여 커다란 표식을 세우는 중이다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "표식 앞면에는 우회로와 샘터가 그림으로 새겨져 있다. 뒤를 돌려 보니 손바닥 자국, 공구 흠집, 작은 바퀴 자국이 겹겹이다. 이 길을 손본 사람들이 하나씩 남긴 표시라고 했다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "도윤이 빈 모서리를 닦아 우리 쪽으로 돌린다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "달구지 자리, 비워뒀어요.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "기름때 묻은 손에 노란 페인트를 얇게 발랐다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "손바닥 전체요? 아니면 손가락만—",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "도윤",
+        "text": "아무렇게나요. 어차피 다 제각각이에요.",
+        "displayName": "도윤"
+      },
+      {
+        "kind": "narration",
+        "text": "도윤이 자기 자국을 가리켰다. 손가락 두 개가 겹쳐 뭉개져 있었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "큰 손 옆에 작은 손이, 굳은살 박인 손 옆에 떨리는 손이 찍혔다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "순임은 마르는 자국을 보며 사람 수를 셌다. 이번에는 다 세고도 오래 자리를 뜨지 않았다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "우리가 모르는 사람을 위해 고친 길. 우리를 모르는 사람이 고쳐 둔 길. 서울까지 온 건 그 길들이 이어졌기 때문이었다.",
+        "displayName": null
+      }
+    ],
+    "text": "기름때 묻은 손에 노란 페인트를 얇게 발랐다.\n\n\"손바닥 전체요? 아니면 손가락만—\"\n\n\"아무렇게나요. 어차피 다 제각각이에요.\" 도윤이 자기 자국을 가리켰다. 손가락 두 개가 겹쳐 뭉개져 있었다.\n\n큰 손 옆에 작은 손이, 굳은살 박인 손 옆에 떨리는 손이 찍혔다.\n\n순임은 마르는 자국을 보며 사람 수를 셌다. 이번에는 다 세고도 오래 자리를 뜨지 않았다.\n\n우리가 모르는 사람을 위해 고친 길. 우리를 모르는 사람이 고쳐 둔 길. 서울까지 온 건 그 길들이 이어졌기 때문이었다."
+  },
+  {
+    "id": "roadcrew_sign",
+    "choice": 1,
+    "outcome": 0,
+    "file": "roadcrew_sign-1.0-paid.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "서울 쪽 능선이 보이는 갈림길에서 익숙한 겨자색 조끼가 펄럭인다. 순임과 도윤은 서로 다른 철판을 이어 붙여 커다란 표식을 세우는 중이다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "표식 앞면에는 우회로와 샘터가 그림으로 새겨져 있다. 뒤를 돌려 보니 손바닥 자국, 공구 흠집, 작은 바퀴 자국이 겹겹이다. 이 길을 손본 사람들이 하나씩 남긴 표시라고 했다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "도윤이 빈 모서리를 닦아 우리 쪽으로 돌린다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "달구지 자리, 비워뒀어요.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "앞바퀴에 페인트를 묻혀 철판 모서리 위로 천천히 굴렸다. 닳은 홈과 두 번 때운 자리가 그대로 찍혔다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "도윤이 웃었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이건 멀리서 봐도 달구지네.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "순임은 남은 페인트 통을 우리에게 건넸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "앞에 가서 끊긴 데 있으면, 너희가 이어.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "통은 가벼웠다. 부탁은 그렇지 않았다.",
+        "displayName": null
+      }
+    ],
+    "text": "앞바퀴에 페인트를 묻혀 철판 모서리 위로 천천히 굴렸다. 닳은 홈과 두 번 때운 자리가 그대로 찍혔다.\n\n도윤이 웃었다. \"이건 멀리서 봐도 달구지네.\"\n\n순임은 남은 페인트 통을 우리에게 건넸다. \"앞에 가서 끊긴 데 있으면, 너희가 이어.\"\n\n통은 가벼웠다. 부탁은 그렇지 않았다."
+  }
+]

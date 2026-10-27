@@ -1,0 +1,64 @@
+{
+  "cohortExcluded": true,
+  "partialReplay": true,
+  "seed": 277003,
+  "sourceHash": "dcd096880f7d50fa359ee2e7b17e92a3745877e6b9582ba250648d7495d46c87",
+  "source40Unchanged": true,
+  "comparedRecords": 402,
+  "comparedChoices": 79,
+  "gameplayMismatches": [],
+  "presentationDifferences": [
+    {
+      "n": 59,
+      "event": "story_bridge_departure_echo",
+      "phase": "entry",
+      "kind": "text"
+    },
+    {
+      "n": 59,
+      "event": "story_bridge_departure_echo",
+      "phase": "entry",
+      "kind": "readerTurns"
+    },
+    {
+      "n": 59,
+      "event": "story_bridge_departure_echo",
+      "phase": "entry",
+      "kind": "sceneKeys"
+    },
+    {
+      "n": 59,
+      "event": "story_bridge_departure_echo",
+      "phase": "result",
+      "kind": "resultSceneKeys"
+    },
+    {
+      "n": 244,
+      "event": "comp_engine_sound",
+      "phase": "entry",
+      "kind": "sceneKeys"
+    },
+    {
+      "n": 244,
+      "event": "comp_engine_sound",
+      "phase": "result",
+      "kind": "resultSceneKeys"
+    },
+    {
+      "n": 375,
+      "event": "story_bridge_child_voice",
+      "phase": "entry",
+      "kind": "sceneKeys"
+    },
+    {
+      "n": 375,
+      "event": "story_bridge_child_voice",
+      "phase": "result",
+      "kind": "resultSceneKeys"
+    }
+  ],
+  "newEntryPath": "agent03/attempt01/normal-unpaid-401-comp_hometown.json",
+  "viewNullish": true,
+  "targetStateMatchesOriginal": true,
+  "intentionalStop": true
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "S16-01",
+    "classification": "natural-confirmed-note-body-contradiction",
+    "eventId": "meet_bus",
+    "choice": 0,
+    "trace": 164,
+    "source": "src/03-data.js meet_bus choices[0].out[0].fx.note.body",
+    "actual": "The entry says refrigerated medicine must arrive before warming; paid note says 구미 쪽 진료소로 식기 전 약을 옮겨야 한다.",
+    "expected": "The note must preserve the cold-chain direction: 차가운 채로 or 따뜻해지기 전에.",
+    "reproduction": "Natural player43 seed276001 trace164, saved entry-162-meet_bus-export.json; final player43-save.json note 박 선생 keeps the phrase.",
+    "scope": "One incorrect note phrase; not a resource, medicine-expiration or real-world medical claim.",
+    "minimumFix": "Change only note phrase; preserve legacy paid notes and all mechanics.",
+    "repairStatus": "reported; production readonly"
+  }
+]

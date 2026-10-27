@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "북쪽에도 관제탑이 있어요. 거기도 누가 있었을 거고, 거기도 하늘이 있잖아요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 헤드폰을 고쳐 썼다."
+  },
+  {
+    "kind": "record",
+    "who": "eunsu",
+    "text": "천리안한테 물어보고, 대답을 듣고, 그 다음엔— 아무도 관제 안 하는 하늘을 보러 갈 거예요. 별만 있는 하늘."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "혼자요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…글쎄요. 계획은 혼자였는데, 계획이라는 게 요즘 잘 안 지켜져서."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 나를 봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "동행 신청은 선착순이에요."
+  },
+  {
+    "kind": "narration",
+    "text": "3막의 예고편 같은 말을, 나는 접수해뒀다."
+  }
+]

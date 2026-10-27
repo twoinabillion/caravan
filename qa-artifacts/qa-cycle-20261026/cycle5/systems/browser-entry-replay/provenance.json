@@ -1,0 +1,40 @@
+{
+  "classification": "Fresh public replay of cycle5 seed, stopped before target choice; not original saved checkpoint or cycle6",
+  "status": "captured-entry",
+  "engineSourceHash": "8fbd1258d643ef3ca8b241d431d24b39638f00645fbd4a371aeb628b7d5bada6",
+  "choicesBeforeEntry": 54,
+  "trace": 321,
+  "day": 8,
+  "min": 1030.5,
+  "at": "nonsan",
+  "party": [
+    "minji",
+    "jaeyi"
+  ],
+  "pendingPresentation": {
+    "version": 1,
+    "eventId": "exp_underground",
+    "phase": "event",
+    "text": "도심 지하상가 입구. 셔터가 반쯤 열려 있고 아래는 완전한 어둠이다.\n\n벽에 스프레이 글씨. 「아래에 있음. 문 두드리지 말 것.」\n\n…있다는 건가, 있었다는 건가.",
+    "view": null,
+    "reading": null
+  },
+  "publicStateMatchesOriginalTrace322": true,
+  "compared": [
+    "day",
+    "min",
+    "km",
+    "scrap",
+    "fuel",
+    "water",
+    "food",
+    "party",
+    "items",
+    "up"
+  ],
+  "exportFunction": "G.exportSave()",
+  "officialInspectAndLoadPassed": true,
+  "stateInjection": false,
+  "exportFile": "qa-artifacts/qa-cycle-20261026/cycle5/systems/browser-entry-replay/player02/attempt01/exp-underground-entry-export.json",
+  "qaNote": "First provenance assertion incorrectly called the unpaid phase entry; actual engine schema uses event. Only assertion corrected, export file unchanged."
+}

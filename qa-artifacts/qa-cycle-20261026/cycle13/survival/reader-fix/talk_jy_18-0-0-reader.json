@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "어디 계시냐뇨. 지붕에 묶어놨잖아요."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 천장을 가리켰다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "현장에서는 은퇴하셨고요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "보고는 계속 해요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "요즘은 잘 안 해요. 말할 사람이 많아져서."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 우리를 둘러보다 말끝을 흐렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "…그게 좀 미안하기도 하고."
+  },
+  {
+    "kind": "narration",
+    "text": "지붕에서 리어카 바퀴가 덜컹했다. 재이가 위를 보고 덧붙였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "삐진 건 아니죠, 사장님?"
+  }
+]

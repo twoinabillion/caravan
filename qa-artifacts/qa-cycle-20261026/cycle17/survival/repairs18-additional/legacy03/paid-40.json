@@ -1,0 +1,581 @@
+{
+  "v": 9,
+  "mode": "onroad",
+  "entryMode": "interactive",
+  "name": "상혁",
+  "day": 1,
+  "min": 615,
+  "at": "busan",
+  "driving": null,
+  "fuel": 50,
+  "fuelMax": 70,
+  "water": 24,
+  "waterMax": 28,
+  "food": 20,
+  "foodMax": 24,
+  "scrap": 90,
+  "van": 82,
+  "vanMax": 100,
+  "vanName": "달구지",
+  "items": {
+    "부품": 1,
+    "의약품": 5,
+    "탄약": 0
+  },
+  "party": [
+    "minji",
+    "leo",
+    "eunsu"
+  ],
+  "comps": {
+    "minji": {
+      "mood": 84,
+      "bond": 90,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    },
+    "parkss": {
+      "mood": 65,
+      "bond": 0,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    },
+    "kangwoo": {
+      "mood": 65,
+      "bond": 0,
+      "lvl": 0,
+      "perks": [
+        "kw_story"
+      ],
+      "pending": 0
+    },
+    "leo": {
+      "mood": 84,
+      "bond": 90,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    },
+    "jaeyi": {
+      "mood": 65,
+      "bond": 0,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    },
+    "eunsu": {
+      "mood": 84,
+      "bond": 90,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    }
+  },
+  "dog": true,
+  "_scrapKm": 0,
+  "known": [
+    "busan",
+    "gimhae",
+    "yangsan",
+    "miryang",
+    "jinju",
+    "hapcheon",
+    "geochang",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "namwon",
+    "jeonju",
+    "yeongdong",
+    "daejeon",
+    "nonsan",
+    "gongju",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul",
+    "ulsan",
+    "yeosu",
+    "suncheon",
+    "gwangju",
+    "damyang",
+    "mokpo",
+    "andong",
+    "mungyeong",
+    "danyang",
+    "wonju",
+    "daegwallyeong",
+    "gangneung",
+    "sokcho",
+    "icheon",
+    "gyeongju",
+    "pohang",
+    "sangju",
+    "gunsan",
+    "chungju",
+    "sejong"
+  ],
+  "visited": [
+    "busan"
+  ],
+  "flags": {
+    "mother_keepsakes": true,
+    "intro_family_helped": false,
+    "intro_appeal_failed": false,
+    "intro_module_seen": false,
+    "intro_workshop_left": false,
+    "recruit_migration_v2": true
+  },
+  "pursuit": 0,
+  "used": [],
+  "quest": null,
+  "recruitQ": null,
+  "wx": "clear",
+  "wxNext": "storm",
+  "up": {},
+  "notes": [
+    {
+      "id": "n0",
+      "type": "장소",
+      "title": "부산 감천 부두",
+      "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n1",
+      "type": "물건",
+      "title": "달구지",
+      "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+      "links": [
+        "할아버지"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n2",
+      "type": "인물",
+      "title": "천리안",
+      "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n3",
+      "type": "인물",
+      "title": "부모님",
+      "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+      "links": [
+        "천리안"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n4",
+      "type": "인물",
+      "title": "할아버지",
+      "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+      "links": [
+        "달구지",
+        "부모님"
+      ],
+      "day": 1
+    }
+  ],
+  "noteSeq": 5,
+  "npcs": {
+    "geumja": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "sundeok": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "taeho": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "jaepil": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "miyoung": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "drhan": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "deokgu": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "suwan": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "byungchul": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "yeongok": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "sera": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "mansu": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "jeomrye": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "dongsu": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "noah": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "hwasun": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "gitae": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    }
+  },
+  "stats": {
+    "km": 0,
+    "events": 0,
+    "nonlethal": 0
+  },
+  "routePlan": null,
+  "thirst": 0,
+  "hunger": 0,
+  "ended": false,
+  "seed": 202020,
+  "fatigue": 0,
+  "_dlv": 0,
+  "_drowsyDay": 0,
+  "_drowsyAt": -999,
+  "_breakfastDay": 1,
+  "_lunchDay": 0,
+  "_storyQueue": [],
+  "_recentEvents": [],
+  "_recentEventTypes": [],
+  "_eventBreather": 0,
+  "_beatQueue": [],
+  "_driveLegsSinceBlock": 3,
+  "_roadEventDay": 1,
+  "_roadEventCount": 0,
+  "_lastRoadEventKm": -999,
+  "_lastCampEventDay": -999,
+  "memories": {
+    "choices": {},
+    "pending": [],
+    "history": []
+  },
+  "knowledge": {
+    "current_exodus": 2,
+    "parents_work": 2,
+    "parent_principle": 0,
+    "parent_key": 0,
+    "repeated_expulsions": 0,
+    "family_order_source": 0,
+    "uplink_gap": 0,
+    "ai_identifies_caravan": 0,
+    "resistance_network": 0
+  },
+  "relations": {
+    "pairs": {},
+    "seenChats": {}
+  },
+  "director": {
+    "intensity": 10,
+    "phase": "build",
+    "relaxEvents": 0
+  },
+  "combat": null,
+  "lastCombatReport": null,
+  "injuries": {},
+  "_exploreDay": 1,
+  "_exploreNodes": {},
+  "_salvagedNodes": {},
+  "_salvageCount": 0,
+  "_combatFlow": {
+    "runId": 0,
+    "adjust": 0,
+    "history": []
+  },
+  "profile": "keeper",
+  "_quality": {
+    "version": 3,
+    "build": "2026-09-11-director-journey",
+    "entryMode": "interactive",
+    "createdAt": 1792997345033,
+    "playMs": 0,
+    "activeSession": null,
+    "sessions": [],
+    "counts": {
+      "events": 0,
+      "choices": 1,
+      "combats": 0,
+      "repeatEvents": 0,
+      "visibleChoices": 2,
+      "lockedChoices": 0
+    },
+    "eventIds": {},
+    "eventTypes": {},
+    "combat": {
+      "success": 0,
+      "partial": 0,
+      "failure": 0
+    },
+    "resources": {},
+    "first45": {
+      "events": 0,
+      "choices": 1,
+      "combats": 0
+    },
+    "lastEventType": "",
+    "typeStreak": 0,
+    "maxTypeStreak": 0,
+    "heavyStreak": 0,
+    "maxHeavyStreak": 0,
+    "meaningful": {
+      "lastPlayMs": 0,
+      "maxGapMinutes": 0,
+      "changes": []
+    },
+    "resourceLatch": {
+      "fuel": false,
+      "water": false,
+      "food": false,
+      "van": false,
+      "fatigue": false,
+      "pursuit": false
+    },
+    "routes": {},
+    "settlements": {},
+    "activeSettlement": null,
+    "upgrades": [],
+    "choiceEchoes": 0,
+    "milestones": {
+      "first_choice": {
+        "playMin": 0,
+        "day": 1,
+        "min": 600,
+        "km": 0,
+        "eventId": "ev_rainbow",
+        "choiceIndex": 1
+      }
+    },
+    "choiceCallbacks": {
+      "remembered": 0,
+      "near": 0,
+      "late": 0,
+      "items": {}
+    },
+    "endings": {},
+    "timeline": [
+      {
+        "type": "choice",
+        "day": 1,
+        "min": 600,
+        "km": 0,
+        "playMin": 0,
+        "eventId": "ev_rainbow",
+        "eventType": "정경",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "milestone",
+        "day": 1,
+        "min": 600,
+        "km": 0,
+        "playMin": 0,
+        "milestone": "first_choice",
+        "eventId": "ev_rainbow",
+        "choiceIndex": 1
+      }
+    ],
+    "lastSeenAt": 1792997345034
+  },
+  "guideDismissed": false,
+  "questTrack": "main",
+  "lastJourneyRecap": null,
+  "journeyRecaps": [],
+  "_stlField": {
+    "daily": {},
+    "once": {},
+    "impact": {},
+    "roadEchoed": {},
+    "log": []
+  },
+  "_impactEcho": null,
+  "_rescues": {},
+  "_stlNights": {},
+  "stopover": null,
+  "locationContractVersion": 2,
+  "campNight": 0,
+  "campConversation": null,
+  "campMemories": {},
+  "opening": {
+    "version": 2,
+    "narrativeVersion": 1,
+    "step": 0,
+    "pendingResult": null,
+    "decisions": {},
+    "completed": true,
+    "nameIntroduction": "done",
+    "nameDraft": ""
+  },
+  "questLedger": {
+    "tracked": [],
+    "completed": [],
+    "updates": [
+      {
+        "id": "main_namsan",
+        "kind": "main",
+        "title": "메인 스토리 진행 · 도윤 가족의 이송표를 확인한다",
+        "next": "양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)",
+        "day": 1,
+        "at": "busan"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "새 임무 · 민지",
+        "next": "정차한 뒤 민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 1,
+        "at": "busan"
+      },
+      {
+        "id": "companion_leo",
+        "kind": "companion",
+        "title": "새 임무 · 레오",
+        "next": "정차한 뒤 레오에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 1,
+        "at": "busan"
+      },
+      {
+        "id": "companion_eunsu",
+        "kind": "companion",
+        "title": "새 임무 · 은수",
+        "next": "정차한 뒤 은수에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 1,
+        "at": "busan"
+      }
+    ],
+    "mainHistory": [],
+    "seenUpdateCount": 4,
+    "snapshot": {
+      "main_namsan": "active|부산 감천 부두 · 떠나기 전|양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)|0/13",
+      "companion_minji": "active|개인 이야기 0/3 · 동료 Lv.0 · 유대 90|정차한 뒤 민지에게 말을 걸어 다음 이야기를 듣는다.|0/3",
+      "companion_leo": "active|개인 이야기 0/3 · 동료 Lv.0 · 유대 90|정차한 뒤 레오에게 말을 걸어 다음 이야기를 듣는다.|0/3",
+      "companion_eunsu": "active|개인 이야기 0/3 · 동료 Lv.0 · 유대 90|정차한 뒤 은수에게 말을 걸어 다음 이야기를 듣는다.|0/3"
+    },
+    "mainState": {
+      "chapterId": "prologue-family",
+      "act": "서장",
+      "title": "도윤 가족의 이송표를 확인한다",
+      "phase": "부산 감천 부두 · 떠나기 전",
+      "next": "양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)",
+      "expected": "도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.",
+      "progress": "0/13"
+    }
+  },
+  "pendingPresentation": {
+    "version": 1,
+    "eventId": "ev_rainbow",
+    "phase": "result",
+    "text": "쌍무지개가 사라지기 전에 눈에 꾹꾹 담았다. 이런 건 사진으로도 다 못 담는다.\n\n\"…예쁜 건 금방 사라지네.\" 무지개가 옅어지며 하늘로 스몄다. 짧아서 더 소중한 것들이, 우릴 계속 살게 한다.",
+    "view": null,
+    "reading": {
+      "eventId": "ev_rainbow",
+      "phase": "outcome",
+      "view": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "쌍무지개가 사라지기 전에 눈에 꾹꾹 담았다. 이런 건 사진으로도 다 못 담는다."
+          },
+          {
+            "kind": "dialogue",
+            "text": "…예쁜 건 금방 사라지네.",
+            "who": "passer_man",
+            "name": "???",
+            "speakerUncertain": true
+          },
+          {
+            "kind": "narration",
+            "text": "무지개가 옅어지며 하늘로 스몄다. 짧아서 더 소중한 것들이, 우릴 계속 살게 한다."
+          }
+        ],
+        "index": 1,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": []
+      },
+      "history": null,
+      "selection": "",
+      "updates": []
+    },
+    "choiceIndex": 1,
+    "outcomeIndex": 0,
+    "chips": [
+      {
+        "t": "15분 경과",
+        "c": "item"
+      },
+      {
+        "t": "피로 -0.675",
+        "c": "plus"
+      },
+      {
+        "t": "사기 +4",
+        "c": "plus"
+      }
+    ]
+  }
+}

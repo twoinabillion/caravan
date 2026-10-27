@@ -1,0 +1,78 @@
+- generic "플레이 테스트":
+  - button "최신 코드 적용"
+  - button "처음부터 테스트"
+- iframe [active] [id="game"]:
+  - text: · +
+  - strong: 세종 신도시
+  - generic: DAY 5 · 10:00
+  - text: ›
+  - generic "달구지 상태":
+    - generic: 연료 ∞
+    - generic: 차체 80%
+    - generic: 맑음
+    - button "추적 위험 0/5 · 설명 열기 또는 닫기":
+      - generic: 0/5
+      - generic: ⌄
+  - region "정차 통합 콘솔":
+    - tablist "정차 콘솔 모드":
+      - tab "목적지"
+      - tab "머물기" [selected]
+    - tabpanel "머물기":
+      - region "머물기 행동 선택":
+        - button "주변 탐색 행동 변경 · 4가지":
+          - generic: 주변 탐색
+          - text: 행동 변경 · 4가지
+          - generic: ›
+        - generic: 시간
+        - generic: +2시간
+        - generic: 피로
+        - generic: 약 +5
+        - generic: 발견물
+        - generic: 미확인
+        - button "주변 탐색":
+          - text: 주변 탐색
+          - generic: →
+        - generic "선택한 행동 설명":
+          - text: 행동 설명
+          - generic: ⌄
+        - button "장소 정보"
+  - navigation "게임 주요 메뉴":
+    - button "길":
+      - generic: 길
+    - button "목표":
+      - generic: 목표
+    - button "동료":
+      - generic: 동료
+    - button "가방":
+      - generic: 가방
+    - button "메뉴":
+      - generic: 메뉴
+  - dialog "길 위의 이야기":
+    - generic: 1 / 3
+    - paragraph: 지금 · 세종 신도시 · 10:00
+    - heading "개관 못 한 도서관" [level=2]
+    - navigation "이야기 읽기":
+      - button "자동 읽기 켜기": 자동 읽기
+      - button "기록"
+    - region "개관 못 한 도서관 사건 내용":
+      - generic "개관하지 못한 넓은 도서관에 포장된 새 책들과 상자, 비어 있는 대출대가 남아 있다. 크게 보기":
+        - img "개관하지 못한 넓은 도서관에 포장된 새 책들과 상자, 비어 있는 대출대가 남아 있다."
+        - button "그림을 눌러 다음 대사"
+        - button "그림 크게 보기": ↗
+      - region "이야기":
+        - article:
+          - generic: 테이프를 끊고(안전 테이프였지만 기분은 리본),
+        - article:
+          - generic: 상혁
+          - generic: 개관을 선언합니다
+        - article:
+          - generic: 를 외쳤다.
+        - article:
+          - generic: 첫 대출자로 각자 한 권씩 골랐다. 대출 카드에 한 사람씩 이름을 적었다.
+        - article:
+          - generic: 다음 사람이 쓸 빈 카드를 책상 위에 가지런히 놓았다. 책 냄새를 실은 차가 도서관을 나섰다.
+      - navigation:
+        - button "결과 확인"
+  - text: →
+  - generic: 테이프를 끊고(안전 테이프였지만 기분은 리본),상혁개관을 선언합니다를 외쳤다.첫 대출자로 각자 한 권씩 골랐다. 대출 카드에 한 사람씩 이름을 적었다.다음 사람이 쓸 빈 카드를 책상 위에 가지런히 놓았다. 책 냄새를 실은 차가 도서관을 나섰다.
+  - text: ↗

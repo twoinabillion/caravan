@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "오늘은…"
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 각자 딴짓 중인 차 안을 훑었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "2등급이요. '교신 불필요'까진 아니고, '교신 대기'."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "1등급은요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "저녁에 다 같이 웃는 일이 한 번 있으면요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 수첩에 시각을 적었다."
+  },
+  {
+    "kind": "record",
+    "who": "eunsu",
+    "text": "…아, 등급은 제가 정한 거예요. 교범에 있는 건 아니고."
+  }
+]

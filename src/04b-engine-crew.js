@@ -38,13 +38,13 @@ G.checkLevel = (id,opt={})=>{
       const stage=G.companionStoryStage(id);
       if(c.storyGateNotified!==stage){
         c.storyGateNotified=stage;
-        UI.toast(`<span class="ic">✦</span>${nm}와 나눌 이야기가 남아 있다 — 야영이나 정차 중 말을 건다`);
+        UI.toast(`<span class="ic">✦</span>${D.withParticle(nm,'과','와')} 나눌 이야기가 남아 있다 — 야영이나 정차 중 말을 건다`);
       }
       break;
     }else if(next<3){ c.pending=next;
       UI.toast(opt.recruit
         ? `<span class="recruit-kicker">정식 동료 합류</span><strong>${nm}</strong> · ${D.comps[id].cls} · 크루 ${S.party.length}/${Object.keys(D.comps).length}<span class="recruit-next">첫 유대 보상 · 동료 카드에서 퍼크 선택</span>`
-        : `<span class="ic">✦</span>${nm}와의 유대가 깊어졌다 — 동료 카드에서 퍼크 선택`, opt.recruit?'recruit':undefined);
+        : `<span class="ic">✦</span>${D.withParticle(nm,'과','와')}의 유대가 깊어졌다 — 동료 카드에서 퍼크 선택`, opt.recruit?'recruit':undefined);
     } else { /* Lv3 시그니처(스토리)는 자동 습득 */
       c.lvl=3;
       const p=D.comps[id].perks[3];
@@ -81,7 +81,7 @@ G.grantPerk = (id, pid)=>{ // 습득 즉시 효과
     case 'kw_story': S.flags.kw_truth=true; break;
     case 'pss_story': S.flags.pss_list=true; break;
     case 'leo_story': S.flags.leo_song=true;
-      UI.toast('🎸 레오의 노래가 완성됐다 — 청주 방송국으로'); break;
+      UI.toast('🎸 길 위의 두 절이 준비됐다 — 청주 방송국으로'); break;
     case 'es_story':
       S.flags.es_backdoor_ready=true; S.pursuit=Math.max(0,S.pursuit-2);
       G.queueStory(S.flags.es_v1194?'es_backdoor':'es_nightshift');
@@ -168,12 +168,22 @@ G.popBeat = ()=>{
 G.popStory = ()=>{
   const timed=G.popTimedStory();
   if(timed) return timed;
-  while(S&&S._storyQueue&&S._storyQueue.length){
+  // Location-bound openings stay queued until arrival, without starving other
+  // stories or looping over the same deferred row in this call.
+  let remaining=S?._storyQueue?.length||0;
+  while(remaining-->0){
     const id=G.mainEvidenceEntryId(S._storyQueue.shift()), ev=D.events.find(e=>e.id===id);
+    if(G.deferRouteOpening(id)) continue;
     if(G.deferTimedStory(id)) continue;
     if(!G.mainEvidenceLocationReady(id)) continue;
     const unansweredEunsu=['es_nightshift','es_backdoor'].includes(id)&&!D.eunsuBackdoorDone(S);
-    if(ev && (!ev.once||!S.used.includes(id)||unansweredEunsu)
+    const unansweredRidge=id==='route_ridge_rescue'&&!S.combat
+      &&!['route_ridge_saved','route_ridge_saved_partial','route_ridge_failed'].some(flag=>S.flags[flag]);
+    // Old saves can contain an opened-but-unpaid convoy at the wrong stop.
+    // Relocation queues it; `used` alone must not swallow the deferred choice.
+    const unansweredMarket=id==='route_market_convoy'&&!S.combat
+      &&!['route_market_escorted','route_market_escorted_partial','route_market_failed'].some(flag=>S.flags[flag]);
+    if(ev && (!ev.once||!S.used.includes(id)||unansweredEunsu||unansweredRidge||unansweredMarket)
       &&!(G.mainEvidenceEventDone&&G.mainEvidenceEventDone(id))) return id;
   }
   return null;
@@ -197,9 +207,13 @@ G.afterChoice = (evd, choice, outcome)=>{
   extra.push(...G.rememberChoice(evd,choice,outcome));
   return extra;
 };
-G.choiceMemoryDef = (eventId,choiceIndex)=>{
+G.choiceMemoryDef = (eventId,choiceIndex,memory=null)=>{
   const defs=D.choiceMemories&&D.choiceMemories[eventId];
-  return Array.isArray(defs)?defs[choiceIndex]:null;
+  const def=Array.isArray(defs)?defs[choiceIndex]:null;
+  // Old paid memories keep the story they actually recorded. A new clinic
+  // encounter must not rewrite an older overturned-bus snapshot on load.
+  if(memory&&memory.id!==def?.id) return D.legacyChoiceMemories?.[memory.id]||null;
+  return def;
 };
 G.openingDecisionMemories = ()=>{
   if(!S||!S.opening||!S.opening.decisions||!D.openingDecisionCallbacks) return [];
@@ -221,7 +235,7 @@ G.rememberChoice = (evd,choice,outcome)=>{
   if(!def||S.memories.choices[def.id]) return [];
   const entry={id:def.id,eventId:evd.id,choiceIndex,day:S.day,km:Math.round(S.stats.km),
     eventTitle:evd.title,choiceLabel:String(choice.label||'').replace(/<[^>]*>/g,''),
-    summary:def.summary,dueKm:S.stats.km+(def.afterKm||16),dueEvents:S.stats.events+(def.afterEvents||1),
+    summary:def.summary,echoLines:JSON.parse(JSON.stringify(def.lines)),dueKm:S.stats.km+(def.afterKm||16),dueEvents:S.stats.events+(def.afterEvents||1),
     ...(def.afterDays?{dueMinute:S.day*1440+S.min+def.afterDays*1440}:{}),
     echoed:false};
   S.memories.choices[def.id]=entry;
@@ -248,15 +262,17 @@ G.takeChoiceEcho = ()=>{
     const due=m&&!m.echoed&&S.stats.km>=m.dueKm&&S.stats.events>=m.dueEvents
       &&(!Number.isFinite(m.dueMinute)||S.day*1440+S.min>=m.dueMinute);
     if(!due) return false;
-    const def=G.choiceMemoryDef(m.eventId,m.choiceIndex);
+    const def=G.choiceMemoryDef(m.eventId,m.choiceIndex,m);
+    const lines=Array.isArray(m.echoLines)?m.echoLines:def?.lines;
     // Keep absent speakers' memories pending without blocking later memories.
     // Missing definitions still reach the cleanup below.
-    return !Array.isArray(def?.lines)||!def.lines.some(line=>D.comps[line[0]]&&!G.hasComp(line[0]));
+    return !Array.isArray(lines)||!lines.some(line=>D.comps[line[0]]&&!G.hasComp(line[0]));
   });
   if(idx>=0){
     const id=S.memories.pending[idx], memory=S.memories.choices[id];
-    const def=G.choiceMemoryDef(memory.eventId,memory.choiceIndex);
-    if(!def||!Array.isArray(def.lines)){
+    const def=G.choiceMemoryDef(memory.eventId,memory.choiceIndex,memory);
+    const lines=Array.isArray(memory.echoLines)?memory.echoLines:def?.lines;
+    if(!Array.isArray(lines)){
       S.memories.pending.splice(idx,1);
       return null;
     }
@@ -266,7 +282,7 @@ G.takeChoiceEcho = ()=>{
     S.memories.pending.splice(idx,1);
     G.qualityChoiceEcho(memory);
     G.save();
-    return {memory,lines:def.lines};
+    return {memory,lines};
   }
   const opening=G.openingDecisionMemories().find(memory=>!memory.echoed
     && S.stats.km>=memory.dueKm&&S.stats.events>=memory.dueEvents);
@@ -287,6 +303,8 @@ G.choiceForeseeable = choice=>{
   if(choice.risk) rows.push({kind:'risk',label:'위험',text:String(choice.risk)});
   if(authored.exposure) rows.push({kind:'exposure',label:'노출',text:String(authored.exposure)});
   if(authored.lasting) rows.push({kind:'lasting',label:'이후',text:String(authored.lasting)});
+  const disposition=choice.out?.[0]?.fx?.dissent,who=D.coreDissentIds?.[disposition];
+  if(who&&G.hasComp(who))rows.push({kind:'lasting',label:'반대',text:`${D.comps[who].name}의 반대를 누르는 결정 · 유대 -6`});
   return rows;
 };
 G.combatTacticDelta = choice=>{
@@ -634,6 +652,31 @@ G.mealForecast = mins=>{
   const water=breakfasts*G.mealNeed('breakfast');
   return {breakfasts,lunches,food,water};
 };
+// Read-only projection of the same breakfast / midnight water boundary as
+// advance+dawn. No reward, weather roll, thirst reset or resource consumption.
+G.dehydrationForecast = mins=>{
+  if(G.isInfiniteResourceMode()) return null;
+  const duration=Number.isFinite(Number(mins))?Math.max(0,Number(mins)):0;
+  if(!duration)return null;
+  const now=S.day*1440+S.min,end=now+duration,need=G.mealNeed('breakfast');
+  let water=Math.max(0,S.water),thirst=Math.max(0,Number(S.thirst)||0);
+  for(let day=S.day;day*1440<=end;day++){
+    const breakfast=day*1440+390;
+    if((day>S.day||(S._breakfastDay||0)<day)&&Math.max(now,breakfast)<=end){
+      const used=Math.min(water,need);water-=used;thirst=used>=need?0:thirst+1;
+      // Collection follows the scheduled drink. For distant unknown weather,
+      // retain the guaranteed dry-weather amount, never invent extra water.
+      if(S.up?.collector){
+        const wx=day===S.day?S.wx:day===S.day+1?S.wxNext:null;
+        water=Math.min(S.waterMax,water+(['rain','storm'].includes(wx)?2:1));
+      }
+    }
+    const midnight=(day+1)*1440;
+    if(midnight<=end&&thirst>=3&&water<need)
+      return {at:midnight,minutes:midnight-now,waterNeed:need,waterShort:Math.max(0,need-water)};
+  }
+  return null;
+};
 G.consumeMeal = kind=>{
   const need=G.mealNeed(kind), before=clamp(Number(S.hunger)||0,0,3);
   const infinite=G.isInfiniteResourceMode();
@@ -641,6 +684,7 @@ G.consumeMeal = kind=>{
   G.addSupply('food',-used);
   if(ok){
     S.hunger=Math.max(0,before-1);
+    if(S.hunger<2&&S._crisis==='crisis_hungry') S._crisis=null;
     return {ok,need,used,before,after:S.hunger,fatigue:0,mood:0};
   }
   S.hunger=Math.min(3,before+1);
@@ -659,16 +703,20 @@ G.mealToast = (label,result,icon='🍚')=>{
   return `${icon} ${label} 결식 · 식량 ${result.used}/${result.need} · ${G.hungerLabel(result.after)} ${result.after}/3 · 피로 +${result.fatigue}${mood}`;
 };
 G.advance = (mins,options={})=>{
+  if(!S||S.ended) return;
   let m = mins;
   const settleBoundary=()=>{
     let changed=false;
     if((S._breakfastDay||0)<S.day&&S.min>=6.5*60){ S._breakfastDay=S.day; G.breakfast(); changed=true; }
+    if(S.ended) return changed;
     if((S._lunchDay||0)<S.day&&S.min>=12*60){ S._lunchDay=S.day; G.lunch(); changed=true; }
+    if(S.ended) return changed;
     if(S.min>=24*60){ S.min=0; S.day++; G.dawn(); changed=true; }
     return changed;
   };
   while(m>0){
     settleBoundary();
+    if(S.ended) return;
     let boundary=24*60;
     if((S._breakfastDay||0)<S.day&&S.min<6.5*60) boundary=Math.min(boundary,6.5*60);
     if((S._lunchDay||0)<S.day&&S.min<12*60) boundary=Math.min(boundary,12*60);
@@ -677,13 +725,13 @@ G.advance = (mins,options={})=>{
     /* 분 단위로 정규화한다. 주행 tick이 실수를 더하다 보면 06:30이 389.9999가 되어
        "다음 날 아침"을 판별하는 조건과 표시가 어긋난다. */
     S.min = Math.round((S.min + step) * 1000) / 1000; m -= step;
-    /* 깨어 있는 모든 시간에 피로가 쌓인다 (수면=camp가 유일한 리셋) */
+    /* 깨어 있는 모든 시간에 피로가 쌓인다. 야영과 명시된 수면만 제외한다. */
     if(!options.sleeping){
       const injuryMul=G.isInjured('driver')?1.2:1;
       S.fatigue = clamp(S.fatigue + step*0.045*(1-G.driverLv()*0.06)*injuryMul, 0, 100);
     }
   }
-  settleBoundary();
+  if(!S.ended) settleBoundary();
 };
 /* Shared by breakfast/lunch; a meal line cannot invent an absent passenger. */
 G.pickMealBanter = ()=>{
@@ -762,7 +810,9 @@ G.dawn = ()=>{
     G.addNote({type:'사건', title:K.nm+' 실패: '+G.questLabel(q),
       body:`기한(${q.due}일차)을 넘겼다. ${D.nodes[q.from].name} 사람들 볼 낯이 없다.`, links:[]});
   }
-  if(S.thirst>=3){ G.endGame('thirst'); return; }
+  /* Recovered drinking water can still reach the next scheduled breakfast.
+     Possession alone neither resets thirst nor grants/consumes a second ration. */
+  if(S.thirst>=3&&!G.hasResource('water',G.mealNeed('breakfast'))){ G.endGame('thirst'); return; }
   /* 좌초 — 연료도 살 고철도 없고 마을도 아닌 곳에서 며칠째. 구제는 무한하지 않다. */
   const atTown=!!(S.at&&D.nodes[S.at]&&D.nodes[S.at].stl);
   /* 빈 탱크로 길가에서 맞는 아침 — 구제가 먼저 온다(값은 오르고 세 번이 한계).

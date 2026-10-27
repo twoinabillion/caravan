@@ -1,0 +1,54 @@
+[
+  {
+    "id": "C16-SYS-01",
+    "evidenceClass": "fresh-natural",
+    "status": "confirmed",
+    "event": "ev_salt_farmer",
+    "trace": 68,
+    "choice": 0,
+    "outcome": 0,
+    "problem": "구매자 질문과 판매자 답이 실제 reader에서 뒤바뀐다.",
+    "observed": [
+      [
+        "passer_refugee",
+        "고철 넷?"
+      ],
+      [
+        "me",
+        "넷. 대신 자루는 큰 걸로 줄게. 어차피 무게 잴 저울도 없어."
+      ],
+      [
+        "passer_refugee",
+        "이거면 겨우내 고기 안 상해. 상처엔 물에 타서— 아니, 그건 좀 묽게 해야 되고."
+      ]
+    ],
+    "expected": [
+      "me",
+      "염전의 사내",
+      "염전의 사내"
+    ],
+    "entrySave": "player02/attempt01/entry-67-ev_salt_farmer-export.json",
+    "source": "src/03-data.js",
+    "allOutcomeEvidence": "candidate-reader-evidence.json",
+    "allOutcomeRuling": "도움 선택1의 두 발화는 모두 현장 사내라 현재 route 순서는 정상. entry 수정 시 상속을 피하도록 모든2결과를 함께 보호해야 한다.",
+    "productionEdited": false
+  },
+  {
+    "id": "C16-SYS-02",
+    "evidenceClass": "fresh-natural",
+    "status": "confirmed",
+    "event": "gp_envelope",
+    "trace": 241,
+    "choice": 1,
+    "outcome": 0,
+    "problem": "즉시 결과가 이후 반복 습관을 이미 일어난 일처럼 서술한다.",
+    "observed": "그날 이후 수첩이 전보다 자주 눈에 들어왔다. 뒷표지가 살짝 불룩한 것도.",
+    "timeBefore": "DAY7 20:44",
+    "timeAfter": "DAY7 20:44",
+    "proof": "fx에 time 또는 반복 행동 후속 없음. 즉시 반응에서 미래의 습관 완료를 주장하지 않는 guardrail에 위배.",
+    "entrySave": "player02/attempt01/entry-240-gp_envelope-export.json",
+    "source": "src/03-data.js",
+    "allOutcomeEvidence": "candidate-reader-evidence.json",
+    "productionEdited": false
+  }
+]

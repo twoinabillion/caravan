@@ -1,0 +1,26 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "동네 약국은 단골 장사야. 근데 단골이라는 말이— 다시 생각하면 좀 이상하지. 아픈 게 단골이 되면 안 되는 건데 말이야."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "그럼 손님 없는 날이 좋으셨겠네요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "기뻤지. 장사는 망해도."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 웃다가 덧붙였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "월세 날엔 조금 덜 기뻤고. 그건 또 그거대로."
+  }
+]

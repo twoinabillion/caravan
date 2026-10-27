@@ -1,0 +1,133 @@
+{
+  "cohortExcluded": true,
+  "classification": "static-derived temporal assertion; not natural22",
+  "event": {
+    "id": "exp_oilmill",
+    "minParty": 1,
+    "type": "탐색",
+    "w": 5,
+    "region": [
+      "south",
+      "mid"
+    ],
+    "title": "방앗간",
+    "text": "참기름 냄새가 여러 해를 버틴 방앗간.\n\n기계는 죽었지만 돌절구와 채반은 살아 있다. 그리고 선반 위, 기적처럼 남은 참기름 두 병.",
+    "choices": [
+      {
+        "label": "참기름을 챙긴다",
+        "out": [
+          {
+            "p": 1,
+            "text": "참기름 두 병. 액체 황금이다.\n\n그날 저녁 통조림 비빔밥에 참기름 한 바퀴가 둘렸다. 전원이 국적을 되찾은 표정을 지었다.",
+            "fx": {
+              "food": 1,
+              "scrap": 6,
+              "moodAll": 6,
+              "note": {
+                "type": "사건",
+                "title": "액체 황금",
+                "body": "참기름 한 바퀴에 전원이 국적을 되찾은 표정."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "label": "돌절구로 뭔가 빻아본다",
+        "out": [
+          {
+            "p": 1,
+            "text": "주워온 도토리를 빻아 묵 비슷한 것을 시도했다. 결과물은 묵과 접착제 사이 어딘가. 그래도 먹었다.",
+            "fx": {
+              "food": 1,
+              "moodAll": 2
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "entry": [
+    {
+      "kind": "narration",
+      "text": "참기름 냄새가 여러 해를 버틴 방앗간.",
+      "displayName": null
+    },
+    {
+      "kind": "narration",
+      "text": "기계는 죽었지만 돌절구와 채반은 살아 있다. 그리고 선반 위, 기적처럼 남은 참기름 두 병.",
+      "displayName": null
+    }
+  ],
+  "out": {
+    "0": [
+      {
+        "kind": "narration",
+        "text": "참기름 두 병. 액체 황금이다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "그날 저녁 통조림 비빔밥에 참기름 한 바퀴가 둘렸다. 전원이 국적을 되찾은 표정을 지었다.",
+        "displayName": null
+      }
+    ],
+    "1": [
+      {
+        "kind": "narration",
+        "text": "주워온 도토리를 빻아 묵 비슷한 것을 시도했다. 결과물은 묵과 접착제 사이 어딘가. 그래도 먹었다.",
+        "displayName": null
+      }
+    ]
+  },
+  "legacy": [
+    {
+      "choice": 0,
+      "file": "legacy-exp_oilmill-0.json",
+      "text": "참기름 두 병. 액체 황금이다.\n\n그날 저녁 통조림 비빔밥에 참기름 한 바퀴가 둘렸다. 전원이 국적을 되찾은 표정을 지었다.",
+      "result": [
+        {
+          "kind": "narration",
+          "text": "참기름 두 병. 액체 황금이다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "그날 저녁 통조림 비빔밥에 참기름 한 바퀴가 둘렸다. 전원이 국적을 되찾은 표정을 지었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "참기름 두 병. 액체 황금이다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "그날 저녁 통조림 비빔밥에 참기름 한 바퀴가 둘렸다. 전원이 국적을 되찾은 표정을 지었다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "choice": 1,
+      "file": "legacy-exp_oilmill-1.json",
+      "text": "주워온 도토리를 빻아 묵 비슷한 것을 시도했다. 결과물은 묵과 접착제 사이 어딘가. 그래도 먹었다.",
+      "result": [
+        {
+          "kind": "narration",
+          "text": "주워온 도토리를 빻아 묵 비슷한 것을 시도했다. 결과물은 묵과 접착제 사이 어딘가. 그래도 먹었다.",
+          "displayName": null
+        }
+      ],
+      "textOnly": [
+        {
+          "kind": "narration",
+          "text": "주워온 도토리를 빻아 묵 비슷한 것을 시도했다. 결과물은 묵과 접착제 사이 어딘가. 그래도 먹었다.",
+          "displayName": null
+        }
+      ]
+    }
+  ]
+}

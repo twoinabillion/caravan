@@ -1,0 +1,652 @@
+{
+  "cases": [
+    {
+      "id": "loc_tower",
+      "index": 1,
+      "oldLabel": "배터리를 빌린다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -3,
+            "van": 10,
+            "item": {
+              "부품": 1
+            }
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 3
+      }
+    },
+    {
+      "id": "exp_temple",
+      "index": 1,
+      "oldLabel": "약수만 받아 간다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "water": 4,
+            "scrap": -1,
+            "moodAll": 3
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 1
+      }
+    },
+    {
+      "id": "meet_barber",
+      "index": 1,
+      "oldLabel": "보리만 미용한다",
+      "oldReq": {
+        "dog": 1
+      },
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -1,
+            "moodAll": 4
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 1
+      }
+    },
+    {
+      "id": "meet_paper_grandma",
+      "index": 1,
+      "oldLabel": "폐지를 고철과 바꿔드린다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -3,
+            "moodAll": 5
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 3
+      }
+    },
+    {
+      "id": "lc_pohang_gwamegi",
+      "index": 0,
+      "oldLabel": "도전한다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 2,
+          "fx": {
+            "food": 3,
+            "scrap": -2,
+            "moodAll": 5
+          }
+        },
+        {
+          "p": 1,
+          "fx": {
+            "food": 2,
+            "scrap": -1,
+            "moodAll": 4
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 2
+      }
+    },
+    {
+      "id": "lc_mokpo_hongeo",
+      "index": 1,
+      "oldLabel": "\"저희는 아직…\"",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -2,
+            "food": 1,
+            "moodAll": 2
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 2
+      }
+    },
+    {
+      "id": "ev_fake_checkpoint",
+      "index": 2,
+      "oldLabel": "통행세 조로 조금 주고 지난다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -5
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 5
+      }
+    },
+    {
+      "id": "ev_water_seller",
+      "index": 1,
+      "oldLabel": "박 선생이 수질을 확인한다",
+      "oldReq": {
+        "comp": "parkss"
+      },
+      "oldOutcomeMechanics": [
+        {
+          "p": 2,
+          "fx": {
+            "scrap": -4,
+            "water": 6,
+            "mood": {
+              "parkss": 2
+            }
+          }
+        },
+        {
+          "p": 1,
+          "fx": {
+            "mood": {
+              "parkss": 4
+            }
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 4
+      }
+    },
+    {
+      "id": "ev_tunnel_warehouse",
+      "index": 0,
+      "oldLabel": "주인을 찾아 거래를 청한다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 2,
+          "fx": {
+            "food": 4,
+            "water": 3,
+            "item": {
+              "부품": 1
+            },
+            "scrap": -5,
+            "time": 40,
+            "note": {
+              "type": "소문",
+              "title": "터널 나눔창고",
+              "body": "폐터널을 저장고로 쓰는 노인. \"필요한 만큼 가져가고, 여유 있으면 채워두라\"는 나눔의 규칙."
+            }
+          }
+        },
+        {
+          "p": 1,
+          "fx": {
+            "food": 3,
+            "water": 2,
+            "item": {
+              "부품": 1
+            },
+            "time": 35
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 5
+      }
+    },
+    {
+      "id": "ev_tunnel_warehouse",
+      "index": 1,
+      "oldLabel": "괜히 남의 것 같다, 조금만 챙긴다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "food": 2,
+            "scrap": -3,
+            "time": 25,
+            "moodAll": 2
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 3
+      }
+    },
+    {
+      "id": "ev_caravan_traders",
+      "index": 2,
+      "oldLabel": "강우가 상단을 경계한다",
+      "oldReq": {
+        "comp": "kangwoo"
+      },
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -5,
+            "fuel": 4,
+            "mood": {
+              "kangwoo": 4
+            },
+            "pursuit": 1
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 5
+      }
+    },
+    {
+      "id": "ev_beekeeper",
+      "index": 1,
+      "oldLabel": "박 선생이 약용을 논한다",
+      "oldReq": {
+        "comp": "parkss"
+      },
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -4,
+            "food": 5,
+            "item": {
+              "의약품": 1
+            },
+            "mood": {
+              "parkss": 3
+            }
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 4
+      }
+    },
+    {
+      "id": "ev_optician",
+      "index": 1,
+      "oldLabel": "박 선생 돋보기를 맞춘다",
+      "oldReq": {
+        "comp": "parkss"
+      },
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -3,
+            "mood": {
+              "parkss": 4
+            }
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 3
+      }
+    },
+    {
+      "id": "react_resist_jaeyi",
+      "index": 1,
+      "oldLabel": "조직을 숨기고 필요한 물건만 산다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "scrap": -2,
+            "pursuit": -3,
+            "note": "재이가 저항 조직의 흔적을 감춘 채 보급을 구했다."
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 2
+      }
+    },
+    {
+      "id": "road_mid_rest_kitchen",
+      "index": 1,
+      "oldLabel": "마른 식량과 바꾼다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "time": 15,
+            "scrap": -2,
+            "food": 3
+          }
+        }
+      ],
+      "cost": {
+        "scrap": 2
+      }
+    },
+    {
+      "id": "road_north_roadside_greenhouse",
+      "index": 0,
+      "oldLabel": "물과 채소를 바꾼다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "time": 20,
+            "water": -2,
+            "food": 5,
+            "moodAll": 2
+          }
+        }
+      ],
+      "cost": {
+        "water": 2
+      }
+    },
+    {
+      "id": "road_north_fortress_fires",
+      "index": 1,
+      "oldLabel": "다음 봉화에 쓸 연료를 보탠다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "time": 25,
+            "fuel": -2,
+            "moodAll": 4
+          }
+        }
+      ],
+      "cost": {
+        "fuel": 2
+      }
+    },
+    {
+      "id": "meet_wedding",
+      "index": 0,
+      "oldLabel": "하객으로 참석한다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "food": -1,
+            "moodAll": 10,
+            "time": 90,
+            "note": {
+              "type": "사건",
+              "title": "정리 이후의 결혼식",
+              "body": "\"살아서, 만나서, 합니다.\" 주례사는 그거면 충분했다."
+            }
+          }
+        }
+      ],
+      "cost": {
+        "food": 1
+      }
+    },
+    {
+      "id": "meet_monk",
+      "index": 0,
+      "oldLabel": "차를 세우고 물을 권한다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "water": -1,
+            "moodAll": 4,
+            "note": {
+              "type": "인물",
+              "title": "걷는 스님",
+              "body": "\"끝이 어딘데요?\" \"걷다 보면 나와요.\""
+            }
+          }
+        }
+      ],
+      "cost": {
+        "water": 1
+      }
+    },
+    {
+      "id": "meet_bike_pilgrims",
+      "index": 1,
+      "oldLabel": "물을 나눠주고 지나간다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "water": -2,
+            "van": 3,
+            "moodAll": 3
+          }
+        }
+      ],
+      "cost": {
+        "water": 2
+      }
+    },
+    {
+      "id": "meet_doljanchi",
+      "index": 1,
+      "oldLabel": "선물만 두고 간다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "food": -1,
+            "moodAll": 5
+          }
+        }
+      ],
+      "cost": {
+        "food": 1
+      }
+    },
+    {
+      "id": "meet_ring",
+      "index": 1,
+      "oldLabel": "물만 나눠주고 간다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "water": -1,
+            "moodAll": 1
+          }
+        }
+      ],
+      "cost": {
+        "water": 1
+      }
+    },
+    {
+      "id": "wx_underpass",
+      "index": 0,
+      "oldLabel": "합석한다 (식량 1 보탠다)",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "food": -1,
+            "moodAll": 5,
+            "time": 50,
+            "note": {
+              "type": "사건",
+              "title": "고가 밑 라면 회식",
+              "body": "폭풍 대피소의 합석. 남쪽, 동쪽, 북쪽. 아무도 왜냐고 묻지 않았다."
+            }
+          }
+        }
+      ],
+      "cost": {
+        "food": 1
+      }
+    },
+    {
+      "id": "meet_southbound",
+      "index": 1,
+      "oldLabel": "물 한 통을 건네고 듣는다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "water": -1,
+            "time": 15,
+            "note": {
+              "type": "소문",
+              "title": "무엇을 싣고 왔냐",
+              "body": "북쪽 검문의 질문. 사람이 아니라 짐을 본다. 뭘 찾는 걸까.",
+              "links": [
+                "천리안"
+              ]
+            }
+          }
+        }
+      ],
+      "cost": {
+        "water": 1
+      }
+    },
+    {
+      "id": "circus_broke",
+      "index": 2,
+      "oldLabel": "남매에게 물과 식량만 주고 간다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "water": -1,
+            "food": -1,
+            "moodAll": 2,
+            "flag": "circus_helped"
+          }
+        }
+      ],
+      "cost": {
+        "food": 1,
+        "water": 1
+      }
+    },
+    {
+      "id": "meet_runner",
+      "index": 1,
+      "oldLabel": "물병을 건네고 지나간다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "water": -1,
+            "moodAll": 3
+          }
+        }
+      ],
+      "cost": {
+        "water": 1
+      }
+    },
+    {
+      "id": "comp_cookoff",
+      "index": 0,
+      "oldLabel": "개최한다 (식량 1)",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "food": -1,
+            "time": 45,
+            "moodAll": 6,
+            "note": {
+              "type": "사건",
+              "title": "제1회 달구지 요리 대회",
+              "body": "심사위원 보리, 두 접시 완식으로 심사 거부(만점). 정비 수첩에 요리 코너 개설."
+            }
+          }
+        }
+      ],
+      "cost": {
+        "food": 1
+      }
+    },
+    {
+      "id": "talkr_bori_2",
+      "index": 0,
+      "oldLabel": "협상에 응한다 (식량 조금)",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "food": -1,
+            "moodAll": 3
+          }
+        }
+      ],
+      "cost": {
+        "food": 1
+      }
+    },
+    {
+      "id": "world_resistance_supply_resentment",
+      "index": 1,
+      "oldLabel": "우리 보급을 나눠 놓고 간다",
+      "oldReq": null,
+      "oldOutcomeMechanics": [
+        {
+          "p": 1,
+          "fx": {
+            "food": -3,
+            "fuel": -3,
+            "moodAll": 2,
+            "note": "마을 창고에 달구지 보급을 나눠 놓았다."
+          }
+        }
+      ],
+      "cost": {
+        "food": 3,
+        "fuel": 3
+      }
+    }
+  ],
+  "freeChoices": [
+    {
+      "id": "meet_barber",
+      "index": 2
+    },
+    {
+      "id": "ev_tunnel_warehouse",
+      "index": 2
+    },
+    {
+      "id": "circus_broke",
+      "index": 3
+    }
+  ]
+}

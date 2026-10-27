@@ -1,0 +1,280 @@
+{
+  "seed": 280003,
+  "freshStarts": 1,
+  "attempts": 1,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_sleep",
+  "storyDone": true,
+  "targetMet": true,
+  "party": [
+    "kangwoo",
+    "parkss",
+    "leo"
+  ],
+  "dog": true,
+  "up": {
+    "bench": true
+  },
+  "choices": 115,
+  "traceRecords": 608,
+  "recordsExcludingEntryAndPaidReload": 378,
+  "actionsByType": {
+    "new-game": 1,
+    "unpaid-entry-reload": 115,
+    "choice": 115,
+    "paid-result-reload": 115,
+    "explore": 22,
+    "travel": 30,
+    "drive": 55,
+    "trade": 64,
+    "work": 8,
+    "camp": 11,
+    "meet-recruit": 3,
+    "recruit-step": 9,
+    "board-open": 6,
+    "npc-rumor": 14,
+    "camp-talk": 9,
+    "accept-companion": 3,
+    "talk": 16,
+    "earned-perk": 6,
+    "buy-upgrade": 1,
+    "seoul-enter": 5
+  },
+  "endingState": {
+    "day": 11,
+    "min": 1173,
+    "km": 1044,
+    "food": 18,
+    "water": 26,
+    "fuel": 43.70118593333293,
+    "scrap": 56,
+    "van": 100,
+    "fatigue": 39.639639999999865
+  },
+  "route": [
+    "yangsan",
+    "miryang",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "sangju",
+    "mungyeong",
+    "chungju",
+    "cheongju",
+    "daejeon",
+    "nonsan",
+    "jeonju",
+    "muju",
+    "gimcheon",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "gwangju",
+    "damyang",
+    "namwon",
+    "jeonju",
+    "nonsan",
+    "airfield",
+    "nonsan",
+    "gongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "review": {
+    "choiceCount": 115,
+    "rawEntryResultCharacters": 40291,
+    "speechCalls": 101,
+    "npcMenus": 28,
+    "notes": 138,
+    "fullTuplesSame": 92,
+    "fullTuplesDifferent": 23,
+    "resultStringsSame": 95,
+    "resultStringsDifferent": 20,
+    "extraRecordsRead": 55,
+    "npcGreetingRumorPairs": 14,
+    "allEntryResultRead": true,
+    "allSpeechRead": true,
+    "allNotesRead": true,
+    "allExtraTextRead": true
+  },
+  "novelStableSelectedPairs": [
+    {
+      "n": 336,
+      "id": "conflict_fuel_detour",
+      "choice": 3,
+      "label": "왕진 대신 소년에게 진료 쪽지를 들려 보낸다"
+    },
+    {
+      "n": 364,
+      "id": "conflict_silent_cab",
+      "choice": 1,
+      "label": "둘 사이에 앉아 쪽지를 읽는다"
+    },
+    {
+      "n": 407,
+      "id": "conflict_campfire",
+      "choice": 1,
+      "label": "말없이 장작을 보탠다"
+    },
+    {
+      "n": 497,
+      "id": "exp_postoffice",
+      "choice": 1,
+      "label": "편지 한 다발을 읽는다"
+    }
+  ],
+  "dynamicCampDayRawNewPairs": [
+    {
+      "n": 306,
+      "id": "camp_5_parkss",
+      "choice": 1,
+      "label": "이어받을 사람이 알 수 있도록 기록을 정리한다"
+    },
+    {
+      "n": 403,
+      "id": "camp_7_parkss",
+      "choice": 1,
+      "label": "알아보기 어려운 글씨를 선생과 함께 고친다"
+    }
+  ],
+  "reload": {
+    "checks": {
+      "unpaid-entry-reload": {
+        "count": 115,
+        "stateEqual": true,
+        "failures": []
+      },
+      "paid-result-reload": {
+        "count": 115,
+        "stateEqual": true,
+        "failures": []
+      }
+    },
+    "reapplied": 0
+  },
+  "chat": {
+    "observedChatSequences": 4,
+    "sameDayDuplicateSequences": 0,
+    "matches": [
+      {
+        "n": 146,
+        "id": "thread-massacre-kangwoo",
+        "day": 3,
+        "min": 1215.9,
+        "lines": 8,
+        "once": true
+      },
+      {
+        "n": 202,
+        "id": "daily-me-kangwoo-seat",
+        "day": 4,
+        "min": 1027.1,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 282,
+        "id": "daily-me-kangwoo-seat",
+        "day": 6,
+        "min": 554.4,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 564,
+        "id": "daily-me-kangwoo-seat",
+        "day": 11,
+        "min": 1129,
+        "lines": 9,
+        "once": false
+      }
+    ],
+    "savedStamps": {
+      "daily:thread-massacre-kangwoo": {
+        "day": 3,
+        "km": 219
+      },
+      "thread-massacre-kangwoo": {
+        "day": 3,
+        "km": 219
+      },
+      "daily:daily-me-kangwoo-seat": {
+        "day": 11,
+        "km": 1036
+      }
+    },
+    "note": "Actual UI.playChat sequences matched source D.chats.lines; independent ambient/banter are not grouped as crew chats. Same chat on a later day is intentionally permitted. No forced pickChat call during natural run."
+  },
+  "sourceReviewClose": {
+    "at": "2026-10-26T08:36:08.578951+00:00",
+    "engineHash": "a9e246136f3100132bf83625f4b032bd4b315782538f31364b38b0e32df93e0b",
+    "all40Match": true,
+    "files": {
+      "src/01-style.html": "4eda85d39b614253f95df7b08c7b54d6b018b994c52a400b69aba69168e82dd8",
+      "src/01b-quest-style.html": "9d03f07188652cb026214f5a544c37a57040c46e5f509d13b6775ff481cdcff5",
+      "src/02-dom.html": "5c9e9c5b1c6a38cfb3b39c7918f81c0133fb5cec3abf0f47a7d5694aa10e4504",
+      "src/03-data.js": "0a55d69dc5b22c8ea09e143ffc5fc85705a92eb7b9e3ea69b6e10290c7e5ce26",
+      "src/03b-portraits.js": "1be24a24f8a55c05c241a31ac8d629a7b95346f8b020b401a2587d08a28ac450",
+      "src/03c-icons.js": "43c35b0eae246755a8703ac12ba117d9e3805c2af65991ae396391066a05e370",
+      "src/03d-bgm.js": "21040addf53954219257ec72dac46679d609929dcc185e5a7bee7fe74880245e",
+      "src/03e-bgm-title.js": "f615bed831348a698ceb9b8715f86c969337c229ca4e89f66a9a21534bf1aebf",
+      "src/03f-npc-portraits.js": "83d6d84750f1180139a91edc03128a7d1002d5a4af4970d08d6d06b930296555",
+      "src/03g-scenes.js": "1496baa672148f27ed2cd25f60b7d0d992cb448fab543b31bd2aa4e8fc26bb48",
+      "src/03h-audio.js": "957e6637474c0777b03b6fc7e834541dedb94df3c98004651972884be5ee1b01",
+      "src/03i-story-expansion.js": "e127803a976d58b37ecca39ec895831bd4f630b32111a19f7bc995dc9c5cb130",
+      "src/03j-camp-conversations.js": "2ae7d5f0bda0c6ff5c3022a6a9b7b528301dc89ed947734a67a0600edd035363",
+      "src/03k-main-evidence.js": "a5db76a1c3382e95c05801efd7d64f5fc48d62fe39917252d432ce242d8d0bd0",
+      "src/03l-main-recovery.js": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377",
+      "src/03m-finale-reading.js": "727303d88553012a8a626a062fd3075830de980df2ed9f7f3d0eaee197a4f4db",
+      "src/03n-offline-foley.js": "325e4ec7781b000e5c97d5a9884858d182d9c04f8deb2494cc4004deee9df40b",
+      "src/04a-engine-core.js": "91259dfca14fa77649dc2fd6b3fca6fa85d09d1e8857da8231f01384aa56c458",
+      "src/04b-engine-crew.js": "b8882e3dfb872eac16f13114dfdb9f86e3efe5f9efd71aa591ff2e4c440351ed",
+      "src/04c-engine-travel.js": "d316356cd0f6fc5ee201f19edeabd435e442695403022ea95ca88e138b7a1234",
+      "src/04d-engine-director.js": "6b44c5dc2de0aa27b9318aaa266851a9e0ac5d5dd7cbffe69142550e72aae67f",
+      "src/04e-engine-world.js": "428bb7fd748738e81fa52bf3428c2104695e812bd61bce6a67810ef4991a2790",
+      "src/04f-engine-quests.js": "0a035a63782b3e7d3fc1a6abfaac668099a3a061407e2364be9990a6eb6e7fa1",
+      "src/04g-engine-evidence.js": "82591b69185615a7e03db7386600923348a314755760d682a5d6ca63fdceff34",
+      "src/04h-engine-presentation.js": "3943bc15ba063f08464b7b494534519cde8c59d1e3e073023af7851af8a3f0f5",
+      "src/05-scene.js": "5fefbb4d5d34e51396a1bd66ce22df43eb7cea77da6ab142de5338c3562023dd",
+      "src/05a-road-environment.js": "90a6c2cae7f255f206b4aafbb5579c11c51b135d87673ca0174bb30714b8711f",
+      "src/05b-vehicle-kit.js": "3354ea777e00f1a8eabbd3e3795b4d2ea2e00d2aca7ba04a9b19c5e81d37a1ff",
+      "src/05c-road-cue-kit.js": "f87aa05dea8b962c2f6cb3a16e8dc3287491828be32fc315d27563d96a2b3311",
+      "src/05d-route-panorama.js": "72fed40558aa9db85cc0fd2f0c69ffedabf574472dfe47cd3dfa88131f759e84",
+      "src/05e-road-continuity.js": "9705ec95712411f5fcc5ab222e8b5a38deb1473a21d3a1c7a986dcf2f3697f1e",
+      "src/06-mapgraph.js": "8c87a68afebd1379a6154a30b9db4be05fb2f66931a92c2beaa50081dd66c2a6",
+      "src/07-ui.js": "17d64cdd4adb7e1d3711a88fdd4c3dee2a7bd6a3f59e50d4bf6b893c5ffd69d7",
+      "src/07d-ui-quests.js": "d4320969bb4487a8e6e5cc0f0ca7a857c81c92675b364b8a91bcc3f89ec64ded",
+      "src/07e-ui-audio.js": "f752354d046b966a6195f77c76d22e7eaa46adfac24d50fc244867994ad68880",
+      "src/07f-ui-road-thoughts.js": "5c23662801c710c34789f2f84c23894cc81983958fbba7c145b7f13d97dd9503",
+      "src/07g-ui-home.js": "db4b7c78349135e37a0de85a71e817e0e2b2377e6a39128e80304e25aa7f270c",
+      "src/07h-story-pages.js": "b60b537b29aee726fe67924666eba6693b090837f079f52893d009f9a7c0b1e7",
+      "src/08-offroad.js": "26097b4830734a01bab583f4b8ce6e84c3990a3a8a55f5cfd0ccd5656942b9d0",
+      "src/09-close.html": "81f092938c9cdd0d3892ae5a2c17203a446918aa81ce6829500391be8a8d8ef7"
+    }
+  },
+  "findings": {
+    "newNarrativeOrReaderConfirmed": 0,
+    "newVisualSourceConfirmed": 1,
+    "ids": [
+      "S20-V01"
+    ]
+  },
+  "limitations": [
+    "Source-informed Node VM finite-resource gameplay; not blind or human playtest",
+    "Root separately owns browser UI/crop verification",
+    "Only two actual scene rasters inspected, not all97 observed keys",
+    "No sidequest accepted: board destinations did not meet this policy corridor; displayed offers still read",
+    "No Bori tracking/tag/bath/family, Jeju/father exhibit/Mingyu, radio repair/crafting",
+    "No natural exposure of the newly repaired cycle20 event/chat set",
+    "1044km includes planned crew recruitment after finishing east corridor and a public airfield detour; not a shortest-route playthrough"
+  ],
+  "partialReplay": {
+    "executed": false,
+    "reason": "Parent cancelled after confirming old normal unpaid camp_dogs export has no frozen reader scene keys; no partial run added to cohort"
+  },
+  "sourceEdited": false
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "narration",
+    "text": "사람 넷과 편지는 모두 올렸다. 약 상자 하나가 진흙에 빠졌지만 더 내려갈 수는 없었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "괜찮아요. 문경에서 나눠 쓰면 돼요."
+  },
+  {
+    "kind": "narration",
+    "text": "여자가 남은 상자를 꼭 안았다."
+  }
+]

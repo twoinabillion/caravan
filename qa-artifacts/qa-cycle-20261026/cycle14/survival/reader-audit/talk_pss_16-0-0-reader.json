@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "약사도 사람이야. 약사의 약이 이거고."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 사탕을 입 안에서 굴렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "약국 30년을 남 처방만 하다 보면 자기 처방을 잊어. 그래서 정해뒀지. 힘든 날은 사탕 하나."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "오늘이 힘든 날이에요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…아니."
+  },
+  {
+    "kind": "narration",
+    "text": "잠깐 뜸을 들였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "오늘은 예방 접종이야."
+  },
+  {
+    "kind": "narration",
+    "text": "그 말을 하는 동안 빈 사탕 봉지를 손에서 접었다 폈다 했다."
+  }
+]

@@ -1,0 +1,259 @@
+{
+  "cycle": 21,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 281002,
+  "evidenceClass": "Fresh finite public-action engine run and extracted actual production reader; isolated storage, no browser claim",
+  "cohortExcluded": false,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "policyStops": 0,
+  "productionChangesDuringJourney": false,
+  "status": "ended",
+  "error": null,
+  "engineSourceHash": "43b982b514b86d2227f8b15b5cd2551c170c715b4173617123e9f4fb98fe6f3c",
+  "result": {
+    "ending": "story_done",
+    "method": "core_quarantine",
+    "storyDone": true,
+    "session1End": true,
+    "day": 14,
+    "km": 695,
+    "actualCompanions": [
+      "minji",
+      "kangwoo",
+      "jaeyi"
+    ],
+    "bori": false
+  },
+  "totals": {
+    "choices": 100,
+    "trace": 554,
+    "otherExecutedPublicActionsIncludingPerks": 253,
+    "otherPublicActionsExcludingPerks": 247,
+    "earnedPerkSelections": 6,
+    "actionKinds": {
+      "new-game": 1,
+      "unpaid-entry-reload": 100,
+      "choice": 100,
+      "paid-result-reload": 100,
+      "explore": 30,
+      "travel": 19,
+      "drive": 39,
+      "camp": 13,
+      "buy-upgrade": 7,
+      "trade-bundle": 7,
+      "trade": 50,
+      "work": 13,
+      "meet-recruit": 3,
+      "board-open": 8,
+      "accept-quest": 2,
+      "turnin-quest": 2,
+      "npc-rumor": 15,
+      "recruit-step": 6,
+      "camp-talk": 9,
+      "camp-meal": 9,
+      "accept-companion": 3,
+      "earned-perk": 6,
+      "sell-demand": 2,
+      "craft": 5,
+      "seoul-enter": 5
+    },
+    "novelPairs": 12,
+    "noveltyBaseline": "systems1–20 primary transcripts exact event+selected label; dynamic camp IDs contain camp-night number, not all are wholly unseen authored scenes",
+    "novelChoicePairs": [
+      {
+        "trace": 117,
+        "event": "exp_icehouse",
+        "choice": "지나친다"
+      },
+      {
+        "trace": 178,
+        "event": "camp_4_kangwoo",
+        "choice": "서연에게 가르친 것을 묻고 먼저 호출하지 않는다"
+      },
+      {
+        "trace": 212,
+        "event": "camp_5_kangwoo",
+        "choice": "무전기를 사이에 두고 조용히 함께 기다린다"
+      },
+      {
+        "trace": 225,
+        "event": "van_garage",
+        "choice": "공구를 챙긴다"
+      },
+      {
+        "trace": 280,
+        "event": "camp_7_minji",
+        "choice": "퓨즈 정리 대신 점검 덮개 소리를 함께 듣는다"
+      },
+      {
+        "trace": 351,
+        "event": "camp_9_jaeyi",
+        "choice": "둘 자리를 재이가 고르게 하고 함께 다시 묶는다"
+      },
+      {
+        "trace": 364,
+        "event": "exp_postoffice",
+        "choice": "식품 소포만 조심히 연다"
+      },
+      {
+        "trace": 388,
+        "event": "camp_10_jaeyi",
+        "choice": "상자를 지탱하고 재이가 고른 간격으로 다시 묶는다"
+      },
+      {
+        "trace": 394,
+        "event": "ev_jaeyi_law",
+        "choice": "우리 여정도 기록해달라고 한다"
+      },
+      {
+        "trace": 421,
+        "event": "exp_checkpoint",
+        "choice": "조심조심 뒤진다"
+      },
+      {
+        "trace": 431,
+        "event": "camp_11_kangwoo",
+        "choice": "함께 앉아 무전기의 호출을 기다린다"
+      },
+      {
+        "trace": 489,
+        "event": "camp_12_jaeyi",
+        "choice": "재이와 짐 사이 간격을 맞추고 끈을 조인다"
+      }
+    ],
+    "reload": {
+      "entry": 100,
+      "paid": 100,
+      "skippedBeforeFirstRadio": [],
+      "failed": 0,
+      "reapplied": 0,
+      "readerEqual": 100,
+      "terminalSeparateExcluded": 1
+    },
+    "disabledChoicesExecuted": 0,
+    "rejectedApiCalls": 0,
+    "novelPairsIgnoringCampNightId": 6,
+    "novelPairsIgnoringCampNightIdList": [
+      {
+        "trace": 117,
+        "event": "exp_icehouse",
+        "choice": "지나친다"
+      },
+      {
+        "trace": 225,
+        "event": "van_garage",
+        "choice": "공구를 챙긴다"
+      },
+      {
+        "trace": 364,
+        "event": "exp_postoffice",
+        "choice": "식품 소포만 조심히 연다"
+      },
+      {
+        "trace": 394,
+        "event": "ev_jaeyi_law",
+        "choice": "우리 여정도 기록해달라고 한다"
+      },
+      {
+        "trace": 421,
+        "event": "exp_checkpoint",
+        "choice": "조심조심 뒤진다"
+      },
+      {
+        "trace": 489,
+        "event": "camp_12_jaeyi",
+        "choice": "재이와 짐 사이 간격을 맞추고 끈을 조인다"
+      }
+    ]
+  },
+  "features": {
+    "upgrades": [
+      "bench",
+      "garden",
+      "collector",
+      "snorkel",
+      "stove",
+      "mudtires",
+      "sidebox"
+    ],
+    "crafts": [
+      "pipe",
+      "xbow",
+      "bolt",
+      "molotov",
+      "ammo"
+    ],
+    "actualPerks": [
+      "mj_camp",
+      "mj_eye",
+      "kw_guard",
+      "kw_sniper",
+      "jy_magpie",
+      "jy_map"
+    ],
+    "radioFixed": false,
+    "radioRepairs": 0,
+    "radioBroadcasts": 0,
+    "tubeSource": null,
+    "campRepair": 0,
+    "campTalks": 9,
+    "campMeals": 9,
+    "trades": 50,
+    "tradeBundles": 7,
+    "actualSale": 2,
+    "publicWork": 13,
+    "boardViews": 8,
+    "sideQuestAccept": 2,
+    "sideQuestTurnin": 2,
+    "letterCompletion": 0,
+    "medicalTreatment": 0
+  },
+  "review": {
+    "completed": true,
+    "choiceEntries": 100,
+    "exactPriorContexts": 80,
+    "newContexts": 20,
+    "newParagraphs": 35,
+    "actualReaderTurns": 843,
+    "exactPriorTurns": 724,
+    "newTurnsRead": 119,
+    "changedReaderEntries": 24,
+    "roadSpeechOccurrences": 44,
+    "roadSpeechUnique": 35,
+    "chatGroups": 11,
+    "chatLines": 34,
+    "sameDayChatDuplicates": 0,
+    "npcCalls": 15,
+    "npcShownGroups": 30,
+    "work": 13,
+    "notes": 129,
+    "scenes": 100,
+    "browserCropVerified": false,
+    "naturalConfirmedFindings": 0,
+    "clarityCandidates": 0,
+    "derivedBoundaryConfirmed": 0
+  },
+  "gaps": [
+    "라디오 진공관/수리/자연방송, 직접치료, 별도캠프정비, 편지완료·철거·무기선반할인 미발생. 제작5개는 일반40분/일반가격이며 캠프정비효과는 실제민지mj_camp 특기의 자동작동과 구분한다.",
+    "2개 조달은 갖고 있던 부품을 게시판 명시인계로 전달했다. 후속 게시판은 읽었지만 후속 퀘스트까지 완료했다고 주장하지 않는다.",
+    "그림/crop/음성 실제 UI는 root 담당. 자연 우체국 미지급export를 제공했고 source selection은 전용키와 일치한다."
+  ],
+  "findingsFile": "findings.json",
+  "sourceStart": "source-start-full.json",
+  "sourceEnd": "source-end-full.json",
+  "sourceReviewEnd": "source-review-end-full.json",
+  "sourceUnchanged": true,
+  "sourceFileCount": 40,
+  "separateExcludedEvidence": {
+    "terminalReload": "terminal-reload.json",
+    "policyPreflight": "policy-preflight.json",
+    "actualChoiceRendererDisproof": "checkpoint-hint-disproof.json",
+    "preFreezePostofficeRegression": "../../cycle20/systems/postoffice-review/README.md"
+  }
+}

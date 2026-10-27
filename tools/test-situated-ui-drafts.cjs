@@ -109,7 +109,9 @@ test('retained record study uses its restoration branch, not classification or u
   const note = '엄마의 발표 원고를 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.';
   // The quote is the historical draft revision, not today's played result.
   assert.ok(html.includes(quote));
-  assert.ok(source.includes(note)); assert.ok(html.includes(note));
+  const fixture=JSON.parse(fs.readFileSync(path.join(root,'tests/fixtures/design-draft-copy.json'),'utf8'));
+  assert.equal(note,fixture.recordNote);assert.match(fixture.provenance.recordNote,/draft creation/);
+  assert.ok(html.includes(note));
   assert.match(html, /수원에서 검증키 확인/);
   assert.match(html, /성곽 공동체 · 주변 탐색 · 준비 30분/);
   assert.match(html, /세종 → 공주 · 6km 남음/);

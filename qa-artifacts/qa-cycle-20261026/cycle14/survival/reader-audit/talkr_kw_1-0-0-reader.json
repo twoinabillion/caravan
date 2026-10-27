@@ -1,0 +1,31 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "하나. 6시 방향 3km, 연기 한 줄기. 밥 짓는 연기다. 위협 아님. 둘. …둘이 뭐였지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "네?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…노면. 노면 상태 양호. 이상."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "연기가 밥 짓는 건지 어떻게 알아요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "색. 그리고 시간."
+  },
+  {
+    "kind": "narration",
+    "text": "세상을 이렇게 읽는 사람이 한 명 있으면, 차 안의 잠이 깊어진다."
+  }
+]

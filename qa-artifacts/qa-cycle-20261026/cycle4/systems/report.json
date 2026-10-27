@@ -1,0 +1,966 @@
+{
+  "cycle": 4,
+  "agent": "systems",
+  "seed": 264002,
+  "evidenceClass": "Actual source engine in isolated Node VM; no browser visual/audio/input verification.",
+  "sourceFrozenDuringBothJourneys": true,
+  "engineSourceHash": "91cb4b3838ecc2989ff5dcb67c629774541d0ba41795701dbaf1ea982e248af1",
+  "sourceHashScope": "Engine/content hash produced by runner, not a complete UI/build hash.",
+  "freshStarts": 2,
+  "completedJourneys": 1,
+  "policyStops": 1,
+  "engineFailures": 0,
+  "engineDeaths": 0,
+  "fixtureJourneys": 0,
+  "normalSaveResumptions": 0,
+  "productionChangesInCycle": [
+    {
+      "file": "src/07-ui.js",
+      "detail": "Remove automatic checkQuest from showStl; reject absent/ended game at entry and legacy explicit handoff callback. Modern market callback already has a terminal guard."
+    },
+    {
+      "file": "src/04e-engine-world.js",
+      "detail": "Reject absent/ended state at G.checkQuest entry before any item/reward/note/quest mutation."
+    }
+  ],
+  "totals": {
+    "choices": 150,
+    "traceRecords": 770,
+    "entryReloads": 150,
+    "paidResultReloads": 150,
+    "reloadFailures": 0,
+    "paidReapply": 0
+  },
+  "attempts": [
+    {
+      "id": "01",
+      "seed": 264002,
+      "origin": "fresh finite public-action journey",
+      "classification": "policy_stop_not_engine_failure",
+      "engineSourceHash": "91cb4b3838ecc2989ff5dcb67c629774541d0ba41795701dbaf1ea982e248af1",
+      "ending": null,
+      "method": null,
+      "session1End": false,
+      "ended": false,
+      "day": 8,
+      "km": 708,
+      "actualCompanions": [
+        "minji",
+        "eunsu"
+      ],
+      "choices": 67,
+      "traceRecords": 350,
+      "actionCounts": {
+        "new-game": 1,
+        "unpaid-entry-reload": 67,
+        "choice": 67,
+        "paid-result-reload": 67,
+        "explore": 14,
+        "travel": 24,
+        "drive": 49,
+        "trade": 15,
+        "meet-recruit": 2,
+        "camp-meal": 5,
+        "camp": 6,
+        "recruit-step": 6,
+        "settlement-repair": 1,
+        "work": 7,
+        "trade-bundle": 1,
+        "board-open": 2,
+        "buy-upgrade": 2,
+        "camp-talk": 4,
+        "accept-companion": 2,
+        "earned-perk": 3,
+        "craft": 5
+      },
+      "publicActionsExcludingChoicesAndReloadAndInitialization": 148,
+      "reload": {
+        "entry": 67,
+        "paid": 67,
+        "loaded": 134,
+        "failed": 0,
+        "paidReapply": 0
+      },
+      "campConversation": {
+        "attempts": 4,
+        "success": 4,
+        "rejected": []
+      },
+      "upgrades": [
+        {
+          "id": "bench",
+          "result": true
+        },
+        {
+          "id": "collector",
+          "result": true
+        }
+      ],
+      "route": [
+        "yangsan",
+        "miryang",
+        "yangsan",
+        "ulsan",
+        "gyeongju",
+        "daegu",
+        "gyeongju",
+        "daegu",
+        "gumi",
+        "gimcheon",
+        "sangju",
+        "mungyeong",
+        "chungju",
+        "cheongju",
+        "daejeon",
+        "cheongju",
+        "sejong",
+        "gongju",
+        "sejong",
+        "gongju",
+        "sejong",
+        "gongju",
+        "sejong",
+        "gongju"
+      ],
+      "policyStop": {
+        "reason": "The policy kept requesting a Muju detour after committing to the eastern corridor, then its strict food condition threw even while public travel was legal.",
+        "at": "gongju",
+        "food": 0,
+        "water": 20,
+        "hunger": 1,
+        "thirst": 0,
+        "gameAlive": true,
+        "preserved": "player02/attempt01/player02-save.json"
+      },
+      "files": {
+        "summary": "player02/attempt01/player02-summary.json",
+        "trace": "player02/attempt01/player02-trace.json",
+        "save": "player02/attempt01/player02-save.json"
+      },
+      "features": [
+        {
+          "n": 105,
+          "action": "settlement-repair",
+          "result": {
+            "ok": true,
+            "cost": 8,
+            "amount": 30,
+            "mins": 180
+          },
+          "at": "daegu",
+          "party": [],
+          "before": {
+            "scrap": 22,
+            "van": 87,
+            "fuel": 47.58811999999988,
+            "water": 13,
+            "food": 12,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          },
+          "after": {
+            "scrap": 14,
+            "van": 100,
+            "fuel": 47.58811999999988,
+            "water": 13,
+            "food": 11,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          }
+        },
+        {
+          "n": 108,
+          "action": "trade-bundle",
+          "result": {
+            "ok": true,
+            "water": 5,
+            "food": 2,
+            "price": 5
+          },
+          "at": "daegu",
+          "party": [],
+          "before": {
+            "scrap": 26,
+            "van": 100,
+            "fuel": 47.58811999999988,
+            "water": 13,
+            "food": 12,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          },
+          "after": {
+            "scrap": 21,
+            "van": 100,
+            "fuel": 47.58811999999988,
+            "water": 18,
+            "food": 14,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          }
+        },
+        {
+          "n": 221,
+          "action": "craft",
+          "id": "pipe",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 42,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 13,
+              "의약품": 1,
+              "탄약": 0
+            }
+          },
+          "after": {
+            "scrap": 36,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 13,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            }
+          }
+        },
+        {
+          "n": 222,
+          "action": "craft",
+          "id": "xbow",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 36,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 13,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            }
+          },
+          "after": {
+            "scrap": 24,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1
+            }
+          }
+        },
+        {
+          "n": 223,
+          "action": "craft",
+          "id": "bolt",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 24,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1
+            }
+          },
+          "after": {
+            "scrap": 21,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3
+            }
+          }
+        },
+        {
+          "n": 224,
+          "action": "craft",
+          "id": "molotov",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 21,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3
+            }
+          },
+          "after": {
+            "scrap": 19,
+            "van": 100,
+            "fuel": 26.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2
+            }
+          }
+        },
+        {
+          "n": 225,
+          "action": "craft",
+          "id": "ammo",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 19,
+            "van": 100,
+            "fuel": 26.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2
+            }
+          },
+          "after": {
+            "scrap": 11,
+            "van": 100,
+            "fuel": 26.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 11,
+              "의약품": 1,
+              "탄약": 2,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "seed": 264002,
+      "origin": "fresh finite public-action journey",
+      "classification": "completed",
+      "engineSourceHash": "91cb4b3838ecc2989ff5dcb67c629774541d0ba41795701dbaf1ea982e248af1",
+      "ending": "story_done",
+      "method": "core_sleep",
+      "session1End": true,
+      "ended": true,
+      "day": 8,
+      "km": 758,
+      "actualCompanions": [
+        "minji",
+        "eunsu"
+      ],
+      "choices": 83,
+      "traceRecords": 420,
+      "actionCounts": {
+        "new-game": 1,
+        "unpaid-entry-reload": 83,
+        "choice": 83,
+        "paid-result-reload": 83,
+        "explore": 16,
+        "travel": 22,
+        "drive": 44,
+        "trade": 32,
+        "meet-recruit": 2,
+        "camp-meal": 5,
+        "camp": 7,
+        "recruit-step": 6,
+        "settlement-repair": 1,
+        "work": 8,
+        "trade-bundle": 1,
+        "board-open": 2,
+        "buy-upgrade": 2,
+        "camp-talk": 6,
+        "accept-companion": 2,
+        "earned-perk": 3,
+        "craft": 5,
+        "sell-demand": 1,
+        "seoul-enter": 5
+      },
+      "publicActionsExcludingChoicesAndReloadAndInitialization": 170,
+      "reload": {
+        "entry": 83,
+        "paid": 83,
+        "loaded": 166,
+        "failed": 0,
+        "paidReapply": 0
+      },
+      "campConversation": {
+        "attempts": 6,
+        "success": 5,
+        "rejected": [
+          {
+            "n": 315,
+            "reason": "이번 밤에는 이미 한 사람과 오래 이야기했다"
+          }
+        ]
+      },
+      "upgrades": [
+        {
+          "id": "bench",
+          "result": true
+        },
+        {
+          "id": "collector",
+          "result": true
+        }
+      ],
+      "route": [
+        "yangsan",
+        "miryang",
+        "yangsan",
+        "ulsan",
+        "gyeongju",
+        "daegu",
+        "gyeongju",
+        "daegu",
+        "gumi",
+        "gimcheon",
+        "sangju",
+        "mungyeong",
+        "chungju",
+        "cheongju",
+        "daejeon",
+        "cheongju",
+        "cheonan",
+        "pyeongtaek",
+        "cheonan",
+        "pyeongtaek",
+        "suwon",
+        "seoul"
+      ],
+      "policyStop": null,
+      "files": {
+        "summary": "player02/attempt02/player02-summary.json",
+        "trace": "player02/attempt02/player02-trace.json",
+        "save": "player02/attempt02/player02-save.json"
+      },
+      "features": [
+        {
+          "n": 105,
+          "action": "settlement-repair",
+          "result": {
+            "ok": true,
+            "cost": 8,
+            "amount": 30,
+            "mins": 180
+          },
+          "at": "daegu",
+          "party": [],
+          "before": {
+            "scrap": 22,
+            "van": 87,
+            "fuel": 47.58811999999988,
+            "water": 13,
+            "food": 12,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          },
+          "after": {
+            "scrap": 14,
+            "van": 100,
+            "fuel": 47.58811999999988,
+            "water": 13,
+            "food": 11,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          }
+        },
+        {
+          "n": 108,
+          "action": "trade-bundle",
+          "result": {
+            "ok": true,
+            "water": 5,
+            "food": 2,
+            "price": 5
+          },
+          "at": "daegu",
+          "party": [],
+          "before": {
+            "scrap": 26,
+            "van": 100,
+            "fuel": 47.58811999999988,
+            "water": 13,
+            "food": 12,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          },
+          "after": {
+            "scrap": 21,
+            "van": 100,
+            "fuel": 47.58811999999988,
+            "water": 18,
+            "food": 14,
+            "items": {
+              "부품": 9,
+              "의약품": 1,
+              "탄약": 0
+            }
+          }
+        },
+        {
+          "n": 221,
+          "action": "craft",
+          "id": "pipe",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 42,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 13,
+              "의약품": 1,
+              "탄약": 0
+            }
+          },
+          "after": {
+            "scrap": 36,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 13,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            }
+          }
+        },
+        {
+          "n": 222,
+          "action": "craft",
+          "id": "xbow",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 36,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 13,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            }
+          },
+          "after": {
+            "scrap": 24,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1
+            }
+          }
+        },
+        {
+          "n": 223,
+          "action": "craft",
+          "id": "bolt",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 24,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1
+            }
+          },
+          "after": {
+            "scrap": 21,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3
+            }
+          }
+        },
+        {
+          "n": 224,
+          "action": "craft",
+          "id": "molotov",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 21,
+            "van": 100,
+            "fuel": 28.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3
+            }
+          },
+          "after": {
+            "scrap": 19,
+            "van": 100,
+            "fuel": 26.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2
+            }
+          }
+        },
+        {
+          "n": 225,
+          "action": "craft",
+          "id": "ammo",
+          "result": true,
+          "at": "chungju",
+          "party": [
+            "minji"
+          ],
+          "before": {
+            "scrap": 19,
+            "van": 100,
+            "fuel": 26.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2
+            }
+          },
+          "after": {
+            "scrap": 11,
+            "van": 100,
+            "fuel": 26.498855066666756,
+            "water": 15,
+            "food": 5,
+            "items": {
+              "부품": 11,
+              "의약품": 1,
+              "탄약": 2,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2
+            }
+          }
+        },
+        {
+          "n": 351,
+          "action": "sell-demand",
+          "result": {
+            "ok": true,
+            "price": 13
+          },
+          "at": "suwon",
+          "party": [
+            "minji",
+            "eunsu"
+          ],
+          "before": {
+            "scrap": 3,
+            "van": 100,
+            "fuel": 20.502855066667056,
+            "water": 21,
+            "food": 12,
+            "items": {
+              "부품": 13,
+              "의약품": 1,
+              "탄약": 2,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2,
+              "부모님의 검증키": 1
+            }
+          },
+          "after": {
+            "scrap": 16,
+            "van": 100,
+            "fuel": 20.502855066667056,
+            "water": 21,
+            "food": 12,
+            "items": {
+              "부품": 12,
+              "의약품": 1,
+              "탄약": 2,
+              "쇠파이프": 1,
+              "석궁": 1,
+              "볼트": 3,
+              "화염병": 2,
+              "부모님의 검증키": 1
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "dialogueReview": {
+    "encounters": 150,
+    "newOrChangedReadInFull": 43,
+    "exactPreviouslyReviewed": 107,
+    "uniqueNewEventChoicePairs": 33,
+    "files": [
+      "transcript01.json",
+      "transcript02.json",
+      "changed-transcript.json"
+    ],
+    "reviewed": [
+      "Opening workshop/handing over keys and mixed immediate/delayed choices",
+      "Minji guest/recruit progression, parts-funded fuse activity and echo in finale",
+      "Eastern corridor rescue, risk label, split rope and mixed rescue outcome",
+      "Eunsu guest/task/recruit progression; camp facts/inferences echoed in Seoul",
+      "Protagonist motivation choice echoed before final entry and after final decision",
+      "Sleep ending with Eunsu objection and bond cost; closed records consequence persists",
+      "Uplink separation, local facilities preserved and actual SESSION 1 END"
+    ]
+  },
+  "findings": [],
+  "scopedVerdict": "No new confirmed game defect in the two captured journeys, replay checks and all encountered dialogue. This is not exhaustive game or browser clearance.",
+  "harnessErrors": [
+    {
+      "stage": "Before any journey started",
+      "classification": "QA adapter nested escaping compilation failure",
+      "retained": [
+        "harness-compile-failed.cjs",
+        "harness-error01.txt",
+        "run01.txt"
+      ],
+      "note": "Corrected only the QA adapter escaping; no game-source change and not counted as a fresh start."
+    }
+  ],
+  "limitations": [
+    "No Muju barter took place: the final east-route policy removed the incompatible Muju detour.",
+    "Only bench (rear rail seat extension) and collector (rainwater collector) were acquired. No armory purchase or discounted craft in this cycle.",
+    "All five recipes used base prices; garage repair preceded formal Minji recruitment, so no Minji repair discount was exercised.",
+    "No new radio tube/repair, driver medical treatment, Bori rescue, disassembly/reinstallation or active local-quest checkpoint in this cycle.",
+    "Camp conversation count includes guests before formal recruitment; only the accept-companion records establish actual companions.",
+    "VM dialogue strips speaker presentation; real reader pagination, mobile visuals and audio are owned by root."
+  ],
+  "activeQuestCheckpoint": {
+    "available": false,
+    "checked": [
+      "player02/attempt01/player02-save.json",
+      "player02/attempt02/decision-409-save.json"
+    ],
+    "note": "Both quest:null; no fabricated active quest save."
+  },
+  "nextCycle": {
+    "seed": 265002,
+    "status": "Preparation only; waiting for root source freeze",
+    "targets": [
+      "Jaeyi normal recruitment",
+      "Muju public barter",
+      "armory normal purchase and discounted crafting",
+      "Complete a finite journey even if feature targets are not all reached"
+    ]
+  },
+  "productionChangesDuringJourneys": [],
+  "postJourneyFindings": [
+    {
+      "phase": "After the frozen cycle4 journeys; root actual-browser report reproduced independently in VM",
+      "id": "SYS09-implicit-quest-handoff",
+      "status": "fixed",
+      "source": "Root mobile browser restored ../story/normal-resume-active-board.json and entered settlement normally.",
+      "contract": "Opening a settlement or board previews a decision; only explicit 전달한다 commits the active quest.",
+      "before": {
+        "normalSave": "../story/normal-resume-active-board.json",
+        "at": "daegu",
+        "day": 91,
+        "min": 390,
+        "parts": [
+          17,
+          15
+        ],
+        "scrap": [
+          0,
+          24
+        ],
+        "quest": [
+          "active",
+          null
+        ],
+        "cause": "showStl invoked G.checkQuest whenever previewOnly was false and the market was open."
+      },
+      "changes": [
+        {
+          "file": "src/07-ui.js",
+          "detail": "Remove automatic checkQuest from showStl; reject absent/ended game at entry and legacy explicit handoff callback. Modern market callback already has a terminal guard."
+        },
+        {
+          "file": "src/04e-engine-world.js",
+          "detail": "Reject absent/ended state at G.checkQuest entry before any item/reward/note/quest mutation."
+        }
+      ],
+      "scopePreserved": [
+        "No layout changes",
+        "No effects, reward, bonus or material-cost change",
+        "Already-paid records are not rewritten or compensated",
+        "Followup generation unchanged; subsequent quest still requires explicit acceptance"
+      ],
+      "regression": {
+        "file": "tests/test_qa_cycle_quest_handoff.cjs",
+        "red": {
+          "pass": 2,
+          "fail": 5,
+          "log": "quest-handoff-before.tap"
+        },
+        "intermediate": {
+          "pass": 6,
+          "fail": 1,
+          "log": "quest-handoff-after.tap",
+          "note": "Only remaining failure was fixture const action redeclaration on second production handler extraction; wrapped extraction in its own block and preserved the log."
+        },
+        "green": {
+          "pass": 7,
+          "fail": 0,
+          "log": "quest-handoff-after02.tap"
+        },
+        "related": {
+          "pass": 46,
+          "fail": 0,
+          "log": "quest-handoff-focused.tap"
+        }
+      },
+      "evidenceLimits": "Root supplied real-browser reproduction. This agent verified actual engine with extracted production UI handlers and DOM/audio sinks; not visual QA.",
+      "minorCopy": {
+        "files": [
+          "src/07-ui.js current market rumor",
+          "src/07-ui.js legacy market rumor"
+        ],
+        "change": "지역 이름+은 → 지역 이름+에서는",
+        "origin": "Root actual mobile market sentence",
+        "test": "Exact two owning templates reviewed; root rechecks rendered page."
+      }
+    }
+  ]
+}

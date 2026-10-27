@@ -191,7 +191,7 @@ function renderHarness(state,height=450){
   placeStoryDock(){},normalizeRecruitDecisionDock(){},storyRecordHtml:()=>'',storyInspectionHtml:()=>'',storyCompletedRecordHtml:()=>'',storyOutcomeSummaryHtml:()=>'',
   clearStoryAuto(){},VO:{play(){}},AMBI:{play(){}},heldStoryAdvanceKeys:new Set(),$:()=>null,
   requestAnimationFrame:fn=>fn(),closeEvent(){},setStoryReaderMode:(s,mode)=>{s.readerMode=mode;env.renderStoryState();}});
- for(const name of ['storyElapsedChip','storyResourceChange','storyResourceIcon','storyResourceHtml','storyDocumentTitle','pagedStoryHtml','storyResultPageTurns','renderPagedStory','advanceStory','storyDisplayTurns'])helper(env,name);
+ for(const name of ['storyElapsedChip','storyFeedbackNumber','storyFeedbackChip','storyResourceChange','storyResourceIcon','storyResourceHtml','storyDocumentTitle','pagedStoryHtml','storyResultPageTurns','renderPagedStory','advanceStory','storyDisplayTurns'])helper(env,name);
  env.renderStoryState=()=>env.renderPagedStory(state,sheet);
  return {env,state,sheet,reader,dock,get captures(){return captures}};
 }

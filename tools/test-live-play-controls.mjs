@@ -109,7 +109,7 @@ test('generated shell JavaScript parses, and fallback controls are siblings befo
 
 test('refresh saves the current journey, captures a supported panel, and restores without restarting', () => {
   let saves = 0, stored, opened = 0;
-  const doc = { getElementById: id => ({ classList: { contains: () => id === 'ovl-status' } }),
+  const doc = { getElementById: id => id === 'dk-status' ? { click: () => opened++ } : ({ classList: { contains: () => id === 'ovl-status' } }),
     querySelector: s => s === '#status-prop' ? { dataset: { toolSurface: 'bag' } } : { scrollTop: 18 },
     querySelectorAll: () => [{ textContent: '가방', click: () => opened++ }] };
   const script = source.slice(source.indexOf('  const viewKey='), source.indexOf('  const studioVisible='));
@@ -119,4 +119,29 @@ test('refresh saves the current journey, captures a supported panel, and restore
   });
   assert.equal(saves, 1); assert.equal(opened, 1);
   assert.deepEqual(JSON.parse(stored).open, ['ovl-status']);
+});
+
+test('live refresh restores the world map without toggling the stopped regional map', () => {
+  const start = source.indexOf('function gameShell(){');
+  const end = source.indexOf('\nasync function imageFiles');
+  const html = vm.runInNewContext(source.slice(start,end) + '\ngameShell()', { buildRevision: 42 });
+  const js = html.match(/<script type="module">([\s\S]*?)<\/script>/)[1];
+  const script = js.slice(js.indexOf('  const viewKey='), js.indexOf('  const studioVisible='));
+  for (const regionalAtRestore of [true, false]) {
+    let stored, world = true, regional = regionalAtRestore, saves = 0;
+    const regionalButton = { textContent: '지도 접기', click: () => { regional = !regional; } };
+    const worldButton = { textContent: '', click: () => { world = true; } };
+    const doc = {
+      getElementById: id => id === 'minimap' ? worldButton : { classList: { contains: () => id === 'ovl-map' && world } },
+      querySelector: () => null,
+      querySelectorAll: () => [regionalButton, worldButton],
+    };
+    const ctx = vm.createContext({ game: { contentDocument: doc, contentWindow: { caravanLiveControls: { save: () => saves++ } } },
+      sessionStorage: { setItem: (_, v) => stored = v, getItem: () => stored }, setTimeout: fn => fn(), console });
+    vm.runInContext(script + '\nthis.capture=captureView;this.restore=restoreView;', ctx);
+    ctx.capture(); world = false; ctx.restore();
+    assert.equal(world, true, 'the captured world overlay must reopen');
+    assert.equal(regional, regionalAtRestore, 'the independent regional-map state must remain unchanged');
+    assert.equal(saves, 1);
+  }
 });

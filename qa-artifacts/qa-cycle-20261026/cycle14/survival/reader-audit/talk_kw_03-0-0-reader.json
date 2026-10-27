@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "narration",
+    "text": "군대식 체조가 시작됐다. 목— 어깨— 허리— 구령은 없는데 박자가 정확하다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "이거 몇 개씩 해요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "……."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "강우 씨?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "세는 거 아니다."
+  },
+  {
+    "kind": "narration",
+    "text": "어깨를 돌리자 우두둑 소리가 났다. 동작 몇 개를 따라 했을 뿐인데 조금 개운했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "운전자는 몸이 장비다. 정비해라."
+  },
+  {
+    "kind": "narration",
+    "text": "강우식 운전 전 점검이었다."
+  }
+]

@@ -1,0 +1,200 @@
+[
+  {
+    "id": "exp_brewery",
+    "choices": {
+      "1.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "exp_postoffice",
+    "choices": {
+      "0.0": [
+        "party_first",
+        "me",
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "vg_shootingstar",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    },
+    "entry": [
+      "party_first"
+    ]
+  },
+  {
+    "id": "exp_comicroom",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "vg_traincross",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "vg_priceboard",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "wx_worms",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "exp_chalkwall",
+    "choices": {
+      "1.0": [
+        "party_first",
+        "me",
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "vg_northglow",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "crisis_rockfall",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ],
+      "0.1": [
+        "me"
+      ]
+    }
+  },
+  {
+    "id": "crisis_hose",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "vg_moonriver",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "exp_kiln",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "exp_hanji",
+    "choices": {
+      "0.0": [
+        "party_first",
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "ai_tunnellights",
+    "choices": {
+      "0.0": [
+        "me"
+      ]
+    }
+  },
+  {
+    "id": "near_miryang_ice",
+    "choices": {
+      "0.0": [
+        "me"
+      ]
+    }
+  },
+  {
+    "id": "near_yeosu_camellia",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "vg_seoulline",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "crisis_boar",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ],
+      "1.0": [
+        "me"
+      ]
+    }
+  },
+  {
+    "id": "crisis_battery",
+    "choices": {
+      "0.0": [
+        "me"
+      ]
+    }
+  },
+  {
+    "id": "vg_ivy",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "exp_selfwash",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "ev_migratory_birds",
+    "choices": {
+      "0.0": [
+        "party_first"
+      ]
+    }
+  }
+]

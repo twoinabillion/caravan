@@ -15,7 +15,7 @@ function fixture(){
     sessionStorage:{setItem:(k,v)=>memory.set(k,v),getItem:k=>memory.get(k)},
     AMBI:{action:()=>{}},
     esc:s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
-    G:{explore:()=>calls.push('explore'),fieldRepair:()=>calls.push('repair'),fixRadio:()=>{calls.push('radio');return true;},openRescue:()=>calls.push('walkfuel'),openRecruitStep:()=>calls.push('recruitstep')},
+    G:{explore:()=>calls.push('explore'),fieldRepair:()=>calls.push('repair'),fixRadio:()=>{calls.push('radio');return true;},seekFuel:()=>calls.push('walkfuel'),openRecruitStep:()=>calls.push('recruitstep')},
     showCampHub:()=>calls.push('camp'),showStl:()=>calls.push('stl'),showCraft:()=>calls.push('craft'),renderAll:()=>{},closeModal:()=>{},wireJourneyDetails:()=>{},models});
   vm.runInContext(controller+dispatch+section('  function rememberJourneyView(){','  let questRouteFocus='),ctx);
   const choices=models.map(m=>({dataset:{staySelect:m.action},attrs:{},focus(){this.focused=true;},setAttribute(k,v){this.attrs[k]=v;}}));

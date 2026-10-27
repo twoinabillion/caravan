@@ -1,0 +1,819 @@
+{
+  "cycle": 23,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 283002,
+  "evidenceClass": "One fresh finite public-action engine journey with actual production reader extraction; local85-file vision review; isolated storage, no browser interaction claim",
+  "cohortExcluded": false,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "policyStops": 0,
+  "productionChangesDuringJourney": false,
+  "status": "ended",
+  "error": null,
+  "engineSourceHash": "8cb29d99d11f89115ad974f7021b59d8373f85f8a7cf37fdbca18102fb9730f3",
+  "result": {
+    "ending": "story_done",
+    "method": "core_sleep",
+    "storyDone": true,
+    "session1End": true,
+    "day": 14,
+    "km": 947,
+    "actualCompanions": [
+      "kangwoo",
+      "jaeyi",
+      "leo"
+    ],
+    "bori": true
+  },
+  "totals": {
+    "choices": 97,
+    "trace": 579,
+    "otherExecutedPublicActionsIncludingPerks": 287,
+    "otherPublicActionsExcludingPerks": 281,
+    "earnedPerkSelections": 6,
+    "actionKinds": {
+      "new-game": 1,
+      "unpaid-entry-reload": 97,
+      "choice": 97,
+      "paid-result-reload": 97,
+      "explore": 26,
+      "travel": 25,
+      "drive": 52,
+      "camp": 13,
+      "buy-upgrade": 6,
+      "trade-bundle": 9,
+      "trade": 72,
+      "work": 12,
+      "camp-meal": 12,
+      "meet-recruit": 3,
+      "recruit-step": 6,
+      "board-open": 4,
+      "npc-rumor": 14,
+      "camp-talk": 11,
+      "accept-companion": 3,
+      "earned-perk": 6,
+      "sell-demand": 2,
+      "accept-quest": 1,
+      "craft": 5,
+      "seoul-enter": 5
+    },
+    "novelPairs": 14,
+    "novelChoicePairs": [
+      {
+        "trace": 101,
+        "event": "camp_2_kangwoo",
+        "choice": "서연에게 가르친 것을 묻고 먼저 호출하지 않는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 113,
+        "event": "exp_ricemill",
+        "choice": "참기름을 짠다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 150,
+        "event": "camp_3_kangwoo",
+        "choice": "무전기를 사이에 두고 조용히 함께 기다린다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 196,
+        "event": "camp_4_jaeyi",
+        "choice": "둘 자리를 재이가 고르게 하고 함께 다시 묶는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 219,
+        "event": "camp_5_jaeyi",
+        "choice": "상자를 지탱하고 재이가 고른 간격으로 다시 묶는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 260,
+        "event": "camp_6_kangwoo",
+        "choice": "함께 앉아 무전기의 호출을 기다린다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 296,
+        "event": "camp_7_jaeyi",
+        "choice": "재이와 짐 사이 간격을 맞추고 끈을 조인다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 301,
+        "event": "comp_food_debate",
+        "choice": "심판을 본다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 335,
+        "event": "camp_8_kangwoo",
+        "choice": "함께 앉아 무전기의 호출을 기다린다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 371,
+        "event": "camp_9_jaeyi",
+        "choice": "재이와 짐 사이 간격을 맞추고 끈을 조인다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 417,
+        "event": "camp_10_leo",
+        "choice": "물 1을 나눠 마시며 조용히 곁에 앉는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 450,
+        "event": "camp_11_leo",
+        "choice": "물 1을 나누고 보리 옆에 앉는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 466,
+        "event": "hist_bot_stop_manual",
+        "choice": "부품만 챙긴다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 487,
+        "event": "camp_12_leo",
+        "choice": "물 1을 나누고 나란히 쉬어 간다",
+        "generatedCamp": true
+      }
+    ],
+    "novelPairsIgnoringCampNightId": 3,
+    "novelPairsIgnoringCampNightIdList": [
+      {
+        "trace": 113,
+        "event": "exp_ricemill",
+        "choice": "참기름을 짠다"
+      },
+      {
+        "trace": 301,
+        "event": "comp_food_debate",
+        "choice": "심판을 본다"
+      },
+      {
+        "trace": 466,
+        "event": "hist_bot_stop_manual",
+        "choice": "부품만 챙긴다"
+      }
+    ],
+    "newPermanentPairs": [
+      {
+        "trace": 113,
+        "event": "exp_ricemill",
+        "choice": "참기름을 짠다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 301,
+        "event": "comp_food_debate",
+        "choice": "심판을 본다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 466,
+        "event": "hist_bot_stop_manual",
+        "choice": "부품만 챙긴다",
+        "generatedCamp": false
+      }
+    ],
+    "noveltyBaseline": "Exact eventId+choice label against systems transcripts from cycles1-22; not global cross-agent novelty and not normalized dynamic-camp chapter novelty.",
+    "reload": {
+      "entry": 97,
+      "paid": 97,
+      "skippedBeforeFirstRadio": [],
+      "failed": 0,
+      "reapplied": 0,
+      "readerEqual": 97,
+      "terminalSeparateExcluded": 1
+    },
+    "disabledChoicesExecuted": 0,
+    "rejectedApiCalls": 0
+  },
+  "features": {
+    "crafts": [
+      {
+        "trace": 362,
+        "id": "molotov",
+        "result": true,
+        "before": {
+          "at": "jeonju",
+          "day": 10,
+          "min": 1166,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 65.2919907333334,
+          "water": 25,
+          "food": 23,
+          "scrap": 44,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "after": {
+          "at": "jeonju",
+          "day": 10,
+          "min": 1186,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 63.29199073333341,
+          "water": 25,
+          "food": 23,
+          "scrap": 42,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "paid": {
+          "scrap": 2,
+          "parts": 0,
+          "fuel": 2,
+          "minutes": 20
+        },
+        "messages": [
+          "🔥 화염병 ×2 제작 완료"
+        ],
+        "publicGateEvidence": "policy.cjs lines99-103 selects only visible recipes with status.ok; public-features.cjs uses G.craftQuote. Natural snapshots show armory and actual payment; no separate synthetic quote is counted as play."
+      },
+      {
+        "trace": 387,
+        "id": "bolt",
+        "result": true,
+        "before": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 575,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 64,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "after": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 595,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 61,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2,
+            "볼트": 3
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "paid": {
+          "scrap": 3,
+          "parts": 0,
+          "fuel": 0,
+          "minutes": 20
+        },
+        "messages": [
+          "➶ 볼트 ×3 제작 완료"
+        ],
+        "publicGateEvidence": "policy.cjs lines99-103 selects only visible recipes with status.ok; public-features.cjs uses G.craftQuote. Natural snapshots show armory and actual payment; no separate synthetic quote is counted as play."
+      },
+      {
+        "trace": 388,
+        "id": "pipe",
+        "result": true,
+        "before": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 595,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 61,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2,
+            "볼트": 3
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "after": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 615,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 56,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2,
+            "볼트": 3,
+            "쇠파이프": 1
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "paid": {
+          "scrap": 5,
+          "parts": 0,
+          "fuel": 0,
+          "minutes": 20
+        },
+        "messages": [
+          "🔧 쇠파이프 제작 완료"
+        ],
+        "publicGateEvidence": "policy.cjs lines99-103 selects only visible recipes with status.ok; public-features.cjs uses G.craftQuote. Natural snapshots show armory and actual payment; no separate synthetic quote is counted as play."
+      },
+      {
+        "trace": 389,
+        "id": "ammo",
+        "result": true,
+        "before": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 615,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 56,
+          "items": {
+            "부품": 8,
+            "의약품": 1,
+            "탄약": 0,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2,
+            "볼트": 3,
+            "쇠파이프": 1
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "after": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 635,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 49,
+          "items": {
+            "부품": 7,
+            "의약품": 1,
+            "탄약": 2,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2,
+            "볼트": 3,
+            "쇠파이프": 1
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "paid": {
+          "scrap": 7,
+          "parts": 1,
+          "fuel": 0,
+          "minutes": 20
+        },
+        "messages": [
+          "• 소총탄 ×2 제작 완료"
+        ],
+        "publicGateEvidence": "policy.cjs lines99-103 selects only visible recipes with status.ok; public-features.cjs uses G.craftQuote. Natural snapshots show armory and actual payment; no separate synthetic quote is counted as play."
+      },
+      {
+        "trace": 390,
+        "id": "xbow",
+        "result": true,
+        "before": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 635,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 49,
+          "items": {
+            "부품": 7,
+            "의약품": 1,
+            "탄약": 2,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2,
+            "볼트": 3,
+            "쇠파이프": 1
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "after": {
+          "at": "gwangju",
+          "day": 11,
+          "min": 655,
+          "party": [
+            "kangwoo",
+            "jaeyi"
+          ],
+          "dog": false,
+          "fuel": 66.47599073333356,
+          "water": 25,
+          "food": 23,
+          "scrap": 39,
+          "items": {
+            "부품": 6,
+            "의약품": 1,
+            "탄약": 2,
+            "할아버지의 봉투": 1,
+            "부모님의 검증키": 1,
+            "교란 장치": 1,
+            "화염병": 2,
+            "볼트": 3,
+            "쇠파이프": 1,
+            "석궁": 1
+          },
+          "up": {
+            "bench": true,
+            "sidebox": true,
+            "armory": true,
+            "awning": true,
+            "stove": true,
+            "curtain": true
+          },
+          "injuries": {},
+          "radioFixed": false
+        },
+        "paid": {
+          "scrap": 10,
+          "parts": 1,
+          "fuel": 0,
+          "minutes": 20
+        },
+        "messages": [
+          "🏹 사제 석궁 제작 완료"
+        ],
+        "publicGateEvidence": "policy.cjs lines99-103 selects only visible recipes with status.ok; public-features.cjs uses G.craftQuote. Natural snapshots show armory and actual payment; no separate synthetic quote is counted as play."
+      }
+    ],
+    "upgrades": [
+      {
+        "trace": 47,
+        "id": "bench",
+        "result": true,
+        "scrap": 12,
+        "minutes": 300
+      },
+      {
+        "trace": 92,
+        "id": "sidebox",
+        "result": true,
+        "scrap": 18,
+        "minutes": 200
+      },
+      {
+        "trace": 203,
+        "id": "armory",
+        "result": true,
+        "scrap": 24,
+        "minutes": 200
+      },
+      {
+        "trace": 205,
+        "id": "awning",
+        "result": true,
+        "scrap": 16,
+        "minutes": 200
+      },
+      {
+        "trace": 206,
+        "id": "stove",
+        "result": true,
+        "scrap": 20,
+        "minutes": 200
+      },
+      {
+        "trace": 248,
+        "id": "curtain",
+        "result": true,
+        "scrap": 14,
+        "minutes": 200
+      }
+    ],
+    "perks": [
+      {
+        "trace": 111,
+        "comp": "kangwoo",
+        "id": "kw_guard",
+        "name": "경계 태세",
+        "description": "매복·강도류 조우 빈도 대폭 감소",
+        "learning": "강우가 정차할 때마다 확인할 방향과 위험 신호를 정해 경계 순서를 만들었다."
+      },
+      {
+        "trace": 153,
+        "comp": "kangwoo",
+        "id": "kw_sniper",
+        "name": "저격수",
+        "description": "조우마다 첫 탄약 선택은 반드시 성공 — 연발은 위치가 드러난다",
+        "learning": "강우가 첫발에 끝낼 거리와 사선을 미리 확인하는 사격 절차를 익혔다."
+      },
+      {
+        "trace": 194,
+        "comp": "jaeyi",
+        "id": "jy_magpie",
+        "name": "까치의 눈",
+        "description": "주행 25km마다 길에서 고철을 줍는다",
+        "learning": "재이가 달리는 차에서도 쓸 만한 고철이 모인 곳을 알아보는 기준을 만들었다."
+      },
+      {
+        "trace": 204,
+        "comp": "jaeyi",
+        "id": "jy_map",
+        "name": "보물 감각",
+        "description": "즉시 미확인 장소 2곳의 위치를 짚어낸다",
+        "learning": "재이가 오래된 지도와 버려진 표지판을 대조해 물자가 남을 만한 장소를 찾아냈다."
+      },
+      {
+        "trace": 438,
+        "comp": "leo",
+        "id": "leo_vip",
+        "name": "단골 손님",
+        "description": "정착지 거래 할인 10% → 20%",
+        "learning": "레오가 장터 사람들의 이름과 필요한 물건을 기억해 거래할 때 먼저 말을 붙이기 시작했다."
+      },
+      {
+        "trace": 453,
+        "comp": "leo",
+        "id": "leo_bori",
+        "name": "보리의 육감",
+        "description": "발견형 이벤트가 훨씬 자주 일어난다",
+        "learning": "레오가 보리의 걸음과 귀 움직임을 보고 길가의 낯선 기척을 읽기 시작했다."
+      }
+    ],
+    "radioRepairs": 0,
+    "radioBroadcasts": 0,
+    "naturalTubeAcquired": false,
+    "healingActions": 0,
+    "injuryHistory": [
+      {
+        "trace": 136,
+        "event": "salvage_claim",
+        "before": {},
+        "after": {
+          "driver": {
+            "label": "무릎 찰과상",
+            "days": 2
+          }
+        }
+      },
+      {
+        "trace": 185,
+        "event": "crisis_drowsy",
+        "before": {
+          "driver": {
+            "label": "무릎 찰과상",
+            "days": 1
+          }
+        },
+        "after": {}
+      }
+    ],
+    "acceptedQuest": {
+      "kind": "deliver",
+      "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+      "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+      "from": "daejeon",
+      "to": "miryang",
+      "due": 107,
+      "noExpiry": true,
+      "need": null,
+      "ready": false,
+      "navigation": {
+        "key": "story_relay_1",
+        "kind": "local",
+        "target": "miryang",
+        "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "action": "밀양 장터까지 이동한다"
+      }
+    },
+    "questTurnins": 0,
+    "activeCompanionAbilities": 0
+  },
+  "review": {
+    "entryResults": 97,
+    "actualTurns": 771,
+    "baseline": "cycle12/systems/reader-diagnostic-after.json through cycle22/systems/reader-transcript.json exact complete turn objects",
+    "entries": 97,
+    "exactPriorTurns": 718,
+    "newTurns": 53,
+    "changedEntries": 17,
+    "unknown": [
+      {
+        "n": 397,
+        "event": "lc_damyang_juktong",
+        "phase": "entry",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "죽통밥이요. 대나무가 밥을 지키고, 밥이 대나무 향을 얻고. 서로 돕는 밥이죠.",
+        "displayName": "???"
+      }
+    ],
+    "notes": 128,
+    "roadSpeech": 47,
+    "uniqueRoadSpeech": 36,
+    "chatGroups": 18,
+    "chatLines": 92,
+    "sameDayDuplicateChatGroups": [],
+    "npcInteractions": 14,
+    "npcShownMenus": 28,
+    "work": 12,
+    "uniqueMessages": 93,
+    "sceneContexts": 97,
+    "uniqueImageFiles": 85,
+    "imageMissing": 0,
+    "reviewMethod": "Read all53 new complete reader turns and29 new paragraphs in current contexts;718 exact prior complete-turn matches and76 exact full contexts compared. Read all97 choice menus, full finale,128 notes,47 short-speech occurrences/36 unique texts,18 chat groups/92 lines,14 NPC greetings+replies,12 work results and93 unique messages. Viewed8 contact sheets covering85 originals; expanded workshop and trader originals. Local image review is not actual browser/crop/audio QA."
+  },
+  "gaps": [
+    "Vehicle radio tube/repair/broadcast did not occur; station tape scene is separate.",
+    "No explicit healing, active companion ability, dismantling or restoration action. Driver injury recovered with time.",
+    "One public relay-chain quest was accepted at Daejeon, but not delivered to Miryang before main ending. No procurement/turn-in/follow-up completion claimed.",
+    "Local file vision review is not actual browser crop/mobile/audio verification. 18 proposed pictures remain unwired;8 known art occurrences are not new issues."
+  ],
+  "findingsFile": "findings.json",
+  "sourceStart": "source-start-full.json",
+  "sourceEnd": "source-end-full.json",
+  "sourceReviewEnd": "source-review-end-full.json",
+  "sourceUnchanged": true,
+  "sourceFileCount": 40,
+  "separateExcludedEvidence": {
+    "terminalReload": "terminal-reload.json"
+  },
+  "report": "REPORT.md",
+  "audit": "audit-metrics.json"
+}

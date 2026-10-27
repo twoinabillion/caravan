@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "맞아. 또 셀 거야."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생은 태연했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "세는 동안엔 딴생각이 안 나거든. 이건 재고 관리 겸… 뭐라고 하나. 그, 나한테 내리는—"
+  },
+  {
+    "kind": "narration",
+    "text": "말이 거기서 멈췄다. 박 선생은 다시 알약을 세기 시작했고, 문장은 끝내 안 돌아왔다."
+  }
+]

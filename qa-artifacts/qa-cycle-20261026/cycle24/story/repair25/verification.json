@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-26T11:31:51.126651+00:00",
+  "sourceFiles": [
+    {
+      "file": "src/03-data.js",
+      "before": "a7f87a177d1620f4870345c02155bdfa4868f998d1a0696add98b0cb85e0a968",
+      "after": "7509a66ef2a242edb9e063a1f82493c7e920c20638b09286616231a7314ab551",
+      "exactApprovedChangesOnly": true
+    },
+    {
+      "file": "src/03i-story-expansion.js",
+      "before": "e127803a976d58b37ecca39ec895831bd4f630b32111a19f7bc995dc9c5cb130",
+      "after": "e8884a905e801e05e3077fe1081cab5d7c73e522a19d47c3f96a48d1c7167d5a",
+      "exactApprovedChangesOnly": true
+    }
+  ],
+  "red": {
+    "pass": 3,
+    "fail": 8,
+    "log": "before-normalized.tap"
+  },
+  "green": {
+    "pass": 11,
+    "fail": 0,
+    "log": "after-owned-scope.tap"
+  },
+  "historicalDialogueContract": {
+    "pass": 17,
+    "fail": 0,
+    "log": "dialogue-contract.tap",
+    "hashUpdated": false,
+    "projectionAdded": false
+  },
+  "sourceQuoteCountOrRoutesChanged": false,
+  "scope": "Two approved copy owners only. No event gate, effects, index, time, weather, state schema or renderer modification.",
+  "originalFirstRed": "before.tap contains isolated fixture normalization/import-store errors; retained without treating those as production defects.",
+  "permanentTestScope": "Only the owned chat, D.roadEchoCopy and settlement_road_echo definition. Whole two-file exact byte proof is an implementation-time artifact, not a permanent full-source lock."
+}

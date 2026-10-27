@@ -1,0 +1,172 @@
+[
+  {
+    "id": "ev_comp_argument",
+    "i": 0,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-0.json"
+  },
+  {
+    "id": "ev_comp_argument",
+    "i": 1,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-1.json"
+  },
+  {
+    "id": "ev_comp_argument",
+    "i": 2,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-2.json"
+  },
+  {
+    "id": "comp_dialect",
+    "i": 0,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-3.json"
+  },
+  {
+    "id": "comp_dialect",
+    "i": 1,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-4.json"
+  },
+  {
+    "id": "ev_cinema_film",
+    "i": 0,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-5.json"
+  },
+  {
+    "id": "ev_cinema_film",
+    "i": 1,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-6.json"
+  },
+  {
+    "id": "ev_cinema_film",
+    "i": 2,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-7.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 0,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 1200,
+    "file": "legacy/paid-8.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 1,
+    "party": [
+      "minji",
+      "kangwoo"
+    ],
+    "dog": false,
+    "min": 1200,
+    "file": "legacy/paid-9.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 0,
+    "party": [],
+    "dog": false,
+    "min": 1200,
+    "file": "legacy/paid-10.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 0,
+    "party": [],
+    "dog": true,
+    "min": 1200,
+    "file": "legacy/paid-11.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 0,
+    "party": [
+      "minji"
+    ],
+    "dog": false,
+    "min": 1200,
+    "file": "legacy/paid-12.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 0,
+    "party": [
+      "minji"
+    ],
+    "dog": true,
+    "min": 1200,
+    "file": "legacy/paid-13.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 0,
+    "party": [
+      "minji",
+      "kangwoo",
+      "eunsu"
+    ],
+    "dog": false,
+    "min": 1200,
+    "file": "legacy/paid-14.json"
+  },
+  {
+    "id": "near_jinju_lantern",
+    "i": 0,
+    "party": [
+      "minji",
+      "kangwoo",
+      "eunsu"
+    ],
+    "dog": true,
+    "min": 1200,
+    "file": "legacy/paid-15.json"
+  }
+]

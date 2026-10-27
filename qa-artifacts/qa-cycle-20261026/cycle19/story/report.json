@@ -1,0 +1,235 @@
+{
+  "seed": 279003,
+  "freshStarts": 1,
+  "attempts": 1,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "targetMet": true,
+  "party": [
+    "minji",
+    "leo",
+    "eunsu"
+  ],
+  "dog": true,
+  "up": {
+    "bench": true
+  },
+  "choices": 95,
+  "traceRecords": 496,
+  "recordsExcludingEntryAndPaidReload": 306,
+  "actionsByType": {
+    "new-game": 1,
+    "unpaid-entry-reload": 95,
+    "choice": 95,
+    "paid-result-reload": 95,
+    "explore": 18,
+    "travel": 21,
+    "drive": 42,
+    "trade": 49,
+    "meet-recruit": 3,
+    "camp": 8,
+    "recruit-step": 8,
+    "camp-talk": 7,
+    "accept-companion": 3,
+    "talk": 13,
+    "earned-perk": 6,
+    "work": 7,
+    "board-open": 5,
+    "accept-quest": 1,
+    "npc-rumor": 12,
+    "quest-turnin": 1,
+    "buy-upgrade": 1,
+    "seoul-enter": 5
+  },
+  "endState": {
+    "at": "seoul",
+    "location": "서울 — 남산",
+    "day": 9,
+    "min": 672,
+    "km": 683,
+    "driving": null,
+    "fuel": 49.47557866666688,
+    "water": 26,
+    "food": 18,
+    "scrap": 58,
+    "van": 98.98000000000027,
+    "fatigue": 15.95012,
+    "party": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "items": {
+      "부품": 13,
+      "의약품": 1,
+      "탄약": 0,
+      "교란 장치": 1,
+      "부모님의 검증키": 1
+    },
+    "weather": "storm",
+    "campNight": 8,
+    "campPlan": {},
+    "campParticipants": [
+      "minji",
+      "leo",
+      "eunsu"
+    ],
+    "campConversation": null,
+    "crew": {
+      "minji": {
+        "name": "민지",
+        "mood": 100,
+        "bond": 42,
+        "injury": null
+      },
+      "leo": {
+        "name": "레오",
+        "mood": 100,
+        "bond": 20,
+        "injury": null
+      },
+      "eunsu": {
+        "name": "은수",
+        "mood": 100,
+        "bond": 16,
+        "injury": null
+      }
+    },
+    "up": {
+      "bench": true
+    },
+    "sideQuest": null,
+    "boardOffers": [
+      {
+        "index": 0,
+        "label": "동수에게 편지",
+        "description": "\"전주 서문 시장의 동수에게 편지 한 통만. 사례는 적지만… 꼭 좀 전해 주세요.\"",
+        "from": "suwon",
+        "to": "jeonju",
+        "due": 14,
+        "kind": "letter",
+        "need": null,
+        "reward": 7
+      },
+      {
+        "index": 1,
+        "label": "약 꾸러미",
+        "description": "\"약 꾸러미, 무주 터널까지 부탁드려도 될까요? 사례는 고철 10.\"",
+        "from": "suwon",
+        "to": "muju",
+        "due": 13,
+        "kind": "deliver",
+        "need": null,
+        "reward": 10
+      }
+    ],
+    "boardAt": "suwon",
+    "boardDay": 9,
+    "ended": true,
+    "endKind": "story_done",
+    "main": {
+      "id": "main_namsan",
+      "kind": "main",
+      "status": "completed",
+      "tracked": true,
+      "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+      "act": "종장",
+      "chapterId": "ending",
+      "eyebrow": "메인 스토리 · 종장",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "phase": "남산 코어 · 여정 기록",
+      "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+      "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+      "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+      "steps": [
+        {
+          "id": "ending",
+          "label": "남산 코어에서 최종 결정을 내렸다",
+          "state": "done"
+        }
+      ],
+      "progress": {
+        "have": 1,
+        "need": 1,
+        "label": "완료"
+      }
+    },
+    "navigation": {
+      "key": "main_ending",
+      "kind": "main",
+      "target": "seoul",
+      "title": "강제 이송 명령에 마지막 결론을 내렸다",
+      "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+    }
+  },
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "ulsan",
+    "yangsan",
+    "miryang",
+    "hapcheon",
+    "geochang",
+    "namwon",
+    "damyang",
+    "gwangju",
+    "damyang",
+    "namwon",
+    "jeonju",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "review": {
+    "choiceCount": 95,
+    "rawEntryResultCharacters": 33587,
+    "speechCalls": 66,
+    "npcMenus": 24,
+    "notes": 111,
+    "fullTuplesSame": 79,
+    "fullTuplesDifferent": 16,
+    "resultStringsSame": 84,
+    "resultStringsDifferent": 11
+  },
+  "sameDayChatDuplicates": 0,
+  "chatSequences": 3,
+  "newRawCoveragePairs": [
+    "camp_7_eunsu:1",
+    "comp_engine_sound:2",
+    "exp_chalkwall:0"
+  ],
+  "newStableNonCampPairs": [
+    "comp_engine_sound:2",
+    "exp_chalkwall:0"
+  ],
+  "dynamicCampNoveltyWarning": "camp_7_eunsu:1 is a night-indexed runtime ID and is not proof of a new authored camp option.",
+  "naturalCopyMatchedFields": 9,
+  "naturalConfirmedReaderFindings": 1,
+  "naturalSourceArtMismatch": 1,
+  "clarityCandidates": 2,
+  "artCandidate": 1,
+  "staticDerivedFindings": 2,
+  "runtimeErrors": [],
+  "sourceHash": "7168ef4d79391c676d30d45782d469ed7a9fb09efc67c2c85859c6d18464f49e",
+  "all40SourceBeforeEndReviewEqual": true,
+  "gaps": [
+    "Bori individual tracking/tag/bath/family not triggered",
+    "Jaeyi/Kangwoo/Parkss not recruited",
+    "No hidden-region detour, Jeju, father exhibit, Mingyu rescue",
+    "Relay2 offered but unaccepted; no full3-step side chain",
+    "No grandfather envelope acquisition, so seoul_base envelope choice disabled",
+    "No radio repair or crafting",
+    "Only3 original rasters inspected; actual UI root-owned"
+  ],
+  "productionEdits": false,
+  "cohortExcludedPaths": [
+    "boundary-review/"
+  ]
+}

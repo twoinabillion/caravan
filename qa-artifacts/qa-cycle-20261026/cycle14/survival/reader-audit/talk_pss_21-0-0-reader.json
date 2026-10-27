@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "지금?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "지금요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "여기, 차 안에서?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "환자들이 괜찮다잖아요."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 팔을 한쪽씩 넣었다. 소매가 낡았는데 단추는 전부 잠겼다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…어깨가 줄었나. 아니, 내가 줄었지."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 한동안 아무 말도 안 했다. 벗지 않은 채로 왕진 가방을 들었다."
+  }
+]

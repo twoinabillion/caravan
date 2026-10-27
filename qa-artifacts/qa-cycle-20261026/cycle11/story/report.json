@@ -1,0 +1,334 @@
+{
+  "seed": 271003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "busan",
+    "gimhae",
+    "jinju",
+    "yeosu",
+    "suncheon",
+    "gwangju",
+    "damyang",
+    "namwon",
+    "jeonju",
+    "nonsan",
+    "lighthouse",
+    "nonsan",
+    "gongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 77,
+  "actions": 362,
+  "sourceHash": "732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b",
+  "freshStarts": 1,
+  "attempts": 1,
+  "reviewedChoices": 77,
+  "reviewedChars": 27855,
+  "party": [
+    "leo"
+  ],
+  "dog": true,
+  "day": 7,
+  "min": 1389,
+  "km": 631,
+  "reviewStatistics": {
+    "comparisonScope": "All retained own cycle1–10 attempts; identical authored strings, not equivalent meaning",
+    "previousFiles": [
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle1/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle2/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt02/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle4/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt02/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle6/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle7/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle8/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle9/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle10/story/agent03/attempt01/agent03-trace.json"
+    ],
+    "exactEntryChoiceResultDuplicateOccurrences": 56,
+    "newOrDifferentEntryChoiceResultOccurrences": 21,
+    "exactResultDuplicateOccurrences": 57,
+    "newOrDifferentResultOccurrences": 20,
+    "novelPairsVsOwnCycles1to10": [
+      "camp_3_leo:1",
+      "camp_4_leo:0",
+      "camp_5_leo:1",
+      "ev_container_port:0",
+      "ev_lighthouse_visit:2",
+      "ev_salt_farmer:1",
+      "exp_arcade:1",
+      "exp_glasshouse:1",
+      "exp_hardware:0",
+      "lc_cheonan_walnut:1",
+      "lc_damyang_juktong:1",
+      "loc_suncheon:1",
+      "loc_yeosu:0",
+      "main_recovery_parents_father_last_log:0",
+      "main_recovery_story_parent_route_shared:0",
+      "talk_leo_03:1"
+    ],
+    "novelPairsVsAllRetainedCoverageCycles1to10": [
+      "camp_5_leo:1",
+      "ev_container_port:0",
+      "ev_lighthouse_visit:2",
+      "ev_salt_farmer:1",
+      "exp_arcade:1",
+      "exp_glasshouse:1",
+      "lc_cheonan_walnut:1",
+      "loc_suncheon:1",
+      "loc_yeosu:0",
+      "main_recovery_parents_father_last_log:0",
+      "main_recovery_story_parent_route_shared:0",
+      "talk_leo_03:1"
+    ],
+    "allRetainedBaselineCaveat": "42 coverage files / 688 raw pairs include repeated/resumed/repair attempts. This is a conservative novelty reference, not the primary-cohort aggregate. Recovery-copy event IDs are distinct raw IDs, not new authored stories.",
+    "differentOccurrences": [
+      {
+        "n": 38,
+        "event": "exp_glasshouse",
+        "choice": 1
+      },
+      {
+        "n": 87,
+        "event": "exp_kimchi",
+        "choice": 0
+      },
+      {
+        "n": 96,
+        "event": "loc_yeosu",
+        "choice": 0
+      },
+      {
+        "n": 101,
+        "event": "ev_salt_farmer",
+        "choice": 1
+      },
+      {
+        "n": 110,
+        "event": "loc_suncheon",
+        "choice": 1
+      },
+      {
+        "n": 114,
+        "event": "exp_arcade",
+        "choice": 1
+      },
+      {
+        "n": 143,
+        "event": "lc_damyang_juktong",
+        "choice": 1
+      },
+      {
+        "n": 157,
+        "event": "ev_waterpark",
+        "choice": 0
+      },
+      {
+        "n": 171,
+        "event": "camp_3_leo",
+        "choice": 1
+      },
+      {
+        "n": 204,
+        "event": "exp_hardware",
+        "choice": 0
+      },
+      {
+        "n": 217,
+        "event": "camp_4_leo",
+        "choice": 0
+      },
+      {
+        "n": 226,
+        "event": "ev_lighthouse_visit",
+        "choice": 2
+      },
+      {
+        "n": 250,
+        "event": "camp_5_leo",
+        "choice": 1
+      },
+      {
+        "n": 258,
+        "event": "talk_leo_03",
+        "choice": 1
+      },
+      {
+        "n": 262,
+        "event": "lc_cheonan_walnut",
+        "choice": 1
+      },
+      {
+        "n": 272,
+        "event": "ev_container_port",
+        "choice": 0
+      },
+      {
+        "n": 291,
+        "event": "main_recovery_story_parent_route_shared",
+        "choice": 0
+      },
+      {
+        "n": 303,
+        "event": "main_recovery_parents_father_last_log",
+        "choice": 0
+      },
+      {
+        "n": 326,
+        "event": "seoul_open",
+        "choice": 0
+      },
+      {
+        "n": 346,
+        "event": "seoul_core",
+        "choice": 4
+      },
+      {
+        "n": 355,
+        "event": "seoul_night",
+        "choice": 0
+      }
+    ],
+    "countByAction": {
+      "new-game": 1,
+      "unpaid-entry-reload": 77,
+      "choice": 77,
+      "paid-result-reload": 77,
+      "explore": 21,
+      "travel": 20,
+      "drive": 41,
+      "trade": 12,
+      "work": 3,
+      "camp": 6,
+      "meet-recruit": 1,
+      "recruit-step": 3,
+      "camp-talk": 3,
+      "accept-companion": 1,
+      "board-open": 2,
+      "earned-perk": 2,
+      "accept-quest": 1,
+      "npc-rumor": 5,
+      "talk": 3,
+      "quest-turnin": 1,
+      "seoul-enter": 5
+    },
+    "entryReloads": 77,
+    "paidReloads": 77,
+    "reapplied": 0,
+    "reviewedChoices": 77,
+    "chars": 27855,
+    "manualReview": "All 77 entry/selected-label/result occurrences read fully, including exact duplicates; additionally 5 NPC rumors, 3 field works, 2 board openings, accepted delivery and its paid turn-in read."
+  },
+  "sourceUnchangedDuringRun": true,
+  "newConfirmedNarrativeOrActionErrors": [],
+  "scopedTextClean": true,
+  "parentConfirmedImageMismatches": [
+    "exp_glasshouse",
+    "exp_kimchi"
+  ],
+  "lowPriorityProseObservation": {
+    "event": "gp_envelope",
+    "n": 254,
+    "choice": 1,
+    "text": "그날 이후 수첩이 전보다 자주 눈에 들어왔다.",
+    "reason": "Zero-time immediate result uses retrospective attention language. No concrete unpaid future action; not classified as a confirmed causality bug. Parent notified."
+  },
+  "disprovedCandidate": {
+    "topic": "Grandfather envelope ending callback missing",
+    "evidence": "seoul_base n342 offered visible+enabled 봉투를 연다 index1 with owned envelope. Policy selected index3 stairs. Untaken optional branch, not missing callback."
+  },
+  "naturalRechecks": [
+    "lc_damyang_juktong free exit index1",
+    "lc_cheonan_walnut free exit index1",
+    "loc_lighthouse maintenance index0 neutral time/continuity",
+    "ev_lighthouse_visit index2 repaired emergency-lamp premise",
+    "seoul_core current physical records",
+    "seoul_costs anonymous reservation copy",
+    "Leo rescue/recruitment and earned camp callbacks"
+  ],
+  "sideMission": {
+    "label": "아기 옷 보따리",
+    "from": "jeonju",
+    "to": "suwon",
+    "acceptedN": 181,
+    "completedN": 284,
+    "reward": 15,
+    "baseReward": 11,
+    "earlyBonus": 4
+  },
+  "gaps": [
+    "Bori tracking/tag/family/bath not triggered despite dog acquired",
+    "maehwa/sunflower and other hidden locations not reached",
+    "Mokpo or longer coast not visited",
+    "Long three-village radio side mission offered but not accepted",
+    "No upgrades/crafting used",
+    "Other roster combinations and core sleep/watch endings",
+    "Actual images/UI/crops delegated to parent, not verified by this source-informed journey"
+  ],
+  "validation": {
+    "unpaidReload": 77,
+    "paidReload": 77,
+    "reapplied": 0,
+    "runtimeError": null
+  },
+  "excludedUIReplays": [
+    "browser-entry-replay: cycle9 seed269003 fishfarm entry, 23 prior choices, intentional stop",
+    "browser-scene-replay: same cycle11 seed271003 partial replay, 19 prior choices, intentional stop before kimchi choice"
+  ],
+  "limitations": [
+    "Node VM engine simulation, not browser or human playtest",
+    "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+    "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+    "No edits to source or actual user save; no infinite resources"
+  ],
+  "postJourneyUIFindings": [
+    {
+      "id": "V11-05",
+      "status": "fixed_verified_engine_reader",
+      "scope": "Parent actual UI of normal cycle9 fishfarm partial replay; not encountered in cycle11 primary 77 choices",
+      "event": "exp_fishfarm",
+      "choiceIndex": 0,
+      "outcomeIndex": 1,
+      "issue": "Unintroduced anonymous speaker ??? for player release comment",
+      "fix": "Explicit outcome turnSpeakers:[me]; all text/mechanics preserved",
+      "tests": "tests/test_qa_cycle11_fishfarm_speaker.cjs plus narrative/dialogue contracts 31/31",
+      "legacyPaid": "Frozen view and text-only paid retained; no reapplication",
+      "engineHashAfter": "3406fea24cbc619f7d51757885943891f6a46060e6fe3edcfa1e6ccead3f9282",
+      "browserFixVerification": "parent pending"
+    }
+  ],
+  "findings": [
+    {
+      "id": "V11-05",
+      "status": "fixed_verified_engine_reader",
+      "scope": "Parent actual UI of normal cycle9 fishfarm partial replay; not encountered in cycle11 primary 77 choices",
+      "event": "exp_fishfarm",
+      "choiceIndex": 0,
+      "outcomeIndex": 1,
+      "issue": "Unintroduced anonymous speaker ??? for player release comment",
+      "fix": "Explicit outcome turnSpeakers:[me]; all text/mechanics preserved",
+      "tests": "tests/test_qa_cycle11_fishfarm_speaker.cjs plus narrative/dialogue contracts 31/31",
+      "legacyPaid": "Frozen view and text-only paid retained; no reapplication",
+      "engineHashAfter": "3406fea24cbc619f7d51757885943891f6a46060e6fe3edcfa1e6ccead3f9282",
+      "browserFixVerification": "parent pending"
+    }
+  ],
+  "parentImageImprovements": [
+    {
+      "event": "camp_thief",
+      "classification": "scene specificity improvement, not absent companion defect",
+      "correction": "Parent initially viewed inactive .webp. Actual event-crisis-exhaustion maps to v2.jpg steering hands/road; dedicated thief art retained."
+    }
+  ]
+}

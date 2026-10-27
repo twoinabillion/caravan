@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "narration",
+    "text": "그날부터 지도 낭독 담당이 됐다. 박 선생은 듣고, 나는 읽고."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "거기 갈림길 지명 뭐라고 했나."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "왜요, 안 들리셨어요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "들렸는데 잊었어. 그건 노안이 아니라 딴 문제고."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 지도를 아예 내 쪽으로 넘겼다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "눈이 나빠지니 귀가 좋아지더군. 몸이 어떻게든 수지를 맞춰."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 팔이 편해졌다는 얘기를 한동안 더 했다."
+  }
+]

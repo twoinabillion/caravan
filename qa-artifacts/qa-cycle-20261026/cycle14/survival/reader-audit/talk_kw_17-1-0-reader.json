@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "narration",
+    "text": "강우가 멈칫했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…그런 건 교범에 없습니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "우리 교범엔 있어야죠."
+  },
+  {
+    "kind": "narration",
+    "text": "잠시 고민하던 강우가 주먹으로 배를 두 번 두드렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "……신설했습니다."
+  },
+  {
+    "kind": "narration",
+    "text": "세상에서 제일 진지한 얼굴로 밥 신호를 만든 남자."
+  }
+]

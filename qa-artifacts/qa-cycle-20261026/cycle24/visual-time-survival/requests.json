@@ -1,0 +1,137 @@
+{
+  "cohortExcluded": true,
+  "classification": "approved-time-variant-art-staged-only",
+  "tool": "image_gen.imagegen",
+  "assets": [
+    {
+      "event": "seoul_ruins",
+      "key": "seoul-ruins-green-day-v1",
+      "mode": "edit",
+      "format": "place",
+      "time": "day",
+      "referenced_image_paths": [
+        "/Users/sang/caravan/assets/scenes/seoul-ruins.webp",
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "scene": "Image 1 is the location/composition edit target; images 2–5 are canonical style references. Preserve the same Seoul downtown avenue, old empty buildings, rows of orderly stored curbside objects, distant central Namsan wooded hill and N Seoul Tower, and the grounded wheeled street-sweeping robot with circular brushes in the right lane. Remove the travelling Dalguji vehicle from the left lane completely, replacing it with empty continuous roadway. No people. Correct ALL visible red road signals along both sides into normal green traffic indications facing the camera/traveller approach; every illuminated traffic signal in this frame is GREEN, no lit red or amber signal anywhere. Make the nearest green signal circles clear enough to read at small size while keeping believable street scale. A sequence of green traffic lights recedes into the street, welcoming the unseen vehicle. Do not turn the green signals into neon decoration. Keep the roadway unnaturally clear and maintained while the buildings are dead and weathered: an empty city being managed by an unseen AI. DAYTIME variant with diffuse neutral gray-blue ambient daylight, no sunset/sunrise hue, no hard sun direction, no falling rain or strongly specific weather. Maintain realistic Seoul infrastructure, no advertising or legible signs, no futuristic skyline. This is the current approach, not a flashback or scene of a completed core decision.",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nSingle large 16:9 narrative frame, at least 1536 by 864. Image references are not collages to reproduce. No words, logos, watermarks or UI. Keep important objects readable within the central 80% width and 82% height. No visible human, human silhouette, companion, dog, driver hands or Dalguji anywhere; the travelling party and their vehicle are just outside the camera frame. Do not show any decision, reward, new evidence or future action.\n\nImage 1 is the location/composition edit target; images 2–5 are canonical style references. Preserve the same Seoul downtown avenue, old empty buildings, rows of orderly stored curbside objects, distant central Namsan wooded hill and N Seoul Tower, and the grounded wheeled street-sweeping robot with circular brushes in the right lane. Remove the travelling Dalguji vehicle from the left lane completely, replacing it with empty continuous roadway. No people. Correct ALL visible red road signals along both sides into normal green traffic indications facing the camera/traveller approach; every illuminated traffic signal in this frame is GREEN, no lit red or amber signal anywhere. Make the nearest green signal circles clear enough to read at small size while keeping believable street scale. A sequence of green traffic lights recedes into the street, welcoming the unseen vehicle. Do not turn the green signals into neon decoration. Keep the roadway unnaturally clear and maintained while the buildings are dead and weathered: an empty city being managed by an unseen AI. DAYTIME variant with diffuse neutral gray-blue ambient daylight, no sunset/sunrise hue, no hard sun direction, no falling rain or strongly specific weather. Maintain realistic Seoul infrastructure, no advertising or legible signs, no futuristic skyline. This is the current approach, not a flashback or scene of a completed core decision.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "transparent_background": false,
+      "promptSha256": "683285420c6ca43c79b1429d482a9d35d52de09d93d9c88843b1e9bf4b687376",
+      "references": [
+        {
+          "path": "assets/scenes/seoul-ruins.webp",
+          "sha256": "868d134ed182fcfa88fd91532f0e720ac88c2f7d8fe5cb263f293e0e74bfce29",
+          "role": "edit-target"
+        },
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "role": "canonical-reference"
+        }
+      ]
+    },
+    {
+      "event": "seoul_han",
+      "key": "seoul-han-night-v1",
+      "mode": "edit",
+      "format": "place",
+      "time": "night",
+      "referenced_image_paths": [
+        "/Users/sang/caravan/assets/scenes/seoul-han.jpg",
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "scene": "Image 1 is the location/composition edit target; images 2–5 are canonical style references. Preserve the same long intact bridge across the Han River towards the Seoul skyline and Namsan/N Seoul Tower, with the railing and roadway leading into the distance. Remove the travelling Dalguji from the roadway; no cars or people anywhere. This is a NIGHT variant, fully dark blue-black sky and dark river, no pale daytime sky, sunset band or sunrise glow. Restrained pools of existing bridge light and dim distant city lighting keep the bridge, skyline and central tower legible without a colorful nightlife atmosphere. Add the authored fixed clue to the foreground left railing: a small old portable radio hanging securely by its strap from the railing, its ordinary dark casing, grille and short antenna clearly visible. A few faded ribbons, one old single shoe and several small laminated photo cards with blank backs facing camera hang from the same rail. These are existing anonymous crossing markers, not tokens currently being tied by a companion. The radio is merely present with no legible display, voice bubble, human portrait or image; whether it plays static or a recorded voice is not depicted. No letter, map, dog tags, handoff, living postman or person. Keep all bridge spans intact; no folded/collapsed return route. Weather-neutral night, no visible rain or moon/stars required.",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nSingle large 16:9 narrative frame, at least 1536 by 864. Image references are not collages to reproduce. No words, logos, watermarks or UI. Keep important objects readable within the central 80% width and 82% height. No visible human, human silhouette, companion, dog, driver hands or Dalguji anywhere; the travelling party and their vehicle are just outside the camera frame. Do not show any decision, reward, new evidence or future action.\n\nImage 1 is the location/composition edit target; images 2–5 are canonical style references. Preserve the same long intact bridge across the Han River towards the Seoul skyline and Namsan/N Seoul Tower, with the railing and roadway leading into the distance. Remove the travelling Dalguji from the roadway; no cars or people anywhere. This is a NIGHT variant, fully dark blue-black sky and dark river, no pale daytime sky, sunset band or sunrise glow. Restrained pools of existing bridge light and dim distant city lighting keep the bridge, skyline and central tower legible without a colorful nightlife atmosphere. Add the authored fixed clue to the foreground left railing: a small old portable radio hanging securely by its strap from the railing, its ordinary dark casing, grille and short antenna clearly visible. A few faded ribbons, one old single shoe and several small laminated photo cards with blank backs facing camera hang from the same rail. These are existing anonymous crossing markers, not tokens currently being tied by a companion. The radio is merely present with no legible display, voice bubble, human portrait or image; whether it plays static or a recorded voice is not depicted. No letter, map, dog tags, handoff, living postman or person. Keep all bridge spans intact; no folded/collapsed return route. Weather-neutral night, no visible rain or moon/stars required.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "transparent_background": false,
+      "promptSha256": "5a7dcc065086deab7df6c7e554adceb7eb8e6ac9662940c6c970a78b3f3d6625",
+      "references": [
+        {
+          "path": "assets/scenes/seoul-han.jpg",
+          "sha256": "a1d741fe24cfdf24620e312ff80cdc3d56c8f4c81adedade1cd716b5528b032f",
+          "role": "edit-target"
+        },
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "role": "canonical-reference"
+        }
+      ]
+    },
+    {
+      "event": "story_bridge_last_quiet",
+      "key": "event-vista-road-night-v1",
+      "mode": "generate",
+      "format": "place",
+      "time": "night",
+      "referenced_image_paths": [
+        "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+        "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+      ],
+      "scene": "A quiet Korean road at the last low hill pass before entering Seoul, at night. Human-eye-height film-still view from an empty road shoulder just beside a worn guardrail, looking along the empty descending road towards the spread of Seoul below; the wooded Namsan hill and recognizable slender N Seoul Tower are visible in the distance. The main subject is the pause before entering the city. Road curve, guardrail, distant urban building silhouettes and the hill give natural perspective, no extreme panorama or aerial drone view. A few tiny green road signals in the city below are already on, consistent with the unseen city preparing a route; no red signal dominates. Fully dark blue-black night sky with restrained cool ambient fill and scattered dim city/road lights; no sunset, sunrise or daylight haze. Preserve believable worn Korean roads and infrastructure in the attached canonical style. No visible vehicle, named companion, person, dog, driver, luggage, map, evidence envelope, water bottle or open door. Do not show restarting the engine, reuniting with someone or any final core outcome. No toll plaza, checkpoint, gate, new landmark or giant antennas. The unseen Dalguji and party are stopped outside the camera frame. Weather-neutral with no active rain/snow or dramatic moon.",
+      "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nSingle large 16:9 narrative frame, at least 1536 by 864. Image references are not collages to reproduce. No words, logos, watermarks or UI. Keep important objects readable within the central 80% width and 82% height. No visible human, human silhouette, companion, dog, driver hands or Dalguji anywhere; the travelling party and their vehicle are just outside the camera frame. Do not show any decision, reward, new evidence or future action.\n\nA quiet Korean road at the last low hill pass before entering Seoul, at night. Human-eye-height film-still view from an empty road shoulder just beside a worn guardrail, looking along the empty descending road towards the spread of Seoul below; the wooded Namsan hill and recognizable slender N Seoul Tower are visible in the distance. The main subject is the pause before entering the city. Road curve, guardrail, distant urban building silhouettes and the hill give natural perspective, no extreme panorama or aerial drone view. A few tiny green road signals in the city below are already on, consistent with the unseen city preparing a route; no red signal dominates. Fully dark blue-black night sky with restrained cool ambient fill and scattered dim city/road lights; no sunset, sunrise or daylight haze. Preserve believable worn Korean roads and infrastructure in the attached canonical style. No visible vehicle, named companion, person, dog, driver, luggage, map, evidence envelope, water bottle or open door. Do not show restarting the engine, reuniting with someone or any final core outcome. No toll plaza, checkpoint, gate, new landmark or giant antennas. The unseen Dalguji and party are stopped outside the camera frame. Weather-neutral with no active rain/snow or dramatic moon.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+      "transparent_background": false,
+      "promptSha256": "ac8c06195f82c90bf7244ecb73da0c0149d79ae54f5b38e46df43ad9553691b3",
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7",
+          "role": "canonical-reference"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212",
+          "role": "canonical-reference"
+        }
+      ]
+    }
+  ],
+  "plannedNightPair": "seoul-ruins-green-night-v1 uses accepted day master as edit target + canonical4"
+}

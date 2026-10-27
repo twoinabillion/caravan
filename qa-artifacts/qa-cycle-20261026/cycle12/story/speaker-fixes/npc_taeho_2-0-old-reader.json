@@ -1,0 +1,43 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "그날 밤, 여기가 대피소였어. 물자는 부족하고 사람은 밀려들고. 첫 주에 배급 줄에서 싸움이 났지. 셋이 죽었어. 천리안이 아니라— 우리끼리."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "…몇 명이나 있었는데요, 그때."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "몰라. 세다 말았어. 세는 것보다 급한 일이 계속 생겨서."
+  },
+  {
+    "kind": "narration",
+    "text": "태호가 돔 천장을 올려다봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "taeho",
+    "text": "그때 알았어. 걔가 안 죽여도 우리가 죽는구나. 그래서 규칙을 하나만 남겼어. 제일 지키기 어려운 걸로."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "그래서 지금도 싸움이 나면 장사부터 멈춰. 물건값보다 사람이 먼저니까."
+  },
+  {
+    "kind": "narration",
+    "text": "태호가 순찰봉을 들고 다음 통로로 걸어갔다. 상인 둘이 목소리를 높이자 걸음이 바로 빨라졌다."
+  }
+]

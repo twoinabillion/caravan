@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "narration",
+    "text": "내 손등의 흉터를 보여주자 민지가 진지하게 들여다봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…이건 뭐 배운 자국이야?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "펜치 잘못 잡는 법."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 웃음을 터뜨렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "그럼 우리 지도 겹치네. 나도 그거 있어."
+  },
+  {
+    "kind": "narration",
+    "text": "흉터가 겹치는 사이가 됐다."
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "kind": "narration",
+    "text": "다리 셋 의자에 넷째 다리를 깎아 붙였다. 목공소 주인의 미완성 목록을 하나 줄여준 셈이다."
+  },
+  {
+    "kind": "narration",
+    "text": "완성된 의자는 작업대에 올려놨다. 누가 와서 앉든, 주인이 와서"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "누가 내 일 끝냈어?"
+  },
+  {
+    "kind": "narration",
+    "text": "하든. 둘 다 나쁘지 않은 결말이다."
+  }
+]

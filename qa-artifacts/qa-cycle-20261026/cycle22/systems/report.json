@@ -1,0 +1,243 @@
+{
+  "cycle": 22,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 282002,
+  "evidenceClass": "One fresh finite public-action engine journey with actual production reader extraction; isolated storage, no browser interaction claim",
+  "cohortExcluded": false,
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "policyStops": 0,
+  "productionChangesDuringJourney": false,
+  "status": "ended",
+  "error": null,
+  "engineSourceHash": "0e52ebe9c32e0a3ce96a54c9c9cfe66a78c8ef92bdca331d3bf0b7b832dea694",
+  "result": {
+    "ending": "story_done",
+    "method": "core_quarantine",
+    "storyDone": true,
+    "session1End": true,
+    "day": 12,
+    "km": 619,
+    "actualCompanions": [
+      "minji",
+      "kangwoo",
+      "eunsu"
+    ],
+    "bori": false
+  },
+  "totals": {
+    "choices": 90,
+    "trace": 489,
+    "otherExecutedPublicActionsIncludingPerks": 218,
+    "otherPublicActionsExcludingPerks": 213,
+    "earnedPerkSelections": 5,
+    "actionKinds": {
+      "new-game": 1,
+      "unpaid-entry-reload": 90,
+      "choice": 90,
+      "paid-result-reload": 90,
+      "explore": 29,
+      "travel": 17,
+      "drive": 35,
+      "camp": 11,
+      "buy-upgrade": 4,
+      "trade-bundle": 3,
+      "trade": 53,
+      "work": 7,
+      "meet-recruit": 3,
+      "board-open": 6,
+      "npc-rumor": 15,
+      "camp-meal": 7,
+      "recruit-step": 6,
+      "accept-companion": 3,
+      "camp-talk": 6,
+      "earned-perk": 5,
+      "accept-quest": 1,
+      "sell-demand": 1,
+      "turnin-quest": 1,
+      "seoul-enter": 5
+    },
+    "novelPairs": 9,
+    "novelChoicePairs": [
+      {
+        "trace": 128,
+        "event": "exp_towyard",
+        "choice": "부품을 수확한다"
+      },
+      {
+        "trace": 175,
+        "event": "camp_4_kangwoo",
+        "choice": "내일의 경계를 나눠 맡고 쉴 순번도 적는다"
+      },
+      {
+        "trace": 221,
+        "event": "camp_5_minji",
+        "choice": "부품 1을 꺼내 함께 예비 퓨즈 자리를 만든다"
+      },
+      {
+        "trace": 252,
+        "event": "camp_6_kangwoo",
+        "choice": "서연에게 가르친 것을 묻고 먼저 호출하지 않는다"
+      },
+      {
+        "trace": 296,
+        "event": "camp_7_minji",
+        "choice": "곁에 앉아 오늘 들은 소리를 비교한다"
+      },
+      {
+        "trace": 309,
+        "event": "exp_comicroom",
+        "choice": "반나절 눌러앉는다"
+      },
+      {
+        "trace": 361,
+        "event": "comp_engine_sound",
+        "choice": "지금 정비한다 (30분)"
+      },
+      {
+        "trace": 403,
+        "event": "camp_10_eunsu",
+        "choice": "들은 것과 짐작한 것을 나눠 적는다"
+      },
+      {
+        "trace": 444,
+        "event": "npc_deokgu_2",
+        "choice": "\"왜 북쪽만 봐요?\""
+      }
+    ],
+    "novelPairsIgnoringCampNightId": 5,
+    "novelPairsIgnoringCampNightIdList": [
+      {
+        "trace": 128,
+        "event": "exp_towyard",
+        "choice": "부품을 수확한다"
+      },
+      {
+        "trace": 175,
+        "event": "camp_4_kangwoo",
+        "choice": "내일의 경계를 나눠 맡고 쉴 순번도 적는다"
+      },
+      {
+        "trace": 309,
+        "event": "exp_comicroom",
+        "choice": "반나절 눌러앉는다"
+      },
+      {
+        "trace": 361,
+        "event": "comp_engine_sound",
+        "choice": "지금 정비한다 (30분)"
+      },
+      {
+        "trace": 444,
+        "event": "npc_deokgu_2",
+        "choice": "\"왜 북쪽만 봐요?\""
+      }
+    ],
+    "noveltyBaseline": "systems1–21 primary transcripts, exact event+choice label. Camp-night dynamic IDs additionally normalized.",
+    "reload": {
+      "entry": 90,
+      "paid": 90,
+      "skippedBeforeFirstRadio": [],
+      "failed": 0,
+      "reapplied": 0,
+      "readerEqual": 90,
+      "terminalSeparateExcluded": 1
+    },
+    "disabledChoicesExecuted": 0,
+    "rejectedApiCalls": 0
+  },
+  "features": {
+    "upgrades": [
+      "bench",
+      "collector",
+      "antenna",
+      "solar"
+    ],
+    "crafts": [],
+    "actualPerks": [
+      "mj_camp",
+      "mj_eye",
+      "kw_guard",
+      "kw_sniper",
+      "es_scan"
+    ],
+    "radioFixed": false,
+    "radioRepairs": 0,
+    "radioBroadcasts": 0,
+    "tubeSource": null,
+    "campRepair": 0,
+    "campTalks": 6,
+    "campMeals": 7,
+    "trades": 53,
+    "tradeBundles": 3,
+    "actualSale": 1,
+    "publicWork": 7,
+    "boardViews": 6,
+    "sideQuestAccept": 1,
+    "sideQuestTurnin": 1,
+    "letterCompletion": 0,
+    "medicalTreatment": 0,
+    "storyTapePlayback": {
+      "trace": 238,
+      "event": "ev_broadcast_station",
+      "separateFromVehicleRadio": true
+    },
+    "repairEvent": {
+      "trace": 361,
+      "event": "comp_engine_sound",
+      "selected": "지금 정비한다 (30분)",
+      "hullBefore": 100,
+      "hullAfter": 100,
+      "elapsed": 30
+    }
+  },
+  "review": {
+    "completed": true,
+    "choiceEntries": 90,
+    "exactPriorContexts": 69,
+    "newContexts": 21,
+    "newParagraphs": 36,
+    "actualReaderTurns": 780,
+    "exactPriorTurns": 705,
+    "newTurnsRead": 75,
+    "changedReaderEntries": 21,
+    "roadSpeechOccurrences": 39,
+    "roadSpeechUnique": 29,
+    "chatGroups": 10,
+    "chatLines": 29,
+    "sameDayChatDuplicates": 0,
+    "npcCalls": 15,
+    "npcShownGroups": 30,
+    "work": 7,
+    "notes": 117,
+    "scenes": 90,
+    "imageFilesReviewed": 82,
+    "suspectOriginalImagesEnlarged": 4,
+    "browserCropVerified": false,
+    "naturalConfirmedReaderFindings": 1,
+    "naturalVisualMismatchCandidates": 3,
+    "naturalVisualClarityCandidates": 1,
+    "derivedBoundaryConfirmed": 0
+  },
+  "gaps": [
+    "Radio tube/repair/natural broadcasts, all crafting, medical care, explicit camp repair, dismantling and letter completion did not occur. Station tape playback is an authored event, not vehicle-radio functionality.",
+    "Armory stayed unavailable because sidebox prerequisite was not in the optional policy. Unregistered bed preference was inert because policy selected actual public rows only. These are policy coverage limitations, not game faults, and no disabled API was called. Actual upgrades were bench/collector/antenna/solar.",
+    "One normal parcel delivery was accepted in Muju and explicitly handed over in Jeonju for11+4 quick bonus. Boards6 were inspected; no procurement or completed follow-up chain claimed.",
+    "All82 original scene files were inspected in contact sheets and four suspect originals enlarged; no browser crop or audible playback certification. Root owns actual UI validation."
+  ],
+  "findingsFile": "findings.json",
+  "sourceStart": "source-start-full.json",
+  "sourceEnd": "source-end-full.json",
+  "sourceReviewEnd": "source-review-end-full.json",
+  "sourceUnchanged": true,
+  "sourceFileCount": 40,
+  "separateExcludedEvidence": {
+    "terminalReload": "terminal-reload.json",
+    "preFreezeSixSceneRegression": "../../cycle21/systems/visual-six-review/README.md"
+  }
+}

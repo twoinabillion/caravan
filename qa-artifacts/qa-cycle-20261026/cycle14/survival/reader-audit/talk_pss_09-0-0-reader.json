@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "북쪽이 제일 아플 거 아냐. 제일 아픈 데가 약국 자리지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "남산 일 끝나자마자요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "간판이라도 걸어 놔야지. 쉬고 싶어지기 전에."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생은 벌써 자리를 고르는 눈치였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "여하튼 간판도 정했어. '있을 건 있는 약국'."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…없을 건 없다는 뜻이기도 하고."
+  },
+  {
+    "kind": "narration",
+    "text": "스스로 해설까지 붙이고는 흡족해했다. 아무도 안 웃었는데도."
+  }
+]

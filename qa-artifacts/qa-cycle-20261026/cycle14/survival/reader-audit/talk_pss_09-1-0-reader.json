@@ -1,0 +1,21 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "자넨 손님 말고 직원 해."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "월급은 주시는 거죠?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "경력은 인정해줄게. 그, 뭐라고 하나— 호봉. 호봉을 쳐줄게."
+  },
+  {
+    "kind": "narration",
+    "text": "월급 얘기를 다시 꺼내자 박 선생은 약국 자리부터 구해야 한다며 지도를 폈다."
+  }
+]

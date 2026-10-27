@@ -1,0 +1,66 @@
+[
+  {
+    "id": "S21-V01",
+    "classification": "natural-source-art-mismatch",
+    "key": "event-find-signal",
+    "ruling": "confirmed-place-action-mismatch",
+    "event": "exp_radioshop",
+    "n": 38,
+    "authored": "A radio shop interior lined with radios, Walkmans and CRT televisions; choice0 salvages wiring/capacitors.",
+    "actualRaster": "Actual raster: exterior hilltop radio hut overlooking a large city/river and a tower. No radio-shop shelving or indoor salvage context.",
+    "token": "__SCENE_EVENT_FIND_SIGNAL__",
+    "asset": "assets/scenes/event-find-signal.webp",
+    "sha256": "c1e20693bbb48fe06ee6408fd7944ba15bc481c6178d5dce5f974193da3a62d8",
+    "screenCropVerifiedByThisAgent": false,
+    "unpaidExport": "agent03/attempt01/normal-unpaid-36-exp_radioshop.json",
+    "pendingPresentationKeys": [
+      "version",
+      "eventId",
+      "phase",
+      "text"
+    ],
+    "unpaidHasNoReaderKeys": true,
+    "status": "Reported to root; dedicated art owned by root. Production untouched."
+  },
+  {
+    "id": "S21-V02",
+    "classification": "natural-source-art-mismatch",
+    "key": "event-explore-shelter",
+    "ruling": "confirmed-place-action-mismatch",
+    "event": "near_geochang_actor",
+    "n": 154,
+    "authored": "Geochang abandoned theatre: suited male actor rehearses onstage before empty seats; selected choice watches and applauds.",
+    "actualRaster": "Actual raster: tent and bedroll shelter below an elevated highway; no theatre stage or actor.",
+    "token": "__SCENE_EVENT_EXPLORE_SHELTER__",
+    "asset": "assets/scenes/event-explore-shelter.webp",
+    "sha256": "3c3d672d608e9e42d341171c370a2bb4018d34f912ee0360babe9d17f806a1ea",
+    "screenCropVerifiedByThisAgent": false,
+    "unpaidExport": "agent03/attempt01/normal-unpaid-152-near_geochang_actor.json",
+    "pendingPresentationKeys": [
+      "version",
+      "eventId",
+      "phase",
+      "text"
+    ],
+    "unpaidHasNoReaderKeys": true,
+    "status": "Reported to root; dedicated art owned by root. Production untouched."
+  },
+  {
+    "id": "S21-C01",
+    "classification": "repetition-clarity-candidate",
+    "n": [
+      364,
+      368
+    ],
+    "day": 8,
+    "minutes": [
+      909.4,
+      1041.9
+    ],
+    "text": "남쪽 공기엔 기름 냄새가 남아 있었는데. 여긴… 너무 깨끗해.",
+    "gapGameMinutes": 132.5,
+    "source": "D.banter, src/03-data.js:1329; G.pickBanter, src/04e-engine-world.js:434–464; G.load resets timers in src/04a-engine-core.js:532; resetDriveTimers clears lastBanter in src/04c-engine-travel.js:476–477.",
+    "evidence": "The same one-line banter appeared twice on one driving leg with the cleaners_recall entry/paid reload between. Not a crew chat and not an immediate consecutive line.",
+    "status": "Candidate only: repeated flavour line after regular reload, no factual contradiction or effect loss. No production edit."
+  }
+]

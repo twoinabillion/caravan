@@ -33,6 +33,10 @@ function inspectAdultPlayerRegister(D) {
       for(const [index,quote] of humanQuotes(text).entries())
         if(speakerKey(speakers?.[index])==='me') {
           if(scope==='es_backdoor.out.0.0'&&index===0) continue;
+          // The second fragment supplies the object of the preceding polite
+          // request. Exempt only this reviewed line, not all endings in 는지.
+          if(scope==='ev_jaeyi_law.out.1.0'&&index===0
+            &&quote==='우리 얘기도 적어 줘요. 이 달구지가 뭘 봤는지.') continue;
           check(`${scope}.${index}`,quote);
         }
     };

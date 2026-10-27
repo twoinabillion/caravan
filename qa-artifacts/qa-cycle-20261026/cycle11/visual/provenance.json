@@ -1,0 +1,132 @@
+{
+  "generatedAt": "2026-10-26T03:39:37.503Z",
+  "generator": "image_gen.imagegen",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "prompts": [
+    "fishfarm-prompt.json",
+    "additional-prompts.json"
+  ],
+  "export": "sharp: cover/centre 1024x576, sRGB, WebP quality86 effort6; masters retained unchanged",
+  "galleryBeforeWiring": {
+    "url": "http://127.0.0.1:4319/__live/assets",
+    "evidence": "gallery-before-wiring.png"
+  },
+  "browser": {
+    "url": "http://127.0.0.1:4319/",
+    "viewport": [
+      1333,
+      884
+    ],
+    "actualEventFrameWidthCssPx": 480,
+    "imageNaturalSize": [
+      1024,
+      576
+    ],
+    "source": "normal public-action partial replays; no state injection; excluded from journey cohort",
+    "oldFrozenView": "Existing saved scene keys preserved. New entry replay needed to observe new mapping.",
+    "flow": "All four entered, chose, displayed result and returned to road; fishfarm paid result survives actual reload; zoom entry/result open-close preserves read stage.",
+    "mode": "Live infinite-resource UI; finite resource/payment checks are separate engine runs.",
+    "crop360Block": "Viewport control timed out. A local HTML QA wrapper was then rejected by browser URL security policy (file: protocol); no alternate route or workaround attempted."
+  },
+  "assets": [
+    {
+      "event": "exp_fishfarm",
+      "key": "explore-fishfarm-tanks-v1",
+      "oldKey": "event-explore-farm",
+      "delivery": "assets/scenes/explore-fishfarm-tanks-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle11/visual/masters/explore-fishfarm-tanks-v1.png",
+      "sha256": "c7b332813dc3f70acb5e3e7ae4e0677b2776561692ebeec63058657556f8f5c8",
+      "bytes": 158644,
+      "width": 1024,
+      "height": 576,
+      "space": "srgb",
+      "format": "webp",
+      "actualGameScreenshot": "fishfarm-current-size.png",
+      "visionReview": {
+        "style": "Matches canonical restrained cinematic painterly realism; compared with existing gallery assets.",
+        "identity": "No named companion. First three have no people/vehicle. camp_thief has only the anonymous thief and canonical ivory camper roof/side.",
+        "entryTiming": "No completed choice outcome depicted.",
+        "crop480": "Central subject readable in the actual live event image; no introduced companion or landmark.",
+        "crop360": "Not verified: browser viewport capability timed out; no claim of a 360px runtime pass."
+      },
+      "oldResolvedAsset": "assets/scenes/event-explore-farm.webp",
+      "classification": "confirmed location/absent-person mismatch"
+    },
+    {
+      "event": "exp_glasshouse",
+      "key": "explore-glasshouse-tomatoes-v1",
+      "oldKey": "event-explore-farm",
+      "delivery": "assets/scenes/explore-glasshouse-tomatoes-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle11/visual/masters/explore-glasshouse-tomatoes-v1.png",
+      "sha256": "148a37f53563790178f912d81ae33742b4dbd827de1121bfcd128ba8cde57cbd",
+      "bytes": 183768,
+      "width": 1024,
+      "height": 576,
+      "space": "srgb",
+      "format": "webp",
+      "actualGameScreenshot": "glasshouse-after-480-panel.png",
+      "visionReview": {
+        "style": "Matches canonical restrained cinematic painterly realism; compared with existing gallery assets.",
+        "identity": "No named companion. First three have no people/vehicle. camp_thief has only the anonymous thief and canonical ivory camper roof/side.",
+        "entryTiming": "No completed choice outcome depicted.",
+        "crop480": "Central subject readable in the actual live event image; no introduced companion or landmark.",
+        "crop360": "Not verified: browser viewport capability timed out; no claim of a 360px runtime pass."
+      },
+      "oldResolvedAsset": "assets/scenes/event-explore-farm.webp",
+      "classification": "confirmed location/absent-person mismatch"
+    },
+    {
+      "event": "exp_kimchi",
+      "key": "explore-kimchi-coldstore-v1",
+      "oldKey": "event-explore-workshop",
+      "delivery": "assets/scenes/explore-kimchi-coldstore-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle11/visual/masters/explore-kimchi-coldstore-v1.png",
+      "sha256": "e09317fac02c8a2f3698e6b2b6d5f4915e7edee29461f8ceabef970181c5f937",
+      "bytes": 113874,
+      "width": 1024,
+      "height": 576,
+      "space": "srgb",
+      "format": "webp",
+      "actualGameScreenshot": "kimchi-after-480-panel.png",
+      "visionReview": {
+        "style": "Matches canonical restrained cinematic painterly realism; compared with existing gallery assets.",
+        "identity": "No named companion. First three have no people/vehicle. camp_thief has only the anonymous thief and canonical ivory camper roof/side.",
+        "entryTiming": "No completed choice outcome depicted.",
+        "crop480": "Central subject readable in the actual live event image; no introduced companion or landmark.",
+        "crop360": "Not verified: browser viewport capability timed out; no claim of a 360px runtime pass."
+      },
+      "oldResolvedAsset": "assets/scenes/event-explore-workshop.webp",
+      "classification": "confirmed location/absent-person mismatch"
+    },
+    {
+      "event": "camp_thief",
+      "key": "camp-roof-thief-v1",
+      "oldKey": "event-crisis-exhaustion",
+      "delivery": "assets/scenes/camp-roof-thief-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle11/visual/masters/camp-roof-thief-v1.png",
+      "sha256": "f65482250beb67c209488b3c0cb6234278cca0f422105cf6074d8444270ce812",
+      "bytes": 99016,
+      "width": 1024,
+      "height": 576,
+      "space": "srgb",
+      "format": "webp",
+      "actualGameScreenshot": "thief-after-480-panel.png",
+      "visionReview": {
+        "style": "Matches canonical restrained cinematic painterly realism; compared with existing gallery assets.",
+        "identity": "No named companion. First three have no people/vehicle. camp_thief has only the anonymous thief and canonical ivory camper roof/side.",
+        "entryTiming": "No completed choice outcome depicted.",
+        "crop480": "Central subject readable in the actual live event image; no introduced companion or landmark.",
+        "crop360": "Not verified: browser viewport capability timed out; no claim of a 360px runtime pass."
+      },
+      "oldResolvedAsset": "assets/scenes/event-crisis-exhaustion-v2.jpg",
+      "classification": "scene-specific visual enhancement; old v2 has driver hands only, not an absent companion defect"
+    }
+  ],
+  "reviewCorrection": "The initially inspected event-crisis-exhaustion.webp is unused for this key. The actual old binding is event-crisis-exhaustion-v2.jpg (driver hands/empty road). camp_thief new art is a scene-specific enhancement, not correction of absent companions."
+}

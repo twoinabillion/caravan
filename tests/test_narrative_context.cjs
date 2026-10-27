@@ -45,6 +45,12 @@ test('family bus uses a school-age sister and the hose detail only at the actual
 test('41 edited encounters retain gates, branches, probabilities, effects and chains',()=>{
  const ctx=setup(),rows=permanentEvents(ctx.data).filter(e=>ids.includes(e.id)).sort((a,b)=>a.id.localeCompare(b.id));
  assert.equal(rows.length,ids.length);
+ // Reviewed display-only rescue titles, not altered rescue escalation/effects.
+ const collapse=rows.find(e=>e.id==='crisis_collapse2');
+ assert.equal(collapse.title,'다시 찾아온 한계');collapse.title='두 번째 한계';
+ assert.equal(collapse.choices[0].out[0].fx.note.title,'다시 찾아온 탈진');
+ collapse.choices[0].out[0].fx.note.title='두 번째 탈진';
+ require('../tools/story-review-contract.cjs').regional(rows);
  // Only authored prose, quote attribution and the corrected one-hour label are excluded.
  const data=JSON.stringify(rows,(k,v)=>['text','body','turns','readingRecord','turnSpeakers','label'].includes(k)?undefined:v);
  assert.equal(crypto.createHash('sha256').update(data).digest('hex'),
@@ -63,7 +69,7 @@ test('mandatory fatigue crises remain solo-safe without gating away the crisis',
  }
  assert.match(copy(ctx,'crisis_drowsy'),/차를 세우고.*시트를 젖혔다/);
  assert.match(copy(ctx,'crisis_drowsy'),/두 시간/);
- assert.deepEqual(plain(event(ctx,'crisis_drowsy').choices[0].out[0].fx),{time:120,fatigue:-45,moodAll:2});
+ assert.deepEqual(plain(event(ctx,'crisis_drowsy').choices[0].out[0].fx),{time:120,sleeping:true,fatigue:-45,moodAll:2});
  vm.runInContext(source('04c-engine-travel.js'),ctx);
  const opened=[];ctx.G.openEventById=id=>opened.push(id);
  for(let i=0;i<3;i++)ctx.G.openRescue('collapse','crisis_collapse');
@@ -71,6 +77,7 @@ test('mandatory fatigue crises remain solo-safe without gating away the crisis',
 });
 test('ungated scenes no longer invent passengers, shared dialogue or previous choices',()=>{
  const ctx=setup();
+ vm.runInContext(source('04c-engine-travel.js'),ctx);
  const scopes=[['cleaners_recall',0],['cleaners_recall',2],['signal_bait',0],['meet_bikers',0],
   ['prev_trace_thirst',0],['meet_cinema',1],['loc_sunflower',0],['gp_note1',0],['gp_note3',0],
   ['loc_icheon',0],['combat_walker_strike',0],['ev_uplink',0],['ev_seaside_restaurant',0],
@@ -80,7 +87,7 @@ test('ungated scenes no longer invent passengers, shared dialogue or previous ch
   /누군가|다들|일행이|돌아가며|태웠어|밤새 말이 없던 사람|숫자가 뒤집히자|나란히 앉아/,id);
  assert.doesNotMatch(event(ctx,'crisis_breakdown2').text,/철사/);
  assert.doesNotMatch(copy(ctx,'crisis_breakdown2',1),/내가 한 번은|했죠/);
- assert.doesNotMatch(event(ctx,'crisis_nofuel2').text,/같은 갓길/);
+ assert.doesNotMatch(event(ctx,'crisis_nofuel2').text(ctx.S),/같은 갓길/);
  assert.doesNotMatch(copy(ctx,'crisis_nofuel2'),/같은 농가/);
  assert.doesNotMatch(copy(ctx,'crisis_nofuel2',1),/또 지나|또 만났/);
  assert.doesNotMatch(copy(ctx,'deserter_check'),/개\(있다면|보리/);

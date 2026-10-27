@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "narration",
+    "text": "강우가 먼저 입을 열었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…대장은 침묵을 잘 견디는군."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "네? 아, 미안해요. 딴생각하느라 못 들었어요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…됐다."
+  },
+  {
+    "kind": "narration",
+    "text": "그게 다였다. 그런데 어조가, 칭찬이었다."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 다시 창밖을 봤다. 나도 굳이 다음 말을 찾지 않았다."
+  }
+]

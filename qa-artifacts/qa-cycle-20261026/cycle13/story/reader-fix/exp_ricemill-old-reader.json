@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "narration",
+    "text": "착유기를 돌려 병 하나 분량을 짰다. 차 안이 참기름 냄새로 가득 차자 사기가 이유 없이 올랐다. 아니, 이유가 있다. 참기름이니까."
+  },
+  {
+    "kind": "narration",
+    "text": "주인 몫으로 병 반을 선반에 남기고 쪽지를 붙였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "깨 주인분들 것으로 짰습니다. 반은 통행료로 받아갑니다."
+  }
+]

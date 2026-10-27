@@ -1,0 +1,9 @@
+{
+  "id":"near_hapcheon_sutra",
+  "entry":[{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"}],
+  "choices":[
+    {"i":0,"o":0,"speakers":["me",{"who":"passer_monk","name":"목판 옮기는 스님"},"me",{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"}]},
+    {"i":1,"o":0,"speakers":[{"who":"passer_monk","name":"목판 옮기는 스님"}]},
+    {"i":2,"o":0,"speakers":[]}
+  ]
+}

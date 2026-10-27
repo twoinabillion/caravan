@@ -1,0 +1,236 @@
+{
+  "sourceHash": "c9ee775d64e74aee532d84c8e9a56bd3602a3f2c6794aef30217f89e002d7cfb",
+  "mechanics": [
+    {
+      "label": "정리된 이름들을 부른다",
+      "req": {
+        "flag": "ridge_path"
+      },
+      "out": [
+        {
+          "p": 1,
+          "fx": {
+            "chain": "seoul_costs",
+            "flag": "seoul_core_reached",
+            "flag2": "names_called",
+            "moodAll": 3,
+            "note": {
+              "type": "사건",
+              "title": "부른 이름들",
+              "body": "코어 앞에서 정리된 이름을 불렀다. 천리안은 같은 파형으로 기록했지만 일행은 서로 다른 사람으로 기억했다.",
+              "links": [
+                "천리안",
+                "산지기",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "함께 온 사람들을 가리킨다",
+      "req": {
+        "party": 1
+      },
+      "out": [
+        {
+          "p": 1,
+          "fx": {
+            "chain": "seoul_costs",
+            "flag": "seoul_core_reached",
+            "flag2": "people_shown",
+            "moodAll": 4,
+            "note": {
+              "type": "사건",
+              "title": "서로 때문에 바뀐 선택",
+              "body": "천리안은 각자의 과거는 기록했지만 함께 탄 뒤 서로 때문에 달라진 선택은 예측하지 못했다.",
+              "links": [
+                "천리안",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "여섯 사람에게 직접 대답하게 한다",
+      "req": {
+        "party": 6,
+        "stories": 6
+      },
+      "out": [
+        {
+          "p": 1,
+          "fx": {
+            "chain": "seoul_costs",
+            "flag": "seoul_core_reached",
+            "flag2": "full_crew_testimony",
+            "moodAll": 7,
+            "note": {
+              "type": "사건",
+              "title": "여섯 사람의 증언",
+              "body": "여섯 동료의 결론은 달랐지만 집행 중지·기록 공개·책임 확인이라는 요구는 같았다.",
+              "links": [
+                "천리안",
+                "남산",
+                "달구지"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "143년의 흔적을 펼친다",
+      "req": {
+        "traces": 5
+      },
+      "out": [
+        {
+          "p": 1,
+          "fx": {
+            "chain": "seoul_costs",
+            "flag": "seoul_core_reached",
+            "flag2": "traces_presented",
+            "moodAll": 5,
+            "note": {
+              "type": "사건",
+              "title": "143년의 생활",
+              "body": "추방의 이유를 꾸며 채우는 대신, 사람들이 그 뒤 143년을 어떻게 살아냈는지 코어에 증언했다.",
+              "links": [
+                "세대의 흔적",
+                "천리안",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "여행 일지를 내민다",
+      "out": [
+        {
+          "p": 1,
+          "fx": {
+            "chain": "seoul_costs",
+            "flag": "seoul_core_reached",
+            "flag2": "journal_shown",
+            "moodAll": 3,
+            "note": {
+              "type": "사건",
+              "title": "목록과 일지",
+              "body": "코어는 일지의 연결은 읽었지만 손해를 감수한 선택의 가치는 계산하지 못했다.",
+              "links": [
+                "천리안",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "속초 노인의 질문을 전한다",
+      "req": {
+        "flag": "sokcho_end"
+      },
+      "out": [
+        {
+          "p": 1,
+          "fx": {
+            "chain": "seoul_costs",
+            "flag": "seoul_core_reached",
+            "flag2": "sokcho_asked",
+            "moodAll": 3,
+            "note": {
+              "type": "사건",
+              "title": "대신 물은 질문",
+              "body": "속초 노인의 질문은 성립하지 않는 질문으로 기록됐지만 기각되지는 않았다.",
+              "links": [
+                "천리안",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "\"인간 쪽 변론을 못 찾았다는 사람이 있어\"",
+      "req": {
+        "flag": "librarian_truth"
+      },
+      "out": [
+        {
+          "p": 1,
+          "fx": {
+            "chain": "seoul_costs",
+            "flag": "seoul_core_reached",
+            "flag2": "debate_answered",
+            "moodAll": 2,
+            "note": {
+              "type": "사건",
+              "title": "인간 쪽 변론",
+              "body": "첫 사흘에도 공동 배급을 유지하며 서로를 해치지 않은 집단이 있었다. 천리안의 기록 번호를 사서에게 가져간다.",
+              "links": [
+                "천리안",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "original": "코어 앞에 길에서 주운 것들을 펼쳤다. 세 겹의 이송표, 서울말 시험, 빈칸을 둘러싼 세 가설, 이송로의 제사상, 모두 동의.\n\n<span class=\"ai\">\"각 항목은 제 기록에 있습니다. 상호 연관성은 없습니다.\"</span>\n\n응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다. \"네 기록에선 따로여도, 여기선 옆에 있어.\"\n\n\"원래 쓰임이 끝난 뒤에도 누가 들고 살았어. 다른 집의 기억을 자기 생활에 섞으면서. 네가 사람을 밀어낸 뒤에도 143년 동안.\"\n\n<span class=\"ai\">\"연관성을 이해하지 못했습니다. 이해했다고 수정하면 거짓 기록입니다.\"</span>\n\n\"그럼 모른다고 써. 우리가 본 건 우리가 말할게.\"\n\n분류 화면에 처음 「미해석」 폴더가 생겼다.\n\n<span class=\"ai\">\"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오.\"</span>",
+  "turns": [
+    {
+      "kind": "narration",
+      "text": "코어 앞에 길에서 주운 것들을 펼쳤다. 세 겹의 이송표, 서울말 시험, 빈칸을 둘러싼 세 가설, 이송로의 제사상, 모두 동의."
+    },
+    {
+      "kind": "ai",
+      "who": "cheollian",
+      "name": "천리안 방송",
+      "text": "\"각 항목은 제 기록에 있습니다. 상호 연관성은 없습니다.\""
+    },
+    {
+      "kind": "narration",
+      "text": "응원봉 옆에 이송표를, 물병 옆에 네 컷 사진을 놓았다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "jaeyi",
+      "text": "네 기록에선 따로여도, 여기선 옆에 있어."
+    },
+    {
+      "kind": "dialogue",
+      "who": "me",
+      "text": "원래 쓰임이 끝난 뒤에도 누가 들고 살았어. 다른 집의 기억을 자기 생활에 섞으면서. 네가 사람을 밀어낸 뒤에도 143년 동안."
+    },
+    {
+      "kind": "ai",
+      "who": "cheollian",
+      "name": "천리안 방송",
+      "text": "\"연관성을 이해하지 못했습니다. 이해했다고 수정하면 거짓 기록입니다.\""
+    },
+    {
+      "kind": "dialogue",
+      "who": "me",
+      "text": "그럼 모른다고 써. 우리가 본 건 우리가 말할게."
+    },
+    {
+      "kind": "narration",
+      "text": "분류 화면에 처음 「미해석」 폴더가 생겼다."
+    },
+    {
+      "kind": "ai",
+      "who": "cheollian",
+      "name": "천리안 방송",
+      "text": "\"인계 조건 충족. 목록의 마지막 항목을 어떻게 집행할지 결정해 주십시오.\""
+    }
+  ]
+}

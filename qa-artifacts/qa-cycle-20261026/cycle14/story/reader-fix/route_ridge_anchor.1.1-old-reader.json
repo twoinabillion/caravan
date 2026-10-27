@@ -1,0 +1,21 @@
+[
+  {
+    "kind": "narration",
+    "text": "가드레일 기둥이 생각보다 삭아 있었다. 보조줄을 당기자 기둥이 뿌리째 기울었다."
+  },
+  {
+    "kind": "narration",
+    "text": "급히 본줄 하나로 되돌렸다. 이제 하중을 한 줄에만 실어야 한다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "한 명씩. 절대 두 명 같이 오르지 마세요."
+  },
+  {
+    "kind": "narration",
+    "text": "남자를 먼저 받쳐 올렸다. 그가 도로에 닿고도 본줄은 한동안 흔들렸다."
+  }
+]

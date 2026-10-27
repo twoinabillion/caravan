@@ -1,0 +1,68 @@
+{
+  "recordedAt": "2026-10-26T08:18:30.972916+00:00",
+  "sourceFreeze": "cycle19/frozen-source.json",
+  "engineHash": "7168ef4d79391c676d30d45782d469ed7a9fb09efc67c2c85859c6d18464f49e",
+  "sourceAtTestAndJourneyTime": "Frozen19; all3runtime start/end and fullreview end manifests match40files",
+  "sourceAtRecordTime": {
+    "equal": false,
+    "changedSinceFreeze": [
+      "src/03-data.js",
+      "src/03g-scenes.js"
+    ],
+    "reason": "20repairs began after all19 runtime and fullreview end hashes were retained."
+  },
+  "tests": {
+    "pass": 2135,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "test-source.log"
+  },
+  "build": {
+    "exitCode": 0,
+    "log": "build.log",
+    "htmlBytes": 108866852,
+    "htmlSha256": null,
+    "hashNote": "Original19 HTML SHA was not captured before the live watcher rebuilt20 working source; do not attribute current HTML hash to19."
+  },
+  "quick": {
+    "exitCode": 0,
+    "log": "verify-quick.log",
+    "sceneClassAssets": 626,
+    "portraits": 74,
+    "mainCanonicalPortraits": 7
+  },
+  "journeys": {
+    "freshStarts": 3,
+    "mainEndings": 3,
+    "methods": [
+      "core_quarantine",
+      "core_sleep",
+      "core_transfer"
+    ],
+    "choices": 301,
+    "traceRecords": 1672,
+    "entryReloads": 300,
+    "paidReloads": 300,
+    "reloadFailures": 0,
+    "reapplied": 0,
+    "intentionalReloadOmissions": "Systems first-radio-broadcast sequence deliberately omitted1entry+1paid; originalaudit retained. Not tested300+1."
+  },
+  "review": {
+    "allThreeFullTextReviewed": true,
+    "allThreeRuntimeAndReviewEndSource40MatchesFreeze": true,
+    "furtherFindings": "waterpark internal speaker, letterpress printed record, radio noise source; separate clarity/derived/image findings recorded in teamreports"
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4319/",
+    "eventFrameWidthCssPx": 480,
+    "newStoppedGuide": "Same normal18 cloud unpaid backup→choice0 on19 displays 민지에게 말을 걸어…; resultreload andreturnpassed",
+    "screens": [
+      "parked-hint-after.png",
+      "parked-hint-restored.png"
+    ],
+    "originalQaBackupRestored": true,
+    "resourceMode": "Infinite preview; enginejourneysfinite",
+    "responsive360": "Unverified; priorlimitationsretained"
+  },
+  "status": "19technicalchecks and3main endings/reviewscomplete; furtherfindings require20repairs. Not clean completion."
+}

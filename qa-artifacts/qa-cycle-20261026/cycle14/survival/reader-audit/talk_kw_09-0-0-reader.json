@@ -1,0 +1,25 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "익숙해지는 거."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 드물게 긴 문장을 시작했다. 중간에 한 번 말을 골랐다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "총성에 익숙해지고, 폐허에 익숙해지고, 사람 잃는 것에… 익숙해지고. 나중엔 아무렇지도 않아져."
+  },
+  {
+    "kind": "narration",
+    "text": "뒷자리에서 냄비 뚜껑이 덜컹 떨어졌다. 강우가 그쪽을 보고 입꼬리를 아주 조금 올렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "저런 건 아직 좋군."
+  }
+]

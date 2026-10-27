@@ -1,0 +1,78 @@
+{
+  "key": "explore-abandoned-orchard-v1",
+  "event": "exp_orchard",
+  "format": "place",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nOne new cohesive 16:9 narrative scene, native PNG master at least1536x864. The four canonical references are style/world references only: do not copy their collage panels, title, characters, Dalguji, skyline, Namsan tower or signs into this scene. Weathered ordinary Korean materials, restrained contrast and subtle grain. No dreamy softness, beauty filter, glowy haze, glossy retouching or painterly pastel drift. Important subject inside central80% width/82%height, readable at mobile480 and360px. Avoid strong directional sunlight, sunrise/sunset colors or an explicit starry sky; close framing and diffuse local illumination keep the picture usable across the event time window. No captions, legible lettering or logos.\n\nAn ownerless Korean apple orchard, intimate eye-level view beneath a dense canopy. Low gnarled branches sag under many ripe muted-red apples, a mixture of sound fruit and clearly insect-damaged or blemished fruit; one or two small ordinary birds perch warily among the branches. Orchard rows can be suggested behind the main heavy branch, not a vegetable garden. Fruit still on the trees, no picked fruit boxes, baskets, harvesting, meal, people, hands, companions, vehicle or city. Crop the sky out under the foliage; subdued cool diffuse shade with natural rough bark and believable leaves, not a sunny idyllic commercial orchard.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "promptSha256": "272303d2c03e9600cbcf03f2a54327c8dccccb5c67c11a937072a3c4db56c33e",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../systems/candidate-evidence.json",
+  "entry": "주인 잃은 과수원. 가지가 휘도록 열매가 달렸다.\n\n벌레 먹은 것 반, 멀쩡한 것 반. 새들이 경계하며 이쪽을 본다.",
+  "sourceEvent": {
+    "id": "exp_orchard",
+    "minParty": 1,
+    "type": "탐색",
+    "w": 8,
+    "region": [
+      "south",
+      "mid"
+    ],
+    "title": "야생 과수원",
+    "text": "주인 잃은 과수원. 가지가 휘도록 열매가 달렸다.\n\n벌레 먹은 것 반, 멀쩡한 것 반. 새들이 경계하며 이쪽을 본다.",
+    "choices": [
+      {
+        "label": "과일을 딴다",
+        "out": [
+          {
+            "p": 1,
+            "text": "상자 가득 땄다. 달다. 미치게 달다.\n\n다들 과즙 범벅이 되어 웃었다. 오랜만에 소리 내어 웃었다.",
+            "fx": {
+              "food": 3,
+              "water": 1,
+              "moodAll": 6,
+              "time": 40
+            }
+          }
+        ]
+      },
+      {
+        "label": "서두른다 — 갈 길이 멀다",
+        "out": [
+          {
+            "p": 1,
+            "text": "손 닿는 가지에서 몇 개만 따 차로 돌아왔다. 운전석에 앉아 사과를 베어 물었다. 서둘러 딴 것도 꽤 달았다.",
+            "fx": {
+              "food": 1,
+              "moodAll": 2
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

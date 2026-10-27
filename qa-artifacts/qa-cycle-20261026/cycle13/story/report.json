@@ -1,0 +1,224 @@
+{
+  "seed": 273003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "hapcheon",
+    "geochang",
+    "muju",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "daejeon",
+    "yeongdong",
+    "gimcheon",
+    "gumi",
+    "gimcheon",
+    "jaeyi_cache",
+    "gimcheon",
+    "yeongdong",
+    "spring",
+    "yeongdong",
+    "daejeon",
+    "sejong",
+    "gongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 102,
+  "actions": 498,
+  "sourceHash": "5c8940162113635cc9ddb0baf6a51501a6f320c87f7ddef7eaddb2fe8ca2e402",
+  "freshStarts": 1,
+  "attempts": 1,
+  "party": [
+    "jaeyi",
+    "parkss"
+  ],
+  "dog": false,
+  "day": 9,
+  "min": 1317,
+  "km": 872,
+  "sourceUnchangedDuringRun": true,
+  "all40FilesUnchanged": true,
+  "statistics": {
+    "reviewedChoices": 102,
+    "chars": 36782,
+    "sameEntryChoiceResult": 80,
+    "differentEntryChoiceResult": 22,
+    "sameResult": 81,
+    "differentResult": 21,
+    "newRawPairsVsAllRetained": [
+      "camp_1_jaeyi:0",
+      "camp_2_jaeyi:1",
+      "camp_3_jaeyi:1",
+      "camp_5_jaeyi:1",
+      "camp_6_jaeyi:0",
+      "camp_7_jaeyi:1",
+      "exp_laundry:0",
+      "exp_photostudio:1",
+      "loc_jaeyi_cache:0",
+      "npc_drhan_2:0",
+      "talk_pss_01:0"
+    ],
+    "comparisonFiles": [
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle1/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle2/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt02/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle4/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt02/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle6/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle7/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle8/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle9/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle10/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle11/story/agent03/attempt01/agent03-trace.json",
+      "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle12/story/agent03/attempt02/agent03-trace.json"
+    ],
+    "comparisonCaveat": "Own retained attempts for exact strings; all retained coverage for raw pairs. Includes repeated/resumed attempts, excludes partial browser replays, not primary-cohort totals or new authored story counts.",
+    "countByAction": {
+      "new-game": 1,
+      "unpaid-entry-reload": 102,
+      "choice": 102,
+      "paid-result-reload": 102,
+      "explore": 20,
+      "travel": 28,
+      "drive": 55,
+      "trade": 28,
+      "work": 4,
+      "camp": 8,
+      "meet-recruit": 2,
+      "board-open": 4,
+      "npc-rumor": 9,
+      "recruit-step": 6,
+      "camp-talk": 7,
+      "accept-companion": 2,
+      "talk": 9,
+      "earned-perk": 4,
+      "seoul-enter": 5
+    },
+    "entryReloads": 102,
+    "paidReloads": 102,
+    "paidReaderDeepEqual": 102,
+    "reapplied": 0,
+    "speechCalls": 70,
+    "npcMenus": 18
+  },
+  "readerConfirmed": 8,
+  "readerFindingsFile": "findings.json",
+  "productionChanges": 0,
+  "runtimeErrors": [],
+  "causalityCandidates": [
+    {
+      "n": 417,
+      "kind": "UI.speak",
+      "issue": "gp_envelope_found alone lists owned score, drawing, photograph and other documents; this route did not acquire a score."
+    },
+    {
+      "n": 158,
+      "kind": "work roof_tiles",
+      "issue": "Before rain wording while storm already active."
+    }
+  ],
+  "notCountedAsConfirmed": [
+    "near_hapcheon_sutra anonymous monk display label",
+    "cell_mountain_meet anonymous group speaker label",
+    "north-only clear sky line during local storm may describe distant sky",
+    "talkr_jy_2 player 바꿔준다며 register is a contextual voice candidate",
+    "talkr_pss_1 어제도 can refer to ordinary off-scene daily care; no impossible shared event established"
+  ],
+  "features": [
+    "Jaeyi recruitment hand-clearing choice; earned shelf/fixed-bracket camp continuations",
+    "Park medical request and recruitment via real medicine cost",
+    "Publicly revealed Jaeyi cache and spring visited",
+    "Western market three-stage convoy route",
+    "Grandfather envelope kept then actually opened at seoul_base",
+    "Actual NPC greeting and rumor response menus for nine NPCs",
+    "Four boards read; no suitable accepted on-corridor mission"
+  ],
+  "naturalRechecks": [
+    "npc_jaepil_2[0] repaired voices",
+    "route_mid_fork[1] player voice",
+    "lc_jeonju_bibim entry/result cook voices",
+    "camp_visitor entry voices",
+    "cell_ghost_meet speaker broadcasts",
+    "seoul_han postman recording entry",
+    "talk_jy_05[1] neutral useful-parts gift wording",
+    "loc_spring afternoon neutral time",
+    "seoul_core journal option",
+    "seoul_costs actual three connected channels"
+  ],
+  "policyNotes": "872km includes Jaeyi task, western route lock to Cheongju, deferred Park task in Gumi and one cache/spring visit. No fuel rescue, policy loop, forced state or replay; real finite trading/supply used.",
+  "gaps": [
+    "Eunsu not recruited (two seats occupied by Jaeyi/Park)",
+    "No Bori/Jeju/father exhibit",
+    "Tunnelbook and other revealed hidden nodes not all visited; no forced encounter",
+    "No accepted board mission despite four inspections; current target filter was restrictive",
+    "No crafting/upgrades or installed radio; capture hook present but broadcast row0",
+    "Unknown anonymous NPC labels are not automatically defects",
+    "Speech calls do not prove visible bubble queue; actual image/crop/input/audio belongs to root"
+  ],
+  "limitations": [
+    "Node VM engine simulation, not browser or human playtest",
+    "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+    "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+    "No edits to source or actual user save; no infinite resources"
+  ],
+  "manualReview": "All102 complete entry/result reader occurrences (plus exact string comparisons), speech70, NPC greeting+response18 menus, field work4 and board4 fully read.",
+  "productionChangesDuringNaturalRun": 0,
+  "postJourneyFix": {
+    "scope": "After the frozen cycle13 natural journey; not additional natural choices or browser proof",
+    "ownReaderEvents": 8,
+    "ownReaderMetadata": 8,
+    "roofDescriptionOnly": 1,
+    "ownTextAndMechanicsUnchangedExceptRoofDesc": true,
+    "oldFrozenAndTextOnlyPaidPreserved": true,
+    "red": {
+      "tests": 20,
+      "failed": 17,
+      "passed": 3
+    },
+    "green": {
+      "tests": 21,
+      "failed": 0
+    },
+    "entryInheritanceMatrix": {
+      "events": 4,
+      "outcomes": 9,
+      "newDefects": 0
+    },
+    "integratedCurrentDeliveredChanges": {
+      "tests": 117,
+      "failed": 0
+    },
+    "otherOwnerPending": null,
+    "projection": "Exact new routes asserted, existing Minji routes restored exactly, only inline bracket quote-count deltas projected. No corpus hash replaced.",
+    "monk": {
+      "parentDirectPortraitMismatchConfirmed": true,
+      "newEntryRoute": 2,
+      "outcomeRoutes": [
+        7,
+        1,
+        0
+      ],
+      "fixtureTests": 10,
+      "passed": 10,
+      "oldPaidAndTextOnlyPreserved": true,
+      "sourceAndGalleryAuthority": "parent registered dedicated portrait after actual inspection; this agent only changed role metadata and exact quote projection"
+    }
+  },
+  "anonymousCandidateDisposition": {
+    "near_hapcheon_sutra": "Anonymous name alone non-defect; parent actual mapped worker portrait inspection confirmed a clothing mismatch. Parent generated/registered monk portrait; this agent completed explicit monk/player routes for entry and all3 outcomes with10/10 fixture checks. Natural old journey unchanged.",
+    "cell_mountain_meet": "Non-defect: Sanjigi is a group name; unnamed leading woman has no personal name to reveal."
+  }
+}

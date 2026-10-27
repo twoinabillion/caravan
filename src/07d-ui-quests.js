@@ -21,7 +21,7 @@ const QuestJournal={
     minji:['같이 일할 방식은 민지랑 맞춰 놨다.','민지랑 같이 따라간 민규의 신호.','민지가 왜 혼자 남았는지, 이제 끝까지 들었다.'],
     parkss:['서로 몸 상태부터 살펴봤다.','명단의 이름들. 그 사람들이 어떻게 살았는지 같이 되짚어 봤지.','남겨진 이름들은 증언으로 정리해 뒀다. 잊지 않으려고.'],
     kangwoo:['차 안에서 서로 지킬 선은 정해 놨고.','후임이 고친 경계선은 같이 따라가 봤다.','수비대에서 무슨 일이 있었는지 끝까지 들었다. 그랬던 거구나.'],
-    leo:['농담을 하다가도 레오가 말을 멈출 때가 있네.','레오가 끝내지 못한 노래. 이번엔 같이 이어 가 봤다.','길에서 만난 사람들 목소리로 노래를 완성했다. 끝까지.'],
+    leo:['농담을 하다가도 레오가 말을 멈출 때가 있네.','레오가 끝내지 못한 노래. 이번엔 같이 이어 가 봤다.','길에서 만난 사람들의 목소리로 두 절을 만들었다. 마지막 절은 서울에서 쓰기로 했다.'],
     jaeyi:['재이 아버지의 상자에 뭘 남길지 같이 골랐다.','열쇠가 가리키는 곳까지 같이 가 봤지.','재이가 떠나왔던 곳에 다시 갔다. 이번엔 함께.'],
     eunsu:['녹음기를 끄고 나눈 얘기. 차 안에서 은수랑.','관제실에서 놓친 신호는 다시 열어 봤고.','은수가 남긴 접속 코드와 그 책임. 같이 얘기해 봤다.']
   },
@@ -62,13 +62,20 @@ const QuestJournal={
         result.title='지나온 단서';result.next='다음 단서로 넘어갈 때 따라갔던 기록.';
       }else if(row.chapterId==='ending'){
         result.title='남산에서 내린 결정';result.next='남산 코어에서 마지막 결정까지 내렸다. 여기까지 뭘 골랐는지, 잊기 전에 적어 두자.';result.phase='여정을 마치고';
+      }else if(row.chapterId==='finale-aftermath'){
+        result.title='남산에서 내린 결정';
+        result.next='어떻게 할지는 정했다. 그 뒤에 무슨 일이 남았는지 끝까지 확인하자.';
+        result.guide='진행 중인 사건 · 계속 읽기';
+      }else if(row.chapterId==='finale-preparation'){
+        result.title='결정 전에 준비할 것';result.next='남산까지는 다녀왔다. 고를 방법에 필요한 사람과 거점 응답부터 챙기고 돌아가자. 멈춘 결정부터 이어 갈 수 있다.';result.guide='거점 응답 · 동료 합류·치료·야영 / 준비 뒤 전체 지도에서 서울로';
       }else if(String(row.chapterId).startsWith('seoul-')){
         const stops=D.seoulMap?.stops||[],stage=Number(row.chapterId.slice(6)),stop=stops[stage];
-        result.title=stop?(stop.name||stop.label):'남산 코어 앞에서';
-        result.next=stop?'여긴 길이 막혔네. 길을 열고, 가져온 기록은 코어까지 직접 들고 가야지.':'이제 코어에 검증키와 증언을 연결할 차례. 여기서 어떻게 할지는 내가 정해야 한다.';
-        result.guide='서울 진입로 · 현재 지점 확인';
+        const atDecision=!!S.flags?.seoul_core_reached&&!!S.flags?.seoul_costs_seen&&!G.resolvedFinaleMethod?.();
+        result.title=atDecision?'남산 코어 앞에서':stop?(stop.name||stop.label):'남산 코어 앞에서';
+        result.next=atDecision?'코어에서 각 방법의 조건까지 확인했다. 준비한 것을 다시 보고, 여기서 어떻게 할지 정하자.':stop?'가져온 기록은 코어까지 직접 들고 가야지. 지금 지점부터 차례로 살펴보자.':'이제 코어에 검증키와 증언을 연결할 차례. 여기서 어떻게 할지는 내가 정해야 한다.';
+        result.guide=atDecision?'서울 지도 · 남산 코어 / 마지막 결정 이어가기':'서울 진입로 · 현재 지점 확인';
       }else if(row.chapterId==='road-to-seoul'){
-        result.title='이제 서울로';result.next='기록도 모았고, 도와줄 사람들과도 연락이 닿았다. 이제 서울로 가 볼까.';result.guide='전체 지도 · 서울 방면';
+        result.title='이제 서울로';result.next='기록도 모았고, 도와줄 사람들과도 연락이 닿았다. 서울로 가기 전에 연락할 거점과 함께 갈 동료들의 상태도 확인해 둘 것.';result.guide='전체 지도 · 서울 방면 / 동료 상태 · 거점 연락 확인';
       }else{
         const pillar=String(row.chapterId||'').replace('prepare-','');
         const fallback={관계:'witness',세계:'relay',진실:'command',유산:'records'}[pillar];
@@ -79,12 +86,20 @@ const QuestJournal={
         if(evidence) result.guide=`${this.place(evidence.target)} · 주변 탐색 · ${evidence.cost}`;
         else if(!result.guide) result.guide=row.next||'';
         if(key==='mother'&&S.flags?.mother_reunited) result.next='엄마랑 다시 만났다. 남산에 들어가기 전에, 밖에서 연락을 어떻게 주고받을지 맞춰 놔야겠네.';
-        if(key==='key'&&S.flags?.parent_principle_found) result.next='설명서를 찾았으니 원래 수첩이랑 맞춰 볼 것. 순서를 확인하기 전엔 검증키에 손대지 말자.';
+        else if(key==='mother'&&!S.flags?.parents_recent_signal){
+          result.title='엄마의 행방';
+          result.next='기록 정리소를 떠난 뒤 엄마는 어디로 갔을까. 북부 기록망에서 이름이 남은 곳을 찾아보자.';
+        }
+        if(key==='key'&&S.flags?.parent_principle_found) result.next=S.flags.parent_key_found
+          ?'빠진 두 장을 맞춰 보고 검증키를 꺼냈다. 가져갈 기록과 함께 챙겨 둘 것.'
+          :'영상에서 부모님이 지키려던 절차는 확인했다. 계기판의 검증키를 꺼내려면 빠진 설명서 두 장을 더 찾아야 한다.';
+        const reading=G.mainEvidenceReading?.();
+        if(reading){result.next=reading.hint;result.guide='진행 중인 기록 · 계속 읽기';}
         // Authored marks belong to this thought, not to every quest template.
         // Do not call the journey lonely after a companion has joined.
         if(key==='parents_work'){
           if(!(S.party||[]).length&&!S.recruitQ) result.aside={erased:'혼자서는 무리일 것 같다',added:'해 보기 전엔 모르지.'};
-          if(evidence?.target) result.pencil=`${this.place(evidence.target)}에 가면 주변부터 둘러보자.`;
+          if(evidence?.target&&!reading) result.pencil=`${this.place(evidence.target)}에 가면 주변부터 둘러보자.`;
           result.doodle=true;
         }
       }
@@ -127,7 +142,10 @@ const QuestJournal={
         if(q.kind==='express'&&!overdue) result.next+=' 급한 짐이니 너무 늦지는 말아야지.';
         result.guide=`${to} · 게시판에서 전달`;
       }
-      if(overdue) result.next+=' 약속한 날을 넘겨 버렸네. 늦었어도 전달은 마저 하자.';
+      if(overdue){
+        result.next='약속한 날을 넘겨 버렸네. 게시판에서 이 부탁의 처리 상태부터 확인하자.';
+        result.guide=`${to} · 게시판에서 처리 상태 확인`;
+      }
     }else if(completed){
       const kind=String(row.id).match(/^completed_local_(deliver|delivery|express|procure|letter)_/)?.[1];
       result.next=kind==='procure'?'부탁받은 물건은 다 구해서 건넸다. 이 일은 여기까지.'

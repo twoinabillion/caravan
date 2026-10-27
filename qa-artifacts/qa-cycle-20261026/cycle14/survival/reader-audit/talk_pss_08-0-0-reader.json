@@ -1,0 +1,53 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "수진이. 실습생. 나보다 나은 약사가 될 애였어."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "그날, 내가 창고 정리를 시켰어. 안쪽에 있으라고. 안전하라고."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 가방 손잡이를 쓸었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…정신 차려보니 약국 앞이 온통 사람이었고, 다시 들어가 보니 창고엔 이 가방만 있었어."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…수진 씨는요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "몰라. 살았는지, 어디서 제 몫의 약을 짓고 있는지. 오래 몰라."
+  },
+  {
+    "kind": "narration",
+    "text": "말이 거기서 한 번 끊겼다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "그래서 들어. 매일. 주인 찾아 돌려줄 때까진 내 어깨가 얘 자리야."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 가방을 고쳐 멨다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…오늘 몫 시작하지. 자네 어깨 좀 보자. 자세가 나빠."
+  },
+  {
+    "kind": "narration",
+    "text": "어깨를 내주는 동안, 그가 가방끈을 두 번 더 고쳐 쥐는 걸 봤다."
+  }
+]

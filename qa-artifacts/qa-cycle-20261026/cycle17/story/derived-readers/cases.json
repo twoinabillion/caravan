@@ -1,0 +1,7 @@
+[
+ {"id":"comp_diary_read","entry":["party_first"],"choices":{"0.0":["party_first","party_second","party_first","party_second","party_first","party_second","me"]}},
+ {"id":"up_beehive_swarm","choices":{"0.1":["me"]}},
+ {"id":"comp_van_pride","entry":["party_first"],"choices":{"0.0":["me"]}},
+ {"id":"ev_group_feast","choices":{"1.0":["me"]}},
+ {"id":"up_armor_argument","entry":["party_first"],"choices":{"0.0":[],"1.0":[]}}
+]

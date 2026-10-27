@@ -1,0 +1,1006 @@
+{
+  "evidence": "Separate frozen14 static pair audit all authored entry/outcomes/notes,not natural journey",
+  "records": [
+    {
+      "id": "pair_leo_jy_1",
+      "raw": {
+        "id": "pair_leo_jy_1",
+        "scenes": [
+          "pair-leo-jaeyi-plan-v2",
+          "pair-leo-jaeyi-performance-v1"
+        ],
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "leo",
+        "needsComp2": "jaeyi",
+        "title": "레오×재이 — 버스킹 듀오",
+        "text": "\"여기서 잠깐 공연해요!\" 레오가 제안했다. \"재이 씨는 수금 담당이요. 모자 돌리는 거.\"\n\n\"수금이요?\"\n\n\"수금이요.\"\n\n\"…그거 제일 중요한 파트인 거 알죠?\" 재이가 진지해졌다. \"모자 각도 3도만 틀어도 수익이 달라져요.\"\n\n\"그런 게 있어요?\"\n\n\"없어요. 근데 있는 것처럼 하면 사람들이 넣어요.\"",
+        "choices": [
+          {
+            "label": "매니저를 자청한다",
+            "out": [
+              {
+                "p": 1,
+                "text": "달구지 옆에 모인 행인들 앞에서 세 곡짜리 공연을 했다. 레오가 부르고, 재이가 모자를 돌리고, 나는 박수를 유도했다.\n\n수익은 고철 셋, 말린 옥수수 두 개, 그리고 아이가 준 구슬 한 개.\n\n\"구슬은 제 수수료예요.\" 재이가 챙겼다. \"이야기 있는 물건이니까.\"\n\n\"그거 규정에 없는데요.\" \"지금 만들었어요.\" \"언제요?\" \"방금이요.\"\n\n정산은 끝났는데 둘은 자리를 안 뜨고 다음 공연지를 놓고 계속 떠들었다.",
+                "fx": {
+                  "mood": {
+                    "leo": 4,
+                    "jaeyi": 4
+                  },
+                  "scrap": 3,
+                  "food": 1,
+                  "note": {
+                    "type": "사건",
+                    "title": "듀오 「모자와 기타」",
+                    "body": "공연 수익: 고철 3, 옥수수 2, 구슬 1(수수료로 재이 수령). 차기 공연지 논의 중.",
+                    "links": [
+                      "레오",
+                      "재이"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "여기서 잠깐 공연해요!",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 제안했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "재이 씨는 수금 담당이요. 모자 돌리는 거.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "수금이요?",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "수금이요.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "…그거 제일 중요한 파트인 거 알죠?",
+          "displayName": "재이"
+        },
+        {
+          "kind": "narration",
+          "text": "재이가 진지해졌다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "모자 각도 3도만 틀어도 수익이 달라져요.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "그런 게 있어요?",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "없어요. 근데 있는 것처럼 하면 사람들이 넣어요.",
+          "displayName": "재이"
+        }
+      ],
+      "outcomes": [
+        {
+          "i": 0,
+          "j": 0,
+          "label": "매니저를 자청한다",
+          "fx": {
+            "mood": {
+              "leo": 4,
+              "jaeyi": 4
+            },
+            "scrap": 3,
+            "food": 1,
+            "note": {
+              "type": "사건",
+              "title": "듀오 「모자와 기타」",
+              "body": "공연 수익: 고철 3, 옥수수 2, 구슬 1(수수료로 재이 수령). 차기 공연지 논의 중.",
+              "links": [
+                "레오",
+                "재이"
+              ]
+            }
+          },
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "달구지 옆에 모인 행인들 앞에서 세 곡짜리 공연을 했다. 레오가 부르고, 재이가 모자를 돌리고, 나는 박수를 유도했다.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "수익은 고철 셋, 말린 옥수수 두 개, 그리고 아이가 준 구슬 한 개.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "구슬은 제 수수료예요.",
+              "displayName": "레오"
+            },
+            {
+              "kind": "narration",
+              "text": "재이가 챙겼다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "이야기 있는 물건이니까.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "그거 규정에 없는데요.",
+              "displayName": "레오"
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "지금 만들었어요.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "언제요?",
+              "displayName": "레오"
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "방금이요.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "narration",
+              "text": "정산은 끝났는데 둘은 자리를 안 뜨고 다음 공연지를 놓고 계속 떠들었다.",
+              "displayName": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pair_leo_jy_2",
+      "raw": {
+        "id": "pair_leo_jy_2",
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "leo",
+        "needsComp2": "jaeyi",
+        "needBond": [
+          "jaeyi",
+          12
+        ],
+        "title": "레오×재이 — 아빠들의 합동 전시",
+        "text": "\"재이 씨 박물관에 코너 하나만 줘요.\" 레오가 말했다. \"'아빠들의 물건' 코너.\"\n\n닦던 걸 계속 닦던 재이의 손이 멈췄다. 멈추고도 한동안 그대로 있었다.",
+        "choices": [
+          {
+            "label": "지켜본다",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"하모니카 기증할게요. 관람객이 불어볼 수 있게요. 물건은 쓰여야 사니까.\"\n\n재이가 얼마간 있다 답했다. \"…그럼 저는 창고 열쇠요. 옆에 걸어둘게요.\"\n\n\"전시명은요?\"\n\n\"전시명은—\"\n\n둘이 동시에 말했다. \"'잘 부는 노래 하나면 충분하다'.\" \"'줍는 순간 물건이 된다'.\"\n\n\"…….\"\n\n\"…둘 다 걸죠.\"\n\n전시명이 두 줄인 코너가 기획됐다. 개관일은 안 정했고, 소장품은 두 점이 됐다.",
+                "fx": {
+                  "mood": {
+                    "leo": 5,
+                    "jaeyi": 6
+                  },
+                  "note": {
+                    "type": "소문",
+                    "title": "아빠들의 물건 코너",
+                    "body": "소장 확정: 하모니카(체험형)+창고 열쇠. 전시명 두 줄(아빠가 둘이라서).",
+                    "links": [
+                      "레오",
+                      "재이"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "재이 씨 박물관에 코너 하나만 줘요.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 말했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "'아빠들의 물건' 코너.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "닦던 걸 계속 닦던 재이의 손이 멈췄다. 멈추고도 한동안 그대로 있었다.",
+          "displayName": null
+        }
+      ],
+      "outcomes": [
+        {
+          "i": 0,
+          "j": 0,
+          "label": "지켜본다",
+          "fx": {
+            "mood": {
+              "leo": 5,
+              "jaeyi": 6
+            },
+            "note": {
+              "type": "소문",
+              "title": "아빠들의 물건 코너",
+              "body": "소장 확정: 하모니카(체험형)+창고 열쇠. 전시명 두 줄(아빠가 둘이라서).",
+              "links": [
+                "레오",
+                "재이"
+              ]
+            }
+          },
+          "turns": [
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "하모니카 기증할게요. 관람객이 불어볼 수 있게요. 물건은 쓰여야 사니까.",
+              "displayName": "레오"
+            },
+            {
+              "kind": "narration",
+              "text": "재이가 얼마간 있다 답했다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "…그럼 저는 창고 열쇠요. 옆에 걸어둘게요.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "전시명은요?",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "전시명은—",
+              "displayName": "레오"
+            },
+            {
+              "kind": "narration",
+              "text": "둘이 동시에 말했다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "'잘 부는 노래 하나면 충분하다'.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "'줍는 순간 물건이 된다'.",
+              "displayName": "레오"
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "…….",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "…둘 다 걸죠.",
+              "displayName": "레오"
+            },
+            {
+              "kind": "narration",
+              "text": "전시명이 두 줄인 코너가 기획됐다. 개관일은 안 정했고, 소장품은 두 점이 됐다.",
+              "displayName": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pair_leo_es_1",
+      "raw": {
+        "id": "pair_leo_es_1",
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "leo",
+        "needsComp2": "eunsu",
+        "title": "레오×은수 — 잡음 콜라보",
+        "text": "\"누나 그 잡음 컬렉션이요,\" 레오가 은수의 녹음기를 가리켰다. \"그거 위에 기타 얹으면 곡 돼요. 진짜로.\"\n\n\"…얹는다는 게 무슨 뜻이에요?\"\n\n\"그러니까 밑에 깔고, 위에다— 아니다. 그냥 해볼게요. 말로 하면 이상해요.\"\n\n은수가 녹음기를 먼저 내밀었다.",
+        "choices": [
+          {
+            "label": "세션에 참관한다",
+            "out": [
+              {
+                "p": 1,
+                "text": "은수가 모아 둔 빗소리 녹음을 틀었다. 그 위에 A마이너가 얹히고, 새벽에 녹음한 주파수의 웅웅거림이 베이스가 됐다.\n\n짧게 맞춰 본 소리를 녹음했다. 제목은 「세상에서 제일 시끄러운 침묵」. 레오가 지었고, 은수가 두 번 고치자고 했다가 그냥 뒀다.\n\n\"빗소리를 끄면 곡이 반쯤 비어요.\" 은수가 말했다. \"여기 빗소리 조금만 더 키워 봐요.\"\n\n\"그럼 크레딧에는 비라고 적어요?\"\n\n\"…날씨라고 적을까요.\"\n\n결국 효과음 칸에 ‘빗소리’라고 적었다. 은수는 녹음기에서 원본 파일을 찾아 그 번호를 덧붙였다.",
+                "fx": {
+                  "mood": {
+                    "leo": 4,
+                    "eunsu": 5
+                  },
+                  "note": {
+                    "type": "사건",
+                    "title": "시끄러운 침묵 1번",
+                    "body": "은수가 모아 둔 빗소리에 레오가 기타를 얹었다. 짧은 시험 녹음에도 제목을 붙였다.",
+                    "links": [
+                      "레오",
+                      "은수"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  "eunsu",
+                  "eunsu",
+                  "leo",
+                  "eunsu"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "누나 그 잡음 컬렉션이요,",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 은수의 녹음기를 가리켰다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "그거 위에 기타 얹으면 곡 돼요. 진짜로.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "…얹는다는 게 무슨 뜻이에요?",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "그러니까 밑에 깔고, 위에다— 아니다. 그냥 해볼게요. 말로 하면 이상해요.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 녹음기를 먼저 내밀었다.",
+          "displayName": null
+        }
+      ],
+      "outcomes": [
+        {
+          "i": 0,
+          "j": 0,
+          "label": "세션에 참관한다",
+          "fx": {
+            "mood": {
+              "leo": 4,
+              "eunsu": 5
+            },
+            "note": {
+              "type": "사건",
+              "title": "시끄러운 침묵 1번",
+              "body": "은수가 모아 둔 빗소리에 레오가 기타를 얹었다. 짧은 시험 녹음에도 제목을 붙였다.",
+              "links": [
+                "레오",
+                "은수"
+              ]
+            }
+          },
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "은수가 모아 둔 빗소리 녹음을 틀었다. 그 위에 A마이너가 얹히고, 새벽에 녹음한 주파수의 웅웅거림이 베이스가 됐다.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "짧게 맞춰 본 소리를 녹음했다. 제목은 「세상에서 제일 시끄러운 침묵」. 레오가 지었고, 은수가 두 번 고치자고 했다가 그냥 뒀다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "빗소리를 끄면 곡이 반쯤 비어요.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "narration",
+              "text": "은수가 말했다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "여기 빗소리 조금만 더 키워 봐요.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "그럼 크레딧에는 비라고 적어요?",
+              "displayName": "레오"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "…날씨라고 적을까요.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "narration",
+              "text": "결국 효과음 칸에 ‘빗소리’라고 적었다. 은수는 녹음기에서 원본 파일을 찾아 그 번호를 덧붙였다.",
+              "displayName": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pair_leo_es_2",
+      "raw": {
+        "id": "pair_leo_es_2",
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "leo",
+        "needsComp2": "eunsu",
+        "needBond": [
+          "eunsu",
+          12
+        ],
+        "title": "레오×은수 — 기장님께 보내는 방송",
+        "text": "\"누나가 찾는 그 기장님이요.\" 레오가 조심스럽게 말했다. \"노래로 찾아보면 어때요?\"\n\n\"…노래로요?\"\n\n\"라디오 방송국을 찾으면 신청곡을 보내는 거예요. 사연이랑 같이요. 그 기장님이 어디서 라디오를 듣고 있을 수도 있잖아요. 아니면 옆 사람이 듣고 있다가— 하여튼요.\"",
+        "choices": [
+          {
+            "label": "사연 작성을 돕는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "셋이서 사연을 썼다. \"제주발 김포행, 그날의 기장님께. 관제사가 마지막 교신의 뒷부분을 기다립니다. 이 사연을 들으시면 답을 보내 주세요.\"\n\n은수는 그걸 열 번쯤 고쳐 썼다. 아홉 번째와 열 번째의 차이는 쉼표 하나였다. 봉투에 넣어 조수석 서랍에 맡겼다. 길에서 방송국을 찾으면 신청곡과 함께 맡기기로 했다.\n\n\"답이 올까요?\"\n\n\"몰라요.\" 레오가 말했다. \"저도 길에서 노래할 때 누가 듣는지 잘 몰라요. 그래도 끝까지 불러 봐야죠.\"\n\n\"…신청곡은 뭘로 할까요?\"\n\n\"기장님이 알 만한 걸로요. 누나, 후보부터 적어요.\"",
+                "fx": {
+                  "mood": {
+                    "leo": 5,
+                    "eunsu": 6
+                  },
+                  "flag": "pilot_appeal",
+                  "note": {
+                    "type": "사건",
+                    "title": "기장님께 보내는 사연",
+                    "body": "방송국에 맡길 사연을 써서 서랍에 보관했다. 아직 전달하지는 못했다.",
+                    "links": [
+                      "레오",
+                      "은수",
+                      "새벽 두 시의 DJ"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  {
+                    "who": "record",
+                    "kind": "record",
+                    "name": "기장님께 보내는 사연"
+                  },
+                  "eunsu",
+                  "leo",
+                  "leo",
+                  "eunsu",
+                  "leo"
+                ]
+              }
+            ]
+          }
+        ],
+        "turnSpeakers": [
+          "leo",
+          "leo",
+          "eunsu",
+          "leo"
+        ]
+      },
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "누나가 찾는 그 기장님이요.",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 조심스럽게 말했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "노래로 찾아보면 어때요?",
+          "displayName": "레오"
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "…노래로요?",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "라디오 방송국을 찾으면 신청곡을 보내는 거예요. 사연이랑 같이요. 그 기장님이 어디서 라디오를 듣고 있을 수도 있잖아요. 아니면 옆 사람이 듣고 있다가— 하여튼요.",
+          "displayName": "레오"
+        }
+      ],
+      "outcomes": [
+        {
+          "i": 0,
+          "j": 0,
+          "label": "사연 작성을 돕는다",
+          "fx": {
+            "mood": {
+              "leo": 5,
+              "eunsu": 6
+            },
+            "flag": "pilot_appeal",
+            "note": {
+              "type": "사건",
+              "title": "기장님께 보내는 사연",
+              "body": "방송국에 맡길 사연을 써서 서랍에 보관했다. 아직 전달하지는 못했다.",
+              "links": [
+                "레오",
+                "은수",
+                "새벽 두 시의 DJ"
+              ]
+            }
+          },
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "셋이서 사연을 썼다.",
+              "displayName": null
+            },
+            {
+              "kind": "record",
+              "who": "record",
+              "name": "기장님께 보내는 사연",
+              "text": "제주발 김포행, 그날의 기장님께. 관제사가 마지막 교신의 뒷부분을 기다립니다. 이 사연을 들으시면 답을 보내 주세요.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "은수는 그걸 열 번쯤 고쳐 썼다. 아홉 번째와 열 번째의 차이는 쉼표 하나였다. 봉투에 넣어 조수석 서랍에 맡겼다. 길에서 방송국을 찾으면 신청곡과 함께 맡기기로 했다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "답이 올까요?",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "몰라요.",
+              "displayName": "레오"
+            },
+            {
+              "kind": "narration",
+              "text": "레오가 말했다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "저도 길에서 노래할 때 누가 듣는지 잘 몰라요. 그래도 끝까지 불러 봐야죠.",
+              "displayName": "레오"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "…신청곡은 뭘로 할까요?",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "leo",
+              "text": "기장님이 알 만한 걸로요. 누나, 후보부터 적어요.",
+              "displayName": "레오"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pair_jy_es_1",
+      "raw": {
+        "id": "pair_jy_es_1",
+        "scenes": [
+          "pair-jaeyi-eunsu-proposal-v1",
+          "pair-jaeyi-eunsu-exhibit-v1"
+        ],
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "jaeyi",
+        "needsComp2": "eunsu",
+        "title": "재이×은수 — 소리 전시관 협약",
+        "text": "\"박물관에 소리도 전시할 수 있어요?\" 은수가 물었다. \"제 잡음 컬렉션… 물건은 아니지만.\"\n\n\"물건이죠.\"\n\n\"…네?\"\n\n재이가 벌떡 일어났다. \"그게 왜 물건이 아니에요. 담겼잖아요, 녹음기에. 담기면 물건이에요. 무게도 나가요. 380그램쯤—\"\n\n\"그건 녹음기 무게예요.\"\n\n\"…그것도 그렇네.\"",
+        "choices": [
+          {
+            "label": "협약식을 지켜본다",
+            "out": [
+              {
+                "p": 1,
+                "text": "즉석 협약이 체결됐다. 보통 물건 박물관 별관, 「보통 소리 전시관」. 초대 관장은 은수.\n\n소장 목록 1호부터 정했다. 빗소리 잡음, 새벽 주파수, 그리고 \"달구지 엔진 소리(2번 실린더 포함)\".\n\n\"입장료는요?\"\n\n\"소리 하나 기부요. 자기가 좋아하는 소리.\"\n\n\"그건 어떻게 받아요? 담아 올 통이 있어야 하잖아요.\"\n\n\"…받는 방법은 개관 전까지 생각할게요.\"\n\n개관 전까지 생각할 게 아직 많았다.",
+                "fx": {
+                  "mood": {
+                    "jaeyi": 4,
+                    "eunsu": 4
+                  },
+                  "note": {
+                    "type": "소문",
+                    "title": "보통 소리 전시관",
+                    "body": "박물관 별관 협약. 초대 관장 은수. 입장료=좋아하는 소리 1개 기부.",
+                    "links": [
+                      "재이",
+                      "은수"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "turnSpeakers": [
+          "eunsu",
+          "eunsu",
+          "jaeyi",
+          "eunsu",
+          "jaeyi",
+          "eunsu",
+          "jaeyi"
+        ]
+      },
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "박물관에 소리도 전시할 수 있어요?",
+          "displayName": "은수"
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 물었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "제 잡음 컬렉션… 물건은 아니지만.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "물건이죠.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "…네?",
+          "displayName": "은수"
+        },
+        {
+          "kind": "narration",
+          "text": "재이가 벌떡 일어났다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "그게 왜 물건이 아니에요. 담겼잖아요, 녹음기에. 담기면 물건이에요. 무게도 나가요. 380그램쯤—",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "그건 녹음기 무게예요.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "…그것도 그렇네.",
+          "displayName": "재이"
+        }
+      ],
+      "outcomes": [
+        {
+          "i": 0,
+          "j": 0,
+          "label": "협약식을 지켜본다",
+          "fx": {
+            "mood": {
+              "jaeyi": 4,
+              "eunsu": 4
+            },
+            "note": {
+              "type": "소문",
+              "title": "보통 소리 전시관",
+              "body": "박물관 별관 협약. 초대 관장 은수. 입장료=좋아하는 소리 1개 기부.",
+              "links": [
+                "재이",
+                "은수"
+              ]
+            }
+          },
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "즉석 협약이 체결됐다. 보통 물건 박물관 별관, 「보통 소리 전시관」. 초대 관장은 은수.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "소장 목록 1호부터 정했다. 빗소리 잡음, 새벽 주파수, 그리고",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "달구지 엔진 소리(2번 실린더 포함)",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "입장료는요?",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "소리 하나 기부요. 자기가 좋아하는 소리.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "그건 어떻게 받아요? 담아 올 통이 있어야 하잖아요.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "…받는 방법은 개관 전까지 생각할게요.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "narration",
+              "text": "개관 전까지 생각할 게 아직 많았다.",
+              "displayName": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pair_jy_es_2",
+      "raw": {
+        "id": "pair_jy_es_2",
+        "scenes": [
+          "pair-jaeyi-eunsu-searching-v1",
+          "pair-jaeyi-eunsu-stored-v1"
+        ],
+        "type": "대화",
+        "w": 4,
+        "once": true,
+        "needsComp": "jaeyi",
+        "needsComp2": "eunsu",
+        "needBond": [
+          "jaeyi",
+          12
+        ],
+        "title": "재이×은수 — 잃어버린 것들의 짝",
+        "text": "\"언니는 찾는 게 목소리고,\" 재이가 말했다. \"나는 찾는 게… 뭐지.\"\n\n\"…네?\"\n\n\"아니, 저요. 저 뭐 찾고 있죠?\"\n\n\"그걸 왜 저한테—\"\n\n뜻밖의 질문에 은수가 헤드폰을 벗었다.",
+        "choices": [
+          {
+            "label": "귀 기울인다",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"재이 씨는 찾는 게 아니라 지키는 쪽 같아요.\" 은수가 말했다. \"버려진 것들 데려와서, 이야기 붙여서, 못 사라지게. 그거 지키는 일이잖아요.\"\n\n\"…지키는 거였구나, 이게.\" 재이가 자루를 새삼 내려다봤다. 안에서 뭘 하나 꺼냈다가 도로 넣었다.\n\n\"그럼 언니 목소리는 찾을 때까지 제 창고에 맡겨 둔 걸로 쳐요. 아니, 말이 좀 이상한데… 아무튼 없어졌다고 하진 말자고요.\"\n\n\"…보관 중.\"\n\n\"보관 중.\"\n\n은수가 그 단어를 받아 적었다. 적고 나서 옆에 시간을 적고, 밑줄까지 그었다.",
+                "fx": {
+                  "mood": {
+                    "jaeyi": 5,
+                    "eunsu": 6
+                  },
+                  "note": {
+                    "type": "사건",
+                    "title": "보관 중",
+                    "body": "못 찾는 동안은 잃어버린 게 아니라 보관 중. 창고 이론의 위로. 교본 외 문장 2호.",
+                    "links": [
+                      "재이",
+                      "은수"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "언니는 찾는 게 목소리고,",
+          "displayName": "재이"
+        },
+        {
+          "kind": "narration",
+          "text": "재이가 말했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "나는 찾는 게… 뭐지.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "…네?",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "아니, 저요. 저 뭐 찾고 있죠?",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "그걸 왜 저한테—",
+          "displayName": "재이"
+        },
+        {
+          "kind": "narration",
+          "text": "뜻밖의 질문에 은수가 헤드폰을 벗었다.",
+          "displayName": null
+        }
+      ],
+      "outcomes": [
+        {
+          "i": 0,
+          "j": 0,
+          "label": "귀 기울인다",
+          "fx": {
+            "mood": {
+              "jaeyi": 5,
+              "eunsu": 6
+            },
+            "note": {
+              "type": "사건",
+              "title": "보관 중",
+              "body": "못 찾는 동안은 잃어버린 게 아니라 보관 중. 창고 이론의 위로. 교본 외 문장 2호.",
+              "links": [
+                "재이",
+                "은수"
+              ]
+            }
+          },
+          "turns": [
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "재이 씨는 찾는 게 아니라 지키는 쪽 같아요.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "narration",
+              "text": "은수가 말했다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "버려진 것들 데려와서, 이야기 붙여서, 못 사라지게. 그거 지키는 일이잖아요.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "…지키는 거였구나, 이게.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "narration",
+              "text": "재이가 자루를 새삼 내려다봤다. 안에서 뭘 하나 꺼냈다가 도로 넣었다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "그럼 언니 목소리는 찾을 때까지 제 창고에 맡겨 둔 걸로 쳐요. 아니, 말이 좀 이상한데… 아무튼 없어졌다고 하진 말자고요.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "…보관 중.",
+              "displayName": "은수"
+            },
+            {
+              "kind": "dialogue",
+              "who": "jaeyi",
+              "text": "보관 중.",
+              "displayName": "재이"
+            },
+            {
+              "kind": "narration",
+              "text": "은수가 그 단어를 받아 적었다. 적고 나서 옆에 시간을 적고, 밑줄까지 그었다.",
+              "displayName": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

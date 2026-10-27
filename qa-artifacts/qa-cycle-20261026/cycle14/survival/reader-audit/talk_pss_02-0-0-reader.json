@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "narration",
+    "text": "해열제 스물넷, 소독약 반 병, 붕대 세 롤…"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "스물넷이요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "스물셋. 아니, 넷 맞네. 하나가 굴러갔었어."
+  },
+  {
+    "kind": "narration",
+    "text": "상자 모서리에 낀 알약을 꺼내 줄 끝에 놓았다. 박 선생은 수첩의 숫자를 고쳤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "이제 자네도 우리 약국 직원이야. 무급이지만."
+  },
+  {
+    "kind": "narration",
+    "text": "뚜껑을 닫다가 붕대 한 롤을 따로 꺼내 손 닿는 칸에 넣었다."
+  }
+]

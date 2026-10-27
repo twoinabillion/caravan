@@ -1,0 +1,516 @@
+[
+  {
+    "id": "signal_bait",
+    "event": {
+      "id": "signal_bait",
+      "type": "추적",
+      "w": 8,
+      "once": true,
+      "region": [
+        "north"
+      ],
+      "needFlag": "radio_fixed",
+      "title": "구조 요청 주파수",
+      "text": "라디오에서 여자 목소리가 반복된다.\n\n\"…차량 고장. 아이 둘. 좌표 보냅니다. 물이 없어요…\"\n\n같은 문장이 정확히 같은 간격으로 여덟 번.\n\n<span class=\"ai\">(잡음)</span>\n\n\"…차량 고장. 아이 둘. 좌표 보냅니다. 물이 없어요…\"\n\n아홉 번째에도 억양이 똑같았다. 사람이 지치면 목소리가 변한다. 이 목소리는 변하지 않는다.\n\n녹음이거나, 아니면 지친 적이 없는 사람이다.",
+      "choices": [
+        {
+          "label": "좌표로 간다",
+          "risk": "미끼일 수 있다",
+          "out": [
+            {
+              "p": 1,
+              "text": "좌표에는 정말 차가 있었다. 그리고 아이도 둘 있었다.\n\n다만 차는 고장 나지 않았고, 아이들은 우리 차 문이 열리기를 기다리고 있었다. 뒤편 수풀에서 어른 셋이 일어섰다.\n\n액셀을 밟았다. 뒷유리에 돌이 맞았다.\n\n아이들 때문에 차를 세운 건데. 저쪽도 그걸 알았겠지. 뒷유리의 금이 자꾸 눈에 들어왔다.",
+              "fx": {
+                "van": -10,
+                "fuel": -5,
+                "time": 80,
+                "moodAll": -6,
+                "pursuit": 1,
+                "flag": "bait_seen",
+                "note": {
+                  "type": "사건",
+                  "title": "아홉 번의 같은 목소리",
+                  "body": "구조 요청 주파수는 미끼였다. 아이 둘을 앞에 세운 함정. 아이들이 미끼로 쓰였다는 사실이 오래 남았다.",
+                  "links": [
+                    "달구지"
+                  ]
+                }
+              }
+            },
+            {
+              "p": 1,
+              "text": "좌표 근처에서 차를 세우고 먼저 걸어서 살폈다.\n\n수풀에 사람이 셋. 차는 멀쩡했고 아이 둘은 어른들 뒤에 앉아 있었다. 시키는 대로 기다리는 얼굴이었다.\n\n돌아 나오며 물 한 통을 길가에 두었다. 아이들 몫이라고 혼잣말했다. 어른들이 가져갈 것도 알고 있었다.",
+              "fx": {
+                "water": -2,
+                "time": 100,
+                "moodAll": -3,
+                "flag": "bait_seen",
+                "note": {
+                  "type": "사건",
+                  "title": "미끼 좌표",
+                  "body": "구조 신호는 함정이었다. 먼저 걸어서 확인해 피했다. 물 한 통은 두고 왔다.",
+                  "links": []
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "주파수를 역추적한다",
+          "req": {
+            "comp": "eunsu"
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "은수가 헤드폰을 눌러 썼다.\n\n\"…송신 위치가 좌표랑 달라요. 이건 저 자리에서 사람이 부르는 게 아니라, 다른 데서 틀어 놓은 거예요.\"\n\n\"녹음이에요?\"\n\n\"녹음이에요. 그런데—\" 은수가 잠깐 멈췄다. \"원본은 진짜였을 거예요. 억양이 이래요. 처음 녹음할 땐 진짜로 급했던 사람.\"\n\n아무도 그 말에 대꾸하지 못했다.\n\n우회로를 잡고 좌표를 크게 돌았다.",
+              "fx": {
+                "time": 60,
+                "fuel": -3,
+                "mood": {
+                  "eunsu": 3
+                },
+                "flag": "bait_seen",
+                "note": {
+                  "type": "사건",
+                  "title": "누군가의 진짜 목소리",
+                  "body": "미끼로 쓰인 구조 요청은 원본이 진짜였다. 처음 그 말을 녹음한 사람이 어떻게 됐는지는 아무도 묻지 않았다.",
+                  "links": [
+                    "은수"
+                  ]
+                }
+              },
+              "speakers": [
+                "eunsu"
+              ],
+              "turnSpeakers": [
+                "eunsu",
+                "me",
+                "eunsu",
+                "eunsu"
+              ]
+            }
+          ]
+        },
+        {
+          "label": "무시하고 간다",
+          "out": [
+            {
+              "p": 1,
+              "text": "라디오를 껐다.\n\n껐는데도 그 문장의 간격이 머릿속에서 계속 세어졌다. 여덟 번. 아홉 번.\n\n진짜였으면 어쩌지. 라디오를 다시 켜려다 손을 거뒀다.",
+              "fx": {
+                "moodAll": -4,
+                "flag": "bait_seen"
+              }
+            }
+          ]
+        }
+      ],
+      "turnSpeakers": [
+        {
+          "who": "radio",
+          "kind": "radio",
+          "name": "녹음된 구조 요청"
+        },
+        {
+          "who": "radio",
+          "kind": "radio",
+          "name": "녹음된 구조 요청"
+        }
+      ]
+    },
+    "routes": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "라디오에서 여자 목소리가 반복된다.",
+          "displayName": null
+        },
+        {
+          "kind": "radio",
+          "who": "radio",
+          "name": "녹음된 구조 요청",
+          "text": "…차량 고장. 아이 둘. 좌표 보냅니다. 물이 없어요…",
+          "displayName": "녹음된 구조 요청"
+        },
+        {
+          "kind": "narration",
+          "text": "같은 문장이 정확히 같은 간격으로 여덟 번.",
+          "displayName": null
+        },
+        {
+          "kind": "ai",
+          "who": "cheollian",
+          "name": "천리안 방송",
+          "text": "(잡음)",
+          "displayName": "천리안 방송"
+        },
+        {
+          "kind": "radio",
+          "who": "radio",
+          "name": "녹음된 구조 요청",
+          "text": "…차량 고장. 아이 둘. 좌표 보냅니다. 물이 없어요…",
+          "displayName": "녹음된 구조 요청"
+        },
+        {
+          "kind": "narration",
+          "text": "아홉 번째에도 억양이 똑같았다. 사람이 지치면 목소리가 변한다. 이 목소리는 변하지 않는다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "녹음이거나, 아니면 지친 적이 없는 사람이다.",
+          "displayName": null
+        }
+      ],
+      "out": {
+        "0.0": [
+          {
+            "kind": "narration",
+            "text": "좌표에는 정말 차가 있었다. 그리고 아이도 둘 있었다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "다만 차는 고장 나지 않았고, 아이들은 우리 차 문이 열리기를 기다리고 있었다. 뒤편 수풀에서 어른 셋이 일어섰다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "액셀을 밟았다. 뒷유리에 돌이 맞았다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "아이들 때문에 차를 세운 건데. 저쪽도 그걸 알았겠지. 뒷유리의 금이 자꾸 눈에 들어왔다.",
+            "displayName": null
+          }
+        ],
+        "0.1": [
+          {
+            "kind": "narration",
+            "text": "좌표 근처에서 차를 세우고 먼저 걸어서 살폈다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "수풀에 사람이 셋. 차는 멀쩡했고 아이 둘은 어른들 뒤에 앉아 있었다. 시키는 대로 기다리는 얼굴이었다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "돌아 나오며 물 한 통을 길가에 두었다. 아이들 몫이라고 혼잣말했다. 어른들이 가져갈 것도 알고 있었다.",
+            "displayName": null
+          }
+        ],
+        "1.0": [
+          {
+            "kind": "narration",
+            "text": "은수가 헤드폰을 눌러 썼다.",
+            "displayName": null
+          },
+          {
+            "kind": "dialogue",
+            "who": "eunsu",
+            "text": "…송신 위치가 좌표랑 달라요. 이건 저 자리에서 사람이 부르는 게 아니라, 다른 데서 틀어 놓은 거예요.",
+            "displayName": "은수"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "녹음이에요?",
+            "displayName": "상혁"
+          },
+          {
+            "kind": "dialogue",
+            "who": "eunsu",
+            "text": "녹음이에요. 그런데—",
+            "displayName": "은수"
+          },
+          {
+            "kind": "narration",
+            "text": "은수가 잠깐 멈췄다.",
+            "displayName": null
+          },
+          {
+            "kind": "dialogue",
+            "who": "eunsu",
+            "text": "원본은 진짜였을 거예요. 억양이 이래요. 처음 녹음할 땐 진짜로 급했던 사람.",
+            "displayName": "은수"
+          },
+          {
+            "kind": "narration",
+            "text": "아무도 그 말에 대꾸하지 못했다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "우회로를 잡고 좌표를 크게 돌았다.",
+            "displayName": null
+          }
+        ],
+        "2.0": [
+          {
+            "kind": "narration",
+            "text": "라디오를 껐다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "껐는데도 그 문장의 간격이 머릿속에서 계속 세어졌다. 여덟 번. 아홉 번.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "진짜였으면 어쩌지. 라디오를 다시 켜려다 손을 거뒀다.",
+            "displayName": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "crisis_nofuel",
+    "event": {
+      "id": "crisis_nofuel",
+      "type": "위기",
+      "w": 0,
+      "fixed": true,
+      "title": "연료 바닥",
+      "text": "S=>D.fuelRecoveryIntro(S,'게이지 바늘이 E 아래로 떨어졌다. 엔진이 두 번 기침하고 잠들었다.\\n\\n여기는 길 위. 가장 가까운 사람 사는 곳까지는 걸어서 한나절.')",
+      "choices": [
+        {
+          "label": "걸어서 연료를 구해온다",
+          "foreseeable": {
+            "expense": "보유한 물·식량에서 각각 최대 2 소모 · 도보 중 끼니 소모 별도",
+            "lasting": "연료를 구하러 장시간 자리를 비운다"
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "빈 기름통 두 개를 메고 걸었다. 한나절 만에 농가 창고에서 경운기 기름을 구해 돌아왔다.\n\n다리가 후들거리지만, 차가 다시 살아났다.",
+              "fx": {
+                "fuel": 9,
+                "water": -2,
+                "food": -2,
+                "time": 420,
+                "moodAll": -4
+              }
+            }
+          ]
+        },
+        {
+          "label": "지나가는 차를 기다린다",
+          "foreseeable": {
+            "expense": "유료 지원 시 고철 10 · 대기 중 물·식량 소모 가능",
+            "lasting": "지원이 없으면 직접 걸어야 한다"
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "반나절 만에 만수네 만물상이 지나갔다!\n\n\"어이~ 이럴 줄 알고 기름 챙겨왔지~\" 바가지를 썼지만 목숨값이다.",
+              "fx": {
+                "scrap": -10,
+                "fuel": 10,
+                "time": 300
+              }
+            },
+            {
+              "p": 1,
+              "text": "몇 시간을 기다려도 차가 오지 않아 결국 걸었다. 연료를 구해 돌아오기까지 열 시간이 걸렸다.",
+              "fx": {
+                "fuel": 8,
+                "water": -3,
+                "food": -3,
+                "time": 600,
+                "moodAll": -6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "routes": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "대전 연구단지에 차를 세워 둔 채 연료통을 확인했다. 남은 양으로는 다음 길을 안심하고 나설 수 없다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "주변에서 기름을 구하거나 지나가는 차에 도움을 청해야 한다. 기름통을 꺼내 차 옆에 놓았다.",
+          "displayName": null
+        }
+      ],
+      "out": {
+        "0.0": [
+          {
+            "kind": "narration",
+            "text": "빈 기름통 두 개를 메고 걸었다. 한나절 만에 농가 창고에서 경운기 기름을 구해 돌아왔다.",
+            "displayName": null
+          },
+          {
+            "kind": "narration",
+            "text": "다리가 후들거리지만, 차가 다시 살아났다.",
+            "displayName": null
+          }
+        ],
+        "1.0": [
+          {
+            "kind": "narration",
+            "text": "반나절 만에 만수네 만물상이 지나갔다!",
+            "displayName": null
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_worker",
+            "name": "???",
+            "speakerUncertain": true,
+            "text": "어이~ 이럴 줄 알고 기름 챙겨왔지~",
+            "displayName": "???"
+          },
+          {
+            "kind": "narration",
+            "text": "바가지를 썼지만 목숨값이다.",
+            "displayName": null
+          }
+        ],
+        "1.1": [
+          {
+            "kind": "narration",
+            "text": "몇 시간을 기다려도 차가 오지 않아 결국 걸었다. 연료를 구해 돌아오기까지 열 시간이 걸렸다.",
+            "displayName": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "crisis_nofuel2",
+    "event": {
+      "id": "crisis_nofuel2",
+      "type": "위기",
+      "w": 0,
+      "fixed": true,
+      "title": "또, 연료 바닥",
+      "text": "S=>D.fuelRecoveryIntro(S,'바늘이 E 아래로 떨어지는 걸 이번에는 보고 있었다.\\n\\n엔진이 잠들었다. 지난번과 같은 소리. 이번에도 길 위다.\\n\\n빈 기름통을 꺼내는 손이 익숙해진 게 제일 무섭다.')",
+      "choices": [
+        {
+          "label": "다시 걷는다",
+          "foreseeable": {
+            "expense": "보유한 물·식량에서 각각 최대 3 소모 · 도보 중 끼니 소모 별도",
+            "lasting": "더 먼 곳까지 걸어야 할 수 있다"
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "처음 들른 농가는 문이 잠겨 있었다. 두 집을 더 지나서야 경운기 기름을 나눠 받았다.\n\n\"조심혀. 요즘 길에 서 있는 차는 위에서 다 세어 간다니께.\"\n\n아홉 시간 만에 돌아왔다. 다리보다 마음이 더 무겁다.",
+              "fx": {
+                "fuel": 8,
+                "water": -3,
+                "food": -3,
+                "time": 540,
+                "fatigue": 18,
+                "moodAll": -6
+              }
+            }
+          ]
+        },
+        {
+          "label": "지나가는 차를 기다린다",
+          "foreseeable": {
+            "expense": "유료 지원 시 고철 16 · 대기 중 물·식량 소모 가능",
+            "lasting": "지원이 없으면 직접 걸어야 한다"
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "만수네 만물상이 지나갔다.\n\n\"어이~ 기름 필요해? 여기선 좀 비싸.\"\n\n웃고 있었지만 값은 웃기지 않았다.",
+              "fx": {
+                "scrap": -16,
+                "fuel": 9,
+                "time": 360
+              }
+            },
+            {
+              "p": 1,
+              "text": "기다리다 지쳐 결국 걸었다. 기름을 구해 돌아오니 11시간째. 지난번보다 더 멀게 느껴졌다.",
+              "fx": {
+                "fuel": 7,
+                "water": -3,
+                "food": -3,
+                "time": 660,
+                "moodAll": -7,
+                "fatigue": 15
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "routes": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "대전 연구단지에 차를 세워 둔 채 연료통을 확인했다. 남은 양으로는 다음 길을 안심하고 나설 수 없다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "주변에서 기름을 구하거나 지나가는 차에 도움을 청해야 한다. 기름통을 꺼내 차 옆에 놓았다.",
+          "displayName": null
+        }
+      ],
+      "out": {
+        "0.0": [
+          {
+            "kind": "narration",
+            "text": "처음 들른 농가는 문이 잠겨 있었다. 두 집을 더 지나서야 경운기 기름을 나눠 받았다.",
+            "displayName": null
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_worker",
+            "name": "???",
+            "speakerUncertain": true,
+            "text": "조심혀. 요즘 길에 서 있는 차는 위에서 다 세어 간다니께.",
+            "displayName": "???"
+          },
+          {
+            "kind": "narration",
+            "text": "아홉 시간 만에 돌아왔다. 다리보다 마음이 더 무겁다.",
+            "displayName": null
+          }
+        ],
+        "1.0": [
+          {
+            "kind": "narration",
+            "text": "만수네 만물상이 지나갔다.",
+            "displayName": null
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_worker",
+            "name": "???",
+            "speakerUncertain": true,
+            "text": "어이~ 기름 필요해? 여기선 좀 비싸.",
+            "displayName": "???"
+          },
+          {
+            "kind": "narration",
+            "text": "웃고 있었지만 값은 웃기지 않았다.",
+            "displayName": null
+          }
+        ],
+        "1.1": [
+          {
+            "kind": "narration",
+            "text": "기다리다 지쳐 결국 걸었다. 기름을 구해 돌아오니 11시간째. 지난번보다 더 멀게 느껴졌다.",
+            "displayName": null
+          }
+        ]
+      }
+    }
+  }
+]

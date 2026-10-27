@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "허허. 아부도 처방이지."
+  },
+  {
+    "kind": "narration",
+    "text": "알면서도 기분은 좋아했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "늙는 건 말이야, 몸이 느려지는 게— 아니지, 몸도 느려져. 그건 그거고. 겁이 느는 게 진짜야."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "겁이요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "그래서 겁이 늘 때마다 하나씩 저질러 보는 거야. 이 여행도 그중 하나고."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 무릎을 두어 번 두드렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "저지르고 나면 무릎이 항의를 하지만."
+  }
+]

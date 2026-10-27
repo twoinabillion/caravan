@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "narration",
+    "text": "박 선생이 슥슥 갈겨썼다. 오래 들여다봐도 모르겠다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…항복이에요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "잘 봐. 여기가 자네 이름이고."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "여기요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "거기 말고 그 옆에. …아니 거기."
+  },
+  {
+    "kind": "narration",
+    "text": "결국 손가락으로 짚어줬다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "뒤에 붙은 건 「튼튼함」이야. 내 처방전엔 다 그렇게 붙어."
+  },
+  {
+    "kind": "narration",
+    "text": "차에 탄 사람들 이름 뒤에 전부 「튼튼함」이 붙어 있었다."
+  }
+]

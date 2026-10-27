@@ -1,0 +1,165 @@
+{
+  "seed": 276003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "hapcheon",
+    "geochang",
+    "namwon",
+    "damyang",
+    "gwangju",
+    "damyang",
+    "namwon",
+    "jeonju",
+    "nonsan",
+    "airfield",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 76,
+  "actions": 382,
+  "sourceHash": "1911ad89b75afe51e44e8c8856bd7d6b7a16f070c0d717214e5230be996df9ab",
+  "freshStarts": 1,
+  "attempts": 1,
+  "party": [
+    "leo",
+    "eunsu"
+  ],
+  "dog": true,
+  "day": 7,
+  "min": 704,
+  "km": 575,
+  "finalResources": {
+    "food": 18,
+    "water": 23,
+    "fuel": 46.390855466666835,
+    "scrap": 83,
+    "van": 97.35999999999973,
+    "fatigue": 18.57886
+  },
+  "upgrades": {
+    "bench": true
+  },
+  "all40FilesUnchanged": true,
+  "sourceUnchangedDuringRun": true,
+  "runtimeErrors": [],
+  "productionChangesDuringNaturalRun": 0,
+  "statistics": {
+    "choiceCount": 76,
+    "rawEntryResultCharacters": 27928,
+    "speechCalls": 60,
+    "npcMenus": 18,
+    "notes": 95,
+    "fullTuplesSame": 63,
+    "fullTuplesDifferent": 13,
+    "resultStringsSame": 69,
+    "resultStringsDifferent": 7,
+    "newPairsAgainstRetainedCycles1to15": [],
+    "newPairCount": 0
+  },
+  "confirmedReaderEvents": 2,
+  "confirmedReaderLocations": 3,
+  "confirmedSourceArt": 1,
+  "candidates": [
+    "S16-C01"
+  ],
+  "entryReloads": 76,
+  "paidReloads": 76,
+  "paidDeepReaderEquality": 76,
+  "repayments": 0,
+  "chatAudit": {
+    "observedChatSequences": 3,
+    "sameDayDuplicateSequences": 0,
+    "matches": [
+      {
+        "n": 171,
+        "id": "daily-me-leo-blanket",
+        "day": 4,
+        "min": 1061.6,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 204,
+        "id": "daily-me-leo-blanket",
+        "day": 5,
+        "min": 644.4,
+        "lines": 9,
+        "once": false
+      },
+      {
+        "n": 279,
+        "id": "daily-leo-eunsu-unfinished",
+        "day": 6,
+        "min": 712.3,
+        "lines": 10,
+        "once": false
+      }
+    ],
+    "savedStamps": {
+      "daily:daily-me-leo-blanket": {
+        "day": 5,
+        "km": 379
+      },
+      "daily:daily-leo-eunsu-unfinished": {
+        "day": 6,
+        "km": 508
+      }
+    },
+    "note": "Actual UI.playChat sequences matched source D.chats.lines; independent ambient/banter are not grouped as crew chats. Day4/day5 Leo blanket repetition is intentionally permitted on a new day. No forced pickChat call during natural run."
+  },
+  "naturalRechecksThisFix": [
+    "rq_eunsu_task burn→rq_eunsu_join neutral receiver entry",
+    "daily crew chat stamps survive natural entry/paid reload and departure; 3 observed sequences on3 days with0 same-day duplicates"
+  ],
+  "otherNaturalRechecks": [
+    "Hapcheon monk explicit portrait and decline alternative",
+    "Jagalchi refusal speaker stays vendor",
+    "Miyoung ledger question/answers",
+    "Airfield fixed time-neutral entry at20:21",
+    "Eunsu06 player final joke and Eunsu07 recorded-noise prose",
+    "Leo18 correct Leo/me turns",
+    "Seoul Han solo default and Seoul Base me goodbye"
+  ],
+  "features": [
+    "Leo/Bori guest→wet rescue→camp→join; Bori present for full subsequent trip",
+    "Eunsu guest→burn stored coordinates→join→Seoul analysis",
+    "4 distinct field work actions and4 perks",
+    "2 accepted and delivered missions: radio tube, first stage of three-village radio chain; bonus notes match receipts",
+    "Bought bench at Suwon; visited publicly discovered airfield",
+    "4 Leo camp conversations: water, unfinished lyric, water, rhythm; later payoff retained",
+    "No legal emergency fuel needed; finite trades25 and camps6; no failed/retry journey"
+  ],
+  "gaps": [
+    "No Bori tracking/tag/family/bath event or dog-specific choice selected; camp_dogs chose horn alternative",
+    "No Minji/Park/Kangwoo/Jaeyi; no Jeju/father exhibit",
+    "No grandfather envelope acquired, seoul_base opening disabled",
+    "Second radio-chain stage points back to Gwangju and was not accepted; chain not complete",
+    "No crafting or radio repair; no whole-image/mobile/input/audio QA by this agent"
+  ],
+  "manualReview": "Read all76 complete actual entry/result turns (27928 raw entry+result characters), all60 UI.speak/chat/ambient lines,9 NPC greeting+rumour pairs (18menus),4 field works,4 boards,2quest accepts/2turnins,4perks,1upgrade,95notes. Own prior story1–15 exact full tuples63same/13different; result69same/7different.",
+  "comparisonCaveat": "Harness novelPairs17 preserved as older internal baseline. Retained cycles1–15 union baseline gives the newPairCount listed in statistics; neither means new authored content.",
+  "imageScope": {
+    "contracts": "Previously read IMAGE-BIBLE and visual-contract; actual resolver followed",
+    "viewedOriginals": [
+      "assets/scenes/event-explore-farm.webp"
+    ],
+    "newVisualPartialReplay": "browser-visual-entry-replay/verification.json, cohortExcluded true; 127same prior actions/24choices; not another journey",
+    "notClaimed": "No in-game crop by story agent"
+  },
+  "limits": [
+    "Node VM engine simulation, not browser or human playtest",
+    "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+    "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+    "No edits to source or actual user save; no infinite resources"
+  ]
+}

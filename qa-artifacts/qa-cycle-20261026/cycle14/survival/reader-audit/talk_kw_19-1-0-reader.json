@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…밥을 빨리 먹었습니다. 노래를 못했습니다. 근데 자꾸 불렀습니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "무슨 노래요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…모릅니다. 음이 다 달라서. 본인은 같은 노래라고 했습니다."
+  },
+  {
+    "kind": "narration",
+    "text": "짧은 문장들이 오래 이어졌다. 강우 기준으로는 폭풍 수다였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…오랜만에 놈 얘길 했더니, 이상하게 배가 고픕니다."
+  },
+  {
+    "kind": "narration",
+    "text": "라이터를 주머니에 넣고도 강우는 한동안 옆에 앉아 있었다."
+  }
+]

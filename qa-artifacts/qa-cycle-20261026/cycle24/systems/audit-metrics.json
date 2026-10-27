@@ -1,0 +1,704 @@
+{
+  "cycle": 24,
+  "seed": 284002,
+  "cohortExcluded": false,
+  "freshRuns": 1,
+  "resumeSegments": 0,
+  "retries": 0,
+  "policyStops": 0,
+  "failedJourneys": 0,
+  "engineHash": "cdfeba9d024198a5d0eba3b0a017a9a8ed5bf41c264c01b52f777497eeee00d6",
+  "actions": 613,
+  "choices": 112,
+  "uniqueEvents": 112,
+  "actionCounts": {
+    "new-game": 1,
+    "unpaid-entry-reload": 112,
+    "choice": 112,
+    "paid-result-reload": 112,
+    "explore": 33,
+    "travel": 27,
+    "drive": 54,
+    "camp": 13,
+    "buy-upgrade": 4,
+    "trade-bundle": 4,
+    "trade": 53,
+    "work": 10,
+    "board-open": 6,
+    "accept-quest": 2,
+    "npc-rumor": 17,
+    "camp-meal": 11,
+    "meet-recruit": 3,
+    "sell-demand": 1,
+    "recruit-step": 6,
+    "camp-talk": 8,
+    "accept-companion": 3,
+    "talk": 8,
+    "earned-perk": 6,
+    "turnin-quest": 2,
+    "seoul-enter": 5
+  },
+  "ending": {
+    "kind": "story_done",
+    "method": "core_quarantine",
+    "session1End": true,
+    "day": 14,
+    "displayMinute": 1340,
+    "km": 971
+  },
+  "actualCompanions": [
+    "jaeyi",
+    "eunsu",
+    "leo"
+  ],
+  "dog": true,
+  "disabledChoicesExecuted": 0,
+  "rejectedPublicCalls": [],
+  "reload": {
+    "entry": 112,
+    "paid": 112,
+    "policySkips": 0,
+    "reapplied": 0,
+    "readerMismatch": 0,
+    "allStateEqual": true,
+    "separateTerminalReload": 1,
+    "terminalExcludedFromJourneyCounts": true,
+    "terminalUnchanged": true
+  },
+  "exports": 112,
+  "novelty": {
+    "basis": "Exact eventId+label systems cycles1-23; not global novelty. Generated camp labels separate.",
+    "newPairs": [
+      {
+        "trace": 110,
+        "event": "exp_mushroom",
+        "choice": "아는 것만 조심히 딴다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 177,
+        "event": "camp_4_jaeyi",
+        "choice": "고철 2로 상자가 들어갈 선반을 더 단다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 200,
+        "event": "talk_jy_04",
+        "choice": "\"기준이 있어요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 205,
+        "event": "exp_orchard",
+        "choice": "과일을 딴다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 241,
+        "event": "camp_6_jaeyi",
+        "choice": "둘 자리를 재이가 고르게 하고 함께 다시 묶는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 247,
+        "event": "talk_jy_02",
+        "choice": "\"열쇠요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 251,
+        "event": "exp_underground",
+        "choice": "입구에 물 1을 두고 간다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 286,
+        "event": "camp_7_eunsu",
+        "choice": "들은 것과 짐작한 것을 나눠 적는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 295,
+        "event": "talk_jy_16",
+        "choice": "\"수집꾼이 왜 값 안 나가는 걸 모아요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 341,
+        "event": "camp_8_eunsu",
+        "choice": "확인한 한 줄만 함께 읽고 나머지는 남겨 둔다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 348,
+        "event": "talk_es_04",
+        "choice": "\"실행 여부요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 363,
+        "event": "exp_conv",
+        "choice": "전자레인지를 뜯는다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 373,
+        "event": "camp_9_jaeyi",
+        "choice": "상자를 지탱하고 재이가 고른 간격으로 다시 묶는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 397,
+        "event": "talk_es_14",
+        "choice": "잡음 나는 쪽부터 확인한다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 414,
+        "event": "camp_10_eunsu",
+        "choice": "오늘 기록을 짧게 확인하고 길 이야기를 나눈다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 433,
+        "event": "talk_es_05",
+        "choice": "\"별이랑 관제가 무슨 상관이에요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 451,
+        "event": "exp_villagehall",
+        "choice": "재생한다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 471,
+        "event": "camp_11_leo",
+        "choice": "물 1을 나눠 마시며 조용히 곁에 앉는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 488,
+        "event": "talkr_es_1",
+        "choice": "보고를 받는다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 492,
+        "event": "pair_leo_jy_1",
+        "choice": "매니저를 자청한다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 521,
+        "event": "camp_12_leo",
+        "choice": "물 1을 나누고 보리 옆에 앉는다",
+        "generatedCamp": true
+      },
+      {
+        "trace": 527,
+        "event": "talk_es_07",
+        "choice": "\"잡음에 좋은 게 있어요?\"",
+        "generatedCamp": false
+      }
+    ],
+    "newPermanentPairs": [
+      {
+        "trace": 110,
+        "event": "exp_mushroom",
+        "choice": "아는 것만 조심히 딴다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 200,
+        "event": "talk_jy_04",
+        "choice": "\"기준이 있어요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 205,
+        "event": "exp_orchard",
+        "choice": "과일을 딴다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 247,
+        "event": "talk_jy_02",
+        "choice": "\"열쇠요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 251,
+        "event": "exp_underground",
+        "choice": "입구에 물 1을 두고 간다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 295,
+        "event": "talk_jy_16",
+        "choice": "\"수집꾼이 왜 값 안 나가는 걸 모아요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 348,
+        "event": "talk_es_04",
+        "choice": "\"실행 여부요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 363,
+        "event": "exp_conv",
+        "choice": "전자레인지를 뜯는다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 397,
+        "event": "talk_es_14",
+        "choice": "잡음 나는 쪽부터 확인한다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 433,
+        "event": "talk_es_05",
+        "choice": "\"별이랑 관제가 무슨 상관이에요?\"",
+        "generatedCamp": false
+      },
+      {
+        "trace": 451,
+        "event": "exp_villagehall",
+        "choice": "재생한다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 488,
+        "event": "talkr_es_1",
+        "choice": "보고를 받는다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 492,
+        "event": "pair_leo_jy_1",
+        "choice": "매니저를 자청한다",
+        "generatedCamp": false
+      },
+      {
+        "trace": 527,
+        "event": "talk_es_07",
+        "choice": "\"잡음에 좋은 게 있어요?\"",
+        "generatedCamp": false
+      }
+    ],
+    "generatedCampLabels": 8
+  },
+  "review": {
+    "entryResults": 112,
+    "actualTurns": 907,
+    "baseline": "cycle12/systems/reader-diagnostic-after.json through cycle23/systems/reader-transcript.json exact complete turn objects",
+    "entries": 112,
+    "exactPriorTurns": 742,
+    "newTurns": 165,
+    "changedEntries": 32,
+    "unknown": [
+      {
+        "n": 76,
+        "event": "loc_lake",
+        "phase": "entry",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "왔는가. 허허. 오랜만에 두 번째 손님이네.",
+        "displayName": "???"
+      },
+      {
+        "n": 76,
+        "event": "loc_lake",
+        "phase": "result",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "세상이 왜 이 꼴이 됐는지 아나? 다들 뭘 잡을지만 생각하고, 언제 놓아줄지를 생각 안 해서야.",
+        "displayName": "???"
+      },
+      {
+        "n": 327,
+        "event": "lc_cheonan_walnut",
+        "phase": "entry",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "천안이니까요. 여기서 호두과자 없으면 그게 멸망이죠.",
+        "displayName": "???"
+      },
+      {
+        "n": 327,
+        "event": "lc_cheonan_walnut",
+        "phase": "entry",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "호두과자가요. 아니, 그— 말이 그렇다는 거고.",
+        "displayName": "???"
+      },
+      {
+        "n": 327,
+        "event": "lc_cheonan_walnut",
+        "phase": "result",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "팥이 귀해서요. 고구마도 귀한데 팥보단 덜 귀해서.",
+        "displayName": "???"
+      },
+      {
+        "n": 327,
+        "event": "lc_cheonan_walnut",
+        "phase": "result",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "천안 지나가는 차엔 무조건 있어야죠. 전통이니까.",
+        "displayName": "???"
+      },
+      {
+        "n": 437,
+        "event": "lc_damyang_juktong",
+        "phase": "entry",
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "죽통밥이요. 대나무가 밥을 지키고, 밥이 대나무 향을 얻고. 서로 돕는 밥이죠.",
+        "displayName": "???"
+      }
+    ],
+    "newParagraphs": 96,
+    "exactFullContexts": 83,
+    "changedFullContexts": 29,
+    "allMenusRead": 112,
+    "notes": 142,
+    "roadSpeech": 48,
+    "uniqueRoadSpeech": 36,
+    "chatGroups": 12,
+    "chatLines": 45,
+    "sameDayDuplicateChatGroups": [],
+    "npcInteractions": 17,
+    "npcShownMenus": 34,
+    "work": 10,
+    "uniqueMessages": 86,
+    "sceneContexts": 112,
+    "uniqueImageFiles": 91,
+    "imageMissing": 0,
+    "reviewMethod": "Read all initially flagged171 turns (final comparison correctly includes cycle22 and gives165 new/742 exact). Read96 new paragraphs in29 complete contexts, all112 choice menus, complete core/finale/SESSION1END,142 notes,48 short speech occurrences/unique texts,12 full chats,17 NPC greetings+replies,10 work outcomes and all unique messages. Vision reviewed8 sheets covering91 originals plus6 expanded originals. No browser/crop/audio playback claim."
+  },
+  "features": {
+    "crafts": [],
+    "craftSuccesses": 0,
+    "upgrades": [
+      {
+        "trace": 47,
+        "id": "bench",
+        "success": true,
+        "scrap": 12,
+        "minutes": 300
+      },
+      {
+        "trace": 93,
+        "id": "antenna",
+        "success": true,
+        "scrap": 17,
+        "minutes": 200
+      },
+      {
+        "trace": 95,
+        "id": "collector",
+        "success": true,
+        "scrap": 15,
+        "minutes": 200
+      },
+      {
+        "trace": 156,
+        "id": "solar",
+        "success": true,
+        "scrap": 35,
+        "minutes": 200
+      }
+    ],
+    "perks": [
+      {
+        "trace": 198,
+        "comp": "jaeyi",
+        "id": "jy_magpie",
+        "name": "까치의 눈",
+        "description": "주행 25km마다 길에서 고철을 줍는다",
+        "learning": "재이가 달리는 차에서도 쓸 만한 고철이 모인 곳을 알아보는 기준을 만들었다."
+      },
+      {
+        "trace": 203,
+        "comp": "jaeyi",
+        "id": "jy_map",
+        "name": "보물 감각",
+        "description": "즉시 미확인 장소 2곳의 위치를 짚어낸다",
+        "learning": "재이가 오래된 지도와 버려진 표지판을 대조해 물자가 남을 만한 장소를 찾아냈다."
+      },
+      {
+        "trace": 321,
+        "comp": "eunsu",
+        "id": "es_scan",
+        "name": "주파수 스캔",
+        "description": "장소를 발견할 때 주변 한 곳을 덤으로 찾아낸다",
+        "learning": "은수가 발견한 신호의 주변 대역까지 함께 훑도록 수신기 검색 범위를 넓혔다."
+      },
+      {
+        "trace": 344,
+        "comp": "eunsu",
+        "id": "es_hack",
+        "name": "드론 해킹",
+        "description": "정찰 드론을 탈취하는 선택지 해금",
+        "learning": "은수가 정찰 드론의 오래된 제어 규격을 분석해 접속 순서를 완성했다."
+      },
+      {
+        "trace": 479,
+        "comp": "leo",
+        "id": "leo_vip",
+        "name": "단골 손님",
+        "description": "정착지 거래 할인 10% → 20%",
+        "learning": "레오가 장터 사람들의 이름과 필요한 물건을 기억해 거래할 때 먼저 말을 붙이기 시작했다."
+      },
+      {
+        "trace": 495,
+        "comp": "leo",
+        "id": "leo_bori",
+        "name": "보리의 육감",
+        "description": "발견형 이벤트가 훨씬 자주 일어난다",
+        "learning": "레오가 보리의 걸음과 귀 움직임을 보고 길가의 낯선 기척을 읽기 시작했다."
+      }
+    ],
+    "companionCardTalks": [
+      {
+        "trace": 197,
+        "id": "jaeyi",
+        "day": 7,
+        "min": 390,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      },
+      {
+        "trace": 245,
+        "id": "jaeyi",
+        "day": 8,
+        "min": 390,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      },
+      {
+        "trace": 293,
+        "id": "jaeyi",
+        "day": 9,
+        "min": 390,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      },
+      {
+        "trace": 346,
+        "id": "eunsu",
+        "day": 10,
+        "min": 390,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      },
+      {
+        "trace": 395,
+        "id": "eunsu",
+        "day": 11,
+        "min": 815,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      },
+      {
+        "trace": 431,
+        "id": "eunsu",
+        "day": 12,
+        "min": 465,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      },
+      {
+        "trace": 486,
+        "id": "eunsu",
+        "day": 13,
+        "min": 515,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      },
+      {
+        "trace": 525,
+        "id": "eunsu",
+        "day": 14,
+        "min": 390,
+        "stopped": true,
+        "result": true,
+        "publicGateEvidence": "policy/public-features uses actual party and stopped/talked-today UI conditions; compact action trace does not retain its entire observation"
+      }
+    ],
+    "radioRepairs": 0,
+    "radioBroadcasts": 0,
+    "radioFixed": false,
+    "naturalTubeMaximum": 0,
+    "radioTargetNaturalEvents": [],
+    "distinctPlaybackNotVehicleRadio": [
+      {
+        "trace": 163,
+        "event": "ev_broadcast_station",
+        "choice": "마지막 방송 테이프를 튼다"
+      },
+      {
+        "trace": 451,
+        "event": "exp_villagehall",
+        "choice": "재생한다"
+      },
+      {
+        "trace": 527,
+        "event": "talk_es_07",
+        "choice": "\"잡음에 좋은 게 있어요?\""
+      },
+      {
+        "trace": 581,
+        "event": "seoul_han",
+        "choice": "해도를 펼친다"
+      }
+    ],
+    "healingActions": 0,
+    "injuryHistory": [],
+    "questsAccepted": 2,
+    "questTurnins": 2,
+    "questOutstanding": null,
+    "activeCompanionAbilities": 0
+  },
+  "knownDeferredArtOccurrences": [
+    {
+      "event": "lc_busan_dried",
+      "trace": 29,
+      "actualKeys": [
+        "event-meet-trader"
+      ],
+      "deferredKey": "local-busan-dried-fish-cart-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "seoul_base",
+      "trace": 593,
+      "actualKeys": [
+        "seoul-base"
+      ],
+      "deferredKey": "seoul-cablecar-stairs-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "cleaners_recall",
+      "trace": 312,
+      "actualKeys": [
+        "event-ai-surveillance"
+      ],
+      "deferredKey": "event-human-retrieval-team-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "exp_arcade",
+      "trace": 183,
+      "actualKeys": [
+        "event-explore-leisure"
+      ],
+      "deferredKey": "explore-arcade-airhockey-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "lc_damyang_juktong",
+      "trace": 437,
+      "actualKeys": [
+        "event-meet-trader"
+      ],
+      "deferredKey": "local-bamboo-rice-fire-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "seoul_square",
+      "trace": 589,
+      "actualKeys": [
+        "seoul-square"
+      ],
+      "deferredKey": "seoul-empty-clothes-square-v1",
+      "knownFromCycle": 22,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "story_generation_speech",
+      "trace": 277,
+      "actualKeys": [
+        "story-generation-speech",
+        "story-generation-speech-stations-v1"
+      ],
+      "deferredKey": "story-generation-covered-market-v1",
+      "knownFromCycle": 23,
+      "status": "Unwired known proposal; excluded from new findings"
+    },
+    {
+      "event": "talk_es_07",
+      "trace": 527,
+      "actualKeys": [
+        "comp-talk-eunsu-road-v1"
+      ],
+      "deferredKey": "companion-noise-recorder-detail-v1",
+      "knownFromCycle": 23,
+      "status": "Unwired known proposal; excluded from new findings"
+    }
+  ],
+  "finalState": {
+    "at": "seoul",
+    "day": 14,
+    "min": 1340,
+    "km": 971,
+    "party": [
+      "jaeyi",
+      "eunsu",
+      "leo"
+    ],
+    "dog": true,
+    "fuel": 56.50880173333404,
+    "water": 25,
+    "food": 23,
+    "scrap": 199,
+    "items": {
+      "부품": 10,
+      "의약품": 2,
+      "탄약": 0,
+      "부모님의 검증키": 1
+    },
+    "up": {
+      "bench": true,
+      "antenna": true,
+      "collector": true,
+      "solar": true
+    },
+    "injuries": {},
+    "radioFixed": false,
+    "sideQuest": null
+  }
+}

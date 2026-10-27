@@ -1,0 +1,10 @@
+{
+  "newNaturalTextOrMechanicsConfirmed": 0,
+  "staticDerivedConfirmed": 0,
+  "newClarityConfirmed": 0,
+  "visualHighConfidenceCandidates": 3,
+  "visualLowerConfidenceCandidates": 1,
+  "visualTriage": "awaiting parent actual-image judgment; do not call the whole cohort clean",
+  "visualEvidence": "visual-candidates.json",
+  "closedCandidates": "candidates-closed.json"
+}

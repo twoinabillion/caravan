@@ -1953,7 +1953,7 @@ test('an absent memory speaker does not block later echoes and returns only once
   h.S.stats.km=200;h.S.stats.events=20;h.S.party=[];
   h.S.driving={from:'cheongju',to:'cheonan'};
   h.reload();
-  assert.equal(h.G.takeChoiceEcho().memory.id,'bus_left');
+  assert.equal(h.G.takeChoiceEcho().memory.id,'clinic_route_declined');
   assert(!h.S.memories.choices.family_repaired.echoed);
   assert(h.S.memories.pending.includes('family_repaired'));
   h.reload();assert.equal(h.G.takeChoiceEcho(),null);

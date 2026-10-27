@@ -1,0 +1,28 @@
+{
+  "cohortExcluded": true,
+  "status": "Applied to production after all frozen23 journeys/reviews closed; natural23 artifacts remain unchanged",
+  "event": "seoul_han",
+  "source": "src/03-data.js",
+  "replacements": [
+    {
+      "old": "다리 한복판에서 라디오가 저 혼자 켜졌다. 잡음뿐이다.",
+      "new": "다리 한복판, 난간에 매달린 라디오가 저 혼자 켜졌다. 잡음뿐이다."
+    },
+    {
+      "old": "다리 한복판에서 라디오가 켜졌다. 우편부의 목소리다(녹음이었다).",
+      "new": "다리 한복판, 난간에 매달린 라디오가 켜졌다. 우편부의 목소리다(녹음이었다)."
+    },
+    {
+      "old": "라디오가 지직, 하고 꺼졌다. 대답처럼.",
+      "new": "난간의 라디오가 지직, 하고 꺼졌다. 대답처럼."
+    }
+  ],
+  "unchanged": [
+    "postman_met/postman_letter branch selection",
+    "all spoken quotes and quote routes",
+    "all choice labels/indices",
+    "all flags/notes/costs/time/effects",
+    "vehicle radio_fixed",
+    "historical paid and text-only receipts"
+  ]
+}

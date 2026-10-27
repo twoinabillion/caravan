@@ -1,0 +1,19 @@
+[
+  {
+    "kind": "narration",
+    "text": "나란히 앉아 창밖을 봤다. 대화 없음. 특이사항 없음."
+  },
+  {
+    "kind": "narration",
+    "text": "내릴 때 강우가 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…내일도 비워두지."
+  },
+  {
+    "kind": "narration",
+    "text": "예약이 갱신됐다."
+  }
+]

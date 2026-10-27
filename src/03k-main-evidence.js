@@ -83,7 +83,7 @@ D.mainCompanionWitnessNames = state=>(state.party||[])
     radio('이음망 전달자','이의 제기는 우리가 전달하겠습니다. 집행권을 받으면 우리끼리도 다툴 겁니다. 그래도 이의 제기부터 막지는 않겠습니다.'),
     radio('유령 통신원','명령선과 생활 설비를 구분해서 알리겠습니다. 병원과 급수 회선이 섞이지 않게 확인하겠습니다.'),
     radio('산지기 길잡이','남산 진입로는 우리가 안내하겠습니다. 진입할 때 이 주파수로 연락하세요.'),
-    {kind:'dialogue',who:'mother',text:'나는 여기 남을게. 너희가 들어가면 여섯 주파수로 기록을 보낼 거야.'},
+    {kind:'dialogue',who:'mother',text:'나는 여기 남을게. 남산에 들어가면 여섯 주파수로 기록을 보낼 거야.'},
     narration('세 응답을 송신표에 옮겼다. 오늘 확인한 것은 각자의 수락이었다. 인계 뒤 도로와 물의 우선순위는 거점들이 사람들과 다시 정해야 한다.')
   ];
   attach('main_relay_conference',relayTurns(false),'main-relay-workbench-v1');

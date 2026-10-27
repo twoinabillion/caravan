@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "땡. 열쇠는 수집품이 아니에요."
+  },
+  {
+    "kind": "narration",
+    "text": "재이의 목소리가 살짝 낮아졌다가 돌아왔다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "정답은 병뚜껑. 여섯 살 때 아빠 창고에서 주운 사이다 뚜껑."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 지갑을 뒤졌다. 안쪽 칸, 그 안쪽 칸."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "어디 갔— 아, 여기 있다."
+  },
+  {
+    "kind": "narration",
+    "text": "납작하게 눌린 별 모양."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "아빠가 그랬어요. 줍는 순간 쓰레기가 물건이 된다고. 제 인생 이론이에요."
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "scope": "Post-cycle15 authorized preparation for cycle16; original natural trace and forty-source manifests preserved",
+  "ownCopyScopes": 3,
+  "engineChange": "Daily chat stamps in existing saved _crewChatSeen namespace; obsolete global lastChat removed; no fallback or timing/probability change",
+  "ownRegression": {"tests": 13, "passed": 13, "failed": 0},
+  "existingFocused": {"tests": 183, "passed": 183, "failed": 0, "log": "focused.txt"},
+  "finalTeamIntegration": {"tests": 80, "passed": 80, "failed": 0, "log": "integration-final.txt"},
+  "testCountCaveat": "Suites overlap; do not add their counts",
+  "dialogueLint": {"errors": 0, "samples": 5803, "manualCandidates": 2, "log": "dialogue-lint-final.txt"},
+  "historicalPaidViewAndTextOnlyPreserved": true,
+  "eventFxCostsGatesProbabilitiesUnchanged": true,
+  "corpusBaselineReplaced": false,
+  "newNaturalJourneyAfterRepair": false,
+  "productionEditingFinished": true
+}

@@ -1,0 +1,508 @@
+[
+  {
+    "id": "exp_arcade",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-0.json"
+  },
+  {
+    "id": "exp_arcade",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-1.json"
+  },
+  {
+    "id": "wx_bigwash",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-2.json"
+  },
+  {
+    "id": "comp_food_debate",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-3.json"
+  },
+  {
+    "id": "comp_food_debate",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-4.json"
+  },
+  {
+    "id": "comp_hometown",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-5.json"
+  },
+  {
+    "id": "comp_water_fight",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-6.json"
+  },
+  {
+    "id": "comp_water_fight",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-7.json"
+  },
+  {
+    "id": "comp_water_fight",
+    "i": 2,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-8.json"
+  },
+  {
+    "id": "comp_ghost_story",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-9.json"
+  },
+  {
+    "id": "comp_ghost_story",
+    "i": 0,
+    "j": 1,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-10.json"
+  },
+  {
+    "id": "comp_ghost_story",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-11.json"
+  },
+  {
+    "id": "comp_van_name",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-12.json"
+  },
+  {
+    "id": "comp_van_name",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-13.json"
+  },
+  {
+    "id": "comp_radio_war",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-14.json"
+  },
+  {
+    "id": "comp_radio_war",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-15.json"
+  },
+  {
+    "id": "comp_storm_count",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-16.json"
+  },
+  {
+    "id": "comp_storm_count",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-17.json"
+  },
+  {
+    "id": "comp_snore",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-18.json"
+  },
+  {
+    "id": "comp_snore",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-19.json"
+  },
+  {
+    "id": "comp_dj_night",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-20.json"
+  },
+  {
+    "id": "comp_dj_night",
+    "i": 1,
+    "j": 0,
+    "party": [
+      "minji",
+      "leo"
+    ],
+    "dog": true,
+    "min": 600,
+    "file": "legacy/paid-21.json"
+  },
+  {
+    "id": "exp_arcade",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-22.json"
+  },
+  {
+    "id": "exp_arcade",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-23.json"
+  },
+  {
+    "id": "wx_bigwash",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-24.json"
+  },
+  {
+    "id": "wx_bigwash",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-25.json"
+  },
+  {
+    "id": "comp_food_debate",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-26.json"
+  },
+  {
+    "id": "comp_food_debate",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-27.json"
+  },
+  {
+    "id": "comp_hometown",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-28.json"
+  },
+  {
+    "id": "comp_hometown",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-29.json"
+  },
+  {
+    "id": "comp_water_fight",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-30.json"
+  },
+  {
+    "id": "comp_water_fight",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-31.json"
+  },
+  {
+    "id": "comp_ghost_story",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-32.json"
+  },
+  {
+    "id": "comp_ghost_story",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-33.json"
+  },
+  {
+    "id": "comp_van_name",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-34.json"
+  },
+  {
+    "id": "comp_van_name",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-35.json"
+  },
+  {
+    "id": "comp_radio_war",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-36.json"
+  },
+  {
+    "id": "comp_radio_war",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-37.json"
+  },
+  {
+    "id": "comp_storm_count",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-38.json"
+  },
+  {
+    "id": "comp_storm_count",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-39.json"
+  },
+  {
+    "id": "comp_snore",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-40.json"
+  },
+  {
+    "id": "comp_snore",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-41.json"
+  },
+  {
+    "id": "comp_dj_night",
+    "i": 0,
+    "j": 0,
+    "party": [],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-42.json"
+  },
+  {
+    "id": "comp_dj_night",
+    "i": 0,
+    "j": 0,
+    "party": [
+      "leo",
+      "minji",
+      "parkss"
+    ],
+    "dog": false,
+    "min": 600,
+    "file": "legacy/paid-43.json"
+  }
+]

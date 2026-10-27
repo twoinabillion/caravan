@@ -1,0 +1,630 @@
+{
+  "cycle": 9,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 269002,
+  "evidenceClass": "Production engine in isolated VM; finite resources. Browser/input/audio not claimed. Rejected capacity-blocked API calls in failed policy are separated from UI-enabled actions.",
+  "engineSourceHash": "ca09c5e146f86e69583f89a241f4c0699138454c464ee469010dcbb876f77a6f",
+  "sourceUnchangedAcrossJourneys": true,
+  "freshStarts": 2,
+  "primaryFreshStarts": 1,
+  "sameSeedFreshPolicyRetries": 1,
+  "normalSaveResumptions": 0,
+  "completedJourneys": 1,
+  "terminalJourneys": 2,
+  "policyStops": 0,
+  "engineFailures": 0,
+  "engineDeaths": 1,
+  "fixtureJourneys": 0,
+  "productionChanges": [],
+  "result": {
+    "ending": "story_done",
+    "method": "core_quarantine",
+    "ended": true,
+    "storyDone": true,
+    "session1End": true,
+    "day": 8,
+    "km": 869,
+    "actualCompanions": [
+      "jaeyi",
+      "parkss",
+      "eunsu"
+    ],
+    "bori": false,
+    "finalState": {
+      "at": "seoul",
+      "location": "서울 — 남산",
+      "day": 8,
+      "min": 1423,
+      "km": 869,
+      "driving": null,
+      "fuel": 18.252057800000586,
+      "water": 25,
+      "food": 15,
+      "scrap": 27,
+      "van": 87.78400000000136,
+      "vanMax": 100,
+      "fuelMax": 70,
+      "foodMax": 24,
+      "waterMax": 28,
+      "fatigue": 59.079299999999975,
+      "dog": false,
+      "hunger": 0,
+      "thirst": 0,
+      "injuries": {},
+      "party": [
+        "jaeyi",
+        "parkss",
+        "eunsu"
+      ],
+      "items": {
+        "부품": 4,
+        "의약품": 0,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1,
+        "쇠파이프": 1
+      },
+      "weather": "fog",
+      "campNight": 7,
+      "campPlan": {},
+      "campParticipants": [
+        "jaeyi",
+        "parkss",
+        "eunsu"
+      ],
+      "campConversation": null,
+      "crew": {
+        "jaeyi": {
+          "name": "재이",
+          "mood": 100,
+          "bond": 13,
+          "injury": null
+        },
+        "parkss": {
+          "name": "박 선생",
+          "mood": 97,
+          "bond": 6,
+          "injury": null
+        },
+        "eunsu": {
+          "name": "은수",
+          "mood": 81,
+          "bond": 5,
+          "injury": null
+        }
+      },
+      "up": {
+        "collector": true,
+        "stove": true,
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": true,
+      "endKind": "story_done",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "completed",
+        "tracked": true,
+        "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+        "act": "종장",
+        "chapterId": "ending",
+        "eyebrow": "메인 스토리 · 종장",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "phase": "남산 코어 · 여정 기록",
+        "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+        "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+        "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+        "steps": [
+          {
+            "id": "ending",
+            "label": "남산 코어에서 최종 결정을 내렸다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      "navigation": {
+        "key": "main_ending",
+        "kind": "main",
+        "target": "seoul",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+      }
+    }
+  },
+  "segments": [
+    {
+      "attempt": "01",
+      "kind": "primary fresh journey",
+      "status": "ended",
+      "ending": "thirst",
+      "method": null,
+      "choices": 90,
+      "traceRecords": 513,
+      "day": 19,
+      "km": 1431,
+      "actualCompanions": [
+        "jaeyi",
+        "parkss"
+      ],
+      "sourceHash": "ca09c5e146f86e69583f89a241f4c0699138454c464ee469010dcbb876f77a6f",
+      "gameEnded": true,
+      "storyDone": false
+    },
+    {
+      "attempt": "02",
+      "kind": "same-seed fresh policy retry; same participant",
+      "status": "ended",
+      "ending": "story_done",
+      "method": "core_quarantine",
+      "choices": 71,
+      "traceRecords": 386,
+      "day": 8,
+      "km": 869,
+      "actualCompanions": [
+        "jaeyi",
+        "parkss",
+        "eunsu"
+      ],
+      "sourceHash": "ca09c5e146f86e69583f89a241f4c0699138454c464ee469010dcbb876f77a6f",
+      "gameEnded": true,
+      "storyDone": true
+    }
+  ],
+  "totals": {
+    "choices": 161,
+    "traceRecords": 899,
+    "nonChoiceNonReloadActionRecords": 414,
+    "knownUiDisabledRejectedRecruitApiCalls": 11,
+    "actionRecordsExcludingKnownUiDisabledCalls": 403,
+    "actionCounts": {
+      "new-game": 2,
+      "unpaid-entry-reload": 161,
+      "choice": 161,
+      "paid-result-reload": 161,
+      "travel": 68,
+      "drive": 124,
+      "work": 20,
+      "buy-upgrade": 5,
+      "camp-meal": 14,
+      "camp": 25,
+      "trade": 70,
+      "explore": 14,
+      "meet-recruit": 6,
+      "recruit-step": 26,
+      "walkfuel": 12,
+      "accept-companion": 16,
+      "earned-perk": 8,
+      "craft": 1,
+      "seoul-enter": 5
+    },
+    "entryReload": 161,
+    "paidResultReload": 161,
+    "reloadLoaded": 322,
+    "reloadFailed": 0,
+    "paidReapplied": 0
+  },
+  "features": {
+    "successfulRecruitments": [
+      {
+        "attempt": "01",
+        "n": 134,
+        "action": "accept-companion",
+        "id": "jaeyi",
+        "at": "muju",
+        "day": 4,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "01",
+        "n": 260,
+        "action": "accept-companion",
+        "id": "parkss",
+        "at": "gimcheon",
+        "day": 7,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 134,
+        "action": "accept-companion",
+        "id": "jaeyi",
+        "at": "muju",
+        "day": 4,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 251,
+        "action": "accept-companion",
+        "id": "parkss",
+        "at": "gimcheon",
+        "day": 7,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 292,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 8,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      }
+    ],
+    "rejectedRecruitCalls": [
+      {
+        "attempt": "01",
+        "n": 303,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 8,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 308,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 8,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 354,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 9,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 376,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 11,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 393,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 12,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 413,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 13,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 427,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 14,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 444,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 15,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 472,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 16,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 485,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 17,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      },
+      {
+        "attempt": "01",
+        "n": 506,
+        "action": "accept-companion",
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 18,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "partDelta": 0,
+        "ok": false
+      }
+    ],
+    "upgrades": [
+      {
+        "attempt": "01",
+        "n": 41,
+        "action": "buy-upgrade",
+        "id": "collector",
+        "at": "miryang",
+        "day": 1,
+        "elapsedMinutes": 200,
+        "scrapDelta": -15,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "01",
+        "n": 56,
+        "action": "buy-upgrade",
+        "id": "stove",
+        "at": "daegu",
+        "day": 2,
+        "elapsedMinutes": 200,
+        "scrapDelta": -20,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 41,
+        "action": "buy-upgrade",
+        "id": "collector",
+        "at": "miryang",
+        "day": 1,
+        "elapsedMinutes": 200,
+        "scrapDelta": -15,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 56,
+        "action": "buy-upgrade",
+        "id": "stove",
+        "at": "daegu",
+        "day": 2,
+        "elapsedMinutes": 200,
+        "scrapDelta": -20,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "attempt": "02",
+        "n": 164,
+        "action": "buy-upgrade",
+        "id": "bench",
+        "at": "jeonju",
+        "day": 4,
+        "elapsedMinutes": 300,
+        "scrapDelta": -12,
+        "partDelta": -1,
+        "ok": true
+      }
+    ],
+    "crafts": [
+      {
+        "attempt": "02",
+        "n": 216,
+        "action": "craft",
+        "id": "pipe",
+        "at": "daejeon",
+        "day": 6,
+        "elapsedMinutes": 40,
+        "scrapDelta": -6,
+        "partDelta": 0,
+        "ok": true
+      }
+    ],
+    "cashSupplyTrades": 60,
+    "barterTrades": 10,
+    "localWorkCalls": 20,
+    "uniqueLocalWorkResults": 11,
+    "camps": 25,
+    "warmMeals": 14,
+    "emergencyFuelRequests": 12,
+    "routeByAttempt": [
+      {
+        "attempt": "01",
+        "route": [
+          "yangsan",
+          "miryang",
+          "daegu",
+          "gumi",
+          "gimcheon",
+          "muju",
+          "gimcheon",
+          "muju",
+          "jeonju",
+          "nonsan",
+          "daejeon",
+          "cheongju",
+          "daejeon",
+          "yeongdong",
+          "gimcheon",
+          "gumi",
+          "gimcheon",
+          "yeongdong",
+          "gimcheon",
+          "yeongdong",
+          "daejeon",
+          "cheongju",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek",
+          "cheonan",
+          "pyeongtaek"
+        ]
+      },
+      {
+        "attempt": "02",
+        "route": [
+          "yangsan",
+          "miryang",
+          "daegu",
+          "gumi",
+          "gimcheon",
+          "muju",
+          "gimcheon",
+          "muju",
+          "jeonju",
+          "nonsan",
+          "daejeon",
+          "cheongju",
+          "daejeon",
+          "yeongdong",
+          "gimcheon",
+          "gumi",
+          "gimcheon",
+          "yeongdong",
+          "daejeon",
+          "cheongju",
+          "cheonan",
+          "pyeongtaek",
+          "suwon",
+          "seoul"
+        ]
+      }
+    ],
+    "guardedFinalChoice": {
+      "method": "core_quarantine",
+      "eligibleActualRoster": [
+        "eunsu",
+        "jaeyi",
+        "parkss"
+      ],
+      "rosterSize": 3,
+      "allThreeOptionsEnabled": true,
+      "objections": {
+        "transfer": "jaeyi",
+        "sleep": "eunsu"
+      },
+      "chosenPreservationObjection": false
+    }
+  },
+  "dialogueReview": {
+    "encounters": 161,
+    "newOrChangedEntries": 15,
+    "newParagraphsRead": 19,
+    "exactPriorParagraphOccurrencesWithinChangedEntries": 74,
+    "priorCyclesExact": 134,
+    "withinCycleExact": 12,
+    "newOrChanged": 15,
+    "localWorkCallsRead": 20,
+    "uniqueLocalWorkResultsRead": 11,
+    "method": "Exact [event,text,choices,choice,result] against cycles1–8 and earlier same-cycle entries. All new/changed choices, contextual time/party and novel paragraphs read; exact old paragraphs SHA256 matched. Attempt01 read through thirst death, attempt02 through SESSION1END.",
+    "notes": [
+      "Fuel-rescue cost descriptions disclose resource/time exposure; no fabricated survival guarantee.",
+      "Three-party finale lists Eunsu, Jaeyi and Park as the actual eligible watch crew; sleep/transfer objections match Eunsu/Jaeyi.",
+      "Eunsu join body waits for acceptance; capacity denial is accurately rendered by the real source helper.",
+      "Camp dog/visitor prose belongs to saved night memory after camping. Ending dawn is terminal aftermath prose, not a new timed road action."
+    ],
+    "files": [
+      "transcript01.json",
+      "transcript02.json",
+      "changed-transcript.json",
+      "review-collapsed.json",
+      "review-match-counts.json",
+      "work-transcript.json",
+      "work-transcript02.json"
+    ]
+  },
+  "findings": [],
+  "scopedVerdict": "No newly confirmed production defect in the reviewed two frozen same-seed journeys. First actual death and 11 rejected disabled-UI recruitment calls retained; second fresh retry completes the main story.",
+  "failureAnalysis": "failure-analysis.json",
+  "separateVerification": "separate-checks.json",
+  "separateVerificationExcludedFromJourneyCounts": true,
+  "coverageLimits": [
+    "Two fresh starts belong to one participant and one seed; the failure is not overwritten by success.",
+    "No radio repair/tube, driver clinic, new quest handoff, armory discount, upgrade removal/reinstallation or Bori recruitment.",
+    "Ending is preservation only; other endings are availability observations, not newly executed alternate endings.",
+    "Actual browser/mobile/audio remains root-owned."
+  ]
+}

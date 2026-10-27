@@ -1,0 +1,19 @@
+{
+  "files": [
+    "tests/test_dialogue_human_flow.cjs",
+    "tests/test_event_materials_draft.cjs",
+    "tests/test_event_materials_game.cjs",
+    "tests/test_opening_extra_pack_draft.cjs",
+    "tests/test_opening_pack_integration.cjs",
+    "tests/test_opening_wharf_draft.cjs",
+    "tests/test_road_encounter_detail_draft.cjs",
+    "tests/test_road_seam_plan.cjs",
+    "tests/test_scenery_hd_all.cjs",
+    "tests/test_scenery_seam_hd.cjs",
+    "tests/test_story_scene_review_draft.cjs",
+    "tools/test-scenery-route-draft.cjs"
+  ],
+  "exitCode": 0,
+  "declaredDependency": "sharp@0.34.5",
+  "note": "Shared preinstalled packages used; not a fresh network install."
+}

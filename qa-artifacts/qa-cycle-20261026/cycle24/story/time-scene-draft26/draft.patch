@@ -1,0 +1,245 @@
+--- a/src/03g-scenes.js
++++ b/src/03g-scenes.js
+@@ -1284,3 +1284,76 @@
+   'craft-ammo-preview-v1':'assets/scenes/craft-ammo-preview-v1.webp',
+   'craft-ammo-making-v1':'assets/scenes/craft-ammo-making-v1.webp'
+ });
++
++// ISOLATED QA DRAFT ONLY: missing art uses non-renderable test tokens.
++D.eventSceneTimeVariants={
++  "talk_kw_16": {
++    "base": "comp-talk-kangwoo-camp-v1",
++    "day": "comp-talk-kangwoo-camp-day-v1",
++    "night": "comp-talk-kangwoo-camp-v1"
++  },
++  "talk_pss_18": {
++    "base": "comp-talk-parkss-camp-v1",
++    "day": "comp-talk-parkss-camp-day-v1",
++    "night": "comp-talk-parkss-camp-v1"
++  },
++  "perimeter_first": {
++    "base": "combat-walker-watch-v1",
++    "day": "combat-walker-watch-v1",
++    "night": "combat-walker-watch-night-v1"
++  },
++  "crisis_drowsy": {
++    "base": "event-crisis-exhaustion",
++    "day": "event-crisis-exhaustion",
++    "night": "event-crisis-exhaustion-night-v1"
++  },
++  "settlement_road_echo": {
++    "base": "settlement-road-echo",
++    "day": "settlement-road-echo",
++    "night": "settlement-road-echo-night-v1"
++  },
++  "seoul_han": {
++    "base": "seoul-han",
++    "day": "seoul-han",
++    "night": "seoul-han-night-v1"
++  },
++  "seoul_ruins": {
++    "base": "seoul-ruins",
++    "day": "seoul-ruins-green-day-v1",
++    "night": "seoul-ruins-green-night-v1"
++  },
++  "story_bridge_last_quiet": {
++    "base": "event-vista-road",
++    "day": "event-vista-road",
++    "night": "event-vista-road-night-v1"
++  }
++};
++D.scenes["comp-talk-kangwoo-camp-day-v1"]="__QA_TIME_SCENE_STUB_comp-talk-kangwoo-camp-day-v1__";
++D.scenes["comp-talk-parkss-camp-day-v1"]="__QA_TIME_SCENE_STUB_comp-talk-parkss-camp-day-v1__";
++D.scenes["combat-walker-watch-night-v1"]="__QA_TIME_SCENE_STUB_combat-walker-watch-night-v1__";
++D.scenes["event-crisis-exhaustion-night-v1"]="__QA_TIME_SCENE_STUB_event-crisis-exhaustion-night-v1__";
++D.scenes["settlement-road-echo-night-v1"]="__QA_TIME_SCENE_STUB_settlement-road-echo-night-v1__";
++D.scenes["seoul-han-night-v1"]="__QA_TIME_SCENE_STUB_seoul-han-night-v1__";
++D.scenes["seoul-ruins-green-day-v1"]="__QA_TIME_SCENE_STUB_seoul-ruins-green-day-v1__";
++D.scenes["seoul-ruins-green-night-v1"]="__QA_TIME_SCENE_STUB_seoul-ruins-green-night-v1__";
++D.scenes["event-vista-road-night-v1"]="__QA_TIME_SCENE_STUB_event-vista-road-night-v1__";
++
++// Planned delivery metadata only; no raster size/style/identity claim.
++D.sceneDescriptions["comp-talk-kangwoo-camp-day-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["comp-talk-kangwoo-camp-day-v1"]={"format":"character","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["comp-talk-parkss-camp-day-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["comp-talk-parkss-camp-day-v1"]={"format":"character","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["combat-walker-watch-night-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["combat-walker-watch-night-v1"]={"format":"action","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["event-crisis-exhaustion-night-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["event-crisis-exhaustion-night-v1"]={"format":"place","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["settlement-road-echo-night-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["settlement-road-echo-night-v1"]={"format":"place","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["seoul-han-night-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["seoul-han-night-v1"]={"format":"place","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["seoul-ruins-green-day-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["seoul-ruins-green-day-v1"]={"format":"place","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["seoul-ruins-green-night-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["seoul-ruins-green-night-v1"]={"format":"place","size":"1024x576","status":"qa-stub","qaStub":true};
++D.sceneDescriptions["event-vista-road-night-v1"]='QA 테스트 표식 — 실제 그림 미연결';
++D.sceneAssetMeta["event-vista-road-night-v1"]={"format":"place","size":"1024x576","status":"qa-stub","qaStub":true};
+--- a/src/04h-engine-presentation.js
++++ b/src/04h-engine-presentation.js
+@@ -32,6 +32,12 @@
+ };
+ G.presentationCopy = value=>JSON.parse(JSON.stringify(value));
+ G.presentationText = value=>typeof value==='string'?value.slice(0,40000):'';
++// Optional clock provenance for newly created opt-in scene receipts only.
++G.presentationSceneTime = value=>value&&Number.isInteger(value.day)&&value.day>=1
++  &&Number.isFinite(value.min)&&value.min>=0&&value.min<1440
++  ?{day:value.day,min:value.min}:null;
++G.newPresentationSceneTime = event=>D.eventSceneTimeVariants?.[event?.id]
++  ?G.presentationSceneTime({day:S.day,min:S.min}):null;
+ // Reading state belongs to the existing gameplay receipt, including the two
+ // specialized owners. It never contains executable effects or rendered HTML.
+ G.presentationOwner = eventId=>{
+@@ -64,6 +70,7 @@
+     });
+   if(!turns.length) return null;
+   return {turns,index:clamp(Math.floor(Number(view.index)||0),0,turns.length-1),
++    ...(G.presentationSceneTime(view.sceneTime)?{sceneTime:G.presentationSceneTime(view.sceneTime)}:{}),
+     knownSpeaker:view.knownSpeaker===true,readingRecord:G.presentationText(view.readingRecord),
+     recordOpen:view.recordOpen===true,readingRecordLabel:G.presentationText(view.readingRecordLabel),
+     ...(view.readingPage?{readingPage:{
+@@ -86,6 +93,7 @@
+   if(!event) return null;
+   const row={version:1,eventId:event.id,phase:value.phase};
+   if(value.phase==='transition') return row;
++  if(G.presentationSceneTime(value.sceneTime))row.sceneTime=G.presentationSceneTime(value.sceneTime);
+   if(event.roadCheckIn&&value.phase==='event'&&(!S?.driving||S.driving.checkIn||!S.party.includes(event.roadCheckIn))) return null;
+   row.text=G.presentationText(value.text);
+   row.view=G.presentationView(value.view);
+@@ -118,6 +126,7 @@
+   const saved=S.pendingPresentation;
+   if(saved&&saved.eventId===event.id&&saved.phase!=='transition') return saved;
+   S.pendingPresentation={version:1,eventId:event.id,phase:'event',
++    ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
+     text:G.presentationText(typeof event.text==='function'?event.text(S):event.text)};
+   G.save();
+   return S.pendingPresentation;
+@@ -220,6 +229,7 @@
+     }
+     if(!own&&!S.ended){
+       S.pendingPresentation=G.validatePresentation({version:1,phase:'result',eventId:event.id,
++        ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
+         choiceIndex:ci,outcomeIndex:out.presentationOutcomeIndex??choice.out.indexOf(out),text,chips,combatState,authoredView});
+     }
+     if(!S.ended&&(!own||own.applied)){
+--- a/src/07-ui.js
++++ b/src/07-ui.js
+@@ -3334,6 +3334,34 @@
+     if(keys.length) return keys;
+     add('generic-story');
+     return keys;
++  }
++  function eventScenePresentation(evd,phase,leading=[],turns=[]){
++    const owner=G.presentationOwner(evd.id);
++    const reading=G.presentationReading(owner?.reading);
++    const ownerPhase=phase==='outcome'?'result':'event';
++    const stored=reading?.phase===phase&&reading.view
++      ||owner?.phase===ownerPhase&&G.presentationView(owner.view);
++    // Stored keys are historical data, never input to today's variant selector.
++    if(stored?.sceneKeys?.length)return {sceneKeys:[...stored.sceneKeys],
++      ...(stored.sceneTime?{sceneTime:stored.sceneTime}:{})};
++    const sceneTime=owner?.phase===ownerPhase?G.presentationSceneTime(owner.sceneTime):null;
++    const keys=eventSceneKeys(evd,leading),variant=D.eventSceneTimeVariants?.[evd.id];
++    const historical=['memory','video'].includes(evd.storyOrigin?.kind)
++      ||turns.some(turn=>turn.timeKind&&turn.timeKind!=='current');
++    if(!variant||!sceneTime||historical)return {sceneKeys:keys,...(sceneTime?{sceneTime}:{})};
++    // Matches G.isNight's 05:30/19:30 boundary, including fractional minutes.
++    const period=sceneTime.min<330||sceneTime.min>=1170?'night':'day';
++    const sceneKeys=keys.map(key=>[variant.base,variant.day,variant.night].includes(key)
++      &&D.scenes[variant[period]]?variant[period]:key);
++    return {sceneKeys:[...new Set(sceneKeys)],sceneTime};
++  }
++  function eventSceneOrientation(evd,sceneTime){
++    if(D.eventSceneTimeVariants?.[evd.id]&&!sceneTime)return '저장된 장면';
++    const place=evd.id==='opening_parents_module'||evd.id==='opening_departure'
++      ?'감천 작업장':S.at&&D.nodes[S.at]?.name||'길 위';
++    const minute=Math.floor(Number(sceneTime?.min??S.min)||0);
++    const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
++    return `지금 · ${place} · ${clock}`;
+   }
+   function sceneFormat(key){
+     const declared=D.sceneAssetMeta&&D.sceneAssetMeta[key]&&D.sceneAssetMeta[key].format;
+@@ -4177,10 +4205,6 @@
+     sheet.dataset.missionLayout=missionOnly?'departure':'';
+     const text = pending?.phase==='event'?pending.text:typeof evd.text==='function'?evd.text(S):evd.text;
+     const sceneAlt=stripTags(evd.title||'길 위의 사건');
+-    const sceneKeys=eventSceneKeys(evd);
+-    const scene=missionOnly
+-      ?`<figure class="mission-art"><img src="${esc(D.scenes[sceneKeys[0]]||'')}" width="1280" height="720" decoding="async" alt="${esc(D.sceneDescriptions?.[sceneKeys[0]]||sceneAlt)}"></figure>`
+-      :sceneFrameHtml(sceneKeys,sceneAlt);
+     const storyOrigin=storyOriginHtml(evd);
+     let context=D.storyContext&&D.storyContext[evd.id]
+       ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
+@@ -4202,12 +4226,13 @@
+         : prepareEventAudio(buildStoryTurns(text,evd,{turnSpeakers:D.finaleSpeakers(evd.id,-1,S)||evd.turnSpeakers}),evd);
+     // Bridges belong to authored turns, not renderer-side event exceptions.
+     // Existing saved turns are restored below without retroactive edits.
+-    const scenePlace=evd.id==='opening_parents_module'||evd.id==='opening_departure'
+-      ?'감천 작업장':S.at&&D.nodes[S.at]?.name||'';
+-    const sceneMinute=Math.floor(Number(S.min)||0);
+-    const sceneClock=String(Math.floor(sceneMinute/60)%24).padStart(2,'0')+':'+String(sceneMinute%60).padStart(2,'0');
++    const sceneInfo=eventScenePresentation(evd,'event',[],turns),sceneKeys=sceneInfo.sceneKeys;
++    const scene=missionOnly
++      ?`<figure class="mission-art"><img src="${esc(D.scenes[sceneKeys[0]]||'')}" width="1280" height="720" decoding="async" alt="${esc(D.sceneDescriptions?.[sceneKeys[0]]||sceneAlt)}"></figure>`
++      :sceneFrameHtml(sceneKeys,sceneAlt);
++    const sceneCurrentOrientation=eventSceneOrientation(evd,sceneInfo.sceneTime);
+     const sceneOrientation=!evd.combat&&!missionOnly
+-      ?`<p class="event-orientation" data-current-orientation="지금 · ${esc(scenePlace||'길 위')} · ${sceneClock}">지금 · ${esc(scenePlace||'길 위')} · ${sceneClock}</p>`:'';
++      ?`<p class="event-orientation" data-current-orientation="${esc(sceneCurrentOrientation)}">${esc(sceneCurrentOrientation)}</p>`:'';
+     const presentId=evd.needsComp||(Array.isArray(evd.needBond)?evd.needBond[0]:null);
+     if(presentId&&G.hasComp(presentId)&&G.crewLocation){
+       const companion=D.comps[presentId];
+@@ -4244,7 +4269,7 @@
+       lastAdvanceAt:0,
+       knownSpeaker:!!turns.knownSpeaker,
+       lanes,
+-      sceneKeys,sceneAlt,sceneStart:0,originKind:evd.storyOrigin&&evd.storyOrigin.kind||'',
++      sceneKeys,sceneTime:sceneInfo.sceneTime,sceneAlt,sceneStart:0,originKind:evd.storyOrigin&&evd.storyOrigin.kind||'',
+       nameEntry:evd.nameInput===true,
+       finalDock:evd.nameInput?openingNameAnswerHtml():directRoadChoice
+         ?`${missionOnly?`<p class="mission-optional">${esc(mission.optional)}</p>`:''}<button class="story-next onboarding-route-start" type="button"><strong>길로 나가기</strong></button>`
+@@ -4634,12 +4659,12 @@
+       scale:priorFrame.style.getPropertyValue('--scene-scale'),
+       tone:priorFrame.dataset.tone
+     }:null;
+-    const sceneKeys=eventSceneKeys(curEv,explicitCuts);
++    const sceneInfo=eventScenePresentation(curEv,'outcome',explicitCuts,turns),sceneKeys=sceneInfo.sceneKeys;
+     const hasExplicit=sceneKeys.length&&explicitCuts.some(value=>
+       Array.isArray(value)?value.some(Boolean):Boolean(value));
+-    const outcomeSceneKeys=hasExplicit
+-      ? sceneKeys
+-      : eventSceneKeys(curEv,priorScene?[priorScene]:[]);
++    const outcomeSceneInfo=hasExplicit
++      ?sceneInfo:eventScenePresentation(curEv,'outcome',priorScene?[priorScene]:[],turns);
++    const outcomeSceneKeys=outcomeSceneInfo.sceneKeys;
+     const sceneCarry=priorShot&&outcomeSceneKeys[0]===priorShot.key?priorShot:null;
+     const sceneStart=0;
+     const scene=sceneFrameHtml(outcomeSceneKeys,sceneAlt);
+@@ -4684,9 +4709,13 @@
+     const head=sheet.querySelector('.event-head h2');
+     const orientation=sheet.querySelector('.event-orientation');
+     if(orientation?.dataset.currentOrientation){
+-      const minute=Math.floor(Number(S.min)||0);
+-      const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
+-      orientation.dataset.currentOrientation=orientation.dataset.currentOrientation.replace(/\d{2}:\d{2}$/,clock);
++      if(D.eventSceneTimeVariants?.[curEv.id]){
++        orientation.dataset.currentOrientation=eventSceneOrientation(curEv,outcomeSceneInfo.sceneTime);
++      }else{
++        const minute=Math.floor(Number(S.min)||0);
++        const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
++        orientation.dataset.currentOrientation=orientation.dataset.currentOrientation.replace(/\d{2}:\d{2}$/,clock);
++      }
+     }
+     sheet.querySelector('[data-road-later]')?.remove();
+     if(head) head.textContent=visibleReportTitle;
+@@ -4705,7 +4734,7 @@
+       readingRecord:typeof out.readingRecord==='function'?out.readingRecord(S):out.readingRecord,
+       knownSpeaker:!!turns.knownSpeaker,
+       lanes,
+-      sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,sceneCarry,
++      sceneKeys:outcomeSceneKeys,sceneTime:outcomeSceneInfo.sceneTime,sceneAlt,sceneStart,sceneCarry,
+       originKind:curEv.storyOrigin&&curEv.storyOrigin.kind||'',
+       offerComp:out.fx&&out.fx.offerComp||null,
+       finalDock:`<div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,

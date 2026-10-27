@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "매주 닦는다. 녹슬면… 이름이 안 보이게 되니까."
+  },
+  {
+    "kind": "narration",
+    "text": "내 수첩도 꺼냈다. 강우는 묻지 않고 헝겊의 깨끗한 쪽을 찢어 건넸다. 군번줄과 할아버지 수첩의 쇠 모서리를 나란히 닦았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…좋은 습관이다."
+  },
+  {
+    "kind": "narration",
+    "text": "그날 대화는 그걸로 끝이었다."
+  }
+]

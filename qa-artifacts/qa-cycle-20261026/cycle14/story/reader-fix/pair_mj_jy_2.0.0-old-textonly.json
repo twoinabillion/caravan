@@ -1,0 +1,59 @@
+[
+  {
+    "kind": "narration",
+    "text": "나중에 민지에게 들은 대화의 결말은 이랬다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "찾을 사람 없으면 만들면 돼요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "…네?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "만들면 된다고요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "그게 만들어지는 거예요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "지금 만들고 있잖아요, 언니."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 재이 이마를 손가락으로 툭 밀었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "그럼 저는 언니 찾을 사람이에요. 잃어버리면 찾아요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "찾는 데 비용은—"
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "언니."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…네."
+  },
+  {
+    "kind": "narration",
+    "text": "재이가 그날 시세 없는 목록에 한 줄을 더 적었다. 찾을 사람(생김)."
+  }
+]

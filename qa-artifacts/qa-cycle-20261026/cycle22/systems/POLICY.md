@@ -1,0 +1,7 @@
+# Cycle22 systems policy
+
+Fresh seed282002, no resource injection or forced outcome. Minji/Kangwoo/Eunsu invitations and actual third seat take priority over novelty. Visit publicly revealed Miryang/Daegu/Daejeon and follow the active guest objective. Revisit a known recruitment settlement after capacity expansion; do not chase an unavailable slot or disabled action. Core preservation/quarantine is preferred only when its actual choice is enabled.
+
+Retain the proven current-settlement supplies and legal forward route policy, including all legs until the next real market and reserve delays. Buy the enabled bench before optional equipment, after one-day food/water and next-hop fuel. New optional upgrade preference: armory/antenna/armor/bed/collector/solar, using only actual public upgrade rows. Craft only enabled recipes with spare funds; record real armory discount if obtained. Existing finite one-off public work, trade, side missions, camp talk/meal/repair, rumors and naturally revealed radio supplies remain enabled.
+
+Choice novelty now compares primary systems transcripts1–21; recruitment precedes novelty. Entry/paid reloads and actual reader/NPC all shown history/short speech/chat/radio/scene observers are inherited unchanged. If the radio is naturally fixed, skip only the recorded reload interval until first actual broadcast. All old fixtures and image-regression samples remain excluded.

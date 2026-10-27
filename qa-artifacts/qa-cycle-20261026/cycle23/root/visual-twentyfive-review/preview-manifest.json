@@ -1,0 +1,508 @@
+{
+  "cohortExcluded": true,
+  "classification": "isolated-draft-preview-index-not-new-natural-play",
+  "entries": [
+    {
+      "event": "ev_chunrian_lab",
+      "key": "story-chunrian-lab-archive-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-ev_chunrian_lab.json",
+        "sha256": "849c1d786d30788b4677ffffb012ae1e817062c1b85501c657af9d65529c0196",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/survival/attempt01/entry-438-ev_chunrian_lab-export.json",
+        "sha256": "78d0451261720ff324f2164badb2f86388a714bbeb7b840710d06cb1367257a5",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle23/survival/attempt01/player51-summary.json",
+        "cycle": 23,
+        "seed": 283001,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "exp_towyard",
+      "key": "explore-towtruck-depot-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-exp_towyard.json",
+        "sha256": "9608f7f2ef92df1e528278f807466f3e9ca79016125388c380d5c2caab782907",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle22/systems/player02/attempt01/entry-127-exp_towyard-export.json",
+        "sha256": "8aeceee80b2ff7cb8a961e21304f84c73ef6384315fd164aa3a3a64c352c0f96",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle22/systems/player02/attempt01/player02-summary.json",
+        "cycle": 22,
+        "seed": 282002,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "lc_busan_dried",
+      "key": "local-busan-dried-fish-cart-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-lc_busan_dried.json",
+        "sha256": "0ad9b6942964b96f6de14ae0cc10bb4fdc35dd4b6966b27f2fb6a4791ae2b24e",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/systems/player02/attempt01/entry-28-lc_busan_dried-export.json",
+        "sha256": "c62588974d4a6aa7cd9552e4ae98bad0138db94b1b3a411dbe803ec67aa2a91e",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/systems/player02/attempt01/player02-summary.json",
+        "cycle": 24,
+        "seed": 284002,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "exp_comicroom",
+      "key": "explore-comicbook-room-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-exp_comicroom.json",
+        "sha256": "fbe7d806fdc6d98b205ca2bf40009316ee193445dcb13980ca528ee826f326f3",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle22/systems/player02/attempt01/entry-308-exp_comicroom-export.json",
+        "sha256": "5e354dd2731d020fb04b7a7a635efc58f3dee96996815bc5633c3c6314157d5f",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle22/systems/player02/attempt01/player02-summary.json",
+        "cycle": 22,
+        "seed": 282002,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "lc_daejeon_bakery",
+      "key": "local-daejeon-bakery-shutter-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-lc_daejeon_bakery.json",
+        "sha256": "e0d0c9f4ec4ee9f1a9917794e5bafccf83a6f78fe830988ff573c5d0e7f1752f",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/survival/attempt01/entry-303-lc_daejeon_bakery-export.json",
+        "sha256": "c4d6574416f445d47e15c9add9a00f12899a99bd227f032d70ff10d2f3644942",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/survival/attempt01/player52-summary.json",
+        "cycle": 24,
+        "seed": 284001,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "ev_uplink",
+      "key": "story-ridge-uplink-dishes-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-ev_uplink.json",
+        "sha256": "0245c9ce2099bb500e3f8411e11bae9b3aafb1292dd6c4ba76ad53e1a756e8bf",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/survival/attempt01/entry-411-ev_uplink-export.json",
+        "sha256": "4d296a6e77e72e7bcac5543e9cdb65a634be69dc39ab7f8a9ce34d5fed404ea0",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle23/survival/attempt01/player51-summary.json",
+        "cycle": 23,
+        "seed": 283001,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "camp_scan",
+      "key": "camp-field-searchlight-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-camp_scan.json",
+        "sha256": "dbb992e8b9ff4e318354a1a09af5417fb266d2d737b8077b7ea543166afd0d79",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/systems/player02/attempt01/entry-455-camp_scan-export.json",
+        "sha256": "ac9d523729a41ac78d1123f842a92b2b03abd45fac2099b6238eca58fcbb3a0f",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle23/systems/player02/attempt01/player02-summary.json",
+        "cycle": 23,
+        "seed": 283002,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "seoul_base",
+      "key": "seoul-cablecar-stairs-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-seoul_base.json",
+        "sha256": "c7ede46b044d470bd067e99741695a12631e2a4b7001ec64d8bead558b81614c",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-695-seoul_base.json",
+        "sha256": "f6fb42512c0274c9b8f058f78102ed4350417c62e551ccf1818d3a5a022c7ece",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "exp_checkpoint",
+      "key": "explore-abandoned-military-checkpoint-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-exp_checkpoint.json",
+        "sha256": "4b544ec9ae76c92ed9cc60959def3f9a1ad956567d233073883315ebde27aa68",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt02/normal-unpaid-388-exp_checkpoint.json",
+        "sha256": "4dd762f239b88cd261fe1ccc2bf4857ae076b91a058f02b57ca98c01fc1bde0c",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt02/agent03-summary.json",
+        "cycle": 22,
+        "seed": 282003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "cleaners_recall",
+      "key": "event-human-retrieval-team-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-cleaners_recall.json",
+        "sha256": "4126526bb4317210f4d5fd1198aad14c09012f7a290f851c14d726ccc21b6569",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-193-cleaners_recall.json",
+        "sha256": "72fed0aa9f2fdd2b61aa77e30a4582677fc4349e1cb4c16cb2db5b549e80662d",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "lc_sejong_library",
+      "key": "local-sejong-unopened-library-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-lc_sejong_library.json",
+        "sha256": "b52edb75f660e82712aa7b8a741f3ff9bc0cddecca9690a08cda310460a987b2",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt02/normal-unpaid-417-lc_sejong_library.json",
+        "sha256": "a383ce68c5f971ef0e4a489a30c89a0fa57bece124c2dd03479c4b0203972f7d",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt02/agent03-summary.json",
+        "cycle": 22,
+        "seed": 282003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "ev_waterfall",
+      "key": "vista-cliff-waterfall-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-ev_waterfall.json",
+        "sha256": "bfd1f442aa223378992be5567465cb8ef9f5647c26c5aaa6fcbb5d5469290b2a",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt01/normal-unpaid-415-ev_waterfall.json",
+        "sha256": "c02e2b327aefdb38bf007a17ff053a1ad7270c7d208130e735eedce4598c321c",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 22,
+        "seed": 282003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "ev_atm_cash",
+      "key": "event-abandoned-atm-cash-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-ev_atm_cash.json",
+        "sha256": "865d1748235f663970bb06b5e0899ea25b780a2a92cc9892a9a9a8d4bf37c5c7",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt02/normal-unpaid-369-ev_atm_cash.json",
+        "sha256": "805e3b253e9a526d44870364219841a30213f5d5b598f1cb0848e77e9a555123",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt02/agent03-summary.json",
+        "cycle": 22,
+        "seed": 282003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "exp_arcade",
+      "key": "explore-arcade-airhockey-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-exp_arcade.json",
+        "sha256": "c6554ee27631ae1ef88c67dfb7c99d33873b31d806efb238041e1b2dc9d6f30c",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/systems/player02/attempt01/entry-182-exp_arcade-export.json",
+        "sha256": "852256ed0b2aafca1a477759ba2315a692a7262bc5c24ec9202a8e993fe62d72",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/systems/player02/attempt01/player02-summary.json",
+        "cycle": 24,
+        "seed": 284002,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "lc_damyang_juktong",
+      "key": "local-bamboo-rice-fire-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-lc_damyang_juktong.json",
+        "sha256": "9133ef7c80e9a5af953942e6c12a748f2ca82ebf287b16ba5bda4fd68c5c7fa1",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-547-lc_damyang_juktong.json",
+        "sha256": "3a257d692013ce1d5e38cd039b13318de7664aed5b16320325c9b53e1f91e81b",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "exp_cafeteria",
+      "key": "explore-school-cafeteria-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-exp_cafeteria.json",
+        "sha256": "1426dccad970b63cfdcf217c71348e58c69c968b44e009193a90d0c29093e0aa",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt01/normal-unpaid-290-exp_cafeteria.json",
+        "sha256": "a69b6697a72f7569c5305f41cc14364c2124dba94463e51147e8ae92f290e000",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle22/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 22,
+        "seed": 282003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "lc_chungju_lake",
+      "key": "local-chungju-receded-village-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-lc_chungju_lake.json",
+        "sha256": "836c2dfdc6d1f9cd6cdfebaacad712c48699053b73927df8fc2189ea9f97288d",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-163-lc_chungju_lake.json",
+        "sha256": "a53356911e88d58ade4c1e02b1401e7d22879273c79054d09a72256810849186",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "seoul_square",
+      "key": "seoul-empty-clothes-square-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-seoul_square.json",
+        "sha256": "a8513c52c962e5acfae48687a414a823b385fbcbce51c33159cacbb969a473ca",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-691-seoul_square.json",
+        "sha256": "2fb3512c21cb5830fdb8f44eb61ba756cd8c2fdff1b9a9848c2278d0cd75ee4d",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "exp_ricemill",
+      "key": "explore-sesame-mill-interior-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-exp_ricemill.json",
+        "sha256": "2e0921683020df2633f4a88eb76a380f069ca70796702a120d5147bc5c87e90b",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/systems/player02/attempt01/entry-112-exp_ricemill-export.json",
+        "sha256": "a16a55e374d0f3fa05dbc264cff97e5e06de344e0ecfa9da4a3d77345436e6aa",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle23/systems/player02/attempt01/player02-summary.json",
+        "cycle": 23,
+        "seed": 283002,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "postman_again",
+      "key": "postman-again-bicycle-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-postman_again.json",
+        "sha256": "28bce9619cbd7f53dbc42bba7770692a19d91d2bf1e6549567f605adf75c0154",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/normal-unpaid-235-postman_again.json",
+        "sha256": "2e27534b070c12e54e9a623cb777bcb55b9aea6bd98bf3ea712a4f2a3d1922bf",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 23,
+        "seed": 283003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "exp_bowling",
+      "key": "explore-bowling-lanes-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-exp_bowling.json",
+        "sha256": "ac7c8a0c7e46bb243e9f260f9b01de573613ada8dcd16542a5caed8fe70aa18b",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/normal-unpaid-100-exp_bowling.json",
+        "sha256": "bba528ec995b496a2dc5a6e16e0e1ab18f8b9ee97770b958ecc50333a0d2eb4f",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle23/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 23,
+        "seed": 283003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "ev_wedding_hall_storage",
+      "key": "explore-wedding-hall-storage-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-ev_wedding_hall_storage.json",
+        "sha256": "e12dae2db76243c2731156c33f49948214c17a5c3a7d06d8f5b46714aa463525",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-606-ev_wedding_hall_storage.json",
+        "sha256": "00d7f306df43084ae204cdee4d56eab3a654b9451f86de673841f44c7ef6d51d",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "story_generation_speech",
+      "key": "story-generation-covered-market-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-story_generation_speech.json",
+        "sha256": "d14aa0c450212685ba2ec1554c1c21dabe5b2c7356dce4b206895235b979735d",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-272-story_generation_speech.json",
+        "sha256": "4ff57e6b34e270390d290bc2d99252f30ec11b35b0559983dbb6d302a93beca4",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "talk_es_07",
+      "key": "companion-noise-recorder-detail-v1",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-talk_es_07.json",
+        "sha256": "d8a8237bdbf695d5bc167f9168cf4d252cca4190d79c6de46010ce358c5890a8",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/systems/player02/attempt01/entry-526-talk_es_07-export.json",
+        "sha256": "28af7ac01fafced0fda040977ce0aed0fbf40877cb6a1a6f2964f359f62e5518",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/systems/player02/attempt01/player02-summary.json",
+        "cycle": 24,
+        "seed": 284002,
+        "hasFrozenReading": true,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    },
+    {
+      "event": "meet_hitchhiker",
+      "key": "recruit-leo-daein-market-v2",
+      "fixturePreview": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle23/root/visual-twentyfive-review/preview-entry-meet_hitchhiker.json",
+        "sha256": "dbb1f0b89975cb1530b054656c38b76c40ae62b96532e83d3ac4338e5d95d6f8",
+        "cohortExcluded": true,
+        "classification": "explicit-isolated-presentation-fixture",
+        "entryCreation": "G.beginPresentation → actual qaEntry/qaSceneKeys → G.capturePresentationView → G.save/G.load → official G.exportSave; no manual view/key patch"
+      },
+      "retainedNaturalEntry": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-520-meet_hitchhiker.json",
+        "sha256": "24853798d3c775e08b9496538ae805c9921f36e7cc336cc3085c0a6ce8d6aeb6",
+        "lineageSummary": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/agent03-summary.json",
+        "cycle": 24,
+        "seed": 284003,
+        "hasFrozenReading": false,
+        "note": "Retained original natural unpaid entry. Frozen historical picture remains; not rewritten to new draft key."
+      }
+    }
+  ],
+  "fixtures": 25,
+  "retainedNaturalOriginsFound": 25
+}

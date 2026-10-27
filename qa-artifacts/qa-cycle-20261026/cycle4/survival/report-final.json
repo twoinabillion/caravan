@@ -1,0 +1,511 @@
+{
+  "seed": 264001,
+  "method": "source-informed targeted real-engine journey with isolated presentation stubs; finite public actions; not browser QA",
+  "baselineHash": "91cb4b3838ecc2989ff5dcb67c629774541d0ba41795701dbaf1ea982e248af1",
+  "postFixHash": "eb30ba1d43af4e00206ef6b8b6d15f07c86198823ed726dcac1c41cd9d2cd315",
+  "freshAttempts": 2,
+  "sameSeedRetry": true,
+  "independentPlayers": 1,
+  "thirdAttemptStarted": false,
+  "findingsCount": 2,
+  "readCompletion": {
+    "attempt01Choices": 107,
+    "attempt02Choices": 141,
+    "attempt02ExactTextMatchesToAttempt01": 100,
+    "attempt02DistinctReviewed": 41,
+    "presentedChoiceSetsReviewed": 140,
+    "distinctPublicWorkResultsReviewed": 8
+  },
+  "coverage": {
+    "baseline": "our cycle1–3 natural traces only, same-seed retries deduplicated; no fixtures",
+    "previousFiles": [
+      "qa-artifacts/qa-cycle-20261026/cycle1/survival/attempt01/player31-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle2/survival/attempt01/player31-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle2/survival/attempt02/player31-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle3/survival/attempt01/player31-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle3/survival/attempt02/player31-trace.json"
+    ],
+    "previousUniquePairs": 151,
+    "cycle4UniquePairs": 139,
+    "additionalPairs": [
+      "opening_departure:1",
+      "ev_mart_warehouse:0",
+      "exp_towyard:0",
+      "lc_ulsan_whale:0",
+      "talk_mj_01:1",
+      "near_geochang_actor:0",
+      "meet_bus:0",
+      "talk_mj_05:1",
+      "lc_yeongdong_wine:0",
+      "talk_mj_16:1",
+      "talk_mj_18:1",
+      "crisis_hungry:0",
+      "talkr_mj_3:0",
+      "rq_parkss_task:0",
+      "exp_arcade:0",
+      "rq_parkss_join:0",
+      "talkr_pss_3:0",
+      "camp_8_parkss:1",
+      "talk_pss_07:1",
+      "talk_mj_03:1",
+      "camp_9_parkss:0",
+      "talk_mj_21:1",
+      "talk_pss_02:1",
+      "jy_recruit:0",
+      "rq_jaeyi_task:1",
+      "camp_8_minji:0",
+      "camp_9_jaeyi:0",
+      "rq_jaeyi_join:0",
+      "talk_jy_02:1",
+      "water_toll:0",
+      "camp_10_parkss:1",
+      "talk_jy_18:1",
+      "loc_reststop:0",
+      "pair_mj_pss_1:0",
+      "talk_pss_19:1",
+      "ev_rooftop_tank:1",
+      "crisis_nofuel3:0",
+      "camp_11_minji:0",
+      "talk_jy_13:0",
+      "ev_chunrian_lab:1",
+      "loc_spring:0",
+      "pair_mj_pss_2:0",
+      "exp_fishfarm:0",
+      "camp_12_jaeyi:0",
+      "camp_13_parkss:0",
+      "camp_14_minji:0",
+      "talk_pss_18:1",
+      "talkr_jy_3:0",
+      "talk_mj_04:1",
+      "camp_15_jaeyi:0",
+      "pair_mj_jy_1:0",
+      "talk_pss_16:1",
+      "talk_jy_21:1"
+    ],
+    "normalizedCampPriorPairs": 143,
+    "normalizedCampCycle4Pairs": 127,
+    "normalizedAdditionalPairs": [
+      "opening_departure:1",
+      "ev_mart_warehouse:0",
+      "exp_towyard:0",
+      "lc_ulsan_whale:0",
+      "talk_mj_01:1",
+      "near_geochang_actor:0",
+      "meet_bus:0",
+      "talk_mj_05:1",
+      "lc_yeongdong_wine:0",
+      "talk_mj_16:1",
+      "talk_mj_18:1",
+      "crisis_hungry:0",
+      "talkr_mj_3:0",
+      "rq_parkss_task:0",
+      "exp_arcade:0",
+      "rq_parkss_join:0",
+      "talkr_pss_3:0",
+      "camp_parkss:1",
+      "talk_pss_07:1",
+      "talk_mj_03:1",
+      "camp_parkss:0",
+      "talk_mj_21:1",
+      "talk_pss_02:1",
+      "jy_recruit:0",
+      "rq_jaeyi_task:1",
+      "camp_jaeyi:0",
+      "rq_jaeyi_join:0",
+      "talk_jy_02:1",
+      "water_toll:0",
+      "talk_jy_18:1",
+      "loc_reststop:0",
+      "pair_mj_pss_1:0",
+      "talk_pss_19:1",
+      "ev_rooftop_tank:1",
+      "crisis_nofuel3:0",
+      "talk_jy_13:0",
+      "ev_chunrian_lab:1",
+      "loc_spring:0",
+      "pair_mj_pss_2:0",
+      "exp_fishfarm:0",
+      "talk_pss_18:1",
+      "talkr_jy_3:0",
+      "talk_mj_04:1",
+      "pair_mj_jy_1:0",
+      "talk_pss_16:1",
+      "talk_jy_21:1"
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": "attempt01",
+      "rows": 531,
+      "choices": 107,
+      "fullEnding": true,
+      "ending": "core_sleep",
+      "day": 11,
+      "km": 978,
+      "party": [
+        "minji",
+        "parkss"
+      ],
+      "actionCounts": {
+        "new-game": {
+          "recorded": 1,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "unpaid-entry-reload": {
+          "recorded": 107,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "choice": {
+          "recorded": 107,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "paid-result-reload": {
+          "recorded": 107,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "explore": {
+          "recorded": 22,
+          "explicitSuccess": 22,
+          "explicitFailure": 0
+        },
+        "travel": {
+          "recorded": 28,
+          "explicitSuccess": 28,
+          "explicitFailure": 0
+        },
+        "drive": {
+          "recorded": 56,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "buy-upgrade": {
+          "recorded": 1,
+          "explicitSuccess": 1,
+          "explicitFailure": 0
+        },
+        "camp": {
+          "recorded": 10,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "meet-recruit": {
+          "recorded": 2,
+          "explicitSuccess": 2,
+          "explicitFailure": 0
+        },
+        "work": {
+          "recorded": 7,
+          "explicitSuccess": 7,
+          "explicitFailure": 0
+        },
+        "recruit-step": {
+          "recorded": 5,
+          "explicitSuccess": 4,
+          "explicitFailure": 1
+        },
+        "camp-talk": {
+          "recorded": 11,
+          "explicitSuccess": 8,
+          "explicitFailure": 3
+        },
+        "accept-companion": {
+          "recorded": 2,
+          "explicitSuccess": 2,
+          "explicitFailure": 0
+        },
+        "talk": {
+          "recorded": 25,
+          "explicitSuccess": 12,
+          "explicitFailure": 13
+        },
+        "earned-perk": {
+          "recorded": 4,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "trade": {
+          "recorded": 30,
+          "explicitSuccess": 30,
+          "explicitFailure": 0
+        },
+        "walkfuel": {
+          "recorded": 1,
+          "explicitSuccess": 1,
+          "explicitFailure": 0
+        },
+        "seoul-enter": {
+          "recorded": 5,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        }
+      },
+      "unpaidReloads": {
+        "count": 107,
+        "loaded": 107
+      },
+      "paidReloads": {
+        "count": 107,
+        "loaded": 107,
+        "replayed": 107,
+        "reapplied": 0,
+        "stateChanged": 0
+      },
+      "decision": [
+        {
+          "index": 0,
+          "label": "집행권을 저항 연대망에 넘긴다",
+          "hint": "",
+          "visible": true,
+          "enabled": true,
+          "requirement": ""
+        },
+        {
+          "index": 1,
+          "label": "코어를 격리 수면에 넣는다",
+          "hint": "",
+          "visible": true,
+          "enabled": true,
+          "requirement": ""
+        },
+        {
+          "index": 2,
+          "label": "집행은 멈추되, 기록을 열 때까지 코어를 보존한다",
+          "hint": "",
+          "visible": true,
+          "enabled": false,
+          "requirement": "감시 근무를 설 사람 2/3 — 근무 가능한 동료 1명 더 필요 · 동료 1명 추가 합류 필요"
+        }
+      ],
+      "resourceMinimum": {
+        "food": 0,
+        "water": 8,
+        "fuel": 3.4388419999998407,
+        "scrap": 10,
+        "van": 82
+      },
+      "campConversations": [
+        "camp_1_minji",
+        "camp_2_minji",
+        "camp_3_minji",
+        "camp_4_minji",
+        "camp_5_minji",
+        "camp_7_minji",
+        "camp_8_parkss",
+        "camp_9_parkss"
+      ],
+      "legacyNaturalReplay": false,
+      "campsCrossingCalendarDay": 8,
+      "successfulCampCompletions": 10
+    },
+    {
+      "attempt": "attempt02",
+      "rows": 715,
+      "choices": 141,
+      "fullEnding": true,
+      "ending": "core_sleep",
+      "day": 17,
+      "km": 1152,
+      "party": [
+        "minji",
+        "parkss",
+        "jaeyi"
+      ],
+      "actionCounts": {
+        "new-game": {
+          "recorded": 1,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "unpaid-entry-reload": {
+          "recorded": 141,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "choice": {
+          "recorded": 141,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "paid-result-reload": {
+          "recorded": 141,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "explore": {
+          "recorded": 24,
+          "explicitSuccess": 24,
+          "explicitFailure": 0
+        },
+        "travel": {
+          "recorded": 38,
+          "explicitSuccess": 38,
+          "explicitFailure": 0
+        },
+        "drive": {
+          "recorded": 69,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "buy-upgrade": {
+          "recorded": 1,
+          "explicitSuccess": 1,
+          "explicitFailure": 0
+        },
+        "camp": {
+          "recorded": 16,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "meet-recruit": {
+          "recorded": 3,
+          "explicitSuccess": 3,
+          "explicitFailure": 0
+        },
+        "work": {
+          "recorded": 10,
+          "explicitSuccess": 10,
+          "explicitFailure": 0
+        },
+        "recruit-step": {
+          "recorded": 7,
+          "explicitSuccess": 6,
+          "explicitFailure": 1
+        },
+        "camp-talk": {
+          "recorded": 31,
+          "explicitSuccess": 14,
+          "explicitFailure": 17
+        },
+        "accept-companion": {
+          "recorded": 3,
+          "explicitSuccess": 3,
+          "explicitFailure": 0
+        },
+        "talk": {
+          "recorded": 41,
+          "explicitSuccess": 22,
+          "explicitFailure": 19
+        },
+        "earned-perk": {
+          "recorded": 6,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        },
+        "trade": {
+          "recorded": 33,
+          "explicitSuccess": 33,
+          "explicitFailure": 0
+        },
+        "walkfuel": {
+          "recorded": 4,
+          "explicitSuccess": 4,
+          "explicitFailure": 0
+        },
+        "seoul-enter": {
+          "recorded": 5,
+          "explicitSuccess": 0,
+          "explicitFailure": 0
+        }
+      },
+      "unpaidReloads": {
+        "count": 141,
+        "loaded": 141
+      },
+      "paidReloads": {
+        "count": 141,
+        "loaded": 141,
+        "replayed": 141,
+        "reapplied": 0,
+        "stateChanged": 0
+      },
+      "decision": [
+        {
+          "index": 0,
+          "label": "집행권을 저항 연대망에 넘긴다",
+          "hint": "반대 · 재이의 반대를 누르는 결정 · 유대 -6",
+          "visible": true,
+          "enabled": true,
+          "requirement": ""
+        },
+        {
+          "index": 1,
+          "label": "코어를 격리 수면에 넣는다",
+          "hint": "",
+          "visible": true,
+          "enabled": true,
+          "requirement": ""
+        },
+        {
+          "index": 2,
+          "label": "집행은 멈추되, 기록을 열 때까지 코어를 보존한다",
+          "hint": "",
+          "visible": true,
+          "enabled": false,
+          "requirement": "감시 근무를 설 사람 1/3 — 근무 가능한 동료 2명 더 필요 · 사기 낮은 동료 2명은 야영으로 사기 45 이상 회복"
+        }
+      ],
+      "resourceMinimum": {
+        "food": 0,
+        "water": 0,
+        "fuel": 0.4608737333332943,
+        "scrap": 10,
+        "van": 82
+      },
+      "campConversations": [
+        "camp_1_minji",
+        "camp_2_minji",
+        "camp_3_minji",
+        "camp_4_minji",
+        "camp_5_minji",
+        "camp_7_minji",
+        "camp_8_minji",
+        "camp_9_jaeyi",
+        "camp_10_parkss",
+        "camp_11_minji",
+        "camp_12_jaeyi",
+        "camp_13_parkss",
+        "camp_14_minji",
+        "camp_15_jaeyi"
+      ],
+      "legacyNaturalReplay": false,
+      "campsCrossingCalendarDay": 15,
+      "successfulCampCompletions": 16
+    }
+  ],
+  "reportRevision": "final: camp success uses campNight increase, not calendar-day rollover",
+  "findings": [
+    {
+      "id": "S4-01",
+      "event": "talk_mj_21",
+      "choiceIndex": 1,
+      "actual": "DAY11 07:20→07:20에서 그날부터 반복 정비를 했다고 기록",
+      "expected": "시각이 흐르지 않은 약속은 현재 1회 행동 또는 의향",
+      "cause": "시간 비용 없는 정적 결과에 미래 반복 완료문",
+      "fix": "함께 공구함을 닫는 현재 행동",
+      "originalEvidence": "attempt01 trace n462",
+      "status": "fixed and regression verified"
+    },
+    {
+      "id": "S4-02",
+      "event": "talk_pss_19",
+      "choiceIndex": 1,
+      "actual": "DAY12 07:03 clear, 최근 공급은 우물/창고인데 계곡 출처·빗소리 언급, 마지막 박 선생 발언이 me로 파싱",
+      "expected": "현재 행동/확인된 출처·날씨만 명시, 마지막 발화 parkss",
+      "cause": "무조건 출처/날씨를 정한 정적 결과와 자동교대 fallback",
+      "fix": "현재 물을 다 마셔도 되는지 묻는 대화·창밖으로 중립화, parkss/me/parkss/parkss 명시",
+      "originalEvidence": "attempt02 trace n478 + real-reader regression",
+      "status": "fixed and regression verified"
+    }
+  ],
+  "remainingGaps": [
+    "Source-informed engine harness, no browser/image QA in this agent",
+    "All cycle4 natural journeys used baseline91cb, post-fix eb30 needs next fresh round",
+    "Shared-watch target not reached in cycle4; legitimate final gate was shown and core_sleep completed",
+    "No authentic historical legacy file was resumed in cycle4: 248 current unpaid/paid reloads plus 2 constructed historical-prose receipt tests",
+    "Only actually presented branches reviewed; unchosen outcomes and unrelated event corpus not claimed clean"
+  ]
+}

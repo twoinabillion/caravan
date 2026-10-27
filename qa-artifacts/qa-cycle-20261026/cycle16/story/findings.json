@@ -1,0 +1,609 @@
+[
+  {
+    "id": "S16-01",
+    "n": 38,
+    "event": "ev_seed_warehouse",
+    "choice": 0,
+    "kind": "reader-identity",
+    "status": "confirmed",
+    "issue": "Solo narrator reaction is assigned to passer_worker/???.",
+    "reason": "Seed warehouse contains no introduced NPC; 먹을 걸 줍는 것보다 이게 더 부자 된 기분이야 is the player reaction. Actual parser and paid reload both retain wrong generic-worker role.",
+    "entryText": "농협 자재창고. 셔터가 굳게 닫혔지만 옆문이 열려 있다.\n\n안엔 비료 포대, 농기구, 그리고— 종자 보관고. 밀봉된 씨앗 봉지가 종류별로 정리돼 있다.\n\n먹을 건 아니지만, 씨앗은 미래다.",
+    "resultText": "상추, 무, 배추, 콩, 옥수수… 종류별로 씨앗을 챙겼다. 정착할 땅만 있으면, 이걸로 밭을 일군다.\n\n\"먹을 걸 줍는 것보다 이게 더 부자 된 기분이야.\"\n\n옆 선반에는 밀봉된 저장식과 농기구용 예비 부품도 남아 있었다. 지금 쓸 것은 따로 싣고, 씨앗 봉지는 젖지 않게 묶었다. 한 계절의 식량이 되려면 땅과 시간이 더 필요했다.",
+    "state": {
+      "at": "yangsan",
+      "location": "양산 고가차도",
+      "day": 1,
+      "min": 918,
+      "km": 20,
+      "driving": null,
+      "fuel": 38.91999999999993,
+      "water": 10,
+      "food": 9,
+      "scrap": 25,
+      "van": 82,
+      "fatigue": 24.737499999999972,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 0,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "act": "1장",
+        "chapterId": "parents-diversion",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "phase": "남쪽 환승소의 오래된 운행표",
+        "why": "부모님이 함께 부산에 오지 못한 이유를 확인해야, 가족을 갈라놓은 명령이 사람을 어떻게 다뤘는지 알 수 있다.",
+        "next": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.",
+        "eyebrow": "메인 스토리 · 1장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다",
+            "state": "upcoming"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 4,
+          "need": 13,
+          "label": "4/13"
+        }
+      },
+      "navigation": {
+        "key": "main_parents-diversion",
+        "kind": "main",
+        "target": "gimcheon",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "action": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "entryReader": [
+      {
+        "kind": "narration",
+        "text": "농협 자재창고. 셔터가 굳게 닫혔지만 옆문이 열려 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "안엔 비료 포대, 농기구, 그리고— 종자 보관고. 밀봉된 씨앗 봉지가 종류별로 정리돼 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "먹을 건 아니지만, 씨앗은 미래다.",
+        "displayName": null
+      }
+    ],
+    "resultReader": [
+      {
+        "kind": "narration",
+        "text": "상추, 무, 배추, 콩, 옥수수… 종류별로 씨앗을 챙겼다. 정착할 땅만 있으면, 이걸로 밭을 일군다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "먹을 걸 줍는 것보다 이게 더 부자 된 기분이야.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "옆 선반에는 밀봉된 저장식과 농기구용 예비 부품도 남아 있었다. 지금 쓸 것은 따로 싣고, 씨앗 봉지는 젖지 않게 묶었다. 한 계절의 식량이 되려면 땅과 시간이 더 필요했다.",
+        "displayName": null
+      }
+    ],
+    "normalCheckpoint": "agent03/attempt01/normal-unpaid-36-ev_seed_warehouse.json"
+  },
+  {
+    "id": "S16-02",
+    "n": 201,
+    "event": "exp_station",
+    "choice": 0,
+    "kind": "reader-medium",
+    "status": "confirmed",
+    "issue": "Station sign and stationmaster diary are rendered as passer_refugee/??? live dialogue.",
+    "reason": "Entry explicitly labels 역명판 and result labels 역장의 일지/마지막 장. Both are written records rather than present refugee speech.",
+    "entryText": "풀에 묻힌 철길과 작은 간이역. 대합실 나무 의자가 반질반질하다.\n\n역명판: \"다음 열차를 기다리지 마세요. 걷는 게 빠릅니다 — 역장\"\n\n유머 있는 역장이었던 모양이다.",
+    "resultText": "나무 의자에서 잠깐 눈을 붙였다. 철길 위로 바람이 열차처럼 지나갔다.\n\n역무실에서 역장의 일지를 발견했다. 마지막 장: \"폐역이 결정됐다. 그래도 나는 매일 첫차 시간에 문을 열 것이다. 역은 기다리는 곳이니까.\"\n\n일지 옆에 열쇠 꾸러미와 구급함이 가지런했다. 끝까지 역장이었다.",
+    "state": {
+      "at": "nonsan",
+      "location": "논산 평야",
+      "day": 5,
+      "min": 510,
+      "km": 371,
+      "driving": null,
+      "fuel": 45.92634786666627,
+      "water": 16,
+      "food": 15,
+      "scrap": 76,
+      "van": 89.35999999999973,
+      "fatigue": 4.428,
+      "party": [
+        "leo"
+      ],
+      "items": {
+        "부품": 8,
+        "의약품": 1,
+        "탄약": 1
+      },
+      "weather": "fog",
+      "campNight": 4,
+      "campPlan": {},
+      "campParticipants": [
+        "leo"
+      ],
+      "campConversation": null,
+      "crew": {
+        "leo": {
+          "name": "레오",
+          "mood": 96,
+          "bond": 16,
+          "injury": null
+        }
+      },
+      "up": {},
+      "sideQuest": {
+        "kind": "deliver",
+        "label": "라디오 진공관",
+        "description": "\"라디오 진공관, 대전 연구단지까지 부탁드려도 될까요? 사례는 고철 12.\"",
+        "from": "jeonju",
+        "to": "daejeon",
+        "due": 8,
+        "need": null,
+        "ready": false,
+        "navigation": {
+          "key": "local_deliver_jeonju_daejeon_8",
+          "kind": "local",
+          "target": "daejeon",
+          "title": "라디오 진공관",
+          "action": "대전 연구단지까지 이동한다"
+        }
+      },
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "청주 방송국에서 ‘주변 탐색’을 눌러 「서진이 찾아낸 두 장」 기록을 확인한다 (열람 준비 30분)",
+        "act": "2장",
+        "chapterId": "verification-key",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "phase": "계기판의 장치를 꺼낼 방법을 찾는 중",
+        "why": "엄마가 절차를 설계하고 아빠가 만든 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.",
+        "next": "청주 방송국에서 ‘주변 탐색’을 눌러 「서진이 찾아낸 두 장」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.",
+        "eyebrow": "메인 스토리 · 2장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "청주 방송국에서 ‘주변 탐색’을 눌러 「서진이 찾아낸 두 장」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 6,
+          "need": 13,
+          "label": "6/13"
+        }
+      },
+      "navigation": {
+        "key": "main_verification-key",
+        "kind": "main",
+        "target": "cheongju",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "action": "청주 방송국에서 ‘주변 탐색’을 눌러 「서진이 찾아낸 두 장」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "entryReader": [
+      {
+        "kind": "narration",
+        "text": "풀에 묻힌 철길과 작은 간이역. 대합실 나무 의자가 반질반질하다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "역명판:",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "다음 열차를 기다리지 마세요. 걷는 게 빠릅니다 — 역장",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "유머 있는 역장이었던 모양이다.",
+        "displayName": null
+      }
+    ],
+    "resultReader": [
+      {
+        "kind": "narration",
+        "text": "나무 의자에서 잠깐 눈을 붙였다. 철길 위로 바람이 열차처럼 지나갔다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "역무실에서 역장의 일지를 발견했다. 마지막 장:",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "폐역이 결정됐다. 그래도 나는 매일 첫차 시간에 문을 열 것이다. 역은 기다리는 곳이니까.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "일지 옆에 열쇠 꾸러미와 구급함이 가지런했다. 끝까지 역장이었다.",
+        "displayName": null
+      }
+    ],
+    "normalCheckpoint": "agent03/attempt01/normal-unpaid-199-exp_station.json"
+  },
+  {
+    "id": "S16-V01",
+    "n": 38,
+    "event": "ev_seed_warehouse",
+    "choice": 0,
+    "kind": "scene-context",
+    "status": "confirmed-source-raster",
+    "issue": "Solo warehouse scene displays two people searching a field outside a greenhouse.",
+    "reason": "Actual key event-explore-farm → __SCENE_EVENT_EXPLORE_FARM__ → assets/scenes/event-explore-farm.webp via build WebP-priority resolver. Raster visually inspected. No in-game crop check claimed.",
+    "entryText": "농협 자재창고. 셔터가 굳게 닫혔지만 옆문이 열려 있다.\n\n안엔 비료 포대, 농기구, 그리고— 종자 보관고. 밀봉된 씨앗 봉지가 종류별로 정리돼 있다.\n\n먹을 건 아니지만, 씨앗은 미래다.",
+    "resultText": "상추, 무, 배추, 콩, 옥수수… 종류별로 씨앗을 챙겼다. 정착할 땅만 있으면, 이걸로 밭을 일군다.\n\n\"먹을 걸 줍는 것보다 이게 더 부자 된 기분이야.\"\n\n옆 선반에는 밀봉된 저장식과 농기구용 예비 부품도 남아 있었다. 지금 쓸 것은 따로 싣고, 씨앗 봉지는 젖지 않게 묶었다. 한 계절의 식량이 되려면 땅과 시간이 더 필요했다.",
+    "state": {
+      "at": "yangsan",
+      "location": "양산 고가차도",
+      "day": 1,
+      "min": 918,
+      "km": 20,
+      "driving": null,
+      "fuel": 38.91999999999993,
+      "water": 10,
+      "food": 9,
+      "scrap": 25,
+      "van": 82,
+      "fatigue": 24.737499999999972,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 0,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "act": "1장",
+        "chapterId": "parents-diversion",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "phase": "남쪽 환승소의 오래된 운행표",
+        "why": "부모님이 함께 부산에 오지 못한 이유를 확인해야, 가족을 갈라놓은 명령이 사람을 어떻게 다뤘는지 알 수 있다.",
+        "next": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.",
+        "eyebrow": "메인 스토리 · 1장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다",
+            "state": "upcoming"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 4,
+          "need": 13,
+          "label": "4/13"
+        }
+      },
+      "navigation": {
+        "key": "main_parents-diversion",
+        "kind": "main",
+        "target": "gimcheon",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "action": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "entryReader": [
+      {
+        "kind": "narration",
+        "text": "농협 자재창고. 셔터가 굳게 닫혔지만 옆문이 열려 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "안엔 비료 포대, 농기구, 그리고— 종자 보관고. 밀봉된 씨앗 봉지가 종류별로 정리돼 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "먹을 건 아니지만, 씨앗은 미래다.",
+        "displayName": null
+      }
+    ],
+    "resultReader": [
+      {
+        "kind": "narration",
+        "text": "상추, 무, 배추, 콩, 옥수수… 종류별로 씨앗을 챙겼다. 정착할 땅만 있으면, 이걸로 밭을 일군다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "먹을 걸 줍는 것보다 이게 더 부자 된 기분이야.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "옆 선반에는 밀봉된 저장식과 농기구용 예비 부품도 남아 있었다. 지금 쓸 것은 따로 싣고, 씨앗 봉지는 젖지 않게 묶었다. 한 계절의 식량이 되려면 땅과 시간이 더 필요했다.",
+        "displayName": null
+      }
+    ],
+    "normalCheckpoint": "agent03/attempt01/normal-unpaid-36-ev_seed_warehouse.json"
+  }
+]

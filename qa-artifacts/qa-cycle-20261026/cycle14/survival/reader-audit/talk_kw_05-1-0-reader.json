@@ -1,0 +1,45 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "양파."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "네."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "물."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…물이 어디 갔지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "왼쪽에요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…아, 왼쪽. 내가 놓고 잊었군. 아무튼 물."
+  },
+  {
+    "kind": "narration",
+    "text": "둘이서 군대식 주방이 돌아갔다. 완성된 국을 맛본 강우가 짧게 말했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…합격."
+  },
+  {
+    "kind": "narration",
+    "text": "내 그릇에 건더기가 조금 더 들어왔다."
+  }
+]

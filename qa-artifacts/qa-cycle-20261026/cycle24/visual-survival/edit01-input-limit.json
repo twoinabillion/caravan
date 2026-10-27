@@ -1,0 +1,7 @@
+{
+  "key": "local-daegu-makchang-alley-v1",
+  "status": "tool-validation-error-no-image-produced",
+  "reason": "referenced_image_paths must contain at most 5 paths",
+  "submitted": 6,
+  "followup": "new generation with required canonical4 + passer_woman portrait5; target image omitted rather than canonical refs"
+}

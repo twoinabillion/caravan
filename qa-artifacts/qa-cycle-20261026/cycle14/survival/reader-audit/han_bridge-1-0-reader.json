@@ -1,0 +1,22 @@
+[
+  {
+    "kind": "narration",
+    "text": "강우가 안테나에 대대 깃발 조각을 묶었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "내가 겪은 추방 때 이 다리로 피난민이 건넜다. 우리 대대가 통과시킨 사람들이."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "그 길로 되돌아가는 거다. 이번엔 우리가."
+  },
+  {
+    "kind": "narration",
+    "text": "달구지가 다리 앞 관문 쪽으로 들어섰다. 가로등이 꺼지는 대신— 일제히 한 단계 밝아졌다. 경례처럼."
+  }
+]

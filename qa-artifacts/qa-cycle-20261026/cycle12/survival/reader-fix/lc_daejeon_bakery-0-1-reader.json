@@ -1,0 +1,13 @@
+[
+  {
+    "kind": "narration",
+    "text": "주방은 비어 있었다. 대신 셔터 분필 답글에 한 줄을 보탰다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "먹어본 적 있는 게 자랑이 되는 시대."
+  }
+]

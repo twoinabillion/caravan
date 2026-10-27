@@ -1,0 +1,43 @@
+[
+  {
+    "kind": "narration",
+    "text": "노인은 오랫동안 걸어서 전국을 돌고 있다고 했다.",
+    "timeKind": "memory",
+    "timeLabel": "지난밤 · 야영지"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_elder",
+    "name": "걷는 노인",
+    "text": "차가 있으면 빠르지. 근데 걸으면 다 보여."
+  },
+  {
+    "kind": "narration",
+    "text": "노인의 지도엔 우리가 모르는 표시가 가득했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "이 세모는 뭐예요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_elder",
+    "name": "걷는 노인",
+    "text": "그거는."
+  },
+  {
+    "kind": "narration",
+    "text": "노인이 지도를 돌려 봤다가 다시 돌렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_elder",
+    "name": "걷는 노인",
+    "text": "적어놓고 까먹었네. 아마 물일 거요. 아마."
+  },
+  {
+    "kind": "narration",
+    "text": "떠나기 전, 확실하다는 표시 하나를 우리 지도에 옮겨줬다."
+  }
+]

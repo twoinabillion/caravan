@@ -1,0 +1,10 @@
+[
+  {"id":"talk_jy_16","i":1,"o":0,"route":["jaeyi","jaeyi","me","jaeyi","jaeyi"]},
+  {"id":"talk_jy_08","i":0,"o":0,"route":["jaeyi","jaeyi","jaeyi"]},
+  {"id":"npc_drhan_2","i":0,"o":0,"route":["drhan","drhan","me","drhan"]},
+  {"id":"cleaners_recall","i":1,"o":0,"route":[{"who":"passer_man","name":"회수조 선두"},{"who":"passer_man","name":"회수조 선두"},{"who":"passer_man","name":"회수조 선두"}]},
+  {"id":"exp_ricemill","i":0,"o":0,"route":[{"kind":"record","who":"record","name":"내가 남긴 방앗간 쪽지","medium":"paper"}]},
+  {"id":"talk_jy_02","i":0,"o":0,"route":["jaeyi","jaeyi","jaeyi","jaeyi"]},
+  {"id":"talkr_pss_1","i":0,"o":0,"route":["parkss","parkss","parkss","me","parkss"]},
+  {"id":"seoul_base","i":1,"o":0,"route":[{"kind":"record","who":"record","name":"할아버지의 쪽지","medium":"paper"},{"kind":"record","who":"record","name":"할아버지의 쪽지","medium":"paper"}]}
+]

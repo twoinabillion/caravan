@@ -1,0 +1,51 @@
+[
+  {
+    "id": "meet_bus",
+    "collection": "events",
+    "path": [
+      "choices",
+      0,
+      "out",
+      0,
+      "fx",
+      "note",
+      "body"
+    ],
+    "old": "전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 식기 전 약을 옮겨야 한다.",
+    "new": "전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 따뜻해지기 전에 약을 옮겨야 한다."
+  },
+  {
+    "id": "story_family_principle",
+    "collection": "choiceMemories",
+    "path": [
+      0,
+      "lines",
+      0,
+      1
+    ],
+    "old": "예측은 명령이 아니다. 수처럼 외웠던 문장이 이제야 부모님 목소리로 들렸다.",
+    "new": "예측은 명령이 아니다. 외워 두기만 했던 문장이 이제야 부모님 목소리로 들렸다."
+  },
+  {
+    "id": "thread-massacre-kangwoo",
+    "collection": "chats",
+    "path": [
+      "lines",
+      1,
+      1
+    ],
+    "old": "어제도 그랬잖아요.",
+    "new": "문 쪽이 더 편해요?"
+  },
+  {
+    "id": "thread-massacre-kangwoo",
+    "collection": "chats",
+    "path": [
+      "lines",
+      7,
+      1
+    ],
+    "old": "나는 더 묻지 않고 문 반대편에 자리를 폈다. 가운데 통로는 비워 두었다.",
+    "new": "오늘 밤 내 자리는 문 반대편에 펴고, 가운데 통로는 비워 두기로 했다."
+  }
+]

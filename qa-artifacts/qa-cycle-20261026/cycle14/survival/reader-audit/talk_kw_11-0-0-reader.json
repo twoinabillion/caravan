@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "훈련 때 참호에서 비 맞으면, 세상에 나 혼자인 기분이 든다. 그게 싫었지."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…지금은요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "……."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 차 안을 둘러봤다. 빗소리 아래서 여기저기 부스럭거리는 기척이 났다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "지금은 비 오면… 시끄럽군. 좋은 뜻이다."
+  },
+  {
+    "kind": "narration",
+    "text": "지붕 두드리는 비가 그날은 북소리 같았다."
+  }
+]

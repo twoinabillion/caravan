@@ -1,0 +1,199 @@
+{
+  "ev_road_piano": {
+    "0.1": [
+      "party_first"
+    ]
+  },
+  "ev_fireflies": {
+    "entry": [
+      "party_first"
+    ],
+    "0.0": [
+      "party_first",
+      "me",
+      "party_first",
+      "party_first"
+    ],
+    "1.0": [
+      "eunsu"
+    ]
+  },
+  "ev_cosmos_road": {
+    "0.0": [
+      "party_first"
+    ],
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_observatory": {
+    "0.0": [
+      "party_first"
+    ]
+  },
+  "ev_arcade": {
+    "0.0": [
+      "party_first",
+      "me",
+      "party_first",
+      "me",
+      "party_first",
+      "me"
+    ],
+    "1.1": [
+      "me"
+    ]
+  },
+  "ev_autumn_valley": {
+    "0.0": [
+      "party_first"
+    ]
+  },
+  "ev_reed_sunset": {
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_dawn_mist": {
+    "0.0": [
+      "party_first"
+    ]
+  },
+  "ev_barley_field": {
+    "0.0": [
+      "party_first"
+    ],
+    "1.0": [
+      "me"
+    ]
+  },
+  "ev_ferris_wheel": {
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_meteor_shower": {
+    "entry": [
+      "party_first"
+    ],
+    "0.0": [
+      "party_first",
+      "me",
+      "party_first",
+      "me"
+    ],
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_pc_cafe": {
+    "2.0": [
+      "me"
+    ]
+  },
+  "ev_temple_bell": {
+    "0.0": [
+      "me",
+      "party_first",
+      "party_first"
+    ],
+    "1.0": [
+      "me"
+    ],
+    "0.1": [
+      {
+        "who": "passer_refugee",
+        "name": "생존자 가족"
+      }
+    ]
+  },
+  "ev_waterfall": {
+    "entry": [
+      "party_first"
+    ],
+    "0.0": [
+      "party_first"
+    ],
+    "1.0": []
+  },
+  "ev_laundromat": {
+    "0.0": [
+      "party_first"
+    ]
+  },
+  "ev_train_depot": {
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_frost_morning": {
+    "0.0": [
+      "party_first"
+    ],
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_rainbow": {
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_dolmen": {
+    "0.0": [
+      "party_first",
+      "me",
+      "party_first",
+      "me"
+    ]
+  },
+  "ev_milkyway": {
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_newsstand": {
+    "0.0": [
+      "party_first",
+      "me"
+    ],
+    "1.0": [
+      "party_first",
+      "me",
+      "party_first"
+    ]
+  },
+  "ev_snow_pines": {
+    "0.0": [
+      "party_first"
+    ],
+    "1.0": [
+      "party_first"
+    ]
+  },
+  "ev_near_seoul_sign": {
+    "0.0": [
+      "party_first",
+      "me",
+      "party_first",
+      "me"
+    ],
+    "1.0": [
+      "me",
+      "party_first",
+      "party_first",
+      "me",
+      "party_first",
+      "me",
+      "party_first"
+    ]
+  },
+  "ev_roadside_shrine": {
+    "0.0": [
+      "me"
+    ],
+    "1.0": [
+      "me"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "verifiedAt": "2026-10-26T02:44:39.902406+00:00",
+  "engineHash": "732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b",
+  "sourceFreeze": "cycle10/frozen-source.json",
+  "sourceUnchangedAfterTestsAndJourneys": true,
+  "tests": {
+    "command": "npm run test:source",
+    "pass": 1231,
+    "fail": 0,
+    "log": "source-tests-cycle10.log",
+    "exitCode": 0
+  },
+  "build": {
+    "command": "npm run build:html",
+    "exitCode": 0,
+    "log": "build-cycle10.log",
+    "htmlBytes": 106589943,
+    "htmlSha256": "6ac483664a694f8de8735471b4906ab1ea983d78a86eb02e86df5c67b8f0c4ce"
+  },
+  "quick": {
+    "command": "npm run verify:quick",
+    "exitCode": 0,
+    "log": "verify-quick-cycle10.log",
+    "events": 1039,
+    "nodes": 58,
+    "scenes": 416,
+    "sceneClassAssets": 611,
+    "portraits": 73,
+    "builtCanonicalMainPortraits": 7
+  },
+  "diffCheck": {
+    "command": "git diff --check",
+    "exitCode": 0
+  },
+  "livePreview": {
+    "url": "http://127.0.0.1:4319/",
+    "actualBrowser": "Chrome",
+    "restoredQaSave": "가온 DAY1 부산 09:45",
+    "latestApplyObserved": true,
+    "temporaryViewportReset": true,
+    "evidence": "browser/README.md",
+    "finalScreenshot": "browser/final-preview-cycle10.jpg",
+    "mode": "Live infinite resources; finite costs and survival verified in separate engine runs",
+    "personalSaveUsed": false
+  },
+  "warnings": [
+    "HTML exceeds existing 32 MB advisory",
+    "Two repeated-opening warnings retained; 20 text samples manually reviewed without a confirmed defect"
+  ],
+  "limits": [
+    "Not exhaustive branch/image/companion combination coverage",
+    "Bori nose/tag/family followups not naturally exercised in these cycles",
+    "No physical phone, listening, packaged installation, full performance or human-playtest certification"
+  ],
+  "release": {
+    "commit": false,
+    "push": false,
+    "deployment": false
+  },
+  "status": "Final cycle10 frozen source: all three new journeys reached main endings and completed read-through with no new confirmed or pending defects in those encountered paths.",
+  "finalRound": {
+    "cycle": 10,
+    "freshStarts": 3,
+    "mainEndings": 3,
+    "choices": 270,
+    "traceRecords": 1347,
+    "newConfirmed": 0,
+    "pendingCandidates": 0,
+    "scope": "Encountered engine paths and actual browser checks listed separately; not exhaustive catalogue coverage or human playtesting."
+  }
+}

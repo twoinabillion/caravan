@@ -1,0 +1,43 @@
+[
+  {
+    "kind": "narration",
+    "text": "몇 번 더 묻자 대답이 나왔다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "…트로트요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "네?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "트로트요. 관제사들 회식 가면 제가 분위기 담당이었어요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 헛기침을 했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "상상 안 되죠. 그게 포인트예요, 반전."
+  },
+  {
+    "kind": "narration",
+    "text": "아주 작게 한 소절. 정말로 잘했고, 정말로 트로트였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "노래방 다시 생기면 풀버전으로— 아니다. 그건 그때 가서 정할게요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 헤드폰을 도로 썼다."
+  }
+]

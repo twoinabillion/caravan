@@ -1,0 +1,159 @@
+{
+  "cycle": 1,
+  "owner": "qa_story_exploration",
+  "seed": 261003,
+  "attempts": 1,
+  "status": "ended",
+  "ending": "story_done",
+  "endingMethod": "core_transfer",
+  "day": 10,
+  "km": 1057,
+  "party": [
+    "minji",
+    "parkss"
+  ],
+  "bori": false,
+  "actions": 484,
+  "choices": 100,
+  "choiceProseReadCount": 100,
+  "choiceProseCharactersRead": 34971,
+  "novelHistoricalPairs": [
+    "loc_lake:1",
+    "pair_mj_pss_2:0",
+    "talk_pss_17:0"
+  ],
+  "originalSourceHash": "54419fafaea6eeff91ba98168ea51990d3856eff8b5c4043e295f307a8d94cdb",
+  "currentPostfixSourceManifest": "source-manifest-after.json",
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "ulsan",
+    "gyeongju",
+    "daegu",
+    "lake",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "sangju",
+    "mungyeong",
+    "chungju",
+    "cheongju",
+    "daejeon",
+    "yeongdong",
+    "muju",
+    "jeonju",
+    "muju",
+    "gimcheon",
+    "gumi",
+    "gimcheon",
+    "yeongdong",
+    "gimcheon",
+    "yeongdong",
+    "daejeon",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "observedActions": {
+    "new-game": 1,
+    "unpaid-entry-reload": 100,
+    "choice": 100,
+    "paid-result-reload": 100,
+    "explore": 22,
+    "travel": 31,
+    "drive": 59,
+    "trade": 28,
+    "work": 5,
+    "meet-recruit": 2,
+    "camp": 9,
+    "recruit-step": 5,
+    "accept-companion": 2,
+    "earned-perk": 4,
+    "talk": 10,
+    "buy-upgrade": 1,
+    "seoul-enter": 5
+  },
+  "findings": [
+    {
+      "id": "S1-time-lake",
+      "event": "loc_lake",
+      "severity": "medium",
+      "evidence": "natural n127 + four-time explicit fixtures",
+      "problem": "8-hour fishing from DAY3 18:18 ends DAY4 02:18 but narrates a departing morning.",
+      "fix": "Time-neutral 8-hour label/result/note; preserve duration and rewards."
+    },
+    {
+      "id": "S1-time-spring",
+      "event": "loc_spring",
+      "severity": "medium",
+      "evidence": "explicit fixture at09:00 + four-time regression only",
+      "problem": "Daylight bath claims night sky; solo visit invents surrounding chatter.",
+      "fix": "Time-neutral water/rest prose and note; effects preserved."
+    },
+    {
+      "id": "S1-time-lighthouse",
+      "event": "loc_lighthouse",
+      "severity": "medium",
+      "evidence": "explicit four-time fixtures, later naturally retested cycle2 n346",
+      "problem": "Any-time entry asks dinner and 8h result claims overnight/morning.",
+      "fix": "Meal-neutral entry, timed maintenance result, rewards/duration preserved."
+    },
+    {
+      "id": "S1-cost-maehwa",
+      "event": "loc_maehwa",
+      "choice": 1,
+      "severity": "medium",
+      "evidence": "explicit zero/exact/stale-stock fixture",
+      "problem": "Scrap3 deduction had no requirement and accepted scrap0.",
+      "fix": "req.scrap=3 and visible cost, keep existing free choice."
+    },
+    {
+      "id": "S1-cost-tunnelbook",
+      "event": "loc_tunnelbook",
+      "choice": 1,
+      "severity": "medium",
+      "evidence": "explicit zero/exact/stale-stock fixture",
+      "problem": "Food1 deduction had no requirement and accepted food0.",
+      "fix": "req.food=1 and visible cost, keep existing free choice."
+    },
+    {
+      "id": "S1-cost-filmset",
+      "event": "loc_filmset",
+      "choice": 0,
+      "severity": "medium",
+      "evidence": "explicit zero/exact/stale-stock fixture",
+      "problem": "Food1 deduction had no requirement and accepted food0.",
+      "fix": "req.food=1 and visible cost, keep existing free choice. Sleeping effect is survival agent ownership."
+    },
+    {
+      "id": "S1-art-parkss-task",
+      "event": "rq_parkss_task",
+      "severity": "medium",
+      "evidence": "natural n320 medicine result + actual old source-image inspection and registry resolution",
+      "problem": "Entry/default picture depicts a bus-side power repair while scene is bus-stop clinic before medicine/cooling choice.",
+      "fix": "Same registry key now points to unoccupied clinic-preparation detail with medicine bag/cooler/thermometer/bandages/3cups; source inspected, actual mobile crop pending."
+    }
+  ],
+  "readback": "All100selected entry/results read. Lake exact time contradiction confirmed; no other new selected-prose defect established. Actual method is core_transfer; policy destroy-regex did not find an option and fallback selected transfer.",
+  "boriCoverage": "No Bori recruitment or use.",
+  "tests": {
+    "before": "test-before.txt:6pass15fail",
+    "after": "test-after.txt:21pass0fail"
+  },
+  "imageEvidence": "image-generation-attempts.json and image-provenance.json; first child-clinic blocked, safe unpeopled alternative accepted after removing wrong Seoul landmark; original rejected source retained.",
+  "remainingGaps": [
+    "Actual mobile crop for new clinic table.",
+    "Finale v3 source art is correct; initial stale-v2 impression was a rejected false positive."
+  ],
+  "limits": [
+    "Source-informed policy; not a blind human playtest.",
+    "Real finite-resource engine with isolated localStorage and public newGame/choices/travel/work/trade/companion actions. No grants or state mutation in natural runs.",
+    "Node VM presentation/audio/timing/DOM stubs; no browser control, touch target, native audio, real mobile crop or performance coverage.",
+    "One natural journey per cycle, no failed journey or reroll; explicit fixtures and image-generation failures are separately preserved.",
+    "All selected entry and result prose was read; unchosen outcomes and all possible routes were not comprehensively covered.",
+    "Source changed between cycles; original run hashes and raw receipts are retained. New fixes are regression-tested, not retroactively applied to those historical runs."
+  ]
+}

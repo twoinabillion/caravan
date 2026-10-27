@@ -1,0 +1,23 @@
+{
+  "normalPublicReplay": true,
+  "cohortExcluded": true,
+  "originalCycle": 9,
+  "seed": 269003,
+  "originalTraceN": 107,
+  "originalEngineHash": "ca09c5e146f86e69583f89a241f4c0699138454c464ee469010dcbb876f77a6f",
+  "replayEngineHash": "732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b",
+  "completeObservationEqual": true,
+  "fields": {
+    "at": "sangju",
+    "day": 3,
+    "min": 510,
+    "party": [],
+    "fuel": 40.32605666666664,
+    "water": 12,
+    "food": 7,
+    "scrap": 90,
+    "van": 90,
+    "fatigue": 4.752
+  },
+  "exportPath": "qa-artifacts/qa-cycle-20261026/cycle11/story/browser-entry-replay/agent03/attempt01/normal-exp_fishfarm-entry.json"
+}

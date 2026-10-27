@@ -1,0 +1,16 @@
+{
+  "event": "seoul_ruins",
+  "key": "seoul-ruins-green-night-v1",
+  "mode": "edit",
+  "format": "place",
+  "time": "night",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nEdit target: image 1 is the approved DAY composition. Images 2–5 are style references only. Create its NIGHT lighting variant, single landscape16:9 large frame at least1536x864. Lock camera, lens, every building, Namsan hill and tower position, roadway, ordered objects, lane markings, street-sweeping robot shape and position, and every traffic signal position. Change ONLY the time-of-day lighting.\n\nIt is fully NIGHT: deep blue-black sky, no daylight clouds, sunset band, dawn glow, sun or large moon. Dim indirect night ambient reveals the empty managed buildings and distant Namsan silhouette. Restrained cool street illumination and the sweeper robot work lights provide visibility; tiny city/tower lights may be visible but no bright entertainment/neon atmosphere. Every traffic light that is lit remains GREEN, distinctly visible on both sides down the entire approach; no red or amber traffic lights anywhere. The wet/dull roadway may reflect the green and work lights softly; no new rain, snow or dense fog. Keep the wide open left travel lane completely empty. No cars, Dalguji, people, companions, hands or animals. No new signs, text, labels, reward, letter or selected action. Do not move or add props. Match the approved daytime frame precisely except nocturnal illumination.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-day-v1.png",
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false
+}

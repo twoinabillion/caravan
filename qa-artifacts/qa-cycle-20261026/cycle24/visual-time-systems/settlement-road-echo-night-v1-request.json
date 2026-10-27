@@ -1,0 +1,113 @@
+{
+  "key": "settlement-road-echo-night-v1",
+  "event": "settlement_road_echo",
+  "format": "place",
+  "timeVariant": "night",
+  "oldAsset": "assets/scenes/settlement-road-echo.webp",
+  "oldAssetSha256": "d0828ffa1397a07f561ea0d674dfbe1e56307105dc6091820e239b3047d7d116",
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nMake one cohesive16:9 cinematic PNG master at least1536x864. Preserve grounded realism, worn surfaces, restrained color and subtle grain: no softened beauty filter, glow wash, pastel paint, glossy advertising look or fantasy detail. Important face/object/action inside central80%width/82%height and legible at480/360px. No readable text, labels, logos, watermark, panel layout or UI. Canonical references guide style/world only, never import their collage, typography, unrequested companions or landmarks.\n\nEDIT the FIRST image into the same roadside reunion at true NIGHT. Preserve the mountain-road location, road alignment, canonical Dalguji proportions and cargo, anonymous local settlers and their loaded handcarts. They are ordinary settlement residents, NOT any named Caravan companions: keep faces small/anonymous, do not transform anyone into Minji, Kangwoo, Jaeyi, Leo, Eunsu or Parkss. Keep composition and carts; do not add people, money, food exchange, new rewards, completed road construction, fire, fighting or departure action. Replace every bright sunrise/day sky/ridge wash with dark night sky and shadowed ridges. Use restrained headlamp spill and existing warm vehicle-window light, allowing faces to remain silhouettes and cargo/carts to read on the dark roadside. No new lantern-bearing people, moon/stars, artificial neon or excessive bloom. This is a present reunion recalling earlier settlement work, and must fit assist, relay or pass choices without promising which is selected. References2–5 guide canonical vehicle/style only; no imported cast.\n\nAvoid: anime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/assets/scenes/settlement-road-echo.webp",
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false,
+  "references": [
+    {
+      "path": "assets/scenes/settlement-road-echo.webp",
+      "role": "edit-target",
+      "sha256": "d0828ffa1397a07f561ea0d674dfbe1e56307105dc6091820e239b3047d7d116"
+    },
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "role": "canonical-style",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "role": "canonical-style",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "promptSha256": "085be89554694ac3a4e231fc7217047f58e177714b315df918b66b09a9054013",
+  "baseExact": true,
+  "negativeExact": true,
+  "sourceEvidence": "../story/time-scene-design26/source-evidence.json",
+  "sourceEvent": {
+    "id": "settlement_road_echo",
+    "trace": 444,
+    "day": 10,
+    "min": 15,
+    "sceneKeys": [
+      "settlement-road-echo"
+    ],
+    "asset": "assets/scenes/settlement-road-echo.webp",
+    "normalBackup": "qa-artifacts/qa-cycle-20261026/cycle24/story/agent03/attempt01/normal-unpaid-442-settlement_road_echo.json",
+    "observation": "00:15 여파에 밝은 태양과 산등성이 원본.",
+    "definition": {
+      "id": "settlement_road_echo",
+      "type": "여파",
+      "w": 0,
+      "fixed": true,
+      "scene": "settlement-road-echo",
+      "title": "먼저 지나간 달구지의 흔적",
+      "text": "()=>D.roadEchoCopy(S,'text')",
+      "choices": [
+        {
+          "label": "차를 세우고 마지막 구간을 함께 정리한다",
+          "out": [
+            {
+              "p": 1,
+              "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다.'",
+              "fx": {
+                "impactEcho": "assist"
+              }
+            }
+          ]
+        },
+        {
+          "label": "무전과 지도로 다음 구간만 이어 준다",
+          "out": [
+            {
+              "p": 1,
+              "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다.'",
+              "fx": {
+                "impactEcho": "relay"
+              }
+            }
+          ]
+        },
+        {
+          "label": "멈추지 않고 북쪽으로 계속 간다",
+          "out": [
+            {
+              "p": 1,
+              "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다.'",
+              "fx": {
+                "impactEcho": "pass"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "sceneMetadata": {
+      "eventScene": "settlement-road-echo",
+      "turnScenes": null,
+      "stages": null,
+      "choiceScenes": null
+    }
+  }
+}

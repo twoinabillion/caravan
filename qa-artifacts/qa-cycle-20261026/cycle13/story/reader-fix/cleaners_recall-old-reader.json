@@ -1,0 +1,36 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "회수조 선두",
+    "text": "본인 의사는 확인하셨습니까."
+  },
+  {
+    "kind": "narration",
+    "text": "남자가 되물었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "회수조 선두",
+    "text": "저희는 매일 확인합니다. 답이 바뀔 때까지."
+  },
+  {
+    "kind": "narration",
+    "text": "그 말이 이 무리의 전부였다. 매일 묻는 것. 지치게 하는 것. 그것을 정성이라 부르는 것."
+  },
+  {
+    "kind": "narration",
+    "text": "우리가 창문을 올리지 않고 버티자, 회수조는"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "붙잡힌 여자",
+    "text": "오늘은 여기까지"
+  },
+  {
+    "kind": "narration",
+    "text": "라며 물러났다. 내일 또 올 것이다. 여자는 우리 차를 오래 봤지만, 타겠다고는 하지 않았다."
+  }
+]

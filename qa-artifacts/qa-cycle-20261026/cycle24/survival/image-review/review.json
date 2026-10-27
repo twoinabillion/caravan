@@ -1,0 +1,64 @@
+{
+  "uniqueFiles": 96,
+  "sheetsViewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "fullOriginalsViewed": [
+    {
+      "index": 13,
+      "file": "assets/scenes/event-explore-farm.webp",
+      "sha256": "ad1de3ff3365aa1e8ccc11d79e17f2bbbb6e9a555c63ff905758a494144baf45"
+    },
+    {
+      "index": 37,
+      "file": "assets/scenes/event-meet-trader.webp",
+      "sha256": "f60c1055ff009ec0c20cce325c9d38ca6346e95cedb73776df6d29ecf66d6681"
+    },
+    {
+      "index": 81,
+      "file": "assets/scenes/event-explore-transit.webp",
+      "sha256": "a4cc5422becec36ae60b7b9124c029824b9987ad46d401007af962b036fab673"
+    },
+    {
+      "index": 90,
+      "file": "assets/scenes/seoul-ruins.webp",
+      "sha256": "868d134ed182fcfa88fd91532f0e720ac88c2f7d8fe5cb263f293e0e74bfce29"
+    }
+  ],
+  "actualBrowser": false,
+  "scope": "All selected unique local raster files viewed in 400x225 contact tiles, four suspect originals expanded; not browser/mobile CSS crop.",
+  "newIssues": [
+    "S24-V01",
+    "S24-V02",
+    "S24-V03",
+    "S24-C02"
+  ],
+  "knownDeferred": [
+    {
+      "eventId": "lc_daejeon_bakery",
+      "file": "assets/scenes/event-explore-retail.webp"
+    },
+    {
+      "eventId": "cleaners_recall",
+      "file": "assets/scenes/event-ai-surveillance.webp"
+    },
+    {
+      "eventId": "seoul_square",
+      "file": "assets/scenes/seoul-square.webp"
+    },
+    {
+      "eventId": "seoul_base",
+      "file": "assets/scenes/seoul-base.webp"
+    }
+  ],
+  "postmanAgainNotOccurred": true,
+  "canonicalRecruitGuests": "Minji/Kangwoo/Parkss guest portraits inspected as current invited passengers; not mislabelled unacquired companions.",
+  "remaining": "Gallery and in-game crop still root pending; staged22/23 art is unwired."
+}

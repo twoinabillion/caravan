@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "narration",
+    "text": "물 한 통을 수레에 실어드렸다. 스님은 합장으로 답했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "가시는 길 북쪽이면— 마음 단단히 잡수시고."
+  },
+  {
+    "kind": "narration",
+    "text": "스님의 축원은 실용적이었다."
+  }
+]

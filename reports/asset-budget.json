@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-18T07:00:35.088Z",
+  "generatedAt": "2026-10-26T12:13:06.620Z",
   "html": {
-    "bytes": 106293067,
+    "bytes": 113875041,
     "warnBytes": 32000000,
     "maxBytes": 120000000
   },
   "literalPool": {
-    "assets": 4,
-    "savedBytes": 229729
+    "assets": 5,
+    "savedBytes": 315331
   },
   "losslessDelivery": {
-    "assets": 601,
-    "savedBytes": 4012146
+    "assets": 650,
+    "savedBytes": 4510068
   },
   "embedded": {
-    "files": 844,
-    "bytes": 76384969,
+    "files": 893,
+    "bytes": 82373295,
     "categories": {
       "audio": {
         "files": 45,
@@ -28,9 +28,9 @@
         "encodedBytes": 37203340
       },
       "scene": {
-        "files": 493,
-        "bytes": 34536989,
-        "encodedBytes": 46050012
+        "files": 541,
+        "bytes": 40516333,
+        "encodedBytes": 54022520
       },
       "other": {
         "files": 78,
@@ -38,9 +38,9 @@
         "encodedBytes": 4262172
       },
       "portrait": {
-        "files": 49,
-        "bytes": 1038443,
-        "encodedBytes": 1384668
+        "files": 50,
+        "bytes": 1047425,
+        "encodedBytes": 1396644
       }
     }
   },

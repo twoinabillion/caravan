@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "하나면 됩니다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "저도 하나면 돼요. 그러니까 하나씩."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…하나면 된다니까."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "네. 그래서 하나 드리는 거예요."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 셈이 안 맞는다는 얼굴로 3초쯤 별사탕을 보다가, 입에 넣었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "……답니다."
+  },
+  {
+    "kind": "narration",
+    "text": "그 한마디가 강우식 만찬 소감이었다."
+  }
+]

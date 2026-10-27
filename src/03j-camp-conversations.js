@@ -170,6 +170,9 @@ D.campConversationData=record=>{
   return {...current,choices:base.choices.map(choice=>{
     const visits=record.choiceVisits[choice.id]||0;
     const branch=visits>=2?base.settled:visits===1?base.followup:null;
-    return {...choice,...branch?.choices[choice.id]};
+    const next={...choice,...branch?.choices[choice.id]};
+    if(record.cid==='minji'&&record.previousChoiceId==='sort'&&choice.id==='listen'&&!visits)
+      next.label='퓨즈 정리 대신 점검 덮개 소리를 함께 듣는다';
+    return next;
   })};
 };

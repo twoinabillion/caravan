@@ -1,0 +1,75 @@
+{
+  "classification": "approved-post-cycle16-repair",
+  "cohortExcluded": true,
+  "productionEditingComplete": true,
+  "frozenBaseline": {
+    "cycle": 16,
+    "engineHash": "1911ad89b75afe51e44e8c8856bd7d6b7a16f070c0d717214e5230be996df9ab",
+    "snapshot": "../source/src"
+  },
+  "currentSharedSourceHash": "d3ce6f5e0bf34349dc9fa9aeed3941b8f950c361caed41805830c79d177f8d5d",
+  "hashAlgorithm": "UTF8 content in frozen engineFiles order, joined with one LF retaining existing source newlines; no filenames",
+  "changedProductionOwned": [
+    "src/03-data.js:choiceMemories.story_family_principle[0].lines[0][1]",
+    "src/03-data.js:meet_bus[0].out[0].fx.note.body",
+    "src/03i-story-expansion.js:thread-massacre-kangwoo.lines[1][1]",
+    "src/03i-story-expansion.js:thread-massacre-kangwoo.lines[7][1]"
+  ],
+  "scope": [
+    {
+      "id": "S16-01",
+      "classification": "natural-confirmed",
+      "evidence": "attempt01/player43-trace.json n164 and entry-162-meet_bus-export.json",
+      "change": "냉장 운반을 지급 노트에도 일치시킴"
+    },
+    {
+      "id": "C16-01",
+      "classification": "natural-queue-observation-plus-isolated-engine-confirmation",
+      "evidence": "attempt01/player43-trace.json n148; repairs17/old-chat-picked.json",
+      "change": "주행에서도 오늘 밤의 자리 약속으로 해석되며, 전날 행동을 새로 단정하지 않음",
+      "limit": "Natural queue was captured; actual browser paint was not observed. Same-day recruitment fixture uses actual doRecruit/pickChat/startTravel in isolated VM, not a new natural journey."
+    },
+    {
+      "id": "C16-02",
+      "classification": "approved-clarity-only",
+      "evidence": "attempt01/player43-trace.json n246",
+      "change": "외워 두기만 했던 문장으로 표현 명료화",
+      "naturalBugCountIncrement": 0
+    }
+  ],
+  "verification": {
+    "tests": {
+      "file": "tests/test_qa_cycle16_survival_copy.cjs",
+      "red": {
+        "pass": 5,
+        "fail": 5
+      },
+      "green": {
+        "pass": 10,
+        "fail": 0
+      }
+    },
+    "dialogueLint": {
+      "errors": 0,
+      "lines": 5803,
+      "existingRepetitionCandidates": 2
+    },
+    "syntaxAndDiffCheck": "passed",
+    "mechanicalEquality": "Entire three owned definitions match frozen16 after restoring exactly four approved text fields; choices, probabilities, recruitment, echo distances, minBond, once and all other fields are unchanged.",
+    "legacy": "Old paid note, receipt text, saved-reader and text-only receipt modes; old echoLines snapshot and one-time echo; old chat once stamp are preserved."
+  },
+  "limits": [
+    "No browser/crop or onscreen chat-paint verification is claimed.",
+    "Legacy echo memory lacking echoLines still falls back to current source by existing engine design; no migration added.",
+    "Full source tests/build and exact corpus projection are root/story owned. Current shared hash includes other approved agent repairs; it is not yet a cycle17 freeze."
+  ],
+  "newJourneyCount": 0,
+  "independentIntegration": {
+    "reportedBy": "qa_story_exploration",
+    "exactCopyFields": 4,
+    "combinedPass": 109,
+    "combinedFail": 0,
+    "dialogueErrors": 0,
+    "evidence": "Parent-thread collaborator report; not rerun by survival."
+  }
+}

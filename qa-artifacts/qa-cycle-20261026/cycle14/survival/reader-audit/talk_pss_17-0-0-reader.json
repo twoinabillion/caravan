@@ -1,0 +1,43 @@
+[
+  {
+    "kind": "narration",
+    "text": "고물 틈에서 작은 종을 찾아 조수석 문에 달았다. 문 열 때마다 딸랑—"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…소리가 좀 얇지 않나."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 문을 세 번 여닫았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "우리 건 더 낮았는데. 놋쇠라서."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "떼어드릴까요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "아니. 놔둬."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 또 한 번 여닫았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…이제 이 차가 약국이네. 왕진 전문."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생은 한 번 더 문을 여닫았다. 종이 울릴 때마다 문 쪽을 돌아봤다."
+  }
+]

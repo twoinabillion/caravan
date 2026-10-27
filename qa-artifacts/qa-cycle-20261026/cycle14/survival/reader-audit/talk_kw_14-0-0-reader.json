@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…자가 평가로는 호전."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 입꼬리를 올려 보였다. 0.5도쯤."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "많이 늘었네요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…놀리는 건가."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "아뇨, 진심…인데 반쯤은 놀리는 거예요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "……솔직하군."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 거울을 접었다. 부끄러움의 표현이라는 걸 이제는 안다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…목표는 서울까지 한 번. 제대로."
+  },
+  {
+    "kind": "narration",
+    "text": "서울행 목표 목록에 웃음 한 번이 공식 등재됐다."
+  }
+]

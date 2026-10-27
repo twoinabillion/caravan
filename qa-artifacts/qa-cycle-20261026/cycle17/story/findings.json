@@ -1,0 +1,586 @@
+[
+  {
+    "id": "S17-01",
+    "n": 403,
+    "event": "comp_hometown",
+    "choice": 0,
+    "kind": "reader-identity",
+    "status": "confirmed",
+    "issue": "Crew-only map quiz uses external passer_worker/??? in six entry/result turns.",
+    "reason": "Event is type 동행 with minParty2. Actual party Minji/Kangwoo, no outside worker introduced. Entry and result each assign three of four quotations to passer_worker. Roster-dependent party roles are appropriate; ownership transferred to survival for narrow crew-event audit.",
+    "entryText": "조수석에서 낡은 전국 지도를 펴 들고 퀴즈가 시작됐다.\n\n\"가본 데 나오면 손. 거짓말하면 저녁 굶기.\"\n\n\"휴게소도 가본 걸로 쳐요?\"\n\n\"휴게소는 안 쳐.\"\n\n\"그럼 대전은 아무도 못 가본 게 되는데.\"\n\n손이 제일 많이 올라간 곳은 결국 다들 수학여행으로 스친 경주였다.",
+    "resultText": "지도 위 손가락들이 각자의 옛날을 짚었다. 이모네 동네, 군대, 첫 출장, 수학여행.\n\n\"서울 가본 사람?\" 손이 반만 올라갔다.\n\n\"반은 뭐예요, 반은.\"\n\n\"들었다가 말았어.\"\n\n\"곧 다 가보겠네.\" 누가 말했고, 지도가 조용히 접혔다.",
+    "state": {
+      "at": "suwon",
+      "location": "수원 성곽 공동체",
+      "day": 9,
+      "min": 390,
+      "km": 619,
+      "driving": null,
+      "fuel": 28.611057933333534,
+      "water": 25,
+      "food": 10,
+      "scrap": 124,
+      "van": 100,
+      "fatigue": 0,
+      "party": [
+        "minji",
+        "kangwoo"
+      ],
+      "items": {
+        "부품": 8,
+        "의약품": 2,
+        "탄약": 0,
+        "남산행 편지": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 8,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 100,
+          "bond": 45,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 100,
+          "bond": 19,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "편지 다발",
+          "description": "\"편지 다발, 밀양 장터까지 부탁드려도 될까요? 사례는 고철 10.\"",
+          "from": "daejeon",
+          "to": "miryang",
+          "due": 11,
+          "kind": "deliver",
+          "need": null,
+          "reward": 10
+        },
+        {
+          "index": 1,
+          "label": "혼례 떡",
+          "description": "\"급합니다. 혼례 떡 — 전주 서문 시장까지 이틀 안에. 사례는 고철 18. 서둘러 주세요.\"",
+          "from": "daejeon",
+          "to": "jeonju",
+          "due": 9,
+          "kind": "express",
+          "need": null,
+          "reward": 18
+        }
+      ],
+      "boardAt": "daejeon",
+      "boardDay": 7,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "entryReader": [
+      {
+        "kind": "narration",
+        "text": "조수석에서 낡은 전국 지도를 펴 들고 퀴즈가 시작됐다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "가본 데 나오면 손. 거짓말하면 저녁 굶기.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "휴게소도 가본 걸로 쳐요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "휴게소는 안 쳐.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그럼 대전은 아무도 못 가본 게 되는데.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "손이 제일 많이 올라간 곳은 결국 다들 수학여행으로 스친 경주였다.",
+        "displayName": null
+      }
+    ],
+    "resultReader": [
+      {
+        "kind": "narration",
+        "text": "지도 위 손가락들이 각자의 옛날을 짚었다. 이모네 동네, 군대, 첫 출장, 수학여행.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "서울 가본 사람?",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "손이 반만 올라갔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "반은 뭐예요, 반은.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "들었다가 말았어.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "곧 다 가보겠네.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "누가 말했고, 지도가 조용히 접혔다.",
+        "displayName": null
+      }
+    ],
+    "sceneKeys": [
+      "event-companion-van"
+    ],
+    "normalCheckpoint": "agent03/attempt01/normal-unpaid-401-comp_hometown.json"
+  },
+  {
+    "id": "S17-V01",
+    "n": 403,
+    "event": "comp_hometown",
+    "choice": 0,
+    "kind": "scene-context",
+    "status": "confirmed-source-raster",
+    "issue": "Crew map-quiz art includes unrecruited Park in a Minji/Kangwoo journey.",
+    "reason": "event-companion-van → __SCENE_EVENT_COMPANION_VAN__ → assets/scenes/event-companion-van.webp, confirmed WebP-first build resolver. Gray-haired bespectacled man in gray vest matches official parkss portrait. Other background passenger not assigned a name. Raster inspected; actual UI crop not claimed.",
+    "entryText": "조수석에서 낡은 전국 지도를 펴 들고 퀴즈가 시작됐다.\n\n\"가본 데 나오면 손. 거짓말하면 저녁 굶기.\"\n\n\"휴게소도 가본 걸로 쳐요?\"\n\n\"휴게소는 안 쳐.\"\n\n\"그럼 대전은 아무도 못 가본 게 되는데.\"\n\n손이 제일 많이 올라간 곳은 결국 다들 수학여행으로 스친 경주였다.",
+    "resultText": "지도 위 손가락들이 각자의 옛날을 짚었다. 이모네 동네, 군대, 첫 출장, 수학여행.\n\n\"서울 가본 사람?\" 손이 반만 올라갔다.\n\n\"반은 뭐예요, 반은.\"\n\n\"들었다가 말았어.\"\n\n\"곧 다 가보겠네.\" 누가 말했고, 지도가 조용히 접혔다.",
+    "state": {
+      "at": "suwon",
+      "location": "수원 성곽 공동체",
+      "day": 9,
+      "min": 390,
+      "km": 619,
+      "driving": null,
+      "fuel": 28.611057933333534,
+      "water": 25,
+      "food": 10,
+      "scrap": 124,
+      "van": 100,
+      "fatigue": 0,
+      "party": [
+        "minji",
+        "kangwoo"
+      ],
+      "items": {
+        "부품": 8,
+        "의약품": 2,
+        "탄약": 0,
+        "남산행 편지": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 8,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 100,
+          "bond": 45,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 100,
+          "bond": 19,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "편지 다발",
+          "description": "\"편지 다발, 밀양 장터까지 부탁드려도 될까요? 사례는 고철 10.\"",
+          "from": "daejeon",
+          "to": "miryang",
+          "due": 11,
+          "kind": "deliver",
+          "need": null,
+          "reward": 10
+        },
+        {
+          "index": 1,
+          "label": "혼례 떡",
+          "description": "\"급합니다. 혼례 떡 — 전주 서문 시장까지 이틀 안에. 사례는 고철 18. 서둘러 주세요.\"",
+          "from": "daejeon",
+          "to": "jeonju",
+          "due": 9,
+          "kind": "express",
+          "need": null,
+          "reward": 18
+        }
+      ],
+      "boardAt": "daejeon",
+      "boardDay": 7,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "entryReader": [
+      {
+        "kind": "narration",
+        "text": "조수석에서 낡은 전국 지도를 펴 들고 퀴즈가 시작됐다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "가본 데 나오면 손. 거짓말하면 저녁 굶기.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "휴게소도 가본 걸로 쳐요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "휴게소는 안 쳐.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그럼 대전은 아무도 못 가본 게 되는데.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "손이 제일 많이 올라간 곳은 결국 다들 수학여행으로 스친 경주였다.",
+        "displayName": null
+      }
+    ],
+    "resultReader": [
+      {
+        "kind": "narration",
+        "text": "지도 위 손가락들이 각자의 옛날을 짚었다. 이모네 동네, 군대, 첫 출장, 수학여행.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "서울 가본 사람?",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "손이 반만 올라갔다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "반은 뭐예요, 반은.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "들었다가 말았어.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_worker",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "곧 다 가보겠네.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "누가 말했고, 지도가 조용히 접혔다.",
+        "displayName": null
+      }
+    ],
+    "sceneKeys": [
+      "event-companion-van"
+    ],
+    "normalCheckpoint": "agent03/attempt01/normal-unpaid-401-comp_hometown.json"
+  }
+]

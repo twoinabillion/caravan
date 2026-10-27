@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "박일병. 스물둘. 겁이 많았다. 겁이 많아서 제일 꼼꼼했다."
+  },
+  {
+    "kind": "narration",
+    "text": "강우는 창밖을 보며 말을 이었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "제3방어선에서 내가 박 일병에게 반대쪽을 맡겼다. 판단은 정확했다. 결과가 틀렸을 뿐."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "판단이 맞았는데 결과가 틀리면, 누구 잘못입니까."
+  },
+  {
+    "kind": "narration",
+    "text": "무슨 말이든 해야 할 것 같아 입을 뗐다가, 아무 말도 고르지 못했다. 강우가 먼저 군번줄을 쥐었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "됐어. 서울 가서 걔 부모님께 돌려드리고, 그때 다시 묻지."
+  }
+]

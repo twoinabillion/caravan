@@ -83,6 +83,21 @@ G.resolveMainEvidenceChain = id=>{
   const row=G.mainEvidenceRows().find(row=>row.event===source);
   return id===source&&S.at===row?.target?source:null;
 };
+// Pure reading guidance: an opened chain is not another paid search.
+G.mainEvidenceReading = ()=>{
+  if(!S||S.flags.story_done||G.openingPending()) return null;
+  const pending=S.pendingPresentation;
+  let id=pending?.eventId||S._chain;
+  if(pending?.phase==='result'){
+    const event=G.presentationEvent(pending.eventId);
+    id=event?.choices[pending.choiceIndex]?.out[pending.outcomeIndex]?.fx?.chain||S._chain;
+  }
+  if(!id) return null;
+  const source=G.mainEvidenceSourceId(id);
+  if(!D.mainEvidenceCompletion[source]&&!G.mainEvidenceRows().some(row=>row.event===source)) return null;
+  id=G.resolveMainEvidenceChain(id);
+  return id?{event:id,target:S.at||S.driving?.to,hint:'열어 둔 기록을 계속 읽는다.',cost:'계속 읽기'}:null;
+};
 G.mainEvidenceOpportunity = ()=>{
   if(!S||S.flags.story_done||G.openingPending()) return null;
   const row=G.mainEvidenceRows().find(row=>!row.done);
@@ -119,15 +134,15 @@ G.departureSteps = ()=>{
     {id:'witness',done:witnessed>=D.seoulPillars.관계,label:'같은 이송표를 받은 사람들의 이야기를 모은다',detail:witnessed>=D.seoulPillars.관계?'이송을 겪은 사람들이 확인한 증언을 보관했다':`같은 이송표를 받은 사람들의 이야기를 모은다 · ${witnessed}/${D.seoulPillars.관계}`},
     {id:'command',done:D.familyOrderKnown(S)&&!G.pillarUnmet('진실'),label:'증언과 명령 원본을 대조한다',detail:'발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다'},
     {id:'father',done:!!S.flags.father_fate_known,label:'아빠의 마지막 남산 기록을 확인한다',detail:S.flags.father_fate_known?'아빠는 의료와 급수 회선을 지키다 남산에서 사망했다':'실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다'},
-    {id:'mother',done:!!S.flags.mother_reunited&&!!S.flags.mother_broadcast_ready,label:'엄마의 최근 신호를 따라간다',detail:S.flags.mother_reunited?(S.flags.mother_broadcast_ready?'수원 외곽 무전 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'수원 외곽 무전 중계소에서 엄마와 재회했다. 아직 이야기를 더 들어야 한다'):'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다'},
-    {id:'relay',done:G.pillars().세계.have>=D.seoulPillars.세계,label:'남산 진입과 연락을 맡을 거점의 응답을 받는다',detail:'수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다'},
+    {id:'mother',done:!!S.flags.mother_reunited&&!!S.flags.mother_broadcast_ready,label:S.flags.parents_recent_signal||S.flags.mother_reunited?'엄마의 최근 신호를 따라간다':'엄마의 행방을 찾는다',detail:S.flags.mother_reunited?(S.flags.mother_broadcast_ready?'수원 외곽 무전 중계소에서 엄마와 재회했고 송출 지원을 약속받았다':'수원 외곽 무전 중계소에서 엄마와 재회했다. 아직 이야기를 더 들어야 한다'):S.flags.parents_recent_signal?'북부 연대망을 따라 며칠 전까지 이어진 무전 표식을 찾는다':'북부 기록망에서 엄마의 이름이 남은 기록을 찾는다'},
+    {id:'relay',done:G.pillars().세계.have>=D.seoulPillars.세계,label:'남산 진입과 연락을 맡을 거점의 응답을 받는다',detail:G.pillars().세계.have>=D.seoulPillars.세계?(S.flags.main_relay_confirmed?'수원 외곽 무전 중계소에서 거점의 응답과 맡을 일을 확인했다':`길에서 직접 접촉한 ${G.coreLinkedCells().map(cell=>cell.name).join('·')}와 연락망을 이었다`):'수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다'},
     {id:'records',done:!G.pillarUnmet('유산'),label:'남산에 가져갈 실물 기록을 보관한다',detail:'검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다'},
     {id:'seoul',done:!!S.flags.story_done,label:'남산 코어에서 강제 이송 명령을 끊는다',detail:S.flags.story_done?'제7 잔류구역을 향하던 강제 이송을 끝냈다':'필요한 기록과 사람을 모은 뒤 남산 코어에서 명령을 멈춘다. 날짜 제한은 없다'}
   ];
-  const next=G.mainEvidenceOpportunity();
+  const next=G.mainEvidenceOpportunity(),reading=G.mainEvidenceReading();
   const evidence=G.mainEvidenceRows();
   return rows.map(row=>{
     const fact=evidence.find(item=>item.id===row.id);
-    return {...row,...(fact?{done:fact.done}:{}),...(!row.done&&next&&row.id===next.id?{detail:next.hint}:{})};
+    return {...row,...(fact?{done:fact.done}:{}),...(!row.done&&next&&row.id===next.id?{detail:reading?.hint||next.hint}:{})};
   });
 };

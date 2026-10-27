@@ -1,0 +1,37 @@
+{
+  "cohortExcluded": true,
+  "classification": "static-derived-distance-repair",
+  "naturalCount": 0,
+  "confirmedNewDistanceIssue": 1,
+  "event": "ev_near_seoul_sign",
+  "maxRemain": 9,
+  "metric": "existing rounded G.remainKm()",
+  "productionFiles": [
+    "src/03-data.js",
+    "src/04h-engine-presentation.js"
+  ],
+  "tests": {
+    "new": 9,
+    "existingSkyline": 5,
+    "combined": 14,
+    "priorDefinitionProjection": 1
+  },
+  "legacy": {
+    "unpaid": 2,
+    "paid": 2,
+    "paidModes": [
+      "reader",
+      "text-only"
+    ]
+  },
+  "preserved": [
+    "text",
+    "notes",
+    "fx",
+    "probability",
+    "indices",
+    "old-paid-receipts",
+    "seoul_seen"
+  ],
+  "productionEditingComplete": true
+}

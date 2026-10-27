@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…해봐라."
+  },
+  {
+    "kind": "narration",
+    "text": "오늘 본 것 두 개를 보고했다. 코스모스 군락과 구름 모양."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…접수."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 진지하게 접수했다. 위협 없는 보고도 보고로 쳐주는 상관이다."
+  }
+]

@@ -1,0 +1,601 @@
+{
+  "cycle": 11,
+  "agent": "systems",
+  "participant": "player02",
+  "seed": 271002,
+  "evidenceClass": "Production engine VM and extracted unchanged public UI callbacks; finite resources, no browser/input/audio claim",
+  "engineSourceHash": "732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b",
+  "sourceUnchangedAcrossJourney": true,
+  "sourceEvidence": "source-start.json + source-end-full.json (all 40 src files, before approved repairs)",
+  "freshStarts": 1,
+  "normalSaveResumptions": 0,
+  "sameSeedFreshPolicyRetries": 0,
+  "completedJourneys": 1,
+  "terminalJourneys": 1,
+  "policyStops": 0,
+  "engineDeaths": 0,
+  "engineFailures": 0,
+  "fixtureJourneys": 0,
+  "productionChangesDuringJourney": [],
+  "result": {
+    "ending": "story_done",
+    "method": "core_transfer",
+    "ended": true,
+    "storyDone": true,
+    "session1End": true,
+    "day": 22,
+    "km": 577,
+    "actualCompanions": [
+      "jaeyi",
+      "eunsu"
+    ],
+    "bori": false,
+    "finalState": {
+      "at": "seoul",
+      "location": "서울 — 남산",
+      "day": 22,
+      "min": 1390,
+      "km": 577,
+      "driving": null,
+      "fuel": 16.628569133333556,
+      "water": 11,
+      "food": 15,
+      "scrap": 224,
+      "van": 100,
+      "vanMax": 100,
+      "fuelMax": 70,
+      "foodMax": 24,
+      "waterMax": 28,
+      "fatigue": 55.53268000000003,
+      "dog": false,
+      "hunger": 0,
+      "thirst": 0,
+      "injuries": {},
+      "party": [
+        "jaeyi",
+        "eunsu"
+      ],
+      "items": {
+        "부품": 7,
+        "의약품": 1,
+        "탄약": 2,
+        "남산행 편지": 1,
+        "교란 장치": 1,
+        "부모님의 검증키": 1,
+        "쇠파이프": 1,
+        "석궁": 1,
+        "볼트": 3,
+        "화염병": 2
+      },
+      "weather": "clear",
+      "campNight": 21,
+      "campPlan": {},
+      "campParticipants": [
+        "jaeyi",
+        "eunsu"
+      ],
+      "campConversation": null,
+      "crew": {
+        "jaeyi": {
+          "name": "재이",
+          "mood": 100,
+          "bond": 22,
+          "injury": null
+        },
+        "eunsu": {
+          "name": "은수",
+          "mood": 100,
+          "bond": 6,
+          "injury": null
+        }
+      },
+      "up": {
+        "antenna": true,
+        "awning": true,
+        "sidebox": true,
+        "armory": true
+      },
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": true,
+      "endKind": "story_done",
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "completed",
+        "tracked": true,
+        "recovery": "완료한 본편 기록은 임무 장부의 완료 탭에서 다시 볼 수 있다.",
+        "act": "종장",
+        "chapterId": "ending",
+        "eyebrow": "메인 스토리 · 종장",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "phase": "남산 코어 · 여정 기록",
+        "why": "부산에서 시작한 질문에 답했고, 그 답이 앞으로 누구에게 남을지도 결정했다.",
+        "next": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다.",
+        "expected": "끝난 명령과 아직 남아 있는 상위 명령망의 흔적을 확인한다.",
+        "steps": [
+          {
+            "id": "ending",
+            "label": "남산 코어에서 최종 결정을 내렸다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      "navigation": {
+        "key": "main_ending",
+        "kind": "main",
+        "target": "seoul",
+        "title": "강제 이송 명령에 마지막 결론을 내렸다",
+        "action": "이번 여정에서 내린 선택과 함께한 사람들의 기록을 확인한다."
+      }
+    }
+  },
+  "totals": {
+    "choices": 82,
+    "traceRecords": 461,
+    "publicActionsExcludingChoicesReloadInitialization": 214,
+    "knownUiDisabledRejectedRecruitApiCalls": 0,
+    "actionCounts": {
+      "new-game": 1,
+      "unpaid-entry-reload": 82,
+      "choice": 82,
+      "paid-result-reload": 82,
+      "explore": 32,
+      "travel": 17,
+      "drive": 35,
+      "camp-meal": 9,
+      "camp": 21,
+      "board-open": 6,
+      "npc-rumor": 15,
+      "work": 11,
+      "buy-upgrade": 4,
+      "trade": 37,
+      "meet-recruit": 2,
+      "recruit-step": 5,
+      "accept-companion": 2,
+      "earned-perk": 3,
+      "walkfuel": 1,
+      "accept-quest": 2,
+      "turnin-quest": 2,
+      "craft": 5,
+      "seoul-enter": 5
+    },
+    "entryReload": 82,
+    "paidResultReload": 82,
+    "reloadLoaded": 164,
+    "reloadFailed": 0,
+    "paidReapplied": 0,
+    "novelChoicePairs": 12
+  },
+  "features": {
+    "successfulRecruitments": [
+      {
+        "n": 194,
+        "id": "jaeyi",
+        "at": "muju",
+        "day": 7,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "fuelDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "n": 347,
+        "id": "eunsu",
+        "at": "cheonan",
+        "day": 21,
+        "elapsedMinutes": 0,
+        "scrapDelta": 0,
+        "fuelDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      }
+    ],
+    "upgrades": [
+      {
+        "n": 60,
+        "id": "antenna",
+        "at": "miryang",
+        "day": 2,
+        "elapsedMinutes": 200,
+        "scrapDelta": -17,
+        "fuelDelta": 0,
+        "partDelta": -1,
+        "ok": true
+      },
+      {
+        "n": 61,
+        "id": "awning",
+        "at": "miryang",
+        "day": 2,
+        "elapsedMinutes": 200,
+        "scrapDelta": -16,
+        "fuelDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "n": 62,
+        "id": "sidebox",
+        "at": "miryang",
+        "day": 2,
+        "elapsedMinutes": 200,
+        "scrapDelta": -18,
+        "fuelDelta": 0,
+        "partDelta": -1,
+        "ok": true
+      },
+      {
+        "n": 108,
+        "id": "armory",
+        "at": "daegu",
+        "day": 4,
+        "elapsedMinutes": 200,
+        "scrapDelta": -24,
+        "fuelDelta": 0,
+        "partDelta": -1,
+        "ok": true
+      }
+    ],
+    "crafts": [
+      {
+        "n": 399,
+        "id": "pipe",
+        "at": "suwon",
+        "day": 22,
+        "elapsedMinutes": 20,
+        "scrapDelta": -5,
+        "fuelDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "n": 400,
+        "id": "xbow",
+        "at": "suwon",
+        "day": 22,
+        "elapsedMinutes": 20,
+        "scrapDelta": -10,
+        "fuelDelta": 0,
+        "partDelta": -1,
+        "ok": true
+      },
+      {
+        "n": 401,
+        "id": "bolt",
+        "at": "suwon",
+        "day": 22,
+        "elapsedMinutes": 20,
+        "scrapDelta": -3,
+        "fuelDelta": 0,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "n": 402,
+        "id": "molotov",
+        "at": "suwon",
+        "day": 22,
+        "elapsedMinutes": 20,
+        "scrapDelta": -2,
+        "fuelDelta": -2,
+        "partDelta": 0,
+        "ok": true
+      },
+      {
+        "n": 403,
+        "id": "ammo",
+        "at": "suwon",
+        "day": 22,
+        "elapsedMinutes": 20,
+        "scrapDelta": -7,
+        "fuelDelta": 0,
+        "partDelta": -1,
+        "ok": true
+      }
+    ],
+    "procurementHandoffs": [
+      {
+        "n": 258,
+        "at": "jeonju",
+        "day": 19,
+        "elapsedMinutes": 0,
+        "scrapDelta": 19,
+        "fuelDelta": 0,
+        "partDelta": -2,
+        "ok": true
+      },
+      {
+        "n": 392,
+        "at": "suwon",
+        "day": 22,
+        "elapsedMinutes": 0,
+        "scrapDelta": 20,
+        "fuelDelta": 0,
+        "partDelta": -2,
+        "ok": true
+      }
+    ],
+    "cashSupplyTrades": 37,
+    "barterTrades": 0,
+    "localWork": 11,
+    "camps": 21,
+    "warmMeals": 9,
+    "publicNpcRumors": 15,
+    "publicExplorations": 32,
+    "walkFuel": 1,
+    "route": [
+      "yangsan",
+      "miryang",
+      "lake",
+      "daegu",
+      "gumi",
+      "gimcheon",
+      "muju",
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "nonsan",
+      "daejeon",
+      "cheongju",
+      "cheonan",
+      "pyeongtaek",
+      "suwon",
+      "seoul"
+    ],
+    "novelChoicePairs": [
+      "npc_sundeok_2:0",
+      "exp_glasshouse:1",
+      "loc_lake:0",
+      "npc_taeho_2:0",
+      "npc_jaepil_2:0",
+      "jy_photo:0",
+      "npc_miyoung_2:0",
+      "exp_jjimjil:0",
+      "rq_eunsu_task:0",
+      "camp_thief:2",
+      "ev_container_port:0",
+      "lc_suwon_galbi:0"
+    ],
+    "naturalRadioRepair": false,
+    "naturalTubeAcquisition": false,
+    "naturalRadioBroadcasts": 0,
+    "actualHiddenLocation": "lake",
+    "guardedFinalChoice": {
+      "selected": "core_transfer",
+      "sleepAvailable": true,
+      "preservationAvailable": false,
+      "preservationRequirement": "2/3 actual eligible companions; one more needed",
+      "transferObjector": "jaeyi",
+      "sleepObjector": "eunsu"
+    }
+  },
+  "policyLimitations": [
+    {
+      "location": "muju",
+      "days": "7–17",
+      "kind": "Policy delay, not game softlock",
+      "details": "Policy kept camping instead of using legal backward Gimcheon supply. Fuel about9.64 could cover backward edge9 but not forward Jeonju edge12; Muju had no public fuel cash offer. On day18 weather made every departure unaffordable and the public walk-fuel action supplied10. Original delays remain in trace; no reset/resource injection occurred."
+    }
+  ],
+  "dialogueReview": {
+    "encounters": 82,
+    "newOrChangedEntries": 21,
+    "newParagraphsRead": 84,
+    "exactPriorParagraphOccurrencesWithinChangedEntries": 34,
+    "priorCyclesExact": 61,
+    "withinCycleExact": 0,
+    "newOrChanged": 21,
+    "localWorkResultsRead": 11,
+    "npcGreetingAndRumorPairsRead": 15,
+    "npcUtterancesRead": 30,
+    "crewChatGroupsRead": 9,
+    "uniqueCrewChatsRead": 8,
+    "roadSpeechOccurrencesRead": 45,
+    "uniqueRoadSpeechesRead": 26,
+    "method": "Exact [event,text,choices,choice,result] comparison with cycles1–10, then every changed context and novel paragraph read. All NPC/work/crew/short-road dialogue captured and read. UI.speak omission was backfilled by a separate deterministic replay; every one of461 non-ambient trace records is identical.",
+    "files": [
+      "transcript01.json",
+      "changed-transcript.json",
+      "review-collapsed.json",
+      "review-match-counts.json",
+      "work-transcript.json",
+      "npc-transcript.json",
+      "ambient-transcript.json",
+      "road-speech-transcript.json",
+      "road-speech-unique.json"
+    ]
+  },
+  "findings": [
+    {
+      "id": "C11-SYS-01",
+      "severity": "P2",
+      "title": "Unrepaired radio plays a music banter line",
+      "statusAtFrozenJourneyEnd": "confirmed",
+      "trace": 293,
+      "day": 20,
+      "minute": 621,
+      "location": "nonsan→daejeon",
+      "actualParty": [
+        "jaeyi"
+      ],
+      "evidence": "road-speech-transcript.json: trace293; entry-290-story_personal_cache-export.json has radio_fixed false and no tube",
+      "cause": "D.banter music line has no need gate; existing G.pickBanter already supports need.flag",
+      "source": "src/03-data.js",
+      "postJourneyFix": "Added need:{flag:\"radio_fixed\"}; text unchanged",
+      "regression": "Unrepaired normal save before/after reload returns no line; real repair fixture consumes one tube and 40 minutes, then permits music across reload"
+    },
+    {
+      "id": "C11-SYS-02",
+      "severity": "P2",
+      "title": "Jaeyi repeatedly discovers and puts away the same grandfather wrench",
+      "statusAtFrozenJourneyEnd": "confirmed",
+      "traces": [
+        270,
+        313
+      ],
+      "chatId": "daily-me-jaeyi-wrench",
+      "evidence": "ambient-transcript.json: same complete first-time physical action at day19 and day20",
+      "cause": "Chat lacks once:true; road timer resets clear only transient lastChat",
+      "source": "src/03i-story-expansion.js",
+      "postJourneyFix": "Added once:true; existing _crewChatSeen persistence provides the history",
+      "regression": "First encounter allowed; later road/reset and save reload block repeat",
+      "legacyLimit": "An old save that played this formerly untracked chat may show it once more. No note/day-based guessed migration is introduced."
+    }
+  ],
+  "candidateRulings": [
+    {
+      "candidate": "Finale dawn aftermath while terminal engine clock remains22/1390",
+      "ruling": "Retrospective terminal aftermath, not another interactive time-consuming road action; no new bug claimed."
+    },
+    {
+      "candidate": "Taeho fight memory may sound like the historic collapse night",
+      "ruling": "No explicit date tying his personal fight to the143-year-old collapse; insufficient evidence for contradiction."
+    }
+  ],
+  "separateTranscriptCaptureReplay": {
+    "purpose": "Capture omitted short UI.speak prose only",
+    "originalTraceRecords": 461,
+    "replayTraceRecords": 461,
+    "allNonAmbientTraceFieldsIdentical": true,
+    "extraRoadSpeechRecords": 45,
+    "uniqueRoadSpeech": 26,
+    "excludedFromJourneyCounts": true
+  },
+  "separateTerminalVerification": "terminal-reload.json",
+  "separateVerificationExcludedFromJourneyCounts": true,
+  "sceneEvidence": {
+    "actualUniqueEventIds": 82,
+    "eventIds": [
+      "opening_workshop",
+      "opening_bus_repair",
+      "opening_name_introduction",
+      "opening_failed_appeal",
+      "opening_parents_module",
+      "opening_departure",
+      "opening_farewell",
+      "lc_busan_dried",
+      "cell_sea_meet",
+      "meet_postman",
+      "onboarding_first_road",
+      "ev_rice_mill",
+      "memory_busan_terminal",
+      "npc_sundeok_2",
+      "exp_glasshouse",
+      "story_bridge_departure_echo",
+      "loc_lake",
+      "exp_radioshop",
+      "story_generation_form",
+      "npc_taeho_2",
+      "cell_dome_meet",
+      "story_bridge_trace_gap",
+      "ev_broadcast_station",
+      "levy_office",
+      "route_mid_fork",
+      "parents_diversion_manifest",
+      "lc_yeongdong_wine",
+      "salvage_claim",
+      "route_market_convoy",
+      "route_market_mask",
+      "route_market_pass",
+      "jy_recruit",
+      "npc_jaepil_2",
+      "story_bridge_watched",
+      "rq_jaeyi_task",
+      "parents_separated_work",
+      "rq_jaeyi_join",
+      "jy_photo",
+      "crisis_nofuel",
+      "story_family_principle",
+      "postman_again",
+      "lc_jeonju_bibim",
+      "npc_miyoung_2",
+      "story_family_key",
+      "perimeter_first",
+      "exp_jjimjil",
+      "ev_chunrian_lab",
+      "story_personal_cache",
+      "es_recruit",
+      "lc_daejeon_bakery",
+      "cell_ghost_meet",
+      "cleaners_recall",
+      "rq_eunsu_task",
+      "story_parent_route_shared",
+      "main_transfer_testimony",
+      "ev_wedding_hall_storage",
+      "story_generation_speech",
+      "rq_eunsu_join",
+      "main_command_ledger",
+      "lc_cheonan_walnut",
+      "story_bridge_parent_route",
+      "camp_thief",
+      "history_failed_namsan",
+      "parents_father_last_log",
+      "ev_container_port",
+      "story_bridge_child_voice",
+      "history_parents_network",
+      "parents_mother_reunion",
+      "parents_mother_truth",
+      "lc_suwon_galbi",
+      "han_bridge",
+      "seoul_open",
+      "seoul_han",
+      "seoul_ruins",
+      "seoul_square",
+      "seoul_base",
+      "seoul_core",
+      "seoul_costs",
+      "seoul_decision",
+      "seoul_night",
+      "seoul_uplink_reveal",
+      "seoul_session_reset"
+    ],
+    "files": [
+      "scene-evidence.json",
+      "scene-review-list.json",
+      "scene-review-list.md"
+    ],
+    "scope": "Encountered scene keys and expected subjects only; root owns actual visual/crop review."
+  },
+  "postJourneyRepairs": {
+    "productionFiles": [
+      "src/03-data.js",
+      "src/03i-story-expansion.js"
+    ],
+    "focusedTests": "tests/test_qa_cycle11_radio_chat.cjs",
+    "before": {
+      "passed": 2,
+      "failed": 2,
+      "log": "tests-red.txt"
+    },
+    "after": {
+      "passed": 4,
+      "failed": 0,
+      "log": "tests-green.txt"
+    },
+    "related": {
+      "passed": 73,
+      "failed": 0,
+      "log": "tests-related.txt"
+    },
+    "corpusBaselineChanged": false,
+    "fullSuiteAndBrowserOwner": "root"
+  },
+  "scopedVerdict": "Completed one frozen finite journey through transfer/SESSION1END and all encountered prose review. Two confirmed ambient dialogue defects repaired afterward with red→green regressions. Radio acquisition/repair/broadcast remains a natural-play gap.",
+  "coverageLimits": [
+    "No naturally acquired radio tube, actual radio repair or G.pickRadio broadcast; bounded public searches and NPC rumors did not obtain a tube. The repair regression supplies a tube only in an explicit unit fixture.",
+    "Driver clinic, live barter, upgrade removal/reinstallation did not occur.",
+    "Only transfer ending executed; sleep/preservation were availability observations.",
+    "Separate transcript-only replay, focused fixtures and terminal reload are excluded from fresh journeys/action counts.",
+    "Legacy untracked wrench dialogue can replay once; no speculative migration.",
+    "Browser/mobile/audio/rendering evidence remains root-owned."
+  ]
+}

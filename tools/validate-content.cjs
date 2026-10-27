@@ -73,8 +73,8 @@ const speakerIds = new Set([
   'me', '나', 'sys', 'record', 'cheollian', 'radio', 'unknown',
   'passer_man', 'passer_woman', 'passer_elder', 'passer_child',
   'passer_merchant', 'passer_guard', 'passer_refugee', 'passer_worker', 'passer_medic',
-  /* 화면을 열 때 현재 첫 동행인의 실제 id로 해석되는 화자 토큰. */
-  'party_first'
+  /* 화면을 열 때 현재 첫째·둘째 동행인의 실제 id로 해석되는 화자 토큰. */
+  'party_first', 'party_second'
 ]);
 const validateSpeaker = (speaker, where) => {
   const id = typeof speaker === 'string' ? speaker : speaker && speaker.who;
@@ -347,7 +347,12 @@ for (const [id, stages] of Object.entries(D.eventTurnSceneStages || {})) {
   for (const stage of stages || []) {
     need(Number.isInteger(stage.at)&&stage.at>=0&&stage.at>=prior, `turnSceneStages:${id}`, '장면 단계 순서 오류');
     need(!!D.scenes[stage.key], `turnSceneStages:${id}`, `없는 장면 ${stage.key}`);
-    need(Array.isArray(turns)&&turns.includes(stage.key), `turnSceneStages:${id}`, `연속 컷에 없는 장면 ${stage.key}`);
+    // New Leo meetings stay in Gwangju. Retain this exact historical stage for
+    // saved readers whose frozen sceneKeys still include the former Namwon cut.
+    // renderStoryScene ignores it when the current reader has only the market.
+    const retainedLeoStage=id==='meet_hitchhiker'&&stage.at===2&&stage.key==='recruit-leo-meet-action'
+      &&Array.isArray(turns)&&turns.length===1&&turns[0]==='recruit-leo-daein-market-v2';
+    need(Array.isArray(turns)&&(turns.includes(stage.key)||retainedLeoStage), `turnSceneStages:${id}`, `연속 컷에 없는 장면 ${stage.key}`);
     prior=stage.at;
   }
 }
@@ -385,10 +390,15 @@ need(familyRules.length===48, 'eventSceneFamilies', `사건 장면군은 정확�
 const usedFamilies=new Map();
 for (const [index, rule] of familyRules.entries()) {
   const where=`eventSceneFamily[${index}]`;
-  need(typeof rule.scene==='string' && rule.scene.startsWith('event-'), where, `잘못된 장면 키 ${rule.scene}`);
+  const neutralCompanionFallback=rule.scene==='companion-cabin-detail-v1' &&
+    Array.isArray(rule.types)&&rule.types.length===1&&rule.types[0]==='동행'&&!rule.match;
+  need(typeof rule.scene==='string' && (rule.scene.startsWith('event-')||neutralCompanionFallback), where, `잘못된 장면 키 ${rule.scene}`);
   need(!!D.scenes[rule.scene], where, `없는 장면 ${rule.scene}`);
   need(!rule.match || (Object.prototype.toString.call(rule.match)==='[object RegExp]' && !rule.match.global), where, '정규식은 비전역 RegExp여야 함');
   need(!rule.types || (Array.isArray(rule.types) && rule.types.length), where, '타입 목록이 비었음');
+  if(rule.companions)need(Array.isArray(rule.companions)&&rule.companions.length>0&&
+    new Set(rule.companions).size===rule.companions.length&&rule.companions.every(id=>compIds.has(id)),where,'장면에 필요한 동료 목록이 잘못됨');
+  if(rule.flag)need(rule.flag==='radio_fixed',where,`등록되지 않은 장면 상태 조건 ${rule.flag}`);
 }
 let familyCandidates=0, familyMapped=0;
 for (const event of D.events || []) {

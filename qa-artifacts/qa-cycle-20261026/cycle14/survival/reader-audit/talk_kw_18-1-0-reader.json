@@ -1,0 +1,25 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…날짜는 모르겠습니다."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 물병 쪽을 봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "내 몫의 물이 같은 자리에 놓여 있더군요. 그걸 보고부터는."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "물이요? 물이 왜…"
+  },
+  {
+    "kind": "narration",
+    "text": "대답은 없었다. 그다음부터는 물병을 아무 데나 놓지 않았다. 늘 강우 손이 닿는 같은 자리에 뒀다."
+  }
+]

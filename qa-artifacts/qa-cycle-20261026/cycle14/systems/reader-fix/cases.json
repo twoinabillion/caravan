@@ -1,0 +1,339 @@
+[
+  {
+    "id": "ev_jaeyi_law",
+    "classification": "systems-natural",
+    "reason": "The player asks what Jaeyi writes; Jaeyi explains her own ledger. Alternate branch request belongs to player.",
+    "script": {
+      "text": [
+        "me",
+        "jaeyi",
+        "jaeyi"
+      ],
+      "choices": {
+        "0.0": [
+          "jaeyi",
+          "jaeyi"
+        ],
+        "1.0": [
+          "me",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "lc_suwon_galbi",
+    "classification": "systems-natural",
+    "reason": "Explicit 문지기 owns both consecutive statements and question; leaving has no dialogue.",
+    "script": {
+      "text": [
+        {
+          "who": "passer_guard",
+          "name": "문지기"
+        },
+        {
+          "who": "passer_guard",
+          "name": "문지기"
+        },
+        "me",
+        {
+          "who": "passer_guard",
+          "name": "문지기"
+        }
+      ],
+      "choices": {
+        "0.0": [
+          {
+            "who": "passer_guard",
+            "name": "문지기"
+          },
+          {
+            "who": "passer_guard",
+            "name": "문지기"
+          },
+          "me"
+        ],
+        "1.0": []
+      }
+    }
+  },
+  {
+    "id": "gp_note2",
+    "classification": "systems-natural",
+    "reason": "Grandfather notebook advice and childhood graffiti are separately authored written sources.",
+    "script": {
+      "text": [
+        {
+          "who": "record",
+          "kind": "record",
+          "name": "할아버지의 정비 수첩",
+          "medium": "paper"
+        },
+        {
+          "who": "record",
+          "kind": "record",
+          "name": "어릴 적 내가 남긴 낙서",
+          "medium": "paper"
+        }
+      ],
+      "choices": {
+        "0.0": []
+      }
+    }
+  },
+  {
+    "id": "gp_note1",
+    "classification": "survival-natural",
+    "reason": "The source explicitly says 할아버지의 글씨, not a current spoken line.",
+    "script": {
+      "text": [
+        {
+          "who": "record",
+          "kind": "record",
+          "name": "할아버지의 정비 수첩",
+          "medium": "paper"
+        }
+      ],
+      "choices": {
+        "0.0": []
+      }
+    }
+  },
+  {
+    "id": "talk_leo_13",
+    "classification": "survival-natural",
+    "reason": "Player asks 아저씨요; Leo explains his own reaction and first fan letter.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "me",
+          "leo",
+          "leo",
+          "leo"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_leo_05",
+    "classification": "static-derived",
+    "reason": "All3 result lines are Leo recounting his first meeting with Bori.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "leo",
+          "leo",
+          "leo"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_jy_07",
+    "classification": "static-derived",
+    "reason": "Player asks Jaeyi dream; Jaeyi answers museum and explains why.",
+    "script": {
+      "text": [
+        "jaeyi",
+        "me",
+        "jaeyi"
+      ],
+      "choices": {
+        "0.0": [
+          "jaeyi",
+          "jaeyi",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talkr_jy_1",
+    "classification": "static-derived",
+    "reason": "The best object of the day is part of Jaeyi inventory briefing, not player dialogue.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "jaeyi",
+          "jaeyi",
+          "jaeyi"
+        ],
+        "1.0": [
+          "jaeyi",
+          "me",
+          "jaeyi",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_jy_11",
+    "classification": "static-derived",
+    "reason": "The expert continues the answer about rusty object value before player asks quantity.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "jaeyi",
+          "jaeyi",
+          "jaeyi",
+          "me",
+          "jaeyi",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_leo_18",
+    "classification": "static-derived",
+    "reason": "Leo cannot read his own notebook, sings his own refrain and answers the player question about the star.",
+    "script": {
+      "text": [
+        "leo",
+        "leo",
+        "leo"
+      ],
+      "choices": {
+        "0.0": [
+          "leo",
+          "me",
+          "leo",
+          "me",
+          "leo",
+          "leo"
+        ],
+        "1.0": [
+          "leo",
+          "leo",
+          "me",
+          "leo"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_leo_20",
+    "classification": "static-derived",
+    "reason": "Leo wrote the verse, player identifies driver metaphor; their reply exchange remains live speech after notebook closes.",
+    "script": {
+      "text": [
+        "leo",
+        "leo",
+        "leo"
+      ],
+      "choices": {
+        "0.0": [
+          {
+            "who": "me",
+            "kind": "dialogue"
+          },
+          {
+            "who": "leo",
+            "kind": "dialogue"
+          },
+          {
+            "who": "me",
+            "kind": "dialogue"
+          },
+          {
+            "who": "leo",
+            "kind": "dialogue"
+          }
+        ],
+        "1.0": [
+          "leo",
+          "leo",
+          "me",
+          "leo"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_jy_17",
+    "classification": "static-derived",
+    "reason": "Jaeyi announces player dishwashing and offers help; player asks about rules and Jaeyi admits inventing them.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "jaeyi",
+          "jaeyi",
+          "jaeyi",
+          "me",
+          "jaeyi"
+        ],
+        "0.1": [
+          "jaeyi",
+          "me",
+          "jaeyi",
+          "jaeyi"
+        ],
+        "1.0": [
+          "jaeyi",
+          "jaeyi",
+          "me",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_jy_20",
+    "classification": "static-derived",
+    "reason": "After hiding the written list Jaeyi asks player not to speak; it is dialogue, not another record.",
+    "script": {
+      "choices": {
+        "0.0": [
+          {
+            "who": "jaeyi",
+            "kind": "dialogue"
+          },
+          {
+            "who": "jaeyi",
+            "kind": "dialogue"
+          },
+          {
+            "who": "jaeyi",
+            "kind": "dialogue"
+          }
+        ],
+        "1.0": [
+          "jaeyi",
+          "me",
+          "jaeyi",
+          "jaeyi",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "talk_jy_21",
+    "classification": "static-derived",
+    "reason": "Owner Jaeyi finishes adjusting the borrowed scale and warns she will charge if lost.",
+    "script": {
+      "choices": {
+        "0.0": [
+          "jaeyi",
+          "jaeyi",
+          "me",
+          "jaeyi"
+        ],
+        "1.0": [
+          "jaeyi",
+          "me",
+          "jaeyi",
+          "jaeyi",
+          "jaeyi"
+        ]
+      }
+    }
+  },
+  {
+    "id": "gp_note3",
+    "classification": "document-clarity-improvement",
+    "reason": "Multiline notebook quotation is split into narration with dangling quote marks; explicit authored document keeps signature together.",
+    "authoredTurns": true
+  }
+]

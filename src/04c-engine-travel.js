@@ -65,6 +65,7 @@ G.travelForecast = id=>{
   const reasons=[];
   if(chk.road==='rough') reasons.push('험로');
   if(S.wx==='storm') reasons.push('폭풍');
+  else if(S.wx==='fog') reasons.push('안개');
   else if(S.wx==='rain') reasons.push('빗길');
   else if(S.wx==='dust') reasons.push('먼지');
   if(S.fatigue>=60) reasons.push('피로 누적');
@@ -80,6 +81,8 @@ G.travelForecast = id=>{
   const shortage=!infinite&&S.fuel<chk.fuel;
   const fuelMargin=infinite?Infinity:Math.floor(S.fuel-chk.fuel);
   const rationForecast=G.mealForecast(minutes);
+  const dehydration=G.dehydrationForecast(minutes);
+  const survivalWarning=dehydration?`자정 전 물 ${dehydration.waterShort} 보급 필요 · 탈수 위험`:'';
   const supplyNeed=Math.max(rationForecast.food,rationForecast.water);
   const foodMargin=infinite?Infinity:Math.floor(S.food-rationForecast.food);
   const waterMargin=infinite?Infinity:Math.floor(S.water-rationForecast.water);
@@ -106,6 +109,9 @@ G.travelForecast = id=>{
   if(['storm','dust'].includes(S.wx)&&!S.up.snorkel){ readinessScore-=8; warnings.push('흡기 보호 없음'); }
   if(G.isNight()&&!S.up.lightbar){ readinessScore-=7; warnings.push('야간 시야 제한'); }
   readinessScore=Math.round(clamp(readinessScore+Math.min(9,gear.length*3),0,100));
+  if(dehydration){readinessScore=Math.min(readinessScore,44);warnings.push(survivalWarning);}
+  // An imminent mandatory collapse cannot be summarized as ready, even with gear.
+  if(S.fatigue>=99) readinessScore=Math.min(readinessScore,44);
   const readinessLabel=readinessScore>=86?'여유':readinessScore>=68?'준비됨':readinessScore>=45?'주의':'위험';
   const readinessClass=readinessScore>=86?'ready':readinessScore>=68?'steady':readinessScore>=45?'caution':'danger';
   const support=gear.length?`${gear.join(' · ')} 작동`:'';
@@ -125,7 +131,7 @@ G.travelForecast = id=>{
   return {...chk,minutes,shortage,
     risk:reasons.length?reasons.join(' · '):'보통 도로',gear,
     gearLabel:gear.length?`대응 장비: ${gear.join(' · ')}`:'',fuelMargin,supplyMargin,foodMargin,waterMargin,supplyNeed,
-    rationForecast,rationCompact,
+    rationForecast,rationCompact,dehydration,survivalWarning,
     readinessScore,readinessLabel,readinessClass,readinessReason,
     safetyScore:readinessScore,progressKm,progressScore,supplyScore,directionLabel};
 };
@@ -268,7 +274,7 @@ G.prepareRecruitMemory = (dv)=>{
       S.van=clamp(S.van+drive.van,0,S.vanMax);
       dv.memoryVan=drive.van;
     }
-    UI.toast(`🔩 ${D.comps[id].name}가 첫 동행을 준비한다 — ${drive.effect}`);
+    UI.toast(`🔩 ${D.withParticle(D.comps[id].name,'이','가')} 첫 동행을 준비한다 — ${drive.effect}`);
     return dv.recruitMemory;
   }
   return null;
@@ -468,7 +474,7 @@ let choiceEchoCd = 8;              // 선택의 후속은 일반 잡담보다 �
 /* 선택 풀을 거르는 "최근에 나온 것" 기록까지 함께 되돌린다 — 쿨다운만 리셋하면
    대사 후보 집합이 이전 판을 기억한 채 남아 같은 시드가 다른 여정을 만든다. */
 G.resetDriveTimers = ()=>{ banterCd=6; radioCd=30; choiceEchoCd=8;
-  lastBanter=[]; lastChat=-1; lastRadio=null; };
+  lastBanter=[]; lastRadio=null; };
 /* 큰 정서적 타격 직후에는 사건 모달이 닫히자마자 유쾌한 잡담이 끼어들지 않는다.
    실시간 주행 초 단위로 밀며, 테스트와 사건 처리부가 같은 타이머를 쓰게 공개한다. */
 G.delayBanter = (minSeconds=40,maxSeconds=minSeconds)=>{
@@ -481,9 +487,11 @@ G.delayBanter = (minSeconds=40,maxSeconds=minSeconds)=>{
 G.banterCooldown = ()=>banterCd;
 /* 실시간 1초당 진행 거리(km). 테스트·도구가 속도 상수를 복제하지 않도록 엔진이 노출한다. */
 G.tickKmPerSecond = ()=> KMH/60*TIMESCALE;
-/* 표시용 주행 소요 시간(게임 분). UI가 속도 상수를 복제하면 예상과 실제가 갈라진다 —
-   2026-08-06에 실제로 그랬다(표시 2시간 58분 vs 실제 10시간). 단일 소스로 고정. */
-G.driveMinutes = (km)=> Math.ceil((Number(km)||0)/KMH*60);
+/* 현재 날씨/피로 기준의 순수 주행 예보. 앞으로의 날씨 변화·사건·휴식은 제외한다.
+   같은 감속 계수를 tick과 공유해야 끼니/자정 예보도 기본 속도로 과소 계산되지 않는다. */
+G.driveSpeedFactor = (wx=S?.wx,fatigue=S?.fatigue)=>
+  (wx==='storm'?.76:wx==='fog'?.88:1)*(fatigue>=80?.85:1);
+G.driveMinutes = (km)=> Math.ceil(Math.max(0,Number(km)||0)/KMH*60/G.driveSpeedFactor());
 
 G.tick = (dt)=>{ // dt: real seconds
   if(!S || S.ended || UI.modalOpen()) return;
@@ -491,12 +499,11 @@ G.tick = (dt)=>{ // dt: real seconds
   const gm = dt*TIMESCALE;               // game minutes
     const dv = S.driving;
     if(dv.approach) return;
-  const wxSpd = S.wx==='storm'?0.76 : S.wx==='fog'?0.88 : 1;
-  const ftgSpd = S.fatigue>=80?0.85:1;   // 수면 부족 → 감속
+  const speedFactor = G.driveSpeedFactor();
   /* 백그라운드 복귀나 느린 기기에서 큰 dt가 한 번 들어와도 남은 거리보다
      더 달린 것으로 기록·과금하지 않는다. 위치만 dist에서 멈추고 통계·연료가
      초과되던 문제를 같은 실제 이동 거리로 고정한다. */
-  const rawKm = KMH/60*gm*wxSpd*ftgSpd;
+  const rawKm = KMH/60*gm*speedFactor;
   const km = Math.min(Math.max(0,dv.dist-dv.gone),rawKm);
   dv.gone = Math.min(dv.dist, dv.gone+km);
   S.stats.km += km;
@@ -576,10 +583,31 @@ G.tick = (dt)=>{ // dt: real seconds
 };
 
 G.queueCrisis = (id)=>{ S._crisis = id; };
-G.maybeCrisis = ()=>{ if(S._crisis){ const id=S._crisis; S._crisis=null; G.openEventById(id); return true } return false };
+G.crisisStillNeeded = id=>id!=='crisis_hungry'||Number(S.hunger)>=2;
+G.maybeCrisis = ()=>{
+  if(!S._crisis) return false;
+  const id=S._crisis; S._crisis=null;
+  // A queued missed-meal crisis is not a paid receipt. Recheck after actual meals/load.
+  if(!G.crisisStillNeeded(id)) return false;
+  G.openEventById(id); return true;
+};
 /* 구제 위기는 반복될수록 비싸진다. 첫 실수는 배움이고, 그 뒤로는 시간·자원·관측이
    실제 비용으로 청구된다 — "실패 = 소액 과금" 루프를 여기서 끊는다. */
 G.rescueCount = (kind)=>((S&&S._rescues)||{})[kind]||0;
+/* 저연료 예방 행동은 기존 5L 기준뿐 아니라, 공개·노선 허용 출발이 모두
+   연료 부족으로 잠겼을 때도 제공한다. 연료 무시 출발/무료 급유는 하지 않는다. */
+G.canSeekFuel = ()=>{
+  if(!S||S.ended||S.driving||!S.at||G.isInfiniteResourceMode()) return false;
+  if(S.fuel<5) return true;
+  const routes=G.neighbors(S.at).filter(nb=>S.known.includes(nb.id))
+    .map(nb=>G.canTravelTo(nb.id)).filter(check=>check.ok);
+  return routes.length>0&&routes.every(check=>S.fuel<check.fuel);
+};
+G.seekFuel = ()=>{
+  if(!G.canSeekFuel()) return false;
+  G.openRescue('nofuel','crisis_nofuel');
+  return true;
+};
 G.openRescue = (kind, base)=>{
   S._rescues=S._rescues||{};
   const n=S._rescues[kind]||0;
@@ -667,6 +695,7 @@ G.eventAvailable = (ev,context={})=>{
   if(ev.needWx&&S.wx!==ev.needWx) return false;
   if(ev.needRain&&!G.isWet()) return false;
   if(ev.needLowWater&&(G.isInfiniteResourceMode()||S.water>2)) return false;
+  if(ev.waterMin!==undefined&&!G.hasResource('water',ev.waterMin)) return false;
   if(ev.hiddenTarget&&!G.unknownHidden().length) return false;
   if(ev.id==='comp_sick'&&!S.flags.food_poison) return false;
   /* 사건이 열렸는데 현재 일행으로는 보이는 행동이 하나도 없는 소프트락을

@@ -1,6 +1,19 @@
 /* Run the production interaction handlers without a browser or personal save. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync(process.env.CARAVAN_UI_SOURCE||'src/07-ui.js','utf8');
+const postcss=require('postcss');
+const styles=[...fs.readFileSync('src/01-style.html','utf8').matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)].map(match=>postcss.parse(match[1]));
+// Static cascade contract paired with the real handler below; actual browser hit-testing is separate QA.
+function zoomPointerEvents(layout,materials=false){
+ const selectors=['.scene-zoom',`#app #ev-sheet.passenger-reader${layout==='pages'?'[data-reader-layout="pages"]':':not([data-reader-layout="pages"])'} .scene-zoom`];
+ if(materials)selectors.push('#app #ev-sheet.passenger-reader[data-reader-layout="pages"][data-reader-skin="materials"] .scene-zoom');
+ let winner={value:'auto',rank:-1,important:false};
+ for(const sheet of styles)sheet.walkRules(rule=>{
+  const rank=selectors.indexOf(rule.selector);if(rank<0)return;
+  rule.walkDecls('pointer-events',decl=>{const important=!!decl.important;if(important&&!winner.important||important===winner.important&&rank>=winner.rank)winner={value:decl.value,rank,important};});
+ });
+ return winner.value;
+}
 function load(ctx,name){const start=source.indexOf('  function '+name+'(');assert(start>=0,name);const end=source.indexOf('\n  function ',start+4);vm.runInContext(source.slice(start,end),ctx);return ctx[name];}
 let passed=0;
 function test(name,fn){fn();passed++;console.log('PASS '+name);}
@@ -31,6 +44,16 @@ test('scene retains pointer ownership outside its bounds and releases on lost ca
 test('picture swipe/cancel do not consume a speech; the next fresh tap works',()=>{const f=fixture();f.next.onpointerdown(event({clientX:90,clientY:70}));f.next.onpointerup(event({clientX:90,clientY:130}));f.next.onclick(event());assert.equal(f.state.index,0);f.next.onpointerdown(event({clientX:90,clientY:70}));f.next.onpointercancel();f.next.onclick(event());assert.equal(f.state.index,0);f.next.onpointerdown(event({clientX:90,clientY:70}));f.next.onpointerup(event({clientX:91,clientY:71}));f.next.onclick(event());assert.equal(f.state.index,1);});
 test('held keyboard input cannot skip into the next decision',()=>{const f=fixture();f.next.onkeydown(event({key:'Enter',code:'Enter',repeat:false}));assert.equal(f.state.index,1);f.next.onkeydown(event({key:'Enter',code:'Enter',repeat:true}));f.next.onkeydown(event({key:'Enter',code:'Enter',repeat:false}));assert.equal(f.state.index,1);f.ctx.heldStoryAdvanceKeys.delete('Enter');f.next.onkeydown(event({key:'Enter',code:'Enter',repeat:false}));assert.equal(f.state.index,2);f.ctx.heldStoryAdvanceKeys.clear();f.next.onclick(event());assert.equal(f.state.index,2);});
 test('zoom is an explicit control; closing it does not advance',()=>{const f=fixture();f.zoom.onclick(event());assert(f.frame.classList.contains('zoomed'));assert.equal(f.zoom.attributes['aria-expanded'],'true');assert.equal(f.state.index,0);f.next.onclick(event());assert(!f.frame.classList.contains('zoomed'));assert.equal(f.state.index,0);f.zoom.onclick(event());const key=event({key:'Escape'});f.frame.onkeydown(key);assert(key.stopped);assert(!f.frame.classList.contains('zoomed'));assert(f.zoom.focused);});
+test('zoom button receives pointer hits in both passenger layouts and the material skin',()=>{
+ for(const [layout,materials] of [['current',false],['pages',false],['pages',true]])assert.equal(zoomPointerEvents(layout,materials),'auto',`${layout}/${materials}: decorative span CSS must not pass button clicks to scene-advance`);
+ const f=fixture(),click=event();f.zoom.onclick(click);assert(click.prevented&&click.stopped);assert(f.frame.classList.contains('zoomed'));assert.equal(f.state.index,0);
+ f.zoom.onclick(event());assert(!f.frame.classList.contains('zoomed'));assert.equal(f.state.index,0);
+});
+test('zoom remains usable when the final reading turn disables scene advance',()=>{
+ const f=fixture();f.state.index=f.state.turns.length-1;f.ctx.wireSceneZoom(f.sheet);assert(f.next.disabled);
+ f.zoom.onclick(event());assert(f.frame.classList.contains('zoomed'));assert.equal(f.state.index,2);
+ f.zoom.onclick(event());assert(!f.frame.classList.contains('zoomed'));assert.equal(f.state.index,2);
+});
 test('review, evidence, and detached event controls cannot advance',()=>{const f=fixture();for(const mode of ['review','inspection']){f.state.readerMode=mode;f.ctx.wireSceneZoom(f.sheet);assert(f.next.disabled);f.next.onclick(event());assert.equal(f.state.index,0);}f.state.readerMode='current';f.ctx.wireSceneZoom(f.sheet);f.ctx.curStory={...f.state};f.next.onclick(event());assert.equal(f.state.index,0);});
 test('long speech reveals its lower text before advancing or saving a new index',()=>{const f=fixture();f.reader.scrollHeight=480;f.reader.clientHeight=200;f.next.onclick(event());assert.equal(f.state.index,0);assert.equal(f.reader.scrollTop,150);assert.equal(f.rendered(),0);f.next.onclick(event());assert.equal(f.reader.scrollTop,280);assert.equal(f.state.index,0);f.next.onclick(event());assert.equal(f.state.index,1);assert.equal(f.rendered(),1);});
 test('body tap and Enter reveal unread text too; a scroll gesture never advances',()=>{const f=fixture();f.reader.scrollHeight=480;f.reader.clientHeight=200;load(f.ctx,'wireStoryReviewPause')(f.state,1);f.reader.onpointerdown(event({clientX:90,clientY:70}));f.reader.onpointerup(event({clientX:91,clientY:71}));assert.equal(f.state.index,0);assert.equal(f.reader.scrollTop,150);f.reader.onkeydown(event({key:'Enter',code:'Enter',repeat:false}));assert.equal(f.reader.scrollTop,280);assert.equal(f.state.index,0);f.reader.onpointerdown(event({clientX:90,clientY:70}));f.reader.onpointerup(event({clientX:90,clientY:120}));assert.equal(f.state.index,0);f.reader.onpointerdown(event({clientX:90,clientY:70}));f.reader.onpointerup(event({clientX:91,clientY:71}));assert.equal(f.state.index,1);});

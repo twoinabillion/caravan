@@ -1,0 +1,15 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "…그러세요. 요즘 세상에 당연하지.",
+    "timeKind": "memory",
+    "timeLabel": "지난밤 · 야영지"
+  },
+  {
+    "kind": "narration",
+    "text": "노인은 화내지 않고 어둠 속으로 사라졌다. 모닥불이 괜히 머쓱하게 탔다."
+  }
+]

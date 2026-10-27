@@ -1,0 +1,26 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "다음 도시에서 안경점 털— 아니, 들르죠."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "방금 뭐라 그랬나."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "들른다고요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…돋보기는 2.5로 부탁하네."
+  },
+  {
+    "kind": "narration",
+    "text": "못 들은 걸로 하기로 한 모양이다. 다음 탐색 목표에 돋보기가 추가됐다."
+  }
+]

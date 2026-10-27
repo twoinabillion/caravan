@@ -36,7 +36,7 @@ const StoryPages=(()=>{
       const row={...original,text:slice(original.text,at.offset),sourceIndex:at.turn};
       // Never collapse a voiced beat into another beat: audio and authored cuts
       // must still have an explicit entry point.
-      if(rows.length&&(original.scene||original.voice||original.sfx||rows.some(r=>r.voice||r.sfx)))break;
+      if(rows.length&&(original.scene||original.timeKind||original.voice||original.sfx||rows.some(r=>r.voice||r.sfx)))break;
       if(fits([...rows,row])){rows.push(row);at={turn:at.turn+1,offset:0};continue;}
       if(rows.length){
         // Move a short question together with its reply when the pair fits a

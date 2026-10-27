@@ -1,0 +1,36 @@
+{
+  "verifiedAt": "2026-10-26T02:17:43.639894+00:00",
+  "engineHash": "4aa512d311b53bdf1a7294df0c9bf7230ea3c7702f07c8af75dd0e3ec839bc0c",
+  "sourceFreeze": "cycle8/frozen-source.json",
+  "sourceUnchangedAfterTestsAndJourneys": true,
+  "tests": {
+    "command": "npm run test:source",
+    "pass": 1231,
+    "fail": 0,
+    "log": "source-tests-cycle8.log",
+    "exitCode": 0
+  },
+  "build": {
+    "command": "npm run build:html",
+    "exitCode": 0,
+    "log": "build-cycle8.log",
+    "htmlBytes": 106589901,
+    "htmlSha256": "7f2b8b62d8cd5bc60f6031f9f9e07c86b0c5e31baeee5d49cee303cec5668fcc"
+  },
+  "quick": {
+    "command": "npm run verify:quick",
+    "exitCode": 0,
+    "log": "verify-quick-cycle8.log",
+    "events": 1039,
+    "nodes": 58,
+    "scenes": 416,
+    "sceneClassAssets": 611,
+    "portraits": 73,
+    "builtCanonicalMainPortraits": 7
+  },
+  "diffCheck": {
+    "command": "git diff --check",
+    "exitCode": 0
+  },
+  "status": "Cycle8 historical frozen checks. Read-through found round-trip distance and premature future cleaning contradictions plus a borrowing-label clarity issue; minimal fixes and cycle9 follow."
+}

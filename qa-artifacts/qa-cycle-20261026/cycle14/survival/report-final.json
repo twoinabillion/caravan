@@ -1,0 +1,123 @@
+{
+  "seed": 274001,
+  "sourceHash": "52a1873eab1c96a321c39513d5c6ceff4d8b7df69eb13677b87bd2049ffd007b",
+  "freshAttempts": 2,
+  "resumes": 0,
+  "mainEndings": 1,
+  "thirstDeaths": 1,
+  "choices": 271,
+  "trace": 1369,
+  "entryReload": 271,
+  "paidReload": 271,
+  "readerUnequal": 0,
+  "reloadFailureOrReapplied": 0,
+  "shortSpeechCalls": 265,
+  "npcPresentations": 26,
+  "priorNaturalTraceFiles": 52,
+  "newNormalizedPairs": [
+    [
+      "camp_dogs",
+      0
+    ],
+    [
+      "exp_bowling",
+      1
+    ],
+    [
+      "exp_checkpoint",
+      1
+    ],
+    [
+      "exp_fishfarm",
+      1
+    ],
+    [
+      "exp_woodshop",
+      1
+    ],
+    [
+      "pair_pss_kw_1",
+      0
+    ],
+    [
+      "talk_kw_01",
+      0
+    ],
+    [
+      "talk_kw_03",
+      1
+    ],
+    [
+      "talk_kw_06",
+      1
+    ],
+    [
+      "talk_kw_21",
+      1
+    ],
+    [
+      "talk_pss_10",
+      0
+    ],
+    [
+      "talk_pss_15",
+      0
+    ],
+    [
+      "talk_pss_19",
+      0
+    ],
+    [
+      "talkr_kw_1",
+      1
+    ]
+  ],
+  "newConfirmedEvents": 19,
+  "duplicateOfStory": [
+    "loc_mungyeong"
+  ],
+  "candidateEvents": [
+    "talk_kw_05",
+    "near_muju_firefly",
+    "talk_pss_17"
+  ],
+  "actualPartyBoth": [
+    "kangwoo",
+    "parkss",
+    "leo"
+  ],
+  "bori": {
+    "noseSelected": 0,
+    "tagSelected": 0,
+    "familySelected": 0,
+    "tagStoppedDirectorCandidateOccurrences": 1,
+    "scope": "C14 only; C6 tag and C13 normal save branch family already exist"
+  },
+  "attempts": [
+    {
+      "attempt": "attempt01",
+      "ending": "thirst",
+      "method": null,
+      "day": 17,
+      "km": 1210,
+      "choices": 146,
+      "trace": 696
+    },
+    {
+      "attempt": "attempt02",
+      "ending": "story_done",
+      "method": "core_quarantine",
+      "day": 16,
+      "km": 1305,
+      "choices": 125,
+      "trace": 673
+    }
+  ],
+  "limits": [
+    "Known prior policy/source and coverage guided; not blind or independent humans",
+    "Actual engine and 07 reader/NPC handlers under stubs; no browser image crop/input/audio evidence",
+    "UI.speak calls captured, no claim each queued bubble was visible",
+    "Current entry/paid reloads are not old-version legacy fixture checks",
+    "Natural observations and follow-up static branch audit are separately counted"
+  ]
+}

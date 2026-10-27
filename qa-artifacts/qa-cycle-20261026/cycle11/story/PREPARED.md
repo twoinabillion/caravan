@@ -1,0 +1,3 @@
+# Cycle11 policy
+
+Seed271003. One fresh finite-resource public-action journey on frozen732d24… . After first main evidence, supplies at Miryang then Jinju→Yeosu→Suncheon→Gwangju; Leo recruited only through normal meet/task/follow/join. Only discovered nearby maehwa/lighthouse/sunflower once; hidden explore at most2, no infinite hunting. Public mission boards once per town; only delivery/letter on planned corridor, normal turnin. All retained cycles1–10 coverage pairs guide unseen choices; source-informed, not blind. Main journey then resumes, max1600actions/28days. No source/state/resource/event injection. Capture actual UI scene-key resolver output as source wiring evidence, distinct from actual crop/visual verification. Browser-entry-replay is separate and excluded.

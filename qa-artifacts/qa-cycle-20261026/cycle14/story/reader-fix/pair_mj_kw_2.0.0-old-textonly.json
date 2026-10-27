@@ -1,0 +1,58 @@
+[
+  {
+    "kind": "narration",
+    "text": "강우가 군번줄을 꺼내 보였다. 민지는 라디오 주파수를 말했다. 88.9."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…그걸로 찾나."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "찾는 게 아니라 열어두는 거예요. 켜놓으면 언젠가 걸릴 수도 있으니까. 안 걸려도 켜놓는 거고요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "……."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "지치지 않냐고 물어보시려는 거죠."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…그렇다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "지쳐요."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 하늘을 봤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "근데 기다리는 걸 그만두면, 그때부터 진짜 잃는 거예요."
+  },
+  {
+    "kind": "narration",
+    "text": "강우는 바로 대답하지 않았다. 대답은 두어 박자 늦게 왔다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "…그 말, 빌리겠다."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 뭐라고 대꾸하려다 그만뒀다. 두 사람은 교대 시간까지 그러고 앉아 있었다."
+  }
+]

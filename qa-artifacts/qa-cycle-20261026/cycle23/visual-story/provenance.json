@@ -1,0 +1,148 @@
+{
+  "tool": "builtin image_gen.imagegen",
+  "cliFallback": false,
+  "sourceHash": "8cb29d99d11f89115ad974f7021b59d8373f85f8a7cf37fdbca18102fb9730f3",
+  "scope": "QA assets only; registry/game/gallery not changed",
+  "references": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "commonBaseAndNegative": "Verbatim assets/visual-contract.json in every request",
+  "calls": [
+    {
+      "request": "explore-bowling-lanes-v1-request.json",
+      "source": "/Users/sang/.codex/generated_images/01a17418-9e4a-7693-ac94-338b8fa8ec1b/exec-fa62bcc8-dad8-4f8b-981a-46ff8d604db5.png",
+      "master": "masters/explore-bowling-lanes-v1-initial.png",
+      "selected": false,
+      "note": "Small white logo-like mark on ball-return housing; retained initial.",
+      "masterSha256": "59555562d65f74dd3fcd2598375351c2a4477be2f99ceffbc893717a0eb4b287",
+      "requestSha256": "6b1065015dcb4455abc6df8d4f5f801cdb4daa0d312f45f36143e0450e0e616f"
+    },
+    {
+      "request": "bowling-mark-cleanup-request.json",
+      "source": "/Users/sang/.codex/generated_images/01a17418-9e4a-7693-ac94-338b8fa8ec1b/exec-ee35f938-ac39-4712-a8b0-c9e19c7c0220.png",
+      "master": "masters/explore-bowling-lanes-cleanup-failed.png",
+      "selected": false,
+      "note": "Targeted mark edit left a visible white mark; retained unsuccessful output.",
+      "masterSha256": "4108e27020b7cf4d26576eddc27c375084f522d8275fa3428eed00e8624958f9",
+      "requestSha256": "46bef49e952b5c7b295813564ef08203b5cccc86b04b5b7431c08e801a7bbd7d"
+    },
+    {
+      "request": "bowling-rack-cleanup-request.json",
+      "source": "/Users/sang/.codex/generated_images/01a17418-9e4a-7693-ac94-338b8fa8ec1b/exec-5ec38d2a-3b8a-491b-a895-ce188cbd3a2c.png",
+      "master": "masters/explore-bowling-lanes-v1.png",
+      "selected": true,
+      "note": "Unmarked low open ball rack replaces the hood. Rest of empty alley retained.",
+      "masterSha256": "4e11511e8e1a90c81ccacc81700b514ccec54df38dfb824fe5e3791ac096b128",
+      "requestSha256": "edd3f4c82d45af30218fef049137d6813245f75c7f190a6a14c04d508fe98006"
+    },
+    {
+      "request": "explore-wedding-hall-storage-v1-request.json",
+      "source": "/Users/sang/.codex/generated_images/01a17418-9e4a-7693-ac94-338b8fa8ec1b/exec-a752621d-e1cb-435a-8d5d-b85f2d4ab87a.png",
+      "master": "masters/explore-wedding-hall-storage-v1.png",
+      "selected": true,
+      "masterSha256": "9d4a3e542a562b27a359542c33e89d677a7a3cd103296bd427207a96a29b8151",
+      "requestSha256": "791e93e1cec522a45836412db77ef8adba3f35f4a24ab07e37279dead042bfe3"
+    }
+  ],
+  "exports": [
+    {
+      "stem": "explore-bowling-lanes-v1",
+      "master": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/visual-story/masters/explore-bowling-lanes-v1.png",
+      "masterMetadata": {
+        "format": "png",
+        "width": 1672,
+        "height": 941,
+        "space": "srgb",
+        "channels": 3,
+        "depth": "uchar",
+        "density": 72,
+        "isProgressive": false,
+        "isPalette": false,
+        "bitsPerSample": 8,
+        "hasProfile": false,
+        "hasAlpha": false,
+        "autoOrient": {
+          "width": 1672,
+          "height": 941
+        }
+      },
+      "masterSha256": "4e11511e8e1a90c81ccacc81700b514ccec54df38dfb824fe5e3791ac096b128",
+      "delivery": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/visual-story/explore-bowling-lanes-v1.webp",
+      "deliveryMetadata": {
+        "format": "webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "channels": 3,
+        "depth": "uchar",
+        "isProgressive": false,
+        "isPalette": false,
+        "hasProfile": false,
+        "hasAlpha": false,
+        "autoOrient": {
+          "width": 1024,
+          "height": 576
+        }
+      },
+      "deliverySha256": "9d5d65297e3f36fe1dd5ac1c6819be22ecb1e0822386880c78fc9950113c4615",
+      "bytes": 103728
+    },
+    {
+      "stem": "explore-wedding-hall-storage-v1",
+      "master": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/visual-story/masters/explore-wedding-hall-storage-v1.png",
+      "masterMetadata": {
+        "format": "png",
+        "width": 1672,
+        "height": 941,
+        "space": "srgb",
+        "channels": 3,
+        "depth": "uchar",
+        "density": 72,
+        "isProgressive": false,
+        "isPalette": false,
+        "bitsPerSample": 8,
+        "hasProfile": false,
+        "hasAlpha": false,
+        "autoOrient": {
+          "width": 1672,
+          "height": 941
+        }
+      },
+      "masterSha256": "9d4a3e542a562b27a359542c33e89d677a7a3cd103296bd427207a96a29b8151",
+      "delivery": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle23/visual-story/explore-wedding-hall-storage-v1.webp",
+      "deliveryMetadata": {
+        "format": "webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "channels": 3,
+        "depth": "uchar",
+        "isProgressive": false,
+        "isPalette": false,
+        "hasProfile": false,
+        "hasAlpha": false,
+        "autoOrient": {
+          "width": 1024,
+          "height": 576
+        }
+      },
+      "deliverySha256": "f7e7b581a1f6dbd9f42f168be6e6fb6c8f5cd4e038c60812e6e4206fee24dfa6",
+      "bytes": 105676
+    }
+  ]
+}

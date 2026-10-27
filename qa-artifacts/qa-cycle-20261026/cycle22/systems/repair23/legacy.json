@@ -1,0 +1,228 @@
+[
+  {
+    "id": "npc_deokgu_2",
+    "choice": 0,
+    "outcome": 0,
+    "file": "legacy-npc_deokgu_2-0-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen22 resolution from exact natural unpaid entry, separate replay",
+    "text": "덕구가 오래 말이 없었다. 대답을 안 하려나 싶어질 때쯤, 순찰봉으로 북쪽 지평선을 가리켰다.\n\n\"나 소방관이었다. 서울에서.\" 거기서 또 한 번 말이 끊겼다. \"…그날 우리 서장이 그랬어. '주민 대피 먼저, 우린 마지막'. 나만 마지막이 못 됐지. 성벽까지 떠밀려 내려왔으니까.\"\n\n\"그래서 북쪽을 봐. 언젠가 저기서 우리 대원들이 걸어 내려올 것 같아서. 문지기가 딴 데 보고 있으면— 못 알아보잖아.\"\n\n서울 가는 미친놈들을 굳이 막지 않는 이유도 그제야 알았다. 그는 북쪽으로 가는 모든 차에, 몰래 답장을 실어 보내는 중이었다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "덕구가 오래 말이 없었다. 대답을 안 하려나 싶어질 때쯤, 순찰봉으로 북쪽 지평선을 가리켰다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "deokgu",
+        "text": "나 소방관이었다. 서울에서.",
+        "displayName": "덕구"
+      },
+      {
+        "kind": "narration",
+        "text": "거기서 또 한 번 말이 끊겼다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…그날 우리 서장이 그랬어. '주민 대피 먼저, 우린 마지막'. 나만 마지막이 못 됐지. 성벽까지 떠밀려 내려왔으니까.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그래서 북쪽을 봐. 언젠가 저기서 우리 대원들이 걸어 내려올 것 같아서. 문지기가 딴 데 보고 있으면— 못 알아보잖아.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "서울 가는 미친놈들을 굳이 막지 않는 이유도 그제야 알았다. 그는 북쪽으로 가는 모든 차에, 몰래 답장을 실어 보내는 중이었다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "덕구가 오래 말이 없었다. 대답을 안 하려나 싶어질 때쯤, 순찰봉으로 북쪽 지평선을 가리켰다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "deokgu",
+        "text": "나 소방관이었다. 서울에서.",
+        "displayName": "덕구"
+      },
+      {
+        "kind": "narration",
+        "text": "거기서 또 한 번 말이 끊겼다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…그날 우리 서장이 그랬어. '주민 대피 먼저, 우린 마지막'. 나만 마지막이 못 됐지. 성벽까지 떠밀려 내려왔으니까.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "그래서 북쪽을 봐. 언젠가 저기서 우리 대원들이 걸어 내려올 것 같아서. 문지기가 딴 데 보고 있으면— 못 알아보잖아.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "서울 가는 미친놈들을 굳이 막지 않는 이유도 그제야 알았다. 그는 북쪽으로 가는 모든 차에, 몰래 답장을 실어 보내는 중이었다.",
+        "displayName": null
+      }
+    ]
+  },
+  {
+    "id": "npc_deokgu_2",
+    "choice": 1,
+    "outcome": 0,
+    "file": "legacy-npc_deokgu_2-1-0.json",
+    "cohortExcluded": true,
+    "kind": "Frozen22 isolated alternate branch: explicit prerequisite flag, not natural play",
+    "text": "성벽을 따라 걷다— 있었다. 사진보다 야윈, 활을 멘 청년. 억양이 밀양이다.\n\n\"저기, 밀양 장터 순덕 씨 아세요?\" 청년의 활이 덜컹 떨어질 뻔했다. \"…어무이를 어떻게.\"\n\n부탁받은 대로, 전언은 안 했다. 대신 밥은 잘 먹고 다니는지만 봤다. 마침 야식 교대 시간이었고, 청년은 주먹밥 두 개를 우물거리고 있었다. 잘 먹고 있었다.\n\n\"어무이 국수는… 여전하죠?\" \"여전하시던데요. 국물이 끝내줘요.\" 청년이 웃다가 코를 훌쩍였다. \"…겨울 전에 한번 내려가야지.\" 그 말이면 됐다. 순덕 씨한테는 밥 잘 먹더라고만 전하면 된다.",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "성벽을 따라 걷다— 있었다. 사진보다 야윈, 활을 멘 청년. 억양이 밀양이다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "저기, 밀양 장터 순덕 씨 아세요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "청년의 활이 덜컹 떨어질 뻔했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "…어무이를 어떻게.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "부탁받은 대로, 전언은 안 했다. 대신 밥은 잘 먹고 다니는지만 봤다. 마침 야식 교대 시간이었고, 청년은 주먹밥 두 개를 우물거리고 있었다. 잘 먹고 있었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어무이 국수는… 여전하죠?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "여전하시던데요. 국물이 끝내줘요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "청년이 웃다가 코를 훌쩍였다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…겨울 전에 한번 내려가야지.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "그 말이면 됐다. 순덕 씨한테는 밥 잘 먹더라고만 전하면 된다.",
+        "displayName": null
+      }
+    ],
+    "textOnlyResult": [
+      {
+        "kind": "narration",
+        "text": "성벽을 따라 걷다— 있었다. 사진보다 야윈, 활을 멘 청년. 억양이 밀양이다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "저기, 밀양 장터 순덕 씨 아세요?",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "청년의 활이 덜컹 떨어질 뻔했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "…어무이를 어떻게.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "부탁받은 대로, 전언은 안 했다. 대신 밥은 잘 먹고 다니는지만 봤다. 마침 야식 교대 시간이었고, 청년은 주먹밥 두 개를 우물거리고 있었다. 잘 먹고 있었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "어무이 국수는… 여전하죠?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "여전하시던데요. 국물이 끝내줘요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "청년이 웃다가 코를 훌쩍였다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_man",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "…겨울 전에 한번 내려가야지.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "그 말이면 됐다. 순덕 씨한테는 밥 잘 먹더라고만 전하면 된다.",
+        "displayName": null
+      }
+    ]
+  }
+]

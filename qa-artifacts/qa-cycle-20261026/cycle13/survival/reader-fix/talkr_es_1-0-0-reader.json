@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "narration",
+    "text": "오늘 잡힌 신호들이 브리핑됐다. 멀리서 온 잡음, 정체불명의 규칙적 신호, 혹은 아무것도 없음."
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "오늘은 아무것도 없었어요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "그것도 보고예요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "eunsu",
+    "text": "'이상 무'도 정보니까요."
+  },
+  {
+    "kind": "narration",
+    "text": "은수가 수첩에 시각을 적었다."
+  },
+  {
+    "kind": "record",
+    "who": "eunsu",
+    "text": "…아, 새벽 세 시쯤 한 번 뭐가 있었는데 제가 졸아서요. 그건 못 들은 걸로 적었어요."
+  }
+]

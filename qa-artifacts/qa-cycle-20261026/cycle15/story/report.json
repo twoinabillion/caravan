@@ -1,0 +1,206 @@
+{
+  "seed": 275003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "yangsan",
+    "ulsan",
+    "yangsan",
+    "miryang",
+    "lake",
+    "miryang",
+    "hapcheon",
+    "geochang",
+    "muju",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 100,
+  "actions": 504,
+  "sourceHash": "c55c4d288c554cc872971334c8ceb590154f952e952dc6f399b68dfae01e82ad",
+  "freshStarts": 1,
+  "attempts": 1,
+  "party": [
+    "minji",
+    "jaeyi",
+    "eunsu"
+  ],
+  "day": 9,
+  "min": 1184,
+  "km": 716,
+  "finalResources": {
+    "food": 18,
+    "water": 25,
+    "fuel": 44.14274833333404,
+    "scrap": 72,
+    "van": 100,
+    "fatigue": 44.50457999999986
+  },
+  "upgrades": {
+    "bench": true
+  },
+  "all40FilesUnchanged": true,
+  "sourceUnchangedDuringRun": true,
+  "runtimeErrors": [],
+  "productionChangesDuringNaturalRun": 0,
+  "statistics": {
+    "reviewedChoices": 100,
+    "rawChars": 35942,
+    "sameEntryChoiceResult": 78,
+    "differentEntryChoiceResult": 22,
+    "sameResult": 88,
+    "differentResult": 12,
+    "newRawPairsVsAllRetained": [
+      "ev_school_classroom:1",
+      "talk_mj_02:1",
+      "talk_mj_17:1"
+    ],
+    "comparisonFiles": [
+      "qa-artifacts/qa-cycle-20261026/cycle1/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle2/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt02/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle3/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle4/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt02/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle5/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle6/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle7/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle8/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle9/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle10/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle11/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle12/story/agent03/attempt02/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle13/story/agent03/attempt01/agent03-trace.json",
+      "qa-artifacts/qa-cycle-20261026/cycle14/story/agent03/attempt01/agent03-trace.json"
+    ],
+    "comparisonCaveat": "Own retained attempts for exact strings; all retained coverage for raw pairs. Repeated/resumed included, partial browser replays excluded. Not fresh-cohort totals or new authored-event counts.",
+    "countByAction": {
+      "new-game": 1,
+      "unpaid-entry-reload": 100,
+      "choice": 100,
+      "paid-result-reload": 100,
+      "explore": 19,
+      "travel": 21,
+      "drive": 43,
+      "trade": 44,
+      "work": 6,
+      "meet-recruit": 3,
+      "camp": 8,
+      "recruit-step": 8,
+      "camp-talk": 7,
+      "accept-companion": 3,
+      "talk": 12,
+      "earned-perk": 5,
+      "board-open": 5,
+      "npc-rumor": 12,
+      "walkfuel": 1,
+      "buy-upgrade": 1,
+      "seoul-enter": 5
+    },
+    "entryReloads": 100,
+    "paidReloads": 100,
+    "paidReaderDeepEqual": 100,
+    "reapplied": 0,
+    "speechCalls": 108,
+    "npcMenus": 24,
+    "notes": 102
+  },
+  "confirmedProse": 1,
+  "confirmedSourceArt": 2,
+  "readerDefectsConfirmed": 0,
+  "candidates": [
+    "S15-C01",
+    "S15-C02"
+  ],
+  "qualityIssues": [
+    "S15-Q01"
+  ],
+  "naturalRechecksThisFix": [
+    "talk_mj_02 choice1: both Minji lines remain Minji, payment and frozen reload equal"
+  ],
+  "otherNaturalRechecks": [
+    "near_hapcheon_sutra water-gift entry/result explicit monk portrait ID",
+    "npc_jaepil_2 tunnel image key and correct question/answer voices",
+    "lc_daejeon_bakery empty-kitchen chalk answer is record",
+    "talk_jy_18 choice1 correct Jaeyi/me/Jaeyi including 결재",
+    "talk_jy_05 choice0 self-contained gift question",
+    "route_mid_fork west: player voice",
+    "seoul_han recorded postman and outstanding letter acknowledged in finale"
+  ],
+  "features": [
+    "Three normal recruit guest/task/road/join sequences: Minji, Jaeyi, Eunsu",
+    "Miryang work/rumours; 8h fishing at publicly discovered lake",
+    "Geochang actor audience; Hapcheon monk water gift; Muju Jaepil candles",
+    "Western market escort: generator failure and partial hand relay, consequence retained",
+    "Legitimate purchased bench extension at Jeonju, allowing third companion",
+    "12 NPC greeting/rumour sequences, 6 field work actions, 5 boards read",
+    "Different late choices: diary to core, ask current roster to keep watch, transfer despite Jaeyi objection",
+    "Letter retained and unfulfilled delivery explicitly acknowledged in ending"
+  ],
+  "policyNotes": "716km includes Minji Ulsan detour, Jaeyi Gimcheon task and public lake spur. One legal fuel recovery at Jeonju (fuel crisis then walkfuel) preserved; no injection, no retry, no infinite camp. Board offers were read but none fit planned direction before target detours completed, so no accepted side quest.",
+  "gaps": [
+    "No Bori, Park, Kangwoo, Leo, Jeju or father exhibit",
+    "No grandfather envelope acquired: seoul_base envelope opening disabled",
+    "Most newly audited personal/pair conversations did not randomly occur; only this-fix Minji02 choice1 is counted naturally rechecked",
+    "No completed board delivery or crafting; only bench upgrade",
+    "No human device/input/audio QA; root handles image crops and browser actions"
+  ],
+  "manualReview": "Read all100 full actual entry/results (35942 raw prose/choice characters), all108 UI.speak/chat lines, 12 NPC first greeting+rumour (24 menus), 6 work outputs, 5 boards, paid upgrade, 102 final note bodies. Compare identical old prose separately:78 same full tuples/22 different,88 same result strings/12 different.",
+  "comparisonCaveat": "Harness summary novelPairs22 uses its older internal baseline and is preserved untouched. Global retained cycles1-14 baseline comparison yields only3 new raw event/choice pairs; neither count means new authored content.",
+  "imageScope": {
+    "contractsRead": [
+      "docs/IMAGE-BIBLE.md",
+      "assets/visual-contract.json"
+    ],
+    "viewedOriginals": [
+      "assets/scenes/event-explore-water.webp",
+      "assets/scenes/arrival-lake.webp"
+    ],
+    "resolverEvidence": "src03g actual tokens + tools/build-html.mjs WebP priority",
+    "notClaimed": "No mobile/in-game crop check by story agent"
+  },
+  "limits": [
+    "Node VM engine simulation, not browser or human playtest",
+    "Presentation/audio/timing are stubbed; no visual/input/audio QA",
+    "Policy sees displayed choices/goals/costs, not future fx/outcomes",
+    "No edits to source or actual user save; no infinite resources"
+  ],
+  "postJourneyFix": {
+    "naturalOriginalPreserved": true,
+    "approvedCopyScopes": [
+      "talk_jy_04 entry",
+      "rq_eunsu_join entry",
+      "Minji-Jaeyi authentication chat first3 lines"
+    ],
+    "copyDelta": "repair/copy-delta.json",
+    "chatPolicy": "Persist same-day chat selection in existing _crewChatSeen daily namespace; original once and relation logic unchanged; no new banter fallback",
+    "ownRegressionCount": 13,
+    "focusedWithExisting": 183,
+    "focusedPassed": 183,
+    "legacyPaidAndTextOnlyPreserved": true,
+    "sourceEditScope": [
+      "src/03-data.js assigned prose only",
+      "src/04e-engine-world.js pickChat",
+      "src/04c-engine-travel.js obsolete lastChat reset"
+    ],
+    "newNaturalRun": false,
+    "finalTeamIntegration": 80,
+    "finalTeamIntegrationPassed": 80,
+    "dialogueErrors": 0,
+    "dialogueSamples": 5803,
+    "productionEditingFinished": true,
+    "verification": "repair/verification.json"
+  }
+}

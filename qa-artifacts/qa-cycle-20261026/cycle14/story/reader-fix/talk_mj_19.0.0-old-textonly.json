@@ -1,0 +1,26 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "아픈 건 그때 끝났어."
+  },
+  {
+    "kind": "narration",
+    "text": "민지가 손을 쥐었다 폈다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "대신 어디에 손 넣으면 안 되는지는 안 까먹지. 특히 배기관. 두 번 데면 진짜 바보야."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…두 번 뎄구나?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "minji",
+    "text": "…세 번."
+  }
+]

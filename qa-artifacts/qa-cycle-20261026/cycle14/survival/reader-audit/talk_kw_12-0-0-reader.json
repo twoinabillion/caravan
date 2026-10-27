@@ -1,0 +1,39 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "국자 끝 두 별. 그 간격 다섯 배. 저기."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…어느 거요. 저 밝은 거?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "아니. 그 옆. …아니. 그래, 그거다."
+  },
+  {
+    "kind": "narration",
+    "text": "하늘에서 제일 안 반짝이는 별 하나가 북쪽이었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "제일 밝은 별이 아니라는 게 요령이다. 위치가 안 변하는 별이지."
+  },
+  {
+    "kind": "narration",
+    "text": "강우가 내 손가락을 조금 옆으로 밀었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "kangwoo",
+    "text": "저 밝은 건 북극성이 아니다. 그 별만 따라가면 서쪽으로 샌다."
+  },
+  {
+    "kind": "narration",
+    "text": "나는 밝은 별에서 손가락을 떼고, 옆의 희미한 별을 다시 찾았다."
+  }
+]

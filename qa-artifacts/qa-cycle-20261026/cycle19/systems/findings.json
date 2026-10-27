@@ -1,0 +1,93 @@
+{
+  "naturalConfirmed": 1,
+  "clarityCandidates": 1,
+  "derivedBoundaryConfirmed": 0,
+  "scopedClean": false,
+  "findings": [
+    {
+      "id": "C19-SYS-01",
+      "status": "confirmed",
+      "kind": "reader media attribution",
+      "trace": 240,
+      "event": "signal_bait",
+      "entryExport": "player02/attempt01/entry-239-signal_bait-export.json",
+      "source": "src/03-data.js signal_bait.text",
+      "actual": [
+        {
+          "kind": "narration",
+          "text": "라디오에서 여자 목소리가 반복된다.",
+          "displayName": null
+        },
+        {
+          "kind": "radio",
+          "who": "radio",
+          "name": "녹음된 구조 요청",
+          "text": "…차량 고장. 아이 둘. 좌표 보냅니다. 물이 없어요…",
+          "displayName": "녹음된 구조 요청"
+        },
+        {
+          "kind": "narration",
+          "text": "같은 문장이 정확히 같은 간격으로 여덟 번.",
+          "displayName": null
+        },
+        {
+          "kind": "ai",
+          "who": "cheollian",
+          "name": "천리안 방송",
+          "text": "(잡음)",
+          "displayName": "천리안 방송"
+        },
+        {
+          "kind": "radio",
+          "who": "radio",
+          "name": "녹음된 구조 요청",
+          "text": "…차량 고장. 아이 둘. 좌표 보냅니다. 물이 없어요…",
+          "displayName": "녹음된 구조 요청"
+        },
+        {
+          "kind": "narration",
+          "text": "아홉 번째에도 억양이 똑같았다. 사람이 지치면 목소리가 변한다. 이 목소리는 변하지 않는다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "녹음이거나, 아니면 지친 적이 없는 사람이다.",
+          "displayName": null
+        }
+      ],
+      "reason": "Repeated recorded rescue request has no evidence that Tianyan is its source. The isolated <span class=\"ai\">(잡음)</span> becomes ai/cheollian/천리안 방송, while both adjacent requests are radio/녹음된 구조 요청.",
+      "minimalDirection": "Only this noise span should become ordinary narration or retain the same radio source. Preserve all outcomes, choices, effects and paid history.",
+      "parentDisposition": "Root independently read every outcome and agreed that Tianyan attribution has no evidence. Source stays frozen until authorization."
+    },
+    {
+      "id": "C19-SYS-C01",
+      "status": "clarity candidate",
+      "kind": "introduced merchant role label",
+      "trace": 70,
+      "event": "crisis_nofuel",
+      "entryExport": "player02/attempt01/entry-69-crisis_nofuel-export.json",
+      "actual": [
+        {
+          "kind": "narration",
+          "text": "반나절 만에 만수네 만물상이 지나갔다!",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_worker",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "어이~ 이럴 줄 알고 기름 챙겨왔지~",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "바가지를 썼지만 목숨값이다.",
+          "displayName": null
+        }
+      ],
+      "reason": "Result introduces 만수네 만물상 immediately before the line, but reader renders passer_worker/???. The text does not prove this is NPC 만수 himself. A merchant role label may be clearer; do not invent that identity.",
+      "minimalDirection": "If approved, label the already-introduced 만물상 상인; no global unknown fallback change."
+    }
+  ]
+}

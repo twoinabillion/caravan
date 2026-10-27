@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "narration",
+    "text": "물을 받아든 박 선생이 한 모금 마셨다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "따뜻하네. …내가 다 마셔도 되나?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "네. 천천히 드세요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "그렇군."
+  },
+  {
+    "kind": "narration",
+    "text": "대답을 듣고도 한 모금 더 마시고 나서야 컵을 내 쪽으로 조금 기울였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "지금은 말하지 말자는 거지? 알겠네."
+  },
+  {
+    "kind": "narration",
+    "text": "창밖을 보며 물이 식을 때까지 앉아 있었다."
+  }
+]

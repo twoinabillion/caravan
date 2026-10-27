@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "narration",
+    "text": "신작이 발표됐고, 차 안 반응은 늘 그렇듯 절반의 침묵과 절반의 신음이었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "이 정도면 중박이군."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "어디가요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "뒷부분. 앞부분은 나도 좀…"
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 인정하다 말고 고개를 저었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "아니, 앞부분도 괜찮았어. 전달이 문제였지."
+  },
+  {
+    "kind": "narration",
+    "text": "반려 처리했다. 재제출은 내일 또 올 것이다."
+  }
+]

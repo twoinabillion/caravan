@@ -1,0 +1,567 @@
+{
+  "cohortExcluded": true,
+  "classification": "source-context-fixture-not-natural-play",
+  "rows": [
+    {
+      "id": "gp_envelope",
+      "authored": {
+        "id": "gp_envelope",
+        "pillar": "유산",
+        "minParty": 1,
+        "type": "동행",
+        "w": 8,
+        "once": true,
+        "title": "수첩 뒤의 봉투",
+        "text": "정비 수첩을 넘기다가— 뒤표지 안쪽 종이가 들떠 있는 걸 처음 알았다.\n\n칼로 조심히 뜯자 봉투가 나왔다. 종이치고 묵직했다. 안에 쪽지 말고 다른 것이 한 장 더 든 모양이다. 겉면에 할아버지 글씨.\n\n「남산 보고 열어라」",
+        "choices": [
+          {
+            "label": "…열어본다",
+            "out": [
+              {
+                "p": 1,
+                "turnSpeakers": [
+                  {
+                    "kind": "record",
+                    "who": "record",
+                    "name": "할아버지의 쪽지",
+                    "medium": "paper"
+                  }
+                ],
+                "text": "봉투를 열었다. 안에는 쪽지 한 장.\n\n\"아직 남산 아니지 않냐.\"\n\n…그리고 그 뒤에 진짜 봉투가 한 겹 더 있었다. 「이번엔 진짜다. 남산 보고 열어라」\n\n다들 한참 웃었고, 웃음 끝이 조금 젖었다. 손주가 어떤 인간인지 정확히 아는 사람의 이중 포장이었다.\n\n속봉투는 도로 수첩 뒤에 꽂았다. 남산까지 갖고 간다.",
+                "fx": {
+                  "moodAll": 5,
+                  "item": {
+                    "할아버지의 봉투": 1
+                  },
+                  "flag": "gp_envelope_found",
+                  "note": {
+                    "type": "사건",
+                    "title": "이중 봉투",
+                    "body": "\"아직 남산 아니지 않냐.\" 손주를 정확히 아는 이중 포장. 속봉투는 남산까지.",
+                    "links": [
+                      "할아버지",
+                      "남산"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "참는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "봉투를 수첩 뒤에 도로 꽂았다. 남산 보고 열라면, 남산 보고 연다.\n\n수첩을 덮고도 시선이 다시 뒷표지로 갔다. 봉투를 꽂은 자리가 살짝 불룩했다.",
+                "fx": {
+                  "moodAll": 3,
+                  "item": {
+                    "할아버지의 봉투": 1
+                  },
+                  "flag": "gp_envelope_found",
+                  "note": {
+                    "type": "사건",
+                    "title": "남산 보고 열어라",
+                    "body": "봉투는 미개봉. 약속은 약속이다. 수첩 뒷표지가 불룩하다.",
+                    "links": [
+                      "할아버지",
+                      "남산"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "정비 수첩을 넘기다가— 뒤표지 안쪽 종이가 들떠 있는 걸 처음 알았다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "칼로 조심히 뜯자 봉투가 나왔다. 종이치고 묵직했다. 안에 쪽지 말고 다른 것이 한 장 더 든 모양이다. 겉면에 할아버지 글씨.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "「남산 보고 열어라」",
+          "displayName": null
+        }
+      ],
+      "outcomes": [
+        {
+          "choice": 0,
+          "outcome": 0,
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "봉투를 열었다. 안에는 쪽지 한 장.",
+              "displayName": null
+            },
+            {
+              "kind": "record",
+              "who": "record",
+              "name": "할아버지의 쪽지",
+              "medium": "paper",
+              "text": "아직 남산 아니지 않냐.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "…그리고 그 뒤에 진짜 봉투가 한 겹 더 있었다. 「이번엔 진짜다. 남산 보고 열어라」",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "다들 한참 웃었고, 웃음 끝이 조금 젖었다. 손주가 어떤 인간인지 정확히 아는 사람의 이중 포장이었다.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "속봉투는 도로 수첩 뒤에 꽂았다. 남산까지 갖고 간다.",
+              "displayName": null
+            }
+          ],
+          "fx": {
+            "moodAll": 5,
+            "item": {
+              "할아버지의 봉투": 1
+            },
+            "flag": "gp_envelope_found",
+            "note": {
+              "type": "사건",
+              "title": "이중 봉투",
+              "body": "\"아직 남산 아니지 않냐.\" 손주를 정확히 아는 이중 포장. 속봉투는 남산까지.",
+              "links": [
+                "할아버지",
+                "남산"
+              ]
+            }
+          }
+        },
+        {
+          "choice": 1,
+          "outcome": 0,
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "봉투를 수첩 뒤에 도로 꽂았다. 남산 보고 열라면, 남산 보고 연다.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "수첩을 덮고도 시선이 다시 뒷표지로 갔다. 봉투를 꽂은 자리가 살짝 불룩했다.",
+              "displayName": null
+            }
+          ],
+          "fx": {
+            "moodAll": 3,
+            "item": {
+              "할아버지의 봉투": 1
+            },
+            "flag": "gp_envelope_found",
+            "note": {
+              "type": "사건",
+              "title": "남산 보고 열어라",
+              "body": "봉투는 미개봉. 약속은 약속이다. 수첩 뒷표지가 불룩하다.",
+              "links": [
+                "할아버지",
+                "남산"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "ev_parking_evs",
+      "authored": {
+        "id": "ev_parking_evs",
+        "type": "탐색",
+        "w": 8,
+        "region": [
+          "mid",
+          "north"
+        ],
+        "title": "충전소의 차들",
+        "text": "대형 주차장에 전기차들이 충전기에 연결된 채 줄지어 서 있다. 마지막으로 충전하던 날의 모습 그대로다.\n\n계기판마다 「충전 87%」, 「충전 완료」— 영영 출발하지 못한 숫자들.\n\n배터리가 남은 차도 있을지 모른다.",
+        "choices": [
+          {
+            "label": "쓸 만한 부품을 뜯는다",
+            "out": [
+              {
+                "p": 2,
+                "text": "멀쩡한 배터리 셀과 배선을 챙겼다. 우리 차 예비 전력으로 요긴하다.",
+                "fx": {
+                  "item": {
+                    "부품": 1
+                  },
+                  "time": 45,
+                  "fatigue": 3
+                }
+              },
+              {
+                "p": 1,
+                "text": "대부분 방전됐거나 이미 뜯겼다. 그래도 공구함 몇 개와 삼각대는 챙겼다.",
+                "fx": {
+                  "scrap": 5,
+                  "time": 40
+                }
+              }
+            ]
+          },
+          {
+            "label": "민지가 배터리를 살린다",
+            "req": {
+              "comp": "minji"
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "민지가 셀 상태를 하나하나 재더니, 살아 있는 것만 병렬로 묶었다.\n\n\"열두 개 중에 네 개— 아니, 세 개. 하나는 부풀었어.\"\n\n\"부푼 건 빼 놨지?\"\n\n\"응. 터질 수 있으니까 뺐지.\" 민지가 부푼 셀을 멀찍이 치웠다. \"세 개면 며칠은 전깃불 켜고 자겠네.\"\n\n오랜만에 밤에 불을 켤 수 있게 됐다.",
+                "fx": {
+                  "item": {
+                    "부품": 1
+                  },
+                  "time": 40,
+                  "mood": {
+                    "minji": 5
+                  },
+                  "moodAll": 2
+                },
+                "speakers": [
+                  "minji"
+                ],
+                "turnSpeakers": [
+                  "minji",
+                  "me",
+                  "minji",
+                  "minji"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "대형 주차장에 전기차들이 충전기에 연결된 채 줄지어 서 있다. 마지막으로 충전하던 날의 모습 그대로다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "계기판마다 「충전 87%」, 「충전 완료」— 영영 출발하지 못한 숫자들.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "배터리가 남은 차도 있을지 모른다.",
+          "displayName": null
+        }
+      ],
+      "outcomes": [
+        {
+          "choice": 0,
+          "outcome": 0,
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "멀쩡한 배터리 셀과 배선을 챙겼다. 우리 차 예비 전력으로 요긴하다.",
+              "displayName": null
+            }
+          ],
+          "fx": {
+            "item": {
+              "부품": 1
+            },
+            "time": 45,
+            "fatigue": 3
+          }
+        },
+        {
+          "choice": 0,
+          "outcome": 1,
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "대부분 방전됐거나 이미 뜯겼다. 그래도 공구함 몇 개와 삼각대는 챙겼다.",
+              "displayName": null
+            }
+          ],
+          "fx": {
+            "scrap": 5,
+            "time": 40
+          }
+        },
+        {
+          "choice": 1,
+          "outcome": 0,
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "민지가 셀 상태를 하나하나 재더니, 살아 있는 것만 병렬로 묶었다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "minji",
+              "text": "열두 개 중에 네 개— 아니, 세 개. 하나는 부풀었어.",
+              "displayName": "민지"
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "부푼 건 빼 놨지?",
+              "displayName": "상혁"
+            },
+            {
+              "kind": "dialogue",
+              "who": "minji",
+              "text": "응. 터질 수 있으니까 뺐지.",
+              "displayName": "민지"
+            },
+            {
+              "kind": "narration",
+              "text": "민지가 부푼 셀을 멀찍이 치웠다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "minji",
+              "text": "세 개면 며칠은 전깃불 켜고 자겠네.",
+              "displayName": "민지"
+            },
+            {
+              "kind": "narration",
+              "text": "오랜만에 밤에 불을 켤 수 있게 됐다.",
+              "displayName": null
+            }
+          ],
+          "fx": {
+            "item": {
+              "부품": 1
+            },
+            "time": 40,
+            "mood": {
+              "minji": 5
+            },
+            "moodAll": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "lc_daegu_makchang",
+      "authored": {
+        "id": "lc_daegu_makchang",
+        "minParty": 1,
+        "type": "조우",
+        "w": 12,
+        "once": true,
+        "nearNode": [
+          "daegu"
+        ],
+        "turnSpeakers": [
+          {
+            "who": "passer_woman",
+            "name": "막창집 사장님"
+          }
+        ],
+        "title": "막창 골목의 불",
+        "text": "대구 외곽, 골목 안에서 숯불 냄새가 차를 습격한다.\n\n포장마차 하나가 영업 중이다. \"막창 굽습니더. 고철 받고예.\"\n\n연기가 신호탄처럼 오른다. 이건 도저히 그냥 못 지나간다.",
+        "choices": [
+          {
+            "label": "막창을 굽는다 (고철 5)",
+            "req": {
+              "scrap": 5
+            },
+            "out": [
+              {
+                "p": 1,
+                "turnSpeakers": [
+                  "me",
+                  {
+                    "who": "passer_woman",
+                    "name": "막창집 사장님"
+                  },
+                  "me",
+                  {
+                    "who": "passer_woman",
+                    "name": "막창집 사장님"
+                  },
+                  {
+                    "who": "passer_woman",
+                    "name": "막창집 사장님"
+                  },
+                  {
+                    "who": "passer_woman",
+                    "name": "막창집 사장님"
+                  }
+                ],
+                "text": "지글지글. 다들 불판에서 눈을 못 뗐다.\n\n\"이거 언제 뒤집어요?\"\n\n\"아직.\"\n\n\"지금 아니에요?\"\n\n\"아직이라니까.\"\n\n\"…지금.\"\n\n\"마이 무으이소. 요즘 손님이 귀해가.\" 사장님이 된장 소스를 아낌없이 퍼줬다.\n\n불판이 다 비고도 아무도 일어나지 않았다.",
+                "fx": {
+                  "scrap": -5,
+                  "food": 1,
+                  "moodAll": 9,
+                  "fatigue": -8,
+                  "note": {
+                    "type": "사건",
+                    "title": "막창 골목",
+                    "body": "숯불, 된장, 지글지글. 불판이 빈 뒤에도 일어나지 않았다."
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "냄새만 포장한다",
+            "out": [
+              {
+                "p": 1,
+                "text": "창문을 열고 천천히 지나갔다. 냄새는 공짜다.\n\n조금 뒤 누군가 조용히 말했다. \"…돌아가면 안 될까.\" 기각됐지만 아무도 그 말을 나무라지 않았다.",
+                "fx": {
+                  "moodAll": -1
+                },
+                "turnSpeakers": [
+                  "party_first"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "대구 외곽, 골목 안에서 숯불 냄새가 차를 습격한다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "포장마차 하나가 영업 중이다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_woman",
+          "name": "막창집 사장님",
+          "text": "막창 굽습니더. 고철 받고예.",
+          "displayName": "막창집 사장님"
+        },
+        {
+          "kind": "narration",
+          "text": "연기가 신호탄처럼 오른다. 이건 도저히 그냥 못 지나간다.",
+          "displayName": null
+        }
+      ],
+      "outcomes": [
+        {
+          "choice": 0,
+          "outcome": 0,
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "지글지글. 다들 불판에서 눈을 못 뗐다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "이거 언제 뒤집어요?",
+              "displayName": "상혁"
+            },
+            {
+              "kind": "dialogue",
+              "who": "passer_woman",
+              "name": "막창집 사장님",
+              "text": "아직.",
+              "displayName": "막창집 사장님"
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "지금 아니에요?",
+              "displayName": "상혁"
+            },
+            {
+              "kind": "dialogue",
+              "who": "passer_woman",
+              "name": "막창집 사장님",
+              "text": "아직이라니까.",
+              "displayName": "막창집 사장님"
+            },
+            {
+              "kind": "dialogue",
+              "who": "passer_woman",
+              "name": "막창집 사장님",
+              "text": "…지금.",
+              "displayName": "막창집 사장님"
+            },
+            {
+              "kind": "dialogue",
+              "who": "passer_woman",
+              "name": "막창집 사장님",
+              "text": "마이 무으이소. 요즘 손님이 귀해가.",
+              "displayName": "막창집 사장님"
+            },
+            {
+              "kind": "narration",
+              "text": "사장님이 된장 소스를 아낌없이 퍼줬다.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "불판이 다 비고도 아무도 일어나지 않았다.",
+              "displayName": null
+            }
+          ],
+          "fx": {
+            "scrap": -5,
+            "food": 1,
+            "moodAll": 9,
+            "fatigue": -8,
+            "note": {
+              "type": "사건",
+              "title": "막창 골목",
+              "body": "숯불, 된장, 지글지글. 불판이 빈 뒤에도 일어나지 않았다."
+            }
+          }
+        },
+        {
+          "choice": 1,
+          "outcome": 0,
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "창문을 열고 천천히 지나갔다. 냄새는 공짜다.",
+              "displayName": null
+            },
+            {
+              "kind": "narration",
+              "text": "조금 뒤 누군가 조용히 말했다.",
+              "displayName": null
+            },
+            {
+              "kind": "dialogue",
+              "who": "minji",
+              "text": "…돌아가면 안 될까.",
+              "displayName": "민지"
+            },
+            {
+              "kind": "narration",
+              "text": "기각됐지만 아무도 그 말을 나무라지 않았다.",
+              "displayName": null
+            }
+          ],
+          "fx": {
+            "moodAll": -1
+          }
+        }
+      ]
+    }
+  ]
+}

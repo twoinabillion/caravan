@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "narration",
+    "text": "끈질기게 졸랐더니 비결이 나왔다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "간을 두 번에 나눠서 해. 처음에 반, 마지막에 반."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…그게 다예요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "그게 다야. 뭘 더 바라나."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 국자로 냄비를 두 번 두드렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "약도 그래. 한 번에 다 쓰면 독이고."
+  },
+  {
+    "kind": "narration",
+    "text": "비결을 알고 먹었는데도 여전히 맛이 달랐다. 그건 설명이 안 됐다."
+  }
+]

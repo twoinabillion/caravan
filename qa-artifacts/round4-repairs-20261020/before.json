@@ -1,0 +1,432 @@
+{
+  "ids": [
+    "initiative_kangwoo_route",
+    "comp_brake",
+    "ev_carsick_comp",
+    "gw_gangneung",
+    "talk_leo_11",
+    "up_garden_roster",
+    "route_ridge_rescue",
+    "ev_resistance_graffiti",
+    "ev_mobile_clinic"
+  ],
+  "engineSha": "7c742cfe5abf86ce0964fa1b868e3a71e40af2cee1b11001df58ee62755d5116",
+  "mechanics": [
+    {
+      "id": "initiative_kangwoo_route",
+      "type": "동행",
+      "w": 8,
+      "once": true,
+      "needsComp": "kangwoo",
+      "needBond": [
+        "kangwoo",
+        5
+      ],
+      "minPursuit": 1,
+      "title": "강우가 고른 우회로",
+      "choices": [
+        {
+          "req": {
+            "trustComp": "kangwoo"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 55,
+                "pursuit": -1,
+                "mood": {
+                  "kangwoo": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "trustComp": "eunsu"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 30,
+                "pursuit": -1,
+                "mood": {
+                  "kangwoo": 3,
+                  "eunsu": 3
+                },
+                "relation": {
+                  "between": [
+                    "kangwoo",
+                    "eunsu"
+                  ],
+                  "amount": 1,
+                  "reason": "관측망을 함께 읽음"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comp_brake",
+      "minParty": 1,
+      "type": "동행",
+      "w": 6,
+      "title": "급브레이크",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 4
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 10,
+                "moodAll": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ev_carsick_comp",
+      "type": "동행",
+      "w": 8,
+      "needsComp": "eunsu",
+      "region": [
+        "mid",
+        "north"
+      ],
+      "title": "멀미",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 25,
+                "mood": {
+                  "eunsu": 4
+                },
+                "moodAll": 1
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "comp": "parkss"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "eunsu": 3,
+                  "parkss": 3
+                },
+                "time": 10
+              },
+              "speakers": [
+                "parkss"
+              ]
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 15,
+                "mood": {
+                  "eunsu": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gw_gangneung",
+      "type": "스토리",
+      "w": 0,
+      "locEvent": "gangneung",
+      "once": true,
+      "title": "강릉 — 세우는 사람들",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "flag": "cell_gangneung_help",
+                "item": {
+                  "의약품": 2
+                },
+                "moodAll": 4
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_11",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "leo",
+      "needRain": true,
+      "title": "레오 — 지붕 드럼",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "leo": 4
+                },
+                "moodAll": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "up_garden_roster",
+      "type": "동행",
+      "w": 18,
+      "once": true,
+      "needUp": "garden",
+      "minParty": 2,
+      "title": "지붕 텃밭 당번",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 3,
+                "food": 1,
+                "flag": "garden_roster"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "route_ridge_rescue",
+      "type": "구조",
+      "w": 0,
+      "fixed": true,
+      "once": true,
+      "scene": "route-ridge-rigging-v2",
+      "title": "능선 아래의 네 사람",
+      "combat": {
+        "phase": 1,
+        "total": 3,
+        "step": "멈춰 세우기",
+        "threat": "비탈에 걸린 우편 수레",
+        "objective": "비탈이 다시 움직이기 전에 네 사람을 도로로 올린다",
+        "terrain": "젖은 절개지와 무너진 돌망",
+        "stakes": "수레가 계곡 쪽으로 밀리면 사람과 약 상자를 함께 잃는다",
+        "intent": "젖은 돌망이 한 번 더 내려앉기 전에 사람과 차의 무게를 고정해야 한다",
+        "counters": {
+          "고정": "달구지를 닻으로 쓴다",
+          "지휘": "하중을 사람별로 나눈다"
+        }
+      },
+      "choices": [
+        {
+          "tactic": "고정",
+          "prep": 1,
+          "terrainFit": 2,
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 15,
+                "combatStart": {
+                  "id": "ridge_rescue",
+                  "kind": "구조",
+                  "threat": "비탈에 걸린 우편 수레",
+                  "terrain": "젖은 절개지와 무너진 돌망",
+                  "objective": "네 사람을 도로로 올린다",
+                  "stakes": "비탈이 다시 움직이기 전에 끝내야 한다",
+                  "pressure": 1
+                },
+                "combatEdge": 2,
+                "chain": "route_ridge_anchor"
+              },
+              "sfx": "metal"
+            }
+          ]
+        },
+        {
+          "tactic": "지휘",
+          "prep": 1,
+          "terrainFit": 1,
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 10,
+                "combatStart": {
+                  "id": "ridge_rescue",
+                  "kind": "구조",
+                  "threat": "비탈에 걸린 우편 수레",
+                  "terrain": "젖은 절개지와 무너진 돌망",
+                  "objective": "네 사람을 도로로 올린다",
+                  "stakes": "비탈이 다시 움직이기 전에 끝내야 한다",
+                  "pressure": 1
+                },
+                "combatEdge": 1,
+                "combatPressure": -1,
+                "chain": "route_ridge_anchor"
+              },
+              "sfx": "cover"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ev_resistance_graffiti",
+      "type": "사건",
+      "w": 7,
+      "region": [
+        "mid",
+        "north"
+      ],
+      "title": "담벼락의 표식",
+      "choices": [
+        {
+          "req": {
+            "comp": "kangwoo"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "kangwoo": 5
+                },
+                "pursuit": -2
+              },
+              "speakers": [
+                "kangwoo"
+              ]
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "pursuit": -1,
+                "moodAll": 2,
+                "time": 20
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "time": 40,
+                "fuel": -2
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 3,
+                "time": 15
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ev_mobile_clinic",
+      "type": "조우",
+      "w": 7,
+      "once": true,
+      "region": [
+        "mid",
+        "north"
+      ],
+      "title": "이동 진료소",
+      "choices": [
+        {
+          "req": {
+            "item": "의약품"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 6
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "comp": "parkss"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 60,
+                "mood": {
+                  "parkss": 6
+                },
+                "moodAll": 4,
+                "item": {
+                  "의약품": 1
+                }
+              },
+              "speakers": [
+                "parkss"
+              ]
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": -2
+              }
+            }
+          ]
+        }
+      ],
+      "scene": "event-road-clinic-bus-v2"
+    }
+  ]
+}

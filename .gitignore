@@ -28,3 +28,7 @@ trailer/rec/
 /design-consultation-all-screens.html
 /서울까지400km.html
 /.worktrees/
+
+# Raw local QA archives are large. Deliberately selected reports and regression
+# dependencies are tracked; add new required fixtures explicitly with git add -f.
+/qa-artifacts/

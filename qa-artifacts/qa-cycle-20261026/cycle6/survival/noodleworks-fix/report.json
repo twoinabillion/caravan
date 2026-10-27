@@ -1,0 +1,44 @@
+{
+  "finding": "Systems cycle6 trace72 exp_noodleworks[0]:08:30→10:30 paid result certifies that evening meal",
+  "cause": "Unscheduled120-minute outcome used future dinner completion prose",
+  "scope": "Only src/03-data.js exp_noodleworks.choices[0].out[0].text sentence",
+  "change": {
+    "old": "그날 저녁은 잔치국수",
+    "new": "뽑은 면으로 잔치국수를 끓였다"
+  },
+  "preserved": [
+    "all event and choice IDs and indices",
+    "req/cost/probability",
+    "time120, food4, moodAll6, original note",
+    "paid current and historical receipt"
+  ],
+  "test": {
+    "red01": {
+      "pass": 2,
+      "fail": 3
+    },
+    "green01": {
+      "pass": 40,
+      "fail": 1,
+      "reason": "fixture lacked already-eaten day3 breakfast, corrected fixture rather than production"
+    },
+    "green02": {
+      "pass": 42,
+      "fail": 0
+    },
+    "newRegressionTests": 6,
+    "timingCases": [
+      510,
+      660,
+      1080,
+      1380
+    ],
+    "naturalSaveReplay": "systems seed266002 entry71, day3 min510→630, food9→13, current paid replay applied=false",
+    "historicalPaidEvidence": "constructed saved historical receipt, not an authentic old-version save file"
+  },
+  "productionAdditionalEditPlanned": false,
+  "wholeEngineHash": "c9ee775d64e74aee532d84c8e9a56bd3602a3f2c6794aef30217f89e002d7cfb",
+  "rawByteConcatHash": "bb8bb6581a4c762341c2b3bd3a35392a90fa4039f66ac7caa2f842c31574e7dd",
+  "hashNote": "Current shared files at handoff; same16-file order and LF algorithm as cycle6 baseline. Other agents may finish their separately owned fixes.",
+  "previousSurvivalRound": "cycle6/survival report02 remains0 confirmed within its own natural journey; this defect was found on systems path"
+}

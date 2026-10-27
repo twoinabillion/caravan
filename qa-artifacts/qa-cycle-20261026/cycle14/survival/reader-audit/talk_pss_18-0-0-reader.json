@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "약 이름을 애들이 읽고 함부로 사 먹을까 봐. 약사만 읽게 쓰는 버릇이 들었어."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…그럼 다른 약사는 읽어요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "못 읽지. 그건 나도 나중에 알았고."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 메모를 들어 보였다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "이건 「푹 잘 것」이라고 쓴 거야. 자네 처방."
+  },
+  {
+    "kind": "narration",
+    "text": "어느 획이 「푹」인지는 끝내 못 찾았다. 종이는 접어 두고, 어깨에 들어간 힘부터 풀었다."
+  }
+]

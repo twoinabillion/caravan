@@ -1,0 +1,93 @@
+{
+  "evidence": "Read-only actual parser diagnostic loaded from natural entry. All authored outcomes, not extra journey choices.",
+  "cohortExcluded": true,
+  "sourceSave": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle15/systems/player02/attempt01/entry-329-ev_container_port-export.json",
+  "entry": [
+    {
+      "kind": "narration",
+      "text": "평택 항구도로. 컨테이너가 산맥처럼 쌓였다. 전부 정부 봉인 스티커가 붙은 채로.",
+      "displayName": null
+    },
+    {
+      "kind": "dialogue",
+      "who": "passer_woman",
+      "name": "???",
+      "speakerUncertain": true,
+      "text": "정리 대상 — 개봉 금지.",
+      "displayName": "???"
+    },
+    {
+      "kind": "narration",
+      "text": "오래전 날짜. 천리안의 글씨체다.",
+      "displayName": null
+    },
+    {
+      "kind": "narration",
+      "text": "봉인 하나가 살짝 뜯겨 있다.",
+      "displayName": null
+    }
+  ],
+  "outcomes": [
+    {
+      "choice": 0,
+      "outcome": 0,
+      "label": "뜯긴 컨테이너를 연다",
+      "text": "안엔 구호물자— 담요, 통조림, 정수 알약이 가득했다. 배급되지 못하고 봉인된 채 여러 해.\n\n필요한 만큼만 챙겼다.",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "안엔 구호물자— 담요, 통조림, 정수 알약이 가득했다. 배급되지 못하고 봉인된 채 여러 해.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "필요한 만큼만 챙겼다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "choice": 0,
+      "outcome": 1,
+      "label": "뜯긴 컨테이너를 연다",
+      "text": "문을 열자 안에서 서류 뭉치만 쏟아졌다. \"정리 명단\"이라 적힌 이름의 바다.\n\n…아무것도 챙기지 못하고 문을 닫았다.",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "문을 열자 안에서 서류 뭉치만 쏟아졌다. \"정리 명단\"이라 적힌 이름의 바다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "…아무것도 챙기지 못하고 문을 닫았다.",
+          "displayName": null
+        }
+      ]
+    },
+    {
+      "choice": 1,
+      "outcome": 0,
+      "label": "봉인을 건드리지 않는다",
+      "text": "\"개봉 금지.\" 글씨가 천리안 것이다. 손잡이까지 갔던 손을 도로 뺐다.\n\n함정인지 미끼인지 가릴 방법이 없었다. 컨테이너 산맥을 그대로 지나쳤다.",
+      "turns": [
+        {
+          "kind": "record",
+          "who": "record",
+          "name": "기록",
+          "text": "개봉 금지.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "글씨가 천리안 것이다. 손잡이까지 갔던 손을 도로 뺐다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "함정인지 미끼인지 가릴 방법이 없었다. 컨테이너 산맥을 그대로 지나쳤다.",
+          "displayName": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "id": "ev_container_port",
+    "choice": 0,
+    "j": 0,
+    "file": "ev_container_port-0-0-paid.json",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "안엔 구호물자— 담요, 통조림, 정수 알약이 가득했다. 배급되지 못하고 봉인된 채 여러 해.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "필요한 만큼만 챙겼다.",
+        "displayName": null
+      }
+    ],
+    "text": "안엔 구호물자— 담요, 통조림, 정수 알약이 가득했다. 배급되지 못하고 봉인된 채 여러 해.\n\n필요한 만큼만 챙겼다."
+  },
+  {
+    "id": "ev_container_port",
+    "choice": 0,
+    "j": 1,
+    "file": "ev_container_port-0-1-paid.json",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "문을 열자 안에서 서류 뭉치만 쏟아졌다. \"정리 명단\"이라 적힌 이름의 바다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "…아무것도 챙기지 못하고 문을 닫았다.",
+        "displayName": null
+      }
+    ],
+    "text": "문을 열자 안에서 서류 뭉치만 쏟아졌다. \"정리 명단\"이라 적힌 이름의 바다.\n\n…아무것도 챙기지 못하고 문을 닫았다."
+  },
+  {
+    "id": "ev_container_port",
+    "choice": 1,
+    "j": 0,
+    "file": "ev_container_port-1-0-paid.json",
+    "result": [
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "기록",
+        "text": "개봉 금지.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "글씨가 천리안 것이다. 손잡이까지 갔던 손을 도로 뺐다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "함정인지 미끼인지 가릴 방법이 없었다. 컨테이너 산맥을 그대로 지나쳤다.",
+        "displayName": null
+      }
+    ],
+    "text": "\"개봉 금지.\" 글씨가 천리안 것이다. 손잡이까지 갔던 손을 도로 뺐다.\n\n함정인지 미끼인지 가릴 방법이 없었다. 컨테이너 산맥을 그대로 지나쳤다."
+  },
+  {
+    "id": "exp_radioshop",
+    "choice": 0,
+    "j": 0,
+    "file": "exp_radioshop-0-0-paid.json",
+    "result": [
+      {
+        "kind": "narration",
+        "text": "진공관, 배선, 콘덴서. 오래된 장비를 살릴 수 있는 귀한 부품들이다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "계산대 아래에 굴러다니던 고철도 챙겼다.",
+        "displayName": null
+      },
+      {
+        "kind": "record",
+        "who": "record",
+        "name": "기록",
+        "text": "수리비는 형편껏",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "팻말은 그 자리에 뒀다.",
+        "displayName": null
+      }
+    ],
+    "text": "진공관, 배선, 콘덴서. 오래된 장비를 살릴 수 있는 귀한 부품들이다.\n\n계산대 아래에 굴러다니던 고철도 챙겼다. \"수리비는 형편껏\" 팻말은 그 자리에 뒀다."
+  }
+]

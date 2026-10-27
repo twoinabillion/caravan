@@ -1,0 +1,521 @@
+[
+  {
+    "id": "vg_crossing",
+    "entry": [
+      {
+        "who": "record",
+        "kind": "record",
+        "name": "건널목 안내문",
+        "medium": "written"
+      }
+    ],
+    "out": {
+      "0.0": []
+    }
+  },
+  {
+    "id": "ev_carousel_park",
+    "entry": [
+      {
+        "who": "record",
+        "kind": "record",
+        "name": "매표소 안내문",
+        "medium": "written"
+      }
+    ],
+    "out": {
+      "0.0": [],
+      "1.0": []
+    }
+  },
+  {
+    "id": "ev_milestone_cairn",
+    "entry": [
+      {
+        "who": "record",
+        "kind": "record",
+        "name": "돌에 적힌 소원",
+        "medium": "written"
+      },
+      {
+        "who": "record",
+        "kind": "record",
+        "name": "돌에 적힌 소원",
+        "medium": "written"
+      },
+      {
+        "who": "record",
+        "kind": "record",
+        "name": "돌에 적힌 소원",
+        "medium": "written"
+      }
+    ],
+    "out": {
+      "0.0": [
+        {
+          "who": "record",
+          "kind": "record",
+          "name": "내가 돌에 적은 소원",
+          "medium": "written"
+        }
+      ],
+      "1.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "roadbeat_100_divide",
+    "entry": null,
+    "out": {
+      "0.0": [],
+      "1.0": [
+        {
+          "who": "record",
+          "kind": "record",
+          "name": "함께 되짚은 천리안의 회유",
+          "medium": "memory",
+          "timeKind": "memory",
+          "timeLabel": "조금 전 들은 회유 · 함께 되짚는 말"
+        }
+      ]
+    }
+  },
+  {
+    "id": "wx_dust_vendor",
+    "entry": [
+      {
+        "who": "passer_man",
+        "name": "방독면 장수"
+      }
+    ],
+    "out": {
+      "0.0": [
+        {
+          "who": "passer_man",
+          "name": "방독면 장수"
+        },
+        "me",
+        {
+          "who": "passer_man",
+          "name": "방독면 장수"
+        },
+        "me",
+        {
+          "who": "passer_man",
+          "name": "방독면 장수"
+        }
+      ],
+      "1.0": [
+        {
+          "who": "passer_man",
+          "name": "방독면 장수"
+        }
+      ]
+    }
+  },
+  {
+    "id": "meet_theater",
+    "entry": [
+      {
+        "who": "passer_worker",
+        "name": "극단 단원"
+      }
+    ],
+    "out": {
+      "0.0": [
+        "me"
+      ],
+      "1.0": []
+    }
+  },
+  {
+    "id": "lc_daegu_makchang",
+    "entry": [
+      {
+        "who": "passer_woman",
+        "name": "막창집 사장님"
+      }
+    ],
+    "out": {
+      "0.0": [
+        "me",
+        {
+          "who": "passer_woman",
+          "name": "막창집 사장님"
+        },
+        "me",
+        {
+          "who": "passer_woman",
+          "name": "막창집 사장님"
+        },
+        {
+          "who": "passer_woman",
+          "name": "막창집 사장님"
+        },
+        {
+          "who": "passer_woman",
+          "name": "막창집 사장님"
+        }
+      ],
+      "1.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "lc_mokpo_hongeo",
+    "entry": [
+      {
+        "who": "passer_woman",
+        "name": "목포 아짐"
+      },
+      "me",
+      {
+        "who": "passer_woman",
+        "name": "목포 아짐"
+      }
+    ],
+    "out": {
+      "0.0": [
+        "party_first",
+        {
+          "who": "passer_woman",
+          "name": "목포 아짐"
+        }
+      ],
+      "1.0": [
+        {
+          "who": "passer_woman",
+          "name": "목포 아짐"
+        }
+      ]
+    },
+    "copy": [
+      {
+        "path": "0.0",
+        "old": "첫 번째: 눈물. 두 번째: 기침. 세 번째: …",
+        "new": "한 입에 눈물, 또 한 입에 기침. 그런데…"
+      },
+      {
+        "path": "0.0",
+        "old": "세 번째 사람이 접시를 비웠다.",
+        "new": "결국 한 사람이 접시를 비웠다."
+      }
+    ]
+  },
+  {
+    "id": "meet_runner",
+    "entry": null,
+    "out": {
+      "0.0": [
+        {
+          "who": "passer_man",
+          "name": "달리는 사람"
+        },
+        {
+          "who": "passer_man",
+          "name": "달리는 사람"
+        },
+        "me",
+        {
+          "who": "passer_man",
+          "name": "달리는 사람"
+        },
+        "me",
+        {
+          "who": "passer_man",
+          "name": "달리는 사람"
+        }
+      ],
+      "1.0": [
+        "party_first"
+      ]
+    }
+  },
+  {
+    "id": "meet_stargazer",
+    "entry": [
+      {
+        "who": "passer_man",
+        "name": "천문 관측자"
+      },
+      {
+        "who": "passer_man",
+        "name": "천문 관측자"
+      }
+    ],
+    "out": {
+      "0.0": [
+        {
+          "who": "passer_man",
+          "name": "천문 관측자"
+        },
+        "me",
+        {
+          "who": "passer_man",
+          "name": "천문 관측자"
+        },
+        "me",
+        {
+          "who": "passer_man",
+          "name": "천문 관측자"
+        },
+        {
+          "who": "passer_man",
+          "name": "천문 관측자"
+        }
+      ],
+      "1.0": []
+    }
+  },
+  {
+    "id": "kids_escort",
+    "entry": [
+      {
+        "who": "passer_child",
+        "name": "큰애"
+      }
+    ],
+    "out": {
+      "0.0": [
+        {
+          "who": "passer_child",
+          "name": "막내"
+        },
+        "me",
+        {
+          "who": "passer_child",
+          "name": "큰애"
+        },
+        "me",
+        {
+          "who": "passer_merchant",
+          "name": "국밥집 주인"
+        },
+        {
+          "who": "passer_child",
+          "name": "큰애"
+        }
+      ]
+    }
+  },
+  {
+    "id": "meet_welldigger",
+    "entry": [
+      {
+        "who": "passer_man",
+        "name": "우물을 파는 남자"
+      },
+      {
+        "who": "passer_man",
+        "name": "우물을 파는 남자"
+      }
+    ],
+    "out": {
+      "0.0": [
+        "me",
+        {
+          "who": "passer_man",
+          "name": "우물을 파는 남자"
+        },
+        "me",
+        {
+          "who": "passer_man",
+          "name": "우물을 파는 남자"
+        },
+        "me"
+      ],
+      "1.0": [
+        {
+          "who": "passer_man",
+          "name": "우물을 파는 남자"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ev_wandering_musician",
+    "entry": [
+      {
+        "who": "passer_man",
+        "name": "떠돌이 악사"
+      }
+    ],
+    "out": {
+      "0.0": [],
+      "1.0": [
+        {
+          "who": "passer_man",
+          "name": "떠돌이 악사"
+        }
+      ],
+      "2.0": []
+    }
+  },
+  {
+    "id": "ev_rooftop_farm",
+    "entry": null,
+    "out": {
+      "0.0": [
+        {
+          "who": "passer_elder",
+          "name": "옥상 밭의 노인"
+        },
+        {
+          "who": "passer_elder",
+          "name": "옥상 밭의 노인"
+        }
+      ],
+      "1.0": [
+        "jaeyi",
+        {
+          "who": "passer_elder",
+          "name": "옥상 밭의 노인"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ev_kids_playing_school",
+    "entry": [
+      {
+        "who": "passer_child",
+        "name": "선생님 역의 아이"
+      },
+      {
+        "who": "passer_child",
+        "name": "학생 역의 아이들"
+      },
+      {
+        "who": "passer_child",
+        "name": "선생님 역의 아이"
+      }
+    ],
+    "out": {
+      "0.0": [
+        "me",
+        {
+          "who": "passer_child",
+          "name": "학생 역의 아이들"
+        }
+      ],
+      "1.0": [
+        {
+          "who": "passer_child",
+          "name": "학생 역의 아이들"
+        }
+      ],
+      "2.0": []
+    }
+  },
+  {
+    "id": "ev_claw_truck",
+    "entry": [
+      {
+        "who": "passer_worker",
+        "name": "인형뽑기 트럭 주인"
+      },
+      {
+        "who": "passer_worker",
+        "name": "인형뽑기 트럭 주인"
+      }
+    ],
+    "out": {
+      "0.0": [
+        "me",
+        {
+          "who": "passer_worker",
+          "name": "인형뽑기 트럭 주인"
+        }
+      ],
+      "0.1": [
+        "me",
+        {
+          "who": "passer_worker",
+          "name": "인형뽑기 트럭 주인"
+        },
+        "me"
+      ],
+      "1.0": [
+        {
+          "who": "passer_worker",
+          "name": "인형뽑기 트럭 주인"
+        },
+        {
+          "who": "passer_worker",
+          "name": "인형뽑기 트럭 주인"
+        }
+      ]
+    }
+  },
+  {
+    "id": "roadcrew_washout",
+    "entry": [
+      {
+        "who": "passer_elder",
+        "name": "순임"
+      }
+    ],
+    "out": {
+      "0.0": [
+        {
+          "who": "passer_worker",
+          "name": "도윤"
+        },
+        {
+          "who": "passer_elder",
+          "name": "순임"
+        },
+        {
+          "who": "passer_worker",
+          "name": "도윤"
+        },
+        {
+          "who": "passer_elder",
+          "name": "순임"
+        }
+      ],
+      "1.0": [
+        {
+          "who": "passer_elder",
+          "name": "순임"
+        }
+      ],
+      "2.0": [
+        {
+          "who": "passer_elder",
+          "name": "순임"
+        }
+      ]
+    }
+  },
+  {
+    "id": "roadcrew_sign",
+    "entry": [
+      {
+        "who": "passer_worker",
+        "name": "도윤"
+      }
+    ],
+    "out": {
+      "0.0": [
+        "me",
+        {
+          "who": "passer_worker",
+          "name": "도윤"
+        }
+      ],
+      "1.0": [
+        {
+          "who": "passer_worker",
+          "name": "도윤"
+        },
+        {
+          "who": "passer_elder",
+          "name": "순임"
+        }
+      ]
+    }
+  }
+]

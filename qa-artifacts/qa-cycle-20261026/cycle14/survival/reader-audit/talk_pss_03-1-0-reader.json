@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "오."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 진심으로 놀랐다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "처방 순응도 100%인 환자는 자네가 처음이야. …아니, 둘째군. 우리 딸이 있었지."
+  },
+  {
+    "kind": "narration",
+    "text": "그러고는 사탕을 하나 꺼내 놨다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "모범 환자한테 주는 거야."
+  },
+  {
+    "kind": "narration",
+    "text": "딸 얘기는 그걸로 끝이었다."
+  }
+]

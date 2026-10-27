@@ -1,0 +1,1480 @@
+[
+  {
+    "id": "ev_jaeyi_law",
+    "i": 0,
+    "classification": "systems-natural",
+    "evidence": "normal-entry separate alternate-branch replay",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "야영 중 재이가 낡은 수첩을 꺼내 뭔가 적는다. 슬쩍 보니 마을들의 이름, 시세, 그리고 그곳의 규칙들.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "뭐 적어요?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "시세부터 적었는데요. 그것만 보면 이상해서요. 같은 부품도 어디서는 물 한 통이고, 어디서는 밥 두 끼예요. 장터가 어떻게 굴러가는지도 같이 적는 중이에요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "나중에 다시 장사할 때 써먹으려고요. 사람 급한 틈에 값을 올리는 장터랑, 먼저 빌려주는 장터는 구분해 둬야죠.",
+        "displayName": "재이"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "재이가 씩 웃었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "맞아요. 아빠 수첩에는 물건 값만 있었는데, 제 수첩에는 누가 외상을 받아 줬는지도 있어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "나중에 제가 장터를 열면 그런 사람부터 다시 찾아가려고요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "재이는 방금 지나온 마을 이름 옆에 외상 허용이라고 적었다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "재이가 씩 웃었다. \"맞아요. 아빠 수첩에는 물건 값만 있었는데, 제 수첩에는 누가 외상을 받아 줬는지도 있어요.\"\n\n\"나중에 제가 장터를 열면 그런 사람부터 다시 찾아가려고요.\" 재이는 방금 지나온 마을 이름 옆에 외상 허용이라고 적었다."
+  },
+  {
+    "id": "ev_jaeyi_law",
+    "i": 1,
+    "classification": "systems-natural",
+    "evidence": "normal-entry separate alternate-branch replay",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "야영 중 재이가 낡은 수첩을 꺼내 뭔가 적는다. 슬쩍 보니 마을들의 이름, 시세, 그리고 그곳의 규칙들.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "뭐 적어요?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "시세부터 적었는데요. 그것만 보면 이상해서요. 같은 부품도 어디서는 물 한 통이고, 어디서는 밥 두 끼예요. 장터가 어떻게 굴러가는지도 같이 적는 중이에요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "나중에 다시 장사할 때 써먹으려고요. 사람 급한 틈에 값을 올리는 장터랑, 먼저 빌려주는 장터는 구분해 둬야죠.",
+        "displayName": "재이"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "우리 얘기도 적어 줘요. 이 달구지가 뭘 봤는지.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 진지하게 고개를 끄덕였다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "그럴게요. …그럴게요. 대신 틀린 건 바로 말해 줘요. 나중에 고치기 더 힘드니까.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이는 오늘 날짜와 주행 거리를 적고, 내가 빠뜨린 정차 지점을 물었다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "\"우리 얘기도 적어 줘요. 이 달구지가 뭘 봤는지.\" 재이가 진지하게 고개를 끄덕였다.\n\n\"그럴게요. …그럴게요. 대신 틀린 건 바로 말해 줘요. 나중에 고치기 더 힘드니까.\" 재이는 오늘 날짜와 주행 거리를 적고, 내가 빠뜨린 정차 지점을 물었다."
+  },
+  {
+    "id": "lc_suwon_galbi",
+    "i": 0,
+    "classification": "systems-natural",
+    "evidence": "normal-entry separate alternate-branch replay",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "수원 성곽 근처. 어디선가 갈비 양념 냄새가 난다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘 고기날이거든.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "문지기가 씩 웃는다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "타이밍 좋네. 손님도 한 접시요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "고기날이요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "한 달에 한 번. …아, 그릇은 각자 갖고 와야 돼요. 그 말을 맨날 빼먹네.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "배급 갈비는 한 사람당 세 대. 뼈까지 쪽쪽 빨았다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_guard",
+        "name": "문지기",
+        "text": "수원이잖아. 망해도 갈비는 지켜야지.",
+        "displayName": "문지기"
+      },
+      {
+        "kind": "narration",
+        "text": "문지기가 말하다 말고 옆 사람을 돌아봤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "이거 몇 대씩이더라. 세 대 맞나?",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "세 대 맞아요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "답례로 고철 두 덩이를 주방 선반에 놓고 왔다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "배급 갈비는 한 사람당 세 대. 뼈까지 쪽쪽 빨았다.\n\n\"수원이잖아. 망해도 갈비는 지켜야지.\" 문지기가 말하다 말고 옆 사람을 돌아봤다. \"이거 몇 대씩이더라. 세 대 맞나?\"\n\n\"세 대 맞아요.\"\n\n답례로 고철 두 덩이를 주방 선반에 놓고 왔다."
+  },
+  {
+    "id": "lc_suwon_galbi",
+    "i": 1,
+    "classification": "systems-natural",
+    "evidence": "normal-entry separate alternate-branch replay",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "수원 성곽 근처. 어디선가 갈비 양념 냄새가 난다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "오늘 고기날이거든.",
+        "displayName": "???"
+      },
+      {
+        "kind": "narration",
+        "text": "문지기가 씩 웃는다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "타이밍 좋네. 손님도 한 접시요.",
+        "displayName": "???"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "speakerUncertain": true,
+        "text": "고기날이요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "한 달에 한 번. …아, 그릇은 각자 갖고 와야 돼요. 그 말을 맨날 빼먹네.",
+        "displayName": "???"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "문지기에게 손을 들고 차로 돌아왔다. 갈비 냄새가 창문 틈으로 한동안 따라왔다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "문지기에게 손을 들고 차로 돌아왔다. 갈비 냄새가 창문 틈으로 한동안 따라왔다."
+  },
+  {
+    "id": "gp_note2",
+    "i": 0,
+    "classification": "systems-natural",
+    "evidence": "normal-entry separate alternate-branch replay",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "수첩 중간, 기름때 묻은 페이지.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "grandfather",
+        "text": "내리막에선 절대 기어를 빼지 마라. 내려가기 전에 속도를 줄이고 낮은 기어로 버텨.\n브레이크만 밟고 내려가면 열 받아서 정작 필요할 때 말을 안 듣는다.",
+        "displayName": "할아버지"
+      },
+      {
+        "kind": "narration",
+        "text": "밑에 어린 글씨로 낙서가 있다. 옛날의 내 글씨다.",
+        "displayName": null
+      },
+      {
+        "kind": "record",
+        "who": "grandfather",
+        "text": "할아버지 잔소리 1등",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "낙서 옆에 순서를 적었다. 내려가기 전에 속도를 줄이고, 낮은 기어를 고를 것. 브레이크를 계속 밟아야 한다면 무리하지 말고 세울 곳부터 찾을 것.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "다음 내리막에 닿으면 펼쳐 볼 수 있게 그 페이지를 접어 뒀다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "낙서 옆에 순서를 적었다. 내려가기 전에 속도를 줄이고, 낮은 기어를 고를 것. 브레이크를 계속 밟아야 한다면 무리하지 말고 세울 곳부터 찾을 것.\n\n다음 내리막에 닿으면 펼쳐 볼 수 있게 그 페이지를 접어 뒀다."
+  },
+  {
+    "id": "gp_note1",
+    "i": 0,
+    "classification": "survival-natural",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "신호 대기 중(신호는 없지만 버릇이다), 조수석의 수첩이 툭 떨어지며 접힌 페이지가 펼쳐졌다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "할아버지의 글씨.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "grandfather",
+        "text": "엔진 소리가 평소와 다르면 속도부터 줄여라. 계속 밟으면 작은 고장도 큰돈 든다.\n옆 사람이 갑자기 말이 없어져도 똑같다. 물부터 주고, 차를 세워.",
+        "displayName": "할아버지"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "시동을 켜고 소리에 귀를 기울였다. 할아버지가 가르쳐준 순서대로.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "벨트 장력이 어긋난 걸 찾아 시동을 끄고 조였다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "작은 소리부터 들으라는 말. 엔진 얘기만은 아니었겠지.",
+        "displayName": null
+      }
+    ],
+    "resultText": "시동을 켜고 소리에 귀를 기울였다. 할아버지가 가르쳐준 순서대로.\n\n벨트 장력이 어긋난 걸 찾아 시동을 끄고 조였다.\n\n작은 소리부터 들으라는 말. 엔진 얘기만은 아니었겠지."
+  },
+  {
+    "id": "talk_leo_13",
+    "i": 0,
+    "classification": "survival-natural",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "저 팬레터 받아본 적 있어요. 한 번.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 기타 케이스 안쪽 주머니에서 접힌 종이를 꺼냈다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "꼬깃꼬깃한 초등학생 글씨다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "「아저씨 노래 조아요. 우리 엄마가 아저씨 노래 듣고 우러써요. 슬퍼서 운 거 아니래요.」",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "아저씨요?",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "거기 걸리셨어요? 저도 처음엔 거기서 좀…",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 편지를 접다 말았다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "아무튼 지하철역에서 받았어요. 제 데뷔 성적표예요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "슬퍼서 운 거 아니래요— 이 문장 때문에 계속하는 거예요, 음악. 뒤에 설명을 좀 붙이려다 관뒀어요. 붙이면 이상해져서.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "관객 세 명 시절의 훈장은 사탕 두 개와 이 편지였다. 레오가 편지를 케이스 안쪽 주머니에 도로 넣고, 지퍼를 두 번 확인했다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "「아저씨 노래 조아요. 우리 엄마가 아저씨 노래 듣고 우러써요. 슬퍼서 운 거 아니래요.」\n\n\"아저씨요?\"\n\n\"거기 걸리셨어요? 저도 처음엔 거기서 좀…\" 레오가 편지를 접다 말았다. \"아무튼 지하철역에서 받았어요. 제 데뷔 성적표예요.\"\n\n\"슬퍼서 운 거 아니래요— 이 문장 때문에 계속하는 거예요, 음악. 뒤에 설명을 좀 붙이려다 관뒀어요. 붙이면 이상해져서.\"\n\n관객 세 명 시절의 훈장은 사탕 두 개와 이 편지였다. 레오가 편지를 케이스 안쪽 주머니에 도로 넣고, 지퍼를 두 번 확인했다."
+  },
+  {
+    "id": "talk_leo_05",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "보리랑 저랑 어떻게 만났는지 얘기했던가요?",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 보리(자고 있다)를 보며 물었다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "공연하는데 앞에 와서 앉더라고요. 그 공연 관객이 셋이었나, 넷이었나. 아무튼 보리까지 넷. 끝까지 듣고, 끝나니까 가만히 보는 거예요. 그래서 말했죠. '너 매니저 할래?'",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "조건은 저녁 반 그릇. 보리가 앞발을 내밀었어요. 계약 성립.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 웃었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "저 친구는 제 첫 정규 계약이에요. 아직까지 위약 없고요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "자던 보리 꼬리가 잠결에 흔들렸다. 계약 이행 중이라는 뜻으로 접수됐다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "\"공연하는데 앞에 와서 앉더라고요. 그 공연 관객이 셋이었나, 넷이었나. 아무튼 보리까지 넷. 끝까지 듣고, 끝나니까 가만히 보는 거예요. 그래서 말했죠. '너 매니저 할래?'\"\n\n\"조건은 저녁 반 그릇. 보리가 앞발을 내밀었어요. 계약 성립.\" 레오가 웃었다. \"저 친구는 제 첫 정규 계약이에요. 아직까지 위약 없고요.\"\n\n자던 보리 꼬리가 잠결에 흔들렸다. 계약 이행 중이라는 뜻으로 접수됐다."
+  },
+  {
+    "id": "talk_jy_07",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "꿈이 뭐냐고 물어봐 줘요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 대놓고 요청했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "…꿈이 뭐예요?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "물어봐 줘서 고마워요. 박물관이요.",
+        "displayName": "상혁"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "'보통 물건 박물관'. 국보 말고요. 밥숟가락, 버스 토큰, 다 쓴 몽당연필… 아, 토큰은 벌써 세 개 있다. 아무튼 그런 것만 모으는 데.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "사라지고 나니까 그런 게 제일 보고 싶더라고요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 전리품 자루를 두드렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "지금은 임시 수장고예요. 발로 차면 관람료 받아요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "마침 굴러다니던 숟가락이 발에 걸렸다. 재이는 바로 손을 내밀었다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "\"'보통 물건 박물관'. 국보 말고요. 밥숟가락, 버스 토큰, 다 쓴 몽당연필… 아, 토큰은 벌써 세 개 있다. 아무튼 그런 것만 모으는 데.\"\n\n\"사라지고 나니까 그런 게 제일 보고 싶더라고요.\" 재이가 전리품 자루를 두드렸다. \"지금은 임시 수장고예요. 발로 차면 관람료 받아요.\"\n\n마침 굴러다니던 숟가락이 발에 걸렸다. 재이는 바로 손을 내밀었다."
+  },
+  {
+    "id": "talkr_jy_1",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "오늘의 수확 보고합니다.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 자루를 열었다. 브리핑 시간이다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "오늘의 수확이 하나씩 소개됐다. 시세, 상태, 그리고 발견 스토리(이게 제일 길다).",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "이건 어디서 주웠냐면— 아, 무게부터. 380그램. 아니 400 좀 안 되나.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 손저울처럼 흔들어 봤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "아무튼요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "오늘의 베스트는 이거.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "뭐가 됐든 하나는 꼭 베스트다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "오늘의 수확이 하나씩 소개됐다. 시세, 상태, 그리고 발견 스토리(이게 제일 길다).\n\n\"이건 어디서 주웠냐면— 아, 무게부터. 380그램. 아니 400 좀 안 되나.\" 재이가 손저울처럼 흔들어 봤다. \"아무튼요.\"\n\n\"오늘의 베스트는 이거.\" 뭐가 됐든 하나는 꼭 베스트다."
+  },
+  {
+    "id": "talkr_jy_1",
+    "i": 1,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "오늘의 수확 보고합니다.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 자루를 열었다. 브리핑 시간이다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "급하시네. 좋아요, 오늘의 베스트—",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "…….",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "아직이요. 뜸도 감정에 들어가요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 자루 입구를 붙잡은 채 버텼다. 뜸이 브리핑 전체보다 길었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "결국 나온 건 손잡이가 빠진 국자였다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "손잡이는 만들면 되고요.",
+        "displayName": "재이"
+      }
+    ],
+    "resultText": "\"급하시네. 좋아요, 오늘의 베스트—\"\n\n\"…….\"\n\n\"아직이요. 뜸도 감정에 들어가요.\" 재이가 자루 입구를 붙잡은 채 버텼다. 뜸이 브리핑 전체보다 길었다.\n\n결국 나온 건 손잡이가 빠진 국자였다. \"손잡이는 만들면 되고요.\""
+  },
+  {
+    "id": "talk_jy_11",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "비 오는 날, 재이가 창밖의 젖은 고철 더미를 안타깝게 본다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "저 좋은 애들 다 녹슬겠다…",
+        "displayName": "재이"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "떨어지는 것도 있고, 오르는 것도 있어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "오래된 건 녹까지 봐야 진짜인지 아는데— 아, 그건 좀 다른 얘기고.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 자루끈을 고쳐 쥐었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "저건 비 맞으라고 둔 게 아니잖아요. 아무도 안 챙긴 게 아까운 거지.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "몇 무더기나 되는데요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "세 무더기. …아니, 네 무더기예요. 저 뒤에 하나 더 있어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 세다 말고 손가락을 접었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "비 그치면 10분만 들러요. 진짜 10분.",
+        "displayName": "재이"
+      }
+    ],
+    "resultText": "\"떨어지는 것도 있고, 오르는 것도 있어요.\"\n\n\"오래된 건 녹까지 봐야 진짜인지 아는데— 아, 그건 좀 다른 얘기고.\" 재이가 자루끈을 고쳐 쥐었다. \"저건 비 맞으라고 둔 게 아니잖아요. 아무도 안 챙긴 게 아까운 거지.\"\n\n\"몇 무더기나 되는데요?\"\n\n\"세 무더기. …아니, 네 무더기예요. 저 뒤에 하나 더 있어요.\" 재이가 세다 말고 손가락을 접었다. \"비 그치면 10분만 들러요. 진짜 10분.\""
+  },
+  {
+    "id": "talk_leo_18",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "레오의 가사 수첩엔 낯선 이름들이 가득하다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "지나온 마을 사람들 사연이에요. 노래로 만들어주기로 약속했거든요. 씨앗 파는 애, 등대 할아버지…",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "…그리고 또 누구였더라. 적어놨는데 제 글씨를 제가 못 알아보겠어요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "세상이 기록을 안 해주니까, 노래라도 해야죠.",
+        "displayName": "레오"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "레오가 수첩을 뒤로 숨겼다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "…있는데, 아직 미완성이라 못 보여줘요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "제목만 알려줘요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "…「운전석」이요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "그게 다예요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "후렴만 완성됐어요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "잠깐 뜸을 들이더니 흥얼거렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "—핸들을 잡은 손이 우릴 잡은 손— …여기까지만요!",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "얼굴이 빨개진 시인이 수첩을 덮었다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "레오가 수첩을 뒤로 숨겼다. \"…있는데, 아직 미완성이라 못 보여줘요.\"\n\n\"제목만 알려줘요.\" \"…「운전석」이요.\"\n\n\"그게 다예요?\" \"후렴만 완성됐어요.\"\n\n잠깐 뜸을 들이더니 흥얼거렸다. \"—핸들을 잡은 손이 우릴 잡은 손— …여기까지만요!\"\n\n얼굴이 빨개진 시인이 수첩을 덮었다."
+  },
+  {
+    "id": "talk_leo_18",
+    "i": 1,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "레오의 가사 수첩엔 낯선 이름들이 가득하다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "지나온 마을 사람들 사연이에요. 노래로 만들어주기로 약속했거든요. 씨앗 파는 애, 등대 할아버지…",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "…그리고 또 누구였더라. 적어놨는데 제 글씨를 제가 못 알아보겠어요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "세상이 기록을 안 해주니까, 노래라도 해야죠.",
+        "displayName": "레오"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "다는 못 지킬 수도 있죠. 근데 하나 지킬 때마다 노래가 하나 늘잖아요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 수첩을 넣다가 다시 꺼냈다. 못 알아보겠던 이름을 두 번 덧썼다. 두 번째 글씨가 더 삐뚤어졌다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "천리안은 명단을 만들고, 전 세트리스트를 만들어요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 이름 옆에 별표를 쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "별표는 왜 쳐요?",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "까먹을까 봐요.",
+        "displayName": "상혁"
+      }
+    ],
+    "resultText": "\"다는 못 지킬 수도 있죠. 근데 하나 지킬 때마다 노래가 하나 늘잖아요.\"\n\n레오가 수첩을 넣다가 다시 꺼냈다. 못 알아보겠던 이름을 두 번 덧썼다. 두 번째 글씨가 더 삐뚤어졌다.\n\n\"천리안은 명단을 만들고, 전 세트리스트를 만들어요.\" 레오가 이름 옆에 별표를 쳤다.\n\n\"별표는 왜 쳐요?\" \"까먹을까 봐요.\""
+  },
+  {
+    "id": "talk_leo_20",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "「400km」 2절이요, 드디어 풀렸어요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 수첩을 펼쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "1절은 길 얘기였는데, 2절은 사람이에요. 한 소절에 한 명씩. 여섯 소절.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "근데 하나 걸리는 게— 아니다, 걸리는 건 아니고요. 여섯 명 다 자기 소절인 줄 모르게 썼어요. 들키면 부끄러우니까.",
+        "displayName": "상혁"
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "가사를 읽었다. 렌치를 쥔 별, 흰 가운의 등대, 말없는 방패, 저울을 든 까치, 주파수의 등불…",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "…이 「졸음을 쫓는 헤드라이트」가 저예요?",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 화들짝 수첩을 덮었다.",
+        "displayName": null
+      },
+      {
+        "kind": "record",
+        "who": "leo",
+        "text": "어떻게 알았어요?!",
+        "displayName": null
+      },
+      {
+        "kind": "record",
+        "who": "leo",
+        "text": "운전 담당이니까요.",
+        "displayName": null
+      },
+      {
+        "kind": "record",
+        "who": "leo",
+        "text": "…그건 생각을 못 했네.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "여섯 개의 초상이 노래 속에 숨어서 같이 달리고 있었다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "가사를 읽었다. 렌치를 쥔 별, 흰 가운의 등대, 말없는 방패, 저울을 든 까치, 주파수의 등불…\n\n\"…이 「졸음을 쫓는 헤드라이트」가 저예요?\"\n\n레오가 화들짝 수첩을 덮었다. \"어떻게 알았어요?!\" \"운전 담당이니까요.\" \"…그건 생각을 못 했네.\"\n\n여섯 개의 초상이 노래 속에 숨어서 같이 달리고 있었다."
+  },
+  {
+    "id": "talk_leo_20",
+    "i": 1,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "「400km」 2절이요, 드디어 풀렸어요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 수첩을 펼쳤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "1절은 길 얘기였는데, 2절은 사람이에요. 한 소절에 한 명씩. 여섯 소절.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "근데 하나 걸리는 게— 아니다, 걸리는 건 아니고요. 여섯 명 다 자기 소절인 줄 모르게 썼어요. 들키면 부끄러우니까.",
+        "displayName": "상혁"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "…엄마요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "레오가 바로 답했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "남산에 방송국 있다면서요. 전파는 하늘까지 가잖아요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "하늘까지 가나요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "leo",
+        "text": "…거기까진 확인 안 해봤어요. 근데 가긴 갈 거예요. 안 가면 곤란하고요.",
+        "displayName": "레오"
+      },
+      {
+        "kind": "narration",
+        "text": "노래를 하늘에 부치려는 사람 옆에서, 나는 남은 거리를 다시 셌다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "\"…엄마요.\" 레오가 바로 답했다.\n\n\"남산에 방송국 있다면서요. 전파는 하늘까지 가잖아요.\"\n\n\"하늘까지 가나요?\"\n\n\"…거기까진 확인 안 해봤어요. 근데 가긴 갈 거예요. 안 가면 곤란하고요.\"\n\n노래를 하늘에 부치려는 사람 옆에서, 나는 남은 거리를 다시 셌다."
+  },
+  {
+    "id": "talk_jy_17",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "심심한데 게임해요. 제가 물건 대면 대장님이 시세 맞히기. 지는 사람이 설거지.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "뭘 맞혀요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "시세요. 고철 몇 개 값이냐.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 팔짱을 꼈다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "첫 문제. 멀쩡한 건전지 한 알.",
+        "displayName": "재이"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "…정답이에요. 뭐지?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 건전지를 다시 들여다봤다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "재능 있네. 아니, 찍은 거죠? 찍은 거 맞죠.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "두 문제, 세 문제. 접전 끝에 한 끗 차이로 졌다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "설거지는 대장님! 근데 오늘은 제가 도울게요. 접전 보너스.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "규정에 그런 게 있어요?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "방금 만들었어요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 먼저 냄비를 들고 나갔다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "\"…정답이에요. 뭐지?\" 재이가 건전지를 다시 들여다봤다. \"재능 있네. 아니, 찍은 거죠? 찍은 거 맞죠.\"\n\n두 문제, 세 문제. 접전 끝에 한 끗 차이로 졌다.\n\n\"설거지는 대장님! 근데 오늘은 제가 도울게요. 접전 보너스.\"\n\n\"규정에 그런 게 있어요?\"\n\n\"방금 만들었어요.\" 재이가 먼저 냄비를 들고 나갔다."
+  },
+  {
+    "id": "talk_jy_17",
+    "i": 1,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "심심한데 게임해요. 제가 물건 대면 대장님이 시세 맞히기. 지는 사람이 설거지.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "뭘 맞혀요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "시세요. 고철 몇 개 값이냐.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 팔짱을 꼈다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "첫 문제. 멀쩡한 건전지 한 알.",
+        "displayName": "재이"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "그럼 가게마다 싸움 나죠.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 건전지를 손가락으로 튕겼다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "지난 장에서 셋이면 이번 장에서도 셋. 그래야 다음에 또 거래해요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "그래서 정답은 뭐예요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "세 개. 설거지 당첨.",
+        "displayName": "재이"
+      }
+    ],
+    "resultText": "\"그럼 가게마다 싸움 나죠.\" 재이가 건전지를 손가락으로 튕겼다. \"지난 장에서 셋이면 이번 장에서도 셋. 그래야 다음에 또 거래해요.\"\n\n\"그래서 정답은 뭐예요?\"\n\n\"세 개. 설거지 당첨.\""
+  },
+  {
+    "id": "talk_jy_20",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "재이가 수첩 맨 뒷장을 보여줬다. 「비매품 목록」이라 적혀 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "아빠 손저울, 반짝이 상자, 사장님(리어카)… 그리고 차에 타고 나서 줄이 더 늘었어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "레오. 마지막 한 줄은 손가락으로 가렸다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "…안 돼요. 부끄러워요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "잠깐 실랑이를 벌인 끝에 재이가 손가락을 치웠다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "「운전석. 시세: 측정 불가. 사유: 기준가 없음. 세상에 하나뿐인 물건은 시세가 안 잡힘.」",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "이거 감정 오류예요, 그냥. 기준가가 없으면 감정을 못 하는 건데 저는 적었잖아요. 그러니까—",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 수첩을 도로 덮었다.",
+        "displayName": null
+      },
+      {
+        "kind": "record",
+        "who": "jaeyi",
+        "text": "…아무 말도 하지 마세요, 지금.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "감정가의 귀가 새빨갰다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "\"…안 돼요. 부끄러워요.\" 잠깐 실랑이를 벌인 끝에 재이가 손가락을 치웠다.\n\n「운전석. 시세: 측정 불가. 사유: 기준가 없음. 세상에 하나뿐인 물건은 시세가 안 잡힘.」\n\n\"이거 감정 오류예요, 그냥. 기준가가 없으면 감정을 못 하는 건데 저는 적었잖아요. 그러니까—\" 재이가 수첩을 도로 덮었다. \"…아무 말도 하지 마세요, 지금.\"\n\n감정가의 귀가 새빨갰다."
+  },
+  {
+    "id": "talk_jy_20",
+    "i": 1,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "재이가 수첩 맨 뒷장을 보여줬다. 「비매품 목록」이라 적혀 있다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "아빠 손저울, 반짝이 상자, 사장님(리어카)… 그리고 차에 타고 나서 줄이 더 늘었어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "레오. 마지막 한 줄은 손가락으로 가렸다.",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "좋은 습관이에요! 첫 줄은 뭐 쓸 거예요?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "이 차랑, 이 차에 탄 전원이요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "그거 제 목록이랑— 어? 겹치는데.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 자기 뒷장이랑 번갈아 보더니 수첩을 덮었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "겹치면 두 번 세는 건가. 아닌가.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "답은 안 나왔고, 재이는 종이를 한 장 찢어 건넸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "여기 쓰세요. 줄은 제가 그어드릴게요.",
+        "displayName": "재이"
+      }
+    ],
+    "resultText": "\"좋은 습관이에요! 첫 줄은 뭐 쓸 거예요?\"\n\n\"이 차랑, 이 차에 탄 전원이요.\"\n\n\"그거 제 목록이랑— 어? 겹치는데.\" 재이가 자기 뒷장이랑 번갈아 보더니 수첩을 덮었다. \"겹치면 두 번 세는 건가. 아닌가.\"\n\n답은 안 나왔고, 재이는 종이를 한 장 찢어 건넸다. \"여기 쓰세요. 줄은 제가 그어드릴게요.\""
+  },
+  {
+    "id": "talk_jy_21",
+    "i": 0,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "재이가 아빠의 손저울을 꺼내더니, 뜻밖의 말을 했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "이거요, 대장님이 잠깐 차고 있어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "…이건 재이 씨가 제일 아끼는 비매품이잖아요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "그러니까 맡기는 거예요. 제가 잃어버릴까 봐가 아니라… 대장님이 서울까지 가져갔으면 해서요.",
+        "displayName": "재이"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "이자요?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 씩 웃었다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "서울까지 무사히 가면 저 계속 데리고 다녀요. 어때요, 남는 장사죠?",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "…그건 이자가 아니라 원금인데요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "어? 들켰다.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 저울끈을 손목에 맞게 한 칸 늘려줬다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "\"이자요?\" 재이가 씩 웃었다.\n\n\"서울까지 무사히 가면 저 계속 데리고 다녀요. 어때요, 남는 장사죠?\"\n\n\"…그건 이자가 아니라 원금인데요.\"\n\n\"어? 들켰다.\" 재이가 저울끈을 손목에 맞게 한 칸 늘려줬다."
+  },
+  {
+    "id": "talk_jy_21",
+    "i": 1,
+    "classification": "static-derived",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "재이가 아빠의 손저울을 꺼내더니, 뜻밖의 말을 했다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "이거요, 대장님이 잠깐 차고 있어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "…이건 재이 씨가 제일 아끼는 비매품이잖아요.",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "그러니까 맡기는 거예요. 제가 잃어버릴까 봐가 아니라… 대장님이 서울까지 가져갔으면 해서요.",
+        "displayName": "재이"
+      }
+    ],
+    "result": [
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "서울 도착하면 돌려주면서 말해줘요. 「거래 완료」라고.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "꼭 그 말로 해야 돼요?",
+        "displayName": "상혁"
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "네.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "narration",
+        "text": "재이가 저울을 내 손에 올렸다. 손목에 조금 짧아서 끈을 한 칸 늘렸다.",
+        "displayName": null
+      },
+      {
+        "kind": "dialogue",
+        "who": "jaeyi",
+        "text": "…아니, 아무 말이나 해도 되는데. 그 말이면 좋겠어요.",
+        "displayName": "재이"
+      },
+      {
+        "kind": "dialogue",
+        "who": "me",
+        "text": "이제 됐어요. 잃어버리면 진짜 비싸게 받을 거예요.",
+        "displayName": "상혁"
+      }
+    ],
+    "resultText": "\"서울 도착하면 돌려주면서 말해줘요. 「거래 완료」라고.\"\n\n\"꼭 그 말로 해야 돼요?\"\n\n\"네.\" 재이가 저울을 내 손에 올렸다. 손목에 조금 짧아서 끈을 한 칸 늘렸다. \"…아니, 아무 말이나 해도 되는데. 그 말이면 좋겠어요.\"\n\n\"이제 됐어요. 잃어버리면 진짜 비싸게 받을 거예요.\""
+  },
+  {
+    "id": "gp_note3",
+    "i": 0,
+    "classification": "document-clarity-improvement",
+    "evidence": "explicit standalone fixture",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "야영 준비 중, 처음으로 수첩의 마지막 장을 넘겼다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "다른 페이지와 달리 기름때가 없다. 아껴 쓴 글씨.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "\"네가 이걸 읽고 있으면 나는 조수석에 없겠구나.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "달구지는 혼자 몰 수 있어도, 혼자 살라고 만든 차는 아니다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "믿을 만한 사람을 태웠으면 잠자리부터 제대로 만들어라. 서로 운전대를 바꿔 잡아야 서울까지 간다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "— 할아버지가\"",
+        "displayName": null
+      }
+    ],
+    "result": [
+      {
+        "kind": "narration",
+        "text": "오래도록 그대로 앉아 있었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "엔진이 식으며 딱딱 소리를 냈다. 잠자리부터 만들라는 줄을 손가락으로 짚었다.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "차만 멀쩡하면 되는 줄 알았는데. 할아버지는 이런 것까지 적어 뒀네.",
+        "displayName": null
+      },
+      {
+        "kind": "narration",
+        "text": "수첩을 덮어 조수석 서랍에 넣었다.",
+        "displayName": null
+      }
+    ],
+    "resultText": "오래도록 그대로 앉아 있었다.\n\n엔진이 식으며 딱딱 소리를 냈다. 잠자리부터 만들라는 줄을 손가락으로 짚었다.\n\n차만 멀쩡하면 되는 줄 알았는데. 할아버지는 이런 것까지 적어 뒀네.\n\n수첩을 덮어 조수석 서랍에 넣었다."
+  }
+]

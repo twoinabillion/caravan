@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "passer_refugee",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "이게 왜 필요하지?"
+  },
+  {
+    "kind": "narration",
+    "text": "스스로 물어봤지만 답은 없었다."
+  },
+  {
+    "kind": "narration",
+    "text": "그래도 제일 반짝이는 공 하나를 실었다. 언젠가 쓸 것 같다는 예감은, 대개 짐칸만 무겁게 한다."
+  }
+]

@@ -1,0 +1,10 @@
+[
+ {"id":"talk_kw_16","base":"comp-talk-kangwoo-camp-v1","day":"comp-talk-kangwoo-camp-day-v1","night":"comp-talk-kangwoo-camp-v1"},
+ {"id":"talk_pss_18","base":"comp-talk-parkss-camp-v1","day":"comp-talk-parkss-camp-day-v1","night":"comp-talk-parkss-camp-v1"},
+ {"id":"perimeter_first","base":"combat-walker-watch-v1","day":"combat-walker-watch-v1","night":"combat-walker-watch-night-v1"},
+ {"id":"crisis_drowsy","base":"event-crisis-exhaustion","day":"event-crisis-exhaustion","night":"event-crisis-exhaustion-night-v1"},
+ {"id":"settlement_road_echo","base":"settlement-road-echo","day":"settlement-road-echo","night":"settlement-road-echo-night-v1"},
+ {"id":"seoul_han","base":"seoul-han","day":"seoul-han","night":"seoul-han-night-v1"},
+ {"id":"seoul_ruins","base":"seoul-ruins","day":"seoul-ruins-green-day-v1","night":"seoul-ruins-green-night-v1"},
+ {"id":"story_bridge_last_quiet","base":"event-vista-road","day":"event-vista-road","night":"event-vista-road-night-v1"}
+]

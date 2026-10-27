@@ -1,0 +1,258 @@
+{
+  "cohortExcluded": true,
+  "classification": "approved-new-art-staged-only",
+  "tool": "image_gen.imagegen built-in; no CLI/API fallback",
+  "successfulGeneratedImages": 7,
+  "validationFailuresWithoutImage": 2,
+  "canonicalContract": "assets/visual-contract.json",
+  "canonicalRequiredReferences": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "baseNegativeVerbatimAllPromptFiles": true,
+  "lineage": [
+    {
+      "key": "story-grandfather-envelope-detail-v1",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-a4267adf-6ca8-4be8-b64d-551e1d4c462f.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/story-grandfather-envelope-detail-v1.png",
+      "sha256": "242c68fab53f4e92661d324dfd257f9a1c3d1d53a793e7942b19e868e3cc2525",
+      "promptFile": "prompts/story-grandfather-envelope-detail-v1.txt",
+      "promptFileSha256": "303693843c8426885b518f88147bebf241032d2ccd0598920836b211719274c0",
+      "status": "accepted"
+    },
+    {
+      "key": "explore-ev-charging-parking-v1",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-494f5f3c-d03c-443e-9f24-8c8cd5048cf7.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft01.png",
+      "sha256": "7bf32d66561f34b7ce64d1dc1eb52c0d57b86e92e8dfb6945eb6ce00c739fde3",
+      "promptFile": "prompts/explore-ev-charging-parking-v1.txt",
+      "promptFileSha256": "0e02058289468fd3fac83fe7f1aeab8883db26c2e730af8984fdca76a10d991e",
+      "status": "rejected: visible Namsan tower and vehicle logos"
+    },
+    {
+      "key": "local-daegu-makchang-alley-v1",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-270c814b-7de6-4ec9-8032-bb3e01622730.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1-draft01.png",
+      "sha256": "ac4f17faeafb581445b071d20f849a2b75d827c56ea3ae69449d1f54b1bd6c14",
+      "promptFile": "prompts/local-daegu-makchang-alley-v1.txt",
+      "promptFileSha256": "283de3b799b284e8113e2396d41be7201f4e7c083f8d1e41939b45b177d20380",
+      "status": "rejected: extra blurred background person"
+    },
+    {
+      "key": "explore-ev-charging-parking-v1",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-321d030f-b7cc-443b-a4f1-978796078e8e.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft02.png",
+      "sha256": "b27d69490d1b12fed40136d2b04d32ea945c22e3b620c4b0d0b05c8e56aacb4c",
+      "promptFile": "prompts/explore-ev-charging-parking-v1-edit01.txt",
+      "promptFileSha256": "86ebe68007372cca55f985a64cad8b26babcf255c86e6fea62653be5ac2825df",
+      "status": "rejected: tower removed, small foreground logo residual"
+    },
+    {
+      "key": "explore-ev-charging-parking-v1",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-072063af-514b-40b2-b940-e80d4c2d0593.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft03.png",
+      "sha256": "07fa7e0f4da24ded7e16a548f3ea9397874e2b805ed4ff11415f500a31836192",
+      "promptFile": "prompts/explore-ev-charging-parking-v1-edit02.txt",
+      "promptFileSha256": "0cd34be5eeca57d76580092c47c751f1cda6224f2355129a8d2f8e404a450d5e",
+      "status": "rejected: faint oval residual"
+    },
+    {
+      "key": "local-daegu-makchang-alley-v1",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-cbb5c403-622a-4a48-94e9-9ac68e782491.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1.png",
+      "sha256": "7d1e427f790bd67135af06a03df746701384601517ebba00dcc2e79a95d67dae",
+      "promptFile": "prompts/local-daegu-makchang-alley-v1-generate02.txt",
+      "promptFileSha256": "a2bc4319f406b2c304e2513f641965665c7ca090825a4f181a83da06902f9975",
+      "status": "accepted: single proprietor and empty alley"
+    },
+    {
+      "key": "explore-ev-charging-parking-v1",
+      "generatedOriginal": "/Users/sang/.codex/generated_images/01a17418-299a-7700-81a3-fc89d9c33388/exec-1282234a-b082-4313-8815-662f6285904d.png",
+      "preservedMaster": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1.png",
+      "sha256": "cbf59f0c93ed33a55fbb7859d03d93dda1de0a3a83f6484ff9d0cf8f13d6920f",
+      "promptFile": "prompts/explore-ev-charging-parking-v1-edit03.txt",
+      "promptFileSha256": "311a8aa7fd891096b795aee7c455bee12b11c3e6c8e6d8587ffb787501613c73",
+      "status": "accepted: no tower or readable emblem"
+    }
+  ],
+  "deliveries": [
+    {
+      "event": "gp_envelope",
+      "key": "story-grandfather-envelope-detail-v1",
+      "format": "detail",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/story-grandfather-envelope-detail-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "242c68fab53f4e92661d324dfd257f9a1c3d1d53a793e7942b19e868e3cc2525"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/story-grandfather-envelope-detail-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 122330,
+        "sha256": "3d8dc1fe332540cf6036f791ec5d4e721f553dc4f3365173d20c40c46ce278d0"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "size": [
+          1024,
+          576
+        ],
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "geometryPass": true,
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ]
+    },
+    {
+      "event": "ev_parking_evs",
+      "key": "explore-ev-charging-parking-v1",
+      "format": "place",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "cbf59f0c93ed33a55fbb7859d03d93dda1de0a3a83f6484ff9d0cf8f13d6920f"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/explore-ev-charging-parking-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 145466,
+        "sha256": "6d437b63b66ecfb879fa863ae8f39d07474e6176c8828577cb6353f5e27a85ed"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "size": [
+          1024,
+          576
+        ],
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "geometryPass": true,
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        }
+      ]
+    },
+    {
+      "event": "lc_daegu_makchang",
+      "key": "local-daegu-makchang-alley-v1",
+      "format": "character",
+      "master": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1.png",
+        "width": 1672,
+        "height": 941,
+        "sha256": "7d1e427f790bd67135af06a03df746701384601517ebba00dcc2e79a95d67dae"
+      },
+      "delivery": {
+        "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/local-daegu-makchang-alley-v1.webp",
+        "width": 1024,
+        "height": 576,
+        "space": "srgb",
+        "format": "webp",
+        "hasAlpha": false,
+        "bytes": 129670,
+        "sha256": "e5a069a991df48abfeae37b9d7847cfa16220cca5265cc0ae6a4a006b6ba1ef8"
+      },
+      "export": {
+        "tool": "sharp",
+        "resize": "center cover",
+        "size": [
+          1024,
+          576
+        ],
+        "colourspace": "srgb",
+        "webp": {
+          "quality": 86,
+          "effort": 6
+        }
+      },
+      "geometryPass": true,
+      "baseVerbatim": true,
+      "negativeVerbatim": true,
+      "references": [
+        {
+          "path": "assets/reference/visual-canon-2026-08-11.png",
+          "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+        },
+        {
+          "path": "assets/reference/world-canon-2026-08-11.png",
+          "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+        },
+        {
+          "path": "assets/reference/people-canon-2026-08-11.png",
+          "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+        },
+        {
+          "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+          "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+        },
+        {
+          "path": "assets/portraits/passer_woman.png",
+          "sha256": "56d945e3f5c7b58d66e403556104310cc869ccda4507078746c95d09380532f8"
+        }
+      ]
+    }
+  ],
+  "sourcesRead": "event-reader-review.json",
+  "actualVision": "review.json",
+  "sourceChecks": "source-context-verification.json",
+  "mappingOwner": "root",
+  "assetProductionCopies": 0,
+  "productionSourceEdits": 0,
+  "freshJourneysAdded": 0
+}

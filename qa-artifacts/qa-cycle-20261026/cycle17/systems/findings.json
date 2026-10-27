@@ -1,0 +1,48 @@
+{
+  "naturalConfirmed": 2,
+  "derivedBoundaryConfirmed": 1,
+  "unresolvedCandidates": 0,
+  "findings": [
+    {
+      "id": "C17-SYS-01",
+      "classification": "natural-confirmed",
+      "scope": "reader",
+      "event": "comp_cloudgame",
+      "trace": 414,
+      "entryExport": "player02/attempt01/entry-413-comp_cloudgame-export.json",
+      "summary": "차 안에서 알려진 동료와 나누는 6발화 중5발화가 외부 passer_woman/???로 표시됨.",
+      "evidence": "reader-transcript.json; cloudgame-evidence.json",
+      "repair": "crew/me 명시 metadata 및 모든 outcome 상속 보호. 임의 고정 인물 추가 없음."
+    },
+    {
+      "id": "C17-SYS-02",
+      "classification": "natural-confirmed",
+      "scope": "image",
+      "event": "comp_cloudgame",
+      "trace": 414,
+      "entryExport": "player02/attempt01/entry-413-comp_cloudgame-export.json",
+      "sceneKey": "event-companion-van",
+      "asset": "assets/scenes/event-companion-van.webp",
+      "assetSha256": "8510cff63b617e51ff8f435030c049dde5c1d1dc95f79ec9091872eda38046bc",
+      "actualParty": [
+        "minji",
+        "eunsu",
+        "jaeyi"
+      ],
+      "summary": "실제 asset view에서 중앙 박 선생이 canonical 초상과 일치하나 현재 미영입. 본문은 창밖 구름 감정이며 그림은 고정 여러 동료의 실내 지도 장면.",
+      "evidence": "Direct view_image of mapped asset plus assets/portraits/parkss.png; no browser crop assertion",
+      "repairOwner": "root"
+    },
+    {
+      "id": "C17-SYS-D01",
+      "classification": "derived-boundary-confirmed",
+      "cohortExcluded": true,
+      "scope": "headcount",
+      "event": "comp_cloudgame",
+      "choice": 0,
+      "summary": "minParty2+운전자=총3명으로 eventAvailable true지만 결과는 4표인 삼 대 일. 자연17은4명이므로 자연 관측 결함으로 합산하지 않음.",
+      "evidence": "cloudgame-evidence.json: explicit roster boundary, no effects or new journey actions",
+      "repair": "표결 수를 인원 중립 문장으로 바꾸고 FX/조건 유지."
+    }
+  ]
+}

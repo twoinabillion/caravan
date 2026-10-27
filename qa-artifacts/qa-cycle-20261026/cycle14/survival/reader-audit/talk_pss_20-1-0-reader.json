@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "있지."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 뒷장 맨 끝을 펼쳐 보였다."
+  },
+  {
+    "kind": "narration",
+    "text": "차에 탄 사람들 이름이 나란히 적혀 있었다. 메모는 전부 묶여서 한 줄이었다. 「진행 중」."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "진행 중이요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "아직 안 끝났으니까. 끝나야 뭐라고 적지."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 수첩을 덮었다."
+  },
+  {
+    "kind": "record",
+    "who": "me",
+    "text": "오래 걸릴 걸세. 오래 걸려야 하고."
+  },
+  {
+    "kind": "narration",
+    "text": "그 처방대로 오래 걸리고 싶다."
+  }
+]

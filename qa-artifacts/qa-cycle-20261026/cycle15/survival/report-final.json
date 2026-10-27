@@ -1,0 +1,233 @@
+{
+  "classification": "fresh-finite-normal-public-engine-journey",
+  "cohortExcluded": false,
+  "freshJourneys": 1,
+  "resumeJourneys": 0,
+  "attempt": "attempt01",
+  "seed": 275001,
+  "player": "player40",
+  "status": "ended",
+  "storyDone": true,
+  "ending": "core_transfer",
+  "finalDay": 9,
+  "finalMin": 699.1,
+  "km": 728.9999999999945,
+  "party": [
+    "minji",
+    "kangwoo",
+    "eunsu"
+  ],
+  "dog": false,
+  "choices": 105,
+  "traceRows": 509,
+  "reloads": {
+    "entry": 105,
+    "paid": 105,
+    "loadedFalse": 0,
+    "replayedFalse": 0,
+    "reapplied": 0,
+    "snapshotChanges": 0
+  },
+  "readerEqualFalse": 0,
+  "shortSpeechCalls": 103,
+  "npcPresentations": 12,
+  "finalNotesReviewed": 103,
+  "priorComparison": {
+    "priorNaturalTraceFiles": 57,
+    "exactPriorTextRows": 92,
+    "newTextRows": 13,
+    "newNormalizedPairs": [
+      [
+        "ev_cinema_film",
+        2
+      ],
+      [
+        "ev_comp_argument",
+        2
+      ],
+      [
+        "talk_kw_06",
+        0
+      ],
+      [
+        "talk_mj_17",
+        1
+      ]
+    ]
+  },
+  "resourceMin": {
+    "food": 8,
+    "water": 10,
+    "fuel": 25.553125000000087,
+    "scrap": 0,
+    "van": 82
+  },
+  "successfulActions": {
+    "explore": 18,
+    "travel": 22,
+    "trade": 37,
+    "buy-upgrade": 1,
+    "meet-recruit": 3,
+    "npc-local": 6,
+    "work": 7,
+    "recruit-step": 6,
+    "camp-talk": 7,
+    "accept-companion": 3,
+    "talk": 15,
+    "camp-meal": 1,
+    "camp-repair": 1,
+    "craft": 1
+  },
+  "failedActionsNotCountedAsSuccess": [
+    {
+      "trace": 337,
+      "action": "recruit-step",
+      "result": false
+    }
+  ],
+  "boriPools": {
+    "find_bori_nose": {
+      "poolOccurrences": 0,
+      "poolDriving": 0,
+      "poolStopped": 0,
+      "selected": 0
+    },
+    "bori_tag": {
+      "poolOccurrences": 0,
+      "poolDriving": 0,
+      "poolStopped": 0,
+      "selected": 0
+    },
+    "bori_family": {
+      "poolOccurrences": 0,
+      "poolDriving": 0,
+      "poolStopped": 0,
+      "selected": 0
+    }
+  },
+  "radio": {
+    "controlObservations": 71,
+    "enabledObservations": 0,
+    "success": 0
+  },
+  "combatScope": "Three public convoy/mask/pass choices; no standalone tactical combat encounter. Crafted pipe once.",
+  "review": {
+    "readStatus": "complete",
+    "all105EntriesResultsAndReader": true,
+    "all103Notes": true,
+    "all103ShortSpeechCallsAnd12NpcPresentations": true,
+    "allWorkMessagesAnd5UniqueWorkBodies": true,
+    "newNaturalIssues": 4,
+    "uniqueNaturalEvents": 3,
+    "ambientQueueCandidate": 1,
+    "sourceDerivedSiblings": 2,
+    "imageScope": "Reviewed actual candidate scene keys/content and supplied root scene-evidence. Root independently viewed whale/wine assets and confirmed2 mismatches. No browser crop claim by survival.",
+    "sceneKeyCount": 90,
+    "sceneKeys": [
+      "arrival-gongju",
+      "arrival-sejong",
+      "combat-walker-watch-v1",
+      "comp-talk-eunsu-camp-v1",
+      "comp-talk-eunsu-road-v1",
+      "comp-talk-kangwoo-camp-v1",
+      "comp-talk-kangwoo-road-v1",
+      "comp-talk-minji-camp-v1",
+      "comp-talk-minji-road-v1",
+      "daegu-dome",
+      "daejeon-commune",
+      "event-ai-surveillance",
+      "event-companion-van",
+      "event-explore-leisure",
+      "event-explore-school",
+      "event-explore-transit",
+      "event-find-broadcast-station-v1",
+      "event-meet-family",
+      "event-meet-guard",
+      "event-meet-roadside",
+      "event-meet-trader",
+      "event-road-coffee-van-v2",
+      "event-road-food-truck-v2",
+      "event-vista-road",
+      "family-verification-key",
+      "grandfather-envelope",
+      "history-failed-namsan-v1",
+      "history-parents-network-record-v2",
+      "history-transit-trust-v1",
+      "intro-appeal-denied",
+      "intro-busan-workday-v1",
+      "intro-dashboard-module",
+      "intro-departure-conversation-v4",
+      "intro-departure-start-v1",
+      "intro-dock-aid",
+      "intro-family-packing-v1",
+      "intro-parents-discovery",
+      "intro-workshop-departure",
+      "memory-busan-terminal-v1",
+      "onboarding-first-road-scan-v1",
+      "opening-bus-heater-v1",
+      "parents-diversion-record-v2",
+      "parents-father-last-log-record-v2",
+      "parents-linked-records-v2",
+      "parents-mother-broadcast-v1",
+      "parents-mother-reunion-v1",
+      "recruit-eunsu-join",
+      "recruit-eunsu-join-decision",
+      "recruit-eunsu-rooftop",
+      "recruit-eunsu-sky-point",
+      "recruit-eunsu-task",
+      "recruit-eunsu-task-breaker",
+      "recruit-kangwoo",
+      "recruit-kangwoo-join",
+      "recruit-kangwoo-join-decision",
+      "recruit-kangwoo-meet-action",
+      "recruit-kangwoo-pickpocket",
+      "recruit-kangwoo-task",
+      "recruit-minji",
+      "recruit-minji-join",
+      "recruit-minji-join-decision",
+      "recruit-minji-meet-action",
+      "recruit-minji-task",
+      "recruit-minji-task-collapse",
+      "recruit-minji-task-signal",
+      "recruit-minji-welding",
+      "route-market-convoy",
+      "route-mid-fork",
+      "sea-captain-contact",
+      "seoul-base",
+      "seoul-core-view-v2",
+      "seoul-han",
+      "seoul-home-dawn-v2",
+      "seoul-night-quiet-v2",
+      "seoul-reset-empty-v2",
+      "seoul-ruins",
+      "seoul-square",
+      "seoul-uplink-empty-v2",
+      "story-bridge-departure-echo-v1",
+      "story-bridge-invitation-v1",
+      "story-bridge-parent-route-v1",
+      "story-bridge-trace-gap-v1",
+      "story-bridge-watched-v1",
+      "story-family-principle-review-v1",
+      "story-generation-form",
+      "story-generation-route",
+      "story-generation-speech",
+      "story-generation-speech-stations-v1",
+      "story-generation-theories-cast-v1",
+      "story-personal-cache-v1"
+    ]
+  },
+  "source": {
+    "engineHash": "c55c4d288c554cc872971334c8ceb590154f952e952dc6f399b68dfae01e82ad",
+    "all40RuntimeStartEndEqualFrozen": true,
+    "start": "runtime-start-attempt01.json",
+    "end": "runtime-end-attempt01.json"
+  },
+  "gaps": [
+    "No Bori encounter, nose/tag/family (dog false); cumulative earlier family evidence unaffected.",
+    "No radio tube/repair; no enabled radio control.",
+    "No standalone tactical combat.",
+    "Only chosen natural outcomes; sibling findings source-derived, not extra play.",
+    "Queued speech visibility and actual in-game image crops owned by root/browser validation."
+  ],
+  "nextRequestedWork": "After cycle16 freeze, separate cohortExcluded normal public-action partial replay to export lc_ulsan_whale and lc_yeongdong_wine entry saves for browser asset checks. Current15 trace has entry text/reader but no those entry-export saves."
+}

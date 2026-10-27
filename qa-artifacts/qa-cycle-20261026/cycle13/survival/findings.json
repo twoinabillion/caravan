@@ -1,0 +1,641 @@
+[
+  {
+    "id": "S13-01",
+    "status": "confirmed",
+    "scope": "fresh-natural-journey",
+    "trace": 277,
+    "eventId": "talk_jy_18",
+    "choice": 1,
+    "phase": "entry",
+    "actual": "자기 과거 설명 마지막 줄이 me로 배정",
+    "expected": "jaeyi 세 연속 발화",
+    "evidence": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "저 혼자 다닐 때요, 리어카에 이름 붙였었어요. 「사장님」.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "narration",
+          "text": "재이가 웃었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "혼자면 미치니까, 사장님한테 보고를 했어요. 오늘 매출 얼마요, 내일 어디 가요.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "…그렇게 몇 년을 살았어요.",
+          "displayName": "상혁"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "재이가 자세를 고쳐 앉더니 또랑또랑 보고를 시작했다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "금일 습득 고철 다섯, 지출 둘, 순익 셋! 특이사항— 대원 전원 무사, 저녁 메뉴 기대됨!",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "결재.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "손도장을 찍는 시늉을 하자 재이가 깔깔 웃었다. 웃다가 다시",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "저녁 뭐예요?",
+          "displayName": "재이"
+        },
+        {
+          "kind": "narration",
+          "text": "하고 물었다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "text": "\"저 혼자 다닐 때요, 리어카에 이름 붙였었어요. 「사장님」.\"\n\n재이가 웃었다. \"혼자면 미치니까, 사장님한테 보고를 했어요. 오늘 매출 얼마요, 내일 어디 가요.\"\n\n\"…그렇게 몇 년을 살았어요.\"",
+    "proposal": "Explicit turnSpeakers only; preserve prose/effects/choice order and paid views",
+    "file": "src/03-data.js",
+    "owner": "survival"
+  },
+  {
+    "id": "S13-02",
+    "status": "confirmed",
+    "scope": "fresh-natural-journey",
+    "trace": 437,
+    "eventId": "talk_jy_03",
+    "choice": 0,
+    "phase": "result",
+    "actual": "흥정 둘째 원칙이 me로 배정",
+    "expected": "jaeyi 세 연속 발화",
+    "evidence": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "다음 정착지에서 제가 흥정하는 거 잘 봐요.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "narration",
+          "text": "재이가 어깨를 폈다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "오늘 기술 하나 공개할 거니까.",
+          "displayName": "재이"
+        }
+      ],
+      "result": [
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "첫째, 갖고 싶은 건 세 번째로 물어봐요. 첫 번째로 물으면 값이 두 배 돼요.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "둘째… 둘째 뭐였지. 아, 걸어 나갈 준비. 걸어 나갈 준비가 된 사람이 이겨요. 셋째가 제일 중요한데—",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "재이가 뜸을 들이다 씩 웃었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "jaeyi",
+          "text": "정말 좋은 물건이면 흥정하지 마요. 부르는 값 주고 사요. 그 주인이랑은 오래 봐야 하니까.",
+          "displayName": "재이"
+        },
+        {
+          "kind": "narration",
+          "text": "흥정의 기술 최종장이 흥정 포기라는 게 이 바닥의 깊이다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "text": "\"첫째, 갖고 싶은 건 세 번째로 물어봐요. 첫 번째로 물으면 값이 두 배 돼요.\"\n\n\"둘째… 둘째 뭐였지. 아, 걸어 나갈 준비. 걸어 나갈 준비가 된 사람이 이겨요. 셋째가 제일 중요한데—\" 재이가 뜸을 들이다 씩 웃었다. \"정말 좋은 물건이면 흥정하지 마요. 부르는 값 주고 사요. 그 주인이랑은 오래 봐야 하니까.\"\n\n흥정의 기술 최종장이 흥정 포기라는 게 이 바닥의 깊이다.",
+    "proposal": "Explicit turnSpeakers only; preserve prose/effects/choice order and paid views",
+    "file": "src/03-data.js",
+    "owner": "survival"
+  },
+  {
+    "id": "S13-03",
+    "status": "confirmed",
+    "scope": "fresh-natural-journey",
+    "trace": 412,
+    "eventId": "talkr_es_1",
+    "choice": 0,
+    "phase": "result",
+    "actual": "새벽 신호를 놓쳤다는 현재 설명이 record로 분류",
+    "expected": "eunsu/me/eunsu/eunsu 현재 대화",
+    "evidence": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "오늘의 전파 보고입니다.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 헤드폰 한쪽을 들었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "들으실래요?",
+          "displayName": "은수"
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "오늘 잡힌 신호들이 브리핑됐다. 멀리서 온 잡음, 정체불명의 규칙적 신호, 혹은 아무것도 없음.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "오늘은 아무것도 없었어요.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "그것도 보고예요?",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "'이상 무'도 정보니까요.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 수첩에 시각을 적었다.",
+          "displayName": null
+        },
+        {
+          "kind": "record",
+          "who": "eunsu",
+          "text": "…아, 새벽 세 시쯤 한 번 뭐가 있었는데 제가 졸아서요. 그건 못 들은 걸로 적었어요.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "text": "오늘 잡힌 신호들이 브리핑됐다. 멀리서 온 잡음, 정체불명의 규칙적 신호, 혹은 아무것도 없음.\n\n\"오늘은 아무것도 없었어요.\"\n\n\"그것도 보고예요?\"\n\n\"'이상 무'도 정보니까요.\" 은수가 수첩에 시각을 적었다. \"…아, 새벽 세 시쯤 한 번 뭐가 있었는데 제가 졸아서요. 그건 못 들은 걸로 적었어요.\"",
+    "proposal": "Explicit turnSpeakers only; preserve prose/effects/choice order and paid views",
+    "file": "src/03-data.js",
+    "owner": "survival"
+  },
+  {
+    "id": "S13-04",
+    "status": "confirmed",
+    "scope": "fresh-natural-journey",
+    "trace": 515,
+    "eventId": "seoul_ruins",
+    "choice": 1,
+    "phase": "result",
+    "actual": "플레이어 질문2줄 passer_man, 은수 답2줄 me",
+    "expected": "eunsu/me/eunsu/eunsu/me/eunsu/eunsu",
+    "evidence": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "죽은 빌딩 숲을 지난다. 유리창 수만 개가 우리를 비춘다. 그리고—",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "신호등이, 우리가 다가갈 때마다 초록으로 바뀐다. 정확히 우리 속도에 맞춰서.",
+          "displayName": null
+        },
+        {
+          "kind": "ai",
+          "who": "cheollian",
+          "name": "천리안 방송",
+          "text": "\"막힘없이 모시겠습니다. 손님을 기다린 지 오래되었습니다.\"",
+          "displayName": "천리안 방송"
+        },
+        {
+          "kind": "narration",
+          "text": "도시 전체가 우리를 위해 길을 터준다. 융숭한 대접인데, 등골이 서늘하다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "은수가 유리 빌딩들을 올려다봤다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "…이거 관제예요. 창문마다 센서가 있어요. 몇 명인지, 뭘 실었는지까지—",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "확실해요?",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "speakerUncertain": true,
+          "text": "…아뇨. 창문 반사가 일정한 건 확실하고, 센서라는 건 제 짐작이에요.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 잠깐 멈췄다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "근데 짐작이 맞을 거예요.",
+          "displayName": "은수"
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "공격하려는 거예요?",
+          "displayName": "???"
+        },
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "speakerUncertain": true,
+          "text": "아뇨. 길 잃을 틈도 안 주려는 거예요.",
+          "displayName": "상혁"
+        },
+        {
+          "kind": "narration",
+          "text": "때맞춰 다음 신호등이 초록으로 바뀌었다. 은수가 헤드폰을 벗었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "우리가 운전하는 것 같죠? 지금은 저쪽이 운전하고 있어요.",
+          "displayName": "은수"
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "text": "은수가 유리 빌딩들을 올려다봤다. \"…이거 관제예요. 창문마다 센서가 있어요. 몇 명인지, 뭘 실었는지까지—\"\n\n\"확실해요?\"\n\n\"…아뇨. 창문 반사가 일정한 건 확실하고, 센서라는 건 제 짐작이에요.\" 은수가 잠깐 멈췄다. \"근데 짐작이 맞을 거예요.\"\n\n\"공격하려는 거예요?\"\n\n\"아뇨. 길 잃을 틈도 안 주려는 거예요.\" 때맞춰 다음 신호등이 초록으로 바뀌었다. 은수가 헤드폰을 벗었다. \"우리가 운전하는 것 같죠? 지금은 저쪽이 운전하고 있어요.\"",
+    "proposal": "Explicit turnSpeakers only; preserve prose/effects/choice order and paid views",
+    "file": "src/03-data.js",
+    "owner": "survival"
+  },
+  {
+    "id": "S13-05",
+    "status": "confirmed",
+    "scope": "fresh-natural-journey",
+    "trace": 523,
+    "eventId": "seoul_base",
+    "choice": 1,
+    "phase": "result",
+    "actual": "할아버지 편지 두 줄이 passer_man/???",
+    "expected": "할아버지 편지 paper record 두 줄",
+    "evidence": {
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "케이블카 승강장. 곤돌라는 멈춰 있고, 코어까지는 걸어 올라야 한다. 계단이 안개 속으로 사라진다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "여기서부터 달구지는 못 간다. 차를 두고 가야 한다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "조수석의 수첩을 봤다. 할아버지의 자리. 여기까지 함께 온 840km.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "「남산 보고 열어라.」",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "남산이 보인다. 봉투를 열었다.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "속지와 함께, 접힌 종이표 하나가 나왔다. 빛바랜 글씨. 「서울 외곽 이송 / 사유: —」. 할아버지가 자기 부모에게서 받은 표였다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "이건 네 증조모 때부터 우리 집에 있던 거다. 나도 이유는 못 찾았다. 천리안이 뭐라고 답하든 발신 기록하고 승인 시간부터 맞춰 봐라. 안 맞으면 빈칸은 그대로 둬.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "그 아래에는 짧게 덧붙여져 있었다.",
+          "displayName": null
+        },
+        {
+          "kind": "dialogue",
+          "who": "passer_man",
+          "name": "???",
+          "speakerUncertain": true,
+          "text": "차는 남산 아래 평지에 세워라. 주차 브레이크 두 번 확인하고, 열쇠는 갖고 올라가.",
+          "displayName": "???"
+        },
+        {
+          "kind": "narration",
+          "text": "말대로 브레이크를 두 번 당겨 보고 열쇠를 주머니에 넣었다. 표와 수첩은 품 안에 넣었다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "text": "「남산 보고 열어라.」\n\n남산이 보인다. 봉투를 열었다.\n\n속지와 함께, 접힌 종이표 하나가 나왔다. 빛바랜 글씨. 「서울 외곽 이송 / 사유: —」. 할아버지가 자기 부모에게서 받은 표였다.\n\n\"이건 네 증조모 때부터 우리 집에 있던 거다. 나도 이유는 못 찾았다. 천리안이 뭐라고 답하든 발신 기록하고 승인 시간부터 맞춰 봐라. 안 맞으면 빈칸은 그대로 둬.\"\n\n그 아래에는 짧게 덧붙여져 있었다.\n\n\"차는 남산 아래 평지에 세워라. 주차 브레이크 두 번 확인하고, 열쇠는 갖고 올라가.\"\n\n말대로 브레이크를 두 번 당겨 보고 열쇠를 주머니에 넣었다. 표와 수첩은 품 안에 넣었다.",
+    "proposal": "Explicit turnSpeakers only; preserve prose/effects/choice order and paid views",
+    "file": "src/03-data.js",
+    "owner": "story"
+  },
+  {
+    "id": "S13-06",
+    "status": "confirmed",
+    "scope": "fresh-natural-journey",
+    "trace": 298,
+    "eventId": "D.banter/meet_pansori callback",
+    "actual": "판소리 반 마당 약속을 듣지 않았는데 그 약속을 회상",
+    "expected": "Specific completed source required or source-neutral dialogue",
+    "short": [
+      {
+        "speech": {
+          "who": "leo",
+          "t": "판소리 어르신이 반 마당 남았댔죠. 남은 가사는 제가 먼저 좀 써둘게요.",
+          "need": {
+            "comp": "leo"
+          }
+        },
+        "display": {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "판소리 어르신이 반 마당 남았댔죠. 남은 가사는 제가 먼저 좀 써둘게요.",
+          "displayName": "레오"
+        },
+        "at": null,
+        "day": 7,
+        "min": 1054.9,
+        "party": [
+          "leo",
+          "jaeyi"
+        ]
+      }
+    ],
+    "usedMeetPansori": 0,
+    "matchingNotes": [],
+    "proposal": "Completed source gate, not generic Leo membership",
+    "file": "src/03-data.js",
+    "owner": "systems"
+  },
+  {
+    "id": "S13-B01",
+    "status": "confirmed",
+    "scope": "normal-save-branch-exploration",
+    "cohortExcluded": true,
+    "trace": 22,
+    "actual": "DAY36 15:21 레오가 점심 아직 멀었다고 단정",
+    "expected": "현재 시각과 무관한 다음 식사 표현 또는 기존 시간 조건",
+    "short": [
+      {
+        "speech": {
+          "who": "parkss",
+          "t": "다들 아까 그 국밥집 봤나? 오래전엔 줄 서서 먹었다는데.",
+          "drivingOnly": true
+        },
+        "display": {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "다들 아까 그 국밥집 봤나? 오래전엔 줄 서서 먹었다는데.",
+          "displayName": "박 선생"
+        },
+        "at": null,
+        "day": 36,
+        "min": 921.1,
+        "party": [
+          "leo",
+          "parkss"
+        ]
+      },
+      {
+        "speech": {
+          "who": "나",
+          "t": "지금은 문 닫혔겠죠.",
+          "drivingOnly": true
+        },
+        "display": {
+          "kind": "dialogue",
+          "who": "나",
+          "text": "지금은 문 닫혔겠죠.",
+          "displayName": "상혁"
+        },
+        "at": null,
+        "day": 36,
+        "min": 921.1,
+        "party": [
+          "leo",
+          "parkss"
+        ]
+      },
+      {
+        "speech": {
+          "who": "parkss",
+          "t": "닫혔지. 닫혔는데… 간판 글씨가 좋더라고. 원조라고, 붉은 글씨로. 그 시절엔 원조 아닌 집이 없었어.",
+          "drivingOnly": true
+        },
+        "display": {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "닫혔지. 닫혔는데… 간판 글씨가 좋더라고. 원조라고, 붉은 글씨로. 그 시절엔 원조 아닌 집이 없었어.",
+          "displayName": "박 선생"
+        },
+        "at": null,
+        "day": 36,
+        "min": 921.1,
+        "party": [
+          "leo",
+          "parkss"
+        ]
+      },
+      {
+        "speech": {
+          "who": "leo",
+          "t": "쌤, 배고파지는 얘기 그만해요. 점심 아직 멀었단 말이에요.",
+          "drivingOnly": true
+        },
+        "display": {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "쌤, 배고파지는 얘기 그만해요. 점심 아직 멀었단 말이에요.",
+          "displayName": "레오"
+        },
+        "at": null,
+        "day": 36,
+        "min": 921.1,
+        "party": [
+          "leo",
+          "parkss"
+        ]
+      },
+      {
+        "speech": {
+          "who": "parkss",
+          "t": "문 닫았다고 먹어본 사람 입맛까지 없어지나. …미안하네, 더 고파졌지?",
+          "drivingOnly": true
+        },
+        "display": {
+          "kind": "dialogue",
+          "who": "parkss",
+          "text": "문 닫았다고 먹어본 사람 입맛까지 없어지나. …미안하네, 더 고파졌지?",
+          "displayName": "박 선생"
+        },
+        "at": null,
+        "day": 36,
+        "min": 921.1,
+        "party": [
+          "leo",
+          "parkss"
+        ]
+      },
+      {
+        "speech": {
+          "who": "leo",
+          "t": "네. 이제 뭐라도 먹어요. 쌤 가방에 뭐 없어요?",
+          "drivingOnly": true
+        },
+        "display": {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "네. 이제 뭐라도 먹어요. 쌤 가방에 뭐 없어요?",
+          "displayName": "레오"
+        },
+        "at": null,
+        "day": 36,
+        "min": 921.1,
+        "party": [
+          "leo",
+          "parkss"
+        ]
+      }
+    ],
+    "file": "src/03-data.js",
+    "owner": "systems"
+  },
+  {
+    "id": "S13-B02",
+    "status": "confirmed",
+    "scope": "normal-save-branch-exploration",
+    "cohortExcluded": true,
+    "trace": 68,
+    "eventId": "talkr_leo_3",
+    "choice": 0,
+    "actual": "소재를 받아 적으며 주인공에게 하는 설명을 record로 분류",
+    "expected": "현재 dialogue/leo",
+    "evidence": {
+      "entry": [
+        {
+          "kind": "dialogue",
+          "who": "leo",
+          "text": "운전하면서 본 것 중에 노래 될 만한 거 있었어요?",
+          "displayName": "레오"
+        },
+        {
+          "kind": "narration",
+          "text": "레오가 수첩을 펴 들었다. 소재 수집 시간이다.",
+          "displayName": null
+        }
+      ],
+      "result": [
+        {
+          "kind": "narration",
+          "text": "오늘 본 것 하나를 말하자 레오가 받아 적으며 고개를 끄덕였다.",
+          "displayName": null
+        },
+        {
+          "kind": "record",
+          "who": "record",
+          "name": "기록",
+          "text": "대장님 눈에 걸린 건 노래가 돼요. 운전자는 제일 좋은 자리에서 세상을 보니까.",
+          "displayName": null
+        },
+        {
+          "kind": "narration",
+          "text": "수첩이 한 줄 두꺼워졌다.",
+          "displayName": null
+        }
+      ],
+      "knownSpeaker": false
+    },
+    "proposal": "Explicit turnSpeakers:[leo], prose/FX/paid view unchanged",
+    "file": "src/03-data.js",
+    "owner": "survival"
+  },
+  {
+    "id": "S13-B03",
+    "status": "confirmed",
+    "scope": "normal-save-branch-exploration with supplemental fixture roster diagnostics",
+    "cohortExcluded": true,
+    "naturalTrace": 25,
+    "eventId": "comp_naming",
+    "actual": "All four roster diagnostics map an internal companion exchange to passer_man/??? with external male portrait reference; proposal and rebuttal appear as same speaker",
+    "expected": "Actual crew members exchange the naming suggestion/rebuttal, driver owns final ignition question; engine nickname remains inline narration",
+    "evidence": "comp-naming-review/reader-rosters.json; bori-save-branch/attempt01/player35-trace.json trace25",
+    "specificIdentityLimitation": "Original prose does not fix named individuals. Fix assigns first and second actual crew roles, not an externally named stranger.",
+    "fix": "Entry party_first route; result authored turns resolves actual party[0]/[1] CID directly and retains original narration including engine nickname",
+    "file": "src/03-data.js",
+    "owner": "survival",
+    "tests": "test_qa_cycle13_comp_naming.cjs four rosters + paid/text-only preservation + unchanged body/effects"
+  }
+]

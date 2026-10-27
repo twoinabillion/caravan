@@ -1,0 +1,347 @@
+{
+  "at": "2026-10-26T12:15:49.286Z",
+  "reason": "User stopped QA and requested record/commit/push via root",
+  "cohortExcluded": true,
+  "newJourneys": 0,
+  "newGenerationAfterStop": 0,
+  "productionWritesByThisAgent": 0,
+  "scope": "Finish existing exported image file review and own documentation only",
+  "status": "7 staged images; no production mapping; root independent review and UI pending",
+  "source": {
+    "comparison": "time-art before.json to stop checkpoint; read-only",
+    "count": 40,
+    "changedSinceBefore": [],
+    "rows": [
+      {
+        "path": "src/01-style.html",
+        "sha256": "4eda85d39b614253f95df7b08c7b54d6b018b994c52a400b69aba69168e82dd8"
+      },
+      {
+        "path": "src/01b-quest-style.html",
+        "sha256": "9d03f07188652cb026214f5a544c37a57040c46e5f509d13b6775ff481cdcff5"
+      },
+      {
+        "path": "src/02-dom.html",
+        "sha256": "5c9e9c5b1c6a38cfb3b39c7918f81c0133fb5cec3abf0f47a7d5694aa10e4504"
+      },
+      {
+        "path": "src/03-data.js",
+        "sha256": "7509a66ef2a242edb9e063a1f82493c7e920c20638b09286616231a7314ab551"
+      },
+      {
+        "path": "src/03b-portraits.js",
+        "sha256": "1be24a24f8a55c05c241a31ac8d629a7b95346f8b020b401a2587d08a28ac450"
+      },
+      {
+        "path": "src/03c-icons.js",
+        "sha256": "43c35b0eae246755a8703ac12ba117d9e3805c2af65991ae396391066a05e370"
+      },
+      {
+        "path": "src/03d-bgm.js",
+        "sha256": "21040addf53954219257ec72dac46679d609929dcc185e5a7bee7fe74880245e"
+      },
+      {
+        "path": "src/03e-bgm-title.js",
+        "sha256": "f615bed831348a698ceb9b8715f86c969337c229ca4e89f66a9a21534bf1aebf"
+      },
+      {
+        "path": "src/03f-npc-portraits.js",
+        "sha256": "83d6d84750f1180139a91edc03128a7d1002d5a4af4970d08d6d06b930296555"
+      },
+      {
+        "path": "src/03g-scenes.js",
+        "sha256": "31ec5fb5ad991df02429ff147d66794d1af6aed0f264dafec84fc00cf74f06ce"
+      },
+      {
+        "path": "src/03h-audio.js",
+        "sha256": "957e6637474c0777b03b6fc7e834541dedb94df3c98004651972884be5ee1b01"
+      },
+      {
+        "path": "src/03i-story-expansion.js",
+        "sha256": "e8884a905e801e05e3077fe1081cab5d7c73e522a19d47c3f96a48d1c7167d5a"
+      },
+      {
+        "path": "src/03j-camp-conversations.js",
+        "sha256": "2ae7d5f0bda0c6ff5c3022a6a9b7b528301dc89ed947734a67a0600edd035363"
+      },
+      {
+        "path": "src/03k-main-evidence.js",
+        "sha256": "a5db76a1c3382e95c05801efd7d64f5fc48d62fe39917252d432ce242d8d0bd0"
+      },
+      {
+        "path": "src/03l-main-recovery.js",
+        "sha256": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377"
+      },
+      {
+        "path": "src/03m-finale-reading.js",
+        "sha256": "727303d88553012a8a626a062fd3075830de980df2ed9f7f3d0eaee197a4f4db"
+      },
+      {
+        "path": "src/03n-offline-foley.js",
+        "sha256": "325e4ec7781b000e5c97d5a9884858d182d9c04f8deb2494cc4004deee9df40b"
+      },
+      {
+        "path": "src/04a-engine-core.js",
+        "sha256": "91259dfca14fa77649dc2fd6b3fca6fa85d09d1e8857da8231f01384aa56c458"
+      },
+      {
+        "path": "src/04b-engine-crew.js",
+        "sha256": "b8882e3dfb872eac16f13114dfdb9f86e3efe5f9efd71aa591ff2e4c440351ed"
+      },
+      {
+        "path": "src/04c-engine-travel.js",
+        "sha256": "d316356cd0f6fc5ee201f19edeabd435e442695403022ea95ca88e138b7a1234"
+      },
+      {
+        "path": "src/04d-engine-director.js",
+        "sha256": "6b44c5dc2de0aa27b9318aaa266851a9e0ac5d5dd7cbffe69142550e72aae67f"
+      },
+      {
+        "path": "src/04e-engine-world.js",
+        "sha256": "428bb7fd748738e81fa52bf3428c2104695e812bd61bce6a67810ef4991a2790"
+      },
+      {
+        "path": "src/04f-engine-quests.js",
+        "sha256": "0a035a63782b3e7d3fc1a6abfaac668099a3a061407e2364be9990a6eb6e7fa1"
+      },
+      {
+        "path": "src/04g-engine-evidence.js",
+        "sha256": "82591b69185615a7e03db7386600923348a314755760d682a5d6ca63fdceff34"
+      },
+      {
+        "path": "src/04h-engine-presentation.js",
+        "sha256": "3943bc15ba063f08464b7b494534519cde8c59d1e3e073023af7851af8a3f0f5"
+      },
+      {
+        "path": "src/05-scene.js",
+        "sha256": "5fefbb4d5d34e51396a1bd66ce22df43eb7cea77da6ab142de5338c3562023dd"
+      },
+      {
+        "path": "src/05a-road-environment.js",
+        "sha256": "90a6c2cae7f255f206b4aafbb5579c11c51b135d87673ca0174bb30714b8711f"
+      },
+      {
+        "path": "src/05b-vehicle-kit.js",
+        "sha256": "3354ea777e00f1a8eabbd3e3795b4d2ea2e00d2aca7ba04a9b19c5e81d37a1ff"
+      },
+      {
+        "path": "src/05c-road-cue-kit.js",
+        "sha256": "f87aa05dea8b962c2f6cb3a16e8dc3287491828be32fc315d27563d96a2b3311"
+      },
+      {
+        "path": "src/05d-route-panorama.js",
+        "sha256": "72fed40558aa9db85cc0fd2f0c69ffedabf574472dfe47cd3dfa88131f759e84"
+      },
+      {
+        "path": "src/05e-road-continuity.js",
+        "sha256": "9705ec95712411f5fcc5ab222e8b5a38deb1473a21d3a1c7a986dcf2f3697f1e"
+      },
+      {
+        "path": "src/06-mapgraph.js",
+        "sha256": "8c87a68afebd1379a6154a30b9db4be05fb2f66931a92c2beaa50081dd66c2a6"
+      },
+      {
+        "path": "src/07-ui.js",
+        "sha256": "17d64cdd4adb7e1d3711a88fdd4c3dee2a7bd6a3f59e50d4bf6b893c5ffd69d7"
+      },
+      {
+        "path": "src/07d-ui-quests.js",
+        "sha256": "d4320969bb4487a8e6e5cc0f0ca7a857c81c92675b364b8a91bcc3f89ec64ded"
+      },
+      {
+        "path": "src/07e-ui-audio.js",
+        "sha256": "f752354d046b966a6195f77c76d22e7eaa46adfac24d50fc244867994ad68880"
+      },
+      {
+        "path": "src/07f-ui-road-thoughts.js",
+        "sha256": "5c23662801c710c34789f2f84c23894cc81983958fbba7c145b7f13d97dd9503"
+      },
+      {
+        "path": "src/07g-ui-home.js",
+        "sha256": "db4b7c78349135e37a0de85a71e817e0e2b2377e6a39128e80304e25aa7f270c"
+      },
+      {
+        "path": "src/07h-story-pages.js",
+        "sha256": "b60b537b29aee726fe67924666eba6693b090837f079f52893d009f9a7c0b1e7"
+      },
+      {
+        "path": "src/08-offroad.js",
+        "sha256": "26097b4830734a01bab583f4b8ce6e84c3990a3a8a55f5cfd0ccd5656942b9d0"
+      },
+      {
+        "path": "src/09-close.html",
+        "sha256": "81f092938c9cdd0d3892ae5a2c17203a446918aa81ce6829500391be8a8d8ef7"
+      }
+    ]
+  },
+  "originalAssets": [
+    {
+      "path": "assets/scenes/seoul-ruins.webp",
+      "sha256": "868d134ed182fcfa88fd91532f0e720ac88c2f7d8fe5cb263f293e0e74bfce29",
+      "currentSha256": "868d134ed182fcfa88fd91532f0e720ac88c2f7d8fe5cb263f293e0e74bfce29",
+      "unchanged": true
+    },
+    {
+      "path": "assets/scenes/seoul-han.jpg",
+      "sha256": "a1d741fe24cfdf24620e312ff80cdc3d56c8f4c81adedade1cd716b5528b032f",
+      "currentSha256": "a1d741fe24cfdf24620e312ff80cdc3d56c8f4c81adedade1cd716b5528b032f",
+      "unchanged": true
+    },
+    {
+      "path": "assets/scenes/event-vista-road.webp",
+      "sha256": "073fd7b3801315fe3703c4c5e913faa31a8f1ed14619fb703504455aa5f2db36",
+      "currentSha256": "073fd7b3801315fe3703c4c5e913faa31a8f1ed14619fb703504455aa5f2db36",
+      "unchanged": true
+    }
+  ],
+  "stagedDeliveries": [
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/explore-ev-charging-parking-v1.webp",
+      "sha256": "6d437b63b66ecfb879fa863ae8f39d07474e6176c8828577cb6353f5e27a85ed",
+      "bytes": 145466,
+      "key": "explore-ev-charging-parking-v1",
+      "keyReferencedInProduction": false,
+      "copiedToAssets": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/local-daegu-makchang-alley-v1.webp",
+      "sha256": "e5a069a991df48abfeae37b9d7847cfa16220cca5265cc0ae6a4a006b6ba1ef8",
+      "bytes": 129670,
+      "key": "local-daegu-makchang-alley-v1",
+      "keyReferencedInProduction": false,
+      "copiedToAssets": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/story-grandfather-envelope-detail-v1.webp",
+      "sha256": "3d8dc1fe332540cf6036f791ec5d4e721f553dc4f3365173d20c40c46ce278d0",
+      "bytes": 122330,
+      "key": "story-grandfather-envelope-detail-v1",
+      "keyReferencedInProduction": false,
+      "copiedToAssets": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-day-v1.webp",
+      "sha256": "e6a96f440658c24a4ecaae8698de3b7d14aa774eb651a2f77b2c151b92cf63ae",
+      "bytes": 184044,
+      "key": "seoul-ruins-green-day-v1",
+      "keyReferencedInProduction": false,
+      "copiedToAssets": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-night-v1.webp",
+      "sha256": "016ca691b7eaf8eb9cfff3cc40b242666802d92fe4b2be1431db7d788031ab0e",
+      "bytes": 174562,
+      "key": "seoul-ruins-green-night-v1",
+      "keyReferencedInProduction": false,
+      "copiedToAssets": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-han-night-v1.webp",
+      "sha256": "dfd1a3765a3b7321aa65a786836406fa571f62393ad98d47e821846096c398c2",
+      "bytes": 148500,
+      "key": "seoul-han-night-v1",
+      "keyReferencedInProduction": false,
+      "copiedToAssets": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    },
+    {
+      "path": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/event-vista-road-night-v1.webp",
+      "sha256": "29eda797b0528805d88f2c5a538d4f64072a04ff912dc446396aedcfa89d6d5f",
+      "bytes": 126240,
+      "key": "event-vista-road-night-v1",
+      "keyReferencedInProduction": false,
+      "copiedToAssets": false,
+      "rootReviewed": false,
+      "uiReviewed": false
+    }
+  ],
+  "filesBeforeCheckpoint": [
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/before.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/event-vista-road-night-v1.webp",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-han-night-v1.webp",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-day-v1.webp",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-ruins-green-night-v1.webp",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/event-reader-review.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/export.cjs",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/export.log",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/geometry-verification.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/event-vista-road-night-v1.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-han-night-v1.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-day-v1.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/masters/seoul-ruins-green-night-v1.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/event-vista-road-night-v1.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/seoul-han-night-v1.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/seoul-ruins-green-day-v1.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/prompts/seoul-ruins-green-night-v1.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/provenance.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/requests.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/event-vista-road-night-v1-360.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/event-vista-road-night-v1-480.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-han-night-v1-360.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-han-night-v1-480.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-day-v1-360.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-day-v1-480.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-night-v1-360.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review/seoul-ruins-green-night-v1-480.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/review.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/ruins-night-request.json"
+  ],
+  "firstThreeArtFiles": [
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/README.md",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/explore-ev-charging-parking-v1.webp",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/local-daegu-makchang-alley-v1.webp",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/delivery/story-grandfather-envelope-detail-v1.webp",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/edit-requests.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/edit01-input-limit.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/ev-edit03-request.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/event-reader-review.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/generation-attempt01.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/geometry-verification.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft01.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft02.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft03.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1-draft01.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/local-daegu-makchang-alley-v1.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/story-grandfather-envelope-detail-v1.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/production-before.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1-edit01.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1-edit02.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1-edit03.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/explore-ev-charging-parking-v1.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/local-daegu-makchang-alley-v1-edit01.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/local-daegu-makchang-alley-v1-generate02.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/local-daegu-makchang-alley-v1.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/prompts/story-grandfather-envelope-detail-v1.txt",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/provenance.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/requests.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/retry-requests.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/explore-ev-charging-parking-v1-360.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/explore-ev-charging-parking-v1-480.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/local-daegu-makchang-alley-v1-360.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/local-daegu-makchang-alley-v1-480.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/story-grandfather-envelope-detail-v1-360.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review/story-grandfather-envelope-detail-v1-480.png",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/review.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/source-context-verification.json",
+    "qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/tool-validation-failures.json"
+  ],
+  "remaining": [
+    "Root independent review of all seven staged images",
+    "Gallery and real game/device crop review of all seven",
+    "Time selector wiring and mapping if later authorized",
+    "No new journey or generation until user requests resume"
+  ],
+  "commitPushOwner": "root"
+}

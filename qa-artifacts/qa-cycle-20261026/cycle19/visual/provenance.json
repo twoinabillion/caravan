@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-10-26T08:14:33.843651+00:00",
+  "generator": "image_gen.imagegen",
+  "method": "Separate dedicated edits of existing generic images; originals retained",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "references": [
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "prompts": [
+    "prompts.json",
+    "dogs-edit-prompt.json"
+  ],
+  "export": "sharp center cover1024x576 sRGB WebP q86 effort6; generated masters retained unchanged",
+  "assets": [
+    {
+      "key": "explore-letterpress-detail-v1",
+      "original": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-a60f3240-6b9a-47e6-b3b2-19359ba994e4.png",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle19/visual/masters/explore-letterpress-detail-v1.png",
+      "delivery": "assets/scenes/explore-letterpress-detail-v1.webp",
+      "sha256": "6c9908f4aa37bdbf76f9ce6ea59a31b8ca44b69c38dee6b88618753023e4cb33",
+      "bytes": 107400,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "event": "exp_printshop",
+      "oldKey": "event-find-document",
+      "visionReview": "Manual press and blank paper, no invented NPC or completed print."
+    },
+    {
+      "key": "camp-stray-dogs-night-v1",
+      "original": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-f5794970-b131-4c17-aeb4-c61fa2322ef1.png",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle19/visual/masters/camp-stray-dogs-night-v1.png",
+      "delivery": "assets/scenes/camp-stray-dogs-night-v1.webp",
+      "sha256": "7b4ff76d65e9e5c06c04e6196ed8b6e8a551ef8c708c74b8809b8c619b73d181",
+      "bytes": 91974,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "event": "camp_dogs",
+      "oldKey": "event-crisis-animal",
+      "visionReview": "Six stray dogs at night around canonical vehicle, opaque curtains remove fixed crew; original boars and daytime rain removed."
+    }
+  ],
+  "galleryBeforeWiring": [
+    "print-gallery-before-wiring.png",
+    "dogs-gallery-before-wiring.png"
+  ],
+  "galleryTransientError": "Initial DOM snapshot timed out; screenshot confirmed gallery, semantic file-name filters succeeded. No alternate control channel.",
+  "runtimeCrop": {
+    "sourceCycle": 20,
+    "widthCssPx": 480,
+    "letterpress": {
+      "backup": "cycle20/survival/attempt01/entry-462-exp_printshop-export.json",
+      "actions": "entry, choice0 print, record-labelled result, actualreload, result panel, road",
+      "screens": [
+        "print-entry-ui.png",
+        "print-result-ui.png",
+        "print-restored-ui.png"
+      ]
+    },
+    "dogs": {
+      "backup": "cycle19/story/agent03/attempt01/normal-unpaid-60-camp_dogs.json",
+      "preReaderProof": "Original pendingPresentation has version/eventId/phase/text only; no reading/view/scene keys removed or modified. Current20 scene selected normally.",
+      "actions": "entry, choice2 horn, result, road",
+      "screens": [
+        "dogs-entry-ui.png",
+        "dogs-result-ui.png"
+      ],
+      "time": "DAY2 06:30; explicit past-night camp memory means night image appropriate"
+    }
+  },
+  "originalAssetsRetained": [
+    "assets/scenes/event-find-document.webp",
+    "assets/scenes/event-crisis-animal.webp"
+  ],
+  "responsive360": "Not verified; prior viewport/file URL limitation retained",
+  "rejectedInterim": "exec-65035a36-9e97-4a21-a68e-8cab9a12441c.png cabin people-like forms; image_gen curtain edit, never wired"
+}

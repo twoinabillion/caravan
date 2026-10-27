@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "narration",
+    "text": "본줄은 달구지에, 보조줄은 가드레일 기둥에 걸었다. 한 줄이 흔들릴 때 다른 줄이 몸을 잡았다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "이제 한 발씩. 뛰지 말고."
+  },
+  {
+    "kind": "narration",
+    "text": "남자가 두 줄 사이로 몸을 옮겨 도로 위를 짚었다."
+  }
+]

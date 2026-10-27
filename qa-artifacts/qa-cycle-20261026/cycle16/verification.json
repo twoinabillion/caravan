@@ -1,0 +1,73 @@
+{
+  "recordedAt": "2026-10-26T05:48:03.441537+00:00",
+  "sourceFreeze": "cycle16/frozen-source.json",
+  "engineHash": "1911ad89b75afe51e44e8c8856bd7d6b7a16f070c0d717214e5230be996df9ab",
+  "sourceAtRecordTime": {
+    "equal": true,
+    "changedSinceFreeze": []
+  },
+  "tests": {
+    "command": "npm run test:source",
+    "pass": 1776,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "cycle16/test-source-after-contract.log",
+    "initial": {
+      "pass": 1774,
+      "fail": 2,
+      "log": "cycle16/test-source.log",
+      "reason": "Historical48-scene assertion rejected approved talk_jy_04 new entry. Exact single-sentence assertion/projection added to test; production40 unchanged."
+    }
+  },
+  "build": {
+    "at": "2026-10-26T05:38:01.270517+00:00",
+    "buildLog": "build.log",
+    "exitCode": 0,
+    "htmlBytes": 107994591,
+    "htmlSha256": "cfeb8fb3d149315ac721867d39dc0cb5ec3a279a2fa97ac0d97f5df14d0f05e4",
+    "srcUnchanged": true,
+    "changedSinceFreeze": [],
+    "engineHash": "1911ad89b75afe51e44e8c8856bd7d6b7a16f070c0d717214e5230be996df9ab"
+  },
+  "quick": {
+    "exitCode": 0,
+    "log": "cycle16/verify-quick.log",
+    "sceneClassAssets": 619,
+    "portraits": 74,
+    "mainCanonicalPortraits": 7
+  },
+  "journeys": {
+    "segments": 3,
+    "freshStarts": 3,
+    "normalSaveContinuations": 0,
+    "mainEndings": 3,
+    "otherEndings": 0,
+    "stoppedSegments": 0,
+    "choices": 285,
+    "traceRecords": 1544,
+    "entryReloads": 285,
+    "paidReloads": 285,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "review": {
+    "allThreeFullTextReviewed": true,
+    "allThreeEndSource40MatchesFreeze": true,
+    "methods": [
+      "core_quarantine",
+      "core_sleep",
+      "core_transfer"
+    ],
+    "sameDayChatDuplicates": 0
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4319/",
+    "eventFrameWidthCssPx": 480,
+    "newSceneFlow": "Whale,wine,ice,reservoir: normal new entry,choice,result,return to road; whale zoom/close; whale and reservoir actual reload",
+    "provenance": "cycle15/visual/provenance.json",
+    "originalQaBackupRestored": true,
+    "responsive360": "Unverified, previous viewport failure/security block; no workaround",
+    "infiniteMode": "Actual UI is infinite-resource preview; finite resources verified by engine journeys"
+  },
+  "status": "Technical verification and all three main endings passed. Further reader/copy/art findings remain for17; not a clean completion."
+}

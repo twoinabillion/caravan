@@ -1,0 +1,186 @@
+[
+  {
+    "collection": "banter",
+    "path": [
+      "t"
+    ],
+    "old": "운전석 레일 다시 맞췄어. 대장님이 자꾸 오른쪽 어깨 주무르잖아. 앉아 봐. 너무 뒤로 갔으면 말하고.",
+    "new": "아까 멈췄을 때 운전석 레일 다시 맞췄어. 대장님이 자꾸 오른쪽 어깨 주무르잖아. 지금은 어때? 너무 뒤로 갔으면 다음에 세울 때 말해.",
+    "classification": "natural-confirmed"
+  },
+  {
+    "collection": "chats",
+    "path": [
+      "thread-parent-key-minji",
+      "lines",
+      3,
+      1
+    ],
+    "old": "오늘은 내가 들고 있을까? 계속 만지작거리길래.",
+    "new": "다음에 차 세우면 내가 먼저 살펴볼까? 대장님은 나사부터 풀 것 같아서.",
+    "classification": "natural-confirmed"
+  },
+  {
+    "collection": "chats",
+    "path": [
+      "thread-parent-key-minji",
+      "lines",
+      5,
+      1
+    ],
+    "old": "알아. 그럼 나사 쪽은 그만 만져. 열고 싶으면 수첩 같이 보자.",
+    "new": "알아. 그럼 다음에 멈추면 수첩 같이 보자. 나사 풀기 전에.",
+    "classification": "natural-confirmed"
+  },
+  {
+    "collection": "chats",
+    "path": [
+      "thread-parent-key-minji",
+      "lines",
+      6,
+      1
+    ],
+    "old": "나는 장치를 내려놓고 수첩을 폈다. 민지가 옆으로 와 계기판 분해도가 있는 장을 짚었다.",
+    "new": "민지가 수첩을 조수석에 챙겨 두었다. 나는 핸들을 잡은 채 다음에 설 곳을 생각했다.",
+    "classification": "natural-confirmed"
+  },
+  {
+    "collection": "chats",
+    "path": [
+      "daily-me-minji-hands",
+      "lines",
+      3,
+      1
+    ],
+    "old": "대장님, 기름 묻은 손으로 비누부터 잡지 마. 걸레 여기.",
+    "new": "다음에 쉬면 기름 묻은 손으로 비누부터 잡지 마. 걸레로 먼저 닦아.",
+    "classification": "natural-clarity"
+  },
+  {
+    "collection": "chats",
+    "path": [
+      "daily-me-minji-hands",
+      "lines",
+      5,
+      1
+    ],
+    "old": "알아. 그러니까 번갈아 씻자고. 비누 둘 다 까매지기 전에.",
+    "new": "알아. 그때 번갈아 씻자고. 비누 둘 다 까매지기 전에.",
+    "classification": "natural-clarity"
+  },
+  {
+    "collection": "chats",
+    "path": [
+      "daily-me-minji-hands",
+      "lines",
+      6,
+      1
+    ],
+    "old": "민지는 말없이 비누 조각을 반으로 잘라 건넸다. 나는 더 거절하지 않았다.",
+    "new": "민지는 비누 조각을 반으로 잘라 걸레와 함께 넣어 두었다. 다음에 멈추면 꺼내 쓰기로 했다.",
+    "classification": "natural-clarity"
+  },
+  {
+    "collection": "opening",
+    "path": [
+      "opening_workshop",
+      "answer_call",
+      "lines",
+      0,
+      1
+    ],
+    "old": "급히 닫은 공구함의 걸쇠가 첫 비포장길에서 덜컹거렸다. 다음 정차에서야 안쪽 렌치를 다시 묶었다.",
+    "new": "급히 닫은 공구함의 걸쇠가 첫 비포장길에서 덜컹거렸다. 다음에 정차하면 안쪽 렌치부터 다시 묶어야겠다.",
+    "classification": "clarity-corrected-from-initial-claim"
+  },
+  {
+    "collection": "opening",
+    "path": [
+      "opening_workshop",
+      "pack_workshop",
+      "lines",
+      0,
+      1
+    ],
+    "old": "작업장에서 챙긴 얇은 연장 렌치가 느슨해진 배터리 고정쇠에 꼭 맞았다. 조인 뒤에는 운전석 문 안쪽, 바로 꺼낼 자리에 꽂아 두었다.",
+    "new": "작업장에서 챙긴 얇은 연장 렌치가 떠올랐다. 다음에 멈추면 배터리 고정쇠를 조이고 운전석 문 안쪽에 꽂아 둬야겠다.",
+    "classification": "clarity"
+  },
+  {
+    "collection": "opening",
+    "path": [
+      "opening_bus_repair",
+      "scrap_collar",
+      "lines",
+      0,
+      1
+    ],
+    "old": "공구함에 망치를 돌려 넣다가 끝에 붙은 철판 조각을 떼어 냈다. 부두에서 버스 연결 고리를 깎을 때 붙은 것이었다.",
+    "new": "부두에서 연결 고리를 깎던 망치 소리가 떠올랐다. 망치 끝에 붙은 철판 조각은 다음에 공구함을 열 때 떼어 내야겠다.",
+    "classification": "derived-clarity"
+  },
+  {
+    "collection": "opening",
+    "path": [
+      "opening_failed_appeal",
+      "record_names",
+      "lines",
+      0,
+      1
+    ],
+    "old": "수첩을 펴서 하진, 도윤, 유나의 이름을 다시 읽었다. 유나 이름 끝에 번진 잉크를 덧썼다.",
+    "new": "부두에서 수첩에 적은 하진, 도윤, 유나의 이름을 떠올렸다. 유나 이름 끝의 번진 잉크는 다음에 차를 세우면 덧써야겠다.",
+    "classification": "natural-clarity"
+  },
+  {
+    "collection": "opening",
+    "path": [
+      "opening_parents_module",
+      "label_wires",
+      "lines",
+      0,
+      1
+    ],
+    "old": "험로를 지난 뒤 계기판을 열어 보니 번호표가 전부 제자리에 있었다. 빠진 절차를 찾으면 같은 순서로 선을 풀 수 있다.",
+    "new": "험로를 지날 때마다 계기판 속 번호표가 생각났다. 다음에 멈추면 제자리에 붙어 있는지부터 확인하자. 빠진 절차를 찾으면 그 번호대로 선을 풀 수 있다.",
+    "classification": "natural-clarity"
+  },
+  {
+    "collection": "opening",
+    "path": [
+      "opening_parents_module",
+      "trace_diagram",
+      "lines",
+      0,
+      1
+    ],
+    "old": "덧그린 회로도를 계기판 배선에 다시 대 봤다. 진동에 선이 흔들려 손끝으로 하나씩 짚으며 대조했다.",
+    "new": "작업장에서 덧그린 회로도가 조수석에 있다. 계기판에서 진동이 느껴질 때마다 선을 하나씩 짚으며 그리던 순간이 떠올랐다. 실제 배선과 다시 맞춰 볼 일은 차를 세운 뒤에 하자.",
+    "classification": "derived-clarity"
+  },
+  {
+    "collection": "opening",
+    "path": [
+      "opening_departure",
+      "leave_key",
+      "lines",
+      0,
+      1
+    ],
+    "old": "감천에서 짧은 무전이 왔다. 단골은 셔터와 공구함을 확인했고, 열쇠를 가진 사람이 작업장을 지키고 있었다.",
+    "new": "감천 단골의 손에 맡긴 열쇠를 떠올렸다. 셔터와 공구함만 가끔 봐 달라던 말도. 돌아가면 그 손에서 열쇠를 다시 받아야 한다.",
+    "classification": "equipment-clarity"
+  },
+  {
+    "collection": "memory",
+    "path": [
+      0,
+      "lines",
+      1,
+      1
+    ],
+    "old": "약을 받아야 할 아이들이 있다던 부탁을 수첩에서 다시 읽었다.",
+    "new": "약을 받아야 할 아이들이 있다던 말을 되뇌었다.",
+    "classification": "natural-clarity"
+  }
+]

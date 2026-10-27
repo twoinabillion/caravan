@@ -1,0 +1,21 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),path=require('path');
+const {setup}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs'),dir=path.join(__dirname,'../qa-artifacts/qa-cycle-20261026/cycle13/survival/comp-naming-review');
+function fixture(party=['leo','parkss']){const h=setup();h.run(fs.readFileSync(path.join(dir,'reader-extras.js'),'utf8'));h.run(`S.party=${JSON.stringify(party)};S.food=12;S.water=20;S.scrap=20;S.min=600;globalThis.e=event('comp_naming');G.beginPresentation(e);globalThis.entry=qaEntry(e);globalThis.knownSpeaker=!!entry.knownSpeaker;G.capturePresentationView({eventId:e.id,phase:'event',turns:entry,knownSpeaker,index:0});G.save();G.load();`);return h;}
+const state=h=>h.run('JSON.stringify([S.min,S.food,S.water,S.scrap,S.comps,S.flags,S.notes,S.stats])');
+for(const party of [['leo','parkss'],['parkss','leo'],['minji','eunsu'],['minji','leo','jaeyi']])test('actual named crew in entry/result/payment replay: '+party.join(','),()=>{
+ const h=fixture(party),e=h.json('qaNamed(qaEntry(e))');assert.deepEqual(e.filter(t=>t.kind==='dialogue').map(t=>t.who),[party[0]]);
+ h.run("e.turnSpeakers=['me'];globalThis.r=G.resolvePresentedChoice(e,e.choices[0]);globalThis.turns=qaResult(e,e.choices[0],r.out,{knownSpeaker});");assert(h.run('r.ok&&r.applied'));
+ const turns=h.json('qaNamed(turns)'),spoken=turns.filter(t=>t.kind==='dialogue');assert.deepEqual(spoken.map(t=>t.who),[party[0],party[1],party[0],party[1],party[0],party[1],'me']);assert(spoken.every(t=>t.displayName&&t.displayName!=='???'&&!t.who.startsWith('passer_')&&!t.who.startsWith('party_')));
+ assert(turns.some(t=>t.kind==='narration'&&t.text.includes('엔진은 만장일치로 "할아버지"가 됐다.')));assert(!spoken.some(t=>t.text==='할아버지'));
+ const before=state(h);h.run("G.capturePresentationView({eventId:e.id,phase:'outcome',turns,knownSpeaker,index:2});G.save();G.load();globalThis.r=G.resolvePresentedChoice(e,e.choices[0]);globalThis.turns=qaResult(e,e.choices[0],r.out,{knownSpeaker});");assert.equal(h.run('r.applied'),false);assert.deepEqual(h.json('qaNamed(turns)'),turns);assert.equal(state(h),before);
+});
+test('old paid view and text-only receipt keep their original text/speakers/effects',()=>{
+ const old=JSON.parse(fs.readFileSync(path.join(dir,'before-paid.json'))),reader=JSON.parse(fs.readFileSync(path.join(dir,'before-reader.json')));
+ for(const textOnly of [false,true]){const s=JSON.parse(JSON.stringify(old));if(textOnly){s.pendingPresentation.reading=null;s.pendingPresentation.view=null;s.pendingPresentation.authoredView=null;}
+  const h=fixture();assert(h.run('G.load('+JSON.stringify(JSON.stringify(s))+')'));const before=state(h);h.run("globalThis.e=event('comp_naming');globalThis.knownSpeaker=!!S.pendingPresentation.reading?.view?.knownSpeaker;globalThis.r=G.resolvePresentedChoice(e,e.choices[0]);globalThis.turns=qaResult(e,e.choices[0],r.out,{knownSpeaker});");assert.equal(h.run('r.applied'),false);assert.equal(h.run('r.out.text'),old.pendingPresentation.text);const plain=x=>x.map(({timeLabel,timeKind,...r})=>r);assert.deepEqual(plain(h.json('turns')),plain(reader));assert.equal(state(h),before);
+ }
+});
+test('authored words, choices and effects unchanged; inline nickname stays narration',()=>{
+ const h=fixture();const old=JSON.parse(fs.readFileSync(path.join(dir,'before-event.json'))),curr=JSON.parse(h.run("JSON.stringify(e,(k,v)=>['turns','turnSpeakers'].includes(k)?undefined:typeof v==='function'?v.toString():v)"));assert.deepEqual(curr,JSON.parse(JSON.stringify(old,(k,v)=>['turns','turnSpeakers'].includes(k)?undefined:v)));
+ h.run('globalThis.r=G.resolvePresentedChoice(e,e.choices[0]);globalThis.turns=qaResult(e,e.choices[0],r.out,{knownSpeaker});');const words=s=>s.replace(/[\s“”"]/g,'');assert.equal(words(h.json('turns').map(t=>t.text).join('')),words(old.choices[0].out[0].text));assert.equal(h.run('S.min'),630);assert.equal(h.run('S.flags.van_parts_named'),true);
+});

@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "음. 목소리 톤 보니 진짜군. 합격."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 도장 찍는 시늉을 했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "근데 셋 다 합격인 날이 일 년에 며칠 없어. 알고 있나?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "몰랐는데요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "나도 세본 적은 없고."
+  },
+  {
+    "kind": "narration",
+    "text": "박 선생이 시늉하던 손을 내렸다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "그러니 오늘은 좀 알아채고 다니게. 그것도 처방이야."
+  }
+]

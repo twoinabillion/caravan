@@ -1,0 +1,843 @@
+{
+  "capturedAt": "2026-10-19T16:18:16.460Z",
+  "ids": [
+    "seoul_costs",
+    "seoul_decision",
+    "pair_mj_pss_1",
+    "pair_pss_leo_2",
+    "talk_pss_18",
+    "talk_es_05",
+    "talk_mj_15",
+    "near_mungyeong_omija",
+    "loc_suncheon",
+    "camp_thief",
+    "camp_dogs",
+    "camp_scan",
+    "camp_visitor",
+    "ev_chunrian_lab",
+    "exp_radiostation",
+    "ev_seed_warehouse",
+    "water_toll",
+    "cell_dome_meet",
+    "seoul_session_reset"
+  ],
+  "hashes": {
+    "src/03-data.js": "d9531f7eeff744491c878d66ec7af9d15e3eb744bce72bdd5547172068bc72be",
+    "src/03f-npc-portraits.js": "779afdd72d91a1c3838f679953f3cbc7822a80ec58db6d877627445ac841fc57",
+    "src/03g-scenes.js": "82057a394bf3dc393869058019140e8eb87f04d8b4ec9f9a58dc080d0d49dc0e",
+    "src/03i-story-expansion.js": "ba0fa3a7fb99019c8f8aa5aeb679f3fc56aa4b3ac44e32d86a5bdf7fe4a18fc8",
+    "src/03j-camp-conversations.js": "20607ed0e57b26ed3f4375e1dfe2a426d4d9c1cb15104beb6dac184275ee41e5",
+    "src/03k-main-evidence.js": "25f1305bf7bcab35a9d9f64e246d300323453e6be3286c9c0f66b1b7a072fb74",
+    "src/03l-main-recovery.js": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377",
+    "src/03m-finale-reading.js": "a0d2f0d3c0c7fc5acc5e6a7b1f47136bc088e77046581a75fa14ad4b8ba64262",
+    "src/04a-engine-core.js": "358e8b5104d294d3bbd3bacfd99684fac747d29fc475c7ff6e05f05693f6a61a",
+    "src/04b-engine-crew.js": "537879b14f2b1198c3e74781665329d349dd9ff8c1f740a06d25f0b6c9184099",
+    "src/04c-engine-travel.js": "3be4009ccfecce7566827d9f3a8fbe1af0920c95d3ca043c53b5338b2b2f7e78",
+    "src/04d-engine-director.js": "7246660ca2a05547f19548606645d85b1ffbf10c94e5a463feb1799537347b47",
+    "src/04e-engine-world.js": "cbf046fe0bb8b87afeeb7a83c4e666317a708c51500b0b996b9b3383c0d7f420",
+    "src/04f-engine-quests.js": "db5debbac4d6cb8009b17e6349263ffca8536b997ab473bca5d010244ae3ab30",
+    "src/04g-engine-evidence.js": "c712576480f8a0f0f06f08b1e8a2fa1398b918eaa1b2f76942984536840de90d",
+    "src/04h-engine-presentation.js": "e404bea488c09183aa652791e0a1e40dfbbf59e079eb38410d1b721bc9f7a101",
+    "src/07-ui.js": "e74f0dfb595f8b5f936592331c0135327331a23af7cab3f8c44921b6b7c0a97f",
+    "src/07d-ui-quests.js": "53a18633cf23e55b16d881eb56305eae845fc2e386e8970b907b6ba66714bd68"
+  },
+  "mechanics": [
+    {
+      "id": "seoul_costs",
+      "type": "스토리",
+      "ai": 1,
+      "once": true,
+      "noPool": 1,
+      "minParty": 1,
+      "title": "세 개의 값",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "chain": "seoul_decision",
+                "flag": "seoul_costs_seen",
+                "flag2": "costs_checked_cells"
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "chain": "seoul_decision",
+                "flag": "seoul_costs_seen",
+                "flag2": "costs_checked_records"
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "chain": "seoul_decision",
+                "flag": "seoul_costs_seen",
+                "flag2": "costs_checked_watch"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seoul_decision",
+      "type": "스토리",
+      "ai": 1,
+      "once": true,
+      "noPool": 1,
+      "minParty": 1,
+      "title": "마지막 집행권",
+      "choices": [
+        {
+          "req": {
+            "cells": 3
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "flag": "core_decided",
+                "flag2": "core_transfer",
+                "chain": "seoul_night",
+                "dissent": "core_transfer",
+                "moodAll": 4
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "keyHolders": 4
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "flag": "core_decided",
+                "flag2": "core_sleep",
+                "chain": "seoul_night",
+                "dissent": "core_sleep",
+                "moodAll": 3
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "nightWatch": 3
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "flag": "core_decided",
+                "flag2": "core_quarantine",
+                "chain": "seoul_night",
+                "dissent": "core_quarantine",
+                "moodAll": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pair_mj_pss_1",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "minji",
+      "needsComp2": "parkss",
+      "title": "민지×박선생 — 맞교환 강습",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "minji": 3,
+                  "parkss": 3
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pair_pss_leo_2",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "parkss",
+      "needsComp2": "leo",
+      "needBond": [
+        "leo",
+        12
+      ],
+      "title": "박선생×레오 — 헌정곡",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "parkss": 6,
+                  "leo": 5
+                },
+                "moodAll": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "talk_pss_18",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "parkss",
+      "needBond": [
+        "parkss",
+        5
+      ],
+      "title": "박 선생 — 악필의 이유",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "parkss": 4
+                },
+                "fatigue": -2
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "parkss": 5
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "talk_es_05",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "eunsu",
+      "title": "은수 — 별명의 유래",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "eunsu": 4
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "talk_mj_15",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "minji",
+      "needBond": [
+        "minji",
+        12
+      ],
+      "title": "민지 — 처음 하는 칭찬",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "minji": 5
+                },
+                "moodAll": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "near_mungyeong_omija",
+      "type": "조우",
+      "w": 9,
+      "once": true,
+      "nearNode": [
+        "mungyeong"
+      ],
+      "title": "오미자 할머니",
+      "choices": [
+        {
+          "req": {
+            "scrap": 2
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "scrap": -2,
+                "moodAll": 4,
+                "item": {
+                  "의약품": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loc_suncheon",
+      "type": "탐색",
+      "w": 0,
+      "locEvent": "suncheon",
+      "once": true,
+      "title": "순천만 갈대밭",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 120,
+                "moodAll": 8,
+                "fatigue": -8
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "scrap": 4,
+                "van": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "camp_thief",
+      "type": "위기",
+      "w": 0,
+      "fixed": true,
+      "title": "밤손님",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "scrap": -4,
+                "moodAll": -2
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "scrap": 5,
+                "moodAll": 2
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "item": "쇠파이프"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "fatigue": 8,
+                "moodAll": 1
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "scrap": -3,
+                "food": -1,
+                "moodAll": -3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "camp_dogs",
+      "type": "위기",
+      "w": 0,
+      "fixed": true,
+      "title": "들개들의 밤",
+      "choices": [
+        {
+          "req": {
+            "comp": "leo"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 3
+              },
+              "speakers": [
+                "leo"
+              ]
+            }
+          ]
+        },
+        {
+          "req": {
+            "food": 1
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "food": -1,
+                "moodAll": 1
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "fatigue": 10,
+                "moodAll": -2
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": -1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "camp_scan",
+      "type": "위기",
+      "w": 0,
+      "fixed": true,
+      "ai": 1,
+      "title": "새벽의 탐조등",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "fatigue": 8,
+                "moodAll": -2
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "pursuit": 1,
+                "moodAll": -3
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "comp": "eunsu"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "mood": {
+                  "eunsu": 3
+                }
+              },
+              "speakers": [
+                "eunsu"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "camp_visitor",
+      "type": "조우",
+      "w": 0,
+      "fixed": true,
+      "title": "모닥불의 손님",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "revealNear": 1,
+                "moodAll": 3
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 4,
+                "fatigue": 6
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": -2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ev_chunrian_lab",
+      "pillar": "진실",
+      "type": "스토리",
+      "w": 5,
+      "once": true,
+      "region": [
+        "north"
+      ],
+      "title": "천리안이 태어난 곳",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "time": 50,
+                "moodAll": -5,
+                "flag": "massacre_known"
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "time": 40,
+                "moodAll": -3
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "comp": "minji"
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "time": 45,
+                "mood": {
+                  "minji": 4
+                },
+                "moodAll": -2
+              },
+              "speakers": [
+                "minji"
+              ]
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "pursuit": 1,
+                "moodAll": -2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exp_radiostation",
+      "type": "탐색",
+      "w": 7,
+      "region": [
+        "mid",
+        "north"
+      ],
+      "title": "지역 방송국",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "item": {
+                  "라디오 진공관": 1
+                },
+                "scrap": 4
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "moodAll": 2
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ev_seed_warehouse",
+      "type": "탐색",
+      "w": 7,
+      "region": [
+        "south",
+        "mid"
+      ],
+      "title": "농협 창고",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 2,
+              "fx": {
+                "food": 3,
+                "item": {
+                  "부품": 1
+                },
+                "time": 45,
+                "moodAll": 3,
+                "flag": "seed_found"
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "time": 40,
+                "flag": "seed_found"
+              }
+            }
+          ]
+        },
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "item": {
+                  "부품": 1
+                },
+                "scrap": 5,
+                "time": 35
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "water_toll",
+      "type": "조우",
+      "w": 9,
+      "once": true,
+      "region": [
+        "mid",
+        "north"
+      ],
+      "needLowWater": true,
+      "title": "우물 앞의 줄",
+      "choices": [
+        {
+          "req": {
+            "scrap": 3
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "scrap": -3,
+                "water": 4,
+                "time": 40,
+                "moodAll": -2
+              }
+            }
+          ]
+        },
+        {
+          "req": {
+            "scrap": 8
+          },
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "scrap": -8,
+                "water": 4,
+                "food": 1,
+                "time": 70,
+                "moodAll": 5
+              }
+            }
+          ]
+        },
+        {
+          "risk": "마을과 척진다",
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "water": 5,
+                "time": 30,
+                "moodAll": 2,
+                "flag": "well_broken"
+              }
+            },
+            {
+              "p": 1,
+              "fx": {
+                "time": 40,
+                "moodAll": -5,
+                "injury": {
+                  "who": "driver",
+                  "days": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cell_dome_meet",
+      "pillar": "세계",
+      "type": "스토리",
+      "w": 9,
+      "once": true,
+      "nearNode": [
+        "daegu"
+      ],
+      "title": "돔의 하 여사",
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "fx": {
+                "flag": "cell_dome",
+                "scrap": 6,
+                "item": {
+                  "부품": 1
+                },
+                "moodAll": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seoul_session_reset",
+      "type": "스토리",
+      "ai": 1,
+      "once": true,
+      "noPool": 1,
+      "minParty": 1,
+      "title": "새 세션",
+      "scenes": [
+        "seoul-uplink-empty-v2",
+        "seoul-reset-empty-v2"
+      ],
+      "choices": [
+        {
+          "out": [
+            {
+              "p": 1,
+              "scenes": [
+                "seoul-uplink-empty-v2",
+                "parents-mother-reunion-v1"
+              ],
+              "fx": {
+                "flag": "story_done",
+                "flag2": "session_two_teased",
+                "endJourney": 1,
+                "moodAll": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

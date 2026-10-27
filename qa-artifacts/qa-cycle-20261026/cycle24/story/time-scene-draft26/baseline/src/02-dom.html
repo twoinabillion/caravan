@@ -1,0 +1,294 @@
+<div id="frame"><div id="app" data-screen="title">
+
+  <button id="early-sound" type="button" aria-label="소리 켜기" aria-pressed="false">
+    <span class="sound-icon" aria-hidden="true">🔇</span><span class="sound-label">소리 켜기</span>
+  </button>
+
+  <!-- ══ TITLE ══ -->
+  <div class="scr on" id="scr-title" data-title-layout="wharf">
+    <canvas id="titlecv"></canvas>
+    <div id="title-ui">
+      <nav class="wharf-nav" aria-label="타이틀 메뉴"><span>부산 감천 부두</span><button id="bt-title-sound" type="button" aria-label="소리 켜기" aria-pressed="false"><span class="sound-icon" aria-hidden="true">🔇</span> <span class="sound-label">소리 켜기</span></button></nav>
+      <div class="title-heading">
+        <div class="kicker">멸망 이후, 부산에서 서울까지</div>
+        <h1><span class="title-name">서울까지</span><span class="km" id="title-km">400<span>km</span></span></h1>
+      </div>
+      <figure class="title-departure-scene" aria-label="부산 감천 부두에서 출발을 기다리는 달구지">
+        <img id="title-harbor" class="title-harbor" width="1024" height="576" alt="">
+      </figure>
+      <div class="title-console" aria-label="여정 출발 메뉴">
+        <p class="tag">낡은 달구지 한 대와<br>아직 끝나지 않은 사람들의 길.</p>
+        <div class="acts">
+          <button type="button" class="act primary" id="bt-continue" style="display:none"><span><b>이어가기</b><small id="cont-info"></small></span><strong aria-hidden="true">→</strong></button>
+          <button type="button" class="act primary" id="bt-new"><span><b>출발 준비</b></span></button>
+          <button type="button" class="act title-restore" id="bt-title-restore" aria-haspopup="dialog" aria-controls="save-transfer-dialog"><span><b>백업으로 이어가기</b></span></button>
+          <button type="button" class="act title-preview" id="bt-preview"><span><b>여정 미리보기</b></span><strong aria-hidden="true">↗</strong></button>
+        </div>
+        <details id="title-last-record" hidden><summary>지난 여정 기록</summary><div id="last-journey" hidden></div></details>
+        <div class="title-console-foot">
+          <div class="ver"><span>기록은 자동으로 저장됩니다</span><span>오프라인 플레이</span></div>
+        </div>
+        <details class="title-extra-tools"><summary>배경음 · 설치</summary>
+          <div class="title-console-tools">
+            <button id="bt-install" type="button" hidden><small>홈 화면</small><b>앱 설치</b></button>
+            <button id="bt-song" type="button" title="부서진 고속도로 재생" aria-pressed="false"><small>배경음</small><b>부서진 고속도로</b></button>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-wrap" id="install-guide" role="dialog" aria-modal="true" aria-labelledby="install-title" aria-hidden="true">
+    <section class="sheet install-card">
+      <header class="install-card-head">
+        <img class="install-app-icon" src="assets/app-icon.png" alt="">
+        <div class="install-card-title"><small>INSTALL ON PHONE</small><h2 id="install-title">휴대폰에 게임 설치</h2><p id="install-copy">홈 화면 아이콘으로 바로 실행합니다.</p></div>
+        <button id="install-x" type="button" aria-label="설치 안내 닫기">✕</button>
+      </header>
+      <div class="install-card-body">
+        <div class="install-result" aria-label="설치 후 달라지는 점"><span><b>전체 화면</b><small>주소창 없음</small></span><span><b>자동 갱신</b><small>온라인 최신판</small></span><span><b>저장 유지</b><small>이 기기에 보관</small></span></div>
+        <ol class="install-steps" id="install-steps"></ol>
+        <button id="install-action" type="button">앱 설치하기</button>
+        <p class="install-note">인터넷이 없을 때는 마지막으로 받은 버전으로 이어서 플레이합니다.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ══ SPOILER-LIGHT JOURNEY PREVIEW ══ -->
+  <div class="scr" id="scr-preview" aria-label="여정 미리보기">
+    <header id="preview-head">
+      <button id="bt-previewback" aria-label="제목 화면으로 돌아가기">←</button>
+      <div>
+        <span>ROAD ALBUM · 스포일러 없는 장면들</span>
+        <h2>길 위에는 이런 이야기가 있다</h2>
+      </div>
+    </header>
+    <div id="preview-scroll">
+      <section id="previous-journey" hidden aria-label="이전 여정과 다음 길"></section>
+      <p class="preview-lead">낡은 달구지를 집으로 고치고, 낯선 사람의 일을 함께 해결하고, 폐허에 남은 흔적을 좇는다. 선택에 따라 만나거나 놓칠 수 있는 여정의 일부다.</p>
+      <div id="preview-grid" aria-live="polite"></div>
+      <div class="preview-tail">
+        <span>400 KM · ONE ROAD · MANY STORIES</span>
+        <p>모든 장면은 실제 플레이 중 만나는 삽화입니다.</p>
+        <button class="act primary" id="bt-previewnew"><span class="ic">▶</span><span><b>내 여정 시작하기</b><small>부산에서 첫 장을 연다</small></span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 외부 API 모드 선택은 사용하지 않는다. 구형 QA가 화면 경유 여부만
+       확인할 수 있게 빈 호환 노드만 남긴다. -->
+  <div class="scr" id="scr-mode" hidden aria-hidden="true"></div>
+
+  <!-- ══ INTRO ══ -->
+  <div class="scr" id="scr-name" data-prep-layout="packing">
+    <nav class="wharf-nav" aria-label="출발 준비 메뉴"><button id="bt-name-back" type="button">타이틀로</button><button id="bt-prep-text" type="button" aria-pressed="false">큰 글씨</button></nav>
+    <div class="departure-scroll">
+      <section id="name-card" aria-labelledby="packing-title">
+        <header class="pack-heading"><p>부산 감천 부두</p><h2 id="packing-title">무엇을 더 챙길까?</h2><p class="pack-rule">기본 짐에 더해, 셋 중 하나만.</p></header>
+        <fieldset class="departure-loadout"><legend class="sr-only">추가로 챙길 짐 하나</legend><div id="profile-pick" role="radiogroup" aria-label="추가로 챙길 짐 하나"></div></fieldset>
+        <details id="departure-inventory"><summary>전체 짐 확인<span>기본 짐 포함</span></summary><section id="profile-detail" aria-label="최종 출발 물자" aria-live="polite"></section></details>
+      </section>
+    </div>
+    <footer class="departure-actions"><button id="bt-name" class="mbtn" type="button">이 짐으로 준비를 마친다</button><div class="departure-secondary"><button id="opening-history" type="button">과거 이야기 미리 읽기</button><button id="bt-prep-sound" type="button" aria-label="소리 켜기" aria-pressed="false"><span class="sound-icon" aria-hidden="true">🔇</span> <span class="sound-label">소리 켜기</span></button></div></footer>
+  </div>
+  <div class="scr" id="scr-intro" role="region" tabindex="0" aria-label="프롤로그. Enter 또는 Space 키를 눌러 다음 문장으로 진행합니다.">
+    <button id="intro-auto" type="button" aria-pressed="true">자동 ON</button>
+    <button id="intro-skip" type="button">프롤로그 핵심 요약</button>
+    <div id="intro-book">
+      <div id="intro-visual">
+        <img id="intro-img" alt="">
+      </div>
+      <div id="intro-page">
+        <div id="intro-meta" hidden aria-hidden="true"><span id="intro-era"></span><span id="intro-count"></span></div>
+        <h2 id="intro-title"></h2>
+        <div id="intro-txt"></div>
+      </div>
+      <div id="intro-hint">탭하면 다음 말풍선</div>
+    </div>
+    <div id="intro-summary" role="dialog" aria-modal="true" aria-labelledby="intro-summary-title" aria-hidden="true">
+      <div class="intro-summary-card">
+        <span class="intro-summary-kicker">STORY SO FAR · 1분 요약</span>
+        <h2 id="intro-summary-title">왜 서울로 가는가</h2>
+        <p class="intro-summary-lead">긴 프롤로그를 계속 읽거나, 출발에 필요한 사실만 일지에 남길 수 있습니다.</p>
+        <ol>
+          <li><i>01</i><span><b>내가 고친 버스가 다시 남쪽으로 떠났다.</b><small>도윤 가족도 부모님과 같은 빈 사유의 이송표를 받았다.</small></span></li>
+          <li><i>02</i><span><b>부모님을 데려간 명령과 같은 곳에서 왔다.</b><small>엄마의 남산 도면과 달구지 계기판 속 검증 모듈이 지금 내려진 명령을 가리켰다.</small></span></li>
+          <li><i>03</i><span><b>다음 이송표는 계속 발행된다.</b><small>정해진 날짜는 없지만 식량과 물의 공급망이 바뀔 때마다 새로운 가족이 선택된다.</small></span></li>
+          <li><i>04</i><span><b>그래서 내가 북쪽으로 간다.</b><small>발신 기록과 증언을 모아 남산의 강제 이송 명령을 멈춘다.</small></span></li>
+        </ol>
+        <div class="intro-summary-actions">
+          <button id="intro-summary-continue" type="button">전체 기록을 계속 읽는다</button>
+          <button id="intro-summary-start" class="primary" type="button">핵심을 기록하고 출발</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GAME ══ -->
+  <div id="scr-game">
+    <div id="stage">
+      <canvas id="cv"></canvas>
+      <div class="journey-location"><strong id="journey-place"></strong><span id="journey-date"></span></div>
+      <section id="journey-route-map" aria-label="선택한 경로 지도" hidden>
+        <header class="journey-map-head"><div><h2>경로 보기</h2><p id="journey-map-context"></p></div><button type="button" id="journey-map-close" aria-label="경로 지도를 접고 풍경 보기">×</button></header>
+        <div id="journey-map-surface"><canvas id="journey-map-canvas" aria-label="현재 위치와 선택한 목적지의 경로"></canvas><button type="button" id="journey-map-world">전체 여정</button></div>
+      </section>
+      <div id="bubbles" aria-live="polite" aria-atomic="true"></div>
+      <p id="road-whisper" role="note" aria-live="polite" aria-atomic="true" hidden></p>
+      <div id="road-quest-tracker" class="road-quest-tracker" role="status" aria-live="polite" aria-label="현재 임무 안내" hidden></div>
+      <div id="road-status" class="stage-readout stage-readout-vehicle" aria-live="polite" aria-label="달구지 상태">
+        <span><small>연료</small><b id="stage-fuel">--L</b></span>
+        <span><small>차체</small><b id="stage-van">--%</b></span>
+      </div>
+      <div id="stage-time" class="stage-readout stage-readout-time" aria-live="polite" aria-label="날짜 시간 날씨">
+        <span id="stage-day">DAY 1</span><b id="stage-clock">08:00</b><small id="stage-weather">맑음</small>
+      </div>
+      <canvas id="minimap" title="지도 열기" role="button" tabindex="-1" aria-label="전체 지도 열기" aria-hidden="true"></canvas>
+    </div>
+
+    <section id="pursuit-help" role="region" aria-label="천리안의 추적 위험 설명" hidden>
+      <div class="pursuit-help-head"><strong>추적 위험</strong><span class="pursuit-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><button id="pursuit-help-close" type="button" aria-label="추적 위험 설명 닫기">×</button></div>
+      <p id="pursuit-description"></p><small>천리안에 쌓인 관측 표식이에요. 지금 누가 쫓아온다는 뜻은 아니에요.</small>
+    </section>
+    <div id="pursuit-notice" role="status" aria-live="polite" aria-atomic="true" hidden><strong id="pursuit-change"></strong><span>추적 사건을 만날 가능성이 커졌어요.</span></div>
+    <div id="mission-strip" class="mission-strip" role="status" aria-live="polite" aria-label="현재 의뢰와 여정 상태"></div>
+
+    <div id="journey-vehicle" aria-label="달구지 상태">
+      <div id="journey-resources"></div>
+      <button id="pursuit-indicator" type="button" aria-expanded="false" aria-controls="pursuit-help" aria-label="추적 위험 0/5 · 설명 열기" data-level="0">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 7V3h4m8 0h4v4M2 13v4h4m8 0h4v-4"/><circle cx="10" cy="10" r="3"/><path d="M10 8.5v3M8.5 10h3"/></svg>
+        <span class="pursuit-value"><span id="pursuit-value">0</span><small>/5</small></span><span class="pursuit-chevron" aria-hidden="true">⌄</span>
+      </button>
+    </div>
+    <div id="main">
+      <div id="panel"></div>
+      <nav id="dock" aria-label="게임 주요 메뉴">
+        <button id="dk-road" class="here" aria-current="page" data-nav-icon="van"><span class="dic" aria-hidden="true"></span><span>길</span></button>
+        <button id="dk-objectives" data-nav-icon="quest"><span class="dic" aria-hidden="true"></span><span>목표</span></button>
+        <button id="dk-crew" data-nav-icon="bond"><span class="dic" aria-hidden="true"></span><span>동료</span></button>
+        <button id="dk-status" data-nav-icon="parts"><span class="dic" aria-hidden="true"></span><span>가방</span></button>
+        <button id="dk-menu" data-nav-icon="perk"><span class="dic" aria-hidden="true"></span><span>메뉴</span></button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ══ ARRIVAL CINEMATIC ══ -->
+<div id="arrival-scene" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="arrival-title"></div>
+
+  <!-- ══ EVENT SHEET ══ -->
+  <div class="sheet-wrap" id="ev-wrap" role="dialog" aria-modal="true" aria-label="길 위의 이야기" aria-hidden="true"><div class="sheet" id="ev-sheet"></div></div>
+
+  <!-- ══ SETTLEMENT ══ -->
+  <div class="ovl" id="ovl-stl" role="dialog" aria-modal="true" aria-labelledby="stl-name" aria-hidden="true">
+    <div id="stl-head"><h2 id="stl-name"></h2><div class="d" id="stl-desc"></div></div>
+    <div id="stl-body"></div>
+  </div>
+
+  <!-- ══ MAP ══ -->
+  <div class="ovl road-tool-overlay map-tool-overlay" id="ovl-map" role="dialog" aria-modal="false" aria-labelledby="map-title" aria-hidden="true">
+    <div class="road-tool-stage">
+      <section class="road-tool-prop map-navigator" aria-label="차내 네비게이션">
+        <header class="map-live-head"><h2 id="map-title">여정 지도</h2><span id="map-mini"></span><button class="road-tool-close" id="map-x" aria-label="지도를 닫고 길로 돌아가기">길로</button></header>
+        <div id="mapwrap">
+          <canvas id="mapcv" aria-label="대한민국 주요 도시와 서울행 경로 지도"></canvas>
+        </div>
+        <div id="nodecard"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ══ JOURNAL ══ -->
+  <div class="ovl" id="ovl-journal" role="dialog" aria-modal="true" aria-labelledby="journal-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="journal-title">여행 일지</h2><span class="mini" id="j-mini"></span>
+      <button class="x" id="bt-export" title="Obsidian 마크다운으로 내보내기" aria-label="여행 일지를 마크다운으로 내보내기" style="font-size:13px">⇩ .md</button>
+      <button class="x" id="j-x" aria-label="여행 일지 닫기">✕</button></div>
+    <div id="jtabs">
+      <button data-jt="log" class="here">기록</button>
+      <button data-jt="graph">관계망</button>
+    </div>
+    <div class="jpane on" id="jp-log"></div>
+    <div id="jgraphwrap"><canvas id="graphcv"></canvas><div id="gnote"></div></div>
+  </div>
+
+  <!-- ══ STATUS ══ -->
+  <div class="ovl road-tool-overlay" id="ovl-status" role="dialog" aria-modal="false" aria-labelledby="status-title" aria-hidden="true">
+    <div class="road-tool-stage">
+      <section class="road-tool-prop" id="status-prop">
+        <header class="road-tool-live-head"><h2 id="status-title">가방과 보급</h2><span id="st-mini"></span><button class="road-tool-close" id="st-x" aria-label="도구를 닫고 길로 돌아가기">길로</button></header>
+        <div id="st-tabs" class="st-tabs" role="tablist">
+          <button data-st="self" role="tab" aria-controls="st-body" aria-selected="false">내 상태</button>
+          <button class="here" data-st="crew" role="tab" aria-controls="st-body" aria-selected="true">동료</button>
+          <button data-st="growth" role="tab" aria-controls="st-body" aria-selected="false">능력</button>
+        </div>
+        <div id="st-body"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ══ SECONDARY MENU ══ -->
+  <div class="ovl" id="ovl-menu" role="dialog" aria-modal="true" aria-labelledby="menu-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="menu-title">메뉴</h2><span class="mini">화면 · 소리 · 저장</span><button class="x" id="menu-x" aria-label="메뉴 닫기">✕</button></div>
+    <div id="menu-body">
+      <div class="menu-control-list">
+        <section class="menu-control-card" aria-labelledby="menu-brightness-title">
+          <header><span><small>DISPLAY</small><b id="menu-brightness-title">화면 밝기</b></span><output id="menu-brightness-value" for="menu-brightness">100%</output></header>
+          <input id="menu-brightness" type="range" min="60" max="120" step="5" value="100" aria-label="화면 밝기">
+          <div class="menu-range-labels" aria-hidden="true"><span>어둡게</span><span>밝게</span></div>
+          <div class="menu-reading-options" aria-label="읽기와 움직임 설정">
+            <button id="menu-text-toggle" data-ui-pref="text" type="button" aria-pressed="false"><span>큰 글씨</span><b>꺼짐</b></button>
+            <button id="menu-motion-toggle" data-ui-pref="motion" type="button" aria-pressed="false"><span>움직임 줄이기</span><b>꺼짐</b></button>
+            <button id="menu-road-thought-toggle" data-ui-pref="road-thought" type="button" aria-pressed="true"><span>운전 중 생각</span><b>가끔</b></button>
+          </div>
+        </section>
+        <section class="menu-control-card" aria-labelledby="menu-sound-title">
+          <header><span><small>AUDIO</small><b id="menu-sound-title">소리</b></span><output id="menu-sound-state">꺼짐</output></header>
+          <button id="menu-sound-toggle" class="menu-control-action" type="button" aria-pressed="false">소리 켜기</button>
+          <label class="menu-volume-row" for="menu-volume"><span>전체 음량</span><input id="menu-volume" type="range" min="0" max="100" step="5" value="100"></label>
+        </section>
+        <section class="menu-control-card" aria-labelledby="menu-save-title">
+          <header><span><small>JOURNEY</small><b id="menu-save-title">저장</b></span><output id="menu-save-state">자동 저장 중</output></header>
+          <p>현재 여정은 이 기기에 자동으로 저장된다.</p>
+          <div class="menu-save-actions"><button id="menu-save-now" class="menu-control-action" type="button">지금 저장</button><button id="menu-save-transfer" type="button" aria-haspopup="dialog" aria-controls="save-transfer-dialog">백업·복원</button></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approved save-transfer-v1: UI-only staging until explicit restore. -->
+  <dialog id="save-transfer-dialog" aria-modal="true" aria-labelledby="save-transfer-title" aria-hidden="true">
+    <div class="save-transfer-shell">
+      <header><button id="save-transfer-back" type="button" aria-label="이전 화면으로">‹</button><h2 id="save-transfer-title">여정 백업</h2></header>
+      <div id="save-transfer-body" tabindex="-1"></div>
+      <footer id="save-transfer-actions"></footer>
+      <input id="save-transfer-file" type="file" accept=".json,application/json" hidden>
+    </div>
+  </dialog>
+
+  <!-- ══ CAMP / VAN HOME ══ -->
+  <div class="ovl" id="ovl-camp" role="dialog" aria-modal="true" aria-labelledby="camp-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="camp-title">야영 준비</h2><span class="mini" id="camp-mini"></span><button class="x" id="camp-x" aria-label="야영 준비 닫기">✕</button></div>
+    <div id="camp-body"></div>
+  </div>
+
+  <!-- ══ STOP CONSOLE DETAIL DRAWERS ══ -->
+  <div class="ovl console-detail-overlay" id="ovl-local-actions" role="dialog" aria-modal="true" aria-labelledby="local-actions-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="local-actions-title">머물며 더 할 일</h2><span class="mini">현재 정차지</span><button class="x" id="local-actions-x" aria-label="추가 행동 닫기">✕</button></div>
+    <div class="console-detail-body" id="local-actions-body"></div>
+  </div>
+
+  <!-- ══ SEOUL (내부 오르막) ══ -->
+  <div class="ovl" id="ovl-seoul" role="dialog" aria-modal="true" aria-labelledby="seoul-title" aria-hidden="true">
+    <div class="ovl-head"><h2 id="seoul-title">서울 — 남산 코어까지</h2><span class="mini" id="seoul-mini"></span></div>
+    <div id="seoul-body"></div>
+  </div>
+
+  <!-- ══ ENDING ══ -->
+  <div class="scr" id="scr-end"></div>
+
+  <div id="story-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <div id="toasts" aria-live="polite" aria-atomic="true"></div>
+</div>
+<!-- 넓은 화면의 빈 여백을 여정 요약으로 채운다 (≥1200px에서만 표시) -->
+<aside id="desk-rail" aria-hidden="true" hidden></aside>
+</div>
+<script>

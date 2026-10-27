@@ -1,0 +1,3 @@
+# Cycle10 policy
+
+Seed270003 fresh finite-resource public-action journey, main objectives first. Encountered Kangwoo/Eunsu recruitment and west main route, prefer unseen own cycles1–9 choices, target available core_sleep. No forced event/party/flags/resources. No hidden detour targets. Fix policy-only Suwon night loop by using actually available main exploration or waiting at the objective. Same legal trade/labor/rescue controls. 1200actions/28days bound. If death occurs, preserve original before any separately authorised retry. Freeze732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b must match.

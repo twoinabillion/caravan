@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "narration",
+    "text": "비면의 이름을 하나하나 읽었다. 중간에 한 이름에서 막혔다. 옛 글씨였다. 산지기가 어깨너머로 보더니"
+  },
+  {
+    "kind": "dialogue",
+    "who": "sanjigi",
+    "text": "금. 쇠 금 자요."
+  },
+  {
+    "kind": "narration",
+    "text": "하고 일러줬다."
+  },
+  {
+    "kind": "narration",
+    "text": "몇 줄 지나자 산지기들이 곁에 서서 다음 이름을 이어 읽었다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "sanjigi",
+    "text": "여기선 다 읽고 가요. 이송표엔 숫자만 있었으니까."
+  },
+  {
+    "kind": "dialogue",
+    "who": "sanjigi",
+    "text": "천리안도 듣겠네요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "sanjigi",
+    "text": "걔 들으라고 하는 거 아니에요. 우리가 안 잊으려고 하는 거지."
+  },
+  {
+    "kind": "narration",
+    "text": "마지막 이름을 읽었을 때는 목이 완전히 쉬어 있었다."
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "kind": "narration",
+    "text": "재이가 자세를 고쳐 앉더니 또랑또랑 보고를 시작했다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "금일 습득 고철 다섯, 지출 둘, 순익 셋! 특이사항— 대원 전원 무사, 저녁 메뉴 기대됨!"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "결재."
+  },
+  {
+    "kind": "narration",
+    "text": "손도장을 찍는 시늉을 하자 재이가 깔깔 웃었다. 웃다가 다시"
+  },
+  {
+    "kind": "dialogue",
+    "who": "jaeyi",
+    "text": "저녁 뭐예요?"
+  },
+  {
+    "kind": "narration",
+    "text": "하고 물었다."
+  }
+]

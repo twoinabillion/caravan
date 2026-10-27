@@ -1,0 +1,234 @@
+{
+  "generatedAt": "2026-10-26T06:27:54.710Z",
+  "generator": "image_gen.imagegen",
+  "styleId": "caravan-grounded-cinematic-v1",
+  "references": [
+    "assets/reference/visual-canon-2026-08-11.png",
+    "assets/reference/world-canon-2026-08-11.png",
+    "assets/reference/people-canon-2026-08-11.png",
+    "assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "prompts": [
+    "prompts.json",
+    "map-edit-prompt.json",
+    "cabin-prompt.json",
+    "terminal-detail-prompt.json"
+  ],
+  "export": "sharp centre cover1024x576 sRGB WebP quality86 effort6; unchanged masters retained",
+  "assets": [
+    {
+      "event": "comp_hometown",
+      "key": "companion-road-atlas-v1",
+      "oldKey": "event-companion-van",
+      "delivery": "assets/scenes/companion-road-atlas-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle17/visual/masters/companion-road-atlas-v1.png",
+      "originalGeneratedPath": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-1c28c265-d0a7-4da1-98d4-7d62dc7fc121.png",
+      "sha256": "fbb9d0a8c38de54d87b85d336987c6dede6a171fc119766970c70f6fde0bedf0",
+      "bytes": 86730,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "visionReview": "Object/place detail matches initial narrative; no absent companions, no operative radio, no choice outcome; canonical cabin treatment.",
+      "runtimeCrop": {
+        "source": "cycle18/story/browser-visual-entry-replay/agent03/attempt01/normal-unpaid-401-comp_hometown.json",
+        "ui": "18source,480CSSpx,infinite resource preview",
+        "at": "DAY9 Suwon06:30",
+        "party": [
+          "minji",
+          "kangwoo"
+        ],
+        "steps": [
+          "entry",
+          "choice0",
+          "result all pages",
+          "return to road"
+        ],
+        "screens": [
+          "map-entry-ui.png",
+          "map-result-ui.png"
+        ],
+        "sourceType": "Normal public-action partial replay, explicitly excluded from fresh journey statistics; saved views unedited."
+      }
+    },
+    {
+      "event": "comp_cloudgame",
+      "key": "companion-window-clouds-v1",
+      "oldKey": "event-companion-van",
+      "delivery": "assets/scenes/companion-window-clouds-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle17/visual/masters/companion-window-clouds-v1.png",
+      "originalGeneratedPath": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-75570215-8436-4e4d-a032-712eff845ea6.png",
+      "sha256": "a21ed3e4bcb00b3adfa2c7ec27f111205ea64cff578a546bc9e0b6ef845d3f0a",
+      "bytes": 75192,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "visionReview": "Object/place detail matches initial narrative; no absent companions, no operative radio, no choice outcome; canonical cabin treatment.",
+      "runtimeCrop": {
+        "source": "cycle18/systems/browser-visual-entry-replay/player02/attempt01/entry-413-comp_cloudgame-export.json",
+        "ui": "18source,480CSSpx,infinite resource preview",
+        "at": "DAY11 Cheonan06:30",
+        "party": [
+          "minji",
+          "eunsu",
+          "jaeyi"
+        ],
+        "steps": [
+          "entry",
+          "choice0",
+          "result all pages",
+          "return to road"
+        ],
+        "screens": [
+          "cloud-entry-ui.png",
+          "cloud-result-ui.png"
+        ],
+        "sourceType": "Normal public-action partial replay, explicitly excluded from fresh journey statistics; saved views unedited."
+      }
+    },
+    {
+      "event": "D.eventSceneRules type 동행 fallback",
+      "key": "companion-cabin-detail-v1",
+      "oldKey": "event-companion-van",
+      "delivery": "assets/scenes/companion-cabin-detail-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle17/visual/masters/companion-cabin-detail-v1.png",
+      "originalGeneratedPath": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-9eace31f-62c5-49cc-8bbb-b2087324f74a.png",
+      "sha256": "34c464f72a815093e55f53cd70dc13eacfd4af3ce2f4572052ec1492b74f8e08",
+      "bytes": 95654,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "visionReview": "Neutral cabin detail with no named/absent crew, active equipment or completed action; old key retained for historical receipts.",
+      "runtimeCrop": {
+        "source": "cycle18/survival/attempt01/entry-438-up_bench_first-export.json",
+        "ui": "18 source, 480 CSS px game frame, infinite resource preview",
+        "steps": [
+          "entry",
+          "choice0",
+          "result",
+          "actual reload preserved result/art",
+          "return to road"
+        ],
+        "screens": [
+          "cabin-entry-ui.png",
+          "cabin-result-ui.png",
+          "cabin-restored-ui.png"
+        ],
+        "at": "DAY11 Kimcheon06:30",
+        "party": [
+          "leo",
+          "parkss",
+          "jaeyi"
+        ]
+      }
+    },
+    {
+      "events": [
+        "story_bridge_departure_echo",
+        "story_bridge_child_voice"
+      ],
+      "key": "story-roadside-terminal-detail-v2",
+      "oldKeys": [
+        "story-bridge-departure-echo-v1",
+        "story-child-voice-terminal-v1"
+      ],
+      "delivery": "assets/scenes/story-roadside-terminal-detail-v2.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle17/visual/masters/story-roadside-terminal-detail-v2.png",
+      "originalGeneratedPath": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-5cce4d4f-a2a7-478f-94ae-dd7efdad1ad7.png",
+      "sha256": "cd611b6697c6690bd5f5e5ed346adef0d3b19655c6964c29e526d87cd7284194",
+      "bytes": 87126,
+      "width": 1024,
+      "height": 576,
+      "format": "webp",
+      "space": "srgb",
+      "visionReview": "Close terminal detail without sky/daylight landscape. Same speaker, switch and independent receiver indicator. Suitable when echo occurs at21:55; no new people/equipment or chosen result.",
+      "runtimeCrop": {
+        "source": "cycle18/story/agent03/attempt01/normal-unpaid-57-story_bridge_departure_echo.json",
+        "ui": "18 source, 480 CSS px game frame, infinite preview",
+        "steps": [
+          "entry at21:25",
+          "choice0",
+          "result21:40",
+          "return to driving21:41"
+        ],
+        "screens": [
+          "terminal-detail-entry-ui.png",
+          "terminal-detail-result-ui.png"
+        ],
+        "childVoice": "Same registered key checked in source; actual childVoice UI flow was tested17 using previous terminal art."
+      }
+    }
+  ],
+  "rejected": {
+    "master": "/Users/sang/.codex/generated_images/01a17415-1d16-7aa1-88af-b8f7380c547d/exec-b9d3a708-6eed-4442-bd10-c9020c7ec749.png",
+    "reason": "Unrequested lit radio equipment replaced through image_gen edit; never wired."
+  },
+  "responsive360": "Not verified; existing viewport/file URL limitation retained.",
+  "galleryBeforeWiring": {
+    "url": "http://127.0.0.1:4319/__live/assets",
+    "evidence": [
+      "gallery-before-wiring.png",
+      "gallery-cabin-before-wiring.png",
+      "gallery-terminal-before-wiring.png"
+    ]
+  },
+  "sceneRegression": {
+    "log": "scene-roster-green.log",
+    "initialFixtureFailures": [
+      "Used food debate which already has a dedicated meal-family image, changed fixture to van-name event that exercises actual fallback.",
+      "Initialized legacy migration through normal save/load and compared normalized receipt; did not strip flags or ignore state changes."
+    ],
+    "pass": 4,
+    "fail": 0,
+    "rosterRedLog": "scene-roster-red.log"
+  },
+  "interimReusedAsset": {
+    "event": "story_bridge_departure_echo",
+    "oldKey": "story-bridge-departure-echo-v1",
+    "key": "story-child-voice-terminal-v1",
+    "reason": "External terminal matches revised audible broadcast and avoids implying repaired car radio.",
+    "runtimeCrop": "pending",
+    "status": "Superseded before18 freeze by time-neutral detail; old17 asset retained for existing saved views."
+  },
+  "familyAssetReview": {
+    "inspected": [
+      "assets/scenes/event-companion-radio.webp",
+      "assets/scenes/event-companion-meal.webp",
+      "assets/scenes/event-companion-repair.webp",
+      "assets/scenes/event-companion-camp.webp"
+    ],
+    "requirements": {
+      "event-companion-radio": {
+        "companions": [
+          "minji"
+        ],
+        "flag": "radio_fixed"
+      },
+      "event-companion-meal": {
+        "companions": [
+          "minji",
+          "jaeyi"
+        ]
+      },
+      "event-companion-repair": {
+        "companions": [
+          "minji",
+          "jaeyi"
+        ]
+      },
+      "event-companion-camp": {
+        "companions": [
+          "minji",
+          "jaeyi",
+          "kangwoo"
+        ]
+      }
+    },
+    "fallback": "companion-cabin-detail-v1",
+    "scope": "Current family selection checks pictured companions and active radio; explicit scenes and saved reader scene keys retain precedence. Original art stays available for existing saved views."
+  },
+  "originalQaBackupRestoredAfterFirstTwo18Checks": true,
+  "originalQaBackupRestoredAfterAllFour18Checks": true
+}

@@ -1,0 +1,133 @@
+{
+  "seed": 269003,
+  "status": "ended",
+  "ending": "story_done",
+  "method": "core_transfer",
+  "storyDone": true,
+  "route": [
+    "yangsan",
+    "miryang",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "sangju",
+    "mungyeong",
+    "chungju",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "pyeongtaek",
+    "suwon",
+    "seoul"
+  ],
+  "choices": 62,
+  "actions": 274,
+  "sourceHash": "ca09c5e146f86e69583f89a241f4c0699138454c464ee469010dcbb876f77a6f",
+  "freshStarts": 1,
+  "attempts": 1,
+  "reviewedChoices": 62,
+  "reviewedChars": 24163,
+  "party": [],
+  "day": 5,
+  "min": 800,
+  "km": 490,
+  "dog": false,
+  "actionCounts": {
+    "new-game": 1,
+    "unpaid-entry-reload": 62,
+    "choice": 62,
+    "paid-result-reload": 62,
+    "explore": 16,
+    "travel": 15,
+    "drive": 30,
+    "trade": 8,
+    "work": 3,
+    "camp": 4,
+    "npc-rumor": 6,
+    "seoul-enter": 5
+  },
+  "reviewStatistics": {
+    "novelPairsVsOwnCycles1to8": [
+      "exp_fishfarm:0",
+      "exp_gas:2"
+    ],
+    "exactEntryChoiceResultDuplicateOccurrences": 53,
+    "newOrDifferentEntryChoiceResultOccurrences": 9,
+    "exactResultDuplicateOccurrences": 56,
+    "newOrDifferentResultOccurrences": 6,
+    "countByAction": {
+      "new-game": 1,
+      "unpaid-entry-reload": 62,
+      "choice": 62,
+      "paid-result-reload": 62,
+      "explore": 16,
+      "travel": 15,
+      "drive": 30,
+      "trade": 8,
+      "work": 3,
+      "camp": 4,
+      "npc-rumor": 6,
+      "seoul-enter": 5
+    },
+    "entryReloads": 62,
+    "paidReloads": 62,
+    "reapplied": 0,
+    "chars": 24163
+  },
+  "sourceUnchangedDuringRun": true,
+  "findings": [
+    {
+      "id": "C9-STORY-01",
+      "severity": "confirmed solo participant inconsistency",
+      "event": "exp_fishfarm",
+      "traceN": 107,
+      "choice": 0,
+      "outcome": 1,
+      "status": "fixed after all cycle9 runs closed",
+      "old": "힘이 장사라 여럿이 매달렸다 / 회의 끝에 방생했다",
+      "proposed": "힘이 장사라 그물을 놓치지 않으려 버텼다 / 고민 끝에 방생했다",
+      "effectsToPreserve": {
+        "p": 1,
+        "fx": {
+          "food": 2,
+          "moodAll": 5,
+          "note": {
+            "type": "사건",
+            "title": "수조의 주인",
+            "body": "초대형 잉어는 방생. \"쟤는 이 수조의 주인이다.\""
+          }
+        }
+      },
+      "new": "힘이 장사라 그물을 놓치지 않으려 버텼다 / 고민 끝에 방생했다"
+    }
+  ],
+  "gaps": [
+    "Eunsu recruitment; Daejeon not visited",
+    "all companion or Bori features",
+    "hidden-location-specific choices",
+    "cycle8 wordchain/tower repaired branches",
+    "conflict_fuel_detour",
+    "exp_noodleworks",
+    "Jaeyi05/09",
+    "UI crop and image review"
+  ],
+  "validation": {
+    "unpaidReload": 62,
+    "paidReload": 62,
+    "reapplied": 0,
+    "runtimeError": null
+  },
+  "policyLimitation": "One unnecessary Suwon→Pyeongtaek→Suwon loop: policy excluded exploration after19:00 instead of resting/using permitted main evidence. No fuel rescue, failed travel, forced event, infinite-resource or restart.",
+  "postRunFixVerification": {
+    "kind": "explicit regression fixtures, not natural journeys",
+    "mechanicsEqual": true,
+    "mechanicsHash": "820a4400b9675ff31e557f361ed57c7cee741a270897297dde35f9750cf15460",
+    "legacyResultUnchanged": true,
+    "legacyApplied": false,
+    "legacyStateUnchanged": true,
+    "freshSoloReaderNeutral": true,
+    "engineHash": "732d24fdbfb0b8b90d5d6968250b9cf4e70229d21a4da1769638438363415e4b",
+    "existingNarrativeDialogueTestsPassed": 25
+  }
+}

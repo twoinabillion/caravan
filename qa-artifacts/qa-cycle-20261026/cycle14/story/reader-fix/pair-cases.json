@@ -1,0 +1,62 @@
+[
+  {
+    "id": "pair_mj_kw_2",
+    "entry": [
+      "minji",
+      "minji",
+      "kangwoo",
+      "minji",
+      "kangwoo"
+    ],
+    "choices": {
+      "0.0": [
+        "kangwoo",
+        "minji",
+        "kangwoo",
+        "minji",
+        "kangwoo",
+        "minji",
+        "minji",
+        "kangwoo"
+      ]
+    }
+  },
+  {
+    "id": "pair_mj_jy_1",
+    "entry": [
+      "jaeyi",
+      "jaeyi",
+      "minji",
+      "jaeyi"
+    ],
+    "choices": {
+      "0.0": [
+        "jaeyi",
+        "minji",
+        "jaeyi",
+        "minji",
+        "jaeyi",
+        "jaeyi"
+      ]
+    }
+  },
+  {
+    "id": "pair_mj_jy_2",
+    "entry": [
+      "jaeyi"
+    ],
+    "choices": {
+      "0.0": [
+        "minji",
+        "jaeyi",
+        "minji",
+        "jaeyi",
+        "minji",
+        "minji",
+        "jaeyi",
+        "minji",
+        "jaeyi"
+      ]
+    }
+  }
+]

@@ -1,0 +1,25 @@
+[
+  {
+    "kind": "narration",
+    "text": "손바닥을 내밀자 박 선생이 피식 웃으며 사탕 하나를 더 꺼내 올려놨다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "…자네도 예방 접종."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "무슨 예방인데요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "……."
+  },
+  {
+    "kind": "narration",
+    "text": "대답 대신 껍질 벗기는 소리만 났다. 둘이서 오래 사탕만 굴렸다."
+  }
+]

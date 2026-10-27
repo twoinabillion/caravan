@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-26T11:39:52.142448+00:00",
+  "scope": "Root approved26 art preparation.5 new scene assets only, no production mapping, no new journey.",
+  "sourceEvidence": "../systems/visual-six-index.md",
+  "contractSha256": "5aec3e1cee8432c884f1d35dbdddc411a312262b71a840a6ebd59edb83cbcc22",
+  "assets": [
+    {
+      "key": "explore-mushroom-growhouse-v1",
+      "event": "exp_mushroom",
+      "format": "place",
+      "promptSha256": "e0204303746c24c808bf2e031d8e6126e96115b1fc0aed27e4b05ed772201dd4"
+    },
+    {
+      "key": "explore-abandoned-orchard-v1",
+      "event": "exp_orchard",
+      "format": "place",
+      "promptSha256": "272303d2c03e9600cbcf03f2a54327c8dccccb5c67c11a937072a3c4db56c33e"
+    },
+    {
+      "key": "local-pyeongtaek-sealed-containers-v1",
+      "event": "ev_container_port",
+      "format": "place",
+      "promptSha256": "ff9357209775636a7885481498067e3a94ce95f2e448aedf4cf5deb8751b2276"
+    },
+    {
+      "key": "explore-villagehall-cassette-v1",
+      "event": "exp_villagehall",
+      "format": "detail",
+      "promptSha256": "c3d0ec56fd73ea3169c8787b8accb7319dccad4e8e4f5dd5655be0f4179caf38"
+    },
+    {
+      "key": "local-cheonan-pedal-walnut-cart-v1",
+      "event": "lc_cheonan_walnut",
+      "format": "character",
+      "promptSha256": "945475708da5b5db756e7b28f86fd3a8359a29b52572a32c06d34db8119d9628"
+    }
+  ],
+  "delivery": {
+    "width": 1024,
+    "height": 576,
+    "format": "WebP",
+    "colorSpace": "sRGB",
+    "quality": 86,
+    "effort": 6
+  },
+  "deployment": "assets/scenes copy authorized; mapping/gallery root-owned"
+}

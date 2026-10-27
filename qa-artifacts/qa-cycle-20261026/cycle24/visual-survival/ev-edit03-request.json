@@ -1,0 +1,11 @@
+{
+  "prompt": "Use case: stylized-concept. Near-photographic cinematic painterly realism for the Korean post-collapse road-trip game Seoul to 400km. Grounded Korean people and infrastructure, restrained cool gray-blue palette, wet or dusty weathered materials, one practical warm amber light source where inhabited, natural anatomy, human-scale action, subtle film grain, believable 35-50mm film-still composition. Match the attached Caravan canonical references exactly in medium, palette, character identity and vehicle design.\n\nPrecise local image edit: image 1 is the target. All other images are style references only. In image1 the frontmost car on the right still has a faint oval logo just above-left of its charging socket. Replace a broad continuous region of that car front between its two headlights (above the black charging socket) with plain unbranded matte gray sheet metal and irregular solid dry road grime. There must be NO OVAL SHAPE, badge, embossing, letter, logo or outline in that area. Make it visibly plain continuous metal, not a faded brand. Preserve the headlights and black charging connector and cable exactly, preserve the entire rest of the frame including cars, poles, no-tower generic ridge, composition, natural light and Korean parking setting. No other new objects or people. Large single landscape frame.\n\nNegative prompt (verbatim):\nanime, manga, comic book, ink outline, cel shading, cartoon, chibi, pixel art, glossy advertising photo, hyperreal skin pores, fashion editorial, studio portrait, 3D render, game-engine screenshot, fantasy, zombies, neon cyberpunk, clean sci-fi vehicle, American RV, panel van, readable text, logo, watermark, UI, frame, collage, split panel",
+  "referenced_image_paths": [
+    "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle24/visual-survival/masters/explore-ev-charging-parking-v1-draft03.png",
+    "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp"
+  ],
+  "transparent_background": false
+}
